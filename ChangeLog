@@ -1,5 +1,21 @@
 2011-05-28  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Alternative structure of testdirs, similar to --import.
+	* gnulib-tool: New option --single-configure.
+	(func_usage): Document it.
+	(single_configure): New variable.
+	(func_modules_transitive_closure_separately,
+	func_modules_transitive_closure_separately,
+	func_determine_use_libtests, func_modules_add_dummy_separately,
+	func_modules_to_filelist_separately): New functions, extracted from
+	func_import.
+	(func_emit_tests_Makefile_am): Handle $single_configure = true case.
+	(func_import): Use the new functions.
+	(func_create_testdir): Set final_modules. Handle $single_configure =
+	true case.
+
+2011-05-28  Bruno Haible  <bruno@clisp.org>
+
 	getloadavg: Remove an unreliable safety check.
 	* m4/getloadavg.m4 (gl_GETLOADAVG): Drop argument. Remove test whether
 	getloadavg.c is in place.

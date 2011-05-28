@@ -273,6 +273,8 @@ Options for --create-[mega]testdir, --[mega]test:
                             Exclude unit tests that require root privileges.
       --without-unportable-tests
                             Exclude unit tests that fail on some platforms.
+      --single-configure    Generate a single configure file, not a separate
+                            configure file for the tests directory.
 
 Options for --import, --add/remove-import, --update,
             --create-[mega]testdir, --[mega]test:
@@ -916,6 +918,7 @@ fi
 #                          otherwise
 # - excl_unportable_tests  true if --without-unportable-tests was given, blank
 #                          otherwise
+# - single_configure  true if --single-configure was given, false otherwise
 # - avoidlist       list of modules to avoid, from --avoid
 # - cond_dependencies  true if --conditional-dependencies was given, false if
 #                      --no-conditional-dependencies was given, blank otherwise
@@ -959,6 +962,7 @@ fi
   excl_longrunning_tests=
   excl_privileged_tests=
   excl_unportable_tests=
+  single_configure=false
   avoidlist=
   cond_dependencies=
   lgpl=
@@ -1150,6 +1154,9 @@ fi
       --without-unportable-tests | --without-unportable-test | --without-unportable-tes | --without-unportable-te | --without-unportable-t | --without-unportable- | --without-unportable | --without-unportabl | --without-unportab | --without-unporta | --without-unport | --without-unpor | --without-unpo | --without-unp | --without-un | --without-u)
         excl_unportable_tests=true
         shift ;;
+      --single-configure | --single-configur | --single-configu | --single-config | --single-confi | --single-conf | --single-con | --single-con | --single-co | --single-c | --single- | --single | --singl | --sing | --sin | --si)
+        single_configure=true
+        shift ;;
       --avoid )
         shift
         if test $# = 0; then
@@ -1257,7 +1264,8 @@ fi
 
   if case "$mode" in import | add-import | remove-import) true;; *) false;; esac; then
     if test -n "$excl_cxx_tests" || test -n "$excl_longrunning_tests" \
-       || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests"; then
+       || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests" \
+       || test "$single_configure" != false; then
       echo "gnulib-tool: invalid options for '$mode' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       func_exit 1
@@ -2758,6 +2766,109 @@ func_show_module_list ()
     | sed -e 's/^\(.*\)|.*/|\1/' -e 's/^/    /' -e 's/^    |\(.*\)$/  '"${bold_on}"'\1'"${bold_off}"'/'
 }
 
+# func_modules_transitive_closure_separately
+# Determine main module list and tests-related module list separately.
+# The main module list is the transitive closure of the specified modules,
+# ignoring tests modules. Its lib/* sources go into $sourcebase/. If --lgpl
+# is specified, it will consist only of LGPLed source.
+# The tests-related module list is the transitive closure of the specified
+# modules, including tests modules, minus the main module list excluding
+# modules of applicability 'all'. Its lib/* sources (brought in through
+# dependencies of *-tests modules) go into $testsbase/. It may contain GPLed
+# source, even if --lgpl is specified.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache        true or false, from --cache-modules/--no-cache-modules
+# - specified_modules  list of specified modules
+# - inctests        true if tests should be included, blank otherwise
+# - incobsolete     true if obsolete modules among dependencies should be
+#                   included, blank otherwise
+# - inc_cxx_tests   true if C++ interoperability tests should be included,
+#                   blank otherwise
+# - inc_longrunning_tests  true if long-runnings tests should be included,
+#                          blank otherwise
+# - inc_privileged_tests  true if tests that require root privileges should be
+#                         included, blank otherwise
+# - inc_unportable_tests  true if tests that fail on some platforms should be
+#                         included, blank otherwise
+# - inc_all_direct_tests   true if all kinds of problematic unit tests among
+#                          the unit tests of the specified modules should be
+#                          included, blank otherwise
+# - inc_all_indirect_tests   true if all kinds of problematic unit tests among
+#                            the unit tests of the dependencies should be
+#                            included, blank otherwise
+# - excl_cxx_tests   true if C++ interoperability tests should be excluded,
+#                    blank otherwise
+# - excl_longrunning_tests  true if long-runnings tests should be excluded,
+#                           blank otherwise
+# - excl_privileged_tests  true if tests that require root privileges should be
+#                          excluded, blank otherwise
+# - excl_unportable_tests  true if tests that fail on some platforms should be
+#                          excluded, blank otherwise
+# - avoidlist       list of modules to avoid
+# - cond_dependencies  true if conditional dependencies shall be supported,
+#                      blank otherwise
+# - tmp             pathname of a temporary directory
+# Output:
+# - main_modules    list of modules, including dependencies
+# - testsrelated_modules  list of tests-related modules, including dependencies
+# - conddep_dependers, conddep_condition  information about conditionally
+#                                         enabled modules
+func_modules_transitive_closure_separately ()
+{
+  # Determine main module list.
+  saved_inctests="$inctests"
+  inctests=""
+  modules="$specified_modules"
+  func_modules_transitive_closure
+  main_modules="$modules"
+  inctests="$saved_inctests"
+  if test $verbose -ge 1; then
+    echo "Main module list:"
+    echo "$main_modules" | sed -e 's/^/  /'
+  fi
+  # Determine tests-related module list.
+  echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
+  testsrelated_modules=`for module in $main_modules; do
+                          if test \`func_get_applicability $module\` = main; then
+                            echo $module
+                          fi
+                        done \
+                        | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  if test $verbose -ge 1; then
+    echo "Tests-related module list:"
+    echo "$testsrelated_modules" | sed -e 's/^/  /'
+  fi
+}
+
+# func_determine_use_libtests
+# Determines whether a $testsbase/libtests.a is needed.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache        true or false, from --cache-modules/--no-cache-modules
+# - testsrelated_modules  list of tests-related modules, including dependencies
+# Output:
+# - use_libtests    true if a $testsbase/libtests.a is needed, false otherwise
+func_determine_use_libtests ()
+{
+  use_libtests=false
+  for module in $testsrelated_modules; do
+    func_verify_nontests_module
+    if test -n "$module"; then
+      all_files=`func_get_filelist $module`
+      # Test whether some file in $all_files lies in lib/.
+      for f in $all_files; do
+        case $f in
+          lib/*)
+            use_libtests=true
+            break 2
+            ;;
+        esac
+      done
+    fi
+  done
+}
+
 # func_modules_add_dummy
 # Input:
 # - local_gnulib_dir  from --local-dir
@@ -2797,6 +2908,32 @@ ba
     if func_acceptable "dummy"; then
       func_append modules " dummy"
     fi
+  fi
+}
+
+# func_modules_add_dummy_separately
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache        true or false, from --cache-modules/--no-cache-modules
+# - main_modules    list of modules, including dependencies
+# - testsrelated_modules  list of tests-related modules, including dependencies
+# - use_libtests    true if a $testsbase/libtests.a is needed, false otherwise
+# Output:
+# - main_modules    list of modules, including 'dummy' if needed
+# - testsrelated_modules  list of tests-related modules, including 'dummy' if
+#                         needed
+func_modules_add_dummy_separately ()
+{
+  # Add the dummy module to the main module list if needed.
+  modules="$main_modules"
+  func_modules_add_dummy
+  main_modules="$modules"
+
+  # Add the dummy module to the tests-related module list if needed.
+  if $use_libtests; then
+    modules="$testsrelated_modules"
+    func_modules_add_dummy
+    testsrelated_modules="$modules"
   fi
 }
 
@@ -2840,6 +2977,37 @@ func_modules_to_filelist ()
     fi
   done
   files=`for f in $files; do echo $f; done | LC_ALL=C sort -u`
+}
+
+# func_modules_to_filelist_separately
+# Determine the final file lists.
+# They must be computed separately, because files in lib/* go into
+# $sourcebase/ if they are in the main file list but into $testsbase/
+# if they are in the tests-related file list. Furthermore lib/dummy.c
+# can be in both.
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache        true or false, from --cache-modules/--no-cache-modules
+# - main_modules    list of modules, including dependencies
+# - testsrelated_modules  list of tests-related modules, including dependencies
+func_modules_to_filelist_separately ()
+{
+  # Determine final main file list.
+  modules="$main_modules"
+  func_modules_to_filelist
+  main_files="$files"
+  # Determine final tests-related file list.
+  modules="$testsrelated_modules"
+  func_modules_to_filelist
+  testsrelated_files=`echo "$files" | sed -e 's,^lib/,tests=lib/,'`
+  # Merge both file lists.
+  sed_remove_empty_lines='/^$/d'
+  files=`{ echo "$main_files"; echo "$testsrelated_files"; } | sed -e "$sed_remove_empty_lines" | LC_ALL=C sort -u`
+  if test $verbose -ge 0; then
+    echo "File list:"
+    sed_prettyprint_files='s,^tests=lib/\(.*\)$,lib/\1 -> tests/\1,'
+    echo "$files" | sed -e "$sed_prettyprint_files" -e 's/^/  /'
+  fi
 }
 
 # func_execute_command command [args...]
@@ -3291,6 +3459,8 @@ func_emit_po_POTFILES_in ()
 # - testsbase       relative directory containing unit test code
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - for_test        true if creating a package for testing, false otherwise
+# - single_configure  true if a single configure file should be generated,
+#                     false for a separate configure file for the tests
 # - use_libtests    true if a libtests.a should be built, false otherwise
 # - destfile        filename relative to destdir of makefile being generated
 # Input/Output:
@@ -3325,7 +3495,7 @@ func_emit_tests_Makefile_am ()
   uses_subdirs=
   {
     for module in $modules; do
-      if $for_test; then
+      if $for_test && ! $single_configure; then
         func_verify_tests_module
       else
         func_verify_module
@@ -3385,7 +3555,7 @@ func_emit_tests_Makefile_am ()
   fi
   echo "AUTOMAKE_OPTIONS = 1.5 foreign${subdir_options}"
   echo
-  if $for_test; then
+  if $for_test && ! $single_configure; then
     echo "ACLOCAL_AMFLAGS = -I ${testsbase_inverse}/${m4base}"
     echo
   fi
@@ -4169,67 +4339,14 @@ func_import ()
   final_modules="$modules"
 
   # Determine main module list and tests-related module list separately.
-  # The main module list is the transitive closure of the specified modules,
-  # ignoring tests modules. Its lib/* sources go into $sourcebase/. If --lgpl
-  # is specified, it will consist only of LGPLed source.
-  # The tests-related module list is the transitive closure of the specified
-  # modules, including tests modules, minus the main module list excluding
-  # modules of applicability 'all'. Its lib/* sources (brought in through
-  # dependencies of *-tests modules) go into $testsbase/. It may contain GPLed
-  # source, even if --lgpl is specified.
-  # Determine main module list.
-  saved_inctests="$inctests"
-  inctests=""
-  modules="$specified_modules"
-  func_modules_transitive_closure
-  main_modules="$modules"
-  inctests="$saved_inctests"
-  if test $verbose -ge 1; then
-    echo "Main module list:"
-    echo "$main_modules" | sed -e 's/^/  /'
-  fi
-  # Determine tests-related module list.
-  echo "$final_modules" | LC_ALL=C sort -u > "$tmp"/final-modules
-  testsrelated_modules=`for module in $main_modules; do
-                          if test \`func_get_applicability $module\` = main; then
-                            echo $module
-                          fi
-                        done \
-                        | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
-  if test $verbose -ge 1; then
-    echo "Tests-related module list:"
-    echo "$testsrelated_modules" | sed -e 's/^/  /'
-  fi
-
-  # Add the dummy module to the main module list if needed.
-  modules="$main_modules"
-  func_modules_add_dummy
-  main_modules="$modules"
+  func_modules_transitive_closure_separately
 
   # Determine whether a $testsbase/libtests.a is needed.
-  use_libtests=false
-  for module in $testsrelated_modules; do
-    func_verify_nontests_module
-    if test -n "$module"; then
-      all_files=`func_get_filelist $module`
-      # Test whether some file in $all_files lies in lib/.
-      for f in $all_files; do
-        case $f in
-          lib/*)
-            use_libtests=true
-            break 2
-            ;;
-        esac
-      done
-    fi
-  done
+  func_determine_use_libtests
 
-  # Add the dummy module to the tests-related module list if needed.
-  if $use_libtests; then
-    modules="$testsrelated_modules"
-    func_modules_add_dummy
-    testsrelated_modules="$modules"
-  fi
+  # Add the dummy module to the main module list or to the tests-related module
+  # list if needed.
+  func_modules_add_dummy_separately
 
   # If --lgpl, verify that the licenses of modules are compatible.
   if test -n "$lgpl"; then
@@ -4350,26 +4467,7 @@ s,^\(.................................................[^ ]*\) *,                
   fi
 
   # Determine the final file lists.
-  # They must be computed separately, because files in lib/* go into
-  # $sourcebase/ if they are in the main file list but into $testsbase/
-  # if they are in the tests-related file list. Furthermore lib/dummy.c
-  # can be in both.
-  # Determine final main file list.
-  modules="$main_modules"
-  func_modules_to_filelist
-  main_files="$files"
-  # Determine final tests-related file list.
-  modules="$testsrelated_modules"
-  func_modules_to_filelist
-  testsrelated_files=`echo "$files" | sed -e 's,^lib/,tests=lib/,'`
-  # Merge both file lists.
-  sed_remove_empty_lines='/^$/d'
-  files=`{ echo "$main_files"; echo "$testsrelated_files"; } | sed -e "$sed_remove_empty_lines" | LC_ALL=C sort -u`
-  if test $verbose -ge 0; then
-    echo "File list:"
-    sed_prettyprint_files='s,^tests=lib/\(.*\)$,lib/\1 -> tests/\1,'
-    echo "$files" | sed -e "$sed_prettyprint_files" -e 's/^/  /'
-  fi
+  func_modules_to_filelist_separately
 
   test -n "$files" \
     || func_fatal_error "refusing to do nothing"
@@ -5292,6 +5390,8 @@ s,//*$,/,'
 #                          excluded, blank otherwise
 # - excl_unportable_tests  true if tests that fail on some platforms should be
 #                          excluded, blank otherwise
+# - single_configure  true if a single configure file should be generated,
+#                     false for a separate configure file for the tests
 # - avoidlist       list of modules to avoid
 # - cond_dependencies  true if --conditional-dependencies was given, false if
 #                      --no-conditional-dependencies was given, blank otherwise
@@ -5387,18 +5487,42 @@ func_create_testdir ()
   if test $verbose -ge 0; then
     func_show_module_list
   fi
+  final_modules="$modules"
+
+  if $single_configure; then
+    # Determine main module list and tests-related module list separately.
+    func_modules_transitive_closure_separately
+  fi
+
+  if $single_configure; then
+    # Determine whether a $testsbase/libtests.a is needed.
+    func_determine_use_libtests
+  fi
 
   # Add the dummy module if needed.
-  func_modules_add_dummy
+  if $single_configure; then
+    func_modules_add_dummy_separately
+  else
+    func_modules_add_dummy
+  fi
 
   # Show banner notice of every module.
-  func_modules_notice
+  if $single_configure; then
+    modules="$main_modules"
+    func_modules_notice
+  else
+    func_modules_notice
+  fi
 
   # Determine final file list.
-  func_modules_to_filelist
-  if test $verbose -ge 0; then
-    echo "File list:"
-    echo "$files" | sed -e 's/^/  /'
+  if $single_configure; then
+    func_modules_to_filelist_separately
+  else
+    func_modules_to_filelist
+    if test $verbose -ge 0; then
+      echo "File list:"
+      echo "$files" | sed -e 's/^/  /'
+    fi
   fi
   # Add files for which the copy in gnulib is newer than the one that
   # "automake --add-missing --copy" would provide.
@@ -5413,6 +5537,7 @@ func_create_testdir ()
     s,^lib/,$rewritten$sourcebase/,
     s,^m4/,$rewritten$m4base/,
     s,^tests/,$rewritten$testsbase/,
+    s,^tests=lib/,$rewritten$testsbase/,
     s,^top/,$rewritten,
     s,^$rewritten,,"
 
@@ -5441,6 +5566,9 @@ func_create_testdir ()
     # constructs are executed in a subshell e.g. by Solaris 10 /bin/sh.
     exec 5<&0 < "$tmp"/files
     while read g f; do
+      case "$f" in
+        tests=lib/*) f=`echo "$f" | sed -e 's,^tests=lib/,lib/,'` ;;
+      esac
       func_lookup_file "$f"
       if test -n "$lookedup_tmp"; then
         cp -p "$lookedup_file" "$testdir/$g"
@@ -5467,6 +5595,9 @@ func_create_testdir ()
   # Create $sourcebase/Makefile.am.
   mkdir -p "$testdir/$sourcebase"
   destfile="$sourcebase/Makefile.am"
+  if $single_configure; then
+    modules="$main_modules"
+  fi
   func_emit_lib_Makefile_am > "$testdir/$sourcebase/Makefile.am"
   any_uses_subdirs="$uses_subdirs"
 
@@ -5497,104 +5628,112 @@ func_create_testdir ()
 
   if test -n "$inctests"; then
     test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
-    # Viewed from the $testsbase subdirectory, $auxdir is different.
-    saved_auxdir="$auxdir"
-    auxdir=`echo "$testsbase/" | sed -e 's%[^/][^/]*//*%../%g'`"$auxdir"
-    # Create $testsbase/Makefile.am.
-    use_libtests=false
-    destfile="$testsbase/Makefile.am"
-    func_emit_tests_Makefile_am "" > "$testdir/$testsbase/Makefile.am"
-    any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
-    # Create $testsbase/configure.ac.
-    (echo "# Process this file with autoconf to produce a configure script."
-     echo "AC_INIT([dummy], [0])"
-     echo "AC_CONFIG_AUX_DIR([$auxdir])"
-     echo "AM_INIT_AUTOMAKE"
-     echo
-     echo "AC_CONFIG_HEADERS([config.h])"
-     echo
-     echo "AC_PROG_CC"
-     echo "AC_PROG_INSTALL"
-     echo "AC_PROG_MAKE_SET"
-     echo "AC_PROG_RANLIB"
-     echo
-     if test -n "$uses_subdirs"; then
-       echo "AM_PROG_CC_C_O"
+    if $single_configure; then
+      # Create $testsbase/Makefile.am.
+      destfile="$testsbase/Makefile.am"
+      modules="$testsrelated_modules"
+      func_emit_tests_Makefile_am "${macro_prefix}tests_WITNESS" > "$testdir/$testsbase/Makefile.am"
+    else
+      # Viewed from the $testsbase subdirectory, $auxdir is different.
+      saved_auxdir="$auxdir"
+      auxdir=`echo "$testsbase/" | sed -e 's%[^/][^/]*//*%../%g'`"$auxdir"
+      # Create $testsbase/Makefile.am.
+      use_libtests=false
+      destfile="$testsbase/Makefile.am"
+      func_emit_tests_Makefile_am "" > "$testdir/$testsbase/Makefile.am"
+      any_uses_subdirs="$any_uses_subdirs$uses_subdirs"
+      # Create $testsbase/configure.ac.
+      (echo "# Process this file with autoconf to produce a configure script."
+       echo "AC_INIT([dummy], [0])"
+       echo "AC_CONFIG_AUX_DIR([$auxdir])"
+       echo "AM_INIT_AUTOMAKE"
        echo
-     fi
-     for module in $modules; do
-       func_verify_module
-       if test -n "$module"; then
-         case $module in
-           gnumakefile | maintainer-makefile)
-             # These modules are meant to be used only in the top-level directory.
-             ;;
-           *)
-             func_get_autoconf_early_snippet "$module"
-             ;;
-         esac
+       echo "AC_CONFIG_HEADERS([config.h])"
+       echo
+       echo "AC_PROG_CC"
+       echo "AC_PROG_INSTALL"
+       echo "AC_PROG_MAKE_SET"
+       echo "AC_PROG_RANLIB"
+       echo
+       if test -n "$uses_subdirs"; then
+         echo "AM_PROG_CC_C_O"
+         echo
        fi
-     done \
-       | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
-     if test "$libtool" = true; then
-       echo "LT_INIT([win32-dll])"
-       echo "LT_LANG([C++])"
-       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
-       echo "gl_cond_libtool=true"
-     else
-       echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
-       echo "gl_cond_libtool=false"
-       echo "gl_libdeps="
-       echo "gl_ltlibdeps="
-     fi
-     # Wrap the set of autoconf snippets into an autoconf macro that is then
-     # invoked. This is needed because autoconf does not support AC_REQUIRE
-     # at the top level:
-     #   error: AC_REQUIRE(gt_CSHARPCOMP): cannot be used outside of an AC_DEFUN'd macro
-     # but we want the AC_REQUIRE to have its normal meaning (provide one
-     # expansion of the required macro before the current point, and only one
-     # expansion total).
-     echo "AC_DEFUN([gl_INIT], ["
-     sed_replace_build_aux='
-       :a
-       /AC_CONFIG_FILES(.*:build-aux\/.*)/{
-         s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
-         ba
-       }'
-     echo "gl_m4_base='../$m4base'"
-     func_emit_initmacro_start $macro_prefix
-     # We don't have explicit ordering constraints between the various
-     # autoconf snippets. It's cleanest to put those of the library before
-     # those of the tests.
-     echo "gl_source_base='../$sourcebase'"
-     func_emit_autoconf_snippets "$modules" func_verify_nontests_module false false false
-     echo "gl_source_base='.'"
-     func_emit_autoconf_snippets "$modules" func_verify_tests_module false false false
-     func_emit_initmacro_end $macro_prefix
-     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
-     # created using libtool, because libtool already handles the dependencies.
-     if test "$libtool" != true; then
-       libname_upper=`echo "$libname" | LC_ALL=C tr '[a-z]-' '[A-Z]_'`
-       echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
-       echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
-       echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
-       echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
-     fi
-     echo "])"
-     func_emit_initmacro_done $macro_prefix $sourcebase # FIXME use $sourcebase or $testsbase?
-     echo
-     echo "gl_INIT"
-     echo
-     # Usually $testsbase/config.h will be a superset of config.h. Verify this
-     # by "merging" config.h into $testsbase/config.h; look out for gcc warnings.
-     echo "AH_TOP([#include \"../config.h\"])"
-     echo
-     echo "AC_CONFIG_FILES([Makefile])"
-     echo "AC_OUTPUT"
-    ) > "$testdir/$testsbase/configure.ac"
-    auxdir="$saved_auxdir"
-    func_append subdirs " $testsbase"
-    subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
+       for module in $modules; do
+         func_verify_module
+         if test -n "$module"; then
+           case $module in
+             gnumakefile | maintainer-makefile)
+               # These modules are meant to be used only in the top-level directory.
+               ;;
+             *)
+               func_get_autoconf_early_snippet "$module"
+               ;;
+           esac
+         fi
+       done \
+         | sed -e '/^$/d;' -e 's/AC_REQUIRE(\[\([^()]*\)\])/\1/'
+       if test "$libtool" = true; then
+         echo "LT_INIT([win32-dll])"
+         echo "LT_LANG([C++])"
+         echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
+         echo "gl_cond_libtool=true"
+       else
+         echo "AM_CONDITIONAL([GL_COND_LIBTOOL], [false])"
+         echo "gl_cond_libtool=false"
+         echo "gl_libdeps="
+         echo "gl_ltlibdeps="
+       fi
+       # Wrap the set of autoconf snippets into an autoconf macro that is then
+       # invoked. This is needed because autoconf does not support AC_REQUIRE
+       # at the top level:
+       #   error: AC_REQUIRE(gt_CSHARPCOMP): cannot be used outside of an AC_DEFUN'd macro
+       # but we want the AC_REQUIRE to have its normal meaning (provide one
+       # expansion of the required macro before the current point, and only one
+       # expansion total).
+       echo "AC_DEFUN([gl_INIT], ["
+       sed_replace_build_aux='
+         :a
+         /AC_CONFIG_FILES(.*:build-aux\/.*)/{
+           s|AC_CONFIG_FILES(\(.*\):build-aux/\(.*\))|AC_CONFIG_FILES(\1:'"$auxdir"'/\2)|
+           ba
+         }'
+       echo "gl_m4_base='../$m4base'"
+       func_emit_initmacro_start $macro_prefix
+       # We don't have explicit ordering constraints between the various
+       # autoconf snippets. It's cleanest to put those of the library before
+       # those of the tests.
+       echo "gl_source_base='../$sourcebase'"
+       func_emit_autoconf_snippets "$modules" func_verify_nontests_module false false false
+       echo "gl_source_base='.'"
+       func_emit_autoconf_snippets "$modules" func_verify_tests_module false false false
+       func_emit_initmacro_end $macro_prefix
+       # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
+       # created using libtool, because libtool already handles the dependencies.
+       if test "$libtool" != true; then
+         libname_upper=`echo "$libname" | LC_ALL=C tr '[a-z]-' '[A-Z]_'`
+         echo "  ${libname_upper}_LIBDEPS=\"\$gl_libdeps\""
+         echo "  AC_SUBST([${libname_upper}_LIBDEPS])"
+         echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
+         echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
+       fi
+       echo "])"
+       func_emit_initmacro_done $macro_prefix $sourcebase # FIXME use $sourcebase or $testsbase?
+       echo
+       echo "gl_INIT"
+       echo
+       # Usually $testsbase/config.h will be a superset of config.h. Verify this
+       # by "merging" config.h into $testsbase/config.h; look out for gcc warnings.
+       echo "AH_TOP([#include \"../config.h\"])"
+       echo
+       echo "AC_CONFIG_FILES([Makefile])"
+       echo "AC_OUTPUT"
+      ) > "$testdir/$testsbase/configure.ac"
+      auxdir="$saved_auxdir"
+      func_append subdirs " $testsbase"
+      subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
+    fi
+    subdirs="$subdirs $testsbase"
   fi
 
   # Create Makefile.am.
@@ -5636,8 +5775,12 @@ func_create_testdir ()
      echo "AM_PROG_CC_C_O"
      echo
    fi
-   for module in $modules; do
-     func_verify_nontests_module
+   for module in $final_modules; do
+     if $single_configure; then
+       func_verify_module
+     else
+       func_verify_nontests_module
+     fi
      if test -n "$module"; then
        func_get_autoconf_early_snippet "$module"
      fi
@@ -5675,8 +5818,26 @@ func_create_testdir ()
    echo "gl_m4_base='$m4base'"
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"
-   func_emit_autoconf_snippets "$modules" func_verify_nontests_module true false false
+   if $single_configure; then
+     func_emit_autoconf_snippets "$main_modules" func_verify_module true false false
+   else
+     func_emit_autoconf_snippets "$modules" func_verify_nontests_module true false false
+   fi
    func_emit_initmacro_end $macro_prefix
+   if $single_configure; then
+     echo "  gltests_libdeps="
+     echo "  gltests_ltlibdeps="
+     func_emit_initmacro_start ${macro_prefix}tests
+     echo "  gl_source_base='$testsbase'"
+     # Define a tests witness macro.
+     echo "  ${macro_prefix}tests_WITNESS=IN_GNULIB_TESTS"
+     echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
+     echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
+     echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
+     func_emit_autoconf_snippets "$testsrelated_modules" func_verify_module true false false
+     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
+     func_emit_initmacro_end ${macro_prefix}tests
+   fi
    # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
    # created using libtool, because libtool already handles the dependencies.
    if test "$libtool" != true; then
@@ -5686,8 +5847,17 @@ func_create_testdir ()
      echo "  ${libname_upper}_LTLIBDEPS=\"\$gl_ltlibdeps\""
      echo "  AC_SUBST([${libname_upper}_LTLIBDEPS])"
    fi
+   if $single_configure; then
+     if $use_libtests; then
+       echo "  LIBTESTS_LIBDEPS=\"\$gltests_libdeps\""
+       echo "  AC_SUBST([LIBTESTS_LIBDEPS])"
+     fi
+   fi
    echo "])"
    func_emit_initmacro_done $macro_prefix $sourcebase
+   if $single_configure; then
+     func_emit_initmacro_done ${macro_prefix}tests $testsbase
+   fi
    echo
    echo "gl_INIT"
    echo
@@ -5730,7 +5900,7 @@ func_create_testdir ()
    func_execute_command ${AUTOHEADER} || func_exit 1
    func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
   ) || func_exit 1
-  if test -n "$inctests"; then
+  if test -n "$inctests" && ! $single_configure; then
     # Create autogenerated files.
     (cd "$testdir/$testsbase" || func_exit 1
      # Do not use "${AUTORECONF} --force --install", because it may invoke
