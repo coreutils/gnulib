@@ -14,6 +14,9 @@ MAKEINFO = $(lang_env) $(makeinfo_prog)
 manual_opts = --no-split --reference-limit=2000
 TEXI2HTML = $(MAKEINFO) $(manual_opts) --html
 
+# Needed so that tex finds a recent enough texinfo.tex.
+tex_opts = -I ../build-aux
+
 %.info: %.texi
 	$(MAKEINFO) $(manual_opts) $<
 
@@ -21,10 +24,10 @@ TEXI2HTML = $(MAKEINFO) $(manual_opts) --html
 	$(TEXI2HTML) -o $@ $<
 
 %.dvi: %.texi
-	texi2dvi $< || { if texi2dvi $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
+	texi2dvi $(tex_opts) $< || { if texi2dvi $(tex_opts) $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
 
 %.pdf: %.texi
-	texi2pdf $< || { if texi2pdf $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
+	texi2pdf $(tex_opts) $< || { if texi2pdf $(tex_opts) $< 2>/dev/null | grep 'TeX capacity exceeded, sorry \[save size=' > /dev/null; then echo '*** You must increase the save_size in your texmf.cnf file, often located under /etc/texmf/.'; fi; exit 1; }
 
 all: info html dvi
 info: $(doc).info
