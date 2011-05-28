@@ -59,6 +59,19 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
+/* Solaris 2.6 <wctype.h> includes <widec.h> which includes <euc.h> which
+   #defines a number of identifiers in the application namespace.  Revert
+   these #defines.  */
+#ifdef __sun
+# undef multibyte
+# undef eucw1
+# undef eucw2
+# undef eucw3
+# undef scrw1
+# undef scrw2
+# undef scrw3
+#endif
+
 /* Define wint_t and WEOF.  (Also done in wchar.in.h.)  */
 #if !@HAVE_WINT_T@ && !defined wint_t
 # define wint_t int

@@ -25,6 +25,10 @@ IRIX 6.5.30.
 @item
 The functions @code{isw*} are actually defined as macros that don't work,
 on IRIX 5.3.
+@item
+This header file defines some identifiers, such as @code{multibyte}, as macros
+on some platforms:
+Solaris 2.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:

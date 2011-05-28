@@ -1,3 +1,11 @@
+2011-05-29  Bruno Haible  <bruno@clisp.org>
+
+	wctype-h: Avoid namespace pollution on Solaris 2.6.
+	* lib/wctype.in.h: On Solaris, undefine 'multibyte' and a few other
+	identifiers.
+	* doc/posix-headers/wctype.texi: Mention the problem.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-05-28  Jim Meyering  <meyering@redhat.com>
 
 	parse-datetime.y: accommodate -Wstrict-overflow
