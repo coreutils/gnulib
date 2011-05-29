@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_SYS_IOCTL_H
+#ifndef _@GUARD_PREFIX@_SYS_IOCTL_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -27,8 +27,8 @@
 # @INCLUDE_NEXT@ @NEXT_SYS_IOCTL_H@
 #endif
 
-#ifndef _GL_SYS_IOCTL_H
-#define _GL_SYS_IOCTL_H
+#ifndef _@GUARD_PREFIX@_SYS_IOCTL_H
+#define _@GUARD_PREFIX@_SYS_IOCTL_H
 
 /* AIX 5.1 and Solaris 10 declare ioctl() in <unistd.h> and in <stropts.h>,
    but not in <sys/ioctl.h>.
@@ -75,5 +75,5 @@ _GL_WARN_ON_USE (ioctl, "ioctl does not portably work on sockets - "
 #endif
 
 
-#endif /* _GL_SYS_IOCTL_H */
-#endif /* _GL_SYS_IOCTL_H */
+#endif /* _@GUARD_PREFIX@_SYS_IOCTL_H */
+#endif /* _@GUARD_PREFIX@_SYS_IOCTL_H */

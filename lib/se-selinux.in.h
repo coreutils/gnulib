@@ -14,8 +14,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_SELINUX_SELINUX_H
-# define _GL_SELINUX_SELINUX_H
+#ifndef _@GUARD_PREFIX@_SELINUX_SELINUX_H
+# define _@GUARD_PREFIX@_SELINUX_SELINUX_H
 
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -94,4 +94,4 @@ static inline int matchpathcon_init_prefix
 #  endif
 
 # endif
-#endif /* _GL_SELINUX_SELINUX_H */
+#endif /* _@GUARD_PREFIX@_SELINUX_SELINUX_H */

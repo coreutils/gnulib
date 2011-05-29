@@ -18,7 +18,7 @@
 
 /* Written by Paul Eggert and Glen Lenker.  */
 
-#ifndef _GL_PTHREAD_H_
+#ifndef _@GUARD_PREFIX@_PTHREAD_H_
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -30,8 +30,8 @@
 # @INCLUDE_NEXT@ @NEXT_PTHREAD_H@
 #endif
 
-#ifndef _GL_PTHREAD_H_
-#define _GL_PTHREAD_H_
+#ifndef _@GUARD_PREFIX@_PTHREAD_H_
+#define _@GUARD_PREFIX@_PTHREAD_H_
 
 #include <errno.h>
 #include <stdlib.h>
@@ -270,5 +270,5 @@ pthread_spin_unlock (pthread_spinlock_t *lock)
 
 #endif
 
-#endif /* _GL_PTHREAD_H_ */
-#endif /* _GL_PTHREAD_H_ */
+#endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
+#endif /* _@GUARD_PREFIX@_PTHREAD_H_ */

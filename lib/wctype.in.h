@@ -26,7 +26,7 @@
  * wctrans_t, and wctype_t are not yet implemented.
  */
 
-#ifndef _GL_WCTYPE_H
+#ifndef _@GUARD_PREFIX@_WCTYPE_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -52,8 +52,8 @@
 # @INCLUDE_NEXT@ @NEXT_WCTYPE_H@
 #endif
 
-#ifndef _GL_WCTYPE_H
-#define _GL_WCTYPE_H
+#ifndef _@GUARD_PREFIX@_WCTYPE_H
+#define _@GUARD_PREFIX@_WCTYPE_H
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -466,5 +466,5 @@ _GL_WARN_ON_USE (towctrans, "towctrans is unportable - "
 #endif
 
 
-#endif /* _GL_WCTYPE_H */
-#endif /* _GL_WCTYPE_H */
+#endif /* _@GUARD_PREFIX@_WCTYPE_H */
+#endif /* _@GUARD_PREFIX@_WCTYPE_H */

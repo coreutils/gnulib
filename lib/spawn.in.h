@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_SPAWN_H
+#ifndef _@GUARD_PREFIX@_SPAWN_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -27,8 +27,8 @@
 # @INCLUDE_NEXT@ @NEXT_SPAWN_H@
 #endif
 
-#ifndef _GL_SPAWN_H
-#define _GL_SPAWN_H
+#ifndef _@GUARD_PREFIX@_SPAWN_H
+#define _@GUARD_PREFIX@_SPAWN_H
 
 /* Get definitions of 'struct sched_param' and 'sigset_t'.
    But avoid namespace pollution on glibc systems.  */
@@ -877,5 +877,5 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_adddup2,
 #endif
 
 
-#endif /* _GL_SPAWN_H */
-#endif /* _GL_SPAWN_H */
+#endif /* _@GUARD_PREFIX@_SPAWN_H */
+#endif /* _@GUARD_PREFIX@_SPAWN_H */

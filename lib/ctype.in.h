@@ -23,7 +23,7 @@
  * <http://www.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html>
  */
 
-#ifndef _GL_CTYPE_H
+#ifndef _@GUARD_PREFIX@_CTYPE_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -34,8 +34,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_CTYPE_H@
 
-#ifndef _GL_CTYPE_H
-#define _GL_CTYPE_H
+#ifndef _@GUARD_PREFIX@_CTYPE_H
+#define _@GUARD_PREFIX@_CTYPE_H
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -54,5 +54,5 @@ _GL_WARN_ON_USE (isblank, "isblank is unportable - "
 # endif
 #endif
 
-#endif /* _GL_CTYPE_H */
-#endif /* _GL_CTYPE_H */
+#endif /* _@GUARD_PREFIX@_CTYPE_H */
+#endif /* _@GUARD_PREFIX@_CTYPE_H */

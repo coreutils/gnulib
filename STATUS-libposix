@@ -52,9 +52,9 @@ Bruno Haible says:
   Discussion:
   <http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00289.html>
 
-  Half of the work has been done, but not yet pushed.
-  <http://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00199.html>
-  <http://lists.gnu.org/archive/html/bug-gnulib/2011-02/msg00078.html>
+  Still missing: dealing with include_next and old compilers, cf.
+  <http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00269.html>
+  <http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00285.html>
 
 2) Allow using libgnu's file name in module descriptions.
   <http://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00284.html>

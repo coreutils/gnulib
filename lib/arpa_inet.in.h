@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_ARPA_INET_H
+#ifndef _@GUARD_PREFIX@_ARPA_INET_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -47,8 +47,8 @@
 
 #endif
 
-#ifndef _GL_ARPA_INET_H
-#define _GL_ARPA_INET_H
+#ifndef _@GUARD_PREFIX@_ARPA_INET_H
+#define _@GUARD_PREFIX@_ARPA_INET_H
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -111,5 +111,5 @@ _GL_WARN_ON_USE (inet_pton, "inet_pton is unportable - "
 #endif
 
 
-#endif /* _GL_ARPA_INET_H */
-#endif /* _GL_ARPA_INET_H */
+#endif /* _@GUARD_PREFIX@_ARPA_INET_H */
+#endif /* _@GUARD_PREFIX@_ARPA_INET_H */

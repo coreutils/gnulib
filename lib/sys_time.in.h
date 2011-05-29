@@ -23,7 +23,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#if defined _GL_SYS_TIME_H
+#if defined _@GUARD_PREFIX@_SYS_TIME_H
 
 /* Simply delegate to the system's header, without adding anything.  */
 # if @HAVE_SYS_TIME_H@
@@ -32,7 +32,7 @@
 
 #else
 
-# define _GL_SYS_TIME_H
+# define _@GUARD_PREFIX@_SYS_TIME_H
 
 # if @HAVE_SYS_TIME_H@
 #  @INCLUDE_NEXT@ @NEXT_SYS_TIME_H@
@@ -98,4 +98,4 @@ _GL_WARN_ON_USE (gettimeofday, "gettimeofday is unportable - "
 #  endif
 # endif
 
-#endif /* _GL_SYS_TIME_H */
+#endif /* _@GUARD_PREFIX@_SYS_TIME_H */

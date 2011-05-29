@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_SYS_UTSNAME_H
+#ifndef _@GUARD_PREFIX@_SYS_UTSNAME_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -26,7 +26,7 @@
 # @INCLUDE_NEXT@ @NEXT_SYS_UTSNAME_H@
 #endif
 
-#define _GL_SYS_UTSNAME_H
+#define _@GUARD_PREFIX@_SYS_UTSNAME_H
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
@@ -98,4 +98,4 @@ _GL_WARN_ON_USE (uname, "uname is unportable - "
 #endif
 
 
-#endif /* _GL_SYS_UTSNAME_H */
+#endif /* _@GUARD_PREFIX@_SYS_UTSNAME_H */

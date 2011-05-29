@@ -18,7 +18,7 @@
 
 /* Written by Richard W.M. Jones.  */
 
-#ifndef _GL_SYS_FILE_H
+#ifndef _@GUARD_PREFIX@_SYS_FILE_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -30,8 +30,8 @@
 # @INCLUDE_NEXT@ @NEXT_SYS_FILE_H@
 #endif
 
-#ifndef _GL_SYS_FILE_H
-#define _GL_SYS_FILE_H
+#ifndef _@GUARD_PREFIX@_SYS_FILE_H
+#define _@GUARD_PREFIX@_SYS_FILE_H
 
 #ifndef LOCK_SH
 /* Operations for the 'flock' call (same as Linux kernel constants).  */
@@ -60,5 +60,5 @@ _GL_WARN_ON_USE (flock, "flock is unportable - "
 #endif
 
 
-#endif /* _GL_SYS_FILE_H */
-#endif /* _GL_SYS_FILE_H */
+#endif /* _@GUARD_PREFIX@_SYS_FILE_H */
+#endif /* _@GUARD_PREFIX@_SYS_FILE_H */

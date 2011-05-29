@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_SCHED_H
+#ifndef _@GUARD_PREFIX@_SCHED_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -26,8 +26,8 @@
 # @INCLUDE_NEXT@ @NEXT_SCHED_H@
 #endif
 
-#ifndef _GL_SCHED_H
-#define _GL_SCHED_H
+#ifndef _@GUARD_PREFIX@_SCHED_H
+#define _@GUARD_PREFIX@_SCHED_H
 
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
@@ -47,5 +47,5 @@ struct sched_param
 # define SCHED_OTHER  0
 #endif
 
-#endif /* _GL_SCHED_H */
-#endif /* _GL_SCHED_H */
+#endif /* _@GUARD_PREFIX@_SCHED_H */
+#endif /* _@GUARD_PREFIX@_SCHED_H */

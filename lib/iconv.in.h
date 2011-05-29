@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_ICONV_H
+#ifndef _@GUARD_PREFIX@_ICONV_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -26,8 +26,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_ICONV_H@
 
-#ifndef _GL_ICONV_H
-#define _GL_ICONV_H
+#ifndef _@GUARD_PREFIX@_ICONV_H
+#define _@GUARD_PREFIX@_ICONV_H
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -107,5 +107,5 @@ _GL_CXXALIASWARN (iconv_close);
 #endif
 
 
-#endif /* _GL_ICONV_H */
-#endif /* _GL_ICONV_H */
+#endif /* _@GUARD_PREFIX@_ICONV_H */
+#endif /* _@GUARD_PREFIX@_ICONV_H */

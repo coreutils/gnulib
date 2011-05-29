@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_PTY_H
+#ifndef _@GUARD_PREFIX@_PTY_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -27,8 +27,8 @@
 # @INCLUDE_NEXT@ @NEXT_PTY_H@
 #endif
 
-#ifndef _GL_PTY_H
-#define _GL_PTY_H
+#ifndef _@GUARD_PREFIX@_PTY_H
+#define _@GUARD_PREFIX@_PTY_H
 
 /* Some platforms declare this in a different header than glibc.  */
 #if @HAVE_UTIL_H@
@@ -120,5 +120,5 @@ _GL_WARN_ON_USE (openpty, "openpty is not declared consistently - "
 #endif
 
 
-#endif /* _GL_PTY_H */
-#endif /* _GL_PTY_H */
+#endif /* _@GUARD_PREFIX@_PTY_H */
+#endif /* _@GUARD_PREFIX@_PTY_H */

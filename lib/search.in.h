@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_SEARCH_H
+#ifndef _@GUARD_PREFIX@_SEARCH_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -27,8 +27,8 @@
 # @INCLUDE_NEXT@ @NEXT_SEARCH_H@
 #endif
 
-#ifndef _GL_SEARCH_H
-#define _GL_SEARCH_H
+#ifndef _@GUARD_PREFIX@_SEARCH_H
+#define _@GUARD_PREFIX@_SEARCH_H
 
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
@@ -203,5 +203,5 @@ _GL_WARN_ON_USE (twalk, "twalk is unportable - "
 #endif
 
 
-#endif /* _GL_SEARCH_H */
-#endif /* _GL_SEARCH_H */
+#endif /* _@GUARD_PREFIX@_SEARCH_H */
+#endif /* _@GUARD_PREFIX@_SEARCH_H */

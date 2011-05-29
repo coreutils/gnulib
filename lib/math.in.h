@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_MATH_H
+#ifndef _@GUARD_PREFIX@_MATH_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -25,8 +25,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT_AS_FIRST_DIRECTIVE@ @NEXT_AS_FIRST_DIRECTIVE_MATH_H@
 
-#ifndef _GL_MATH_H
-#define _GL_MATH_H
+#ifndef _@GUARD_PREFIX@_MATH_H
+#define _@GUARD_PREFIX@_MATH_H
 
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
@@ -806,5 +806,5 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 #endif
 
 
-#endif /* _GL_MATH_H */
-#endif /* _GL_MATH_H */
+#endif /* _@GUARD_PREFIX@_MATH_H */
+#endif /* _@GUARD_PREFIX@_MATH_H */

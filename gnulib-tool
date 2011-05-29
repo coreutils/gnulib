@@ -3010,6 +3010,24 @@ func_modules_to_filelist_separately ()
   fi
 }
 
+# func_compute_include_guard_prefix
+# Determine include_guard_prefix.
+# Input:
+# - macro_prefix    prefix of gl_LIBOBJS macros to use
+# Output:
+# - include_guard_prefix  replacement for ${gl_include_guard_prefix}
+# - sed_replace_include_guard_prefix
+#                   sed expression for resolving ${gl_include_guard_prefix}
+func_compute_include_guard_prefix ()
+{
+  if test "$macro_prefix" = gl; then
+    include_guard_prefix='GL'
+  else
+    include_guard_prefix='GL_'`echo "$macro_prefix" | LC_ALL=C tr '[a-z]' '[A-Z]'`
+  fi
+  sed_replace_include_guard_prefix='s/\${gl_include_guard_prefix}/'"${include_guard_prefix}"'/g'
+}
+
 # func_execute_command command [args...]
 # Executes a command.
 # Uses also the variables
@@ -3154,6 +3172,8 @@ func_update_file ()
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
 # - actioncmd       (optional) command that will reproduce this invocation
 # - for_test        true if creating a package for testing, false otherwise
+# - sed_replace_include_guard_prefix
+#                   sed expression for resolving ${gl_include_guard_prefix}
 # - destfile        filename relative to destdir of makefile being generated
 # Input/Output:
 # - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
@@ -3215,7 +3235,8 @@ func_emit_lib_Makefile_am ()
                 -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
-                -e "$sed_transform_check_PROGRAMS"
+                -e "$sed_transform_check_PROGRAMS" \
+                -e "$sed_replace_include_guard_prefix"
           if test "$module" = 'alloca'; then
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
@@ -3462,6 +3483,8 @@ func_emit_po_POTFILES_in ()
 # - single_configure  true if a single configure file should be generated,
 #                     false for a separate configure file for the tests
 # - use_libtests    true if a libtests.a should be built, false otherwise
+# - sed_replace_include_guard_prefix
+#                   sed expression for resolving ${gl_include_guard_prefix}
 # - destfile        filename relative to destdir of makefile being generated
 # Input/Output:
 # - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
@@ -3510,7 +3533,8 @@ func_emit_tests_Makefile_am ()
                 -e 's,lib_\([A-Z][A-Z]*\),libtests_a_\1,g' \
                 -e 's,lib%_LIBRARIES,lib_LIBRARIES,g' \
                 -e 's,lib%_LTLIBRARIES,lib_LTLIBRARIES,g' \
-                -e "$sed_transform_check_PROGRAMS"
+                -e "$sed_transform_check_PROGRAMS" \
+                -e "$sed_replace_include_guard_prefix"
           if $use_libtests && test "$module" = 'alloca'; then
             echo "libtests_a_LIBADD += @${perhapsLT}ALLOCA@"
             echo "libtests_a_DEPENDENCIES += @${perhapsLT}ALLOCA@"
@@ -4715,6 +4739,9 @@ s,^\(.................................................[^ ]*\) *,                
   fi
   func_append actioncmd " `echo $specified_modules`"
 
+  # Determine include_guard_prefix.
+  func_compute_include_guard_prefix
+
   # Default the makefile name to Makefile.am.
   if test -n "$makefile_name"; then
     makefile_am=$makefile_name
@@ -5585,6 +5612,9 @@ func_create_testdir ()
     done
     exec 0<&5 5<&-
   }
+
+  # Determine include_guard_prefix.
+  func_compute_include_guard_prefix
 
   # Create Makefile.ams that are for testing.
   for_test=true

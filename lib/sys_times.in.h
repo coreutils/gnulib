@@ -20,7 +20,7 @@
 /* This file is supposed to be used on platforms where <sys/times.h>
    is missing.  */
 
-#ifndef _GL_SYS_TIMES_H
+#ifndef _@GUARD_PREFIX@_SYS_TIMES_H
 
 # if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -31,7 +31,7 @@
 #  @INCLUDE_NEXT@ @NEXT_SYS_TIMES_H@
 # endif
 
-# define _GL_SYS_TIMES_H
+# define _@GUARD_PREFIX@_SYS_TIMES_H
 
 /* Get clock_t.
    But avoid namespace pollution on glibc systems.  */
@@ -78,4 +78,4 @@ _GL_WARN_ON_USE (times, "times is unportable - "
 }
 # endif
 
-#endif                          /* _GL_SYS_TIMES_H */
+#endif                          /* _@GUARD_PREFIX@_SYS_TIMES_H */

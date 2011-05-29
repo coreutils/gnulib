@@ -40,7 +40,7 @@
 #else
 /* Normal invocation convention.  */
 
-#ifndef _GL_FCNTL_H
+#ifndef _@GUARD_PREFIX@_FCNTL_H
 
 #include <sys/types.h>
 /* On some systems other than glibc, <sys/stat.h> is a prerequisite of
@@ -55,8 +55,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
-#ifndef _GL_FCNTL_H
-#define _GL_FCNTL_H
+#ifndef _@GUARD_PREFIX@_FCNTL_H
+#define _@GUARD_PREFIX@_FCNTL_H
 
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <unistd.h>
@@ -320,6 +320,6 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 #endif
 
 
-#endif /* _GL_FCNTL_H */
-#endif /* _GL_FCNTL_H */
+#endif /* _@GUARD_PREFIX@_FCNTL_H */
+#endif /* _@GUARD_PREFIX@_FCNTL_H */
 #endif

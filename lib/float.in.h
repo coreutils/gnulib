@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_FLOAT_H
+#ifndef _@GUARD_PREFIX@_FLOAT_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -25,8 +25,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FLOAT_H@
 
-#ifndef _GL_FLOAT_H
-#define _GL_FLOAT_H
+#ifndef _@GUARD_PREFIX@_FLOAT_H
+#define _@GUARD_PREFIX@_FLOAT_H
 
 /* 'long double' properties.  */
 #if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
@@ -59,5 +59,5 @@
 # define LDBL_MAX_10_EXP 4932
 #endif
 
-#endif /* _GL_FLOAT_H */
-#endif /* _GL_FLOAT_H */
+#endif /* _@GUARD_PREFIX@_FLOAT_H */
+#endif /* _@GUARD_PREFIX@_FLOAT_H */

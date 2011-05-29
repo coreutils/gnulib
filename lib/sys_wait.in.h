@@ -16,7 +16,7 @@
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
 
-#ifndef _GL_SYS_WAIT_H
+#ifndef _@GUARD_PREFIX@_SYS_WAIT_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -28,8 +28,8 @@
 # @INCLUDE_NEXT@ @NEXT_SYS_WAIT_H@
 #endif
 
-#ifndef _GL_SYS_WAIT_H
-#define _GL_SYS_WAIT_H
+#ifndef _@GUARD_PREFIX@_SYS_WAIT_H
+#define _@GUARD_PREFIX@_SYS_WAIT_H
 
 /* Get pid_t.  */
 #include <sys/types.h>
@@ -126,5 +126,5 @@ _GL_WARN_ON_USE (waitpid, "waitpid is unportable - "
 #endif
 
 
-#endif /* _GL_SYS_WAIT_H */
-#endif /* _GL_SYS_WAIT_H */
+#endif /* _@GUARD_PREFIX@_SYS_WAIT_H */
+#endif /* _@GUARD_PREFIX@_SYS_WAIT_H */

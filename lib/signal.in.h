@@ -28,13 +28,13 @@
 #else
 /* Normal invocation convention.  */
 
-#ifndef _GL_SIGNAL_H
+#ifndef _@GUARD_PREFIX@_SIGNAL_H
 
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_SIGNAL_H@
 
-#ifndef _GL_SIGNAL_H
-#define _GL_SIGNAL_H
+#ifndef _@GUARD_PREFIX@_SIGNAL_H
+#define _@GUARD_PREFIX@_SIGNAL_H
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -371,6 +371,6 @@ _GL_WARN_ON_USE (sigaction, "sigaction is unportable - "
 #endif
 
 
-#endif /* _GL_SIGNAL_H */
-#endif /* _GL_SIGNAL_H */
+#endif /* _@GUARD_PREFIX@_SIGNAL_H */
+#endif /* _@GUARD_PREFIX@_SIGNAL_H */
 #endif

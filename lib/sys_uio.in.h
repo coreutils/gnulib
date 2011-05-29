@@ -20,7 +20,7 @@
 # endif
 @PRAGMA_COLUMNS@
 
-#ifndef _GL_SYS_UIO_H
+#ifndef _@GUARD_PREFIX@_SYS_UIO_H
 
 #if @HAVE_SYS_UIO_H@
 
@@ -32,8 +32,8 @@
 
 #endif
 
-#ifndef _GL_SYS_UIO_H
-#define _GL_SYS_UIO_H
+#ifndef _@GUARD_PREFIX@_SYS_UIO_H
+#define _@GUARD_PREFIX@_SYS_UIO_H
 
 #if !@HAVE_SYS_UIO_H@
 /* A platform that lacks <sys/uio.h>.  */
@@ -60,5 +60,5 @@ struct iovec {
 
 #endif
 
-#endif /* _GL_SYS_UIO_H */
-#endif /* _GL_SYS_UIO_H */
+#endif /* _@GUARD_PREFIX@_SYS_UIO_H */
+#endif /* _@GUARD_PREFIX@_SYS_UIO_H */

@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GL_LOCALE_H
+#ifndef _@GUARD_PREFIX@_LOCALE_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -24,8 +24,8 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_LOCALE_H@
 
-#ifndef _GL_LOCALE_H
-#define _GL_LOCALE_H
+#ifndef _@GUARD_PREFIX@_LOCALE_H
+#define _@GUARD_PREFIX@_LOCALE_H
 
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
@@ -92,5 +92,5 @@ _GL_WARN_ON_USE (duplocale, "duplocale is buggy on some glibc systems - "
 # endif
 #endif
 
-#endif /* _GL_LOCALE_H */
-#endif /* _GL_LOCALE_H */
+#endif /* _@GUARD_PREFIX@_LOCALE_H */
+#endif /* _@GUARD_PREFIX@_LOCALE_H */

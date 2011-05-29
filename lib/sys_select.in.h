@@ -34,7 +34,7 @@
 
 #else
 
-#ifndef _GL_SYS_SELECT_H
+#ifndef _@GUARD_PREFIX@_SYS_SELECT_H
 
 #if @HAVE_SYS_SELECT_H@
 
@@ -64,8 +64,8 @@
 
 #endif
 
-#ifndef _GL_SYS_SELECT_H
-#define _GL_SYS_SELECT_H
+#ifndef _@GUARD_PREFIX@_SYS_SELECT_H
+#define _@GUARD_PREFIX@_SYS_SELECT_H
 
 #if !@HAVE_SYS_SELECT_H@
 /* A platform that lacks <sys/select.h>.  */
@@ -115,6 +115,6 @@ _GL_WARN_ON_USE (select, "select is not always POSIX compliant - "
 #endif
 
 
-#endif /* _GL_SYS_SELECT_H */
-#endif /* _GL_SYS_SELECT_H */
+#endif /* _@GUARD_PREFIX@_SYS_SELECT_H */
+#endif /* _@GUARD_PREFIX@_SYS_SELECT_H */
 #endif /* OSF/1 */

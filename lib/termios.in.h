@@ -15,7 +15,7 @@
    along with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#ifndef _GL_TERMIOS_H
+#ifndef _@GUARD_PREFIX@_TERMIOS_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -38,8 +38,8 @@ extern "C" {
 # @INCLUDE_NEXT@ @NEXT_TERMIOS_H@
 #endif
 
-#ifndef _GL_TERMIOS_H
-#define _GL_TERMIOS_H
+#ifndef _@GUARD_PREFIX@_TERMIOS_H
+#define _@GUARD_PREFIX@_TERMIOS_H
 
 #if @GNULIB_TCGETSID@
 /* Get pid_t.  */
@@ -72,5 +72,5 @@ _GL_WARN_ON_USE (tcgetsid, "tcgetsid is not portable - "
 #endif
 
 
-#endif /* _GL_TERMIOS_H */
-#endif /* _GL_TERMIOS_H */
+#endif /* _@GUARD_PREFIX@_TERMIOS_H */
+#endif /* _@GUARD_PREFIX@_TERMIOS_H */

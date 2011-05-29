@@ -20,7 +20,7 @@
    It is intended to provide definitions and prototypes needed by an
    application.  */
 
-#ifndef _GL_NETDB_H
+#ifndef _@GUARD_PREFIX@_NETDB_H
 
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
@@ -34,8 +34,8 @@
 
 #endif
 
-#ifndef _GL_NETDB_H
-#define _GL_NETDB_H
+#ifndef _@GUARD_PREFIX@_NETDB_H
+#define _@GUARD_PREFIX@_NETDB_H
 
 /* Get <netdb.h> definitions such as 'socklen_t' on IRIX 6.5 and OSF/1 4.0 and
    'struct hostent' on MinGW.  */
@@ -262,5 +262,5 @@ _GL_WARN_ON_USE (getnameinfo, "getnameinfo is unportable - "
 
 #endif
 
-#endif /* _GL_NETDB_H */
-#endif /* _GL_NETDB_H */
+#endif /* _@GUARD_PREFIX@_NETDB_H */
+#endif /* _@GUARD_PREFIX@_NETDB_H */
