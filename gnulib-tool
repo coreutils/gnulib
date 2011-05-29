@@ -5760,10 +5760,9 @@ func_create_testdir ()
        echo "AC_OUTPUT"
       ) > "$testdir/$testsbase/configure.ac"
       auxdir="$saved_auxdir"
-      func_append subdirs " $testsbase"
       subdirs_with_configure_ac="$subdirs_with_configure_ac $testsbase"
     fi
-    subdirs="$subdirs $testsbase"
+    func_append subdirs " $testsbase"
   fi
 
   # Create Makefile.am.

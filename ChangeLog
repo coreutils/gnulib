@@ -1,5 +1,11 @@
 2011-05-29  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Fix bug in yesterday's commit.
+	* gnulib-tool (func_create_testdir): Don't add gltests to $subdirs
+	twice.
+
+2011-05-29  Bruno Haible  <bruno@clisp.org>
+
 	Allow multiple gnulib generated include files to be combined.
 	* gnulib-tool (func_compute_include_guard_prefix): New function.
 	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am): Resolve also
