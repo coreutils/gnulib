@@ -209,7 +209,7 @@ template <int w>
 #  endif
 # endif
 
-# ifdef _GL_VERIFY_H
+/* @assert.h omit start@  */
 
 /* Each of these macros verifies that its argument R is nonzero.  To
    be portable, R should be an integer constant expression.  Unlike
@@ -223,13 +223,13 @@ template <int w>
 /* Verify requirement R at compile-time, as an integer constant expression.
    Return 1.  */
 
-#  define verify_true(R) _GL_VERIFY_TRUE (R, "verify_true (" #R ")")
+# define verify_true(R) _GL_VERIFY_TRUE (R, "verify_true (" #R ")")
 
 /* Verify requirement R at compile-time, as a declaration without a
    trailing ';'.  */
 
-#  define verify(R) _GL_VERIFY (R, "verify (" #R ")")
+# define verify(R) _GL_VERIFY (R, "verify (" #R ")")
 
-# endif
+/* @assert.h omit end@  */
 
 #endif

@@ -1,3 +1,9 @@
+2011-05-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	assert-h: work around 'verify' incompatibility
+	* lib/verify.h: Use @...@ directives, not ifdef.
+	* modules/assert-h (assert.h): Implement the directives.
+
 2011-05-29  Jim Meyering  <meyering@redhat.com>
 
 	trim: remove three superfluous assignments
