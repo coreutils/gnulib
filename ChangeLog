@@ -1,5 +1,10 @@
 2011-05-29  Bruno Haible  <bruno@clisp.org>
 
+	assert-h: Allow multiple gnulib generated replacements to coexist.
+	* lib/verify.h (struct _gl_verify_type): Avoid identical redefinition.
+
+2011-05-29  Bruno Haible  <bruno@clisp.org>
+
 	argp: Allow coexistence with strerror_r-posix module.
 	* lib/argp-help.c (__argp_failure): If strerror_r is defined as a macro
 	(either to __xpg_strerror_r by glibc's <string.h> or to rpl_strerror_r

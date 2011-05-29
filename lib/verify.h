@@ -164,10 +164,13 @@
     (!!sizeof (_GL_VERIFY_TYPE (R, DIAGNOSTIC)))
 
 # ifdef __cplusplus
+#  if !GNULIB_defined_struct__gl_verify_type
 template <int w>
   struct _gl_verify_type {
     unsigned int _gl_verify_error_if_negative: w;
   };
+#   define GNULIB_defined_struct__gl_verify_type 1
+#  endif
 #  define _GL_VERIFY_TYPE(R, DIAGNOSTIC) \
     _gl_verify_type<(R) ? 1 : -1>
 # elif defined _GL_HAVE__STATIC_ASSERT
