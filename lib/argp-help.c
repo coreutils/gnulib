@@ -1917,7 +1917,7 @@ __argp_failure (const struct argp_state *state, int status, int errnum,
                   char const *s = NULL;
                   putc_unlocked (':', stream);
                   putc_unlocked (' ', stream);
-#if _LIBC || (HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P)
+#if _LIBC || (HAVE_DECL_STRERROR_R && STRERROR_R_CHAR_P && !defined strerror_r)
                   s = __strerror_r (errnum, buf, sizeof buf);
 #elif HAVE_DECL_STRERROR_R
                   if (__strerror_r (errnum, buf, sizeof buf) == 0)
