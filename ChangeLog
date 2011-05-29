@@ -3,6 +3,7 @@
 	assert-h: work around 'verify' incompatibility
 	* lib/verify.h: Use @...@ directives, not ifdef.
 	* modules/assert-h (assert.h): Implement the directives.
+	(assert.h): Substitute the symbol-prefix more consistently.
 
 2011-05-29  Jim Meyering  <meyering@redhat.com>
 

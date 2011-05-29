@@ -26,10 +26,10 @@ assert.h: assert.in.h verify.h $(top_builddir)/config.status
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_ASSERT_H''@|$(NEXT_ASSERT_H)|g' \
 	      < $(srcdir)/assert.in.h && \
-	  sed -e 's|_GL_VERIFY_H|_${gl_include_guard_prefix}_STATIC_ASSERT_H|g' \
-	      -e '/@assert.h omit start@/,/@assert.h omit end@/d' \
+	  sed -e '/@assert.h omit start@/,/@assert.h omit end@/d' \
 	      -e 's|_gl_verify|_gl_static_assert|g' \
 	      -e 's|_GL_VERIFY|_GL_STATIC_ASSERT|g' \
+	      -e 's|_GL\(_STATIC_ASSERT_H\)|_${gl_include_guard_prefix}\1|g' \
 	      < $(srcdir)/verify.h; \
 	} > $@-t && \
 	mv $@-t $@
