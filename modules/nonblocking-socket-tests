@@ -42,5 +42,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-nonblocking-socket.sh
 check_PROGRAMS += test-nonblocking-socket-main test-nonblocking-socket-child
-test_nonblocking_socket_main_LDADD = $(LDADD) $(LIBSOCKET)
+test_nonblocking_socket_main_LDADD = $(LDADD) $(LIBSOCKET) @LIBINTL@
 test_nonblocking_socket_child_LDADD = $(LDADD) $(LIBSOCKET)

@@ -32,3 +32,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-nonblocking-pipe.sh
 check_PROGRAMS += test-nonblocking-pipe-main test-nonblocking-pipe-child
+test_nonblocking_pipe_main_LDADD = $(LDADD) @LIBINTL@

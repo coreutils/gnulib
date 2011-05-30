@@ -1,3 +1,12 @@
+2011-05-31  Bruno Haible  <bruno@clisp.org>
+
+	Fix link errors in tests: wait-process uses gettext-h.
+	* modules/nonblocking-pipe-tests (Makefile.am): Set
+	test_nonblocking_pipe_main_LDADD.
+	* modules/nonblocking-socket-tests (Makefile.am): Link
+	test-nonblocking-socket-main against $(LIBINTL).
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-05-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	assert-h: work around 'verify' incompatibility
