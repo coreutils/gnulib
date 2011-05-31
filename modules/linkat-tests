@@ -17,3 +17,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-linkat
 check_PROGRAMS += test-linkat
+test_linkat_LDADD = $(LDADD) @LIBINTL@

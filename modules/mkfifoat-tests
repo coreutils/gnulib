@@ -13,3 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-mkfifoat
 check_PROGRAMS += test-mkfifoat
+test_mkfifoat_LDADD = $(LDADD) @LIBINTL@

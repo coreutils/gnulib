@@ -1,5 +1,32 @@
 2011-05-31  Bruno Haible  <bruno@clisp.org>
 
+	Fix link errors in tests: openat-die uses gettext-h.
+	* modules/areadlinkat-tests (Makefile.am): Link test-areadlinkat
+	against $(LIBINTL).
+	* modules/dirent-safer-tests (Makefile.am): Link test-dirent-safer
+	against $(LIBINTL).
+	* modules/fdopendir-tests (Makefile.am): Link test-fdopendir against
+	$(LIBINTL).
+	* modules/fdutimensat-tests (Makefile.am): Link test-fdutimensat
+	against $(LIBINTL).
+	* modules/linkat-tests (Makefile.am): Link test-linkat against
+	$(LIBINTL).
+	* modules/mkfifoat-tests (Makefile.am): Link test-mkfifoat against
+	$(LIBINTL).
+	* modules/openat-safer-tests (Makefile.am): Link test-openat-safer
+	against $(LIBINTL).
+	* modules/openat-tests (Makefile.am): Link test-fchownat, test-fstatat,
+	test-mkdirat, test-openat, test-unlinkat against $(LIBINTL).
+	* modules/readlinkat-tests (Makefile.am): Link test-readlinkat against
+	$(LIBINTL).
+	* modules/symlinkat-tests (Makefile.am): Link test-symlinkat against
+	$(LIBINTL).
+	* modules/utimensat-tests (Makefile.am): Link test-utimensat against
+	$(LIBINTL).
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-05-31  Bruno Haible  <bruno@clisp.org>
+
 	Fix link errors in tests: wait-process uses gettext-h.
 	* modules/nonblocking-pipe-tests (Makefile.am): Set
 	test_nonblocking_pipe_main_LDADD.

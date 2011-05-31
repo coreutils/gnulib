@@ -19,4 +19,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-utimensat
 check_PROGRAMS += test-utimensat
-test_utimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
+test_utimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@

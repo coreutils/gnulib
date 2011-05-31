@@ -12,3 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-symlinkat
 check_PROGRAMS += test-symlinkat
+test_symlinkat_LDADD = $(LDADD) @LIBINTL@
