@@ -27,6 +27,7 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #if GNULIB_defined_ESOCK /* native Windows platforms */
 # if HAVE_WINSOCK2_H
@@ -81,9 +82,6 @@ extern char *sys_errlist[];
 #  if defined __sun && !defined _LP64
 extern int sys_nerr;
 #  endif
-
-/* Get sys_nerr, sys_errlist on native Windows.  */
-#  include <stdlib.h>
 
 # else
 

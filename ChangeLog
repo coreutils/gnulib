@@ -1,3 +1,10 @@
+2011-06-01  Eric Blake  <eblake@redhat.com>
+
+	strerror_r: fix includes for FreeBSD
+	* lib/strerror_r.c (includes): Use <stdlib.h> unconditionally,
+	since we use abort on some platforms.
+	Reported by Matthias Bolte.
+
 2011-05-31  Bruno Haible  <bruno@clisp.org>
 
 	Fix link errors in tests: openat-die uses gettext-h.
