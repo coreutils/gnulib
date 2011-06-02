@@ -1988,7 +1988,7 @@ fts_padjust (FTS *sp, FTSENT *head)
 }
 
 static size_t
-internal_function
+internal_function _GL_ATTRIBUTE_PURE
 fts_maxarglen (char * const *argv)
 {
         size_t len, max;

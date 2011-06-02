@@ -34,7 +34,7 @@
 /* Return the longest suffix of F that is a relative file name.
    If it has no such suffix, return the empty string.  */
 
-static char const *
+static char const * _GL_ATTRIBUTE_PURE
 longest_relative_suffix (char const *f)
 {
   for (f += FILE_SYSTEM_PREFIX_LEN (f); ISSLASH (*f); f++)

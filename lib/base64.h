@@ -35,7 +35,7 @@ struct base64_decode_context
   char buf[4];
 };
 
-extern bool isbase64 (char ch);
+extern bool isbase64 (char ch) _GL_ATTRIBUTE_CONST;
 
 extern void base64_encode (const char *restrict in, size_t inlen,
                            char *restrict out, size_t outlen);

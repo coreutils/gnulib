@@ -1246,7 +1246,7 @@ _GL_EXTERN_C int isnand (double x);
 /* Test whether X is a NaN.  */
 #  undef isnanl
 #  define isnanl rpl_isnanl
-_GL_EXTERN_C int isnanl (long double x);
+_GL_EXTERN_C int isnanl (long double x) _GL_ATTRIBUTE_CONST;
 # endif
 #endif
 
@@ -1272,7 +1272,7 @@ _GL_EXTERN_C int rpl_isnand (double x);
 #  if @HAVE_ISNANL@ && __GNUC__ >= 4
 #   define gl_isnan_l(x) __builtin_isnanl ((long double)(x))
 #  else
-_GL_EXTERN_C int rpl_isnanl (long double x);
+_GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #   define gl_isnan_l(x) rpl_isnanl (x)
 #  endif
 #  undef isnan

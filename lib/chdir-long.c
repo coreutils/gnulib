@@ -83,7 +83,7 @@ cdb_advance_fd (struct cd_buf *cdb, char const *dir)
 }
 
 /* Return a pointer to the first non-slash in S.  */
-static inline char *
+static inline char * _GL_ATTRIBUTE_PURE
 find_non_slash (char const *s)
 {
   size_t n_slash = strspn (s, "/");

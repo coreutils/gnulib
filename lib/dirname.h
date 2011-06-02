@@ -37,9 +37,9 @@ char *dir_name (char const *file);
 # endif
 
 char *mdir_name (char const *file);
-size_t base_len (char const *file);
-size_t dir_len (char const *file);
-char *last_component (char const *file);
+size_t base_len (char const *file) _GL_ATTRIBUTE_PURE;
+size_t dir_len (char const *file) _GL_ATTRIBUTE_PURE;
+char *last_component (char const *file) _GL_ATTRIBUTE_PURE;
 
 bool strip_trailing_slashes (char *file);
 

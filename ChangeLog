@@ -1,3 +1,53 @@
+2011-11-27  Jim Meyering  <meyering@redhat.com>
+
+	mark functions with const and pure attributes
+
+	Mark functions per suggestions from gcc-4.6 when using these options:
+	-Wsuggest-attribute=pure -Wsuggest-attribute=const.
+	Use gnulib's _GL_ATTRIBUTE_PURE and _GL_ATTRIBUTE_CONST macros.
+	Follow these guidelines: when possible, apply the attribute to
+	an extern declaration, not to its definition.  Apply it to the
+	definition only when the definition is static.
+	* lib/argmatch.h (argmatch, argmatch_to_argument): Mark.
+	* lib/argv-iter.h (argv_iter_n_args): Likewise.
+	* lib/base64.h (isbase64): Likewise.
+	* lib/basename-lgpl.c (last_component, base_len): Likewise.
+	* lib/c-ctype.h (c_isascii, c_isalnum, c_isalpha): Likewise.
+	(c_isblank, c_iscntrl, c_isdigit, c_islower, c_isgraph): Likewise.
+	(c_isprint, c_ispunct, c_isspace, c_isupper, c_isxdigit): Likewise.
+	(c_tolower, c_toupper): Likewise.
+	* lib/c-strcase.h (c_strcasecmp, c_strncasecmp): Likewise.
+	* lib/chdir-long.c (find_non_slash): Likewise.
+	* lib/dirname.h (base_len, dir_len, last_component): Likewise.
+	* lib/exclude.h (fnmatch_pattern_has_wildcards): Likewise.
+	* lib/file-type.h (file_type): Likewise.
+	* lib/filenamecat-lgpl.c (longest_relative_suffix): Likewise.
+	* lib/filevercmp.c (verrevcmp): Likewise.
+	* lib/freadahead.h (freadahead): Likewise.
+	* lib/fts.c (fts_maxarglen): Likewise.
+	* lib/hash-pjw.h (hash_pjw): Likewise.
+	* lib/hash-triple.h (triple_hash_no_name, triple_compare_ino_str):
+	* lib/hash.c (is_prime, next_prime): Likewise.
+	* lib/hash.c (hash_get_n_buckets, hash_get_n_buckets_used): Likewise.
+	(hash_get_n_entries, hash_get_max_bucket_length): Likewise.
+	(hash_table_ok, hash_get_first, hash_string): Likewise.
+	(compute_bucket_size): Likewise.
+	* lib/i-ring.h (i_ring_empty): Likewise.
+	* lib/isnan.c (isnanl): Likewise.
+	* lib/math.h (isnanl, rpl_isnanl): Likewise.
+	* lib/memcasecmp.h (memcasecmp): Likewise.
+	* lib/memchr2.h (memchr2): Likewise.
+	* lib/memcmp2.h (memcmp2): Likewise.
+	* lib/parse-datetime.y (lookup_zone): Likewise.
+	* lib/sockets.h (gl_sockets_startup, gl_sockets_cleanup)
+	[!WINDOWS_SOCKETS]: Likewise.
+	* lib/strnlen1.h (strnlen1): Likewise.
+	* lib/uniwidth.in.h (uc_width): Likewise.
+	* lib/quotearg.c: Add pragma to avoid unwarranted suggestion from
+	gcc's -Wsuggest-attribute=pure for quoting_options_from_style.
+	(quoting_options_from_style): Add a comment.
+	* lib/propername.h (proper_name): Add a comment.
+
 2011-11-27  Bruno Haible  <bruno@clisp.org>
 
 	Remove unused macros from !_LIBC code in glibc-borrowed files.

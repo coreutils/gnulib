@@ -440,7 +440,7 @@ hash_string (const char *string, size_t n_buckets)
 /* Return true if CANDIDATE is a prime number.  CANDIDATE should be an odd
    number at least equal to 11.  */
 
-static bool
+static bool _GL_ATTRIBUTE_CONST
 is_prime (size_t candidate)
 {
   size_t divisor = 3;
@@ -459,7 +459,7 @@ is_prime (size_t candidate)
 /* Round a given CANDIDATE number up to the nearest prime, and return that
    prime.  Primes lower than 10 are merely skipped.  */
 
-static size_t
+static size_t _GL_ATTRIBUTE_CONST
 next_prime (size_t candidate)
 {
   /* Skip small primes.  */

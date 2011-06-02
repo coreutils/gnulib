@@ -20,4 +20,4 @@
    and return the hash code modulo TABLESIZE.
    The result is platform dependent: it depends on the size of the 'size_t'
    type and on the signedness of the 'char' type.  */
-extern size_t hash_pjw (void const *x, size_t tablesize);
+extern size_t hash_pjw (void const *x, size_t tablesize) _GL_ATTRIBUTE_PURE;

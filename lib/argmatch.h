@@ -40,7 +40,7 @@
    to the same values in VALLIST).  */
 
 ptrdiff_t argmatch (char const *arg, char const *const *arglist,
-                    char const *vallist, size_t valsize);
+                    char const *vallist, size_t valsize) _GL_ATTRIBUTE_PURE;
 
 # define ARGMATCH(Arg, Arglist, Vallist) \
   argmatch (Arg, Arglist, (char const *) (Vallist), sizeof *(Vallist))
@@ -93,7 +93,8 @@ ptrdiff_t __xargmatch_internal (char const *context,
 
 char const *argmatch_to_argument (char const *value,
                                   char const *const *arglist,
-                                  char const *vallist, size_t valsize);
+                                  char const *vallist, size_t valsize)
+  _GL_ATTRIBUTE_PURE;
 
 # define ARGMATCH_TO_ARGUMENT(Value, Arglist, Vallist)                  \
   argmatch_to_argument (Value, Arglist,                                 \

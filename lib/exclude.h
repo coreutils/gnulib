@@ -39,7 +39,7 @@
 
 struct exclude;
 
-bool fnmatch_pattern_has_wildcards (const char *, int);
+bool fnmatch_pattern_has_wildcards (const char *, int) _GL_ATTRIBUTE_PURE;
 
 struct exclude *new_exclude (void);
 void free_exclude (struct exclude *);

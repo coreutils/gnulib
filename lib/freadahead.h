@@ -31,7 +31,7 @@ extern "C" {
 
    STREAM must not be wide-character oriented.  */
 
-extern size_t freadahead (FILE *stream);
+extern size_t freadahead (FILE *stream) _GL_ATTRIBUTE_PURE;
 
 #ifdef __cplusplus
 }

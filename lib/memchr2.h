@@ -24,7 +24,8 @@ extern "C" {
    char) that occurs within N bytes of the memory region S.  If
    neither byte appears, return NULL.  */
 
-extern void *memchr2 (void const *s, int c1, int c2, size_t n);
+extern void *memchr2 (void const *s, int c1, int c2, size_t n)
+  _GL_ATTRIBUTE_PURE;
 
 #ifdef __cplusplus
 }

@@ -24,6 +24,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-char const *file_type (struct stat const *);
+char const *file_type (struct stat const *) _GL_ATTRIBUTE_PURE;
 
 #endif /* FILE_TYPE_H */

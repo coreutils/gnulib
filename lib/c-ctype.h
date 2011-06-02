@@ -118,23 +118,23 @@ extern "C" {
          if (c_isalpha (*s)) ...
  */
 
-extern bool c_isascii (int c); /* not locale dependent */
+extern bool c_isascii (int c) _GL_ATTRIBUTE_CONST; /* not locale dependent */
 
-extern bool c_isalnum (int c);
-extern bool c_isalpha (int c);
-extern bool c_isblank (int c);
-extern bool c_iscntrl (int c);
-extern bool c_isdigit (int c);
-extern bool c_islower (int c);
-extern bool c_isgraph (int c);
-extern bool c_isprint (int c);
-extern bool c_ispunct (int c);
-extern bool c_isspace (int c);
-extern bool c_isupper (int c);
-extern bool c_isxdigit (int c);
+extern bool c_isalnum (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isalpha (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isblank (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_iscntrl (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isdigit (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_islower (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isgraph (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isprint (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_ispunct (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isspace (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isupper (int c) _GL_ATTRIBUTE_CONST;
+extern bool c_isxdigit (int c) _GL_ATTRIBUTE_CONST;
 
-extern int c_tolower (int c);
-extern int c_toupper (int c);
+extern int c_tolower (int c) _GL_ATTRIBUTE_CONST;
+extern int c_toupper (int c) _GL_ATTRIBUTE_CONST;
 
 
 #if defined __GNUC__ && defined __OPTIMIZE__ && !defined __OPTIMIZE_SIZE__ && !defined NO_C_CTYPE_MACROS

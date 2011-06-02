@@ -21,7 +21,7 @@
 /* Specification.  */
 #ifdef USE_LONG_DOUBLE
 /* Specification found in math.h or isnanl-nolibm.h.  */
-extern int rpl_isnanl (long double x);
+extern int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #elif ! defined USE_FLOAT
 /* Specification found in math.h or isnand-nolibm.h.  */
 extern int rpl_isnand (double x);

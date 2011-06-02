@@ -89,7 +89,7 @@ extern "C" {
 #endif
 
 /* Return the localization of NAME.  NAME is written in ASCII.  */
-extern const char * proper_name (const char *name);
+extern const char * proper_name (const char *name) /* NOT PURE */;
 
 /* Return the localization of a name whose original writing is not ASCII.
    NAME_UTF8 is the real name, written in UTF-8 with octal or hexadecimal

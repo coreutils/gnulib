@@ -26,8 +26,17 @@
 #define SOCKETS_2_1 0x201
 #define SOCKETS_2_2 0x202
 
-int gl_sockets_startup (int version);
-int gl_sockets_cleanup (void);
+int gl_sockets_startup (int version)
+#if !WINDOWS_SOCKETS
+  _GL_ATTRIBUTE_CONST
+#endif
+  ;
+
+int gl_sockets_cleanup (void)
+#if !WINDOWS_SOCKETS
+  _GL_ATTRIBUTE_CONST
+#endif
+  ;
 
 /* This function is useful it you create a socket using gnulib's
    Winsock wrappers but needs to pass on the socket handle to some

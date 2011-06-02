@@ -17,6 +17,13 @@
 
 /* Written by Paul Eggert <eggert@twinsun.com> */
 
+/* Without this pragma, gcc 4.7.0 20111124 mistakenly suggests that
+   the quoting_options_from_style function might be candidate for
+   attribute 'pure'  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
+#endif
+
 #include <config.h>
 
 #include "quotearg.h"
@@ -165,7 +172,7 @@ set_custom_quoting (struct quoting_options *o,
 }
 
 /* Return quoting options for STYLE, with no extra quoting.  */
-static struct quoting_options
+static struct quoting_options /* NOT PURE!! */
 quoting_options_from_style (enum quoting_style style)
 {
   struct quoting_options o = { 0 };
