@@ -1,5 +1,10 @@
 2011-06-02  Bruno Haible  <bruno@clisp.org>
 
+	doc: Fix a module name.
+	* doc/posix-functions/open.texi: Fix module name 'nonblocking'.
+
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
 	pipe2: Remove dependency on 'nonblocking' module.
 	* lib/pipe2.c: Include verify.h. Include nonblocking.h only if
 	O_NONBLOCK is defined by gnulib.
