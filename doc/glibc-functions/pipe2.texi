@@ -15,3 +15,6 @@ IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, mingw, Interix 3.5, BeOS.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: This function portably supports the @code{O_NONBLOCK} flag only if the
+gnulib module @code{nonblocking} is also used.

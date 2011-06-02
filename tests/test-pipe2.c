@@ -33,7 +33,9 @@ SIGNATURE_CHECK (pipe2, int, (int[2], int));
 
 #include "binary-io.h"
 #include "macros.h"
-#include "nonblocking.h"
+#if GNULIB_NONBLOCKING
+# include "nonblocking.h"
+#endif
 
 /* Return true if FD is open.  */
 static bool
@@ -68,13 +70,30 @@ is_cloexec (int fd)
 #endif
 }
 
+#if ! GNULIB_NONBLOCKING
+static int
+get_nonblocking_flag (int fd)
+{
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  return 0;
+# else
+#  ifndef F_GETFL
+#   error Please port fcntl to your platform
+#  endif
+  int flags;
+  ASSERT ((flags = fcntl (fd, F_GETFL)) >= 0);
+  return (flags & O_NONBLOCK) != 0;
+# endif
+}
+#endif
+
 int
 main ()
 {
   int use_nonblocking;
   int use_cloexec;
 
-  for (use_nonblocking = 0; use_nonblocking <= 1; use_nonblocking++)
+  for (use_nonblocking = 0; use_nonblocking <= !!O_NONBLOCK; use_nonblocking++)
     for (use_cloexec = 0; use_cloexec <= !!O_CLOEXEC; use_cloexec++)
       {
         int o_flags;

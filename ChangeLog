@@ -1,3 +1,17 @@
+2011-06-02  Bruno Haible  <bruno@clisp.org>
+
+	pipe2: Remove dependency on 'nonblocking' module.
+	* lib/pipe2.c: Include verify.h. Include nonblocking.h only if
+	O_NONBLOCK is defined by gnulib.
+	(pipe2) [WIN32]: If O_NONBLOCK is not defined by gnulib, verify that it
+	is zero.
+	* modules/pipe2 (Depends-on): Add verify. Remove nonblocking.
+	* tests/test-pipe2.c: Include nonblocking.h only if O_NONBLOCK is
+	defined by gnulib.
+	(get_nonblocking_flag): New function.
+	(main): Test O_NONBLOCK flag only if it is nonzero.
+	* doc/glibc-functions/pipe2.texi: Mention the 'nonblocking' module.
+
 2011-06-03  Jim Meyering  <meyering@redhat.com>
 
 	maint: three new prohibit-header-without-use rules

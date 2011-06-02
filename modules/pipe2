@@ -10,7 +10,7 @@ unistd
 fcntl-h
 binary-io
 extensions
-nonblocking
+verify
 
 configure.ac:
 gl_FUNC_PIPE2
