@@ -1,3 +1,11 @@
+2011-06-03  Jim Meyering  <meyering@redhat.com>
+
+	maint: three new prohibit-header-without-use rules
+	Prohibit use of cloexec.h, posixver.h, same.h without use.
+	* top/maint.mk (sc_prohibit_cloexec_without_use): New rule.
+	(sc_prohibit_posixver_without_use): Likewise.
+	(sc_prohibit_same_without_use): Likewise.
+
 2011-06-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	allocator: 'die' routine is now given requested size

@@ -495,6 +495,16 @@ sc_prohibit_hash_without_use:
 	re='$(_hash_fn)|$(_hash_struct)'\
 	  $(_sc_header_without_use)
 
+sc_prohibit_cloexec_without_use:
+	@h='"cloexec.h"' re='\<(set_cloexec_flag|dup_cloexec) *\(' \
+	  $(_sc_header_without_use)
+
+sc_prohibit_posixver_without_use:
+	@h='"posixver.h"' re='\<posix2_version *\(' $(_sc_header_without_use)
+
+sc_prohibit_same_without_use:
+	@h='"same.h"' re='\<same_name *\(' $(_sc_header_without_use)
+
 sc_prohibit_hash_pjw_without_use:
 	@h='"hash-pjw.h"' \
 	re='\<hash_pjw *\(' \
