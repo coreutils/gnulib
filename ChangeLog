@@ -1,3 +1,11 @@
+2011-06-03  Bruno Haible  <bruno@clisp.org>
+
+	Copyright: Use LGPL 2.1 instead of LGPL 2.0.
+	* lib/localename.h: Update copyright header.
+	* lib/localename.c: Likewise.
+	* lib/relocatable.h: Likewise.
+	* lib/relocatable.c: Likewise.
+
 2011-06-02  Bruno Haible  <bruno@clisp.org>
 
 	doc: Fix a module name.
