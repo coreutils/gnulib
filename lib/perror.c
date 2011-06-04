@@ -24,18 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "intprops.h"
-#include "verify.h"
-
 /* Use the system functions, not the gnulib overrides in this file.  */
-#undef sprintf
-
-/* my_strerror (errnum) is equivalent to strerror (errnum).
-   But it uses its own buffer, not the one from strerror().  */
-#define STATIC static
-#undef strerror
-#define strerror my_strerror
-#include "strerror-impl.h"
+#undef fprintf
 
 void
 perror (const char *string)

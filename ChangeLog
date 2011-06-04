@@ -1,5 +1,12 @@
 2011-06-04  Bruno Haible  <bruno@clisp.org>
 
+	perror: Fix compilation error.
+	* lib/perror.c: Don't include intprops.h, verify.h, strerror-impl.h.
+	Undefine fprintf, not sprintf.
+	* modules/perror (Depends-on): Remove intprops, verify.
+
+2011-06-04  Bruno Haible  <bruno@clisp.org>
+
 	setlocale: Enable replacement on Cygwin 1.5.
 	* m4/setlocale.m4 (gl_FUNC_SETLOCALE): Set REPLACE_SETLOCALE also on
 	Cygwin 1.5.x.
