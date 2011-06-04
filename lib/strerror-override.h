@@ -18,7 +18,8 @@
 #ifndef _GL_STRERROR_OVERRIDE_H
 # define _GL_STRERROR_OVERRIDE_H
 
-# include <string.h>
+# include <errno.h>
+# include <stddef.h>
 
 /* Reasonable buffer size that should never trigger ERANGE; if this
    proves too small, we intentionally abort(), to remind us to fix

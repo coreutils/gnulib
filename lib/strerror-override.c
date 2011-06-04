@@ -17,6 +17,8 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2010.  */
 
+#include <config.h>
+
 #include "strerror-override.h"
 
 #include <errno.h>
@@ -26,10 +28,6 @@
 #  include <winsock2.h>
 # endif
 #endif
-
-/* This undefine allows testing with gl_cv_header_errno_h_complete=no on
-   a system that otherwise has a complete errno.h.  */
-#undef strerror_override
 
 /* If ERRNUM maps to an errno value defined by gnulib, return a string
    describing the error.  Otherwise return NULL.  */
