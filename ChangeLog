@@ -1,3 +1,10 @@
+2011-06-04  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: sc_unmarked_diagnostics: don't hard-code "error"
+	* top/maint.mk (sc_unmarked_diagnostics): Don't hard-code the
+	function name, "error".
+	(_gl_translatable_diag_func_re): New configurable variable.
+
 2011-06-04  Bruno Haible  <bruno@clisp.org>
 
 	getopt: Avoid gcc warning.

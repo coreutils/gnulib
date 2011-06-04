@@ -684,11 +684,16 @@ sc_two_space_separator_in_usage:
 	halt='help2man requires at least two spaces between an option and its description'\
 	  $(_sc_search_regexp)
 
+# A regexp matching function names like "error" that may be used
+# to emit translatable messages.
+_gl_translatable_diag_func_re ?= error
+
 # Look for diagnostics that aren't marked for translation.
 # This won't find any for which error's format string is on a separate line.
 sc_unmarked_diagnostics:
 	@grep -nE							\
-	    '\<error *\([^"]*"[^"]*[a-z]{3}' $$($(VC_LIST_EXCEPT))	\
+	    '\<$(_gl_translatable_diag_func_re) *\([^"]*"[^"]*[a-z]{3}' \
+		$$($(VC_LIST_EXCEPT))					\
 	  | grep -Ev '(_|ngettext ?)\(' &&				\
 	  { echo '$(ME): found unmarked diagnostic(s)' 1>&2;		\
 	    exit 1; } || :
