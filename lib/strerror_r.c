@@ -181,9 +181,8 @@ strerror_r (int errnum, char *buf, size_t buflen)
       {
         char stackbuf[STACKBUF_LEN];
 
-        /* strerror-impl.h is also affected if our choice of stackbuf
-           size is not large enough.  */
         if (strerror_r (errnum, stackbuf, sizeof stackbuf) == ERANGE)
+          /* STACKBUF_LEN should have been large enough.  */
           abort ();
         safe_copy (buf, buflen, stackbuf);
       }
@@ -198,7 +197,7 @@ strerror_r (int errnum, char *buf, size_t buflen)
         size_t len;
         strerror_r (errnum, stackbuf, sizeof stackbuf);
         len = strlen (stackbuf);
-        /* stackbuf should have been large enough.  */
+        /* STACKBUF_LEN should have been large enough.  */
         if (len + 1 == sizeof stackbuf)
           abort ();
         if (buflen <= len)
