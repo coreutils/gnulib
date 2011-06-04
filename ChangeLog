@@ -1,5 +1,10 @@
 2011-06-04  Bruno Haible  <bruno@clisp.org>
 
+	getopt: Avoid gcc warning.
+	* lib/getopt.c (_getopt_internal_r): Remove unused variable 'ambig'.
+
+2011-06-04  Bruno Haible  <bruno@clisp.org>
+
 	strerror_r: Fix comments.
 	* lib/strerror_r.c (strerror_r): Update comments after 2011-06-01
 	commit.
