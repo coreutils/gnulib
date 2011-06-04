@@ -13,9 +13,9 @@ On Windows platforms (excluding Cygwin), @code{setlocale(@var{category},NULL)}
 ignores the environment variables @code{LC_ALL}, @code{@var{category}}, and
 @code{LANG}.
 @item
-On Windows platforms (excluding Cygwin), @code{setlocale(LC_ALL,@var{name})}
-succeeds and sets the LC_CTYPE category to @samp{C} when it does not support
-the encoding, instead of failing.
+On Windows platforms (excluding Cygwin) and Cygwin 1.5.x,
+@code{setlocale(LC_ALL,@var{name})} succeeds and sets the LC_CTYPE category to
+@samp{C} when it does not support the encoding, instead of failing.
 @item
 On Windows platforms (excluding Cygwin), @code{setlocale} understands different
 locale names, that are not based on ISO 639 language names and ISO 3166 country

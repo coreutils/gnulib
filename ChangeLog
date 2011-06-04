@@ -1,5 +1,13 @@
 2011-06-04  Bruno Haible  <bruno@clisp.org>
 
+	setlocale: Enable replacement on Cygwin 1.5.
+	* m4/setlocale.m4 (gl_FUNC_SETLOCALE): Set REPLACE_SETLOCALE also on
+	Cygwin 1.5.x.
+	* doc/posix-functions/setlocale.texi: Mention that the problem with the
+	LC_CTYPE category also exists on Cygwin 1.5.x.
+
+2011-06-04  Bruno Haible  <bruno@clisp.org>
+
 	strerror-override: Don't disable symbol renamings.
 	* lib/strerror-override.h: Include errno.h and stddef.h, not string.h.
 	* lib/strerror-override.c: Include config.h.
