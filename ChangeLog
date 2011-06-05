@@ -1,5 +1,11 @@
 2011-06-05  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix test failure on AIX 7.
+	* tests/test-sameacls.c (main) [AIX]: Fix aclx_printStr invocation.
+	Based on a patch by Jørn Amundsen <Jorn.Amundsen@ntnu.no>.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
 	pipe-filter-ii: Fix test failure on AIX and IRIX.
 	* lib/pipe-filter-ii.c (pipe_filter_ii_execute): When write() fails
 	with EAGAIN, retry with a smaller buffer size.

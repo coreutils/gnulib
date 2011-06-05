@@ -430,11 +430,13 @@ main (int argc, char *argv[])
   size_t aclsize1 = sizeof (acl1);
   mode_t mode1;
   char text1[1000];
+  size_t textsize1 = sizeof (text1);
   acl_type_t type2;
   char acl2[1000];
   size_t aclsize2 = sizeof (acl2);
   mode_t mode2;
   char text2[1000];
+  size_t textsize2 = sizeof (text2);
 
   /* The docs say that type1 being 0 is equivalent to ACL_ANY, but it is not
      true, in AIX 5.3.  */
@@ -445,7 +447,7 @@ main (int argc, char *argv[])
       fflush (stderr);
       abort ();
     }
-  if (aclx_printStr (text1, sizeof (text1), acl1, aclsize1, type1, file1, 0) < 0)
+  if (aclx_printStr (text1, &textsize1, acl1, aclsize1, type1, file1, 0) < 0)
     {
       fprintf (stderr, "cannot convert the ACLs of file %s to text\n", file1);
       fflush (stderr);
@@ -461,7 +463,7 @@ main (int argc, char *argv[])
       fflush (stderr);
       abort ();
     }
-  if (aclx_printStr (text2, sizeof (text2), acl2, aclsize2, type2, file2, 0) < 0)
+  if (aclx_printStr (text2, &textsize2, acl2, aclsize2, type2, file2, 0) < 0)
     {
       fprintf (stderr, "cannot convert the ACLs of file %s to text\n", file2);
       fflush (stderr);
