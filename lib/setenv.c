@@ -350,6 +350,9 @@ weak_alias (__clearenv, clearenv)
 #if HAVE_SETENV
 
 # undef setenv
+# if !HAVE_DECL_SETENV
+extern int setenv (const char *, const char *, int);
+# endif
 # define STREQ(a, b) (strcmp (a, b) == 0)
 
 int
