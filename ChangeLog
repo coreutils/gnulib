@@ -1,5 +1,11 @@
 2011-06-05  Bruno Haible  <bruno@clisp.org>
 
+	pipe-filter-ii: Fix test failure on AIX and IRIX.
+	* lib/pipe-filter-ii.c (pipe_filter_ii_execute): When write() fails
+	with EAGAIN, retry with a smaller buffer size.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
 	localename: Fix link dependencies.
 	* modules/localename (Link): Mention $(LIBTHREAD) or $(LTLIBTHREAD).
 	* modules/localename-tests (Makefile.am): Link test-localename with

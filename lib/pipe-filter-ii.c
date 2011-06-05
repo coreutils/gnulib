@@ -347,21 +347,42 @@ pipe_filter_ii_execute (const char *progname,
             const void *buf = prepare_write (&bufsize, private_data);
             if (buf != NULL)
               {
-                ssize_t nwritten =
-                  write (fd[1], buf,
-                         bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
-                if (nwritten < 0)
+                /* Writing to a pipe in non-blocking mode is tricky: The
+                   write() call may fail with EAGAIN, simply because suffcient
+                   space is not available in the pipe. See POSIX:2008
+                   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
+                   This happens actually on AIX and IRIX, when bufsize >= 8192
+                   (even though PIPE_BUF and pathconf ("/", _PC_PIPE_BUF) are
+                   both 32768).  */
+                size_t attempt_to_write =
+                  (bufsize > SSIZE_MAX ? SSIZE_MAX : bufsize);
+                for (;;)
                   {
-                    if (!IS_EAGAIN (errno))
+                    ssize_t nwritten = write (fd[1], buf, attempt_to_write);
+                    if (nwritten < 0)
                       {
-                        if (exit_on_error)
-                          error (EXIT_FAILURE, errno,
-                                 _("write to %s subprocess failed"), progname);
-                        goto fail;
+                        if (errno == EAGAIN)
+                          {
+                            attempt_to_write = attempt_to_write / 2;
+                            if (attempt_to_write == 0)
+                              break;
+                          }
+                        else if (!IS_EAGAIN (errno))
+                          {
+                            if (exit_on_error)
+                              error (EXIT_FAILURE, errno,
+                                     _("write to %s subprocess failed"),
+                                     progname);
+                            goto fail;
+                          }
+                      }
+                    else
+                      {
+                        if (nwritten > 0)
+                          done_write ((void *) buf, nwritten, private_data);
+                        break;
                       }
                   }
-                else if (nwritten > 0)
-                  done_write ((void *) buf, nwritten, private_data);
               }
             else
               {
