@@ -1,5 +1,10 @@
 2011-06-05  Bruno Haible  <bruno@clisp.org>
 
+	error: Avoid gcc warning.
+	* lib/error.c (strerror_r): Declare also when its return type is 'int'.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
 	unsetenv: Avoid gcc warning.
 	* lib/unsetenv.c (unsetenv): Provide declaration if system lacks it.
 
