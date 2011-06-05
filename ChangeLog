@@ -1,5 +1,10 @@
 2011-06-05  Bruno Haible  <bruno@clisp.org>
 
+	unsetenv: Avoid gcc warning.
+	* lib/unsetenv.c (unsetenv): Provide declaration if system lacks it.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
 	setenv: Avoid gcc warning.
 	* lib/setenv.c (setenv): Provide declaration if system lacks it.
 

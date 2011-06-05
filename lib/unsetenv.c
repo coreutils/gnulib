@@ -97,6 +97,13 @@ weak_alias (__unsetenv, unsetenv)
 #else /* HAVE_UNSETENV */
 
 # undef unsetenv
+# if !HAVE_DECL_UNSETENV
+#  if VOID_UNSETENV
+extern void unsetenv (const char *);
+#  else
+extern int unsetenv (const char *);
+#  endif
+# endif
 
 /* Call the underlying unsetenv, in case there is hidden bookkeeping
    that needs updating beyond just modifying environ.  */
