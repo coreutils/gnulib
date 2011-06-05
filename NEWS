@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-06-05  ansi-c++-opt    When a C++ compiler is not found, the variable CXX
+                            is now set to "no", not to ":".
+
 2011-05-11  group-member    The include file is changed from "group-member.h"
                             to <unistd.h>.
 

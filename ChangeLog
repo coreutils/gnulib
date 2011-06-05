@@ -1,5 +1,12 @@
 2011-06-05  Bruno Haible  <bruno@clisp.org>
 
+	ansi-c++-opt: Interoperability with libtool.
+	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): When a C++ compiler is not found,
+	set the variable to "no", not to ":".
+	* NEWS: Mention the change.
+
+2011-06-05  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix test failure on AIX 7.
 	* tests/test-sameacls.c (main) [AIX]: Fix aclx_printStr invocation.
 	Based on a patch by Jørn Amundsen <Jorn.Amundsen@ntnu.no>.

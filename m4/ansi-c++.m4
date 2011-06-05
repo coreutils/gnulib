@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 7
+# ansi-c++.m4 serial 8
 dnl Copyright (C) 2002-2003, 2005, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_CXX_CHOICE],
 
 # gl_PROG_ANSI_CXX([ANSICXX_VARIABLE], [ANSICXX_CONDITIONAL])
 # Sets ANSICXX_VARIABLE to the name of a sufficiently ANSI C++ compliant
-# compiler, or to ":" if none is found.
+# compiler, or to "no" if none is found.
 # Defines the Automake condition ANSICXX_CONDITIONAL to true if such a compiler
 # was found, or to false if not.
 
@@ -51,7 +51,7 @@ AC_DEFUN([gl_PROG_ANSI_CXX],
   m4_if([$1], [CXX], [],
     [gl_save_CXX="$CXX"])
   if test "$CXX_CHOICE" = no; then
-    CXX=":"
+    CXX=no
   fi
   if test -z "$CXX"; then
     if test -n "$CCC"; then
@@ -62,7 +62,7 @@ AC_DEFUN([gl_PROG_ANSI_CXX],
                      [:])
     fi
   fi
-  if test "$CXX" != ":"; then
+  if test "$CXX" != no; then
     dnl Use a modified version of AC_PROG_CXX_WORKS that does not exit
     dnl upon failure.
     AC_MSG_CHECKING([whether the C++ compiler ($CXX $CXXFLAGS $LDFLAGS) works])
@@ -114,9 +114,9 @@ EOF
      CXX="$gl_save_CXX"])
   AC_SUBST([$1])
 
-  AM_CONDITIONAL([$2], [test "$$1" != ":"])
+  AM_CONDITIONAL([$2], [test "$$1" != no])
 
-  if test "$$1" != ":"; then
+  if test "$$1" != no; then
     dnl This macro invocation resolves an automake error:
     dnl /usr/local/share/automake-1.11/am/depend2.am: am__fastdepCXX does not appear in AM_CONDITIONAL
     dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define `am__fastdepCXX' is to add `AC_PROG_CXX'
