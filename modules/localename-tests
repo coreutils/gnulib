@@ -14,5 +14,5 @@ AC_CHECK_FUNCS_ONCE([newlocale])
 Makefile.am:
 TESTS += test-localename
 check_PROGRAMS += test-localename
-test_localename_LDADD = $(LDADD) @INTL_MACOSX_LIBS@
+test_localename_LDADD = $(LDADD) @INTL_MACOSX_LIBS@ $(LIBTHREAD)
 

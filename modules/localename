@@ -23,6 +23,7 @@ Include:
 
 Link:
 @INTL_MACOSX_LIBS@
+$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
 
 License:
 LGPLv2+
