@@ -51,10 +51,10 @@
 #  include <sys/time.h>
 # endif
 
-/* On Solaris 10, <sys/select.h> provides an FD_ZERO implementation
+/* On AIX 7 and Solaris 10, <sys/select.h> provides an FD_ZERO implementation
    that relies on memset(), but without including <string.h>.
    But in any case avoid namespace pollution on glibc systems.  */
-# if (defined __OpenBSD__ || defined __sun || defined __osf__ || defined __BEOS__) \
+# if (defined __OpenBSD__ || defined _AIX || defined __sun || defined __osf__ || defined __BEOS__) \
      && ! defined __GLIBC__
 #  include <string.h>
 # endif
