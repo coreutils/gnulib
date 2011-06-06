@@ -1,4 +1,4 @@
-# strerror.m4 serial 12
+# strerror.m4 serial 13
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_STRERROR],
 [
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_ERRNO_H])
+  m4_ifdef([gl_FUNC_STRERROR_R_WORKS], [
+    AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
+  ])
   if test -z "$ERRNO_H"; then
     AC_CACHE_CHECK([for working strerror function],
      [gl_cv_func_working_strerror],
@@ -32,6 +35,10 @@ AC_DEFUN([gl_FUNC_STRERROR],
       dnl integers. Replace it.
       REPLACE_STRERROR=1
     fi
+    dnl If the system's strerror_r clobbers strerror, we must replace strerror.
+    case $gl_cv_func_strerror_r_works in
+      *no) REPLACE_STRERROR=1 ;;
+    esac
   else
     dnl The system's strerror() cannot know about the new errno values we add
     dnl to <errno.h>. Replace it.

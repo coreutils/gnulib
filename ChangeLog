@@ -1,5 +1,13 @@
 2011-06-07  Eric Blake  <eblake@redhat.com>
 
+	strerror_r-posix: work around cygwin 1.7.9
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Split...
+	(gl_FUNC_STRERROR_R_WORKS): ...into new macro, to detect Cygwin
+	bug without replacing strerror_r.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Replace strerror if
+	strerror_r is buggy, but without requiring strerror_r compilation.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Fix docs.
+
 	test-perror: relax test to ignore cygwin bug
 	* tests/test-perror2.c (main): Relax test on requiring detection
 	of stream errors, and use unbuffered stream.

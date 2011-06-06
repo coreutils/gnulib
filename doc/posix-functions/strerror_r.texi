@@ -64,8 +64,4 @@ glibc 2.13, FreeBSD 8.2, Solaris 10.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-Calling this function can clobber the buffer used by @code{strerror}
-on some platforms:
-Cygwin 1.7.9.
 @end itemize

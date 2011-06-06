@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 9
+# strerror_r.m4 serial 10
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,9 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRERROR_R],
 [
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
-  AC_REQUIRE([gl_HEADER_ERRNO_H])
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
 
   dnl Persuade Solaris <string.h> to declare strerror_r().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -20,7 +18,40 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
     HAVE_DECL_STRERROR_R=0
   fi
 
-  AC_CHECK_FUNCS([strerror_r])
+  if test $ac_cv_func_strerror_r = yes; then
+    if test -z "$ERRNO_H"; then
+      if test $gl_cv_func_strerror_r_posix_signature = yes; then
+        case "$gl_cv_func_strerror_r_works" in
+          dnl The system's strerror_r has bugs.  Replace it.
+          *no) REPLACE_STRERROR_R=1 ;;
+        esac
+      else
+        dnl The system's strerror() has a wrong signature. Replace it.
+        REPLACE_STRERROR_R=1
+      fi
+    else
+      dnl The system's strerror_r() cannot know about the new errno values we
+      dnl add to <errno.h>. Replace it.
+      REPLACE_STRERROR_R=1
+    fi
+  fi
+])
+
+# Prerequisites of lib/strerror_r.c.
+AC_DEFUN([gl_PREREQ_STRERROR_R], [
+  AC_CHECK_FUNCS_ONCE([catgets])
+  :
+])
+
+# Detect if strerror_r works, but without affecting whether a replacement
+# strerror_r will be used.
+AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
+[
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
+  AC_REQUIRE([gl_HEADER_ERRNO_H])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
+  AC_CHECK_FUNCS_ONCE([strerror_r])
   if test $ac_cv_func_strerror_r = yes; then
     if test -z "$ERRNO_H"; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);
@@ -85,25 +116,44 @@ changequote(,)dnl
 changequote([,])dnl
              ])
           ])
-        case "$gl_cv_func_strerror_r_works" in
-          *no) REPLACE_STRERROR_R=1 ;;
-        esac
       else
-        dnl The system's strerror() has a wrong signature. Replace it.
-        REPLACE_STRERROR_R=1
+        dnl The system's strerror() has a wrong signature.
         dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
         AC_CHECK_FUNCS([__xpg_strerror_r])
+        dnl glibc < 2.14 does not populate buf on failure
+        dnl cygwin < 1.7.10 clobbers strerror
+        if test $ac_cv_func___xpg_strerror_r = yes; then
+          AC_CACHE_CHECK([whether strerror_r works],
+            [gl_cv_func_strerror_r_works],
+            [AC_RUN_IFELSE(
+               [AC_LANG_PROGRAM(
+                  [[#include <errno.h>
+                    #include <string.h>
+                    extern int __xpg_strerror_r(int, char *, size_t);
+                  ]],
+                  [[int result = 0;
+                    char buf[256] = "^";
+                    char copy[256];
+                    char *str = strerror (-1);
+                    strcpy (copy, str);
+                    if (__xpg_strerror_r (-2, buf, 1) == 0)
+                      result |= 1;
+                    if (*buf)
+                      result |= 2;
+                    __xpg_strerror_r (-2, buf, 256);
+                    if (strcmp (str, copy))
+                      result |= 4;
+                    return result;
+                  ]])],
+               [gl_cv_func_strerror_r_works=yes],
+               [gl_cv_func_strerror_r_works=no],
+               [dnl guess no on all platforms that have __xpg_strerror_r,
+                dnl at least until fixed glibc and cygwin are more common
+                gl_cv_func_strerror_r_works="guessing no"
+               ])
+            ])
+        fi
       fi
-    else
-      dnl The system's strerror_r() cannot know about the new errno values we
-      dnl add to <errno.h>. Replace it.
-      REPLACE_STRERROR_R=1
     fi
   fi
-])
-
-# Prerequisites of lib/strerror_r.c.
-AC_DEFUN([gl_PREREQ_STRERROR_R], [
-  AC_CHECK_FUNCS_ONCE([catgets])
-  :
 ])
