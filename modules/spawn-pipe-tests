@@ -1,6 +1,7 @@
 Files:
 tests/test-spawn-pipe.sh
 tests/test-spawn-pipe.c
+tests/test-spawn-pipe-child.c
 tests/macros.h
 
 Depends-on:
@@ -10,5 +11,9 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-spawn-pipe.sh
-check_PROGRAMS += test-spawn-pipe
+check_PROGRAMS += test-spawn-pipe test-spawn-pipe-child
 test_spawn_pipe_LDADD = $(LDADD) @LIBINTL@
+# The test-spawn-pipe-child program must be a real executable, not a libtool
+# wrapper script, and should link against as few libraries as possible.
+# Therefore don't link it against any libraries other than -lc.
+test_spawn_pipe_child_LDADD =

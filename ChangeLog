@@ -1,5 +1,23 @@
 2011-06-06  Bruno Haible  <bruno@clisp.org>
 
+	spawn-pipe tests: Like the child program only against libc.
+	* tests/test-spawn-pipe-child.c: New file, extracted from
+	tests/test-spawn-pipe.c.
+	(main): Expect only one argument.
+	(is_open): New function, copied from tests/test-pipe.c.
+	* tests/test-spawn-pipe.c: Don't include <errno.h>.
+	(child_main): Remove function.
+	(test_pipe): Pass only one argument to the child program.
+	(main): Remove child process code. Expect the child program's name as
+	first argument.
+	* tests/test-spawn-pipe.sh: Pass the child program's name as first
+	argument.
+	* modules/spawn-pipe-tests (Files): Add tests/test-spawn-pipe-child.c.
+	(Makefile.am): Add test-spawn-pipe-child to check_PROGRAMS. Link
+	test-spawn-pipe-child against no libraries.
+
+2011-06-06  Bruno Haible  <bruno@clisp.org>
+
 	careadlinkat: Avoid mismatch between ssize_t and int.
 	* lib/careadlinkat.h (careadlinkatcwd): Declare as a function always.
 	* lib/careadlinkat.c (careadlinkatcwd): Define always.
