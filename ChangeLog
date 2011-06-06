@@ -6,7 +6,7 @@
 	* tests/test-spawn-pipe.sh: Update.
 	* modules/spawn-pipe-tests (Files, Makefile.am): Update.
 
-	spawn-pipe tests: Like the child program only against libc.
+	spawn-pipe tests: Link the child program only against libc.
 	* tests/test-spawn-pipe-child.c: New file, extracted from
 	tests/test-spawn-pipe.c.
 	(main): Expect only one argument.
