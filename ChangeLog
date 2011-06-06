@@ -1,3 +1,13 @@
+2011-06-06  Eric Blake  <eblake@redhat.com>
+
+	strerror-override: avoid bloating errno module
+	* modules/errno (Files, configure.ac): Move replacement strings...
+	* modules/strerror-override: ...to new module.
+	* modules/strerror (Depends-on): Add strerror-override.
+	* modules/strerror_r-posix (Depends-on): Likewise.
+	* MODULES.html.sh: Document new module.
+	Reported by Bruno Haible.
+
 2011-06-06  Bruno Haible  <bruno@clisp.org>
 
 	spawn-pipe tests: Rename program.

@@ -1626,6 +1626,7 @@ func_all_modules ()
   func_module atexit
   func_module strtod
   func_module strerror
+  func_module strerror-override
   func_module mktime
   func_end_table
 

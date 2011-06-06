@@ -9,6 +9,7 @@ Depends-on:
 string
 errno            [test $REPLACE_STRERROR = 1]
 intprops         [test $REPLACE_STRERROR = 1]
+strerror-override [test $REPLACE_STRERROR = 1]
 verify           [test $REPLACE_STRERROR = 1]
 
 configure.ac:

@@ -1,0 +1,26 @@
+Description:
+strerror_override() function: provide strings for gnulib-specific errno values
+
+Files:
+lib/strerror-override.h
+lib/strerror-override.c
+
+Depends-on:
+errno
+
+configure.ac:
+AC_REQUIRE([gl_HEADER_ERRNO_H])
+if test -n "$ERRNO_H"; then
+  AC_LIBOBJ([strerror-override])
+fi
+
+Makefile.am:
+
+Include:
+"strerror-override.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
