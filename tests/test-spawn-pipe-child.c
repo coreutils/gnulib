@@ -1,4 +1,4 @@
-/* Child program invoked by test-spawn-pipe..
+/* Child program invoked by test-spawn-pipe-main.
    Copyright (C) 2009-2011 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
