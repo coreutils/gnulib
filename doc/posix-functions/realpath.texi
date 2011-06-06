@@ -27,6 +27,9 @@ glibc 2.3.5.
 This function fails to recognize non-directories followed @samp{..} on
 some platforms:
 cygwin.
+@item
+This function misbehaves on consecutive slashes on some platforms:
+AIX 7.
 @end itemize
 
 Portability problems not fixed by Gnulib:
