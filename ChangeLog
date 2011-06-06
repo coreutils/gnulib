@@ -1,3 +1,9 @@
+2011-06-06  Bruno Haible  <bruno@clisp.org>
+
+	careadlinkat: Avoid mismatch between ssize_t and int.
+	* lib/careadlinkat.h (careadlinkatcwd): Declare as a function always.
+	* lib/careadlinkat.c (careadlinkatcwd): Define always.
+
 2011-06-06  Jim Meyering  <meyering@redhat.com>
 
 	gnulib-common.m4: add _GL_ATTRIBUTE_CONST and _GL_ATTRIBUTE_PURE
