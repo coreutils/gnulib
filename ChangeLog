@@ -1,5 +1,10 @@
 2011-06-06  Eric Blake  <eblake@redhat.com>
 
+	canonicalize-lgpl: use common idiom
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Prefer older rm -rf
+	over newer POSIX -Rf.
+	Reported by Bruno Haible.
+
 	canonicalize-lgpl: work around AIX realpath bug
 	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Expose AIX bug.
 	* doc/posix-functions/realpath.texi (realpath): Document it.

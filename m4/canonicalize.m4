@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 20
+# canonicalize.m4 serial 21
 
 dnl Copyright (C) 2003-2007, 2009-2011 Free Software Foundation, Inc.
 
@@ -95,7 +95,7 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
       ]])
     ], [gl_cv_func_realpath_works=yes], [gl_cv_func_realpath_works=no],
        [gl_cv_func_realpath_works="guessing no"])
-    rm -Rf conftest.a conftest.d
+    rm -rf conftest.a conftest.d
   ])
   if test "$gl_cv_func_realpath_works" = yes; then
     AC_DEFINE([FUNC_REALPATH_WORKS], [1], [Define to 1 if realpath()
