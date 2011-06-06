@@ -45,10 +45,22 @@ strerror (int n)
   if (msg)
     return (char *) msg;
 
+  /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.  */
+  if (n)
+    msg = strerror (n);
+  else
+    {
+      int saved_errno = errno;
+      errno = 0;
+      msg = strerror (n);
+      if (errno)
+        msg = "Success";
+      errno = saved_errno;
+    }
+
   /* Our strerror_r implementation might use the system's strerror
      buffer, so all other clients of strerror have to see the error
      copied into a buffer that we manage.  */
-  msg = strerror (n);
   if (!msg || !*msg)
     {
       static char const fmt[] = "Unknown error %d";
