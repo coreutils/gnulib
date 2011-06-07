@@ -1,5 +1,12 @@
 2011-06-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
+	tests: fix usage message in 'mktempd_'
+	* tests/init.sh (mktempd_): In the usage message, use literal
+	'mktempd_', not '$ME' (which is even undefined), as the name of
+	the subroutine.
+
+2011-06-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
 	tests init: new function 'fatal_', for hard errors
 	Before this patch, the only way offered by tests/init.sh to
 	properly signal a hard error was the `framework_failure_'
