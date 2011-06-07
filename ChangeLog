@@ -1,3 +1,11 @@
+2011-06-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stat-time: get_stat_birthtime failure is better-defined
+	* lib/stat-time.h (get_stat_birthtime): If the time is not available,
+	return a timestamp whose tv_sec and tv_nsec values are both -1.
+	Previously, the spec said only that the tv_nsec value was negative.
+	This upward-compatible change simplifies GNU tar a bit.
+
 2011-06-07  Eric Blake  <eblake@redhat.com>
 
 	strerror_r-posix: work around cygwin 1.7.9
