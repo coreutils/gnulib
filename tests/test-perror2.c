@@ -116,12 +116,14 @@ main (void)
   /* Test that perror reports write failure.  */
   {
     ASSERT (freopen (BASE ".tmp", "r", stderr) == stderr);
-    ASSERT (setvbuf (stderr, NULL, _IOLBF, BUFSIZ) == 0);
+    ASSERT (setvbuf (stderr, NULL, _IONBF, BUFSIZ) == 0);
     errno = -1;
     ASSERT (!ferror (stderr));
     perror (NULL);
-    ASSERT (errno > 0);
 #if 0
+    /* Commented out until cygwin behaves:
+       http://sourceware.org/ml/newlib/2011/msg00228.html */
+    ASSERT (errno > 0);
     /* Commented out until glibc behaves:
        http://sourceware.org/bugzilla/show_bug.cgi?id=12792 */
     ASSERT (ferror (stderr));

@@ -86,5 +86,5 @@ Portability problems not fixed by Gnulib:
 @item
 Attempting to write to a read-only stream fails with @code{EOF} but
 does not set the error flag for @code{ferror} on some platforms:
-glibc 2.13.
+glibc 2.13, cygwin 1.7.9.
 @end itemize

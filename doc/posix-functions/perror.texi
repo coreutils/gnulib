@@ -23,7 +23,7 @@ Portability problems not fixed by Gnulib:
 @item
 POSIX requires that this function set the stream error bit (detected
 by @code{ferror}) on write failure, but not all platforms do this:
-glibc 2.13.
+glibc 2.13, cygwin 1.7.9.
 @item
 POSIX requires that this function not alter stream orientation, but
 the gnulib replacement locks in byte orientation and fails on wide

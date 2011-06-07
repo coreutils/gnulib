@@ -1,3 +1,37 @@
+2011-06-07  Eric Blake  <eblake@redhat.com>
+
+	test-perror: relax test to ignore cygwin bug
+	* tests/test-perror2.c (main): Relax test on requiring detection
+	of stream errors, and use unbuffered stream.
+	* doc/posix-functions/dprintf.texi (dprintf): Document bug.
+	* doc/posix-functions/fprintf.texi (fprintf): Likewise.
+	* doc/posix-functions/fputc.texi (fputc): Likewise.
+	* doc/posix-functions/fputs.texi (fputs): Likewise.
+	* doc/posix-functions/fputws.texi (fputws): Likewise.
+	* doc/posix-functions/fwprintf.texi (fwprintf): Likewise.
+	* doc/posix-functions/fwrite.texi (fwrite): Likewise.
+	* doc/posix-functions/getopt.texi (getopt): Likewise.
+	* doc/posix-functions/perror.texi (perror): Likewise.
+	* doc/posix-functions/printf.texi (printf): Likewise.
+	* doc/posix-functions/psiginfo.texi (psiginfo): Likewise.
+	* doc/posix-functions/psignal.texi (psignal): Likewise.
+	* doc/posix-functions/putc.texi (putc): Likewise.
+	* doc/posix-functions/putc_unlocked.texi (putc_unlocked):
+	Likewise.
+	* doc/posix-functions/putchar.texi (putchar): Likewise.
+	* doc/posix-functions/putchar_unlocked.texi (putchar_unlocked):
+	Likewise.
+	* doc/posix-functions/puts.texi (puts): Likewise.
+	* doc/posix-functions/putwc.texi (putwc): Likewise.
+	* doc/posix-functions/putwchar.texi (putwchar): Likewise.
+	* doc/posix-functions/vdprintf.texi (vdprintf): Likewise.
+	* doc/posix-functions/vfprintf.texi (vfprintf): Likewise.
+	* doc/posix-functions/vfwprintf.texi (vfwprintf): Likewise.
+	* doc/posix-functions/vprintf.texi (vprintf): Likewise.
+	* doc/posix-functions/vwprintf.texi (vwprintf): Likewise.
+	* doc/posix-functions/wordexp.texi (wordexp): Likewise.
+	* doc/posix-functions/wprintf.texi (wprintf): Likewise.
+
 2011-05-22  Bruno Haible  <bruno@clisp.org>
 
 	strerror: Move AC_LIBOBJ invocations to module description.
