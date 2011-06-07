@@ -1,3 +1,15 @@
+2011-06-07  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	tests init: new function 'fatal_', for hard errors
+	Before this patch, the only way offered by tests/init.sh to
+	properly signal a hard error was the `framework_failure_'
+	function.  But the error message issued by that function,
+	as its name would suggest, refers to a set-up failure in the
+	testsuite, while hard errors can obviously also be due to
+	other reasons.  The best way to fix this inconsistency is to
+	introduce a new function with a more general error message.
+	* tests/init.sh (fatal_): New function.
+
 2011-06-06  Eric Blake  <eblake@redhat.com>
 
 	canonicalize-lgpl: use common idiom

@@ -77,6 +77,7 @@ Exit () { set +e; (exit $1); exit $1; }
 warn_ () { echo "$@" 1>&$stderr_fileno_; }
 fail_ () { warn_ "$ME_: failed test: $@"; Exit 1; }
 skip_ () { warn_ "$ME_: skipped test: $@"; Exit 77; }
+fatal_ () { warn_ "$ME_: hard error: $@"; Exit 99; }
 framework_failure_ () { warn_ "$ME_: set-up failure: $@"; Exit 99; }
 
 # Sanitize this shell to POSIX mode, if possible.
