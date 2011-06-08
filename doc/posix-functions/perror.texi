@@ -16,6 +16,13 @@ OpenBSD 4.0, OSF/1 5.1, Cygwin 1.5.x, mingw.
 This function treats @code{errno} of 0 like failure, although POSIX
 requires that the message declare it as a success, on some platforms:
 FreeBSD 8.2
+@item
+This function clobbers the @code{strerror} buffer on some platforms:
+Cygwin 1.7.9.
+@item
+This function fails to print a useful a string for out-of-range integers on
+some platforms:
+HP-UX 11, IRIX 6.5, Solaris 8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -1,3 +1,9 @@
+2011-06-07  Eric Blake  <eblake@redhat.com>
+
+	perror: document fixed bugs
+	* doc/posix-functions/perror.texi (perror): Document recent
+	patches.
+
 2011-06-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stat-time: get_stat_birthtime failure is better-defined
