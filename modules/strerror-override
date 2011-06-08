@@ -4,6 +4,7 @@ strerror_override() function: provide strings for gnulib-specific errno values
 Files:
 lib/strerror-override.h
 lib/strerror-override.c
+m4/sys_socket_h.m4
 
 Depends-on:
 errno
@@ -12,6 +13,7 @@ configure.ac:
 AC_REQUIRE([gl_HEADER_ERRNO_H])
 if test -n "$ERRNO_H"; then
   AC_LIBOBJ([strerror-override])
+  gl_PREREQ_SYS_H_WINSOCK2
 fi
 
 Makefile.am:

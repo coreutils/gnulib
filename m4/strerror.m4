@@ -1,4 +1,4 @@
-# strerror.m4 serial 13
+# strerror.m4 serial 14
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,18 +46,5 @@ AC_DEFUN([gl_FUNC_STRERROR],
     dnl The system's strerror() cannot know about the new errno values we add
     dnl to <errno.h>. Replace it.
     REPLACE_STRERROR=1
-  fi
-])
-
-# Prerequisites of lib/strerror.c.
-AC_DEFUN([gl_PREREQ_STRERROR], [
-  AC_CHECK_DECLS([strerror])
-  AC_CHECK_HEADERS_ONCE([sys/socket.h])
-  if test $ac_cv_header_sys_socket_h != yes; then
-    dnl We cannot use AC_CHECK_HEADERS_ONCE here, because that would make
-    dnl the check for those headers unconditional; yet cygwin reports
-    dnl that the headers are present but cannot be compiled (since on
-    dnl cygwin, all socket information should come from sys/socket.h).
-    AC_CHECK_HEADERS([winsock2.h])
   fi
 ])
