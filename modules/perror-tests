@@ -7,6 +7,7 @@ tests/test-perror2.c
 tests/test-perror.sh
 
 Depends-on:
+dup2
 strerror
 
 configure.ac:

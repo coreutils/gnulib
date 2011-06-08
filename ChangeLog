@@ -1,5 +1,8 @@
 2011-06-08  Eric Blake  <eblake@redhat.com>
 
+	perror: fix test on mingw
+	* modules/perror-tests (Depends-on): Add dup2.
+
 	strerror_r-posix: fix on MacOS
 	* m4/strerror.m4 (gl_FUNC_STRERROR): Flush out MacOS bug.
 	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R_WORKS): Likewise, and fix
