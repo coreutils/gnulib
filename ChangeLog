@@ -1,3 +1,13 @@
+2011-06-08  Bruno Haible  <bruno@clisp.org>
+
+	strerror_r-posix: Tweaks.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Omit the code that tests
+	gl_cv_func_strerror_r_works if gl_FUNC_STRERROR_R_WORKS is not present.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R_WORKS): Fix AC_CACHE_CHECK
+	message. Move gl_HEADER_STRING_H_DEFAULTS invocation from here...
+	(gl_FUNC_STRERROR_R): ... to here.
+	(gl_PREREQ_STRERROR_R): Test for __xpg_strerror_r.
+
 2011-06-07  Eric Blake  <eblake@redhat.com>
 
 	perror: document fixed bugs

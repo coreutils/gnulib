@@ -35,10 +35,13 @@ AC_DEFUN([gl_FUNC_STRERROR],
       dnl integers. Replace it.
       REPLACE_STRERROR=1
     fi
-    dnl If the system's strerror_r clobbers strerror, we must replace strerror.
-    case $gl_cv_func_strerror_r_works in
-      *no) REPLACE_STRERROR=1 ;;
-    esac
+    m4_ifdef([gl_FUNC_STRERROR_R_WORKS], [
+      dnl If the system's strerror_r or __xpg_strerror_r clobbers strerror's
+      dnl buffer, we must replace strerror.
+      case "$gl_cv_func_strerror_r_works" in
+        *no) REPLACE_STRERROR=1 ;;
+      esac
+    ])
   else
     dnl The system's strerror() cannot know about the new errno values we add
     dnl to <errno.h>. Replace it.

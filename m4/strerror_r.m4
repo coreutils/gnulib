@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STRERROR_R],
 [
+  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
 
   dnl Persuade Solaris <string.h> to declare strerror_r().
@@ -26,7 +27,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
           *no) REPLACE_STRERROR_R=1 ;;
         esac
       else
-        dnl The system's strerror() has a wrong signature. Replace it.
+        dnl The system's strerror_r() has a wrong signature. Replace it.
         REPLACE_STRERROR_R=1
       fi
     else
@@ -39,15 +40,15 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
 
 # Prerequisites of lib/strerror_r.c.
 AC_DEFUN([gl_PREREQ_STRERROR_R], [
+  dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
+  AC_CHECK_FUNCS([__xpg_strerror_r])
   AC_CHECK_FUNCS_ONCE([catgets])
-  :
 ])
 
 # Detect if strerror_r works, but without affecting whether a replacement
 # strerror_r will be used.
 AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
 [
-  AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_ERRNO_H])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
@@ -120,10 +121,10 @@ changequote([,])dnl
         dnl The system's strerror() has a wrong signature.
         dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
         AC_CHECK_FUNCS([__xpg_strerror_r])
-        dnl glibc < 2.14 does not populate buf on failure
-        dnl cygwin < 1.7.10 clobbers strerror
+        dnl In glibc < 2.14, __xpg_strerror_r does not populate buf on failure.
+        dnl In cygwin < 1.7.10, __xpg_strerror_r clobbers strerror's buffer.
         if test $ac_cv_func___xpg_strerror_r = yes; then
-          AC_CACHE_CHECK([whether strerror_r works],
+          AC_CACHE_CHECK([whether __xpg_strerror_r works],
             [gl_cv_func_strerror_r_works],
             [AC_RUN_IFELSE(
                [AC_LANG_PROGRAM(
@@ -147,8 +148,8 @@ changequote([,])dnl
                   ]])],
                [gl_cv_func_strerror_r_works=yes],
                [gl_cv_func_strerror_r_works=no],
-               [dnl guess no on all platforms that have __xpg_strerror_r,
-                dnl at least until fixed glibc and cygwin are more common
+               [dnl Guess no on all platforms that have __xpg_strerror_r,
+                dnl at least until fixed glibc and cygwin are more common.
                 gl_cv_func_strerror_r_works="guessing no"
                ])
             ])
