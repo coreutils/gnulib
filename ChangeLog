@@ -1,3 +1,48 @@
+2011-06-08  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Better isolation between different gnulib-tool invocations.
+	* gnulib-tool: New option --witness-c-macro.
+	(witness_c_macro): New variable.
+	(func_emit_lib_Makefile_am): If --witness-c-macro was specified, let
+	AM_CPPFLAGS define it as a C macro.
+	(func_emit_tests_Makefile_am): Likewise.
+	(func_import): Store witness_c_macro setting in gnulib-cache.m4 and
+	read it from there.
+	* m4/gnulib-common.m4 (gl_MODULE_INDICATOR_CONDITION): Define through
+	m4_define, not AC_DEFUN.
+	(gl_MODULE_INDICATOR_SET_VARIABLE_AUX,
+	gl_MODULE_INDICATOR_SET_VARIABLE_AUX_OR): New macros.
+	(gl_MODULE_INDICATOR_SET_VARIABLE): Use them.
+	* modules/arpa_inet (Makefile.am): Use sed expression s/.../.../, not
+	s|...|...|, to substitute the values of the GNULIB_* module indicator
+	variables.
+	* modules/dirent (Makefile.am): Likewise.
+	* modules/fcntl-h (Makefile.am): Likewise.
+	* modules/iconv-h (Makefile.am): Likewise.
+	* modules/langinfo (Makefile.am): Likewise.
+	* modules/locale (Makefile.am): Likewise.
+	* modules/math (Makefile.am): Likewise.
+	* modules/netdb (Makefile.am): Likewise.
+	* modules/poll-h (Makefile.am): Likewise.
+	* modules/pty (Makefile.am): Likewise.
+	* modules/search (Makefile.am): Likewise.
+	* modules/signal (Makefile.am): Likewise.
+	* modules/spawn (Makefile.am): Likewise.
+	* modules/stdio (Makefile.am): Likewise.
+	* modules/stdlib (Makefile.am): Likewise.
+	* modules/string (Makefile.am): Likewise.
+	* modules/sys_ioctl (Makefile.am): Likewise.
+	* modules/sys_select (Makefile.am): Likewise.
+	* modules/sys_socket (Makefile.am): Likewise.
+	* modules/sys_stat (Makefile.am): Likewise.
+	* modules/sys_times (Makefile.am): Likewise.
+	* modules/sys_utsname (Makefile.am): Likewise.
+	* modules/sys_wait (Makefile.am): Likewise.
+	* modules/termios (Makefile.am): Likewise.
+	* modules/time (Makefile.am): Likewise.
+	* modules/unistd (Makefile.am): Likewise.
+	* modules/wchar (Makefile.am): Likewise.
+
 2011-06-08  Eric Blake  <eblake@redhat.com>
 
 	strerror: simplify replacement

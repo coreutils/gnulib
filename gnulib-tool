@@ -259,6 +259,8 @@ Options for --import, --add/remove-import:
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
                             the package name. A suffix '-gnulib' is appended.
+      --witness-c-macro=NAME  Specify the C macro that is defined when the
+                            sources in this directory are compiled or used.
       --vc-files            Update version control related files.
       --no-vc-files         Don't update version control related files
                             (.gitignore and/or .cvsignore).
@@ -928,6 +930,7 @@ fi
 #                   given, blank otherwise
 # - macro_prefix    from --macro-prefix
 # - po_domain       from --po-domain
+# - witness_c_macro  from --witness-c-macro
 # - vc_files        true if --vc-files was given, false if --no-vc-files was
 #                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
@@ -970,6 +973,7 @@ fi
   libtool=
   macro_prefix=
   po_domain=
+  witness_c_macro=
   vc_files=
   do_changelog=:
   doit=:
@@ -1221,6 +1225,16 @@ fi
       --po-domain=* )
         po_domain=`echo "X$1" | sed -e 's/^X--po-domain=//'`
         shift ;;
+      --witness-c-macro )
+        shift
+        if test $# = 0; then
+          func_fatal_error "missing argument for --witness-c-macro"
+        fi
+        witness_c_macro="$1"
+        shift ;;
+      --witness-c-macro=* )
+        witness_c_macro=`echo "X$1" | sed -e 's/^X--witness-c-macro=//'`
+        shift ;;
       --vc-files )
         vc_files=true
         shift ;;
@@ -1303,7 +1317,7 @@ fi
        || test -n "$excl_privileged_tests" || test -n "$excl_unportable_tests" \
        || test -n "$avoidlist" || test -n "$lgpl" || test -n "$makefile_name" \
        || test -n "$macro_prefix" || test -n "$po_domain" \
-       || test -n "$vc_files"; then
+       || test -n "$witness_c_macro" || test -n "$vc_files"; then
       echo "gnulib-tool: invalid options for 'update' mode" 1>&2
       echo "Try 'gnulib-tool --help' for more information." 1>&2
       echo "If you really want to modify the gnulib configuration of your project," 1>&2
@@ -3170,6 +3184,7 @@ func_update_file ()
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
+# - witness_c_macro  from --witness-c-macro
 # - actioncmd       (optional) command that will reproduce this invocation
 # - for_test        true if creating a package for testing, false otherwise
 # - sed_replace_include_guard_prefix
@@ -3327,10 +3342,16 @@ func_emit_lib_Makefile_am ()
   if test -z "$makefile_name"; then
     echo
     if $for_test; then
-      echo "AM_CPPFLAGS = -DGNULIB_STRICT_CHECKING=1"
+      cppflags_part1=" -DGNULIB_STRICT_CHECKING=1"
     else
-      echo "AM_CPPFLAGS ="
+      cppflags_part1=
     fi
+    if test -n "$witness_c_macro"; then
+      cppflags_part2=" -D$witness_c_macro=1"
+    else
+      cppflags_part2=
+    fi
+    echo "AM_CPPFLAGS =$cppflags_part1$cppflags_part2"
     echo "AM_CFLAGS ="
   fi
   echo
@@ -3479,6 +3500,7 @@ func_emit_po_POTFILES_in ()
 # - m4base          relative directory containing autoconf macros
 # - testsbase       relative directory containing unit test code
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
+# - witness_c_macro  from --witness-c-macro
 # - for_test        true if creating a package for testing, false otherwise
 # - single_configure  true if a single configure file should be generated,
 #                     false for a separate configure file for the tests
@@ -3634,6 +3656,9 @@ func_emit_tests_Makefile_am ()
   echo "AM_CPPFLAGS = \\"
   if $for_test; then
     echo "  -DGNULIB_STRICT_CHECKING=1 \\"
+  fi
+  if test -n "$witness_c_macro"; then
+    echo "  -D$witness_c_macro=1 \\"
   fi
   if test -n "${witness_macro}"; then
     echo "  -D@${witness_macro}@=1 \\"
@@ -4022,6 +4047,7 @@ func_emit_autoconf_snippets ()
 # - guessed_libtool true if the configure.ac file uses libtool, false otherwise
 # - macro_prefix    prefix of gl_EARLY, gl_INIT macros to use
 # - po_domain       prefix of i18n domain to use (without -gnulib suffix)
+# - witness_c_macro  from --witness-c-macro
 # - vc_files        true if --vc-files was given, false if --no-vc-files was
 #                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
@@ -4058,6 +4084,7 @@ func_import ()
   cached_libtool=
   cached_macro_prefix=
   cached_po_domain=
+  cached_witness_c_macro=
   cached_vc_files=
   cached_files=
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
@@ -4141,6 +4168,9 @@ func_import ()
       }
       /gl_PO_DOMAIN(/ {
         s,^.*gl_PO_DOMAIN([[ ]*\([^]"$`\\)]*\).*$,cached_po_domain="\1",p
+      }
+      /gl_WITNESS_C_MACRO(/ {
+        s,^.*gl_WITNESS_C_MACRO([[ ]*\([^]"$`\\)]*\).*$,cached_witness_c_macro="\1",p
       }
       /gl_VC_FILES(/ {
         s,^.*gl_VC_FILES([[ ]*\([^]"$`\\)]*\).*$,cached_vc_files="\1",p
@@ -4330,6 +4360,10 @@ func_import ()
     # The po_domain defaults to the cached one.
     if test -z "$po_domain"; then
       po_domain="$cached_po_domain"
+    fi
+    # The witness_c_macro defaults to the cached one.
+    if test -z "$witness_c_macro"; then
+      witness_c_macro="$cached_witness_c_macro"
     fi
     # The vc_files defaults to the cached one.
     if test -z "$vc_files"; then
@@ -4730,6 +4764,9 @@ s,^\(.................................................[^ ]*\) *,                
   if test -n "$po_domain"; then
     func_append actioncmd " --po-domain=$po_domain"
   fi
+  if test -n "$witness_c_macro"; then
+    func_append actioncmd " --witness-c-macro=$witness_c_macro"
+  fi
   if test -n "$vc_files"; then
     if test "$vc_files" = true; then
       func_append actioncmd " --vc-files"
@@ -5026,6 +5063,7 @@ s,//*$,/,'
     fi
     echo "gl_MACRO_PREFIX([$macro_prefix])"
     echo "gl_PO_DOMAIN([$po_domain])"
+    echo "gl_WITNESS_C_DOMAIN([$witness_c_macro])"
     if test -n "$vc_files"; then
       echo "gl_VC_FILES([$vc_files])"
     fi
@@ -5121,7 +5159,13 @@ s,//*$,/,'
     echo "  gl_m4_base='$m4base'"
     func_emit_initmacro_start $macro_prefix
     echo "  gl_source_base='$sourcebase'"
+    if test -n "$witness_c_macro"; then
+      echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$witness_c_macro])"
+    fi
     func_emit_autoconf_snippets "$main_modules" func_verify_module true false true
+    if test -n "$witness_c_macro"; then
+      echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
+    fi
     echo "  # End of code from modules"
     func_emit_initmacro_end $macro_prefix
     echo "  gltests_libdeps="
@@ -5506,6 +5550,7 @@ func_create_testdir ()
   testsbase=gltests
   macro_prefix=gl
   po_domain=
+  witness_c_macro=
   vc_files=
 
   # Determine final module list.
@@ -6292,7 +6337,8 @@ s/\([.*$]\)/[\1]/g'
                 #   inc_longrunning_tests, inc_privileged_tests,
                 #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
                 #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
-                #   makefile_name, libtool, macro_prefix, po_domain, vc_files
+                #   makefile_name, libtool, macro_prefix, po_domain,
+                #   witness_c_macro, vc_files
                 # don't propagate from one directory to another.
                 (func_import) || func_exit 1
               done
