@@ -209,9 +209,16 @@ strerror_r (int errnum, char *buf, size_t buflen)
     if (ret < 0)
       ret = errno;
 
-    /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.  */
-    if (errnum == 0 && ret == EINVAL)
-      ret = safe_copy (buf, buflen, "Success");
+    /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.
+       MacOS X 10.5 strerror_r differs from the strerror string for 0.  */
+    if (errnum == 0)
+      {
+# if defined __APPLE__ && defined __MACH__
+        ret = EINVAL;
+# endif
+        if (ret == EINVAL)
+          ret = safe_copy (buf, buflen, "Success");
+      }
 
 #else /* USE_SYSTEM_STRERROR */
 

@@ -66,6 +66,7 @@ main (void)
   ASSERT (buf[0]);
   ASSERT (errno == 0);
   ASSERT (strstr (buf, "nknown") == NULL);
+  ASSERT (strstr (buf, "ndefined") == NULL);
 
   /* Test results with out-of-range errnum and enough room.  POSIX
      allows an empty string on success, and allows an unchanged buf on
@@ -84,10 +85,13 @@ main (void)
      EINVAL for out-of-range values.  On error, POSIX permits buf to
      be empty, unchanged, or unterminated, but these are not useful,
      so we guarantee NUL-terminated truncated contents for all but
-     size 0.  http://austingroupbugs.net/view.php?id=398  */
+     size 0.  http://austingroupbugs.net/view.php?id=398.  Also ensure
+     that no out-of-bounds writes occur.  */
   {
     int errs[] = { EACCES, 0, -3, };
     int j;
+
+    buf[sizeof buf - 1] = '\0';
     for (j = 0; j < SIZEOF (errs); j++)
       {
         int err = errs[j];
@@ -97,10 +101,11 @@ main (void)
 
         strerror_r (err, buf2, sizeof buf2);
         len = strlen (buf2);
+        ASSERT (len < sizeof buf);
 
         for (i = 0; i <= len; i++)
           {
-            strcpy (buf, "BADFACE");
+            memset (buf, '^', sizeof buf - 1);
             errno = 0;
             ret = strerror_r (err, buf, i);
             ASSERT (errno == 0);
@@ -108,13 +113,12 @@ main (void)
               ASSERT (ret == ERANGE || ret == EINVAL);
             else
               ASSERT (ret == ERANGE);
-            if (i == 0)
-              ASSERT (strcmp (buf, "BADFACE") == 0);
-            else
+            if (i)
               {
                 ASSERT (strncmp (buf, buf2, i - 1) == 0);
                 ASSERT (buf[i - 1] == '\0');
               }
+            ASSERT (strspn (buf + i, "^") == sizeof buf - 1 - i);
           }
 
         strcpy (buf, "BADFACE");

@@ -1,4 +1,4 @@
-# strerror.m4 serial 14
+# strerror.m4 serial 15
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,10 +20,14 @@ AC_DEFUN([gl_FUNC_STRERROR],
              #include <errno.h>
            ]],
            [[int result = 0;
+             char *str;
              if (!*strerror (-2)) result |= 1;
              errno = 0;
-             if (!*strerror (0)) result |= 2;
+             str = strerror (0);
+             if (!*str) result |= 2;
              if (errno) result |= 4;
+             if (strstr (str, "nknown") || strstr (str, "ndefined"))
+               result |= 8;
              return result;]])],
         [gl_cv_func_working_strerror=yes],
         [gl_cv_func_working_strerror=no],

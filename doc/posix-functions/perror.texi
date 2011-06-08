@@ -15,7 +15,7 @@ OpenBSD 4.0, OSF/1 5.1, Cygwin 1.5.x, mingw.
 @item
 This function treats @code{errno} of 0 like failure, although POSIX
 requires that the message declare it as a success, on some platforms:
-FreeBSD 8.2
+FreeBSD 8.2, MacOS X 10.5.
 @item
 This function clobbers the @code{strerror} buffer on some platforms:
 Cygwin 1.7.9.

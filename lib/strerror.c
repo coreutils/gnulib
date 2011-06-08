@@ -45,7 +45,8 @@ strerror (int n)
   if (msg)
     return (char *) msg;
 
-  /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.  */
+  /* FreeBSD rejects 0; see http://austingroupbugs.net/view.php?id=382.
+     MacOS X 10.5 does not distinguish 0 from -1.  */
   if (n)
     msg = strerror (n);
   else
@@ -53,14 +54,17 @@ strerror (int n)
       int saved_errno = errno;
       errno = 0;
       msg = strerror (n);
-      if (errno)
+      if (errno || (msg &&
+                    (strstr (msg, "nknown") || strstr (msg, "ndefined"))))
         msg = "Success";
       errno = saved_errno;
     }
 
   /* Our strerror_r implementation might use the system's strerror
      buffer, so all other clients of strerror have to see the error
-     copied into a buffer that we manage.  */
+     copied into a buffer that we manage.  This is not thread-safe,
+     even if the system strerror is, but portable programs shouldn't
+     be using strerror if they care about thread-safety.  */
   if (!msg || !*msg)
     {
       static char const fmt[] = "Unknown error %d";

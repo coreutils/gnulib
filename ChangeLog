@@ -1,3 +1,18 @@
+2011-06-08  Eric Blake  <eblake@redhat.com>
+
+	strerror_r-posix: fix on MacOS
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Flush out MacOS bug.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R_WORKS): Likewise, and fix
+	logic bug.
+	* lib/strerror_r.c (strerror_r): Fix the bug.
+	* lib/strerror.c (strerror): Likewise.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document the
+	problem.
+	* doc/posix-functions/strerror.texi (strerror): Likewise.
+	* doc/posix-functions/perror.texi (perror): Likewise.
+	* tests/test-strerror.c (main): Enhance test.
+	* tests/test-strerror_r.c (main): Likewise.
+
 2011-06-08  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Better isolation between different gnulib-tool invocations.
