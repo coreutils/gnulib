@@ -205,7 +205,7 @@ typedef pth_t gl_thread_t;
 # define glthread_join(THREAD, RETVALP) \
     (pth_in_use () && !pth_join (THREAD, RETVALP) ? errno : 0)
 # define gl_thread_self() \
-    (pth_in_use () ? (void *) pth_self () : 0)
+    (pth_in_use () ? (void *) pth_self () : NULL)
 # define gl_thread_exit(RETVAL) \
     (pth_in_use () ? pth_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
@@ -257,7 +257,7 @@ typedef thread_t gl_thread_t;
 # define glthread_join(THREAD, RETVALP) \
     (thread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
 # define gl_thread_self() \
-    (thread_in_use () ? (void *) thr_self () : 0)
+    (thread_in_use () ? (void *) thr_self () : NULL)
 # define gl_thread_exit(RETVAL) \
     (thread_in_use () ? thr_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
@@ -322,7 +322,7 @@ typedef int gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) ENOSYS
 # define glthread_sigmask(HOW, SET, OSET) 0
 # define glthread_join(THREAD, RETVALP) 0
-# define gl_thread_self() NULL
+# define gl_thread_self() 0
 # define gl_thread_exit(RETVAL) 0
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
 
