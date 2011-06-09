@@ -47,6 +47,10 @@
        current = gl_thread_self ();
        extern gl_thread_t gl_thread_self (void);
 
+   Getting a reference to the current thread as a pointer, for debugging:
+       ptr = gl_thread_self_pointer ();
+       extern void * gl_thread_self_pointer (void);
+
    Terminating the current thread:
        gl_thread_exit (return_value);
        extern void gl_thread_exit (void *return_value) __attribute__ ((noreturn));
@@ -147,8 +151,20 @@ typedef pthread_t gl_thread_t;
     (pthread_in_use () ? pthread_sigmask (HOW, SET, OSET) : 0)
 # define glthread_join(THREAD, RETVALP) \
     (pthread_in_use () ? pthread_join (THREAD, RETVALP) : 0)
-# define gl_thread_self() \
-    (pthread_in_use () ? (void *) pthread_self () : NULL)
+# ifdef PTW32_VERSION
+   /* In pthreads-win32, pthread_t is a struct with a pointer field 'p' and
+      other fields.  */
+#  define gl_thread_self() \
+     (pthread_in_use () ? pthread_self () : gl_null_thread)
+#  define gl_thread_self_pointer() \
+     (pthread_in_use () ? pthread_self ().p : NULL)
+extern const gl_thread_t gl_null_thread;
+# else
+#  define gl_thread_self() \
+     (pthread_in_use () ? (void *) pthread_self () : NULL)
+#  define gl_thread_self_pointer() \
+     gl_thread_self ()
+# endif
 # define gl_thread_exit(RETVAL) \
     (pthread_in_use () ? pthread_exit (RETVAL) : 0)
 
@@ -206,6 +222,8 @@ typedef pth_t gl_thread_t;
     (pth_in_use () && !pth_join (THREAD, RETVALP) ? errno : 0)
 # define gl_thread_self() \
     (pth_in_use () ? (void *) pth_self () : NULL)
+# define gl_thread_self_pointer() \
+    gl_thread_self ()
 # define gl_thread_exit(RETVAL) \
     (pth_in_use () ? pth_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
@@ -258,6 +276,8 @@ typedef thread_t gl_thread_t;
     (thread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
 # define gl_thread_self() \
     (thread_in_use () ? (void *) thr_self () : NULL)
+# define gl_thread_self_pointer() \
+    gl_thread_self ()
 # define gl_thread_exit(RETVAL) \
     (thread_in_use () ? thr_exit (RETVAL) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
@@ -298,6 +318,8 @@ typedef struct gl_thread_struct *gl_thread_t;
     glthread_join_func (THREAD, RETVALP)
 # define gl_thread_self() \
     gl_thread_self_func ()
+# define gl_thread_self_pointer() \
+    gl_thread_self ()
 # define gl_thread_exit(RETVAL) \
     gl_thread_exit_func (RETVAL)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
@@ -323,6 +345,8 @@ typedef int gl_thread_t;
 # define glthread_sigmask(HOW, SET, OSET) 0
 # define glthread_join(THREAD, RETVALP) 0
 # define gl_thread_self() 0
+# define gl_thread_self_pointer() \
+    ((void *) gl_thread_self ())
 # define gl_thread_exit(RETVAL) 0
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
 

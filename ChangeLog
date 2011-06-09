@@ -1,5 +1,18 @@
 2011-06-09  Bruno Haible  <bruno@clisp.org>
 
+	thread: Support pthreads-win32.
+	* lib/glthread/thread.h (gl_thread_self): Define differently on
+	pthreads-win32.
+	(gl_null_thread): New declaration.
+	(gl_thread_self_pointer): New macro.
+	* lib/glthread/thread.c (gl_null_thread): New constant.
+	* tests/test-lock.c: Use gl_thread_self_pointer instead of
+	gl_thread_self.
+	* tests/test-tls.c: Likewise.
+	Suggested by Paul Eggert. Reported by Eric Blake.
+
+2011-06-09  Bruno Haible  <bruno@clisp.org>
+
 	thread: Fix confusion between NULL and 0.
 	* lib/glthread/thread.h (gl_thread_self): Use NULL and 0 appropriately.
 	Reported by Paul Eggert.

@@ -89,7 +89,7 @@ worker_thread (void *arg)
   int i, j, repeat;
   unsigned int values[KEYS_COUNT];
 
-  dbgprintf ("Worker %p started\n", gl_thread_self ());
+  dbgprintf ("Worker %p started\n", gl_thread_self_pointer ());
 
   /* Initialize the per-thread storage.  */
   for (i = 0; i < KEYS_COUNT; i++)
@@ -102,28 +102,28 @@ worker_thread (void *arg)
   perhaps_yield ();
 
   /* Verify that the initial value is NULL.  */
-  dbgprintf ("Worker %p before initial verify\n", gl_thread_self ());
+  dbgprintf ("Worker %p before initial verify\n", gl_thread_self_pointer ());
   for (i = 0; i < KEYS_COUNT; i++)
     if (gl_tls_get (mykeys[i]) != NULL)
       abort ();
-  dbgprintf ("Worker %p after  initial verify\n", gl_thread_self ());
+  dbgprintf ("Worker %p after  initial verify\n", gl_thread_self_pointer ());
   perhaps_yield ();
 
   /* Initialize the per-thread storage.  */
-  dbgprintf ("Worker %p before first tls_set\n", gl_thread_self ());
+  dbgprintf ("Worker %p before first tls_set\n", gl_thread_self_pointer ());
   for (i = 0; i < KEYS_COUNT; i++)
     {
       unsigned int *ptr = (unsigned int *) malloc (sizeof (unsigned int));
       *ptr = values[i];
       gl_tls_set (mykeys[i], ptr);
     }
-  dbgprintf ("Worker %p after  first tls_set\n", gl_thread_self ());
+  dbgprintf ("Worker %p after  first tls_set\n", gl_thread_self_pointer ());
   perhaps_yield ();
 
   /* Shuffle around the pointers.  */
   for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
     {
-      dbgprintf ("Worker %p doing value swapping\n", gl_thread_self ());
+      dbgprintf ("Worker %p doing value swapping\n", gl_thread_self_pointer ());
       i = ((unsigned int) rand () >> 3) % KEYS_COUNT;
       j = ((unsigned int) rand () >> 3) % KEYS_COUNT;
       if (i != j)
@@ -138,14 +138,14 @@ worker_thread (void *arg)
     }
 
   /* Verify that all the values are from this thread.  */
-  dbgprintf ("Worker %p before final verify\n", gl_thread_self ());
+  dbgprintf ("Worker %p before final verify\n", gl_thread_self_pointer ());
   for (i = 0; i < KEYS_COUNT; i++)
     if ((*(unsigned int *) gl_tls_get (mykeys[i]) % THREAD_COUNT) != id)
       abort ();
-  dbgprintf ("Worker %p after  final verify\n", gl_thread_self ());
+  dbgprintf ("Worker %p after  final verify\n", gl_thread_self_pointer ());
   perhaps_yield ();
 
-  dbgprintf ("Worker %p dying.\n", gl_thread_self ());
+  dbgprintf ("Worker %p dying.\n", gl_thread_self_pointer ());
   return NULL;
 }
 

@@ -29,6 +29,20 @@
 
 /* ========================================================================= */
 
+#if USE_POSIX_THREADS
+
+#include <pthread.h>
+
+#ifdef PTW32_VERSION
+
+const gl_thread_t gl_null_thread /* = { .p = NULL } */;
+
+#endif
+
+#endif
+
+/* ========================================================================= */
+
 #if USE_WIN32_THREADS
 
 #include <process.h>
