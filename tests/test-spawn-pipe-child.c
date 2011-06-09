@@ -95,8 +95,12 @@ main (int argc, char *argv[])
       ASSERT (is_open (STDERR_FILENO));
       break;
     case 1:
-      /* Expect fd 2 is closed.  */
+      /* Expect fd 2 is closed.
+         But on HP-UX 11, fd 2 gets automatically re-opened to /dev/null if it
+         was closed.  */
+#if !defined __hpux
       ASSERT (! is_open (STDERR_FILENO));
+#endif
       break;
     default:
       ASSERT (0);

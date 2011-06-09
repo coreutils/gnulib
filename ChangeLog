@@ -1,5 +1,11 @@
 2011-06-09  Bruno Haible  <bruno@clisp.org>
 
+	spawn-pipe tests: Avoid test failure on HP-UX 11.
+	* tests/test-spawn-pipe-child.c (main) [HP-UX]: Don't assert that fd 2
+	is closed.
+
+2011-06-09  Bruno Haible  <bruno@clisp.org>
+
 	acl tests: Fix compilation error on HP-UX 11.
 	* tests/test-sameacls.c: Include <sys/acl.h> also on HP-UX.
 
