@@ -1,5 +1,10 @@
 2011-06-09  Bruno Haible  <bruno@clisp.org>
 
+	acl tests: Fix compilation error on HP-UX 11.
+	* tests/test-sameacls.c: Include <sys/acl.h> also on HP-UX.
+
+2011-06-09  Bruno Haible  <bruno@clisp.org>
+
 	rmdir: Avoid test failure on HP-UX 10.20.
 	* tests/test-rmdir.h (test_rmdir_func): Accept ENOTEMPTY error, like
 	EEXIST.

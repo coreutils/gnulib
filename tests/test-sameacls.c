@@ -24,7 +24,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#if HAVE_ACL_GET_FILE || HAVE_FACL || HAVE_ACLX_GET || HAVE_STATACL || HAVE_ACLSORT
+#if HAVE_ACL_GET_FILE || HAVE_FACL || HAVE_GETACL || HAVE_ACLX_GET || HAVE_STATACL || HAVE_ACLSORT
 # include <sys/types.h>
 # include <sys/acl.h>
 #endif
