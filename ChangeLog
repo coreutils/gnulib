@@ -1,3 +1,9 @@
+2011-06-09  Bruno Haible  <bruno@clisp.org>
+
+	rmdir: Avoid test failure on HP-UX 10.20.
+	* tests/test-rmdir.h (test_rmdir_func): Accept ENOTEMPTY error, like
+	EEXIST.
+
 2011-06-08  Eric Blake  <eblake@redhat.com>
 
 	perror: fix test on mingw
