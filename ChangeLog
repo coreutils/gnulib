@@ -1,3 +1,16 @@
+2011-06-11  James Youngman  <jay@gnu.org>
+
+	New module 'stat-size'.
+	* modules/stat-size: New module.  Provides macros for accessing
+	file size information in instances of struct stat.  Depends on the
+	fileblocks module because it calls st_blocks.
+	* lib/stat-size.h: New file, adapted from coreutils' system.h.
+	* doc/gnulib.texi: Include stat-size.texi.
+	* doc/stat-size.texi: Documentation for this module.
+	* m4/stat-size.m4: New file; defines gl_STAT_SIZE.
+	* m4/fileblocks.m4: Mention that stat-size depends on the call to
+	AC_STRUCT_ST_BLOCKS.
+
 2011-06-09  Bruno Haible  <bruno@clisp.org>
 
 	thread: Support pthreads-win32.

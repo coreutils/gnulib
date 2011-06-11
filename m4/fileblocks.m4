@@ -8,6 +8,10 @@ AC_DEFUN([gl_FILEBLOCKS],
 [
   AC_STRUCT_ST_BLOCKS
   dnl Note: AC_STRUCT_ST_BLOCKS does AC_LIBOBJ([fileblocks]).
+  dnl The stat-size module depends on this one and also assumes that
+  dnl HAVE_STRUCT_STAT_ST_BLOCKS is correctly defined.  So if you
+  dnl remove the call above, please make sure that this does not
+  dnl introduce a bug into lib/stat-size.h.
   if test $ac_cv_member_struct_stat_st_blocks = no; then
     gl_PREREQ_FILEBLOCKS
   fi

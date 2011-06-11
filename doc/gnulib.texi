@@ -6512,6 +6512,7 @@ This list of functions is sorted according to the header that declares them.
 * warnings::
 * manywarnings::
 * Running self-tests under valgrind::
+* stat-size::
 @end menu
 
 @node alloca
@@ -6607,6 +6608,9 @@ ASCII characters.
 @include manywarnings.texi
 
 @include valgrind-tests.texi
+
+@include stat-size.texi
+
 
 @node Regular expressions
 @chapter Regular expressions
