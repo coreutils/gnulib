@@ -527,7 +527,15 @@ file_has_acl (char const *name, struct stat const *sb)
           count = getacl (name, 0, NULL);
 
           if (count < 0)
-            return (errno == ENOSYS || errno == EOPNOTSUPP ? 0 : -1);
+            {
+              /* ENOSYS is seen on newer HP-UX versions.
+                 EOPNOTSUPP is typically seen on NFS mounts.
+                 ENOTSUP was seen on Quantum StorNext file systems (cvfs).  */
+              if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+                return 0;
+              else
+                return -1;
+            }
 
           if (count == 0)
             return 0;

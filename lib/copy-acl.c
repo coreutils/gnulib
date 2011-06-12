@@ -420,7 +420,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
       if (count < 0)
         {
-          if (ACL_NOT_WELL_SUPPORTED (errno))
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
             {
               count = 0;
               break;
@@ -455,7 +455,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
       int saved_errno = errno;
 
-      if (ACL_NOT_WELL_SUPPORTED (errno))
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
         {
           struct stat source_statbuf;
 

@@ -360,10 +360,12 @@ main (int argc, char *argv[])
   int count2;
 
   count1 = getacl (file1, 0, NULL);
-  if (count1 < 0 && (errno == ENOSYS || errno == EOPNOTSUPP))
+  if (count1 < 0
+      && (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP))
     count1 = 0;
   count2 = getacl (file2, 0, NULL);
-  if (count2 < 0 && (errno == ENOSYS || errno == EOPNOTSUPP))
+  if (count2 < 0
+      && (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP))
     count2 = 0;
 
   if (count1 < 0)

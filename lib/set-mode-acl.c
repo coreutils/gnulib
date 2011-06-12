@@ -432,7 +432,7 @@ qset_acl (char const *name, int desc, mode_t mode)
     ret = setacl (name, sizeof (entries) / sizeof (struct acl_entry), entries);
   if (ret < 0)
     {
-      if (errno == ENOSYS || errno == EOPNOTSUPP)
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
         return chmod_or_fchmod (name, desc, mode);
       return -1;
     }

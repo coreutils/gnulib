@@ -1,5 +1,15 @@
 2011-06-12  Bruno Haible  <bruno@clisp.org>
 
+	acl: Complete the 2010-08-10 fix.
+	* lib/file-has-acl.c (file_has_acl) [HP-UX]: Also test against ENOTSUP.
+	* lib/set-mode-acl.c (qset_acl) [HP-UX]: Likewise.
+	* lib/copy-acl.c (qcopy_acl) [HP-UX]: Test for the errno values
+	explicitly.
+	* tests/test-sameacls.c (main) [HP-UX]: Also test against ENOTSUP.
+	Reported in <http://debbugs.gnu.org/db/60/6053.html>.
+
+2011-06-12  Bruno Haible  <bruno@clisp.org>
+
 	spawn-pipe tests: Comments.
 	* tests/test-spawn-pipe-child.c (main): Update comment.
 	Reported by James Youngman <jay@gnu.org>.
