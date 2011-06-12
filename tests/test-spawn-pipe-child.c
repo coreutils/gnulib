@@ -97,7 +97,8 @@ main (int argc, char *argv[])
     case 1:
       /* Expect fd 2 is closed.
          But on HP-UX 11, fd 2 gets automatically re-opened to /dev/null if it
-         was closed.  */
+         was closed. Future POSIX will allow this, see
+         <http://austingroupbugs.net/view.php?id=173>.  */
 #if !defined __hpux
       ASSERT (! is_open (STDERR_FILENO));
 #endif

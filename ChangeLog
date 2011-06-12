@@ -1,3 +1,9 @@
+2011-06-12  Bruno Haible  <bruno@clisp.org>
+
+	spawn-pipe tests: Comments.
+	* tests/test-spawn-pipe-child.c (main): Update comment.
+	Reported by James Youngman <jay@gnu.org>.
+
 2011-06-11  James Youngman  <jay@gnu.org>
 
 	New module 'stat-size'.
