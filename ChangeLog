@@ -1,3 +1,8 @@
+2011-06-13  Jim Meyering  <meyering@redhat.com>
+
+	syntax-check: add a rule to help enforce the no-AC_LIBOBJ-in-m4/ policy
+	* Makefile (sc_prohibit_AC_LIBOBJ_in_m4): New rule.
+
 2011-05-23  Bruno Haible  <bruno@clisp.org>
 
 	yesno: Move AC_LIBOBJ invocations to module description.

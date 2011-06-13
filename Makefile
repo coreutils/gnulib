@@ -37,6 +37,42 @@ sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
 	else :; fi
 
+# Files in m4/ that (exceptionally) may use AC_LIBOBJ.
+# Do not include their ".m4" suffix.
+allow_AC_LIBOBJ =	\
+  close			\
+  dprintf		\
+  dup2			\
+  faccessat		\
+  fchdir		\
+  fclose		\
+  fcntl			\
+  fprintf-posix		\
+  open			\
+  printf-posix		\
+  snprintf		\
+  sprintf-posix		\
+  stdio_h		\
+  vasnprintf		\
+  vasprintf		\
+  vdprintf		\
+  vfprintf-posix	\
+  vprintf-posix		\
+  vsnprintf		\
+  vsprintf-posix
+
+allow_AC_LIBOBJ_or := $(shell echo $(allow_AC_LIBOBJ) | tr -s ' ' '|')
+
+sc_prohibit_AC_LIBOBJ_in_m4:
+	url=http://article.gmane.org/gmane.comp.lib.gnulib.bugs/26995;	\
+	if test -d .git; then						\
+	  git ls-files m4						\
+	     | grep -Ev '^m4/($(allow_AC_LIBOBJ_or))\.m4$$'		\
+	     | xargs grep '^ *AC_LIBOBJ('				\
+	    && { printf '%s\n' 'Do not use AC_LIBOBJ in m4/*.m4;'	\
+		 "see <$$url>"; exit 1; } || :;				\
+	else :; fi
+
 sc_pragma_columns:
 	if test -d .git; then						\
 	  git ls-files|grep '\.in\.h$$'					\
