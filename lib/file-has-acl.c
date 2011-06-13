@@ -234,6 +234,33 @@ acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb)
   return 0;
 }
 
+# if HAVE_ACLV_H /* HP-UX >= 11.11 */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+int
+aclv_nontrivial (int count, struct acl *entries)
+{
+  int i;
+
+  for (i = 0; i < count; i++)
+    {
+      struct acl *ace = &entries[i];
+
+      /* Note: If ace->a_type = USER_OBJ, ace->a_id is the st_uid from stat().
+         If ace->a_type = GROUP_OBJ, ace->a_id is the st_gid from stat().
+         We don't need to check ace->a_id in these cases.  */
+      if (!(ace->a_type == USER_OBJ /* no need to check ace->a_id here */
+            || ace->a_type == GROUP_OBJ /* no need to check ace->a_id here */
+            || ace->a_type == CLASS_OBJ
+            || ace->a_type == OTHER_OBJ))
+        return 1;
+    }
+  return 0;
+}
+
+# endif
+
 #elif USE_ACL && (HAVE_ACLX_GET || HAVE_STATACL) /* AIX */
 
 /* Return 1 if the given ACL is non-trivial.
@@ -519,11 +546,11 @@ file_has_acl (char const *name, struct stat const *sb)
 
 # elif HAVE_GETACL /* HP-UX */
 
-      int count;
-      struct acl_entry entries[NACLENTRIES];
-
       for (;;)
         {
+          int count;
+          struct acl_entry entries[NACLENTRIES];
+
           count = getacl (name, 0, NULL);
 
           if (count < 0)
@@ -532,7 +559,7 @@ file_has_acl (char const *name, struct stat const *sb)
                  EOPNOTSUPP is typically seen on NFS mounts.
                  ENOTSUP was seen on Quantum StorNext file systems (cvfs).  */
               if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
-                return 0;
+                break;
               else
                 return -1;
             }
@@ -562,6 +589,46 @@ file_has_acl (char const *name, struct stat const *sb)
           /* Huh? The number of ACL entries changed since the last call.
              Repeat.  */
         }
+
+#  if HAVE_ACLV_H /* HP-UX >= 11.11 */
+
+      for (;;)
+        {
+          int count;
+          struct acl entries[NACLVENTRIES];
+
+          count = acl ((char *) name, ACL_CNT, NACLVENTRIES, entries);
+
+          if (count < 0)
+            {
+              /* EOPNOTSUPP is seen on NFS in HP-UX 11.11, 11.23.
+                 EINVAL is seen on NFS in HP-UX 11.31.  */
+              if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+                break;
+              else
+                return -1;
+            }
+
+          if (count == 0)
+            return 0;
+
+          if (count > NACLVENTRIES)
+            /* If NACLVENTRIES cannot be trusted, use dynamic memory
+               allocation.  */
+            abort ();
+
+          /* If there are more than 4 entries, there cannot be only the
+             four base ACL entries.  */
+          if (count > 4)
+            return 1;
+
+          if (acl ((char *) name, ACL_GET, count, entries) == count)
+            return aclv_nontrivial (count, entries);
+          /* Huh? The number of ACL entries changed since the last call.
+             Repeat.  */
+        }
+
+#  endif
 
 # elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
 

@@ -406,7 +406,6 @@ qset_acl (char const *name, int desc, mode_t mode)
 # elif HAVE_GETACL /* HP-UX */
 
   struct stat statbuf;
-  struct acl_entry entries[3];
   int ret;
 
   if (desc != -1)
@@ -416,25 +415,68 @@ qset_acl (char const *name, int desc, mode_t mode)
   if (ret < 0)
     return -1;
 
-  entries[0].uid = statbuf.st_uid;
-  entries[0].gid = ACL_NSGROUP;
-  entries[0].mode = (mode >> 6) & 7;
-  entries[1].uid = ACL_NSUSER;
-  entries[1].gid = statbuf.st_gid;
-  entries[1].mode = (mode >> 3) & 7;
-  entries[2].uid = ACL_NSUSER;
-  entries[2].gid = ACL_NSGROUP;
-  entries[2].mode = mode & 7;
+  {
+    struct acl_entry entries[3];
 
-  if (desc != -1)
-    ret = fsetacl (desc, sizeof (entries) / sizeof (struct acl_entry), entries);
-  else
-    ret = setacl (name, sizeof (entries) / sizeof (struct acl_entry), entries);
+    entries[0].uid = statbuf.st_uid;
+    entries[0].gid = ACL_NSGROUP;
+    entries[0].mode = (mode >> 6) & 7;
+    entries[1].uid = ACL_NSUSER;
+    entries[1].gid = statbuf.st_gid;
+    entries[1].mode = (mode >> 3) & 7;
+    entries[2].uid = ACL_NSUSER;
+    entries[2].gid = ACL_NSGROUP;
+    entries[2].mode = mode & 7;
+
+    if (desc != -1)
+      ret = fsetacl (desc, sizeof (entries) / sizeof (struct acl_entry), entries);
+    else
+      ret = setacl (name, sizeof (entries) / sizeof (struct acl_entry), entries);
+  }
   if (ret < 0)
     {
-      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
-        return chmod_or_fchmod (name, desc, mode);
-      return -1;
+      if (!(errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP))
+        return -1;
+
+#  if HAVE_ACLV_H /* HP-UX >= 11.11 */
+      {
+        struct acl entries[4];
+
+        entries[0].a_type = USER_OBJ;
+        entries[0].a_id = 0; /* irrelevant */
+        entries[0].a_perm = (mode >> 6) & 7;
+        entries[1].a_type = GROUP_OBJ;
+        entries[1].a_id = 0; /* irrelevant */
+        entries[1].a_perm = (mode >> 3) & 7;
+        entries[2].a_type = CLASS_OBJ;
+        entries[2].a_id = 0;
+        entries[2].a_perm = (mode >> 3) & 7;
+        entries[3].a_type = OTHER_OBJ;
+        entries[3].a_id = 0;
+        entries[3].a_perm = mode & 7;
+
+        ret = aclsort (sizeof (entries) / sizeof (struct acl), 1, entries);
+        if (ret > 0)
+          abort ();
+        if (ret < 0)
+          {
+            if (0)
+              return chmod_or_fchmod (name, desc, mode);
+            return -1;
+          }
+
+        ret = acl ((char *) name, ACL_SET,
+                   sizeof (entries) / sizeof (struct acl), entries);
+        if (ret < 0)
+          {
+            if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+              return chmod_or_fchmod (name, desc, mode);
+            return -1;
+          }
+      }
+#  else
+      return chmod_or_fchmod (name, desc, mode);
+#  endif
     }
 
   if (mode & (S_ISUID | S_ISGID | S_ISVTX))

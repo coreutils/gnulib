@@ -243,15 +243,16 @@ Utilities:
   chmod
 
 
-HP-UX ACLs
+HP-UX 11.00 ACLs
 
+Present in HP-UX >= 11.00. On some machines, yields ENOSYS always.
 Manual pages:
-  http://docs.hp.com/en/B2355-60105/acl.2.html
-  http://docs.hp.com/en/B2355-60105/lsacl.1.html
-  http://docs.hp.com/en/B2355-60105/chacl.1.html
-  http://docs.hp.com/en/B2355-60105/getacl.1.html
+  getacl, fgetacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261503/c02261503.pdf
+  setacl, fsetacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02267386/c02267386.pdf
+  lsacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261049/c02261049.pdf
+  chacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c01921575/c01921575.pdf p. 125
 Includes:
-  <acl.h> or <sys/acl.h>, optionally <aclv.h>
+  <acl.h> or <sys/acl.h>
 Library:
   none needed
 Functions:
@@ -259,14 +260,31 @@ Functions:
   fgetacl
   fsetacl
   setacl
-Functions only declared in <aclv.h>:
-  acl
 Utilities:
   lsacl
   chacl
+  chmod
+
+
+HP-UX 11.11 ACLs
+
+Present in HP-UX >= 11.11.
+Manual pages:
+  acl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02254861/c02254861.pdf
+  acl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c01921366/c01921366.pdf p. 27
+  aclsort: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02254876/c02254876.pdf
+  getacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261501/c02261501.pdf
+  setacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02267385/c02267385.pdf
+Includes:
+  <aclv.h>
+Library:
+  none needed
+Functions:
+  acl
+  aclsort
+Utilities:
   getacl
   setacl
-  chmod
 
 
 IRIX ACLs

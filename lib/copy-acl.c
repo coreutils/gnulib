@@ -410,6 +410,12 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
   int count;
   struct acl_entry entries[NACLENTRIES];
+# if HAVE_ACLV_H
+  int aclv_count;
+  struct acl aclv_entries[NACLVENTRIES];
+# endif
+  int did_chmod;
+  int saved_errno;
   int ret;
 
   for (;;)
@@ -445,42 +451,107 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
          Repeat.  */
     }
 
-  if (count == 0)
-    return qset_acl (dst_name, dest_desc, mode);
-
-  ret = (dest_desc != -1
-         ? fsetacl (dest_desc, count, entries)
-         : setacl (dst_name, count, entries));
-  if (ret < 0)
+# if HAVE_ACLV_H
+  for (;;)
     {
-      int saved_errno = errno;
+      aclv_count = acl ((char *) src_name, ACL_CNT, NACLVENTRIES, aclv_entries);
 
-      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+      if (aclv_count < 0)
         {
-          struct stat source_statbuf;
-
-          if ((source_desc != -1
-               ? fstat (source_desc, &source_statbuf)
-               : stat (src_name, &source_statbuf)) == 0)
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
             {
-              if (!acl_nontrivial (count, entries, &source_statbuf))
-                return chmod_or_fchmod (dst_name, dest_desc, mode);
+              count = 0;
+              break;
             }
           else
-            saved_errno = errno;
+            return -2;
         }
 
-      chmod_or_fchmod (dst_name, dest_desc, mode);
-      errno = saved_errno;
-      return -1;
+      if (aclv_count == 0)
+        break;
+
+      if (aclv_count > NACLVENTRIES)
+        /* If NACLVENTRIES cannot be trusted, use dynamic memory allocation.  */
+        abort ();
+
+      if (acl ((char *) src_name, ACL_GET, aclv_count, aclv_entries)
+          == aclv_count)
+        break;
+      /* Huh? The number of ACL entries changed since the last call.
+         Repeat.  */
+    }
+# endif
+
+  if (count == 0)
+# if HAVE_ACLV_H
+    if (aclv_count == 0)
+# endif
+      return qset_acl (dst_name, dest_desc, mode);
+
+  did_chmod = 0; /* set to 1 once the mode bits in 0777 have been set */
+  saved_errno = 0; /* the first non-ignorable error code */
+
+  if (count > 0)
+    {
+      ret = (dest_desc != -1
+             ? fsetacl (dest_desc, count, entries)
+             : setacl (dst_name, count, entries));
+      if (ret < 0 && saved_errno == 0)
+        {
+          saved_errno = errno;
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+            {
+              struct stat source_statbuf;
+
+              if ((source_desc != -1
+                   ? fstat (source_desc, &source_statbuf)
+                   : stat (src_name, &source_statbuf)) == 0)
+                {
+                  if (!acl_nontrivial (count, entries, &source_statbuf))
+                    saved_errno = 0;
+                }
+              else
+                saved_errno = errno;
+            }
+        }
+      else
+        did_chmod = 1;
     }
 
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+# if HAVE_ACLV_H
+  if (aclv_count > 0)
     {
-      /* We did not call chmod so far, and either the mode and the ACL are
-         separate or special bits are to be set which don't fit into ACLs.  */
+      ret = acl ((char *) dst_name, ACL_SET, aclv_count, aclv_entries);
+      if (ret < 0 && saved_errno == 0)
+        {
+          saved_errno = errno;
+          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+            {
+              if (!aclv_nontrivial (aclv_count, aclv_entries))
+                saved_errno = 0;
+            }
+        }
+      else
+        did_chmod = 1;
+    }
+# endif
 
-      return chmod_or_fchmod (dst_name, dest_desc, mode);
+  if (did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
+    {
+      /* We did not call chmod so far, and special bits are to be set which
+         don't fit into ACLs.  */
+
+      if (chmod_or_fchmod (dst_name, dest_desc, mode) != 0)
+        {
+          if (saved_errno == 0)
+            saved_errno = errno;
+        }
+    }
+
+  if (saved_errno)
+    {
+      errno = saved_errno;
+      return -1;
     }
   return 0;
 

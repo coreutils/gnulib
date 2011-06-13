@@ -1,5 +1,35 @@
 2011-06-12  Bruno Haible  <bruno@clisp.org>
 
+	acl: Add support for HP-UX >= 11.11 JFS ACLs.
+	* doc/acl-resources.txt: Add info about the ACL APIs on HP-UX.
+	* m4/acl.m4 (gl_FUNC_ACL): Also test for HP-UX 11.11 API.
+	* lib/acl-internal.h [HP-UX 11.11]: Include <aclv.h>.
+	(acl, aclsort): New declarations.
+	(aclv_nontrivial): New declaration.
+	* lib/file-has-acl.c (aclv_nontrivial) [HP-UX 11.11]: New function.
+	(file_has_acl): Read also the second kind of HP-UX ACLs.
+	* lib/set-mode-acl.c (qset_acl) [HP-UX 11.11]: Try to set the second
+	kind of HP-UX ACLs if the first kind fails.
+	* lib/copy-acl.c (qcopy_acl) [HP-UX 11.11]: Read and set also the
+	second kind of HP-UX ACLs.
+	* tests/test-sameacls.c [HP-UX 11.11]: Include <aclv.h>.
+	(main) [HP-UX 11.11]: Test also whether the second kind of HP-UX ACLs
+	agree.
+	* tests/test-file-has-acl.sh (acl_flavor) [HP-UX 11.11]: Set to
+	hpuxjfs.
+	Handle hpuxjfs.
+	* tests/test-set-mode-acl.sh (acl_flavor) [HP-UX 11.11]: Set to
+	hpuxjfs.
+	Handle hpuxjfs.
+	* tests/test-copy-acl.sh (acl_flavor) [HP-UX 11.11]: Set to hpuxjfs.
+	(func_test_same_acls): Use both lsacl and getacl.
+	Handle hpuxjfs.
+	* tests/test-copy-file.sh (acl_flavor) [HP-UX 11.11]: Set to hpuxjfs.
+	(func_test_same_acls): Use both lsacl and getacl.
+	Handle hpuxjfs.
+
+2011-06-12  Bruno Haible  <bruno@clisp.org>
+
 	acl: Complete the 2010-08-10 fix.
 	* lib/file-has-acl.c (file_has_acl) [HP-UX]: Also test against ENOTSUP.
 	* lib/set-mode-acl.c (qset_acl) [HP-UX]: Likewise.

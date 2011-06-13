@@ -35,6 +35,15 @@
 # include <acl/libacl.h>
 #endif
 
+/* On HP-UX >= 11.11, additional ACL API is available in <aclv.h>.  */
+#if HAVE_ACLV_H
+# include <sys/types.h>
+# include <aclv.h>
+/* HP-UX 11.11 lacks these declarations.  */
+extern int acl (char *, int, int, struct acl *);
+extern int aclsort (int, int, struct acl *);
+#endif
+
 #include "error.h"
 #include "quote.h"
 
@@ -205,6 +214,14 @@ extern int acl_ace_nontrivial (int count, ace_t *entries);
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb);
+
+#  if HAVE_ACLV_H /* HP-UX >= 11.11 */
+
+/* Return 1 if the given ACL is non-trivial.
+   Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
+extern int aclv_nontrivial (int count, struct acl *entries);
+
+#  endif
 
 # elif HAVE_ACLX_GET && 0 /* AIX */
 

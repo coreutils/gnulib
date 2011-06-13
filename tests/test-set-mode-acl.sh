@@ -60,7 +60,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, osf1, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, osf1, aix, macosx, irix, none.
   # TODO: Support also native Win32 platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -88,7 +88,13 @@ cd "$builddir" ||
     if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
       # HP-UX, sometimes also IRIX.
-      acl_flavor=hpux
+      if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
+        # HP-UX 11.11 or newer.
+        acl_flavor=hpuxjfs
+      else
+        # HP-UX 11.00.
+        acl_flavor=hpux
+      fi
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
         # Tru64, NonStop Kernel.
@@ -177,6 +183,11 @@ cd "$builddir" ||
           hpux)
             orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`
             chacl -r "${orig}($auid.%,--x)" tmpfile0
+            ;;
+          hpuxjfs)
+            orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`
+            chacl -r "${orig}($auid.%,--x)" tmpfile0 \
+              || setacl -m user:$auid:1 tmpfile0
             ;;
           osf1)
             setacl -u user:$auid:1 tmpfile0

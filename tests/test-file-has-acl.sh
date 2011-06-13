@@ -60,7 +60,7 @@ cd "$builddir" ||
   # Classification of the platform according to the programs available for
   # manipulating ACLs.
   # Possible values are:
-  #   linux, cygwin, freebsd, solaris, hpux, osf1, aix, macosx, irix, none.
+  #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, osf1, aix, macosx, irix, none.
   # TODO: Support also native Win32 platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
@@ -88,7 +88,13 @@ cd "$builddir" ||
     if (lsacl / >/dev/null) 2>/dev/null; then
       # Platforms with the lsacl and chacl programs.
       # HP-UX, sometimes also IRIX.
-      acl_flavor=hpux
+      if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
+        # HP-UX 11.11 or newer.
+        acl_flavor=hpuxjfs
+      else
+        # HP-UX 11.00.
+        acl_flavor=hpux
+      fi
     else
       if (getacl tmpfile0 >/dev/null) 2>/dev/null; then
         # Tru64, NonStop Kernel.
@@ -256,7 +262,7 @@ cd "$builddir" ||
         fi
         ;;
 
-      hpux)
+      hpux | hpuxjfs)
 
         # Set an ACL for a user.
         orig=`lsacl tmpfile0 | sed -e 's/ tmpfile0$//'`
@@ -269,6 +275,20 @@ cd "$builddir" ||
 
           func_test_has_acl tmpfile0 no
 
+        else
+          if test $acl_flavor = hpuxjfs; then
+
+            # Set an ACL for a user.
+            setacl -m user:$auid:1 tmpfile0
+
+            func_test_has_acl tmpfile0 yes
+
+            # Remove the ACL for the user.
+            setacl -d user:$auid tmpfile0
+
+            func_test_has_acl tmpfile0 no
+
+          fi
         fi
         ;;
 
