@@ -3341,20 +3341,25 @@ func_emit_lib_Makefile_am ()
       fi
     fi
   done
+  if test -n "$witness_c_macro"; then
+    cppflags_part1=" -D$witness_c_macro=1"
+  else
+    cppflags_part1=
+  fi
+  if $for_test; then
+    cppflags_part2=" -DGNULIB_STRICT_CHECKING=1"
+  else
+    cppflags_part2=
+  fi
   if test -z "$makefile_name"; then
     echo
-    if $for_test; then
-      cppflags_part1=" -DGNULIB_STRICT_CHECKING=1"
-    else
-      cppflags_part1=
-    fi
-    if test -n "$witness_c_macro"; then
-      cppflags_part2=" -D$witness_c_macro=1"
-    else
-      cppflags_part2=
-    fi
     echo "AM_CPPFLAGS =$cppflags_part1$cppflags_part2"
     echo "AM_CFLAGS ="
+  else
+    if test -n "$cppflags_part1$cppflags_part2"; then
+      echo
+      echo "AM_CPPFLAGS +=$cppflags_part1$cppflags_part2"
+    fi
   fi
   echo
   if LC_ALL=C grep "^[a-zA-Z0-9_]*_${perhapsLT}LIBRARIES *+\{0,1\}= *$libname\\.$libext\$" "$tmp"/allsnippets > /dev/null \

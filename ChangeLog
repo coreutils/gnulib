@@ -1,5 +1,11 @@
 2011-06-13  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Addendum to 2011-06-08 commit.
+	* gnulib-tool (func_emit_lib_Makefile_am): If options --makefile-name
+	and --witness-c-macro have been given, augment AM_CPPFLAGS.
+
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
 	fseeko: Provide a non-inline replacement of fseek().
 	* lib/stdio.in.h (fseek): Don't provide if module 'fseek' is not used.
 	* modules/fseeko (Depends-on): Add fseek.
