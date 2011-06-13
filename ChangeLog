@@ -1,3 +1,10 @@
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
+	file-set.h: guard __attibute__ use, now that it's not always defined
+	* lib/file-set.h (record_file): Use __attribute__ only with compiler
+	versions that support it.  This fixes a coreutils build failure with
+	/bin/cc on HP-UX 11.31.
+
 2011-06-12  Bruno Haible  <bruno@clisp.org>
 
 	acl: Add support for HP-UX >= 11.11 JFS ACLs.
