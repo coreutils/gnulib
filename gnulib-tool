@@ -2096,24 +2096,26 @@ func_get_dependencies ()
       ;;
   esac
   # Then the explicit dependencies listed in the module description.
-  if ! $modcache; then
-    func_lookup_file "modules/$1"
-    sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
-  else
-    func_cache_lookup_module "$1"
-    # Output the field's value, including the final newline (if any).
-    if $have_associative; then
-      if eval 'test -n "${modcache_dependson[$1]+set}"'; then
-        eval 'echo "${modcache_dependson[$1]}"'
-      fi
+  { if ! $modcache; then
+      func_lookup_file "modules/$1"
+      sed -n -e "/^Depends-on$sed_extract_prog" < "$lookedup_file"
     else
-      eval "field_set=\"\$${cachevar}_dependson_set\""
-      if test -n "$field_set"; then
-        eval "field_value=\"\$${cachevar}_dependson\""
-        echo "${field_value}"
+      func_cache_lookup_module "$1"
+      # Output the field's value, including the final newline (if any).
+      if $have_associative; then
+        if eval 'test -n "${modcache_dependson[$1]+set}"'; then
+          eval 'echo "${modcache_dependson[$1]}"'
+        fi
+      else
+        eval "field_set=\"\$${cachevar}_dependson_set\""
+        if test -n "$field_set"; then
+          eval "field_value=\"\$${cachevar}_dependson\""
+          echo "${field_value}"
+        fi
       fi
     fi
-  fi
+  } \
+  | sed -e '/^#/d'
 }
 
 # func_get_autoconf_early_snippet module

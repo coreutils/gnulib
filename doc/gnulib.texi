@@ -406,6 +406,8 @@ statements.  For example:
 strtoull   [test $ac_cv_func_strtoumax = no]
 @end smallexample
 
+Lines starting with @code{#} are recognized as comments and are ignored.
+
 @item configure.ac-early
 This field contains @file{configure.ac} stuff (Autoconf macro invocations and
 shell statements) that are logically placed early in the @file{configure.ac}

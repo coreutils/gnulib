@@ -1,5 +1,12 @@
 2011-06-13  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Allow comments in the 'Depends-on' section.
+	* doc/gnulib.texi (Module description): Mention comment syntax in the
+	Depends-on section.
+	* gnulib-tool (func_get_dependencies): Filter out comment lines.
+
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
 	file-set.h: guard __attibute__ use, now that it's not always defined
 	* lib/file-set.h (record_file): Use __attribute__ only with compiler
 	versions that support it.  This fixes a coreutils build failure with
