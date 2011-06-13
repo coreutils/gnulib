@@ -11,6 +11,8 @@ Depends-on:
 stdio
 extensions
 lseek           [test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1]
+# Just to guarantee consistency between ftell() and ftello().
+ftell
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])

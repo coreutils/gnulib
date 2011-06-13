@@ -1,3 +1,12 @@
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
+	ftello: Provide a non-inline replacement of ftell().
+	* lib/stdio.in.h (ftell): Don't provide if module 'ftell' is not used.
+	* m4/ftell.m4 (gl_FUNC_FTELL): Replace ftell also if the system does
+	not have ftello() (such as on mingw).
+	* modules/ftello (Depends-on): Add ftell.
+	* modules/ftell (License): Change to LGPLv2+.
+
 2011-05-07  Bruno Haible  <bruno@clisp.org>
 
 	ftell: Move AC_LIBOBJ invocations to module description.
