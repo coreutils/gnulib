@@ -10,6 +10,7 @@ Depends-on:
 intprops
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([strtof])
 AC_REQUIRE([gl_C99_STRTOLD])
 
 Makefile.am:
