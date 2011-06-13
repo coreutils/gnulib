@@ -1,5 +1,12 @@
 2011-06-13  Bruno Haible  <bruno@clisp.org>
 
+	fseeko: Provide a non-inline replacement of fseek().
+	* lib/stdio.in.h (fseek): Don't provide if module 'fseek' is not used.
+	* modules/fseeko (Depends-on): Add fseek.
+	* modules/fseek (License): Change to LGPLv2+.
+
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
 	ftello: Provide a non-inline replacement of ftell().
 	* lib/stdio.in.h (ftell): Don't provide if module 'ftell' is not used.
 	* m4/ftell.m4 (gl_FUNC_FTELL): Replace ftell also if the system does

@@ -10,6 +10,8 @@ Depends-on:
 extensions
 lseek
 stdio
+# Just to guarantee consistency between fseek() and fseeko().
+fseek
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])

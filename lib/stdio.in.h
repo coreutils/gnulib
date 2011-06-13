@@ -461,25 +461,6 @@ _GL_FUNCDECL_SYS (fseeko, int, (FILE *fp, off_t offset, int whence)
 _GL_CXXALIAS_SYS (fseeko, int, (FILE *fp, off_t offset, int whence));
 # endif
 _GL_CXXALIASWARN (fseeko);
-# if (@REPLACE_FSEEKO@ || !@HAVE_FSEEKO@) && !@GNULIB_FSEEK@
-   /* Provide an fseek function that is consistent with fseeko.  */
-   /* In order to avoid that fseek gets defined as a macro here, the
-      developer can request the 'fseek' module.  */
-#  if !GNULIB_defined_fseek_function
-#   undef fseek
-#   define fseek rpl_fseek
-static inline int _GL_ARG_NONNULL ((1))
-rpl_fseek (FILE *fp, long offset, int whence)
-{
-#   if @REPLACE_FSEEKO@
-  return rpl_fseeko (fp, offset, whence);
-#   else
-  return fseeko (fp, offset, whence);
-#   endif
-}
-#   define GNULIB_defined_fseek_function 1
-#  endif
-# endif
 #elif defined GNULIB_POSIXCHECK
 # define _GL_FSEEK_WARN /* Category 1, above.  */
 # undef fseek
