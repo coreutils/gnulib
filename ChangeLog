@@ -1,3 +1,9 @@
+2011-06-13  Bruno Haible  <bruno@clisp.org>
+
+	locale-zh: Reject zh_CN.GB18030 locale on Solaris 8.
+	* m4/locale-zh.m4 (gt_LOCALE_ZH_CN): On Solaris 8, set LOCALE_ZH_CN to
+	'none'.
+
 2011-06-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: use strtof only if HAVE_STRTOF

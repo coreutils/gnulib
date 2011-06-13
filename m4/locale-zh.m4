@@ -1,4 +1,4 @@
-# locale-zh.m4 serial 8
+# locale-zh.m4 serial 9
 dnl Copyright (C) 2003, 2005-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,6 +92,12 @@ changequote([,])dnl
             # None found.
             gt_cv_locale_zh_CN=none
           fi
+          ;;
+        solaris2.8)
+          # On Solaris 8, the locales zh_CN.GB18030, zh_CN.GBK, zh.GBK are
+          # broken. One witness is the test case in gl_MBRTOWC_SANITYCHECK.
+          # Another witness is that "LC_ALL=zh_CN.GB18030 bash -c true" dumps core.
+          gt_cv_locale_zh_CN=none
           ;;
         *)
           # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
