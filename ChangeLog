@@ -1,3 +1,11 @@
+2011-06-14  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: give more portable redirection-related advice in a comment
+	* tests/init.sh (stderr_fileno_): Update the advice in comments.
+	See http://thread.gmane.org/gmane.comp.gnu.coreutils.bugs/22488
+	for lots of discussion.  Stefano Lattarini suggested the solution
+	of putting "9>&2" after the command.  Reported by Bruno Haible.
+
 2011-06-13  Bruno Haible  <bruno@clisp.org>
 
 	locale-zh: Reject zh_CN.GB18030 locale on Solaris 8.
