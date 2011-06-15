@@ -1,3 +1,12 @@
+2011-06-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: new macro verify_expr; verify_true deprecated
+	* NEWS: Mention this.
+	* doc/verify.texi (Compile-time Assertions): Document this.
+	* lib/verify.h (verify_true): Deprecate.
+	(verify_expr): New macro.
+	* tests/test-verify.c (function): Test verify_expr.
+
 2011-06-14  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: give more portable redirection-related advice in a comment

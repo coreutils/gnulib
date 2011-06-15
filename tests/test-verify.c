@@ -55,9 +55,9 @@ function (int n)
   verify (1 == 1); verify (1 == 1); /* should be ok */
 
   if (n)
-    return ((void) verify_true (1 == 1), verify_true (1 == 1) + 7); /* should be ok */
+    return ((void) verify_expr (1 == 1, 1), verify_expr (1 == 1, 8)); /* should be ok */
 #if EXP_FAIL == 5
-  return (verify_true (1 == 2), 5); /* should give ERROR */
+  return verify_expr (1 == 2, 5); /* should give ERROR */
 #endif
   return 0;
 }

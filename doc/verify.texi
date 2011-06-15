@@ -14,7 +14,7 @@
 
 @cindex assertion
 @findex verify
-@findex verify_true
+@findex verify_expr
 
 The @samp{verify} module supports compile-time tests, as opposed to
 the standard @code{assert} macro which supports only runtime tests.
@@ -22,31 +22,36 @@ Since the tests occur at compile-time, they are more reliable, and
 they require no runtime overhead.
 
 This module provides a header file @file{verify.h} that defines two
-macros: @code{verify (@var{EXPRESSION})} and @code{verify_true
-(@var{EXPRESSION})}.  Both accept an integer constant expression
-argument and verify that it is nonzero.  If not, a compile-time error
+macros: @code{verify (@var{V})} and @code{verify_expr
+(@var{V}, @var{EXPR})}.  Both accept an integer constant expression
+argument @var{V} and verify that it is nonzero.  If not, a compile-time error
 results.
 
-@code{verify (@var{EXPRESSION});} is a declaration; it can occur
-outside of functions.  In contrast, @code{verify_true
-(@var{EXPRESSION})} is an integer constant expression that always
-evaluates to 1; it can be used in macros that expand to
-expressions.
+@code{verify (@var{V});} is a declaration; it can occur outside of
+functions.  In contrast, @code{verify_expr (@var{V}, @var{EXPR})} is
+an expression that returns the value of @var{EXPR}; it can be used in
+macros that expand to expressions.  If @var{EXPR} is an integer
+constant expression, then @code{verify_expr (@var{V}, @var{EXPR})} is
+also an integer constant expression.  Although @var{EXPR} and
+@code{verify_expr (@var{V}, @var{EXPR})}@ are guaranteed to have the
+same side effects and value and type (after integer promotion), they
+need not have the same type if @var{EXPR}'s type is an integer that is
+narrower than @code{int} or @code{unsigned int}.
 
-@var{EXPRESSION} should be an integer constant expression in the sense
+@var{V} should be an integer constant expression in the sense
 of the C standard.  Its leaf operands should be integer, enumeration,
 or character constants; or @code{sizeof} expressions that return
 constants; or floating constants that are the immediate operands of
-casts.  Outside a @code{sizeof} subexpression, @var{EXPRESSION} should
+casts.  Outside a @code{sizeof} subexpression, @var{V} should
 not contain any assignments, function calls, comma operators, casts to
 non-integer types, or subexpressions whose values are outside the
-representable ranges for their types.  If @var{EXPRESSION} is not an
+representable ranges for their types.  If @var{V} is not an
 integer constant expression, then a compiler might reject a usage like
-@samp{verify (@var{EXPRESSION});} even when @var{EXPRESSION} is
+@samp{verify (@var{V});} even when @var{V} is
 nonzero.
 
 Although the standard @code{assert} macro is a runtime test, draft C1X
-specifies a builtin @code{_Static_assert (@var{EXPRESSION},
+specifies a builtin @code{_Static_assert (@var{V},
 @var{STRING-LITERAL})}, its @file{assert.h} header has a similar macro
 named @code{static_assert}, and draft C++0X has a similar
 @code{static_assert} builtin.  These draft builtins and macros differ
@@ -55,7 +60,7 @@ within a @code{struct} or @code{union} specifier, in place of an
 ordinary member declaration.  Second, they require the programmer to
 specify a compile-time diagnostic as a string literal.
 
-Here are some example uses of @code{verify} and @code{verify_true}.
+Here are some example uses of @code{verify} and @code{verify_expr}.
 
 @example
 #include <verify.h>
@@ -76,16 +81,10 @@ verify ((time_t) -1 < 0);
 verify (~ (time_t) -1 == 0);
 
 /* Return the maximum value of the integer type T,
-   verifying that T is an unsigned integer type.  */
-#define MAX_UNSIGNED_VAL_WITH_COMMA(t) \
-   (verify_true (0 < (T) -1), (T) -1)
-
-/* Same as MAX_UNSIGNED_VAL_WITH_COMMA,
-   but expand to an integer constant expression,
-   which cannot contain a comma operator.
-   The cast to (T) is outside the conditional expression
+   verifying that T is an unsigned integer type.
+   The cast to (T) is outside the call to verify_expr
    so that the result is of type T
    even when T is narrower than unsigned int.  */
-#define MAX_UNSIGNED_VAL(t) ((T) \
-   ((T) (verify_true (0 < (T) -1) ? -1 : 0))
+#define MAX_UNSIGNED_VAL(t) \
+   ((T) verify_expr (0 < (T) -1, -1))
 @end example
