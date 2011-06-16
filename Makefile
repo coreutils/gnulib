@@ -49,7 +49,7 @@ allow_AC_LIBOBJ =	\
   fcntl			\
   fprintf-posix		\
   open			\
-  printf-posix		\
+  printf-posix-rpl	\
   snprintf		\
   sprintf-posix		\
   stdio_h		\

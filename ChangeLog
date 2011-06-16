@@ -1,3 +1,10 @@
+2011-06-16  Bruno Haible  <bruno@clisp.org>
+
+	syntax-check: Fix typo.
+	* Makefile (allow_AC_LIBOBJ): Mention printf-posix-rpl.m4, not
+	printf-posix.m4.
+	Reported by Jim Meyering.
+
 2011-06-13  Jim Meyering  <meyering@redhat.com>
 
 	syntax-check: add a rule to help enforce the no-AC_LIBOBJ-in-m4/ policy
