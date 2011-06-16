@@ -1,5 +1,9 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-arctwo: Fix recent regression.
+	* modules/crypto/gc-arctwo (configure.ac): Invoke AC_LIBOBJ here.
+	* m4/arctwo.m4 (gl_ARCTWO): Ensure the expansion is non-empty.
+
 	crypto/gc-rijndael: Fix recent regression.
 	* modules/crypto/gc-rijndael (Files): Remove m4/rijndael.m4.
 	(configure.ac): Invoke AC_LIBOBJ here.
