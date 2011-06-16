@@ -8,7 +8,6 @@ lib/sha1.c
 m4/sha1.m4
 lib/hmac.h
 lib/hmac-sha1.c
-m4/hmac-sha1.m4
 lib/memxor.h
 lib/memxor.c
 m4/memxor.m4
@@ -19,6 +18,11 @@ crypto/gc
 
 configure.ac:
 gl_GC_HMAC_SHA1
+if test "$ac_cv_libgcrypt" != yes; then
+  AC_LIBOBJ([sha1])
+  AC_LIBOBJ([hmac-sha1])
+  AC_LIBOBJ([memxor])
+fi
 gl_MODULE_INDICATOR([gc-hmac-sha1])
 
 Makefile.am:

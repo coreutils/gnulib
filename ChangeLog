@@ -1,5 +1,11 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-hmac-sha1: Fix recent regression.
+	* modules/crypto/gc-hmac-sha1 (Files): Remove m4/hmac-sha1.m4.
+	(configure.ac): Invoke AC_LIBOBJ here.
+	* m4/gc-hmac-sha1.m4 (gl_GC_HMAC_SHA1): Don't invoke gl_HMAC_SHA1.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 	crypto/gc-hmac-md5: Fix recent regression.
 	* modules/crypto/gc-hmac-md5 (Files): Remove m4/hmac-md5.m4.
 	(configure.ac): Invoke AC_LIBOBJ here.
