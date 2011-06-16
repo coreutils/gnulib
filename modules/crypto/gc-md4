@@ -13,6 +13,9 @@ crypto/gc
 
 configure.ac:
 gl_GC_MD4
+if test "$ac_cv_libgcrypt" != yes; then
+  AC_LIBOBJ([md4])
+fi
 gl_MODULE_INDICATOR([gc-md4])
 
 Makefile.am:
