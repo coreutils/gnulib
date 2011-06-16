@@ -1,5 +1,11 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-des: Fix recent regression.
+	* modules/crypto/gc-des (Files): Remove m4/des.m4.
+	(configure.ac): Invoke AC_LIBOBJ here.
+	* m4/gc-des.m4 (gl_GC_DES): Don't invoke gl_DES.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 	crypto/gc-arcfour: Fix recent regression.
 	* modules/crypto/gc-arcfour (Files): Remove m4/arcfour.m4.
 	(configure.ac): Invoke AC_LIBOBJ here.
