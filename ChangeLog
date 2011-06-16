@@ -1,5 +1,9 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-sha1: Fix recent regression.
+	* modules/crypto/gc-sha1 (configure.ac): Invoke AC_LIBOBJ here.
+	* m4/gc-sha1.m4 (gl_GC_SHA1): Don't invoke gl_SHA1.
+
 	crypto/gc-md5: Fix recent regression.
 	* modules/crypto/gc-md5 (configure.ac): Invoke AC_LIBOBJ here.
 

@@ -13,6 +13,9 @@ crypto/gc
 
 configure.ac:
 gl_GC_SHA1
+if test "$ac_cv_libgcrypt" != yes; then
+  AC_LIBOBJ([sha1])
+fi
 gl_MODULE_INDICATOR([gc-sha1])
 
 Makefile.am:
