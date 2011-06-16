@@ -1,5 +1,11 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	tmpfile-safer: Finish 2011-05-23 commit.
+	* m4/stdio-safer.m4: Really remove file.
+	Reported by Jim Meyering.
+
+2011-06-16  Bruno Haible  <bruno@clisp.org>
+
 	syntax-check: Fix typo.
 	* Makefile (allow_AC_LIBOBJ): Mention printf-posix-rpl.m4, not
 	printf-posix.m4.
