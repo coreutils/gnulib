@@ -7,7 +7,6 @@ lib/rijndael-alg-fst.c
 lib/rijndael-alg-fst.h
 lib/rijndael-api-fst.c
 lib/rijndael-api-fst.h
-m4/rijndael.m4
 
 Depends-on:
 stdint
@@ -15,6 +14,10 @@ crypto/gc
 
 configure.ac:
 gl_GC_RIJNDAEL
+if test "$ac_cv_libgcrypt" != yes; then
+  AC_LIBOBJ([rijndael-alg-fst])
+  AC_LIBOBJ([rijndael-api-fst])
+fi
 gl_MODULE_INDICATOR([gc-rijndael])
 
 Makefile.am:

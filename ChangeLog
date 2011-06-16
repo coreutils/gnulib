@@ -1,5 +1,11 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-rijndael: Fix recent regression.
+	* modules/crypto/gc-rijndael (Files): Remove m4/rijndael.m4.
+	(configure.ac): Invoke AC_LIBOBJ here.
+	* m4/gc-rijndael.m4 (gl_GC_RIJNDAEL): Don't invoke gl_RIJNDAEL.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 	crypto/gc-hmac-sha1: Fix recent regression.
 	* modules/crypto/gc-hmac-sha1 (Files): Remove m4/hmac-sha1.m4.
 	(configure.ac): Invoke AC_LIBOBJ here.
