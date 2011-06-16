@@ -1,3 +1,11 @@
+2011-06-16  Bruno Haible  <bruno@clisp.org>
+
+	crypto/gc-arcfour: Fix recent regression.
+	* modules/crypto/gc-arcfour (Files): Remove m4/arcfour.m4.
+	(configure.ac): Invoke AC_LIBOBJ here.
+	* m4/gc-arcfour.m4 (gl_GC_ARCFOUR): Don't invoke gl_ARCFOUR.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-06-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* m4/lstat.m4 (gl_FUNC_LSTAT): Fix typo in prerequisite.

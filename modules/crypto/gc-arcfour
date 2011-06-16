@@ -5,7 +5,6 @@ Files:
 m4/gc-arcfour.m4
 lib/arcfour.h
 lib/arcfour.c
-m4/arcfour.m4
 
 Depends-on:
 stdint
@@ -13,6 +12,9 @@ crypto/gc
 
 configure.ac:
 gl_GC_ARCFOUR
+if test "$ac_cv_libgcrypt" != yes; then
+  AC_LIBOBJ([arcfour])
+fi
 gl_MODULE_INDICATOR([gc-arcfour])
 
 Makefile.am:
