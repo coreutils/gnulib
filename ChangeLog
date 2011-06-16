@@ -1,5 +1,8 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	crypto/gc-md5: Fix recent regression.
+	* modules/crypto/gc-md5 (configure.ac): Invoke AC_LIBOBJ here.
+
 	crypto/gc-md4: Fix recent regression.
 	* modules/crypto/gc-md4 (configure.ac): Invoke AC_LIBOBJ here.
 	* m4/md4.m4 (gl_MD4): Ensure the expansion is non-empty.
