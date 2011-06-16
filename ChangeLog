@@ -1,5 +1,14 @@
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
+	fprintftime: Move AC_LIBOBJ invocations to module description.
+	* m4/fprintftime.m4: Remove file.
+	* modules/fprintftime (Files): Remove m4/fprintftime.m4.
+	(configure.ac): Remove gl_FPRINTFTIME call.
+	(Makefile.am): Augment lib_SOURCES.
+	Reported by Jim Meyering.
+
+2011-06-16  Bruno Haible  <bruno@clisp.org>
+
 	tmpfile-safer: Finish 2011-05-23 commit.
 	* m4/stdio-safer.m4: Really remove file.
 	Reported by Jim Meyering.

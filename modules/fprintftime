@@ -4,16 +4,15 @@ like nstrftime, but output the formatted date to a FILE* stream
 Files:
 lib/fprintftime.h
 lib/fprintftime.c
-m4/fprintftime.m4
 
 Depends-on:
 ignore-value
 strftime
 
 configure.ac:
-gl_FPRINTFTIME
 
 Makefile.am:
+lib_SOURCES += fprintftime.c
 
 Include:
 "fprintftime.h"
