@@ -1,3 +1,10 @@
+2011-06-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/lstat.m4 (gl_FUNC_LSTAT): Fix typo in prerequisite.
+	After the 2011-05-21 change, this macro requires
+	gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK, not
+	AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK.
+
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
 	fprintftime: Move AC_LIBOBJ invocations to module description.
