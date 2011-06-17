@@ -1,5 +1,11 @@
 2011-06-17  Bruno Haible  <bruno@clisp.org>
 
+	pread, pwrite: Avoid cc warning on AIX.
+	* lib/unistd.in.h (pread): Undefine before defining as a macro.
+	(pwrite): Likewise.
+
+2011-06-17  Bruno Haible  <bruno@clisp.org>
+
 	spawn-pipe tests: Fix link error.
 	* tests/test-spawn-pipe-child.c: Undefine fprintf.
 	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
