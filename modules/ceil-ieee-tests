@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-ceil-ieee
 check_PROGRAMS += test-ceil-ieee
-test_ceil_ieee_LDADD = $(LDADD) @FLOOR_LIBM@
+test_ceil_ieee_LDADD = $(LDADD) @CEIL_LIBM@

@@ -1,3 +1,16 @@
+2011-06-17  Bruno Haible  <bruno@clisp.org>
+
+	Fix tests link errors.
+	* modules/ceil-ieee-tests (Makefile.am): Use CEIL_LIBM, not FLOOR_LIBM.
+	* modules/chown-tests (Makefile.am): Don't link test-chown with
+	LIBINTL.
+	* modules/lchown-tests (Makefile.am): Don't link test-lchown with
+	LIBINTL.
+	* modules/utimens-tests (Makefile.am): Don't link test-utimens with
+	LIBINTL.
+	* modules/futimens-tests (Makefile.am): Don't link test-futimens with
+	LIBINTL.
+
 2011-06-16  Bruno Haible  <bruno@clisp.org>
 
 	crypto/gc-sha1: Fix recent regression.

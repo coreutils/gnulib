@@ -21,4 +21,3 @@ AC_CHECK_FUNCS_ONCE([getegid])
 Makefile.am:
 TESTS += test-chown
 check_PROGRAMS += test-chown
-test_chown_LDADD = $(LDADD) @LIBINTL@

@@ -17,4 +17,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-futimens
 check_PROGRAMS += test-futimens
-test_futimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@
+test_futimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME)
