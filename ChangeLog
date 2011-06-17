@@ -1,5 +1,10 @@
 2011-06-17  Bruno Haible  <bruno@clisp.org>
 
+	spawn-pipe tests: Fix link error.
+	* tests/test-spawn-pipe-child.c: Undefine fflush.
+
+2011-06-17  Bruno Haible  <bruno@clisp.org>
+
 	Fix tests link errors.
 	* modules/ceil-ieee-tests (Makefile.am): Use CEIL_LIBM, not FLOOR_LIBM.
 	* modules/chown-tests (Makefile.am): Don't link test-chown with

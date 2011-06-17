@@ -45,6 +45,7 @@ static FILE *myerr;
 #undef close
 #undef fcntl
 #undef fdopen
+#undef fflush
 #undef read
 #undef write
 
