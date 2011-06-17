@@ -1,5 +1,11 @@
 2011-06-17  Bruno Haible  <bruno@clisp.org>
 
+	spawn-pipe tests: Fix link error.
+	* tests/test-spawn-pipe-child.c: Undefine fprintf.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-06-17  Bruno Haible  <bruno@clisp.org>
+
 	Tests: Remove unnecessary dependency.
 	* modules/canonicalize-tests (Depends-on): Remove progname.
 	* modules/chown-tests (Depends-on): Likewise.
