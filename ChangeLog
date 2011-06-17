@@ -1,5 +1,20 @@
 2011-06-17  Bruno Haible  <bruno@clisp.org>
 
+	Tests: Remove unnecessary dependency.
+	* modules/canonicalize-tests (Depends-on): Remove progname.
+	* modules/chown-tests (Depends-on): Likewise.
+	* modules/dirname-tests (Depends-on): Likewise.
+	* modules/fdopendir-tests (Depends-on): Likewise.
+	* modules/fdutimensat-tests (Depends-on): Likewise.
+	* modules/hash-tests (Depends-on): Likewise.
+	* modules/lchown-tests (Depends-on): Likewise.
+	* modules/linkat-tests (Depends-on): Likewise.
+	* modules/renameat-tests (Depends-on): Likewise.
+	* modules/spawn-pipe-tests (Depends-on): Likewise.
+	* modules/utimensat-tests (Depends-on): Likewise.
+
+2011-06-17  Bruno Haible  <bruno@clisp.org>
+
 	spawn-pipe tests: Fix link error.
 	* tests/test-spawn-pipe-child.c: Undefine fflush.
 

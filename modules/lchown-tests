@@ -8,7 +8,6 @@ tests/macros.h
 Depends-on:
 ignore-value
 mgetgroups
-progname
 usleep
 stat-time
 stdbool

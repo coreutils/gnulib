@@ -8,7 +8,6 @@ Depends-on:
 ignore-value
 filenamecat
 getcwd-lgpl
-progname
 
 configure.ac:
 

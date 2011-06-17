@@ -9,7 +9,6 @@ ignore-value
 areadlink-with-size
 filenamecat-lgpl
 getcwd-lgpl
-progname
 same-inode
 
 configure.ac:

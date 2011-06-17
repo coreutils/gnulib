@@ -4,7 +4,6 @@ tests/macros.h
 
 Depends-on:
 ignore-value
-progname
 same-inode
 symlink
 

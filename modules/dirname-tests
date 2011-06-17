@@ -2,7 +2,6 @@ Files:
 tests/test-dirname.c
 
 Depends-on:
-progname
 strdup
 
 configure.ac:

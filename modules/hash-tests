@@ -5,7 +5,6 @@ tests/macros.h
 Depends-on:
 hash-pjw
 inttostr
-progname
 stdbool
 
 configure.ac:
