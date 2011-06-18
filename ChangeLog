@@ -1,5 +1,15 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	getloadavg: Don't clobber LIBS. Regression from previous commit.
+	* m4/getloadavg.m4 (gl_PREREQ_GETLOADAVG): Move tests that use
+	AC_CHECK_LIB from here...
+	(gl_GETLOADAVG): ... to here, inside the experiment with LIBS.
+	(gl_GETLOADAVG, gl_PREREQ_GETLOADAVG): Rename gl_have_func to
+	gl_func_getloadavg_done.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	clean-temp: Improve documentation.
 	* lib/clean-temp.h: Explain better how to use this module.
 	Reported by John Darrington <john@darrington.wattle.id.au>.
