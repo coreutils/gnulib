@@ -1,5 +1,12 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	isfinite, isinf: Fix link error on AIX 6 and 7.
+	* m4/isfinite.m4 (gl_ISFINITE): When determining whether libm is
+	needed, also test the macro with a 'float' argument.
+	* m4/isinf.m4 (gl_ISINF): Likewise.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	getloadavg: Don't clobber LIBS. Regression from previous commit.
 	* m4/getloadavg.m4 (gl_PREREQ_GETLOADAVG): Move tests that use
 	AC_CHECK_LIB from here...
