@@ -5,6 +5,7 @@ Depends-on:
 errno
 fcntl-h
 getcwd-lgpl
+pathmax
 sys_stat
 
 configure.ac:

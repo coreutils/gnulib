@@ -1,5 +1,11 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	getcwd tests: Avoid compilation error on HP-UX 11.31.
+	* modules/getcwd-tests (Depends-on): Add pathmax.
+	* tests/test-getcwd.c: Include pathmax.h.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	isfinite, isinf: Fix link error on AIX 6 and 7.
 	* m4/isfinite.m4 (gl_ISFINITE): When determining whether libm is
 	needed, also test the macro with a 'float' argument.

@@ -26,6 +26,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include "pathmax.h"
 #include "macros.h"
 
 #if ! HAVE_GETPAGESIZE
