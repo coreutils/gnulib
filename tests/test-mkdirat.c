@@ -30,6 +30,7 @@ SIGNATURE_CHECK (mkdirat, int, (int, char const *, mode_t));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "progname.h"
 #include "ignore-value.h"
 #include "macros.h"
 
@@ -47,9 +48,11 @@ do_mkdir (char const *name, mode_t mode)
 }
 
 int
-main (void)
+main (int argc _GL_UNUSED, char *argv[])
 {
   int result;
+
+  set_program_name (argv[0]);
 
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));

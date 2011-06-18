@@ -29,6 +29,7 @@ SIGNATURE_CHECK (openat, int, (int, char const *, int, ...));
 #include <stdio.h>
 #include <unistd.h>
 
+#include "progname.h"
 #include "macros.h"
 
 #define BASE "test-openat.t"
@@ -58,9 +59,11 @@ do_open (char const *name, int flags, ...)
 }
 
 int
-main (void)
+main (int argc _GL_UNUSED, char *argv[])
 {
   int result;
+
+  set_program_name (argv[0]);
 
   /* Basic checks.  */
   result = test_open (do_open, false);

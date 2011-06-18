@@ -1,5 +1,23 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	openat, fdopendir tests: Fix link errors.
+	* modules/openat-tests (Depends-on): Add progname.
+	* modules/fdopendir-tests (Depends-on): Likewise.
+	* tests/test-fchownat.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-fstatat.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-mkdirat.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-openat.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-unlinkat.c: Include progname.h.
+	(main): Call set_program_name.
+	* tests/test-fdopendir.c: Include progname.h.
+	(main): Call set_program_name.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	Doc update.
 	* doc/posix-functions/pthread_attr_getstack.texi: Update info regarding
 	HP-UX.

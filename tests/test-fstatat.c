@@ -32,6 +32,7 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 
 #include "openat.h"
 #include "pathmax.h"
+#include "progname.h"
 #include "same-inode.h"
 #include "ignore-value.h"
 #include "macros.h"
@@ -58,9 +59,11 @@ do_lstat (char const *name, struct stat *st)
 }
 
 int
-main (void)
+main (int argc _GL_UNUSED, char *argv[])
 {
   int result;
+
+  set_program_name (argv[0]);
 
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));

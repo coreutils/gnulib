@@ -19,6 +19,7 @@ Depends-on:
 ignore-value
 mgetgroups
 pathmax
+progname
 usleep
 stat-time
 symlink

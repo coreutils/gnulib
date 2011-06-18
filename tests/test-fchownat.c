@@ -32,6 +32,7 @@ SIGNATURE_CHECK (fchownat, int, (int, char const *, uid_t, gid_t, int));
 
 #include "mgetgroups.h"
 #include "openat.h"
+#include "progname.h"
 #include "stat-time.h"
 #include "ignore-value.h"
 #include "macros.h"
@@ -58,10 +59,12 @@ do_lchown (char const *name, uid_t user, gid_t group)
 }
 
 int
-main (void)
+main (int argc _GL_UNUSED, char *argv[])
 {
   int result1; /* Skip because of no chown/symlink support.  */
   int result2; /* Skip because of no lchown support.  */
+
+  set_program_name (argv[0]);
 
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
