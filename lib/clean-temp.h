@@ -43,7 +43,12 @@ extern "C" {
    are automatically cleaned up (at the latest) when the program exits or
    dies from a fatal signal such as SIGINT, SIGTERM, SIGHUP, but not if it
    dies from a fatal signal such as SIGQUIT, SIGKILL, or SIGABRT, SIGSEGV,
-   SIGBUS, SIGILL, SIGFPE.  */
+   SIGBUS, SIGILL, SIGFPE.
+
+   For the cleanup in the normal case, programs that use this module need to
+   call 'cleanup_temp_dir' for each successful return of 'create_temp_dir'.
+   The cleanup in the case of a fatal signal such as SIGINT, SIGTERM, SIGHUP,
+   is done entirely automatically by the functions of this module.  */
 
 struct temp_dir
 {
