@@ -1,5 +1,12 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	Doc update.
+	* doc/posix-functions/pthread_attr_getstack.texi: Update info regarding
+	HP-UX.
+	* doc/posix-functions/pthread_attr_setstack.texi: Likewise.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	getcwd tests: Avoid compilation error on HP-UX 11.31.
 	* modules/getcwd-tests (Depends-on): Add pathmax.
 	* tests/test-getcwd.c: Include pathmax.h.
