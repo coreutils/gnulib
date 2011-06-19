@@ -1,5 +1,13 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	round-ieee: Fix test failures on AIX 7.1 and OSF/1 5.1.
+	* modules/round-ieee (Depends-on): Add floor-ieee, ceil-ieee.
+	* doc/posix-functions/round.texi: Mention problem with negative
+	arguments.
+	* doc/posix-functions/ceil.texi: Mention problem on OSF/1 5.1.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	roundf-ieee: Fix test failures on AIX 7.1 and OSF/1 5.1.
 	* m4/roundf.m4 (gl_FUNC_ROUNDF): Test also the sign of roundf (-0.3f).
 	* modules/roundf-ieee (Depends-on): Add floorf-ieee, ceilf-ieee.

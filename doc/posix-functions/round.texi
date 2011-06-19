@@ -22,6 +22,10 @@ NetBSD 3.0, AIX 7.1.
 Portability problems fixed by Gnulib module @code{round-ieee}:
 @itemize
 @item
+This function returns a positive zero for an argument between -0.5 and 0
+on some platforms:
+AIX 7.1, OSF/1 5.1.
+@item
 This function returns a positive zero for a minus zero argument
 on some platforms:
 OSF/1 5.1.
