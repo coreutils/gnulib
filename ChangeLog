@@ -1,5 +1,12 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	roundl-ieee: Fix test failure on AIX 7.1.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Test also the sign of roundl (-0.3L).
+	* doc/posix-functions/roundl.texi: Mention problem with negative
+	arguments.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	round-ieee: Fix test failures on AIX 7.1 and OSF/1 5.1.
 	* modules/round-ieee (Depends-on): Add floor-ieee, ceil-ieee.
 	* doc/posix-functions/round.texi: Mention problem with negative
