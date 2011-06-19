@@ -1,4 +1,4 @@
-# truncl.m4 serial 7
+# truncl.m4 serial 8
 dnl Copyright (C) 2007-2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,10 +84,12 @@ int main()
 #include <math.h>
 ]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
 ]gl_LONG_DOUBLE_SIGNBIT_CODE[
-int main()
+static long double dummy (long double f) { return 0; }
+int main (int argc, char *argv[])
 {
+  long double (*my_truncl) (long double) = argc ? truncl : dummy;
   /* Test whether truncl (-0.3L) is -0.0L.  */
-  if (signbitl (minus_zerol) && !signbitl (truncl (-0.3L)))
+  if (signbitl (minus_zerol) && !signbitl (my_truncl (-0.3L)))
     return 1;
   return 0;
 }

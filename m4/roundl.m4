@@ -1,4 +1,4 @@
-# roundl.m4 serial 9
+# roundl.m4 serial 10
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,10 +31,12 @@ AC_DEFUN([gl_FUNC_ROUNDL],
 #include <math.h>
 ]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
 ]gl_LONG_DOUBLE_SIGNBIT_CODE[
-int main()
+static long double dummy (long double f) { return 0; }
+int main (int argc, char *argv[])
 {
+  long double (*my_roundl) (long double) = argc ? roundl : dummy;
   /* Test whether roundl (-0.0L) is -0.0L.  */
-  if (signbitl (minus_zerol) && !signbitl (roundl (minus_zerol)))
+  if (signbitl (minus_zerol) && !signbitl (my_roundl (minus_zerol)))
     return 1;
   return 0;
 }

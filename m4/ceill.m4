@@ -1,4 +1,4 @@
-# ceill.m4 serial 9
+# ceill.m4 serial 10
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,10 +35,12 @@ AC_DEFUN([gl_FUNC_CEILL],
 #include <math.h>
 ]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
 ]gl_LONG_DOUBLE_SIGNBIT_CODE[
-int main()
+static long double dummy (long double f) { return 0; }
+int main (int argc, char *argv[])
 {
+  long double (*my_ceill) (long double) = argc ? ceill : dummy;
   /* Test whether ceill (-0.3L) is -0.0L.  */
-  if (signbitl (minus_zerol) && !signbitl (ceill (-0.3L)))
+  if (signbitl (minus_zerol) && !signbitl (my_ceill (-0.3L)))
     return 1;
   return 0;
 }

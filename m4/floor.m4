@@ -1,4 +1,4 @@
-# floor.m4 serial 6
+# floor.m4 serial 7
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,10 +28,12 @@ AC_DEFUN([gl_FUNC_FLOOR],
 #include <math.h>
 ]gl_DOUBLE_MINUS_ZERO_CODE[
 ]gl_DOUBLE_SIGNBIT_CODE[
-int main()
+static double dummy (double f) { return 0; }
+int main (int argc, char *argv[])
 {
+  double (*my_floor) (double) = argc ? floor : dummy;
   /* Test whether floor (-0.0) is -0.0.  */
-  if (signbitd (minus_zerod) && !signbitd (floor (minus_zerod)))
+  if (signbitd (minus_zerod) && !signbitd (my_floor (minus_zerod)))
     return 1;
   return 0;
 }

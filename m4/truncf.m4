@@ -1,4 +1,4 @@
-# truncf.m4 serial 5
+# truncf.m4 serial 6
 dnl Copyright (C) 2007, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,10 +56,12 @@ AC_DEFUN([gl_FUNC_TRUNCF],
 #include <math.h>
 ]gl_FLOAT_MINUS_ZERO_CODE[
 ]gl_FLOAT_SIGNBIT_CODE[
-int main()
+static float dummy (float f) { return 0; }
+int main (int argc, char *argv[])
 {
+  float (*my_truncf) (float) = argc ? truncf : dummy;
   /* Test whether truncf (-0.0f) is -0.0f.  */
-  if (signbitf (minus_zerof) && !signbitf (truncf (minus_zerof)))
+  if (signbitf (minus_zerof) && !signbitf (my_truncf (minus_zerof)))
     return 1;
   return 0;
 }

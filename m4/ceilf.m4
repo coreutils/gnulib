@@ -1,4 +1,4 @@
-# ceilf.m4 serial 10
+# ceilf.m4 serial 11
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,14 +35,16 @@ AC_DEFUN([gl_FUNC_CEILF],
 #include <math.h>
 ]gl_FLOAT_MINUS_ZERO_CODE[
 ]gl_FLOAT_SIGNBIT_CODE[
-int main()
+static float dummy (float f) { return 0; }
+int main (int argc, char *argv[])
 {
+  float (*my_ceilf) (float) = argc ? ceilf : dummy;
   int result = 0;
   /* Test whether ceilf (-0.0f) is -0.0f.  */
-  if (signbitf (minus_zerof) && !signbitf (ceilf (minus_zerof)))
+  if (signbitf (minus_zerof) && !signbitf (my_ceilf (minus_zerof)))
     result |= 1;
   /* Test whether ceilf (-0.3f) is -0.0f.  */
-  if (signbitf (-0.3f) && !signbitf (ceilf (-0.3f)))
+  if (signbitf (-0.3f) && !signbitf (my_ceilf (-0.3f)))
     result |= 2;
   return result;
 }

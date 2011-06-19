@@ -1,4 +1,4 @@
-# round.m4 serial 11
+# round.m4 serial 12
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,10 +69,12 @@ int main()
 #include <math.h>
 ]gl_DOUBLE_MINUS_ZERO_CODE[
 ]gl_DOUBLE_SIGNBIT_CODE[
-int main()
+static double dummy (double f) { return 0; }
+int main (int argc, char *argv[])
 {
+  double (*my_round) (double) = argc ? round : dummy;
   /* Test whether round (-0.0) is -0.0.  */
-  if (signbitd (minus_zerod) && !signbitd (round (minus_zerod)))
+  if (signbitd (minus_zerod) && !signbitd (my_round (minus_zerod)))
     return 1;
   return 0;
 }
