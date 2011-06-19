@@ -1,5 +1,11 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	ceilf-ieee: Work around bug on AIX 7.1.
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Test also the sign of ceilf (-0.3f).
+	* doc/posix-functions/ceilf.texi: Mention the AIX 7.1 problem.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	ceil-ieee: Work around bug on AIX 7.1.
 	* m4/ceil.m4 (gl_FUNC_CEIL): Test also the sign of ceil (-0.3).
 	* doc/posix-functions/ceil.texi: Mention the AIX 7.1 problem.
