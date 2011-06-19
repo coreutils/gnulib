@@ -21,17 +21,20 @@
 
 #include <float.h>
 
-int gl_isinff (float x)
+int
+gl_isinff (float x)
 {
   return x < -FLT_MAX || x > FLT_MAX;
 }
 
-int gl_isinfd (double x)
+int
+gl_isinfd (double x)
 {
   return x < -DBL_MAX || x > DBL_MAX;
 }
 
-int gl_isinfl (long double x)
+int
+gl_isinfl (long double x)
 {
   return x < -LDBL_MAX || x > LDBL_MAX;
 }
