@@ -1,5 +1,11 @@
 2011-06-18  Bruno Haible  <bruno@clisp.org>
 
+	fsync test: Avoid test failure on MacOS X and AIX.
+	* tests/test-fsync.c (fsync): Allow ENOTSUP and EBADF instead of
+	EINVAL.
+
+2011-06-18  Bruno Haible  <bruno@clisp.org>
+
 	openat, fdopendir tests: Fix link errors.
 	* modules/openat-tests (Depends-on): Add progname.
 	* modules/fdopendir-tests (Depends-on): Likewise.

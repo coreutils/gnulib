@@ -33,7 +33,12 @@ main (void)
   const char *file = "test-fsync.txt";
 
   if (fsync (0) != 0)
-    ASSERT (errno == EINVAL);
+    {
+      ASSERT (errno == EINVAL /* POSIX */
+              || errno == ENOTSUP /* seen on MacOS X 10.5 */
+              || errno == EBADF /* seen on AIX 7.1 */
+             );
+    }
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);
   ASSERT (write (fd, "hello", 5) == 5);
