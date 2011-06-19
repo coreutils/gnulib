@@ -1,5 +1,8 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	ceilf-ieee: Work around bug on MacOS X 10.5.
+	* doc/posix-functions/ceilf.texi: Mention the MacOS X 10.5 problem.
+
 	floor*-ieee, ceil*-ieee, trunc*-ieee, round*-ieee: More robust checks.
 	* m4/floorf.m4 (gl_FUNC_FLOORF): In the test whether the function is
 	IEEE compliant, avoid compiler optimizations.
