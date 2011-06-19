@@ -20,6 +20,10 @@ Portability problems fixed by Gnulib module @code{dprintf-posix}:
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6.
+@item
+This function does not support precisions larger than 512 or 1024 in integer,
+floating-point and pointer output on some platforms:
+AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

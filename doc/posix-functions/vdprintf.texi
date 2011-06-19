@@ -37,7 +37,7 @@ BeOS.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-BeOS.
+AIX 7.1, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

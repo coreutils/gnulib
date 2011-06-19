@@ -53,7 +53,7 @@ MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11 
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-Solaris 10/x86, mingw, BeOS.
+AIX 7.1, Solaris 10/x86, mingw, BeOS.
 @item
 This function mishandles large floating point precisions
 (for example, formatting 1.0 with @samp{"%.511f"})

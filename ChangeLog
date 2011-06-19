@@ -1,5 +1,21 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	sprintf-posix: Fix test failure on AIX 7.1.
+	* m4/printf.m4 (gl_PRINTF_PRECISION): Test against AIX bug.
+	* doc/posix-functions/dprintf.texi: Mention limited precision problem
+	on AIX.
+	* doc/posix-functions/fprintf.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vdprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	roundl-ieee: Fix test failure on AIX 7.1.
 	* m4/roundl.m4 (gl_FUNC_ROUNDL): Test also the sign of roundl (-0.3L).
 	* doc/posix-functions/roundl.texi: Mention problem with negative

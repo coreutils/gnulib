@@ -1,4 +1,4 @@
-# printf.m4 serial 42
+# printf.m4 serial 43
 dnl Copyright (C) 2003, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -892,7 +892,8 @@ dnl On mingw, precisions larger than 512 are treated like 512, in integer,
 dnl floating-point or pointer output. On Solaris 10/x86, precisions larger
 dnl than 510 in floating-point output crash the program. On Solaris 10/SPARC,
 dnl precisions larger than 510 in floating-point output yield wrong results.
-dnl On BeOS, precisions larger than 1044 crash the program.
+dnl On AIX 7.1, precisions larger than 998 in floating-point output yield
+dnl wrong results. On BeOS, precisions larger than 1044 crash the program.
 dnl Result is gl_cv_func_printf_precision.
 
 AC_DEFUN([gl_PRINTF_PRECISION],
@@ -919,6 +920,9 @@ int main ()
   if (sprintf (buf, "%.4000f %d", 1.0, 33, 44) < 4000 + 5)
     result |= 2;
   if (sprintf (buf, "%.511f %d", 1.0, 33, 44) < 511 + 5
+      || buf[0] != '1')
+    result |= 4;
+  if (sprintf (buf, "%.999f %d", 1.0, 33, 44) < 999 + 5
       || buf[0] != '1')
     result |= 4;
   return result;
@@ -1465,7 +1469,8 @@ dnl   Solaris 11 2010-11             .  .  #  #  #  .  .  #  .  .  .  #  .  .  .
 dnl   Solaris 10                     .  .  #  #  #  .  .  #  .  .  .  #  #  .  .  .  .  .  .  .
 dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  #  .  .  .  #  #  .  .  .  #  .  .  .
 dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  #  .  .  .  #  .  .  #  #  #  #  #  #
-dnl   AIX 5.2, 7.1                   .  .  #  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   AIX 7.1                        .  .  #  #  #  .  .  .  .  .  .  #  #  .  .  .  .  .  .  .
+dnl   AIX 5.2                        .  .  #  #  #  .  .  .  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   AIX 4.3.2, 5.1                 #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  #  .  .  .
 dnl   HP-UX 11.31                    .  .  .  .  #  .  .  .  .  .  .  #  .  .  .  .  #  #  .  .
 dnl   HP-UX 11.{00,11,23}            #  .  .  .  #  #  .  .  .  .  .  #  .  .  .  .  #  #  .  #
