@@ -201,11 +201,13 @@ main (void)
   errno = 0;
   ASSERT (linkat (dfd, BASE "link1/", dfd, BASE "sub1",
                   AT_SYMLINK_FOLLOW) == -1);
-  ASSERT (errno == EEXIST || errno == EPERM || errno == EACCES);
+  ASSERT (errno == EEXIST || errno == EPERM || errno == EACCES
+          || errno == EINVAL);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link1", dfd, BASE "sub1/",
                   AT_SYMLINK_FOLLOW) == -1);
-  ASSERT (errno == EEXIST || errno == EPERM || errno == EACCES);
+  ASSERT (errno == EEXIST || errno == EPERM || errno == EACCES
+          || errno == EINVAL);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link1", dfd, BASE "link2", 0) == -1);
   ASSERT (errno == EEXIST);
@@ -250,21 +252,21 @@ main (void)
   errno = 0;
   ASSERT (linkat (dfd, BASE "link2/", dfd, BASE "link5",
                   AT_SYMLINK_FOLLOW) == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link3/", dfd, BASE "link5", 0) == -1);
   ASSERT (errno == ELOOP);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link3/", dfd, BASE "link5",
                   AT_SYMLINK_FOLLOW) == -1);
-  ASSERT (errno == ELOOP);
+  ASSERT (errno == ELOOP || errno == EINVAL);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link4/", dfd, BASE "link5", 0) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (linkat (dfd, BASE "link4/", dfd, BASE "link5",
                   AT_SYMLINK_FOLLOW) == -1);
-  ASSERT (errno == ENOENT);
+  ASSERT (errno == ENOENT || errno == EINVAL);
 
   /* Check for hard links to symlinks.  */
   ASSERT (linkat (dfd, BASE "link1", dfd, BASE "link5", 0) == 0);

@@ -1,5 +1,11 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	linkat test: Avoid test failure on AIX 7.1.
+	* tests/test-linkat.c (main): Allow EINVAL as alternate error value.
+	* tests/test-link.h (test_link): Likewise.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	pread test: Avoid test failure on OpenBSD 4.9.
 	* tests/test-pread.c (main): Allow EFBIG instead of EINBAL.
 

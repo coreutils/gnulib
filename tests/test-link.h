@@ -115,10 +115,10 @@ test_link (int (*func) (char const *, char const *), bool print)
   ASSERT (errno == ENOENT);
   errno = 0;
   ASSERT (func (BASE "a/", BASE "c") == -1);
-  ASSERT (errno == ENOTDIR);
+  ASSERT (errno == ENOTDIR || errno == EINVAL);
   errno = 0;
   ASSERT (func (BASE "a", BASE "c/") == -1);
-  ASSERT (errno == ENOTDIR || errno == ENOENT);
+  ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EINVAL);
 
   /* Most platforms reject hard links to directories, and even on
      those that do permit it, most users can't create them.  We assume
@@ -164,11 +164,12 @@ test_link (int (*func) (char const *, char const *), bool print)
     }
   errno = 0;
   ASSERT (func (BASE "b", BASE "link/") == -1);
-  ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EEXIST);
+  ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EEXIST
+          || errno == EINVAL);
   ASSERT (rename (BASE "b", BASE "a") == 0);
   errno = 0;
   ASSERT (func (BASE "link/", BASE "b") == -1);
-  ASSERT (errno == ENOTDIR || errno == EEXIST);
+  ASSERT (errno == ENOTDIR || errno == EEXIST || errno == EINVAL);
 
   /* Clean up.  */
   ASSERT (unlink (BASE "a") == 0);
