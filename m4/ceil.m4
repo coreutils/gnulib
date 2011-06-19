@@ -1,4 +1,4 @@
-# ceil.m4 serial 6
+# ceil.m4 serial 7
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,10 +30,14 @@ AC_DEFUN([gl_FUNC_CEIL],
 ]gl_DOUBLE_SIGNBIT_CODE[
 int main()
 {
+  int result = 0;
   /* Test whether ceil (-0.0) is -0.0.  */
   if (signbitd (minus_zerod) && !signbitd (ceil (minus_zerod)))
-    return 1;
-  return 0;
+    result |= 1;
+  /* Test whether ceil (-0.3) is -0.0.  */
+  if (signbitd (-0.3) && !signbitd (ceil (-0.3)))
+    result |= 2;
+  return result;
 }
             ]])],
             [gl_cv_func_ceil_ieee=yes],
