@@ -68,7 +68,9 @@ main (void)
     /* Invalid offset must evoke failure with EINVAL.  */
     char byte;
     ASSERT (pread (fd, &byte, 1, (off_t) -1) == -1);
-    ASSERT (errno == EINVAL);
+    ASSERT (errno == EINVAL
+            || errno == EFBIG /* seen on OpenBSD 4.9 */
+           );
   }
 
   ASSERT (close (fd) == 0);

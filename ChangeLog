@@ -1,5 +1,10 @@
 2011-06-19  Bruno Haible  <bruno@clisp.org>
 
+	pread test: Avoid test failure on OpenBSD 4.9.
+	* tests/test-pread.c (main): Allow EFBIG instead of EINBAL.
+
+2011-06-19  Bruno Haible  <bruno@clisp.org>
+
 	sprintf-posix: Fix test failure on AIX 7.1.
 	* m4/printf.m4 (gl_PRINTF_PRECISION): Test against AIX bug.
 	* doc/posix-functions/dprintf.texi: Mention limited precision problem
