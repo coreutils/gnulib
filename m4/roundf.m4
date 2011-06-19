@@ -1,4 +1,4 @@
-# roundf.m4 serial 12
+# roundf.m4 serial 13
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,10 +70,14 @@ static float dummy (float f) { return 0; }
 int main (int argc, char *argv[])
 {
   float (*my_roundf) (float) = argc ? roundf : dummy;
+  int result = 0;
   /* Test whether roundf (-0.0f) is -0.0f.  */
   if (signbitf (minus_zerof) && !signbitf (my_roundf (minus_zerof)))
-    return 1;
-  return 0;
+    result |= 1;
+  /* Test whether roundf (-0.3f) is -0.0f.  */
+  if (signbitf (-0.3f) && !signbitf (my_roundf (-0.3f)))
+    result |= 2;
+  return result;
 }
               ]])],
               [gl_cv_func_roundf_ieee=yes],

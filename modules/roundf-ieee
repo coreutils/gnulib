@@ -8,6 +8,8 @@ m4/signbit.m4
 
 Depends-on:
 roundf
+floorf-ieee     [test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
+ceilf-ieee      [test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
 
 configure.ac:
 gl_FUNC_ROUNDF_IEEE
