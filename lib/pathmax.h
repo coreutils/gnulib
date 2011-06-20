@@ -19,6 +19,12 @@
 #ifndef _PATHMAX_H
 # define _PATHMAX_H
 
+/* POSIX:2008 defines PATH_MAX to be the maximum number of bytes in a filename,
+   including the terminating NUL byte.
+   <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/limits.h.html>
+   PATH_MAX is not defined on systems which have no limit on filename length,
+   such as GNU/Hurd.  */
+
 # include <unistd.h>
 
 # include <limits.h>
@@ -43,6 +49,15 @@
 
 # ifndef PATH_MAX
 #  define PATH_MAX _POSIX_PATH_MAX
+# endif
+
+# ifdef __hpux
+/* On HP-UX, PATH_MAX designates the maximum number of bytes in a filename,
+   *not* including the terminating NUL byte, and is set to 1023.
+   Additionally, when _XOPEN_SOURCE is defined to 500 or more, PATH_MAX is
+   not defined at all any more.  */
+#  undef PATH_MAX
+#  define PATH_MAX 1024
 # endif
 
 #endif /* _PATHMAX_H */
