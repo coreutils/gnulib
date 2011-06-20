@@ -3,6 +3,7 @@ A correct <float.h>.
 
 Files:
 lib/float.in.h
+lib/float.c
 m4/float_h.m4
 
 Depends-on:
@@ -10,6 +11,9 @@ include_next
 
 configure.ac:
 gl_FLOAT_H
+if test $REPLACE_FLOAT_LDBL = 1; then
+  AC_LIBOBJ([float])
+fi
 
 Makefile.am:
 BUILT_SOURCES += $(FLOAT_H)

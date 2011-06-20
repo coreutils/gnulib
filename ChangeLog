@@ -1,5 +1,16 @@
 2011-06-20  Bruno Haible  <bruno@clisp.org>
 
+	float: Work around <float.h> bugs on FreeBSD/x86, AIX with GCC, IRIX.
+	* lib/float.in.h: Add workarounds for FreeBSD/x86, AIX with GCC, IRIX.
+	* lib/float.c: New file.
+	* m4/float_h.m4 (gl_FLOAT_H): Also handle FreeBSD, AIX, IRIX. Set
+	REPLACE_FLOAT_LDBL.
+	* modules/float (Files): Add lib/float.c.
+	(configure.ac): Invoke AC_LIBOBJ.
+	* doc/posix-headers/float.texi: Mention problems on FreeBSD, AIX, IRIX.
+
+2011-06-20  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'float'.
 	* modules/float-tests: New file.
 	* tests/test-float.c: New file.
