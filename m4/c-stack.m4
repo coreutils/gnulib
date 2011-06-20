@@ -7,11 +7,10 @@
 
 # Written by Paul Eggert.
 
-# serial 12
+# serial 13
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
-  [# for STACK_DIRECTION
-   AC_REQUIRE([AC_FUNC_ALLOCA])
+  [
    AC_REQUIRE([AC_CANONICAL_HOST])
    AC_CHECK_FUNCS_ONCE([setrlimit])
    AC_CHECK_HEADERS_ONCE([ucontext.h])

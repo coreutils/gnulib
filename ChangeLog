@@ -1,3 +1,14 @@
+2011-06-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-stack: stop worrying about stack direction
+	* lib/c-stack.c (find_stack_direction): Remove.
+	(segv_handler): Don't worry about stack direction growth, as it's
+	too much of a pain to configure this correctly, given how compilers
+	are optimizing-away our stack-growth detection code.  Instead, assume
+	that any access to just before or just after the stack is OK.
+	* m4/c-stack.m4 (AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC):
+	Don't require AC_FUNC_ALLOCA; no longer needed.
+
 2011-06-20  Eric Blake  <eblake@redhat.com>
 
 	test-stat: don't allocate PATH_MAX bytes
