@@ -93,25 +93,15 @@ long i00afunc ();
 static int stack_dir;           /* 1 or -1 once known.  */
 #   define STACK_DIR    stack_dir
 
-static void
-find_stack_direction (char **ptr)
+static int
+find_stack_direction (int *addr, int depth)
 {
-  auto char dummy;              /* To get stack address.  */
-
-  if (*ptr == NULL)
-    {                           /* Initial entry.  */
-      *ptr = ADDRESS_FUNCTION (dummy);
-
-      find_stack_direction (ptr);  /* Recurse once.  */
-    }
-  else
-    {
-      /* Second entry.  */
-      if (ADDRESS_FUNCTION (dummy) > *ptr)
-        stack_dir = 1;          /* Stack grew upward.  */
-      else
-        stack_dir = -1;         /* Stack grew downward.  */
-    }
+  int dir, dummy = 0;
+  if (! addr)
+    addr = &dummy;
+  *addr = addr < &dummy ? 1 : addr == &dummy ? 0 : -1;
+  dir = depth ? find_stack_direction (addr, depth - 1) : 0;
+  return dir + dummy;
 }
 
 #  endif /* STACK_DIRECTION == 0 */
@@ -154,10 +144,7 @@ alloca (size_t size)
 
 #  if STACK_DIRECTION == 0
   if (STACK_DIR == 0)           /* Unknown growth direction.  */
-    {
-      char *addr = NULL;        /* Address of first `dummy', once known.  */
-      find_stack_direction (&addr);
-    }
+    STACK_DIR = find_stack_direction (NULL, (size & 1) + 20);
 #  endif
 
   /* Reclaim garbage, defined as all alloca'd storage that

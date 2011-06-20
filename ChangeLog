@@ -1,5 +1,14 @@
 2011-06-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	alloca: port to compilers that can optimize like GCC 4.6.0
+	* lib/alloca.c (find_stack_direction): New signature, taken from
+	Autoconf git.  This works with GCC 4.6.0.  This code should never
+	be used with GCC 4.6.0 itself, as GCC has alloca, but it might
+	be used with other compilers that optimize as well as GCC 4.6.0 does.
+	(alloca): Adjust to new signature.
+	* m4/alloca.m4 (__AC_LIBOBJ_ALLOCA) [Autoconf version < 2.69]:
+	New macro, which patches Autoconf in a similar way.
+
 	c-stack: stop worrying about stack direction
 	* lib/c-stack.c (find_stack_direction): Remove.
 	(segv_handler): Don't worry about stack direction growth, as it's
