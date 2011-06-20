@@ -27,9 +27,9 @@ test_stat_func (int (*func) (char const *, struct stat *), bool print)
 {
   struct stat st1;
   struct stat st2;
-  char cwd[PATH_MAX];
+  char *cwd = getcwd (NULL, 0);
 
-  ASSERT (getcwd (cwd, PATH_MAX) == cwd);
+  ASSERT (cwd);
   ASSERT (func (".", &st1) == 0);
   ASSERT (func ("./", &st2) == 0);
   ASSERT (SAME_INODE (st1, st2));

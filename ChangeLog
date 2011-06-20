@@ -1,3 +1,14 @@
+2011-06-20  Eric Blake  <eblake@redhat.com>
+
+	test-stat: don't allocate PATH_MAX bytes
+	* tests/test-stat.h (test_stat_func): Don't stack-allocate a
+	PATH_MAX-sized buffer.
+	* modules/openat-tests (Depends-on): Add getcwd-lgpl, drop pathmax.
+	* modules/stat-tests (Depends-on): Likewise.
+	* tests/test-fstatat.c (includes): Drop pathmax.h.
+	* tests/test-stat.c (includes): Likewise.
+	Reported by Bruno Haible.
+
 2011-06-20  Bruno Haible  <bruno@clisp.org>
 
 	float: Work around <float.h> bugs on FreeBSD/x86, AIX with GCC, IRIX.

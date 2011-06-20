@@ -33,7 +33,6 @@ SIGNATURE_CHECK (stat, int, (char const *, struct stat *));
 #include <stdio.h>
 #include <unistd.h>
 
-#include "pathmax.h"
 #include "same-inode.h"
 #include "macros.h"
 

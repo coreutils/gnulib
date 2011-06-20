@@ -5,7 +5,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-pathmax
+getcwd-lgpl
 same-inode
 stdbool
 symlink

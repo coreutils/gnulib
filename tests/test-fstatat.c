@@ -31,7 +31,6 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 #include <unistd.h>
 
 #include "openat.h"
-#include "pathmax.h"
 #include "progname.h"
 #include "same-inode.h"
 #include "ignore-value.h"
