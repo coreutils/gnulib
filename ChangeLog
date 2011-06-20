@@ -1,5 +1,9 @@
 2011-06-22  Eric Blake  <eblake@redhat.com>
 
+	stat: be robust to PATH_MAX definition
+	* lib/stat.c (rpl_stat): Require reasonable PATH_MAX.
+	* modules/stat (Depends-on): Add verify.
+
 	link: work around IRIX bug
 	* m4/link.m4 (gl_FUNC_LINK): Expose the bug.
 	* lib/link.c (rpl_link): Work around it.
