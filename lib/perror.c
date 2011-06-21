@@ -24,13 +24,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "strerror-override.h"
+
 /* Use the system functions, not the gnulib overrides in this file.  */
 #undef fprintf
 
 void
 perror (const char *string)
 {
-  char stackbuf[256];
+  char stackbuf[STACKBUF_LEN];
   int ret;
 
   /* Our implementation guarantees that this will be a non-empty

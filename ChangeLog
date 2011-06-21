@@ -1,5 +1,9 @@
 2011-06-21  Eric Blake  <eblake@redhat.com>
 
+	perror: adjust array size
+	* modules/perror (Depends-on): Add strerror-override.
+	* lib/perror.c (perror): Use it to avoid magic number.
+
 	strerror-override: reduce size
 	* lib/strerror-override.c (strerror_override): Use fewer lines.
 
