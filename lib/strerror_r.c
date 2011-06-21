@@ -175,17 +175,11 @@ strerror_r (int errnum, char *buf, size_t buflen)
         ret = strerror_r (errnum, buf, buflen);
     }
 # else
-    /* Solaris 10 does not populate buf on ERANGE.  */
     ret = strerror_r (errnum, buf, buflen);
-    if (ret == ERANGE && !*buf)
-      {
-        char stackbuf[STACKBUF_LEN];
 
-        if (strerror_r (errnum, stackbuf, sizeof stackbuf) == ERANGE)
-          /* STACKBUF_LEN should have been large enough.  */
-          abort ();
-        safe_copy (buf, buflen, stackbuf);
-      }
+    /* Some old implementations may return (-1, EINVAL) instead of EINVAL.  */
+    if (ret < 0)
+      ret = errno;
 # endif
 
 # ifdef _AIX
@@ -203,11 +197,23 @@ strerror_r (int errnum, char *buf, size_t buflen)
         if (buflen <= len)
           ret = ERANGE;
       }
-# endif
+# else
+    /* Solaris 10 does not populate buf on ERANGE.  OpenBSD 4.7
+       truncates early on ERANGE rather than return a partial integer.
+       We prefer the maximal string.  We set buf[0] earlier, and we
+       know of no implementation that modifies buf to be an
+       unterminated string, so this strlen should be portable in
+       practice (rather than pulling in a safer strnlen).  */
+    if (ret == ERANGE && strlen (buf) < buflen - 1)
+      {
+        char stackbuf[STACKBUF_LEN];
 
-    /* Some old implementations may return (-1, EINVAL) instead of EINVAL.  */
-    if (ret < 0)
-      ret = errno;
+        /* STACKBUF_LEN should have been large enough.  */
+        if (strerror_r (errnum, stackbuf, sizeof stackbuf) == ERANGE)
+          abort ();
+        safe_copy (buf, buflen, stackbuf);
+      }
+# endif
 
 #else /* USE_SYSTEM_STRERROR */
 

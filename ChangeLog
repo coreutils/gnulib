@@ -1,5 +1,9 @@
 2011-06-21  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: fix OpenBSD behavior on out-of-range
+	* lib/strerror_r.c (strerror_r): Always use maximal string.
+	* doc/posix-functions/strerror_r.texi (strerror_r): Document it.
+
 	strerror_r: fix OpenBSD behavior on 0
 	* lib/strerror-override.c (strerror_override): Also override 0
 	when needed.

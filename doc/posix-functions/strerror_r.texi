@@ -64,6 +64,11 @@ When the value is not in range or the buffer is too small, this
 function fails to leave a NUL-terminated string in the buffer on some
 platforms:
 glibc 2.13, FreeBSD 8.2, Solaris 10.
+@item
+When the value is out of range but the buffer is too small, this
+function does not always return the longest possible string on some
+platforms:
+OpenBSD 4.7.
 @end itemize
 
 Portability problems not fixed by Gnulib:
