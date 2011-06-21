@@ -1,5 +1,9 @@
 2011-06-21  Eric Blake  <eblake@redhat.com>
 
+	perror: test for output mismatch
+	* m4/perror.m4 (gl_FUNC_PERROR): Add test, in order to replace
+	perror on IRIX.
+
 	strerror_r: fix OpenBSD behavior on out-of-range
 	* lib/strerror_r.c (strerror_r): Always use maximal string.
 	* doc/posix-functions/strerror_r.texi (strerror_r): Document it.
