@@ -1,5 +1,23 @@
 2011-06-21  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: fix OpenBSD behavior on 0
+	* lib/strerror-override.c (strerror_override): Also override 0
+	when needed.
+	* lib/strerror-override.h (strerror_override): Likewise.
+	* lib/strerror.c (strerror): Simplify, now that 0 override is done
+	earlier.
+	* lib/strerror_r.c (strerror_r): Likewise.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Split detection of 0
+	behavior...
+	(gl_FUNC_STRERROR_0): ...into new macro.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Replace strerror_r if 0
+	is overridden.
+	(gl_FUNC_STRERROR_R_WORKS): Avoid extra tests if 0 is broken.
+	* modules/strerror-override (Files): Add strerror.m4.
+	(configure.ac): Also provide override for 0 when needed.
+	* doc/posix-functions/strerror.texi (strerror): Document this.
+	* doc/posix-functions/perror.texi (perror): Likewise.
+
 	perror: adjust array size
 	* modules/perror (Depends-on): Add strerror-override.
 	* lib/perror.c (perror): Use it to avoid magic number.

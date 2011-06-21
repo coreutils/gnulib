@@ -40,7 +40,8 @@
     || GNULIB_defined_ENOTSUP \
     || GNULIB_defined_ESTALE \
     || GNULIB_defined_EDQUOT \
-    || GNULIB_defined_ECANCELED
+    || GNULIB_defined_ECANCELED \
+    || REPLACE_STRERROR_0
 extern const char *strerror_override (int errnum);
 # else
 #  define strerror_override(ignored) NULL

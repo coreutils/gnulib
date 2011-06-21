@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 11
+# strerror_r.m4 serial 12
 dnl Copyright (C) 2002, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
   fi
 
   if test $ac_cv_func_strerror_r = yes; then
-    if test -z "$ERRNO_H"; then
+    if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
       if test $gl_cv_func_strerror_r_posix_signature = yes; then
         case "$gl_cv_func_strerror_r_works" in
           dnl The system's strerror_r has bugs.  Replace it.
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
       fi
     else
       dnl The system's strerror_r() cannot know about the new errno values we
-      dnl add to <errno.h>. Replace it.
+      dnl add to <errno.h>, or any fix for strerror(0). Replace it.
       REPLACE_STRERROR_R=1
     fi
   fi
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
 # Prerequisites of lib/strerror_r.c.
 AC_DEFUN([gl_PREREQ_STRERROR_R], [
   dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
-  AC_CHECK_FUNCS([__xpg_strerror_r])
+  AC_CHECK_FUNCS_ONCE([__xpg_strerror_r])
   AC_CHECK_FUNCS_ONCE([catgets])
 ])
 
@@ -51,10 +51,11 @@ AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
 [
   AC_REQUIRE([gl_HEADER_ERRNO_H])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_FUNC_STRERROR_0])
 
   AC_CHECK_FUNCS_ONCE([strerror_r])
   if test $ac_cv_func_strerror_r = yes; then
-    if test -z "$ERRNO_H"; then
+    if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);
       dnl glibc, Cygwin:           char *strerror_r (int, char *, size_t);
       dnl AIX 5.1, OSF/1 5.1:      int strerror_r (int, char *, int);
@@ -116,8 +117,8 @@ changequote(,)dnl
                 aix*)  gl_cv_func_strerror_r_works="guessing no";;
                        # Guess no on HP-UX.
                 hpux*) gl_cv_func_strerror_r_works="guessing no";;
-                       # Guess no on FreeBSD.
-                freebsd*)  gl_cv_func_strerror_r_works="guessing no";;
+                       # Guess no on BSD variants.
+                *bsd*)  gl_cv_func_strerror_r_works="guessing no";;
                        # Guess yes otherwise.
                 *)     gl_cv_func_strerror_r_works="guessing yes";;
               esac
@@ -127,7 +128,7 @@ changequote([,])dnl
       else
         dnl The system's strerror() has a wrong signature.
         dnl glibc >= 2.3.4 and cygwin 1.7.9 have a function __xpg_strerror_r.
-        AC_CHECK_FUNCS([__xpg_strerror_r])
+        AC_CHECK_FUNCS_ONCE([__xpg_strerror_r])
         dnl In glibc < 2.14, __xpg_strerror_r does not populate buf on failure.
         dnl In cygwin < 1.7.10, __xpg_strerror_r clobbers strerror's buffer.
         if test $ac_cv_func___xpg_strerror_r = yes; then

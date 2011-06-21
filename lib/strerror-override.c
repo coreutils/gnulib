@@ -37,6 +37,11 @@ strerror_override (int errnum)
   /* These error messages are taken from glibc/sysdeps/gnu/errlist.c.  */
   switch (errnum)
     {
+#if REPLACE_STRERROR_0
+    case 0:
+      return "Success";
+#endif
+
 #if GNULIB_defined_ETXTBSY
     case ETXTBSY:
       return "Text file busy";
