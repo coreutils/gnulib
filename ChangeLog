@@ -1,3 +1,10 @@
+2011-06-22  Eric Blake  <eblake@redhat.com>
+
+	getopt: silence clang warning
+	* lib/getopt.c (_getopt_internal_r): Avoid unlikely NULL
+	dereference.
+	Reported by Gustavo Martin Domato.
+
 2011-06-22  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: do not insert a blank line into each .gitignore file
