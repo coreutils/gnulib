@@ -1106,6 +1106,7 @@ sc_copyright_check:
 # the other init.sh-using tests also get it right.
 _hv_file ?= $(srcdir)/tests/help-version
 _hv_regex_weak ?= ^ *\. .*/init\.sh"
+# Fix syntax-highlighters "
 _hv_regex_strong ?= ^ *\. "\$${srcdir=\.}/init\.sh"
 sc_cross_check_PATH_usage_in_tests:
 	@if test -f $(_hv_file); then					\
@@ -1131,6 +1132,14 @@ sc_Wundef_boolean:
 	@prohibit='^#define.*(yes|no|true|false)$$'			\
 	in_files='$(CONFIG_INCLUDE)'					\
 	halt='Use 0 or 1 for macro values'				\
+	  $(_sc_search_regexp)
+
+# Even if you use pathmax.h to guarantee that PATH_MAX is defined, it might
+# not be constant.  In general, use PATH_MAX as a limit, not an array
+# allocation bound.
+sc_prohibit_path_max_array:
+	@prohibit='\[PATH''_MAX'					\
+	halt='Avoid arrays of size PATH_MAX'				\
 	  $(_sc_search_regexp)
 
 sc_vulnerable_makefile_CVE-2009-4029:

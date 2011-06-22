@@ -1,5 +1,8 @@
 2011-06-22  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: add syntax-check to avoid char[PATH_MAX]
+	* top/maint.mk (sc_prohibit_path_max_array): New rule.
+
 	stat: be robust to PATH_MAX definition
 	* lib/stat.c (rpl_stat): Require reasonable PATH_MAX.
 	* modules/stat (Depends-on): Add verify.
