@@ -1,5 +1,11 @@
 2011-06-22  Eric Blake  <eblake@redhat.com>
 
+	link: work around IRIX bug
+	* m4/link.m4 (gl_FUNC_LINK): Expose the bug.
+	* lib/link.c (rpl_link): Work around it.
+	* tests/test-link.h (test_link): Enhance test.
+	* doc/posix-functions/link.texi (link): Document the bug.
+
 	getopt: silence clang warning
 	* lib/getopt.c (_getopt_internal_r): Avoid unlikely NULL
 	dereference.

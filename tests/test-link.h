@@ -166,6 +166,9 @@ test_link (int (*func) (char const *, char const *), bool print)
   ASSERT (func (BASE "b", BASE "link/") == -1);
   ASSERT (errno == ENOTDIR || errno == ENOENT || errno == EEXIST
           || errno == EINVAL);
+  errno = 0;
+  ASSERT (func (BASE "b", BASE "link") == -1);
+  ASSERT (errno == EEXIST);
   ASSERT (rename (BASE "b", BASE "a") == 0);
   errno = 0;
   ASSERT (func (BASE "link/", BASE "b") == -1);

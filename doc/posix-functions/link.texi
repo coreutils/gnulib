@@ -15,6 +15,10 @@ mingw.
 This function fails to reject trailing slashes on non-directories on
 some platforms:
 FreeBSD 7.2, Solaris 11 2010-11, Cygwin 1.5.x.
+@item
+When the second argument is a dangling symlink, some platforms follow
+that link and create the destination rather than failing:
+IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
