@@ -1,3 +1,8 @@
+2011-06-22  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: do not insert a blank line into each .gitignore file
+	* build-aux/bootstrap (sort_patterns): Filter out blank lines.
+
 2011-06-21  Eric Blake  <eblake@redhat.com>
 
 	perror: test for output mismatch
