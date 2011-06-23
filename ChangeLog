@@ -1,3 +1,10 @@
+2011-06-23  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: test further PATH_MAX issues
+	* top/maint.mk (sc_prohibit_path_max_array): Rename...
+	(sc_prohibit_path_max_allocation): ...and also test alloca.
+	Suggested by Jim Meyering.
+
 2011-06-22  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: add syntax-check to avoid char[PATH_MAX]

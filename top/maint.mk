@@ -1135,11 +1135,11 @@ sc_Wundef_boolean:
 	  $(_sc_search_regexp)
 
 # Even if you use pathmax.h to guarantee that PATH_MAX is defined, it might
-# not be constant.  In general, use PATH_MAX as a limit, not an array
-# allocation bound.
-sc_prohibit_path_max_array:
-	@prohibit='\[PATH''_MAX'					\
-	halt='Avoid arrays of size PATH_MAX'				\
+# not be constant, or might overflow a stack.  In general, use PATH_MAX as
+# a limit, not an array or alloca size.
+sc_prohibit_path_max_allocation:
+	@prohibit='(\balloca *\([^)]*|\[[^]]*)PATH_MAX'			\
+	halt='Avoid stack allocations of size PATH_MAX'			\
 	  $(_sc_search_regexp)
 
 sc_vulnerable_makefile_CVE-2009-4029:
