@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 5, 2011
+@set lastupdate May 10, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -615,8 +615,7 @@ for interface to certain types of terminals or printers
 that can't handle those characters.
 Whenever possible, try to make programs work properly with
 sequences of bytes that represent multibyte characters, using encodings
-such as UTF-8 and others.  You can use libiconv to deal with a wide
-range of encodings.
+such as UTF-8 and others.
 
 @cindex error messages
 Check every system call for an error return, unless you know you wish
