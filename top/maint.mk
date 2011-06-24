@@ -596,11 +596,17 @@ sc_prohibit_strings_without_use:
 	  $(_sc_header_without_use)
 
 # Get the list of symbol names with this:
-# perl -lne '/^# *define (\w+)\(/ and print $1' lib/intprops.h|grep -v '^s'|fmt
+# perl -lne '/^# *define ([A-Z]\w+)\(/ and print $1' lib/intprops.h|fmt
 _intprops_names =							\
   TYPE_IS_INTEGER TYPE_TWOS_COMPLEMENT TYPE_ONES_COMPLEMENT		\
   TYPE_SIGNED_MAGNITUDE TYPE_SIGNED TYPE_MINIMUM TYPE_MAXIMUM		\
-  INT_STRLEN_BOUND INT_BUFSIZE_BOUND
+  INT_BITS_STRLEN_BOUND INT_STRLEN_BOUND INT_BUFSIZE_BOUND		\
+  INT_ADD_RANGE_OVERFLOW INT_SUBTRACT_RANGE_OVERFLOW			\
+  INT_NEGATE_RANGE_OVERFLOW INT_MULTIPLY_RANGE_OVERFLOW			\
+  INT_DIVIDE_RANGE_OVERFLOW INT_REMAINDER_RANGE_OVERFLOW		\
+  INT_LEFT_SHIFT_RANGE_OVERFLOW INT_ADD_OVERFLOW INT_SUBTRACT_OVERFLOW	\
+  INT_NEGATE_OVERFLOW INT_MULTIPLY_OVERFLOW INT_DIVIDE_OVERFLOW		\
+  INT_REMAINDER_OVERFLOW INT_LEFT_SHIFT_OVERFLOW
 _intprops_syms_re = $(subst $(_sp),|,$(strip $(_intprops_names)))
 # Prohibit the inclusion of intprops.h without an actual use.
 sc_prohibit_intprops_without_use:
