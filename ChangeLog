@@ -1,3 +1,12 @@
+2011-06-24  Jim Meyering  <meyering@redhat.com>
+
+	syntax-check: keep one maint.mk rule in sync with its header
+	* Makefile (sc_check_sym_list): Add a rule to prevent a repeat
+	of the bug Eric has just fixed, with today's commit 25e4c2ec.
+	I prefer to avoid temporary files here, so use <(...), but that
+	is not supported by /bin/sh, so...
+	(SHELL): Define to /bin/bash.
+
 2011-06-24  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: update sc_prohibit_intprops_without_use

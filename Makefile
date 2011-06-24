@@ -8,6 +8,9 @@
 # This Makefile requires the use of GNU make.  Some targets require
 # that you have tools like git, makeinfo and cppi installed.
 
+# Required for the use of <(...) below.
+SHELL=/bin/bash
+
 # Produce some files that are not stored in the repository.
 all:
 
@@ -94,6 +97,16 @@ sc_cpp_indent_check:
           | grep '\.c$$' \
           | grep -v '/getloadavg\.c$$' \
           | xargs cppi -c
+
+# Ensure that the list of symbols checked for by the
+# sc_prohibit_intprops_without_use rule match those in the actual file.
+# Extract the symbols from the .h file and compare with the list of
+# symbols extracted from the rule in maint.mk.
+sc_check_sym_list:
+	i=lib/intprops.h; \
+	diff -u <(perl -lne '/^# *define ([A-Z]\w+)\(/ and print $$1' $$i|fmt) \
+	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
+            |sed '/^_/d;s/^  //;s/	*\\$$//')
 
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html
