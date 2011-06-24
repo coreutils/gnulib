@@ -1,3 +1,34 @@
+2011-06-24  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: enhance useless header checks
+	* top/maint.mk (_sc_header_without_use): Check both include
+	styles.
+	(sc_prohibit_assert_without_use)
+	(sc_prohibit_close_stream_without_use)
+	(sc_prohibit_getopt_without_use)
+	(sc_prohibit_quotearg_without_use)
+	(sc_prohibit_quote_without_use)
+	(sc_prohibit_long_options_without_use)
+	(sc_prohibit_inttostr_without_use)
+	(sc_prohibit_ignore_value_without_use)
+	(sc_prohibit_error_without_use, sc_prohibit_xalloc_without_use)
+	(sc_prohibit_hash_without_use, sc_prohibit_cloexec_without_use)
+	(sc_prohibit_posixver_without_use, sc_prohibit_same_without_use)
+	(sc_prohibit_hash_pjw_without_use)
+	(sc_prohibit_safe_read_without_use)
+	(sc_prohibit_argmatch_without_use)
+	(sc_prohibit_canonicalize_without_use)
+	(sc_prohibit_root_dev_ino_without_use)
+	(sc_prohibit_openat_without_use)
+	(sc_prohibit_c_ctype_without_use)
+	(sc_prohibit_signal_without_use)
+	(sc_prohibit_stdio--_without_use)
+	(sc_prohibit_stdio-safer_without_use)
+	(sc_prohibit_strings_without_use)
+	(sc_prohibit_intprops_without_use)
+	(sc_prohibit_stddef_without_use)
+	(sc_prohibit_xfreopen_without_use): Update clients.
+
 2011-06-24  Jim Meyering  <meyering@redhat.com>
 
 	syntax-check: keep one maint.mk rule in sync with its header
