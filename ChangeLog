@@ -1,5 +1,11 @@
 2011-06-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	nanosleep: simplify carrying
+	* lib/nanosleep.c (nanosleep): Use the requested tv_nsec for the
+	first call to the underyling nanosleep, not for the last one.
+	This doesn't fix any bugs, but it simplifies the computation of
+	the remaining delay.  Found while auditing integer overflow issues.
+
 	dup2: remove test for existence of fcntl
 	* m4/dup2.m4 (gl_FUNC_DUP2): Use "#ifdef FD_CLOEXEC", not
 	"#if HAVE_FCNTL", in the configure-time test program.

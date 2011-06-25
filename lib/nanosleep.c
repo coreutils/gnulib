@@ -65,7 +65,7 @@ nanosleep (const struct timespec *requested_delay,
     const time_t limit = 24 * 24 * 60 * 60;
     time_t seconds = requested_delay->tv_sec;
     struct timespec intermediate;
-    intermediate.tv_nsec = 0;
+    intermediate.tv_nsec = requested_delay->tv_nsec;
 
     while (limit < seconds)
       {
@@ -76,20 +76,12 @@ nanosleep (const struct timespec *requested_delay,
         if (result)
           {
             if (remaining_delay)
-              {
-                remaining_delay->tv_sec += seconds;
-                remaining_delay->tv_nsec += requested_delay->tv_nsec;
-                if (BILLION <= requested_delay->tv_nsec)
-                  {
-                    remaining_delay->tv_sec++;
-                    remaining_delay->tv_nsec -= BILLION;
-                  }
-              }
+              remaining_delay->tv_sec += seconds;
             return result;
           }
+        intermediate.tv_nsec = 0;
       }
     intermediate.tv_sec = seconds;
-    intermediate.tv_nsec = requested_delay->tv_nsec;
     return nanosleep (&intermediate, remaining_delay);
   }
 }
