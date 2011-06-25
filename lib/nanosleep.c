@@ -210,12 +210,11 @@ my_usleep (const struct timespec *ts_delay)
   tv_delay.tv_usec = (ts_delay->tv_nsec + 999) / 1000;
   if (tv_delay.tv_usec == 1000000)
     {
-      time_t t1 = tv_delay.tv_sec + 1;
-      if (t1 < tv_delay.tv_sec)
+      if (tv_delay.tv_sec == TYPE_MAXIMUM (time_t))
         tv_delay.tv_usec = 1000000 - 1; /* close enough */
       else
         {
-          tv_delay.tv_sec = t1;
+          tv_delay.tv_sec++;
           tv_delay.tv_usec = 0;
         }
     }

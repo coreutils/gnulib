@@ -1,5 +1,9 @@
 2011-06-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	nanosleep: fix integer overflow problem
+	* lib/nanosleep.c (my_usleep): Don't assume signed integer
+	arithmetic wraps around on overflow.
+
 	nanosleep: simplify carrying
 	* lib/nanosleep.c (nanosleep): Use the requested tv_nsec for the
 	first call to the underyling nanosleep, not for the last one.
