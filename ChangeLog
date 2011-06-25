@@ -1,3 +1,12 @@
+2011-06-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dup2: remove test for existence of fcntl
+	* m4/dup2.m4 (gl_FUNC_DUP2): Use "#ifdef FD_CLOEXEC", not
+	"#if HAVE_FCNTL", in the configure-time test program.
+	This removes the need for the AC_CHECK_FUNCS_ONCE([fcntl]),
+	and therefore speeds up "configure" a bit.  Found while
+	adding the dup2 module to Emacs.
+
 2011-06-24  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: enhance useless header checks

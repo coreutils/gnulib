@@ -1,4 +1,4 @@
-#serial 12
+#serial 13
 dnl Copyright (C) 2002, 2005, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,6 @@ AC_DEFUN([gl_FUNC_DUP2],
   ], [
     AC_DEFINE([HAVE_DUP2], [1], [Define to 1 if you have the 'dup2' function.])
   ])
-  AC_CHECK_FUNCS_ONCE([fcntl])
   if test $HAVE_DUP2 = 1; then
     AC_CACHE_CHECK([whether dup2 works], [gl_cv_func_dup2_works],
       [AC_RUN_IFELSE([
@@ -25,13 +24,13 @@ AC_DEFUN([gl_FUNC_DUP2],
 #include <fcntl.h>
 #include <errno.h>]],
            [int result = 0;
-#if HAVE_FCNTL
+#ifdef FD_CLOEXEC
             if (fcntl (1, F_SETFD, FD_CLOEXEC) == -1)
               result |= 1;
-#endif HAVE_FCNTL
+#endif
             if (dup2 (1, 1) == 0)
               result |= 2;
-#if HAVE_FCNTL
+#ifdef FD_CLOEXEC
             if (fcntl (1, F_GETFD) != FD_CLOEXEC)
               result |= 4;
 #endif
