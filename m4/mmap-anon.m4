@@ -27,18 +27,18 @@ AC_DEFUN([gl_FUNC_MMAP_ANON],
   gl_have_mmap_anonymous=no
   if test $gl_have_mmap = yes; then
     AC_MSG_CHECKING([for MAP_ANONYMOUS])
-    AC_EGREP_CPP([I cant identify this map.], [
+    AC_EGREP_CPP([I cant identify this map], [
 #include <sys/mman.h>
 #ifdef MAP_ANONYMOUS
-    I cant identify this map.
+    I cant identify this map
 #endif
 ],
       [gl_have_mmap_anonymous=yes])
     if test $gl_have_mmap_anonymous != yes; then
-      AC_EGREP_CPP([I cant identify this map.], [
+      AC_EGREP_CPP([I cant identify this map], [
 #include <sys/mman.h>
 #ifdef MAP_ANON
-    I cant identify this map.
+    I cant identify this map
 #endif
 ],
         [AC_DEFINE([MAP_ANONYMOUS], [MAP_ANON],

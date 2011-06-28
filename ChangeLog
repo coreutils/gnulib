@@ -1,3 +1,9 @@
+2011-06-27  Paolo Bonzini  <bonzini@gnu.org>
+
+	mmap-anon: do not use regular expressions inadvertently
+	* m4/mmap-anon.m4: Remove trailing period from strings sought
+	in the output.
+
 2011-06-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	nanosleep: fix integer overflow problem
