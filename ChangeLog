@@ -1,5 +1,9 @@
 2011-06-29  Eric Blake  <eblake@redhat.com>
 
+	pipe2: fix C89 compile problem
+	* lib/pipe2.c (pipe2): Avoid C99 array initialization.
+	Reported by Bruno Haible.
+
 	pipe, pipe2: don't corrupt fd on error
 	* lib/pipe.c (pipe): Leave fd unchanged on error.
 	* lib/pipe2.c (pipe2): Likewise.
