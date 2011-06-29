@@ -15,4 +15,8 @@ mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function crashes rather than failing with @code{EMFILE} if no
+resources are left on some platforms:
+Cygwin 1.7.9.
 @end itemize

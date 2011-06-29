@@ -1,3 +1,11 @@
+2011-06-29  Eric Blake  <eblake@redhat.com>
+
+	pipe, pipe2: don't corrupt fd on error
+	* lib/pipe.c (pipe): Leave fd unchanged on error.
+	* lib/pipe2.c (pipe2): Likewise.
+	* doc/posix-functions/pipe.texi (pipe): Document cygwin issue.
+	* doc/glibc-functions/pipe2.texi (pipe2): Likewise.
+
 2011-06-27  Paolo Bonzini  <bonzini@gnu.org>
 
 	mmap-anon: do not use regular expressions inadvertently

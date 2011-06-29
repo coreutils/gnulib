@@ -32,7 +32,16 @@
 int
 pipe (int fd[2])
 {
-  return _pipe (fd, 4096, _O_BINARY);
+  /* Mingw changes fd to {-1,-1} on failure, but this violates
+     http://austingroupbugs.net/view.php?id=467 */
+  int tmp[2];
+  int result = _pipe (tmp, 4096, _O_BINARY);
+  if (!result)
+    {
+      fd[0] = tmp[0];
+      fd[1] = tmp[1];
+    }
+  return result;
 }
 
 #else

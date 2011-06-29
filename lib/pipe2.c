@@ -40,6 +40,11 @@
 int
 pipe2 (int fd[2], int flags)
 {
+  /* Mingw _pipe() corrupts fd on failure; also, if we succeed at
+     creating the pipe but later fail at changing fcntl, we want
+     to leave fd unchanged: http://austingroupbugs.net/view.php?id=467  */
+  int tmp[2] = { fd[0], fd[1] };
+
 #if HAVE_PIPE2
 # undef pipe2
   /* Try the system call first, if it exists.  (We may be running with a glibc
@@ -71,7 +76,11 @@ pipe2 (int fd[2], int flags)
 /* Native Woe32 API.  */
 
   if (_pipe (fd, 4096, flags & ~O_NONBLOCK) < 0)
-    return -1;
+    {
+      fd[0] = tmp[0];
+      fd[1] = tmp[1];
+      return -1;
+    }
 
   /* O_NONBLOCK handling.
      On native Windows platforms, O_NONBLOCK is defined by gnulib.  Use the
@@ -145,6 +154,8 @@ pipe2 (int fd[2], int flags)
     int saved_errno = errno;
     close (fd[0]);
     close (fd[1]);
+    fd[0] = tmp[0];
+    fd[1] = tmp[1];
     errno = saved_errno;
     return -1;
   }
