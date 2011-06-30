@@ -65,6 +65,13 @@ timespec_sign (struct timespec a)
   return a.tv_sec < 0 ? -1 : a.tv_sec || a.tv_nsec;
 }
 
+/* Return an approximation to A, of type 'double'.  */
+static inline double
+timespectod (struct timespec a)
+{
+  return a.tv_sec + a.tv_nsec / 1e9;
+}
+
 void gettime (struct timespec *);
 int settime (struct timespec const *);
 
