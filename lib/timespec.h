@@ -65,6 +65,8 @@ timespec_sign (struct timespec a)
   return a.tv_sec < 0 ? -1 : a.tv_sec || a.tv_nsec;
 }
 
+struct timespec timespec_add (struct timespec, struct timespec);
+struct timespec timespec_sub (struct timespec, struct timespec);
 struct timespec dtotimespec (double);
 
 /* Return an approximation to A, of type 'double'.  */

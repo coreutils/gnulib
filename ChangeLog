@@ -1,5 +1,10 @@
 2011-06-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	timespec-add, timespec-sub: new modules
+	* lib/timespec.h (timespec_add, timespec_sub): New decls.
+	* lib/timespec-add.c, lib/timespec-sub.c:
+	* modules/timespec-add, modules/timespec-sub: New files.
+
 	dtotimespec: new module
 	* lib/timespec.h (dtotimespec): New decl.
 	* lib/dtotimespec.c, modules/dtotimespec: New files.
