@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 17
+# sys_select_h.m4 serial 18
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_HEADER_SYS_SELECT],
 [
+  AC_REQUIRE([AC_C_RESTRICT])
   AC_REQUIRE([gl_SYS_SELECT_H_DEFAULTS])
   AC_CACHE_CHECK([whether <sys/select.h> is self-contained],
     [gl_cv_header_sys_select_h_selfcontained],
@@ -77,7 +78,10 @@ AC_DEFUN([gl_SYS_SELECT_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_SELECT_H_DEFAULTS],
 [
+  GNULIB_PSELECT=0; AC_SUBST([GNULIB_PSELECT])
   GNULIB_SELECT=0; AC_SUBST([GNULIB_SELECT])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_PSELECT=1; AC_SUBST([HAVE_PSELECT])
+  REPLACE_PSELECT=0; AC_SUBST([REPLACE_PSELECT])
   REPLACE_SELECT=0; AC_SUBST([REPLACE_SELECT])
 ])

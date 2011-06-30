@@ -85,10 +85,47 @@
 # endif
 #endif
 
+/* Get definition of 'sigset_t'.
+   But avoid namespace pollution on glibc systems.  */
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
+# include <signal.h>
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
+
+#if @GNULIB_PSELECT@
+# if @REPLACE_PSELECT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef pselect
+#   define pselect rpl_pselect
+#  endif
+_GL_FUNCDECL_RPL (pselect, int,
+                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                   struct timespec const *restrict, const sigset_t *restrict));
+_GL_CXXALIAS_RPL (pselect, int,
+                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                   struct timespec const *restrict, const sigset_t *restrict));
+# else
+#  if !@HAVE_PSELECT@
+_GL_FUNCDECL_SYS (pselect, int,
+                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                   struct timespec const *restrict, const sigset_t *restrict));
+#  endif
+_GL_CXXALIAS_SYS (pselect, int,
+                  (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                   struct timespec const *restrict, const sigset_t *restrict));
+# endif
+_GL_CXXALIASWARN (pselect);
+#elif defined GNULIB_POSIXCHECK
+# undef pselect
+# if HAVE_RAW_DECL_PSELECT
+_GL_WARN_ON_USE (pselect, "pselect is not portable - "
+                 "use gnulib module pselect for portability");
+# endif
+#endif
 
 #if @GNULIB_SELECT@
 # if @REPLACE_SELECT@

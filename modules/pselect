@@ -1,0 +1,29 @@
+Description:
+pselect() function: synchronous I/O multiplexing.
+
+Files:
+lib/pselect.c
+m4/pselect.m4
+
+Depends-on:
+sys_select
+
+configure.ac:
+gl_FUNC_PSELECT
+if test $REPLACE_PSELECT = 1; then
+  AC_LIBOBJ([pselect])
+fi
+gl_SYS_SELECT_MODULE_INDICATOR([pselect])
+
+Makefile.am:
+
+Include:
+<sys/select.h>
+
+Link:
+
+License:
+LGPLv2+
+
+Maintainer:
+Paul Eggert
