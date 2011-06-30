@@ -1,5 +1,14 @@
 2011-06-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xnanosleep: Rewrite to use new dtotimespec module.
+	It has the conversion code that used to be in xnanosleep.
+	* lib/xnanosleep.c: Do not include limits.h, stdbool.h, stdio.h,
+	assert.h, sys/types.h, or intprops.h.  Include timespec.h instead.
+	(TIME_T_MAX): Remove.
+	(xnanosleep): Rewrite in terms of dtotimespec.
+	* modules/xnanosleep (Depends-on): Add dtotimespec.
+	Remove intprops, stdbool.
+
 	timespec-add, timespec-sub: new modules
 	* lib/timespec.h (timespec_add, timespec_sub): New decls.
 	* lib/timespec-add.c, lib/timespec-sub.c:

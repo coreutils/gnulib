@@ -7,10 +7,9 @@ lib/xnanosleep.c
 m4/xnanosleep.m4
 
 Depends-on:
+dtotimespec
 nanosleep
 time
-intprops
-stdbool
 
 configure.ac:
 gl_XNANOSLEEP
