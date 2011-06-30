@@ -1,5 +1,7 @@
 2011-06-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/timespec.h (timespec_sign): New inline function.
+
 	pselect: new module
 	* lib/sys_select.in.h: Include <signal.h>, for 'sigset_t'.
 	(pselect): New decls.

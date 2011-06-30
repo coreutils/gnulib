@@ -57,6 +57,14 @@ timespec_cmp (struct timespec a, struct timespec b)
           : (int) (a.tv_nsec - b.tv_nsec));
 }
 
+/* Return -1, 0, 1, depending on the sign of A.  A.tv_nsec must be
+   nonnegative.  */
+static inline int
+timespec_sign (struct timespec a)
+{
+  return a.tv_sec < 0 ? -1 : a.tv_sec || a.tv_nsec;
+}
+
 void gettime (struct timespec *);
 int settime (struct timespec const *);
 
