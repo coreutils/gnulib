@@ -80,7 +80,9 @@
 /* On native Windows platforms:
    Get the 'fd_set' type.  Also, gnulib's <sys/socket.h> redefines select
    so as to hide the declaration from <winsock2.h>.  */
-# include <sys/socket.h>
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  include <sys/socket.h>
+# endif
 #endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */

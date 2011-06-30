@@ -4,11 +4,11 @@ A <sys/select.h> for systems lacking it.
 Files:
 lib/sys_select.in.h
 m4/sys_select_h.m4
+m4/sys_socket_h.m4
 
 Depends-on:
 include_next
 c++defs
-sys_socket
 sys_time
 warn-on-use
 
