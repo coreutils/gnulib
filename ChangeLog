@@ -1,3 +1,13 @@
+2011-07-05  Eric Blake  <eblake@redhat.com>
+
+	snprintf: guarantee %1$d, for libintl
+	* m4/snprintf.m4 (gl_FUNC_SNPRINTF): Require %1$d support.
+	* m4/vsnprintf.m4 (gl_FUNC_VSNPRINTF): Likewise.
+	* doc/posix-functions/snprintf.texi (snprintf): Update.
+	* doc/posix-functions/vsnprintf.texi (vsnprintf): Likewise.
+	* tests/test-snprintf.c (main): Enhance test.
+	* tests/test-vsnprintf.c (main): Likewise.
+
 2011-07-05  Jim Meyering  <meyering@redhat.com>
 
 	maint: exempt stdio-read.c and stdio-write.c from the cppi check

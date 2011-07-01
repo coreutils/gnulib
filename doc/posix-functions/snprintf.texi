@@ -12,12 +12,17 @@ Portability problems fixed by either Gnulib module @code{snprintf} or @code{snpr
 This function is missing on some platforms:
 IRIX 5.3, OSF/1 4.0, Solaris 2.5.1.
 @item
-This function does not return a byte count as specified in C99 on some platforms:
+This function does not support format directives that access arguments in an
+arbitrary order, such as @code{"%2$s"}, on some platforms:
+NetBSD 3.0, mingw, BeOS.
+@item
+This function does not return a byte count as specified in C99 on some
+platforms:
 HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
 @item
 This function overwrites memory even when a size argument of 1 is passed on some
 platforms:
-Linux libc5.
+Linux libc5, BeOS.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{snprintf-posix}:
@@ -50,10 +55,6 @@ This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
 Solaris 11 2010-11.
 @item
-This function does not support format directives that access arguments in an
-arbitrary order, such as @code{"%2$s"}, on some platforms:
-NetBSD 3.0, mingw, BeOS.
-@item
 This function doesn't support the @code{'} flag on some platforms:
 NetBSD 3.0, Cygwin 1.5.24, mingw.
 @item
@@ -82,10 +83,6 @@ mingw.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
 HP-UX 11, mingw.
-@item
-This function overwrites memory when a size = 1 argument is passed on some
-platforms:
-BeOS.
 @item
 This function overwrites memory even when a zero size argument is passed on some
 platforms:
