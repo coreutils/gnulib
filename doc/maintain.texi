@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 9, 2011
+@set lastupdate June 30, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -1426,8 +1426,8 @@ finally email the resulting @file{@var{msgfile}.asc}), to
 
 @enumerate
 @item
-Name of package(s) that you are the maintainer for, and your
-preferred email address.
+Name of package(s) that you are the maintainer for, your
+preferred email address, and your Savannah username.
 
 @item
 An ASCII armored copy of your GPG key, as an attachment.  (@samp{gpg
@@ -2041,31 +2041,35 @@ about GNU.
 
 @node Free Software and Open Source
 @section Free Software and Open Source
-@cindex free software
+@cindex free software movement
 @cindex open source
-@cindex movements, Free Software and Open Source
+@cindex movement, free software
+@cindex development method, open source
 
-The terms ``free software'' and ``open source'' are the slogans of two
-different movements which differ in their basic philosophy.  The Free
-Software Movement is idealistic, and raises issues of freedom, ethics,
-principle and what makes for a good society.  The Open Source Movement,
-founded in 1998, studiously avoids such questions.  For more explanation,
-see @url{http://www.gnu.org/philosophy/open-source-misses-the-point.html}.
+The terms ``free software'' and ``open source'', while describing
+almost the same category of software, stand for views based on
+fundamentally different values.  The free software movement is
+idealistic, and raises issues of freedom, ethics, principle and what
+makes for a good society.  The term open source, initiated in 1998, is
+associated with a philosophy which studiously avoids such questions.
+For a detailed explanation, see
+@url{http://www.gnu.org/philosophy/open-source-misses-the-point.html}.
 
-The GNU Project is aligned with the Free Software Movement.  This
+The GNU Project is aligned with the free software movement.  This
 doesn't mean that all GNU contributors and maintainers have to agree;
 your views on these issues are up to you, and you're entitled to express
 them when speaking for yourself.
 
-However, due to the much greater publicity that the Open Source
-Movement receives, the GNU Project needs to overcome a widespread
-mistaken impression that GNU is @emph{and always was} an activity of
-the Open Source Movement.  For this reason, please use the term ``free
+However, due to the much greater publicity that the term ``open source''
+receives, the GNU Project needs to overcome a widespread
+mistaken impression that GNU is @emph{and always was} an ``open
+source'' activity.  For this reason, please use the term ``free
 software'', not ``open source'', in GNU software releases, GNU
 documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  A reference to the URL given
 above, to explain the difference, is a useful thing to include as
 well.
+
 
 @node GNU and Linux
 @section GNU and Linux
