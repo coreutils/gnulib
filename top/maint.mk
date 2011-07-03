@@ -516,7 +516,7 @@ sc_prohibit_safe_read_without_use:
 
 sc_prohibit_argmatch_without_use:
 	@h='argmatch.h' \
-	re='(\<(ARRAY_CARDINALITY|X?ARGMATCH(|_TO_ARGUMENT|_VERIFY))\>|\<argmatch(_exit_fn|_(in)?valid) *\()' \
+	re='(\<(ARRAY_CARDINALITY|X?ARGMATCH(|_TO_ARGUMENT|_VERIFY))\>|\<(invalid_arg|argmatch(_exit_fn|_(in)?valid)?) *\()' \
 	  $(_sc_header_without_use)
 
 sc_prohibit_canonicalize_without_use:

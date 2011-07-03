@@ -1,3 +1,11 @@
+2011-07-03  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: correct omissions in prohibit_argmatch_without_use check
+	This rule would mistakenly report that argmatch.h is included without
+	use even when both the argmatch and invalid_arg macro were used.
+	* top/maint.mk (sc_prohibit_argmatch_without_use): Also detect uses
+	of argmatch and invalid_arg.
+
 2011-07-03  Bruno Haible  <bruno@clisp.org>
 
 	Comments about EINTR.
