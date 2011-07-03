@@ -1,3 +1,14 @@
+2011-07-03  Bruno Haible  <bruno@clisp.org>
+
+	Comments about EINTR.
+	* lib/safe-read.h: Explain the purpose of this module.
+	* lib/safe-write.h: Likewise.
+	* doc/posix-functions/read.texi: Mention EINTR and the 'safe-read'
+	module.
+	* doc/posix-functions/write.texi: Mention EINTR and the 'safe-write'
+	module.
+	Reported by Ralf Wildenhues <Ralf.Wildenhues@gmx.de>.
+
 2011-06-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xnanosleep: Rewrite to use new dtotimespec module.

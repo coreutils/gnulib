@@ -14,6 +14,19 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+/* Some system calls may be interrupted and fail with errno = EINTR in the
+   following situations:
+     - The process is stopped and restarted (signal SIGSTOP and SIGCONT, user
+       types Ctrl-Z) on some platforms: MacOS X.
+     - The process receives a signal for which a signal handler was installed
+       with sigaction() with an sa_flags field that does not contain
+       SA_RESTART.
+     - The process receives a signal for which a signal handler was installed
+       with signal() and for which no call to siginterrupt(sig,0) was done,
+       on some platforms: AIX, HP-UX, IRIX, OSF/1, Solaris.
+
+   This module provides a wrapper around write() that handles EINTR.  */
+
 #include <stddef.h>
 
 #define SAFE_WRITE_ERROR ((size_t) -1)
