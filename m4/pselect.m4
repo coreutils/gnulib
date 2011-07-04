@@ -14,15 +14,15 @@ AC_DEFUN([gl_FUNC_PSELECT],
     AC_CACHE_CHECK([whether signature of pselect conforms to POSIX],
       gl_cv_sig_pselect,
       [AC_LINK_IFELSE(
-	 [AC_LANG_PROGRAM(
-	      [[#include <sys/select.h>
-		]],
-	      [[int (*p) (int, fd_set *, fd_set *, fd_set *restrict,
-			  struct timespec const *restrict,
-			  sigset_t const *restrict) = pselect;
-		return !p;]])],
-	 [gl_cv_sig_pselect=yes],
-	 [gl_cv_sig_pselect=no])])
+         [AC_LANG_PROGRAM(
+              [[#include <sys/select.h>
+                ]],
+              [[int (*p) (int, fd_set *, fd_set *, fd_set *restrict,
+                          struct timespec const *restrict,
+                          sigset_t const *restrict) = pselect;
+                return !p;]])],
+         [gl_cv_sig_pselect=yes],
+         [gl_cv_sig_pselect=no])])
   fi
 
   if test $ac_cv_func_pselect = no || test $gl_cv_sig_pselect = no; then

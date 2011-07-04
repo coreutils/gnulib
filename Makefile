@@ -32,6 +32,16 @@ sc_prefer_ac_check_funcs_once:
 		   in modules/ 1>&2; exit 1; } || :			\
 	else :; fi
 
+sc_prohibit_leading_TABs:
+	if test -d .git; then						\
+	  url=FIXME;							\
+	  git grep -l '^ *	' lib m4 tests				\
+            | grep -Ev '^m4/po\.m4|^lib/reg|Makefile|test-update-copyright' \
+            | grep .							\
+	    && { printf '*** %s\n' 'indent with spaces, not TABs;'	\
+		 1>&2; exit 1; } || :					\
+	else :; fi
+
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	if test -d .git; then						\
 	  url=http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/22874;	\

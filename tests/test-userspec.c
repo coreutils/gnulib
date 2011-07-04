@@ -144,7 +144,7 @@ main (void)
       char *user_name;
       char *group_name;
       char const *diag = parse_user_spec (T[i].in, &uid, &gid,
-					  &user_name, &group_name);
+                                          &user_name, &group_name);
       free (user_name);
       free (group_name);
       if (!same_diag (diag, T[i].result))
@@ -161,8 +161,8 @@ main (void)
       if (uid != T[i].uid || gid != T[i].gid)
         {
           printf ("%s mismatch (-: expected uid,gid; +:actual)\n"
-		  "-%3lu,%3lu\n+%3lu,%3lu\n",
-		  T[i].in,
+                  "-%3lu,%3lu\n+%3lu,%3lu\n",
+                  T[i].in,
                   (unsigned long int) T[i].uid,
                   (unsigned long int) T[i].gid,
                   (unsigned long int) uid,
@@ -175,8 +175,8 @@ main (void)
 
         {
           printf ("%s diagnostic mismatch (-: expected uid,gid; +:actual)\n"
-		  "-%s\n+%s\n",
-		  T[i].in, T[i].result, diag);
+                  "-%s\n+%s\n",
+                  T[i].in, T[i].result, diag);
           fail = 1;
         }
     }

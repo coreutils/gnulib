@@ -226,7 +226,7 @@ parse_opt (int key, char *arg, struct argp_state *state)
     {
     case ARGP_KEY_INIT:
       for (i = 0; state->root_argp->children[i].argp; i++)
-	state->child_inputs[i] = args;
+        state->child_inputs[i] = args;
       break;
 
     case 't':
@@ -346,7 +346,7 @@ test6 (struct argp *argp)
 
 void
 test_optional (struct argp *argp, int argc, char **argv,
-	       struct test_args *args, const char *val, const char *a)
+               struct test_args *args, const char *val, const char *a)
 {
   int index;
   if (argp_parse (argp, argc, argv, 0, &index, args))
@@ -357,7 +357,7 @@ test_optional (struct argp *argp, int argc, char **argv,
   if (!val)
     {
       if (args->optional)
-	fail ("option processed incorrectly");
+        fail ("option processed incorrectly");
     }
   else if (strcmp (args->optional, val))
     fail ("option processed incorrectly");
@@ -365,9 +365,9 @@ test_optional (struct argp *argp, int argc, char **argv,
   if (a)
     {
       if (index == argc)
-	fail ("expected command line argument not found");
+        fail ("expected command line argument not found");
       else if (strcmp (argv[index], a))
-	fail ("expected command line argument does not match");
+        fail ("expected command line argument does not match");
     }
 }
 

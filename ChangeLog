@@ -1,3 +1,15 @@
+2011-07-04  Jim Meyering  <meyering@redhat.com>
+
+	maint: indent with spaces, not TABs, and add a rule to check this
+	* tests/test-userspec.c: Indent with spaces, not TABs.
+	* tests/test-argp.c: Likewise.
+	* tests/test-c-stack2.sh: Likewise.
+	* tests/test-parse-duration.sh: Likewise
+	* m4/strtod.m4: Likewise.
+	* m4/alloca.m4: Likewise.
+	* m4/pselect.m4: Likewise.
+	* Makefile (sc_prohibit_leading_TABs): Prohibit leading TABs.
+
 2011-07-03  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: correct omissions in prohibit_argmatch_without_use check
