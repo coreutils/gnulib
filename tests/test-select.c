@@ -21,8 +21,16 @@
 #include <sys/select.h>
 
 #include "signature.h"
+
+#ifdef TEST_PSELECT
+SIGNATURE_CHECK (pselect, int,
+                 (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                  struct timespec const *restrict, const sigset_t *restrict));
+#else
 SIGNATURE_CHECK (select, int, (int, fd_set *, fd_set *, fd_set *,
                                struct timeval *));
+#endif
+
 /* The following may be macros without underlying functions, so only
    check signature if they are not macros.  */
 #ifndef FD_CLR
@@ -190,7 +198,20 @@ do_select (int fd, int ev, struct timeval *timeout)
     FD_SET (fd, &wfds);
   if (ev & SEL_EXC)
     FD_SET (fd, &xfds);
+#ifdef TEST_PSELECT
+  {
+    struct timespec ts, *pts = NULL;
+    if (timeout)
+      {
+        ts.tv_sec = timeout->tv_sec;
+        ts.tv_nsec = timeout->tv_usec * 1000;
+        pts = &ts;
+      }
+    r = pselect (fd + 1, &rfds, &wfds, &xfds, pts, NULL);
+  }
+#else
   r = select (fd + 1, &rfds, &wfds, &xfds, timeout);
+#endif
   if (r < 0)
     return r;
 

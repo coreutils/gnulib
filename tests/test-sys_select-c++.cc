@@ -24,6 +24,12 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_PSELECT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pselect, int,
+                 (int, fd_set *restrict, fd_set *restrict, fd_set *restrict,
+                  struct timespec const *restrict, sigset_t const *restrict));
+#endif
+
 #if GNULIB_TEST_SELECT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::select, int,
                  (int, fd_set *, fd_set *, fd_set *, struct timeval *));

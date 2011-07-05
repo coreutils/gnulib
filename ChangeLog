@@ -1,5 +1,10 @@
 2011-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-pselect: new module
+	* modules/pselect-tests, tests/test-pselect.c: New files.
+	* tests/test-select.c, tests/test-sys_select-c++.cc:
+	If TEST_PSELECT is defined, test pselect instead of testing select.
+
 	* tests/test-sys_select.c (sigset_t): Test for it, too.
 	Suggested by Bruno Haible.
 

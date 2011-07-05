@@ -1,0 +1,12 @@
+Files:
+tests/test-pselect.c
+
+Depends-on:
+select-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pselect
+check_PROGRAMS += test-pselect
+test_pselect_LDADD = $(LDADD) @LIBSOCKET@ $(INET_PTON_LIB)
