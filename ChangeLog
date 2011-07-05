@@ -1,3 +1,8 @@
+2011-07-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* tests/test-sys_select.c (sigset_t): Test for it, too.
+	Suggested by Bruno Haible.
+
 2011-07-05  Eric Blake  <eblake@redhat.com>
 
 	snprintf: guarantee %1$d, for libintl
