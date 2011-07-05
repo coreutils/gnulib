@@ -105,7 +105,7 @@ sc_cpp_indent_check:
             $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
           | sort -u \
           | grep '\.c$$' \
-          | grep -v '/getloadavg\.c$$' \
+          | grep -vE '/(stdio-(read|write)|getloadavg)\.c$$' \
           | xargs cppi -c
 
 # Ensure that the list of symbols checked for by the

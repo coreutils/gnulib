@@ -1,3 +1,16 @@
+2011-07-05  Jim Meyering  <meyering@redhat.com>
+
+	maint: exempt stdio-read.c and stdio-write.c from the cppi check
+	* Makefile (sc_cpp_indent_check): Exempt stdio-read.c and stdio-write.c
+	per Bruno's request, to accommodate this idiom (no space after "#")
+	even when the function is inside an #if block:
+	char *
+	gets (char *s)
+	#undef gets
+	{
+	  ...
+	}
+
 2011-07-04  Jim Meyering  <meyering@redhat.com>
 
 	maint: indent with spaces, not TABs, and add a rule to check this
