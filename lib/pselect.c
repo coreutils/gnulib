@@ -62,14 +62,14 @@ pselect (int nfds, fd_set *restrict rfds,
   /* Signal mask munging should be atomic, but this is the best we can
      do in this emulation.  */
   if (sigmask)
-    sigprocmask (SIG_SETMASK, sigmask, &origmask);
+    pthread_sigmask (SIG_SETMASK, sigmask, &origmask);
 
   select_result = select (nfds, rfds, wfds, xfds, tvp);
 
   if (sigmask)
     {
       int select_errno = errno;
-      sigprocmask (SIG_SETMASK, &origmask, NULL);
+      pthread_sigmask (SIG_SETMASK, &origmask, NULL);
       errno = select_errno;
     }
 

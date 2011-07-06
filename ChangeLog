@@ -1,3 +1,11 @@
+2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pselect: Use pthread_sigmask, not sigprocmask.
+	* lib/pselect.c (pselect): Use pthread_sigmask, as it supports
+	multithreaded apps better than sigprocmask does.
+	* modules/pselect (Depends-on): Depend on pthread_sigmask, not
+	sigprocmask directly.
+
 2011-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/pselect.c (pselect): Use plain name, without "rpl_".
