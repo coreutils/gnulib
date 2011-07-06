@@ -1,3 +1,8 @@
+2011-07-06  Erik Faye-Lund  <kusmabite@gmail.com>
+
+	poll: do not return 0 on timeout=-1
+	* lib/poll.c: Loop with yield if no events occured
+
 2011-07-06  Eric Blake  <eblake@redhat.com>
 
 	pthread_sigmask: always replace when not using pthread
