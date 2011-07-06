@@ -2,8 +2,10 @@
 
 	* lib/pselect.c (pselect): Use plain name, without "rpl_".
 	Don't #undef,  since we don't need any underlying pselect.
-	* modules/pselect (Depends-on): Use our pselect.o if !HAVE_PSELECT.
-	Both changes suggested by Bruno Haible.
+	* modules/pselect (configure.ac): Use our pselect.o if !HAVE_PSELECT.
+	(Depends-on): Add select.
+	(Link): Add $(LIBSOCKET).
+	These changes suggested by Bruno Haible.
 
 	pselect: document better
 	* MODULES.html.sh (Support for systems lacking POSIX:2008): Add it.

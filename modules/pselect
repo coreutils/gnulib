@@ -7,6 +7,7 @@ m4/pselect.m4
 
 Depends-on:
 sys_select
+select          [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1]
 
 configure.ac:
 gl_FUNC_PSELECT
@@ -21,6 +22,7 @@ Include:
 <sys/select.h>
 
 Link:
+$(LIBSOCKET)
 
 License:
 LGPLv2+
