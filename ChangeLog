@@ -1,3 +1,8 @@
+2011-07-06  Bruno Haible  <bruno@clisp.org>
+
+	Comments.
+	* m4/printf.m4: Update comments about mingw.
+
 2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_select: define sigset_t more portably
