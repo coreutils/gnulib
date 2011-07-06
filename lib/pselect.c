@@ -27,8 +27,6 @@
 #include <errno.h>
 #include <signal.h>
 
-#undef pselect
-
 /* Examine the size-NFDS file descriptor sets in RFDS, WFDS, and XFDS
    to see whether some of their descriptors are ready for reading,
    ready for writing, or have exceptions pending.  Wait for at most
@@ -37,10 +35,10 @@
    or an unaffected signal mask.  */
 
 int
-rpl_pselect (int nfds, fd_set *restrict rfds,
-             fd_set *restrict wfds, fd_set *restrict xfds,
-             struct timespec const *restrict timeout,
-             sigset_t const *restrict sigmask)
+pselect (int nfds, fd_set *restrict rfds,
+         fd_set *restrict wfds, fd_set *restrict xfds,
+         struct timespec const *restrict timeout,
+         sigset_t const *restrict sigmask)
 {
   int select_result;
   sigset_t origmask;

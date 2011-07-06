@@ -10,7 +10,7 @@ sys_select
 
 configure.ac:
 gl_FUNC_PSELECT
-if test $REPLACE_PSELECT = 1; then
+if test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1; then
   AC_LIBOBJ([pselect])
 fi
 gl_SYS_SELECT_MODULE_INDICATOR([pselect])
