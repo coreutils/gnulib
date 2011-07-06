@@ -1,5 +1,8 @@
 2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Poison pselect.
+	Suggested by Bruno Haible.
+
 	pselect: Use pthread_sigmask, not sigprocmask.
 	* lib/pselect.c (pselect): Use pthread_sigmask, as it supports
 	multithreaded apps better than sigprocmask does.

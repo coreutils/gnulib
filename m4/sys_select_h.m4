@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 18
+# sys_select_h.m4 serial 19
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -64,7 +64,7 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
 # include <sys/time.h>
 #endif
 #include <sys/select.h>
-    ]], [select])
+    ]], [pselect select])
 ])
 
 AC_DEFUN([gl_SYS_SELECT_MODULE_INDICATOR],
