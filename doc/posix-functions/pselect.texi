@@ -8,11 +8,16 @@ Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+OpenBSD 3.8, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-OpenBSD 3.8, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, Interix 3.5, BeOS.
+When the @var{sigmask} argument is nonnull on platforms that do not
+natively support this function, race conditions are possible when its
+gnulib implementation temporarily modifies the signal mask, and the
+behavior is unspecified in a multi-threaded process.
 @end itemize

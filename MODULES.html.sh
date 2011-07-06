@@ -2419,6 +2419,7 @@ func_all_modules ()
   func_module posix_spawnp
   func_module pread
   func_module printf-posix
+  func_module pselect
   func_module pthread
   func_module ptsname
   func_module pwrite

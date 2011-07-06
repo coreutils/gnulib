@@ -1,5 +1,9 @@
 2011-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pselect: document better
+	* MODULES.html.sh (Support for systems lacking POSIX:2008): Add it.
+	* doc/posix-functions/pselect.texi (pselect): Document new module.
+
 	pthread_sigmask: new module
 	* MODULES.html.sh (Support for systems lacking POSIX:2008): Add it.
 	* doc/posix-functions/pthread_sigmask.texi: Document new module.
