@@ -2451,6 +2451,7 @@ func_all_modules ()
   func_module times
   func_module timespec
   func_module nanosleep
+  func_module pthread_sigmask
   func_module regex
   func_module rename
   func_module renameat

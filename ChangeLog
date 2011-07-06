@@ -1,5 +1,16 @@
 2011-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pthread_sigmask: new module
+	* MODULES.html.sh (Support for systems lacking POSIX:2008): Add it.
+	* doc/posix-functions/pthread_sigmask.texi: Document new module.
+	* lib/signal.in.h (pthread_sigmask): Arrange for replacement.
+	This is done only as a macro; I don't know how well that'll
+	work for C++.  Move <sys/types.h> include before the include_next,
+	to avoid mishap on Solaris.
+	* m4/signal_h.m4 (gl_SIGNAL_H, gl_SIGNAL_H_DEFAULTS): Check for it.
+	* modules/signal (Makefile.am): Substitute the check's results.
+	* modules/pthread_sigmask, m4/pthread_sigmask.m4: New files.
+
 	test-pselect: new module
 	* modules/pselect-tests, tests/test-pselect.c: New files.
 	* tests/test-select.c, tests/test-sys_select-c++.cc:

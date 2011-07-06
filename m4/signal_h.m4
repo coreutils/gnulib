@@ -1,4 +1,4 @@
-# signal_h.m4 serial 12
+# signal_h.m4 serial 13
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,8 @@ AC_DEFUN([gl_SIGNAL_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <signal.h>
-    ]], [sigaction sigaddset sigdelset sigemptyset sigfillset sigismember
+    ]], [pthread_sigmask sigaction
+    sigaddset sigdelset sigemptyset sigfillset sigismember
     sigpending sigprocmask])
 ])
 
@@ -42,6 +43,7 @@ AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
 [
+  GNULIB_PTHREAD_SIGMASK=0;    AC_SUBST([GNULIB_PTHREAD_SIGMASK])
   GNULIB_SIGNAL_H_SIGPIPE=0;   AC_SUBST([GNULIB_SIGNAL_H_SIGPIPE])
   GNULIB_SIGPROCMASK=0;        AC_SUBST([GNULIB_SIGPROCMASK])
   GNULIB_SIGACTION=0;          AC_SUBST([GNULIB_SIGACTION])
@@ -55,4 +57,5 @@ AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
   HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=1;
                                AC_SUBST([HAVE_TYPE_VOLATILE_SIG_ATOMIC_T])
   HAVE_SIGHANDLER_T=1;         AC_SUBST([HAVE_SIGHANDLER_T])
+  REPLACE_PTHREAD_SIGMASK=0;   AC_SUBST([REPLACE_PTHREAD_SIGMASK])
 ])

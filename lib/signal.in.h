@@ -30,6 +30,12 @@
 
 #ifndef _@GUARD_PREFIX@_SIGNAL_H
 
+/* Define pid_t, uid_t.
+   Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.
+   On Solaris 10, <signal.h> includes <sys/types.h>, which eventually includes
+   us; so include <sys/types.h> now, before the second inclusion guard.  */
+#include <sys/types.h>
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_SIGNAL_H@
 
@@ -41,10 +47,6 @@
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
-
-/* Define pid_t, uid_t.
-   Also, mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
-#include <sys/types.h>
 
 /* On AIX, sig_atomic_t already includes volatile.  C99 requires that
    'volatile sig_atomic_t' ignore the extra modifier, but C89 did not.
@@ -96,6 +98,20 @@ typedef void (*sighandler_t) (int);
 #ifndef NSIG
 # if defined __TANDEM
 #  define NSIG 32
+# endif
+#endif
+
+
+#if @GNULIB_PTHREAD_SIGMASK@
+# if @REPLACE_PTHREAD_SIGMASK@
+#  undef pthread_sigmask
+#  define pthread_sigmask sigprocmask
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef pthread_sigmask
+# if HAVE_RAW_DECL_PTHREAD_SIGMASK
+_GL_WARN_ON_USE (pthread_sigmask, "pthread_sigmask is not portable - "
+                 "use gnulib module pthread_sigmask for portability");
 # endif
 #endif
 

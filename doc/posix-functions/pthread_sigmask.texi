@@ -8,11 +8,14 @@ Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+Solaris 2.4, mingw, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-Solaris 2.4, mingw, BeOS.
+On platforms that do not natively support this function,
+it has unspecified behavior in a multi-threaded process.
 @end itemize
