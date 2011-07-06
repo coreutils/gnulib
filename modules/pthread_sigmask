@@ -10,7 +10,7 @@ sigprocmask     [test $REPLACE_PTHREAD_SIGMASK = 1]
 
 configure.ac:
 gl_PTHREAD_SIGMASK
-gl_SYS_SELECT_MODULE_INDICATOR([pthread_sigmask])
+gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
 
 Makefile.am:
 

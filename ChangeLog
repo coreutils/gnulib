@@ -1,3 +1,9 @@
+2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* modules/pthread_sigmask (configure.ac): gl_SIGNAL_MODULE_INDICATOR
+	and not gl_SYS_SELECT_MODULE_INDICATOR, fixing a typo exposed
+	in an application that does not use the sys_select module.
+
 2011-07-06  Erik Faye-Lund  <kusmabite@gmail.com>
 
 	poll: do not return 0 on timeout=-1
