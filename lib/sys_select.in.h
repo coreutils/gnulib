@@ -36,11 +36,18 @@
 
 #ifndef _@GUARD_PREFIX@_SYS_SELECT_H
 
-#if @HAVE_SYS_SELECT_H@
-
 /* On many platforms, <sys/select.h> assumes prior inclusion of
-   <sys/types.h>.  */
-# include <sys/types.h>
+   <sys/types.h>.  Also, mingw defines sigset_t there, instead of
+   in <signal.h> where it belongs.  */
+#include <sys/types.h>
+
+/* Get definition of 'sigset_t'.
+   But avoid namespace pollution on glibc systems.  */
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
+# include <signal.h>
+#endif
+
+#if @HAVE_SYS_SELECT_H@
 
 /* On OSF/1 4.0, <sys/select.h> provides only a forward declaration
    of 'struct timeval', and no definition of this type.
@@ -83,12 +90,6 @@
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 #  include <sys/socket.h>
 # endif
-#endif
-
-/* Get definition of 'sigset_t'.
-   But avoid namespace pollution on glibc systems.  */
-#if !(defined __GLIBC__ && !defined __UCLIBC__)
-# include <signal.h>
 #endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */

@@ -1,4 +1,4 @@
-# signal_h.m4 serial 13
+# signal_h.m4 serial 14
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_SIGNAL_H],
 [
   AC_REQUIRE([gl_SIGNAL_H_DEFAULTS])
+  AC_REQUIRE([gl_CHECK_TYPE_SIGSET_T])
   gl_NEXT_HEADERS([signal.h])
 
 # AIX declares sig_atomic_t to already include volatile, and C89 compilers
@@ -30,6 +31,20 @@ AC_DEFUN([gl_SIGNAL_H],
     ]], [pthread_sigmask sigaction
     sigaddset sigdelset sigemptyset sigfillset sigismember
     sigpending sigprocmask])
+])
+
+AC_DEFUN([gl_CHECK_TYPE_SIGSET_T],
+[
+  AC_CHECK_TYPES([sigset_t],
+    [gl_cv_type_sigset_t=yes], [gl_cv_type_sigset_t=no],
+    [[
+      #include <signal.h>
+      /* Mingw defines sigset_t not in <signal.h>, but in <sys/types.h>.  */
+      #include <sys/types.h>
+    ]])
+  if test $gl_cv_type_sigset_t != yes; then
+    HAVE_SIGSET_T=0
+  fi
 ])
 
 AC_DEFUN([gl_SIGNAL_MODULE_INDICATOR],

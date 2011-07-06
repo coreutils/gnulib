@@ -1,5 +1,19 @@
 2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sys_select: define sigset_t more portably
+	* lib/sys_select.in.h: Always include <sys/types.h>, since
+	we now need sigset_t and mingw defines it there.
+	Include <signal.h> before split inclusion guard, to avoid
+	mishaps on Solaris, whose <signal.h> eventually includes us.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Require gl_CHECK_TYPE_SIGSET_T.
+	(gl_CHECK_TYPE_SIGSET_T): New macro, most of the contents of
+	which come from ...
+	* m4/signalblocking.m4 (gl_SIGNALBLOCKING): Require
+	gl_CHECK_TYPE_SIGSET_T.
+	(gl_PREREQ_SIGPROCMASK): Now a no-op, since gl_CHECK_TYPE_SIGSET_T
+	does the real work.
+	* modules/sys_select (Depends-on): Add 'signal'.
+
 	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT): Poison pselect.
 	Suggested by Bruno Haible.
 
