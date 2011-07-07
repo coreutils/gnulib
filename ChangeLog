@@ -1,5 +1,9 @@
 2011-07-07  Eric Blake  <eblake@redhat.com>
 
+	getopt: avoid compiler warning during configure
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADRS): Avoid problems with
+	assigning string literals to non-const pointer.
+
 	getopt-gnu: avoid crash in glibc getopt
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADRS): Detect the problem.
 	* tests/test-getopt.h (test_getopt): Enhance test.
