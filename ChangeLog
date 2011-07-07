@@ -1,5 +1,12 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	Avoid literal tabs.
+	* m4/po,m4 (AM_PO_SUBDIRS, AM_POSTPROCESS_PO_MAKEFILE): Use a shell
+	variable containing a tab instead of a literal tab.
+	Reported by Jim Meyering.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	Comments.
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Update comments about mingw.
 
