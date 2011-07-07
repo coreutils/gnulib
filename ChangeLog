@@ -1,3 +1,9 @@
+2011-07-07  Ulrich Drepper  <drepper@gmail.com>
+
+	getopt: handle W; without long options in getopt [BZ #12922]
+	* lib/getopt.c (_getopt_internal_r): When "W;" is in short options
+	but no long options are defined, just return 'W'.
+
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
 	Avoid literal tabs.
