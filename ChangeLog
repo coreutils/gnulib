@@ -1,3 +1,11 @@
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
+	pthread_sigmask: Fix return value.
+	* lib/signal.in.h (pthread_sigmask): Declare. Don't define as a macro.
+	* lib/pthread_sigmask.c: New file.
+	* modules/pthread_sigmask (Files): Add it.
+	(configure.ac): Invoke AC_LIBOBJ.
+
 2011-07-07  Eric Blake  <eblake@redhat.com>
 
 	getopt: more portable argv creation

@@ -2,6 +2,7 @@ Description:
 POSIX compatible signal blocking for threads.
 
 Files:
+lib/pthread_sigmask.c
 m4/pthread_sigmask.m4
 
 Depends-on:
@@ -10,6 +11,9 @@ sigprocmask     [test $REPLACE_PTHREAD_SIGMASK = 1]
 
 configure.ac:
 gl_PTHREAD_SIGMASK
+if test $REPLACE_PTHREAD_SIGMASK = 1; then
+  AC_LIBOBJ([pthread_sigmask])
+fi
 gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
 
 Makefile.am:

@@ -104,8 +104,8 @@ typedef void (*sighandler_t) (int);
 
 #if @GNULIB_PTHREAD_SIGMASK@
 # if @REPLACE_PTHREAD_SIGMASK@
-#  undef pthread_sigmask
-#  define pthread_sigmask sigprocmask
+_GL_FUNCDECL_SYS (pthread_sigmask, int,
+                  (int how, const sigset_t *new_mask, sigset_t *old_mask));
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_sigmask
