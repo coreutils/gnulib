@@ -1,4 +1,4 @@
-# getopt.m4 serial 37
+# getopt.m4 serial 38
 dnl Copyright (C) 2002-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,15 +89,15 @@ AC_DEFUN([gl_GETOPT_CHECK_HEADERS],
     AC_CACHE_CHECK([whether getopt is POSIX compatible],
       [gl_cv_func_getopt_posix],
       [
-        dnl BSD getopt_long uses an incompatible method to reset
-        dnl option processing.  Existence of the variable, in and of
+        dnl BSD getopt_long uses an incompatible method to reset option
+        dnl processing.  Existence of the optreset variable, in and of
         dnl itself, is not a reason to replace getopt, but knowledge
         dnl of the variable is needed to determine how to reset and
         dnl whether a reset reparses the environment.  Solaris
         dnl supports neither optreset nor optind=0, but keeps no state
         dnl that needs a reset beyond setting optind=1; detect Solaris
         dnl by getopt_clip.
-        AC_COMPILE_IFELSE(
+        AC_LINK_IFELSE(
           [AC_LANG_PROGRAM(
              [[#include <unistd.h>]],
              [[int *p = &optreset; return optreset;]])],
@@ -121,22 +121,20 @@ int
 main ()
 {
   {
-    int argc = 0;
-    const char *argv[10];
+    static char program[] = "program";
+    static char a[] = "-a";
+    static char foo[] = "foo";
+    static char bar[] = "bar";
+    char *argv[] = { program, a, foo, bar, NULL };
     int c;
 
-    argv[argc++] = "program";
-    argv[argc++] = "-a";
-    argv[argc++] = "foo";
-    argv[argc++] = "bar";
-    argv[argc] = NULL;
     optind = OPTIND_MIN;
     opterr = 0;
 
-    c = getopt (argc, (char **) argv, "ab");
+    c = getopt (4, argv, "ab");
     if (!(c == 'a'))
       return 1;
-    c = getopt (argc, (char **) argv, "ab");
+    c = getopt (4, argv, "ab");
     if (!(c == -1))
       return 2;
     if (!(optind == 2))
@@ -144,22 +142,20 @@ main ()
   }
   /* Some internal state exists at this point.  */
   {
-    int argc = 0;
-    const char *argv[10];
+    static char program[] = "program";
+    static char donald[] = "donald";
+    static char p[] = "-p";
+    static char billy[] = "billy";
+    static char duck[] = "duck";
+    static char a[] = "-a";
+    static char bar[] = "bar";
+    char *argv[] = { program, donald, p, billy, duck, a, bar, NULL };
     int c;
 
-    argv[argc++] = "program";
-    argv[argc++] = "donald";
-    argv[argc++] = "-p";
-    argv[argc++] = "billy";
-    argv[argc++] = "duck";
-    argv[argc++] = "-a";
-    argv[argc++] = "bar";
-    argv[argc] = NULL;
     optind = OPTIND_MIN;
     opterr = 0;
 
-    c = getopt (argc, (char **) argv, "+abp:q:");
+    c = getopt (7, argv, "+abp:q:");
     if (!(c == -1))
       return 4;
     if (!(strcmp (argv[0], "program") == 0))
@@ -181,12 +177,14 @@ main ()
   }
   /* Detect MacOS 10.5, AIX 7.1 bug.  */
   {
-    const char *argv[3] = { "program", "-ab", NULL };
+    static char program[] = "program";
+    static char ab[] = "-ab";
+    char *argv[3] = { program, ab, NULL };
     optind = OPTIND_MIN;
     opterr = 0;
-    if (getopt (2, (char **) argv, "ab:") != 'a')
+    if (getopt (2, argv, "ab:") != 'a')
       return 13;
-    if (getopt (2, (char **) argv, "ab:") != '?')
+    if (getopt (2, argv, "ab:") != '?')
       return 14;
     if (optopt != 'b')
       return 15;
@@ -239,53 +237,65 @@ dnl is ambiguous with environment values that contain newlines.
                 and fails on MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
                 OSF/1 5.1, Solaris 10.  */
              {
-               const char *myargv[3];
-               myargv[0] = "conftest";
-               myargv[1] = "-+";
-               myargv[2] = 0;
+               static char conftest[] = "conftest";
+               static char plus[] = "-+";
+               char *argv[3] = { conftest, plus, NULL };
                opterr = 0;
-               if (getopt (2, (char **) myargv, "+a") != '?')
+               if (getopt (2, argv, "+a") != '?')
                  result |= 1;
              }
              /* This code succeeds on glibc 2.8, mingw,
                 and fails on MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11,
                 IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x.  */
              {
-               const char *argv[] = { "program", "-p", "foo", "bar", NULL };
+               static char program[] = "program";
+               static char p[] = "-p";
+               static char foo[] = "foo";
+               static char bar[] = "bar";
+               char *argv[] = { program, p, foo, bar, NULL };
 
                optind = 1;
-               if (getopt (4, (char **) argv, "p::") != 'p')
+               if (getopt (4, argv, "p::") != 'p')
                  result |= 2;
                else if (optarg != NULL)
                  result |= 4;
-               else if (getopt (4, (char **) argv, "p::") != -1)
+               else if (getopt (4, argv, "p::") != -1)
                  result |= 6;
                else if (optind != 2)
                  result |= 8;
              }
              /* This code succeeds on glibc 2.8 and fails on Cygwin 1.7.0.  */
              {
-               const char *argv[] = { "program", "foo", "-p", NULL };
+               static char program[] = "program";
+               static char foo[] = "foo";
+               static char p[] = "-p";
+               char *argv[] = { program, foo, p, NULL };
                optind = 0;
-               if (getopt (3, (char **) argv, "-p") != 1)
+               if (getopt (3, argv, "-p") != 1)
                  result |= 16;
-               else if (getopt (3, (char **) argv, "-p") != 'p')
+               else if (getopt (3, argv, "-p") != 'p')
                  result |= 32;
              }
              /* This code fails on glibc 2.11.  */
              {
-               const char *argv[] = { "program", "-b", "-a", NULL };
+               static char program[] = "program";
+               static char b[] = "-b";
+               static char a[] = "-a";
+               char *argv[] = { program, b, a, NULL };
                optind = opterr = 0;
-               if (getopt (3, (char **) argv, "+:a:b") != 'b')
+               if (getopt (3, argv, "+:a:b") != 'b')
                  result |= 64;
-               else if (getopt (3, (char **) argv, "+:a:b") != ':')
+               else if (getopt (3, argv, "+:a:b") != ':')
                  result |= 64;
              }
              /* This code dumps core on glibc 2.14.  */
              {
-               const char *argv[] = { "program", "-W", "dummy", NULL };
+               static char program[] = "program";
+               static char w[] = "-W";
+               static char dummy[] = "dummy";
+               char *argv[] = { program, w, dummy, NULL };
                optind = opterr = 1;
-               if (getopt (3, (char **) argv, "W;") != 'W')
+               if (getopt (3, argv, "W;") != 'W')
                  result |= 128;
              }
              return result;

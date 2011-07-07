@@ -1,3 +1,10 @@
+2011-07-07  Eric Blake  <eblake@redhat.com>
+
+	getopt: more portable argv creation
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADRS): Rather than casting away
+	const, use char arrays rather than strings.
+	Suggested by Paul Eggert.
+
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'sigprocmask'.
