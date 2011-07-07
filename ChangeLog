@@ -1,3 +1,8 @@
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
+	float tests: Tweak.
+	* tests/test-float.c (main): Tweak skip message.
+
 2011-07-07  Eric Blake  <eblake@redhat.com>
 
 	getopt: avoid compiler warning during configure

@@ -377,7 +377,7 @@ main ()
 int
 main ()
 {
-  fprintf (stderr, "FLT_RADIX is not 2.\n");
+  fprintf (stderr, "Skipping test: FLT_RADIX is not 2.\n");
   return 77;
 }
 
