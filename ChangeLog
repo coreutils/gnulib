@@ -1,3 +1,10 @@
+2011-07-07  Jim Meyering  <meyering@redhat.com>
+
+	maint: reduce list of files exempt from sc_prohibit_leading_TABs
+	* Makefile (sc_prohibit_leading_TABs): Don't exempt m4/po.m4,
+	now that it no longer contains leading TABs.
+	Remove unused "url=FIXME" statement.
+
 2011-07-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread_sigmask: Assume POSIX when not gl_THREADLIB.

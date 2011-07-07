@@ -34,9 +34,8 @@ sc_prefer_ac_check_funcs_once:
 
 sc_prohibit_leading_TABs:
 	if test -d .git; then						\
-	  url=FIXME;							\
 	  git grep -l '^ *	' lib m4 tests				\
-            | grep -Ev '^m4/po\.m4|^lib/reg|Makefile|test-update-copyright' \
+            | grep -Ev '^lib/reg|Makefile|test-update-copyright'	\
             | grep .							\
 	    && { printf '*** %s\n' 'indent with spaces, not TABs;'	\
 		 1>&2; exit 1; } || :					\
