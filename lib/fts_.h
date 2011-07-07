@@ -142,7 +142,9 @@ typedef struct {
      dirent.d_type data.  */
 # define FTS_DEFER_STAT         0x0400
 
-# define FTS_OPTIONMASK 0x07ff          /* valid user option mask */
+# define FTS_NOATIME    0x0800          /* use O_NOATIME during traversal */
+
+# define FTS_OPTIONMASK 0x0fff          /* valid user option mask */
 
 # define FTS_NAMEONLY   0x1000          /* (private) child names only */
 # define FTS_STOP       0x2000          /* (private) unrecoverable error */

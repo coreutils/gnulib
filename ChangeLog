@@ -1,3 +1,11 @@
+2011-07-08  Eric Blake  <eblake@redhat.com>
+
+	fts: introduce FTS_NOATIME
+	* lib/fts_.h (FTS_NOATIME): New bit flag.
+	(FTS_OPTIONMASK): Adjust.
+	* lib/fts.c (diropen, fts_open, fts_build): Honor it.
+	(fd_ring_check): Debug code unconditionally uses O_NOATIME.
+
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'thread'.
