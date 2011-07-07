@@ -1,3 +1,14 @@
+2011-07-07  Eric Blake  <eblake@redhat.com>
+
+	getopt-gnu: avoid crash in glibc getopt
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADRS): Detect the problem.
+	* tests/test-getopt.h (test_getopt): Enhance test.
+	* tests/test-getopt_long.h (test_getopt_long): Likewise.
+	* doc/posix-functions/getopt.texi (getopt): Document it.
+	* doc/glibc-functions/getopt_long.texi (getopt_long): Likewise.
+	* doc/glibc-functions/getopt_long_only.texi (getopt_long_only):
+	Likewise.
+
 2011-07-07  Ulrich Drepper  <drepper@gmail.com>
 
 	getopt: handle W; without long options in getopt [BZ #12922]

@@ -1365,5 +1365,28 @@ test_getopt (void)
       ASSERT (optind == 3);
       ASSERT (!output);
     }
+
+  /* Check that 'W' does not dump core:
+     http://sourceware.org/bugzilla/show_bug.cgi?id=12922
+     Technically, POSIX says the presence of ';' in the opt-string
+     gives unspecified behavior, so we only test this when GNU compliance
+     is desired.  */
+  for (start = OPTIND_MIN; start <= 1; start++)
+    {
+      int argc = 0;
+      const char *argv[10];
+      int c;
+      int pos = ftell (stderr);
+
+      argv[argc++] = "program";
+      argv[argc++] = "-W";
+      argv[argc++] = "dummy";
+      argv[argc] = NULL;
+      optind = start;
+      opterr = 1;
+      ASSERT (getopt (argc, (char **) argv, "W;") == 'W');
+      ASSERT (ftell (stderr) == pos);
+      ASSERT (optind == 2);
+    }
 #endif /* GNULIB_TEST_GETOPT_GNU */
 }

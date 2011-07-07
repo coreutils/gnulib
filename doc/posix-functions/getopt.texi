@@ -48,6 +48,10 @@ AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, Interix 3.5.
 The function @code{getopt_long_only} is missing on some platforms:
 MacOS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, AIX 5.1, HP-UX 11, IRIX 6.5,
 OSF/1 5.1, Solaris 9, mingw, Interix 3.5.
+@item
+This function crashes if the option string includes @code{W;} on some
+platforms:
+glibc 2.14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

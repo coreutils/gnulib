@@ -314,6 +314,25 @@ test_getopt_long (void)
       }
   }
 
+  /* Test that 'W' does not dump core:
+     http://sourceware.org/bugzilla/show_bug.cgi?id=12922  */
+  {
+    int argc = 0;
+    const char *argv[10];
+    int option_index;
+    int c;
+
+    argv[argc++] = "program";
+    argv[argc++] = "-W";
+    argv[argc++] = "dummy";
+    argv[argc] = NULL;
+    optind = 1;
+    opterr = 0;
+    c = do_getopt_long (argc, argv, "W;", NULL, &option_index);
+    ASSERT (c == 'W');
+    ASSERT (optind == 2);
+  }
+
   /* Test processing of boolean short options.  */
   for (start = 0; start <= 1; start++)
     {
