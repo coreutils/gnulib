@@ -1,5 +1,11 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sigprocmask'.
+	* modules/sigprocmask-tests: New file.
+	* tests/test-sigprocmask.c: New file.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	float tests: Tweak.
 	* tests/test-float.c (main): Tweak skip message.
 
