@@ -88,7 +88,7 @@ AC_DEFUN([gl_CHECK_FREXP_NO_LIBM],
 
 dnl Test whether frexp() works also on denormalized numbers (this fails e.g. on
 dnl NetBSD 3.0), on infinite numbers (this fails e.g. on IRIX 6.5 and mingw),
-dnl and on negative zero (this fails e.g. on NetBSD 4.99).
+dnl and on negative zero (this fails e.g. on NetBSD 4.99 and mingw).
 AC_DEFUN([gl_FUNC_FREXP_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
