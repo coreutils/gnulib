@@ -1,3 +1,20 @@
+2011-07-06  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Fix compilation error on mingw, introduced on 2011-06-30.
+	* lib/sys_select.in.h: Don't include <sys/socket.h>. Instead, include
+	<winsock2.h>.
+	(rpl_fd_isset, FD_ISSET): New definitions, copied from
+	lib/sys_socket.in.h.
+	(close, gethostname): Hide declarations from <winsock2.h>.
+	(socket, connect, accept, bind, getpeername, getsockname, getsockopt,
+	listen, recv, send, recvfrom, sendto, setsockopt, shutdown): Likewise.
+	* lib/sys_socket.in.h (close, gethostname): Tweak indentation.
+	(select): Don't override if gnulib's <sys/select.h> was already
+	included.
+	* lib/unistd.in.h (socket, connect, accept, bind, getpeername,
+	getsockname, getsockopt, listen, recv, send, recvfrom, sendto,
+	setsockopt, shutdown, select): Tweak indentation.
+
 2011-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* modules/pthread_sigmask (configure.ac): gl_SIGNAL_MODULE_INDICATOR

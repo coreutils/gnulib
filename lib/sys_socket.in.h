@@ -194,6 +194,8 @@ struct msghdr {
 
 #endif
 
+/* Fix some definitions from <winsock2.h>.  */
+
 #if @HAVE_WINSOCK2_H@
 
 # if !GNULIB_defined_rpl_fd_isset
@@ -222,27 +224,37 @@ rpl_fd_isset (SOCKET fd, fd_set * set)
 
 #endif
 
+/* Hide some function declarations from <winsock2.h>.  */
+
+#if @HAVE_WINSOCK2_H@
+# if !defined _@GUARD_PREFIX@_UNISTD_H
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef close
+#   define close close_used_without_including_unistd_h
+#  else
+    _GL_WARN_ON_USE (close,
+                     "close() used without including <unistd.h>");
+#  endif
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef gethostname
+#   define gethostname gethostname_used_without_including_unistd_h
+#  else
+    _GL_WARN_ON_USE (gethostname,
+                     "gethostname() used without including <unistd.h>");
+#  endif
+# endif
+# if !defined _@GUARD_PREFIX@_SYS_SELECT_H
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef select
+#   define select select_used_without_including_sys_select_h
+#  else
+    _GL_WARN_ON_USE (select,
+                     "select() used without including <sys/select.h>");
+#  endif
+# endif
+#endif
+
 /* Wrap everything else to use libc file descriptors for sockets.  */
-
-#if @HAVE_WINSOCK2_H@ && !defined _@GUARD_PREFIX@_UNISTD_H
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef close
-#  define close close_used_without_including_unistd_h
-# else
-   _GL_WARN_ON_USE (close,
-                    "close() used without including <unistd.h>");
-# endif
-#endif
-
-#if @HAVE_WINSOCK2_H@ && !defined _@GUARD_PREFIX@_UNISTD_H
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef gethostname
-#  define gethostname gethostname_used_without_including_unistd_h
-# else
-   _GL_WARN_ON_USE (gethostname,
-                    "gethostname() used without including <unistd.h>");
-# endif
-#endif
 
 #if @GNULIB_SOCKET@
 # if @HAVE_WINSOCK2_H@
@@ -630,16 +642,6 @@ _GL_CXXALIASWARN (shutdown);
 # if HAVE_RAW_DECL_SHUTDOWN
 _GL_WARN_ON_USE (shutdown, "shutdown is not always POSIX compliant - "
                  "use gnulib module shutdown for portability");
-# endif
-#endif
-
-#if @HAVE_WINSOCK2_H@
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  undef select
-#  define select select_used_without_including_sys_select_h
-# else
-   _GL_WARN_ON_USE (select,
-                    "select() used without including <sys/select.h>");
 # endif
 #endif
 
