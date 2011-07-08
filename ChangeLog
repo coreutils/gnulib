@@ -1,3 +1,11 @@
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'pthread_sigmask'.
+	* modules/pthread_sigmask-tests: New file.
+	* tests/test-pthread_sigmask1.c: New file, based on
+	tests/test-sigprocmask.c.
+	* tests/test-pthread_sigmask2.c: New file.
+
 2011-07-08  Jim Meyering  <meyering@redhat.com>
 
 	test-getopt.h: avoid warning about an unused variable
