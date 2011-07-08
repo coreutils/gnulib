@@ -1,5 +1,18 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Fix link requirements on OSF/1 5.1 and with pth.
+	* lib/signal.in.h (pthread_sigmask): Override if
+	REPLACE_PTHREAD_SIGMASK is 1.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Initialize
+	REPLACE_PTHREAD_SIGMASK.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Set also
+	REPLACE_PTHREAD_SIGMASK. Set and substitute LIB_PTHREAD_SIGMASK.
+	* modules/signal (Makefile.am): Substitute REPLACE_PTHREAD_SIGMASK.
+	* modules/pthread_sigmask (Depends-on, configure.ac): Update condition.
+	(Link): Set to $(LIB_PTHREAD_SIGMASK), not $(LIBMULTITHREAD).
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Ensure declaration in <signal.h>.
 	* lib/signal.in.h: On MacOS X, FreeBSD, OpenBSD, OSF/1, Solaris 2.6,
 	include <pthread.h>.

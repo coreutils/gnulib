@@ -125,12 +125,23 @@ typedef void (*sighandler_t) (int);
 
 
 #if @GNULIB_PTHREAD_SIGMASK@
-# if !@HAVE_PTHREAD_SIGMASK@
+# if @REPLACE_PTHREAD_SIGMASK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef pthread_sigmask
+#   define pthread_sigmask rpl_pthread_sigmask
+#  endif
+_GL_FUNCDECL_RPL (pthread_sigmask, int,
+                  (int how, const sigset_t *new_mask, sigset_t *old_mask));
+_GL_CXXALIAS_RPL (pthread_sigmask, int,
+                  (int how, const sigset_t *new_mask, sigset_t *old_mask));
+# else
+#  if !@HAVE_PTHREAD_SIGMASK@
 _GL_FUNCDECL_SYS (pthread_sigmask, int,
                   (int how, const sigset_t *new_mask, sigset_t *old_mask));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (pthread_sigmask, int,
                   (int how, const sigset_t *new_mask, sigset_t *old_mask));
+# endif
 _GL_CXXALIASWARN (pthread_sigmask);
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_sigmask

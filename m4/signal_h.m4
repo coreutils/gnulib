@@ -1,4 +1,4 @@
-# signal_h.m4 serial 15
+# signal_h.m4 serial 16
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,4 +73,5 @@ AC_DEFUN([gl_SIGNAL_H_DEFAULTS],
   HAVE_TYPE_VOLATILE_SIG_ATOMIC_T=1;
                                AC_SUBST([HAVE_TYPE_VOLATILE_SIG_ATOMIC_T])
   HAVE_SIGHANDLER_T=1;         AC_SUBST([HAVE_SIGHANDLER_T])
+  REPLACE_PTHREAD_SIGMASK=0;   AC_SUBST([REPLACE_PTHREAD_SIGMASK])
 ])

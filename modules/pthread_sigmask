@@ -7,11 +7,11 @@ m4/pthread_sigmask.m4
 
 Depends-on:
 signal
-sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0]
+sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1]
 
 configure.ac:
 gl_FUNC_PTHREAD_SIGMASK
-if test $HAVE_PTHREAD_SIGMASK = 0; then
+if test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1; then
   AC_LIBOBJ([pthread_sigmask])
 fi
 gl_SIGNAL_MODULE_INDICATOR([pthread_sigmask])
@@ -22,7 +22,7 @@ Include:
 <signal.h>
 
 Link:
-$(LIBMULTITHREAD)
+$(LIB_PTHREAD_SIGMASK)
 
 License:
 LGPLv2+
