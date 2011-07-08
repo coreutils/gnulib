@@ -1,3 +1,10 @@
+2011-07-08  Eric Blake  <eblake@redhat.com>
+
+	test-snprintf: avoid compiler warning
+	* tests/test-snprintf.c (main): Avoid shadowed declaration.
+	* tests/test-vsnprintf.c (main): Likewise.
+	Reported by Jim Meyering.
+
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'pthread_sigmask'.

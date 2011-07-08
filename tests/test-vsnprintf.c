@@ -76,7 +76,7 @@ main (int argc, char *argv[])
   /* Test the support of the POSIX/XSI format strings with positions.  */
   {
     char result[100];
-    int retval = my_snprintf (result, sizeof (result), "%2$d %1$d", 33, 55);
+    retval = my_snprintf (result, sizeof (result), "%2$d %1$d", 33, 55);
     ASSERT (strcmp (result, "55 33") == 0);
     ASSERT (retval == strlen (result));
   }
