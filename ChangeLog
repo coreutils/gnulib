@@ -1,5 +1,19 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Make declaration C++ safe.
+	* lib/signal.in.h: In two special conditions, just do an #include_next.
+	(pthread_sigmask): Test HAVE_PTHREAD_SIGMASK, not REPLACE_PTHREAD_MASK.
+	Invoke _GL_CXXALIAS_SYS and _GL_CXXALIASWARN.
+	* m4/signal_h.m4 (gl_SIGNAL_H_DEFAULTS): Initialize
+	HAVE_PTHREAD_SIGMASK, not REPLACE_PTHREAD_MASK.
+	* m4/pthread_sigmask.m4 (gl_PTHREAD_SIGMASK): Set HAVE_PTHREAD_SIGMASK,
+	not REPLACE_PTHREAD_MASK.
+	* modules/signal (Makefile.am): Substitute HAVE_PTHREAD_SIGMASK,
+	not REPLACE_PTHREAD_MASK.
+	* modules/pthread_sigmask (Depends-on, configure.ac): Update condition.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Fix return value.
 	* lib/signal.in.h (pthread_sigmask): Declare. Don't define as a macro.
 	* lib/pthread_sigmask.c: New file.
