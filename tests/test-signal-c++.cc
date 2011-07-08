@@ -24,6 +24,11 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_PTHREAD_SIGMASK
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_sigmask, int,
+                 (int, const sigset_t *, sigset_t *));
+#endif
+
 #if GNULIB_TEST_SIGPROCMASK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigismember, int, (const sigset_t *, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sigemptyset, int, (sigset_t *));

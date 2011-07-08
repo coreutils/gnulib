@@ -1,5 +1,12 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	signal-c++-tests: Check declaration of pthread_sigmask.
+	* tests/test-signal-c++.cc: Check declaration of pthread_sigmask.
+	* modules/signal-c++-tests (Makefile.am): Link test-signal-c++ against
+	$(LIB_PTHREAD_SIGMASK).
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Fix link requirements on OSF/1 5.1 and with pth.
 	* lib/signal.in.h (pthread_sigmask): Override if
 	REPLACE_PTHREAD_SIGMASK is 1.
