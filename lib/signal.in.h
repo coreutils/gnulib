@@ -55,6 +55,15 @@
 #ifndef _@GUARD_PREFIX@_SIGNAL_H
 #define _@GUARD_PREFIX@_SIGNAL_H
 
+/* MacOS X 10.3, FreeBSD 6.4, OpenBSD 3.8, OSF/1 4.0 declare pthread_sigmask in
+   <pthread.h>, not in <signal.h>.
+   But avoid namespace pollution on glibc systems.*/
+#if (@GNULIB_PTHREAD_SIGMASK@ || defined GNULIB_POSIXCHECK) \
+    && ((defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __OpenBSD__ || defined __osf__) \
+    && ! defined __GLIBC__
+# include <pthread.h>
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */

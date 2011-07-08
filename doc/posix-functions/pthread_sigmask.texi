@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.4, mingw, BeOS.
+@item
+This function is declared in @code{<pthread.h>} instead of @code{<signal.h>}
+on some platforms:
+MacOS X 10.3, FreeBSD 6.4, OpenBSD 3.8, OSF/1 4.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
