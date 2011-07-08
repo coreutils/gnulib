@@ -43,6 +43,10 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
         }
     }
 # endif
+# if PTHREAD_SIGMASK_FAILS_WITH_ERRNO
+  if (ret == -1)
+    return errno;
+# endif
   return ret;
 #else
   int ret = sigprocmask (how, new_mask, old_mask);

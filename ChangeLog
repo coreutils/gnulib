@@ -1,5 +1,14 @@
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Work around Cygwin bug.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the Cygwin
+	bug.
+	* lib/pthread_sigmask.c (pthread_sigmask): Fix the return value from
+	the system's pthread_sigmask function.
+	* doc/posix-functions/pthread_sigmask.texi: Mention the Cygwin bug.
+
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Work around bug in single-threaded implementation.
 	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the
 	FreeBSD, HP-UX, Solaris bug.

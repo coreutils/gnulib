@@ -119,6 +119,46 @@ changequote([,])dnl
           ;;
       esac
     fi
+
+    dnl On Cygwin 1.7.5, the pthread_sigmask() has a wrong return value
+    dnl convention: Upon failure, it returns -1 and sets errno.
+    AC_CACHE_CHECK([whether pthread_sigmask returns error numbers],
+      [gl_cv_func_pthread_sigmask_return_works],
+      [
+        gl_save_LIBS="$LIBS"
+        LIBS="$LIBS $LIB_PTHREAD_SIGMASK"
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
+#include <pthread.h>
+#include <signal.h>
+#include <stddef.h>
+int main ()
+{
+  sigset_t set;
+  sigemptyset (&set);
+  if (pthread_sigmask (1729, &set, NULL) == -1)
+    return 1;
+  return 0;
+}]])],
+          [gl_cv_func_pthread_sigmask_return_works=yes],
+          [gl_cv_func_pthread_sigmask_return_works=no],
+          [case "$host_os" in
+             cygwin*)
+               gl_cv_func_pthread_sigmask_return_works="guessing no";;
+             *)
+               gl_cv_func_pthread_sigmask_return_works="guessing yes";;
+           esac
+          ])
+        LIBS="$gl_save_LIBS"
+      ])
+    case "$gl_cv_func_pthread_sigmask_return_works" in
+      *no)
+        REPLACE_PTHREAD_SIGMASK=1
+        AC_DEFINE([PTHREAD_SIGMASK_FAILS_WITH_ERRNO], [1],
+          [Define to 1 if pthread_mask(), when it fails, returns -1 and sets errno.])
+        ;;
+    esac
+
   fi
 ])
 
