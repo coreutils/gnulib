@@ -1,8 +1,8 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
 	pthread_sigmask: Ensure declaration in <signal.h>.
-	* lib/signal.in.h: On MacOS X, FreeBSD, OpenBSD, OSF/1, include
-	<pthread.h>.
+	* lib/signal.in.h: On MacOS X, FreeBSD, OpenBSD, OSF/1, Solaris 2.6,
+	include <pthread.h>.
 	* doc/posix-functions/pthread_sigmask.texi: Mention the header file
 	problem.
 
