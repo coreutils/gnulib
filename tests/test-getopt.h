@@ -1375,7 +1375,6 @@ test_getopt (void)
     {
       int argc = 0;
       const char *argv[10];
-      int c;
       int pos = ftell (stderr);
 
       argv[argc++] = "program";
