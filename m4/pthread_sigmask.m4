@@ -1,4 +1,4 @@
-# pthread_sigmask.m4 serial 5
+# pthread_sigmask.m4 serial 6
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,7 @@ AC_DEFUN([gl_FUNC_PTHREAD_SIGMASK],
             [gl_cv_func_pthread_sigmask_in_LIBMULTITHREAD],
             [gl_save_LIBS="$LIBS"
              LIBS="$LIBS $LIBMULTITHREAD"
-             AC_COMPILE_IFELSE(
+             AC_LINK_IFELSE(
                [AC_LANG_PROGRAM(
                   [[#include <pthread.h>
                     #include <signal.h>

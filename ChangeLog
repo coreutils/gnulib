@@ -1,3 +1,9 @@
+2011-07-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread_sigmask: fix typo when testing for libraries
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK):
+	AC_LINK_IFELSE, not AC_COMPILE_IFELSE.
+
 2011-07-08  Eric Blake  <eblake@redhat.com>
 
 	fts: introduce FTS_NOATIME
