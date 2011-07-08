@@ -1,5 +1,12 @@
 2011-07-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pthread_sigmask: Assume POSIX when not gl_THREADLIB.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK):
+	When gl_THREADLIB is not in use, assume that the POSIX sematics
+	are desired.  This is better for Emacs, which uses POSIX semantics
+	on GNUish and/or POSIXish platforms, and does not use threads at
+	all otherwise.
+
 	pthread_sigmask: fix typo when testing for libraries
 	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK):
 	AC_LINK_IFELSE, not AC_COMPILE_IFELSE.
