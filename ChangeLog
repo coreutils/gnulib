@@ -1,5 +1,12 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Follow gnulib conventions.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Renamed from
+	gl_PTHREAD_SIGMASK.
+	* modules/pthread_sigmask (configure.ac): Update.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Make declaration C++ safe.
 	* lib/signal.in.h: In two special conditions, just do an #include_next.
 	(pthread_sigmask): Test HAVE_PTHREAD_SIGMASK, not REPLACE_PTHREAD_MASK.

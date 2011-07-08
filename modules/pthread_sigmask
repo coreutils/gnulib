@@ -10,7 +10,7 @@ signal
 sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0]
 
 configure.ac:
-gl_PTHREAD_SIGMASK
+gl_FUNC_PTHREAD_SIGMASK
 if test $HAVE_PTHREAD_SIGMASK = 0; then
   AC_LIBOBJ([pthread_sigmask])
 fi
