@@ -1,5 +1,12 @@
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'thread'.
+	* modules/thread-tests: New file.
+	* tests/test-thread_self.c: New file.
+	* tests/test-thread_create.cc: New file.
+
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
 	thread: Avoid gcc warnings when using gl_thread_self().
 	* lib/glthread/thread.h (gl_thread_self): Return a pthread_t, not a
 	'void *'.
