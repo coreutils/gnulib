@@ -1,3 +1,10 @@
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
+	thread: Avoid gcc warnings when using gl_thread_self().
+	* lib/glthread/thread.h (gl_thread_self): Return a pthread_t, not a
+	'void *'.
+	(gl_thread_self_pointer): Update.
+
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
 	signal-c++-tests: Check declaration of pthread_sigmask.

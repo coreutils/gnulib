@@ -161,9 +161,9 @@ typedef pthread_t gl_thread_t;
 extern const gl_thread_t gl_null_thread;
 # else
 #  define gl_thread_self() \
-     (pthread_in_use () ? (void *) pthread_self () : NULL)
+     (pthread_in_use () ? pthread_self () : (pthread_t) NULL)
 #  define gl_thread_self_pointer() \
-     gl_thread_self ()
+     (pthread_in_use () ? (void *) pthread_self () : NULL)
 # endif
 # define gl_thread_exit(RETVAL) \
     (pthread_in_use () ? pthread_exit (RETVAL) : 0)
