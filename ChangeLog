@@ -1,3 +1,17 @@
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
+	pthread_sigmask: Work around bug in single-threaded implementation.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the
+	FreeBSD, HP-UX, Solaris bug.
+	(gl_PREREQ_PTHREAD_SIGMASK): New macro.
+	* lib/pthread_sigmask.c: Include <stddef.h>.
+	(pthread_sigmask): If HAVE_PTHREAD_SIGMASK, define as a wrapper around
+	the system's pthread_sigmask function.
+	* modules/pthread_sigmask (configure.ac): Invoke
+	gl_PREREQ_PTHREAD_SIGMASK.
+	* doc/posix-functions/pthread_sigmask.texi: Mention bug on FreeBSD,
+	HP-UX, Solaris.
+
 2011-07-08  Eric Blake  <eblake@redhat.com>
 
 	test-sigprocmask: avoid compiler warning

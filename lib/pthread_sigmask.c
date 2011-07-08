@@ -20,10 +20,32 @@
 #include <signal.h>
 
 #include <errno.h>
+#include <stddef.h>
 
 int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
+#undef pthread_sigmask
 {
+#if HAVE_PTHREAD_SIGMASK
+  int ret = pthread_sigmask (how, new_mask, old_mask);
+# if PTHREAD_SIGMASK_INEFFECTIVE
+  if (ret == 0)
+    {
+      /* Detect whether pthread_sigmask is currently ineffective.
+         Don't cache the information: libpthread.so could be dynamically
+         loaded after the program started and after pthread_sigmask was
+         called for the first time.  */
+      if (pthread_sigmask (1729, NULL, NULL) == 0)
+        {
+          /* pthread_sigmask is currently ineffective.  The program is not
+             linked to -lpthread.  So use sigprocmask instead.  */
+          return (sigprocmask (how, new_mask, old_mask) < 0 ? errno : 0);
+        }
+    }
+# endif
+  return ret;
+#else
   int ret = sigprocmask (how, new_mask, old_mask);
   return (ret < 0 ? errno : 0);
+#endif
 }

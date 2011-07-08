@@ -15,6 +15,10 @@ Solaris 2.4, mingw, BeOS.
 This function is declared in @code{<pthread.h>} instead of @code{<signal.h>}
 on some platforms:
 MacOS X 10.3, FreeBSD 6.4, OpenBSD 3.8, OSF/1 4.0, Solaris 2.6.
+@item
+This function does nothing and always returns 0 in programs that are not
+linked with @code{-lpthread} on some platforms:
+FreeBSD 6.4, HP-UX 11.31, Solaris 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

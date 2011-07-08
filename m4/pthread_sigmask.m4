@@ -1,4 +1,4 @@
-# pthread_sigmask.m4 serial 7
+# pthread_sigmask.m4 serial 8
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,4 +74,59 @@ AC_DEFUN([gl_FUNC_PTHREAD_SIGMASK],
   dnl We don't need a variable LTLIB_PTHREAD_SIGMASK, because when
   dnl "$gl_threads_api" = posix, $LTLIBMULTITHREAD and $LIBMULTITHREAD are the
   dnl same: either both empty or both "-lpthread".
+
+  dnl Now test for some bugs in the system function.
+  if test $HAVE_PTHREAD_SIGMASK = 1; then
+    AC_REQUIRE([AC_PROG_CC])
+    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
+    dnl On FreeBSD 6.4, HP-UX 11.31, Solaris 9, in programs that are not linked
+    dnl with -lpthread, the pthread_sigmask() function always returns 0 and has
+    dnl no effect.
+    if test -z "$LIB_PTHREAD_SIGMASK"; then
+      AC_CACHE_CHECK([whether pthread_sigmask works without -lpthread],
+        [gl_cv_func_pthread_sigmask_in_libc_works],
+        [
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#include <pthread.h>
+#include <signal.h>
+#include <stddef.h>
+int main ()
+{
+  sigset_t set;
+  sigemptyset (&set);
+  return pthread_sigmask (1729, &set, NULL) != 0;
+}]])],
+            [gl_cv_func_pthread_sigmask_in_libc_works=no],
+            [gl_cv_func_pthread_sigmask_in_libc_works=yes],
+            [
+changequote(,)dnl
+             case "$host_os" in
+               freebsd* | hpux* | solaris | solaris2.[2-9]*)
+                 gl_cv_func_pthread_sigmask_in_libc_works="guessing no";;
+               *)
+                 gl_cv_func_pthread_sigmask_in_libc_works="guessing yes";;
+             esac
+changequote([,])dnl
+            ])
+        ])
+      case "$gl_cv_func_pthread_sigmask_in_libc_works" in
+        *no)
+          REPLACE_PTHREAD_SIGMASK=1
+          AC_DEFINE([PTHREAD_SIGMASK_INEFFECTIVE], [1],
+            [Define to 1 if pthread_mask() may returns 0 and have no effect.])
+          ;;
+      esac
+    fi
+  fi
+])
+
+# Prerequisite of lib/pthread_sigmask.c.
+AC_DEFUN([gl_PREREQ_PTHREAD_SIGMASK],
+[
+  if test $HAVE_PTHREAD_SIGMASK = 1; then
+    AC_DEFINE([HAVE_PTHREAD_SIGMASK], [1],
+      [Define to 1 if the pthread_sigmask function can be used (despite bugs).])
+  fi
 ])
