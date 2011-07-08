@@ -1,5 +1,10 @@
 2011-07-08  Eric Blake  <eblake@redhat.com>
 
+	test-sigprocmask: avoid compiler warning
+	* modules/sigprocmask-tests (Depends-on): Add ignore-value.
+	* tests/test-sigprocmask.c (main): Use it to silence warning.
+	Reported by Jim Meyering.
+
 	test-snprintf: avoid compiler warning
 	* tests/test-snprintf.c (main): Avoid shadowed declaration.
 	* tests/test-vsnprintf.c (main): Likewise.

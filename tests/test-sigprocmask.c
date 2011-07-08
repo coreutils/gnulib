@@ -28,6 +28,7 @@ SIGNATURE_CHECK (sigprocmask, int, (int, const sigset_t *, sigset_t *));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "ignore-value.h"
 #include "macros.h"
 
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
@@ -61,7 +62,7 @@ main (int argc, char *argv[])
 
   /* Request a SIGINT signal from outside.  */
   sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, pid);
-  system (command);
+  ignore_value (system (command));
 
   /* Wait.  */
   sleep (2);
