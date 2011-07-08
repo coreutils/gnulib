@@ -47,6 +47,16 @@ pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
   if (ret == -1)
     return errno;
 # endif
+# if PTHREAD_SIGMASK_UNBLOCK_BUG
+  if (ret == 0
+      && new_mask != NULL
+      && (how == SIG_UNBLOCK || how == SIG_SETMASK))
+    {
+      /* Give the OS the opportunity to raise signals that were pending before
+         the pthread_sigmask call and have now been unblocked.  */
+      usleep (1);
+    }
+# endif
   return ret;
 #else
   int ret = sigprocmask (how, new_mask, old_mask);

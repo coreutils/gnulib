@@ -1,4 +1,4 @@
-# pthread_sigmask.m4 serial 8
+# pthread_sigmask.m4 serial 9
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,7 +115,7 @@ changequote([,])dnl
         *no)
           REPLACE_PTHREAD_SIGMASK=1
           AC_DEFINE([PTHREAD_SIGMASK_INEFFECTIVE], [1],
-            [Define to 1 if pthread_mask() may returns 0 and have no effect.])
+            [Define to 1 if pthread_sigmask() may returns 0 and have no effect.])
           ;;
       esac
     fi
@@ -155,10 +155,74 @@ int main ()
       *no)
         REPLACE_PTHREAD_SIGMASK=1
         AC_DEFINE([PTHREAD_SIGMASK_FAILS_WITH_ERRNO], [1],
-          [Define to 1 if pthread_mask(), when it fails, returns -1 and sets errno.])
+          [Define to 1 if pthread_sigmask(), when it fails, returns -1 and sets errno.])
         ;;
     esac
 
+    dnl On IRIX 6.5, in a single-threaded program, pending signals are not
+    dnl immediately delivered when they are unblocked through pthread_sigmask,
+    dnl only a little while later.
+    AC_CACHE_CHECK([whether pthread_sigmask unblocks signals correctly],
+      [gl_cv_func_pthread_sigmask_unblock_works],
+      [
+        case "$host_os" in
+          irix*)
+            gl_cv_func_pthread_sigmask_unblock_works="guessing no";;
+          *)
+            gl_cv_func_pthread_sigmask_unblock_works="guessing yes";;
+        esac
+        dnl Here we link against $LIBMULTITHREAD, not only $LIB_PTHREAD_SIGMASK,
+        dnl otherwise we get a false positive on those platforms where
+        dnl $gl_cv_func_pthread_sigmask_in_libc_works is "no".
+        gl_save_LIBS="$LIBS"
+        LIBS="$LIBS $LIBMULTITHREAD"
+        AC_RUN_IFELSE(
+          [AC_LANG_SOURCE([[
+#include <pthread.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+static volatile int sigint_occurred;
+static void
+sigint_handler (int sig)
+{
+  sigint_occurred++;
+}
+int main ()
+{
+  sigset_t set;
+  int pid = getpid ();
+  char command[80];
+  signal (SIGINT, sigint_handler);
+  sigemptyset (&set);
+  sigaddset (&set, SIGINT);
+  if (!(pthread_sigmask (SIG_BLOCK, &set, NULL) == 0))
+    return 1;
+  sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, pid);
+  if (!(system (command) == 0))
+    return 2;
+  sleep (2);
+  if (!(sigint_occurred == 0))
+    return 3;
+  if (!(pthread_sigmask (SIG_UNBLOCK, &set, NULL) == 0))
+    return 4;
+  if (!(sigint_occurred == 1)) /* This fails on IRIX.  */
+    return 5;
+  return 0;
+}]])],
+          [:],
+          [gl_cv_func_pthread_sigmask_unblock_works=no],
+          [:])
+        LIBS="$gl_save_LIBS"
+      ])
+    case "$gl_cv_func_pthread_sigmask_unblock_works" in
+      *no)
+        REPLACE_PTHREAD_SIGMASK=1
+        AC_DEFINE([PTHREAD_SIGMASK_UNBLOCK_BUG], [1],
+          [Define to 1 if pthread_sigmask() unblocks signals incorrectly.])
+        ;;
+    esac
   fi
 ])
 

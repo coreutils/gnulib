@@ -1,5 +1,14 @@
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Work around IRIX bug.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the IRIX
+	bug.
+	* lib/pthread_sigmask.c (pthread_sigmask): usleep for some time when
+	there may be unblocked pending signals.
+	* doc/posix-functions/pthread_sigmask.texi: Mention the IRIX bug.
+
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Work around Cygwin bug.
 	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the Cygwin
 	bug.
