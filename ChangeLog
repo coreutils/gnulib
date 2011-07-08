@@ -1,5 +1,12 @@
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
+	sigprocmask tests: A better way to avoid a compiler warning.
+	* tests/test-sigprocmask.c: Don't include "ignore-value.h".
+	(main): Complain if system() returns non-zero.
+	* modules/sigprocmask-tests (Depends-on): Remove ignore-value.
+
+2011-07-08  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Work around IRIX bug.
 	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test for the IRIX
 	bug.
