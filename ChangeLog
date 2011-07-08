@@ -1,5 +1,10 @@
 2011-07-07  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Document the module.
+	* doc/posix-functions/pthread_sigmask.texi: Mention the new module.
+
+2011-07-07  Bruno Haible  <bruno@clisp.org>
+
 	pthread_sigmask: Follow gnulib conventions.
 	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Renamed from
 	gl_PTHREAD_SIGMASK.
