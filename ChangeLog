@@ -1,3 +1,16 @@
+2011-07-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: respect system's intmax_t if INTMAX_MAX
+	* lib/stdint.in.h (intmax_t, uintmax_t): If the system defines
+	INTMAX_MAX, assume its intmax_t is OK.  Similarly for and
+	uintmax_t.  This is for some Mac OS X builds, where intmax_t is
+	long but int64_t is long long, and where we will clash with the
+	system intmax_t if we override it.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00160.html>.
+	(INTMAX_C, UINTMAX_C): For consistency, respect the system's
+	INTMAX_C if INTMAX_MAX and INTMAX_C are both defined, and
+	similarly for UINTMAX_C.
+
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
 	pthread_sigmask tests: Avoid a compiler warning.
