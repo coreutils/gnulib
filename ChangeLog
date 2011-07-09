@@ -1,5 +1,9 @@
 2011-07-08  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask tests: Avoid a compiler warning.
+	* tests/test-pthread_sigmask1.c (main): Complain if system() returns
+	non-zero.
+
 	sigprocmask tests: A better way to avoid a compiler warning.
 	* tests/test-sigprocmask.c: Don't include "ignore-value.h".
 	(main): Complain if system() returns non-zero.

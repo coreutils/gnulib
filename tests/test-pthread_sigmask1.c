@@ -60,7 +60,7 @@ main (int argc, char *argv[])
 
   /* Request a SIGINT signal from outside.  */
   sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, pid);
-  system (command);
+  ASSERT (system (command) == 0);
 
   /* Wait.  */
   sleep (2);
