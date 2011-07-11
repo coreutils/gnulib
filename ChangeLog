@@ -1,3 +1,10 @@
+2011-07-11  Eric Blake  <eblake@redhat.com>
+
+	regex: avoid compiler warning
+	* lib/regex.c (includes): Include <strings.h>, for use of
+	strcasecmp in regcomp.c.
+	Reported by Jachim Schmitz.
+
 2011-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: respect system's intmax_t if INTMAX_MAX
