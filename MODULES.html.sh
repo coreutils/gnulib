@@ -1736,6 +1736,7 @@ func_all_modules ()
 
   func_begin_table
   func_module count-one-bits
+  func_module ffs
   func_module gcd
   func_module minmax
   func_end_table

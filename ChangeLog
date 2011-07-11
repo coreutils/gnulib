@@ -1,5 +1,18 @@
 2011-07-11  Eric Blake  <eblake@redhat.com>
 
+	ffs: new module
+	* modules/ffs: New file.
+	* m4/ffs.m4: Likewise.
+	* lib/ffs.c: Likewise.
+	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_DEFAULTS): Add default.
+	* modules/strings (Makefile.am): Substitute witness.
+	(Depends-on): Add c++defs.
+	* lib/strings.in.h (ffs): Declare.
+	* modules/ffs-tests: New test file.
+	* tests/test-ffs.c: Test new module.
+	* MODULES.html.sh (Integer arithmetic functions): Mention it.
+	* doc/posix-functions/ffs.texi (ffs): Likewise.
+
 	regex: avoid compiler warning
 	* lib/regex.c (includes): Include <strings.h>, for use of
 	strcasecmp in regcomp.c.

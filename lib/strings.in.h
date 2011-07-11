@@ -30,6 +30,8 @@
 #define _@GUARD_PREFIX@_STRINGS_H
 
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
 /* The definition of _GL_ARG_NONNULL is copied here.  */
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
@@ -38,6 +40,20 @@
 extern "C" {
 #endif
 
+
+  /* Find the index of the least-significant set bit.  */
+#if @GNULIB_FFS@
+# if !@HAVE_FFS@
+_GL_FUNCDECL_SYS (ffs, int, (int i));
+# endif
+_GL_CXXALIAS_SYS (ffs, int, (int i));
+_GL_CXXALIASWARN (ffs);
+#elif defined GNULIB_POSIXCHECK
+# undef ffs
+# if HAVE_RAW_DECL_FFS
+_GL_WARN_ON_USE (ffs, "ffs is not portable - use the ffs module");
+# endif
+#endif
 
 /* Compare strings S1 and S2, ignoring case, returning less than, equal to or
    greater than zero if S1 is lexicographically less than, equal to or greater
