@@ -104,8 +104,7 @@ static char const * volatile stack_overflow_message;
    appears to have been a stack overflow, or with a core dump
    otherwise.  This function is async-signal-safe.  */
 
-static void die (int) __attribute__ ((noreturn));
-static void
+static _Noreturn void
 die (int signo)
 {
   char const *message;
@@ -182,9 +181,7 @@ static int segv_handler (void *address __attribute__ ((unused)),
 /* Handle a segmentation violation that is likely to be a stack
    overflow and exit.  This function is async-signal-safe.  */
 
-static void overflow_handler (int, stackoverflow_context_t)
-  __attribute__ ((noreturn));
-static void
+static _Noreturn void
 overflow_handler (int emergency,
                   stackoverflow_context_t context __attribute__ ((unused)))
 {
@@ -228,8 +225,7 @@ c_stack_action (void (*action) (int))
 /* Handle a segmentation violation and exit.  This function is
    async-signal-safe.  */
 
-static void segv_handler (int, siginfo_t *, void *) __attribute__((noreturn));
-static void
+static _Noreturn void
 segv_handler (int signo, siginfo_t *info,
               void *context __attribute__ ((unused)))
 {

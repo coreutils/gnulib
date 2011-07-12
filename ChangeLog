@@ -1,5 +1,9 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	c-stack: use _Noreturn
+	* lib/c-stack.c (die, overflow_handler, segv_handler):
+	Use _Noreturn rather than __attribute__((noreturn)).
+
 	argmatch-tests, exclude_tests: use _Noreturn
 	* tests/test-argmatch.c, tests/test-exclude.c (_GL_ATTRIBUTE_NORETURN):
 	Remove.
