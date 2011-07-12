@@ -1,3 +1,9 @@
+2011-07-12  Jim Meyering  <meyering@redhat.com>
+
+	warn-on-use: fix typo in file name
+	* modules/snippet/warn-on-use (Files): Correct file name:
+	include /snippet/ component in "build-aux/snippet/warn-on-use.h".
+
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
 	strings: Document module.

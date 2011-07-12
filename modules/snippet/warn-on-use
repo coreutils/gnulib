@@ -5,7 +5,7 @@ Applicability:
 all
 
 Files:
-build-aux/warn-on-use.h
+build-aux/snippet/warn-on-use.h
 m4/warn-on-use.m4
 
 Depends-on:
