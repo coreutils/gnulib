@@ -6,9 +6,9 @@ lib/poll.in.h
 m4/poll_h.m4
 
 Depends-on:
-c++defs
 extensions
 include_next
+snippet/c++defs
 warn-on-use
 
 configure.ac:

@@ -6,9 +6,9 @@ lib/math.in.h
 m4/math_h.m4
 
 Depends-on:
-c++defs
 include_next
 snippet/arg-nonnull
+snippet/c++defs
 warn-on-use
 
 configure.ac:

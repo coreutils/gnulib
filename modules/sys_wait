@@ -6,8 +6,8 @@ lib/sys_wait.in.h
 m4/sys_wait_h.m4
 
 Depends-on:
-c++defs
 include_next
+snippet/c++defs
 warn-on-use
 
 configure.ac:

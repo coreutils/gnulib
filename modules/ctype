@@ -7,7 +7,7 @@ m4/ctype.m4
 
 Depends-on:
 include_next
-c++defs
+snippet/c++defs
 warn-on-use
 
 configure.ac:

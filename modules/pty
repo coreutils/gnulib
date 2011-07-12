@@ -6,8 +6,8 @@ lib/pty.in.h
 m4/pty_h.m4
 
 Depends-on:
-c++defs
 include_next
+snippet/c++defs
 warn-on-use
 
 configure.ac:

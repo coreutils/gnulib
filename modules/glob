@@ -9,9 +9,9 @@ lib/glob.c
 m4/glob.m4
 
 Depends-on:
-c++defs
 extensions
 snippet/arg-nonnull
+snippet/c++defs
 warn-on-use
 alloca          [test -n "$GLOB_H"]
 d-type          [test -n "$GLOB_H"]

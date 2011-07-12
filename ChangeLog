@@ -1,5 +1,40 @@
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'c++defs' to 'snippet/c++defs'.
+	* modules/snippet/c++defs: Renamed from modules/c++defs.
+	(Files, Makefile.am): Update.
+	* build-aux/snippet/c++defs.h: Renamed from build-aux/c++defs.h.
+	* modules/arpa_inet (Depends-on): Update.
+	* modules/ctype (Depends-on): Update.
+	* modules/dirent (Depends-on): Update.
+	* modules/fcntl-h (Depends-on): Update.
+	* modules/glob (Depends-on): Update.
+	* modules/iconv-h (Depends-on): Update.
+	* modules/langinfo (Depends-on): Update.
+	* modules/locale (Depends-on): Update.
+	* modules/math (Depends-on): Update.
+	* modules/netdb (Depends-on): Update.
+	* modules/poll-h (Depends-on): Update.
+	* modules/pty (Depends-on): Update.
+	* modules/search (Depends-on): Update.
+	* modules/signal (Depends-on): Update.
+	* modules/spawn (Depends-on): Update.
+	* modules/stdio (Depends-on): Update.
+	* modules/stdlib (Depends-on): Update.
+	* modules/string (Depends-on): Update.
+	* modules/strings (Depends-on): Update.
+	* modules/sys_ioctl (Depends-on): Update.
+	* modules/sys_select (Depends-on): Update.
+	* modules/sys_socket (Depends-on): Update.
+	* modules/sys_stat (Depends-on): Update.
+	* modules/sys_time (Depends-on): Update.
+	* modules/sys_wait (Depends-on): Update.
+	* modules/termios (Depends-on): Update.
+	* modules/time (Depends-on): Update.
+	* modules/unistd (Depends-on): Update.
+	* modules/wchar (Depends-on): Update.
+	* modules/wctype-h (Depends-on): Update.
+
 	Rename module 'arg-nonnull' to 'snippet/arg-nonnull'.
 	* modules/snippet/arg-nonnull: Renamed from modules/arg-nonnull.
 	(Files, Makefile.am): Update.

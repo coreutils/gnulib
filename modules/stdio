@@ -7,8 +7,8 @@ m4/stdio_h.m4
 
 Depends-on:
 include_next
-c++defs
 snippet/arg-nonnull
+snippet/c++defs
 stddef
 warn-on-use
 

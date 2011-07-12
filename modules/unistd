@@ -6,9 +6,9 @@ m4/unistd_h.m4
 lib/unistd.in.h
 
 Depends-on:
-c++defs
 include_next
 snippet/arg-nonnull
+snippet/c++defs
 stddef
 warn-on-use
 

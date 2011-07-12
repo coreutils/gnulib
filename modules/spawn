@@ -6,10 +6,10 @@ lib/spawn.in.h
 m4/spawn_h.m4
 
 Depends-on:
-c++defs
 include_next
 sched
 snippet/arg-nonnull
+snippet/c++defs
 warn-on-use
 
 configure.ac:

@@ -7,9 +7,9 @@ m4/dirent_h.m4
 m4/unistd_h.m4
 
 Depends-on:
-c++defs
 include_next
 snippet/arg-nonnull
+snippet/c++defs
 warn-on-use
 
 configure.ac:

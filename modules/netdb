@@ -6,9 +6,9 @@ lib/netdb.in.h
 m4/netdb_h.m4
 
 Depends-on:
-c++defs
 include_next
 snippet/arg-nonnull
+snippet/c++defs
 warn-on-use
 sys_socket
 

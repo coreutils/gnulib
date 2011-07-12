@@ -7,7 +7,7 @@ m4/sys_ioctl_h.m4
 
 Depends-on:
 include_next
-c++defs
+snippet/c++defs
 unistd
 warn-on-use
 
