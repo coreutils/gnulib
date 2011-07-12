@@ -7,9 +7,9 @@ m4/sys_stat_h.m4
 m4/unistd_h.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 include_next
+snippet/arg-nonnull
 time
 warn-on-use
 

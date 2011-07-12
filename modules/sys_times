@@ -6,8 +6,8 @@ lib/sys_times.in.h
 m4/sys_times_h.m4
 
 Depends-on:
-arg-nonnull
 include_next
+snippet/arg-nonnull
 warn-on-use
 
 configure.ac:

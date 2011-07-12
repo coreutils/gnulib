@@ -6,9 +6,9 @@ lib/arpa_inet.in.h
 m4/arpa_inet_h.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 include_next
+snippet/arg-nonnull
 sys_socket
 warn-on-use
 

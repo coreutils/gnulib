@@ -7,9 +7,9 @@ m4/wchar_h.m4
 m4/wint_t.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 include_next
+snippet/arg-nonnull
 stddef
 warn-on-use
 

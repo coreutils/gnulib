@@ -3439,7 +3439,7 @@ func_all_modules ()
 
   func_begin_table
   func_module absolute-header
-  func_module arg-nonnull
+  func_module snippet/arg-nonnull
   func_module config-h
   func_module configmake
   func_module dummy

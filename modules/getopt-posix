@@ -12,7 +12,7 @@ Depends-on:
 unistd
 extensions
 include_next
-arg-nonnull
+snippet/arg-nonnull
 gettext-h       [test $REPLACE_GETOPT = 1]
 
 configure.ac:

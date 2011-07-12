@@ -6,9 +6,9 @@ lib/signal.in.h
 m4/signal_h.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 include_next
+snippet/arg-nonnull
 warn-on-use
 extensions
 

@@ -6,8 +6,8 @@ lib/sys_utsname.in.h
 m4/sys_utsname_h.m4
 
 Depends-on:
-arg-nonnull
 include_next
+snippet/arg-nonnull
 warn-on-use
 
 configure.ac:

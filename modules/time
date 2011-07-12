@@ -8,8 +8,8 @@ m4/time_h.m4
 Depends-on:
 extensions
 include_next
-arg-nonnull
 c++defs
+snippet/arg-nonnull
 warn-on-use
 stddef
 

@@ -7,10 +7,10 @@ m4/fcntl_h.m4
 m4/fcntl-o.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 extensions
 include_next
+snippet/arg-nonnull
 unistd
 warn-on-use
 

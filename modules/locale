@@ -6,10 +6,10 @@ lib/locale.in.h
 m4/locale_h.m4
 
 Depends-on:
-arg-nonnull
 c++defs
 extensions
 include_next
+snippet/arg-nonnull
 stddef
 warn-on-use
 

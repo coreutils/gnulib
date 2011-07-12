@@ -8,10 +8,10 @@ m4/sockpfaf.m4
 
 Depends-on:
 alignof
-arg-nonnull
 c++defs
 errno
 include_next
+snippet/arg-nonnull
 socklen
 sys_uio
 warn-on-use

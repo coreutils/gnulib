@@ -8,7 +8,7 @@ m4/iconv_h.m4
 Depends-on:
 include_next
 c++defs
-arg-nonnull
+snippet/arg-nonnull
 warn-on-use
 
 configure.ac:

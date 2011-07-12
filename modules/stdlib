@@ -7,9 +7,9 @@ m4/stdlib_h.m4
 
 Depends-on:
 _Noreturn
-arg-nonnull
 c++defs
 include_next
+snippet/arg-nonnull
 stddef
 unistd
 warn-on-use
