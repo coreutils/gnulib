@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 27
+# gnulib-common.m4 serial 28
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,12 @@ AC_DEFUN([gl_COMMON], [
 AC_DEFUN([gl_COMMON_BODY], [
   AH_VERBATIM([_Noreturn],
 [/* The _Noreturn keyword of draft C1X.  */
-#if ! defined _Noreturn && __STDC_VERSION__ < 201000L
-# if (3 <= __GNUC__ || __GNUC__ == 2 && 8 <= __GNUC_MINOR__ \
+#ifndef _Noreturn
+# if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__) \
       || 0x5110 <= __SUNPRO_C)
 #  define _Noreturn __attribute__ ((__noreturn__))
+# elif 1200 <= _MSC_VER
+#  define _Noreturn __declspec (noreturn)
 # else
 #  define _Noreturn
 # endif

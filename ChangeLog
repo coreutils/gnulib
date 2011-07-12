@@ -1,5 +1,11 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	_Noreturn: Ignore __STDC_VERSION__; observe _MSC_VER.
+	* build-aux/_Noreturn.h (_Noreturn): Ignore __STDC_VERSION__.
+	Reparenthesize to avoid GCC warning.
+	Support Microsoft's syntax.
+	* m4/gnulib-common.m4 (gl_COMMON_BODY): Likewise.
+
 	_Noreturn-tests: remove module
 	* modules/_Noreturn-tests: Remove.
 	* modules/stdnoreturn-tests (Files): Remove tests/test-_Noreturn.c.
