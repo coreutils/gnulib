@@ -8,7 +8,7 @@ m4/sys_utsname_h.m4
 Depends-on:
 include_next
 snippet/arg-nonnull
-warn-on-use
+snippet/warn-on-use
 
 configure.ac:
 gl_SYS_UTSNAME_H

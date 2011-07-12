@@ -12,7 +12,7 @@ Depends-on:
 extensions
 snippet/arg-nonnull
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 alloca          [test -n "$GLOB_H"]
 d-type          [test -n "$GLOB_H"]
 dirfd           [test -n "$GLOB_H"]

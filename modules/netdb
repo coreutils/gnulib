@@ -9,7 +9,7 @@ Depends-on:
 include_next
 snippet/arg-nonnull
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 sys_socket
 
 configure.ac:

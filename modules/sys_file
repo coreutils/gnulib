@@ -7,7 +7,7 @@ m4/sys_file_h.m4
 
 Depends-on:
 include_next
-warn-on-use
+snippet/warn-on-use
 
 configure.ac:
 gl_HEADER_SYS_FILE_H

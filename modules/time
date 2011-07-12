@@ -10,7 +10,7 @@ extensions
 include_next
 snippet/arg-nonnull
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 stddef
 
 configure.ac:

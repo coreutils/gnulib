@@ -9,8 +9,8 @@ Depends-on:
 include_next
 snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 sys_socket
-warn-on-use
 
 configure.ac:
 gl_HEADER_ARPA_INET

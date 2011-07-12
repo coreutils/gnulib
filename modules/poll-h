@@ -9,7 +9,7 @@ Depends-on:
 extensions
 include_next
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 
 configure.ac:
 gl_POLL_H

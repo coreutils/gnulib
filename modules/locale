@@ -10,8 +10,8 @@ extensions
 include_next
 snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 stddef
-warn-on-use
 
 configure.ac:
 gl_LOCALE_H

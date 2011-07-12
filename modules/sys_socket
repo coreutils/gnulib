@@ -12,9 +12,9 @@ errno
 include_next
 snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 socklen
 sys_uio
-warn-on-use
 
 configure.ac:
 gl_HEADER_SYS_SOCKET

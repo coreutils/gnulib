@@ -10,8 +10,8 @@ Depends-on:
 include_next
 snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 time
-warn-on-use
 
 configure.ac:
 gl_HEADER_SYS_STAT_H

@@ -10,8 +10,8 @@ Depends-on:
 include_next
 signal
 snippet/c++defs
+snippet/warn-on-use
 sys_time
-warn-on-use
 
 configure.ac:
 gl_HEADER_SYS_SELECT

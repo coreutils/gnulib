@@ -8,8 +8,8 @@ m4/sys_ioctl_h.m4
 Depends-on:
 include_next
 snippet/c++defs
+snippet/warn-on-use
 unistd
-warn-on-use
 
 configure.ac:
 gl_SYS_IOCTL_H

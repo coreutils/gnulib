@@ -11,8 +11,8 @@ extensions
 include_next
 snippet/arg-nonnull
 snippet/c++defs
+snippet/warn-on-use
 unistd
-warn-on-use
 
 configure.ac:
 gl_FCNTL_H

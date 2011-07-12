@@ -8,7 +8,7 @@ m4/pty_h.m4
 Depends-on:
 include_next
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 
 configure.ac:
 gl_PTY_H

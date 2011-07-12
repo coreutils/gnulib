@@ -10,7 +10,7 @@ include_next
 sched
 snippet/arg-nonnull
 snippet/c++defs
-warn-on-use
+snippet/warn-on-use
 
 configure.ac:
 gl_SPAWN_H

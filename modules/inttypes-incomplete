@@ -9,8 +9,8 @@ Depends-on:
 include_next
 multiarch
 snippet/arg-nonnull
+snippet/warn-on-use
 stdint
-warn-on-use
 
 configure.ac:
 gl_INTTYPES_INCOMPLETE

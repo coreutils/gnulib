@@ -3459,7 +3459,7 @@ func_all_modules ()
   func_module relocatable-prog
   func_module relocatable-prog-wrapper
   func_module relocatable-script
-  func_module warn-on-use
+  func_module snippet/warn-on-use
   func_module warnings
   func_end_table
 
