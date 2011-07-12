@@ -1,7 +1,8 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
-	argmatch-tests: use _Noreturn
-	* tests/test-argmatch.c (_GL_ATTRIBUTE_NORETURN): Remove.
+	argmatch-tests, exclude_tests: use _Noreturn
+	* tests/test-argmatch.c, tests/test-exclude.c (_GL_ATTRIBUTE_NORETURN):
+	Remove.
 	(ARGMATCH_DIE_DECL): Use _Noreturn instead.
 
 	stdlib: use _Noreturn
