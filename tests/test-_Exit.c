@@ -20,8 +20,26 @@
 
 #include <stdlib.h>
 
-int
-main ()
+/* But did he ever return?  No he never returned,
+   And his fate is still unlearned ... */
+static _Noreturn void MTA (int);
+
+static _Noreturn void
+Charlie (int n)
 {
-  _Exit (81);
+  MTA (n - 1);
+}
+
+static void
+MTA (int n)
+{
+  if (n < 0)
+    _Exit (81);
+  Charlie (n - 1);
+}
+
+int
+main (int argc, char **argv)
+{
+  MTA (argc + !!argv);
 }
