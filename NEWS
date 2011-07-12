@@ -12,6 +12,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-07-12  arg-nonnull     Renamed to snippet/arg-nonnull.
+            c++defs         Renamed to snippet/c++defs.
+            link-warning    Renamed to snippet/link-warning.
+            unused-parameter Renamed to snippet/unused-parameter.
+            warn-on-use     Renamed to snippet/warn-on-use.
+
 2011-06-15  verify          verify_true (V) is deprecated; please use
                             verify_expr (V, 1) instead.
 

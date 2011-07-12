@@ -1,5 +1,7 @@
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
+	* NEWS: Mention the changes.
+
 	Rename module 'warn-on-use' to 'snippet/warn-on-use'.
 	* modules/snippet/warn-on-use: Renamed from modules/warn-on-use.
 	(Files, Makefile.am): Update.
@@ -41,8 +43,6 @@
 	* MODULES.html.sh (Support for building libraries and executables):
 	Update.
 
-2011-07-12  Bruno Haible  <bruno@clisp.org>
-
 	Rename module 'unused-parameter' to 'snippet/unused-parameter'.
 	* modules/snippet/unused-parameter: Renamed from
 	modules/unused-parameter.
@@ -52,8 +52,6 @@
 	* modules/selinux-h (Depends-on): Update.
 	* modules/unistr/base (Depends-on): Update.
 	* MODULES.html.sh (Core language properties): Update.
-
-2011-07-12  Bruno Haible  <bruno@clisp.org>
 
 	Rename module 'link-warning' to 'snippet/link-warning'.
 	* modules/snippet/link-warning: Renamed from modules/link-warning.
