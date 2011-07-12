@@ -19,7 +19,6 @@
 # define XMEMDUP_H_
 
 # include <stddef.h>
-# include <stdnoreturn.h>
 
 
 # ifdef __cplusplus
@@ -31,7 +30,7 @@ extern "C" {
    or by using gnulib's xalloc-die module.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
-extern noreturn void xalloc_die (void);
+extern _Noreturn void xalloc_die (void);
 
 char *xmemdup0 (void const *p, size_t s);
 

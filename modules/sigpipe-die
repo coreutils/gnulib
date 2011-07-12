@@ -12,7 +12,6 @@ exitfail
 sigpipe
 sigprocmask
 sigaction
-stdnoreturn
 
 configure.ac:
 

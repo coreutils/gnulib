@@ -1,5 +1,18 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdnoreturn, stdnoreturn-tests: remove modules
+	They're not needed here and a bit premature for use elsewhere.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00209.html>.
+	* m4/stdnoreturn.m4, modules/stdnoreturn, modules/stdnoreturn-tests:
+	* tests/test-stdnoreturn.c: Remove files.
+	* MODULES.html.sh (_Noreturn <stdnoreturn.h>): Remove section.
+	* lib/openat.h, lib/sigpipe-die.h, lib/xalloc.h, lib/xmemdup0.h:
+	* lib/xstrtol.h: Use _Noreturn rather than including <stdnoreturn.h>
+	and using noreturn.
+	* modules/openat, modules/sigpipe-die, modules/xalloc:
+	* modules/xmemdup0, modules/xstrtol:
+	Remove dependency on stdnoreturn.
+
 	_Noreturn: Ignore __STDC_VERSION__; observe _MSC_VER.
 	* build-aux/_Noreturn.h (_Noreturn): Ignore __STDC_VERSION__.
 	Reparenthesize to avoid GCC warning.

@@ -21,7 +21,6 @@
 
 # include <getopt.h>
 # include <inttypes.h>
-# include <stdnoreturn.h>
 
 # ifndef _STRTOL_ERROR
 enum strtol_error
@@ -67,8 +66,8 @@ _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
 
    After reporting an error, exit with a failure status.  */
 
-void noreturn xstrtol_fatal (enum strtol_error,
-                             int, char, struct option const *,
-                             char const *);
+void _Noreturn xstrtol_fatal (enum strtol_error,
+                              int, char, struct option const *,
+                              char const *);
 
 #endif /* not XSTRTOL_H_ */

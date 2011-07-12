@@ -26,7 +26,6 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <stdbool.h>
-#include <stdnoreturn.h>
 
 #if !HAVE_OPENAT
 
@@ -42,8 +41,8 @@ bool openat_needs_fchdir (void);
 
 #endif
 
-noreturn void openat_restore_fail (int);
-noreturn void openat_save_fail (int);
+_Noreturn void openat_restore_fail (int);
+_Noreturn void openat_save_fail (int);
 
 /* Using these function names makes application code
    slightly more readable than it would be with
