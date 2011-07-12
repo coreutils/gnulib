@@ -1,5 +1,9 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdnoreturn: new module
+	* MODULES.html.sh (Noreturn <stdnoreturn.h>): New section.
+	* m4/stdnoreturn.m4, modules/stdnoreturn: New files.
+
 	_Noreturn-tests: new module
 	* modules/_Noreturn-tests, tests/test-_Noreturn.c: New files.
 
