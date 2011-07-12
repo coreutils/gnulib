@@ -1,5 +1,7 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/xalloc-die.c (xalloc_die): Modernize comment.
+
 	* lib/glthread/thread.h: Modernize comment.
 
 	obstack: use _Noreturn
