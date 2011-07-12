@@ -1,5 +1,12 @@
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
+	pthread_sigmask: Rely on module 'threadlib'.
+	* modules/pthread_sigmask (Depends-on): Add threadlib.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Assume gl_THREADLIB
+	is defined.
+
+2011-07-12  Bruno Haible  <bruno@clisp.org>
+
 	regex: Depend on module 'strcase'.
 	* modules/regex (Depends-on): Add strcase, for strcasecmp().
 
