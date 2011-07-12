@@ -37,7 +37,7 @@ openat_save_fail (int errnum)
   error (exit_failure, errnum,
          _("unable to record current working directory"));
 #endif
-  /* The `noreturn' attribute cannot be applied to error, since it returns
+  /* _Noreturn cannot be applied to error, since it returns
      when its first argument is 0.  To help compilers understand that this
      function does not return, call abort.  Also, the abort is a
      safety feature if exit_failure is 0 (which shouldn't happen).  */
