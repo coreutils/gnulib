@@ -1,5 +1,11 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdlib: use _Noreturn
+	* lib/stdlib.in.h (_GL_ATTRIBUTE_NORETURN): Remove.
+	(_Exit): Use _Noreturn rather than _GL_ATTRIBUTE_NORETURN.
+	* modules/stdlib (Depends-on): Add _Noreturn.
+	(stdlib.h): Depend on $(_NORETURN_H), and copy it in.
+
 	stdnoreturn-tests: new module
 	* modules/stdnoreturn-tests, tests/test-stdnoreturn.c: New files.
 
