@@ -1,5 +1,10 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	openat: use stdnoreturn.h
+	* lib/openat.h: Include <stdnoreturn.h>.
+	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.
+	* modules/openat (Depends-on): Add stdnoreturn.
+
 	* lib/openat-die.c (openat_save_fail): Modernize comment.
 
 	* lib/xalloc-die.c (xalloc_die): Modernize comment.

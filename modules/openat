@@ -32,6 +32,7 @@ openat-die
 rmdir           [test $REPLACE_UNLINKAT = 1]
 save-cwd
 stdbool
+stdnoreturn
 sys_stat
 unistd
 unlink          [test $REPLACE_UNLINKAT = 1]
