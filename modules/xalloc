@@ -8,6 +8,7 @@ m4/xalloc.m4
 
 Depends-on:
 inline
+stdnoreturn
 xalloc-die
 xalloc-oversized
 

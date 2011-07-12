@@ -1,5 +1,10 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xalloc: use stdnoreturn.h
+	* lib/xalloc.h: Include <stdnoreturn.h>.
+	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.
+	* modules/xalloc (Depends-on): Add stdnoreturn.
+
 	xstrtol: use stdnoreturn.h
 	* lib/xstrtol.h: Include <stdnoreturn.h>.
 	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.

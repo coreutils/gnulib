@@ -19,6 +19,7 @@
 # define XALLOC_H_
 
 # include <stddef.h>
+# include <stdnoreturn.h>
 
 # include "xalloc-oversized.h"
 
@@ -26,12 +27,6 @@
 extern "C" {
 # endif
 
-
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-#  define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
-# else
-#  define _GL_ATTRIBUTE_NORETURN /* empty */
-# endif
 
 # if __GNUC__ >= 3
 #  define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
@@ -50,7 +45,7 @@ extern "C" {
    or by using gnulib's xalloc-die module.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
-extern void xalloc_die (void) _GL_ATTRIBUTE_NORETURN;
+extern noreturn void xalloc_die (void);
 
 void *xmalloc (size_t s)
       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
