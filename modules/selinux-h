@@ -10,7 +10,7 @@ m4/selinux-selinux-h.m4
 
 Depends-on:
 errno
-unused-parameter
+snippet/unused-parameter
 
 configure.ac:
 gl_HEADERS_SELINUX_SELINUX_H

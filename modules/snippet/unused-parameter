@@ -5,7 +5,7 @@ Applicability:
 all
 
 Files:
-build-aux/unused-parameter.h
+build-aux/snippet/unused-parameter.h
 
 Depends-on:
 
@@ -19,12 +19,12 @@ Makefile.am:
 
 BUILT_SOURCES += unused-parameter.h
 # The unused-parameter.h that gets inserted into generated .h files is the same
-# as build-aux/unused-parameter.h, except that it has the copyright header cut
-# off.
-unused-parameter.h: $(top_srcdir)/build-aux/unused-parameter.h
+# as build-aux/snippet/unused-parameter.h, except that it has the copyright
+# header cut off.
+unused-parameter.h: $(top_srcdir)/build-aux/snippet/unused-parameter.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	sed -n -e '/GL_UNUSED_PARAMETER/,$$p' \
-	  < $(top_srcdir)/build-aux/unused-parameter.h \
+	  < $(top_srcdir)/build-aux/snippet/unused-parameter.h \
 	  > $@-t && \
 	mv $@-t $@
 MOSTLYCLEANFILES += unused-parameter.h unused-parameter.h-t
