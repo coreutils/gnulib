@@ -1,5 +1,12 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	_Noreturn-tests: remove module
+	* modules/_Noreturn-tests: Remove.
+	* modules/stdnoreturn-tests (Files): Remove tests/test-_Noreturn.c.
+	* tests/test-_Noreturn.c: Remove.
+	* tests/test-stdnoreturn.c: Merge from the old
+	tests/test-_Noreturn.c, testing both noreturn and _Noreturn.
+
 	* top/maint.mk: Adjust to new noreturn support.
 	(gl_extract_significant_defines_): Omit pattern ATTRIBUTE_NORETURN.
 	(def_sym_regex): Do not remove ATTRIBUTE_NORETURN.

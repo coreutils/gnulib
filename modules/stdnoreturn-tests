@@ -1,6 +1,5 @@
 Files:
 tests/test-stdnoreturn.c
-tests/test-_Noreturn.c
 
 Depends-on:
 
