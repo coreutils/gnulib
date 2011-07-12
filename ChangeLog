@@ -1,5 +1,8 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	_Noreturn-tests: new module
+	* modules/_Noreturn-tests, tests/test-_Noreturn.c: New files.
+
 	_Noreturn: new module
 	* MODULES.html.sh (Support for systems lacking draft ISO C 1X):
 	New section, mentioning it.

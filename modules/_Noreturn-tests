@@ -1,0 +1,10 @@
+Files:
+tests/test-_Noreturn.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-_Noreturn
+check_PROGRAMS += test-_Noreturn
