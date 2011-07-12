@@ -15,6 +15,7 @@ getopt-gnu
 gettext-h
 intprops
 inttypes-incomplete
+stdnoreturn
 
 configure.ac:
 gl_XSTRTOL
