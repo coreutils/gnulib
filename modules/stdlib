@@ -6,11 +6,11 @@ lib/stdlib.in.h
 m4/stdlib_h.m4
 
 Depends-on:
-_Noreturn
 include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
+snippet/_Noreturn
 stddef
 unistd
 

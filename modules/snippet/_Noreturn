@@ -5,7 +5,7 @@ Applicability:
 all
 
 Files:
-build-aux/_Noreturn.h
+build-aux/snippet/_Noreturn.h
 
 Depends-on:
 
@@ -16,7 +16,7 @@ Makefile.am:
 # gnulib Makefile snippets, it must be present in all Makefile.am that
 # need it. This is ensured by the applicability 'all' defined above.
 
-_NORETURN_H=$(top_srcdir)/build-aux/_Noreturn.h
+_NORETURN_H=$(top_srcdir)/build-aux/snippet/_Noreturn.h
 
 Include:
 
