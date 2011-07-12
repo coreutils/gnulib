@@ -1,5 +1,7 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Improvements on _Noreturn and related modules.
+
 	modules/_Exit-tests: test _Noreturn too
 	* tests/test-_Exit.c (MTA, Charlie): New functions, taken from the
 	old tests/test-stdnoreturn.c.  This tests the _Noreturn keyword a bit.
@@ -30,6 +32,10 @@
 	* tests/test-_Noreturn.c: Remove.
 	* tests/test-stdnoreturn.c: Merge from the old
 	tests/test-_Noreturn.c, testing both noreturn and _Noreturn.
+
+2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	_Noreturn, stdnoreturn, and related modules.
 
 	* top/maint.mk: Adjust to new noreturn support.
 	(gl_extract_significant_defines_): Omit pattern ATTRIBUTE_NORETURN.
