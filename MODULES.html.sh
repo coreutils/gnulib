@@ -2306,6 +2306,21 @@ func_all_modules ()
   func_module mbfile
   func_end_table
 
+  element="Support for systems lacking draft ISO C 1X"
+  func_section_wrap c1x_sup
+  func_wrap H2
+  func_echo "$element"
+
+  element="Core language properties"
+  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
+  func_section_wrap c1x_core_properties
+  func_wrap H3
+  func_echo "$element"
+
+  func_begin_table
+  func_module _Noreturn
+  func_end_table
+
   element="Support for obsolete systems lacking POSIX:2008"
   func_section_wrap posix_sup_obsolete
   func_wrap H2

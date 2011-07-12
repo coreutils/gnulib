@@ -1,5 +1,10 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	_Noreturn: new module
+	* MODULES.html.sh (Support for systems lacking draft ISO C 1X):
+	New section, mentioning it.
+	* build-aux/_Noreturn.h, modules/_Noreturn: New files.
+
 	* m4/gnulib-common.m4 (gl_COMMON_BODY): Add _Noreturn.
 
 2011-07-11  Eric Blake  <eblake@redhat.com>
