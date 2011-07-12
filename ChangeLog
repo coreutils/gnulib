@@ -1,3 +1,7 @@
+2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* m4/gnulib-common.m4 (gl_COMMON_BODY): Add _Noreturn.
+
 2011-07-11  Eric Blake  <eblake@redhat.com>
 
 	ffs: new module
