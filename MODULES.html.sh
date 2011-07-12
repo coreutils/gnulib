@@ -3451,7 +3451,7 @@ func_all_modules ()
   func_module lib-ignore
   func_module lib-msvc-compat
   func_module lib-symbol-versions
-  func_module link-warning
+  func_module snippet/link-warning
   func_module manywarnings
   func_module no-c++
   func_module relocatable-lib

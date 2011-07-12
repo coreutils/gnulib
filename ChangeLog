@@ -1,5 +1,13 @@
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
+	Rename module 'link-warning' to 'snippet/link-warning'.
+	* modules/snippet/link-warning: Renamed from modules/link-warning.
+	(Files, Makefile.am): Update.
+	* build-aux/snippet/link-warning.h: Renamed from
+	build-aux/link-warning.h.
+	* MODULES.html.sh (Support for building libraries and executables):
+	Update.
+
 	Rename module 'c++defs' to 'snippet/c++defs'.
 	* modules/snippet/c++defs: Renamed from modules/c++defs.
 	(Files, Makefile.am): Update.
