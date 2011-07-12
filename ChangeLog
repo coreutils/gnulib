@@ -1,5 +1,9 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* top/maint.mk: Adjust to new noreturn support.
+	(gl_extract_significant_defines_): Omit pattern ATTRIBUTE_NORETURN.
+	(def_sym_regex): Do not remove ATTRIBUTE_NORETURN.
+
 	xalloc: use stdnoreturn.h
 	* lib/xalloc.h: Include <stdnoreturn.h>.
 	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.

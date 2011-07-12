@@ -746,7 +746,7 @@ gl_other_headers_ ?= \
 gl_extract_significant_defines_ = \
   /^\# *define ([^_ (][^ (]*)(\s*\(|\s+\w+)/\
     && $$2 !~ /(?:rpl_|_used_without_)/\
-    && $$1 !~ /^(?:NSIG|ATTRIBUTE_NORETURN)$$/\
+    && $$1 !~ /^(?:NSIG)$$/\
     and print $$1
 
 # Create a list of regular expressions matching the names
@@ -758,7 +758,6 @@ define def_sym_regex
 	    perl -lne '$(gl_extract_significant_defines_)' $$f;		\
 	  done;								\
 	) | sort -u							\
-	  | grep -Ev '^ATTRIBUTE_NORETURN'				\
 	  | sed 's/^/^ *# *(define|undef)  */;s/$$/\\>/'
 endef
 
