@@ -1,5 +1,10 @@
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
+	strings: Document module.
+	* doc/posix-headers/strings.texi: Mention module 'strings'.
+
+2011-07-12  Bruno Haible  <bruno@clisp.org>
+
 	Rename module '_Noreturn' to 'snippet/_Noreturn'.
 	* modules/snippet/_Noreturn: Renamed from modules/_Noreturn.
 	(Files, Makefile.am): Update.
