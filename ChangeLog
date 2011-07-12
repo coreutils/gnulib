@@ -1,5 +1,7 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/glthread/thread.h: Modernize comment.
+
 	obstack: use _Noreturn
 	* lib/obstack.c (__attribute__): Remove macro.
 	(print_and_abort): Use _Noreturn.

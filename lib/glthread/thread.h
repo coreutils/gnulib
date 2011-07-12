@@ -53,7 +53,7 @@
 
    Terminating the current thread:
        gl_thread_exit (return_value);
-       extern void gl_thread_exit (void *return_value) __attribute__ ((noreturn));
+       extern _Noreturn void gl_thread_exit (void *return_value);
 
    Requesting custom code to be executed at fork() time(not supported on all
    platforms):
