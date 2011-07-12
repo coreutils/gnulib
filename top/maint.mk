@@ -621,6 +621,12 @@ sc_prohibit_stddef_without_use:
 	re='\<($(_stddef_syms_re)) *\('					\
 	  $(_sc_header_without_use)
 
+# Prohibit the inclusion of verify.h without an actual use.
+sc_prohibit_verify_without_use:
+	@h='verify.h'							\
+	re='\<(verify(true|expr)?|static_assert) *\('			\
+	  $(_sc_header_without_use)
+
 # Don't include xfreopen.h unless you use one of its functions.
 sc_prohibit_xfreopen_without_use:
 	@h='xfreopen.h' re='\<xfreopen *\(' $(_sc_header_without_use)

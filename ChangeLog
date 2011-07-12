@@ -1,3 +1,8 @@
+2011-07-12  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit inclusion of "verify.h" without use
+	* top/maint.mk (sc_prohibit_verify_without_use): New rule.
+
 2011-07-19  Pádraig Brady  <P@draigBrady.com>
 
 	timer-time: A new module to check for timer_settime()
