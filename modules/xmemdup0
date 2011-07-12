@@ -6,6 +6,7 @@ lib/xmemdup0.h
 lib/xmemdup0.c
 
 Depends-on:
+stdnoreturn
 xalloc
 
 configure.ac:

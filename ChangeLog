@@ -1,5 +1,10 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xmemdup0: use stdnoreturn.h
+	* lib/xmemdup0.h: Include <stdnoreturn.h>.
+	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.
+	* modules/xmemdup0 (Depends-on): Add stdnoreturn.
+
 	sigpipe-die: use stdnoreturn.h
 	* lib/sigpipe-die.h: Include <stdnoreturn.h>.
 	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.
