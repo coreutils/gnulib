@@ -1,5 +1,10 @@
 2011-07-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sigpipe-die: use stdnoreturn.h
+	* lib/sigpipe-die.h: Include <stdnoreturn.h>.
+	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.
+	* modules/sigpipe-die (Depends-on): Add stdnoreturn.
+
 	openat: use stdnoreturn.h
 	* lib/openat.h: Include <stdnoreturn.h>.
 	(_GL_ATTRIBUTE_NORETURN): Remove; all uses replaced with noreturn.

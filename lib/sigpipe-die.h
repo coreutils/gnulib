@@ -41,21 +41,16 @@
 #ifndef _SIGPIPE_DIE_H
 #define _SIGPIPE_DIE_H
 
+#include <stdnoreturn.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
-#  define _GL_ATTRIBUTE_NORETURN __attribute__ ((__noreturn__))
-# else
-#  define _GL_ATTRIBUTE_NORETURN /* empty */
-# endif
-
 /* Emit an error message indicating a SIGPIPE signal, and terminate the
    process with an error code.  */
-extern void sigpipe_die (void) _GL_ATTRIBUTE_NORETURN;
+extern noreturn void sigpipe_die (void);
 
 /* Install a SIGPIPE handler that invokes PREPARE_DIE and then emits an
    error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.  */
