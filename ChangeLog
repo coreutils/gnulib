@@ -1,5 +1,25 @@
 2011-07-15  Eric Blake  <eblake@redhat.com>
 
+	ffsl, ffsll: new modules
+	* modules/ffsl: New file.
+	* modules/ffsll: Likewise.
+	* m4/ffsl.m4: Likewise.
+	* m4/ffsll.m4: Likewise.
+	* lib/ffsl.c: Likewise.
+	* lib/ffsl.h: Likewise.
+	* lib/ffsll.c: Likewise.
+	* m4/string_h.m4 (gl_HEADER_STRING_H_BODY)
+	(gl_HEADER_STRING_H_DEFAULTS): Add defaults.
+	* modules/string (Makefile.am): Substitute witnesses.
+	* lib/strings.in.h (ffsl, ffsll): Declare.
+	* modules/ffsl-tests: New test file.
+	* modules/ffsll-tests: Likewise.
+	* tests/test-ffsl.c: Likewise.
+	* tests/test-ffsll.c: Likewise.
+	* MODULES.html.sh (Integer arithmetic functions): Mention it.
+	* doc/glibc-functions/ffsl.texi (ffsl): Likewise.
+	* doc/glibc-functions/ffsll.texi (ffsll): Likewise.
+
 	ffs: fix m4 prerequisite
 	* m4/ffs.m4 (gl_FUNC_FFS): Require strings.h defaults.
 
