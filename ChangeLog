@@ -1,3 +1,10 @@
+2011-07-15  Eric Blake  <eblake@redhat.com>
+
+	ffs: avoid undefined behavior
+	* lib/ffs.c (ffs): Provide fallback for non-32-bit int.
+	* tests/test-ffs.c (naive, main): Avoid signed shifts.
+	Reported by Bruno Haible.
+
 2011-07-12  Bruno Haible  <bruno@clisp.org>
 
 	pthread_sigmask: Rely on module 'threadlib'.

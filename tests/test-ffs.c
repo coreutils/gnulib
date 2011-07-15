@@ -29,9 +29,9 @@ SIGNATURE_CHECK (ffs, int, (int));
 static int
 naive (int i)
 {
-  int j;
+  unsigned int j;
   for (j = 0; j < CHAR_BIT * sizeof i; j++)
-    if (i & (1 << j))
+    if (i & (1U << j))
       return j + 1;
   return 0;
 }
@@ -45,8 +45,8 @@ main (int argc, char *argv[])
     ASSERT (ffs (i) == naive (i));
   for (i = 0; i < CHAR_BIT * sizeof i; i++)
     {
-      ASSERT (ffs (1 << i) == naive (1 << i));
-      ASSERT (ffs (1 << i) == i + 1);
+      ASSERT (ffs (1U << i) == naive (1U << i));
+      ASSERT (ffs (1U << i) == i + 1);
     }
   return 0;
 }

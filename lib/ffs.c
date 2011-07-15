@@ -18,6 +18,8 @@
 
 #include <strings.h>
 
+#include <limits.h>
+
 int
 ffs (int i)
 {
@@ -26,13 +28,26 @@ ffs (int i)
 #else
   /* http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup
      gives this deBruijn constant for a branch-less computation, although
-     that table counted trailing zeros rather than bit position.  */
-  static unsigned int table[] = {
-    1, 2, 29, 3, 30, 15, 25, 4, 31, 23, 21, 16, 26, 18, 5, 9,
-    32, 28, 14, 24, 22, 20, 17, 8, 27, 13, 19, 7, 12, 6, 11, 10
-  };
-  unsigned int u = i;
-  unsigned int bit = u & -u;
-  return table[(bit * 0x077cb531U) >> 27] - !i;
+     that table counted trailing zeros rather than bit position.  This
+     requires 32-bit int, we fall back to a naive algorithm on the rare
+     platforms where that assumption is not true.  */
+  if (CHAR_BIT * sizeof i == 32)
+    {
+      static unsigned int table[] = {
+        1, 2, 29, 3, 30, 15, 25, 4, 31, 23, 21, 16, 26, 18, 5, 9,
+        32, 28, 14, 24, 22, 20, 17, 8, 27, 13, 19, 7, 12, 6, 11, 10
+      };
+      unsigned int u = i;
+      unsigned int bit = u & -u;
+      return table[(bit * 0x077cb531U) >> 27] - !i;
+    }
+  else
+    {
+      unsigned int j;
+      for (j = 0; j < CHAR_BIT * sizeof i; j++)
+        if (i & (1U << j))
+          return j + 1;
+      return 0;
+    }
 #endif
 }
