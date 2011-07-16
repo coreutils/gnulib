@@ -39,9 +39,9 @@ FUNC (TYPE i)
     return 0;
   while (1)
     {
-      if ((int) j)
-        return result + ffs (j);
-      j >>= CHAR_BIT * sizeof (int);
-      result += CHAR_BIT * sizeof (int);
+      if ((unsigned int) j)
+        return result + ffs ((unsigned int) j);
+      j >>= CHAR_BIT * sizeof (unsigned int);
+      result += CHAR_BIT * sizeof (unsigned int);
     }
 }

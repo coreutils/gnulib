@@ -1,5 +1,10 @@
 2011-07-15  Bruno Haible  <bruno@clisp.org>
 
+	ffsl, ffsll: Avoid unportable behaviour.
+	* lib/ffsl.h (FUNC): Use 'unsigned int' instead of 'int'.
+
+2011-07-15  Bruno Haible  <bruno@clisp.org>
+
 	ffs: More tests.
 	* tests/test-ffs.c (NBITS): New macro.
 	(main): Add more tests.
