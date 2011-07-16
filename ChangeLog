@@ -1,3 +1,13 @@
+2011-07-15  Bruno Haible  <bruno@clisp.org>
+
+	ffs: More tests.
+	* tests/test-ffs.c (NBITS): New macro.
+	(main): Add more tests.
+	* tests/test-ffsl.c (NBITS): New macro.
+	(main): Add more tests.
+	* tests/test-ffsll.c (NBITS): New macro.
+	(main): Add more tests.
+
 2011-07-15  Eric Blake  <eblake@redhat.com>
 
 	ffsl, ffsll: new modules

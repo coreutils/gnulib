@@ -26,11 +26,13 @@ SIGNATURE_CHECK (ffsll, int, (long long int));
 
 #include "macros.h"
 
+#define NBITS (sizeof (long long int) * CHAR_BIT)
+
 static int
 naive (long long int i)
 {
   unsigned long long int j;
-  for (j = 0; j < CHAR_BIT * sizeof i; j++)
+  for (j = 0; j < NBITS; j++)
     if (i & (1ULL << j))
       return j + 1;
   return 0;
@@ -39,14 +41,28 @@ naive (long long int i)
 int
 main (int argc, char *argv[])
 {
-  long long int i;
+  long long int x;
+  int i;
 
-  for (i = -128; i <= 128; i++)
-    ASSERT (ffsll (i) == naive (i));
-  for (i = 0; i < CHAR_BIT * sizeof i; i++)
+  for (x = -128; x <= 128; x++)
+    ASSERT (ffsll (x) == naive (x));
+  for (i = 0; i < NBITS; i++)
     {
       ASSERT (ffsll (1ULL << i) == naive (1ULL << i));
       ASSERT (ffsll (1ULL << i) == i + 1);
+      ASSERT (ffsll (-1ULL << i) == i + 1);
+    }
+  for (i = 0; i < NBITS - 1; i++)
+    {
+      ASSERT (ffsll (3ULL << i) == i + 1);
+      ASSERT (ffsll (-3ULL << i) == i + 1);
+    }
+  for (i = 0; i < NBITS - 2; i++)
+    {
+      ASSERT (ffsll (5ULL << i) == i + 1);
+      ASSERT (ffsll (-5ULL << i) == i + 1);
+      ASSERT (ffsll (7ULL << i) == i + 1);
+      ASSERT (ffsll (-7ULL << i) == i + 1);
     }
   return 0;
 }
