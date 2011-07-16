@@ -22,6 +22,10 @@
 #include <errno.h>
 #include <stddef.h>
 
+#if PTHREAD_SIGMASK_UNBLOCK_BUG
+# include <unistd.h>
+#endif
+
 int
 pthread_sigmask (int how, const sigset_t *new_mask, sigset_t *old_mask)
 #undef pthread_sigmask

@@ -1,3 +1,9 @@
+2011-07-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread_sigmask: ensure usleep is declared
+	* lib/pthread_sigmask.c [PTHREAD_SIGMASK_UNBLOCK_BUG]:
+	Include <unistd.h>, to declare usleep.  Needed on Solaris 8,
+
 2011-07-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: Document NonStop portability issues.
