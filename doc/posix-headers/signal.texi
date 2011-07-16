@@ -29,6 +29,10 @@ mingw.
 The macro @code{SA_NODEFER} is not defined on some platforms:
 Interix 3.5.
 @item
+The macros @code{SA_RESETHAND} and @code{SA_RESTART} are not defined
+on some platforms:
+NonStop.
+@item
 The type @code{sighandler_t} (a GNU extension) is not defined on most non-glibc
 platforms:
 MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,

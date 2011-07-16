@@ -33,8 +33,12 @@ missing on some platforms:
 mingw.
 
 @item
+Support for SA_RESETHAND is missing on some platforms:
+NonStop.
+
+@item
 Support for SA_RESTART is missing on some platforms:
-mingw.
+mingw, NonStop.
 
 @item
 In spite of having SA_SIGACTION, struct sigaction lacks the
