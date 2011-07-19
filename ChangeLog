@@ -1,3 +1,10 @@
+2011-07-19  Pádraig Brady  <P@draigBrady.com>
+
+	getopt-gnu: suppress core dumps from detection code
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Use the nocrash module
+	to suppress core dumps that may well occur on glibc systems.
+	* modules/getopt-gnu: Depend on nocrash.
+
 2011-07-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread_sigmask: ensure usleep is declared

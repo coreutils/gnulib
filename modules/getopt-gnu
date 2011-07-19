@@ -5,6 +5,7 @@ process command line arguments.
 Files:
 
 Depends-on:
+nocrash
 getopt-posix
 
 configure.ac:
