@@ -1,3 +1,11 @@
+2011-07-19  Pádraig Brady  <P@draigBrady.com>
+
+	timer-time: A new module to check for timer_settime()
+	* m4/timer_time.m4: Check for the posix function.
+	* modules/timer-time: Add the new module.
+	* MODULES.html.sh (Compat checks for POSIX:2008 functions):
+	Mention it.
+
 2011-07-19  Paul Eggert  <eggert@cs.ucla.edu>
 	    Bruno Haible  <bruno@clisp.org>
 
