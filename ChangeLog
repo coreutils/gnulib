@@ -1,3 +1,11 @@
+2011-07-19  Bruno Haible  <bruno@clisp.org>
+
+	strstr: Update cross-compilation guess.
+	* m4/strstr.m4 (gl_FUNC_STRSTR): On glibc > 2.12 with x86 or x86_64
+	CPUs, guess no, in view of glibc
+	BZ #12100 <http://sourceware.org/bugzilla/show_bug.cgi?id=12100>.
+	Suggested by Eric Blake. Reported by Reuben Thomas.
+
 2011-07-19  Pádraig Brady  <P@draigBrady.com>
 
 	getopt-gnu: suppress core dumps from detection code

@@ -1,4 +1,4 @@
-# strstr.m4 serial 14
+# strstr.m4 serial 15
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -93,13 +93,15 @@ static void quit (int sig) { exit (sig + 128); }
     return result;
     ]])],
         [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],
-        [dnl Only glibc > 2.12 and cygwin > 1.7.7 are known to have a
-         dnl bug-free strstr that works in linear time.
+        [dnl Only glibc > 2.12 on processors without SSE 4.2 instructions and
+         dnl cygwin > 1.7.7 are known to have a bug-free strstr that works in
+         dnl linear time.
          AC_EGREP_CPP([Lucky user],
            [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
+     && !(defined __i386__ || defined __x86_64__) \
      && !defined __UCLIBC__
   Lucky user
  #endif
