@@ -1,3 +1,11 @@
+2011-07-19  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
+	pthread_sigmask: assume POSIX threads if --avoid=threadlib
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): If gl_THREADLIB is
+	not defined, assume POSIX threads and look for pthread_sigmask in
+	$LIBS, without changing $CPPFLAGS.
+
 2011-07-19  Bruno Haible  <bruno@clisp.org>
 
 	strstr: Update cross-compilation guess.
