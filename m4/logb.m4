@@ -1,4 +1,4 @@
-# logb.m4 serial 2
+# logb.m4 serial 3
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,7 +20,11 @@ AC_DEFUN([gl_FUNC_LOGB],
          # define __NO_MATH_INLINES 1 /* for glibc */
          #endif
          #include <math.h>
-         extern double logb (double x);
+         extern
+         #ifdef __cplusplus
+         "C"
+         #endif
+         double logb (double x);
          double x;]],
        [[x = logb(x);]])],
     [LOGB_LIBM=])
@@ -33,7 +37,11 @@ AC_DEFUN([gl_FUNC_LOGB],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
-           extern double logb (double x);
+           extern
+           #ifdef __cplusplus
+           "C"
+           #endif
+           double logb (double x);
            double x;]],
          [[x = logb(x);]])],
       [LOGB_LIBM="-lm"])

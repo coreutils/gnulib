@@ -1,4 +1,4 @@
-# sys_select_h.m4 serial 19
+# sys_select_h.m4 serial 20
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,10 +32,18 @@ AC_DEFUN([gl_HEADER_SYS_SELECT],
              [AC_LANG_PROGRAM([[#include <sys/select.h>]], [[
                   #undef memset
                   #define memset nonexistent_memset
-                  extern void *memset (void *, int, unsigned long);
+                  extern
+                  #ifdef __cplusplus
+                  "C"
+                  #endif
+                  void *memset (void *, int, unsigned long);
                   #undef bzero
                   #define bzero nonexistent_bzero
-                  extern void bzero (void *, unsigned long);
+                  extern
+                  #ifdef __cplusplus
+                  "C"
+                  #endif
+                  void bzero (void *, unsigned long);
                   fd_set fds;
                   FD_ZERO (&fds);
                 ]])

@@ -1,4 +1,4 @@
-# frexpl.m4 serial 14
+# frexpl.m4 serial 15
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,7 +115,11 @@ AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP    (-16381)
 #endif
-extern long double frexpl (long double, int *);
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double frexpl (long double, int *);
 int main()
 {
   int result = 0;

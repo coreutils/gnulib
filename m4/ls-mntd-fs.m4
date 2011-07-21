@@ -1,4 +1,4 @@
-# serial 28
+# serial 29
 # How to list mounted file systems.
 
 # Copyright (C) 1998-2004, 2006, 2009-2011 Free Software Foundation, Inc.
@@ -247,7 +247,11 @@ if test -z "$ac_list_mounted_fs"; then
 #if HAVE_SYS_STATVFS_H
 # include <sys/statvfs.h>
 #endif
-extern int getmntinfo (struct statfs **, int);
+extern
+#ifdef __cplusplus
+"C"
+#endif
+int getmntinfo (struct statfs **, int);
             ]], [])],
           [fu_cv_sys_mounted_getmntinfo2=no],
           [fu_cv_sys_mounted_getmntinfo2=yes])

@@ -1,3 +1,34 @@
+2011-07-21  Bruno Haible  <bruno@clisp.org>
+
+	Declare system functions in a way that works with C++.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR) [C++]: In the test program,
+	declare fdopendir as extern "C".
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS) [C++]: In the test program,
+	declare frexpl as extern "C".
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO) [C++]: In the test program,
+	declare gai_strerror as extern "C".
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME) [C++]: In the test
+	programs, declare gai_strerror as extern "C".
+	* m4/getlogin_r.m4 (gl_FUNC_GETLOGIN_R) [C++]: In the test program,
+	declare getlogin_r as extern "C".
+	* m4/ioctl.m4 (gl_FUNC_IOCTL) [C++]: In the test program, declare ioctl
+	as extern "C".
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL_WORKS) [C++]: In the test program,
+	declare ldexpl as extern "C".
+	* m4/logb.m4 (gl_FUNC_LOGB) [C++]: In the test programs, declare logb
+	as extern "C".
+	* m4/ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS) [C++]: In the test
+	program, declare getmntinfo as extern "C".
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY) [C++]: In the test program, declare
+	stpncpy as extern "C".
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R_WORKS) [C++]: In the test
+	program, declare __xpg_strerror_r as extern "C".
+	* m4/strndup.m4 (gl_FUNC_STRNDUP) [C++]: In the test program, declare
+	strndup as extern "C".
+	* m4/sys_select_h.m4 (gl_HEADER_SYS_SELECT) [C++]: In the test program,
+	declare memset and bzero as extern "C".
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2011-07-12  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit inclusion of "verify.h" without use

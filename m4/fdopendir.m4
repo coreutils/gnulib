@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -26,7 +26,11 @@ AC_DEFUN([gl_FUNC_FDOPENDIR],
 #include <fcntl.h>
 #include <unistd.h>
 #if !HAVE_DECL_FDOPENDIR
-extern DIR *fdopendir (int);
+extern
+# ifdef __cplusplus
+"C"
+# endif
+DIR *fdopendir (int);
 #endif
 ]], [int result = 0;
      int fd = open ("conftest.c", O_RDONLY);

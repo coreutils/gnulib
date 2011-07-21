@@ -1,4 +1,4 @@
-# getdomainname.m4 serial 7
+# getdomainname.m4 serial 8
 dnl Copyright (C) 2002-2003, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,7 +28,11 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
        AC_LINK_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <stddef.h>
-              extern int getdomainname (char *, size_t);
+              extern
+              #ifdef __cplusplus
+              "C"
+              #endif
+              int getdomainname (char *, size_t);
             ]],
             [[getdomainname(NULL, 0);]])],
          [gl_cv_func_getdomainname_in_libnsl=yes])
@@ -63,7 +67,12 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
               #include <netdb.h>
               #endif
               #include <unistd.h>
-              extern int getdomainname (char *, int);]],
+              extern
+              #ifdef __cplusplus
+              "C"
+              #endif
+              int getdomainname (char *, int);
+            ]],
             [[]])],
          [gl_cv_decl_getdomainname_argtype2='int'],
          [gl_cv_decl_getdomainname_argtype2='size_t'])

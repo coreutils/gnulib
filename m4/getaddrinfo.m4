@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 26
+# getaddrinfo.m4 serial 27
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -92,7 +92,11 @@ AC_DEFUN([gl_GETADDRINFO],
 #include <ws2tcpip.h>
 #endif
 #include <stddef.h>
-extern const char *gai_strerror(int);]])],
+extern
+#ifdef __cplusplus
+"C"
+#endif
+const char *gai_strerror(int);]])],
         [gl_cv_func_gai_strerror_posix_signature=yes],
         [gl_cv_func_gai_strerror_posix_signature=no])])
     if test $gl_cv_func_gai_strerror_posix_signature = no; then

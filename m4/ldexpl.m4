@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 11
+# ldexpl.m4 serial 12
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -86,7 +86,11 @@ AC_DEFUN([gl_FUNC_LDEXPL_WORKS],
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
 #include <math.h>
-extern long double ldexpl (long double, int);
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double ldexpl (long double, int);
 int main()
 {
   int result = 0;
