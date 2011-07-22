@@ -2656,6 +2656,7 @@ func_all_modules ()
   func_module file-set
   func_module hash-triple
   func_module i-ring
+  func_module large-inode
   func_module same-inode
   func_end_table
 

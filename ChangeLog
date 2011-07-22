@@ -1,5 +1,9 @@
 2011-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	large-inode: New module
+	* MODULES.html.sh: Add it.
+	* modules/large-inode, m4/large-inode.m4: New files.
+
 	extensions: Enable extensions on MacOS X 10.5 and later.
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Define _DARWIN_C_SOURCE.
 

@@ -1,0 +1,22 @@
+Description:
+Use large inode numbers.
+
+Files:
+m4/large-inode.m4
+
+Depends-on:
+
+configure.ac-early:
+AC_REQUIRE([gl_SYS_LARGE_INODE])
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+
+License:
+LGPLv2+
+
+Maintainer:
+all
