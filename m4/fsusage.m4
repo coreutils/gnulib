@@ -40,7 +40,7 @@ ac_fsusage_space=no
 # systems.  That system is reported to work fine with STAT_STATFS4 which
 # is what it gets when this test fails.
 if test $ac_fsusage_space = no; then
-  # glibc/{Hurd,kFreeBSD}, MacOS X >= 10.4, FreeBSD >= 5.0, NetBSD >= 3.0,
+  # glibc/{Hurd,kFreeBSD}, FreeBSD >= 5.0, NetBSD >= 3.0,
   # OpenBSD >= 4.4, AIX, HP-UX, IRIX, Solaris, Cygwin, Interix, BeOS.
   AC_CACHE_CHECK([for statvfs function (SVR4)], [fu_cv_sys_stat_statvfs],
                  [AC_LINK_IFELSE([AC_LANG_PROGRAM([[#include <sys/types.h>
@@ -56,8 +56,16 @@ a system call.
 "Do not use Tru64's statvfs implementation"
 #endif
 
-#include <sys/statvfs.h>]],
-                                    [[struct statvfs fsd; statvfs (0, &fsd);]])],
+#include <limits.h>
+#include <sys/statvfs.h>
+
+/* Reject implementations, such as MacOS X 10.7, where f_blocks is a
+   32-bit quantity; that commonly limits file systems to 4 TiB, a
+   ridiculously small limit these days.  */
+struct statvfs fsd;
+int check_f_blocks_size[sizeof fsd.f_blocks * CHAR_BIT <= 32 ? -1 : 1];
+]],
+                                    [[statvfs (0, &fsd);]])],
                                  [fu_cv_sys_stat_statvfs=yes],
                                  [fu_cv_sys_stat_statvfs=no])])
   if test $fu_cv_sys_stat_statvfs = yes; then
@@ -94,8 +102,8 @@ if test $ac_fsusage_space = no; then
 fi
 
 if test $ac_fsusage_space = no; then
-  # glibc/Linux, MacOS X < 10.4, FreeBSD < 5.0, NetBSD < 3.0, OpenBSD < 4.4.
-  # (glibc/{Hurd,kFreeBSD}, MacOS X >= 10.4, FreeBSD >= 5.0, NetBSD >= 3.0,
+  # glibc/Linux, MacOS X, FreeBSD < 5.0, NetBSD < 3.0, OpenBSD < 4.4.
+  # (glibc/{Hurd,kFreeBSD}, FreeBSD >= 5.0, NetBSD >= 3.0,
   # OpenBSD >= 4.4, AIX, HP-UX, OSF/1, Cygwin already handled above.)
   # (On IRIX you need to include <sys/statfs.h>, not only <sys/mount.h> and
   # <sys/vfs.h>.)
