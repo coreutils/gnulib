@@ -1,13 +1,13 @@
 Description:
-Use large inode numbers.
+Use large files.
 
 Files:
-m4/large-inode.m4
+m4/largefile.m4
 
 Depends-on:
 
-configure.ac-early:
-AC_REQUIRE([gl_SYS_LARGE_INODE])
+configure.ac:
+AC_REQUIRE([AC_SYS_LARGEFILE])
 
 configure.ac:
 

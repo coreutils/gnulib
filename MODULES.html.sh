@@ -2608,6 +2608,7 @@ func_all_modules ()
   func_module filenamecat-lgpl
   func_module fts
   func_module isdir
+  func_module largefile
   func_module lchmod
   func_module lchown
   func_module mkancesdirs
@@ -2656,7 +2657,6 @@ func_all_modules ()
   func_module file-set
   func_module hash-triple
   func_module i-ring
-  func_module large-inode
   func_module same-inode
   func_end_table
 
