@@ -1,3 +1,11 @@
+2011-07-22  Kamil Dudka  <kdudka@redhat.com>
+
+	file-has-acl: use acl_extended_file_nofollow if available
+	* lib/acl-internal.h (HAVE_ACL_EXTENDED_FILE): New macro.
+	(acl_extended_file): New macro.
+	* lib/file-has-acl.c (file_has_acl): Use acl_extended_file_nofollow.
+	* m4/acl.m4 (gl_FUNC_ACL): Check for acl_extended_file_nofollow.
+
 2011-07-21  Bruno Haible  <bruno@clisp.org>
 
 	Declare system functions in a way that works with C++.

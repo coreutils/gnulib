@@ -366,12 +366,20 @@ file_has_acl (char const *name, struct stat const *sb)
       /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
       int ret;
 
-      if (HAVE_ACL_EXTENDED_FILE) /* Linux */
+      if (HAVE_ACL_EXTENDED_FILE || HAVE_ACL_EXTENDED_FILE_NOFOLLOW) /* Linux */
         {
+#  if HAVE_ACL_EXTENDED_FILE_NOFOLLOW
+          /* acl_extended_file_nofollow() uses lgetxattr() in order to prevent
+             unnecessary mounts, but it returns the same result as we already
+             know that NAME is not a symbolic link at this point (modulo the
+             TOCTTOU race condition).  */
+          ret = acl_extended_file_nofollow (name);
+#  else
           /* On Linux, acl_extended_file is an optimized function: It only
              makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
              ACL_TYPE_DEFAULT.  */
           ret = acl_extended_file (name);
+#  endif
         }
       else /* FreeBSD, MacOS X, IRIX, Tru64 */
         {
