@@ -1,5 +1,24 @@
 2011-07-22  Bruno Haible  <bruno@clisp.org>
 
+	select tests, pselect tests: Refactor.
+	* tests/test-select.h: New file, extracted from tests/test-select.c.
+	(select_fn): New type.
+	(test, do_select, do_select_nowait, do_select_wait, test_tty,
+	test_connect_first, test_accept_first, test_pair, test_socket_pair,
+	test_pipe): Add my_select argument.
+	(test_function): Renamed from main. Add my_select argument.
+	* tests/test-select.c: Move most code to tests/test-select.h. Include
+	test-select.h.
+	* modules/select-tests (Files): Add tests/test-select.h.
+	* tests/test-pselect.c: Include test-select.h instead of test-select.c.
+	(my_select, main): New functions.
+	* modules/pselect-tests (Files): Add tests/test-select.h,
+	tests/macros.h, tests/signature.h.
+	(Depends-on): Remove select-tests. Add dependencies of test-select.h.
+	(configure.ac): Check for <sys/wait.h>.
+
+2011-07-22  Bruno Haible  <bruno@clisp.org>
+
 	sys_select tests: Check the signature of FD_*.
 	* tests/test-select.c (FD_CLR, FD_ISSET, FD_SET, FD_ZERO): Move
 	signature tests from here...

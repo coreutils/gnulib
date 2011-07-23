@@ -2,6 +2,7 @@ Files:
 tests/macros.h
 tests/signature.h
 tests/test-select.c
+tests/test-select.h
 tests/test-select-fd.c
 tests/test-select-in.sh
 tests/test-select-out.sh
