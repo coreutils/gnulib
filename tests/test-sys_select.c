@@ -20,6 +20,23 @@
 
 #include <sys/select.h>
 
+#include "signature.h"
+
+/* The following may be macros without underlying functions, so only
+   check signature if they are not macros.  */
+#ifndef FD_CLR
+SIGNATURE_CHECK (FD_CLR, void, (int, fd_set *));
+#endif
+#ifndef FD_ISSET
+SIGNATURE_CHECK (FD_ISSET, void, (int, fd_set *));
+#endif
+#ifndef FD_SET
+SIGNATURE_CHECK (FD_SET, int, (int, fd_set *));
+#endif
+#ifndef FD_ZERO
+SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
+#endif
+
 /* Check that the 'struct timeval' type is defined.  */
 struct timeval t1;
 

@@ -1,3 +1,12 @@
+2011-07-22  Bruno Haible  <bruno@clisp.org>
+
+	sys_select tests: Check the signature of FD_*.
+	* tests/test-select.c (FD_CLR, FD_ISSET, FD_SET, FD_ZERO): Move
+	signature tests from here...
+	* tests/test-sys_select.c (FD_CLR, FD_ISSET, FD_SET, FD_ZERO): ... to
+	here.
+	* modules/sys_select-tests (Files): Add tests/signature.h.
+
 2011-07-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	largefile: new module, replacing large-inode
