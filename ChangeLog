@@ -1,5 +1,59 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention the effects of AC_SYS_LARGEFILE.
+	* doc/posix-functions/aio_cancel.texi: Mention the effects of AC_SYS_LARGEFILE
+	on this function.
+	* doc/posix-functions/aio_error.texi: Likewise.
+	* doc/posix-functions/aio_fsync.texi: Likewise.
+	* doc/posix-functions/aio_read.texi: Likewise.
+	* doc/posix-functions/aio_return.texi: Likewise.
+	* doc/posix-functions/aio_suspend.texi: Likewise.
+	* doc/posix-functions/aio_write.texi: Likewise.
+	* doc/posix-functions/fgetpos.texi: Likewise.
+	* doc/posix-functions/fopen.texi: Likewise.
+	* doc/posix-functions/freopen.texi: Likewise.
+	* doc/posix-functions/fsetpos.texi: Likewise.
+	* doc/posix-functions/fstatvfs.texi: Likewise.
+	* doc/posix-functions/ftruncate.texi: Likewise.
+	* doc/posix-functions/ftw.texi: Likewise.
+	* doc/posix-functions/getrlimit.texi: Likewise.
+	* doc/posix-functions/glob.texi: Likewise.
+	* doc/posix-functions/lio_listio.texi: Likewise.
+	* doc/posix-functions/lockf.texi: Likewise.
+	* doc/posix-functions/mkstemp.texi: Likewise.
+	* doc/posix-functions/mmap.texi: Likewise.
+	* doc/posix-functions/nftw.texi: Likewise.
+	* doc/posix-functions/openat.texi: Likewise.
+	* doc/posix-functions/opendir.texi: Likewise.
+	* doc/posix-functions/posix_fadvise.texi: Likewise.
+	* doc/posix-functions/posix_fallocate.texi: Likewise.
+	* doc/posix-functions/pread.texi: Likewise.
+	* doc/posix-functions/pwrite.texi: Likewise.
+	* doc/posix-functions/readdir.texi: Likewise.
+	* doc/posix-functions/readdir_r.texi: Likewise.
+	* doc/posix-functions/rewinddir.texi: Likewise.
+	* doc/posix-functions/scandir.texi: Likewise.
+	* doc/posix-functions/seekdir.texi: Likewise.
+	* doc/posix-functions/setrlimit.texi: Likewise.
+	* doc/posix-functions/statvfs.texi: Likewise.
+	* doc/posix-functions/telldir.texi: Likewise.
+	* doc/posix-functions/tmpfile.texi: Likewise.
+	* doc/posix-functions/truncate.texi: Likewise.
+	* doc/glibc-functions/fallocate.texi: Likewise.
+	* doc/glibc-functions/fstatfs.texi: Likewise.
+	* doc/glibc-functions/fts_children.texi: Likewise.
+	* doc/glibc-functions/fts_read.texi: Likewise.
+	* doc/glibc-functions/getdirentries.texi: Likewise.
+	* doc/glibc-functions/mkostemp.texi: Likewise.
+	* doc/glibc-functions/mkostemps.texi: Likewise.
+	* doc/glibc-functions/mkstemps.texi: Likewise.
+	* doc/glibc-functions/preadv.texi: Likewise.
+	* doc/glibc-functions/pwritev.texi: Likewise.
+	* doc/glibc-functions/sendfile.texi: Likewise.
+	* doc/glibc-functions/statfs.texi: Likewise.
+
+2011-07-24  Bruno Haible  <bruno@clisp.org>
+
 	doc: Fix typo.
 	* doc/posix-functions/fstat.texi: Talk about fstat, not stat.
 

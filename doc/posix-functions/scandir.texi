@@ -21,4 +21,9 @@ glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Interix 3.5.
 @item
 The fourth parameter of this function is declared as @code{int (*) (void *, void *)} on some platforms:
 AIX 5.1.
+@item
+On platforms where @code{off_t} is a 32-bit type, this function may not
+work correctly on huge directories larger than 2 GB.  Also, on platforms
+where @code{ino_t} is a 32-bit type, this function may report inode numbers
+incorrectly.  The fix is to use the @code{AC_SYS_LARGEFILE} macro.
 @end itemize
