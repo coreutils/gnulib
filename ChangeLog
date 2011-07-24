@@ -1,5 +1,9 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	fsusage: Restore previous behaviour on AIX, Cygwin, Interix.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Enforce a 64-bit struct statvfs
+	f_blocks field only on MacOS X.
+
 	fsusage: Support large volumes on glibc/Hurd, HP-UX, Solaris, MacOS X.
 	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Require AC_SYS_LARGEFILE.
 	* modules/fsusage (Depends-on): Add largefile.

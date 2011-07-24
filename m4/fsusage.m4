@@ -62,14 +62,19 @@ a system call.
 "Do not use Tru64's statvfs implementation"
 #endif
 
-#include <limits.h>
 #include <sys/statvfs.h>
 
-/* Reject implementations, such as MacOS X 10.7, where f_blocks is a
-   32-bit quantity; that commonly limits file systems to 4 TiB, a
-   ridiculously small limit these days.  */
 struct statvfs fsd;
+
+#if defined __APPLE__ && defined __MACH__
+#include <limits.h>
+/* On MacOS X >= 10.5, f_blocks in 'struct statvfs' is a 32-bit quantity;
+   that commonly limits file systems to 4 TiB.  Whereas f_blocks in
+   'struct statfs' is a 64-bit type, thanks to the large-file support
+   that was enabled above.  In this case, don't use statvfs(); use statfs()
+   instead.  */
 int check_f_blocks_size[sizeof fsd.f_blocks * CHAR_BIT <= 32 ? -1 : 1];
+#endif
 ]],
                                     [[statvfs (0, &fsd);]])],
                                  [fu_cv_sys_stat_statvfs=yes],
