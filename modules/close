@@ -8,7 +8,6 @@ m4/close.m4
 Depends-on:
 unistd
 fd-hook         [test $REPLACE_CLOSE = 1]
-fclose
 
 configure.ac:
 gl_FUNC_CLOSE

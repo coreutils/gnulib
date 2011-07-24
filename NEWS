@@ -12,6 +12,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-07-24  close           This module no longer pulls in the 'fclose' module.
+                            If your code creates a socket descriptor using
+                            socket() or accept(), then a FILE stream referring
+                            to it using fdopen(), then in order to close this
+                            stream, you need the 'fclose' module.
+
 2011-07-12  arg-nonnull     Renamed to snippet/arg-nonnull.
             c++defs         Renamed to snippet/c++defs.
             link-warning    Renamed to snippet/link-warning.
