@@ -16,3 +16,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 MacOS X 10.3, OpenBSD 3.8, mingw.
 @end itemize
+
+Gnulib provides a module @code{fsusage} that provides similar information
+as @code{statvfs}.

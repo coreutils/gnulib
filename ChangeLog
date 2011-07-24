@@ -1,5 +1,10 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention fsusage.
+	* doc/posix-functions/statvfs.texi: Mention the fsusage module.
+
+2011-07-24  Bruno Haible  <bruno@clisp.org>
+
 	doc: Mention new glibc headers and functions.
 	* doc/glibc-headers/gshadow.texi: New file.
 	* doc/glibc-functions/endsgent.texi: New file.
