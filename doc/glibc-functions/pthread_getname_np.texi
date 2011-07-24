@@ -1,0 +1,16 @@
+@node pthread_getname_np
+@subsection @code{pthread_getname_np}
+@findex pthread_getname_np
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many non-glibc platforms:
+glibc 2.11, MacOS X 10.5, FreeBSD 6.4, OpenBSD 3.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11 2010-11, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize

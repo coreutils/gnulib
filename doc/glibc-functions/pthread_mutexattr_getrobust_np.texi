@@ -1,0 +1,19 @@
+@node pthread_mutexattr_getrobust_np
+@subsection @code{pthread_mutexattr_getrobust_np}
+@findex pthread_mutexattr_getrobust_np
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many non-glibc platforms:
+glibc 2.3.6, MacOS X 10.5, FreeBSD 6.4, NetBSD 5.0, OpenBSD 3.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 7, Cygwin, mingw, Interix 3.5, BeOS.
+@end itemize
+
+This function has now been standardized by POSIX under the name
+@code{pthread_mutexattr_getrobust}.

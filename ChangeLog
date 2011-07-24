@@ -1,5 +1,49 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention new glibc headers and functions.
+	* doc/glibc-headers/gshadow.texi: New file.
+	* doc/glibc-functions/endsgent.texi: New file.
+	* doc/glibc-functions/fgetsgent.texi: New file.
+	* doc/glibc-functions/fgetsgent_r.texi: New file.
+	* doc/glibc-functions/getsgent.texi: New file.
+	* doc/glibc-functions/getsgent_r.texi: New file.
+	* doc/glibc-functions/getsgnam.texi: New file.
+	* doc/glibc-functions/getsgnam_r.texi: New file.
+	* doc/glibc-functions/putsgent.texi: New file.
+	* doc/glibc-functions/setsgent.texi: New file.
+	* doc/glibc-functions/sgetsgent.texi: New file.
+	* doc/glibc-functions/sgetsgent_r.texi: New file.
+	* doc/glibc-functions/malloc_info.texi: New file.
+	* doc/glibc-functions/preadv.texi: New file.
+	* doc/glibc-functions/pwritev.texi: New file.
+	* doc/glibc-functions/register_printf_modifier.texi: New file.
+	* doc/glibc-functions/register_printf_specifier.texi: New file.
+	* doc/glibc-functions/register_printf_type.texi: New file.
+	* doc/glibc-functions/pthread_attr_getaffinity_np.texi: New file.
+	* doc/glibc-functions/pthread_attr_setaffinity_np.texi: New file.
+	* doc/glibc-functions/pthread_getaffinity_np.texi: New file.
+	* doc/glibc-functions/pthread_getname_np.texi: New file.
+	* doc/glibc-functions/pthread_mutex_consistent_np.texi: New file.
+	* doc/glibc-functions/pthread_mutexattr_getrobust_np.texi: New file.
+	* doc/glibc-functions/pthread_mutexattr_setrobust_np.texi: New file.
+	* doc/glibc-functions/pthread_setaffinity_np.texi: New file.
+	* doc/glibc-functions/pthread_setname_np.texi: New file.
+	* doc/glibc-functions/pthread_sigqueue.texi: New file.
+	* doc/glibc-functions/pthread_timedjoin_np.texi: New file.
+	* doc/glibc-functions/pthread_tryjoin_np.texi: New file.
+	* doc/glibc-functions/qsort_r.texi: New file.
+	* doc/glibc-functions/quick_exit.texi: New file.
+	* doc/glibc-functions/syncfs.texi: New file.
+	* doc/gnulib.texi: Include them.
+	(Glibc gshadow.h, Glibc sys/uio.h): New sections.
+	* doc/posix-functions/psiginfo.texi: Fix info about glibc version.
+	* doc/posix-functions/pthread_mutex_consistent.texi: Likewise.
+	* doc/posix-functions/pthread_mutexattr_getrobust.texi: Likewise.
+	* doc/posix-functions/pthread_mutexattr_setrobust.texi: Likewise.
+	* doc/glibc-functions/execvpe.texi: Likewise.
+
+2011-07-24  Bruno Haible  <bruno@clisp.org>
+
 	close: No longer depend on module 'fclose'.
 	* modules/close (Depends-on): Remove fclose.
 	* NEWS: Mention the change.

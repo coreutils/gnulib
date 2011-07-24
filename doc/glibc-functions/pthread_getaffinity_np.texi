@@ -1,0 +1,22 @@
+@node pthread_getaffinity_np
+@subsection @code{pthread_getaffinity_np}
+@findex pthread_getaffinity_np
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This function is missing on many non-glibc platforms:
+glibc 2.3.2, MacOS X 10.5, FreeBSD 6.4, NetBSD 3.0, OpenBSD 3.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin, mingw, Interix 3.5, BeOS.
+@item
+This function has a different signature on some platforms:
+glibc 2.3.3.
+@item
+The third parameter has a different type on some platforms:
+FreeBSD 7.2, NetBSD 5.0.
+@end itemize
