@@ -13,7 +13,7 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
+On platforms where @code{off_t} is a 32-bit type, @code{fstat} may not correctly
 report the size of files or block devices larger than 2 GB.  The fix is to
 use the @code{AC_SYS_LARGEFILE} macro.
 @item

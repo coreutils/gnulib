@@ -1,5 +1,10 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	doc: Fix typo.
+	* doc/posix-functions/fstat.texi: Talk about fstat, not stat.
+
+2011-07-24  Bruno Haible  <bruno@clisp.org>
+
 	doc: Mention fsusage.
 	* doc/posix-functions/statvfs.texi: Mention the fsusage module.
 
