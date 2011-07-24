@@ -3,6 +3,7 @@
 	close: No longer depend on module 'fclose'.
 	* modules/close (Depends-on): Remove fclose.
 	* NEWS: Mention the change.
+	Suggested by Sam Steingold <sds@gnu.org>.
 
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
