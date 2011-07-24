@@ -21,8 +21,6 @@
 
 #include <errno.h>
 #include <limits.h>
-/* Get off_t.  */
-#include <unistd.h>
 
 long
 ftell (FILE *fp)

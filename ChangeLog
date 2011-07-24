@@ -23,6 +23,11 @@
 
 2011-07-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	ftell: don't include <unistd.h>
+	* lib/ftell.c: Don't include <unistd.h>.  <stdio.h> is now
+	guaranteed to define off_t, and the ftell module depends on the
+	stdio module.
+
 	ftell: do not assume wraparound signed arithmetic
 	* lib/ftell.c: Include <limits.h>.
 	(ftell): Don't assume wraparound signed arithmetic.
