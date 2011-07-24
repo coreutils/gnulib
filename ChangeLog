@@ -1,3 +1,8 @@
+2011-07-24  Jim Meyering  <meyering@redhat.com>
+
+	test-select.h: avoid warning when using gcc's -Wmissing-declarations
+	* tests/test-select.h (test_function): Declare as "static".
+
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
 	doc: Mention the effects of AC_SYS_LARGEFILE.

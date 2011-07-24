@@ -359,7 +359,7 @@ test_pipe (select_fn my_select)
 
 /* Do them all.  */
 
-int
+static int
 test_function (select_fn my_select)
 {
   int result;
