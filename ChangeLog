@@ -42,6 +42,17 @@
 	* doc/posix-functions/pthread_mutexattr_setrobust.texi: Likewise.
 	* doc/glibc-functions/execvpe.texi: Likewise.
 
+2011-07-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftell: don't include <unistd.h>
+	* lib/ftell.c: Don't include <unistd.h>.  <stdio.h> is now
+	guaranteed to define off_t, and the ftell module depends on the
+	stdio module.
+
+	ftell: do not assume wraparound signed arithmetic
+	* lib/ftell.c: Include <limits.h>.
+	(ftell): Don't assume wraparound signed arithmetic.
+
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
 	close: No longer depend on module 'fclose'.
@@ -66,15 +77,6 @@
 	* modules/fsusage (Depends-on): Add largefile.
 
 2011-07-24  Paul Eggert  <eggert@cs.ucla.edu>
-
-	ftell: don't include <unistd.h>
-	* lib/ftell.c: Don't include <unistd.h>.  <stdio.h> is now
-	guaranteed to define off_t, and the ftell module depends on the
-	stdio module.
-
-	ftell: do not assume wraparound signed arithmetic
-	* lib/ftell.c: Include <limits.h>.
-	(ftell): Don't assume wraparound signed arithmetic.
 
 	* README: Modernize discussion of signed integers.
 	Assuming overflow wraparound is no longer safe.
