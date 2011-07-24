@@ -7,6 +7,7 @@ lib/fsusage.c
 m4/fsusage.m4
 
 Depends-on:
+largefile
 stdbool
 stdint
 full-read       [test $gl_cv_fs_space = yes]

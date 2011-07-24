@@ -1,4 +1,4 @@
-# serial 28
+# serial 29
 # Obtaining file system usage information.
 
 # Copyright (C) 1997-1998, 2000-2001, 2003-2011 Free Software Foundation, Inc.
@@ -29,6 +29,12 @@ AC_DEFUN([gl_FSUSAGE],
 
 AC_DEFUN([gl_FILE_SYSTEM_USAGE],
 [
+dnl Enable large-file support. This has the effect of changing the size
+dnl of field f_blocks in 'struct statvfs' from 32 bit to 64 bit on
+dnl glibc/Hurd, HP-UX 11, Solaris (32-bit mode). It also changes the size
+dnl of field f_blocks in 'struct statfs' from 32 bit to 64 bit on
+dnl MacOS X >= 10.5 (32-bit mode).
+AC_REQUIRE([AC_SYS_LARGEFILE])
 
 AC_MSG_NOTICE([checking how to get file system space usage])
 ac_fsusage_space=no

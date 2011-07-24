@@ -1,3 +1,9 @@
+2011-07-24  Bruno Haible  <bruno@clisp.org>
+
+	fsusage: Support large volumes on glibc/Hurd, HP-UX, Solaris, MacOS X.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Require AC_SYS_LARGEFILE.
+	* modules/fsusage (Depends-on): Add largefile.
+
 2011-07-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* README: Modernize discussion of signed integers.
