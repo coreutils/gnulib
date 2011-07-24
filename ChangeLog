@@ -23,6 +23,10 @@
 
 2011-07-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	ftell: do not assume wraparound signed arithmetic
+	* lib/ftell.c: Include <limits.h>.
+	(ftell): Don't assume wraparound signed arithmetic.
+
 	* README: Modernize discussion of signed integers.
 	Assuming overflow wraparound is no longer safe.
 	Mention ones' complement and signed magnitude.

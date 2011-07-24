@@ -20,6 +20,7 @@
 #include <stdio.h>
 
 #include <errno.h>
+#include <limits.h>
 /* Get off_t.  */
 #include <unistd.h>
 
@@ -28,7 +29,7 @@ ftell (FILE *fp)
 {
   /* Use the replacement ftello function with all its workarounds.  */
   off_t offset = ftello (fp);
-  if (offset == (long)offset)
+  if (LONG_MIN <= offset && offset <= LONG_MAX)
     return (long)offset;
   else
     {
