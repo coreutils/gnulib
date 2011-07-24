@@ -81,8 +81,32 @@ int check_f_blocks_size[sizeof fsd.f_blocks * CHAR_BIT <= 32 ? -1 : 1];
                                  [fu_cv_sys_stat_statvfs=no])])
   if test $fu_cv_sys_stat_statvfs = yes; then
     ac_fsusage_space=yes
-    AC_DEFINE([STAT_STATVFS], [1],
-              [  Define if there is a function named statvfs.  (SVR4)])
+    # AIX >= 5.2 has statvfs64 that has a wider f_blocks field than statvfs.
+    # glibc, HP-UX, IRIX, Solaris have statvfs64 as well, but on these systems
+    # statvfs with large-file support is already equivalent to statvfs64.
+    AC_CACHE_CHECK([whether to use statvfs64],
+      [fu_cv_sys_stat_statvfs64],
+      [AC_LINK_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <sys/types.h>
+              #include <sys/statvfs.h>
+              struct statvfs64 fsd;
+              int check_f_blocks_larger_in_statvfs64
+                [sizeof (((struct statvfs64 *) 0)->f_blocks)
+                 > sizeof (((struct statvfs *) 0)->f_blocks)
+                 ? 1 : -1];
+            ]],
+            [[statvfs64 (0, &fsd);]])],
+         [fu_cv_sys_stat_statvfs64=yes],
+         [fu_cv_sys_stat_statvfs64=no])
+      ])
+    if test $fu_cv_sys_stat_statvfs64 = yes; then
+      AC_DEFINE([STAT_STATVFS64], [1],
+                [  Define if statvfs64 should be preferred over statvfs.])
+    else
+      AC_DEFINE([STAT_STATVFS], [1],
+                [  Define if there is a function named statvfs.  (SVR4)])
+    fi
   fi
 fi
 

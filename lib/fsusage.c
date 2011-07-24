@@ -23,7 +23,7 @@
 #include <limits.h>
 #include <sys/types.h>
 
-#if STAT_STATVFS                /* POSIX 1003.1-2001 (and later) with XSI */
+#if STAT_STATVFS || STAT_STATVFS64 /* POSIX 1003.1-2001 (and later) with XSI */
 # include <sys/statvfs.h>
 #else
 /* Don't include backward-compatibility files unless they're needed.
@@ -99,6 +99,18 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
   struct statvfs fsd;
 
   if (statvfs (file, &fsd) < 0)
+    return -1;
+
+  /* f_frsize isn't guaranteed to be supported.  */
+  fsp->fsu_blocksize = (fsd.f_frsize
+                        ? PROPAGATE_ALL_ONES (fsd.f_frsize)
+                        : PROPAGATE_ALL_ONES (fsd.f_bsize));
+
+#elif defined STAT_STATVFS64            /* AIX */
+
+  struct statvfs64 fsd;
+
+  if (statvfs64 (file, &fsd) < 0)
     return -1;
 
   /* f_frsize isn't guaranteed to be supported.  */
@@ -223,7 +235,7 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 
 #endif
 
-#if (defined STAT_STATVFS \
+#if (defined STAT_STATVFS || defined STAT_STATVFS64 \
      || (!defined STAT_STATFS2_FS_DATA && !defined STAT_READ_FILSYS))
 
   fsp->fsu_blocks = PROPAGATE_ALL_ONES (fsd.f_blocks);

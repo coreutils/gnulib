@@ -1,5 +1,11 @@
 2011-07-24  Bruno Haible  <bruno@clisp.org>
 
+	fsusage: Enable large volume support on AIX >= 5.2.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): If 'struct statvfs64' has a
+	larger f_blocks field than 'struct statvfs', define STAT_STATVFS64
+	instead of STAT_STATVFS.
+	* lib/fsusage.c (get_fs_usage) [STAT_STATVFS64]: Use statvfs64.
+
 	fsusage: Restore previous behaviour on AIX, Cygwin, Interix.
 	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Enforce a 64-bit struct statvfs
 	f_blocks field only on MacOS X.
