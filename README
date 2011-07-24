@@ -242,30 +242,18 @@ than 'long'.  POSIX 1003.1-2001 and the GNU coding standards both
 require 'int' to be at least 32 bits wide, so Gnulib code assumes this
 as well.  Gnulib code makes the following additional assumptions:
 
- * With one exception noted below, signed integer arithmetic is two's
-   complement, without runtime overflow checking.  This is the
-   traditional behavior, and is supported by C99 implementations that
-   conform to ISO/IEC 10967-1 (LIA-1) and that define signed integer
-   types as being modulo.
+ * Signed integer arithmetic is two's complement.
 
-   The exception is signed loop indexes.  Here, the behavior is
-   undefined if any signed expression derived from the loop index
-   overflows.  For example, the following code contains two such
-   overflows (the "i++" and the "i + 1") and therefore has undefined
-   behavior:
+   Previously, gnulib code sometimes assumed that signed integer
+   arithmetic wraps around, but modern compiler optimizations
+   sometimes do not guarantee this, and gnulib code with this
+   assumption is now considered to be questionable.  For more, please
+   see the file doc/intprops.texi.
 
-     int i;
-     for (i = INT_MAX - 10; i <= INT_MAX; i++)
-       if (i + 1 < 0)
-	 {
-	   report_overflow ();
-	   break;
-	 }
-
-   This exception is a concession to modern optimizing compilers,
-   which can turn the above loop into code that executes the loop body
-   11 times, even though wraparound arithmetic would cause the loop to
-   iterate forever.
+   Some gnulib modules contain explicit support for the other signed
+   integer representations allowed by C99 (ones' complement and signed
+   magnitude), but these modules are the exception rather than the rule.
+   All practical gnulib targets use two's complement.
 
  * There are no "holes" in integer values: all the bits of an integer
    contribute to its value in the usual way.
