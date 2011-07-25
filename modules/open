@@ -12,6 +12,10 @@ stat            [test $REPLACE_OPEN = 1]
 
 configure.ac:
 gl_FUNC_OPEN
+if test $REPLACE_OPEN = 1; then
+  AC_LIBOBJ([open])
+  gl_PREREQ_OPEN
+fi
 gl_FCNTL_MODULE_INDICATOR([open])
 
 Makefile.am:

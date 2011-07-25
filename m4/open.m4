@@ -9,7 +9,7 @@ AC_DEFUN([gl_FUNC_OPEN],
   AC_REQUIRE([AC_CANONICAL_HOST])
   case "$host_os" in
     mingw* | pw*)
-      gl_REPLACE_OPEN
+      REPLACE_OPEN=1
       ;;
     *)
       dnl open("foo/") should not create a file when the file name has a
@@ -57,7 +57,7 @@ changequote([,])dnl
         *no)
           AC_DEFINE([OPEN_TRAILING_SLASH_BUG], [1],
             [Define to 1 if open() fails to recognize a trailing slash.])
-          gl_REPLACE_OPEN
+          REPLACE_OPEN=1
           ;;
       esac
       ;;
@@ -68,7 +68,7 @@ changequote([,])dnl
     if test $REPLACE_OPEN = 0; then
       gl_TEST_FCHDIR
       if test $HAVE_FCHDIR = 0; then
-        gl_REPLACE_OPEN
+        REPLACE_OPEN=1
       fi
     fi
   ])
@@ -77,18 +77,10 @@ changequote([,])dnl
     if test $REPLACE_OPEN = 0; then
       gl_NONBLOCKING_IO
       if test $gl_cv_have_open_O_NONBLOCK != yes; then
-        gl_REPLACE_OPEN
+        REPLACE_OPEN=1
       fi
     fi
   ])
-])
-
-AC_DEFUN([gl_REPLACE_OPEN],
-[
-  AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
-  REPLACE_OPEN=1
-  AC_LIBOBJ([open])
-  gl_PREREQ_OPEN
 ])
 
 # Prerequisites of lib/open.c.
