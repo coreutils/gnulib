@@ -1,5 +1,9 @@
 2011-07-25  Bruno Haible  <bruno@clisp.org>
 
+	fclose: Remove call-in from close.m4.
+	* m4/fclose.m4 (gl_FUNC_FCLOSE): Invoke gl_FUNC_CLOSE.
+	* m4/close.m4 (gl_FUNC_CLOSE): Don't invoke gl_REPLACE_FCLOSE.
+
 	close: Move AC_LIBOBJ invocation to module description.
 	* m4/close.m4 (gl_REPLACE_CLOSE): Remove macro.
 	(gl_FUNC_CLOSE): Instead of gl_REPLACE_CLOSE, just set REPLACE_CLOSE to

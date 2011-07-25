@@ -26,7 +26,4 @@ AC_DEFUN([gl_FUNC_CLOSE],
       fi
     fi
   ])
-  if test $REPLACE_CLOSE = 1; then
-    m4_ifdef([gl_REPLACE_FCLOSE], [gl_REPLACE_FCLOSE], [:])
-  fi
 ])
