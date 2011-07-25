@@ -1,4 +1,4 @@
-#serial 13
+#serial 14
 dnl Copyright (C) 2002, 2005, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,6 +63,14 @@ AC_DEFUN([gl_FUNC_DUP2],
       gl_REPLACE_DUP2
     fi
   fi
+  dnl Replace dup2() for supporting the gnulib-defined fchdir() function,
+  dnl to keep fchdir's bookkeeping up-to-date.
+  m4_ifdef([gl_FUNC_FCHDIR], [
+    gl_TEST_FCHDIR
+    if test $HAVE_FCHDIR = 0; then
+      gl_REPLACE_DUP2
+    fi
+  ])
 ])
 
 AC_DEFUN([gl_REPLACE_DUP2],
