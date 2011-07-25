@@ -1,5 +1,7 @@
 2011-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* lib/ftell.c (ftell): Comment out cast.
+
 	close: use gl_REPLACE_FCLOSE only if defined
 	* m4/close.m4 (gl_REPLACE_CLOSE): Use gl_REPLACE_FCLOSE only if it
 	is defined.  The close module doesn't depend on the fclose module
