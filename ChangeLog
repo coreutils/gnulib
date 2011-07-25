@@ -1,3 +1,12 @@
+2011-07-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	close: use gl_REPLACE_FCLOSE only if defined
+	* m4/close.m4 (gl_REPLACE_CLOSE): Use gl_REPLACE_FCLOSE only if it
+	is defined.  The close module doesn't depend on the fclose module
+	any more, so gl_REPLACE_CLOSE's existence cannot be assumed.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00392.html>.
+	I reproduced the problem with "./gnulib-tool --test close sys_socket".
+
 2011-07-24  Jim Meyering  <meyering@redhat.com>
 
 	test-select.h: avoid warning when using gcc's -Wmissing-declarations

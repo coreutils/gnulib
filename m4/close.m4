@@ -1,4 +1,4 @@
-# close.m4 serial 5
+# close.m4 serial 6
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,5 +22,5 @@ AC_DEFUN([gl_REPLACE_CLOSE],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   REPLACE_CLOSE=1
   AC_LIBOBJ([close])
-  gl_REPLACE_FCLOSE
+  m4_ifdef([gl_REPLACE_FCLOSE], [gl_REPLACE_FCLOSE])
 ])
