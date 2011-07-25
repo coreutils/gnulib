@@ -12,7 +12,6 @@ AC_DEFUN([gl_FUNC_DUP2],
     AC_CHECK_FUNCS_ONCE([dup2])
     if test $ac_cv_func_dup2 = no; then
       HAVE_DUP2=0
-      AC_LIBOBJ([dup2])
     fi
   ], [
     AC_DEFINE([HAVE_DUP2], [1], [Define to 1 if you have the 'dup2' function.])
@@ -60,7 +59,7 @@ AC_DEFUN([gl_FUNC_DUP2],
          esac])
       ])
     if test "$gl_cv_func_dup2_works" = no; then
-      gl_REPLACE_DUP2
+      REPLACE_DUP2=1
     fi
   fi
   dnl Replace dup2() for supporting the gnulib-defined fchdir() function,
@@ -68,17 +67,7 @@ AC_DEFUN([gl_FUNC_DUP2],
   m4_ifdef([gl_FUNC_FCHDIR], [
     gl_TEST_FCHDIR
     if test $HAVE_FCHDIR = 0; then
-      gl_REPLACE_DUP2
+      REPLACE_DUP2=1
     fi
   ])
-])
-
-AC_DEFUN([gl_REPLACE_DUP2],
-[
-  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  AC_CHECK_FUNCS_ONCE([dup2])
-  if test $ac_cv_func_dup2 = yes; then
-    REPLACE_DUP2=1
-  fi
-  AC_LIBOBJ([dup2])
 ])

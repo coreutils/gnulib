@@ -11,6 +11,9 @@ dup2-obsolete
 
 configure.ac:
 gl_FUNC_DUP2
+if test $HAVE_DUP2 = 0 || test $REPLACE_DUP2 = 1; then
+  AC_LIBOBJ([dup2])
+fi
 gl_UNISTD_MODULE_INDICATOR([dup2])
 
 Makefile.am:
