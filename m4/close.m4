@@ -6,13 +6,14 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CLOSE],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   m4_ifdef([gl_PREREQ_SYS_H_WINSOCK2], [
     gl_PREREQ_SYS_H_WINSOCK2
     if test $UNISTD_H_HAVE_WINSOCK2_H = 1; then
       dnl Even if the 'socket' module is not used here, another part of the
       dnl application may use it and pass file descriptors that refer to
       dnl sockets to the close() function. So enable the support for sockets.
-      gl_REPLACE_CLOSE
+      REPLACE_CLOSE=1
     fi
   ])
   dnl Replace close() for supporting the gnulib-defined fchdir() function,
@@ -21,16 +22,11 @@ AC_DEFUN([gl_FUNC_CLOSE],
     if test $REPLACE_CLOSE = 0; then
       gl_TEST_FCHDIR
       if test $HAVE_FCHDIR = 0; then
-        gl_REPLACE_CLOSE
+        REPLACE_CLOSE=1
       fi
     fi
   ])
-])
-
-AC_DEFUN([gl_REPLACE_CLOSE],
-[
-  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  REPLACE_CLOSE=1
-  AC_LIBOBJ([close])
-  m4_ifdef([gl_REPLACE_FCLOSE], [gl_REPLACE_FCLOSE])
+  if test $REPLACE_CLOSE = 1; then
+    m4_ifdef([gl_REPLACE_FCLOSE], [gl_REPLACE_FCLOSE], [:])
+  fi
 ])
