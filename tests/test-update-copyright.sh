@@ -102,7 +102,6 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Foundation, Inc.
 EOF
 
-rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2009 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
@@ -145,7 +144,6 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Foundation, Inc.
 EOF
 
-rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
@@ -184,7 +182,6 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 # Copyright (C) 1990-2005, 2007-2010 Free Software Foundation, Inc.
 EOF
 
-rm -f $TMP.*.bak
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_FORCE=1 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
