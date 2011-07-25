@@ -13,6 +13,9 @@ getdtablesize   [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
 
 configure.ac:
 gl_FUNC_FCNTL
+if test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1; then
+  AC_LIBOBJ([fcntl])
+fi
 gl_FCNTL_MODULE_INDICATOR([fcntl])
 
 Makefile.am:

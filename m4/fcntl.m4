@@ -92,5 +92,4 @@ AC_DEFUN([gl_REPLACE_FCNTL],
   else
     REPLACE_FCNTL=1
   fi
-  AC_LIBOBJ([fcntl])
 ])
