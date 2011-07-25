@@ -27,7 +27,6 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     REPLACE_OPENDIR=1
     REPLACE_CLOSEDIR=1
     REPLACE_DUP=1
-    gl_REPLACE_CLOSE
     gl_REPLACE_DUP2
     dnl dup3 is already unconditionally replaced
     gl_REPLACE_FCNTL

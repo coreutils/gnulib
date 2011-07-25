@@ -1,4 +1,4 @@
-# close.m4 serial 6
+# close.m4 serial 7
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,16 @@ AC_DEFUN([gl_FUNC_CLOSE],
       dnl application may use it and pass file descriptors that refer to
       dnl sockets to the close() function. So enable the support for sockets.
       gl_REPLACE_CLOSE
+    fi
+  ])
+  dnl Replace close() for supporting the gnulib-defined fchdir() function,
+  dnl to keep fchdir's bookkeeping up-to-date.
+  m4_ifdef([gl_FUNC_FCHDIR], [
+    if test $REPLACE_CLOSE = 0; then
+      gl_TEST_FCHDIR
+      if test $HAVE_FCHDIR = 0; then
+        gl_REPLACE_CLOSE
+      fi
     fi
   ])
 ])
