@@ -1,4 +1,4 @@
-# fcntl.m4 serial 4
+# fcntl.m4 serial 5
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,6 +73,14 @@ choke me
       dnl No witness macro needed for this bug.
     fi
   fi
+  dnl Replace fcntl() for supporting the gnulib-defined fchdir() function,
+  dnl to keep fchdir's bookkeeping up-to-date.
+  m4_ifdef([gl_FUNC_FCHDIR], [
+    gl_TEST_FCHDIR
+    if test $HAVE_FCHDIR = 0; then
+      gl_REPLACE_FCNTL
+    fi
+  ])
 ])
 
 AC_DEFUN([gl_REPLACE_FCNTL],
