@@ -7,6 +7,7 @@ m4/fopen.m4
 
 Depends-on:
 stdio
+largefile
 unistd          [test $REPLACE_FOPEN = 1]
 
 configure.ac:

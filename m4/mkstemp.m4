@@ -1,4 +1,4 @@
-#serial 21
+#serial 22
 
 # Copyright (C) 2001, 2003-2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,7 +16,6 @@
 AC_DEFUN([gl_FUNC_MKSTEMP],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
-  AC_REQUIRE([AC_SYS_LARGEFILE])
 
   AC_CHECK_FUNCS_ONCE([mkstemp])
   if test $ac_cv_func_mkstemp = yes; then

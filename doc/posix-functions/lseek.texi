@@ -9,6 +9,9 @@ Gnulib module: lseek
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{lseek} does not work
+correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 This function mistakenly succeeds on pipes on some platforms: mingw, BeOS.
 @end itemize
 
@@ -18,10 +21,6 @@ Portability problems not fixed by Gnulib:
 POSIX does not specify which file descriptors support seeking and which don't.
 In practice, regular files and block devices support seeking, and ttys, pipes,
 and most character devices don't support it.
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{lseek} does not work
-correctly with files larger than 2 GB.  The fix is to use the
-@code{AC_SYS_LARGEFILE} macro.
 @item
 When the third argument is invalid, POSIX says that @code{lseek} should set
 @code{errno} to @code{EINVAL} and return -1, but in this situation a

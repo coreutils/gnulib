@@ -9,6 +9,9 @@ Gnulib module: open, fchdir
 Portability problems fixed by the Gnulib module open:
 @itemize
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
+correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
@@ -35,8 +38,4 @@ Portability problems not fixed by Gnulib:
 On Windows, this function returns a file handle in @code{O_TEXT} mode by
 default; this means that it translates '\n' to CR/LF by default.  Use the
 @code{O_BINARY} flag if you need reliable binary I/O.
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
-correctly with files larger than 2 GB.  The fix is to use the
-@code{AC_SYS_LARGEFILE} macro.
 @end itemize

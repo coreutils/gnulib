@@ -14,6 +14,10 @@ glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{fstatat} may
+not correctly report the size of files or block devices larger than 2
+GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 On some platforms, @code{fstatat(fd,"file/",buf,flag)} succeeds instead of
 failing with @code{ENOTDIR}.
 Solaris 9.
@@ -25,10 +29,6 @@ Solaris 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{fstatat} may
-not correctly report the size of files or block devices larger than 2
-GB.  The fix is to use the @code{AC_SYS_LARGEFILE} macro.
 @item
 On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
 @item

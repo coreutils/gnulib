@@ -10,6 +10,7 @@ m4/ftello.m4
 Depends-on:
 stdio
 extensions
+largefile
 lseek           [test $HAVE_FTELLO = 0 || test $REPLACE_FTELLO = 1]
 # Just to guarantee consistency between ftell() and ftello().
 ftell

@@ -9,6 +9,7 @@ m4/mkostemps.m4
 Depends-on:
 stdlib
 extensions
+largefile
 tempname        [test $HAVE_MKOSTEMPS = 0]
 
 configure.ac:

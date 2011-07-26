@@ -7,6 +7,7 @@ m4/tmpfile.m4
 
 Depends-on:
 stdio
+largefile
 pathmax         [test $REPLACE_TMPFILE = 1]
 tempname        [test $REPLACE_TMPFILE = 1]
 tmpdir          [test $REPLACE_TMPFILE = 1]

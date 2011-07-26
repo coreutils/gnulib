@@ -24,6 +24,7 @@ fcntl-h
 fdopendir
 gettext-h
 intprops
+largefile
 lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 lstat
 mkdir           [test $HAVE_MKDIRAT = 0]

@@ -8,6 +8,7 @@ m4/pwrite.m4
 Depends-on:
 unistd
 extensions
+largefile
 lseek           [test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1]
 write           [test $HAVE_PWRITE = 0 || test $REPLACE_PWRITE = 1]
 

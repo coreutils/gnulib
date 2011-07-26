@@ -7,6 +7,7 @@ m4/freopen.m4
 
 Depends-on:
 stdio
+largefile
 
 configure.ac:
 gl_FUNC_FREOPEN

@@ -9,6 +9,9 @@ Gnulib module: freopen
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{freopen} may not work
+correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.
 @end itemize
@@ -23,10 +26,6 @@ This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
 HP-UX 11.00, Solaris 9, Irix 5.3.
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{freopen} may not work
-correctly with files larger than 2 GB.  The fix is to use the
-@code{AC_SYS_LARGEFILE} macro.
 @item
 Applications should not assume that @code{fileno(f)} will be the same
 before and after a call to @code{freopen(name,mode,f)}.  However, the

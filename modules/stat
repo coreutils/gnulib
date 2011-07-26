@@ -7,6 +7,7 @@ m4/stat.m4
 
 Depends-on:
 sys_stat
+largefile
 dosname         [test $REPLACE_STAT = 1]
 stdbool         [test $REPLACE_STAT = 1]
 verify          [test $REPLACE_STAT = 1]

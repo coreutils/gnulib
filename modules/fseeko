@@ -8,6 +8,7 @@ m4/fseeko.m4
 
 Depends-on:
 extensions
+largefile
 lseek
 stdio
 # Just to guarantee consistency between fseek() and fseeko().

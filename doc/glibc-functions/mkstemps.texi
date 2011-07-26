@@ -14,14 +14,13 @@ glibc 2.10, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin
 This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
 on some platforms:
 MacOS X 10.5.
+@item
+On platforms where @code{off_t} is a 32-bit type, @code{mkstemps} may not work
+correctly to create files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{mkstemps} may not work
-correctly to create files larger than 2 GB.  The fix is to use the
-@code{AC_SYS_LARGEFILE} macro.
 @end itemize
 
 The gnulib module @code{clean-temp} can create temporary files that will not

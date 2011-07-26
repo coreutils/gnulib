@@ -20,6 +20,9 @@ On some platforms (HP-UX 10.20, SunOS 4.1.4, Solaris 2.5.1), mkstemp has a silly
 limit that it can create no more than 26 files from a given template.  On
 OSF/1 4.0f, it can create only 32 files per process.
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{mkstemp} may not work
+correctly to create files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 On some older platforms, @code{mkstemp} can create a world or group
 writable or readable file, if you haven't set the process umask to
 077.  This is a security risk.
@@ -27,10 +30,6 @@ writable or readable file, if you haven't set the process umask to
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{mkstemp} may not work
-correctly to create files larger than 2 GB.  The fix is to use the
-@code{AC_SYS_LARGEFILE} macro.
 @end itemize
 
 The gnulib module @code{clean-temp} can create temporary files that will not

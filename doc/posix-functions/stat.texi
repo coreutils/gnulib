@@ -9,6 +9,10 @@ Gnulib module: stat
 Portability problems fixed by Gnulib:
 @itemize
 @item
+On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
+report the size of files or block devices larger than 2 GB.
+(Cf. @code{AC_SYS_LARGEFILE}.)
+@item
 On some platforms, @code{stat("link-to-file/",buf)} succeeds instead
 of failing with @code{ENOTDIR}.
 FreeBSD 7.2, AIX 7.1, Solaris 9.
@@ -20,10 +24,6 @@ mingw.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
-report the size of files or block devices larger than 2 GB.  The fix is to
-use the @code{AC_SYS_LARGEFILE} macro.
 @item
 Cygwin's @code{stat} function sometimes sets @code{errno} to @code{EACCES} when
 @code{ENOENT} would be more appropriate.

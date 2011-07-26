@@ -1,3 +1,49 @@
+2011-07-25  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
+	Add dependencies to the 'largefile' module.
+	* modules/fopen (Depends-on): Add 'largefile'.
+	* modules/freopen (Depends-on): Likewise.
+	* modules/fseeko (Depends-on): Likewise.
+	* modules/ftello (Depends-on): Likewise.
+	* modules/glob (Depends-on): Likewise.
+	* modules/lseek (Depends-on): Likewise.
+	* modules/lstat (Depends-on): Likewise.
+	* modules/mkostemp (Depends-on): Likewise.
+	* modules/mkostemps (Depends-on): Likewise.
+	* modules/mkstemp (Depends-on): Likewise.
+	* modules/mkstemps (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/pread (Depends-on): Likewise.
+	* modules/pwrite (Depends-on): Likewise.
+	* modules/scandir (Depends-on): Likewise.
+	* modules/stat (Depends-on): Likewise.
+	* modules/tmpfile (Depends-on): Likewise.
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Do not require AC_SYS_LARGEFILE,
+	since the containing module now depends on the largefile module.
+	* m4/tempname.m4 (gl_FUNC_GEN_TEMPNAME): Likewise.
+	* doc/posix-functions/fopen.texi: Mention that the problem of 32-bit
+	off_t is fixed by gnulib.
+	* doc/posix-functions/freopen.texi: Likewise.
+	* doc/posix-functions/fseeko.texi: Likewise.
+	* doc/posix-functions/fstatat.texi: Likewise.
+	* doc/posix-functions/ftello.texi: Likewise.
+	* doc/posix-functions/glob.texi: Likewise.
+	* doc/posix-functions/lseek.texi: Likewise.
+	* doc/posix-functions/lstat.texi: Likewise.
+	* doc/posix-functions/mkstemp.texi: Likewise.
+	* doc/posix-functions/open.texi: Likewise.
+	* doc/posix-functions/openat.texi: Likewise.
+	* doc/posix-functions/pread.texi: Likewise.
+	* doc/posix-functions/pwrite.texi: Likewise.
+	* doc/posix-functions/scandir.texi: Likewise.
+	* doc/posix-functions/stat.texi: Likewise.
+	* doc/posix-functions/tmpfile.texi: Likewise.
+	* doc/glibc-functions/mkostemp.texi: Likewise.
+	* doc/glibc-functions/mkostemps.texi: Likewise.
+	* doc/glibc-functions/mkstemps.texi: Likewise.
+
 2011-07-25  Bruno Haible  <bruno@clisp.org>
 
 	fcntl: Move AC_LIBOBJ invocation to module description.

@@ -8,6 +8,7 @@ m4/mkstemp.m4
 Depends-on:
 stdlib
 extensions
+largefile
 tempname        [test $HAVE_MKSTEMP = 0 || test $REPLACE_MKSTEMP = 1]
 
 configure.ac:
