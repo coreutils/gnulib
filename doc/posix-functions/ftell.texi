@@ -28,6 +28,6 @@ on input streams that are opened in @code{O_TEXT} mode and whose contents
 contains Unix line terminators (LF), on some platforms: mingw.
 @item
 On platforms where @code{long} is a 32-bit type, @code{ftell} does not work
-correctly with files larger than 2 GB.  The fix is to use @code{ftello}
-instead and to invoke the @code{AC_SYS_LARGEFILE} macro.
+correctly with files larger than 2 GB, even when the @code{AC_SYS_LARGEFILE}
+macro is used.  The fix is to use @code{ftello} instead.
 @end itemize

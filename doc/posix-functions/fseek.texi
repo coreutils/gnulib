@@ -19,6 +19,6 @@ On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 @item
 On platforms where @code{long} is a 32-bit type, @code{fseek} does not work
-correctly with files larger than 2 GB.  The fix is to use @code{fseeko}
-instead and to invoke the @code{AC_SYS_LARGEFILE} macro.
+correctly with files larger than 2 GB, even when the @code{AC_SYS_LARGEFILE}
+macro is used.  The fix is to use @code{fseeko} instead.
 @end itemize
