@@ -1,5 +1,12 @@
 2011-07-26  Eric Blake  <eblake@redhat.com>
 
+	warnings: add comments about previous patch
+	* m4/absolute-header.m4: Document AS_VAR_PUSHDEF limitation.
+	* m4/include_next.m4: Likewise.
+	* m4/warn-on-use.m4: Likewise.
+	* m4/warnings.m4: Likewise, and simplify use.
+	Suggested by Stefano Lattarini.
+
 	include-next, warnings: support older autoconf
 	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Use
 	AS_VAR_PUSHDEF in a way that works with older autoconf.

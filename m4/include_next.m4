@@ -1,4 +1,4 @@
-# include_next.m4 serial 19
+# include_next.m4 serial 20
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -175,6 +175,8 @@ AC_DEFUN([gl_NEXT_HEADERS_INTERNAL],
     [AC_CHECK_HEADERS_ONCE([$1])
     ])
 
+dnl FIXME: gl_next_header and gl_header_exists must be used unquoted
+dnl until we can assume autoconf 2.64 or newer.
   m4_foreach_w([gl_HEADER_NAME], [$1],
     [AS_VAR_PUSHDEF([gl_next_header],
                     [gl_cv_next_]m4_defn([gl_HEADER_NAME]))

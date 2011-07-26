@@ -1,4 +1,4 @@
-# warnings.m4 serial 4
+# warnings.m4 serial 5
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,8 @@ m4_ifdef([AS_VAR_APPEND],
 # Adds parameter to WARN_CFLAGS if the compiler supports it.  For example,
 # gl_WARN_ADD([-Wparentheses]).
 AC_DEFUN([gl_WARN_ADD],
+dnl FIXME: gl_Warn must be used unquoted until we can assume
+dnl autoconf 2.64 or newer.
 [AS_VAR_PUSHDEF([gl_Warn], [gl_cv_warn_$1])dnl
 AC_CACHE_CHECK([whether compiler handles $1], m4_defn([gl_Warn]), [
   gl_save_CPPFLAGS="$CPPFLAGS"
@@ -28,9 +30,8 @@ AC_CACHE_CHECK([whether compiler handles $1], m4_defn([gl_Warn]), [
                     [AS_VAR_SET(gl_Warn, [no])])
   CPPFLAGS="$gl_save_CPPFLAGS"
 ])
-AS_VAR_PUSHDEF([gl_Flags], m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]))dnl
-AS_VAR_IF(gl_Warn, [yes], [gl_AS_VAR_APPEND([gl_Flags], [" $1"])])
-AS_VAR_POPDEF([gl_Flags])dnl
+AS_VAR_IF(gl_Warn, [yes],
+  [gl_AS_VAR_APPEND(m4_if([$2], [], [[WARN_CFLAGS]], [[$2]]), [" $1"])])
 AS_VAR_POPDEF([gl_Warn])dnl
 m4_ifval([$2], [AS_LITERAL_IF([$2], [AC_SUBST([$2])], [])])dnl
 ])

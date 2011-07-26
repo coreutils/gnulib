@@ -1,4 +1,4 @@
-# absolute-header.m4 serial 12
+# absolute-header.m4 serial 13
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,8 @@ dnl From Derek Price.
 AC_DEFUN([gl_ABSOLUTE_HEADER],
 [AC_REQUIRE([AC_CANONICAL_HOST])
 AC_LANG_PREPROC_REQUIRE()dnl
+dnl FIXME: gl_absolute_header and ac_header_exists must be used unquoted
+dnl until we can assume autoconf 2.64 or newer.
 m4_foreach_w([gl_HEADER_NAME], [$1],
   [AS_VAR_PUSHDEF([gl_absolute_header],
                   [gl_cv_absolute_]m4_defn([gl_HEADER_NAME]))dnl
