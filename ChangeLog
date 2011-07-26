@@ -1,3 +1,11 @@
+2011-07-26  Eric Blake  <eblake@redhat.com>
+
+	include-next, warnings: support older autoconf
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Use
+	AS_VAR_PUSHDEF in a way that works with older autoconf.
+	* m4/warnings.m4 (gl_WARN_ADD): Likewise.
+	Reported by Daniel P. Berrange.
+
 2011-07-25  Bruno Haible  <bruno@clisp.org>
 
 	fseek, ftell: Fix doc.
