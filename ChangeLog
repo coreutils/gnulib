@@ -1,3 +1,13 @@
+2011-07-27  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid sc_prohibit_always-defined_macros failure in coreutils
+	* top/maint.mk (gl_extract_significant_defines_): Now that
+	SA_RESETHAND and SA_RESTART are #defined (albeit conditionally) in
+	gnulib/lib/signal.in.h, and now that we recommend to
+	define-if-undefined those two symbols in application code,
+	we must filter them out of the "significant" list.
+	This avoids a "make syntax-check" failure in coreutils.
+
 2011-07-26  Eric Blake  <eblake@redhat.com>
 
 	warnings: add comments about previous patch

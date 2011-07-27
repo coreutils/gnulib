@@ -753,6 +753,7 @@ gl_extract_significant_defines_ = \
   /^\# *define ([^_ (][^ (]*)(\s*\(|\s+\w+)/\
     && $$2 !~ /(?:rpl_|_used_without_)/\
     && $$1 !~ /^(?:NSIG)$$/\
+    && $$1 !~ /^(?:SA_RESETHAND|SA_RESTART)$$/\
     and print $$1
 
 # Create a list of regular expressions matching the names
