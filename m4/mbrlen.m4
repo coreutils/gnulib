@@ -1,4 +1,4 @@
-# mbrlen.m4 serial 7
+# mbrlen.m4 serial 8
 dnl Copyright (C) 2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,22 @@ AC_DEFUN([gl_FUNC_MBRLEN],
   AC_CHECK_FUNCS_ONCE([mbrlen])
   if test $ac_cv_func_mbrlen = no; then
     HAVE_MBRLEN=0
+    AC_CHECK_DECLS([mbrlen],,, [[
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
+]])
+    if test $ac_cv_have_decl_mbrlen = yes; then
+      dnl On Minix 3.1.8, the system's <wchar.h> declares mbrlen() although
+      dnl it does not have the function. Avoid a collision with gnulib's
+      dnl replacement.
+      REPLACE_MBRLEN=1
+    fi
   else
     dnl Most bugs affecting the system's mbrtowc function also affect the
     dnl mbrlen function. So override mbrlen whenever mbrtowc is overridden.

@@ -1,5 +1,21 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	Work around declaration collisions on Minix.
+	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): If mbsinit is declared but not
+	defined, set REPLACE_MBSINIT.
+	* m4/mbrtowc.m4 (gl_FUNC_MBRTOWC): If mbrtowc is declared but not
+	defined, set REPLACE_MBRTOWC.
+	* m4/mbrlen.m4 (gl_FUNC_MBRLEN): If mbrlen is declared but not defined,
+	set REPLACE_MBRLEN.
+	* m4/mbsrtowcs.m4 (gl_FUNC_MBSRTOWCS): If mbsrtowcs is declared but not
+	defined, set REPLACE_MBSRTOWCS.
+	* m4/wcrtomb.m4 (gl_FUNC_WCRTOMB): If wcrtomb is declared but not
+	defined, set REPLACE_WCRTOMB.
+	* m4/wcsrtombs.m4 (gl_FUNC_WCSRTOMBS): If wcsrtombs is declared but not
+	defined, set REPLACE_WCSRTOMBS.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	Add support for Minix with ACK compiler.
 	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): New macro.
 	* gnulib-tool (func_import, func_create_testdir): Emit invocation of
