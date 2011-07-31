@@ -23,6 +23,12 @@
 #endif
 @PRAGMA_COLUMNS@
 
+/* Minix 3.1.8 has a bug: <sys/types.h> must be included before <strings.h>.
+   But avoid namespace pollution on glibc systems.  */
+#if defined __minix && !defined __GLIBC__
+# include <sys/types.h>
+#endif
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_STRINGS_H@
 

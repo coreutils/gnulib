@@ -1,5 +1,12 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	strings: Add support for Minix.
+	* lib/strings.in.h [Minix]: Include <sys/types.h> before <strings.h>.
+	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_BODY): Likewise.
+	* doc/posix-headers/strings.texi: Document the Minix problem.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	wctype-h: Add support for Minix.
 	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether towlower is declared. Set
 	REPLACE_TOWLOWER.

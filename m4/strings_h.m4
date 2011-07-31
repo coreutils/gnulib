@@ -1,5 +1,5 @@
 # Configure a replacement for <strings.h>.
-# serial 4
+# serial 5
 
 # Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -20,7 +20,11 @@ AC_DEFUN([gl_HEADER_STRINGS_H_BODY],
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
-  gl_WARN_ON_USE_PREPARE([[#include <strings.h>
+  gl_WARN_ON_USE_PREPARE([[
+    /* Minix 3.1.8 has a bug: <sys/types.h> must be included before
+       <strings.h>.  */
+    #include <sys/types.h>
+    #include <strings.h>
     ]], [ffs strcasecmp strncasecmp])
 ])
 
