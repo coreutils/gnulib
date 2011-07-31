@@ -1,5 +1,11 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	frexpl: Update autoconf test.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL_WORKS): Update overrides of <float.h>,
+	according to changes of 2011-06-20.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	sys_utsname: Add support for Minix.
 	* lib/sys_utsname.in.h [Minix]: Include <stddef.h> before
 	<sys/utsname.h>.
