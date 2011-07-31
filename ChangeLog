@@ -1,5 +1,13 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	sys_utsname: Add support for Minix.
+	* lib/sys_utsname.in.h [Minix]: Include <stddef.h> before
+	<sys/utsname.h>.
+	* m4/sys_utsname_h.m4 (gl_SYS_UTSNAME_H): Likewise.
+	* doc/posix-headers/sys_utsname.texi: Document the Minix problem.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	strings: Add support for Minix.
 	* lib/strings.in.h [Minix]: Include <sys/types.h> before <strings.h>.
 	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_BODY): Likewise.

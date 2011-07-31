@@ -23,7 +23,15 @@
 @PRAGMA_COLUMNS@
 
 #if @HAVE_SYS_UTSNAME_H@
+
+/* Minix 3.1.8 has a bug: <stddef.h> must be included before <sys/utsname.h>.
+   But avoid namespace pollution on glibc systems.  */
+# if defined __minix && !defined __GLIBC__
+#  include <stddef.h>
+# endif
+
 # @INCLUDE_NEXT@ @NEXT_SYS_UTSNAME_H@
+
 #endif
 
 #define _@GUARD_PREFIX@_SYS_UTSNAME_H

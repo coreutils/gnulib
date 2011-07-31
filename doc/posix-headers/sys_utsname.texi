@@ -10,6 +10,9 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 mingw.
+@item
+This header file is not self-contained on some platforms:
+Minix 3.1.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:
