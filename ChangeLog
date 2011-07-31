@@ -1,3 +1,12 @@
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
+	wctype-h: Add support for Minix.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Test whether towlower is declared. Set
+	REPLACE_TOWLOWER.
+	* modules/wctype-h (Makefile.am): Substitute REPLACE_TOWLOWER.
+	* lib/wctype.in.h (towlower, towupper): Test REPLACE_TOWLOWER, not
+	REPLACE_ISWCNTRL.
+
 2011-07-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/xalloc.h (DEFAULT_MXFAST): Track 64-bit glibc.
