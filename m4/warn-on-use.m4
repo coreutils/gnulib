@@ -1,4 +1,4 @@
-# warn-on-use.m4 serial 3
+# warn-on-use.m4 serial 4
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,8 +37,8 @@ dnl autoconf 2.64 or newer.
 [@%:@undef $gl_func
   (void) $gl_func;])],
         [AS_VAR_SET(gl_Symbol, [yes])], [AS_VAR_SET(gl_Symbol, [no])])])
-     AS_VAR_IF(gl_Symbol, [yes],
-       [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_RAW_DECL_$gl_func]), [1])
+    AS_VAR_IF(gl_Symbol, [yes],
+      [AC_DEFINE_UNQUOTED(AS_TR_CPP([HAVE_RAW_DECL_$gl_func]), [1])
        dnl shortcut - if the raw declaration exists, then set a cache
        dnl variable to allow skipping any later AC_CHECK_DECL efforts
        eval ac_cv_have_decl_$gl_func=yes])
