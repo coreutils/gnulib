@@ -39,6 +39,8 @@
      || GNULIB_defined_EBADMSG \
      || GNULIB_defined_EOVERFLOW \
      || GNULIB_defined_ENOTSUP \
+     || GNULIB_defined_ENETRESET \
+     || GNULIB_defined_ECONNABORTED \
      || GNULIB_defined_ESTALE \
      || GNULIB_defined_EDQUOT \
      || GNULIB_defined_ECANCELED

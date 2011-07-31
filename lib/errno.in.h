@@ -147,6 +147,16 @@
 #  define GNULIB_defined_ENOTSUP 1
 # endif
 
+# ifndef ENETRESET
+#  define ENETRESET 2011
+#  define GNULIB_defined_ENETRESET 1
+# endif
+
+# ifndef ECONNABORTED
+#  define ECONNABORTED 2012
+#  define GNULIB_defined_ECONNABORTED 1
+# endif
+
 # ifndef ESTALE
 #  define ESTALE    2009
 #  define GNULIB_defined_ESTALE 1

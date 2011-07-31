@@ -1,5 +1,18 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	errno: Port to Minix.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Test also whether ENETRESET and
+	ECONNABORTED are defined.
+	* lib/errno.in.h (ENETRESET, GNULIB_defined_ENETRESET, ECONNABORTED,
+	GNULIB_defined_ECONNABORTED): New macros.
+	* lib/strerror-override.h (strerror_override): Test also
+	GNULIB_defined_ENETRESET, GNULIB_defined_ECONNABORTED.
+	* lib/strerror-override.c (strerror_override): Handle also ENETRESET,
+	ECONNABORTED.
+	* doc/posix-headers/errno.texi: Mention the Minix problem.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	Work around declaration collisions on Minix.
 	* m4/mbsinit.m4 (gl_FUNC_MBSINIT): If mbsinit is declared but not
 	defined, set REPLACE_MBSINIT.

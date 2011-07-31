@@ -25,14 +25,17 @@ mingw, Interix 3.5.
 The macro @code{EDQUOT} is not defined on some platforms:
 NonStop Kernel, mingw.
 @item
+The macros @code{ENETRESET}, @code{ECONNABORTED} are not defined on some
+platforms:
+Minix 3.1.8, mingw.
+@item
 The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},
 @code{EDESTADDRREQ}, @code{EMSGSIZE}, @code{EPROTOTYPE}, @code{ENOPROTOOPT},
 @code{EPROTONOSUPPORT}, @code{EOPNOTSUPP}, @code{EAFNOSUPPORT},
 @code{EADDRINUSE}, @code{EADDRNOTAVAIL}, @code{ENETDOWN}, @code{ENETUNREACH},
-@code{ENETRESET}, @code{ECONNABORTED}, @code{ECONNRESET}, @code{ENOBUFS},
-@code{EISCONN}, @code{ENOTCONN}, @code{ETIMEDOUT}, @code{ECONNREFUSED},
-@code{EHOSTUNREACH}, @code{EALREADY}, @code{EINPROGRESS} are not defined on
-some platforms:
+@code{ECONNRESET}, @code{ENOBUFS}, @code{EISCONN}, @code{ENOTCONN},
+@code{ETIMEDOUT}, @code{ECONNREFUSED}, @code{EHOSTUNREACH}, @code{EALREADY},
+@code{EINPROGRESS} are not defined on some platforms:
 mingw.
 @end itemize
 

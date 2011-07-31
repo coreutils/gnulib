@@ -248,6 +248,16 @@ strerror_override (int errnum)
       return "Not supported";
 #endif
 
+#if GNULIB_defined_ENETRESET
+    case ENETRESET:
+      return "Network dropped connection on reset";
+#endif
+
+#if GNULIB_defined_ECONNABORTED
+    case ECONNABORTED:
+      return "Software caused connection abort";
+#endif
+
 #if GNULIB_defined_ESTALE
     case ESTALE:
       return "Stale NFS file handle";
