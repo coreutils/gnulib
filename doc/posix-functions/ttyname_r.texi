@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-NetBSD 3.0, mingw, BeOS.
+NetBSD 3.0, Minix 3.1.8, mingw, BeOS.
 @item
 This function is not declared unless @code{_REENTRANT} is defined,
 on some platforms:

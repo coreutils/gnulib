@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, Solaris 2.5.1.
+Minix 3.1.8, IRIX 5.3, Solaris 2.5.1.
 @item
 This function returns 0 for all possible arguments on some platforms:
 Linux libc5.

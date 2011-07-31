@@ -1,5 +1,13 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	Documentation about Minix.
+	* doc/posix-headers/*.texi: Add info about Minix 3.1.8.
+	* doc/glibc-headers/*.texi: Likewise.
+	* doc/posix-functions/*.texi: Likewise.
+	* doc/glibc-functions/*.texi: Likewise.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	snippet/warn-on-use: Fix indentation.
 	* m4/warn-on-use.m4 (gl_WARN_ON_USE_PREPARE): Fix indentation.
 

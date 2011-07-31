@@ -10,8 +10,8 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
-5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw,
+glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw,
 Interix 3.5, BeOS.
 However, the replacement function may end up truncating timestamps to
 less resolution than supported by the file system.

@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, AIX 5.1, IRIX 6.5,
+MacOS X 10.5, FreeBSD 6.0, NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5,
 Solaris 9, Interix 3.5.
 @item
 This function is only provided as a macro on some platforms:

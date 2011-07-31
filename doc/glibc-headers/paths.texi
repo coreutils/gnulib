@@ -13,7 +13,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-HP-UX 11, Solaris 11 2010-11, mingw, BeOS.
+Minix 3.1.8, HP-UX 11, Solaris 11 2010-11, mingw, BeOS.
 @item
 The set of @code{_PATH_*} macros is platform dependent.
 @end itemize

@@ -19,7 +19,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 8, Interix 3.5.
+Minix 3.1.8, AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 8, Interix 3.5.
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.

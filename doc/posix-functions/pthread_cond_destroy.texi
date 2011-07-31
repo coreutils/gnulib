@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-HP-UX 11, IRIX 5.3, Solaris 2.4, mingw, BeOS.
+Minix 3.1.8, HP-UX 11, IRIX 5.3, Solaris 2.4, mingw, BeOS.
 @end itemize

@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+Minix 3.1.8, mingw.
 
 @item
 This is only provided as a macro on some platforms:

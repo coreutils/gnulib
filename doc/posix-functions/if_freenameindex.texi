@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OpenBSD 3.8, HP-UX 11.23, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin 1.5.x,
+OpenBSD 3.8, Minix 3.1.8, HP-UX 11.23, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin 1.5.x,
 mingw, Interix 3.5, BeOS.
 
 @item

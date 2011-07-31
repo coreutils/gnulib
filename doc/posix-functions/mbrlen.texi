@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
+Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
 @item
 This function does not put the state into non-initial state when parsing an
 incomplete multibyte character on some platforms:

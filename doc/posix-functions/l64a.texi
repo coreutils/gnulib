@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 6.0, mingw, BeOS.
+FreeBSD 6.0, Minix 3.1.8, mingw, BeOS.
 @item
 This function was not correctly implemented in glibc versions before 2.2.5.
 @end itemize
