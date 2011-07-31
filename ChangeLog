@@ -1,5 +1,22 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	stdioext: Add support for Minix.
+	* lib/fbufmode.c (fbufmode) [__minix]: Add conditional code.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/freadahead.c (freadahead): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	* lib/fseterr.c (fseterr): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	* lib/fflush.c (clear_ungetc_buffer): Update comment.
+	* m4/fpending.m4 (gl_PREREQ_FPENDING): Add a variant for Minix.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	errno: Port to Minix.
 	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Test also whether ENETRESET and
 	ECONNABORTED are defined.

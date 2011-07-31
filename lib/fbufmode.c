@@ -50,6 +50,8 @@ fbufmode (FILE *fp)
   return _IOFBF;
 #elif defined __EMX__               /* emx+gcc */
   return fp->_flags & (_IOLBF | _IONBF | _IOFBF);
+#elif defined __minix               /* Minix */
+  return fp->_flags & (_IOLBF | _IONBF | _IOFBF);
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
 # if HAVE___FLBF                    /* Solaris >= 7 */
   if (__flbf (fp))

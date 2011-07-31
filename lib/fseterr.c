@@ -35,6 +35,8 @@ fseterr (FILE *fp)
   fp_->_flags |= __SERR;
 #elif defined __EMX__               /* emx+gcc */
   fp->_flags |= _IOERR;
+#elif defined __minix               /* Minix */
+  fp->_flags |= _IOERR;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   fp_->_flag |= _IOERR;
 #elif defined __UCLIBC__            /* uClibc */

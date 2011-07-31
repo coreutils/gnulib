@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 
 # Copyright (C) 2000-2001, 2004-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -57,6 +57,9 @@ AC_DEFUN([gl_PREREQ_FPENDING],
                                                                         \
           '# emx+gcc'                                                   \
           'fp->_ptr - fp->_buffer'                                      \
+                                                                        \
+          '# Minix'                                                     \
+          'fp->_ptr - fp->_buf'                                         \
                                                                         \
           '# VMS'                                                       \
           '(*fp)->_ptr - (*fp)->_base'                                  \

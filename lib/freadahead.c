@@ -48,6 +48,10 @@ freadahead (FILE *fp)
   /* equivalent to
      (fp->_ungetc_count == 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount) */
   return (fp->_rcount > 0 ? fp->_rcount : fp->_ungetc_count - fp->_rcount);
+#elif defined __minix               /* Minix */
+  if ((fp_->_flags & _IOWRITING) != 0)
+    return 0;
+  return fp_->_count;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   if ((fp_->_flag & _IOWRT) != 0)
     return 0;

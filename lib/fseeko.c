@@ -69,6 +69,9 @@ fseeko (FILE *fp, off_t offset, int whence)
       && fp->_rcount == 0
       && fp->_wcount == 0
       && fp->_ungetc_count == 0)
+#elif defined __minix               /* Minix */
+  if (fp_->_ptr == fp_->_buf
+      && (fp_->_ptr == NULL || fp_->_count == 0))
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   if (fp_->_ptr == fp_->_base
       && (fp_->_ptr == NULL || fp_->_cnt == 0))

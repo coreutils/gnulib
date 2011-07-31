@@ -56,6 +56,14 @@ freadptr (FILE *fp, size_t *sizep)
     abort ();
   *sizep = fp->_rcount;
   return fp->_ptr;
+#elif defined __minix               /* Minix */
+  if ((fp_->_flags & _IOWRITING) != 0)
+    return NULL;
+  size = fp_->_count;
+  if (size == 0)
+    return NULL;
+  *sizep = size;
+  return (const char *) fp_->_ptr;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   if ((fp_->_flag & _IOWRT) != 0)
     return NULL;

@@ -60,7 +60,7 @@ clear_ungetc_buffer (FILE *fp)
       fp->_ungetc_count = 0;
       fp->_rcount = - fp->_rcount;
     }
-# elif defined _IOERR               /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
+# elif defined _IOERR               /* Minix, AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   /* Nothing to do.  */
 # else                              /* other implementations */
   fseeko (fp, 0, SEEK_CUR);

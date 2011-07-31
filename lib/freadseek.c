@@ -42,6 +42,9 @@ freadptrinc (FILE *fp, size_t increment)
 #elif defined __EMX__               /* emx+gcc */
   fp->_ptr += increment;
   fp->_rcount -= increment;
+#elif defined __minix               /* Minix */
+  fp_->_ptr += increment;
+  fp_->_count -= increment;
 #elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, NonStop Kernel */
   fp_->_ptr += increment;
   fp_->_cnt -= increment;
