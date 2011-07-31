@@ -1,3 +1,9 @@
+2011-07-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/xalloc.h (DEFAULT_MXFAST): Track 64-bit glibc.
+	This is a performance improvement for 64-bit hosts: it causes the
+	value of DEFAULT_MXFAST to track what's in glibc on such hosts.
+
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
 	stdioext: Add support for Minix.

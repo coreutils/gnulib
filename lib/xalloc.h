@@ -192,9 +192,9 @@ x2nrealloc (void *p, size_t *pn, size_t s)
         {
           /* The approximate size to use for initial small allocation
              requests, when the invoking code specifies an old size of
-             zero.  64 bytes is the largest "small" request for the
-             GNU C library malloc.  */
-          enum { DEFAULT_MXFAST = 64 };
+             zero.  This is the largest "small" request for the GNU C
+             library malloc.  */
+          enum { DEFAULT_MXFAST = 64 * sizeof (size_t) / 4 };
 
           n = DEFAULT_MXFAST / s;
           n += !n;
