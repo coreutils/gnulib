@@ -1,3 +1,10 @@
+2011-07-31  Iain Nicol  <iain@thenicols.net>
+
+	git-version-gen: document that EXTRA_DIST must include .version
+	* build-aux/git-version-gen: In the how-to-use comment, document
+	that EXTRA_DIST must include .version.  Otherwise, "make distcheck"
+	will fail when run from an unpacked distribution tarball.
+
 2011-08-01  Bruno Haible  <bruno@clisp.org>
 
 	wctype-h: Fix last change.

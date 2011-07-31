@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-02-19.19; # UTC
+scriptversion=2011-07-31.12; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -57,9 +57,10 @@ scriptversion=2011-02-19.19; # UTC
 #         [bug-project@example])
 #
 # Then use the following lines in your Makefile.am, so that .version
-# will be present for dependencies, and so that .tarball-version will
-# exist in distribution tarballs.
+# will be present for dependencies, and so that .version and
+# .tarball-version will exist in distribution tarballs.
 #
+# EXTRA_DIST = $(top_srcdir)/.version
 # BUILT_SOURCES = $(top_srcdir)/.version
 # $(top_srcdir)/.version:
 #	echo $(VERSION) > $@-t && mv $@-t $@
