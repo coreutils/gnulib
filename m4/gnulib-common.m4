@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 28
+# gnulib-common.m4 serial 29
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -210,6 +210,35 @@ m4_ifndef([m4_foreach_w],
 m4_ifndef([AS_VAR_IF],
 [m4_define([AS_VAR_IF],
 [AS_IF([test x"AS_VAR_GET([$1])" = x""$2], [$3], [$4])])])
+
+# gl_PROG_AR_RANLIB
+# Determines the values for AR, ARFLAGS, RANLIB that fit with the compiler.
+AC_DEFUN([gl_PROG_AR_RANLIB],
+[
+  dnl Minix 3 comes with two toolchains: The Amsterdam Compiler Kit compiler
+  dnl as "cc", and GCC as "gcc". They have different object file formats and
+  dnl library formats. In particular, the GNU binutils programs ar, ranlib
+  dnl produce libraries that work only with gcc, not with cc.
+  AC_REQUIRE([AC_PROG_CC])
+  AC_EGREP_CPP([Amsterdam],
+    [
+#ifdef __ACK__
+Amsterdam
+#endif
+    ],
+    [AR='cc -c.a'
+     ARFLAGS='-o'
+     RANLIB=':'
+    ],
+    [dnl Use the Automake-documented default values for AR and ARFLAGS.
+     AR='ar'
+     ARFLAGS='cru'
+     dnl Use the ranlib program if it is available.
+     AC_PROG_RANLIB
+    ])
+  AC_SUBST([AR])
+  AC_SUBST([ARFLAGS])
+])
 
 # AC_PROG_MKDIR_P
 # is a backport of autoconf-2.60's AC_PROG_MKDIR_P, with a fix

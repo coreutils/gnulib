@@ -5126,7 +5126,7 @@ s,//*$,/,'
     echo "  m4_pattern_allow([^gl_ES\$])dnl a valid locale name"
     echo "  m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
     echo "  m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
-    echo "  AC_REQUIRE([AC_PROG_RANLIB])"
+    echo "  AC_REQUIRE([gl_PROG_AR_RANLIB])"
     if test -n "$uses_subdirs"; then
       echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
     fi
@@ -5735,7 +5735,7 @@ func_create_testdir ()
        echo "AC_PROG_CC"
        echo "AC_PROG_INSTALL"
        echo "AC_PROG_MAKE_SET"
-       echo "AC_PROG_RANLIB"
+       echo "gl_PROG_AR_RANLIB"
        echo
        if test -n "$uses_subdirs"; then
          echo "AM_PROG_CC_C_O"
@@ -5850,7 +5850,7 @@ func_create_testdir ()
    echo "m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
    echo "m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
    echo
-   echo "AC_PROG_RANLIB"
+   echo "gl_PROG_AR_RANLIB"
    echo
    if test -n "$any_uses_subdirs"; then
      echo "AM_PROG_CC_C_O"

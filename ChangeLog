@@ -1,5 +1,12 @@
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
+	Add support for Minix with ACK compiler.
+	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): New macro.
+	* gnulib-tool (func_import, func_create_testdir): Emit invocation of
+	gl_PROG_AR_RANLIB instead of AC_PROG_RANLIB.
+
+2011-07-31  Bruno Haible  <bruno@clisp.org>
+
 	Documentation about Minix.
 	* doc/posix-headers/*.texi: Add info about Minix 3.1.8.
 	* doc/glibc-headers/*.texi: Likewise.
