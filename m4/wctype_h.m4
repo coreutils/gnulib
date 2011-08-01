@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 15
+# wctype_h.m4 serial 16
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -82,26 +82,31 @@ AC_DEFUN([gl_WCTYPE_H],
   if test $REPLACE_ISWCNTRL = 1; then
     REPLACE_TOWLOWER=1
   else
-    AC_CHECK_DECLS([towlower],,,
-      [[/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
-           included before <wchar.h>.
-           BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h>
-           must be included before <wchar.h>.  */
-        #include <stddef.h>
-        #include <stdio.h>
-        #include <time.h>
-        #include <wchar.h>
-        #if HAVE_WCTYPE_H
-        # include <wctype.h>
-        #endif
-      ]])
-    if test $ac_cv_have_decl_towlower = yes; then
-      dnl On Minix 3.1.8, the system's <wctype.h> declares towlower() and
-      dnl towupper() although it does not have the functions. Avoid a collision
-      dnl with gnulib's replacement.
-      REPLACE_TOWLOWER=1
-    else
+    AC_CHECK_FUNCS([towlower])
+    if test $ac_cv_func_towlower = yes; then
       REPLACE_TOWLOWER=0
+    else
+      AC_CHECK_DECLS([towlower],,,
+        [[/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
+             included before <wchar.h>.
+             BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h>
+             must be included before <wchar.h>.  */
+          #include <stddef.h>
+          #include <stdio.h>
+          #include <time.h>
+          #include <wchar.h>
+          #if HAVE_WCTYPE_H
+          # include <wctype.h>
+          #endif
+        ]])
+      if test $ac_cv_have_decl_towlower = yes; then
+        dnl On Minix 3.1.8, the system's <wctype.h> declares towlower() and
+        dnl towupper() although it does not have the functions. Avoid a
+        dnl collision with gnulib's replacement.
+        REPLACE_TOWLOWER=1
+      else
+        REPLACE_TOWLOWER=0
+      fi
     fi
   fi
   AC_SUBST([REPLACE_TOWLOWER])

@@ -1,3 +1,10 @@
+2011-08-01  Bruno Haible  <bruno@clisp.org>
+
+	wctype-h: Fix last change.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): If towlower is defined, set
+	REPLACE_TOWLOWER to 0.
+	Reported by Sam Steingold <sds@gnu.org>.
+
 2011-07-31  Bruno Haible  <bruno@clisp.org>
 
 	frexpl: Update autoconf test.
