@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 10, 2011
+@set lastupdate August 1, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -4024,11 +4024,13 @@ copying conditions.  The GNU GPL, if used, should be in a file called
 @file{COPYING}.  If the GNU LGPL is used, it should be in a file called
 @file{COPYING.LESSER}.
 
-Naturally, all the source files must be in the distribution.  It is okay
-to include non-source files in the distribution, provided they are
-up-to-date and machine-independent, so that building the distribution
-normally will never modify them.  We commonly include non-source files
-produced by Bison, @code{lex}, @TeX{}, and @code{makeinfo}; this helps avoid
+Naturally, all the source files must be in the distribution.  It is
+okay to include non-source files in the distribution along with the
+source files they are generated from, provided they are up-to-date
+with the source they are made from, and machine-independent, so that
+normal building of the distribution will never modify them.  We
+commonly include non-source files produced by Autoconf, Automake,
+Bison, @code{lex}, @TeX{}, and @code{makeinfo}; this helps avoid
 unnecessary dependencies between our distributions, so that users can
 install whichever packages they want to install.
 
