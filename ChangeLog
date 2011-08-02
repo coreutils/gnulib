@@ -1,3 +1,10 @@
+2011-08-02  Bruno Haible  <bruno@clisp.org>
+
+	pthread_sigmask: Actually use results of gl_THREADLIB.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Test and require
+	gl_THREADLIB, not gl_[]THREADLIB.
+	Reported by Eric Blake.
+
 2011-08-02  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: relax the default _gl_TS_function_match regexp
