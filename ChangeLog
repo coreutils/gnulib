@@ -1,3 +1,10 @@
+2011-08-02  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: relax the default _gl_TS_function_match regexp
+	* top/maint.mk (_gl_TS_function_match): Don't require at least one
+	space between function name and "(" in an "extern" declaration.
+	That would fail to match a decl with no space there: extern void foo();
+
 2011-07-31  Iain Nicol  <iain@thenicols.net>
 
 	git-version-gen: document that EXTRA_DIST must include .version
