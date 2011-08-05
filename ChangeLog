@@ -1,5 +1,9 @@
 2011-08-04  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'pathmax'.
+	* modules/pathmax-tests: New file.
+	* tests/test-pathmax.c: New file.
+
 	canonicalize-lgpl: Support larger filenames on the Hurd.
 	* lib/canonicalize-lgpl.c (__realpath): Bump path_max fallback to 8192.
 	Reported by Paul Eggert.
