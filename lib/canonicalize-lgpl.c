@@ -125,7 +125,7 @@ __realpath (const char *name, char *resolved)
 #else
   path_max = pathconf (name, _PC_PATH_MAX);
   if (path_max <= 0)
-    path_max = 1024;
+    path_max = 8192;
 #endif
 
   if (resolved == NULL)

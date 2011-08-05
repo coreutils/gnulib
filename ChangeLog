@@ -1,5 +1,9 @@
 2011-08-04  Bruno Haible  <bruno@clisp.org>
 
+	canonicalize-lgpl: Support larger filenames on the Hurd.
+	* lib/canonicalize-lgpl.c (__realpath): Bump path_max fallback to 8192.
+	Reported by Paul Eggert.
+
 	pathmax: Leave PATH_MAX undefined on the Hurd, and a constant otherwise.
 	* lib/pathmax.h (PATH_MAX): Leave it undefined on GNU/Hurd.
 	* lib/chdir-long.h: Include pathmax.h.
