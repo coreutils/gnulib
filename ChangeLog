@@ -1,3 +1,9 @@
+2011-08-05  Simon Josefsson  <simon@josefsson.org>
+
+	openat: Fix warnings and commens when building unlinkat.c on Hurd.
+	* lib/unlinkat.c: Mention Hurd in comments.  Include stdlib.h to
+	get prototype for free.
+
 2011-08-04  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'pathmax'.
