@@ -59,13 +59,10 @@
 
 #define _(str) gettext (str)
 
-/* GNU Hurd doesn't have PATH_MAX.  */
+/* GNU Hurd doesn't have PATH_MAX.  Use a fallback.
+   Temporary directory names are usually not that long.  */
 #ifndef PATH_MAX
-# ifdef MAXPATHLEN
-#  define PATH_MAX MAXPATHLEN
-# else
-#  define PATH_MAX 1024
-# endif
+# define PATH_MAX 1024
 #endif
 
 #ifndef uintptr_t

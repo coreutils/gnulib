@@ -23,7 +23,22 @@
    including the terminating NUL byte.
    <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/limits.h.html>
    PATH_MAX is not defined on systems which have no limit on filename length,
-   such as GNU/Hurd.  */
+   such as GNU/Hurd.
+
+   This file does *not* define PATH_MAX always.  Programs that use this file
+   can handle the GNU/Hurd case in several ways:
+     - Either with a package-wide handling, or with a per-file handling,
+     - Either through a
+         #ifdef PATH_MAX
+       or through a fallback like
+         #ifndef PATH_MAX
+         # define PATH_MAX 8192
+         #endif
+       or through a fallback like
+         #ifndef PATH_MAX
+         # define PATH_MAX pathconf ("/", _PC_PATH_MAX)
+         #endif
+ */
 
 # include <unistd.h>
 
@@ -33,11 +48,6 @@
 #  define _POSIX_PATH_MAX 256
 # endif
 
-# if !defined PATH_MAX && defined _PC_PATH_MAX && defined HAVE_PATHCONF
-#  define PATH_MAX (pathconf ("/", _PC_PATH_MAX) < 1 ? 1024 \
-                    : pathconf ("/", _PC_PATH_MAX))
-# endif
-
 /* Don't include sys/param.h if it already has been.  */
 # if defined HAVE_SYS_PARAM_H && !defined PATH_MAX && !defined MAXPATHLEN
 #  include <sys/param.h>
@@ -45,10 +55,6 @@
 
 # if !defined PATH_MAX && defined MAXPATHLEN
 #  define PATH_MAX MAXPATHLEN
-# endif
-
-# ifndef PATH_MAX
-#  define PATH_MAX _POSIX_PATH_MAX
 # endif
 
 # ifdef __hpux

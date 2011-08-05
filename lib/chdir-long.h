@@ -19,11 +19,7 @@
 #include <unistd.h>
 #include <limits.h>
 
-#ifndef PATH_MAX
-# ifdef MAXPATHLEN
-#  define PATH_MAX MAXPATHLEN
-# endif
-#endif
+#include "pathmax.h"
 
 /* On systems without PATH_MAX, presume that chdir accepts
    arbitrarily long directory names.  */

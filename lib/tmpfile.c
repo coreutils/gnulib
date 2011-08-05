@@ -37,6 +37,9 @@
 #include "tempname.h"
 #include "tmpdir.h"
 
+/* PATH_MAX is guaranteed to be defined, because this replacement is only
+   used on native Windows.  */
+
 /* On Windows, opening a file with _O_TEMPORARY has the effect of passing
    the FILE_FLAG_DELETE_ON_CLOSE flag to CreateFile(), which has the effect
    of deleting the file when it is closed - even when the program crashes.

@@ -1,3 +1,21 @@
+2011-08-04  Bruno Haible  <bruno@clisp.org>
+
+	pathmax: Leave PATH_MAX undefined on the Hurd, and a constant otherwise.
+	* lib/pathmax.h (PATH_MAX): Leave it undefined on GNU/Hurd.
+	* lib/chdir-long.h: Include pathmax.h.
+	* lib/clean-temp.c (PATH_MAX): Remove code that is done by pathmax.h.
+	* lib/getcwd.c: Include pathmax.h instead of <limits.h>.
+	(PATH_MAX): Remove code that is done by pathmax.h.
+	* lib/canonicalize.c (PATH_MAX): Provide a fallback value.
+	* lib/tmpfile.c: Add a comment.
+	* m4/pathmax.m4 (gl_PATHMAX): Don't test for pathconf.
+	* modules/chdir-long (Depends-on): Add pathmax.
+	* modules/getcwd (Depends-on): Add pathmax.
+	* tests/test-getcwd.c (test_abort_bug): Avoid syntax error when PATH_MAX
+	is not defined.
+	* doc/posix-headers/limits.texi: Mention the pathmax module.
+	* NEWS: Mention the change.
+
 2011-08-02  Bruno Haible  <bruno@clisp.org>
 
 	pthread_sigmask: Actually use results of gl_THREADLIB.

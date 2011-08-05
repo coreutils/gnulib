@@ -49,10 +49,12 @@ test_abort_bug (void)
   size_t desired_depth;
   size_t d;
 
+#ifdef PATH_MAX
   /* The bug is triggered when PATH_MAX < getpagesize (), so skip
      this relatively expensive and invasive test if that's not true.  */
   if (getpagesize () <= PATH_MAX)
     return 0;
+#endif
 
   cwd = getcwd (NULL, 0);
   if (cwd == NULL)

@@ -57,8 +57,6 @@
 # endif
 #endif
 
-#include <limits.h>
-
 #ifndef MAX
 # define MAX(a, b) ((a) < (b) ? (b) : (a))
 #endif
@@ -66,12 +64,12 @@
 # define MIN(a, b) ((a) < (b) ? (a) : (b))
 #endif
 
+#include "pathmax.h"
+
+/* In this file, PATH_MAX only serves as a threshold for choosing among two
+   algorithms.  */
 #ifndef PATH_MAX
-# ifdef MAXPATHLEN
-#  define PATH_MAX MAXPATHLEN
-# else
-#  define PATH_MAX 1024
-# endif
+# define PATH_MAX 8192
 #endif
 
 #if D_INO_IN_DIRENT

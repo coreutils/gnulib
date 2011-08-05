@@ -12,6 +12,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-08-04  pathmax         The header file "pathmax.h" no longer defines
+                            PATH_MAX on GNU/Hurd. Please use one of the methods
+                            listed in pathmax.h to ensure your package is
+                            portable to GNU/Hurd.
+
 2011-07-24  close           This module no longer pulls in the 'fclose' module.
                             If your code creates a socket descriptor using
                             socket() or accept(), then a FILE stream referring

@@ -31,6 +31,12 @@
 #include "xalloc.h"
 #include "xgetcwd.h"
 
+/* In this file, we cannot handle file names longer than PATH_MAX.
+   On systems with no file name length limit, use a fallback.  */
+#ifndef PATH_MAX
+# define PATH_MAX 8192
+#endif
+
 #ifndef DOUBLE_SLASH_IS_DISTINCT_ROOT
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
 #endif
