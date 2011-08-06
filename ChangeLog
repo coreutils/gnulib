@@ -1,3 +1,8 @@
+2011-08-06  Karl Berry  <karl@gnu.org>
+
+	* MODULES.html.sh (func_all_files): _Noreturn is no longer
+	a separate module.
+
 2011-08-05  Simon Josefsson  <simon@josefsson.org>
 
 	openat: Fix warnings and commens when building unlinkat.c on Hurd.
