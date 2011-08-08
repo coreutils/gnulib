@@ -1,5 +1,11 @@
 2011-08-08  Bruno Haible  <bruno@clisp.org>
 
+	unictype/base: Fix interoperability with preinstalled libunistring.
+	* modules/unictype/base (configure.ac): Bump minimum version to 0.9.4.
+	Reported by Simon Josefsson.
+
+2011-08-08  Bruno Haible  <bruno@clisp.org>
+
 	iswblank: Detect declaration correctly.
 	* m4/iswblank.m4 (gl_FUNC_ISWBLANK): Use correct headers in
 	AC_CHECK_DECLS invocation.

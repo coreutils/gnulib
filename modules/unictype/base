@@ -10,7 +10,7 @@ unitypes
 stdbool
 
 configure.ac:
-gl_LIBUNISTRING_LIBHEADER([0.9], [unictype.h])
+gl_LIBUNISTRING_LIBHEADER([0.9.4], [unictype.h])
 
 Makefile.am:
 BUILT_SOURCES += $(LIBUNISTRING_UNICTYPE_H)
