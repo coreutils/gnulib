@@ -1,5 +1,11 @@
 2011-08-08  Bruno Haible  <bruno@clisp.org>
 
+	iswblank: Detect declaration correctly.
+	* m4/iswblank.m4 (gl_FUNC_ISWBLANK): Use correct headers in
+	AC_CHECK_DECLS invocation.
+
+2011-08-08  Bruno Haible  <bruno@clisp.org>
+
 	tcgetsid: Detect declaration correctly.
 	* m4/tcgetsid.m4 (gl_FUNC_TCGETSID): Use correct headers in
 	AC_CHECK_DECLS invocation.
