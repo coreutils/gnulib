@@ -1,3 +1,9 @@
+2011-08-09  Eric Blake  <eblake@redhat.com>
+
+	fseeko: fix bug on glibc
+	* lib/fseeko.c (fseeko): Set stream offset to match fd offset.
+	Reported by John W. Eaton.
+
 2011-08-08  Bruno Haible  <bruno@clisp.org>
 
 	unictype/base: Fix interoperability with preinstalled libunistring.

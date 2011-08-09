@@ -111,6 +111,7 @@ fseeko (FILE *fp, off_t offset, int whence)
 
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
       fp->_flags &= ~_IO_EOF_SEEN;
+      fp->_offset = pos;
 #elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 # if defined __CYGWIN__
       /* fp_->_offset is typed as an integer.  */
