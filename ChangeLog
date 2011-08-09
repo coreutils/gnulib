@@ -1,7 +1,7 @@
 2011-08-09  Eric Blake  <eblake@redhat.com>
 
 	fseeko: remove unneeded hack
-	* tests/test-fflush2.c (main): Don't special-case SEEK_END.
+	* lib/fseeko.c (fseeko): Don't special-case SEEK_END.
 
 	fseeko: fix bug on glibc
 	* lib/fseeko.c (fseeko): Set stream offset to match fd offset.
