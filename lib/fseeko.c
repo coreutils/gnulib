@@ -93,14 +93,10 @@ fseeko (FILE *fp, off_t offset, int whence)
   #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
 #endif
     {
-      /* We get here when an fflush() call immediately preceded this one.  We
-         know there are no buffers.
-         POSIX requires us to modify the file descriptor's position.
-         But we cannot position beyond end of file here.  */
-      off_t pos =
-        lseek (fileno (fp),
-               whence == SEEK_END && offset > 0 ? 0 : offset,
-               whence);
+      /* We get here when an fflush() call immediately preceded this one (or
+         if ftell() has created buffers but no I/O has occurred on a
+         newly-opened stream).  We know there are no buffers.  */
+      off_t pos = lseek (fileno (fp), offset, whence);
       if (pos == -1)
         {
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
@@ -141,10 +137,7 @@ fseeko (FILE *fp, off_t offset, int whence)
       fp->__offset = pos;
       fp->__eof = 0;
 #endif
-      /* If we were not requested to position beyond end of file, we're
-         done.  */
-      if (!(whence == SEEK_END && offset > 0))
-        return 0;
+      return 0;
     }
   return fseeko (fp, offset, whence);
 }
