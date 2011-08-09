@@ -1,3 +1,12 @@
+2011-08-09  Bruno Haible  <bruno@clisp.org>
+
+	More tests for 'fseeko'.
+	* tests/test-fseeko3.c: New file, from Eric Blake.
+	* tests/test-fseeko3.sh: New file.
+	* modules/fseeko-tests (Files): Add them.
+	(TESTS): Add test-fseeko3.sh.
+	(check_PROGRAMS): Add test-fseeko3.
+
 2011-08-09  Eric Blake  <eblake@redhat.com>
 
 	fseeko: remove unneeded hack

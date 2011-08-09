@@ -2,6 +2,8 @@ Files:
 tests/test-fseeko.c
 tests/test-fseeko.sh
 tests/test-fseeko2.sh
+tests/test-fseeko3.c
+tests/test-fseeko3.sh
 tests/signature.h
 tests/macros.h
 m4/ungetc.m4
@@ -12,5 +14,5 @@ configure.ac:
 gl_FUNC_UNGETC_WORKS
 
 Makefile.am:
-TESTS += test-fseeko.sh test-fseeko2.sh
-check_PROGRAMS += test-fseeko
+TESTS += test-fseeko.sh test-fseeko2.sh test-fseeko3.sh
+check_PROGRAMS += test-fseeko test-fseeko3
