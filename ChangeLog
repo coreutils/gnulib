@@ -1,3 +1,11 @@
+2011-08-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	base64: fix off-by-one buffer size bug
+	Problem and (trivial) fix reported by Gijs van Tulder in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-08/msg00083.html>.
+	* lib/base64.c (base64_decode_alloc_ctx): Allocate one more byte.
+	* tests/test-base64.c (main): Catch the bug.
+
 2011-08-10  Eric Blake  <eblake@redhat.com>
 
 	closein: correct comments

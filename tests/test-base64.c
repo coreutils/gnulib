@@ -184,9 +184,8 @@ main (void)
 
     ok = base64_decode_alloc_ctx (&ctx, "hp", 2, &p, &len);
     ASSERT (ok);
-    ASSERT (len == 2);
-    /* Actually this looks buggy.  Shouldn't output be 'ghi'? */
-    ASSERT (memcmp (p, "gh", len) == 0);
+    ASSERT (len == 3);
+    ASSERT (memcmp (p, "ghi", len) == 0);
     ok = base64_decode_alloc_ctx (&ctx, "", 0, &p, &len);
     ASSERT (ok);
   }
