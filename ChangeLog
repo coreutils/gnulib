@@ -1,3 +1,8 @@
+2011-08-10  Eric Blake  <eblake@redhat.com>
+
+	closein: correct comments
+	* lib/closein.c (close_stdin): Improve comments.
+
 2011-08-09  Bruno Haible  <bruno@clisp.org>
 
 	More tests for 'fseeko'.

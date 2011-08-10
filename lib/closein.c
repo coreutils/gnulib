@@ -55,7 +55,7 @@ close_stdin_set_file_name (const char *file)
    For example, POSIX requires that these two commands behave alike:
 
      (sed -ne 1q; cat) < file
-     tail -n 1 file
+     tail -n +2 file
 
    Since close_stdin is commonly registered via 'atexit', POSIX
    and the C standard both say that it should not call 'exit',
@@ -82,7 +82,8 @@ close_stdin (void)
 
   /* There is no need to flush stdin if we can determine quickly that stdin's
      input buffer is empty; in this case we know that if stdin is seekable,
-     fseeko (stdin, 0, SEEK_CUR) == lseek (0, 0, SEEK_CUR).  */
+     (fseeko (stdin, 0, SEEK_CUR), ftello (stdin))
+     == lseek (0, 0, SEEK_CUR).  */
   if (freadahead (stdin) > 0)
     {
       /* Only attempt flush if stdin is seekable, as fflush is entitled to
