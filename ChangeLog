@@ -1,5 +1,7 @@
 2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* build-aux/bootstrap (slurp): Remove obsolescent gettext.m4 patch.
+
 	po/Makefile.in.in: fix make -q problem
 	* build-aux/po/Makefile.in.in (check-macro-version): Remove this
 	rule, since there's no file named 'check-macro-version' and its
