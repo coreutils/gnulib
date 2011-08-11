@@ -19,7 +19,7 @@
  * (mailbox/filter_trans.c, as of 2004-11-28).  Improved by review
  * from Paul Eggert, Bruno Haible, and Stepan Kasal.
  *
- * See also RFC 3548 <http://www.ietf.org/rfc/rfc3548.txt>.
+ * See also RFC 4648 <http://www.ietf.org/rfc/rfc4648.txt>.
  *
  * Be careful with error checking.  Here is how you would typically
  * use these functions:

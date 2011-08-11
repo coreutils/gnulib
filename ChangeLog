@@ -1,3 +1,9 @@
+2011-08-12  Simon Josefsson  <simon@josefsson.org>
+
+	* lib/base64.c: Fix comment to reference RFC 4648.
+	Suggested by Bruno Haible <bruno@clisp.org> and Gijs van Tulder
+	<gvtulder@gmail.com>.
+
 2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* build-aux/bootstrap (slurp): Remove obsolescent gettext.m4 patch.
