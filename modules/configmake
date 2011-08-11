@@ -44,12 +44,8 @@ configmake.h: Makefile
 	  echo '#define PKGINCLUDEDIR "$(pkgincludedir)"'; \
 	  echo '#define PKGLIBDIR "$(pkglibdir)"'; \
 	  echo '#define PKGLIBEXECDIR "$(pkglibexecdir)"'; \
-	} | sed '/""/d' > $@-t && \
-	if test -f $@ && cmp $@-t $@ > /dev/null; then \
-	  rm -f $@-t; \
-	else \
-	  rm -f $@; mv $@-t $@; \
-	fi
+	} | sed '/""/d' > $@-t
+	mv -f $@-t $@
 
 BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t

@@ -1,3 +1,11 @@
+2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	configmake: fix make -q problem
+	* modules/configmake (configmake.h): Update configmake.h's time stamp
+	even if the file does not change.  Otherwise, 'make -q' fails.
+	Problem reported by Simon Josefsson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-08/msg00088.html>.
+
 2011-08-11  Jim Meyering  <meyering@redhat.com>
 
 	git-version-gen: correct the advice in a comment
