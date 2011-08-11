@@ -1,5 +1,13 @@
 2011-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	po/Makefile.in.in: fix make -q problem
+	* build-aux/po/Makefile.in.in (check-macro-version): Remove this
+	rule, since there's no file named 'check-macro-version' and its
+	use as a file breaks make -q.
+	(all): Don't depend on check-macro-version.
+	(CHECK_MACRO_VERSION): New macro.
+	(stamp-po): Use it.
+
 	configmake: fix make -q problem
 	* modules/configmake (configmake.h): Update configmake.h's time stamp
 	even if the file does not change.  Otherwise, 'make -q' fails.
