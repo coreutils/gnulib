@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-07-31.12; # UTC
+scriptversion=2011-08-11.12; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -44,8 +44,10 @@ scriptversion=2011-07-31.12; # UTC
 #   files to pick up a version string change; and leave it stale to
 #   minimize rebuild time after unrelated changes to configure sources.
 #
-# It is probably wise to add these two files to .gitignore, so that you
-# don't accidentally commit either generated file.
+# As with any generated file in a VC'd directory, you should add
+# /.version to .gitignore, so that you don't accidentally commit it.
+# .tarball-version is never generated in a VC'd directory, so needn't
+# be listed there.
 #
 # Use the following line in your configure.ac, so that $(VERSION) will
 # automatically be up-to-date each time configure is run (and note that

@@ -1,3 +1,9 @@
+2011-08-11  Jim Meyering  <meyering@redhat.com>
+
+	git-version-gen: correct the advice in a comment
+	* build-aux/git-version-gen: Correct comment.
+	Don't recommend to list .tarball-version in .gitignore.
+
 2011-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	base64: fix off-by-one buffer size bug
