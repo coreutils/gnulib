@@ -1,3 +1,14 @@
+2011-08-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getaddrinfo: fix sh typo in gai_strerrorA decl checking
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Fix typo in the generated
+	shell code: it contained a 'break' that was not in a loop.
+	Apparently the macro assumed that AC_CHECK_DECLS is implemenented
+	via a shell-language loop; this may have been true in old Autoconf
+	versions, but it's not true in Autoconf 2.68.  I found this bug
+	when testing coreutils git on Solaris 8, whose shell complains
+	about the syntax error.
+
 2011-08-12  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/base64.c: Fix comment to reference RFC 4648.
