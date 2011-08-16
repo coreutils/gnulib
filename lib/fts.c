@@ -1233,12 +1233,6 @@ fts_build (register FTS *sp, int type)
          * Open the directory for reading.  If this fails, we're done.
          * If being called from fts_read, set the fts_info field.
          */
-#if defined FTS_WHITEOUT && 0
-        if (ISSET(FTS_WHITEOUT))
-                oflag = DTF_NODUP|DTF_REWIND;
-        else
-                oflag = DTF_HIDEW|DTF_NODUP|DTF_REWIND;
-#else
 # define __opendir2(file, flag) \
         opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
                    ? sp->fts_cwd_fd : AT_FDCWD),                \
@@ -1249,7 +1243,7 @@ fts_build (register FTS *sp, int type)
                     ? O_NOFOLLOW : 0)                           \
                    | (ISSET (FTS_NOATIME) ? O_NOATIME : 0)),    \
                   &dir_fd)
-#endif
+
        if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
                 if (type == BREAD) {
                         cur->fts_info = FTS_DNR;
@@ -1412,10 +1406,6 @@ mem1:                           saved_errno = errno;
                 p->fts_parent = sp->fts_cur;
                 p->fts_pathlen = new_len;
 
-#if defined FTS_WHITEOUT && 0
-                if (dp->d_type == DT_WHT)
-                        p->fts_flags |= FTS_ISW;
-#endif
                 /* Store dirent.d_ino, in case we need to sort
                    entries before processing them.  */
                 p->fts_statp->st_ino = D_INO (dp);
@@ -1689,15 +1679,6 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
 
         if (p->fts_level == FTS_ROOTLEVEL && ISSET(FTS_COMFOLLOW))
                 follow = true;
-
-#if defined FTS_WHITEOUT && 0
-        /* check for whiteout */
-        if (p->fts_flags & FTS_ISW) {
-                memset(sbp, '\0', sizeof (*sbp));
-                sbp->st_mode = S_IFWHT;
-                return (FTS_W);
-       }
-#endif
 
         /*
          * If doing a logical walk, or application requested FTS_FOLLOW, do
