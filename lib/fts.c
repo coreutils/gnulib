@@ -1192,7 +1192,7 @@ set_stat_type (struct stat *st, unsigned int dtype)
   st->st_mode = type;
 }
 
-# define __opendir2(file) \
+#define fts_opendir(file, Pdir_fd)                              \
         opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
                    ? sp->fts_cwd_fd : AT_FDCWD),                \
                   file,                                         \
@@ -1201,7 +1201,7 @@ set_stat_type (struct stat *st, unsigned int dtype)
                            && cur->fts_level == FTS_ROOTLEVEL)) \
                     ? O_NOFOLLOW : 0)                           \
                    | (ISSET (FTS_NOATIME) ? O_NOATIME : 0)),    \
-                  &dir_fd)
+                  Pdir_fd)
 
 /*
  * This is the tricky part -- do not casually change *anything* in here.  The
@@ -1242,7 +1242,7 @@ fts_build (register FTS *sp, int type)
 
         /* Open the directory for reading.  If this fails, we're done.
            If being called from fts_read, set the fts_info field.  */
-        if ((dirp = __opendir2(cur->fts_accpath)) == NULL) {
+        if ((dirp = fts_opendir(cur->fts_accpath, &dir_fd)) == NULL) {
                 if (type == BREAD) {
                         cur->fts_info = FTS_DNR;
                         cur->fts_errno = errno;
