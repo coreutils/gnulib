@@ -1,3 +1,13 @@
+2011-08-15  Ben Pfaff  <blp@cs.stanford.edu>
+
+	relocatable-prog: fix link error
+	* modules/relocatable-prog (configure.ac) [RELOCATABLE]: Also
+	invoke AC_LIBOBJ([relocatable]).  This invocation was previously
+	in the gl_RELOCATABLE_LIBRARY macro.  That invocation was moved
+	into modules/relocatable-lib without noticing that
+	modules/relocatable-prog also invokes gl_RELOCATABLE_LIBRARY and
+	also needs to build relocatable.c.
+
 2011-08-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getaddrinfo: fix sh typo in gai_strerrorA decl checking

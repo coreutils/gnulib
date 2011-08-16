@@ -28,6 +28,7 @@ configure.ac:
 gl_RELOCATABLE([$gl_source_base])
 if test $RELOCATABLE = yes; then
   AC_LIBOBJ([progreloc])
+  AC_LIBOBJ([relocatable])
 fi
 
 Makefile.am:
