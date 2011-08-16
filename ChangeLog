@@ -1,5 +1,8 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	maint: fts.c: remove __opendir2's now-unused parameter, oflag
+	* lib/fts.c (__opendir2): Remove unused parameter, oflag.
+
 	maint: fts.c: correct off-by-one indentation
 	* lib/fts.c (fts_build): Correct indentation, change style
 	of a couple of block comments, and bracing style.
