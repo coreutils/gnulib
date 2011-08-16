@@ -1192,6 +1192,17 @@ set_stat_type (struct stat *st, unsigned int dtype)
   st->st_mode = type;
 }
 
+# define __opendir2(file, flag) \
+        opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
+                   ? sp->fts_cwd_fd : AT_FDCWD),                \
+                  file,                                         \
+                  (((ISSET(FTS_PHYSICAL)                        \
+                     && ! (ISSET(FTS_COMFOLLOW)                 \
+                           && cur->fts_level == FTS_ROOTLEVEL)) \
+                    ? O_NOFOLLOW : 0)                           \
+                   | (ISSET (FTS_NOATIME) ? O_NOATIME : 0)),    \
+                  &dir_fd)
+
 /*
  * This is the tricky part -- do not casually change *anything* in here.  The
  * idea is to build the linked list of entries that are used by fts_children
@@ -1229,21 +1240,8 @@ fts_build (register FTS *sp, int type)
         /* Set current node pointer. */
         cur = sp->fts_cur;
 
-        /*
-         * Open the directory for reading.  If this fails, we're done.
-         * If being called from fts_read, set the fts_info field.
-         */
-# define __opendir2(file, flag) \
-        opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
-                   ? sp->fts_cwd_fd : AT_FDCWD),                \
-                  file,                                         \
-                  (((ISSET(FTS_PHYSICAL)                        \
-                     && ! (ISSET(FTS_COMFOLLOW)                 \
-                           && cur->fts_level == FTS_ROOTLEVEL)) \
-                    ? O_NOFOLLOW : 0)                           \
-                   | (ISSET (FTS_NOATIME) ? O_NOATIME : 0)),    \
-                  &dir_fd)
-
+        /* Open the directory for reading.  If this fails, we're done.
+           If being called from fts_read, set the fts_info field.  */
        if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
                 if (type == BREAD) {
                         cur->fts_info = FTS_DNR;

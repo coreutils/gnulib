@@ -1,5 +1,8 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	maint: fts.c: move __opendir2 #define "up" out of function body
+	* lib/fts.c (__opendir2): Move "up".  No semantic change.
+
 	maint: fts.c: remove #if-0'd FTS_WHITEOUT code
 	* lib/fts.c: Remove #if-0'd FTS_WHITEOUT code.  It's been #if-0'd
 	out for a long time and besides was useful only on BSD systems.
