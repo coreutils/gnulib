@@ -1,5 +1,9 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	maint: fts.c: correct off-by-one indentation
+	* lib/fts.c (fts_build): Correct indentation, change style
+	of a couple of block comments, and bracing style.
+
 	maint: fts.c: move __opendir2 #define "up" out of function body
 	* lib/fts.c (__opendir2): Move "up".  No semantic change.
 

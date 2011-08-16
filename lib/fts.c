@@ -1242,38 +1242,37 @@ fts_build (register FTS *sp, int type)
 
         /* Open the directory for reading.  If this fails, we're done.
            If being called from fts_read, set the fts_info field.  */
-       if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
+        if ((dirp = __opendir2(cur->fts_accpath, oflag)) == NULL) {
                 if (type == BREAD) {
                         cur->fts_info = FTS_DNR;
                         cur->fts_errno = errno;
                 }
                 return (NULL);
         }
-       /* Rather than calling fts_stat for each and every entry encountered
-          in the readdir loop (below), stat each directory only right after
-          opening it.  */
-       if (cur->fts_info == FTS_NSOK)
-         cur->fts_info = fts_stat(sp, cur, false);
-       else if (sp->fts_options & FTS_TIGHT_CYCLE_CHECK) {
-                /* Now read the stat info again after opening a directory to
-                 * reveal eventual changes caused by a submount triggered by
-                 * the traversal.  But do it only for utilities which use
-                 * FTS_TIGHT_CYCLE_CHECK.  Therefore, only find and du
-                 * benefit/suffer from this feature for now.
-                 */
-                LEAVE_DIR (sp, cur, "4");
-                fts_stat (sp, cur, false);
-                if (! enter_dir (sp, cur)) {
-                         __set_errno (ENOMEM);
-                         return NULL;
-                }
-        }
+        /* Rather than calling fts_stat for each and every entry encountered
+           in the readdir loop (below), stat each directory only right after
+           opening it.  */
+        if (cur->fts_info == FTS_NSOK)
+          cur->fts_info = fts_stat(sp, cur, false);
+        else if (sp->fts_options & FTS_TIGHT_CYCLE_CHECK)
+          {
+            /* Now read the stat info again after opening a directory to
+               reveal eventual changes caused by a submount triggered by
+               the traversal.  But do it only for utilities which use
+               FTS_TIGHT_CYCLE_CHECK.  Therefore, only find and du
+               benefit/suffer from this feature for now. */
+            LEAVE_DIR (sp, cur, "4");
+            fts_stat (sp, cur, false);
+            if (! enter_dir (sp, cur))
+              {
+                __set_errno (ENOMEM);
+                return NULL;
+              }
+          }
 
-        /*
-         * Nlinks is the number of possible entries of type directory in the
-         * directory if we're cheating on stat calls, 0 if we're not doing
-         * any stat calls at all, (nlink_t) -1 if we're statting everything.
-         */
+        /* Nlinks is the number of possible entries of type directory in the
+           directory if we're cheating on stat calls, 0 if we're not doing
+           any stat calls at all, (nlink_t) -1 if we're statting everything.  */
         if (type == BNAMES) {
                 nlinks = 0;
                 /* Be quiet about nostat, GCC. */
