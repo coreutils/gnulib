@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 30, 2011
+@set lastupdate August 14, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -93,8 +93,8 @@ In addition to this document, please read and follow the GNU Coding
 Standards (@pxref{Top, , Contents, standards, GNU Coding Standards}).
 
 @cindex @code{bug-standards@@gnu.org} email address
-@cindex Savannah repository for gnustandards
-@cindex gnustandards project repository
+@cindex Savannah repository for @code{gnustandards}
+@cindex @code{gnustandards} project repository
 Please send corrections or suggestions for this document to
 @email{bug-standards@@gnu.org}.  If you make a suggestion, please
 include suggested new wording if you can.  We prefer a context diff to
@@ -200,12 +200,11 @@ If you have an idea for who should take over, please tell
 maintainer needs the GNU Project's confirmation, but your judgment that
 a person is capable of doing the job will carry a lot of weight.
 
-As your final act as maintainer, it would be helpful to set up the
-package under @code{savannah.gnu.org} if it is not there already
-(@pxref{Old Versions}).  This will make it much easier for the new
-maintainer to pick up where you left off and will ensure that the
-source tree is not misplaced if it takes us a while to find a new
-maintainer.
+As your final act as maintainer, it would be helpful to set up or
+update the package under @code{savannah.gnu.org} (@pxref{Old
+Versions}).  This will make it much easier for the new maintainer to
+pick up where you left off and will ensure that the source tree is not
+misplaced if it takes us a while to find a new maintainer.
 
 
 @node Recruiting Developers
@@ -1170,8 +1169,8 @@ useful for your package.
 
 It is very important to keep backup files of all source files of GNU.
 You can do this using a source control system (such as Bazaar, RCS,
-CVS, Git, Subversion, @dots{}) if you like.  The easiest way to use
-RCS or CVS is via the Version Control library in Emacs
+CVS, Git, Subversion, @dots{}) if you like.  An easy way to use
+many such systems is via the Version Control library in Emacs
 (@pxref{Introduction to VC,, Introduction to Version Control, emacs,
 The GNU Emacs Manual}).
 
@@ -1182,16 +1181,18 @@ change log that you would not want to hand over to another maintainer
 some day.
 
 @cindex @code{savannah-hackers@@gnu.org}
-The GNU Project provides a server that GNU software packages can use
+The GNU Project provides a server that GNU packages can use
 for source control and other package needs: @code{savannah.gnu.org}.
 Savannah is managed by @email{savannah-hackers@@gnu.org}.  For more
 details on using and contributing to Savannah, see
 @url{http://savannah.gnu.org/maintenance}.
 
-It's not a requirement, but all GNU maintainers are strongly
+It's not an absolute requirement, but all GNU maintainers are strongly
 encouraged to take advantage of Savannah, as sharing such a central
-point can serve to foster a sense of community among GNU developers
-and help in keeping up with project management.
+point can serve to foster a sense of community among GNU developers as
+well as help in keeping up with project management.  Please don't mark
+Savannah projects for GNU packages as private; that defeats a large
+part of the purpose of using Savannah in the first place.
 
 @cindex @code{savannah-announce@@gnu.org} mailing list
 If you do use Savannah, please subscribe to the
