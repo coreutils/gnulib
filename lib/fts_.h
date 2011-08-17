@@ -67,6 +67,7 @@
 
 # include <stddef.h>
 # include <sys/types.h>
+# include <dirent.h>
 # include <sys/stat.h>
 # include "i-ring.h"
 
@@ -191,6 +192,9 @@ typedef struct _ftsent {
         struct _ftsent *fts_cycle;      /* cycle node */
         struct _ftsent *fts_parent;     /* parent directory */
         struct _ftsent *fts_link;       /* next file in directory */
+        DIR *fts_dirp;                  /* Dir pointer for any directory
+                                           containing more entries than we
+                                           read at one time.  */
         long fts_number;                /* local numeric value */
         void *fts_pointer;              /* local address value */
         char *fts_accpath;              /* access file name */

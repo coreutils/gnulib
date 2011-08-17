@@ -1,5 +1,18 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	fts: add/use new struct member, fts_dirp
+	We are about to use this to manage any directory with
+	too many entries to read all of them into memory at once.
+	To do that, we'll need to save the DIR* pointer in each
+	affected FTSENT struct.
+	* lib/fts_.h: Include <dirent.h>.
+	(struct FTSENT) [fts_dirp]: New member.
+	* lib/fts.c (closedir_and_clear): Define.
+	Use it in place of closedir so that we are sure to
+	clear the new fts_dirp member when done with it.
+	(fts_alloc): Initialize the new member.
+	(fts_lfree): Free, if needed.
+
 	maint: fts: give __opendir2 a new parameter and rename
 	* lib/fts.c (__opendir2): Give it a new parameter, Pdir_fd, rather
 	than surreptitiously using sole caller's "dir_fd".

@@ -1192,6 +1192,14 @@ set_stat_type (struct stat *st, unsigned int dtype)
   st->st_mode = type;
 }
 
+#define closedir_and_clear(dirp)                \
+  do                                            \
+    {                                           \
+      closedir (dirp);                          \
+      dirp = NULL;                              \
+    }                                           \
+  while (0)
+
 #define fts_opendir(file, Pdir_fd)                              \
         opendirat((! ISSET(FTS_NOCHDIR) && ISSET(FTS_CWDFD)     \
                    ? sp->fts_cwd_fd : AT_FDCWD),                \
@@ -1224,8 +1232,7 @@ fts_build (register FTS *sp, int type)
         register struct dirent *dp;
         register FTSENT *p, *head;
         register size_t nitems;
-        FTSENT *cur, *tail;
-        DIR *dirp;
+        FTSENT *tail;
         void *oldaddr;
         int saved_errno;
         bool descend;
@@ -1236,13 +1243,11 @@ fts_build (register FTS *sp, int type)
         size_t len, maxlen, new_len;
         char *cp;
         int dir_fd;
-
-        /* Set current node pointer. */
-        cur = sp->fts_cur;
+        FTSENT *cur = sp->fts_cur;
 
         /* Open the directory for reading.  If this fails, we're done.
            If being called from fts_read, set the fts_info field.  */
-        if ((dirp = fts_opendir(cur->fts_accpath, &dir_fd)) == NULL) {
+        if ((cur->fts_dirp = fts_opendir(cur->fts_accpath, &dir_fd)) == NULL) {
                 if (type == BREAD) {
                         cur->fts_info = FTS_DNR;
                         cur->fts_errno = errno;
@@ -1313,10 +1318,10 @@ fts_build (register FTS *sp, int type)
                                 cur->fts_errno = errno;
                         cur->fts_flags |= FTS_DONTCHDIR;
                         descend = false;
-                        closedir(dirp);
+                        closedir_and_clear(cur->fts_dirp);
                         if (ISSET(FTS_CWDFD) && 0 <= dir_fd)
                                 close (dir_fd);
-                        dirp = NULL;
+                        cur->fts_dirp = NULL;
                 } else
                         descend = true;
         } else
@@ -1347,7 +1352,7 @@ fts_build (register FTS *sp, int type)
 
         /* Read the directory, attaching each entry to the `link' pointer. */
         doadjust = false;
-        for (head = tail = NULL, nitems = 0; dirp && (dp = readdir(dirp));) {
+        for (head = tail = NULL, nitems = 0; cur->fts_dirp && (dp = readdir(cur->fts_dirp));) {
                 bool is_dir;
 
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
@@ -1368,7 +1373,7 @@ fts_build (register FTS *sp, int type)
 mem1:                           saved_errno = errno;
                                 free(p);
                                 fts_lfree(head);
-                                closedir(dirp);
+                                closedir_and_clear(cur->fts_dirp);
                                 cur->fts_info = FTS_ERR;
                                 SET(FTS_STOP);
                                 __set_errno (saved_errno);
@@ -1393,7 +1398,7 @@ mem1:                           saved_errno = errno;
                          */
                         free(p);
                         fts_lfree(head);
-                        closedir(dirp);
+                        closedir_and_clear(cur->fts_dirp);
                         cur->fts_info = FTS_ERR;
                         SET(FTS_STOP);
                         __set_errno (ENAMETOOLONG);
@@ -1459,8 +1464,8 @@ mem1:                           saved_errno = errno;
                 }
                 ++nitems;
         }
-        if (dirp)
-                closedir(dirp);
+        if (cur->fts_dirp)
+                closedir_and_clear(cur->fts_dirp);
 
         /*
          * If realloc() changed the address of the file name, adjust the
@@ -1803,6 +1808,7 @@ fts_alloc (FTS *sp, const char *name, register size_t namelen)
         p->fts_fts = sp;
         p->fts_path = sp->fts_path;
         p->fts_errno = 0;
+        p->fts_dirp = NULL;
         p->fts_flags = 0;
         p->fts_instr = FTS_NOINSTR;
         p->fts_number = 0;
@@ -1819,6 +1825,8 @@ fts_lfree (register FTSENT *head)
         /* Free a linked list of structures. */
         while ((p = head)) {
                 head = head->fts_link;
+                if (p->fts_dirp)
+                        closedir (p->fts_dirp);
                 free(p);
         }
 }
