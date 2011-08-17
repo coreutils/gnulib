@@ -1,5 +1,30 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	fts: do not exhaust memory when processing million-entry directories
+	Before this change, traversing (via rm -rf, find, du, etc.) an N-entry
+	directory would require about 256*N bytes of memory.  Thus, it was
+	easy to construct a directory too large to be processed by any of
+	those tools.  With this change, fts' maximum memory utilization is
+	now limited to around 30MB.
+	* lib/fts.c (FTS_MAX_READDIR_ENTRIES): Define.
+	(fts_read): When we've processed the final entry (i.e., when
+	->fts_link is NULL) and fts_dirp is non-NULL, call fts_build
+	using the parent entry to read any remaining entries.  Dispatch
+	depending on what fts_build returns:
+	- NULL+stop, aka failure: stop
+	- NULL otherwise: move up in the dir hierarchy
+	- non-NULL: handle this new entry
+	(fts_build): Declare and use new local, continue_readdir.
+	Prepare to be called from fts_read, when the entries
+	from a partially-read directory have just been exhausted.
+	In that case, we'll skip the opendir and instead use the parent's
+	fts_dirp and derive dir_fd from that.
+	Finally, in the readdir loop, if we read max_entries entries,
+	exit the loop ensuring *not* to call closedir.  This is required
+	so that fts_dirp can be reused on a subsequent call.
+	Prompted by Ben England's report of memory exhaustion in find
+	and rm -rf vs. NFS: https://bugzilla.redhat.com/719749.
+
 	maint: fts: move decl of `dp' down into while loop; split a long line
 	* lib/fts.c (fts_build): No semantic change.
 

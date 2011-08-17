@@ -134,12 +134,21 @@ enum
 # define D_INO(dp) NOT_AN_INODE_NUMBER
 #endif
 
+/* If possible (see max_entries, below), read no more than this many directory
+   entries at a time.  Without this limit (i.e., when using non-NULL
+   fts_compar), processing a directory with 4,000,000 entries requires ~1GiB
+   of memory, and handling 64M entries would require 16GiB of memory.  */
+#ifndef FTS_MAX_READDIR_ENTRIES
+# define FTS_MAX_READDIR_ENTRIES 100000
+#endif
+
 /* If there are more than this many entries in a directory,
    and the conditions mentioned below are satisfied, then sort
    the entries on inode number before any further processing.  */
 #ifndef FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
 # define FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD 10000
 #endif
+
 enum
 {
   _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD = FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
@@ -908,6 +917,27 @@ fts_read (register FTS *sp)
 
         /* Move to the next node on this level. */
 next:   tmp = p;
+
+        /* If we have so many directory entries that we're reading them
+           in batches, and we've reached the end of the current batch,
+           read in a new batch.  */
+        if (p->fts_link == NULL && p->fts_parent->fts_dirp)
+          {
+            p = tmp->fts_parent;
+            sp->fts_cur = p;
+            sp->fts_path[p->fts_pathlen] = '\0';
+
+            if ((p = fts_build (sp, BREAD)) == NULL)
+              {
+                if (ISSET(FTS_STOP))
+                  return NULL;
+                goto cd_dot_dot;
+              }
+
+            free(tmp);
+            goto name;
+          }
+
         if ((p = p->fts_link) != NULL) {
                 sp->fts_cur = p;
                 free(tmp);
@@ -996,6 +1026,7 @@ check_for_dir:
                   }
                 return p;
         }
+cd_dot_dot:
 
         /* Move up to the parent node. */
         p = tmp->fts_parent;
@@ -1243,40 +1274,76 @@ fts_build (register FTS *sp, int type)
         char *cp;
         int dir_fd;
         FTSENT *cur = sp->fts_cur;
+        bool continue_readdir = !!cur->fts_dirp;
 
-        /* Open the directory for reading.  If this fails, we're done.
-           If being called from fts_read, set the fts_info field.  */
-        if ((cur->fts_dirp = fts_opendir(cur->fts_accpath, &dir_fd)) == NULL) {
-                if (type == BREAD) {
-                        cur->fts_info = FTS_DNR;
-                        cur->fts_errno = errno;
-                }
-                return (NULL);
-        }
-        /* Rather than calling fts_stat for each and every entry encountered
-           in the readdir loop (below), stat each directory only right after
-           opening it.  */
-        if (cur->fts_info == FTS_NSOK)
-          cur->fts_info = fts_stat(sp, cur, false);
-        else if (sp->fts_options & FTS_TIGHT_CYCLE_CHECK)
+        /* When cur->fts_dirp is non-NULL, that means we should
+           continue calling readdir on that existing DIR* pointer
+           rather than opening a new one.  */
+        if (continue_readdir)
           {
-            /* Now read the stat info again after opening a directory to
-               reveal eventual changes caused by a submount triggered by
-               the traversal.  But do it only for utilities which use
-               FTS_TIGHT_CYCLE_CHECK.  Therefore, only find and du
-               benefit/suffer from this feature for now. */
-            LEAVE_DIR (sp, cur, "4");
-            fts_stat (sp, cur, false);
-            if (! enter_dir (sp, cur))
+            DIR *dp = cur->fts_dirp;
+            dir_fd = dirfd (dp);
+            if (dir_fd < 0)
               {
-                __set_errno (ENOMEM);
+                closedir_and_clear (cur->fts_dirp);
+                if (type == BREAD)
+                  {
+                    cur->fts_info = FTS_DNR;
+                    cur->fts_errno = errno;
+                  }
                 return NULL;
               }
           }
+        else
+          {
+            /* Open the directory for reading.  If this fails, we're done.
+               If being called from fts_read, set the fts_info field. */
+            if ((cur->fts_dirp = fts_opendir(cur->fts_accpath, &dir_fd)) == NULL)
+              {
+                if (type == BREAD)
+                  {
+                    cur->fts_info = FTS_DNR;
+                    cur->fts_errno = errno;
+                  }
+                return NULL;
+              }
+            /* Rather than calling fts_stat for each and every entry encountered
+               in the readdir loop (below), stat each directory only right after
+               opening it.  */
+            if (cur->fts_info == FTS_NSOK)
+              cur->fts_info = fts_stat(sp, cur, false);
+            else if (sp->fts_options & FTS_TIGHT_CYCLE_CHECK)
+              {
+                /* Now read the stat info again after opening a directory to
+                   reveal eventual changes caused by a submount triggered by
+                   the traversal.  But do it only for utilities which use
+                   FTS_TIGHT_CYCLE_CHECK.  Therefore, only find and du
+                   benefit/suffer from this feature for now.  */
+                LEAVE_DIR (sp, cur, "4");
+                fts_stat (sp, cur, false);
+                if (! enter_dir (sp, cur))
+                  {
+                    __set_errno (ENOMEM);
+                    return NULL;
+                  }
+              }
+          }
 
-        /* Nlinks is the number of possible entries of type directory in the
-           directory if we're cheating on stat calls, 0 if we're not doing
-           any stat calls at all, (nlink_t) -1 if we're statting everything.  */
+        /* Maximum number of readdir entries to read at one time.  This
+           limitation is to avoid reading millions of entries into memory
+           at once.  When an fts_compar function is specified, we have no
+           choice: we must read all entries into memory before calling that
+           function.  But when no such function is specified, we can read
+           entries in batches that are large enough to help us with inode-
+           sorting, yet not so large that we risk exhausting memory.  */
+        size_t max_entries = (sp->fts_compar == NULL
+                              ? FTS_MAX_READDIR_ENTRIES : SIZE_MAX);
+
+        /*
+         * Nlinks is the number of possible entries of type directory in the
+         * directory if we're cheating on stat calls, 0 if we're not doing
+         * any stat calls at all, (nlink_t) -1 if we're statting everything.
+         */
         if (type == BNAMES) {
                 nlinks = 0;
                 /* Be quiet about nostat, GCC. */
@@ -1305,7 +1372,13 @@ fts_build (register FTS *sp, int type)
          * needed sorted entries or stat information, they had better be
          * checking FTS_NS on the returned nodes.
          */
-        if (nlinks || type == BREAD) {
+        if (continue_readdir)
+          {
+            /* When resuming a short readdir run, we already have
+               the required dirp and dir_fd.  */
+            descend = true;
+          }
+        else if (nlinks || type == BREAD) {
                 if (ISSET(FTS_CWDFD))
                   {
                     dir_fd = dup (dir_fd);
@@ -1467,9 +1540,18 @@ mem1:                           saved_errno = errno;
                         tail = p;
                 }
                 ++nitems;
+                if (max_entries <= nitems) {
+                        /* When there are too many dir entries, leave
+                           fts_dirp open, so that a subsequent fts_read
+                           can take up where we leave off.  */
+                        goto break_without_closedir;
+                }
         }
+
         if (cur->fts_dirp)
                 closedir_and_clear(cur->fts_dirp);
+
+ break_without_closedir:
 
         /*
          * If realloc() changed the address of the file name, adjust the
@@ -1495,7 +1577,7 @@ mem1:                           saved_errno = errno;
          * to an empty directory, we wind up here with no other way back.  If
          * can't get back, we're done.
          */
-        if (descend && (type == BCHILD || !nitems) &&
+        if (!continue_readdir && descend && (type == BCHILD || !nitems) &&
             (cur->fts_level == FTS_ROOTLEVEL
              ? RESTORE_INITIAL_CWD(sp)
              : fts_safe_changedir(sp, cur->fts_parent, -1, ".."))) {
