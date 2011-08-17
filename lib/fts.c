@@ -1229,7 +1229,6 @@ static FTSENT *
 internal_function
 fts_build (register FTS *sp, int type)
 {
-        register struct dirent *dp;
         register FTSENT *p, *head;
         register size_t nitems;
         FTSENT *tail;
@@ -1352,9 +1351,14 @@ fts_build (register FTS *sp, int type)
 
         /* Read the directory, attaching each entry to the `link' pointer. */
         doadjust = false;
-        for (head = tail = NULL, nitems = 0; cur->fts_dirp && (dp = readdir(cur->fts_dirp));) {
+        head = NULL;
+        tail = NULL;
+        nitems = 0;
+        while (cur->fts_dirp) {
                 bool is_dir;
-
+                struct dirent *dp = readdir(cur->fts_dirp);
+                if (dp == NULL)
+                        break;
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
                         continue;
 

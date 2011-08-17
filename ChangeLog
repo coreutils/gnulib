@@ -1,5 +1,8 @@
 2011-08-19  Jim Meyering  <meyering@redhat.com>
 
+	maint: fts: move decl of `dp' down into while loop; split a long line
+	* lib/fts.c (fts_build): No semantic change.
+
 	fts: add/use new struct member, fts_dirp
 	We are about to use this to manage any directory with
 	too many entries to read all of them into memory at once.
