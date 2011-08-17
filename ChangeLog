@@ -1,5 +1,10 @@
 2011-08-17  Eric Blake  <eblake@redhat.com>
 
+	getcwd: fix compilation on mingw64
+	* lib/unistd.in.h (includes) [mingw]: Include <direct.h> for
+	getcwd.
+	Reported by Marc-André Lureau.
+
 	pipe2: silence compiler warning
 	* lib/pipe2.c (pipe2): Hide label if it is not used.
 
