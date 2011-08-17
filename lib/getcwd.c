@@ -146,7 +146,7 @@ __getcwd (char *buf, size_t size)
 
 # undef getcwd
   dir = getcwd (buf, size);
-  if (dir)
+  if (dir || (size && errno == ERANGE))
     return dir;
 
   /* Solaris getcwd (NULL, 0) fails with errno == EINVAL, but it has

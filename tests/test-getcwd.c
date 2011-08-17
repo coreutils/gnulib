@@ -68,7 +68,8 @@ test_abort_bug (void)
     {
       if (mkdir (dir_name, S_IRWXU) < 0 || chdir (dir_name) < 0)
         {
-          fail = 3; /* Unable to construct deep hierarchy.  */
+          if (! (errno == ERANGE || errno == ENAMETOOLONG || errno == ENOENT))
+            fail = 3; /* Unable to construct deep hierarchy.  */
           break;
         }
     }
@@ -77,7 +78,8 @@ test_abort_bug (void)
      results in a failed assertion.  */
   cwd = getcwd (NULL, 0);
   if (cwd == NULL)
-    fail = 4; /* getcwd failed.  This is ok, and expected.  */
+    fail = 4; /* getcwd didn't assert, but it failed for a long name
+                 where the answer could have been learned.  */
   free (cwd);
 
   /* Call rmdir first, in case the above chdir failed.  */
@@ -149,7 +151,7 @@ test_long_name (void)
          errors, be pessimistic and consider that as a failure, too.  */
       if (mkdir (DIR_NAME, S_IRWXU) < 0 || chdir (DIR_NAME) < 0)
         {
-          if (! (errno == ERANGE || errno == ENAMETOOLONG))
+          if (! (errno == ERANGE || errno == ENAMETOOLONG || errno == ENOENT))
             fail = 20;
           break;
         }

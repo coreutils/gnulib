@@ -1,5 +1,10 @@
 2011-08-17  Eric Blake  <eblake@redhat.com>
 
+	getcwd: fix test failures on mingw
+	* lib/getcwd.c (__getcwd): Early exit for ERANGE.
+	* tests/test-getcwd.c (test_abort_bug, test_long_name): Don't fail
+	test if long directory cannot be created, and allow mingw errno.
+
 	getcwd-lgpl: fix m4 to match relaxed test for BSD
 	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Relax probe.
 	(gl_FUNC_GETCWD_SIGNATURE): New macro.
