@@ -1,3 +1,22 @@
+2011-08-17  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	parse-datetime: accept ISO 8601 date and time rep with "T" separator
+	The parser now accepts ISO 8601 date-time strings with "T" as the
+	separator.  It has long parsed dates like "2004-02-29 16:21:42"
+	with a space between the date and time strings.  Now it also parses
+	"2004-02-29T16:21:42" and fractional-second and time-zone-annotated
+	variants like "2004-02-29T16:21:42.333-07:00"
+	* lib/parse-datetime.y: Parse ISO 8601 extended date and time
+	of day representation using the 'T' separator character.
+	* doc/parse-datetime.texi (General date syntax): replace use of
+	deprecated --iso-8601 option with --rfc-3339 in example of date
+	command output formats that can be parsed.
+	* tests/test-parse-datetime.c (tm_diff): New function, taken from
+	lib/parse-datetime.y.
+	(gmt_offset): New function.
+	(main): Add additional test cases to validate ISO8601 extended
+	date and time of day parsing.
+
 2011-08-31  Bruno Haible  <bruno@clisp.org>
 
 	freopen: Documentation.
