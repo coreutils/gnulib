@@ -14,7 +14,8 @@ On glibc platforms, @code{getcwd (NULL, n)} allocates memory for the result.
 On some other platforms, this call is not allowed.
 @item
 On some platforms, the prototype for @code{getcwd} uses @code{int}
-instead of @code{size_t} for the size argument:
+instead of @code{size_t} for the size argument when using non-standard
+headers, and the declaration is missing from @code{<unistd.h>}:
 mingw.
 @item
 On some platforms, @code{getcwd (buf, 0)} fails with @code{ERANGE}

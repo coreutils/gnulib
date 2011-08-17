@@ -1,5 +1,12 @@
 2011-08-17  Eric Blake  <eblake@redhat.com>
 
+	getcwd-lgpl: fix m4 to match relaxed test for BSD
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Relax probe.
+	(gl_FUNC_GETCWD_SIGNATURE): New macro.
+	(gl_FUNC_GETCWD_LGPL, gl_FUNC_GETCWD): Use it.
+	* doc/posix-functions/getcwd.texi (getcwd): Tweak mentions of
+	signature problem.
+
 	getcwd: fix compilation on mingw64
 	* lib/unistd.in.h (includes) [mingw]: Include <direct.h> for
 	getcwd.
