@@ -40,7 +40,7 @@ Here are most of the steps we (maintainers) follow when making a release.
     # "TYPE" must be stable, beta or alpha
     make TYPE
 
-* Test the tarball.  copy it to a few odd-ball systems and ensure that
+* Test the tarball.  Copy it to a few odd-ball systems and ensure that
   it builds and passes all tests.
 
 * While that's happening, write the release announcement that you will
