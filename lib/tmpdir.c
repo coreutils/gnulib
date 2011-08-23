@@ -33,10 +33,21 @@
 
 #include <stdio.h>
 #ifndef P_tmpdir
-# define P_tmpdir "/tmp"
+# ifdef _P_tmpdir /* native Windows */
+#  define P_tmpdir _P_tmpdir
+# else
+#  define P_tmpdir "/tmp"
+# endif
 #endif
 
 #include <sys/stat.h>
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
+#endif
+
+#include "pathmax.h"
 
 #if _LIBC
 # define struct_stat64 struct stat64
@@ -106,6 +117,19 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
     }
   if (dir == NULL)
     {
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+      char dirbuf[PATH_MAX];
+      DWORD retval;
+
+      /* Find Windows temporary file directory.
+         We try this before P_tmpdir because Windows defines P_tmpdir to "\\"
+         and will therefore try to put all temporary files in the root
+         directory (unless $TMPDIR is set).  */
+      retval = GetTempPath (PATH_MAX, dirbuf);
+      if (retval > 0 && retval < PATH_MAX && direxists (dirbuf))
+        dir = dirbuf;
+      else
+#endif
       if (direxists (P_tmpdir))
         dir = P_tmpdir;
       else if (strcmp (P_tmpdir, "/tmp") != 0 && direxists ("/tmp"))

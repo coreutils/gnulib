@@ -9,6 +9,7 @@ m4/tmpdir.m4
 Depends-on:
 stdbool
 sys_stat
+pathmax
 
 configure.ac:
 gt_TMPDIR

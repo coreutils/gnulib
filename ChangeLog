@@ -1,3 +1,13 @@
+2011-08-23  Bruno Haible  <bruno@clisp.org>
+
+	tmpdir: Use a good default directory on native Windows.
+	* lib/tmpdir.c: Include <windows.h>, pathmax.h.
+	(P_tmpdir): Default to _P_tmpdir on native Windows.
+	(path_search): On native Windows, try the value returned by GetTempPath
+	before trying P_tmpdir.
+	* modules/tmpdir (Depends-on): Add pathmax.
+	Suggested by John Darrington <john@darrington.wattle.id.au>.
+
 2011-08-20  Reuben Thomas  <rrt@sc3d.org>
 
 	doc: fix typo in README-release
