@@ -13,6 +13,7 @@ $AUTOMAKE/lib/install-sh	build-aux
 $AUTOMAKE/lib/mdate-sh		build-aux
 $AUTOMAKE/lib/missing		build-aux
 $AUTOMAKE/lib/mkinstalldirs	build-aux
+$AUTOMAKE/lib/ylwrap		build-aux
 #
 $TEXINFOSRC/doc/texinfo.tex		build-aux
 $TEXINFOSRC/util/gendocs.sh		build-aux

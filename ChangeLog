@@ -1,3 +1,8 @@
+2011-08-25  Karl Berry  <karl@gnu.org>
+
+	* config/srclist.txt (ylwrap): new try.
+	* build-aux/ylwrap: new file.
+
 2011-08-23  Bruno Haible  <bruno@clisp.org>
 
 	tmpdir: Use a good default directory on native Windows.
