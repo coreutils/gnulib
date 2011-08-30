@@ -1,3 +1,13 @@
+2011-08-30  Bruno Haible  <bruno@clisp.org>
+
+	Avoid endless recursions if config.h includes some header files.
+	* lib/fopen.c (__need_FILE): Define already before including config.h.
+	* lib/freopen.c (__need_FILE): Likewise.
+	* lib/open.c (__need_system_fcntl_h): Likewise.
+	* lib/stat.c (__need_system_sys_stat_h): Likewise.
+	* lib/lstat.c (__need_system_sys_stat_h): Likewise.
+	Reported by Michael Goffioul <michael.goffioul@gmail.com>.
+
 2011-08-25  Karl Berry  <karl@gnu.org>
 
 	* config/srclist.txt (ylwrap): new try.
