@@ -1,4 +1,4 @@
-# serial 33
+# serial 34
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -23,8 +23,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
   GNULIB_UNLINKAT=1
 
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_FUNCS_ONCE([lchmod])
-  AC_CHECK_FUNCS([fchmodat fstatat mkdirat openat unlinkat])
+  AC_CHECK_FUNCS_ONCE([fchmodat lchmod mkdirat openat unlinkat])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   AC_REQUIRE([gl_FUNC_UNLINK])
   case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink in
@@ -37,13 +36,11 @@ AC_DEFUN([gl_FUNC_OPENAT],
     # Solaris 9 has *at functions, but uniformly mishandles trailing
     # slash in all of them.
     REPLACE_OPENAT=1
-    REPLACE_FSTATAT=1
     REPLACE_UNLINKAT=1
     ;;
   *)
     HAVE_OPENAT=0
     HAVE_UNLINKAT=0 # No known system with unlinkat but not openat
-    HAVE_FSTATAT=0 # No known system with fstatat but not openat
     gl_PREREQ_OPENAT;;
   esac
   if test $ac_cv_func_fchmodat != yes; then
@@ -53,6 +50,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
     HAVE_MKDIRAT=0
   fi
   gl_FUNC_FCHOWNAT
+  gl_FUNC_FSTATAT
 ])
 
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])
@@ -153,6 +151,65 @@ AC_DEFUN([gl_FUNC_FCHOWNAT],
        REPLACE_FCHOWNAT=1
      fi],
     [HAVE_FCHOWNAT=0])
+])
+
+# If we have the fstatat function, and it has the bug (in AIX 7.1)
+# that it does not fill in st_size correctly, use the replacement function.
+AC_DEFUN([gl_FUNC_FSTATAT],
+[
+  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
+  AC_CHECK_FUNCS_ONCE([fstatat openat])
+
+  if test $ac_cv_func_fstatat = no; then
+    HAVE_FSTATAT=0
+  else
+    AC_CACHE_CHECK([whether fstatat fills in st_size etc.],
+      [gl_cv_func_fstatat_st_size_etc],
+      [gl_cv_func_fstatat_st_size_etc=no
+       echo xxx >conftest.file
+       AC_RUN_IFELSE(
+         [AC_LANG_SOURCE(
+            [[
+              #include <fcntl.h>
+              #include <sys/stat.h>
+
+              int
+              main (void)
+              {
+                struct stat a;
+                struct stat b;
+                if (fstatat (AT_FDCWD, "conftest.file", &a,
+                             AT_SYMLINK_NOFOLLOW)
+                    != 0)
+                  return 1;
+                if (lstat ("conftest.file", &b) != 0)
+                  return 2;
+                if (a.st_size != b.st_size) return 3;
+                if (a.st_dev != b.st_dev) return 4;
+                if (a.st_ino != b.st_ino) return 5;
+                if (a.st_mode != b.st_mode) return 6;
+                if (a.st_nlink != b.st_nlink) return 7;
+                if (a.st_uid != b.st_uid) return 8;
+                if (a.st_gid != b.st_gid) return 9;
+                /* Don't check time members, to avoid caching issues.  */
+                return 0;
+              }
+            ]])],
+         [gl_cv_func_fstatat_st_size_etc=yes])])
+
+    case $gl_cv_func_fstatat_st_size_etc+$gl_cv_func_lstat_dereferences_slashed_symlink in
+    yes+yes) ;;
+    *) REPLACE_FSTATAT=1
+       if test $gl_cv_func_fstatat_st_size_etc != yes; then
+         AC_DEFINE([FSTATAT_ST_SIZE_ETC_BROKEN], [1],
+           [Define to 1 if fstatat does not fill in st_size etc.,
+            as in AIX 7.1.])
+       fi
+       ;;
+    esac
+  fi
 ])
 
 AC_DEFUN([gl_PREREQ_OPENAT],

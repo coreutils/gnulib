@@ -1,3 +1,18 @@
+2011-08-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat: work around AIX 7.1 fstatat bug
+	Problem reported by Kevin Brott for GNU tar, in the thread containing
+	<http://lists.gnu.org/archive/html/bug-tar/2011-08/msg00015.html>.
+	* lib/fstatat.c (rpl_fstatat): Do not invoke underlying fstatat if
+	FSTATAT_ST_SIZE_ETC_BROKEN.
+	(fstatat) [FSTATAT_ST_SIZE_ETC_BROKEN && HAVE_FSTATAT]: #define to
+	rpl_fstatat.
+	* m4/openat.m4 (gl_FUNC_FSTATAT): New macro, with the fstatat-relevant
+	part of gl_FUNC_OPENAT.  Also, check for the AIX 7.1 bug, and use
+	AC_CHECK_FUNCS_ONCE for fstatat.
+	(gl_FUNC_OPENAT): Use it.  Use AC_CHECK_FUNCS_ONCE for
+	fchmodat, mkdirat, openat and unlinkat.
+
 2011-08-30  Bruno Haible  <bruno@clisp.org>
 
 	Avoid endless recursions if config.h includes some header files.

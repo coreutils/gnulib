@@ -25,7 +25,7 @@
 #include <fcntl.h>
 #include <string.h>
 
-#if HAVE_FSTATAT
+#if HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN
 
 # undef fstatat
 
@@ -65,7 +65,12 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
   return result;
 }
 
-#else /* !HAVE_FSTATAT */
+#else /* ! (HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN) */
+
+# if HAVE_FSTATAT
+#  undef fstatat
+#  define fstatat rpl_fstatat
+# endif
 
 /* On mingw, the gnulib <sys/stat.h> defines `stat' as a function-like
    macro; but using it in AT_FUNC_F2 causes compilation failure
@@ -107,4 +112,4 @@ stat_func (char const *name, struct stat *st)
 # undef AT_FUNC_POST_FILE_PARAM_DECLS
 # undef AT_FUNC_POST_FILE_ARGS
 
-#endif /* !HAVE_FSTATAT */
+#endif /* ! (HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN) */
