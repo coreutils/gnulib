@@ -1,5 +1,12 @@
 2011-08-31  Jim Meyering  <meyering@redhat.com>
 
+	maint: indent with spaces, not TABs
+	I need to get in the habit of running gnulib's "make check".
+	Both of these would have been caught.
+	* m4/largefile.m4: Indent with spaces, not TABs.
+	* lib/parse-datetime.y (iso_8601_time): Likewise.
+	Spotted by Pádraig Brady.
+
 	test-parse-datetime.c: accommodate a relatively strict gcc warning
 	* tests/test-parse-datetime.c (gmt_offset): Declare function "static",
 	to avoid a warning from gcc's -Werror=missing-declarations.

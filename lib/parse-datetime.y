@@ -381,7 +381,7 @@ iso_8601_time:
     tUNUMBER zone_offset
       {
         set_hhmmss (pc, $1.value, 0, 0, 0);
-	pc->meridian = MER24;
+        pc->meridian = MER24;
       }
   | tUNUMBER ':' tUNUMBER o_zone_offset
       {
