@@ -22,6 +22,10 @@ Portability problems not fixed by Gnulib:
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 @item
+This function does not support a @code{NULL} file name argument on some
+platforms:
+OpenBSD 4.9, AIX 7.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw.
+@item
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:

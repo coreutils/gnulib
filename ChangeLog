@@ -1,3 +1,10 @@
+2011-08-31  Bruno Haible  <bruno@clisp.org>
+
+	freopen: Documentation.
+	* doc/posix-functions/freopen.texi: Document the bug with the NULL file
+	name.
+	Reported by Claudio Bley <claudio.bley@gmail.com>.
+
 2011-08-31  Claudio Bley  <claudio.bley@gmail.com>  (tiny change)
 
 	freopen: Don't crash if the filename argument is NULL.
