@@ -1,5 +1,10 @@
 2011-08-31  Jim Meyering  <meyering@redhat.com>
 
+	tests: avoid spurious assertion failure in test-float.c on ppc64
+	* tests/test-float.c (test_long_double): Comment out an assertion,
+	LDBL_MIN_EXP <= DBL_MIN_EXP, that is failing at least on PowerPC-64
+	with gcc-4.4.4.
+
 	maint: indent with spaces, not TABs
 	I need to get in the habit of running gnulib's "make check".
 	Both of these would have been caught.
