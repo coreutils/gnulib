@@ -36,7 +36,7 @@
 #define LOG(str, now, res) (void) 0
 #endif
 
-static const char* const day_table[] =
+static const char *const day_table[] =
 {
   "SUNDAY",
   "MONDAY",
@@ -93,21 +93,21 @@ tm_diff (struct tm const *a, struct tm const *b)
 }
 #endif /* ! HAVE_TM_GMTOFF */
 
-long
-gmt_offset()
+static long
+gmt_offset ()
 {
   time_t now;
   long gmtoff;
 
-  time(&now);
+  time (&now);
 
 #if !HAVE_TM_GMTOFF
-  struct tm tm_local = *localtime(&now);
-  struct tm tm_gmt   = *gmtime(&now);
+  struct tm tm_local = *localtime (&now);
+  struct tm tm_gmt   = *gmtime (&now);
 
-  gmtoff = tm_diff(&tm_local, &tm_gmt);
+  gmtoff = tm_diff (&tm_local, &tm_gmt);
 #else
-  gmtoff = localtime(&now)->tm_gmtoff;
+  gmtoff = localtime (&now)->tm_gmtoff;
 #endif
 
   return gmtoff;
@@ -126,7 +126,7 @@ main (int argc _GL_UNUSED, char **argv)
 
   set_program_name (argv[0]);
 
-  gmtoff = gmt_offset();
+  gmtoff = gmt_offset ();
 
 
   /* ISO 8601 extended date and time of day representation,
