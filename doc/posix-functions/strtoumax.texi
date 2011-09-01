@@ -15,4 +15,7 @@ OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 9, Interix 3.5.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is only defined as a macro on some platforms:
+HP-UX 11.11.
 @end itemize
