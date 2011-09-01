@@ -17,7 +17,23 @@
 
 /* Written by Paul Eggert and Jim Meyering.  */
 
+/* If the user's config.h happens to include <sys/stat.h>, let it include only
+   the system's <sys/stat.h> here, so that orig_fstatat doesn't recurse to
+   rpl_fstatat.  */
+#define __need_system_sys_stat_h
 #include <config.h>
+
+/* Get the original definition of fstatat.  It might be defined as a macro.  */
+#include <sys/stat.h>
+#undef __need_system_sys_stat_h
+
+#if HAVE_FSTATAT
+static inline int
+orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
+{
+  return fstatat (fd, filename, buf, flags);
+}
+#endif
 
 #include <sys/stat.h>
 
@@ -25,7 +41,7 @@
 #include <fcntl.h>
 #include <string.h>
 
-#if HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN
+#if HAVE_FSTATAT
 
 # undef fstatat
 
@@ -38,7 +54,7 @@
 int
 rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
 {
-  int result = fstatat (fd, file, st, flag);
+  int result = orig_fstatat (fd, file, st, flag);
   size_t len;
 
   if (result != 0)
@@ -65,12 +81,7 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
   return result;
 }
 
-#else /* ! (HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN) */
-
-# if HAVE_FSTATAT
-#  undef fstatat
-#  define fstatat rpl_fstatat
-# endif
+#else /* !HAVE_FSTATAT */
 
 /* On mingw, the gnulib <sys/stat.h> defines `stat' as a function-like
    macro; but using it in AT_FUNC_F2 causes compilation failure
@@ -112,4 +123,4 @@ stat_func (char const *name, struct stat *st)
 # undef AT_FUNC_POST_FILE_PARAM_DECLS
 # undef AT_FUNC_POST_FILE_ARGS
 
-#endif /* ! (HAVE_FSTATAT && ! FSTATAT_ST_SIZE_ETC_BROKEN) */
+#endif /* !HAVE_FSTATAT */

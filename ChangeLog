@@ -1,3 +1,16 @@
+2011-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat: work around AIX 7.1 fstatat issue
+	This should fix the problem that was not properly fixed
+	in the previous change, dated 2011-08-30.
+	* lib/fstatat.c: Include <sys/stat.h> twice, the first with
+	__need_system_stat_h defined.
+	(orig_fstatat) [HAVE_FSTATAT]: New function.
+	(rpl_fstatat): Go back to the old way of doing things,
+	except call orig_fstatat instead of fstatat.
+	* m4/openat.m4 (gl_FUNC_FSTATAT): Remove unnecessary check for openat.
+	Remove unnecessary check whether fstatat fills in st_size etc.
+
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
 	sys_select: Avoid a syntax error regarding timespec_t on IRIX 6.5.
