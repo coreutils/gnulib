@@ -1,5 +1,9 @@
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'imaxdiv'.
+	* modules/imaxdiv-tests: New file.
+	* tests/test-imaxdiv.c: New file.
+
 	Tests for module 'imaxabs'.
 	* modules/imaxabs-tests: New file.
 	* tests/test-imaxabs.c: New file.
