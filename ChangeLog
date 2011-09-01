@@ -1,5 +1,13 @@
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
+	strtoumax: Avoid link error on OSF/1 with DTK cc.
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX): Always test whether strtoumax is
+	defined as a function.
+	* modules/strtoumax (Depends-on, configure.ac): Test only whether
+	strtoumax is defined, not whether it is declared.
+
+2011-09-01  Bruno Haible  <bruno@clisp.org>
+
 	strtoimax: Avoid link error on OSF/1 with DTK cc.
 	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Always test whether strtoimax is
 	defined as a function.
