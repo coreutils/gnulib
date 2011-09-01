@@ -10,7 +10,7 @@ inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXABS
-if test $HAVE_DECL_IMAXABS = 0; then
+if test $ac_cv_func_imaxabs = no; then
   AC_LIBOBJ([imaxabs])
   gl_PREREQ_IMAXABS
 fi
