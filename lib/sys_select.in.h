@@ -32,6 +32,16 @@
 # define _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TIME_H
 # @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
 
+/* On IRIX 6.5, <sys/timespec.h> includes <sys/types.h>, which includes
+   <sys/bsd_types.h>, which includes <sys/select.h>.  At this point we cannot
+   include <signal.h>, because that includes <internal/signal_core.h>, which
+   gives a syntax error because <sys/timespec.h> has not been completely
+   processed.  Simply delegate to the system's header in this case.  */
+#elif @HAVE_SYS_SELECT_H@ && defined __sgi && (defined _SYS_BSD_TYPES_H && !defined _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_BSD_TYPES_H)
+
+# define _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_BSD_TYPES_H
+# @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
+
 #else
 
 #ifndef _@GUARD_PREFIX@_SYS_SELECT_H

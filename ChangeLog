@@ -1,3 +1,9 @@
+2011-09-01  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Avoid a syntax error regarding timespec_t on IRIX 6.5.
+	* lib/sys_select.in.h [__sgi]: When included from <sys/bsd_types.h>,
+	just include the system's header.
+
 2011-08-31  Jim Meyering  <meyering@redhat.com>
 
 	tests: avoid spurious assertion failure in test-float.c on ppc64
