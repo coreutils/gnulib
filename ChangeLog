@@ -1,5 +1,13 @@
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
+	imaxdiv: Avoid link error on OSF/1 with DTK cc.
+	* m4/imaxdiv.m4 (gl_FUNC_IMAXDIV): Also test whether imaxdiv is defined
+	as a function.
+	* modules/imaxdiv (configure.ac): Test whether imaxdiv is defined, not
+	whether it is declared.
+
+2011-09-01  Bruno Haible  <bruno@clisp.org>
+
 	imaxabs: Avoid link error on OSF/1 with DTK cc.
 	* m4/imaxabs.m4 (gl_FUNC_IMAXABS): Also test whether imaxabs is defined
 	as a function.

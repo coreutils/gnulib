@@ -10,7 +10,7 @@ inttypes-incomplete
 
 configure.ac:
 gl_FUNC_IMAXDIV
-if test $HAVE_DECL_IMAXDIV = 0; then
+if test $ac_cv_func_imaxdiv = no; then
   AC_LIBOBJ([imaxdiv])
   gl_PREREQ_IMAXDIV
 fi
