@@ -1,5 +1,9 @@
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'strtoumax'.
+	* modules/strtoumax-tests: New file.
+	* tests/test-strtoumax.c: New file.
+
 	Tests for module 'strtoimax'.
 	* modules/strtoimax-tests: New file.
 	* tests/test-strtoimax.c: New file.
