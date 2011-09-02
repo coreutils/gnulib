@@ -1,3 +1,11 @@
+2011-09-02  Bruno Haible  <bruno@clisp.org>
+
+	tests: init.sh: work also with any non-GNU diff that supports -u
+	* tests/init.sh: Relax check for diff -u support.
+	Rather than checking for GNU diff via --version, simply check
+	for support for -u itself.  Useful at least on OpenBSD 4.9,
+	AIX 7.1, IRIX 6.5 and Solaris 10.
+
 2011-09-01  Bruno Haible  <bruno@clisp.org>
 
 	strtoimax, strtoumax: Document problem on HP-UX 11.
