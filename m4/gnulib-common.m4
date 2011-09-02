@@ -213,6 +213,8 @@ m4_ifndef([AS_VAR_IF],
 
 # gl_PROG_AR_RANLIB
 # Determines the values for AR, ARFLAGS, RANLIB that fit with the compiler.
+# The user can set the variables AR, ARFLAGS, RANLIB if he wants to override
+# the values.
 AC_DEFUN([gl_PROG_AR_RANLIB],
 [
   dnl Minix 3 comes with two toolchains: The Amsterdam Compiler Kit compiler
@@ -220,25 +222,47 @@ AC_DEFUN([gl_PROG_AR_RANLIB],
   dnl library formats. In particular, the GNU binutils programs ar, ranlib
   dnl produce libraries that work only with gcc, not with cc.
   AC_REQUIRE([AC_PROG_CC])
-  AC_EGREP_CPP([Amsterdam],
+  AC_CACHE_CHECK([for Minix Amsterdam compiler], [gl_cv_c_amsterdam_compiler],
     [
+      AC_EGREP_CPP([Amsterdam],
+        [
 #ifdef __ACK__
 Amsterdam
 #endif
-    ],
-    [AR='cc -c.a'
-     ARFLAGS='-o'
-     RANLIB=':'
-    ],
-    [dnl Use the Automake-documented default values for AR and ARFLAGS,
-     dnl but prefer ${host}-ar over ar (useful for cross-compiling).
-     AC_CHECK_TOOL([AR], [ar], [ar])
-     ARFLAGS='cru'
-     dnl Use the ranlib program if it is available.
-     AC_PROG_RANLIB
+        ],
+        [gl_cv_c_amsterdam_compiler=yes],
+        [gl_cv_c_amsterdam_compiler=no])
     ])
+  if test -z "$AR"; then
+    if test $gl_cv_c_amsterdam_compiler = yes; then
+      AR='cc -c.a'
+      if test -z "$ARFLAGS"; then
+        ARFLAGS='-o'
+      fi
+    else
+      dnl Use the Automake-documented default values for AR and ARFLAGS,
+      dnl but prefer ${host}-ar over ar (useful for cross-compiling).
+      AC_CHECK_TOOL([AR], [ar], [ar])
+      if test -z "$ARFLAGS"; then
+        ARFLAGS='cru'
+      fi
+    fi
+  else
+    if test -z "$ARFLAGS"; then
+      ARFLAGS='cru'
+    fi
+  fi
   AC_SUBST([AR])
   AC_SUBST([ARFLAGS])
+  if test -z "$RANLIB"; then
+    if test $gl_cv_c_amsterdam_compiler = yes; then
+      RANLIB=':'
+    else
+      dnl Use the ranlib program if it is available.
+      AC_PROG_RANLIB
+    fi
+  fi
+  AC_SUBST([RANLIB])
 ])
 
 # AC_PROG_MKDIR_P

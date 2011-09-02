@@ -1,5 +1,12 @@
 2011-09-02  Bruno Haible  <bruno@clisp.org>
 
+	Allow the user to override the choice of AR, ARFLAGS, RANLIB.
+	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): Don't override the given
+	values of AR, ARFLAGS, RANLIB.
+	Reported by John W. Eaton <jwe@gnu.org> for Octave.
+
+2011-09-02  Bruno Haible  <bruno@clisp.org>
+
 	Find 'ar' program that fits with --host argument.
 	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): Use AC_CHECK_TOOL.
 
