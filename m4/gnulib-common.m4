@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 29
+# gnulib-common.m4 serial 30
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -230,8 +230,9 @@ Amsterdam
      ARFLAGS='-o'
      RANLIB=':'
     ],
-    [dnl Use the Automake-documented default values for AR and ARFLAGS.
-     AR='ar'
+    [dnl Use the Automake-documented default values for AR and ARFLAGS,
+     dnl but prefer ${host}-ar over ar (useful for cross-compiling).
+     AC_CHECK_TOOL([AR], [ar], [ar])
      ARFLAGS='cru'
      dnl Use the ranlib program if it is available.
      AC_PROG_RANLIB
