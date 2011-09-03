@@ -914,8 +914,8 @@ symbol.
 @subsection Character Class Operators (@code{[:} @dots{} @code{:]})
 
 @cindex character classes
-@cindex @samp{[:} in regex
-@cindex @samp{:]} in regex
+@cindex @samp{[colon} in regex
+@cindex @samp{colon]} in regex
 
 If the syntax bit @code{RE_CHAR_CLASSES} is set, then Regex recognizes
 character class expressions inside lists.  A @dfn{character class
