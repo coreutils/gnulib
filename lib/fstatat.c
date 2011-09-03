@@ -46,19 +46,33 @@ orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
 
 # undef fstatat
 
+# ifndef FSTATAT_AT_FDCWD_0_BROKEN
+#  define FSTATAT_AT_FDCWD_0_BROKEN 0
+# endif
+
+# ifndef LSTAT_FOLLOWS_SLASHED_SYMLINK
+#  define LSTAT_FOLLOWS_SLASHED_SYMLINK 0
+# endif
+
 /* fstatat should always follow symbolic links that end in /, but on
    Solaris 9 it doesn't if AT_SYMLINK_NOFOLLOW is specified.
    Likewise, trailing slash on a non-directory should be an error.
    These are the same problems that lstat.c and stat.c address, so
-   solve it in a similar way.  */
+   solve it in a similar way.
+
+   AIX 7.1 fstatat (AT_FDCWD, ..., 0) always fails, which is a bug.
+   Work around this bug if FSTATAT_AT_FDCWD_0_BROKEN is nonzero.  */
 
 int
 rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
 {
-  int result = orig_fstatat (fd, file, st, flag);
+  int result =
+    (FSTATAT_AT_FDCWD_0_BROKEN && fd == AT_FDCWD && flag == 0
+     ? stat (file, st)
+     : orig_fstatat (fd, file, st, flag));
   size_t len;
 
-  if (result != 0)
+  if (LSTAT_FOLLOWS_SLASHED_SYMLINK || result != 0)
     return result;
   len = strlen (file);
   if (flag & AT_SYMLINK_NOFOLLOW)
