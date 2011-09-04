@@ -1,3 +1,9 @@
+2011-09-04  J.T. Conklin  <jtc@acorntoolworks.com>
+
+	parse-datetime: document the newly accepted format
+	* doc/parse-datetime.texi (Combined date and time of day items):
+	New section.
+
 2011-09-06  Bruno Haible  <bruno@clisp.org>
 
 	acl: Fix a test failure on newer Solaris 10 with ZFS.

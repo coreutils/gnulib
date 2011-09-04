@@ -51,6 +51,7 @@ arguments to the various programs.  The C interface (via the
 * Calendar date items::            19 Dec 1994.
 * Time of day items::              9:20pm.
 * Time zone items::                @sc{est}, @sc{pdt}, @sc{gmt}.
+* Combined date and time of day items:: 1972-09-24T20:02:00,000000-0500
 * Day of week items::              Monday and others.
 * Relative items in date strings:: next tuesday, 2 years ago.
 * Pure numbers in date strings::   19931219, 1440.
@@ -76,6 +77,7 @@ many flavors of items:
 @item calendar date items
 @item time of day items
 @item time zone items
+@item combined date and time of day items
 @item day of the week items
 @item relative items
 @item pure numbers.
@@ -309,6 +311,29 @@ described in the previous section.
 If neither a time zone item nor a time zone correction is supplied,
 time stamps are interpreted using the rules of the default time zone
 (@pxref{Specifying time zone rules}).
+
+
+@node Combined date and time of day items
+@section Combined date and time of day items
+
+@cindex combined date and time of day item
+
+A @dfn{combined date and time of day item} specifies the time on a
+specific day of the year.  This type is needed for formats that cannot
+be represented by individual calendar date (@pxref{Calendar date items})
+and time of day (@pxref{Time of day items}) items due to ambiguity.
+
+@example
+# ISO 8601 extended date and time of day format
+1972-09-24T20:02:00,000000-0500
+@end example
+
+@cindex @sc{iso} 8601 date and time of day format
+@cindex date and time of day format, @sc{iso} 8601
+
+The @sc{iso} 8601 extended date and time of day format is an @sc{iso}
+8601 date, a @samp{T} character separator, followed by an @sc{iso} 8601 time
+of day.
 
 
 @node Day of week items
