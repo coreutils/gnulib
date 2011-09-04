@@ -42,13 +42,7 @@ orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
 #include <fcntl.h>
 #include <string.h>
 
-#if HAVE_FSTATAT
-
-# undef fstatat
-
-# ifndef FSTATAT_AT_FDCWD_0_BROKEN
-#  define FSTATAT_AT_FDCWD_0_BROKEN 0
-# endif
+#if HAVE_FSTATAT && !FSTATAT_ZERO_FLAG_BROKEN
 
 # ifndef LSTAT_FOLLOWS_SLASHED_SYMLINK
 #  define LSTAT_FOLLOWS_SLASHED_SYMLINK 0
@@ -66,10 +60,7 @@ orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
 int
 rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
 {
-  int result =
-    (FSTATAT_AT_FDCWD_0_BROKEN && fd == AT_FDCWD && flag == 0
-     ? stat (file, st)
-     : orig_fstatat (fd, file, st, flag));
+  int result = orig_fstatat (fd, file, st, flag);
   size_t len;
 
   if (LSTAT_FOLLOWS_SLASHED_SYMLINK || result != 0)
@@ -85,7 +76,7 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
           errno = ENOTDIR;
           return -1;
         }
-      result = fstatat (fd, file, st, flag & ~AT_SYMLINK_NOFOLLOW);
+      result = orig_fstatat (fd, file, st, flag & ~AT_SYMLINK_NOFOLLOW);
     }
   /* Fix stat behavior.  */
   if (result == 0 && !S_ISDIR (st->st_mode) && file[len - 1] == '/')
@@ -96,7 +87,7 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
   return result;
 }
 
-#else /* !HAVE_FSTATAT */
+#else /* !HAVE_FSTATAT || FSTATAT_ZERO_FLAG_BROKEN */
 
 /* On mingw, the gnulib <sys/stat.h> defines `stat' as a function-like
    macro; but using it in AT_FUNC_F2 causes compilation failure
@@ -124,7 +115,11 @@ stat_func (char const *name, struct stat *st)
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fstatat.  */
 
-# define AT_FUNC_NAME fstatat
+# if FSTATAT_ZERO_FLAG_BROKEN
+#  define AT_FUNC_NAME rpl_fstatat
+# else
+#  define AT_FUNC_NAME fstatat
+# endif
 # define AT_FUNC_F1 lstat
 # define AT_FUNC_F2 stat_func
 # define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW

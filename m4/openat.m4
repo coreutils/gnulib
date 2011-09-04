@@ -1,4 +1,4 @@
-# serial 36
+# serial 37
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -167,10 +167,9 @@ AC_DEFUN([gl_FUNC_FSTATAT],
   else
     dnl Test for an AIX 7.1 bug; see
     dnl <http://lists.gnu.org/archive/html/bug-tar/2011-09/msg00015.html>.
-    AC_CACHE_CHECK([whether fstatat (AT_FDCWD, ..., 0) works],
-      [gl_cv_func_fstatat_AT_FDCWD_0],
-      [gl_cv_func_fstatat_AT_FDCWD_0=no
-       echo xxx >conftest.file
+    AC_CACHE_CHECK([whether fstatat (..., 0) works],
+      [gl_cv_func_fstatat_zero_flag],
+      [gl_cv_func_fstatat_zero_flag=no
        AC_RUN_IFELSE(
          [AC_LANG_SOURCE(
             [[
@@ -180,17 +179,17 @@ AC_DEFUN([gl_FUNC_FSTATAT],
               main (void)
               {
                 struct stat a;
-                return fstatat (AT_FDCWD, "conftest.file", &a, 0) != 0;
+                return fstatat (AT_FDCWD, ".", &a, 0) != 0;
               }
             ]])],
-         [gl_cv_func_fstatat_AT_FDCWD_0=yes])])
+         [gl_cv_func_fstatat_zero_flag=yes])])
 
-    case $gl_cv_func_fstatat_AT_FDCWD_0+$gl_cv_func_lstat_dereferences_slashed_symlink in
+    case $gl_cv_func_fstatat_zero_flag+$gl_cv_func_lstat_dereferences_slashed_symlink in
     yes+yes) ;;
     *) REPLACE_FSTATAT=1
-       if test $gl_cv_func_fstatat_AT_FDCWD_0 != yes; then
-         AC_DEFINE([FSTATAT_AT_FDCWD_0_BROKEN], [1],
-           [Define to 1 if fstatat (AT_FDCWD, ..., 0) does not work,
+       if test $gl_cv_func_fstatat_zero_flag != yes; then
+         AC_DEFINE([FSTATAT_ZERO_FLAG_BROKEN], [1],
+           [Define to 1 if fstatat (..., 0) does not work,
             as in AIX 7.1.])
        fi
        ;;
