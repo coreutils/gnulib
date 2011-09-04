@@ -203,7 +203,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 
 # elif HAVE_FACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
 
-#  if defined ACL_NO_TRIVIAL
+#  if defined ACL_NO_TRIVIAL && 0
   /* Solaris 10 (newer version), which has additional API declared in
      <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
      acl_fromtext, ...).  */
@@ -250,6 +250,8 @@ qset_acl (char const *name, int desc, mode_t mode)
 
 #  else /* Solaris, Cygwin, general case */
 
+  int done_setacl = 0;
+
 #   ifdef ACE_GETACL
   /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
      file systems (whereas the other ones are used in UFS file systems).  */
@@ -292,7 +294,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 
             convention = 0;
             for (i = 0; i < count; i++)
-              if (entries[i].a_flags & (ACE_OWNER | ACE_GROUP | ACE_OTHER))
+              if (entries[i].a_flags & (OLD_ACE_OWNER | OLD_ACE_GROUP | OLD_ACE_OTHER))
                 {
                   convention = 1;
                   break;
@@ -308,90 +310,153 @@ qset_acl (char const *name, int desc, mode_t mode)
 
   if (convention >= 0)
     {
-      ace_t entries[3];
+      ace_t entries[6];
+      int count;
       int ret;
 
       if (convention)
         {
           /* Running on Solaris 10.  */
-          entries[0].a_type = ALLOW;
-          entries[0].a_flags = ACE_OWNER;
+          entries[0].a_type = OLD_ALLOW;
+          entries[0].a_flags = OLD_ACE_OWNER;
           entries[0].a_who = 0; /* irrelevant */
           entries[0].a_access_mask = (mode >> 6) & 7;
-          entries[1].a_type = ALLOW;
-          entries[1].a_flags = ACE_GROUP;
+          entries[1].a_type = OLD_ALLOW;
+          entries[1].a_flags = OLD_ACE_GROUP;
           entries[1].a_who = 0; /* irrelevant */
           entries[1].a_access_mask = (mode >> 3) & 7;
-          entries[2].a_type = ALLOW;
-          entries[2].a_flags = ACE_OTHER;
+          entries[2].a_type = OLD_ALLOW;
+          entries[2].a_flags = OLD_ACE_OTHER;
           entries[2].a_who = 0;
           entries[2].a_access_mask = mode & 7;
+          count = 3;
         }
       else
         {
-          /* Running on Solaris 10 (newer version) or Solaris 11.  */
-          entries[0].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
+          /* Running on Solaris 10 (newer version) or Solaris 11.
+             The details here were found through "/bin/ls -lvd somefiles".  */
+          struct stat statbuf;
+          int dir;
+
+          if ((desc != -1 ? fstat (desc, &statbuf) : stat (name, &statbuf)) >= 0)
+            dir = S_ISDIR (statbuf.st_mode);
+          else
+            dir = 0;
+
+          entries[0].a_type = NEW_ACE_ACCESS_DENIED_ACE_TYPE;
           entries[0].a_flags = NEW_ACE_OWNER;
           entries[0].a_who = 0; /* irrelevant */
-          entries[0].a_access_mask =
-            (mode & 0400 ? NEW_ACE_READ_DATA : 0)
-            | (mode & 0200 ? NEW_ACE_WRITE_DATA : 0)
-            | (mode & 0100 ? NEW_ACE_EXECUTE : 0);
-          entries[1].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
-          entries[1].a_flags = NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP;
+          entries[0].a_access_mask = 0;
+          entries[1].a_type = NEW_ACE_ACCESS_ALLOWED_ACE_TYPE;
+          entries[1].a_flags = NEW_ACE_OWNER;
           entries[1].a_who = 0; /* irrelevant */
-          entries[1].a_access_mask =
-            (mode & 0040 ? NEW_ACE_READ_DATA : 0)
-            | (mode & 0020 ? NEW_ACE_WRITE_DATA : 0)
-            | (mode & 0010 ? NEW_ACE_EXECUTE : 0);
-          entries[2].a_type = ACE_ACCESS_ALLOWED_ACE_TYPE;
-          entries[2].a_flags = ACE_EVERYONE;
-          entries[2].a_who = 0;
-          entries[2].a_access_mask =
-            (mode & 0004 ? NEW_ACE_READ_DATA : 0)
-            | (mode & 0002 ? NEW_ACE_WRITE_DATA : 0)
-            | (mode & 0001 ? NEW_ACE_EXECUTE : 0);
+          entries[1].a_access_mask = NEW_ACE_WRITE_NAMED_ATTRS
+                                     | NEW_ACE_WRITE_ATTRIBUTES
+                                     | NEW_ACE_WRITE_ACL
+                                     | NEW_ACE_WRITE_OWNER;
+          if (mode & 0400)
+            entries[1].a_access_mask |= NEW_ACE_READ_DATA;
+          else
+            entries[0].a_access_mask |= NEW_ACE_READ_DATA;
+          if (mode & 0200)
+            entries[1].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          else
+            entries[0].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          if (mode & 0100)
+            entries[1].a_access_mask |= NEW_ACE_EXECUTE;
+          else
+            entries[0].a_access_mask |= NEW_ACE_EXECUTE;
+          entries[2].a_type = NEW_ACE_ACCESS_DENIED_ACE_TYPE;
+          entries[2].a_flags = NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP;
+          entries[2].a_who = 0; /* irrelevant */
+          entries[2].a_access_mask = 0;
+          entries[3].a_type = NEW_ACE_ACCESS_ALLOWED_ACE_TYPE;
+          entries[3].a_flags = NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP;
+          entries[3].a_who = 0; /* irrelevant */
+          entries[3].a_access_mask = 0;
+          if (mode & 0040)
+            entries[3].a_access_mask |= NEW_ACE_READ_DATA;
+          else
+            entries[2].a_access_mask |= NEW_ACE_READ_DATA;
+          if (mode & 0020)
+            entries[3].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          else
+            entries[2].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          if (mode & 0010)
+            entries[3].a_access_mask |= NEW_ACE_EXECUTE;
+          else
+            entries[2].a_access_mask |= NEW_ACE_EXECUTE;
+          entries[4].a_type = NEW_ACE_ACCESS_DENIED_ACE_TYPE;
+          entries[4].a_flags = ACE_EVERYONE;
+          entries[4].a_who = 0;
+          entries[4].a_access_mask = NEW_ACE_WRITE_NAMED_ATTRS
+                                     | NEW_ACE_WRITE_ATTRIBUTES
+                                     | NEW_ACE_WRITE_ACL
+                                     | NEW_ACE_WRITE_OWNER;
+          entries[5].a_type = NEW_ACE_ACCESS_ALLOWED_ACE_TYPE;
+          entries[5].a_flags = ACE_EVERYONE;
+          entries[5].a_who = 0;
+          entries[5].a_access_mask = NEW_ACE_READ_NAMED_ATTRS
+                                     | NEW_ACE_READ_ATTRIBUTES
+                                     | NEW_ACE_READ_ACL
+                                     | NEW_ACE_SYNCHRONIZE;
+          if (mode & 0004)
+            entries[5].a_access_mask |= NEW_ACE_READ_DATA;
+          else
+            entries[4].a_access_mask |= NEW_ACE_READ_DATA;
+          if (mode & 0002)
+            entries[5].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          else
+            entries[4].a_access_mask |= NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA;
+          if (mode & 0001)
+            entries[5].a_access_mask |= NEW_ACE_EXECUTE;
+          else
+            entries[4].a_access_mask |= NEW_ACE_EXECUTE;
+          count = 6;
         }
       if (desc != -1)
-        ret = facl (desc, ACE_SETACL,
-                    sizeof (entries) / sizeof (ace_t), entries);
+        ret = facl (desc, ACE_SETACL, count, entries);
       else
-        ret = acl (name, ACE_SETACL,
-                   sizeof (entries) / sizeof (ace_t), entries);
+        ret = acl (name, ACE_SETACL, count, entries);
       if (ret < 0 && errno != EINVAL && errno != ENOTSUP)
         {
           if (errno == ENOSYS)
             return chmod_or_fchmod (name, desc, mode);
           return -1;
         }
+      if (ret == 0)
+        done_setacl = 1;
     }
 #   endif
 
-  {
-    aclent_t entries[3];
-    int ret;
+  if (!done_setacl)
+    {
+      aclent_t entries[3];
+      int ret;
 
-    entries[0].a_type = USER_OBJ;
-    entries[0].a_id = 0; /* irrelevant */
-    entries[0].a_perm = (mode >> 6) & 7;
-    entries[1].a_type = GROUP_OBJ;
-    entries[1].a_id = 0; /* irrelevant */
-    entries[1].a_perm = (mode >> 3) & 7;
-    entries[2].a_type = OTHER_OBJ;
-    entries[2].a_id = 0;
-    entries[2].a_perm = mode & 7;
+      entries[0].a_type = USER_OBJ;
+      entries[0].a_id = 0; /* irrelevant */
+      entries[0].a_perm = (mode >> 6) & 7;
+      entries[1].a_type = GROUP_OBJ;
+      entries[1].a_id = 0; /* irrelevant */
+      entries[1].a_perm = (mode >> 3) & 7;
+      entries[2].a_type = OTHER_OBJ;
+      entries[2].a_id = 0;
+      entries[2].a_perm = mode & 7;
 
-    if (desc != -1)
-      ret = facl (desc, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
-    else
-      ret = acl (name, SETACL, sizeof (entries) / sizeof (aclent_t), entries);
-    if (ret < 0)
-      {
-        if (errno == ENOSYS || errno == EOPNOTSUPP)
-          return chmod_or_fchmod (name, desc, mode);
-        return -1;
-      }
-  }
+      if (desc != -1)
+        ret = facl (desc, SETACL,
+                    sizeof (entries) / sizeof (aclent_t), entries);
+      else
+        ret = acl (name, SETACL,
+                   sizeof (entries) / sizeof (aclent_t), entries);
+      if (ret < 0)
+        {
+          if (errno == ENOSYS || errno == EOPNOTSUPP)
+            return chmod_or_fchmod (name, desc, mode);
+          return -1;
+        }
+    }
 
   if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {

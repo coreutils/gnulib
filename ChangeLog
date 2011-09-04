@@ -1,3 +1,24 @@
+2011-09-04  Bruno Haible  <bruno@clisp.org>
+
+	acl: Improve support of NFSv4 ACLs on Solaris 10 (newer version).
+	* lib/acl-internal.h (ACE_*, NEW_ACE_*): Define also on newer Solaris
+	10.
+	(OLD_ALLOW, OLD_DENY): New macros.
+	(NEW_ACE_ACCESS_ALLOWED_ACE_TYPE): Renamed from
+	ACE_ACCESS_ALLOWED_ACE_TYPE.
+	(NEW_ACE_ACCESS_DENIED_ACE_TYPE): Renamed from
+	ACE_ACCESS_DENIED_ACE_TYPE.
+	(OLD_ACE_OWNER, OLD_ACE_GROUP, OLD_ACE_OTHER): New macros.
+	(NEW_ACE_EXECUTE): Fix value.
+	(NEW_ACE_APPEND_DATA, NEW_ACE_READ_NAMED_ATTRS,
+	NEW_ACE_WRITE_NAMED_ATTRS, NEW_ACE_DELETE_CHILD,
+	NEW_ACE_READ_ATTRIBUTES, NEW_ACE_WRITE_ATTRIBUTES, NEW_ACE_DELETE,
+	NEW_ACE_READ_ACL, NEW_ACE_WRITE_ACL, NEW_ACE_WRITE_OWNER,
+	NEW_ACE_SYNCHRONIZE): New macros.
+	* lib/set-mode-acl.c (qset_acl): On newer Solaris 10, use acl or facl
+	instead of acl_fromtext, acl_set, facl_set.
+	Fixes a coreutils/tests/cp/perm failure.
+
 2011-09-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	openat: test for fstatat (..., 0) bug
