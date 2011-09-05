@@ -183,13 +183,9 @@ extern int acl_access_nontrivial (acl_t);
 #   define MODE_INSIDE_ACL 1
 #  endif
 
-#  if !(defined ACL_NO_TRIVIAL && 0) /* Solaris <= 10, Cygwin */
-
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 extern int acl_nontrivial (int count, aclent_t *entries);
-
-#  endif
 
 #  ifdef ACE_GETACL /* Solaris 10 */
 

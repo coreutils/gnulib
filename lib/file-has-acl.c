@@ -120,8 +120,6 @@ acl_access_nontrivial (acl_t acl)
 
 #elif USE_ACL && HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
-# if !(defined ACL_NO_TRIVIAL && 0) /* Solaris <= 10, Cygwin */
-
 /* Test an ACL retrieved with GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
@@ -148,7 +146,7 @@ acl_nontrivial (int count, aclent_t *entries)
   return 0;
 }
 
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
 
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
@@ -299,8 +297,6 @@ acl_ace_nontrivial (int count, ace_t *entries)
 
   return 0;
 }
-
-#  endif
 
 # endif
 

@@ -1,5 +1,13 @@
 2011-09-05  Bruno Haible  <bruno@clisp.org>
 
+	acl: Clean up Solaris code.
+	* lib/acl-internal.h: Remove no-op #if.
+	* lib/file-has-acl.c: Likewise.
+	* lib/set-mode-acl.c (qset_acl): Remove unused Solaris code.
+	* lib/copy-acl.c (qcopy_acl): Likewise.
+
+2011-09-05  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix a bug with NFSv4 ACLs on Solaris 10 (newer version) in
 	binaries built on the original Solaris 10.
 	* lib/file-has-acl.c (file_has_acl): ACLs with 4..6 ACEs can be

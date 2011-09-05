@@ -181,57 +181,20 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #elif USE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
-# if defined ACL_NO_TRIVIAL && 0
-  /* Solaris 10 (newer version), which has additional API declared in
-     <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
-     acl_fromtext, ...).  */
-
-  int ret;
-  acl_t *aclp = NULL;
-  ret = (source_desc < 0
-         ? acl_get (src_name, ACL_NO_TRIVIAL, &aclp)
-         : facl_get (source_desc, ACL_NO_TRIVIAL, &aclp));
-  if (ret != 0 && errno != ENOSYS)
-    return -2;
-
-  ret = qset_acl (dst_name, dest_desc, mode);
-  if (ret != 0)
-    return -1;
-
-  if (aclp)
-    {
-      ret = (dest_desc < 0
-             ? acl_set (dst_name, aclp)
-             : facl_set (dest_desc, aclp));
-      if (ret != 0)
-        {
-          int saved_errno = errno;
-
-          acl_free (aclp);
-          errno = saved_errno;
-          return -1;
-        }
-      acl_free (aclp);
-    }
-
-  return 0;
-
-# else /* Solaris, Cygwin, general case */
-
   /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
      of Unixware.  The acl() call returns the access and default ACL both
      at once.  */
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   int ace_count;
   ace_t *ace_entries;
-#  endif
+# endif
   int count;
   aclent_t *entries;
   int did_chmod;
   int saved_errno;
   int ret;
 
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
      file systems (whereas the other ones are used in UFS file systems).
      There is an API
@@ -284,7 +247,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       /* Huh? The number of ACL entries changed since the last call.
          Repeat.  */
     }
-#  endif
+# endif
 
   for (;;)
     {
@@ -327,9 +290,9 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
 
   /* Is there an ACL of either kind?  */
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   if (ace_count == 0)
-#  endif
+# endif
     if (count == 0)
       return qset_acl (dst_name, dest_desc, mode);
 
@@ -367,7 +330,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
     }
   free (entries);
 
-#  ifdef ACE_GETACL
+# ifdef ACE_GETACL
   if (ace_count > 0)
     {
       ret = (dest_desc != -1
@@ -382,7 +345,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
         }
     }
   free (ace_entries);
-#  endif
+# endif
 
   if (MODE_INSIDE_ACL
       && did_chmod <= ((mode & (S_ISUID | S_ISGID | S_ISVTX)) ? 1 : 0))
@@ -403,8 +366,6 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
       return -1;
     }
   return 0;
-
-# endif
 
 #elif USE_ACL && HAVE_GETACL /* HP-UX */
 
