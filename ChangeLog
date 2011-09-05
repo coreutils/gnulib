@@ -1,5 +1,12 @@
 2011-09-05  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix a bug with NFSv4 ACLs on Solaris 10 (newer version) in
+	binaries built on the original Solaris 10.
+	* lib/file-has-acl.c (file_has_acl): ACLs with 4..6 ACEs can be
+	trivial.
+
+2011-09-05  Bruno Haible  <bruno@clisp.org>
+
 	acl: Improve support of NFSv4 ACLs on Solaris 10 (newer version).
 	* lib/acl-internal.h (acl_nontrivial): Declare also on newer Solaris
 	10.

@@ -612,9 +612,15 @@ file_has_acl (char const *name, struct stat const *sb)
             if (count == 0)
               break;
 
-            /* If there are more than 3 entries, there cannot be only the
-               ACE_OWNER, ACE_GROUP, ACE_OTHER entries.  */
-            if (count > 3)
+            /* In the old (original Solaris 10) convention:
+               If there are more than 3 entries, there cannot be only the
+               ACE_OWNER, ACE_GROUP, ACE_OTHER entries.
+               In the newer Solaris 10 and Solaris 11 convention:
+               If there are more than 6 entries, there cannot be only the
+               ACE_OWNER, ACE_GROUP, ACE_EVERYONE entries, each once with
+               NEW_ACE_ACCESS_ALLOWED_ACE_TYPE and once with
+               NEW_ACE_ACCESS_DENIED_ACE_TYPE.  */
+            if (count > 6)
               return 1;
 
             entries = (ace_t *) malloc (count * sizeof (ace_t));
