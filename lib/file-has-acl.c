@@ -810,7 +810,12 @@ file_has_acl (char const *name, struct stat const *sb)
           count = acl ((char *) name, ACL_CNT, NACLENTRIES, NULL);
 
           if (count < 0)
-            return -1;
+            {
+              if (errno == ENOSYS || errno == ENOTSUP)
+                break;
+              else
+                return -1;
+            }
 
           if (count == 0)
             return 0;
