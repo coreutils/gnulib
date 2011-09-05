@@ -1,3 +1,15 @@
+2011-09-05  Bruno Haible  <bruno@clisp.org>
+
+	acl: Try unit tests on more file systems.
+	* tests/test-file-has-acl-1.sh: New file.
+	* tests/test-file-has-acl-2.sh: New file.
+	* tests/test-set-mode-acl-1.sh: New file.
+	* tests/test-set-mode-acl-2.sh: New file.
+	* tests/test-copy-acl-1.sh: New file.
+	* tests/test-copy-acl-2.sh: New file.
+	* modules/acl-tests (Files): Add them.
+	(Makefile.am): Add them to TESTS.
+
 2011-09-04  Bruno Haible  <bruno@clisp.org>
 
 	acl: Improve support of NFSv4 ACLs on Solaris 10 (newer version).
