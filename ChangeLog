@@ -1,5 +1,11 @@
 2011-09-05  Bruno Haible  <bruno@clisp.org>
 
+	copy-file: Try unit tests on more file systems.
+	* tests/test-copy-file-1.sh: New file.
+	* tests/test-copy-file-2.sh: New file.
+	* modules/copy-file-tests (Files): Add them.
+	(Makefile.am): Add them to TESTS.
+
 	acl: Try unit tests on more file systems.
 	* tests/test-file-has-acl-1.sh: New file.
 	* tests/test-file-has-acl-2.sh: New file.
