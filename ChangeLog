@@ -1,3 +1,10 @@
+2011-12-17  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	build: let bootstrap resort to wget when downloading .po files
+	* build-aux/bootstrap (download_po_files): Fallback to wget when
+	downloading the .po files via rsync fails.  This is necessary to
+	bootstrap from behind a strict firewall.
+
 2011-12-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: don't assume C++11 when compiling with g++
