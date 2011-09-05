@@ -120,7 +120,7 @@ acl_access_nontrivial (acl_t acl)
 
 #elif USE_ACL && HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
-# if !defined ACL_NO_TRIVIAL /* Solaris <= 10, Cygwin */
+# if !(defined ACL_NO_TRIVIAL && 0) /* Solaris <= 10, Cygwin */
 
 /* Test an ACL retrieved with GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
@@ -167,7 +167,7 @@ acl_ace_nontrivial (int count, ace_t *entries)
   int old_convention = 0;
 
   for (i = 0; i < count; i++)
-    if (entries[i].a_flags & (ACE_OWNER | ACE_GROUP | ACE_OTHER))
+    if (entries[i].a_flags & (OLD_ACE_OWNER | OLD_ACE_GROUP | OLD_ACE_OTHER))
       {
         old_convention = 1;
         break;
@@ -183,28 +183,119 @@ acl_ace_nontrivial (int count, ace_t *entries)
            If ace->a_flags = ACE_OWNER, ace->a_who is the st_uid from stat().
            If ace->a_flags = ACE_GROUP, ace->a_who is the st_gid from stat().
            We don't need to check ace->a_who in these cases.  */
-        if (!(ace->a_type == ALLOW
-              && (ace->a_flags == ACE_OWNER
-                  || ace->a_flags == ACE_GROUP
-                  || ace->a_flags == ACE_OTHER)))
+        if (!(ace->a_type == OLD_ALLOW
+              && (ace->a_flags == OLD_ACE_OWNER
+                  || ace->a_flags == OLD_ACE_GROUP
+                  || ace->a_flags == OLD_ACE_OTHER)))
           return 1;
       }
   else
-    /* Running on Solaris 10 (newer version) or Solaris 11.  */
-    for (i = 0; i < count; i++)
-      {
-        ace_t *ace = &entries[i];
+    {
+      /* Running on Solaris 10 (newer version) or Solaris 11.  */
+      unsigned int access_masks[6] =
+        {
+          0, /* owner@ deny */
+          0, /* owner@ allow */
+          0, /* group@ deny */
+          0, /* group@ allow */
+          0, /* everyone@ deny */
+          0  /* everyone@ allow */
+        };
 
-        if (!(ace->a_type == ACE_ACCESS_ALLOWED_ACE_TYPE
-              && (ace->a_flags == NEW_ACE_OWNER
-                  || ace->a_flags
-                     == (NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP)
-                  || ace->a_flags == ACE_EVERYONE)
-              && (ace->a_access_mask
-                  & ~(NEW_ACE_READ_DATA | NEW_ACE_WRITE_DATA | NEW_ACE_EXECUTE))
-                 == 0))
-          return 1;
-      }
+      for (i = 0; i < count; i++)
+        {
+          ace_t *ace = &entries[i];
+          unsigned int index1;
+          unsigned int index2;
+
+          if (ace->a_type == NEW_ACE_ACCESS_ALLOWED_ACE_TYPE)
+            index1 = 1;
+          else if (ace->a_type == NEW_ACE_ACCESS_DENIED_ACE_TYPE)
+            index1 = 0;
+          else
+            return 1;
+
+          if (ace->a_flags == NEW_ACE_OWNER)
+            index2 = 0;
+          else if (ace->a_flags == (NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP))
+            index2 = 2;
+          else if (ace->a_flags == ACE_EVERYONE)
+            index2 = 4;
+          else
+            return 1;
+
+          access_masks[index1 + index2] |= ace->a_access_mask;
+        }
+
+      /* The same bit shouldn't be both allowed and denied.  */
+      if (access_masks[0] & access_masks[1])
+        return 1;
+      if (access_masks[2] & access_masks[3])
+        return 1;
+      if (access_masks[4] & access_masks[5])
+        return 1;
+
+      /* Check minimum masks.  */
+      if ((NEW_ACE_WRITE_NAMED_ATTRS
+           | NEW_ACE_WRITE_ATTRIBUTES
+           | NEW_ACE_WRITE_ACL
+           | NEW_ACE_WRITE_OWNER)
+          & ~ access_masks[1])
+        return 1;
+      access_masks[1] &= ~(NEW_ACE_WRITE_NAMED_ATTRS
+                           | NEW_ACE_WRITE_ATTRIBUTES
+                           | NEW_ACE_WRITE_ACL
+                           | NEW_ACE_WRITE_OWNER);
+      if ((NEW_ACE_WRITE_NAMED_ATTRS
+           | NEW_ACE_WRITE_ATTRIBUTES
+           | NEW_ACE_WRITE_ACL
+           | NEW_ACE_WRITE_OWNER)
+          & ~ access_masks[4])
+        return 1;
+      access_masks[4] &= ~(NEW_ACE_WRITE_NAMED_ATTRS
+                           | NEW_ACE_WRITE_ATTRIBUTES
+                           | NEW_ACE_WRITE_ACL
+                           | NEW_ACE_WRITE_OWNER);
+      if ((NEW_ACE_READ_NAMED_ATTRS
+           | NEW_ACE_READ_ATTRIBUTES
+           | NEW_ACE_READ_ACL
+           | NEW_ACE_SYNCHRONIZE)
+          & ~ access_masks[5])
+        return 1;
+      access_masks[5] &= ~(NEW_ACE_READ_NAMED_ATTRS
+                           | NEW_ACE_READ_ATTRIBUTES
+                           | NEW_ACE_READ_ACL
+                           | NEW_ACE_SYNCHRONIZE);
+
+      /* Check the allowed or denied bits.  */
+      if ((access_masks[0] | access_masks[1])
+          != (NEW_ACE_READ_DATA
+              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
+              | NEW_ACE_EXECUTE))
+        return 1;
+      if ((access_masks[2] | access_masks[3])
+          != (NEW_ACE_READ_DATA
+              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
+              | NEW_ACE_EXECUTE))
+        return 1;
+      if ((access_masks[4] | access_masks[5])
+          != (NEW_ACE_READ_DATA
+              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
+              | NEW_ACE_EXECUTE))
+        return 1;
+
+      /* Check that the NEW_ACE_WRITE_DATA and NEW_ACE_APPEND_DATA bits are
+         either both allowed or both denied.  */
+      if (((access_masks[0] & NEW_ACE_WRITE_DATA) != 0)
+          != ((access_masks[0] & NEW_ACE_APPEND_DATA) != 0))
+        return 1;
+      if (((access_masks[2] & NEW_ACE_WRITE_DATA) != 0)
+          != ((access_masks[2] & NEW_ACE_APPEND_DATA) != 0))
+        return 1;
+      if (((access_masks[4] & NEW_ACE_WRITE_DATA) != 0)
+          != ((access_masks[4] & NEW_ACE_APPEND_DATA) != 0))
+        return 1;
+    }
 
   return 0;
 }

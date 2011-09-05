@@ -1,5 +1,15 @@
 2011-09-05  Bruno Haible  <bruno@clisp.org>
 
+	acl: Improve support of NFSv4 ACLs on Solaris 10 (newer version).
+	* lib/acl-internal.h (acl_nontrivial): Declare also on newer Solaris
+	10.
+	* lib/file-has-acl.c (acl_nontrivial): Define also on newer Solaris 10.
+	(acl_ace_nontrivial): Likewise. Recognize the trivial ACLs with 6 ACEs.
+	* lib/copy-acl.c (qcopy_acl): On newer Solaris 10, use acl or facl
+	instead of acl_get, facl_get, acl_set, facl_set.
+
+2011-09-05  Bruno Haible  <bruno@clisp.org>
+
 	copy-file: Try unit tests on more file systems.
 	* tests/test-copy-file-1.sh: New file.
 	* tests/test-copy-file-2.sh: New file.

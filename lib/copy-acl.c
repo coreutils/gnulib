@@ -181,7 +181,7 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #elif USE_ACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
-# if defined ACL_NO_TRIVIAL
+# if defined ACL_NO_TRIVIAL && 0
   /* Solaris 10 (newer version), which has additional API declared in
      <sys/acl.h> (acl_t) and implemented in libsec (acl_set, acl_trivial,
      acl_fromtext, ...).  */
