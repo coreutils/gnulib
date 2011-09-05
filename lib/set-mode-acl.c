@@ -335,14 +335,6 @@ qset_acl (char const *name, int desc, mode_t mode)
         {
           /* Running on Solaris 10 (newer version) or Solaris 11.
              The details here were found through "/bin/ls -lvd somefiles".  */
-          struct stat statbuf;
-          int dir;
-
-          if ((desc != -1 ? fstat (desc, &statbuf) : stat (name, &statbuf)) >= 0)
-            dir = S_ISDIR (statbuf.st_mode);
-          else
-            dir = 0;
-
           entries[0].a_type = NEW_ACE_ACCESS_DENIED_ACE_TYPE;
           entries[0].a_flags = NEW_ACE_OWNER;
           entries[0].a_who = 0; /* irrelevant */
