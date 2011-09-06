@@ -57,7 +57,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 # if HAVE_ACL_GET_FILE
   /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
   /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
-#  if MODE_INSIDE_ACL
+#  if !HAVE_ACL_TYPE_EXTENDED
   /* Linux, FreeBSD, IRIX, Tru64 */
 
   /* We must also have acl_from_text and acl_delete_def_file.
@@ -132,20 +132,16 @@ qset_acl (char const *name, int desc, mode_t mode)
   if (S_ISDIR (mode) && acl_delete_def_file (name))
     return -1;
 
-  if (mode & (S_ISUID | S_ISGID | S_ISVTX))
+  if (!MODE_INSIDE_ACL || (mode & (S_ISUID | S_ISGID | S_ISVTX)))
     {
-      /* We did not call chmod so far, so the special bits have not yet
-         been set.  */
+      /* We did not call chmod so far, and either the mode and the ACL are
+         separate or special bits are to be set which don't fit into ACLs.  */
       return chmod_or_fchmod (name, desc, mode);
     }
   return 0;
 
-#  else /* !MODE_INSIDE_ACL */
+#  else /* HAVE_ACL_TYPE_EXTENDED */
   /* MacOS X */
-
-#   if !HAVE_ACL_TYPE_EXTENDED
-#    error Must have ACL_TYPE_EXTENDED
-#   endif
 
   /* On MacOS X,  acl_get_file (name, ACL_TYPE_ACCESS)
      and          acl_get_file (name, ACL_TYPE_DEFAULT)

@@ -146,7 +146,7 @@ rpl_acl_set_fd (int fd, acl_t acl)
 
 /* Set to 1 if a file's mode is implicit by the ACL.
    Set to 0 if a file's mode is stored independently from the ACL.  */
-#  if HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP /* MacOS X */
+#  if (HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP) || defined __sgi /* MacOS X, IRIX */
 #   define MODE_INSIDE_ACL 0
 #  else
 #   define MODE_INSIDE_ACL 1
