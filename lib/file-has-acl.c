@@ -746,6 +746,8 @@ file_has_acl (char const *name, struct stat const *sb)
           type.u64 = ACL_ANY;
           if (aclx_get (name, 0, &type, aclbuf, &aclsize, &mode) >= 0)
             break;
+          if (errno == ENOSYS)
+            return 0;
           if (errno != ENOSPC)
             {
               if (acl != aclbuf)
