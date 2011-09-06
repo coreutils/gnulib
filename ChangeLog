@@ -1,3 +1,17 @@
+2011-09-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat: port to AIX 7.1 with large files
+	AIX 7.1 does a "#define openat open64at" if large files are in use,
+	so we can't simply #undef openat.  Use the orig_openat trick (similar
+	to orig_open in lib/open.c) to work around the problem.  Problem
+	reported by Kevin Brott for GNU tar, in the thread containing
+	<http://lists.gnu.org/archive/html/bug-tar/2011-09/msg00032.html>.
+	* lib/openat.c (__need_system_fcntl_h): Define first.
+	Include <fcntl.h> and <sys/types.h> before undefining.
+	(orig_openat) [HAVE_OPENAT]: New inline function.
+	(openat) [HAVE_OPENAT]: Do not undef.
+	(rpl_openat): Use orig_openat, not openat.
+
 2011-09-05  Joachim Schmitz  <schmitz@hp.com>  (tiny change)
             Bruno Haible  <bruno@clisp.org>
 
