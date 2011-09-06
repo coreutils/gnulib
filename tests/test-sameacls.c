@@ -227,7 +227,11 @@ main (int argc, char *argv[])
   int count2;
 
   count1 = acl (file1, GETACLCNT, 0, NULL);
+  if (count1 < 0 && errno == ENOSYS) /* Can happen on Solaris 10 with ZFS */
+    count1 = 0;
   count2 = acl (file2, GETACLCNT, 0, NULL);
+  if (count2 < 0 && errno == ENOSYS) /* Can happen on Solaris 10 with ZFS */
+    count2 = 0;
 
   if (count1 < 0)
     {
@@ -253,13 +257,13 @@ main (int argc, char *argv[])
       aclent_t *entries2 = XNMALLOC (count2, aclent_t);
       int i;
 
-      if (acl (file1, GETACL, count1, entries1) < count1)
+      if (count1 > 0 && acl (file1, GETACL, count1, entries1) < count1)
         {
           fprintf (stderr, "error retrieving the ACLs of file %s\n", file1);
           fflush (stderr);
           abort ();
         }
-      if (acl (file2, GETACL, count2, entries2) < count1)
+      if (count2 > 0 && acl (file2, GETACL, count2, entries2) < count1)
         {
           fprintf (stderr, "error retrieving the ACLs of file %s\n", file2);
           fflush (stderr);
