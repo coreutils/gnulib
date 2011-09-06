@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 14, 2011
+@set lastupdate September 5, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -2125,15 +2125,17 @@ repository for your package, but that's not required.  @xref{Old
 Versions}, for more information about Savannah.
 
 We strongly urge you to use @code{ftp.gnu.org} as the standard
-distribution site.  Doing so makes it easier for developers and users
-to find the latest GNU releases.  However, it is ok to use another
-server if you wish, provided it allows access from the general public
-without limitation (for instance, without excluding any country).
+distribution site for releases.  Doing so makes it easier for
+developers and users to find the latest GNU releases.  However, it is
+ok to use another server if you wish, provided it allows access from
+the general public without limitation (for instance, without excluding
+any country).
 
 If you use a company's machine to hold the repository for your
-program, or as its ftp site, please put this statement in a prominent
-place on the site, so as to prevent people from getting the wrong idea
-about the relationship between the package and the company:
+program, or as its release distribution site, please put this
+statement in a prominent place on the site, so as to prevent people
+from getting the wrong idea about the relationship between the package
+and the company:
 
 @smallexample
 The programs <list of them> hosted here are free software packages
