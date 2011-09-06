@@ -1,5 +1,11 @@
 2011-09-06  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix a test failure on AIX >= 5.3 with NFS.
+	* tests/test-sameacls.c (main): Interpret aclx_get failure with ENOSYS
+	as no ACL.
+
+2011-09-06  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix a test failure on IRIX 6.5 with NFS.
 	* lib/acl-internal.h (MODE_INSIDE_ACL): Define to 0 on IRIX.
 	* lib/set-mode-acl.c (qset_acl): Test !HAVE_ACL_TYPE_EXTENDED instead
