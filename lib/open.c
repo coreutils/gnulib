@@ -34,7 +34,9 @@ orig_open (const char *filename, int flags, mode_t mode)
 }
 
 /* Specification.  */
-#include <fcntl.h>
+/* Write "fcntl.h" here, not <fcntl.h>, otherwise OSF/1 5.1 DTK cc eliminates
+   this include because of the preliminary #include <fcntl.h> above.  */
+#include "fcntl.h"
 
 #include <errno.h>
 #include <stdarg.h>

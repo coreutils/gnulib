@@ -33,7 +33,9 @@ orig_freopen (const char *filename, const char *mode, FILE *stream)
 }
 
 /* Specification.  */
-#include <stdio.h>
+/* Write "stdio.h" here, not <stdio.h>, otherwise OSF/1 5.1 DTK cc eliminates
+   this include because of the preliminary #include <stdio.h> above.  */
+#include "stdio.h"
 
 #include <string.h>
 

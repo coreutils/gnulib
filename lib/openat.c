@@ -35,6 +35,10 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 }
 #endif
 
+/* Write "fcntl.h" here, not <fcntl.h>, otherwise OSF/1 5.1 DTK cc eliminates
+   this include because of the preliminary #include <fcntl.h> above.  */
+#include "fcntl.h"
+
 #include "openat.h"
 
 #include <stdarg.h>
