@@ -19,9 +19,7 @@
 #ifndef _GL_HEADER_OPENAT
 #define _GL_HEADER_OPENAT
 
-/* Write "fcntl.h" here, not <fcntl.h>, otherwise OSF/1 5.1 DTK cc miscompiles
-   openat.c because that file has a preliminary #include <fcntl.h>.  */
-#include "fcntl.h"
+#include <fcntl.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
