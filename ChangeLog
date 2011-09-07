@@ -1,5 +1,11 @@
 2011-09-07  Bruno Haible  <bruno@clisp.org>
 
+	pthread: Determine $(LIB_PTHREAD) correctly on OSF/1 5.1.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Use AC_CACHE_CHECK and
+	AC_LINK_IFELSE instead of AC_SEARCH_LIBS.
+
+2011-09-07  Bruno Haible  <bruno@clisp.org>
+
 	openat: Work around compilation error with OSF/1 5.1 DTK cc.
 	* lib/fopen.c: Use different syntax for include of <stdio.h>.
 	* lib/freopen.c: Likewise.
