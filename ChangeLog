@@ -1,3 +1,9 @@
+2011-09-08  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: mark the post-release commit log with "maint: " prefix
+	* top/maint.mk (emit-commit-log): Add "maint: " prefix to the
+	one-line commit-log summary.
+
 2011-09-08  Reuben Thomas  <rrt@sc3d.org>
             Bruno Haible  <bruno@clisp.org>
 

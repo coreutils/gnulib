@@ -1235,9 +1235,9 @@ emit_upload_commands:
 	@echo =====================================
 
 define emit-commit-log
-  printf '%s\n' 'post-release administrivia' '' \
-    '* NEWS: Add header line for next release.' \
-    '* .prev-version: Record previous version.' \
+  printf '%s\n' 'maint: post-release administrivia' ''			\
+    '* NEWS: Add header line for next release.'				\
+    '* .prev-version: Record previous version.'				\
     '* cfg.mk (old_NEWS_hash): Auto-update.'
 endef
 
