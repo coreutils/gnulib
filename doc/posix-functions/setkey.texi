@@ -15,4 +15,8 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 NetBSD 5.0, Minix 3.1.8, Cygwin, mingw, BeOS.
+@item
+This function is not declared in @code{<stdlib.h>}
+(without @code{-D_GNU_SOURCE}) on some platforms:
+glibc 2.11.
 @end itemize
