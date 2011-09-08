@@ -5,7 +5,7 @@
 	one-line commit-log summary.
 
 2011-09-08  Reuben Thomas  <rrt@sc3d.org>
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	Doc about crypt functions.
 	* doc/posix-functions/crypt.texi: Mention need for _GNU_SOURCE on glibc
@@ -80,7 +80,7 @@
 	(rpl_openat): Use orig_openat, not openat.
 
 2011-09-05  Joachim Schmitz  <schmitz@hp.com>  (tiny change)
-            Bruno Haible  <bruno@clisp.org>
+	    Bruno Haible  <bruno@clisp.org>
 
 	acl: Avoid errors on NonStop Kernel.
 	* lib/file-has-acl.c (file_has_acl) [NonStop Kernel]: Ignore ENOSYS and
