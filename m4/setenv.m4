@@ -1,4 +1,4 @@
-# setenv.m4 serial 24
+# setenv.m4 serial 25
 dnl Copyright (C) 2001-2004, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,11 +77,7 @@ extern
 #ifdef __cplusplus
 "C"
 #endif
-#if defined(__STDC__) || defined(__cplusplus)
 int unsetenv (const char *name);
-#else
-int unsetenv();
-#endif
             ]],
             [[]])],
          [gt_cv_func_unsetenv_ret='int'],

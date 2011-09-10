@@ -1,5 +1,38 @@
 2011-09-10  Bruno Haible  <bruno@clisp.org>
 
+	iconv, unsetenv: Add support for MSVC compiler.
+	* m4/iconv.m4 (AM_ICONV): Use ISO C declaration syntax on MSVC.
+	* m4/setenv.m4 (gl_FUNC_UNSETENV): Drop support for K&R C compilers.
+
+2011-09-10  Bruno Haible  <bruno@clisp.org>
+
+	*printf: Add support for MSVC compiler.
+	* m4/printf.m4 (gl_PRINTF_DIRECTIVE_N): On MSVC, install a handler that
+	handles the exception caused by the %n directive. When cross-compiling,
+	guess no on native Windows.
+	(gl_SNPRINTF_TRUNCATION_C99, gl_SNPRINTF_RETVAL_C99,
+	gl_SNPRINTF_DIRECTIVE_N, gl_SNPRINTF_SIZE1): When snprintf is missing,
+	emulate it through vsnprintf.
+	* m4/vsnprintf-posix.m4 (gl_FUNC_VSNPRINTF_POSIX): Update comment.
+	* doc/posix-functions/dprintf.texi: Update documentation regarding
+	MSVC 9.
+	* doc/posix-functions/fprintf.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/swprintf.texi: Likewise.
+	* doc/posix-functions/vdprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/glibc-functions/asprintf.texi: Likewise.
+	* doc/glibc-functions/obstack_printf.texi: Likewise.
+	* doc/glibc-functions/obstack_vprintf.texi: Likewise.
+	* doc/glibc-functions/vasprintf.texi: Likewise.
+
+2011-09-10  Bruno Haible  <bruno@clisp.org>
+
 	nocrash: Add support for native Windows.
 	* m4/nocrash.m4 (GL_NOCRASH): Avoid a crash also on native Windows.
 
