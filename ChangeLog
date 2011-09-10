@@ -1,3 +1,8 @@
+2011-09-10  Bruno Haible  <bruno@clisp.org>
+
+	nocrash: Add support for native Windows.
+	* m4/nocrash.m4 (GL_NOCRASH): Avoid a crash also on native Windows.
+
 2011-09-10  Michael Goffioul  <michael.goffioul@gmail.com>  (tiny change)
 	    Bruno Haible  <bruno@clisp.org>
 
