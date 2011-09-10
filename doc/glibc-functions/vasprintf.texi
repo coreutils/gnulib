@@ -8,7 +8,7 @@ Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vas
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, Interix 3.5.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, MSVC 9, Interix 3.5.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{vasprintf-posix}:

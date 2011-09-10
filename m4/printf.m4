@@ -1,4 +1,4 @@
-# printf.m4 serial 43
+# printf.m4 serial 44
 dnl Copyright (C) 2003, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -615,12 +615,27 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#ifdef _MSC_VER
+/* See page about "Parameter Validation" on msdn.microsoft.com.  */
+static void cdecl
+invalid_parameter_handler (const wchar_t *expression,
+                           const wchar_t *function,
+                           const wchar_t *file, unsigned int line,
+                           uintptr_t dummy)
+{
+  exit (1);
+}
+#endif
 static char fmtstring[10];
 static char buf[100];
 int main ()
 {
   int count = -1;
+#ifdef _MSC_VER
+  _set_invalid_parameter_handler (invalid_parameter_handler);
+#endif
   /* Copy the format string.  Some systems (glibc with _FORTIFY_SOURCE=2)
      support %n in format strings in read-only memory but not in writable
      memory.  */
@@ -636,7 +651,8 @@ int main ()
         [
 changequote(,)dnl
          case "$host_os" in
-           *)     gl_cv_func_printf_directive_n="guessing yes";;
+           mingw*) gl_cv_func_printf_directive_n="guessing no";;
+           *)      gl_cv_func_printf_directive_n="guessing yes";;
          esac
 changequote([,])dnl
         ])
@@ -1076,6 +1092,7 @@ AC_DEFUN([gl_SNPRINTF_TRUNCATION_C99],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_SNPRINTF_PRESENCE])
   AC_CACHE_CHECK([whether snprintf truncates the result as in C99],
     [gl_cv_func_snprintf_truncation_c99],
     [
@@ -1083,11 +1100,25 @@ AC_DEFUN([gl_SNPRINTF_TRUNCATION_C99],
         [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
+#if HAVE_SNPRINTF
+# define my_snprintf snprintf
+#else
+# include <stdarg.h>
+static int my_snprintf (char *buf, int size, const char *format, ...)
+{
+  va_list args;
+  int ret;
+  va_start (args, format);
+  ret = vsnprintf (buf, size, format, args);
+  va_end (args);
+  return ret;
+}
+#endif
 static char buf[100];
 int main ()
 {
   strcpy (buf, "ABCDEF");
-  snprintf (buf, 3, "%d %d", 4567, 89);
+  my_snprintf (buf, 3, "%d %d", 4567, 89);
   if (memcmp (buf, "45\0DEF", 6) != 0)
     return 1;
   return 0;
@@ -1157,6 +1188,7 @@ AC_DEFUN_ONCE([gl_SNPRINTF_RETVAL_C99],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_SNPRINTF_PRESENCE])
   AC_CACHE_CHECK([whether snprintf returns a byte count as in C99],
     [gl_cv_func_snprintf_retval_c99],
     [
@@ -1164,15 +1196,29 @@ AC_DEFUN_ONCE([gl_SNPRINTF_RETVAL_C99],
         [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
+#if HAVE_SNPRINTF
+# define my_snprintf snprintf
+#else
+# include <stdarg.h>
+static int my_snprintf (char *buf, int size, const char *format, ...)
+{
+  va_list args;
+  int ret;
+  va_start (args, format);
+  ret = vsnprintf (buf, size, format, args);
+  va_end (args);
+  return ret;
+}
+#endif
 static char buf[100];
 int main ()
 {
   strcpy (buf, "ABCDEF");
-  if (snprintf (buf, 3, "%d %d", 4567, 89) != 7)
+  if (my_snprintf (buf, 3, "%d %d", 4567, 89) != 7)
     return 1;
-  if (snprintf (buf, 0, "%d %d", 4567, 89) != 7)
+  if (my_snprintf (buf, 0, "%d %d", 4567, 89) != 7)
     return 2;
-  if (snprintf (NULL, 0, "%d %d", 4567, 89) != 7)
+  if (my_snprintf (NULL, 0, "%d %d", 4567, 89) != 7)
     return 3;
   return 0;
 }]])],
@@ -1221,6 +1267,7 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([gl_SNPRINTF_PRESENCE])
   AC_CACHE_CHECK([whether snprintf fully supports the 'n' directive],
     [gl_cv_func_snprintf_directive_n],
     [
@@ -1228,6 +1275,20 @@ AC_DEFUN([gl_SNPRINTF_DIRECTIVE_N],
         [AC_LANG_SOURCE([[
 #include <stdio.h>
 #include <string.h>
+#if HAVE_SNPRINTF
+# define my_snprintf snprintf
+#else
+# include <stdarg.h>
+static int my_snprintf (char *buf, int size, const char *format, ...)
+{
+  va_list args;
+  int ret;
+  va_start (args, format);
+  ret = vsnprintf (buf, size, format, args);
+  va_end (args);
+  return ret;
+}
+#endif
 static char fmtstring[10];
 static char buf[100];
 int main ()
@@ -1237,7 +1298,7 @@ int main ()
      support %n in format strings in read-only memory but not in writable
      memory.  */
   strcpy (fmtstring, "%d %n");
-  snprintf (buf, 4, fmtstring, 12345, &count, 33, 44, 55);
+  my_snprintf (buf, 4, fmtstring, 12345, &count, 33, 44, 55);
   if (count != 6)
     return 1;
   return 0;
@@ -1289,16 +1350,31 @@ dnl Result is gl_cv_func_snprintf_size1.
 AC_DEFUN([gl_SNPRINTF_SIZE1],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([gl_SNPRINTF_PRESENCE])
   AC_CACHE_CHECK([whether snprintf respects a size of 1],
     [gl_cv_func_snprintf_size1],
     [
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
 #include <stdio.h>
+#if HAVE_SNPRINTF
+# define my_snprintf snprintf
+#else
+# include <stdarg.h>
+static int my_snprintf (char *buf, int size, const char *format, ...)
+{
+  va_list args;
+  int ret;
+  va_start (args, format);
+  ret = vsnprintf (buf, size, format, args);
+  va_end (args);
+  return ret;
+}
+#endif
 int main()
 {
   static char buf[8] = { 'D', 'E', 'A', 'D', 'B', 'E', 'E', 'F' };
-  snprintf (buf, 1, "%d", 12345);
+  my_snprintf (buf, 1, "%d", 12345);
   return buf[1] != 'E';
 }]])],
         [gl_cv_func_snprintf_size1=yes],
@@ -1484,5 +1560,6 @@ dnl   NetBSD 3.0                     .  .  .  .  #  #  .  ?  #  #  ?  #  .  #  .
 dnl   Haiku                          .  .  .  #  #  #  .  #  .  .  .  .  .  ?  .  .  ?  .  .  .
 dnl   BeOS                           #  #  .  #  #  #  .  ?  #  .  ?  .  #  ?  .  .  ?  .  .  .
 dnl   old mingw / msvcrt             #  #  #  #  #  #  .  .  #  #  .  #  #  ?  .  #  #  #  .  .
+dnl   MSVC 9                         #  #  #  #  #  #  #  .  #  #  .  #  #  ?  #  #  #  #  .  .
 dnl   mingw 2009-2011                .  #  .  #  .  .  .  .  #  #  .  .  .  ?  .  .  .  .  .  .
 dnl   mingw-w64 2011                 #  #  #  #  #  #  .  .  #  #  .  #  #  ?  .  #  #  #  .  .

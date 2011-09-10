@@ -1,4 +1,4 @@
-# vsnprintf-posix.m4 serial 14
+# vsnprintf-posix.m4 serial 15
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_VSNPRINTF_POSIX],
   gl_cv_func_vsnprintf_posix=no
   AC_CHECK_FUNCS([vsnprintf])
   if test $ac_cv_func_vsnprintf = yes; then
-    dnl Assume that if vsnprintf() exists, snprintf() also exists.
+    dnl These tests use vsnprintf() if snprintf() does not exist.
     gl_SNPRINTF_TRUNCATION_C99
     gl_SNPRINTF_RETVAL_C99
     gl_SNPRINTF_DIRECTIVE_N

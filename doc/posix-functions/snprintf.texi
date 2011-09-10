@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{snprintf} or @code{snpr
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, OSF/1 4.0, Solaris 2.5.1.
+IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, MSVC 9.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
@@ -30,23 +30,26 @@ Portability problems fixed by Gnulib module @code{snprintf-posix}:
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
-AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, BeOS.
+AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, MSVC 9, BeOS.
 @item
 printf of @samp{long double} numbers is unsupported on some platforms:
-mingw, BeOS.
+mingw, MSVC 9, BeOS.
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
-AIX 5.2, OSF/1 5.1, Solaris 11 2010-11, mingw.
+AIX 5.2, OSF/1 5.1, Solaris 11 2010-11, mingw, MSVC 9.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, MacOS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, BeOS.
+IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, MSVC 9, BeOS.
 @item
 This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
-Cygwin 1.5.x, mingw, BeOS.
+Cygwin 1.5.x, mingw, MSVC 9, BeOS.
+@item
+This function does not support the @samp{n} directive on some platforms:
+MSVC 9.
 @item
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Haiku.
@@ -56,7 +59,7 @@ on some platforms:
 Solaris 11 2010-11.
 @item
 This function doesn't support the @code{'} flag on some platforms:
-NetBSD 3.0, Cygwin 1.5.24, mingw.
+NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 9.
 @item
 This function behaves incorrectly when a @samp{-} flag and a negative width
 are specified together, on some platforms:
@@ -64,11 +67,11 @@ HP-UX 10.20.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw.
+MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-AIX 7.1, Solaris 10/x86, mingw, BeOS.
+AIX 7.1, Solaris 10/x86, mingw, MSVC 9, BeOS.
 @item
 This function mishandles large floating point precisions
 (for example, formatting 1.0 with @samp{"%.511f"})
@@ -79,10 +82,10 @@ This function can crash in out-of-memory conditions on some platforms:
 MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 @item
 This function does not truncate the result as specified in C99 on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
-HP-UX 11, mingw.
+HP-UX 11, mingw, MSVC 9.
 @item
 This function overwrites memory even when a zero size argument is passed on some
 platforms:

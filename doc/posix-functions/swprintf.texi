@@ -16,6 +16,9 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Interix 3.5, BeOS.
 @item
+This function does not support the @samp{n} directive on some platforms:
+MSVC 9.
+@item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
