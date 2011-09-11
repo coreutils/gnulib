@@ -1,4 +1,4 @@
-# dirent_h.m4 serial 14
+# dirent_h.m4 serial 15
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,12 @@ AC_DEFUN([gl_DIRENT_H],
 
   dnl <dirent.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([dirent.h])
+  if test $ac_cv_header_dirent_h = yes; then
+    HAVE_DIRENT_H=1
+  else
+    HAVE_DIRENT_H=0
+  fi
+  AC_SUBST([HAVE_DIRENT_H])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

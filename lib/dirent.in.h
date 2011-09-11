@@ -22,7 +22,9 @@
 @PRAGMA_COLUMNS@
 
 /* The include_next requires a split double-inclusion guard.  */
-#@INCLUDE_NEXT@ @NEXT_DIRENT_H@
+#if @HAVE_DIRENT_H@
+# @INCLUDE_NEXT@ @NEXT_DIRENT_H@
+#endif
 
 #ifndef _@GUARD_PREFIX@_DIRENT_H
 #define _@GUARD_PREFIX@_DIRENT_H

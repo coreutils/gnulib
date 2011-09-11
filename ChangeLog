@@ -1,5 +1,13 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	dirent: Don't assume <dirent.h> exists.
+	* lib/dirent.in.h: Include <dirent.h> only if HAVE_DIRENT_H is 1.
+	* m4/dirent_h.m4 (gl_DIRENT_H): Set HAVE_DIRENT_H.
+	* modules/dirent (Makefile.am): Substitute HAVE_DIRENT_H.
+	* doc/posix-headers/dirent.texi: Mention the MSVC problem.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	Fix wint_t on MSVC.
 	* lib/wchar.in.h (wint_t): On MSVC, override it.
 	* lib/wctype.in.h (wint_t): Likewise.
