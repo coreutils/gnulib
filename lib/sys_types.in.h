@@ -1,4 +1,4 @@
-/* Provide a more complete sys/time.h.
+/* Provide a more complete sys/types.h.
 
    Copyright (C) 2011 Free Software Foundation, Inc.
 

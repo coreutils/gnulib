@@ -1,5 +1,9 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	sys_types: Fix typo.
+	* lib/sys_types.in.h: Fix typo in comment.
+	Reported by Paul Eggert.
+
 	Support for MSVC compiler: Ensure size_t gets defined.
 	* modules/strings (Depends-on): Add 'sys_types'.
 	* modules/sys_uio (Depends-on): Likewise.
