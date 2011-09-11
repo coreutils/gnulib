@@ -1,5 +1,9 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sys_types'.
+	* modules/sys_types-tests: New file.
+	* tests/test-sys_types.c: New file.
+
 	New module 'sys_types'.
 	* lib/sys_types.in.h: New file.
 	* m4/sys_types_h.m4: New file.
