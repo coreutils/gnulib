@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 On some platforms, @code{fork} followed by a call of the @code{exec} family
 (@code{execl}, @code{execlp}, @code{execle}, @code{execv}, @code{execvp},

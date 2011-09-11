@@ -7,6 +7,9 @@ Gnulib module: getopt-gnu
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, MSVC 9, Interix 3.5.
+@item
 The function @code{getopt_long} does not obey the combination of
 @samp{+} and @samp{:} flags in the options string on some platforms:
 glibc 2.11.
@@ -34,9 +37,6 @@ NetBSD, Cygwin 1.7.0.
 The function @code{getopt_long} does not support options with optional
 arguments on some platforms:
 MacOS X 10.5, OpenBSD 4.0, AIX 5.2, IRIX 6.5, Solaris 11 2010-11, Cygwin 1.5.x.
-@item
-This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Interix 3.5.
 @item
 This function crashes if the option string includes @code{W;} but
 there are no long options, on some platforms:

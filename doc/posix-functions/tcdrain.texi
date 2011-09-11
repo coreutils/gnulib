@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 On some platforms, @code{tcdrain} on a non-tty fails with @code{errno} set to
 @code{EINVAL} or, on MacOS X, also @code{EOPNOTSUPP} or @code{ENODEV}, rather

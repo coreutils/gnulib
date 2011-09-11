@@ -26,5 +26,5 @@ instead.
 On some platforms, the prototype for @code{utime} omits @code{const}
 for the second argument.  Fortunately, the argument is not modified,
 so it is safe to cast away const:
-mingw.
+mingw, MSVC 9.
 @end itemize

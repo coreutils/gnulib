@@ -15,7 +15,7 @@ NetBSD 1.6.
 @item
 This function does not reject trailing slashes on the destination for
 non-directories on some platforms, as in @code{rename("file","new/")}:
-AIX 7.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw.
+AIX 7.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not reject trailing slashes on symlinks to
 non-directories on some platforms, as in
@@ -32,17 +32,17 @@ NetBSD 1.6, Cygwin 1.5.x.
 @item
 This function will not always replace an existing destination on some
 platforms:
-Cygwin 1.5.x, mingw.
+Cygwin 1.5.x, mingw, MSVC 9.
 However, the replacement is not atomic for directories, and may end up
 losing the empty destination if the source could not be renamed.
 @item
 This function mistakenly allows names ending in @samp{.} or @samp{..}
 on some platforms:
-Cygwin 1.5.x, mingw.
+Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not reject attempts to rename existing directories
 and non-directories onto one another on some platforms:
-Cygwin 1.5.x, mingw.
+Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not allow trailing slashes on source directories on
 older platforms, as in @samp{rename("dir/","new")}:
@@ -67,5 +67,5 @@ Linux 2.6.18.
 @item
 This function will not rename a source that is currently opened
 by any process:
-mingw.
+mingw, MSVC 9.
 @end itemize

@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, IRIX 5.3, Solaris 2.5.1.
+Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, MSVC 9.
 @item
 This function is declared in @code{<wchar.h>}, not in @code{<wctype.h>}, on
 some platforms:

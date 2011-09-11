@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 The definition of @samp{LC_MESSAGES} is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 
 @item
 The @code{locale_t} type is not defined on some platforms:

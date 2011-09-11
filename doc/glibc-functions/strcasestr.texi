@@ -10,7 +10,7 @@ or @code{strcasestr}:
 @item
 This function is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x,
-mingw, BeOS.
+mingw, MSVC 9, BeOS.
 
 @item
 This function can trigger memchr bugs on some platforms:

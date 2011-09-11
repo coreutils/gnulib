@@ -12,7 +12,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, mingw, Interix 3.5, BeOS.
+AIX 5.1, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 On very old systems, this function operated on an array of @samp{int},
 even though that was a different size than an array of @samp{gid_t};

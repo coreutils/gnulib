@@ -17,7 +17,7 @@ On some platforms, @code{readlink} returns @code{int} instead of
 glibc 2.4, FreeBSD 6.0, OpenBSD 3.8, Cygwin 1.5.x.
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

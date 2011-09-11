@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib module @code{stdio}, together with module @
 When writing to a non-blocking pipe whose buffer is full, this function fails
 with @code{errno} being set to @code{ENOSPC} instead of @code{EAGAIN} on some
 platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio}, together with module @code{sigpipe}:
@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{stdio}, together with module @
 @item
 When writing to a pipe with no readers, this function fails, instead of
 obeying the current @code{SIGPIPE} handler, on some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

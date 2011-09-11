@@ -9,7 +9,8 @@ Gnulib module: ftell
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function mistakenly succeeds on pipes on some platforms: mingw.
+This function mistakenly succeeds on pipes on some platforms:
+mingw, MSVC 9.
 @item
 This function produces incorrect results after @code{putc} that followed a
 @code{getc} call that reached EOF on some platforms:
@@ -25,7 +26,7 @@ HP-UX 11.
 @item
 @code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
 on input streams that are opened in @code{O_TEXT} mode and whose contents
-contains Unix line terminators (LF), on some platforms: mingw.
+contains Unix line terminators (LF), on some platforms: mingw, MSVC 9.
 @item
 On platforms where @code{long} is a 32-bit type, @code{ftell} does not work
 correctly with files larger than 2 GB, even when the @code{AC_SYS_LARGEFILE}

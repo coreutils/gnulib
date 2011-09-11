@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw, Interix 3.5, BeOS.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @end itemize
 
@@ -19,7 +19,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function always fails on platforms that don't support symlinks:
-mingw
+mingw, MSVC 9.
 @item
 When @code{readlink} is called on a directory: In the case of NFS mounted
 directories, Cygwin sets @code{errno} to @code{ENOENT} or @code{EIO} instead of

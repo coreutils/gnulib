@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 The @code{inet_ntoa} function need not be reentrant, and consequently
 is not required to be thread safe.  Implementations of

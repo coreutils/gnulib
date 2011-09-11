@@ -14,7 +14,7 @@ This function is declared in @code{unistd.h} instead of
 Cygwin 1.7.1.
 @item
 This function is missing on some platforms:
-mingw, BeOS.
+mingw, MSVC 9, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -8,7 +8,7 @@ Gnulib module: arpa_inet
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This header file is missing on some platforms: mingw, BeOS.
+This header file is missing on some platforms: mingw, MSVC 9, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -9,6 +9,9 @@ Gnulib module: isnan
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This macro is missing on some platforms:
+MSVC 9.
+@item
 @code{isnan} was introduced with C99 and is thus commonly not present
 on pre-C99 systems.
 @item

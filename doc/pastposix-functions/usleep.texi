@@ -16,7 +16,7 @@ mingw.
 This function is missing on some platforms.  However, the replacement
 is designed to be lightweight, and may round to the neareset second;
 use @code{select} or @code{nanosleep} if better resolution is needed:
-IRIX 5.3, Solaris 2.4, older mingw, BeOS.
+IRIX 5.3, Solaris 2.4, older mingw, MSVC 9, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

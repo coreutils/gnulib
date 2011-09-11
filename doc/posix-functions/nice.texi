@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw, BeOS.
+mingw, MSVC 9, BeOS.
 @item
 In glibc before glibc 2.2.4, @code{nice} returned 0 upon success.
 @end itemize

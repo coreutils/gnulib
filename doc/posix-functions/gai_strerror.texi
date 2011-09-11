@@ -15,11 +15,11 @@ HP-UX 11.11, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin 1.5.x, Interix
 @item
 This function is only available in @code{<ws2tcpip.h>} on some
 platforms:
-mingw.
+mingw, MSVC 9.
 @item
 This function's return type is @code{char *} instead of @code{const char *}
 on some platforms:
-AIX 7.1, HP-UX 11, OSF/1 5.1, Solaris 9, mingw.
+AIX 7.1, HP-UX 11, OSF/1 5.1, Solaris 9, mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, mingw, BeOS.
+Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, mingw, MSVC 9, BeOS.
 @item
 This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
 glibc 2.8.

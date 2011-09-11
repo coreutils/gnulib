@@ -20,5 +20,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, Interix 3.5, BeOS.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize

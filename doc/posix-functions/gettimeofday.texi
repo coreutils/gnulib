@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 This function is declared with a nonstandard function prototype (only one
 argument, or ``...'' after the first argument) on some platforms.

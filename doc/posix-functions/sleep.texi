@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw (2005 or newer).
+mingw (2005 or newer), MSVC 9.
 @item
 This function takes milliseconds as argument and returns @code{void} on some
 platforms:

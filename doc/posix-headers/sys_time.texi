@@ -8,7 +8,8 @@ Gnulib module: sys_time
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This header file is missing on some platforms.
+This header file is missing on some platforms:
+MSVC 9.
 @item
 @samp{struct timeval} is not defined on some platforms.
 @end itemize

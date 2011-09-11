@@ -17,6 +17,9 @@ Cygwin 1.5.x.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+MSVC 9.
+@item
 Some platforms mistakenly set the close-on-exec bit, then if it is
 cleared by the application, the platform then leaks file descriptors
 from earlier @code{popen} calls into subsequent @code{popen} children:

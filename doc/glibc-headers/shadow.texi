@@ -26,7 +26,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, OSF/1 5.1, Cygwin, mingw, Interix 3.5, BeOS.
+MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, OSF/1 5.1, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 The functions @code{getspent_r}, @code{getspnam_r}, @code{sgetspent_r},
 @code{fgetspent}, @code{fgetspent_r}, @code{putspent} are missing on some

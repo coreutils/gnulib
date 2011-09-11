@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 On some platforms, this function fails to reject a negative count,
 even though that is less than the size that would be returned:

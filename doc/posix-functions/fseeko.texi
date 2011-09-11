@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw.
+IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw, MSVC 9.
 @item
 The declaration of @code{fseeko} in @code{<stdio.h>} is not enabled by default
 on some platforms:

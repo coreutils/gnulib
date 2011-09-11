@@ -15,7 +15,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 OpenBSD 3.8, Minix 3.1.8, HP-UX 11.23, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin 1.5.x,
-mingw, Interix 3.5, BeOS.
+mingw, MSVC 9, Interix 3.5, BeOS.
 
 @item
 This is available only as a macro, rather than a function, on some

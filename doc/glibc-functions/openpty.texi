@@ -29,7 +29,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 After a successful call to @code{openpty}, the application needs to close
 the master's file descriptor before closing the slave's file descriptor,

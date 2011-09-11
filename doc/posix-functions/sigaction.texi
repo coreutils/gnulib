@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -21,16 +21,16 @@ also be specified.
 
 @item
 Support for SA_ONSTACK is missing on some platforms:
-mingw, cygwin.
+mingw, MSVC 9, cygwin.
 
 @item
 Support for SA_SIGINFO is missing on some platforms:
-mingw, Interix 3.5.
+mingw, MSVC 9, Interix 3.5.
 
 @item
 Support for SIGCHLD, and thus for SA_NOCLDSTOP and SA_NOCLDWAIT, is
 missing on some platforms:
-mingw.
+mingw, MSVC 9.
 
 @item
 Support for SA_RESETHAND is missing on some platforms:
@@ -38,7 +38,7 @@ NonStop.
 
 @item
 Support for SA_RESTART is missing on some platforms:
-mingw, NonStop.
+mingw, MSVC 9, NonStop.
 
 @item
 In spite of having SA_SIGACTION, struct sigaction lacks the

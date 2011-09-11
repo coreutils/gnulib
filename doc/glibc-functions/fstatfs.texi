@@ -12,7 +12,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, mingw, Interix 3.5, BeOS.
+AIX 5.1, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 On platforms where @code{f_blocks} in @samp{struct statfs} is a 32-bit
 value, this function may not work correctly on files systems larger than

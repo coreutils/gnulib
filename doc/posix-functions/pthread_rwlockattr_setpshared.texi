@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-NetBSD 5.0, Minix 3.1.8, HP-UX 11, OSF/1 4.0, Solaris 2.6, mingw, BeOS.
+NetBSD 5.0, Minix 3.1.8, HP-UX 11, OSF/1 4.0, Solaris 2.6, mingw, MSVC 9, BeOS.
 @end itemize

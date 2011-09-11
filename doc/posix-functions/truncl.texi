@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{truncl} or @code{truncl
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
+FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, MSVC 9, Interix 3.5, BeOS.
 @item
 This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
 glibc 2.8.

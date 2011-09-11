@@ -1,5 +1,16 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	doc: Update regarding MSVC 9.
+	* doc/gnulib-intro.texi (Target Platforms): Classify MSVC as "rarely
+	tested".
+	* doc/posix-functions/*.texi: Update with info about MSVC 9.
+	* doc/posix-headers/*.texi: Likewise.
+	* doc/pastposix-functions/*.texi: Likewise.
+	* doc/glibc-functions/*.texi: Likewise.
+	* doc/glibc-headers/*.texi: Likewise.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	unistd et al.: Don't assume <unistd.h> exists.
 	* m4/chdir-long.m4 (gl_FUNC_CHDIR_LONG): Don't include <unistd.h> if it
 	does not exist.

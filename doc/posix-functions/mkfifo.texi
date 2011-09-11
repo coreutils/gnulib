@@ -14,7 +14,7 @@ FreeBSD 7.2, Solaris 9.
 @item
 This function is missing on some platforms; however, the replacement
 always fails with @code{ENOSYS}:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

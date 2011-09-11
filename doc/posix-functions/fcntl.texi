@@ -9,10 +9,14 @@ Gnulib module: fcntl
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+mingw, MSVC 9.
+
+@item
 This function does not support @code{F_DUPFD_CLOEXEC} on some
 platforms:
 MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, mingw, Interix 3.5,
+IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, Interix 3.5,
 BeOS.
 Note that the gnulib replacement code is functional but not atomic.
 
@@ -25,10 +29,6 @@ Cygwin 1.5.x, Haiku.
 The @code{F_DUPFD} action of this function mistakenly clears
 FD_CLOEXEC on the source descriptor on some platforms:
 Haiku.
-
-@item
-This function is missing on some platforms:
-mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -37,5 +37,5 @@ Portability problems not fixed by Gnulib:
 The replacement function does not support @code{F_SETFD},
 @code{F_GETFL}, @code{F_SETFL}, @code{F_GETOWN}, @code{F_SETOWN},
 @code{F_GETLK}, @code{F_SETLK}, and @code{F_SETLKW} on some platforms:
-mingw
+mingw, MSVC 9.
 @end itemize

@@ -9,7 +9,7 @@ Gnulib module: gethostname
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On mingw, this function has a prototype that differs from that
+On mingw and MSVC 9, this function has a prototype that differs from that
 specified by POSIX, and it is defined only in the ws2_32 library.
 @end itemize
 

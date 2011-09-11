@@ -23,7 +23,7 @@ Solaris 11 2010-11.
 @item
 This function is missing on some platforms:
 glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw,
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, MSVC 9,
 Interix 3.5, BeOS.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @end itemize
@@ -46,5 +46,5 @@ Linux 2.6.18.
 @item
 This function will not rename a source that is currently opened
 by any process:
-mingw.
+mingw, MSVC 9.
 @end itemize

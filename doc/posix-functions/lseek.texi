@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 On platforms where @code{off_t} is a 32-bit type, @code{lseek} does not work
 correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
-This function mistakenly succeeds on pipes on some platforms: mingw, BeOS.
+This function mistakenly succeeds on pipes on some platforms: mingw, MSVC 9, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

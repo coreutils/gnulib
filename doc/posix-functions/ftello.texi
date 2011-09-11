@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw.
+IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, mingw, MSVC 9.
 @item
 The declaration of @code{ftello} in @code{<stdio.h>} is not enabled by default
 on some platforms:
@@ -35,7 +35,7 @@ HP-UX 11.
 @item
 @code{fflush}, @code{ftell}, @code{ftello}, @code{fgetpos} behave incorrectly
 on input streams that are opened in @code{O_TEXT} mode and whose contents
-contains Unix line terminators (LF), on some platforms: mingw.
+contains Unix line terminators (LF), on some platforms: mingw, MSVC 9.
 @item
 On platforms where @code{off_t} is a 64-bit type, but @code{fseeko} is
 not present, stream operations on files larger than 2 GB silently do

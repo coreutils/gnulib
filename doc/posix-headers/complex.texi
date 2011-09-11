@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1,
-Cygwin 1.7.7, mingw, Interix 3.5, BeOS.
+Cygwin 1.7.7, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize

@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This variable is missing on some platforms:
-MacOS X 10.5, IRIX 6.5, OSF/1 5.1.
+MacOS X 10.5, IRIX 6.5, OSF/1 5.1, MSVC 9.
 @end itemize

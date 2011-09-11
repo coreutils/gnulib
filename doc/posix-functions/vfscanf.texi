@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib module @code{vfscanf}, together with module
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
 some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

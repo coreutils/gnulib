@@ -19,7 +19,7 @@ FreeBSD 7.2, AIX 7.1, Solaris 9.
 @item
 On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

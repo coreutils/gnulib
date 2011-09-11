@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-BeOS.
+MSVC 9, BeOS.
 @item
 On platforms where @code{long int} is a 32-bit type, this function may not
 work correctly on huge directories larger than 2 GB.  The fix is to use

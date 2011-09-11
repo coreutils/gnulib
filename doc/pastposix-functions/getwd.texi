@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Solaris 2.4, mingw, BeOS.
+Solaris 2.4, mingw, MSVC 9, BeOS.
 @item
 The size of the buffer required for this function is not a compile-time
 constant.  Also, the function truncates a result that would be larger than

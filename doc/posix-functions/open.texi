@@ -19,7 +19,7 @@ FreeBSD 7.2, AIX 7.1, HP-UX 11.00, Solaris 9, Irix 5.3.
 @item
 This function does not support the @code{O_NONBLOCK} flag when it is defined
 by the gnulib module @code{nonblocking} on some platforms:
-mingw.
+mingw, MSVC 9.
 @item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.

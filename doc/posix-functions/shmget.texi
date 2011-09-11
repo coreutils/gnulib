@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw, BeOS.
+mingw, MSVC 9, BeOS.
 @item
 On many platforms (not Linux), SHMMAX is so small that it is unusable for
 reasonable applications, and/or @code{shmget} requires superuser privileges.

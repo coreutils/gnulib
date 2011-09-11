@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
-OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x, mingw.
+OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function reports failure for @code{strerror(0)} (by setting
 @code{errno} or using a string similar to out-of-range values),

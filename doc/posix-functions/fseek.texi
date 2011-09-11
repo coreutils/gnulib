@@ -9,7 +9,8 @@ Gnulib module: fseek
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function mistakenly succeeds on pipes on some platforms: mingw.
+This function mistakenly succeeds on pipes on some platforms:
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

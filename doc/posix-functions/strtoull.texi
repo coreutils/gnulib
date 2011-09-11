@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-HP-UX 11.11, OSF/1 5.1, Interix 3.5.
+HP-UX 11.11, OSF/1 5.1, MSVC 9, Interix 3.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

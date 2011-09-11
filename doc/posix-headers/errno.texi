@@ -10,24 +10,24 @@ Portability problems fixed by Gnulib:
 @item
 The macros @code{EOVERFLOW}, @code{ENOLINK}, @code{EMULTIHOP} are not defined
 on some platforms:
-OpenBSD 4.0, OSF/1 5.1, mingw.
+OpenBSD 4.0, OSF/1 5.1, mingw, MSVC 9.
 @item
 The macro @code{ECANCELED} is not defined on some platforms:
-OpenBSD 4.0, Cygwin, mingw.
+OpenBSD 4.0, Cygwin, mingw, MSVC 9.
 @item
 The macros @code{ENOMSG}, @code{EIDRM}, @code{EPROTO}, @code{EBADMSG},
 @code{ENOTSUP} are not defined on some platforms:
-OpenBSD 4.0, mingw.
+OpenBSD 4.0, mingw, MSVC 9.
 @item
 The macro @code{ESTALE} is not defined on some platforms:
-mingw, Interix 3.5.
+mingw, MSVC 9, Interix 3.5.
 @item
 The macro @code{EDQUOT} is not defined on some platforms:
-NonStop Kernel, mingw.
+NonStop Kernel, mingw, MSVC 9.
 @item
 The macros @code{ENETRESET}, @code{ECONNABORTED} are not defined on some
 platforms:
-Minix 3.1.8, mingw.
+Minix 3.1.8, mingw, MSVC 9.
 @item
 The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},
 @code{EDESTADDRREQ}, @code{EMSGSIZE}, @code{EPROTOTYPE}, @code{ENOPROTOOPT},
@@ -36,7 +36,7 @@ The macros @code{EWOULDBLOCK}, @code{ETXTBSY}, @code{ELOOP}, @code{ENOTSOCK},
 @code{ECONNRESET}, @code{ENOBUFS}, @code{EISCONN}, @code{ENOTCONN},
 @code{ETIMEDOUT}, @code{ECONNREFUSED}, @code{EHOSTUNREACH}, @code{EALREADY},
 @code{EINPROGRESS} are not defined on some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

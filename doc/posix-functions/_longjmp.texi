@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Solaris 2.5.1, mingw.
+Solaris 2.5.1, mingw, MSVC 9.
 @end itemize
 
 Note: A future revision of POSIX later than the 2008/2009 one may drop the

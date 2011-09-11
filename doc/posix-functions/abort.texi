@@ -20,5 +20,5 @@ Cygwin 1.5.x.
 @item
 Some platforms always print a message to stderr, even if a SIGABRT handler
 uses longjmp to resume execution at a safe point:
-mingw.
+mingw, MSVC 9.
 @end itemize

@@ -13,10 +13,10 @@ This function does not work on denormalized numbers on some platforms:
 NetBSD 3.0.
 @item
 This function does not work on negative zero on some platforms:
-NetBSD 4.99.
+NetBSD 4.99, MSVC 9.
 @item
 This function does not work on infinite numbers on some platforms:
-IRIX 6.5, mingw.
+IRIX 6.5, mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -30,7 +30,7 @@ OSF/1 5.1.
 This function returns the total number of bytes that make up the multibyte
 character, not the number of bytes that were needed to complete the multibyte
 character, on some platforms:
-HP-UX 11.11, Solaris 11 2010-11, mingw.
+HP-UX 11.11, Solaris 11 2010-11, mingw, possibly MSVC 9.
 @item
 This function may not return 0 when parsing the NUL character on some platforms:
 Solaris 9.

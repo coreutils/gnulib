@@ -18,7 +18,7 @@ This function mistakenly removes a directory with
 Cygwin 1.5.x.
 @item
 This function does not remove empty directories on some platforms:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

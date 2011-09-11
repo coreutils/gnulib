@@ -16,11 +16,11 @@ On some other platforms, this call is not allowed.
 On some platforms, the prototype for @code{getcwd} uses @code{int}
 instead of @code{size_t} for the size argument when using non-standard
 headers, and the declaration is missing from @code{<unistd.h>}:
-mingw.
+mingw, MSVC 9.
 @item
 On some platforms, @code{getcwd (buf, 0)} fails with @code{ERANGE}
 instead of the required @code{EINVAL}:
-mingw.
+mingw, MSVC 9.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getcwd}:
@@ -38,7 +38,7 @@ Portability problems not fixed by Gnulib:
 When using @code{getcwd(NULL, nonzero)}, some platforms, such as glibc
 or cygwin, allocate exactly @code{nonzero} bytes and fail with
 @code{ERANGE} if it was not big enough, while other platforms, such as
-FreeBSD or mingw, ignore the size argument and allocate whatever size
+FreeBSD, mingw, or MSVC 9, ignore the size argument and allocate whatever size
 is necessary.  If this call succeeds, an application cannot portably
 access beyond the string length of the result.
 @end itemize

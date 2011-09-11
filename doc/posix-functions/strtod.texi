@@ -36,16 +36,16 @@ IRIX 6.5, OSF/1 4.0.
 
 @item
 This function fails to parse Infinities and plain NaNs on some platforms:
-OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw.
+OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Solaris 9, mingw, MSVC 9.
 
 @item
 This function fails to parse @samp{NaN()} on some platforms:
-glibc-2.3.6, MacOS X 10.5, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Cygwin < 1.5.25-11, mingw.
+glibc-2.3.6, MacOS X 10.5, FreeBSD 6.2, OpenBSD 4.0, AIX 7.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, Cygwin < 1.5.25-11, mingw, MSVC 9.
 
 @item
 This function fails to parse @samp{NaN(@var{n-char-sequence})} on some
 platforms:
-OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw.
+OpenBSD 4.0, HP-UX 11.11, IRIX 6.5, OSF/1 5.1, mingw, MSVC 9.
 
 @item
 This function parses @samp{NaN(@var{n-char-sequence})}, but returns
@@ -56,7 +56,7 @@ glibc-2.4, AIX 7.1.
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
 NetBSD 5.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
-Solaris 11 2010-11, mingw.
+Solaris 11 2010-11, mingw, MSVC 9.
 
 @item
 This function returns the wrong end pointer for @samp{0x1p} on some
@@ -75,17 +75,17 @@ Portability problems not fixed by Gnulib:
 @item
 This function returns +0.0 (not -0.0) for negative underflow on some
 platforms:
-glibc 2.7, Cygwin 1.5.x, mingw.
+glibc 2.7, Cygwin 1.5.x, mingw, MSVC 9.
 
 @item
 This function cannot distinguish between ``nan'' and ``-nan'' on some
 platforms:
-glibc 2.7, IRIX 6.5, OSF/1 5.1, mingw.
+glibc 2.7, IRIX 6.5, OSF/1 5.1, mingw, MSVC 9.
 
 @item
 This function fails to correctly parse very long strings on some
 platforms:
-MacOS X 10.5, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Cygwin, mingw.
+MacOS X 10.5, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, IRIX 6.5, OSF/1 5.1, Cygwin, mingw, MSVC 9.
 
 @item
 The replacement function does not always return correctly rounded results.
