@@ -1,5 +1,15 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	Fix wint_t on MSVC.
+	* lib/wchar.in.h (wint_t): On MSVC, override it.
+	* lib/wctype.in.h (wint_t): Likewise.
+	* m4/stdint.m4 (gl_STDINT_TYPE_PROPERTIES): Override BITSIZEOF_WINT_T on
+	MSVC.
+	* doc/posix-headers/wchar.texi: Mention the problem with wint_t on MSVC.
+	* doc/posix-headers/wctype.texi: Likewise.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	sys_types: Fix typo.
 	* lib/sys_types.in.h: Fix typo in comment.
 	Reported by Paul Eggert.

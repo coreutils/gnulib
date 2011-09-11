@@ -16,6 +16,9 @@ OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
 @item
 The type @code{wint_t} and macro @code{WEOF} are missing on some platforms:
 IRIX 5.3.
+@item
+The type @code{wint_t} is incorrect on some platforms:
+MSVC 9.
 
 @item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
