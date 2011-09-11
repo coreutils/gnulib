@@ -30,7 +30,9 @@
 #endif
 
 /* The include_next requires a split double-inclusion guard.  */
-#@INCLUDE_NEXT@ @NEXT_STRINGS_H@
+#if @HAVE_STRINGS_H@
+# @INCLUDE_NEXT@ @NEXT_STRINGS_H@
+#endif
 
 #ifndef _@GUARD_PREFIX@_STRINGS_H
 #define _@GUARD_PREFIX@_STRINGS_H

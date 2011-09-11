@@ -15,6 +15,9 @@ Minix 3.1.8.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This header file is missing on some platforms:
+MSVC 9.
+@item
 This header file defines symbols, such as @samp{index}, often used for
 variables, making debugging harder.
 @end itemize

@@ -1,5 +1,13 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	strings: Don't assume <strings.h> exists.
+	* lib/strings.in.h: Include <strings.h> only if HAVE_STRINGS_H is 1.
+	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_BODY): Set HAVE_STRINGS_H.
+	* modules/strings (Makefile.am): Substitute HAVE_STRINGS_H.
+	* doc/posix-headers/strings.texi: Mention the MSVC problem.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	dirent: Don't assume <dirent.h> exists.
 	* lib/dirent.in.h: Include <dirent.h> only if HAVE_DIRENT_H is 1.
 	* m4/dirent_h.m4 (gl_DIRENT_H): Set HAVE_DIRENT_H.
