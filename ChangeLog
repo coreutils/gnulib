@@ -1,3 +1,11 @@
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
+	acl: Fix compilation on Solaris 10 (older version).
+	* lib/file-has-acl.c (acl_ace_nontrivial): Use NEW_ACE_EVERYONE instead
+	of ACE_EVERYONE.
+	* lib/set-mode-acl.c (qset_acl): Likewise.
+	Reported by Christian Jullien <eligis@orange.fr>.
+
 2011-09-10  Bruno Haible  <bruno@clisp.org>
 
 	iconv, unsetenv: Add support for MSVC compiler.

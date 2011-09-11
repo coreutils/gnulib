@@ -217,7 +217,7 @@ acl_ace_nontrivial (int count, ace_t *entries)
             index2 = 0;
           else if (ace->a_flags == (NEW_ACE_GROUP | NEW_ACE_IDENTIFIER_GROUP))
             index2 = 2;
-          else if (ace->a_flags == ACE_EVERYONE)
+          else if (ace->a_flags == NEW_ACE_EVERYONE)
             index2 = 4;
           else
             return 1;

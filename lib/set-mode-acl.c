@@ -328,14 +328,14 @@ qset_acl (char const *name, int desc, mode_t mode)
           else
             entries[2].a_access_mask |= NEW_ACE_EXECUTE;
           entries[4].a_type = NEW_ACE_ACCESS_DENIED_ACE_TYPE;
-          entries[4].a_flags = ACE_EVERYONE;
+          entries[4].a_flags = NEW_ACE_EVERYONE;
           entries[4].a_who = 0;
           entries[4].a_access_mask = NEW_ACE_WRITE_NAMED_ATTRS
                                      | NEW_ACE_WRITE_ATTRIBUTES
                                      | NEW_ACE_WRITE_ACL
                                      | NEW_ACE_WRITE_OWNER;
           entries[5].a_type = NEW_ACE_ACCESS_ALLOWED_ACE_TYPE;
-          entries[5].a_flags = ACE_EVERYONE;
+          entries[5].a_flags = NEW_ACE_EVERYONE;
           entries[5].a_who = 0;
           entries[5].a_access_mask = NEW_ACE_READ_NAMED_ATTRS
                                      | NEW_ACE_READ_ATTRIBUTES
