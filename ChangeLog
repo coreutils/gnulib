@@ -1,3 +1,11 @@
+2011-09-11  Reuben Thomas  <rrt@sc3d.org>
+
+	Doc about crypt functions.
+	* doc/posix-functions/crypt.texi: Expand range of glibc versions
+	needing for _GNU_SOURCE to get crypt.
+	* doc/posix-functions/encrypt.texi: Likewise.
+	* doc/posix-functions/setkey.texi: Likewise.
+
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
 	doc: Update regarding MSVC 9.
