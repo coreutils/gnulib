@@ -37,7 +37,7 @@
 
 #if !@HAVE_SYS_UIO_H@
 /* A platform that lacks <sys/uio.h>.  */
-/* Get 'ssize_t'.  */
+/* Get 'size_t' and 'ssize_t'.  */
 # include <sys/types.h>
 
 # ifdef __cplusplus

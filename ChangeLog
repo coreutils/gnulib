@@ -1,5 +1,10 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	Support for MSVC compiler: Ensure size_t gets defined.
+	* modules/strings (Depends-on): Add 'sys_types'.
+	* modules/sys_uio (Depends-on): Likewise.
+	* lib/sys_uio.in.h: Update comment.
+
 	C++ tests for module 'sys_types'.
 	* modules/sys_types-c++-tests: New file.
 	* tests/test-sys_types-c++.cc: New file.
