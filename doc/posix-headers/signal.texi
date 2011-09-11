@@ -23,6 +23,9 @@ mingw.
 platforms:
 Irix 5.3, Interix 3.5.
 @item
+The type @code{pid_t} is not defined on some platforms:
+MSVC 9.
+@item
 The signal @code{SIGPIPE} is not defined on some platforms:
 mingw.
 @item

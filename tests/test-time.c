@@ -22,7 +22,9 @@
 
 #include "verify.h"
 
-struct timespec a;
+/* Check that the types are all defined.  */
+struct timespec t1;
+pid_t t2;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */

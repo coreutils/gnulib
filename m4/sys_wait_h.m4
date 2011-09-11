@@ -1,4 +1,4 @@
-# sys_wait_h.m4 serial 5
+# sys_wait_h.m4 serial 6
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,9 @@ AC_DEFUN([gl_SYS_WAIT_H],
 
   dnl <sys/wait.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_CHECK_NEXT_HEADERS([sys/wait.h])
+
+  dnl Ensure the type pid_t gets defined.
+  AC_REQUIRE([AC_TYPE_PID_T])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

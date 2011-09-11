@@ -20,6 +20,9 @@
 
 #include <termios.h>
 
+/* Check that the types are all defined.  */
+pid_t t1;
+
 int
 main (void)
 {

@@ -26,6 +26,9 @@ static struct sched_param a;
 /* Check that the SCHED_* macros are defined and compile-time constants.  */
 int b[] = { SCHED_FIFO, SCHED_RR, SCHED_OTHER };
 
+/* Check that the types are all defined.  */
+pid_t t1;
+
 static int f1;
 
 int

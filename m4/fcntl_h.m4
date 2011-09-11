@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 # Configure fcntl.h.
 dnl Copyright (C) 2006-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -12,6 +12,9 @@ AC_DEFUN([gl_FCNTL_H],
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_REQUIRE([gl_FCNTL_O_FLAGS])
   gl_NEXT_HEADERS([fcntl.h])
+
+  dnl Ensure the type pid_t gets defined.
+  AC_REQUIRE([AC_TYPE_PID_T])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, if it is not common

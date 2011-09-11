@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @samp{struct timespec} is not defined on some platforms.
 
 @item
+The type @code{pid_t} is not defined on some platforms:
+MSVC 9.
+
+@item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0

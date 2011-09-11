@@ -11,4 +11,8 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The type @code{pid_t} is not defined on some platforms:
+MSVC 9.
+You can use the macro @code{AC_TYPE_PID_T} to fix this.
 @end itemize

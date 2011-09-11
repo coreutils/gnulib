@@ -1,4 +1,4 @@
-# sched_h.m4 serial 4
+# sched_h.m4 serial 5
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,9 @@ AC_DEFUN([gl_SCHED_H],
        [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
        [#include <sched.h>])
      AC_SUBST([HAVE_STRUCT_SCHED_PARAM])
+
+     dnl Ensure the type pid_t gets defined.
+     AC_REQUIRE([AC_TYPE_PID_T])
     ])
   AC_SUBST([SCHED_H])
   AM_CONDITIONAL([GL_GENERATE_SCHED_H], [test -n "$SCHED_H"])

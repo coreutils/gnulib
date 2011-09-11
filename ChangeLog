@@ -1,5 +1,25 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	Ensure pid_t gets defined.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Require AC_TYPE_PID_T.
+	* m4/sched_h.m4 (gl_SCHED_H): Likewise.
+	* m4/signal_h.m4 (gl_SIGNAL_H): Likewise.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/sys_wait_h.m4 (gl_SYS_WAIT_H): Likewise.
+	* m4/termios_h.m4 (gl_TERMIOS_H): Likewise.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_BODY): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+	* tests/test-fcntl-h.c: Check that pid_t is defined.
+	* tests/test-sched.c: Likewise.
+	* tests/test-termios.c: Likewise.
+	* tests/test-time.c: Likewise.
+	* doc/posix-headers/fcntl.texi: Mention lack of pid_t on MSVC platform.
+	* doc/posix-headers/signal.texi: Likewise.
+	* doc/posix-headers/sys_types.texi: Likewise.
+	* doc/posix-headers/time.texi: Likewise.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix compilation on Solaris 10 (older version).
 	* lib/file-has-acl.c (acl_ace_nontrivial): Use NEW_ACE_EVERYONE instead
 	of ACE_EVERYONE.
