@@ -1,4 +1,4 @@
-# unlink.m4 serial 8
+# unlink.m4 serial 9
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   dnl Detect FreeBSD 7.2, AIX 7.1, Solaris 9 bug.
   AC_CACHE_CHECK([whether unlink honors trailing slashes],
     [gl_cv_func_unlink_honors_slashes],
@@ -18,7 +19,11 @@ AC_DEFUN([gl_FUNC_UNLINK],
      fi
      AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
-         [[#include <unistd.h>
+         [[#if HAVE_UNISTD_H
+           # include <unistd.h>
+           #else /* on Windows with MSVC */
+           # include <io.h>
+           #endif
            #include <errno.h>
          ]],
          [[int result = 0;
@@ -70,7 +75,12 @@ AC_DEFUN([gl_FUNC_UNLINK],
            AC_RUN_IFELSE(
              [AC_LANG_SOURCE([[
                 #include <stdlib.h>
-                #include <unistd.h>
+                #if HAVE_UNISTD_H
+                # include <unistd.h>
+                #else /* on Windows with MSVC */
+                # include <direct.h>
+                # include <io.h>
+                #endif
                 int main ()
                 {
                   int result = 0;

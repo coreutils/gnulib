@@ -1,5 +1,34 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	unistd et al.: Don't assume <unistd.h> exists.
+	* m4/chdir-long.m4 (gl_FUNC_CHDIR_LONG): Don't include <unistd.h> if it
+	does not exist.
+	* m4/environ.m4 (gl_ENVIRON): Don't include <unistd.h> if it does not
+	exist. But include <stdlib.h>.
+	* m4/fcntl-o.m4 (gl_FCNTL_O_FLAGS): If <unistd.h> does not exist,
+	include <io.h> and <stdlib.h> instead. Don't test symbolink links if
+	symlink() does not exist.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH_STDIN): If <unistd.h> does not exist,
+	include <io.h> instead.
+	* m4/free.m4 (gl_FUNC_FREE): Assume free(NULL) works on native Windows.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): If <unistd.h> does not exist,
+	include <direct.h> instead.
+	* m4/getcwd-abort-bug.m4 (gl_FUNC_GETCWD_ABORT_BUG): Likewise.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Likewise.
+	* m4/lseek.m4 (gl_FUNC_LSEEK): If <unistd.h> does not exist, include
+	<io.h> instead.
+	* m4/rename.m4 (gl_FUNC_RENAME): Assume rename() manages hard links
+	correctly if the system does not have hard links.
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): If <unistd.h> does not exist, include
+	<direct.h> instead.
+	* m4/unistd_h.m4 (gl_UNISTD_H): If <unistd.h> does not exist, bypass
+	it when looking for function declarations.
+	* m4/unlink.m4 (gl_FUNC_UNLINK): If <unistd.h> does not exist, include
+	<direct.h> and <io.h> instead.
+	* doc/posix-headers/unistd.texi: More details about MSVC problem.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	strcase: Support for MSVC.
 	* modules/strcase (Status, Notice): Remove obsoletion mark.
 	* doc/posix-functions/strcasecmp.texi: Mention MSVC problem.

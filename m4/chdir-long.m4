@@ -1,4 +1,4 @@
-#serial 12
+#serial 13
 
 # Use Gnulib's robust chdir function.
 # It can handle arbitrarily long directory names, which means
@@ -15,10 +15,14 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_CHDIR_LONG],
 [
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether this system has an arbitrary file name length limit],
     gl_cv_have_arbitrary_file_name_length_limit,
     [AC_EGREP_CPP([have_arbitrary_file_name_length_limit],
-                  [#include <unistd.h>
+                  [
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#endif
 #include <limits.h>
 #if defined PATH_MAX || defined MAXPATHLEN
 have_arbitrary_file_name_length_limit

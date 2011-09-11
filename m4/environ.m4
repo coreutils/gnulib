@@ -1,4 +1,4 @@
-# environ.m4 serial 5
+# environ.m4 serial 6
 dnl Copyright (C) 2001-2004, 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,16 @@ AC_DEFUN_ONCE([gl_ENVIRON],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   dnl Persuade glibc <unistd.h> to declare environ.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  gt_CHECK_VAR_DECL([#include <unistd.h>], environ)
+
+  AC_CHECK_HEADERS_ONCE([unistd.h])
+  gt_CHECK_VAR_DECL(
+    [#if HAVE_UNISTD_H
+     #include <unistd.h>
+     #endif
+     /* mingw, BeOS, Haiku declare environ in <stdlib.h>, not in <unistd.h>.  */
+     #include <stdlib.h>
+    ],
+    [environ])
   if test $gt_cv_var_environ_declaration != yes; then
     HAVE_DECL_ENVIRON=0
   fi

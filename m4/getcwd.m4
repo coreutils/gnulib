@@ -6,15 +6,20 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 8
+# serial 9
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+   AC_CHECK_HEADERS_ONCE([unistd.h])
    AC_CACHE_CHECK([whether getcwd (NULL, 0) allocates memory for result],
      [gl_cv_func_getcwd_null],
      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#        include <unistd.h>
+#        if HAVE_UNISTD_H
+#         include <unistd.h>
+#        else /* on Windows with MSVC */
+#         include <direct.h>
+#        endif
 #        ifndef getcwd
          char *getcwd ();
 #        endif

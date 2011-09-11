@@ -1,4 +1,4 @@
-# serial 24
+# serial 25
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -110,37 +110,42 @@ AC_DEFUN([gl_FUNC_RENAME],
   dnl NetBSD 1.6 and cygwin 1.5.x mistakenly reduce hard link count
   dnl on rename("h1","h2").
   dnl This bug requires stat'ting targets prior to attempting rename.
+  AC_CHECK_FUNCS_ONCE([link])
   AC_CACHE_CHECK([whether rename manages hard links correctly],
     [gl_cv_func_rename_link_works],
-    [rm -rf conftest.f conftest.f1
-    if touch conftest.f && ln conftest.f conftest.f1 &&
-        set x `ls -i conftest.f conftest.f1` && test "$2" = "$4"; then
-      AC_RUN_IFELSE(
-        [AC_LANG_PROGRAM([[
-#          include <stdio.h>
-#          include <stdlib.h>
-#          include <unistd.h>
-           ]],
-           [[int result = 0;
-             if (rename ("conftest.f", "conftest.f1"))
-               result |= 1;
-             if (unlink ("conftest.f1"))
-               result |= 2;
-             if (rename ("conftest.f", "conftest.f"))
-               result |= 4;
-             if (rename ("conftest.f1", "conftest.f1") == 0)
-               result |= 8;
-             return result;
-           ]])],
-        [gl_cv_func_rename_link_works=yes],
-        [gl_cv_func_rename_link_works=no],
-        dnl When crosscompiling, assume rename is broken.
-        [gl_cv_func_rename_link_works="guessing no"])
-    else
-      gl_cv_func_rename_link_works="guessing no"
-    fi
-    rm -rf conftest.f conftest.f1
-  ])
+    [if test $ac_cv_func_link = yes; then
+       rm -rf conftest.f conftest.f1
+       if touch conftest.f && ln conftest.f conftest.f1 &&
+           set x `ls -i conftest.f conftest.f1` && test "$2" = "$4"; then
+         AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM([[
+#             include <stdio.h>
+#             include <stdlib.h>
+#             include <unistd.h>
+              ]],
+              [[int result = 0;
+                if (rename ("conftest.f", "conftest.f1"))
+                  result |= 1;
+                if (unlink ("conftest.f1"))
+                  result |= 2;
+                if (rename ("conftest.f", "conftest.f"))
+                  result |= 4;
+                if (rename ("conftest.f1", "conftest.f1") == 0)
+                  result |= 8;
+                return result;
+              ]])],
+           [gl_cv_func_rename_link_works=yes],
+           [gl_cv_func_rename_link_works=no],
+           dnl When crosscompiling, assume rename is broken.
+           [gl_cv_func_rename_link_works="guessing no"])
+       else
+         gl_cv_func_rename_link_works="guessing no"
+       fi
+       rm -rf conftest.f conftest.f1
+     else
+       gl_cv_func_rename_link_works=yes
+     fi
+    ])
   if test "x$gl_cv_func_rename_link_works" != xyes; then
     REPLACE_RENAME=1
     AC_DEFINE([RENAME_HARD_LINK_BUG], [1],

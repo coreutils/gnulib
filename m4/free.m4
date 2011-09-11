@@ -16,18 +16,24 @@
 
 AC_DEFUN([gl_FUNC_FREE],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CACHE_CHECK([whether free (NULL) is known to work],
     [gl_cv_func_free],
-    [AC_COMPILE_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[@%:@include <unistd.h>]],
-          [[@%:@if _POSIX_VERSION < 199009L && \
-                (defined unix || defined _unix || defined _unix_ \
-                 || defined __unix || defined __unix__)
-              @%:@error "'free (NULL)' is not known to work"
-            @%:@endif]])],
-       [gl_cv_func_free=yes],
-       [gl_cv_func_free=no])])
+    [case "$host_os" in
+       mingw*) gl_cv_func_free=yes ;;
+       *)
+         AC_COMPILE_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[@%:@include <unistd.h>]],
+              [[@%:@if _POSIX_VERSION < 199009L && \
+                    (defined unix || defined _unix || defined _unix_ \
+                     || defined __unix || defined __unix__)
+                  @%:@error "'free (NULL)' is not known to work"
+                @%:@endif]])],
+           [gl_cv_func_free=yes],
+           [gl_cv_func_free=no])
+     esac
+    ])
 
   if test $gl_cv_func_free = no; then
     AC_DEFINE([free], [rpl_free],

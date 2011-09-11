@@ -1,4 +1,4 @@
-# fflush.m4 serial 12
+# fflush.m4 serial 13
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -24,13 +24,18 @@ dnl Sets gl_cv_func_fflush_stdin.
 
 AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
 [
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether fflush works on input streams],
     [gl_cv_func_fflush_stdin],
     [echo hello world > conftest.txt
      AC_RUN_IFELSE([AC_LANG_PROGRAM(
        [[
 #include <stdio.h>
-#include <unistd.h>
+#if HAVE_UNISTD_H
+# include <unistd.h>
+#else /* on Windows with MSVC */
+# include <io.h>
+#endif
        ]], [[FILE *f = fopen ("conftest.txt", "r");
          char buffer[10];
          int fd;

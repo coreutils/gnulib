@@ -1,4 +1,4 @@
-# rmdir.m4 serial 11
+# rmdir.m4 serial 12
 dnl Copyright (C) 2002, 2005, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_RMDIR],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   dnl Detect cygwin 1.5.x bug.
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether rmdir works], [gl_cv_func_rmdir_works],
     [mkdir conftest.dir
      touch conftest.file
@@ -15,7 +16,11 @@ AC_DEFUN([gl_FUNC_RMDIR],
        [AC_LANG_PROGRAM(
          [[#include <stdio.h>
            #include <errno.h>
-           #include <unistd.h>
+           #if HAVE_UNISTD_H
+           # include <unistd.h>
+           #else /* on Windows with MSVC */
+           # include <direct.h>
+           #endif
 ]], [[int result = 0;
       if (!rmdir ("conftest.file/"))
         result |= 1;

@@ -1,4 +1,4 @@
-# fcntl-o.m4 serial 3
+# fcntl-o.m4 serial 4
 dnl Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,12 +17,21 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
   m4_ifdef([AC_USE_SYSTEM_EXTENSIONS],
     [AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])],
     [AC_REQUIRE([AC_GNU_SOURCE])])
+
+  AC_CHECK_HEADERS_ONCE([unistd.h])
+  AC_CHECK_FUNCS_ONCE([symlink])
   AC_CACHE_CHECK([for working fcntl.h], [gl_cv_header_working_fcntl_h],
     [AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <sys/types.h>
            #include <sys/stat.h>
-           #include <unistd.h>
+           #if HAVE_UNISTD_H
+           # include <unistd.h>
+           #else /* on Windows with MSVC */
+           # include <io.h>
+           # include <stdlib.h>
+           # defined sleep(n) _sleep ((n) * 1000)
+           #endif
            #include <fcntl.h>
            #ifndef O_NOATIME
             #define O_NOATIME 0
@@ -38,6 +47,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
           ]],
           [[
             int result = !constants;
+            #if HAVE_SYMLINK
             {
               static char const sym[] = "conftest.sym";
               if (symlink (".", sym) != 0)
@@ -53,6 +63,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
                 }
               unlink (sym);
             }
+            #endif
             {
               static char const file[] = "confdefs.h";
               int fd = open (file, O_RDONLY | O_NOATIME);
