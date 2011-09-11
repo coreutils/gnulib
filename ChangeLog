@@ -1,5 +1,14 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sys_types'.
+	* lib/sys_types.in.h: New file.
+	* m4/sys_types_h.m4: New file.
+	* modules/sys_types: New file.
+	* doc/posix-headers/sys_types.texi: Mention the new module and the
+	size_t problem on MSVC 9.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	Support for MSVC compiler: Avoid division by a literal 0.
 	* lib/math.in.h (NAN): Define through a function call also on MSVC.
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Divide by 'zero' instead of 0.0.
