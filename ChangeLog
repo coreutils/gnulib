@@ -1,5 +1,10 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	strcase: Support for MSVC.
+	* modules/strcase (Status, Notice): Remove obsoletion mark.
+	* doc/posix-functions/strcasecmp.texi: Mention MSVC problem.
+	* doc/posix-functions/strncasecmp.texi: Likewise.
+
 	strings: Don't assume <strings.h> exists.
 	* lib/strings.in.h: Include <strings.h> only if HAVE_STRINGS_H is 1.
 	* m4/strings_h.m4 (gl_HEADER_STRINGS_H_BODY): Set HAVE_STRINGS_H.
