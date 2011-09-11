@@ -3,6 +3,7 @@ tests/test-vsnprintf-posix.c
 tests/test-snprintf-posix.h
 tests/test-vsnprintf.c
 tests/minus-zero.h
+tests/infinity.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

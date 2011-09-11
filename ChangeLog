@@ -1,5 +1,123 @@
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
+	Support for MSVC compiler: Avoid division by a literal 0.
+	* lib/math.in.h (NAN): Define through a function call also on MSVC.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Divide by 'zero' instead of 0.0.
+	* m4/printf.m4 (gl_PRINTF_INFINITE, gl_PRINTF_DIRECTIVE_A,
+	gl_PRINTF_DIRECTIVE_F, gl_PRINTF_FLAG_ZERO): Likewise.
+	(gl_PRINTF_INFINITE_LONG_DOUBLE): Divide by 'zeroL' instead of 0.0L.
+	* tests/infinity.h: New file.
+	* tests/nan.h (NaNf, NaNd, NaNl): Define through a function call also
+	on MSVC.
+	* tests/test-ceilf1.c: Include infinity.h.
+	(main): Use Infinityf.
+	* tests/test-ceil1.c: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-ceill.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-dprintf-posix.c: Include infinity.h.
+	(test_function): Use Infinityd.
+	* tests/test-floorf1.c: Include infinity.h.
+	(main): Use Infinityf.
+	* tests/test-floor1.c: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-floorl.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-fprintf-posix.c: Include infinity.h.
+	(test_function): Use Infinityd.
+	* tests/test-frexp.c: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-frexpl.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-isfinite.c: Include infinity.h.
+	(test_isfinitef): Use Infinityf.
+	(test_isfinited): Use Infinityd.
+	(test_isfinitel): Use Infinityl.
+	* tests/test-isinf.c: Include infinity.h.
+	(test_isinff): Use Infinityf.
+	(test_isinfd): Use Infinityd.
+	(test_isinfl): Use Infinityl.
+	* tests/test-isnan.c: Include infinity.h.
+	(test_float): Use Infinityf.
+	(test_double): Use Infinityd.
+	(test_long_double): Use Infinityl.
+	* tests/test-isnanf.h: Include infinity.h.
+	(main): Use Infinityf.
+	* tests/test-isnand.h: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-isnanl.h: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-ldexpl.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-printf-posix.h: Include infinity.h.
+	(test_function): Use Infinityd.
+	* tests/test-roundf1.c: Include infinity.h.
+	(main): Use Infinityf.
+	* tests/test-round1.c: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-roundl.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-signbit.c: Include infinity.h.
+	(test_signbitf): Use Infinityf.
+	(test_signbitd): Use Infinityd.
+	(test_signbitl): Use Infinityl.
+	* tests/test-snprintf-posix.h: Include infinity.h.
+	(test_function): Use Infinityd, Infinityl.
+	* tests/test-sprintf-posix.h: Include infinity.h.
+	(test_function): Use Infinityd, Infinityl.
+	* tests/test-truncf1.c: Include infinity.h.
+	(main): Use Infinityf.
+	* tests/test-trunc1.c: Include infinity.h.
+	(main): Use Infinityd.
+	* tests/test-truncl.c: Include infinity.h.
+	(main): Use Infinityl.
+	* tests/test-vasnprintf-posix.c: Include infinity.h.
+	(test_function): Use Infinityd, Infinityl.
+	* tests/test-vasprintf-posix.c: Include infinity.h.
+	(test_function): Use Infinityd, Infinityl.
+	* modules/ceilf-tests (Files): Add tests/infinity.h.
+	* modules/ceil-tests (Files): Likewise.
+	* modules/ceill-tests (Files): Likewise.
+	* modules/dprintf-posix-tests (Files): Likewise.
+	* modules/floorf-tests (Files): Likewise.
+	* modules/floor-tests (Files): Likewise.
+	* modules/floorl-tests (Files): Likewise.
+	* modules/fprintf-posix-tests (Files): Likewise.
+	* modules/frexp-tests (Files): Likewise.
+	* modules/frexp-nolibm-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+	* modules/frexpl-nolibm-tests (Files): Likewise.
+	* modules/isfinite-tests (Files): Likewise.
+	* modules/isinf-tests (Files): Likewise.
+	* modules/isnan-tests (Files): Likewise.
+	* modules/isnanf-tests (Files): Likewise.
+	* modules/isnanf-nolibm-tests (Files): Likewise.
+	* modules/isnand-tests (Files): Likewise.
+	* modules/isnand-nolibm-tests (Files): Likewise.
+	* modules/isnanl-tests (Files): Likewise.
+	* modules/isnanl-nolibm-tests (Files): Likewise.
+	* modules/ldexpl-tests (Files): Likewise.
+	* modules/printf-posix-tests (Files): Likewise.
+	* modules/roundf-tests (Files): Likewise.
+	* modules/round-tests (Files): Likewise.
+	* modules/roundl-tests (Files): Likewise.
+	* modules/signbit-tests (Files): Likewise.
+	* modules/snprintf-posix-tests (Files): Likewise.
+	* modules/sprintf-posix-tests (Files): Likewise.
+	* modules/truncf-tests (Files): Likewise.
+	* modules/trunc-tests (Files): Likewise.
+	* modules/truncl-tests (Files): Likewise.
+	* modules/vasnprintf-posix-tests (Files): Likewise.
+	* modules/vasprintf-posix-tests (Files): Likewise.
+	* modules/vdprintf-posix-tests (Files): Likewise.
+	* modules/vfprintf-posix-tests (Files): Likewise.
+	* modules/vprintf-posix-tests (Files): Likewise.
+	* modules/vsnprintf-posix-tests (Files): Likewise.
+	* modules/vsprintf-posix-tests (Files): Likewise.
+	* modules/xprintf-posix-tests (Files): Likewise.
+
+2011-09-11  Bruno Haible  <bruno@clisp.org>
+
 	Ensure pid_t gets defined.
 	* m4/fcntl_h.m4 (gl_FCNTL_H): Require AC_TYPE_PID_T.
 	* m4/sched_h.m4 (gl_SCHED_H): Likewise.

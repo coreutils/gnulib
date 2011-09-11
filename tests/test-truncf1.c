@@ -25,6 +25,7 @@ SIGNATURE_CHECK (truncf, float, (float));
 
 #include "isnanf-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -55,8 +56,8 @@ main ()
   ASSERT (truncf (-65536.0f) == -65536.0f);
   ASSERT (truncf (-2.341e31f) == -2.341e31f);
   /* Infinite numbers.  */
-  ASSERT (truncf (1.0f / 0.0f) == 1.0f / 0.0f);
-  ASSERT (truncf (-1.0f / 0.0f) == -1.0f / 0.0f);
+  ASSERT (truncf (Infinityf ()) == Infinityf ());
+  ASSERT (truncf (- Infinityf ()) == - Infinityf ());
   /* NaNs.  */
   ASSERT (isnanf (truncf (NaNf ())));
 

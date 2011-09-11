@@ -28,6 +28,7 @@ SIGNATURE_CHECK (ldexpl, long double, (long double, int));
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -49,14 +50,14 @@ main ()
   }
 
   { /* Positive infinity.  */
-    x = 1.0L / 0.0L;
+    x = Infinityl ();
     y = ldexpl (x, 0); ASSERT (y == x);
     y = ldexpl (x, 5); ASSERT (y == x);
     y = ldexpl (x, -5); ASSERT (y == x);
   }
 
   { /* Negative infinity.  */
-    x = -1.0L / 0.0L;
+    x = - Infinityl ();
     y = ldexpl (x, 0); ASSERT (y == x);
     y = ldexpl (x, 5); ASSERT (y == x);
     y = ldexpl (x, -5); ASSERT (y == x);

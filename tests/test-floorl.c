@@ -28,6 +28,7 @@ SIGNATURE_CHECK (floorl, long double, (long double));
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -63,8 +64,8 @@ main ()
   ASSERT (floorl (-65536.0L) == -65536.0L);
   ASSERT (floorl (-2.341e31L) == -2.341e31L);
   /* Infinite numbers.  */
-  ASSERT (floorl (1.0L / 0.0L) == 1.0L / 0.0L);
-  ASSERT (floorl (-1.0L / 0.0L) == -1.0L / 0.0L);
+  ASSERT (floorl (Infinityl ()) == Infinityl ());
+  ASSERT (floorl (- Infinityl ()) == - Infinityl ());
   /* NaNs.  */
   ASSERT (isnanl (floorl (NaNl ())));
 

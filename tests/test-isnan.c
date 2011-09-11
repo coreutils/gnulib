@@ -30,6 +30,7 @@
 #include <limits.h>
 
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -46,8 +47,8 @@ test_float (void)
   ASSERT (!isnan (0.0f));
   ASSERT (!isnan (minus_zerof));
   /* Infinite values.  */
-  ASSERT (!isnan (1.0f / 0.0f));
-  ASSERT (!isnan (-1.0f / 0.0f));
+  ASSERT (!isnan (Infinityf ()));
+  ASSERT (!isnan (- Infinityf ()));
   /* Quiet NaN.  */
   ASSERT (isnan (NaNf ()));
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
@@ -86,8 +87,8 @@ test_double (void)
   ASSERT (!isnan (0.0));
   ASSERT (!isnan (minus_zerod));
   /* Infinite values.  */
-  ASSERT (!isnan (1.0 / 0.0));
-  ASSERT (!isnan (-1.0 / 0.0));
+  ASSERT (!isnan (Infinityd ()));
+  ASSERT (!isnan (- Infinityd ()));
   /* Quiet NaN.  */
   ASSERT (isnan (NaNd ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
@@ -129,8 +130,8 @@ test_long_double (void)
   ASSERT (!isnan (0.0L));
   ASSERT (!isnan (minus_zerol));
   /* Infinite values.  */
-  ASSERT (!isnan (1.0L / 0.0L));
-  ASSERT (!isnan (-1.0L / 0.0L));
+  ASSERT (!isnan (Infinityl ()));
+  ASSERT (!isnan (- Infinityl ()));
   /* Quiet NaN.  */
   ASSERT (isnan (NaNl ()));
 

@@ -25,6 +25,7 @@ SIGNATURE_CHECK (trunc, double, (double));
 
 #include "isnand-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -55,8 +56,8 @@ main ()
   ASSERT (trunc (-65536.0) == -65536.0);
   ASSERT (trunc (-2.341e31) == -2.341e31);
   /* Infinite numbers.  */
-  ASSERT (trunc (1.0 / 0.0) == 1.0 / 0.0);
-  ASSERT (trunc (-1.0 / 0.0) == -1.0 / 0.0);
+  ASSERT (trunc (Infinityd ()) == Infinityd ());
+  ASSERT (trunc (- Infinityd ()) == - Infinityd ());
   /* NaNs.  */
   ASSERT (isnand (trunc (NaNd ())));
 

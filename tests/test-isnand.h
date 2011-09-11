@@ -19,6 +19,7 @@
 #include <limits.h>
 
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -35,8 +36,8 @@ main ()
   ASSERT (!isnand (0.0));
   ASSERT (!isnand (minus_zerod));
   /* Infinite values.  */
-  ASSERT (!isnand (1.0 / 0.0));
-  ASSERT (!isnand (-1.0 / 0.0));
+  ASSERT (!isnand (Infinityd ()));
+  ASSERT (!isnand (- Infinityd ()));
   /* Quiet NaN.  */
   ASSERT (isnand (NaNd ()));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT

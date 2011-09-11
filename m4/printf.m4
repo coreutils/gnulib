@@ -1,4 +1,4 @@
-# printf.m4 serial 44
+# printf.m4 serial 45
 dnl Copyright (C) 2003, 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -178,28 +178,28 @@ static double zero = 0.0;
 int main ()
 {
   int result = 0;
-  if (sprintf (buf, "%f", 1.0 / 0.0) < 0
+  if (sprintf (buf, "%f", 1.0 / zero) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 1;
-  if (sprintf (buf, "%f", -1.0 / 0.0) < 0
+  if (sprintf (buf, "%f", -1.0 / zero) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 1;
   if (sprintf (buf, "%f", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
     result |= 2;
-  if (sprintf (buf, "%e", 1.0 / 0.0) < 0
+  if (sprintf (buf, "%e", 1.0 / zero) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 4;
-  if (sprintf (buf, "%e", -1.0 / 0.0) < 0
+  if (sprintf (buf, "%e", -1.0 / zero) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 4;
   if (sprintf (buf, "%e", zero / zero) < 0
       || !strisnan (buf, 0, strlen (buf)))
     result |= 8;
-  if (sprintf (buf, "%g", 1.0 / 0.0) < 0
+  if (sprintf (buf, "%g", 1.0 / zero) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 16;
-  if (sprintf (buf, "%g", -1.0 / 0.0) < 0
+  if (sprintf (buf, "%g", -1.0 / zero) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 16;
   if (sprintf (buf, "%g", zero / zero) < 0
@@ -294,28 +294,28 @@ int main ()
 {
   int result = 0;
   nocrash_init();
-  if (sprintf (buf, "%Lf", 1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Lf", 1.0L / zeroL) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 1;
-  if (sprintf (buf, "%Lf", -1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Lf", -1.0L / zeroL) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 1;
   if (sprintf (buf, "%Lf", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
     result |= 1;
-  if (sprintf (buf, "%Le", 1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Le", 1.0L / zeroL) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 1;
-  if (sprintf (buf, "%Le", -1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Le", -1.0L / zeroL) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 1;
   if (sprintf (buf, "%Le", zeroL / zeroL) < 0
       || !strisnan (buf, 0, strlen (buf)))
     result |= 1;
-  if (sprintf (buf, "%Lg", 1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Lg", 1.0L / zeroL) < 0
       || (strcmp (buf, "inf") != 0 && strcmp (buf, "infinity") != 0))
     result |= 1;
-  if (sprintf (buf, "%Lg", -1.0L / 0.0L) < 0
+  if (sprintf (buf, "%Lg", -1.0L / zeroL) < 0
       || (strcmp (buf, "-inf") != 0 && strcmp (buf, "-infinity") != 0))
     result |= 1;
   if (sprintf (buf, "%Lg", zeroL / zeroL) < 0
@@ -478,6 +478,7 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_A],
 #include <stdio.h>
 #include <string.h>
 static char buf[100];
+static double zero = 0.0;
 int main ()
 {
   int result = 0;
@@ -502,7 +503,7 @@ int main ()
     result |= 4;
   /* This catches a FreeBSD 6.1 bug.  See
      <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
-  if (sprintf (buf, "%010a %d", 1.0 / 0.0, 33, 44, 55) < 0
+  if (sprintf (buf, "%010a %d", 1.0 / zero, 33, 44, 55) < 0
       || buf[0] == '0')
     result |= 8;
   /* This catches a MacOS X 10.3.9 (Darwin 7.9) bug.  */
@@ -562,13 +563,14 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_F],
 #include <stdio.h>
 #include <string.h>
 static char buf[100];
+static double zero = 0.0;
 int main ()
 {
   int result = 0;
   if (sprintf (buf, "%F %d", 1234567.0, 33, 44, 55) < 0
       || strcmp (buf, "1234567.000000 33") != 0)
     result |= 1;
-  if (sprintf (buf, "%F", 1.0 / 0.0) < 0
+  if (sprintf (buf, "%F", 1.0 / zero) < 0
       || (strcmp (buf, "INF") != 0 && strcmp (buf, "INFINITY") != 0))
     result |= 2;
   /* This catches a Cygwin 1.5.x bug.  */
@@ -878,9 +880,10 @@ AC_DEFUN([gl_PRINTF_FLAG_ZERO],
 #include <stdio.h>
 #include <string.h>
 static char buf[100];
+static double zero = 0.0;
 int main ()
 {
-  if (sprintf (buf, "%010f", 1.0 / 0.0, 33, 44, 55) < 0
+  if (sprintf (buf, "%010f", 1.0 / zero, 33, 44, 55) < 0
       || (strcmp (buf, "       inf") != 0
           && strcmp (buf, "  infinity") != 0))
     return 1;

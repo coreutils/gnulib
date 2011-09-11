@@ -17,8 +17,9 @@
 
 /* NaNf () returns a 'float' not-a-number.  */
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
+/* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
+   on the expression 0.0 / 0.0.  */
+#if defined __DECC || defined _MSC_VER
 static float
 NaNf ()
 {
@@ -32,8 +33,9 @@ NaNf ()
 
 /* NaNd () returns a 'double' not-a-number.  */
 
-/* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#ifdef __DECC
+/* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
+   on the expression 0.0 / 0.0.  */
+#if defined __DECC || defined _MSC_VER
 static double
 NaNd ()
 {
@@ -48,11 +50,19 @@ NaNd ()
 /* NaNl () returns a 'long double' not-a-number.  */
 
 /* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
-   runtime type conversion.  */
+   runtime type conversion.
+   The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.  */
 #ifdef __sgi
 static long double NaNl ()
 {
   double zero = 0.0;
+  return zero / zero;
+}
+#elif defined _MSC_VER
+static long double
+NaNl ()
+{
+  static long double zero = 0.0L;
   return zero / zero;
 }
 #else

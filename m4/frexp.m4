@@ -1,4 +1,4 @@
-# frexp.m4 serial 11
+# frexp.m4 serial 12
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -133,7 +133,7 @@ int main()
         result |= 1;
     }
   /* Test on infinite numbers.  */
-  x = 1.0 / 0.0;
+  x = 1.0 / zero;
   {
     int exp;
     double y = frexp (x, &exp);

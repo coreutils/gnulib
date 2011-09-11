@@ -29,6 +29,7 @@
 #include <float.h>
 #include <limits.h>
 
+#include "infinity.h"
 #include "macros.h"
 
 float zerof = 0.0f;
@@ -51,8 +52,8 @@ test_isfinitef ()
   ASSERT (isfinite (-2.718e30f));
   ASSERT (isfinite (-2.718e-30f));
   /* Infinite values.  */
-  ASSERT (!isfinite (1.0f / 0.0f));
-  ASSERT (!isfinite (-1.0f / 0.0f));
+  ASSERT (!isfinite (Infinityf ()));
+  ASSERT (!isfinite (- Infinityf ()));
   /* Quiet NaN.  */
   ASSERT (!isfinite (zerof / zerof));
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
@@ -95,8 +96,8 @@ test_isfinited ()
   ASSERT (isfinite (-2.718e30));
   ASSERT (isfinite (-2.718e-30));
   /* Infinite values.  */
-  ASSERT (!isfinite (1.0 / 0.0));
-  ASSERT (!isfinite (-1.0 / 0.0));
+  ASSERT (!isfinite (Infinityd ()));
+  ASSERT (!isfinite (- Infinityd ()));
   /* Quiet NaN.  */
   ASSERT (!isfinite (zerod / zerod));
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
@@ -142,8 +143,8 @@ test_isfinitel ()
   ASSERT (isfinite (-2.718e30L));
   ASSERT (isfinite (-2.718e-30L));
   /* Infinite values.  */
-  ASSERT (!isfinite (1.0L / 0.0L));
-  ASSERT (!isfinite (-1.0L / 0.0L));
+  ASSERT (!isfinite (Infinityl ()));
+  ASSERT (!isfinite (- Infinityl ()));
   /* Quiet NaN.  */
   ASSERT (!isfinite (zerol / zerol));
 

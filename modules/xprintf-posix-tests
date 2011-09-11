@@ -5,6 +5,7 @@ tests/test-xprintf-posix.c
 tests/test-fprintf-posix.h
 tests/test-printf-posix.h
 tests/test-printf-posix.output
+tests/infinity.h
 tests/macros.h
 
 Depends-on:

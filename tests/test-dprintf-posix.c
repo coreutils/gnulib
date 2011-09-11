@@ -27,6 +27,7 @@ SIGNATURE_CHECK (dprintf, int, (int, const char *, ...));
 #include <stdint.h>
 #include <string.h>
 
+#include "infinity.h"
 #include "macros.h"
 
 static void
@@ -50,13 +51,13 @@ test_function (int (*my_dprintf) (int, const char *, ...))
   my_dprintf (fileno (stdout), "%a %d\n", 0.0, 33, 44, 55);
 
   /* Positive infinity.  */
-  my_dprintf (fileno (stdout), "%a %d\n", 1.0 / 0.0, 33, 44, 55);
+  my_dprintf (fileno (stdout), "%a %d\n", Infinityd (), 33, 44, 55);
 
   /* Negative infinity.  */
-  my_dprintf (fileno (stdout), "%a %d\n", -1.0 / 0.0, 33, 44, 55);
+  my_dprintf (fileno (stdout), "%a %d\n", - Infinityd (), 33, 44, 55);
 
   /* FLAG_ZERO with infinite number.  */
-  my_dprintf (fileno (stdout), "%010a %d\n", 1.0 / 0.0, 33, 44, 55);
+  my_dprintf (fileno (stdout), "%010a %d\n", Infinityd (), 33, 44, 55);
 
   /* Test the support of the %f format directive.  */
 

@@ -27,6 +27,7 @@ SIGNATURE_CHECK (round, double, (double));
 
 #include "isnand-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -63,8 +64,8 @@ main ()
   ASSERT (round (-65536.001) == -65536.0);
   ASSERT (round (-2.341e31) == -2.341e31);
   /* Infinite numbers.  */
-  ASSERT (round (1.0 / 0.0) == 1.0 / 0.0);
-  ASSERT (round (-1.0 / 0.0) == -1.0 / 0.0);
+  ASSERT (round (Infinityd ()) == Infinityd ());
+  ASSERT (round (- Infinityd ()) == - Infinityd ());
   /* NaNs.  */
   ASSERT (isnand (round (NaNd ())));
 

@@ -27,6 +27,7 @@ SIGNATURE_CHECK (ceil, double, (double));
 
 #include "isnand-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -58,8 +59,8 @@ main ()
   ASSERT (ceil (-65536.0) == -65536.0);
   ASSERT (ceil (-2.341e31) == -2.341e31);
   /* Infinite numbers.  */
-  ASSERT (ceil (1.0 / 0.0) == 1.0 / 0.0);
-  ASSERT (ceil (-1.0 / 0.0) == -1.0 / 0.0);
+  ASSERT (ceil (Infinityd ()) == Infinityd ());
+  ASSERT (ceil (- Infinityd ()) == - Infinityd ());
   /* NaNs.  */
   ASSERT (isnand (ceil (NaNd ())));
 

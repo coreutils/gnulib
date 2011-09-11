@@ -25,6 +25,7 @@ SIGNATURE_CHECK (ceilf, float, (float));
 
 #include "isnanf-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -69,8 +70,8 @@ main (int argc, char **argv _GL_UNUSED)
   ASSERT (my_ceilf (-65536.0f) == -65536.0f);
   ASSERT (my_ceilf (-2.341e31f) == -2.341e31f);
   /* Infinite numbers.  */
-  ASSERT (my_ceilf (1.0f / 0.0f) == 1.0f / 0.0f);
-  ASSERT (my_ceilf (-1.0f / 0.0f) == -1.0f / 0.0f);
+  ASSERT (my_ceilf (Infinityf ()) == Infinityf ());
+  ASSERT (my_ceilf (- Infinityf ()) == - Infinityf ());
   /* NaNs.  */
   ASSERT (isnanf (my_ceilf (NaNf ())));
 

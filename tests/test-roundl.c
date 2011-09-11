@@ -30,6 +30,7 @@ SIGNATURE_CHECK (roundl, long double, (long double));
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -70,8 +71,8 @@ main ()
   ASSERT (roundl (-65536.001L) == -65536.0L);
   ASSERT (roundl (-2.341e31L) == -2.341e31L);
   /* Infinite numbers.  */
-  ASSERT (roundl (1.0 / 0.0L) == 1.0 / 0.0L);
-  ASSERT (roundl (-1.0 / 0.0L) == -1.0 / 0.0L);
+  ASSERT (roundl (Infinityl ()) == Infinityl ());
+  ASSERT (roundl (- Infinityl ()) == - Infinityl ());
   /* NaNs.  */
   ASSERT (isnanl (roundl (NaNl ())));
 

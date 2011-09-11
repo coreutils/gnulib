@@ -29,6 +29,7 @@
 #include <limits.h>
 
 #include "minus-zero.h"
+#include "infinity.h"
 #include "macros.h"
 
 float zerof = 0.0f;
@@ -52,8 +53,8 @@ test_signbitf ()
   else
     ASSERT (!signbit (minus_zerof));
   /* Infinite values.  */
-  ASSERT (!signbit (1.0f / 0.0f));
-  ASSERT (signbit (-1.0f / 0.0f));
+  ASSERT (!signbit (Infinityf ()));
+  ASSERT (signbit (- Infinityf ()));
   /* Quiet NaN.  */
   (void) signbit (zerof / zerof);
 #if defined FLT_EXPBIT0_WORD && defined FLT_EXPBIT0_BIT
@@ -97,8 +98,8 @@ test_signbitd ()
   else
     ASSERT (!signbit (minus_zerod));
   /* Infinite values.  */
-  ASSERT (!signbit (1.0 / 0.0));
-  ASSERT (signbit (-1.0 / 0.0));
+  ASSERT (!signbit (Infinityd ()));
+  ASSERT (signbit (- Infinityd ()));
   /* Quiet NaN.  */
   (void) signbit (zerod / zerod);
 #if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
@@ -140,8 +141,8 @@ test_signbitl ()
   else
     ASSERT (!signbit (minus_zerol));
   /* Infinite values.  */
-  ASSERT (!signbit (1.0L / 0.0L));
-  ASSERT (signbit (-1.0L / 0.0L));
+  ASSERT (!signbit (Infinityl ()));
+  ASSERT (signbit (- Infinityl ()));
   /* Quiet NaN.  */
   (void) signbit (zerol / zerol);
 #if defined LDBL_EXPBIT0_WORD && defined LDBL_EXPBIT0_BIT

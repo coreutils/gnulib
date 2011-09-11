@@ -1,6 +1,7 @@
 Files:
 tests/test-signbit.c
 tests/minus-zero.h
+tests/infinity.h
 tests/macros.h
 m4/exponentf.m4
 m4/exponentd.m4

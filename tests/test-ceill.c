@@ -28,6 +28,7 @@ SIGNATURE_CHECK (ceill, long double, (long double));
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -63,8 +64,8 @@ main ()
   ASSERT (ceill (-65536.0L) == -65536.0L);
   ASSERT (ceill (-2.341e31L) == -2.341e31L);
   /* Infinite numbers.  */
-  ASSERT (ceill (1.0L / 0.0L) == 1.0L / 0.0L);
-  ASSERT (ceill (-1.0L / 0.0L) == -1.0L / 0.0L);
+  ASSERT (ceill (Infinityl ()) == Infinityl ());
+  ASSERT (ceill (- Infinityl ()) == - Infinityl ());
   /* NaNs.  */
   ASSERT (isnanl (ceill (NaNl ())));
 

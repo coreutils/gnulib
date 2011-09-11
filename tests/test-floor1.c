@@ -25,6 +25,7 @@ SIGNATURE_CHECK (floor, double, (double));
 
 #include "isnand-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -56,8 +57,8 @@ main (int argc, char **argv _GL_UNUSED)
   ASSERT (floor (-65536.0) == -65536.0);
   ASSERT (floor (-2.341e31) == -2.341e31);
   /* Infinite numbers.  */
-  ASSERT (floor (1.0 / 0.0) == 1.0 / 0.0);
-  ASSERT (floor (-1.0 / 0.0) == -1.0 / 0.0);
+  ASSERT (floor (Infinityd ()) == Infinityd ());
+  ASSERT (floor (- Infinityd ()) == - Infinityd ());
   /* NaNs.  */
   ASSERT (isnand (floor (NaNd ())));
 

@@ -75,8 +75,9 @@ _GL_WARN_ON_USE (rpl_ ## func ## l, #func " is unportable - "       \
 #if !defined NAN || @REPLACE_NAN@
 # if !GNULIB_defined_NAN
 #  undef NAN
-  /* The Compaq (ex-DEC) C 6.4 compiler chokes on the expression 0.0 / 0.0.  */
-#  ifdef __DECC
+  /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler
+     choke on the expression 0.0 / 0.0.  */
+#  if defined __DECC || defined _MSC_VER
 static float
 _NaN ()
 {

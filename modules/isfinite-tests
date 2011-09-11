@@ -1,5 +1,6 @@
 Files:
 tests/test-isfinite.c
+tests/infinity.h
 tests/macros.h
 
 Depends-on:

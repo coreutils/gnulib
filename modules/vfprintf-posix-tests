@@ -3,6 +3,7 @@ tests/test-vfprintf-posix.sh
 tests/test-vfprintf-posix.c
 tests/test-fprintf-posix.h
 tests/test-printf-posix.output
+tests/infinity.h
 tests/signature.h
 tests/macros.h
 

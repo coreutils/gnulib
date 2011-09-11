@@ -2,6 +2,7 @@ Files:
 tests/test-isnand-nolibm.c
 tests/test-isnand.h
 tests/minus-zero.h
+tests/infinity.h
 tests/nan.h
 tests/macros.h
 

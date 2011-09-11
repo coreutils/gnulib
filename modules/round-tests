@@ -2,6 +2,7 @@ Files:
 tests/test-round1.c
 tests/test-round2.c
 tests/minus-zero.h
+tests/infinity.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

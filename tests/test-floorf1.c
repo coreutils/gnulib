@@ -25,6 +25,7 @@ SIGNATURE_CHECK (floorf, float, (float));
 
 #include "isnanf-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -69,8 +70,8 @@ main (int argc, char **argv _GL_UNUSED)
   ASSERT (my_floorf (-65536.0f) == -65536.0f);
   ASSERT (my_floorf (-2.341e31f) == -2.341e31f);
   /* Infinite numbers.  */
-  ASSERT (my_floorf (1.0f / 0.0f) == 1.0f / 0.0f);
-  ASSERT (my_floorf (-1.0f / 0.0f) == -1.0f / 0.0f);
+  ASSERT (my_floorf (Infinityf ()) == Infinityf ());
+  ASSERT (my_floorf (- Infinityf ()) == - Infinityf ());
   /* NaNs.  */
   ASSERT (isnanf (my_floorf (NaNf ())));
 

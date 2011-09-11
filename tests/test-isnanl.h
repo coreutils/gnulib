@@ -20,6 +20,7 @@
 #include <limits.h>
 
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -41,8 +42,8 @@ main ()
   ASSERT (!isnanl (0.0L));
   ASSERT (!isnanl (minus_zerol));
   /* Infinite values.  */
-  ASSERT (!isnanl (1.0L / 0.0L));
-  ASSERT (!isnanl (-1.0L / 0.0L));
+  ASSERT (!isnanl (Infinityl ()));
+  ASSERT (!isnanl (- Infinityl ()));
   /* Quiet NaN.  */
   ASSERT (isnanl (NaNl ()));
 

@@ -2,6 +2,7 @@ Files:
 tests/test-truncf1.c
 tests/test-truncf2.c
 tests/minus-zero.h
+tests/infinity.h
 tests/nan.h
 tests/signature.h
 tests/macros.h

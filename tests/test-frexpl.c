@@ -28,6 +28,7 @@ SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 #include "fpucw.h"
 #include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -79,7 +80,7 @@ main ()
   { /* Positive infinity.  */
     int exp = -9999;
     long double mantissa;
-    x = 1.0L / 0.0L;
+    x = Infinityl ();
     mantissa = frexpl (x, &exp);
     ASSERT (mantissa == x);
   }
@@ -87,7 +88,7 @@ main ()
   { /* Negative infinity.  */
     int exp = -9999;
     long double mantissa;
-    x = -1.0L / 0.0L;
+    x = - Infinityl ();
     mantissa = frexpl (x, &exp);
     ASSERT (mantissa == x);
   }

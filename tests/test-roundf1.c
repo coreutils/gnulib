@@ -27,6 +27,7 @@ SIGNATURE_CHECK (roundf, float, (float));
 
 #include "isnanf-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
 #include "nan.h"
 #include "macros.h"
 
@@ -63,8 +64,8 @@ main ()
   ASSERT (roundf (-65536.01f) == -65536.0f);
   ASSERT (roundf (-2.341e31f) == -2.341e31f);
   /* Infinite numbers.  */
-  ASSERT (roundf (1.0 / 0.0f) == 1.0 / 0.0f);
-  ASSERT (roundf (-1.0 / 0.0f) == -1.0 / 0.0f);
+  ASSERT (roundf (Infinityf ()) == Infinityf ());
+  ASSERT (roundf (- Infinityf ()) == - Infinityf ());
   /* NaNs.  */
   ASSERT (isnanf (roundf (NaNf ())));
 
