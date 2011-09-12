@@ -32,6 +32,29 @@
 /* Get ino_t.  Needed on some systems, including glibc 2.8.  */
 #include <sys/types.h>
 
+#if !@HAVE_DIRENT_H@
+/* Define types DIR and 'struct dirent'.  */
+# if !GNULIB_defined_struct_dirent
+struct dirent
+{
+  char d_type;
+  char d_name[1];
+};
+/* Possible values for 'd_type'.  */
+#  define DT_UNKNOWN 0
+#  define DT_FIFO    1          /* FIFO */
+#  define DT_CHR     2          /* character device */
+#  define DT_DIR     4          /* directory */
+#  define DT_BLK     6          /* block device */
+#  define DT_REG     8          /* regular file */
+#  define DT_LNK    10          /* symbolic link */
+#  define DT_SOCK   12          /* socket */
+#  define DT_WHT    14          /* whiteout */
+typedef struct gl_directory DIR;
+#  define GNULIB_defined_struct_dirent 1
+# endif
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -41,16 +64,79 @@
 
 /* Declare overridden functions.  */
 
-#if @REPLACE_CLOSEDIR@
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  define closedir rpl_closedir
+#if @GNULIB_OPENDIR@
+# if @REPLACE_OPENDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef opendir
+#   define opendir rpl_opendir
+#  endif
+_GL_FUNCDECL_RPL (opendir, DIR *, (const char *dir_name) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (opendir, DIR *, (const char *dir_name));
+# else
+#  if !@HAVE_OPENDIR@
+_GL_FUNCDECL_SYS (opendir, DIR *, (const char *dir_name) _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (opendir, DIR *, (const char *dir_name));
 # endif
-_GL_FUNCDECL_RPL (closedir, int, (DIR *) _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (closedir, int, (DIR *));
-#else
-_GL_CXXALIAS_SYS (closedir, int, (DIR *));
+_GL_CXXALIASWARN (opendir);
+#elif defined GNULIB_POSIXCHECK
+# undef opendir
+# if HAVE_RAW_DECL_OPENDIR
+_GL_WARN_ON_USE (opendir, "opendir is not portable - "
+                 "use gnulib module opendir for portability");
+# endif
 #endif
+
+#if @GNULIB_READDIR@
+# if !@HAVE_READDIR@
+_GL_FUNCDECL_SYS (readdir, struct dirent *, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (readdir, struct dirent *, (DIR *dirp));
+_GL_CXXALIASWARN (readdir);
+#elif defined GNULIB_POSIXCHECK
+# undef readdir
+# if HAVE_RAW_DECL_READDIR
+_GL_WARN_ON_USE (readdir, "readdir is not portable - "
+                 "use gnulib module readdir for portability");
+# endif
+#endif
+
+#if @GNULIB_REWINDDIR@
+# if !@HAVE_REWINDDIR@
+_GL_FUNCDECL_SYS (rewinddir, void, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (rewinddir, void, (DIR *dirp));
+_GL_CXXALIASWARN (rewinddir);
+#elif defined GNULIB_POSIXCHECK
+# undef rewinddir
+# if HAVE_RAW_DECL_REWINDDIR
+_GL_WARN_ON_USE (rewinddir, "rewinddir is not portable - "
+                 "use gnulib module rewinddir for portability");
+# endif
+#endif
+
+#if @GNULIB_CLOSEDIR@
+# if @REPLACE_CLOSEDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef closedir
+#   define closedir rpl_closedir
+#  endif
+_GL_FUNCDECL_RPL (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (closedir, int, (DIR *dirp));
+# else
+#  if !@HAVE_CLOSEDIR@
+_GL_FUNCDECL_SYS (closedir, int, (DIR *dirp) _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (closedir, int, (DIR *dirp));
+# endif
 _GL_CXXALIASWARN (closedir);
+#elif defined GNULIB_POSIXCHECK
+# undef closedir
+# if HAVE_RAW_DECL_CLOSEDIR
+_GL_WARN_ON_USE (closedir, "closedir is not portable - "
+                 "use gnulib module closedir for portability");
+# endif
+#endif
 
 #if @GNULIB_DIRFD@
 /* Return the file descriptor associated with the given directory stream,
@@ -110,17 +196,6 @@ _GL_WARN_ON_USE (fdopendir, "fdopendir is unportable - "
                  "use gnulib module fdopendir for portability");
 # endif
 #endif
-
-#if @REPLACE_OPENDIR@
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  define opendir rpl_opendir
-# endif
-_GL_FUNCDECL_RPL (opendir, DIR *, (const char *) _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (opendir, DIR *, (const char *));
-#else
-_GL_CXXALIAS_SYS (opendir, DIR *, (const char *));
-#endif
-_GL_CXXALIASWARN (opendir);
 
 #if @GNULIB_SCANDIR@
 /* Scan the directory DIR, calling FILTER on each directory entry.

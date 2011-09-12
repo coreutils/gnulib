@@ -1,0 +1,30 @@
+Description:
+opendir() function: start reading the entries of a directory
+
+Files:
+lib/opendir.c
+lib/dirent-private.h
+m4/opendir.m4
+
+Depends-on:
+dirent
+largefile
+filename        [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
+
+configure.ac:
+gl_FUNC_OPENDIR
+if test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1; then
+  AC_LIBOBJ([opendir])
+fi
+gl_DIRENT_MODULE_INDICATOR([opendir])
+
+Makefile.am:
+
+Include:
+<dirent.h>
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

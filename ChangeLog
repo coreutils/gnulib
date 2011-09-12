@@ -1,3 +1,42 @@
+2011-09-12  Bruno Haible  <bruno@clisp.org>
+
+	New modules 'opendir', 'readdir', 'rewinddir', 'closedir'.
+	* lib/dirent.in.h (struct dirent): New type.
+	(DT_UNKNOWN, DT_FIFO, DT_CHR, DT_DIR, DT_BLK, DT_REG, DT_LNK, DT_SOCK,
+	DT_WHT): New macros.
+	(DIR): New type.
+	(opendir, closedir): Declare only if the module 'opendir' is enabled.
+	(readdir, rewinddir): New declarations.
+	* lib/dirent-private.h: New file.
+	* lib/opendir.c: New file.
+	* lib/readdir.c: New file.
+	* lib/rewinddir.c: New file.
+	* lib/closedir.c: New file.
+	* lib/fchdir.c (rpl_closedir, rpl_opendir): Remove functions.
+	* m4/opendir.m4: New file.
+	* m4/readdir.m4: New file.
+	* m4/rewinddir.m4: New file.
+	* m4/closedir.m4: New file.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Don't set REPLACE_OPENDIR,
+	REPLACE_CLOSEDIR here.
+	* m4/dirent_h.m4 (gl_DIRENT_H): Also check whether closedir, opendir,
+	readdir, rewinddir are declared.
+	(gl_DIRENT_H_DEFAULTS): Initialize GNULIB_OPENDIR, GNULIB_READDIR,
+	GNULIB_REWINDDIR, GNULIB_CLOSEDIR, HAVE_OPENDIR, HAVE_READDIR,
+	HAVE_REWINDDIR, HAVE_CLOSEDIR.
+	* modules/dirent (Makefile.am): Substitute GNULIB_OPENDIR,
+	GNULIB_READDIR, GNULIB_REWINDDIR, GNULIB_CLOSEDIR, HAVE_OPENDIR,
+	HAVE_READDIR, HAVE_REWINDDIR, HAVE_CLOSEDIR.
+	* modules/opendir: New file.
+	* modules/readdir: New file.
+	* modules/rewinddir: New file.
+	* modules/closedir: New file.
+	* doc/posix-functions/opendir.texi: Mention the 'opendir' module.
+	* doc/posix-functions/readdir.texi: Mention the 'readdir' module.
+	* doc/posix-functions/rewinddir.texi: Mention the 'rewinddir' module.
+	* doc/posix-functions/closedir.texi: Mention the 'closedir' module.
+	* NEWS: Mention the 'fchdir' change.
+
 2011-09-11  Bruno Haible  <bruno@clisp.org>
 
 	asm-underscore.m4: Support for MSVC.
