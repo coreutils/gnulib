@@ -66,4 +66,19 @@
 #  define PATH_MAX 1024
 # endif
 
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* The page "Naming Files, Paths, and Namespaces" on msdn.microsoft.com,
+   section "Maximum Path Length Limitation",
+   <http://msdn.microsoft.com/en-us/library/aa365247(v=vs.85).aspx#maxpath>
+   explains that the maximum size of a filename, including the terminating
+   NUL byte, is 260 = 3 + 256 + 1.
+   This is the same value as
+     - FILENAME_MAX in <stdio.h>,
+     - _MAX_PATH in <stdlib.h>,
+     - MAX_PATH in <windef.h>.
+   Undefine the original value, because mingw's <limits.h> gets it wrong.  */
+#  undef PATH_MAX
+#  define PATH_MAX 260
+# endif
+
 #endif /* _PATHMAX_H */
