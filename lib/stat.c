@@ -44,6 +44,7 @@ orig_stat (const char *filename, struct stat *buf)
 #include <stdbool.h>
 #include <string.h>
 #include "dosname.h"
+#include "pathmax.h"
 #include "verify.h"
 
 /* Store information about NAME into ST.  Work around bugs with

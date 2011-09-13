@@ -1,5 +1,9 @@
 2011-09-13  Bruno Haible  <bruno@clisp.org>
 
+	stat: Support for MSVC.
+	* lib/stat.c: Include pathmax.h.
+	* modules/stat (Depends-on): Add pathmax.
+
 	pathmax: Support for native Windows.
 	* lib/pathmax.h (PATH_MAX): Define to 260 on native Windows.
 
