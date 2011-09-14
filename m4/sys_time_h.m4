@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/time.h>.
-# serial 6
+# serial 7
 
 # Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -27,6 +27,9 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
     HAVE_SYS_TIME_H=0
   fi
 
+  dnl On native Windows with MSVC, 'struct timeval' is defined in <winsock2.h>
+  dnl only. So include that header in the list.
+  gl_PREREQ_SYS_H_WINSOCK2
   AC_CACHE_CHECK([for struct timeval], [gl_cv_sys_struct_timeval],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
@@ -34,6 +37,9 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
              #include <sys/time.h>
             #endif
             #include <time.h>
+            #if HAVE_WINSOCK2_H
+            # include <winsock2.h>
+            #endif
           ]],
           [[static struct timeval x; x.tv_sec = x.tv_usec;]])],
        [gl_cv_sys_struct_timeval=yes],
