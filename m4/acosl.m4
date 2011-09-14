@@ -1,4 +1,4 @@
-# acosl.m4 serial 4
+# acosl.m4 serial 5
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,7 +51,7 @@ AC_DEFUN([gl_FUNC_ACOSL],
      || test $gl_cv_func_acosl_in_libm = yes; then
     dnl Also check whether it's declared.
     dnl MacOS X 10.3 has acosl() in libc but doesn't declare it in <math.h>.
-    AC_CHECK_DECL([acosl], , [HAVE_DECL_ACOSL=0], [#include <math.h>])
+    AC_CHECK_DECL([acosl], , [HAVE_DECL_ACOSL=0], [[#include <math.h>]])
   else
     HAVE_DECL_ACOSL=0
     HAVE_ACOSL=0

@@ -1,3 +1,23 @@
+2011-09-14  Bruno Haible  <bruno@clisp.org>
+
+	Properly quote AC_CHECK_DECL's 4th argument.
+	* m4/acosl.m4 (gl_FUNC_ACOSL): Double-quote AC_CHECK_DECL's 4th
+	argument.
+	* m4/argp.m4 (gl_ARGP): Likewise.
+	* m4/asinl.m4 (gl_FUNC_ASINL): Likewise.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Likewise.
+	* m4/cosl.m4 (gl_FUNC_COSL): Likewise.
+	* m4/expl.m4 (gl_FUNC_EXPL): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL, gl_FUNC_FREXPL_NO_LIBM): Likewise.
+	* m4/getloadavg.m4 (gl_GETLOADAVG): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): Likewise.
+	* m4/logl.m4 (gl_FUNC_LOGL): Likewise.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Likewise.
+	* m4/sinl.m4 (gl_FUNC_SINL): Likewise.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL): Likewise.
+	* m4/tanl.m4 (gl_FUNC_TANL): Likewise.
+	Reported by Eric Blake.
+
 2011-09-14  Eric Blake  <eblake@redhat.com>
 
 	opendir: avoid compile warning

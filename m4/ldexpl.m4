@@ -1,4 +1,4 @@
-# ldexpl.m4 serial 12
+# ldexpl.m4 serial 13
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_LDEXPL],
   AC_REQUIRE([gl_FUNC_ISNANL]) dnl for ISNANL_LIBM
   dnl Check whether it's declared.
   dnl MacOS X 10.3 has ldexpl() in libc but doesn't declare it in <math.h>.
-  AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [#include <math.h>])
+  AC_CHECK_DECL([ldexpl], , [HAVE_DECL_LDEXPL=0], [[#include <math.h>]])
   LDEXPL_LIBM=
   if test $HAVE_DECL_LDEXPL = 1; then
     gl_CHECK_LDEXPL_NO_LIBM
