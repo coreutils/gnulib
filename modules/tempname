@@ -8,6 +8,7 @@ m4/tempname.m4
 
 Depends-on:
 extensions
+fcntl-h
 gettimeofday
 lstat
 stdint

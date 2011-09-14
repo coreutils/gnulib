@@ -1,5 +1,12 @@
 2011-09-13  Bruno Haible  <bruno@clisp.org>
 
+	tempname: Support for MSVC.
+	* doc/posix-headers/fcntl.texi: Document the problem with O_ACCMODE on
+	MSVC.
+	* modules/tempname (Depends-on): Add fcntl-h.
+
+2011-09-13  Bruno Haible  <bruno@clisp.org>
+
 	sys_time: Support for MSVC.
 	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Invoke
 	gl_PREREQ_SYS_H_WINSOCK2. When testing for 'struct timeval', also

@@ -27,6 +27,10 @@ non-zero value; otherwise, the gnulib replacement is 0.
 Gnulib defines these macros to @samp{O_RDONLY}, which is typically 0.
 
 @item
+@samp{O_ACCMODE} is not defined on some platforms:
+MSVC 9.
+
+@item
 The @samp{O_ACCMODE} mask mistakenly omits @samp{O_SEARCH} and
 @samp{O_EXEC} on some platforms:
 Cygwin.
