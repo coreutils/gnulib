@@ -1,4 +1,4 @@
-# round.m4 serial 12
+# round.m4 serial 13
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_ROUND],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare round().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_DECLS([round], , , [#include <math.h>])
+  AC_CHECK_DECLS([round], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_round" = yes; then
     gl_CHECK_MATH_LIB([ROUND_LIBM], [x = round (x);])
     if test "$ROUND_LIBM" != missing; then

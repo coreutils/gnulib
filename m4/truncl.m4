@@ -1,4 +1,4 @@
-# truncl.m4 serial 8
+# truncl.m4 serial 9
 dnl Copyright (C) 2007-2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_TRUNCL],
   dnl Persuade glibc <math.h> to declare truncl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether truncl() is declared.
-  AC_CHECK_DECLS([truncl], , , [#include <math.h>])
+  AC_CHECK_DECLS([truncl], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_truncl" = yes; then
     dnl Test whether truncl() can be used without libm.
     TRUNCL_LIBM=?

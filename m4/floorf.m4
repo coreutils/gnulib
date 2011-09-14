@@ -1,4 +1,4 @@
-# floorf.m4 serial 10
+# floorf.m4 serial 11
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_FLOORF],
   dnl Persuade glibc <math.h> to declare floorf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether floorf() is declared.
-  AC_CHECK_DECLS([floorf], , , [#include <math.h>])
+  AC_CHECK_DECLS([floorf], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_floorf" = yes; then
     dnl Test whether floorf() can be used without libm.
     gl_FUNC_FLOORF_LIBS

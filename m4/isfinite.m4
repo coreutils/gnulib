@@ -1,4 +1,4 @@
-# isfinite.m4 serial 10
+# isfinite.m4 serial 11
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_ISFINITE],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare isfinite.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_DECLS([isfinite], , , [#include <math.h>])
+  AC_CHECK_DECLS([isfinite], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_isfinite" = yes; then
     gl_CHECK_MATH_LIB([ISFINITE_LIBM],
      [x = isfinite (x) + isfinite ((float) x);])

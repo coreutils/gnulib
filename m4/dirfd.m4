@@ -1,4 +1,4 @@
-# serial 21   -*- Autoconf -*-
+# serial 22   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -18,8 +18,8 @@ AC_DEFUN([gl_FUNC_DIRFD],
 
   AC_CHECK_FUNCS([dirfd])
   AC_CHECK_DECLS([dirfd], , ,
-    [#include <sys/types.h>
-     #include <dirent.h>])
+    [[#include <sys/types.h>
+      #include <dirent.h>]])
   if test $ac_cv_have_decl_dirfd = no; then
     HAVE_DECL_DIRFD=0
   fi

@@ -1,4 +1,4 @@
-# inet_ntop.m4 serial 15
+# inet_ntop.m4 serial 16
 dnl Copyright (C) 2005-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,11 +30,11 @@ AC_DEFUN([gl_FUNC_INET_NTOP],
 
   AC_CHECK_HEADERS_ONCE([netdb.h])
   AC_CHECK_DECLS([inet_ntop],,,
-    [#include <arpa/inet.h>
-     #if HAVE_NETDB_H
-     # include <netdb.h>
-     #endif
-    ])
+    [[#include <arpa/inet.h>
+      #if HAVE_NETDB_H
+      # include <netdb.h>
+      #endif
+    ]])
   if test $ac_cv_have_decl_inet_ntop = no; then
     HAVE_DECL_INET_NTOP=0
     AC_REQUIRE([AC_C_RESTRICT])

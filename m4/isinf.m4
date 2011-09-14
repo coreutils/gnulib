@@ -1,4 +1,4 @@
-# isinf.m4 serial 5
+# isinf.m4 serial 6
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_ISINF],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare isinf.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_DECLS([isinf], , , [#include <math.h>])
+  AC_CHECK_DECLS([isinf], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_isinf" = yes; then
     gl_CHECK_MATH_LIB([ISINF_LIBM], [x = isinf (x) + isinf ((float) x);])
     if test "$ISINF_LIBM" != missing; then

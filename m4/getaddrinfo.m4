@@ -1,4 +1,4 @@
-# getaddrinfo.m4 serial 28
+# getaddrinfo.m4 serial 29
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -146,7 +146,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 
   AC_CHECK_HEADERS_ONCE([netinet/in.h])
 
-  AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, getnameinfo],,,[
+  AC_CHECK_DECLS([getaddrinfo, freeaddrinfo, getnameinfo],,,[[
   /* sys/types.h is not needed according to POSIX, but the
      sys/socket.h in i386-unknown-freebsd4.10 and
      powerpc-apple-darwin5.5 required it. */
@@ -160,7 +160,7 @@ AC_DEFUN([gl_PREREQ_GETADDRINFO], [
 #ifdef HAVE_WS2TCPIP_H
 #include <ws2tcpip.h>
 #endif
-])
+]])
   if test $ac_cv_have_decl_getaddrinfo = no; then
     HAVE_DECL_GETADDRINFO=0
   fi

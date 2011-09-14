@@ -1,4 +1,4 @@
-# ceill.m4 serial 10
+# ceill.m4 serial 11
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_CEILL],
   dnl Persuade glibc <math.h> to declare ceill().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether ceill() is declared.
-  AC_CHECK_DECLS([ceill], , , [#include <math.h>])
+  AC_CHECK_DECLS([ceill], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_ceill" = yes; then
     dnl Test whether ceill() can be used without libm.
     gl_FUNC_CEILL_LIBS

@@ -1,4 +1,4 @@
-# serial 59
+# serial 60
 
 # Copyright (C) 1996-2001, 2003-2011 Free Software Foundation, Inc.
 #
@@ -219,5 +219,5 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   AC_CHECK_HEADERS([libintl.h])
   AC_CHECK_FUNCS_ONCE([isblank iswctype wcscoll])
-  AC_CHECK_DECLS([isblank], [], [], [#include <ctype.h>])
+  AC_CHECK_DECLS([isblank], [], [], [[#include <ctype.h>]])
 ])

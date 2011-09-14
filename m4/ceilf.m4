@@ -1,4 +1,4 @@
-# ceilf.m4 serial 11
+# ceilf.m4 serial 12
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_CEILF],
   dnl Persuade glibc <math.h> to declare ceilf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   dnl Test whether ceilf() is declared.
-  AC_CHECK_DECLS([ceilf], , , [#include <math.h>])
+  AC_CHECK_DECLS([ceilf], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_ceilf" = yes; then
     dnl Test whether ceilf() can be used without libm.
     gl_FUNC_CEILF_LIBS

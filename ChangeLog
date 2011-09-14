@@ -1,5 +1,39 @@
 2011-09-14  Bruno Haible  <bruno@clisp.org>
 
+	Properly quote AC_CHECK_DECLS' 4th argument.
+	* m4/c-stack.m4 (gl_PREREQ_C_STACK): Double-quote AC_CHECK_DECLS' 4th
+	argument.
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Likewise.
+	* m4/ceill.m4 (gl_FUNC_CEILL): Likewise.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	* m4/floorf.m4 (gl_FUNC_FLOORF): Likewise.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): Likewise.
+	* m4/fnmatch.m4 (gl_PREREQ_FNMATCH): Likewise.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO): Likewise.
+	* m4/getdomainname.m4 (gl_FUNC_GETDOMAINNAME): Likewise.
+	* m4/gethrxtime.m4 (gl_GETHRXTIME): Likewise.
+	* m4/getpass.m4 (gl_PREREQ_GETPASS): Likewise.
+	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Likewise.
+	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Likewise.
+	* m4/isfinite.m4 (gl_ISFINITE): Likewise.
+	* m4/isinf.m4 (gl_ISINF): Likewise.
+	* m4/logb.m4 (gl_FUNC_LOGB): Likewise.
+	* m4/readutmp.m4 (gl_READUTMP): Likewise.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Likewise.
+	* m4/round.m4 (gl_FUNC_ROUND): Likewise.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Likewise.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Likewise.
+	* m4/signbit.m4 (gl_SIGNBIT): Likewise.
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Likewise.
+	* m4/strsignal.m4 (gl_PREREQ_STRSIGNAL): Likewise.
+	* m4/trunc.m4 (gl_FUNC_TRUNC): Likewise.
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): Likewise.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Likewise.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Likewise.
+	* m4/wctob.m4 (gl_FUNC_WCTOB): Likewise.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Likewise.
+	Reported by Eric Blake.
+
 	Properly quote AC_CHECK_DECL's 4th argument.
 	* m4/acosl.m4 (gl_FUNC_ACOSL): Double-quote AC_CHECK_DECL's 4th
 	argument.

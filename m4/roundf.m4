@@ -1,4 +1,4 @@
-# roundf.m4 serial 13
+# roundf.m4 serial 14
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_ROUNDF],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   dnl Persuade glibc <math.h> to declare roundf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_DECLS([roundf], , , [#include <math.h>])
+  AC_CHECK_DECLS([roundf], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_roundf" = yes; then
     gl_CHECK_MATH_LIB([ROUNDF_LIBM], [x = roundf (x);])
     if test "$ROUNDF_LIBM" != missing; then
@@ -96,7 +96,7 @@ int main (int argc, char *argv[])
   fi
   if test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
     dnl Find libraries needed to link lib/roundf.c.
-    AC_CHECK_DECLS([ceilf, floorf], , , [#include <math.h>])
+    AC_CHECK_DECLS([ceilf, floorf], , , [[#include <math.h>]])
     if test "$ac_cv_have_decl_floorf" = yes \
        && test "$ac_cv_have_decl_ceilf" = yes; then
       gl_FUNC_FLOORF_LIBS

@@ -1,4 +1,4 @@
-# sleep.m4 serial 5
+# sleep.m4 serial 6
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_SLEEP],
   dnl _sleep() in MSVCRT. It has a different signature than POSIX sleep():
   dnl it takes the number of milliseconds as argument and returns void.
   dnl mingw does not declare this function.
-  AC_CHECK_DECLS([sleep], , , [#include <unistd.h>])
+  AC_CHECK_DECLS([sleep], , , [[#include <unistd.h>]])
   AC_CHECK_FUNCS_ONCE([sleep])
   if test $ac_cv_have_decl_sleep != yes; then
     HAVE_SLEEP=0
