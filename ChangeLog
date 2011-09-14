@@ -1,3 +1,10 @@
+2011-09-14  Martin von Gagern  <Martin.vGagern@gmx.net>
+
+	maint.mk: avoid warnings from perl about missing files
+	* top/maint.mk (def_sym_regex): Ignore files listed in
+	$(gl_other_headers_) that do not exist, say because a project
+	does not use a corresponding module.
+
 2011-09-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stat: use pathmax.h only if needed

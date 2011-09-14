@@ -762,7 +762,8 @@ define def_sym_regex
 	gen_h=$(gl_generated_headers_);					\
 	(cd $(gnulib_dir)/lib;						\
 	  for f in *.in.h $(gl_other_headers_); do			\
-	    perl -lne '$(gl_extract_significant_defines_)' $$f;		\
+	    test -f $$f							\
+	      && perl -lne '$(gl_extract_significant_defines_)' $$f;	\
 	  done;								\
 	) | sort -u							\
 	  | sed 's/^/^ *# *(define|undef)  */;s/$$/\\>/'
