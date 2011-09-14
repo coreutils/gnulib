@@ -19,6 +19,8 @@
 /* Specification.  */
 #include <dirent.h>
 
+#include <errno.h>
+
 #if HAVE_OPENDIR
 
 /* Override opendir(), to keep track of the open file descriptors.
@@ -26,7 +28,6 @@
 
 #else
 
-# include <errno.h>
 # include <stddef.h>
 # include <stdlib.h>
 
