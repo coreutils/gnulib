@@ -1,4 +1,4 @@
-# absolute-header.m4 serial 14
+# absolute-header.m4 serial 15
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,13 +81,13 @@ changequote(,)
       gl_dirsep_regex='/'
       ;;
   esac
-changequote([,])
-  gl_absolute_header_sed='\#'"${gl_dirsep_regex}"'$1#{
-      s#.*"\(.*'"${gl_dirsep_regex}"'$1\)".*#\1#
-      s#^/[^/]#//&#
+  gl_absolute_header_sed='\|'"${gl_dirsep_regex}"'$1|{
+      s|.*"\(.*'"${gl_dirsep_regex}"'$1\)".*|\1|
+      s|^/[^/]|//&|
       p
       q
     }'
+changequote([,])
   dnl eval is necessary to expand gl_absname_cpp.
   dnl Ultrix and Pyramid sh refuse to redirect output of eval,
   dnl so use subshell.

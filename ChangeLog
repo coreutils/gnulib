@@ -1,5 +1,11 @@
 2011-09-14  Bruno Haible  <bruno@clisp.org>
 
+	Avoid using #, the m4 comment starter character, near brackets.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER_ONE): Use |, not #, as
+	delimiter character in sed expressions.
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Likewise.
+	Suggested by Eric Blake.
+
 	Properly quote AC_CHECK_DECLS' 4th argument.
 	* m4/c-stack.m4 (gl_PREREQ_C_STACK): Double-quote AC_CHECK_DECLS' 4th
 	argument.
