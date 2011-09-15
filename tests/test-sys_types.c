@@ -23,6 +23,7 @@
 /* Check that the types are all defined.  */
 pid_t t1;
 size_t t2;
+ssize_t t3;
 
 int
 main (void)

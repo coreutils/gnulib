@@ -12,7 +12,7 @@ The type @code{off_t} is missing on some platforms:
 glibc 2.8, eglibc 2.11.2 and others.
 @item
 The type @code{ssize_t} is missing on some platforms:
-glibc 2.8, MacOS X 10.5, Solaris 10, and others.
+glibc 2.8, MacOS X 10.5, Solaris 10, MSVC 9, and others.
 @item
 The type @code{va_list} is missing on some platforms:
 glibc 2.8, OpenBSD 4.0, Solaris 11 2010-11, and others.

@@ -10,6 +10,7 @@ include_next
 snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
+ssize_t
 stddef
 
 configure.ac:

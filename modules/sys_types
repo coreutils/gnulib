@@ -7,6 +7,7 @@ m4/sys_types_h.m4
 
 Depends-on:
 include_next
+ssize_t
 
 configure.ac:
 gl_SYS_TYPES_H

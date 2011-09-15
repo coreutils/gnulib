@@ -30,6 +30,10 @@ int a[] = { SHUT_RD, SHUT_WR, SHUT_RDWR };
 /* Check that the 'socklen_t' type is defined.  */
 socklen_t t1;
 
+/* Check that the 'size_t' and 'ssize_t' types are defined.  */
+size_t t1;
+ssize_t t2;
+
 /* Check that 'struct iovec' is defined.  */
 struct iovec io;
 
