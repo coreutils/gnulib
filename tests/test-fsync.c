@@ -32,6 +32,8 @@ main (void)
   int fd;
   const char *file = "test-fsync.txt";
 
+  /* Assuming stdin and stdout are ttys, fsync is allowed to fail, but
+     may succeed as an extension.  */
   for (fd = 0; fd < 2; fd++)
     if (fsync (fd) != 0)
       {
@@ -41,6 +43,7 @@ main (void)
                 );
       }
 
+  /* fsync must fail on invalid fd.  */
   errno = 0;
   ASSERT (fsync (-1) == -1);
   ASSERT (errno == EBADF);
@@ -50,6 +53,18 @@ main (void)
   ASSERT (write (fd, "hello", 5) == 5);
   ASSERT (fsync (fd) == 0);
   ASSERT (close (fd) == 0);
+
+  /* For a read-only regular file input file descriptor, fsync should
+     succeed (since at least atime changes can be synchronized).  */
+  fd = open (file, O_RDONLY);
+  ASSERT (0 <= fd);
+  {
+    char buf[1];
+    ASSERT (read (fd, buf, sizeof buf) == sizeof buf);
+  }
+  ASSERT (fsync (fd) == 0);
+  ASSERT (close (fd) == 0);
+
   ASSERT (unlink (file) == 0);
 
   return 0;

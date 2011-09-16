@@ -1,3 +1,9 @@
+2011-09-16  Eric Blake  <eblake@redhat.com>
+
+	test-fsync: yet another enhancement
+	* tests/test-fsync.c (main): Also test behavior on read-only text
+	file.
+
 2011-09-16  Bruno Haible  <bruno@clisp.org>
 
 	Enhance fsync, fdatasync tests.
