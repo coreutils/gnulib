@@ -1,5 +1,13 @@
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
+	fdatasync: port to MacOS X 10.7.
+	* m4/fdatasync.m4 (gl_FUNC_FDATASYNC): Check for present but not
+	declared.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Another default.
+	* modules/unistd (Makefile.am): Substitute it.
+	* lib/unistd.in.h (fdatasync): Declare on MacOS.
+	* doc/posix-functions/fdatasync.texi (fdatasync): Document it.
+
 	fdatasync: minor improvements
 	* modules/fdatasync (Depends-on): Add condition for fsync.
 	* lib/fdatasync.c (fdatasync): Add comment.

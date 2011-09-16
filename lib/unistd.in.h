@@ -489,7 +489,7 @@ _GL_WARN_ON_USE (fchownat, "fchownat is not portable - "
    Return 0 if successful, otherwise -1 and errno set.
    See POSIX:2008 specification
    <http://pubs.opengroup.org/onlinepubs/9699919799/functions/fdatasync.html>.  */
-# if !@HAVE_FDATASYNC@
+# if !@HAVE_FDATASYNC@ || !@HAVE_DECL_FDATASYNC@
 _GL_FUNCDECL_SYS (fdatasync, int, (int fd));
 # endif
 _GL_CXXALIAS_SYS (fdatasync, int, (int fd));
