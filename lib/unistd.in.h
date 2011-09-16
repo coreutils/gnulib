@@ -98,6 +98,12 @@
 # include <netdb.h>
 #endif
 
+/* MSVC defines off_t in <sys/types.h>.  */
+#if !@HAVE_UNISTD_H@
+/* Get off_t.  */
+# include <sys/types.h>
+#endif
+
 #if (@GNULIB_READ@ || @GNULIB_WRITE@ \
      || @GNULIB_READLINK@ || @GNULIB_READLINKAT@ \
      || @GNULIB_PREAD@ || @GNULIB_PWRITE@ || defined GNULIB_POSIXCHECK)

@@ -24,6 +24,7 @@
 pid_t t1;
 size_t t2;
 ssize_t t3;
+off_t t4;
 
 int
 main (void)

@@ -33,6 +33,7 @@ int i = FD_CLOEXEC;
 
 /* Check that the types are all defined.  */
 pid_t t1;
+off_t t2;
 
 int
 main (void)
