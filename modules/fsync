@@ -1,5 +1,5 @@
 Description:
-fsync(2) function: synchronize writes to a file.
+fsync(2) function: synchronize writes, including metadata, to a file.
 
 Files:
 lib/fsync.c

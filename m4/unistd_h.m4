@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 58
+# unistd_h.m4 serial 59
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,7 @@ AC_DEFUN([gl_UNISTD_H],
 # endif
 #endif
     ]], [chown dup2 dup3 environ euidaccess faccessat fchdir fchownat
-    fsync ftruncate getcwd getdomainname getdtablesize getgroups
+    fdatasync fsync ftruncate getcwd getdomainname getdtablesize getgroups
     gethostname getlogin getlogin_r getpagesize getusershell setusershell
     endusershell group_member lchown link linkat lseek pipe pipe2 pread pwrite
     readlink readlinkat rmdir sleep symlink symlinkat ttyname_r unlink unlinkat
@@ -67,6 +67,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_FACCESSAT=0;            AC_SUBST([GNULIB_FACCESSAT])
   GNULIB_FCHDIR=0;               AC_SUBST([GNULIB_FCHDIR])
   GNULIB_FCHOWNAT=0;             AC_SUBST([GNULIB_FCHOWNAT])
+  GNULIB_FDATASYNC=0;            AC_SUBST([GNULIB_FDATASYNC])
   GNULIB_FSYNC=0;                AC_SUBST([GNULIB_FSYNC])
   GNULIB_FTRUNCATE=0;            AC_SUBST([GNULIB_FTRUNCATE])
   GNULIB_GETCWD=0;               AC_SUBST([GNULIB_GETCWD])
@@ -110,6 +111,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_FACCESSAT=1;       AC_SUBST([HAVE_FACCESSAT])
   HAVE_FCHDIR=1;          AC_SUBST([HAVE_FCHDIR])
   HAVE_FCHOWNAT=1;        AC_SUBST([HAVE_FCHOWNAT])
+  HAVE_FDATASYNC=1;       AC_SUBST([HAVE_FDATASYNC])
   HAVE_FSYNC=1;           AC_SUBST([HAVE_FSYNC])
   HAVE_FTRUNCATE=1;       AC_SUBST([HAVE_FTRUNCATE])
   HAVE_GETDTABLESIZE=1;   AC_SUBST([HAVE_GETDTABLESIZE])

@@ -39,6 +39,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's/@''GNULIB_FACCESSAT''@/$(GNULIB_FACCESSAT)/g' \
 	      -e 's/@''GNULIB_FCHDIR''@/$(GNULIB_FCHDIR)/g' \
 	      -e 's/@''GNULIB_FCHOWNAT''@/$(GNULIB_FCHOWNAT)/g' \
+	      -e 's/@''GNULIB_FDATASYNC''@/$(GNULIB_FDATASYNC)/g' \
 	      -e 's/@''GNULIB_FSYNC''@/$(GNULIB_FSYNC)/g' \
 	      -e 's/@''GNULIB_FTRUNCATE''@/$(GNULIB_FTRUNCATE)/g' \
 	      -e 's/@''GNULIB_GETCWD''@/$(GNULIB_GETCWD)/g' \
@@ -82,6 +83,7 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_FACCESSAT''@|$(HAVE_FACCESSAT)|g' \
 	      -e 's|@''HAVE_FCHDIR''@|$(HAVE_FCHDIR)|g' \
 	      -e 's|@''HAVE_FCHOWNAT''@|$(HAVE_FCHOWNAT)|g' \
+	      -e 's|@''HAVE_FDATASYNC''@|$(HAVE_FDATASYNC)|g' \
 	      -e 's|@''HAVE_FSYNC''@|$(HAVE_FSYNC)|g' \
 	      -e 's|@''HAVE_FTRUNCATE''@|$(HAVE_FTRUNCATE)|g' \
 	      -e 's|@''HAVE_GETDTABLESIZE''@|$(HAVE_GETDTABLESIZE)|g' \

@@ -484,8 +484,27 @@ _GL_WARN_ON_USE (fchownat, "fchownat is not portable - "
 #endif
 
 
-#if @GNULIB_FSYNC@
+#if @GNULIB_FDATASYNC@
 /* Synchronize changes to a file.
+   Return 0 if successful, otherwise -1 and errno set.
+   See POSIX:2001 specification
+   <http://www.opengroup.org/susv3xsh/fdatasync.html>.  */
+# if !@HAVE_FDATASYNC@
+_GL_FUNCDECL_SYS (fdatasync, int, (int fd));
+# endif
+_GL_CXXALIAS_SYS (fdatasync, int, (int fd));
+_GL_CXXALIASWARN (fdatasync);
+#elif defined GNULIB_POSIXCHECK
+# undef fdatasync
+# if HAVE_RAW_DECL_FDATASYNC
+_GL_WARN_ON_USE (fdatasync, "fdatasync is unportable - "
+                 "use gnulib module fdatasync for portability");
+# endif
+#endif
+
+
+#if @GNULIB_FSYNC@
+/* Synchronize changes, including metadata, to a file.
    Return 0 if successful, otherwise -1 and errno set.
    See POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/fsync.html>.  */

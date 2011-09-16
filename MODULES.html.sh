@@ -2356,6 +2356,7 @@ func_all_modules ()
   func_module fclose
   func_module fcntl-h
   func_module fcntl
+  func_module fdatasync
   func_module flock
   func_module fopen
   func_module fprintf-posix

@@ -1,5 +1,21 @@
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
+	fdatasync: new module
+	* modules/fsync (Description): Document difference to fdatasync.
+	* modules/fdatasync: New module.
+	* m4/fdatasync.m4 (gl_FUNC_FDATASYNC): New file.
+	* lib/fdatasync.c (fdatasync): Likewise.
+	* m4/unistd_h.m4 (gl_UNISTD_H, gl_UNISTD_H_DEFAULTS): Set up
+	defaults.
+	* modules/unistd (Makefile.am): Set witnesses.
+	* lib/unistd.in.h (fdatasync): Declare.
+	* MODULES.html.sh: Document it.
+	* doc/posix-functions/fdatasync.texi (fdatasync): Likewise.
+	* modules/fdatasync-tests: New test.
+	* tests/test-fdatasync.c: Likewise.
+
+2011-09-16  Eric Blake  <eblake@redhat.com>
+
 	test-fsync: enhance tests
 	* modules/fsync-tests (Depends-on): Add errno, for mingw.
 	* tests/test-fsync.c (main): Enhance test.

@@ -1,0 +1,28 @@
+Description:
+fdatasync(2) function: synchronize writes to a file.
+
+Files:
+lib/fdatasync.c
+m4/fdatasync.m4
+
+Depends-on:
+fsync
+unistd
+
+configure.ac:
+gl_FUNC_FDATASYNC
+if test $HAVE_FDATASYNC = 0; then
+  AC_LIBOBJ([fdatasync])
+fi
+gl_UNISTD_MODULE_INDICATOR([fdatasync])
+
+Makefile.am:
+
+Include:
+<unistd.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Eric Blake
