@@ -1,5 +1,13 @@
 2011-09-16  Bruno Haible  <bruno@clisp.org>
 
+	sys_stat: Support for MSVC.
+	* lib/sys_stat.in.h (S_IFIFO): Define to _S_IFIFO if that exists.
+	* tests/test-sys_stat.c: Don't assume that S_IFBLK exists.
+	* doc/posix-headers/sys_stat.texi: Mention missing S_IFIFO, S_IFBLK on
+	MSVC.
+
+2011-09-16  Bruno Haible  <bruno@clisp.org>
+
 	Support for MSVC compiler: Ensure off_t gets defined.
 	* lib/unistd.in.h: Include <sys/types.h>.
 	* tests/test-fcntl-h.c: Check that off_t is defined.

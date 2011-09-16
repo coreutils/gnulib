@@ -61,6 +61,12 @@
 # include <direct.h> /* mingw64 */
 #endif
 
+#ifndef S_IFIFO
+# ifdef _S_IFIFO
+#  define S_IFIFO _S_IFIFO
+# endif
+#endif
+
 #ifndef S_IFMT
 # define S_IFMT 0170000
 #endif
