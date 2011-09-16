@@ -32,21 +32,25 @@ main (void)
   int fd;
   const char *file = "test-fdatasync.txt";
 
-  if (fdatasync (STDOUT_FILENO) != 0)
-    {
-      ASSERT (errno == EINVAL /* POSIX */
-              || errno == ENOTSUP /* seen on MacOS X 10.5 */
-              || errno == EBADF /* seen on AIX 7.1 */
-              );
-    }
+  for (fd = 0; fd < 2; fd++)
+    if (fdatasync (fd) != 0)
+      {
+        ASSERT (errno == EINVAL /* POSIX */
+                || errno == ENOTSUP /* seen on MacOS X 10.5 */
+                || errno == EBADF /* seen on AIX 7.1 */
+                );
+      }
+
   errno = 0;
   ASSERT (fdatasync (-1) == -1);
   ASSERT (errno == EBADF);
+
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);
   ASSERT (write (fd, "hello", 5) == 5);
   ASSERT (fdatasync (fd) == 0);
   ASSERT (close (fd) == 0);
+
 #if 0
   /* POSIX is self-contradictory on whether fdatasync must fail on
      read-only file descriptors.  Glibc allows it, as does our
@@ -58,6 +62,7 @@ main (void)
   ASSERT (errno == EBADF);
   ASSERT (close (fd) == 0);
 #endif
+
   ASSERT (unlink (file) == 0);
 
   return 0;
