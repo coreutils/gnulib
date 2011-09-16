@@ -1,3 +1,9 @@
+2011-09-16  Eric Blake  <eblake@redhat.com>
+
+	test-fsync: enhance tests
+	* modules/fsync-tests (Depends-on): Add errno, for mingw.
+	* tests/test-fsync.c (main): Enhance test.
+
 2011-09-15  Bruno Haible  <bruno@clisp.org>
 
 	Support for MSVC compiler: Ensure ssize_t gets defined.
