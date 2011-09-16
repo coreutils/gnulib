@@ -1,5 +1,9 @@
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
+	unistd: update refs to newer POSIX
+	* lib/unistd.in.h: Prefer POSIX 2008 over 2001.
+	Suggested by Bruno Haible.
+
 	fdatasync: new module
 	* modules/fsync (Description): Document difference to fdatasync.
 	* modules/fdatasync: New module.
