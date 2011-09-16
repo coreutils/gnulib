@@ -1,4 +1,4 @@
-2011-09-15  Bruno Haible  <bruno@clisp.org>
+2011-09-16  Bruno Haible  <bruno@clisp.org>
 
 	Support for MSVC compiler: Ensure mode_t gets defined.
 	* m4/fcntl_h.m4 (gl_FCNTL_H): Require AC_TYPE_MODE_T.
