@@ -1,6 +1,11 @@
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
-	fdatasync: port to MacOS X 10.7.
+	fdatasync: port to Solaris
+	* m4/fdatasync.m4 (gl_FUNC_FDATASYNC): Set LIB_FDATASYNC.
+	* modules/fdatasync (Link): Document it.
+	* modules/fdatasync-tests (test_fdatasync_LDADD): Link with it.
+
+	fdatasync: port to MacOS X 10.7
 	* m4/fdatasync.m4 (gl_FUNC_FDATASYNC): Check for present but not
 	declared.
 	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Another default.

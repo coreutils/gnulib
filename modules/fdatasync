@@ -21,6 +21,9 @@ Makefile.am:
 Include:
 <unistd.h>
 
+Link:
+$(LIB_FDATASYNC)
+
 License:
 LGPLv2+
 
