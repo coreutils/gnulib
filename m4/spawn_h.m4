@@ -1,4 +1,4 @@
-# spawn_h.m4 serial 14
+# spawn_h.m4 serial 15
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,9 @@ AC_DEFUN([gl_SPAWN_H],
 
   dnl Ensure the type pid_t gets defined.
   AC_REQUIRE([AC_TYPE_PID_T])
+
+  dnl Ensure the type mode_t gets defined.
+  AC_REQUIRE([AC_TYPE_MODE_T])
 
   AC_REQUIRE([gl_HAVE_POSIX_SPAWN])
 

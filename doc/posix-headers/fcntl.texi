@@ -12,6 +12,10 @@ The type @code{pid_t} is not defined on some platforms:
 MSVC 9.
 
 @item
+The type @code{mode_t} is not defined on some platforms:
+MSVC 9.
+
+@item
 @samp{O_CLOEXEC}, @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
 @samp{O_NOFOLLOW}, @samp{O_RSYNC}, @samp{O_SYNC},
 and @samp{O_TTY_INIT} are not defined on some platforms.  Gnulib defines

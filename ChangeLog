@@ -1,3 +1,17 @@
+2011-09-15  Bruno Haible  <bruno@clisp.org>
+
+	Support for MSVC compiler: Ensure mode_t gets defined.
+	* m4/fcntl_h.m4 (gl_FCNTL_H): Require AC_TYPE_MODE_T.
+	* m4/spawn_h.m4 (gl_SPAWN_H): Likewise.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Likewise.
+	* m4/sys_types_h.m4 (gl_SYS_TYPES_H): Likewise.
+	* tests/test-fcntl-h.c: Check that mode_t is defined.
+	* tests/test-sys_stat.c: Likewise.
+	* tests/test-sys_types.c: Likewise.
+	* doc/posix-headers/fcntl.texi: Mention the missing mode_t problem.
+	* doc/posix-headers/sys_stat.texi: Likewise.
+	* doc/posix-headers/sys_types.texi: Likewise.
+
 2011-09-16  Bruno Haible  <bruno@clisp.org>
 
 	sys_stat: Support for MSVC.

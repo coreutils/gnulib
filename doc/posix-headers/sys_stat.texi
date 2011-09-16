@@ -8,6 +8,9 @@ Gnulib module: sys_stat
 Portability problems fixed by Gnulib:
 @itemize
 @item
+The type @code{mode_t} is not defined on some platforms:
+MSVC 9.
+@item
 Some macros, such as @code{S_IFMT} or @code{S_IFIFO}, are missing on some
 platforms.
 @item

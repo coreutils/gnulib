@@ -16,6 +16,9 @@ MSVC 9.
 @item
 The type @code{ssize_t} is not defined on some platforms:
 MSVC 9.
+@item
+The type @code{mode_t} is not defined on some platforms:
+MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

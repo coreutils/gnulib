@@ -314,8 +314,9 @@ invalid UTIME macros
 /* Check the existence of some types.  */
 nlink_t t1;
 off_t t2;
+mode_t t3;
 
-struct timespec t3;
+struct timespec st;
 
 int
 main (void)
