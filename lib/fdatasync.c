@@ -21,5 +21,7 @@
 int
 fdatasync (int fd)
 {
+  /* This does more work than strictly necessary, but is the best we
+     can do portably.  */
   return fsync (fd);
 }

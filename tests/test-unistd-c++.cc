@@ -60,6 +60,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::fchownat, int,
                  (int, char const *, uid_t, gid_t, int));
 #endif
 
+#if GNULIB_TEST_FDATASYNC
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fdatasync, int, (int));
+#endif
+
 #if GNULIB_TEST_FSYNC
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fsync, int, (int));
 #endif

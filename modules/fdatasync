@@ -6,7 +6,7 @@ lib/fdatasync.c
 m4/fdatasync.m4
 
 Depends-on:
-fsync
+fsync         [test $HAVE_FDATASYNC = 0]
 unistd
 
 configure.ac:

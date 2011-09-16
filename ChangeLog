@@ -1,5 +1,10 @@
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
+	fdatasync: minor improvements
+	* modules/fdatasync (Depends-on): Add condition for fsync.
+	* lib/fdatasync.c (fdatasync): Add comment.
+	* tests/test-unistd-c++.cc: Test fdatasync.
+
 	unistd: update refs to newer POSIX
 	* lib/unistd.in.h: Prefer POSIX 2008 over 2001.
 	Suggested by Bruno Haible.
