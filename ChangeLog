@@ -1,3 +1,10 @@
+2011-09-19  Eric Blake  <eblake@redhat.com>
+
+	date: accept 'hence' as opposite of 'ago'
+	* lib/parse-datetime.y (relative_time_table): Add 'hence'.
+	* tests/test-parse-datetime.c (main): Enhance test.
+	Suggested by Jesse Wilson.
+
 2011-09-19  Jim Meyering  <meyering@redhat.com>
 
 	getcwd: don't fail in a deep directory on a system without openat

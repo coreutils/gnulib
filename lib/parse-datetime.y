@@ -296,7 +296,8 @@ set_hhmmss (parser_control *pc, long int hour, long int minutes,
   relative_time rel;
 }
 
-%token tAGO tDST
+%token <intval> tAGO
+%token tDST
 
 %token tYEAR_UNIT tMONTH_UNIT tHOUR_UNIT tMINUTE_UNIT tSEC_UNIT
 %token <intval> tDAY_UNIT tDAY_SHIFT
@@ -544,7 +545,7 @@ iso_8601_date:
 
 rel:
     relunit tAGO
-      { apply_relative_time (pc, $1, -1); }
+      { apply_relative_time (pc, $1, $2); }
   | relunit
       { apply_relative_time (pc, $1, 1); }
   | dayshift
@@ -733,7 +734,8 @@ static table const relative_time_table[] =
   { "TENTH",    tORDINAL,       10 },
   { "ELEVENTH", tORDINAL,       11 },
   { "TWELFTH",  tORDINAL,       12 },
-  { "AGO",      tAGO,            1 },
+  { "AGO",      tAGO,           -1 },
+  { "HENCE",    tAGO,            1 },
   { NULL, 0, 0 }
 };
 

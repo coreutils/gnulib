@@ -327,6 +327,8 @@ main (int argc _GL_UNUSED, char **argv)
   ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 tomorrow ago";
   ASSERT (!parse_datetime (&result, p, &now));
+  p = "UTC+4:00 tomorrow hence";
+  ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 40 now ago";
   ASSERT (!parse_datetime (&result, p, &now));
   p = "UTC+4:00 last tomorrow";
@@ -341,6 +343,11 @@ main (int argc _GL_UNUSED, char **argv)
   ASSERT (parse_datetime (&result, p, &now));
   LOG (p, now, result);
   p = "UTC+400 +1 day";
+  ASSERT (parse_datetime (&result2, p, &now));
+  LOG (p, now, result2);
+  ASSERT (result.tv_sec == result2.tv_sec
+          && result.tv_nsec == result2.tv_nsec);
+  p = "UTC+400 1 day hence";
   ASSERT (parse_datetime (&result2, p, &now));
   LOG (p, now, result2);
   ASSERT (result.tv_sec == result2.tv_sec
