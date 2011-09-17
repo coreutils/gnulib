@@ -108,13 +108,25 @@ _GL_WARN_ON_USE (inet_ntop, "inet_ntop is unportable - "
 #endif
 
 #if @GNULIB_INET_PTON@
-# if !@HAVE_DECL_INET_PTON@
+# if @REPLACE_INET_PTON@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef inet_pton
+#   define inet_pton rpl_inet_pton
+#  endif
+_GL_FUNCDECL_RPL (inet_pton, int,
+                  (int af, const char *restrict src, void *restrict dst)
+                  _GL_ARG_NONNULL ((2, 3)));
+_GL_CXXALIAS_RPL (inet_pton, int,
+                  (int af, const char *restrict src, void *restrict dst));
+# else
+#  if !@HAVE_DECL_INET_PTON@
 _GL_FUNCDECL_SYS (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst)
                   _GL_ARG_NONNULL ((2, 3)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst));
+# endif
 _GL_CXXALIASWARN (inet_pton);
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton

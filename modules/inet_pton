@@ -8,14 +8,14 @@ m4/inet_pton.m4
 Depends-on:
 arpa_inet
 extensions
-c-ctype         [test $HAVE_INET_PTON = 0]
-sys_socket      [test $HAVE_INET_PTON = 0]
-errno           [test $HAVE_INET_PTON = 0]
-netinet_in      [test $HAVE_INET_PTON = 0]
+c-ctype         [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1]
+sys_socket      [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1]
+errno           [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1]
+netinet_in      [test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1]
 
 configure.ac:
 gl_FUNC_INET_PTON
-if test $HAVE_INET_PTON = 0; then
+if test $HAVE_INET_PTON = 0 || test $REPLACE_INET_NTOP = 1; then
   AC_LIBOBJ([inet_pton])
   gl_PREREQ_INET_PTON
 fi
