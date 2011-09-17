@@ -1,3 +1,19 @@
+2011-09-17  Bruno Haible  <bruno@clisp.org>
+
+	inet_ntop: Support for MSVC on Windows Vista or newer.
+	* lib/arpa_inet.in.h (inet_ntop): Also consider REPLACE_INET_NTOP.
+	* lib/inet_ntop.c (rpl_inet_ntop): Use a simple wrapper if
+	HAVE_DECL_INET_NTOP is defined.
+	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Invoke gl_PREREQ_SYS_H_WINSOCK2.
+	On platforms with <winsock2.h>, test whether inet_ntop is declared in
+	<ws2tcpip.h>. If so, arrange to replace it.
+	* m4/arpa_inet_h.m4 (gl_ARPA_INET_H_DEFAULTS): Initialize
+	REPLACE_INET_NTOP.
+	* modules/arpa_inet (Makefile.am): Substitute REPLACE_INET_NTOP.
+	* modules/inet_ntop (Files): Add m4/sys_socket_h.m4.
+	(Depends-on, configure.ac): Update condition.
+	* doc/posix-functions/inet_ntop.texi: Mention the MSVC problem.
+
 2011-09-16  Eric Blake  <eblake@redhat.com>
 
 	test-fsync: yet another enhancement

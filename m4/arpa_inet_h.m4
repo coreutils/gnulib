@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 12
+# arpa_inet_h.m4 serial 13
 dnl Copyright (C) 2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,4 +52,5 @@ AC_DEFUN([gl_ARPA_INET_H_DEFAULTS],
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DECL_INET_NTOP=1;  AC_SUBST([HAVE_DECL_INET_NTOP])
   HAVE_DECL_INET_PTON=1;  AC_SUBST([HAVE_DECL_INET_PTON])
+  REPLACE_INET_NTOP=0;    AC_SUBST([REPLACE_INET_NTOP])
 ])

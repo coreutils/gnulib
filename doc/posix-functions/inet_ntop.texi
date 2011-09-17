@@ -15,6 +15,10 @@ HP-UX 11.00, OSF/1 4.0, Solaris 2.5.1, mingw, MSVC 9, Interix 3.5, BeOS.
 This function is declared in @code{<netdb.h>} instead of @code{<arpa/inet.h>}
 on some platforms:
 NonStop Kernel.
+@item
+This function is declared in @code{<ws2tcpip.h>}, with a POSIX incompatible
+declaration, on some platforms:
+MSVC 9 on Windows >= Vista.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -58,7 +58,6 @@
 
 
 #if @GNULIB_INET_NTOP@
-# if !@HAVE_DECL_INET_NTOP@
 /* Converts an internet address from internal format to a printable,
    presentable format.
    AF is an internet address family, such as AF_INET or AF_INET6.
@@ -74,16 +73,31 @@
 
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
+# if @REPLACE_INET_NTOP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef inet_ntop
+#   define inet_ntop rpl_inet_ntop
+#  endif
+_GL_FUNCDECL_RPL (inet_ntop, const char *,
+                  (int af, const void *restrict src,
+                   char *restrict dst, socklen_t cnt)
+                  _GL_ARG_NONNULL ((2, 3)));
+_GL_CXXALIAS_RPL (inet_ntop, const char *,
+                  (int af, const void *restrict src,
+                   char *restrict dst, socklen_t cnt));
+# else
+#  if !@HAVE_DECL_INET_NTOP@
 _GL_FUNCDECL_SYS (inet_ntop, const char *,
                   (int af, const void *restrict src,
                    char *restrict dst, socklen_t cnt)
                   _GL_ARG_NONNULL ((2, 3)));
-# endif
+#  endif
 /* Need to cast, because on NonStop Kernel, the fourth parameter is
                                             size_t cnt.  */
 _GL_CXXALIAS_SYS_CAST (inet_ntop, const char *,
                        (int af, const void *restrict src,
                         char *restrict dst, socklen_t cnt));
+# endif
 _GL_CXXALIASWARN (inet_ntop);
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
