@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 38
+# stdio_h.m4 serial 39
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,7 +74,7 @@ AC_DEFUN([gl_STDIO_H],
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C89.
   gl_WARN_ON_USE_PREPARE([[#include <stdio.h>
-    ]], [dprintf fpurge fseeko ftello getdelim getline popen renameat
+    ]], [dprintf fpurge fseeko ftello getdelim getline pclose popen renameat
     snprintf tmpfile vdprintf vsnprintf])
 ])
 
@@ -115,6 +115,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   GNULIB_GETS=0;                 AC_SUBST([GNULIB_GETS])
   GNULIB_OBSTACK_PRINTF=0;       AC_SUBST([GNULIB_OBSTACK_PRINTF])
   GNULIB_OBSTACK_PRINTF_POSIX=0; AC_SUBST([GNULIB_OBSTACK_PRINTF_POSIX])
+  GNULIB_PCLOSE=0;               AC_SUBST([GNULIB_PCLOSE])
   GNULIB_PERROR=0;               AC_SUBST([GNULIB_PERROR])
   GNULIB_POPEN=0;                AC_SUBST([GNULIB_POPEN])
   GNULIB_PRINTF=0;               AC_SUBST([GNULIB_PRINTF])
@@ -153,6 +154,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   HAVE_DPRINTF=1;                AC_SUBST([HAVE_DPRINTF])
   HAVE_FSEEKO=1;                 AC_SUBST([HAVE_FSEEKO])
   HAVE_FTELLO=1;                 AC_SUBST([HAVE_FTELLO])
+  HAVE_PCLOSE=1;                 AC_SUBST([HAVE_PCLOSE])
   HAVE_POPEN=1;                  AC_SUBST([HAVE_POPEN])
   HAVE_RENAMEAT=1;               AC_SUBST([HAVE_RENAMEAT])
   HAVE_VASPRINTF=1;              AC_SUBST([HAVE_VASPRINTF])

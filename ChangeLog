@@ -1,5 +1,19 @@
 2011-09-17  Bruno Haible  <bruno@clisp.org>
 
+	New module 'pclose'.
+	* lib/stdio.in.h (pclose): New declaration.
+	* lib/pclose.c: New file.
+	* m4/pclose.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H): Test whether pclose is declared.
+	(gl_STDIO_H_DEFAULTS): Initialize GNULIB_PCLOSE, HAVE_PCLOSE.
+	* modules/stdio (Makefile.am): Substitute GNULIB_PCLOSE, HAVE_PCLOSE.
+	* modules/pclose: New file.
+	* modules/popen-tests (Depends-on): Add pclose.
+	* modules/popen-safer-tests (Depends-on): Likewise.
+	* doc/posix-functions/pclose.texi: Mention the new module.
+
+2011-09-17  Bruno Haible  <bruno@clisp.org>
+
 	popen: Support for MSVC.
 	* lib/stdio.in.h (popen): Declare it if the system lacks this function.
 	* lib/popen.c (popen): Provide alternate definition for native Windows.

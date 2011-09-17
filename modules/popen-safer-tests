@@ -6,6 +6,7 @@ tests/macros.h
 
 Depends-on:
 dup2
+pclose
 sys_wait
 
 configure.ac:

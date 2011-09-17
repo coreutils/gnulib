@@ -750,6 +750,20 @@ _GL_CXXALIAS_SYS (obstack_vprintf, int,
 _GL_CXXALIASWARN (obstack_vprintf);
 #endif
 
+#if @GNULIB_PCLOSE@
+# if !@HAVE_PCLOSE@
+_GL_FUNCDECL_SYS (pclose, int, (FILE *stream) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (pclose, int, (FILE *stream));
+_GL_CXXALIASWARN (pclose);
+#elif defined GNULIB_POSIXCHECK
+# undef pclose
+# if HAVE_RAW_DECL_PCLOSE
+_GL_WARN_ON_USE (pclose, "popen is unportable - "
+                 "use gnulib module pclose for more portability");
+# endif
+#endif
+
 #if @GNULIB_PERROR@
 /* Print a message to standard error, describing the value of ERRNO,
    (if STRING is not NULL and not empty) prefixed with STRING and ": ",

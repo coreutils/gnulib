@@ -55,6 +55,7 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's/@''GNULIB_GETS''@/$(GNULIB_GETS)/g' \
 	      -e 's/@''GNULIB_OBSTACK_PRINTF''@/$(GNULIB_OBSTACK_PRINTF)/g' \
 	      -e 's/@''GNULIB_OBSTACK_PRINTF_POSIX''@/$(GNULIB_OBSTACK_PRINTF_POSIX)/g' \
+	      -e 's/@''GNULIB_PCLOSE''@/$(GNULIB_PCLOSE)/g' \
 	      -e 's/@''GNULIB_PERROR''@/$(GNULIB_PERROR)/g' \
 	      -e 's/@''GNULIB_POPEN''@/$(GNULIB_POPEN)/g' \
 	      -e 's/@''GNULIB_PRINTF''@/$(GNULIB_PRINTF)/g' \
@@ -93,6 +94,7 @@ stdio.h: stdio.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) 
 	      -e 's|@''HAVE_DPRINTF''@|$(HAVE_DPRINTF)|g' \
 	      -e 's|@''HAVE_FSEEKO''@|$(HAVE_FSEEKO)|g' \
 	      -e 's|@''HAVE_FTELLO''@|$(HAVE_FTELLO)|g' \
+	      -e 's|@''HAVE_PCLOSE''@|$(HAVE_PCLOSE)|g' \
 	      -e 's|@''HAVE_POPEN''@|$(HAVE_POPEN)|g' \
 	      -e 's|@''HAVE_RENAMEAT''@|$(HAVE_RENAMEAT)|g' \
 	      -e 's|@''HAVE_VASPRINTF''@|$(HAVE_VASPRINTF)|g' \
