@@ -55,6 +55,7 @@ AC_DEFUN([gl_FUNC_INET_PTON],
     if test $ac_cv_have_decl_inet_pton = no; then
       HAVE_DECL_INET_PTON=0
     fi
+  fi
   AC_SUBST([INET_PTON_LIB])
 ])
 
