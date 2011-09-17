@@ -12,6 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
 @item
+This function is only defined as a macro with arguments on some platforms:
+MSVC 9.
+@item
 This function is not declared on some platforms:
 MacOS X 10.3.
 @end itemize
