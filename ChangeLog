@@ -1,5 +1,8 @@
 2011-09-17  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'pclose'.
+	* modules/pclose-tests: New file.
+
 	New module 'pclose'.
 	* lib/stdio.in.h (pclose): New declaration.
 	* lib/pclose.c: New file.
