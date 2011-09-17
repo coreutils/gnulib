@@ -15,12 +15,15 @@ snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 alloca          [test -n "$GLOB_H"]
+closedir        [test -n "$GLOB_H"]
 d-type          [test -n "$GLOB_H"]
 dirfd           [test -n "$GLOB_H"]
 fnmatch         [test -n "$GLOB_H"]
 getlogin_r      [test -n "$GLOB_H"]
 memchr          [test -n "$GLOB_H"]
 mempcpy         [test -n "$GLOB_H"]
+opendir         [test -n "$GLOB_H"]
+readdir         [test -n "$GLOB_H"]
 stdbool         [test -n "$GLOB_H"]
 strdup          [test -n "$GLOB_H"]
 sys_stat        [test -n "$GLOB_H"]

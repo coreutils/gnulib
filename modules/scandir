@@ -6,9 +6,12 @@ lib/scandir.c
 m4/scandir.m4
 
 Depends-on:
+closedir
 dirent
 extensions
 largefile
+opendir
+readdir
 
 configure.ac:
 gl_FUNC_SCANDIR

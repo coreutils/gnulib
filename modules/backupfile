@@ -9,10 +9,13 @@ m4/backupfile.m4
 
 Depends-on:
 argmatch
+closedir
 d-ino
 dirent-safer
 dirname-lgpl
 memcmp
+opendir
+readdir
 stdbool
 
 configure.ac:

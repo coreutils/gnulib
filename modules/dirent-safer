@@ -9,7 +9,9 @@ m4/dirent-safer.m4
 
 Depends-on:
 dirent
+closedir
 dirfd
+opendir
 unistd-safer
 
 configure.ac:

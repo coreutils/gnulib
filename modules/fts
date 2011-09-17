@@ -9,6 +9,7 @@ m4/fts.m4
 
 Depends-on:
 cloexec
+closedir
 cycle-check
 d-ino
 d-type
@@ -21,6 +22,8 @@ i-ring
 lstat
 memmove
 openat-safer
+opendir
+readdir
 stdbool
 unistd-safer
 
