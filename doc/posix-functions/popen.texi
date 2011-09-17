@@ -9,6 +9,9 @@ Gnulib module: popen
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+MSVC 9.
+@item
 Some platforms start the child with closed stdin or stdout if the
 standard descriptors were closed in the parent:
 Cygwin 1.5.x.
@@ -16,9 +19,6 @@ Cygwin 1.5.x.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-MSVC 9.
 @item
 Some platforms mistakenly set the close-on-exec bit, then if it is
 cleared by the application, the platform then leaks file descriptors

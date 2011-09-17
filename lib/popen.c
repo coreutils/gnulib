@@ -21,12 +21,14 @@
 /* Specification.  */
 #include <stdio.h>
 
-#include <errno.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <unistd.h>
+#if HAVE_POPEN
 
-#undef popen
+# include <errno.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+# undef popen
 
 FILE *
 rpl_popen (const char *filename, const char *mode)
@@ -80,3 +82,22 @@ rpl_popen (const char *filename, const char *mode)
   errno = saved_errno;
   return result;
 }
+
+#else
+/* Native Woe32 API.  */
+
+# include <string.h>
+
+FILE *
+popen (const char *filename, const char *mode)
+{
+  /* Use binary mode by default.  */
+  if (strcmp (mode, "r") == 0)
+    mode = "rb";
+  else if (strcmp (mode, "w") == 0)
+    mode = "wb";
+
+  return _popen (filename, mode);
+}
+
+#endif

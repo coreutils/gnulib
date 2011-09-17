@@ -1,5 +1,17 @@
 2011-09-17  Bruno Haible  <bruno@clisp.org>
 
+	popen: Support for MSVC.
+	* lib/stdio.in.h (popen): Declare it if the system lacks this function.
+	* lib/popen.c (popen): Provide alternate definition for native Windows.
+	* m4/popen.m4 (gl_FUNC_POPEN): Test if popen exists. Set HAVE_POPEN.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize HAVE_POPEN.
+	* modules/popen (Depends-on, configure.ac): Update condition.
+	* modules/stdio (Makefile.am): Substitute HAVE_POPEN.
+	* doc/posix-functions/popen.texi: Mention that the MSVC problem is
+	fixed.
+
+2011-09-17  Bruno Haible  <bruno@clisp.org>
+
 	isnanl, isnand, isnanf: Work around MSVC bug.
 	* lib/isnan.c (FUNC): Use alternate ways of computing NaN and Infinity.
 

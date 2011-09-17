@@ -781,6 +781,10 @@ _GL_FUNCDECL_RPL (popen, FILE *, (const char *cmd, const char *mode)
                                  _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (popen, FILE *, (const char *cmd, const char *mode));
 # else
+#  if !@HAVE_POPEN@
+_GL_FUNCDECL_SYS (popen, FILE *, (const char *cmd, const char *mode)
+                                 _GL_ARG_NONNULL ((1, 2)));
+#  endif
 _GL_CXXALIAS_SYS (popen, FILE *, (const char *cmd, const char *mode));
 # endif
 _GL_CXXALIASWARN (popen);
