@@ -7,6 +7,7 @@ m4/putenv.m4
 
 Depends-on:
 stdlib
+environ         [test $REPLACE_PUTENV = 1]
 malloc-posix    [test $REPLACE_PUTENV = 1]
 
 configure.ac:

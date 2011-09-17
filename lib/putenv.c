@@ -34,10 +34,12 @@
 #include <string.h>
 #include <unistd.h>
 
-#if HAVE_GNU_LD
+#if _LIBC
+# if HAVE_GNU_LD
 # define environ __environ
-#else
+# else
 extern char **environ;
+# endif
 #endif
 
 #if _LIBC

@@ -1,5 +1,12 @@
 2011-09-17  Bruno Haible  <bruno@clisp.org>
 
+	putenv: Support for MSVC.
+	* modules/putenv (Depends-on): Add environ.
+	* lib/putenv.c (environ): Disable declaration.
+	* lib/unistd.in.h: Update comment.
+
+2011-09-17  Bruno Haible  <bruno@clisp.org>
+
 	math: Avoid macro redefinition warnings on MSVC.
 	* lib/math.in.h (ceilf, ceill, floorf, floorl, frexpl, ldexpl):
 	Undefine before redefining.

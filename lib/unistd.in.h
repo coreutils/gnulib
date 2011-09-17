@@ -75,7 +75,8 @@
 #endif
 
 /* mingw fails to declare _exit in <unistd.h>.  */
-/* mingw, BeOS, Haiku declare environ in <stdlib.h>, not in <unistd.h>.  */
+/* mingw, MSVC, BeOS, Haiku declare environ in <stdlib.h>, not in
+   <unistd.h>.  */
 /* Solaris declares getcwd not only in <unistd.h> but also in <stdlib.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
 #ifndef __GLIBC__
