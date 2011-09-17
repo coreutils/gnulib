@@ -1,5 +1,11 @@
 2011-09-17  Bruno Haible  <bruno@clisp.org>
 
+	math: Avoid macro redefinition warnings on MSVC.
+	* lib/math.in.h (ceilf, ceill, floorf, floorl, frexpl, ldexpl):
+	Undefine before redefining.
+
+2011-09-17  Bruno Haible  <bruno@clisp.org>
+
 	doc: Mention functions which are declared as macros.
 	* doc/posix-functions/*[fl].texi: Mention that some functions are
 	defined as macros with arguments only.
