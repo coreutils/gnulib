@@ -1,5 +1,11 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'accept4'.
+	* modules/accept4-tests: New file.
+	* tests/test-accept4.c: New file.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'accept'.
 	* modules/accept-tests: New file.
 	* tests/test-accept.c: New file.

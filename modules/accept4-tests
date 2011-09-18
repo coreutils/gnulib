@@ -1,0 +1,15 @@
+Files:
+tests/test-accept4.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+fcntl-h
+netinet_in
+binary-io
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-accept4
+check_PROGRAMS += test-accept4
