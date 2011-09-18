@@ -31,6 +31,8 @@
 # include <windows.h>
 #endif
 
+#include "msvc-inval.h"
+
 #if HAVE_DUP2
 
 # undef dup2
@@ -45,7 +47,19 @@ rpl_dup2 (int fd, int desired_fd)
      future dup2 calls will hang.  */
   if (fd == desired_fd)
     {
-      if ((HANDLE) _get_osfhandle (fd) == INVALID_HANDLE_VALUE)
+      HANDLE handle;
+
+      TRY_MSVC_INVAL
+        {
+          handle = (HANDLE) _get_osfhandle (fd);
+        }
+      CATCH_MSVC_INVAL
+        {
+          handle = INVALID_HANDLE_VALUE;
+        }
+      DONE_MSVC_INVAL
+
+      if (handle == INVALID_HANDLE_VALUE)
         {
           errno = EBADF;
           return -1;
@@ -64,7 +78,18 @@ rpl_dup2 (int fd, int desired_fd)
   if (fd == desired_fd)
     return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
 # endif
-  result = dup2 (fd, desired_fd);
+
+  TRY_MSVC_INVAL
+    {
+      result = dup2 (fd, desired_fd);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL
+
 # ifdef __linux__
   /* Correct a Linux return value.
      <http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commitdiff;h=2b79bc4f7ebbd5af3c8b867968f9f15602d5f802>

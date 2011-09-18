@@ -1,5 +1,12 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	dup2: Support for MSVC.
+	* lib/dup2.c: Include msvc-inval.h.
+	(rpl_dup2): Handle invalid parameter notifications during dup2 and
+	_get_osfhandle calls.
+	* modules/dup2 (Depends-on): Add msvc-inval.
+	* doc/posix-functions/dup2.texi: Mention problem on MSVC.
+
 	New module 'msvc-inval'.
 	* lib/msvc-inval.h: New file.
 	* lib/msvc-inval.c: New file.

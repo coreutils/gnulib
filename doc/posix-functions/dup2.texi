@@ -17,6 +17,10 @@ This function can hang when duplicating an fd to itself on some platforms:
 mingw, MSVC 9.
 
 @item
+This function crashes when invoked with invalid arguments on some platforms:
+MSVC 9.
+
+@item
 This function resets the @code{FD_CLOEXEC} flag when duplicating an fd
 to itself on some platforms:
 Haiku.
