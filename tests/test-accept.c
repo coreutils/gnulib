@@ -35,7 +35,7 @@ main (void)
     socklen_t addrlen = sizeof (addr);
 
     errno = 0;
-    ASSERT (accept (-1, (struct sockaddr *) &addr, &addrlen));
+    ASSERT (accept (-1, (struct sockaddr *) &addr, &addrlen) == -1);
     ASSERT (errno == EBADF);
   }
   {
@@ -43,7 +43,7 @@ main (void)
     socklen_t addrlen = sizeof (addr);
 
     errno = 0;
-    ASSERT (accept (99, (struct sockaddr *) &addr, &addrlen));
+    ASSERT (accept (99, (struct sockaddr *) &addr, &addrlen) == -1);
     ASSERT (errno == EBADF);
   }
 
