@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (ptsname, char *, (int));
 
 #include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -54,6 +55,13 @@ same_slave (const char *slave_name1, const char *slave_name2)
 int
 main (void)
 {
+#if HAVE_DECL_ALARM
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  */
+  signal (SIGALRM, SIG_DFL);
+  alarm (5);
+#endif
+
   {
     int fd;
     char *result;

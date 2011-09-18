@@ -1,5 +1,12 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	ptsname tests: Let the test fail rather than hang (e.g. on AIX 5.1).
+	* tests/test-ptsname.c (main): Terminate the test if it takes longer
+	than 5 seconds.
+	* modules/ptsname-tests (configure.ac): Test for alarm.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	posix_spawn_file_actions_add*: Fix module dependencies.
 	* modules/posix_spawn_file_actions_addclose (Dependencies): Add
 	posix_spawn_file_actions_init.
