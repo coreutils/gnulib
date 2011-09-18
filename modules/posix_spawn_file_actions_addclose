@@ -9,7 +9,8 @@ m4/posix_spawn.m4
 
 Depends-on:
 spawn
-getdtablesize   [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
+getdtablesize                 [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
+posix_spawn_file_actions_init [test $HAVE_POSIX_SPAWN = 0 || test $REPLACE_POSIX_SPAWN = 1]
 
 configure.ac:
 gl_POSIX_SPAWN

@@ -1,5 +1,13 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	posix_spawn_file_actions_add*: Fix module dependencies.
+	* modules/posix_spawn_file_actions_addclose (Dependencies): Add
+	posix_spawn_file_actions_init.
+	* modules/posix_spawn_file_actions_adddup2 (Dependencies): Likewise.
+	* modules/posix_spawn_file_actions_addopen (Dependencies): Likewise.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	rename, renameat tests: Avoid test failures on FreeBSD 6.4.
 	* tests/test-rename.h (test_rename): Allow error code EEXIST.
 	* tests/test-renameat.c (main): Likewise.
