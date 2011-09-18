@@ -1,5 +1,11 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'accept'.
+	* modules/accept-tests: New file.
+	* tests/test-accept.c: New file.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	dup2: Support for MSVC.
 	* lib/dup2.c: Include msvc-inval.h.
 	(rpl_dup2): Handle invalid parameter notifications during dup2 and
