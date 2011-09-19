@@ -1,5 +1,10 @@
 2011-09-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stat: use pathmax.h only if needed
+	* lib/stat.c: Include pathmax.h only if REPLACE_FUNC_STAT_DIR.
+	This is better for Emacs, which does not have a mingw port and
+	therefore can avoid the pathmax module.
+
 	utimens: remove dependency on dup2
 	* lib/utimens.c (fdutimens): Don't invoke dup2; it's not needed
 	to work around the Linux kernel bug.
