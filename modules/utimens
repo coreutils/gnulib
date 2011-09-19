@@ -9,7 +9,6 @@ m4/utimens.m4
 m4/utimes.m4
 
 Depends-on:
-dup2
 errno
 lstat
 gettime

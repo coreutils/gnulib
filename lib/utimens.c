@@ -180,18 +180,13 @@ fdutimens (int fd, char const *file, struct timespec const timespec[2])
   if (adjustment_needed < 0)
     return -1;
 
-  /* Require that at least one of FD or FILE are valid.  Works around
+  /* Require that at least one of FD or FILE are potentially valid, to avoid
      a Linux bug where futimens (AT_FDCWD, NULL) changes "." rather
      than failing.  */
-  if (!file)
+  if (fd < 0 && !file)
     {
-      if (fd < 0)
-        {
-          errno = EBADF;
-          return -1;
-        }
-      if (dup2 (fd, fd) != fd)
-        return -1;
+      errno = EBADF;
+      return -1;
     }
 
   /* Some Linux-based NFS clients are buggy, and mishandle time stamps

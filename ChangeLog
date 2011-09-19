@@ -1,3 +1,10 @@
+2011-09-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: remove dependency on dup2
+	* lib/utimens.c (fdutimens): Don't invoke dup2; it's not needed
+	to work around the Linux kernel bug.
+	* modules/utimens (Depends-on): Remove dup2.
+
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
 	inet_ntop, inet_pton: Look for it also in libresolv.
