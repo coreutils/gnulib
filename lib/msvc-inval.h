@@ -29,14 +29,16 @@
      TRY_MSVC_INVAL
        {
          <Code that can trigger an invalid parameter notification
-          but does not do 'return', 'break', nor 'goto'.>
+          but does not do 'return', 'break', 'continue', nor 'goto'.>
        }
      CATCH_MSVC_INVAL
        {
          <Code that handles an invalid parameter notification
-          but does not do 'return', 'break', nor 'goto'.>
+          but does not do 'return', 'break', 'continue', nor 'goto'.>
        }
      DONE_MSVC_INVAL
+
+   This entire block expands to a single statement.
  */
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
@@ -77,13 +79,15 @@ extern void gl_msvc_inval_ensure_handler (void);
 #  endif
 
 #  define TRY_MSVC_INVAL \
-     gl_msvc_inval_ensure_handler ();                                          \
-     __try
+     {                                                                         \
+       gl_msvc_inval_ensure_handler ();                                        \
+       __try
 #  define CATCH_MSVC_INVAL \
-     __except (GetExceptionCode () == STATUS_GNULIB_INVALID_PARAMETER          \
-               ? EXCEPTION_EXECUTE_HANDLER                                     \
-               : EXCEPTION_CONTINUE_SEARCH)
-#  define DONE_MSVC_INVAL
+       __except (GetExceptionCode () == STATUS_GNULIB_INVALID_PARAMETER        \
+                 ? EXCEPTION_EXECUTE_HANDLER                                   \
+                 : EXCEPTION_CONTINUE_SEARCH)
+#  define DONE_MSVC_INVAL \
+     }
 
 # else
 /* Any compiler.
@@ -140,10 +144,13 @@ extern void cdecl gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 # endif
 
 #else
+/* A platform that does not need to the invalid parameter handler.  */
 
-# define TRY_MSVC_INVAL if (1)
+/* The braces here avoid GCC warnings like
+   "warning: suggest explicit braces to avoid ambiguous `else'".  */
+# define TRY_MSVC_INVAL { if (1)
 # define CATCH_MSVC_INVAL else
-# define DONE_MSVC_INVAL
+# define DONE_MSVC_INVAL }
 
 #endif
 
