@@ -13,3 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-accept4
 check_PROGRAMS += test-accept4
+test_accept4_LDADD = $(LDADD) @LIBSOCKET@
