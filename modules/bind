@@ -7,6 +7,7 @@ lib/w32sock.h
 
 Depends-on:
 sys_socket
+socketlib
 errno           [test "$ac_cv_header_winsock2_h" = yes]
 
 configure.ac:
@@ -20,6 +21,9 @@ Makefile.am:
 
 Include:
 <sys/socket.h>
+
+Link:
+$(LIBSOCKET)
 
 License:
 LGPLv2+

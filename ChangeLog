@@ -1,5 +1,37 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	socket functions: Avoid link errors on Solaris.
+	* modules/accept (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/bind (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/connect (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/getpeername (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/getsockname (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/getsockopt (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/listen (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/recv (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/recvfrom (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/send (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/sendto (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/setsockopt (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/shutdown (Depends-on): Add socketlib.
+	(Link): New section.
+	* modules/socket (Depends-on): Add socketlib.
+	(Link): New section.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	ptsname tests: Let the test fail rather than hang (e.g. on AIX 5.1).
 	* tests/test-ptsname.c (main): Terminate the test if it takes longer
 	than 5 seconds.
