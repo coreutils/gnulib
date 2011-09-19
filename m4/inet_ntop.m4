@@ -1,4 +1,4 @@
-# inet_ntop.m4 serial 17
+# inet_ntop.m4 serial 18
 dnl Copyright (C) 2005-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,7 @@ AC_DEFUN([gl_FUNC_INET_NTOP],
 
   dnl Most platforms that provide inet_ntop define it in libc.
   dnl Solaris 8..10 provide inet_ntop in libnsl instead.
+  dnl Solaris 2.6..7 provide inet_ntop in libresolv instead.
   dnl Native Windows provides it in -lws2_32 instead, with a declaration in
   dnl <ws2tcpip.h>, and it uses stdcall calling convention, not cdecl
   dnl (hence we cannot use AC_CHECK_FUNCS, AC_SEARCH_LIBS to find it).
@@ -32,7 +33,7 @@ AC_DEFUN([gl_FUNC_INET_NTOP],
     fi
   else
     gl_save_LIBS=$LIBS
-    AC_SEARCH_LIBS([inet_ntop], [nsl], [],
+    AC_SEARCH_LIBS([inet_ntop], [nsl resolv], [],
       [AC_CHECK_FUNCS([inet_ntop])
        if test $ac_cv_func_inet_ntop = no; then
          HAVE_INET_NTOP=0

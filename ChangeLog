@@ -1,5 +1,13 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	inet_ntop, inet_pton: Look for it also in libresolv.
+	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): If the function was not found in
+	libnsl, search for it in libresolv.
+	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Likewise.
+	Needed on Solaris 7.
+
+2011-09-18  Bruno Haible  <bruno@clisp.org>
+
 	accept, accept4 tests: Avoid link error on Solaris.
 	* modules/accept-tests (Makefile.am): Link test-accept against
 	$(LIBSOCKET).
