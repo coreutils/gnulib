@@ -1,5 +1,8 @@
 2011-09-18  Bruno Haible  <bruno@clisp.org>
 
+	accept4: Avoid link error on Solaris.
+	* modules/accept4 (Link): New section.
+
 	socket functions: Avoid link errors on Solaris.
 	* modules/accept (Depends-on): Add socketlib.
 	(Link): New section.

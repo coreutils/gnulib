@@ -23,6 +23,9 @@ lib_SOURCES += accept4.c
 Include:
 <sys/socket.h>
 
+Link:
+$(LIBSOCKET)
+
 License:
 LGPL
 
