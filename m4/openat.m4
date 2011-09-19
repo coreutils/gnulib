@@ -51,6 +51,9 @@ AC_DEFUN([gl_FUNC_OPENAT],
   fi
   gl_FUNC_FCHOWNAT
   gl_FUNC_FSTATAT
+
+  dnl This is tested at least via getcwd.c.
+  gl_MODULE_INDICATOR([openat])
 ])
 
 # gl_FUNC_FCHOWNAT_DEREF_BUG([ACTION-IF-BUGGY[, ACTION-IF-NOT_BUGGY]])

@@ -1,3 +1,16 @@
+2011-09-19  Jim Meyering  <meyering@redhat.com>
+
+	getcwd: don't fail in a deep directory on a system without openat
+	Before this change, getcwd would fail when called from a directory
+	of depth PATH_MAX / 3 or greater.  That was due to the fact that
+	the non-openat implementation used "..", "../..", "../../..", etc.
+	to access ancestor directories.  With too many, that string would
+	be longer than PATH_MAX.
+	* lib/getcwd.c (HAVE_OPENAT_SUPPORT): Define also when we are
+	using gnulib's openat replacement.
+	* m4/openat.m4: Set GNULIB_OPENAT, so getcwd.c knows when
+	we're using the replacement function.
+
 2011-09-14  Martin von Gagern  <Martin.vGagern@gmx.net>
 
 	maint.mk: avoid warnings from perl about missing files
