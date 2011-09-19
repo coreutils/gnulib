@@ -1,5 +1,14 @@
 2011-09-19  Bruno Haible  <bruno@clisp.org>
 
+	sched: Ensure pid_t is defined.
+	* m4/sched_h.m4 (gl_SCHED_H): Arrange to override <sched.h> if it does
+	not define pid_t.
+	* lib/sched.in.h: Include <sys/types.h>.
+	* doc/posix-headers/sched.texi: Mention the pid_t problem.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-09-19  Bruno Haible  <bruno@clisp.org>
+
 	msvc-inval: Ensure the entire expansion is a single statement.
 	* lib/msvc-inval.h (TRY_MSVC_INVAL, DONE_MSVC_INVAL): Add an extra pair
 	of braces.

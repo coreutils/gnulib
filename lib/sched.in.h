@@ -29,6 +29,12 @@
 #ifndef _@GUARD_PREFIX@_SCHED_H
 #define _@GUARD_PREFIX@_SCHED_H
 
+/* Get pid_t.
+   This is needed on glibc 2.11 (see
+   glibc bug <http://sourceware.org/bugzilla/show_bug.cgi?id=13198>)
+   and MacOS X 10.5.  */
+#include <sys/types.h>
+
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
 # if !GNULIB_defined_struct_sched_param
