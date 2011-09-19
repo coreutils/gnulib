@@ -81,6 +81,14 @@ test_futimens (int (*func) (int, struct timespec const *),
   ASSERT (func (-1, NULL) == -1);
   ASSERT (errno == EBADF);
   {
+    int fd = dup (0);
+    ASSERT (0 <= fd);
+    ASSERT (close (fd) == 0);
+    errno = 0;
+    ASSERT (func (fd, NULL) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
     struct timespec ts[2] = { { Y2K, UTIME_BOGUS_POS }, { Y2K, 0 } };
     errno = 0;
     ASSERT (func (fd, ts) == -1);

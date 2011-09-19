@@ -1,5 +1,9 @@
 2011-09-19  Eric Blake  <eblake@redhat.com>
 
+	futimens: enhance test
+	* tests/test-futimens.h (test_futimens): Also check for EBADF on
+	closed non-negative fd.
+
 	date: accept 'hence' as opposite of 'ago'
 	* lib/parse-datetime.y (relative_time_table): Add 'hence'.
 	* tests/test-parse-datetime.c (main): Enhance test.
