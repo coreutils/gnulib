@@ -1,3 +1,10 @@
+2011-09-19  Jim Meyering  <meyering@redhat.com>
+
+	tests: use printf, not echo in init.sh's warn_ function
+	* tests/init.sh (warn_): Use printf, not echo.  The latter would
+	misbehave when given strings containing a backslash or starting
+	with e.g., -n.  James Youngman suggested setting IFS.
+
 2011-09-19  Eric Blake  <eblake@redhat.com>
 
 	futimens: enhance test
