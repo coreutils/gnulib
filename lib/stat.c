@@ -48,6 +48,8 @@ orig_stat (const char *filename, struct stat *buf)
 
 #if REPLACE_FUNC_STAT_DIR
 # include "pathmax.h"
+  /* The only known systems where REPLACE_FUNC_STAT_DIR is needed also
+     have a constant PATH_MAX.  */
 # ifndef PATH_MAX
 #  error "Please port this replacement to your platform"
 # endif
@@ -77,8 +79,6 @@ rpl_stat (char const *name, struct stat *st)
     }
 #endif /* REPLACE_FUNC_STAT_FILE */
 #if REPLACE_FUNC_STAT_DIR
-  /* The only known systems where REPLACE_FUNC_STAT_DIR is needed also
-     have a constant PATH_MAX.  */
 
   if (result == -1 && errno == ENOENT)
     {
