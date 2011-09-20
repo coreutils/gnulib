@@ -58,6 +58,22 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (symlinkat ("foo", -1, "bar") == -1);
+    ASSERT (errno == EBADF
+            || errno == ENOSYS /* seen on mingw */
+           );
+  }
+  {
+    errno = 0;
+    ASSERT (symlinkat ("foo", 99, "bar") == -1);
+    ASSERT (errno == EBADF
+            || errno == ENOSYS /* seen on mingw */
+           );
+  }
+
   /* Perform same checks as counterpart functions.  */
   result = test_symlink (do_symlink, false);
   dfd = openat (AT_FDCWD, ".", O_RDONLY);

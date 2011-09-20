@@ -1,5 +1,8 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	symlinkat tests: EBADF tests.
+	* tests/test-symlinkat.c (main): Add tests for EBADF.
+
 	linkat tests: EBADF tests.
 	* tests/test-linkat.c (main): Add tests for EBADF.
 
