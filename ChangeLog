@@ -1,5 +1,12 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'grantpt'.
+	* modules/grantpt-tests: New file.
+	* tests/test-grantpt.c: New file.
+	* doc/posix-functions/grantpt.texi: Mention the Cygwin 1.7 problem.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	freopen tests: EBADF tests.
 	* tests/test-freopen.c: Include errno.h, unistd.h.
 	(main): Add tests for EBADF, commented out for the moment.
