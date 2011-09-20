@@ -59,6 +59,18 @@ main (void)
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (readlinkat (-1, "foo", buf, sizeof buf) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (readlinkat (99, "foo", buf, sizeof buf) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Perform same checks as counterpart functions.  */
   result = test_readlink (do_readlink, false);
   dfd = openat (AT_FDCWD, ".", O_RDONLY);
