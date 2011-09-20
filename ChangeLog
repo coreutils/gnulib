@@ -1,5 +1,10 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	fsync tests: Avoid a test failure on mingw.
+	* tests/test-fsync.c (main): Allow a failure with EIO.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	euidaccess: Update comments.
 	* m4/euidaccess.m4 (gl_PREREQ_EUIDACCESS): Update comments.
 

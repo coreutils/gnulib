@@ -40,6 +40,7 @@ main (void)
         ASSERT (errno == EINVAL /* POSIX */
                 || errno == ENOTSUP /* seen on MacOS X 10.5 */
                 || errno == EBADF /* seen on AIX 7.1 */
+                || errno == EIO /* seen on mingw */
                 );
       }
 
