@@ -32,17 +32,27 @@ ssize_t
 rpl_recvfrom (int fd, void *buf, size_t len, int flags, struct sockaddr *from,
               socklen_t *fromlen)
 {
-  int frombufsize = (from != NULL ? *fromlen : 0);
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = recvfrom (sock, buf, len, flags, from, fromlen);
 
-  if (r < 0)
-    set_winsock_errno ();
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int frombufsize = (from != NULL ? *fromlen : 0);
+      int r = recvfrom (sock, buf, len, flags, from, fromlen);
 
-  /* Winsock recvfrom() only returns a valid 'from' when the socket is
-     connectionless.  POSIX gives a valid 'from' for all types of sockets.  */
-  else if (from != NULL && *fromlen == frombufsize)
-    rpl_getpeername (fd, from, fromlen);
+      if (r < 0)
+        set_winsock_errno ();
 
-  return r;
+      /* Winsock recvfrom() only returns a valid 'from' when the socket is
+         connectionless.  POSIX gives a valid 'from' for all types of
+         sockets.  */
+      else if (from != NULL && *fromlen == frombufsize)
+        rpl_getpeername (fd, from, fromlen);
+
+      return r;
+    }
 }

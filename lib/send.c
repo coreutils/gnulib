@@ -32,9 +32,18 @@ ssize_t
 rpl_send (int fd, const void *buf, size_t len, int flags)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = send (sock, buf, len, flags);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = send (sock, buf, len, flags);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

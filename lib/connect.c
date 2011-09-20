@@ -32,16 +32,25 @@ int
 rpl_connect (int fd, const struct sockaddr *sockaddr, socklen_t len)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = connect (sock, sockaddr, len);
-  if (r < 0)
+
+  if (sock == INVALID_SOCKET)
     {
-      /* EINPROGRESS is not returned by WinSock 2.0; for backwards
-         compatibility, connect(2) uses EWOULDBLOCK.  */
-      if (WSAGetLastError () == WSAEWOULDBLOCK)
-        WSASetLastError (WSAEINPROGRESS);
-
-      set_winsock_errno ();
+      errno = EBADF;
+      return -1;
     }
+  else
+    {
+      int r = connect (sock, sockaddr, len);
+      if (r < 0)
+        {
+          /* EINPROGRESS is not returned by WinSock 2.0; for backwards
+             compatibility, connect(2) uses EWOULDBLOCK.  */
+          if (WSAGetLastError () == WSAEWOULDBLOCK)
+            WSASetLastError (WSAEINPROGRESS);
 
-  return r;
+          set_winsock_errno ();
+        }
+
+      return r;
+    }
 }

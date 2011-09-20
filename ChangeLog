@@ -1,5 +1,23 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Ensure EBADF returns for socket functions on mingw.
+	* lib/accept.c (rpl_accept): Fail with error EBADF if the file
+	descriptor is invalid.
+	* lib/bind.c (rpl_bind): Likewise.
+	* lib/connect.c (rpl_connect): Likewise.
+	* lib/getpeername.c (rpl_getpeername): Likewise.
+	* lib/getsockname.c (rpl_getsockname): Likewise.
+	* lib/getsockopt.c (rpl_getsockopt): Likewise.
+	* lib/listen.c (rpl_listen): Likewise.
+	* lib/recv.c (rpl_recv): Likewise.
+	* lib/recvfrom.c (rpl_recvfrom): Likewise.
+	* lib/send.c (rpl_send): Likewise.
+	* lib/sendto.c (rpl_sendto): Likewise.
+	* lib/setsockopt.c (rpl_setsockopt): Likewise.
+	* lib/shutdown.c (rpl_shutdown): Likewise.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	select tests: EBADF tests.
 	* tests/test-select.h (do_select_bad_fd, do_select_bad_fd_nowait,
 	test_bad_fd): New functions.

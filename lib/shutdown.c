@@ -32,9 +32,18 @@ int
 rpl_shutdown (int fd, int how)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = shutdown (sock, how);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = shutdown (sock, how);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

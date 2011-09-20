@@ -32,9 +32,18 @@ int
 rpl_listen (int fd, int backlog)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = listen (sock, backlog);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = listen (sock, backlog);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

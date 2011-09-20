@@ -37,32 +37,43 @@
 int
 rpl_getsockopt (int fd, int level, int optname, void *optval, socklen_t *optlen)
 {
-  int r;
   SOCKET sock = FD_TO_SOCKET (fd);
 
-  if (level == SOL_SOCKET && (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO))
+  if (sock == INVALID_SOCKET)
     {
-      int milliseconds;
-      int milliseconds_len = sizeof (int);
-      struct timeval tv;
-      size_t n;
-      r = getsockopt (sock, level, optname, (char *) &milliseconds,
-                      &milliseconds_len);
-      tv.tv_sec = milliseconds / 1000;
-      tv.tv_usec = (milliseconds - 1000 * tv.tv_sec) * 1000;
-      n = sizeof (struct timeval);
-      if (n > *optlen)
-        n = *optlen;
-      memcpy (optval, &tv, n);
-      *optlen = n;
+      errno = EBADF;
+      return -1;
     }
   else
     {
-      r = getsockopt (sock, level, optname, optval, optlen);
+      int r;
+
+      if (level == SOL_SOCKET
+          && (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO))
+        {
+          int milliseconds;
+          int milliseconds_len = sizeof (int);
+          struct timeval tv;
+          size_t n;
+
+          r = getsockopt (sock, level, optname, (char *) &milliseconds,
+                          &milliseconds_len);
+          tv.tv_sec = milliseconds / 1000;
+          tv.tv_usec = (milliseconds - 1000 * tv.tv_sec) * 1000;
+          n = sizeof (struct timeval);
+          if (n > *optlen)
+            n = *optlen;
+          memcpy (optval, &tv, n);
+          *optlen = n;
+        }
+      else
+        {
+          r = getsockopt (sock, level, optname, optval, optlen);
+        }
+
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
     }
-
-  if (r < 0)
-    set_winsock_errno ();
-
-  return r;
 }

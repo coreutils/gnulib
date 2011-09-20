@@ -32,9 +32,18 @@ int
 rpl_bind (int fd, const struct sockaddr *sockaddr, socklen_t len)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = bind (sock, sockaddr, len);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = bind (sock, sockaddr, len);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

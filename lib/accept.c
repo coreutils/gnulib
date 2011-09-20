@@ -31,12 +31,22 @@
 int
 rpl_accept (int fd, struct sockaddr *addr, socklen_t *addrlen)
 {
-  SOCKET fh = accept (FD_TO_SOCKET (fd), addr, addrlen);
-  if (fh == INVALID_SOCKET)
+  SOCKET sock = FD_TO_SOCKET (fd);
+
+  if (sock == INVALID_SOCKET)
     {
-      set_winsock_errno ();
+      errno = EBADF;
       return -1;
     }
   else
-    return SOCKET_TO_FD (fh);
+    {
+      SOCKET fh = accept (sock, addr, addrlen);
+      if (fh == INVALID_SOCKET)
+        {
+          set_winsock_errno ();
+          return -1;
+        }
+      else
+        return SOCKET_TO_FD (fh);
+    }
 }

@@ -34,23 +34,32 @@
 int
 rpl_setsockopt (int fd, int level, int optname, const void *optval, socklen_t optlen)
 {
-  int r;
   SOCKET sock = FD_TO_SOCKET (fd);
+  int r;
 
-  if (level == SOL_SOCKET && (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO))
+  if (sock == INVALID_SOCKET)
     {
-      const struct timeval *tv = optval;
-      int milliseconds = tv->tv_sec * 1000 + tv->tv_usec / 1000;
-      optval = &milliseconds;
-      r = setsockopt (sock, level, optname, optval, sizeof (int));
+      errno = EBADF;
+      return -1;
     }
   else
     {
-      r = setsockopt (sock, level, optname, optval, optlen);
+      if (level == SOL_SOCKET
+          && (optname == SO_RCVTIMEO || optname == SO_SNDTIMEO))
+        {
+          const struct timeval *tv = optval;
+          int milliseconds = tv->tv_sec * 1000 + tv->tv_usec / 1000;
+          optval = &milliseconds;
+          r = setsockopt (sock, level, optname, optval, sizeof (int));
+        }
+      else
+        {
+          r = setsockopt (sock, level, optname, optval, optlen);
+        }
+
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
     }
-
-  if (r < 0)
-    set_winsock_errno ();
-
-  return r;
 }

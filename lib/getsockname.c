@@ -32,9 +32,18 @@ int
 rpl_getsockname (int fd, struct sockaddr *addr, socklen_t *addrlen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = getsockname (sock, addr, addrlen);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = getsockname (sock, addr, addrlen);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

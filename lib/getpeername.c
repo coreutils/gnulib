@@ -32,9 +32,18 @@ int
 rpl_getpeername (int fd, struct sockaddr *addr, socklen_t *addrlen)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = getpeername (sock, addr, addrlen);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = getpeername (sock, addr, addrlen);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }

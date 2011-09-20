@@ -32,9 +32,18 @@ ssize_t
 rpl_recv (int fd, void *buf, size_t len, int flags)
 {
   SOCKET sock = FD_TO_SOCKET (fd);
-  int r = recv (sock, buf, len, flags);
-  if (r < 0)
-    set_winsock_errno ();
 
-  return r;
+  if (sock == INVALID_SOCKET)
+    {
+      errno = EBADF;
+      return -1;
+    }
+  else
+    {
+      int r = recv (sock, buf, len, flags);
+      if (r < 0)
+        set_winsock_errno ();
+
+      return r;
+    }
 }
