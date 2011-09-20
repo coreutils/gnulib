@@ -61,6 +61,29 @@ main (void)
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (renameat (-1, "foo", AT_FDCWD, "bar") == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (renameat (99, "foo", AT_FDCWD, "bar") == -1);
+    ASSERT (errno == EBADF);
+  }
+  ASSERT (close (creat (BASE "oo", 0600)) == 0);
+  {
+    errno = 0;
+    ASSERT (renameat (AT_FDCWD, BASE "oo", -1, "bar") == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (renameat (AT_FDCWD, BASE "oo", 99, "bar") == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Test basic rename functionality, using current directory.  */
   result = test_rename (do_rename, false);
   dfd1 = open (".", O_RDONLY);

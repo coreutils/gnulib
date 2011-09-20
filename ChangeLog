@@ -1,5 +1,8 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	renameat tests: EBADF tests.
+	* tests/test-renameat.c (main): Add tests for EBADF.
+
 	mkfifoat tests: EBADF tests.
 	* tests/test-mkfifoat.c (main): Add tests for EBADF.
 
