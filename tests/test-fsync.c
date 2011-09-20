@@ -44,9 +44,16 @@ main (void)
       }
 
   /* fsync must fail on invalid fd.  */
-  errno = 0;
-  ASSERT (fsync (-1) == -1);
-  ASSERT (errno == EBADF);
+  {
+    errno = 0;
+    ASSERT (fsync (-1) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (fsync (99) == -1);
+    ASSERT (errno == EBADF);
+  }
 
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);
