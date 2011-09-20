@@ -89,6 +89,22 @@ main (void)
       struct stat st;
       test_func func = funcs[i];
 
+      /* Test behaviour for invalid file descriptors.  */
+      {
+        errno = 0;
+        ASSERT (func (-1, "foo", 0600) == -1);
+        ASSERT (errno == EBADF
+                || errno == ENOSYS /* seen on mingw */
+               );
+      }
+      {
+        errno = 0;
+        ASSERT (func (99, "foo", 0600) == -1);
+        ASSERT (errno == EBADF
+                || errno == ENOSYS /* seen on mingw */
+               );
+      }
+
       /* Create fifo while cwd is '.', then stat it from '..'.  */
       ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == 0);
       errno = 0;
