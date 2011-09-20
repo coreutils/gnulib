@@ -26,12 +26,15 @@ SIGNATURE_CHECK (accept4, int, (int, struct sockaddr *, socklen_t *, int));
 #include <netinet/in.h>
 
 #include "binary-io.h"
+#include "sockets.h"
 
 #include "macros.h"
 
 int
 main (void)
 {
+  gl_sockets_startup (SOCKETS_1_1);
+
   /* Test behaviour for invalid file descriptors.  */
   {
     struct sockaddr_in addr;

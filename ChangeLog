@@ -1,5 +1,10 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	accept4 tests: Fix for native Windows.
+	* tests/test-accept4.c: Include sockets.h.
+	(main): Invoke gl_sockets_startup.
+	* modules/accept4-tests (Depends-on): Add sockets.
+
 	accept tests: Fix for native Windows.
 	* tests/test-accept.c: Include sockets.h.
 	(main): Invoke gl_sockets_startup.
