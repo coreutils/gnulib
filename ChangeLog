@@ -1,5 +1,12 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	select tests: EBADF tests.
+	* tests/test-select.h (do_select_bad_fd, do_select_bad_fd_nowait,
+	test_bad_fd): New functions.
+	(test_function): Invoke also test_bad_fd.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'posix_spawn_file_actions_addopen.
 	* modules/posix_spawn_file_actions_addopen-tests: New file.
 	* tests/test-posix_spawn_file_actions_addopen.c: New file.
