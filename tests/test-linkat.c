@@ -95,6 +95,29 @@ main (void)
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (linkat (-1, "foo", AT_FDCWD, "bar", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (linkat (99, "foo", AT_FDCWD, "bar", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  ASSERT (close (creat (BASE "oo", 0600)) == 0);
+  {
+    errno = 0;
+    ASSERT (linkat (AT_FDCWD, BASE "oo", -1, "bar", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (linkat (AT_FDCWD, BASE "oo", 99, "bar", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Test basic link functionality, without mentioning symlinks.  */
   result = test_link (do_link, true);
   dfd1 = open (".", O_RDONLY);
