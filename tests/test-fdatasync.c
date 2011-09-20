@@ -32,18 +32,29 @@ main (void)
   int fd;
   const char *file = "test-fdatasync.txt";
 
+  /* Assuming stdin and stdout are ttys, fdatasync is allowed to fail, but
+     may succeed as an extension.  */
   for (fd = 0; fd < 2; fd++)
     if (fdatasync (fd) != 0)
       {
         ASSERT (errno == EINVAL /* POSIX */
                 || errno == ENOTSUP /* seen on MacOS X 10.5 */
                 || errno == EBADF /* seen on AIX 7.1 */
+                || errno == EIO /* seen on mingw */
                 );
       }
 
-  errno = 0;
-  ASSERT (fdatasync (-1) == -1);
-  ASSERT (errno == EBADF);
+  /* fdatasync must fail on invalid fd.  */
+  {
+    errno = 0;
+    ASSERT (fdatasync (-1) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (fdatasync (99) == -1);
+    ASSERT (errno == EBADF);
+  }
 
   fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
   ASSERT (0 <= fd);
