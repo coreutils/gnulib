@@ -1,5 +1,11 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ioctl'.
+	* modules/ioctl-tests: New file.
+	* tests/test-ioctl.c: New file.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	fcntl tests: EBADF tests.
 	* tests/test-fcntl.c (main): Add more tests for EBADF.
 
