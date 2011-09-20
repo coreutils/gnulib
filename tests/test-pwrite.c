@@ -76,5 +76,20 @@ main (void)
     ASSERT (close (fd) == 0);
     ASSERT (strcmp ("W1W3W5W7W9",buf) == 0);
   }
+
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    char byte = 'x';
+    errno = 0;
+    ASSERT (pwrite (-1, &byte, 1, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    char byte = 'x';
+    errno = 0;
+    ASSERT (pwrite (99, &byte, 1, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   return 0;
 }
