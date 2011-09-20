@@ -24,7 +24,11 @@
 
 /* Check that the types are all defined.  */
 struct timespec t1;
+#if 0
+/* POSIX:2008 does not require pid_t in <time.h> unconditionally, and indeed
+   it's missing on MacOS X 10.5, FreeBSD 6.4, OpenBSD 4.9, mingw.  */
 pid_t t2;
+#endif
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
