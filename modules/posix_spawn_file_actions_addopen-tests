@@ -1,0 +1,13 @@
+Files:
+tests/test-posix_spawn_file_actions_addopen.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+posix_spawn_file_actions_init
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-posix_spawn_file_actions_addopen
+check_PROGRAMS += test-posix_spawn_file_actions_addopen

@@ -1,5 +1,9 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'posix_spawn_file_actions_addopen.
+	* modules/posix_spawn_file_actions_addopen-tests: New file.
+	* tests/test-posix_spawn_file_actions_addopen.c: New file.
+
 	Tests for module 'posix_spawn_file_actions_adddup2'.
 	* modules/posix_spawn_file_actions_adddup2-tests: New file.
 	* tests/test-posix_spawn_file_actions_adddup2.c: New file.
