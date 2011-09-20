@@ -34,14 +34,29 @@ SIGNATURE_CHECK (fchdir, int, (int));
 int
 main (void)
 {
-  char *cwd = getcwd (NULL, 0);
-  int fd = open (".", O_RDONLY);
+  char *cwd;
+  int fd;
   int i;
 
+  cwd = getcwd (NULL, 0);
   ASSERT (cwd);
+
+  fd = open (".", O_RDONLY);
   ASSERT (0 <= fd);
 
-  /* Check for failure cases.  */
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (fchdir (-1) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (fchdir (99) == -1);
+    ASSERT (errno == EBADF);
+  }
+
+  /* Check for other failure cases.  */
   {
     int bad_fd = open ("/dev/null", O_RDONLY);
     ASSERT (0 <= bad_fd);
@@ -49,9 +64,6 @@ main (void)
     ASSERT (fchdir (bad_fd) == -1);
     ASSERT (errno == ENOTDIR);
     ASSERT (close (bad_fd) == 0);
-    errno = 0;
-    ASSERT (fchdir (-1) == -1);
-    ASSERT (errno == EBADF);
   }
 
   /* Repeat test twice, once in '.' and once in '..'.  */
