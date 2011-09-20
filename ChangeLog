@@ -1,5 +1,9 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'bind'.
+	* modules/bind-tests: New file.
+	* tests/test-bind.c: New file.
+
 	accept4 tests: Fix for native Windows.
 	* tests/test-accept4.c: Include sockets.h.
 	(main): Invoke gl_sockets_startup.
