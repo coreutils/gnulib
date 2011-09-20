@@ -76,12 +76,35 @@ main (int argc, char **argv)
 
   /* Test that fclose() sets errno if someone else closes the stream
      fd behind the back of stdio.  */
-  f = fdopen (fd, "w+");
-  ASSERT (f);
-  ASSERT (close (fd) == 0);
-  errno = 0;
-  ASSERT (fclose (f) == EOF);
-  ASSERT (errno == EBADF);
+  {
+    FILE *fp = fdopen (fd, "w+");
+    ASSERT (fp != NULL);
+    ASSERT (close (fd) == 0);
+    errno = 0;
+    ASSERT (fclose (fp) == EOF);
+    ASSERT (errno == EBADF);
+  }
+
+  /* Test that fclose() sets errno if the stream was constructed with
+     an invalid file descriptor.  */
+  {
+    FILE *fp = fdopen (-1, "r");
+    if (fp != NULL)
+      {
+        errno = 0;
+        ASSERT (fclose (fp) == EOF);
+        ASSERT (errno == EBADF);
+      }
+  }
+  {
+    FILE *fp = fdopen (99, "r");
+    if (fp != NULL)
+      {
+        errno = 0;
+        ASSERT (fclose (fp) == EOF);
+        ASSERT (errno == EBADF);
+      }
+  }
 
   /* Clean up.  */
   ASSERT (remove (BASE) == 0);
