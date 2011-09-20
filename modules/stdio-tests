@@ -4,6 +4,7 @@ tests/test-stdio.c
 Depends-on:
 verify
 stdio-c++-tests
+fdopen-tests
 
 configure.ac:
 
