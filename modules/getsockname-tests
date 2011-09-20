@@ -1,0 +1,15 @@
+Files:
+tests/test-getsockname.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+netinet_in
+sockets
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getsockname
+check_PROGRAMS += test-getsockname
+test_getsockname_LDADD = $(LDADD) @LIBSOCKET@
