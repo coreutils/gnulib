@@ -83,5 +83,19 @@ main (void)
     ASSERT (errno == ESPIPE);
   }
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    char byte;
+    errno = 0;
+    ASSERT (pread (-1, &byte, 1, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    char byte;
+    errno = 0;
+    ASSERT (pread (99, &byte, 1, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   return 0;
 }
