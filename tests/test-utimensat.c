@@ -69,6 +69,18 @@ main (void)
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (utimensat (-1, "foo", NULL, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (utimensat (99, "foo", NULL, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Basic tests.  */
   result1 = test_utimens (do_utimensat, true);
   result2 = test_lutimens (do_lutimensat, result1 == 0);

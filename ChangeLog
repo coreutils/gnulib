@@ -1,5 +1,8 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	utimensat tests: EBADF tests.
+	* tests/test-utimensat.c (main): Add tests for EBADF.
+
 	renameat tests: EBADF tests.
 	* tests/test-renameat.c (main): Add tests for EBADF.
 
