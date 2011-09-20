@@ -65,6 +65,18 @@ main (int argc _GL_UNUSED, char *argv[])
 
   set_program_name (argv[0]);
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (openat (-1, "foo", O_RDONLY) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (openat (99, "foo", O_RDONLY) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Basic checks.  */
   result = test_open (do_open, false);
   dfd = open (".", O_RDONLY);

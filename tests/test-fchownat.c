@@ -69,6 +69,18 @@ main (int argc _GL_UNUSED, char *argv[])
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (fchownat (-1, "foo", getuid (), getgid (), 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (fchownat (99, "foo", getuid (), getgid (), 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Basic tests.  */
   result1 = test_chown (do_chown, true);
   result2 = test_lchown (do_lchown, result1 == 0);

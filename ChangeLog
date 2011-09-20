@@ -1,5 +1,17 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	openat tests: EBADF tests.
+	* tests/test-fchownat.c (main): Add tests for EBADF.
+	* tests/test-fstatat.c (main): Likewise.
+	* tests/test-mkdirat.c (main): Likewise.
+	* tests/test-openat.c (main): Likewise.
+	* tests/test-unlinkat.c (main): Likewise.
+	* tests/test-fchmodat.c: New file.
+	* modules/openat-tests (Files): Add tests/test-fchmodat.c.
+	(Makefile.am): Also run 'test-fchmodat'.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	utimens, futimens, fdutimensat tests: EBADF tests.
 	* tests/test-futimens.h (test_futimens): Add more tests for EBADF.
 

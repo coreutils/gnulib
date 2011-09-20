@@ -12,6 +12,7 @@ tests/test-fstatat.c
 tests/test-mkdirat.c
 tests/test-openat.c
 tests/test-unlinkat.c
+tests/test-fchmodat.c
 tests/signature.h
 tests/macros.h
 
@@ -29,8 +30,11 @@ configure.ac:
 AC_CHECK_FUNCS_ONCE([getegid])
 
 Makefile.am:
-TESTS += test-fchownat test-fstatat test-mkdirat test-openat test-unlinkat
-check_PROGRAMS += test-fchownat test-fstatat test-mkdirat test-openat \
+TESTS += \
+  test-fchmodat test-fchownat test-fstatat test-mkdirat test-openat \
+  test-unlinkat
+check_PROGRAMS += \
+  test-fchmodat test-fchownat test-fstatat test-mkdirat test-openat \
   test-unlinkat
 test_fchownat_LDADD = $(LDADD) @LIBINTL@
 test_fstatat_LDADD = $(LDADD) @LIBINTL@

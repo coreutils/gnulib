@@ -57,6 +57,18 @@ main (int argc _GL_UNUSED, char *argv[])
   /* Clean up any trash from prior testsuite runs.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (mkdirat (-1, "foo", 0700) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (mkdirat (99, "foo", 0700) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   /* Test basic mkdir functionality.  */
   result = test_mkdir (do_mkdir, false);
   dfd = open (".", O_RDONLY);

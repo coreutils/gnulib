@@ -67,6 +67,22 @@ main (int argc _GL_UNUSED, char *argv[])
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    struct stat statbuf;
+
+    errno = 0;
+    ASSERT (fstatat (-1, "foo", &statbuf, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    struct stat statbuf;
+
+    errno = 0;
+    ASSERT (fstatat (99, "foo", &statbuf, 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   result = test_stat_func (do_stat, false);
   ASSERT (test_lstat_func (do_lstat, false) == result);
   dfd = open (".", O_RDONLY);

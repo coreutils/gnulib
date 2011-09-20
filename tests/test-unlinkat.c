@@ -68,6 +68,18 @@ main (int argc _GL_UNUSED, char *argv[])
   /* Remove any leftovers from a previous partial run.  */
   ignore_value (system ("rm -rf " BASE "*"));
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    errno = 0;
+    ASSERT (unlinkat (-1, "foo", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (unlinkat (99, "foo", 0) == -1);
+    ASSERT (errno == EBADF);
+  }
+
   result1 = test_rmdir_func (rmdirat, false);
   result2 = test_unlink_func (unlinker, false);
   ASSERT (result1 == result2);
