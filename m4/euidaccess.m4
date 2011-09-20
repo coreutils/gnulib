@@ -1,4 +1,4 @@
-# euidaccess.m4 serial 13
+# euidaccess.m4 serial 14
 dnl Copyright (C) 2002-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,7 @@ AC_DEFUN([gl_PREREQ_EUIDACCESS], [
   AC_CHECK_DECLS_ONCE([setregid])
   AC_REQUIRE([AC_FUNC_GETGROUPS])
 
-  # Solaris 9 needs -lgen to get the eaccess function.
+  # Solaris 9 and 10 need -lgen to get the eaccess function.
   # Save and restore LIBS so -lgen isn't added to it.  Otherwise, *all*
   # programs in the package would end up linked with that potentially-shared
   # library, inducing unnecessary run-time overhead.
