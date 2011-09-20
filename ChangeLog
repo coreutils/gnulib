@@ -1,5 +1,9 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'send'.
+	* modules/send-tests: New file.
+	* tests/test-send.c: New file.
+
 	Tests for module 'recvfrom'.
 	* modules/recvfrom-tests: New file.
 	* tests/test-recvfrom.c: New file.
