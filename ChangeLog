@@ -1,5 +1,10 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for function fputc().
+	* modules/fputc-tests: New file.
+	* tests/test-fputc.c: New file.
+	* modules/stdio-tests (Depends-on): Add fputc-tests.
+
 	Tests for function fgetc().
 	* modules/fgetc-tests: New file.
 	* tests/test-fgetc.c: New file.
