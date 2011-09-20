@@ -81,12 +81,24 @@ main (int argc, char **argv)
          invoking shell are not enough on HP-UX.  */
       close (0);
       close (1);
+
       errno = 0;
       ASSERT (lseek (0, (off_t)0, SEEK_CUR) == -1);
       ASSERT (errno == EBADF);
+
       errno = 0;
       ASSERT (lseek (1, (off_t)0, SEEK_CUR) == -1);
       ASSERT (errno == EBADF);
+
+      /* Test behaviour for invalid file descriptors.  */
+      errno = 0;
+      ASSERT (lseek (-1, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == EBADF);
+
+      errno = 0;
+      ASSERT (lseek (99, (off_t)0, SEEK_CUR) == -1);
+      ASSERT (errno == EBADF);
+
       break;
 
     default:
