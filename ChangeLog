@@ -1,5 +1,8 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	test-ttyname_r tests: EBADF tests.
+	* tests/test-ttyname_r.c (main): Add tests for EBADF.
+
 	Tests for module 'isatty'.
 	* modules/isatty-tests: New file.
 	* tests/test-isatty.c: New file.

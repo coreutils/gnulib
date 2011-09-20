@@ -47,5 +47,19 @@ main (void)
   ASSERT (ttyname_r (fd, buf, sizeof (buf)) == 0);
   ASSERT (memcmp (buf, "/dev/", 5) == 0);
 
+  /* Test behaviour for invalid file descriptors.  */
+  {
+    int err = ttyname_r (-1, buf, sizeof (buf));
+    ASSERT (err == EBADF
+            || err == ENOTTY /* seen on FreeBSD 6.4 */
+           );
+  }
+  {
+    int err = ttyname_r (99, buf, sizeof (buf));
+    ASSERT (err == EBADF
+            || err == ENOTTY /* seen on FreeBSD 6.4 */
+           );
+  }
+
   return 0;
 }
