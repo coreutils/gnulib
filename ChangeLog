@@ -1,5 +1,11 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'close'.
+	* modules/close-tests: New file.
+	* tests/test-close.c: New file.
+
+2011-09-20  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'shutdown'.
 	* modules/shutdown-tests: New file.
 	* tests/test-shutdown.c: New file.
