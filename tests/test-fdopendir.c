@@ -48,9 +48,16 @@ main (int argc _GL_UNUSED, char *argv[])
   ASSERT (unlink ("test-fdopendir.tmp") == 0);
 
   /* A bad fd cannot be turned into a stream.  */
-  errno = 0;
-  ASSERT (fdopendir (-1) == NULL);
-  ASSERT (errno == EBADF);
+  {
+    errno = 0;
+    ASSERT (fdopendir (-1) == NULL);
+    ASSERT (errno == EBADF);
+  }
+  {
+    errno = 0;
+    ASSERT (fdopendir (99) == NULL);
+    ASSERT (errno == EBADF);
+  }
 
   /* This should work.  */
   fd = open (".", O_RDONLY);

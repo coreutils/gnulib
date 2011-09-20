@@ -1,5 +1,8 @@
 2011-09-20  Bruno Haible  <bruno@clisp.org>
 
+	fdopendir tests: EBADF tests.
+	* tests/test-fdopendir.c (main): Add more tests for EBADF.
+
 	openat tests: EBADF tests.
 	* tests/test-fchownat.c (main): Add tests for EBADF.
 	* tests/test-fstatat.c (main): Likewise.
