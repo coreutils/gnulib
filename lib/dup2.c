@@ -57,7 +57,7 @@ rpl_dup2 (int fd, int desired_fd)
         {
           handle = INVALID_HANDLE_VALUE;
         }
-      DONE_MSVC_INVAL
+      DONE_MSVC_INVAL;
 
       if (handle == INVALID_HANDLE_VALUE)
         {
@@ -88,7 +88,7 @@ rpl_dup2 (int fd, int desired_fd)
       result = -1;
       errno = EBADF;
     }
-  DONE_MSVC_INVAL
+  DONE_MSVC_INVAL;
 
 # ifdef __linux__
   /* Correct a Linux return value.

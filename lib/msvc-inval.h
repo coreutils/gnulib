@@ -36,7 +36,7 @@
          <Code that handles an invalid parameter notification
           but does not do 'return', 'break', 'continue', nor 'goto'.>
        }
-     DONE_MSVC_INVAL
+     DONE_MSVC_INVAL;
 
    This entire block expands to a single statement.
  */
@@ -79,15 +79,17 @@ extern void gl_msvc_inval_ensure_handler (void);
 #  endif
 
 #  define TRY_MSVC_INVAL \
-     {                                                                         \
-       gl_msvc_inval_ensure_handler ();                                        \
-       __try
+     do                                                                        \
+       {                                                                       \
+         gl_msvc_inval_ensure_handler ();                                      \
+         __try
 #  define CATCH_MSVC_INVAL \
-       __except (GetExceptionCode () == STATUS_GNULIB_INVALID_PARAMETER        \
-                 ? EXCEPTION_EXECUTE_HANDLER                                   \
-                 : EXCEPTION_CONTINUE_SEARCH)
+         __except (GetExceptionCode () == STATUS_GNULIB_INVALID_PARAMETER      \
+                   ? EXCEPTION_EXECUTE_HANDLER                                 \
+                   : EXCEPTION_CONTINUE_SEARCH)
 #  define DONE_MSVC_INVAL \
-     }
+       }                                                                       \
+     while (0)
 
 # else
 /* Any compiler.
@@ -119,27 +121,29 @@ extern void cdecl gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 #  endif
 
 #  define TRY_MSVC_INVAL \
-     {                                                                         \
-       _invalid_parameter_handler orig_handler;                                \
-       /* First, initialize gl_msvc_inval_restart.  */                         \
-       if (setjmp (gl_msvc_inval_restart) == 0)                                \
-         {                                                                     \
-           /* Then, enable gl_msvc_invalid_parameter_handler.  */              \
-           orig_handler =                                                      \
-             _set_invalid_parameter_handler (gl_msvc_invalid_parameter_handler);
+     do                                                                        \
+       {                                                                       \
+         _invalid_parameter_handler orig_handler;                              \
+         /* First, initialize gl_msvc_inval_restart.  */                       \
+         if (setjmp (gl_msvc_inval_restart) == 0)                              \
+           {                                                                   \
+             /* Then, enable gl_msvc_invalid_parameter_handler.  */            \
+             orig_handler =                                                    \
+               _set_invalid_parameter_handler (gl_msvc_invalid_parameter_handler);
 #  define CATCH_MSVC_INVAL \
-           /* Execution completed.                                             \
-              Disable gl_msvc_invalid_parameter_handler.  */                   \
-           _set_invalid_parameter_handler (orig_handler);                      \
-         }                                                                     \
-       else                                                                    \
-         {                                                                     \
-           /* Execution triggered an invalid parameter notification.           \
-              Disable gl_msvc_invalid_parameter_handler.  */                   \
-           _set_invalid_parameter_handler (orig_handler);
+             /* Execution completed.                                           \
+                Disable gl_msvc_invalid_parameter_handler.  */                 \
+             _set_invalid_parameter_handler (orig_handler);                    \
+           }                                                                   \
+         else                                                                  \
+           {                                                                   \
+             /* Execution triggered an invalid parameter notification.         \
+                Disable gl_msvc_invalid_parameter_handler.  */                 \
+             _set_invalid_parameter_handler (orig_handler);
 #  define DONE_MSVC_INVAL \
-         }                                                                     \
-     }
+           }                                                                   \
+       }                                                                       \
+     while (0)
 
 # endif
 
@@ -148,9 +152,15 @@ extern void cdecl gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 
 /* The braces here avoid GCC warnings like
    "warning: suggest explicit braces to avoid ambiguous `else'".  */
-# define TRY_MSVC_INVAL { if (1)
-# define CATCH_MSVC_INVAL else
-# define DONE_MSVC_INVAL }
+# define TRY_MSVC_INVAL \
+    do                                                                         \
+      {                                                                        \
+        if (1)
+# define CATCH_MSVC_INVAL \
+        else
+# define DONE_MSVC_INVAL \
+      }                                                                        \
+    while (0)
 
 #endif
 
