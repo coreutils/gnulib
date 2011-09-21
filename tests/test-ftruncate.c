@@ -49,7 +49,9 @@ main (int argc, char *argv[])
     ASSERT (fd >= 0);
     errno = 0;
     ASSERT (ftruncate (fd, 0) == -1);
-    ASSERT (errno == EBADF || errno == EINVAL);
+    ASSERT (errno == EBADF || errno == EINVAL
+            || errno == EACCES /* seen on mingw */
+           );
     close (fd);
   }
 
