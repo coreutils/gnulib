@@ -4,6 +4,8 @@ tests/macros.h
 
 Depends-on:
 dup2
+opendir
+closedir
 
 configure.ac:
 

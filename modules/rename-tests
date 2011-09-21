@@ -11,6 +11,9 @@ link
 stdbool
 symlink
 sys_stat
+opendir
+readdir
+closedir
 
 configure.ac:
 

@@ -5,6 +5,8 @@ tests/macros.h
 
 Depends-on:
 open
+opendir
+closedir
 progname
 
 configure.ac:

@@ -1,5 +1,15 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	Add dependencies to new dirent related modules.
+	* modules/opendir (Depends-on): Add closedir.
+	* modules/getcwd (Depends-on): Add opendir, closedir.
+	* modules/dirent-safer-tests (Depends-on): Likewise.
+	* modules/fdopendir-tests (Depends-on): Likewise.
+	* modules/rename-tests (Depends-on): Add opendir, readdir, closedir.
+	* modules/renameat-tests (Depends-on): Likewise.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	opendir: Avoid compilation error on mingw.
 	* lib/opendir.c: Include <stddef.h> always. Include <unistd.h> as well.
 	* modules/opendir (Depends-on): Add unistd.

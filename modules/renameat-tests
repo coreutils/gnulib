@@ -8,6 +8,9 @@ Depends-on:
 ignore-value
 filenamecat
 getcwd-lgpl
+opendir
+readdir
+closedir
 
 configure.ac:
 
