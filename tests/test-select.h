@@ -261,16 +261,18 @@ do_select_bad_fd_nowait (int fd, int ev, select_fn my_select)
 static void
 test_bad_fd (select_fn my_select)
 {
+  /* This tests fails on OSF/1 and native Windows, even with fd = 16.  */
+#if !(defined __osf__ || defined WIN32_NATIVE)
   int fd;
 
-  /* On Linux, MacOS X, *BSD, and OSF/1, values of fd like 99 or 399 are
-     discarded by the kernel early and therefore do *not* lead to EBADF,
-     as required by POSIX.  */
-#if defined __linux__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __OpenBSD__ || defined __NetBSD__ || defined __osf__
+  /* On Linux, MacOS X, *BSD, values of fd like 99 or 399 are discarded
+     by the kernel early and therefore do *not* lead to EBADF, as required
+     by POSIX.  */
+# if defined __linux__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD__ || defined __OpenBSD__ || defined __NetBSD__
   fd = 16;
-#else
+# else
   fd = 99;
-#endif
+# endif
 
   if (do_select_bad_fd_nowait (fd, SEL_IN, my_select) == 0 || errno != EBADF)
     failed ("invalid fd among rfds");
@@ -278,6 +280,7 @@ test_bad_fd (select_fn my_select)
     failed ("invalid fd among wfds");
   if (do_select_bad_fd_nowait (fd, SEL_EXC, my_select) == 0 || errno != EBADF)
     failed ("invalid fd among xfds");
+#endif
 }
 
 

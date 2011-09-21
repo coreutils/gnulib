@@ -1,5 +1,11 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	select tests: Avoid test failures on OSF/1 5.1 and mingw.
+	* tests/test-select.h (test_bad_fd): Disable all tests on OSF/1 and
+	native Windows.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	New module 'fdopen'.
 	* lib/stdio.in.h (fdopen): New declaration.
 	* lib/fdopen.c: New file.
