@@ -20,6 +20,7 @@
 #include <dirent.h>
 
 #include <errno.h>
+#include <stddef.h>
 
 #if HAVE_OPENDIR
 
@@ -28,12 +29,15 @@
 
 #else
 
-# include <stddef.h>
 # include <stdlib.h>
 
 # include "dirent-private.h"
 # include "filename.h"
 
+#endif
+
+#if REPLACE_FCHDIR
+# include <unistd.h>
 #endif
 
 DIR *

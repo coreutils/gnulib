@@ -10,6 +10,7 @@ Depends-on:
 dirent
 largefile
 filename        [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
+unistd          [test $HAVE_OPENDIR = 0 || test $REPLACE_OPENDIR = 1]
 
 configure.ac:
 gl_FUNC_OPENDIR

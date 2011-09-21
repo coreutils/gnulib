@@ -1,5 +1,11 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	opendir: Avoid compilation error on mingw.
+	* lib/opendir.c: Include <stddef.h> always. Include <unistd.h> as well.
+	* modules/opendir (Depends-on): Add unistd.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	ftruncate tests: Avoid a test failure on mingw.
 	* tests/test-ftruncate.c (main): Allow a failure with EACCES.
 
