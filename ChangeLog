@@ -1,5 +1,20 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fdopen'.
+	* lib/stdio.in.h (fdopen): New declaration.
+	* lib/fdopen.c: New file.
+	* m4/fdopen.m4: New file.
+	* m4/stdio_h.m4 (gl_STDIO_H_DEFAULTS): Initialize GNULIB_FDOPEN,
+	REPLACE_FDOPEN.
+	* modules/stdio (Makefile.am): Substitute GNULIB_FDOPEN,
+	REPLACE_FDOPEN.
+	* modules/fdopen: New file.
+	* modules/stdio-tests (Depends-on): Remove fdopen-tests.
+	* tests/test-stdio-c++.cc: Check signature of fdopen.
+	* doc/posix-functions/fdopen.texi: Mention the new module.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	unlockpt tests: Avoid test failure on NetBSD 5.1.
 	* tests/test-unlockpt.c (main): Skip the EBADF tests on NetBSD.
 	* doc/posix-functions/unlockpt.texi: Mention the bug on NetBSD.

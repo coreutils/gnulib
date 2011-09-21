@@ -32,6 +32,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::dprintf, int, (int, const char *, ...));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fclose, int, (FILE *));
 #endif
 
+#if GNULIB_TEST_FDOPEN
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fdopen, FILE *, (int, const char *));
+#endif
+
 #if GNULIB_TEST_FFLUSH
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fflush, int, (FILE *));
 #endif

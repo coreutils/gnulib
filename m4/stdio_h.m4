@@ -1,4 +1,4 @@
-# stdio_h.m4 serial 39
+# stdio_h.m4 serial 40
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -91,6 +91,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
 [
   GNULIB_DPRINTF=0;              AC_SUBST([GNULIB_DPRINTF])
   GNULIB_FCLOSE=0;               AC_SUBST([GNULIB_FCLOSE])
+  GNULIB_FDOPEN=0;               AC_SUBST([GNULIB_FDOPEN])
   GNULIB_FFLUSH=0;               AC_SUBST([GNULIB_FFLUSH])
   GNULIB_FGETC=0;                AC_SUBST([GNULIB_FGETC])
   GNULIB_FGETS=0;                AC_SUBST([GNULIB_FGETS])
@@ -161,6 +162,7 @@ AC_DEFUN([gl_STDIO_H_DEFAULTS],
   HAVE_VDPRINTF=1;               AC_SUBST([HAVE_VDPRINTF])
   REPLACE_DPRINTF=0;             AC_SUBST([REPLACE_DPRINTF])
   REPLACE_FCLOSE=0;              AC_SUBST([REPLACE_FCLOSE])
+  REPLACE_FDOPEN=0;              AC_SUBST([REPLACE_FDOPEN])
   REPLACE_FFLUSH=0;              AC_SUBST([REPLACE_FFLUSH])
   REPLACE_FOPEN=0;               AC_SUBST([REPLACE_FOPEN])
   REPLACE_FPRINTF=0;             AC_SUBST([REPLACE_FPRINTF])
