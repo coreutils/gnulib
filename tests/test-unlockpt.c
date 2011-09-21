@@ -29,6 +29,7 @@ int
 main (void)
 {
   /* Test behaviour for invalid file descriptors.  */
+#if !defined __NetBSD__ /* known bug on NetBSD 5.1 */
   {
     errno = 0;
     ASSERT (unlockpt (-1) == -1);
@@ -43,6 +44,7 @@ main (void)
             || errno == EINVAL /* seen on FreeBSD 6.4 */
            );
   }
+#endif
 
   return 0;
 }

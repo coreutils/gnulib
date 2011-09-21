@@ -1,5 +1,11 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	unlockpt tests: Avoid test failure on NetBSD 5.1.
+	* tests/test-unlockpt.c (main): Skip the EBADF tests on NetBSD.
+	* doc/posix-functions/unlockpt.texi: Mention the bug on NetBSD.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	getlogin, getlogin_r tests: Avoid test failure on Linux/SPARC.
 	* tests/test-getlogin.c (main): Allow a failure with EINVAL.
 	* tests/test-getlogin_r.c (main): Likewise.
