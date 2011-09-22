@@ -1,5 +1,11 @@
 2011-09-22  Bruno Haible  <bruno@clisp.org>
 
+	strerror_r-posix: Avoid a link error on MSVC.
+	* m4/strerror_r.m4 (gl_PREREQ_STRERROR_R): Check for snprintf.
+	* lib/strerror_r.c (snprintf): Define to _snprintf if it doesn't exist.
+
+2011-09-22  Bruno Haible  <bruno@clisp.org>
+
 	select: Avoid link errors on MSVC.
 	* m4/select.m4 (gl_FUNC_SELECT): Determine LIB_SELECT.
 	* modules/select (Link): Replace $(LIBSOCKET) with $(LIB_SELECT).

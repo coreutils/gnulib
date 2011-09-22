@@ -86,6 +86,12 @@ gl_lock_define_initialized(static, strerror_lock)
 
 #endif
 
+/* On MSVC, there is no snprintf() function, just a _snprintf().
+   It is of lower quality, but sufficient for the simple use here.  */
+#if !HAVE_SNPRINTF
+# define snprintf _snprintf
+#endif
+
 /* Copy as much of MSG into BUF as possible, without corrupting errno.
    Return 0 if MSG fit in BUFLEN, otherwise return ERANGE.  */
 static int
