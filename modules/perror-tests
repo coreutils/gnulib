@@ -8,6 +8,7 @@ tests/test-perror.sh
 
 Depends-on:
 dup2
+ftruncate
 strerror
 
 configure.ac:
