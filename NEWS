@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-09-22  select          The link requirements of this module are changed
+                            from $(LIBSOCKET) to $(LIB_SELECT).
+
 2011-09-12  fchdir          This module no longer overrides the functions
                             opendir() and closedir(), unless the modules
                             'opendir' and 'closedir' are in use, respectively.

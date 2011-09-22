@@ -36,6 +36,6 @@ Makefile.am:
 TESTS += test-select test-select-in.sh test-select-out.sh
 # test-select-stdin has to be run by hand.
 check_PROGRAMS += test-select test-select-fd test-select-stdin
-test_select_LDADD = $(LDADD) @LIBSOCKET@ $(INET_PTON_LIB)
-test_select_fd_LDADD = $(LDADD) @LIBSOCKET@
-test_select_stdin_LDADD = $(LDADD) @LIBSOCKET@
+test_select_LDADD = $(LDADD) @LIB_SELECT@ @LIBSOCKET@ $(INET_PTON_LIB)
+test_select_fd_LDADD = $(LDADD) @LIB_SELECT@
+test_select_stdin_LDADD = $(LDADD) @LIB_SELECT@

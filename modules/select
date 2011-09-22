@@ -23,7 +23,7 @@ Include:
 <sys/select.h>
 
 Link:
-$(LIBSOCKET)
+$(LIB_SELECT)
 
 License:
 LGPLv2+

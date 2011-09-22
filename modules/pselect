@@ -23,7 +23,7 @@ Include:
 <sys/select.h>
 
 Link:
-$(LIBSOCKET) $(LIB_PTHREAD_SIGMASK)
+$(LIB_SELECT) $(LIB_PTHREAD_SIGMASK)
 
 License:
 LGPLv2+
