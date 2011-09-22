@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -18,6 +18,7 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
   AC_CHECK_DECLS_ONCE([getcwd])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS_ONCE([unistd.h])
+  AC_REQUIRE([gl_PATHMAX_SNIPPET_PREREQ])
   AC_CACHE_CHECK([whether getcwd handles long file names properly],
     gl_cv_func_getcwd_path_max,
     [# Arrange for deletion of the temporary directory this test creates.
@@ -38,6 +39,8 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
+
+]gl_PATHMAX_SNIPPET[
 
 #ifndef AT_FDCWD
 # define AT_FDCWD 0

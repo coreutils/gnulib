@@ -1,5 +1,17 @@
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
+	Consolidate all uses of PATH_MAX in *.m4 files.
+	* m4/pathmax.m4 (gl_PATHMAX_SNIPPET, gl_PATHMAX_SNIPPET_PREREQ): New
+	macros.
+	* m4/chdir-long.m4 (gl_FUNC_CHDIR_LONG): Use gl_PATHMAX_SNIPPET_PREREQ
+	and gl_PATHMAX_SNIPPET.
+	* m4/getcwd-abort-bug.m4 (gl_FUNC_GETCWD_ABORT_BUG): Likewise.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Likewise.
+	* modules/chdir-long (Files): Add m4/pathmax.m4.
+	* modules/getcwd (Files): Likewise.
+
+2011-09-21  Bruno Haible  <bruno@clisp.org>
+
 	ftruncate: Un-deprecate, concentrate on Win32 support.
 	* modules/ftruncate (Status, Notice): Remove sections.
 	(Depends-on): Add largefile.
