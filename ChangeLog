@@ -1,3 +1,8 @@
+2011-09-22  Bruno Haible  <bruno@clisp.org>
+
+	select: Avoid compilation error on MSVC.
+	* lib/select.c: Don't include <stdbool.h>.
+
 2011-09-21  Bruno Haible  <bruno@clisp.org>
 
 	Consolidate all uses of PATH_MAX in *.m4 files.
