@@ -22,8 +22,11 @@
 /* Get O_RDWR and O_BINARY.  */
 #include <fcntl.h>
 
-/* Get _get_osfhandle() and _open_osfhandle().  */
+/* Get _open_osfhandle().  */
 #include <io.h>
+
+/* Get _get_osfhandle().  */
+#include "msvc-nothrow.h"
 
 #define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
 #define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))

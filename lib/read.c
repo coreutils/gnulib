@@ -31,6 +31,8 @@
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
 
+#  include "msvc-nothrow.h"
+
 ssize_t
 rpl_read (int fd, void *buf, size_t count)
 #undef read

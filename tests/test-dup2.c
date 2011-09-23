@@ -36,6 +36,8 @@ SIGNATURE_CHECK (dup2, int, (int, int));
 /* Get declarations of the Win32 API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #endif
 
 #include "macros.h"

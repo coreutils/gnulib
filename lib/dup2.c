@@ -29,6 +29,8 @@
 /* Get declarations of the Win32 API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #endif
 
 #include "msvc-inval.h"
@@ -70,19 +72,7 @@ rpl_dup2 (int fd, int desired_fd)
      future dup2 calls will hang.  */
   if (fd == desired_fd)
     {
-      HANDLE handle;
-
-      TRY_MSVC_INVAL
-        {
-          handle = (HANDLE) _get_osfhandle (fd);
-        }
-      CATCH_MSVC_INVAL
-        {
-          handle = INVALID_HANDLE_VALUE;
-        }
-      DONE_MSVC_INVAL;
-
-      if (handle == INVALID_HANDLE_VALUE)
+      if ((HANDLE) _get_osfhandle (fd) == INVALID_HANDLE_VALUE)
         {
           errno = EBADF;
           return -1;

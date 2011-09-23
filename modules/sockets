@@ -11,6 +11,7 @@ Depends-on:
 socketlib
 sys_socket
 fd-hook
+msvc-nothrow
 
 configure.ac:
 gl_SOCKETS

@@ -27,14 +27,14 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* _get_osfhandle */
-# include <io.h>
-
 /* FlushFileBuffers */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 
 # include <errno.h>
+
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 
 int
 fsync (int fd)

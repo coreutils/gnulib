@@ -37,6 +37,9 @@
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
+
 /* Upper bound on getdtablesize().  See lib/getdtablesize.c.  */
 # define OPEN_MAX_MAX 0x10000
 

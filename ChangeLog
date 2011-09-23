@@ -1,5 +1,80 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'msvc-nothrow'. Makes _get_osfhandle safe on MSVC 9.
+	* lib/msvc-nothrow.h: New file.
+	* lib/msvc-nothrow.c: New file.
+	* m4/msvc-nothrow.m4: New file.
+	* modules/msvc-nothrow: New file.
+	* lib/dup2.c: Include msvc-nothrow.h.
+	(rpl_dup2): No need to protect _get_osfhandle call here.
+	* lib/accept4.c: Include msvc-nothrow.h.
+	* lib/error.c: Likewise.
+	* lib/fcntl.c: Likewise.
+	* lib/lseek.c: Likewise.
+	* lib/nonblocking.c: Likewise.
+	* lib/poll.c: Likewise.
+	* lib/read.c: Likewise.
+	* lib/select.c: Likewise.
+	* lib/sockets.h: Likewise.
+	* lib/sockets.c: Likewise.
+	* lib/stdio-read.c: Likewise.
+	* lib/stdio-write.c: Likewise.
+	* lib/write.c: Likewise.
+	* lib/w32sock.h: Likewise.
+	* lib/w32spawn.h: Likewise.
+	* lib/flock.c: Include msvc-nothrow.h instead of <io.h>.
+	* lib/fsync.c: Likewise.
+	* lib/isapipe.c: Likewise.
+	* modules/dup2 (Depends-on): Add msvc-nothrow.
+	* modules/accept4 (Depends-on): Likewise.
+	* modules/error (Depends-on): Likewise.
+	* modules/fcntl (Depends-on): Likewise.
+	* modules/lseek (Depends-on): Likewise.
+	* modules/nonblocking (Depends-on): Likewise.
+	* modules/poll (Depends-on): Likewise.
+	* modules/read (Depends-on): Likewise.
+	* modules/select (Depends-on): Likewise.
+	* modules/sockets (Depends-on): Likewise.
+	* modules/sigpipe (Depends-on): Likewise.
+	* modules/write (Depends-on): Likewise.
+	* modules/accept (Depends-on): Likewise.
+	* modules/bind (Depends-on): Likewise.
+	* modules/connect (Depends-on): Likewise.
+	* modules/gethostname (Depends-on): Likewise.
+	* modules/getpeername (Depends-on): Likewise.
+	* modules/getsockname (Depends-on): Likewise.
+	* modules/getsockopt (Depends-on): Likewise.
+	* modules/ioctl (Depends-on): Likewise.
+	* modules/listen (Depends-on): Likewise.
+	* modules/recv (Depends-on): Likewise.
+	* modules/recvfrom (Depends-on): Likewise.
+	* modules/send (Depends-on): Likewise.
+	* modules/sendto (Depends-on): Likewise.
+	* modules/setsockopt (Depends-on): Likewise.
+	* modules/shutdown (Depends-on): Likewise.
+	* modules/socket (Depends-on): Likewise.
+	* modules/execute (Depends-on): Likewise.
+	* modules/spawn-pipe (Depends-on): Likewise.
+	* modules/flock (Depends-on): Likewise.
+	* modules/fsync (Depends-on): Likewise.
+	* modules/isapipe (Depends-on): Likewise.
+	* tests/test-cloexec.c: Include msvc-nothrow.h.
+	* tests/test-dup-safer.c: Likewise.
+	* tests/test-dup2.c: Likewise.
+	* tests/test-dup3.c: Likewise.
+	* tests/test-fcntl.c: Likewise.
+	* tests/test-pipe.c: Likewise.
+	* tests/test-pipe2.c: Likewise.
+	* modules/cloexec-tests (Depends-on): Add msvc-nothrow.
+	* modules/unistd-safer-tests (Depends-on): Likewise.
+	* modules/dup2-tests (Depends-on): Likewise.
+	* modules/dup3-tests (Depends-on): Likewise.
+	* modules/fcntl-tests (Depends-on): Likewise.
+	* modules/pipe-posix-tests (Depends-on): Likewise.
+	* modules/pipe2-tests (Depends-on): Likewise.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	dup2: Make code more maintainable.
 	* lib/dup2.c (dup2_nothrow): New function, extracted from rpl_dup2.
 	(rpl_dup2): Use it.

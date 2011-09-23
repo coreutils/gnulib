@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 binary-io
+msvc-nothrow
 
 configure.ac:
 

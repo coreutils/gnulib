@@ -12,6 +12,7 @@ lib/stdio-write.c
 m4/asm-underscore.m4
 
 Depends-on:
+msvc-nothrow
 raise
 signal
 sigprocmask

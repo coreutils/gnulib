@@ -43,6 +43,7 @@
 # include <io.h>
 # include <stdio.h>
 # include <conio.h>
+# include "msvc-nothrow.h"
 #else
 # include <sys/time.h>
 # include <sys/socket.h>

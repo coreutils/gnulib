@@ -11,6 +11,7 @@ unistd
 sys_socket      [test $HAVE_GETHOSTNAME = 0]
 errno           [test $HAVE_GETHOSTNAME = 0]
 sockets         [test $HAVE_GETHOSTNAME = 0]
+msvc-nothrow    [test $HAVE_GETHOSTNAME = 0]
 
 configure.ac:
 gl_FUNC_GETHOSTNAME

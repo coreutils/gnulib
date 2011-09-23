@@ -23,6 +23,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "binary-io.h"
+#include "msvc-nothrow.h"
 
 #ifndef SOCK_CLOEXEC
 # define SOCK_CLOEXEC 0

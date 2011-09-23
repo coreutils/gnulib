@@ -37,6 +37,8 @@
 #include <conio.h>
 #include <time.h>
 
+#include "msvc-nothrow.h"
+
 struct bitset {
   unsigned char in[FD_SETSIZE / CHAR_BIT];
   unsigned char out[FD_SETSIZE / CHAR_BIT];

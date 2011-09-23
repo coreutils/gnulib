@@ -6,6 +6,7 @@ Depends-on:
 binary-io
 cloexec
 fd-safer-flag
+msvc-nothrow
 stdbool
 
 configure.ac:

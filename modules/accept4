@@ -12,6 +12,7 @@ accept
 fcntl-h
 binary-io
 extensions
+msvc-nothrow
 
 configure.ac:
 gl_FUNC_ACCEPT4

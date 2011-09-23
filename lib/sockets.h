@@ -36,6 +36,8 @@ int gl_sockets_cleanup (void);
 
 #include <sys/socket.h>
 
+#include "msvc-nothrow.h"
+
 static inline SOCKET
 gl_fd_to_handle (int fd)
 {

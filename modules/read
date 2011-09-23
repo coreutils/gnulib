@@ -7,6 +7,7 @@ m4/read.m4
 
 Depends-on:
 unistd
+msvc-nothrow    [test $REPLACE_READ = 1]
 
 configure.ac:
 gl_FUNC_READ

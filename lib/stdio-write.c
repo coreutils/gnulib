@@ -39,6 +39,8 @@
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
 
+#  include "msvc-nothrow.h"
+
 #  if GNULIB_NONBLOCKING
 #   define CLEAR_ERRNO \
       errno = 0;

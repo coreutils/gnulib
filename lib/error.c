@@ -92,6 +92,8 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 /* Get declarations of the Win32 API functions.  */
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
+/* Get _get_osfhandle.  */
+#  include "msvc-nothrow.h"
 # endif
 
 /* The gnulib override of fcntl is not needed in this file.  */

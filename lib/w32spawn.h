@@ -19,13 +19,16 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-/* Get _get_osfhandle() and _open_osfhandle().  */
+/* Get _open_osfhandle().  */
 #include <io.h>
 
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+
+/* Get _get_osfhandle().  */
+#include "msvc-nothrow.h"
 
 #include "cloexec.h"
 #include "xalloc.h"

@@ -11,6 +11,7 @@ sys_ioctl
 sys_socket      [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 errno           [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 fd-hook         [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
+msvc-nothrow    [test $HAVE_IOCTL = 0 || test $REPLACE_IOCTL = 1]
 
 configure.ac:
 gl_FUNC_IOCTL

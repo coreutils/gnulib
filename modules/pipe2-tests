@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 stdbool
+msvc-nothrow
 
 configure.ac:
 

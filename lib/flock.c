@@ -26,14 +26,14 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* _get_osfhandle */
-# include <io.h>
-
 /* LockFileEx */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 
 # include <errno.h>
+
+/* _get_osfhandle */
+# include "msvc-nothrow.h"
 
 /* Determine the current size of a file.  Because the other braindead
  * APIs we'll call need lower/upper 32 bit pairs, keep the file size

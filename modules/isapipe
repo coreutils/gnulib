@@ -10,6 +10,7 @@ Depends-on:
 stdbool         [test $HAVE_ISAPIPE = 0]
 sys_stat        [test $HAVE_ISAPIPE = 0]
 unistd          [test $HAVE_ISAPIPE = 0]
+msvc-nothrow    [test $HAVE_ISAPIPE = 0]
 
 configure.ac:
 gl_ISAPIPE

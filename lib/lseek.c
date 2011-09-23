@@ -24,6 +24,8 @@
 /* Windows platforms.  */
 /* Get GetFileType.  */
 # include <windows.h>
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 #else
 # include <sys/stat.h>
 #endif

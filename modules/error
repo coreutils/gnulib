@@ -14,6 +14,7 @@ m4/error.m4
 Depends-on:
 strerror        [test $ac_cv_lib_error_at_line = no]
 unistd          [test $ac_cv_lib_error_at_line = no]
+msvc-nothrow    [test $ac_cv_lib_error_at_line = no]
 
 configure.ac:
 gl_ERROR

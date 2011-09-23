@@ -12,6 +12,7 @@ m4/asm-underscore.m4
 Depends-on:
 fcntl-h
 ioctl
+msvc-nothrow
 stdbool
 stdio
 sys_socket
