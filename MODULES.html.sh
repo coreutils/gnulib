@@ -2451,7 +2451,7 @@ func_all_modules ()
   func_module servent
   func_module setsockopt
   func_module shutdown
-  func_module signal
+  func_module signal-h
   func_module sleep
   func_module snprintf-posix
   func_module socket

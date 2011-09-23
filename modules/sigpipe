@@ -14,7 +14,7 @@ m4/asm-underscore.m4
 Depends-on:
 msvc-nothrow
 raise
-signal
+signal-h
 sigprocmask
 stdio
 unistd

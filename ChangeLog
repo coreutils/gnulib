@@ -1,5 +1,27 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	signal-h: Rename from signal.
+	* modules/signal-h: Renamed from modules/signal.
+	* modules/pthread_sigmask (Depends-on): Update.
+	* modules/raise (Depends-on): Likewise.
+	* modules/sigaction (Depends-on): Likewise.
+	* modules/sigpipe (Depends-on): Likewise.
+	* modules/sigprocmask (Depends-on): Likewise.
+	* modules/sys_select (Depends-on): Likewise.
+	* modules/signal-h-tests: Renamed from modules/signal-tests.
+	(Files, Depends-on, Makefile.am): Update.
+	* tests/test-signal-h.c: Renamed from tests/test-signal.c.
+	* modules/signal-h-c++-tests: Renamed from modules/signal-c++-tests.
+	(Files, Makefile.am): Update.
+	* tests/test-signal-h-c++.cc: Renamed from tests/test-signal-c++.cc.
+	* tests/test-signal-h-c++2.cc: Renamed from tests/test-signal-c++2.cc.
+	* modules/signal: New placeholder file.
+	* MODULES.html.sh (Support for systems lacking POSIX:2008): Update.
+	* doc/posix-headers/signal.texi: Update.
+	* NEWS: Mention the change.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	sigprocmask: Avoid crashes through signal() on MSVC 9.
 	* lib/sigprocmask.c: Include msvc-inval.h.
 	(signal_nothrow): New function.

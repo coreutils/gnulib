@@ -6,7 +6,7 @@ lib/pthread_sigmask.c
 m4/pthread_sigmask.m4
 
 Depends-on:
-signal
+signal-h
 threadlib
 sigprocmask     [test $HAVE_PTHREAD_SIGMASK = 0 || test $REPLACE_PTHREAD_SIGMASK = 1]
 

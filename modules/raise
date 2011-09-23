@@ -6,7 +6,7 @@ lib/raise.c
 m4/raise.m4
 
 Depends-on:
-signal
+signal-h
 msvc-inval      [test $HAVE_RAISE = 0 || test $REPLACE_RAISE = 1]
 
 configure.ac:

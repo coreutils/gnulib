@@ -8,7 +8,7 @@ m4/sys_socket_h.m4
 
 Depends-on:
 include_next
-signal
+signal-h
 snippet/c++defs
 snippet/warn-on-use
 sys_time

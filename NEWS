@@ -12,6 +12,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-09-23  signal          This module is renamed to 'signal-h'.
+
 2011-09-22  select          The link requirements of this module are changed
                             from $(LIBSOCKET) to $(LIB_SELECT).
 
