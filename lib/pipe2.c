@@ -95,7 +95,9 @@ pipe2 (int fd[2], int flags)
         goto fail;
     }
 # else
-  verify (O_NONBLOCK == 0);
+  {
+    verify (O_NONBLOCK == 0);
+  }
 # endif
 
   return 0;
