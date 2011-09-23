@@ -73,7 +73,7 @@ AC_DEFUN([gl_FUNC_DUP2],
 ])
 
 # Prerequisites of lib/dup2.c.
-AC_DEFUN([gl_PREREQ_DUP2].
+AC_DEFUN([gl_PREREQ_DUP2],
 [
   AC_REQUIRE([AC_C_INLINE])
 ])
