@@ -1,5 +1,15 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	sigprocmask: Avoid crashes through signal() on MSVC 9.
+	* lib/sigprocmask.c: Include msvc-inval.h.
+	(signal_nothrow): New function.
+	(signal): Redefine it.
+	* m4/signalblocking.m4 (gl_PREREQ_SIGPROCMASK): Require AC_C_INLINE.
+	* modules/sigprocmask (Depends-on): Add msvc-inval.
+	* doc/posix-functions/signal.texi: Mention the problem on MSVC.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'raise'.
 	* modules/raise-tests: New file.
 	* tests/test-raise.c: New file.

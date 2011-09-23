@@ -9,6 +9,7 @@ Depends-on:
 signal
 stdint          [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 raise           [test $HAVE_POSIX_SIGNALBLOCKING = 0]
+msvc-inval      [test $HAVE_POSIX_SIGNALBLOCKING = 0]
 
 configure.ac:
 gl_SIGNALBLOCKING
