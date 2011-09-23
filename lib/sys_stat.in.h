@@ -55,10 +55,11 @@
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
 /* Before doing "#define mkdir rpl_mkdir" below, we need to include all
-   headers that may declare mkdir().  */
+   headers that may declare mkdir().  Native Windows platforms declare mkdir
+   in <io.h> and/or <direct.h>, not in <unistd.h>.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # include <io.h>     /* mingw32, mingw64 */
-# include <direct.h> /* mingw64 */
+# include <direct.h> /* mingw64, MSVC 9 */
 #endif
 
 #ifndef S_IFIFO
