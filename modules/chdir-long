@@ -10,6 +10,7 @@ m4/pathmax.m4
 Depends-on:
 unistd
 pathmax
+chdir
 atexit          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
 fchdir          [test $gl_cv_have_arbitrary_file_name_length_limit = yes]
 fcntl-h         [test $gl_cv_have_arbitrary_file_name_length_limit = yes]

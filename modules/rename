@@ -8,6 +8,7 @@ m4/rename.m4
 Depends-on:
 stdio
 canonicalize-lgpl [test $REPLACE_RENAME = 1]
+chdir             [test $REPLACE_RENAME = 1]
 dirname-lgpl      [test $REPLACE_RENAME = 1]
 lstat             [test $REPLACE_RENAME = 1]
 rmdir             [test $REPLACE_RENAME = 1]

@@ -83,9 +83,10 @@
 # include <stdlib.h>
 #endif
 
-/* Native Windows platforms declare getcwd, rmdir in
+/* Native Windows platforms declare chdir, getcwd, rmdir in
    <io.h> and/or <direct.h>, not in <unistd.h>.  */
-#if ((@GNULIB_GETCWD@ || @GNULIB_RMDIR@ || defined GNULIB_POSIXCHECK) \
+#if ((@GNULIB_CHDIR@ || @GNULIB_GETCWD@ || @GNULIB_RMDIR@ \
+      || defined GNULIB_POSIXCHECK) \
      && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
 # include <io.h>     /* mingw32, mingw64 */
 # include <direct.h> /* mingw64, MSVC 9 */
@@ -229,6 +230,18 @@
 /* The access() function is a security risk.  */
 _GL_WARN_ON_USE (access, "the access function is a security risk - "
                  "use the gnulib module faccessat instead");
+#endif
+
+
+#if @GNULIB_CHDIR@
+_GL_CXXALIAS_SYS (chdir, int, (const char *file) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIASWARN (chdir);
+#elif defined GNULIB_POSIXCHECK
+# undef chdir
+# if HAVE_RAW_DECL_CHDIR
+_GL_WARN_ON_USE (chown, "chdir is not always in <unistd.h> - "
+                 "use gnulib module chdir for portability");
+# endif
 #endif
 
 

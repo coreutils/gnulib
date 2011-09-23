@@ -1,5 +1,19 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'chdir'.
+	* modules/chdir: New file.
+	* lib/unistd.in.h: Include <io.h>, <direct.h> also for chdir.
+	(chdir): New declaration.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Test whether chdir is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_CHDIR.
+	* modules/unistd (Makefile.am): Substitute GNULIB_CHDIR.
+	* tests/test-unistd-c++.cc: Check signature of chdir.
+	* doc/posix-functions/chdir.texi: Mention problem on native Windows.
+	* modules/chdir-long (Depends-on): Add chdir.
+	* modules/fchdir (Depends-on): Likewise.
+	* modules/rename (Depends-on): Likewise.
+	* modules/savewd (Depends-on): Likewise.
+
 	rmdir: Support for mingw, MSVC 9.
 	* lib/unistd.in.h: Include <io.h> and <direct.h> also for rmdir.
 	* doc/posix-functions/getcwd.texi: Mention problem on native Windows.
