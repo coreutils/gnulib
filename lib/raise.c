@@ -15,16 +15,59 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* written by Jim Meyering */
+/* written by Jim Meyering and Bruno Haible */
 
 #include <config.h>
 
-#include <sys/types.h>
+/* Specification.  */
 #include <signal.h>
-#include <unistd.h>
+
+#if HAVE_RAISE
+/* Native Windows platform.  */
+
+# include <errno.h>
+
+# include "msvc-inval.h"
+
+# undef raise
+
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static inline int
+raise_nothrow (int sig)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = raise (sig);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EINVAL;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+#  define raise raise_nothrow
+# endif
+
+int
+rpl_raise (int sig)
+{
+  return raise_nothrow (sig);
+}
+
+#else
+/* An old Unix platform.  */
+
+# include <unistd.h>
 
 int
 raise (int sig)
 {
   return kill (getpid (), sig);
 }
+
+#endif

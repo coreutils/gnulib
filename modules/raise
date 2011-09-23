@@ -1,19 +1,21 @@
 Description:
 Send a signal to the executing process.
 
-Status:
-obsolete
-
-Notice:
-This module is obsolete.
-
 Files:
 lib/raise.c
+m4/raise.m4
 
 Depends-on:
+signal
+msvc-inval      [test $HAVE_RAISE = 0 || test $REPLACE_RAISE = 1]
 
 configure.ac:
-AC_REPLACE_FUNCS(raise)
+gl_FUNC_RAISE
+if test $HAVE_RAISE = 0 || test $REPLACE_RAISE = 1; then
+  AC_LIBOBJ([raise])
+  gl_PREREQ_RAISE
+fi
+gl_SIGNAL_MODULE_INDICATOR([raise])
 
 Makefile.am:
 
@@ -24,5 +26,5 @@ License:
 LGPLv2+
 
 Maintainer:
-Jim Meyering
+Jim Meyering, Bruno Haible
 
