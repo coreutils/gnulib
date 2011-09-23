@@ -7,11 +7,13 @@ m4/getdtablesize.m4
 
 Depends-on:
 unistd
+msvc-inval      [test $HAVE_GETDTABLESIZE = 0]
 
 configure.ac:
 gl_FUNC_GETDTABLESIZE
 if test $HAVE_GETDTABLESIZE = 0; then
   AC_LIBOBJ([getdtablesize])
+  gl_PREREQ_GETDTABLESIZE
 fi
 gl_UNISTD_MODULE_INDICATOR([getdtablesize])
 

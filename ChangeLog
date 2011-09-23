@@ -1,5 +1,15 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	getdtablesize: Support for MSVC 9.
+	* lib/getdtablesize.c: Include msvc-inval.h.
+	(_setmaxstdio_nothrow): New function.
+	(_setmaxstdio): Redefine it.
+	* m4/getdtablesize.m4 (gl_PREREQ_GETDTABLESIZE): New macro.
+	* modules/getdtablesize (Depends-on): Add msvc-inval.
+	(configure.ac): Invoke gl_PREREQ_GETDTABLESIZE.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	signal-h: Rename from signal.
 	* modules/signal-h: Renamed from modules/signal.
 	* modules/pthread_sigmask (Depends-on): Update.
