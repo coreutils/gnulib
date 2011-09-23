@@ -1,5 +1,9 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	rmdir: Support for mingw, MSVC 9.
+	* lib/unistd.in.h: Include <io.h> and <direct.h> also for rmdir.
+	* doc/posix-functions/getcwd.texi: Mention problem on native Windows.
+
 	getcwd: Tweak for MSVC 9.
 	* lib/unistd.in.h: Update comments.
 	* doc/posix-functions/getcwd.texi: Mention problem on MSVC 9.

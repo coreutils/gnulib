@@ -83,9 +83,9 @@
 # include <stdlib.h>
 #endif
 
-/* Native Windows platforms declare getcwd in
+/* Native Windows platforms declare getcwd, rmdir in
    <io.h> and/or <direct.h>, not in <unistd.h>.  */
-#if ((@GNULIB_GETCWD@ || defined GNULIB_POSIXCHECK) \
+#if ((@GNULIB_GETCWD@ || @GNULIB_RMDIR@ || defined GNULIB_POSIXCHECK) \
      && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__))
 # include <io.h>     /* mingw32, mingw64 */
 # include <direct.h> /* mingw64, MSVC 9 */
