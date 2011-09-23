@@ -1,5 +1,10 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	msvc-inval: Fix compilation error.
+	* lib/msvc-inval.h: Include <excpt.h>.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	mkdir: Tweak for MSVC 9.
 	* lib/sys_stat.in.h: Update comments.
 	* doc/posix-functions/mkdir.texi: Mention problem on MSVC 9.

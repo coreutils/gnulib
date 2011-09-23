@@ -46,13 +46,15 @@
 
 /* Get _invalid_parameter_handler type and _set_invalid_parameter_handler
    declaration.  */
-#include <stdlib.h>
+# include <stdlib.h>
 
 # if defined _MSC_VER
 /* A compiler that supports __try/__except, as described in the page
    "try-except statement" on microsoft.com
    <http://msdn.microsoft.com/en-us/library/s58ftw19.aspx>.
    With __try/__except, we can use the multithread-safe exception handling.  */
+
+#  include <excpt.h>
 
 /* Gnulib can define its own status codes, as described in the page
    "Raising Software Exceptions" on microsoft.com
