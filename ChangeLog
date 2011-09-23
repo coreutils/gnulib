@@ -1,5 +1,9 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'raise'.
+	* modules/raise-tests: New file.
+	* tests/test-raise.c: New file.
+
 	raise: Support for MSVC.
 	* lib/signal.in.h (raise): New declaration.
 	* lib/raise.c (raise_nothrow, rpl_raise): New alternate implementation
