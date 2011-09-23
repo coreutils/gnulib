@@ -37,6 +37,29 @@
 
 # undef dup2
 
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static inline int
+dup2_nothrow (int fd, int desired_fd)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = dup2 (fd, desired_fd);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+# else
+#  define dup2_nothrow dup2
+# endif
+
 int
 rpl_dup2 (int fd, int desired_fd)
 {
@@ -79,16 +102,7 @@ rpl_dup2 (int fd, int desired_fd)
     return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
 # endif
 
-  TRY_MSVC_INVAL
-    {
-      result = dup2 (fd, desired_fd);
-    }
-  CATCH_MSVC_INVAL
-    {
-      result = -1;
-      errno = EBADF;
-    }
-  DONE_MSVC_INVAL;
+  result = dup2_nothrow (fd, desired_fd);
 
 # ifdef __linux__
   /* Correct a Linux return value.
