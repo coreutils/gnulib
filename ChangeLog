@@ -1,3 +1,9 @@
+2011-09-24  Bruno Haible  <bruno@clisp.org>
+
+	sigprocmask: Make code safer.
+	* lib/sigprocmask.c: Move '#include "msvc-inval.h"' before the code
+	section that changes macro definitions for this compilation unit.
+
 2011-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup2: clarify by coalescing Windows-specific material

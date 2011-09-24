@@ -24,6 +24,10 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
+
 /* We assume that a platform without POSIX signal blocking functions
    also does not have the POSIX sigaction() function, only the
    signal() function.  We also assume signal() has SysV semantics,
@@ -59,8 +63,6 @@
 typedef void (*handler_t) (int);
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-# include "msvc-inval.h"
-
 static inline handler_t
 signal_nothrow (int sig, handler_t handler)
 {
