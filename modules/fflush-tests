@@ -7,6 +7,7 @@ tests/macros.h
 
 Depends-on:
 binary-io
+fdopen
 fseeko
 
 configure.ac:

@@ -7,6 +7,7 @@ m4/fdopen.m4
 
 Depends-on:
 stdio
+msvc-inval      [test $REPLACE_FDOPEN = 1]
 
 configure.ac:
 gl_FUNC_FDOPEN

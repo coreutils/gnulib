@@ -11,6 +11,7 @@ tests/macros.h
 m4/ungetc.m4
 
 Depends-on:
+fdopen
 
 configure.ac:
 gl_FUNC_UNGETC_WORKS

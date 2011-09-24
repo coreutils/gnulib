@@ -2,6 +2,7 @@ Files:
 tests/test-fclose.c
 
 Depends-on:
+fdopen
 
 configure.ac:
 

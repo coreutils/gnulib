@@ -11,6 +11,7 @@ m4/ungetc.m4
 
 Depends-on:
 binary-io
+fdopen
 
 configure.ac:
 gl_FUNC_UNGETC_WORKS

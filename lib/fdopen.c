@@ -21,7 +21,33 @@
 
 #include <errno.h>
 
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
+
 #undef fdopen
+
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static FILE *
+fdopen_nothrow (int fd, const char *mode)
+{
+  FILE *result;
+
+  TRY_MSVC_INVAL
+    {
+      result = fdopen (fd, mode);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = NULL;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+#else
+# define fdopen_nothrow fdopen
+#endif
 
 FILE *
 rpl_fdopen (int fd, const char *mode)
@@ -30,7 +56,7 @@ rpl_fdopen (int fd, const char *mode)
   FILE *fp;
 
   errno = 0;
-  fp = fdopen (fd, mode);
+  fp = fdopen_nothrow (fd, mode);
   if (fp == NULL)
     {
       if (errno == 0)
