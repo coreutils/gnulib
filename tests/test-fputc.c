@@ -43,6 +43,7 @@ main (int argc, char **argv)
     errno = 0;
     ASSERT (fputc ('x', fp) == EOF);
     ASSERT (errno == EBADF);
+    ASSERT (ferror (fp));
     fclose (fp);
   }
 
@@ -56,6 +57,7 @@ main (int argc, char **argv)
         errno = 0;
         ASSERT (fputc ('x', fp) == EOF);
         ASSERT (errno == EBADF);
+        ASSERT (ferror (fp));
         fclose (fp);
       }
   }
@@ -67,6 +69,7 @@ main (int argc, char **argv)
         errno = 0;
         ASSERT (fputc ('x', fp) == EOF);
         ASSERT (errno == EBADF);
+        ASSERT (ferror (fp));
         fclose (fp);
       }
   }

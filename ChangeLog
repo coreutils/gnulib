@@ -1,5 +1,11 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	Enhance fgetc, fputc tests.
+	* tests/test-fgetc.c (main): Also test the stream's error indicator.
+	* tests/test-fputc.c (main): Likewise.
+
+2011-09-24  Bruno Haible  <bruno@clisp.org>
+
 	write: Support for MSVC 9.
 	* lib/unistd.in.h (write): Replace also when GNULIB_UNISTD_H_NONBLOCKING
 	is not 1.
