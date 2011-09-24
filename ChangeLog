@@ -1,5 +1,20 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	write: Support for MSVC 9.
+	* lib/unistd.in.h (write): Replace also when GNULIB_UNISTD_H_NONBLOCKING
+	is not 1.
+	* lib/write.c (write_nothrow): New function.
+	(rpl_write): Define also when GNULIB_NONBLOCKING or GNULIB_SIGPIPE is
+	not 1. Use write_nothrow.
+	* m4/write.m4 (gl_FUNC_WRITE): Replace read if the platform has an
+	invalid parameter handler.
+	(gl_PREREQ_WRITE): New macro.
+	* modules/write (Depends-on): Add msvc-inval.
+	(configure.ac): Invoke gl_PREREQ_WRITE.
+	* doc/posix-functions/write.texi: Mention the problem on MSVC.
+
+2011-09-24  Bruno Haible  <bruno@clisp.org>
+
 	read: Fix last commit.
 	* lib/read.c (read_nothrow): Change return type to 'ssize_t'.
 

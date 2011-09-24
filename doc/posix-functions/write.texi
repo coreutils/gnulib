@@ -9,6 +9,9 @@ Gnulib module: write, nonblocking, sigpipe
 Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
 @itemize
 @item
+This function crashes when invoked with invalid arguments on some platforms:
+MSVC 9.
+@item
 When writing to a non-blocking pipe whose buffer is full, this function fails
 with @code{errno} being set to @code{ENOSPC} instead of @code{EAGAIN} on some
 platforms:

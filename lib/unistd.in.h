@@ -1449,7 +1449,7 @@ _GL_WARN_ON_USE (usleep, "usleep is unportable - "
 /* Write up to COUNT bytes starting at BUF to file descriptor FD.
    See the POSIX:2008 specification
    <http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.  */
-# if @REPLACE_WRITE@ && (@GNULIB_UNISTD_H_NONBLOCKING@ || @GNULIB_UNISTD_H_SIGPIPE@)
+# if @REPLACE_WRITE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef write
 #   define write rpl_write

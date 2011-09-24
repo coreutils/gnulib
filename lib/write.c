@@ -20,37 +20,58 @@
 /* Specification.  */
 #include <unistd.h>
 
-/* Replace this function only if module 'nonblocking' or module 'sigpipe' is
-   requested.  */
-#if GNULIB_NONBLOCKING || GNULIB_SIGPIPE
-
 /* On native Windows platforms, SIGPIPE does not exist.  When write() is
    called on a pipe with no readers, WriteFile() fails with error
    GetLastError() = ERROR_NO_DATA, and write() in consequence fails with
    error EINVAL.  */
 
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-#  include <errno.h>
-#  include <signal.h>
-#  include <io.h>
+# include <errno.h>
+# include <signal.h>
+# include <io.h>
 
-#  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
-#  include <windows.h>
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
 
-#  include "msvc-nothrow.h"
+# include "msvc-inval.h"
+# include "msvc-nothrow.h"
+
+# undef write
+
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static inline ssize_t
+write_nothrow (int fd, const void *buf, size_t count)
+{
+  ssize_t result;
+
+  TRY_MSVC_INVAL
+    {
+      result = write (fd, buf, count);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+# else
+#  define write_nothrow write
+# endif
 
 ssize_t
 rpl_write (int fd, const void *buf, size_t count)
-#undef write
 {
   for (;;)
     {
-      ssize_t ret = write (fd, buf, count);
+      ssize_t ret = write_nothrow (fd, buf, count);
 
       if (ret < 0)
         {
-#  if GNULIB_NONBLOCKING
+# if GNULIB_NONBLOCKING
           if (errno == ENOSPC)
             {
               HANDLE h = (HANDLE) _get_osfhandle (fd);
@@ -101,9 +122,9 @@ rpl_write (int fd, const void *buf, size_t count)
                 }
             }
           else
-#  endif
+# endif
             {
-#  if GNULIB_SIGPIPE
+# if GNULIB_SIGPIPE
               if (GetLastError () == ERROR_NO_DATA
                   && GetFileType ((HANDLE) _get_osfhandle (fd))
                      == FILE_TYPE_PIPE)
@@ -114,12 +135,11 @@ rpl_write (int fd, const void *buf, size_t count)
                      EINVAL to EPIPE.  */
                   errno = EPIPE;
                 }
-#  endif
+# endif
             }
         }
       return ret;
     }
 }
 
-# endif
 #endif

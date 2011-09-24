@@ -8,12 +8,14 @@ m4/write.m4
 Depends-on:
 unistd
 raise           [test $REPLACE_WRITE = 1]
+msvc-inval      [test $REPLACE_WRITE = 1]
 msvc-nothrow    [test $REPLACE_WRITE = 1]
 
 configure.ac:
 gl_FUNC_WRITE
 if test $REPLACE_WRITE = 1; then
   AC_LIBOBJ([write])
+  gl_PREREQ_WRITE
 fi
 gl_UNISTD_MODULE_INDICATOR([write])
 
