@@ -25,48 +25,24 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Get declarations of the Win32 API functions.  */
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
-/* Get _get_osfhandle.  */
-# include "msvc-nothrow.h"
-#endif
-
-#include "msvc-inval.h"
-
 #if HAVE_DUP2
 
 # undef dup2
 
-# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# if defined _WIN32 || defined __WIN32__
+#  include "msvc-inval.h"
+#  ifndef __CYGWIN__
+#   define WIN32_LEAN_AND_MEAN
+#   include <windows.h>
+#   include "msvc-nothrow.h"
+#  endif
+
 static inline int
-dup2_nothrow (int fd, int desired_fd)
+ms_windows_dup2 (int fd, int desired_fd)
 {
   int result;
 
-  TRY_MSVC_INVAL
-    {
-      result = dup2 (fd, desired_fd);
-    }
-  CATCH_MSVC_INVAL
-    {
-      result = -1;
-      errno = EBADF;
-    }
-  DONE_MSVC_INVAL;
-
-  return result;
-}
-# else
-#  define dup2_nothrow dup2
-# endif
-
-int
-rpl_dup2 (int fd, int desired_fd)
-{
-  int result;
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#  ifndef __CYGWIN__
   /* If fd is closed, mingw hangs on dup2 (fd, fd).  If fd is open,
      dup2 (fd, fd) returns 0, but all further attempts to use fd in
      future dup2 calls will hang.  */
@@ -79,6 +55,8 @@ rpl_dup2 (int fd, int desired_fd)
         }
       return fd;
     }
+#  endif
+
   /* Wine 1.0.1 return 0 when desired_fd is negative but not -1:
      http://bugs.winehq.org/show_bug.cgi?id=21289 */
   if (desired_fd < 0)
@@ -86,28 +64,41 @@ rpl_dup2 (int fd, int desired_fd)
       errno = EBADF;
       return -1;
     }
-# elif !defined __linux__
-  /* On Haiku, dup2 (fd, fd) mistakenly clears FD_CLOEXEC.  */
-  if (fd == desired_fd)
-    return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
-# endif
 
-  result = dup2_nothrow (fd, desired_fd);
-
-# ifdef __linux__
-  /* Correct a Linux return value.
-     <http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.30.y.git;a=commitdiff;h=2b79bc4f7ebbd5af3c8b867968f9f15602d5f802>
-   */
-  if (fd == desired_fd && result == (unsigned int) -EBADF)
+  TRY_MSVC_INVAL
+    {
+      result = dup2 (fd, desired_fd);
+    }
+  CATCH_MSVC_INVAL
     {
       errno = EBADF;
       result = -1;
     }
-# endif
+  DONE_MSVC_INVAL;
+
+  /* Cygwin 1.5.x dup2 (1, 1) returns 0.  */
   if (result == 0)
     result = desired_fd;
-  /* Correct a cygwin 1.5.x errno value.  */
-  else if (result == -1 && errno == EMFILE)
+
+  return result;
+}
+#  define dup2 ms_windows_dup2
+# endif
+
+int
+rpl_dup2 (int fd, int desired_fd)
+{
+  int result;
+
+  /* On Linux kernels 2.6.26-2.6.29, dup2 (fd, fd) returns -EBADF.
+     On Haiku, dup2 (fd, fd) mistakenly clears FD_CLOEXEC.  */
+  if (fd == desired_fd)
+    return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
+
+  result = dup2 (fd, desired_fd);
+
+  /* Correct an errno value on FreeBSD 6.1 and Cygwin 1.5.x.  */
+  if (result == -1 && errno == EMFILE)
     errno = EBADF;
 # if REPLACE_FCHDIR
   if (fd != desired_fd && result != -1)
