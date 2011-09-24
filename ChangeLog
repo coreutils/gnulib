@@ -1,5 +1,11 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	dup: Simplify autoconf test.
+	* m4/dup.m4 (gl_FUNC_DUP): Don't run a test program. Instead, just rely
+	on gl_MSVC_INVAL's result.
+
+2011-09-24  Bruno Haible  <bruno@clisp.org>
+
 	Tests for function fwrite().
 	* modules/fwrite-tests: New file.
 	* tests/test-fwrite.c: New file.
