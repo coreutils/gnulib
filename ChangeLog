@@ -1,5 +1,8 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	Activate fputc tests.
+	* modules/stdio-tests (Depends-on): Add fputc-tests.
+
 	Enhance fgetc, fputc tests.
 	* tests/test-fgetc.c (main): Also test the stream's error indicator.
 	* tests/test-fputc.c (main): Likewise.

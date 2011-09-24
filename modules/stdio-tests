@@ -5,6 +5,7 @@ Depends-on:
 verify
 stdio-c++-tests
 fgetc-tests
+fputc-tests
 
 configure.ac:
 
