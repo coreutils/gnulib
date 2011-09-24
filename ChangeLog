@@ -1,5 +1,21 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	close: Support for MSVC 9.
+	* lib/close.c: Include <errno.h>, msvc-inval.h.
+	(close_nothrow): New function.
+	(rpl_close): Use it.
+	* m4/close.m4 (gl_FUNC_CLOSE): Replace close if the platform has an
+	invalid parameter handler.
+	* modules/close (Depends-on): Add msvc-inval.
+	* modules/dup2-tests (Depends-on): Add close.
+	* modules/dup3-tests (Depends-on): Likewise.
+	* modules/fcntl-tests (Depends-on): Likewise.
+	* modules/spawn-pipe-tests (Depends-on): Likewise.
+	* modules/unistd-safer-tests (Depends-on): Likewise.
+	* doc/posix-functions/close.texi: Mention the problem on MSVC.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	New module 'dup'.
 	* lib/unistd.in.h (dup): Declare only if the 'dup' module is in use.
 	Allow replacement.

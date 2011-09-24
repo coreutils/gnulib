@@ -5,6 +5,7 @@ tests/test-spawn-pipe-child.c
 tests/macros.h
 
 Depends-on:
+close
 
 configure.ac:
 
