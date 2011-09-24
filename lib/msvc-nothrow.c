@@ -41,7 +41,7 @@ _gl_nothrow_get_osfhandle (int fd)
     }
   CATCH_MSVC_INVAL
     {
-      result = INVALID_HANDLE_VALUE;
+      result = (intptr_t) INVALID_HANDLE_VALUE;
     }
   DONE_MSVC_INVAL;
 
