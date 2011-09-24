@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 60
+# unistd_h.m4 serial 61
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([gl_UNISTD_H],
 #  include <io.h>
 # endif
 #endif
-    ]], [chdir chown dup2 dup3 environ euidaccess faccessat fchdir fchownat
+    ]], [chdir chown dup dup2 dup3 environ euidaccess faccessat fchdir fchownat
     fdatasync fsync ftruncate getcwd getdomainname getdtablesize getgroups
     gethostname getlogin getlogin_r getpagesize getusershell setusershell
     endusershell group_member lchown link linkat lseek pipe pipe2 pread pwrite
@@ -61,6 +61,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_CHDIR=0;                AC_SUBST([GNULIB_CHDIR])
   GNULIB_CHOWN=0;                AC_SUBST([GNULIB_CHOWN])
   GNULIB_CLOSE=0;                AC_SUBST([GNULIB_CLOSE])
+  GNULIB_DUP=0;                  AC_SUBST([GNULIB_DUP])
   GNULIB_DUP2=0;                 AC_SUBST([GNULIB_DUP2])
   GNULIB_DUP3=0;                 AC_SUBST([GNULIB_DUP3])
   GNULIB_ENVIRON=0;              AC_SUBST([GNULIB_ENVIRON])

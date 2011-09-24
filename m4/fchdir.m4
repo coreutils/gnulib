@@ -1,4 +1,4 @@
-# fchdir.m4 serial 18
+# fchdir.m4 serial 19
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,7 +24,6 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     dnl We must also replace anything that can manipulate a directory fd,
     dnl to keep our bookkeeping up-to-date.  We don't have to replace
     dnl fstatat, since no platform has fstatat but lacks fchdir.
-    REPLACE_DUP=1
     AC_CACHE_CHECK([whether open can visit directories],
       [gl_cv_func_open_directory_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[#include <fcntl.h>

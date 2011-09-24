@@ -9,6 +9,7 @@ tests/macros.h
 Depends-on:
 ignore-value
 timespec
+dup
 usleep
 utimecmp
 

@@ -8,6 +8,7 @@ tests/test-utimens.c
 tests/macros.h
 
 Depends-on:
+dup
 ignore-value
 symlink
 timespec

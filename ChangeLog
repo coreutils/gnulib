@@ -1,5 +1,30 @@
 2011-09-23  Bruno Haible  <bruno@clisp.org>
 
+	New module 'dup'.
+	* lib/unistd.in.h (dup): Declare only if the 'dup' module is in use.
+	Allow replacement.
+	* lib/dup.c: New file.
+	* lib/fchdir.c (rpl_dup): Remove function.
+	* m4/dup.m4: New file.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Don't set REPLACE_DUP here.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Test whether 'dup' is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_DUP.
+	* modules/unistd (Makefile.am): Substitute GNULIB_DUP.
+	* modules/dup: New file.
+	* tests/test-unistd-c++.cc: Check the signature of 'dup' only if the
+	'dup' module is in use.
+	* modules/fdopendir (Depends-on): Add dup.
+	* modules/fdutimensat-tests (Depends-on): Likewise.
+	* modules/fts (Depends-on): Likewise.
+	* modules/futimens-tests (Depends-on): Likewise.
+	* modules/posix_spawnp-tests (Depends-on): Likewise.
+	* modules/unistd-safer-tests (Depends-on): Likewise.
+	* modules/utimens-tests (Depends-on): Likewise.
+	* doc/posix-functions/dup.texi: Mention the new module and the problem
+	on MSVC.
+
+2011-09-23  Bruno Haible  <bruno@clisp.org>
+
 	getdtablesize: Support for MSVC 9.
 	* lib/getdtablesize.c: Include msvc-inval.h.
 	(_setmaxstdio_nothrow): New function.

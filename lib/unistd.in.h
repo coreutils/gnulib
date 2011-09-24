@@ -301,16 +301,24 @@ _GL_WARN_ON_USE (close, "close does not portably work on sockets - "
 #endif
 
 
-#if @REPLACE_DUP@
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  define dup rpl_dup
-# endif
+#if @GNULIB_DUP@
+# if @REPLACE_DUP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define dup rpl_dup
+#  endif
 _GL_FUNCDECL_RPL (dup, int, (int oldfd));
 _GL_CXXALIAS_RPL (dup, int, (int oldfd));
-#else
+# else
 _GL_CXXALIAS_SYS (dup, int, (int oldfd));
-#endif
+# endif
 _GL_CXXALIASWARN (dup);
+#elif defined GNULIB_POSIXCHECK
+# undef dup
+# if HAVE_RAW_DECL_DUP
+_GL_WARN_ON_USE (dup, "dup is unportable - "
+                 "use gnulib module dup for portability");
+# endif
+#endif
 
 
 #if @GNULIB_DUP2@

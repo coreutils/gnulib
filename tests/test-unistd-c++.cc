@@ -36,7 +36,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::chown, int, (const char *, uid_t, gid_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::close, int, (int));
 #endif
 
+#if GNULIB_TEST_DUP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::dup, int, (int));
+#endif
 
 #if GNULIB_TEST_DUP2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::dup2, int, (int, int));

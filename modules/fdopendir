@@ -10,6 +10,7 @@ m4/fdopendir.m4
 Depends-on:
 dirent
 extensions
+dup             [test $HAVE_FDOPENDIR = 0]
 errno           [test $HAVE_FDOPENDIR = 0]
 fchdir          [test $HAVE_FDOPENDIR = 0]
 openat-die      [test $HAVE_FDOPENDIR = 0]

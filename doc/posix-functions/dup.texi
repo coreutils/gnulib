@@ -4,10 +4,13 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/dup.html}
 
-Gnulib module: ---
+Gnulib module: dup
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function crashes when invoked with invalid arguments on some platforms:
+MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

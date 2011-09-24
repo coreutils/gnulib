@@ -211,19 +211,6 @@ rpl_fstat (int fd, struct stat *statbuf)
 }
 #endif
 
-/* Override dup(), to keep track of open file descriptors.  */
-
-int
-rpl_dup (int oldfd)
-#undef dup
-{
-  int newfd = dup (oldfd);
-
-  if (0 <= newfd)
-    newfd = _gl_register_dup (oldfd, newfd);
-  return newfd;
-}
-
 
 /* Implement fchdir() in terms of chdir().  */
 

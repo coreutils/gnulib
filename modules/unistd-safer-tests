@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 binary-io
 cloexec
+dup
 fd-safer-flag
 msvc-nothrow
 stdbool
