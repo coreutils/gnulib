@@ -7,6 +7,7 @@ stdio-c++-tests
 fgetc-tests
 fputc-tests
 fread-tests
+fwrite-tests
 
 configure.ac:
 

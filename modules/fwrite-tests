@@ -1,0 +1,12 @@
+Files:
+tests/test-fwrite.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fwrite
+check_PROGRAMS += test-fwrite
