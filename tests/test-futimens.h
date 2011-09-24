@@ -90,11 +90,11 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (errno == EBADF);
   }
   {
-    int fd = dup (0);
-    ASSERT (0 <= fd);
-    ASSERT (close (fd) == 0);
+    int fd0 = dup (0);
+    ASSERT (0 <= fd0);
+    ASSERT (close (fd0) == 0);
     errno = 0;
-    ASSERT (func (fd, NULL) == -1);
+    ASSERT (func (fd0, NULL) == -1);
     ASSERT (errno == EBADF);
   }
   {
