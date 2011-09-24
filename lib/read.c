@@ -20,25 +20,48 @@
 /* Specification.  */
 #include <unistd.h>
 
-/* Replace this function only if module 'nonblocking' is requested.  */
-#if GNULIB_NONBLOCKING
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# include <errno.h>
+# include <io.h>
 
-#  include <errno.h>
-#  include <io.h>
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
 
-#  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
-#  include <windows.h>
+# include "msvc-inval.h"
+# include "msvc-nothrow.h"
 
-#  include "msvc-nothrow.h"
+# undef read
+
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static inline int
+read_nothrow (int fd, void *buf, size_t count)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = read (fd, buf, count);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+# else
+#  define read_nothrow read
+# endif
 
 ssize_t
 rpl_read (int fd, void *buf, size_t count)
-#undef read
 {
-  ssize_t ret = read (fd, buf, count);
+  ssize_t ret = read_nothrow (fd, buf, count);
 
+# if GNULIB_NONBLOCKING
   if (ret < 0
       && GetLastError () == ERROR_NO_DATA)
     {
@@ -54,8 +77,9 @@ rpl_read (int fd, void *buf, size_t count)
             errno = EAGAIN;
         }
     }
+# endif
+
   return ret;
 }
 
-# endif
 #endif

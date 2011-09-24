@@ -1177,7 +1177,7 @@ _GL_WARN_ON_USE (pwrite, "pwrite is unportable - "
 /* Read up to COUNT bytes from file descriptor FD into the buffer starting
    at BUF.  See the POSIX:2008 specification
    <http://pubs.opengroup.org/onlinepubs/9699919799/functions/read.html>.  */
-# if @REPLACE_READ@ && @GNULIB_UNISTD_H_NONBLOCKING@
+# if @REPLACE_READ@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef read
 #   define read rpl_read
