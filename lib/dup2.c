@@ -29,20 +29,22 @@
 
 # undef dup2
 
-# if defined _WIN32 || defined __WIN32__
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
+/* Get declarations of the Win32 API functions.  */
+#  define WIN32_LEAN_AND_MEAN
+#  include <windows.h>
+
 #  include "msvc-inval.h"
-#  ifndef __CYGWIN__
-#   define WIN32_LEAN_AND_MEAN
-#   include <windows.h>
-#   include "msvc-nothrow.h"
-#  endif
+
+/* Get _get_osfhandle.  */
+#  include "msvc-nothrow.h"
 
 static inline int
 ms_windows_dup2 (int fd, int desired_fd)
 {
   int result;
 
-#  ifndef __CYGWIN__
   /* If fd is closed, mingw hangs on dup2 (fd, fd).  If fd is open,
      dup2 (fd, fd) returns 0, but all further attempts to use fd in
      future dup2 calls will hang.  */
@@ -55,7 +57,6 @@ ms_windows_dup2 (int fd, int desired_fd)
         }
       return fd;
     }
-#  endif
 
   /* Wine 1.0.1 return 0 when desired_fd is negative but not -1:
      http://bugs.winehq.org/show_bug.cgi?id=21289 */
@@ -76,13 +77,14 @@ ms_windows_dup2 (int fd, int desired_fd)
     }
   DONE_MSVC_INVAL;
 
-  /* Cygwin 1.5.x dup2 (1, 1) returns 0.  */
   if (result == 0)
     result = desired_fd;
 
   return result;
 }
+
 #  define dup2 ms_windows_dup2
+
 # endif
 
 int
@@ -90,10 +92,13 @@ rpl_dup2 (int fd, int desired_fd)
 {
   int result;
 
+# if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
   /* On Linux kernels 2.6.26-2.6.29, dup2 (fd, fd) returns -EBADF.
+     On Cygwin 1.5.x, dup2 (1, 1) returns 0.
      On Haiku, dup2 (fd, fd) mistakenly clears FD_CLOEXEC.  */
   if (fd == desired_fd)
     return fcntl (fd, F_GETFL) == -1 ? -1 : fd;
+# endif
 
   result = dup2 (fd, desired_fd);
 

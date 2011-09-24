@@ -1,5 +1,9 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	dup2: Fix last commit.
+	* lib/dup2.c: Restore comments. Treat Cygwin like Unix.
+	(rpl_dup2): Disable fcntl workaround on native Windows.
+
 	sigprocmask: Make code safer.
 	* lib/sigprocmask.c: Move '#include "msvc-inval.h"' before the code
 	section that changes macro definitions for this compilation unit.
