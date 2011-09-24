@@ -34,10 +34,10 @@
 # undef read
 
 # if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static inline ssize_t
 read_nothrow (int fd, void *buf, size_t count)
 {
-  int result;
+  ssize_t result;
 
   TRY_MSVC_INVAL
     {
