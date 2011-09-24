@@ -6,6 +6,7 @@ verify
 stdio-c++-tests
 fgetc-tests
 fputc-tests
+fread-tests
 
 configure.ac:
 
