@@ -1,5 +1,13 @@
 2011-09-24  Bruno Haible  <bruno@clisp.org>
 
+	fgetc, fputc, fread, fwrite tests: Avoid compilation error on MSVC.
+	* modules/fgetc-tests (Depends-on): Add unistd.
+	* modules/fputc-tests (Depends-on): Likewise.
+	* modules/fread-tests (Depends-on): Likewise.
+	* modules/fwrite-tests (Depends-on): Likewise.
+
+2011-09-24  Bruno Haible  <bruno@clisp.org>
+
 	dup: Simplify autoconf test.
 	* m4/dup.m4 (gl_FUNC_DUP): Don't run a test program. Instead, just rely
 	on gl_MSVC_INVAL's result.
