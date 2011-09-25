@@ -87,9 +87,24 @@ gl_lock_define_initialized(static, strerror_lock)
 #endif
 
 /* On MSVC, there is no snprintf() function, just a _snprintf().
-   It is of lower quality, but sufficient for the simple use here.  */
+   It is of lower quality, but sufficient for the simple use here.
+   We only have to make sure to NUL terminate the result (_snprintf
+   does not NUL terminate, like strncpy).  */
 #if !HAVE_SNPRINTF
-# define snprintf _snprintf
+static int
+local_snprintf (char *buf, size_t buflen, const char *format, ...)
+{
+  va_list args;
+  int result;
+
+  va_start (args, format);
+  result = _vsnprintf (buf, buflen, format, args);
+  va_end (args);
+  if (buflen > 0 && (result < 0 || result >= buflen))
+    buf[buflen - 1] = '\0';
+  return result;
+}
+# define snprintf local_snprintf
 #endif
 
 /* Copy as much of MSG into BUF as possible, without corrupting errno.
