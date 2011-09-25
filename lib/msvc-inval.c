@@ -20,13 +20,31 @@
 /* Specification.  */
 #include "msvc-inval.h"
 
-#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER \
+    && !(MSVC_INVALID_PARAMETER_HANDLING == SANE_LIBRARY_HANDLING)
+
+/* Get _invalid_parameter_handler type and _set_invalid_parameter_handler
+   declaration.  */
+# include <stdlib.h>
+
+# if MSVC_INVALID_PARAMETER_HANDLING == DEFAULT_HANDLING
+
+static void cdecl
+gl_msvc_invalid_parameter_handler (const wchar_t *expression,
+                                   const wchar_t *function,
+                                   const wchar_t *file,
+                                   unsigned int line,
+                                   uintptr_t dummy)
+{
+}
+
+# else
 
 /* Get declarations of the Win32 API functions.  */
-# define WIN32_LEAN_AND_MEAN
-# include <windows.h>
+#  define WIN32_LEAN_AND_MEAN
+#  include <windows.h>
 
-# if defined _MSC_VER
+#  if defined _MSC_VER
 
 static void cdecl
 gl_msvc_invalid_parameter_handler (const wchar_t *expression,
@@ -38,7 +56,7 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
   RaiseException (STATUS_GNULIB_INVALID_PARAMETER, 0, 0, NULL);
 }
 
-# else
+#  else
 
 /* An index to thread-local storage.  */
 static DWORD tls_index;
@@ -92,6 +110,8 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
        Give the caller a chance to intervene.  */
     RaiseException (STATUS_GNULIB_INVALID_PARAMETER, 0, 0, NULL);
 }
+
+#  endif
 
 # endif
 

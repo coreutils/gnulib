@@ -1,5 +1,18 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	msvc-inval: Allow three invalid parameter handling modes.
+	* lib/msvc-inval.h: Don't include <stdlib.h> here.
+	(DEFAULT_HANDLING, HAIRY_LIBRARY_HANDLING, SANE_LIBRARY_HANDLING): New
+	macros.
+	(gl_msvc_inval_ensure_handler, TRY_MSVC_INVAL, CATCH_MSVC_INVAL,
+	DONE_MSVC_INVAL): Implement DEFAULT_HANDLING. Treat
+	SANE_LIBRARY_HANDLING as a no-op.
+	* lib/msvc-inval.c: Treat SANE_LIBRARY_HANDLING as a no-op. Include
+	<stdlib.h>.
+	(gl_msvc_invalid_parameter_handler): Implement DEFAULT_HANDLING.
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	msvc-inval: Make handler multithread-safe.
 	* lib/msvc-inval.h (struct gl_msvc_inval_per_thread): New type.
 	(gl_msvc_inval_restart, gl_msvc_inval_restart_valid): Remove
