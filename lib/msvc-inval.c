@@ -40,8 +40,42 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 
 # else
 
-jmp_buf gl_msvc_inval_restart;
-int gl_msvc_inval_restart_valid;
+/* An index to thread-local storage.  */
+static DWORD tls_index;
+static int tls_initialized /* = 0 */;
+
+/* Used as a fallback only.  */
+static struct gl_msvc_inval_per_thread not_per_thread;
+
+struct gl_msvc_inval_per_thread *
+gl_msvc_inval_current (void)
+{
+  if (!tls_initialized)
+    {
+      tls_index = TlsAlloc ();
+      tls_initialized = 1;
+    }
+  if (tls_index == TLS_OUT_OF_INDEXES)
+    /* TlsAlloc had failed.  */
+    return &not_per_thread;
+  else
+    {
+      struct gl_msvc_inval_per_thread *pointer =
+        (struct gl_msvc_inval_per_thread *) TlsGetValue (tls_index);
+      if (pointer == NULL)
+        {
+          /* First call.  Allocate a new 'struct gl_msvc_inval_per_thread'.  */
+          pointer =
+            (struct gl_msvc_inval_per_thread *)
+            malloc (sizeof (struct gl_msvc_inval_per_thread));
+          if (pointer == NULL)
+            /* Could not allocate memory.  Use the global storage.  */
+            pointer = &not_per_thread;
+          TlsSetValue (tls_index, pointer);
+        }
+      return pointer;
+    }
+}
 
 static void cdecl
 gl_msvc_invalid_parameter_handler (const wchar_t *expression,
@@ -50,8 +84,9 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
                                    unsigned int line,
                                    uintptr_t dummy)
 {
-  if (gl_msvc_inval_restart_valid)
-    longjmp (gl_msvc_inval_restart, 1);
+  struct gl_msvc_inval_per_thread *current = gl_msvc_inval_current ();
+  if (current->restart_valid)
+    longjmp (current->restart, 1);
   else
     /* An invalid parameter notification from outside the gnulib code.
        Give the caller a chance to intervene.  */

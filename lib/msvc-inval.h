@@ -102,13 +102,16 @@ extern void gl_msvc_inval_ensure_handler (void);
 extern "C" {
 #  endif
 
-/* The restart that will resume execution at the code between
-   CATCH_MSVC_INVAL and DONE_MSVC_INVAL.  It is enabled only between
-   TRY_MSVC_INVAL and CATCH_MSVC_INVAL.  */
-extern jmp_buf gl_msvc_inval_restart;
+struct gl_msvc_inval_per_thread
+{
+  /* The restart that will resume execution at the code between
+     CATCH_MSVC_INVAL and DONE_MSVC_INVAL.  It is enabled only between
+     TRY_MSVC_INVAL and CATCH_MSVC_INVAL.  */
+  jmp_buf restart;
 
-/* Tells whether the contents of gl_msvc_inval_restart is valid.  */
-extern int gl_msvc_inval_restart_valid;
+  /* Tells whether the contents of restart is valid.  */
+  int restart_valid;
+};
 
 /* Ensure that the invalid parameter handler in installed that passes
    control to the gl_msvc_inval_restart if it is valid, or raises a
@@ -117,6 +120,9 @@ extern int gl_msvc_inval_restart_valid;
    invalid parameter handler, this solution is multithread-safe.  */
 extern void gl_msvc_inval_ensure_handler (void);
 
+/* Return a pointer to the per-thread data for the current thread.  */
+extern struct gl_msvc_inval_per_thread *gl_msvc_inval_current (void);
+
 #  ifdef __cplusplus
 }
 #  endif
@@ -124,22 +130,24 @@ extern void gl_msvc_inval_ensure_handler (void);
 #  define TRY_MSVC_INVAL \
      do                                                                        \
        {                                                                       \
+         struct gl_msvc_inval_per_thread *msvc_inval_current;                  \
          gl_msvc_inval_ensure_handler ();                                      \
+         msvc_inval_current = gl_msvc_inval_current ();                        \
          /* First, initialize gl_msvc_inval_restart.  */                       \
-         if (setjmp (gl_msvc_inval_restart) == 0)                              \
+         if (setjmp (msvc_inval_current->restart) == 0)                        \
            {                                                                   \
              /* Then, mark it as valid.  */                                    \
-             gl_msvc_inval_restart_valid = 1;
+             msvc_inval_current->restart_valid = 1;
 #  define CATCH_MSVC_INVAL \
              /* Execution completed.                                           \
                 Mark gl_msvc_inval_restart as invalid.  */                     \
-             gl_msvc_inval_restart_valid = 0;                                  \
+             msvc_inval_current->restart_valid = 0;                            \
            }                                                                   \
          else                                                                  \
            {                                                                   \
              /* Execution triggered an invalid parameter notification.         \
                 Mark gl_msvc_inval_restart as invalid.  */                     \
-             gl_msvc_inval_restart_valid = 0;
+             msvc_inval_current->restart_valid = 0;
 #  define DONE_MSVC_INVAL \
            }                                                                   \
        }                                                                       \

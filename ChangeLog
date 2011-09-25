@@ -1,5 +1,22 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	msvc-inval: Make handler multithread-safe.
+	* lib/msvc-inval.h (struct gl_msvc_inval_per_thread): New type.
+	(gl_msvc_inval_restart, gl_msvc_inval_restart_valid): Remove
+	declarations.
+	(gl_msvc_inval_current): New declaration.
+	(TRY_MSVC_INVAL, CATCH_MSVC_INVAL, DONE_MSVC_INVAL) [!_MSC_VER]:
+	Operate on the structure returned by gl_msvc_inval_current().
+	* lib/msvc-inval.c (gl_msvc_inval_restart, gl_msvc_inval_restart_valid):
+	Remove varaiables.
+	(tls_index, tls_initialized): New variables.
+	(not_per_thread): New variable.
+	(gl_msvc_inval_current): New function.
+	(gl_msvc_invalid_parameter_handler) [!_MSC_VER]: Use the structure
+	returned by gl_msvc_inval_current().
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	msvc-inval: Install handler globally.
 	* lib/msvc-inval.h (STATUS_GNULIB_INVALID_PARAMETER): Define also for
 	!_MSC_VER.
