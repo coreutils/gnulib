@@ -12,6 +12,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-09-25  sys_stat        This module no longer provides the fstat()
+                            function. If you need this function, you now need
+                            to request the 'fstat' module.
+
 2011-09-23  signal          This module is renamed to 'signal-h'.
 
 2011-09-22  select          The link requirements of this module are changed

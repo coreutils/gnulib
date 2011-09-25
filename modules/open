@@ -9,6 +9,7 @@ m4/mode_t.m4
 Depends-on:
 fcntl-h
 largefile
+fstat           [test $REPLACE_OPEN = 1]
 stat            [test $REPLACE_OPEN = 1]
 
 configure.ac:

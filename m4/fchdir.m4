@@ -1,4 +1,4 @@
-# fchdir.m4 serial 19
+# fchdir.m4 serial 20
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,6 @@ AC_DEFUN([gl_FUNC_FCHDIR],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
-  AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
 
   AC_CHECK_DECLS_ONCE([fchdir])
   if test $ac_cv_have_decl_fchdir = no; then
@@ -34,7 +33,6 @@ AC_DEFUN([gl_FUNC_FCHDIR],
     if test "$gl_cv_func_open_directory_works" != yes; then
       AC_DEFINE([REPLACE_OPEN_DIRECTORY], [1], [Define to 1 if open() should
 work around the inability to open a directory.])
-      REPLACE_FSTAT=1
     fi
   fi
 ])

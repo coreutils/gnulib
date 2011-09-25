@@ -12,6 +12,7 @@ m4/acl.m4
 
 Depends-on:
 error
+fstat
 gettext-h
 quote
 sys_stat

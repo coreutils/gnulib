@@ -319,16 +319,25 @@ _GL_WARN_ON_USE (fchmodat, "fchmodat is not portable - "
 #endif
 
 
-#if @REPLACE_FSTAT@
-# if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#  define fstat rpl_fstat
-# endif
+#if @GNULIB_FSTAT@
+# if @REPLACE_FSTAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fstat
+#   define fstat rpl_fstat
+#  endif
 _GL_FUNCDECL_RPL (fstat, int, (int fd, struct stat *buf) _GL_ARG_NONNULL ((2)));
 _GL_CXXALIAS_RPL (fstat, int, (int fd, struct stat *buf));
-#else
+# else
 _GL_CXXALIAS_SYS (fstat, int, (int fd, struct stat *buf));
-#endif
+# endif
 _GL_CXXALIASWARN (fstat);
+#elif defined GNULIB_POSIXCHECK
+# undef fstat
+# if HAVE_RAW_DECL_FSTAT
+_GL_WARN_ON_USE (fstat, "fstat has portability problems - "
+                 "use gnulib module fstat for portability");
+# endif
+#endif
 
 
 #if @GNULIB_FSTATAT@

@@ -9,6 +9,7 @@ Depends-on:
 stdio
 largefile
 unistd          [test $REPLACE_FOPEN = 1]
+fstat           [test $REPLACE_FOPEN = 1]
 
 configure.ac:
 gl_FUNC_FOPEN

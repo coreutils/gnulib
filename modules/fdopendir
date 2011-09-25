@@ -13,6 +13,7 @@ extensions
 dup             [test $HAVE_FDOPENDIR = 0]
 errno           [test $HAVE_FDOPENDIR = 0]
 fchdir          [test $HAVE_FDOPENDIR = 0]
+fstat           [test $HAVE_FDOPENDIR = 0]
 openat-die      [test $HAVE_FDOPENDIR = 0]
 opendir         [test $HAVE_FDOPENDIR = 0]
 save-cwd        [test $HAVE_FDOPENDIR = 0]

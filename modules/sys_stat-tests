@@ -4,7 +4,6 @@ tests/test-sys_stat.c
 Depends-on:
 verify
 sys_stat-c++-tests
-fstat-tests
 
 configure.ac:
 

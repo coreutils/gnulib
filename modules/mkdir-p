@@ -11,6 +11,7 @@ m4/mkdir-p.m4
 Depends-on:
 error
 fcntl-h
+fstat
 gettext-h
 lchmod
 lchown

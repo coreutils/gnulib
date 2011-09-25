@@ -29,7 +29,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::fchmodat, int,
                  (int, char const *, mode_t, int));
 #endif
 
+#if GNULIB_TEST_FSTAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fstat, int, (int, struct stat *));
+#endif
 
 #if GNULIB_TEST_FSTATAT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fstatat, int,

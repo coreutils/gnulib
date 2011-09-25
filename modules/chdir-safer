@@ -10,6 +10,7 @@ Depends-on:
 errno
 fchdir
 fcntl-h
+fstat
 open
 same-inode
 stdbool

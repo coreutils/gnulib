@@ -1,5 +1,43 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fstat'.
+	* lib/sys_stat.in.h (fstat): Declare only if GNULIB_FSTAT is set.
+	* lib/fstat.c: New file, based on a piece of lib/fchdir.c.
+	* lib/fchdir.c (rpl_fstat): Remove function.
+	* m4/fstat.m4: New file.
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Don't set REPLACE_FSTAT.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Test whether fstat is
+	declared.
+	(gl_SYS_STAT_H_DEFAULTS): Initialize GNULIB_FSTAT.
+	* modules/sys_stat (Makefile.am): Substitute GNULIB_FSTAT.
+	* modules/fstat: New file.
+	* modules/sys_stat-tests (Depends-on): Remove fstat-tests.
+	* tests/test-sys_stat-c++.cc (fstat): Check only if GNULIB_TEST_FSTAT
+	is set.
+	* doc/posix-functions/fstat.texi: Mention the new module and the
+	problem on MSVC.
+	* NEWS: Mention the change.
+	* modules/acl (Depends-on): Add fstat.
+	* modules/chdir-safer (Depends-on): Likewise.
+	* modules/chown (Depends-on): Likewise.
+	* modules/copy-file (Depends-on): Likewise.
+	* modules/fchdir (Depends-on): Likewise.
+	* modules/fdopendir (Depends-on): Likewise.
+	* modules/fopen (Depends-on): Likewise.
+	* modules/fts (Depends-on): Likewise.
+	* modules/getcwd (Depends-on): Likewise.
+	* modules/isapipe (Depends-on): Likewise.
+	* modules/linkat (Depends-on): Likewise.
+	* modules/lseek (Depends-on): Likewise.
+	* modules/mkdir-p (Depends-on): Likewise.
+	* modules/open (Depends-on): Likewise.
+	* modules/openat (Depends-on): Likewise.
+	* modules/read-file (Depends-on): Likewise.
+	* modules/renameat (Depends-on): Likewise.
+	* modules/utimens (Depends-on): Likewise.
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	linkat: Fix compilation on MSVC 9.
 	* lib/linkat.c: Don't include <stdint.h>.
 
