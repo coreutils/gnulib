@@ -1,3 +1,11 @@
+2011-09-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dup2: minor simplifications
+	* lib/dup2.c (ms_windows_dup2): Omit 'inline' as it's not clear
+	that it's a performance win.
+	(rpl_dup2): Change "if !((defined _WIN32 || defined __WIN32__) &&
+	! defined __CYGWIN__)" to "ifdef F_GETFL".
+
 2011-09-24  Jim Meyering  <meyering@redhat.com>
 
 	test-futimens: avoid a warning from gcc -Wshadow

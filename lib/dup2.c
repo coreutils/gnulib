@@ -40,7 +40,7 @@
 /* Get _get_osfhandle.  */
 #  include "msvc-nothrow.h"
 
-static inline int
+static int
 ms_windows_dup2 (int fd, int desired_fd)
 {
   int result;
@@ -92,7 +92,7 @@ rpl_dup2 (int fd, int desired_fd)
 {
   int result;
 
-# if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+# ifdef F_GETFL
   /* On Linux kernels 2.6.26-2.6.29, dup2 (fd, fd) returns -EBADF.
      On Cygwin 1.5.x, dup2 (1, 1) returns 0.
      On Haiku, dup2 (fd, fd) mistakenly clears FD_CLOEXEC.  */
