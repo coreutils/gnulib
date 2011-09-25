@@ -1,5 +1,21 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	msvc-inval: Install handler globally.
+	* lib/msvc-inval.h (STATUS_GNULIB_INVALID_PARAMETER): Define also for
+	!_MSC_VER.
+	(gl_msvc_invalid_parameter_handler): Remove declaration.
+	(gl_msvc_inval_restart_valid, gl_msvc_inval_ensure_handler): New
+	declarations.
+	(TRY_MSVC_INVAL, CATCH_MSVC_INVAL, DONE_MSVC_INVAL) [!_MSC_VER]:
+	Install the handler globally, don't uninstall it.
+	* lib/msvc-inval.c (gl_msvc_inval_restart_valid): New variable.
+	(gl_msvc_invalid_parameter_handler): Make static. If the restart is not
+	currently valid, call RaiseException instead.
+	(gl_msvc_inval_initialized, gl_msvc_inval_ensure_handler): Define also
+	for !_MSC_VER.
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	strerror_r-posix: Fix for MSVC 9.
 	* lib/strerror_r.c (local_snprintf): New function.
 	(snprintf): Define to local_snprintf, not to _snprintf.

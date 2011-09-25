@@ -22,11 +22,11 @@
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 
-# ifdef STATUS_GNULIB_INVALID_PARAMETER
-
 /* Get declarations of the Win32 API functions.  */
-#  define WIN32_LEAN_AND_MEAN
-#  include <windows.h>
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+
+# if defined _MSC_VER
 
 static void cdecl
 gl_msvc_invalid_parameter_handler (const wchar_t *expression,
@@ -37,6 +37,28 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 {
   RaiseException (STATUS_GNULIB_INVALID_PARAMETER, 0, 0, NULL);
 }
+
+# else
+
+jmp_buf gl_msvc_inval_restart;
+int gl_msvc_inval_restart_valid;
+
+static void cdecl
+gl_msvc_invalid_parameter_handler (const wchar_t *expression,
+                                   const wchar_t *function,
+                                   const wchar_t *file,
+                                   unsigned int line,
+                                   uintptr_t dummy)
+{
+  if (gl_msvc_inval_restart_valid)
+    longjmp (gl_msvc_inval_restart, 1);
+  else
+    /* An invalid parameter notification from outside the gnulib code.
+       Give the caller a chance to intervene.  */
+    RaiseException (STATUS_GNULIB_INVALID_PARAMETER, 0, 0, NULL);
+}
+
+# endif
 
 static int gl_msvc_inval_initialized /* = 0 */;
 
@@ -49,21 +71,5 @@ gl_msvc_inval_ensure_handler (void)
       gl_msvc_inval_initialized = 1;
     }
 }
-
-# else
-
-jmp_buf gl_msvc_inval_restart;
-
-void cdecl
-gl_msvc_invalid_parameter_handler (const wchar_t *expression,
-                                   const wchar_t *function,
-                                   const wchar_t *file,
-                                   unsigned int line,
-                                   uintptr_t dummy)
-{
-  longjmp (gl_msvc_inval_restart, 1);
-}
-
-# endif
 
 #endif

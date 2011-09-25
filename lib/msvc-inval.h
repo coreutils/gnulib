@@ -47,14 +47,7 @@
 /* Get _invalid_parameter_handler type and _set_invalid_parameter_handler
    declaration.  */
 # include <stdlib.h>
-
-# if defined _MSC_VER
-/* A compiler that supports __try/__except, as described in the page
-   "try-except statement" on microsoft.com
-   <http://msdn.microsoft.com/en-us/library/s58ftw19.aspx>.
-   With __try/__except, we can use the multithread-safe exception handling.  */
-
-#  include <excpt.h>
+# include <excpt.h>
 
 /* Gnulib can define its own status codes, as described in the page
    "Raising Software Exceptions" on microsoft.com
@@ -64,7 +57,13 @@
      - 0x474E550, a API identifier ("GNU"),
      - 0, 1, 2, ..., used to distinguish different status codes from the
        same API.  */
-#  define STATUS_GNULIB_INVALID_PARAMETER (0xE0000000 + 0x474E550 + 0)
+# define STATUS_GNULIB_INVALID_PARAMETER (0xE0000000 + 0x474E550 + 0)
+
+# if defined _MSC_VER
+/* A compiler that supports __try/__except, as described in the page
+   "try-except statement" on microsoft.com
+   <http://msdn.microsoft.com/en-us/library/s58ftw19.aspx>.
+   With __try/__except, we can use the multithread-safe exception handling.  */
 
 #  ifdef __cplusplus
 extern "C" {
@@ -95,8 +94,7 @@ extern void gl_msvc_inval_ensure_handler (void);
 
 # else
 /* Any compiler.
-   We can only use setjmp/longjmp.
-   Unfortunately, this is *not* multithread-safe.  */
+   We can only use setjmp/longjmp.  */
 
 #  include <setjmp.h>
 
@@ -109,14 +107,15 @@ extern "C" {
    TRY_MSVC_INVAL and CATCH_MSVC_INVAL.  */
 extern jmp_buf gl_msvc_inval_restart;
 
-/* The invalid parameter handler that unwinds the stack up to the
-   gl_msvc_inval_restart.  It is enabled only between TRY_MSVC_INVAL
-   and CATCH_MSVC_INVAL.  */
-extern void cdecl gl_msvc_invalid_parameter_handler (const wchar_t *expression,
-                                                     const wchar_t *function,
-                                                     const wchar_t *file,
-                                                     unsigned int line,
-                                                     uintptr_t dummy);
+/* Tells whether the contents of gl_msvc_inval_restart is valid.  */
+extern int gl_msvc_inval_restart_valid;
+
+/* Ensure that the invalid parameter handler in installed that passes
+   control to the gl_msvc_inval_restart if it is valid, or raises a
+   software exception with code STATUS_GNULIB_INVALID_PARAMETER otherwise.
+   Because we assume no other part of the program installs a different
+   invalid parameter handler, this solution is multithread-safe.  */
+extern void gl_msvc_inval_ensure_handler (void);
 
 #  ifdef __cplusplus
 }
@@ -125,23 +124,22 @@ extern void cdecl gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 #  define TRY_MSVC_INVAL \
      do                                                                        \
        {                                                                       \
-         _invalid_parameter_handler orig_handler;                              \
+         gl_msvc_inval_ensure_handler ();                                      \
          /* First, initialize gl_msvc_inval_restart.  */                       \
          if (setjmp (gl_msvc_inval_restart) == 0)                              \
            {                                                                   \
-             /* Then, enable gl_msvc_invalid_parameter_handler.  */            \
-             orig_handler =                                                    \
-               _set_invalid_parameter_handler (gl_msvc_invalid_parameter_handler);
+             /* Then, mark it as valid.  */                                    \
+             gl_msvc_inval_restart_valid = 1;
 #  define CATCH_MSVC_INVAL \
              /* Execution completed.                                           \
-                Disable gl_msvc_invalid_parameter_handler.  */                 \
-             _set_invalid_parameter_handler (orig_handler);                    \
+                Mark gl_msvc_inval_restart as invalid.  */                     \
+             gl_msvc_inval_restart_valid = 0;                                  \
            }                                                                   \
          else                                                                  \
            {                                                                   \
              /* Execution triggered an invalid parameter notification.         \
-                Disable gl_msvc_invalid_parameter_handler.  */                 \
-             _set_invalid_parameter_handler (orig_handler);
+                Mark gl_msvc_inval_restart as invalid.  */                     \
+             gl_msvc_inval_restart_valid = 0;
 #  define DONE_MSVC_INVAL \
            }                                                                   \
        }                                                                       \
