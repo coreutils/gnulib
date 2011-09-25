@@ -1973,6 +1973,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module base32
   func_module base64
   func_module check-version
   func_module crc

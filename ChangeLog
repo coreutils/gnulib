@@ -1,3 +1,14 @@
+2011-09-26  Gijs van Tulder  <gvtulder@gmail.com>
+
+	base32: new module
+	* modules/base32: New module.
+	* lib/base32.c: New file.
+	* lib/base32.h: Likewise.
+	* m4/base32.m4: Likewise.
+	* modules/base32-tests: New test.
+	* tests/test-base32.c: Likewise.
+	* MODULES.html.sh (Misc): Mention it.
+
 2011-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib: use more-standard license notice wording
