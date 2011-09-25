@@ -13,6 +13,10 @@ On some platforms, this function fails to set the file position of a
 seekable input stream to the byte after the last one actually read:
 glibc 2.13, FreeBSD.
 @item
+This function crashes if the stream's file descriptor has already been
+closed on some platforms:
+MSVC 9.
+@item
 On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
 followed by @code{fdopen} do not return streams that can be closed by
 @code{fclose}.

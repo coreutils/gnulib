@@ -11,6 +11,7 @@ close           [test $REPLACE_FCLOSE = 1]
 fflush          [test $REPLACE_FCLOSE = 1]
 freading        [test $REPLACE_FCLOSE = 1]
 lseek           [test $REPLACE_FCLOSE = 1]
+msvc-inval      [test $REPLACE_FCLOSE = 1]
 
 configure.ac:
 gl_FUNC_FCLOSE

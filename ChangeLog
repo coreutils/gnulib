@@ -1,3 +1,12 @@
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
+	fclose: Support for MSVC 9.
+	* lib/fclose.c: Include msvc-inval.h.
+	(fclose_nothrow): New function.
+	(rpl_fclose): Use it.
+	* modules/fclose (Depends-on): Add msvc-inval.
+	* doc/posix-functions/fclose.texi: Mention the problem on MSVC.
+
 2011-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup2: minor simplifications
