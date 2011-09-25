@@ -20,4 +20,10 @@ Portability problems not fixed by Gnulib:
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
+@item
+This function crashes if the stream's file descriptor has already been
+closed, if @code{MSVC_INVALID_PARAMETER_HANDLING} is
+@code{HAIRY_LIBRARY_HANDLING} or @code{SANE_LIBRARY_HANDLING},
+on some platforms:
+MSVC 9.
 @end itemize

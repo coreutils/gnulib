@@ -1,5 +1,15 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	fflush et al.: Document limitation on MSVC.
+	* doc/posix-functions/fflush.texi: Document possible crash in handling
+	mode other than DEFAULT_HANDLING.
+	* doc/posix-functions/fgetc.texi: Likewise.
+	* doc/posix-functions/fputc.texi: Likewise.
+	* doc/posix-functions/fread.texi: Likewise.
+	* doc/posix-functions/fwrite.texi: Likewise.
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	msvc-inval: Allow three invalid parameter handling modes.
 	* lib/msvc-inval.h: Don't include <stdlib.h> here.
 	(DEFAULT_HANDLING, HAIRY_LIBRARY_HANDLING, SANE_LIBRARY_HANDLING): New

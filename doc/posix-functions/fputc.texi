@@ -32,4 +32,10 @@ upon failure.
 On some platforms, this function does not set @code{errno} or the
 stream error indicator on attempts to write to a read-only stream:
 Cygwin 1.7.9.
+@item
+This function crashes if the stream's file descriptor has already been
+closed, if @code{MSVC_INVALID_PARAMETER_HANDLING} is
+@code{HAIRY_LIBRARY_HANDLING} or @code{SANE_LIBRARY_HANDLING},
+on some platforms:
+MSVC 9.
 @end itemize

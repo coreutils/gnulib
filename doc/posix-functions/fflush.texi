@@ -31,6 +31,12 @@ contains Unix line terminators (LF), on some platforms: mingw, MSVC 9.
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.
 @item
+This function crashes if the stream's file descriptor has already been
+closed, if @code{MSVC_INVALID_PARAMETER_HANDLING} is
+@code{HAIRY_LIBRARY_HANDLING} or @code{SANE_LIBRARY_HANDLING},
+on some platforms:
+MSVC 9.
+@item
 @code{fflush} on an input stream right after @code{ungetc} does not discard
 the @code{ungetc} buffer, on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, mingw, MSVC 9.
