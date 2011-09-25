@@ -1,5 +1,14 @@
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
+	ftruncate: Support for MSVC 9.
+	* lib/ftruncate.c: Include errno.h, msvc-inval.h.
+	(chsize_nothrow): New function.
+	(chsize): Redefine as a macro.
+	* m4/ftruncate.m4 (gl_PREREQ_FTRUNCATE): Require AC_C_INLINE.
+	* modules/ftruncate (Depends-on): Add msvc-inval.
+
+2011-09-25  Bruno Haible  <bruno@clisp.org>
+
 	New module 'fstat'.
 	* lib/sys_stat.in.h (fstat): Declare only if GNULIB_FSTAT is set.
 	* lib/fstat.c: New file, based on a piece of lib/fchdir.c.

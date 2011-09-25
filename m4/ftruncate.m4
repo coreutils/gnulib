@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 
 # See if we need to emulate a missing ftruncate function using chsize.
 
@@ -19,5 +19,6 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
 # Prerequisites of lib/ftruncate.c.
 AC_DEFUN([gl_PREREQ_FTRUNCATE],
 [
+  AC_REQUIRE([AC_C_INLINE])
   AC_CHECK_FUNCS([chsize])
 ])
