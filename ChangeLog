@@ -1,5 +1,14 @@
 2011-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gnulib: use more-standard license notice wording
+	* gnulib-tool (func_emit_copyright_notice): When emitting a
+	license notice into a file, use the standard wording as suggested
+	by the current information for GNU maintainers, except say "file"
+	rather than "program".  The new wording gives a license version
+	number, which addresses an issue raised by Glenn Morris in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-09/msg00397.html>.
+	* m4/onceonly.m4: Use that same wording here, too.
+
 	dup2: minor simplification
 	* m4/dup2.m4 (gl_PREREQ_DUP2): Don't require AC_C_INLINE,
 	as lib/dup2.c no longer uses 'inline'.
