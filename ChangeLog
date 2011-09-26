@@ -1,3 +1,9 @@
+2011-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dup2: minor simplification
+	* m4/dup2.m4 (gl_PREREQ_DUP2): Don't require AC_C_INLINE,
+	as lib/dup2.c no longer uses 'inline'.
+
 2011-09-25  Bruno Haible  <bruno@clisp.org>
 
 	strings: Fix compilation error on MSVC.
