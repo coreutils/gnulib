@@ -1,5 +1,8 @@
 2011-09-26  Gijs van Tulder  <gvtulder@gmail.com>
 
+	base64-tests: avoid memory leak
+	* tests/test-base64.c (main): Plug memory leak.
+
 	base32: new module
 	* modules/base32: New module.
 	* lib/base32.c: New file.
