@@ -37,6 +37,11 @@
 #ifndef _@GUARD_PREFIX@_STRINGS_H
 #define _@GUARD_PREFIX@_STRINGS_H
 
+#if ! @HAVE_DECL_STRNCASECMP@
+/* Get size_t.  */
+# include <stddef.h>
+#endif
+
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
