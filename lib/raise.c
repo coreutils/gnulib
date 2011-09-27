@@ -50,24 +50,30 @@ raise_nothrow (int sig)
 
   return result;
 }
-#  define raise raise_nothrow
+# else
+#  define raise_nothrow raise
 # endif
-
-int
-rpl_raise (int sig)
-{
-  return raise_nothrow (sig);
-}
 
 #else
 /* An old Unix platform.  */
 
 # include <unistd.h>
 
-int
-raise (int sig)
-{
-  return kill (getpid (), sig);
-}
+# define rpl_raise raise
 
 #endif
+
+int
+rpl_raise (int sig)
+{
+#if GNULIB_defined_signal_blocking && GNULIB_defined_SIGPIPE
+  if (sig == SIGPIPE)
+    return _gl_raise_SIGPIPE ();
+#endif
+
+#if HAVE_RAISE
+  return raise_nothrow (sig);
+#else
+  return kill (getpid (), sig);
+#endif
+}

@@ -1,3 +1,18 @@
+2011-09-26  Bruno Haible  <bruno@clisp.org>
+
+	raise: Fix double declaration with modules 'sigprocmask' and 'sigpipe'.
+	* lib/signal.in.h (GNULIB_defined_signal_blocking): New macro.
+	(raise): Remove older, duplicated declaration.
+	(_gl_raise_SIGPIPE): New declaration.
+	* lib/sigprocmask.c (_gl_raise_SIGPIPE): New function.
+	(rpl_raise): Remove function.
+	* lib/raise.c (rpl_raise, raise): Merge into a single function. Handle
+	a gnulib-defined SIGPIPE here.
+	* m4/raise.m4 (gl_FUNC_RAISE): Set REPLACE_RAISE also if the module
+	'sigprocmask' has detected missing signal-blocking and the module
+	'sigpipe' is enabled.
+	Reported by Tatsuro MATSUOKA <tmacchant5@yahoo.co.jp>.
+
 2011-09-26  Gijs van Tulder  <gvtulder@gmail.com>
 
 	base64-tests: avoid memory leak

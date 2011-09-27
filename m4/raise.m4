@@ -1,4 +1,4 @@
-# raise.m4 serial 1
+# raise.m4 serial 2
 dnl Copyright (C) 2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,17 @@ AC_DEFUN([gl_FUNC_RAISE],
     if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
       REPLACE_RAISE=1
     fi
+    m4_ifdef([gl_SIGNALBLOCKING], [
+      gl_SIGNALBLOCKING
+      if test $HAVE_POSIX_SIGNALBLOCKING = 0; then
+        m4_ifdef([gl_SIGNAL_SIGPIPE], [
+          gl_SIGNAL_SIGPIPE
+          if test $gl_cv_header_signal_h_SIGPIPE != yes; then
+            REPLACE_RAISE=1
+          fi
+        ], [:])
+      fi
+    ])
   fi
 ])
 
