@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 1, 2011
+@set lastupdate September 25, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -578,7 +578,7 @@ prohibited.  How silly!  GCC implements many extensions, some of which
 were later adopted as part of the standard.  If you want these
 constructs to give an error message as ``required'' by the standard,
 you must specify @samp{--pedantic}, which was implemented only so that
-we can say ``GCC is a 100% implementation of the standard,'' not
+we can say ``GCC is a 100% implementation of the standard'', not
 because there is any reason to actually use it.
 
 POSIX.2 specifies that @samp{df} and @samp{du} must output sizes by
@@ -594,7 +594,7 @@ options with ordinary arguments.  This minor incompatibility with
 POSIX is never a problem in practice, and it is very useful.
 
 In particular, don't reject a new feature, or remove an old one,
-merely because a standard says it is ``forbidden'' or ``deprecated.''
+merely because a standard says it is ``forbidden'' or ``deprecated''.
 
 
 @node Semantics
@@ -3226,9 +3226,10 @@ doing the job in another way using @code{read} and @code{write}.
 
 The reason this precaution is needed is that the GNU kernel (the HURD)
 provides a user-extensible file system, in which there can be many
-different kinds of ``ordinary files.''  Many of them support
+different kinds of ``ordinary files''.  Many of them support
 @code{mmap}, but some do not.  It is important to make programs handle
 all these kinds of files.
+
 
 @node Documentation
 @chapter Documenting Programs

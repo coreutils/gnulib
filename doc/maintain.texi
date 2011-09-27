@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 5, 2011
+@set lastupdate September 26, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -1065,6 +1065,9 @@ used for all GNU programs that don't have their own specific lists.  But
 nowadays we want to give each program its own bug-reporting list and
 move away from using @email{bug-gnu-utils}.
 
+@xref{Replying to Mail}, for more about handling and tracking bug
+reports.
+
 @cindex help for users, mailing list for
 Some GNU programs with many users have another mailing list,
 @samp{help-@var{package}.org}, for people to ask other users for help.
@@ -1074,8 +1077,8 @@ is better not to bother with this.
 
 @cindex announcements, mailing list for
 If you wish, you can also have a mailing list
-@samp{info-@var{package}} for announcements (@pxref{Announcements}),
-and any others you find useful.
+@samp{info-@var{package}} for announcements (@pxref{Announcements}).
+Any other mailing lists you find useful can also be created.
 
 
 @node Creating Mailing Lists
@@ -1161,6 +1164,17 @@ response.
 Some GNU packages, such as Emacs and GCC, come with advice about how
 to make bug reports useful.  Copying and adapting that could be very
 useful for your package.
+
+@cindex @url{http://bugs.gnu.org}
+@cindex bug reports, email tracker for
+@cindex bug reports, web tracker for
+If you would like to use an email-based bug tracking system, see
+@url{http://bugs.gnu.org}; this can be connected with the regular
+bug-reporting address.  Alternatively, if you would like to use a
+web-based bug tracking system, Savannah supports this (@pxref{Old
+Versions}), but please don't fail to accept bugs by regular email as
+well---we don't want to put up unnecessary barriers against users
+submitting reports.
 
 
 @node Old Versions
@@ -1280,7 +1294,7 @@ it will be very clear from the diffs themselves which version is which.
 @cindex time stamp in diffs
 If you use GNU @code{diff} to make the patch, use the options
 @samp{-rc2P}.  That will put any new files into the output as ``entirely
-different.''  Also, the patch's context diff headers should have dates
+different''.  Also, the patch's context diff headers should have dates
 and times in Universal Time using traditional Unix format, so that patch
 recipients can use GNU @code{patch}'s @samp{-Z} option.  For example,
 you could use the following Bourne shell command to create the patch:
@@ -1313,11 +1327,6 @@ GNU packages are distributed through the directory @file{/gnu} on
 @code{ftp.gnu.org}, via both HTTP and FTP.  Each package should have a
 subdirectory named after the package, and all the distribution files
 for the package should go in that subdirectory.
-
-@c If you have an interest in seeing the monthly download logs from the FTP
-@c site at @code{ftp.gnu.org} for your program, that is something that
-@c @email{ftp-upload@@gnu.org} can set up for you.  Please contact them if
-@c you are interested.
 
 @xref{Automated FTP Uploads}, for procedural details of putting new
 versions on @code{ftp.gnu.org}.
@@ -1524,7 +1533,9 @@ directory of @code{gnulib} serves as a replacement which uses plain
 command line @code{ftp}.
 
 If you have difficulties with an upload, email
-@email{ftp-upload@@gnu.org}.
+@email{ftp-upload@@gnu.org}.  You can check the archive of uploads
+processed at
+@url{https://lists.gnu.org/archive/html/ftp-upload-report}.
 
 
 @node FTP Upload Directive File - v1.1
@@ -1868,15 +1879,15 @@ gendocs.sh --email @var{yourbuglist} @var{yourmanual} "GNU @var{yourmanual} manu
 @end smallexample
 
 @noindent where @var{yourmanual} is the short name for your package
-and @var{yourbuglist} is the email address for bug reports (typically
-@code{bug-@var{package}@@gnu.org}).  The script processes the file
-@file{@var{yourmanual}.texinfo} (or @file{.texi} or @file{.txi}).  For
-example:
+and @var{yourbuglist} is the email address for bug reports (which
+should be @code{bug-@var{package}@@gnu.org}).  The script processes
+the file @file{@var{yourmanual}.texinfo} (or @file{.texi} or
+@file{.txi}).  For example:
 
 @smallexample
-cd .../emacs/man
+cd .../texinfo/doc
 # download gendocs.sh and gendocs_template
-gendocs.sh --email bug-gnu-emacs@@gnu.org emacs "GNU Emacs manual"
+gendocs.sh --email bug-texinfo@@gnu.org texinfo "GNU Texinfo manual"
 @end smallexample
 
 @command{gendocs.sh} creates a subdirectory @file{manual/} containing
@@ -2085,7 +2096,7 @@ users don't know about the GNU Project's major accomplishment---or more
 precisely, they know about it, but don't realize it is the GNU Project's
 accomplishment and reason for existence.  Even people who believe they
 know the real history often believe that the goal of GNU was to develop
-``tools'' or ``utilities.''
+``tools'' or ``utilities''.
 
 To correct this confusion, we have made a years-long effort to
 distinguish between Linux, the kernel that Linus Torvalds wrote, and
@@ -2101,12 +2112,12 @@ terminology and its reasons, you can refer to the URL
 @url{http://www.gnu.org/gnu/linux-and-gnu.html}.
 
 To contrast the GNU system properly with respect to GNU/Linux, you can
-call it ``GNU/Hurd'' or ``the GNU/Hurd system.''  However, when that
+call it ``GNU/Hurd'' or ``the GNU/Hurd system''.  However, when that
 contrast is not specifically the focus, please call it just ``GNU'' or
-``the GNU system.''
+``the GNU system''.
 
 When referring to the collection of servers that is the higher level
-of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd.''
+of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd''.
 Note that this uses a space, not a slash.
 
 
