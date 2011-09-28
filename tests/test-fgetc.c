@@ -35,9 +35,10 @@ main (int argc, char **argv)
 {
   const char *filename = "test-fgetc.txt";
 
-  /* We don't have an fread() function that installs an invalid parameter
+  /* We don't have an fgetc() function that installs an invalid parameter
      handler so far.  So install that handler here, explicitly.  */
-#if MSVC_INVALID_PARAMETER_HANDLING == DEFAULT_HANDLING
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER \
+    && MSVC_INVALID_PARAMETER_HANDLING == DEFAULT_HANDLING
   gl_msvc_inval_ensure_handler ();
 #endif
 
