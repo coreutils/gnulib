@@ -26,12 +26,20 @@ SIGNATURE_CHECK (fputc, int, (int, FILE *));
 #include <fcntl.h>
 #include <unistd.h>
 
+#include "msvc-inval.h"
+
 #include "macros.h"
 
 int
 main (int argc, char **argv)
 {
   const char *filename = "test-fputc.txt";
+
+  /* We don't have an fputc() function that installs an invalid parameter
+     handler so far.  So install that handler here, explicitly.  */
+#if MSVC_INVALID_PARAMETER_HANDLING == DEFAULT_HANDLING
+  gl_msvc_inval_ensure_handler ();
+#endif
 
   /* Test that fputc() on an unbuffered stream sets errno if someone else
      closes the stream fd behind the back of stdio.  */

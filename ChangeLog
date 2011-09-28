@@ -1,4 +1,20 @@
-2011-09-26  Bruno Haible  <bruno@clisp.org>
+2011-09-27  Bruno Haible  <bruno@clisp.org>
+
+	fputc, fwrite tests: Avoid test failure on MSVC.
+	* tests/test-fgetc.c: Include msvc-inval.h.
+	(main): Invoke gl_msvc_inval_ensure_handler.
+	* tests/test-fputc.c: Include msvc-inval.h.
+	(main): Invoke gl_msvc_inval_ensure_handler.
+	* tests/test-fread.c: Include msvc-inval.h.
+	(main): Invoke gl_msvc_inval_ensure_handler.
+	* tests/test-fwrite.c: Include msvc-inval.h.
+	(main): Invoke gl_msvc_inval_ensure_handler.
+	* modules/fgetc-tests (Depends-on): Add msvc-inval.
+	* modules/fputc-tests (Depends-on): Likewise.
+	* modules/fread-tests (Depends-on): Likewise.
+	* modules/fwrite-tests (Depends-on): Likewise.
+
+2011-09-27  Bruno Haible  <bruno@clisp.org>
 
 	raise: Fix double declaration with modules 'sigprocmask' and 'sigpipe'.
 	* lib/signal.in.h (GNULIB_defined_signal_blocking): New macro.
