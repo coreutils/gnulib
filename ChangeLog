@@ -3,7 +3,7 @@
 	doc: Improve doc about gl_EARLY.
 	* doc/gnulib-tool.texi (Initial import): Mention where to place an
 	AC_PROG_CC_STDC invocation.
-	Reported by Gary V. Vaughan <gary@vaughan.pe>.
+	Reported by Gary V. Vaughan <gary@gnu.org>.
 
 2011-09-28  Bruno Haible  <bruno@clisp.org>
 
