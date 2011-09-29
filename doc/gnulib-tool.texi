@@ -217,6 +217,17 @@ gl_EARLY
 ...
 @end example
 
+If you are using @code{AC_PROG_CC_STDC}, the macro @code{gl_EARLY} must
+be called after it, like this:
+
+@example
+...
+AC_PROG_CC
+AC_PROG_CC_STDC
+gl_EARLY
+...
+@end example
+
 The core part of the gnulib checks are done by the macro
 @code{gl_INIT}.  Place it further down in the file, typically where
 you normally check for header files or functions.  It must come after
