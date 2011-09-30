@@ -21,6 +21,7 @@
      Platform                        PIPE_DATA_BLOCK_SIZE
 
      Linux                           >= 63489
+     Linux/SPARC                     >= 126977
      FreeBSD, OpenBSD, MacOS X       >= 65537
      AIX                             >= 32769
      HP-UX                           >= 8193
@@ -33,6 +34,8 @@
  */
 #if defined __osf__
 # define PIPE_DATA_BLOCK_SIZE 270000
+#elif defined __linux__ && defined __sparc__
+# define PIPE_DATA_BLOCK_SIZE 140000
 #else
 # define PIPE_DATA_BLOCK_SIZE 70000
 #endif

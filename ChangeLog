@@ -1,5 +1,11 @@
 2011-09-30  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking tests: Fix test failure on Linux/SPARC (32-bit and 64-bit).
+	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/SPARC]:
+	Set to 140000.
+
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Improve suggestion where to put gl_EARLY invocation.
 	* gnulib-tool (func_import): If the configure.ac has an AC_PROG_CC_STDC
 	invocation, say "right after AC_PROG_CC_STDC", not "right after
