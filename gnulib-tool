@@ -5460,7 +5460,16 @@ s,//*$,/,'
       echo "  - mention \"${val}\" in ${var} in ${dir}Makefile.am,"
     fi
   done
-  echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after AC_PROG_CC,"
+  if grep '^ *AC_PROG_CC_STDC' "$configure_ac" > /dev/null; then
+    position_early_after=AC_PROG_CC_STDC
+  else
+    if grep '^ *AC_PROG_CC_C99' "$configure_ac" > /dev/null; then
+      position_early_after=AC_PROG_CC_C99
+    else
+      position_early_after=AC_PROG_CC
+    fi
+  fi
+  echo "  - invoke ${macro_prefix}_EARLY in $configure_ac, right after $position_early_after,"
   echo "  - invoke ${macro_prefix}_INIT in $configure_ac."
 }
 

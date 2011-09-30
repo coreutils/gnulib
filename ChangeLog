@@ -1,5 +1,13 @@
 2011-09-30  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Improve suggestion where to put gl_EARLY invocation.
+	* gnulib-tool (func_import): If the configure.ac has an AC_PROG_CC_STDC
+	invocation, say "right after AC_PROG_CC_STDC", not "right after
+	AC_PROG_CC".
+	Reported by Gary V. Vaughan <gary@gnu.org>.
+
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
 	Centralize C99 requirement.
 	* m4/gnulib-common.m4 (gl_PROG_CC_C99): New macro.
 	* modules/stdarg (configure.ac-early): Invoke it instead of
