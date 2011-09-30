@@ -1,4 +1,4 @@
-# float_h.m4 serial 7
+# float_h.m4 serial 8
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,9 +33,16 @@ changequote([,])dnl
           ;;
       esac
       ;;
+    linux*)
+      case "$host_cpu" in
+        powerpc*)
+          FLOAT_H=float.h
+          ;;
+      esac
+      ;;
   esac
   case "$host_os" in
-    aix* | freebsd*)
+    aix* | freebsd* | linux*)
       if test -n "$FLOAT_H"; then
         REPLACE_FLOAT_LDBL=1
       fi
