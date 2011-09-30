@@ -67,6 +67,14 @@ _GL_WARN_ON_USE (rpl_ ## func ## l, #func " is unportable - "       \
    : rpl_ ## func ## l (value))
 
 
+#if @REPLACE_ITOLD@
+/* Pull in a function that fixes the 'int' to 'long double' conversion
+   of glibc 2.7.  */
+_GL_EXTERN_C void _Qp_itoq (long double *, int);
+static void (*_gl_math_fix_itold) (long double *, int) = _Qp_itoq;
+#endif
+
+
 /* POSIX allows platforms that don't support NAN.  But all major
    machines in the past 15 years have supported something close to
    IEEE NaN, so we define this unconditionally.  We also must define

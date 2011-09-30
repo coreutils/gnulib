@@ -173,5 +173,16 @@ extern const union gl_long_double_union gl_LDBL_MAX;
 # endif
 #endif
 
+#if @REPLACE_ITOLD@
+/* Pull in a function that fixes the 'int' to 'long double' conversion
+   of glibc 2.7.  */
+extern
+# ifdef __cplusplus
+"C"
+# endif
+void _Qp_itoq (long double *, int);
+static void (*_gl_float_fix_itold) (long double *, int) = _Qp_itoq;
+#endif
+
 #endif /* _@GUARD_PREFIX@_FLOAT_H */
 #endif /* _@GUARD_PREFIX@_FLOAT_H */

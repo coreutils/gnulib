@@ -8,6 +8,11 @@ Gnulib module: math
 Portability problems fixed by Gnulib:
 @itemize
 @item
+The conversion from @code{int} to @code{long double} in incorrect on some
+platforms:
+glibc 2.7 on Linux/SPARC64.
+
+@item
 The macro @code{NAN} is not defined on some platforms:
 OpenBSD 4.0, AIX 5.1, IRIX 6.5, OSF/1 5.1.
 

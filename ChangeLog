@@ -1,5 +1,22 @@
 2011-09-30  Bruno Haible  <bruno@clisp.org>
 
+	float, math: Fix 'int' to 'long double' conversion on Linux/SPARC64.
+	* m4/float_h.m4 (gl_FLOAT_H): Test conversion from 'int' to
+	'long double'. Set REPLACE_ITOLD.
+	* lib/float.in.h (_Qp_itoq, _gl_float_fix_itold): New declarations.
+	* lib/math.in.h (_Qp_itoq, _gl_math_fix_itold): New declarations.
+	* lib/itold.c: New file.
+	* modules/float (Files): Add lib/itold.c.
+	(configure.ac): When REPLACE_ITOLD is 1, arrange to compile itold.c.
+	(Makefile.am): Substitute REPLACE_ITOLD.
+	* modules/math (Depends-on): Add float.
+	(Makefile.am): Substitute REPLACE_ITOLD.
+	* doc/posix-headers/float.texi: Mention problem on Linux/SPARC64.
+	* doc/posix-headers/math.texi: Likewise.
+	* doc/posix-functions/logl.texi: Likewise.
+
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
 	nonblocking tests: Fix test failure on Linux/SPARC (32-bit and 64-bit).
 	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/SPARC]:
 	Set to 140000.

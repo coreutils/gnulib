@@ -4,6 +4,7 @@ A correct <float.h>.
 Files:
 lib/float.in.h
 lib/float.c
+lib/itold.c
 m4/float_h.m4
 
 Depends-on:
@@ -13,6 +14,9 @@ configure.ac:
 gl_FLOAT_H
 if test $REPLACE_FLOAT_LDBL = 1; then
   AC_LIBOBJ([float])
+fi
+if test $REPLACE_ITOLD = 1; then
+  AC_LIBOBJ([itold])
 fi
 
 Makefile.am:
@@ -29,6 +33,7 @@ float.h: float.in.h $(top_builddir)/config.status
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_FLOAT_H''@|$(NEXT_FLOAT_H)|g' \
+	      -e 's|@''REPLACE_ITOLD''@|$(REPLACE_ITOLD)|g' \
 	      < $(srcdir)/float.in.h; \
 	} > $@-t && \
 	mv $@-t $@
