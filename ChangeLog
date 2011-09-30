@@ -1,3 +1,11 @@
+2011-09-30  Bruno Haible  <bruno@clisp.org>
+
+	Centralize C99 requirement.
+	* m4/gnulib-common.m4 (gl_PROG_CC_C99): New macro.
+	* modules/stdarg (configure.ac-early): Invoke it instead of
+	AC_PROG_CC_STDC.
+	Reported by Gary V. Vaughan and Paul Eggert.
+
 2011-09-29  Bruno Haible  <bruno@clisp.org>
 
 	float: Fix LDBL_MAX value on Linux/PowerPC.
