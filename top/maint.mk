@@ -1079,16 +1079,20 @@ sc_makefile_path_separator_check:
 	halt=$(msg)							\
 	  $(_sc_search_regexp)
 
-# Check that `make alpha' will not fail at the end of the process.
+# Check that `make alpha' will not fail at the end of the process,
+# i.e., when pkg-M.N.tar.xz already exists (either in "." or in ../release)
+# and is read-only.
 writable-files:
-	if test -d $(release_archive_dir); then :; else			\
-	  for file in $(distdir).tar.gz					\
-		      $(release_archive_dir)/$(distdir).tar.gz; do	\
-	    test -e $$file || continue;					\
-	    test -w $$file						\
-	      || { echo ERROR: $$file is not writable; fail=1; };	\
+	if test -d $(release_archive_dir); then				\
+	  for file in $(DIST_ARCHIVES); do				\
+	    for p in ./ $(release_archive_dir)/; do			\
+	      test -e $$p$$file || continue;				\
+	      test -w $$p$$file						\
+		|| { echo ERROR: $$p$$file is not writable; fail=1; };	\
+	    done;							\
 	  done;								\
 	  test "$$fail" && exit 1 || : ;				\
+	else :;								\
 	fi
 
 v_etc_file = $(gnulib_dir)/lib/version-etc.c

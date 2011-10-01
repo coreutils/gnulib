@@ -1,5 +1,10 @@
 2011-10-01  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: adjust a release-related rule not to require use of gzip
+	* top/maint.mk (writable-files): Don't hard-code use of .tar.gz.
+	Instead, check each file in $(DIST_ARCHIVES).  This is better for
+	projects that build only .tar.xz files.  Also fix an erroneous test.
+
 	test-linkat: don't leave behind a temporary file
 	* tests/test-linkat.c (main): Don't forget to remove a temporary file.
 	Otherwise, coreutils' "make distcheck" would fail with this:
