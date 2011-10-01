@@ -1,5 +1,12 @@
 2011-10-01  Bruno Haible  <bruno@clisp.org>
 
+	isinf: Fix for OpenBSD/x86.
+	* m4/isinf.m4 (gl_ISINFL_WORKS): Also test the behaviour of isinf on
+	pseudo-NaNs, pseudo-Infinities, and other non-IEEE values.
+	* doc/posix-functions/isinf.texi: Mention the problem on OpenBSD/x86.
+
+2011-10-01  Bruno Haible  <bruno@clisp.org>
+
 	isfinite: Fix syntax error in configure test.
 	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Fix syntax error.
 

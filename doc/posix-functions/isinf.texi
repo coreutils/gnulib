@@ -11,6 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This macro is missing on some platforms:
 AIX 4.3.2, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11.
+@item
+This macro incorrectly yields true for some @samp{long double} arguments, on
+some platforms:
+OpenBSD 4.9/x86 (pseudo-Infinity).
 @end itemize
 
 Portability problems not fixed by Gnulib:
