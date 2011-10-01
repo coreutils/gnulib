@@ -117,6 +117,7 @@ main (void)
     ASSERT (linkat (AT_FDCWD, BASE "oo", 99, "bar", 0) == -1);
     ASSERT (errno == EBADF);
   }
+  ASSERT (unlink (BASE "oo") == 0);
 
   /* Test basic link functionality, without mentioning symlinks.  */
   result = test_link (do_link, true);

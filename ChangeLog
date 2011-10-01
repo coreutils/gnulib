@@ -1,5 +1,12 @@
 2011-10-01  Jim Meyering  <meyering@redhat.com>
 
+	test-linkat: don't leave behind a temporary file
+	* tests/test-linkat.c (main): Don't forget to remove a temporary file.
+	Otherwise, coreutils' "make distcheck" would fail with this:
+	  Only in /c/cu/tests/torture/coreutils/test/\
+	    coreutils-8.13.22-d5caf.old/gnulib-tests: test-linkat.too
+	  make[2]: *** [my-distcheck] Error 1
+
 	float, math: add omitted file
 	* lib/itold.c: Add file, required for yesterday's float change.
 
