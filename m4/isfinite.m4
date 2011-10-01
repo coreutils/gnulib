@@ -148,7 +148,7 @@ int main ()
     static memory_long_double x =
       { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
     if (isfinite (x.value))
-      return |= 64;
+      result |= 64;
   }
 #endif
 

@@ -1,5 +1,8 @@
 2011-10-01  Bruno Haible  <bruno@clisp.org>
 
+	isfinite: Fix syntax error in configure test.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Fix syntax error.
+
 	isfinite: Fix typo.
 	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): When cross-compiling, set
 	gl_cv_func_isfinitel_works, not gl_cv_func_isnanl_works.
