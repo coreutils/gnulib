@@ -1,3 +1,8 @@
+2011-10-01  Jim Meyering  <meyering@redhat.com>
+
+	float, math: add omitted file
+	* lib/itold.c: Add file, required for yesterday's float change.
+
 2011-10-01  Bruno Haible  <bruno@clisp.org>
 
 	isinf: Fix for OpenBSD/x86.
