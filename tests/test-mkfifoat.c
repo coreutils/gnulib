@@ -106,32 +106,41 @@ main (void)
       }
 
       /* Create fifo while cwd is '.', then stat it from '..'.  */
-      ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == 0);
-      errno = 0;
-      ASSERT (func (dfd, BASE "fifo", 0600) == -1);
-      ASSERT (errno == EEXIST);
-      ASSERT (chdir ("..") == 0);
-      errno = 0;
-      ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, 0) == -1);
-      ASSERT (errno == ENOENT);
-      memset (&st, 0, sizeof st);
-      ASSERT (fstatat (dfd, BASE "fifo", &st, 0) == 0);
-      ASSERT (S_ISFIFO (st.st_mode));
-      ASSERT (unlinkat (dfd, BASE "fifo", 0) == 0);
+      if (func (AT_FDCWD, BASE "fifo", 0600) != 0)
+        ASSERT (errno == ENOSYS); /* seen on native Windows */
+      else
+        {
+          errno = 0;
+          ASSERT (func (dfd, BASE "fifo", 0600) == -1);
+          ASSERT (errno == EEXIST);
+          ASSERT (chdir ("..") == 0);
+          errno = 0;
+          ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, 0) == -1);
+          ASSERT (errno == ENOENT);
+          memset (&st, 0, sizeof st);
+          ASSERT (fstatat (dfd, BASE "fifo", &st, 0) == 0);
+          ASSERT (S_ISFIFO (st.st_mode));
+          ASSERT (unlinkat (dfd, BASE "fifo", 0) == 0);
+        }
 
       /* Create fifo while cwd is '..', then stat it from '.'.  */
-      ASSERT (func (dfd, BASE "fifo", 0600) == 0);
-      ASSERT (fchdir (dfd) == 0);
-      errno = 0;
-      ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == -1);
-      ASSERT (errno == EEXIST);
-      memset (&st, 0, sizeof st);
-      ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW) == 0);
-      ASSERT (S_ISFIFO (st.st_mode));
-      memset (&st, 0, sizeof st);
-      ASSERT (fstatat (dfd, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW) == 0);
-      ASSERT (S_ISFIFO (st.st_mode));
-      ASSERT (unlink (BASE "fifo") == 0);
+      if (func (dfd, BASE "fifo", 0600) != 0)
+        ASSERT (errno == ENOSYS); /* seen on native Windows */
+      else
+        {
+          ASSERT (fchdir (dfd) == 0);
+          errno = 0;
+          ASSERT (func (AT_FDCWD, BASE "fifo", 0600) == -1);
+          ASSERT (errno == EEXIST);
+          memset (&st, 0, sizeof st);
+          ASSERT (fstatat (AT_FDCWD, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW)
+                  == 0);
+          ASSERT (S_ISFIFO (st.st_mode));
+          memset (&st, 0, sizeof st);
+          ASSERT (fstatat (dfd, BASE "fifo", &st, AT_SYMLINK_NOFOLLOW) == 0);
+          ASSERT (S_ISFIFO (st.st_mode));
+          ASSERT (unlink (BASE "fifo") == 0);
+        }
     }
 
   ASSERT (close (dfd) == 0);
