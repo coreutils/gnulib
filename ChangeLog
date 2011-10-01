@@ -1,5 +1,11 @@
 2011-10-01  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking tests: Fix test failure on Linux/IA-64.
+	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/IA-64]:
+	Set to 270000.
+
+2011-10-01  Bruno Haible  <bruno@clisp.org>
+
 	mkfifoat tests: Fix a test failure on mingw.
 	* tests/test-mkfifoat.c (main): Allow mkfifoat or test_mknodat to fail
 	with error ENOSYS.
