@@ -1,5 +1,11 @@
 2011-10-01  Bruno Haible  <bruno@clisp.org>
 
+	isfinite: Fix typo.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): When cross-compiling, set
+	gl_cv_func_isfinitel_works, not gl_cv_func_isnanl_works.
+
+2011-10-01  Bruno Haible  <bruno@clisp.org>
+
 	nonblocking tests: Fix test failure on Linux/IA-64.
 	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/IA-64]:
 	Set to 270000.

@@ -1,4 +1,4 @@
-# isfinite.m4 serial 11
+# isfinite.m4 serial 12
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -156,8 +156,8 @@ int main ()
 }]])], [gl_cv_func_isfinitel_works=yes], [gl_cv_func_isfinitel_works=no],
       [case "$host_cpu" in
                                # Guess no on ia64, x86_64, i386.
-         ia64 | x86_64 | i*86) gl_cv_func_isnanl_works="guessing no";;
-         *)                    gl_cv_func_isnanl_works="guessing yes";;
+         ia64 | x86_64 | i*86) gl_cv_func_isfinitel_works="guessing no";;
+         *)                    gl_cv_func_isfinitel_works="guessing yes";;
        esac
       ])
     ])
