@@ -1,5 +1,11 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking tests: Fix test failure on OpenBSD/SPARC64.
+	* tests/test-nonblocking-socket.h (SOCKET_DATA_BLOCK_SIZE) [OpenBSD]:
+	Set to 100000.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix specification.
 	* lib/file-has-acl.c (file_has_acl): Fix specification.
 

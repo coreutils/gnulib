@@ -38,7 +38,11 @@
      Cygwin 1.7.x                    >= 163838 (depends on circumstances)
      native Win32                    >= 66294401
  */
-#define SOCKET_DATA_BLOCK_SIZE 1000000
+#if defined __OpenBSD__
+# define SOCKET_DATA_BLOCK_SIZE  100000
+#else
+# define SOCKET_DATA_BLOCK_SIZE 1000000
+#endif
 
 /* On Linux, MacOS X, Cygwin 1.5.x, native Win32,
    sockets have very large buffers in the kernel, so that write() calls
