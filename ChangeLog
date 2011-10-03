@@ -1,5 +1,11 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	wmemmove: Support for MSVC.
+	* m4/wmemmove.m4 (gl_FUNC_WMEMMOVE): Use a small test program to test
+	whether wmemmove() exists.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	wmemcpy: Support for MSVC.
 	* m4/wmemcpy.m4 (gl_FUNC_WMEMCPY): Use a small test program to test
 	whether wmemcpy() exists.
