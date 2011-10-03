@@ -1,3 +1,13 @@
+2011-10-03  Kamil Dudka  <kdudka@redhat.com>
+
+	file-has-acl: revert unintended change in behavior of ls -L
+	* lib/file-has-acl.c (acl_extended_file_wrap): New function,
+	derived from...
+	(file_has_acl): ...code here.  Call it.
+	This problem was introduced with 2011-07-22 commit 95f7c57f,
+	"file-has-acl: use acl_extended_file_nofollow if available".
+	See http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/28538
+
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
 	poll: Avoid link errors on MSVC.

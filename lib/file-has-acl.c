@@ -437,6 +437,34 @@ acl_nontrivial (int count, struct acl *entries)
 #endif
 
 
+/* acl_extended_file() tests whether a file has an ACL.  But it can trigger
+   unnecessary autofs mounts.  In newer versions of libacl, a function
+   acl_extended_file_nofollow() is available that uses lgetxattr() and
+   therefore does not have this problem.  It is equivalent to
+   acl_extended_file(), except on symbolic links.  */
+
+static int
+acl_extended_file_wrap (char const *name)
+{
+  if ( ! HAVE_ACL_EXTENDED_FILE)
+    return -1;
+
+  if (HAVE_ACL_EXTENDED_FILE_NOFOLLOW)
+    {
+      struct stat sb;
+      if (! lstat (name, &sb) && ! S_ISLNK (sb.st_mode))
+        /* acl_extended_file_nofollow() uses lgetxattr() in order to
+           prevent unnecessary mounts.  It returns the same result as
+           acl_extended_file() since we already know that NAME is not a
+           symbolic link at this point (modulo the TOCTTOU race condition).  */
+        return acl_extended_file_nofollow (name);
+    }
+
+  /* fallback for symlinks and old versions of libacl */
+  return acl_extended_file (name);
+}
+
+
 /* Return 1 if NAME has a nontrivial access control list, 0 if NAME
    only has no or a base access control list, and -1 (setting errno)
    on error.  SB must be set to the stat buffer of NAME, obtained
@@ -454,20 +482,12 @@ file_has_acl (char const *name, struct stat const *sb)
       /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
       int ret;
 
-      if (HAVE_ACL_EXTENDED_FILE || HAVE_ACL_EXTENDED_FILE_NOFOLLOW) /* Linux */
+      if (HAVE_ACL_EXTENDED_FILE) /* Linux */
         {
-#  if HAVE_ACL_EXTENDED_FILE_NOFOLLOW
-          /* acl_extended_file_nofollow() uses lgetxattr() in order to prevent
-             unnecessary mounts, but it returns the same result as we already
-             know that NAME is not a symbolic link at this point (modulo the
-             TOCTTOU race condition).  */
-          ret = acl_extended_file_nofollow (name);
-#  else
           /* On Linux, acl_extended_file is an optimized function: It only
              makes two calls to getxattr(), one for ACL_TYPE_ACCESS, one for
              ACL_TYPE_DEFAULT.  */
-          ret = acl_extended_file (name);
-#  endif
+          ret = acl_extended_file_wrap (name);
         }
       else /* FreeBSD, MacOS X, IRIX, Tru64 */
         {
