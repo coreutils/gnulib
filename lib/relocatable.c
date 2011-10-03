@@ -85,6 +85,19 @@
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
+/* Whether to enable the more costly support for relocatable libraries.
+   It allows libraries to be have been installed with a different original
+   prefix than the program.  But it is quite costly, especially on Cygwin
+   platforms, see below.  Therefore we enable it by default only on native
+   Win32 platforms.  */
+#ifndef ENABLE_COSTLY_RELOCATABLE
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#  define ENABLE_COSTLY_RELOCATABLE 1
+# else
+#  define ENABLE_COSTLY_RELOCATABLE 0
+# endif
+#endif
+
 /* Original installation prefix.  */
 static char *orig_prefix;
 static size_t orig_prefix_len;
@@ -154,7 +167,7 @@ set_relocation_prefix (const char *orig_prefix_arg, const char *curr_prefix_arg)
 #endif
 }
 
-#if !defined IN_LIBRARY || (defined PIC && defined INSTALLDIR)
+#if !defined IN_LIBRARY || (defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE)
 
 /* Convenience function:
    Computes the current installation prefix, based on the original
@@ -284,7 +297,7 @@ compute_curr_prefix (const char *orig_installprefix,
 
 #endif /* !IN_LIBRARY || PIC */
 
-#if defined PIC && defined INSTALLDIR
+#if defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE
 
 /* Full pathname of shared library, or NULL.  */
 static char *shared_library_fullname;
@@ -330,7 +343,9 @@ find_shared_library_fullname ()
 #if (defined __linux__ && (__GLIBC__ >= 2 || defined __UCLIBC__)) || defined __CYGWIN__
   /* Linux has /proc/self/maps. glibc 2 and uClibc have the getline()
      function.
-     Cygwin >= 1.5 has /proc/self/maps and the getline() function too.  */
+     Cygwin >= 1.5 has /proc/self/maps and the getline() function too.
+     But it is costly: ca. 0.3 ms on Linux, 3 ms on Cygwin 1.5, and 5 ms on
+     Cygwin 1.7.  */
   FILE *fp;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
@@ -403,7 +418,7 @@ get_shared_library_fullname ()
 const char *
 relocate (const char *pathname)
 {
-#if defined PIC && defined INSTALLDIR
+#if defined PIC && defined INSTALLDIR && ENABLE_COSTLY_RELOCATABLE
   static int initialized;
 
   /* Initialization code for a shared library.  */

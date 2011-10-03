@@ -1,3 +1,13 @@
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
+	relocatable-lib[-lgpl]: Avoid expensive /proc access on Linux, Cygwin.
+	* lib/relocatable.c (ENABLE_COSTLY_RELOCATABLE): New macro.
+	(compute_curr_prefix, shared_library_fullname,
+	find_shared_library_fullname, get_shared_library_fullname, relocate):
+	Use it together with PIC && INSTALLDIR.
+	Reported by <jojelino@gmail.com>
+	via Charles Wilson <cygwin@cwilson.fastmail.fm>.
+
 2011-10-01  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: adjust a release-related rule not to require use of gzip
