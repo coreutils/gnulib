@@ -1,5 +1,18 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	glthread/*, strsignal: Support for MSVC.
+	* lib/glthread/cond.h: Define WIN32_LEAN_AND_MEAN, so as to avoid
+	including <winsock.h> on MSVC 9.
+	* lib/glthread/lock.h: Likewise.
+	* lib/glthread/thread.h: Likewise.
+	* lib/glthread/tls.h: Likewise.
+	* lib/glthread/yield.h: Likewise.
+	* lib/strsignal.c: Include <string.h> first. Don't include <unistd.h>
+	if HAVE_UNISTD_H is false.
+	* m4/strsignal.m4 (gl_PREREQ_STRSIGNAL): Test for <unistd.h>.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	nonblocking tests: Fix test failure on OpenBSD/SPARC64.
 	* tests/test-nonblocking-socket.h (SOCKET_DATA_BLOCK_SIZE) [OpenBSD]:
 	Set to 100000.

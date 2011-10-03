@@ -292,6 +292,7 @@ typedef thread_t gl_thread_t;
 
 #if USE_WIN32_THREADS
 
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
 # ifdef __cplusplus

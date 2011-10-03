@@ -616,6 +616,7 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 
 #if USE_WIN32_THREADS
 
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
 # ifdef __cplusplus

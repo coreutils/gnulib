@@ -1,4 +1,4 @@
-# strsignal.m4 serial 7
+# strsignal.m4 serial 8
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,6 +53,7 @@ AC_DEFUN([gl_FUNC_STRSIGNAL],
 
 # Prerequisites of lib/strsignal.c.
 AC_DEFUN([gl_PREREQ_STRSIGNAL], [
+  AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_REQUIRE([AC_DECL_SYS_SIGLIST])
   AC_CHECK_DECLS([_sys_siglist], [], [], [[#include <signal.h>]])
 ])
