@@ -1,5 +1,11 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	wmemchr: Support for MSVC.
+	* m4/wmemchr.m4 (gl_FUNC_WMEMCHR): Use a small test program to test
+	whether wmemchr() exists.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	glthread/*, strsignal: Support for MSVC.
 	* lib/glthread/cond.h: Define WIN32_LEAN_AND_MEAN, so as to avoid
 	including <winsock.h> on MSVC 9.
