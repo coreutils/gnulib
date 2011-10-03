@@ -1,5 +1,11 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	wmemcpy: Support for MSVC.
+	* m4/wmemcpy.m4 (gl_FUNC_WMEMCPY): Use a small test program to test
+	whether wmemcpy() exists.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	wmemcmp: Support for MSVC.
 	* m4/wmemcmp.m4 (gl_FUNC_WMEMCMP): Use a small test program to test
 	whether wmemcmp() exists.
