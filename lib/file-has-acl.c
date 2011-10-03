@@ -439,7 +439,8 @@ acl_nontrivial (int count, struct acl *entries)
 
 /* Return 1 if NAME has a nontrivial access control list, 0 if NAME
    only has no or a base access control list, and -1 (setting errno)
-   on error.  SB must be set to the stat buffer of FILE.  */
+   on error.  SB must be set to the stat buffer of NAME, obtained
+   through stat() or lstat().  */
 
 int
 file_has_acl (char const *name, struct stat const *sb)

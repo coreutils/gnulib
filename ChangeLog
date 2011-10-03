@@ -1,5 +1,10 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix specification.
+	* lib/file-has-acl.c (file_has_acl): Fix specification.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	relocatable-lib[-lgpl]: Avoid expensive /proc access on Linux, Cygwin.
 	* lib/relocatable.c (ENABLE_COSTLY_RELOCATABLE): New macro.
 	(compute_curr_prefix, shared_library_fullname,
