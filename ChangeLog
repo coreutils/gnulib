@@ -1,5 +1,10 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	sys_select: Fix compilation error on mingw.
+	* lib/sys_select.in.h: On native Windows, include <io.h>.
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	wmemset: Support for MSVC.
 	* m4/wmemset.m4 (gl_FUNC_WMEMSET): Use a small test program to test
 	whether wmemset() exists.

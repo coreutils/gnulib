@@ -95,11 +95,15 @@
 #  include <string.h>
 # endif
 /* On native Windows platforms:
-   Get the 'fd_set' type.  */
-# if @HAVE_WINSOCK2_H@ && !defined _GL_INCLUDING_WINSOCK2_H
-#  define _GL_INCLUDING_WINSOCK2_H
-#  include <winsock2.h>
-#  undef _GL_INCLUDING_WINSOCK2_H
+   Get the 'fd_set' type.
+   Get the close() declaration before we override it.  */
+# if @HAVE_WINSOCK2_H@
+#  if !defined _GL_INCLUDING_WINSOCK2_H
+#   define _GL_INCLUDING_WINSOCK2_H
+#   include <winsock2.h>
+#   undef _GL_INCLUDING_WINSOCK2_H
+#  endif
+#  include <io.h>
 # endif
 #endif
 
