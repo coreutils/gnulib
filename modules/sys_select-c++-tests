@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-sys_select-c++
 check_PROGRAMS += test-sys_select-c++
 test_sys_select_c___SOURCES = test-sys_select-c++.cc
-test_sys_select_c___LDADD = $(LDADD) $(LIBINTL) $(LIBSOCKET) $(LIB_NANOSLEEP)
+test_sys_select_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_SELECT) $(LIB_NANOSLEEP)
 endif

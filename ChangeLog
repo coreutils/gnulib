@@ -1,5 +1,11 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	sys_select tests: Fix link error on MSVC 9.
+	* modules/sys_select-c++-tests (Makefile.am): Link test-sys_select-c++
+	with $(LIB_SELECT) instead of $(LIBSOCKET).
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	sys_select: Fix compilation error on mingw.
 	* lib/sys_select.in.h: On native Windows, include <io.h>.
 
