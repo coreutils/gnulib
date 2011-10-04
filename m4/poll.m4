@@ -1,4 +1,4 @@
-# poll.m4 serial 14
+# poll.m4 serial 15
 dnl Copyright (c) 2003, 2005-2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_POLL],
 [
   AC_REQUIRE([gl_POLL_H])
+  AC_REQUIRE([gl_SOCKETS])
   if test "$ac_cv_header_poll_h" = no; then
     ac_cv_func_poll=no
     gl_cv_func_poll=no
@@ -68,6 +69,31 @@ This is MacOSX or AIX
     AC_DEFINE([HAVE_POLL], [1],
       [Define to 1 if you have the 'poll' function and it works.])
   fi
+
+  dnl Determine the needed libraries.
+  LIB_POLL="$LIBSOCKET"
+  if test $HAVE_POLL = 0 || test $REPLACE_POLL = 1; then
+    case "$host_os" in
+      mingw*)
+        dnl On the MSVC platform, the function MsgWaitForMultipleObjects
+        dnl (used in lib/poll.c) requires linking with -luser32. On mingw,
+        dnl it is implicit.
+        AC_LINK_IFELSE(
+          [AC_LANG_SOURCE([[
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+int
+main ()
+{
+  MsgWaitForMultipleObjects (0, NULL, 0, 0, 0);
+  return 0;
+}]])],
+          [],
+          [LIB_POLL="$LIB_POLL -luser32"])
+        ;;
+    esac
+  fi
+  AC_SUBST([LIB_POLL])
 ])
 
 # Prerequisites of lib/poll.c.

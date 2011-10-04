@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-10-03  poll            The link requirements of this module are changed
+                            from empty to $(LIB_POLL).
+
 2011-09-25  sys_stat        This module no longer provides the fstat()
                             function. If you need this function, you now need
                             to request the 'fstat' module.

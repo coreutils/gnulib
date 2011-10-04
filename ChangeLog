@@ -1,5 +1,16 @@
 2011-10-03  Bruno Haible  <bruno@clisp.org>
 
+	poll: Avoid link errors on MSVC.
+	* m4/poll.m4 (gl_FUNC_POLL): Determine LIB_POLL.
+	* modules/poll (Depends-on): Add sockets.
+	(Link): New section.
+	* NEWS: Mention the change.
+	* modules/poll-tests (Makefile.am): Link test-poll against $(LIB_POLL).
+	* modules/poll-h-c++-tests (Makefile.am): Link test-poll-h-c++ against
+	$(LIB_POLL) instead of $(LIBSOCKET).
+
+2011-10-03  Bruno Haible  <bruno@clisp.org>
+
 	sys_select tests: Fix link error on MSVC 9.
 	* modules/sys_select-c++-tests (Makefile.am): Link test-sys_select-c++
 	with $(LIB_SELECT) instead of $(LIBSOCKET).

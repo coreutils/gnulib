@@ -9,6 +9,7 @@ Depends-on:
 poll-h
 alloca          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 select          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+sockets         [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_select      [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_time        [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 errno           [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
@@ -26,6 +27,9 @@ Makefile.am:
 
 Include:
 <poll.h>
+
+Link:
+$(LIB_POLL)
 
 License:
 LGPLv2+

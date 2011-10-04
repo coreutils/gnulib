@@ -28,4 +28,4 @@ AC_CHECK_HEADERS_ONCE([unistd.h sys/wait.h])
 Makefile.am:
 TESTS += test-poll
 check_PROGRAMS += test-poll
-test_poll_LDADD = $(LDADD) @LIBSOCKET@ $(INET_PTON_LIB)
+test_poll_LDADD = $(LDADD) $(LIB_POLL) @LIBSOCKET@ $(INET_PTON_LIB)
