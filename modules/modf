@@ -2,12 +2,13 @@ Description:
 modf() function: get signed integer and fractional parts.
 
 Files:
+m4/modf.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_MATHFUNC([modf], [double], [(double, double *)])
+gl_FUNC_MODF
 
 Makefile.am:
 

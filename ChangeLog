@@ -1,5 +1,12 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	modf: Use a .m4 file.
+	* m4/modf.m4: New file.
+	* modules/modf (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_MODF.
+
+2011-10-05  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'fmodf'.
 	* modules/fmodf-tests: New file.
 	* tests/test-fmodf.c: New file.
