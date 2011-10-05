@@ -2,12 +2,13 @@ Description:
 fmod() function: floating-point remainder function.
 
 Files:
+m4/fmod.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([fmod])
+gl_FUNC_FMOD
 
 Makefile.am:
 

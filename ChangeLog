@@ -1,5 +1,12 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	fmod: Use a .m4 file.
+	* m4/fmod.m4: New file.
+	* modules/fmod (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_FMOD.
+
+2011-10-05  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'fabsf'.
 	* modules/fabsf-tests: New file.
 	* tests/test-fabsf.c: New file.
