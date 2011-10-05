@@ -1,3 +1,10 @@
+2011-10-05  Bruno Haible  <bruno@clisp.org>
+
+	fabs: Use a .m4 file.
+	* m4/fabs.m4: New file.
+	* modules/fabs (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_FABS.
+
 2011-10-05  Jim Meyering  <meyering@redhat.com>
 
 	file-has-acl: revert both recent changes, 80af92af and 95f7c57f

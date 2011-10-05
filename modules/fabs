@@ -2,12 +2,13 @@ Description:
 fabs() function: absolute value.
 
 Files:
+m4/fabs.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_MATHFUNC([fabs], [double], [(double)])
+gl_FUNC_FABS
 
 Makefile.am:
 
