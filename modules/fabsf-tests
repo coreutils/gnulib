@@ -1,0 +1,13 @@
+Files:
+tests/test-fabsf.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fabsf
+check_PROGRAMS += test-fabsf
+test_fabsf_LDADD = $(LDADD) @FABSF_LIBM@
