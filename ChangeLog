@@ -1,5 +1,9 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fmodf'.
+	* modules/fmodf-tests: New file.
+	* tests/test-fmodf.c: New file.
+
 	New module 'fmodf'.
 	* lib/math.in.h (fmodf): New declaration.
 	* lib/fmodf.c: New file.
