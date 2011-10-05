@@ -1,5 +1,16 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmodf'.
+	* lib/math.in.h (fmodf): New declaration.
+	* lib/fmodf.c: New file.
+	* m4/fmodf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether fmodf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMODF, HAVE_FMODF.
+	* modules/math (Makefile.am): Substitute GNULIB_FMODF, HAVE_FMODF.
+	* modules/fmodf: New file.
+	* tests/test-math-c++.cc: Check the declaration of fmodf.
+	* doc/posix-functions/fmodf.texi: Mention the new module.
+
 	fmod: Use a .m4 file.
 	* m4/fmod.m4: New file.
 	* modules/fmod (Files): Add it.

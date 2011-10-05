@@ -358,6 +358,22 @@ _GL_WARN_ON_USE (floorl, "floorl is unportable - "
 #endif
 
 
+#if @GNULIB_FMODF@
+# if !@HAVE_FMODF@
+#  undef fmodf
+_GL_FUNCDECL_SYS (fmodf, float, (float x, float y));
+# endif
+_GL_CXXALIAS_SYS (fmodf, float, (float x, float y));
+_GL_CXXALIASWARN (fmodf);
+#elif defined GNULIB_POSIXCHECK
+# undef fmodf
+# if HAVE_RAW_DECL_FMODF
+_GL_WARN_ON_USE (fmodf, "fmodf is unportable - "
+                 "use gnulib module fmodf for portability");
+# endif
+#endif
+
+
 /* Write x as
      x = mantissa * 2^exp
    where

@@ -39,6 +39,9 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fabsf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::fabs, double, (double));
+#if GNULIB_TEST_FMODF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fmodf, float, (float, float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::fmod, double, (double, double));
 #if GNULIB_TEST_FREXP
 SIGNATURE_CHECK (GNULIB_NAMESPACE::frexp, double, (double, int *));

@@ -1,4 +1,4 @@
-# math_h.m4 serial 26
+# math_h.m4 serial 27
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([gl_MATH_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
-    [acosl asinl atanl ceilf ceill cosl expl fabsf floorf floorl frexpl
+    [acosl asinl atanl ceilf ceill cosl expl fabsf floorf floorl fmodf frexpl
      ldexpl logb logl round roundf roundl sinl sqrtl tanl trunc truncf truncl])
 ])
 
@@ -66,6 +66,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_FLOOR=0;    AC_SUBST([GNULIB_FLOOR])
   GNULIB_FLOORF=0;   AC_SUBST([GNULIB_FLOORF])
   GNULIB_FLOORL=0;   AC_SUBST([GNULIB_FLOORL])
+  GNULIB_FMODF=0;    AC_SUBST([GNULIB_FMODF])
   GNULIB_FREXP=0;    AC_SUBST([GNULIB_FREXP])
   GNULIB_FREXPL=0;   AC_SUBST([GNULIB_FREXPL])
   GNULIB_ISFINITE=0; AC_SUBST([GNULIB_ISFINITE])
@@ -94,6 +95,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_COSL=1;                 AC_SUBST([HAVE_COSL])
   HAVE_EXPL=1;                 AC_SUBST([HAVE_EXPL])
   HAVE_FABSF=1;                AC_SUBST([HAVE_FABSF])
+  HAVE_FMODF=1;                AC_SUBST([HAVE_FMODF])
   HAVE_ISNANF=1;               AC_SUBST([HAVE_ISNANF])
   HAVE_ISNAND=1;               AC_SUBST([HAVE_ISNAND])
   HAVE_ISNANL=1;               AC_SUBST([HAVE_ISNANL])
