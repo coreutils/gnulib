@@ -36,6 +36,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_CEILL''@/$(GNULIB_CEILL)/g' \
 	      -e 's/@''GNULIB_COSL''@/$(GNULIB_COSL)/g' \
 	      -e 's/@''GNULIB_EXPL''@/$(GNULIB_EXPL)/g' \
+	      -e 's/@''GNULIB_FABSF''@/$(GNULIB_FABSF)/g' \
 	      -e 's/@''GNULIB_FLOOR''@/$(GNULIB_FLOOR)/g' \
 	      -e 's/@''GNULIB_FLOORF''@/$(GNULIB_FLOORF)/g' \
 	      -e 's/@''GNULIB_FLOORL''@/$(GNULIB_FLOORL)/g' \
@@ -66,6 +67,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_ATANL''@|$(HAVE_ATANL)|g' \
 	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \
 	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
+	      -e 's|@''HAVE_FABSF''@|$(HAVE_FABSF)|g' \
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
 	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
 	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \
