@@ -1,5 +1,5 @@
 Description:
-fmodf() function: remainder.
+fmodf() function: floating-point remainder function.
 
 Files:
 lib/fmodf.c
