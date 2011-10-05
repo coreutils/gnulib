@@ -8,8 +8,8 @@
 	* lib/math.in.h (fabsf): New declaration.
 	* lib/fabsf.c: New file.
 	* m4/fabsf.m4: New file.
-	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_FABSF,
-	HAVE_FABSF.
+	* m4/math_h.m4 (gl_MATH_H): Test whether fabsf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FABSF, HAVE_FABSF.
 	* modules/math (Makefile.am): Substitute GNULIB_FABSF, HAVE_FABSF.
 	* modules/fabsf: New file.
 	* tests/test-math-c++.cc: Check the declaration of fabsf.

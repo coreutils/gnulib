@@ -38,9 +38,9 @@ AC_DEFUN([gl_MATH_H],
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
-  gl_WARN_ON_USE_PREPARE([[#include <math.h>
-    ]], [acosl asinl atanl ceilf ceill cosl expl floorf floorl frexpl
-    ldexpl logb logl round roundf roundl sinl sqrtl tanl trunc truncf truncl])
+  gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
+    [acosl asinl atanl ceilf ceill cosl expl fabsf floorf floorl frexpl
+     ldexpl logb logl round roundf roundl sinl sqrtl tanl trunc truncf truncl])
 ])
 
 AC_DEFUN([gl_MATH_MODULE_INDICATOR],
