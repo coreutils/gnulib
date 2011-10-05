@@ -133,12 +133,6 @@ rpl_acl_set_fd (int fd, acl_t acl)
 #  endif
 
 /* Linux-specific */
-#  ifndef HAVE_ACL_EXTENDED_FILE_NOFOLLOW
-#   define HAVE_ACL_EXTENDED_FILE_NOFOLLOW false
-#   define acl_extended_file_nofollow(name) (-1)
-#  endif
-
-/* Linux-specific */
 #  ifndef HAVE_ACL_FROM_MODE
 #   define HAVE_ACL_FROM_MODE false
 #   define acl_from_mode(mode) (NULL)
