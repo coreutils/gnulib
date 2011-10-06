@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 6
+# mathfunc.m4 serial 7
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,8 +30,11 @@ AC_DEFUN([gl_MATHFUNC],
              #endif
              #include <math.h>
              $2 (*funcptr) $3 = ]func[;
-             double d_ret;]],
-           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double \*], [&d_ret])], [double], [1.6180339887])[;
+             int i_ret;
+             float f_ret;
+             double d_ret;
+             long double l_ret;]],
+           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int \*], [&i_ret])], [float \*], [&f_ret])], [double \*], [&d_ret])], [long double \*], [&l_ret])], [int], [2])], [float], [1.618034f])], [long double], [1.618033988749894848L])], [double], [1.6180339887])[;
              return y < 0.3 || y > 1.7;
            ]])],
         [gl_cv_func_]func[_no_libm=yes],
@@ -50,8 +53,11 @@ AC_DEFUN([gl_MATHFUNC],
                #endif
                #include <math.h>
                $2 (*funcptr) $3 = ]func[;
-               double d_ret;]],
-             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int], [2])], [double \*], [&d_ret])], [double], [1.6180339887])[;
+               int i_ret;
+               float f_ret;
+               double d_ret;
+               long double l_ret;]],
+             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int \*], [&i_ret])], [float \*], [&f_ret])], [double \*], [&d_ret])], [long double \*], [&l_ret])], [int], [2])], [float], [1.618034f])], [long double], [1.618033988749894848L])], [double], [1.6180339887])[;
                return y < 0.3 || y > 1.7;
              ]])],
           [gl_cv_func_]func[_in_libm=yes],

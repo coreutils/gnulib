@@ -1,5 +1,12 @@
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
+	frexpf: Drop assumption about library that defines frexpf.
+	* m4/mathfunc.m4 (gl_MATHFUNC): Support also the argument types
+	'int *', 'float *', 'long double *', 'float', 'long double'.
+	* m4/frexpf.m4 (gl_FUNC_FREXPF): Use gl_MATHFUNC macro instead of
+	AC_CHECK_FUNCS.
+	* modules/frexpf (Files): Add m4/mathfunc.m4.
+
 	Tests for module 'frexpf'.
 	* modules/frexpf-tests: New file.
 	* tests/test-frexpf.c: New file.

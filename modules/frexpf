@@ -4,6 +4,7 @@ frexpf() function: split a float into its constituents.
 Files:
 lib/frexpf.c
 m4/frexpf.m4
+m4/mathfunc.m4
 
 Depends-on:
 math
