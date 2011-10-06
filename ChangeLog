@@ -1,5 +1,18 @@
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'frexpf'.
+	* lib/math.in.h (frexpf): New declaration.
+	* lib/frexpf.c: New file.
+	* m4/frexpf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether frexpf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FREXPF, HAVE_FREXPF.
+	* modules/math (Makefile.am): Substitute GNULIB_FREXPF, HAVE_FREXPF.
+	* modules/frexpf: New file.
+	* tests/test-math-c++.cc: Check the declaration of frexpf.
+	* doc/posix-functions/frexpf.texi: Mention the new module.
+
+2011-10-06  Bruno Haible  <bruno@clisp.org>
+
 	math: Sort function declarations of math.in.h.
 	* lib/math.in.h (frexp, logb): Move declarations.
 

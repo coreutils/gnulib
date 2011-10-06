@@ -342,6 +342,28 @@ _GL_WARN_ON_USE (fmodf, "fmodf is unportable - "
      If x is zero: mantissa = x, exp = 0.
      If x is infinite or NaN: mantissa = x, exp unspecified.
    Store exp in *EXPPTR and return mantissa.  */
+#if @GNULIB_FREXPF@
+# if !@HAVE_FREXPF@
+#  undef frexpf
+_GL_FUNCDECL_SYS (frexpf, float, (float x, int *expptr) _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (frexpf, float, (float x, int *expptr));
+_GL_CXXALIASWARN (frexpf);
+#elif defined GNULIB_POSIXCHECK
+# undef frexpf
+# if HAVE_RAW_DECL_FREXPF
+_GL_WARN_ON_USE (frexpf, "frexpf is unportable - "
+                 "use gnulib module frexpf for portability");
+# endif
+#endif
+
+/* Write x as
+     x = mantissa * 2^exp
+   where
+     If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
+     If x is zero: mantissa = x, exp = 0.
+     If x is infinite or NaN: mantissa = x, exp unspecified.
+   Store exp in *EXPPTR and return mantissa.  */
 #if @GNULIB_FREXP@
 # if @REPLACE_FREXP@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
