@@ -1,5 +1,16 @@
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
+	frexpf: Work around problems on IRIX and mingw.
+	* lib/math.in.h (frexpf): Consider also REPLACE_FREXPF.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_FREXPF.
+	* m4/frexpf.m4 (gl_FUNC_FREXPF_WORKS): New macro.
+	(gl_FUNC_FREXPF): Invoke it. Set REPLACE_FREXPF.
+	* modules/frexpf (Depends-on, configure.ac): Consider REPLACE_FREXPF.
+	* modules/math (Makefile.am): Substitute REPLACE_FREXPF.
+	* doc/posix-functions/frexpf.texi: Mention the IRIX and mingw problems.
+
+2011-10-06  Bruno Haible  <bruno@clisp.org>
+
 	fabsf: Drop assumption about library that defines fabsf.
 	* m4/fabsf.m4 (gl_FUNC_FABSF): Use gl_MATHFUNC macro instead of
 	AC_CHECK_FUNCS.

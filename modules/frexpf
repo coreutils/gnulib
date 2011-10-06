@@ -8,11 +8,11 @@ m4/mathfunc.m4
 
 Depends-on:
 math
-frexp           [test $HAVE_FREXPF = 0]
+frexp           [test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1]
 
 configure.ac:
 gl_FUNC_FREXPF
-if test $HAVE_FREXPF = 0; then
+if test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1; then
   AC_LIBOBJ([frexpf])
 fi
 gl_MATH_MODULE_INDICATOR([frexpf])

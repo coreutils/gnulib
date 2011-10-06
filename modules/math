@@ -110,6 +110,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_FLOOR''@|$(REPLACE_FLOOR)|g' \
 	      -e 's|@''REPLACE_FLOORF''@|$(REPLACE_FLOORF)|g' \
 	      -e 's|@''REPLACE_FLOORL''@|$(REPLACE_FLOORL)|g' \
+	      -e 's|@''REPLACE_FREXPF''@|$(REPLACE_FREXPF)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \
 	      -e 's|@''REPLACE_HUGE_VAL''@|$(REPLACE_HUGE_VAL)|g' \
