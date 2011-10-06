@@ -1,5 +1,9 @@
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'frexpf'.
+	* modules/frexpf-tests: New file.
+	* tests/test-frexpf.c: New file.
+
 	New module 'frexpf'.
 	* lib/math.in.h (frexpf): New declaration.
 	* lib/frexpf.c: New file.
