@@ -1,5 +1,9 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'modff'.
+	* modules/modff-tests: New file.
+	* tests/test-modff.c: New file.
+
 	New module 'modff'.
 	* lib/math.in.h (modff): New declaration.
 	* lib/modff.c: New file.

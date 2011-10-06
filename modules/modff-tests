@@ -1,0 +1,13 @@
+Files:
+tests/test-modff.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-modff
+check_PROGRAMS += test-modff
+test_modff_LDADD = $(LDADD) @MODFF_LIBM@
