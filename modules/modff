@@ -1,0 +1,31 @@
+Description:
+modff() function: get signed integer and fractional parts.
+
+Files:
+lib/modff.c
+m4/modff.m4
+
+Depends-on:
+math
+modf            [test $HAVE_MODFF = 0]
+
+configure.ac:
+gl_FUNC_MODFF
+if test $HAVE_MODFF = 0; then
+  AC_LIBOBJ([modff])
+fi
+gl_MATH_MODULE_INDICATOR([modff])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(MODFF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

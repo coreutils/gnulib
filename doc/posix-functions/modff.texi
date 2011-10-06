@@ -4,18 +4,18 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/modff.html}
 
-Gnulib module: ---
+Gnulib module: modff
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 MacOS X 10.5, Minix 3.1.8, AIX 5.1, HP-UX 11.
 @item
-This function is only defined as a macro with arguments on some platforms:
+This function is only defined as a buggy macro with arguments on some platforms:
 MSVC 9.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

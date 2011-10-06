@@ -1,5 +1,16 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'modff'.
+	* lib/math.in.h (modff): New declaration.
+	* lib/modff.c: New file.
+	* m4/modff.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether modff is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_MODFF, HAVE_MODFF.
+	* modules/math (Makefile.am): Substitute GNULIB_MODFF, HAVE_MODFF.
+	* modules/modff: New file.
+	* tests/test-math-c++.cc: Check the declaration of modff.
+	* doc/posix-functions/modff.texi: Mention the new module.
+
 	modf tests: Make test sharper.
 	* tests/test-modf.c (main): Strengthen upper bound.
 

@@ -453,6 +453,22 @@ _GL_WARN_ON_USE (logl, "logl is unportable - "
 #endif
 
 
+#if @GNULIB_MODFF@
+# if !@HAVE_MODFF@
+#  undef modff
+_GL_FUNCDECL_SYS (modff, float, (float x, float *iptr) _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (modff, float, (float x, float *iptr));
+_GL_CXXALIASWARN (modff);
+#elif defined GNULIB_POSIXCHECK
+# undef modff
+# if HAVE_RAW_DECL_MODFF
+_GL_WARN_ON_USE (modff, "modff is unportable - "
+                 "use gnulib module modff for portability");
+# endif
+#endif
+
+
 #if @GNULIB_ROUNDF@
 # if @REPLACE_ROUNDF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
