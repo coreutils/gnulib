@@ -108,45 +108,6 @@ _NaN ()
 #endif
 
 
-/* Write x as
-     x = mantissa * 2^exp
-   where
-     If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
-     If x is zero: mantissa = x, exp = 0.
-     If x is infinite or NaN: mantissa = x, exp unspecified.
-   Store exp in *EXPPTR and return mantissa.  */
-#if @GNULIB_FREXP@
-# if @REPLACE_FREXP@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   define frexp rpl_frexp
-#  endif
-_GL_FUNCDECL_RPL (frexp, double, (double x, int *expptr) _GL_ARG_NONNULL ((2)));
-_GL_CXXALIAS_RPL (frexp, double, (double x, int *expptr));
-# else
-_GL_CXXALIAS_SYS (frexp, double, (double x, int *expptr));
-# endif
-_GL_CXXALIASWARN (frexp);
-#elif defined GNULIB_POSIXCHECK
-# undef frexp
-/* Assume frexp is always declared.  */
-_GL_WARN_ON_USE (frexp, "frexp is unportable - "
-                 "use gnulib module frexp for portability");
-#endif
-
-
-#if @GNULIB_LOGB@
-# if !@HAVE_DECL_LOGB@
-_GL_EXTERN_C double logb (double x);
-# endif
-#elif defined GNULIB_POSIXCHECK
-# undef logb
-# if HAVE_RAW_DECL_LOGB
-_GL_WARN_ON_USE (logb, "logb is unportable - "
-                 "use gnulib module logb for portability");
-# endif
-#endif
-
-
 #if @GNULIB_ACOSL@
 # if !@HAVE_ACOSL@ || !@HAVE_DECL_ACOSL@
 _GL_FUNCDECL_SYS (acosl, long double, (long double x));
@@ -381,6 +342,31 @@ _GL_WARN_ON_USE (fmodf, "fmodf is unportable - "
      If x is zero: mantissa = x, exp = 0.
      If x is infinite or NaN: mantissa = x, exp unspecified.
    Store exp in *EXPPTR and return mantissa.  */
+#if @GNULIB_FREXP@
+# if @REPLACE_FREXP@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define frexp rpl_frexp
+#  endif
+_GL_FUNCDECL_RPL (frexp, double, (double x, int *expptr) _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (frexp, double, (double x, int *expptr));
+# else
+_GL_CXXALIAS_SYS (frexp, double, (double x, int *expptr));
+# endif
+_GL_CXXALIASWARN (frexp);
+#elif defined GNULIB_POSIXCHECK
+# undef frexp
+/* Assume frexp is always declared.  */
+_GL_WARN_ON_USE (frexp, "frexp is unportable - "
+                 "use gnulib module frexp for portability");
+#endif
+
+/* Write x as
+     x = mantissa * 2^exp
+   where
+     If x finite and nonzero: 0.5 <= |mantissa| < 1.0.
+     If x is zero: mantissa = x, exp = 0.
+     If x is infinite or NaN: mantissa = x, exp unspecified.
+   Store exp in *EXPPTR and return mantissa.  */
 #if @GNULIB_FREXPL@ && @REPLACE_FREXPL@
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef frexpl
@@ -434,6 +420,19 @@ _GL_CXXALIASWARN (ldexpl);
 # if HAVE_RAW_DECL_LDEXPL
 _GL_WARN_ON_USE (ldexpl, "ldexpl is unportable - "
                  "use gnulib module ldexpl for portability");
+# endif
+#endif
+
+
+#if @GNULIB_LOGB@
+# if !@HAVE_DECL_LOGB@
+_GL_EXTERN_C double logb (double x);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef logb
+# if HAVE_RAW_DECL_LOGB
+_GL_WARN_ON_USE (logb, "logb is unportable - "
+                 "use gnulib module logb for portability");
 # endif
 #endif
 
@@ -650,6 +649,10 @@ _GL_WARN_ON_USE (truncl, "truncl is unportable - "
                  "use gnulib module truncl for portability");
 # endif
 #endif
+
+
+/* Definitions of function-like macros come here, after the function
+   declarations.  */
 
 
 #if @GNULIB_ISFINITE@
