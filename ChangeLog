@@ -1,5 +1,12 @@
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
+	fabsf: Drop assumption about library that defines fabsf.
+	* m4/fabsf.m4 (gl_FUNC_FABSF): Use gl_MATHFUNC macro instead of
+	AC_CHECK_FUNCS.
+	* modules/fabsf (Files): Add m4/mathfunc.m4.
+
+2011-10-06  Bruno Haible  <bruno@clisp.org>
+
 	frexpf: Drop assumption about library that defines frexpf.
 	* m4/mathfunc.m4 (gl_MATHFUNC): Support also the argument types
 	'int *', 'float *', 'long double *', 'float', 'long double'.

@@ -4,6 +4,7 @@ fabsf() function: absolute value.
 Files:
 lib/fabsf.c
 m4/fabsf.m4
+m4/mathfunc.m4
 
 Depends-on:
 math
