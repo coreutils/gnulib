@@ -1,5 +1,8 @@
 2011-10-05  Bruno Haible  <bruno@clisp.org>
 
+	modf tests: Make test sharper.
+	* tests/test-modf.c (main): Strengthen upper bound.
+
 	modf: Use a .m4 file.
 	* m4/modf.m4: New file.
 	* modules/modf (Files): Add it.

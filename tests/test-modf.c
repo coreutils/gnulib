@@ -41,7 +41,7 @@ main ()
   /* A particular negative value.  */
   x = -5.972406760;
   y = modf (x, &z);
-  ASSERT (y >= -0.972406761 && y <= 0.972406759);
+  ASSERT (y >= -0.972406761 && y <= -0.972406759);
   ASSERT (z == -5.0);
 
   return 0;
