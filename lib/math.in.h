@@ -428,6 +428,22 @@ _GL_WARN_ON_USE (frexpl, "frexpl is unportable - "
 
 
 /* Return x * 2^exp.  */
+#if @GNULIB_LDEXPF@
+# if !@HAVE_LDEXPF@
+#  undef ldexpf
+_GL_FUNCDECL_SYS (ldexpf, float, (float x, int exp));
+# endif
+_GL_CXXALIAS_SYS (ldexpf, float, (float x, int exp));
+_GL_CXXALIASWARN (ldexpf);
+#elif defined GNULIB_POSIXCHECK
+# undef ldexpf
+# if HAVE_RAW_DECL_LDEXPF
+_GL_WARN_ON_USE (ldexpf, "ldexpf is unportable - "
+                 "use gnulib module ldexpf for portability");
+# endif
+#endif
+
+/* Return x * 2^exp.  */
 #if @GNULIB_LDEXPL@ && @REPLACE_LDEXPL@
 # if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #  undef ldexpl

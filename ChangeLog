@@ -1,3 +1,16 @@
+2011-10-07  Bruno Haible  <bruno@clisp.org>
+
+	New module 'ldexpf'.
+	* lib/math.in.h (ldexpf): New declaration.
+	* lib/ldexpf.c: New file.
+	* m4/ldexpf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether ldexpf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LDEXPF, HAVE_LDEXPF.
+	* modules/math (Makefile.am): Substitute GNULIB_LDEXPF, HAVE_LDEXPF.
+	* modules/ldexpf: New file.
+	* tests/test-math-c++.cc: Check the declaration of ldexpf.
+	* doc/posix-functions/ldexpf.texi: Mention the new module.
+
 2011-10-06  Bruno Haible  <bruno@clisp.org>
 
 	frexpf: Work around problems on IRIX and mingw.

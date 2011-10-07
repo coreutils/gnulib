@@ -50,6 +50,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ISNANF''@/$(GNULIB_ISNANF)/g' \
 	      -e 's/@''GNULIB_ISNAND''@/$(GNULIB_ISNAND)/g' \
 	      -e 's/@''GNULIB_ISNANL''@/$(GNULIB_ISNANL)/g' \
+	      -e 's/@''GNULIB_LDEXPF''@/$(GNULIB_LDEXPF)/g' \
 	      -e 's/@''GNULIB_LDEXPL''@/$(GNULIB_LDEXPL)/g' \
 	      -e 's/@''GNULIB_LOGB''@/$(GNULIB_LOGB)/g' \
 	      -e 's/@''GNULIB_LOGL''@/$(GNULIB_LOGL)/g' \
@@ -76,6 +77,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
 	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
 	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \
+	      -e 's|@''HAVE_LDEXPF''@|$(HAVE_LDEXPF)|g' \
 	      -e 's|@''HAVE_LOGL''@|$(HAVE_LOGL)|g' \
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
 	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \

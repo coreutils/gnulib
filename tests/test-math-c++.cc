@@ -53,6 +53,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::frexp, double, (double, int *));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j0, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j1, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::jn, double, (int, double));
+#if GNULIB_TEST_LDEXPF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpf, float, (float, int));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexp, double, (double, int));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::lgamma, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::log10, double, (double));
