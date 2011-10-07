@@ -4,6 +4,7 @@ modff() function: get signed integer and fractional parts.
 Files:
 lib/modff.c
 m4/modff.m4
+m4/mathfunc.m4
 
 Depends-on:
 math
