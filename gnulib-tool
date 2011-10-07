@@ -3962,7 +3962,7 @@ func_emit_autoconf_snippets ()
               func_module_shellfunc_name "$dep"
               func_cond_module_condition "$module" "$dep"
               if test "$condition" != true; then
-                echo '      if $condition; then'
+                echo "      if $condition; then"
                 echo "        $shellfunc"
                 echo '      fi'
               else
