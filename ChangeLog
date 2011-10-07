@@ -1,5 +1,29 @@
 2011-10-07  Bruno Haible  <bruno@clisp.org>
 
+	Fix documentation about math functions on MacOS X.
+	* doc/posix-functions/exp2.texi: Don't say the function is missing on
+	MacOS X 10.5.
+	* doc/posix-functions/fdim.texi: Likewise.
+	* doc/posix-functions/feclearexcept.texi: Likewise.
+	* doc/posix-functions/fegetenv.texi: Likewise.
+	* doc/posix-functions/fegetround.texi: Likewise.
+	* doc/posix-functions/feholdexcept.texi: Likewise.
+	* doc/posix-functions/feraiseexcept.texi: Likewise.
+	* doc/posix-functions/fesetenv.texi: Likewise.
+	* doc/posix-functions/fesetround.texi: Likewise.
+	* doc/posix-functions/fetestexcept.texi: Likewise.
+	* doc/posix-functions/feupdateenv.texi: Likewise.
+	* doc/posix-functions/fmax.texi: Likewise.
+	* doc/posix-functions/fmin.texi: Likewise.
+	* doc/posix-functions/log2.texi: Likewise.
+	* doc/posix-functions/modff.texi: Likewise.
+	* doc/posix-functions/nan.texi: Likewise.
+	* doc/posix-functions/nanf.texi: Likewise.
+	* doc/posix-functions/nextafterf.texi: Likewise.
+	* doc/posix-functions/remquo.texi: Likewise.
+
+2011-10-07  Bruno Haible  <bruno@clisp.org>
+
 	modff: Drop assumption about library that defines modff.
 	* m4/modff.m4 (gl_FUNC_MODFF): Use gl_MATHFUNC macro instead of
 	AC_CHECK_FUNCS.
