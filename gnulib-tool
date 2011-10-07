@@ -2731,6 +2731,9 @@ func_modules_transitive_closure ()
               esac
             done
             if $inc; then
+              func_acceptable $dep || inc=false
+            fi
+            if $inc; then
               func_append inmodules " $dep"
               if test "$cond_dependencies" = true; then
                 escaped_dep=`echo "$dep" | sed -e "$sed_escape_dependency"`
@@ -3958,7 +3961,9 @@ func_emit_autoconf_snippets ()
           echo "      $shellvar=true"
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
           for dep in $deps; do
-            if func_cond_module_p "$dep"; then
+            if ! func_acceptable $dep; then
+              :
+            elif func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
               func_cond_module_condition "$module" "$dep"
               if test "$condition" != true; then
@@ -3988,7 +3993,9 @@ func_emit_autoconf_snippets ()
         else
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
           for dep in $deps; do
-            if func_cond_module_p "$dep"; then
+            if ! func_acceptable $dep; then
+              :
+            elif func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
               func_cond_module_condition "$module" "$dep"
               if test "$condition" != true; then
@@ -6507,6 +6514,9 @@ s/\([.*$]\)/[\1]/g'
     ;;
 
   extract-dependencies )
+    if test -n "$avoidlist"; then
+      func_fatal_error "cannot combine --avoid and --extract-dependencies"
+    fi
     for module
     do
       func_verify_module

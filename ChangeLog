@@ -1,5 +1,13 @@
 2011-10-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gnulib-tool: don't follow dependencies to avoided modules
+	This fixes a bug that is related to the previous one.
+	* gnulib-tool (func_modules_transitive_closure)
+	(func_emit_autoconf_snippets):
+	Check whether a dependency is acceptable before using it.
+	(--extract-dependencies): Report an error if --avoid is also used,
+	since this combination of options is not yet supported.
+
 	gnulib-tool: fix typo that broke Emacs on powerpc-apple-darwin9.8.0.
 	Problem reported by Peter Dyballa in
 	<http://debbugs.gnu.org/cgi/bugreport.cgi?bug=9696>.
