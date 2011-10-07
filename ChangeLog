@@ -1,5 +1,9 @@
 2011-10-07  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ldexpf'.
+	* modules/ldexpf-tests: New file.
+	* tests/test-ldexpf.c: New file.
+
 	New module 'ldexpf'.
 	* lib/math.in.h (ldexpf): New declaration.
 	* lib/ldexpf.c: New file.

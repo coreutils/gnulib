@@ -1,0 +1,13 @@
+Files:
+tests/test-ldexpf.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-ldexpf
+check_PROGRAMS += test-ldexpf
+test_ldexpf_LDADD = $(LDADD) @LDEXPF_LIBM@
