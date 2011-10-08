@@ -2730,10 +2730,7 @@ func_modules_transitive_closure ()
                   ;;
               esac
             done
-            if $inc; then
-              func_acceptable $dep || inc=false
-            fi
-            if $inc; then
+            if $inc && func_acceptable "$dep"; then
               func_append inmodules " $dep"
               if test "$cond_dependencies" = true; then
                 escaped_dep=`echo "$dep" | sed -e "$sed_escape_dependency"`
@@ -3924,6 +3921,7 @@ func_emit_autoconf_snippets ()
   disable_libtool="$4"
   disable_gettext="$5"
   if test "$cond_dependencies" = true; then
+    for m in $modules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/modules
     # Emit the autoconf code for the unconditional modules.
     for module in $1; do
       eval $verifier
@@ -3960,10 +3958,10 @@ func_emit_autoconf_snippets ()
           func_emit_autoconf_snippet "      "
           echo "      $shellvar=true"
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+          # Intersect $deps with the modules list $1.
+          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C join - "$tmp"/modules`
           for dep in $deps; do
-            if ! func_acceptable $dep; then
-              :
-            elif func_cond_module_p "$dep"; then
+            if func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
               func_cond_module_condition "$module" "$dep"
               if test "$condition" != true; then
@@ -3992,10 +3990,10 @@ func_emit_autoconf_snippets ()
           :
         else
           deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+          # Intersect $deps with the modules list $1.
+          deps=`for m in $deps; do echo $m; done | LC_ALL=C sort -u | LC_ALL=C join - "$tmp"/modules`
           for dep in $deps; do
-            if ! func_acceptable $dep; then
-              :
-            elif func_cond_module_p "$dep"; then
+            if func_cond_module_p "$dep"; then
               func_module_shellfunc_name "$dep"
               func_cond_module_condition "$module" "$dep"
               if test "$condition" != true; then

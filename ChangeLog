@@ -1,3 +1,10 @@
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Improve last commit.
+	* gnulib-tool (func_modules_transitive_closure): Simplify code.
+	(func_emit_autoconf_snippets): Instead of invoking func_acceptable,
+	ignore dependencies that are not among the modules list.
+
 2011-10-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-tool: don't follow dependencies to avoided modules
