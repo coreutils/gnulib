@@ -12,3 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fchdir
 check_PROGRAMS += test-fchdir
+test_fchdir_LDADD = $(LDADD) $(LIBINTL)

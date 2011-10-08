@@ -36,6 +36,7 @@ TESTS += \
 check_PROGRAMS += \
   test-fchmodat test-fchownat test-fstatat test-mkdirat test-openat \
   test-unlinkat
+test_fchmodat_LDADD = $(LDADD) @LIBINTL@
 test_fchownat_LDADD = $(LDADD) @LIBINTL@
 test_fstatat_LDADD = $(LDADD) @LIBINTL@
 test_mkdirat_LDADD = $(LDADD) @LIBINTL@

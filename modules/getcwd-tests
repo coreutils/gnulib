@@ -13,3 +13,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getcwd
 check_PROGRAMS += test-getcwd
+test_getcwd_LDADD = $(LDADD) @LIBINTL@

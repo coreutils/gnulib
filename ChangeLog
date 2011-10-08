@@ -1,5 +1,20 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests: Avoid link failures w.r.t. libintl.
+	* modules/faccessat-tests (Makefile.am): Link test-faccessat against
+	$(LIBINTL).
+	* modules/fchdir-tests (Makefile.am): Link test-fchdir against
+	$(LIBINTL).
+	* modules/getcwd-lgpl-tests (Makefile.am): Link test-getcwd-lgpl
+	against $(LIBINTL).
+	* modules/getcwd-tests (Makefile.am): Link test-getcwd against
+	$(LIBINTL).
+	* modules/openat-tests (Makefile.am): Link test-fchmodat against
+	$(LIBINTL).
+	* modules/stat-tests (Makefile.am): Link test-stat against $(LIBINTL).
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	pow tests: Defeat compiler optimizations.
 	* tests/test-pow.c (main): Assign arguments to x and y before use.
 
