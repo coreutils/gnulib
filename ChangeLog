@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'tanf'.
+	* lib/math.in.h (tanf): New declaration.
+	* lib/tanf.c: New file.
+	* m4/tanf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether tanf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_TANF, HAVE_TANF.
+	* modules/math (Makefile.am): Substitute GNULIB_TANF, HAVE_TANF.
+	* modules/tanf: New file.
+	* tests/test-math-c++.cc: Check the declaration of tanf.
+	* doc/posix-functions/tanf.texi: Mention the new module.
+
 	tan: Use a .m4 file.
 	* m4/tan.m4: New file.
 	* modules/tan (Files): Add it.

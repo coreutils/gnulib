@@ -722,6 +722,21 @@ _GL_WARN_ON_USE (sqrtl, "sqrtl is unportable - "
 #endif
 
 
+#if @GNULIB_TANF@
+# if !@HAVE_TANF@
+#  undef tanf
+_GL_FUNCDECL_SYS (tanf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (tanf, float, (float x));
+_GL_CXXALIASWARN (tanf);
+#elif defined GNULIB_POSIXCHECK
+# undef tanf
+# if HAVE_RAW_DECL_TANF
+_GL_WARN_ON_USE (tanf, "tanf is unportable - "
+                 "use gnulib module tanf for portability");
+# endif
+#endif
+
 #if @GNULIB_TANL@
 # if !@HAVE_TANL@ || !@HAVE_DECL_TANL@
 _GL_FUNCDECL_SYS (tanl, long double, (long double x));
