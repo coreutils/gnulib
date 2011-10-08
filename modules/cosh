@@ -2,12 +2,13 @@ Description:
 cosh() function: hyperbolic cosine function.
 
 Files:
+m4/cosh.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([cosh])
+gl_FUNC_COSH
 
 Makefile.am:
 

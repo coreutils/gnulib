@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	cosh: Use a .m4 file.
+	* m4/cosh.m4: New file.
+	* modules/cosh (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_COSH.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'sinhf'.
 	* modules/sinhf-tests: New file.
 	* tests/test-sinhf.c: New file.
