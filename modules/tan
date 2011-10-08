@@ -2,12 +2,13 @@ Description:
 tan() function: tangent function.
 
 Files:
+m4/tan.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([tan])
+gl_FUNC_TAN
 
 Makefile.am:
 

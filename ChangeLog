@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	tan: Use a .m4 file.
+	* m4/tan.m4: New file.
+	* modules/tan (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_TAN.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'cosf'.
 	* modules/cosf-tests: New file.
 	* tests/test-cosf.c: New file.
