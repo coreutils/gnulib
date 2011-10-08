@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'cosf'.
+	* modules/cosf-tests: New file.
+	* tests/test-cosf.c: New file.
+
 	New module 'cosf'.
 	* lib/math.in.h (cosf): New declaration.
 	* lib/cosf.c: New file.
