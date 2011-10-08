@@ -2,12 +2,13 @@ Description:
 exp() function: exponential function.
 
 Files:
+m4/exp.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([exp])
+gl_FUNC_EXP
 
 Makefile.am:
 
