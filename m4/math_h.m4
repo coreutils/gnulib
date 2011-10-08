@@ -1,4 +1,4 @@
-# math_h.m4 serial 31
+# math_h.m4 serial 32
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_MATH_H],
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosl asinl atanl ceilf ceill cosl expl fabsf floorf floorl fmodf
      frexpf frexpl
-     ldexpf ldexpl logb logl modff round roundf roundl sinl sqrtl
+     ldexpf ldexpl logb logl modff round roundf roundl sinl sqrtf sqrtl
      tanl trunc truncf truncl])
 ])
 
@@ -88,6 +88,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_ROUNDL=0;   AC_SUBST([GNULIB_ROUNDL])
   GNULIB_SIGNBIT=0;  AC_SUBST([GNULIB_SIGNBIT])
   GNULIB_SINL=0;     AC_SUBST([GNULIB_SINL])
+  GNULIB_SQRTF=0;    AC_SUBST([GNULIB_SQRTF])
   GNULIB_SQRTL=0;    AC_SUBST([GNULIB_SQRTL])
   GNULIB_TANL=0;     AC_SUBST([GNULIB_TANL])
   GNULIB_TRUNC=0;    AC_SUBST([GNULIB_TRUNC])
@@ -109,6 +110,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_LOGL=1;                 AC_SUBST([HAVE_LOGL])
   HAVE_MODFF=1;                AC_SUBST([HAVE_MODFF])
   HAVE_SINL=1;                 AC_SUBST([HAVE_SINL])
+  HAVE_SQRTF=1;                AC_SUBST([HAVE_SQRTF])
   HAVE_SQRTL=1;                AC_SUBST([HAVE_SQRTL])
   HAVE_TANL=1;                 AC_SUBST([HAVE_TANL])
   HAVE_DECL_ACOSL=1;           AC_SUBST([HAVE_DECL_ACOSL])

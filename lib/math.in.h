@@ -600,6 +600,21 @@ _GL_WARN_ON_USE (sinl, "sinl is unportable - "
 #endif
 
 
+#if @GNULIB_SQRTF@
+# if !@HAVE_SQRTF@
+#  undef sqrtf
+_GL_FUNCDECL_SYS (sqrtf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (sqrtf, float, (float x));
+_GL_CXXALIASWARN (sqrtf);
+#elif defined GNULIB_POSIXCHECK
+# undef sqrtf
+# if HAVE_RAW_DECL_SQRTF
+_GL_WARN_ON_USE (sqrtf, "sqrtf is unportable - "
+                 "use gnulib module sqrtf for portability");
+# endif
+#endif
+
 #if @GNULIB_SQRTL@
 # if !@HAVE_SQRTL@ || !@HAVE_DECL_SQRTL@
 _GL_FUNCDECL_SYS (sqrtl, long double, (long double x));

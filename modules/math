@@ -60,6 +60,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ROUNDL''@/$(GNULIB_ROUNDL)/g' \
 	      -e 's/@''GNULIB_SIGNBIT''@/$(GNULIB_SIGNBIT)/g' \
 	      -e 's/@''GNULIB_SINL''@/$(GNULIB_SINL)/g' \
+	      -e 's/@''GNULIB_SQRTF''@/$(GNULIB_SQRTF)/g' \
 	      -e 's/@''GNULIB_SQRTL''@/$(GNULIB_SQRTL)/g' \
 	      -e 's/@''GNULIB_TANL''@/$(GNULIB_TANL)/g' \
 	      -e 's/@''GNULIB_TRUNC''@/$(GNULIB_TRUNC)/g' \
@@ -81,6 +82,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_LOGL''@|$(HAVE_LOGL)|g' \
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
 	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \
+	      -e 's|@''HAVE_SQRTF''@|$(HAVE_SQRTF)|g' \
 	      -e 's|@''HAVE_SQRTL''@|$(HAVE_SQRTL)|g' \
 	      -e 's|@''HAVE_TANL''@|$(HAVE_TANL)|g' \
 	      -e 's|@''HAVE_DECL_ACOSL''@|$(HAVE_DECL_ACOSL)|g' \
