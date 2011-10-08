@@ -2,12 +2,13 @@ Description:
 cos() function: cosine function.
 
 Files:
+m4/cos.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([cos])
+gl_FUNC_COS
 
 Makefile.am:
 
