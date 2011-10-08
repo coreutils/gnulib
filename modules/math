@@ -29,6 +29,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_AS_FIRST_DIRECTIVE_MATH_H''@|$(NEXT_AS_FIRST_DIRECTIVE_MATH_H)|g' \
 	      -e 's/@''GNULIB_ACOSL''@/$(GNULIB_ACOSL)/g' \
+	      -e 's/@''GNULIB_ASINF''@/$(GNULIB_ASINF)/g' \
 	      -e 's/@''GNULIB_ASINL''@/$(GNULIB_ASINL)/g' \
 	      -e 's/@''GNULIB_ATANL''@/$(GNULIB_ATANL)/g' \
 	      -e 's/@''GNULIB_CEIL''@/$(GNULIB_CEIL)/g' \
@@ -75,6 +76,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_TRUNCL''@/$(GNULIB_TRUNCL)/g' \
 	      < $(srcdir)/math.in.h | \
 	  sed -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \
+	      -e 's|@''HAVE_ASINF''@|$(HAVE_ASINF)|g' \
 	      -e 's|@''HAVE_ASINL''@|$(HAVE_ASINL)|g' \
 	      -e 's|@''HAVE_ATANL''@|$(HAVE_ATANL)|g' \
 	      -e 's|@''HAVE_COSF''@|$(HAVE_COSF)|g' \

@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'asinf'.
+	* lib/math.in.h (asinf): New declaration.
+	* lib/asinf.c: New file.
+	* m4/asinf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether asinf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ASINF, HAVE_ASINF.
+	* modules/math (Makefile.am): Substitute GNULIB_ASINF, HAVE_ASINF.
+	* modules/asinf: New file.
+	* tests/test-math-c++.cc: Check the declaration of asinf.
+	* doc/posix-functions/asinf.texi: Mention the new module.
+
 	asin: Use a .m4 file.
 	* m4/asin.m4: New file.
 	* modules/asin (Files): Add it.

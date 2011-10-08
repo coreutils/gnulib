@@ -123,6 +123,21 @@ _GL_WARN_ON_USE (acosl, "acosl is unportable - "
 #endif
 
 
+#if @GNULIB_ASINF@
+# if !@HAVE_ASINF@
+#  undef asinf
+_GL_FUNCDECL_SYS (asinf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (asinf, float, (float x));
+_GL_CXXALIASWARN (asinf);
+#elif defined GNULIB_POSIXCHECK
+# undef asinf
+# if HAVE_RAW_DECL_ASINF
+_GL_WARN_ON_USE (asinf, "asinf is unportable - "
+                 "use gnulib module asinf for portability");
+# endif
+#endif
+
 #if @GNULIB_ASINL@
 # if !@HAVE_ASINL@ || !@HAVE_DECL_ASINL@
 _GL_FUNCDECL_SYS (asinl, long double, (long double x));

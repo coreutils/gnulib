@@ -1,4 +1,4 @@
-# math_h.m4 serial 39
+# math_h.m4 serial 40
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN([gl_MATH_H],
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
-    [acosl asinl atanl ceilf ceill cosf cosl
+    [acosl asinf asinl atanl ceilf ceill cosf cosl
      expf expl fabsf floorf floorl fmodf frexpf frexpl
      ldexpf ldexpl logb logf logl log10f modff powf
      round roundf roundl sinf sinl sqrtf sqrtl
@@ -58,6 +58,7 @@ AC_DEFUN([gl_MATH_MODULE_INDICATOR],
 AC_DEFUN([gl_MATH_H_DEFAULTS],
 [
   GNULIB_ACOSL=0;    AC_SUBST([GNULIB_ACOSL])
+  GNULIB_ASINF=0;    AC_SUBST([GNULIB_ASINF])
   GNULIB_ASINL=0;    AC_SUBST([GNULIB_ASINL])
   GNULIB_ATANL=0;    AC_SUBST([GNULIB_ATANL])
   GNULIB_CEIL=0;     AC_SUBST([GNULIB_CEIL])
@@ -104,6 +105,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_TRUNCL=0;   AC_SUBST([GNULIB_TRUNCL])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_ACOSL=1;                AC_SUBST([HAVE_ACOSL])
+  HAVE_ASINF=1;                AC_SUBST([HAVE_ASINF])
   HAVE_ASINL=1;                AC_SUBST([HAVE_ASINL])
   HAVE_ATANL=1;                AC_SUBST([HAVE_ATANL])
   HAVE_COSF=1;                 AC_SUBST([HAVE_COSF])

@@ -25,6 +25,9 @@
 
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::acos, double, (double));
+#if GNULIB_TEST_ASINF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::asinf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::asin, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atan, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2, double, (double, double));
