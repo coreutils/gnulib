@@ -2,12 +2,13 @@ Description:
 atan() function: inverse tangent function.
 
 Files:
+m4/atan.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([atan])
+gl_FUNC_ATAN
 
 Makefile.am:
 

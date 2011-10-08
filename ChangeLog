@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	atan: Use a .m4 file.
+	* m4/atan.m4: New file.
+	* modules/atan (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_ATAN.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'acosf'.
 	* modules/acosf-tests: New file.
 	* tests/test-acosf.c: New file.
