@@ -2,12 +2,13 @@ Description:
 pow() function: power function.
 
 Files:
+m4/pow.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([pow])
+gl_FUNC_POW
 
 Makefile.am:
 
