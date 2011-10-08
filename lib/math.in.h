@@ -213,6 +213,21 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 #endif
 
 
+#if @GNULIB_COSF@
+# if !@HAVE_COSF@
+#  undef cosf
+_GL_FUNCDECL_SYS (cosf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (cosf, float, (float x));
+_GL_CXXALIASWARN (cosf);
+#elif defined GNULIB_POSIXCHECK
+# undef cosf
+# if HAVE_RAW_DECL_COSF
+_GL_WARN_ON_USE (cosf, "cosf is unportable - "
+                 "use gnulib module cosf for portability");
+# endif
+#endif
+
 #if @GNULIB_COSL@
 # if !@HAVE_COSL@ || !@HAVE_DECL_COSL@
 _GL_FUNCDECL_SYS (cosl, long double, (long double x));

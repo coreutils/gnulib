@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'cosf'.
+	* lib/math.in.h (cosf): New declaration.
+	* lib/cosf.c: New file.
+	* m4/cosf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether cosf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_COSF, HAVE_COSF.
+	* modules/math (Makefile.am): Substitute GNULIB_COSF, HAVE_COSF.
+	* modules/cosf: New file.
+	* tests/test-math-c++.cc: Check the declaration of cosf.
+	* doc/posix-functions/cosf.texi: Mention the new module.
+
 	cos: Use a .m4 file.
 	* m4/cos.m4: New file.
 	* modules/cos (Files): Add it.
