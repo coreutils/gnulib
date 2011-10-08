@@ -2,12 +2,13 @@ Description:
 sin() function: sine function.
 
 Files:
+m4/sin.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([sin])
+gl_FUNC_SIN
 
 Makefile.am:
 

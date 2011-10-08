@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	sin: Use a .m4 file.
+	* m4/sin.m4: New file.
+	* modules/sin (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_SIN.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'powf'.
 	* modules/powf-tests: New file.
 	* tests/test-powf.c: New file.
