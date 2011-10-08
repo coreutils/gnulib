@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sinf'.
+	* modules/sinf-tests: New file.
+	* tests/test-sinf.c: New file.
+
 	New module 'sinf'.
 	* lib/math.in.h (sinf): New declaration.
 	* lib/sinf.c: New file.
