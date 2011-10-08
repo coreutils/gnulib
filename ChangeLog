@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'logf'.
+	* modules/logf-tests: New file.
+	* tests/test-logf.c: New file.
+
 	New module 'logf'.
 	* lib/math.in.h (logf): New declaration.
 	* lib/logf.c: New file.
