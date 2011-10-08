@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'atanf'.
+	* modules/atanf-tests: New file.
+	* tests/test-atanf.c: New file.
+
 	New module 'atanf'.
 	* lib/math.in.h (atanf): New declaration.
 	* lib/atanf.c: New file.
