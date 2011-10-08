@@ -1,5 +1,10 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	pow tests: Defeat compiler optimizations.
+	* tests/test-pow.c (main): Assign arguments to x and y before use.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Improve last commit.
 	* gnulib-tool (func_modules_transitive_closure): Simplify code.
 	(func_emit_autoconf_snippets): Instead of invoking func_acceptable,

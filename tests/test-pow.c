@@ -33,7 +33,9 @@ int
 main ()
 {
   /* A particular value.  */
-  z = pow (243.0, 1.2);
+  x = 243.0;
+  y = 1.2;
+  z = pow (x, y);
   ASSERT (z >= 728.9999999 && z <= 729.0000001);
 
   return 0;
