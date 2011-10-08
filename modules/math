@@ -70,6 +70,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_SIGNBIT''@/$(GNULIB_SIGNBIT)/g' \
 	      -e 's/@''GNULIB_SINF''@/$(GNULIB_SINF)/g' \
 	      -e 's/@''GNULIB_SINL''@/$(GNULIB_SINL)/g' \
+	      -e 's/@''GNULIB_SINHF''@/$(GNULIB_SINHF)/g' \
 	      -e 's/@''GNULIB_SQRTF''@/$(GNULIB_SQRTF)/g' \
 	      -e 's/@''GNULIB_SQRTL''@/$(GNULIB_SQRTL)/g' \
 	      -e 's/@''GNULIB_TANF''@/$(GNULIB_TANF)/g' \
@@ -103,6 +104,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
 	      -e 's|@''HAVE_SINF''@|$(HAVE_SINF)|g' \
 	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \
+	      -e 's|@''HAVE_SINHF''@|$(HAVE_SINHF)|g' \
 	      -e 's|@''HAVE_SQRTF''@|$(HAVE_SQRTF)|g' \
 	      -e 's|@''HAVE_SQRTL''@|$(HAVE_SQRTL)|g' \
 	      -e 's|@''HAVE_TANF''@|$(HAVE_TANF)|g' \

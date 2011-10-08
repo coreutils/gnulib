@@ -753,6 +753,22 @@ _GL_WARN_ON_USE (sinl, "sinl is unportable - "
 #endif
 
 
+#if @GNULIB_SINHF@
+# if !@HAVE_SINHF@
+#  undef sinhf
+_GL_FUNCDECL_SYS (sinhf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (sinhf, float, (float x));
+_GL_CXXALIASWARN (sinhf);
+#elif defined GNULIB_POSIXCHECK
+# undef sinhf
+# if HAVE_RAW_DECL_SINHF
+_GL_WARN_ON_USE (sinhf, "sinhf is unportable - "
+                 "use gnulib module sinhf for portability");
+# endif
+#endif
+
+
 #if @GNULIB_SQRTF@
 # if !@HAVE_SQRTF@
 #  undef sqrtf

@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sinhf'.
+	* lib/math.in.h (sinhf): New declaration.
+	* lib/sinhf.c: New file.
+	* m4/sinhf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether sinhf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_SINHF, HAVE_SINHF.
+	* modules/math (Makefile.am): Substitute GNULIB_SINHF, HAVE_SINHF.
+	* modules/sinhf: New file.
+	* tests/test-math-c++.cc: Check the declaration of sinhf.
+	* doc/posix-functions/sinhf.texi: Mention the new module.
+
 	sinh: Use a .m4 file.
 	* m4/sinh.m4: New file.
 	* modules/sinh (Files): Add it.
