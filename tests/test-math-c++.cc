@@ -116,6 +116,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::sqrtf, float, (float));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::tanf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::tan, double, (double));
+#if GNULIB_TEST_TANHF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tanhf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::tanh, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::y0, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::y1, double, (double));

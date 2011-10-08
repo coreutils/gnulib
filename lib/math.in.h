@@ -845,6 +845,22 @@ _GL_WARN_ON_USE (tanl, "tanl is unportable - "
 #endif
 
 
+#if @GNULIB_TANHF@
+# if !@HAVE_TANHF@
+#  undef tanhf
+_GL_FUNCDECL_SYS (tanhf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (tanhf, float, (float x));
+_GL_CXXALIASWARN (tanhf);
+#elif defined GNULIB_POSIXCHECK
+# undef tanhf
+# if HAVE_RAW_DECL_TANHF
+_GL_WARN_ON_USE (tanhf, "tanhf is unportable - "
+                 "use gnulib module tanhf for portability");
+# endif
+#endif
+
+
 #if @GNULIB_TRUNCF@
 # if @REPLACE_TRUNCF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

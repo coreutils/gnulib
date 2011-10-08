@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'tanhf'.
+	* lib/math.in.h (tanhf): New declaration.
+	* lib/tanhf.c: New file.
+	* m4/tanhf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether tanhf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_TANHF, HAVE_TANHF.
+	* modules/math (Makefile.am): Substitute GNULIB_TANHF, HAVE_TANHF.
+	* modules/tanhf: New file.
+	* tests/test-math-c++.cc: Check the declaration of tanhf.
+	* doc/posix-functions/tanhf.texi: Mention the new module.
+
 	tanh: Use a .m4 file.
 	* m4/tanh.m4: New file.
 	* modules/tanh (Files): Add it.
