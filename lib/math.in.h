@@ -561,6 +561,22 @@ _GL_WARN_ON_USE (modff, "modff is unportable - "
 #endif
 
 
+#if @GNULIB_POWF@
+# if !@HAVE_POWF@
+#  undef powf
+_GL_FUNCDECL_SYS (powf, float, (float x, float y));
+# endif
+_GL_CXXALIAS_SYS (powf, float, (float x, float y));
+_GL_CXXALIASWARN (powf);
+#elif defined GNULIB_POSIXCHECK
+# undef powf
+# if HAVE_RAW_DECL_POWF
+_GL_WARN_ON_USE (powf, "powf is unportable - "
+                 "use gnulib module powf for portability");
+# endif
+#endif
+
+
 #if @GNULIB_ROUNDF@
 # if @REPLACE_ROUNDF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'powf'.
+	* lib/math.in.h (powf): New declaration.
+	* lib/powf.c: New file.
+	* m4/powf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether powf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_POWF, HAVE_POWF.
+	* modules/math (Makefile.am): Substitute GNULIB_POWF, HAVE_POWF.
+	* modules/powf: New file.
+	* tests/test-math-c++.cc: Check the declaration of powf.
+	* doc/posix-functions/powf.texi: Mention the new module.
+
 	pow: Use a .m4 file.
 	* m4/pow.m4: New file.
 	* modules/pow (Files): Add it.

@@ -76,6 +76,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::modff, float, (float, float *));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::modf, double, (double, double *));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::nextafter, double, (double, double));
+#if GNULIB_TEST_POWF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::powf, float, (float, float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::pow, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::remainder, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::rint, double, (double));

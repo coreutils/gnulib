@@ -58,6 +58,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LOGL''@/$(GNULIB_LOGL)/g' \
 	      -e 's/@''GNULIB_LOG10F''@/$(GNULIB_LOG10F)/g' \
 	      -e 's/@''GNULIB_MODFF''@/$(GNULIB_MODFF)/g' \
+	      -e 's/@''GNULIB_POWF''@/$(GNULIB_POWF)/g' \
 	      -e 's/@''GNULIB_ROUND''@/$(GNULIB_ROUND)/g' \
 	      -e 's/@''GNULIB_ROUNDF''@/$(GNULIB_ROUNDF)/g' \
 	      -e 's/@''GNULIB_ROUNDL''@/$(GNULIB_ROUNDL)/g' \
@@ -87,6 +88,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_LOGL''@|$(HAVE_LOGL)|g' \
 	      -e 's|@''HAVE_LOG10F''@|$(HAVE_LOG10F)|g' \
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
+	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
 	      -e 's|@''HAVE_SINL''@|$(HAVE_SINL)|g' \
 	      -e 's|@''HAVE_SQRTF''@|$(HAVE_SQRTF)|g' \
 	      -e 's|@''HAVE_SQRTL''@|$(HAVE_SQRTL)|g' \
