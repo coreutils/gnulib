@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sinhf'.
+	* modules/sinhf-tests: New file.
+	* tests/test-sinhf.c: New file.
+
 	New module 'sinhf'.
 	* lib/math.in.h (sinhf): New declaration.
 	* lib/sinhf.c: New file.
