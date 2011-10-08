@@ -2,12 +2,13 @@ Description:
 atan2() function: angle of a point in the plane.
 
 Files:
+m4/atan2.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([atan2])
+gl_FUNC_ATAN2
 
 Makefile.am:
 
