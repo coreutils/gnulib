@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'asinf'.
+	* modules/asinf-tests: New file.
+	* tests/test-asinf.c: New file.
+
 	New module 'asinf'.
 	* lib/math.in.h (asinf): New declaration.
 	* lib/asinf.c: New file.
