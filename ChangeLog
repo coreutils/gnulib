@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'powf'.
+	* modules/powf-tests: New file.
+	* tests/test-powf.c: New file.
+
 	New module 'powf'.
 	* lib/math.in.h (powf): New declaration.
 	* lib/powf.c: New file.
