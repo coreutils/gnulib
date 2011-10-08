@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	acos: Use a .m4 file.
+	* m4/acos.m4: New file.
+	* modules/acos (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_ACOS.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'asinf'.
 	* modules/asinf-tests: New file.
 	* tests/test-asinf.c: New file.

@@ -2,12 +2,13 @@ Description:
 acos() function: inverse cosine function.
 
 Files:
+m4/acos.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([acos])
+gl_FUNC_ACOS
 
 Makefile.am:
 
