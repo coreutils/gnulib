@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	tanh: Use a .m4 file.
+	* m4/tanh.m4: New file.
+	* modules/tanh (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_TANH.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'coshf'.
 	* modules/coshf-tests: New file.
 	* tests/test-coshf.c: New file.

@@ -2,12 +2,13 @@ Description:
 tanh() function: hyperbolic tangent function.
 
 Files:
+m4/tanh.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([tanh])
+gl_FUNC_TANH
 
 Makefile.am:
 
