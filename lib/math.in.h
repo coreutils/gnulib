@@ -499,6 +499,21 @@ _GL_WARN_ON_USE (logb, "logb is unportable - "
 #endif
 
 
+#if @GNULIB_LOGF@
+# if !@HAVE_LOGF@
+#  undef logf
+_GL_FUNCDECL_SYS (logf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (logf, float, (float x));
+_GL_CXXALIASWARN (logf);
+#elif defined GNULIB_POSIXCHECK
+# undef logf
+# if HAVE_RAW_DECL_LOGF
+_GL_WARN_ON_USE (logf, "logf is unportable - "
+                 "use gnulib module logf for portability");
+# endif
+#endif
+
 #if @GNULIB_LOGL@
 # if !@HAVE_LOGL@ || !@HAVE_DECL_LOGL@
 _GL_FUNCDECL_SYS (logl, long double, (long double x));

@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'logf'.
+	* lib/math.in.h (logf): New declaration.
+	* lib/logf.c: New file.
+	* m4/logf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether logf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOGF, HAVE_LOGF.
+	* modules/math (Makefile.am): Substitute GNULIB_LOGF, HAVE_LOGF.
+	* modules/logf: New file.
+	* tests/test-math-c++.cc: Check the declaration of logf.
+	* doc/posix-functions/logf.texi: Mention the new module.
+
 	log: Use a .m4 file.
 	* m4/log.m4: New file.
 	* modules/log (Files): Add it.
