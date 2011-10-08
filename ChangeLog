@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'atan2f'.
+	* modules/atan2f-tests: New file.
+	* tests/test-atan2f.c: New file.
+
 	New module 'atan2f'.
 	* lib/math.in.h (atan2f): New declaration.
 	* lib/atan2f.c: New file.
