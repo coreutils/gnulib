@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'coshf'.
+	* modules/coshf-tests: New file.
+	* tests/test-coshf.c: New file.
+
 	New module 'coshf'.
 	* lib/math.in.h (coshf): New declaration.
 	* lib/coshf.c: New file.
