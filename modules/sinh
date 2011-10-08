@@ -2,12 +2,13 @@ Description:
 sinh() function: hyperbolic sine function.
 
 Files:
+m4/sinh.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([sinh])
+gl_FUNC_SINH
 
 Makefile.am:
 
