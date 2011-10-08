@@ -1,0 +1,13 @@
+Files:
+tests/test-log10f.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-log10f
+check_PROGRAMS += test-log10f
+test_log10f_LDADD = $(LDADD) @LOG10F_LIBM@

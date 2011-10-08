@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log10f'.
+	* modules/log10f-tests: New file.
+	* tests/test-log10f.c: New file.
+
 	New module 'log10f'.
 	* lib/math.in.h (log10f): New declaration.
 	* lib/log10f.c: New file.
