@@ -304,6 +304,22 @@ _GL_WARN_ON_USE (cosl, "cosl is unportable - "
 #endif
 
 
+#if @GNULIB_COSHF@
+# if !@HAVE_COSHF@
+#  undef coshf
+_GL_FUNCDECL_SYS (coshf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (coshf, float, (float x));
+_GL_CXXALIASWARN (coshf);
+#elif defined GNULIB_POSIXCHECK
+# undef coshf
+# if HAVE_RAW_DECL_COSHF
+_GL_WARN_ON_USE (coshf, "coshf is unportable - "
+                 "use gnulib module coshf for portability");
+# endif
+#endif
+
+
 #if @GNULIB_EXPF@
 # if !@HAVE_EXPF@
 #  undef expf

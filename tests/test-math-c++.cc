@@ -46,6 +46,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2f, float, (float, float));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::cosf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::cos, double, (double));
+#if GNULIB_TEST_COSHF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::coshf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::cosh, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::erf, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::erfc, double, (double));

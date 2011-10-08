@@ -40,6 +40,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_CEILL''@/$(GNULIB_CEILL)/g' \
 	      -e 's/@''GNULIB_COSF''@/$(GNULIB_COSF)/g' \
 	      -e 's/@''GNULIB_COSL''@/$(GNULIB_COSL)/g' \
+	      -e 's/@''GNULIB_COSHF''@/$(GNULIB_COSHF)/g' \
 	      -e 's/@''GNULIB_EXPF''@/$(GNULIB_EXPF)/g' \
 	      -e 's/@''GNULIB_EXPL''@/$(GNULIB_EXPL)/g' \
 	      -e 's/@''GNULIB_FABSF''@/$(GNULIB_FABSF)/g' \
@@ -88,6 +89,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_ATAN2F''@|$(HAVE_ATAN2F)|g' \
 	      -e 's|@''HAVE_COSF''@|$(HAVE_COSF)|g' \
 	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \
+	      -e 's|@''HAVE_COSHF''@|$(HAVE_COSHF)|g' \
 	      -e 's|@''HAVE_EXPF''@|$(HAVE_EXPF)|g' \
 	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
 	      -e 's|@''HAVE_FABSF''@|$(HAVE_FABSF)|g' \

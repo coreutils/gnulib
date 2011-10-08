@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'coshf'.
+	* lib/math.in.h (coshf): New declaration.
+	* lib/coshf.c: New file.
+	* m4/coshf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether coshf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_COSHF, HAVE_COSHF.
+	* modules/math (Makefile.am): Substitute GNULIB_COSHF, HAVE_COSHF.
+	* modules/coshf: New file.
+	* tests/test-math-c++.cc: Check the declaration of coshf.
+	* doc/posix-functions/coshf.texi: Mention the new module.
+
 	cosh: Use a .m4 file.
 	* m4/cosh.m4: New file.
 	* modules/cosh (Files): Add it.
