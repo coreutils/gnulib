@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	log10: Use a .m4 file.
+	* m4/log10.m4: New file.
+	* modules/log10 (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_LOG10.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'logf'.
 	* modules/logf-tests: New file.
 	* tests/test-logf.c: New file.

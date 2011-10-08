@@ -2,12 +2,13 @@ Description:
 log10() function: base 10 logarithmic function.
 
 Files:
+m4/log10.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([log10])
+gl_FUNC_LOG10
 
 Makefile.am:
 
