@@ -1,0 +1,31 @@
+Description:
+log10f() function: base 10 logarithmic function.
+
+Files:
+lib/log10f.c
+m4/log10f.m4
+
+Depends-on:
+math
+log10           [test $HAVE_LOG10F = 0]
+
+configure.ac:
+gl_FUNC_LOG10F
+if test $HAVE_LOG10F = 0; then
+  AC_LIBOBJ([log10f])
+fi
+gl_MATH_MODULE_INDICATOR([log10f])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG10F_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

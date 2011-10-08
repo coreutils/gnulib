@@ -68,6 +68,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpf, float, (float, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::logf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::log, double, (double));
+#if GNULIB_TEST_LOG10F
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log10f, float, (float));
+#endif
 #if GNULIB_TEST_MODFF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::modff, float, (float, float *));
 #endif

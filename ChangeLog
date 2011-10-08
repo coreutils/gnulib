@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log10f'.
+	* lib/math.in.h (log10f): New declaration.
+	* lib/log10f.c: New file.
+	* m4/log10f.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log10f is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG10F, HAVE_LOG10F.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG10F, HAVE_LOG10F.
+	* modules/log10f: New file.
+	* tests/test-math-c++.cc: Check the declaration of log10f.
+	* doc/posix-functions/log10f.texi: Mention the new module.
+
 	log10: Use a .m4 file.
 	* m4/log10.m4: New file.
 	* modules/log10 (Files): Add it.
