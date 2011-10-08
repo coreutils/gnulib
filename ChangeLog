@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'acosf'.
+	* modules/acosf-tests: New file.
+	* tests/test-acosf.c: New file.
+
 	New module 'acosf'.
 	* lib/math.in.h (acosf): New declaration.
 	* lib/acosf.c: New file.
