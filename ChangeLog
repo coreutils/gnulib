@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'expf'.
+	* lib/math.in.h (expf): New declaration.
+	* lib/expf.c: New file.
+	* m4/expf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether expf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_EXPF, HAVE_EXPF.
+	* modules/math (Makefile.am): Substitute GNULIB_EXPF, HAVE_EXPF.
+	* modules/expf: New file.
+	* tests/test-math-c++.cc: Check the declaration of expf.
+	* doc/posix-functions/expf.texi: Mention the new module.
+
 	exp: Use a .m4 file.
 	* m4/exp.m4: New file.
 	* modules/exp (Files): Add it.

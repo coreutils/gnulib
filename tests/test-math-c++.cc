@@ -34,6 +34,9 @@
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::cosh, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::erf, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::erfc, double, (double));
+#if GNULIB_TEST_EXPF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::expf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::exp, double, (double));
 #if GNULIB_TEST_FABSF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fabsf, float, (float));
