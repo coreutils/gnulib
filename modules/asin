@@ -2,12 +2,13 @@ Description:
 asin() function: inverse sine function.
 
 Files:
+m4/asin.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([asin])
+gl_FUNC_ASIN
 
 Makefile.am:
 
