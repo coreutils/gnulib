@@ -108,6 +108,21 @@ _NaN ()
 #endif
 
 
+#if @GNULIB_ACOSF@
+# if !@HAVE_ACOSF@
+#  undef acosf
+_GL_FUNCDECL_SYS (acosf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (acosf, float, (float x));
+_GL_CXXALIASWARN (acosf);
+#elif defined GNULIB_POSIXCHECK
+# undef acosf
+# if HAVE_RAW_DECL_ACOSF
+_GL_WARN_ON_USE (acosf, "acosf is unportable - "
+                 "use gnulib module acosf for portability");
+# endif
+#endif
+
 #if @GNULIB_ACOSL@
 # if !@HAVE_ACOSL@ || !@HAVE_DECL_ACOSL@
 _GL_FUNCDECL_SYS (acosl, long double, (long double x));

@@ -24,6 +24,9 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_ACOSF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::acosf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::acos, double, (double));
 #if GNULIB_TEST_ASINF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::asinf, float, (float));

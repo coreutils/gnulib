@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'acosf'.
+	* lib/math.in.h (acosf): New declaration.
+	* lib/acosf.c: New file.
+	* m4/acosf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether acosf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ACOSF, HAVE_ACOSF.
+	* modules/math (Makefile.am): Substitute GNULIB_ACOSF, HAVE_ACOSF.
+	* modules/acosf: New file.
+	* tests/test-math-c++.cc: Check the declaration of acosf.
+	* doc/posix-functions/acosf.texi: Mention the new module.
+
 	acos: Use a .m4 file.
 	* m4/acos.m4: New file.
 	* modules/acos (Files): Add it.
