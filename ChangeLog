@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'tanf'.
+	* modules/tanf-tests: New file.
+	* tests/test-tanf.c: New file.
+
 	New module 'tanf'.
 	* lib/math.in.h (tanf): New declaration.
 	* lib/tanf.c: New file.
