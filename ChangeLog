@@ -1,5 +1,12 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	log: Use a .m4 file.
+	* m4/log.m4: New file.
+	* modules/log (Files): Add it.
+	(configure.ac): Just invoke gl_FUNC_LOG.
+
+2011-10-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'expf'.
 	* modules/expf-tests: New file.
 	* tests/test-expf.c: New file.

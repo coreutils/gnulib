@@ -2,12 +2,13 @@ Description:
 log() function: natural logarithmic function.
 
 Files:
+m4/log.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([log])
+gl_FUNC_LOG
 
 Makefile.am:
 
