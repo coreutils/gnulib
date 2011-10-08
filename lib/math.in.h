@@ -198,6 +198,22 @@ _GL_WARN_ON_USE (atanl, "atanl is unportable - "
 #endif
 
 
+#if @GNULIB_ATAN2F@
+# if !@HAVE_ATAN2F@
+#  undef atan2f
+_GL_FUNCDECL_SYS (atan2f, float, (float y, float x));
+# endif
+_GL_CXXALIAS_SYS (atan2f, float, (float y, float x));
+_GL_CXXALIASWARN (atan2f);
+#elif defined GNULIB_POSIXCHECK
+# undef atan2f
+# if HAVE_RAW_DECL_ATAN2F
+_GL_WARN_ON_USE (atan2f, "atan2f is unportable - "
+                 "use gnulib module atan2f for portability");
+# endif
+#endif
+
+
 #if @GNULIB_CEILF@
 # if @REPLACE_CEILF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

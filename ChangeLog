@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'atan2f'.
+	* lib/math.in.h (atan2f): New declaration.
+	* lib/atan2f.c: New file.
+	* m4/atan2f.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether atan2f is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ATAN2F, HAVE_ATAN2F.
+	* modules/math (Makefile.am): Substitute GNULIB_ATAN2F, HAVE_ATAN2F.
+	* modules/atan2f: New file.
+	* tests/test-math-c++.cc: Check the declaration of atan2f.
+	* doc/posix-functions/atan2f.texi: Mention the new module.
+
 	atan2: Use a .m4 file.
 	* m4/atan2.m4: New file.
 	* modules/atan2 (Files): Add it.

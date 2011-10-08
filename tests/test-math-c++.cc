@@ -36,6 +36,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::asinf, float, (float));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::atanf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atan, double, (double));
+#if GNULIB_TEST_ATAN2F
+SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2f, float, (float, float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrt, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::copysign, double, (double, double));
