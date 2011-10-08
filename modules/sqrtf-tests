@@ -1,0 +1,13 @@
+Files:
+tests/test-sqrtf.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sqrtf
+check_PROGRAMS += test-sqrtf
+test_sqrtf_LDADD = $(LDADD) @SQRTF_LIBM@

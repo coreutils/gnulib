@@ -1,5 +1,9 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sqrtf'.
+	* modules/sqrtf-tests: New file.
+	* tests/test-sqrtf.c: New file.
+
 	New module 'sqrtf'.
 	* lib/math.in.h (sqrtf): New declaration.
 	* lib/sqrtf.c: New file.
