@@ -32,6 +32,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ACOSL''@/$(GNULIB_ACOSL)/g' \
 	      -e 's/@''GNULIB_ASINF''@/$(GNULIB_ASINF)/g' \
 	      -e 's/@''GNULIB_ASINL''@/$(GNULIB_ASINL)/g' \
+	      -e 's/@''GNULIB_ATANF''@/$(GNULIB_ATANF)/g' \
 	      -e 's/@''GNULIB_ATANL''@/$(GNULIB_ATANL)/g' \
 	      -e 's/@''GNULIB_CEIL''@/$(GNULIB_CEIL)/g' \
 	      -e 's/@''GNULIB_CEILF''@/$(GNULIB_CEILF)/g' \
@@ -80,6 +81,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \
 	      -e 's|@''HAVE_ASINF''@|$(HAVE_ASINF)|g' \
 	      -e 's|@''HAVE_ASINL''@|$(HAVE_ASINL)|g' \
+	      -e 's|@''HAVE_ATANF''@|$(HAVE_ATANF)|g' \
 	      -e 's|@''HAVE_ATANL''@|$(HAVE_ATANL)|g' \
 	      -e 's|@''HAVE_COSF''@|$(HAVE_COSF)|g' \
 	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \

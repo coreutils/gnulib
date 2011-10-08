@@ -1,5 +1,16 @@
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'atanf'.
+	* lib/math.in.h (atanf): New declaration.
+	* lib/atanf.c: New file.
+	* m4/atanf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether atanf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ATANF, HAVE_ATANF.
+	* modules/math (Makefile.am): Substitute GNULIB_ATANF, HAVE_ATANF.
+	* modules/atanf: New file.
+	* tests/test-math-c++.cc: Check the declaration of atanf.
+	* doc/posix-functions/atanf.texi: Mention the new module.
+
 	atan: Use a .m4 file.
 	* m4/atan.m4: New file.
 	* modules/atan (Files): Add it.

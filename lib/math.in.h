@@ -168,6 +168,21 @@ _GL_WARN_ON_USE (asinl, "asinl is unportable - "
 #endif
 
 
+#if @GNULIB_ATANF@
+# if !@HAVE_ATANF@
+#  undef atanf
+_GL_FUNCDECL_SYS (atanf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (atanf, float, (float x));
+_GL_CXXALIASWARN (atanf);
+#elif defined GNULIB_POSIXCHECK
+# undef atanf
+# if HAVE_RAW_DECL_ATANF
+_GL_WARN_ON_USE (atanf, "atanf is unportable - "
+                 "use gnulib module atanf for portability");
+# endif
+#endif
+
 #if @GNULIB_ATANL@
 # if !@HAVE_ATANL@ || !@HAVE_DECL_ATANL@
 _GL_FUNCDECL_SYS (atanl, long double, (long double x));
