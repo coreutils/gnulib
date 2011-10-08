@@ -82,6 +82,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::powf, float, (float, float));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::pow, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::remainder, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::rint, double, (double));
+#if GNULIB_TEST_SINF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::sinf, float, (float));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::sin, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::sinh, double, (double));
 #if GNULIB_TEST_SQRTF

@@ -647,6 +647,21 @@ _GL_WARN_ON_USE (roundl, "roundl is unportable - "
 #endif
 
 
+#if @GNULIB_SINF@
+# if !@HAVE_SINF@
+#  undef sinf
+_GL_FUNCDECL_SYS (sinf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (sinf, float, (float x));
+_GL_CXXALIASWARN (sinf);
+#elif defined GNULIB_POSIXCHECK
+# undef sinf
+# if HAVE_RAW_DECL_SINF
+_GL_WARN_ON_USE (sinf, "sinf is unportable - "
+                 "use gnulib module sinf for portability");
+# endif
+#endif
+
 #if @GNULIB_SINL@
 # if !@HAVE_SINL@ || !@HAVE_DECL_SINL@
 _GL_FUNCDECL_SYS (sinl, long double, (long double x));
