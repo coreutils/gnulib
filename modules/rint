@@ -1,13 +1,20 @@
 Description:
-rint() function: round to nearest integer.
+rint() function: round according to the current rounding mode.
 
 Files:
+lib/rint.c
+m4/rint.m4
 m4/mathfunc.m4
 
 Depends-on:
+math
 
 configure.ac:
-gl_MATHFUNC([rint], [double], [(double)])
+gl_FUNC_RINT
+if test $HAVE_RINT = 0; then
+  AC_LIBOBJ([rint])
+fi
+gl_MATH_MODULE_INDICATOR([rint])
 
 Makefile.am:
 

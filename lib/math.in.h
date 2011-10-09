@@ -712,6 +712,21 @@ _GL_WARN_ON_USE (powf, "powf is unportable - "
 #endif
 
 
+#if @GNULIB_RINT@
+# if !@HAVE_RINT@
+_GL_FUNCDECL_SYS (rint, double, (double x));
+# endif
+_GL_CXXALIAS_SYS (rint, double, (double x));
+_GL_CXXALIASWARN (rint);
+#elif defined GNULIB_POSIXCHECK
+# undef rint
+# if HAVE_RAW_DECL_RINT
+_GL_WARN_ON_USE (rint, "rint is unportable - "
+                 "use gnulib module rint for portability");
+# endif
+#endif
+
+
 #if @GNULIB_ROUNDF@
 # if @REPLACE_ROUNDF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

@@ -8,11 +8,11 @@ Gnulib module: rint
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-MSVC 9.
 @end itemize

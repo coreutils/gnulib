@@ -104,7 +104,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::powf, float, (float, float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::pow, double, (double, double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::remainder, double, (double, double));
-//SIGNATURE_CHECK (GNULIB_NAMESPACE::rint, double, (double));
+#if GNULIB_TEST_RINT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::rint, double, (double));
+#endif
 #if GNULIB_TEST_SINF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::sinf, float, (float));
 #endif

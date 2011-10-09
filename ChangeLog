@@ -1,5 +1,23 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	rint: Support for MSVC.
+	* lib/math.in.h (rint): New declaration.
+	* lib/rint.c: New file.
+	* m4/rint.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether rint is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_RINT, HAVE_RINT.
+	* modules/math (Makefile.am): Substitute GNULIB_RINT, HAVE_RINT.
+	* modules/rint (Description): Fix.
+	(Files): Add lib/rint.c, m4/rint.m4.
+	(Depends-on): Add math.
+	(configure.ac): Invoke gl_FUNC_RINT, AC_LIBOBJ,
+	gl_MATH_MODULE_INDICATOR.
+	* tests/test-math-c++.cc: Check the declaration of rint.
+	* modules/math-c++-tests (Makefile.am): Link test-math-c++ against
+	$(RINT_LIBM). Needed on IRIX 6.5 with cc.
+	* doc/posix-functions/rint.texi: Mention the replacement provided by
+	the module.
+
 	rint tests: More tests.
 	* tests/test-rint.c: Include <float.h>, <stdio.h>, isnand-nolibm.h,
 	minus-zero.h, infinity.h, nan.h.
