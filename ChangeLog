@@ -1,5 +1,9 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'rintf'.
+	* modules/rintf-tests: New file.
+	* tests/test-rintf.c: New file.
+
 	New module 'rintf'.
 	* lib/math.in.h (rintf): New declaration.
 	* lib/rintf.c: New file.

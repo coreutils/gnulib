@@ -1,0 +1,17 @@
+Files:
+tests/test-rintf.c
+tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+isnanf-nolibm
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-rintf
+check_PROGRAMS += test-rintf
+test_rintf_LDADD = $(LDADD) @RINTF_LIBM@
