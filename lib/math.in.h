@@ -274,6 +274,35 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 #endif
 
 
+#if @GNULIB_COPYSIGNF@
+# if !@HAVE_COPYSIGNF@
+_GL_FUNCDECL_SYS (copysignf, float, (float x, float y));
+# endif
+_GL_CXXALIAS_SYS (copysignf, float, (float x, float y));
+_GL_CXXALIASWARN (copysignf);
+#elif defined GNULIB_POSIXCHECK
+# undef copysignf
+# if HAVE_RAW_DECL_COPYSIGNF
+_GL_WARN_ON_USE (copysignf, "copysignf is unportable - "
+                 "use gnulib module copysignf for portability");
+# endif
+#endif
+
+#if @GNULIB_COPYSIGN@
+# if !@HAVE_COPYSIGN@
+_GL_FUNCDECL_SYS (copysign, double, (double x, double y));
+# endif
+_GL_CXXALIAS_SYS (copysign, double, (double x, double y));
+_GL_CXXALIASWARN (copysign);
+#elif defined GNULIB_POSIXCHECK
+# undef copysign
+# if HAVE_RAW_DECL_COPYSIGN
+_GL_WARN_ON_USE (copysign, "copysign is unportable - "
+                 "use gnulib module copysign for portability");
+# endif
+#endif
+
+
 #if @GNULIB_COSF@
 # if !@HAVE_COSF@
 #  undef cosf
@@ -316,21 +345,6 @@ _GL_CXXALIASWARN (coshf);
 # if HAVE_RAW_DECL_COSHF
 _GL_WARN_ON_USE (coshf, "coshf is unportable - "
                  "use gnulib module coshf for portability");
-# endif
-#endif
-
-
-#if @GNULIB_COPYSIGN@
-# if !@HAVE_COPYSIGN@
-_GL_FUNCDECL_SYS (copysign, double, (double x, double y));
-# endif
-_GL_CXXALIAS_SYS (copysign, double, (double x, double y));
-_GL_CXXALIASWARN (copysign);
-#elif defined GNULIB_POSIXCHECK
-# undef copysign
-# if HAVE_RAW_DECL_COPYSIGN
-_GL_WARN_ON_USE (copysign, "copysign is unportable - "
-                 "use gnulib module copysign for portability");
 # endif
 #endif
 

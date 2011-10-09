@@ -1,5 +1,19 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'copysignf'.
+	* lib/math.in.h (copysignf): New declaration.
+	* lib/copysignf.c: New file.
+	* m4/copysignf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether copysignf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_COPYSIGNF, HAVE_COPYSIGNF.
+	* modules/math (Makefile.am): Substitute GNULIB_COPYSIGNF,
+	HAVE_COPYSIGNF.
+	* modules/copysignf: New file.
+	* tests/test-math-c++.cc: Check the declaration of copysignf.
+	* doc/posix-functions/copysignf.texi: Mention the new module.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	Ensure that HAVE_* variables are set to 1 before they are set to 0.
 	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Require gl_DIRENT_H_DEFAULTS.
 	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Require gl_ARPA_INET_H_DEFAULTS.
