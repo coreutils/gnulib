@@ -1,4 +1,4 @@
-# serial 8
+# serial 9
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
@@ -10,7 +10,10 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_FDOPENDIR],
 [
+  AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   dnl FreeBSD 7.3 has the function, but failed to declare it.
   AC_CHECK_DECLS([fdopendir], [], [HAVE_DECL_FDOPENDIR=0], [[
 #include <dirent.h>

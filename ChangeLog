@@ -1,5 +1,14 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	Ensure that HAVE_* variables are set to 1 before they are set to 0.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Require gl_DIRENT_H_DEFAULTS.
+	* m4/inet_ntop.m4 (gl_FUNC_INET_NTOP): Require gl_ARPA_INET_H_DEFAULTS.
+	* m4/inet_pton.m4 (gl_FUNC_INET_PTON): Likewise.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Require
+	gl_SIGNAL_H_DEFAULTS.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	poll: Make macro safer.
 	* m4/poll.m4 (gl_FUNC_POLL): Complain if, after invoking gl_POLL_H,
 	ac_cv_header_poll_h is not set.
