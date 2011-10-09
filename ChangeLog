@@ -1,5 +1,18 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'rintf'.
+	* lib/math.in.h (rintf): New declaration.
+	* lib/rintf.c: New file.
+	* m4/rintf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether rintf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_RINTF, HAVE_RINTF.
+	* modules/math (Makefile.am): Substitute GNULIB_RINTF, HAVE_RINTF.
+	* modules/rintf: New file.
+	* tests/test-math-c++.cc: Check the declaration of rintf.
+	* doc/posix-functions/rintf.texi: Mention the new module.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	rint: Support for MSVC.
 	* lib/math.in.h (rint): New declaration.
 	* lib/rint.c: New file.

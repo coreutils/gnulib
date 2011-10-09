@@ -712,6 +712,20 @@ _GL_WARN_ON_USE (powf, "powf is unportable - "
 #endif
 
 
+#if @GNULIB_RINTF@
+# if !@HAVE_RINTF@
+_GL_FUNCDECL_SYS (rintf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (rintf, float, (float x));
+_GL_CXXALIASWARN (rintf);
+#elif defined GNULIB_POSIXCHECK
+# undef rintf
+# if HAVE_RAW_DECL_RINTF
+_GL_WARN_ON_USE (rintf, "rintf is unportable - "
+                 "use gnulib module rintf for portability");
+# endif
+#endif
+
 #if @GNULIB_RINT@
 # if !@HAVE_RINT@
 _GL_FUNCDECL_SYS (rint, double, (double x));
