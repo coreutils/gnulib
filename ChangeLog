@@ -1,5 +1,16 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	rint tests: More tests.
+	* tests/test-rint.c: Include <float.h>, <stdio.h>, isnand-nolibm.h,
+	minus-zero.h, infinity.h, nan.h.
+	(main): Skip the test if the current rounding mode is not standard. Add
+	tests for negative numbers, minus zero, infinity, NaN.
+	* modules/rint-tests (Files): Add tests/minus-zero.h, tests/infinity.h,
+	tests/nan.h.
+	(Depends-on): Add isnand-nolibm.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'copysignl'.
 	* modules/copysignl-tests: New file.
 	* tests/test-copysignl.c: New file.

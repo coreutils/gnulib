@@ -1,9 +1,13 @@
 Files:
 tests/test-rint.c
+tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
 tests/signature.h
 tests/macros.h
 
 Depends-on:
+isnand-nolibm
 
 configure.ac:
 

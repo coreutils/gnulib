@@ -23,39 +23,69 @@
 #include "signature.h"
 SIGNATURE_CHECK (rint, double, (double));
 
-#include "macros.h"
+#include <float.h>
+#include <stdio.h>
 
-volatile double x;
-double y;
+#include "isnand-nolibm.h"
+#include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
+#include "macros.h"
 
 int
 main ()
 {
-  /* Assume round-to-nearest rounding (the default in IEEE 754).  */
+  /* Consider the current rounding mode, cf.
+     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html>  */
+  if (FLT_ROUNDS == 1)
+    {
+      /* The current rounding mode is round-to-nearest
+         (the default in IEEE 754).  */
 
-  x = 2.1;
-  y = rint (x);
-  ASSERT (y == 2.0);
+      /* Zero.  */
+      ASSERT (rint (0.0) == 0.0);
+      ASSERT (rint (minus_zerod) == 0.0);
+      /* Positive numbers.  */
+      ASSERT (rint (0.3) == 0.0);
+      ASSERT (rint (0.5) == 0.0); /* unlike round() */
+      ASSERT (rint (0.7) == 1.0);
+      ASSERT (rint (1.0) == 1.0);
+      ASSERT (rint (1.5) == 2.0);
+      ASSERT (rint (1.999) == 2.0);
+      ASSERT (rint (2.0) == 2.0);
+      ASSERT (rint (2.1) == 2.0);
+      ASSERT (rint (2.5) == 2.0); /* unlike round() */
+      ASSERT (rint (2.7) == 3.0);
+      ASSERT (rint (65535.999) == 65536.0);
+      ASSERT (rint (65536.0) == 65536.0);
+      ASSERT (rint (65536.001) == 65536.0);
+      ASSERT (rint (2.341e31) == 2.341e31);
+      /* Negative numbers.  */
+      ASSERT (rint (-0.3) == 0.0);
+      ASSERT (rint (-0.5) == 0.0); /* unlike round() */
+      ASSERT (rint (-0.7) == -1.0);
+      ASSERT (rint (-1.0) == -1.0);
+      ASSERT (rint (-1.5) == -2.0);
+      ASSERT (rint (-1.999) == -2.0);
+      ASSERT (rint (-2.0) == -2.0);
+      ASSERT (rint (-2.1) == -2.0);
+      ASSERT (rint (-2.5) == -2.0); /* unlike round() */
+      ASSERT (rint (-2.7) == -3.0);
+      ASSERT (rint (-65535.999) == -65536.0);
+      ASSERT (rint (-65536.0) == -65536.0);
+      ASSERT (rint (-65536.001) == -65536.0);
+      ASSERT (rint (-2.341e31) == -2.341e31);
+      /* Infinite numbers.  */
+      ASSERT (rint (Infinityd ()) == Infinityd ());
+      ASSERT (rint (- Infinityd ()) == - Infinityd ());
+      /* NaNs.  */
+      ASSERT (isnand (rint (NaNd ())));
 
-  x = -2.1;
-  y = rint (x);
-  ASSERT (y == -2.0);
-
-  x = 2.7;
-  y = rint (x);
-  ASSERT (y == 3.0);
-
-  x = -2.7;
-  y = rint (x);
-  ASSERT (y == -3.0);
-
-  x = 2.5;
-  y = rint (x);
-  ASSERT (y == 2.0);
-
-  x = 3.5;
-  y = rint (x);
-  ASSERT (y == 4.0);
-
-  return 0;
+      return 0;
+    }
+  else
+    {
+      fputs ("Skipping test: non-standard rounding mode\n", stderr);
+      return 77;
+    }
 }
