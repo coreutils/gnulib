@@ -153,6 +153,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ceil, double, (double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceill, long double, (long double));
 #endif
 
+#if GNULIB_TEST_COPYSIGNL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::copysignl, long double,
+                 (long double, long double));
+#endif
+
 #if GNULIB_TEST_COSL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::cosl, long double, (long double));
 #endif

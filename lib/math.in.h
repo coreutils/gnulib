@@ -302,6 +302,20 @@ _GL_WARN_ON_USE (copysign, "copysign is unportable - "
 # endif
 #endif
 
+#if @GNULIB_COPYSIGNL@
+# if !@HAVE_COPYSIGNL@
+_GL_FUNCDECL_SYS (copysignl, long double, (long double x, long double y));
+# endif
+_GL_CXXALIAS_SYS (copysignl, long double, (long double x, long double y));
+_GL_CXXALIASWARN (copysignl);
+#elif defined GNULIB_POSIXCHECK
+# undef copysignl
+# if HAVE_RAW_DECL_COPYSIGNL
+_GL_WARN_ON_USE (copysign, "copysignl is unportable - "
+                 "use gnulib module copysignl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_COSF@
 # if !@HAVE_COSF@

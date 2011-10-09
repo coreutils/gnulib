@@ -1,5 +1,21 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'copysignl'.
+	* lib/math.in.h (copysignl): New declaration.
+	* lib/copysignl.c: New file.
+	* m4/copysignl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether copysignl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_COPYSIGNL, HAVE_COPYSIGNL.
+	* modules/math (Makefile.am): Substitute GNULIB_COPYSIGNL,
+	HAVE_COPYSIGNL.
+	* modules/copysignl: New file.
+	* tests/test-math-c++.cc: Check the declaration of copysignl.
+	* modules/math-c++-tests (Makefile.am): Link test-math-c++ against
+	$(COPYSIGNL_LIBM). Needed on IRIX 6.5 with cc.
+	* doc/posix-functions/copysignl.texi: Mention the new module.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'copysignf'.
 	* modules/copysignf-tests: New file.
 	* tests/test-copysignf.c: New file.

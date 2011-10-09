@@ -1,4 +1,4 @@
-# math_h.m4 serial 49
+# math_h.m4 serial 50
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,7 @@ AC_DEFUN([gl_MATH_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosf acosl asinf asinl atanf atanl
-     ceilf ceill copysign copysignf cosf cosl coshf
+     ceilf ceill copysign copysignf copysignl cosf cosl coshf
      expf expl fabsf floorf floorl fmodf frexpf frexpl
      ldexpf ldexpl logb logf logl log10f modff powf
      round roundf roundl sinf sinl sinhf sqrtf sqrtl
@@ -70,6 +70,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_CEILL=0;     AC_SUBST([GNULIB_CEILL])
   GNULIB_COPYSIGN=0;  AC_SUBST([GNULIB_COPYSIGN])
   GNULIB_COPYSIGNF=0; AC_SUBST([GNULIB_COPYSIGNF])
+  GNULIB_COPYSIGNL=0; AC_SUBST([GNULIB_COPYSIGNL])
   GNULIB_COSF=0;      AC_SUBST([GNULIB_COSF])
   GNULIB_COSL=0;      AC_SUBST([GNULIB_COSL])
   GNULIB_COSHF=0;     AC_SUBST([GNULIB_COSHF])
@@ -122,6 +123,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_ATAN2F=1;               AC_SUBST([HAVE_ATAN2F])
   HAVE_COPYSIGN=1;             AC_SUBST([HAVE_COPYSIGN])
   HAVE_COPYSIGNF=1;            AC_SUBST([HAVE_COPYSIGNF])
+  HAVE_COPYSIGNL=1;            AC_SUBST([HAVE_COPYSIGNL])
   HAVE_COSF=1;                 AC_SUBST([HAVE_COSF])
   HAVE_COSL=1;                 AC_SUBST([HAVE_COSL])
   HAVE_COSHF=1;                AC_SUBST([HAVE_COSHF])
