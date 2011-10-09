@@ -1,5 +1,16 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	floorl: Simplify for platforms where 'long double' == 'double'.
+	* lib/floorl.c: Include <config.h>.
+	(floorl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/floor.c [!USE_LONG_DOUBLE]: Don't include <config.h> a second
+	time.
+	* m4/floorl.m4 (gl_FUNC_FLOORL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine FLOORL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/floorl (Depends-on): Add floor. Update conditions.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	rint: Fix ordering constraints.
 	* m4/rint.m4 (gl_FUNC_RINT): Require gl_MATH_H_DEFAULTS.
 	* m4/rintf.m4 (gl_FUNC_RINTF): Likewise.
