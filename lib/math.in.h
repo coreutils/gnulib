@@ -320,6 +320,21 @@ _GL_WARN_ON_USE (coshf, "coshf is unportable - "
 #endif
 
 
+#if @GNULIB_COPYSIGN@
+# if !@HAVE_COPYSIGN@
+_GL_FUNCDECL_SYS (copysign, double, (double x, double y));
+# endif
+_GL_CXXALIAS_SYS (copysign, double, (double x, double y));
+_GL_CXXALIASWARN (copysign);
+#elif defined GNULIB_POSIXCHECK
+# undef copysign
+# if HAVE_RAW_DECL_COPYSIGN
+_GL_WARN_ON_USE (copysign, "copysign is unportable - "
+                 "use gnulib module copysign for portability");
+# endif
+#endif
+
+
 #if @GNULIB_EXPF@
 # if !@HAVE_EXPF@
 #  undef expf

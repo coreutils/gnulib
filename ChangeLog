@@ -1,5 +1,24 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	copysign: Provide replacement.
+	* lib/math.in.h (copysign): New declaration.
+	* lib/copysign.c: New file.
+	* m4/copysign.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether copysign is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_COPYSIGN, HAVE_COPYSIGN.
+	* modules/math (Makefile.am): Substitute GNULIB_COPYSIGN,
+	HAVE_COPYSIGN.
+	* modules/copysign (Description): Clarify.
+	(Files): Add lib/copysign.c, m4/copysign.m4.
+	(Depends-on): Add math, signbit.
+	(configure.ac): Invoke gl_FUNC_COPYSIGN, AC_LIBOBJ,
+	gl_MATH_MODULE_INDICATOR.
+	* tests/test-math-c++.cc: Check the declaration of copysign.
+	* doc/posix-functions/copysign.texi: Mention the effects of the module
+	on Minix and MSVC.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	isinf: Ensure macro on AIX 5.1.
 	* m4/isinf.m4 (gl_ISINF): Also test whether isinf is defined as a
 	macro.
