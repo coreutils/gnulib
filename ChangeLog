@@ -1,5 +1,19 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	*printf-posix tests: Fix for platforms where 'long double' == 'double'.
+	* modules/snprintf-posix-tests (configure.ac): Require
+	gl_LONG_DOUBLE_VS_DOUBLE.
+	* modules/sprintf-posix-tests (configure.ac): Likewise.
+	* modules/vasnprintf-posix-tests (configure.ac): Likewise.
+	* modules/vasprintf-posix-tests (configure.ac): Likewise.
+	* modules/vsnprintf-posix-tests (configure.ac): Likewise.
+	* modules/vsprintf-posix-tests (configure.ac): Likewise.
+	* tests/test-snprintf-posix.h (test_function): Avoid 80-bit long double
+	tests on platforms where 'long double' is the same as 'double'.
+	* tests/test-sprintf-posix.h (test_function): Likewise.
+	* tests/test-vasnprintf-posix.c (test_function): Likewise.
+	* tests/test-vasprintf-posix.c (test_function): Likewise.
+
 	*printf: Fix for platforms where 'long double' == 'double'.
 	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Require
 	gl_LONG_DOUBLE_VS_DOUBLE. Don't blindly assume 80-bit 'long double'.

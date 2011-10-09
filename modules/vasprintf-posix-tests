@@ -10,6 +10,7 @@ stdint
 float
 
 configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 
 Makefile.am:
 TESTS += test-vasprintf-posix

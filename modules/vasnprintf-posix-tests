@@ -16,6 +16,7 @@ float
 setlocale
 
 configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 gt_LOCALE_FR
 gt_LOCALE_FR_UTF8
 

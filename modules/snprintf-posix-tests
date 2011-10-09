@@ -13,6 +13,7 @@ stdint
 float
 
 configure.ac:
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 AC_DEFINE([CHECK_SNPRINTF_POSIX], 1,
   [Define to 1 for strict checking in test-snprintf.c.])
 
