@@ -1,5 +1,12 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	isinf: Ensure macro on AIX 5.1.
+	* m4/isinf.m4 (gl_ISINF): Also test whether isinf is defined as a
+	macro.
+	* doc/posix-functions/isinf.texi: Mention also AIX 5.1 as deficient.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	*printf-posix tests: Fix for platforms where 'long double' == 'double'.
 	* modules/snprintf-posix-tests (configure.ac): Require
 	gl_LONG_DOUBLE_VS_DOUBLE.
