@@ -1,5 +1,11 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	poll: Make macro safer.
+	* m4/poll.m4 (gl_FUNC_POLL): Complain if, after invoking gl_POLL_H,
+	ac_cv_header_poll_h is not set.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	copysign: Provide replacement.
 	* lib/math.in.h (copysign): New declaration.
 	* lib/copysign.c: New file.
