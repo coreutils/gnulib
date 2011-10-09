@@ -1,5 +1,9 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'copysignl'.
+	* modules/copysignl-tests: New file.
+	* tests/test-copysignl.c: New file.
+
 	New module 'copysignl'.
 	* lib/math.in.h (copysignl): New declaration.
 	* lib/copysignl.c: New file.
