@@ -1,5 +1,16 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	truncl: Simplify for platforms where 'long double' == 'double'.
+	* lib/truncl.c: Include <config.h>.
+	(truncl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/trunc.c [!USE_LONG_DOUBLE]: Don't include <config.h> a second
+	time.
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine TRUNCL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/truncl (Depends-on): Add trunc. Update conditions.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	ceill: Simplify for platforms where 'long double' == 'double'.
 	* lib/ceill.c: Include <config.h>.
 	(ceill) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.

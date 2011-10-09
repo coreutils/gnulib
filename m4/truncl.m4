@@ -1,4 +1,4 @@
-# truncl.m4 serial 9
+# truncl.m4 serial 10
 dnl Copyright (C) 2007-2008, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,9 +8,12 @@ AC_DEFUN([gl_FUNC_TRUNCL],
 [
   m4_divert_text([DEFAULTS], [gl_truncl_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
   dnl Persuade glibc <math.h> to declare truncl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   dnl Test whether truncl() is declared.
   AC_CHECK_DECLS([truncl], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_truncl" = yes; then
@@ -109,8 +112,13 @@ int main (int argc, char *argv[])
     HAVE_DECL_TRUNCL=0
   fi
   if test $HAVE_DECL_TRUNCL = 0 || test $REPLACE_TRUNCL = 1; then
-    dnl No libraries are needed to link lib/truncl.c.
-    TRUNCL_LIBM=
+    dnl Find libraries needed to link lib/truncl.c.
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_TRUNC])
+      TRUNCL_LIBM="$TRUNC_LIBM"
+    else
+      TRUNCL_LIBM=
+    fi
   fi
   AC_SUBST([TRUNCL_LIBM])
 ])
