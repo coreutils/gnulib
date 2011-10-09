@@ -4,7 +4,7 @@
 #   2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
 #   2011 Free Software Foundation, Inc.
 
-timestamp='2011-09-09'
+timestamp='2011-10-08'
 
 # This file is (in principle) common to ALL GNU software.
 # The presence of a machine in this file suggests that SOME GNU software
@@ -255,6 +255,7 @@ case $basic_machine in
 	| bfin \
 	| c4x | clipper \
 	| d10v | d30v | dlx | dsp16xx \
+	| epiphany \
 	| fido | fr30 | frv \
 	| h8300 | h8500 | hppa | hppa1.[01] | hppa2.0 | hppa2.0[nw] | hppa64 \
 	| hexagon \
