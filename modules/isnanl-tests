@@ -11,6 +11,7 @@ float
 
 configure.ac:
 gl_LONG_DOUBLE_EXPONENT_LOCATION
+AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 
 Makefile.am:
 TESTS += test-isnanl

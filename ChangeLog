@@ -1,3 +1,19 @@
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
+	isfinite, isinf, isnan tests: Avoid syntax error on MSVC 9.
+	* m4/math_h.m4 (gl_LONG_DOUBLE_VS_DOUBLE): New macro.
+	* modules/isfinite-tests (configure.ac): Require
+	gl_LONG_DOUBLE_VS_DOUBLE.
+	* modules/isinf-tests (configure.ac): Likewise.
+	* modules/isnan-tests (configure.ac): Likewise.
+	* modules/isnanl-tests (configure.ac): Likewise.
+	* modules/isnanl-nolibm-tests (configure.ac): Likewise.
+	* tests/test-isfinite.c (test_isfinitel): Avoid 80-bit long double
+	tests on platforms where 'long double' is the same as 'double'.
+	* tests/test-isinf.c (test_isinfl): Likewise.
+	* tests/test-isnan.c (test_long_double): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+
 2011-10-08  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'tanhf'.

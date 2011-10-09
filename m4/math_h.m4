@@ -1,4 +1,4 @@
-# math_h.m4 serial 46
+# math_h.m4 serial 47
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -187,4 +187,35 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_TRUNC=0;             AC_SUBST([REPLACE_TRUNC])
   REPLACE_TRUNCF=0;            AC_SUBST([REPLACE_TRUNCF])
   REPLACE_TRUNCL=0;            AC_SUBST([REPLACE_TRUNCL])
+])
+
+# gl_LONG_DOUBLE_VS_DOUBLE
+# determines whether 'long double' and 'double' have the same representation.
+# Sets variable HAVE_SAME_LONG_DOUBLE_AS_DOUBLE to 0 or 1, and defines
+# HAVE_SAME_LONG_DOUBLE_AS_DOUBLE accordingly.
+# The currently known platforms where this is the case are:
+# Linux/HPPA, Minix 3.1.8, AIX 5, AIX 6 and 7 with xlc, MSVC 9.
+AC_DEFUN([gl_LONG_DOUBLE_VS_DOUBLE],
+[
+  AC_CACHE_CHECK([whether long double and double are the same],
+    [gl_cv_long_double_equals_double],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[#include <float.h>]],
+          [[typedef int check[sizeof (long double) == sizeof (double)
+                              && LDBL_MANT_DIG == DBL_MANT_DIG
+                              && LDBL_MAX_EXP == DBL_MAX_EXP
+                              && LDBL_MIN_EXP == DBL_MIN_EXP
+                              ? 1 : -1];
+          ]])],
+       [gl_cv_long_double_equals_double=yes],
+       [gl_cv_long_double_equals_double=no])
+    ])
+  if test $gl_cv_long_double_equals_double = yes; then
+    AC_DEFINE([HAVE_SAME_LONG_DOUBLE_AS_DOUBLE], [1],
+      [Define to 1 if 'long double' and 'double' have the same representation.])
+    HAVE_SAME_LONG_DOUBLE_AS_DOUBLE=1
+  else
+    HAVE_SAME_LONG_DOUBLE_AS_DOUBLE=0
+  fi
+  AC_SUBST([HAVE_SAME_LONG_DOUBLE_AS_DOUBLE])
 ])
