@@ -1,5 +1,16 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	roundl: Simplify for platforms where 'long double' == 'double'.
+	* lib/roundl.c: Include <config.h>.
+	(roundl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/round.c [!USE_LONG_DOUBLE]: Don't include <config.h> a second
+	time.
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine ROUNDL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/roundl (Depends-on): Add round. Update conditions.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	truncl: Simplify for platforms where 'long double' == 'double'.
 	* lib/truncl.c: Include <config.h>.
 	(truncl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.

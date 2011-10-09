@@ -15,5 +15,22 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
 
-#define USE_LONG_DOUBLE
-#include "round.c"
+#include <config.h>
+
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+/* Specification.  */
+# include <math.h>
+
+long double
+roundl (long double x)
+{
+  return round (x);
+}
+
+#else
+
+# define USE_LONG_DOUBLE
+# include "round.c"
+
+#endif

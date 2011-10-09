@@ -18,7 +18,9 @@
 /* Written by Ben Pfaff <blp@gnu.org>, 2007.
    Based heavily on code by Bruno Haible. */
 
-#include <config.h>
+#if ! defined USE_LONG_DOUBLE
+# include <config.h>
+#endif
 
 /* Specification.  */
 #include <math.h>
