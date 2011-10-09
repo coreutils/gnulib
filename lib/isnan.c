@@ -83,7 +83,7 @@ int
 FUNC (DOUBLE x)
 {
 #ifdef KNOWN_EXPBIT0_LOCATION
-# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
   /* Special CPU dependent code is needed to treat bit patterns outside the
      IEEE 754 specification (such as Pseudo-NaNs, Pseudo-Infinities,
      Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals) as NaNs.
@@ -157,7 +157,7 @@ FUNC (DOUBLE x)
      the signaling NaNs, handle only the quiet NaNs.  */
   if (x == x)
     {
-# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+# if defined USE_LONG_DOUBLE && ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
       /* Detect any special bit patterns that pass ==; see comment above.  */
       memory_double m1;
       memory_double m2;

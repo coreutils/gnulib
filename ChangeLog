@@ -1,5 +1,12 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	isnanl[-nolibm]: Fix for platforms where 'long double' == 'double'.
+	* lib/isnan.c (rpl_isnanl): Don't blindly assume 80-bit 'long double'.
+	* m4/isnanl.m4 (gl_PREREQ_ISNANL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	(gl_FUNC_ISNANL_WORKS): Likewise. Don't blindly assume 80-bit
+	'long double'.
+	* modules/isnanl-nolibm (Files): Add m4/math_h.m4.
+
 	isinf: Fix for platforms where 'long double' == 'double'.
 	* m4/isinf.m4 (gl_ISINFL_WORKS): Require gl_LONG_DOUBLE_VS_DOUBLE.
 	Don't blindly assume 80-bit 'long double'.

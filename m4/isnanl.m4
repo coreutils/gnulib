@@ -1,4 +1,4 @@
-# isnanl.m4 serial 16
+# isnanl.m4 serial 17
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,6 +56,7 @@ dnl Prerequisites of replacement isnanl definition. It does not need -lm.
 AC_DEFUN([gl_PREREQ_ISNANL],
 [
   gl_LONG_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
 ])
 
 dnl Test whether isnanl() can be used without libm.
@@ -116,6 +117,7 @@ AC_DEFUN([gl_FUNC_ISNANL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_BIGENDIAN])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether isnanl works], [gl_cv_func_isnanl_works],
     [
@@ -169,7 +171,7 @@ int main ()
       result |= 1;
   }
 
-#if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_))
+#if ((defined __ia64 && LDBL_MANT_DIG == 64) || (defined __x86_64__ || defined __amd64__) || (defined __i386 || defined __i386__ || defined _I386 || defined _M_IX86 || defined _X86_)) && !HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
 /* Representation of an 80-bit 'long double' as an initializer for a sequence
    of 'unsigned int' words.  */
 # ifdef WORDS_BIGENDIAN

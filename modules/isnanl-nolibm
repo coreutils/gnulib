@@ -8,6 +8,7 @@ lib/isnan.c
 lib/float+.h
 m4/exponentl.m4
 m4/isnanl.m4
+m4/math_h.m4
 
 Depends-on:
 float
