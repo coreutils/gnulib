@@ -10,6 +10,7 @@ that module occurs among the main modules in lib/.
 Files:
 m4/obstack-printf.m4
 m4/obstack-printf-posix.m4
+m4/math_h.m4
 lib/obstack_printf.c
 
 Depends-on:

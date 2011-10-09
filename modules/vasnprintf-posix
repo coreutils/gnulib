@@ -11,6 +11,7 @@ that module occurs among the main modules in lib/.
 Files:
 m4/vasnprintf-posix.m4
 m4/printf.m4
+m4/math_h.m4
 
 Depends-on:
 vasnprintf

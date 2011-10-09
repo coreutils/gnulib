@@ -11,6 +11,7 @@ Files:
 lib/vfprintf.c
 m4/vfprintf-posix.m4
 m4/printf.m4
+m4/math_h.m4
 
 Depends-on:
 stdio

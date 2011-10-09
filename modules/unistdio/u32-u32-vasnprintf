@@ -6,6 +6,7 @@ lib/unistdio/u32-u32-vasnprintf.c
 lib/vasnprintf.c
 m4/vasnprintf.m4
 m4/printf.m4
+m4/math_h.m4
 m4/wchar_t.m4
 m4/wint_t.m4
 m4/longlong.m4

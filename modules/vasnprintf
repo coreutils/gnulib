@@ -18,6 +18,7 @@ m4/stdint_h.m4
 m4/inttypes_h.m4
 m4/vasnprintf.m4
 m4/printf.m4
+m4/math_h.m4
 
 Depends-on:
 alloca-opt

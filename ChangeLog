@@ -1,5 +1,28 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	*printf: Fix for platforms where 'long double' == 'double'.
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE): Require
+	gl_LONG_DOUBLE_VS_DOUBLE. Don't blindly assume 80-bit 'long double'.
+	* modules/dprintf-posix (Files): Add m4/math_h.m4.
+	* modules/fprintf-posix (Files): Likewise.
+	* modules/obstack-printf-posix (Files): Likewise.
+	* modules/snprintf-posix (Files): Likewise.
+	* modules/sprintf-posix (Files): Likewise.
+	* modules/vasnprintf (Files): Likewise.
+	* modules/vasnprintf-posix (Files): Likewise.
+	* modules/vasprintf-posix (Files): Likewise.
+	* modules/vdprintf-posix (Files): Likewise.
+	* modules/vfprintf-posix (Files): Likewise.
+	* modules/vsnprintf-posix (Files): Likewise.
+	* modules/vsprintf-posix (Files): Likewise.
+	* modules/unistdio/u8-vasnprintf (Files): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Files): Likewise.
+	* modules/unistdio/u16-vasnprintf (Files): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Files): Likewise.
+	* modules/unistdio/u32-vasnprintf (Files): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Files): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Files): Likewise.
+
 	isnanl[-nolibm]: Fix for platforms where 'long double' == 'double'.
 	* lib/isnan.c (rpl_isnanl): Don't blindly assume 80-bit 'long double'.
 	* m4/isnanl.m4 (gl_PREREQ_ISNANL): Require gl_LONG_DOUBLE_VS_DOUBLE.

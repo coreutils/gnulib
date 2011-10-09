@@ -11,6 +11,7 @@ Files:
 lib/sprintf.c
 m4/sprintf-posix.m4
 m4/printf.m4
+m4/math_h.m4
 
 Depends-on:
 stdio
