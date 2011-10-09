@@ -19,8 +19,20 @@
 /* Specification.  */
 #include <math.h>
 
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+copysignl (long double x, long double y)
+{
+  return copysign (x, y);
+}
+
+#else
+
 long double
 copysignl (long double x, long double y)
 {
   return (signbit (x) != signbit (y) ? - x : x);
 }
+
+#endif

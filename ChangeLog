@@ -1,5 +1,14 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	copysignl: Simplify for platforms where 'long double' == 'double'.
+	* lib/copysignl.c (copysignl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
+	alternative.
+	* m4/copysignl.m4 (gl_FUNC_COPYSIGNL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine COPYSIGNL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/copysignl (Depends-on): Add copysign. Update conditions.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'rintl'.
 	* modules/rintl-tests: New file.
 	* tests/test-rintl.c: New file.
