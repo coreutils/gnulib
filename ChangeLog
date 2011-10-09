@@ -1,5 +1,11 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	mathfunc.m4: Refactor.
+	* m4/mathfunc.m4 (gl_MATHFUNC): Assign the argument list to a temporary
+	m4 variable.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	rintl: Simplify for platforms where 'long double' == 'double'.
 	* lib/rintl.c: Include <config.h>.
 	(rintl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.

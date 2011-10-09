@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 7
+# mathfunc.m4 serial 8
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,6 +19,23 @@ AC_DEFUN([gl_MATHFUNC],
   m4_pushdef([func], [$1])
   m4_pushdef([FUNC], [m4_translit([$1],[abcdefghijklmnopqrstuvwxyz],
                                        [ABCDEFGHIJKLMNOPQRSTUVWXYZ])])
+  m4_pushdef([ARGS], [m4_bpatsubst(
+                        [m4_bpatsubst(
+                           [m4_bpatsubst(
+                              [m4_bpatsubst(
+                                 [m4_bpatsubst(
+                                    [m4_bpatsubst(
+                                       [m4_bpatsubst(
+                                          [m4_bpatsubst(
+                                             [$3],
+                                             [int \*], [&i_ret])],
+                                          [float \*], [&f_ret])],
+                                       [double \*], [&d_ret])],
+                                    [long double \*], [&l_ret])],
+                                 [int], [2])],
+                              [float], [1.618034f])],
+                           [long double], [1.618033988749894848L])],
+                        [double], [1.6180339887])])
   FUNC[]_LIBM=
   AC_CACHE_CHECK([whether func() can be used without linking with libm],
     [gl_cv_func_]func[_no_libm],
@@ -34,7 +51,7 @@ AC_DEFUN([gl_MATHFUNC],
              float f_ret;
              double d_ret;
              long double l_ret;]],
-           [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int \*], [&i_ret])], [float \*], [&f_ret])], [double \*], [&d_ret])], [long double \*], [&l_ret])], [int], [2])], [float], [1.618034f])], [long double], [1.618033988749894848L])], [double], [1.6180339887])[;
+           [[$2 y = funcptr ]ARGS[;
              return y < 0.3 || y > 1.7;
            ]])],
         [gl_cv_func_]func[_no_libm=yes],
@@ -57,7 +74,7 @@ AC_DEFUN([gl_MATHFUNC],
                float f_ret;
                double d_ret;
                long double l_ret;]],
-             [[$2 y = funcptr ]m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([m4_bpatsubst([$3], [int \*], [&i_ret])], [float \*], [&f_ret])], [double \*], [&d_ret])], [long double \*], [&l_ret])], [int], [2])], [float], [1.618034f])], [long double], [1.618033988749894848L])], [double], [1.6180339887])[;
+             [[$2 y = funcptr ]ARGS[;
                return y < 0.3 || y > 1.7;
              ]])],
           [gl_cv_func_]func[_in_libm=yes],
@@ -69,6 +86,7 @@ AC_DEFUN([gl_MATHFUNC],
     fi
   fi
   AC_SUBST(FUNC[_LIBM])
+  m4_popdef([ARGS])
   m4_popdef([FUNC])
   m4_popdef([func])
 ])
