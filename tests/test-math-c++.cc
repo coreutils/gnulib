@@ -195,6 +195,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpl, long double, (long double, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
 #endif
 
+#if GNULIB_TEST_RINTL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::rintl, long double, (long double));
+#endif
+
 #if GNULIB_TEST_ROUNDF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::roundf, float, (float));
 #endif

@@ -1,0 +1,32 @@
+Description:
+rintl() function: round according to the current rounding mode.
+
+Files:
+lib/rintl.c
+lib/rint.c
+m4/rintl.m4
+m4/mathfunc.m4
+
+Depends-on:
+math
+
+configure.ac:
+gl_FUNC_RINTL
+if test $HAVE_RINTL = 0; then
+  AC_LIBOBJ([rintl])
+fi
+gl_MATH_MODULE_INDICATOR([rintl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(RINTL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

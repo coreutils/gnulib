@@ -740,6 +740,20 @@ _GL_WARN_ON_USE (rint, "rint is unportable - "
 # endif
 #endif
 
+#if @GNULIB_RINTL@
+# if !@HAVE_RINTL@
+_GL_FUNCDECL_SYS (rintl, long double, (long double x));
+# endif
+_GL_CXXALIAS_SYS (rintl, long double, (long double x));
+_GL_CXXALIASWARN (rintl);
+#elif defined GNULIB_POSIXCHECK
+# undef rintl
+# if HAVE_RAW_DECL_RINTL
+_GL_WARN_ON_USE (rintl, "rintl is unportable - "
+                 "use gnulib module rintl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_ROUNDF@
 # if @REPLACE_ROUNDF@

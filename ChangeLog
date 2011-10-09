@@ -1,5 +1,20 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	New module 'rintl'.
+	* lib/math.in.h (rintl): New declaration.
+	* lib/rintl.c: New file.
+	* m4/rintl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether rintl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_RINTL, HAVE_RINTL.
+	* modules/math (Makefile.am): Substitute GNULIB_RINTL, HAVE_RINTL.
+	* modules/rintl: New file.
+	* tests/test-math-c++.cc: Check the declaration of rintl.
+	* modules/math-c++-tests (Makefile.am): Link test-math-c++ against
+	$(RINTL_LIBM). Needed on IRIX 6.5 with cc.
+	* doc/posix-functions/rintl.texi: Mention the new module.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'rintf'.
 	* modules/rintf-tests: New file.
 	* tests/test-rintf.c: New file.
