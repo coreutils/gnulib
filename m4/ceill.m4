@@ -1,4 +1,4 @@
-# ceill.m4 serial 11
+# ceill.m4 serial 12
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,11 @@ AC_DEFUN([gl_FUNC_CEILL],
 [
   m4_divert_text([DEFAULTS], [gl_ceill_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Persuade glibc <math.h> to declare ceill().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   dnl Test whether ceill() is declared.
   AC_CHECK_DECLS([ceill], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_ceill" = yes; then
@@ -60,8 +63,13 @@ int main (int argc, char *argv[])
     HAVE_DECL_CEILL=0
   fi
   if test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; then
-    dnl No libraries are needed to link lib/ceill.c.
-    CEILL_LIBM=
+    dnl Find libraries needed to link lib/ceill.c.
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_CEIL])
+      CEILL_LIBM="$CEIL_LIBM"
+    else
+      CEILL_LIBM=
+    fi
   fi
   AC_SUBST([CEILL_LIBM])
 ])

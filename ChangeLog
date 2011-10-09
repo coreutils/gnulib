@@ -1,5 +1,16 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	ceill: Simplify for platforms where 'long double' == 'double'.
+	* lib/ceill.c: Include <config.h>.
+	(ceill) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/ceil.c [!USE_LONG_DOUBLE]: Don't include <config.h> a second
+	time.
+	* m4/ceill.m4 (gl_FUNC_CEILL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine CEILL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/ceill (Depends-on): Add ceil. Update conditions.
+
+2011-10-09  Bruno Haible  <bruno@clisp.org>
+
 	floorl: Simplify for platforms where 'long double' == 'double'.
 	* lib/floorl.c: Include <config.h>.
 	(floorl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
