@@ -1,3 +1,12 @@
+2011-10-10  Jim Meyering  <meyering@redhat.com>
+
+	test-renameat: don't leave behind a temporary file
+	* tests/test-renameat.c (main): Don't forget to remove a temporary file.
+	  ERROR: files left in build directory after distclean:
+	  ./gltests/test-renameat.too
+	  make[1]: *** [distcleancheck] Error 1
+	Reported by Tom G. Christensen.
+
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
 	rint: Determine RINT_LIBM correctly on AIX 7.

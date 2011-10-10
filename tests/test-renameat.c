@@ -83,6 +83,7 @@ main (void)
     ASSERT (renameat (AT_FDCWD, BASE "oo", 99, "bar") == -1);
     ASSERT (errno == EBADF);
   }
+  ASSERT (unlink (BASE "oo") == 0);
 
   /* Test basic rename functionality, using current directory.  */
   result = test_rename (do_rename, false);
