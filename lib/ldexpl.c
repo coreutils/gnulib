@@ -23,8 +23,18 @@
 /* Specification.  */
 #include <math.h>
 
-#include <float.h>
-#include "fpucw.h"
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+ldexpl (long double x, int exp)
+{
+  return ldexp (x, exp);
+}
+
+#else
+
+# include <float.h>
+# include "fpucw.h"
 
 long double
 ldexpl (long double x, int exp)
@@ -64,6 +74,8 @@ ldexpl (long double x, int exp)
 
   return x;
 }
+
+#endif
 
 #if 0
 int

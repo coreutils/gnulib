@@ -1,3 +1,12 @@
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
+	ldexpl: Simplify for platforms where 'long double' == 'double'.
+	* lib/ldexpl.c (ldexpl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
+	alternative implementation.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine LDEXPL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/ldexpl (Depends-on): Add ldexp. Update conditions.
+
 2011-10-10  Tom G. Christensen  <tgc@jupiterrise.com>  (tiny change)
 
 	ffsll: set correct witness
