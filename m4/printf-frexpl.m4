@@ -1,4 +1,4 @@
-# printf-frexpl.m4 serial 8
+# printf-frexpl.m4 serial 9
 dnl Copyright (C) 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,8 @@ dnl Check how to define printf_frexpl() without linking with libm.
 AC_DEFUN([gl_FUNC_PRINTF_FREXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Subset of gl_FUNC_FREXPL_NO_LIBM.
   gl_CHECK_FREXPL_NO_LIBM
   if test $gl_cv_func_frexpl_no_libm = yes; then

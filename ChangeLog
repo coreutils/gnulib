@@ -1,5 +1,17 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	printf-frexpl: Simplify for platforms where 'long double' == 'double'.
+	* lib/printf-frexpl.c: Include <config.h>.
+	(printf_frexpl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/printf-frexp.c [!USE_LONG_DOUBLE]: Don't include <config.h> a
+	second time.
+	* m4/printf-frexpl.m4 (gl_FUNC_PRINTF_FREXPL): Require
+	gl_LONG_DOUBLE_VS_DOUBLE.
+	* modules/printf-frexpl (Depends-on): Add printf-frexp. Update
+	conditions.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	frexpl: Simplify for platforms where 'long double' == 'double'.
 	* lib/frexpl.c: Include <config.h>.
 	(frexpl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
