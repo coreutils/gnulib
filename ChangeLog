@@ -1,5 +1,14 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	sqrtl: Simplify for platforms where 'long double' == 'double'.
+	* lib/sqrtl.c (sqrtl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
+	alternative implementation.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine SQRTL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/sqrtl (Depends-on): Update conditions.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	ldexpl: Simplify for platforms where 'long double' == 'double'.
 	* lib/ldexpl.c (ldexpl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
 	alternative implementation.

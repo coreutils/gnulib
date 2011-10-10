@@ -1,4 +1,4 @@
-# sqrtl.m4 serial 5
+# sqrtl.m4 serial 6
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_SQRTL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Persuade glibc <math.h> to declare sqrtl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
@@ -56,30 +58,35 @@ AC_DEFUN([gl_FUNC_SQRTL],
     HAVE_DECL_SQRTL=0
     HAVE_SQRTL=0
     dnl Find libraries needed to link lib/sqrtl.c.
-    AC_REQUIRE([gl_FUNC_ISNANL])
-    AC_REQUIRE([gl_FUNC_FREXPL])
-    AC_REQUIRE([gl_FUNC_LDEXPL])
-    AC_REQUIRE([gl_FUNC_SQRT])
-    dnl Append $ISNANL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
-    case " $SQRTL_LIBM " in
-      *" $ISNANL_LIBM "*) ;;
-      *) SQRTL_LIBM="$SQRTL_LIBM $ISNANL_LIBM" ;;
-    esac
-    dnl Append $FREXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
-    case " $SQRTL_LIBM " in
-      *" $FREXPL_LIBM "*) ;;
-      *) SQRTL_LIBM="$SQRTL_LIBM $FREXPL_LIBM" ;;
-    esac
-    dnl Append $LDEXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
-    case " $SQRTL_LIBM " in
-      *" $LDEXPL_LIBM "*) ;;
-      *) SQRTL_LIBM="$SQRTL_LIBM $LDEXPL_LIBM" ;;
-    esac
-    dnl Append $SQRT_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
-    case " $SQRTL_LIBM " in
-      *" $SQRT_LIBM "*) ;;
-      *) SQRTL_LIBM="$SQRTL_LIBM $SQRT_LIBM" ;;
-    esac
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_SQRT])
+      SQRTL_LIBM="$SQRT_LIBM"
+    else
+      AC_REQUIRE([gl_FUNC_ISNANL])
+      AC_REQUIRE([gl_FUNC_FREXPL])
+      AC_REQUIRE([gl_FUNC_LDEXPL])
+      AC_REQUIRE([gl_FUNC_SQRT])
+      dnl Append $ISNANL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+      case " $SQRTL_LIBM " in
+        *" $ISNANL_LIBM "*) ;;
+        *) SQRTL_LIBM="$SQRTL_LIBM $ISNANL_LIBM" ;;
+      esac
+      dnl Append $FREXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+      case " $SQRTL_LIBM " in
+        *" $FREXPL_LIBM "*) ;;
+        *) SQRTL_LIBM="$SQRTL_LIBM $FREXPL_LIBM" ;;
+      esac
+      dnl Append $LDEXPL_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+      case " $SQRTL_LIBM " in
+        *" $LDEXPL_LIBM "*) ;;
+        *) SQRTL_LIBM="$SQRTL_LIBM $LDEXPL_LIBM" ;;
+      esac
+      dnl Append $SQRT_LIBM to SQRTL_LIBM, avoiding gratuitous duplicates.
+      case " $SQRTL_LIBM " in
+        *" $SQRT_LIBM "*) ;;
+        *) SQRTL_LIBM="$SQRTL_LIBM $SQRT_LIBM" ;;
+      esac
+    fi
   fi
   AC_SUBST([SQRTL_LIBM])
 ])
