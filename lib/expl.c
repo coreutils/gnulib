@@ -23,16 +23,26 @@
 /* Specification.  */
 #include <math.h>
 
-#include <float.h>
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+expl (long double x)
+{
+  return exp (x);
+}
+
+#else
+
+# include <float.h>
 
 static const long double C[] = {
 /* Chebyshev polynom coeficients for (exp(x)-1)/x */
-#define P1 C[0]
-#define P2 C[1]
-#define P3 C[2]
-#define P4 C[3]
-#define P5 C[4]
-#define P6 C[5]
+# define P1 C[0]
+# define P2 C[1]
+# define P3 C[2]
+# define P4 C[3]
+# define P5 C[4]
+# define P6 C[5]
  0.5L,
  1.66666666666666666666666666666666683E-01L,
  4.16666666666666666666654902320001674E-02L,
@@ -41,19 +51,19 @@ static const long double C[] = {
  1.98412698413981650382436541785404286E-04L,
 
 /* Smallest integer x for which e^x overflows.  */
-#define himark C[6]
+# define himark C[6]
  11356.523406294143949491931077970765L,
 
 /* Largest integer x for which e^x underflows.  */
-#define lomark C[7]
+# define lomark C[7]
 -11433.4627433362978788372438434526231L,
 
 /* very small number */
-#define TINY C[8]
+# define TINY C[8]
  1.0e-4900L,
 
 /* 2^16383 */
-#define TWO16383 C[9]
+# define TWO16383 C[9]
  5.94865747678615882542879663314003565E+4931L};
 
 long double
@@ -117,6 +127,8 @@ expl (long double x)
     /* Return x, if x is a NaN or Inf; or overflow, otherwise.  */
     return TWO16383*x;
 }
+
+#endif
 
 #if 0
 int

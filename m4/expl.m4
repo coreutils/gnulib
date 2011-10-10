@@ -1,4 +1,4 @@
-# expl.m4 serial 4
+# expl.m4 serial 5
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_EXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Persuade glibc <math.h> to declare expl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
@@ -56,8 +58,13 @@ AC_DEFUN([gl_FUNC_EXPL],
     HAVE_DECL_EXPL=0
     HAVE_EXPL=0
     dnl Find libraries needed to link lib/expl.c.
-    AC_REQUIRE([gl_FUNC_FLOORL])
-    EXPL_LIBM="$FLOORL_LIBM"
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_EXP])
+      EXPL_LIBM="$EXP_LIBM"
+    else
+      AC_REQUIRE([gl_FUNC_FLOORL])
+      EXPL_LIBM="$FLOORL_LIBM"
+    fi
   fi
   AC_SUBST([EXPL_LIBM])
 ])

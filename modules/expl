@@ -8,8 +8,9 @@ m4/expl.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_EXPL = 0]
-floorl          [test $HAVE_EXPL = 0]
+exp             [test $HAVE_EXPL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float           [test $HAVE_EXPL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+floorl          [test $HAVE_EXPL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_EXPL
