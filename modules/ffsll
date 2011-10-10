@@ -16,7 +16,7 @@ gl_FUNC_FFSLL
 if test $HAVE_FFSLL = 0; then
   AC_LIBOBJ([ffsll])
 fi
-gl_STRING_MODULE_INDICATOR([ffsl])
+gl_STRING_MODULE_INDICATOR([ffsll])
 
 Makefile.am:
 

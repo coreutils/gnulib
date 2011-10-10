@@ -1,3 +1,8 @@
+2011-10-10  Tom G. Christensen  <tgc@jupiterrise.com>  (tiny change)
+
+	ffsll: set correct witness
+	* modules/ffsll (configure.ac): Fix typo.
+
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
 	printf-frexpl: Simplify for platforms where 'long double' == 'double'.
