@@ -1,4 +1,4 @@
-# frexpl.m4 serial 17
+# frexpl.m4 serial 18
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FREXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   dnl Check whether it's declared.
   dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
   AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [[#include <math.h>]])
@@ -40,7 +41,7 @@ AC_DEFUN([gl_FUNC_FREXPL],
       LIBS="$save_LIBS"
       case "$gl_cv_func_frexpl_works" in
         *yes) gl_func_frexpl=yes ;;
-        *)    gl_func_frexpl=no; REPLACE_FREXPL=1; FREXPL_LIBM= ;;
+        *)    gl_func_frexpl=no; REPLACE_FREXPL=1 ;;
       esac
     else
       gl_func_frexpl=no
@@ -50,12 +51,22 @@ AC_DEFUN([gl_FUNC_FREXPL],
         [Define if the frexpl() function is available.])
     fi
   fi
+  if test $HAVE_DECL_FREXPL = 0 || test $gl_func_frexpl = no; then
+    dnl Find libraries needed to link lib/frexpl.c.
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_FREXP])
+      FREXPL_LIBM="$FREXP_LIBM"
+    else
+      FREXPL_LIBM=
+    fi
+  fi
   AC_SUBST([FREXPL_LIBM])
 ])
 
 AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   dnl Check whether it's declared.
   dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
   AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [[#include <math.h>]])

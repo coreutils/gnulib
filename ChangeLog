@@ -1,3 +1,17 @@
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
+	frexpl: Simplify for platforms where 'long double' == 'double'.
+	* lib/frexpl.c: Include <config.h>.
+	(frexpl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New function.
+	* lib/frexp.c [!USE_LONG_DOUBLE]: Don't include <config.h> a second
+	time.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine FREXPL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	(gl_FUNC_FREXPL_NO_LIBM): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	* modules/frexpl (Depends-on): Add frexp. Update conditions.
+	* modules/frexpl-nolibm (Depends-on): Add frexp-nolibm. Update
+	conditions.
+
 2011-10-10  Jim Meyering  <meyering@redhat.com>
 
 	test-renameat: don't leave behind a temporary file

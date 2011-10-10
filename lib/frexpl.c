@@ -14,5 +14,22 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#define USE_LONG_DOUBLE
-#include "frexp.c"
+#include <config.h>
+
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+/* Specification.  */
+# include <math.h>
+
+long double
+frexpl (long double x, int *expptr)
+{
+  return frexp (x, expptr);
+}
+
+#else
+
+# define USE_LONG_DOUBLE
+# include "frexp.c"
+
+#endif
