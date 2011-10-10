@@ -1,5 +1,12 @@
 2011-10-09  Bruno Haible  <bruno@clisp.org>
 
+	rint: Determine RINT_LIBM correctly on AIX 7.
+	* m4/mathfunc.m4 (gl_MATHFUNC): Try to invoke the function also
+	directly, not only through a function pointer. Also accept an optional
+	4th argument with extra code.
+	* m4/rint.m4 (gl_FUNC_RINT): Pass an extra code that gets turned into a
+	rintf() call by gcc when optimizing.
+
 	mathfunc.m4: Refactor.
 	* m4/mathfunc.m4 (gl_MATHFUNC): Assign the argument list to a temporary
 	m4 variable.
