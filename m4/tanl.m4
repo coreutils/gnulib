@@ -1,4 +1,4 @@
-# tanl.m4 serial 5
+# tanl.m4 serial 6
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_TANL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Persuade glibc <math.h> to declare tanl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
@@ -56,24 +58,29 @@ AC_DEFUN([gl_FUNC_TANL],
     HAVE_DECL_TANL=0
     HAVE_TANL=0
     dnl Find libraries needed to link lib/tanl.c, lib/trigl.c.
-    AC_REQUIRE([gl_FUNC_ISNANL])
-    AC_REQUIRE([gl_FUNC_FLOOR])
-    AC_REQUIRE([gl_FUNC_FLOORL])
-    dnl Append $ISNANL_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
-    case " $TANL_LIBM " in
-      *" $ISNANL_LIBM "*) ;;
-      *) TANL_LIBM="$TANL_LIBM $ISNANL_LIBM" ;;
-    esac
-    dnl Append $FLOOR_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
-    case " $TANL_LIBM " in
-      *" $FLOOR_LIBM "*) ;;
-      *) TANL_LIBM="$TANL_LIBM $FLOOR_LIBM" ;;
-    esac
-    dnl Append $FLOORL_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
-    case " $TANL_LIBM " in
-      *" $FLOORL_LIBM "*) ;;
-      *) TANL_LIBM="$TANL_LIBM $FLOORL_LIBM" ;;
-    esac
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_TAN])
+      TANL_LIBM="$TAN_LIBM"
+    else
+      AC_REQUIRE([gl_FUNC_ISNANL])
+      AC_REQUIRE([gl_FUNC_FLOOR])
+      AC_REQUIRE([gl_FUNC_FLOORL])
+      dnl Append $ISNANL_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
+      case " $TANL_LIBM " in
+        *" $ISNANL_LIBM "*) ;;
+        *) TANL_LIBM="$TANL_LIBM $ISNANL_LIBM" ;;
+      esac
+      dnl Append $FLOOR_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
+      case " $TANL_LIBM " in
+        *" $FLOOR_LIBM "*) ;;
+        *) TANL_LIBM="$TANL_LIBM $FLOOR_LIBM" ;;
+      esac
+      dnl Append $FLOORL_LIBM to TANL_LIBM, avoiding gratuitous duplicates.
+      case " $TANL_LIBM " in
+        *" $FLOORL_LIBM "*) ;;
+        *) TANL_LIBM="$TANL_LIBM $FLOORL_LIBM" ;;
+      esac
+    fi
   fi
   AC_SUBST([TANL_LIBM])
 ])

@@ -1,5 +1,16 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	tanl: Simplify for platforms where 'long double' == 'double'.
+	* lib/tanl.c (tanl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
+	implementation.
+	* m4/tanl.m4 (gl_FUNC_TANL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine TANL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/tanl (Depends-on): Add tan. Update conditions.
+	(configure.ac): Don't compile trigl.c if
+	HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	cosl: Simplify for platforms where 'long double' == 'double'.
 	* lib/cosl.c (cosl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
 	implementation.
