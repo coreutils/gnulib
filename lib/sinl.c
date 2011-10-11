@@ -18,6 +18,16 @@
 /* Specification.  */
 #include <math.h>
 
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+sinl (long double x)
+{
+  return sin (x);
+}
+
+#else
+
 /* sinl(x)
  * Return sine function of x.
  *
@@ -49,7 +59,7 @@
  *      TRIG(x) returns trig(x) nearly rounded
  */
 
-#include "trigl.h"
+# include "trigl.h"
 
 long double
 sinl (long double x)
@@ -87,6 +97,8 @@ sinl (long double x)
         }
     }
 }
+
+#endif
 
 #if 0
 int

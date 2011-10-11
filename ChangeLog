@@ -1,5 +1,16 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	sinl: Simplify for platforms where 'long double' == 'double'.
+	* lib/sinl.c (sinl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
+	implementation.
+	* m4/sinl.m4 (gl_FUNC_SINL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine SINL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/sinl (Depends-on): Add sin. Update conditions.
+	(configure.ac): Don't compile sincosl.c and trigl.c if
+	HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	logl: Simplify for platforms where 'long double' == 'double'.
 	* lib/logl.c (logl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
 	implementation.
