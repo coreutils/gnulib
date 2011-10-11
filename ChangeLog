@@ -1,5 +1,14 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	atanl: Simplify for platforms where 'long double' == 'double'.
+	* lib/atanl.c (atanl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
+	alternative implementation.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine ATANL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/atanl (Depends-on): Add atan. Update conditions.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	acosl: Simplify for platforms where 'long double' == 'double'.
 	* lib/acosl.c (acosl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
 	alternative implementation.
