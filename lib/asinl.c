@@ -14,6 +14,16 @@
 /* Specification.  */
 #include <math.h>
 
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+asinl (long double x)
+{
+  return asin (x);
+}
+
+#else
+
 /*
   Long double expansions contributed by
   Stephen L. Moshier <moshier@na-net.ornl.gov>
@@ -187,6 +197,8 @@ asinl (long double x)
 
   return t * sign;
 }
+
+#endif
 
 #if 0
 int
