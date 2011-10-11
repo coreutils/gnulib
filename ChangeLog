@@ -1,5 +1,14 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	acosl: Simplify for platforms where 'long double' == 'double'.
+	* lib/acosl.c (acosl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
+	alternative implementation.
+	* m4/acosl.m4 (gl_FUNC_ACOSL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine ACOSL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/acosl (Depends-on): Add acos. Update conditions.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	asinl: Simplify for platforms where 'long double' == 'double'.
 	* lib/asinl.c (asinl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New
 	alternative implementation.

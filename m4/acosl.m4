@@ -1,4 +1,4 @@
-# acosl.m4 serial 5
+# acosl.m4 serial 6
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_ACOSL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
   dnl Persuade glibc <math.h> to declare acosl().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
@@ -56,18 +58,23 @@ AC_DEFUN([gl_FUNC_ACOSL],
     HAVE_DECL_ACOSL=0
     HAVE_ACOSL=0
     dnl Find libraries needed to link lib/acosl.c.
-    AC_REQUIRE([gl_FUNC_ASINL])
-    AC_REQUIRE([gl_FUNC_SQRTL])
-    dnl Append $ASINL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
-    case " $ACOSL_LIBM " in
-      *" $ASINL_LIBM "*) ;;
-      *) ACOSL_LIBM="$ACOSL_LIBM $ASINL_LIBM" ;;
-    esac
-    dnl Append $SQRTL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
-    case " $ACOSL_LIBM " in
-      *" $SQRTL_LIBM "*) ;;
-      *) ACOSL_LIBM="$ACOSL_LIBM $SQRTL_LIBM" ;;
-    esac
+    if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
+      AC_REQUIRE([gl_FUNC_ACOS])
+      ACOSL_LIBM="$ACOS_LIBM"
+    else
+      AC_REQUIRE([gl_FUNC_ASINL])
+      AC_REQUIRE([gl_FUNC_SQRTL])
+      dnl Append $ASINL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
+      case " $ACOSL_LIBM " in
+        *" $ASINL_LIBM "*) ;;
+        *) ACOSL_LIBM="$ACOSL_LIBM $ASINL_LIBM" ;;
+      esac
+      dnl Append $SQRTL_LIBM to ACOSL_LIBM, avoiding gratuitous duplicates.
+      case " $ACOSL_LIBM " in
+        *" $SQRTL_LIBM "*) ;;
+        *) ACOSL_LIBM="$ACOSL_LIBM $SQRTL_LIBM" ;;
+      esac
+    fi
   fi
   AC_SUBST([ACOSL_LIBM])
 ])
