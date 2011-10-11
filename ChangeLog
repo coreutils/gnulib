@@ -1,5 +1,14 @@
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
+	logl: Simplify for platforms where 'long double' == 'double'.
+	* lib/logl.c (logl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
+	implementation.
+	* m4/logl.m4 (gl_FUNC_LOGL): Require gl_LONG_DOUBLE_VS_DOUBLE.
+	Determine LOGL_LIBM according to HAVE_SAME_LONG_DOUBLE_AS_DOUBLE.
+	* modules/logl (Depends-on): Add log. Update conditions.
+
+2011-10-10  Bruno Haible  <bruno@clisp.org>
+
 	expl: Simplify for platforms where 'long double' == 'double'.
 	* lib/expl.c (expl) [HAVE_SAME_LONG_DOUBLE_AS_DOUBLE]: New alternative
 	implementation.

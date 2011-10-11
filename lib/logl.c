@@ -18,6 +18,16 @@
 /* Specification.  */
 #include <math.h>
 
+#if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
+
+long double
+logl (long double x)
+{
+  return log (x);
+}
+
+#else
+
 /*                                                      logll.c
  *
  * Natural logarithm for 128-bit long double precision.
@@ -122,7 +132,7 @@ static const long double logtbl[92] = {
 -2.7902661731604211834685052867305795169688E-4L,
 -1.2335696813916860754951146082826952093496E-4L,
 -3.0677461025892873184042490943581654591817E-5L,
-#define ZERO logtbl[38]
+# define ZERO logtbl[38]
  0.0000000000000000000000000000000000000000E0L,
 -3.0359557945051052537099938863236321874198E-5L,
 -1.2081346403474584914595395755316412213151E-4L,
@@ -259,3 +269,5 @@ logl (long double x)
   y += e * ln2a;
   return y;
 }
+
+#endif
