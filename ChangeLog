@@ -1,5 +1,12 @@
 2011-10-13  Bruno Haible  <bruno@clisp.org>
 
+	ffsl, ffsll: Optimize for GCC.
+	* lib/ffsl.h (FUNC): Use GCC_BUILTIN if defined.
+	* lib/ffsl.c (GCC_BUILTIN): New macro.
+	* lib/ffsll.c (GCC_BUILTIN): Likewise.
+
+2011-10-13  Bruno Haible  <bruno@clisp.org>
+
 	ffs, bcopy, memset: Support symbol renaming via config.h.
 	* lib/ffs.c: Include <config.h>.
 	* lib/bcopy.c: Likewise.

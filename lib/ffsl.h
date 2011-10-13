@@ -31,6 +31,9 @@
 int
 FUNC (TYPE i)
 {
+#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)) && defined GCC_BUILTIN
+  return GCC_BUILTIN (i);
+#else
   int result = 0;
   unsigned TYPE j = i;
 
@@ -44,4 +47,5 @@ FUNC (TYPE i)
       j >>= CHAR_BIT * sizeof (unsigned int);
       result += CHAR_BIT * sizeof (unsigned int);
     }
+#endif
 }
