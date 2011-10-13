@@ -16,6 +16,9 @@
 
 /* Written by Eric Blake.  */
 
+#include <config.h>
+
+/* Specification.  */
 #include <strings.h>
 
 #include <limits.h>

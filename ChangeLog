@@ -1,3 +1,10 @@
+2011-10-13  Bruno Haible  <bruno@clisp.org>
+
+	ffs, bcopy, memset: Support symbol renaming via config.h.
+	* lib/ffs.c: Include <config.h>.
+	* lib/bcopy.c: Likewise.
+	* lib/memset.c: Likewise.
+
 2011-10-10  Bruno Haible  <bruno@clisp.org>
 
 	atanl: Simplify for platforms where 'long double' == 'double'.
