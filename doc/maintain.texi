@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 26, 2011
+@set lastupdate October 12, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -343,10 +343,14 @@ file gives per instructions for how to ask the FSF to mail per the
 papers to sign.  The @file{request-} file also raises the issue of
 getting an employer's disclaimer from the contributor's employer.
 
-When the contributor emails the form to the FSF, the FSF sends per
-papers to sign.  If person signs them right away, the whole process
-takes a couple of weeks---mostly waiting for letters to go back and
-forth.
+When the contributor emails the form to the FSF, the FSF sends per an
+electronic (usually PDF) copy of the assignment.  All contributors
+then print the assignment and sign it.  Contributors residing outside
+the U.S. must mail the signed form to the FSF via the post.
+Contributors located in the U.S. can then email or fax a scanned copy
+back to the FSF (or use postal mail, if they prefer).  (To emphasize,
+the necessary distinction is between US residents and non-residents,
+citizenship does not matter.)
 
 For less common cases, we have template files you should send to the
 contributor.  Be sure to fill in the name of the person and the name
@@ -1431,7 +1435,7 @@ information about GPG, see @url{http://www.gnu.org/software/gpg}.
 @item
 Compose a message with the following items in some @var{msgfile}.
 Then GPG-sign it by running @code{gpg --clearsign @var{msgfile}}, and
-finally email the resulting @file{@var{msgfile}.asc}), to
+finally email the resulting @file{@var{msgfile}.asc} to
 @email{ftp-upload@@gnu.org}.
 
 @enumerate
