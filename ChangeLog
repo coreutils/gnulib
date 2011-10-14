@@ -1,5 +1,10 @@
 2011-10-14  Daniel Richard G.  <skunk@iskunk.org>  (tiny change)
 
+	popen: Fix dependency conditions.
+	* modules/popen (Depends-on, configure.ac): Fix shell syntax error.
+
+2011-10-14  Daniel Richard G.  <skunk@iskunk.org>  (tiny change)
+
 	perror: Fix autoconf test.
 	* m4/perror.m4 (gl_FUNC_PERROR): In the test program, include
 	<stdlib.h> and <string.h>.
