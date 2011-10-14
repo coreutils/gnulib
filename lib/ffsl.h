@@ -34,18 +34,34 @@ FUNC (TYPE i)
 #if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)) && defined GCC_BUILTIN
   return GCC_BUILTIN (i);
 #else
-  int result = 0;
-  unsigned TYPE j = i;
-
-  /* GCC has __builtin_ffs, but it is limited to int.  */
-  if (!i)
-    return 0;
-  while (1)
+  if (sizeof (TYPE) == sizeof (int))
+    return ffs (i);
+  else
     {
-      if ((unsigned int) j)
-        return result + ffs ((unsigned int) j);
-      j >>= CHAR_BIT * sizeof (unsigned int);
-      result += CHAR_BIT * sizeof (unsigned int);
+      unsigned TYPE j = i;
+      /* Split j into chunks, and look at one chunk after the other.  */
+      /* Define chunk_bits so as to avoid a GCC warning
+           "right shift count >= width of type"
+         if sizeof (TYPE) == sizeof (int).  */
+      enum
+        {
+          chunk_bits = (sizeof (TYPE) != sizeof (int)
+                        ? CHAR_BIT * sizeof (unsigned int)
+                        : 0)
+        };
+      int result = 0;
+
+      /* It is tempting to write  if (!j)  here, but if we do this,
+         Solaris 10/x86 "cc -O" miscompiles the code.  */
+      if (!i)
+        return 0;
+      while (1)
+        {
+          if ((unsigned int) j)
+            return result + ffs ((unsigned int) j);
+          j >>= chunk_bits;
+          result += chunk_bits;
+        }
     }
 #endif
 }

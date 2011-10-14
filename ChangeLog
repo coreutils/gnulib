@@ -1,5 +1,9 @@
 2011-10-13  Bruno Haible  <bruno@clisp.org>
 
+	ffsl: Optimize on 32-bit platforms.
+	* lib/ffsl.h (FUNC): If TYPE has the same representation as 'int', just
+	use ffs() without a loop.
+
 	ffsl, ffsll: Optimize for GCC.
 	* lib/ffsl.h (FUNC): Use GCC_BUILTIN if defined.
 	* lib/ffsl.c (GCC_BUILTIN): New macro.
