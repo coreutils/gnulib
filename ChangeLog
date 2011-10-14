@@ -1,3 +1,9 @@
+2011-10-14  Bruno Haible  <bruno@clisp.org>
+
+	ffsl: Optimize on 64-bit platforms.
+	* lib/ffsl.h (FUNC): Omit a test from the last loop round. Do loop
+	unrolling.
+
 2011-10-13  Bruno Haible  <bruno@clisp.org>
 
 	ffsl: Optimize on 32-bit platforms.
