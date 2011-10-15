@@ -885,9 +885,9 @@ decode_long_double (long double x, int *ep, mpn_t *mp)
   y = frexpl (x, &exp);
   if (!(y >= 0.0L && y < 1.0L))
     abort ();
-  /* x = 2^exp * y = 2^(exp - LDBL_MANT_BIT) * (y * LDBL_MANT_BIT), and the
+  /* x = 2^exp * y = 2^(exp - LDBL_MANT_BIT) * (y * 2^LDBL_MANT_BIT), and the
      latter is an integer.  */
-  /* Convert the mantissa (y * LDBL_MANT_BIT) to a sequence of limbs.
+  /* Convert the mantissa (y * 2^LDBL_MANT_BIT) to a sequence of limbs.
      I'm not sure whether it's safe to cast a 'long double' value between
      2^31 and 2^32 to 'unsigned int', therefore play safe and cast only
      'long double' values between 0 and 2^16 (to 'unsigned int' or 'int',
@@ -973,9 +973,9 @@ decode_double (double x, int *ep, mpn_t *mp)
   y = frexp (x, &exp);
   if (!(y >= 0.0 && y < 1.0))
     abort ();
-  /* x = 2^exp * y = 2^(exp - DBL_MANT_BIT) * (y * DBL_MANT_BIT), and the
+  /* x = 2^exp * y = 2^(exp - DBL_MANT_BIT) * (y * 2^DBL_MANT_BIT), and the
      latter is an integer.  */
-  /* Convert the mantissa (y * DBL_MANT_BIT) to a sequence of limbs.
+  /* Convert the mantissa (y * 2^DBL_MANT_BIT) to a sequence of limbs.
      I'm not sure whether it's safe to cast a 'double' value between
      2^31 and 2^32 to 'unsigned int', therefore play safe and cast only
      'double' values between 0 and 2^16 (to 'unsigned int' or 'int',

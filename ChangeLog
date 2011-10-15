@@ -1,3 +1,8 @@
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
+	vasnprintf: Fix comments.
+	* lib/vasnprintf.c (decode_long_double, decode_double): Fix comments.
+
 2011-10-14  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'integer_length_ll'.
