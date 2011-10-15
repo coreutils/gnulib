@@ -1,5 +1,9 @@
 2011-10-14  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'integer_length_l'.
+	* modules/integer_length_l-tests: New file.
+	* tests/test-integer_length_l.c: New file.
+
 	New module 'integer_length_l'.
 	* lib/integer_length_l.c: New file.
 	* modules/integer_length_l: New file.
