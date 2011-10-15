@@ -1,4 +1,4 @@
-# isnand.m4 serial 10
+# isnand.m4 serial 11
 dnl Copyright (C) 2007-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_FUNC_ISNAND_NO_LIBM],
 dnl Prerequisites of replacement isnand definition. It does not need -lm.
 AC_DEFUN([gl_PREREQ_ISNAND],
 [
-  gl_DOUBLE_EXPONENT_LOCATION
+  AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
 ])
 
 dnl Test whether isnand() can be used with libm.

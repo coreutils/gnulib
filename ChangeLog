@@ -1,5 +1,21 @@
 2011-10-15  Bruno Haible  <bruno@clisp.org>
 
+	vasnprintf: Optimize bit search operation.
+	* lib/vasnprintf.c (divide): Use optimizations from integer_length.c.
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Require
+	gl_DOUBLE_EXPONENT_LOCATION.
+	* modules/vasnprintf (Files): Add m4/exponentd.m4.
+	* modules/unistdio/u8-vasnprintf (Files): Likewise.
+	* modules/unistdio/u8-u8-vasnprintf (Files): Likewise.
+	* modules/unistdio/u16-vasnprintf (Files): Likewise.
+	* modules/unistdio/u16-u16-vasnprintf (Files): Likewise.
+	* modules/unistdio/u32-vasnprintf (Files): Likewise.
+	* modules/unistdio/u32-u32-vasnprintf (Files): Likewise.
+	* modules/unistdio/ulc-vasnprintf (Files): Likewise.
+	* m4/isnand.m4 (gl_PREREQ_ISNAND): Use AC_REQUIRE.
+
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Fix comments.
 	* lib/vasnprintf.c (decode_long_double, decode_double): Fix comments.
 

@@ -13,6 +13,7 @@ m4/longlong.m4
 m4/intmax_t.m4
 m4/stdint_h.m4
 m4/inttypes_h.m4
+m4/exponentd.m4
 
 Depends-on:
 unistdio/base
