@@ -7,13 +7,24 @@ Gnulib module: gethostname
 
 Portability problems fixed by Gnulib:
 @itemize
-@item The @code{HOST_NAME_MAX} macro is not defined on some platforms:
+@item
+The @code{HOST_NAME_MAX} macro is not defined on some platforms:
 MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
 IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The macros @code{LLONG_MIN}, @code{LLONG_MAX}, @code{ULLONG_MAX} are not
+defined on some platforms:
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1 with gcc.
+@item
+The macros @code{WORD_BIT}, @code{LONG_BIT} are not defined on some platforms:
+glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 9.
+@item
+The macro @code{SSIZE_MAX} is not defined on some platforms:
+MSVC 9.
 @end itemize
 
 For @code{PATH_MAX}, Gnulib provides a module @code{pathmax} with a header

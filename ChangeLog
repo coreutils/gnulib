@@ -1,5 +1,14 @@
 2011-10-15  Bruno Haible  <bruno@clisp.org>
 
+	xstrtoll: Fix compilation failure.
+	* lib/xstrtol.c (ULLONG_MAX, LLONG_MAX, LLONG_MIN): New macros, taken
+	from lib/strtol.c.
+	* doc/posix-headers/limits.texi: Mention missing numerical limits on
+	some platforms.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2011-10-15  Bruno Haible  <bruno@clisp.org>
+
 	vasnprintf: Optimize bit search operation.
 	* lib/vasnprintf.c (divide): Use optimizations from integer_length.c.
 	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF): Require
