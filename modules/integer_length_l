@@ -1,0 +1,25 @@
+Description:
+Finds the most significant bit in an 'unsigned long'.
+
+Files:
+lib/integer_length.h
+lib/integer_length_l.c
+m4/longlong.m4
+
+Depends-on:
+integer_length
+
+configure.ac:
+AC_REQUIRE([AC_TYPE_UNSIGNED_LONG_LONG_INT])
+
+Makefile.am:
+lib_SOURCES += integer_length_l.c
+
+Include:
+"integer_length.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible
