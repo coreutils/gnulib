@@ -21,6 +21,7 @@
 #endif
 
 #include <alloca.h>
+#include <stdalign.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
@@ -42,7 +43,6 @@
 #include "argp.h"
 #include "argp-namefrob.h"
 
-#define alignof(type) offsetof (struct { char c; type x; }, x)
 #define alignto(n, d) ((((n) + (d) - 1) / (d)) * (d))
 
 /* Getopt return values.  */

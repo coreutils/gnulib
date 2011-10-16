@@ -9,6 +9,11 @@
 	stdalign-tests: new module
 	* modules/stdalign-tests, tests/test-stdalign.c: New files.
 
+	argp: use stdalign
+	* lib/argp-parse.c: Include <stdalign.h>.
+	(alignof): Remove.
+	* modules/argp (Depends-on): Add stdalign.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	raise test: Avoid a test failure on Linux/MIPS.

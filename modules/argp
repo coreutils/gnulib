@@ -35,6 +35,7 @@ strcase
 extensions
 vsnprintf
 sleep
+stdalign
 strerror
 memchr
 memmove
