@@ -2320,6 +2320,10 @@ func_all_modules ()
   func_wrap H3
   func_echo "$element"
 
+  func_begin_table
+  func_module stdalign
+  func_end_table
+
   element="Support for obsolete systems lacking POSIX:2008"
   func_section_wrap posix_sup_obsolete
   func_wrap H2

@@ -1,0 +1,61 @@
+/* A substitute for ISO C 1x <stdalign.h>.
+
+   Copyright 2011 Free Software Foundation, Inc.
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2, or (at your option)
+   any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software Foundation,
+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
+
+/* Written by Paul Eggert and Bruno Haible.  */
+
+#ifndef _GL_STDALIGN_H
+#define _GL_STDALIGN_H
+
+/* ISO C1X <stdalign.h> for platforms that lack it.
+
+   References:
+   ISO C1X <http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf>
+   sections 6.5.3.4, 6.7.5, 7.15.
+   C++0X <http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>
+   section 18.10. */
+
+/* Return the alignment of a structure slot (field) of TYPE,
+   as an integer constant expression.  The result cannot be used as a
+   value for an 'enum' constant, if you want to be portable to HP-UX
+   10.20 cc and AIX 3.2.5 xlc.
+
+   This is not the same as GCC's __alignof__ operator; for example, on
+   x86 with GCC, _Alignof (long long) is typically 4 whereas
+   __alignof__ (long long) is 8.  */
+#include <stddef.h>
+#if defined __cplusplus
+   template <class __t> struct __alignof_helper { char __a; __t __b; };
+# define _Alignof(type) offsetof (__alignof_helper<type>, __b)
+#else
+# define _Alignof(type) offsetof (struct { char __a; type __b; }, __b)
+#endif
+#define alignof _Alignof
+#define __alignof_is_defined 1
+
+/* Align a type or variable to the alignment A.  */
+#if @HAVE_ATTRIBUTE_ALIGNED@ && !defined __cplusplus
+# define _Alignas(a) __attribute__ ((__aligned__ (a)))
+#elif 1300 <= _MSC_VER
+# define _Alignas(a) __declspec ((align (a)))
+#endif
+#ifdef _Alignas
+# define alignas _Alignas
+# define __alignas_is_defined 1
+#endif
+
+#endif /* _GL_STDALIGN_H */

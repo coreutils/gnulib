@@ -1,3 +1,11 @@
+2011-10-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: new module
+	* doc/posix-headers/stdalign.texi, lib/stdalign.in.h, m4/stdalign.m4:
+	* modules/stdalign: New files.
+	* MODULES.html.sh (c1x_core_properties): Add stdalign.
+	* doc/gnulib.texi (Header File Substitutes): Add stdalign.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	raise test: Avoid a test failure on Linux/MIPS.

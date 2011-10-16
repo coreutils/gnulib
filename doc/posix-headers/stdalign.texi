@@ -1,0 +1,32 @@
+@node stdalign.h
+@section @file{stdalign.h}
+
+POSIX specification:@* Not in POSIX yet, but we expect it will be.
+ISO C1X @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf}
+sections 6.5.3.4, 6.7.5, 7.15.
+C++0X @url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf}
+section 18.10.
+
+Gnulib module: stdalign
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on most circa-2011 platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+@code{_Alignas} and @code{alignas} are not always supported;
+on platforms lacking support, the
+macro @code{__alignas_is_defined} is not defined.
+Supported platforms includes GCC 2 and later, Sun C 5.11 and later,
+and MSVC 7.0 or later.
+@item
+@code{<stdalign.h>} must be #included before @samp{_Alignas} and
+@samp{_Alignof} can be used.
+@item
+You cannot assume that @code{_Alignas} and @code{_Alignof} are reserved words;
+they might be macros.
+@end itemize

@@ -1187,6 +1187,7 @@ which (known) portability problems are not worked around by Gnulib.
 * setjmp.h::
 * signal.h::
 * spawn.h::
+* stdalign.h::
 * stdarg.h::
 * stdbool.h::
 * stddef.h::
@@ -1273,6 +1274,7 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/setjmp.texi
 @include posix-headers/signal.texi
 @include posix-headers/spawn.texi
+@include posix-headers/stdalign.texi
 @include posix-headers/stdarg.texi
 @include posix-headers/stdbool.texi
 @include posix-headers/stddef.texi
