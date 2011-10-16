@@ -1,0 +1,12 @@
+Files:
+tests/test-stdalign.c
+
+Depends-on:
+verify
+stdint
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-stdalign
+check_PROGRAMS += test-stdalign

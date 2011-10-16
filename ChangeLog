@@ -6,6 +6,9 @@
 	* MODULES.html.sh (c1x_core_properties): Add stdalign.
 	* doc/gnulib.texi (Header File Substitutes): Add stdalign.
 
+	stdalign-tests: new module
+	* modules/stdalign-tests, tests/test-stdalign.c: New files.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	raise test: Avoid a test failure on Linux/MIPS.
