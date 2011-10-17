@@ -553,6 +553,33 @@ _GL_WARN_ON_USE (fma, "fma is unportable - "
 # endif
 #endif
 
+#if @GNULIB_FMAL@
+# if @REPLACE_FMAL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fmal
+#   define fmal rpl_fmal
+#  endif
+_GL_FUNCDECL_RPL (fmal, long double,
+                  (long double x, long double y, long double z));
+_GL_CXXALIAS_RPL (fmal, long double,
+                  (long double x, long double y, long double z));
+# else
+#  if !@HAVE_FMAL@
+_GL_FUNCDECL_SYS (fmal, long double,
+                  (long double x, long double y, long double z));
+#  endif
+_GL_CXXALIAS_SYS (fmal, long double,
+                  (long double x, long double y, long double z));
+# endif
+_GL_CXXALIASWARN (fmal);
+#elif defined GNULIB_POSIXCHECK
+# undef fmal
+# if HAVE_RAW_DECL_FMAL
+_GL_WARN_ON_USE (fmal, "fmal is unportable - "
+                 "use gnulib module fmal for portability");
+# endif
+#endif
+
 
 #if @GNULIB_FMODF@
 # if !@HAVE_FMODF@

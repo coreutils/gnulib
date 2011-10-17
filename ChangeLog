@@ -1,5 +1,17 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmal'.
+	* lib/math.in.h (fmal): New declaration.
+	* lib/fmal.c: New file.
+	* m4/fmal.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whethern fmal is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMAL, HAVE_FMAL, REPLACE_FMAL.
+	* modules/math (Makefile.am): Substitute GNULIB_FMAL, HAVE_FMAL,
+	REPLACE_FMAL.
+	* modules/fmal: New file.
+	* doc/posix-functions/fmal.texi: Mention the new module and the various
+	bugs.
+
 	Tests for module 'fmaf'.
 	* modules/fmaf-tests: New file.
 	* tests/test-fmaf1.c: New file.
