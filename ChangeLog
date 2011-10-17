@@ -14,6 +14,17 @@
 	(alignof): Remove.
 	* modules/argp (Depends-on): Add stdalign.
 
+	crypto libraries: use stdalign
+	* lib/md4.c, lib/md5.c, lib/sha1.c, lib/sha256.c, lib/sha512.c:
+	Include <stdalign.h> and <stdint.h>.  Do not include <stddef.h>.
+	Do not include <stdlib.h> twice, in md4.c.
+	(UNALIGNED_P): Simplify by using alignof.  Use uintptr_t, not size_t,
+	because we are accessing a pointer's bit-pattern, not a size.
+	* modules/crypto/gc-md4 (Depends-on): Add stdalign.
+	* modules/crypto/gc-md5, modules/crypto/gc-sha1, modules/crypto/md4:
+	* modules/crypto/md5, modules/crypto/sha1, modules/crypto/sha256:
+	* modules/crypto/sha512: Likewise.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	raise test: Avoid a test failure on Linux/MIPS.

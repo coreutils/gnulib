@@ -7,6 +7,7 @@ lib/sha256.c
 m4/sha256.m4
 
 Depends-on:
+stdalign
 stdint
 
 configure.ac:

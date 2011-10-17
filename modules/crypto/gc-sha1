@@ -8,6 +8,7 @@ lib/sha1.c
 m4/sha1.m4
 
 Depends-on:
+stdalign
 stdint
 crypto/gc
 

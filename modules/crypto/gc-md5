@@ -8,6 +8,7 @@ lib/md5.c
 m4/md5.m4
 
 Depends-on:
+stdalign
 stdint
 crypto/gc
 

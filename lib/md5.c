@@ -24,7 +24,8 @@
 
 #include "md5.h"
 
-#include <stddef.h>
+#include <stdalign.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -254,8 +255,7 @@ md5_process_bytes (const void *buffer, size_t len, struct md5_ctx *ctx)
   if (len >= 64)
     {
 #if !_STRING_ARCH_unaligned
-# define alignof(type) offsetof (struct { char c; type x; }, x)
-# define UNALIGNED_P(p) (((size_t) p) % alignof (uint32_t) != 0)
+# define UNALIGNED_P(p) ((uintptr_t) (p) % alignof (uint32_t) != 0)
       if (UNALIGNED_P (buffer))
         while (len > 64)
           {
