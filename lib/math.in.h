@@ -507,6 +507,29 @@ _GL_WARN_ON_USE (floorl, "floorl is unportable - "
 #endif
 
 
+#if @GNULIB_FMAF@
+# if @REPLACE_FMAF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fmaf
+#   define fmaf rpl_fmaf
+#  endif
+_GL_FUNCDECL_RPL (fmaf, float, (float x, float y, float z));
+_GL_CXXALIAS_RPL (fmaf, float, (float x, float y, float z));
+# else
+#  if !@HAVE_FMAF@
+_GL_FUNCDECL_SYS (fmaf, float, (float x, float y, float z));
+#  endif
+_GL_CXXALIAS_SYS (fmaf, float, (float x, float y, float z));
+# endif
+_GL_CXXALIASWARN (fmaf);
+#elif defined GNULIB_POSIXCHECK
+# undef fmaf
+# if HAVE_RAW_DECL_FMAF
+_GL_WARN_ON_USE (fmaf, "fmaf is unportable - "
+                 "use gnulib module fmaf for portability");
+# endif
+#endif
+
 #if @GNULIB_FMA@
 # if @REPLACE_FMA@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

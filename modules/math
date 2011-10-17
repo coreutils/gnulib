@@ -51,6 +51,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_FLOORF''@/$(GNULIB_FLOORF)/g' \
 	      -e 's/@''GNULIB_FLOORL''@/$(GNULIB_FLOORL)/g' \
 	      -e 's/@''GNULIB_FMA''@/$(GNULIB_FMA)/g' \
+	      -e 's/@''GNULIB_FMAF''@/$(GNULIB_FMAF)/g' \
 	      -e 's/@''GNULIB_FMODF''@/$(GNULIB_FMODF)/g' \
 	      -e 's/@''GNULIB_FREXPF''@/$(GNULIB_FREXPF)/g' \
 	      -e 's/@''GNULIB_FREXP''@/$(GNULIB_FREXP)/g' \
@@ -105,6 +106,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
 	      -e 's|@''HAVE_FABSF''@|$(HAVE_FABSF)|g' \
 	      -e 's|@''HAVE_FMA''@|$(HAVE_FMA)|g' \
+	      -e 's|@''HAVE_FMAF''@|$(HAVE_FMAF)|g' \
 	      -e 's|@''HAVE_FMODF''@|$(HAVE_FMODF)|g' \
 	      -e 's|@''HAVE_FREXPF''@|$(HAVE_FREXPF)|g' \
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
@@ -157,6 +159,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_FLOORF''@|$(REPLACE_FLOORF)|g' \
 	      -e 's|@''REPLACE_FLOORL''@|$(REPLACE_FLOORL)|g' \
 	      -e 's|@''REPLACE_FMA''@|$(REPLACE_FMA)|g' \
+	      -e 's|@''REPLACE_FMAF''@|$(REPLACE_FMAF)|g' \
 	      -e 's|@''REPLACE_FREXPF''@|$(REPLACE_FREXPF)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \
 	      -e 's|@''REPLACE_FREXPL''@|$(REPLACE_FREXPL)|g' \

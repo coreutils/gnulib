@@ -1,5 +1,17 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmaf'.
+	* lib/math.in.h (fmaf): New declaration.
+	* lib/fmaf.c: New file.
+	* m4/fmaf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whethern fmaf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMAF, HAVE_FMAF, REPLACE_FMAF.
+	* modules/math (Makefile.am): Substitute GNULIB_FMAF, HAVE_FMAF,
+	REPLACE_FMAF.
+	* modules/fmaf: New file.
+	* doc/posix-functions/fmaf.texi: Mention the new module and the various
+	bugs.
+
 	Tests for module 'fma'.
 	* modules/fma-tests: New file.
 	* tests/test-fma1.c: New file.
