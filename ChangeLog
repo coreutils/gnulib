@@ -25,6 +25,10 @@
 	* modules/crypto/md5, modules/crypto/sha1, modules/crypto/sha256:
 	* modules/crypto/sha512: Likewise.
 
+	sys_socket: use stdalign, not alignof
+	* lib/sys_socket.in.h: Include <stdalign.h> instead of <alignof.h>.
+	* modules/sys_socket (Depends-on): Depend on stdalign, not alignof.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	raise test: Avoid a test failure on Linux/MIPS.
