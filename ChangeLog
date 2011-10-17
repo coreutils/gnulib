@@ -1,5 +1,18 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fma'.
+	* lib/math.in.h (fma): New declaration.
+	* lib/fma.c: New file.
+	* m4/fma.m4: New file.
+	* m4/fegetround.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whethern fma is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMA, HAVE_FMA, REPLACE_FMA.
+	* modules/math (Makefile.am): Substitute GNULIB_FMA, HAVE_FMA,
+	REPLACE_FMA.
+	* modules/fma: New file.
+	* doc/posix-functions/fma.texi: Mention the new module and the various
+	bugs.
+
 	Extend gl_MATHFUNC.
 	* m4/mathfunc.m4 (gl_MATHFUNC): Accept an 4th parameter of INCLUDES.
 	Support 'void' as argument type.
