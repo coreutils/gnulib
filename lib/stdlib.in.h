@@ -423,6 +423,22 @@ _GL_WARN_ON_USE (mkstemps, "mkstemps is unportable - "
 # endif
 #endif
 
+#if @GNULIB_POSIX_OPENPT@
+/* Return an FD open to the master side of a pseudo-terminal.  Flags should
+   include O_RDWR, and may also include O_NOCTTY.  */
+# if !@HAVE_POSIX_OPENPT@
+_GL_FUNCDECL_SYS (posix_openpt, int, (int flags));
+# endif
+_GL_CXXALIAS_SYS (posix_openpt, int, (int flags));
+_GL_CXXALIASWARN (posix_openpt);
+#elif defined GNULIB_POSIXCHECK
+# undef posix_openpt
+# if HAVE_RAW_DECL_POSIX_OPENPT
+_GL_WARN_ON_USE (posix_openpt, "posix_openpt is not portable - "
+                 "use gnulib module posix_openpt for portability");
+# endif
+#endif
+
 #if @GNULIB_PTSNAME@
 /* Return the pathname of the pseudo-terminal slave associated with
    the master FD is open on, or NULL on errors.  */

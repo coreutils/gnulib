@@ -19,10 +19,10 @@ AC_DEFUN([gl_STDLIB_H],
 #if HAVE_RANDOM_H
 # include <random.h>
 #endif
-    ]], [_Exit atoll canonicalize_file_name getloadavg getsubopt grantpt mkdtemp
-    mkostemp mkostemps mkstemp mkstemps ptsname random_r initstat_r srandom_r
-    setstate_r realpath rpmatch setenv strtod strtoll strtoull unlockpt
-    unsetenv])
+    ]], [_Exit atoll canonicalize_file_name getloadavg getsubopt grantpt
+    initstate_r mkdtemp mkostemp mkostemps mkstemp mkstemps posix_openpt
+    ptsname random_r realpath rpmatch setenv setstate_r srandom_r strtod
+    strtoll strtoull unlockpt unsetenv])
 ])
 
 AC_DEFUN([gl_STDLIB_MODULE_INDICATOR],
@@ -50,6 +50,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   GNULIB_MKOSTEMPS=0;     AC_SUBST([GNULIB_MKOSTEMPS])
   GNULIB_MKSTEMP=0;       AC_SUBST([GNULIB_MKSTEMP])
   GNULIB_MKSTEMPS=0;      AC_SUBST([GNULIB_MKSTEMPS])
+  GNULIB_POSIX_OPENPT=0;  AC_SUBST([GNULIB_POSIX_OPENPT])
   GNULIB_PTSNAME=0;       AC_SUBST([GNULIB_PTSNAME])
   GNULIB_PUTENV=0;        AC_SUBST([GNULIB_PUTENV])
   GNULIB_RANDOM_R=0;      AC_SUBST([GNULIB_RANDOM_R])
@@ -76,6 +77,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_MKOSTEMPS=1;          AC_SUBST([HAVE_MKOSTEMPS])
   HAVE_MKSTEMP=1;            AC_SUBST([HAVE_MKSTEMP])
   HAVE_MKSTEMPS=1;           AC_SUBST([HAVE_MKSTEMPS])
+  HAVE_POSIX_OPENPT=1;       AC_SUBST([HAVE_POSIX_OPENPT])
   HAVE_PTSNAME=1;            AC_SUBST([HAVE_PTSNAME])
   HAVE_RANDOM_H=1;           AC_SUBST([HAVE_RANDOM_H])
   HAVE_RANDOM_R=1;           AC_SUBST([HAVE_RANDOM_R])

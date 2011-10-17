@@ -1,3 +1,18 @@
+2011-10-18  Eric Blake  <eblake@redhat.com>
+
+	posix_openpt: new module
+	* modules/posix_openpt: New module.
+	* m4/posix_openpt.m4: New file.
+	* lib/posix_openpt.c: Likewise.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check for decl.
+	(gl_STDLIB_H_DEFAULTS): Set defaults.
+	* modules/stdlib (Makefile.am): Substitute macros.
+	* lib/stdlib.in.h (posix_openpt): Declare.
+	* MODULES.html.sh (systems lacking POSIX:2008): Document it.
+	* doc/posix-functions/posix_openpt.texi (posix_openpt): Likewise.
+	* modules/posix_openpt-tests: New test module.
+	* tests/test-posix_openpt.c: New test.
+
 2011-10-15  Bruno Haible  <bruno@clisp.org>
 
 	xstrtoll: Fix compilation failure.
