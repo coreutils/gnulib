@@ -1,3 +1,15 @@
+2011-10-18  Daniel Richard G.  <skunk@iskunk.org>  (tiny change)
+
+	Support for old NeXTstep 3.3 gcc.
+	* lib/gettext.h (_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS): Write
+	'defined __STRICT_ANSI__', not '__STRICT_ANSI__'.
+	* lib/math.in.h (_GL_NUM_UINT_WORDS etc.): Likewise.
+	* lib/spawn.in.h (_Restrict_arr_): Likewise.
+	* lib/regex.h (_Restrict_arr_): Likewise.
+	* lib/regex_internal.h (re_token_t): Likewise.
+	* lib/regexec.c (check_node_accept_bytes): Likewise.
+	* tests/test-printf-posix.c (func1, func2, func3, func4): Likewise.
+
 2011-10-18  Eric Blake  <eblake@redhat.com>
 
 	posix_openpt: new module
