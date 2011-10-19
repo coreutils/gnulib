@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-09-23.09}
+\def\texinfoversion{2011-10-19.08}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2372,7 +2372,9 @@ end
   \else\ifx\next-%
   \else\ifx\next.%
   \else\ptexslash
-  \fi\fi\fi}
+  \fi\fi\fi
+  \aftersmartic
+}
 
 % like \smartslanted except unconditionally uses \ttsl, and no ic.
 % @var is set to this for defun arguments.
@@ -2382,9 +2384,15 @@ end
 % ttsl for book titles, do we?
 \def\cite#1{{\sl #1}\futurelet\next\smartitaliccorrection}
 
+\def\aftersmartic{}
+\def\var#1{%
+  \let\saveaftersmartic = \aftersmartic
+  \def\aftersmartic{\null\let\aftersmartic=\saveaftersmartic}%
+  \smartslanted{#1}%
+}
+
 \let\i=\smartitalic
 \let\slanted=\smartslanted
-\def\var#1{\smartslanted{#1}}
 \let\dfn=\smartslanted
 \let\emph=\smartitalic
 
@@ -2480,7 +2488,7 @@ end
     \plainfrenchspacing
     #1%
   }%
-  \null
+  \null % reset spacefactor to 1000
 }
 
 % We *must* turn on hyphenation at `-' and `_' in @code.
@@ -2762,6 +2770,7 @@ end
   \ifx\temp\empty \else
     \space ({\unsepspaces \ignorespaces \temp \unskip})%
   \fi
+  \null % reset \spacefactor=1000
 }
 
 % @abbr for "Comput. J." and the like.
@@ -2774,6 +2783,7 @@ end
   \ifx\temp\empty \else
     \space ({\unsepspaces \ignorespaces \temp \unskip})%
   \fi
+  \null % reset \spacefactor=1000
 }
 
 % @asis just yields its argument.  Used with @table, for example.
@@ -8103,7 +8113,7 @@ end
 % space to prevent strange expansion errors.)
 \def\supereject{\par\penalty -20000\footnoteno =0 }
 
-% @footnotestyle is meaningful for info output only.
+% @footnotestyle is meaningful for Info output only.
 \let\footnotestyle=\comment
 
 {\catcode `\@=11
@@ -8166,6 +8176,8 @@ end
   % expands into a box, it must come within the paragraph, lest it
   % provide a place where TeX can split the footnote.
   \footstrut
+  %
+  % Invoke rest of plain TeX footnote routine.
   \futurelet\next\fo@t
 }
 }%end \catcode `\@=11
