@@ -1,5 +1,12 @@
 2011-10-19  Bruno Haible  <bruno@clisp.org>
 
+	posix_openpt: Fix compilation error.
+	* lib/posix_openpt.c (posix_openpt): Renamed from posix_openpty.
+	* doc/posix-functions/posix_openpt.texi: Mention ENOENT error code.
+	Mention the openpty module as an alternative.
+
+2011-10-19  Bruno Haible  <bruno@clisp.org>
+
 	Support for old NeXTstep 3.3 frexp().
 	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Check for alarm. Limit the
 	execution time of the test to 5 seconds.

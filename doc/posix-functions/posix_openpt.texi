@@ -12,9 +12,15 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 MacOS X 10.3, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1,
 Solaris 9, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
-However, the replacement may fail with ENOSYS on some platforms.
+However, the replacement may fail with @code{ENOSYS} or @code{ENOENT} on
+some platforms.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note that when using this function to open the master side of a
+pseudo-terminal, you still need platform dependent code to open the
+corresponding slave side.  The Gnulib module @code{openpty} provides
+an easy-to-use API that does both at once.

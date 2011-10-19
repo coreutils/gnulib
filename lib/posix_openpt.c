@@ -23,7 +23,7 @@
 #include <errno.h>
 
 int
-posix_openpty (int flags)
+posix_openpt (int flags)
 {
   int master;
 
