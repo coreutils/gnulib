@@ -1327,7 +1327,7 @@ web-manual:
 	@test -z "$(manual_title)" \
 	  && { echo define manual_title in cfg.mk 1>&2; exit 1; } || :
 	@cd '$(srcdir)/doc'; \
-	  $(SHELL) ../build-aux/gendocs.sh $(gendocs_options_) \
+	  $(SHELL) ../$(build_aux)/gendocs.sh $(gendocs_options_) \
 	     -o '$(abs_builddir)/doc/manual' \
 	     --email $(PACKAGE_BUGREPORT) $(PACKAGE) \
 	    "$(PACKAGE_NAME) - $(manual_title)"
