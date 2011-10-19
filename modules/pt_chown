@@ -21,7 +21,7 @@ pt_chown_LDADD = libgnu.a
 Include:
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 glibc

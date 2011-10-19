@@ -1,3 +1,12 @@
+2011-10-19  Eric Blake  <eblake@redhat.com>
+
+	ptsname and others: relax license
+	* modules/grantpt (License): Change from LGPLv3+ to LGPLv2+.
+	* modules/unlockpt (License): Likewise.
+	* modules/pt_chown (License): Likewise.
+	* modules/ptsname (License): Likewise.
+	* modules/ttyname_r (License): Likewise.
+
 2011-10-19  Jim Meyering  <meyering@redhat.com>
 
 	posix_openpt: remove spurious #endif
