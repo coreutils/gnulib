@@ -1,5 +1,12 @@
 2011-10-19  Bruno Haible  <bruno@clisp.org>
 
+	Support for old NeXTstep 3.3 frexp().
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Check for alarm. Limit the
+	execution time of the test to 5 seconds.
+	Reported by Daniel Richard G. <skunk@iskunk.org>.
+
+2011-10-19  Bruno Haible  <bruno@clisp.org>
+
 	Support for old NeXTstep 3.3 sed.
 	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER_ONE): In the sed address
 	part, use /.../, not \|...|. Escape periods in the header file name.
