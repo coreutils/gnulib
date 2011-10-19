@@ -1,3 +1,11 @@
+2011-10-19  Bruno Haible  <bruno@clisp.org>
+
+	Support for old NeXTstep 3.3 sed.
+	* m4/absolute-header.m4 (gl_ABSOLUTE_HEADER_ONE): In the sed address
+	part, use /.../, not \|...|. Escape periods in the header file name.
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Likewise.
+	Reported by Daniel Richard G. <skunk@iskunk.org>.
+
 2011-10-18  Daniel Richard G.  <skunk@iskunk.org>  (tiny change)
 
 	Support for old NeXTstep 3.3 gcc.

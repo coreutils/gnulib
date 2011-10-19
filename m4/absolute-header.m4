@@ -1,4 +1,4 @@
-# absolute-header.m4 serial 15
+# absolute-header.m4 serial 16
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -78,11 +78,16 @@ changequote(,)
       gl_dirsep_regex='[/\\]'
       ;;
     *)
-      gl_dirsep_regex='/'
+      gl_dirsep_regex='\/'
       ;;
   esac
-  gl_absolute_header_sed='\|'"${gl_dirsep_regex}"'$1|{
-      s|.*"\(.*'"${gl_dirsep_regex}"'$1\)".*|\1|
+  dnl A sed expression that turns a string into a basic regular
+  dnl expression, for use within "/.../".
+  gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
+  gl_header_literal_regex=`echo '$1' \
+                           | sed -e "$gl_make_literal_regex_sed"`
+  gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
+      s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
       s|^/[^/]|//&|
       p
       q

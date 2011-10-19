@@ -1,4 +1,4 @@
-# include_next.m4 serial 22
+# include_next.m4 serial 23
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -219,12 +219,17 @@ changequote(,)
                    gl_dirsep_regex='[/\\]'
                    ;;
                  *)
-                   gl_dirsep_regex='/'
+                   gl_dirsep_regex='\/'
                    ;;
                esac
+               dnl A sed expression that turns a string into a basic regular
+               dnl expression, for use within "/.../".
+               gl_make_literal_regex_sed='s,[]$^\\.*/[],\\&,g'
 changequote([,])
-               gl_absolute_header_sed='\|'"${gl_dirsep_regex}"']m4_defn([gl_HEADER_NAME])[|{
-                   s|.*"\(.*'"${gl_dirsep_regex}"']m4_defn([gl_HEADER_NAME])[\)".*|\1|
+               gl_header_literal_regex=`echo ']m4_defn([gl_HEADER_NAME])[' \
+                                        | sed -e "$gl_make_literal_regex_sed"`
+               gl_absolute_header_sed="/${gl_dirsep_regex}${gl_header_literal_regex}/"'{
+                   s/.*"\(.*'"${gl_dirsep_regex}${gl_header_literal_regex}"'\)".*/\1/
 changequote(,)dnl
                    s|^/[^/]|//&|
 changequote([,])dnl
