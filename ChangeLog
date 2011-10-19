@@ -1,5 +1,8 @@
 2011-10-19  Eric Blake  <eblake@redhat.com>
 
+	pt_chown: use configmake to simplify build
+	* modules/pt_chown (Makefile.am): Drop line guaranteed by configmake.
+
 	ptsname and others: relax license
 	* modules/grantpt (License): Change from LGPLv3+ to LGPLv2+.
 	* modules/unlockpt (License): Likewise.
