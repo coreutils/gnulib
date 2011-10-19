@@ -46,5 +46,3 @@ posix_openpt (int flags)
 
   return master;
 }
-
-#endif

@@ -1,3 +1,8 @@
+2011-10-19  Jim Meyering  <meyering@redhat.com>
+
+	posix_openpt: remove spurious #endif
+	* lib/posix_openpt.c (posix_openpt): Remove spurious #endif.
+
 2011-10-19  Gary V. Vaughan  <gary@gnu.org>
 
 	maint.mk: Respect $(build_aux) in web-manual rule.
