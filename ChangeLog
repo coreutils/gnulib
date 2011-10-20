@@ -1,5 +1,14 @@
 2011-10-20  Bruno Haible  <bruno@clisp.org>
 
+	posix_openpt: Support for OpenBSD.
+	* lib/posix_openpt.c [OpenBSD]: Include <sys/ioctl.h>, <sys/tty.h>.
+	(posix_openpt) [OpenBSD]: New code.
+	* lib/grantpt.c: Include <fcntl.h>.
+	(grantpt) [OpenBSD]: Only test whether fd is valid, nothing else.
+	* modules/grantpt (Depends-on): Add fcntl-h.
+
+2011-10-20  Bruno Haible  <bruno@clisp.org>
+
 	posix_openpt test: Coding style.
 	* tests/test-posix_openpt.c: Use GNU coding style.
 

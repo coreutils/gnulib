@@ -21,6 +21,7 @@
 
 #include <assert.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -46,6 +47,13 @@
 int
 grantpt (int fd)
 {
+#if defined __OpenBSD__
+  /* On OpenBSD, master and slave of a pseudo-terminal are allocated together,
+     through an ioctl on /dev/ptm.  There is no need for grantpt().  */
+  if (fcntl (fd, F_GETFD) < 0)
+    return -1;
+  return 0;
+#else
   /* This function is most often called from a process without 'root'
      credentials.  Use the helper program.  */
   int retval = -1;
@@ -56,20 +64,20 @@ grantpt (int fd)
     {
       /* This is executed in the child process.  */
 
-#if HAVE_SETRLIMIT && defined RLIMIT_CORE
+# if HAVE_SETRLIMIT && defined RLIMIT_CORE
       /* Disable core dumps.  */
       struct rlimit rl = { 0, 0 };
       __setrlimit (RLIMIT_CORE, &rl);
-#endif
+# endif
 
       /* We pass the master pseudo terminal as file descriptor PTY_FILENO.  */
       if (fd != PTY_FILENO)
         if (__dup2 (fd, PTY_FILENO) < 0)
           _exit (FAIL_EBADF);
 
-#ifdef CLOSE_ALL_FDS
+# ifdef CLOSE_ALL_FDS
       CLOSE_ALL_FDS ();
-#endif
+# endif
 
       execle (_PATH_PT_CHOWN, strrchr (_PATH_PT_CHOWN, '/') + 1, NULL, NULL);
       _exit (FAIL_EXEC);
@@ -111,4 +119,5 @@ grantpt (int fd)
 
  cleanup:
   return retval;
+#endif
 }

@@ -19,8 +19,12 @@
 /* Specification.  */
 #include <stdlib.h>
 
-#include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
+#if defined __OpenBSD__
+# include <sys/ioctl.h>
+# include <sys/tty.h>
+#endif
 
 int
 posix_openpt (int flags)
@@ -37,7 +41,34 @@ posix_openpt (int flags)
   master = -1;
   errno = ENOSYS;
 
-#else /* MacOS, OpenBSD, HP-UX, IRIX, Solaris 9, Cygwin 1.5 */
+#elif defined __OpenBSD__
+
+  /* On OpenBSD, master and slave of a pseudo-terminal are allocated together,
+     by opening /dev/ptm and applying the PTMGET ioctl to it.  */
+  int fd;
+  struct ptmget data;
+
+  fd = open (PATH_PTMDEV, O_RDWR);
+  if (fd >= 0)
+    {
+      if (ioctl (fd, PTMGET, &data) >= 0)
+        {
+          master = data.cfd;
+          close (data.sfd);
+          close (fd);
+        }
+      else
+        {
+          int saved_errno = errno;
+          close (fd);
+          errno = saved_errno;
+          master = -1;
+        }
+    }
+  else
+    master = -1;
+
+#else /* MacOS X, Minix, HP-UX, IRIX, OSF/1, Solaris 9, Cygwin 1.5 */
 
   /* Most systems that lack posix_openpt() have /dev/ptmx.  */
   master = open ("/dev/ptmx", flags);
