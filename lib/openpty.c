@@ -92,6 +92,7 @@ openpty (int *amaster, int *aslave, char *name,
   /* If all this does not work, we could try to open, one by one:
      - On MacOS X: /dev/pty[p-w][0-9a-f]
      - On *BSD:    /dev/pty[p-sP-S][0-9a-v]
+     - On Minix:   /dev/pty[p-q][0-9a-f]
      - On AIX:     /dev/ptyp[0-9a-f]
      - On HP-UX:   /dev/pty[p-r][0-9a-f]
      - On OSF/1:   /dev/pty[p-q][0-9a-f]
