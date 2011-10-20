@@ -3,6 +3,7 @@ grantpt() function: Acquire ownership of the slave side of a pseudo-terminal.
 
 Files:
 lib/grantpt.c
+lib/pty-private.h
 m4/grantpt.m4
 
 Depends-on:
