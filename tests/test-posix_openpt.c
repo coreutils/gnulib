@@ -42,7 +42,7 @@ main (void)
   char *name;
 
   /* Open the master of a pseudo-terminal pair.  */
-  master = posix_openpt(O_RDWR | O_NOCTTY);
+  master = posix_openpt (O_RDWR | O_NOCTTY);
   if (master < 0 && errno == ENOSYS)
     {
       fputs ("skipping: platform lacks pty support\n", stderr);
