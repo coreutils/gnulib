@@ -35,6 +35,7 @@ rpl_openpty (int *amaster, int *aslave, char *name,
 #else /* AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, mingw */
 
 # include <fcntl.h>
+# include <stdlib.h>
 # include <string.h>
 # include <sys/ioctl.h>
 # include <termios.h>
@@ -59,45 +60,11 @@ openpty (int *amaster, int *aslave, char *name,
 
 # else /* AIX 5.1, HP-UX 11, Solaris 10, mingw */
 
-#  if HAVE_POSIX_OPENPT /* Solaris 10 */
-
+  /* This call uses the 'posix_openpt' module.  */
   master = posix_openpt (O_RDWR | O_NOCTTY);
   if (master < 0)
     return -1;
 
-#  else /* AIX 5.1, HP-UX 11, Solaris 9, mingw */
-
-#   ifdef _AIX /* AIX */
-
-  master = open ("/dev/ptc", O_RDWR | O_NOCTTY);
-  if (master < 0)
-    return -1;
-
-#   else /* HP-UX 11, Solaris 9, mingw */
-
-  /* HP-UX, Solaris have /dev/ptmx.
-     HP-UX also has /dev/ptym/clone, but this should not be needed.
-     Linux also has /dev/ptmx, but Linux already has openpty().
-     MacOS X also has /dev/ptmx, but MacOS X already has openpty().
-     OSF/1 also has /dev/ptmx and /dev/ptmx_bsd, but OSF/1 already has
-     openpty().  */
-  master = open ("/dev/ptmx", O_RDWR | O_NOCTTY);
-  if (master < 0)
-    return -1;
-
-#   endif
-
-#  endif
-
-  /* If all this does not work, we could try to open, one by one:
-     - On MacOS X: /dev/pty[p-w][0-9a-f]
-     - On *BSD:    /dev/pty[p-sP-S][0-9a-v]
-     - On Minix:   /dev/pty[p-q][0-9a-f]
-     - On AIX:     /dev/ptyp[0-9a-f]
-     - On HP-UX:   /dev/pty[p-r][0-9a-f]
-     - On OSF/1:   /dev/pty[p-q][0-9a-f]
-     - On Solaris: /dev/pty[p-r][0-9a-f]
-   */
 # endif
 
   /* This call does not require a dependency to the 'grantpt' module,
