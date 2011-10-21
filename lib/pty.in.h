@@ -42,6 +42,9 @@
 
 /* Get 'struct termios' and 'struct winsize'.  */
 #include <termios.h>
+#if defined _AIX
+# include <sys/ioctl.h>
+#endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
