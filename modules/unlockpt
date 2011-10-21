@@ -9,6 +9,7 @@ m4/unlockpt.m4
 Depends-on:
 stdlib
 extensions
+fcntl-h         [test $HAVE_UNLOCKPT = 0]
 ptsname         [test $HAVE_UNLOCKPT = 0]
 
 configure.ac:

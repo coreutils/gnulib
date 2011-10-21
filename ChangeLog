@@ -1,5 +1,12 @@
 2011-10-20  Bruno Haible  <bruno@clisp.org>
 
+	unlockpt: Detect invalid argument.
+	* lib/unlockpt.c: Include <fcntl.h>.
+	(unlockpt): Check whether fd is valid, using fcntl().
+	* modules/unlockpt (Depends-on): Add fcntl-h.
+
+2011-10-20  Bruno Haible  <bruno@clisp.org>
+
 	openpty: Avoid compilation error on AIX 6.1.
 	* lib/pty.in.h [AIX]: Include <sys/ioctl.h>, for 'struct winsize'.
 

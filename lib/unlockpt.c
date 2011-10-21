@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 
+#include <fcntl.h>
 #include <unistd.h>
 
 int
@@ -36,6 +37,8 @@ unlockpt (int fd)
 #else
   /* Assume that the slave side of a pseudo-terminal is already unlocked
      by default.  */
+  if (fcntl (fd, F_GETFD) < 0)
+    return -1;
   return 0;
 #endif
 }
