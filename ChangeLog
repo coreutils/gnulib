@@ -1,5 +1,10 @@
 2011-10-22  Bruno Haible  <bruno@clisp.org>
 
+	perror: Fix indentation.
+	* m4/perror.m4 (gl_FUNC_PERROR): Fix indentation.
+
+2011-10-22  Bruno Haible  <bruno@clisp.org>
+
 	isfinite, isinf, isnan, signbit: Don't define as a macro in C++.
 	* lib/math.in.h (_GL_MATH_CXX_REAL_FLOATING_DECL_1,
 	_GL_MATH_CXX_REAL_FLOATING_DECL_2): nEW MACROS.

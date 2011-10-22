@@ -1,4 +1,4 @@
-# perror.m4 serial 4
+# perror.m4 serial 5
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,12 +46,17 @@ AC_DEFUN([gl_FUNC_PERROR],
             rm -rf conftest.txt1 conftest.txt2],
            [gl_cv_func_perror_works=no],
            [dnl Guess no when cross-compiling.
-            gl_cv_func_perror_works="guessing no"])])
-       if test "$gl_cv_func_perror_works" != yes; then
-         REPLACE_PERROR=1
-       fi ;;
-    *) dnl The system's perror() probably inherits the bugs in the
-       dnl system's strerror_r(). Replace it.
-      REPLACE_PERROR=1 ;;
+            gl_cv_func_perror_works="guessing no"
+           ])
+        ])
+      if test "$gl_cv_func_perror_works" != yes; then
+        REPLACE_PERROR=1
+      fi
+      ;;
+    *)
+      dnl The system's perror() probably inherits the bugs in the
+      dnl system's strerror_r(). Replace it.
+      REPLACE_PERROR=1
+      ;;
   esac
 ])
