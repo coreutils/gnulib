@@ -23,6 +23,18 @@
 
 #include "signature.h"
 
+/* Signature check for a function that takes a real-floating argument.
+   Check that each overloaded function with the specified signature exists.  */
+#define REAL_FLOATING_CHECK(func,\
+                            rettype1, parameters1,\
+                            rettype2, parameters2,\
+                            rettype3, parameters3) \
+  OVERLOADED_CHECK (func, rettype1, parameters1, _1); \
+  OVERLOADED_CHECK (func, rettype2, parameters2, _2); \
+  OVERLOADED_CHECK (func, rettype3, parameters3, _3)
+#define OVERLOADED_CHECK(func, rettype, parameters, suffix) \
+  static rettype (* _GL_UNUSED signature_check_ ## func ## suffix) parameters \
+    = static_cast<rettype(*)parameters>(func)
 
 #if GNULIB_TEST_ACOSF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::acosf, float, (float));
@@ -76,6 +88,24 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::frexpf, float, (float, int *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::frexp, double, (double, int *));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::hypot, double, (double, double));
+#if GNULIB_TEST_ISFINITE
+# ifdef isfinite
+#  error "isfinite should not be a macro in C++"
+# endif
+REAL_FLOATING_CHECK (isfinite, int, (float), int, (double), int, (long double));
+#endif
+#if GNULIB_TEST_ISINF
+# ifdef isinf
+#  error "isinf should not be a macro in C++"
+# endif
+REAL_FLOATING_CHECK (isinf, int, (float), int, (double), int, (long double));
+#endif
+#if GNULIB_TEST_ISNAN
+# ifdef isnan
+#  error "isnan should not be a macro in C++"
+# endif
+REAL_FLOATING_CHECK (isnan, int, (float), int, (double), int, (long double));
+#endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j0, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j1, double, (double));
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::jn, double, (int, double));
@@ -209,6 +239,13 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::round, double, (double));
 
 #if GNULIB_TEST_ROUNDL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::roundl, long double, (long double));
+#endif
+
+#if GNULIB_TEST_SIGNBIT
+# ifdef signbit
+#  error "signbit should not be a macro in C++"
+# endif
+REAL_FLOATING_CHECK (signbit, int, (float), int, (double), int, (long double));
 #endif
 
 #if GNULIB_TEST_SINL

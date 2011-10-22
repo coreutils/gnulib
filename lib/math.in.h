@@ -35,6 +35,44 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
+#ifdef __cplusplus
+/* Helper macros to define type-generic function FUNC as overloaded functions,
+   rather than as macros like in C.  POSIX declares these with an argument of
+   real-floating (that is, one of float, double, or long double).  */
+# define _GL_MATH_CXX_REAL_FLOATING_DECL_1(func) \
+static inline int                                                   \
+_gl_cxx_ ## func ## f (float f)                                     \
+{                                                                   \
+  return func (f);                                                  \
+}                                                                   \
+static inline int                                                   \
+_gl_cxx_ ## func ## d (double d)                                    \
+{                                                                   \
+  return func (d);                                                  \
+}                                                                   \
+static inline int                                                   \
+_gl_cxx_ ## func ## l (long double l)                               \
+{                                                                   \
+  return func (l);                                                  \
+}
+# define _GL_MATH_CXX_REAL_FLOATING_DECL_2(func) \
+inline int                                                          \
+func (float f)                                                      \
+{                                                                   \
+  return _gl_cxx_ ## func ## f (f);                                 \
+}                                                                   \
+inline int                                                          \
+func (double d)                                                     \
+{                                                                   \
+  return _gl_cxx_ ## func ## d (d);                                 \
+}                                                                   \
+inline int                                                          \
+func (long double l)                                                \
+{                                                                   \
+  return _gl_cxx_ ## func ## l (l);                                 \
+}
+#endif
+
 /* Helper macros to define a portability warning for the
    classification macro FUNC called with VALUE.  POSIX declares the
    classification macros with an argument of real-floating (that is,
@@ -1030,6 +1068,13 @@ _GL_EXTERN_C int gl_isfinitel (long double x);
     sizeof (x) == sizeof (double) ? gl_isfinited (x) : \
     gl_isfinitef (x))
 # endif
+# ifdef __cplusplus
+#  ifdef isfinite
+_GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
+#   undef isfinite
+_GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite)
+#  endif
+# endif
 #elif defined GNULIB_POSIXCHECK
 # if defined isfinite
 _GL_WARN_REAL_FLOATING_DECL (isfinite);
@@ -1049,6 +1094,13 @@ _GL_EXTERN_C int gl_isinfl (long double x);
    (sizeof (x) == sizeof (long double) ? gl_isinfl (x) : \
     sizeof (x) == sizeof (double) ? gl_isinfd (x) : \
     gl_isinff (x))
+# endif
+# ifdef __cplusplus
+#  ifdef isinf
+_GL_MATH_CXX_REAL_FLOATING_DECL_1 (isinf)
+#   undef isinf
+_GL_MATH_CXX_REAL_FLOATING_DECL_2 (isinf)
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # if defined isinf
@@ -1161,9 +1213,17 @@ _GL_EXTERN_C int rpl_isnanl (long double x);
     sizeof (x) == sizeof (double) ? __builtin_isnan ((double)(x)) : \
     __builtin_isnanf ((float)(x)))
 # endif
+# ifdef __cplusplus
+#  ifdef isnan
+_GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
+#   undef isnan
+_GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan)
+#  endif
+# else
 /* Ensure isnan is a macro.  */
-# ifndef isnan
-#  define isnan isnan
+#  ifndef isnan
+#   define isnan isnan
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # if defined isnan
@@ -1226,6 +1286,13 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
    (sizeof (x) == sizeof (long double) ? gl_signbitl (x) : \
     sizeof (x) == sizeof (double) ? gl_signbitd (x) : \
     gl_signbitf (x))
+# endif
+# ifdef __cplusplus
+#  ifdef signbit
+_GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
+#   undef signbit
+_GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit)
+#  endif
 # endif
 #elif defined GNULIB_POSIXCHECK
 # if defined signbit
