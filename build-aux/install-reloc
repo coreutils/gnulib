@@ -172,10 +172,10 @@ rc=$?
 rm -f relocwrapper.o \
       progname.o \
       progreloc.o \
-      xreadlink.o \
       areadlink.o \
       careadlinkat.o \
       allocator.o \
+      readlink.o \
       canonicalize-lgpl.o \
       malloca.o \
       relocatable.o \
