@@ -1,4 +1,4 @@
-# perror.m4 serial 5
+# perror.m4 serial 6
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,9 +36,10 @@ AC_DEFUN([gl_FUNC_PERROR],
                 puts (str);
                 errno = -1;
                 perror ("");
+                return 0;
               ]])],
-           [CONFTEST_OUTPUT=1 ./conftest$EXEEXT >conftest.txt1 2>conftest.txt2
-            if cmp conftest.txt1 conftest.txt2 >/dev/null; then
+           [if CONFTEST_OUTPUT=1 ./conftest$EXEEXT >conftest.txt1 2>conftest.txt2 \
+               && cmp conftest.txt1 conftest.txt2 >/dev/null; then
               gl_cv_func_perror_works=yes
             else
               gl_cv_func_perror_works=no

@@ -1,5 +1,10 @@
 2011-10-22  Bruno Haible  <bruno@clisp.org>
 
+	perror: Recognize when test program crashes.
+	* m4/perror.m4 (gl_FUNC_PERROR): If the test program crashes due to
+	strerror, set gl_cv_func_perror_works to no.
+	Reported by Daniel Richard G. <skunk@iskunk.org>.
+
 	perror: Fix indentation.
 	* m4/perror.m4 (gl_FUNC_PERROR): Fix indentation.
 
