@@ -1,5 +1,25 @@
 2011-10-22  Bruno Haible  <bruno@clisp.org>
 
+	errno, strerror-override: Support for MSVC 10.
+	* lib/errno.in.h (GNULIB_defined_ETXTBSY): Remove macro.
+	(ENOMSG, EIDRM, ENOLINK, EPROTO, EBADMSG, EOVERFLOW, ENOTSUP,
+	ENETRESET, ECONNABORTED, ECANCELED, EINPROGRESS, EALREADY, ENOTSOCK,
+	EDESTADDRREQ, EMSGSIZE, EPROTOTYPE, ENOPROTOOPT, EPROTONOSUPPORT,
+	EOPNOTSUPP, EAFNOSUPPORT, EADDRINUSE, EADDRNOTAVAIL, ENETDOWN,
+	ENETUNREACH, ECONNRESET, ENOBUFS, EISCONN, ENOTCONN, ETIMEDOUT,
+	ECONNREFUSED, ELOOP, EHOSTUNREACH, EWOULDBLOCK, ETXTBSY) [Win32]:
+	Assign values compatible with MSVC 10.
+	(ENODATA, ENOSR, ENOSTR, ENOTRECOVERABLE, EOWNERDEAD, ETIME, EOTHER):
+	New macros.
+	(GNULIB_defined_EWINSOCK): New macro.
+	* lib/strerror-override.c (strerror_override): Update accordingly.
+	* lib/strerror-override.h: Likewise.
+	* lib/w32sock.h (set_winsock_errno): Map those WSA* values that are no
+	longer equal to the corresponding errno value.
+	Reported by Michael Goffioul <michael.goffioul@gmail.com>.
+
+2011-10-22  Bruno Haible  <bruno@clisp.org>
+
 	perror: Recognize when test program crashes.
 	* m4/perror.m4 (gl_FUNC_PERROR): If the test program crashes due to
 	strerror, set gl_cv_func_perror_works to no.
