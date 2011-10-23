@@ -21,8 +21,12 @@
 # ME := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ME := maint.mk
 
-# Override this in cfg.mk if you use a non-standard build-aux directory.
-build_aux ?= $(srcdir)/build-aux
+# Diagnostic for continued use of deprecated variable.
+# Remove in 2013
+ifneq ($(build_aux),)
+ $(error "$(ME): \
+set $$(_build-aux) relative to $$(srcdir) instead of $$(build_aux)")
+endif
 
 # Do not save the original name or timestamp in the .tar.gz file.
 # Use --rsyncable if available.
@@ -34,7 +38,7 @@ GZIP_ENV = '--no-name --best $(gzip_rsyncable)'
 GIT = git
 VC = $(GIT)
 
-VC_LIST = $(build_aux)/vc-list-files -C $(srcdir)
+VC_LIST = $(srcdir)/$(_build-aux)/vc-list-files -C $(srcdir)
 
 # You can override this variable in cfg.mk to set your own regexp
 # matching files to ignore.
@@ -274,7 +278,7 @@ define _sc_search_regexp
 endef
 
 sc_avoid_if_before_free:
-	@$(build_aux)/useless-if-before-free				\
+	@$(srcdir)/$(_build-aux)/useless-if-before-free			\
 		$(useless_free_options)					\
 	    $$($(VC_LIST_EXCEPT) | grep -v useless-if-before-free) &&	\
 	  { echo '$(ME): found useless "if" before "free" above' 1>&2;	\
@@ -1210,7 +1214,7 @@ else
 endif
 
 announcement: NEWS ChangeLog $(rel-files)
-	@$(build_aux)/announce-gen					\
+	@$(srcdir)/$(_build-aux)/announce-gen				\
 	    --mail-headers='$(announcement_mail_headers_)'		\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
@@ -1234,7 +1238,7 @@ upload_dest_dir_ ?= $(PACKAGE)
 emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
-	@echo "$(build_aux)/gnupload $(GNUPLOADFLAGS) \\"
+	@echo "$(srcdir)/$(_build-aux)/gnupload $(GNUPLOADFLAGS) \\"
 	@echo "    --to $(gnu_rel_host):$(upload_dest_dir_) \\"
 	@echo "  $(rel-files)"
 	@echo '# send the ~/announce-$(my_distdir) e-mail'
@@ -1329,7 +1333,7 @@ web-manual:
 	@test -z "$(manual_title)" \
 	  && { echo define manual_title in cfg.mk 1>&2; exit 1; } || :
 	@cd '$(srcdir)/doc'; \
-	  $(SHELL) ../$(build_aux)/gendocs.sh $(gendocs_options_) \
+	  $(SHELL) ../$(_build-aux)/gendocs.sh $(gendocs_options_) \
 	     -o '$(abs_builddir)/doc/manual' \
 	     --email $(PACKAGE_BUGREPORT) $(PACKAGE) \
 	    "$(PACKAGE_NAME) - $(manual_title)"
@@ -1394,7 +1398,7 @@ update-copyright-env ?=
 update-copyright:
 	grep -l -w Copyright                                             \
 	  $$(export VC_LIST_EXCEPT_DEFAULT=COPYING && $(VC_LIST_EXCEPT)) \
-	  | $(update-copyright-env) xargs $(build_aux)/$@
+	  | $(update-copyright-env) xargs $(srcdir)/$(_build-aux)/$@
 
 # This tight_scope test is skipped with a warning if $(_gl_TS_headers) is not
 # overridden and $(_gl_TS_dir)/Makefile.am does not mention noinst_HEADERS.

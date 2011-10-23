@@ -1,3 +1,13 @@
+2011-10-28  Gary V. Vaughan  <gary@gnu.org>
+
+	maint.mk: don't maintain a second build-aux variable.
+	* maint.mk (build_aux): Removed.  The maintainer-makefile module
+	depends on GNUmakefile, which already maintains a cfg.mk
+	overridable $(_build-aux) for projects with a non-standard
+	build-aux directory location, although without the $(srcdir)
+	prefix.  Use that variable consistently instead of introducing a
+	second one.  Adjust all call sites.
+
 2011-10-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Add stdalign module and use it in other modules.
