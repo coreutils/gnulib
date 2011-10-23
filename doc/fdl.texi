@@ -481,7 +481,7 @@ license notices just after the title page:
 @end smallexample
 
 If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts,
-replace the ``with@dots{}Texts.'' line with this:
+replace the ``with@dots{}Texts.''@: line with this:
 
 @smallexample
 @group
