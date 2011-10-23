@@ -229,11 +229,6 @@ static int      fts_safe_changedir (FTS *, FTSENT *, int, const char *)
 #define ISSET(opt)      (sp->fts_options & (opt))
 #define SET(opt)        (sp->fts_options |= (opt))
 
-/* FIXME: make this a function */
-#define RESTORE_INITIAL_CWD(sp)                 \
-  (fd_ring_clear (&((sp)->fts_fd_ring)),        \
-   FCHDIR ((sp), (ISSET (FTS_CWDFD) ? AT_FDCWD : (sp)->fts_rfd)))
-
 /* FIXME: FTS_NOCHDIR is now misnamed.
    Call it FTS_USE_FULL_RELATIVE_FILE_NAMES instead. */
 #define FCHDIR(sp, fd)                                  \
@@ -347,6 +342,18 @@ cwd_advance_fd (FTS *sp, int fd, bool chdir_down_one)
     }
 
   sp->fts_cwd_fd = fd;
+}
+
+/* Restore the initial, pre-traversal, "working directory".
+   In FTS_CWDFD mode, we merely call cwd_advance_fd, otherwise,
+   we may actually change the working directory.
+   Return 0 upon success. Upon failure, set errno and return nonzero.  */
+static int
+restore_initial_cwd (FTS *sp)
+{
+  int fail = FCHDIR (sp, ISSET (FTS_CWDFD) ? AT_FDCWD : sp->fts_rfd);
+  fd_ring_clear (&(sp->fts_fd_ring));
+  return fail;
 }
 
 /* Open the directory DIR if possible, and return a file
@@ -948,7 +955,7 @@ next:   tmp = p;
                  * root.
                  */
                 if (p->fts_level == FTS_ROOTLEVEL) {
-                        if (RESTORE_INITIAL_CWD(sp)) {
+                        if (restore_initial_cwd(sp)) {
                                 SET(FTS_STOP);
                                 return (NULL);
                         }
@@ -1055,7 +1062,7 @@ cd_dot_dot:
          * one level, via "..".
          */
         if (p->fts_level == FTS_ROOTLEVEL) {
-                if (RESTORE_INITIAL_CWD(sp)) {
+                if (restore_initial_cwd(sp)) {
                         p->fts_errno = errno;
                         SET(FTS_STOP);
                 }
@@ -1579,7 +1586,7 @@ mem1:                           saved_errno = errno;
          */
         if (!continue_readdir && descend && (type == BCHILD || !nitems) &&
             (cur->fts_level == FTS_ROOTLEVEL
-             ? RESTORE_INITIAL_CWD(sp)
+             ? restore_initial_cwd(sp)
              : fts_safe_changedir(sp, cur->fts_parent, -1, ".."))) {
                 cur->fts_info = FTS_ERR;
                 SET(FTS_STOP);

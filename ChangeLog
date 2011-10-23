@@ -1,3 +1,28 @@
+2011-10-23  Jim Meyering  <meyering@redhat.com>
+
+	fts: close parent dir FD before returning from post-traversal fts_read
+	The problem: the fts-using "mkdir -p A/B; rm -rf A" would attempt to
+	unlink A, even though an FD open on A remained.  This is suboptimal
+	(holding a file descriptor open longer than needed), but otherwise not
+	a problem on Unix-like kernels.  However, on Cygwin with certain Novell
+	file systems, (see http://cygwin.com/ml/cygwin/2011-10/msg00365.html),
+	that represents a real problem: it causes the removal of A to fail
+	with e.g., "rm: cannot remove `A': Device or resource busy"
+
+	fts visits each directory twice and keeps a cache (fts_fd_ring) of
+	directory file descriptors.  After completing the final, FTS_DP,
+	visit of a directory, RESTORE_INITIAL_CWD intended to clear the FD
+	cache, but then proceeded to add a new FD to it via the subsequent
+	FCHDIR (which calls cwd_advance_fd and i_ring_push).  Before, the
+	final file descriptor would be closed only via fts_close's call to
+	fd_ring_clear.  Now, it is usually closed earlier, via the final
+	FTS_DP-returning fts_read call.
+	* lib/fts.c (restore_initial_cwd): New function, converted from
+	the macro.  Call fd_ring_clear *after* FCHDIR, not before it.
+	Update callers.
+	Reported by Franz Sirl via the above URL, with analysis by Eric Blake
+	in http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/28739
+
 2011-10-23  Gary V. Vaughan  <gary@gnu.org>
 	    Bruno Haible  <bruno@clisp.org>
 	    Jim Meyering  <jim@meyering.net>
