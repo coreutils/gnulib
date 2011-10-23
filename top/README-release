@@ -2,9 +2,9 @@ Here are most of the steps we (maintainers) follow when making a release.
 
 * start from a clean, up-to-date git directory.
 
-    git checkout master; git pull
-
-* Run ./configure && make maintainer-clean
+    make -k maintainer-clean || { ./configure && make maintainer-clean; }
+    git checkout master
+    git pull origin master
 
 * Ensure that the desired versions of autoconf, automake, etc.
   are in your PATH.  See the buildreq list in bootstrap.conf for
@@ -16,14 +16,12 @@ Here are most of the steps we (maintainers) follow when making a release.
 * Ensure that you've pushed all changes that belong in the release
   and that the NixOS/Hydra autobuilder is reporting all is well:
 
-      http://hydra.nixos.org/jobset/gnu/@PACKAGE@-master
+    http://hydra.nixos.org/jobset/gnu/@PACKAGE@-master
 
-* Run bootstrap one last time.  This downloads any new translations:
-
-    ./bootstrap
+* Run "./bootstrap && ./configure".  This downloads any new translations:
 
 * Pre-release testing:
-  Ensure that make check syntax-check succeeds.
+  Ensure that "make check syntax-check" succeeds.
 
 * Run "make distcheck"
 
