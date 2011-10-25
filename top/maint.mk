@@ -749,10 +749,12 @@ gl_other_headers_ ?= \
 
 # Perl -lne code to extract "significant" cpp-defined symbols from a
 # gnulib header file, eliminating a few common false-positives.
+# The exempted names below are defined only conditionally in gnulib,
+# and hence sometimes must/may be defined in application code.
 gl_extract_significant_defines_ = \
   /^\# *define ([^_ (][^ (]*)(\s*\(|\s+\w+)/\
     && $$2 !~ /(?:rpl_|_used_without_)/\
-    && $$1 !~ /^(?:NSIG)$$/\
+    && $$1 !~ /^(?:NSIG|ENODATA)$$/\
     && $$1 !~ /^(?:SA_RESETHAND|SA_RESTART)$$/\
     and print $$1
 
