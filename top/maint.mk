@@ -618,7 +618,7 @@ _stddef_syms_re = NULL|offsetof|ptrdiff_t|size_t|wchar_t
 # Prohibit the inclusion of stddef.h without an actual use.
 sc_prohibit_stddef_without_use:
 	@h='stddef.h'							\
-	re='\<($(_stddef_syms_re)) *\('					\
+	re='\<($(_stddef_syms_re))\>'					\
 	  $(_sc_header_without_use)
 
 # Prohibit the inclusion of verify.h without an actual use.

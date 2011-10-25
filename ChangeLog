@@ -1,5 +1,10 @@
 2011-10-25  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: fix a bug in sc_prohibit_stddef_without_use
+	* top/maint.mk (sc_prohibit_stddef_without_use): Don't require / *\(/
+	after symbols like NULL, size_t, etc.
+	Reported by Alfred M. Szmidt.
+
 	maint.mk: exempt ENODATA from a syntax-check rule
 	* top/maint.mk (gl_extract_significant_defines_): Also exempt ENODATA
 	from the sc_prohibit_always-defined_macros syntax-check rule.
