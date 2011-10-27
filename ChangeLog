@@ -1,5 +1,9 @@
 2011-10-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Add stdalign module and use it in other modules.
+	This is based on a previous proposal by Bruno Haible
+	<https://lists.gnu.org/archive/html/bug-gnulib/2011-07/msg00226.html>.
+
 	stdalign: new module
 	* doc/posix-headers/stdalign.texi, lib/stdalign.in.h, m4/stdalign.m4:
 	* modules/stdalign: New files.

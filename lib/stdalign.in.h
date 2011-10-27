@@ -29,14 +29,18 @@
    C++0X <http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>
    section 18.10. */
 
-/* Return the alignment of a structure slot (field) of TYPE,
-   as an integer constant expression.  The result cannot be used as a
-   value for an 'enum' constant, if you want to be portable to HP-UX
-   10.20 cc and AIX 3.2.5 xlc.
+/* alignof (TYPE), also known as _Alignof (TYPE), yields the alignment
+   requirement of a structure member (i.e., slot or field) that is of
+   type TYPE, as an integer constant expression.
 
-   This is not the same as GCC's __alignof__ operator; for example, on
-   x86 with GCC, _Alignof (long long) is typically 4 whereas
-   __alignof__ (long long) is 8.  */
+   This differs from GCC's __alignof__ operator, which can yield a
+   better-performing alignment for an object of that type.  For
+   example, on x86 with GCC, __alignof__ (double) and __alignof__
+   (long long) are 8, whereas alignof (double) and alignof (long long)
+   are 4 unless the option '-malign-double' is used.
+
+   The result cannot be used as a value for an 'enum' constant, if you
+   want to be portable to HP-UX 10.20 cc and AIX 3.2.5 xlc.  */
 #include <stddef.h>
 #if defined __cplusplus
    template <class __t> struct __alignof_helper { char __a; __t __b; };
@@ -47,8 +51,28 @@
 #define alignof _Alignof
 #define __alignof_is_defined 1
 
-/* Align a type or variable to the alignment A.  */
-#if @HAVE_ATTRIBUTE_ALIGNED@ && !defined __cplusplus
+/* alignas (A), also known as _Alignas (A), aligns a variable or type
+   to the alignment A, where A is an integer constant expression.  For
+   example:
+
+      int alignas (8) foo;
+      struct s { int a; int alignas (8) bar; };
+
+   aligns the address of FOO and the offset of BAR to be multiples of 8.
+
+   A should be a power of two that is at least the type's alignment
+   and at most the implementation's alignment limit.  This limit is
+   2**28 on typical GNUish hosts, and 2**13 on MSVC.
+
+   The following draft C1X requirements are not supported here:
+
+     - If A is zero, alignas has no effect.
+     - alignas can be used multiple times; the strictest one wins.
+     - alignas (TYPE) is equivalent to alignas (alignof (TYPE)).
+
+   */
+
+#if __GNUC__ || __IBMC__ || __IBMCPP__ || 0x5110 <= __SUNPRO_C
 # define _Alignas(a) __attribute__ ((__aligned__ (a)))
 #elif 1300 <= _MSC_VER
 # define _Alignas(a) __declspec ((align (a)))

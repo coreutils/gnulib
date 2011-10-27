@@ -22,6 +22,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include "verify.h"
 
@@ -41,37 +42,56 @@ verify (__alignas_is_defined == 1);
 # ifndef alignas
 #  error "alignas is not a macro"
 # endif
-# define CHECK_ALIGNAS(type) \
-    type alignas (1 << 3) type##_alignas; \
-    type _Alignas (1 << 3) type##_Alignas;
+# define DECLARE_ALIGNED(type, name) \
+    type alignas (1 << 3) name##_alignas; \
+    type _Alignas (1 << 3) name##_Alignas;
+# define CHECK_ALIGNED(name) \
+    (((uintptr_t) &name##_alignas % (1 << 3) ? abort () : (void) 0), \
+     ((uintptr_t) &name##_Alignas % (1 << 3) ? abort () : (void) 0))
 #else
-# define CHECK_ALIGNAS(type)
+# define DECLARE_ALIGNED(type, name)
+# define CHECK_ALIGNED(name) ((void) 0)
 #endif
 
-#define CHECK(type) \
+#define CHECK_STATIC(type) \
   typedef struct { char slot1; type slot2; } type##_helper; \
   verify (alignof (type) == offsetof (type##_helper, slot2)); \
   verify (_Alignof (type) == alignof (type)); \
   const int type##_alignment = alignof (type); \
-  CHECK_ALIGNAS(type)
+  DECLARE_ALIGNED(type, static_##type)
 
-CHECK (char)
-CHECK (short)
-CHECK (int)
-CHECK (long)
-CHECK (float)
-CHECK (double)
-CHECK (longdouble)
+#define CHECK_AUTO(type) \
+  { \
+    DECLARE_ALIGNED(type, auto_##type) \
+    CHECK_ALIGNED(static_##type); \
+    CHECK_ALIGNED(auto_##type); \
+  }
+
 #ifdef INT64_MAX
-CHECK (int64_t)
+# define if_INT64_MAX(x) x
+#else
+# define if_INT64_MAX(x)
 #endif
-CHECK (struct1)
-CHECK (struct2)
-CHECK (struct3)
-CHECK (struct4)
+
+#define CHECK_TYPES(check) \
+  check (char) \
+  check (short) \
+  check (int) \
+  check (long) \
+  if_INT64_MAX (check (int64_t)) \
+  check (float) \
+  check (double) \
+  check (longdouble) \
+  check (struct1) \
+  check (struct2) \
+  check (struct3) \
+  check (struct4)
+
+CHECK_TYPES (CHECK_STATIC)
 
 int
 main ()
 {
+  CHECK_TYPES (CHECK_AUTO)
   return 0;
 }

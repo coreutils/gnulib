@@ -19,7 +19,7 @@ if GL_GENERATE_STDALIGN_H
 stdalign.h: stdalign.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e 's/@''HAVE_ATTRIBUTE_ALIGNED''@/$(HAVE_ATTRIBUTE_ALIGNED)/g' < $(srcdir)/stdalign.in.h; \
+	  cat $(srcdir)/stdalign.in.h; \
 	} > $@-t && \
 	mv $@-t $@
 else

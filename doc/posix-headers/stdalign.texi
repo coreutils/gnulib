@@ -21,8 +21,8 @@ Portability problems not fixed by Gnulib:
 @code{_Alignas} and @code{alignas} are not always supported;
 on platforms lacking support, the
 macro @code{__alignas_is_defined} is not defined.
-Supported platforms includes GCC 2 and later, Sun C 5.11 and later,
-and MSVC 7.0 or later.
+Supported compilers include GCC, IBM C, Sun C 5.11 and later,
+and MSVC 7.0 and later.
 @item
 @code{<stdalign.h>} must be #included before @samp{_Alignas} and
 @samp{_Alignof} can be used.
