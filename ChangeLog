@@ -1,3 +1,12 @@
+2011-10-27  Bruno Haible  <bruno@clisp.org>
+
+	Update documentation regarding 'largefile' module.
+	* doc/posix-functions/fstat.texi: Tweak wording.
+	* doc/posix-functions/opendir.texi: Mention that the module fixes the
+	problems with huge directories and/or small ino_t types.
+	* doc/posix-functions/readdir.texi: Likewise.
+	* doc/posix-functions/rewinddir.texi: Likewise.
+
 2011-10-28  Gary V. Vaughan  <gary@gnu.org>
 
 	maint.mk: don't maintain a second build-aux variable.

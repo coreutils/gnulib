@@ -13,8 +13,8 @@ This function crashes when invoked with invalid arguments on some platforms:
 MSVC 9.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{fstat} may not correctly
-report the size of files or block devices larger than 2 GB.  The fix is to
-use the @code{AC_SYS_LARGEFILE} macro.
+report the size of files or block devices larger than 2 GB.
+(Cf. @code{AC_SYS_LARGEFILE}.)
 @end itemize
 
 Portability problems not fixed by Gnulib:
