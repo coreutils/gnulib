@@ -1,5 +1,5 @@
 Description:
-fstat() function: query file information
+fstat() function: return information about an open file.
 
 Files:
 lib/fstat.c

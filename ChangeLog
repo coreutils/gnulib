@@ -1,5 +1,10 @@
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
+	fstat: Tweak documentation.
+	* modules/fstat (Description): More precise description.
+
+2011-10-27  Bruno Haible  <bruno@clisp.org>
+
 	Update documentation regarding 'largefile' module.
 	* doc/posix-functions/fstat.texi: Tweak wording.
 	* doc/posix-functions/opendir.texi: Mention that the module fixes the
