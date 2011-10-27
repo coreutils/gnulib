@@ -1,5 +1,11 @@
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking tests: Fix test failure on Linux/MIPS.
+	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/MIPS]:
+	Set to 270000.
+
+2011-10-27  Bruno Haible  <bruno@clisp.org>
+
 	utimensat: Work around problem on Linux/hppa.
 	* lib/utimensat.c (rpl_utimensat) [Linux/hppa]: Reject invalid tv_nsec
 	values.
