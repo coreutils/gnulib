@@ -1,5 +1,11 @@
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
+	raise test: Avoid a test failure on Linux/MIPS.
+	* tests/test-raise.c (main): Try raising signal 199, not 99. Needed
+	because 99 is a valid signal on Linux/MIPS.
+
+2011-10-27  Bruno Haible  <bruno@clisp.org>
+
 	nonblocking tests: Fix test failure on Linux/MIPS.
 	* tests/test-nonblocking-pipe.h (PIPE_DATA_BLOCK_SIZE) [Linux/MIPS]:
 	Set to 270000.

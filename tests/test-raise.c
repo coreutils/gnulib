@@ -39,7 +39,7 @@ main (void)
 {
   /* Test behaviour for invalid argument.  */
   ASSERT (raise (-1) != 0);
-  ASSERT (raise (99) != 0);
+  ASSERT (raise (199) != 0);
 
   /* Test behaviour for SIGINT.  */
   ASSERT (signal (SIGINT, handler) != SIG_ERR);
