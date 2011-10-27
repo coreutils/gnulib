@@ -1,3 +1,10 @@
+2011-10-27  Bruno Haible  <bruno@clisp.org>
+
+	utimensat: Work around problem on Linux/hppa.
+	* lib/utimensat.c (rpl_utimensat) [Linux/hppa]: Reject invalid tv_nsec
+	values.
+	* doc/posix-functions/utimensat.texi: Mention the problem on Linux/hppa.
+
 2011-10-25  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: fix a bug in sc_prohibit_stddef_without_use

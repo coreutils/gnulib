@@ -34,6 +34,10 @@ Linux kernel 2.6.25.
 When using @code{UTIME_OMIT} for the modification time, but specifying
 an access time, some systems fail to update the change time:
 Linux kernel 2.6.32.
+@item
+Out-of-range values of @code{tv_nsec} do not lead to a failure on some
+platforms:
+Linux kernel 2.6.22.19 on hppa.
 @end itemize
 
 Portability problems not fixed by Gnulib:
