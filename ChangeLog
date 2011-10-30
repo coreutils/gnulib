@@ -1,3 +1,14 @@
+2011-10-30  Jim Meyering  <meyering@redhat.com>
+
+	GNUmakefile: reenable "make syntax-check" for most projects
+	Since Friday's commit 05e2d798, "maint.mk: don't maintain a second
+	build-aux variable", "syntax-check" would do nothing but succeed with
+	the "No version control files detected..." diagnostic (unless you
+	happened to override _build-aux via cfg.mk).
+	* top/GNUmakefile (_autoreconf, _build-aux): Move default definitions
+	to precede inclusion of maint.mk.  Otherwise, these variables would
+	be used undefined in any project that does not override the default.
+
 2011-10-29  Dmitry V. Levin  <ldv@altlinux.org>
 
 	gitlog-to-changelog: treat a message with only blank lines as empty.

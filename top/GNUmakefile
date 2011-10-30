@@ -45,11 +45,12 @@ include Makefile
 
 # Some projects override e.g., _autoreconf here.
 -include $(srcdir)/cfg.mk
-include $(srcdir)/maint.mk
 
 # Allow cfg.mk to override these.
 _build-aux ?= build-aux
 _autoreconf ?= autoreconf -v
+
+include $(srcdir)/maint.mk
 
 # Ensure that $(VERSION) is up to date for dist-related targets, but not
 # for others: rerunning autoreconf and recompiling everything isn't cheap.
