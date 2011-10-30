@@ -1,3 +1,9 @@
+2011-10-30  Dmitry V. Levin  <ldv@altlinux.org>
+
+	gitlog-to-changelog: new option --append-dot.
+	* build-aux/gitlog-to-changelog: New option --append-dot, makes the
+	first non-blank line of each commit message terminated with a dot.
+
 2011-10-30  Bruno Haible  <bruno@clisp.org>
 
 	ffsl, ffsll: Avoid compilation error due to 'restrict'.

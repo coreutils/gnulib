@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2009-10-30 13:46'; # UTC
+my $VERSION = '2011-10-31 07:45'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -65,6 +65,8 @@ OPTIONS:
    --format=FMT set format string for commit subject and body;
                   see 'man git-log' for the list of format metacharacters;
                   the default is '%s%n%b%n'
+   --append-dot append a dot to the first line of each commit message if
+                  there is no other punctuation or blank at the end.
 
    --help       display this help and exit
    --version    output version information and exit
@@ -102,12 +104,14 @@ sub quoted_cmd(@)
 {
   my $since_date = '1970-01-01 UTC';
   my $format_string = '%s%n%b%n';
+  my $append_dot = 0;
   GetOptions
     (
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
      'since=s' => \$since_date,
      'format=s' => \$format_string,
+     'append-dot' => \$append_dot,
     ) or usage 1;
 
   my @cmd = (qw (git log --log-size), "--since=$since_date",
@@ -163,6 +167,18 @@ sub quoted_cmd(@)
         }
       else
         {
+          if ($append_dot)
+            {
+              # If the first line of the message has enough room, then
+              if (length $line[0] < 72)
+                {
+                  # append a dot if there is no other punctuation or blank
+                  # at the end.
+                  $line[0] =~ /[[:punct:]\s]$/
+                    or $line[0] .= '.';
+                }
+            }
+
           # Prefix each non-empty line with a TAB.
           @line = map { length $_ ? "\t$_" : '' } @line;
 
