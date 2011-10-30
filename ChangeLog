@@ -1,3 +1,11 @@
+2011-10-30  Jim Meyering  <meyering@redhat.com>
+
+	test-parse-datetime.c: avoid new DST-related false positive test failure
+	* tests/test-parse-datetime.c (gmt_offset): Determine the "gmt_offset"
+	based on the time/date we'll convert, not the current time.
+	Otherwise, the moment we cross a DST boundary like today's in
+	Europe, (CEST to CET), that offset ends up being one hour off.
+
 2011-10-27  Bruno Haible  <bruno@clisp.org>
 
 	fstat: Tweak documentation.
