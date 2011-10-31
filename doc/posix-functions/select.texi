@@ -37,4 +37,8 @@ when instead it should return immediately.
 @item
 On Linux, when some file descriptor refers to a regular file, @code{select}
 may fail, setting @code{errno} to @code{EBADF}.
+@item
+This function is declared in @code{<unistd.h>}, not @code{<sys/select.h>},
+on some platforms:
+IRIX 5.3.
 @end itemize

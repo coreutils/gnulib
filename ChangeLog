@@ -1,3 +1,20 @@
+2011-10-31  Bruno Haible  <bruno@clisp.org>
+
+	doc about some IRIX 5.3 problems.
+	* doc/posix-functions/getpwnam_r.texi: Mention incompatible declaration
+	on IRIX 5.3.
+	* doc/posix-headers/poll.texi: Mention missing nfds_t on IRIX 5.3.
+	* doc/posix-functions/ptsname.texi: Mention missing declaration on IRIX
+	5.3.
+	* doc/posix-functions/grantpt.texi: Likewise.
+	* doc/posix-functions/unlockpt.texi: Likewise.
+	* doc/posix-functions/lgamma.texi: Likewise.
+	* doc/posix-functions/nextafter.texi: Likewise.
+	* doc/posix-functions/remainder.texi: Likewise.
+	* doc/posix-functions/select.texi: Mention misplaced declaration on
+	IRIX 5.3.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-10-31  Dmitry V. Levin  <ldv@altlinux.org>
 
 	gitlog-to-changelog: fix git-log invocation.
