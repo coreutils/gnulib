@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2011-10-31 07:45'; # UTC
+my $VERSION = '2011-10-31 16:06'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -102,7 +102,7 @@ sub quoted_cmd(@)
 }
 
 {
-  my $since_date = '1970-01-01 UTC';
+  my $since_date;
   my $format_string = '%s%n%b%n';
   my $append_dot = 0;
   GetOptions
@@ -114,7 +114,10 @@ sub quoted_cmd(@)
      'append-dot' => \$append_dot,
     ) or usage 1;
 
-  my @cmd = (qw (git log --log-size), "--since=$since_date",
+  defined $since_date
+    and unshift @ARGV, "--since=$since_date";
+
+  my @cmd = (qw (git log --log-size),
              '--pretty=format:%ct  %an  <%ae>%n%n'.$format_string, @ARGV);
   open PIPE, '-|', @cmd
     or die ("$ME: failed to run `". quoted_cmd (@cmd) ."': $!\n"

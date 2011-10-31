@@ -1,3 +1,11 @@
+2011-10-31  Dmitry V. Levin  <ldv@altlinux.org>
+
+	gitlog-to-changelog: fix git-log invocation.
+	git-log mishandles date strings before 1970-01-01 UTC, and there is
+	no use to specify --since=1970-01-01 by default anyway.
+	* build-aux/gitlog-to-changelog: By default, when no --since option
+	was given, do not specify explicit --since option to git-log.
+
 2011-10-30  Dmitry V. Levin  <ldv@altlinux.org>
 
 	gitlog-to-changelog: new option --append-dot.
