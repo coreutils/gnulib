@@ -1,3 +1,9 @@
+2011-10-30  Bruno Haible  <bruno@clisp.org>
+
+	ffsl, ffsll: Avoid compilation error due to 'restrict'.
+	* lib/ffsl.h: Include <config.h>.
+	Suggested by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2011-10-30  Jim Meyering  <meyering@redhat.com>
 
 	GNUmakefile: reenable "make syntax-check" for most projects

@@ -19,6 +19,9 @@
 /* This file is meant to be included by ffsl.c and ffsll.c, after
    they have defined FUNC and TYPE.  */
 
+#include <config.h>
+
+/* Specification.  */
 #include <string.h>
 
 #include <limits.h>
