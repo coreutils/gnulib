@@ -1,3 +1,19 @@
+2011-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* MODULES.html.sh: Fix sed-script shell quoting and locale issues.
+	(func_module): Replace foo=` ... sed -e COMPLICATED ... ` with
+	bar=COMPLICATED; foo=` ... sed -e "$bar" ... ` when COMPLICATED
+	contains (possibly-quoted) backslashes.  This should avoid
+	all-too-common shell bugs if COMPLICATED contains backslashes in
+	the "wrong" places.  Reported by David Evans in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00013.html>.
+	When 'sed' uses character ranges like A-Z, invoke it in the C locale,
+	because we want ASCII ranges.  Is there some reason we don't use
+	the C locale everywhere in this script?
+	(func_module, top level): Avoid unwanted pathname expansion when
+	$repo_url_prefix or $repo_url_suffix_repl contain shell
+	metacharacters like '?' and '*'.
+
 2011-11-01  Bruno Haible  <bruno@clisp.org>
 
 	fchownat: Improve description.
