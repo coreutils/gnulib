@@ -22,9 +22,10 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <stdlib.h>
 
 #include "verify.h"
+
+#include "macros.h"
 
 typedef long double longdouble;
 typedef struct { char a[1]; } struct1;
@@ -42,15 +43,11 @@ verify (__alignas_is_defined == 1);
 # ifndef alignas
 #  error "alignas is not a macro"
 # endif
-# define DECLARE_ALIGNED(type, name) \
-    type alignas (1 << 3) name##_alignas; \
-    type _Alignas (1 << 3) name##_Alignas;
-# define CHECK_ALIGNED(name) \
-    (((uintptr_t) &name##_alignas % (1 << 3) ? abort () : (void) 0), \
-     ((uintptr_t) &name##_Alignas % (1 << 3) ? abort () : (void) 0))
+# define TEST_ALIGNMENT 16
 #else
-# define DECLARE_ALIGNED(type, name)
-# define CHECK_ALIGNED(name) ((void) 0)
+# define _Alignas(alignment)
+# define alignas(alignment)
+# define TEST_ALIGNMENT 1
 #endif
 
 #define CHECK_STATIC(type) \
@@ -58,40 +55,54 @@ verify (__alignas_is_defined == 1);
   verify (alignof (type) == offsetof (type##_helper, slot2)); \
   verify (_Alignof (type) == alignof (type)); \
   const int type##_alignment = alignof (type); \
-  DECLARE_ALIGNED(type, static_##type)
+  type alignas (TEST_ALIGNMENT) static_##type##_alignas; \
+  type _Alignas (TEST_ALIGNMENT) static_##type##_Alignas
 
-#define CHECK_AUTO(type) \
-  { \
-    DECLARE_ALIGNED(type, auto_##type) \
-    CHECK_ALIGNED(static_##type); \
-    CHECK_ALIGNED(auto_##type); \
-  }
+#define CHECK_ALIGNED(var) ASSERT ((uintptr_t) &(var) % TEST_ALIGNMENT == 0)
 
+CHECK_STATIC (char);
+CHECK_STATIC (short);
+CHECK_STATIC (int);
+CHECK_STATIC (long);
 #ifdef INT64_MAX
-# define if_INT64_MAX(x) x
-#else
-# define if_INT64_MAX(x)
+CHECK_STATIC (int64_t);
 #endif
-
-#define CHECK_TYPES(check) \
-  check (char) \
-  check (short) \
-  check (int) \
-  check (long) \
-  if_INT64_MAX (check (int64_t)) \
-  check (float) \
-  check (double) \
-  check (longdouble) \
-  check (struct1) \
-  check (struct2) \
-  check (struct3) \
-  check (struct4)
-
-CHECK_TYPES (CHECK_STATIC)
+CHECK_STATIC (float);
+CHECK_STATIC (double);
+CHECK_STATIC (longdouble);
+CHECK_STATIC (struct1);
+CHECK_STATIC (struct2);
+CHECK_STATIC (struct3);
+CHECK_STATIC (struct4);
 
 int
 main ()
 {
-  CHECK_TYPES (CHECK_AUTO)
+  CHECK_ALIGNED (static_char_alignas);
+  CHECK_ALIGNED (static_char_Alignas);
+  CHECK_ALIGNED (static_short_alignas);
+  CHECK_ALIGNED (static_short_Alignas);
+  CHECK_ALIGNED (static_int_alignas);
+  CHECK_ALIGNED (static_int_Alignas);
+  CHECK_ALIGNED (static_long_alignas);
+  CHECK_ALIGNED (static_long_Alignas);
+#ifdef INT64_MAX
+  CHECK_ALIGNED (static_int64_t_alignas);
+  CHECK_ALIGNED (static_int64_t_Alignas);
+#endif
+  CHECK_ALIGNED (static_float_alignas);
+  CHECK_ALIGNED (static_float_Alignas);
+  CHECK_ALIGNED (static_double_alignas);
+  CHECK_ALIGNED (static_double_Alignas);
+  CHECK_ALIGNED (static_longdouble_alignas);
+  CHECK_ALIGNED (static_longdouble_Alignas);
+  CHECK_ALIGNED (static_struct1_alignas);
+  CHECK_ALIGNED (static_struct1_Alignas);
+  CHECK_ALIGNED (static_struct2_alignas);
+  CHECK_ALIGNED (static_struct2_Alignas);
+  CHECK_ALIGNED (static_struct3_alignas);
+  CHECK_ALIGNED (static_struct3_Alignas);
+  CHECK_ALIGNED (static_struct4_alignas);
+  CHECK_ALIGNED (static_struct4_Alignas);
   return 0;
 }

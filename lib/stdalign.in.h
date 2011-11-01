@@ -62,7 +62,11 @@
 
    A should be a power of two that is at least the type's alignment
    and at most the implementation's alignment limit.  This limit is
-   2**28 on typical GNUish hosts, and 2**13 on MSVC.
+   2**28 on typical GNUish hosts, and 2**13 on MSVC.  To be portable
+   to MSVC through at least version 10.0, A should be an integer
+   constant, as MSVC does not support expressions such as 1 << 3.
+   To be portable to Sun C 5.11, do not align auto variables to
+   anything stricter than their default alignment.
 
    The following draft C1X requirements are not supported here:
 
@@ -75,7 +79,7 @@
 #if __GNUC__ || __IBMC__ || __IBMCPP__ || 0x5110 <= __SUNPRO_C
 # define _Alignas(a) __attribute__ ((__aligned__ (a)))
 #elif 1300 <= _MSC_VER
-# define _Alignas(a) __declspec ((align (a)))
+# define _Alignas(a) __declspec (align (a))
 #endif
 #ifdef _Alignas
 # define alignas _Alignas

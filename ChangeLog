@@ -1,3 +1,25 @@
+2011-10-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: port better to MSVC and to Sun C 5.11
+	I think these problems were reported by Bruno Haible, in email
+	that I've unfortunately misplaced.
+	* doc/posix-headers/stdalign.texi (stdalign.h): Document more
+	shortcomings of MSVC and of Sun C 5.11.
+	* lib/stdalign.in.h (_Alignas): Omit bogus extra parenthesis
+	around __declspec arg.
+	* modules/stdalign-tests (Files): Add tests/macros.h.
+	* tests/test-stdalign.c: Do not include <stdlib.h>; no longer needed.
+	Include macros.h, for ASSERT.
+	(DECLARE_ALIGNED): Remove.
+	(TEST_ALIGNMENT): Define to 16 if alignment is supported (more likely
+	to catch bug), and to 1 if not (simplifies the rest of the code).
+	(CHECK_STATIC): Always declare the alignment test vars; that's simpler.
+	(CHECK_AUTO): Remove.
+	(CHECK_ALIGNED): Check only the alignment of the static vars,
+	since auto var alignment isn't supported by Sun C 5.11.
+	(CHECK_TYPES): Remove.  All uses replaced by inline code, so that
+	ASSERT failures are easier to diagnose.
+
 2011-10-31  Bruno Haible  <bruno@clisp.org>
 
 	doc about some IRIX 5.3 problems.

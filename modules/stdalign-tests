@@ -1,5 +1,6 @@
 Files:
 tests/test-stdalign.c
+tests/macros.h
 
 Depends-on:
 verify
