@@ -47,6 +47,9 @@ _Noreturn void openat_save_fail (int);
 /* Using these function names makes application code
    slightly more readable than it would be with
    fchownat (..., 0) or fchownat (..., AT_SYMLINK_NOFOLLOW).  */
+
+#if GNULIB_FCHOWNAT
+
 static inline int
 chownat (int fd, char const *file, uid_t owner, gid_t group)
 {
@@ -58,6 +61,8 @@ lchownat (int fd, char const *file, uid_t owner, gid_t group)
 {
   return fchownat (fd, file, owner, group, AT_SYMLINK_NOFOLLOW);
 }
+
+#endif
 
 static inline int
 chmodat (int fd, char const *file, mode_t mode)

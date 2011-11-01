@@ -1,13 +1,9 @@
 Files:
-tests/nap.h
-tests/test-chown.h
-tests/test-lchown.h
 tests/test-lstat.h
 tests/test-mkdir.h
 tests/test-rmdir.h
 tests/test-stat.h
 tests/test-unlink.h
-tests/test-fchownat.c
 tests/test-fstatat.c
 tests/test-mkdirat.c
 tests/test-openat.c
@@ -19,25 +15,18 @@ tests/macros.h
 Depends-on:
 getcwd-lgpl
 ignore-value
-mgetgroups
 progname
-usleep
-stat-time
 symlink
 unlinkdir
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([getegid])
 
 Makefile.am:
 TESTS += \
-  test-fchmodat test-fchownat test-fstatat test-mkdirat test-openat \
-  test-unlinkat
+  test-fchmodat test-fstatat test-mkdirat test-openat test-unlinkat
 check_PROGRAMS += \
-  test-fchmodat test-fchownat test-fstatat test-mkdirat test-openat \
-  test-unlinkat
+  test-fchmodat test-fstatat test-mkdirat test-openat test-unlinkat
 test_fchmodat_LDADD = $(LDADD) @LIBINTL@
-test_fchownat_LDADD = $(LDADD) @LIBINTL@
 test_fstatat_LDADD = $(LDADD) @LIBINTL@
 test_mkdirat_LDADD = $(LDADD) @LIBINTL@
 test_openat_LDADD = $(LDADD) @LIBINTL@

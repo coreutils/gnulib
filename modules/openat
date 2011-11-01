@@ -4,7 +4,6 @@ Open a file at a directory.
 Files:
 lib/at-func.c
 lib/fchmodat.c
-lib/fchownat.c
 lib/fstatat.c
 lib/mkdirat.c
 lib/openat.c
@@ -26,7 +25,6 @@ fstat
 gettext-h
 intprops
 largefile
-lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 lstat
 mkdir           [test $HAVE_MKDIRAT = 0]
 open
@@ -55,9 +53,6 @@ if test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1; then
 fi
 if test $ac_cv_func_unlinkat = no || test $REPLACE_UNLINKAT = 1; then
   AC_LIBOBJ([unlinkat])
-fi
-if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
-  AC_LIBOBJ([fchownat])
 fi
 
 Makefile.am:

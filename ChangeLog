@@ -1,3 +1,27 @@
+2011-11-01  Bruno Haible  <bruno@clisp.org>
+
+	New module 'fchownat', split off from module 'openat'.
+	* lib/openat.h (chownat, lchownat): Enable only if GNULIB_FCHOWNAT is
+	defined.
+	* m4/fchownat.m4: New file, extracted from m4/openat.m4.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_FCHOWNAT. Don't
+	invoke gl_FUNC_FCHOWNAT.
+	(gl_FUNC_FCHOWNAT_DEREF_BUG, gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG,
+	gl_FUNC_FCHOWNAT): Moved to m4/fchownat.m4.
+	* modules/fchownat: New file, extracted from modules/openat.
+	* modules/openat (Files): Remove lib/fchownat.c.
+	(Depends-on): Remove lchown.
+	(configure.ac): Remove AC_LIBOBJ of fchownat.
+	* modules/fchownat-tests: New file, extracted from modules/openat-tests.
+	* modules/openat-tests (Files): Remove tests/test-fchownat.c,
+	tests/test-chown.h, tests/test-lchown.h, tests/nap.h.
+	(Depends-on): Remove mgetgroups, usleep, stat-time.
+	(configure.ac): Remove test for getegid.
+	(Makefile.am): Remove rules for test-fchownat.
+	* doc/posix-functions/fchownat.texi: Mention module 'fchownat' instead
+	of module 'openat'.
+	* NEWS: Mention the change.
+
 2011-10-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port better to MSVC and to Sun C 5.11
