@@ -43,7 +43,9 @@ verify (__alignas_is_defined == 1);
 # ifndef alignas
 #  error "alignas is not a macro"
 # endif
-# define TEST_ALIGNMENT 16
+/* mingw can go up only to 8.  8 is all that GNU Emacs needs, so let's
+   limit the test to 8 for now.  */
+# define TEST_ALIGNMENT 8
 #else
 # define _Alignas(alignment)
 # define alignas(alignment)

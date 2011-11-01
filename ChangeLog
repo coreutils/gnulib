@@ -1,3 +1,10 @@
+2011-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* tests/test-stdalign.c (TEST_ALIGNMENT): Shrink back to 8.
+	mingw supports alignments only up to 8 (!).  Reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00006.html>.
+	* doc/posix-headers/stdalign.texi (stdalign.h): Document this.
+
 2011-11-01  Bruno Haible  <bruno@clisp.org>
 
 	alignof: Avoid collision with stdalign module.

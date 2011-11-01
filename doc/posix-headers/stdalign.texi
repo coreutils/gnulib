@@ -29,6 +29,9 @@ Some compilers do not support alignment via
 variables on the stack).  They diagnose and ignore the alignment: Sun
 C 5.11.
 @item
+Some linkers do not support operands of @code{_Alignas}/@code{alignas}
+that are greater than 8: mingw.
+@item
 Some compilers require the operand of @code{_Alignas}/@code{alignas}
 to be a single integer constant, not an expression: MSVC 7.0 through
 at least 10.0.
