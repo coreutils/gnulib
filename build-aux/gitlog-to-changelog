@@ -200,6 +200,7 @@ sub parse_amend_file($)
             . "(Is your Git too old?  Version 1.5.1 or later is required.)\n");
 
   my $prev_date_line = '';
+  my @prev_coauthors = ();
   while (1)
     {
       defined (my $in = <PIPE>)
@@ -249,18 +250,36 @@ sub parse_amend_file($)
           . "(expected date/author/email):\n$author_line\n";
 
       my $date_line = sprintf "%s  $2\n", strftime ("%F", localtime ($1));
-      # If this line would be the same as the previous date/name/email
-      # line, then arrange not to print it.
-      if ($date_line ne $prev_date_line)
+
+      # Format 'Co-authored-by: A U Thor <email@example.com>' lines in
+      # standard multi-author ChangeLog format.
+      my @coauthors = grep /^Co-authored-by:.*$/, @line;
+      for (@coauthors)
+        {
+          s/^Co-authored-by:\s*/\t    /;
+          s/\s*</  </;
+
+          /<.*?@.*\..*>/
+            or warn "$ME: warning: missing email address for "
+              . substr ($_, 5) . "\n";
+        }
+
+      # If this header would be the same as the previous date/name/email/
+      # coauthors header, then arrange not to print it.
+      if ($date_line ne $prev_date_line or "@coauthors" ne "@prev_coauthors")
         {
           $prev_date_line eq ''
             or print "\n";
           print $date_line;
+          @coauthors
+            and print join ("\n", @coauthors), "\n";
         }
       $prev_date_line = $date_line;
+      @prev_coauthors = @coauthors;
 
-      # Omit "Signed-off-by..." lines.
+      # Omit "Co-authored-by..." and "Signed-off-by..." lines.
       @line = grep !/^Signed-off-by: .*>$/, @line;
+      @line = grep !/^Co-authored-by: /, @line;
 
       # Remove leading and trailing blank lines.
       if (@line)

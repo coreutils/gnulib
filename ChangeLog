@@ -1,3 +1,16 @@
+2011-11-01  Gary V. Vaughan  <gary@gnu.org>
+
+	gitlog-to-changelog: support multi-author commits.
+	The FSF cares about keeping track of all authors of patches to its
+	projects, but Git doesn't provide obvious support for multi-author
+	changesets. Consensus seems to be forming around the use of extra
+	Signed-off-by inspired lines in the log message formatted as
+	`Co-authored-by: A U Thor <email@example.com>' for round-tripping
+	multi-author commits between version control systems.
+	* gitlog-to-changelog: Extract `Co-authored-by:' lines from the git
+	log message and output in standard ChangeLog multi-author format.
+	Reported by Peter Rosin <peda@lysator.liu.se>
+
 2011-11-15  Ben Walton <bwalton@artsci.utoronto.ca>  (tiny change)
 	    Bruno Haible  <bruno@clisp.org>
 
