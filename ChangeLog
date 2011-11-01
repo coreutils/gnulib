@@ -1,3 +1,17 @@
+2011-11-02  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: provide a ChangeLog-repair mechanism
+	Git logs are often treated as immutable, because editing them
+	changes the SHA1 checksums of all descendants.  Thus, errors in
+	git logs tend to stay there forever.  However, when we generate
+	a ChangeLog file -- typically for distribution -- from that git log,
+	we can actually make corrections in the generated file.  The key
+	lies in recording in machine-readable/applicable form the desired
+	corrections.  See --help for description and an example.
+	* build-aux/gitlog-to-changelog (parse_amend_file): New function.
+	(usage): Describe it; alphabetize option descriptions.
+	(main): Honor the new option, carefully.
+
 2011-11-01  Jim Meyering  <meyering@redhat.com>
 
 	gitlog-to-changelog: avoid an infloop
