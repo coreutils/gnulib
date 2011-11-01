@@ -160,8 +160,11 @@ sub quoted_cmd(@)
       @line = grep !/^Signed-off-by: .*>$/, @line;
 
       # Remove leading and trailing blank lines.
-      while ($line[0] =~ /^\s*$/) { shift @line; }
-      while ($line[$#line] =~ /^\s*$/) { pop @line; }
+      if (@line)
+        {
+          while ($line[0] =~ /^\s*$/) { shift @line; }
+          while ($line[$#line] =~ /^\s*$/) { pop @line; }
+        }
 
       # If there were any lines
       if (@line == 0)

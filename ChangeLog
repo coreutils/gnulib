@@ -1,3 +1,9 @@
+2011-11-01  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: avoid an infloop
+	* build-aux/gitlog-to-changelog: Don't infloop for a commit log
+	that ends up being empty.
+
 2011-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* MODULES.html.sh: Fix sed-script shell quoting and locale issues.
