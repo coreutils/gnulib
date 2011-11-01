@@ -1,5 +1,12 @@
 2011-11-01  Bruno Haible  <bruno@clisp.org>
 
+	alignof: Avoid collision with stdalign module.
+	* lib/alignof.h (alignof): Remove macro.
+	* NEWS: Mention the change.
+	Reported by Paul Eggert.
+
+2011-11-01  Bruno Haible  <bruno@clisp.org>
+
 	New module 'fchownat', split off from module 'openat'.
 	* lib/openat.h (chownat, lchownat): Enable only if GNULIB_FCHOWNAT is
 	defined.

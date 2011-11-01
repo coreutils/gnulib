@@ -12,6 +12,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-11-01  alignof         This module no longer provides the alignof() macro.
+                            Use either alignof_slot() or alignof_type() instead.
+
 2011-11-01  openat          This module no longer provides the fchownat()
                             function. If you need this function, you now need
                             to request the 'fchownat' module.
