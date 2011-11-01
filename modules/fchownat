@@ -1,5 +1,5 @@
 Description:
-Change the owner of a file at a directory.
+fchownat() function: Change the owner of a file at a directory.
 
 Files:
 lib/fchownat.c
