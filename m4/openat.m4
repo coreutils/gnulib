@@ -1,4 +1,4 @@
-# serial 39
+# serial 40
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -17,28 +17,19 @@ AC_DEFUN([gl_FUNC_OPENAT],
   GNULIB_FSTATAT=1
   GNULIB_MKDIRAT=1
 
-  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
-  GNULIB_UNLINKAT=1
-
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_FUNCS_ONCE([mkdirat openat unlinkat])
+  AC_CHECK_FUNCS_ONCE([mkdirat openat])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
-  AC_REQUIRE([gl_FUNC_UNLINK])
   case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink in
   yes+yes)
-    # GNU/Hurd has unlinkat, but it has the same bug as unlink.
-    if test $REPLACE_UNLINK = 1; then
-      REPLACE_UNLINKAT=1
-    fi ;;
+    ;;
   yes+*)
     # Solaris 9 has *at functions, but uniformly mishandles trailing
     # slash in all of them.
     REPLACE_OPENAT=1
-    REPLACE_UNLINKAT=1
     ;;
   *)
     HAVE_OPENAT=0
-    HAVE_UNLINKAT=0 # No known system with unlinkat but not openat
     gl_PREREQ_OPENAT;;
   esac
   if test $ac_cv_func_mkdirat != yes; then

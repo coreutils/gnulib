@@ -1,3 +1,26 @@
+2011-11-03  Bruno Haible  <bruno@clisp.org>
+
+	New module 'unlinkat', split off from module 'openat'.
+	* m4/unlinkat.m4: New file, extracted from m4/openat.m4.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_UNLINKAT,
+	REPLACE_UNLINKAT, HAVE_UNLINKAT. Don't test for unlinkat.
+	* modules/unlinkat: New file, extracted from modules/openat. Correct
+	the dependency conditions.
+	* modules/openat (Files): Remove lib/unlinkat.c.
+	(Depends-on): Remove rmdir, unlink.
+	(configure.ac): Remove AC_LIBOBJ of unlinkat.
+	* modules/unlinkat-tests: New file, extracted from modules/openat-tests.
+	* modules/openat-tests (Files): Remove tests/test-unlinkat.c,
+	tests/test-rmdir.h, tests/test-unlink.h.
+	(Depends-on): Remove unlinkdir.
+	(Makefile.am): Remove rules for test-unlinkat.
+	* doc/posix-functions/unlinkat.texi: Mention module 'unlinkat' instead
+	of module 'openat'.
+	* NEWS: Mention the change.
+	* modules/linkat-tests (Depends-on): Add unlinkat.
+	* modules/mkfifoat-tests (Depends-on): Likewise.
+	* modules/readlinkat-tests (Depends-on): Likewise.
+
 2011-11-02  Bruno Haible  <bruno@clisp.org>
 
 	New module 'fchmodat', split off from module 'openat'.

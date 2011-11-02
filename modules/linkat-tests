@@ -10,6 +10,7 @@ areadlink-with-size
 filenamecat-lgpl
 getcwd-lgpl
 same-inode
+unlinkat
 
 configure.ac:
 

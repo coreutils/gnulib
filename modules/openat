@@ -9,7 +9,6 @@ lib/openat.c
 lib/openat.h
 lib/openat-priv.h
 lib/openat-proc.c
-lib/unlinkat.c
 m4/openat.m4
 m4/mode_t.m4
 
@@ -28,12 +27,10 @@ lstat
 mkdir           [test $HAVE_MKDIRAT = 0]
 open
 openat-die
-rmdir           [test $REPLACE_UNLINKAT = 1]
 save-cwd
 stdbool
 sys_stat
 unistd
-unlink          [test $REPLACE_UNLINKAT = 1]
 
 configure.ac:
 gl_FUNC_OPENAT
@@ -46,9 +43,6 @@ if test $HAVE_MKDIRAT = 0; then
 fi
 if test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1; then
   AC_LIBOBJ([openat])
-fi
-if test $ac_cv_func_unlinkat = no || test $REPLACE_UNLINKAT = 1; then
-  AC_LIBOBJ([unlinkat])
 fi
 
 Makefile.am:

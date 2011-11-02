@@ -12,7 +12,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2011-11-01  openat          This module no longer provides the fchmodat()
+2011-11-03  openat          This module no longer provides the unlinkat()
+                            function. If you need this function, you now need
+                            to request the 'unlinkat' module.
+
+2011-11-02  openat          This module no longer provides the fchmodat()
                             function. If you need this function, you now need
                             to request the 'fchmodat' module.
 
