@@ -1,3 +1,21 @@
+2011-11-02  Bruno Haible  <bruno@clisp.org>
+
+	New module 'fchmodat', split off from module 'openat'.
+	* lib/openat.h (chmodat, lchmodat): Enable only if GNULIB_FCHMODAT is
+	defined.
+	* m4/fchmodat.m4: New file, extracted from m4/openat.m4.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_FCHMODAT. Don't test
+	for fchmodat, lchmod. Don't set HAVE_FCHMODAT.
+	* modules/fchmodat: New file, extracted from modules/openat.
+	* modules/openat (Files): Remove lib/fchmodat.c.
+	(configure.ac): Remove AC_LIBOBJ of fchmodat.
+	* modules/fchmodat-tests: New file, extracted from modules/openat-tests.
+	* modules/openat-tests (Files): Remove tests/test-fchmodat.c.
+	(Makefile.am): Remove rules for test-fchmodat.
+	* doc/posix-functions/fchmodat.texi: Mention module 'fchmodat' instead
+	of module 'openat'.
+	* NEWS: Mention the change.
+
 2011-11-02  Jim Meyering  <meyering@redhat.com>
 
 	putenv: indent #definition of "environ" to placate cppi

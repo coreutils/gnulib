@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fchmodat.html}
 
-Gnulib module: openat
+Gnulib module: fchmodat
 
 Portability problems fixed by Gnulib:
 @itemize

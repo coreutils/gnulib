@@ -64,6 +64,8 @@ lchownat (int fd, char const *file, uid_t owner, gid_t group)
 
 #endif
 
+#if GNULIB_FCHMODAT
+
 static inline int
 chmodat (int fd, char const *file, mode_t mode)
 {
@@ -75,6 +77,8 @@ lchmodat (int fd, char const *file, mode_t mode)
 {
   return fchmodat (fd, file, mode, AT_SYMLINK_NOFOLLOW);
 }
+
+#endif
 
 static inline int
 statat (int fd, char const *name, struct stat *st)

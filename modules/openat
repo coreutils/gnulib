@@ -3,7 +3,6 @@ Open a file at a directory.
 
 Files:
 lib/at-func.c
-lib/fchmodat.c
 lib/fstatat.c
 lib/mkdirat.c
 lib/openat.c
@@ -39,9 +38,6 @@ unlink          [test $REPLACE_UNLINKAT = 1]
 configure.ac:
 gl_FUNC_OPENAT
 AC_LIBOBJ([openat-proc])
-if test $HAVE_FCHMODAT = 0; then
-  AC_LIBOBJ([fchmodat])
-fi
 if test $ac_cv_func_fstatat = no || test $REPLACE_FSTATAT = 1; then
   AC_LIBOBJ([fstatat])
 fi

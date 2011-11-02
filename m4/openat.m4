@@ -1,4 +1,4 @@
-# serial 38
+# serial 39
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -14,7 +14,6 @@ AC_DEFUN([gl_FUNC_OPENAT],
   GNULIB_OPENAT=1
 
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
-  GNULIB_FCHMODAT=1
   GNULIB_FSTATAT=1
   GNULIB_MKDIRAT=1
 
@@ -22,7 +21,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
   GNULIB_UNLINKAT=1
 
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_CHECK_FUNCS_ONCE([fchmodat lchmod mkdirat openat unlinkat])
+  AC_CHECK_FUNCS_ONCE([mkdirat openat unlinkat])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   AC_REQUIRE([gl_FUNC_UNLINK])
   case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink in
@@ -42,9 +41,6 @@ AC_DEFUN([gl_FUNC_OPENAT],
     HAVE_UNLINKAT=0 # No known system with unlinkat but not openat
     gl_PREREQ_OPENAT;;
   esac
-  if test $ac_cv_func_fchmodat != yes; then
-    HAVE_FCHMODAT=0
-  fi
   if test $ac_cv_func_mkdirat != yes; then
     HAVE_MKDIRAT=0
   fi
