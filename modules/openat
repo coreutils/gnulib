@@ -3,7 +3,6 @@ Open a file at a directory.
 
 Files:
 lib/at-func.c
-lib/fstatat.c
 lib/mkdirat.c
 lib/openat.c
 lib/openat.h
@@ -23,7 +22,6 @@ fstat
 gettext-h
 intprops
 largefile
-lstat
 mkdir           [test $HAVE_MKDIRAT = 0]
 open
 openat-die
@@ -35,9 +33,6 @@ unistd
 configure.ac:
 gl_FUNC_OPENAT
 AC_LIBOBJ([openat-proc])
-if test $ac_cv_func_fstatat = no || test $REPLACE_FSTATAT = 1; then
-  AC_LIBOBJ([fstatat])
-fi
 if test $HAVE_MKDIRAT = 0; then
   AC_LIBOBJ([mkdirat])
 fi

@@ -80,6 +80,8 @@ lchmodat (int fd, char const *file, mode_t mode)
 
 #endif
 
+#if GNULIB_FSTATAT
+
 static inline int
 statat (int fd, char const *name, struct stat *st)
 {
@@ -91,6 +93,8 @@ lstatat (int fd, char const *name, struct stat *st)
 {
   return fstatat (fd, name, st, AT_SYMLINK_NOFOLLOW);
 }
+
+#endif
 
 /* For now, there are no wrappers named laccessat or leuidaccessat,
    since gnulib doesn't support faccessat(,AT_SYMLINK_NOFOLLOW) and

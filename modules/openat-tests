@@ -1,15 +1,11 @@
 Files:
-tests/test-lstat.h
 tests/test-mkdir.h
-tests/test-stat.h
-tests/test-fstatat.c
 tests/test-mkdirat.c
 tests/test-openat.c
 tests/signature.h
 tests/macros.h
 
 Depends-on:
-getcwd-lgpl
 ignore-value
 progname
 symlink
@@ -18,9 +14,8 @@ configure.ac:
 
 Makefile.am:
 TESTS += \
-  test-fstatat test-mkdirat test-openat
+  test-mkdirat test-openat
 check_PROGRAMS += \
-  test-fstatat test-mkdirat test-openat
-test_fstatat_LDADD = $(LDADD) @LIBINTL@
+  test-mkdirat test-openat
 test_mkdirat_LDADD = $(LDADD) @LIBINTL@
 test_openat_LDADD = $(LDADD) @LIBINTL@

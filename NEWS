@@ -12,6 +12,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2011-11-04  openat          This module no longer provides the fstatat()
+                            function. If you need this function, you now need
+                            to request the 'fstatat' module.
+
 2011-11-03  openat          This module no longer provides the unlinkat()
                             function. If you need this function, you now need
                             to request the 'unlinkat' module.

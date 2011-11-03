@@ -1,3 +1,29 @@
+2011-11-04  Bruno Haible  <bruno@clisp.org>
+
+	New module 'fstatat', split off from module 'openat'.
+	* lib/openat.h (statat, lstatat): Enable only if GNULIB_FSTATAT is
+	defined.
+	* m4/fstatat.m4: New file. extracted from m4/openat.m4.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_FSTATAT. Don't invoke
+	gl_FUNC_FSTATAT.
+	(gl_FUNC_FSTATAT): Moved to m4/fstatat.m4.
+	* modules/fstatat: New file, extracted from modules/openat.
+	* modules/openat (Files): Remove lib/fstatat.c.
+	(Depends-on): Remove lstat.
+	(configure.ac): Remove AC_LIBOBJ of fstatat.
+	* modules/fstatat-tests: New file, extracted from modules/openat-tests.
+	* modules/openat-tests (Files): Remove tests/test-fstatat.c,
+	tests/test-lstat.h, tests/test-stat.h.
+	(Depends-on): Remove getcwd-lgpl.
+	(Makefile.am): Remove rules for test-fstatat.
+	* doc/posix-functions/fstatat.texi: Mention module 'fstatat' instead
+	of module 'openat'.
+	* NEWS: Mention the change.
+	* modules/getcwd (Depends-on): Add fstatat.
+	* modules/linkat (Depends-on): Likewise.
+	* modules/mkfifoat-tests (Depends-on): Likewise.
+	* modules/utimensat (Depends-on): Add fstatat. Remove openat.
+
 2011-11-03  Bruno Haible  <bruno@clisp.org>
 
 	New module 'unlinkat', split off from module 'openat'.

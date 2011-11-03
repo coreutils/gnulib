@@ -8,7 +8,7 @@ m4/utimensat.m4
 Depends-on:
 sys_stat
 extensions
-openat          [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
+fstatat         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 utimens         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 
 configure.ac:
