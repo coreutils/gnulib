@@ -1,5 +1,10 @@
 2011-11-04  Bruno Haible  <bruno@clisp.org>
 
+	openat tests: Fix file list.
+	* modules/openat-tests (Files): Add tests/test-open.h.
+
+2011-11-04  Bruno Haible  <bruno@clisp.org>
+
 	openat, fchmodat, fchownat, linkat, renameat: Fix dependencies.
 	* modules/fchmodat (Depends-on): Add openat-die.
 	* modules/fchownat (Depends-on): Likewise.

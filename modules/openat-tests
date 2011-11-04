@@ -1,5 +1,6 @@
 Files:
 tests/test-openat.c
+tests/test-open.h
 tests/signature.h
 tests/macros.h
 
