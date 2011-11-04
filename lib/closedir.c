@@ -19,6 +19,10 @@
 /* Specification.  */
 #include <dirent.h>
 
+#if REPLACE_FCHDIR
+# include <unistd.h>
+#endif
+
 #if HAVE_CLOSEDIR
 
 /* Override closedir(), to keep track of the open file descriptors.
