@@ -1,5 +1,11 @@
 2011-11-04  Bruno Haible  <bruno@clisp.org>
 
+	renameat: Optimize code size.
+	* modules/renameat (configure.ac): Don't compile at-func2.c if
+	REPLACE_RENAMEAT is 1.
+
+2011-11-04  Bruno Haible  <bruno@clisp.org>
+
 	openat tests: Fix file list.
 	* modules/openat-tests (Files): Add tests/test-open.h.
 

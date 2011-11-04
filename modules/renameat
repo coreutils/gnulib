@@ -24,6 +24,8 @@ configure.ac:
 gl_FUNC_RENAMEAT
 if test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1; then
   AC_LIBOBJ([renameat])
+fi
+if test $HAVE_RENAMEAT = 0; then
   AC_LIBOBJ([at-func2])
 fi
 gl_STDIO_MODULE_INDICATOR([renameat])
