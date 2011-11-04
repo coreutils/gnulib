@@ -1,3 +1,11 @@
+2011-11-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openat: remove direct dependency on dirent
+	* lib/openat.h: Don't include <dirent.h>; it's no longer needed,
+	and hasn't been needed ever since fdopendir was split into its own
+	module on 2009-08-31.
+	* modules/openat (Depends-on): Remove dirent.
+
 2011-11-04  Bruno Haible  <bruno@clisp.org>
 
 	renameat: Optimize code size.
