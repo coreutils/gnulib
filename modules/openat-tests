@@ -1,21 +1,15 @@
 Files:
-tests/test-mkdir.h
-tests/test-mkdirat.c
 tests/test-openat.c
 tests/signature.h
 tests/macros.h
 
 Depends-on:
-ignore-value
 progname
 symlink
 
 configure.ac:
 
 Makefile.am:
-TESTS += \
-  test-mkdirat test-openat
-check_PROGRAMS += \
-  test-mkdirat test-openat
-test_mkdirat_LDADD = $(LDADD) @LIBINTL@
+TESTS += test-openat
+check_PROGRAMS += test-openat
 test_openat_LDADD = $(LDADD) @LIBINTL@

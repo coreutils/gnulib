@@ -1,5 +1,25 @@
 2011-11-04  Bruno Haible  <bruno@clisp.org>
 
+	New module 'mkdirat', split off from module 'openat'.
+	* m4/mkdirat.m4: New file. extracted from m4/openat.m4.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't require gl_SYS_STAT_H_DEFAULTS.
+	Don't test for mkdirat. Don't set GNULIB_MKDIRAT, HAVE_MKDIRAT.
+	* modules/mkdirat: New file, extracted from modules/openat.
+	* modules/openat (Files): Remove lib/mkdirat.c.
+	(Depends-on): Remove mkdir.
+	(configure.ac): Remove AC_LIBOBJ of mkdirat.
+	(Include): Remove <sys/stat.h>.
+	* modules/mkdirat-tests: New file, extracted from modules/openat-tests.
+	* modules/openat-tests (Files): Remove tests/test-mkdirat.c,
+	tests/test-mkdir.h.
+	(Depends-on): Remove ignore-value.
+	(Makefile.am): Remove rules for test-mkdirat.
+	* doc/posix-functions/mkdirat.texi: Mention module 'mkdirat' instead
+	of module 'openat'.
+	* NEWS: Mention the change.
+
+2011-11-04  Bruno Haible  <bruno@clisp.org>
+
 	closedir: Avoid warning on mingw.
 	* lib/closedir.c: Include <unistd.h>.
 
