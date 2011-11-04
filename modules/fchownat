@@ -17,6 +17,7 @@ fchdir
 fcntl-h
 lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat
+openat-die
 save-cwd
 stdbool
 sys_stat

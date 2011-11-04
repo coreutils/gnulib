@@ -16,6 +16,7 @@ extensions
 fchdir
 fcntl-h
 openat
+openat-die
 save-cwd
 stdbool
 sys_stat
