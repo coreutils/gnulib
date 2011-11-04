@@ -1,4 +1,4 @@
-/* Define an at-style functions like fstatat, unlinkat, fchownat, etc.
+/* Define at-style functions like fstatat, unlinkat, fchownat, etc.
    Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

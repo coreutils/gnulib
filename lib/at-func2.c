@@ -1,4 +1,4 @@
-/* Define an at-style functions like linkat or renameat.
+/* Define 2-FD at-style functions like linkat or renameat.
    Copyright (C) 2006, 2009-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
