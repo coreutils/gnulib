@@ -9,7 +9,7 @@ tests/macros.h
 Depends-on:
 ignore-value
 mgetgroups
-openat
+openat-h
 progname
 usleep
 stat-time

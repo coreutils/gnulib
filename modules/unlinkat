@@ -4,23 +4,21 @@ unlinkat() function: Remove a file at a directory.
 Files:
 lib/unlinkat.c
 lib/at-func.c
-lib/openat.h
 lib/openat-priv.h
 m4/unlinkat.m4
 
 Depends-on:
-dirent
+at-internal
 dosname
 errno
 extensions
 fchdir
 fcntl-h
 fstatat
-openat
 openat-die
+openat-h
 rmdir           [test $HAVE_UNLINKAT = 0]
 save-cwd
-stdbool
 sys_stat
 unistd
 unlink          [test $HAVE_UNLINKAT = 0]

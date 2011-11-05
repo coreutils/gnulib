@@ -1,46 +1,42 @@
 Description:
-Open a file at a directory.
+openat() function: Open a file at a directory.
 
 Files:
 lib/at-func.c
 lib/openat.c
-lib/openat.h
 lib/openat-priv.h
-lib/openat-proc.c
 m4/openat.m4
 m4/mode_t.m4
 
 Depends-on:
+at-internal
 dosname
 errno
 extensions
 fchdir
 fcntl-h
-fdopendir
 fstat
-gettext-h
-intprops
 largefile
 open
 openat-die
+openat-h
 save-cwd
 stdbool
 sys_stat
-unistd
 
 configure.ac:
 gl_FUNC_OPENAT
-AC_LIBOBJ([openat-proc])
 if test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1; then
   AC_LIBOBJ([openat])
+  gl_PREREQ_OPENAT
 fi
+gl_MODULE_INDICATOR([openat]) dnl for lib/getcwd.c
+gl_FCNTL_MODULE_INDICATOR([openat])
 
 Makefile.am:
 
 Include:
 <fcntl.h>
-<unistd.h>
-"openat.h"
 
 License:
 GPL

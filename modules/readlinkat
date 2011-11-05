@@ -3,13 +3,19 @@ readlinkat(): read symlinks relative to a directory
 
 Files:
 lib/readlinkat.c
+lib/at-func.c
 m4/readlinkat.m4
 
 Depends-on:
-unistd
+at-internal
+dosname
+errno
 extensions
-fcntl-h
-openat          [test $HAVE_READLINKAT = 0]
+fchdir
+openat-die
+openat-h
+save-cwd
+unistd
 readlink        [test $HAVE_READLINKAT = 0]
 
 configure.ac:

@@ -6,6 +6,7 @@ tests/macros.h
 
 Depends-on:
 ignore-value
+openat
 
 configure.ac:
 

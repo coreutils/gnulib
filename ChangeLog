@@ -1,5 +1,73 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	New modules 'at-internal', 'openat-h', split off from module 'openat'.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_OPENAT. Don't
+	invoke gl_PREREQ_OPENAT and gl_MODULE_INDICATOR.
+	* modules/openat (Description): Add reference to POSIX function.
+	(Files): Remove lib/openat.h, lib/openat-proc.c.
+	(Depends-on): Add at-internal, openat-h. Remove fdopendir, gettext-h,
+	intprops, unistd.
+	(configure.ac): Remove AC_LIBOBJ of openat-proc. Invoke
+	gl_PREREQ_OPENAT, gl_MODULE_INDICATOR here. Invoke
+	gl_FCNTL_MODULE_INDICATOR.
+	(Include): Remove unistd.h, openat.h.
+	* modules/areadlinkat (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, extensions, fchdir,
+	openat-die, openat-h, save-cwd.
+	* modules/areadlinkat-with-size (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, extensions, fchdir,
+	openat-die, openat-h, save-cwd, unistd.
+	* modules/faccessat (Files): Add lib/at-func.c, lib/openat-priv.h.
+	(Depends-on): Add at-internal, dosname, errno, fchdir, openat-die,
+	openat-h, save-cwd. Remove fcntl-h, openat.
+	* modules/fchmodat (Files): Remove lib/openat.h.
+	(Depends-on): Add at-internal, openat-h. Remove dirent, fcntl-h,
+	openat, stdbool, unistd.
+	* modules/fchownat (Files): Remove lib/openat.h.
+	(Depends-on): Add at-internal, openat-h. Remove dirent, fcntl-h,
+	openat, stdbool, sys_stat.
+	* modules/fdopendir (Files): Remove lib/openat-priv.h,
+	lib/openat-proc.c.
+	(Depends-on): Add at-internal.
+	(condigure.ac): Remove AC_LIBOBJ of openat-proc.
+	* modules/fstatat (Files): Remove lib/openat.h.
+	(Depends-on): Add at-internal, openat-h. Remove dirent, openat,
+	stdbool, unistd.
+	* modules/fts (Depends-on): Add openat-h.
+	* modules/linkat (Depends-on): Add at-internal, openat-h. Remove
+	openat.
+	* modules/mkdirat (Files): Remove lib/openat.h.
+	(Depends-on): Add at-internal, openat-h. Remove dirent, fcntl-h,
+	openat, stdbool, sys_stat.
+	* modules/mkfifoat (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, fchdir, openat-die,
+	openat-h, save-cwd. Remove fcntl-h, openat.
+	* modules/openat-die (Depends-on): Add openat-h. Remove openat.
+	* modules/readlinkat (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, fchdir, openat-die,
+	openat-h, save-cwd. Remove fcntl-h, openat.
+	* modules/renameat (Depends-on): Add at-internal, openat-h. Remove
+	openat.
+	* modules/selinux-at (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, extensions, fchdir,
+	fcntl-h, openat-die, openat-h, save-cwd, unistd. Remove openat.
+	* modules/symlinkat (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, fchdir, openat-die,
+	openat-h, save-cwd. Remove fcntl-h, openat.
+	* modules/unlinkat (Files): Remove lib/openat.h.
+	(Depends-on): Add at-internal, openat-h. Remove dirent, openat,
+	stdbool.
+	* modules/utimensat (Files): Add lib/at-func.c.
+	(Depends-on): Add at-internal, dosname, errno, fchdir, fcntl-h,
+	openat-die, openat-h, save-cwd.
+	* modules/fchownat-tests (Depends-on): Add openat-h. Remove openat.
+	* modules/fdutimensat-tests (Depends-on): Add openat.
+	* modules/fstatat-tests (Depends-on): Add openat-h.
+	* modules/readlinkat-tests (Depends-on): Add openat.
+	* modules/symlinkat-tests (Depends-on): Add openat.
+
+2011-11-05  Bruno Haible  <bruno@clisp.org>
+
 	openat: Include <stdbool.h>.
 	* lib/openat.c: Include <stdbool.h>.
 

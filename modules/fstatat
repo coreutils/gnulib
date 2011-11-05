@@ -4,12 +4,11 @@ fstatat() function: Return information about a file at a directory.
 Files:
 lib/fstatat.c
 lib/at-func.c
-lib/openat.h
 lib/openat-priv.h
 m4/fstatat.m4
 
 Depends-on:
-dirent
+at-internal
 dosname
 errno
 extensions
@@ -17,12 +16,10 @@ fchdir
 fcntl-h
 fstat
 lstat
-openat
 openat-die
+openat-h
 save-cwd
-stdbool
 sys_stat
-unistd
 
 configure.ac:
 gl_FUNC_FSTATAT

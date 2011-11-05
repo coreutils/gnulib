@@ -2,12 +2,22 @@ Description:
 openat-style fd-relative functions for SE Linux
 
 Files:
-lib/selinux-at.c
 lib/selinux-at.h
+lib/selinux-at.c
+lib/at-func.c
 
 Depends-on:
-openat
 selinux-h
+at-internal
+dosname
+errno
+extensions
+fchdir
+fcntl-h
+openat-die
+openat-h
+save-cwd
+unistd
 
 configure.ac:
 AC_CHECK_HEADERS([selinux/flask.h])

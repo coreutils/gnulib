@@ -1,4 +1,4 @@
-# serial 42
+# serial 43
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
@@ -11,8 +11,6 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_OPENAT],
 [
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
-  GNULIB_OPENAT=1
-
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_FUNCS_ONCE([openat])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
@@ -26,13 +24,11 @@ AC_DEFUN([gl_FUNC_OPENAT],
     ;;
   *)
     HAVE_OPENAT=0
-    gl_PREREQ_OPENAT;;
+    ;;
   esac
-
-  dnl This is tested at least via getcwd.c.
-  gl_MODULE_INDICATOR([openat])
 ])
 
+# Prerequisites of lib/openat.c.
 AC_DEFUN([gl_PREREQ_OPENAT],
 [
   AC_REQUIRE([AC_C_INLINE])

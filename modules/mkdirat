@@ -4,23 +4,19 @@ mkdirat() function: Create a directory relative to a given directory.
 Files:
 lib/mkdirat.c
 lib/at-func.c
-lib/openat.h
 lib/openat-priv.h
 m4/mkdirat.m4
 
 Depends-on:
-dirent
+at-internal
 dosname
 errno
 extensions
 fchdir
-fcntl-h
 mkdir           [test $HAVE_MKDIRAT = 0]
-openat
 openat-die
+openat-h
 save-cwd
-stdbool
-sys_stat
 unistd
 
 configure.ac:

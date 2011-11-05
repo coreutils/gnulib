@@ -4,23 +4,19 @@ fchmodat() function: Change access permissions of a file at a directory.
 Files:
 lib/fchmodat.c
 lib/at-func.c
-lib/openat.h
 lib/openat-priv.h
 m4/fchmodat.m4
 
 Depends-on:
-dirent
+at-internal
 dosname
 errno
 extensions
 fchdir
-fcntl-h
-openat
 openat-die
+openat-h
 save-cwd
-stdbool
 sys_stat
-unistd
 
 configure.ac:
 gl_FUNC_FCHMODAT

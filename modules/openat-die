@@ -5,10 +5,10 @@ Files:
 lib/openat-die.c
 
 Depends-on:
-openat
+openat-h
 error
-gettext-h
 exitfail
+gettext-h
 
 configure.ac:
 

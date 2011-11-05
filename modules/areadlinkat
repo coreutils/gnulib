@@ -4,11 +4,20 @@ Reading symbolic links without size limitation, relative to fd.
 Files:
 lib/areadlink.h
 lib/areadlinkat.c
+lib/at-func.c
 
 Depends-on:
 areadlink
 careadlinkat
 readlinkat
+at-internal
+dosname
+errno
+extensions
+fchdir
+openat-die
+openat-h
+save-cwd
 
 configure.ac:
 gl_MODULE_INDICATOR([areadlinkat])

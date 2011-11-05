@@ -4,11 +4,21 @@ Read a symbolic link, without size limitations, relative to fd.
 Files:
 lib/areadlink.h
 lib/areadlinkat-with-size.c
+lib/at-func.c
 
 Depends-on:
 areadlink-with-size
 stdint
 readlinkat
+at-internal
+dosname
+errno
+extensions
+fchdir
+openat-die
+openat-h
+save-cwd
+unistd
 
 configure.ac:
 gl_MODULE_INDICATOR([areadlinkat-with-size])
