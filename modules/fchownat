@@ -15,6 +15,7 @@ errno
 extensions
 fchdir
 fcntl-h
+fstatat
 lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat
 openat-die

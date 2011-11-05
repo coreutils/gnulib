@@ -13,6 +13,7 @@ fcntl-h
 dosname          [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 fstat            [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+fstatat          [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 getcwd-lgpl      [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 openat           [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 openat-die       [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]

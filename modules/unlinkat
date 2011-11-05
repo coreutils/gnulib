@@ -15,6 +15,7 @@ errno
 extensions
 fchdir
 fcntl-h
+fstatat
 openat
 openat-die
 rmdir           [test $HAVE_UNLINKAT = 0]

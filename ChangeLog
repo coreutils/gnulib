@@ -1,3 +1,10 @@
+2011-11-04  Bruno Haible  <bruno@clisp.org>
+
+	fchownat, renameat, unlinkat: Fix dependencies.
+	* modules/fchownat (Depends-on): Add fstatat.
+	* modules/renameat (Depends-on): Likewise.
+	* modules/unlinkat (Depends-on): Likewise.
+
 2011-11-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	openat: remove direct dependency on dirent
