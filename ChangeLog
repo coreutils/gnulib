@@ -1,5 +1,12 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	ldexpl tests: Avoid test failure on MSVC 9.
+	* tests/test-ldexpl.c (main): Use a temporary variable for the expected
+	value. Needed in order to enforce the conversion from a value greater
+	than LDBL_MAX to Infinity.
+
+2011-11-05  Bruno Haible  <bruno@clisp.org>
+
 	New modules 'at-internal', 'openat-h', split off from module 'openat'.
 	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_OPENAT. Don't
 	invoke gl_PREREQ_OPENAT and gl_MODULE_INDICATOR.

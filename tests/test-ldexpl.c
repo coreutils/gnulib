@@ -94,7 +94,12 @@ main ()
   for (i = 1, x = 1.73205L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
     {
       y = ldexpl (x, 0); ASSERT (y == x);
-      y = ldexpl (x, 5); ASSERT (y == x * 32.0L);
+      {
+        volatile long double expected;
+        y = ldexpl (x, 5);
+        expected = x * 32.0L;
+        ASSERT (y == expected);
+      }
       y = ldexpl (x, -5); ASSERT (y == x * 0.03125L);
     }
   for (i = 1, x = 1.73205L; i >= LDBL_MIN_EXP; i--, x *= 0.5L)
