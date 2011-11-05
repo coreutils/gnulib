@@ -625,6 +625,16 @@ sc_prohibit_stddef_without_use:
 	re='\<($(_stddef_syms_re))\>'					\
 	  $(_sc_header_without_use)
 
+_de1 = dirfd|(close|(fd)?open|read|rewind|seek|tell)dir(64)?(_r)?
+_de2 = (versionsort|struct dirent|getdirentries|alphasort|scandir(at)?)(64)?
+_de3 = MAXNAMLEN|DIR|ino_t|d_ino|d_fileno|d_namlen
+_dirent_syms_re = $(_de1)|$(_de2)|$(_de3)
+# Prohibit the inclusion of dirent.h without an actual use.
+sc_prohibit_dirent_without_use:
+	h='dirent.h'							\
+	re='\<($(_dirent_syms_re))\>'					\
+	  $(_sc_header_without_use)
+
 # Prohibit the inclusion of verify.h without an actual use.
 sc_prohibit_verify_without_use:
 	@h='verify.h'							\

@@ -1,3 +1,8 @@
+2011-11-05  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: also prohibit inclusion of dirent.h without use
+	* top/maint.mk (sc_prohibit_dirent_without_use): New rule.
+
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
 	ldexpl tests: Avoid test failure on MSVC 9.
