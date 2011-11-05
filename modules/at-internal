@@ -1,0 +1,28 @@
+Description:
+Internal functions for dealing with files relative to a directory.
+
+Files:
+lib/openat-priv.h
+lib/openat-proc.c
+
+Depends-on:
+errno
+fcntl-h
+intprops
+open
+sys_stat
+unistd
+
+configure.ac:
+AC_LIBOBJ([openat-proc])
+
+Makefile.am:
+
+Include:
+"openat-priv.h"
+
+License:
+GPL
+
+Maintainer:
+Jim Meyering, Eric Blake

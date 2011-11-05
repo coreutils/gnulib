@@ -13,6 +13,8 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
 	New modules 'at-internal', 'openat-h', split off from module 'openat'.
+	* modules/at-internal: New file, extracted from modules/openat.
+	* modules/openat-h: New file.
 	* m4/openat.m4 (gl_FUNC_OPENAT): Don't set GNULIB_OPENAT. Don't
 	invoke gl_PREREQ_OPENAT and gl_MODULE_INDICATOR.
 	* modules/openat (Description): Add reference to POSIX function.
