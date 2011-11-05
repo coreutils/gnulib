@@ -42,6 +42,7 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 #include "openat.h"
 
 #include <stdarg.h>
+#include <stdbool.h>
 #include <stddef.h>
 #include <string.h>
 #include <sys/stat.h>
