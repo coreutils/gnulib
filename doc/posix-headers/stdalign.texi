@@ -39,7 +39,9 @@ at least 10.0.
 The Sun C 5.11 compiler sometimes mishandles the alignment of multiple
 external variables that are declared close together with
 @code{_Alignas}/@code{alignas}.  This compiler bug causes the Gnulib
-module @code{stdalign-tests} to fail.
+module @code{stdalign-tests} to fail.  The Sun Studio Developer Bug
+Report Review Team assigned the internal review ID 2125432 (dated
+2011-11-01) to this issue.
 @item
 @code{<stdalign.h>} must be #included before @samp{_Alignas} and
 @samp{_Alignof} can be used.

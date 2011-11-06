@@ -1,3 +1,7 @@
+2011-11-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* doc/posix-headers/stdalign.texi (stdalign.h): Mention Sun review ID.
+
 2011-11-06  Bruno Haible  <bruno@clisp.org>
 
 	copysignl: Fix result for zero argument on HP-UX 11 with HP C.
