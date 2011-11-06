@@ -1,5 +1,11 @@
 2011-11-06  Bruno Haible  <bruno@clisp.org>
 
+	Doc about floating-point and math API.
+	* doc/posix-headers/float.texi: Mention problem with FLT_ROUNDS.
+	* doc/posix-headers/math.texi: Mention problem with math_errhandling.
+
+2011-11-06  Bruno Haible  <bruno@clisp.org>
+
 	stdalign tests: Skip the test when compiled by Sun C.
 	* tests/test-stdalign.c (main): Skip the test on Sun C.
 

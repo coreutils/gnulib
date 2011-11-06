@@ -25,4 +25,8 @@ correctly.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The macro @code{FLT_ROUNDS} is a constant expression and does not represent
+the current rounding mode on some platforms:
+glibc 2.11, HP-UX 11, mingw.
 @end itemize
