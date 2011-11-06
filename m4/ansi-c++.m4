@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 8
+# ansi-c++.m4 serial 9
 dnl Copyright (C) 2002-2003, 2005, 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,7 +84,7 @@ AC_DEFUN([gl_PROG_ANSI_CXX],
     AC_LANG_POP([C++])
     AC_MSG_RESULT([$gl_cv_prog_ansicxx_works])
     if test $gl_cv_prog_ansicxx_works = no; then
-      CXX=:
+      CXX=no
     else
       dnl Test for namespaces.
       dnl We don't bother supporting pre-ANSI-C++ compilers.
@@ -105,7 +105,7 @@ EOF
       AC_LANG_POP([C++])
       AC_MSG_RESULT([$gl_cv_prog_ansicxx_namespaces])
       if test $gl_cv_prog_ansicxx_namespaces = no; then
-        CXX=:
+        CXX=no
       fi
     fi
   fi
