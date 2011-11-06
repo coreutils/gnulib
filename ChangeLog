@@ -1,5 +1,10 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fmaf'.
+	* modules/fmaf-tests: New file.
+	* tests/test-fmaf1.c: New file.
+	* tests/test-fmaf2.c: New file.
+
 	New module 'fmaf'.
 	* lib/math.in.h (fmaf): New declaration.
 	* lib/fmaf.c: New file.
