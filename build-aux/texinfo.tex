@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-10-19.08}
+\def\texinfoversion{2011-11-06.09}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -116,6 +116,7 @@
 % Set up fixed words for English if not already set.
 \ifx\putwordAppendix\undefined  \gdef\putwordAppendix{Appendix}\fi
 \ifx\putwordChapter\undefined   \gdef\putwordChapter{Chapter}\fi
+\ifx\putworderror\undefined     \gdef\putwordfile{error}\fi
 \ifx\putwordfile\undefined      \gdef\putwordfile{file}\fi
 \ifx\putwordin\undefined        \gdef\putwordin{in}\fi
 \ifx\putwordIndexIsEmpty\undefined       \gdef\putwordIndexIsEmpty{(Index is empty)}\fi
@@ -1194,29 +1195,31 @@ output) for that.)}
     \def\imagewidth{#2}\setbox0 = \hbox{\ignorespaces #2}%
     \def\imageheight{#3}\setbox2 = \hbox{\ignorespaces #3}%
     %
-    % pdftex (and the PDF format) support .png, .jpg, .pdf (among
-    % others).  Let's try in that order.
+    % pdftex (and the PDF format) support .pdf, .png, .jpg (among
+    % others).  Let's try in that order, PDF first since if
+    % someone has a scalable image, presumably better to use that than a
+    % bitmap.
     \let\pdfimgext=\empty
     \begingroup
-      \openin 1 #1.png \ifeof 1
-        \openin 1 #1.jpg \ifeof 1
-          \openin 1 #1.jpeg \ifeof 1
-            \openin 1 #1.JPG \ifeof 1
-              \openin 1 #1.pdf \ifeof 1
-                \openin 1 #1.PDF \ifeof 1
+      \openin 1 #1.pdf \ifeof 1
+        \openin 1 #1.PDF \ifeof 1
+          \openin 1 #1.png \ifeof 1
+            \openin 1 #1.jpg \ifeof 1
+              \openin 1 #1.jpeg \ifeof 1
+                \openin 1 #1.JPG \ifeof 1
                   \errhelp = \nopdfimagehelp
                   \errmessage{Could not find image file #1 for pdf}%
-                \else \gdef\pdfimgext{PDF}%
+                \else \gdef\pdfimgext{JPG}%
                 \fi
-              \else \gdef\pdfimgext{pdf}%
+              \else \gdef\pdfimgext{jpeg}%
               \fi
-            \else \gdef\pdfimgext{JPG}%
+            \else \gdef\pdfimgext{jpg}%
             \fi
-          \else \gdef\pdfimgext{jpeg}%
+          \else \gdef\pdfimgext{png}%
           \fi
-        \else \gdef\pdfimgext{jpg}%
+        \else \gdef\pdfimgext{PDF}%
         \fi
-      \else \gdef\pdfimgext{png}%
+      \else \gdef\pdfimgext{pdf}%
       \fi
       \closein 1
     \endgroup
@@ -2989,7 +2992,7 @@ end
 {\tentt \global\dimen0 = 3em}% Width of the box.
 \dimen2 = .55pt % Thickness of rules
 % The text. (`r' is open on the right, `e' somewhat less so on the left.)
-\setbox0 = \hbox{\kern-.75pt \reducedsf error\kern-1.5pt}
+\setbox0 = \hbox{\kern-.75pt \reducedsf \putworderror\kern-1.5pt}
 %
 \setbox\errorbox=\hbox to \dimen0{\hfil
    \hsize = \dimen0 \advance\hsize by -5.8pt % Space to left+right.
