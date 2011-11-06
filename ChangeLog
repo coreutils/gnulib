@@ -1,5 +1,12 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fma'.
+	* modules/fma-tests: New file.
+	* tests/test-fma1.c: New file.
+	* tests/test-fma1.h: New file.
+	* tests/test-fma2.c: New file.
+	* tests/test-fma2.h: New file.
+
 	New module 'fma'.
 	* lib/math.in.h (fma): New declaration.
 	* lib/fma.c: New file.
