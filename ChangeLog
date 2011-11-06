@@ -1,5 +1,10 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fmal'.
+	* modules/fmal-tests: New file.
+	* tests/test-fmal1.c: New file.
+	* tests/test-fmal2.c: New file.
+
 	New module 'fmal'.
 	* lib/math.in.h (fmal): New declaration.
 	* lib/fmal.c: New file.
