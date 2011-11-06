@@ -1,3 +1,10 @@
+2011-11-05  Bruno Haible  <bruno@clisp.org>
+
+	Extend gl_MATHFUNC.
+	* m4/mathfunc.m4 (gl_MATHFUNC): Accept an 4th parameter of INCLUDES.
+	Support 'void' as argument type.
+	* m4/rint.m4 (gl_FUNC_RINT): Update gl_MATHFUNC invocation.
+
 2011-11-05  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: also prohibit inclusion of dirent.h without use

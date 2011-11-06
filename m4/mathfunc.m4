@@ -1,11 +1,11 @@
-# mathfunc.m4 serial 9
+# mathfunc.m4 serial 10
 dnl Copyright (C) 2010-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-# gl_MATHFUNC(FUNC, RETTYPE, PARAMTYPES [, EXTRA-CODE])
-# -----------------------------------------------------
+# gl_MATHFUNC(FUNC, RETTYPE, PARAMTYPES [, INCLUDES] [, EXTRA-CODE])
+# ------------------------------------------------------------------
 # tests whether the function FUNC is available in libc or libm.
 # RETTYPE is the return type. PARAMTYPES is a parameter list, with parentheses.
 # It sets FUNC_LIBM to empty or "-lm" accordingly.
@@ -38,15 +38,17 @@ AC_DEFUN([gl_MATHFUNC],
                                     [m4_bpatsubst(
                                        [m4_bpatsubst(
                                           [m4_bpatsubst(
-                                             [$3],
-                                             [int \*], [&i_ret])],
-                                          [float \*], [&f_ret])],
-                                       [double \*], [&d_ret])],
-                                    [long double \*], [&l_ret])],
-                                 [int], [2])],
-                              [float], [1.618034f])],
-                           [long double], [1.618033988749894848L])],
-                        [double], [1.6180339887])])
+                                             [m4_bpatsubst(
+                                                [$3],
+                                                [int \*], [&i_ret])],
+                                             [float \*], [&f_ret])],
+                                          [double \*], [&d_ret])],
+                                       [long double \*], [&l_ret])],
+                                    [int], [2])],
+                                 [float], [1.618034f])],
+                              [long double], [1.618033988749894848L])],
+                           [double], [1.6180339887])],
+                        [void], [])])
   FUNC[]_LIBM=
   AC_CACHE_CHECK([whether func() can be used without linking with libm],
     [gl_cv_func_]func[_no_libm],
@@ -57,13 +59,14 @@ AC_DEFUN([gl_MATHFUNC],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             $4
              $2 (*funcptr) $3 = ]func[;
              int i_ret;
              float f_ret;
              double d_ret;
              long double l_ret;]],
            [[$2 y = funcptr ]ARGS[ + ]func[ ]ARGS[;
-             $4
+             $5
              return y < 0.3 || y > 1.7;
            ]])],
         [gl_cv_func_]func[_no_libm=yes],
@@ -81,13 +84,14 @@ AC_DEFUN([gl_MATHFUNC],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
+               $4
                $2 (*funcptr) $3 = ]func[;
                int i_ret;
                float f_ret;
                double d_ret;
                long double l_ret;]],
              [[$2 y = funcptr ]ARGS[ + ]func[ ]ARGS[;
-               $4
+               $5
                return y < 0.3 || y > 1.7;
              ]])],
           [gl_cv_func_]func[_in_libm=yes],
