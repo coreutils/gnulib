@@ -1,5 +1,13 @@
 2011-11-06  Bruno Haible  <bruno@clisp.org>
 
+	copysignl: Fix result for zero argument on HP-UX 11 with HP C.
+	* lib/copysignl.c (compute_minus_zerol) [HP-UX]: New function.
+	(minus_zerol) [HP-UX]: New macro.
+	(unary_minus) [HP-UX]: New function.
+	(copysignl) [HP-UX]: Use unary_minus function.
+
+2011-11-06  Bruno Haible  <bruno@clisp.org>
+
 	ldexp, ldexpf, ldexpl: Enhance tests.
 	* tests/test-ldexp.h: New file, combining code from tests/test-ldexp.c
 	and tests/test-ldexpl.c.

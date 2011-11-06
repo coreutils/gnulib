@@ -29,10 +29,44 @@ copysignl (long double x, long double y)
 
 #else
 
+# if defined __hpux && !defined __GNUC__
+
+#  include <float.h>
+
+/* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0L.  */
+static long double
+compute_minus_zerol (void)
+{
+  return -LDBL_MIN * LDBL_MIN;
+}
+#  define minus_zerol compute_minus_zerol ()
+
+/* HP cc on HP-UX 11 has a bug: When x is a positive zero, - x comes out
+   as a positive zero, rather than as a minus zero.  Work around it.  */
+static long double
+unary_minus (long double x)
+{
+  if (x == 0.0L)
+    {
+      if (signbit (x))
+        return 0.0L;
+      else
+        return minus_zerol;
+    }
+  else
+    return - x;
+}
+
+# endif
+
 long double
 copysignl (long double x, long double y)
 {
+# if defined __hpux && !defined __GNUC__
+  return (signbit (x) != signbit (y) ? unary_minus (x) : x);
+# else
   return (signbit (x) != signbit (y) ? - x : x);
+# endif
 }
 
 #endif
