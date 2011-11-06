@@ -1,5 +1,36 @@
 2011-11-06  Bruno Haible  <bruno@clisp.org>
 
+	ldexp, ldexpf, ldexpl: Enhance tests.
+	* tests/test-ldexp.h: New file, combining code from tests/test-ldexp.c
+	and tests/test-ldexpl.c.
+	* tests/test-ldexpl.c: (DOUBLE, ISNAN, INFINITY, NAN, L_, MINUS_ZERO,
+	LDEXP, MIN_EXP, MAX_EXP): New macros.
+	Include test-ldexp.h.
+	(main): Just call test_function.
+	* tests/test-ldexp.c: Include float.h, isnand-nolibm.h, minus-zero.h,
+	infinity.h, nan.h.
+	(DOUBLE, ISNAN, INFINITY, NAN, L_, MINUS_ZERO, LDEXP, MIN_EXP,
+	MAX_EXP): New macros.
+	Include test-ldexp.h.
+	(x, y): Remove variables.
+	(main): Just call test_function.
+	* tests/test-ldexpf.c: Include float.h, isnanf-nolibm.h, minus-zero.h,
+	infinity.h, nan.h.
+	(DOUBLE, ISNAN, INFINITY, NAN, L_, MINUS_ZERO, LDEXP, MIN_EXP,
+	MAX_EXP): New macros.
+	Include test-ldexp.h.
+	(x, y): Remove variables.
+	(main): Just call test_function.
+	* modules/ldexpl-tests (Files): Add tests/test-ldexp.h.
+	* modules/ldexp-tests (Files): Add tests/test-ldexp.h,
+	tests/minus-zero.h, tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnand-nolibm, signbit, float.
+	* modules/ldexpf-tests (Files): Add tests/test-ldexp.h,
+	tests/minus-zero.h, tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnanf-nolibm, signbit, float.
+
+2011-11-06  Bruno Haible  <bruno@clisp.org>
+
 	math tests: Cosmetics.
 	* tests/test-math-c++.cc: Reorder declarations.
 

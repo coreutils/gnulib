@@ -1,5 +1,5 @@
 /* Test of ldexp() function.
-   Copyright (C) 2010-2011 Free Software Foundation, Inc.
+   Copyright (C) 2007-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Bruno Haible <bruno@clisp.org>, 2010.  */
+/* Written by Bruno Haible <bruno@clisp.org>, 2007, 2010.  */
 
 #include <config.h>
 
@@ -23,26 +23,32 @@
 #include "signature.h"
 SIGNATURE_CHECK (ldexp, double, (double, int));
 
+#include <float.h>
+
+#include "isnand-nolibm.h"
+#include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
 #include "macros.h"
 
-volatile double x;
-double y;
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE double
+#define ISNAN isnand
+#define INFINITY Infinityd ()
+#define NAN NaNd ()
+#define L_(literal) literal
+#define MINUS_ZERO minus_zerod
+#define LDEXP ldexp
+#define MIN_EXP DBL_MIN_EXP
+#define MAX_EXP DBL_MAX_EXP
+#include "test-ldexp.h"
 
 int
 main ()
 {
-  /* A particular value.  */
-  x = 0.6;
-  y = ldexp (x, 0);
-  ASSERT (y >= 0.5999999999 && y <= 0.6000000001);
-
-  x = 0.6;
-  y = ldexp (x, 1);
-  ASSERT (y >= 1.199999999 && y <= 1.200000001);
-
-  x = 0.6;
-  y = ldexp (x, -1);
-  ASSERT (y >= 0.2999999999 && y <= 0.3000000001);
+  test_function ();
 
   return 0;
 }

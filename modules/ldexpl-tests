@@ -1,5 +1,6 @@
 Files:
 tests/test-ldexpl.c
+tests/test-ldexp.h
 tests/minus-zero.h
 tests/infinity.h
 tests/nan.h

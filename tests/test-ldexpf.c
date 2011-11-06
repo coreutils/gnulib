@@ -1,5 +1,5 @@
 /* Test of ldexpf() function.
-   Copyright (C) 2010-2011 Free Software Foundation, Inc.
+   Copyright (C) 2007-2011 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Written by Bruno Haible <bruno@clisp.org>, 2010.  */
+/* Written by Bruno Haible <bruno@clisp.org>, 2007, 2010.  */
 
 #include <config.h>
 
@@ -23,26 +23,32 @@
 #include "signature.h"
 SIGNATURE_CHECK (ldexpf, float, (float, int));
 
+#include <float.h>
+
+#include "isnanf-nolibm.h"
+#include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
 #include "macros.h"
 
-volatile float x;
-float y;
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE float
+#define ISNAN isnanf
+#define INFINITY Infinityf ()
+#define NAN NaNf ()
+#define L_(literal) literal##f
+#define MINUS_ZERO minus_zerof
+#define LDEXP ldexpf
+#define MIN_EXP FLT_MIN_EXP
+#define MAX_EXP FLT_MAX_EXP
+#include "test-ldexp.h"
 
 int
 main ()
 {
-  /* A particular value.  */
-  x = 0.6f;
-  y = ldexp (x, 0);
-  ASSERT (y >= 0.59999999f && y <= 0.60000001f);
-
-  x = 0.6f;
-  y = ldexp (x, 1);
-  ASSERT (y >= 1.1999999f && y <= 1.2000001f);
-
-  x = 0.6f;
-  y = ldexp (x, -1);
-  ASSERT (y >= 0.29999999f && y <= 0.30000001f);
+  test_function ();
 
   return 0;
 }

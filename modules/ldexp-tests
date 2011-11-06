@@ -1,9 +1,16 @@
 Files:
 tests/test-ldexp.c
+tests/test-ldexp.h
+tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
 tests/signature.h
 tests/macros.h
 
 Depends-on:
+isnand-nolibm
+signbit
+float
 
 configure.ac:
 
