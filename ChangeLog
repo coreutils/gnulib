@@ -1,5 +1,10 @@
 2011-11-06  Bruno Haible  <bruno@clisp.org>
 
+	stdalign tests: Skip the test when compiled by Sun C.
+	* tests/test-stdalign.c (main): Skip the test on Sun C.
+
+2011-11-06  Bruno Haible  <bruno@clisp.org>
+
 	ansi-c++-opt: Complete the 2011-06-05 change.
 	* m4/ansi-c++.m4 (gl_PROG_ANSI_CXX): When a C++ compiler is found but
 	does not support namespaces, set the variable to "no", not to ":".

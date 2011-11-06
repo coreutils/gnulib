@@ -80,6 +80,11 @@ CHECK_STATIC (struct4);
 int
 main ()
 {
+#if defined __SUNPRO_C
+  /* Avoid a test failure due to Sun Studio Developer Bug Report #2125432.  */
+  fputs ("Skipping test: known Sun C compiler bug\n", stderr);
+  return 77;
+#else
   CHECK_ALIGNED (static_char_alignas);
   CHECK_ALIGNED (static_char_Alignas);
   CHECK_ALIGNED (static_short_alignas);
@@ -88,10 +93,10 @@ main ()
   CHECK_ALIGNED (static_int_Alignas);
   CHECK_ALIGNED (static_long_alignas);
   CHECK_ALIGNED (static_long_Alignas);
-#ifdef INT64_MAX
+# ifdef INT64_MAX
   CHECK_ALIGNED (static_int64_t_alignas);
   CHECK_ALIGNED (static_int64_t_Alignas);
-#endif
+# endif
   CHECK_ALIGNED (static_float_alignas);
   CHECK_ALIGNED (static_float_Alignas);
   CHECK_ALIGNED (static_double_alignas);
@@ -107,4 +112,5 @@ main ()
   CHECK_ALIGNED (static_struct4_alignas);
   CHECK_ALIGNED (static_struct4_Alignas);
   return 0;
+#endif
 }
