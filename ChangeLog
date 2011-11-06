@@ -1,5 +1,9 @@
 2011-11-05  Bruno Haible  <bruno@clisp.org>
 
+	fma*: Simplify test.
+	* tests/test-fma2.h (FORGIVE_GLIBC_BUG): Remove macro.
+	(test_function): Remove all if (FORGIVE_GLIBC_BUG) statements.
+
 	Tests for module 'fmal'.
 	* modules/fmal-tests: New file.
 	* tests/test-fmal1.c: New file.

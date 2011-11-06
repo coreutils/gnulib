@@ -25,15 +25,6 @@
 #define XE_RANGE 0
 #define YE_RANGE 0
 
-/* Define to 1 if you want to allow the behaviour of the glibc 2.11 fma()
-   implementation.  glibc bug #1..#16 refer to the test cases in
-   <http://sourceware.org/bugzilla/show_bug.cgi?id=13304>.  */
-#if __GLIBC__ >= 2 && 0
-# define FORGIVE_GLIBC_BUG 1
-#else
-# define FORGIVE_GLIBC_BUG 0
-#endif
-
 /* Define to 1 if you want to allow the behaviour of the 'double-double'
    implementation of 'long double' (seen on IRIX 6.5 and Linux/PowerPC).
    This floating-point type does not follow IEEE 754.  */
@@ -181,14 +172,10 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                               sign * (POW2 (xe + ye)
                                       + POW2 (xe + ye - i + 1));
                           else if (2 * i == MANT_BIT)
-                            {
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #7 */
-                                goto skip1;
-                              expected =
-                                sign * (POW2 (xe + ye)
-                                        + POW2 (xe + ye - i + 1)
-                                        + POW2 (xe + ye - MANT_BIT + 1));
-                            }
+                            expected =
+                              sign * (POW2 (xe + ye)
+                                      + POW2 (xe + ye - i + 1)
+                                      + POW2 (xe + ye - MANT_BIT + 1));
                           else
                             expected =
                               sign * (POW2 (xe + ye)
@@ -198,14 +185,10 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                       else if (xe + ye == ze + MANT_BIT)
                         {
                           if (2 * i >= MANT_BIT)
-                            {
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #8 */
-                                goto skip1;
-                              expected =
-                                sign * (POW2 (xe + ye)
-                                        + POW2 (xe + ye - i + 1)
-                                        + POW2 (xe + ye - MANT_BIT + 1));
-                            }
+                            expected =
+                              sign * (POW2 (xe + ye)
+                                      + POW2 (xe + ye - i + 1)
+                                      + POW2 (xe + ye - MANT_BIT + 1));
                           else if (2 * i == MANT_BIT - 1)
                             /* round-to-even rounds up */
                             expected =
@@ -219,16 +202,11 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                                       + POW2 (xe + ye - 2 * i));
                         }
                       else if (xe + ye > ze - MANT_BIT + 2 * i)
-                        {
-                          if (2 * i == MANT_BIT)
-                            if (FORGIVE_GLIBC_BUG) /* glibc bug #9 */
-                              goto skip1;
-                          expected =
-                            sign * (POW2 (ze)
-                                    + POW2 (xe + ye)
-                                    + POW2 (xe + ye - i + 1)
-                                    + POW2 (xe + ye - 2 * i));
-                        }
+                        expected =
+                          sign * (POW2 (ze)
+                                  + POW2 (xe + ye)
+                                  + POW2 (xe + ye - i + 1)
+                                  + POW2 (xe + ye - 2 * i));
                       else if (xe + ye >= ze - MANT_BIT + i)
                         expected =
                           sign * (POW2 (ze)
@@ -236,9 +214,6 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                                   + POW2 (xe + ye - i + 1));
                       else if (xe + ye == ze - MANT_BIT + i - 1)
                         {
-                          if (2 * i >= MANT_BIT)
-                            if (FORGIVE_GLIBC_BUG) /* glibc bug #3, #10 */
-                              goto skip1;
                           if (i == 1)
                             expected =
                               sign * (POW2 (ze) + POW2 (ze - MANT_BIT + 1));
@@ -256,12 +231,8 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                       else if (xe + ye == ze - MANT_BIT - 1)
                         {
                           if (i == 1)
-                            {
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #1 */
-                                goto skip1;
-                              expected =
-                                sign * (POW2 (ze) + POW2 (ze - MANT_BIT + 1));
-                            }
+                            expected =
+                              sign * (POW2 (ze) + POW2 (ze - MANT_BIT + 1));
                           else
                             expected = z;
                         }
@@ -299,9 +270,6 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                         if (xe + ye == ze)
                           {
                             /* maximal extinction */
-                            if (2 * i >= MANT_BIT)
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #12 */
-                                goto skip2;
                             expected =
                               sign * (POW2 (xe + ye - i + 1)
                                       + POW2 (xe + ye - 2 * i));
@@ -314,15 +282,10 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                                 sign * (- POW2 (xe + ye)
                                         + POW2 (xe + ye - i + 1));
                             else
-                              {
-                                if (2 * i == MANT_BIT)
-                                  if (FORGIVE_GLIBC_BUG) /* glibc bug #13 */
-                                    goto skip2;
-                                expected =
-                                  sign * (- POW2 (xe + ye)
-                                          + POW2 (xe + ye - i + 1)
-                                          + POW2 (xe + ye - 2 * i));
-                              }
+                              expected =
+                                sign * (- POW2 (xe + ye)
+                                        + POW2 (xe + ye - i + 1)
+                                        + POW2 (xe + ye - 2 * i));
                           }
                         else if (xe + ye > ze + MANT_BIT)
                           {
@@ -355,43 +318,29 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                                         + POW2 (xe + ye - 2 * i));
                           }
                         else if (xe + ye >= ze - MANT_BIT + 2 * i)
-                          {
-                            if (2 * i == MANT_BIT)
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #11 */
-                                goto skip2;
-                            expected =
-                              sign * (- POW2 (ze)
-                                      + POW2 (xe + ye)
-                                      + POW2 (xe + ye - i + 1)
-                                      + POW2 (xe + ye - 2 * i));
-                          }
+                          expected =
+                            sign * (- POW2 (ze)
+                                    + POW2 (xe + ye)
+                                    + POW2 (xe + ye - i + 1)
+                                    + POW2 (xe + ye - 2 * i));
                         else if (xe + ye >= ze - MANT_BIT + i - 1)
                           expected =
                             sign * (- POW2 (ze)
                                     + POW2 (xe + ye)
                                     + POW2 (xe + ye - i + 1));
                         else if (xe + ye == ze - MANT_BIT + i - 2)
-                          {
-                            if (2 * i >= MANT_BIT)
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #4, #14 */
-                                goto skip2;
-                            expected =
-                              sign * (- POW2 (ze)
-                                      + POW2 (xe + ye)
-                                      + POW2 (ze - MANT_BIT));
-                          }
+                          expected =
+                            sign * (- POW2 (ze)
+                                    + POW2 (xe + ye)
+                                    + POW2 (ze - MANT_BIT));
                         else if (xe + ye >= ze - MANT_BIT)
                           expected =
                             sign * (- POW2 (ze)
                                     + POW2 (xe + ye));
                         else if (xe + ye == ze - MANT_BIT - 1)
-                          {
-                            if (FORGIVE_GLIBC_BUG) /* glibc bug #2 */
-                              goto skip2;
-                            expected =
-                              sign * (- POW2 (ze)
-                                      + POW2 (ze - MANT_BIT));
-                          }
+                          expected =
+                            sign * (- POW2 (ze)
+                                    + POW2 (ze - MANT_BIT));
                         else
                           expected = z;
                         ASSERT (result == expected);
@@ -510,9 +459,6 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                         if (xe + ye == ze)
                           {
                             /* maximal extinction */
-                            if (2 * i > MANT_BIT)
-                              if (FORGIVE_GLIBC_BUG) /* glibc bug #16 */
-                                goto skip4;
                             expected = sign * - POW2 (xe + ye - 2 * i);
                           }
                         else if (xe + ye > ze + MANT_BIT + 1)
@@ -520,13 +466,9 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                             if (2 * i > MANT_BIT + 1)
                               expected = sign * POW2 (xe + ye);
                             else if (2 * i == MANT_BIT + 1)
-                              {
-                                if (FORGIVE_GLIBC_BUG) /* glibc bug #6 */
-                                  goto skip4;
-                                expected =
-                                  sign * (POW2 (xe + ye)
-                                          - POW2 (xe + ye - MANT_BIT));
-                              }
+                              expected =
+                                sign * (POW2 (xe + ye)
+                                        - POW2 (xe + ye - MANT_BIT));
                             else
                               expected =
                                 sign * (POW2 (xe + ye)
@@ -535,13 +477,9 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                         else if (xe + ye == ze + MANT_BIT + 1)
                           {
                             if (2 * i > MANT_BIT)
-                              {
-                                if (FORGIVE_GLIBC_BUG) /* glibc bug #15 */
-                                  goto skip4;
-                                expected =
-                                  sign * (POW2 (xe + ye)
-                                          - POW2 (xe + ye - MANT_BIT));
-                              }
+                              expected =
+                                sign * (POW2 (xe + ye)
+                                        - POW2 (xe + ye - MANT_BIT));
                             else if (2 * i == MANT_BIT)
                               expected =
                                 sign * (POW2 (xe + ye)
@@ -583,14 +521,8 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
                             sign * (- POW2 (ze)
                                     + POW2 (xe + ye)
                                     - POW2 (xe + ye - 2 * i));
-                        else if (xe + ye > ze - MANT_BIT)
+                        else if (xe + ye >= ze - MANT_BIT)
                           expected = sign * (- POW2 (ze) + POW2 (xe + ye));
-                        else if (xe + ye == ze - MANT_BIT)
-                          {
-                            if (FORGIVE_GLIBC_BUG) /* glibc bug #5 */
-                              goto skip4;
-                            expected = sign * (- POW2 (ze) + POW2 (xe + ye));
-                          }
                         else
                           expected = z;
                         ASSERT (result == expected);
