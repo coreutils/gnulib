@@ -247,7 +247,7 @@ _GL_CXXALIASWARN (grantpt);
 #elif defined GNULIB_POSIXCHECK
 # undef grantpt
 # if HAVE_RAW_DECL_GRANTPT
-_GL_WARN_ON_USE (ptsname, "grantpt is not portable - "
+_GL_WARN_ON_USE (grantpt, "grantpt is not portable - "
                  "use gnulib module grantpt for portability");
 # endif
 #endif

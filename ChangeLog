@@ -1,5 +1,8 @@
 2011-11-07  Eric Blake  <eblake@redhat.com>
 
+	grantpt: fix typo
+	* lib/stdlib.in.h (grantpt): Check correct function.
+
 	maint.mk: silence new syntax check
 	* top/maint.mk (sc_prohibit_dirent_without_use): Add missing @.
 
