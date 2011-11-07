@@ -1,3 +1,19 @@
+2011-11-09  Eric Blake  <eblake@redhat.com>
+
+	ptsname_r: new module
+	* modules/ptsname_r: New module.
+	* m4/ptsname_r.m4 (gl_FUNC_PTSNAME_R): New file.
+	* lib/ptsname.c (__ptsname_r): Split...
+	* lib/ptsname_r.c: ...into new file.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check for decl.
+	(gl_STDLIB_H_DEFAULTS): Set witness defaults.
+	* modules/stdlib (Makefile.am): Substitute witnesses.
+	* lib/stdlib.in.h (ptsname_r): Declare it.
+	* doc/glibc-functions/ptsname_r.texi (ptsname_r): Document it.
+	* MODULES.html.sh (Misc): Likewise.
+	* modules/ptsname (Depends-on): Alter dependency.
+	* doc/posix-functions/ptsname.texi (ptsname): Mention new module.
+
 2011-11-09  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: be more concise when there's only one URL+tarball

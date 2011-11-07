@@ -18,30 +18,6 @@
 
 #include <stdlib.h>
 
-#include <errno.h>
-#include <string.h>
-#include <sys/stat.h>
-#include <unistd.h>
-
-#ifdef _LIBC
-# include <paths.h>
-#else
-# ifndef _PATH_TTY
-#  define _PATH_TTY "/dev/tty"
-# endif
-# ifndef _PATH_DEV
-#  define _PATH_DEV "/dev/"
-# endif
-
-# define __set_errno(e) errno = (e)
-# define __isatty isatty
-# define __stat stat
-# define __ttyname_r ttyname_r
-
-static int __ptsname_r (int fd, char *buf, size_t buflen);
-#endif
-
-
 /* Static buffer for `ptsname'.  */
 static char buffer[64];
 
@@ -52,48 +28,5 @@ static char buffer[64];
 char *
 ptsname (int fd)
 {
-  return __ptsname_r (fd, buffer, sizeof (buffer)) != 0 ? NULL : buffer;
-}
-
-
-/* Store at most BUFLEN characters of the pathname of the slave pseudo
-   terminal associated with the master FD is open on in BUF.
-   Return 0 on success, otherwise an error number.  */
-static int
-__ptsname_r (int fd, char *buf, size_t buflen)
-{
-  int save_errno = errno;
-  int err;
-  struct stat st;
-
-  if (buf == NULL)
-    {
-      __set_errno (EINVAL);
-      return EINVAL;
-    }
-
-  if (!__isatty (fd))
-    /* We rely on isatty to set errno properly (i.e. EBADF or ENOTTY).  */
-    return errno;
-
-  if (buflen < strlen (_PATH_TTY) + 3)
-    {
-      __set_errno (ERANGE);
-      return ERANGE;
-    }
-
-  err = __ttyname_r (fd, buf, buflen);
-  if (err != 0)
-    {
-      __set_errno (err);
-      return errno;
-    }
-
-  buf[sizeof (_PATH_DEV) - 1] = 't';
-
-  if (__stat (buf, &st) < 0)
-    return errno;
-
-  __set_errno (save_errno);
-  return 0;
+  return ptsname_r (fd, buffer, sizeof (buffer)) != 0 ? NULL : buffer;
 }

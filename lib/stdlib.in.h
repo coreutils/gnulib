@@ -455,6 +455,23 @@ _GL_WARN_ON_USE (ptsname, "ptsname is not portable - "
 # endif
 #endif
 
+#if @GNULIB_PTSNAME_R@
+/* Set the pathname of the pseudo-terminal slave associated with
+   the master FD is open on and return 0, or set errno and return
+   non-zero on errors.  */
+# if !@HAVE_PTSNAME_R@
+_GL_FUNCDECL_SYS (ptsname_r, int, (int fd, char *buf, size_t len));
+# endif
+_GL_CXXALIAS_SYS (ptsname_r, int, (int fd, char *buf, size_t len));
+_GL_CXXALIASWARN (ptsname_r);
+#elif defined GNULIB_POSIXCHECK
+# undef ptsname_r
+# if HAVE_RAW_DECL_PTSNAME_R
+_GL_WARN_ON_USE (ptsname_r, "ptsname_r is not portable - "
+                 "use gnulib module ptsname_r for portability");
+# endif
+#endif
+
 #if @GNULIB_PUTENV@
 # if @REPLACE_PUTENV@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

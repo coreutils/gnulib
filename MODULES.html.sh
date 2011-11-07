@@ -3447,6 +3447,7 @@ func_all_modules ()
   func_module physmem
   func_module posixver
   func_module progname
+  func_module ptsname_r
   func_module pty
   func_module quotearg
   func_module quote
