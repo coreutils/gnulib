@@ -1,5 +1,9 @@
 2011-11-09  Eric Blake  <eblake@redhat.com>
 
+	ptsname_r-tests: new test module
+	* modules/ptsname_r-tests: New module.
+	* tests/test-ptsname_r.c: New file.
+
 	ptsname_r: new module
 	* modules/ptsname_r: New module.
 	* m4/ptsname_r.m4 (gl_FUNC_PTSNAME_R): New file.
