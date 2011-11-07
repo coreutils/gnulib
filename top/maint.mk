@@ -631,7 +631,7 @@ _de3 = MAXNAMLEN|DIR|ino_t|d_ino|d_fileno|d_namlen
 _dirent_syms_re = $(_de1)|$(_de2)|$(_de3)
 # Prohibit the inclusion of dirent.h without an actual use.
 sc_prohibit_dirent_without_use:
-	h='dirent.h'							\
+	@h='dirent.h'							\
 	re='\<($(_dirent_syms_re))\>'					\
 	  $(_sc_header_without_use)
 
