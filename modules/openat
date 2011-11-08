@@ -9,20 +9,20 @@ m4/openat.m4
 m4/mode_t.m4
 
 Depends-on:
-at-internal
-dosname
-errno
-extensions
-fchdir
 fcntl-h
-fstat
+extensions
 largefile
-open
-openat-die
-openat-h
-save-cwd
-stdbool
-sys_stat
+openat-h        [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
+stdbool         [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
+sys_stat        [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
+fstat           [test $REPLACE_OPENAT = 1]
+at-internal     [test $HAVE_OPENAT = 0]
+dosname         [test $HAVE_OPENAT = 0]
+errno           [test $HAVE_OPENAT = 0]
+fchdir          [test $HAVE_OPENAT = 0]
+open            [test $HAVE_OPENAT = 0]
+openat-die      [test $HAVE_OPENAT = 0]
+save-cwd        [test $HAVE_OPENAT = 0]
 
 configure.ac:
 gl_FUNC_OPENAT

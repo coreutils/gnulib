@@ -1,3 +1,9 @@
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
+	openat: Conditionalize dependencies.
+	* lib/openat.c: Reduce the scope of some #includes.
+	* modules/openat (Depends-on): Add conditions.
+
 2011-11-07  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: extract GPG key ID without using a temporary file

@@ -47,10 +47,6 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 #include <string.h>
 #include <sys/stat.h>
 
-#include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
-#include "openat-priv.h"
-#include "save-cwd.h"
-
 #if HAVE_OPENAT
 
 /* Like openat, but work around Solaris 9 bugs with trailing slash.  */
@@ -143,6 +139,10 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
 }
 
 #else /* !HAVE_OPENAT */
+
+# include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+# include "openat-priv.h"
+# include "save-cwd.h"
 
 /* Replacement for Solaris' openat function.
    <http://www.google.com/search?q=openat+site:docs.sun.com>
