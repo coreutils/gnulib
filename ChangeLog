@@ -1,3 +1,10 @@
+2011-11-07  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: extract GPG key ID without using a temporary file
+	* top/maint.mk (gpg_key_ID): Extract GPG key ID from signed tag, but
+	without using a temporary file.  Based on a suggestion from Werner Koch
+	in http://thread.gmane.org/gmane.comp.encryption.gpg.devel/16496
+
 2011-11-07  Eric Blake  <eblake@redhat.com>
 
 	grantpt: fix typo
