@@ -1,3 +1,8 @@
+2011-11-08  Simon Josefsson  <simon@josefsson.org>
+
+	GNUmakefile: behave when Makefile is missing.
+	* top/GNUmakefile: Always initialize _build-aux and _autoreconf.
+
 2011-11-08  Bruno Haible  <bruno@clisp.org>
 
 	openat: Conditionalize dependencies.

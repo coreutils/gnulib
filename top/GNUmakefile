@@ -101,6 +101,11 @@ srcdir = .
 
 # The package can override .DEFAULT_GOAL to run actions like autoreconf.
 -include ./cfg.mk
+
+# Allow cfg.mk to override these.
+_build-aux ?= build-aux
+_autoreconf ?= autoreconf -v
+
 include ./maint.mk
 
 ifeq ($(.DEFAULT_GOAL),abort-due-to-no-makefile)
