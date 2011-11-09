@@ -1,5 +1,9 @@
 2011-11-09  Eric Blake  <eblake@redhat.com>
 
+	openpty: provide a stub on mingw
+	* lib/pty.in.h (includes): Provide forward declarations.
+	* lib/openpty.c (openpty) [mingw]: Provide ENOSYS stub.
+
 	raise: fix mingw handling of SIGPIPE
 	* lib/sigprocmask.c (_gl_raise_SIGPIPE): Provide a return value.
 
