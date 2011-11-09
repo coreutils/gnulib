@@ -1,3 +1,10 @@
+2011-11-09  Bruno Haible  <bruno@clisp.org>
+
+	Improve MODULES.html output.
+	* modules/mkfifoat (Description): Use the word "function".
+	* modules/readlinkat (Description): Likewise.
+	* modules/symlinkat (Description): Likewise.
+
 2011-11-09  Eric Blake  <eblake@redhat.com>
 
 	ptsname_r-tests: new test module

@@ -1,5 +1,5 @@
 Description:
-readlinkat(): read symlinks relative to a directory
+readlinkat() function: read symlinks relative to a directory
 
 Files:
 lib/readlinkat.c

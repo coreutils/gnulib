@@ -1,5 +1,6 @@
 Description:
-mkfifoat() and mknodat(): create named FIFOs relative to a directory
+mkfifoat() function and mknodat() function: create named FIFOs relative to a
+directory
 
 Files:
 lib/mkfifoat.c

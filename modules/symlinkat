@@ -1,5 +1,5 @@
 Description:
-symlinkat(): create symlinks relative to a directory
+symlinkat() function: create symlinks relative to a directory
 
 Files:
 lib/symlinkat.c
