@@ -1,5 +1,10 @@
 2011-11-08  Bruno Haible  <bruno@clisp.org>
 
+	renameat: Fix dependencies.
+	* modules/renameat (Depends-on): Add stdbool.
+
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
 	mkfifoat: Fix module description.
 	* modules/mkfifoat (configure.ac): Invoke gl_SYS_STAT_MODULE_INDICATOR,
 	not gl_UNISTD_MODULE_INDICATOR.
