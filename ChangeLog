@@ -1,3 +1,11 @@
+2011-11-09  Jim Meyering  <meyering@redhat.com>
+
+	announce-gen: be more concise when there's only one URL+tarball
+	* build-aux/announce-gen (get_tool_versions): When you distribute
+	only one type of tarball, combine the first two "Here are..."
+	sections and make the key-checking grammar independent of
+	how many tarballs there are.
+
 2011-11-09  Eric Blake  <eblake@redhat.com>
 
 	openpty: provide a stub on mingw

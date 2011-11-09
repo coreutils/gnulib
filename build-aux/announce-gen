@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2011-05-17 20:25'; # UTC
+my $VERSION = '2011-11-09 21:30'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -453,28 +453,50 @@ FIXME: put comments here
 
 EOF
 
-  print_locations ("compressed sources", @url_dir_list, %size, @tarballs);
-  -f $xd
-    and print_locations ("xdelta diffs (useful? if so, "
-                         . "please tell bug-gnulib\@gnu.org)",
-                         @url_dir_list, %size, $xd);
-  my @sig_files = map { "$_.sig" } @tarballs;
-  print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
-                   @sig_files);
+  if (@url_dir_list == 1 && @tarballs == 1)
+    {
+      # When there's only one tarball and one URL, use a more concise form.
+      my $m = "$url_dir_list[0]/$tarballs[0]";
+      print "Here are the compressed sources and a GPG detached signature[*]:\n"
+        . "  $m\n"
+        . "  $m.sig\n\n";
+    }
+  else
+    {
+      print_locations ("compressed sources", @url_dir_list, %size, @tarballs);
+      -f $xd
+        and print_locations ("xdelta diffs (useful? if so, "
+                             . "please tell bug-gnulib\@gnu.org)",
+                             @url_dir_list, %size, $xd);
+      my @sig_files = map { "$_.sig" } @tarballs;
+      print_locations ("GPG detached signatures[*]", @url_dir_list, %size,
+                       @sig_files);
+    }
+
   if ($url_dir_list[0] =~ "gnu\.org")
     {
-      print "To reduce load on the main server, use a mirror listed at:\n";
-      print "  http://www.gnu.org/order/ftp.html\n\n";
+      print "Use a mirror for higher download bandwidth:\n";
+      if (@tarballs == 1 && $url_dir_list[0] =~ m!http://ftp\.gnu\.org/gnu/!)
+        {
+          (my $m = "$url_dir_list[0]/$tarballs[0]")
+            =~ s!http://ftp\.gnu\.org/gnu/!http://ftpmirror\.gnu\.org/!;
+          print "  $m\n"
+              . "  $m.sig\n\n";
+
+        }
+      else
+        {
+          print "  http://www.gnu.org/order/ftp.html\n\n";
+        }
     }
 
   $print_checksums_p
     and print_checksums (@sizable);
 
   print <<EOF;
-[*] You can use either of the above signature files to verify that
-the corresponding file (without the .sig suffix) is intact.  First,
-be sure to download both the .sig file and the corresponding tarball.
-Then, run a command like this:
+[*] Use a .sig file to verify that the corresponding file (without the
+.sig suffix) is intact.  First, be sure to download both the .sig file
+and the corresponding tarball.  Then, run a command like this:
 
   gpg --verify $tarballs[0].sig
 
