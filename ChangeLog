@@ -1,5 +1,11 @@
 2011-11-08  Bruno Haible  <bruno@clisp.org>
 
+	faccessat: Simplify autoconf macro.
+	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Don't require gl_FUNC_OPENAT,
+	gl_FUNC_EUIDACCESS.
+
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
 	renameat: Fix dependencies.
 	* modules/renameat (Depends-on): Add stdbool.
 
