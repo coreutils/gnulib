@@ -8,16 +8,17 @@ lib/openat-priv.h
 m4/mkdirat.m4
 
 Depends-on:
-at-internal
-dosname
-errno
+sys_stat
 extensions
-fchdir
+at-internal     [test $HAVE_MKDIRAT = 0]
+dosname         [test $HAVE_MKDIRAT = 0]
+errno           [test $HAVE_MKDIRAT = 0]
+fchdir          [test $HAVE_MKDIRAT = 0]
 mkdir           [test $HAVE_MKDIRAT = 0]
-openat-die
-openat-h
-save-cwd
-unistd
+openat-die      [test $HAVE_MKDIRAT = 0]
+openat-h        [test $HAVE_MKDIRAT = 0]
+save-cwd        [test $HAVE_MKDIRAT = 0]
+unistd          [test $HAVE_MKDIRAT = 0]
 
 configure.ac:
 gl_FUNC_MKDIRAT

@@ -8,15 +8,15 @@ lib/at-func.c
 m4/mkfifoat.m4
 
 Depends-on:
-at-internal
-dosname
-errno
-extensions
-fchdir
-openat-die
-openat-h
-save-cwd
 sys_stat
+extensions
+at-internal     [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+dosname         [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+errno           [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+fchdir          [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+openat-die      [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+openat-h        [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
+save-cwd        [test $HAVE_MKFIFOAT = 0 || test $HAVE_MKNODAT = 0]
 mkfifo          [test $HAVE_MKFIFOAT = 0]
 mknod           [test $HAVE_MKNODAT = 0]
 

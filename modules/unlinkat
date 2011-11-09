@@ -8,19 +8,19 @@ lib/openat-priv.h
 m4/unlinkat.m4
 
 Depends-on:
-at-internal
-dosname
-errno
-extensions
-fchdir
-fcntl-h
-fstatat
-openat-die
-openat-h
-rmdir           [test $HAVE_UNLINKAT = 0]
-save-cwd
-sys_stat
 unistd
+extensions
+fcntl-h         [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
+openat-h        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
+sys_stat        [test $HAVE_UNLINKAT = 0 || test $REPLACE_UNLINKAT = 1]
+fstatat         [test $REPLACE_UNLINKAT = 1]
+at-internal     [test $HAVE_UNLINKAT = 0]
+dosname         [test $HAVE_UNLINKAT = 0]
+errno           [test $HAVE_UNLINKAT = 0]
+fchdir          [test $HAVE_UNLINKAT = 0]
+openat-die      [test $HAVE_UNLINKAT = 0]
+rmdir           [test $HAVE_UNLINKAT = 0]
+save-cwd        [test $HAVE_UNLINKAT = 0]
 unlink          [test $HAVE_UNLINKAT = 0]
 
 configure.ac:

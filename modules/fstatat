@@ -8,17 +8,17 @@ lib/openat-priv.h
 m4/fstatat.m4
 
 Depends-on:
-at-internal
-dosname
-errno
-extensions
-fchdir
-fcntl-h
-lstat
-openat-die
-openat-h
-save-cwd
 sys_stat
+extensions
+at-internal     [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+dosname         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+errno           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+fchdir          [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+fcntl-h         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+lstat           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+openat-die      [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+openat-h        [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+save-cwd        [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 
 configure.ac:
 gl_FUNC_FSTATAT

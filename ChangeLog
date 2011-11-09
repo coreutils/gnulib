@@ -1,5 +1,21 @@
 2011-11-08  Bruno Haible  <bruno@clisp.org>
 
+	More conditional dependencies.
+	* modules/faccessat (Depends-on): Add conditions.
+	* modules/fchmodat (Depends-on): Likewise.
+	* modules/fchownat (Depends-on): Likewise.
+	* modules/fstatat (Depends-on): Likewise.
+	* modules/mkfifoat (Depends-on): Likewise.
+	* modules/readlinkat (Depends-on): Likewise.
+	* modules/symlinkat (Depends-on): Likewise.
+	* modules/unlinkat (Depends-on): Likewise.
+	* modules/utimensat (Depends-on): Likewise.
+	* modules/mkdirat (Depends-on): Add sys_stat. Add conditions.
+	* modules/linkat (Depends-on): Refine the conditions.
+	* modules/renameat (Depends-on): Likewise.
+
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
 	faccessat: Move AC_LIBOBJ invocation to module description.
 	* m4/faccessat.m4 (gl_PREREQ_FACCESSAT): New macro.
 	(gl_FUNC_FACESSAT): Don't test for access() here. Move AC_LIBOBJ
