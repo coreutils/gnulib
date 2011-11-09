@@ -21,6 +21,10 @@ euidaccess      [test $HAVE_FACCESSAT = 0]
 
 configure.ac:
 gl_FUNC_FACCESSAT
+if test $HAVE_FACCESSAT = 0; then
+  AC_LIBOBJ([faccessat])
+  gl_PREREQ_FACCESSAT
+fi
 gl_MODULE_INDICATOR([faccessat])
 gl_UNISTD_MODULE_INDICATOR([faccessat])
 

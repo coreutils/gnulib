@@ -1,5 +1,14 @@
 2011-11-08  Bruno Haible  <bruno@clisp.org>
 
+	faccessat: Move AC_LIBOBJ invocation to module description.
+	* m4/faccessat.m4 (gl_PREREQ_FACCESSAT): New macro.
+	(gl_FUNC_FACESSAT): Don't test for access() here. Move AC_LIBOBJ
+	invocation from here...
+	* modules/faccessat (configure.ac): ... to here. Invoke
+	gl_PREREQ_FACCESSAT.
+
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
 	faccessat: Simplify autoconf macro.
 	* m4/faccessat.m4 (gl_FUNC_FACCESSAT): Don't require gl_FUNC_OPENAT,
 	gl_FUNC_EUIDACCESS.
