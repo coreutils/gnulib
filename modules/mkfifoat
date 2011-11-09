@@ -28,8 +28,8 @@ fi
 if test $HAVE_MKNODAT = 0; then
   AC_LIBOBJ([mknodat])
 fi
-gl_UNISTD_MODULE_INDICATOR([mkfifoat])
-gl_UNISTD_MODULE_INDICATOR([mknodat])
+gl_SYS_STAT_MODULE_INDICATOR([mkfifoat])
+gl_SYS_STAT_MODULE_INDICATOR([mknodat])
 
 Makefile.am:
 
