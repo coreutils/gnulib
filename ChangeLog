@@ -1,3 +1,8 @@
+2011-11-08  Bruno Haible  <bruno@clisp.org>
+
+	fstatat: Remove unused dependency.
+	* modules/fstatat (Depends-on): Remove fstat.
+
 2011-11-08  Simon Josefsson  <simon@josefsson.org>
 
 	GNUmakefile: behave when Makefile is missing.

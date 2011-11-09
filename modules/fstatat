@@ -14,7 +14,6 @@ errno
 extensions
 fchdir
 fcntl-h
-fstat
 lstat
 openat-die
 openat-h
