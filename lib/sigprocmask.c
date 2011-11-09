@@ -344,5 +344,6 @@ _gl_raise_SIGPIPE (void)
       else if (handler != SIG_IGN)
         (*handler) (SIGPIPE);
     }
+  return 0;
 }
 #endif
