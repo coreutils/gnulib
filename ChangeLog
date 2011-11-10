@@ -1,5 +1,11 @@
 2011-11-10  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r test: Avoid gcc warning on glibc systems.
+	* tests/test-ptsname_r.c (null_ptr): New function.
+	(test_errors): Use it.
+
+2011-11-10  Bruno Haible  <bruno@clisp.org>
+
 	ptsname_r: Avoid compilation error on OSF/1 5.1.
 	* lib/stdlib.in.h (ptsname_r): Override if REPLACE_PTSNAME_R is 1.
 	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_PTSNAME_R.

@@ -53,6 +53,12 @@ same_slave (const char *slave_name1, const char *slave_name2)
               && SAME_INODE (statbuf1, statbuf2)));
 }
 
+static char *
+null_ptr (void)
+{
+  return NULL;
+}
+
 static void
 test_errors (int fd, const char *slave)
 {
@@ -86,7 +92,7 @@ test_errors (int fd, const char *slave)
     }
 
   errno = 0;
-  result = ptsname_r (fd, NULL, 0);
+  result = ptsname_r (fd, null_ptr (), 0);
   ASSERT (result != 0);
   ASSERT (result == errno);
   ASSERT (errno == EINVAL);
