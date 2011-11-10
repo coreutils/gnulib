@@ -45,7 +45,7 @@ orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
 #include <fcntl.h>
 #include <string.h>
 
-#if HAVE_FSTATAT && !FSTATAT_ZERO_FLAG_BROKEN
+#if HAVE_FSTATAT && HAVE_WORKING_FSTATAT_ZERO_FLAG
 
 # ifndef LSTAT_FOLLOWS_SLASHED_SYMLINK
 #  define LSTAT_FOLLOWS_SLASHED_SYMLINK 0
@@ -90,7 +90,7 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
   return result;
 }
 
-#else /* !HAVE_FSTATAT || FSTATAT_ZERO_FLAG_BROKEN */
+#else /* ! (HAVE_FSTATAT && HAVE_WORKING_FSTATAT_ZERO_FLAG) */
 
 /* On mingw, the gnulib <sys/stat.h> defines `stat' as a function-like
    macro; but using it in AT_FUNC_F2 causes compilation failure
@@ -118,7 +118,7 @@ stat_func (char const *name, struct stat *st)
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fstatat.  */
 
-# if FSTATAT_ZERO_FLAG_BROKEN
+# if ! HAVE_WORKING_FSTATAT_ZERO_FLAG
 #  define AT_FUNC_NAME rpl_fstatat
 # else
 #  define AT_FUNC_NAME fstatat

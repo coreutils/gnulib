@@ -1,4 +1,4 @@
-# fstatat.m4 serial 1
+# fstatat.m4 serial 2
 dnl Copyright (C) 2004-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,8 +22,7 @@ AC_DEFUN([gl_FUNC_FSTATAT],
     dnl <http://lists.gnu.org/archive/html/bug-tar/2011-09/msg00015.html>.
     AC_CACHE_CHECK([whether fstatat (..., 0) works],
       [gl_cv_func_fstatat_zero_flag],
-      [gl_cv_func_fstatat_zero_flag=no
-       AC_RUN_IFELSE(
+      [AC_RUN_IFELSE(
          [AC_LANG_SOURCE(
             [[
               #include <fcntl.h>
@@ -35,15 +34,17 @@ AC_DEFUN([gl_FUNC_FSTATAT],
                 return fstatat (AT_FDCWD, ".", &a, 0) != 0;
               }
             ]])],
-         [gl_cv_func_fstatat_zero_flag=yes])])
+         [gl_cv_func_fstatat_zero_flag=yes],
+         [gl_cv_func_fstatat_zero_flag=no],
+         [gl_cv_func_fstatat_zero_flag=cross-compiling])])
 
     case $gl_cv_func_fstatat_zero_flag+$gl_cv_func_lstat_dereferences_slashed_symlink in
     yes+yes) ;;
     *) REPLACE_FSTATAT=1
-       if test $gl_cv_func_fstatat_zero_flag != yes; then
-         AC_DEFINE([FSTATAT_ZERO_FLAG_BROKEN], [1],
-           [Define to 1 if fstatat (..., 0) does not work,
-            as in AIX 7.1.])
+       if test $gl_cv_func_fstatat_zero_flag = yes; then
+         AC_DEFINE([HAVE_WORKING_FSTATAT_ZERO_FLAG], [1],
+           [Define to 1 if fstatat (..., 0) works.
+            For example, it does not work in AIX 7.1.])
        fi
        ;;
     esac
