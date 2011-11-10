@@ -1,3 +1,10 @@
+2011-11-10  Bruno Haible  <bruno@clisp.org>
+
+	fstatat: Make cross-compilation guess succeed everywhere except on AIX.
+	* m4/fstatat.m4 (gl_FUNC_FSTATAT): Require AC_CANONICAL_HOST.
+	When cross-compiling, guess yes on all platforms except AIX.
+	Reported by Ludovic Courtès <ludo@gnu.org>.
+
 2011-11-09  Bruno Haible  <bruno@clisp.org>
 
 	ptsname_r tests: Fix bugs.

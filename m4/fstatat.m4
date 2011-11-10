@@ -13,6 +13,7 @@ AC_DEFUN([gl_FUNC_FSTATAT],
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([fstatat])
 
   if test $ac_cv_func_fstatat = no; then
@@ -36,16 +37,23 @@ AC_DEFUN([gl_FUNC_FSTATAT],
             ]])],
          [gl_cv_func_fstatat_zero_flag=yes],
          [gl_cv_func_fstatat_zero_flag=no],
-         [gl_cv_func_fstatat_zero_flag=cross-compiling])])
+         [case "$host_os" in
+            aix*) gl_cv_func_fstatat_zero_flag="guessing no";;
+            *)    gl_cv_func_fstatat_zero_flag="guessing yes";;
+          esac
+         ])
+      ])
 
     case $gl_cv_func_fstatat_zero_flag+$gl_cv_func_lstat_dereferences_slashed_symlink in
-    yes+yes) ;;
+    *yes+yes) ;;
     *) REPLACE_FSTATAT=1
-       if test $gl_cv_func_fstatat_zero_flag = yes; then
+       case $gl_cv_func_fstatat_zero_flag in
+       *yes)
          AC_DEFINE([HAVE_WORKING_FSTATAT_ZERO_FLAG], [1],
            [Define to 1 if fstatat (..., 0) works.
             For example, it does not work in AIX 7.1.])
-       fi
+         ;;
+       esac
        ;;
     esac
   fi
