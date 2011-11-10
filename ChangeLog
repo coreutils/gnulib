@@ -1,3 +1,9 @@
+2011-11-09  Bruno Haible  <bruno@clisp.org>
+
+	ptsname_r tests: Fix bugs.
+	* tests/test-ptsname_r.c (test_errors): Change return type to 'void'.
+	Fix ptsname_r calls. Reduce loop rounds to a reasonable amount.
+
 2011-11-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fstatat: work with cross-compilation

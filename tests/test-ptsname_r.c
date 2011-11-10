@@ -53,20 +53,24 @@ same_slave (const char *slave_name1, const char *slave_name2)
               && SAME_INODE (statbuf1, statbuf2)));
 }
 
-static int
+static void
 test_errors (int fd, const char *slave)
 {
   char buffer[256];
   size_t len;
-  int result;
+  size_t buflen_max;
   size_t buflen;
+  int result;
 
   len = strlen (slave);
-  for (buflen = 0; buflen <= sizeof buffer; buflen++)
+  buflen_max = len + 5;
+  if (buflen_max > sizeof buffer)
+    buflen_max = sizeof buffer;
+  for (buflen = 0; buflen <= buflen_max; buflen++)
     {
-      errno = 0;
       memset (buffer, 'X', sizeof buffer);
-      result = ptsname_r (fd, buffer, len);
+      errno = 0;
+      result = ptsname_r (fd, buffer, buflen);
       if (buflen > len)
         {
           ASSERT (result == 0);
