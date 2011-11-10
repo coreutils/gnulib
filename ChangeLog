@@ -1,5 +1,16 @@
 2011-11-10  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r: Avoid compilation error on OSF/1 5.1.
+	* lib/stdlib.in.h (ptsname_r): Override if REPLACE_PTSNAME_R is 1.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_PTSNAME_R.
+	* m4/ptsname_r.m4 (gl_FUNC_PTSNAME_R): Set REPLACE_PTSNAME_R if the
+	function is not declared or incompatibly declared.
+	* modules/stdlib (Makefile.am): Substitute REPLACE_PTSNAME_R.
+	* modules/ptsname_r (Depends-on, configure.ac): Update.
+	* doc/glibc-functions/ptsname_r.texi: Mention the OSF/1 problems.
+
+2011-11-10  Bruno Haible  <bruno@clisp.org>
+
 	fstatat: Make cross-compilation guess succeed everywhere except on AIX.
 	* m4/fstatat.m4 (gl_FUNC_FSTATAT): Require AC_CANONICAL_HOST.
 	When cross-compiling, guess yes on all platforms except AIX.
