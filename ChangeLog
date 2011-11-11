@@ -1,3 +1,8 @@
+2011-11-11  Bruno Haible  <bruno@clisp.org>
+
+	obstack: Fix compilation error on MSVC 9.
+	* lib/obstack.c (print_and_abort): Declare with _Noreturn specifier.
+
 2011-11-11  Jim Meyering  <meyering@redhat.com>
 
 	test-exclude: skip tests rather than failing on deficient systems
