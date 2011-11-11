@@ -104,6 +104,15 @@ main (int argc, char **argv)
             exclude_options &= ~flag;
           else
             exclude_options |= flag;
+
+          /* Skip this test if invoked with -leading-dir on a system that
+             lacks support for FNM_LEADING_DIR. */
+          if (strcmp (s, "leading-dir") == 0 && FNM_LEADING_DIR == 0)
+            exit (77);
+
+          /* Likewise for -casefold and FNM_CASEFOLD.  */
+          if (strcmp (s, "casefold") == 0 && FNM_CASEFOLD == 0)
+            exit (77);
         }
       else if (add_exclude_file (add_exclude, exclude, opt,
                                  exclude_options, '\n') != 0)

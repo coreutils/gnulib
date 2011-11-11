@@ -1,3 +1,11 @@
+2011-11-11  Jim Meyering  <meyering@redhat.com>
+
+	test-exclude: skip tests rather than failing on deficient systems
+	* tests/test-exclude.c (main): Skip tests that use FNM_CASEFOLD
+	and FNM_LEADING_DIR on systems that lack the definitions.  This affects
+	at least Solaris 9.  Reported and diagnosed by Dagobert Michelsen in
+	http://thread.gmane.org/gmane.comp.gnu.grep.bugs/3947/focus=3950
+
 2011-11-10  Bruno Haible  <bruno@clisp.org>
 
 	ptsname_r test: Avoid gcc warning on glibc systems.
