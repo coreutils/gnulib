@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 . "${srcdir=.}/init.sh"; path_prepend_ .
-
 fail=0
 
 cat > in <<EOT
@@ -37,16 +36,14 @@ baz: 1
 bar/qux: 0
 EOT
 
-test-exclude -casefold in -- foo 'foo*' bar foobar baz bar/qux > out \
-  || exit $?
+test-exclude -casefold in -- foo 'foo*' bar foobar baz bar/qux > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.
 case $(echo r | tr -d '\r') in '') cr='\015';; *) cr='\r';; esac
 
 # normalize output
-LC_ALL=C tr -d "$cr" < out > k
-mv k out
+LC_ALL=C tr -d "$cr" < out > k && mv k out
 
 compare expected out || fail=1
 

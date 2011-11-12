@@ -17,7 +17,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 . "${srcdir=.}/init.sh"; path_prepend_ .
-
 fail=0
 
 # Test FNM_LEADING_DIR
@@ -35,16 +34,14 @@ barz: 0
 foo/bar: 1
 EOT
 
-test-exclude -leading_dir in -- bar bar/qux barz foo/bar > out \
-  || exit $?
+test-exclude -leading_dir in -- bar bar/qux barz foo/bar > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.
 case $(echo r | tr -d '\r') in '') cr='\015';; *) cr='\r';; esac
 
 # normalize output
-LC_ALL=C tr -d "$cr" < out > k
-mv k out
+LC_ALL=C tr -d "$cr" < out > k && mv k out
 
 compare expected out || fail=1
 

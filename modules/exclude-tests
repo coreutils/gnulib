@@ -1,4 +1,5 @@
 Files:
+tests/init.sh
 tests/test-exclude.c
 tests/test-exclude1.sh
 tests/test-exclude2.sh

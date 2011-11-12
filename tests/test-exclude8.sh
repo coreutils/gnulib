@@ -16,25 +16,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-TMP=excltmp.$$
-LIST=flist.$$
-ERR=0
+. "${srcdir=.}/init.sh"; path_prepend_ .
+fail=0
 
 # Test escaped metacharacters.
 
-cat > $LIST <<'EOT'
+cat > in <<'EOT'
 f\*e
 b[a\*]r
 EOT
 
-cat > $TMP <<'EOT'
+cat > expected <<'EOT'
 f*e: 1
 file: 0
 bar: 1
 EOT
 
-./test-exclude$EXEEXT -wildcards $LIST -- 'f*e' 'file' 'bar' |
- tr -d '\015' | diff -c $TMP - || ERR=1
+test-exclude -wildcards in -- 'f*e' 'file' 'bar' > out || exit $?
 
-rm -f $TMP $LIST
-exit $ERR
+# Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+# does not understand '\r'.
+case $(echo r | tr -d '\r') in '') cr='\015';; *) cr='\r';; esac
+
+# normalize output
+LC_ALL=C tr -d "$cr" < out > k && mv k out
+
+compare expected out || fail=1
+
+Exit $fail

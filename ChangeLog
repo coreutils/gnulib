@@ -1,5 +1,16 @@
 2011-11-12  Jim Meyering  <meyering@redhat.com>
 
+	revamp the other test-exclude?.sh scripts to use init.sh, too
+	* tests/test-exclude1.sh: Use init.sh.
+	* tests/test-exclude2.sh: Likewise.
+	* tests/test-exclude3.sh: Likewise.
+	* tests/test-exclude4.sh: Likewise.
+	* tests/test-exclude5.sh: Likewise.
+	* tests/test-exclude6.sh: Likewise.
+	* tests/test-exclude7.sh: Likewise.
+	* tests/test-exclude8.sh: Likewise.
+	* modules/exclude-tests (Files): List init.sh.
+
 	test-exclude2.sh, test-exclude5.sh: fail if test-exclude fails
 	These shell scripts ignored failure of the binary test-exclude,
 	so making the latter return 77 didn't cause them to be skipped.

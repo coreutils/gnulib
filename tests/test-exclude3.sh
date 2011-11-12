@@ -16,19 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-TMP=excltmp.$$
-LIST=flist.$$
-ERR=0
+. "${srcdir=.}/init.sh"; path_prepend_ .
+fail=0
 
 # Test include
 
-cat > $LIST <<EOT
+cat > in <<EOT
 foo*
 bar
 Baz
 EOT
 
-cat > $TMP <<EOT
+cat > expected <<EOT
 foo: 1
 foo*: 0
 bar: 0
@@ -37,9 +36,15 @@ baz: 1
 bar/qux: 1
 EOT
 
-./test-exclude$EXEEXT -include $LIST -- foo 'foo*' bar foobar baz bar/qux |
- tr -d '\015' |
- diff -c $TMP - || ERR=1
+test-exclude -include in -- foo 'foo*' bar foobar baz bar/qux > out || exit $?
 
-rm -f $TMP $LIST
-exit $ERR
+# Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+# does not understand '\r'.
+case $(echo r | tr -d '\r') in '') cr='\015';; *) cr='\r';; esac
+
+# normalize output
+LC_ALL=C tr -d "$cr" < out > k && mv k out
+
+compare expected out || fail=1
+
+Exit $fail
