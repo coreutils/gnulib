@@ -1,3 +1,8 @@
+2011-11-12  Jim Meyering  <meyering@redhat.com>
+
+	test-exclude: fix a typo
+	* tests/test-exclude.c (main): Test for "leading_dir", not "leading-dir".
+
 2011-11-11  Bruno Haible  <bruno@clisp.org>
 
 	obstack: Fix compilation error on MSVC 9.

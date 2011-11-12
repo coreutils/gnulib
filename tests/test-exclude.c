@@ -107,7 +107,7 @@ main (int argc, char **argv)
 
           /* Skip this test if invoked with -leading-dir on a system that
              lacks support for FNM_LEADING_DIR. */
-          if (strcmp (s, "leading-dir") == 0 && FNM_LEADING_DIR == 0)
+          if (strcmp (s, "leading_dir") == 0 && FNM_LEADING_DIR == 0)
             exit (77);
 
           /* Likewise for -casefold and FNM_CASEFOLD.  */
