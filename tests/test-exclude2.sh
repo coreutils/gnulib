@@ -16,11 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-TMP=excltmp.$$
-LIST=flist.$$
-ERR=0
+. "${srcdir=.}/init.sh"; path_prepend_ .
 
-cat > $LIST <<EOT
+fail=0
+
+cat > in <<EOT
 foo*
 bar
 Baz
@@ -28,7 +28,7 @@ EOT
 
 # Test case-insensitive literal matches
 
-cat > $TMP <<EOT
+cat > expected <<EOT
 foo: 0
 foo*: 1
 bar: 1
@@ -37,9 +37,17 @@ baz: 1
 bar/qux: 0
 EOT
 
-./test-exclude$EXEEXT -casefold $LIST -- foo 'foo*' bar foobar baz bar/qux |
- tr -d '\015' |
- diff -c $TMP - || ERR=1
+test-exclude -casefold in -- foo 'foo*' bar foobar baz bar/qux > out \
+  || exit $?
 
-rm -f $TMP $LIST
-exit $ERR
+# Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
+# does not understand '\r'.
+case $(echo r | tr -d '\r') in '') cr='\015';; *) cr='\r';; esac
+
+# normalize output
+LC_ALL=C tr -d "$cr" < out > k
+mv k out
+
+compare expected out || fail=1
+
+Exit $fail

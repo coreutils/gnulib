@@ -1,5 +1,12 @@
 2011-11-12  Jim Meyering  <meyering@redhat.com>
 
+	test-exclude2.sh, test-exclude5.sh: fail if test-exclude fails
+	These shell scripts ignored failure of the binary test-exclude,
+	so making the latter return 77 didn't cause them to be skipped.
+	* tests/test-exclude5.sh: Exit with test-exclude's error status
+	when that program fails.  Revamp to use init.sh.
+	* tests/test-exclude2.sh: Likewise.
+
 	test-exclude: fix a typo
 	* tests/test-exclude.c (main): Test for "leading_dir", not "leading-dir".
 
