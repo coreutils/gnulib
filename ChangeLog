@@ -1,5 +1,11 @@
 2011-11-13  Bruno Haible  <bruno@clisp.org>
 
+	Makefile: Tweak indentation.
+	* Makefile: Use tab as first character in every line that contains rule
+	commands.
+
+2011-11-13  Bruno Haible  <bruno@clisp.org>
+
 	Syntax check for copyright statements.
 	* check-copyright: New file.
 	* Makefile (sc_check_copyright): New rule.

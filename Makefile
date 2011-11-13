@@ -35,8 +35,8 @@ sc_prefer_ac_check_funcs_once:
 sc_prohibit_leading_TABs:
 	if test -d .git; then						\
 	  git grep -l '^ *	' lib m4 tests				\
-            | grep -Ev '^lib/reg|Makefile|test-update-copyright'	\
-            | grep .							\
+	    | grep -Ev '^lib/reg|Makefile|test-update-copyright'	\
+	    | grep .							\
 	    && { printf '*** %s\n' 'indent with spaces, not TABs;'	\
 		 1>&2; exit 1; } || :					\
 	else :; fi
@@ -101,11 +101,11 @@ sc_pragma_columns:
 # *.c files are consistently cpp indented.
 sc_cpp_indent_check:
 	./gnulib-tool --extract-filelist \
-            $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
-          | sort -u \
-          | grep '\.c$$' \
-          | grep -vE '/(stdio-(read|write)|getloadavg)\.c$$' \
-          | xargs cppi -c
+	    $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
+	  | sort -u \
+	  | grep '\.c$$' \
+	  | grep -vE '/(stdio-(read|write)|getloadavg)\.c$$' \
+	  | xargs cppi -c
 
 # Ensure that the list of symbols checked for by the
 # sc_prohibit_intprops_without_use rule match those in the actual file.
@@ -115,7 +115,7 @@ sc_check_sym_list:
 	i=lib/intprops.h; \
 	diff -u <(perl -lne '/^# *define ([A-Z]\w+)\(/ and print $$1' $$i|fmt) \
 	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
-            |sed '/^_/d;s/^  //;s/	*\\$$//')
+	    |sed '/^_/d;s/^  //;s/	*\\$$//')
 
 # Ensure that the copyright statements in files and in the module descriptions
 # are consistent.
