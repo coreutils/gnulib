@@ -1,3 +1,9 @@
+2011-11-13  Bruno Haible  <bruno@clisp.org>
+
+	Syntax check for copyright statements.
+	* check-copyright: New file.
+	* Makefile (sc_check_copyright): New rule.
+
 2011-11-13  Simon Josefsson  <simon@josefsson.org>
 
 	* build-aux/git-version-gen: Add --prefix to configure the tag

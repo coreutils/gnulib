@@ -117,6 +117,11 @@ sc_check_sym_list:
 	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
             |sed '/^_/d;s/^  //;s/	*\\$$//')
 
+# Ensure that the copyright statements in files and in the module descriptions
+# are consistent.
+sc_check_copyright:
+	./check-copyright
+
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html
 
