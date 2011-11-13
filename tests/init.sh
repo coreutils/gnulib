@@ -221,10 +221,43 @@ export MALLOC_PERTURB_
 # a partition, or to undo any other global state changes.
 cleanup_ () { :; }
 
-if ( diff -u "$0" "$0" < /dev/null ) > /dev/null 2>&1; then
-  compare () { diff -u "$@"; }
-elif ( diff -c "$0" "$0" < /dev/null ) > /dev/null 2>&1; then
-  compare () { diff -c "$@"; }
+if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
+  if test -z "$diff_out_"; then
+    compare () { diff -u "$@"; }
+  else
+    compare ()
+    {
+      if diff -u "$@" > diff.out; then
+        # No differences were found, but Solaris 'diff' produces output
+        # "No differences encountered". Hide this output.
+        rm -f diff.out
+        true
+      else
+        cat diff.out
+        rm -f diff.out
+        false
+      fi
+    }
+  fi
+elif diff_out_=`( diff -c "$0" "$0" < /dev/null ) 2>/dev/null`; then
+  if test -z "$diff_out_"; then
+    compare () { diff -c "$@"; }
+  else
+    compare ()
+    {
+      if diff -c "$@" > diff.out; then
+        # No differences were found, but AIX and HP-UX 'diff' produce output
+        # "No differences encountered" or "There are no differences between the
+        # files.". Hide this output.
+        rm -f diff.out
+        true
+      else
+        cat diff.out
+        rm -f diff.out
+        false
+      fi
+    }
+  fi
 elif ( cmp --version < /dev/null 2>&1 | grep GNU ) > /dev/null 2>&1; then
   compare () { cmp -s "$@"; }
 else
