@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2011-08-11.12; # UTC
+scriptversion=2011-11-13.10; # UTC
 
 # Copyright (C) 2007-2011 Free Software Foundation, Inc.
 #
@@ -69,15 +69,55 @@ scriptversion=2011-08-11.12; # UTC
 # dist-hook:
 #	echo $(VERSION) > $(distdir)/.tarball-version
 
-case $# in
-    1|2) ;;
-    *) echo 1>&2 "Usage: $0 \$srcdir/.tarball-version" \
-         '[TAG-NORMALIZATION-SED-SCRIPT]'
-       exit 1;;
-esac
 
-tarball_version_file=$1
-tag_sed_script="${2:-s/x/x/}"
+me=$0
+
+version="git-version-gen $scriptversion
+
+Copyright 2011 Free Software Foundation, Inc.
+There is NO warranty.  You may redistribute this software
+under the terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING."
+
+usage="\
+Usage: $me [OPTION]... \$srcdir/.tarball-version [TAG-NORMALIZATION-SED-SCRIPT]
+Print a version string.
+
+Options:
+
+   --help             display this help and exit
+   --version          output version information and exit
+
+Running without arguments will suffice in most cases."
+
+while test $# -gt 0; do
+  case $1 in
+    --help) echo "$usage"; exit 0;;
+    --version) echo "$version"; exit 0;;
+    -*)
+      echo "$0: Unknown option \`$1'." >&2
+      echo "$0: Try \`--help' for more information." >&2
+      exit 1;;
+    *)
+      if test -z "$tarball_version_file"; then
+        tarball_version_file="$1"
+      elif test -z "$tag_sed_script"; then
+        tag_sed_script="$1"
+      else
+        echo "$0: extra non-option argument \`$1'." >&2
+        exit 1
+      fi;;
+  esac
+  shift
+done
+
+if test -z "$tarball_version_file"; then
+    echo "$usage"
+    exit 1
+fi
+
+tag_sed_script="${tag_sed_script:-s/x/x/}"
+
 nl='
 '
 

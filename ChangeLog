@@ -1,3 +1,7 @@
+2011-11-13  Simon Josefsson  <simon@josefsson.org>
+
+	* build-aux/git-version-gen: Add --help and --version.
+
 2011-11-12  Jim Meyering  <meyering@redhat.com>
 
 	revamp the other test-exclude?.sh scripts to use init.sh, too
