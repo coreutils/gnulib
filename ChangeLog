@@ -1,3 +1,10 @@
+2011-11-15  Gary V. Vaughan  <gary@gnu.org>
+
+	maint.mk: fix tight-scope.mk generation in VPATH builds.
+	* top/maint.mk (tight-scope.mk): Make sure to prefix file
+	reference with $(srcdir) so that the file is found correctly even
+	when running `make syntax-check' in a VPATH build.
+
 2011-11-13  Bruno Haible  <bruno@clisp.org>
 	    Jim Meyering  <meyering@redhat.com>
 

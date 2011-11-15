@@ -1438,7 +1438,7 @@ sc_tight_scope: tight-scope.mk
 
 tight-scope.mk: $(ME)
 	@rm -f $@ $@-t
-	@perl -ne '/^# TS-start/.../^# TS-end/ and print' $(ME) > $@-t
+	@perl -ne '/^# TS-start/.../^# TS-end/ and print' $(srcdir)/$(ME) > $@-t
 	@chmod a=r $@-t && mv $@-t $@
 
 ifeq (a,b)
