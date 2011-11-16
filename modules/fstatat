@@ -6,6 +6,7 @@ lib/fstatat.c
 lib/at-func.c
 lib/openat-priv.h
 m4/fstatat.m4
+m4/lstat.m4
 
 Depends-on:
 sys_stat

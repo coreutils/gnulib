@@ -1,3 +1,11 @@
+2011-11-15  Ben Walton <bwalton@artsci.utoronto.ca>  (tiny change)
+	    Bruno Haible  <bruno@clisp.org>
+
+	Fix some modules' file list.
+	* modules/fstatat (Files): Add m4/lstat.m4.
+	* modules/openat (Files): Likewise.
+	* modules/unlinkat (Files): Likewise.
+
 2011-11-15  Gary V. Vaughan  <gary@gnu.org>
 
 	maint.mk: fix tight-scope.mk generation in VPATH builds.
