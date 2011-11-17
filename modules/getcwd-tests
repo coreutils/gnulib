@@ -1,5 +1,7 @@
 Files:
 tests/test-getcwd.c
+tests/test-getcwd.sh
+tests/init.sh
 
 Depends-on:
 errno
@@ -11,6 +13,6 @@ sys_stat
 configure.ac:
 
 Makefile.am:
-TESTS += test-getcwd
+TESTS += test-getcwd.sh
 check_PROGRAMS += test-getcwd
 test_getcwd_LDADD = $(LDADD) @LIBINTL@
