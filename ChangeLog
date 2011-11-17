@@ -1,5 +1,11 @@
 2011-11-17  Jim Meyering  <meyering@redhat.com>
 
+	tests: factor st_ctime-comparison out of two headers
+	* tests/test-utimens-common.h (ctime_compare): Define.
+	* tests/test-futimens.h (test_futimens): Replace open-coded equivalent.
+	* tests/test-lutimens.h (test_lutimens): Likewise.
+	* tests/test-utimens.h (test_utimens): Likewise.
+
 	test-getcwd: don't leave behind a confdir3/ directory upon interrupt
 	Invoke the test program via an init.sh-using wrapper.
 	* tests/test-getcwd.sh: New file.

@@ -54,9 +54,7 @@ test_futimens (int (*func) (int, struct timespec const *),
      source.  */
   ASSERT (0 <= utimecmp (BASE "file", &st2, &st1, UTIMECMP_TRUNCATE_SOURCE));
   if (check_ctime)
-    ASSERT (st1.st_ctime < st2.st_ctime
-            || (st1.st_ctime == st2.st_ctime
-                && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
+    ASSERT (ctime_compare (&st1, &st2) < 0);
   {
     /* On some NFS systems, the 'now' timestamp of creat or a NULL
        timespec is determined by the server, but the 'now' timestamp
@@ -126,9 +124,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
     if (check_ctime)
-      ASSERT (st1.st_ctime < st2.st_ctime
-              || (st1.st_ctime == st2.st_ctime
-                  && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
+      ASSERT (ctime_compare (&st1, &st2) < 0);
   }
 
   /* Play with UTIME_OMIT, UTIME_NOW.  */
@@ -143,9 +139,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (get_stat_atime_ns (&st3) <= BILLION / 2);
     ASSERT (utimecmp (BASE "file", &st1, &st3, 0) <= 0);
     if (check_ctime)
-      ASSERT (st2.st_ctime < st3.st_ctime
-              || (st2.st_ctime == st3.st_ctime
-                  && get_stat_ctime_ns (&st2) < get_stat_ctime_ns (&st3)));
+      ASSERT (ctime_compare (&st2, &st3) < 0);
     nap ();
     ts[0].tv_nsec = 0;
     ts[1].tv_nsec = UTIME_OMIT;
@@ -156,9 +150,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (st3.st_mtime == st2.st_mtime);
     ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
     if (check_ctime)
-      ASSERT (st3.st_ctime < st2.st_ctime
-              || (st3.st_ctime == st2.st_ctime
-                  && get_stat_ctime_ns (&st3) < get_stat_ctime_ns (&st2)));
+      ASSERT (ctime_compare (&st3, &st2) < 0);
   }
 
   /* Cleanup.  */

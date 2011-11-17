@@ -61,9 +61,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (st2.st_atime == Y2K);
   ASSERT (st2.st_mtime == Y2K);
   if (check_ctime)
-    ASSERT (st1.st_ctime < st2.st_ctime
-            || (st1.st_ctime == st2.st_ctime
-                && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
+    ASSERT (ctime_compare (&st1, &st2) < 0);
 
   /* Play with symlink timestamps.  */
   if (symlink (BASE "file", BASE "link"))
@@ -143,9 +141,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (0 <= get_stat_mtime_ns (&st2));
     ASSERT (get_stat_mtime_ns (&st2) < BILLION);
     if (check_ctime)
-      ASSERT (st1.st_ctime < st2.st_ctime
-              || (st1.st_ctime == st2.st_ctime
-                  && get_stat_ctime_ns (&st1) < get_stat_ctime_ns (&st2)));
+      ASSERT (ctime_compare (&st1, &st2) < 0);
   }
 
   /* Play with UTIME_OMIT, UTIME_NOW.  */
@@ -163,9 +159,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
       }
     ASSERT (utimecmp (BASE "link", &st1, &st3, 0) <= 0);
     if (check_ctime)
-      ASSERT (st2.st_ctime < st3.st_ctime
-              || (st2.st_ctime == st3.st_ctime
-                  && get_stat_ctime_ns (&st2) < get_stat_ctime_ns (&st3)));
+      ASSERT (ctime_compare (&st2, &st3) < 0);
     nap ();
     ts[0].tv_nsec = 0;
     ts[1].tv_nsec = UTIME_OMIT;
@@ -179,9 +173,7 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (st3.st_mtime == st2.st_mtime);
     ASSERT (get_stat_mtime_ns (&st3) == get_stat_mtime_ns (&st2));
     if (check_ctime)
-      ASSERT (st3.st_ctime < st2.st_ctime
-              || (st3.st_ctime == st2.st_ctime
-                  && get_stat_ctime_ns (&st3) < get_stat_ctime_ns (&st2)));
+      ASSERT (ctime_compare (&st3, &st2) < 0);
   }
 
   /* Symlink to directory.  */
