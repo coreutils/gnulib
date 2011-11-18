@@ -3,20 +3,13 @@ Generic crypto wrappers for ARCTWO block cipher.
 
 Files:
 m4/gc-arctwo.m4
-lib/arctwo.h
-lib/arctwo.c
-m4/arctwo.m4
 
 Depends-on:
-stdint
 crypto/gc
-bitrotate
+crypto/arctwo [test "$ac_cv_libgcrypt" != yes]
 
 configure.ac:
 gl_GC_ARCTWO
-if test "$ac_cv_libgcrypt" != yes; then
-  AC_LIBOBJ([arctwo])
-fi
 gl_MODULE_INDICATOR([gc-arctwo])
 
 Makefile.am:

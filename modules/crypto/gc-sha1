@@ -3,20 +3,13 @@ Generic crypto wrappers for SHA-1 functions.
 
 Files:
 m4/gc-sha1.m4
-lib/sha1.h
-lib/sha1.c
-m4/sha1.m4
 
 Depends-on:
-stdalign
-stdint
 crypto/gc
+crypto/sha1 [test "$ac_cv_libgcrypt" != yes]
 
 configure.ac:
 gl_GC_SHA1
-if test "$ac_cv_libgcrypt" != yes; then
-  AC_LIBOBJ([sha1])
-fi
 gl_MODULE_INDICATOR([gc-sha1])
 
 Makefile.am:

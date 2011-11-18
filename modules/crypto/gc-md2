@@ -5,8 +5,6 @@ Files:
 m4/gc-md2.m4
 
 Depends-on:
-stdint
-minmax
 crypto/gc
 crypto/md2
 

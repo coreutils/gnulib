@@ -3,18 +3,13 @@ Generic crypto wrappers for ARCFOUR stream cipher.
 
 Files:
 m4/gc-arcfour.m4
-lib/arcfour.h
-lib/arcfour.c
 
 Depends-on:
-stdint
 crypto/gc
+crypto/arcfour [test "$ac_cv_libgcrypt" != yes]
 
 configure.ac:
 gl_GC_ARCFOUR
-if test "$ac_cv_libgcrypt" != yes; then
-  AC_LIBOBJ([arcfour])
-fi
 gl_MODULE_INDICATOR([gc-arcfour])
 
 Makefile.am:

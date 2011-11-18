@@ -1,3 +1,40 @@
+2011-11-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	modules/crypto/gc-*: simplify dependencies and fix stdalign.h bug
+	stdalign problem reported by Ian Beckwith in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00238.html>.
+	* modules/crypto/gc-arcfour (Depends-on):
+	Depend conditionally on crypto/arcfour.
+	* modules/crypto/gc-arctwo (Depends-on):
+	Depend conditionally on crypto/arctwo.
+	* modules/crypto/gc-des (Depends-on):
+	Depend conditionally on crypto/des.
+	* modules/crypto/gc-hmac-md5 (Depends-on):
+	Depend conditionally on crypto/hmac-md5.
+	* modules/crypto/gc-hmac-sha1 (Depends-on):
+	Depend conditionally on crypto/hmac-sha1.
+	* modules/crypto/gc-md2 (Depends-on): Remove stdint, minmax.
+	* modules/crypto/gc-md4 (Depends-on):
+	Depend conditionally on crypto/md4.
+	* modules/crypto/gc-md5 (Depends-on):
+	Depend conditionally on crypto/md5.
+	* modules/crypto/gc-rijndael (Depends-on):
+	Depend conditionally on crypto/rijndael.
+	* modules/crypto/gc-sha1 (Depends-on):
+	Depend conditionally on crypto/sha1.
+	* modules/crypto/gc-arcfour:
+	* modules/crypto/gc-arctwo:
+	* modules/crypto/gc-des:
+	* modules/crypto/gc-hmac-md5:
+	* modules/crypto/gc-hmac-sha1:
+	* modules/crypto/gc-md2:
+	* modules/crypto/gc-md4:
+	* modules/crypto/gc-md5:
+	* modules/crypto/gc-rijndael:
+	* modules/crypto/gc-sha1:
+	(Files, Depends-on, configure.ac): Remove now-unnecessary stuff,
+	now that the conditional dependencies do the work for us.
+
 2011-11-17  Jim Meyering  <meyering@redhat.com>
 
 	tests: factor st_ctime-comparison out of two headers

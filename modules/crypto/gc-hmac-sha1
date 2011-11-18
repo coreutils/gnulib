@@ -3,26 +3,13 @@ Generic crypto wrappers for HMAC-SHA1 functions.
 
 Files:
 m4/gc-hmac-sha1.m4
-lib/sha1.h
-lib/sha1.c
-m4/sha1.m4
-lib/hmac.h
-lib/hmac-sha1.c
-lib/memxor.h
-lib/memxor.c
-m4/memxor.m4
 
 Depends-on:
-stdint
 crypto/gc
+crypto/hmac-sha1 [test "$ac_cv_libgcrypt" != yes]
 
 configure.ac:
 gl_GC_HMAC_SHA1
-if test "$ac_cv_libgcrypt" != yes; then
-  AC_LIBOBJ([sha1])
-  AC_LIBOBJ([hmac-sha1])
-  AC_LIBOBJ([memxor])
-fi
 gl_MODULE_INDICATOR([gc-hmac-sha1])
 
 Makefile.am:

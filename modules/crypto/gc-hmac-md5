@@ -3,26 +3,13 @@ Generic crypto wrappers for HMAC-MD5 functions.
 
 Files:
 m4/gc-hmac-md5.m4
-lib/md5.h
-lib/md5.c
-m4/md5.m4
-lib/hmac.h
-lib/hmac-md5.c
-lib/memxor.h
-lib/memxor.c
-m4/memxor.m4
 
 Depends-on:
-stdint
 crypto/gc
+crypto/hmac-md5 [test "$ac_cv_libgcrypt" != yes]
 
 configure.ac:
 gl_GC_HMAC_MD5
-if test "$ac_cv_libgcrypt" != yes; then
-  AC_LIBOBJ([md5])
-  AC_LIBOBJ([hmac-md5])
-  AC_LIBOBJ([memxor])
-fi
 gl_MODULE_INDICATOR([gc-hmac-md5])
 
 Makefile.am:
