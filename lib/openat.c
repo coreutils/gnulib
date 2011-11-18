@@ -46,6 +46,7 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 #include <stddef.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <errno.h>
 
 #if HAVE_OPENAT
 
