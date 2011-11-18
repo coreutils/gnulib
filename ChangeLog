@@ -1,3 +1,16 @@
+2011-11-18  Jim Meyering  <meyering@redhat.com>
+
+	hash: deprecate poorly-named hash_insert0: use hash_insert_if_absent
+	* lib/hash.c (hash_insert_if_absent): Rename from hash_insert0.
+	Add a sentence to the comment.
+	(hash_insert0): New function that simply calls hash_insert_if_absent.
+	* lib/hash.h (hash_insert_if_absent): Declare it.
+	(hash_insert0): Add deprecation attribute.
+	(_GL_ATTRIBUTE_DEPRECATED): Define.
+	* lib/di-set.c (di_set_insert): Use hash_insert_if_absent,
+	not hash_insert0.
+	* NEWS: Mention it, even though it's not really an incompatible change.
+
 2011-11-18  Dagobert Michelsen  <dam@opencsw.org>  (tiny change)
 
 	openat: avoid compilation failure due to lack of <errno.h> inclusion

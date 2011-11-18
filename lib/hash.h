@@ -35,6 +35,16 @@
 #  define _GL_ATTRIBUTE_WUR /* empty */
 # endif
 
+# ifndef _GL_ATTRIBUTE_DEPRECATED
+/* The __attribute__((__deprecated__)) feature
+   is available in gcc versions 3.1 and newer.  */
+#  if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ < 1)
+#   define _GL_ATTRIBUTE_DEPRECATED /* empty */
+#  else
+#   define _GL_ATTRIBUTE_DEPRECATED __attribute__ ((__deprecated__))
+#  endif
+# endif
+
 typedef size_t (*Hash_hasher) (const void *, size_t);
 typedef bool (*Hash_comparator) (const void *, const void *);
 typedef void (*Hash_data_freer) (void *);
@@ -85,8 +95,13 @@ void hash_free (Hash_table *);
 /* Insertion and deletion.  */
 bool hash_rehash (Hash_table *, size_t) _GL_ATTRIBUTE_WUR;
 void *hash_insert (Hash_table *, const void *) _GL_ATTRIBUTE_WUR;
-int hash_insert0 (Hash_table *table, const void *entry,
-                  const void **matched_ent);
+
+/* Deprecate this interface.  It has been renamed to hash_insert_if_absent.  */
+int hash_insert0 (Hash_table *table, /* FIXME: remove in 2013 */
+                  const void *entry,
+                  const void **matched_ent) _GL_ATTRIBUTE_DEPRECATED;
+int hash_insert_if_absent (Hash_table *table, const void *entry,
+                           const void **matched_ent);
 void *hash_delete (Hash_table *, const void *);
 
 #endif

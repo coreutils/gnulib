@@ -233,7 +233,7 @@ di_set_insert (struct di_set *dis, dev_t dev, ino_t ino)
     return -1;
 
   /* Put I into the inode set.  */
-  return hash_insert0 (ino_set, (void const *) i, NULL);
+  return hash_insert_if_absent (ino_set, (void const *) i, NULL);
 }
 
 /* Look up the DEV,INO pair in the set DIS.
