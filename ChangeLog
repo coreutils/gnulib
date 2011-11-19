@@ -1,3 +1,15 @@
+2011-11-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fstatat: fix configuration bug on mingw, OpenBSD 4, Solaris 8
+	* lib/fstatat.c (AT_FUNC_NAME): Use HAVE_FSTAT, not
+	HAVE_WORKING_FSTATAT_ZERO_FLAG, to decide whether to define
+	rpl_fstatat or fstatat.  This should fix the other problem
+	reported by Kai Habel in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00237.html>.
+	A similar problem was reported for OpenBSD 4.6 by Mats Erik Andersson
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00239.html>
+	and I reproduced it on a Solaris 8 host we still have in production.
+
 2011-11-18  Jim Meyering  <meyering@redhat.com>
 
 	hash: deprecate poorly-named hash_insert0: use hash_insert_if_absent
