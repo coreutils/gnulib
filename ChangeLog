@@ -1,5 +1,10 @@
 2011-11-19  Bruno Haible  <bruno@clisp.org>
 
+	euidaccess: Update a comment.
+	* lib/euidaccess.c: Update comment about platforms with faccessat.
+
+2011-11-19  Bruno Haible  <bruno@clisp.org>
+
 	openat: Fix file list.
 	* modules/openat (Files): Remove lib/at-func.c.
 
