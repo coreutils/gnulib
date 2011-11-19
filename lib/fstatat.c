@@ -118,11 +118,7 @@ stat_func (char const *name, struct stat *st)
    then give a diagnostic and exit nonzero.
    Otherwise, this function works just like Solaris' fstatat.  */
 
-# if HAVE_FSTATAT
-#  define AT_FUNC_NAME rpl_fstatat
-# else
-#  define AT_FUNC_NAME fstatat
-# endif
+# define AT_FUNC_NAME fstatat
 # define AT_FUNC_F1 lstat
 # define AT_FUNC_F2 stat_func
 # define AT_FUNC_USE_F1_COND AT_SYMLINK_NOFOLLOW
