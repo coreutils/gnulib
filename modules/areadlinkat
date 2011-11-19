@@ -15,6 +15,7 @@ dosname
 errno
 extensions
 fchdir
+fcntl-h
 openat-die
 openat-h
 save-cwd

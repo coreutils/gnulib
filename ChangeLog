@@ -1,5 +1,23 @@
 2011-11-19  Bruno Haible  <bruno@clisp.org>
 
+	Depend on module fcntl-h when AT_FDCWD is used.
+	* modules/utimens (Depends-on): Add fcntl-h.
+	* modules/areadlinkat (Depends-on): Likewise.
+	* modules/areadlinkat-with-size (Depends-on): Likewise.
+	* modules/faccessat (Depends-on): Likewise.
+	* modules/fchmodat (Depends-on): Likewise.
+	* modules/fchownat (Depends-on): Likewise.
+	* modules/getcwd (Depends-on): Likewise.
+	* modules/mkdirat (Depends-on): Likewise.
+	* modules/mkfifoat (Depends-on): Likewise.
+	* modules/readlinkat (Depends-on): Likewise.
+	* modules/symlinkat (Depends-on): Likewise.
+	* modules/dup2-tests (Depends-on): Likewise.
+	* modules/fdutimensat-tests (Depends-on): Likewise.
+	* modules/futimens-tests (Depends-on): Likewise.
+
+2011-11-19  Bruno Haible  <bruno@clisp.org>
+
 	euidaccess: Update a comment.
 	* lib/euidaccess.c: Update comment about platforms with faccessat.
 

@@ -8,6 +8,7 @@ tests/test-fdutimensat.c
 tests/macros.h
 
 Depends-on:
+fcntl-h
 ignore-value
 openat
 timespec
