@@ -1,3 +1,11 @@
+2011-11-19  Bruno Haible  <bruno@clisp.org>
+
+	Ensure 'inline' can be used in tests/test-utimens-common.h.
+	* modules/fdutimensat-tests (configure.ac): Require AC_C_INLINE.
+	* modules/futimens-tests (configure.ac): Likewise.
+	* modules/utimens-tests (configure.ac): Likewise.
+	* modules/utimensat-tests (configure.ac): Likewise.
+
 2011-11-19  Simon Josefsson  <simon@josefsson.org>
 
 	* lib/hash.c (hash_insert): Use hash_insert_if_absent,
