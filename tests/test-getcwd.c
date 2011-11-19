@@ -134,7 +134,7 @@ test_long_name (void)
   size_t n_chdirs = 0;
 
   if (cwd == NULL)
-    return 10;
+    return 1;
 
   cwd_len = initial_cwd_len = strlen (cwd);
 
@@ -152,7 +152,7 @@ test_long_name (void)
       if (mkdir (DIR_NAME, S_IRWXU) < 0 || chdir (DIR_NAME) < 0)
         {
           if (! (errno == ERANGE || errno == ENAMETOOLONG || errno == ENOENT))
-            fail = 20;
+            fail = 2;
           break;
         }
 
@@ -161,12 +161,12 @@ test_long_name (void)
           c = getcwd (buf, PATH_MAX);
           if (!c && errno == ENOENT)
             {
-              fail = 11;
+              fail = 3;
               break;
             }
           if (c || ! (errno == ERANGE || errno == ENAMETOOLONG))
             {
-              fail = 21;
+              fail = 4;
               break;
             }
         }
@@ -181,12 +181,12 @@ test_long_name (void)
               if (! (errno == ERANGE || errno == ENOENT
                      || errno == ENAMETOOLONG))
                 {
-                  fail = 22;
+                  fail = 5;
                   break;
                 }
               if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
                 {
-                  fail = 12;
+                  fail = 6;
                   break;
                 }
             }
@@ -194,7 +194,7 @@ test_long_name (void)
 
       if (c && strlen (c) != cwd_len)
         {
-          fail = 23;
+          fail = 7;
           break;
         }
       ++n_chdirs;
@@ -224,5 +224,5 @@ test_long_name (void)
 int
 main (int argc, char **argv)
 {
-  return test_abort_bug () + test_long_name ();
+  return test_abort_bug () * 8 + test_long_name ();
 }

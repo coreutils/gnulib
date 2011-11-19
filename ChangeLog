@@ -1,5 +1,10 @@
 2011-11-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-getcwd: disambiguate exit status
+	* tests/test-getcwd.c (test_long_name): Return 0..7.
+	(main): Exit with an unambiguous exit status.  The old
+	code yielded a mysterious mixture of two failure codes.
+
 	fstatat: fix configuration bug on mingw, OpenBSD 4, Solaris 8
 	* lib/fstatat.c (AT_FUNC_NAME): Use HAVE_FSTAT, not
 	HAVE_WORKING_FSTATAT_ZERO_FLAG, to decide whether to define
