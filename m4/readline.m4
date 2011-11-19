@@ -72,7 +72,7 @@ AC_DEFUN([gl_FUNC_READLINE],
   AC_SUBST([LIBREADLINE])
   AC_SUBST([LTLIBREADLINE])
 
-  AC_CHECK_HEADERS([readline/readline.h])
+  AC_CHECK_HEADERS([readline/readline.h readline/history.h])
 ])
 
 # Prerequisites of lib/readline.c.

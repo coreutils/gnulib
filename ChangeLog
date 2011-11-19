@@ -1,3 +1,7 @@
+2011-11-19  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/readline.m4 (gl_FUNC_READLINE): Check for readline/history.h.
+
 2011-11-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-getcwd: disambiguate exit status
