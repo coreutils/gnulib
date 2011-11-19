@@ -2,7 +2,6 @@ Description:
 openat() function: Open a file at a directory.
 
 Files:
-lib/at-func.c
 lib/openat.c
 lib/openat-priv.h
 m4/openat.m4

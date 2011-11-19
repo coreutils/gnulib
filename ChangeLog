@@ -1,5 +1,10 @@
 2011-11-19  Bruno Haible  <bruno@clisp.org>
 
+	openat: Fix file list.
+	* modules/openat (Files): Remove lib/at-func.c.
+
+2011-11-19  Bruno Haible  <bruno@clisp.org>
+
 	fstatat: Simplify.
 	* lib/fstatat.c (AT_FUNC_NAME): Define as fstatat. On platforms where
 	gnulib should define rpl_fstatat, there is a
