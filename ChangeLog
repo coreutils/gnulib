@@ -1,5 +1,11 @@
 2011-11-19  Simon Josefsson  <simon@josefsson.org>
 
+	* lib/hash.c (hash_insert): Use hash_insert_if_absent,
+	not hash_insert0.
+	(hash_insert_if_absent): Doc fix.
+
+2011-11-19  Simon Josefsson  <simon@josefsson.org>
+
 	* m4/readline.m4 (gl_FUNC_READLINE): Check for readline/history.h.
 
 2011-11-18  Paul Eggert  <eggert@cs.ucla.edu>

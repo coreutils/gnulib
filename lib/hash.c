@@ -1032,8 +1032,8 @@ hash_rehash (Hash_table *table, size_t candidate)
    hash_insert, the only way to distinguish those cases is to compare
    the return value and ENTRY.  That works only when you can have two
    different ENTRY values that point to data that compares "equal".  Thus,
-   when the ENTRY value is a simple scalar, you must use hash_insert0.
-   ENTRY must not be NULL.  */
+   when the ENTRY value is a simple scalar, you must use
+   hash_insert_if_absent.  ENTRY must not be NULL.  */
 int
 hash_insert_if_absent (Hash_table *table, void const *entry,
                        void const **matched_ent)
@@ -1134,7 +1134,7 @@ void *
 hash_insert (Hash_table *table, void const *entry)
 {
   void const *matched_ent;
-  int err = hash_insert0 (table, entry, &matched_ent);
+  int err = hash_insert_if_absent (table, entry, &matched_ent);
   return (err == -1
           ? NULL
           : (void *) (err == 0 ? matched_ent : entry));
