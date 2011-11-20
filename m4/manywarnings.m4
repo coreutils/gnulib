@@ -148,6 +148,33 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC],
     ; do
     gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
   done
+  # More warnings from gcc 4.6.2 --help=warnings.
+  for gl_manywarn_item in \
+    -Wabi \
+    -Wcpp \
+    -Wdeprecated \
+    -Wdeprecated-declarations \
+    -Wdiv-by-zero \
+    -Wdouble-promotion \
+    -Wendif-labels \
+    -Wextra \
+    -Wformat-contains-nul \
+    -Wformat-extra-args \
+    -Wformat-zero-length \
+    -Wformat=2 \
+    -Wmultichar \
+    -Wnormalized=nfc \
+    -Woverflow \
+    -Wpointer-to-int-cast \
+    -Wpragmas \
+    -Wsuggest-attribute=const \
+    -Wsuggest-attribute=noreturn \
+    -Wsuggest-attribute=pure \
+    -Wtrampolines \
+    -Wunsuffixed-float-constants \
+    ; do
+    gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
+  done
 
   # Disable the missing-field-initializers warning if needed
   if test "$gl_cv_cc_nomfi_needed" = yes; then
