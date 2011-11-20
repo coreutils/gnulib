@@ -52,14 +52,14 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
       L_(1.0), - L_(1.0), L_(1.0), - L_(1.0),
       L_(1.0), - L_(1.0), L_(1.0), - L_(1.0)
     };
-  volatile DOUBLE x;
-  volatile DOUBLE y;
-  volatile DOUBLE z;
-  volatile DOUBLE result;
-  volatile DOUBLE expected;
 
   /* A product x * y that consists of two bits.  */
   {
+    volatile DOUBLE x;
+    volatile DOUBLE y;
+    volatile DOUBLE z;
+    volatile DOUBLE result;
+    volatile DOUBLE expected;
     int xs;
     int xe;
     int ys;
@@ -127,6 +127,11 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
   }
   /* A product x * y that consists of three bits.  */
   {
+    volatile DOUBLE x;
+    volatile DOUBLE y;
+    volatile DOUBLE z;
+    volatile DOUBLE result;
+    volatile DOUBLE expected;
     int i;
     int xs;
     int xe;
@@ -361,6 +366,11 @@ test_function (DOUBLE (*my_fma) (DOUBLE, DOUBLE, DOUBLE))
   /* A product x * y that consists of one segment of bits (or, if you prefer,
      two bits, one with positive weight and one with negative weight).  */
   {
+    volatile DOUBLE x;
+    volatile DOUBLE y;
+    volatile DOUBLE z;
+    volatile DOUBLE result;
+    volatile DOUBLE expected;
     int i;
     int xs;
     int xe;
