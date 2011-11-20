@@ -1,3 +1,10 @@
+2011-11-20  Bruno Haible  <bruno@clisp.org>
+
+	sethostname: Mention more portability problems.
+	* doc/glibc-functions/sethostname.texi: Mention the missing declaration
+	problem.
+	Reported by Ben Walton <bwalton@artsci.utoronto.ca>.
+
 2011-11-19  Bruno Haible  <bruno@clisp.org>
 
 	Depend on module fcntl-h when AT_FDCWD is used.
