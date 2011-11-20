@@ -1,5 +1,10 @@
 2011-11-20  Bruno Haible  <bruno@clisp.org>
 
+	copysignf tests: Fix.
+	* tests/test-copysignf.c: Fix signature check.
+
+2011-11-20  Bruno Haible  <bruno@clisp.org>
+
 	fma: Remove unused code.
 	* lib/fma.c (DECL_ROUNDING, BEGIN_ROUNDING, END_ROUNDING): Remove
 	unused macros.

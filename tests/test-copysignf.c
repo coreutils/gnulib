@@ -21,7 +21,7 @@
 #include <math.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (copysignf, double, (double, double));
+SIGNATURE_CHECK (copysignf, float, (float, float));
 
 #include "macros.h"
 #include "minus-zero.h"
