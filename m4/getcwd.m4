@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 9
+# serial 10
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -108,12 +108,18 @@ AC_DEFUN([gl_FUNC_GETCWD],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   gl_abort_bug=no
-  case $gl_cv_func_getcwd_null,$host_os in
-  *,mingw*)
-    gl_cv_func_getcwd_path_max=yes;;
-  yes,*)
-    gl_FUNC_GETCWD_PATH_MAX
-    gl_FUNC_GETCWD_ABORT_BUG([gl_abort_bug=yes]);;
+  case "$host_os" in
+    mingw*)
+      gl_cv_func_getcwd_path_max=yes
+      ;;
+    *)
+      case "$gl_cv_func_getcwd_null" in
+        *yes)
+          gl_FUNC_GETCWD_PATH_MAX
+          gl_FUNC_GETCWD_ABORT_BUG([gl_abort_bug=yes])
+          ;;
+      esac
+      ;;
   esac
 
   case $gl_cv_func_getcwd_null,$gl_cv_func_getcwd_posix_signature$gl_cv_func_getcwd_path_max,$gl_abort_bug in
