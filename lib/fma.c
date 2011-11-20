@@ -41,9 +41,6 @@
 # define LDEXP ldexpl
 # define MIN_EXP LDBL_MIN_EXP
 # define MANT_BIT LDBL_MANT_BIT
-# define DECL_ROUNDING DECL_LONG_DOUBLE_ROUNDING
-# define BEGIN_ROUNDING() BEGIN_LONG_DOUBLE_ROUNDING ()
-# define END_ROUNDING() END_LONG_DOUBLE_ROUNDING ()
 # define L_(literal) literal##L
 #elif ! defined USE_FLOAT
 # define FUNC fma
@@ -52,9 +49,6 @@
 # define LDEXP ldexp
 # define MIN_EXP DBL_MIN_EXP
 # define MANT_BIT DBL_MANT_BIT
-# define DECL_ROUNDING
-# define BEGIN_ROUNDING()
-# define END_ROUNDING()
 # define L_(literal) literal
 #else /* defined USE_FLOAT */
 # define FUNC fmaf
@@ -63,9 +57,6 @@
 # define LDEXP ldexpf
 # define MIN_EXP FLT_MIN_EXP
 # define MANT_BIT FLT_MANT_BIT
-# define DECL_ROUNDING
-# define BEGIN_ROUNDING()
-# define END_ROUNDING()
 # define L_(literal) literal##f
 #endif
 
