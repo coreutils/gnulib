@@ -1,5 +1,23 @@
 2011-11-20  Bruno Haible  <bruno@clisp.org>
 
+	getcwd: Work around getcwd bug on AIX 5..7.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX): Require
+	AC_CANONICAL_HOST. Assign exit code 31 to the bug seen on AIX 5.1..7.1.
+	Use a different value for gl_cv_func_getcwd_path_max. Move the
+	definition of HAVE_PARTLY_WORKING_GETCWD from here...
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): ... to here. Invoke
+	gl_FUNC_GETCWD_PATH_MAX also when $gl_cv_func_getcwd_null is 'no'.
+	Define HAVE_MINIMALLY_WORKING_GETCWD.
+	* lib/getcwd.c (__getcwd): Don't use the system's getcwd on platforms
+	where it is not even minimally working, that is, on AIX.
+	* tests/test-getcwd.c (test_long_name): Distinguish the same cases as
+	m4/getcwd-path-max.m4.
+	(main): Update exit code computation.
+	* doc/posix-functions/getcwd.texi: Mention list of platforms where
+	getcwd does not handle long file names.
+
+2011-11-20  Bruno Haible  <bruno@clisp.org>
+
 	getcwd: Fix bug from 2009-09-10.
 	* m4/getcwd.m4 (gl_FUNC_GETCWD): Treat "guessing yes" like "yes", not
 	like "no".

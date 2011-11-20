@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -16,6 +16,7 @@
 AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
 [
   AC_CHECK_DECLS_ONCE([getcwd])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_REQUIRE([gl_PATHMAX_SNIPPET_PREREQ])
@@ -124,7 +125,12 @@ main ()
               fail = 11;
               break;
             }
-          if (c || ! (errno == ERANGE || is_ENAMETOOLONG (errno)))
+          if (c)
+            {
+              fail = 31;
+              break;
+            }
+          if (! (errno == ERANGE || is_ENAMETOOLONG (errno)))
             {
               fail = 21;
               break;
@@ -184,14 +190,12 @@ main ()
     [gl_cv_func_getcwd_path_max=yes],
     [case $? in
      10|11|12) gl_cv_func_getcwd_path_max='no, but it is partly working';;
+     31) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
      *) gl_cv_func_getcwd_path_max=no;;
      esac],
-    [gl_cv_func_getcwd_path_max=no])
+    [case "$host_os" in
+       aix*) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
+       *) gl_cv_func_getcwd_path_max=no;;
+     esac])
   ])
-  case $gl_cv_func_getcwd_path_max in
-  no,*)
-    AC_DEFINE([HAVE_PARTLY_WORKING_GETCWD], [1],
-      [Define to 1 if getcwd works, except it sometimes fails when it shouldn't,
-       setting errno to ERANGE, ENAMETOOLONG, or ENOENT.]);;
-  esac
 ])

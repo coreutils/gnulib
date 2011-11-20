@@ -164,9 +164,14 @@ test_long_name (void)
               fail = 3;
               break;
             }
-          if (c || ! (errno == ERANGE || errno == ENAMETOOLONG))
+          if (c)
             {
               fail = 4;
+              break;
+            }
+          if (! (errno == ERANGE || errno == ENAMETOOLONG))
+            {
+              fail = 5;
               break;
             }
         }
@@ -181,12 +186,12 @@ test_long_name (void)
               if (! (errno == ERANGE || errno == ENOENT
                      || errno == ENAMETOOLONG))
                 {
-                  fail = 5;
+                  fail = 6;
                   break;
                 }
               if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
                 {
-                  fail = 6;
+                  fail = 7;
                   break;
                 }
             }
@@ -194,7 +199,7 @@ test_long_name (void)
 
       if (c && strlen (c) != cwd_len)
         {
-          fail = 7;
+          fail = 8;
           break;
         }
       ++n_chdirs;
@@ -224,5 +229,5 @@ test_long_name (void)
 int
 main (int argc, char **argv)
 {
-  return test_abort_bug () * 8 + test_long_name ();
+  return test_abort_bug () * 10 + test_long_name ();
 }
