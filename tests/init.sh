@@ -221,11 +221,35 @@ export MALLOC_PERTURB_
 # a partition, or to undo any other global state changes.
 cleanup_ () { :; }
 
+# Arrange not to let diff or cmp operate on /dev/null,
+# since on some systems (at least OSF/1 5.1), that doesn't work.
+# When there are not two arguments, or no argument is /dev/null, return 2.
+# When one argument is /dev/null and the other is not empty,
+# cat the nonempty file to stderr and return 1.
+# Otherwise, return 0.
+compare_dev_null_ ()
+{
+  test $# = 2 || return 2
+
+  if test "x$1" = x/dev/null; then
+    set dummy "$2" "$1"; shift
+  fi
+
+  test "x$2" = x/dev/null || return 2
+
+  test -s "$1" || return 0
+
+  cat - "$1" <<EOF >&2
+Unexpected contents of $1:
+EOF
+  return 1
+}
+
 if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
   if test -z "$diff_out_"; then
-    compare () { diff -u "$@"; }
+    compare_ () { diff -u "$@"; }
   else
-    compare ()
+    compare_ ()
     {
       if diff -u "$@" > diff.out; then
         # No differences were found, but Solaris 'diff' produces output
@@ -241,9 +265,9 @@ if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
   fi
 elif diff_out_=`( diff -c "$0" "$0" < /dev/null ) 2>/dev/null`; then
   if test -z "$diff_out_"; then
-    compare () { diff -c "$@"; }
+    compare_ () { diff -c "$@"; }
   else
-    compare ()
+    compare_ ()
     {
       if diff -c "$@" > diff.out; then
         # No differences were found, but AIX and HP-UX 'diff' produce output
@@ -259,10 +283,21 @@ elif diff_out_=`( diff -c "$0" "$0" < /dev/null ) 2>/dev/null`; then
     }
   fi
 elif ( cmp --version < /dev/null 2>&1 | grep GNU ) > /dev/null 2>&1; then
-  compare () { cmp -s "$@"; }
+  compare_ () { cmp -s "$@"; }
 else
-  compare () { cmp "$@"; }
+  compare_ () { cmp "$@"; }
 fi
+
+# Given compare_dev_null_'s preprocessing, defer to compare_ if 2 or more.
+# Otherwise, propagate $? to caller: any diffs have already been printed.
+compare ()
+{
+  compare_dev_null_ "$@"
+  case $? in
+    0|1) return $?;;
+    *) compare_ "$@";;
+  esac
+}
 
 # An arbitrary prefix to help distinguish test directories.
 testdir_prefix_ () { printf gt; }

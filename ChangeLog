@@ -1,3 +1,11 @@
+2011-11-21  Jim Meyering  <meyering@redhat.com>
+	    Eric Blake  <eblake@redhat.com>
+
+	init.sh: work around OSF/1 5.1's mishandling of /dev/null
+	* tests/init.sh: Make our compare function slightly more portable.
+	Reported by Bruno Haible in
+	http://thread.gmane.org/gmane.comp.gnu.grep.bugs/4020
+
 2011-11-21  Simon Josefsson  <simon@josefsson.org>
 
 	* m4/gnulib-common.m4 (_Noreturn): Check that _MSC_VER is defined
