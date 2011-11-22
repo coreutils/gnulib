@@ -1,3 +1,11 @@
+2011-11-22  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: make "compare /dev/null FILE" output more readable
+	* tests/init.sh (compare_): Document the preferred order of arguments.
+	(emit_diff_u_header_): New function.
+	(compare_dev_null_): Emit a simulated diff, rather than just the
+	contents of the unexpected file.  Suggestion from Bruno Haible.
+
 2011-11-21  Jim Meyering  <meyering@redhat.com>
 	    Eric Blake  <eblake@redhat.com>
 

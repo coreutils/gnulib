@@ -221,6 +221,15 @@ export MALLOC_PERTURB_
 # a partition, or to undo any other global state changes.
 cleanup_ () { :; }
 
+# Emit a header similar to that from diff -u;  Print the simulated "diff"
+# command so that the order of arguments is clear.  Don't bother with @@ lines.
+emit_diff_u_header_ ()
+{
+  printf '%s\n' "diff -u $*" \
+    "--- $1	1970-01-01" \
+    "+++ $2	1970-01-01"
+}
+
 # Arrange not to let diff or cmp operate on /dev/null,
 # since on some systems (at least OSF/1 5.1), that doesn't work.
 # When there are not two arguments, or no argument is /dev/null, return 2.
@@ -232,17 +241,18 @@ compare_dev_null_ ()
   test $# = 2 || return 2
 
   if test "x$1" = x/dev/null; then
-    set dummy "$2" "$1"; shift
+    test -s "$2" || return 0
+    { emit_diff_u_header_ "$@"; sed 's/^/+/' -- "$2"; } >&2
+    return 1
   fi
 
-  test "x$2" = x/dev/null || return 2
+  if test "x$2" = x/dev/null; then
+    test -s "$1" || return 0
+    { emit_diff_u_header_ "$@"; sed 's/^/-/' -- "$1"; } >&2
+    return 1
+  fi
 
-  test -s "$1" || return 0
-
-  cat - "$1" <<EOF >&2
-Unexpected contents of $1:
-EOF
-  return 1
+  return 2
 }
 
 if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
@@ -288,6 +298,8 @@ else
   compare_ () { cmp "$@"; }
 fi
 
+# Usage: compare EXPECTED ACTUAL
+#
 # Given compare_dev_null_'s preprocessing, defer to compare_ if 2 or more.
 # Otherwise, propagate $? to caller: any diffs have already been printed.
 compare ()
