@@ -1,3 +1,10 @@
+2011-11-25  Simon Josefsson  <simon@josefsson.org>
+
+	valgrind-tests.m4: Avoid breakage if valgrind on bash fails.
+	* m4/valgrind-tests.m4: Check that the parameters that will be
+	used works, not just a subset of them.  Reported by Bruno Haible
+	<bruno@clisp.org>.
+
 2011-11-24  Jim Meyering  <meyering@redhat.com>
 
 	test-stdalign.c: comment out long double tests
