@@ -103,7 +103,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2009 \
-  update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
+  update-copyright $TMP.? 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
 compare - $TMP-stderr <<EOF || exit 1
 $TMP.4: warning: copyright statement not found
@@ -145,7 +145,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_USE_INTERVALS=1 \
-  update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
+  update-copyright $TMP.? 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
 compare - $TMP-stderr <<EOF || exit 1
 $TMP.4: warning: copyright statement not found
@@ -183,7 +183,7 @@ Copyright (C) 1990-2005, 2007-2009 Acme, Inc.
 EOF
 
 UPDATE_COPYRIGHT_YEAR=2010 UPDATE_COPYRIGHT_FORCE=1 \
-  update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
+  update-copyright $TMP.? 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
 compare - $TMP-stderr <<EOF || exit 1
 $TMP.4: warning: copyright statement not found

@@ -1,3 +1,11 @@
+2011-11-25  Jim Meyering  <meyering@redhat.com>
+
+	test-update-copyright.sh: avoid false-positive failure
+	* tests/test-update-copyright.sh: Use $TMP.? (not $TMP.*), to work
+	around false positive failure on Cygwin/Windows.  The latter was
+	matching erroneously-created files with names like
+	update-copyright.test-ex.4.bak.  Reported by Simon Josefsson.
+
 2011-11-25  Simon Josefsson  <simon@josefsson.org>
 
 	valgrind-tests.m4: Avoid breakage if valgrind on bash fails.
