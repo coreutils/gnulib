@@ -1,3 +1,10 @@
+2011-11-25  Bruno Haible  <bruno@clisp.org>
+
+	pagealign_alloc: Doc and comments.
+	* doc/posix-functions/posix_memalign.texi: Refer to the pagealign_alloc
+	module.
+	* lib/pagealign_alloc.c (pagealign_alloc): Add comment.
+
 2011-11-25  Jim Meyering  <meyering@redhat.com>
 
 	test-update-copyright.sh: avoid false-positive failure
