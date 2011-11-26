@@ -1,4 +1,4 @@
-# getopt.m4 serial 38
+# getopt.m4 serial 39
 dnl Copyright (C) 2002-2006, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,8 +25,6 @@ AC_DEFUN([gl_FUNC_GETOPT_POSIX],
   if test $REPLACE_GETOPT = 1; then
     dnl Arrange for getopt.h to be created.
     gl_GETOPT_SUBSTITUTE_HEADER
-    dnl Arrange for unistd.h to include getopt.h.
-    GNULIB_UNISTD_H_GETOPT=1
   fi
 ])
 

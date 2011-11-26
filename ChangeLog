@@ -1,3 +1,18 @@
+2011-11-26  Bruno Haible  <bruno@clisp.org>
+
+	Fix conflict between two instantiations of module 'unistd'.
+	* gnulib-tool (func_emit_autoconf_snippet): Substitute
+	${include_guard_prefix} also in the autoconf snippet.
+	* m4/getopt.m4 (gl_FUNC_GETOPT_POSIX): Don't set GNULIB_UNISTD_H_GETOPT.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Don't initialize
+	GNULIB_UNISTD_H_GETOPT.
+	* modules/getopt-posix (configure.ac): Set the
+	GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT variable.
+	* modules/getopt-gnu (configure.ac): Likewise.
+	* modules/unistd (Makefile.am): Change the substitution value of
+	GNULIB_UNISTD_H_GETOPT to depend on the include guard prefix.
+	Reported by Simon Josefsson.
+
 2011-11-25  Bruno Haible  <bruno@clisp.org>
 
 	pagealign_alloc: Doc and comments.

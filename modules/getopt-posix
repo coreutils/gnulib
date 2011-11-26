@@ -21,7 +21,10 @@ if test $REPLACE_GETOPT = 1; then
   AC_LIBOBJ([getopt])
   AC_LIBOBJ([getopt1])
   gl_PREREQ_GETOPT
+  dnl Arrange for unistd.h to include getopt.h.
+  GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT=1
 fi
+AC_SUBST([GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT])
 
 Makefile.am:
 BUILT_SOURCES += $(GETOPT_H)

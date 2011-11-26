@@ -3852,6 +3852,8 @@ func_emit_initmacro_done ()
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - sed_replace_include_guard_prefix
+#                     sed expression for resolving ${gl_include_guard_prefix}
 # - module            the module name
 # - toplevel          true or false. 'false' means a subordinate use of
 #                     gnulib-tool.
@@ -3874,6 +3876,7 @@ func_emit_autoconf_snippet ()
     func_get_autoconf_snippet "$module" \
       | sed -e '/^$/d;' -e "s/^/$indentation/" \
             -e "$sed_replace_build_aux" \
+            -e "$sed_replace_include_guard_prefix" \
       | { if $disable_libtool; then
             sed -e 's/\$gl_cond_libtool/false/g' \
                 -e 's/gl_libdeps/gltests_libdeps/g' \
@@ -3903,6 +3906,8 @@ func_emit_autoconf_snippet ()
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
+# - sed_replace_include_guard_prefix
+#                     sed expression for resolving ${gl_include_guard_prefix}
 # - modules           the list of modules.
 # - verifier          one of func_verify_module, func_verify_nontests_module,
 #                     func_verify_tests_module. It selects the subset of
