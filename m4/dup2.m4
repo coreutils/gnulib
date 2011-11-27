@@ -1,4 +1,4 @@
-#serial 16
+#serial 17
 dnl Copyright (C) 2002, 2005, 2007, 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,7 +67,9 @@ AC_DEFUN([gl_FUNC_DUP2],
   m4_ifdef([gl_FUNC_FCHDIR], [
     gl_TEST_FCHDIR
     if test $HAVE_FCHDIR = 0; then
-      REPLACE_DUP2=1
+      if test $HAVE_DUP2 = 1; then
+        REPLACE_DUP2=1
+      fi
     fi
   ])
 ])

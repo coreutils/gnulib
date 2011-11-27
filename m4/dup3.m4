@@ -1,4 +1,4 @@
-# dup3.m4 serial 3
+# dup3.m4 serial 4
 dnl Copyright (C) 2009-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,9 @@ dnl  dnl to keep fchdir's bookkeeping up-to-date.
 dnl  m4_ifdef([gl_FUNC_FCHDIR], [
 dnl    gl_TEST_FCHDIR
 dnl    if test $HAVE_FCHDIR = 0; then
-dnl      REPLACE_DUP3=1
+dnl      if test $HAVE_DUP3 = 1; then
+dnl        REPLACE_DUP3=1
+dnl      fi
 dnl    fi
 dnl  ])
 ])

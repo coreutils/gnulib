@@ -1,5 +1,16 @@
 2011-11-27  Bruno Haible  <bruno@clisp.org>
 
+	Don't set REPLACE_FOO to 1 if HAVE_FOO is 0.
+	* m4/opendir.m4 (gl_FUNC_OPENDIR): Don't set REPLACE_OPENDIR to 1 if
+	HAVE_OPENDIR is 0.
+	* m4/closedir.m4 (gl_FUNC_CLOSEDIR): Don't set REPLACE_CLOSEDIR to 1 if
+	HAVE_CLOSEDIR is 0.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Don't set REPLACE_DUP2 to 1 if HAVE_DUP2
+	is 0.
+	* m4/dup3.m4 (gl_FUNC_DUP3): Update comments.
+
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
 	getcwd: Fix bug from 2011-08-17.
 	* m4/getcwd.m4 (gl_FUNC_GETCWD): Set REPLACE_GETCWD to 1 only on
 	platforms that need it.
