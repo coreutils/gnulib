@@ -1,5 +1,10 @@
 2011-11-27  Bruno Haible  <bruno@clisp.org>
 
+	getcwd: Fix link error on MSVC 9.
+	* modules/getcwd (Depends-on): Add readdir, rewinddir.
+
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
 	Don't set REPLACE_FOO to 1 if HAVE_FOO is 0.
 	* m4/opendir.m4 (gl_FUNC_OPENDIR): Don't set REPLACE_OPENDIR to 1 if
 	HAVE_OPENDIR is 0.
