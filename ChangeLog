@@ -1,5 +1,14 @@
 2011-11-27  Bruno Haible  <bruno@clisp.org>
 
+	getcwd: Fix bug from 2011-08-17.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): Set REPLACE_GETCWD to 1 only on
+	platforms that need it.
+	* m4/getcwd-abort-bug.m4 (gl_FUNC_GETCWD_ABORT_BUG): Consider a return
+	code of 4 to be a failure, not a success. This ensures that
+	REPLACE_GETCWD becomes 1 on OpenBSD 4.9 and NetBSD 5.1.
+
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
 	binary-io tests: Avoid test failure on mingw when libtool is used.
 	* tests/test-binary-io.c (main): Don't remove t-bin-out2.tmp here.
 	Don't verify the size of t-bin-out1.tmp here.
