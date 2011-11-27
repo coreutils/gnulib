@@ -1,3 +1,11 @@
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
+	binary-io tests: Avoid test failure on mingw when libtool is used.
+	* tests/test-binary-io.c (main): Don't remove t-bin-out2.tmp here.
+	Don't verify the size of t-bin-out1.tmp here.
+	* tests/test-binary-io.sh: Verify it here.
+	Reported by Simon Josefsson.
+
 2011-11-26  Bruno Haible  <bruno@clisp.org>
 
 	Fix conflict between two instantiations of module 'unistd'.
