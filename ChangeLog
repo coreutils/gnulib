@@ -1,5 +1,11 @@
 2011-11-28  Jim Meyering  <meyering@redhat.com>
 
+	propername: do not mark proper_name with the const attribute
+	* lib/propername.h (proper_name): Do *not* mark as _GL_ATTRIBUTE_CONST,
+	since it examines data pointed to by its parameter.
+	* lib/propername.c (proper_name): Instead, add a pragma to suppress
+	the suggestion from -Wsuggest-attribute=const.
+
 	propername: mark one more function as const
 	* lib/propername.h (proper_name): Mark as _GL_ATTRIBUTE_CONST.
 

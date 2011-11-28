@@ -15,6 +15,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+/* Without this pragma, gcc 4.7.0 20111124 mistakenly suggests that
+   the proper_name function might be candidate for attribute 'const'  */
+#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
+#endif
+
 #include <config.h>
 
 /* Specification.  */
