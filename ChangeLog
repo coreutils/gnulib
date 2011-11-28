@@ -1,5 +1,14 @@
 2011-11-27  Bruno Haible  <bruno@clisp.org>
 
+	Remove unused macros from !_LIBC code in glibc-borrowed files.
+	* lib/fnmatch.c (STRCOLL): Remove macro.
+	* lib/fnmatch_loop.c (STRCOLL): Remove undef.
+	* lib/glob.c (__stat, __readdir64): Remove macros.
+	* lib/tempname.c (__open64, __xstat64): Remove macros.
+	Suggested by Paul Eggert.
+
+2011-11-27  Bruno Haible  <bruno@clisp.org>
+
 	getcwd: Fix link error on MSVC 9.
 	* modules/getcwd (Depends-on): Add readdir, rewinddir.
 

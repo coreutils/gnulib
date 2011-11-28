@@ -67,9 +67,7 @@
 # define __gettimeofday gettimeofday
 # define __mkdir mkdir
 # define __open open
-# define __open64 open
 # define __lxstat64(version, file, buf) lstat (file, buf)
-# define __xstat64(version, file, buf) stat (file, buf)
 #endif
 
 #if ! (HAVE___SECURE_GETENV || _LIBC)

@@ -1214,7 +1214,6 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
 #undef END
 #undef MEMPCPY
 #undef MEMCHR
-#undef STRCOLL
 #undef STRLEN
 #undef STRCAT
 #undef L_

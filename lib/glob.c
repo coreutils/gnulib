@@ -145,10 +145,8 @@
 # define __stat64(fname, buf)   stat (fname, buf)
 # define __fxstatat64(_, d, f, st, flag) fstatat (d, f, st, flag)
 # define struct_stat64          struct stat
-# define __stat(fname, buf)     stat (fname, buf)
 # define __alloca               alloca
 # define __readdir              readdir
-# define __readdir64            readdir64
 # define __glob_pattern_p       glob_pattern_p
 #endif /* _LIBC */
 
