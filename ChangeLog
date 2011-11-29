@@ -1,3 +1,9 @@
+2011-11-29  Jim Meyering  <meyering@redhat.com>
+
+	quotearg, propername: correct pragma guard expression
+	* lib/quotearg.c: Enable pragma for gcc-4.6 and newer, not 4.3 and newer.
+	* lib/propername.c: Likewise.  Reported by Bernhard Voelker.
+
 2011-11-28  Jim Meyering  <meyering@redhat.com>
 
 	propername: do not mark proper_name with the const attribute

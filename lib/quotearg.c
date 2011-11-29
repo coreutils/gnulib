@@ -20,7 +20,7 @@
 /* Without this pragma, gcc 4.7.0 20111124 mistakenly suggests that
    the quoting_options_from_style function might be candidate for
    attribute 'pure'  */
-#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
 # pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
 #endif
 
