@@ -540,7 +540,7 @@ check_tuning (Hash_table *table)
    TUNING, or return 0 if there is no possible way to allocate that
    many entries.  */
 
-static size_t
+static size_t _GL_ATTRIBUTE_PURE
 compute_bucket_size (size_t candidate, const Hash_tuning *tuning)
 {
   if (!tuning->is_n_buckets)

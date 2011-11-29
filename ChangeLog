@@ -1,5 +1,8 @@
 2011-11-29  Jim Meyering  <meyering@redhat.com>
 
+	hash: mark compute_bucket_size with the pure attribute
+	* lib/hash.c (compute_bucket_size): Use _GL_ATTRIBUTE_PURE.
+
 	quotearg, propername: correct pragma guard expression
 	* lib/quotearg.c: Enable pragma for gcc-4.6 and newer, not 4.3 and newer.
 	* lib/propername.c: Likewise.  Reported by Bernhard Voelker.
