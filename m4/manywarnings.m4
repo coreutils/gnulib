@@ -1,4 +1,4 @@
-# manywarnings.m4 serial 1
+# manywarnings.m4 serial 2
 dnl Copyright (C) 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -171,7 +171,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC],
     -Wsuggest-attribute=noreturn \
     -Wsuggest-attribute=pure \
     -Wtrampolines \
-    -Wunsuffixed-float-constants \
     ; do
     gl_manywarn_set="$gl_manywarn_set $gl_manywarn_item"
   done

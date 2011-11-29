@@ -1,3 +1,9 @@
+2011-11-29  Eric Blake  <eblake@redhat.com>
+
+	manywarnings: drop -Wunsuffixed-float-constants
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): C99 does not allow
+	'1.0D', which is the only way to silence this warning for 'double'.
+
 2011-11-29  Jim Meyering  <meyering@redhat.com>
 
 	hash: mark compute_bucket_size with the pure attribute
