@@ -1,5 +1,9 @@
 2011-11-29  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: add syntax check for use of compare from init.sh
+	* top/maint.mk (sc_prohibit_reversed_compare_failure): New rule,
+	moved here from coreutils.
+
 	manywarnings: drop -Wunsuffixed-float-constants
 	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): C99 does not allow
 	'1.0D', which is the only way to silence this warning for 'double'.

@@ -1157,6 +1157,16 @@ sc_cross_check_PATH_usage_in_tests:
 		1>&2; exit 1; } || :;					\
 	fi
 
+# BRE regex of file contents to identify a test script.
+_test_script_regex ?= \<init\.sh\>
+
+# In tests, use "compare expected actual", not the reverse.
+sc_prohibit_reversed_compare_failure:
+	@prohibit='\<compare [^ ]+ ([^ ]*exp|/dev/null)'		\
+	containing='$(_test_script_regex)'				\
+	halt='reversed compare arguments'				\
+	  $(_sc_search_regexp)
+
 # #if HAVE_... will evaluate to false for any non numeric string.
 # That would be flagged by using -Wundef, however gnulib currently
 # tests many undefined macros, and so we can't enable that option.
