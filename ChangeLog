@@ -1,3 +1,11 @@
+2011-11-30  Jim Meyering  <meyering@redhat.com>
+
+	hash: mark a few floating point constants with "f" suffix
+	* lib/hash.c (DEFAULT_GROWTH_THRESHOLD, DEFAULT_GROWTH_FACTOR)
+	(DEFAULT_SHRINK_THRESHOLD, DEFAULT_SHRINK_FACTOR): Mark literal
+	floating point constants with "f", since they're destined to be
+	saved/used as "float"s.
+
 2011-11-29  Paolo Bonzini  <bonzini@gnu.org>
 
 	float tests: Correct and re-enable assertion about LDBL_MIN_EXP.
