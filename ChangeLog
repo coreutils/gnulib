@@ -1,3 +1,9 @@
+2011-11-30  Simon Josefsson  <simon@josefsson.org>
+
+	manywarnings: Don't mention gcc version in docstring.
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Doc fix.  Suggested by
+	Jim Meyering <meyering@redhat.com>.
+
 2011-11-30  Jim Meyering  <meyering@redhat.com>
 
 	hash: mark a few floating point constants with "f" suffix
