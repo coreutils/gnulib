@@ -298,14 +298,7 @@ test_long_double (void)
 
   /* Check that 'long double' is at least as wide as 'double'.  */
   ASSERT (LDBL_MANT_DIG >= DBL_MANT_DIG);
-
-  /* Normally, we would also assert this:
-       ASSERT (LDBL_MIN_EXP <= DBL_MIN_EXP);
-     but at least on powerpc64 with gcc-4.4.4, it would fail:
-     $ :|gcc -dD -E -include stddef.h -|grep -E 'L?DBL_MIN_EXP'
-     #define __DBL_MIN_EXP__ (-1021)
-     #define __LDBL_MIN_EXP__ (-968)
-  */
+  ASSERT (LDBL_MIN_EXP - LDBL_MANT_DIG <= DBL_MIN_EXP - DBL_MANT_DIG);
   ASSERT (LDBL_MAX_EXP >= DBL_MAX_EXP);
 
   /* Check the value of LDBL_DIG.  */
