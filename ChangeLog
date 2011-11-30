@@ -1,3 +1,10 @@
+2011-11-29  Matthew Wala  <wala1@illinois.edu>  (tiny change)
+
+	Avoid subtracting two pointers that don't point into the same block.
+	* lib/argp-help.c (hol_append): Reorder pointer subtractions so that
+	only pointers into the same memory block are subtracted. We cannot
+	assume that sizeof (ptrdiff_t) == sizeof (void *).
+
 2011-11-29  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: add syntax check for use of compare from init.sh
