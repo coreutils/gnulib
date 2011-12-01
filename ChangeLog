@@ -1,3 +1,8 @@
+2011-12-01  Eric Blake  <eblake@redhat.com>
+
+	mktempd: silence dd usage
+	* build-aux/mktempd (rand_bytes): Silence dd.
+
 2011-11-30  Simon Josefsson  <simon@josefsson.org>
 
 	manywarnings: Don't mention gcc version in docstring.
