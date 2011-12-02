@@ -13,6 +13,8 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on most circa-2011 platforms.
+@item
+Clang 3.0's @code{<stdalign.h>} does not define @code{alignof}/@code{_Alignof}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

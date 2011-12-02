@@ -1,3 +1,12 @@
+2011-12-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: port to Clang 3.0
+	Problem reported by Simon Josefsson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-12/msg00005.html>.
+	* doc/posix-headers/stdalign.texi (stdalign.h): Mention Clang 3.0,
+	which has <stdalign.h> but which does not define alignof.
+	* m4/stdalign.m4 (gl_STDALIGN_H): Check for Clang 3.0's problem.
+
 2011-12-01  Eric Blake  <eblake@redhat.com>
 
 	mktempd: silence dd usage
