@@ -1,5 +1,14 @@
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Verify that the License field is present and non-empty.
+	* gnulib-tool (func_get_license_raw): New function, extracted from
+	func_get_license.
+	(func_get_license): Use it. Warn if the module is not a test module and
+	has no license.
+	Suggested by Jim Meyering.
+
+2011-12-03  Bruno Haible  <bruno@clisp.org>
+
 	sethostname tests: Fix link error on mingw.
 	* tests/test-sethostname1.c: New file, extracted from
 	tests/test-sethostname.c.

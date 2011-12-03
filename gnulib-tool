@@ -2375,31 +2375,50 @@ func_get_link_directive ()
   fi
 }
 
+# func_get_license_raw module
+# Input:
+# - local_gnulib_dir  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_license_raw ()
+{
+  if ! $modcache; then
+    func_lookup_file "modules/$1"
+    sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
+  else
+    func_cache_lookup_module "$1"
+    # Output the field's value, including the final newline (if any).
+    if $have_associative; then
+      if eval 'test -n "${modcache_license[$1]+set}"'; then
+        eval 'echo "${modcache_license[$1]}"'
+      fi
+    else
+      eval "field_set=\"\$${cachevar}_license_set\""
+      if test -n "$field_set"; then
+        eval "field_value=\"\$${cachevar}_license\""
+        echo "${field_value}"
+      fi
+    fi
+  fi
+}
+
 # func_get_license module
 # Input:
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_license ()
 {
-  {
-    if ! $modcache; then
-      func_lookup_file "modules/$1"
-      sed -n -e "/^License$sed_extract_prog" < "$lookedup_file"
-    else
-      func_cache_lookup_module "$1"
-      # Output the field's value, including the final newline (if any).
-      if $have_associative; then
-        if eval 'test -n "${modcache_license[$1]+set}"'; then
-          eval 'echo "${modcache_license[$1]}"'
-        fi
-      else
-        eval "field_set=\"\$${cachevar}_license_set\""
-        if test -n "$field_set"; then
-          eval "field_value=\"\$${cachevar}_license\""
-          echo "${field_value}"
-        fi
+  # Warn if the License field is missing.
+  case "$1" in
+    *-tests ) ;;
+    * )
+      license=`func_get_license_raw "$1"`
+      if test -z "$license"; then
+        func_warning "module $1 lacks a License"
       fi
-    fi
+      ;;
+  esac
+  {
+    func_get_license_raw "$1"
     # The default is GPL.
     echo "GPL"
   } | sed -e 's,^ *$,,' | sed -e 1q
