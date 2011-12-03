@@ -1,5 +1,17 @@
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
+	sethostname tests: Fix link error on mingw.
+	* tests/test-sethostname1.c: New file, extracted from
+	tests/test-sethostname.c.
+	* tests/test-sethostname2.c: New file, extracted from
+	tests/test-sethostname.c.
+	* tests/test-sethostname.c: Remove file.
+	* modules/sethostname-tests (Files): Add tests/test-sethostname1.c,
+	tests/test-sethostname2.c. Remove tests/test-sethostname.c.
+	(Depends-on): Add gethostname.
+	(Makefile.am): Compile both test-sethostname1 and test-sethostname2.
+	Link the latter with $(GETHOSTNAME_LIB).
+
 	sethostname tests: Fix compilation error on mingw.
 	* tests/test-sethostname.c: Don't include <sys/types.h>.
 	(geteuid): Use a dummy value without uid_t.

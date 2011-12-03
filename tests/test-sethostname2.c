@@ -19,9 +19,6 @@
 
 #include <unistd.h>
 
-#include "signature.h"
-SIGNATURE_CHECK (sethostname, int, (const char *, size_t));
-
 /* for HOST_NAME_MAX */
 #include <limits.h>
 /* for strlen */
