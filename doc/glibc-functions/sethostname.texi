@@ -9,6 +9,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Minix 3.1.8, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+Note that the Gnulib replacement may fail with ENOSYS on some platforms.
 @item
 This function is not declared on some platforms:
 AIX 7.1, OSF/1 5.1, Solaris 10.
@@ -16,8 +17,6 @@ AIX 7.1, OSF/1 5.1, Solaris 10.
 On Solaris 10, the first argument is @code{char *} instead of
 @code{const char *} and the second parameter is @code{int} instead of
 @code{size_t}.
-@item
-On some platforms the Gnulib replacement always fails with ENOSYS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

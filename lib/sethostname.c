@@ -26,7 +26,6 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <string.h>
 #include <limits.h>
 
 /* Set up to LEN chars of NAME as system hostname.
@@ -43,12 +42,6 @@ sethostname (const char *name, size_t len)
       return -1;
     }
 
-  /* NAME does not need to be null terminated so leave room to terminate
-     regardless of input. */
-  char hostname[HOST_NAME_MAX + 1];
-  memcpy ((void *) hostname, (const void *) name, len);
-  hostname[len] = '\0';
-
 #ifdef __minix /* Minix */
   {
     FILE *hostf;
@@ -63,24 +56,28 @@ sethostname (const char *name, size_t len)
       r = -1;
     else
       {
-        fprintf (hostf, "%s\n", hostname);
+        fprintf (hostf, "%.*s\n", (int) len, name);
         if (ferror (hostf))
           {
-            clearerr (hostf);
+            /* Close hostf, preserving the errno from the fprintf call.  */
+            int saved_errno = errno;
+            fclose (hostf);
+            errno = saved_errno;
             r = -1;
           }
-
-        /* use return value of fclose for function return value as it
-           matches our needs.  fclose will also set errno on
-           failure */
-        r = fclose (hostf);
+        else
+          {
+            if (fclose (hostf))
+              /* fclose sets errno on failure.  */
+              r = -1;
+          }
       }
 
     return r;
   }
 #else
   /* For platforms that we don't have a better option for, simply bail
-     out */
+     out.  */
   errno = ENOSYS;
   return -1;
 #endif

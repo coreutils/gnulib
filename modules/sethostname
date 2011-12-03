@@ -22,8 +22,6 @@ Makefile.am:
 Include:
 <unistd.h>
 
-Link:
-
 License:
 LGPLv2+
 

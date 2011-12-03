@@ -1,3 +1,15 @@
+2011-12-03  Bruno Haible  <bruno@clisp.org>
+
+	Tweak last commit.
+	* lib/sethostname.c: Don't include <string.h>.
+	(sethostname): No need to copy the argument string to the stack. Don't
+	call clearerr. Preserve errno when fprintf failed.
+	* m4/sethostname.m4 (gl_FUNC_SETHOSTNAME): Comment about HOST_NAME_MAX.
+	Don't invoke AC_REPLACE_FUNCS.
+	* modules/sethostname (Link): Remove empty section.
+	* doc/glibc-functions/sethostname.texi: Gnulib does not fix the ENOSYS
+	failure problem.
+
 2011-12-01  Ben Walton  <bwalton@artsci.utoronto.ca>
 
 	New module 'sethostname'.

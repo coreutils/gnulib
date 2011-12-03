@@ -6,13 +6,13 @@ dnl with or without modifications, as long as this notice is preserved.
 
 # Ensure
 # - the sethostname() function,
+# - the HOST_NAME_MAX macro in <limits.h>.
 AC_DEFUN([gl_FUNC_SETHOSTNAME],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
 
   gl_PREREQ_HOST_NAME_MAX
 
-  AC_REPLACE_FUNCS([sethostname])
   AC_CHECK_FUNCS([sethostname])
   if test $ac_cv_func_sethostname = no; then
     HAVE_SETHOSTNAME=0
