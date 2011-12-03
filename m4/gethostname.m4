@@ -43,9 +43,8 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
   gl_PREREQ_HOST_NAME_MAX
 ])
 
-dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.
+# Provide HOST_NAME_MAX when <limits.h> lacks it.
 AC_DEFUN([gl_PREREQ_HOST_NAME_MAX], [
-
   dnl - On most Unix systems, use MAXHOSTNAMELEN from <sys/param.h> instead.
   dnl - On Solaris, Cygwin, BeOS, use MAXHOSTNAMELEN from <netdb.h> instead.
   dnl - On mingw, use 256, because
