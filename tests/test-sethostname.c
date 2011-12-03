@@ -49,7 +49,7 @@ main (int argc, char *argv[] _GL_UNUSED)
   char origname[HOST_NAME_MAX];
   char newname[HOST_NAME_MAX];
   char longname[HOST_NAME_MAX + 2];
-  int rcg, rcs, i;
+  int rcs, i;
 
   /* skip the tests if we don't have root privilege.  this does not
      consider things like CAP_SYS_ADMIN (linux) or PRIV_SYS_ADMIN

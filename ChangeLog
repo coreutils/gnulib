@@ -1,5 +1,8 @@
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
+	sethostname tests: Avoid a gcc warning.
+	* tests/test-sethostname.c (main): Remove an unused variable.
+
 	Tweak last commit.
 	* modules/sethostname-tests (Files): Sort by decreasing importance.
 	(configure.ac): Check for geteuid.
