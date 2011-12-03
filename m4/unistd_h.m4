@@ -43,8 +43,8 @@ AC_DEFUN([gl_UNISTD_H],
     fdatasync fsync ftruncate getcwd getdomainname getdtablesize getgroups
     gethostname getlogin getlogin_r getpagesize getusershell setusershell
     endusershell group_member lchown link linkat lseek pipe pipe2 pread pwrite
-    readlink readlinkat rmdir sleep symlink symlinkat ttyname_r unlink unlinkat
-    usleep])
+    readlink readlinkat rmdir sethostname sleep symlink symlinkat ttyname_r
+    unlink unlinkat usleep])
 ])
 
 AC_DEFUN([gl_UNISTD_MODULE_INDICATOR],
@@ -95,6 +95,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_READLINKAT=0;           AC_SUBST([GNULIB_READLINKAT])
   GNULIB_RMDIR=0;                AC_SUBST([GNULIB_RMDIR])
   GNULIB_SLEEP=0;                AC_SUBST([GNULIB_SLEEP])
+  GNULIB_SETHOSTNAME=0;          AC_SUBST([GNULIB_SETHOSTNAME])
   GNULIB_SYMLINK=0;              AC_SUBST([GNULIB_SYMLINK])
   GNULIB_SYMLINKAT=0;            AC_SUBST([GNULIB_SYMLINKAT])
   GNULIB_TTYNAME_R=0;            AC_SUBST([GNULIB_TTYNAME_R])
@@ -131,6 +132,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_READLINK=1;        AC_SUBST([HAVE_READLINK])
   HAVE_READLINKAT=1;      AC_SUBST([HAVE_READLINKAT])
   HAVE_SLEEP=1;           AC_SUBST([HAVE_SLEEP])
+  HAVE_SETHOSTNAME=1;     AC_SUBST([HAVE_SETHOSTNAME])
   HAVE_SYMLINK=1;         AC_SUBST([HAVE_SYMLINK])
   HAVE_SYMLINKAT=1;       AC_SUBST([HAVE_SYMLINKAT])
   HAVE_UNLINKAT=1;        AC_SUBST([HAVE_UNLINKAT])
@@ -142,6 +144,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   HAVE_DECL_GETLOGIN_R=1; AC_SUBST([HAVE_DECL_GETLOGIN_R])
   HAVE_DECL_GETPAGESIZE=1; AC_SUBST([HAVE_DECL_GETPAGESIZE])
   HAVE_DECL_GETUSERSHELL=1; AC_SUBST([HAVE_DECL_GETUSERSHELL])
+  HAVE_DECL_SETHOSTNAME=1; AC_SUBST([HAVE_DECL_SETHOSTNAME])
   HAVE_DECL_TTYNAME_R=1;  AC_SUBST([HAVE_DECL_TTYNAME_R])
   HAVE_OS_H=0;            AC_SUBST([HAVE_OS_H])
   HAVE_SYS_PARAM_H=0;     AC_SUBST([HAVE_SYS_PARAM_H])
