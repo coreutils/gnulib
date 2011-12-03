@@ -1,12 +1,13 @@
 Files:
-tests/signature.h
 tests/test-sethostname.c
+tests/signature.h
 tests/macros.h
 
 Depends-on:
 sys_types
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([geteuid])
 
 Makefile.am:
 TESTS += test-sethostname

@@ -55,13 +55,16 @@ main (int argc, char *argv[] _GL_UNUSED)
      consider things like CAP_SYS_ADMIN (linux) or PRIV_SYS_ADMIN
      (solaris), etc.  systems without a working geteuid (mingw, MSVC
      9) will always skip this test. */
-  if (geteuid() != 0)
-    return 0;
+  if (geteuid () != 0)
+    {
+      fprintf (stderr, "Skipping test: insufficient permissions.\n");
+      return 77;
+    }
 
   /* we want to ensure we can do a get/set/get check to ensure the
      change is accepted. record the current name so it can be restored
      later */
-  ASSERT(gethostname (origname, sizeof (origname)) == 0);
+  ASSERT (gethostname (origname, sizeof (origname)) == 0);
 
   /* try setting a valid hostname.  if it fails -1/ENOSYS, we will
      skip the test for long names as this is an indication we're using
@@ -71,25 +74,29 @@ main (int argc, char *argv[] _GL_UNUSED)
   if (rcs != 0)
     {
       if (rcs == -1 && errno == ENOSYS)
-	return 0;
+        {
+          fprintf (stderr,
+                   "Skipping test: sethostname is not really implemented.\n");
+          return 77;
+        }
       else
-	{
-	  printf ("error setting valid hostname.\n");
-	  return 1;
-	}
+        {
+          fprintf (stderr, "error setting valid hostname.\n");
+          return 1;
+        }
     }
   else
     {
       ASSERT (gethostname (newname, sizeof (newname)) == 0);
 
       /* if we don't get back what we put in, there is no need to
-	 restore the original name as we will assume it was not
-	 properly changed. */
+         restore the original name as we will assume it was not
+         properly changed. */
       if (strcmp (newname, TESTHOSTNAME) != 0)
-	{
-	  printf ("set/get comparison failed.\n");
-	  return 1;
-	}
+        {
+          fprintf (stderr, "set/get comparison failed.\n");
+          return 1;
+        }
     }
 
   /* glibc does allow setting a zero length name, so the lower bound
@@ -100,18 +107,18 @@ main (int argc, char *argv[] _GL_UNUSED)
 
   longname[i] = '\0';
 
-  rcs = sethostname ((const char *) longname, (HOST_NAME_MAX + 1));
+  rcs = sethostname (longname, (HOST_NAME_MAX + 1));
 
   if (rcs != -1)
     {
       /* attempt to restore the original name. */
-      sethostname (origname, strlen (origname));
-      printf ("expected failure when setting very long hostname.\n");
+      ASSERT (sethostname (origname, strlen (origname)) == 0);
+      fprintf (stderr, "setting a too long hostname succeeded.\n");
       return 1;
     }
 
   /* restore the original name. */
-  sethostname (origname, strlen (origname));
+  ASSERT (sethostname (origname, strlen (origname)) == 0);
 
   return 0;
 }
