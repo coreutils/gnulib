@@ -104,8 +104,8 @@ unistd.h: unistd.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H
 	      -e 's|@''HAVE_PWRITE''@|$(HAVE_PWRITE)|g' \
 	      -e 's|@''HAVE_READLINK''@|$(HAVE_READLINK)|g' \
 	      -e 's|@''HAVE_READLINKAT''@|$(HAVE_READLINKAT)|g' \
-	      -e 's|@''HAVE_SLEEP''@|$(HAVE_SLEEP)|g' \
 	      -e 's|@''HAVE_SETHOSTNAME''@|$(HAVE_SETHOSTNAME)|g' \
+	      -e 's|@''HAVE_SLEEP''@|$(HAVE_SLEEP)|g' \
 	      -e 's|@''HAVE_SYMLINK''@|$(HAVE_SYMLINK)|g' \
 	      -e 's|@''HAVE_SYMLINKAT''@|$(HAVE_SYMLINKAT)|g' \
 	      -e 's|@''HAVE_UNLINKAT''@|$(HAVE_UNLINKAT)|g' \

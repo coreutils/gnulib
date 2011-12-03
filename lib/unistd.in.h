@@ -683,31 +683,6 @@ _GL_WARN_ON_USE (getgroups, "getgroups is unportable - "
 # endif
 #endif
 
-#if @GNULIB_SETHOSTNAME@
-/* Set the host name of the machine.
-   The host name may or may not be fully qualified.
-
-   Put LEN bytes of NAME into the host name.
-   Return 0 if successful, otherwise, set errno and return -1
-
-   Platforms with no ability to set the hostname return -1 and set
-   errno = ENOSYS. */
-#  if !@HAVE_SETHOSTNAME@ || !@HAVE_DECL_SETHOSTNAME@
-_GL_FUNCDECL_SYS (sethostname, int, (const char *name, size_t len)
-                                    _GL_ARG_NONNULL ((1)));
-#  endif
-/* Need to cast, because on Solaris 11 2011-10, MacOS X 10.5, IRIX 6.5
-   and FreeBSD 6.4 the second parameter is int.  On Solaris 11
-   2011-10, the first parameter is not const. */
-_GL_CXXALIAS_SYS_CAST (sethostname, int, (const char *name, size_t len));
-_GL_CXXALIASWARN (sethostname);
-#elif defined GNULIB_POSIXCHECK
-# undef gethostname
-# if HAVE_RAW_DECL_GETHOSTNAME
-_GL_WARN_ON_USE (sethostname, "sethostname is unportable - "
-                 "use gnulib module sethostname for portability");
-# endif
-#endif
 
 #if @GNULIB_GETHOSTNAME@
 /* Return the standard host name of the machine.
@@ -1289,6 +1264,33 @@ _GL_CXXALIASWARN (rmdir);
 # if HAVE_RAW_DECL_RMDIR
 _GL_WARN_ON_USE (rmdir, "rmdir is unportable - "
                  "use gnulib module rmdir for portability");
+# endif
+#endif
+
+
+#if @GNULIB_SETHOSTNAME@
+/* Set the host name of the machine.
+   The host name may or may not be fully qualified.
+
+   Put LEN bytes of NAME into the host name.
+   Return 0 if successful, otherwise, set errno and return -1.
+
+   Platforms with no ability to set the hostname return -1 and set
+   errno = ENOSYS.  */
+# if !@HAVE_SETHOSTNAME@ || !@HAVE_DECL_SETHOSTNAME@
+_GL_FUNCDECL_SYS (sethostname, int, (const char *name, size_t len)
+                                    _GL_ARG_NONNULL ((1)));
+# endif
+/* Need to cast, because on Solaris 11 2011-10, MacOS X 10.5, IRIX 6.5
+   and FreeBSD 6.4 the second parameter is int.  On Solaris 11
+   2011-10, the first parameter is not const.  */
+_GL_CXXALIAS_SYS_CAST (sethostname, int, (const char *name, size_t len));
+_GL_CXXALIASWARN (sethostname);
+#elif defined GNULIB_POSIXCHECK
+# undef sethostname
+# if HAVE_RAW_DECL_SETHOSTNAME
+_GL_WARN_ON_USE (sethostname, "sethostname is unportable - "
+                 "use gnulib module sethostname for portability");
 # endif
 #endif
 

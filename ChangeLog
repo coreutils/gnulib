@@ -1,3 +1,11 @@
+2011-12-03  Bruno Haible  <bruno@clisp.org>
+
+	Tweak last commit.
+	* lib/unistd.in.h (sethostname): Keep declarations in alphabetic order.
+	Fix preprocessor directives indentation. Fix typos.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Keep alphabetic order.
+	* modules/unistd (Makefile): Likewise.
+
 2011-12-01  Ben Walton  <bwalton@artsci.utoronto.ca>
 
 	Integrate the sethostname module into unistd.
