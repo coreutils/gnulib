@@ -24,8 +24,6 @@ SIGNATURE_CHECK (sethostname, int, (const char *, size_t));
 
 /* for HOST_NAME_MAX */
 #include <limits.h>
-/* for uid_t */
-#include <sys/types.h>
 /* for strlen */
 #include <string.h>
 
@@ -36,11 +34,9 @@ SIGNATURE_CHECK (sethostname, int, (const char *, size_t));
 
 #define TESTHOSTNAME "gnulib-hostname"
 
-/* mingw and MSVC 9 lack geteuid, so setup a value that will indicate
-   we don't have root privilege since we wouldn't know whether to
-   expect success or failure when setting a name anyway*/
+/* mingw and MSVC 9 lack geteuid, so setup a dummy value.  */
 #if !HAVE_GETEUID
-# define geteuid() ((uid_t) -1)
+# define geteuid() 0
 #endif
 
 int

@@ -1,5 +1,10 @@
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
+	sethostname tests: Fix compilation error on mingw.
+	* tests/test-sethostname.c: Don't include <sys/types.h>.
+	(geteuid): Use a dummy value without uid_t.
+	* modules/sethostname-tests (Depends-on): Remove sys_types.
+
 	sethostname tests: Avoid a gcc warning.
 	* tests/test-sethostname.c (main): Remove an unused variable.
 
