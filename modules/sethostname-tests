@@ -1,0 +1,13 @@
+Files:
+tests/signature.h
+tests/test-sethostname.c
+tests/macros.h
+
+Depends-on:
+sys_types
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sethostname
+check_PROGRAMS += test-sethostname

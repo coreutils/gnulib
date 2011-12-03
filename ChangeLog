@@ -1,3 +1,10 @@
+2011-12-01  Ben Walton  <bwalton@artsci.utoronto.ca>
+
+	Add a test suite for the sethostname module.
+	* modules/sethostname-tests: New file.  A test program
+	for the sethostname module.
+	* tests/test-sethostname.c: Likewise.
+
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
 	Tweak last commit.
