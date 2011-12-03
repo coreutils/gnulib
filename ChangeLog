@@ -1,3 +1,11 @@
+2011-12-03  Bruno Haible  <bruno@clisp.org>
+
+	Fix module descriptions syntax.
+	* modules/argv-iter (License): Fix syntax.
+	* modules/di-set (License): Likewise.
+	* modules/ino-map (License): Likewise.
+	Reported by Stefano Lattarini <stefano.lattarini@gmail.com>.
+
 2011-12-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port to Clang 3.0
