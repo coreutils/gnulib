@@ -1,4 +1,4 @@
-# gethostname.m4 serial 12
+# gethostname.m4 serial 13
 dnl Copyright (C) 2002, 2008-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,7 +40,12 @@ AC_DEFUN([gl_FUNC_GETHOSTNAME],
     HAVE_GETHOSTNAME=0
   fi
 
-  dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.
+  gl_PREREQ_HOST_NAME_MAX
+])
+
+dnl Also provide HOST_NAME_MAX when <limits.h> lacks it.
+AC_DEFUN([gl_PREREQ_HOST_NAME_MAX], [
+
   dnl - On most Unix systems, use MAXHOSTNAMELEN from <sys/param.h> instead.
   dnl - On Solaris, Cygwin, BeOS, use MAXHOSTNAMELEN from <netdb.h> instead.
   dnl - On mingw, use 256, because
