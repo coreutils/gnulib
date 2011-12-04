@@ -1,3 +1,9 @@
+2011-12-04  Bruno Haible  <bruno@clisp.org>
+
+	sethostname: Fix documentation.
+	* doc/glibc-functions/sethostname.texi: Move the Solaris problem to the
+	"not fixed" section.
+
 2011-12-03  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Verify that the License field is present and non-empty.

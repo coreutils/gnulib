@@ -13,12 +13,12 @@ Note that the Gnulib replacement may fail with ENOSYS on some platforms.
 @item
 This function is not declared on some platforms:
 AIX 7.1, OSF/1 5.1, Solaris 10.
-@item
-On Solaris 10, the first argument is @code{char *} instead of
-@code{const char *} and the second parameter is @code{int} instead of
-@code{size_t}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On Solaris 11 2010-11, the first argument is @code{char *} instead of
+@code{const char *} and the second parameter is @code{int} instead of
+@code{size_t}.
 @end itemize
