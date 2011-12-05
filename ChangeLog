@@ -1,4 +1,10 @@
 2011-12-04  Bruno Haible  <bruno@clisp.org>
+	    Jim Meyering  <meyering@redhat.com>
+
+	tests: Avoid spurious error message on platforms without mktemp program.
+	* tests/init.sh (mktempd_): Run mktemp in a subcommand.
+
+2011-12-04  Bruno Haible  <bruno@clisp.org>
 
 	sethostname: Fix documentation.
 	* doc/glibc-functions/sethostname.texi: Move the Solaris problem to the
