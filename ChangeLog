@@ -1,4 +1,13 @@
 2011-12-04  Bruno Haible  <bruno@clisp.org>
+
+	sethostname: Port to Windows platforms.
+	* lib/sethostname.c: Provide an alternate implementation for Windows
+	platforms.
+	* tests/test-sethostname2.c (geteuid): Redefine on Cygwin.
+	(main): Skip the test if sethostname() fails with EPERM. On Windows
+	platforms, don't check the result of gethostname().
+
+2011-12-04  Bruno Haible  <bruno@clisp.org>
 	    Jim Meyering  <meyering@redhat.com>
 
 	tests: Avoid spurious error message on platforms without mktemp program.

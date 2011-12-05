@@ -31,8 +31,10 @@
 
 #define TESTHOSTNAME "gnulib-hostname"
 
-/* mingw and MSVC 9 lack geteuid, so setup a dummy value.  */
-#if !HAVE_GETEUID
+/* mingw and MSVC 9 lack geteuid, so setup a dummy value.
+   On Cygwin, geteuid() may return non-zero even for user accounts with
+   administrator privileges, so use a dummy value as well.  */
+#if !HAVE_GETEUID || defined __CYGWIN__
 # define geteuid() 0
 #endif
 
@@ -72,6 +74,11 @@ main (int argc, char *argv[] _GL_UNUSED)
                    "Skipping test: sethostname is not really implemented.\n");
           return 77;
         }
+      else if (rcs == -1 && errno == EPERM)
+        {
+          fprintf (stderr, "Skipping test: insufficient permissions.\n");
+          return 77;
+        }
       else
         {
           fprintf (stderr, "error setting valid hostname.\n");
@@ -82,6 +89,10 @@ main (int argc, char *argv[] _GL_UNUSED)
     {
       ASSERT (gethostname (newname, sizeof (newname)) == 0);
 
+      /* On Windows, a hostname change becomes effective only after
+         a reboot.  */
+#if !((defined _WIN32 || defined __WIN32__) || defined __CYGWIN__)
+
       /* if we don't get back what we put in, there is no need to
          restore the original name as we will assume it was not
          properly changed. */
@@ -90,6 +101,7 @@ main (int argc, char *argv[] _GL_UNUSED)
           fprintf (stderr, "set/get comparison failed.\n");
           return 1;
         }
+#endif
     }
 
   /* glibc does allow setting a zero length name, so the lower bound
