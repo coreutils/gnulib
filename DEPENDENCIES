@@ -81,6 +81,16 @@ at any time.
     http://ftp.gnu.org/gnu/diffutils/
     ftp://ftp.gnu.org/gnu/diffutils/
 
+* The patch utility 'patch'.
+  + Mandatory if you use gnulib-local diffs. Using the platform's native
+    utilities gives good portability exposure, but you can also use GNU
+    patch.
+  + Homepage:
+    http://www.gnu.org/software/patch/
+  + Download:
+    http://ftp.gnu.org/gnu/patch/
+    ftp://ftp.gnu.org/gnu/patch/
+
 * Grep.
   + Mandatory. Using the platform's native grep gives good portability
     exposure, but you can also use GNU grep.

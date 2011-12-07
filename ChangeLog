@@ -1,3 +1,10 @@
+2011-12-07  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: detect tools required by gnulib-tool
+	* build-aux/bootstrap (buildreq): Provide minimum implicit
+	dependencies.
+	* DEPENDENCIES: Mention patch as a prereq.
+
 2011-12-04  Bruno Haible  <bruno@clisp.org>
 
 	sethostname: Port to Windows platforms.
