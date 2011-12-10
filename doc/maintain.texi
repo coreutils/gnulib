@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 12, 2011
+@set lastupdate December 2, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -525,6 +525,11 @@ trivial to matter for copyright purposes.  Later on you can update the
 @file{AUTHORS} file from the change log.  This can even be done
 automatically, if you are careful about the formatting of the change
 log entries.
+
+It is ok to include other email addresses, names, and program
+information in @file{AUTHORS}, such as bug-reporting information.
+@xref{Standard Mailing Lists}.
+
 
 @node Copying from Other Packages
 @section Copying from Other Packages
@@ -1059,9 +1064,7 @@ programs have their own special lists for sending bug reports.  The
 advertised bug-reporting email address should always be
 @samp{bug-@var{package}@@gnu.org}, to help show users that the program
 is a GNU package, but it is ok to set up that list to forward to another
-site if you prefer.  The package distribution should state the
-name of the bug-reporting list in a prominent place, and ask users to
-help us by reporting bugs there.
+site if you prefer.
 
 @cindex @email{bug-gnu-utils@@gnu.org}
 We also have a catch-all list, @email{bug-gnu-utils@@gnu.org}, which is
@@ -1083,6 +1086,14 @@ is better not to bother with this.
 If you wish, you can also have a mailing list
 @samp{info-@var{package}} for announcements (@pxref{Announcements}).
 Any other mailing lists you find useful can also be created.
+
+The package distribution should state the name of all the package's
+mailing lists in a prominent place, and ask users to help us by
+reporting bugs appropriately.  The top-level @file{README} file and/or
+@file{AUTHORS} file are good places.  Mailing list information should
+also be included in the manual and the package web pages (@pxref{Web
+Pages}).
+
 
 
 @node Creating Mailing Lists

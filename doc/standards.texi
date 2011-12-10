@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate September 25, 2011
+@set lastupdate December 4, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -614,8 +614,8 @@ The only sensible exceptions would be utilities specifically intended
 for interface to certain types of terminals or printers
 that can't handle those characters.
 Whenever possible, try to make programs work properly with
-sequences of bytes that represent multibyte characters, using encodings
-such as UTF-8 and others.
+sequences of bytes that represent multibyte characters; 
+UTF-8 is the most important.
 
 @cindex error messages
 Check every system call for an error return, unless you know you wish
@@ -769,7 +769,9 @@ Line numbers should start from 1 at the beginning of the file, and
 column numbers should start from 1 at the beginning of the line.  (Both
 of these conventions are chosen for compatibility.)  Calculate column
 numbers assuming that space and all ASCII printing characters have
-equal width, and assuming tab stops every 8 columns.
+equal width, and assuming tab stops every 8 columns.  For non-ASCII
+characters, Unicode character widths should be used when in a UTF-8
+locale; GNU libc and GNU gnulib provide suitable @code{wcwidth} functions.
 
 The error message can also give both the starting and ending positions
 of the erroneous text.  There are several formats so that you can
@@ -3170,11 +3172,12 @@ contexts, unless there is good reason to do something else because of
 the application domain.  For example, if source code deals with the
 French Revolutionary calendar, it is OK if its literal strings contain
 accented characters in month names like ``Flor@'eal''.  Also, it is OK
-to use non-ASCII characters to represent proper names of contributors in
-change logs (@pxref{Change Logs}).
+(but not required) to use non-ASCII characters to represent proper
+names of contributors in change logs (@pxref{Change Logs}).
 
 If you need to use non-ASCII characters, you should normally stick with
-one encoding, as one cannot in general mix encodings reliably.
+one encoding, certainly within a single file.  UTF-8 is likely to be
+the best choice.
 
 
 @node Quote Characters
@@ -4163,7 +4166,7 @@ things in the GNU system even if they are free---they are outside the
 scope of what a software distribution needs to include.
 
 Referring to a web site that describes or recommends a non-free
-program is promoting that program, so please do not make links (or
+program is promoting that program, so please do not make links to (or
 mention by name) web sites that contain such material.  This policy is
 relevant particularly for the web pages for a GNU package.
 
