@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 4, 2011
+@set lastupdate December 10, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -611,10 +611,9 @@ are silently truncated''.  This is not acceptable in a GNU utility.
 Utilities reading files should not drop NUL characters, or any other
 nonprinting characters @emph{including those with codes above 0177}.
 The only sensible exceptions would be utilities specifically intended
-for interface to certain types of terminals or printers
-that can't handle those characters.
-Whenever possible, try to make programs work properly with
-sequences of bytes that represent multibyte characters; 
+for interface to certain types of terminals or printers that can't
+handle those characters.  Whenever possible, try to make programs work
+properly with sequences of bytes that represent multibyte characters;
 UTF-8 is the most important.
 
 @cindex error messages
@@ -766,12 +765,13 @@ If you want to mention the column number, use one of these formats:
 
 @noindent
 Line numbers should start from 1 at the beginning of the file, and
-column numbers should start from 1 at the beginning of the line.  (Both
-of these conventions are chosen for compatibility.)  Calculate column
-numbers assuming that space and all ASCII printing characters have
-equal width, and assuming tab stops every 8 columns.  For non-ASCII
-characters, Unicode character widths should be used when in a UTF-8
-locale; GNU libc and GNU gnulib provide suitable @code{wcwidth} functions.
+column numbers should start from 1 at the beginning of the line.
+(Both of these conventions are chosen for compatibility.)  Calculate
+column numbers assuming that space and all ASCII printing characters
+have equal width, and assuming tab stops every 8 columns.  For
+non-ASCII characters, Unicode character widths should be used when in
+a UTF-8 locale; GNU libc and GNU gnulib provide suitable
+@code{wcwidth} functions.
 
 The error message can also give both the starting and ending positions
 of the erroneous text.  There are several formats so that you can
@@ -3175,9 +3175,9 @@ accented characters in month names like ``Flor@'eal''.  Also, it is OK
 (but not required) to use non-ASCII characters to represent proper
 names of contributors in change logs (@pxref{Change Logs}).
 
-If you need to use non-ASCII characters, you should normally stick with
-one encoding, certainly within a single file.  UTF-8 is likely to be
-the best choice.
+If you need to use non-ASCII characters, you should normally stick
+with one encoding, certainly within a single file.  UTF-8 is likely to
+be the best choice.
 
 
 @node Quote Characters
@@ -3208,8 +3208,7 @@ this time: there are no true left or right quote characters in Latin1;
 the @samp{`} character we use was standardized there as a grave
 accent.  Moreover, Latin1 is still not universally usable.
 
-Unicode contains the unambiguous quote characters required, and its
-common encoding UTF-8 is upward compatible with Latin1.  However,
+Unicode contains the unambiguous quote characters required.  However,
 Unicode and UTF-8 are not universally well-supported, either.
 
 This may change over the next few years, and then we will revisit
