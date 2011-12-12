@@ -1,3 +1,10 @@
+2011-12-12  Jim Meyering  <meyering@redhat.com>
+
+	argmatch: don't hard-code `' when listing valid option arguments
+	* lib/argmatch.c (argmatch_valid): Don't hard-code `%s'.  Instead,
+	use the quote function to add quotes.  Use fputs rather than
+	fprintf for the format string with no format directive.
+
 2011-12-07  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: detect tools required by gnulib-tool

@@ -150,17 +150,17 @@ argmatch_valid (const char *const *arglist,
 
   /* We try to put synonyms on the same line.  The assumption is that
      synonyms follow each other */
-  fprintf (stderr, _("Valid arguments are:"));
+  fputs (_("Valid arguments are:"), stderr);
   for (i = 0; arglist[i]; i++)
     if ((i == 0)
         || memcmp (last_val, vallist + valsize * i, valsize))
       {
-        fprintf (stderr, "\n  - `%s'", arglist[i]);
+        fprintf (stderr, "\n  - %s", quote (arglist[i]));
         last_val = vallist + valsize * i;
       }
     else
       {
-        fprintf (stderr, ", `%s'", arglist[i]);
+        fprintf (stderr, ", %s", quote (arglist[i]));
       }
   putc ('\n', stderr);
 }
