@@ -23,6 +23,7 @@
      Linux                           >= 63489
      Linux/SPARC                     >= 126977
      Linux/IA-64, Linux/MIPS         >= 253953
+     Linux/PPC64                     >= 1048576
      FreeBSD, OpenBSD, MacOS X       >= 65537
      AIX                             >= 32769
      HP-UX                           >= 8193
@@ -37,6 +38,8 @@
 # define PIPE_DATA_BLOCK_SIZE 270000
 #elif defined __linux__ && defined __sparc__
 # define PIPE_DATA_BLOCK_SIZE 140000
+#elif defined __linux__ && defined __powerpc__
+# define PIPE_DATA_BLOCK_SIZE 1100000
 #else
 # define PIPE_DATA_BLOCK_SIZE 70000
 #endif
