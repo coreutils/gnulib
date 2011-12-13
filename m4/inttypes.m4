@@ -1,4 +1,4 @@
-# inttypes.m4 serial 24
+# inttypes.m4 serial 25
 dnl Copyright (C) 2006-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,22 +23,6 @@ AC_DEFUN_ONCE([gl_INTTYPES_INCOMPLETE],
   gl_CHECK_NEXT_HEADERS([inttypes.h])
 
   AC_REQUIRE([gl_MULTIARCH])
-
-  dnl Ensure that <stdint.h> defines the limit macros, since gnulib's
-  dnl <inttypes.h> relies on them.  This macro is only needed when a
-  dnl C++ compiler is in use; it has no effect for a C compiler.
-  dnl Also be careful to define __STDC_LIMIT_MACROS only when gnulib's
-  dnl <inttypes.h> is going to be created, and to avoid redefinition warnings
-  dnl if the __STDC_LIMIT_MACROS is already defined through the CPPFLAGS.
-  AC_DEFINE([GL_TRIGGER_STDC_LIMIT_MACROS], [1],
-    [Define to make the limit macros in <stdint.h> visible.])
-  AH_VERBATIM([__STDC_LIMIT_MACROS_ZZZ],
-[/* Ensure that <stdint.h> defines the limit macros, since gnulib's
-   <inttypes.h> relies on them.  */
-#if defined __cplusplus && !defined __STDC_LIMIT_MACROS && GL_TRIGGER_STDC_LIMIT_MACROS
-# define __STDC_LIMIT_MACROS 1
-#endif
-])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

@@ -1,3 +1,25 @@
+2011-12-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	inttypes, stdint: add C++11 support
+	C++11 says there's no need to define __STDC_CONSTANT_MACROS etc.
+	when including inttypes.h and stdint.h.  Support this change to
+	the standard.
+	* doc/posix-headers/inttypes.texi (inttypes.h):
+	* doc/posix-headers/stdint.texi (stdint.h): Document this.
+	* lib/inttypes.in.h (__STDC_FORMAT_MACROS) [! __cplusplus]:
+	Define if not defined already, for the benefit of pre-C++11 hosts.
+	Define the standard format macros (e.g., PRId8) always.
+	* lib/stdint.in.h (__STDC_CONSTANT_MACROS, __STDC_LIMIT_MACROS):
+	Likewise, if __cpluspus.  Define the standard constant and limit
+	macros (e.g., INT8_C, INT8_MAX) always.
+	* m4/inttypes.m4 (gl_INTTYPES_INCOMPLETE): Do not define
+	GL_TRIGGER_STDC_LIMIT_MACROS or __STDC_LIMIT_MACROS; no longer needed.
+	* m4/stdint.m4 (gl_STDINT_H): Update comments about these macros.
+	* tests/test-inttypes.c (__STDC_LIMIT_MACROS, __STDC_CONSTANT_MACROS)
+	(__STDC_FORMAT_MACROS): Do not define, since we assume C++11 API now.
+	* tests/test-stdint.c (__STDC_LIMIT_MACROS, __STDC_CONSTANT_MACROS):
+	Likewise.
+
 2011-12-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	nonblocking tests: Fix test failure on Linux/PPC.

@@ -27,6 +27,12 @@ HP-UX 11.23.
 The macros @code{WCHAR_MIN} and @code{WCHAR_MAX} are not defined in
 @code{<stdint.h>} (only in @code{<wchar.h>}) on some platforms:
 Dragonfly, BSDI.
+@item
+On some hosts that predate C++11, when using C++ one must define
+@code{__STDC_CONSTANT_MACROS} to make visible the definitions of
+constant macros such as @code{INTMAX_C}, and one must define
+@code{__STDC_LIMIT_MACROS} to make visible the definitions of limit
+macros such as @code{INTMAX_MAX}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
