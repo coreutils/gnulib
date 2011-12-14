@@ -38,6 +38,7 @@ struct posixtm_test
 static struct posixtm_test const T[] =
   {
     { 1300000000, 0,            "%F", "2011-03-13" },
+    { 0,          10,           "%T.%N", "00:00:00.000000010" },
     { 0,          0,            NULL, NULL }
   };
 
