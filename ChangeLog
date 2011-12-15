@@ -1,3 +1,10 @@
+2011-12-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	alloca: protect comment from gnulib-tool
+	* lib/alloca.c: Change "GCC version 2" to "GCC 2" in comment, so
+	that gnulib-tool doesn't think it's a license, and munge it to
+	say "GCC version 3".
+
 2011-12-15  Ludovic Courtès  <ludo@gnu.org>  (tiny change)
 
 	localcharset: Use an absolute path in TESTS_ENVIRONMENT.
