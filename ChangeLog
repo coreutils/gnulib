@@ -1,3 +1,9 @@
+2011-12-15  Ludovic Courtès  <ludo@gnu.org>  (tiny change)
+
+	localcharset: Use an absolute path in TESTS_ENVIRONMENT.
+	* modules/localcharset (LOCALCHARSET_TESTS_ENVIRONMENT): Use
+	$(abs_top_builddir) instead of $(top_builddir).
+
 2011-12-14  Alex Nelson  <ajnelson@cs.ucsc.edu>  (tiny change)
 
 	strftime-tests: also test nanoseconds
