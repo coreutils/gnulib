@@ -1,4 +1,4 @@
-2011-12-15  Ludovic Courtès  <ludo@gnu.org>  (tiny change)
+2011-12-15  Ludovic CourtÃ¨s  <ludo@gnu.org>  (tiny change)
 
 	localcharset: Use an absolute path in TESTS_ENVIRONMENT.
 	* modules/localcharset (LOCALCHARSET_TESTS_ENVIRONMENT): Use
