@@ -1,4 +1,4 @@
-# stdint.m4 serial 42
+# stdint.m4 serial 43
 dnl Copyright (C) 2001-2011 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,8 +69,6 @@ AC_DEFUN_ONCE([gl_STDINT_H],
       [gl_cv_header_working_stdint_h=no
        AC_COMPILE_IFELSE([
          AC_LANG_PROGRAM([[
-#define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ before C++11 */
-#define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ before C++11 */
 #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H 1 /* work if build isn't clean */
 #include <stdint.h>
 /* Dragonfly defines WCHAR_MIN, WCHAR_MAX only in <wchar.h>.  */

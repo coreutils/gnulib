@@ -1,5 +1,14 @@
 2011-12-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdint: don't assume C++11 when compiling with g++
+	Problem reported for glibc 2.14 and g++ by Alexander V. Lukyanov in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2011-12/msg00099.html>.
+	* m4/stdint.m4 (gl_STDINT_H): Don't go to extra work to make it
+	work also in C++ before C++11, as that improperly inhibits
+	generating a substitute stdint.h for that case.
+
+2011-12-15  Paul Eggert  <eggert@cs.ucla.edu>
+
 	alloca: protect comment from gnulib-tool
 	* lib/alloca.c: Change "GCC version 2" to "GCC 2" in comment, so
 	that gnulib-tool doesn't think it's a license, and munge it to
