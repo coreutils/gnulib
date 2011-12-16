@@ -217,8 +217,6 @@ struct s {
           dnl This detects a bug on HP-UX 11.23/ia64.
           AC_RUN_IFELSE([
             AC_LANG_PROGRAM([[
-#define __STDC_LIMIT_MACROS 1 /* to make it work also in C++ before C++11 */
-#define __STDC_CONSTANT_MACROS 1 /* to make it work also in C++ before C++11 */
 #define _GL_JUST_INCLUDE_SYSTEM_STDINT_H 1 /* work if build isn't clean */
 #include <stdint.h>
 ]
