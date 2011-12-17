@@ -1,3 +1,12 @@
+2011-12-17  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: correct the recent buildreq change
+	The 2011-12-07 commit, 39f5f1e4, omitted some '*'s, and thus
+	had no effect.
+	* build-aux/bootstrap (buildreq): Bracket each search term with
+	"*...*", so that the shell "case" statement works as intended.
+	Add comments.
+
 2011-12-17  Bernhard Voelker  <mail@bernhard-voelker.de>
 
 	build: let bootstrap resort to wget when downloading .po files
