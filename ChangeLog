@@ -1,3 +1,21 @@
+2011-12-17  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: remove some now-unneeded code
+	This script arose back when gnulib-tool was young.
+	Since then, it has seen improvements that render much of this
+	script unnecessary.  In particular, it can now make symlinks
+	to the files it uses.  Also, I no longer see as much value in
+	marking files as read-only via comments.
+	If you relied on the symlink-creation feature of the preceding
+	version of this script, you can get most of that functionality
+	by adding the --symlink option to the definition of
+	gnulib_tool_option_extras in your bootstrap.conf file.
+	* build-aux/bootstrap (AUTOPOINT, AUTORECONF): Factor out definitions.
+	Run autopoint and libtoolize *before* gnulib-tool.
+	After it, run an abbreviated autoreconf, rather than a loop around
+	all tools.
+	(slirp, bt_mark_as_generated): Remove functions.
+
 2011-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: fix typo
