@@ -221,10 +221,7 @@ gettext_quote (char const *msgid, enum quoting_style s)
   if (STRCASEEQ (locale_code, "GB18030", 'G','B','1','8','0','3','0',0,0))
     return msgid[0] == '`' ? "\xa1\ae": "\xa1\xaf";
 
-  if (s == clocale_quoting_style)
-    return "\"";
-
-  return translation;
+  return (s == clocale_quoting_style ? "\"" : "'");
 }
 
 /* Place into buffer BUFFER (of size BUFFERSIZE) a quoted version of
@@ -303,7 +300,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                use Unicode U+2018 (LEFT SINGLE QUOTATION MARK) and
                Unicode U+2019 (RIGHT SINGLE QUOTATION MARK).  If the
                current locale is not Unicode, locale_quoting_style
-               will quote `like this', and clocale_quoting_style will
+               will quote 'like this', and clocale_quoting_style will
                quote "like this".  You should always include translations
                for "`" and "'" even if U+2018 and U+2019 are appropriate
                for your locale.

@@ -1,6 +1,15 @@
 Important notes
 ---------------
 
+Date        Modules         Changes
+
+2011-12-20  quotearg        In the C locale, the function will no longer use
+                            the grave accent character to begin a quoted
+                            string (`like this').  It will use apostrophes
+                            'like these' or, in Unicode locales, single quotes
+                            ‘like these’.  You may want to adjust any error
+                            messages that hard code the quoting characters.
+
 2010-09-04  gnulib-tool     The option '--import' is no longer cumulative; it
                             now expects the complete list of modules and other
                             options on the command line. If you want to
