@@ -9,12 +9,14 @@ m4/mbrtowc.m4
 m4/quotearg.m4
 
 Depends-on:
+c-strcaseeq
 extensions
 gettext-h
 mbrtowc
 mbsinit
 memcmp
 quotearg-simple
+localcharset
 stdbool
 wchar
 wctype-h
