@@ -273,7 +273,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                and U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
 
                If you don't know what to put here, please see
-               <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+               <http://en.wikipedia.org/wiki/Quotation_marks_in_other_languages>
                and use glyphs suitable for your language.  */
             left_quote = gettext_quote (N_("`"), quoting_style);
             right_quote = gettext_quote (N_("'"), quoting_style);
