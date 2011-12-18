@@ -18,7 +18,7 @@ Here are most of the steps we (maintainers) follow when making a release.
 
     http://hydra.nixos.org/jobset/gnu/@PACKAGE@-master
 
-* Run "./bootstrap && ./configure".  This downloads any new translations:
+* Run "./bootstrap && ./configure".  This downloads any new translations.
 
 * Pre-release testing:
   Ensure that "make check syntax-check" succeeds.

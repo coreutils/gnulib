@@ -1,3 +1,7 @@
+2011-12-18  Reuben Thomas  <rrt@sc3d.org>
+
+	* top/README-release: fix punctuation.
+
 2011-12-17  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: correct the recent buildreq change
