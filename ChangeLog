@@ -1,3 +1,8 @@
+2011-12-22  Reuben Thomas  <rrt@sc3d.org>
+
+	.gitignore: ignore gnulib.dvi and regex.info
+	* doc/.gitignore:add gnulib.dvi and regex.info
+
 2011-12-22  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: correct previous change

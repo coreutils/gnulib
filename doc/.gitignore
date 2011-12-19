@@ -2,6 +2,7 @@ gnulib.aux
 gnulib.cn
 gnulib.cp
 gnulib.cps
+gnulib.dvi
 gnulib.fn
 gnulib.ky
 gnulib.log
@@ -19,4 +20,5 @@ gnulib.info-5
 gnulib.info-6
 gnulib.html
 gnulib.pdf
+regex.info
 updated-stamp
