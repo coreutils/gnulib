@@ -58,7 +58,7 @@ enum
     FTOASTR_ALWAYS_SIGNED = 2,
 
     /* Output " " before positive numbers; ignored if
-       FTOASTER_ALWAYS_SIGNED is also given.  */
+       FTOASTR_ALWAYS_SIGNED is also given.  */
     FTOASTR_SPACE_POSITIVE = 4,
 
     /* Pad with zeros instead of spaces; ignored if FTOASTR_LEFT_JUSTIFY

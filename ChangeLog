@@ -1,3 +1,8 @@
+2011-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: fix typo
+	* lib/ftoastr.h: Fix misspelling in comment.
+
 2011-12-18  Reuben Thomas  <rrt@sc3d.org>
 
 	* top/README-release: fix punctuation.
