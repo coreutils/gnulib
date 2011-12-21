@@ -1,3 +1,12 @@
+2011-12-21  Alfred M. Szmidt  <ams@gnu.org>
+
+	bootstrap: fix it to honor $ACLOCAL_FLAGS once again
+	The 2011-12-17 change, commit 767ccd40, replaced a manual invocation
+	of aclocal that used explicit $ACLOCAL_FLAGS with an invocation of
+	autoreconf that did not.
+	* build-aux/bootstrap: Use $ACLOCAL_FLAGS when invoking autoreconf.
+	Reported by Mats Erik Andersson <gnu@gisladisker.se>.
+
 2011-12-17  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: remove some now-unneeded code

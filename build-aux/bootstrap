@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2011-12-17.15; # UTC
+scriptversion=2011-12-21.09; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -821,9 +821,9 @@ find "$m4_base" "$source_base" \
 
 # Tell autoreconf not to invoke autopoint or libtoolize; they were run above.
 echo "running: AUTOPOINT=true LIBTOOLIZE=true " \
-    "$AUTORECONF --verbose --install --no-recursive -I $m4_base"
+    "$AUTORECONF --verbose --install --no-recursive -I $m4_base $ACLOCAL_FLAGS"
 AUTOPOINT=true LIBTOOLIZE=true \
-    $AUTORECONF --verbose --install --no-recursive -I $m4_base \
+    $AUTORECONF --verbose --install --no-recursive -I $m4_base $ACLOCAL_FLAGS \
   || exit 1
 
 # Get some extra files from gnulib, overriding existing files.
