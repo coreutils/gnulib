@@ -304,11 +304,17 @@ fi
 # Otherwise, propagate $? to caller: any diffs have already been printed.
 compare ()
 {
-  compare_dev_null_ "$@" || :
-  case $? in
-    0|1) return $?;;
-    *) compare_ "$@";;
-  esac
+  # This looks like it can be factored to use a simple "case $?"
+  # after unchecked compare_dev_null_ invocation, but that would
+  # fail in a "set -e" environment.
+  if compare_dev_null_ "$@"; then
+    return 0
+  else
+    case $? in
+      1) return 1;;
+      *) compare_ "$@";;
+    esac
+  fi
 }
 
 # An arbitrary prefix to help distinguish test directories.
