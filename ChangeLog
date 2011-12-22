@@ -1,3 +1,10 @@
+2011-12-22  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: avoid unwarranted test failure when using "set -x"
+	* tests/init.sh (compare): Ignore nonzero exit from compare_dev_null_.
+	Otherwise, in a test script that uses "set -x" (like many in vc-dwim)
+	a use like "compare exp out" would get evoke an unconditional failure.
+
 2011-12-21  Alfred M. Szmidt  <ams@gnu.org>
 
 	bootstrap: fix it to honor $ACLOCAL_FLAGS once again

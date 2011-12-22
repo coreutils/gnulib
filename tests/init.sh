@@ -304,7 +304,7 @@ fi
 # Otherwise, propagate $? to caller: any diffs have already been printed.
 compare ()
 {
-  compare_dev_null_ "$@"
+  compare_dev_null_ "$@" || :
   case $? in
     0|1) return $?;;
     *) compare_ "$@";;
