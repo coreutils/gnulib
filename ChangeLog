@@ -1,3 +1,8 @@
+2011-12-22  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: do not emit simulated diff output to stderr
+	* tests/init.sh (compare_dev_null_): Print to stdout, not stderr.
+
 2011-12-22  Reuben Thomas  <rrt@sc3d.org>
 
 	.gitignore: ignore gnulib.dvi and regex.info
