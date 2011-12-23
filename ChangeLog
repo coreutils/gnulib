@@ -1,5 +1,9 @@
 2011-12-22  Jim Meyering  <meyering@redhat.com>
 
+	test-framework-sh: add minimal tests of init.sh's compare function
+	* modules/test-framework-sh-tests: New file.
+	* tests/test-init.sh: New file.
+
 	test-framework-sh: new module
 	* modules/test-framework-sh: New file.
 	* MODULES.html.sh (Support for maintaining and releasing projects):
