@@ -1,3 +1,23 @@
+2011-12-23  Jim Meyering  <meyering@redhat.com>
+
+	maint: remove explicit Files: tests/init.sh; depend on test-framework-sh
+	* modules/atexit-tests: Rather than listing tests/init.sh,
+	now that there's a module for it, simply depend on that new module.
+	* modules/closein-tests: Likewise.
+	* modules/exclude-tests: Likewise.
+	* modules/getcwd-tests: Likewise.
+	* modules/perror-tests: Likewise.
+	* modules/pread-tests: Likewise.
+	* modules/pwrite-tests: Likewise.
+	* modules/vc-list-files-tests: Likewise.
+	* modules/verify-tests: Likewise.
+	* modules/xalloc-die-tests: Likewise.
+	* modules/xstrtoimax-tests: Likewise.
+	* modules/xstrtol-tests: Likewise.
+	* modules/xstrtoll-tests: Likewise.
+	* modules/xstrtoumax-tests: Likewise.
+	* modules/yesno-tests: Likewise.
+
 2011-12-22  Jim Meyering  <meyering@redhat.com>
 
 	test-framework-sh: add minimal tests of init.sh's compare function

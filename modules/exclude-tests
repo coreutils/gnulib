@@ -1,5 +1,4 @@
 Files:
-tests/init.sh
 tests/test-exclude.c
 tests/test-exclude1.sh
 tests/test-exclude2.sh
@@ -11,9 +10,10 @@ tests/test-exclude7.sh
 tests/test-exclude8.sh
 
 Depends-on:
-progname
-error
 argmatch
+error
+progname
+test-framework-sh
 
 Makefile.am:
 TESTS += \

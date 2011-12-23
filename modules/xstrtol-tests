@@ -1,11 +1,11 @@
 Files:
-tests/init.sh
 tests/test-xstrtol.c
 tests/test-xstrtoul.c
 tests/test-xstrtol.sh
 
 Depends-on:
 inttypes
+test-framework-sh
 
 configure.ac:
 

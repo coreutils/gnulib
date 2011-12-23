@@ -1,9 +1,9 @@
 Files:
-tests/init.sh
 tests/test-xstrtoimax.c
 tests/test-xstrtoimax.sh
 
 Depends-on:
+test-framework-sh
 
 configure.ac:
 

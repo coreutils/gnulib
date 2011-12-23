@@ -1,9 +1,9 @@
 Files:
 tests/test-vc-list-files-git.sh
 tests/test-vc-list-files-cvs.sh
-tests/init.sh
 
 Depends-on:
+test-framework-sh
 
 configure.ac:
 abs_aux_dir=`cd "$ac_aux_dir"; pwd`

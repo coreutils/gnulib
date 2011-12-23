@@ -1,5 +1,4 @@
 Files:
-tests/init.sh
 tests/macros.h
 tests/signature.h
 tests/test-perror.c
@@ -10,6 +9,7 @@ Depends-on:
 dup2
 ftruncate
 strerror
+test-framework-sh
 
 configure.ac:
 

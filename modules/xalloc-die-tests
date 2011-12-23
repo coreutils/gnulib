@@ -1,10 +1,10 @@
 Files:
 tests/test-xalloc-die.c
 tests/test-xalloc-die.sh
-tests/init.sh
 
 Depends-on:
 progname
+test-framework-sh
 
 Makefile.am:
 TESTS += test-xalloc-die.sh

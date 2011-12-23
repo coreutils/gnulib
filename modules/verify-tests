@@ -1,9 +1,9 @@
 Files:
 tests/test-verify.c
 tests/test-verify.sh
-tests/init.sh
 
 Depends-on:
+test-framework-sh
 
 configure.ac:
 

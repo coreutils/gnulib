@@ -1,7 +1,6 @@
 Files:
 tests/test-getcwd.c
 tests/test-getcwd.sh
-tests/init.sh
 
 Depends-on:
 errno
@@ -9,6 +8,7 @@ fcntl-h
 getcwd-lgpl
 pathmax
 sys_stat
+test-framework-sh
 
 configure.ac:
 

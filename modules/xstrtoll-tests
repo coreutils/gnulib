@@ -1,5 +1,4 @@
 Files:
-tests/init.sh
 tests/test-xstrtol.c
 tests/test-xstrtoll.c
 tests/test-xstrtoull.c
@@ -7,6 +6,7 @@ tests/test-xstrtoll.sh
 
 Depends-on:
 inttypes
+test-framework-sh
 
 configure.ac:
 

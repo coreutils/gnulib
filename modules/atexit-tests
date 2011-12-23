@@ -1,10 +1,10 @@
 Files:
-tests/init.sh
 tests/signature.h
 tests/test-atexit.sh
 tests/test-atexit.c
 
 Depends-on:
+test-framework-sh
 unistd
 
 configure.ac:
