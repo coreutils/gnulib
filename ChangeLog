@@ -1,5 +1,10 @@
 2011-12-23  Jim Meyering  <meyering@redhat.com>
 
+	test-framework-sh: distribute init.sh
+	* modules/test-framework-sh (EXTRA_DIST): Append init.sh.
+	Otherwise, "make -C gnulib-tests check" (at least in grep) would
+	fail due to the lack of init.sh.
+
 	maint: remove explicit Files: tests/init.sh; depend on test-framework-sh
 	* modules/atexit-tests: Rather than listing tests/init.sh,
 	now that there's a module for it, simply depend on that new module.

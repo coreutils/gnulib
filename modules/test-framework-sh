@@ -9,6 +9,7 @@ Depends-on:
 configure.ac:
 
 Makefile.am:
+EXTRA_DIST += init.sh
 
 Include:
 
