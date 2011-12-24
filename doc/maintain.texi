@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 2, 2011
+@set lastupdate December 23, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -873,6 +873,10 @@ can omit both cover texts.
 Texinfo manual, and see
 @url{http://www.gnu.org/licenses/fdl-howto.html} for more advice about
 how to use the GNU FDL.
+
+If you write a manual that people might want to buy on paper, please
+write to @email{maintainers@@gnu.org} to tell the FSF about it.  We
+might want to publish it.
 
 If the manual is over 400 pages, or if the FSF thinks it might be a
 good choice for publishing on paper, then please include the GNU GPL,
@@ -2125,6 +2129,17 @@ documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  If you want to explain the
 terminology and its reasons, you can refer to the URL
 @url{http://www.gnu.org/gnu/linux-and-gnu.html}.
+
+To make it clear that Linux is a kernel, not an operating system,
+please take care to avoid using the term ``Linux system'' in those
+materials.  If you want to have occasion to make a statement about
+systems in which the kernel is Linux, write ``systems in which the
+kernel is Linux'' or ``systems with Linux as the kernel.''  That
+explicitly contrasts the system and the kernel, and will help readers
+understand the difference between the two.  Please avoid simplified
+forms such as ``Linux-based systems'' because those fail to highlight
+the difference between the kernel and the system, and could encourage
+readers to overlook the distinction.
 
 To contrast the GNU system properly with respect to GNU/Linux, you can
 call it ``GNU/Hurd'' or ``the GNU/Hurd system''.  However, when that

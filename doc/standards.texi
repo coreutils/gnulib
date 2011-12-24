@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 10, 2011
+@set lastupdate December 22, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -3647,38 +3647,58 @@ make the records of authorship more accurate.
 @cindex conditional changes, and change logs
 @cindex change logs, conditional changes
 
-C programs often contain compile-time @code{#if} conditionals.  Many
-changes are conditional; sometimes you add a new definition which is
-entirely contained in a conditional.  It is very useful to indicate in
-the change log the conditions for which the change applies.
+Source files can often contain code that is conditional to build-time
+or static conditions.  For example, C programs can contain
+compile-time @code{#if} conditionals; programs implemented in
+interpreted languages can contain module imports of function
+definitions that are only performed for certain versions of the
+interpreter; and Automake @file{Makefile.am} files can contain
+variable definitions or target declarations that are only to be
+considered if a configure-time Automake conditional is true.
 
-Our convention for indicating conditional changes is to use square
-brackets around the name of the condition.
+Many changes are conditional as well: sometimes you add a new variable,
+or function, or even a new program or library, which is entirely
+dependent on a build-time condition.  It is useful to indicate
+in the change log the conditions for which a change applies.
 
-Here is a simple example, describing a change which is conditional but
-does not have a function or entity name associated with it:
+Our convention for indicating conditional changes is to use
+@emph{square brackets around the name of the condition}.
+
+Conditional changes can happen in numerous scenarios and with many
+variations, so here are some examples to help clarify.  This first
+example describes changes in C, Perl, and Python files which are
+conditional but do not have an associated function or entity name:
 
 @example
-* xterm.c [SOLARIS2]: Include string.h.
+* xterm.c [SOLARIS2]: Include <string.h>.
+* FilePath.pm [$^O eq 'VMS']: Import the VMS::Feature module.
+* framework.py [sys.version_info < (2, 6)]: Make "with" statement
+  available by importing it from __future__,
+  to support also python 2.5.
 @end example
 
-Here is an entry describing a new definition which is entirely
-conditional.  This new definition for the macro @code{FRAME_WINDOW_P} is
-used only when @code{HAVE_X_WINDOWS} is defined:
+Our other examples will for simplicity be limited to C, as the minor
+changes necessary to adapt them to other languages should be
+self-evident.
+
+Next, here is an entry describing a new definition which is entirely
+conditional: the C macro @code{FRAME_WINDOW_P} is defined (and used)
+only when the macro @code{HAVE_X_WINDOWS} is defined:
 
 @example
 * frame.h [HAVE_X_WINDOWS] (FRAME_WINDOW_P): Macro defined.
 @end example
 
-Here is an entry for a change within the function @code{init_display},
-whose definition as a whole is unconditional, but the changes themselves
-are contained in a @samp{#ifdef HAVE_LIBNCURSES} conditional:
+Next, an entry for a change within the function @code{init_display},
+whose definition as a whole is unconditional, but the changes
+themselves are contained in a @samp{#ifdef HAVE_LIBNCURSES}
+conditional:
 
 @example
 * dispnew.c (init_display) [HAVE_LIBNCURSES]: If X, call tgetent.
 @end example
 
-Here is an entry for a change that takes affect only when
+Finally, here is an entry for a change that takes effect only when
 a certain macro is @emph{not} defined:
 
 @example
