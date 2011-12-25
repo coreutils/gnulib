@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-11-09.15}
+\def\texinfoversion{2011-12-24.11}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -229,6 +229,13 @@
   \tracingcommands3  % 3 gives us more in etex
   \errorcontextlines16
 }%
+
+% @errormsg{MSG}.  Do the index-like expansions on MSG, but if things
+% aren't perfect, it's not the end of the world, being an error message,
+% after all.
+% 
+\def\errormsg{\begingroup \indexnofonts \doerrormsg}
+\def\doerrormsg#1{\errmessage{#1}}
 
 % add check for \lastpenalty to plain's definitions.  If the last thing
 % we did was a \nobreak, we don't want to insert more space.
@@ -1090,50 +1097,24 @@ where each line of input produces a line of output.}
 % for display in the outlines, and in other places.  Thus, we have to
 % double any backslashes.  Otherwise, a name like "\node" will be
 % interpreted as a newline (\n), followed by o, d, e.  Not good.
-% http://www.ntg.nl/pipermail/ntg-pdftex/2004-July/000654.html
-% (and related messages, the final outcome is that it is up to the TeX
-% user to double the backslashes and otherwise make the string valid, so
-% that's what we do).
+% 
+% See http://www.ntg.nl/pipermail/ntg-pdftex/2004-July/000654.html and
+% related messages.  The final outcome is that it is up to the TeX user
+% to double the backslashes and otherwise make the string valid, so
+% that's what we do.  pdftex 1.30.0 (ca.2005) introduced a primitive to
+% do this reliably, so we use it.
 
-% double active backslashes.
-%
-{\catcode`\@=0 \catcode`\\=\active
- @gdef@activebackslashdouble{%
-   @catcode`@\=@active
-   @let\=@doublebackslash}
-}
-
-% To handle parens, we must adopt a different approach, since parens are
-% not active characters.  hyperref.dtx (which has the same problem as
-% us) handles it with this amazing macro to replace tokens, with minor
-% changes for Texinfo.  It is included here under the GPL by permission
-% from the author, Heiko Oberdiek.
-%
-% #1 is the tokens to replace.
-% #2 is the replacement.
-% #3 is the control sequence with the string.
-%
-\def\HyPsdSubst#1#2#3{%
-  \def\HyPsdReplace##1#1##2\END{%
-    ##1%
-    \ifx\\##2\\%
-    \else
-      #2%
-      \HyReturnAfterFi{%
-        \HyPsdReplace##2\END
-      }%
-    \fi
-  }%
-  \xdef#3{\expandafter\HyPsdReplace#3#1\END}%
-}
-\long\def\HyReturnAfterFi#1\fi{\fi#1}
-
-% #1 is a control sequence in which to do the replacements.
-\def\backslashparens#1{%
-  \xdef#1{#1}% redefine it as its expansion; the definition is simply
-             % \lastnode when called from \setref -> \pdfmkdest.
-  \HyPsdSubst{(}{\realbackslash(}{#1}%
-  \HyPsdSubst{)}{\realbackslash)}{#1}%
+% #1 is a control sequence in which to do the replacements,
+% which we \xdef.
+\def\txiescapepdf#1{%
+  \ifx\pdfescapestring\relax
+    % No primitive available; should we give a warning or log?
+    % Many times it won't matter.
+  \else
+    % The expandable \pdfescapestring primitive escapes parentheses,
+    % backslashes, and other special chars.
+    \xdef#1{\pdfescapestring{#1}}%
+  \fi
 }
 
 \newhelp\nopdfimagehelp{Texinfo supports .png, .jpg, .jpeg, and .pdf images
@@ -1247,10 +1228,9 @@ output) for that.)}
     % such as \, aren't expanded when present in a section title.
     \indexnofonts
     \turnoffactive
-    \activebackslashdouble
     \makevalueexpandable
     \def\pdfdestname{#1}%
-    \backslashparens\pdfdestname
+    \txiescapepdf\pdfdestname
     \safewhatsit{\pdfdest name{\pdfdestname} xyz}%
   }}
   %
@@ -1282,28 +1262,22 @@ output) for that.)}
     % page number.  We could generate a destination for the section
     % text in the case where a section has no node, but it doesn't
     % seem worth the trouble, since most documents are normally structured.
-    \def\pdfoutlinedest{#3}%
+    \edef\pdfoutlinedest{#3}%
     \ifx\pdfoutlinedest\empty
       \def\pdfoutlinedest{#4}%
     \else
-      % Doubled backslashes in the name.
-      {\activebackslashdouble \xdef\pdfoutlinedest{#3}%
-       \backslashparens\pdfoutlinedest}%
+      \txiescapepdf\pdfoutlinedest
     \fi
     %
-    % Also double the backslashes in the display string.
-    {\activebackslashdouble \xdef\pdfoutlinetext{#1}%
-     \backslashparens\pdfoutlinetext}%
+    % Also escape PDF chars in the display string.
+    \edef\pdfoutlinetext{#1}%
+    \txiescapepdf\pdfoutlinetext
     %
     \pdfoutline goto name{\pdfmkpgn{\pdfoutlinedest}}#2{\pdfoutlinetext}%
   }
   %
   \def\pdfmakeoutlines{%
     \begingroup
-      % Thanh's hack / proper braces in bookmarks
-      \edef\mylbrace{\iftrue \string{\else}\fi}\let\{=\mylbrace
-      \edef\myrbrace{\iffalse{\else\string}\fi}\let\}=\myrbrace
-      %
       % Read toc silently, to get counts of subentries for \pdfoutline.
       \def\partentry##1##2##3##4{}% ignore parts in the outlines
       \def\numchapentry##1##2##3##4{%
@@ -1359,15 +1333,26 @@ output) for that.)}
       % Latin 2 (0xea) gets translated to a | character.  Info from
       % Staszek Wawrykiewicz, 19 Jan 2004 04:09:24 +0100.
       %
-      % xx to do this right, we have to translate 8-bit characters to
-      % their "best" equivalent, based on the @documentencoding.  Right
-      % now, I guess we'll just let the pdf reader have its way.
+      % TODO this right, we have to translate 8-bit characters to
+      % their "best" equivalent, based on the @documentencoding.  Too
+      % much work for too little return.  Just use the ASCII equivalents
+      % we use for the index sort strings.
+      % 
       \indexnofonts
       \setupdatafile
+      % We can have normal brace characters in the PDF outlines, unlike
+      % Texinfo index files.  So set that up.
+      \def\{{\lbracecharliteral}%
+      \def\}{\rbracecharliteral}%
       \catcode`\\=\active \otherbackslash
       \input \tocreadfilename
     \endgroup
   }
+  {\catcode`[=1 \catcode`]=2
+   \catcode`{=\other \catcode`}=\other
+   \gdef\lbracecharliteral[{]%
+   \gdef\rbracecharliteral[}]%
+  ]
   %
   \def\skipspaces#1{\def\PP{#1}\def\D{|}%
     \ifx\PP\D\let\nextsp\relax
@@ -4486,6 +4471,7 @@ end
   %
   % Commands that take arguments.
   \definedummyword\acronym
+  \definedummyword\anchor
   \definedummyword\cite
   \definedummyword\code
   \definedummyword\command
@@ -7825,9 +7811,8 @@ end
      % etc. don't get their TeX definitions.
      \getfilename{#4}%
      %
-     % See comments at \activebackslashdouble.
-     {\activebackslashdouble \xdef\pdfxrefdest{#1}%
-      \backslashparens\pdfxrefdest}%
+     \edef\pdfxrefdest{#1}%
+     \txiescapepdf\pdfxrefdest
      %
      \leavevmode
      \startlink attr{/Border [0 0 0]}%
