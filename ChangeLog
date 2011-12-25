@@ -1,3 +1,17 @@
+2011-12-25  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: do not clump multi-paragraph entries
+	Identical header lines (date,name,email+coauthors) are suppressed,
+	thus putting all entries with those same characteristics under
+	a single header.  However, when a log entry consists of two or
+	more paragraphs, it may not be clear where it starts and ends.
+	This change makes it so that such an entry is always separated
+	from others by a header line, even when that header would
+	otherwise be suppressed.
+	* build-aux/gitlog-to-changelog: Implement the above.
+	Inspired by a related request from Stefano Lattarini in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/29456
+
 2011-12-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	announce-gen: fix `cmd' typo in diagnostic

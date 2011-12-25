@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2011-11-02 07:53'; # UTC
+my $VERSION = '2011-12-24 18:51'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -199,6 +199,7 @@ sub parse_amend_file($)
     or die ("$ME: failed to run `". quoted_cmd (@cmd) ."': $!\n"
             . "(Is your Git too old?  Version 1.5.1 or later is required.)\n");
 
+  my $prev_multi_paragraph;
   my $prev_date_line = '';
   my @prev_coauthors = ();
   while (1)
@@ -248,35 +249,9 @@ sub parse_amend_file($)
       $author_line =~ /^(\d+)  (.*>)$/
         or die "$ME:$.: Invalid line "
           . "(expected date/author/email):\n$author_line\n";
-
       my $date_line = sprintf "%s  $2\n", strftime ("%F", localtime ($1));
 
-      # Format 'Co-authored-by: A U Thor <email@example.com>' lines in
-      # standard multi-author ChangeLog format.
       my @coauthors = grep /^Co-authored-by:.*$/, @line;
-      for (@coauthors)
-        {
-          s/^Co-authored-by:\s*/\t    /;
-          s/\s*</  </;
-
-          /<.*?@.*\..*>/
-            or warn "$ME: warning: missing email address for "
-              . substr ($_, 5) . "\n";
-        }
-
-      # If this header would be the same as the previous date/name/email/
-      # coauthors header, then arrange not to print it.
-      if ($date_line ne $prev_date_line or "@coauthors" ne "@prev_coauthors")
-        {
-          $prev_date_line eq ''
-            or print "\n";
-          print $date_line;
-          @coauthors
-            and print join ("\n", @coauthors), "\n";
-        }
-      $prev_date_line = $date_line;
-      @prev_coauthors = @coauthors;
-
       # Omit "Co-authored-by..." and "Signed-off-by..." lines.
       @line = grep !/^Signed-off-by: .*>$/, @line;
       @line = grep !/^Co-authored-by: /, @line;
@@ -287,6 +262,39 @@ sub parse_amend_file($)
           while ($line[0] =~ /^\s*$/) { shift @line; }
           while ($line[$#line] =~ /^\s*$/) { pop @line; }
         }
+
+      # Record whether there are two or more paragraphs.
+      my $multi_paragraph = grep /^\s*$/, @line;
+
+      # Format 'Co-authored-by: A U Thor <email@example.com>' lines in
+      # standard multi-author ChangeLog format.
+      for (@coauthors)
+        {
+          s/^Co-authored-by:\s*/\t    /;
+          s/\s*</  </;
+
+          /<.*?@.*\..*>/
+            or warn "$ME: warning: missing email address for "
+              . substr ($_, 5) . "\n";
+        }
+
+      # If this header would be different from the previous date/name/email/
+      # coauthors header, or if this or the previous entry consists of two
+      # or more paragraphs, then print the header.
+      if ($date_line ne $prev_date_line
+          or "@coauthors" ne "@prev_coauthors"
+          or $multi_paragraph
+          or $prev_multi_paragraph)
+        {
+          $prev_date_line eq ''
+            or print "\n";
+          print $date_line;
+          @coauthors
+            and print join ("\n", @coauthors), "\n";
+        }
+      $prev_date_line = $date_line;
+      @prev_coauthors = @coauthors;
+      $prev_multi_paragraph = $multi_paragraph;
 
       # If there were any lines
       if (@line == 0)
