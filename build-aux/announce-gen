@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2011-11-09 21:30'; # UTC
+my $VERSION = '2011-12-25 18:26'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -310,7 +310,7 @@ sub print_changelog_deltas ($$)
   # The exit code should be 1.
   # Allow in case there are no modified ChangeLog entries.
   $? == 256 || $? == 128
-    or warn "$ME: warning: `cmd' had unexpected exit code or signal ($?)\n";
+    or warn "$ME: warning: `$cmd' had unexpected exit code or signal ($?)\n";
 }
 
 sub get_tool_versions ($$)

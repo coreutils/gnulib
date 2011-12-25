@@ -1,3 +1,9 @@
+2011-12-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	announce-gen: fix `cmd' typo in diagnostic
+	* build-aux/announce-gen (print_changelog_deltas): Fix typo in
+	diagnostic: a missing '$' meant that the command was not output.
+
 2011-12-23  Jim Meyering  <meyering@redhat.com>
 
 	test-framework-sh: distribute init.sh
