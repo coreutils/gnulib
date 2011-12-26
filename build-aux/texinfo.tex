@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-12-25.16}
+\def\texinfoversion{2011-12-26.13}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -9810,7 +9810,16 @@ directory should work if nowhere else does.}
 % In texinfo, backslash is an active character; it prints the backslash
 % in fixed width font.
 \catcode`\\=\active  % @ for escape char from now on.
-@def@normalbackslash{{@tt @backslashcurfont}}
+
+% The story here is that in math mode, the \char of \backslashcurfont
+% ends up printing the roman \ from the math symbol font (because \char
+% in math mode uses the \mathcode, and plain.tex sets
+% \mathcode`\\="026E).  It seems better for @backslashchar{} to always
+% print a typewriter backslash, hence we use an explicit \mathchar,
+% which is the decimal equivalent of "715c (class 7, e.g., use \fam;
+% ignored family value; char position "5C).  We can't use " for the
+% usual hex value because it has already been made active.
+@def@normalbackslash{{@tt @ifmmode @mathchar29020 @else @backslashcurfont @fi}}
 @let@backslashchar = @normalbackslash % @backslashchar{} is for user documents.
 
 % On startup, @fixbackslash assigns:
