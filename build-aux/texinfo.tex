@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-12-24.11}
+\def\texinfoversion{2011-12-25.16}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2836,20 +2836,48 @@ end
   }
 }
 
+% @inlinefmt{FMTNAME,PROCESSED-TEXT} and @inlineraw{FMTNAME,RAW-TEXT}.
+% Ignore unless FMTNAME == tex; then it is like @iftex and @tex,
+% except specified as a normal braced arg, so no newlines to worry about.
+% 
+\def\outfmtnametex{tex}
+%
+\def\inlinefmt#1{\doinlinefmt #1,\finish}
+\def\doinlinefmt#1,#2,\finish{%
+  \def\inlinefmtname{#1}%
+  \ifx\inlinefmtname\outfmtnametex \ignorespaces #2\fi
+}
+% For raw, must switch into @tex before parsing the argument, to avoid
+% setting catcodes prematurely.  Doing it this way means that, for
+% example, @inlineraw{html, foo{bar} gets a parse error instead of being
+% ignored.  But this isn't important because if people want a literal
+% *right* brace they would have to use a command anyway, so they may as
+% well use a command to get a left brace too.  We could re-use the
+% delimiter character idea from \verb, but it seems like overkill.
+% 
+\def\inlineraw{\tex \doinlineraw}
+\def\doinlineraw#1{\doinlinerawtwo #1,\finish}
+\def\doinlinerawtwo#1,#2,\finish{%
+  \def\inlinerawname{#1}%
+  \ifx\inlinerawname\outfmtnametex \ignorespaces #2\fi
+  \endgroup % close group opened by \tex.
+}
+
 
 \message{glyphs,}
 % and logos.
 
-% @@ prints an @.
+% @@ prints an @, as does @atchar{}.
 \def\@{\char64 }
+\let\atchar=\@
 
-% Used to generate quoted braces.  Unless we're in typewriter, use
-% \ecfont because the CM text fonts do not have braces, and we don't
-% want to switch into math.
+% @{ @} @lbracechar{} @rbracechar{} all generate brace characters.
+% Unless we're in typewriter, use \ecfont because the CM text fonts do
+% not have braces, and we don't want to switch into math.
 \def\mylbrace{{\ifmonospace\else\ecfont\fi \char123}}
 \def\myrbrace{{\ifmonospace\else\ecfont\fi \char125}}
-\let\{=\mylbrace
-\let\}=\myrbrace
+\let\{=\mylbrace \let\lbracechar=\{
+\let\}=\myrbrace \let\rbracechar=\}
 \begingroup
   % Definitions to produce \{ and \} commands for indices,
   % and @{ and @} for the aux/toc files.
@@ -9781,14 +9809,15 @@ directory should work if nowhere else does.}
 
 % In texinfo, backslash is an active character; it prints the backslash
 % in fixed width font.
-\catcode`\\=\active
-@def@normalbackslash{{@tt@backslashcurfont}}
+\catcode`\\=\active  % @ for escape char from now on.
+@def@normalbackslash{{@tt @backslashcurfont}}
+@let@backslashchar = @normalbackslash % @backslashchar{} is for user documents.
+
 % On startup, @fixbackslash assigns:
 %  @let \ = @normalbackslash
-
 % \rawbackslash defines an active \ to do \backslashcurfont.
 % \otherbackslash defines an active \ to be a literal `\' character with
-% catcode other.
+% catcode other.  We switch back and forth between these.
 @gdef@rawbackslash{@let\=@backslashcurfont}
 @gdef@otherbackslash{@let\=@realbackslash}
 
