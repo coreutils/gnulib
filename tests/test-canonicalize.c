@@ -82,6 +82,9 @@ main (void)
     result2 = canonicalize_filename_mode (NULL, CAN_EXISTING);
     ASSERT (result2 == NULL);
     ASSERT (errno == EINVAL);
+    result2 = canonicalize_filename_mode (".", CAN_MISSING | CAN_ALL_BUT_LAST);
+    ASSERT (result2 == NULL);
+    ASSERT (errno == EINVAL);
   }
 
   /* Check that a non-directory with trailing slash yields NULL.  */
@@ -133,6 +136,15 @@ main (void)
   ASSERT (close (creat (BASE "/d/2", 0600)) == 0);
   ASSERT (symlink ("../s/2", BASE "/d/1") == 0);
   ASSERT (symlink ("//.//../..", BASE "/droot") == 0);
+
+  /* Check that symbolic links are not resolved, with CAN_NOLINKS.  */
+  {
+    char *result1 = canonicalize_filename_mode (BASE "/huk", CAN_NOLINKS);
+    ASSERT (result1 != NULL);
+    ASSERT (strcmp (result1 + strlen (result1) - strlen ("/" BASE "/huk"),
+                    "/" BASE "/huk") == 0);
+    free (result1);
+  }
 
   /* Check that the symbolic link to a file can be resolved.  */
   {

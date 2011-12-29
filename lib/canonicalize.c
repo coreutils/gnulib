@@ -31,6 +31,8 @@
 #include "xalloc.h"
 #include "xgetcwd.h"
 
+#define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
+
 /* In this file, we cannot handle file names longer than PATH_MAX.
    On systems with no file name length limit, use a fallback.  */
 #ifndef PATH_MAX
@@ -82,8 +84,9 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
 /* Return the canonical absolute name of file NAME, while treating
    missing elements according to CAN_MODE.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
-   separators ('/') or symlinks.  Whether components must exist
-   or not depends on canonicalize mode.  The result is malloc'd.  */
+   separators ('/') or, depdending on other CAN_MODE flags, symlinks.
+   Whether components must exist or not depends on canonicalize mode.
+   The result is malloc'd.  */
 
 char *
 canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
@@ -95,6 +98,16 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   size_t extra_len = 0;
   Hash_table *ht = NULL;
   int saved_errno;
+  int can_flags = can_mode & ~CAN_MODE_MASK;
+  can_mode &= CAN_MODE_MASK;
+  bool logical = can_flags & CAN_NOLINKS;
+  /* Perhaps in future we might support CAN_NOALLOC with CAN_NOLINKS.  */
+
+  if (MULTIPLE_BITS_SET (can_mode))
+    {
+      errno = EINVAL;
+      return NULL;
+    }
 
   if (name == NULL)
     {
@@ -185,7 +198,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           dest += end - start;
           *dest = '\0';
 
-          if (lstat (rname, &st) != 0)
+          if ((logical ? stat : lstat) (rname, &st) != 0)
             {
               saved_errno = errno;
               if (can_mode == CAN_EXISTING)

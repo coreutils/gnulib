@@ -19,6 +19,8 @@
 
 #include <stdlib.h> /* for canonicalize_file_name */
 
+#define CAN_MODE_MASK (CAN_EXISTING | CAN_ALL_BUT_LAST | CAN_MISSING)
+
 enum canonicalize_mode_t
   {
     /* All components must exist.  */
@@ -28,7 +30,10 @@ enum canonicalize_mode_t
     CAN_ALL_BUT_LAST = 1,
 
     /* No requirements on components existence.  */
-    CAN_MISSING = 2
+    CAN_MISSING = 2,
+
+    /* Don't expand symlinks.  */
+    CAN_NOLINKS = 4
   };
 typedef enum canonicalize_mode_t canonicalize_mode_t;
 

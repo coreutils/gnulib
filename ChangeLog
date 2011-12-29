@@ -1,3 +1,19 @@
+2011-12-29  Pádraig Brady  <P@draigBrady.com>
+
+	canonicalize: add support for not resolving symlinks
+	* lib/canonicalize.h: Add the CAN_NOLINKS flag to
+	indicate we don't want to follow symlinks.  Also
+	provide CAN_MODE_MASK to aid setting these existing
+	mutually exclusive values.
+	* lib/canonicalize.c (canonicalize_filename_mode):
+	Extract the flags from can_mode parameter, which
+	are currently just used to select between stat()
+	and lstat().  Also ensure that mutually exclusive
+	values are flagged immediately as invalid.
+	* tests/test-canonicalize.c: Verify symlinks are
+	not followed, and that invalid flag combinations
+	are diagnosed.
+
 2011-12-25  Jim Meyering  <meyering@redhat.com>
 
 	gitlog-to-changelog: do not clump multi-paragraph entries
