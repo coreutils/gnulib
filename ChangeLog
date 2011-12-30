@@ -1,3 +1,11 @@
+2011-12-30  Gary V. Vaughan  <gary@gnu.org>
+
+	gitlog-to-changelog: Copyright-paperwork-exempt: yes == (tiny change)
+	* build-aux/gitlog-to-changelog (main): Map the string, at beginning
+	of line in a git commit log, "Copyright-paperwork-exempt: yes", to
+	the "  (tiny change)" notation that is appended to the standard
+	ChangeLog "date  name  email" header line.
+
 2012-01-01  Jim Meyering  <meyering@redhat.com>
 
 	test-framework-sh: init.sh: fix "make dist" failure
