@@ -198,7 +198,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           dest += end - start;
           *dest = '\0';
 
-          if ((logical ? stat : lstat) (rname, &st) != 0)
+          if ((logical ? stat (rname, &st) : lstat (rname, &st)) != 0)
             {
               saved_errno = errno;
               if (can_mode == CAN_EXISTING)

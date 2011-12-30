@@ -1,3 +1,10 @@
+2011-12-30  Pádraig Brady  <P@draigBrady.com>
+
+	canonicalize: fix references to stat() and lstat()
+	* lib/canonicalize.c (canonicalize_filename_mode):
+	Ensure references always resolve to a replacement
+	function if required (even via a macro).
+
 2011-12-30  Jim Meyering  <meyering@redhat.com>
 
 	gitlog-to-changelog: remove a little duplication
