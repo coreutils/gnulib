@@ -1,3 +1,9 @@
+2011-12-30  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: remove a little duplication
+	* build-aux/gitlog-to-changelog (main): Grep @lines once,
+	rather than twice.
+
 2011-12-29  Pádraig Brady  <P@draigBrady.com>
 
 	canonicalize: add support for not resolving symlinks
