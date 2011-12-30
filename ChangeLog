@@ -1,3 +1,10 @@
+2011-12-30  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: don't malfunction when name contains %-directive
+	* build-aux/gitlog-to-changelog (main): Don't let a %-directive
+	in a name string cause trouble.  E.g., with a user name of "%s",
+	gitlog-to-changelog would fail with "Missing argument in sprintf at..."
+
 2011-12-30  Gary V. Vaughan  <gary@gnu.org>
 
 	gitlog-to-changelog: Copyright-paperwork-exempt: yes == (tiny change)
