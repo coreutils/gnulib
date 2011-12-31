@@ -198,7 +198,14 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
           dest += end - start;
           *dest = '\0';
 
-          if ((logical ? stat (rname, &st) : lstat (rname, &st)) != 0)
+          if (logical && (can_mode == CAN_MISSING))
+            {
+              /* Avoid the stat in this case as it's inconsequential.
+                 i.e. we're neither resolving symlinks or testing
+                 component existence.  */
+              st.st_mode = 0;
+            }
+          else if ((logical ? stat (rname, &st) : lstat (rname, &st)) != 0)
             {
               saved_errno = errno;
               if (can_mode == CAN_EXISTING)

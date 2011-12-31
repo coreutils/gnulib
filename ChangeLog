@@ -1,3 +1,11 @@
+2011-12-31  Pádraig Brady  <P@draigBrady.com>
+
+	canonicalize: only stat() if required
+	* lib/canonicalize.c (canonicalize_filename_mode):
+	Avoid calling l?stat() when both CAN_MISSING,
+	and CAN_NOLINKS are set, as we neither need
+	to resolve symlinks or test component existence.
+
 2011-12-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: cover st_ino issues once; add OpenVMS etc.
