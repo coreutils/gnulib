@@ -18,8 +18,16 @@
 #ifndef SAME_INODE_H
 # define SAME_INODE_H 1
 
-# define SAME_INODE(Stat_buf_1, Stat_buf_2) \
-   ((Stat_buf_1).st_ino == (Stat_buf_2).st_ino \
-    && (Stat_buf_1).st_dev == (Stat_buf_2).st_dev)
+# ifdef __VMS
+#  define SAME_INODE(a, b)             \
+    ((a).st_ino[0] == (b).st_ino[0]    \
+     && (a).st_ino[1] == (b).st_ino[1] \
+     && (a).st_ino[2] == (b).st_ino[2] \
+     && (a).st_dev == (b).st_dev)
+# else
+#  define SAME_INODE(a, b)    \
+    ((a).st_ino == (b).st_ino \
+     && (a).st_dev == (b).st_dev)
+# endif
 
 #endif

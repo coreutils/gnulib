@@ -1,3 +1,9 @@
+2011-12-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	same-inode: port to OpenVMS
+	* lib/same-inode.h (SAME_INODE): Port to OpenVMS by checking all
+	three st_ino values.
+
 2011-12-30  Pádraig Brady  <P@draigBrady.com>
 
 	canonicalize: fix references to stat() and lstat()
