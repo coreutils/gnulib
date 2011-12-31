@@ -25,10 +25,10 @@ mingw, MSVC 9.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+@xref{sys/stat.h}, for general portability problems with @code{struct stat}.
+@item
 Cygwin's @code{stat} function sometimes sets @code{errno} to @code{EACCES} when
 @code{ENOENT} would be more appropriate.
-@item
-On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
 @item
 Because of the definition of @code{struct stat}, it is not possible to
 portably replace @code{stat} via an object-like macro.  Therefore,

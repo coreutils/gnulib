@@ -1,5 +1,17 @@
 2011-12-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: cover st_ino issues once; add OpenVMS etc.
+	* doc/posix-functions/stat.texi (stat):
+	* doc/posix-functions/lstat.texi (lstat):
+	* doc/posix-functions/fstatat.texi (fstatat):
+	* doc/posix-functions/fstat.texi (fstat):
+	Move general 'struct stat' stuff to sys_stat.texi,
+	leaving behind a pointer.
+	* doc/posix-headers/sys_stat.texi (sys/stat.h):
+	Merge duplicate info about 'struct stat' problems into here.
+	Mention issues with OpenVMS, GNU/Linux NFS, NetApp, ClearCase,
+	and suggest partial workarounds.
+
 	same-inode: port to OpenVMS
 	* lib/same-inode.h (SAME_INODE): Port to OpenVMS by checking all
 	three st_ino values.

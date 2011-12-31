@@ -36,4 +36,40 @@ Portability problems not fixed by Gnulib:
 @item
 The macro @code{S_IFBLK} is missing on some platforms:
 MSVC 9.
+@item
+On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
+@item
+On OpenVMS, @code{st_ino} is an array of three @code{ino_t} values,
+not a single value.
+@item
+To partially work around the previous two problems, you can test for
+nonzero @code{st_ino} and use the Gnulib @code{same-inode} module to
+compare nonzero values.  For example, @code{(a.st_ino && SAME_INODE
+(a, b))} is true if the @code{struct stat} values @code{a} and
+@code{b} are known to represent the same file, @code{(a.st_ino &&
+!SAME_INODE (a, b))} is true if they are known to represent different
+files, and @code{!a.st_ino} is true if it is not known whether they
+represent different files.
+@item
+On some platforms, two different files may have the same @code{st_dev}
+and @code{st_ino} values, even when @code{st_ino} is nonzero:
+@itemize
+@item
+GNU/Linux NFS servers that export all local file systems as a single
+NFS file system, if a local @code{st_dev} exceeds 255, or if a local
+@code{st_ino} exceeds 16777215.
+@item
+Network Appliance NFS servers in snapshot directories; see Network
+Appliance bug #195.
+@item
+ClearCase MVFS; see bug id ATRia04618.
+@end itemize
+One partial workaround is to compare other file metadata such as
+@code{st_mode} and @code{st_mtime} to detect this bug, but this
+approach does not work on files whose metadata are being changed by
+other programs.
+@item
+On some file systems, @code{st_size} contains bogus information for
+symlinks; use the Gnulib module @code{areadlink-with-size} for a
+better way to get symlink contents.
 @end itemize

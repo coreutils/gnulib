@@ -20,6 +20,8 @@ report the size of files or block devices larger than 2 GB.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+@xref{sys/stat.h}, for general portability problems with @code{struct stat}.
+@item
 On Cygwin, @code{fstat} applied to the file descriptors 0 and 1, returns
 different @code{st_ino} values, even if standard input and standard output
 are not redirected and refer to the same terminal.

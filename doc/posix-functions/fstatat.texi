@@ -30,9 +30,5 @@ Solaris 9.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
-@item
-On some file systems, @code{st_size} contains bogus information for
-symlinks; use the gnulib module areadlink-with-size for a better way
-to get symlink contents.
+@xref{sys/stat.h}, for general portability problems with @code{struct stat}.
 @end itemize
