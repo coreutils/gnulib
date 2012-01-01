@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 22, 2011
+@set lastupdate December 31, 2011
 @c %**end of header
 
 @dircategory GNU organization
@@ -2374,7 +2374,7 @@ when writing GNU software.
 * System Functions::            Portability and ``standard'' library functions.
 * Internationalization::        Techniques for internationalization.
 * Character Set::               Use ASCII by default.
-* Quote Characters::            Use `...' in the C locale.
+* Quote Characters::            Use "..." or '...' in the C locale.
 * Mmap::                        How you can safely use @code{mmap}.
 @end menu
 
@@ -3049,12 +3049,12 @@ Using GNU gettext involves putting a call to the @code{gettext} macro
 around each string that might need translation---like this:
 
 @example
-printf (gettext ("Processing file `%s'..."));
+printf (gettext ("Processing file '%s'..."), file);
 @end example
 
 @noindent
 This permits GNU gettext to replace the string @code{"Processing file
-`%s'..."} with a translated version.
+'%s'..."} with a translated version.
 
 Once a program uses gettext, please make a point of writing calls to
 @code{gettext} when you add new strings that call for translation.
@@ -3185,34 +3185,50 @@ be the best choice.
 @cindex quote characters
 @cindex locale-specific quote characters
 @cindex left quote
+@cindex right quote
+@cindex opening quote
+@cindex single quote
+@cindex double quote
 @cindex grave accent
+@set txicodequoteundirected
+@set txicodequotebacktick
 
-In the C locale, GNU programs should stick to plain ASCII for quotation
-characters in messages to users: preferably 0x60 (@samp{`}) for left
-quotes and 0x27 (@samp{'}) for right quotes.  It is ok, but not
-required, to use locale-specific quotes in other locales.
+In the C locale, the output of GNU programs should stick to plain
+ASCII for quotation characters in messages to users: preferably 0x22
+(@samp{"}) or 0x27 (@samp{'}) for both opening and closing quotes.
+Although GNU programs traditionally used 0x60 (@samp{`}) for opening
+and 0x27 (@samp{'}) for closing quotes, nowadays quotes @samp{`like
+this'} are typically rendered asymmetrically, so quoting @samp{"like
+this"} or @samp{'like this'} typically looks better.
 
-The @uref{http://www.gnu.org/software/gnulib/, Gnulib} @code{quote} and
-@code{quotearg} modules provide a reasonably straightforward way to
-support locale-specific quote characters, as well as taking care of
-other issues, such as quoting a filename that itself contains a quote
-character.  See the Gnulib documentation for usage details.
+It is ok, but not required, for GNU programs to generate
+locale-specific quotes in non-C locales.  For example:
 
-In any case, the documentation for your program should clearly specify
-how it does quoting, if different than the preferred method of @samp{`}
-and @samp{'}.  This is especially important if the output of your
-program is ever likely to be parsed by another program.
+@example
+printf (gettext ("Processing file '%s'..."), file);
+@end example
 
-Quotation characters are a difficult area in the computing world at
-this time: there are no true left or right quote characters in Latin1;
-the @samp{`} character we use was standardized there as a grave
-accent.  Moreover, Latin1 is still not universally usable.
+@noindent
+Here, a French translation might cause @code{gettext} to return the
+string @code{"Traitement de fichier
+@guilsinglleft{}@tie{}%s@tie{}@guilsinglright{}..."}, yielding quotes
+more appropriate for a French locale.
 
-Unicode contains the unambiguous quote characters required.  However,
-Unicode and UTF-8 are not universally well-supported, either.
+Sometimes a program may need to use opening and closing quotes
+directly.  By convention, @code{gettext} translates the string
+@samp{"`"} to the opening quote and the string @samp{"'"} to the
+closing quote, and a program can use these translations.  Generally,
+though, it is better to translate quote characters in the context of
+longer strings.
 
-This may change over the next few years, and then we will revisit
-this.
+If the output of your program is ever likely to be parsed by another
+program, it is good to provide an option that makes this parsing
+reliable.  For example, you could escape special characters using
+conventions from the C language or the Bourne shell.  See for example
+the option @option{--quoting-style} of GNU @code{ls}.
+
+@clear txicodequoteundirected
+@clear txicodequotebacktick
 
 
 @node Mmap
@@ -3585,7 +3601,7 @@ Break long lists of function names by closing continued lines with
 
 @example
 * keyboard.c (menu_bar_items, tool_bar_items)
-(Fexecute_extended_command): Deal with `keymap' property.
+(Fexecute_extended_command): Deal with 'keymap' property.
 @end example
 
 When you install someone else's changes, put the contributor's name in
