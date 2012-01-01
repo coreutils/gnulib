@@ -1,6 +1,6 @@
 # serial 7
 
-# Copyright (C) 1996, 1999, 2001, 2004, 2009-2011 Free Software Foundation,
+# Copyright (C) 1996, 1999, 2001, 2004, 2009-2012 Free Software Foundation,
 # Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,

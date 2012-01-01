@@ -1,6 +1,6 @@
 /* Definitions for data structures and routines for the regular
    expression library.
-   Copyright (C) 1985, 1989-1993, 1995-1998, 2000-2003, 2005-2006, 2009-2011
+   Copyright (C) 1985, 1989-1993, 1995-1998, 2000-2003, 2005-2006, 2009-2012
    Free Software Foundation, Inc.
    This file is part of the GNU C Library.
 

@@ -1,6 +1,6 @@
 /* Write block to given position in file without changing file pointer.
    POSIX version.
-   Copyright (C) 1997-1999, 2002, 2011 Free Software Foundation, Inc.
+   Copyright (C) 1997-1999, 2002, 2011-2012 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Contributed by Ulrich Drepper <drepper@cygnus.com>, 1997.
 

@@ -1,6 +1,6 @@
 /* Sequential list data type backed by another list, with out-of-memory
    checking.
-   Copyright (C) 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 2009-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify

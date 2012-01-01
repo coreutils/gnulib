@@ -1,6 +1,6 @@
 /* quote.c - quote arguments for output
 
-   Copyright (C) 1998-2001, 2003, 2005-2006, 2009-2011 Free Software
+   Copyright (C) 1998-2001, 2003, 2005-2006, 2009-2012 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

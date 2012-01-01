@@ -1,6 +1,6 @@
 /* glob.h -- Find a path matching a pattern.
 
-   Copyright (C) 2005-2007, 2009-2011 Free Software Foundation, Inc.
+   Copyright (C) 2005-2007, 2009-2012 Free Software Foundation, Inc.
 
    Written by Derek Price <derek@ximbiot.com> & Paul Eggert <eggert@CS.UCLA.EDU>
 

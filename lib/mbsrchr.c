@@ -1,5 +1,5 @@
 /* Searching a string for the last occurrence of a character.
-   Copyright (C) 2007-2011 Free Software Foundation, Inc.
+   Copyright (C) 2007-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2007.
 
    This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /* Memory allocation with expensive empty allocations.
-   Copyright (C) 2003, 2008, 2010-2011 Free Software Foundation, Inc.
+   Copyright (C) 2003, 2008, 2010-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003,
    based on prior work by Jim Meyering.
 

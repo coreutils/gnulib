@@ -1,5 +1,5 @@
 /* Construct a regular expression from a literal string.
-   Copyright (C) 1995, 2010-2011 Free Software Foundation, Inc.
+   Copyright (C) 1995, 2010-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <haible@clisp.cons.org>, 2010.
 
    This program is free software: you can redistribute it and/or modify

@@ -1,5 +1,5 @@
 /* Test of xstrtol module.
-   Copyright (C) 1995-1996, 1998-2001, 2003-2011 Free Software Foundation, Inc.
+   Copyright (C) 1995-1996, 1998-2001, 2003-2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

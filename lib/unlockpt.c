@@ -1,5 +1,5 @@
 /* Unlock the slave side of a pseudo-terminal from its master side.
-   Copyright (C) 1998, 2010-2011 Free Software Foundation, Inc.
+   Copyright (C) 1998, 2010-2012 Free Software Foundation, Inc.
    Contributed by Zack Weinberg <zack@rabi.phys.columbia.edu>, 1998.
 
    This program is free software: you can redistribute it and/or modify
