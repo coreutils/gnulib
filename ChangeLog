@@ -1,3 +1,8 @@
+2012-01-01  Jim Meyering  <meyering@redhat.com>
+
+	version-etc: update copyright year reported by --version
+	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2012.
+
 2011-12-31  Pádraig Brady  <P@draigBrady.com>
 
 	canonicalize: only stat() if required
@@ -90572,7 +90577,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2011 Free Software Foundation, Inc.
+	Copyright (C) 1997-2012 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
