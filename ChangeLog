@@ -1,5 +1,17 @@
 2012-01-01  Jim Meyering  <meyering@redhat.com>
 
+	test-framework-sh: init.sh: fix "make dist" failure
+	When using gnulib-tool's --with-tests option and any module that
+	depends on test-framework-sh, "make dist" would fail due to the
+	lack of init.sh *in lib/*.  The EXTRA_DIST += init.sh is required
+	in the gltests directory, and not in the gllib/ directory.
+	One way to work around that is to move the EXTRA_DIST += init.sh
+	from the primary module to the -tests one:
+	* modules/test-framework-sh-tests (EXTRA_DIST): Add init.sh here, ...
+	* modules/test-framework-sh (Makefile.am): ...not here.
+	Reported by Tom G. Christensen in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/29519
+
 	version-etc: update copyright year reported by --version
 	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2012.
 

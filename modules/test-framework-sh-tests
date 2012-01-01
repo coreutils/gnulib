@@ -7,3 +7,4 @@ configure.ac:
 
 Makefile.am:
 TESTS += test-init.sh
+EXTRA_DIST += init.sh
