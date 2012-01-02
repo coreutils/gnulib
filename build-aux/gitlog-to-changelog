@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2011-12-30 17:48'; # UTC
+my $VERSION = '2012-01-02 09:55'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -93,7 +93,7 @@ s/all tile types/all file types/
 1379ed974f1fa39b12e2ffab18b3f7a607082202
 # Due to a bug in vc-dwim, I mis-attributed a patch by Paul to myself.
 # Change the author to be Paul.  Note the escaped "@":
-s,Jim .*>,Paul Eggert <eggert\@cs.ucla.edu>,
+s,Jim .*>,Paul Eggert <eggert\\\@cs.ucla.edu>,
 
 EOF
     }

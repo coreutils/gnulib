@@ -1,3 +1,9 @@
+2012-01-02  Jim Meyering  <meyering@redhat.com>
+
+	gitlog-to-changelog: fix typo in --help: show backslash before email @
+	* build-aux/gitlog-to-changelog (usage): An "@" was backslash-escaped
+	in sources, but not in actual output.
+
 2011-12-30  Jim Meyering  <meyering@redhat.com>
 
 	gitlog-to-changelog: don't malfunction when name contains %-directive
