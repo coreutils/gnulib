@@ -1,5 +1,8 @@
 2012-01-02  Jim Meyering  <meyering@redhat.com>
 
+	gitlog-to-changelog: describe input syntax in --help output
+	* build-aux/gitlog-to-changelog (usage) [SPECIAL SYNTAX]: New section.
+
 	gitlog-to-changelog: fix typo in --help: show backslash before email @
 	* build-aux/gitlog-to-changelog (usage): An "@" was backslash-escaped
 	in sources, but not in actual output.

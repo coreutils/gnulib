@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-01-02 09:55'; # UTC
+my $VERSION = '2012-01-02 14:48'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -77,6 +77,21 @@ EXAMPLE:
 
   $ME --since=2008-01-01 > ChangeLog
   $ME -- -n 5 foo > last-5-commits-to-branch-foo
+
+SPECIAL SYNTAX:
+
+The following types of strings are interpreted specially when they appear
+at the beginning of a log message line.  They are not copied to the output.
+
+  Copyright-paperwork-exempt: Yes
+    Append the "(tiny change)" notation to the usual "date name email"
+    ChangeLog header to mark a change that does not require a copyright
+    assignment.
+  Co-authored-by: Joe User <user\@example.com>
+    List the specified name and email address on a second
+    ChangeLog header, denoting a co-author.
+  Signed-off-by: Joe User <user\@example.com>
+    These lines are simply elided.
 
 In a FILE specified via --amend, comment lines (starting with "#") are ignored.
 FILE must consist of <SHA,CODE+> pairs where SHA is a 40-byte SHA1 (alone on
