@@ -4,15 +4,15 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isatty.html}
 
-Gnulib module: ---
+Gnulib module: isatty
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On native Windows, this function also returns true for character devices such
+as @file{NUL}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On Windows, @code{isatty} also returns true for character devices such as
-@file{NUL}.
 @end itemize

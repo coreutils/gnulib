@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 62
+# unistd_h.m4 serial 63
 dnl Copyright (C) 2006-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,8 +41,9 @@ AC_DEFUN([gl_UNISTD_H],
 #endif
     ]], [chdir chown dup dup2 dup3 environ euidaccess faccessat fchdir fchownat
     fdatasync fsync ftruncate getcwd getdomainname getdtablesize getgroups
-    gethostname getlogin getlogin_r getpagesize getusershell setusershell
-    endusershell group_member lchown link linkat lseek pipe pipe2 pread pwrite
+    gethostname getlogin getlogin_r getpagesize
+    getusershell setusershell endusershell
+    group_member isatty lchown link linkat lseek pipe pipe2 pread pwrite
     readlink readlinkat rmdir sethostname sleep symlink symlinkat ttyname_r
     unlink unlinkat usleep])
 ])
@@ -82,6 +83,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   GNULIB_GETPAGESIZE=0;          AC_SUBST([GNULIB_GETPAGESIZE])
   GNULIB_GETUSERSHELL=0;         AC_SUBST([GNULIB_GETUSERSHELL])
   GNULIB_GROUP_MEMBER=0;         AC_SUBST([GNULIB_GROUP_MEMBER])
+  GNULIB_ISATTY=0;               AC_SUBST([GNULIB_ISATTY])
   GNULIB_LCHOWN=0;               AC_SUBST([GNULIB_LCHOWN])
   GNULIB_LINK=0;                 AC_SUBST([GNULIB_LINK])
   GNULIB_LINKAT=0;               AC_SUBST([GNULIB_LINKAT])
@@ -158,6 +160,7 @@ AC_DEFUN([gl_UNISTD_H_DEFAULTS],
   REPLACE_GETLOGIN_R=0;   AC_SUBST([REPLACE_GETLOGIN_R])
   REPLACE_GETGROUPS=0;    AC_SUBST([REPLACE_GETGROUPS])
   REPLACE_GETPAGESIZE=0;  AC_SUBST([REPLACE_GETPAGESIZE])
+  REPLACE_ISATTY=0;       AC_SUBST([REPLACE_ISATTY])
   REPLACE_LCHOWN=0;       AC_SUBST([REPLACE_LCHOWN])
   REPLACE_LINK=0;         AC_SUBST([REPLACE_LINK])
   REPLACE_LINKAT=0;       AC_SUBST([REPLACE_LINKAT])

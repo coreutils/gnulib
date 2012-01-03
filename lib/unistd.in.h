@@ -935,6 +935,27 @@ _GL_WARN_ON_USE (group_member, "group_member is unportable - "
 #endif
 
 
+#if @GNULIB_ISATTY@
+# if @REPLACE_ISATTY@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef isatty
+#   define isatty rpl_isatty
+#  endif
+_GL_FUNCDECL_RPL (isatty, int, (int fd));
+_GL_CXXALIAS_RPL (isatty, int, (int fd));
+# else
+_GL_CXXALIAS_SYS (isatty, int, (int fd));
+# endif
+_GL_CXXALIASWARN (isatty);
+#elif defined GNULIB_POSIXCHECK
+# undef isatty
+# if HAVE_RAW_DECL_ISATTY
+_GL_WARN_ON_USE (isatty, "isatty has portability problems on native Windows - "
+                 "use gnulib module isatty for portability");
+# endif
+#endif
+
+
 #if @GNULIB_LCHOWN@
 /* Change the owner of FILE to UID (if UID is not -1) and the group of FILE
    to GID (if GID is not -1).  Do not follow symbolic links.

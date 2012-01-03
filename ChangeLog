@@ -1,5 +1,20 @@
 2012-01-02  Bruno Haible  <bruno@clisp.org>
 
+	New module 'isatty'.
+	* lib/unistd.in.h (isatty): New declaration.
+	* lib/isatty.c: New file, based on an idea of
+	Bastien Roucariès <roucaries.bastien@gmail.com>.
+	* m4/isatty.m4: New file.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Test whether isatty is declared.
+	(gl_UNISTD_H_DEFAULTS): Initialize GNULIB_ISATTY, REPLACE_ISATTY.
+	* modules/unistd (Makefile.am): Substitute GNULIB_ISATTY,
+	REPLACE_ISATTY.
+	* modules/isatty: New file.
+	* doc/posix-functions/isatty.texi: Mention the new module.
+	Suggested by Paolo Bonzini.
+
+2012-01-02  Bruno Haible  <bruno@clisp.org>
+
 	canonicalize: Tweak 2011-12-29 commit.
 	* lib/canonicalize.c (canonicalize_filename_mode): Fix typo in comment.
 	* lib/canonicalize.h (canonicalize_filename_mode): Update specification.
