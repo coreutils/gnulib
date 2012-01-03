@@ -1,5 +1,11 @@
 2012-01-03  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: remove temporary transition aid from over 1.5 years ago
+	* top/maint.mk (_prohibit_regexp): Remove definition whose sole
+	purpose was to aid in the transition (avoiding silent malfunction)
+	from that old name to the new _sc_search_regexp.  This shim was
+	added by commit 219c504b.
+
 	init.sh: do not try to accommodate compare arguments starting with "-"
 	* tests/init.sh (compare_dev_null_): Do not try to accommodate
 	compare arguments that start with "-".  Besides, we do not worry
