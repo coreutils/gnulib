@@ -242,13 +242,13 @@ compare_dev_null_ ()
 
   if test "x$1" = x/dev/null; then
     test -s "$2" || return 0
-    emit_diff_u_header_ "$@"; sed 's/^/+/' -- "$2"
+    emit_diff_u_header_ "$@"; sed 's/^/+/' "$2"
     return 1
   fi
 
   if test "x$2" = x/dev/null; then
     test -s "$1" || return 0
-    emit_diff_u_header_ "$@"; sed 's/^/-/' -- "$1"
+    emit_diff_u_header_ "$@"; sed 's/^/-/' "$1"
     return 1
   fi
 

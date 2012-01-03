@@ -1,3 +1,13 @@
+2012-01-03  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: do not try to accommodate compare arguments starting with "-"
+	* tests/init.sh (compare_dev_null_): Do not try to accommodate
+	compare arguments that start with "-".  Besides, we do not worry
+	about this when invoking diff or cmp; why start now with sed?
+	Using "--" to separate options from argument would trigger sed
+	failure in at least Solaris 7, HP-UX 11.00, IRIX 6.5, FreeBSD 6.4,
+	OpenBSD 4.9 and NetBSD 5.1.  Reported by Bruno Haible.
+
 2012-01-02  Bruno Haible  <bruno@clisp.org>
 
 	Enhance tests for module 'isatty'.
