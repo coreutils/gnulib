@@ -1,3 +1,9 @@
+2012-01-02  Bruno Haible  <bruno@clisp.org>
+
+	canonicalize: Tweak 2011-12-29 commit.
+	* lib/canonicalize.c (canonicalize_filename_mode): Fix typo in comment.
+	* lib/canonicalize.h (canonicalize_filename_mode): Update specification.
+
 2012-01-02  Jim Meyering  <meyering@redhat.com>
 
 	gitlog-to-changelog: describe input syntax in --help output

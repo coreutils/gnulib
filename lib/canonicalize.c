@@ -84,7 +84,7 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
 /* Return the canonical absolute name of file NAME, while treating
    missing elements according to CAN_MODE.  A canonical name
    does not contain any `.', `..' components nor any repeated file name
-   separators ('/') or, depdending on other CAN_MODE flags, symlinks.
+   separators ('/') or, depending on other CAN_MODE flags, symlinks.
    Whether components must exist or not depends on canonicalize mode.
    The result is malloc'd.  */
 
