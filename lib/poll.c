@@ -71,6 +71,8 @@
 
 #ifdef WIN32_NATIVE
 
+/* Optimized test whether a HANDLE refers to a console.
+   See <http://lists.gnu.org/archive/html/bug-gnulib/2009-08/msg00065.html>.  */
 #define IsConsoleHandle(h) (((long) (h) & 3) == 3)
 
 static BOOL

@@ -21,20 +21,49 @@
 
 /* This replacement is enabled on native Windows.  */
 
+#include <errno.h>
+
 /* Get declarations of the Win32 API functions.  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#include "msvc-inval.h"
+
 /* Get _get_osfhandle().  */
 #include "msvc-nothrow.h"
 
+/* Optimized test whether a HANDLE refers to a console.
+   See <http://lists.gnu.org/archive/html/bug-gnulib/2009-08/msg00065.html>.  */
 #define IsConsoleHandle(h) (((long) (h) & 3) == 3)
+
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+static inline int
+_isatty_nothrow (int fd)
+{
+  int result;
+
+  TRY_MSVC_INVAL
+    {
+      result = _isatty (fd);
+    }
+  CATCH_MSVC_INVAL
+    {
+      result = -1;
+      errno = EBADF;
+    }
+  DONE_MSVC_INVAL;
+
+  return result;
+}
+#else
+# define _isatty_nothrow _isatty
+#endif
 
 int
 isatty (int fd)
 {
   /* _isatty (fd) tests whether GetFileType of the handle is FILE_TYPE_CHAR.  */
-  if (_isatty (fd))
+  if (_isatty_nothrow (fd))
     {
       HANDLE h = (HANDLE) _get_osfhandle (fd);
       return IsConsoleHandle (h);

@@ -1,3 +1,18 @@
+2012-01-03  Bruno Haible  <bruno@clisp.org>
+
+	isatty: Support for MSVC 9.
+	* doc/posix-functions/isatty.texi: Mention the MSVC problem.
+	* lib/isatty.c: Include <errno.h>, msvc-inval.h.
+	(_isatty_nothrow): New function.
+	(isatty): Use it instead of _isatty.
+	(IsConsoleHandle): Add comment, from Paolo Bonzini.
+	* lib/poll.c (IsConsoleHandle): Likewise.
+	* lib/select.c (IsConsoleHandle): Likewise.
+	* m4/isatty.m4 (gl_FUNC_ISATTY): Fix comment. Reported by Eli Zaretskii.
+	(gl_PREREQ_ISATTY): New macro.
+	* modules/isatty (Depends-on): Add msvc-inval.
+	(configure.ac): Invoke gl_PREREQ_ISATTY.
+
 2012-01-03  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: remove temporary transition aid from over 1.5 years ago

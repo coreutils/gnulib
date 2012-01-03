@@ -1,4 +1,4 @@
-# isatty.m4 serial 1
+# isatty.m4 serial 2
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,9 +8,14 @@ AC_DEFUN([gl_FUNC_ISATTY],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  dnl On native Windows, the system's isatty() returns true for pipes and
-  dnl for the NUL device.
+  dnl On native Windows, the system's isatty(), defined as an alias of _isatty()
+  dnl in the "oldnames" library, returns true for the NUL device.
   case $host_os in
     mingw*) REPLACE_ISATTY=1 ;;
   esac
+])
+
+# Prerequisites of lib/isatty.c.
+AC_DEFUN([gl_PREREQ_ISATTY], [
+  AC_REQUIRE([AC_C_INLINE])
 ])

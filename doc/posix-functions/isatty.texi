@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 On native Windows, this function also returns true for character devices such
 as @file{NUL}.
+@item
+This function crashes when invoked with invalid arguments on some platforms:
+MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

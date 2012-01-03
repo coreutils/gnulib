@@ -7,12 +7,14 @@ m4/isatty.m4
 
 Depends-on:
 unistd
+msvc-inval      [test $REPLACE_ISATTY = 1]
 msvc-nothrow    [test $REPLACE_ISATTY = 1]
 
 configure.ac:
 gl_FUNC_ISATTY
 if test $REPLACE_ISATTY = 1; then
   AC_LIBOBJ([isatty])
+  gl_PREREQ_ISATTY
 fi
 gl_UNISTD_MODULE_INDICATOR([isatty])
 
