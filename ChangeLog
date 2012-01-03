@@ -1,5 +1,12 @@
 2012-01-02  Bruno Haible  <bruno@clisp.org>
 
+	Enhance tests for module 'isatty'.
+	* modules/isatty-tests (Depends-on): Add pipe-posix.
+	* tests/test-isatty.c: Include <fcntl.h>.
+	(DEV_NULL): New macro.
+	(main): Test the resut of isatty() also on regular files, pipes, and
+	/dev/null.
+
 	New module 'isatty'.
 	* lib/unistd.in.h (isatty): New declaration.
 	* lib/isatty.c: New file, based on an idea of

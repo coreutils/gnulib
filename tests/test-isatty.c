@@ -22,12 +22,24 @@
 SIGNATURE_CHECK (isatty, int, (int));
 
 #include <errno.h>
+#include <fcntl.h>
 
 #include "macros.h"
+
+/* The name of the "always silent" device.  */
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Native Woe32 API.  */
+# define DEV_NULL "NUL"
+#else
+/* Unix API.  */
+# define DEV_NULL "/dev/null"
+#endif
 
 int
 main (void)
 {
+  const char *file = "test-isatty.txt";
+
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
@@ -43,6 +55,44 @@ main (void)
             || errno == 0 /* seen on Solaris 10 */
            );
   }
+
+  /* Test behaviour for regular files.  */
+  {
+    int fd;
+
+    fd = open (file, O_WRONLY|O_CREAT|O_TRUNC, 0644);
+    ASSERT (0 <= fd);
+    ASSERT (write (fd, "hello", 5) == 5);
+    ASSERT (close (fd) == 0);
+
+    fd = open (file, O_RDONLY);
+    ASSERT (0 <= fd);
+    ASSERT (! isatty (fd));
+    ASSERT (close (fd) == 0);
+  }
+
+  /* Test behaviour for pipes.  */
+  {
+    int fd[2];
+
+    ASSERT (pipe (fd) == 0);
+    ASSERT (! isatty (fd[0]));
+    ASSERT (! isatty (fd[1]));
+    ASSERT (close (fd[0]) == 0);
+    ASSERT (close (fd[1]) == 0);
+  }
+
+  /* Test behaviour for /dev/null.  */
+  {
+    int fd;
+
+    fd = open (DEV_NULL, O_RDONLY);
+    ASSERT (0 <= fd);
+    ASSERT (! isatty (fd));
+    ASSERT (close (fd) == 0);
+  }
+
+  ASSERT (unlink (file) == 0);
 
   return 0;
 }
