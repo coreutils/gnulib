@@ -1,3 +1,9 @@
+2012-01-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Spell out "Windows 9x" and "Windows XP".
+	* lib/poll.c, lib/select.c: In comments, replace "Win9x" with
+	"Windows 9x" and "WinXP" with "Windows XP".
+
 2012-01-04  Jim Meyering  <meyering@redhat.com>
 
 	test-vc-list-files-cvs.sh: remove obsolete comment

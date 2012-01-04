@@ -163,11 +163,12 @@ windows_compute_revents (HANDLE h, int *p_sought)
         {
           /* It was the write-end of the pipe.  Check if it is writable.
              If NtQueryInformationFile fails, optimistically assume the pipe is
-             writable.  This could happen on Win9x, where NtQueryInformationFile
-             is not available, or if we inherit a pipe that doesn't permit
-             FILE_READ_ATTRIBUTES access on the write end (I think this should
-             not happen since WinXP SP2; WINE seems fine too).  Otherwise,
-             ensure that enough space is available for atomic writes.  */
+             writable.  This could happen on Windows 9x, where
+             NtQueryInformationFile is not available, or if we inherit a pipe
+             that doesn't permit FILE_READ_ATTRIBUTES access on the write end
+             (I think this should not happen since Windows XP SP2; WINE seems
+             fine too).  Otherwise, ensure that enough space is available for
+             atomic writes.  */
           memset (&iosb, 0, sizeof (iosb));
           memset (&fpli, 0, sizeof (fpli));
 
