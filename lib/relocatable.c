@@ -70,7 +70,7 @@
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
 #if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+  /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -89,7 +89,7 @@
    It allows libraries to be have been installed with a different original
    prefix than the program.  But it is quite costly, especially on Cygwin
    platforms, see below.  Therefore we enable it by default only on native
-   Win32 platforms.  */
+   Windows platforms.  */
 #ifndef ENABLE_COSTLY_RELOCATABLE
 # if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 #  define ENABLE_COSTLY_RELOCATABLE 1
@@ -249,7 +249,7 @@ compute_curr_prefix (const char *orig_installprefix,
                often case-insensitive.  It's better to accept the comparison
                if the difference is only in case, rather than to fail.  */
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-            /* Win32, Cygwin, OS/2, DOS - case insignificant file system */
+            /* Native Windows, Cygwin, OS/2, DOS - case insignificant file system */
             if ((*rpi >= 'a' && *rpi <= 'z' ? *rpi - 'a' + 'A' : *rpi)
                 != (*cpi >= 'a' && *cpi <= 'z' ? *cpi - 'a' + 'A' : *cpi))
               break;
@@ -303,10 +303,10 @@ compute_curr_prefix (const char *orig_installprefix,
 static char *shared_library_fullname;
 
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-/* Native Win32 only.
+/* Native Windows only.
    On Cygwin, it is better to use the Cygwin provided /proc interface, than
-   to use native Win32 API and cygwin_conv_to_posix_path, because it supports
-   longer file names
+   to use native Windows API and cygwin_conv_to_posix_path, because it
+   supports longer file names
    (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
 
 /* Determine the full pathname of the shared library when it is loaded.  */
@@ -390,7 +390,7 @@ find_shared_library_fullname ()
 #endif
 }
 
-#endif /* WIN32 / Unix */
+#endif /* Native Windows / Unix */
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.

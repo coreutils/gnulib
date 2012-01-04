@@ -54,7 +54,7 @@ glthread_tls_get_multithreaded (thread_key_t key)
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 #endif
 

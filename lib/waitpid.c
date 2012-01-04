@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <sys/wait.h>
 
-/* Implementation for native Win32 systems.  */
+/* Implementation for native Windows systems.  */
 
 #include <process.h> /* for _cwait, WAIT_CHILD */
 

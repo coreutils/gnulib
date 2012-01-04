@@ -34,7 +34,7 @@
 #endif
 
 #if defined _WIN32 || defined __WIN32__
-# define WIN32_NATIVE
+# define WINDOWS_NATIVE
 #endif
 
 #if defined __EMX__
@@ -44,7 +44,7 @@
 # endif
 #endif
 
-#if !defined WIN32_NATIVE
+#if !defined WINDOWS_NATIVE
 # include <unistd.h>
 # if HAVE_LANGINFO_CODESET
 #  include <langinfo.h>
@@ -57,7 +57,7 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 # endif
-#elif defined WIN32_NATIVE
+#elif defined WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -83,7 +83,7 @@
 #endif
 
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, Cygwin, OS/2, DOS */
+  /* Native Windows, Cygwin, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 #endif
 
@@ -123,7 +123,7 @@ get_charset_aliases (void)
   cp = charset_aliases;
   if (cp == NULL)
     {
-#if !(defined DARWIN7 || defined VMS || defined WIN32_NATIVE || defined __CYGWIN__)
+#if !(defined DARWIN7 || defined VMS || defined WINDOWS_NATIVE || defined __CYGWIN__)
       const char *dir;
       const char *base = "charset.alias";
       char *file_name;
@@ -308,7 +308,7 @@ get_charset_aliases (void)
            "DECKOREAN" "\0" "EUC-KR" "\0";
 # endif
 
-# if defined WIN32_NATIVE || defined __CYGWIN__
+# if defined WINDOWS_NATIVE || defined __CYGWIN__
       /* To avoid the troubles of installing a separate file in the same
          directory as the DLL and of retrieving the DLL's directory at
          runtime, simply inline the aliases here.  */
@@ -360,7 +360,7 @@ locale_charset (void)
   const char *codeset;
   const char *aliases;
 
-#if !(defined WIN32_NATIVE || defined OS2)
+#if !(defined WINDOWS_NATIVE || defined OS2)
 
 # if HAVE_LANGINFO_CODESET
 
@@ -453,7 +453,7 @@ locale_charset (void)
 
 # endif
 
-#elif defined WIN32_NATIVE
+#elif defined WINDOWS_NATIVE
 
   static char buf[2 + 10 + 1];
 

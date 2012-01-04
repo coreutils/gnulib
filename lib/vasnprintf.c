@@ -4885,7 +4885,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    in format strings in writable memory may crash the program
                    (if compiled with _FORTIFY_SOURCE=2), so we should avoid it
                    in this situation.  */
-                /* On native Win32 systems (such as mingw), we can avoid using
+                /* On native Windows systems (such as mingw), we can avoid using
                    %n because:
                      - Although the gl_SNPRINTF_TRUNCATION_C99 test fails,
                        snprintf does not write more than the specified number
@@ -4894,7 +4894,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                      - Although the gl_SNPRINTF_RETVAL_C99 test fails, snprintf
                        allows us to recognize the case of an insufficient
                        buffer size: it returns -1 in this case.
-                   On native Win32 systems (such as mingw) where the OS is
+                   On native Windows systems (such as mingw) where the OS is
                    Windows Vista, the use of %n in format strings by default
                    crashes the program. See
                      <http://gcc.gnu.org/ml/gcc/2007-06/msg00122.html> and

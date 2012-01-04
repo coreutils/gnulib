@@ -22,7 +22,7 @@
 /* Specification. */
 #include <unistd.h>
 
-/* This implementation is only for native Win32 systems.  */
+/* This implementation is only for native Windows systems.  */
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN

@@ -630,7 +630,7 @@ glthread_once_singlethreaded (gl_once_t *once_control)
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 /* -------------------------- gl_lock_t datatype -------------------------- */
 

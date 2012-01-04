@@ -98,11 +98,11 @@
         get_rusage_as_via_setrlimit() therefore produces a wrong value.
      b) The /proc/$pid/maps file lists only the memory areas belonging to
         the executable and shared libraries, not the anonymous memory.
-        But the native Win32 API works.
+        But the native Windows API works.
 
    mingw:
      a) There is no setrlimit function.
-     b) The native Win32 API works.
+     b) The native Windows API works.
 
    BeOS, Haiku:
      a) On BeOS, there is no setrlimit function.

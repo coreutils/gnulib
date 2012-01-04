@@ -32,7 +32,7 @@
      Solaris <= 7                    >= 10241
      Solaris >= 8                    >= 20481
      Cygwin                          >= 65537
-     native Win32                    >= 4097 (depends on the _pipe argument)
+     native Windows                  >= 4097 (depends on the _pipe argument)
  */
 #if defined __osf__ || (defined __linux__ && (defined __ia64__ || defined __mips__))
 # define PIPE_DATA_BLOCK_SIZE 270000

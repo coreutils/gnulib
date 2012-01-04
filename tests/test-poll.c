@@ -37,10 +37,10 @@ SIGNATURE_CHECK (poll, int, (struct pollfd[], nfds_t, int));
 #include <errno.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-# define WIN32_NATIVE
+# define WINDOWS_NATIVE
 #endif
 
-#ifdef WIN32_NATIVE
+#ifdef WINDOWS_NATIVE
 #include <io.h>
 #define pipe(x) _pipe(x, 256, O_BINARY)
 #endif
@@ -132,7 +132,7 @@ connect_to_socket (int blocking)
 
   if (!blocking)
     {
-#ifdef WIN32_NATIVE
+#ifdef WINDOWS_NATIVE
       unsigned long iMode = 1;
       ioctl (s, FIONBIO, (char *) &iMode);
 
@@ -246,7 +246,7 @@ test_connect_first (void)
 static void
 test_accept_first (void)
 {
-#ifndef WIN32_NATIVE
+#ifndef WINDOWS_NATIVE
   int s = open_server_socket ();
   struct sockaddr_in ia;
   socklen_t addrlen;

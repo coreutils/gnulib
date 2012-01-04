@@ -105,7 +105,7 @@
         get_rusage_data_via_setrlimit() therefore produces a wrong value.
      b) The /proc/$pid/maps file lists only the memory areas belonging to
         the executable and shared libraries, not the anonymous memory.
-        But the native Win32 API works.
+        But the native Windows API works.
      Note that malloc() apparently falls back on mmap() for large allocations.
 
    mingw:
@@ -341,7 +341,7 @@ static inline uintptr_t
 get_rusage_data_via_iterator (void)
 {
 # if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __BEOS__ || defined __HAIKU__
-  /* On mingw, there is no sbrk() function.
+  /* On native Windows, there is no sbrk() function.
      On Haiku, sbrk(0) always returns 0.  */
   static void *brk_value;
 

@@ -15,7 +15,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Ulrich Drepper <drepper@gnu.org>, 1995.  */
-/* Win32 code written by Tor Lillqvist <tml@iki.fi>.  */
+/* Native Windows code written by Tor Lillqvist <tml@iki.fi>.  */
 /* MacOS X code written by Bruno Haible <bruno@clisp.org>.  */
 
 #include <config.h>
@@ -54,10 +54,10 @@
 #endif
 
 #if defined _WIN32 || defined __WIN32__
-# define WIN32_NATIVE
+# define WINDOWS_NATIVE
 #endif
 
-#if defined WIN32_NATIVE || defined __CYGWIN__ /* WIN32 or Cygwin */
+#if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 /* List of language codes, sorted by value:
@@ -1405,11 +1405,11 @@ gl_locale_name_canonicalize (char *name)
 #endif
 
 
-#if defined WIN32_NATIVE || defined __CYGWIN__ /* WIN32 or Cygwin */
+#if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
 
-/* Canonicalize a Win32 native locale name to a Unix locale name.
+/* Canonicalize a Windows native locale name to a Unix locale name.
    NAME is a sufficiently large buffer.
-   On input, it contains the Win32 locale name.
+   On input, it contains the Windows locale name.
    On output, it contains the Unix locale name.  */
 # if !defined IN_LIBINTL
 static
@@ -1465,9 +1465,9 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
     }
   /* Internet Explorer has an LCID to RFC3066 name mapping stored in
      HKEY_CLASSES_ROOT\Mime\Database\Rfc1766.  But we better don't use that
-     since IE's i18n subsystem is known to be inconsistent with the Win32 base
-     (e.g. they have different character conversion facilities that produce
-     different results).  */
+     since IE's i18n subsystem is known to be inconsistent with the native
+     Windows base (e.g. they have different character conversion facilities
+     that produce different results).  */
   /* Use our own table.  */
   {
     int primary, sub;
@@ -2866,7 +2866,7 @@ gl_locale_name_default (void)
          "C.UTF-8" locale, which operates in the same way as the "C" locale.
   */
 
-#if !(HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE || defined WIN32_NATIVE || defined __CYGWIN__)
+#if !(HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE || defined WINDOWS_NATIVE || defined __CYGWIN__)
 
   /* The system does not have a way of setting the locale, other than the
      POSIX specified environment variables.  We use C as default locale.  */
@@ -2921,11 +2921,11 @@ gl_locale_name_default (void)
 
 # endif
 
-# if defined WIN32_NATIVE || defined __CYGWIN__ /* WIN32 or Cygwin */
+# if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
   {
     LCID lcid;
 
-    /* Use native Win32 API locale ID.  */
+    /* Use native Windows API locale ID.  */
     lcid = GetThreadLocale ();
 
     return gl_locale_name_from_win32_LCID (lcid);

@@ -1,4 +1,4 @@
-# locale-ja.m4 serial 9
+# locale-ja.m4 serial 10
 dnl Copyright (C) 2003, 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -28,7 +28,7 @@ int main ()
   const char *p;
   /* Check whether the given locale name is recognized by the system.  */
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-  /* On native Win32, setlocale(category, "") looks at the system settings,
+  /* On native Windows, setlocale(category, "") looks at the system settings,
      not at the environment variables.  Also, when an encoding suffix such
      as ".65001" or ".54936" is speficied, it succeeds but sets the LC_CTYPE
      category of the locale to "C".  */
@@ -84,8 +84,9 @@ changequote([,])dnl
         # "ja" as "Japanese" or "Japanese_Japan.932",
         # and similar.
         mingw*)
-          # Note that on native Win32, the Japanese locale is Japanese_Japan.932,
-          # and CP932 is very different from EUC-JP, so we cannot use it here.
+          # Note that on native Windows, the Japanese locale is
+          # Japanese_Japan.932, and CP932 is very different from EUC-JP, so we
+          # cannot use it here.
           gt_cv_locale_ja=none
           ;;
         *)

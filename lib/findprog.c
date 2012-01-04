@@ -39,7 +39,7 @@ const char *
 find_in_path (const char *progname)
 {
 #if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
-  /* Win32, Cygwin, OS/2, DOS */
+  /* Native Windows, Cygwin, OS/2, DOS */
   /* The searching rules with .COM, .EXE, .BAT, .CMD etc. suffixes are
      too complicated.  Leave it to the OS.  */
   return progname;

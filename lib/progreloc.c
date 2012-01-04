@@ -36,10 +36,10 @@
 #endif
 
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-# define WIN32_NATIVE
+# define WINDOWS_NATIVE
 #endif
 
-#ifdef WIN32_NATIVE
+#ifdef WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -74,7 +74,7 @@ extern char * canonicalize_file_name (const char *name);
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
 #if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+  /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
@@ -113,7 +113,7 @@ static bool
 maybe_executable (const char *filename)
 {
   /* Woe32 lacks the access() function.  */
-#if !defined WIN32_NATIVE
+#if !defined WINDOWS_NATIVE
   if (access (filename, X_OK) < 0)
     return false;
 #endif
@@ -148,11 +148,11 @@ maybe_executable (const char *filename)
 static char *
 find_executable (const char *argv0)
 {
-#if defined WIN32_NATIVE
-  /* Native Win32 only.
+#if defined WINDOWS_NATIVE
+  /* Native Windows only.
      On Cygwin, it is better to use the Cygwin provided /proc interface, than
-     to use native Win32 API and cygwin_conv_to_posix_path, because it supports
-     longer file names
+     to use native Windows API and cygwin_conv_to_posix_path, because it
+     supports longer file names
      (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
   char location[MAX_PATH];
   int length = GetModuleFileName (NULL, location, sizeof (location));

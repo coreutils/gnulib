@@ -614,7 +614,7 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
@@ -623,8 +623,8 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 extern "C" {
 # endif
 
-/* We can use CRITICAL_SECTION directly, rather than the Win32 Event, Mutex,
-   Semaphore types, because
+/* We can use CRITICAL_SECTION directly, rather than the native Windows Event,
+   Mutex, Semaphore types, because
      - we need only to synchronize inside a single process (address space),
        not inter-process locking,
      - we don't need to support trylock operations.  (TryEnterCriticalSection
@@ -710,9 +710,9 @@ extern int glthread_rwlock_destroy_func (gl_rwlock_t *lock);
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
 
-/* The Win32 documentation says that CRITICAL_SECTION already implements a
-   recursive lock.  But we need not rely on it: It's easy to implement a
-   recursive lock without this assumption.  */
+/* The native Windows documentation says that CRITICAL_SECTION already
+   implements a recursive lock.  But we need not rely on it: It's easy to
+   implement a recursive lock without this assumption.  */
 
 typedef struct
         {
@@ -764,7 +764,7 @@ extern void glthread_once_func (gl_once_t *once_control, void (*initfunction) (v
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

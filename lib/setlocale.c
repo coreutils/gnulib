@@ -74,7 +74,7 @@ category_to_name (int category)
 
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* The native Win32 setlocale() function expects locale names of the form
+/* The native Windows setlocale() function expects locale names of the form
    "German" or "German_Germany" or "DEU", but not "de" or "de_DE".  We need
    to convert the names from the form with ISO 639 language code and ISO 3166
    country code to the form with English names or with three-letter identifier.

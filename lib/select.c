@@ -24,7 +24,7 @@
 #include <assert.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Win32.  */
+/* Native Windows.  */
 
 #include <sys/types.h>
 #include <errno.h>
@@ -97,11 +97,14 @@ IsSocketHandle (HANDLE h)
   return ev.lNetworkEvents != 0xDEADBEEF;
 }
 
-/* Compute output fd_sets for libc descriptor FD (whose Win32 handle is H).  */
+/* Compute output fd_sets for libc descriptor FD (whose Windows handle is
+   H).  */
 
 static int
-win32_poll_handle (HANDLE h, int fd, struct bitset *rbits, struct bitset *wbits,
-                   struct bitset *xbits)
+windows_poll_handle (HANDLE h, int fd,
+		     struct bitset *rbits,
+		     struct bitset *wbits,
+                     struct bitset *xbits)
 {
   BOOL read, write, except;
   int i, ret;
@@ -371,7 +374,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
 
           /* Poll now.  If we get an event, do not wait below.  */
           if (wait_timeout != 0
-              && win32_poll_handle (h, i, &rbits, &wbits, &xbits))
+              && windows_poll_handle (h, i, &rbits, &wbits, &xbits))
             wait_timeout = 0;
         }
     }
@@ -448,7 +451,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
         {
           /* Not a socket.  */
           nhandles++;
-          win32_poll_handle (h, i, &rbits, &wbits, &xbits);
+          windows_poll_handle (h, i, &rbits, &wbits, &xbits);
           if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
             {
               rc++;
@@ -470,7 +473,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   return rc;
 }
 
-#else /* ! Native Win32.  */
+#else /* ! Native Windows.  */
 
 #include <sys/select.h>
 

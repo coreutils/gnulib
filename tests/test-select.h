@@ -30,7 +30,7 @@
 #include "macros.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-# define WIN32_NATIVE
+# define WINDOWS_NATIVE
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
@@ -121,7 +121,7 @@ connect_to_socket (bool blocking)
 
   if (!blocking)
     {
-#ifdef WIN32_NATIVE
+#ifdef WINDOWS_NATIVE
       unsigned long iMode = 1;
       ioctl (s, FIONBIO, (char *) &iMode);
 
@@ -262,7 +262,7 @@ static void
 test_bad_fd (select_fn my_select)
 {
   /* This tests fails on OSF/1 and native Windows, even with fd = 16.  */
-#if !(defined __osf__ || defined WIN32_NATIVE)
+#if !(defined __osf__ || defined WINDOWS_NATIVE)
   int fd;
 
   /* On Linux, MacOS X, *BSD, values of fd like 99 or 399 are discarded
@@ -318,7 +318,7 @@ test_connect_first (select_fn my_select)
 static void
 test_accept_first (select_fn my_select)
 {
-#ifndef WIN32_NATIVE
+#ifndef WINDOWS_NATIVE
   int s = open_server_socket ();
   struct sockaddr_in ia;
   socklen_t addrlen;

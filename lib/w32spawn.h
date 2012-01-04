@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
@@ -101,7 +101,7 @@ undup_safer_noinherit (int tempfd, int origfd)
          v.dwPlatformId == VER_PLATFORM_WIN32_NT;
       }) ? "cmd.exe" : "command.com").
    Instead it simply concatenates the arguments, separated by ' ', and calls
-   CreateProcess().  We must quote the arguments since Win32 CreateProcess()
+   CreateProcess().  We must quote the arguments since Windows CreateProcess()
    interprets characters like ' ', '\t', '\\', '"' (but not '<' and '>') in a
    special way:
    - Space and tab are interpreted as delimiters. They are not treated as
@@ -136,7 +136,7 @@ prepare_spawn (char **argv)
      script, not a program.
      On Unix, this would be "/bin/sh". On native Windows, "sh" is actually
      "sh.exe".  We have to omit the directory part and rely on the search in
-     PATH, because the mingw "mount points" are not visible inside Win32
+     PATH, because the mingw "mount points" are not visible inside Windows
      CreateProcess().  */
   *new_argv++ = "sh.exe";
 

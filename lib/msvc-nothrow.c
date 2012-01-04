@@ -21,7 +21,7 @@
 /* Specification.  */
 #include "msvc-nothrow.h"
 
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 

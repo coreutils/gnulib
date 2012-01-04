@@ -40,7 +40,7 @@ gl_msvc_invalid_parameter_handler (const wchar_t *expression,
 
 # else
 
-/* Get declarations of the Win32 API functions.  */
+/* Get declarations of the native Windows API functions.  */
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 

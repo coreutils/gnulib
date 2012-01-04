@@ -34,7 +34,7 @@
 
 /* Separator in PATH like lists of pathnames.  */
 #if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
-  /* Win32, OS/2, DOS */
+  /* Native Windows, OS/2, DOS */
 # define PATH_SEPARATOR ';'
 #else
   /* Unix */

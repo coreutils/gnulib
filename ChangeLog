@@ -1,3 +1,94 @@
+2012-01-04  Bruno Haible  <bruno@clisp.org>
+
+	Talk about "native Windows API", not "Win32".
+	* lib/classpath.c: Update comments to mention native Windows.
+	* lib/csharpexec.c: Likewise.
+	* lib/dup2.c: Likewise.
+	* lib/error.c: Likewise.
+	* lib/fcntl.c: Likewise.
+	* lib/filename.h: Likewise.
+	* lib/findprog.c: Likewise.
+	* lib/get-rusage-as.c: Likewise.
+	* lib/get-rusage-data.c: Likewise.
+	* lib/getpagesize.c: Likewise.
+	* lib/javaexec.c: Likewise.
+	* lib/msvc-inval.c: Likewise.
+	* lib/msvc-nothrow.c: Likewise.
+	* lib/nanosleep.c: Likewise.
+	* lib/nonblocking.c: Likewise.
+	* lib/printf-parse.c: Likewise.
+	* lib/setlocale.c: Likewise.
+	* lib/sigaction.c: Likewise.
+	* lib/strerror_r.c: Likewise.
+	* lib/tmpdir.c: Likewise.
+	* lib/vasnprintf.c: Likewise.
+	* lib/w32spawn.h: Likewise.
+	* lib/waitpid.c: Likewise.
+	* lib/stdio.in.h (fdopen, fopen, freopen): Likewise.
+	* m4/locale-ar.m4: Likewise.
+	* m4/locale-fr.m4: Likewise.
+	* m4/locale-ja.m4: Likewise.
+	* m4/locale-tr.m4: Likewise.
+	* m4/locale-zh.m4: Likewise.
+	* m4/printf.m4: Likewise.
+	* tests/test-cloexec.c: Likewise.
+	* tests/test-copy-acl.sh: Likewise.
+	* tests/test-copy-file.sh: Likewise.
+	* tests/test-file-has-acl.sh: Likewise.
+	* tests/test-set-mode-acl.sh: Likewise.
+	* tests/test-dup-safer.c: Likewise.
+	* tests/test-dup2.c: Likewise.
+	* tests/test-dup3.c: Likewise.
+	* tests/test-fcntl.c: Likewise.
+	* tests/test-nonblocking-pipe.h: Likewise.
+	* tests/test-nonblocking-socket.h: Likewise.
+	* tests/test-pipe.c: Likewise.
+	* tests/test-pipe2.c: Likewise.
+	* tests/test-spawn-pipe-child.c: Likewise.
+	* doc/acl-resources.txt: Likewise.
+	* lib/getaddrinfo.c (WINDOWS_NATIVE): Renamed from WIN32_NATIVE.
+	* tests/test-poll.c (WINDOWS_NATIVE): Likewise.
+	* tests/test-select.h (WINDOWS_NATIVE): Likewise.
+	* lib/localcharset.c: Update comments to mention native Windows.
+	(WINDOWS_NATIVE): Renamed from WIN32_NATIVE.
+	* lib/localename.c: Likewise.
+	* lib/progreloc.c: Likewise.
+	* lib/relocatable.c: Likewise.
+	* lib/poll.c (WINDOWS_NATIVE): Renamed from WIN32_NATIVE.
+	(windows_compute_revents): Renamed from win32_compute_revents.
+	(windows_compute_revents_socket): Renamed from
+	win32_compute_revents_socket.
+	* lib/select.c: Update comments to mention native Windows.
+	(windows_poll_handle): Renamed from win32_poll_handle.
+	* m4/threadlib.m4: Update comments to mention native Windows.
+	(gl_THREADLIB_EARLY_BODY, gl_THREADLIB_BODY): Expect
+	--enable-threads=windows instead of --enable-threads=win32. Set
+	USE_WINDOWS_THREADS, not USE_WIN32_THREADS.
+	* lib/glthread/lock.h: Update comments to mention native Windows.
+	(USE_WINDOWS_THREADS): Renamed from USE_WIN32_THREADS.
+	* lib/glthread/lock.c (USE_WINDOWS_THREADS): Renamed from
+	USE_WIN32_THREADS.
+	* lib/glthread/cond.h (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/cond.c (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/thread.h (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/thread.c (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/tls.h (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/tls.c (USE_WINDOWS_THREADS): Likewise.
+	* lib/glthread/yield.h (USE_WINDOWS_THREADS): Likewise.
+	* tests/test-cond.c (USE_WINDOWS_THREADS): Likewise.
+	* tests/test-thread_create.c (USE_WINDOWS_THREADS): Likewise.
+	* tests/test-lock.c (USE_WINDOWS_THREADS): Likewise.
+	(TEST_WINDOWS_THREADS): Renamed from TEST_WIN32_THREADS.
+	* tests/test-tls.c: Likewise.
+	Rationale:
+	Microsoft renamed the "Win32 API" to "Windows API", as it is available
+	on both 32-bit and 64-bit Windows systems.
+	But in gnulib, we treat Cygwin like a Unix platform, therefore the main
+	line of distinction is between "native Windows" on one side and Unix/
+	POSIX systems on the other side. More details in
+	<https://lists.gnu.org/archive/html/bug-gnulib/2012-01/msg00027.html>.
+	Suggested by Paul Eggert.
+
 2012-01-03  Bruno Haible  <bruno@clisp.org>
 
 	isatty: Support for MSVC 9.

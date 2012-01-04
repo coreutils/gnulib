@@ -476,7 +476,7 @@ Utilities:
   setfacl
 
 
-Win32 ACLs
+Native Windows ACLs
 
 Introduction:
   http://setacl.sourceforge.net/html/doc-basics.html

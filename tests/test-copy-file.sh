@@ -55,7 +55,7 @@ cd "$builddir" ||
   # manipulating ACLs.
   # Possible values are:
   #   linux, cygwin, freebsd, solaris, hpux, hpuxjfs, osf1, aix, macosx, irix, none.
-  # TODO: Support also native Win32 platforms (mingw).
+  # TODO: Support also native Windows platforms (mingw).
   acl_flavor=none
   if (getfacl tmpfile0 >/dev/null) 2>/dev/null; then
     # Platforms with the getfacl and setfacl programs.

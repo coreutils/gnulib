@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_SOLARIS_THREADS || USE_PTH_THREADS || USE_WIN32_THREADS
+#if USE_POSIX_THREADS || USE_SOLARIS_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
 
 #if USE_POSIX_THREADS
 # define TEST_POSIX_THREADS 1
@@ -29,8 +29,8 @@
 #if USE_PTH_THREADS
 # define TEST_PTH_THREADS 1
 #endif
-#if USE_WIN32_THREADS
-# define TEST_WIN32_THREADS 1
+#if USE_WINDOWS_THREADS
+# define TEST_WINDOWS_THREADS 1
 #endif
 
 /* Whether to enable locking.
@@ -69,7 +69,7 @@
 # undef USE_POSIX_THREADS
 # undef USE_SOLARIS_THREADS
 # undef USE_PTH_THREADS
-# undef USE_WIN32_THREADS
+# undef USE_WINDOWS_THREADS
 #endif
 #include "glthread/lock.h"
 
@@ -83,8 +83,8 @@
 # if TEST_PTH_THREADS
 #  define USE_PTH_THREADS 1
 # endif
-# if TEST_WIN32_THREADS
-#  define USE_WIN32_THREADS 1
+# if TEST_WINDOWS_THREADS
+#  define USE_WINDOWS_THREADS 1
 # endif
 #endif
 

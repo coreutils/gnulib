@@ -73,7 +73,7 @@ glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 #include <sys/time.h>
 

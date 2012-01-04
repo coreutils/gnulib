@@ -290,7 +290,7 @@ typedef thread_t gl_thread_t;
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
@@ -337,7 +337,7 @@ extern int gl_thread_exit_func (void *retval);
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WIN32_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

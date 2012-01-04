@@ -1,4 +1,4 @@
-# locale-fr.m4 serial 13
+# locale-fr.m4 serial 14
 dnl Copyright (C) 2003, 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,7 +26,7 @@ char buf[16];
 int main () {
   /* Check whether the given locale name is recognized by the system.  */
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-  /* On native Win32, setlocale(category, "") looks at the system settings,
+  /* On native Windows, setlocale(category, "") looks at the system settings,
      not at the environment variables.  Also, when an encoding suffix such
      as ".65001" or ".54936" is speficied, it succeeds but sets the LC_CTYPE
      category of the locale to "C".  */
@@ -80,7 +80,7 @@ changequote([,])dnl
         # "ja" as "Japanese" or "Japanese_Japan.932",
         # and similar.
         mingw*)
-          # Test for the native Win32 locale name.
+          # Test for the native Windows locale name.
           if (LC_ALL=French_France.1252 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
             gt_cv_locale_fr=French_France.1252
           else
@@ -152,7 +152,7 @@ int main () {
 #if !(defined __BEOS__ || defined __HAIKU__)
   /* Check whether the given locale name is recognized by the system.  */
 # if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
-  /* On native Win32, setlocale(category, "") looks at the system settings,
+  /* On native Windows, setlocale(category, "") looks at the system settings,
      not at the environment variables.  Also, when an encoding suffix such
      as ".65001" or ".54936" is speficied, it succeeds but sets the LC_CTYPE
      category of the locale to "C".  */
@@ -206,7 +206,7 @@ changequote([,])dnl
         # "ja" as "Japanese" or "Japanese_Japan.932",
         # and similar.
         mingw*)
-          # Test for the hypothetical native Win32 locale name.
+          # Test for the hypothetical native Windows locale name.
           if (LC_ALL=French_France.65001 LC_TIME= LC_CTYPE= ./conftest; exit) 2>/dev/null; then
             gt_cv_locale_fr_utf8=French_France.65001
           else

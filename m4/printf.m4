@@ -1,4 +1,4 @@
-# printf.m4 serial 46
+# printf.m4 serial 47
 dnl Copyright (C) 2003, 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -952,7 +952,7 @@ int main ()
         [
 changequote(,)dnl
          case "$host_os" in
-           # Guess no only on Solaris, native Win32, and BeOS systems.
+           # Guess no only on Solaris, native Windows, and BeOS systems.
            solaris*)     gl_cv_func_printf_precision="guessing no" ;;
            mingw* | pw*) gl_cv_func_printf_precision="guessing no" ;;
            beos*)        gl_cv_func_printf_precision="guessing no" ;;

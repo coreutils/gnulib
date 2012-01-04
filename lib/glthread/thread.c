@@ -43,7 +43,7 @@ const gl_thread_t gl_null_thread /* = { .p = NULL } */;
 
 /* ========================================================================= */
 
-#if USE_WIN32_THREADS
+#if USE_WINDOWS_THREADS
 
 #include <process.h>
 
