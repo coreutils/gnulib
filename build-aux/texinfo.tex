@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2011-12-26.13}
+\def\texinfoversion{2012-01-03.09}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -9882,9 +9882,12 @@ directory should work if nowhere else does.}
 @def@normalslash{/}
 
 % These look ok in all fonts, so just make them not special.
+% @hashchar{} gets its own user-level command, because of #line.
 @catcode`@& = @other @def@normalamp{&}
 @catcode`@# = @other @def@normalhash{#}
 @catcode`@% = @other @def@normalpercent{%}
+
+@let @hashchar = @normalhash
 
 @c Finally, make ` and ' active, so that txicodequoteundirected and
 @c txicodequotebacktick work right in, e.g., @w{@code{`foo'}}.  If we
