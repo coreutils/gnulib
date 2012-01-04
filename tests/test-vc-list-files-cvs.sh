@@ -36,7 +36,6 @@ for i in with-cvsu without; do
   ok=0
   mkdir $tmpdir && cd $tmpdir &&
     # without cvs, skip the test
-    # The double use of 'exit' is needed for the reference to $? inside the trap.
     { ( cvs -Q -d "$repo" init ) > /dev/null 2>&1 \
       || skip_ "cvs not found in PATH"; } &&
     mkdir w && cd w &&

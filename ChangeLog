@@ -1,3 +1,9 @@
+2012-01-04  Jim Meyering  <meyering@redhat.com>
+
+	test-vc-list-files-cvs.sh: remove obsolete comment
+	* tests/test-vc-list-files-cvs.sh: Remove obsolete comment about
+	double exit.  Now that's all encapsulated via skip_ and Exit.
+
 2012-01-04  Bruno Haible  <bruno@clisp.org>
 
 	Talk about "native Windows API", not "Win32".
