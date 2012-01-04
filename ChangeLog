@@ -1,3 +1,10 @@
+2012-01-04  Jim Meyering  <meyering@redhat.com>
+
+	test-init.sh: accommodate Solaris 5.10's different diff -u output
+	* tests/test-init.sh: Also exempt @@ lines from the comparison
+	of diff output, since Solaris 5.10 and GNU diff formats differ.
+	Reported by Stefano Lattarini.
+
 2012-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-posixtm: don't assume signed integer wraparound

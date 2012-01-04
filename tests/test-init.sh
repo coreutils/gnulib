@@ -52,13 +52,15 @@ EOF
   compare empty in >out 2>err && fail=1
   # Remove the TAB-date suffix on each --- and +++ line,
   # for both the expected and the actual output files.
+  # Also remove the @@ line, since Solaris 5.10 and GNU diff formats differ:
+  # -@@ -0,0 +1 @@
+  # +@@ -1,0 +1,1 @@
   cat <<\EOF > exp
 --- empty
 +++ in
-@@ -0,0 +1 @@
 +xyz
 EOF
-  sed 's/	.*//' out > k && mv k out
+  sed 's/	.*//;/^@@/d' out > k && mv k out
   compare exp out || fail=1
   case $- in *x*) ;; *) test -s err && fail_ "err not empty: $(cat err)";; esac
 }
