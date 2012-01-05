@@ -1,4 +1,4 @@
-# strtoimax.m4 serial 11
+# strtoimax.m4 serial 12
 dnl Copyright (C) 2002-2004, 2006, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,6 +13,58 @@ AC_DEFUN([gl_FUNC_STRTOIMAX],
   AC_CHECK_DECLS_ONCE([strtoimax])
   if test "$ac_cv_have_decl_strtoimax" != yes; then
     HAVE_DECL_STRTOIMAX=0
+  fi
+
+  if test $ac_cv_func_strtoimax = yes; then
+    HAVE_STRTOIMAX=1
+    dnl On AIX 5.1, strtoimax() fails for values outside the 'int' range.
+    AC_REQUIRE([gl_AC_HEADER_STDINT_H])
+    AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])
+    AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+    AC_CACHE_CHECK([whether strtoimax works], [gl_cv_func_strtoimax],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+#include <errno.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/types.h>
+#if HAVE_STDINT_H_WITH_UINTMAX
+# include <stdint.h>
+#endif
+#if HAVE_INTTYPES_H_WITH_UINTMAX
+# include <inttypes.h>
+#endif
+int main ()
+{
+  const char *s = "4294967295";
+  char *p;
+  intmax_t res;
+  errno = 0;
+  res = strtoimax (s, &p, 10);
+  if (p != s + strlen (s))
+    return 1;
+  if (errno != 0)
+    return 2;
+  if (res != (intmax_t) 65535 * (intmax_t) 65537)
+    return 3;
+  return 0;
+}
+]])],
+         [gl_cv_func_strtoimax=yes],
+         [gl_cv_func_strtoimax=no],
+         [case "$host_os" in
+                   # Guess no on AIX 5.
+            aix5*) gl_cv_func_strtoimax="guessing no" ;;
+                   # Guess yes otherwise.
+            *)     gl_cv_func_strtoimax="guessing yes" ;;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_strtoimax" in
+      *no) REPLACE_STRTOIMAX=1 ;;
+    esac
+  else
+    HAVE_STRTOIMAX=0
   fi
 ])
 

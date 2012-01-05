@@ -1,5 +1,22 @@
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
+	strtoimax: Work around AIX 5.1 bug.
+	* lib/inttypes.in.h (strtoimax): Allow overriding the system's
+	definition.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Check against the AIX 5.1 bug.
+	Set HAVE_STRTOIMAX.
+	* m4/inttypes.m4 (gl_INTTYPES_H_DEFAULTS): Initialize
+	REPLACE_STRTOIMAX.
+	* modules/inttypes-incomplete (Makefile.am): Substitute
+	REPLACE_STRTOIMAX.
+	* modules/strtoimax (Files): Add m4/stdint_h.m4, m4/inttypes_h.m4.
+	(configure.ac): Test HAVE_STRTOIMAX, REPLACE_STRTOIMAX.
+	(Depends-on): Update conditions.
+	* tests/test-strtoimax.c (main): Add tests for large values.
+	* doc/posix-functions/strtoimax.texi: Mention the AIX 5.1 bug.
+
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
 	inttypes: Modernize.
 	* lib/inttypes.in.h (strtoimax, strtoumax): Use the C++ safe idioms.
 	* modules/inttypes-incomplete (Depends-on): Add snippet/c++defs.

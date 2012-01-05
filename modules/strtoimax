@@ -3,18 +3,20 @@ strtoimax() function: convert string to 'intmax_t'.
 
 Files:
 lib/strtoimax.c
-m4/longlong.m4
 m4/strtoimax.m4
+m4/stdint_h.m4
+m4/inttypes_h.m4
+m4/longlong.m4
 
 Depends-on:
 inttypes-incomplete
-verify          [test $ac_cv_func_strtoimax = no]
-stdint          [test $ac_cv_func_strtoimax = no]
-strtoll         [test $ac_cv_func_strtoimax = no && test $ac_cv_type_long_long_int = yes]
+verify          [test $HAVE_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
+stdint          [test $HAVE_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1]
+strtoll         [{ test $HAVE_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1; } && test $ac_cv_type_long_long_int = yes]
 
 configure.ac:
 gl_FUNC_STRTOIMAX
-if test $ac_cv_func_strtoimax = no; then
+if test $HAVE_STRTOIMAX = 0 || test $REPLACE_STRTOIMAX = 1; then
   AC_LIBOBJ([strtoimax])
   gl_PREREQ_STRTOIMAX
 fi

@@ -1079,12 +1079,22 @@ _GL_WARN_ON_USE (imaxdiv, "imaxdiv is unportable - "
 #endif
 
 #if @GNULIB_STRTOIMAX@
-# if !@HAVE_DECL_STRTOIMAX@
-#  undef strtoimax
+# if @REPLACE_STRTOIMAX@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef strtoimax
+#   define strtoimax rpl_strtoimax
+#  endif
+_GL_FUNCDECL_RPL (strtoimax, intmax_t,
+                  (const char *, char **, int) _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strtoimax, intmax_t, (const char *, char **, int));
+# else
+#  if !@HAVE_DECL_STRTOIMAX@
+#   undef strtoimax
 _GL_FUNCDECL_SYS (strtoimax, intmax_t,
                   (const char *, char **, int) _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (strtoimax, intmax_t, (const char *, char **, int));
+# endif
 _GL_CXXALIASWARN (strtoimax);
 #elif defined GNULIB_POSIXCHECK
 # undef strtoimax
