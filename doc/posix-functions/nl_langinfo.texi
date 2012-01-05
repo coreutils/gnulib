@@ -41,4 +41,9 @@ On Cygwin 1.7.0, only the charset portion of a locale designation is honored.
 On NetBSD 5.0, in some locales, @code{nl_langinfo(CRNCYSTR)} returns the
 empty string, although the local currency symbol, as returned by
 @code{localeconv()->currency_symbol}, is non-empty.
+
+@item
+On NetBSD 5.1, in the "C" locale, the results of
+@code{nl_langinfo(ABMON_1)} ... @code{nl_langinfo(ABMON_12)} are full month
+names, not abbreviated month names.
 @end itemize

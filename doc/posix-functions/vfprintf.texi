@@ -87,6 +87,10 @@ mingw, MSVC 9.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+When formatting an integer with grouping flag, this function inserts thousands
+separators even in the "C" locale on some platforms:
+NetBSD 5.1.
+@item
 Attempting to write to a read-only stream fails with @code{EOF} but
 does not set the error flag for @code{ferror} on some platforms:
 glibc 2.13, cygwin 1.7.9.

@@ -1,5 +1,11 @@
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention NetBSD bugs.
+	* doc/posix-functions/*printf.texi: Mention a NetBSD 5.1 bug.
+	* doc/posix-functions/nl_langinfo.texi: Mention another NetBSD 5.1 bug.
+
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
 	strtoumax tests: Enhance tests.
 	* tests/test-strtoumax.c (main): Add tests for large values.
 

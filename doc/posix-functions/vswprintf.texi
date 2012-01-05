@@ -20,4 +20,8 @@ On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cann
 accommodate all Unicode characters.
 @item
 On Windows, this function does not take a buffer size as second argument.
+@item
+When formatting an integer with grouping flag, this function inserts thousands
+separators even in the "C" locale on some platforms:
+NetBSD 5.1.
 @end itemize

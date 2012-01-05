@@ -94,4 +94,8 @@ OSF/1 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+When formatting an integer with grouping flag, this function inserts thousands
+separators even in the "C" locale on some platforms:
+NetBSD 5.1.
 @end itemize
