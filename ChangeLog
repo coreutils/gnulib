@@ -1,5 +1,11 @@
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'strtoull'.
+	* modules/strtoull-tests: New file.
+	* tests/test-strtoull.c: New file, based on tests/test-strtoumax.c.
+
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'strtoll'.
 	* modules/strtoll-tests: New file.
 	* tests/test-strtoll.c: New file, based on tests/test-strtoimax.c.
