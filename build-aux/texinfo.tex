@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2012-01-03.09}
+\def\texinfoversion{2012-01-04.16}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -2842,8 +2842,8 @@ end
 % 
 \def\outfmtnametex{tex}
 %
-\def\inlinefmt#1{\doinlinefmt #1,\finish}
-\def\doinlinefmt#1,#2,\finish{%
+\long\def\inlinefmt#1{\doinlinefmt #1,\finish}
+\long\def\doinlinefmt#1,#2,\finish{%
   \def\inlinefmtname{#1}%
   \ifx\inlinefmtname\outfmtnametex \ignorespaces #2\fi
 }
@@ -2855,8 +2855,8 @@ end
 % well use a command to get a left brace too.  We could re-use the
 % delimiter character idea from \verb, but it seems like overkill.
 % 
-\def\inlineraw{\tex \doinlineraw}
-\def\doinlineraw#1{\doinlinerawtwo #1,\finish}
+\long\def\inlineraw{\tex \doinlineraw}
+\long\def\doinlineraw#1{\doinlinerawtwo #1,\finish}
 \def\doinlinerawtwo#1,#2,\finish{%
   \def\inlinerawname{#1}%
   \ifx\inlinerawname\outfmtnametex \ignorespaces #2\fi
