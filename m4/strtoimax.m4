@@ -36,17 +36,34 @@ AC_DEFUN([gl_FUNC_STRTOIMAX],
 #endif
 int main ()
 {
-  const char *s = "4294967295";
-  char *p;
-  intmax_t res;
-  errno = 0;
-  res = strtoimax (s, &p, 10);
-  if (p != s + strlen (s))
-    return 1;
-  if (errno != 0)
-    return 2;
-  if (res != (intmax_t) 65535 * (intmax_t) 65537)
-    return 3;
+  if (sizeof (intmax_t) > sizeof (int))
+    {
+      const char *s = "4294967295";
+      char *p;
+      intmax_t res;
+      errno = 0;
+      res = strtoimax (s, &p, 10);
+      if (p != s + strlen (s))
+        return 1;
+      if (errno != 0)
+        return 2;
+      if (res != (intmax_t) 65535 * (intmax_t) 65537)
+        return 3;
+    }
+  else
+    {
+      const char *s = "2147483647";
+      char *p;
+      intmax_t res;
+      errno = 0;
+      res = strtoimax (s, &p, 10);
+      if (p != s + strlen (s))
+        return 1;
+      if (errno != 0)
+        return 2;
+      if (res != 2147483647)
+        return 3;
+    }
   return 0;
 }
 ]])],

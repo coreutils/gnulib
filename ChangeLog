@@ -1,5 +1,12 @@
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
+	strtoimax: Don't force a replacement on systems where intmax_t is int.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Use a different test if
+	'intmax_t' is not larger than 'int'.
+	Reported by Pádraig Brady <P@draigBrady.com>.
+
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
 	doc: Mention NetBSD bugs.
 	* doc/posix-functions/*printf.texi: Mention a NetBSD 5.1 bug.
 	* doc/posix-functions/nl_langinfo.texi: Mention another NetBSD 5.1 bug.
