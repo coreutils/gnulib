@@ -255,7 +255,7 @@ compare_dev_null_ ()
   return 2
 }
 
-if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
+if diff_out_=`exec 2>/dev/null; diff -u "$0" "$0" < /dev/null`; then
   if test -z "$diff_out_"; then
     compare_ () { diff -u "$@"; }
   else
@@ -273,7 +273,7 @@ if diff_out_=`( diff -u "$0" "$0" < /dev/null ) 2>/dev/null`; then
       fi
     }
   fi
-elif diff_out_=`( diff -c "$0" "$0" < /dev/null ) 2>/dev/null`; then
+elif diff_out_=`exec 2>/dev/null; diff -c "$0" "$0" < /dev/null`; then
   if test -z "$diff_out_"; then
     compare_ () { diff -c "$@"; }
   else

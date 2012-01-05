@@ -1,5 +1,9 @@
 2012-01-05  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: don't waste a subshell just to redirect stderr
+	* tests/init.sh: In testing for diff -u and diff -c, use a
+	stderr-redirecting exec inside `...` rather than a subshell.
+
 	test-init.sh: avoid failure on HP-UX 11.00
 	* tests/test-init.sh: Skip "diff -u"-comparing step when compare
 	resolves to diff -c or cmp.  Reported by Bruno Haible.
