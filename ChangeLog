@@ -1,3 +1,9 @@
+2012-01-05  Jim Meyering  <meyering@redhat.com>
+
+	test-init.sh: avoid failure on HP-UX 11.00
+	* tests/test-init.sh: Skip "diff -u"-comparing step when compare
+	resolves to diff -c or cmp.  Reported by Bruno Haible.
+
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'strtoull'.

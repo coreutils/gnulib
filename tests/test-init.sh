@@ -61,7 +61,11 @@ EOF
 +xyz
 EOF
   sed 's/	.*//;/^@@/d' out > k && mv k out
-  compare exp out || fail=1
+
+  # Check the expected output only if compare is using diff -u.
+  if $(exec 2>/dev/null; diff -u out out < /dev/null); then
+    compare exp out || fail=1
+  fi
   case $- in *x*) ;; *) test -s err && fail_ "err not empty: $(cat err)";; esac
 }
 
