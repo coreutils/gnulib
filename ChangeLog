@@ -1,5 +1,10 @@
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
+	strtoumax tests: Enhance tests.
+	* tests/test-strtoumax.c (main): Add tests for large values.
+
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
 	strtoimax: Work around AIX 5.1 bug.
 	* lib/inttypes.in.h (strtoimax): Allow overriding the system's
 	definition.
