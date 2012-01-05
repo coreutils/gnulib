@@ -1,5 +1,11 @@
 2012-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-posixtm: don't assume signed integer wraparound
+	* tests/test-posixtm.c (main): Don't assume wraparound semantics
+	after signed integer overflow.  Inspired by (though it may not
+	fix) Bruno Haible's bug report in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-01/msg00066.html>.
+
 	Spell out "Windows 9x" and "Windows XP".
 	* lib/poll.c, lib/select.c: In comments, replace "Win9x" with
 	"Windows 9x" and "WinXP" with "Windows XP".
