@@ -1,3 +1,9 @@
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
+	Tests for module 'strtol'.
+	* modules/strtol-tests: New file.
+	* tests/test-strtol.c: New file, based on tests/test-strtoimax.c.
+
 2012-01-04  Jim Meyering  <meyering@redhat.com>
 
 	test-init.sh: accommodate Solaris 5.10's different diff -u output
