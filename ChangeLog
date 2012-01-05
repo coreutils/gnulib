@@ -1,3 +1,10 @@
+2012-01-05  Bruno Haible  <bruno@clisp.org>
+
+	inttypes: Modernize.
+	* lib/inttypes.in.h (strtoimax, strtoumax): Use the C++ safe idioms.
+	* modules/inttypes-incomplete (Depends-on): Add snippet/c++defs.
+	(Makefile.am): Update inttypes.h rule.
+
 2012-01-05  Jim Meyering  <meyering@redhat.com>
 
 	init.sh: don't waste a subshell just to redirect stderr
