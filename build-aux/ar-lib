@@ -2,10 +2,9 @@
 # Wrapper for Microsoft lib.exe
 
 me=ar-lib
-scriptversion=2010-09-02.19; # UTC
+scriptversion=2012-01-04.17; # UTC
 
-# Copyright (C) 2010 Free Software
-# Foundation, Inc.
+# Copyright (C) 2010, 2012 Free Software Foundation, Inc.
 # Written by Peter Rosin <peda@lysator.liu.se>.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -42,7 +41,7 @@ file_conv=
 
 # func_file_conv build_file
 # Convert a $build file to $host form and store it in $file
-# Currently only supports Win32 hosts.
+# Currently only supports Windows hosts.
 func_file_conv ()
 {
   file=$1

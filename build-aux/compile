@@ -1,10 +1,10 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand `-c -o'.
 
-scriptversion=2010-11-15.09; # UTC
+scriptversion=2012-01-04.17; # UTC
 
-# Copyright (C) 1999, 2000, 2003, 2004, 2005, 2009, 2010 Free Software
-# Foundation, Inc.
+# Copyright (C) 1999, 2000, 2003, 2004, 2005, 2009, 2010, 2012 Free
+# Software Foundation, Inc.
 # Written by Tom Tromey <tromey@cygnus.com>.
 #
 # This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@ file_conv=
 
 # func_file_conv build_file lazy
 # Convert a $build file to $host form and store it in $file
-# Currently only supports Win32 hosts. If the determined conversion
+# Currently only supports Windows hosts. If the determined conversion
 # type is listed in (the comma separated) LAZY, no conversion will
 # take place.
 func_file_conv ()
