@@ -63,7 +63,7 @@ struct hash_table
     /* Tuning arguments, kept in a physically separate structure.  */
     const Hash_tuning *tuning;
 
-    /* Three functions are given to `hash_initialize', see the documentation
+    /* Three functions are given to 'hash_initialize', see the documentation
        block for this function.  In a word, HASHER randomizes a user entry
        into a number up from 0 up to some maximum minus 1; COMPARATOR returns
        true if two user entries compare equally; and DATA_FREER is the cleanup
@@ -87,23 +87,23 @@ struct hash_table
    some user-provided data (also called a user entry).  An entry indistinctly
    refers to both the internal entry and its associated user entry.  A user
    entry contents may be hashed by a randomization function (the hashing
-   function, or just `hasher' for short) into a number (or `slot') between 0
+   function, or just "hasher" for short) into a number (or "slot") between 0
    and the current table size.  At each slot position in the hash table,
    starts a linked chain of entries for which the user data all hash to this
    slot.  A bucket is the collection of all entries hashing to the same slot.
 
-   A good `hasher' function will distribute entries rather evenly in buckets.
+   A good "hasher" function will distribute entries rather evenly in buckets.
    In the ideal case, the length of each bucket is roughly the number of
    entries divided by the table size.  Finding the slot for a data is usually
-   done in constant time by the `hasher', and the later finding of a precise
+   done in constant time by the "hasher", and the later finding of a precise
    entry is linear in time with the size of the bucket.  Consequently, a
    larger hash table size (that is, a larger number of buckets) is prone to
-   yielding shorter chains, *given* the `hasher' function behaves properly.
+   yielding shorter chains, *given* the "hasher" function behaves properly.
 
    Long buckets slow down the lookup algorithm.  One might use big hash table
    sizes in hope to reduce the average length of buckets, but this might
    become inordinate, as unused slots in the hash table take some space.  The
-   best bet is to make sure you are using a good `hasher' function (beware
+   best bet is to make sure you are using a good "hasher" function (beware
    that those are not that easy to write! :-), and to use a table size
    larger than the actual number of entries.  */
 
@@ -300,7 +300,7 @@ hash_get_first (const Hash_table *table)
 }
 
 /* Return the user data for the entry following ENTRY, where ENTRY has been
-   returned by a previous call to either `hash_get_first' or `hash_get_next'.
+   returned by a previous call to either 'hash_get_first' or 'hash_get_next'.
    Return NULL if there are no more entries.  */
 
 void *
@@ -419,9 +419,9 @@ hash_string (const char *string, size_t n_buckets)
 
 #else /* not USE_DIFF_HASH */
 
-/* This one comes from `recode', and performs a bit better than the above as
+/* This one comes from 'recode', and performs a bit better than the above as
    per a few experiments.  It is inspired from a hashing routine found in the
-   very old Cyber `snoop', itself written in typical Greg Mansfield style.
+   very old Cyber 'snoop', itself written in typical Greg Mansfield style.
    (By the way, what happened to this excellent man?  Is he still alive?)  */
 
 size_t
@@ -584,9 +584,9 @@ compute_bucket_size (size_t candidate, const Hash_tuning *tuning)
 
    The user-supplied DATA_FREER function, when not NULL, may be later called
    with the user data as an argument, just before the entry containing the
-   data gets freed.  This happens from within `hash_free' or `hash_clear'.
+   data gets freed.  This happens from within 'hash_free' or 'hash_clear'.
    You should specify this function only if you want these functions to free
-   all of your `data' data.  This is typically the case when your data is
+   all of your 'data' data.  This is typically the case when your data is
    simply an auxiliary struct that you have malloc'd to aggregate several
    values.  */
 

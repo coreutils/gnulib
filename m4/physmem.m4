@@ -6,7 +6,7 @@ dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # Check for the external symbol, _system_configuration,
-# a struct with member `physmem'.
+# a struct with member 'physmem'.
 AC_DEFUN([gl_SYS__SYSTEM_CONFIGURATION],
   [AC_CACHE_CHECK([for external symbol _system_configuration],
                   gl_cv_var__system_configuration,

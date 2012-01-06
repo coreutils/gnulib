@@ -46,7 +46,7 @@
 #if !((HAVE_CANONICALIZE_FILE_NAME && FUNC_REALPATH_WORKS)      \
       || GNULIB_CANONICALIZE_LGPL)
 /* Return the canonical absolute name of file NAME.  A canonical name
-   does not contain any `.', `..' components nor any repeated file name
+   does not contain any ".", ".." components nor any repeated file name
    separators ('/') or symlinks.  All components must exist.
    The result is malloc'd.  */
 
@@ -83,7 +83,7 @@ seen_triple (Hash_table **ht, char const *filename, struct stat const *st)
 
 /* Return the canonical absolute name of file NAME, while treating
    missing elements according to CAN_MODE.  A canonical name
-   does not contain any `.', `..' components nor any repeated file name
+   does not contain any ".", ".." components nor any repeated file name
    separators ('/') or, depending on other CAN_MODE flags, symlinks.
    Whether components must exist or not depends on canonicalize mode.
    The result is malloc'd.  */

@@ -73,7 +73,7 @@ struct md5_ctx
 
 /*
  * The following three functions are build up the low level used in
- * the functions `md5_stream' and `md5_buffer'.
+ * the functions 'md5_stream' and 'md5_buffer'.
  */
 
 /* Initialize structure containing state of computation.

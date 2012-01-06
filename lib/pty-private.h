@@ -27,7 +27,7 @@
 /* The file descriptor connected to the master pseudo terminal.  */
 #define PTY_FILENO 3
 
-/* Path to the helper program that implements `grantpt' in user space.  */
+/* Path to the helper program that implements 'grantpt' in user space.  */
 #define _PATH_PT_CHOWN PKGLIBEXECDIR "/pt_chown"
 
 /* Test whether given TTY is really a Unix98 pseudo terminal.  */

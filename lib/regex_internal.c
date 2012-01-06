@@ -1550,7 +1550,7 @@ re_acquire_state_context (reg_errcode_t *err, const re_dfa_t *dfa,
 	  && re_node_set_compare (state->entrance_nodes, nodes))
 	return state;
     }
-  /* There are no appropriate state in `dfa', create the new one.  */
+  /* There are no appropriate state in 'dfa', create the new one.  */
   new_state = create_cd_newstate (dfa, nodes, context, hash);
   if (BE (new_state == NULL, 0))
     *err = REG_ESPACE;

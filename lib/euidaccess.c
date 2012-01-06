@@ -66,7 +66,7 @@
 #endif
 
 /* Return 0 if the user has permission of type MODE on FILE;
-   otherwise, return -1 and set `errno'.
+   otherwise, return -1 and set 'errno'.
    Like access, except that it uses the effective user and group
    id's instead of the real ones, and it does not always check for read-only
    file system, text busy, etc.  */

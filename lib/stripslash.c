@@ -35,7 +35,7 @@ strip_trailing_slashes (char *file)
   bool had_slash;
 
   /* last_component returns "" for file system roots, but we need to turn
-     `///' into `/'.  */
+     "///" into "/".  */
   if (! *base)
     base = file;
   base_lim = base + base_len (base);

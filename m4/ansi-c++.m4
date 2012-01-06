@@ -119,8 +119,8 @@ EOF
   if test "$$1" != no; then
     dnl This macro invocation resolves an automake error:
     dnl /usr/local/share/automake-1.11/am/depend2.am: am__fastdepCXX does not appear in AM_CONDITIONAL
-    dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define `am__fastdepCXX' is to add `AC_PROG_CXX'
-    dnl /usr/local/share/automake-1.11/am/depend2.am:   to `configure.ac' and run `aclocal' and `autoconf' again.
+    dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define 'am__fastdepCXX' is to add 'AC_PROG_CXX'
+    dnl /usr/local/share/automake-1.11/am/depend2.am:   to 'configure.ac' and run 'aclocal' and 'autoconf' again.
     _AM_DEPENDENCIES([CXX])
   else
     AM_CONDITIONAL([am__fastdepCXX], [false])

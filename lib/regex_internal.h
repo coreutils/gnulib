@@ -483,8 +483,8 @@ struct bin_tree_t
 
   re_token_t token;
 
-  /* `node_idx' is the index in dfa->nodes, if `type' == 0.
-     Otherwise `type' indicate the type of this node.  */
+  /* 'node_idx' is the index in dfa->nodes, if 'type' == 0.
+     Otherwise 'type' indicate the type of this node.  */
   Idx node_idx;
 };
 typedef struct bin_tree_t bin_tree_t;
@@ -537,9 +537,9 @@ struct re_dfastate_t
   struct re_dfastate_t **trtable, **word_trtable;
   unsigned int context : 4;
   unsigned int halt : 1;
-  /* If this state can accept `multi byte'.
+  /* If this state can accept "multi byte".
      Note that we refer to multibyte characters, and multi character
-     collating elements as `multi byte'.  */
+     collating elements as "multi byte".  */
   unsigned int accept_mb : 1;
   /* If this state has backreference node(s).  */
   unsigned int has_backref : 1;
@@ -668,7 +668,7 @@ struct re_dfa_t
   re_bitset_ptr_t sb_char;
   int str_tree_storage_idx;
 
-  /* number of subexpressions `re_nsub' is in regex_t.  */
+  /* number of subexpressions 're_nsub' is in regex_t.  */
   re_hashval_t state_hash_mask;
   Idx init_node;
   Idx nbackref; /* The number of backreference in this dfa.  */

@@ -25,9 +25,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-/* Set the `FD_CLOEXEC' flag of DESC if VALUE is true,
+/* Set the 'FD_CLOEXEC' flag of DESC if VALUE is true,
    or clear the flag if VALUE is false.
-   Return 0 on success, or -1 on error with `errno' set.
+   Return 0 on success, or -1 on error with 'errno' set.
 
    Note that on MingW, this function does NOT protect DESC from being
    inherited into spawned children.  Instead, either use dup_cloexec

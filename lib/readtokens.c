@@ -143,7 +143,7 @@ readtoken (FILE *stream,
    All storage is obtained through calls to xmalloc-like functions.
 
    %%% Question: is it worth it to do a single
-   %%% realloc() of `tokens' just before returning? */
+   %%% realloc() of 'tokens' just before returning? */
 
 size_t
 readtokens (FILE *stream,

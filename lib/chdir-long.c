@@ -96,7 +96,7 @@ find_non_slash (char const *s)
    name.  It handles an arbitrarily long directory name by operating
    on manageable portions of the name.  On systems without the openat
    syscall, this means changing the working directory to more and more
-   `distant' points along the long directory name and then restoring
+   "distant" points along the long directory name and then restoring
    the working directory.  If any of those attempts to save or restore
    the working directory fails, this function exits nonzero.
 
@@ -245,7 +245,7 @@ main (int argc, char *argv[])
 
   if (argc <= 1)
     {
-      /* Using `pwd' here makes sense only if it is a robust implementation,
+      /* Using 'pwd' here makes sense only if it is a robust implementation,
          like the one in coreutils after the 2004-04-19 changes.  */
       char const *cmd = "pwd";
       execlp (cmd, (char *) NULL);

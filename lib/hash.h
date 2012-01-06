@@ -19,7 +19,7 @@
 /* A generic hash table package.  */
 
 /* Make sure USE_OBSTACK is defined to 1 if you want the allocator to use
-   obstacks instead of malloc, and recompile `hash.c' with same setting.  */
+   obstacks instead of malloc, and recompile 'hash.c' with same setting.  */
 
 #ifndef HASH_H_
 # define HASH_H_
@@ -52,8 +52,8 @@ typedef bool (*Hash_processor) (void *, void *);
 
 struct hash_tuning
   {
-    /* This structure is mainly used for `hash_initialize', see the block
-       documentation of `hash_reset_tuning' for more complete comments.  */
+    /* This structure is mainly used for 'hash_initialize', see the block
+       documentation of 'hash_reset_tuning' for more complete comments.  */
 
     float shrink_threshold;     /* ratio of used buckets to trigger a shrink */
     float shrink_factor;        /* ratio of new smaller size to original size */

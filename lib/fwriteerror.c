@@ -42,7 +42,7 @@ do_fwriteerror (FILE *fp, bool ignore_ebadf)
      or if fclose failed, with two exceptions:
        - Ignore an fclose failure if there was no previous error, no data
          remains to be flushed, and fclose failed with EBADF.  That can
-         happen when a program like cp is invoked like this `cp a b >&-'
+         happen when a program like cp is invoked like this 'cp a b >&-'
          (i.e., with standard output closed) and doesn't generate any
          output (hence no previous error and nothing to be flushed).
        - Ignore an fclose failure due to EPIPE.  That can happen when a

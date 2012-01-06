@@ -29,7 +29,7 @@
 #include "spawn_int.h"
 
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `close' for the given file descriptor during the `spawn' call.  */
+   'close' for the given file descriptor during the 'spawn' call.  */
 int
 posix_spawn_file_actions_addclose (posix_spawn_file_actions_t *file_actions,
                                    int fd)

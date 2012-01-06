@@ -21,7 +21,7 @@
 extern "C" {
 #endif
 
-/* Setup standard display of the version information for the `--version'
+/* Setup standard display of the version information for the '--version'
    option.  NAME is the canonical program name, and AUTHORS is a NULL-
    terminated array of author names. At least one author name must be
    given.

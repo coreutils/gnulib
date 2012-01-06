@@ -29,7 +29,7 @@
 #include "spawn_int.h"
 
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `dup2' for the given file descriptors during the `spawn' call.  */
+   'dup2' for the given file descriptors during the 'spawn' call.  */
 int
 posix_spawn_file_actions_adddup2 (posix_spawn_file_actions_t *file_actions,
                                   int fd, int newfd)

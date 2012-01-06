@@ -140,7 +140,7 @@ int type = ACL_TYPE_EXTENDED;]])],
 
 # gl_ACL_GET_FILE(IF-WORKS, IF-NOT)
 # -------------------------------------
-# If `acl_get_file' works (does not have a particular bug),
+# If 'acl_get_file' works (does not have a particular bug),
 # run IF-WORKS, otherwise, IF-NOT.
 # This tests for a Darwin 8.7.0 bug, whereby acl_get_file returns NULL,
 # but sets errno = ENOENT for an existing file or directory.

@@ -19,8 +19,8 @@
 /* If set by the user program, it should point to string that is the
    bug-reporting address for the program.  It will be printed by argp_help if
    the ARGP_HELP_BUG_ADDR flag is set (as it is by various standard help
-   messages), embedded in a sentence that says something like `Report bugs to
-   ADDR.'.  */
+   messages), embedded in a sentence that says something like "Report bugs to
+   ADDR."  */
 const char *argp_program_bug_address
 /* This variable should be zero-initialized.  On most systems, putting it into
    BSS is sufficient.  Not so on MacOS X 10.3 and 10.4, see

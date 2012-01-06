@@ -16,7 +16,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* This package emulates glibc `line_wrap_stream' semantics for systems that
+/* This package emulates glibc 'line_wrap_stream' semantics for systems that
    don't have that.  If the system does have it, it is just a wrapper for
    that.  This header file is only used internally while compiling argp, and
    shouldn't be installed.  */

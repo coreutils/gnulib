@@ -15,7 +15,7 @@ AC_DEFUN([gl_PERL],
   dnl FIXME: don't hard-code 5.005
   AC_MSG_CHECKING([for perl5.005 or newer])
   if test "${PERL+set}" = set; then
-    # `PERL' is set in the user's environment.
+    # 'PERL' is set in the user's environment.
     candidate_perl_names="$PERL"
     perl_specified=yes
   else

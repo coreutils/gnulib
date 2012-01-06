@@ -1,4 +1,4 @@
-# Having a separate GNUmakefile lets me `include' the dynamically
+# Having a separate GNUmakefile lets me 'include' the dynamically
 # generated rules created via cfg.mk (package-local configuration)
 # as well as maint.mk (generic maintainer rules).
 # This makefile is used only if you run GNU Make.

@@ -108,9 +108,9 @@ memcmp_bytes (op_t a, op_t b)
 }
 #endif
 
-/* memcmp_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN `op_t'
+/* memcmp_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN 'op_t'
    objects (not LEN bytes!).  Both SRCP1 and SRCP2 should be aligned for
-   memory operations on `op_t's.  */
+   memory operations on 'op_t's.  */
 #ifdef __GNUC__
 __inline
 #endif
@@ -194,8 +194,8 @@ memcmp_common_alignment (uintptr_t srcp1, uintptr_t srcp2, size_t len)
 }
 
 /* memcmp_not_common_alignment -- Compare blocks at SRCP1 and SRCP2 with LEN
-   `op_t' objects (not LEN bytes!).  SRCP2 should be aligned for memory
-   operations on `op_t', but SRCP1 *should be unaligned*.  */
+   'op_t' objects (not LEN bytes!).  SRCP2 should be aligned for memory
+   operations on 'op_t', but SRCP1 *should be unaligned*.  */
 #ifdef __GNUC__
 __inline
 #endif
@@ -213,7 +213,7 @@ memcmp_not_common_alignment (uintptr_t srcp1, uintptr_t srcp2, size_t len)
   shl = 8 * (srcp1 % OPSIZ);
   shr = 8 * OPSIZ - shl;
 
-  /* Make SRCP1 aligned by rounding it down to the beginning of the `op_t'
+  /* Make SRCP1 aligned by rounding it down to the beginning of the 'op_t'
      it points in the middle of.  */
   srcp1 &= -OPSIZ;
 
@@ -324,7 +324,7 @@ rpl_memcmp (const void *s1, const void *s2, size_t len)
           len -= 1;
         }
 
-      /* SRCP2 is now aligned for memory operations on `op_t'.
+      /* SRCP2 is now aligned for memory operations on 'op_t'.
          SRCP1 alignment determines if we can do a simple,
          aligned compare or need to shuffle bits.  */
 

@@ -53,8 +53,8 @@ m4_version_prereq([2.69], [] ,[
 
 # _AC_LIBOBJ_ALLOCA
 # -----------------
-# Set up the LIBOBJ replacement of `alloca'.  Well, not exactly
-# AC_LIBOBJ since we actually set the output variable `ALLOCA'.
+# Set up the LIBOBJ replacement of 'alloca'.  Well, not exactly
+# AC_LIBOBJ since we actually set the output variable 'ALLOCA'.
 # Nevertheless, for Automake, AC_LIBSOURCES it.
 m4_define([_AC_LIBOBJ_ALLOCA],
 [# The SVR3 libPW and SVR4 libucb both contain incompatible functions

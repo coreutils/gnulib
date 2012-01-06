@@ -1,4 +1,4 @@
-/* Function to parse an `unsigned long long int' from text.
+/* Function to parse an 'unsigned long long int' from text.
    Copyright (C) 1995-1997, 1999, 2009-2012 Free Software Foundation, Inc.
    NOTE: The canonical source of this file is maintained with the GNU C
    Library.  Bugs can be reported to bug-glibc@gnu.org.

@@ -207,7 +207,7 @@ extern struct gl_msvc_inval_per_thread *gl_msvc_inval_current (void);
    or when SANE_LIBRARY_HANDLING is desired.  */
 
 /* The braces here avoid GCC warnings like
-   "warning: suggest explicit braces to avoid ambiguous `else'".  */
+   "warning: suggest explicit braces to avoid ambiguous 'else'".  */
 # define TRY_MSVC_INVAL \
     do                                                                         \
       {                                                                        \

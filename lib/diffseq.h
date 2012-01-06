@@ -76,7 +76,7 @@
 # define EARLY_ABORT(ctxt) false
 #endif
 
-/* Use this to suppress gcc's `...may be used before initialized' warnings.
+/* Use this to suppress gcc's "...may be used before initialized" warnings.
    Beware: The Code argument must not contain commas.  */
 #ifndef IF_LINT
 # ifdef lint
@@ -129,7 +129,7 @@ struct context
   /* Edit scripts longer than this are too expensive to compute.  */
   OFFSET too_expensive;
 
-  /* Snakes bigger than this are considered `big'.  */
+  /* Snakes bigger than this are considered "big".  */
   #define SNAKE_LIMIT 20
 };
 

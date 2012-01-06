@@ -47,7 +47,7 @@
    closed;  return non-zero -- in that case, free_cwd need not be
    called, but doing so is ok.  Otherwise, return zero.
 
-   The `raison d'etre' for this interface is that the working directory
+   The _raison d'etre_ for this interface is that the working directory
    is sometimes inaccessible, and getcwd is not robust or as efficient.
    So, we prefer to use the open/fchdir approach, but fall back on
    getcwd if necessary.  This module works for most cases with just

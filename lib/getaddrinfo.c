@@ -332,7 +332,7 @@ getaddrinfo (const char *restrict nodename,
   return 0;
 }
 
-/* Free `addrinfo' structure AI including associated storage.  */
+/* Free 'addrinfo' structure AI including associated storage.  */
 void
 freeaddrinfo (struct addrinfo *ai)
 {

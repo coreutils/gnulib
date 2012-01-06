@@ -59,8 +59,8 @@ static char const* const default_shells[] =
   "/bin/sh", "/bin/csh", "/usr/bin/sh", "/usr/bin/csh", NULL
 };
 
-/* Index of the next shell in `default_shells' to return.
-   0 means we are not using `default_shells'. */
+/* Index of the next shell in 'default_shells' to return.
+   0 means we are not using 'default_shells'. */
 static size_t default_index = 0;
 
 /* Input stream from the shells file. */
@@ -69,7 +69,7 @@ static FILE *shellstream = NULL;
 /* Line of input from the shells file. */
 static char *line = NULL;
 
-/* Number of bytes allocated for `line'. */
+/* Number of bytes allocated for 'line'. */
 static size_t line_size = 0;
 
 /* Return an entry from the shells file, ignoring comment lines.

@@ -18,7 +18,7 @@
 
 
 # Read a module description file and derive the set of files
-# included directly by any .c or .h file listed in the `Files:' section.
+# included directly by any .c or .h file listed in the 'Files:' section.
 # Take the union of all such sets for any dependent modules.
 # Then, compare that set with the set derived from the names
 # listed in the various Files: sections.
@@ -31,7 +31,7 @@
 # FIXME:
 # for each .m4 file listed in the Files: section(s)
 # parse it for AC_LIBSOURCES directives, and accumulate the set
-# of files `required' via all AC_LIBSOURCES.
+# of files "required" via all AC_LIBSOURCES.
 # If this set is not empty, ensure that it contains
 # the same (.c and .h only?) files as are listed in the Files: sections.
 
@@ -198,7 +198,7 @@ sub find_included_lib_files ($)
 
 my %exempt_header =
   (
-   # Exempt headers like unlocked-io.h that are `#include'd
+   # Exempt headers like unlocked-io.h that are '#include'd
    # but not necessarily used.
    'unlocked-io.h' => 1,
 

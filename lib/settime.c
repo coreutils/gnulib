@@ -49,7 +49,7 @@ settime (struct timespec const *ts)
   }
 #elif HAVE_STIME
   /* This fails to compile on OSF1 V5.1, due to stime requiring
-     a `long int*' and tv_sec is `int'.  But that system does provide
+     a 'long int*' and tv_sec is 'int'.  But that system does provide
      settimeofday.  */
   return stime (&ts->tv_sec);
 #else

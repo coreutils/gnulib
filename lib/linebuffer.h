@@ -21,7 +21,7 @@
 
 # include <stdio.h>
 
-/* A `struct linebuffer' holds a line of text. */
+/* A 'struct linebuffer' holds a line of text. */
 
 struct linebuffer
 {

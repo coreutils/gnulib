@@ -78,7 +78,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
    Library, but also included in many other GNU distributions.  Compiling
    and linking in this code is a waste when using the GNU C library
    (especially if it is a shared library).  Rather than having every GNU
-   program understand `configure --with-gnu-libc' and omit the object files,
+   program understand 'configure --with-gnu-libc' and omit the object files,
    it is simpler to just do this in the source for each such file.  */
 
 #if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
@@ -119,7 +119,7 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #  endif
 
 # else
-#  define CHAR_CLASS_MAX_LENGTH  6 /* Namely, `xdigit'.  */
+#  define CHAR_CLASS_MAX_LENGTH  6 /* Namely, 'xdigit'.  */
 
 #  define IS_CHAR_CLASS(string)                                               \
    (STREQ (string, "alpha") || STREQ (string, "upper")                        \

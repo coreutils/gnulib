@@ -9,7 +9,7 @@
 
 dnl From Jim Meyering
 
-dnl Define HAVE_STRUCT_UTIMBUF if `struct utimbuf' is declared --
+dnl Define HAVE_STRUCT_UTIMBUF if 'struct utimbuf' is declared --
 dnl usually in <utime.h>.
 dnl Some systems have utime.h but don't declare the struct anywhere.
 

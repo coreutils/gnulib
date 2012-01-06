@@ -77,7 +77,7 @@ argmatch_exit_fn argmatch_die = __argmatch_die;
    synonyms, i.e., for
      "yes", "yop" -> 0
      "no", "nope" -> 1
-   "y" is a valid argument, for `0', and "n" for `1'.  */
+   "y" is a valid argument, for 0, and "n" for 1.  */
 
 ptrdiff_t
 argmatch (const char *arg, const char *const *arglist,

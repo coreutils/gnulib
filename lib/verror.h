@@ -25,9 +25,9 @@
 extern "C" {
 #endif
 
-/* Print a message with `vfprintf (stderr, FORMAT, ARGS)';
+/* Print a message with 'vfprintf (stderr, FORMAT, ARGS)';
    if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
-   If STATUS is nonzero, terminate the program with `exit (STATUS)'.
+   If STATUS is nonzero, terminate the program with 'exit (STATUS)'.
    Use the globals error_print_progname and error_message_count similarly
    to error().  */
 
@@ -35,10 +35,10 @@ extern void verror (int __status, int __errnum, const char *__format,
                     va_list __args)
      _GL_ATTRIBUTE_FORMAT ((__printf__, 3, 0));
 
-/* Print a message with `vfprintf (stderr, FORMAT, ARGS)';
+/* Print a message with 'vfprintf (stderr, FORMAT, ARGS)';
    if ERRNUM is nonzero, follow it with ": " and strerror (ERRNUM).
-   If STATUS is nonzero, terminate the program with `exit (STATUS)'.
-   If FNAME is not NULL, prepend the message with `FNAME:LINENO:'.
+   If STATUS is nonzero, terminate the program with 'exit (STATUS)'.
+   If FNAME is not NULL, prepend the message with "FNAME:LINENO:".
    Use the globals error_print_progname, error_message_count, and
    error_one_per_line similarly to error_at_line().  */
 

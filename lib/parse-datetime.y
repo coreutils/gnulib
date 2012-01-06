@@ -82,7 +82,7 @@
    - It's typically faster.
    POSIX says that only '0' through '9' are digits.  Prefer ISDIGIT to
    isdigit unless it's important to use the locale's definition
-   of `digit' even when the host does not conform to POSIX.  */
+   of "digit" even when the host does not conform to POSIX.  */
 #define ISDIGIT(c) ((unsigned int) (c) - '0' <= 9)
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
@@ -754,7 +754,7 @@ static table const universal_time_zone_table[] =
    zone abbreviations are ambiguous; e.g. Australians interpret "EST"
    as Eastern time in Australia, not as US Eastern Standard Time.
    You cannot rely on parse_datetime to handle arbitrary time zone
-   abbreviations; use numeric abbreviations like `-0500' instead.  */
+   abbreviations; use numeric abbreviations like "-0500" instead.  */
 static table const time_zone_table[] =
 {
   { "WET",      tZONE,     HOUR ( 0) }, /* Western European */

@@ -34,7 +34,7 @@
    C Library, but also included in many other GNU distributions.  Compiling
    and linking in this code is a waste when using the GNU C library
    (especially if it is a shared library).  Rather than having every GNU
-   program understand `configure --with-gnu-libc' and omit the object
+   program understand 'configure --with-gnu-libc' and omit the object
    files, it is simpler to just do this in the source for each such file.  */
 
 #include <stdio.h>              /* Random thing to get __GNU_LIBRARY__.  */
@@ -74,23 +74,23 @@ enum
 
 /* When we copy a long block of data, this is the unit to do it with.
    On some machines, copying successive ints does not work;
-   in such a case, redefine COPYING_UNIT to `long' (if that works)
-   or `char' as a last resort.  */
+   in such a case, redefine COPYING_UNIT to 'long' (if that works)
+   or 'char' as a last resort.  */
 # ifndef COPYING_UNIT
 #  define COPYING_UNIT int
 # endif
 
 
-/* The functions allocating more room by calling `obstack_chunk_alloc'
-   jump to the handler pointed to by `obstack_alloc_failed_handler'.
+/* The functions allocating more room by calling 'obstack_chunk_alloc'
+   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
    This can be set to a user defined function which should either
    abort gracefully or use longjump - but shouldn't return.  This
    variable by default points to the internal function
-   `print_and_abort'.  */
+   'print_and_abort'.  */
 static _Noreturn void print_and_abort (void);
 void (*obstack_alloc_failed_handler) (void) = print_and_abort;
 
-/* Exit value used when `print_and_abort' is used.  */
+/* Exit value used when 'print_and_abort' is used.  */
 # include <stdlib.h>
 # ifdef _LIBC
 int obstack_exit_failure = EXIT_FAILURE;

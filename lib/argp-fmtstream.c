@@ -17,7 +17,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-/* This package emulates glibc `line_wrap_stream' semantics for systems that
+/* This package emulates glibc 'line_wrap_stream' semantics for systems that
    don't have that.  */
 
 #ifdef HAVE_CONFIG_H

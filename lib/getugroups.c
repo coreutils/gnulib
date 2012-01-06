@@ -47,7 +47,7 @@ getugroups (int maxcount _GL_UNUSED,
 
 # define STREQ(a, b) (strcmp (a, b) == 0)
 
-/* Like `getgroups', but for user USERNAME instead of for the current
+/* Like 'getgroups', but for user USERNAME instead of for the current
    process.  Store at most MAXCOUNT group IDs in the GROUPLIST array.
    If GID is not -1, store it first (if possible).  GID should be the
    group ID (pw_gid) obtained from getpwuid, in case USERNAME is not

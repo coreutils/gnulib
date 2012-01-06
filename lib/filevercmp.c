@@ -77,7 +77,7 @@ order (unsigned char c)
    This implements the algorithm for comparison of version strings
    specified by Debian and now widely adopted.  The detailed
    specification can be found in the Debian Policy Manual in the
-   section on the `Version' control field.  This version of the code
+   section on the 'Version' control field.  This version of the code
    implements that from s5.6.12 of Debian Policy v3.8.0.1
    http://www.debian.org/doc/debian-policy/ch-controlfields.html#s-f-Version */
 static int _GL_ATTRIBUTE_PURE

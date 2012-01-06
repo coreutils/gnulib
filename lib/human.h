@@ -52,7 +52,7 @@ enum
   /* Round to minus infinity.  */
   human_floor = 2,
 
-  /* Group digits together, e.g. `1,000,000'.  This uses the
+  /* Group digits together, e.g. "1,000,000".  This uses the
      locale-defined grouping; the traditional C locale does not group,
      so this has effect only if some other locale is in use.  */
   human_group_digits = 4,

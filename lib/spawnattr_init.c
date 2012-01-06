@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 int
 posix_spawnattr_init (posix_spawnattr_t *attr)
 {

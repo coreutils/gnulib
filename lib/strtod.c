@@ -149,7 +149,7 @@ parse_number (const char *nptr,
       else
         {
           /* The value of the digit doesn't matter, since we have already
-             gotten as many digits as can be represented in a `double'.
+             gotten as many digits as can be represented in a 'double'.
              This doesn't necessarily mean the result will overflow.
              The exponent may reduce it to within range.
 

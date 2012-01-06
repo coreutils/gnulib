@@ -47,7 +47,7 @@ ptrdiff_t argmatch (char const *arg, char const *const *arglist,
 
 /* xargmatch calls this function when it fails.  This function should not
    return.  By default, this is a function that calls ARGMATCH_DIE which
-   in turn defaults to `exit (exit_failure)'.  */
+   in turn defaults to 'exit (exit_failure)'.  */
 typedef void (*argmatch_exit_fn) (void);
 extern argmatch_exit_fn argmatch_die;
 

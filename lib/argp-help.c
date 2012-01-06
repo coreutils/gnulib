@@ -56,7 +56,7 @@
 
 /* User-selectable (using an environment variable) formatting parameters.
 
-   These may be specified in an environment variable called `ARGP_HELP_FMT',
+   These may be specified in an environment variable called 'ARGP_HELP_FMT',
    with a contents like:  VAR1=VAL1,VAR2=VAL2,BOOLVAR2,no-BOOLVAR2
    Where VALn must be a positive integer.  The list of variables is in the
    UPARAM_NAMES vector, below.  */
@@ -73,13 +73,13 @@
 #define RMARGIN      79         /* right margin used for wrapping */
 
 /* User-selectable (using an environment variable) formatting parameters.
-   They must all be of type `int' for the parsing code to work.  */
+   They must all be of type 'int' for the parsing code to work.  */
 struct uparams
 {
   /* If true, arguments for an option are shown with both short and long
-     options, even when a given option has both, e.g. `-x ARG, --longx=ARG'.
+     options, even when a given option has both, e.g. '-x ARG, --longx=ARG'.
      If false, then if an option has both, the argument is only shown with
-     the long one, e.g., `-x, --longx=ARG', and a message indicating that
+     the long one, e.g., '-x, --longx=ARG', and a message indicating that
      this really means both is printed below the options.  */
   int dup_args;
 
@@ -111,7 +111,7 @@ static struct uparams uparams = {
 struct uparam_name
 {
   const char *name;             /* User name.  */
-  int is_bool;                  /* Whether it's `boolean'.  */
+  int is_bool;                  /* Whether it's 'boolean'.  */
   size_t uparams_offs;          /* Location of the (int) field in UPARAMS.  */
 };
 
@@ -728,7 +728,7 @@ canon_doc_option (const char **name)
       /* Skip initial whitespace.  */
       while (isspace ((unsigned char) **name))
         (*name)++;
-      /* Decide whether this looks like an option (leading `-') or not.  */
+      /* Decide whether this looks like an option (leading '-') or not.  */
       non_opt = (**name != '-');
       /* Skip until part of name used for sorting.  */
       while (**name && !isalnum ((unsigned char) **name))
@@ -755,7 +755,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
       /* The entries are not within the same cluster, so we can't compare them
          directly, we have to use the appropiate clustering level too.  */
       if (! entry1->cluster)
-        /* ENTRY1 is at the `base level', not in a cluster, so we have to
+        /* ENTRY1 is at the "base level", not in a cluster, so we have to
            compare it's group number with that of the base cluster in which
            ENTRY2 resides.  Note that if they're in the same group, the
            clustered option always comes laster.  */
@@ -785,7 +785,7 @@ hol_entry_cmp (const struct hol_entry *entry1,
         doc2 = canon_doc_option (&long2);
 
       if (doc1 != doc2)
-        /* `documentation' options always follow normal options (or
+        /* "documentation" options always follow normal options (or
            documentation options that *look* like normal options).  */
         return doc1 - doc2;
       else if (!short1 && !short2 && long1 && long2)
@@ -1145,7 +1145,7 @@ hol_entry_help (struct hol_entry *entry, const struct argp_state *state,
 
   /* Now, long options.  */
   if (odoc (real))
-    /* A `documentation' option.  */
+    /* A "documentation" option.  */
     {
       __argp_fmtstream_set_wmargin (stream, uparams.doc_opt_col);
       for (opt = real, num = entry->num; num > 0; opt++, num--)
@@ -1439,7 +1439,7 @@ argp_args_usage (const struct argp *argp, const struct argp_state *state,
       const char *cp = fdoc;
       nl = __strchrnul (cp, '\n');
       if (*nl != '\0')
-        /* This is a `multi-level' args doc; advance to the correct position
+        /* This is a "multi-level" args doc; advance to the correct position
            as determined by our state in LEVELS, and update LEVELS.  */
         {
           int i;
@@ -1480,9 +1480,9 @@ argp_args_usage (const struct argp *argp, const struct argp_state *state,
 }
 
 /* Print the documentation for ARGP to STREAM; if POST is false, then
-   everything preceeding a `\v' character in the documentation strings (or
+   everything preceeding a '\v' character in the documentation strings (or
    the whole string, for those with none) is printed, otherwise, everything
-   following the `\v' character (nothing for strings without).  Each separate
+   following the '\v' character (nothing for strings without).  Each separate
    bit of documentation is separated a blank line, and if PRE_BLANK is true,
    then the first is as well.  If FIRST_ONLY is true, only the first
    occurrence is output.  Returns true if anything was output.  */
@@ -1580,7 +1580,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
 
 /* Output a usage message for ARGP to STREAM.  If called from
    argp_state_help, STATE is the relevent parsing state.  FLAGS are from the
-   set ARGP_HELP_*.  NAME is what to use wherever a `program name' is
+   set ARGP_HELP_*.  NAME is what to use wherever a "program name" is
    needed. */
 static void
 _help (const struct argp *argp, const struct argp_state *state, FILE *stream,
@@ -1621,7 +1621,7 @@ _help (const struct argp *argp, const struct argp_state *state, FILE *stream,
     }
 
   if (flags & (ARGP_HELP_USAGE | ARGP_HELP_SHORT_USAGE))
-    /* Print a short `Usage:' message.  */
+    /* Print a short "Usage:" message.  */
     {
       int first_pattern = 1, more_patterns;
       size_t num_pattern_levels = argp_args_levels (argp);
@@ -1724,7 +1724,7 @@ Try '%s --help' or '%s --usage' for more information.\n"),
 }
 
 /* Output a usage message for ARGP to STREAM.  FLAGS are from the set
-   ARGP_HELP_*.  NAME is what to use wherever a `program name' is needed. */
+   ARGP_HELP_*.  NAME is what to use wherever a "program name" is needed. */
 void __argp_help (const struct argp *argp, FILE *stream,
                   unsigned flags, char *name)
 {
@@ -1782,7 +1782,7 @@ weak_alias (__argp_state_help, argp_state_help)
 #endif
 
 /* If appropriate, print the printf string FMT and following args, preceded
-   by the program name and `:', to stderr, and followed by a `Try ... --help'
+   by the program name and ':', to stderr, and followed by a "Try ... --help"
    message, then exit (1).  */
 void
 __argp_error (const struct argp_state *state, const char *fmt, ...)

@@ -38,7 +38,7 @@ static struct option const long_options[] =
 };
 
 /* Process long options --help and --version, but only if argc == 2.
-   Be careful not to gobble up `--'.  */
+   Be careful not to gobble up "--".  */
 
 void
 parse_long_options (int argc,

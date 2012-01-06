@@ -1,4 +1,4 @@
-/* pt_chown - helper program for `grantpt'.
+/* pt_chown - helper program for 'grantpt'.
    Copyright (C) 1998-1999, 2009-2012 Free Software Foundation, Inc.
    Contributed by C. Scott Ananian <cananian@alumni.princeton.edu>, 1998.
 
@@ -51,7 +51,7 @@ do_pt_chown (void)
   if (stat (pty, &st) < 0 || !S_ISCHR (st.st_mode))
     return FAIL_EINVAL;
 
-  /* Get the group ID of the special `tty' group.  */
+  /* Get the group ID of the special 'tty' group.  */
   p = getgrnam (TTY_GROUP);
   gid = p ? p->gr_gid : getgid ();
 

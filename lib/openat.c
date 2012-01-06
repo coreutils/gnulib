@@ -180,7 +180,7 @@ openat (int fd, char const *file, int flags, ...)
    directory argument.
 
    If a previous attempt to restore the current working directory
-   failed, then we must not even try to access a `.'-relative name.
+   failed, then we must not even try to access a '.'-relative name.
    It is the caller's responsibility not to call this function
    in that case.  */
 

@@ -18,7 +18,7 @@ all:
 info html dvi pdf:
 	cd doc && $(MAKE) $@ && $(MAKE) mostlyclean
 
-# Collect the names of rules starting with `sc_'.
+# Collect the names of rules starting with 'sc_'.
 syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p'\
 			Makefile))
 

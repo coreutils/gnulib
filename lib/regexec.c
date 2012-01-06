@@ -209,11 +209,11 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx)
    string STRING.
 
    If NMATCH is zero or REG_NOSUB was set in the cflags argument to
-   `regcomp', we ignore PMATCH.  Otherwise, we assume PMATCH has at
+   'regcomp', we ignore PMATCH.  Otherwise, we assume PMATCH has at
    least NMATCH elements, and we set them to the offsets of the
    corresponding matched substrings.
 
-   EFLAGS specifies `execution flags' which affect matching: if
+   EFLAGS specifies "execution flags" which affect matching: if
    REG_NOTBOL is set, then ^ does not match at the beginning of the
    string; if REG_NOTEOL is set, then $ does not match at the end.
 
@@ -513,7 +513,7 @@ re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
   int rval = REGS_REALLOCATE;
   Idx i;
   Idx need_regs = nregs + 1;
-  /* We need one extra element beyond `num_regs' for the `-1' marker GNU code
+  /* We need one extra element beyond 'num_regs' for the '-1' marker GNU code
      uses.  */
 
   /* Have the register data arrays been allocated?  */
@@ -1607,21 +1607,21 @@ update_regs (const re_dfa_t *dfa, regmatch_t *pmatch,
    and sift the nodes in each states according to the following rules.
    Updated state_log will be wrote to STATE_LOG.
 
-   Rules: We throw away the Node `a' in the STATE_LOG[STR_IDX] if...
+   Rules: We throw away the Node 'a' in the STATE_LOG[STR_IDX] if...
      1. When STR_IDX == MATCH_LAST(the last index in the state_log):
-	If `a' isn't the LAST_NODE and `a' can't epsilon transit to
-	the LAST_NODE, we throw away the node `a'.
-     2. When 0 <= STR_IDX < MATCH_LAST and `a' accepts
-	string `s' and transit to `b':
+	If 'a' isn't the LAST_NODE and 'a' can't epsilon transit to
+	the LAST_NODE, we throw away the node 'a'.
+     2. When 0 <= STR_IDX < MATCH_LAST and 'a' accepts
+	string 's' and transit to 'b':
 	i. If 'b' isn't in the STATE_LOG[STR_IDX+strlen('s')], we throw
-	   away the node `a'.
+	   away the node 'a'.
 	ii. If 'b' is in the STATE_LOG[STR_IDX+strlen('s')] but 'b' is
-	    thrown away, we throw away the node `a'.
+	    thrown away, we throw away the node 'a'.
      3. When 0 <= STR_IDX < MATCH_LAST and 'a' epsilon transit to 'b':
 	i. If 'b' isn't in the STATE_LOG[STR_IDX], we throw away the
-	   node `a'.
+	   node 'a'.
 	ii. If 'b' is in the STATE_LOG[STR_IDX] but 'b' is thrown away,
-	    we throw away the node `a'.  */
+	    we throw away the node 'a'.  */
 
 #define STATE_NODE_CONTAINS(state,node) \
   ((state) != NULL && re_node_set_contains (&(state)->nodes, node))
@@ -1694,11 +1694,11 @@ build_sifted_states (const re_match_context_t *mctx, re_sift_context_t *sctx,
   Idx i;
 
   /* Then build the next sifted state.
-     We build the next sifted state on `cur_dest', and update
-     `sifted_states[str_idx]' with `cur_dest'.
+     We build the next sifted state on 'cur_dest', and update
+     'sifted_states[str_idx]' with 'cur_dest'.
      Note:
-     `cur_dest' is the sifted state from `state_log[str_idx + 1]'.
-     `cur_src' points the node_set of the old `state_log[str_idx]'
+     'cur_dest' is the sifted state from 'state_log[str_idx + 1]'.
+     'cur_src' points the node_set of the old 'state_log[str_idx]'
      (with the epsilon nodes pre-filtered out).  */
   for (i = 0; i < cur_src->nelem; i++)
     {
@@ -1711,7 +1711,7 @@ build_sifted_states (const re_match_context_t *mctx, re_sift_context_t *sctx,
       assert (!IS_EPSILON_NODE (type));
 #endif
 #ifdef RE_ENABLE_I18N
-      /* If the node may accept `multi byte'.  */
+      /* If the node may accept "multi byte".  */
       if (dfa->nodes[prev_node].accept_mb)
 	naccepted = sift_states_iter_mb (mctx, sctx, prev_node,
 					 str_idx, sctx->last_str_idx);
@@ -2267,17 +2267,17 @@ sift_states_iter_mb (const re_match_context_t *mctx, re_sift_context_t *sctx,
 {
   const re_dfa_t *const dfa = mctx->dfa;
   int naccepted;
-  /* Check the node can accept `multi byte'.  */
+  /* Check the node can accept "multi byte".  */
   naccepted = check_node_accept_bytes (dfa, node_idx, &mctx->input, str_idx);
   if (naccepted > 0 && str_idx + naccepted <= max_str_idx &&
       !STATE_NODE_CONTAINS (sctx->sifted_states[str_idx + naccepted],
 			    dfa->nexts[node_idx]))
-    /* The node can't accept the `multi byte', or the
+    /* The node can't accept the "multi byte", or the
        destination was already thrown away, then the node
-       could't accept the current input `multi byte'.   */
+       could't accept the current input "multi byte".   */
     naccepted = 0;
   /* Otherwise, it is sure that the node could accept
-     `naccepted' bytes input.  */
+     'naccepted' bytes input.  */
   return naccepted;
 }
 #endif /* RE_ENABLE_I18N */
@@ -2567,7 +2567,7 @@ transit_state_mb (re_match_context_t *mctx, re_dfastate_t *pstate)
       if (naccepted == 0)
 	continue;
 
-      /* The node can accepts `naccepted' bytes.  */
+      /* The node can accepts 'naccepted' bytes.  */
       dest_idx = re_string_cur_idx (&mctx->input) + naccepted;
       mctx->max_mb_elem_len = ((mctx->max_mb_elem_len < naccepted) ? naccepted
 			       : mctx->max_mb_elem_len);
@@ -2619,7 +2619,7 @@ transit_state_bkref (re_match_context_t *mctx, const re_node_set *nodes)
       const re_token_t *node = dfa->nodes + node_idx;
       re_node_set *new_dest_nodes;
 
-      /* Check whether `node' is a backreference or not.  */
+      /* Check whether 'node' is a backreference or not.  */
       if (node->type != OP_BACK_REF)
 	continue;
 
@@ -2631,14 +2631,14 @@ transit_state_bkref (re_match_context_t *mctx, const re_node_set *nodes)
 	    continue;
 	}
 
-      /* `node' is a backreference.
+      /* 'node' is a backreference.
 	 Check the substring which the substring matched.  */
       bkc_idx = mctx->nbkref_ents;
       err = get_subexp (mctx, node_idx, cur_str_idx);
       if (BE (err != REG_NOERROR, 0))
 	goto free_return;
 
-      /* And add the epsilon closures (which is `new_dest_nodes') of
+      /* And add the epsilon closures (which is 'new_dest_nodes') of
 	 the backreference to appropriate state_log.  */
 #ifdef DEBUG
       assert (dfa->nexts[node_idx] != REG_MISSING);
@@ -2662,7 +2662,7 @@ transit_state_bkref (re_match_context_t *mctx, const re_node_set *nodes)
 	  dest_state = mctx->state_log[dest_str_idx];
 	  prev_nelem = ((mctx->state_log[cur_str_idx] == NULL) ? 0
 			: mctx->state_log[cur_str_idx]->nodes.nelem);
-	  /* Add `new_dest_node' to state_log.  */
+	  /* Add 'new_dest_node' to state_log.  */
 	  if (dest_state == NULL)
 	    {
 	      mctx->state_log[dest_str_idx]
@@ -3101,7 +3101,7 @@ check_arrival_add_next_nodes (re_match_context_t *mctx, Idx str_idx,
       assert (!IS_EPSILON_NODE (type));
 #endif
 #ifdef RE_ENABLE_I18N
-      /* If the node may accept `multi byte'.  */
+      /* If the node may accept "multi byte".  */
       if (dfa->nodes[cur_node].accept_mb)
 	{
 	  naccepted = check_node_accept_bytes (dfa, cur_node, &mctx->input,
@@ -3358,7 +3358,7 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
   bitset_word_t elem, mask;
   bool dests_node_malloced = false;
   bool dest_states_malloced = false;
-  Idx ndests; /* Number of the destination states from `state'.  */
+  Idx ndests; /* Number of the destination states from 'state'.  */
   re_dfastate_t **trtable;
   re_dfastate_t **dest_states = NULL, **dest_states_word, **dest_states_nl;
   re_node_set follows, *dests_node;
@@ -3372,8 +3372,8 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
   } *dests_alloc;
 
   /* We build DFA states which corresponds to the destination nodes
-     from `state'.  `dests_node[i]' represents the nodes which i-th
-     destination state contains, and `dests_ch[i]' represents the
+     from 'state'.  'dests_node[i]' represents the nodes which i-th
+     destination state contains, and 'dests_ch[i]' represents the
      characters which i-th destination state accepts.  */
   if (__libc_use_alloca (sizeof (struct dests_alloc)))
     dests_alloc = (struct dests_alloc *) alloca (sizeof (struct dests_alloc));
@@ -3390,7 +3390,7 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
   /* Initialize transiton table.  */
   state->word_trtable = state->trtable = NULL;
 
-  /* At first, group all nodes belonging to `state' into several
+  /* At first, group all nodes belonging to 'state' into several
      destinations.  */
   ndests = group_nodes_into_DFAstates (dfa, state, dests_node, dests_ch);
   if (BE (! REG_VALID_NONZERO_INDEX (ndests), 0))
@@ -3592,13 +3592,13 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
   reg_errcode_t err;
   bool ok;
   Idx i, j, k;
-  Idx ndests; /* Number of the destinations from `state'.  */
+  Idx ndests; /* Number of the destinations from 'state'.  */
   bitset_t accepts; /* Characters a node can accept.  */
   const re_node_set *cur_nodes = &state->nodes;
   bitset_empty (accepts);
   ndests = 0;
 
-  /* For all the nodes belonging to `state',  */
+  /* For all the nodes belonging to 'state',  */
   for (i = 0; i < cur_nodes->nelem; ++i)
     {
       re_token_t *node = &dfa->nodes[cur_nodes->elems[i]];
@@ -3641,7 +3641,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
       else
 	continue;
 
-      /* Check the `accepts' and sift the characters which are not
+      /* Check the 'accepts' and sift the characters which are not
 	 match it the context.  */
       if (constraint)
 	{
@@ -3700,7 +3700,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	    }
 	}
 
-      /* Then divide `accepts' into DFA states, or create a new
+      /* Then divide 'accepts' into DFA states, or create a new
 	 state.  Above, we make sure that accepts is not empty.  */
       for (j = 0; j < ndests; ++j)
 	{
@@ -3713,7 +3713,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	  if (type == CHARACTER && !bitset_contain (dests_ch[j], node->opr.c))
 	    continue;
 
-	  /* Enumerate the intersection set of this state and `accepts'.  */
+	  /* Enumerate the intersection set of this state and 'accepts'.  */
 	  has_intersec = 0;
 	  for (k = 0; k < BITSET_WORDS; ++k)
 	    has_intersec |= intersec[k] = accepts[k] & dests_ch[j][k];
@@ -3721,7 +3721,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	  if (!has_intersec)
 	    continue;
 
-	  /* Then check if this state is a subset of `accepts'.  */
+	  /* Then check if this state is a subset of 'accepts'.  */
 	  not_subset = not_consumed = 0;
 	  for (k = 0; k < BITSET_WORDS; ++k)
 	    {
@@ -3729,8 +3729,8 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 	      not_consumed |= accepts[k] = accepts[k] & ~dests_ch[j][k];
 	    }
 
-	  /* If this state isn't a subset of `accepts', create a
-	     new group state, which has the `remains'. */
+	  /* If this state isn't a subset of 'accepts', create a
+	     new group state, which has the 'remains'. */
 	  if (not_subset)
 	    {
 	      bitset_copy (dests_ch[ndests], remains);
@@ -3769,7 +3769,7 @@ group_nodes_into_DFAstates (const re_dfa_t *dfa, const re_dfastate_t *state,
 }
 
 #ifdef RE_ENABLE_I18N
-/* Check how many bytes the node `dfa->nodes[node_idx]' accepts.
+/* Check how many bytes the node 'dfa->nodes[node_idx]' accepts.
    Return the number of the bytes the node accepts.
    STR_IDX is the current index of the input string.
 

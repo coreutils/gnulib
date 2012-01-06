@@ -40,8 +40,8 @@ base_name (char const *name)
   if (ISSLASH (base[length]))
     length++;
 
-  /* On systems with drive letters, `a/b:c' must return `./b:c' rather
-     than `b:c' to avoid confusion with a drive letter.  On systems
+  /* On systems with drive letters, "a/b:c" must return "./b:c" rather
+     than "b:c" to avoid confusion with a drive letter.  On systems
      with pure POSIX semantics, this is not an issue.  */
   if (FILE_SYSTEM_PREFIX_LEN (base))
     {

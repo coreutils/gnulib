@@ -161,9 +161,9 @@ typedef unsigned long int reg_syntax_t;
    If not set, newline is literal.  */
 # define RE_NEWLINE_ALT (RE_LIMITED_OPS << 1)
 
-/* If this bit is set, then `{...}' defines an interval, and \{ and \}
+/* If this bit is set, then '{...}' defines an interval, and \{ and \}
      are literals.
-  If not set, then `\{...\}' defines an interval.  */
+  If not set, then '\{...\}' defines an interval.  */
 # define RE_NO_BK_BRACES (RE_NEWLINE_ALT << 1)
 
 /* If this bit is set, (...) defines a group, and \( and \) are literals.
@@ -329,7 +329,7 @@ extern reg_syntax_t re_syntax_options;
 #endif /* defined __USE_GNU_REGEX */
 
 
-/* POSIX `cflags' bits (i.e., information for `regcomp').  */
+/* POSIX 'cflags' bits (i.e., information for 'regcomp').  */
 
 /* If this bit is set, then use extended regular expression syntax.
    If not set, then use basic regular expression syntax.  */
@@ -349,7 +349,7 @@ extern reg_syntax_t re_syntax_options;
 #define REG_NOSUB (1 << 3)
 
 
-/* POSIX `eflags' bits (i.e., information for regexec).  */
+/* POSIX 'eflags' bits (i.e., information for regexec).  */
 
 /* If this bit is set, then the beginning-of-line operator doesn't match
      the beginning of the string (presumably because it's not the
@@ -367,7 +367,7 @@ extern reg_syntax_t re_syntax_options;
 
 
 /* If any error codes are removed, changed, or added, update the
-   `__re_error_msgid' table in regcomp.c.  */
+   '__re_error_msgid' table in regcomp.c.  */
 
 typedef enum
 {
@@ -417,9 +417,9 @@ typedef enum
 #define REG_ESIZE	_REG_ESIZE
 #define REG_ERPAREN	_REG_ERPAREN
 
-/* struct re_pattern_buffer normally uses member names like `buffer'
+/* struct re_pattern_buffer normally uses member names like 'buffer'
    that POSIX does not allow.  In POSIX mode these members have names
-   with leading `re_' (e.g., `re_buffer').  */
+   with leading 're_' (e.g., 're_buffer').  */
 #ifdef __USE_GNU_REGEX
 # define _REG_RE_NAME(id) id
 # define _REG_RM_NAME(id) id
@@ -442,22 +442,22 @@ typedef enum
 #endif
 
 /* This data structure represents a compiled pattern.  Before calling
-   the pattern compiler, the fields `buffer', `allocated', `fastmap',
-   `translate', and `no_sub' can be set.  After the pattern has been
-   compiled, the `re_nsub' field is available.  All other fields are
+   the pattern compiler, the fields 'buffer', 'allocated', 'fastmap',
+   'translate', and 'no_sub' can be set.  After the pattern has been
+   compiled, the 're_nsub' field is available.  All other fields are
    private to the regex routines.  */
 
 struct re_pattern_buffer
 {
   /* Space that holds the compiled pattern.  It is declared as
-     `unsigned char *' because its elements are sometimes used as
+     'unsigned char *' because its elements are sometimes used as
      array indexes.  */
   unsigned char *_REG_RE_NAME (buffer);
 
-  /* Number of bytes to which `buffer' points.  */
+  /* Number of bytes to which 'buffer' points.  */
   __re_long_size_t _REG_RE_NAME (allocated);
 
-  /* Number of bytes actually used in `buffer'.  */
+  /* Number of bytes actually used in 'buffer'.  */
   __re_long_size_t _REG_RE_NAME (used);
 
   /* Syntax setting with which the pattern was compiled.  */
@@ -478,13 +478,13 @@ struct re_pattern_buffer
   size_t re_nsub;
 
   /* Zero if this pattern cannot match the empty string, one else.
-     Well, in truth it's used only in `re_search_2', to see whether or
+     Well, in truth it's used only in 're_search_2', to see whether or
      not we should use the fastmap, so we don't set this absolutely
-     perfectly; see `re_compile_fastmap' (the `duplicate' case).  */
+     perfectly; see 're_compile_fastmap' (the "duplicate" case).  */
   unsigned int _REG_RE_NAME (can_be_null) : 1;
 
-  /* If REGS_UNALLOCATED, allocate space in the `regs' structure
-     for `max (RE_NREGS, re_nsub + 1)' groups.
+  /* If REGS_UNALLOCATED, allocate space in the 'regs' structure
+     for 'max (RE_NREGS, re_nsub + 1)' groups.
      If REGS_REALLOCATE, reallocate space if necessary.
      If REGS_FIXED, use what's there.  */
 #ifdef __USE_GNU_REGEX
@@ -494,11 +494,11 @@ struct re_pattern_buffer
 #endif
   unsigned int _REG_RE_NAME (regs_allocated) : 2;
 
-  /* Set to zero when `re_compile_pattern' compiles a pattern; set to
-     one by `re_compile_fastmap' if it updates the fastmap.  */
+  /* Set to zero when 're_compile_pattern' compiles a pattern; set to
+     one by 're_compile_fastmap' if it updates the fastmap.  */
   unsigned int _REG_RE_NAME (fastmap_accurate) : 1;
 
-  /* If set, `re_match_2' does not return information about
+  /* If set, 're_match_2' does not return information about
      subexpressions.  */
   unsigned int _REG_RE_NAME (no_sub) : 1;
 
@@ -527,16 +527,16 @@ struct re_registers
 };
 
 
-/* If `regs_allocated' is REGS_UNALLOCATED in the pattern buffer,
-   `re_match_2' returns information about at least this many registers
-   the first time a `regs' structure is passed.  */
+/* If 'regs_allocated' is REGS_UNALLOCATED in the pattern buffer,
+   're_match_2' returns information about at least this many registers
+   the first time a 'regs' structure is passed.  */
 #if !defined RE_NREGS && defined __USE_GNU_REGEX
 # define RE_NREGS 30
 #endif
 
 
 /* POSIX specification for registers.  Aside from the different names than
-   `re_registers', POSIX uses an array of structures, instead of a
+   're_registers', POSIX uses an array of structures, instead of a
    structure of arrays.  */
 typedef struct
 {
@@ -547,11 +547,11 @@ typedef struct
 /* Declarations for routines.  */
 
 /* Sets the current default syntax to SYNTAX, and return the old syntax.
-   You can also simply assign to the `re_syntax_options' variable.  */
+   You can also simply assign to the 're_syntax_options' variable.  */
 extern reg_syntax_t re_set_syntax (reg_syntax_t __syntax);
 
 /* Compile the regular expression PATTERN, with length LENGTH
-   and syntax given by the global `re_syntax_options', into the buffer
+   and syntax given by the global 're_syntax_options', into the buffer
    BUFFER.  Return NULL if successful, and an error string if not.  */
 extern const char *re_compile_pattern (const char *__pattern, size_t __length,
 				       struct re_pattern_buffer *__buffer);
@@ -574,7 +574,7 @@ extern regoff_t re_search (struct re_pattern_buffer *__buffer,
 			   struct re_registers *__regs);
 
 
-/* Like `re_search', but search in the concatenation of STRING1 and
+/* Like 're_search', but search in the concatenation of STRING1 and
    STRING2.  Also, stop searching at index START + STOP.  */
 extern regoff_t re_search_2 (struct re_pattern_buffer *__buffer,
 			     const char *__string1, __re_idx_t __length1,
@@ -584,14 +584,14 @@ extern regoff_t re_search_2 (struct re_pattern_buffer *__buffer,
 			     __re_idx_t __stop);
 
 
-/* Like `re_search', but return how many characters in STRING the regexp
+/* Like 're_search', but return how many characters in STRING the regexp
    in BUFFER matched, starting at position START.  */
 extern regoff_t re_match (struct re_pattern_buffer *__buffer,
 			  const char *__string, __re_idx_t __length,
 			  __re_idx_t __start, struct re_registers *__regs);
 
 
-/* Relates to `re_match' as `re_search_2' relates to `re_search'.  */
+/* Relates to 're_match' as 're_search_2' relates to 're_search'.  */
 extern regoff_t re_match_2 (struct re_pattern_buffer *__buffer,
 			    const char *__string1, __re_idx_t __length1,
 			    const char *__string2, __re_idx_t __length2,
@@ -602,7 +602,7 @@ extern regoff_t re_match_2 (struct re_pattern_buffer *__buffer,
 /* Set REGS to hold NUM_REGS registers, storing them in STARTS and
    ENDS.  Subsequent matches using BUFFER and REGS will use this memory
    for recording register information.  STARTS and ENDS must be
-   allocated with malloc, and must each be at least `NUM_REGS * sizeof
+   allocated with malloc, and must each be at least 'NUM_REGS * sizeof
    (regoff_t)' bytes long.
 
    If NUM_REGS == 0, then subsequent matches should allocate their own

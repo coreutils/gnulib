@@ -100,7 +100,7 @@ AC_CHECK_DECL([getloadavg], [], [HAVE_DECL_GETLOADAVG=0],
 
 # gl_PREREQ_GETLOADAVG
 # --------------------
-# Set up the AC_LIBOBJ replacement of `getloadavg'.
+# Set up the AC_LIBOBJ replacement of 'getloadavg'.
 AC_DEFUN([gl_PREREQ_GETLOADAVG],
 [
 # Figure out what our getloadavg.c needs.

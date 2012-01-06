@@ -29,7 +29,7 @@
 #include "spawn_int.h"
 
 /* Add an action to FILE-ACTIONS which tells the implementation to call
-   `open' for the given file during the `spawn' call.  */
+   'open' for the given file during the 'spawn' call.  */
 int
 posix_spawn_file_actions_addopen (posix_spawn_file_actions_t *file_actions,
                                   int fd, const char *path, int oflag,

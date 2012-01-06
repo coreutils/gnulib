@@ -72,7 +72,7 @@ adjust_value (int inexact_style, long double value)
    each byte inserted.  Return the starting address of the modified
    number.
 
-   To group the digits, use GROUPING and THOUSANDS_SEP as in `struct
+   To group the digits, use GROUPING and THOUSANDS_SEP as in 'struct
    lconv' from <locale.h>.  */
 
 static char *
@@ -128,7 +128,7 @@ group_number (char *number, size_t numberlen,
    that cannot be expressed exactly.
 
    If (OPTS & human_group_digits), group the thousands digits
-   according to the locale, e.g., `1,000,000' in an American English
+   according to the locale, e.g., "1,000,000" in an American English
    locale.
 
    If (OPTS & human_autoscale), deduce the output block size

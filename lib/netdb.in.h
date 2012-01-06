@@ -80,9 +80,9 @@ struct addrinfo
 
 # endif
 
-/* Possible values for `ai_flags' field in `addrinfo' structure.  */
+/* Possible values for 'ai_flags' field in 'addrinfo' structure.  */
 # ifndef AI_PASSIVE
-#  define AI_PASSIVE    0x0001  /* Socket address is intended for `bind'.  */
+#  define AI_PASSIVE    0x0001  /* Socket address is intended for 'bind'.  */
 # endif
 # ifndef AI_CANONNAME
 #  define AI_CANONNAME  0x0002  /* Request for canonical name.  */
@@ -111,16 +111,16 @@ struct addrinfo
                                       returned address type.  */
 # endif
 
-/* Error values for `getaddrinfo' function.  */
+/* Error values for 'getaddrinfo' function.  */
 # ifndef EAI_BADFLAGS
-#  define EAI_BADFLAGS    -1    /* Invalid value for `ai_flags' field.  */
+#  define EAI_BADFLAGS    -1    /* Invalid value for 'ai_flags' field.  */
 #  define EAI_NONAME      -2    /* NAME or SERVICE is unknown.  */
 #  define EAI_AGAIN       -3    /* Temporary failure in name resolution.  */
 #  define EAI_FAIL        -4    /* Non-recoverable failure in name res.  */
 #  define EAI_NODATA      -5    /* No address associated with NAME.  */
-#  define EAI_FAMILY      -6    /* `ai_family' not supported.  */
-#  define EAI_SOCKTYPE    -7    /* `ai_socktype' not supported.  */
-#  define EAI_SERVICE     -8    /* SERVICE not supported for `ai_socktype'.  */
+#  define EAI_FAMILY      -6    /* 'ai_family' not supported.  */
+#  define EAI_SOCKTYPE    -7    /* 'ai_socktype' not supported.  */
+#  define EAI_SERVICE     -8    /* SERVICE not supported for 'ai_socktype'.  */
 #  define EAI_MEMORY      -10   /* Memory allocation failure.  */
 # endif
 
@@ -141,7 +141,7 @@ struct addrinfo
 # endif
 # ifndef EAI_SYSTEM
 /* Not defined on mingw32. */
-#  define EAI_SYSTEM      -11   /* System error returned in `errno'.  */
+#  define EAI_SYSTEM      -11   /* System error returned in 'errno'.  */
 # endif
 
 # if 0
@@ -179,7 +179,7 @@ _GL_CXXALIAS_SYS (getaddrinfo, int,
 _GL_CXXALIASWARN (getaddrinfo);
 
 # if !@HAVE_DECL_FREEADDRINFO@
-/* Free `addrinfo' structure AI including associated storage.
+/* Free 'addrinfo' structure AI including associated storage.
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
 _GL_FUNCDECL_SYS (freeaddrinfo, void, (struct addrinfo *ai)

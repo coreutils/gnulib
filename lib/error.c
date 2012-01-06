@@ -54,7 +54,7 @@
    function without parameters instead.  */
 void (*error_print_progname) (void);
 
-/* This variable is incremented each time `error' is called.  */
+/* This variable is incremented each time 'error' is called.  */
 unsigned int error_message_count;
 
 #ifdef _LIBC
@@ -65,7 +65,7 @@ unsigned int error_message_count;
 # include <limits.h>
 # include <libio/libioP.h>
 
-/* In GNU libc we want do not want to use the common name `error' directly.
+/* In GNU libc we want do not want to use the common name 'error' directly.
    Instead make it a weak alias.  */
 extern void __error (int status, int errnum, const char *message, ...)
      __attribute__ ((__format__ (__printf__, 3, 4)));

@@ -187,7 +187,7 @@ find_long_option (struct option *long_options, const char *name)
 }
 
 
-/* The state of a `group' during parsing.  Each group corresponds to a
+/* The state of a "group" during parsing.  Each group corresponds to a
    particular argp structure from the tree of such descending from the top
    level argp passed to argp_parse.  */
 struct group
@@ -439,7 +439,7 @@ calc_sizes (const struct argp *argp,  struct parser_sizes *szs)
           int num_opts = 0;
           while (!__option_is_end (opt++))
             num_opts++;
-          szs->short_len += num_opts * 3; /* opt + up to 2 `:'s */
+          szs->short_len += num_opts * 3; /* opt + up to 2 ':'s */
           szs->long_len += num_opts;
         }
     }
@@ -781,7 +781,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
 
   if (parser->state.quoted && parser->state.next < parser->state.quoted)
     /* The next argument pointer has been moved to before the quoted
-       region, so pretend we never saw the quoting `--', and give getopt
+       region, so pretend we never saw the quoting "--", and give getopt
        another chance.  If the user hasn't removed it, getopt will just
        process it again.  */
     parser->state.quoted = 0;
@@ -813,7 +813,7 @@ parser_parse_next (struct parser *parser, int *arg_ebadkey)
               && strcmp (parser->state.argv[parser->state.next - 1], QUOTE)
                    == 0)
             /* Not only is this the end of the options, but it's a
-               `quoted' region, which may have args that *look* like
+               "quoted" region, which may have args that *look* like
                options, so we definitely shouldn't try to use getopt past
                here, whatever happens.  */
             parser->state.quoted = parser->state.next;

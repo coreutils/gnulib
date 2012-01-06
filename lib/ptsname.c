@@ -18,7 +18,7 @@
 
 #include <stdlib.h>
 
-/* Static buffer for `ptsname'.  */
+/* Static buffer for 'ptsname'.  */
 static char buffer[64];
 
 

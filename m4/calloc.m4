@@ -14,7 +14,7 @@
 
 # _AC_FUNC_CALLOC_IF([IF-WORKS], [IF-NOT])
 # -------------------------------------
-# If `calloc (0, 0)' is properly handled, run IF-WORKS, otherwise, IF-NOT.
+# If 'calloc (0, 0)' is properly handled, run IF-WORKS, otherwise, IF-NOT.
 AC_DEFUN([_AC_FUNC_CALLOC_IF],
 [
   AC_REQUIRE([AC_TYPE_SIZE_T])dnl
@@ -39,7 +39,7 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
 
 # gl_FUNC_CALLOC_GNU
 # ------------------
-# Report whether `calloc (0, 0)' is properly handled, and replace calloc if
+# Report whether 'calloc (0, 0)' is properly handled, and replace calloc if
 # needed.
 AC_DEFUN([gl_FUNC_CALLOC_GNU],
 [

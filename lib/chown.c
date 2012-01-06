@@ -1,5 +1,5 @@
 /* provide consistent interface to chown for systems that don't interpret
-   an ID of -1 as meaning `don't change the corresponding ID'.
+   an ID of -1 as meaning "don't change the corresponding ID".
 
    Copyright (C) 1997, 2004-2007, 2009-2012 Free Software Foundation, Inc.
 
@@ -53,7 +53,7 @@ chown (const char *file _GL_UNUSED, uid_t uid _GL_UNUSED,
 /* Provide a more-closely POSIX-conforming version of chown on
    systems with one or both of the following problems:
    - chown doesn't treat an ID of -1 as meaning
-   `don't change the corresponding ID'.
+   "don't change the corresponding ID".
    - chown doesn't dereference symlinks.  */
 
 int

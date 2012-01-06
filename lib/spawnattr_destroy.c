@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <spawn.h>
 
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 int
 posix_spawnattr_destroy (posix_spawnattr_t *attr)
 {

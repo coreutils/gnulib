@@ -18,7 +18,7 @@
 
 /* Written by David MacKenzie <djm@ai.mit.edu> */
 
-/* The ASCII mode string is compiled into an array of `struct
+/* The ASCII mode string is compiled into an array of 'struct
    modechange', which can then be applied to each file to be changed.
    We do this instead of re-parsing the ASCII string for each file
    because the compiled form requires less computation to use; when
@@ -90,7 +90,7 @@ enum
 
     /* Instead of the typical case, copy some existing permissions for
        u, g, or o onto the other two.  Which of u, g, or o is copied
-       is determined by which bits are set in the `value' field.  */
+       is determined by which bits are set in the 'value' field.  */
     MODE_COPY_EXISTING
   };
 
@@ -104,8 +104,8 @@ struct mode_change
   mode_t mentioned;             /* Bits explicitly mentioned.  */
 };
 
-/* Return a mode_change array with the specified `=ddd'-style
-   mode change operation, where NEW_MODE is `ddd' and MENTIONED
+/* Return a mode_change array with the specified "=ddd"-style
+   mode change operation, where NEW_MODE is "ddd" and MENTIONED
    contains the bits explicitly mentioned in the mode are MENTIONED.  */
 
 static struct mode_change *
@@ -127,7 +127,7 @@ make_node_op_equals (mode_t new_mode, mode_t mentioned)
    the form:
    [ugoa...][[+-=][rwxXstugo...]...][,...]
 
-   Return NULL if `mode_string' does not contain a valid
+   Return NULL if 'mode_string' does not contain a valid
    representation of file mode change operations.  */
 
 struct mode_change *
@@ -168,13 +168,13 @@ mode_compile (char const *mode_string)
     mc = xnmalloc (needed, sizeof *mc);
   }
 
-  /* One loop iteration for each `[ugoa]*([-+=]([rwxXst]*|[ugo]))+'.  */
+  /* One loop iteration for each '[ugoa]*([-+=]([rwxXst]*|[ugo]))+'.  */
   for (;; mode_string++)
     {
       /* Which bits in the mode are operated on.  */
       mode_t affected = 0;
 
-      /* Turn on all the bits in `affected' for each group given.  */
+      /* Turn on all the bits in 'affected' for each group given.  */
       for (;; mode_string++)
         switch (*mode_string)
           {
@@ -207,17 +207,17 @@ mode_compile (char const *mode_string)
           switch (*mode_string++)
             {
             case 'u':
-              /* Set the affected bits to the value of the `u' bits
+              /* Set the affected bits to the value of the "u" bits
                  on the same file.  */
               value = S_IRWXU;
               break;
             case 'g':
-              /* Set the affected bits to the value of the `g' bits
+              /* Set the affected bits to the value of the "g" bits
                  on the same file.  */
               value = S_IRWXG;
               break;
             case 'o':
-              /* Set the affected bits to the value of the `o' bits
+              /* Set the affected bits to the value of the "o" bits
                  on the same file.  */
               value = S_IRWXO;
               break;
@@ -242,11 +242,11 @@ mode_compile (char const *mode_string)
                     flag = MODE_X_IF_ANY_X;
                     break;
                   case 's':
-                    /* Set the setuid/gid bits if `u' or `g' is selected.  */
+                    /* Set the setuid/gid bits if 'u' or 'g' is selected.  */
                     value |= S_ISUID | S_ISGID;
                     break;
                   case 't':
-                    /* Set the "save text image" bit if `o' is selected.  */
+                    /* Set the "save text image" bit if 'o' is selected.  */
                     value |= S_ISVTX;
                     break;
                   default:
@@ -329,7 +329,7 @@ mode_adjust (mode_t oldmode, bool dir, mode_t umask_value,
           break;
 
         case MODE_COPY_EXISTING:
-          /* Isolate in `value' the bits in `newmode' to copy.  */
+          /* Isolate in 'value' the bits in 'newmode' to copy.  */
           value &= newmode;
 
           /* Copy the isolated bits to the other two parts.  */

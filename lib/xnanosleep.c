@@ -30,7 +30,7 @@
 /* Sleep until the time (call it WAKE_UP_TIME) specified as
    SECONDS seconds after the time this function is called.
    SECONDS must be non-negative.  If SECONDS is so large that
-   it is not representable as a `struct timespec', then use
+   it is not representable as a 'struct timespec', then use
    the maximum value for that interval.  Return -1 on failure
    (setting errno), 0 on success.  */
 

@@ -51,11 +51,11 @@ orig_lstat (const char *filename, struct stat *buf)
 # include <errno.h>
 
 /* lstat works differently on Linux and Solaris systems.  POSIX (see
-   `pathname resolution' in the glossary) requires that programs like
-   `ls' take into consideration the fact that FILE has a trailing slash
+   "pathname resolution" in the glossary) requires that programs like
+   'ls' take into consideration the fact that FILE has a trailing slash
    when FILE is a symbolic link.  On Linux and Solaris 10 systems, the
    lstat function already has the desired semantics (in treating
-   `lstat ("symlink/", sbuf)' just like `lstat ("symlink/.", sbuf)',
+   'lstat ("symlink/", sbuf)' just like 'lstat ("symlink/.", sbuf)',
    but on Solaris 9 and earlier it does not.
 
    If FILE has a trailing slash and specifies a symbolic link,

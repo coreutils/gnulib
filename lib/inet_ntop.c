@@ -74,7 +74,7 @@ static const char *inet_ntop6 (const unsigned char *src, char *dst, socklen_t si
  * inet_ntop(af, src, dst, size)
  *      convert a network format address to presentation format.
  * return:
- *      pointer to presentation format address (`dst'), or NULL (see errno).
+ *      pointer to presentation format address ('dst'), or NULL (see errno).
  * author:
  *      Paul Vixie, 1996.
  */
@@ -105,7 +105,7 @@ inet_ntop (int af, const void *restrict src,
  * inet_ntop4(src, dst, size)
  *      format an IPv4 address
  * return:
- *      `dst' (as a const)
+ *      'dst' (as a const)
  * notes:
  *      (1) uses no statics
  *      (2) takes a u_char* not an in_addr as input

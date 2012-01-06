@@ -126,9 +126,9 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
       err = LONGINT_OVERFLOW;
     }
 
-  /* Let valid_suffixes == NULL mean `allow any suffix'.  */
+  /* Let valid_suffixes == NULL mean "allow any suffix".  */
   /* FIXME: update all callers except the ones that allow suffixes
-     after the number, changing last parameter NULL to `""'.  */
+     after the number, changing last parameter NULL to "".  */
   if (!valid_suffixes)
     {
       *val = tmp;
@@ -149,7 +149,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
 
       if (strchr (valid_suffixes, '0'))
         {
-          /* The ``valid suffix'' '0' is a special flag meaning that
+          /* The "valid suffix" '0' is a special flag meaning that
              an optional second suffix is allowed, which can change
              the base.  A suffix "B" (e.g. "100MB") stands for a power
              of 1000, whereas a suffix "iB" (e.g. "100MiB") stands for

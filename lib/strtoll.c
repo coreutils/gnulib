@@ -1,4 +1,4 @@
-/* Function to parse a `long long int' from text.
+/* Function to parse a 'long long int' from text.
    Copyright (C) 1995-1997, 1999, 2001, 2009-2012 Free Software Foundation,
    Inc.
    This file is part of the GNU C Library.

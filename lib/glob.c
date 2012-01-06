@@ -66,7 +66,7 @@
 #endif
 
 /* When used in the GNU libc the symbol _DIRENT_HAVE_D_TYPE is available
-   if the `d_type' member for `struct dirent' is available.
+   if the 'd_type' member for 'struct dirent' is available.
    HAVE_STRUCT_DIRENT_D_TYPE plays the same role in GNULIB.  */
 #if defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE
 /* True if the directory entry D must be of type T.  */
@@ -86,7 +86,7 @@
 # define DIRENT_MIGHT_BE_DIR(d)         true
 #endif /* HAVE_D_TYPE */
 
-/* If the system has the `struct dirent64' type we use it internally.  */
+/* If the system has the 'struct dirent64' type we use it internally.  */
 #if defined _LIBC && !defined COMPILE_GLOB64
 # if (defined POSIX || defined WINDOWS32) && !defined __GNU_LIBRARY__
 #  define CONVERT_D_INO(d64, d32)
@@ -245,10 +245,10 @@ next_brace_sub (const char *cp, int flags)
    The bits defined above may be set in FLAGS.
    If a directory cannot be opened or read and ERRFUNC is not nil,
    it is called with the pathname that caused the error, and the
-   `errno' value from the failing call; if it returns non-zero
-   `glob' returns GLOB_ABORTED; if it returns zero, the error is ignored.
+   'errno' value from the failing call; if it returns non-zero
+   'glob' returns GLOB_ABORTED; if it returns zero, the error is ignored.
    If memory cannot be allocated for PGLOB, GLOB_NOSPACE is returned.
-   Otherwise, `glob' returns zero.  */
+   Otherwise, 'glob' returns zero.  */
 int
 #ifdef GLOB_ATTRIBUTE
 GLOB_ATTRIBUTE
@@ -275,7 +275,7 @@ glob (pattern, flags, errfunc, pglob)
     }
 
   if (!(flags & GLOB_DOOFFS))
-    /* Have to do this so `globfree' knows where to start freeing.  It
+    /* Have to do this so 'globfree' knows where to start freeing.  It
        also makes all the code that uses gl_offs simpler. */
     pglob->gl_offs = 0;
 
@@ -428,7 +428,7 @@ glob (pattern, flags, errfunc, pglob)
   /* Find the filename.  */
   filename = strrchr (pattern, '/');
 #if defined __MSDOS__ || defined WINDOWS32
-  /* The case of "d:pattern".  Since `:' is not allowed in
+  /* The case of "d:pattern".  Since ':' is not allowed in
      file names, we can safely assume that wherever it
      happens in pattern, it signals the filename part.  This
      is so we could some day support patterns like "[a-z]:foo".  */
@@ -487,7 +487,7 @@ glob (pattern, flags, errfunc, pglob)
              prevent infinite recursion in glob.  */
           if (__glob_pattern_p (drive_spec, !(flags & GLOB_NOESCAPE)))
             return GLOB_NOMATCH;
-          /* If this is "d:pattern", we need to copy `:' to DIRNAME
+          /* If this is "d:pattern", we need to copy ':' to DIRNAME
              as well.  If it's "d:/pattern", don't remove the slash
              from "d:/", since "d:" and "d:/" are not the same.*/
         }
@@ -597,7 +597,7 @@ glob (pattern, flags, errfunc, pglob)
               size_t buflen = GET_LOGIN_NAME_MAX () + 1;
 
               if (buflen == 0)
-                /* `sysconf' does not support _SC_LOGIN_NAME_MAX.  Try
+                /* 'sysconf' does not support _SC_LOGIN_NAME_MAX.  Try
                    a moderate value.  */
                 buflen = 20;
               name = __alloca (buflen);
@@ -614,7 +614,7 @@ glob (pattern, flags, errfunc, pglob)
 
 #    ifndef _LIBC
                   if (pwbuflen == -1)
-                    /* `sysconf' does not support _SC_GETPW_R_SIZE_MAX.
+                    /* 'sysconf' does not support _SC_GETPW_R_SIZE_MAX.
                        Try a moderate value.  */
                     pwbuflen = 1024;
 #    endif
@@ -739,7 +739,7 @@ glob (pattern, flags, errfunc, pglob)
 
 #   ifndef _LIBC
             if (buflen == -1)
-              /* `sysconf' does not support _SC_GETPW_R_SIZE_MAX.  Try a
+              /* 'sysconf' does not support _SC_GETPW_R_SIZE_MAX.  Try a
                  moderate value.  */
               buflen = 1024;
 #   endif
@@ -944,7 +944,7 @@ glob (pattern, flags, errfunc, pglob)
 
       flags |= GLOB_MAGCHAR;
 
-      /* We have ignored the GLOB_NOCHECK flag in the `glob_in_dir' calls.
+      /* We have ignored the GLOB_NOCHECK flag in the 'glob_in_dir' calls.
          But if we have not found any matching entry and the GLOB_NOCHECK
          flag was set we must return the input pattern itself.  */
       if (pglob->gl_pathc + pglob->gl_offs == oldcount)
@@ -1089,7 +1089,7 @@ libc_hidden_def (glob)
 
 #if !defined _LIBC || !defined GLOB_ONLY_P
 
-/* Free storage allocated in PGLOB by a previous `glob' call.  */
+/* Free storage allocated in PGLOB by a previous 'glob' call.  */
 void
 globfree (pglob)
      register glob_t *pglob;
@@ -1154,7 +1154,7 @@ prefix_array (const char *dirname, char **array, size_t n)
         --dirlen;
       else if (dirname[dirlen - 1] == ':')
         {
-          /* DIRNAME is "d:".  Use `:' instead of `/'.  */
+          /* DIRNAME is "d:".  Use ':' instead of '/'.  */
           --dirlen;
           sep_char = ':';
         }
@@ -1292,7 +1292,7 @@ link_exists_p (int dfd, const char *dir, size_t dirlen, const char *fname,
 #endif
 
 
-/* Like `glob', but PATTERN is a final pathname component,
+/* Like 'glob', but PATTERN is a final pathname component,
    and matches are searched for in DIRECTORY.
    The GLOB_NOSORT bit in FLAGS is ignored.  No sorting is ever done.
    The GLOB_APPEND flag is assumed to be set (always appends).  */

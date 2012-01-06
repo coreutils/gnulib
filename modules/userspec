@@ -1,5 +1,5 @@
 Description:
-Parse a `user:group' specifier (e.g. the first argument of chown utility).
+Parse a 'user:group' specifier (e.g. the first argument of chown utility).
 
 Files:
 lib/userspec.c

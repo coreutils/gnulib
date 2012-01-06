@@ -49,7 +49,7 @@
 
 
 
-/* Extract or fake data from a `struct stat'.
+/* Extract or fake data from a 'struct stat'.
    ST_BLKSIZE: Preferred I/O blocksize for the file, in bytes.
    ST_NBLOCKS: Number of blocks in the file, including indirect blocks.
    ST_NBLOCKSIZE: Size of blocks used when calculating ST_NBLOCKS.  */
@@ -67,10 +67,10 @@
 # endif
 #else
 /* Some systems, like Sequents, return st_blksize of 0 on pipes.
-   Also, when running `rsh hpux11-system cat any-file', cat would
+   Also, when running 'rsh hpux11-system cat any-file', cat would
    determine that the output stream had an st_blksize of 2147421096.
    Conversely st_blksize can be 2 GiB (or maybe even larger) with XFS
-   on 64-bit hosts.  Somewhat arbitrarily, limit the `optimal' block
+   on 64-bit hosts.  Somewhat arbitrarily, limit the "optimal" block
    size to SIZE_MAX / 8 + 1.  (Dividing SIZE_MAX by only 4 wouldn't
    suffice, since "cat" sometimes multiplies the result by 4.)  If
    anyone knows of a system for which this limit is too small, please

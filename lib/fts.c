@@ -31,7 +31,7 @@
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS" AND
  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
  * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
@@ -427,7 +427,7 @@ fts_open (char * const *argv,
                            O_SEARCH | (ISSET (FTS_NOATIME) ? O_NOATIME : 0));
             if (fd < 0)
               {
-                /* Even if `.' is unreadable, don't revert to FTS_NOCHDIR mode
+                /* Even if "." is unreadable, don't revert to FTS_NOCHDIR mode
                    on systems like Linux+PROC_FS, where our openat emulation
                    is good enough.  Note: on a system that emulates
                    openat via /proc, this technique can still fail, but
@@ -1429,7 +1429,7 @@ fts_build (register FTS *sp, int type)
 
         level = cur->fts_level + 1;
 
-        /* Read the directory, attaching each entry to the `link' pointer. */
+        /* Read the directory, attaching each entry to the "link" pointer. */
         doadjust = false;
         head = NULL;
         tail = NULL;
@@ -2004,7 +2004,7 @@ fts_maxarglen (char * const *argv)
  * tricked by someone changing the world out from underneath us.
  * Assumes p->fts_statp->st_dev and p->fts_statp->st_ino are filled in.
  * If FD is non-negative, expect it to be used after this function returns,
- * and to be closed eventually.  So don't pass e.g., `dirfd(dirp)' and then
+ * and to be closed eventually.  So don't pass e.g., 'dirfd(dirp)' and then
  * do closedir(dirp), because that would invalidate the saved FD.
  * Upon failure, close FD immediately and return nonzero.
  */
@@ -2053,7 +2053,7 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
           return -1;
 
         /* The following dev/inode check is necessary if we're doing a
-           `logical' traversal (through symlinks, a la chown -L), if the
+           "logical" traversal (through symlinks, a la chown -L), if the
            system lacks O_NOFOLLOW support, or if we're changing to ".."
            (but not via a popped file descriptor).  When changing to the
            name "..", O_NOFOLLOW can't help.  In general, when the target is

@@ -39,7 +39,7 @@
 
 __BEGIN_DECLS
 
-/* We need `size_t' for the following definitions.  */
+/* We need 'size_t' for the following definitions.  */
 #ifndef __size_t
 # if defined __GNUC__ && __GNUC__ >= 2
 typedef __SIZE_TYPE__ __size_t;
@@ -59,7 +59,7 @@ typedef __SIZE_TYPE__ size_t;
 # define __size_t size_t
 #endif
 
-/* Bits set in the FLAGS argument to `glob'.  */
+/* Bits set in the FLAGS argument to 'glob'.  */
 #define GLOB_ERR        (1 << 0)/* Return on read errors.  */
 #define GLOB_MARK       (1 << 1)/* Append a slash to each name.  */
 #define GLOB_NOSORT     (1 << 2)/* Don't sort the names.  */
@@ -67,7 +67,7 @@ typedef __SIZE_TYPE__ size_t;
 #define GLOB_NOCHECK    (1 << 4)/* If nothing matches, return the pattern.  */
 #define GLOB_APPEND     (1 << 5)/* Append to results of a previous call.  */
 #define GLOB_NOESCAPE   (1 << 6)/* Backslashes don't quote metacharacters.  */
-#define GLOB_PERIOD     (1 << 7)/* Leading `.' can be matched by metachars.  */
+#define GLOB_PERIOD     (1 << 7)/* Leading '.' can be matched by metachars.  */
 
 #if !defined __USE_POSIX2 || defined __USE_BSD || defined __USE_GNU
 # define GLOB_MAGCHAR    (1 << 8)/* Set in gl_flags if any metachars seen.  */
@@ -88,7 +88,7 @@ typedef __SIZE_TYPE__ size_t;
                          GLOB_PERIOD)
 #endif
 
-/* Error returns from `glob'.  */
+/* Error returns from 'glob'.  */
 #define GLOB_NOSPACE    1       /* Ran out of memory.  */
 #define GLOB_ABORTED    2       /* Read error.  */
 #define GLOB_NOMATCH    3       /* No matches found.  */
@@ -107,7 +107,7 @@ typedef struct
   {
     __size_t gl_pathc;          /* Count of paths matched by the pattern.  */
     char **gl_pathv;            /* List of matched pathnames.  */
-    __size_t gl_offs;           /* Slots to reserve in `gl_pathv'.  */
+    __size_t gl_offs;           /* Slots to reserve in 'gl_pathv'.  */
     int gl_flags;               /* Set to FLAGS, maybe | GLOB_MAGCHAR.  */
 
     /* If the GLOB_ALTDIRFUNC flag is set, the following functions
@@ -167,16 +167,16 @@ typedef struct
    The bits defined above may be set in FLAGS.
    If a directory cannot be opened or read and ERRFUNC is not nil,
    it is called with the pathname that caused the error, and the
-   `errno' value from the failing call; if it returns non-zero
-   `glob' returns GLOB_ABEND; if it returns zero, the error is ignored.
+   'errno' value from the failing call; if it returns non-zero
+   'glob' returns GLOB_ABEND; if it returns zero, the error is ignored.
    If memory cannot be allocated for PGLOB, GLOB_NOSPACE is returned.
-   Otherwise, `glob' returns zero.  */
+   Otherwise, 'glob' returns zero.  */
 #if !defined __USE_FILE_OFFSET64 || __GNUC__ < 2 || defined __GLOB_GNULIB
 extern int glob (const char *_Restrict_ __pattern, int __flags,
                  int (*__errfunc) (const char *, int),
                  glob_t *_Restrict_ __pglob) __THROW _GL_ARG_NONNULL ((1, 4));
 
-/* Free storage allocated in PGLOB by a previous `glob' call.  */
+/* Free storage allocated in PGLOB by a previous 'glob' call.  */
 extern void globfree (glob_t *__pglob) __THROW _GL_ARG_NONNULL ((1));
 #else
 extern int __REDIRECT_NTH (glob, (const char *_Restrict_ __pattern,

@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2012-01-06 07:21'; # UTC
+my $VERSION = '2012-01-06 07:46'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -210,7 +210,7 @@ sub print_news_deltas ($$$)
       else
         {
           # This regexp must not match version numbers in NEWS items.
-          # For example, they might well say `introduced in 4.5.5',
+          # For example, they might well say "introduced in 4.5.5",
           # and we don't want that to match.
           $line =~ /^$re_prefix.*(?:[^\d.]|$)\Q$prev_version\E(?:[^\d.]|$)/o
             and last;
@@ -269,7 +269,7 @@ sub print_changelog_deltas ($$)
   # Append any remaining ChangeLog files.
   push @reordered, sort keys %changelog;
 
-  # Remove leading `./'.
+  # Remove leading './'.
   @reordered = map { s!^\./!!; $_ } @reordered;
 
   print "\nChangeLog entries:\n\n";
@@ -282,9 +282,9 @@ sub print_changelog_deltas ($$)
   open DIFF, '-|', $cmd
     or die "$ME: cannot run '$cmd': $!\n";
   # Print two types of lines, making minor changes:
-  # Lines starting with `+++ ', e.g.,
+  # Lines starting with '+++ ', e.g.,
   # +++ ChangeLog   22 Feb 2003 16:52:51 -0000      1.247
-  # and those starting with `+'.
+  # and those starting with '+'.
   # Don't print the others.
   my $prev_printed_line_empty = 1;
   while (defined (my $line = <DIFF>))
@@ -329,7 +329,7 @@ sub get_tool_versions ($$)
           next;
         }
       # Assume that the last "word" on the first line of
-      # `tool --version` output is the version string.
+      # 'tool --version' output is the version string.
       my ($first_line, undef) = split ("\n", `$t --version`);
       if ($first_line =~ /.* (\d[\w.-]+)$/)
         {

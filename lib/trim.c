@@ -30,7 +30,7 @@
 #include "mbiter.h"
 #include "xalloc.h"
 
-/* Use this to suppress gcc's `...may be used before initialized' warnings. */
+/* Use this to suppress gcc's "...may be used before initialized" warnings. */
 #ifdef lint
 # define IF_LINT(Code) Code
 #else

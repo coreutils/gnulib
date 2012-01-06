@@ -206,7 +206,7 @@ static const size_t __re_error_msgid_idx[] =
    compiles PATTERN (of length LENGTH) and puts the result in BUFP.
    Returns 0 if the pattern was valid, otherwise an error string.
 
-   Assumes the `allocated' (and perhaps `buffer') and `translate' fields
+   Assumes the 'allocated' (and perhaps 'buffer') and 'translate' fields
    are set in BUFP on entry.  */
 
 #ifdef _LIBC
@@ -241,7 +241,7 @@ re_compile_pattern (const char *pattern, size_t length,
 weak_alias (__re_compile_pattern, re_compile_pattern)
 #endif
 
-/* Set by `re_set_syntax' to the current regexp syntax to recognize.  Can
+/* Set by 're_set_syntax' to the current regexp syntax to recognize.  Can
    also be assigned to arbitrarily: each pattern buffer stores its own
    syntax, so it can be changed between regex compilations.  */
 /* This has no initializer because initialized variables in Emacs
@@ -439,15 +439,15 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
    PREG is a regex_t *.  We do not expect any fields to be initialized,
    since POSIX says we shouldn't.  Thus, we set
 
-     `buffer' to the compiled pattern;
-     `used' to the length of the compiled pattern;
-     `syntax' to RE_SYNTAX_POSIX_EXTENDED if the
+     'buffer' to the compiled pattern;
+     'used' to the length of the compiled pattern;
+     'syntax' to RE_SYNTAX_POSIX_EXTENDED if the
        REG_EXTENDED bit in CFLAGS is set; otherwise, to
        RE_SYNTAX_POSIX_BASIC;
-     `newline_anchor' to REG_NEWLINE being set in CFLAGS;
-     `fastmap' to an allocated space for the fastmap;
-     `fastmap_accurate' to zero;
-     `re_nsub' to the number of subexpressions in PATTERN.
+     'newline_anchor' to REG_NEWLINE being set in CFLAGS;
+     'fastmap' to an allocated space for the fastmap;
+     'fastmap_accurate' to zero;
+     're_nsub' to the number of subexpressions in PATTERN.
 
    PATTERN is the address of the pattern string.
 
@@ -718,7 +718,7 @@ re_comp (s)
 				 + __re_error_msgid_idx[(int) REG_ESPACE]);
     }
 
-  /* Since `re_exec' always passes NULL for the `regs' argument, we
+  /* Since 're_exec' always passes NULL for the 'regs' argument, we
      don't need to initialize the pattern buffer fields which affect it.  */
 
   /* Match anchors at newlines.  */
@@ -729,7 +729,7 @@ re_comp (s)
   if (!ret)
     return NULL;
 
-  /* Yes, we're discarding `const' here if !HAVE_LIBINTL.  */
+  /* Yes, we're discarding 'const' here if !HAVE_LIBINTL.  */
   return (char *) gettext (__re_error_msgid + __re_error_msgid_idx[(int) ret]);
 }
 
@@ -1659,7 +1659,7 @@ calc_eclosure (re_dfa_t *dfa)
       /* If we have already calculated, skip it.  */
       if (dfa->eclosures[node_idx].nelem != 0)
 	continue;
-      /* Calculate epsilon closure of `node_idx'.  */
+      /* Calculate epsilon closure of 'node_idx'.  */
       err = calc_eclosure_iter (&eclosure_elem, dfa, node_idx, true);
       if (BE (err != REG_NOERROR, 0))
 	return err;
@@ -1709,14 +1709,14 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
       {
 	re_node_set eclosure_elem;
 	Idx edest = dfa->edests[node].elems[i];
-	/* If calculating the epsilon closure of `edest' is in progress,
+	/* If calculating the epsilon closure of 'edest' is in progress,
 	   return intermediate result.  */
 	if (dfa->eclosures[edest].nelem == REG_MISSING)
 	  {
 	    incomplete = true;
 	    continue;
 	  }
-	/* If we haven't calculated the epsilon closure of `edest' yet,
+	/* If we haven't calculated the epsilon closure of 'edest' yet,
 	   calculate now. Otherwise use calculated epsilon closure.  */
 	if (dfa->eclosures[edest].nelem == 0)
 	  {
@@ -1726,11 +1726,11 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 	  }
 	else
 	  eclosure_elem = dfa->eclosures[edest];
-	/* Merge the epsilon closure of `edest'.  */
+	/* Merge the epsilon closure of 'edest'.  */
 	err = re_node_set_merge (&eclosure, &eclosure_elem);
 	if (BE (err != REG_NOERROR, 0))
 	  return err;
-	/* If the epsilon closure of `edest' is incomplete,
+	/* If the epsilon closure of 'edest' is incomplete,
 	   the epsilon closure of this node is also incomplete.  */
 	if (dfa->eclosures[edest].nelem == 0)
 	  {
@@ -2134,7 +2134,7 @@ parse (re_string_t *regexp, regex_t *preg, reg_syntax_t syntax,
 	  /   \
    <branch1> <branch2>
 
-   ALT means alternative, which represents the operator `|'.  */
+   ALT means alternative, which represents the operator '|'.  */
 
 static bin_tree_t *
 parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
@@ -3703,7 +3703,7 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
 }
 
 /* This is intended for the expressions like "a{1,3}".
-   Fetch a number from `input', and return the number.
+   Fetch a number from 'input', and return the number.
    Return REG_MISSING if the number field is empty like "{,1}".
    Return REG_ERROR if an error occurred.  */
 

@@ -50,7 +50,7 @@ cycle_check_init (struct cycle_check_state *state)
    descending chdir call, with SB corresponding to the chdir operand.
    If SB corresponds to a directory that has already been seen,
    return true to indicate that there is a directory cycle.
-   Note that this is done `lazily', which means that some of
+   Note that this is done "lazily", which means that some of
    the directories in the cycle may be processed twice before
    the cycle is detected.  */
 
@@ -65,7 +65,7 @@ cycle_check (struct cycle_check_state *state, struct stat const *sb)
   if (state->chdir_counter && SAME_INODE (*sb, state->dev_ino))
     return true;
 
-  /* If the number of `descending' chdir calls is a power of two,
+  /* If the number of "descending" chdir calls is a power of two,
      record the dev/ino of the current directory.  */
   if (is_zero_or_power_of_two (++(state->chdir_counter)))
     {

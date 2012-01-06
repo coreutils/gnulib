@@ -21,7 +21,7 @@
 
 #include <stdlib.h>
 
-/* Initialize data structure for file attribute for `spawn' call.  */
+/* Initialize data structure for file attribute for 'spawn' call.  */
 int
 posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *file_actions)
 {

@@ -177,12 +177,12 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 /* Fix up the O_* macros.  */
 
 #if !defined O_DIRECT && defined O_DIRECTIO
-/* Tru64 spells it `O_DIRECTIO'.  */
+/* Tru64 spells it 'O_DIRECTIO'.  */
 # define O_DIRECT O_DIRECTIO
 #endif
 
 #if !defined O_CLOEXEC && defined O_NOINHERIT
-/* Mingw spells it `O_NOINHERIT'.  */
+/* Mingw spells it 'O_NOINHERIT'.  */
 # define O_CLOEXEC O_NOINHERIT
 #endif
 
