@@ -1,4 +1,4 @@
-/* A substitute for ISO C 1x <stdalign.h>.
+/* A substitute for ISO C11 <stdalign.h>.
 
    Copyright 2011-2012 Free Software Foundation, Inc.
 
@@ -21,12 +21,14 @@
 #ifndef _GL_STDALIGN_H
 #define _GL_STDALIGN_H
 
-/* ISO C1X <stdalign.h> for platforms that lack it.
+/* ISO C11 <stdalign.h> for platforms that lack it.
 
    References:
-   ISO C1X <http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf>
+   ISO C11 (latest free draft
+   <http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf>)
    sections 6.5.3.4, 6.7.5, 7.15.
-   C++0X <http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>
+   C++11 (latest free draft
+   <http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf>)
    section 18.10. */
 
 /* alignof (TYPE), also known as _Alignof (TYPE), yields the alignment
@@ -68,7 +70,7 @@
    To be portable to Sun C 5.11, do not align auto variables to
    anything stricter than their default alignment.
 
-   The following draft C1X requirements are not supported here:
+   The following C11 requirements are not supported here:
 
      - If A is zero, alignas has no effect.
      - alignas can be used multiple times; the strictest one wins.

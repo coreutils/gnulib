@@ -1,5 +1,5 @@
 Description:
-A <stdalign.h> that nearly conforms to ISO C1X and C++0X.
+A <stdalign.h> that nearly conforms to ISO C11 and C++11.
 
 Files:
 lib/stdalign.in.h

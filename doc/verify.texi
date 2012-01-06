@@ -50,11 +50,11 @@ integer constant expression, then a compiler might reject a usage like
 @samp{verify (@var{V});} even when @var{V} is
 nonzero.
 
-Although the standard @code{assert} macro is a runtime test, draft C1X
+Although the standard @code{assert} macro is a runtime test, C11
 specifies a builtin @code{_Static_assert (@var{V},
 @var{STRING-LITERAL})}, its @file{assert.h} header has a similar macro
-named @code{static_assert}, and draft C++0X has a similar
-@code{static_assert} builtin.  These draft builtins and macros differ
+named @code{static_assert}, and C++11 has a similar
+@code{static_assert} builtin.  These builtins and macros differ
 from @code{verify} in two major ways.  First, they can also be used
 within a @code{struct} or @code{union} specifier, in place of an
 ordinary member declaration.  Second, they require the programmer to

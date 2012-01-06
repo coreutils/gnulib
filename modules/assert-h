@@ -1,5 +1,5 @@
 Description:
-An <assert.h> that conforms to C1X.
+An <assert.h> that conforms to C11.
 
 Files:
 lib/assert.in.h

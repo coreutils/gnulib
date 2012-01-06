@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 31
+# gnulib-common.m4 serial 32
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_COMMON], [
 ])
 AC_DEFUN([gl_COMMON_BODY], [
   AH_VERBATIM([_Noreturn],
-[/* The _Noreturn keyword of draft C1X.  */
+[/* The _Noreturn keyword of C11.  */
 #ifndef _Noreturn
 # if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__) \
       || 0x5110 <= __SUNPRO_C)
@@ -224,7 +224,7 @@ m4_ifndef([AS_VAR_IF],
 # - When AC_PROG_CC_STDC is invoked twice, it adds the C99 enabling options
 #   to CC twice
 #   <http://lists.gnu.org/archive/html/bug-gnulib/2011-09/msg00431.html>.
-# - AC_PROG_CC_STDC is likely to change when C1X is an ISO standard.
+# - AC_PROG_CC_STDC is likely to change now that C11 is an ISO standard.
 AC_DEFUN([gl_PROG_CC_C99],
 [
   dnl Change that version number to the minimum Autoconf version that supports

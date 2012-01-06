@@ -2,9 +2,11 @@
 @section @file{stdalign.h}
 
 POSIX specification:@* Not in POSIX yet, but we expect it will be.
-ISO C1X @url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf}
+ISO C11 (latest free draft
+@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf})
 sections 6.5.3.4, 6.7.5, 7.15.
-C++0X @url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf}
+C++11 (latest free draft
+@url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf})
 section 18.10.
 
 Gnulib module: stdalign

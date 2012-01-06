@@ -1,4 +1,4 @@
-# Check for stdalign.h that conforms to C1x.
+# Check for stdalign.h that conforms to C11.
 
 dnl Copyright 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
