@@ -1087,7 +1087,7 @@ And then transferring the @file{dummy-0.tar.gz} file.
 @item Build modules
 
 On the build machine, run ./do-autobuild (or "nohup ./do-autobuild").
-It creates a directory 'logs/' with a log file for each module.
+It creates a directory @file{logs/} with a log file for each module.
 
 @item Submit build logs
 

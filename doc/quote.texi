@@ -27,7 +27,7 @@ example of using @samp{quote}:
 This differs from
 
 @example
-  error (0, errno, _("cannot change owner of `%s'"), fname);
+  error (0, errno, _("cannot change owner of '%s'"), fname);
 @end example
 
 @noindent in that @code{quote} escapes unusual characters in

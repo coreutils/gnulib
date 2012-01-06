@@ -121,7 +121,7 @@ order:
 If this bit is set, then @samp{\} inside a list (@pxref{List Operators}
 quotes (makes ordinary, if it's special) the following character; if
 this bit isn't set, then @samp{\} is an ordinary character inside lists.
-(@xref{The Backslash Character}, for what `\' does outside of lists.)
+(@xref{The Backslash Character}, for what @samp{\} does outside of lists.)
 
 @cnindex RE_BK_PLUS_QM
 @item RE_BK_PLUS_QM
@@ -387,7 +387,7 @@ This generalizes the notion of a character in
 two ways.  First, a single character can map into two or more collating
 elements.  For example, the German
 @tex
-`\ss'
+``\ss''
 @end tex
 @ifinfo
 ``es-zet''
@@ -1474,7 +1474,7 @@ provide more options than the other interfaces.
 * GNU Searching::               re_search ()
 * Matching/Searching with Split Data::  re_match_2 (), re_search_2 ()
 * Searching with Fastmaps::     re_compile_fastmap ()
-* GNU Translate Tables::        The `translate' field.
+* GNU Translate Tables::        The @code{translate} field.
 * Using Registers::             The re_registers type and related fns.
 * Freeing GNU Pattern Buffers::  regfree ()
 @end menu

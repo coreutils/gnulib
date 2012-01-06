@@ -36,6 +36,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 On Windows, this function returns a file handle in @code{O_TEXT} mode by
-default; this means that it translates '\n' to CR/LF by default.  Use the
+default; this means that it translates @code{'\n'} to CR/LF by default.  Use the
 @code{O_BINARY} flag if you need reliable binary I/O.
 @end itemize
