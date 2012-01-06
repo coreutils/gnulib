@@ -62,8 +62,8 @@ EOF
 EOF
   sed 's/	.*//;/^@@/d' out > k && mv k out
 
-  # Check the expected output only if compare is using diff -u.
-  if $(exec 2>/dev/null; diff -u out out < /dev/null); then
+  # Compare against expected output only if compare is using diff -u.
+  if (diff -u out out < /dev/null) > /dev/null 2>&1; then
     compare exp out || fail=1
   fi
   case $- in *x*) ;; *) test -s err && fail_ "err not empty: $(cat err)";; esac

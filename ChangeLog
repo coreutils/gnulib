@@ -1,3 +1,8 @@
+2012-01-06  Bruno Haible  <bruno@clisp.org>
+
+	test-init.sh: correct the test for diff -u
+	* tests/test-init.sh: Also redirect stdout to /dev/null.
+
 2012-01-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Use ', not `, for quoting output.
