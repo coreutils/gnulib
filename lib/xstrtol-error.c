@@ -60,16 +60,16 @@ xstrtol_error (enum strtol_error err,
       abort ();
 
     case LONGINT_INVALID:
-      msgid = N_("invalid %s%s argument `%s'");
+      msgid = N_("invalid %s%s argument '%s'");
       break;
 
     case LONGINT_INVALID_SUFFIX_CHAR:
     case LONGINT_INVALID_SUFFIX_CHAR_WITH_OVERFLOW:
-      msgid = N_("invalid suffix in %s%s argument `%s'");
+      msgid = N_("invalid suffix in %s%s argument '%s'");
       break;
 
     case LONGINT_OVERFLOW:
-      msgid = N_("%s%s argument `%s' too large");
+      msgid = N_("%s%s argument '%s' too large");
       break;
     }
 

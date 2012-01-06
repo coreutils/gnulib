@@ -1,4 +1,4 @@
-# serial 29
+# serial 30
 # How to list mounted file systems.
 
 # Copyright (C) 1998-2004, 2006, 2009-2012 Free Software Foundation, Inc.
@@ -110,7 +110,7 @@ if test -z "$ac_list_mounted_fs"; then
     AC_DEFINE([MOUNTED_VMOUNT], [1],
         [Define if there is a function named mntctl that can be used to read
          the list of mounted file systems, and there is a system header file
-         that declares `struct vmount.'  (AIX)])
+         that declares 'struct vmount'.  (AIX)])
   fi
 fi
 

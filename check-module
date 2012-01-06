@@ -60,7 +60,7 @@ sub parse_module_file ($)
   my ($module_file) = @_;
 
   open FH, '<', $module_file
-    or die "$ME: can't open `$module_file' for reading: $!\n";
+    or die "$ME: can't open '$module_file' for reading: $!\n";
 
   my %file_set;
   my %dep_set;
@@ -130,7 +130,7 @@ sub usage ($)
   my $STREAM = ($exit_code == 0 ? *STDOUT : *STDERR);
   if ($exit_code != 0)
     {
-      print $STREAM "Try `$ME --help' for more information.\n";
+      print $STREAM "Try '$ME --help' for more information.\n";
     }
   else
     {
@@ -138,7 +138,7 @@ sub usage ($)
 Usage: $ME [OPTIONS] FILE...
 
 Read a module description file and derive the set of files
-included directly by any .c or .h file listed in the `Files:' section.
+included directly by any .c or .h file listed in the 'Files:' section.
 Take the union of all such sets for any dependent modules.
 Then, compare that set with the set derived from the names
 listed in the various Files: sections.
@@ -172,7 +172,7 @@ sub find_included_lib_files ($)
 
   my %inc;
   open FH, '<', $file
-    or die "$ME: can't open `$file' for reading: $!\n";
+    or die "$ME: can't open '$file' for reading: $!\n";
 
   while (defined (my $line = <FH>))
     {
@@ -272,7 +272,7 @@ sub check_module ($)
 	    || exists $exempt_header{$i}
 	      and next;
 	  !exists $module_all_files{$lib_file} && -f "../lib/$i"
-	    and warn "$f: $i is `#include'd, but not "
+	    and warn "$f: $i is '#include'd, but not "
 	      . "listed in module's Files: section\n";
 	}
       #my @t = sort keys %$inc;

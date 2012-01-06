@@ -1,4 +1,4 @@
-# serial 10  -*- Autoconf -*-
+# serial 11  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2012 Free Software Foundation, Inc.
@@ -43,7 +43,7 @@ AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
   AC_CHECK_HEADER([minix/config.h], [MINIX=yes], [MINIX=])
   if test "$MINIX" = yes; then
     AC_DEFINE([_POSIX_SOURCE], [1],
-      [Define to 1 if you need to in order for `stat' and other
+      [Define to 1 if you need to in order for 'stat' and other
        things to work.])
     AC_DEFINE([_POSIX_1_SOURCE], [2],
       [Define to 2 if the system does not provide POSIX.1 features

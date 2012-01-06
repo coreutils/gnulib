@@ -269,7 +269,7 @@ main (int argc, const char *const *argv)
     backup_type = XARGMATCH (program_name, argv[1],
                              backup_args, backup_vals);
 
-  printf ("The version control is `%s'\n",
+  printf ("The version control is '%s'\n",
           ARGMATCH_TO_ARGUMENT (backup_type, backup_args, backup_vals));
 
   return 0;

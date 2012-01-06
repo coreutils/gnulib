@@ -66,9 +66,9 @@ int main (int ac, char *av[])
         from[strlen (from) - 1] = '\0';
     }
 
-  printf (" Input string: `%s'\n"
-          "From code set: `%s'\n"
-          "  To code set: `%s'\n",
+  printf (" Input string: '%s'\n"
+          "From code set: '%s'\n"
+          "  To code set: '%s'\n",
           in, from, to);
 
   out = iconv_string (in, from, to);
@@ -77,7 +77,7 @@ int main (int ac, char *av[])
     perror ("iconv");
   else
     {
-      printf ("\nOutput: `%s'\n", out);
+      printf ("\nOutput: '%s'\n", out);
       free (out);
     }
 

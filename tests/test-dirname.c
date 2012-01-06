@@ -149,14 +149,15 @@ main (void)
                  || (dirlen + 1 == strlen (dir) && dir[dirlen] == '.'))))
         {
           ok = false;
-          printf ("dir_name `%s': got `%s' len %d, expected `%s' len %ld\n",
+          printf ("dir_name '%s': got '%s' len %d,"
+                  " expected '%s' len %ld\n",
                   t->name, dir, dirlen,
                   t->dir, (unsigned long) strlen (t->dir));
         }
       if (strcmp (last, t->last))
         {
           ok = false;
-          printf ("last_component `%s': got `%s', expected `%s'\n",
+          printf ("last_component '%s': got '%s', expected '%s'\n",
                   t->name, last, t->last);
         }
       if (! (strcmp (base, t->base) == 0
@@ -165,21 +166,22 @@ main (void)
                      && ISSLASH (base[baselen])))))
         {
           ok = false;
-          printf ("base_name `%s': got `%s' len %d, expected `%s' len %ld\n",
+          printf ("base_name '%s': got '%s' len %d,"
+                  " expected '%s' len %ld\n",
                   t->name, base, baselen,
                   t->base, (unsigned long) strlen (t->base));
         }
       if (strcmp (stripped, t->stripped) || modified != t->modified)
         {
           ok = false;
-          printf ("strip_trailing_slashes `%s': got %s %s, expected %s %s\n",
+          printf ("strip_trailing_slashes '%s': got %s %s, expected %s %s\n",
                   t->name, stripped, modified ? "changed" : "unchanged",
                   t->stripped, t->modified ? "changed" : "unchanged");
         }
       if (t->absolute != absolute)
         {
           ok = false;
-          printf ("`%s': got %s, expected %s\n", t->name,
+          printf ("'%s': got %s, expected %s\n", t->name,
                   absolute ? "absolute" : "relative",
                   t->absolute ? "absolute" : "relative");
         }

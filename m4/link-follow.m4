@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -93,7 +93,7 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
     fi
   fi
   AC_DEFINE_UNQUOTED([LINK_FOLLOWS_SYMLINKS], [$gl_link_follows_symlinks],
-    [Define to 1 if `link(2)' dereferences symbolic links, 0 if it
+    [Define to 1 if 'link(2)' dereferences symbolic links, 0 if it
      creates hard links to symlinks, -1 if it depends on the variable __xpg4,
      and -2 if unknown.])
 ])

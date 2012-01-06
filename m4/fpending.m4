@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 
 # Copyright (C) 2000-2001, 2004-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -83,5 +83,5 @@ AC_DEFUN([gl_PREREQ_FPENDING],
   )
   AC_DEFINE_UNQUOTED([PENDING_OUTPUT_N_BYTES],
     $ac_cv_sys_pending_output_n_bytes,
-    [the number of pending output bytes on stream `fp'])
+    [the number of pending output bytes on stream 'fp'])
 ])

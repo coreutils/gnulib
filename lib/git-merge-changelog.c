@@ -963,7 +963,7 @@ static void
 usage (int status)
 {
   if (status != EXIT_SUCCESS)
-    fprintf (stderr, "Try `%s --help' for more information.\n",
+    fprintf (stderr, "Try '%s --help' for more information.\n",
              program_name);
   else
     {

@@ -30,7 +30,7 @@
 
 #ifdef DEBUG
 #define LOG(str, now, res)                                              \
-  printf ("string `%s' diff %d %d\n",                   \
+  printf ("string '%s' diff %d %d\n",                                 \
           str, res.tv_sec - now.tv_sec, res.tv_nsec - now.tv_nsec);
 #else
 #define LOG(str, now, res) (void) 0

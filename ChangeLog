@@ -1,3 +1,48 @@
+2012-01-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Use ', not `, for quoting output.
+	* build-aux/announce-gen (usage, sizes, print_news_deltas)
+	(print_changelog_deltas, get_tool_versions, main program):
+	* build-aux/git-version-gen:
+	* build-aux/gitlog-to-changelog (usage, parse_amend_file):
+	* build-aux/move-if-change (help):
+	* build-aux/useless-if-before-free (usage, main program):
+	* check-module (parse_module_file, usage)
+	(find_included_lib_files, check_module):
+	* lib/argmatch.c (main) [TEST]:
+	* lib/argp-help.c (_help):
+	* lib/getopt1.c (main) [TEST]:
+	* lib/git-merge-changelog.c (usage):
+	* lib/xstrtol-error.c (xstrtol_error):
+	* m4/alloca.m4 (_AC_LIBOBJ_ALLOCA):
+	* m4/argz.m4 (gl_FUNC_ARGZ):
+	* m4/bison.m4 (gl_BISON):
+	* m4/calloc.m4 (gl_FUNC_CALLOC_GNU):
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):
+	* m4/flexmember.m4 (AC_C_FLEXIBLE_ARRAY_MEMBER):
+	* m4/fpending.m4 (gl_PREREQ_FPENDING):
+	* m4/gc-random.m4 (gl_GC_RANDOM):
+	* m4/intl.m4 (gt_CHECK_DECL):
+	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK):
+	* m4/longlong.m4 (AC_TYPE_LONG_LONG_INT)
+	(AC_TYPE_UNSIGNED_LONG_LONG_INT):
+	* m4/ls-mntd-fs.m4 (gl_LIST_MOUNTED_FILE_SYSTEMS):
+	* m4/lstat.m4 (gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK):
+	* m4/onceonly.m4 (AC_CHECK_FUNCS_ONCE):
+	* m4/posixver.m4 (gl_DEFAULT_POSIX2_VERSION):
+	* tests/test-dirname.c (main):
+	* tests/test-getpass.c (main):
+	* tests/test-iconvme.c (main):
+	* tests/test-parse-datetime.c (LOG):
+	* tests/test-xstrtoimax.sh:
+	* tests/test-xstrtol.sh:
+	* tests/test-xstrtoll.sh:
+	* tests/test-xstrtoumax.sh:
+	* tests/unigbrk/test-uc-is-grapheme-break.c (main):
+	* top/GNUmakefile (abort-due-to-no-makefile):
+	Quote 'like this', not `like this', as per the recent change to
+	the GNU coding standards.
+
 2012-01-05  Bruno Haible  <bruno@clisp.org>
 
 	strtoimax: Don't force a replacement on systems where intmax_t is int.

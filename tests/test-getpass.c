@@ -25,7 +25,7 @@ main (int argc, char *argv[])
 {
   char *pass = getpass ("Enter password: ");
 
-  printf ("The password is `%s'\n", pass);
+  printf ("The password is '%s'\n", pass);
 
   return 0;
 }

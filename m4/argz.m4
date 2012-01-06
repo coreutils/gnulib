@@ -7,7 +7,7 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 10 argz.m4
+# serial 11 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
@@ -19,7 +19,7 @@ AC_CHECK_HEADERS([argz.h], [], [], [AC_INCLUDES_DEFAULT])
 AC_CHECK_TYPES([error_t],
   [],
   [AC_DEFINE([error_t], [int],
-   [Define to a type to use for `error_t' if it is not otherwise available.])
+   [Define to a type to use for 'error_t' if it is not otherwise available.])
    AC_DEFINE([__error_t_defined], [1], [Define so that glibc/gnulib argp.h
     does not typedef error_t.])],
   [#if defined(HAVE_ARGZ_H)

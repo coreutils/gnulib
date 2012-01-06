@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2011-12-25 18:26'; # UTC
+my $VERSION = '2012-01-06 07:21'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -44,7 +44,7 @@ sub usage ($)
   my $STREAM = ($exit_code == 0 ? *STDOUT : *STDERR);
   if ($exit_code != 0)
     {
-      print $STREAM "Try `$ME --help' for more information.\n";
+      print $STREAM "Try '$ME --help' for more information.\n";
     }
   else
     {
@@ -106,7 +106,7 @@ sub sizes (@)
       my $t = `$cmd`;
       # FIXME-someday: give a better diagnostic, a la $PROCESS_STATUS
       $@
-        and (warn "$ME: command failed: `$cmd'\n"), $fail = 1;
+        and (warn "$ME: command failed: '$cmd'\n"), $fail = 1;
       chomp $t;
       $t =~ s/^([\d.]+[MkK]).*/${1}B/;
       $res{$f} = $t;
@@ -222,9 +222,9 @@ sub print_news_deltas ($$$)
   close NEWS;
 
   $in_items
-    or die "$ME: $news_file: no matching lines for `$curr_version'\n";
+    or die "$ME: $news_file: no matching lines for '$curr_version'\n";
   $found_news
-    or die "$ME: $news_file: no news item found for `$curr_version'\n";
+    or die "$ME: $news_file: no news item found for '$curr_version'\n";
 }
 
 sub print_changelog_deltas ($$)
@@ -280,7 +280,7 @@ sub print_changelog_deltas ($$)
 
   my $cmd = "cvs -n diff -u -r$prev_cvs_tag -rHEAD @reordered";
   open DIFF, '-|', $cmd
-    or die "$ME: cannot run `$cmd': $!\n";
+    or die "$ME: cannot run '$cmd': $!\n";
   # Print two types of lines, making minor changes:
   # Lines starting with `+++ ', e.g.,
   # +++ ChangeLog   22 Feb 2003 16:52:51 -0000      1.247
@@ -310,7 +310,7 @@ sub print_changelog_deltas ($$)
   # The exit code should be 1.
   # Allow in case there are no modified ChangeLog entries.
   $? == 256 || $? == 128
-    or warn "$ME: warning: `$cmd' had unexpected exit code or signal ($?)\n";
+    or warn "$ME: warning: '$cmd' had unexpected exit code or signal ($?)\n";
 }
 
 sub get_tool_versions ($$)
@@ -410,7 +410,7 @@ sub get_tool_versions ($$)
         . "in the gnulib source directory.\n"), $fail = 1;
 
   exists $valid_release_types{$release_type}
-    or (warn "$ME: `$release_type': invalid release type\n"), $fail = 1;
+    or (warn "$ME: '$release_type': invalid release type\n"), $fail = 1;
 
   @ARGV
     and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
@@ -505,7 +505,7 @@ then run this command to import it:
 
   gpg --keyserver keys.gnupg.net --recv-keys $gpg_key_id
 
-and rerun the \`gpg --verify' command.
+and rerun the 'gpg --verify' command.
 EOF
 
   my @tool_versions = get_tool_versions (\@tool_list, $gnulib_version);

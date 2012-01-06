@@ -1681,7 +1681,7 @@ _help (const struct argp *argp, const struct argp_state *state, FILE *stream,
   if (flags & ARGP_HELP_SEE)
     {
       __argp_fmtstream_printf (fs, dgettext (argp->argp_domain, "\
-Try `%s --help' or `%s --usage' for more information.\n"),
+Try '%s --help' or '%s --usage' for more information.\n"),
                                name, name);
       anything = 1;
     }

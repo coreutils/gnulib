@@ -33,10 +33,10 @@ cat > exp <<EOF
 1->1 ()
 -1->-1 ()
 1k->1024 ()
-invalid suffix in X argument \`${too_big}h'
-X argument \`$too_big' too large
-invalid X argument \`x'
-invalid suffix in X argument \`9x'
+invalid suffix in X argument '${too_big}h'
+X argument '$too_big' too large
+invalid X argument 'x'
+invalid suffix in X argument '9x'
 010->8 ()
 MiB->1048576 ()
 EOF
