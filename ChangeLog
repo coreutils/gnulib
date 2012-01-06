@@ -1,3 +1,12 @@
+2012-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: C11 and C++11 are now official
+	* doc/posix-headers/assert.texi, doc/posix-headers/stdalign.texi:
+	* doc/verify.texi, stdalign.in.h, verify.h, m4/gnulib-common.m4:
+	* m4/stdalign.m4, modules/assert-h, modules/snippet/_Noreturn:
+	* modules/stdalign:
+	Replace references to draft C1X to C11, and to draft C++0X to C++11.
+
 2012-01-06  Bruno Haible  <bruno@clisp.org>
 
 	uc-is-grapheme-break tests: Tweak.
