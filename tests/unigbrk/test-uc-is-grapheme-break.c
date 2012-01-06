@@ -109,7 +109,7 @@ main (int argc, char *argv[])
             }
           else
             {
-              fprintf (stderr, "%s:%d.%d: syntax error expecting '÷' or '÷'\n",
+              fprintf (stderr, "%s:%d.%d: syntax error expecting '÷' or '×'\n",
                        filename, lineno, (int) (p - line + 1));
               exit (1);
             }
