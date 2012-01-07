@@ -1,3 +1,36 @@
+2012-01-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	quotearg: do not use grave accent for left quote
+	* lib/quotearg.c (gettext_quote): Map "`" to "'" for
+	locale_quoting_style.
+	(quotearg_buffer_restyled): Fix example.
+	* tests/test-quotearg-simple.c (results_g): Adjust test vectors.
+
+2012-01-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	quotearg: fall back to Unicode single quotes in UTF-8, GB-18030 locales
+	Most programs do not have translation catalogs for English and much
+	less separate catalogs for British and American English.  Drop the
+	suggestion to translators about these two, and provide it
+	automatically for Unicode locales.  Like most programs, even those
+	using American English, we use single quotation marks.  This conflicts
+	with the American typographic convention, but works better when you
+	cite the entire error message within double quotes.  It also tries not
+	to clash with established practice and with what non-gnulib programs
+	will usually do.
+	* lib/quotearg.c (gettext_quote): Hard-code U+2018 and U+2019 when
+	using an UTF-8 or GB-18030 locale.  The list of other locales with
+	quotes was provided by Bruno Haible.
+	(quotearg_buffer_restyled): Adjust instructions to translators.
+	* lib/quotearg.h (locale_quoting_style): Do not put an example in the
+	text, since this would be wrong when using Unicode.
+	* modules/quotearg: Depend on c-strcaseeq.
+
+2012-01-07  Paolo Bonzini  <bonzini@gnu.org>
+
+	quotearg: fix Wikipedia link
+	* lib/quotearg.c (quotearg_buffer_restyled): Fix link to Wikipedia.
+
 2012-01-07  Simon Josefsson  <simon@josefsson.org>
 
 	Fix for mingw with MSVC9.

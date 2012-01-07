@@ -3,7 +3,7 @@ Important notes
 
 Date        Modules         Changes
 
-2011-12-20  quotearg        In the C locale, the function will no longer use
+2012-01-07  quotearg        In the C locale, the function will no longer use
                             the grave accent character to begin a quoted
                             string (`like this').  It will use apostrophes
                             'like these' or, in Unicode locales, single quotes
