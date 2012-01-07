@@ -2,7 +2,7 @@
 @section @code{_Exit}
 @findex _Exit
 @c This file would ideally be called _Exit.texi, but then it would collide
-@c with _exit.texi on case-insensitive file systems (MacOS X HFS+ and Woe32
+@c with _exit.texi on case-insensitive file systems (MacOS X HFS+ and Windows
 @c file systems).
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/_Exit.html}

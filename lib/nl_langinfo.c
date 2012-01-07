@@ -141,7 +141,8 @@ nl_langinfo (nl_item item)
       {
         static char buf[2 + 10 + 1];
 
-        /* Woe32 has a function returning the locale's codepage as a number.  */
+        /* The Windows API has a function returning the locale's codepage as
+           a number.  */
         sprintf (buf, "CP%u", GetACP ());
         return buf;
       }

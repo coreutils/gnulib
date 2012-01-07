@@ -91,7 +91,7 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 int
 __spawni (pid_t *pid, const char *file,
           const posix_spawn_file_actions_t *file_actions,

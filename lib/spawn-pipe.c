@@ -37,7 +37,7 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 # include <process.h>
 # include "w32spawn.h"
 
@@ -114,7 +114,7 @@ create_pipe (const char *progname,
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-  /* Native Woe32 API.
+  /* Native Windows API.
      This uses _pipe(), dup2(), and spawnv().  It could also be implemented
      using the low-level functions CreatePipe(), DuplicateHandle(),
      CreateProcess() and _open_osfhandle(); see the GNU make and GNU clisp

@@ -112,7 +112,7 @@ static int executable_fd = -1;
 static bool
 maybe_executable (const char *filename)
 {
-  /* Woe32 lacks the access() function.  */
+  /* The native Windows API lacks the access() function.  */
 #if !defined WINDOWS_NATIVE
   if (access (filename, X_OK) < 0)
     return false;
@@ -143,8 +143,8 @@ maybe_executable (const char *filename)
 
 /* Determine the full pathname of the current executable, freshly allocated.
    Return NULL if unknown.
-   Guaranteed to work on Linux and Woe32.  Likely to work on the other
-   Unixes (maybe except BeOS), under most conditions.  */
+   Guaranteed to work on Linux and native Windows.  Likely to work on the
+   other Unixes (maybe except BeOS), under most conditions.  */
 static char *
 find_executable (const char *argv0)
 {

@@ -37,7 +37,7 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 # include <process.h>
 # include "w32spawn.h"
 
@@ -106,7 +106,7 @@ execute (const char *progname,
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
-  /* Native Woe32 API.  */
+  /* Native Windows API.  */
   int orig_stdin;
   int orig_stdout;
   int orig_stderr;

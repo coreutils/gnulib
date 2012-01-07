@@ -32,7 +32,7 @@
    also does not have the POSIX sigaction() function, only the
    signal() function.  We also assume signal() has SysV semantics,
    where any handler is uninstalled prior to being invoked.  This is
-   true for Woe32 platforms.  */
+   true for native Windows platforms.  */
 
 /* We use raw signal(), but also provide a wrapper rpl_signal() so
    that applications can query or change a blocked signal.  */

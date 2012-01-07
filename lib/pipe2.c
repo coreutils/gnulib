@@ -31,7 +31,7 @@
 #endif
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
 # include <io.h>
 
@@ -75,7 +75,7 @@ pipe2 (int fd[2], int flags)
     }
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
   if (_pipe (fd, 4096, flags & ~O_NONBLOCK) < 0)
     {

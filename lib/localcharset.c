@@ -407,10 +407,10 @@ locale_charset (void)
             }
         }
 
-      /* Woe32 has a function returning the locale's codepage as a number:
-         GetACP().  This encoding is used by Cygwin, unless the user has set
-         the environment variable CYGWIN=codepage:oem (which very few people
-         do).
+      /* The Windows API has a function returning the locale's codepage as a
+         number: GetACP().  This encoding is used by Cygwin, unless the user
+         has set the environment variable CYGWIN=codepage:oem (which very few
+         people do).
          Output directed to console windows needs to be converted (to
          GetOEMCP() if the console is using a raster font, or to
          GetConsoleOutputCP() if it is using a TrueType font).  Cygwin does
@@ -457,8 +457,8 @@ locale_charset (void)
 
   static char buf[2 + 10 + 1];
 
-  /* Woe32 has a function returning the locale's codepage as a number:
-     GetACP().
+  /* The Windows API has a function returning the locale's codepage as a
+     number: GetACP().
      When the output goes to a console window, it needs to be provided in
      GetOEMCP() encoding if the console is using a raster font, or in
      GetConsoleOutputCP() encoding if it is using a TrueType font.

@@ -96,7 +96,7 @@ static inline void filter_cleanup (struct pipe_filter_gi *filter,
 
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
 static unsigned int WINAPI
 reader_thread_func (void *thread_arg)

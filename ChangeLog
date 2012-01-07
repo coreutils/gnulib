@@ -1,3 +1,33 @@
+2012-01-06  Bruno Haible  <bruno@clisp.org>
+
+	Talk about "native Windows API", not "Woe32".
+	* lib/accept4.c: Update comments to mention native Windows.
+	* lib/execute.c: Likewise.
+	* lib/fatal-signal.c: Likewise.
+	* lib/localcharset.c: Likewise.
+	* lib/nanosleep.c: Likewise.
+	* lib/nl_langinfo.c: Likewise.
+	* lib/pclose.c: Likewise.
+	* lib/pipe-filter-gi.c: Likewise.
+	* lib/pipe-filter-ii.c: Likewise.
+	* lib/pipe.c: Likewise.
+	* lib/pipe2.c: Likewise.
+	* lib/popen.c: Likewise.
+	* lib/progreloc.c: Likewise.
+	* lib/relocatable.c: Likewise.
+	* lib/sigaction.c: Likewise.
+	* lib/sigprocmask.c: Likewise.
+	* lib/spawn-pipe.h: Likewise.
+	* lib/spawn-pipe.c: Likewise.
+	* lib/spawni.c: Likewise.
+	* lib/stat-time.h: Likewise.
+	* lib/w32spawn.h: Likewise.
+	* tests/test-isatty.c: Likewise.
+	* lib/config.charset: More comments.
+	* doc/gnulib-intro.texi: Mention native Windows.
+	* doc/posix-functions/_Exit_C99.texi: Likewise.
+	* doc/posix-headers/fcntl.texi: Likewise.
+
 2012-01-06  Guillem Jover  <guillem@hadrons.org>  (tiny change)
 
 	argp: Avoid crash if translator uses % characters in a translation.

@@ -1,4 +1,4 @@
-/* Auxiliary functions for the creation of subprocesses.  Native Woe32 API.
+/* Auxiliary functions for the creation of subprocesses.  Native Windows API.
    Copyright (C) 2001, 2003-2012 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2003.
 

@@ -84,7 +84,7 @@ rpl_popen (const char *filename, const char *mode)
 }
 
 #else
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
 # include <string.h>
 

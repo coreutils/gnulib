@@ -394,7 +394,7 @@ find_shared_library_fullname ()
 
 /* Return the full pathname of the current shared library.
    Return NULL if unknown.
-   Guaranteed to work only on Linux, Cygwin and Woe32.  */
+   Guaranteed to work only on Linux, Cygwin, and native Windows.  */
 static char *
 get_shared_library_fullname ()
 {

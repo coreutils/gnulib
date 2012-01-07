@@ -24,7 +24,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/* This implementation of sigaction is tailored to Woe32 behavior:
+/* This implementation of sigaction is tailored to native Windows behavior:
    signal() has SysV semantics (ie. the handler is uninstalled before
    it is invoked).  This is an inherent data race if an asynchronous
    signal is sent twice in a row before we can reinstall our handler,

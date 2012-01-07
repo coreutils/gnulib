@@ -304,8 +304,8 @@ against the out-of-memory condition.
 Examples are a module for copying a file --- the portability problems
 relate to the copying of the file's modification time, access rights,
 and extended attributes --- or a module for extracting the tail
-component of a file name --- here the portability to Woe32 requires a
-different API than the classical POSIX @code{basename} function.
+component of a file name --- here the portability to native Windows
+requires a different API than the classical POSIX @code{basename} function.
 
 @subsection Reusable application code
 

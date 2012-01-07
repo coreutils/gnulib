@@ -16,7 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* written by Jim Meyering
-   and Bruno Haible for the Woe32 part */
+   and Bruno Haible for the native Windows part */
 
 #include <config.h>
 

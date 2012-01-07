@@ -155,7 +155,7 @@ pipe_filter_ii_execute (const char *progname,
     return -1;
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  /* Native Woe32 API.  */
+  /* Native Windows API.  */
   /* Pipes have a non-blocking mode, see function SetNamedPipeHandleState and
      the article "Named Pipe Type, Read, and Wait Modes", but Microsoft's
      documentation discourages its use.  So don't use it.

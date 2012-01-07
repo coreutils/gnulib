@@ -41,8 +41,8 @@ Cygwin.
 
 @item
 @samp{O_BINARY}, @samp{O_TEXT} (not specified by POSIX, but essential for
-portability to Woe32 platforms) are defined on some platforms but not on
-others.
+portability to native Windows platforms) are defined on some platforms but
+not on others.
 
 @item
 @samp{O_DIRECT}, @samp{O_NDELAY}, @samp{O_NOATIME},

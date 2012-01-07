@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <stdio.h>
 
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
 int
 pclose (FILE *stream)

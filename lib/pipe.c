@@ -21,7 +21,7 @@
 #include <unistd.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
+/* Native Windows API.  */
 
 /* Get _pipe().  */
 # include <io.h>

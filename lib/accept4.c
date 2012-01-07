@@ -67,7 +67,7 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 
 #if SOCK_CLOEXEC
 # if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-/* Native Woe32 API.  */
+/* Native Windows API.  */
   if (flags & SOCK_CLOEXEC)
     {
       HANDLE curr_process = GetCurrentProcess ();
