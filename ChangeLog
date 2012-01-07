@@ -1,3 +1,10 @@
+2012-01-07  Simon Josefsson  <simon@josefsson.org>
+
+	Fix for mingw with MSVC9.
+	* m4/ld-version-script.m4: Check that compiler rejects version
+	scripts with syntax errors.  Reported by Bruno Haible
+	<bruno@clisp.org>.
+
 2012-01-06  Bruno Haible  <bruno@clisp.org>
 
 	Talk about "native Windows API", not "Woe32".
