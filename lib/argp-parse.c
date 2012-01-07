@@ -154,8 +154,9 @@ argp_version_parser (int key, char *arg, struct argp_state *state)
       else if (argp_program_version)
         fprintf (state->out_stream, "%s\n", argp_program_version);
       else
-        __argp_error (state, dgettext (state->root_argp->argp_domain,
-                                       "(PROGRAM ERROR) No version known!?"));
+        __argp_error (state, "%s",
+                      dgettext (state->root_argp->argp_domain,
+                                "(PROGRAM ERROR) No version known!?"));
       if (! (state->flags & ARGP_NO_EXIT))
         exit (0);
       break;

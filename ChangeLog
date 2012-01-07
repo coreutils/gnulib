@@ -1,3 +1,9 @@
+2012-01-06  Guillem Jover  <guillem@hadrons.org>  (tiny change)
+
+	argp: Avoid crash if translator uses % characters in a translation.
+	* lib/argp-parse.c (argp_version_parser): Use a "%s" format string.
+	Reported by Mats Erik Andersson <gnu@gisladisker.se>.
+
 2012-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: C11 and C++11 are now official
