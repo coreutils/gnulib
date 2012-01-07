@@ -30,16 +30,16 @@ scriptversion=2010-02-06.18; # UTC
 
 case $1 in
   '')
-     echo "$0: No files.  Try \`$0 --help' for more information." 1>&2
+     echo "$0: No files.  Try '$0 --help' for more information." 1>&2
      exit 1;
      ;;
   -h | --h*)
     cat <<\EOF
 Usage: elisp-comp [--help] [--version] FILES...
 
-This script byte-compiles all `.el' files listed as FILES using GNU
-Emacs, and put the resulting `.elc' files into the current directory,
-so disregarding the original directories used in `.el' arguments.
+This script byte-compiles all '.el' files listed as FILES using GNU
+Emacs, and put the resulting '.elc' files into the current directory,
+so disregarding the original directories used in '.el' arguments.
 
 This script manages in such a way that all Emacs LISP files to
 be compiled are made visible between themselves, in the event

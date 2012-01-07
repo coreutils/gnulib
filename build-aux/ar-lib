@@ -98,7 +98,7 @@ func_at_file ()
 
 case $1 in
   '')
-     func_error "no command.  Try \`$0 --help' for more information."
+     func_error "no command.  Try '$0 --help' for more information."
      ;;
   -h | --h*)
     cat <<EOF

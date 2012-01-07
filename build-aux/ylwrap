@@ -32,7 +32,7 @@ scriptversion=2011-08-25.18; # UTC
 
 case "$1" in
   '')
-    echo "$0: No files given.  Try \`$0 --help' for more information." 1>&2
+    echo "$0: No files given.  Try '$0 --help' for more information." 1>&2
     exit 1
     ;;
   --basedir)
@@ -129,7 +129,7 @@ if test $ret -eq 0; then
   # The directory holding the input.
   input_dir=`echo "$input" | sed -e 's,\([\\/]\)[^\\/]*$,\1,'`
   # Quote $INPUT_DIR so we can use it in a regexp.
-  # FIXME: really we should care about more than `.' and `\'.
+  # FIXME: really we should care about more than '.' and '\'.
   input_rx=`echo "$input_dir" | sed 's,\\\\,\\\\\\\\,g;s,\\.,\\\\.,g'`
 
   while test "$#" -ne 0; do
@@ -146,7 +146,7 @@ if test $ret -eq 0; then
     fi
     if test -f "$from"; then
       # If $2 is an absolute path name, then just use that,
-      # otherwise prepend `../'.
+      # otherwise prepend '../'.
       case "$2" in
         [\\/]* | ?:[\\/]*) target="$2";;
         *) target="../$2";;
@@ -162,7 +162,7 @@ if test $ret -eq 0; then
         realtarget="$target"
         target="tmp-`echo $target | sed s/.*[\\/]//g`"
       fi
-      # Edit out `#line' or `#' directives.
+      # Edit out '#line' or '#' directives.
       #
       # We don't want the resulting debug information to point at
       # an absolute srcdir; it is better for it to just mention the
