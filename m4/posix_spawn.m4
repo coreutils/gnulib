@@ -441,3 +441,44 @@ int main ()
     esac
   fi
 ])
+
+AC_DEFUN([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2],
+[
+  AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  gl_POSIX_SPAWN
+  if test $REPLACE_POSIX_SPAWN = 1; then
+    REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1
+  else
+    dnl On Solaris 11 2011-11, posix_spawn_file_actions_adddup2 succeeds even
+    dnl if the fd argument is out of range.
+    AC_CACHE_CHECK([whether posix_spawn_file_actions_adddup2 works],
+      [gl_cv_func_posix_spawn_file_actions_adddup2_works],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+#include <spawn.h>
+int main ()
+{
+  posix_spawn_file_actions_t actions;
+  if (posix_spawn_file_actions_init (&actions) != 0)
+    return 1;
+  if (posix_spawn_file_actions_adddup2 (&actions, 10000000, 2) == 0)
+    return 2;
+  return 0;
+}]])],
+         [gl_cv_func_posix_spawn_file_actions_adddup2_works=yes],
+         [gl_cv_func_posix_spawn_file_actions_adddup2_works=no],
+         [# Guess no on Solaris, yes otherwise.
+          case "$host_os" in
+            solaris*) gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
+            *)        gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing yes";;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_posix_spawn_file_actions_adddup2_works" in
+      *yes) ;;
+      *) REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2=1 ;;
+    esac
+  fi
+])

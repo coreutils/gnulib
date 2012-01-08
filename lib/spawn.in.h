@@ -844,7 +844,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addclose,
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'dup2' for the given file descriptors during the 'spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_adddup2 rpl_posix_spawn_file_actions_adddup2
 #  endif
