@@ -1,3 +1,10 @@
+2012-01-08  Simon Josefsson  <simon@josefsson.org>
+
+	Add lgpl-3.0 module.
+	* MODULES.html.sh (Support for building documentation): Add
+	lgpl-3.0.
+	* modules/lgpl-3.0: New file.
+
 2012-01-08  Jim Meyering  <meyering@redhat.com>
 
 	select.c: indent with spaces, not TABs

@@ -3504,6 +3504,7 @@ func_all_modules ()
   func_module gpl-2.0
   func_module gpl-3.0
   func_module lgpl-2.1
+  func_module lgpl-3.0
   func_module pmccabe2html
   func_module regexprops-generic
   func_end_table
