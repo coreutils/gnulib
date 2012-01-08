@@ -1,5 +1,26 @@
 2012-01-08  Bruno Haible  <bruno@clisp.org>
 
+	posix_spawn_file_actions_addclose: Work around Solaris 11 2011-11 bug.
+	* m4/spawn_h.m4 (gl_SPAWN_H_DEFAULTS): Initialize
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE.
+	* m4/posix_spawn.m4 (gl_POSIX_SPAWN_BODY): Define
+	HAVE_WORKING_POSIX_SPAWN.
+	(gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE): New macro.
+	* lib/spawn.in.h (posix_spawn_file_actions_addclose): Test
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE, not REPLACE_POSIX_SPAWN.
+	* lib/spawn_faction_addclose.c: Add workaround implementation if
+	HAVE_WORKING_POSIX_SPAWN.
+	* modules/spawn (Makefile): Substitute
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE.
+	* modules/posix_spawn_file_actions_addclose (configure.ac): Invoke
+	gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE. Test
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE, not REPLACE_POSIX_SPAWN.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/posix_spawn_file_actions_addclose.texi: Mention
+	the Solaris 11 bug.
+
+2012-01-08  Bruno Haible  <bruno@clisp.org>
+
 	doc: Update for Solaris 11 2011-11.
 	* doc/*/*.texi: Mention Solaris 11 2011-11 where appropriate.
 	* m4/printf.m4: Update comments.

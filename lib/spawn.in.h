@@ -813,7 +813,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addopen,
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'close' for the given file descriptor during the 'spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_addclose rpl_posix_spawn_file_actions_addclose
 #  endif
