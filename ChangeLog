@@ -1,5 +1,11 @@
 2012-01-08  Bruno Haible  <bruno@clisp.org>
 
+	setlocale tests: Avoid test failure on Solaris 11 2011-11.
+	* tests/test-setlocale2.sh: Use 'env' to set the LC_ALL environment
+	variable.
+
+2012-01-08  Bruno Haible  <bruno@clisp.org>
+
 	posix_spawn_file_actions_addopen: Work around Solaris 11 2011-11 bug.
 	* m4/spawn_h.m4 (gl_SPAWN_H_DEFAULTS): Initialize
 	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN.
