@@ -1,3 +1,8 @@
+2012-01-08  Jim Meyering  <meyering@redhat.com>
+
+	select.c: indent with spaces, not TABs
+	* lib/select.c (windows_poll_handle): Indent with spaces, not TABs.
+
 2012-01-07  Paolo Bonzini  <bonzini@gnu.org>
 
 	quotearg: do not use grave accent for left quote

@@ -102,8 +102,8 @@ IsSocketHandle (HANDLE h)
 
 static int
 windows_poll_handle (HANDLE h, int fd,
-		     struct bitset *rbits,
-		     struct bitset *wbits,
+                     struct bitset *rbits,
+                     struct bitset *wbits,
                      struct bitset *xbits)
 {
   BOOL read, write, except;
