@@ -16,7 +16,7 @@ But the replacement function is not safe to be used in libraries and is not mult
 @item
 This function fails to reject trailing slashes on non-directories on
 some platforms:
-AIX 7.1, Solaris 11 2010-11.
+AIX 7.1, Solaris 11 2011-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

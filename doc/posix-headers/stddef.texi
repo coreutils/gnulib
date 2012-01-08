@@ -21,7 +21,7 @@ Portability problems not fixed by Gnulib:
 @item
 Some platforms provide an @code{offsetof} macro that cannot be used in
 arbitrary expressions:
-Solaris 11 2010-11
+Solaris 11 2011-11
 This problem can be worked around by parenthesizing the
 @code{offsetof} expression in the unlikely case you use it with
 @code{sizeof} or @samp{[]}.

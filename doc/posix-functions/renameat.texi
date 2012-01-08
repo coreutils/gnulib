@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function does not reject trailing slashes on non-directories on
 some platforms, as in @code{renameat(fd,"file",fd,"new/")}:
-Solaris 11 2010-11.
+Solaris 11 2011-11.
 @item
 This function ignores trailing slashes on symlinks on some platforms,
 such that @code{renameat(fd,"link/",fd,"new")} corrupts @file{link}:
@@ -19,7 +19,7 @@ Solaris 9.
 @item
 This function is declared in @code{<unistd.h>} instead of @code{<stdio.h>}
 on some platforms:
-Solaris 11 2010-11.
+Solaris 11 2011-11.
 @item
 This function is missing on some platforms:
 glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,

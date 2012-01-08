@@ -25,7 +25,7 @@ This header file is missing on some platforms:
 mingw, MSVC 9.
 @item
 This header file does not declare the @code{ioctl} function on some platforms:
-AIX 5.1, Solaris 11 2010-11.
+AIX 5.1, Solaris 11 2011-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

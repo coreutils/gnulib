@@ -27,7 +27,7 @@ Portability problems fixed by Gnulib module @code{strcasestr}:
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.8, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, Solaris 11 2010-11.
+glibc 2.8, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, Solaris 11 2011-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

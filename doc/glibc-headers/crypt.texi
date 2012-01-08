@@ -40,5 +40,5 @@ HP-UX 11, OSF/1 5.1.
 @item
 The type @code{struct crypt_data} and the functions @code{crypt_r},
 @code{setkey_r}, @code{encrypt_r} are missing on some platforms:
-IRIX 6.5, Solaris 11 2010-11, Cygwin.
+IRIX 6.5, Solaris 11 2011-11, Cygwin.
 @end itemize

@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-MacOS X 10.5, Solaris 11 2010-11, mingw, MSVC 9, Interix 3.5, BeOS.
+MacOS X 10.5, Solaris 11 2011-11, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 This header file is useless because most executables and object files are
 in ELF format on some platforms:

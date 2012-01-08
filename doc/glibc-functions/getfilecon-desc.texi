@@ -5,7 +5,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.5, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, mingw, MSVC 9, Interix 3.5, BeOS.
+MacOS X 10.5, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, mingw, MSVC 9, Interix 3.5, BeOS.
 On those platforms, this module provides a stub that always sets
 @code{errno} to @code{ENOTSUP} and returns @samp{-1}.
 @item

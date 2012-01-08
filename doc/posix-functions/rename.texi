@@ -15,7 +15,7 @@ NetBSD 1.6.
 @item
 This function does not reject trailing slashes on the destination for
 non-directories on some platforms, as in @code{rename("file","new/")}:
-AIX 7.1, Solaris 11 2010-11, Cygwin 1.5.x, mingw, MSVC 9.
+AIX 7.1, Solaris 11 2011-11, Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not reject trailing slashes on symlinks to
 non-directories on some platforms, as in

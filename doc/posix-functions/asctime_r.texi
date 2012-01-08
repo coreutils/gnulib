@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function has an incompatible declaration on some platforms:
-Solaris 11 2010-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+Solaris 11 2011-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @end itemize
 
 Portability problems not fixed by Gnulib:

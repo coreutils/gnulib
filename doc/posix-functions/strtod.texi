@@ -56,7 +56,7 @@ glibc-2.4, AIX 7.1.
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
 NetBSD 5.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
-Solaris 11 2010-11, mingw, MSVC 9.
+Solaris 11 2011-11, mingw, MSVC 9.
 
 @item
 This function returns the wrong end pointer for @samp{0x1p} on some

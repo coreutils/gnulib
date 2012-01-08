@@ -12,7 +12,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-glibc 2.3.2, MacOS X 10.5, FreeBSD 6.4, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+glibc 2.3.2, MacOS X 10.5, FreeBSD 6.4, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 FreeBSD 6.4 has a function of this name in @code{libthr} but not in
 @code{libpthread}, and it also is missing a declaration.

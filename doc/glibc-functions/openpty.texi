@@ -8,7 +8,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11 2010-11.
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11 2011-11.
 @item
 One some systems (at least including Cygwin, Interix, OSF/1 4 and 5,
 and Mac OS X) linking with @code{-lutil} is not required.

@@ -1,4 +1,4 @@
-# printf.m4 serial 47
+# printf.m4 serial 48
 dnl Copyright (C) 2003, 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1545,7 +1545,7 @@ dnl   OpenBSD 3.9, 4.0               .  .  #  #  #  #  .  #  .  #  .  #  .  #  .
 dnl   Cygwin 1.7.0 (2009)            .  .  .  #  .  .  .  ?  .  .  .  .  .  ?  .  .  .  .  .  .
 dnl   Cygwin 1.5.25 (2008)           .  .  .  #  #  .  .  #  .  .  .  .  .  #  .  .  .  .  .  .
 dnl   Cygwin 1.5.19 (2006)           #  .  .  #  #  #  .  #  .  #  .  #  #  #  .  .  .  .  .  .
-dnl   Solaris 11 2010-11             .  .  #  #  #  .  .  #  .  .  .  #  .  .  .  .  .  .  .  .
+dnl   Solaris 11 2011-11             .  .  #  #  #  .  .  #  .  .  .  #  .  .  .  .  .  .  .  .
 dnl   Solaris 10                     .  .  #  #  #  .  .  #  .  .  .  #  #  .  .  .  .  .  .  .
 dnl   Solaris 2.6 ... 9              #  .  #  #  #  #  .  #  .  .  .  #  #  .  .  .  #  .  .  .
 dnl   Solaris 2.5.1                  #  .  #  #  #  #  .  #  .  .  .  #  .  .  #  #  #  #  #  #

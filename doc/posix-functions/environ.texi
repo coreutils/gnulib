@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 POSIX does not require this variable to be declared, and it is indeed not
 declared on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, IRIX 6.5, Solaris 11 2010-11.
+MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, IRIX 6.5, Solaris 11 2011-11.
 @item
 On MacOS X 10, this variable is not declared.  Up to MacOS X 10.4, one can use
 @smallexample

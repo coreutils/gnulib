@@ -12,7 +12,7 @@ AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 2.6, Cygwin, mingw, MSVC 9, Inte
 @item
 This function is declared in @code{<sys/loadavg.h>}, not @code{<stdlib.h>},
 on some platforms:
-Solaris 11 2010-11.
+Solaris 11 2011-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:
