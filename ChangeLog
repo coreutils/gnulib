@@ -1,5 +1,25 @@
 2012-01-08  Bruno Haible  <bruno@clisp.org>
 
+	posix_spawn_file_actions_addopen: Work around Solaris 11 2011-11 bug.
+	* m4/spawn_h.m4 (gl_SPAWN_H_DEFAULTS): Initialize
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN.
+	* m4/posix_spawn.m4 (gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN): New
+	macro.
+	* lib/spawn.in.h (posix_spawn_file_actions_addopen): Test
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN, not REPLACE_POSIX_SPAWN.
+	* lib/spawn_faction_addopen.c: Add workaround implementation if
+	HAVE_WORKING_POSIX_SPAWN.
+	* modules/spawn (Makefile): Substitute
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN.
+	* modules/posix_spawn_file_actions_addopen (configure.ac): Invoke
+	gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN. Test
+	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN, not REPLACE_POSIX_SPAWN.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/posix_spawn_file_actions_addopen.texi: Mention
+	the Solaris 11 bug.
+
+2012-01-08  Bruno Haible  <bruno@clisp.org>
+
 	posix_spawn_file_actions_adddup2: Work around Solaris 11 2011-11 bug.
 	* m4/spawn_h.m4 (gl_SPAWN_H_DEFAULTS): Initialize
 	REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2.

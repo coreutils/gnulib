@@ -774,7 +774,7 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_destroy,
 #if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 /* Add an action to FILE-ACTIONS which tells the implementation to call
    'open' for the given file during the 'spawn' call.  */
-# if @REPLACE_POSIX_SPAWN@
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define posix_spawn_file_actions_addopen rpl_posix_spawn_file_actions_addopen
 #  endif
