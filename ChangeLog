@@ -1,5 +1,10 @@
 2012-01-08  Bruno Haible  <bruno@clisp.org>
 
+	mktime: Avoid compilation error on Solaris 11.
+	* lib/mktime.c (WRAPV): Define to 0 on all non-glibc systems.
+
+2012-01-08  Bruno Haible  <bruno@clisp.org>
+
 	doc: Small fix.
 	* doc/posix-headers/nl_types.texi: Correct platforms list.
 
