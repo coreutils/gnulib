@@ -1,3 +1,13 @@
+2012-01-09  Jim Meyering  <meyering@redhat.com>
+
+	test-init.sh: avoid a subshell
+	* tests/test-init.sh: Remove protective subshell.
+	Suggested by Bernhard Voelker.  While a subshell is normally
+	required to protect against older shells (Solaris, FreeBSD) that
+	warn about a missing program before performing redirection, the
+	shell-selection tests performed by init.sh probably exclude any
+	offending shell.
+
 2012-01-08  Bruno Haible  <bruno@clisp.org>
 
 	setlocale tests: Avoid test failure on Solaris 11 2011-11.
