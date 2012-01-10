@@ -825,17 +825,17 @@ there is no workaround about it.  Such a test is better avoided in a
 release that is made for the general public.
 @end table
 
-@code{gnulib-tool --import} will not include tests marked with these
-attributes by default.  When @code{gnulib-tool} is invoked with one
+@code{gnulib-tool --import --with-tests} will not include tests marked with
+these attributes by default.  When @code{gnulib-tool} is invoked with one
 of the options @code{--with-c++-tests}, @code{--with-longrunning-tests},
 @code{--with-privileged-tests}, @code{--with-unportable-tests}, it
 will include tests despite the corresponding special status attribute.
 When @code{gnulib-tool} receives the option @code{--with-all-tests},
 it will include all tests regardless of their status attributes.
 
-@code{gnulib-tool --create-testdir} and
-@code{gnulib-tool --create-megatestdir} by default include all tests of
-modules specified on the command line, regardless of their status
+@code{gnulib-tool --create-testdir --with-tests} and
+@code{gnulib-tool --create-megatestdir --with-tests} by default include all
+tests of modules specified on the command line, regardless of their status
 attributes.  Tests of modules occurring as dependencies are not included
 by default if they have one of these status attributes.  The options
 @code{--with-c++-tests}, @code{--with-longrunning-tests},

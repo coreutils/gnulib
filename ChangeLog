@@ -1,3 +1,11 @@
+2012-01-10  Bruno Haible  <bruno@clisp.org>
+
+	doc: Mention --with-tests option.
+	* gnulib-tool (func_usage): Suggest --with-tests for --test etc.
+	* doc/gnulib.texi (Extra tests modules): Mention the need to pass
+	--with-tests.
+	Reported by Reuben Thomas.
+
 2012-01-10  Reuben Thomas  <rrt@sc3d.org>
 
 	users.txt: order package names lexicographically.

@@ -164,11 +164,15 @@ Operation modes:
       --update              update the current package, restore files omitted
                             from version control
       --create-testdir      create a scratch package with the given modules
+                            (pass --with-tests to include the unit tests)
       --create-megatestdir  create a mega scratch package with the given modules
                             one by one and all together
+                            (pass --with-tests to include the unit tests)
       --test                test the combination of the given modules
+                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --megatest            test the given modules one by one and all together
+                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
       --extract-comment            extract the comment
