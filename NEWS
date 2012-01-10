@@ -21,6 +21,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2012-01-10  ignore-value    This module no longer provides the ignore_ptr
+                            function.  It was deprecated a year ago, but existed
+                            so briefly before then that it never came into use.
+                            Now, the ignore_value function does its job.
+
 2011-11-18  hash            This module deprecates the hash_insert0 function
                             using gcc's "deprecated" attribute.  Use the better-
                             named hash_insert_if_absent equivalent.

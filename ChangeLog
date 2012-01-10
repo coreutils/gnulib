@@ -1,3 +1,9 @@
+2012-01-10  Jim Meyering  <meyering@redhat.com>
+
+	ignore-value: remove deprecated ignore_ptr function
+	* lib/ignore-value.h (ignore_ptr): Remove deprecated function.
+	* NEWS: Note this.
+
 2012-01-09  Jim Meyering  <meyering@redhat.com>
 
 	test-init.sh: avoid a subshell

@@ -54,9 +54,4 @@
 #  define ignore_value(x) (({ __typeof__ (x) __x = (x); (void) __x; }))
 # endif
 
-/* ignore_value works for scalars, pointers and aggregates;
-   deprecate ignore_ptr.  */
-static inline void _GL_ATTRIBUTE_DEPRECATED
-ignore_ptr (void *p) { (void) p; } /* deprecated: use ignore_value */
-
 #endif
