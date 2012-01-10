@@ -1,3 +1,8 @@
+2012-01-10  Reuben Thomas  <rrt@sc3d.org>
+
+	users.txt: order package names lexicographically.
+	* users.txt: Order package names lexicographically.
+
 2012-01-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: fix description in comment

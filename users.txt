@@ -1,8 +1,5 @@
 The following packages appear to be using gnulib and gnulib-tool:
 
-  CSSC            http://git.savannah.gnu.org/cgit/cssc.git
-  Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
-  OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   acct            http://cvs.sv.gnu.org/viewcvs/acct/acct/
   anubis          http://cvs.sv.gnu.org/viewcvs/anubis/anubis/
   augeas          http://augeas.net/
@@ -12,6 +9,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
   coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git
   cpio            http://cvs.sv.gnu.org/viewcvs/cpio/cpio/
+  CSSC            http://git.savannah.gnu.org/cgit/cssc.git
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   cvsps           http://sourceforge.net/projects/cvsps/
   diffutils       http://git.sv.gnu.org/cgit/diffutils.git/
@@ -66,10 +64,12 @@ The following packages appear to be using gnulib and gnulib-tool:
   msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
   myserver        http://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
   nagios-plugins  http://nagiosplug.git.sourceforge.net/
+  Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   netcf           http://fedorahosted.org/netcf/
   newts           http://svn.arete.cc/newts/trunk/
   OATH Toolkit    http://www.nongnu.org/oath-toolkit/
   octave          http://hg.savannah.gnu.org/hgweb/octave/
+  OPeNDAP         http://scm.opendap.org:8090/svn/trunk/
   parted          http://git.debian.org/?p=parted/parted.git;a=summary
   patch           http://git.sv.gnu.org/gitweb/?p=patch.git
   prelude-lml     https://trac.prelude-ids.org/browser/trunk/prelude-lml/
