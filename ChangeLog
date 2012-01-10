@@ -1,5 +1,8 @@
 2012-01-10  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: fix description in comment
+	* top/maint.mk (require_exactly_one_NL_at_EOF_): Fix comment.
+
 	ignore-value: remove deprecated ignore_ptr function
 	* lib/ignore-value.h (ignore_ptr): Remove deprecated function.
 	* NEWS: Note this.
