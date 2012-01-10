@@ -30,6 +30,7 @@ strcase         [test $ac_use_included_regex = yes]
 wchar           [test $ac_use_included_regex = yes]
 wcrtomb         [test $ac_use_included_regex = yes]
 wctype-h        [test $ac_use_included_regex = yes]
+wctype          [test $ac_use_included_regex = yes]
 
 configure.ac:
 gl_REGEX
