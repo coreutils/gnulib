@@ -1,5 +1,8 @@
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
+	copy-file: Use 'quote' module consistently.
+	* lib/copy-file.c (copy_file_preserving): Use quote().
+
 	copy-file: Refactor.
 	* lib/copy-file.c: Include quote.h.
 	(copy_file_preserving): Call qcopy_acl instead of copy_acl. Emit error
