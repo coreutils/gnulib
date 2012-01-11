@@ -1,3 +1,9 @@
+2012-01-11  Eric Blake  <eblake@redhat.com>
+
+	inet_ntop: silence gcc warning
+	* lib/inet_ntop.c (inet_ntop6): Initialize best.base.
+	Reported by Daniel P. Berrange.
+
 2012-01-11  Dmitry V. Levin  <ldv@altlinux.org>
 
 	getloadavg test: skip the test on GNU/Linux without /proc mounted
