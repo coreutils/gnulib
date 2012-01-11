@@ -1,3 +1,9 @@
+2012-01-10  Bruno Haible  <bruno@clisp.org>
+
+	acl: Align return values of copy_acl and qcopy_acl.
+	* lib/copy-acl.c (copy_acl): Return the same value as qcopy_acl,
+	maybe < -1.
+
 2012-01-11  Eric Blake  <eblake@redhat.com>
 
 	strptime: silence gcc warnings

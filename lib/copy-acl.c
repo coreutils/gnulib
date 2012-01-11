@@ -621,7 +621,8 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
    If access control lists are not available, fchmod the target file to
    MODE.  Also sets the non-permission bits of the destination file
    (S_ISUID, S_ISGID, S_ISVTX) to those from MODE if any are set.
-   Return 0 if successful, otherwise output a diagnostic and return -1.  */
+   Return 0 if successful, otherwise output a diagnostic and return a
+   negative error code.  */
 
 int
 copy_acl (const char *src_name, int source_desc, const char *dst_name,
@@ -632,13 +633,14 @@ copy_acl (const char *src_name, int source_desc, const char *dst_name,
     {
     case -2:
       error (0, errno, "%s", quote (src_name));
-      return -1;
+      break;
 
     case -1:
       error (0, errno, _("preserving permissions for %s"), quote (dst_name));
-      return -1;
+      break;
 
     default:
-      return 0;
+      break;
     }
+  return ret;
 }
