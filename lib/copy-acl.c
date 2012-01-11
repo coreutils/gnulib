@@ -38,7 +38,7 @@
    Return -2 and set errno for an error relating to the source file.
    Return -1 and set errno for an error relating to the destination file.  */
 
-static int
+int
 qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
            int dest_desc, mode_t mode)
 {

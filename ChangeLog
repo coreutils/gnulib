@@ -1,5 +1,9 @@
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
+	acl: Export qcopy_acl.
+	* lib/acl.h (qcopy_acl): New declaration.
+	* lib/copy-acl.c (qcopy_acl): Make non-static.
+
 	acl: Rename a local variable.
 	* lib/set-mode-acl.c (set_acl): Use same variable name as in copy_acl.
 
