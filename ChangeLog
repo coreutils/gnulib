@@ -1,5 +1,10 @@
 2012-01-11  Eric Blake  <eblake@redhat.com>
 
+	strptime: silence gcc warnings
+	* lib/strptime.c (__strptime_internal) [!_NL_CURRENT],
+	[!_LIBC && !HAVE_TM_GMTOFF]: Avoid unused variables.
+	Reported by Daniel P. Berrange.
+
 	inet_ntop: silence gcc warning
 	* lib/inet_ntop.c (inet_ntop6): Initialize best.base.
 	Reported by Daniel P. Berrange.

@@ -240,7 +240,6 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
   struct locale_data *const current = locale->__locales[LC_TIME];
 #endif
 
-  const char *rp_backup;
   int cnt;
   size_t val;
   int have_I, is_pm;
@@ -253,14 +252,14 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
   int week_no;
 #ifdef _NL_CURRENT
   size_t num_eras;
+  struct era_entry *era = NULL;
+  const char *rp_backup;
 #endif
-  struct era_entry *era;
 
   have_I = is_pm = 0;
   century = -1;
   want_century = 0;
   want_era = 0;
-  era = NULL;
   week_no = 0;
 
   have_wday = want_xday = have_yday = have_mon = have_mday = have_uweek = 0;
@@ -290,10 +289,10 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
 #ifndef _NL_CURRENT
       /* We need this for handling the 'E' modifier.  */
     start_over:
-#endif
-
+#else
       /* Make back up of current processing pointer.  */
       rp_backup = rp;
+#endif
 
       switch (*fmt++)
         {
@@ -675,7 +674,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
              specify hours.  If fours digits are used, minutes are
              also specified.  */
           {
+#if defined _LIBC || HAVE_TM_GMTOFF
             bool neg;
+#endif
             int n;
 
             val = 0;
@@ -683,7 +684,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
               ++rp;
             if (*rp != '+' && *rp != '-')
               return NULL;
+#if defined _LIBC || HAVE_TM_GMTOFF
             neg = *rp++ == '-';
+#endif
             n = 0;
             while (n < 4 && *rp >= '0' && *rp <= '9')
               {
