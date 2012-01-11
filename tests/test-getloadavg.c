@@ -60,7 +60,7 @@ main (int argc, char **argv)
       int loads = getloadavg (avg, 3);
       if (loads == -1)
         {
-          if (! (errno == ENOSYS || errno == ENOTSUP))
+          if (! (errno == ENOSYS || errno == ENOTSUP || errno == ENOENT))
             return 1;
           perror ("Skipping test; load average not supported");
           return 77;

@@ -1,3 +1,11 @@
+2012-01-11  Dmitry V. Levin  <ldv@altlinux.org>
+
+	getloadavg test: skip the test on GNU/Linux without /proc mounted
+	GNU libc implements getloadavg(3) on Linux by parsing /proc/loadavg
+	file.  When /proc is not mounted, it always fails with ENOENT.
+	* tests/test-getloadavg.c (main): Treat ENOENT return code from
+	getloadavg(3) the same way as ENOSYS and ENOTSUP.
+
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
 	regex: Avoid link error on MSVC 9.
