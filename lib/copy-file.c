@@ -41,6 +41,7 @@
 #include "full-write.h"
 #include "acl.h"
 #include "binary-io.h"
+#include "quote.h"
 #include "gettext.h"
 #include "xalloc.h"
 
@@ -122,8 +123,14 @@ copy_file_preserving (const char *src_filename, const char *dest_filename)
 
   /* Preserve the access permissions.  */
 #if USE_ACL
-  if (copy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
-    exit (EXIT_FAILURE);
+  switch (qcopy_acl (src_filename, src_fd, dest_filename, dest_fd, mode))
+    {
+    case -2:
+      error (EXIT_FAILURE, errno, "%s", quote (src_filename));
+    case -1:
+      error (EXIT_FAILURE, errno, _("preserving permissions for %s"),
+             quote (dest_filename));
+    }
 #else
   chmod (dest_filename, mode);
 #endif

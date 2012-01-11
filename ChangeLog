@@ -1,5 +1,11 @@
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
+	copy-file: Refactor.
+	* lib/copy-file.c: Include quote.h.
+	(copy_file_preserving): Call qcopy_acl instead of copy_acl. Emit error
+	message here.
+	* modules/copy-file (Depends-on): Add quote.
+
 	acl: Export qcopy_acl.
 	* lib/acl.h (qcopy_acl): New declaration.
 	* lib/copy-acl.c (qcopy_acl): Make non-static.
