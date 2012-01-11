@@ -677,8 +677,8 @@ qset_acl (char const *name, int desc, mode_t mode)
 int
 set_acl (char const *name, int desc, mode_t mode)
 {
-  int r = qset_acl (name, desc, mode);
-  if (r != 0)
+  int ret = qset_acl (name, desc, mode);
+  if (ret != 0)
     error (0, errno, _("setting permissions for %s"), quote (name));
-  return r;
+  return ret;
 }

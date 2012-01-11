@@ -1,5 +1,8 @@
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
+	acl: Rename a local variable.
+	* lib/set-mode-acl.c (set_acl): Use same variable name as in copy_acl.
+
 	acl: Align return values of copy_acl and qcopy_acl.
 	* lib/copy-acl.c (copy_acl): Return the same value as qcopy_acl,
 	maybe < -1.
