@@ -57,10 +57,12 @@
    below.  */
 #define _GL_ARG_NONNULL(params)
 
+/* Specification.  */
+#include <stdlib.h>
+
 #include <errno.h>
 #include <limits.h>
 #include <stddef.h>
-#include <stdlib.h>
 #include <stdint.h>
 
 

@@ -1,5 +1,8 @@
 2012-01-12  Bruno Haible  <bruno@clisp.org>
 
+	random_r: Use common idioms.
+	* lib/random_r.c: Include <stdlib.h> first.
+
 	random_r: Override incompatible API on AIX, OSF/1.
 	* lib/stdlib.in.h (random_r, srandom_r, initstate_r, setstate_r):
 	Override the system function if REPLACE_RANDOM_R is 1.
