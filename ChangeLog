@@ -1,5 +1,10 @@
 2012-01-12  Eric Blake  <eblake@redhat.com>
 
+	inet_ntop: guard extra work by IF_LINT
+	* lib/inet_ntop.c (inet_ntop6): Mark spurious initialization, for
+	better code generation when not checking for warnings.
+	Suggested by Paul Eggert and Jim Meyering.
+
 	strptime: fix regression on mingw
 	* lib/strptime.c (__strptime_internal) [!_LIBC && !HAVE_TM_GMTOFF]:
 	Fix regression.  Reported by Bruno Haible.
