@@ -1,5 +1,17 @@
 2012-01-12  Bruno Haible  <bruno@clisp.org>
 
+	random_r: Override incompatible API on AIX, OSF/1.
+	* lib/stdlib.in.h (random_r, srandom_r, initstate_r, setstate_r):
+	Override the system function if REPLACE_RANDOM_R is 1.
+	* m4/random_r.m4 (gl_FUNC_RANDOM_R): Require AC_CANONICAL_HOST. On AIX
+	and OSF/1, set REPLACE_RANDOM_R.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Initialize REPLACE_RANDOM_R.
+	* modules/stdlib (Makefile.am): Substitute REPLACE_RANDOM_R.
+	* modules/random_r (configure.ac): Test REPLACE_RANDOM_R.
+	* doc/glibc-functions/initstate_r.texi: Mention the AIX, OSF/1 problem.
+	* doc/glibc-functions/random_r.texi: Likewise.
+	* doc/glibc-functions/setstate_r.texi: Likewise.
+
 	random_r: Support for MSVC 9.
 	* lib/random_r.c: Include stdint.h, not inttypes.h.
 

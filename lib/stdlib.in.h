@@ -58,7 +58,7 @@
 #  include <random.h>
 # endif
 
-# if !@HAVE_STRUCT_RANDOM_DATA@ || !@HAVE_RANDOM_R@
+# if !@HAVE_STRUCT_RANDOM_DATA@ || @REPLACE_RANDOM_R@ || !@HAVE_RANDOM_R@
 #  include <stdint.h>
 # endif
 
@@ -505,11 +505,21 @@ _GL_CXXALIASWARN (putenv);
 #endif
 
 #if @GNULIB_RANDOM_R@
-# if !@HAVE_RANDOM_R@
+# if @REPLACE_RANDOM_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef random_r
+#   define random_r rpl_random_r
+#  endif
+_GL_FUNCDECL_RPL (random_r, int, (struct random_data *buf, int32_t *result)
+                                 _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (random_r, int, (struct random_data *buf, int32_t *result));
+# else
+#  if !@HAVE_RANDOM_R@
 _GL_FUNCDECL_SYS (random_r, int, (struct random_data *buf, int32_t *result)
                                  _GL_ARG_NONNULL ((1, 2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (random_r, int, (struct random_data *buf, int32_t *result));
+# endif
 _GL_CXXALIASWARN (random_r);
 #elif defined GNULIB_POSIXCHECK
 # undef random_r
@@ -520,13 +530,25 @@ _GL_WARN_ON_USE (random_r, "random_r is unportable - "
 #endif
 
 #if @GNULIB_RANDOM_R@
-# if !@HAVE_RANDOM_R@
+# if @REPLACE_RANDOM_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef srandom_r
+#   define srandom_r rpl_srandom_r
+#  endif
+_GL_FUNCDECL_RPL (srandom_r, int,
+                  (unsigned int seed, struct random_data *rand_state)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (srandom_r, int,
+                  (unsigned int seed, struct random_data *rand_state));
+# else
+#  if !@HAVE_RANDOM_R@
 _GL_FUNCDECL_SYS (srandom_r, int,
                   (unsigned int seed, struct random_data *rand_state)
                   _GL_ARG_NONNULL ((2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (srandom_r, int,
                   (unsigned int seed, struct random_data *rand_state));
+# endif
 _GL_CXXALIASWARN (srandom_r);
 #elif defined GNULIB_POSIXCHECK
 # undef srandom_r
@@ -537,15 +559,29 @@ _GL_WARN_ON_USE (srandom_r, "srandom_r is unportable - "
 #endif
 
 #if @GNULIB_RANDOM_R@
-# if !@HAVE_RANDOM_R@
+# if @REPLACE_RANDOM_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef initstate_r
+#   define initstate_r rpl_initstate_r
+#  endif
+_GL_FUNCDECL_RPL (initstate_r, int,
+                  (unsigned int seed, char *buf, size_t buf_size,
+                   struct random_data *rand_state)
+                  _GL_ARG_NONNULL ((2, 4)));
+_GL_CXXALIAS_RPL (initstate_r, int,
+                  (unsigned int seed, char *buf, size_t buf_size,
+                   struct random_data *rand_state));
+# else
+#  if !@HAVE_RANDOM_R@
 _GL_FUNCDECL_SYS (initstate_r, int,
                   (unsigned int seed, char *buf, size_t buf_size,
                    struct random_data *rand_state)
                   _GL_ARG_NONNULL ((2, 4)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (initstate_r, int,
                   (unsigned int seed, char *buf, size_t buf_size,
                    struct random_data *rand_state));
+# endif
 _GL_CXXALIASWARN (initstate_r);
 #elif defined GNULIB_POSIXCHECK
 # undef initstate_r
@@ -556,13 +592,25 @@ _GL_WARN_ON_USE (initstate_r, "initstate_r is unportable - "
 #endif
 
 #if @GNULIB_RANDOM_R@
-# if !@HAVE_RANDOM_R@
+# if @REPLACE_RANDOM_R@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef setstate_r
+#   define setstate_r rpl_setstate_r
+#  endif
+_GL_FUNCDECL_RPL (setstate_r, int,
+                  (char *arg_state, struct random_data *rand_state)
+                  _GL_ARG_NONNULL ((1, 2)));
+_GL_CXXALIAS_RPL (setstate_r, int,
+                  (char *arg_state, struct random_data *rand_state));
+# else
+#  if !@HAVE_RANDOM_R@
 _GL_FUNCDECL_SYS (setstate_r, int,
                   (char *arg_state, struct random_data *rand_state)
                   _GL_ARG_NONNULL ((1, 2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (setstate_r, int,
                   (char *arg_state, struct random_data *rand_state));
+# endif
 _GL_CXXALIASWARN (setstate_r);
 #elif defined GNULIB_POSIXCHECK
 # undef setstate_r
