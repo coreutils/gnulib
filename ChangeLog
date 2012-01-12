@@ -1,3 +1,20 @@
+2012-01-11  Reuben Thomas  <rrt@sc3d.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	copy-file: add error-code-returning variant.
+	* lib/copy-file.h (GL_COPY_ERR_*): New enumeration items.
+	(qcopy_file_preserving): New declaration.
+	* lib/copy-file.c (qcopy_file_preserving): Renamed from
+	copy_file_preserving. Change return type to 'int'. Don't emit an error
+	message here.
+	(copy_file_preserving): New function.
+	* tests/test-copy-file.c: Include <stdlib.h>.
+	(main): Test qcopy_file_preserving if the environment variable
+	NO_STDERR_OUTPUT is set.
+	* tests/test-copy-file-1.sh: Invoke test-copy-file.sh a second time,
+	with NO_STDERR_OUTPUT
+	* tests/test-copy-file-2.sh: Likewise.
+
 2012-01-10  Bruno Haible  <bruno@clisp.org>
 
 	copy-file: Use 'quote' module consistently.

@@ -6,4 +6,11 @@
 TMPDIR=`pwd`
 export TMPDIR
 
-exec "${srcdir}/test-copy-file.sh"
+"${srcdir}/test-copy-file.sh"
+ret1=$?
+NO_STDERR_OUTPUT=1 "${srcdir}/test-copy-file.sh"
+ret2=$?
+case $ret1 in
+  77 ) exit $ret2 ;;
+  * ) exit $ret1 ;;
+esac
