@@ -674,9 +674,7 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
              specify hours.  If fours digits are used, minutes are
              also specified.  */
           {
-#if defined _LIBC || HAVE_TM_GMTOFF
-            bool neg;
-#endif
+            bool neg _GL_UNUSED;
             int n;
 
             val = 0;
@@ -684,9 +682,7 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
               ++rp;
             if (*rp != '+' && *rp != '-')
               return NULL;
-#if defined _LIBC || HAVE_TM_GMTOFF
             neg = *rp++ == '-';
-#endif
             n = 0;
             while (n < 4 && *rp >= '0' && *rp <= '9')
               {
