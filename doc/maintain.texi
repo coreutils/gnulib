@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 23, 2011
+@set lastupdate January 12, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,7 +24,7 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011 Free Software Foundation, Inc.
+2010, 2011, 2012 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -57,7 +57,7 @@ Texts.  A copy of the license is included in the section entitled
 @menu
 * Preface::
 * Getting Help::
-* Getting a GNU Account::
+* GNU Accounts and Resources::
 * Stepping Down::
 * Recruiting Developers::
 * Legal Matters::
@@ -161,10 +161,12 @@ hardware.  You can email them at @email{sysadmin@@fsf.org}, but please
 try not to burden them unnecessarily.
 
 
-@node Getting a GNU Account
-@chapter Getting a GNU Account
+@node GNU Accounts and Resources
+@chapter GNU Accounts and Resources
 @cindex shell account, on fencepost
-@cindex @code{fencepost.gnu.org} GNU machine
+@cindex @code{fencepost.gnu.org} GNU login host
+@cindex resources for GNU developers
+@cindex development resources
 
 @c We want to repeat this text later, so define a macro.
 @macro gdgnuorgtext
@@ -178,6 +180,28 @@ the package.
 @end macro
 
 @gdgnuorgtext{}
+
+Other resources available to GNU maintainers are described at
+@url{http://www.gnu.org/software/devel.html}, as well as throughout
+this document.  In brief:
+
+@itemize @bullet
+@item Login accounts (see above).
+
+@item Version control (@pxref{Old Versions}).
+
+@item Mailing lists (@pxref{Mail}).
+
+@item Web pages (@pxref{Web Pages}).
+
+@item Mirrored release areas (@pxref{Distributions}).
+
+@cindex Hydra
+@cindex @code{platform-testers} mailing list
+@item Pre-release portability testing, both automated (via Hydra) and
+on request (via volunteers).
+
+@end itemize
 
 
 @node Stepping Down
@@ -1117,8 +1141,8 @@ default configuration for antispam purposes (see below).
 To create and maintain simple aliases and unmanaged lists, you can
 edit @file{/com/mailer/aliases} on the main GNU server.  If you don't
 have an account there, please read
-@url{http://www.gnu.org/software/README.accounts.html} (@pxref{Getting
-a GNU Account}).
+@url{http://www.gnu.org/software/README.accounts.html} (@pxref{GNU
+Accounts and Resources}).
 
 But if you don't want to learn how to do those things, you can
 alternatively ask @email{alias-file@@gnu.org} to add you to the
