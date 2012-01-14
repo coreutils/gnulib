@@ -504,6 +504,67 @@ _GL_CXXALIASWARN (putenv);
 # endif
 #endif
 
+
+#if @GNULIB_RANDOM@
+# if !@HAVE_RANDOM@
+_GL_FUNCDECL_SYS (random, long, (void));
+# endif
+_GL_CXXALIAS_SYS (random, long, (void));
+_GL_CXXALIASWARN (random);
+#elif defined GNULIB_POSIXCHECK
+# undef random
+# if HAVE_RAW_DECL_RANDOM
+_GL_WARN_ON_USE (random, "random is unportable - "
+                 "use gnulib module random for portability");
+# endif
+#endif
+
+#if @GNULIB_RANDOM@
+# if !@HAVE_RANDOM@
+_GL_FUNCDECL_SYS (srandom, void, (unsigned int seed));
+# endif
+_GL_CXXALIAS_SYS (srandom, void, (unsigned int seed));
+_GL_CXXALIASWARN (srandom);
+#elif defined GNULIB_POSIXCHECK
+# undef srandom
+# if HAVE_RAW_DECL_SRANDOM
+_GL_WARN_ON_USE (srandom, "srandom is unportable - "
+                 "use gnulib module random for portability");
+# endif
+#endif
+
+#if @GNULIB_RANDOM@
+# if !@HAVE_RANDOM@
+_GL_FUNCDECL_SYS (initstate, char *,
+                  (unsigned int seed, char *buf, size_t buf_size)
+                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (initstate, char *,
+                  (unsigned int seed, char *buf, size_t buf_size));
+_GL_CXXALIASWARN (initstate);
+#elif defined GNULIB_POSIXCHECK
+# undef initstate
+# if HAVE_RAW_DECL_INITSTATE_R
+_GL_WARN_ON_USE (initstate, "initstate is unportable - "
+                 "use gnulib module random for portability");
+# endif
+#endif
+
+#if @GNULIB_RANDOM@
+# if !@HAVE_RANDOM@
+_GL_FUNCDECL_SYS (setstate, char *, (char *arg_state) _GL_ARG_NONNULL ((1)));
+# endif
+_GL_CXXALIAS_SYS (setstate, char *, (char *arg_state));
+_GL_CXXALIASWARN (setstate);
+#elif defined GNULIB_POSIXCHECK
+# undef setstate
+# if HAVE_RAW_DECL_SETSTATE_R
+_GL_WARN_ON_USE (setstate, "setstate is unportable - "
+                 "use gnulib module random for portability");
+# endif
+#endif
+
+
 #if @GNULIB_RANDOM_R@
 # if @REPLACE_RANDOM_R@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
