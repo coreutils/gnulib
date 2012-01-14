@@ -1,5 +1,9 @@
 2012-01-14  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'random'.
+	* modules/random-tests: New file.
+	* tests/test-random.c: New file, based on tests/test-random_r.c.
+
 	New module 'random'.
 	* lib/stdlib.in.h (random, srandom, initstate, setstate): New
 	declarations.
