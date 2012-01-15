@@ -49,6 +49,11 @@
 # include <sys/loadavg.h>
 #endif
 
+/* Native Windows platforms declare mktemp() in <io.h>.  */
+#if 0 && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+# include <io.h>
+#endif
+
 #if @GNULIB_RANDOM_R@
 
 /* OSF/1 5.1 declares 'struct random_data' in <random.h>, which is included

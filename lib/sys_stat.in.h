@@ -62,6 +62,11 @@
 # include <direct.h> /* mingw64, MSVC 9 */
 #endif
 
+/* Native Windows platforms declare umask() in <io.h>.  */
+#if 0 && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+# include <io.h>
+#endif
+
 #ifndef S_IFIFO
 # ifdef _S_IFIFO
 #  define S_IFIFO _S_IFIFO
