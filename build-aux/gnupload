@@ -1,10 +1,9 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2010-05-23.15; # UTC
+scriptversion=2012-01-15.15; # UTC
 
-# Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
-# Foundation, Inc.
+# Copyright (C) 2004-2010, 2012 Free Software Foundation, Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,6 +19,8 @@ scriptversion=2010-05-23.15; # UTC
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Originally written by Alexandre Duret-Lutz <adl@gnu.org>.
+# The master copy of this file is maintained in the gnulib Git repository.
+# Please send bug reports and feature requests to bug-gnulib@gnu.org.
 
 set -e
 
@@ -105,8 +106,7 @@ happen to have an ncftp package installed, the ncftpput-ftp script in
 the build-aux/ directory of the gnulib package
 (http://savannah.gnu.org/projects/gnulib) may serve as a replacement.
 
-Report bugs to <bug-automake@gnu.org>.
-Send patches to <automake-patches@gnu.org>."
+Send patches and bug reports to <bug-gnulib@gnu.org>."
 
 # Read local configuration file
 if test -r "$conffile"; then
