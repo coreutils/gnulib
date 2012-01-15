@@ -20,8 +20,9 @@ AC_DEFUN([gl_STDLIB_H],
 # include <random.h>
 #endif
     ]], [_Exit atoll canonicalize_file_name getloadavg getsubopt grantpt
-    initstate_r mkdtemp mkostemp mkostemps mkstemp mkstemps posix_openpt
-    ptsname ptsname_r random_r realpath rpmatch setenv setstate_r srandom_r
+    initstate initstate_r mkdtemp mkostemp mkostemps mkstemp mkstemps
+    posix_openpt ptsname ptsname_r random random_r realpath rpmatch
+    setenv setstate setstate_r srandom srandom_r
     strtod strtoll strtoull unlockpt unsetenv])
 ])
 
