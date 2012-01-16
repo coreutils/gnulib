@@ -1,3 +1,8 @@
+2012-01-16  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: add a FIXME comment to ensure we eventually remove the hack
+	* build-aux/bootstrap (gnulib_tool_options): Add comment.
+
 2012-01-16  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: cater to autoconf 2.59
