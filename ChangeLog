@@ -1,5 +1,9 @@
 2012-01-16  Eric Blake  <eblake@redhat.com>
 
+	bootstrap: cater to autoconf 2.59
+	* build-aux/bootstrap (AUTORCONF): Work even when --no-recursive
+	is not available.
+
 	bootstrap: properly check for libtool
 	* build-aux/bootstrap (libtoolize): Also run libtool when older
 	usage is detected.
