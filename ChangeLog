@@ -1,3 +1,9 @@
+2012-01-17  Jim Meyering  <meyering@redhat.com>
+
+	maint: spell file systems with two words, not one
+	* m4/ls-mntd-fs.m4 (MOUNTED_INTERIX_STATVFS): Spell file systems with
+	two words, not one.
+
 2012-01-16  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: add a FIXME comment to ensure we eventually remove the hack

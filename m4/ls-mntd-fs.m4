@@ -339,7 +339,7 @@ if test -z "$ac_list_mounted_fs"; then
       ac_list_mounted_fs=found
       AC_DEFINE([MOUNTED_INTERIX_STATVFS], [1],
                 [Define if we are on interix, and ought to use statvfs plus
-                 some special knowledge on where mounted filesystems can be
+                 some special knowledge on where mounted file systems can be
                  found. (Interix)])
     fi
     ;;
