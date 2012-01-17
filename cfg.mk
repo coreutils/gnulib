@@ -23,7 +23,6 @@ local-checks-to-skip =			\
   sc_prohibit_always-defined_macros	\
   sc_prohibit_atoi_atof			\
   sc_prohibit_c_ctype_without_use	\
-  sc_prohibit_cloexec_without_use	\
   sc_prohibit_dirent_without_use	\
   sc_prohibit_error_without_use		\
   sc_prohibit_getopt_without_use	\

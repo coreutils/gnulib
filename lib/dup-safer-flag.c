@@ -26,8 +26,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "cloexec.h"
-
 /* Like dup, but do not return STDIN_FILENO, STDOUT_FILENO, or
    STDERR_FILENO.  If FLAG contains O_CLOEXEC, behave like
    fcntl(F_DUPFD_CLOEXEC) rather than fcntl(F_DUPFD).  */
