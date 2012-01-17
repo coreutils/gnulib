@@ -57,7 +57,7 @@ Modify file and directory access control lists (ACLs)
 
 At least one of (-d, -f, -m, -s) must be specified
 
-     Acl_entries are one or more comma-separated ACL entries 
+     Acl_entries are one or more comma-separated ACL entries
      from the following list:
 
          u[ser]::perm
@@ -68,7 +68,7 @@ At least one of (-d, -f, -m, -s) must be specified
          o[ther]:perm
 
      Default entries are like the above with the additional
-     default identifier. For example: 
+     default identifier. For example:
 
          d[efault]:u[ser]:uid:perm
 
@@ -116,7 +116,7 @@ The following options are supported:
      - One default other entry.
 
 -m   Add or modify one or more specified ACL entries.
-     Acl_entries is a comma-separated list of entries from the 
+     Acl_entries is a comma-separated list of entries from the
      same list as above.
 
 -r   Causes the permissions specified in the mask entry to be

@@ -1,5 +1,14 @@
 2012-01-17  Jim Meyering  <meyering@redhat.com>
 
+	maint: enable sc_trailing_blank
+	* build-aux/pmccabe.css: Remove trailing blanks.
+	* doc/acl-cygwin.txt: Likewise.
+	* doc/gnu-oids.texi: Likewise
+	* cfg.mk: Enable sc_trailing_blank.
+	Exempt build-aux/texinfo.tex and doc/Copyright/assign.future.manual.
+
+2012-01-17  Jim Meyering  <meyering@redhat.com>
+
 	maint: enable sc_prohibit_openat_without_use
 	* cfg.mk: Enable sc_prohibit_openat_without_use.
 	Exempt lib/selinux-at.c.
