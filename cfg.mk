@@ -26,7 +26,6 @@ local-checks-to-skip =			\
   sc_prohibit_cloexec_without_use	\
   sc_prohibit_dirent_without_use	\
   sc_prohibit_doubled_word		\
-  sc_prohibit_empty_lines_at_EOF	\
   sc_prohibit_error_without_use		\
   sc_prohibit_getopt_without_use	\
   sc_prohibit_hash_pjw_without_use	\
@@ -54,3 +53,7 @@ local-checks-to-skip =			\
   sc_two_space_separator_in_usage	\
   sc_unmarked_diagnostics		\
   sc_useless_cpp_parens
+
+empty-at-EOF = /fr/LC_MESSAGES/test-quotearg\.mo$$|^doc/INSTALL(\.(ISO|UTF-8))?
+exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
+  ^modules/|^lib/javaversion\.class$$|$(empty-at-EOF)

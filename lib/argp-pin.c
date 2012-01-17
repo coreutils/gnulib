@@ -24,4 +24,3 @@ char *program_invocation_short_name = 0;
 #ifndef HAVE_PROGRAM_INVOCATION_NAME
 char *program_invocation_name = 0;
 #endif
-

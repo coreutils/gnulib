@@ -135,4 +135,3 @@ permissions according to the combination of the current umask,
 the explicit permissions requested and the default ACL entries
 Note: Under Cygwin, the default ACL entries are not taken into
 account currently.
-

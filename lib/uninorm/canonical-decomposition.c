@@ -105,4 +105,3 @@ uc_canonical_decomposition (ucs4_t uc, ucs4_t *decomposition)
     }
   return -1;
 }
-

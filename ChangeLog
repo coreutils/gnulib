@@ -1,5 +1,39 @@
 2012-01-17  Jim Meyering  <meyering@redhat.com>
 
+	maint: remove empty lines at EOF, but excluding modules/*
+	Apply syntax rules at home as well as abroad.  Most changes
+	were induced by running this:
+	  make srcdir=. _build-aux=build-aux -f top/maint.mk \
+	    sc_prohibit_empty_lines_at_EOF | grep -v modules/ \
+	    | xargs perl -pi -0777 -e 's/\n\n+$/\n/'
+	* cfg.mk (local-checks-to-skip): Enable sc_prohibit_empty_lines_at_EOF.
+	Exempt modules/* and two binary files.
+	Also exempt doc/INSTALL*, per request from Bruno Haible.
+	* doc/regexprops-generic.texi: *Add* a newline at EOF.  There was none.
+	* doc/Copyright/assign.translation.manual: Remove empty lines at EOF.
+	* doc/Copyright/request-assign.future: Likewise.
+	* doc/Copyright/request-disclaim.changes: Likewise.
+	* doc/INSTALL: Likewise.
+	* doc/INSTALL.ISO: Likewise.
+	* doc/INSTALL.UTF-8: Likewise.
+	* doc/acl-cygwin.txt: Likewise.
+	* doc/acl-resources.txt: Likewise.
+	* doc/fdl-1.2.texi: Likewise.
+	* doc/fdl-1.3.texi: Likewise.
+	* doc/fdl.texi: Likewise.
+	* lib/argp-pin.c: Likewise.
+	* lib/round.c: Likewise.
+	* lib/unicase/u16-totitle.c: Likewise.
+	* lib/unictype/block_test.c: Likewise.
+	* lib/uninorm/canonical-decomposition.c: Likewise.
+	* m4/README: Likewise.
+	* m4/relocatable-lib.m4: Likewise.
+	* tests/test-isnand-nolibm.c: Likewise.
+	* tests/test-isnand.c: Likewise.
+	* tests/uninorm/NormalizationTest.txt: Likewise.
+
+2012-01-17  Jim Meyering  <meyering@redhat.com>
+
 	maint: add framework to run syntax-check rules against gnulib sources
 	* cfg.mk: New file, to disable all currently-failing tests.
 	We'll enable them one by one, as they are made to pass.

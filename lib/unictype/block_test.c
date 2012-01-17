@@ -28,4 +28,3 @@ uc_is_block (ucs4_t uc, const uc_block_t *block)
   else
     return false;
 }
-

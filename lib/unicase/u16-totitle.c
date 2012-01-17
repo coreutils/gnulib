@@ -24,4 +24,3 @@
 #define UNIT uint16_t
 #define U_CT_TOTITLE u16_ct_totitle
 #include "u-totitle.h"
-

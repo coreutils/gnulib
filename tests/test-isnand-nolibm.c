@@ -19,4 +19,3 @@
 #include "isnand-nolibm.h"
 
 #include "test-isnand.h"
-

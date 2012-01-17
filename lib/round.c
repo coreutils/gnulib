@@ -167,4 +167,3 @@ FLOOR_FREE_ROUND (DOUBLE x)
   return z;
 }
 #endif /* FLOOR_FREE_ROUND */
-
