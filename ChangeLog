@@ -1,5 +1,13 @@
 2012-01-17  Jim Meyering  <meyering@redhat.com>
 
+	maint: enable sc_prohibit_hash_pjw_without_use
+	* cfg.mk: Enable sc_prohibit_hash_pjw_without_use.
+	* top/maint.mk (sc_prohibit_hash_pjw_without_use): Adjust regexp
+	to match any use of \<hash_pjw\>, i.e., not necessarily with a
+	following " (".
+
+2012-01-17  Jim Meyering  <meyering@redhat.com>
+
 	maint: enable double-word-prohibiting rule
 	* cfg.mk (local-checks-to-skip): Enable sc_prohibit_doubled_word.
 	Exempt three files.

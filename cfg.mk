@@ -27,7 +27,6 @@ local-checks-to-skip =			\
   sc_prohibit_dirent_without_use	\
   sc_prohibit_error_without_use		\
   sc_prohibit_getopt_without_use	\
-  sc_prohibit_hash_pjw_without_use	\
   sc_prohibit_have_config_h		\
   sc_prohibit_intprops_without_use	\
   sc_prohibit_inttostr_without_use	\

@@ -502,7 +502,7 @@ sc_prohibit_same_without_use:
 
 sc_prohibit_hash_pjw_without_use:
 	@h='hash-pjw.h' \
-	re='\<hash_pjw *\(' \
+	re='\<hash_pjw\>' \
 	  $(_sc_header_without_use)
 
 sc_prohibit_safe_read_without_use:
