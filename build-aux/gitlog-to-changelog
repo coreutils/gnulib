@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-01-06 07:14'; # UTC
+my $VERSION = '2012-01-17 21:54'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -64,6 +64,10 @@ OPTIONS:
                   makes a change to SHA1's commit log text or metadata.
    --append-dot append a dot to the first line of each commit message if
                   there is no other punctuation or blank at the end.
+   --no-cluster never cluster commit messages under the same date/author
+                  header; the default is to cluster adjacent commit messages
+                  if their headers are the same and neither commit message
+                  contains multiple paragraphs.
    --since=DATE convert only the logs since DATE;
                   the default is to convert all log entries.
    --format=FMT set format string for commit subject and body;
@@ -190,6 +194,7 @@ sub parse_amend_file($)
   my $format_string = '%s%n%b%n';
   my $amend_file;
   my $append_dot = 0;
+  my $no_cluster = 0;
   GetOptions
     (
      help => sub { usage 0 },
@@ -198,6 +203,7 @@ sub parse_amend_file($)
      'format=s' => \$format_string,
      'amend=s' => \$amend_file,
      'append-dot' => \$append_dot,
+     'no-cluster' => \$no_cluster,
     ) or usage 1;
 
 
@@ -302,10 +308,12 @@ sub parse_amend_file($)
               . substr ($_, 5) . "\n";
         }
 
-      # If this header would be different from the previous date/name/email/
-      # coauthors header, or if this or the previous entry consists of two
-      # or more paragraphs, then print the header.
-      if ($date_line ne $prev_date_line
+      # If clustering of commit messages has been disabled, if this header
+      # would be different from the previous date/name/email/coauthors header,
+      # or if this or the previous entry consists of two or more paragraphs,
+      # then print the header.
+      if ($no_cluster
+          or $date_line ne $prev_date_line
           or "@coauthors" ne "@prev_coauthors"
           or $multi_paragraph
           or $prev_multi_paragraph)
