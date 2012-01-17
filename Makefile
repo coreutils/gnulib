@@ -49,6 +49,13 @@ sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
 	else :; fi
 
+# Run all maint.mk syntax-check tests on gnulib's sources.
+sc_maint:
+	rm -f maint.mk; ln -s top/maint.mk maint.mk
+	$(MAKE) -s srcdir=. gnulib_dir=. _build-aux=build-aux \
+            -f cfg.mk -f maint.mk syntax-check
+	rm -f maint.mk
+
 # Files in m4/ that (exceptionally) may use AC_LIBOBJ.
 # Do not include their ".m4" suffix.
 allow_AC_LIBOBJ =	\
