@@ -27,7 +27,6 @@ SIGNATURE_CHECK (nanosleep, int, (struct timespec const *, struct timespec *));
 #include <signal.h>
 #include <unistd.h>
 
-#include "intprops.h"
 #include "macros.h"
 
 #if HAVE_DECL_ALARM
