@@ -29,7 +29,6 @@ local-checks-to-skip =			\
   sc_prohibit_have_config_h		\
   sc_prohibit_inttostr_without_use	\
   sc_prohibit_magic_number_exit		\
-  sc_prohibit_openat_without_use	\
   sc_prohibit_path_max_allocation	\
   sc_prohibit_reversed_compare_failure	\
   sc_prohibit_safe_read_without_use	\
@@ -55,3 +54,4 @@ exclude_file_name_regexp--sc_prohibit_empty_lines_at_EOF = \
   ^modules/|^lib/javaversion\.class$$|$(empty-at-EOF)
 exclude_file_name_regexp--sc_prohibit_doubled_word = \
   ^(tests/test-init\.sh|lib/base(32|64)\.c)$$
+exclude_file_name_regexp--sc_prohibit_openat_without_use = ^lib/selinux-at\.c$$
