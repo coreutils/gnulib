@@ -1,3 +1,10 @@
+2012-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: omit trailing empty lines from INSTALL etc.
+	* doc/Makefile (INSTALL): Omit trailing empty lines.
+	(INSTALL.ISO, INSTALL.UTF-8): Build from INSTALL, so that these also
+	omit trailing empty lines.  This simplifies the build procedure.
+
 2012-01-23  Jim Meyering  <meyering@redhat.com>
 
 	tests: avoid spurious warnings about gl_sockets_startup
