@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-01-18 07:44'; # UTC
+my $VERSION = '2012-01-18 07:50'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -194,7 +194,7 @@ sub parse_amend_file($)
   my $format_string = '%s%n%b%n';
   my $amend_file;
   my $append_dot = 0;
-  my $no_cluster = 0;
+  my $cluster = 1;
   GetOptions
     (
      help => sub { usage 0 },
@@ -203,7 +203,7 @@ sub parse_amend_file($)
      'format=s' => \$format_string,
      'amend=s' => \$amend_file,
      'append-dot' => \$append_dot,
-     'no-cluster' => \$no_cluster,
+     'cluster!' => \$cluster,
     ) or usage 1;
 
 
@@ -312,7 +312,7 @@ sub parse_amend_file($)
       # would be different from the previous date/name/email/coauthors header,
       # or if this or the previous entry consists of two or more paragraphs,
       # then print the header.
-      if ($no_cluster
+      if ( ! $cluster
           || $date_line ne $prev_date_line
           || "@coauthors" ne "@prev_coauthors"
           || $multi_paragraph

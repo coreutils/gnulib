@@ -1,5 +1,10 @@
 2012-01-18  Jim Meyering  <meyering@redhat.com>
 
+	gitlog-to-changelog: don't use "no_"-prefixed variable name
+	* build-aux/gitlog-to-changelog (main): Use getopt's "!" attribute
+	to enable both --cluster and --no-cluster.  Change variable name,
+	s/\$no_cluster/$cluster/, and reverse usage to match.
+
 	gitlog-to-changelog: use "||", not "or" in expressions
 	* build-aux/gitlog-to-changelog (main): Use "||", not "or" in
 	expressions.
