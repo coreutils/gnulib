@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-01-16.20; # UTC
+scriptversion=2012-01-18.21; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -87,9 +87,9 @@ gnulib_files=
 : ${AUTOPOINT=autopoint}
 : ${AUTORECONF=autoreconf}
 
-# A function to be called to edit gnulib.mk right after it's created.
+# A function to be called right after gnulib-tool is run.
 # Override it via your own definition in bootstrap.conf.
-gnulib_mk_hook() { :; }
+bootstrap_post_import_hook() { :; }
 
 # A function to be called after everything else in this script.
 # Override it via your own definition in bootstrap.conf.
@@ -806,6 +806,8 @@ $gnulib_tool $gnulib_tool_options --import $gnulib_modules &&
 for file in $gnulib_files; do
   symlink_to_dir "$GNULIB_SRCDIR" $file || exit
 done
+
+bootstrap_post_import_hook
 
 # Remove any dangling symlink matching "*.m4" or "*.[ch]" in some
 # gnulib-populated directories.  Such .m4 files would cause aclocal to fail.
