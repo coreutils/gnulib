@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-01-18.21; # UTC
+scriptversion=2012-01-21.16; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -807,7 +807,8 @@ for file in $gnulib_files; do
   symlink_to_dir "$GNULIB_SRCDIR" $file || exit
 done
 
-bootstrap_post_import_hook
+bootstrap_post_import_hook \
+  || { echo >&2 "$me: bootstrap_post_import_hook failed"; exit 1; }
 
 # Remove any dangling symlink matching "*.m4" or "*.[ch]" in some
 # gnulib-populated directories.  Such .m4 files would cause aclocal to fail.

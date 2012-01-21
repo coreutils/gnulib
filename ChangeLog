@@ -1,3 +1,10 @@
+2012-01-21  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: fail when bootstrap_post_import_hook fails
+	Otherwise, it's far too easy to miss diagnostics emitted
+	between gnulib-tool's output and that of running configure.
+	* build-aux/bootstrap: Fail when bootstrap_post_import_hook fails.
+
 2012-01-17  Jim Meyering  <meyering@redhat.com>
 
 	maint: enable sc_trailing_blank
