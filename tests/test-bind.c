@@ -31,7 +31,7 @@ SIGNATURE_CHECK (bind, int, (int, const struct sockaddr *, socklen_t));
 int
 main (void)
 {
-  gl_sockets_startup (SOCKETS_1_1);
+  (void) gl_sockets_startup (SOCKETS_1_1);
 
   /* Test behaviour for invalid file descriptors.  */
   {

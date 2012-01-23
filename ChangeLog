@@ -1,3 +1,24 @@
+2012-01-23  Jim Meyering  <meyering@redhat.com>
+
+	tests: avoid spurious warnings about gl_sockets_startup
+	Fedora rawhide's gcc version 4.7.0 20120119 with -Wunused-value
+	would warn about every use of "gl_sockets_startup (SOCKETS_1_1);"
+	reporting a "statement with no effect".
+	* tests/test-accept.c (main): Mark as "(void)".
+	* tests/test-accept4.c (main): Likewise.
+	* tests/test-bind.c (main): Likewise.
+	* tests/test-connect.c (main): Likewise.
+	* tests/test-getpeername.c (main): Likewise.
+	* tests/test-getsockname.c (main): Likewise.
+	* tests/test-getsockopt.c (main): Likewise.
+	* tests/test-listen.c (main): Likewise.
+	* tests/test-recv.c (main): Likewise.
+	* tests/test-recvfrom.c (main): Likewise.
+	* tests/test-send.c (main): Likewise.
+	* tests/test-sendto.c (main): Likewise.
+	* tests/test-setsockopt.c (main): Likewise.
+	* tests/test-shutdown.c (main): Likewise.
+
 2012-01-21  Bruno Haible  <bruno@clisp.org>
 
 	locale-fr.m4: Fix for Android.

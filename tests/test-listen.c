@@ -29,7 +29,7 @@ SIGNATURE_CHECK (listen, int, (int, int));
 int
 main (void)
 {
-  gl_sockets_startup (SOCKETS_1_1);
+  (void) gl_sockets_startup (SOCKETS_1_1);
 
   /* Test behaviour for invalid file descriptors.  */
   {
