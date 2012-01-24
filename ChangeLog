@@ -1,5 +1,11 @@
 2012-01-24  Bruno Haible  <bruno@clisp.org>
 
+	havelib: Modern quoting.
+	* build-aux/config.rpath: Quote 'like this', not `like this', as per
+	the recent change to the GNU coding standards.
+
+2012-01-24  Bruno Haible  <bruno@clisp.org>
+
 	stdint: Improve support for Android.
 	* lib/stdint.in.h: Test __ANDROID__, not __BIONIC__.
 	Reported by Simon Josefsson <simon@josefsson.org>.
