@@ -1,3 +1,9 @@
+2012-01-24  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Improve support for Android.
+	* lib/stdint.in.h: Test __ANDROID__, not __BIONIC__.
+	Reported by Simon Josefsson <simon@josefsson.org>.
+
 2012-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: omit trailing empty lines from INSTALL etc.
