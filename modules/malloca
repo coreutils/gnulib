@@ -11,6 +11,7 @@ m4/longlong.m4
 
 Depends-on:
 alloca-opt
+stdint
 verify
 
 configure.ac:

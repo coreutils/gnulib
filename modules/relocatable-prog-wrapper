@@ -39,6 +39,7 @@ errno
 pathmax
 ssize_t
 stdbool
+stdint
 stdlib
 unistd
 environ

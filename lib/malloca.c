@@ -22,6 +22,8 @@
 /* Specification.  */
 #include "malloca.h"
 
+#include <stdint.h>
+
 #include "verify.h"
 
 /* The speed critical point in this file is freea() applied to an alloca()
@@ -85,7 +87,7 @@ mmalloca (size_t n)
           ((int *) p)[-1] = MAGIC_NUMBER;
 
           /* Enter p into the hash table.  */
-          slot = (unsigned long) p % HASH_TABLE_SIZE;
+          slot = (uintptr_t) p % HASH_TABLE_SIZE;
           ((struct header *) (p - HEADER_SIZE))->next = mmalloca_results[slot];
           mmalloca_results[slot] = p;
 
@@ -118,7 +120,7 @@ freea (void *p)
         {
           /* Looks like a mmalloca() result.  To see whether it really is one,
              perform a lookup in the hash table.  */
-          size_t slot = (unsigned long) p % HASH_TABLE_SIZE;
+          size_t slot = (uintptr_t) p % HASH_TABLE_SIZE;
           void **chain = &mmalloca_results[slot];
           for (; *chain != NULL;)
             {

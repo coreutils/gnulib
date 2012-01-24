@@ -1,3 +1,12 @@
+2012-01-24  Marc-André Lureau  <marcandre.lureau@redhat.com>  (tiny change)
+	    Bruno Haible  <bruno@clisp.org>
+
+	malloca: Avoid warnings on x86_64 mingw64.
+	* lib/malloca.c: Include <stdint.h>.
+	(mmalloca, freea): Use uintptr_t to convert pointers to integers.
+	* modules/malloca (Depends-on): Add stdint.
+	* modules/relocatable-prog-wrapper (Depends-on): Likewise.
+
 2012-01-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: remove __STDC__ conditionals
