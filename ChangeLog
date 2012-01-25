@@ -1,3 +1,12 @@
+2012-01-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: remove __STDC__ conditionals
+	* lib/obstack.h: Remove __STDC__ conditionals, as suggested by Joseph
+	S. Myers in <http://cygwin.com/ml/libc-alpha/2012-01/msg00104.html>.
+	This leaves lib/localcharset.c, m4/iconv.m4, and a confusing comment in
+	m4/include_next.m4 as the only gnulib-maintained places that still
+	refer to __STDC__.
+
 2012-01-24  Bruno Haible  <bruno@clisp.org>
 
 	havelib: Modern quoting.
