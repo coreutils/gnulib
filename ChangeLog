@@ -1,5 +1,12 @@
 2012-01-26  Bruno Haible  <bruno@clisp.org>
 
+	pipe2: refine doc about thread-safety
+	* doc/glibc-functions/pipe2.texi: Clarify the extent of the
+	multithread-safety problem.
+	* doc/glibc-functions/accept4.texi: Likewise.
+
+2012-01-26  Bruno Haible  <bruno@clisp.org>
+
 	posix_spawn_file_actions_addopen: Fix 2012-01-08 commit.
 	* m4/posix_spawn.m4 (gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN):
 	In the test program, include <fcntl.h>, for O_RDONLY.
