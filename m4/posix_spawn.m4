@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 10
+# posix_spawn.m4 serial 11
 dnl Copyright (C) 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -499,6 +499,7 @@ AC_DEFUN([gl_FUNC_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN],
       [AC_RUN_IFELSE(
          [AC_LANG_SOURCE([[
 #include <spawn.h>
+#include <fcntl.h>
 int main ()
 {
   posix_spawn_file_actions_t actions;
