@@ -17,6 +17,9 @@ Portability problems fixed by Gnulib:
 This header file is missing on most circa-2011 platforms.
 @item
 Clang 3.0's @code{<stdalign.h>} does not define @code{alignof}/@code{_Alignof}.
+@item
+The @code{alignof} and @code{_Alignof} macros return too large values for
+the types @code{double} and @code{long long} in GCC 4.7.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
