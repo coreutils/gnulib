@@ -17,8 +17,8 @@ AC_DEFUN([gl_STDALIGN_H],
             #include <stddef.h>
 
             /* Test that alignof yields a result consistent with offsetof.
-               This catches GCC bug 51316
-               <http://gcc.gnu.org/bugzilla/show_bug.cgi?id=51316>.  */
+               This catches GCC bug 52023
+               <http://gcc.gnu.org/bugzilla/show_bug.cgi?id=52023>.  */
             #ifdef __cplusplus
                template <class t> struct alignof_helper { char a; t b; };
             # define ao(type) offsetof (alignof_helper<type>, b)
