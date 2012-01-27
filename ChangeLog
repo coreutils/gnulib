@@ -1,3 +1,10 @@
+2012-01-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: check that alignof and offsetof are consistent
+	* m4/stdalign.m4 (gl_STDALIGN_H): Check for GCC bug 52023.
+	Problem reported for gnulib by Richard W.M. Jones in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-01/msg00340.html>.
+
 2012-01-27  Jim Meyering  <meyering@redhat.com>
 
 	update-copyright: accept new option: UPDATE_COPYRIGHT_USE_INTERVALS=2
