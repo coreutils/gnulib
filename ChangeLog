@@ -1,3 +1,14 @@
+2012-01-27  Jim Meyering  <meyering@redhat.com>
+
+	update-copyright: accept new option: UPDATE_COPYRIGHT_USE_INTERVALS=2
+	* build-aux/update-copyright: When UPDATE_COPYRIGHT_USE_INTERVALS=2,
+	convert a sequence with gaps to the minimal containing range.
+	For example, convert 2000, 2004-2007, 2009 to 2000-2009.
+	* tests/test-update-copyright.sh: Test for this.
+	The FSF confirmed it is ok to do this, assuming there is at
+	least one significant change per year in the affected range:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/29554/focus=29860
+
 2012-01-26  Bruno Haible  <bruno@clisp.org>
 
 	pipe2: refine doc about thread-safety

@@ -424,6 +424,13 @@ compare - $TMP <<EOF || exit 1
 		# Copyright (C) 1987-1988, 1991-2011 Free Software
 		# Foundation, Inc.
 EOF
+UPDATE_COPYRIGHT_YEAR=2011 UPDATE_COPYRIGHT_USE_INTERVALS=2 \
+  UPDATE_COPYRIGHT_FORCE=1 update-copyright $TMP 1> $TMP-stdout 2> $TMP-stderr
+compare /dev/null $TMP-stdout || exit 1
+compare /dev/null $TMP-stderr || exit 1
+compare - $TMP <<EOF || exit 1
+		# Copyright (C) 1987-2011 Free Software Foundation, Inc.
+EOF
 rm $TMP*
 
 ## --------- ##
