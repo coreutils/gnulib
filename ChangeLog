@@ -1,3 +1,17 @@
+2012-01-28  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: use more readable (yet functionally equivalent) quoting
+	It is common to quote a single quote in a single quoted string like
+	this:  '...'\''...'.  Unless you know the idiom, that looks like
+	gibberish, so prefer to double-quote the string when possible.
+	Then you can use a more readable, lone single quote: "...'..."
+	* top/maint.mk (sc_cast_of_argument_to_free): Quoting like this
+	"don't" is more readable than the equivalent 'don'\''t'.
+	(sc_cast_of_x_alloc_return_value): Likewise.
+	(sc_cast_of_alloca_return_value): Likewise.
+	(sc_makefile_path_separator_check): Similar: use ":" in '...',
+	rather than '\'':'\''.
+
 2012-01-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: relax _Alignof and tighten _Alignas test
