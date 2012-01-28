@@ -38,7 +38,10 @@ SIGNATURE_CHECK (FD_ZERO, void, (fd_set *));
 #endif
 
 /* Check that the 'struct timeval' type is defined.  */
-struct timeval t1;
+struct timeval a;
+
+/* Check that &a.tv_sec is a 'time_t *', ignoring signedness issues.  */
+typedef int verify_tv_sec_type[sizeof (a.tv_sec) == sizeof (time_t) ? 1 : -1];
 
 /* Check that sigset_t is defined.  */
 sigset_t t2;

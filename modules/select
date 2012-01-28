@@ -9,6 +9,7 @@ Depends-on:
 sys_select
 alloca          [test $REPLACE_SELECT = 1]
 sockets         [test $REPLACE_SELECT = 1]
+sys_time        [test $REPLACE_SELECT = 1]
 msvc-nothrow    [test $REPLACE_SELECT = 1]
 
 configure.ac:

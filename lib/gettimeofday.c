@@ -110,7 +110,18 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
   struct tm save = *localtime_buffer_addr;
 # endif
 
+# if defined timeval /* 'struct timeval' overridden by gnulib?  */
+#  undef timeval
+  struct timeval otv;
+  int result = gettimeofday (&otv, (struct timezone *) tz);
+  if (result == 0)
+    {
+      tv->tv_sec = otv.tv_sec;
+      tv->tv_usec = otv.tv_usec;
+    }
+# else
   int result = gettimeofday (tv, (struct timezone *) tz);
+# endif
 
 # if GETTIMEOFDAY_CLOBBERS_LOCALTIME
   *localtime_buffer_addr = save;

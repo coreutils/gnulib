@@ -20,7 +20,11 @@
 
 #include <sys/time.h>
 
+/* Check that the 'struct timeval' type is defined.  */
 struct timeval a;
+
+/* Check that &a.tv_sec is a 'time_t *', ignoring signedness issues.  */
+typedef int verify_tv_sec_type[sizeof (a.tv_sec) == sizeof (time_t) ? 1 : -1];
 
 int
 main (void)

@@ -1,5 +1,5 @@
 # Configure a replacement for <sys/time.h>.
-# serial 7
+# serial 8
 
 # Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -43,9 +43,36 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_BODY],
           ]],
           [[static struct timeval x; x.tv_sec = x.tv_usec;]])],
        [gl_cv_sys_struct_timeval=yes],
-       [gl_cv_sys_struct_timeval=no])])
+       [gl_cv_sys_struct_timeval=no])
+    ])
   if test $gl_cv_sys_struct_timeval != yes; then
     HAVE_STRUCT_TIMEVAL=0
+  else
+    dnl On native Windows with a 64-bit 'time_t', 'struct timeval' is defined
+    dnl (in <sys/time.h> and <winsock2.h> for mingw64, in <winsock2.h> only
+    dnl for MSVC) with a tv_sec field of type 'long' (32-bit!), which is
+    dnl smaller than the 'time_t' type mandated by POSIX.
+    AC_CACHE_CHECK([for correct struct timeval.tv_sec member],
+      [gl_cv_sys_struct_timeval_tv_sec],
+      [AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#if HAVE_SYS_TIME_H
+               #include <sys/time.h>
+              #endif
+              #include <time.h>
+              #if HAVE_WINSOCK2_H
+              # include <winsock2.h>
+              #endif
+            ]],
+            [[static struct timeval x;
+              typedef int verify_tv_sec_type[sizeof (x.tv_sec) == sizeof (time_t) ? 1 : -1];
+            ]])],
+         [gl_cv_sys_struct_timeval_tv_sec=yes],
+         [gl_cv_sys_struct_timeval_tv_sec=no])
+      ])
+    if test $gl_cv_sys_struct_timeval_tv_sec != yes; then
+      REPLACE_STRUCT_TIMEVAL=1
+    fi
   fi
 
   dnl Check for declarations of anything we want to poison if the
@@ -75,4 +102,5 @@ AC_DEFUN([gl_HEADER_SYS_TIME_H_DEFAULTS],
   HAVE_STRUCT_TIMEVAL=1;     AC_SUBST([HAVE_STRUCT_TIMEVAL])
   HAVE_SYS_TIME_H=1;         AC_SUBST([HAVE_SYS_TIME_H])
   REPLACE_GETTIMEOFDAY=0;    AC_SUBST([REPLACE_GETTIMEOFDAY])
+  REPLACE_STRUCT_TIMEVAL=0;  AC_SUBST([REPLACE_STRUCT_TIMEVAL])
 ])

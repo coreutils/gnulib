@@ -1,3 +1,27 @@
+2012-01-28  Bruno Haible  <bruno@clisp.org>
+
+	sys_time: Override 'struct timeval' on some native Windows platforms.
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Test whether tv_sec
+	has the right type. Set REPLACE_STRUCT_TIMEVAL if not.
+	(gl_HEADER_SYS_TIME_H_DEFAULTS): Initialize REPLACE_STRUCT_TIMEVAL.
+	* lib/sys_time.in.h: Include <winsock2.h> also when 'struct timeval'
+	needs to be overridden.
+	(timeval): Override if REPLACE_STRUCT_TIMEVAL is set.
+	* modules/sys_time (Makefile.am): Substitute REPLACE_STRUCT_TIMEVAL.
+	* tests/test-sys_select.c: Check that the tv_sec member has the same
+	size as a 'time_t'.
+	* tests/test-sys_time.c: Likewise.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): If REPLACE_STRUCT_TIMEVAL
+	is set, set also REPLACE_GETTIMEOFDAY.
+	* lib/gettimeofday.c (gettimeofday): If 'struct timeval' is overridden,
+	convert the resulting 'struct timeval' before returning.
+	* lib/select.c: Include <sys/time.h>.
+	(select, timeval): Undefine at the right place.
+	* modules/select (Depends-on): Add sys_time.
+	* doc/posix-headers/sys_time.texi: Mention the problem with tv_sec on
+	some Windows platforms.
+	Reported by Marc-André Lureau <marcandre.lureau@redhat.com>.
+
 2012-01-28  Marc-André Lureau  <marcandre.lureau@redhat.com>  (tiny change)
 
 	accept4, fcntl, socket modules: Avoid warnings on x86_64 mingw64.

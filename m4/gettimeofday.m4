@@ -1,4 +1,4 @@
-# serial 17
+# serial 18
 
 # Copyright (C) 2001-2003, 2005, 2007, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -48,6 +48,10 @@ int gettimeofday (struct timeval *restrict, struct timezone *restrict);
     if test $gl_cv_func_gettimeofday_posix_signature = almost; then
       gl_gettimeofday_timezone='struct timezone'
     elif test $gl_cv_func_gettimeofday_posix_signature != yes; then
+      REPLACE_GETTIMEOFDAY=1
+    fi
+    dnl If we override 'struct timeval', we also have to override gettimeofday.
+    if test $REPLACE_STRUCT_TIMEVAL = 1; then
       REPLACE_GETTIMEOFDAY=1
     fi
     m4_ifdef([gl_FUNC_TZSET_CLOBBER], [
