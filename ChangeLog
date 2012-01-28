@@ -1,3 +1,11 @@
+2012-01-28  Marc-André Lureau  <marcandre.lureau@redhat.com>  (tiny change)
+
+	select, poll, isatty: Avoid warnings on x86_64 mingw64.
+	* lib/select.c (IsConsoleHandle): Use intptr_t to convert handle
+	pointer to an integer.
+	* lib/poll.c (IsConsoleHandle): Likewise.
+	* lib/isatty.c (IsConsoleHandle): Likewise.
+
 2012-01-28  Jim Meyering  <meyering@redhat.com>
 
 	doc: clarify README-release
