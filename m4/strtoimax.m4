@@ -1,4 +1,4 @@
-# strtoimax.m4 serial 12
+# strtoimax.m4 serial 13
 dnl Copyright (C) 2002-2004, 2006, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,22 +18,13 @@ AC_DEFUN([gl_FUNC_STRTOIMAX],
   if test $ac_cv_func_strtoimax = yes; then
     HAVE_STRTOIMAX=1
     dnl On AIX 5.1, strtoimax() fails for values outside the 'int' range.
-    AC_REQUIRE([gl_AC_HEADER_STDINT_H])
-    AC_REQUIRE([gl_AC_HEADER_INTTYPES_H])
     AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
     AC_CACHE_CHECK([whether strtoimax works], [gl_cv_func_strtoimax],
       [AC_RUN_IFELSE(
          [AC_LANG_SOURCE([[
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
-#include <sys/types.h>
-#if HAVE_STDINT_H_WITH_UINTMAX
-# include <stdint.h>
-#endif
-#if HAVE_INTTYPES_H_WITH_UINTMAX
-# include <inttypes.h>
-#endif
+#include <inttypes.h>
 int main ()
 {
   if (sizeof (intmax_t) > sizeof (int))

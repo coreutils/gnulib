@@ -1,3 +1,16 @@
+2012-01-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoimax: eliminate need for stdint.h, inttypes.h checks
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX): Don't use
+	gl_AC_HEADER_STDINT_H or gl_AC_HEADER_INTTYPES_H.  This reduces
+	the prerequisites for a recently-introduced strtoimax test.
+	I guess this might cause strtoimax to be replaced when not
+	strictly necessary on older hosts, but this shouldn't introduce
+	any bugs and it should make Emacs 'configure' faster on typical
+	modern hosts.  Problem discovered when importing the latest gnulib
+	to an Emacs test version.
+	* modules/strtoimax (Files): Remove m4/stdint_h.m4, m4/inttypes_h.m4.
+
 2012-01-28  Bruno Haible  <bruno@clisp.org>
 
 	sys_time: Override 'struct timeval' on some native Windows platforms.
