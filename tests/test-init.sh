@@ -50,20 +50,19 @@ EOF
   case $- in *x*) ;; *) test -s err && fail_ "err not empty: $(cat err)";; esac
 
   compare empty in >out 2>err && fail=1
-  # Remove the TAB-date suffix on each --- and +++ line,
-  # for both the expected and the actual output files.
-  # Also remove the @@ line, since Solaris 5.10 and GNU diff formats differ:
-  # -@@ -0,0 +1 @@
-  # +@@ -1,0 +1,1 @@
-  cat <<\EOF > exp
+  # Compare against expected output only if compare is using diff -u.
+  if grep @ out >/dev/null; then
+    # Remove the TAB-date suffix on each --- and +++ line,
+    # for both the expected and the actual output files.
+    # Also remove the @@ line, since Solaris 5.10 and GNU diff formats differ:
+    # -@@ -0,0 +1 @@
+    # +@@ -1,0 +1,1 @@
+    sed 's/	.*//;/^@@/d' out > k && mv k out
+    cat <<\EOF > exp
 --- empty
 +++ in
 +xyz
 EOF
-  sed 's/	.*//;/^@@/d' out > k && mv k out
-
-  # Compare against expected output only if compare is using diff -u.
-  if diff -u out out < /dev/null > /dev/null 2>&1; then
     compare exp out || fail=1
   fi
   case $- in *x*) ;; *) test -s err && fail_ "err not empty: $(cat err)";; esac

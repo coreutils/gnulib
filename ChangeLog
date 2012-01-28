@@ -1,3 +1,12 @@
+2012-01-28  Bruno Haible  <bruno@clisp.org>
+
+	test-framework-sh: Fix test failure with AIX 7.1 diff.
+	* tests/init.sh (compare_): Don't use 'diff -u' if it inserts a space
+	in column 1, like 'diff -c' does.
+	* tests/test-init.sh (test_compare): Don't repeat the test from init.sh
+	whether 'diff -u' is used. Instead, test whether the output contains
+	some '@' character.
+
 2012-01-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoimax: eliminate need for stdint.h, inttypes.h checks
