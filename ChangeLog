@@ -1,3 +1,13 @@
+2012-01-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: relax _Alignof and tighten _Alignas test
+	* m4/stdalign.m4 (gl_STDALIGN_H): Relax the _Alignof test,
+	as it was too strict: alignof must divide offsetof, but it need
+	not equal offsetof.  Inspired by Joseph S. Myers's comment
+	<http://gcc.gnu.org/bugzilla/show_bug.cgi?id=52023#c10>.
+	Conversely, tighten the _Alignas test a bit, as the resulting
+	alignment must be exactly 8.
+
 2012-01-27  Bruno Haible  <bruno@clisp.org>
 
 	stdalign: Document the last change.
