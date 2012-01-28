@@ -1,3 +1,8 @@
+2012-01-28  Bruno Haible  <bruno@clisp.org>
+
+	fcntl: Avoid compilation error on native Windows.
+	* modules/fcntl (Depends-on): Add 'close'.
+
 2012-01-28  Marc-André Lureau  <marcandre.lureau@redhat.com>  (tiny change)
 
 	select, poll, isatty: Avoid warnings on x86_64 mingw64.

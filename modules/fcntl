@@ -8,6 +8,7 @@ lib/fcntl.c
 Depends-on:
 fcntl-h
 extensions
+close           [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
 dup2            [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
 getdtablesize   [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
 msvc-nothrow    [test $HAVE_FCNTL = 0 || test $REPLACE_FCNTL = 1]
