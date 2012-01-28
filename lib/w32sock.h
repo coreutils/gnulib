@@ -29,7 +29,7 @@
 #include "msvc-nothrow.h"
 
 #define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
-#define SOCKET_TO_FD(fh)   (_open_osfhandle ((long) (fh), O_RDWR | O_BINARY))
+#define SOCKET_TO_FD(fh)   (_open_osfhandle ((intptr_t) (fh), O_RDWR | O_BINARY))
 
 static inline void
 set_winsock_errno (void)

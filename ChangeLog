@@ -1,3 +1,11 @@
+2012-01-28  Marc-André Lureau  <marcandre.lureau@redhat.com>  (tiny change)
+
+	accept4, fcntl, socket modules: Avoid warnings on x86_64 mingw64.
+	* lib/accept4.c (accept4): Use intptr_t to convert handle pointer to
+	an integer.
+	* lib/fcntl.c (dupfd): Likewise.
+	* lib/w32sock.h (SOCKET_TO_FD): Likewise.
+
 2012-01-28  Bruno Haible  <bruno@clisp.org>
 
 	fcntl: Avoid compilation error on native Windows.
