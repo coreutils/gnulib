@@ -6,9 +6,9 @@ Here are most of the steps we (maintainers) follow when making a release.
     git checkout master
     git pull origin master
 
-* Ensure that the desired versions of autoconf, automake, etc.
+* Ensure that the latest stable versions of autoconf, automake, etc.
   are in your PATH.  See the buildreq list in bootstrap.conf for
-  the complete list.
+  the complete list of tools.
 
 * Ensure that you're on "master" with no uncommitted diffs.
   This should produce no output: git checkout master; git diff

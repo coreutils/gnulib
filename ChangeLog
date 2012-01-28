@@ -1,5 +1,12 @@
 2012-01-28  Jim Meyering  <meyering@redhat.com>
 
+	doc: clarify README-release
+	* top/README-release: Clarify: you should make a point to have
+	the latest stable versions of build tools in your PATH, and the
+	reference to buildreq is solely for its list of tool names, not
+	for its minimal-functional version numbers.
+	Prompted by discussion with Reuben Thomas and Gary V. Vaughan.
+
 	maint.mk: use more readable (yet functionally equivalent) quoting
 	It is common to quote a single quote in a single quoted string like
 	this:  '...'\''...'.  Unless you know the idiom, that looks like
