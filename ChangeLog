@@ -1,3 +1,11 @@
+2012-01-29  Bruno Haible  <bruno@clisp.org>
+
+	doc about getlogin_r, setstate.
+	* doc/posix-functions/getlogin_r.texi: List the incompatible
+	declaration problem under "not fixed by gnulib".
+	* doc/posix-functions/setstate.texi: Mention incompatible declaration
+	problem on Solaris 11 and other platforms.
+
 2012-01-29  Chuanchang Jia  <chuanchang.jia@gmail.com>  (tiny change)
 	    Bruno Haible  <bruno@clisp.org>
 

@@ -15,4 +15,7 @@ Solaris 2.4, mingw, MSVC 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function has a slightly incompatible declaration (the argument type being
+@samp{const char *} instead of @samp(char *}) on some platforms.
 @end itemize

@@ -16,9 +16,6 @@ This function is not declared unless @code{_REENTRANT} is defined,
 on some platforms:
 HP-UX 11.
 @item
-This function has an incompatible declaration on some platforms:
-Solaris 11 2011-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
-@item
 This function returns a truncated result, instead of failing with error code
 @code{ERANGE}, when the buffer is not large enough, on some platforms:
 OSF/1 5.1.
@@ -26,6 +23,9 @@ OSF/1 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function has an incompatible declaration on some platforms:
+Solaris 11 2011-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @item
 This function fails even when standard input is a tty on some platforms:
 HP-UX 11.11.
