@@ -1,3 +1,11 @@
+2012-01-29  Bruno Haible  <bruno@clisp.org>
+
+	quotearg: Fix test failure on MacOS X 10.5.
+	* tests/test-quotearg-simple.c: Include localcharset.h.
+	(main): If the locale encoding is not ASCII, bypass the tests of
+	locale_quoting_style and clocale_quoting_style.
+	* modules/quotearg-tests (Depends-on): Add 'localcharset'.
+
 2012-01-29  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: sc_prohibit_canonicalize_without_use: avoid false positive

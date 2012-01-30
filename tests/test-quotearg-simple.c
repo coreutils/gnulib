@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "localcharset.h"
 #include "progname.h"
 #include "macros.h"
 
@@ -245,12 +246,20 @@ main (int argc _GL_UNUSED, char *argv[])
   for (i = literal_quoting_style; i <= clocale_quoting_style; i++)
     {
       set_quoting_style (NULL, (enum quoting_style) i);
-      compare_strings (use_quotearg_buffer, &results_g[i].group1, ascii_only);
-      compare_strings (use_quotearg, &results_g[i].group2, ascii_only);
-      if (i == c_quoting_style)
-        compare_strings (use_quote_double_quotes, &results_g[i].group2,
-                         ascii_only);
-      compare_strings (use_quotearg_colon, &results_g[i].group3, ascii_only);
+      if (!(i == locale_quoting_style || i == clocale_quoting_style)
+          || (strcmp (locale_charset (), "ASCII") == 0
+              || strcmp (locale_charset (), "ANSI_X3.4-1968") == 0))
+        {
+          compare_strings (use_quotearg_buffer, &results_g[i].group1,
+                           ascii_only);
+          compare_strings (use_quotearg, &results_g[i].group2,
+                           ascii_only);
+          if (i == c_quoting_style)
+            compare_strings (use_quote_double_quotes, &results_g[i].group2,
+                             ascii_only);
+          compare_strings (use_quotearg_colon, &results_g[i].group3,
+                           ascii_only);
+        }
     }
 
   set_quoting_style (NULL, literal_quoting_style);
