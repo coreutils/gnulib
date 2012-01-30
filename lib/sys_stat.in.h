@@ -616,14 +616,33 @@ _GL_WARN_ON_USE (mknodat, "mknodat is not portable - "
 /* We can't use the object-like #define stat rpl_stat, because of
    struct stat.  This means that rpl_stat will not be used if the user
    does (stat)(a,b).  Oh well.  */
-#  undef stat
-#  ifdef _LARGE_FILES
+#  if defined _AIX && defined stat && defined _LARGE_FILES
     /* With _LARGE_FILES defined, AIX (only) defines stat to stat64,
        so we have to replace stat64() instead of stat(). */
-#   define stat stat64
 #   undef stat64
 #   define stat64(name, st) rpl_stat (name, st)
-#  else /* !_LARGE_FILES */
+#  elif defined __MINGW32__ && defined stat
+#   ifdef _USE_32BIT_TIME_T
+     /* The system headers define stat to _stat32i64.  */
+#    undef _stat32i64
+#    define _stat32i64(name, st) rpl_stat (name, st)
+#   else
+     /* The system headers define stat to _stat64.  */
+#    undef _stat64
+#    define _stat64(name, st) rpl_stat (name, st)
+#   endif
+#  elif defined _MSC_VER && defined stat
+#   ifdef _USE_32BIT_TIME_T
+     /* The system headers define stat to _stat32.  */
+#    undef _stat32
+#    define _stat32(name, st) rpl_stat (name, st)
+#   else
+     /* The system headers define stat to _stat64i32.  */
+#    undef _stat64i32
+#    define _stat64i32(name, st) rpl_stat (name, st)
+#   endif
+#  else /* !(_AIX ||__MINGW32__ ||  _MSC_VER) */
+#   undef stat
 #   define stat(name, st) rpl_stat (name, st)
 #  endif /* !_LARGE_FILES */
 _GL_EXTERN_C int stat (const char *name, struct stat *buf)

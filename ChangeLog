@@ -1,5 +1,14 @@
 2012-01-29  Bruno Haible  <bruno@clisp.org>
 
+	sys_stat: Fix support for mingw64 and MSVC.
+	* lib/sys_stat.in.h (stat) [AIX]: Don't redefine 'stat' if the system
+	header files already do it.
+	(stat) [mingw, msvc]: Redefine the symbol to which stat is defined, not
+	stat itself.
+	Reported by Marc-André Lureau <marcandre.lureau@redhat.com>.
+
+2012-01-29  Bruno Haible  <bruno@clisp.org>
+
 	wcwidth: Work around bug in UTF-8 locale on OpenBSD 5.0.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Test also wcwidth of U+05B0.
 	* doc/posix-functions/wcwidth.texi: Mention the OpenBSD 5.0 bug.
