@@ -1,5 +1,11 @@
 2012-01-29  Bruno Haible  <bruno@clisp.org>
 
+	wcwidth: Work around bug in UTF-8 locale on OpenBSD 5.0.
+	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Test also wcwidth of U+05B0.
+	* doc/posix-functions/wcwidth.texi: Mention the OpenBSD 5.0 bug.
+
+2012-01-29  Bruno Haible  <bruno@clisp.org>
+
 	quotearg: Fix test failure on MacOS X 10.5.
 	* tests/test-quotearg-simple.c: Include localcharset.h.
 	(main): If the locale encoding is not ASCII, bypass the tests of

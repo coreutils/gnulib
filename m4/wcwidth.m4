@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 21
+# wcwidth.m4 serial 22
 dnl Copyright (C) 2006-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,7 @@ AC_DEFUN([gl_FUNC_WCWIDTH],
   if test $ac_cv_func_wcwidth = yes; then
     HAVE_WCWIDTH=1
     dnl On MacOS X 10.3, wcwidth(0x0301) (COMBINING ACUTE ACCENT) returns 1.
+    dnl On OpenBSD 5.0, wcwidth(0x05B0) (HEBREW POINT SHEVA) returns 1.
     dnl On OSF/1 5.1, wcwidth(0x200B) (ZERO WIDTH SPACE) returns 1.
     dnl This leads to bugs in 'ls' (coreutils).
     AC_CACHE_CHECK([whether wcwidth works reasonably in UTF-8 locales],
@@ -69,8 +70,10 @@ int main ()
     {
       if (wcwidth (0x0301) > 0)
         result |= 1;
-      if (wcwidth (0x200B) > 0)
+      if (wcwidth (0x05B0) > 0)
         result |= 2;
+      if (wcwidth (0x200B) > 0)
+        result |= 4;
     }
   return result;
 }]])],
