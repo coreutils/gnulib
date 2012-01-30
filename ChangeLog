@@ -1,3 +1,12 @@
+2012-01-29  Chuanchang Jia  <chuanchang.jia@gmail.com>  (tiny change)
+	    Bruno Haible  <bruno@clisp.org>
+
+	poll tests: Make test more robust.
+	* tests/test-poll.c: Include macros.h.
+	(test_accept_first, test_pair, test_socket_pair, test_pipe): Verify
+	return value of various I/O operations.
+	* modules/poll-tests (Files): Add tests/macros.h.
+
 2012-01-29  Bruno Haible  <bruno@clisp.org>
 
 	sys_stat: Fix support for mingw64 and MSVC.

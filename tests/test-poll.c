@@ -36,6 +36,8 @@ SIGNATURE_CHECK (poll, int, (struct pollfd[], nfds_t, int));
 #include <sys/ioctl.h>
 #include <errno.h>
 
+#include "macros.h"
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WINDOWS_NATIVE
 #endif
@@ -261,9 +263,10 @@ test_accept_first (void)
     {
       addrlen = sizeof (ia);
       c = accept (s, (struct sockaddr *) &ia, &addrlen);
+      ASSERT (c >= 0);
       close (s);
-      write (c, "foo", 3);
-      read (c, buf, 3);
+      ASSERT (write (c, "foo", 3) == 3);
+      ASSERT (read (c, buf, 3) == 3);
       shutdown (c, SHUT_RD);
       close (c);
       exit (0);
@@ -272,15 +275,16 @@ test_accept_first (void)
     {
       close (s);
       c = connect_to_socket (true);
+      ASSERT (c >= 0);
       if (poll1_nowait (c, POLLOUT | POLLWRNORM | POLLRDBAND)
           != (POLLOUT | POLLWRNORM))
         failed ("cannot write after blocking connect");
-      write (c, "foo", 3);
+      ASSERT (write (c, "foo", 3) == 3);
       wait (&pid);
       if (poll1_wait (c, POLLIN) != POLLIN)
         failed ("cannot read data left in the socket by closed process");
-      read (c, buf, 3);
-      write (c, "foo", 3);
+      ASSERT (read (c, buf, 3) == 3);
+      ASSERT (write (c, "foo", 3) == 3);
       if ((poll1_wait (c, POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)
         failed ("expecting POLLHUP after shutdown");
       close (c);
@@ -304,7 +308,7 @@ test_pair (int rd, int wd)
       != POLLWRNORM)
     failed ("expecting POLLWRNORM before writing");
 
-  write (wd, "foo", 3);
+  ASSERT (write (wd, "foo", 3) == 3);
   if (poll1_wait (rd, POLLIN | POLLRDNORM) != (POLLIN | POLLRDNORM))
     failed ("expecting POLLIN | POLLRDNORM after writing");
   if (poll1_nowait (rd, POLLIN) != POLLIN)
@@ -312,7 +316,7 @@ test_pair (int rd, int wd)
   if (poll1_nowait (rd, POLLRDNORM) != POLLRDNORM)
     failed ("expecting POLLRDNORM after writing");
 
-  read (rd, buf, 3);
+  ASSERT (read (rd, buf, 3) == 3);
 }
 
 
@@ -327,12 +331,15 @@ test_socket_pair (void)
   int s = open_server_socket ();
   int c1 = connect_to_socket (false);
   int c2 = accept (s, (struct sockaddr *) &ia, &addrlen);
+  ASSERT (s >= 0);
+  ASSERT (c1 >= 0);
+  ASSERT (c2 >= 0);
 
   close (s);
 
   test_pair (c1, c2);
   close (c1);
-  write (c2, "foo", 3);
+  ASSERT (write (c2, "foo", 3) == 3);
   if ((poll1_nowait (c2, POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)
     failed ("expecting POLLHUP after shutdown");
 
@@ -347,7 +354,7 @@ test_pipe (void)
 {
   int fd[2];
 
-  pipe (fd);
+  ASSERT (pipe (fd) >= 0);
   test_pair (fd[0], fd[1]);
   close (fd[0]);
   if ((poll1_wait (fd[1], POLLIN | POLLOUT) & (POLLHUP | POLLERR)) == 0)

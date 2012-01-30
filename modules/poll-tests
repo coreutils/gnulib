@@ -1,6 +1,7 @@
 Files:
-tests/signature.h
 tests/test-poll.c
+tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdbool
