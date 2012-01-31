@@ -21,7 +21,24 @@
 /* Specification.  */
 #include <stdio.h>
 
-#if HAVE_POPEN
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+/* Native Windows API.  */
+
+# include <string.h>
+
+FILE *
+popen (const char *filename, const char *mode)
+{
+  /* Use binary mode by default.  */
+  if (strcmp (mode, "r") == 0)
+    mode = "rb";
+  else if (strcmp (mode, "w") == 0)
+    mode = "wb";
+
+  return _popen (filename, mode);
+}
+
+#else
 
 # include <errno.h>
 # include <fcntl.h>
@@ -33,7 +50,7 @@
 FILE *
 rpl_popen (const char *filename, const char *mode)
 {
-  /* The mingw popen works fine, and all other platforms have fcntl.
+  /* All other platforms have popen and fcntl.
      The bug of the child clobbering its own file descriptors if stdin
      or stdout was closed in the parent can be worked around by
      opening those two fds as close-on-exec to begin with.  */
@@ -81,23 +98,6 @@ rpl_popen (const char *filename, const char *mode)
     close (STDOUT_FILENO);
   errno = saved_errno;
   return result;
-}
-
-#else
-/* Native Windows API.  */
-
-# include <string.h>
-
-FILE *
-popen (const char *filename, const char *mode)
-{
-  /* Use binary mode by default.  */
-  if (strcmp (mode, "r") == 0)
-    mode = "rb";
-  else if (strcmp (mode, "w") == 0)
-    mode = "wb";
-
-  return _popen (filename, mode);
 }
 
 #endif

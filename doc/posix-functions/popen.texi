@@ -20,6 +20,9 @@ Cygwin 1.5.x.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On native Windows platforms, this functions terminates the current process
+with exit code 127 if the environment variable @code{COMSPEC} is not set.
+@item
 Some platforms mistakenly set the close-on-exec bit, then if it is
 cleared by the application, the platform then leaks file descriptors
 from earlier @code{popen} calls into subsequent @code{popen} children:
