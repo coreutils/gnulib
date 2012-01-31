@@ -1,5 +1,10 @@
 2012-01-29  Bruno Haible  <bruno@clisp.org>
 
+	pclose: Fix typo.
+	* lib/stdio.in.h (pclose): Fix typo in warning message.
+
+2012-01-29  Bruno Haible  <bruno@clisp.org>
+
 	doc about getlogin_r, setstate.
 	* doc/posix-functions/getlogin_r.texi: List the incompatible
 	declaration problem under "not fixed by gnulib".

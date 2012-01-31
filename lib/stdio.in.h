@@ -779,7 +779,7 @@ _GL_CXXALIASWARN (pclose);
 #elif defined GNULIB_POSIXCHECK
 # undef pclose
 # if HAVE_RAW_DECL_PCLOSE
-_GL_WARN_ON_USE (pclose, "popen is unportable - "
+_GL_WARN_ON_USE (pclose, "pclose is unportable - "
                  "use gnulib module pclose for more portability");
 # endif
 #endif
