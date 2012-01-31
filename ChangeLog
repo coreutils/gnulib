@@ -1,9 +1,9 @@
-2012-01-29  Bruno Haible  <bruno@clisp.org>
+2012-01-30  Bruno Haible  <bruno@clisp.org>
 
 	pclose: Fix typo.
 	* lib/stdio.in.h (pclose): Fix typo in warning message.
 
-2012-01-29  Bruno Haible  <bruno@clisp.org>
+2012-01-30  Bruno Haible  <bruno@clisp.org>
 
 	doc about getlogin_r, setstate.
 	* doc/posix-functions/getlogin_r.texi: List the incompatible
@@ -11,7 +11,7 @@
 	* doc/posix-functions/setstate.texi: Mention incompatible declaration
 	problem on Solaris 11 and other platforms.
 
-2012-01-29  Chuanchang Jia  <chuanchang.jia@gmail.com>  (tiny change)
+2012-01-30  Chuanchang Jia  <chuanchang.jia@gmail.com>  (tiny change)
 	    Bruno Haible  <bruno@clisp.org>
 
 	poll tests: Make test more robust.
@@ -20,7 +20,7 @@
 	return value of various I/O operations.
 	* modules/poll-tests (Files): Add tests/macros.h.
 
-2012-01-29  Bruno Haible  <bruno@clisp.org>
+2012-01-30  Bruno Haible  <bruno@clisp.org>
 
 	sys_stat: Fix support for mingw64 and MSVC.
 	* lib/sys_stat.in.h (stat) [AIX]: Don't redefine 'stat' if the system
@@ -29,7 +29,7 @@
 	stat itself.
 	Reported by Marc-André Lureau <marcandre.lureau@redhat.com>.
 
-2012-01-29  Bruno Haible  <bruno@clisp.org>
+2012-01-30  Bruno Haible  <bruno@clisp.org>
 
 	wcwidth: Work around bug in UTF-8 locale on OpenBSD 5.0.
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Test also wcwidth of U+05B0.
