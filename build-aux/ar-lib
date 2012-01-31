@@ -2,7 +2,7 @@
 # Wrapper for Microsoft lib.exe
 
 me=ar-lib
-scriptversion=2012-01-04.17; # UTC
+scriptversion=2012-01-30.22; # UTC
 
 # Copyright (C) 2010, 2012 Free Software Foundation, Inc.
 # Written by Peter Rosin <peda@lysator.liu.se>.
@@ -165,6 +165,7 @@ do
     r*) replace=yes ;;
     c*) create=yes  ;;
     u*)             ;; # TODO: don't ignore the update modifier
+    v*)             ;; # TODO: don't ignore the verbose modifier
     *)
       func_error "unknown action specified"
       ;;
