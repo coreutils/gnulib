@@ -1,3 +1,8 @@
+2012-01-31  Karl Berry  <karl@gnu.org>
+
+	setstate doc: typo.
+	* doc/posix-functions/setstate.texi (setstate): { not (.
+
 2012-01-31  Bruno Haible  <bruno@clisp.org>
 
 	popen: Make more robust on Windows.
