@@ -17,6 +17,12 @@
 
    Written by Paul Eggert, Andreas Grünbacher, and Bruno Haible.  */
 
+/* Without this pragma, gcc 4.7.0 20120126 may suggest that the
+   file_has_acl function might be candidate for attribute 'const'  */
+#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=const"
+#endif
+
 #include <config.h>
 
 #include "acl.h"

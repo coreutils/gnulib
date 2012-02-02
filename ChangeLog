@@ -1,3 +1,11 @@
+2012-02-02  Jim Meyering  <meyering@redhat.com>
+
+	file-has-acl: suppress a warning from gcc -Wsuggest-attribute=const
+	* lib/file-has-acl.c (file_has_acl): This function (for some #ifdefs)
+	would evoke a new gcc warning.  Given all of the #ifdefs, it is better
+	not even to try to add the attribute.  Instead, add a pragma to suppress
+	the suggestion/warning.
+
 2012-01-31  Karl Berry  <karl@gnu.org>
 
 	setstate doc: typo.
