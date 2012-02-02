@@ -1015,8 +1015,8 @@ update-NEWS-hash: NEWS
 # setting this to ' && !/PRAGMA_SYSTEM_HEADER/'.
 _makefile_at_at_check_exceptions ?=
 sc_makefile_at_at_check:
-	@perl -ne '/\@[A-Z_0-9]+\@/'					\
-          -e ' && !/([A-Z_0-9]+)\s+=.*\@\1\@$$/'			\
+	@perl -ne '/\@\w+\@/'						\
+          -e ' && !/(\w+)\s+=.*\@\1\@$$/'				\
           -e ''$(_makefile_at_at_check_exceptions)			\
 	  -e 'and (print "$$ARGV:$$.: $$_"), $$m=1; END {exit !$$m}'	\
 	    $$($(VC_LIST_EXCEPT) | grep -E '(^|/)(Makefile\.am|[^/]+\.mk)$$') \
