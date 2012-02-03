@@ -21,6 +21,10 @@
 
 #include "stdio-impl.h"
 
+#if defined EPLAN9                  /* Plan9 */
+# include <fcntl.h>
+#endif
+
 bool
 freadable (FILE *fp)
 {
@@ -41,6 +45,18 @@ freadable (FILE *fp)
   return (fp->_Mode & 0x1 /* _MOPENR */) != 0;
 #elif defined __MINT__              /* Atari FreeMiNT */
   return fp->__mode.__read;
+#elif defined EPLAN9                /* Plan9 */
+  int fd = fp->fd;
+  if (fd >= 0)
+    {
+      int flags = fcntl (fd, F_GETFL, NULL);
+      if (flags >= 0)
+        {
+          flags &= O_ACCMODE;
+          return (flags == O_RDONLY || flags == O_RDWR);
+        }
+    }
+  return 0;
 #else
 # error "Please port gnulib freadable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif

@@ -26,6 +26,8 @@
 # include <sys/param.h>
 #endif
 
+#include <errno.h>                             /* For detecting Plan9.  */
+
 #if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
 
 # if defined __DragonFly__          /* DragonFly */

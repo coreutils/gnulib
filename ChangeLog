@@ -1,3 +1,21 @@
+2012-02-03  Bruno Haible  <bruno@clisp.org>
+
+	stdioext: Add tentative support for Plan9.
+	* lib/stdio-impl.h: Include <errno.h>.
+	* lib/fseterr.c (fseterr) [EPLAN9]: Add conditional code.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fbufmode.c (fbufmode): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/freadahead.c (freadahead): Likewise.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/fseeko.c (rpl_fseeko): Likewise.
+	* m4/fpending.m4 (gl_PREREQ_FPENDING): Add a variant for Plan9.
+	Reported by Jens Staal <staal1978@gmail.com>.
+
 2012-02-02  Jim Meyering  <meyering@redhat.com>
 
 	file-has-acl: suppress a warning from gcc -Wsuggest-attribute=const

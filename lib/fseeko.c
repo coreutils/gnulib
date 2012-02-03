@@ -89,6 +89,9 @@ fseeko (FILE *fp, off_t offset, int whence)
       && fp->__get_limit == fp->__bufp
       && fp->__put_limit == fp->__bufp
       && !fp->__pushed_back)
+#elif defined EPLAN9                /* Plan9 */
+  if (fp->rp == fp->buf
+      && fp->wp == fp->buf)
 #else
   #error "Please port gnulib fseeko.c to your platform! Look at the code in fpurge.c, then report this to bug-gnulib."
 #endif

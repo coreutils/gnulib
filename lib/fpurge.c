@@ -134,6 +134,9 @@ fpurge (FILE *fp)
   /* Nothing in the buffer, next putc is nontrivial.  */
   fp->__put_limit = fp->__buffer;
   return 0;
+# elif defined EPLAN9               /* Plan9 */
+  fp->rp = fp->wp = fp->lp = fp->buf;
+  return 0;
 # else
 #  error "Please port gnulib fpurge.c to your platform! Look at the definitions of fflush, setvbuf and ungetc on your system, then report this to bug-gnulib."
 # endif

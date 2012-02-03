@@ -101,6 +101,13 @@ freadptr (FILE *fp, size_t *sizep)
     return NULL;
   *sizep = size;
   return fp->__bufp;
+#elif defined EPLAN9                /* Plan9 */
+  if (fp->state == 4 /* WR */)
+    return NULL;
+  if (fp->rp >= fp->wp)
+    return NULL;
+  *sizep = fp->wp - fp->rp;
+  return fp->rp;
 #elif defined SLOW_BUT_NO_HACKS     /* users can define this */
   /* This implementation is correct on any ANSI C platform.  It is just
      awfully slow.  */

@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 
 # Copyright (C) 2000-2001, 2004-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -60,6 +60,9 @@ AC_DEFUN([gl_PREREQ_FPENDING],
                                                                         \
           '# Minix'                                                     \
           'fp->_ptr - fp->_buf'                                         \
+                                                                        \
+          '# Plan9'                                                     \
+          'fp->wp - fp->buf'                                            \
                                                                         \
           '# VMS'                                                       \
           '(*fp)->_ptr - (*fp)->_base'                                  \

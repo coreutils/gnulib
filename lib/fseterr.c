@@ -45,6 +45,9 @@ fseterr (FILE *fp)
   fp->_Mode |= 0x200 /* _MERR */;
 #elif defined __MINT__              /* Atari FreeMiNT */
   fp->__error = 1;
+#elif defined EPLAN9                /* Plan9 */
+  if (fp->state != 0 /* CLOSED */)
+    fp->state = 5 /* ERR */;
 #elif 0                             /* unknown  */
   /* Portable fallback, based on an idea by Rich Felker.
      Wow! 6 system calls for something that is just a bit operation!

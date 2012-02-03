@@ -41,6 +41,18 @@ fwritable (FILE *fp)
   return (fp->_Mode & 0x2 /* _MOPENW */) != 0;
 #elif defined __MINT__              /* Atari FreeMiNT */
   return fp->__mode.__write;
+#elif defined EPLAN9                /* Plan9 */
+  int fd = fp->fd;
+  if (fd >= 0)
+    {
+      int flags = fcntl (fd, F_GETFL, NULL);
+      if (flags >= 0)
+        {
+          flags &= O_ACCMODE;
+          return (flags == O_WRONLY || flags == O_RDWR);
+        }
+    }
+  return 0;
 #else
 # error "Please port gnulib fwritable.c to your platform! Look at the definition of fopen, fdopen on your system, then report this to bug-gnulib."
 #endif

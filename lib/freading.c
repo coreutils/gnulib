@@ -62,6 +62,10 @@ freading (FILE *fp)
 #  else
   return (fp->__buffer < fp->__get_limit /*|| fp->__bufp == fp->__put_limit ??*/);
 #  endif
+# elif defined EPLAN9                /* Plan9 */
+  if (fp->state == 0 /* CLOSED */ || fp->state == 4 /* WR */)
+    return 0;
+  return (fp->state == 3 /* RD */ && (fp->bufl == 0 || fp->rp < fp->wp));
 # else
 #  error "Please port gnulib freading.c to your platform!"
 # endif
