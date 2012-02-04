@@ -16,6 +16,7 @@ unistd
 sys_socket
 nonblocking
 wait-process
+progname
 environ
 posix_spawnp
 netinet_in

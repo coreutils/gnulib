@@ -1,5 +1,10 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	nonblocking-socket tests: Fix a NULL program name in a diagnostic.
+	* tests/test-nonblocking-socket-main.c: Include progname.h.
+	(main): Invoke set_program_name.
+	* modules/nonblocking-socket-tests (Depends-on): Add progname.
+
 	nonblocking-pipe tests: Fix a NULL program name in a diagnostic.
 	* tests/test-nonblocking-pipe-main.c: Include progname.h.
 	(main): Invoke set_program_name.

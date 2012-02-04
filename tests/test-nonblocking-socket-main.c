@@ -33,6 +33,7 @@
 
 #include "nonblocking.h"
 #include "wait-process.h"
+#include "progname.h"
 
 #include "macros.h"
 #include "socket-server.h"
@@ -43,13 +44,18 @@
 int
 main (int argc, char *argv[])
 {
-  const char *child_path = argv[1];
-  int test = atoi (argv[2]);
+  const char *child_path;
+  int test;
   int server;
   int port;
   int child;
   int server_socket;
   int exitcode;
+
+  set_program_name (argv[0]);
+
+  child_path = argv[1];
+  test = atoi (argv[2]);
 
   /* Create a server socket.  */
   server = create_server (0, 1, &port);
