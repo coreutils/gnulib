@@ -1,5 +1,11 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	ioctl: Fix test failure on native Windows.
+	* lib/ioctl.c: Include msvc-nothrow.h.
+	(primary_ioctl): If fd is not a valid handle, set errno to EBADF.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
 	fsync: Avoid test failure on native Windows.
 	* lib/fsync.c (fsync) [Windows]: Don't fail if the handle is merely
 	read-only.

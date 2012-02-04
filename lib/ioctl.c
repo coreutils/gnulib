@@ -47,6 +47,8 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 # include <errno.h>
 
 # include "fd-hook.h"
+/* Get _get_osfhandle.  */
+# include "msvc-nothrow.h"
 
 static int
 primary_ioctl (int fd, int request, void *arg)
@@ -55,7 +57,10 @@ primary_ioctl (int fd, int request, void *arg)
      fds non-blocking, use the gnulib 'nonblocking' module, until
      gnulib implements fcntl F_GETFL / F_SETFL with O_NONBLOCK.  */
 
-  errno = ENOSYS;
+  if ((HANDLE) _get_osfhandle (fd) != INVALID_HANDLE_VALUE)
+    errno = ENOSYS;
+  else
+    errno = EBADF;
   return -1;
 }
 
