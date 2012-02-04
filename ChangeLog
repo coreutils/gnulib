@@ -1,5 +1,12 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	isatty: Fix test failure of ptsname_r on native Windows.
+	* lib/isatty.c (_isatty_nothrow): Upon exception, return 0, not -1,
+	and don't set errno.
+	(isatty): Test first whether fd is valid. Set errno when returning 0.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
 	spawn-pipe tests: Fix a NULL program name in a diagnostic.
 	* tests/test-spawn-pipe-main.c: Include progname.h.
 	(main): Invoke set_program_name.
