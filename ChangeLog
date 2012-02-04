@@ -1,6 +1,12 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
 	sys_select: Avoid syntax error on OpenBSD 5.0.
+	* lib/sys_select.in.h [OpenBSD]: When /usr/include/pthread.h is
+	currently being included, just include the system's <sys/select.h>.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
+	sys_select: Avoid syntax error on OpenBSD 5.0.
 	* lib/sys_select.in.h: Include <signal.h> only after the include_next
 	<sys/select.h>, not before.
 	Reported by Jiri B <jirib@devio.us>.

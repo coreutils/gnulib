@@ -42,6 +42,15 @@
 # define _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_BSD_TYPES_H
 # @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
 
+/* On OpenBSD 5.0, <pthread.h> includes <sys/types.h>, which includes
+   <sys/select.h>.  At this point we cannot include <signal.h>, because that
+   includes gnulib's pthread.h override, which gives a syntax error because
+   /usr/include/pthread.h has not been completely processed.  Simply delegate
+   to the system's header in this case.  */
+#elif @HAVE_SYS_SELECT_H@ && defined __OpenBSD__ && (defined _PTHREAD_H_ && !defined PTHREAD_MUTEX_INITIALIZER)
+
+# @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
+
 #else
 
 #ifndef _@GUARD_PREFIX@_SYS_SELECT_H
