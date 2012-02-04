@@ -1,3 +1,9 @@
+2012-02-04  Eric Blake  <eblake@redhat.com>
+
+	canonicalize: fix // handling
+	* lib/canonicalize.c (canonicalize_filename_mode): Don't convert
+	/// to //, since only // is special.
+
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
 	ioctl: Fix test failure on native Windows.
