@@ -23,6 +23,9 @@
 
 #include "macros.h"
 
+void *memchunk1;
+void *memchunk2;
+
 int
 main ()
 {
@@ -30,11 +33,11 @@ main ()
 
   value1 = get_rusage_as ();
 
-  malloc (0x88);
+  memchunk1 = malloc (0x88);
 
   value2 = get_rusage_as ();
 
-  malloc (0x281237);
+  memchunk2 = malloc (0x281237);
 
   value3 = get_rusage_as ();
 

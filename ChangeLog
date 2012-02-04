@@ -1,5 +1,13 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	get-rusage-as, get-rusage-data tests: Avoid test failure with gcc-4.7.
+	* tests/test-get-rusage-as.c (main): Assign the malloc() results to
+	global variables.
+	* tests/test-get-rusage-data.c (main): Likewise.
+	Reported by Jim Meyering.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
 	stdioext: Fix last commit.
 	* lib/fwritable.c [EPLAN9]: Include <fcntl.h>.
 
