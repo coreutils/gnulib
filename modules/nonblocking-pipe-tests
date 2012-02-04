@@ -13,6 +13,7 @@ stdbool
 unistd
 nonblocking
 wait-process
+progname
 pipe-posix
 dup2
 environ

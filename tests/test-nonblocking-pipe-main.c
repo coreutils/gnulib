@@ -32,6 +32,7 @@
 
 #include "nonblocking.h"
 #include "wait-process.h"
+#include "progname.h"
 
 #include "macros.h"
 #include "test-nonblocking-pipe.h"
@@ -41,11 +42,16 @@
 int
 main (int argc, char *argv[])
 {
-  const char *child_path = argv[1];
-  int test = atoi (argv[2]);
+  const char *child_path;
+  int test;
   int fd[2];
   int child;
   int exitcode;
+
+  set_program_name (argv[0]);
+
+  child_path = argv[1];
+  test = atoi (argv[2]);
 
   /* Create a pipe.  */
   ASSERT (pipe (fd) >= 0);
