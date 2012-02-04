@@ -1,3 +1,8 @@
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
+	stdioext: Fix last commit.
+	* lib/fwritable.c [EPLAN9]: Include <fcntl.h>.
+
 2012-02-03  Bruno Haible  <bruno@clisp.org>
 
 	stdioext: Add tentative support for Plan9.

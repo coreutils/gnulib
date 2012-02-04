@@ -21,6 +21,10 @@
 
 #include "stdio-impl.h"
 
+#if defined EPLAN9                  /* Plan9 */
+# include <fcntl.h>
+#endif
+
 bool
 fwritable (FILE *fp)
 {
