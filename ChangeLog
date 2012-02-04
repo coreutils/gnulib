@@ -1,5 +1,8 @@
 2012-02-04  Eric Blake  <eblake@redhat.com>
 
+	canonicalize-lgpl: fix // handling
+	* lib/canonicalize-lgpl.c (__realpath): Don't convert /// to //.
+
 	canonicalize: fix // handling
 	* lib/canonicalize.c (canonicalize_filename_mode): Don't convert
 	/// to //, since only // is special.
