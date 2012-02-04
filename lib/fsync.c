@@ -57,6 +57,11 @@ fsync (int fd)
       err = GetLastError ();
       switch (err)
         {
+        case ERROR_ACCESS_DENIED:
+          /* For a read-only handle, fsync should succeed, even though we have
+             no way to sync the access-time changes.  */
+          return 0;
+
           /* eg. Trying to fsync a tty. */
         case ERROR_INVALID_HANDLE:
           errno = EINVAL;

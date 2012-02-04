@@ -1,5 +1,11 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	fsync: Avoid test failure on native Windows.
+	* lib/fsync.c (fsync) [Windows]: Don't fail if the handle is merely
+	read-only.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
 	sys_select: Avoid syntax error on OpenBSD 5.0.
 	* lib/sys_select.in.h [OpenBSD]: When /usr/include/pthread.h is
 	currently being included, just include the system's <sys/select.h>.
