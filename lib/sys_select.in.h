@@ -51,12 +51,6 @@
    in <signal.h> where it belongs.  */
 #include <sys/types.h>
 
-/* Get definition of 'sigset_t'.
-   But avoid namespace pollution on glibc systems.  */
-#if !(defined __GLIBC__ && !defined __UCLIBC__)
-# include <signal.h>
-#endif
-
 #if @HAVE_SYS_SELECT_H@
 
 /* On OSF/1 4.0, <sys/select.h> provides only a forward declaration
@@ -79,6 +73,14 @@
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_SYS_SELECT_H@
 
+#endif
+
+/* Get definition of 'sigset_t'.
+   But avoid namespace pollution on glibc systems.
+   Do this after the include_next (for the sake of OpenBSD 5.0) but before
+   the split double-inclusion guard (for the sake of Solaris).  */
+#if !(defined __GLIBC__ && !defined __UCLIBC__)
+# include <signal.h>
 #endif
 
 #ifndef _@GUARD_PREFIX@_SYS_SELECT_H

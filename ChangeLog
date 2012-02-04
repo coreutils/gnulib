@@ -1,5 +1,12 @@
 2012-02-04  Bruno Haible  <bruno@clisp.org>
 
+	sys_select: Avoid syntax error on OpenBSD 5.0.
+	* lib/sys_select.in.h: Include <signal.h> only after the include_next
+	<sys/select.h>, not before.
+	Reported by Jiri B <jirib@devio.us>.
+
+2012-02-04  Bruno Haible  <bruno@clisp.org>
+
 	get-rusage-as, get-rusage-data tests: Avoid test failure with gcc-4.7.
 	* tests/test-get-rusage-as.c (main): Assign the malloc() results to
 	global variables.
