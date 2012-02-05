@@ -6,7 +6,7 @@ echo Hello world > in.tmp
 echo world > xout.tmp
 
 fail=0
-# Test with seekable stdin; followon process must see remaining data
+# Test with seekable stdin; follow-on process must see remaining data
 (test-closein; cat) < in.tmp > out1.tmp || fail=1
 cmp out1.tmp in.tmp || fail=1
 

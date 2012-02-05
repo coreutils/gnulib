@@ -456,7 +456,7 @@ kernel_rem_pio2 (double *x, double *y, int e0, int nx, int prec,
 
   jz = jk;
 recompute:
-  /* distill q[] into iq[] reversingly */
+  /* distill q[] into iq[] in reverse order */
   for (i = 0, j = jz, z = q[jz]; j > 0; i++, j--)
     {
       fw = (double) ((int) (twon24 * z));

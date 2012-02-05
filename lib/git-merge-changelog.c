@@ -958,7 +958,7 @@ static const struct option long_options[] =
   { NULL, 0, NULL, 0 }
 };
 
-/* Print a usage mesage and exit.  */
+/* Print a usage message and exit.  */
 static void
 usage (int status)
 {

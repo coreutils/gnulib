@@ -143,7 +143,7 @@ in_off_t_range (intmax_t a)
 These macros yield 1 if the corresponding C operators might not yield
 numerically correct answers due to arithmetic overflow.  They do not
 rely on undefined or implementation-defined behavior.  They expand to
-integer constant expresssions if their arguments are.  Their
+integer constant expressions if their arguments are.  Their
 implementations are simple and straightforward, but they are typically
 harder to use than the integer type overflow macros.  @xref{Integer
 Type Overflow}.
@@ -257,7 +257,7 @@ These macros yield 1 if the corresponding C operators might not yield
 numerically correct answers due to arithmetic overflow of an integer
 type.  They work correctly on all known practical hosts, and do not
 rely on undefined behavior due to signed arithmetic overflow.  They
-expand to integer constant expresssions if their arguments are.  They
+expand to integer constant expressions if their arguments are.  They
 are easier to use than the integer range overflow macros
 (@pxref{Integer Range Overflow}).
 

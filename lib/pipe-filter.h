@@ -119,7 +119,7 @@ typedef void (*done_read_fn) (void *data_read, size_t num_bytes_read,
    true, otherwise return 127.
    Callback arguments are as described above.
 
-   Data is alternatingly written to the subprocess, through the functions
+   Data is alternately written to the subprocess, through the functions
    prepare_write and done_write, and read from the subprocess, through the
    functions prepare_read and done_read.
 

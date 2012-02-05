@@ -14,7 +14,7 @@ else
   cr='\r'
 fi
 
-# Test with seekable stdin; the followon process must see remaining data.
+# Test with seekable stdin; the follow-on process must see remaining data.
 tr @ '\177' <<EOF > in.tmp
 nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn - entire line consumed
 y@n - backspace does not change result

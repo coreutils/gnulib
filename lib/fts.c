@@ -704,7 +704,7 @@ leaf_optimization_applies (int dir_fd)
 
   switch (fs_buf.f_type)
     {
-      /* List here the file system types that lack useable dirent.d_type
+      /* List here the file system types that lack usable dirent.d_type
          info, yet for which the optimization does apply.  */
     case S_MAGIC_REISERFS:
       return true;

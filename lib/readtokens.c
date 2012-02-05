@@ -18,7 +18,7 @@
 
    Written by Jim Meyering. */
 
-/* This almost supercedes xreadline stuff -- using delim="\n"
+/* This almost supersedes xreadline stuff -- using delim="\n"
    gives the same functionality, except that these functions
    would never return empty lines. */
 

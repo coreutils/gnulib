@@ -1853,7 +1853,7 @@ matching or searching with the pattern buffer.
 @node Using Registers
 @subsection Using Registers
 
-A group in a regular expression can match a (posssibly empty) substring
+A group in a regular expression can match a (possibly empty) substring
 of the string that regular expression as a whole matched.  The matcher
 remembers the beginning and end of the substring matched by
 each group.

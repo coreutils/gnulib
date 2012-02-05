@@ -495,7 +495,7 @@ test_once (void)
   for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {
       /* Wait until every thread is ready.  */
-      dbgprintf ("Main thread before synchonizing for round %d\n", repeat);
+      dbgprintf ("Main thread before synchronizing for round %d\n", repeat);
       for (;;)
         {
           int ready_count = 0;
@@ -509,7 +509,7 @@ test_once (void)
             break;
           yield ();
         }
-      dbgprintf ("Main thread after  synchonizing for round %d\n", repeat);
+      dbgprintf ("Main thread after  synchronizing for round %d\n", repeat);
 
       if (repeat > 0)
         {

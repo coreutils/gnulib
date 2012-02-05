@@ -115,7 +115,7 @@ make_dir_parents (char *dir,
       if (0 <= prefix_len)
         {
           /* If the ownership might change, or if the directory will be
-             writeable to other users and its special mode bits may
+             writable to other users and its special mode bits may
              change after the directory is created, create it with
              more restrictive permissions at first, so unauthorized
              users cannot nip in before the directory is ready.  */

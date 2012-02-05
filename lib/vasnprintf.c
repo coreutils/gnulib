@@ -2814,7 +2814,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   if (has_width)
                     {
 #  if ENABLE_UNISTDIO
-                      /* Outside POSIX, it's preferrable to compare the width
+                      /* Outside POSIX, it's preferable to compare the width
                          against the number of _characters_ of the converted
                          value.  */
                       w = DCHAR_MBSNLEN (result + length, characters);
@@ -5417,7 +5417,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       {
                         size_t w;
 # if ENABLE_UNISTDIO
-                        /* Outside POSIX, it's preferrable to compare the width
+                        /* Outside POSIX, it's preferable to compare the width
                            against the number of _characters_ of the converted
                            value.  */
                         w = DCHAR_MBSNLEN (result + length, count);

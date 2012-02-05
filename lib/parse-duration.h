@@ -31,7 +31,7 @@
   the string may contain:  NNN Y NNN M NNN W NNN d NNN h NNN m NNN s
   This represents NNN years, NNN months, NNN weeks, NNN days, NNN hours,
     NNN minutes and NNN seconds.
-  The embeded white space is optional.
+  The embedded white space is optional.
   These terms must appear in this order.
   Case is significant:  'M' is months and 'm' is minutes.
   The final "s" is optional.

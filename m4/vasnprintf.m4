@@ -1,4 +1,4 @@
-# vasnprintf.m4 serial 34
+# vasnprintf.m4 serial 35
 dnl Copyright (C) 2002-2004, 2006-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AC_DEFUN([gl_REPLACE_VASNPRINTF],
   gl_PREREQ_ASNPRINTF
 ])
 
-# Prequisites of lib/printf-args.h, lib/printf-args.c.
+# Prerequisites of lib/printf-args.h, lib/printf-args.c.
 AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
 [
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
@@ -37,7 +37,7 @@ AC_DEFUN([gl_PREREQ_PRINTF_ARGS],
   AC_REQUIRE([gt_TYPE_WINT_T])
 ])
 
-# Prequisites of lib/printf-parse.h, lib/printf-parse.c.
+# Prerequisites of lib/printf-parse.h, lib/printf-parse.c.
 AC_DEFUN([gl_PREREQ_PRINTF_PARSE],
 [
   AC_REQUIRE([gl_FEATURES_H])

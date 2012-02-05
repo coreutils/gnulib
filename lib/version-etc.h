@@ -37,7 +37,7 @@ extern const char version_etc_copyright[];
    standard way: command and package names, package version, followed
    by a short GPLv3+ notice and a list of up to 10 author names.
 
-   If COMMAND_NAME is NULL, the PACKAGE is asumed to be the name of
+   If COMMAND_NAME is NULL, the PACKAGE is assumed to be the name of
    the program.  The formats are therefore:
 
    PACKAGE VERSION

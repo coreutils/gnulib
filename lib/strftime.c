@@ -40,7 +40,7 @@
 extern char *tzname[];
 #endif
 
-/* Do multibyte processing if multibytes are supported, unless
+/* Do multibyte processing if multibyte encodings are supported, unless
    multibyte sequences are safe in formats.  Multibyte sequences are
    safe if they cannot contain byte sequences that look like format
    conversion specifications.  The multibyte encodings used by the

@@ -59,7 +59,7 @@ rpl_popen (const char *filename, const char *mode)
      the fd leaks into subsequent popen calls.  We could work around
      this by maintaining a list of all fd's opened by popen, and
      temporarily marking them cloexec around the real popen call, but
-     we would also have to override pclose, and the bookkeepping seems
+     we would also have to override pclose, and the bookkeeping seems
      extreme given that cygwin 1.7 no longer has the bug.  */
   FILE *result;
   int cloexec0 = fcntl (STDIN_FILENO, F_GETFD);

@@ -921,7 +921,7 @@ re_search_internal (const regex_t *preg,
 	    goto free_return;
 	}
 
-      /* At last, add the offset to the each registers, since we slided
+      /* At last, add the offset to each register, since we slid
 	 the buffers so that we could assume that the matching starts
 	 from 0.  */
       for (reg_idx = 0; reg_idx < nmatch; ++reg_idx)
@@ -1105,7 +1105,7 @@ acquire_init_state_context (reg_errcode_t *err, const re_match_context_t *mctx,
    FL_LONGEST_MATCH means we want the POSIX longest matching.
    If P_MATCH_FIRST is not NULL, and the match fails, it is set to the
    next place where we may want to try matching.
-   Note that the matcher assume that the maching starts from the current
+   Note that the matcher assumes that the matching starts from the current
    index of the buffer.  */
 
 static Idx
@@ -2456,7 +2456,7 @@ find_recover_state (reg_errcode_t *err, re_match_context_t *mctx)
 /* From the node set CUR_NODES, pick up the nodes whose types are
    OP_OPEN_SUBEXP and which have corresponding back references in the regular
    expression. And register them to use them later for evaluating the
-   correspoding back references.  */
+   corresponding back references.  */
 
 static reg_errcode_t
 internal_function
@@ -3387,7 +3387,7 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
   dests_node = dests_alloc->dests_node;
   dests_ch = dests_alloc->dests_ch;
 
-  /* Initialize transiton table.  */
+  /* Initialize transition table.  */
   state->word_trtable = state->trtable = NULL;
 
   /* At first, group all nodes belonging to 'state' into several

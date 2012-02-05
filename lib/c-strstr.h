@@ -33,7 +33,7 @@ extern "C" {
         [this restriction is needed because of BIG5, BIG5-HKSCS, GBK, GB18030,
          Shift_JIS, JOHAB], and
      3. does not consist entirely of decimal digits, or has at least length 4
-        [this restricion is needed because of GB18030].
+        [this restriction is needed because of GB18030].
    This function is also safe to be called, even in a multibyte locale, if
    HAYSTACK and NEEDLE are known to both consist solely of printable ASCII
    characters excluding '\\' and '~'.  */

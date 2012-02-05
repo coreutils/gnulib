@@ -51,7 +51,7 @@
 
 /* Call AT_FUNC_F1 to operate on FILE, which is in the directory
    open on descriptor FD.  If AT_FUNC_USE_F1_COND is defined to a value,
-   AT_FUNC_POST_FILE_PARAM_DECLS must inlude a parameter named flag;
+   AT_FUNC_POST_FILE_PARAM_DECLS must include a parameter named flag;
    call AT_FUNC_F2 if FLAG is 0 or fail if FLAG contains more bits than
    AT_FUNC_USE_F1_COND.  Return int and fail with -1 unless AT_FUNC_RESULT
    or AT_FUNC_FAIL are defined.  If possible, do it without changing the

@@ -29,7 +29,7 @@ should use @samp{unsigned int foo : 1;} rather than @samp{bool foo : 1;}.
 @item
 Casts and automatic conversions to @samp{bool} don't test against the
 zero value or the null pointer, as they should.  Such casts should only
-be used if the casted value is known to be equal to 0 or 1.
+be used if the value is known to be equal to 0 or 1.
 @item
 You cannot assume that casting a floating point literal to @samp{bool} will
 result in a constant expression.

@@ -1,4 +1,4 @@
-# exponentd.m4 serial 2
+# exponentd.m4 serial 3
 dnl Copyright (C) 2007-2008, 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -80,7 +80,8 @@ int main ()
           dnl different sets of instructions: The older FPA instructions assume
           dnl that they are stored in big-endian word order, while the words
           dnl (like integer types) are stored in little-endian byte order.
-          dnl The newer VFP instructions assume little-endian order consistenly.
+          dnl The newer VFP instructions assume little-endian order
+          dnl consistently.
           AC_EGREP_CPP([mixed_endianness], [
 #if defined arm || defined __arm || defined __arm__
   mixed_endianness

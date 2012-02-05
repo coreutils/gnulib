@@ -27,7 +27,7 @@ extern "C" {
    given.
 
    If NAME is NULL, the package name (as given by the PACKAGE macro)
-   is asumed to be the name of the program.
+   is assumed to be the name of the program.
 
    This function is intended to be called before argp_parse().
 */

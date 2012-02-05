@@ -27,7 +27,7 @@
    Let's call this the "black-height" bh of the tree.  It follows that every
    such path contains exactly bh black and between 0 and bh red nodes.  (The
    extreme cases are a path containing only black nodes, and a path colored
-   alternatingly black-red-black-red-...-black-red.)  The height of the tree
+   alternately black-red-black-red-...-black-red.)  The height of the tree
    therefore is >= bh, <= 2*bh.
  */
 

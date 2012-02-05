@@ -125,7 +125,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
      significant bytes (positions j+1..3), but it does not matter since we
      already have a non-zero bit at position 8*j+7.
 
-     Similary, we compute tmp2 =
+     Similarly, we compute tmp2 =
        ((longword2 - repeated_one) & ~longword2) & (repeated_one << 7).
 
      The test whether any byte in longword1 or longword2 is zero is equivalent

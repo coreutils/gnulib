@@ -5558,7 +5558,7 @@ func_create_testdir ()
   # its dependencies.
   saved_inctests="$inctests"
   # When computing transitive closures, don't consider $module to depend on
-  # $module-tests. Need this becauses tests are implicitly GPL and may depend
+  # $module-tests. Need this because tests are implicitly GPL and may depend
   # on GPL modules - therefore we don't want a warning in this case.
   inctests=""
   for requested_module in $specified_modules; do

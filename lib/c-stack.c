@@ -237,7 +237,7 @@ segv_handler (int signo, siginfo_t *info,
 
      Note that although both Linux and Solaris provide
      sigaltstack, SA_ONSTACK, and SA_SIGINFO, currently only
-     Solaris satisfies the XSI heueristic.  This is because
+     Solaris satisfies the XSI heuristic.  This is because
      Solaris populates uc_stack with the details of the
      interrupted stack, while Linux populates it with the details
      of the current stack.  */

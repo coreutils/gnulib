@@ -92,7 +92,7 @@ fill_attribute (unsigned int i,
       exit (1);
     }
   if (strcmp (field2, "Cs") == 0)
-    /* Surrogates are UTF-16 artefacts, not real characters. Ignore them.  */
+    /* Surrogates are UTF-16 artifacts, not real characters. Ignore them.  */
     return;
   uni = &unicode_attributes[i];
   /* Copy the strings.  */
@@ -5698,7 +5698,7 @@ output_tables (const char *filename, const char *version)
   fprintf (stream, "END LC_IDENTIFICATION\n");
   fprintf (stream, "\n");
 
-  /* Verifications. */
+  /* Verification. */
   for (ch = 0; ch < 0x110000; ch++)
     {
       /* toupper restriction: "Only characters specified for the keywords

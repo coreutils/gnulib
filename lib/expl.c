@@ -36,7 +36,7 @@ expl (long double x)
 # include <float.h>
 
 static const long double C[] = {
-/* Chebyshev polynom coeficients for (exp(x)-1)/x */
+/* Chebyshev polynomial coefficients for (exp(x)-1)/x */
 # define P1 C[0]
 # define P2 C[1]
 # define P3 C[2]

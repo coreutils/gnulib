@@ -543,12 +543,12 @@ Date        Modules         Changes
                             <unistd.h>.
 
 2007-06-09  xallocsa        Renamed to xmalloca. The include file "xallocsa.h"
-                            was remamed to "xmalloca.h". The function was
+                            was renamed to "xmalloca.h". The function was
                             renamed:
                               xallocsa -> xmalloca
 
 2007-06-09  allocsa         Renamed to malloca. The include file "allocsa.h"
-                            was remamed to "malloca.h". The function-like
+                            was renamed to "malloca.h". The function-like
                             macros were renamed:
                               allocsa -> malloca
                               freesa -> freea

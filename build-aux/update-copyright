@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" ${1+"$@"}'
     if 0;
 # Update an FSF copyright year list to include the current year.
 
-my $VERSION = '2012-01-27.09:18'; # UTC
+my $VERSION = '2012-02-05.21:39'; # UTC
 
 # Copyright (C) 2009-2012 Free Software Foundation, Inc.
 #
@@ -24,7 +24,7 @@ my $VERSION = '2012-01-27.09:18'; # UTC
 
 # The arguments to this script should be names of files that contain
 # copyright statements to be updated.  The copyright holder's name
-# defaults to "Free Softward Foundation, Inc." but may be changed to
+# defaults to "Free Software Foundation, Inc." but may be changed to
 # any other name by using the "UPDATE_COPYRIGHT_HOLDER" environment
 # variable.
 #
@@ -43,7 +43,7 @@ my $VERSION = '2012-01-27.09:18'; # UTC
 # A warning is printed for every file for which no copyright
 # statement is recognized.
 #
-# Each file's copyright statement must be formated correctly in
+# Each file's copyright statement must be formatted correctly in
 # order to be recognized.  For example, each of these is fine:
 #
 #   Copyright @copyright{} 1990-2005, 2007-2009 Free Software

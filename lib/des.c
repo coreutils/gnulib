@@ -64,7 +64,7 @@
  *     // Encrypt the plaintext
  *     des_ecb_encrypt(&context, plaintext, ciphertext);
  *
- *     // To recover the orginal plaintext from ciphertext use:
+ *     // To recover the original plaintext from ciphertext use:
  *     des_ecb_decrypt(&context, ciphertext, recoverd);
  *
  *

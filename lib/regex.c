@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-/* Make sure noone compiles this code with a C++ compiler.  */
+/* Make sure no one compiles this code with a C++ compiler.  */
 #if defined __cplusplus && defined _LIBC
 # error "This is C code, use a C compiler"
 #endif

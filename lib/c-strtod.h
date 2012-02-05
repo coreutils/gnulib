@@ -20,7 +20,7 @@
    accepting only the ASCII digits '0'..'9', and only '.' as decimal point
    character.
    If ENDPTR is not NULL, set *ENDPTR to point to the first byte beyond the
-   parsed number or to NPTR if the string does not start with a parseable
+   parsed number or to NPTR if the string does not start with a parsable
    number.
    Return value:
    - If successful, return the value as a double or 'long double',

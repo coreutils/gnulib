@@ -1,4 +1,4 @@
-/* w32sock.h --- internal auxilliary functions for Windows socket functions
+/* w32sock.h --- internal auxiliary functions for Windows socket functions
 
    Copyright (C) 2008-2012 Free Software Foundation, Inc.
 

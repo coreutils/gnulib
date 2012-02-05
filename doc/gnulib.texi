@@ -90,7 +90,7 @@ If you need this particular \thing\, you may write to
 @node Introduction
 @chapter Introduction
 
-Gnulib is a source code library. It provides basic functionalities to
+Gnulib is a source code library. It provides basic functionality to
 programs and libraries.  Currently (as of October 2006) more than 30
 packages make use of Gnulib.
 
@@ -389,7 +389,7 @@ required module automatically, unless it is specified with option
 @code{--avoid} or it is marked as obsolete and the option
 @code{--with-obsolete} is not given.
 
-A test modules @code{foo-tests} implicity depends on the corresponding non-test
+A test modules @code{foo-tests} implicitly depends on the corresponding non-test
 module @code{foo}.  @code{foo} implicitly depends on @code{foo-tests} if the
 latter exists and if the option @code{--with-tests} has been given.
 

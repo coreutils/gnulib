@@ -64,7 +64,7 @@ main (void)
   ASSERT (strstr (str, "ndefined") == NULL);
 
   /* POSIX requires strerror to produce a non-NULL result for all
-     inputs; as an extension, we also guarantee a non-empty reseult.
+     inputs; as an extension, we also guarantee a non-empty result.
      Reporting EINVAL is optional.  */
   errno = 0;
   str = strerror (-3);

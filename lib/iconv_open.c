@@ -57,7 +57,7 @@ rpl_iconv_open (const char *tocode, const char *fromcode)
      iconv() to these encoding inserts a BOM, which is wrong.
      We do not need to handle conversion between arbitrary encodings and
      UTF-{16,32}{BE,LE}, because the 'striconveh' module implements two-step
-     conversion throough UTF-8.
+     conversion through UTF-8.
      The _ICONV_* constants are chosen to be disjoint from any iconv_t
      returned by the system's iconv_open() functions.  Recall that iconv_t
      is a scalar type.  */

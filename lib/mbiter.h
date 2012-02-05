@@ -47,9 +47,9 @@
      initializes the iterator, starting at startptr and crossing length bytes.
 
    mbi_avail (iter)
-     returns true if there are more multibyte chracters available before
+     returns true if there are more multibyte characters available before
      the end of string is reached. In this case, mbi_cur (iter) is
-     initialized to the next multibyte chracter.
+     initialized to the next multibyte character.
 
    mbi_advance (iter)
      advances the iterator by one multibyte character.

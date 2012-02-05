@@ -204,7 +204,7 @@ typedef struct
   size_t times_seen;
   size_t zones_seen;
 
-  /* Table of local time zone abbrevations, terminated by a null entry.  */
+  /* Table of local time zone abbreviations, terminated by a null entry.  */
   table local_time_zone_table[3];
 } parser_control;
 
@@ -1394,7 +1394,7 @@ parse_datetime (struct timespec *result, char const *p,
       && ! strcmp (pc.local_time_zone_table[0].name,
                    pc.local_time_zone_table[1].name))
     {
-      /* This locale uses the same abbrevation for standard and
+      /* This locale uses the same abbreviation for standard and
          daylight times.  So if we see that abbreviation, we don't
          know whether it's daylight time.  */
       pc.local_time_zone_table[0].value = -1;

@@ -1,4 +1,4 @@
-# locale-zh.m4 serial 10
+# locale-zh.m4 serial 11
 dnl Copyright (C) 2003, 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,7 +31,7 @@ int main ()
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
   /* On native Windows, setlocale(category, "") looks at the system settings,
      not at the environment variables.  Also, when an encoding suffix such
-     as ".65001" or ".54936" is speficied, it succeeds but sets the LC_CTYPE
+     as ".65001" or ".54936" is specified, it succeeds but sets the LC_CTYPE
      category of the locale to "C".  */
   if (setlocale (LC_ALL, getenv ("LC_ALL")) == NULL
       || strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)

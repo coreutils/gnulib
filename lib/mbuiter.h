@@ -55,9 +55,9 @@
      initializes the iterator, starting at startptr.
 
    mbui_avail (iter)
-     returns true if there are more multibyte chracters available before
+     returns true if there are more multibyte characters available before
      the end of string is reached. In this case, mbui_cur (iter) is
-     initialized to the next multibyte chracter.
+     initialized to the next multibyte character.
 
    mbui_advance (iter)
      advances the iterator by one multibyte character.

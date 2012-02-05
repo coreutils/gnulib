@@ -94,9 +94,9 @@ const char diacrit_base[256] =
 
 /*------------------------------------------------------------------------.
 | For each alphabetic character, returns a code of what its diacritic is, |
-| according to the following codes: 1 (eE) over aA for latin diphtongs; 2 |
-| (') acute accent; 3 (`) grave accent; 4 (^) circumflex accent; 5 (")    |
-| umlaut or diaraesis; 6 (~) tilda; 7 (,) cedilla; 8 (o) covering degree  |
+| according to the following codes: 1 (eE) over aA for latin diphthongs;  |
+| 2 (') acute accent; 3 (`) grave accent; 4 (^) circumflex accent; 5 (")  |
+| umlaut or diaeresis; 6 (~) tilda; 7 (,) cedilla; 8 (o) covering degree  |
 | symbol; 9 (|) slashed character.                                        |
 `------------------------------------------------------------------------*/
 

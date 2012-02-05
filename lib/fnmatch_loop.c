@@ -382,7 +382,7 @@ FCT (const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                           {
                             /* We found a table entry.  Now see whether the
                                character we are currently at has the same
-                               equivalance class value.  */
+                               equivalence class value.  */
                             int len = weights[idx & 0xffffff];
                             int32_t idx2;
                             const UCHAR *np = (const UCHAR *) n;

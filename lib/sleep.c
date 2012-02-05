@@ -35,7 +35,7 @@ sleep (unsigned int seconds)
   unsigned int remaining;
 
   /* Sleep for 1 second many times, because
-       1. Sleep is not interruptiple by Ctrl-C,
+       1. Sleep is not interruptible by Ctrl-C,
        2. we want to avoid arithmetic overflow while multiplying with 1000.  */
   for (remaining = seconds; remaining > 0; remaining--)
     Sleep (1000);
