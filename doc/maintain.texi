@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 12, 2012
+@set lastupdate February 5, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -1262,7 +1262,7 @@ upgrades, problems, and the like.
 @node Distributions
 @chapter Distributions
 
-It is important to follow the GNU conventions when making GNU software
+Please follow the GNU conventions when making GNU software
 distributions.
 
 @menu
@@ -1431,7 +1431,7 @@ In order to upload new releases to @code{ftp.gnu.org} or
 information.  Then, you can perform uploads yourself, with no
 intervention needed by the system administrators.
 
-The general idea is that releases should be crytographically signed
+The general idea is that releases should be cryptographically signed
 before they are made publicly available.
 
 @menu

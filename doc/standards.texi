@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 8, 2012
+@set lastupdate February 5, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -998,7 +998,7 @@ copyright notice.  If more than one copyright notice is called for, put
 each on a separate line.
 
 Next should follow a line stating the license, preferably using one of
-abbrevations below, and a brief statement that the program is free
+abbreviations below, and a brief statement that the program is free
 software, and that users are free to copy and change it.  Also mention
 that there is no warranty, to the extent permitted by law.  See
 recommended wording below.
