@@ -4146,7 +4146,7 @@ extend_buffers (re_match_context_t *mctx)
           <= pstr->bufs_len, 0))
     return REG_ESPACE;
 
-  /* Double the lengthes of the buffers.  */
+  /* Double the lengths of the buffers.  */
   ret = re_string_realloc_buffers (pstr, MIN (pstr->len, pstr->bufs_len * 2));
   if (BE (ret != REG_NOERROR, 0))
     return ret;

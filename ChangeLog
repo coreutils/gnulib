@@ -1,5 +1,8 @@
 2012-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: spelling fix
+	* lib/regexec.c: spelling fix
+
 	regex: rely on stdint.h for SIZE_MAX
 	* lib/regex_internal.h (SIZE_MAX): Remove; stdint.h supplies this now.
 
