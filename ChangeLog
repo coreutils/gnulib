@@ -1,5 +1,10 @@
 2012-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: rely on stdint.h for SIZE_MAX
+	* lib/regex_internal.h (SIZE_MAX): Remove; stdint.h supplies this now.
+
+2012-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
 	regex: merge glibc changes
 
 	* lib/regcomp.c (init_dfa): Tighten overflow checks to test
