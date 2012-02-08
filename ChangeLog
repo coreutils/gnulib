@@ -1,3 +1,9 @@
+2012-02-08  Akim Demaille  <demaille@gostai.com>
+
+	fatal-signal: use C prototypes (with explicit void).
+	* lib/fatal-signal.c (uninstall_handlers, install_handlers)
+	(init_fatal_signal_set, block_fatal_signals): Fix signatures.
+
 2012-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: spelling fix
