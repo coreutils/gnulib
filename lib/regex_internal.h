@@ -22,7 +22,6 @@
 
 #include <assert.h>
 #include <ctype.h>
-#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -32,13 +31,14 @@
 # include "localcharset.h"
 #endif
 #include <locale.h>
-
 #include <wchar.h>
 #include <wctype.h>
+#include <stdbool.h>
 #include <stdint.h>
 #if defined _LIBC
 # include <bits/libc-lock.h>
 #else
+# define __libc_lock_define(CLASS,NAME)
 # define __libc_lock_init(NAME) do { } while (0)
 # define __libc_lock_lock(NAME) do { } while (0)
 # define __libc_lock_unlock(NAME) do { } while (0)
@@ -111,8 +111,8 @@
 # define __wctype wctype
 # define __iswctype iswctype
 # define __btowc btowc
-# define __wcrtomb wcrtomb
 # define __mbrtowc mbrtowc
+# define __wcrtomb wcrtomb
 # define __regfree regfree
 # define attribute_hidden
 #endif /* not _LIBC */
@@ -124,6 +124,11 @@
 #endif
 
 typedef __re_idx_t Idx;
+#ifdef _REGEX_LARGE_OFFSETS
+# define IDX_MAX (SIZE_MAX - 2)
+#else
+# define IDX_MAX INT_MAX
+#endif
 
 /* Special return value for failure to match.  */
 #define REG_MISSING ((Idx) -1)
@@ -418,19 +423,21 @@ typedef struct re_dfa_t re_dfa_t;
 # define internal_function
 #endif
 
+#ifndef NOT_IN_libc
 static reg_errcode_t re_string_realloc_buffers (re_string_t *pstr,
 						Idx new_buf_len)
      internal_function;
-#ifdef RE_ENABLE_I18N
+# ifdef RE_ENABLE_I18N
 static void build_wcs_buffer (re_string_t *pstr) internal_function;
 static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr)
-     internal_function;
-#endif /* RE_ENABLE_I18N */
+  internal_function;
+# endif /* RE_ENABLE_I18N */
 static void build_upper_buffer (re_string_t *pstr) internal_function;
 static void re_string_translate_buffer (re_string_t *pstr) internal_function;
 static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 					  int eflags)
      internal_function __attribute ((pure));
+#endif
 #define re_string_peek_byte(pstr, offset) \
   ((pstr)->mbs[(pstr)->cur_idx + offset])
 #define re_string_fetch_byte(pstr) \
@@ -467,6 +474,9 @@ static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 
 #ifndef MAX
 # define MAX(a,b) ((a) < (b) ? (b) : (a))
+#endif
+#ifndef MIN
+# define MIN(a,b) ((a) < (b) ? (b) : (a))
 #endif
 
 #define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))
@@ -692,9 +702,7 @@ struct re_dfa_t
 #ifdef DEBUG
   char* re_str;
 #endif
-#ifdef _LIBC
   __libc_lock_define (, lock)
-#endif
 };
 
 #define re_node_set_init_empty(set) memset (set, '\0', sizeof (re_node_set))
@@ -818,15 +826,15 @@ re_string_wchar_at (const re_string_t *pstr, Idx idx)
   return (wint_t) pstr->wcs[idx];
 }
 
+# ifndef NOT_IN_libc
 static int
 internal_function __attribute ((pure))
 re_string_elem_size_at (const re_string_t *pstr, Idx idx)
 {
-# ifdef _LIBC
+#  ifdef _LIBC
   const unsigned char *p, *extra;
   const int32_t *table, *indirect;
-  int32_t tmp;
-#  include <locale/weight.h>
+#   include <locale/weight.h>
   uint_fast32_t nrules = _NL_CURRENT_WORD (LC_COLLATE, _NL_COLLATE_NRULES);
 
   if (nrules != 0)
@@ -837,13 +845,14 @@ re_string_elem_size_at (const re_string_t *pstr, Idx idx)
       indirect = (const int32_t *) _NL_CURRENT (LC_COLLATE,
 						_NL_COLLATE_INDIRECTMB);
       p = pstr->mbs + idx;
-      tmp = findidx (&p);
+      findidx (&p, pstr->len - idx);
       return p - pstr->mbs - idx;
     }
   else
-# endif /* _LIBC */
+#  endif /* _LIBC */
     return 1;
 }
+# endif
 #endif /* RE_ENABLE_I18N */
 
 #ifndef __GNUC_PREREQ

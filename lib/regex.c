@@ -17,7 +17,14 @@
    with this program; if not, write to the Free Software Foundation,
    Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. */
 
-#include <config.h>
+#ifndef _LIBC
+# include <config.h>
+
+# if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+#  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
+#  pragma GCC diagnostic ignored "-Wtype-limits"
+# endif
+#endif
 
 /* Make sure no one compiles this code with a C++ compiler.  */
 #if defined __cplusplus && defined _LIBC
@@ -53,7 +60,6 @@
    GNU regex allows.  Include it before <regex.h>, which correctly
    #undefs RE_DUP_MAX and sets it to the right value.  */
 #include <limits.h>
-#include <strings.h>
 
 #include <regex.h>
 #include "regex_internal.h"

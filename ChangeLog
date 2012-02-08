@@ -1,3 +1,101 @@
+2012-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: merge glibc changes
+
+	* lib/regcomp.c (init_dfa): Tighten overflow checks to test
+	for IDX_MAX too, since IDX_MAX can be much less than SIZE_MAX.
+	(init_word_char): Work even if bitset words are not exactly 32 or
+	64 bits wide.  Don't assume there are no padding bits.
+	* lib/regex.c [_LIBC]: Do not include <config.h>.
+	[!_LIBC]: Add pragmas to ignore -Wsuggest-attributes=pure
+	and -Wtype-limits.
+	* lib/regex.h (__USE_GNU): Renamed from __USE_GNU_REGEX, to avoid
+	needless disagreement with glibc.  All uses changed.  Define it to
+	1 only if _GNU_SOURCE, to match glibc.
+	(_REG_RM_NAME): Remove; no longer needed, since the names in
+	question are now all protected by __USE_GNU.
+	(_REG_RE_NAME): Remove; replaced by glibc's __REPB_PREFIX.
+	(REG_TRANSLATE_TYPE): Remove; replaced by glibc's __RE_TRANSLATE_TYPE.
+	* lib/regex_internal.h (MIN): New macro.
+
+	2012-01-03 Ulrich Drepper <drepper@gmail.com>
+	* lib/regcomp.c (init_word_char): Optimize regex a bit.
+
+	2011-12-30 Jakub Jelinek <jakub@redhat.com>
+	* lib/regex_internal.c (re_string_fetch_byte_case):
+	Fix up regcomp/regexec.  The problem is that parse_bracket_symbol
+	is miscompiled, and it turns out it is because of an incorrect
+	attribute on re_string_fetch_byte_case.  Unlike
+	re_string_peek_byte_case, this one is really not pure, it modifies
+	memory (increments pstr->cur_idx), and with the pure attribute GCC
+	assumed it doesn't and it cached the presumed value of
+	regexp->cur_idx in a variable across the
+	 for (;; ++i)
+	   {
+	     if (i >= BRACKET_NAME_BUF_SIZE)
+	       return REG_EBRACK;
+	     if (token->type == OP_OPEN_CHAR_CLASS)
+	       ch = re_string_fetch_byte_case (regexp);
+	     else
+	       ch = re_string_fetch_byte (regexp);
+	     if (re_string_eoi(regexp))
+	       return REG_EBRACK;
+	     if (ch == delim && re_string_peek_byte (regexp, 0) == ']')
+	       break;
+	     elem->opr.name[i] = ch;
+	   }
+
+	2011-11-29 Andreas Schwab <schwab@redhat.com>
+	* lib/regcomp.c (build_equiv_class):
+	Fix access after end of search string in regex matcher.
+
+	2011-11-12 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex_internal.c, lib/regex_internal.h: Fix warnings in regex.
+
+	2011-10-12 Ulrich Drepper <drepper@redhat.com>
+	* lib/regcomp.c (parse_branch): One more regex memory leak fixed.
+
+	2011-10-11 Ulrich Drepper <drepper@redhat.com>
+	* lib/regcomp.c (parse_branch, parse_sub_exp):
+	More regex memory leak fixes and tests.
+	(parse_sub_exp, parse_bracket_exp):
+	Fix memory leak for some invalid regular expressions.
+
+	2011-05-28 Ulrich Drepper <drepper@gmail.com>
+	* lib/regex_internal.c, lib/regexec.c:
+	Fix unnecessary overallocation due to incomplete character.  When
+	incomplete characters are found at the end of a string the code
+	ran amok and allocated lots of memory.  Stricter limits are now in
+	place.
+
+	2011-05-20 Reuben Thomas <rrt@sc3d.org>
+	* lib/regex.h: Update documentation.
+
+	2011-05-16 Aharon Robbins <arnold@skeeve.com>
+	* lib/regex.h: Update RE_SYNTAX*_AWK constants.
+
+	2010-05-05 Andreas Schwab <schwab@redhat.com>
+	* lib/regexec.c (find_collation_sequence_value):
+	Fix lookup of collation sequence value during regexp matching.
+
+	2010-01-22 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex_internal.c (re_dfa_add_node): Extend overflow detection.
+
+	2008-01-16 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex.h: Cleanup namespace.
+
+	2007-11-26 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex.h (REG_ENOSYS): Define REG_ENOSYS also for __USE_XOPEN2K.
+
+	2007-08-26 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex_internal.h: Prevent some declarations and definitions
+	to be seen when used in tests.
+
+	2005-05-06 Ulrich Drepper <drepper@redhat.com>
+	* lib/regex_internal.h: Include bits/libc-lock.h or define dummy
+	__libc_lock_* macros if not _LIBC.
+	(struct re_dfa_t): Add lock.
+
 2012-02-07  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: also prohibit lower-case @var@

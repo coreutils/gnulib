@@ -51,9 +51,8 @@ static regoff_t re_search_stub (struct re_pattern_buffer *bufp,
 				regoff_t range, Idx stop,
 				struct re_registers *regs,
 				bool ret_len) internal_function;
-static unsigned int re_copy_regs (struct re_registers *regs, regmatch_t *pmatch,
-				  Idx nregs, int regs_allocated)
-     internal_function;
+static unsigned re_copy_regs (struct re_registers *regs, regmatch_t *pmatch,
+                              Idx nregs, int regs_allocated) internal_function;
 static reg_errcode_t prune_impossible_nodes (re_match_context_t *mctx)
      internal_function;
 static Idx check_matching (re_match_context_t *mctx, bool fl_longest_match,
@@ -365,7 +364,6 @@ weak_alias (__re_search_2, re_search_2)
 #endif
 
 static regoff_t
-internal_function
 re_search_2_stub (struct re_pattern_buffer *bufp,
 		  const char *string1, Idx length1,
 		  const char *string2, Idx length2,
@@ -413,7 +411,6 @@ re_search_2_stub (struct re_pattern_buffer *bufp,
    otherwise the position of the match is returned.  */
 
 static regoff_t
-internal_function
 re_search_stub (struct re_pattern_buffer *bufp,
 		const char *string, Idx length,
 		Idx start, regoff_t range, Idx stop, struct re_registers *regs,
@@ -505,8 +502,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   return rval;
 }
 
-static unsigned int
-internal_function
+static unsigned
 re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
 	      int regs_allocated)
 {
@@ -636,7 +632,7 @@ re_exec (s)
    (0 <= LAST_START && LAST_START <= LENGTH)  */
 
 static reg_errcode_t
-internal_function __attribute_warn_unused_result__
+__attribute_warn_unused_result__
 re_search_internal (const regex_t *preg,
 		    const char *string, Idx length,
 		    Idx start, Idx last_start, Idx stop,
@@ -719,7 +715,8 @@ re_search_internal (const regex_t *preg,
   if (nmatch > 1 || dfa->has_mb_node)
     {
       /* Avoid overflow.  */
-      if (BE (SIZE_MAX / sizeof (re_dfastate_t *) <= mctx.input.bufs_len, 0))
+      if (BE ((MIN (IDX_MAX, SIZE_MAX / sizeof (re_dfastate_t *))
+               <= mctx.input.bufs_len), 0))
 	{
 	  err = REG_ESPACE;
 	  goto free_return;
@@ -971,7 +968,7 @@ re_search_internal (const regex_t *preg,
 }
 
 static reg_errcode_t
-internal_function __attribute_warn_unused_result__
+__attribute_warn_unused_result__
 prune_impossible_nodes (re_match_context_t *mctx)
 {
   const re_dfa_t *const dfa = mctx->dfa;
@@ -987,7 +984,7 @@ prune_impossible_nodes (re_match_context_t *mctx)
   halt_node = mctx->last_node;
 
   /* Avoid overflow.  */
-  if (BE (SIZE_MAX / sizeof (re_dfastate_t *) <= match_last, 0))
+  if (BE (MIN (IDX_MAX, SIZE_MAX / sizeof (re_dfastate_t *)) <= match_last, 0))
     return REG_ESPACE;
 
   sifted_states = re_malloc (re_dfastate_t *, match_last + 1);
@@ -1174,7 +1171,8 @@ check_matching (re_match_context_t *mctx, bool fl_longest_match,
       re_dfastate_t *old_state = cur_state;
       Idx next_char_idx = re_string_cur_idx (&mctx->input) + 1;
 
-      if (BE (next_char_idx >= mctx->input.bufs_len, 0)
+      if ((BE (next_char_idx >= mctx->input.bufs_len, 0)
+	   && mctx->input.bufs_len < mctx->input.len)
 	  || (BE (next_char_idx >= mctx->input.valid_len, 0)
 	      && mctx->input.valid_len < mctx->input.len))
 	{
@@ -1752,7 +1750,8 @@ clean_state_log_if_needed (re_match_context_t *mctx, Idx next_state_log_idx)
 {
   Idx top = mctx->state_log_top;
 
-  if (next_state_log_idx >= mctx->input.bufs_len
+  if ((next_state_log_idx >= mctx->input.bufs_len
+       && mctx->input.bufs_len < mctx->input.len)
       || (next_state_log_idx >= mctx->input.valid_len
 	  && mctx->input.valid_len < mctx->input.len))
     {
@@ -2936,9 +2935,12 @@ check_arrival (re_match_context_t *mctx, state_array_t *path, Idx top_node,
     {
       re_dfastate_t **new_array;
       Idx old_alloc = path->alloc;
-      Idx new_alloc = old_alloc + last_str + mctx->max_mb_elem_len + 1;
-      if (BE (new_alloc < old_alloc, 0)
-	  || BE (SIZE_MAX / sizeof (re_dfastate_t *) < new_alloc, 0))
+      Idx incr_alloc = last_str + mctx->max_mb_elem_len + 1;
+      Idx new_alloc;
+      if (BE (IDX_MAX - old_alloc < incr_alloc, 0))
+	return REG_ESPACE;
+      new_alloc = old_alloc + incr_alloc;
+      if (BE (SIZE_MAX / sizeof (re_dfastate_t *) < new_alloc, 0))
 	return REG_ESPACE;
       new_array = re_realloc (path->array, re_dfastate_t *, new_alloc);
       if (BE (new_array == NULL, 0))
@@ -3397,6 +3399,7 @@ build_trtable (const re_dfa_t *dfa, re_dfastate_t *state)
     {
       if (dests_node_malloced)
 	free (dests_alloc);
+      /* Return false in case of an error, true otherwise.  */
       if (ndests == 0)
 	{
 	  state->trtable = (re_dfastate_t **)
@@ -3896,7 +3899,6 @@ check_node_accept_bytes (const re_dfa_t *dfa, Idx node_idx,
 	  const int32_t *table, *indirect;
 	  const unsigned char *weights, *extra;
 	  const char *collseqwc;
-	  int32_t idx;
 	  /* This #include defines a local function!  */
 #  include <locale/weight.h>
 
@@ -3954,7 +3956,7 @@ check_node_accept_bytes (const re_dfa_t *dfa, Idx node_idx,
 		_NL_CURRENT (LC_COLLATE, _NL_COLLATE_EXTRAMB);
 	      indirect = (const int32_t *)
 		_NL_CURRENT (LC_COLLATE, _NL_COLLATE_INDIRECTMB);
-	      int32_t idx = findidx (&cp);
+	      int32_t idx = findidx (&cp, elem_len);
 	      if (idx > 0)
 		for (i = 0; i < cset->nequiv_classes; ++i)
 		  {
@@ -4066,7 +4068,7 @@ find_collation_sequence_value (const unsigned char *mbs, size_t mbs_len)
 	  /* Skip the collation sequence value.  */
 	  idx += sizeof (uint32_t);
 	  /* Skip the wide char sequence of the collating element.  */
-	  idx = idx + sizeof (uint32_t) * (extra[idx] + 1);
+	  idx = idx + sizeof (uint32_t) * (*(int32_t *) (extra + idx) + 1);
 	  /* If we found the entry, return the sequence value.  */
 	  if (found)
 	    return *(uint32_t *) (extra + idx);
@@ -4140,11 +4142,12 @@ extend_buffers (re_match_context_t *mctx)
   re_string_t *pstr = &mctx->input;
 
   /* Avoid overflow.  */
-  if (BE (SIZE_MAX / 2 / sizeof (re_dfastate_t *) <= pstr->bufs_len, 0))
+  if (BE (MIN (IDX_MAX, SIZE_MAX / sizeof (re_dfastate_t *)) / 2
+          <= pstr->bufs_len, 0))
     return REG_ESPACE;
 
   /* Double the lengthes of the buffers.  */
-  ret = re_string_realloc_buffers (pstr, pstr->bufs_len * 2);
+  ret = re_string_realloc_buffers (pstr, MIN (pstr->len, pstr->bufs_len * 2));
   if (BE (ret != REG_NOERROR, 0))
     return ret;
 
@@ -4207,7 +4210,7 @@ match_ctx_init (re_match_context_t *mctx, int eflags, Idx n)
       size_t max_object_size =
 	MAX (sizeof (struct re_backref_cache_entry),
 	     sizeof (re_sub_match_top_t *));
-      if (BE (SIZE_MAX / max_object_size < n, 0))
+      if (BE (MIN (IDX_MAX, SIZE_MAX / max_object_size) < n, 0))
 	return REG_ESPACE;
 
       mctx->bkref_ents = re_malloc (struct re_backref_cache_entry, n);

@@ -134,9 +134,9 @@ re_string_realloc_buffers (re_string_t *pstr, Idx new_buf_len)
     {
       wint_t *new_wcs;
 
-      /* Avoid overflow.  */
-      size_t max_object_size = MAX (sizeof (wint_t), sizeof (Idx));
-      if (BE (SIZE_MAX / max_object_size < new_buf_len, 0))
+      /* Avoid overflow in realloc.  */
+      const size_t max_object_size = MAX (sizeof (wint_t), sizeof (Idx));
+      if (BE (MIN (IDX_MAX, SIZE_MAX / max_object_size) < new_buf_len, 0))
 	return REG_ESPACE;
 
       new_wcs = re_realloc (pstr->wcs, wint_t, new_buf_len);
@@ -236,13 +236,8 @@ build_wcs_buffer (re_string_t *pstr)
       else
 	p = (const char *) pstr->raw_mbs + pstr->raw_mbs_idx + byte_idx;
       mbclen = __mbrtowc (&wc, p, remain_len, &pstr->cur_state);
-      if (BE (mbclen == (size_t) -2, 0))
-	{
-	  /* The buffer doesn't have enough space, finish to build.  */
-	  pstr->cur_state = prev_st;
-	  break;
-	}
-      else if (BE (mbclen == (size_t) -1 || mbclen == 0, 0))
+      if (BE (mbclen == (size_t) -1 || mbclen == 0
+	      || (mbclen == (size_t) -2 && pstr->bufs_len >= pstr->len), 0))
 	{
 	  /* We treat these cases as a singlebyte character.  */
 	  mbclen = 1;
@@ -250,6 +245,12 @@ build_wcs_buffer (re_string_t *pstr)
 	  if (BE (pstr->trans != NULL, 0))
 	    wc = pstr->trans[wc];
 	  pstr->cur_state = prev_st;
+	}
+      else if (BE (mbclen == (size_t) -2, 0))
+	{
+	  /* The buffer doesn't have enough space, finish to build.  */
+	  pstr->cur_state = prev_st;
+	  break;
 	}
 
       /* Write wide character and padding.  */
@@ -333,9 +334,11 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	      for (remain_len = byte_idx + mbclen - 1; byte_idx < remain_len ;)
 		pstr->wcs[byte_idx++] = WEOF;
 	    }
-	  else if (mbclen == (size_t) -1 || mbclen == 0)
+	  else if (mbclen == (size_t) -1 || mbclen == 0
+		   || (mbclen == (size_t) -2 && pstr->bufs_len >= pstr->len))
 	    {
-	      /* It is an invalid character or '\0'.  Just use the byte.  */
+	      /* It is an invalid character, an incomplete character
+		 at the end of the string, or '\0'.  Just use the byte.  */
 	      int ch = pstr->raw_mbs[pstr->raw_mbs_idx + byte_idx];
 	      pstr->mbs[byte_idx] = ch;
 	      /* And also cast it to wide char.  */
@@ -448,7 +451,8 @@ build_wcs_upper_buffer (re_string_t *pstr)
 	    for (remain_len = byte_idx + mbclen - 1; byte_idx < remain_len ;)
 	      pstr->wcs[byte_idx++] = WEOF;
 	  }
-	else if (mbclen == (size_t) -1 || mbclen == 0)
+	else if (mbclen == (size_t) -1 || mbclen == 0
+		 || (mbclen == (size_t) -2 && pstr->bufs_len >= pstr->len))
 	  {
 	    /* It is an invalid character or '\0'.  Just use the byte.  */
 	    int ch = pstr->raw_mbs[pstr->raw_mbs_idx + src_idx];
@@ -495,8 +499,7 @@ re_string_skip_chars (re_string_t *pstr, Idx new_raw_idx, wint_t *last_wc)
        rawbuf_idx < new_raw_idx;)
     {
       wchar_t wc2;
-      Idx remain_len;
-      remain_len = pstr->len - rawbuf_idx;
+      Idx remain_len = pstr->len - rawbuf_idx;
       prev_st = pstr->cur_state;
       mbclen = __mbrtowc (&wc2, (const char *) pstr->raw_mbs + rawbuf_idx,
 			  remain_len, &pstr->cur_state);
@@ -732,21 +735,21 @@ re_string_reconstruct (re_string_t *pstr, Idx idx, int eflags)
 			  mbstate_t cur_state;
 			  wchar_t wc2;
 			  Idx mlen = raw + pstr->len - p;
+			  unsigned char buf[6];
 			  size_t mbclen;
 
-#if 0 /* dead code: buf is set but never used */
-			  unsigned char buf[6];
+			  const unsigned char *pp = p;
 			  if (BE (pstr->trans != NULL, 0))
 			    {
 			      int i = mlen < 6 ? mlen : 6;
 			      while (--i >= 0)
 				buf[i] = pstr->trans[p[i]];
+			      pp = buf;
 			    }
-#endif
 			  /* XXX Don't use mbrtowc, we know which conversion
 			     to use (UTF-8 -> UCS4).  */
 			  memset (&cur_state, 0, sizeof (cur_state));
-			  mbclen = __mbrtowc (&wc2, (const char *) p, mlen,
+			  mbclen = __mbrtowc (&wc2, (const char *) pp, mlen,
 					      &cur_state);
 			  if (raw + offset - p <= mbclen
 			      && mbclen < (size_t) -2)
@@ -868,7 +871,7 @@ re_string_peek_byte_case (const re_string_t *pstr, Idx idx)
 }
 
 static unsigned char
-internal_function __attribute ((pure))
+internal_function
 re_string_fetch_byte_case (re_string_t *pstr)
 {
   if (BE (!pstr->mbs_allocated, 1))
@@ -1412,13 +1415,12 @@ re_dfa_add_node (re_dfa_t *dfa, re_token_t token)
       Idx *new_nexts, *new_indices;
       re_node_set *new_edests, *new_eclosures;
       re_token_t *new_nodes;
-      size_t max_object_size =
-	MAX (sizeof (re_token_t),
-	     MAX (sizeof (re_node_set),
-		  sizeof (Idx)));
 
-      /* Avoid overflows.  */
-      if (BE (SIZE_MAX / 2 / max_object_size < dfa->nodes_alloc, 0))
+      /* Avoid overflows in realloc.  */
+      const size_t max_object_size = MAX (sizeof (re_token_t),
+					  MAX (sizeof (re_node_set),
+					       sizeof (Idx)));
+      if (BE (MIN (IDX_MAX, SIZE_MAX / max_object_size) < new_nodes_alloc, 0))
 	return REG_MISSING;
 
       new_nodes = re_realloc (dfa->nodes, re_token_t, new_nodes_alloc);
@@ -1579,7 +1581,7 @@ register_state (const re_dfa_t *dfa, re_dfastate_t *newstate,
     {
       Idx elem = newstate->nodes.elems[i];
       if (!IS_EPSILON_NODE (dfa->nodes[elem].type))
-	if (BE (! re_node_set_insert_last (&newstate->non_eps_nodes, elem), 0))
+	if (! re_node_set_insert_last (&newstate->non_eps_nodes, elem))
 	  return REG_ESPACE;
     }
 
