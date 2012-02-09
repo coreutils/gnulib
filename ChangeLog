@@ -1,3 +1,10 @@
+2011-12-19  Reuben Thomas  <rrt@sc3d.org>
+
+	README-release: various improvements
+	* top/README-release: Give a command to push changes for the
+	release.  Add "distcheck" to list of other pre-release checks.
+	Fix instance of "make stable" which should be "make TYPE".
+
 2012-02-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	maint: replace FSF snail-mail addresses with URLs
