@@ -1,6 +1,6 @@
 Here are most of the steps we (maintainers) follow when making a release.
 
-* start from a clean, up-to-date git directory.
+* Start from a clean, up-to-date git directory:
 
     make -k maintainer-clean || { ./configure && make maintainer-clean; }
     git checkout master
@@ -11,7 +11,9 @@ Here are most of the steps we (maintainers) follow when making a release.
   the complete list of tools.
 
 * Ensure that you're on "master" with no uncommitted diffs.
-  This should produce no output: git checkout master; git diff
+  This should produce no output:
+
+    git checkout master; git diff
 
 * Ensure that you've pushed all changes that belong in the release
   and that the NixOS/Hydra autobuilder is reporting all is well:

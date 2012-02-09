@@ -1,3 +1,8 @@
+2011-12-22  Reuben Thomas  <rrt@sc3d.org>
+
+	README-release: capitalize a word and split a line
+	* top/README-release: Fix punctuation and spacing.
+
 2012-02-08  Akim Demaille  <demaille@gostai.com>
 
 	fatal-signal: use C prototypes (with explicit void).
