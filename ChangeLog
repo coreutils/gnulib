@@ -1,3 +1,9 @@
+2012-02-11  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: don't exit 0 upon gnulib-tool failure
+	* build-aux/bootstrap (gnulib_tool): If gnulib-tool fails, exit with
+	its exit status, not 0.
+
 2011-12-19  Reuben Thomas  <rrt@sc3d.org>
 
 	README-release: various improvements
