@@ -20,20 +20,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Systems where /bin/sh is not the default shell need this.  The $(shell)
-# command below won't work with e.g. stock DOS/Windows shells.
-ifeq ($(wildcard /bin/s[h]),/bin/sh)
-SHELL = /bin/sh
-else
-# will be used only with the next shell-test line, then overwritten
-# by a configured-in value
-SHELL = sh
-endif
-
 # If the user runs GNU make but has not yet run ./configure,
 # give them a diagnostic.
-_have-Makefile := $(shell test -f Makefile && echo yes)
-ifeq ($(_have-Makefile),yes)
+_gl-Makefile := $(wildcard [M]akefile)
+ifneq ($(_gl-Makefile),)
 
 # Make tar archive easier to reproduce.
 export TAR_OPTIONS = --owner=0 --group=0 --numeric-owner

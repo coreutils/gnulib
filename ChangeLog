@@ -1,3 +1,10 @@
+2012-02-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	GNUmakefile: simplify detection of unconfigured trees
+	* top/GNUmakefile: Use $(wildcard) instead of $(shell) to determine
+	whether the tree make is being run from is already configured or
+	not.  Related simplifications.
+
 2012-02-13  Simon Josefsson  <simon@josefsson.org>
 
 	* gnulib-tool (Usage): Document --help and --version.
