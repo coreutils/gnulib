@@ -1,3 +1,8 @@
+2012-02-18  Reuben Thomas  <rrt@sc3d.org>
+
+	README-release: make it easier to execute commands
+	* top/README-release: break commands out on to separate lines.
+
 2012-02-16  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	GNUmakefile: simplify detection of unconfigured trees
