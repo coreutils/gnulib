@@ -190,6 +190,8 @@ Operation modes:
       --extract-maintainer         report the maintainer(s) inside gnulib
       --extract-tests-module       report the unit test module, if it exists
       --copy-file                  copy a file that is not part of any module
+      --help                Show this help text.
+      --version             Show version and authorship information.
 
 General options:
 
@@ -201,11 +203,8 @@ General options:
                             up files before looking in gnulib's directory.
       --cache-modules       Enable module caching optimization.
       --no-cache-modules    Disable module caching optimization.
-
       --verbose             Increase verbosity. May be repeated.
       --quiet               Decrease verbosity. May be repeated.
-      --help                Show this help text.
-      --version             Show version and authorship information.
 
 Options for --import, --add/remove-import, --update:
 

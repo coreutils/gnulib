@@ -1,3 +1,9 @@
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Improve usage message.
+	* gnulib-tool (func_usage): Move doc of --help and --version to the
+	section "Operation modes".
+
 2012-02-18  Reuben Thomas  <rrt@sc3d.org>
 
 	README-release: make it easier to execute commands
@@ -12,7 +18,7 @@
 
 2012-02-13  Simon Josefsson  <simon@josefsson.org>
 
-	* gnulib-tool (Usage): Document --help and --version.
+	* gnulib-tool (func_usage): Document --help and --version.
 
 2012-02-11  Jim Meyering  <meyering@redhat.com>
 
