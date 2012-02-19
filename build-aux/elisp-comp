@@ -1,6 +1,5 @@
 #!/bin/sh
-# Copyright (C) 1995, 2000, 2003, 2004, 2005, 2009, 2010 Free Software
-# Foundation, Inc.
+# Copyright (C) 1995-2012 Free Software Foundation, Inc.
 
 scriptversion=2010-02-06.18; # UTC
 
