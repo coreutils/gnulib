@@ -1,5 +1,16 @@
 2012-02-19  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix endless loop on Solaris with vxfs.
+	* lib/file-has-acl.c (file_has_acl) [Solaris]: Treat a failing
+	acl()/facl() call for ACE_GETACL like a failing call for ACE_GETACLCNT.
+	* lib/set-mode-acl.c (qset_acl) [Solaris]: Likewise.
+	* lib/copy-acl.c (qcopy_acl)[Solaris]: Likewise.
+	* tests/test-sameacls.c (main)[Solaris]: Likewise.
+	Reported by Bill Jones in
+	<http://debbugs.gnu.org/cgi/bugreport.cgi?bug=10639>, via Paul Eggert.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
 	acl: Fix copy-acl test failure on Solaris 11 2011-11.
 	* lib/file-has-acl.c (NEW_ACE_WRITEA_DATA): New macro.
 	(acl_ace_nontrivial): Relax the restrictions on access_masks[] so

@@ -219,6 +219,8 @@ qset_acl (char const *name, int desc, mode_t mode)
 
     for (;;)
       {
+        int ret;
+
         if (desc != -1)
           count = facl (desc, ACE_GETACLCNT, 0, NULL);
         else
@@ -234,10 +236,16 @@ qset_acl (char const *name, int desc, mode_t mode)
             errno = ENOMEM;
             return -1;
           }
-        if ((desc != -1
-             ? facl (desc, ACE_GETACL, count, entries)
-             : acl (name, ACE_GETACL, count, entries))
-            == count)
+        ret = (desc != -1
+               ? facl (desc, ACE_GETACL, count, entries)
+               : acl (name, ACE_GETACL, count, entries));
+        if (ret < 0)
+          {
+            free (entries);
+            convention = -1;
+            break;
+          }
+        if (ret == count)
           {
             int i;
 

@@ -626,6 +626,8 @@ file_has_acl (char const *name, struct stat const *sb)
 
         for (;;)
           {
+            int ret;
+
             count = acl (name, ACE_GETACLCNT, 0, NULL);
 
             if (count < 0)
@@ -656,7 +658,16 @@ file_has_acl (char const *name, struct stat const *sb)
                 errno = ENOMEM;
                 return -1;
               }
-            if (acl (name, ACE_GETACL, count, entries) == count)
+            ret = acl (name, ACE_GETACL, count, entries);
+            if (ret < 0)
+              {
+                free (entries);
+                if (errno == ENOSYS || errno == EINVAL)
+                  break;
+                else
+                  return -1;
+              }
+            if (ret == count)
               {
                 if (acl_ace_nontrivial (count, entries))
                   {

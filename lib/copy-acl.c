@@ -235,10 +235,22 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
           return -2;
         }
 
-      if ((source_desc != -1
-           ? facl (source_desc, ACE_GETACL, ace_count, ace_entries)
-           : acl (src_name, ACE_GETACL, ace_count, ace_entries))
-          == ace_count)
+      ret = (source_desc != -1
+             ? facl (source_desc, ACE_GETACL, ace_count, ace_entries)
+             : acl (src_name, ACE_GETACL, ace_count, ace_entries));
+      if (ret < 0)
+        {
+          free (ace_entries);
+          if (errno == ENOSYS || errno == EINVAL)
+            {
+              ace_count = 0;
+              ace_entries = NULL;
+              break;
+            }
+          else
+            return -2;
+        }
+      if (ret == ace_count)
         break;
       /* Huh? The number of ACL entries changed since the last call.
          Repeat.  */
