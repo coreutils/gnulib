@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 8.
+# Check for fnmatch - serial 9.
 
 # Copyright (C) 2000-2007, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
 
   FNMATCH_H=
   gl_fnmatch_required_lowercase=`
-    echo $gl_fnmatch_required | tr '[[A-Z]]' '[[a-z]]'
+    echo $gl_fnmatch_required | LC_ALL=C tr '[[A-Z]]' '[[a-z]]'
   `
   gl_fnmatch_cache_var="gl_cv_func_fnmatch_${gl_fnmatch_required_lowercase}"
   AC_CACHE_CHECK([for working $gl_fnmatch_required fnmatch],

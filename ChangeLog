@@ -1,5 +1,16 @@
 2012-02-19  Bruno Haible  <bruno@clisp.org>
 
+	Fix test failure in many locales on Solaris 11.
+	* tests/test-pipe-filter-gi1.c (main): Don't use range expression in
+	'tr' arguments.
+	* tests/test-pipe-filter-ii1.c (main): Likewise.
+	* build-aux/bootstrap (check_versions): Run 'tr' command with range
+	expressions in the C locale.
+	* m4/fnmatch.m4 (gl_FUNC_FNMATCH_POSIX): Likewise.
+	* m4/host-os.m4 (gl_HOST_OS): Likewise.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Improve usage message.
 	* gnulib-tool (func_usage): Move doc of --help and --version to the
 	section "Operation modes".

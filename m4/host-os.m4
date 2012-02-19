@@ -1,4 +1,4 @@
-# serial 8
+# serial 9
 
 # Copyright (C) 2001, 2003-2004, 2006, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -66,7 +66,7 @@ AC_DEFUN([gl_HOST_OS],
        # from $host_os, but capitalizes its first letter.
        [A-Za-z]*)
          os=`
-           expr "X$host_os" : 'X\([A-Za-z]\)' | tr '[a-z]' '[A-Z]'
+           expr "X$host_os" : 'X\([A-Za-z]\)' | LC_ALL=C tr '[a-z]' '[A-Z]'
          ``
            expr "X$host_os" : 'X.\([A-Za-z]*\)'
          `
