@@ -1,5 +1,10 @@
 2012-02-19  Bruno Haible  <bruno@clisp.org>
 
+	acl: Update doc references.
+	* doc/acl-resources.txt: Update links to Solaris documentation.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
 	Fix test failure in many locales on Solaris 11.
 	* tests/test-pipe-filter-gi1.c (main): Don't use range expression in
 	'tr' arguments.
