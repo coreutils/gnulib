@@ -1,5 +1,12 @@
 2012-02-19  Bruno Haible  <bruno@clisp.org>
 
+	acl: Fix copy-acl test failure on Solaris 11 2011-11.
+	* lib/file-has-acl.c (NEW_ACE_WRITEA_DATA): New macro.
+	(acl_ace_nontrivial): Relax the restrictions on access_masks[] so
+	that this function returns 0 in some more cases.
+
+2012-02-19  Bruno Haible  <bruno@clisp.org>
+
 	acl: Update doc references.
 	* doc/acl-resources.txt: Update links to Solaris documentation.
 

@@ -154,6 +154,9 @@ acl_nontrivial (int count, aclent_t *entries)
 
 # ifdef ACE_GETACL
 
+/* A shortcut for a bitmask.  */
+#  define NEW_ACE_WRITEA_DATA (NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA)
+
 /* Test an ACL retrieved with ACE_GETACL.
    Return 1 if the given ACL, consisting of COUNT entries, is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
@@ -250,16 +253,6 @@ acl_ace_nontrivial (int count, ace_t *entries)
                            | NEW_ACE_WRITE_ATTRIBUTES
                            | NEW_ACE_WRITE_ACL
                            | NEW_ACE_WRITE_OWNER);
-      if ((NEW_ACE_WRITE_NAMED_ATTRS
-           | NEW_ACE_WRITE_ATTRIBUTES
-           | NEW_ACE_WRITE_ACL
-           | NEW_ACE_WRITE_OWNER)
-          & ~ access_masks[4])
-        return 1;
-      access_masks[4] &= ~(NEW_ACE_WRITE_NAMED_ATTRS
-                           | NEW_ACE_WRITE_ATTRIBUTES
-                           | NEW_ACE_WRITE_ACL
-                           | NEW_ACE_WRITE_OWNER);
       if ((NEW_ACE_READ_NAMED_ATTRS
            | NEW_ACE_READ_ATTRIBUTES
            | NEW_ACE_READ_ACL
@@ -272,21 +265,60 @@ acl_ace_nontrivial (int count, ace_t *entries)
                            | NEW_ACE_SYNCHRONIZE);
 
       /* Check the allowed or denied bits.  */
-      if ((access_masks[0] | access_masks[1])
-          != (NEW_ACE_READ_DATA
-              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
-              | NEW_ACE_EXECUTE))
-        return 1;
-      if ((access_masks[2] | access_masks[3])
-          != (NEW_ACE_READ_DATA
-              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
-              | NEW_ACE_EXECUTE))
-        return 1;
-      if ((access_masks[4] | access_masks[5])
-          != (NEW_ACE_READ_DATA
-              | NEW_ACE_WRITE_DATA | NEW_ACE_APPEND_DATA
-              | NEW_ACE_EXECUTE))
-        return 1;
+      switch ((access_masks[0] | access_masks[1])
+              & ~(NEW_ACE_READ_NAMED_ATTRS
+                  | NEW_ACE_READ_ATTRIBUTES
+                  | NEW_ACE_READ_ACL
+                  | NEW_ACE_SYNCHRONIZE))
+        {
+        case 0:
+        case NEW_ACE_READ_DATA:
+        case                     NEW_ACE_WRITEA_DATA:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA:
+        case                                           NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA |                       NEW_ACE_EXECUTE:
+        case                     NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+          break;
+        default:
+          return 1;
+        }
+      switch ((access_masks[2] | access_masks[3])
+              & ~(NEW_ACE_READ_NAMED_ATTRS
+                  | NEW_ACE_READ_ATTRIBUTES
+                  | NEW_ACE_READ_ACL
+                  | NEW_ACE_SYNCHRONIZE))
+        {
+        case 0:
+        case NEW_ACE_READ_DATA:
+        case                     NEW_ACE_WRITEA_DATA:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA:
+        case                                           NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA |                       NEW_ACE_EXECUTE:
+        case                     NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+          break;
+        default:
+          return 1;
+        }
+      switch ((access_masks[4] | access_masks[5])
+              & ~(NEW_ACE_WRITE_NAMED_ATTRS
+                  | NEW_ACE_WRITE_ATTRIBUTES
+                  | NEW_ACE_WRITE_ACL
+                  | NEW_ACE_WRITE_OWNER))
+        {
+        case 0:
+        case NEW_ACE_READ_DATA:
+        case                     NEW_ACE_WRITEA_DATA:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA:
+        case                                           NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA |                       NEW_ACE_EXECUTE:
+        case                     NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+        case NEW_ACE_READ_DATA | NEW_ACE_WRITEA_DATA | NEW_ACE_EXECUTE:
+          break;
+        default:
+          return 1;
+        }
 
       /* Check that the NEW_ACE_WRITE_DATA and NEW_ACE_APPEND_DATA bits are
          either both allowed or both denied.  */
