@@ -728,38 +728,36 @@ file_has_acl (char const *name, struct stat const *sb)
 
 # elif HAVE_GETACL /* HP-UX */
 
-      for (;;)
-        {
-          int count;
-          struct acl_entry entries[NACLENTRIES];
+      {
+        struct acl_entry entries[NACLENTRIES];
+        int count;
 
-          count = getacl (name, 0, NULL);
+        count = getacl (name, NACLENTRIES, entries);
 
-          if (count < 0)
-            {
-              /* ENOSYS is seen on newer HP-UX versions.
-                 EOPNOTSUPP is typically seen on NFS mounts.
-                 ENOTSUP was seen on Quantum StorNext file systems (cvfs).  */
-              if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
-                break;
-              else
-                return -1;
-            }
+        if (count < 0)
+          {
+            /* ENOSYS is seen on newer HP-UX versions.
+               EOPNOTSUPP is typically seen on NFS mounts.
+               ENOTSUP was seen on Quantum StorNext file systems (cvfs).  */
+            if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+              ;
+            else
+              return -1;
+          }
+        else if (count == 0)
+          return 0;
+        else /* count > 0 */
+          {
+            if (count > NACLENTRIES)
+              /* If NACLENTRIES cannot be trusted, use dynamic memory
+                 allocation.  */
+              abort ();
 
-          if (count == 0)
-            return 0;
+            /* If there are more than 3 entries, there cannot be only the
+               (uid,%), (%,gid), (%,%) entries.  */
+            if (count > 3)
+              return 1;
 
-          if (count > NACLENTRIES)
-            /* If NACLENTRIES cannot be trusted, use dynamic memory
-               allocation.  */
-            abort ();
-
-          /* If there are more than 3 entries, there cannot be only the
-             (uid,%), (%,gid), (%,%) entries.  */
-          if (count > 3)
-            return 1;
-
-          if (getacl (name, count, entries) == count)
             {
               struct stat statbuf;
 
@@ -768,47 +766,43 @@ file_has_acl (char const *name, struct stat const *sb)
 
               return acl_nontrivial (count, entries, &statbuf);
             }
-          /* Huh? The number of ACL entries changed since the last call.
-             Repeat.  */
-        }
+          }
+      }
 
 #  if HAVE_ACLV_H /* HP-UX >= 11.11 */
 
-      for (;;)
-        {
-          int count;
-          struct acl entries[NACLVENTRIES];
+      {
+        struct acl entries[NACLVENTRIES];
+        int count;
 
-          count = acl ((char *) name, ACL_CNT, NACLVENTRIES, entries);
+        count = acl ((char *) name, ACL_GET, NACLVENTRIES, entries);
 
-          if (count < 0)
-            {
-              /* EOPNOTSUPP is seen on NFS in HP-UX 11.11, 11.23.
-                 EINVAL is seen on NFS in HP-UX 11.31.  */
-              if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
-                break;
-              else
-                return -1;
-            }
+        if (count < 0)
+          {
+            /* EOPNOTSUPP is seen on NFS in HP-UX 11.11, 11.23.
+               EINVAL is seen on NFS in HP-UX 11.31.  */
+            if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+              ;
+            else
+              return -1;
+          }
+        else if (count == 0)
+          return 0;
+        else /* count > 0 */
+          {
+            if (count > NACLVENTRIES)
+              /* If NACLVENTRIES cannot be trusted, use dynamic memory
+                 allocation.  */
+              abort ();
 
-          if (count == 0)
-            return 0;
+            /* If there are more than 4 entries, there cannot be only the
+               four base ACL entries.  */
+            if (count > 4)
+              return 1;
 
-          if (count > NACLVENTRIES)
-            /* If NACLVENTRIES cannot be trusted, use dynamic memory
-               allocation.  */
-            abort ();
-
-          /* If there are more than 4 entries, there cannot be only the
-             four base ACL entries.  */
-          if (count > 4)
-            return 1;
-
-          if (acl ((char *) name, ACL_GET, count, entries) == count)
             return aclv_nontrivial (count, entries);
-          /* Huh? The number of ACL entries changed since the last call.
-             Repeat.  */
-        }
+          }
+      }
 
 #  endif
 
@@ -885,39 +879,36 @@ file_has_acl (char const *name, struct stat const *sb)
 
 # elif HAVE_ACLSORT /* NonStop Kernel */
 
-      int count;
-      struct acl entries[NACLENTRIES];
+      {
+        struct acl entries[NACLENTRIES];
+        int count;
 
-      for (;;)
-        {
-          count = acl ((char *) name, ACL_CNT, NACLENTRIES, NULL);
+        count = acl ((char *) name, ACL_GET, NACLENTRIES, entries);
 
-          if (count < 0)
-            {
-              if (errno == ENOSYS || errno == ENOTSUP)
-                break;
-              else
-                return -1;
-            }
+        if (count < 0)
+          {
+            if (errno == ENOSYS || errno == ENOTSUP)
+              ;
+            else
+              return -1;
+          }
+        else if (count == 0)
+          return 0;
+        else /* count > 0 */
+          {
+            if (count > NACLENTRIES)
+              /* If NACLENTRIES cannot be trusted, use dynamic memory
+                 allocation.  */
+              abort ();
 
-          if (count == 0)
-            return 0;
+            /* If there are more than 4 entries, there cannot be only the
+               four base ACL entries.  */
+            if (count > 4)
+              return 1;
 
-          if (count > NACLENTRIES)
-            /* If NACLENTRIES cannot be trusted, use dynamic memory
-               allocation.  */
-            abort ();
-
-          /* If there are more than 4 entries, there cannot be only the
-             four base ACL entries.  */
-          if (count > 4)
-            return 1;
-
-          if (acl ((char *) name, ACL_GET, count, entries) == count)
             return acl_nontrivial (count, entries);
-          /* Huh? The number of ACL entries changed since the last call.
-             Repeat.  */
-        }
+          }
+      }
 
 # endif
     }

@@ -377,77 +377,49 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #elif USE_ACL && HAVE_GETACL /* HP-UX */
 
-  int count;
   struct acl_entry entries[NACLENTRIES];
+  int count;
 # if HAVE_ACLV_H
-  int aclv_count;
   struct acl aclv_entries[NACLVENTRIES];
+  int aclv_count;
 # endif
   int did_chmod;
   int saved_errno;
   int ret;
 
-  for (;;)
+  count = (source_desc != -1
+           ? fgetacl (source_desc, NACLENTRIES, entries)
+           : getacl (src_name, NACLENTRIES, entries));
+
+  if (count < 0)
     {
-      count = (source_desc != -1
-               ? fgetacl (source_desc, 0, NULL)
-               : getacl (src_name, 0, NULL));
-
-      if (count < 0)
-        {
-          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
-            {
-              count = 0;
-              break;
-            }
-          else
-            return -2;
-        }
-
-      if (count == 0)
-        break;
-
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (count > 0)
+    {
       if (count > NACLENTRIES)
         /* If NACLENTRIES cannot be trusted, use dynamic memory allocation.  */
         abort ();
-
-      if ((source_desc != -1
-           ? fgetacl (source_desc, count, entries)
-           : getacl (src_name, count, entries))
-          == count)
-        break;
-      /* Huh? The number of ACL entries changed since the last call.
-         Repeat.  */
     }
 
 # if HAVE_ACLV_H
-  for (;;)
+  aclv_count = acl ((char *) src_name, ACL_GET, NACLVENTRIES, aclv_entries);
+
+  if (aclv_count < 0)
     {
-      aclv_count = acl ((char *) src_name, ACL_CNT, NACLVENTRIES, aclv_entries);
-
-      if (aclv_count < 0)
-        {
-          if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
-            {
-              count = 0;
-              break;
-            }
-          else
-            return -2;
-        }
-
-      if (aclv_count == 0)
-        break;
-
+      if (errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (aclv_count > 0)
+    {
       if (aclv_count > NACLVENTRIES)
         /* If NACLVENTRIES cannot be trusted, use dynamic memory allocation.  */
         abort ();
-
-      if (acl ((char *) src_name, ACL_GET, aclv_count, aclv_entries)
-          == aclv_count)
-        break;
-      /* Huh? The number of ACL entries changed since the last call.
-         Repeat.  */
     }
 # endif
 
@@ -558,36 +530,24 @@ qcopy_acl (const char *src_name, int source_desc, const char *dst_name,
 
 #elif USE_ACL && HAVE_ACLSORT /* NonStop Kernel */
 
-  int count;
   struct acl entries[NACLENTRIES];
+  int count;
   int ret;
 
-  for (;;)
+  count = acl ((char *) src_name, ACL_GET, NACLENTRIES, entries);
+
+  if (count < 0)
     {
-      count = acl ((char *) src_name, ACL_CNT, NACLENTRIES, NULL);
-
-      if (count < 0)
-        {
-          if (0)
-            {
-              count = 0;
-              break;
-            }
-          else
-            return -2;
-        }
-
-      if (count == 0)
-        break;
-
+      if (0)
+        count = 0;
+      else
+        return -2;
+    }
+  else if (count > 0)
+    {
       if (count > NACLENTRIES)
         /* If NACLENTRIES cannot be trusted, use dynamic memory allocation.  */
         abort ();
-
-      if (acl ((char *) src_name, ACL_GET, count, entries) == count)
-        break;
-      /* Huh? The number of ACL entries changed since the last call.
-         Repeat.  */
     }
 
   if (count == 0)

@@ -1,6 +1,14 @@
 2012-02-19  Paul Eggert  <eggert@cs.ucla.edu>
 	    Bruno Haible  <bruno@clisp.org>
 
+	acl: Don't use ACL_CNT and similar ops, since they are unreliable.
+	* lib/file-has-acl.c (file_has_acl) [HP-UX, NonStop Kernel]: Read the
+	entries into a stack-allocated buffer directly.
+	* lib/copy-acl.c (qcopy_acl) [HP-UX, NonStop Kernel]: Likewise.
+
+2012-02-19  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
 	acl: Don't use GETACLCNT and similar ops, since they are unreliable.
 
 	 - There were several instances of this pattern:
