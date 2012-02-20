@@ -55,6 +55,15 @@ extern int aclsort (int, int, struct acl *);
 # define ENOTSUP (-1)
 #endif
 
+#include <limits.h>
+#ifndef MIN
+# define MIN(a,b) ((a) < (b) ? (a) : (b))
+#endif
+
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
+
 #ifndef HAVE_FCHMOD
 # define HAVE_FCHMOD false
 # define fchmod(fd, mode) (-1)

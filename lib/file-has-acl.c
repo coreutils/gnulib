@@ -556,7 +556,7 @@ file_has_acl (char const *name, struct stat const *sb)
         return ACL_NOT_WELL_SUPPORTED (errno) ? 0 : -1;
       return ret;
 
-# elif HAVE_FACL && defined GETACLCNT /* Solaris, Cygwin, not HP-UX */
+# elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
 
 #  if defined ACL_NO_TRIVIAL
 
@@ -570,77 +570,135 @@ file_has_acl (char const *name, struct stat const *sb)
       /* Solaris 2.5 through Solaris 10, Cygwin, and contemporaneous versions
          of Unixware.  The acl() call returns the access and default ACL both
          at once.  */
-      int count;
       {
-        aclent_t *entries;
+        /* Initially, try to read the entries into a stack-allocated buffer.
+           Use malloc if it does not fit.  */
+        enum
+          {
+            alloc_init = 4000 / sizeof (aclent_t), /* >= 3 */
+            alloc_max = MIN (INT_MAX, SIZE_MAX / sizeof (aclent_t))
+          };
+        aclent_t buf[alloc_init];
+        size_t alloc = alloc_init;
+        aclent_t *entries = buf;
+        aclent_t *malloced = NULL;
+        int count;
 
         for (;;)
           {
-            count = acl (name, GETACLCNT, 0, NULL);
-
-            if (count < 0)
+            count = acl (name, GETACL, alloc, entries);
+            if (count < 0 && errno == ENOSPC)
               {
-                if (errno == ENOSYS || errno == ENOTSUP)
-                  break;
-                else
-                  return -1;
+                /* Increase the size of the buffer.  */
+                free (malloced);
+                if (alloc > alloc_max / 2)
+                  {
+                    errno = ENOMEM;
+                    return -1;
+                  }
+                alloc = 2 * alloc; /* <= alloc_max */
+                entries = malloced =
+                  (aclent_t *) malloc (alloc * sizeof (aclent_t));
+                if (entries == NULL)
+                  {
+                    errno = ENOMEM;
+                    return -1;
+                  }
+                continue;
               }
-
-            if (count == 0)
-              break;
-
+            break;
+          }
+        if (count < 0)
+          {
+            if (errno == ENOSYS || errno == ENOTSUP)
+              ;
+            else
+              {
+                int saved_errno = errno;
+                free (malloced);
+                errno = saved_errno;
+                return -1;
+              }
+          }
+        else if (count == 0)
+          ;
+        else
+          {
             /* Don't use MIN_ACL_ENTRIES:  It's set to 4 on Cygwin, but Cygwin
                returns only 3 entries for files with no ACL.  But this is safe:
                If there are more than 4 entries, there cannot be only the
                "user::", "group::", "other:", and "mask:" entries.  */
             if (count > 4)
-              return 1;
+              {
+                free (malloced);
+                return 1;
+              }
 
-            entries = (aclent_t *) malloc (count * sizeof (aclent_t));
-            if (entries == NULL)
+            if (acl_nontrivial (count, entries))
               {
-                errno = ENOMEM;
-                return -1;
+                free (malloced);
+                return 1;
               }
-            if (acl (name, GETACL, count, entries) == count)
-              {
-                if (acl_nontrivial (count, entries))
-                  {
-                    free (entries);
-                    return 1;
-                  }
-                free (entries);
-                break;
-              }
-            /* Huh? The number of ACL entries changed since the last call.
-               Repeat.  */
-            free (entries);
           }
+        free (malloced);
       }
 
 #   ifdef ACE_GETACL
       /* Solaris also has a different variant of ACLs, used in ZFS and NFSv4
          file systems (whereas the other ones are used in UFS file systems).  */
       {
-        ace_t *entries;
+        /* Initially, try to read the entries into a stack-allocated buffer.
+           Use malloc if it does not fit.  */
+        enum
+          {
+            alloc_init = 4000 / sizeof (ace_t), /* >= 3 */
+            alloc_max = MIN (INT_MAX, SIZE_MAX / sizeof (ace_t))
+          };
+        ace_t buf[alloc_init];
+        size_t alloc = alloc_init;
+        ace_t *entries = buf;
+        ace_t *malloced = NULL;
+        int count;
 
         for (;;)
           {
-            int ret;
-
-            count = acl (name, ACE_GETACLCNT, 0, NULL);
-
-            if (count < 0)
+            count = acl (name, ACE_GETACL, alloc, entries);
+            if (count < 0 && errno == ENOSPC)
               {
-                if (errno == ENOSYS || errno == EINVAL)
-                  break;
-                else
-                  return -1;
+                /* Increase the size of the buffer.  */
+                free (malloced);
+                if (alloc > alloc_max / 2)
+                  {
+                    errno = ENOMEM;
+                    return -1;
+                  }
+                alloc = 2 * alloc; /* <= alloc_max */
+                entries = malloced = (ace_t *) malloc (alloc * sizeof (ace_t));
+                if (entries == NULL)
+                  {
+                    errno = ENOMEM;
+                    return -1;
+                  }
+                continue;
               }
-
-            if (count == 0)
-              break;
-
+            break;
+          }
+        if (count < 0)
+          {
+            if (errno == ENOSYS || errno == EINVAL)
+              ;
+            else
+              {
+                int saved_errno = errno;
+                free (malloced);
+                errno = saved_errno;
+                return -1;
+              }
+          }
+        else if (count == 0)
+          ;
+        else
+          {
             /* In the old (original Solaris 10) convention:
                If there are more than 3 entries, there cannot be only the
                ACE_OWNER, ACE_GROUP, ACE_OTHER entries.
@@ -650,37 +708,18 @@ file_has_acl (char const *name, struct stat const *sb)
                NEW_ACE_ACCESS_ALLOWED_ACE_TYPE and once with
                NEW_ACE_ACCESS_DENIED_ACE_TYPE.  */
             if (count > 6)
-              return 1;
+              {
+                free (malloced);
+                return 1;
+              }
 
-            entries = (ace_t *) malloc (count * sizeof (ace_t));
-            if (entries == NULL)
+            if (acl_ace_nontrivial (count, entries))
               {
-                errno = ENOMEM;
-                return -1;
+                free (malloced);
+                return 1;
               }
-            ret = acl (name, ACE_GETACL, count, entries);
-            if (ret < 0)
-              {
-                free (entries);
-                if (errno == ENOSYS || errno == EINVAL)
-                  break;
-                else
-                  return -1;
-              }
-            if (ret == count)
-              {
-                if (acl_ace_nontrivial (count, entries))
-                  {
-                    free (entries);
-                    return 1;
-                  }
-                free (entries);
-                break;
-              }
-            /* Huh? The number of ACL entries changed since the last call.
-               Repeat.  */
-            free (entries);
           }
+        free (malloced);
       }
 #   endif
 

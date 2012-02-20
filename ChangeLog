@@ -1,3 +1,35 @@
+2012-02-19  Paul Eggert  <eggert@cs.ucla.edu>
+	    Bruno Haible  <bruno@clisp.org>
+
+	acl: Don't use GETACLCNT and similar ops, since they are unreliable.
+
+	 - There were several instances of this pattern:
+
+	     for (;;) {
+	       n = acl (f, GETACLCNT, 0, NULL);
+	       [ allocate an array A of size N ]
+	       if (acl (f, GETACL, n, a) == n)
+		 break;
+	     }
+
+	   This loop might never terminate if some other process is constantly
+	   manipulating the file's ACL.  The loop should be rewritten to
+	   terminate.
+
+	 - The acl (... GETACLNT ...) call is merely an optimization; its value
+	   is merely a hint as to how big to make the array.  A better
+	   optimization is to avoid the acl (... GETACLNT ...)  call entirely,
+	   and just guess a reasonably-big size, growing the size and trying
+	   again if it's not large enough.  This guarantees termination, and
+	   saves a system call.
+
+	* lib/acl-internal.h: Include <limits.h>.
+	(MIN, SIZE_MAX): New macros.
+	* lib/file-has-acl.c (file_has_acl) [Solaris]: Read the entries into
+	a stack-allocated buffer, and use malloc if it does not fit. Don't
+	use GETACLCNT.
+	* lib/set-mode-acl.c (qset_acl) [Solaris]: Likewise.
+
 2012-02-19  Bruno Haible  <bruno@clisp.org>
 
 	acl: Fix endless loop on Solaris with vxfs.
