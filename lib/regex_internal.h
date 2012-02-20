@@ -470,7 +470,7 @@ static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 # define MAX(a,b) ((a) < (b) ? (b) : (a))
 #endif
 #ifndef MIN
-# define MIN(a,b) ((a) < (b) ? (b) : (a))
+# define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif
 
 #define re_malloc(t,n) ((t *) malloc ((n) * sizeof (t)))

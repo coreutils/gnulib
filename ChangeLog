@@ -1,3 +1,9 @@
+2012-02-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: fix typo in definition of MIN
+	* lib/regex_internal.h (MIN): Fix typo.  Problem reported by Thomas
+	Schwinge in <http://sourceware.org/bugzilla/show_bug.cgi?id=11638#c4>.
+
 2012-02-19  Paul Eggert  <eggert@cs.ucla.edu>
 	    Bruno Haible  <bruno@clisp.org>
 
