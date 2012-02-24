@@ -1,3 +1,12 @@
+2012-02-24  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
+
+	regex: fix false multibyte matches in some regular expressions
+	See <http://sourceware.org/bugzilla/show_bug.cgi?id=13637>
+	and <http://sourceware.org/ml/libc-alpha/2012-02/msg00521.html>.
+	* lib/regex_internal.c (re_string_skip_chars):
+	Fix miscomputation of remain_len that may cause incomplete
+	multi-byte character and false match.
+
 2012-02-24  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: tell sc_prohibit_strcmp to ding "0 == strcmp (...)", too
