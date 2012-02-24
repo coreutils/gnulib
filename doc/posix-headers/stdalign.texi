@@ -50,8 +50,8 @@ module @code{stdalign-tests} to fail.  The Sun Studio Developer Bug
 Report Review Team assigned the internal review ID 2125432 (dated
 2011-11-01) to this issue.
 @item
-@code{<stdalign.h>} must be #included before @samp{_Alignas} and
-@samp{_Alignof} can be used.
+@code{<stdalign.h>} must be #included before @code{_Alignas} and
+@code{_Alignof} can be used.
 @item
 You cannot assume that @code{_Alignas} and @code{_Alignof} are reserved words;
 they might be macros.
