@@ -1,3 +1,12 @@
+2012-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdnoreturn: new module
+	This implements a replacement for C11's <stdnoreturn.h>.
+	* doc/gnulib.texi (Header File Substitutes): Add stdnoreturn.
+	* doc/posix-headers/stdnoreturn.texi, lib/stdnoreturn.in.h:
+	* m4/stdnoreturn.m4, modules/stdnoreturn, modules/stdnoreturn-tests:
+	* tests/test-stdnoreturn.c: New files.
+
 2012-02-24  Stanislav Brabec  <sbrabec@suse.cz>  (tiny change)
 
 	regex: fix false multibyte matches in some regular expressions

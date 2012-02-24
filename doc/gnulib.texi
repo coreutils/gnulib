@@ -1194,6 +1194,7 @@ which (known) portability problems are not worked around by Gnulib.
 * stdint.h::
 * stdio.h::
 * stdlib.h::
+* stdnoreturn.h::
 * string.h::
 * strings.h::
 * stropts.h::
@@ -1281,6 +1282,7 @@ which (known) portability problems are not worked around by Gnulib.
 @include posix-headers/stdint.texi
 @include posix-headers/stdio.texi
 @include posix-headers/stdlib.texi
+@include posix-headers/stdnoreturn.texi
 @include posix-headers/string.texi
 @include posix-headers/strings.texi
 @include posix-headers/stropts.texi

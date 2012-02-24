@@ -1,0 +1,24 @@
+@node stdnoreturn.h
+@section @file{stdnoreturn.h}
+
+POSIX specification:@* Not in POSIX yet, but we expect it will be.
+ISO C11 (latest free draft
+@url{http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf})
+sections 7.23.
+
+Gnulib module: stdnoreturn
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This header file is missing on most circa-2012 platforms.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+@code{<stdnoreturn.h>} should be #included before @samp{_Noreturn} is used.
+@item
+You cannot assume that @code{_Noreturn} is a reserved word;
+it might be a macro.
+@end itemize
