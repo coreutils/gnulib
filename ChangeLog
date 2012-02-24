@@ -1,3 +1,11 @@
+2012-02-24  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: tell sc_prohibit_strcmp to ding "0 == strcmp (...)", too
+	* top/maint.mk (sc_prohibit_strcmp): Also prohibit uses of strcmp
+	uses with "==" *before* the call, e.g., 0 == strcmp (...)
+	Remove now-unnecessary str''cmp obfuscation.
+	Suggested by Akim Demaille.
+
 2012-02-24  Bruno Haible  <bruno@clisp.org>
 
 	streq: Rename macro.

@@ -303,11 +303,12 @@ sc_prohibit_atoi_atof:
 	  $(_sc_search_regexp)
 
 # Use STREQ rather than comparing strcmp == 0, or != 0.
+sp_ = strcmp *\(.+\)
 sc_prohibit_strcmp:
-	@grep -nE '! *str''cmp *\(|\<str''cmp *\(.+\) *[!=]='	\
+	@grep -nE '! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
 	    $$($(VC_LIST_EXCEPT))					\
 	  | grep -vE ':# *define STRN?EQ\(' &&				\
-	  { echo '$(ME): replace str''cmp calls above with STREQ/STRNEQ' \
+	  { echo '$(ME): replace strcmp calls above with STREQ/STRNEQ'	\
 		1>&2; exit 1; } || :
 
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
