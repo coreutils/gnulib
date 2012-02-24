@@ -21,6 +21,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2012-02-24  streq           This module no longer provides the STREQ macro.
+                            Use STREQ_OPT instead.
+
 2012-01-10  ignore-value    This module no longer provides the ignore_ptr
                             function.  It was deprecated a year ago, but existed
                             so briefly before then that it never came into use.

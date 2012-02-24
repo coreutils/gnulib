@@ -21,8 +21,8 @@
 
 #include <string.h>
 
-/* STREQ allows to optimize string comparison with a small literal string.
-     STREQ (s, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
+/* STREQ_OPT allows to optimize string comparison with a small literal string.
+     STREQ_OPT (s, "EUC-KR", 'E', 'U', 'C', '-', 'K', 'R', 0, 0, 0)
    is semantically equivalent to
      strcmp (s, "EUC-KR") == 0
    just faster.  */
@@ -163,12 +163,12 @@ streq0 (const char *s1, const char *s2, char s20, char s21, char s22, char s23, 
     return 0;
 }
 
-#define STREQ(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
+#define STREQ_OPT(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
   streq0 (s1, s2, s20, s21, s22, s23, s24, s25, s26, s27, s28)
 
 #else
 
-#define STREQ(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
+#define STREQ_OPT(s1,s2,s20,s21,s22,s23,s24,s25,s26,s27,s28) \
   (strcmp (s1, s2) == 0)
 
 #endif

@@ -32,7 +32,7 @@ wcwidth (wchar_t wc)
 {
   /* In UTF-8 locales, use a Unicode aware width function.  */
   const char *encoding = locale_charset ();
-  if (STREQ (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0))
+  if (STREQ_OPT (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0))
     {
       /* We assume that in a UTF-8 locale, a wide character is the same as a
          Unicode character.  */

@@ -1,3 +1,13 @@
+2012-02-24  Bruno Haible  <bruno@clisp.org>
+
+	streq: Rename macro.
+	* lib/streq.h (STREQ_OPT): Renamed from STREQ.
+	* NEWS: Mention the change.
+	* lib/mbrtowc.c (mbrtowc): Update.
+	* lib/uniwidth/cjk.h (is_cjk_encoding): Update.
+	* lib/wcwidth.c (wcwidth): Update.
+	Suggested by Akim Demaille and Jim Meyering.
+
 2012-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: fix typo in definition of MIN
