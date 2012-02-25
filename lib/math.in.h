@@ -629,6 +629,30 @@ _GL_WARN_ON_USE (fmodf, "fmodf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_FMODL@
+# if @REPLACE_FMODL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fmodl
+#   define fmodl rpl_fmodl
+#  endif
+_GL_FUNCDECL_RPL (fmodl, long double, (long double x, long double y));
+_GL_CXXALIAS_RPL (fmodl, long double, (long double x, long double y));
+# else
+#  if !@HAVE_FMODL@
+#   undef fmodl
+_GL_FUNCDECL_SYS (fmodl, long double, (long double x, long double y));
+#  endif
+_GL_CXXALIAS_SYS (fmodl, long double, (long double x, long double y));
+# endif
+_GL_CXXALIASWARN (fmodl);
+#elif defined GNULIB_POSIXCHECK
+# undef fmodl
+# if HAVE_RAW_DECL_FMODL
+_GL_WARN_ON_USE (fmodl, "fmodl is unportable - "
+                 "use gnulib module fmodl for portability");
+# endif
+#endif
+
 
 /* Write x as
      x = mantissa * 2^exp

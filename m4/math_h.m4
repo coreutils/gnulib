@@ -1,4 +1,4 @@
-# math_h.m4 serial 58
+# math_h.m4 serial 59
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_MATH_H],
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosf acosl asinf asinl atanf atanl
      ceilf ceill copysign copysignf copysignl cosf cosl coshf
-     expf expl fabsf fabsl floorf floorl fma fmaf fmal fmodf frexpf frexpl
+     expf expl fabsf fabsl floorf floorl fma fmaf fmal fmodf fmodl frexpf frexpl
      ldexpf ldexpl logb logf logl log10f modff modfl powf
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
      tanf tanl tanhf trunc truncf truncl])
@@ -85,6 +85,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_FMAF=0;      AC_SUBST([GNULIB_FMAF])
   GNULIB_FMAL=0;      AC_SUBST([GNULIB_FMAL])
   GNULIB_FMODF=0;     AC_SUBST([GNULIB_FMODF])
+  GNULIB_FMODL=0;     AC_SUBST([GNULIB_FMODL])
   GNULIB_FREXPF=0;    AC_SUBST([GNULIB_FREXPF])
   GNULIB_FREXP=0;     AC_SUBST([GNULIB_FREXP])
   GNULIB_FREXPL=0;    AC_SUBST([GNULIB_FREXPL])
@@ -143,6 +144,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_FMAF=1;                 AC_SUBST([HAVE_FMAF])
   HAVE_FMAL=1;                 AC_SUBST([HAVE_FMAL])
   HAVE_FMODF=1;                AC_SUBST([HAVE_FMODF])
+  HAVE_FMODL=1;                AC_SUBST([HAVE_FMODL])
   HAVE_FREXPF=1;               AC_SUBST([HAVE_FREXPF])
   HAVE_ISNANF=1;               AC_SUBST([HAVE_ISNANF])
   HAVE_ISNAND=1;               AC_SUBST([HAVE_ISNAND])
@@ -197,6 +199,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_FMA=0;               AC_SUBST([REPLACE_FMA])
   REPLACE_FMAF=0;              AC_SUBST([REPLACE_FMAF])
   REPLACE_FMAL=0;              AC_SUBST([REPLACE_FMAL])
+  REPLACE_FMODL=0;             AC_SUBST([REPLACE_FMODL])
   REPLACE_FREXPF=0;            AC_SUBST([REPLACE_FREXPF])
   REPLACE_FREXP=0;             AC_SUBST([REPLACE_FREXP])
   REPLACE_FREXPL=0;            AC_SUBST([REPLACE_FREXPL])

@@ -1,5 +1,19 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmodl'.
+	* lib/math.in.h (fmodl): New declaration.
+	* lib/fmodl.c: New file.
+	* m4/fmodl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether fmodl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMODL, HAVE_FMODL,
+	REPLACE_FMODL.
+	* modules/math (Makefile.am): Substitute GNULIB_FMODL, HAVE_FMODL,
+	REPLACE_FMODL.
+	* modules/fmodl: New file.
+	* doc/posix-functions/fmodl.texi: Mention the new module.
+
+2012-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'modfl'.
 	* modules/modfl-tests: New file.
 	* tests/test-modfl.c: New file.

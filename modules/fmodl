@@ -1,0 +1,34 @@
+Description:
+fmodl() function: floating-point remainder function.
+
+Files:
+lib/fmodl.c
+m4/fmodl.m4
+m4/mathfunc.m4
+
+Depends-on:
+math
+fmod            [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+truncl          [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+fmal            [{ test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+
+configure.ac:
+gl_FUNC_FMODL
+if test $HAVE_FMODL = 0 || test $REPLACE_FMODL = 1; then
+  AC_LIBOBJ([fmodl])
+fi
+gl_MATH_MODULE_INDICATOR([fmodl])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(FMODL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
