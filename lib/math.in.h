@@ -225,6 +225,7 @@ _GL_WARN_ON_USE (atanf, "atanf is unportable - "
 
 #if @GNULIB_ATANL@
 # if !@HAVE_ATANL@ || !@HAVE_DECL_ATANL@
+#  undef atanl
 _GL_FUNCDECL_SYS (atanl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (atanl, long double, (long double x));

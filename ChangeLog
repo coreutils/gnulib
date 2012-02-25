@@ -1,5 +1,12 @@
 2012-02-24  Bruno Haible  <bruno@clisp.org>
 
+	atanl: Provide function definition on MSVC.
+	* m4/atanl.m4 (gl_FUNC_ATANL): Test also whether atanl can be used as a
+	function pointer.
+	* lib/math.in.h (atanl): Undefine if it does not exist as a function.
+
+2012-02-24  Bruno Haible  <bruno@clisp.org>
+
 	acosl: Provide function definition on MSVC.
 	* m4/acosl.m4 (gl_FUNC_ACOSL): Test also whether acosl can be used as a
 	function pointer.
