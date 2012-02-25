@@ -1,5 +1,12 @@
 2012-02-24  Bruno Haible  <bruno@clisp.org>
 
+	sqrtl: Provide function definition on MSVC.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL): Test also whether sqrtl can be used as
+	a function pointer.
+	* lib/math.in.h (sqrtl): Undefine if it does not exist as a function.
+
+2012-02-24  Bruno Haible  <bruno@clisp.org>
+
 	ceill: Provide function definition on MSVC.
 	* m4/ceill.m4 (gl_FUNC_CEILL_LIBS): Test also whether ceill can be
 	used as a function pointer.

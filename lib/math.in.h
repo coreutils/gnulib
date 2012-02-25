@@ -1004,6 +1004,7 @@ _GL_WARN_ON_USE (sqrtf, "sqrtf is unportable - "
 
 #if @GNULIB_SQRTL@
 # if !@HAVE_SQRTL@ || !@HAVE_DECL_SQRTL@
+#  undef sqrtl
 _GL_FUNCDECL_SYS (sqrtl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (sqrtl, long double, (long double x));
