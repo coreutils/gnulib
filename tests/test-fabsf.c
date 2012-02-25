@@ -23,10 +23,14 @@
 #include "signature.h"
 SIGNATURE_CHECK (fabsf, float, (float));
 
+#include <string.h>
+
 #include "macros.h"
+#include "minus-zero.h"
 
 volatile float x;
 float y;
+float zero = 0.0f;
 
 int
 main ()
@@ -40,6 +44,17 @@ main ()
   x = -0.6f;
   y = fabsf (x);
   ASSERT (y == 0.6f);
+
+  /* Signed zero.  */
+  x = 0.0f;
+  y = fabsf (x);
+  ASSERT (y == 0.0f);
+  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
+
+  x = minus_zerof;
+  y = fabsf (x);
+  ASSERT (y == 0.0f);
+  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
 
   return 0;
 }
