@@ -6,7 +6,7 @@
 	* tests/test-math-c++.cc: Check the declaration of remainderl.
 
 	New module 'remainderl'.
-	* lib/math.in.h (remainderh): New declaration.
+	* lib/math.in.h (remainderl): New declaration.
 	* lib/remainderl.c: New file.
 	* m4/remainderl.m4: New file.
 	* modules/remainderl: New file.
