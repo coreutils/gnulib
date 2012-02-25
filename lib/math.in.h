@@ -262,6 +262,7 @@ _GL_FUNCDECL_RPL (ceilf, float, (float x));
 _GL_CXXALIAS_RPL (ceilf, float, (float x));
 # else
 #  if !@HAVE_DECL_CEILF@
+#   undef ceilf
 _GL_FUNCDECL_SYS (ceilf, float, (float x));
 #  endif
 _GL_CXXALIAS_SYS (ceilf, float, (float x));

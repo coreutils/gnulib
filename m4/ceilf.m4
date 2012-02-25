@@ -1,4 +1,4 @@
-# ceilf.m4 serial 12
+# ceilf.m4 serial 13
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,8 +82,9 @@ AC_DEFUN([gl_FUNC_CEILF_LIBS],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
+           float (*funcptr) (float) = ceilf;
            float x;]],
-         [[x = ceilf(x);]])],
+         [[x = funcptr(x) + ceilf(x);]])],
       [gl_cv_func_ceilf_libm=])
     if test "$gl_cv_func_ceilf_libm" = "?"; then
       save_LIBS="$LIBS"
@@ -94,8 +95,9 @@ AC_DEFUN([gl_FUNC_CEILF_LIBS],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             float (*funcptr) (float) = ceilf;
              float x;]],
-           [[x = ceilf(x);]])],
+           [[x = funcptr(x) + ceilf(x);]])],
         [gl_cv_func_ceilf_libm="-lm"])
       LIBS="$save_LIBS"
     fi
