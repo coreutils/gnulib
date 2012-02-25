@@ -193,6 +193,7 @@ _GL_WARN_ON_USE (asinf, "asinf is unportable - "
 
 #if @GNULIB_ASINL@
 # if !@HAVE_ASINL@ || !@HAVE_DECL_ASINL@
+#  undef asinl
 _GL_FUNCDECL_SYS (asinl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (asinl, long double, (long double x));
