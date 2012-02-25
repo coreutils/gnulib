@@ -120,6 +120,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::expl, long double, (long double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fabsf, float, (float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::fabs, double, (double));
+#if GNULIB_TEST_FABSL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fabsl, long double, (long double));
+#endif
 
 #if GNULIB_TEST_FLOORF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorf, float, (float));

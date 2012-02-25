@@ -3,6 +3,7 @@
 	Tests for module 'fabsl'.
 	* modules/fabsl-tests: New file.
 	* tests/test-fabsl.c: New file.
+	* tests/test-math-c++.cc: Check the declaration of fabsl.
 
 	New module 'fabsl'.
 	* lib/math.in.h (fabsl): New declaration.
