@@ -299,6 +299,7 @@ _GL_FUNCDECL_RPL (ceill, long double, (long double x));
 _GL_CXXALIAS_RPL (ceill, long double, (long double x));
 # else
 #  if !@HAVE_DECL_CEILL@
+#   undef ceill
 _GL_FUNCDECL_SYS (ceill, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (ceill, long double, (long double x));

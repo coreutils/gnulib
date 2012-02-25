@@ -1,4 +1,4 @@
-# ceill.m4 serial 12
+# ceill.m4 serial 13
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -86,8 +86,9 @@ AC_DEFUN([gl_FUNC_CEILL_LIBS],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
+           long double (*funcptr) (long double) = ceill;
            long double x;]],
-         [[x = ceill(x);]])],
+         [[x = funcptr(x) + ceill(x);]])],
       [gl_cv_func_ceill_libm=])
     if test "$gl_cv_func_ceill_libm" = "?"; then
       save_LIBS="$LIBS"
@@ -98,8 +99,9 @@ AC_DEFUN([gl_FUNC_CEILL_LIBS],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             long double (*funcptr) (long double) = ceill;
              long double x;]],
-           [[x = ceill(x);]])],
+           [[x = funcptr(x) + ceill(x);]])],
         [gl_cv_func_ceill_libm="-lm"])
       LIBS="$save_LIBS"
     fi
