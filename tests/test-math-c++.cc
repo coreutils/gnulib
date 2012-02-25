@@ -211,6 +211,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::remainderf, float, (float, float));
 #if GNULIB_TEST_REMAINDER
 SIGNATURE_CHECK (GNULIB_NAMESPACE::remainder, double, (double, double));
 #endif
+#if GNULIB_TEST_REMAINDERL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::remainderl, long double,
+                 (long double, long double));
+#endif
 
 #if GNULIB_TEST_RINTF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::rintf, float, (float));
