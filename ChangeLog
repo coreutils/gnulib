@@ -1,5 +1,9 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fabsl'.
+	* modules/fabsl-tests: New file.
+	* tests/test-fabsl.c: New file.
+
 	New module 'fabsl'.
 	* lib/math.in.h (fabsl): New declaration.
 	* lib/fabsl.c: New file.
