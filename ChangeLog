@@ -1,5 +1,17 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'modfl'.
+	* lib/math.in.h (modfl): New declaration.
+	* lib/modfl.c: New file.
+	* m4/modfl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether modfl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_MODFL, HAVE_MODFL.
+	* modules/math (Makefile.am): Substitute GNULIB_MODFL, HAVE_MODFL.
+	* modules/modfl: New file.
+	* doc/posix-functions/modfl.texi: Mention the new module.
+
+2012-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'fabsl'.
 	* modules/fabsl-tests: New file.
 	* tests/test-fabsl.c: New file.
