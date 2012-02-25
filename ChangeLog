@@ -1,5 +1,10 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log10l'.
+	* modules/log10l-tests: New file.
+	* tests/test-log10l.c: New file.
+	* tests/test-math-c++.cc: Check the declaration of log10l.
+
 	New module 'log10l'.
 	* lib/math.in.h (log10l): New declaration.
 	* lib/log10l.c: New file.
