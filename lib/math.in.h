@@ -495,6 +495,7 @@ _GL_FUNCDECL_RPL (floorl, long double, (long double x));
 _GL_CXXALIAS_RPL (floorl, long double, (long double x));
 # else
 #  if !@HAVE_DECL_FLOORL@
+#   undef floorl
 _GL_FUNCDECL_SYS (floorl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (floorl, long double, (long double x));
