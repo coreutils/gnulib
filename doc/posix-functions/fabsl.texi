@@ -4,13 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fabsl.html}
 
-Gnulib module: ---
+Gnulib module: fabsl
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
@@ -18,4 +14,11 @@ NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Int
 @item
 This function is only defined as a macro with arguments on some platforms:
 MSVC 9.
+@item
+This function returns a minus zero for a minus zero argument on some platforms:
+IRIX 6.5 with gcc 4.2.4.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

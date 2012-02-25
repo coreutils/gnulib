@@ -453,6 +453,30 @@ _GL_WARN_ON_USE (fabsf, "fabsf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_FABSL@
+# if @REPLACE_FABSL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fabsl
+#   define fabsl rpl_fabsl
+#  endif
+_GL_FUNCDECL_RPL (fabsl, long double, (long double x));
+_GL_CXXALIAS_RPL (fabsl, long double, (long double x));
+# else
+#  if !@HAVE_FABSL@
+#   undef fabsl
+_GL_FUNCDECL_SYS (fabsl, long double, (long double x));
+#  endif
+_GL_CXXALIAS_SYS (fabsl, long double, (long double x));
+# endif
+_GL_CXXALIASWARN (fabsl);
+#elif defined GNULIB_POSIXCHECK
+# undef fabsl
+# if HAVE_RAW_DECL_FABSL
+_GL_WARN_ON_USE (fabsl, "fabsl is unportable - "
+                 "use gnulib module fabsl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_FLOORF@
 # if @REPLACE_FLOORF@
