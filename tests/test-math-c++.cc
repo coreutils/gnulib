@@ -189,6 +189,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::log10f, float, (float));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::modff, float, (float, float *));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::modf, double, (double, double *));
+#if GNULIB_TEST_MODFL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::modfl, long double,
+                 (long double, long double *));
+#endif
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::nextafter, double, (double, double));
 

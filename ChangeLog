@@ -1,5 +1,10 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'modfl'.
+	* modules/modfl-tests: New file.
+	* tests/test-modfl.c: New file.
+	* tests/test-math-c++.cc: Check the declaration of modfl.
+
 	New module 'modfl'.
 	* lib/math.in.h (modfl): New declaration.
 	* lib/modfl.c: New file.
