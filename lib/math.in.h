@@ -457,6 +457,7 @@ _GL_FUNCDECL_RPL (floorf, float, (float x));
 _GL_CXXALIAS_RPL (floorf, float, (float x));
 # else
 #  if !@HAVE_DECL_FLOORF@
+#   undef floorf
 _GL_FUNCDECL_SYS (floorf, float, (float x));
 #  endif
 _GL_CXXALIAS_SYS (floorf, float, (float x));

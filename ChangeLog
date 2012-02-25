@@ -1,3 +1,10 @@
+2012-02-24  Bruno Haible  <bruno@clisp.org>
+
+	floorf: Provide function definition on MSVC.
+	* m4/floorf.m4 (gl_FUNC_FLOORF_LIBS): Test also whether floorf can be
+	used as a function pointer.
+	* lib/math.in.h (floorf): Undefine if it is not declared as a function.
+
 2012-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdnoreturn: new module
