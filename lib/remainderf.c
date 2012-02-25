@@ -25,7 +25,26 @@ remainderf (float x, float y)
 #if HAVE_REMAINDER
   return (float) remainder ((double) x, (double) y);
 #else
-  float i = roundf (x / y);
-  return fmaf (- i, y, x);
+  float q = - roundf (x / y);
+  float r = fmaf (q, y, x); /* = x + q * y, computed in one step */
+  /* Correct possible rounding errors in the quotient x / y.  */
+  float half_y = 0.5L * y;
+  if (y >= 0)
+    {
+      /* Expect -y/2 <= r <= y/2.  */
+      if (r > half_y)
+        q -= 1, r = fmaf (q, y, x);
+      else if (r < - half_y)
+        q += 1, r = fmaf (q, y, x);
+    }
+  else
+    {
+      /* Expect y/2 <= r <= -y/2.  */
+      if (r > - half_y)
+        q += 1, r = fmaf (q, y, x);
+      else if (r < half_y)
+        q -= 1, r = fmaf (q, y, x);
+    }
+  return r;
 #endif
 }

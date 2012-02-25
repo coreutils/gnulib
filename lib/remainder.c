@@ -22,6 +22,25 @@
 double
 remainder (double x, double y)
 {
-  double i = round (x / y);
-  return fma (- i, y, x);
+  double q = - round (x / y);
+  double r = fma (q, y, x); /* = x + q * y, computed in one step */
+  /* Correct possible rounding errors in the quotient x / y.  */
+  double half_y = 0.5L * y;
+  if (y >= 0)
+    {
+      /* Expect -y/2 <= r <= y/2.  */
+      if (r > half_y)
+        q -= 1, r = fma (q, y, x);
+      else if (r < - half_y)
+        q += 1, r = fma (q, y, x);
+    }
+  else
+    {
+      /* Expect y/2 <= r <= -y/2.  */
+      if (r > - half_y)
+        q += 1, r = fma (q, y, x);
+      else if (r < half_y)
+        q -= 1, r = fma (q, y, x);
+    }
+  return r;
 }

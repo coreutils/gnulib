@@ -1,5 +1,14 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	fmodl, remainder*: Avoid wrong results due to rounding errors.
+	* lib/fmodl.c (fmodl): Correct the result if it is not within the
+	expected bounds.
+	* lib/remainderf.c (remainderf): Likewise.
+	* lib/remainder.c (remainder): Likewise.
+	* lib/remainderl.c (remainderl): Likewise.
+
+2012-02-25  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'remainderl'.
 	* modules/remainderl-tests: New file.
 	* tests/test-remainderl.c: New file.
