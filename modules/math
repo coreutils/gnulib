@@ -74,6 +74,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_MODFF''@/$(GNULIB_MODFF)/g' \
 	      -e 's/@''GNULIB_MODFL''@/$(GNULIB_MODFL)/g' \
 	      -e 's/@''GNULIB_POWF''@/$(GNULIB_POWF)/g' \
+	      -e 's/@''GNULIB_REMAINDER''@/$(GNULIB_REMAINDER)/g' \
 	      -e 's/@''GNULIB_RINT''@/$(GNULIB_RINT)/g' \
 	      -e 's/@''GNULIB_RINTF''@/$(GNULIB_RINTF)/g' \
 	      -e 's/@''GNULIB_RINTL''@/$(GNULIB_RINTL)/g' \
@@ -126,6 +127,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
 	      -e 's|@''HAVE_MODFL''@|$(HAVE_MODFL)|g' \
 	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
+	      -e 's|@''HAVE_REMAINDER''@|$(HAVE_REMAINDER)|g' \
 	      -e 's|@''HAVE_RINT''@|$(HAVE_RINT)|g' \
 	      -e 's|@''HAVE_RINTF''@|$(HAVE_RINTF)|g' \
 	      -e 's|@''HAVE_RINTL''@|$(HAVE_RINTL)|g' \
@@ -150,6 +152,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
 	      -e 's|@''HAVE_DECL_LOGB''@|$(HAVE_DECL_LOGB)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
+	      -e 's|@''HAVE_DECL_REMAINDER''@|$(HAVE_DECL_REMAINDER)|g' \
 	      -e 's|@''HAVE_DECL_ROUND''@|$(HAVE_DECL_ROUND)|g' \
 	      -e 's|@''HAVE_DECL_ROUNDF''@|$(HAVE_DECL_ROUNDF)|g' \
 	      -e 's|@''HAVE_DECL_ROUNDL''@|$(HAVE_DECL_ROUNDL)|g' \
