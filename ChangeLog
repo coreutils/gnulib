@@ -1,5 +1,10 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fmodl'.
+	* modules/fmodl-tests: New file.
+	* tests/test-fmodl.c: New file.
+	* tests/test-math-c++.cc: Check the declaration of fmodl.
+
 	New module 'fmodl'.
 	* lib/math.in.h (fmodl): New declaration.
 	* lib/fmodl.c: New file.

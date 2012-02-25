@@ -1,0 +1,14 @@
+Files:
+tests/test-fmodl.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+fpucw
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-fmodl
+check_PROGRAMS += test-fmodl
+test_fmodl_LDADD = $(LDADD) @FMODL_LIBM@
