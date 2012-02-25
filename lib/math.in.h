@@ -768,6 +768,7 @@ _GL_WARN_ON_USE (logf, "logf is unportable - "
 
 #if @GNULIB_LOGL@
 # if !@HAVE_LOGL@ || !@HAVE_DECL_LOGL@
+#  undef logl
 _GL_FUNCDECL_SYS (logl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (logl, long double, (long double x));
