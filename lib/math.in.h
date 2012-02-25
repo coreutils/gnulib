@@ -926,6 +926,20 @@ _GL_WARN_ON_USE (remainder, "remainder is unportable - "
 # endif
 #endif
 
+#if @GNULIB_REMAINDERL@
+# if !@HAVE_REMAINDERL@
+_GL_FUNCDECL_SYS (remainderl, long double, (long double x, long double y));
+# endif
+_GL_CXXALIAS_SYS (remainderl, long double, (long double x, long double y));
+_GL_CXXALIASWARN (remainderl);
+#elif defined GNULIB_POSIXCHECK
+# undef remainderl
+# if HAVE_RAW_DECL_REMAINDERL
+_GL_WARN_ON_USE (remainderl, "remainderl is unportable - "
+                 "use gnulib module remainderl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_RINTF@
 # if !@HAVE_RINTF@
