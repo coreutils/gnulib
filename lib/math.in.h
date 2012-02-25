@@ -420,6 +420,7 @@ _GL_WARN_ON_USE (expf, "expf is unportable - "
 
 #if @GNULIB_EXPL@
 # if !@HAVE_EXPL@ || !@HAVE_DECL_EXPL@
+#  undef expl
 _GL_FUNCDECL_SYS (expl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (expl, long double, (long double x));
