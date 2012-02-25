@@ -163,6 +163,7 @@ _GL_WARN_ON_USE (acosf, "acosf is unportable - "
 
 #if @GNULIB_ACOSL@
 # if !@HAVE_ACOSL@ || !@HAVE_DECL_ACOSL@
+#  undef acosl
 _GL_FUNCDECL_SYS (acosl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (acosl, long double, (long double x));
