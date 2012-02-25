@@ -1,5 +1,12 @@
 2012-02-24  Bruno Haible  <bruno@clisp.org>
 
+	cosl: Provide function definition on MSVC.
+	* m4/cosl.m4 (gl_FUNC_COSL): Test also whether cosl can be used as a
+	function pointer.
+	* lib/math.in.h (cosl): Undefine if it does not exist as a function.
+
+2012-02-24  Bruno Haible  <bruno@clisp.org>
+
 	sinl: Provide function definition on MSVC.
 	* m4/sinl.m4 (gl_FUNC_SINL): Test also whether sinl can be used as a
 	function pointer.

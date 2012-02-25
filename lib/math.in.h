@@ -374,6 +374,7 @@ _GL_WARN_ON_USE (cosf, "cosf is unportable - "
 
 #if @GNULIB_COSL@
 # if !@HAVE_COSL@ || !@HAVE_DECL_COSL@
+#  undef cosl
 _GL_FUNCDECL_SYS (cosl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (cosl, long double, (long double x));
