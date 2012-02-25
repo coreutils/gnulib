@@ -1,5 +1,11 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	fabs tests: More tests.
+	* tests/test-fabs.c: Include <string.h>, minus-zero.h.
+	(zero): New variable.
+	(main): Add tests for signed zero.
+	* modules/fabs-tests (Files): Add tests/minus-zero.h.
+
 	fabsf tests: More tests.
 	* tests/test-fabsf.c: Include <string.h>, minus-zero.h.
 	(zero): New variable.

@@ -23,10 +23,14 @@
 #include "signature.h"
 SIGNATURE_CHECK (fabs, double, (double));
 
+#include <string.h>
+
 #include "macros.h"
+#include "minus-zero.h"
 
 volatile double x;
 double y;
+double zero = 0.0;
 
 int
 main ()
@@ -40,6 +44,17 @@ main ()
   x = -0.6;
   y = fabs (x);
   ASSERT (y == 0.6);
+
+  /* Signed zero.  */
+  x = 0.0;
+  y = fabs (x);
+  ASSERT (y == 0.0);
+  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
+
+  x = minus_zerod;
+  y = fabs (x);
+  ASSERT (y == 0.0);
+  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
 
   return 0;
 }
