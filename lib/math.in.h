@@ -1039,6 +1039,7 @@ _GL_WARN_ON_USE (tanf, "tanf is unportable - "
 
 #if @GNULIB_TANL@
 # if !@HAVE_TANL@ || !@HAVE_DECL_TANL@
+#  undef tanl
 _GL_FUNCDECL_SYS (tanl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (tanl, long double, (long double x));

@@ -1,4 +1,4 @@
-# tanl.m4 serial 6
+# tanl.m4 serial 7
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,8 +22,10 @@ AC_DEFUN([gl_FUNC_TANL],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             long double (*funcptr) (long double) = tanl;
              long double x;]],
-           [[return tanl (x) > 0.4;]])],
+           [[return funcptr (x) > 0.4
+                    || tanl (x) > 0.4;]])],
         [gl_cv_func_tanl_no_libm=yes],
         [gl_cv_func_tanl_no_libm=no])
     ])
@@ -39,8 +41,10 @@ AC_DEFUN([gl_FUNC_TANL],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
+               long double (*funcptr) (long double) = tanl;
                long double x;]],
-             [[return tanl (x) > 0.4;]])],
+             [[return funcptr (x) > 0.4
+                      || tanl (x) > 0.4;]])],
           [gl_cv_func_tanl_in_libm=yes],
           [gl_cv_func_tanl_in_libm=no])
         LIBS="$save_LIBS"
