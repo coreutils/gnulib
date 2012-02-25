@@ -1,5 +1,18 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'remainderf'.
+	* lib/math.in.h (remainderf): New declaration.
+	* lib/remainderf.c: New file.
+	* m4/remainderf.m4: New file.
+	* modules/remainderf: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether remainderf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_REMAINDERF, HAVE_REMAINDERF.
+	* modules/math (Makefile.am): Substitute GNULIB_REMAINDERF,
+	HAVE_REMAINDERF.
+	* doc/posix-functions/remainderf.texi: Mention the new module.
+
+2012-02-25  Bruno Haible  <bruno@clisp.org>
+
 	remainder: Support for MSVC.
 	* lib/math.in.h (remainder): New declaration.
 	* lib/remainder.c: New file.
