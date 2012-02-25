@@ -1,0 +1,13 @@
+Files:
+tests/test-remainderf.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-remainderf
+check_PROGRAMS += test-remainderf
+test_remainderf_LDADD = $(LDADD) @REMAINDERF_LIBM@

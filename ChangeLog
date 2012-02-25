@@ -1,5 +1,10 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'remainderf'.
+	* modules/remainderf-tests: New file.
+	* tests/test-remainderf.c: New file.
+	* tests/test-math-c++.cc: Check the declaration of remainderf.
+
 	New module 'remainderf'.
 	* lib/math.in.h (remainderf): New declaration.
 	* lib/remainderf.c: New file.
