@@ -1,0 +1,32 @@
+Description:
+log10l() function: base 10 logarithmic function.
+
+Files:
+lib/log10l.c
+m4/log10l.m4
+
+Depends-on:
+math
+log10           [test $HAVE_LOG10L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+logl            [test $HAVE_LOG10L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+
+configure.ac:
+gl_FUNC_LOG10L
+if test $HAVE_LOG10L = 0; then
+  AC_LIBOBJ([log10l])
+fi
+gl_MATH_MODULE_INDICATOR([log10l])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG10L_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible

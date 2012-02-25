@@ -4,15 +4,18 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log10l.html}
 
-Gnulib module: ---
+Gnulib module: log10l
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
+@item
+This function is not declared on some platforms:
+AIX 5.1.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

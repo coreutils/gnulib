@@ -1,4 +1,4 @@
-# math_h.m4 serial 62
+# math_h.m4 serial 63
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,7 @@ AC_DEFUN([gl_MATH_H],
     [acosf acosl asinf asinl atanf atanl
      ceilf ceill copysign copysignf copysignl cosf cosl coshf
      expf expl fabsf fabsl floorf floorl fma fmaf fmal fmodf fmodl frexpf frexpl
-     ldexpf ldexpl logb logf logl log10f modff modfl powf
+     ldexpf ldexpl logb logf logl log10f log10l modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
      tanf tanl tanhf trunc truncf truncl])
@@ -102,6 +102,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_LOGF=0;       AC_SUBST([GNULIB_LOGF])
   GNULIB_LOGL=0;       AC_SUBST([GNULIB_LOGL])
   GNULIB_LOG10F=0;     AC_SUBST([GNULIB_LOG10F])
+  GNULIB_LOG10L=0;     AC_SUBST([GNULIB_LOG10L])
   GNULIB_MODFF=0;      AC_SUBST([GNULIB_MODFF])
   GNULIB_MODFL=0;      AC_SUBST([GNULIB_MODFL])
   GNULIB_POWF=0;       AC_SUBST([GNULIB_POWF])
@@ -157,6 +158,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_LOGF=1;                 AC_SUBST([HAVE_LOGF])
   HAVE_LOGL=1;                 AC_SUBST([HAVE_LOGL])
   HAVE_LOG10F=1;               AC_SUBST([HAVE_LOG10F])
+  HAVE_LOG10L=1;               AC_SUBST([HAVE_LOG10L])
   HAVE_MODFF=1;                AC_SUBST([HAVE_MODFF])
   HAVE_MODFL=1;                AC_SUBST([HAVE_MODFL])
   HAVE_POWF=1;                 AC_SUBST([HAVE_POWF])
@@ -187,6 +189,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_LDEXPL=1;          AC_SUBST([HAVE_DECL_LDEXPL])
   HAVE_DECL_LOGB=1;            AC_SUBST([HAVE_DECL_LOGB])
   HAVE_DECL_LOGL=1;            AC_SUBST([HAVE_DECL_LOGL])
+  HAVE_DECL_LOG10L=1;          AC_SUBST([HAVE_DECL_LOG10L])
   HAVE_DECL_REMAINDER=1;       AC_SUBST([HAVE_DECL_REMAINDER])
   HAVE_DECL_ROUND=1;           AC_SUBST([HAVE_DECL_ROUND])
   HAVE_DECL_ROUNDF=1;          AC_SUBST([HAVE_DECL_ROUNDF])

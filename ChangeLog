@@ -1,5 +1,19 @@
 2012-02-25  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log10l'.
+	* lib/math.in.h (log10l): New declaration.
+	* lib/log10l.c: New file.
+	* m4/log10l.m4: New file.
+	* modules/log10l: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log10l is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG10L, HAVE_LOG10L,
+	HAVE_DECL_LOG10L.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG10L, HAVE_LOG10L,
+	HAVE_DECL_LOG10L.
+	* doc/posix-functions/log10l.texi: Mention the new module.
+
+2012-02-25  Bruno Haible  <bruno@clisp.org>
+
 	fmodl, remainder*: Avoid wrong results due to rounding errors.
 	* lib/fmodl.c (fmodl): Correct the result if it is not within the
 	expected bounds.

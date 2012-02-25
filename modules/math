@@ -71,6 +71,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LOGF''@/$(GNULIB_LOGF)/g' \
 	      -e 's/@''GNULIB_LOGL''@/$(GNULIB_LOGL)/g' \
 	      -e 's/@''GNULIB_LOG10F''@/$(GNULIB_LOG10F)/g' \
+	      -e 's/@''GNULIB_LOG10L''@/$(GNULIB_LOG10L)/g' \
 	      -e 's/@''GNULIB_MODFF''@/$(GNULIB_MODFF)/g' \
 	      -e 's/@''GNULIB_MODFL''@/$(GNULIB_MODFL)/g' \
 	      -e 's/@''GNULIB_POWF''@/$(GNULIB_POWF)/g' \
@@ -126,6 +127,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_LOGF''@|$(HAVE_LOGF)|g' \
 	      -e 's|@''HAVE_LOGL''@|$(HAVE_LOGL)|g' \
 	      -e 's|@''HAVE_LOG10F''@|$(HAVE_LOG10F)|g' \
+	      -e 's|@''HAVE_LOG10L''@|$(HAVE_LOG10L)|g' \
 	      -e 's|@''HAVE_MODFF''@|$(HAVE_MODFF)|g' \
 	      -e 's|@''HAVE_MODFL''@|$(HAVE_MODFL)|g' \
 	      -e 's|@''HAVE_POWF''@|$(HAVE_POWF)|g' \
@@ -156,6 +158,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_LDEXPL''@|$(HAVE_DECL_LDEXPL)|g' \
 	      -e 's|@''HAVE_DECL_LOGB''@|$(HAVE_DECL_LOGB)|g' \
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
+	      -e 's|@''HAVE_DECL_LOG10L''@|$(HAVE_DECL_LOG10L)|g' \
 	      -e 's|@''HAVE_DECL_REMAINDER''@|$(HAVE_DECL_REMAINDER)|g' \
 	      -e 's|@''HAVE_DECL_ROUND''@|$(HAVE_DECL_ROUND)|g' \
 	      -e 's|@''HAVE_DECL_ROUNDF''@|$(HAVE_DECL_ROUNDF)|g' \
