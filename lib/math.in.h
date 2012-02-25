@@ -960,6 +960,7 @@ _GL_WARN_ON_USE (sinf, "sinf is unportable - "
 
 #if @GNULIB_SINL@
 # if !@HAVE_SINL@ || !@HAVE_DECL_SINL@
+#  undef sinl
 _GL_FUNCDECL_SYS (sinl, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (sinl, long double, (long double x));
