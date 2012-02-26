@@ -1,5 +1,8 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	New module 'frexpl-ieee'.
+	* modules/frexpl-ieee: New file.
+
 	Tests for module 'frexp-ieee'.
 	* modules/frexp-ieee-tests: New file.
 	* tests/test-frexp-ieee.c: New file.
