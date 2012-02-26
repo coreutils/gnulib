@@ -1,5 +1,11 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	ceill-ieee tests: More tests.
+	* tests/test-ceill-ieee.c: Include isnanl-nolibm.h, infinity.h, nan.h.
+	(main): Add tests for [MX] shaded specification in POSIX.
+	* modules/ceill-ieee-tests (Files): Add tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnanl-nolibm.
+
 	ceil-ieee tests: More tests.
 	* tests/test-ceil-ieee.c: Include isnand-nolibm.h, infinity.h, nan.h.
 	(main): Add tests for [MX] shaded specification in POSIX.
