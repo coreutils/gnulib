@@ -1,5 +1,11 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	truncf-ieee tests: More tests.
+	* tests/test-truncf-ieee.c: Include isnanf-nolibm.h, infinity.h, nan.h.
+	(main): Add tests for [MX] shaded specification in POSIX.
+	* modules/truncf-ieee-tests (Files): Add tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnanf-nolibm.
+
 	ceill-ieee tests: More tests.
 	* tests/test-ceill-ieee.c: Include isnanl-nolibm.h, infinity.h, nan.h.
 	(main): Add tests for [MX] shaded specification in POSIX.
