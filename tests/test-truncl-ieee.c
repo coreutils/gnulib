@@ -19,7 +19,10 @@
 #include <math.h>
 
 #include "fpucw.h"
+#include "isnanl-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
 #include "macros.h"
 
 int
@@ -43,6 +46,14 @@ main ()
   /* Negative numbers.  */
   ASSERT (!!signbit (truncl (-0.3L)) == !!signbit (minus_zerol));
   ASSERT (!!signbit (truncl (-0.7L)) == !!signbit (minus_zerol));
+
+  /* [MX] shaded specification in POSIX.  */
+
+  /* NaN.  */
+  ASSERT (isnanl (truncl (NaNl ())));
+  /* Infinity.  */
+  ASSERT (truncl (Infinityl ()) == Infinityl ());
+  ASSERT (truncl (- Infinityl ()) == - Infinityl ());
 
   return 0;
 }
