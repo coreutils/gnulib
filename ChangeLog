@@ -1,5 +1,8 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fabs-ieee'.
+	* modules/fabs-ieee: New file.
+
 	Tests for module 'fabsf-ieee'.
 	* modules/fabsf-ieee-tests: New file.
 	* tests/test-fabsf-ieee.c: New file.
