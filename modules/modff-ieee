@@ -1,0 +1,24 @@
+Description:
+modff() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+modff
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(MODFF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
