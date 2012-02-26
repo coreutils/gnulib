@@ -1,4 +1,4 @@
-# fpieee.m4 serial 1
+# fpieee.m4 serial 2
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,9 +36,11 @@ AC_DEFUN([gl_FP_IEEE],
       # <http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/V51B_HTML/MAN/MAN3/0600____.HTM>
       if test -n "$GCC"; then
         # GCC has the option -mieee.
+        # For full IEEE compliance (rarely needed), use option -mieee-with-inexact.
         CPPFLAGS="$CPPFLAGS -mieee"
       else
-        # Compaq (ex-DEC) C has the option -ieee.
+        # Compaq (ex-DEC) C has the option -ieee, equivalent to -ieee_with_no_inexact.
+        # For full IEEE compliance (rarely needed), use option -ieee_with_inexact.
         CPPFLAGS="$CPPFLAGS -ieee"
       fi
       ;;
