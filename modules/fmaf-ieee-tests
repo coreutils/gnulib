@@ -7,7 +7,6 @@ tests/macros.h
 
 Depends-on:
 isnanf-nolibm
-signbit
 
 configure.ac:
 
