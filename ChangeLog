@@ -1,5 +1,10 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	New module 'frexpf-ieee'.
+	* modules/frexpf-ieee: New file.
+
+2012-02-26  Bruno Haible  <bruno@clisp.org>
+
 	roundl-ieee tests: More tests.
 	* tests/test-roundl-ieee.c: Include isnanl-nolibm.h, infinity.h, nan.h.
 	(main): Add tests for [MX] shaded specification in POSIX.
