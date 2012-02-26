@@ -1,5 +1,11 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	floorl-ieee tests: More tests.
+	* tests/test-floorl-ieee.c: Include isnanl-nolibm.h, infinity.h, nan.h.
+	(main): Add tests for [MX] shaded specification in POSIX.
+	* modules/floorl-ieee-tests (Files): Add tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnanl-nolibm.
+
 	floor-ieee tests: More tests.
 	* tests/test-floor-ieee.c: Include isnand-nolibm.h, infinity.h, nan.h.
 	(main): Add tests for [MX] shaded specification in POSIX.
