@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'frexp-ieee'.
+	* modules/frexp-ieee-tests: New file.
+	* tests/test-frexp-ieee.c: New file.
+
 	New module 'frexp-ieee'.
 	* modules/frexp-ieee: New file.
 
