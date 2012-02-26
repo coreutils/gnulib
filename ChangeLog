@@ -1,5 +1,10 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ldexpf-ieee'.
+	* modules/ldexpf-ieee: New file.
+
+2012-02-26  Bruno Haible  <bruno@clisp.org>
+
 	Refactor frexp*-ieee tests.
 	* tests/test-frexp-ieee.h: New file.
 	* tests/test-frexpf-ieee.c: Include test-frexp-ieee.h.
