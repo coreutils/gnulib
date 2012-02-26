@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fmal-ieee'.
+	* modules/fmal-ieee-tests: New file.
+	* tests/test-fmal-ieee.c: New file.
+
 	New module 'fmal-ieee'.
 	* modules/fmal-ieee: New file.
 
