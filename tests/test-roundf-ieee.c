@@ -18,7 +18,10 @@
 
 #include <math.h>
 
+#include "isnanf-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
 #include "macros.h"
 
 int
@@ -38,6 +41,14 @@ main ()
   /* Negative numbers.  */
   ASSERT (!!signbit (roundf (-0.3f)) == !!signbit (minus_zerof));
   ASSERT (!!signbit (roundf (-0.7f)) == !!signbit (minus_zerof));
+
+  /* [MX] shaded specification in POSIX.  */
+
+  /* NaN.  */
+  ASSERT (isnanf (roundf (NaNf ())));
+  /* Infinity.  */
+  ASSERT (roundf (Infinityf ()) == Infinityf ());
+  ASSERT (roundf (- Infinityf ()) == - Infinityf ());
 
   return 0;
 }
