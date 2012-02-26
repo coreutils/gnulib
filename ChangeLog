@@ -1,5 +1,11 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	round-ieee tests: More tests.
+	* tests/test-round-ieee.c: Include isnand-nolibm.h, infinity.h, nan.h.
+	(main): Add tests for [MX] shaded specification in POSIX.
+	* modules/round-ieee-tests (Files): Add tests/infinity.h, tests/nan.h.
+	(Depends-on): Add isnand-nolibm.
+
 	roundf-ieee tests: More tests.
 	* tests/test-roundf-ieee.c: Include isnanf-nolibm.h, infinity.h, nan.h.
 	(main): Add tests for [MX] shaded specification in POSIX.
