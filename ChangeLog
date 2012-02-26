@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ldexpl-ieee'.
+	* modules/ldexpl-ieee-tests: New file.
+	* tests/test-ldexpl-ieee.c: New file.
+
 	New module 'ldexpl-ieee'.
 	* modules/ldexpl-ieee: New file.
 
