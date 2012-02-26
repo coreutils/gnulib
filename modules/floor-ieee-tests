@@ -1,9 +1,12 @@
 Files:
 tests/test-floor-ieee.c
 tests/minus-zero.h
+tests/infinity.h
+tests/nan.h
 tests/macros.h
 
 Depends-on:
+isnand-nolibm
 float
 signbit
 
