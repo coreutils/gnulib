@@ -24,50 +24,22 @@
 #include "nan.h"
 #include "macros.h"
 
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE double
+#define ISNAN isnand
+#define INFINITY Infinityd ()
+#define NAN NaNd ()
+#define L_(literal) literal
+#define MINUS_ZERO minus_zerod
+#define FREXP frexp
+#include "test-frexp-ieee.h"
+
 int
 main ()
 {
-  /* [MX] shaded specification in POSIX.  */
-
-  /* NaN.  */
-  {
-    int exp = -9999;
-    double mantissa;
-    mantissa = frexp (NaNd (), &exp);
-    ASSERT (isnand (mantissa));
-  }
-
-  /* Signed zero.  */
-  {
-    int exp = -9999;
-    double mantissa;
-    mantissa = frexp (0.0, &exp);
-    ASSERT (mantissa == 0.0);
-    ASSERT (!signbit (mantissa));
-    ASSERT (exp == 0);
-  }
-  {
-    int exp = -9999;
-    double mantissa;
-    mantissa = frexp (minus_zerod, &exp);
-    ASSERT (mantissa == 0.0);
-    ASSERT (!!signbit (mantissa) == !!signbit (minus_zerod));
-    ASSERT (exp == 0);
-  }
-
-  /* Infinity.  */
-  {
-    int exp = -9999;
-    double mantissa;
-    mantissa = frexp (Infinityd (), &exp);
-    ASSERT (mantissa == Infinityd ());
-  }
-  {
-    int exp = -9999;
-    double mantissa;
-    mantissa = frexp (- Infinityd (), &exp);
-    ASSERT (mantissa == - Infinityd ());
-  }
+  test_function ();
 
   return 0;
 }

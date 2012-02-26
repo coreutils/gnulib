@@ -1,5 +1,17 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Refactor frexp*-ieee tests.
+	* tests/test-frexp-ieee.h: New file.
+	* tests/test-frexpf-ieee.c: Include test-frexp-ieee.h.
+	(main): Just call test_function.
+	* tests/test-frexp-ieee.c: Include test-frexp-ieee.h.
+	(main): Just call test_function.
+	* tests/test-frexpl-ieee.c: Include test-frexp-ieee.h.
+	(main): Just call test_function.
+	* modules/frexpf-ieee-tests (Files): Add tests/test-frexp-ieee.h.
+	* modules/frexp-ieee-tests (Files): Likewise.
+	* modules/frexpl-ieee-tests (Files): Likewise.
+
 	Tests for module 'frexpl-ieee'.
 	* modules/frexpl-ieee-tests: New file.
 	* tests/test-frexpl-ieee.c: New file.
