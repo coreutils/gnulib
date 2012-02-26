@@ -62,6 +62,12 @@ main ()
     mantissa = frexpf (Infinityf (), &exp);
     ASSERT (mantissa == Infinityf ());
   }
+  {
+    int exp = -9999;
+    float mantissa;
+    mantissa = frexpf (- Infinityf (), &exp);
+    ASSERT (mantissa == - Infinityf ());
+  }
 
   return 0;
 }

@@ -62,6 +62,12 @@ main ()
     mantissa = frexpl (Infinityl (), &exp);
     ASSERT (mantissa == Infinityl ());
   }
+  {
+    int exp = -9999;
+    long double mantissa;
+    mantissa = frexpl (- Infinityl (), &exp);
+    ASSERT (mantissa == - Infinityl ());
+  }
 
   return 0;
 }

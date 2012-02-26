@@ -62,6 +62,12 @@ main ()
     mantissa = frexp (Infinityd (), &exp);
     ASSERT (mantissa == Infinityd ());
   }
+  {
+    int exp = -9999;
+    double mantissa;
+    mantissa = frexp (- Infinityd (), &exp);
+    ASSERT (mantissa == - Infinityd ());
+  }
 
   return 0;
 }
