@@ -18,7 +18,10 @@
 
 #include <math.h>
 
+#include "isnand-nolibm.h"
 #include "minus-zero.h"
+#include "infinity.h"
+#include "nan.h"
 #include "macros.h"
 
 int
@@ -38,6 +41,14 @@ main ()
   /* Negative numbers.  */
   ASSERT (!!signbit (trunc (-0.3)) == !!signbit (minus_zerod));
   ASSERT (!!signbit (trunc (-0.7)) == !!signbit (minus_zerod));
+
+  /* [MX] shaded specification in POSIX.  */
+
+  /* NaN.  */
+  ASSERT (isnand (trunc (NaNd ())));
+  /* Infinity.  */
+  ASSERT (trunc (Infinityd ()) == Infinityd ());
+  ASSERT (trunc (- Infinityd ()) == - Infinityd ());
 
   return 0;
 }
