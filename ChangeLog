@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'modf-ieee'.
+	* modules/modf-ieee-tests: New file.
+	* tests/test-modf-ieee.c: New file.
+
 	New module 'modf-ieee'.
 	* modules/modf-ieee: New file.
 
