@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'fma-ieee'.
+	* modules/fma-ieee-tests: New file.
+	* tests/test-fma-ieee.c: New file.
+
 	New module 'fma-ieee'.
 	* modules/fma-ieee: New file.
 
