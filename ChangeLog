@@ -1,5 +1,10 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmodf-ieee'.
+	* modules/fmodf-ieee: New file.
+
+2012-02-27  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'rintl-ieee'.
 	* modules/rintl-ieee-tests: New file.
 	* tests/test-rintl-ieee.c: New file.
