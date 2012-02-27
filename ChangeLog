@@ -1,5 +1,9 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	fmodl-ieee: Fix test failures.
+	* lib/fmodl.c (fmodl): Treat Inf specially.
+	* modules/fmodl (Depends-on): Add isinf.
+
 	Tests for module 'fmodl-ieee'.
 	* modules/fmodl-ieee-tests: New file.
 	* tests/test-fmodl-ieee.c: New file.
