@@ -982,10 +982,19 @@ _GL_WARN_ON_USE (powf, "powf is unportable - "
 
 
 #if @GNULIB_REMAINDERF@
-# if !@HAVE_REMAINDERF@
+# if @REPLACE_REMAINDERF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef remainderf
+#   define remainderf rpl_remainderf
+#  endif
+_GL_FUNCDECL_RPL (remainderf, float, (float x, float y));
+_GL_CXXALIAS_RPL (remainderf, float, (float x, float y));
+# else
+#  if !@HAVE_REMAINDERF@
 _GL_FUNCDECL_SYS (remainderf, float, (float x, float y));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (remainderf, float, (float x, float y));
+# endif
 _GL_CXXALIASWARN (remainderf);
 #elif defined GNULIB_POSIXCHECK
 # undef remainderf

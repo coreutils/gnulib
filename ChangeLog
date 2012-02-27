@@ -1,5 +1,21 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	remainderf-ieee: Work around test failure on OSF/1.
+	* m4/remainderf-ieee.m4: New file.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): If gl_FUNC_REMAINDERF_IEEE is
+	present, test whether remainderf works with a zero second argument.
+	Replace it if not.
+	* lib/math.in.h (remainderf): Override if REPLACE_REMAINDERF is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_REMAINDERF.
+	* modules/math (Makefile.am): Substitute REPLACE_REMAINDERF.
+	* modules/remainderf (configure.ac): Consider REPLACE_REMAINDERF.
+	(Depends-on): Update conditions.
+	* modules/remainderf-ieee (Files): Add m4/remainderf-ieee.m4.
+	(Depends-on): Add remainder-ieee.
+	(configure.ac): Invoke gl_FUNC_REMAINDERF_IEEE.
+	* doc/posix-functions/remainderf.texi: Mention the remainderf-ieee
+	module.
+
 	remainder-ieee: Work around test failure on OSF/1.
 	* m4/remainder-ieee.m4: New file.
 	* m4/remainder.m4 (gl_FUNC_REMAINDER): If gl_FUNC_REMAINDER_IEEE is

@@ -1,4 +1,4 @@
-# remainderf.m4 serial 1
+# remainderf.m4 serial 2
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_REMAINDERF],
 [
+  m4_divert_text([DEFAULTS], [gl_remainderf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_REMAINDER])
 
@@ -33,8 +34,56 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
   LIBS="$save_LIBS"
   if test $gl_cv_func_remainderf = yes; then
     REMAINDERF_LIBM="$REMAINDER_LIBM"
+    m4_ifdef([gl_FUNC_REMAINDERF_IEEE], [
+      if test $gl_remainderf_required = ieee && test $REPLACE_REMAINDERF = 0; then
+        AC_CACHE_CHECK([whether remainderf works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_remainderf_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $REMAINDERF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (float x, float y)
+{
+  return x == y;
+}
+static float dummy (float x, float y) { return 0; }
+int main (int argc, char *argv[])
+{
+  float (*my_remainderf) (float, float) = argc ? remainderf : dummy;
+  float i;
+  float f;
+  /* Test remainderf(...,0.0f).
+     This test fails on OSF/1 5.1.  */
+  f = my_remainderf (2.0f, 0.0f);
+  if (numeric_equal (f, f))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_remainderf_ieee=yes],
+              [gl_cv_func_remainderf_ieee=no],
+              [gl_cv_func_remainderf_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_remainderf_ieee" in
+          *yes) ;;
+          *) REPLACE_REMAINDERF=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_REMAINDERF=0
+  fi
+  if test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1; then
     dnl Find libraries needed to link lib/remainderf.c.
     if test $gl_cv_func_remainder_no_libm = yes \
        || test $gl_cv_func_remainder_in_libm = yes; then
