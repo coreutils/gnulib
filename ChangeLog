@@ -1,5 +1,8 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	New module 'remainder-ieee'.
+	* modules/remainder-ieee: New file.
+
 	Tests for module 'remainderf-ieee'.
 	* modules/remainderf-ieee-tests: New file.
 	* tests/test-remainderf-ieee.c: New file.
