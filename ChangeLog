@@ -1,5 +1,8 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	New module 'fmod-ieee'.
+	* modules/fmod-ieee: New file.
+
 	Tests for module 'fmodf-ieee'.
 	* modules/fmodf-ieee-tests: New file.
 	* tests/test-fmodf-ieee.c: New file.
