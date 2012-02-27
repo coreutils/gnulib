@@ -183,6 +183,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_FMAF''@|$(REPLACE_FMAF)|g' \
 	      -e 's|@''REPLACE_FMAL''@|$(REPLACE_FMAL)|g' \
 	      -e 's|@''REPLACE_FMOD''@|$(REPLACE_FMOD)|g' \
+	      -e 's|@''REPLACE_FMODF''@|$(REPLACE_FMODF)|g' \
 	      -e 's|@''REPLACE_FMODL''@|$(REPLACE_FMODL)|g' \
 	      -e 's|@''REPLACE_FREXPF''@|$(REPLACE_FREXPF)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \

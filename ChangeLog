@@ -1,5 +1,18 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	fmodf-ieee: Work around test failure on OSF/1.
+	* m4/fmodf-ieee.m4: New file.
+	* m4/fmodf.m4 (gl_FUNC_FMODF): If gl_FUNC_FMODF_IEEE is present, test
+	whether fmodf works with zero arguments. Replace it if not.
+	* lib/math.in.h (fmodf): Override if REPLACE_FMODF is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_FMODF.
+	* modules/math (Makefile.am): Substitute REPLACE_FMODF.
+	* modules/fmodf (configure.ac): Consider REPLACE_FMODF.
+	(Depends-on): Update dependencies.
+	* modules/fmodf-ieee (Files): Add m4/fmodf-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_FMODF_IEEE.
+	* doc/posix-functions/fmodf.texi: Mention the problem on OSF/1.
+
 	fmodf-ieee: Work around test failure on MSVC 9.
 	* modules/fmodf-ieee (Depends-on): Add fmod-ieee.
 	* doc/posix-functions/fmodf.texi: Mention the fmodf-ieee module.

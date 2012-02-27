@@ -615,11 +615,20 @@ _GL_WARN_ON_USE (fmal, "fmal is unportable - "
 
 
 #if @GNULIB_FMODF@
-# if !@HAVE_FMODF@
-#  undef fmodf
+# if @REPLACE_FMODF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fmodf
+#   define fmodf rpl_fmodf
+#  endif
+_GL_FUNCDECL_RPL (fmodf, float, (float x, float y));
+_GL_CXXALIAS_RPL (fmodf, float, (float x, float y));
+# else
+#  if !@HAVE_FMODF@
+#   undef fmodf
 _GL_FUNCDECL_SYS (fmodf, float, (float x, float y));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (fmodf, float, (float x, float y));
+# endif
 _GL_CXXALIASWARN (fmodf);
 #elif defined GNULIB_POSIXCHECK
 # undef fmodf
