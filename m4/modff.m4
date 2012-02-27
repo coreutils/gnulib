@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_MODFF],
   gl_MATHFUNC([modff], [float], [(float, float *)])
   if test $gl_cv_func_modff_no_libm = yes \
      || test $gl_cv_func_modff_in_libm = yes; then
+    :
     m4_ifdef([gl_FUNC_MODFF_IEEE], [
       if test $gl_modff_required = ieee && test $REPLACE_MODFF = 0; then
         AC_CACHE_CHECK([whether modff works according to ISO C 99 with IEC 60559],

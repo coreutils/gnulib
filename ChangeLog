@@ -1,5 +1,11 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	modff, modfl: Fix configure syntax error.
+	* m4/modff.m4 (gl_FUNC_MODFF): Insert ':' command in 'if'.
+	* m4/modfl.m4 (gl_FUNC_MODFL): Likewise.
+
+2012-02-27  Bruno Haible  <bruno@clisp.org>
+
 	fmodl-ieee: Work around test failures on OSF/1, MSVC 9.
 	* m4/fmodl-ieee.m4: New file.
 	* m4/fmodl.m4 (gl_FUNC_FMODL): If gl_FUNC_FMODL_IEEE is present, test

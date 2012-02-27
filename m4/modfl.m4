@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_MODFL],
   gl_MATHFUNC([modfl], [long double], [(long double, long double *)])
   if test $gl_cv_func_modfl_no_libm = yes \
      || test $gl_cv_func_modfl_in_libm = yes; then
+    :
     m4_ifdef([gl_FUNC_MODFL_IEEE], [
       if test $gl_modfl_required = ieee && test $REPLACE_MODFL = 0; then
         AC_CACHE_CHECK([whether modfl works according to ISO C 99 with IEC 60559],
