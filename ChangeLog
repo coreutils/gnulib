@@ -1,5 +1,23 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	modf-ieee: Work around test failures on *BSD, IRIX, OSF/1, Cygwin.
+	* m4/modf-ieee.m4: New file.
+	* m4/modf.m4 (gl_FUNC_MODF): If gl_FUNC_MODF_IEEE is present, test
+	whether modf works with NaN and Inf. Replace it if not.
+	* lib/math.in.h (modf): New declaration.
+	* lib/modf.c: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether modf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_MODF, REPLACE_MODF.
+	* modules/math (Makefile.am): Substitute GNULIB_MODF, REPLACE_MODF.
+	* modules/modf (Files): Add lib/modf.c.
+	(Depends-on): Add math, isfinite, trunc, isinf.
+	(configure.ac): Addrange to compile lib/modf.c if needed.
+	* modules/modf-ieee (Files): Add m4/modf-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_MODF_IEEE.
+	* tests/test-math-c++.cc: Check the declaration of modf.
+	* doc/posix-functions/modf.texi: Mention the modf-ieee module.
+
 	Tests for module 'modfl-ieee'.
 	* modules/modfl-ieee-tests: New file.
 	* tests/test-modfl-ieee.c: New file.

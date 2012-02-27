@@ -4,10 +4,20 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/modf.html}
 
-Gnulib module: modf
+Gnulib module: modf or modf-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{modf} or @code{modf-ieee}:
 @itemize
+@end itemize
+
+Portability problems fixed by Gnulib module @code{modf-ieee}:
+@itemize
+@item
+This function has problems with a NaN argument on some platforms:
+NetBSD 5.1, Cygwin.
+@item
+This function has problems with infinite arguments on some platforms:
+FreeBSD 6.4, OpenBSD 4.9, IRIX 6.5, OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

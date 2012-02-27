@@ -880,6 +880,26 @@ _GL_WARN_ON_USE (modff, "modff is unportable - "
 # endif
 #endif
 
+#if @GNULIB_MODF@
+# if @REPLACE_MODF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef modf
+#   define modf rpl_modf
+#  endif
+_GL_FUNCDECL_RPL (modf, double, (double x, double *iptr) _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (modf, double, (double x, double *iptr));
+# else
+_GL_CXXALIAS_SYS (modf, double, (double x, double *iptr));
+# endif
+_GL_CXXALIASWARN (modf);
+#elif defined GNULIB_POSIXCHECK
+# undef modf
+# if HAVE_RAW_DECL_MODF
+_GL_WARN_ON_USE (modf, "modf has portability problems - "
+                 "use gnulib module modf for portability");
+# endif
+#endif
+
 #if @GNULIB_MODFL@
 # if !@HAVE_MODFL@
 #  undef modfl
