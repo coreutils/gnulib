@@ -866,11 +866,20 @@ _GL_WARN_ON_USE (log10l, "log10l is unportable - "
 
 
 #if @GNULIB_MODFF@
-# if !@HAVE_MODFF@
-#  undef modff
+# if @REPLACE_MODFF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef modff
+#   define modff rpl_modff
+#  endif
+_GL_FUNCDECL_RPL (modff, float, (float x, float *iptr) _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (modff, float, (float x, float *iptr));
+# else
+#  if !@HAVE_MODFF@
+#   undef modff
 _GL_FUNCDECL_SYS (modff, float, (float x, float *iptr) _GL_ARG_NONNULL ((2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (modff, float, (float x, float *iptr));
+# endif
 _GL_CXXALIASWARN (modff);
 #elif defined GNULIB_POSIXCHECK
 # undef modff

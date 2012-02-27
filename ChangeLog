@@ -1,5 +1,20 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	modff-ieee: Work around test failures on *BSD, IRIX, OSF/1, etc.
+	* m4/modff-ieee.m4: New file.
+	* m4/modff.m4 (gl_FUNC_MODFF): If gl_FUNC_MODFF_IEEE is present, test
+	whether modff works with NaN and Inf. Replace it if not.
+	* lib/math.in.h (modff): Override if REPLACE_MODFF is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_MODFF.
+	* modules/math (Makefile.am): Substitute REPLACE_MODFF.
+	* modules/modff (configure.ac): Consider REPLACE_MODFF.
+	(Depends-on): Update dependencies.
+	* modules/modff-ieee (Files): Add m4/modff-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(Depends-on): Add modf-ieee.
+	(configure.ac): Invoke gl_FUNC_MODFF_IEEE.
+	* doc/posix-functions/modff.texi: Mention the modff-ieee module.
+
 	modf-ieee: Work around test failures on *BSD, IRIX, OSF/1, Cygwin.
 	* m4/modf-ieee.m4: New file.
 	* m4/modf.m4 (gl_FUNC_MODF): If gl_FUNC_MODF_IEEE is present, test
