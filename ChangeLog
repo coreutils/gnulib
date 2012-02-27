@@ -1,5 +1,10 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	New module 'sqrtf-ieee'.
+	* modules/sqrtf-ieee: New file.
+
+2012-02-27  Bruno Haible  <bruno@clisp.org>
+
 	remainderl-ieee: Work around test failure on OSF/1.
 	* m4/remainderl-ieee.m4: New file.
 	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): If gl_FUNC_REMAINDERL_IEEE is
