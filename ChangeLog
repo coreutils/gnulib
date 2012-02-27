@@ -1,5 +1,9 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sqrt-ieee'.
+	* modules/sqrt-ieee-tests: New file.
+	* tests/test-sqrt-ieee.c: New file.
+
 	New module 'sqrt-ieee'.
 	* modules/sqrt-ieee: New file.
 
