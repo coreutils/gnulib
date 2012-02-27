@@ -1,5 +1,9 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sqrtl-ieee'.
+	* modules/sqrtl-ieee-tests: New file.
+	* tests/test-sqrtl-ieee.c: New file.
+
 	New module 'sqrtl-ieee'.
 	* modules/sqrtl-ieee: New file.
 
