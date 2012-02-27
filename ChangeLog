@@ -1,5 +1,8 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	New module 'rint-ieee'.
+	* modules/rint-ieee: New file.
+
 	Tests for module 'rintf-ieee'.
 	* modules/rintf-ieee-tests: New file.
 	* tests/test-rintf-ieee.c: New file.
