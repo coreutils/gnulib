@@ -6,6 +6,7 @@ Files:
 Depends-on:
 fmodf
 fpieee
+fmod-ieee       [test $HAVE_FMODF = 0]
 
 configure.ac:
 

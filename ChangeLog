@@ -1,5 +1,9 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	fmodf-ieee: Work around test failure on MSVC 9.
+	* modules/fmodf-ieee (Depends-on): Add fmod-ieee.
+	* doc/posix-functions/fmodf.texi: Mention the fmodf-ieee module.
+
 	fmod-ieee: Work around test failures on OSF/1, mingw.
 	* m4/fmod-ieee.m4: New file.
 	* m4/fmod.m4 (gl_FUNC_FMOD): If gl_FUNC_FMOD_IEEE is present, test
