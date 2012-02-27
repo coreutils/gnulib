@@ -1028,10 +1028,19 @@ _GL_WARN_ON_USE (remainder, "remainder is unportable - "
 #endif
 
 #if @GNULIB_REMAINDERL@
-# if !@HAVE_REMAINDERL@
+# if @REPLACE_REMAINDERL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef remainderl
+#   define remainderl rpl_remainderl
+#  endif
+_GL_FUNCDECL_RPL (remainderl, long double, (long double x, long double y));
+_GL_CXXALIAS_RPL (remainderl, long double, (long double x, long double y));
+# else
+#  if !@HAVE_REMAINDERL@
 _GL_FUNCDECL_SYS (remainderl, long double, (long double x, long double y));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (remainderl, long double, (long double x, long double y));
+# endif
 _GL_CXXALIASWARN (remainderl);
 #elif defined GNULIB_POSIXCHECK
 # undef remainderl

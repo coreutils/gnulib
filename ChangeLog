@@ -1,5 +1,21 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	remainderl-ieee: Work around test failure on OSF/1.
+	* m4/remainderl-ieee.m4: New file.
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): If gl_FUNC_REMAINDERL_IEEE is
+	present, test whether remainderl works with a zero second argument.
+	Replace it if not.
+	* lib/math.in.h (remainderl): Override if REPLACE_REMAINDERL is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_REMAINDERL.
+	* modules/math (Makefile.am): Substitute REPLACE_REMAINDERL.
+	* modules/remainderl (configure.ac): Consider REPLACE_REMAINDERL.
+	(Depends-on): Update conditions.
+	* modules/remainderl-ieee (Files): Add m4/remainderl-ieee.m4.
+	(Depends-on): Add remainder-ieee.
+	(configure.ac): Invoke gl_FUNC_REMAINDERL_IEEE.
+	* doc/posix-functions/remainderl.texi: Mention the remainderl-ieee
+	module.
+
 	remainderf-ieee: Work around test failure on OSF/1.
 	* m4/remainderf-ieee.m4: New file.
 	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): If gl_FUNC_REMAINDERF_IEEE is
