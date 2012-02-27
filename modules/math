@@ -198,6 +198,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_MODFF''@|$(REPLACE_MODFF)|g' \
 	      -e 's|@''REPLACE_MODFL''@|$(REPLACE_MODFL)|g' \
 	      -e 's|@''REPLACE_NAN''@|$(REPLACE_NAN)|g' \
+	      -e 's|@''REPLACE_REMAINDER''@|$(REPLACE_REMAINDER)|g' \
 	      -e 's|@''REPLACE_ROUND''@|$(REPLACE_ROUND)|g' \
 	      -e 's|@''REPLACE_ROUNDF''@|$(REPLACE_ROUNDF)|g' \
 	      -e 's|@''REPLACE_ROUNDL''@|$(REPLACE_ROUNDL)|g' \
