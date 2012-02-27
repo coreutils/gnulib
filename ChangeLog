@@ -1,3 +1,8 @@
+2012-02-27  Bruno Haible  <bruno@clisp.org>
+
+	New module 'rintf-ieee'.
+	* modules/rintf-ieee: New file.
+
 2012-02-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: re_search etc. should return -2 when memory exhausted
