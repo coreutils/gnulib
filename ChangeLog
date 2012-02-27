@@ -1,5 +1,14 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	fmodl-ieee: Work around test failures on OSF/1, MSVC 9.
+	* m4/fmodl-ieee.m4: New file.
+	* m4/fmodl.m4 (gl_FUNC_FMODL): If gl_FUNC_FMODL_IEEE is present, test
+	whether fmodl works with zero arguments. Replace it if not.
+	* modules/fmodl-ieee (Files): Add m4/fmodl-ieee.m4.
+	(Depends-on): Add fmod-ieee.
+	(configure.ac): Invoke gl_FUNC_FMODL_IEEE.
+	* doc/posix-functions/fmodl.texi: Mention the fmodl-ieee module.
+
 	fmodf-ieee: Work around test failure on OSF/1.
 	* m4/fmodf-ieee.m4: New file.
 	* m4/fmodf.m4 (gl_FUNC_FMODF): If gl_FUNC_FMODF_IEEE is present, test

@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/fmodl.html}
 
-Gnulib module: fmodl
+Gnulib module: fmodl or fmodl-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{fmodl} or @code{fmodl-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -17,6 +17,17 @@ MSVC 9.
 @item
 This function is not declared and does not work on some platforms:
 AIX 5.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{fmodl-ieee}:
+@itemize
+@item
+This function has problems when the second argument is zero on some platforms:
+OSF/1 5.1.
+@item
+This function has problems when the first argument is minus zero on some
+platforms:
+MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
