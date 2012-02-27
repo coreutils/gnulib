@@ -6,6 +6,7 @@ Files:
 Depends-on:
 modfl
 fpieee
+modf-ieee       [test $HAVE_MODFL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 
 configure.ac:
 

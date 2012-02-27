@@ -1,5 +1,8 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	modfl-ieee: Fix dependencies.
+	* modules/modfl-ieee (Depends-on): Add modf-ieee.
+
 	modfl-ieee: Fix test failures.
 	* lib/modfl.c (modfl): Treat NaN and Inf specially.
 	* modules/modfl (Depends-on): Add isfinite, isinf.
