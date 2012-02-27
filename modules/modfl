@@ -8,14 +8,14 @@ m4/mathfunc.m4
 
 Depends-on:
 math
-modf            [test $HAVE_MODFL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-isfinite        [test $HAVE_MODFL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-truncl          [test $HAVE_MODFL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-isinf           [test $HAVE_MODFL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+modf            [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+isfinite        [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+truncl          [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isinf           [{ test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_MODFL
-if test $HAVE_MODFL = 0; then
+if test $HAVE_MODFL = 0 || test $REPLACE_MODFL = 1; then
   AC_LIBOBJ([modfl])
 fi
 gl_MATH_MODULE_INDICATOR([modfl])

@@ -910,12 +910,22 @@ _GL_WARN_ON_USE (modf, "modf has portability problems - "
 #endif
 
 #if @GNULIB_MODFL@
-# if !@HAVE_MODFL@
-#  undef modfl
+# if @REPLACE_MODFL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef modfl
+#   define modfl rpl_modfl
+#  endif
+_GL_FUNCDECL_RPL (modfl, long double, (long double x, long double *iptr)
+                                      _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_RPL (modfl, long double, (long double x, long double *iptr));
+# else
+#  if !@HAVE_MODFL@
+#   undef modfl
 _GL_FUNCDECL_SYS (modfl, long double, (long double x, long double *iptr)
                                       _GL_ARG_NONNULL ((2)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (modfl, long double, (long double x, long double *iptr));
+# endif
 _GL_CXXALIASWARN (modfl);
 #elif defined GNULIB_POSIXCHECK
 # undef modfl

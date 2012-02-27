@@ -1,5 +1,19 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	modfl-ieee: Work around test failures on IRIX, OSF/1, mingw.
+	* m4/modfl-ieee.m4: New file.
+	* m4/modfl.m4 (gl_FUNC_MODFL): If gl_FUNC_MODFL_IEEE is present, test
+	whether modfl works with Inf. Replace it if not.
+	* lib/math.in.h (modfl): Override if REPLACE_MODFF is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_MODFL.
+	* modules/math (Makefile.am): Substitute REPLACE_MODFL.
+	* modules/modfl (configure.ac): Consider REPLACE_MODFL.
+	(Depends-on): Update dependencies.
+	* modules/modfl-ieee (Files): Add m4/modfl-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_MODFL_IEEE.
+	* doc/posix-functions/modfl.texi: Mention the modfl-ieee module.
+
 	modfl-ieee: Fix dependencies.
 	* modules/modfl-ieee (Depends-on): Add modf-ieee.
 
