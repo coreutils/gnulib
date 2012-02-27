@@ -1,5 +1,23 @@
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
+	fmod-ieee: Work around test failures on OSF/1, mingw.
+	* m4/fmod-ieee.m4: New file.
+	* m4/fmod.m4 (gl_FUNC_FMOD): If gl_FUNC_FMOD_IEEE is present, test
+	whether fmod works with zero arguments. Replace it if not.
+	* lib/math.in.h (fmod): New declaration.
+	* lib/fmod.c: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether fmod is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_FMOD, REPLACE_FMOD.
+	* modules/math (Makefile.am): Substitute GNULIB_FMOD, REPLACE_FMOD.
+	* modules/fmod (Files): Add lib/fmod.c.
+	(Depends-on): Add math, isinf, trunc, fma.
+	(configure.ac): Arrange to compile lib/fmod.c if needed.
+	* modules/fmod-ieee (Files): Add m4/fmod-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_FMOD_IEEE.
+	* tests/test-math-c++.cc: Check the declaration of fmod.
+	* doc/posix-functions/fmod.texi: Mention the fmod-ieee module.
+
 	fmodl-ieee: Fix test failures.
 	* lib/fmodl.c (fmodl): Treat Inf specially.
 	* modules/fmodl (Depends-on): Add isinf.

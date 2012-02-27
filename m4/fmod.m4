@@ -1,4 +1,4 @@
-# fmod.m4 serial 1
+# fmod.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,80 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_FMOD],
 [
+  m4_divert_text([DEFAULTS], [gl_fmod_required=plain])
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+
   dnl Determine FMOD_LIBM.
   gl_COMMON_DOUBLE_MATHFUNC([fmod])
+
+  m4_ifdef([gl_FUNC_FMOD_IEEE], [
+    if test $gl_fmod_required = ieee && test $REPLACE_FMOD = 0; then
+      AC_CACHE_CHECK([whether fmod works according to ISO C 99 with IEC 60559],
+        [gl_cv_func_fmod_ieee],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS $FMOD_LIBM"
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_DOUBLE_MINUS_ZERO_CODE[
+]gl_DOUBLE_SIGNBIT_CODE[
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (double x, double y)
+{
+  return x == y;
+}
+static double dummy (double x, double y) { return 0; }
+int main (int argc, char *argv[])
+{
+  double (*my_fmod) (double, double) = argc ? fmod : dummy;
+  int result = 0;
+  double i;
+  double f;
+  /* Test fmod(...,0.0).
+     This test fails on OSF/1 5.1.  */
+  f = my_fmod (2.0, 0.0);
+  if (numeric_equal (f, f))
+    result |= 1;
+  /* Test fmod(-0.0,...).
+     This test fails on native Windows.  */
+  f = my_fmod (minus_zerod, 2.0);
+  if (!(f == 0.0) || (signbitd (minus_zerod) && !signbitd (f)))
+    result |= 2;
+  return result;
+}
+            ]])],
+            [gl_cv_func_fmod_ieee=yes],
+            [gl_cv_func_fmod_ieee=no],
+            [gl_cv_func_fmod_ieee="guessing no"])
+          LIBS="$save_LIBS"
+        ])
+      case "$gl_cv_func_fmod_ieee" in
+        *yes) ;;
+        *) REPLACE_FMOD=1 ;;
+      esac
+    fi
+  ])
+  if test $REPLACE_FMOD = 1; then
+    dnl Find libraries needed to link lib/fmod.c.
+    AC_REQUIRE([gl_FUNC_TRUNC])
+    AC_REQUIRE([gl_FUNC_FMA])
+    FMOD_LIBM=
+    dnl Append $TRUNC_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    case " $FMOD_LIBM " in
+      *" $TRUNC_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $TRUNC_LIBM" ;;
+    esac
+    dnl Append $FMA_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    case " $FMOD_LIBM " in
+      *" $FMA_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $FMA_LIBM" ;;
+    esac
+  fi
 ])

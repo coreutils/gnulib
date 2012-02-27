@@ -54,6 +54,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_FMA''@/$(GNULIB_FMA)/g' \
 	      -e 's/@''GNULIB_FMAF''@/$(GNULIB_FMAF)/g' \
 	      -e 's/@''GNULIB_FMAL''@/$(GNULIB_FMAL)/g' \
+	      -e 's/@''GNULIB_FMOD''@/$(GNULIB_FMOD)/g' \
 	      -e 's/@''GNULIB_FMODF''@/$(GNULIB_FMODF)/g' \
 	      -e 's/@''GNULIB_FMODL''@/$(GNULIB_FMODL)/g' \
 	      -e 's/@''GNULIB_FREXPF''@/$(GNULIB_FREXPF)/g' \
@@ -181,6 +182,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_FMA''@|$(REPLACE_FMA)|g' \
 	      -e 's|@''REPLACE_FMAF''@|$(REPLACE_FMAF)|g' \
 	      -e 's|@''REPLACE_FMAL''@|$(REPLACE_FMAL)|g' \
+	      -e 's|@''REPLACE_FMOD''@|$(REPLACE_FMOD)|g' \
 	      -e 's|@''REPLACE_FMODL''@|$(REPLACE_FMODL)|g' \
 	      -e 's|@''REPLACE_FREXPF''@|$(REPLACE_FREXPF)|g' \
 	      -e 's|@''REPLACE_FREXP''@|$(REPLACE_FREXP)|g' \

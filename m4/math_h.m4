@@ -1,4 +1,4 @@
-# math_h.m4 serial 66
+# math_h.m4 serial 67
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,8 @@ AC_DEFUN([gl_MATH_H],
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosf acosl asinf asinl atanf atanl
      ceilf ceill copysign copysignf copysignl cosf cosl coshf
-     expf expl fabsf fabsl floorf floorl fma fmaf fmal fmodf fmodl frexpf frexpl
+     expf expl fabsf fabsl floorf floorl fma fmaf fmal
+     fmod fmodf fmodl frexpf frexpl
      ldexpf ldexpl logb logf logl log10f log10l modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
@@ -85,6 +86,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_FMA=0;        AC_SUBST([GNULIB_FMA])
   GNULIB_FMAF=0;       AC_SUBST([GNULIB_FMAF])
   GNULIB_FMAL=0;       AC_SUBST([GNULIB_FMAL])
+  GNULIB_FMOD=0;       AC_SUBST([GNULIB_FMOD])
   GNULIB_FMODF=0;      AC_SUBST([GNULIB_FMODF])
   GNULIB_FMODL=0;      AC_SUBST([GNULIB_FMODL])
   GNULIB_FREXPF=0;     AC_SUBST([GNULIB_FREXPF])
@@ -211,6 +213,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_FMA=0;               AC_SUBST([REPLACE_FMA])
   REPLACE_FMAF=0;              AC_SUBST([REPLACE_FMAF])
   REPLACE_FMAL=0;              AC_SUBST([REPLACE_FMAL])
+  REPLACE_FMOD=0;              AC_SUBST([REPLACE_FMOD])
   REPLACE_FMODL=0;             AC_SUBST([REPLACE_FMODL])
   REPLACE_FREXPF=0;            AC_SUBST([REPLACE_FREXPF])
   REPLACE_FREXP=0;             AC_SUBST([REPLACE_FREXP])

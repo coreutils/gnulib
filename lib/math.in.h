@@ -629,6 +629,26 @@ _GL_WARN_ON_USE (fmodf, "fmodf is unportable - "
 # endif
 #endif
 
+#if @GNULIB_FMOD@
+# if @REPLACE_FMOD@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef fmod
+#   define fmod rpl_fmod
+#  endif
+_GL_FUNCDECL_RPL (fmod, double, (double x, double y));
+_GL_CXXALIAS_RPL (fmod, double, (double x, double y));
+# else
+_GL_CXXALIAS_SYS (fmod, double, (double x, double y));
+# endif
+_GL_CXXALIASWARN (fmod);
+#elif defined GNULIB_POSIXCHECK
+# undef fmod
+# if HAVE_RAW_DECL_FMOD
+_GL_WARN_ON_USE (fmod, "fmod has portability problems - "
+                 "use gnulib module fmod for portability");
+# endif
+#endif
+
 #if @GNULIB_FMODL@
 # if @REPLACE_FMODL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

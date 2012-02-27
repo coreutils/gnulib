@@ -137,7 +137,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::floorl, long double, (long double));
 #if GNULIB_TEST_FMODF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fmodf, float, (float, float));
 #endif
-//SIGNATURE_CHECK (GNULIB_NAMESPACE::fmod, double, (double, double));
+#if GNULIB_TEST_FMOD
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fmod, double, (double, double));
+#endif
 #if GNULIB_TEST_FMODL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fmodl, long double,
                  (long double, long double));
