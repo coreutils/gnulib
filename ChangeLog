@@ -1,5 +1,9 @@
 2012-02-26  Bruno Haible  <bruno@clisp.org>
 
+	modfl-ieee: Fix test failures.
+	* lib/modfl.c (modfl): Treat NaN and Inf specially.
+	* modules/modfl (Depends-on): Add isfinite, isinf.
+
 	modff-ieee: Work around test failures on *BSD, IRIX, OSF/1, etc.
 	* m4/modff-ieee.m4: New file.
 	* m4/modff.m4 (gl_FUNC_MODFF): If gl_FUNC_MODFF_IEEE is present, test
