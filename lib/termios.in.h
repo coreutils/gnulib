@@ -32,6 +32,12 @@ extern "C" {
 }
 #endif
 
+/* On Cygwin 1.7.11, tcgetsid returns int instead of pid_t; at least
+   they are the same size on that platform.  */
+#ifdef __CYGWIN__
+# include <sys/types.h>
+#endif
+
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_TERMIOS_H@
 # @INCLUDE_NEXT@ @NEXT_TERMIOS_H@

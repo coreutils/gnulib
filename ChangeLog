@@ -1,5 +1,8 @@
 2012-02-29  Eric Blake  <eblake@redhat.com>
 
+	tcgetsid: fix cygwin header bug
+	* lib/termios.in.h (includes) [Cygwin]: Ensure pid_t is defined.
+
 	docs: update cygwin progress
 	* doc/posix-functions/llround.texi (llround): Added in cygwin
 	1.7.8.
