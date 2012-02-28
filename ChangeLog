@@ -1,3 +1,23 @@
+2012-02-28  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compilation errors with MSVC option -fp:strict.
+	* lib/floor.c: Use MSVC specific pragma fenv_access.
+	* lib/ceil.c: Likewise.
+	* lib/trunc.c: Likewise.
+	* lib/round.c: Likewise.
+	* lib/rint.c: Likewise.
+	* lib/fma.c: Likewise.
+	* lib/integer_length.c: Likewise.
+	* m4/round.m4 (gl_FUNC_ROUND): Likewise.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Likewise.
+	* tests/test-floor2.c: Likewise.
+	* tests/test-floorf2.c: Likewise.
+	* tests/test-ceil2.c: Likewise.
+	* tests/test-ceilf2.c: Likewise.
+	* tests/test-trunc2.c: Likewise.
+	* tests/test-truncf2.c: Likewise.
+	Reported by Michael Goffioul <michael.goffioul@gmail.com>.
+
 2012-02-27  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'sqrtl-ieee'.

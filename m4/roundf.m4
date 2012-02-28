@@ -1,4 +1,4 @@
-# roundf.m4 serial 14
+# roundf.m4 serial 15
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,9 @@ AC_DEFUN([gl_FUNC_ROUNDF],
           AC_RUN_IFELSE([AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
 int main()
 {
   /* 2^FLT_MANT_DIG.  */

@@ -53,6 +53,12 @@
 # define MINUS_ZERO L_(-0.0)
 #endif
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 DOUBLE
 RINT (DOUBLE x)
 {

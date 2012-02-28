@@ -64,6 +64,12 @@
 # define MINUS_ZERO L_(-0.0)
 #endif
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 /* If we're being included from test-round2[f].c, it already defined names for
    our round implementations.  Otherwise, pick the preferred implementation for
    this machine. */

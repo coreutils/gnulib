@@ -42,6 +42,12 @@
 # define L_(literal) literal##f
 #endif
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 /* 2^(MANT_DIG-1).  */
 static const DOUBLE TWO_MANT_DIG =
   /* Assume MANT_DIG <= 5 * 31.

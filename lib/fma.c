@@ -66,6 +66,12 @@
 #undef MIN
 #define MIN(a,b) ((a) < (b) ? (a) : (b))
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 /* It is possible to write an implementation of fused multiply-add with
    floating-point operations alone.  See
      Sylvie Boldo, Guillaume Melquiond:

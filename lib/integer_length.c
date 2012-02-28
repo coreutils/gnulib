@@ -25,6 +25,12 @@
 
 #include "float+.h"
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 #define NBITS (sizeof (unsigned int) * CHAR_BIT)
 
 int
