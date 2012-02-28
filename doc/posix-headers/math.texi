@@ -25,6 +25,11 @@ glibc.
 The macros @code{NAN} and @code{HUGE_VAL} expand to a function address
 rather than a floating point constant on some platforms:
 Solaris 10.
+
+@item
+The macros @code{HUGE_VALF} and @code{HUGE_VALL} are not defined on some
+platforms:
+glibc/HPPA, glibc/SPARC, AIX 5.1, IRIX 6.5, Solaris 9, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

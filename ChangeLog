@@ -1,5 +1,18 @@
 2012-02-28  Bruno Haible  <bruno@clisp.org>
 
+	math: Ensure HUGE_VAL, HUGE_VALF, HUGE_VALL are defined.
+	* lib/math.in.h (HUGE_VAL, HUGE_VALF, HUGE_VALL): Define fallbacks.
+	* tests/test-math.c: Include macros.h. Check that HUGE_VAL, HUGE_VALF,
+	HUGE_VALL are defined.
+	(numeric_equald): Renamed from numeric_equal.
+	(numeric_equalf, numeric_equall): New functions.
+	(main): Check also HUGE_VALF, HUGE_VALL.
+	* modules/math-tests (Files): Add tests/macros.h.
+	* doc/posix-headers/math.texi: Document the problems with HUGE_VALF and
+	HUGE_VALL.
+
+2012-02-28  Bruno Haible  <bruno@clisp.org>
+
 	doc: Move ISO C11 feature notes into POSIX chapters.
 	* doc/posix-functions/aligned_alloc.texi: Renamed from
 	doc/glibc-functions/aligned_alloc.texi.

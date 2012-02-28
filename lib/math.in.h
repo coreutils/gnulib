@@ -141,10 +141,43 @@ _NaN ()
 /* Solaris 10 defines HUGE_VAL, but as a function pointer rather
    than a floating point constant.  */
 #if @REPLACE_HUGE_VAL@
+# undef HUGE_VALF
+# define HUGE_VALF (1.0f / 0.0f)
 # undef HUGE_VAL
 # define HUGE_VAL (1.0 / 0.0)
+# undef HUGE_VALL
+# define HUGE_VALL (1.0L / 0.0L)
 #endif
 
+/* HUGE_VALF is a 'float' Infinity.  */
+#ifndef HUGE_VALF
+# if defined _MSC_VER
+/* The Microsoft MSVC 9 compiler chokes on the expression 1.0f / 0.0f.  */
+#  define HUGE_VALF (1e25f * 1e25f)
+# else
+#  define HUGE_VALF (1.0f / 0.0f)
+# endif
+#endif
+
+/* HUGE_VAL is a 'double' Infinity.  */
+#ifndef HUGE_VAL
+# if defined _MSC_VER
+/* The Microsoft MSVC 9 compiler chokes on the expression 1.0 / 0.0.  */
+#  define HUGE_VAL (1e250 * 1e250)
+# else
+#  define HUGE_VAL (1.0 / 0.0)
+# endif
+#endif
+
+/* HUGE_VALL is a 'long double' Infinity.  */
+#ifndef HUGE_VALL
+# if defined _MSC_VER
+/* The Microsoft MSVC 9 compiler chokes on the expression 1.0L / 0.0L.  */
+#  define HUGE_VALL (1e250L * 1e250L)
+# else
+#  define HUGE_VALL (1.0L / 0.0L)
+# endif
+#endif
 
 #if @GNULIB_ACOSF@
 # if !@HAVE_ACOSF@

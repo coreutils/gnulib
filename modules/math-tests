@@ -1,5 +1,6 @@
 Files:
 tests/test-math.c
+tests/macros.h
 
 Depends-on:
 math-c++-tests
