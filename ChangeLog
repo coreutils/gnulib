@@ -1,3 +1,76 @@
+2012-02-29  Eric Blake  <eblake@redhat.com>
+
+	docs: update cygwin progress
+	* doc/posix-functions/llround.texi (llround): Added in cygwin
+	1.7.8.
+	* doc/posix-functions/llroundf.texi (llroundf): Likewise.
+	* doc/glibc-functions/program_invocation_name.texi
+	(program_invocation_name): Likewise.
+	* doc/glibc-functions/program_invocation_short_name.texi
+	(program_invocation_short_name): Likewise.
+	* doc/glibc-functions/madvise.texi (madvise): Likewise.
+	* doc/glibc-functions/pthread_yield.texi (pthread_yield):
+	Likewise.
+	* doc/posix-functions/pthread_spin_destroy.texi
+	(pthread_spin_destroy): Added in cygwin 1.7.10.
+	* doc/posix-functions/pthread_spin_init.texi (pthread_spin_init):
+	Likewise.
+	* doc/posix-functions/pthread_spin_lock.texi (pthread_spin_lock):
+	Likewise.
+	* doc/posix-functions/pthread_spin_trylock.texi
+	(pthread_spin_trylock): Likewise.
+	* doc/posix-functions/pthread_spin_unlock.texi
+	(pthread_spin_unlock): Likewise.
+	* doc/posix-functions/pthread_setschedprio.texi
+	(pthread_setschedprio): Likewise.
+	* doc/posix-functions/pthread_attr_getstack.texi
+	(pthread_attr_getstack): Likewise.
+	* doc/pastposix-functions/pthread_attr_getstackaddr.texi
+	(pthread_attr_getstackaddr): Likewise.
+	* doc/glibc-functions/pthread_getattr_np.texi
+	(pthread_getattr_np): Likewise.
+	* doc/glibc-functions/sys_siglist.texi (sys_siglist): Likewise.
+	* doc/glibc-functions/sysinfo.texi (sysinfo): Likewise.
+	* doc/posix-functions/clock_settime.texi (clock_settime):
+	Likewise.
+	* doc/posix-functions/pthread_attr_getguardsize.texi
+	(pthread_attr_getguardsize): Likewise.
+	* doc/posix-functions/pthread_attr_setguardsize.texi
+	(pthread_attr_setguardsize): Likewise.
+	* doc/posix-functions/pthread_attr_setstack.texi
+	(pthread_attr_setstack): Likewise.
+	* doc/pastposix-functions/pthread_attr_setstackaddr.texi
+	(pthread_attr_setstackaddr): Likewise.
+	* doc/posix-functions/clock_getcpuclockid.texi
+	(clock_getcpuclockid): Likewise.
+	* doc/posix-functions/pthread_getcpuclockid.texi
+	(pthread_getcpuclockid): Likewise.
+	* doc/glibc-functions/error.texi (error): Likewise.
+	* doc/glibc-functions/error_at_line.texi (error_at_line):
+	Likewise.
+	* doc/glibc-functions/error_message_count.texi
+	(error_message_count): Likewise.
+	* doc/glibc-functions/error_one_per_line.texi
+	(error_one_per_line): Likewise.
+	* doc/glibc-functions/error_print_progname.texi
+	(error_print_progname): Likewise.
+	* doc/posix-functions/pthread_condattr_getclock.texi
+	(pthread_condattr_getclock): Likewise.
+	* doc/posix-functions/pthread_condattr_setclock.texi
+	(pthread_condattr_setclock): Likewise.
+	* doc/posix-functions/clock_nanosleep.texi (clock_nanosleep):
+	Likewise.
+	* doc/glibc-functions/getgrouplist.texi (getgrouplist): Likewise.
+	* doc/glibc-functions/getpt.texi (getpt): Likewise.
+	* doc/glibc-functions/get_current_dir_name.texi
+	(get_current_dir_name): Likewise.
+	* doc/glibc-functions/pthread_sigqueue.texi (pthread_sigqueue):
+	Likewise.
+	* doc/posix-functions/tcgetsid.texi (tcgetsid): Likewise, but with
+	wrong return type.
+	* doc/glibc-functions/scandirat.texi (scandirat): Added in cygwin
+	1.7.11.
+
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'hypotf'.
