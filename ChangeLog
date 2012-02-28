@@ -1,5 +1,47 @@
 2012-02-28  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention new glibc headers and functions.
+	* doc/glibc-headers/uchar.texi: New file.
+	* doc/glibc-functions/aligned_alloc.texi: New file.
+	* doc/glibc-functions/c16rtomb.texi: New file.
+	* doc/glibc-functions/c32rtomb.texi: New file.
+	* doc/glibc-functions/clock_adjtime.texi: New file.
+	* doc/glibc-functions/fanotify_init.texi: New file.
+	* doc/glibc-functions/fanotify_mark.texi: New file.
+	* doc/glibc-functions/inet6_opt_append.texi: New file.
+	* doc/glibc-functions/inet6_opt_find.texi: New file.
+	* doc/glibc-functions/inet6_opt_finish.texi: New file.
+	* doc/glibc-functions/inet6_opt_get_val.texi: New file.
+	* doc/glibc-functions/inet6_opt_init.texi: New file.
+	* doc/glibc-functions/inet6_opt_next.texi: New file.
+	* doc/glibc-functions/inet6_opt_set_val.texi: New file.
+	* doc/glibc-functions/inet6_rth_add.texi: New file.
+	* doc/glibc-functions/inet6_rth_getaddr.texi: New file.
+	* doc/glibc-functions/inet6_rth_init.texi: New file.
+	* doc/glibc-functions/inet6_rth_reverse.texi: New file.
+	* doc/glibc-functions/inet6_rth_segments.texi: New file.
+	* doc/glibc-functions/inet6_rth_space.texi: New file.
+	* doc/glibc-functions/login.texi: New file.
+	* doc/glibc-functions/mbrtoc16.texi: New file.
+	* doc/glibc-functions/mbrtoc32.texi: New file.
+	* doc/glibc-functions/name_to_handle_at.texi: New file.
+	* doc/glibc-functions/ntp_gettimex.texi: New file.
+	* doc/glibc-functions/open_by_handle_at.texi: New file.
+	* doc/glibc-functions/prlimit.texi: New file.
+	* doc/glibc-functions/process_vm_readv.texi: New file.
+	* doc/glibc-functions/process_vm_writev.texi: New file.
+	* doc/glibc-functions/recvmmsg.texi: New file.
+	* doc/glibc-functions/scandirat.texi: New file.
+	* doc/glibc-functions/sendmmsg.texi: New file.
+	* doc/glibc-functions/setns.texi: New file.
+	* doc/glibc-functions/timespec_get.texi: New file.
+	* doc/gnulib.texi: Include them.
+	(Glibc sys/fanotify.h, Glibc sys/resource.h, Glibc uchar.h): New
+	sections.
+	Reported by Eric Blake.
+
+2012-02-28  Bruno Haible  <bruno@clisp.org>
+
 	Avoid compilation errors with MSVC option -fp:strict.
 	* lib/floor.c: Use MSVC specific pragma fenv_access.
 	* lib/ceil.c: Likewise.

@@ -1,0 +1,19 @@
+@node uchar.h
+@section @file{uchar.h}
+
+Defines the types @code{char16_t}, @code{char32_t} and declares the
+functions @code{mbrtoc16}, @code{c16rtomb}, @code{mbrtoc32},
+@code{c32rtomb}.
+
+Gnulib module: ---
+
+Portability problems fixed by Gnulib:
+@itemize
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+This header file is missing on all non-glibc platforms:
+glibc 2.15, MacOS X 10.5, FreeBSD 6.4, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+@end itemize
