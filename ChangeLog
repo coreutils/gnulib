@@ -1,5 +1,18 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'hypotf'.
+	* lib/math.in.h (hypotf): New declaration.
+	* lib/hypotf.c: New file.
+	* m4/hypotf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether hypotf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_HYPOTF, HAVE_HYPOTF,
+	REPLACE_HYPOTF.
+	* modules/math (Makefile.am): Substitute GNULIB_HYPOTF, HAVE_HYPOTF,
+	REPLACE_HYPOTF.
+	* modules/hypotf: New file.
+	* tests/test-math-c++.cc: Check the hypotf declaration.
+	* doc/posix-functions/hypotf.texi: Mention the new module.
+
 	hypot: Prepare for hypotf module.
 	* m4/hypot.m4: New file.
 	* modules/hypot (Files): Add m4/hypot.m4.

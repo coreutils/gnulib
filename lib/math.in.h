@@ -808,6 +808,31 @@ _GL_WARN_ON_USE (frexpl, "frexpl is unportable - "
 #endif
 
 
+/* Return sqrt(x^2+y^2).  */
+#if @GNULIB_HYPOTF@
+# if @REPLACE_HYPOTF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef hypotf
+#   define hypotf rpl_hypotf
+#  endif
+_GL_FUNCDECL_RPL (hypotf, float, (float x, float y));
+_GL_CXXALIAS_RPL (hypotf, float, (float x, float y));
+# else
+#  if !@HAVE_HYPOTF@
+_GL_FUNCDECL_SYS (hypotf, float, (float x, float y));
+#  endif
+_GL_CXXALIAS_SYS (hypotf, float, (float x, float y));
+# endif
+_GL_CXXALIASWARN (hypotf);
+#elif defined GNULIB_POSIXCHECK
+# undef hypotf
+# if HAVE_RAW_DECL_HYPOTF
+_GL_WARN_ON_USE (hypotf, "hypotf is unportable - "
+                 "use gnulib module hypotf for portability");
+# endif
+#endif
+
+
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPF@
 # if !@HAVE_LDEXPF@
