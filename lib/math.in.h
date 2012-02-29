@@ -288,6 +288,21 @@ _GL_WARN_ON_USE (atan2f, "atan2f is unportable - "
 #endif
 
 
+#if @GNULIB_CBRT@
+# if !@HAVE_CBRT@
+_GL_FUNCDECL_SYS (cbrt, double, (double x));
+# endif
+_GL_CXXALIAS_SYS (cbrt, double, (double x));
+_GL_CXXALIASWARN (cbrt);
+#elif defined GNULIB_POSIXCHECK
+# undef cbrt
+# if HAVE_RAW_DECL_CBRT
+_GL_WARN_ON_USE (cbrt, "cbrt is unportable - "
+                 "use gnulib module cbrt for portability");
+# endif
+#endif
+
+
 #if @GNULIB_CEILF@
 # if @REPLACE_CEILF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

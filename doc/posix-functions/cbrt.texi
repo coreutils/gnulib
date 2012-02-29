@@ -8,11 +8,11 @@ Gnulib module: cbrt
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+Minix 3.1.8, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-Minix 3.1.8, MSVC 9.
 @end itemize

@@ -35,6 +35,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_ATANF''@/$(GNULIB_ATANF)/g' \
 	      -e 's/@''GNULIB_ATANL''@/$(GNULIB_ATANL)/g' \
 	      -e 's/@''GNULIB_ATAN2F''@/$(GNULIB_ATAN2F)/g' \
+	      -e 's/@''GNULIB_CBRT''@/$(GNULIB_CBRT)/g' \
 	      -e 's/@''GNULIB_CEIL''@/$(GNULIB_CEIL)/g' \
 	      -e 's/@''GNULIB_CEILF''@/$(GNULIB_CEILF)/g' \
 	      -e 's/@''GNULIB_CEILL''@/$(GNULIB_CEILL)/g' \
@@ -109,6 +110,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_ATANF''@|$(HAVE_ATANF)|g' \
 	      -e 's|@''HAVE_ATANL''@|$(HAVE_ATANL)|g' \
 	      -e 's|@''HAVE_ATAN2F''@|$(HAVE_ATAN2F)|g' \
+	      -e 's|@''HAVE_CBRT''@|$(HAVE_CBRT)|g' \
 	      -e 's|@''HAVE_COPYSIGN''@|$(HAVE_COPYSIGN)|g' \
 	      -e 's|@''HAVE_COPYSIGNF''@|$(HAVE_COPYSIGNF)|g' \
 	      -e 's|@''HAVE_COPYSIGNL''@|$(HAVE_COPYSIGNL)|g' \

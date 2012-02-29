@@ -1,5 +1,21 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	cbrt: Provide replacement on MSVC and Minix.
+	* lib/math.in.h (cbrt): New declaration.
+	* lib/cbrt.c: New file.
+	* m4/cbrt.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether cbrt is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_CBRT, HAVE_CBRT.
+	* modules/math (Makefile.am): Substitute GNULIB_CBRT, HAVE_CBRT.
+	* modules/cbrt (Files): Add lib/cbrt.c, m4/cbrt.m4.
+	(Depends-on): Add dependencies.
+	(configure.ac): Arrange to compile replacement if HAVE_CBRT is 0.
+	* tests/test-math-c++.cc: Check the declaration of cbrt.
+	* doc/posix-functions/cbrt.texi: Mention that the module provides a
+	replacement.
+
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
 	hypotl-ieee: Work around test failure on OSF/1 and native Windows.
 	* m4/hypotl-ieee.m4: New file.
 	* m4/hypotl.m4 (gl_FUNC_HYPOTL): If gl_FUNC_HYPOTL_IEEE is present,
