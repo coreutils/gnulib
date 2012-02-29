@@ -32,12 +32,6 @@ extern "C" {
 }
 #endif
 
-/* On Cygwin 1.7.11, tcgetsid returns int instead of pid_t; at least
-   they are the same size on that platform.  */
-#ifdef __CYGWIN__
-# include <sys/types.h>
-#endif
-
 /* The include_next requires a split double-inclusion guard.  */
 #if @HAVE_TERMIOS_H@
 # @INCLUDE_NEXT@ @NEXT_TERMIOS_H@
@@ -46,10 +40,8 @@ extern "C" {
 #ifndef _@GUARD_PREFIX@_TERMIOS_H
 #define _@GUARD_PREFIX@_TERMIOS_H
 
-#if @GNULIB_TCGETSID@
 /* Get pid_t.  */
-# include <sys/types.h>
-#endif
+#include <sys/types.h>
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 

@@ -10,6 +10,9 @@ Portability problems fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 mingw, MSVC 9.
+@item
+This header does not declare @code{pid_t} on all platforms:
+glibc on some architectures, FreeBSD 6.4, OpenBSD 4.9, Cygwin 1.7.11.
 @end itemize
 
 Portability problems not fixed by Gnulib:

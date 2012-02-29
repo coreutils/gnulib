@@ -1,3 +1,10 @@
+2012-02-29  Eric Blake  <eblake@redhat.com>
+
+	termios: fix pid_t always, not just for tcgetsid
+	* doc/posix-headers/termios.texi (termios.h): Mention problem.
+	* lib/termios.in.h (include): Ensure pid_t on all platforms, not
+	just when building tcgetsid.
+
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'hypotl'.
