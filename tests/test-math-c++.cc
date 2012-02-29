@@ -159,6 +159,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::frexpl, long double, (long double, int *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::hypotf, float, (float, float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::hypot, double, (double, double));
+#if GNULIB_TEST_HYPOTL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::hypotl, long double,
+                 (long double, long double));
+#endif
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j0, double, (double));
 

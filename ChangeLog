@@ -1,3 +1,16 @@
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
+	New module 'hypotl'.
+	* lib/math.in.h (hypotl): New declaration.
+	* lib/hypotl.c: New file.
+	* m4/hypotl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether hypotf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_HYPOTL, HAVE_HYPOTL.
+	* modules/math (Makefile.am): Substitute GNULIB_HYPOTL, HAVE_HYPOTL.
+	* modules/hypotl: New file.
+	* tests/test-math-c++.cc: Check the hypotl declaration.
+	* doc/posix-functions/hypotl.texi: Mention the new module.
+
 2012-02-29  Eric Blake  <eblake@redhat.com>
 
 	tcgetsid: fix cygwin header bug

@@ -832,6 +832,21 @@ _GL_WARN_ON_USE (hypotf, "hypotf is unportable - "
 # endif
 #endif
 
+/* Return sqrt(x^2+y^2).  */
+#if @GNULIB_HYPOTL@
+# if !@HAVE_HYPOTL@
+_GL_FUNCDECL_SYS (hypotl, long double, (long double x, long double y));
+# endif
+_GL_CXXALIAS_SYS (hypotl, long double, (long double x, long double y));
+_GL_CXXALIASWARN (hypotl);
+#elif defined GNULIB_POSIXCHECK
+# undef hypotl
+# if HAVE_RAW_DECL_HYPOTL
+_GL_WARN_ON_USE (hypotl, "hypotl is unportable - "
+                 "use gnulib module hypotl for portability");
+# endif
+#endif
+
 
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPF@
