@@ -1,5 +1,10 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'hypotf-ieee'.
+	* modules/hypotf-ieee-tests: New file.
+	* tests/test-hypotf-ieee.c: New file.
+	* tests/test-hypot-ieee.h: New file.
+
 	New module 'hypotf-ieee'.
 	* modules/hypotf-ieee: New file.
 
