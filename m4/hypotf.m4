@@ -10,7 +10,7 @@ AC_DEFUN([gl_FUNC_HYPOTF],
   AC_REQUIRE([gl_FUNC_HYPOT])
 
   dnl Test whether hypotf() exists. Assume that hypotf(), if it exists, is
-  dnl defined in the same library as fmod().
+  dnl defined in the same library as hypot().
   save_LIBS="$LIBS"
   LIBS="$LIBS $HYPOT_LIBM"
   AC_CHECK_FUNCS([hypotf])
