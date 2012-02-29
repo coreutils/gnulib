@@ -2,12 +2,13 @@ Description:
 hypot() function: length of a vector in the plane.
 
 Files:
+m4/hypot.m4
 m4/mathfunc.m4
 
 Depends-on:
 
 configure.ac:
-gl_COMMON_DOUBLE_MATHFUNC([hypot])
+gl_FUNC_HYPOT
 
 Makefile.am:
 

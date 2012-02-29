@@ -1,5 +1,12 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	hypot: Prepare for hypotf module.
+	* m4/hypot.m4: New file.
+	* modules/hypot (Files): Add m4/hypot.m4.
+	(configure.ac): Invoke gl_FUNC_HYPOT.
+
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
 	hypot tests: More tests.
 	* tests/test-hypot.c: Include <float.h>.
 	(main): Add tests about overflow and underflow.
