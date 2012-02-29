@@ -29,6 +29,9 @@ tanl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/s_tanl.c
+   and           glibc/sysdeps/ieee754/ldbl-128/k_tanl.c.  */
+
 /* tanl(x)
  * Return tangent function of x.
  *

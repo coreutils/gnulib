@@ -24,6 +24,10 @@
 #include <float.h>
 #include <math.h>
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/k_sincosl.c
+   or            glibc/sysdeps/ieee754/ldbl-128/k_{sin,cos}l.c
+   and           glibc/sysdeps/ieee754/ldbl-128/t_sincosl.c.  */
+
 static const long double sin_c[] = {
 #define ONE sin_c[0]
   1.00000000000000000000000000000000000E+00L,   /* 3fff0000000000000000000000000000 */

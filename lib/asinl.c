@@ -24,6 +24,8 @@ asinl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/e_asinl.c.  */
+
 /*
   Long double expansions contributed by
   Stephen L. Moshier <moshier@na-net.ornl.gov>

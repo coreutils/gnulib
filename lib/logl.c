@@ -28,6 +28,8 @@ logl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/e_logl.c.  */
+
 /*                                                      logll.c
  *
  * Natural logarithm for 128-bit long double precision.

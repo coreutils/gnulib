@@ -28,12 +28,14 @@ sinl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/s_sinl.c.  */
+
 /* sinl(x)
  * Return sine function of x.
  *
  * kernel function:
  *      __kernel_sinl           ... sine function on [-pi/4,pi/4]
- *      __kernel_cosl           ... cose function on [-pi/4,pi/4]
+ *      __kernel_cosl           ... cosine function on [-pi/4,pi/4]
  *      __ieee754_rem_pio2l     ... argument reduction routine
  *
  * Method.

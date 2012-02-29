@@ -28,6 +28,8 @@ atanl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/s_atanl.c.  */
+
 /*                                                      s_atanl.c
  *
  *      Inverse circular tangent for 128-bit long double precision

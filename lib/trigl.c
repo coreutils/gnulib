@@ -24,6 +24,9 @@
 #include <float.h>
 #include <math.h>
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/e_rem_pio2l.c
+   and           glibc/sysdeps/ieee754/dbl-64/k_rem_pio2.c.  */
+
 /* Table of constants for 2/pi, 5628 hexadecimal digits of 2/pi */
 static const int two_over_pi[] = {
   0xa2f983, 0x6e4e44, 0x1529fc, 0x2757d1, 0xf534dd, 0xc0db62,

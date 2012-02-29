@@ -1,3 +1,17 @@
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
+	math code: Add comments.
+	* lib/acosl.c: Add comment about related glibc source files.
+	* lib/asinl.c: Likewise.
+	* lib/atanl.c: Likewise.
+	* lib/expl.c: Likewise.
+	* lib/logl.c: Likewise.
+	* lib/sincosl.c: Likewise.
+	* lib/sinl.c: Likewise.
+	* lib/tanl.c: Likewise.
+	* lib/trigl.c: Likewise.
+	* lib/cosl.c: Likewise. Fix comments.
+
 2012-02-28  Bruno Haible  <bruno@clisp.org>
 
 	math: Ensure HUGE_VAL, HUGE_VALF, HUGE_VALL are defined.

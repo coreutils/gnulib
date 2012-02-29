@@ -33,6 +33,8 @@ expl (long double x)
 
 #else
 
+/* Code based on glibc/sysdeps/ieee754/ldbl-128/e_expl.c.  */
+
 # include <float.h>
 
 static const long double C[] = {
