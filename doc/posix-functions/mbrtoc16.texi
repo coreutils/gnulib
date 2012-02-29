@@ -1,6 +1,6 @@
-@node c16rtomb
-@subsection @code{c16rtomb}
-@findex c16rtomb
+@node mbrtoc16
+@section @code{mbrtoc16}
+@findex mbrtoc16
 
 Gnulib module: ---
 

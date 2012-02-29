@@ -1,3 +1,24 @@
+2012-02-28  Bruno Haible  <bruno@clisp.org>
+
+	doc: Move ISO C11 feature notes into POSIX chapters.
+	* doc/posix-functions/aligned_alloc.texi: Renamed from
+	doc/glibc-functions/aligned_alloc.texi.
+	* doc/posix-functions/quick_exit.texi: Renamed from
+	doc/glibc-functions/quick_exit.texi.
+	* doc/posix-headers/uchar.texi: Renamed from
+	doc/glibc-headers/uchar.texi.
+	* doc/posix-functions/c16rtomb.texi: Renamed from
+	doc/glibc-functions/c16rtomb.texi.
+	* doc/posix-functions/c32rtomb.texi: Renamed from
+	doc/glibc-functions/c32rtomb.texi.
+	* doc/posix-functions/mbrtoc16.texi: Renamed from
+	doc/glibc-functions/mbrtoc16.texi.
+	* doc/posix-functions/mbrtoc32.texi: Renamed from
+	doc/glibc-functions/mbrtoc32.texi.
+	* doc/gnulib.texi: Update.
+	(Glibc uchar.h): Remove section.
+	Suggested by Eric Blake.
+
 2012-02-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdnoreturn: port to MSVC better

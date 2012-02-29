@@ -1,5 +1,5 @@
 @node aligned_alloc
-@subsection @code{aligned_alloc}
+@section @code{aligned_alloc}
 @findex aligned_alloc
 
 Gnulib module: ---
