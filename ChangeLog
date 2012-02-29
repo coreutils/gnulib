@@ -1,5 +1,15 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	hypotf-ieee: Work around test failure on OSF/1 and native Windows.
+	* m4/hypotf-ieee.m4: New file.
+	* m4/hypotf.m4 (gl_FUNC_HYPOTF): If gl_FUNC_HYPOTF_IEEE is present,
+	test whether hypotf works with mixed NaN and Infinity arguments.
+	Replace it if not.
+	* modules/hypotf-ieee (Files): Add m4/hypotf-ieee.m4.
+	(Depends-on): Add hypot-ieee.
+	(configure.ac): Invoke gl_FUNC_HYPOTF_IEEE.
+	* doc/posix-functions/hypotf.texi: Mention the hypotf-ieee module.
+
 	hypot-ieee: Work around test failure on OSF/1 and native Windows.
 	* lib/math.in.h (hypot): New declaration.
 	* lib/hypot.c: New file.
