@@ -1,0 +1,24 @@
+Description:
+hypotf() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+hypotf
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(HYPOTF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
