@@ -1,5 +1,11 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	hypot tests: More tests.
+	* tests/test-hypot.c: Include <float.h>.
+	(main): Add tests about overflow and underflow.
+
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
 	math code: Add comments.
 	* lib/acosl.c: Add comment about related glibc source files.
 	* lib/asinl.c: Likewise.

@@ -23,6 +23,8 @@
 #include "signature.h"
 SIGNATURE_CHECK (hypot, double, (double, double));
 
+#include <float.h>
+
 #include "macros.h"
 
 volatile double x;
@@ -37,6 +39,24 @@ main ()
   y = 0.6;
   z = hypot (x, y);
   ASSERT (z >= 0.7211102550 && z <= 0.7211102551);
+
+  /* Overflow.  */
+  x = DBL_MAX;
+  y = DBL_MAX * 0.5;
+  z = hypot (x, y);
+  ASSERT (z == HUGE_VAL);
+
+  /* No underflow.  */
+  x = DBL_MIN;
+  y = 0.0;
+  z = hypot (x, y);
+  ASSERT (z == DBL_MIN);
+
+  /* No underflow.  */
+  x = DBL_MIN * 2.0;
+  y = DBL_MIN * 3.0;
+  z = hypot (x, y);
+  ASSERT (z >= DBL_MIN * 2.0 && z <= DBL_MIN * 4.0);
 
   return 0;
 }
