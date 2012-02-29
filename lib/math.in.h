@@ -833,6 +833,27 @@ _GL_WARN_ON_USE (hypotf, "hypotf is unportable - "
 #endif
 
 /* Return sqrt(x^2+y^2).  */
+#if @GNULIB_HYPOT@
+# if @REPLACE_HYPOT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef hypot
+#   define hypot rpl_hypot
+#  endif
+_GL_FUNCDECL_RPL (hypot, double, (double x, double y));
+_GL_CXXALIAS_RPL (hypot, double, (double x, double y));
+# else
+_GL_CXXALIAS_SYS (hypot, double, (double x, double y));
+# endif
+_GL_CXXALIASWARN (hypot);
+#elif defined GNULIB_POSIXCHECK
+# undef hypot
+# if HAVE_RAW_DECL_HYPOT
+_GL_WARN_ON_USE (hypotf, "hypot has portability problems - "
+                 "use gnulib module hypot for portability");
+# endif
+#endif
+
+/* Return sqrt(x^2+y^2).  */
 #if @GNULIB_HYPOTL@
 # if !@HAVE_HYPOTL@
 _GL_FUNCDECL_SYS (hypotl, long double, (long double x, long double y));

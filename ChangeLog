@@ -1,5 +1,23 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	hypot-ieee: Work around test failure on OSF/1 and native Windows.
+	* lib/math.in.h (hypot): New declaration.
+	* lib/hypot.c: New file.
+	* m4/hypot-ieee.m4: New file.
+	* m4/hypot.m4 (gl_FUNC_HYPOT): If gl_FUNC_HYPOT_IEEE is present, test
+	whether hypot works with mixed NaN and Infinity arguments. Replace it
+	if not.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_HYPOT,
+	REPLACE_HYPOT.
+	* modules/math (Makefile.am): Substitute GNULIB_HYPOT, REPLACE_HYPOT.
+	* modules/hypot (Files): Add lib/hypot.c.
+	(Depends-on): Add dependencies.
+	(configure.ac): Arrange to compile replacement if REPLACE_HYPOT is 1.
+	* modules/hypot-ieee (Files): Add m4/hypot-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_HYPOT_IEEE.
+	* tests/test-math-c++.cc: Check the declaration of hypot.
+	* doc/posix-functions/hypot.texi: Mention the hypot-ieee module.
+
 	Tests for module 'hypotl-ieee'.
 	* modules/hypotl-ieee-tests: New file.
 	* tests/test-hypotl-ieee.c: New file.
