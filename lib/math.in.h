@@ -855,10 +855,19 @@ _GL_WARN_ON_USE (hypotf, "hypot has portability problems - "
 
 /* Return sqrt(x^2+y^2).  */
 #if @GNULIB_HYPOTL@
-# if !@HAVE_HYPOTL@
+# if @REPLACE_HYPOTL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef hypotl
+#   define hypotl rpl_hypotl
+#  endif
+_GL_FUNCDECL_RPL (hypotl, long double, (long double x, long double y));
+_GL_CXXALIAS_RPL (hypotl, long double, (long double x, long double y));
+# else
+#  if !@HAVE_HYPOTL@
 _GL_FUNCDECL_SYS (hypotl, long double, (long double x, long double y));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (hypotl, long double, (long double x, long double y));
+# endif
 _GL_CXXALIASWARN (hypotl);
 #elif defined GNULIB_POSIXCHECK
 # undef hypotl

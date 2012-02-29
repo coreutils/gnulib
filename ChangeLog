@@ -1,5 +1,20 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	hypotl-ieee: Work around test failure on OSF/1 and native Windows.
+	* m4/hypotl-ieee.m4: New file.
+	* m4/hypotl.m4 (gl_FUNC_HYPOTL): If gl_FUNC_HYPOTL_IEEE is present,
+	test whether hypotl works with mixed NaN and Infinity arguments.
+	Replace it if not.
+	* lib/math.in.h (hypotl): Override if REPLACE_HYPOTL is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_HYPOTL.
+	* modules/math (Makefile.am): Substitute REPLACE_HYPOTL.
+	* modules/hypotl (configure.ac): Consider REPLACE_HYPOTL.
+	(Depends-on): Update conditions.
+	* modules/hypotl-ieee (Files): Add m4/hypotl-ieee.m4.
+	(Depends-on): Add hypot-ieee.
+	(configure.ac): Invoke gl_FUNC_HYPOTL_IEEE.
+	* doc/posix-functions/hypotl.texi: Mention the hypotl-ieee module.
+
 	hypotf-ieee: Work around test failure on OSF/1 and native Windows.
 	* m4/hypotf-ieee.m4: New file.
 	* m4/hypotf.m4 (gl_FUNC_HYPOTF): If gl_FUNC_HYPOTF_IEEE is present,
