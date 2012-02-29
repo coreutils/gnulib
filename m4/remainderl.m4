@@ -60,7 +60,6 @@ static long double dummy (long double x, long double y) { return 0; }
 int main (int argc, char *argv[])
 {
   long double (*my_remainderl) (long double, long double) = argc ? remainderl : dummy;
-  long double i;
   long double f;
   /* Test remainderl(...,0.0L).
      This test fails on OSF/1 5.1.  */

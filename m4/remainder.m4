@@ -79,7 +79,6 @@ static double dummy (double x, double y) { return 0; }
 int main (int argc, char *argv[])
 {
   double (*my_remainder) (double, double) = argc ? remainder : dummy;
-  double i;
   double f;
   /* Test remainder(...,0.0).
      This test fails on OSF/1 5.1.  */

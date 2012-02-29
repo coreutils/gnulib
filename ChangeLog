@@ -1,3 +1,11 @@
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
+	Remove unused variables.
+	* m4/fmod.m4 (gl_FUNC_FMOD): Remove unused variable 'i'.
+	* m4/fmodl.m4 (gl_FUNC_FMODL): Likewise.
+	* m4/remainder.m4 (gl_FUNC_REMAINDER): Likewise.
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): Likewise.
+
 2012-02-29  Eric Blake  <eblake@redhat.com>
 
 	termios: fix pid_t always, not just for tcgetsid

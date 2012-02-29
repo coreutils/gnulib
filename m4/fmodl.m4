@@ -54,7 +54,6 @@ static long double dummy (long double x, long double y) { return 0; }
 int main (int argc, char *argv[])
 {
   long double (*my_fmodl) (long double, long double) = argc ? fmodl : dummy;
-  long double i;
   long double f;
   /* Test fmodl(...,0.0L).
      This test fails on OSF/1 5.1.  */

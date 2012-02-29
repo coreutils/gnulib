@@ -40,7 +40,6 @@ int main (int argc, char *argv[])
 {
   double (*my_fmod) (double, double) = argc ? fmod : dummy;
   int result = 0;
-  double i;
   double f;
   /* Test fmod(...,0.0).
      This test fails on OSF/1 5.1.  */
