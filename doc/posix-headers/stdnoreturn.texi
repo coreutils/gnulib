@@ -21,4 +21,12 @@ Portability problems not fixed by Gnulib:
 @item
 You cannot assume that @code{_Noreturn} is a reserved word;
 it might be a macro.
+@item
+On MSVC 9, @code{noreturn} expands to the empty token sequence, to avoid
+problems with standard headers that use @code{__declspec (noreturn)}
+directly.  Although the resulting code operates correctly, the
+compiler is not informed whether @code{noreturn} functions do not
+return, so it may generate incorrect warnings at compile-time, or code
+that is slightly less optimized.  This problem does not occur with
+@code{_Noreturn}.
 @end itemize

@@ -28,7 +28,19 @@
 
 /* The definition of _Noreturn is copied here.  */
 
-#define noreturn _Noreturn
+#if 1200 <= _MSC_VER
+/* Standard include files on this platform contain declarations like
+   "__declspec (noreturn) void abort (void);".  "#define noreturn
+   _Noreturn" would cause this declaration to be rewritten to the
+   invalid "__declspec (__declspec (noreturn)) void abort (void);".
+   Instead, define noreturn to empty, so that such declarations are
+   rewritten to "__declspec () void abort (void);", which is
+   equivalent to "void abort (void);"; this gives up on noreturn's
+   advice to the compiler but at least it is valid code.  */
+# define noreturn /*empty*/
+#else
+# define noreturn _Noreturn
+#endif
 
 /* Did he ever return?
    No he never returned

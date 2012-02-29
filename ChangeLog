@@ -1,3 +1,12 @@
+2012-02-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdnoreturn: port to MSVC better
+	MSVC standard headers use __declspec(noreturn), so #define noreturn
+	to empty on that platform.  Reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-02/msg00152.html>.
+	* lib/stdnoreturn.in.h (noreturn): Define to empty on MSVC.
+	* doc/posix-headers/stdnoreturn.texi (stdnoreturn.h): Document this.
+
 2012-02-28  Bruno Haible  <bruno@clisp.org>
 
 	doc: Mention new glibc headers and functions.
