@@ -1,5 +1,9 @@
 2012-03-01  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'expl-ieee'.
+	* modules/expl-ieee-tests: New file.
+	* tests/test-expl-ieee.c: New file.
+
 	New module 'expl-ieee'.
 	* modules/expl-ieee: New file.
 
