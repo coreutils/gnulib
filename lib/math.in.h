@@ -316,6 +316,20 @@ _GL_WARN_ON_USE (cbrt, "cbrt is unportable - "
 # endif
 #endif
 
+#if @GNULIB_CBRTL@
+# if !@HAVE_DECL_CBRTL@
+_GL_FUNCDECL_SYS (cbrtl, long double, (long double x));
+# endif
+_GL_CXXALIAS_SYS (cbrtl, long double, (long double x));
+_GL_CXXALIASWARN (cbrtl);
+#elif defined GNULIB_POSIXCHECK
+# undef cbrtl
+# if HAVE_RAW_DECL_CBRTL
+_GL_WARN_ON_USE (cbrtl, "cbrtl is unportable - "
+                 "use gnulib module cbrtl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_CEILF@
 # if @REPLACE_CEILF@

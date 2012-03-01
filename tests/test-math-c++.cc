@@ -74,6 +74,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrtf, float, (float));
 #if GNULIB_TEST_CBRT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrt, double, (double));
 #endif
+#if GNULIB_TEST_CBRTL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrtl, long double, (long double));
+#endif
 
 #if GNULIB_TEST_CEILF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ceilf, float, (float));

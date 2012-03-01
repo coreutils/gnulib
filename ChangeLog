@@ -1,5 +1,20 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'cbrtl'.
+	* lib/math.in.h (cbrtl): New declaration.
+	* lib/cbrtl.c: New file.
+	* m4/cbrtl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether cbrtl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_CBRTL, HAVE_CBRTL,
+	HAVE_DECL_CBRTL.
+	* modules/math (Makefile.am): Substitute GNULIB_CBRTL, HAVE_CBRTL,
+	HAVE_DECL_CBRTL.
+	* modules/cbrtl: New file.
+	* tests/test-math-c++.cc: Check the declaration of cbrtl.
+	* doc/posix-functions/cbrtl.texi: Mention the new module.
+
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'cbrtf'.
 	* modules/cbrtf-tests: New file.
 	* tests/test-cbrtf.c: New file.

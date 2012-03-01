@@ -40,7 +40,7 @@ AC_DEFUN([gl_MATH_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosf acosl asinf asinl atanf atanl
-     cbrt cbrtf ceilf ceill copysign copysignf copysignl cosf cosl coshf
+     cbrt cbrtf cbrtl ceilf ceill copysign copysignf copysignl cosf cosl coshf
      expf expl fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
      ldexpf ldexpl logb logf logl log10f log10l modf modff modfl powf
@@ -69,6 +69,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_ATAN2F=0;     AC_SUBST([GNULIB_ATAN2F])
   GNULIB_CBRT=0;       AC_SUBST([GNULIB_CBRT])
   GNULIB_CBRTF=0;      AC_SUBST([GNULIB_CBRTF])
+  GNULIB_CBRTL=0;      AC_SUBST([GNULIB_CBRTL])
   GNULIB_CEIL=0;       AC_SUBST([GNULIB_CEIL])
   GNULIB_CEILF=0;      AC_SUBST([GNULIB_CEILF])
   GNULIB_CEILL=0;      AC_SUBST([GNULIB_CEILL])
@@ -145,6 +146,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_ATAN2F=1;               AC_SUBST([HAVE_ATAN2F])
   HAVE_CBRT=1;                 AC_SUBST([HAVE_CBRT])
   HAVE_CBRTF=1;                AC_SUBST([HAVE_CBRTF])
+  HAVE_CBRTL=1;                AC_SUBST([HAVE_CBRTL])
   HAVE_COPYSIGN=1;             AC_SUBST([HAVE_COPYSIGN])
   HAVE_COPYSIGNF=1;            AC_SUBST([HAVE_COPYSIGNF])
   HAVE_COPYSIGNL=1;            AC_SUBST([HAVE_COPYSIGNL])
@@ -192,6 +194,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_ASINL=1;           AC_SUBST([HAVE_DECL_ASINL])
   HAVE_DECL_ATANL=1;           AC_SUBST([HAVE_DECL_ATANL])
   HAVE_DECL_CBRTF=1;           AC_SUBST([HAVE_DECL_CBRTF])
+  HAVE_DECL_CBRTL=1;           AC_SUBST([HAVE_DECL_CBRTL])
   HAVE_DECL_CEILF=1;           AC_SUBST([HAVE_DECL_CEILF])
   HAVE_DECL_CEILL=1;           AC_SUBST([HAVE_DECL_CEILL])
   HAVE_DECL_COSL=1;            AC_SUBST([HAVE_DECL_COSL])
