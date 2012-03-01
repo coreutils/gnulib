@@ -1,5 +1,8 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'cbrt-ieee'.
+	* modules/cbrt-ieee: New file.
+
 	Tests for module 'cbrtf-ieee'.
 	* modules/cbrtf-ieee-tests: New file.
 	* tests/test-cbrtf-ieee.c: New file.
