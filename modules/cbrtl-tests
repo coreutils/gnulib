@@ -1,0 +1,13 @@
+Files:
+tests/test-cbrtl.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-cbrtl
+check_PROGRAMS += test-cbrtl
+test_cbrtl_LDADD = $(LDADD) @CBRTL_LIBM@

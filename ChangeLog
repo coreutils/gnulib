@@ -1,5 +1,9 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'cbrtl'.
+	* modules/cbrtl-tests: New file.
+	* tests/test-cbrtl.c: New file.
+
 	New module 'cbrtl'.
 	* lib/math.in.h (cbrtl): New declaration.
 	* lib/cbrtl.c: New file.
