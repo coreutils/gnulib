@@ -1,3 +1,10 @@
+2012-03-01  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid spurious failure of _sc_search_regexp-using tests
+	* top/maint.mk: Initialize _sc_search_regexp parameters, so that
+	envvar settings cannot interfere.  Otherwise, setting envvars like
+	prohibit=foo require=bar, etc. would cause spurious test failures.
+
 2012-03-01  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: add per-line exclusions to prohibitions

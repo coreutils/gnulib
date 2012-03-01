@@ -219,6 +219,17 @@ syntax-check: $(local-check)
 # when filtering by name via in_files, we explicitly filter out matching
 # names here as well.
 
+# Initialize each, so that envvar settings cannot interfere.
+export require =
+export prohibit =
+export exclude =
+export in_vc_files =
+export in_files =
+export containing =
+export non_containing =
+export halt =
+export with_grep_options =
+
 # By default, _sc_search_regexp does not ignore case.
 export ignore_case =
 _ignore_case = $$(test -n "$$ignore_case" && printf %s -i || :)
