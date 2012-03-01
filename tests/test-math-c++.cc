@@ -68,6 +68,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2f, float, (float, float));
 #endif
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::atan2, double, (double, double));
 
+#if GNULIB_TEST_CBRTF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrtf, float, (float));
+#endif
 #if GNULIB_TEST_CBRT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::cbrt, double, (double));
 #endif

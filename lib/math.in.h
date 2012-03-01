@@ -288,6 +288,20 @@ _GL_WARN_ON_USE (atan2f, "atan2f is unportable - "
 #endif
 
 
+#if @GNULIB_CBRTF@
+# if !@HAVE_DECL_CBRTF@
+_GL_FUNCDECL_SYS (cbrtf, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (cbrtf, float, (float x));
+_GL_CXXALIASWARN (cbrtf);
+#elif defined GNULIB_POSIXCHECK
+# undef cbrtf
+# if HAVE_RAW_DECL_CBRTF
+_GL_WARN_ON_USE (cbrtf, "cbrtf is unportable - "
+                 "use gnulib module cbrtf for portability");
+# endif
+#endif
+
 #if @GNULIB_CBRT@
 # if !@HAVE_CBRT@
 _GL_FUNCDECL_SYS (cbrt, double, (double x));
