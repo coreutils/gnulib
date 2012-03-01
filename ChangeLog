@@ -1,5 +1,10 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	New module 'cbrtf-ieee'.
+	* modules/cbrtf-ieee: New file.
+
+2012-02-29  Bruno Haible  <bruno@clisp.org>
+
 	cbrtf: Work around bug in IRIX 6.5 system function.
 	* lib/math.in.h (cbrtf): Override if REPLACE_CBRTF is 1.
 	* m4/cbrtf.m4 (gl_FUNC_CBRTF_WORKS): New macro.
