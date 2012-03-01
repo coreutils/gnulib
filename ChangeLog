@@ -1,5 +1,20 @@
 2012-02-29  Bruno Haible  <bruno@clisp.org>
 
+	cbrtl-ieee: Work around test failure on IRIX 6.5.
+	* m4/cbrtl-ieee.m4: New file.
+	* m4/cbrtl.m4 (gl_FUNC_CBRTL): If gl_FUNC_CBRTL_IEEE is present,
+	test whether cbrtl works with a minus zero argument. Replace it if not.
+	* lib/math.in.h (cbrtl): Override if REPLACE_CBRTL is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_CBRTL.
+	* modules/math (Makefile.am): Substitute REPLACE_CBRTL.
+	* modules/cbrtl (configure.ac): Consider REPLACE_CBRTL.
+	(Depends-on): Update conditions.
+	* modules/cbrtl-ieee (Files): Add m4/cbrtl-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_CBRTL_IEEE.
+	* lib/cbrtl.c (cbrtl) [IRIX]: Avoid an unnecessary addition.
+	* doc/posix-functions/cbrtl.texi: Mention the cbrtl-ieee module.
+
 	Tests for module 'cbrtl-ieee'.
 	* modules/cbrtl-ieee-tests: New file.
 	* tests/test-cbrtl-ieee.c: New file.

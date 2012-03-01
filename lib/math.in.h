@@ -326,10 +326,19 @@ _GL_WARN_ON_USE (cbrt, "cbrt is unportable - "
 #endif
 
 #if @GNULIB_CBRTL@
-# if !@HAVE_DECL_CBRTL@
+# if @REPLACE_CBRTL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef cbrtl
+#   define cbrtl rpl_cbrtl
+#  endif
+_GL_FUNCDECL_RPL (cbrtl, long double, (long double x));
+_GL_CXXALIAS_RPL (cbrtl, long double, (long double x));
+# else
+#  if !@HAVE_DECL_CBRTL@
 _GL_FUNCDECL_SYS (cbrtl, long double, (long double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (cbrtl, long double, (long double x));
+# endif
 _GL_CXXALIASWARN (cbrtl);
 #elif defined GNULIB_POSIXCHECK
 # undef cbrtl

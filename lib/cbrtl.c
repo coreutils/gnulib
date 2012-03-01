@@ -140,7 +140,13 @@ cbrtl (long double x)
       return x;
     }
   else
-    return x + x;
+    {
+# ifdef __sgi /* so that when x == -0.0L, the result is -0.0L not +0.0L */
+      return x;
+# else
+      return x + x;
+# endif
+    }
 }
 
 #endif
