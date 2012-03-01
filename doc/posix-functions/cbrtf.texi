@@ -14,6 +14,9 @@ Minix 3.1.8, AIX 5.1, Solaris 9, MSVC 9.
 @item
 This function is not declared on some platforms:
 IRIX 6.5.
+@item
+This function returns a wrong value for a minus zero on some platforms:
+IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

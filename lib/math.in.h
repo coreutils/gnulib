@@ -289,10 +289,19 @@ _GL_WARN_ON_USE (atan2f, "atan2f is unportable - "
 
 
 #if @GNULIB_CBRTF@
-# if !@HAVE_DECL_CBRTF@
+# if @REPLACE_CBRTF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef cbrtf
+#   define cbrtf rpl_cbrtf
+#  endif
+_GL_FUNCDECL_RPL (cbrtf, float, (float x));
+_GL_CXXALIAS_RPL (cbrtf, float, (float x));
+# else
+#  if !@HAVE_DECL_CBRTF@
 _GL_FUNCDECL_SYS (cbrtf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (cbrtf, float, (float x));
+# endif
 _GL_CXXALIASWARN (cbrtf);
 #elif defined GNULIB_POSIXCHECK
 # undef cbrtf
