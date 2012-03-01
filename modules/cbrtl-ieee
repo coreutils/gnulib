@@ -1,0 +1,24 @@
+Description:
+cbrtl() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+cbrtl
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(CBRTL_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
