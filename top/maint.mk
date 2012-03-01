@@ -178,6 +178,13 @@ syntax-check: $(local-check)
 #     Regular expression (ERE) denoting either a forbidden construct
 #     or a required construct.  Those arguments are exclusive.
 #
+#  exclude
+#
+#     Regular expression (ERE) denoting lines to ignore that matched
+#     a prohibit construct.  For example, this can be used to exclude
+#     comments that mention why the nearby code uses an alternative
+#     construct instead of the simpler prohibited construct.
+#
 #  in_vc_files | in_files
 #
 #     grep-E-style regexp denoting the files to check.  If no files
@@ -231,6 +238,9 @@ define _sc_search_regexp
    test -z "$$prohibit" && test -z "$$require"				\
      && { msg='Should specify either prohibit or require'		\
           $(_sc_say_and_exit) } || :;					\
+   test -z "$$prohibit" && test -n "$$exclude"				\
+     && { msg='Use of exclude requires a prohibit pattern'		\
+          $(_sc_say_and_exit) } || :;					\
    test -n "$$in_vc_files" && test -n "$$in_files"			\
      && { msg='Cannot specify both in_vc_files and in_files'		\
           $(_sc_say_and_exit) } || :;					\
@@ -258,6 +268,7 @@ define _sc_search_regexp
    if test -n "$$files"; then						\
      if test -n "$$prohibit"; then					\
        grep $$with_grep_options $(_ignore_case) -nE "$$prohibit" $$files \
+         | grep -vE "$${exclude-^$$}"					\
          && { msg="$$halt" $(_sc_say_and_exit) } || :;			\
      else								\
        grep $$with_grep_options $(_ignore_case) -LE "$$require" $$files \
@@ -305,11 +316,10 @@ sc_prohibit_atoi_atof:
 # Use STREQ rather than comparing strcmp == 0, or != 0.
 sp_ = strcmp *\(.+\)
 sc_prohibit_strcmp:
-	@grep -nE '! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
-	    $$($(VC_LIST_EXCEPT))					\
-	  | grep -vE ':# *define STRN?EQ\(' &&				\
-	  { echo '$(ME): replace strcmp calls above with STREQ/STRNEQ'	\
-		1>&2; exit 1; } || :
+	@prohibit='! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
+	exclude=':# *define STRN?EQ\('					\
+	halt='$(ME): replace strcmp calls above with STREQ/STRNEQ'	\
+	  $(_sc_search_regexp)
 
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
 # Convert all uses automatically, via these two commands:
@@ -709,12 +719,10 @@ _gl_translatable_diag_func_re ?= error
 # Look for diagnostics that aren't marked for translation.
 # This won't find any for which error's format string is on a separate line.
 sc_unmarked_diagnostics:
-	@grep -nE							\
-	    '\<$(_gl_translatable_diag_func_re) *\([^"]*"[^"]*[a-z]{3}' \
-		$$($(VC_LIST_EXCEPT))					\
-	  | grep -Ev '(_|ngettext ?)\(' &&				\
-	  { echo '$(ME): found unmarked diagnostic(s)' 1>&2;		\
-	    exit 1; } || :
+	@prohibit='\<$(_gl_translatable_diag_func_re) *\([^"]*"[^"]*[a-z]{3}' \
+	exclude='(_|ngettext ?)\('					\
+	halt='$(ME): found unmarked diagnostic(s)'			\
+	  $(_sc_search_regexp)
 
 # Avoid useless parentheses like those in this example:
 # #if defined (SYMBOL) || defined (SYM2)
@@ -975,10 +983,10 @@ sc_redundant_const:
 	  $(_sc_search_regexp)
 
 sc_const_long_option:
-	@grep '^ *static.*struct option ' $$($(VC_LIST_EXCEPT))		\
-	  | grep -Ev 'const struct option|struct option const' && {	\
-	      echo 1>&2 '$(ME): add "const" to the above declarations'; \
-	      exit 1; } || :
+	@prohibit='^ *static.*struct option '				\
+	exclude='const struct option|struct option const'		\
+	halt='$(ME): add "const" to the above declarations'		\
+	  $(_sc_search_regexp)
 
 NEWS_hash =								\
   $$(sed -n '/^\*.* $(PREV_VERSION_REGEXP) ([0-9-]*)/,$$p'		\

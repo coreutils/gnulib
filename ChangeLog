@@ -1,3 +1,10 @@
+2012-03-01  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: add per-line exclusions to prohibitions
+	* maint.mk (_sc_search_regexp): Add $exclude parameter.
+	(sc_prohibit_strcmp, sc_unmarked_diagnostics)
+	(sc_const_long_option): Use it.
+
 2012-03-01  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'expl-ieee'.
