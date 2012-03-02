@@ -1,3 +1,13 @@
+2012-03-02  Jim Meyering  <meyering@redhat.com>
+
+	maint: don't specify XZ_OPT=-9ev in dist-related rule
+	Using xz's -9 option is warranted only if you have a very large
+	tarball (see xz's documentation for the sizes vs. presets), and
+	requires 64MiB of memory at decompression time.
+	* top/maint.mk (alpha beta stable): Don't specify XZ_OPT=-9ev.
+	Automake's default of just "-e" is fine.  Override on a
+	per-package basis by setting XZ_OPT e.g., in cfg.mk.
+
 2012-03-01  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: allow announcement for non-gnulib project

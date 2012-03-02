@@ -1332,7 +1332,7 @@ alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	$(MAKE) vc-diff-check
 	$(MAKE) news-check
 	$(MAKE) distcheck
-	$(MAKE) dist XZ_OPT=-9ev
+	$(MAKE) dist
 	$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
 	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 
