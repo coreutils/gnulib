@@ -1,5 +1,23 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	rint* tests: More tests.
+	* tests/test-rint.h: New file, partially extracted from
+	tests/test-rintl.c.
+	* tests/test-rint.c: Include test-rint.h.
+	(main): Invoke test_function.
+	* tests/test-rintf.c: Include test-rint.h.
+	(main): Invoke test_function.
+	* tests/test-rintl.c: Include test-rint.h.
+	(main): Invoke test_function.
+	* modules/rint-tests (Files): Add tests/test-rint.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_rint_SOURCES.
+	* modules/rintf-tests (Files): Add tests/test-rint.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_rintf_SOURCES.
+	* modules/rintl-tests (Files): Add tests/test-rint.h, tests/randoml.c.
+	(Makefile.am): Add randoml.c to test_rintl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	modf* tests: More tests.
 	* tests/test-modf.h: New file.
 	* tests/test-modf.c: Include <float.h> and test-modf.h.

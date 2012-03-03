@@ -32,6 +32,15 @@ SIGNATURE_CHECK (rint, double, (double));
 #include "nan.h"
 #include "macros.h"
 
+#define DOUBLE double
+#define ISNAN isnand
+#define INFINITY Infinityd ()
+#define NAN NaNd ()
+#define L_(literal) literal
+#define RINT rint
+#define RANDOM randomd
+#include "test-rint.h"
+
 int
 main ()
 {
@@ -75,11 +84,8 @@ main ()
       ASSERT (rint (-65536.0) == -65536.0);
       ASSERT (rint (-65536.001) == -65536.0);
       ASSERT (rint (-2.341e31) == -2.341e31);
-      /* Infinite numbers.  */
-      ASSERT (rint (Infinityd ()) == Infinityd ());
-      ASSERT (rint (- Infinityd ()) == - Infinityd ());
-      /* NaNs.  */
-      ASSERT (isnand (rint (NaNd ())));
+
+      test_function ();
 
       return 0;
     }

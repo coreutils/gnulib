@@ -32,6 +32,15 @@ SIGNATURE_CHECK (rintf, float, (float));
 #include "nan.h"
 #include "macros.h"
 
+#define DOUBLE float
+#define ISNAN isnanf
+#define INFINITY Infinityf ()
+#define NAN NaNf ()
+#define L_(literal) literal##f
+#define RINT rintf
+#define RANDOM randomf
+#include "test-rint.h"
+
 int
 main ()
 {
@@ -75,11 +84,8 @@ main ()
       ASSERT (rintf (-65536.0f) == -65536.0f);
       ASSERT (rintf (-65536.01f) == -65536.0f);
       ASSERT (rintf (-2.341e31f) == -2.341e31f);
-      /* Infinite numbers.  */
-      ASSERT (rintf (Infinityf ()) == Infinityf ());
-      ASSERT (rintf (- Infinityf ()) == - Infinityf ());
-      /* NaNs.  */
-      ASSERT (isnanf (rintf (NaNf ())));
+
+      test_function ();
 
       return 0;
     }
