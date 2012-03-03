@@ -40,9 +40,10 @@ SIGNATURE_CHECK (ldexpf, float, (float, int));
 #define NAN NaNf ()
 #define L_(literal) literal##f
 #define MINUS_ZERO minus_zerof
-#define LDEXP ldexpf
 #define MIN_EXP FLT_MIN_EXP
 #define MAX_EXP FLT_MAX_EXP
+#define LDEXP ldexpf
+#define RANDOM randomf
 #include "test-ldexp.h"
 
 int

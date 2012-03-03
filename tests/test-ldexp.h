@@ -114,4 +114,17 @@ test_function (void)
       y = LDEXP (x, 0); ASSERT (y == x);
       y = LDEXP (x, 5); ASSERT (y == x * L_(32.0));
     }
+
+  /* Randomized tests.  */
+  for (i = 0; i < SIZEOF (RANDOM); i++)
+    {
+      int u, v;
+
+      x = L_(20.0) * RANDOM[i] - L_(10.0); /* -10.0 <= x <= 10.0 */
+      /* LDEXP only does rounding when it returns a denormalized number
+         or there is underflow.  It doesn't happen here.  */
+      for (u = -10; u <= 10; u++)
+        for (v = -10; v <= 10; v++)
+          ASSERT (LDEXP (x, u + v) == LDEXP (LDEXP (x, u), v));
+    }
 }

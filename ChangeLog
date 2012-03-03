@@ -1,5 +1,19 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	ldexp* tests: More tests.
+	* tests/test-ldexp.h (test_function): Add some pseudo-randomized tests.
+	* tests/test-ldexp.c (RANDOM): New macro.
+	* tests/test-ldexpf.c (RANDOM): New macro.
+	* tests/test-ldexpl.c (RANDOM): New macro.
+	* modules/ldexp-tests (Files): Add tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_ldexp_SOURCES.
+	* modules/ldexpf-tests (Files): Add tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_ldexpf_SOURCES.
+	* modules/ldexpl-tests (Files): Add tests/randoml.c.
+	(Makefile.am): Add randoml.c to test_ldexpl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	frexp* tests: More tests.
 	* tests/test-frexp.h (test_function): Add some pseudo-randomized tests.
 	* tests/test-frexp.c (RANDOM): New macro.

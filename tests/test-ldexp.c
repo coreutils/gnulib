@@ -40,9 +40,10 @@ SIGNATURE_CHECK (ldexp, double, (double, int));
 #define NAN NaNd ()
 #define L_(literal) literal
 #define MINUS_ZERO minus_zerod
-#define LDEXP ldexp
 #define MIN_EXP DBL_MIN_EXP
 #define MAX_EXP DBL_MAX_EXP
+#define LDEXP ldexp
+#define RANDOM randomd
 #include "test-ldexp.h"
 
 int
