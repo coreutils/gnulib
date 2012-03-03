@@ -36,157 +36,26 @@ SIGNATURE_CHECK (frexpf, float, (float, int *));
 #undef exp
 #define exp exponent
 
-static float
-my_ldexp (float x, int d)
-{
-  for (; d > 0; d--)
-    x *= 2.0f;
-  for (; d < 0; d++)
-    x *= 0.5f;
-  return x;
-}
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE float
+#define VOLATILE volatile
+#define ISNAN isnanf
+#define INFINITY Infinityf ()
+#define NAN NaNf ()
+#define L_(literal) literal##f
+#define MINUS_ZERO minus_zerof
+#define MAX_EXP FLT_MAX_EXP
+#define MIN_EXP FLT_MIN_EXP
+#define MIN_NORMAL_EXP FLT_MIN_EXP
+#define FREXP frexpf
+#include "test-frexp.h"
 
 int
 main ()
 {
-  int i;
-  volatile float x;
-
-  { /* NaN.  */
-    int exp = -9999;
-    float mantissa;
-    x = NaNf ();
-    mantissa = frexpf (x, &exp);
-    ASSERT (isnanf (mantissa));
-  }
-
-  { /* Positive infinity.  */
-    int exp = -9999;
-    float mantissa;
-    x = Infinityf ();
-    mantissa = frexpf (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Negative infinity.  */
-    int exp = -9999;
-    float mantissa;
-    x = - Infinityf ();
-    mantissa = frexpf (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Positive zero.  */
-    int exp = -9999;
-    float mantissa;
-    x = 0.0f;
-    mantissa = frexpf (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (!signbit (mantissa));
-  }
-
-  { /* Negative zero.  */
-    int exp = -9999;
-    float mantissa;
-    x = minus_zerof;
-    mantissa = frexpf (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (signbit (mantissa));
-  }
-
-  for (i = 1, x = 1.0f; i <= FLT_MAX_EXP; i++, x *= 2.0f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5f);
-    }
-  for (i = 1, x = 1.0f; i >= FLT_MIN_EXP; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5f);
-    }
-  for (; i >= FLT_MIN_EXP - 100 && x > 0.0f; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5f);
-    }
-
-  for (i = 1, x = -1.0f; i <= FLT_MAX_EXP; i++, x *= 2.0f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5f);
-    }
-  for (i = 1, x = -1.0f; i >= FLT_MIN_EXP; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5f);
-    }
-  for (; i >= FLT_MIN_EXP - 100 && x < 0.0f; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5f);
-    }
-
-  for (i = 1, x = 1.01f; i <= FLT_MAX_EXP; i++, x *= 2.0f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505f);
-    }
-  for (i = 1, x = 1.01f; i >= FLT_MIN_EXP; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505f);
-    }
-  for (; i >= FLT_MIN_EXP - 100 && x > 0.0f; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa >= 0.5f);
-      ASSERT (mantissa < 1.0f);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
-
-  for (i = 1, x = 1.73205f; i <= FLT_MAX_EXP; i++, x *= 2.0f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025f);
-    }
-  for (i = 1, x = 1.73205f; i >= FLT_MIN_EXP; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025f);
-    }
-  for (; i >= FLT_MIN_EXP - 100 && x > 0.0f; i--, x *= 0.5f)
-    {
-      int exp = -9999;
-      float mantissa = frexpf (x, &exp);
-      ASSERT (exp == i || exp == i + 1);
-      ASSERT (mantissa >= 0.5f);
-      ASSERT (mantissa < 1.0f);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
+  test_function ();
 
   return 0;
 }

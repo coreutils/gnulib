@@ -37,6 +37,18 @@ SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 #undef exp
 #define exp exponent
 
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE long double
+#define VOLATILE
+#define ISNAN isnanl
+#define INFINITY Infinityl ()
+#define NAN NaNl ()
+#define L_(literal) literal##L
+#define MINUS_ZERO minus_zerol
+#define MAX_EXP LDBL_MAX_EXP
+#define MIN_EXP LDBL_MIN_EXP
 /* On MIPS IRIX machines, LDBL_MIN_EXP is -1021, but the smallest reliable
    exponent for 'long double' is -964.  Similarly, on PowerPC machines,
    LDBL_MIN_EXP is -1021, but the smallest reliable exponent for 'long double'
@@ -49,161 +61,17 @@ SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 #else
 # define MIN_NORMAL_EXP LDBL_MIN_EXP
 #endif
-
-static long double
-my_ldexp (long double x, int d)
-{
-  for (; d > 0; d--)
-    x *= 2.0L;
-  for (; d < 0; d++)
-    x *= 0.5L;
-  return x;
-}
+#define FREXP frexpl
+#include "test-frexp.h"
 
 int
 main ()
 {
-  int i;
-  long double x;
   DECL_LONG_DOUBLE_ROUNDING
 
   BEGIN_LONG_DOUBLE_ROUNDING ();
 
-  { /* NaN.  */
-    int exp = -9999;
-    long double mantissa;
-    x = NaNl ();
-    mantissa = frexpl (x, &exp);
-    ASSERT (isnanl (mantissa));
-  }
-
-  { /* Positive infinity.  */
-    int exp = -9999;
-    long double mantissa;
-    x = Infinityl ();
-    mantissa = frexpl (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Negative infinity.  */
-    int exp = -9999;
-    long double mantissa;
-    x = - Infinityl ();
-    mantissa = frexpl (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Positive zero.  */
-    int exp = -9999;
-    long double mantissa;
-    x = 0.0L;
-    mantissa = frexpl (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (!signbit (mantissa));
-  }
-
-  { /* Negative zero.  */
-    int exp = -9999;
-    long double mantissa;
-    x = minus_zerol;
-    mantissa = frexpl (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (signbit (mantissa));
-  }
-
-  for (i = 1, x = 1.0L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5L);
-    }
-  for (i = 1, x = 1.0L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5L);
-    }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5L);
-    }
-
-  for (i = 1, x = -1.0L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5L);
-    }
-  for (i = 1, x = -1.0L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5L);
-    }
-  for (; i >= LDBL_MIN_EXP - 100 && x < 0.0L; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5L);
-    }
-
-  for (i = 1, x = 1.01L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505L);
-    }
-  for (i = 1, x = 1.01L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505L);
-    }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa >= 0.5L);
-      ASSERT (mantissa < 1.0L);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
-
-  for (i = 1, x = 1.73205L; i <= LDBL_MAX_EXP; i++, x *= 2.0L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025L);
-    }
-  for (i = 1, x = 1.73205L; i >= MIN_NORMAL_EXP; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025L);
-    }
-  for (; i >= LDBL_MIN_EXP - 100 && x > 0.0L; i--, x *= 0.5L)
-    {
-      int exp = -9999;
-      long double mantissa = frexpl (x, &exp);
-      ASSERT (exp == i || exp == i + 1);
-      ASSERT (mantissa >= 0.5L);
-      ASSERT (mantissa < 1.0L);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
+  test_function ();
 
   return 0;
 }

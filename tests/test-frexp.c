@@ -36,162 +36,31 @@ SIGNATURE_CHECK (frexp, double, (double, int *));
 #undef exp
 #define exp exponent
 
-static double
-my_ldexp (double x, int d)
-{
-  for (; d > 0; d--)
-    x *= 2.0;
-  for (; d < 0; d++)
-    x *= 0.5;
-  return x;
-}
+#undef INFINITY
+#undef NAN
+
+#define DOUBLE double
+/* The use of 'volatile' guarantees that excess precision bits are dropped
+   when dealing with denormalized numbers.  It is necessary on x86 systems
+   where double-floats are not IEEE compliant by default, to avoid that the
+   results become platform and compiler option dependent.  'volatile' is a
+   portable alternative to gcc's -ffloat-store option.  */
+#define VOLATILE volatile
+#define ISNAN isnand
+#define INFINITY Infinityd ()
+#define NAN NaNd ()
+#define L_(literal) literal
+#define MINUS_ZERO minus_zerod
+#define MAX_EXP DBL_MAX_EXP
+#define MIN_EXP DBL_MIN_EXP
+#define MIN_NORMAL_EXP DBL_MIN_EXP
+#define FREXP frexp
+#include "test-frexp.h"
 
 int
 main ()
 {
-  int i;
-  /* The use of 'volatile' guarantees that excess precision bits are dropped
-     when dealing with denormalized numbers.  It is necessary on x86 systems
-     where double-floats are not IEEE compliant by default, to avoid that the
-     results become platform and compiler option dependent.  'volatile' is a
-     portable alternative to gcc's -ffloat-store option.  */
-  volatile double x;
-
-  { /* NaN.  */
-    int exp = -9999;
-    double mantissa;
-    x = NaNd ();
-    mantissa = frexp (x, &exp);
-    ASSERT (isnand (mantissa));
-  }
-
-  { /* Positive infinity.  */
-    int exp = -9999;
-    double mantissa;
-    x = Infinityd ();
-    mantissa = frexp (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Negative infinity.  */
-    int exp = -9999;
-    double mantissa;
-    x = - Infinityd ();
-    mantissa = frexp (x, &exp);
-    ASSERT (mantissa == x);
-  }
-
-  { /* Positive zero.  */
-    int exp = -9999;
-    double mantissa;
-    x = 0.0;
-    mantissa = frexp (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (!signbit (mantissa));
-  }
-
-  { /* Negative zero.  */
-    int exp = -9999;
-    double mantissa;
-    x = minus_zerod;
-    mantissa = frexp (x, &exp);
-    ASSERT (exp == 0);
-    ASSERT (mantissa == x);
-    ASSERT (signbit (mantissa));
-  }
-
-  for (i = 1, x = 1.0; i <= DBL_MAX_EXP; i++, x *= 2.0)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5);
-    }
-  for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5);
-    }
-  for (; i >= DBL_MIN_EXP - 100 && x > 0.0; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.5);
-    }
-
-  for (i = 1, x = -1.0; i <= DBL_MAX_EXP; i++, x *= 2.0)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5);
-    }
-  for (i = 1, x = -1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5);
-    }
-  for (; i >= DBL_MIN_EXP - 100 && x < 0.0; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == -0.5);
-    }
-
-  for (i = 1, x = 1.01; i <= DBL_MAX_EXP; i++, x *= 2.0)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505);
-    }
-  for (i = 1, x = 1.01; i >= DBL_MIN_EXP; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.505);
-    }
-  for (; i >= DBL_MIN_EXP - 100 && x > 0.0; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa >= 0.5);
-      ASSERT (mantissa < 1.0);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
-
-  for (i = 1, x = 1.73205; i <= DBL_MAX_EXP; i++, x *= 2.0)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025);
-    }
-  for (i = 1, x = 1.73205; i >= DBL_MIN_EXP; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i);
-      ASSERT (mantissa == 0.866025);
-    }
-  for (; i >= DBL_MIN_EXP - 100 && x > 0.0; i--, x *= 0.5)
-    {
-      int exp = -9999;
-      double mantissa = frexp (x, &exp);
-      ASSERT (exp == i || exp == i + 1);
-      ASSERT (mantissa >= 0.5);
-      ASSERT (mantissa < 1.0);
-      ASSERT (mantissa == my_ldexp (x, - exp));
-    }
+  test_function ();
 
   return 0;
 }

@@ -1,3 +1,14 @@
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
+	frexp* tests: Refactor.
+	* tests/test-frexp.h: New file, extracted from tests/test-frexpl.c.
+	* tests/test-frexp.c: Include and use it.
+	* tests/test-frexpf.c: Likewise.
+	* tests/test-frexpl.c: Likewise.
+	* modules/frexp-tests (Files): Add tests/test-frexp.h.
+	* modules/frexpf-tests (Files): Likewise.
+	* modules/frexpl-tests (Files): Likewise.
+
 2012-03-02  Jim Meyering  <meyering@redhat.com>
 
 	maint: don't specify XZ_OPT=-9ev in dist-related rule

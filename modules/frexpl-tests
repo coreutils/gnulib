@@ -1,5 +1,6 @@
 Files:
 tests/test-frexpl.c
+tests/test-frexp.h
 tests/minus-zero.h
 tests/infinity.h
 tests/nan.h
