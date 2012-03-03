@@ -23,12 +23,17 @@
 #include "signature.h"
 SIGNATURE_CHECK (fmodl, long double, (long double, long double));
 
+#include <float.h>
+
 #include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-volatile long double y;
-long double z;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MANT_DIG LDBL_MANT_DIG
+#define FMOD fmodl
+#define RANDOM randoml
+#include "test-fmod.h"
 
 int
 main ()
@@ -42,6 +47,8 @@ main ()
   y = 3.141592654L;
   z = fmodl (x, y);
   ASSERT (z >= 2.962721817L && z <= 2.962721819L);
+
+  test_function ();
 
   return 0;
 }

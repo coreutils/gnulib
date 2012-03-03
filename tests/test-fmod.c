@@ -23,11 +23,16 @@
 #include "signature.h"
 SIGNATURE_CHECK (fmod, double, (double, double));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile double x;
-volatile double y;
-double z;
+#define DOUBLE double
+#define L_(literal) literal
+#define MANT_DIG DBL_MANT_DIG
+#define FMOD fmod
+#define RANDOM randomd
+#include "test-fmod.h"
 
 int
 main ()
@@ -37,6 +42,8 @@ main ()
   y = 3.141592654;
   z = fmod (x, y);
   ASSERT (z >= 2.962721817 && z <= 2.962721819);
+
+  test_function ();
 
   return 0;
 }

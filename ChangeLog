@@ -1,5 +1,23 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	fmod* tests: More tests.
+	* tests/test-fmod.h: New file.
+	* tests/test-fmod.c: Include <float.h> and test-fmod.h.
+	(main): Invoke test_function.
+	* tests/test-fmodf.c: Include <float.h> and test-fmod.h.
+	(main): Invoke test_function.
+	* tests/test-fmodl.c: Include <float.h> and test-fmod.h.
+	(main): Invoke test_function.
+	* modules/fmod-tests (Files): Add tests/test-fmod.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_fmod_SOURCES.
+	* modules/fmodf-tests (Files): Add tests/test-fmod.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_fmodf_SOURCES.
+	* modules/fmodl-tests (Files): Add tests/test-fmod.h, tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_fmodl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	rint* tests: More tests.
 	* tests/test-rint.h: New file, partially extracted from
 	tests/test-rintl.c.
