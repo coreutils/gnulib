@@ -23,12 +23,17 @@
 #include "signature.h"
 SIGNATURE_CHECK (modfl, long double, (long double, long double *));
 
+#include <float.h>
+
 #include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-long double y;
-long double z;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MANT_DIG LDBL_MANT_DIG
+#define MODF modfl
+#define RANDOM randoml
+#include "test-modf.h"
 
 int
 main ()
@@ -48,6 +53,8 @@ main ()
   y = modfl (x, &z);
   ASSERT (y >= -0.972406761L && y <= -0.972406759L);
   ASSERT (z == -5.0L);
+
+  test_function ();
 
   return 0;
 }

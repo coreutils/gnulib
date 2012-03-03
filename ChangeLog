@@ -1,5 +1,23 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	modf* tests: More tests.
+	* tests/test-modf.h: New file.
+	* tests/test-modf.c: Include <float.h> and test-modf.h.
+	(main): Invoke test_function.
+	* tests/test-modff.c: Include <float.h> and test-modf.h.
+	(main): Invoke test_function.
+	* tests/test-modfl.c: Include <float.h> and test-modf.h.
+	(main): Invoke test_function.
+	* modules/modf-tests (Files): Add tests/test-modf.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_modf_SOURCES.
+	* modules/modff-tests (Files): Add tests/test-modf.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_modff_SOURCES.
+	* modules/modfl-tests (Files): Add tests/test-modf.h, tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_modfl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	fabs* tests: More tests.
 	* tests/test-fabs.h: New file, partially extracted from
 	tests/test-fabsl.c.

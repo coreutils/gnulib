@@ -23,11 +23,16 @@
 #include "signature.h"
 SIGNATURE_CHECK (modf, double, (double, double *));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile double x;
-double y;
-double z;
+#define DOUBLE double
+#define L_(literal) literal
+#define MANT_DIG DBL_MANT_DIG
+#define MODF modf
+#define RANDOM randomd
+#include "test-modf.h"
 
 int
 main ()
@@ -43,6 +48,8 @@ main ()
   y = modf (x, &z);
   ASSERT (y >= -0.972406761 && y <= -0.972406759);
   ASSERT (z == -5.0);
+
+  test_function ();
 
   return 0;
 }
