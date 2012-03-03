@@ -66,3 +66,8 @@
 /* STREQ (str1, str2)
    Return true if two strings compare equal.  */
 #define STREQ(a, b) (strcmp (a, b) == 0)
+
+/* Some numbers in the interval [0,1).  */
+extern const float randomf[1000];
+extern const double randomd[1000];
+extern const long double randoml[1000];

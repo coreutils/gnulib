@@ -1,5 +1,13 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	Support for pseudo-random numbers in tests.
+	* tests/randomf.c: New file.
+	* tests/randomd.c: New file.
+	* tests/randoml.c: New file.
+	* tests/macros.h (randomf, randomd, randoml): New declarations.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	frexp* tests: Refactor.
 	* tests/test-frexp.h: New file, extracted from tests/test-frexpl.c.
 	* tests/test-frexp.c: Include and use it.
