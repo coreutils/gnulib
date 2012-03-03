@@ -1,5 +1,19 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	frexp* tests: More tests.
+	* tests/test-frexp.h (test_function): Add some pseudo-randomized tests.
+	* tests/test-frexp.c (RANDOM): New macro.
+	* tests/test-frexpf.c (RANDOM): New macro.
+	* tests/test-frexpl.c (RANDOM): New macro.
+	* modules/frexp-tests (Files): Add tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_frexp_SOURCES.
+	* modules/frexpf-tests (Files): Add tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_frexpf_SOURCES.
+	* modules/frexpl-tests (Files): Add tests/randoml.c.
+	(Makefile.am): Add randoml.c to test_frexpl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	Support for pseudo-random numbers in tests.
 	* tests/randomf.c: New file.
 	* tests/randomd.c: New file.

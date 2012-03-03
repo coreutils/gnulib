@@ -165,4 +165,15 @@ test_function (void)
       ASSERT (mantissa < L_(1.0));
       ASSERT (mantissa == my_ldexp (x, - exp));
     }
+
+  /* Randomized tests.  */
+  for (i = 0; i < SIZEOF (RANDOM); i++)
+    {
+      x = L_(20.0) * RANDOM[i] - L_(10.0); /* -10.0 <= x <= 10.0 */
+      {
+        int exp = -9999;
+        DOUBLE mantissa = FREXP (x, &exp);
+        ASSERT (x == my_ldexp (mantissa, exp));
+      }
+    }
 }

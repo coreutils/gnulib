@@ -62,6 +62,7 @@ SIGNATURE_CHECK (frexpl, long double, (long double, int *));
 # define MIN_NORMAL_EXP LDBL_MIN_EXP
 #endif
 #define FREXP frexpl
+#define RANDOM randoml
 #include "test-frexp.h"
 
 int

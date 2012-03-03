@@ -6,6 +6,7 @@ tests/infinity.h
 tests/nan.h
 tests/signature.h
 tests/macros.h
+tests/randomd.c
 
 Depends-on:
 isnand-nolibm
@@ -16,4 +17,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-frexp
 check_PROGRAMS += test-frexp
+test_frexp_SOURCES = test-frexp.c randomd.c
 test_frexp_LDADD = $(LDADD) @FREXP_LIBM@

@@ -55,6 +55,7 @@ SIGNATURE_CHECK (frexp, double, (double, int *));
 #define MIN_EXP DBL_MIN_EXP
 #define MIN_NORMAL_EXP DBL_MIN_EXP
 #define FREXP frexp
+#define RANDOM randomd
 #include "test-frexp.h"
 
 int
