@@ -28,9 +28,12 @@ SIGNATURE_CHECK (fabsl, long double, (long double));
 #include "macros.h"
 #include "minus-zero.h"
 
-volatile long double x;
-long double y;
-long double zero = 0.0L;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MINUS_ZERO minus_zerol
+#define FABS fabsl
+#define RANDOM randoml
+#include "test-fabs.h"
 
 int
 main ()
@@ -45,16 +48,7 @@ main ()
   y = fabsl (x);
   ASSERT (y == 0.6L);
 
-  /* Signed zero.  */
-  x = 0.0L;
-  y = fabsl (x);
-  ASSERT (y == 0.0L);
-  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
-
-  x = minus_zerol;
-  y = fabsl (x);
-  ASSERT (y == 0.0L);
-  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
+  test_function ();
 
   return 0;
 }

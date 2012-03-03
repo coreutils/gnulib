@@ -28,9 +28,12 @@ SIGNATURE_CHECK (fabsf, float, (float));
 #include "macros.h"
 #include "minus-zero.h"
 
-volatile float x;
-float y;
-float zero = 0.0f;
+#define DOUBLE float
+#define L_(literal) literal##f
+#define MINUS_ZERO minus_zerof
+#define FABS fabsf
+#define RANDOM randomf
+#include "test-fabs.h"
 
 int
 main ()
@@ -45,16 +48,7 @@ main ()
   y = fabsf (x);
   ASSERT (y == 0.6f);
 
-  /* Signed zero.  */
-  x = 0.0f;
-  y = fabsf (x);
-  ASSERT (y == 0.0f);
-  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
-
-  x = minus_zerof;
-  y = fabsf (x);
-  ASSERT (y == 0.0f);
-  ASSERT (memcmp (&y, &zero, sizeof y) == 0);
+  test_function ();
 
   return 0;
 }

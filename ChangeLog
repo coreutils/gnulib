@@ -1,5 +1,20 @@
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
+	fabs* tests: More tests.
+	* tests/test-fabs.h: New file, partially extracted from
+	tests/test-fabsl.c.
+	* tests/test-fabs.c (RANDOM): New macro.
+	* tests/test-fabsf.c (RANDOM): New macro.
+	* tests/test-fabsl.c (RANDOM): New macro.
+	* modules/fabs-tests (Files): Add tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_fabs_SOURCES.
+	* modules/fabsf-tests (Files): Add tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_fabsf_SOURCES.
+	* modules/fabsl-tests (Files): Add tests/randoml.c.
+	(Makefile.am): Add randoml.c to test_fabsl_SOURCES.
+
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
 	ldexp* tests: More tests.
 	* tests/test-ldexp.h (test_function): Add some pseudo-randomized tests.
 	* tests/test-ldexp.c (RANDOM): New macro.
