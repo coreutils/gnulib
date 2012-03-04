@@ -1,3 +1,24 @@
+2012-03-03  Bruno Haible  <bruno@clisp.org>
+
+	remainder* tests: More tests.
+	* tests/test-remainder.h: New file, based on tests/test-fmod.h.
+	* tests/test-remainder.c: Include <float.h> and test-remainder.h.
+	(main): Invoke test_function.
+	* tests/test-remainderf.c: Include <float.h> and test-remainder.h.
+	(main): Invoke test_function.
+	* tests/test-remainderl.c: Include <float.h> and test-remainder.h.
+	(main): Invoke test_function.
+	* modules/remainder-tests (Files): Add tests/test-remainder.h,
+	tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_remainder_SOURCES.
+	* modules/remainderf-tests (Files): Add tests/test-remainder.h,
+	tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_remainderf_SOURCES.
+	* modules/remainderl-tests (Files): Add tests/test-remainder.h,
+	tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_remainderl_SOURCES.
+
 2012-03-04  Bruno Haible  <bruno@clisp.org>
 
 	remainder, remainderf, remainderl: Fix computation for large quotients.

@@ -23,11 +23,17 @@
 #include "signature.h"
 SIGNATURE_CHECK (remainderf, float, (float, float));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile float x;
-volatile float y;
-float z;
+#define DOUBLE float
+#define L_(literal) literal##f
+#define MANT_DIG FLT_MANT_DIG
+#define MAX_EXP FLT_MAX_EXP
+#define REMAINDER remainderf
+#define RANDOM randomf
+#include "test-remainder.h"
 
 int
 main ()
@@ -37,5 +43,8 @@ main ()
   y = 3.141592654f;
   z = remainderf (x, y);
   ASSERT (z >= -0.1788714f && z <= -0.1788708f);
+
+  test_function ();
+
   return 0;
 }

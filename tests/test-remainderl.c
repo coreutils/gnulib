@@ -23,12 +23,18 @@
 #include "signature.h"
 SIGNATURE_CHECK (remainderl, long double, (long double, long double));
 
+#include <float.h>
+
 #include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-volatile long double y;
-long double z;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MANT_DIG LDBL_MANT_DIG
+#define MAX_EXP LDBL_MAX_EXP
+#define REMAINDER remainderl
+#define RANDOM randoml
+#include "test-remainder.h"
 
 int
 main ()
@@ -42,6 +48,8 @@ main ()
   y = 3.141592654L;
   z = remainderl (x, y);
   ASSERT (z >= -0.178870837L && z <= -0.178870835L);
+
+  test_function ();
 
   return 0;
 }
