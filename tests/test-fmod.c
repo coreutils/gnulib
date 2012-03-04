@@ -30,6 +30,7 @@ SIGNATURE_CHECK (fmod, double, (double, double));
 #define DOUBLE double
 #define L_(literal) literal
 #define MANT_DIG DBL_MANT_DIG
+#define MAX_EXP DBL_MAX_EXP
 #define FMOD fmod
 #define RANDOM randomd
 #include "test-fmod.h"

@@ -14,6 +14,16 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+static DOUBLE
+my_ldexp (DOUBLE x, int d)
+{
+  for (; d > 0; d--)
+    x *= L_(2.0);
+  for (; d < 0; d++)
+    x *= L_(0.5);
+  return x;
+}
+
 static void
 test_function (void)
 {
@@ -30,8 +40,8 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
   /* Randomized tests.  */
-  for (i = 0; i < SIZEOF (RANDOM); i++)
-    for (j = 0; j < SIZEOF (RANDOM); j++)
+  for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
+    for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -53,8 +63,8 @@ test_function (void)
           }
       }
 
-  for (i = 0; i < SIZEOF (RANDOM); i++)
-    for (j = 0; j < SIZEOF (RANDOM); j++)
+  for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
+    for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
       {
         DOUBLE x = L_(1.0e9) * RANDOM[i]; /* 0.0 <= x <= 10^9 */
         DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
@@ -87,6 +97,25 @@ test_function (void)
                         && z < - y + L_(2.0) * L_(1.0e9) / TWO_MANT_DIG));
           }
       }
+
+  {
+    int large_exp = (MAX_EXP - 1 < 1000 ? MAX_EXP - 1 : 1000);
+    DOUBLE large = my_ldexp (L_(1.0), large_exp); /* = 2^large_exp */
+    for (i = 0; i < SIZEOF (RANDOM) / 10; i++)
+      for (j = 0; j < SIZEOF (RANDOM) / 10; j++)
+        {
+          DOUBLE x = large * RANDOM[i]; /* 0.0 <= x <= 2^large_exp */
+          DOUBLE y = RANDOM[j]; /* 0.0 <= y < 1.0 */
+          if (y > L_(0.0))
+            {
+              DOUBLE z = FMOD (x, y);
+              /* Regardless how large the rounding errors are, the result
+                 must be >= 0, < y.  */
+              ASSERT (z >= L_(0.0));
+              ASSERT (z < y);
+            }
+        }
+  }
 }
 
 volatile DOUBLE x;
