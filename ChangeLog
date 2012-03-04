@@ -1,5 +1,28 @@
 2012-03-04  Bruno Haible  <bruno@clisp.org>
 
+	remainder, remainderf, remainderl: Fix computation for large quotients.
+	* lib/remainder.c: Completely rewritten.
+	* lib/remainderf.c (remainderf): Use implementation of remainder.c with
+	USE_FLOAT.
+	* lib/remainderl.c (remainderl): Use implementation of remainder.c with
+	USE_LONG_DOUBLE.
+	* modules/remainder (Depends-on): Add isfinite, signbit, fabs, fmod,
+	isnand, isinf. Remove round, fma.
+	* modules/remainderf (Files): Add lib/remainder.c.
+	(Depends-on): Add isfinite, signbit, fabsf, fmodf, isnanf, isinf.
+	Remove roundf, fmaf.
+	* modules/remainderl (Files): Add lib/remainder.c.
+	(Depends-on): Add float, isfinite, signbit, fabsl, fmodl, isnanl,
+	isinf. Remove roundl, fmal.
+	* m4/remainder.m4 (gl_FUNC_REMAINDER): Update computation of
+	REMAINDER_LIBM.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): Update computation of
+	REMAINDERF_LIBM.
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): Update computation of
+	REMAINDERL_LIBM.
+
+2012-03-04  Bruno Haible  <bruno@clisp.org>
+
 	fmod* tests: More tests.
 	* tests/test-fmod.h (my_ldexp): New function.
 	(test_function): Reduce amount of random numbers to test. Add tests

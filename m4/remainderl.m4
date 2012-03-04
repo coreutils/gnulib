@@ -1,4 +1,4 @@
-# remainderl.m4 serial 2
+# remainderl.m4 serial 3
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -88,18 +88,24 @@ int main (int argc, char *argv[])
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       REMAINDERL_LIBM="$REMAINDER_LIBM"
     else
-      AC_REQUIRE([gl_FUNC_ROUNDL])
-      AC_REQUIRE([gl_FUNC_FMAL])
+      AC_REQUIRE([gl_FUNC_FABSL])
+      AC_REQUIRE([gl_FUNC_FMODL])
+      AC_REQUIRE([gl_FUNC_ISNANL])
       REMAINDERL_LIBM=
-      dnl Append $ROUNDL_LIBM to REMAINDERL_LIBM, avoiding gratuitous duplicates.
+      dnl Append $FABSL_LIBM to REMAINDERL_LIBM, avoiding gratuitous duplicates.
       case " $REMAINDERL_LIBM " in
-        *" $ROUNDL_LIBM "*) ;;
-        *) REMAINDERL_LIBM="$REMAINDERL_LIBM $ROUNDL_LIBM" ;;
+        *" $FABSL_LIBM "*) ;;
+        *) REMAINDERL_LIBM="$REMAINDERL_LIBM $FABSL_LIBM" ;;
       esac
-      dnl Append $FMAL_LIBM to REMAINDERL_LIBM, avoiding gratuitous duplicates.
+      dnl Append $FMODL_LIBM to REMAINDERL_LIBM, avoiding gratuitous duplicates.
       case " $REMAINDERL_LIBM " in
-        *" $FMAL_LIBM "*) ;;
-        *) REMAINDERL_LIBM="$REMAINDERL_LIBM $FMAL_LIBM" ;;
+        *" $FMODL_LIBM "*) ;;
+        *) REMAINDERL_LIBM="$REMAINDERL_LIBM $FMODL_LIBM" ;;
+      esac
+      dnl Append $ISNANL_LIBM to REMAINDERL_LIBM, avoiding gratuitous duplicates.
+      case " $REMAINDERL_LIBM " in
+        *" $ISNANL_LIBM "*) ;;
+        *) REMAINDERL_LIBM="$REMAINDERL_LIBM $ISNANL_LIBM" ;;
       esac
     fi
   fi

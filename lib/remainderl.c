@@ -29,30 +29,7 @@ remainderl (long double x, long double y)
 
 #else
 
-long double
-remainderl (long double x, long double y)
-{
-  long double q = - roundl (x / y);
-  long double r = fmal (q, y, x); /* = x + q * y, computed in one step */
-  /* Correct possible rounding errors in the quotient x / y.  */
-  long double half_y = 0.5L * y;
-  if (y >= 0)
-    {
-      /* Expect -y/2 <= r <= y/2.  */
-      if (r > half_y)
-        q -= 1, r = fmal (q, y, x);
-      else if (r < - half_y)
-        q += 1, r = fmal (q, y, x);
-    }
-  else
-    {
-      /* Expect y/2 <= r <= -y/2.  */
-      if (r > - half_y)
-        q += 1, r = fmal (q, y, x);
-      else if (r < half_y)
-        q -= 1, r = fmal (q, y, x);
-    }
-  return r;
-}
+# define USE_LONG_DOUBLE
+# include "remainder.c"
 
 #endif

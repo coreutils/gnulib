@@ -3,14 +3,19 @@ remainderf() function: floating-point remainder function.
 
 Files:
 lib/remainderf.c
+lib/remainder.c
 m4/remainderf.m4
 m4/mathfunc.m4
 
 Depends-on:
 math
 remainder       [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
-roundf          [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
-fmaf            [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+isfinite        [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+signbit         [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+fabsf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+fmodf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+isnanf          [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
+isinf           [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 
 configure.ac:
 gl_FUNC_REMAINDERF

@@ -1,4 +1,4 @@
-# remainder.m4 serial 2
+# remainder.m4 serial 3
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,18 +104,24 @@ int main (int argc, char *argv[])
   fi
   if test $HAVE_REMAINDER = 0 || test $REPLACE_REMAINDER = 1; then
     dnl Find libraries needed to link lib/remainder.c.
-    AC_REQUIRE([gl_FUNC_ROUND])
-    AC_REQUIRE([gl_FUNC_FMA])
+    AC_REQUIRE([gl_FUNC_FABS])
+    AC_REQUIRE([gl_FUNC_FMOD])
+    AC_REQUIRE([gl_FUNC_ISNAND])
     REMAINDER_LIBM=
-    dnl Append $ROUND_LIBM to REMAINDER_LIBM, avoiding gratuitous duplicates.
+    dnl Append $FABS_LIBM to REMAINDER_LIBM, avoiding gratuitous duplicates.
     case " $REMAINDER_LIBM " in
-      *" $ROUND_LIBM "*) ;;
-      *) REMAINDER_LIBM="$REMAINDER_LIBM $ROUND_LIBM" ;;
+      *" $FABS_LIBM "*) ;;
+      *) REMAINDER_LIBM="$REMAINDER_LIBM $FABS_LIBM" ;;
     esac
-    dnl Append $FMA_LIBM to REMAINDER_LIBM, avoiding gratuitous duplicates.
+    dnl Append $FMOD_LIBM to REMAINDER_LIBM, avoiding gratuitous duplicates.
     case " $REMAINDER_LIBM " in
-      *" $FMA_LIBM "*) ;;
-      *) REMAINDER_LIBM="$REMAINDER_LIBM $FMA_LIBM" ;;
+      *" $FMOD_LIBM "*) ;;
+      *) REMAINDER_LIBM="$REMAINDER_LIBM $FMOD_LIBM" ;;
+    esac
+    dnl Append $ISNAND_LIBM to REMAINDER_LIBM, avoiding gratuitous duplicates.
+    case " $REMAINDER_LIBM " in
+      *" $ISNAND_LIBM "*) ;;
+      *) REMAINDER_LIBM="$REMAINDER_LIBM $ISNAND_LIBM" ;;
     esac
   fi
   AC_SUBST([REMAINDER_LIBM])

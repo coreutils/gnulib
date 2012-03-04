@@ -1,4 +1,4 @@
-# remainderf.m4 serial 2
+# remainderf.m4 serial 3
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -91,18 +91,24 @@ int main (int argc, char *argv[])
         [Define to 1 if the remainder() function is available in libc or libm.])
       REMAINDERF_LIBM="$REMAINDER_LIBM"
     else
-      AC_REQUIRE([gl_FUNC_ROUNDF])
-      AC_REQUIRE([gl_FUNC_FMAF])
+      AC_REQUIRE([gl_FUNC_FABSF])
+      AC_REQUIRE([gl_FUNC_FMODF])
+      AC_REQUIRE([gl_FUNC_ISNANF])
       REMAINDERF_LIBM=
-      dnl Append $ROUNDF_LIBM to REMAINDERF_LIBM, avoiding gratuitous duplicates.
+      dnl Append $FABSF_LIBM to REMAINDERF_LIBM, avoiding gratuitous duplicates.
       case " $REMAINDERF_LIBM " in
-        *" $ROUNDF_LIBM "*) ;;
-        *) REMAINDERF_LIBM="$REMAINDERF_LIBM $ROUNDF_LIBM" ;;
+        *" $FABSF_LIBM "*) ;;
+        *) REMAINDERF_LIBM="$REMAINDERF_LIBM $FABSF_LIBM" ;;
       esac
-      dnl Append $FMAF_LIBM to REMAINDERF_LIBM, avoiding gratuitous duplicates.
+      dnl Append $FMODF_LIBM to REMAINDERF_LIBM, avoiding gratuitous duplicates.
       case " $REMAINDERF_LIBM " in
-        *" $FMAF_LIBM "*) ;;
-        *) REMAINDERF_LIBM="$REMAINDERF_LIBM $FMAF_LIBM" ;;
+        *" $FMODF_LIBM "*) ;;
+        *) REMAINDERF_LIBM="$REMAINDERF_LIBM $FMODF_LIBM" ;;
+      esac
+      dnl Append $ISNANF_LIBM to REMAINDERF_LIBM, avoiding gratuitous duplicates.
+      case " $REMAINDERF_LIBM " in
+        *" $ISNANF_LIBM "*) ;;
+        *) REMAINDERF_LIBM="$REMAINDERF_LIBM $ISNANF_LIBM" ;;
       esac
     fi
   fi
