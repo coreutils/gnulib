@@ -1,4 +1,4 @@
-# fmodl.m4 serial 2
+# fmodl.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,18 +82,36 @@ int main (int argc, char *argv[])
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       FMODL_LIBM="$FMOD_LIBM"
     else
+      AC_REQUIRE([gl_FUNC_FABSL])
+      AC_REQUIRE([gl_FUNC_FREXPL])
       AC_REQUIRE([gl_FUNC_TRUNCL])
-      AC_REQUIRE([gl_FUNC_FMAL])
+      AC_REQUIRE([gl_FUNC_LDEXPL])
+      AC_REQUIRE([gl_FUNC_ISNANL])
       FMODL_LIBM=
+      dnl Append $FABSL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
+      case " $FMODL_LIBM " in
+        *" $FABSL_LIBM "*) ;;
+        *) FMODL_LIBM="$FMODL_LIBM $FABSL_LIBM" ;;
+      esac
+      dnl Append $FREXPL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
+      case " $FMODL_LIBM " in
+        *" $FREXPL_LIBM "*) ;;
+        *) FMODL_LIBM="$FMODL_LIBM $FREXPL_LIBM" ;;
+      esac
       dnl Append $TRUNCL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
       case " $FMODL_LIBM " in
         *" $TRUNCL_LIBM "*) ;;
         *) FMODL_LIBM="$FMODL_LIBM $TRUNCL_LIBM" ;;
       esac
-      dnl Append $FMAL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
+      dnl Append $LDEXPL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
       case " $FMODL_LIBM " in
-        *" $FMAL_LIBM "*) ;;
-        *) FMODL_LIBM="$FMODL_LIBM $FMAL_LIBM" ;;
+        *" $LDEXPL_LIBM "*) ;;
+        *) FMODL_LIBM="$FMODL_LIBM $LDEXPL_LIBM" ;;
+      esac
+      dnl Append $ISNANL_LIBM to FMODL_LIBM, avoiding gratuitous duplicates.
+      case " $FMODL_LIBM " in
+        *" $ISNANL_LIBM "*) ;;
+        *) FMODL_LIBM="$FMODL_LIBM $ISNANL_LIBM" ;;
       esac
     fi
   fi

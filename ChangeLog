@@ -1,3 +1,16 @@
+2012-03-04  Bruno Haible  <bruno@clisp.org>
+
+	fmod, fmodl: Fix computation for large quotients x / y.
+	* lib/fmod.c: Completely rewritten.
+	* lib/fmodl.c (fmodl): Use implementation of fmod.c with
+	USE_LONG_DOUBLE.
+	* modules/fmod (Depends-on): Add isfinite, signbit, fabs, frexp, ldexp,
+	isnand. Remove fma.
+	* modules/fmodl (Depends-on): Add float, isfinite, signbit, fabsl,
+	frexpl, ldexpl, isnanl. Remove fma.
+	* m4/fmod.m4 (gl_FUNC_FMOD): Update computation of FMOD_LIBM.
+	* m4/fmodl.m4 (gl_FUNC_FMODL): Update computation of FMODL_LIBM.
+
 2012-03-03  Bruno Haible  <bruno@clisp.org>
 
 	fmod* tests: More tests.

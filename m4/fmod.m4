@@ -1,4 +1,4 @@
-# fmod.m4 serial 2
+# fmod.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,18 +67,36 @@ int main (int argc, char *argv[])
   ])
   if test $REPLACE_FMOD = 1; then
     dnl Find libraries needed to link lib/fmod.c.
+    AC_REQUIRE([gl_FUNC_FABS])
+    AC_REQUIRE([gl_FUNC_FREXP])
     AC_REQUIRE([gl_FUNC_TRUNC])
-    AC_REQUIRE([gl_FUNC_FMA])
+    AC_REQUIRE([gl_FUNC_LDEXP])
+    AC_REQUIRE([gl_FUNC_ISNAND])
     FMOD_LIBM=
+    dnl Append $FABS_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    case " $FMOD_LIBM " in
+      *" $FABS_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $FABS_LIBM" ;;
+    esac
+    dnl Append $FREXP_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    case " $FMOD_LIBM " in
+      *" $FREXP_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $FREXP_LIBM" ;;
+    esac
     dnl Append $TRUNC_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
     case " $FMOD_LIBM " in
       *" $TRUNC_LIBM "*) ;;
       *) FMOD_LIBM="$FMOD_LIBM $TRUNC_LIBM" ;;
     esac
-    dnl Append $FMA_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    dnl Append $LDEXP_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
     case " $FMOD_LIBM " in
-      *" $FMA_LIBM "*) ;;
-      *) FMOD_LIBM="$FMOD_LIBM $FMA_LIBM" ;;
+      *" $LDEXP_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $LDEXP_LIBM" ;;
+    esac
+    dnl Append $ISNAND_LIBM to FMOD_LIBM, avoiding gratuitous duplicates.
+    case " $FMOD_LIBM " in
+      *" $ISNAND_LIBM "*) ;;
+      *) FMOD_LIBM="$FMOD_LIBM $ISNAND_LIBM" ;;
     esac
   fi
 ])

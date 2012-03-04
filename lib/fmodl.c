@@ -29,56 +29,7 @@ fmodl (long double x, long double y)
 
 #else
 
-long double
-fmodl (long double x, long double y)
-{
-  if (isinf (y))
-    return x;
-  else
-    {
-      long double q = - truncl (x / y);
-      long double r = fmal (q, y, x); /* = x + q * y, computed in one step */
-      /* Correct possible rounding errors in the quotient x / y.  */
-      if (y >= 0)
-        {
-          if (x >= 0)
-            {
-              /* Expect 0 <= r < y.  */
-              if (r < 0)
-                q += 1, r = fmal (q, y, x);
-              else if (r >= y)
-                q -= 1, r = fmal (q, y, x);
-            }
-          else
-            {
-              /* Expect - y < r <= 0.  */
-              if (r > 0)
-                q -= 1, r = fmal (q, y, x);
-              else if (r <= - y)
-                q += 1, r = fmal (q, y, x);
-            }
-        }
-      else
-        {
-          if (x >= 0)
-            {
-              /* Expect 0 <= r < - y.  */
-              if (r < 0)
-                q -= 1, r = fmal (q, y, x);
-              else if (r >= - y)
-                q += 1, r = fmal (q, y, x);
-            }
-          else
-            {
-              /* Expect y < r <= 0.  */
-              if (r > 0)
-                q += 1, r = fmal (q, y, x);
-              else if (r <= y)
-                q -= 1, r = fmal (q, y, x);
-            }
-        }
-      return r;
-    }
-}
+# define USE_LONG_DOUBLE
+# include "fmod.c"
 
 #endif
