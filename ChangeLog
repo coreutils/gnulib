@@ -16,7 +16,8 @@
 	USE_LONG_DOUBLE.
 	* modules/fmod (Depends-on): Add isfinite, signbit, fabs, frexp, ldexp,
 	isnand. Remove fma.
-	* modules/fmodl (Depends-on): Add float, isfinite, signbit, fabsl,
+	* modules/fmodl (Files): Add lib/fmod.c.
+	(Depends-on): Add float, isfinite, signbit, fabsl,
 	frexpl, ldexpl, isnanl. Remove fma.
 	* m4/fmod.m4 (gl_FUNC_FMOD): Update computation of FMOD_LIBM.
 	* m4/fmodl.m4 (gl_FUNC_FMODL): Update computation of FMODL_LIBM.

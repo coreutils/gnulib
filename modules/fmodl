@@ -3,6 +3,7 @@ fmodl() function: floating-point remainder function.
 
 Files:
 lib/fmodl.c
+lib/fmod.c
 m4/fmodl.m4
 m4/mathfunc.m4
 
