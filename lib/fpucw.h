@@ -30,7 +30,8 @@
 
    On some platforms, such as NetBSD, the default precision is set to
    "double precision".  This means that 'long double' instructions will operate
-   only as 'double', i.e. lead wrong results.
+   only as 'double', i.e. lead to wrong results.  Similarly on FreeBSD 6.4, at
+   least for the division of 'long double' numbers.
 
    The FPU control word is under control of the application, i.e. it is
    not required to be set either way by the ABI.  (In fact, the i386 ABI

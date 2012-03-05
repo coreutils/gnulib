@@ -1,3 +1,8 @@
+2012-03-05  Bruno Haible  <bruno@clisp.org>
+
+	fpucw: Doc about FreeBSD.
+	* lib/fpucw.h: Mention FreeBSD in comments.
+
 2012-03-04  Bruno Haible  <bruno@clisp.org>
 
 	sqrt* tests: More tests.
