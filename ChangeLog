@@ -1,5 +1,23 @@
 2012-03-05  Bruno Haible  <bruno@clisp.org>
 
+	cbrt* tests: More tests.
+	* tests/test-cbrt.h: New file.
+	* tests/test-cbrt.c: Include <float.h> and test-cbrt.h.
+	(main): Invoke test_function.
+	* tests/test-cbrtf.c: Include <float.h> and test-cbrt.h.
+	(main): Invoke test_function.
+	* tests/test-cbrtl.c: Include <float.h> and test-cbrt.h.
+	(main): Invoke test_function.
+	* modules/cbrt-tests (Files): Add tests/test-cbrt.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_cbrt_SOURCES.
+	* modules/cbrtf-tests (Files): Add tests/test-cbrt.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_cbrtf_SOURCES.
+	* modules/cbrtl-tests (Files): Add tests/test-cbrt.h, tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_cbrtl_SOURCES.
+
+2012-03-05  Bruno Haible  <bruno@clisp.org>
+
 	hypot* tests: More tests.
 	* tests/test-hypot.h: New file, partially extracted from
 	tests/test-hypotl.c.

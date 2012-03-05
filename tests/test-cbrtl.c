@@ -23,10 +23,16 @@
 #include "signature.h"
 SIGNATURE_CHECK (cbrtl, long double, (long double));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile long double x;
-long double y;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MANT_DIG DBL_MANT_DIG
+#define CBRT cbrtl
+#define RANDOM randoml
+#include "test-cbrt.h"
 
 int
 main ()
@@ -35,6 +41,8 @@ main ()
   x = 0.6L;
   y = cbrtl (x);
   ASSERT (y >= 0.8434326653L && y <= 0.8434326654L);
+
+  test_function ();
 
   return 0;
 }
