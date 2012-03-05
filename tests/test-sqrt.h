@@ -35,6 +35,7 @@ test_function (void)
       DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
       DOUBLE y = SQRT (x);
       DOUBLE z = y * y - x;
+      ASSERT (y >= L_(0.0));
       ASSERT (z > - L_(16.0) / TWO_MANT_DIG
               && z < L_(16.0) / TWO_MANT_DIG);
     }
