@@ -1,7 +1,9 @@
 Files:
 tests/test-sqrtf.c
+tests/test-sqrt.h
 tests/signature.h
 tests/macros.h
+tests/randomf.c
 
 Depends-on:
 
@@ -10,4 +12,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-sqrtf
 check_PROGRAMS += test-sqrtf
+test_sqrtf_SOURCES = test-sqrtf.c randomf.c
 test_sqrtf_LDADD = $(LDADD) @SQRTF_LIBM@

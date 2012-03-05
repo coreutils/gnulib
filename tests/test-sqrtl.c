@@ -23,11 +23,17 @@
 #include "signature.h"
 SIGNATURE_CHECK (sqrtl, long double, (long double));
 
+#include <float.h>
+
 #include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-long double y;
+#define DOUBLE long double
+#define L_(literal) literal##L
+#define MANT_DIG DBL_MANT_DIG
+#define SQRT sqrtl
+#define RANDOM randoml
+#include "test-sqrt.h"
 
 int
 main ()
@@ -40,6 +46,8 @@ main ()
   x = 0.6L;
   y = sqrtl (x);
   ASSERT (y >= 0.7745966692L && y <= 0.7745966693L);
+
+  test_function ();
 
   return 0;
 }

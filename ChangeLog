@@ -1,4 +1,22 @@
-2012-03-03  Bruno Haible  <bruno@clisp.org>
+2012-03-04  Bruno Haible  <bruno@clisp.org>
+
+	sqrt* tests: More tests.
+	* tests/test-sqrt.h: New file.
+	* tests/test-sqrt.c: Include <float.h> and test-sqrt.h.
+	(main): Invoke test_function.
+	* tests/test-sqrtf.c: Include <float.h> and test-sqrt.h.
+	(main): Invoke test_function.
+	* tests/test-sqrtl.c: Include <float.h> and test-sqrt.h.
+	(main): Invoke test_function.
+	* modules/sqrt-tests (Files): Add tests/test-sqrt.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_sqrt_SOURCES.
+	* modules/sqrtf-tests (Files): Add tests/test-sqrt.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_sqrtf_SOURCES.
+	* modules/sqrtl-tests (Files): Add tests/test-sqrt.h, tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_sqrtl_SOURCES.
+
+2012-03-04  Bruno Haible  <bruno@clisp.org>
 
 	remainder* tests: More tests.
 	* tests/test-remainder.h: New file, based on tests/test-fmod.h.
