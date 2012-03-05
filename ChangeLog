@@ -1,5 +1,26 @@
 2012-03-05  Bruno Haible  <bruno@clisp.org>
 
+	hypot* tests: More tests.
+	* tests/test-hypot.h: New file, partially extracted from
+	tests/test-hypotl.c.
+	* tests/test-hypot.c: Include test-hypot.h.
+	(main): Invoke test_function.
+	* tests/test-hypotf.c: Include test-hypot.h.
+	(main): Invoke test_function.
+	* tests/test-hypotl.c: Include fpucw.h and test-hypot.h.
+	(main): Invoke BEGIN_LONG_DOUBLE_ROUNDING and test_function.
+	* modules/hypot-tests (Files): Add tests/test-hypot.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_hypot_SOURCES.
+	* modules/hypotf-tests (Files): Add tests/test-hypot.h,
+	tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_hypotf_SOURCES.
+	* modules/hypotl-tests (Files): Add tests/test-hypot.h,
+	tests/randoml.c.
+	(Depends-on): Add 'fpucw', 'float'.
+	(Makefile.am): Add randoml.c to test_hypotl_SOURCES.
+
+2012-03-05  Bruno Haible  <bruno@clisp.org>
+
 	fpucw: Doc about FreeBSD.
 	* lib/fpucw.h: Mention FreeBSD in comments.
 

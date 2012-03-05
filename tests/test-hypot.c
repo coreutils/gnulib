@@ -27,9 +27,18 @@ SIGNATURE_CHECK (hypot, double, (double, double));
 
 #include "macros.h"
 
-volatile double x;
-volatile double y;
-double z;
+#undef MIN
+#undef MAX
+
+#define DOUBLE double
+#define HUGEVAL HUGE_VAL
+#define L_(literal) literal
+#define MANT_DIG DBL_MANT_DIG
+#define MIN DBL_MIN
+#define MAX DBL_MAX
+#define HYPOT hypot
+#define RANDOM randomd
+#include "test-hypot.h"
 
 int
 main ()
@@ -40,23 +49,7 @@ main ()
   z = hypot (x, y);
   ASSERT (z >= 0.7211102550 && z <= 0.7211102551);
 
-  /* Overflow.  */
-  x = DBL_MAX;
-  y = DBL_MAX * 0.5;
-  z = hypot (x, y);
-  ASSERT (z == HUGE_VAL);
-
-  /* No underflow.  */
-  x = DBL_MIN;
-  y = 0.0;
-  z = hypot (x, y);
-  ASSERT (z == DBL_MIN);
-
-  /* No underflow.  */
-  x = DBL_MIN * 2.0;
-  y = DBL_MIN * 3.0;
-  z = hypot (x, y);
-  ASSERT (z >= DBL_MIN * 2.0 && z <= DBL_MIN * 4.0);
+  test_function ();
 
   return 0;
 }

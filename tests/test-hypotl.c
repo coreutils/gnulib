@@ -25,38 +25,36 @@ SIGNATURE_CHECK (hypotl, long double, (long double, long double));
 
 #include <float.h>
 
+#include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-volatile long double y;
-long double z;
+#undef MIN
+#undef MAX
+
+#define DOUBLE long double
+#define HUGEVAL HUGE_VALL
+#define L_(literal) literal##L
+#define MANT_DIG LDBL_MANT_DIG
+#define MIN LDBL_MIN
+#define MAX LDBL_MAX
+#define HYPOT hypotl
+#define RANDOM randoml
+#include "test-hypot.h"
 
 int
 main ()
 {
+  DECL_LONG_DOUBLE_ROUNDING
+
+  BEGIN_LONG_DOUBLE_ROUNDING ();
+
   /* A particular value.  */
   x = 0.4L;
   y = 0.6L;
   z = hypotl (x, y);
   ASSERT (z >= 0.7211102550L && z <= 0.7211102551L);
 
-  /* Overflow.  */
-  x = LDBL_MAX;
-  y = LDBL_MAX * 0.5L;
-  z = hypotl (x, y);
-  ASSERT (z == HUGE_VALL);
-
-  /* No underflow.  */
-  x = LDBL_MIN;
-  y = 0.0L;
-  z = hypotl (x, y);
-  ASSERT (z == LDBL_MIN);
-
-  /* No underflow.  */
-  x = LDBL_MIN * 2.0L;
-  y = LDBL_MIN * 3.0L;
-  z = hypotl (x, y);
-  ASSERT (z >= LDBL_MIN * 2.0L && z <= LDBL_MIN * 4.0L);
+  test_function ();
 
   return 0;
 }
