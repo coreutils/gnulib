@@ -34,10 +34,10 @@ test_function (void)
     {
       DOUBLE x = L_(16.0) * RANDOM[i]; /* 0.0 <= x <= 16.0 */
       DOUBLE y = SQRT (x);
-      DOUBLE z = y * y - x;
+      DOUBLE err = y * y - x;
       ASSERT (y >= L_(0.0));
-      ASSERT (z > - L_(16.0) / TWO_MANT_DIG
-              && z < L_(16.0) / TWO_MANT_DIG);
+      ASSERT (err > - L_(16.0) / TWO_MANT_DIG
+              && err < L_(16.0) / TWO_MANT_DIG);
     }
 
   for (i = 0; i < SIZEOF (RANDOM) / 4; i++)
