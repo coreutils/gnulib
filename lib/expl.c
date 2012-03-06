@@ -84,7 +84,7 @@ expl (long double x)
        where sinh(y) is computed through the power series:
          sinh(y) = y + y^3/3! + y^5/5! + ...
        and cosh(y) is computed as hypot(1, sinh(y)),
-     - or as exp(2*z) = (1 + tanh(z))^2 / (1 - tanh(z)^2)
+     - or as exp(2*z) = (1 + tanh(z)) / (1 - tanh(z))
        where z = y/2
        and tanh(z) is computed through its power series:
          tanh(z) = z
@@ -135,21 +135,19 @@ expl (long double x)
        * z2 + TANH_COEFF_1)
       * z;
 
-    long double exp_y =
-      ((1.0L + tanh_z) * (1.0L + tanh_z)) / (1.0L - tanh_z * tanh_z);
+    long double exp_y = (1.0L + tanh_z) / (1.0L - tanh_z);
 
     int n = (int) roundl (nm * (1.0L / 256.0L));
     int m = (int) nm - 256 * n;
 
     /* expl_table[i] = exp((i - 128) * log(2)/256).
        Computed in GNU clisp through
-       (progn
          (setf (long-float-digits) 128)
          (setq a 0L0)
          (setf (long-float-digits) 256)
          (dotimes (i 257)
            (format t "        ~D,~%"
-                   (float (exp (* (/ (- i 128) 256) (log 2L0))) a))))  */
+                   (float (exp (* (/ (- i 128) 256) (log 2L0))) a)))  */
     static const long double expl_table[257] =
       {
         0.707106781186547524400844362104849039284L,

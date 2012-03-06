@@ -1,3 +1,8 @@
+2012-03-06  Bruno Haible  <bruno@clisp.org>
+
+	expl: Simplify computation.
+	* lib/expl.c (expl): Simplify computation of exp_y. Fix comment.
+
 2012-03-05  Bruno Haible  <bruno@clisp.org>
 
 	exp* tests: More tests.
