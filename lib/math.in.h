@@ -533,10 +533,19 @@ _GL_WARN_ON_USE (expl, "expl is unportable - "
 
 
 #if @GNULIB_EXPM1F@
-# if !@HAVE_EXPM1F@
+# if @REPLACE_EXPM1F@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef expm1f
+#   define expm1f rpl_expm1f
+#  endif
+_GL_FUNCDECL_RPL (expm1f, float, (float x));
+_GL_CXXALIAS_RPL (expm1f, float, (float x));
+# else
+#  if !@HAVE_EXPM1F@
 _GL_FUNCDECL_SYS (expm1f, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (expm1f, float, (float x));
+# endif
 _GL_CXXALIASWARN (expm1f);
 #elif defined GNULIB_POSIXCHECK
 # undef expm1f

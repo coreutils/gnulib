@@ -1,5 +1,18 @@
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
+	Work around expm1f bug on IRIX 6.5.
+	* lib/math.in.h (expm1f): Override if REPLACE_EXPM1F is 1.
+	* m4/expm1f.m4 (gl_FUNC_EXPM1F_WORKS): New macro.
+	(gl_FUNC_EXPM1F): Invoke it. Set REPLACE_EXPM1F to 1 if expm1f() does
+	not work.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_EXPM1F.
+	* modules/math (Makefile.am): Substitute REPLACE_EXPM1F.
+	* modules/expm1f (configure.ac): Consider REPLACE_EXPM1F.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/expm1f.texi: Mention the IRIX 6.5 bug.
+
+2012-03-06  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'expm1l'.
 	* modules/expm1l-tests: New file.
 	* tests/test-expm1l.c: New file.
