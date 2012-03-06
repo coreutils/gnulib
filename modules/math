@@ -51,6 +51,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_EXPL''@/$(GNULIB_EXPL)/g' \
 	      -e 's/@''GNULIB_EXPM1''@/$(GNULIB_EXPM1)/g' \
 	      -e 's/@''GNULIB_EXPM1F''@/$(GNULIB_EXPM1F)/g' \
+	      -e 's/@''GNULIB_EXPM1L''@/$(GNULIB_EXPM1L)/g' \
 	      -e 's/@''GNULIB_FABSF''@/$(GNULIB_FABSF)/g' \
 	      -e 's/@''GNULIB_FABSL''@/$(GNULIB_FABSL)/g' \
 	      -e 's/@''GNULIB_FLOOR''@/$(GNULIB_FLOOR)/g' \
@@ -127,6 +128,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_EXPL''@|$(HAVE_EXPL)|g' \
 	      -e 's|@''HAVE_EXPM1''@|$(HAVE_EXPM1)|g' \
 	      -e 's|@''HAVE_EXPM1F''@|$(HAVE_EXPM1F)|g' \
+	      -e 's|@''HAVE_EXPM1L''@|$(HAVE_EXPM1L)|g' \
 	      -e 's|@''HAVE_FABSF''@|$(HAVE_FABSF)|g' \
 	      -e 's|@''HAVE_FABSL''@|$(HAVE_FABSL)|g' \
 	      -e 's|@''HAVE_FMA''@|$(HAVE_FMA)|g' \
