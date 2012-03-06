@@ -7,6 +7,7 @@ m4/timer_time.m4
 
 Depends-on:
 extensions
+threadlib
 
 configure.ac:
 gl_TIMER_TIME

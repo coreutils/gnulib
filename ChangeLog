@@ -1,3 +1,13 @@
+2012-03-10  Pádraig Brady  <P@draigBrady.com>
+
+	timer-time: link explicitly with pthreads on glibc
+	* m4/timer_time.m4 (LIB_TIMER_TIME): Add -lpthread
+	to support static linking, when newer glibc is
+	detected, as that contains pthread emulation of
+	POSIX timer functions where required.
+	* modules/timer-time: Depend on threadlib to
+	pull in the appropriate library to link.
+
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
 	log* tests: More tests.
