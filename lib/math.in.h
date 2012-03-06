@@ -532,6 +532,20 @@ _GL_WARN_ON_USE (expl, "expl is unportable - "
 #endif
 
 
+#if @GNULIB_EXPM1F@
+# if !@HAVE_EXPM1F@
+_GL_FUNCDECL_SYS (expm1f, float, (float x));
+# endif
+_GL_CXXALIAS_SYS (expm1f, float, (float x));
+_GL_CXXALIASWARN (expm1f);
+#elif defined GNULIB_POSIXCHECK
+# undef expm1f
+# if HAVE_RAW_DECL_EXPM1F
+_GL_WARN_ON_USE (expm1f, "expm1f is unportable - "
+                 "use gnulib module expm1f for portability");
+# endif
+#endif
+
 #if @GNULIB_EXPM1@
 # if !@HAVE_EXPM1@
 _GL_FUNCDECL_SYS (expm1, double, (double x));
