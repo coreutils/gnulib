@@ -1,5 +1,21 @@
 2012-03-05  Bruno Haible  <bruno@clisp.org>
 
+	exp* tests: More tests.
+	* tests/test-exp.h: New file.
+	* tests/test-exp.c: Include <float.h> and test-exp.h.
+	(main): Invoke test_function.
+	* tests/test-expf.c: Include <float.h> and test-exp.h.
+	(main): Invoke test_function.
+	* tests/test-expl.c: Include <float.h> and test-exp.h.
+	(main): Invoke test_function.
+	* modules/exp-tests (Files): Add tests/test-exp.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_exp_SOURCES.
+	* modules/expf-tests (Files): Add tests/test-exp.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_expf_SOURCES.
+	* modules/expl-tests (Files): Add tests/test-exp.h, tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_expl_SOURCES.
+
 	expl: Fix precision of computed result.
 	* lib/expl.c: Completely rewritten.
 	* modules/expl (Depends-on): Add isnanl, roundl, ldexpl. Remove floorl.

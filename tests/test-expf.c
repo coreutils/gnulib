@@ -23,10 +23,16 @@
 #include "signature.h"
 SIGNATURE_CHECK (expf, float, (float));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile float x;
-float y;
+#define DOUBLE float
+#define L_(literal) literal##f
+#define MANT_DIG FLT_MANT_DIG
+#define EXP expf
+#define RANDOM randomf
+#include "test-exp.h"
 
 int
 main ()
@@ -35,6 +41,8 @@ main ()
   x = 0.6f;
   y = expf (x);
   ASSERT (y >= 1.8221188f && y <= 1.8221189f);
+
+  test_function ();
 
   return 0;
 }
