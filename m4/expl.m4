@@ -1,4 +1,4 @@
-# expl.m4 serial 6
+# expl.m4 serial 7
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -66,8 +66,25 @@ AC_DEFUN([gl_FUNC_EXPL],
       AC_REQUIRE([gl_FUNC_EXP])
       EXPL_LIBM="$EXP_LIBM"
     else
-      AC_REQUIRE([gl_FUNC_FLOORL])
-      EXPL_LIBM="$FLOORL_LIBM"
+      AC_REQUIRE([gl_FUNC_ISNANL])
+      AC_REQUIRE([gl_FUNC_ROUNDL])
+      AC_REQUIRE([gl_FUNC_LDEXPL])
+      EXPL_LIBM=
+      dnl Append $ISNANL_LIBM to EXPL_LIBM, avoiding gratuitous duplicates.
+      case " $EXPL_LIBM " in
+        *" $ISNANL_LIBM "*) ;;
+        *) EXPL_LIBM="$EXPL_LIBM $ISNANL_LIBM" ;;
+      esac
+      dnl Append $ROUNDL_LIBM to EXPL_LIBM, avoiding gratuitous duplicates.
+      case " $EXPL_LIBM " in
+        *" $ROUNDL_LIBM "*) ;;
+        *) EXPL_LIBM="$EXPL_LIBM $ROUNDL_LIBM" ;;
+      esac
+      dnl Append $LDEXPL_LIBM to EXPL_LIBM, avoiding gratuitous duplicates.
+      case " $EXPL_LIBM " in
+        *" $LDEXPL_LIBM "*) ;;
+        *) EXPL_LIBM="$EXPL_LIBM $LDEXPL_LIBM" ;;
+      esac
     fi
   fi
   AC_SUBST([EXPL_LIBM])

@@ -1,5 +1,13 @@
 2012-03-05  Bruno Haible  <bruno@clisp.org>
 
+	expl: Fix precision of computed result.
+	* lib/expl.c: Completely rewritten.
+	* modules/expl (Depends-on): Add isnanl, roundl, ldexpl. Remove floorl.
+	(Maintainer): Add me.
+	* m4/expl.m4 (gl_FUNC_EXPL): Update computation of EXPL_LIBM.
+
+2012-03-05  Bruno Haible  <bruno@clisp.org>
+
 	cbrt* tests: More tests.
 	* tests/test-cbrt.h: New file.
 	* tests/test-cbrt.c: Include <float.h> and test-cbrt.h.
