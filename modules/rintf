@@ -9,6 +9,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 
 configure.ac:
 gl_FUNC_RINTF

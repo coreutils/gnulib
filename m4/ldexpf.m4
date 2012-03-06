@@ -1,4 +1,4 @@
-# ldexpf.m4 serial 1
+# ldexpf.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_LDEXPF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_LDEXP])
+
+  dnl Persuade glibc <math.h> to declare ldexpf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether ldexpf() exists. We cannot assume that ldexpf(), if it
   dnl exists, is defined in the same library as ldexp(). This is not the case

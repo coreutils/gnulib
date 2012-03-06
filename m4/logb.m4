@@ -1,4 +1,4 @@
-# logb.m4 serial 4
+# logb.m4 serial 5
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,10 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_LOGB],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+
+  dnl Persuade glibc <math.h> to declare logb().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   dnl Test whether logb() is declared.
   AC_CHECK_DECLS([logb], , , [[#include <math.h>]])
   if test "$ac_cv_have_decl_logb" != yes; then

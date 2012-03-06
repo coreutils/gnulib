@@ -8,6 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 frexp           [test $HAVE_FREXPF = 0 || test $REPLACE_FREXPF = 1]
 
 configure.ac:

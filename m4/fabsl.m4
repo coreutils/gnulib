@@ -1,4 +1,4 @@
-# fabsl.m4 serial 1
+# fabsl.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_FABSL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
+  dnl Persuade glibc <math.h> to declare fabsl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Determine FABSL_LIBM.
   gl_MATHFUNC([fabsl], [long double], [(long double)])

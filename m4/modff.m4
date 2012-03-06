@@ -1,4 +1,4 @@
-# modff.m4 serial 3
+# modff.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,9 @@ AC_DEFUN([gl_FUNC_MODFF],
   m4_divert_text([DEFAULTS], [gl_modff_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_MODF])
+
+  dnl Persuade glibc <math.h> to declare modff().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether modff() exists. We cannot assume that modff(), if it
   dnl exists, is defined in the same library as modf(). This is not the case

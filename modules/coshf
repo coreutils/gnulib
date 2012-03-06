@@ -7,6 +7,7 @@ m4/coshf.m4
 
 Depends-on:
 math
+extensions
 cosh            [test $HAVE_COSHF = 0]
 
 configure.ac:

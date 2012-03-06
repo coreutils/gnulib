@@ -11,6 +11,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 fma             [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 float           [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 stdbool         [{ test $HAVE_FMAL = 0 || test $REPLACE_FMAL = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]

@@ -1,4 +1,4 @@
-# hypotl.m4 serial 2
+# hypotl.m4 serial 3
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,9 @@ AC_DEFUN([gl_FUNC_HYPOTL],
   m4_divert_text([DEFAULTS], [gl_hypotl_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_HYPOT])
+
+  dnl Persuade glibc <math.h> to declare hypotl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether hypotl() exists. Assume that hypotl(), if it exists, is
   dnl defined in the same library as hypot().

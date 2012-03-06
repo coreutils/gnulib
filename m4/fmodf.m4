@@ -1,4 +1,4 @@
-# fmodf.m4 serial 2
+# fmodf.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,9 @@ AC_DEFUN([gl_FUNC_FMODF],
   m4_divert_text([DEFAULTS], [gl_fmodf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_FMOD])
+
+  dnl Persuade glibc <math.h> to declare fmodf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether fmodf() exists. Assume that fmodf(), if it exists, is
   dnl defined in the same library as fmod().

@@ -1,4 +1,4 @@
-# fmodl.m4 serial 3
+# fmodl.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,9 @@ AC_DEFUN([gl_FUNC_FMODL],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([gl_FUNC_FMOD])
+
+  dnl Persuade glibc <math.h> to declare fmodl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether fmodl() is declared.
   dnl AIX 5.1 has fmodl() in libc but doesn't declare it in <math.h>, and the

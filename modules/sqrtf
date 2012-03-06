@@ -7,6 +7,7 @@ m4/sqrtf.m4
 
 Depends-on:
 math
+extensions
 sqrt            [test $HAVE_SQRTF = 0]
 
 configure.ac:

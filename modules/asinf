@@ -7,6 +7,7 @@ m4/asinf.m4
 
 Depends-on:
 math
+extensions
 asin            [test $HAVE_ASINF = 0]
 
 configure.ac:

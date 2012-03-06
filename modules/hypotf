@@ -8,6 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 hypot           [test $HAVE_HYPOTF = 0 || test $REPLACE_HYPOTF = 1]
 
 configure.ac:

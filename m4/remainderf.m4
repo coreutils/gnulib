@@ -1,4 +1,4 @@
-# remainderf.m4 serial 3
+# remainderf.m4 serial 4
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,9 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
   m4_divert_text([DEFAULTS], [gl_remainderf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_REMAINDER])
+
+  dnl Persuade glibc <math.h> to declare remainderf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether remainderf() exists. Assume that remainderf(), if it exists, is
   dnl defined in the same library as remainder().

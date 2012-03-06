@@ -7,6 +7,7 @@ m4/powf.m4
 
 Depends-on:
 math
+extensions
 pow             [test $HAVE_POWF = 0]
 
 configure.ac:

@@ -7,6 +7,7 @@ m4/tanhf.m4
 
 Depends-on:
 math
+extensions
 tanh            [test $HAVE_TANHF = 0]
 
 configure.ac:

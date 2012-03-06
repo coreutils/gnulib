@@ -1,4 +1,4 @@
-# rintl.m4 serial 3
+# rintl.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_RINTL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
+  dnl Persuade glibc <math.h> to declare rintl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Determine RINTL_LIBM.
   gl_MATHFUNC([rintl], [long double], [(long double)])

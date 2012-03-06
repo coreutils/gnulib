@@ -1,5 +1,92 @@
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
+	math: Ensure declarations of math functions.
+	* modules/acosf (Depends-on): Add 'extensions'.
+	* modules/asinf (Depends-on): Likewise.
+	* modules/atan2f (Depends-on): Likewise.
+	* modules/atanf (Depends-on): Likewise.
+	* modules/cbrt (Depends-on): Likewise.
+	* modules/cbrtf (Depends-on): Likewise.
+	* modules/cbrtl (Depends-on): Likewise.
+	* modules/copysignf (Depends-on): Likewise.
+	* modules/copysignl (Depends-on): Likewise.
+	* modules/cosf (Depends-on): Likewise.
+	* modules/coshf (Depends-on): Likewise.
+	* modules/expf (Depends-on): Likewise.
+	* modules/fabsf (Depends-on): Likewise.
+	* modules/fabsl (Depends-on): Likewise.
+	* modules/fmaf (Depends-on): Likewise.
+	* modules/fmal (Depends-on): Likewise.
+	* modules/fmodf (Depends-on): Likewise.
+	* modules/fmodl (Depends-on): Likewise.
+	* modules/frexpf (Depends-on): Likewise.
+	* modules/frexpl (Depends-on): Likewise.
+	* modules/hypot (Depends-on): Likewise.
+	* modules/hypotf (Depends-on): Likewise.
+	* modules/hypotl (Depends-on): Likewise.
+	* modules/ldexpf (Depends-on): Likewise.
+	* modules/ldexpl (Depends-on): Likewise.
+	* modules/log10f (Depends-on): Likewise.
+	* modules/log10l (Depends-on): Likewise.
+	* modules/log1p (Depends-on): Likewise.
+	* modules/logb (Depends-on): Likewise.
+	* modules/logf (Depends-on): Likewise.
+	* modules/modff (Depends-on): Likewise.
+	* modules/modfl (Depends-on): Likewise.
+	* modules/powf (Depends-on): Likewise.
+	* modules/remainderf (Depends-on): Likewise.
+	* modules/remainderl (Depends-on): Likewise.
+	* modules/rintf (Depends-on): Likewise.
+	* modules/rintl (Depends-on): Likewise.
+	* modules/sinf (Depends-on): Likewise.
+	* modules/sinhf (Depends-on): Likewise.
+	* modules/sqrtf (Depends-on): Likewise.
+	* modules/tanf (Depends-on): Likewise.
+	* modules/tanhf (Depends-on): Likewise.
+	* m4/acosf.m4 (gl_FUNC_ACOSF): Require gl_USE_SYSTEM_EXTENSIONS.
+	* m4/asinf.m4 (gl_FUNC_ASINF): Likewise.
+	* m4/atan2f.m4 (gl_FUNC_ATAN2F): Likewise.
+	* m4/atanf.m4 (gl_FUNC_ATANF): Likewise.
+	* m4/cbrt.m4 (gl_FUNC_CBRT): Likewise.
+	* m4/cbrtf.m4 (gl_FUNC_CBRTF): Likewise.
+	* m4/cbrtl.m4 (gl_FUNC_CBRTL): Likewise.
+	* m4/copysignf.m4 (gl_FUNC_COPYSIGNF): Likewise.
+	* m4/copysignl.m4 (gl_FUNC_COPYSIGNL): Likewise.
+	* m4/cosf.m4 (gl_FUNC_COSF): Likewise.
+	* m4/coshf.m4 (gl_FUNC_COSHF): Likewise.
+	* m4/expf.m4 (gl_FUNC_EXPF): Likewise.
+	* m4/fabsf.m4 (gl_FUNC_FABSF): Likewise.
+	* m4/fabsl.m4 (gl_FUNC_FABSL): Likewise.
+	* m4/fmaf.m4 (gl_FUNC_FMAF): Likewise.
+	* m4/fmal.m4 (gl_FUNC_FMAL): Likewise.
+	* m4/fmodf.m4 (gl_FUNC_FMODF): Likewise.
+	* m4/fmodl.m4 (gl_FUNC_FMODL): Likewise.
+	* m4/frexpf.m4 (gl_FUNC_FREXPF): Likewise.
+	* m4/frexpl.m4 (gl_FUNC_FREXPL): Likewise.
+	* m4/hypot.m4 (gl_FUNC_HYPOT): Likewise.
+	* m4/hypotf.m4 (gl_FUNC_HYPOTF): Likewise.
+	* m4/hypotl.m4 (gl_FUNC_HYPOTL): Likewise.
+	* m4/ldexpf.m4 (gl_FUNC_LDEXPF): Likewise.
+	* m4/ldexpl.m4 (gl_FUNC_LDEXPL): Likewise.
+	* m4/log10f.m4 (gl_FUNC_LOG10F): Likewise.
+	* m4/log10l.m4 (gl_FUNC_LOF10L): Likewise.
+	* m4/logb.m4 (gl_FUNC_LOGB): Likewise.
+	* m4/logf.m4 (gl_FUNC_LOGF): Likewise.
+	* m4/modff.m4 (gl_FUNC_MODFF): Likewise.
+	* m4/modfl.m4 (gl_FUNC_MODFL): Likewise.
+	* m4/powf.m4 (gl_FUNC_POWF): Likewise.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): Likewise.
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): Likewise.
+	* m4/rintf.m4 (gl_FUNC_RINTF): Likewise.
+	* m4/rintl.m4 (gl_FUNC_RINTL): Likewise.
+	* m4/sinf.m4 (gl_FUNC_SINF): Likewise.
+	* m4/sinhf.m4 (gl_FUNC_SINHF): Likewise.
+	* m4/sqrtf.m4 (gl_FUNC_SQRTF): Likewise.
+	* m4/tanf.m4 (gl_FUNC_TANF): Likewise.
+	* m4/tanhf.m4 (gl_FUNC_TANHF): Likewise.
+
+2012-03-06  Bruno Haible  <bruno@clisp.org>
+
 	math: Update module names in warnings.
 	* lib/math.in.h (acosl, asinl, atanl, cosl, expl, logl, sinl, sqrtl,
 	tanl): Use specific module name in warn-on-use warning.

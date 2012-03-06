@@ -1,4 +1,4 @@
-# fabsf.m4 serial 2
+# fabsf.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_FABSF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_FABS])
+
+  dnl Persuade glibc <math.h> to declare fabsf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether fabsf() exists. We cannot assume that fabsf(), if it
   dnl exists, is defined in the same library as fabs(). This is not the case

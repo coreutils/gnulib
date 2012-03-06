@@ -7,6 +7,7 @@ m4/atanf.m4
 
 Depends-on:
 math
+extensions
 atan            [test $HAVE_ATANF = 0]
 
 configure.ac:

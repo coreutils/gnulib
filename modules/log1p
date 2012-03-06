@@ -5,6 +5,7 @@ Files:
 m4/mathfunc.m4
 
 Depends-on:
+extensions
 
 configure.ac:
 gl_COMMON_DOUBLE_MATHFUNC([log1p])

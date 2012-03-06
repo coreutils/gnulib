@@ -9,6 +9,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 remainder       [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 isfinite        [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]
 signbit         [test $HAVE_REMAINDERF = 0 || test $REPLACE_REMAINDERF = 1]

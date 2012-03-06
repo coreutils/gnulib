@@ -9,6 +9,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 isfinite        [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 fabsf           [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]
 frexpf          [test $HAVE_CBRTF = 0 || test $REPLACE_CBRTF = 1]

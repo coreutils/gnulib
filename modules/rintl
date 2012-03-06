@@ -9,6 +9,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 rint            [test $HAVE_RINTL = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
 
 configure.ac:

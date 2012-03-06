@@ -1,4 +1,4 @@
-# tanhf.m4 serial 1
+# tanhf.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_TANHF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_TANH])
+
+  dnl Persuade glibc <math.h> to declare tanhf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether tanhf() exists. Assume that tanhf(), if it exists, is
   dnl defined in the same library as tanh().

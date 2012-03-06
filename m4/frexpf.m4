@@ -1,4 +1,4 @@
-# frexpf.m4 serial 3
+# frexpf.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,9 @@ AC_DEFUN([gl_FUNC_FREXPF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_FREXP])
+
+  dnl Persuade glibc <math.h> to declare frexpf().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether frexpf() exists. We cannot assume that frexpf(), if it
   dnl exists, is defined in the same library as frexp(). This is not the case

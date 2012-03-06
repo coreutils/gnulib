@@ -1,4 +1,4 @@
-# frexpl.m4 serial 18
+# frexpl.m4 serial 19
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,9 +8,14 @@ AC_DEFUN([gl_FUNC_FREXPL],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+
+  dnl Persuade glibc <math.h> to declare frexpl().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
   dnl Check whether it's declared.
   dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
   AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [[#include <math.h>]])
+
   FREXPL_LIBM=
   if test $HAVE_DECL_FREXPL = 1; then
     gl_CHECK_FREXPL_NO_LIBM

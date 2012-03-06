@@ -8,6 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 signbit         [test $HAVE_COPYSIGNF = 0]
 
 configure.ac:

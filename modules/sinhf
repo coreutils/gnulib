@@ -7,6 +7,7 @@ m4/sinhf.m4
 
 Depends-on:
 math
+extensions
 sinh            [test $HAVE_SINHF = 0]
 
 configure.ac:

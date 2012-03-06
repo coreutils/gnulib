@@ -1,4 +1,4 @@
-# log10l.m4 serial 1
+# log10l.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,9 @@ AC_DEFUN([gl_FUNC_LOG10L],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([gl_FUNC_LOG10])
+
+  dnl Persuade glibc <math.h> to declare log10l().
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Test whether log10l() is declared. On AIX 5.1 it is not declared.
   AC_CHECK_DECL([log10l], , [HAVE_DECL_LOG10L=0], [[#include <math.h>]])

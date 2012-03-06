@@ -8,6 +8,7 @@ m4/mathfunc.m4
 
 Depends-on:
 math
+extensions
 ldexp           [test $HAVE_LDEXPF = 0]
 
 configure.ac:
