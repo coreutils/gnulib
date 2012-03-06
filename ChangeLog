@@ -1,3 +1,13 @@
+2012-03-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	readtokens: avoid core dumps with unusual calling patterns
+	Reported by Xu Zhongxing in <http://debbugs.gnu.org/10953>.
+	* lib/readtokens.c: Include limits.h.
+	(word, bits_per_word, get_nth_bit, set_nth_bit): New.
+	(readtoken): Don't cache the delimiters; the cache code was buggy
+	if !delim && saved_delim, or if the new n_delim differs from the old.
+	Also, it wasn't thread-safe.
+
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
 	quote: Adhere to common module description layout.

@@ -26,6 +26,7 @@
 
 #include "readtokens.h"
 
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,6 +45,22 @@ init_tokenbuffer (token_buffer *tokenbuffer)
 {
   tokenbuffer->size = 0;
   tokenbuffer->buffer = NULL;
+}
+
+typedef size_t word;
+enum { bits_per_word = sizeof (word) * CHAR_BIT };
+
+static bool
+get_nth_bit (size_t n, word const *bitset)
+{
+  return bitset[n / bits_per_word] >> n % bits_per_word & 1;
+}
+
+static void
+set_nth_bit (size_t n, word *bitset)
+{
+  size_t one = 1;
+  bitset[n / bits_per_word] |= one << n % bits_per_word;
 }
 
 /* Read a token from STREAM into TOKENBUFFER.
@@ -68,42 +85,17 @@ readtoken (FILE *stream,
   char *p;
   int c;
   size_t i, n;
-  static const char *saved_delim = NULL;
-  static char isdelim[256];
-  bool same_delimiters;
+  word isdelim[(UCHAR_MAX + bits_per_word) / bits_per_word];
 
-  if (delim == NULL && saved_delim == NULL)
-    abort ();
-
-  same_delimiters = false;
-  if (delim != saved_delim && saved_delim != NULL)
+  memset (isdelim, 0, sizeof isdelim);
+  for (i = 0; i < n_delim; i++)
     {
-      same_delimiters = true;
-      for (i = 0; i < n_delim; i++)
-        {
-          if (delim[i] != saved_delim[i])
-            {
-              same_delimiters = false;
-              break;
-            }
-        }
+      unsigned char ch = delim[i];
+      set_nth_bit (ch, isdelim);
     }
 
-  if (!same_delimiters)
-    {
-      size_t j;
-      saved_delim = delim;
-      memset (isdelim, 0, sizeof isdelim);
-      for (j = 0; j < n_delim; j++)
-        {
-          unsigned char ch = delim[j];
-          isdelim[ch] = 1;
-        }
-    }
-
-  /* FIXME: don't fool with this caching.  Use strchr instead.  */
   /* skip over any leading delimiters */
-  for (c = getc (stream); c >= 0 && isdelim[c]; c = getc (stream))
+  for (c = getc (stream); c >= 0 && get_nth_bit (c, isdelim); c = getc (stream))
     {
       /* empty */
     }
@@ -124,7 +116,7 @@ readtoken (FILE *stream,
           p[i] = 0;
           break;
         }
-      if (isdelim[c])
+      if (get_nth_bit (c, isdelim))
         {
           p[i] = 0;
           break;
