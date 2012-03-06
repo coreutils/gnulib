@@ -1,5 +1,9 @@
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'expm1f'.
+	* modules/expm1f-tests: New file.
+	* tests/test-expm1f.c: New file.
+
 	New module 'expm1f'.
 	* lib/math.in.h (expm1f): New declaration.
 	* lib/expm1f.c: New file.
