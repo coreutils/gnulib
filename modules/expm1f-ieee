@@ -1,0 +1,26 @@
+Description:
+expm1f() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+expm1f
+fpieee
+expm1-ieee      [test $HAVE_EXPM1F = 0]
+
+configure.ac:
+AC_REQUIRE([gl_FUNC_EXPM1F])
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(EXPM1F_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
