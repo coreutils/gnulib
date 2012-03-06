@@ -1,4 +1,4 @@
-# expm1.m4 serial 1
+# expm1.m4 serial 2
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_EXPM1],
 [
+  m4_divert_text([DEFAULTS], [gl_expm1_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
 
   dnl Persuade glibc <math.h> to declare expm1().
@@ -52,9 +53,49 @@ AC_DEFUN([gl_FUNC_EXPM1],
       EXPM1_LIBM=-lm
     fi
   fi
-  if test $gl_cv_func_expm1_no_libm = no \
-     && test $gl_cv_func_expm1_in_libm = no; then
+  if test $gl_cv_func_expm1_no_libm = yes \
+     || test $gl_cv_func_expm1_in_libm = yes; then
+    :
+    m4_ifdef([gl_FUNC_EXPM1_IEEE], [
+      if test $gl_expm1_required = ieee && test $REPLACE_EXPM1 = 0; then
+        AC_CACHE_CHECK([whether expm1 works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_expm1_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $EXPM1_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_DOUBLE_MINUS_ZERO_CODE[
+]gl_DOUBLE_SIGNBIT_CODE[
+static double dummy (double x) { return 0; }
+int main (int argc, char *argv[])
+{
+  double (*my_expm1) (double) = argc ? expm1 : dummy;
+  double y = my_expm1 (minus_zerod);
+  if (!(y == 0.0) || (signbitd (minus_zerod) && !signbitd (y)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_expm1_ieee=yes],
+              [gl_cv_func_expm1_ieee=no],
+              [gl_cv_func_expm1_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_expm1_ieee" in
+          *yes) ;;
+          *) REPLACE_EXPM1=1 ;;
+        esac
+      fi
+    ])
+  else
     HAVE_EXPM1=0
+  fi
+  if test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1; then
     dnl Find libraries needed to link lib/expm1.c.
     AC_REQUIRE([gl_FUNC_ISNAND])
     AC_REQUIRE([gl_FUNC_EXP])

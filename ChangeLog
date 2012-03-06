@@ -1,5 +1,20 @@
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'expm1-ieee'.
+	* modules/expm1-ieee: New file.
+	* m4/expm1-ieee.m4: New file.
+	* m4/expm1.m4 (gl_FUNC_EXPM1): If gl_FUNC_EXPM1_IEEE is present, test
+	whether expm1 works with a minus zero argument. Replace it if not.
+	* lib/math.in.h (expm1): Override if REPLACE_EXPM1 is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_EXPM1.
+	* modules/math (Makefile.am): Substitute REPLACE_EXPM1.
+	* modules/expm1 (configure.ac): Consider REPLACE_EXPM1.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/expm1.texi: Mention the expm1-ieee module and the
+	AIX problem.
+
+2012-03-06  Bruno Haible  <bruno@clisp.org>
+
 	Work around expm1f bug on IRIX 6.5.
 	* lib/math.in.h (expm1f): Override if REPLACE_EXPM1F is 1.
 	* m4/expm1f.m4 (gl_FUNC_EXPM1F_WORKS): New macro.

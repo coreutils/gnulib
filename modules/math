@@ -196,6 +196,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_CEIL''@|$(REPLACE_CEIL)|g' \
 	      -e 's|@''REPLACE_CEILF''@|$(REPLACE_CEILF)|g' \
 	      -e 's|@''REPLACE_CEILL''@|$(REPLACE_CEILL)|g' \
+	      -e 's|@''REPLACE_EXPM1''@|$(REPLACE_EXPM1)|g' \
 	      -e 's|@''REPLACE_EXPM1F''@|$(REPLACE_EXPM1F)|g' \
 	      -e 's|@''REPLACE_FABSL''@|$(REPLACE_FABSL)|g' \
 	      -e 's|@''REPLACE_FLOOR''@|$(REPLACE_FLOOR)|g' \

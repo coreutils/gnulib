@@ -9,14 +9,14 @@ m4/mathfunc.m4
 Depends-on:
 math
 extensions
-isnand          [test $HAVE_EXPM1 = 0]
-exp             [test $HAVE_EXPM1 = 0]
-round           [test $HAVE_EXPM1 = 0]
-ldexp           [test $HAVE_EXPM1 = 0]
+isnand          [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]
+exp             [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]
+round           [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]
+ldexp           [test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1]
 
 configure.ac:
 gl_FUNC_EXPM1
-if test $HAVE_EXPM1 = 0; then
+if test $HAVE_EXPM1 = 0 || test $REPLACE_EXPM1 = 1; then
   AC_LIBOBJ([expm1])
 fi
 gl_MATH_MODULE_INDICATOR([expm1])
