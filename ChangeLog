@@ -1,5 +1,18 @@
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
+	New module 'expm1'.
+	* lib/math.in.h (expm1): New declaration.
+	* lib/expm1.c: New file.
+	* m4/expm1.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether expm1 is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_EXPM1, HAVE_EXPM1.
+	* modules/math (Makefile.am): Substitute GNULIB_EXPM1, HAVE_EXPM1.
+	* modules/expm1: New file.
+	* tests/test-math-c++.cc: Check the declaration of expm1.
+	* doc/posix-functions/expm1.texi: Mention the new module.
+
+2012-03-06  Bruno Haible  <bruno@clisp.org>
+
 	math: Ensure declarations of math functions.
 	* modules/acosf (Depends-on): Add 'extensions'.
 	* modules/asinf (Depends-on): Likewise.

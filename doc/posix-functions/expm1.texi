@@ -4,15 +4,15 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/expm1.html}
 
-Gnulib module: ---
+Gnulib module: expm1
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 9.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize
