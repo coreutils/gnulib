@@ -205,7 +205,7 @@ _GL_CXXALIASWARN (acosl);
 # undef acosl
 # if HAVE_RAW_DECL_ACOSL
 _GL_WARN_ON_USE (acosl, "acosl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module acosl for portability");
 # endif
 #endif
 
@@ -236,7 +236,7 @@ _GL_CXXALIASWARN (asinl);
 # undef asinl
 # if HAVE_RAW_DECL_ASINL
 _GL_WARN_ON_USE (asinl, "asinl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module asinl for portability");
 # endif
 #endif
 
@@ -267,7 +267,7 @@ _GL_CXXALIASWARN (atanl);
 # undef atanl
 # if HAVE_RAW_DECL_ATANL
 _GL_WARN_ON_USE (atanl, "atanl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module atanl for portability");
 # endif
 #endif
 
@@ -480,7 +480,7 @@ _GL_CXXALIASWARN (cosl);
 # undef cosl
 # if HAVE_RAW_DECL_COSL
 _GL_WARN_ON_USE (cosl, "cosl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module cosl for portability");
 # endif
 #endif
 
@@ -527,7 +527,7 @@ _GL_CXXALIASWARN (expl);
 # undef expl
 # if HAVE_RAW_DECL_EXPL
 _GL_WARN_ON_USE (expl, "expl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module expl for portability");
 # endif
 #endif
 
@@ -1022,7 +1022,7 @@ _GL_CXXALIASWARN (logl);
 # undef logl
 # if HAVE_RAW_DECL_LOGL
 _GL_WARN_ON_USE (logl, "logl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module logl for portability");
 # endif
 #endif
 
@@ -1354,7 +1354,7 @@ _GL_CXXALIASWARN (sinl);
 # undef sinl
 # if HAVE_RAW_DECL_SINL
 _GL_WARN_ON_USE (sinl, "sinl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module sinl for portability");
 # endif
 #endif
 
@@ -1401,7 +1401,7 @@ _GL_CXXALIASWARN (sqrtl);
 # undef sqrtl
 # if HAVE_RAW_DECL_SQRTL
 _GL_WARN_ON_USE (sqrtl, "sqrtl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module sqrtl for portability");
 # endif
 #endif
 
@@ -1432,7 +1432,7 @@ _GL_CXXALIASWARN (tanl);
 # undef tanl
 # if HAVE_RAW_DECL_TANL
 _GL_WARN_ON_USE (tanl, "tanl is unportable - "
-                 "use gnulib module mathl for portability");
+                 "use gnulib module tanl for portability");
 # endif
 #endif
 
