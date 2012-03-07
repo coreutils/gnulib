@@ -4,6 +4,7 @@ Quote arguments for use in error messages.
 Files:
 lib/quotearg.h
 lib/quotearg.c
+lib/quote.h
 m4/mbstate_t.m4
 m4/mbrtowc.m4
 m4/quotearg.m4
