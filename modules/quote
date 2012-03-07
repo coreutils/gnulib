@@ -11,6 +11,8 @@ quotearg
 configure.ac:
 gl_QUOTE
 
+Makefile.am:
+
 Include:
 "quote.h"
 
