@@ -412,7 +412,7 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 
 
 #if @GNULIB_COPYSIGNF@
-# if !@HAVE_COPYSIGNF@
+# if !@HAVE_DECL_COPYSIGNF@
 _GL_FUNCDECL_SYS (copysignf, float, (float x, float y));
 # endif
 _GL_CXXALIAS_SYS (copysignf, float, (float x, float y));

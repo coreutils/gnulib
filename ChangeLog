@@ -1,3 +1,17 @@
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
+	copysignf: Don't override undeclared system function on IRIX 6.5.
+	* lib/math.in.h (copysignf): Test HAVE_DECL_COPYSIGNF, not
+	HAVE_COPYSIGNF.
+	* m4/copysignf.m4 (gl_FUNC_COPYSIGNF): Don't assume copysignf() is
+	declared when it exists. Set HAVE_DECL_COPYSIGNF.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize HAVE_DECL_COPYSIGNF,
+	not HAVE_COPYSIGNF.
+	* modules/math (Makefile.am): Substitute HAVE_DECL_COPYSIGNF, not
+	HAVE_COPYSIGNF.
+	* doc/posix-functions/copysignf.texi: Mention missing declaration
+	problem.
+
 2012-03-07  Jim Meyering  <meyering@redhat.com>
 
 	readtokens: add tests

@@ -119,7 +119,6 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_CBRTF''@|$(HAVE_CBRTF)|g' \
 	      -e 's|@''HAVE_CBRTL''@|$(HAVE_CBRTL)|g' \
 	      -e 's|@''HAVE_COPYSIGN''@|$(HAVE_COPYSIGN)|g' \
-	      -e 's|@''HAVE_COPYSIGNF''@|$(HAVE_COPYSIGNF)|g' \
 	      -e 's|@''HAVE_COPYSIGNL''@|$(HAVE_COPYSIGNL)|g' \
 	      -e 's|@''HAVE_COSF''@|$(HAVE_COSF)|g' \
 	      -e 's|@''HAVE_COSL''@|$(HAVE_COSL)|g' \
@@ -171,6 +170,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_CBRTL''@|$(HAVE_DECL_CBRTL)|g' \
 	      -e 's|@''HAVE_DECL_CEILF''@|$(HAVE_DECL_CEILF)|g' \
 	      -e 's|@''HAVE_DECL_CEILL''@|$(HAVE_DECL_CEILL)|g' \
+	      -e 's|@''HAVE_DECL_COPYSIGNF''@|$(HAVE_DECL_COPYSIGNF)|g' \
 	      -e 's|@''HAVE_DECL_COSL''@|$(HAVE_DECL_COSL)|g' \
 	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
 	      -e 's|@''HAVE_DECL_FLOORF''@|$(HAVE_DECL_FLOORF)|g' \
