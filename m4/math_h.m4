@@ -1,4 +1,4 @@
-# math_h.m4 serial 88
+# math_h.m4 serial 89
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_MATH_H],
   gl_WARN_ON_USE_PREPARE([[#include <math.h>]],
     [acosf acosl asinf asinl atanf atanl
      cbrt cbrtf cbrtl ceilf ceill copysign copysignf copysignl cosf cosl coshf
-     expf expl expm1 expm1f expm1l fabsf fabsl floorf floorl fma fmaf fmal
+     expf expl exp2 expm1 expm1f expm1l fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
      ldexpf ldexpl logb logf logl log10f log10l modf modff modfl powf
      remainder remainderf remainderl
@@ -81,6 +81,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_COSHF=0;      AC_SUBST([GNULIB_COSHF])
   GNULIB_EXPF=0;       AC_SUBST([GNULIB_EXPF])
   GNULIB_EXPL=0;       AC_SUBST([GNULIB_EXPL])
+  GNULIB_EXP2=0;       AC_SUBST([GNULIB_EXP2])
   GNULIB_EXPM1=0;      AC_SUBST([GNULIB_EXPM1])
   GNULIB_EXPM1F=0;     AC_SUBST([GNULIB_EXPM1F])
   GNULIB_EXPM1L=0;     AC_SUBST([GNULIB_EXPM1L])
@@ -202,6 +203,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_COPYSIGNF=1;       AC_SUBST([HAVE_DECL_COPYSIGNF])
   HAVE_DECL_COSL=1;            AC_SUBST([HAVE_DECL_COSL])
   HAVE_DECL_EXPL=1;            AC_SUBST([HAVE_DECL_EXPL])
+  HAVE_DECL_EXP2=1;            AC_SUBST([HAVE_DECL_EXP2])
   HAVE_DECL_EXPM1L=1;          AC_SUBST([HAVE_DECL_EXPM1L])
   HAVE_DECL_FLOORF=1;          AC_SUBST([HAVE_DECL_FLOORF])
   HAVE_DECL_FLOORL=1;          AC_SUBST([HAVE_DECL_FLOORL])
@@ -229,6 +231,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_CEILL=0;             AC_SUBST([REPLACE_CEILL])
   REPLACE_EXPM1=0;             AC_SUBST([REPLACE_EXPM1])
   REPLACE_EXPM1F=0;            AC_SUBST([REPLACE_EXPM1F])
+  REPLACE_EXP2=0;              AC_SUBST([REPLACE_EXP2])
   REPLACE_FABSL=0;             AC_SUBST([REPLACE_FABSL])
   REPLACE_FLOOR=0;             AC_SUBST([REPLACE_FLOOR])
   REPLACE_FLOORF=0;            AC_SUBST([REPLACE_FLOORF])
