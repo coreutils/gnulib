@@ -1,5 +1,11 @@
 2012-03-07  Jim Meyering  <meyering@redhat.com>
 
+	readtokens: add tests
+	* modules/readtokens-tests: New file.
+	* tests/test-readtokens.c: New file.
+
+2012-03-07  Jim Meyering  <meyering@redhat.com>
+
 	quotearg: the module must now include quote.h
 	With commit v0.0-7133-g6417476, quotearg.c includes "quote.h".
 	So must the module.
