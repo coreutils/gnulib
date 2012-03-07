@@ -27,6 +27,7 @@
 #include <config.h>
 
 #include "quotearg.h"
+#include "quote.h"
 
 #include "xalloc.h"
 #include "c-strcaseeq.h"
@@ -177,7 +178,7 @@ set_custom_quoting (struct quoting_options *o,
 static struct quoting_options /* NOT PURE!! */
 quoting_options_from_style (enum quoting_style style)
 {
-  struct quoting_options o = { 0 };
+  struct quoting_options o = { 0, 0, { 0 }, NULL, NULL };
   if (style == custom_quoting_style)
     abort ();
   o.style = style;
@@ -925,4 +926,26 @@ quotearg_custom_mem (char const *left_quote, char const *right_quote,
 {
   return quotearg_n_custom_mem (0, left_quote, right_quote, arg,
                                 argsize);
+}
+
+
+/* The quoting option used by quote_n and quote.  */
+struct quoting_options quote_quoting_options =
+  {
+    locale_quoting_style,
+    0,
+    { 0 },
+    NULL, NULL
+  };
+
+char const *
+quote_n (int n, char const *name)
+{
+  return quotearg_n_options (n, name, SIZE_MAX, &quote_quoting_options);
+}
+
+char const *
+quote (char const *name)
+{
+  return quote_n (0, name);
 }

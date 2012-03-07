@@ -1,3 +1,20 @@
+2012-03-06  Akim Demaille  <demaille@gostai.com>
+
+	quote: fuse into quotearg
+	This patch is made for the benefit of Bison.
+	quote does not leave the choice of the quoting style to the user.
+	quoting_style provides poor customizability, yet quoting_options,
+	which is very rich, is hidden inside quotearg.c.  So in order to
+	allow quote customization, move its implementation to quotearg.c.
+	* lib/quote.c: Remove.
+	* modules/quote: Adjust.
+	* lib/quotearg.c (quoting_options_from_style): Fix a compiler
+	warning: provide all the members of literal structs.
+	(quote_quoting_options): New.
+	(quote, quote_n): Import implementation from quote.c.
+	* lib/quote.h: Import the comments from quote.c.
+	(quote_quoting_options): New.
+
 2012-03-06  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'expm1l-ieee'.
