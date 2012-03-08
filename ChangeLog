@@ -1,5 +1,15 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	fma, fmaf, fmal: Override undeclared system functions on IRIX 6.5.
+	* m4/fma.m4 (gl_FUNC_FMA): If fma() exists but is not declared,
+	arrange to set REPLACE_FMA=1, not HAVE_FMA=0.
+	* m4/fmaf.m4 (gl_FUNC_FMAF): If fmaf() exists but is not declared,
+	arrange to set REPLACE_FMAF=1, not HAVE_FMAF=0.
+	* m4/fmal.m4 (gl_FUNC_FMAL): If fmal() exists but is not declared,
+	arrange to set REPLACE_FMAL=1, not HAVE_FMAL=0.
+
+2012-03-08  Bruno Haible  <bruno@clisp.org>
+
 	remainderf: Override buggy system function on IRIX 6.5.
 	* m4/remainderf.m4 (gl_FUNC_REMAINDERF_WORKS): New macro.
 	(gl_FUNC_REMAINDERF): Invoke it. Don't assume remainderf() is declared

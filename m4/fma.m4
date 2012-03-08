@@ -1,4 +1,4 @@
-# fma.m4 serial 1
+# fma.m4 serial 2
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,13 +9,25 @@ AC_DEFUN([gl_FUNC_FMA],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
 
   dnl Determine FMA_LIBM.
-  gl_MATHFUNC([fma], [double], [(double, double, double)])
+  gl_MATHFUNC([fma], [double], [(double, double, double)],
+    [extern
+     #ifdef __cplusplus
+     "C"
+     #endif
+     double fma (double, double, double);
+    ])
   if test $gl_cv_func_fma_no_libm = yes \
      || test $gl_cv_func_fma_in_libm = yes; then
-    gl_FUNC_FMA_WORKS
-    case "$gl_cv_func_fma_works" in
-      *no) REPLACE_FMA=1 ;;
-    esac
+    dnl Also check whether it's declared.
+    dnl IRIX 6.5 has fma() in libm but doesn't declare it in <math.h>,
+    dnl and the function is buggy.
+    AC_CHECK_DECL([fma], , [REPLACE_FMA=1], [[#include <math.h>]])
+    if test $REPLACE_FMA = 0; then
+      gl_FUNC_FMA_WORKS
+      case "$gl_cv_func_fma_works" in
+        *no) REPLACE_FMA=1 ;;
+      esac
+    fi
   else
     HAVE_FMA=0
   fi
