@@ -30,7 +30,7 @@
 static void
 basic (void)
 {
-  char *filename = "in.827";
+  char const *filename = "in.827";
   int fd = open (filename, O_CREAT | O_WRONLY, 0600);
   ASSERT (fd >= 0);
   ASSERT (write (fd, "a|b;c+d", 7) == 7);
@@ -77,7 +77,7 @@ main (int argc, char **argv)
 
   if (STREQ (delim, "\\0"))
     {
-      delim = "";
+      delim = (char *) "";
       delim_len = 1;
     }
 

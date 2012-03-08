@@ -1,3 +1,8 @@
+2012-03-08  Jim Meyering  <meyering@redhat.com>
+
+	test-readtokens.c: avoid const-related compilation warnings
+	* tests/test-readtokens.c: Avoid const-related compilation warnings.
+
 2012-03-07  Jim Meyering  <meyering@redhat.com>
 	    Bruno Haible  <bruno@clisp.org>
 
