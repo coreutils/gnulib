@@ -579,7 +579,7 @@ _GL_WARN_ON_USE (expm1, "expm1 is unportable - "
 #endif
 
 #if @GNULIB_EXPM1L@
-# if !@HAVE_EXPM1L@
+# if !@HAVE_DECL_EXPM1L@
 _GL_FUNCDECL_SYS (expm1l, long double, (long double x));
 # endif
 _GL_CXXALIAS_SYS (expm1l, long double, (long double x));

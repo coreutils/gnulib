@@ -1,5 +1,17 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	expm1l: Don't override undeclared system function on IRIX 6.5.
+	* lib/math.in.h (expm1l): Test HAVE_DECL_EXPM1L, not HAVE_EXPM1L.
+	* m4/expm1l.m4 (gl_FUNC_EXPM1L): Don't assume expm1l() is declared when
+	it exists. Set HAVE_DECL_EXPM1L.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize HAVE_DECL_EXPM1L, not
+	HAVE_EXPM1L.
+	* modules/math (Makefile.am): Substitute HAVE_DECL_EXPM1L, not
+	HAVE_EXPM1L.
+	* doc/posix-functions/expm1l.texi: Mention missing declaration problem.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	remainderl: Don't override undeclared system function on IRIX 6.5.
 	* lib/math.in.h (remainderl): Test HAVE_DECL_REMAINDERL, not
 	HAVE_REMAINDERL.

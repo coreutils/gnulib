@@ -1,4 +1,4 @@
-# expm1l.m4 serial 1
+# expm1l.m4 serial 2
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,11 @@ AC_DEFUN([gl_FUNC_EXPM1L],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             extern
+             #ifdef __cplusplus
+             "C"
+             #endif
+             long double expm1l (long double);
              long double (*funcptr) (long double) = expm1l;
              long double x;]],
            [[return funcptr (x) > 0.5
@@ -41,6 +46,11 @@ AC_DEFUN([gl_FUNC_EXPM1L],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
+               extern
+               #ifdef __cplusplus
+               "C"
+               #endif
+               long double expm1l (long double);
                long double (*funcptr) (long double) = expm1l;
                long double x;]],
              [[return funcptr (x) > 0.5
@@ -53,9 +63,15 @@ AC_DEFUN([gl_FUNC_EXPM1L],
       EXPM1L_LIBM=-lm
     fi
   fi
-  if test $gl_cv_func_expm1l_no_libm = no \
-     && test $gl_cv_func_expm1l_in_libm = no; then
+  if test $gl_cv_func_expm1l_no_libm = yes \
+     || test $gl_cv_func_expm1l_in_libm = yes; then
+    HAVE_EXPM1L=1
+    dnl Also check whether it's declared.
+    dnl IRIX 6.5 has expm1l() in libm but doesn't declare it in <math.h>.
+    AC_CHECK_DECL([expm1l], , [HAVE_DECL_EXPM1L=0], [[#include <math.h>]])
+  else
     HAVE_EXPM1L=0
+    HAVE_DECL_EXPM1L=0
     dnl Find libraries needed to link lib/expm1l.c.
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       AC_REQUIRE([gl_FUNC_EXPM1])
