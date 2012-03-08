@@ -10,10 +10,10 @@ Portability problems fixed by either Gnulib module @code{roundl} or @code{roundl
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 4.0, Solaris 9, Cygwin, MSVC 9, Interix 3.5, BeOS.
+FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX 6.5, OSF/1 4.0, Solaris 9, Cygwin, MSVC 9, Interix 3.5, BeOS.
 @item
 This function is not declared on some platforms:
-glibc 2.8, OSF/1 5.1.
+glibc 2.8, IRIX 6.5, OSF/1 5.1.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{roundl-ieee}:
