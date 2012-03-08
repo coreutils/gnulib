@@ -124,6 +124,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::expf, float, (float));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::expl, long double, (long double));
 #endif
 
+#if GNULIB_TEST_EXP2F
+SIGNATURE_CHECK (GNULIB_NAMESPACE::exp2f, float, (float));
+#endif
 #if GNULIB_TEST_EXP2
 SIGNATURE_CHECK (GNULIB_NAMESPACE::exp2, double, (double));
 #endif

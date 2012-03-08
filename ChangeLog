@@ -1,5 +1,19 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'exp2f'.
+	* lib/math.in.h (exp2f): New declaration.
+	* lib/exp2f.c: New file.
+	* m4/exp2f.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether exp2f is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_EXP2F, HAVE_DECL_EXP2F.
+	* modules/math (Makefile.am): Substitute GNULIB_EXP2F, HAVE_DECL_EXP2F.
+	* modules/exp2f: New file.
+	* tests/test-math-c++.cc: Check the declaration of exp2f.
+	* doc/posix-functions/exp2f.texi: Mention the new module and the
+	IRIX problem.
+
+2012-03-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'exp2'.
 	* modules/exp2-tests: New file.
 	* tests/test-exp2.c: New file.

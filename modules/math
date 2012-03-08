@@ -50,6 +50,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_EXPF''@/$(GNULIB_EXPF)/g' \
 	      -e 's/@''GNULIB_EXPL''@/$(GNULIB_EXPL)/g' \
 	      -e 's/@''GNULIB_EXP2''@/$(GNULIB_EXP2)/g' \
+	      -e 's/@''GNULIB_EXP2F''@/$(GNULIB_EXP2F)/g' \
 	      -e 's/@''GNULIB_EXPM1''@/$(GNULIB_EXPM1)/g' \
 	      -e 's/@''GNULIB_EXPM1F''@/$(GNULIB_EXPM1F)/g' \
 	      -e 's/@''GNULIB_EXPM1L''@/$(GNULIB_EXPM1L)/g' \
@@ -172,6 +173,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_COSL''@|$(HAVE_DECL_COSL)|g' \
 	      -e 's|@''HAVE_DECL_EXPL''@|$(HAVE_DECL_EXPL)|g' \
 	      -e 's|@''HAVE_DECL_EXP2''@|$(HAVE_DECL_EXP2)|g' \
+	      -e 's|@''HAVE_DECL_EXP2F''@|$(HAVE_DECL_EXP2F)|g' \
 	      -e 's|@''HAVE_DECL_EXPM1L''@|$(HAVE_DECL_EXPM1L)|g' \
 	      -e 's|@''HAVE_DECL_FLOORF''@|$(HAVE_DECL_FLOORF)|g' \
 	      -e 's|@''HAVE_DECL_FLOORL''@|$(HAVE_DECL_FLOORL)|g' \
