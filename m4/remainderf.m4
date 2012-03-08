@@ -1,4 +1,4 @@
-# remainderf.m4 serial 4
+# remainderf.m4 serial 5
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,6 +26,11 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             extern
+             #ifdef __cplusplus
+             "C"
+             #endif
+             float remainderf (float, float);
              float (*funcptr) (float, float) = remainderf;
              float x;
              float y;]],
@@ -37,6 +42,16 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
   LIBS="$save_LIBS"
   if test $gl_cv_func_remainderf = yes; then
     REMAINDERF_LIBM="$REMAINDER_LIBM"
+
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $REMAINDERF_LIBM"
+    gl_FUNC_REMAINDERF_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_remainderf_works" in
+      *yes) ;;
+      *) REPLACE_REMAINDERF=1 ;;
+    esac
+
     m4_ifdef([gl_FUNC_REMAINDERF_IEEE], [
       if test $gl_remainderf_required = ieee && test $REPLACE_REMAINDERF = 0; then
         AC_CACHE_CHECK([whether remainderf works according to ISO C 99 with IEC 60559],
@@ -50,6 +65,11 @@ AC_DEFUN([gl_FUNC_REMAINDERF],
 # define __NO_MATH_INLINES 1 /* for glibc */
 #endif
 #include <math.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+float remainderf (float, float);
 /* Compare two numbers with ==.
    This is a separate function because IRIX 6.5 "cc -O" miscompiles an
    'x == x' test.  */
@@ -116,4 +136,49 @@ int main (int argc, char *argv[])
     fi
   fi
   AC_SUBST([REMAINDERF_LIBM])
+])
+
+dnl Test whether remainderf() works.
+dnl It runs into an endless loop on IRIX 6.5.
+AC_DEFUN([gl_FUNC_REMAINDERF_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CHECK_FUNCS_ONCE([alarm])
+  AC_CACHE_CHECK([whether remainderf works], [gl_cv_func_remainderf_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <math.h>
+#if HAVE_ALARM
+# include <unistd.h>
+#endif
+extern
+#ifdef __cplusplus
+"C"
+#endif
+float remainderf (float, float);
+volatile float x;
+volatile float y;
+float z;
+int main ()
+{
+#if HAVE_ALARM
+  alarm (5);
+#endif
+  /* This test fails on IRIX 6.5.  */
+  x = 9.316161e+37f;
+  y = 0.5475547314f;
+  z = remainderf (x, y);
+  return 0;
+}
+]])],
+        [gl_cv_func_remainderf_works=yes],
+        [gl_cv_func_remainderf_works=no],
+        [case "$host_os" in
+           irix*) gl_cv_func_remainderf_works="guessing no";;
+           *)     gl_cv_func_remainderf_works="guessing yes";;
+         esac
+        ])
+    ])
 ])

@@ -1,3 +1,11 @@
+2012-03-08  Bruno Haible  <bruno@clisp.org>
+
+	remainderf: Override buggy system function on IRIX 6.5.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF_WORKS): New macro.
+	(gl_FUNC_REMAINDERF): Invoke it. Don't assume remainderf() is declared
+	when it exists.
+	* doc/posix-functions/remainderf.texi: Mention the IRIX problems.
+
 2012-03-08  Jim Meyering  <meyering@redhat.com>
 
 	test-readtokens.c: avoid const-related compilation warnings
