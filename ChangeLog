@@ -1,5 +1,17 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	roundf: Don't override undeclared system function on IRIX 6.5.
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Search for roundf() in the libraries
+	also when it is not declared. Set HAVE_ROUNDF. For replacement code,
+	test HAVE_ROUNDF, not HAVE_DECL_ROUNDF.
+	* modules/roundf (configure.ac): For replacement code, test
+	HAVE_ROUNDF, not HAVE_DECL_ROUNDF.
+	(Depends-on): Update conditions.
+	* modules/roundf-ieee (Depends-on): Update conditions.
+	* doc/posix-functions/roundf.texi: Mention the IRIX problem.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	round: Don't override undeclared system function on IRIX 6.5.
 	* m4/check-math-lib.m4 (gl_CHECK_MATH_LIB): Accept an optional third
 	argument.

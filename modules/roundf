@@ -12,11 +12,11 @@ m4/ceilf.m4
 Depends-on:
 math
 extensions
-float           [test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
+float           [test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1]
 
 configure.ac:
 gl_FUNC_ROUNDF
-if test $HAVE_DECL_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
+if test $HAVE_ROUNDF = 0 || test $REPLACE_ROUNDF = 1; then
   AC_LIBOBJ([roundf])
 fi
 gl_MATH_MODULE_INDICATOR([roundf])
