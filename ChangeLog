@@ -1,3 +1,8 @@
+2012-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: fix comment typo
+	* lib/savedir.c (savedirstream): Fix typo in comment.
+
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
 	test-readtokens.c: use const; remove unwarranted cast

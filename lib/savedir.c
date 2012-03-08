@@ -105,7 +105,7 @@ streamsavedir (DIR *dirp)
   return name_space;
 }
 
-/* Like savedirstreamp (DIRP), except also close DIRP.  */
+/* Like streamsavedir (DIRP), except also close DIRP.  */
 
 static char *
 savedirstream (DIR *dirp)
