@@ -1,5 +1,19 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	round: Don't override undeclared system function on IRIX 6.5.
+	* m4/check-math-lib.m4 (gl_CHECK_MATH_LIB): Accept an optional third
+	argument.
+	* m4/round.m4 (gl_FUNC_ROUND): Search for round() in the libraries
+	also when it is not declared. Set HAVE_ROUND. For replacement code,
+	test HAVE_ROUND, not HAVE_DECL_ROUND.
+	* modules/round (configure.ac): For replacement code, test HAVE_ROUND,
+	not HAVE_DECL_ROUND.
+	(Depends-on): Update conditions.
+	* modules/round-ieee (Depends-on): Update conditions.
+	* doc/posix-functions/round.texi: Mention the IRIX problem.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	copysignf: Don't override undeclared system function on IRIX 6.5.
 	* lib/math.in.h (copysignf): Test HAVE_DECL_COPYSIGNF, not
 	HAVE_COPYSIGNF.

@@ -8,8 +8,8 @@ m4/signbit.m4
 
 Depends-on:
 round
-floor-ieee      [test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1]
-ceil-ieee       [test $HAVE_DECL_ROUND = 0 || test $REPLACE_ROUND = 1]
+floor-ieee      [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
+ceil-ieee       [test $HAVE_ROUND = 0 || test $REPLACE_ROUND = 1]
 
 configure.ac:
 gl_FUNC_ROUND_IEEE
