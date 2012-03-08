@@ -56,7 +56,7 @@ int
 main (int argc, char **argv)
 {
   token_buffer tb;
-  char *delim;
+  char const *delim;
   size_t delim_len;
 
   atexit (close_stdout);
@@ -77,7 +77,7 @@ main (int argc, char **argv)
 
   if (STREQ (delim, "\\0"))
     {
-      delim = (char *) "";
+      delim = "";
       delim_len = 1;
     }
 
