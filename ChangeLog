@@ -1,5 +1,19 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	remainderl: Don't override undeclared system function on IRIX 6.5.
+	* lib/math.in.h (remainderl): Test HAVE_DECL_REMAINDERL, not
+	HAVE_REMAINDERL.
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): Don't assume remainderl() is
+	declared when it exists. Set HAVE_DECL_REMAINDERL.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize HAVE_DECL_REMAINDERL,
+	not HAVE_REMAINDERL.
+	* modules/math (Makefile.am): Substitute HAVE_DECL_REMAINDERL, not
+	HAVE_REMAINDERL.
+	* doc/posix-functions/remainderl.texi: Mention missing declaration
+	problem.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	rintf: Don't override undeclared system function on IRIX 6.5.
 	* lib/math.in.h (rintf): Test HAVE_DECL_RINTF, not HAVE_RINTF.
 	* m4/rintf.m4 (gl_FUNC_RINTF): Don't assume rintf() is declared when it

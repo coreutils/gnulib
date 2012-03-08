@@ -1,4 +1,4 @@
-# remainderl.m4 serial 4
+# remainderl.m4 serial 5
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,6 +27,11 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             extern
+             #ifdef __cplusplus
+             "C"
+             #endif
+             long double remainderl (long double, long double);
              long double (*funcptr) (long double, long double) = remainderl;
              long double x;
              long double y;]],
@@ -37,7 +42,11 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
     ])
   LIBS="$save_LIBS"
   if test $gl_cv_func_remainderl = yes; then
+    HAVE_REMAINDERL=1
     REMAINDERL_LIBM="$REMAINDER_LIBM"
+    dnl Also check whether it's declared.
+    dnl IRIX 6.5 has remainderl() in libm but doesn't declare it in <math.h>.
+    AC_CHECK_DECLS([remainderl], , [HAVE_DECL_REMAINDERL=0], [[#include <math.h>]])
     m4_ifdef([gl_FUNC_REMAINDERL_IEEE], [
       if test $gl_remainderl_required = ieee && test $REPLACE_REMAINDERL = 0; then
         AC_CACHE_CHECK([whether remainderl works according to ISO C 99 with IEC 60559],
@@ -51,6 +60,11 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
 # define __NO_MATH_INLINES 1 /* for glibc */
 #endif
 #include <math.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double remainderl (long double, long double);
 /* Compare two numbers with ==.
    This is a separate function because IRIX 6.5 "cc -O" miscompiles an
    'x == x' test.  */
@@ -85,6 +99,7 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_REMAINDERL=0
+    HAVE_DECL_REMAINDERL=0
   fi
   if test $HAVE_REMAINDERL = 0 || test $REPLACE_REMAINDERL = 1; then
     dnl Find libraries needed to link lib/remainderl.c.
