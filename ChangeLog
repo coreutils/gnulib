@@ -1,5 +1,9 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'exp2f'.
+	* modules/exp2f-tests: New file.
+	* tests/test-exp2f.c: New file.
+
 	New module 'exp2f'.
 	* lib/math.in.h (exp2f): New declaration.
 	* lib/exp2f.c: New file.
