@@ -754,6 +754,7 @@ _GL_CXXALIAS_RPL (fmal, long double,
                   (long double x, long double y, long double z));
 # else
 #  if !@HAVE_FMAL@
+#   undef fmal
 _GL_FUNCDECL_SYS (fmal, long double,
                   (long double x, long double y, long double z));
 #  endif

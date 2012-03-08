@@ -1,5 +1,11 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	fmal: Avoid compilation error on AIX.
+	* lib/math.in.h (fmal): Undefine macro before declaration. Needed on
+	AIX 5.2..7.1.
+
+2012-03-08  Bruno Haible  <bruno@clisp.org>
+
 	fma, fmaf, fmal: Override undeclared system functions on IRIX 6.5.
 	* m4/fma.m4 (gl_FUNC_FMA): If fma() exists but is not declared,
 	arrange to set REPLACE_FMA=1, not HAVE_FMA=0.
