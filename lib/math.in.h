@@ -1375,6 +1375,7 @@ _GL_FUNCDECL_RPL (roundl, long double, (long double x));
 _GL_CXXALIAS_RPL (roundl, long double, (long double x));
 # else
 #  if !@HAVE_DECL_ROUNDL@
+#   undef roundl
 _GL_FUNCDECL_SYS (roundl, long double, (long double x));
 #  endif
 _GL_CXXALIAS_SYS (roundl, long double, (long double x));

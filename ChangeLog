@@ -1,5 +1,11 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	roundl: Avoid compilation error on AIX.
+	* lib/math.in.h (roundl): Undefine macro before declaration. Needed on
+	AIX 5.2..7.1.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	roundl: Don't override undeclared system function on IRIX 6.5.
 	* m4/roundl.m4 (gl_FUNC_ROUNDL): Search for roundl() in the libraries
 	also when it is not declared. Set HAVE_ROUNDL. For replacement code,
