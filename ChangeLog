@@ -1,5 +1,11 @@
 2012-03-07  Bruno Haible  <bruno@clisp.org>
 
+	expm1l: Avoid compilation error on AIX.
+	* lib/math.in.h (expm1l): Undefine macro before declaration. Needed on
+	AIX 5.2..7.1.
+
+2012-03-07  Bruno Haible  <bruno@clisp.org>
+
 	expm1l: Don't override undeclared system function on IRIX 6.5.
 	* lib/math.in.h (expm1l): Test HAVE_DECL_EXPM1L, not HAVE_EXPM1L.
 	* m4/expm1l.m4 (gl_FUNC_EXPM1L): Don't assume expm1l() is declared when
