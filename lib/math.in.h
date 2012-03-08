@@ -1277,7 +1277,7 @@ _GL_WARN_ON_USE (remainderl, "remainderl is unportable - "
 
 
 #if @GNULIB_RINTF@
-# if !@HAVE_RINTF@
+# if !@HAVE_DECL_RINTF@
 _GL_FUNCDECL_SYS (rintf, float, (float x));
 # endif
 _GL_CXXALIAS_SYS (rintf, float, (float x));
