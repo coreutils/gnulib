@@ -1,4 +1,4 @@
-# exp2l.m4 serial 1
+# exp2l.m4 serial 2
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_EXP2L],
 [
+  m4_divert_text([DEFAULTS], [gl_exp2l_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([gl_FUNC_EXP2])
@@ -25,9 +26,56 @@ AC_DEFUN([gl_FUNC_EXP2L],
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has exp2l() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECL([exp2l], , [HAVE_DECL_EXP2L=0], [[#include <math.h>]])
+    m4_ifdef([gl_FUNC_EXP2L_IEEE], [
+      if test $gl_exp2l_required = ieee && test $REPLACE_EXP2L = 0; then
+        AC_CACHE_CHECK([whether exp2l works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_exp2l_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $EXP2L_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+#undef exp2l
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double exp2l (long double);
+static long double dummy (long double x) { return 0; }
+static long double zero;
+int main (int argc, char *argv[])
+{
+  long double (*my_exp2l) (long double) = argc ? exp2l : dummy;
+  int result = 0;
+  /* This test fails on OpenBSD 4.9, where exp2l(NaN) = 0.0.  */
+  if (exp2l (zero / zero) == 0.0L)
+    result |= 1;
+  /* This test fails on IRIX 6.5, where exp2l(-Inf) = 1.0.  */
+  if (!(exp2l (-1.0L / zero) == 0.0L))
+    result |= 2;
+  return result;
+}
+              ]])],
+              [gl_cv_func_exp2l_ieee=yes],
+              [gl_cv_func_exp2l_ieee=no],
+              [gl_cv_func_exp2l_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_exp2l_ieee" in
+          *yes) ;;
+          *) REPLACE_EXP2L=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_EXP2L=0
     HAVE_DECL_EXP2L=0
+  fi
+  if test $HAVE_EXP2L = 0 || test $REPLACE_EXP2L = 1; then
     dnl Find libraries needed to link lib/exp2l.c.
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       EXP2L_LIBM="$EXP2_LIBM"

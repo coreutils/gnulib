@@ -1,5 +1,19 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	exp2l-ieee: Work around test failure on OpenBSD 4.9 and IRIX 6.5.
+	* m4/exp2l-ieee.m4: New file.
+	* m4/exp2l.m4 (gl_FUNC_EXP2L): If gl_FUNC_EXP2L_IEEE is present,
+	test whether exp2l works with a NaN argument and with a negative
+	infinity argument. Replace it if not.
+	* lib/math.in.h (exp2l): Override if REPLACE_EXP2L is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_EXP2L.
+	* modules/math (Makefile.am): Substitute REPLACE_EXP2L.
+	* modules/exp2l (configure.ac): Consider REPLACE_EXP2L.
+	(Depends-on): Update conditions.
+	* modules/exp2l-ieee (Files): Add m4/exp2l-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_EXP2L_IEEE.
+	* doc/posix-functions/exp2l.texi: Mention the exp2l-ieee module.
+
 	Tests for module 'exp2l-ieee'.
 	* modules/exp2l-ieee-tests: New file.
 	* tests/test-exp2l-ieee.c: New file.
