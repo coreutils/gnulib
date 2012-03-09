@@ -1,5 +1,9 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'exp2-ieee'.
+	* modules/exp2-ieee-tests: New file.
+	* tests/test-exp2-ieee.c: New file.
+
 	New module 'exp2-ieee'.
 	* modules/exp2-ieee: New file.
 
