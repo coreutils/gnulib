@@ -1,5 +1,9 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'exp2l'.
+	* modules/exp2l-tests: New file.
+	* tests/test-exp2l.c: New file.
+
 	New module 'exp2l'.
 	* lib/math.in.h (exp2l): New declaration.
 	* lib/exp2l.c: New file.
