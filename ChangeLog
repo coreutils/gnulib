@@ -1,3 +1,19 @@
+2012-03-09  Bruno Haible  <bruno@clisp.org>
+
+	log: Work around OSF/1 5.1 bug.
+	* lib/math.in.h (log): New declaration.
+	* lib/log.c: New file.
+	* m4/log.m4 (gl_FUNC_LOG_WORKS): New macro.
+	(gl_FUNC_LOG): Invoke it. Set REPLACE_LOG.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG, REPLACE_LOG.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG, REPLACE_LOG.
+	* modules/log (Files): Add lib/log.c.
+	(Depends-on): Add math.
+	(configure.ac): If REPLACE_LOG is 1, compile an override.
+	* tests/test-math-c++.cc: Check the declaration of log.
+	* doc/posix-functions/log.texi: Mention the OSF/1 5.1 problem.
+
 2012-03-09  Jim Meyering  <meyering@redhat.com>
 
 	readtokens.c: adjust wording in a comment

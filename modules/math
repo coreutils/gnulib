@@ -81,6 +81,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LDEXPF''@/$(GNULIB_LDEXPF)/g' \
 	      -e 's/@''GNULIB_LDEXPL''@/$(GNULIB_LDEXPL)/g' \
 	      -e 's/@''GNULIB_LOGB''@/$(GNULIB_LOGB)/g' \
+	      -e 's/@''GNULIB_LOG''@/$(GNULIB_LOG)/g' \
 	      -e 's/@''GNULIB_LOGF''@/$(GNULIB_LOGF)/g' \
 	      -e 's/@''GNULIB_LOGL''@/$(GNULIB_LOGL)/g' \
 	      -e 's/@''GNULIB_LOG10F''@/$(GNULIB_LOG10F)/g' \
@@ -228,6 +229,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_ISNAN''@|$(REPLACE_ISNAN)|g' \
 	      -e 's|@''REPLACE_ITOLD''@|$(REPLACE_ITOLD)|g' \
 	      -e 's|@''REPLACE_LDEXPL''@|$(REPLACE_LDEXPL)|g' \
+	      -e 's|@''REPLACE_LOG''@|$(REPLACE_LOG)|g' \
 	      -e 's|@''REPLACE_MODF''@|$(REPLACE_MODF)|g' \
 	      -e 's|@''REPLACE_MODFF''@|$(REPLACE_MODFF)|g' \
 	      -e 's|@''REPLACE_MODFL''@|$(REPLACE_MODFL)|g' \

@@ -222,7 +222,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::log10l, long double, (long double));
 #if GNULIB_TEST_LOGF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::logf, float, (float));
 #endif
-//SIGNATURE_CHECK (GNULIB_NAMESPACE::log, double, (double));
+#if GNULIB_TEST_LOG
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log, double, (double));
+#endif
 #if GNULIB_TEST_LOGL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
 #endif

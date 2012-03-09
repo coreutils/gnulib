@@ -2,13 +2,19 @@ Description:
 log() function: natural logarithmic function.
 
 Files:
+lib/log.c
 m4/log.m4
 m4/mathfunc.m4
 
 Depends-on:
+math
 
 configure.ac:
 gl_FUNC_LOG
+if test $REPLACE_LOG = 1; then
+  AC_LIBOBJ([log])
+fi
+gl_MATH_MODULE_INDICATOR([log])
 
 Makefile.am:
 
