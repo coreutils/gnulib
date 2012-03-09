@@ -1,0 +1,24 @@
+Description:
+exp2l() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+exp2l
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(EXP2L_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
