@@ -74,7 +74,7 @@ set_nth_bit (size_t n, word *bitset)
    by testing ferror (STREAM).
 
    This function works properly on lines containing NUL bytes
-   and on files do not end with a delimiter.  */
+   and on files that do not end with a delimiter.  */
 
 size_t
 readtoken (FILE *stream,

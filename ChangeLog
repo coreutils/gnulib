@@ -1,3 +1,8 @@
+2012-03-09  Jim Meyering  <meyering@redhat.com>
+
+	readtokens.c: adjust wording in a comment
+	* lib/readtokens.c: Insert omitted "that" in a comment.
+
 2012-03-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	modechange: add notations +40, 00440, etc.
