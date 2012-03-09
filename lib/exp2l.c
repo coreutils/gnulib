@@ -1,4 +1,4 @@
-/* Exponential function.
+/* Exponential base 2 function.
    Copyright (C) 2011-2012 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@
 #if HAVE_SAME_LONG_DOUBLE_AS_DOUBLE
 
 long double
-expl (long double x)
+exp2l (long double x)
 {
-  return exp (x);
+  return exp2 (x);
 }
 
 #else
@@ -33,9 +33,6 @@ expl (long double x)
 
 /* gl_expl_table[i] = exp((i - 128) * log(2)/256).  */
 extern const long double gl_expl_table[257];
-
-/* A value slightly larger than log(2).  */
-#define LOG2_PLUS_EPSILON 0.6931471805599454L
 
 /* Best possible approximation of log(2) as a 'long double'.  */
 #define LOG2 0.693147180559945309417232121458176568075L
@@ -49,37 +46,37 @@ extern const long double gl_expl_table[257];
 /* Best possible approximation of 256/log(2) as a 'long double'.  */
 #define LOG2_BY_256_INVERSE 369.329930467574632284140718336484387181L
 
-/* The upper 32 bits of log(2)/256.  */
-#define LOG2_BY_256_HI_PART 0.0027076061733168899081647396087646484375L
-/* log(2)/256 - LOG2_HI_PART.  */
-#define LOG2_BY_256_LO_PART \
-  0.000000000000745396456746323365681353781544922399845L
-
 long double
-expl (long double x)
+exp2l (long double x)
 {
+  /* exp2(x) = exp(x*log(2)).
+     If we would compute it like this, there would be rounding errors for
+     integer or near-integer values of x.  To avoid these, we inline the
+     algorithm for exp(), and the multiplication with log(2) cancels a
+     division by log(2).  */
+
   if (isnanl (x))
     return x;
 
-  if (x >= (long double) LDBL_MAX_EXP * LOG2_PLUS_EPSILON)
-    /* x > LDBL_MAX_EXP * log(2)
-       hence exp(x) > 2^LDBL_MAX_EXP, overflows to Infinity.  */
+  if (x > (long double) LDBL_MAX_EXP)
+    /* x > LDBL_MAX_EXP
+       hence exp2(x) > 2^LDBL_MAX_EXP, overflows to Infinity.  */
     return HUGE_VALL;
 
-  if (x <= (long double) (LDBL_MIN_EXP - 1 - LDBL_MANT_DIG) * LOG2_PLUS_EPSILON)
-    /* x < (LDBL_MIN_EXP - 1 - LDBL_MANT_DIG) * log(2)
-       hence exp(x) < 2^(LDBL_MIN_EXP-1-LDBL_MANT_DIG),
+  if (x < (long double) (LDBL_MIN_EXP - 1 - LDBL_MANT_DIG))
+    /* x < (LDBL_MIN_EXP - 1 - LDBL_MANT_DIG)
+       hence exp2(x) < 2^(LDBL_MIN_EXP-1-LDBL_MANT_DIG),
        underflows to zero.  */
     return 0.0L;
 
   /* Decompose x into
-       x = n * log(2) + m * log(2)/256 + y
+       x = n + m/256 + y/log(2)
      where
        n is an integer,
        m is an integer, -128 <= m <= 128,
        y is a number, |y| <= log(2)/512 + epsilon = 0.00135...
      Then
-       exp(x) = 2^n * exp(m * log(2)/256) * exp(y)
+       exp2(x) = 2^n * exp(m * log(2)/256) * exp(y)
      The first factor is an ldexpl() call.
      The second factor is a table lookup.
      The third factor is computed
@@ -101,22 +98,11 @@ expl (long double x)
                    + ...
        Since |z| <= log(2)/1024 < 0.0007, the relative error of the z^13 term
        is < 0.0007^12 < 2^-120 <= 2^-LDBL_MANT_DIG, therefore we can truncate
-       the series after the z^11 term.
-
-     Given the usual bounds LDBL_MAX_EXP <= 16384, LDBL_MIN_EXP >= -16381,
-     LDBL_MANT_DIG <= 120, we can estimate x:  -11440 <= x <= 11357.
-     This means, when dividing x by log(2), where we want x mod log(2)
-     to be precise to LDBL_MANT_DIG bits, we have to use an approximation
-     to log(2) that has 14+LDBL_MANT_DIG bits.  */
+       the series after the z^11 term.  */
 
   {
-    long double nm = roundl (x * LOG2_BY_256_INVERSE); /* = 256 * n + m */
-    /* n has at most 15 bits, nm therefore has at most 23 bits, therefore
-       n * LOG2_HI_PART is computed exactly, and n * LOG2_LO_PART is computed
-       with an absolute error < 2^15 * 2e-10 * 2^-LDBL_MANT_DIG.  */
-    long double y_tmp = x - nm * LOG2_BY_256_HI_PART;
-    long double y = y_tmp - nm * LOG2_BY_256_LO_PART;
-    long double z = 0.5L * y;
+    long double nm = roundl (x * 256.0L); /* = 256 * n + m */
+    long double z = (x * 256.0L - nm) * (LOG2_BY_256 * 0.5L);
 
 /* Coefficients of the power series for tanh(z).  */
 #define TANH_COEFF_1   1.0L

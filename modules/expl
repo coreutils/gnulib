@@ -3,6 +3,7 @@ expl() function: exponential function with long double argument.
 
 Files:
 lib/expl.c
+lib/expl-table.c
 m4/expl.m4
 
 Depends-on:
@@ -18,6 +19,7 @@ configure.ac:
 gl_FUNC_EXPL
 if test $HAVE_EXPL = 0; then
   AC_LIBOBJ([expl])
+  AC_LIBOBJ([expl-table])
 fi
 gl_MATH_MODULE_INDICATOR([expl])
 

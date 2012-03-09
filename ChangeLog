@@ -1,5 +1,24 @@
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'exp2l'.
+	* lib/math.in.h (exp2l): New declaration.
+	* lib/exp2l.c: New file.
+	* lib/expl-table.c: New file, extracted from lib/expl.c.
+	* lib/expl.c (gl_expl_table): New declaration.
+	(expl): Remove expl_table. Update reference.
+	* m4/exp2l.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether exp2l is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_EXP2L, HAVE_DECL_EXP2L.
+	* modules/math (Makefile.am): Substitute GNULIB_EXP2L, HAVE_DECL_EXP2L.
+	* modules/exp2l: New file.
+	* modules/expl (Files): Add lib/expl-table.c.
+	(configure.ac): Compile also expl-table.c.
+	* tests/test-math-c++.cc: Check the declaration of exp2l.
+	* doc/posix-functions/exp2l.texi: Mention the new module and the IRIX
+	problem.
+
+2012-03-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'exp2f'.
 	* modules/exp2f-tests: New file.
 	* tests/test-exp2f.c: New file.
