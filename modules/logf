@@ -8,11 +8,11 @@ m4/logf.m4
 Depends-on:
 math
 extensions
-log             [test $HAVE_LOGF = 0]
+log             [test $HAVE_LOGF = 0 || test $REPLACE_LOGF = 1]
 
 configure.ac:
 gl_FUNC_LOGF
-if test $HAVE_LOGF = 0; then
+if test $HAVE_LOGF = 0 || test $REPLACE_LOGF = 1; then
   AC_LIBOBJ([logf])
 fi
 gl_MATH_MODULE_INDICATOR([logf])

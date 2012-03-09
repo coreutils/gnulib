@@ -1,5 +1,19 @@
 2012-03-09  Bruno Haible  <bruno@clisp.org>
 
+	logf: Work around OSF/1 5.1 bug.
+	* lib/math.in.h (logf): Override if REPLACE_LOGF is 1.
+	* lib/logf.c (logf): If logf exists, use it and provide just the
+	workaround.
+	* m4/logf.m4 (gl_FUNC_LOGF_WORKS): New macro.
+	(gl_FUNC_LOGF): Invoke it. Set REPLACE_LOGF.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_LOGF.
+	* modules/math (Makefile.am): Substitute REPLACE_LOGF.
+	* modules/logf (configure.ac): Consider REPLACE_LOGF.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/logf.texi: Mention the OSF/1 5.1 problem.
+
+2012-03-09  Bruno Haible  <bruno@clisp.org>
+
 	log: Work around OSF/1 5.1 bug.
 	* lib/math.in.h (log): New declaration.
 	* lib/log.c: New file.

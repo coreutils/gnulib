@@ -1122,11 +1122,20 @@ _GL_WARN_ON_USE (logb, "logb is unportable - "
 
 
 #if @GNULIB_LOGF@
-# if !@HAVE_LOGF@
-#  undef logf
+# if @REPLACE_LOGF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef logf
+#   define logf rpl_logf
+#  endif
+_GL_FUNCDECL_RPL (logf, float, (float x));
+_GL_CXXALIAS_RPL (logf, float, (float x));
+# else
+#  if !@HAVE_LOGF@
+#   undef logf
 _GL_FUNCDECL_SYS (logf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (logf, float, (float x));
+# endif
 _GL_CXXALIASWARN (logf);
 #elif defined GNULIB_POSIXCHECK
 # undef logf

@@ -21,6 +21,15 @@
 
 float
 logf (float x)
+#undef logf
 {
+#if HAVE_LOGF
+  /* Work around the OSF/1 5.1 bug.  */
+  if (x == 0.0f)
+    /* Return -Infinity.  */
+    return -1.0f / 0.0f;
+  return logf (x);
+#else
   return (float) log ((double) x);
+#endif
 }
