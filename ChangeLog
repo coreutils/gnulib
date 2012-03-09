@@ -1,3 +1,9 @@
+2012-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	modechange: add notations +40, 00440, etc.
+	* lib/modechange.c (mode_compile): Support new notations
+	+40, -40, =440, 00440.  See <http://debbugs.gnu.org/8391>.
+
 2012-03-08  Bruno Haible  <bruno@clisp.org>
 
 	exp2l-ieee: Work around test failure on OpenBSD 4.9 and IRIX 6.5.

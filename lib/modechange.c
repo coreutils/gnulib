@@ -136,6 +136,7 @@ mode_compile (char const *mode_string)
   /* The array of mode-change directives to be returned.  */
   struct mode_change *mc;
   size_t used = 0;
+  char const *p;
 
   if ('0' <= *mode_string && *mode_string < '8')
     {
@@ -143,40 +144,43 @@ mode_compile (char const *mode_string)
       mode_t mode;
       mode_t mentioned;
 
+      p = mode_string;
       do
         {
-          octal_mode = 8 * octal_mode + *mode_string++ - '0';
+          octal_mode = 8 * octal_mode + *p++ - '0';
           if (ALLM < octal_mode)
             return NULL;
         }
-      while ('0' <= *mode_string && *mode_string < '8');
+      while ('0' <= *p && *p < '8');
 
-      if (*mode_string)
+      if (*p)
         return NULL;
 
       mode = octal_to_mode (octal_mode);
-      mentioned = (mode & (S_ISUID | S_ISGID)) | S_ISVTX | S_IRWXUGO;
+      mentioned = (p - mode_string < 5
+                   ? (mode & (S_ISUID | S_ISGID)) | S_ISVTX | S_IRWXUGO
+                   : CHMOD_MODE_BITS);
       return make_node_op_equals (mode, mentioned);
     }
 
   /* Allocate enough space to hold the result.  */
   {
     size_t needed = 1;
-    char const *p;
     for (p = mode_string; *p; p++)
       needed += (*p == '=' || *p == '+' || *p == '-');
     mc = xnmalloc (needed, sizeof *mc);
   }
 
-  /* One loop iteration for each '[ugoa]*([-+=]([rwxXst]*|[ugo]))+'.  */
-  for (;; mode_string++)
+  /* One loop iteration for each
+     '[ugoa]*([-+=]([rwxXst]*|[ugo]))+|[-+=][0-7]+'.  */
+  for (p = mode_string; ; p++)
     {
       /* Which bits in the mode are operated on.  */
       mode_t affected = 0;
 
       /* Turn on all the bits in 'affected' for each group given.  */
-      for (;; mode_string++)
-        switch (*mode_string)
+      for (;; p++)
+        switch (*p)
           {
           default:
             goto invalid;
@@ -199,35 +203,60 @@ mode_compile (char const *mode_string)
 
       do
         {
-          char op = *mode_string++;
+          char op = *p++;
           mode_t value;
+          mode_t mentioned = 0;
           char flag = MODE_COPY_EXISTING;
           struct mode_change *change;
 
-          switch (*mode_string++)
+          switch (*p)
             {
+            case '0': case '1': case '2': case '3':
+            case '4': case '5': case '6': case '7':
+              {
+                unsigned int octal_mode = 0;
+
+                do
+                  {
+                    octal_mode = 8 * octal_mode + *p++ - '0';
+                    if (ALLM < octal_mode)
+                      return NULL;
+                  }
+                while ('0' <= *p && *p < '8');
+
+                if (affected || (*p && *p != ','))
+                  return NULL;
+                affected = mentioned = CHMOD_MODE_BITS;
+                value = octal_to_mode (octal_mode);
+                flag = MODE_ORDINARY_CHANGE;
+                break;
+              }
+
             case 'u':
               /* Set the affected bits to the value of the "u" bits
                  on the same file.  */
               value = S_IRWXU;
+              p++;
               break;
             case 'g':
               /* Set the affected bits to the value of the "g" bits
                  on the same file.  */
               value = S_IRWXG;
+              p++;
               break;
             case 'o':
               /* Set the affected bits to the value of the "o" bits
                  on the same file.  */
               value = S_IRWXO;
+              p++;
               break;
 
             default:
               value = 0;
               flag = MODE_ORDINARY_CHANGE;
 
-              for (mode_string--;; mode_string++)
-                switch (*mode_string)
+              for (;; p++)
+                switch (*p)
                   {
                   case 'r':
                     value |= S_IRUSR | S_IRGRP | S_IROTH;
@@ -260,16 +289,16 @@ mode_compile (char const *mode_string)
           change->flag = flag;
           change->affected = affected;
           change->value = value;
-          change->mentioned = (affected ? affected & value : value);
+          change->mentioned =
+            (mentioned ? mentioned : affected ? affected & value : value);
         }
-      while (*mode_string == '=' || *mode_string == '+'
-             || *mode_string == '-');
+      while (*p == '=' || *p == '+' || *p == '-');
 
-      if (*mode_string != ',')
+      if (*p != ',')
         break;
     }
 
-  if (*mode_string == 0)
+  if (*p == 0)
     {
       mc[used].flag = MODE_DONE;
       return mc;
