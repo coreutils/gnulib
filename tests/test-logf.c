@@ -23,10 +23,19 @@
 #include "signature.h"
 SIGNATURE_CHECK (logf, float, (float));
 
+#include <float.h>
+
+#include "minus-zero.h"
 #include "macros.h"
 
-volatile float x;
-float y;
+#define DOUBLE float
+#define HUGEVAL HUGE_VALF
+#define L_(literal) literal##f
+#define MANT_DIG FLT_MANT_DIG
+#define MINUS_ZERO minus_zerof
+#define LOG logf
+#define RANDOM randomf
+#include "test-log.h"
 
 int
 main ()
@@ -35,6 +44,8 @@ main ()
   x = 0.6f;
   y = logf (x);
   ASSERT (y >= -0.5108257f && y <= -0.5108256f);
+
+  test_function ();
 
   return 0;
 }

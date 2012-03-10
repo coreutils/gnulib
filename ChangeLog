@@ -1,3 +1,24 @@
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
+	log* tests: More tests.
+	* tests/test-log.h: New file.
+	* tests/test-log.c: Include <float.h>, minus-zero.h, test-log.h.
+	(main): Invoke test_function.
+	* tests/test-logf.c: Include <float.h>, minus-zero.h, test-log.h.
+	(main): Invoke test_function.
+	* tests/test-logl.c: Include <float.h>, minus-zero.h, test-log.h.
+	(main): Invoke test_function.
+	* modules/log-tests (Files): Add tests/test-log.h, tests/minus-zero.h,
+	tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_log_SOURCES.
+	* modules/logf-tests (Files): Add tests/test-log.h, tests/minus-zero.h,
+	tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_logf_SOURCES.
+	* modules/logl-tests (Files): Add tests/test-log.h, tests/minus-zero.h,
+	tests/randoml.c.
+	(Depends-on): Add 'float'.
+	(Makefile.am): Add randoml.c to test_logl_SOURCES.
+
 2012-03-09  Bruno Haible  <bruno@clisp.org>
 
 	logl: Work around OSF/1 5.1 bug.
