@@ -27,7 +27,9 @@
 # else
    /* Get declaration of isnanf(), if not declared in <math.h>.  */
 #  if defined __sgi
-#   include <ieeefp.h>
+   /* We can't include <ieeefp.h>, because it conflicts with our definition of
+      isnand.  Therefore declare isnanf separately.  */
+extern int isnanf (float x);
 #  endif
 # endif
 #else

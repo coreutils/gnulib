@@ -1,5 +1,8 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	isnanf-nolibm: Fix last commit.
+	* lib/isnanf-nolibm.h [IRIX]: Don't include <ieeefp.h>. Declare isnanf.
+
 	isnanf-nolibm: Make it work on IRIX 6.5 with cc.
 	* lib/isnanf-nolibm.h [IRIX]: Include <ieeefp.h>.
 
