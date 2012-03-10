@@ -23,10 +23,17 @@
 #include "signature.h"
 SIGNATURE_CHECK (log1p, double, (double));
 
+#include <float.h>
+
 #include "macros.h"
 
-volatile double x;
-double y;
+#define DOUBLE double
+#define HUGEVAL HUGE_VAL
+#define L_(literal) literal
+#define MANT_DIG DBL_MANT_DIG
+#define LOG1P log1p
+#define RANDOM randomd
+#include "test-log1p.h"
 
 int
 main ()
@@ -35,6 +42,8 @@ main ()
   x = 0.6;
   y = log1p (x);
   ASSERT (y >= 0.4700036292 && y <= 0.4700036293);
+
+  test_function ();
 
   return 0;
 }

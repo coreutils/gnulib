@@ -1,5 +1,12 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1p tests: More tests.
+	* tests/test-log1p.h: New file.
+	* modules/log1p-tests (Files): Add tests/test-log1p.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_log1p_SOURCES.
+	* tests/test-log1p.c: Include <float.h> and test-log1p.h.
+	(main): Invoke test_function.
+
 	log1p: Provide replacement for Minix and MSVC.
 	* lib/math.in.h (log1p): New declaration.
 	* lib/log1p.c: New file.
