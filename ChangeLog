@@ -1,5 +1,9 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log1pf'.
+	* modules/log1pf-tests: New file.
+	* tests/test-log1pf.c: New file.
+
 	New module 'log1pf'.
 	* lib/math.in.h (log1pf): New declaration.
 	* lib/log1pf.c: New file.
