@@ -1,5 +1,18 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log1pl'.
+	* lib/math.in.h (log1pl): New declaration.
+	* lib/log1pl.c: New file.
+	* m4/log1pl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log1pl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG1PL, HAVE_LOG1PL.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG1PL, HAVE_LOG1PL.
+	* modules/log1pl: New file.
+	* tests/test-math-c++.cc: Check the declaration of log1pl.
+	* doc/posix-functions/log1pl.texi: Mention the new module.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'log1pf'.
 	* modules/log1pf-tests: New file.
 	* tests/test-log1pf.c: New file.

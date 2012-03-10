@@ -1258,6 +1258,20 @@ _GL_WARN_ON_USE (log1p, "log1p has portability problems - "
 # endif
 #endif
 
+#if @GNULIB_LOG1PL@
+# if !@HAVE_LOG1PL@
+_GL_FUNCDECL_SYS (log1pl, long double, (long double x));
+# endif
+_GL_CXXALIAS_SYS (log1pl, long double, (long double x));
+_GL_CXXALIASWARN (log1pl);
+#elif defined GNULIB_POSIXCHECK
+# undef log1pl
+# if HAVE_RAW_DECL_LOG1PL
+_GL_WARN_ON_USE (log1pl, "log1pl has portability problems - "
+                 "use gnulib module log1pl for portability");
+# endif
+#endif
+
 
 #if @GNULIB_MODFF@
 # if @REPLACE_MODFF@
