@@ -1,5 +1,9 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	logf-ieee: Work around test failure on Solaris 9.
+	* modules/logf-ieee (Depends-on): Add log-ieee.
+	(configure.ac): Require gl_FUNC_LOGF.
+
 	log-ieee: Work around test failure on NetBSD 5.1 and Solaris 11.
 	* m4/log-ieee.m4: New file.
 	* m4/log.m4 (gl_FUNC_LOG): If gl_FUNC_LOG_IEEE is present, test whether

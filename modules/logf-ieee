@@ -6,8 +6,10 @@ Files:
 Depends-on:
 logf
 fpieee
+log-ieee        [test $HAVE_LOGF = 0 || test $REPLACE_LOGF = 1]
 
 configure.ac:
+AC_REQUIRE([gl_FUNC_LOGF])
 
 Makefile.am:
 
