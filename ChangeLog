@@ -1,5 +1,15 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	math tests: Small simplification.
+	* tests/test-exp.h (test_function): Use the same err_bound for
+	'double' on platforms with sizeof (long double) == sizeof (double)
+	than on platforms with sizeof (long double) > sizeof (double).
+	* tests/test-exp2.h (test_function): Likewise.
+	* tests/test-expm1.h (test_function): Likewise.
+	* tests/test-log.h (test_function): Likewise.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	Fix some comments.
 	* lib/expl.c: Fix an ambiguous comment.
 	* lib/expm1.c: Likewise.

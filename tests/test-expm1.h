@@ -55,7 +55,7 @@ test_function (void)
   {
     /* Error bound, in ulps.  */
     const DOUBLE err_bound =
-      (sizeof (DOUBLE) == sizeof (long double) ?
+      (sizeof (DOUBLE) > sizeof (double) ?
 #if defined __i386__ && defined __FreeBSD__
        /* On FreeBSD/x86 6.4, the 'long double' type really has only 53 bits of
           precision in the compiler but 64 bits of precision at runtime.  See
@@ -84,7 +84,7 @@ test_function (void)
   {
     /* Error bound, in ulps.  */
     const DOUBLE err_bound =
-      (sizeof (DOUBLE) == sizeof (long double) ?
+      (sizeof (DOUBLE) > sizeof (double) ?
 #if defined __i386__ && defined __FreeBSD__
        L_(1536.0)
 #else
