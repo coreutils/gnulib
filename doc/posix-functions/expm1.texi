@@ -16,8 +16,7 @@ Minix 3.1.8, mingw, MSVC 9.
 Portability problems fixed by Gnulib module @code{expm1-ieee}:
 @itemize
 @item
-This function has problems when the first argument is minus zero on some
-platforms:
+This function has problems when the argument is minus zero on some platforms:
 AIX 7.1.
 @end itemize
 
