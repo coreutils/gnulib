@@ -1,4 +1,4 @@
-# fmodf.m4 serial 3
+# fmodf.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,7 +46,6 @@ static float dummy (float x, float y) { return 0; }
 int main (int argc, char *argv[])
 {
   float (*my_fmodf) (float, float) = argc ? fmodf : dummy;
-  float i;
   float f;
   /* Test fmodf(...,0.0f).
      This test fails on OSF/1 5.1.  */

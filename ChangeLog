@@ -1,5 +1,11 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	Remove unused variables.
+	* m4/fmodf.m4 (gl_FUNC_FMODF): Remove unused variable 'i'.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): Likewise.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	isnanf-nolibm: Fix last commit.
 	* lib/isnanf-nolibm.h [IRIX]: Don't include <ieeefp.h>. Declare isnanf.
 

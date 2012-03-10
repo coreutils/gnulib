@@ -1,4 +1,4 @@
-# remainderf.m4 serial 5
+# remainderf.m4 serial 6
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -82,7 +82,6 @@ static float dummy (float x, float y) { return 0; }
 int main (int argc, char *argv[])
 {
   float (*my_remainderf) (float, float) = argc ? remainderf : dummy;
-  float i;
   float f;
   /* Test remainderf(...,0.0f).
      This test fails on OSF/1 5.1.  */
