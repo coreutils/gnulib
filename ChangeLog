@@ -1,5 +1,10 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	New module 'logf-ieee'.
+	* modules/logf-ieee: New file.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	log: Fix bug introduced on 2012-03-09.
 	* m4/log.m4 (gl_FUNC_LOG): Require gl_MATH_H_DEFAULTS.
 

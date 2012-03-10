@@ -1,0 +1,24 @@
+Description:
+logf() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+logf
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOGF_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
