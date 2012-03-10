@@ -6,6 +6,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_LOG],
 [
+  AC_REQUIRE([gl_MATH_H_DEFAULTS])
+
   dnl Determine LOG_LIBM.
   gl_COMMON_DOUBLE_MATHFUNC([log])
 
