@@ -18,6 +18,7 @@ dup
 fchdir
 fcntl-h
 fcntl-safer
+fdopendir
 fstat
 hash
 i-ring
