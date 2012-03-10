@@ -1,5 +1,14 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	logf-ieee: Work around test failure on NetBSD 5.1.
+	* m4/logf-ieee.m4: New file.
+	* m4/logf.m4 (gl_FUNC_LOGF): If gl_FUNC_LOGF_IEEE is present, test
+	whether logf works with a negative argument. Replace it if not.
+	* lib/logf.c (logf): For negative arguments, return NaN.
+	* modules/logf-ieee (Files): Add m4/logf-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_LOGF_IEEE.
+	* doc/posix-functions/logf.texi: Mention the logf-ieee module.
+
 	logf-ieee: Work around test failure on Solaris 9.
 	* modules/logf-ieee (Depends-on): Add log-ieee.
 	(configure.ac): Require gl_FUNC_LOGF.
