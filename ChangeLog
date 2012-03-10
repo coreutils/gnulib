@@ -1,5 +1,9 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log1pl'.
+	* modules/log1pl-tests: New file.
+	* tests/test-log1pl.c: New file.
+
 	New module 'log1pl'.
 	* lib/math.in.h (log1pl): New declaration.
 	* lib/log1pl.c: New file.
