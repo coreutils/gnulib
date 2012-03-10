@@ -1,4 +1,4 @@
-# serial 60
+# serial 61
 
 # Copyright (C) 1996-2001, 2003-2012 Free Software Foundation, Inc.
 #
@@ -175,6 +175,9 @@ AC_DEFUN([gl_REGEX],
   esac
 
   if test $ac_use_included_regex = yes; then
+    AC_DEFINE([_REGEX_INCLUDE_LIMITS_H], [1],
+      [Define if you want <regex.h> to include <limits.h>, so that it
+       consistently overrides <limits.h>'s RE_DUP_MAX.])
     AC_DEFINE([_REGEX_LARGE_OFFSETS], [1],
       [Define if you want regoff_t to be at least as wide POSIX requires.])
     AC_DEFINE([re_syntax_options], [rpl_re_syntax_options],

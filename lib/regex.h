@@ -294,6 +294,9 @@ extern reg_syntax_t re_syntax_options;
 /* Maximum number of duplicates an interval can allow.  POSIX-conforming
    systems might define this in <limits.h>, but we want our
    value, so remove any previous define.  */
+# ifdef _REGEX_INCLUDE_LIMITS_H
+#  include <limits.h>
+# endif
 # ifdef RE_DUP_MAX
 #  undef RE_DUP_MAX
 # endif

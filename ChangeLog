@@ -1,5 +1,15 @@
 2012-03-10  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: allow inclusion of <regex.h> before <limits.h>
+	Without this patch, portable programs had to include <limits.h> before
+	<regex.h> if they wanted a consistent value for RE_DUP_MAX.
+	I ran into this problem with a test version of GNU grep on Solaris 8.
+	* lib/regex.h: Include <limits.h> if _REGEX_INCLUDE_LIMITS_H.
+	This is done conditionally so that this change can be merged
+	back to glibc.
+	* m4/regex.m4 (gl_REGEX): Define _REGEX_INCLUDE_LIMITS_H if
+	using the included regex.
+
 	fts: depend on fdopendir
 	* modules/fts (Depends-on): Depend on fdopendir.  This is needed
 	on Solaris 8, at least, since it lacks fdopendir.  Evidently the
