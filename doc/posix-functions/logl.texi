@@ -20,6 +20,9 @@ MacOS X 10.3.
 @item
 This function returns wrong results on some platforms:
 glibc 2.7 on Linux/SPARC64.
+@item
+This function returns a wrong value for a minus zero argument on some platforms:
+OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
