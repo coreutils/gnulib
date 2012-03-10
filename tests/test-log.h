@@ -29,6 +29,7 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 3) / 5))
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
+  /* Pole.  */
   {
     DOUBLE z = LOG (L_(0.0));
     ASSERT (z == - HUGEVAL);
