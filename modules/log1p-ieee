@@ -1,0 +1,24 @@
+Description:
+log1p() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+log1p
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG1P_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
