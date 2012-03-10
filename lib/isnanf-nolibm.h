@@ -24,6 +24,11 @@
 # elif defined isnan
 #  undef isnanf
 #  define isnanf(x) isnan ((float)(x))
+# else
+   /* Get declaration of isnanf(), if not declared in <math.h>.  */
+#  if defined __sgi
+#   include <ieeefp.h>
+#  endif
 # endif
 #else
 /* Test whether X is a NaN.  */

@@ -1,5 +1,10 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	isnanf-nolibm: Make it work on IRIX 6.5 with cc.
+	* lib/isnanf-nolibm.h [IRIX]: Include <ieeefp.h>.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	logf-ieee: Work around test failure on NetBSD 5.1.
 	* m4/logf-ieee.m4: New file.
 	* m4/logf.m4 (gl_FUNC_LOGF): If gl_FUNC_LOGF_IEEE is present, test
