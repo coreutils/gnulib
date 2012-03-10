@@ -99,9 +99,9 @@ expm1 (double x)
                    + 21844/6081075 * z^13
                    - 929569/638512875 * z^15
                    + ...
-       Since |z| <= log(2)/1024 < 0.0007, the relative error of the z^7 term
-       is < 0.0007^6 < 2^-60 <= 2^-DBL_MANT_DIG, therefore we can truncate
-       the series after the z^5 term.
+       Since |z| <= log(2)/1024 < 0.0007, the relative contribution of the
+       z^7 term is < 0.0007^6 < 2^-60 <= 2^-DBL_MANT_DIG, therefore we can
+       truncate the series after the z^5 term.
 
      Given the usual bounds DBL_MAX_EXP <= 16384, DBL_MANT_DIG <= 120, we
      can estimate x:  -84 <= x <= 11357.

@@ -1,3 +1,12 @@
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
+	Fix some comments.
+	* lib/expl.c: Fix an ambiguous comment.
+	* lib/expm1.c: Likewise.
+	* lib/expm1l.c: Likewise.
+	* lib/exp2.c: Likewise.
+	* lib/exp2l.c: Likewise.
+
 2012-03-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: allow inclusion of <regex.h> before <limits.h>

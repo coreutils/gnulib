@@ -96,9 +96,9 @@ exp2l (long double x)
                    + 21844/6081075 * z^13
                    - 929569/638512875 * z^15
                    + ...
-       Since |z| <= log(2)/1024 < 0.0007, the relative error of the z^13 term
-       is < 0.0007^12 < 2^-120 <= 2^-LDBL_MANT_DIG, therefore we can truncate
-       the series after the z^11 term.  */
+       Since |z| <= log(2)/1024 < 0.0007, the relative contribution of the
+       z^13 term is < 0.0007^12 < 2^-120 <= 2^-LDBL_MANT_DIG, therefore we
+       can truncate the series after the z^11 term.  */
 
   {
     long double nm = roundl (x * 256.0L); /* = 256 * n + m */
