@@ -1221,6 +1221,29 @@ _GL_WARN_ON_USE (log10l, "log10l is unportable - "
 #endif
 
 
+#if @GNULIB_LOG1PF@
+# if @REPLACE_LOG1PF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef log1pf
+#   define log1pf rpl_log1pf
+#  endif
+_GL_FUNCDECL_RPL (log1pf, float, (float x));
+_GL_CXXALIAS_RPL (log1pf, float, (float x));
+# else
+#  if !@HAVE_LOG1PF@
+_GL_FUNCDECL_SYS (log1pf, float, (float x));
+#  endif
+_GL_CXXALIAS_SYS (log1pf, float, (float x));
+# endif
+_GL_CXXALIASWARN (log1pf);
+#elif defined GNULIB_POSIXCHECK
+# undef log1pf
+# if HAVE_RAW_DECL_LOG1PF
+_GL_WARN_ON_USE (log1pf, "log1pf is unportable - "
+                 "use gnulib module log1pf for portability");
+# endif
+#endif
+
 #if @GNULIB_LOG1P@
 # if !@HAVE_LOG1P@
 _GL_FUNCDECL_SYS (log1p, double, (double x));

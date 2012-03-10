@@ -215,6 +215,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpl, long double, (long double, int));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log10l, long double, (long double));
 #endif
 
+#if GNULIB_TEST_LOG1PF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log1pf, float, (float));
+#endif
 #if GNULIB_TEST_LOG1P
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log1p, double, (double));
 #endif

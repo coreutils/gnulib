@@ -1,4 +1,4 @@
-# math_h.m4 serial 96
+# math_h.m4 serial 97
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,8 @@ AC_DEFUN([gl_MATH_H],
      expf expl exp2 exp2f exp2l expm1 expm1f expm1l
      fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
-     ldexpf ldexpl logb log logf logl log10f log10l log1p modf modff modfl powf
+     ldexpf ldexpl logb log logf logl log10f log10l log1p log1pf
+     modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
      tanf tanl tanhf trunc truncf truncl])
@@ -120,6 +121,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_LOG10F=0;     AC_SUBST([GNULIB_LOG10F])
   GNULIB_LOG10L=0;     AC_SUBST([GNULIB_LOG10L])
   GNULIB_LOG1P=0;      AC_SUBST([GNULIB_LOG1P])
+  GNULIB_LOG1PF=0;     AC_SUBST([GNULIB_LOG1PF])
   GNULIB_MODF=0;       AC_SUBST([GNULIB_MODF])
   GNULIB_MODFF=0;      AC_SUBST([GNULIB_MODFF])
   GNULIB_MODFL=0;      AC_SUBST([GNULIB_MODFL])
@@ -184,6 +186,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_LOG10F=1;               AC_SUBST([HAVE_LOG10F])
   HAVE_LOG10L=1;               AC_SUBST([HAVE_LOG10L])
   HAVE_LOG1P=1;                AC_SUBST([HAVE_LOG1P])
+  HAVE_LOG1PF=1;               AC_SUBST([HAVE_LOG1PF])
   HAVE_MODFF=1;                AC_SUBST([HAVE_MODFF])
   HAVE_MODFL=1;                AC_SUBST([HAVE_MODFL])
   HAVE_POWF=1;                 AC_SUBST([HAVE_POWF])
@@ -265,6 +268,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_LOG=0;               AC_SUBST([REPLACE_LOG])
   REPLACE_LOGF=0;              AC_SUBST([REPLACE_LOGF])
   REPLACE_LOGL=0;              AC_SUBST([REPLACE_LOGL])
+  REPLACE_LOG1PF=0;            AC_SUBST([REPLACE_LOG1PF])
   REPLACE_MODF=0;              AC_SUBST([REPLACE_MODF])
   REPLACE_MODFF=0;             AC_SUBST([REPLACE_MODFF])
   REPLACE_MODFL=0;             AC_SUBST([REPLACE_MODFL])
