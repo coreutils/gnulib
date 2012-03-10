@@ -1,5 +1,9 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log1p-ieee'.
+	* modules/log1p-ieee-tests: New file.
+	* tests/test-log1p-ieee.c: New file.
+
 	New module 'log1p-ieee'.
 	* modules/log1p-ieee: New file.
 
