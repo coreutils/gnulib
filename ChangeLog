@@ -1,5 +1,14 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log-ieee: Work around test failure on NetBSD 5.1 and Solaris 11.
+	* m4/log-ieee.m4: New file.
+	* m4/log.m4 (gl_FUNC_LOG): If gl_FUNC_LOG_IEEE is present, test whether
+	log works with a negative argument. Replace it if not.
+	* lib/log.c (log): For negative arguments, return NaN.
+	* modules/log-ieee (Files): Add m4/log-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_LOG_IEEE.
+	* doc/posix-functions/log.texi: Mention the log-ieee module.
+
 	Tests for module 'logl-ieee'.
 	* modules/logl-ieee-tests: New file.
 	* tests/test-logl-ieee.c: New file.

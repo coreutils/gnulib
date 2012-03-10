@@ -2,12 +2,14 @@ Description:
 log() function according to ISO C 99 with IEC 60559.
 
 Files:
+m4/log-ieee.m4
 
 Depends-on:
 log
 fpieee
 
 configure.ac:
+gl_FUNC_LOG_IEEE
 
 Makefile.am:
 

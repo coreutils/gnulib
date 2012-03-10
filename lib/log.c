@@ -23,9 +23,16 @@ double
 log (double x)
 #undef log
 {
-  /* Work around the OSF/1 5.1 bug.  */
-  if (x == 0.0)
-    /* Return -Infinity.  */
-    return -1.0 / 0.0;
+  if (x <= 0.0)
+    {
+      /* Work around the OSF/1 5.1 bug.  */
+      if (x == 0.0)
+        /* Return -Infinity.  */
+        return -1.0 / 0.0;
+      /* Work around the NetBSD 5.1, Solaris 11 2011-11 bug.  */
+      else /* x < 0.0 */
+        /* Return NaN.  */
+        return 0.0 / 0.0;
+    }
   return log (x);
 }
