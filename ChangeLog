@@ -1,5 +1,21 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1p: Provide replacement for Minix and MSVC.
+	* lib/math.in.h (log1p): New declaration.
+	* lib/log1p.c: New file.
+	* m4/log1p.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log1p is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG1P, HAVE_LOG1P.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG1P, HAVE_LOG1P.
+	* modules/log1p (Files): Add lib/log1p.c, m4/log1p.m4.
+	(Depends-on): Add math, isnand, log, round.
+	(configure.ac): Invoke gl_FUNC_LOG1P. Arrange to compile replacement if
+	HAVE_LOG1P is 0.
+	* tests/test-math-c++.cc: Check the declaration of log1p.
+	* doc/posix-functions/log1p.texi: Mention the replacement.
+
+2012-03-10  Bruno Haible  <bruno@clisp.org>
+
 	math tests: Small simplification.
 	* tests/test-exp.h (test_function): Use the same err_bound for
 	'double' on platforms with sizeof (long double) == sizeof (double)
