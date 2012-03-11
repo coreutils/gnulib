@@ -30,6 +30,8 @@ SIGNATURE_CHECK (exp2f, float, (float));
 #define DOUBLE float
 #define L_(literal) literal##f
 #define MANT_DIG FLT_MANT_DIG
+#define MAX_EXP FLT_MAX_EXP
+#define MIN_EXP FLT_MIN_EXP
 #define EXP2 exp2f
 #define RANDOM randomf
 #include "test-exp2.h"

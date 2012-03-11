@@ -30,6 +30,8 @@ SIGNATURE_CHECK (exp2, double, (double));
 #define DOUBLE double
 #define L_(literal) literal
 #define MANT_DIG DBL_MANT_DIG
+#define MAX_EXP DBL_MAX_EXP
+#define MIN_EXP DBL_MIN_EXP
 #define EXP2 exp2
 #define RANDOM randomd
 #include "test-exp2.h"

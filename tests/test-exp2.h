@@ -29,45 +29,41 @@ test_function (void)
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 3) / 5))
     * (DOUBLE) (1U << ((MANT_DIG - 1 + 4) / 5));
 
-  /* Small integral arguments.  */
+  /* Integral arguments.  */
   {
     DOUBLE x = L_(0.0);
     DOUBLE y = EXP2 (x);
     ASSERT (y == L_(1.0));
   }
-  {
-    DOUBLE x = L_(1.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(2.0));
-  }
-  {
-    DOUBLE x = L_(2.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(4.0));
-  }
   /* <http://sourceware.org/bugzilla/show_bug.cgi?id=13824> */
-#if !(defined __linux__ && defined __sparc__)
+#if !(defined __linux__ && (defined __sparc__ || defined __powerpc__))
   {
-    DOUBLE x = L_(3.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(8.0));
+    int e;
+    DOUBLE x;
+    DOUBLE y;
+    for (e = 0, x = L_(0.0), y = L_(1.0);
+         e <= MAX_EXP - 1;
+         e++, x = x + L_(1.0), y = y * L_(2.0))
+      {
+        /* Invariant: x = e, y = 2^e.  */
+        DOUBLE z = EXP2 (x);
+        ASSERT (z == y);
+      }
   }
   {
-    DOUBLE x = L_(4.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(16.0));
+    int e;
+    DOUBLE x;
+    DOUBLE y;
+    for (e = 0, x = L_(0.0), y = L_(1.0);
+         e >= MIN_EXP - 1;
+         e--, x = x - L_(1.0), y = y * L_(0.5))
+      {
+        /* Invariant: x = e, y = 2^e.  */
+        DOUBLE z = EXP2 (x);
+        ASSERT (z == y);
+      }
   }
 #endif
-  {
-    DOUBLE x = - L_(1.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(0.5));
-  }
-  {
-    DOUBLE x = - L_(2.0);
-    DOUBLE y = EXP2 (x);
-    ASSERT (y == L_(0.25));
-  }
 
   /* Randomized tests.  */
   {

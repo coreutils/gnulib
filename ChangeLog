@@ -1,3 +1,12 @@
+2012-03-11  Bruno Haible  <bruno@clisp.org>
+
+	exp2* tests: More tests.
+	* tests/test-exp2.h (test_function): Test all integral arguments that
+	don't need to overflow or denormalized numbers.
+	* tests/test-exp2.c (MAX_EXP, MIN_EXP): New macros.
+	* tests/test-exp2f.c (MAX_EXP, MIN_EXP): Likewise.
+	* tests/test-exp2l.c (MAX_EXP, MIN_EXP): Likewise.
+
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
 	log1pl-ieee: Work around test failure on AIX 7.1.
