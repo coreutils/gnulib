@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log1pf.html}
 
-Gnulib module: log1pf
+Gnulib module: log1pf or log1pf-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{log1pf} or @code{log1pf-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -14,6 +14,13 @@ Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 9.
 @item
 This function returns a wrong value for the argument -1.0f on some platforms:
 IRIX 6.5.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{log1pf-ieee}:
+@itemize
+@item
+This function has problems when the argument is minus zero on some platforms:
+OpenBSD 4.9, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

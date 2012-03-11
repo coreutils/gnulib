@@ -1,4 +1,4 @@
-# log1pf.m4 serial 1
+# log1pf.m4 serial 2
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_LOG1PF],
 [
+  m4_divert_text([DEFAULTS], [gl_log1pf_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_LOG1P])
 
@@ -29,6 +30,44 @@ AC_DEFUN([gl_FUNC_LOG1PF],
       *yes) ;;
       *) REPLACE_LOG1PF=1 ;;
     esac
+
+    m4_ifdef([gl_FUNC_LOG1PF_IEEE], [
+      if test $gl_log1pf_required = ieee && test $REPLACE_LOG1PF = 0; then
+        AC_CACHE_CHECK([whether log1pf works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_log1pf_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $LOG1PF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_FLOAT_MINUS_ZERO_CODE[
+]gl_FLOAT_SIGNBIT_CODE[
+static float dummy (float x) { return 0; }
+int main (int argc, char *argv[])
+{
+  float (*my_log1pf) (float) = argc ? log1pf : dummy;
+  /* This test fails on OpenBSD 4.9, AIX 7.1.  */
+  float y = my_log1pf (minus_zerof);
+  if (!(y == 0.0f) || (signbitf (minus_zerof) && !signbitf (y)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_log1pf_ieee=yes],
+              [gl_cv_func_log1pf_ieee=no],
+              [gl_cv_func_log1pf_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_log1pf_ieee" in
+          *yes) ;;
+          *) REPLACE_LOG1PF=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_LOG1PF=0
   fi
