@@ -1,5 +1,8 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1pl-ieee: Work around test failure on AIX 7.1.
+	* modules/log1pl-ieee (Depends-on): Add log1p-ieee.
+
 	log1pl-ieee: Work around test failure on IRIX 6.5.
 	* m4/log1pl-ieee.m4: New file.
 	* m4/log1pl.m4 (gl_FUNC_LOG1PL): If gl_FUNC_LOG1PL_IEEE is present,
