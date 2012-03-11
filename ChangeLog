@@ -1,5 +1,10 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log2f-ieee'.
+	* modules/log2f-ieee: New file.
+
+2012-03-11  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'log2l'.
 	* modules/log2l-tests: New file.
 	* tests/test-log2l.c: New file.

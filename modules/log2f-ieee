@@ -1,0 +1,24 @@
+Description:
+log2f() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+log2f
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG2F_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
