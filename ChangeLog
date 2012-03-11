@@ -1,5 +1,13 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	log2-ieee: Work around test failure on NetBSD 5.1 and Solaris 10.
+	* m4/log2-ieee.m4: New file.
+	* m4/log2.m4 (gl_FUNC_LOG2): If gl_FUNC_LOG2_IEEE is present, test
+	whether log2 works with a minus zero argument. Replace it if not.
+	* modules/log2-ieee (Files): Add m4/log2-ieee.m4.
+	(configure.ac): Invoke gl_FUNC_LOG2_IEEE.
+	* doc/posix-functions/log2.texi: Mention the log2-ieee module.
+
 	Tests for module 'log2l-ieee'.
 	* modules/log2l-ieee-tests: New file.
 	* tests/test-log2l-ieee.c: New file.
