@@ -1,5 +1,21 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log2'.
+	* lib/math.in.h (log2): New declaration.
+	* lib/log2.c: New file.
+	* m4/log2.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log2 is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG2, HAVE_DECL_LOG2,
+	REPLACE_LOG2.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG2, HAVE_DECL_LOG2,
+	REPLACE_LOG2.
+	* modules/log2: New file.
+	* tests/test-math-c++.cc: Check the declaration of log2.
+	* doc/posix-functions/log2.texi: Mention the new module and the IRIX
+	and OSF/1 and Cygwin problems.
+
+2012-03-11  Bruno Haible  <bruno@clisp.org>
+
 	exp2* tests: More tests.
 	* tests/test-exp2.h (test_function): Test all integral arguments that
 	don't need to overflow or denormalized numbers.

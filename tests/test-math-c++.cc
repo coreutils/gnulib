@@ -241,6 +241,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log10f, float, (float));
 #endif
 
+#if GNULIB_TEST_LOG2
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log2, double, (double));
+#endif
+
 #if GNULIB_TEST_MODFF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::modff, float, (float, float *));
 #endif
