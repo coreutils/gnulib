@@ -1,4 +1,4 @@
-# log2f.m4 serial 1
+# log2f.m4 serial 2
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_LOG2F],
 [
+  m4_divert_text([DEFAULTS], [gl_log2f_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_LOG2])
 
@@ -34,6 +35,58 @@ AC_DEFUN([gl_FUNC_LOG2F],
       *yes) ;;
       *) REPLACE_LOG2F=1 ;;
     esac
+
+    m4_ifdef([gl_FUNC_LOG2F_IEEE], [
+      if test $gl_log2f_required = ieee && test $REPLACE_LOG2F = 0; then
+        AC_CACHE_CHECK([whether log2f works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_log2f_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $LOG2F_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+#ifndef log2f /* for Cygwin 1.7.x */
+extern
+#ifdef __cplusplus
+"C"
+#endif
+float log2f (float);
+#endif
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (float x, float y)
+{
+  return x == y;
+}
+static float dummy (float x) { return 0; }
+int main (int argc, char *argv[])
+{
+  float (*my_log2f) (float) = argc ? log2f : dummy;
+  /* Test log2f(negative).
+     This test fails on NetBSD 5.1 and Solaris 11 2011-11.  */
+  float y = my_log2f (-1.0f);
+  if (numeric_equal (y, y))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_log2f_ieee=yes],
+              [gl_cv_func_log2f_ieee=no],
+              [gl_cv_func_log2f_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_log2f_ieee" in
+          *yes) ;;
+          *) REPLACE_LOG2F=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_LOG2F=0
     HAVE_DECL_LOG2F=0

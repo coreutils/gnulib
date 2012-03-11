@@ -1,5 +1,14 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	log2f-ieee: Work around test failure on NetBSD 5.1 and Solaris 10.
+	* m4/log2f-ieee.m4: New file.
+	* m4/log2f.m4 (gl_FUNC_LOG2F): If gl_FUNC_LOG2F_IEEE is present, test
+	whether log2f works with a minus zero argument. Replace it if not.
+	* modules/log2f-ieee (Files): Add m4/log2f-ieee.m4.
+	(Depends-on): Add log2-ieee.
+	(configure.ac): Invoke gl_FUNC_LOG2F_IEEE.
+	* doc/posix-functions/log2f.texi: Mention the log2f-ieee module.
+
 	log2-ieee: Work around test failure on NetBSD 5.1 and Solaris 10.
 	* m4/log2-ieee.m4: New file.
 	* m4/log2.m4 (gl_FUNC_LOG2): If gl_FUNC_LOG2_IEEE is present, test
