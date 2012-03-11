@@ -1,0 +1,24 @@
+Description:
+log2() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+log2
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG2_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
