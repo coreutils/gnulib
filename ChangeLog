@@ -1,5 +1,9 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log2l'.
+	* modules/log2l-tests: New file.
+	* tests/test-log2l.c: New file.
+
 	New module 'log2l'.
 	* lib/math.in.h (log2l): New declaration.
 	* lib/log2l.c: New file.
