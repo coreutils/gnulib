@@ -6,8 +6,10 @@ Files:
 Depends-on:
 log1pf
 fpieee
+log1p-ieee      [test $HAVE_LOG1PF = 0 || test $REPLACE_LOG1PF = 1]
 
 configure.ac:
+AC_REQUIRE([gl_FUNC_LOG1PF])
 
 Makefile.am:
 

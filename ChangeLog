@@ -1,5 +1,9 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1pf-ieee: Work around test failure on AIX 5.1 and HP-UX 11.
+	* modules/log1pf-ieee (Depends-on): Add log1p-ieee.
+	(configure.ac): Require gl_FUNC_LOG1PF.
+
 	log1p-ieee: Work around test failure on AIX 7.1 and HP-UX 11.
 	* m4/log1p-ieee.m4: New file.
 	* m4/log1p.m4 (gl_FUNC_LOG1P): If gl_FUNC_LOG1P_IEEE is present, test
