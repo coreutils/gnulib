@@ -1291,6 +1291,30 @@ _GL_WARN_ON_USE (log1pl, "log1pl has portability problems - "
 #endif
 
 
+#if @GNULIB_LOG2F@
+# if @REPLACE_LOG2F@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef log2f
+#   define log2f rpl_log2f
+#  endif
+_GL_FUNCDECL_RPL (log2f, float, (float x));
+_GL_CXXALIAS_RPL (log2f, float, (float x));
+# else
+#  if !@HAVE_DECL_LOG2F@
+#   undef log2f
+_GL_FUNCDECL_SYS (log2f, float, (float x));
+#  endif
+_GL_CXXALIAS_SYS (log2f, float, (float x));
+# endif
+_GL_CXXALIASWARN (log2f);
+#elif defined GNULIB_POSIXCHECK
+# undef log2f
+# if HAVE_RAW_DECL_LOG2F
+_GL_WARN_ON_USE (log2f, "log2f is unportable - "
+                 "use gnulib module log2f for portability");
+# endif
+#endif
+
 #if @GNULIB_LOG2@
 # if @REPLACE_LOG2@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

@@ -90,6 +90,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LOG1PF''@/$(GNULIB_LOG1PF)/g' \
 	      -e 's/@''GNULIB_LOG1PL''@/$(GNULIB_LOG1PL)/g' \
 	      -e 's/@''GNULIB_LOG2''@/$(GNULIB_LOG2)/g' \
+	      -e 's/@''GNULIB_LOG2F''@/$(GNULIB_LOG2F)/g' \
 	      -e 's/@''GNULIB_MODF''@/$(GNULIB_MODF)/g' \
 	      -e 's/@''GNULIB_MODFF''@/$(GNULIB_MODFF)/g' \
 	      -e 's/@''GNULIB_MODFL''@/$(GNULIB_MODFL)/g' \
@@ -193,6 +194,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_DECL_LOGL''@|$(HAVE_DECL_LOGL)|g' \
 	      -e 's|@''HAVE_DECL_LOG10L''@|$(HAVE_DECL_LOG10L)|g' \
 	      -e 's|@''HAVE_DECL_LOG2''@|$(HAVE_DECL_LOG2)|g' \
+	      -e 's|@''HAVE_DECL_LOG2F''@|$(HAVE_DECL_LOG2F)|g' \
 	      -e 's|@''HAVE_DECL_REMAINDER''@|$(HAVE_DECL_REMAINDER)|g' \
 	      -e 's|@''HAVE_DECL_REMAINDERL''@|$(HAVE_DECL_REMAINDERL)|g' \
 	      -e 's|@''HAVE_DECL_RINTF''@|$(HAVE_DECL_RINTF)|g' \
@@ -244,6 +246,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_LOG1PF''@|$(REPLACE_LOG1PF)|g' \
 	      -e 's|@''REPLACE_LOG1PL''@|$(REPLACE_LOG1PL)|g' \
 	      -e 's|@''REPLACE_LOG2''@|$(REPLACE_LOG2)|g' \
+	      -e 's|@''REPLACE_LOG2F''@|$(REPLACE_LOG2F)|g' \
 	      -e 's|@''REPLACE_MODF''@|$(REPLACE_MODF)|g' \
 	      -e 's|@''REPLACE_MODFF''@|$(REPLACE_MODFF)|g' \
 	      -e 's|@''REPLACE_MODFL''@|$(REPLACE_MODFL)|g' \

@@ -1,4 +1,4 @@
-# math_h.m4 serial 101
+# math_h.m4 serial 102
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,8 @@ AC_DEFUN([gl_MATH_H],
      expf expl exp2 exp2f exp2l expm1 expm1f expm1l
      fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
-     ldexpf ldexpl logb log logf logl log10f log10l log1p log1pf log1pl log2
+     ldexpf ldexpl
+     logb log logf logl log10f log10l log1p log1pf log1pl log2 log2f
      modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
@@ -124,6 +125,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_LOG1PF=0;     AC_SUBST([GNULIB_LOG1PF])
   GNULIB_LOG1PL=0;     AC_SUBST([GNULIB_LOG1PL])
   GNULIB_LOG2=0;       AC_SUBST([GNULIB_LOG2])
+  GNULIB_LOG2F=0;      AC_SUBST([GNULIB_LOG2F])
   GNULIB_MODF=0;       AC_SUBST([GNULIB_MODF])
   GNULIB_MODFF=0;      AC_SUBST([GNULIB_MODFF])
   GNULIB_MODFL=0;      AC_SUBST([GNULIB_MODFL])
@@ -227,6 +229,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_LOGL=1;            AC_SUBST([HAVE_DECL_LOGL])
   HAVE_DECL_LOG10L=1;          AC_SUBST([HAVE_DECL_LOG10L])
   HAVE_DECL_LOG2=1;            AC_SUBST([HAVE_DECL_LOG2])
+  HAVE_DECL_LOG2F=1;           AC_SUBST([HAVE_DECL_LOG2F])
   HAVE_DECL_REMAINDER=1;       AC_SUBST([HAVE_DECL_REMAINDER])
   HAVE_DECL_REMAINDERL=1;      AC_SUBST([HAVE_DECL_REMAINDERL])
   HAVE_DECL_RINTF=1;           AC_SUBST([HAVE_DECL_RINTF])
@@ -276,6 +279,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_LOG1PF=0;            AC_SUBST([REPLACE_LOG1PF])
   REPLACE_LOG1PL=0;            AC_SUBST([REPLACE_LOG1PL])
   REPLACE_LOG2=0;              AC_SUBST([REPLACE_LOG2])
+  REPLACE_LOG2F=0;             AC_SUBST([REPLACE_LOG2F])
   REPLACE_MODF=0;              AC_SUBST([REPLACE_MODF])
   REPLACE_MODFF=0;             AC_SUBST([REPLACE_MODFF])
   REPLACE_MODFL=0;             AC_SUBST([REPLACE_MODFL])

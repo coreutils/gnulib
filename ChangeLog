@@ -1,5 +1,21 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log2f'.
+	* lib/math.in.h (log2f): New declaration.
+	* lib/log2f.c: New file.
+	* m4/log2f.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log2f is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG2F, HAVE_DECL_LOG2F,
+	REPLACE_LOG2F.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG2F, HAVE_DECL_LOG2F,
+	REPLACE_LOG2F.
+	* modules/log2f: New file.
+	* tests/test-math-c++.cc: Check the declaration of log2f.
+	* doc/posix-functions/log2f.texi: Mention the new module and the IRIX
+	and OSF/1 and Cygwin problems.
+
+2012-03-11  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'log2'.
 	* modules/log2-tests: New file.
 	* tests/test-log2.c: New file.
