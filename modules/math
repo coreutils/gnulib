@@ -240,6 +240,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_LOGL''@|$(REPLACE_LOGL)|g' \
 	      -e 's|@''REPLACE_LOG1P''@|$(REPLACE_LOG1P)|g' \
 	      -e 's|@''REPLACE_LOG1PF''@|$(REPLACE_LOG1PF)|g' \
+	      -e 's|@''REPLACE_LOG1PL''@|$(REPLACE_LOG1PL)|g' \
 	      -e 's|@''REPLACE_MODF''@|$(REPLACE_MODF)|g' \
 	      -e 's|@''REPLACE_MODFF''@|$(REPLACE_MODFF)|g' \
 	      -e 's|@''REPLACE_MODFL''@|$(REPLACE_MODFL)|g' \

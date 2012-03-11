@@ -1,5 +1,20 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1pl-ieee: Work around test failure on IRIX 6.5.
+	* m4/log1pl-ieee.m4: New file.
+	* m4/log1pl.m4 (gl_FUNC_LOG1PL): If gl_FUNC_LOG1PL_IEEE is present,
+	test whether log1pl works with a minus zero argument. Replace it if
+	not.
+	* lib/math.in.h (log1pl): Override if REPLACE_LOG1PL is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_LOG1PL.
+	* modules/math (Makefile.am): Substitute REPLACE_LOG1PL.
+	* modules/log1pl (configure.ac): Consider REPLACE_LOG1PL.
+	(Depends-on): Update conditions.
+	* modules/log1pl-ieee (Files): Add m4/log1p-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_LOG1PL_IEEE.
+	* doc/posix-functions/log1pl.texi: Mention the log1pl-ieee module.
+
 	log1pf-ieee: Work around test failure on OpenBSD 4.9 and AIX 7.1.
 	* m4/log1pf-ieee.m4: New file.
 	* m4/log1pf.m4 (gl_FUNC_LOG1PF): If gl_FUNC_LOG1PF_IEEE is present,

@@ -1,4 +1,4 @@
-# log1pl.m4 serial 1
+# log1pl.m4 serial 2
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_LOG1PL],
 [
+  m4_divert_text([DEFAULTS], [gl_log1pl_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   AC_REQUIRE([gl_FUNC_LOG1P])
@@ -21,6 +22,43 @@ AC_DEFUN([gl_FUNC_LOG1PL],
   LIBS="$save_LIBS"
   if test $ac_cv_func_log1pl = yes; then
     LOG1PL_LIBM="$LOG1P_LIBM"
+    m4_ifdef([gl_FUNC_LOG1PL_IEEE], [
+      if test $gl_log1pl_required = ieee && test $REPLACE_LOG1PL = 0; then
+        AC_CACHE_CHECK([whether log1pl works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_log1pl_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $LOG1PL_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+]gl_LONG_DOUBLE_MINUS_ZERO_CODE[
+]gl_LONG_DOUBLE_SIGNBIT_CODE[
+static long double dummy (long double x) { return 0; }
+int main (int argc, char *argv[])
+{
+  long double (*my_log1pl) (long double) = argc ? log1pl : dummy;
+  /* This test fails on AIX 7.1, IRIX 6.5.  */
+  long double y = my_log1pl (minus_zerol);
+  if (!(y == 0.0L) || (signbitl (minus_zerol) && !signbitl (y)))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_log1pl_ieee=yes],
+              [gl_cv_func_log1pl_ieee=no],
+              [gl_cv_func_log1pl_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_log1pl_ieee" in
+          *yes) ;;
+          *) REPLACE_LOG1PL=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_LOG1PL=0
     dnl Find libraries needed to link lib/log1pl.c.
