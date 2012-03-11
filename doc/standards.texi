@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 5, 2012
+@set lastupdate March 8, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -2655,10 +2655,10 @@ Don't make the program ugly just to placate static analysis tools such
 as @command{lint}, @command{clang}, and GCC with extra warnings
 options such as @option{-Wconversion} and @option{-Wundef}.  These
 tools can help find bugs and unclear code, but they can also generate
-so many false alarms that that it hurts readability to silence them
-with unnecessary casts, wrappers, and other complications.  For
-example, please don't insert casts to @code{void} or calls to
-do-nothing functions merely to pacify a lint checker.
+so many false alarms that it hurts readability to silence them with
+unnecessary casts, wrappers, and other complications.  For example,
+please don't insert casts to @code{void} or calls to do-nothing
+functions merely to pacify a lint checker.
 
 Declarations of external functions and functions to appear later in the
 source file should all go in one place near the beginning of the file
