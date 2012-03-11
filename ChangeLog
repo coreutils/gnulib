@@ -1,5 +1,10 @@
 2012-03-11  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'log2'.
+	* modules/log2-tests: New file.
+	* tests/test-log2.c: New file.
+	* tests/test-log2.h: New file.
+
 	New module 'log2'.
 	* lib/math.in.h (log2): New declaration.
 	* lib/log2.c: New file.
