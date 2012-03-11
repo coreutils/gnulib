@@ -9,13 +9,13 @@ m4/mathfunc.m4
 Depends-on:
 math
 extensions
-isnand          [test $HAVE_LOG1P = 0]
-log             [test $HAVE_LOG1P = 0]
-round           [test $HAVE_LOG1P = 0]
+isnand          [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]
+log             [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]
+round           [test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1]
 
 configure.ac:
 gl_FUNC_LOG1P
-if test $HAVE_LOG1P = 0; then
+if test $HAVE_LOG1P = 0 || test $REPLACE_LOG1P = 1; then
   AC_LIBOBJ([log1p])
 fi
 gl_MATH_MODULE_INDICATOR([log1p])

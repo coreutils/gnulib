@@ -1,5 +1,19 @@
 2012-03-10  Bruno Haible  <bruno@clisp.org>
 
+	log1p-ieee: Work around test failure on AIX 7.1 and HP-UX 11.
+	* m4/log1p-ieee.m4: New file.
+	* m4/log1p.m4 (gl_FUNC_LOG1P): If gl_FUNC_LOG1P_IEEE is present, test
+	whether log1p works with a minus zero argument. Replace it if not.
+	* lib/math.in.h (log1p): Override if REPLACE_LOG1P is 1.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_LOG1P.
+	* modules/math (Makefile.am): Substitute REPLACE_LOG1P.
+	* modules/log1p (configure.ac): Consider REPLACE_LOG1P.
+	(Depends-on): Update conditions.
+	* modules/log1p-ieee (Files): Add m4/log1p-ieee.m4, m4/minus-zero.m4,
+	m4/signbit.m4.
+	(configure.ac): Invoke gl_FUNC_LOG1P_IEEE.
+	* doc/posix-functions/log1p.texi: Mention the log1p-ieee module.
+
 	Tests for module 'log1pl-ieee'.
 	* modules/log1pl-ieee-tests: New file.
 	* tests/test-log1pl-ieee.c: New file.
