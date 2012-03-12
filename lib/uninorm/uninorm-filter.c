@@ -241,6 +241,12 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
             new_sortbuf =
               (struct ucs4_with_ccc *)
               malloc (2 * filter->sortbuf_allocated * sizeof (struct ucs4_with_ccc));
+            if (new_sortbuf == NULL)
+              {
+                /* errno is ENOMEM. */
+                filter->sortbuf_count = sortbuf_count;
+                return -1;
+              }
             memcpy (new_sortbuf, filter->sortbuf,
                     sortbuf_count * sizeof (struct ucs4_with_ccc));
             if (filter->sortbuf != filter->sortbuf_preallocated)

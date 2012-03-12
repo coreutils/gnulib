@@ -310,6 +310,11 @@ FUNC (uninorm_t nf, const UNIT *s, size_t n,
                   abort ();
                 new_sortbuf =
                   (struct ucs4_with_ccc *) malloc (2 * sortbuf_allocated * sizeof (struct ucs4_with_ccc));
+                if (new_sortbuf == NULL)
+                  {
+                    errno = ENOMEM;
+                    goto fail;
+                  }
                 memcpy (new_sortbuf, sortbuf,
                         sortbuf_count * sizeof (struct ucs4_with_ccc));
                 if (sortbuf != sortbuf_preallocated)
