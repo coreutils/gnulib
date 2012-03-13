@@ -1506,6 +1506,7 @@ _GL_FUNCDECL_RPL (remainderl, long double, (long double x, long double y));
 _GL_CXXALIAS_RPL (remainderl, long double, (long double x, long double y));
 # else
 #  if !@HAVE_DECL_REMAINDERL@
+#   undef remainderl
 _GL_FUNCDECL_SYS (remainderl, long double, (long double x, long double y));
 #  endif
 _GL_CXXALIAS_SYS (remainderl, long double, (long double x, long double y));

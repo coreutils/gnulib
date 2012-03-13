@@ -1,5 +1,10 @@
 2012-03-13  Bruno Haible  <bruno@clisp.org>
 
+	remainderl: Avoid compilation error on AIX >= 5.2.
+	* lib/math.in.h (remainderl): Undefine macro from the system header.
+
+2012-03-13  Bruno Haible  <bruno@clisp.org>
+
 	Avoid compilation errors with MSVC option -fp:strict.
 	* lib/cbrt.c: Use MSVC specific pragma fenv_access.
 	* lib/cbrtf.c: Likewise.
