@@ -1,4 +1,4 @@
-# cbrtl.m4 serial 3
+# cbrtl.m4 serial 4
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,16 @@ AC_DEFUN([gl_FUNC_CBRTL],
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has cbrtl() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECL([cbrtl], , [HAVE_DECL_CBRTL=0], [[#include <math.h>]])
+
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $CBRTL_LIBM"
+    gl_FUNC_CBRTL_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_cbrtl_works" in
+      *yes) ;;
+      *) REPLACE_CBRTL=1 ;;
+    esac
+
     m4_ifdef([gl_FUNC_CBRTL_IEEE], [
       if test $gl_cbrtl_required = ieee && test $REPLACE_CBRTL = 0; then
         AC_CACHE_CHECK([whether cbrtl works according to ISO C 99 with IEC 60559],
@@ -94,4 +104,41 @@ int main (int argc, char *argv[])
     fi
   fi
   AC_SUBST([CBRTL_LIBM])
+])
+
+dnl Test whether cbrtl() works.
+dnl On OpenBSD 5.1/SPARC, cbrtl(16.0L) is = 1.2599...
+AC_DEFUN([gl_FUNC_CBRTL_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether cbrtl works], [gl_cv_func_cbrtl_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <math.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double cbrtl (long double);
+volatile long double x;
+long double y;
+int main ()
+{
+  x = 16.0L;
+  y = cbrtl (x);
+  if (y < 2.0L)
+    return 1;
+  return 0;
+}
+]])],
+        [gl_cv_func_cbrtl_works=yes],
+        [gl_cv_func_cbrtl_works=no],
+        [case "$host_os" in
+           osf*) gl_cv_func_cbrtl_works="guessing no";;
+           *)    gl_cv_func_cbrtl_works="guessing yes";;
+         esac
+        ])
+    ])
 ])
