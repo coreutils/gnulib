@@ -1,3 +1,21 @@
+2012-03-23  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	gnulib-tool: fix imprecise comments w.r.t. an automake bug
+
+	It's not just Automake versions < 1.9b that creates an empty
+	pkgdatadir at installation time if pkgdata_DATA is specified
+	to empty; modern automake versions do this as well, at least
+	until automake 1.11.4 (not yet released at the moment of writing,
+	but soon to appear).  That behaviour was generally considered a
+	feature rather than a bug, at least until this discussion:
+	<http://lists.gnu.org/archive/html/automake/2012-03/msg00014.html>
+
+	See also automake bugs #10997 and #11030.
+
+	* gnulib-tool (func_emit_lib_Makefile_am): Adjust comments.  Add
+	reference to relevant automake bug numbers.
+	(func_emit_tests_Makefile_am): Likewise.
+
 2012-03-20  Reuben Thomas  <rrt@sc3d.org>
 
 	announce-gen: use Digest::SHA when possible
