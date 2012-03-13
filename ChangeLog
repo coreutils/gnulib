@@ -1,3 +1,12 @@
+2012-03-13  Pádraig Brady  <P@draigBrady.com>
+
+	doc: Update timer_* platform portability notes.
+	* doc/posix-functions/timer_create.texi: Add platforms (OpenBSD 4.9)
+	that always return ENOSYS.
+	* doc/posix-functions/timer_delete.texi: Likewise.
+	* doc/posix-functions/timer_gettime.texi: Likewise.
+	* doc/posix-functions/timer_settime.texi: Likewise.
+
 2012-03-13  Bruno Haible  <bruno@clisp.org>
 
 	cbrtl: Bypass broken implementation in OpenBSD 5.1/SPARC.
