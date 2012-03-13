@@ -455,7 +455,8 @@ sc_prohibit_quotearg_without_use:
 
 # Don't include quote.h unless you use one of its functions.
 sc_prohibit_quote_without_use:
-	@h='quote.h' re='\<quote(_n)? *\(' $(_sc_header_without_use)
+	@h='quote.h' re='\<quote((_n)? *\(|_quoting_options\>)' \
+	  $(_sc_header_without_use)
 
 # Don't include this header unless you use one of its functions.
 sc_prohibit_long_options_without_use:
