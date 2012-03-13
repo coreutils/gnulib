@@ -22,6 +22,12 @@
 /* Specification.  */
 #include <math.h>
 
+/* MSVC with option -fp:strict refuses to compile constant initializers that
+   contain floating-point operations.  Pacify this compiler.  */
+#ifdef _MSC_VER
+# pragma fenv_access (off)
+#endif
+
 /* Code based on glibc/sysdeps/ieee754/dbl-64/s_cbrt.c.  */
 
 #define CBRT2 1.2599210498948731648             /* 2^(1/3) */

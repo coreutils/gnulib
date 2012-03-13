@@ -1,3 +1,10 @@
+2012-03-13  Bruno Haible  <bruno@clisp.org>
+
+	Avoid compilation errors with MSVC option -fp:strict.
+	* lib/cbrt.c: Use MSVC specific pragma fenv_access.
+	* lib/cbrtf.c: Likewise.
+	Reported by Michael Goffioul <michael.goffioul@gmail.com>.
+
 2012-03-12  Bruno Haible  <bruno@clisp.org>
 
 	uninorm: Don't crash in out-of-memory conditions.
