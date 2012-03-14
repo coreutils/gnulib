@@ -152,8 +152,8 @@ int main ()
         [gl_cv_func_sqrtl_works=yes],
         [gl_cv_func_sqrtl_works=no],
         [case "$host_os" in
-           osf*) gl_cv_func_sqrtl_works="guessing no";;
-           *)    gl_cv_func_sqrtl_works="guessing yes";;
+           openbsd*) gl_cv_func_sqrtl_works="guessing no";;
+           *)        gl_cv_func_sqrtl_works="guessing yes";;
          esac
         ])
     ])

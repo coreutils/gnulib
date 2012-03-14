@@ -136,8 +136,8 @@ int main ()
         [gl_cv_func_cbrtl_works=yes],
         [gl_cv_func_cbrtl_works=no],
         [case "$host_os" in
-           osf*) gl_cv_func_cbrtl_works="guessing no";;
-           *)    gl_cv_func_cbrtl_works="guessing yes";;
+           openbsd*) gl_cv_func_cbrtl_works="guessing no";;
+           *)        gl_cv_func_cbrtl_works="guessing yes";;
          esac
         ])
     ])
