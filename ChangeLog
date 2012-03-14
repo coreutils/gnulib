@@ -1,5 +1,13 @@
 2012-03-13  Bruno Haible  <bruno@clisp.org>
 
+	hypotl: Bypass broken implementation in OpenBSD 5.1/SPARC.
+	* m4/hypotl.m4 (gl_FUNC_HYPOTL_WORKS): New macro.
+	(gl_FUNC_HYPOTL): Invoke it. If the function does not work, set
+	REPLACE_HYPOTL to 1.
+	* doc/posix-functions/hypotl.texi: Mention the OpenBSD 5.1/SPARC bug.
+
+2012-03-13  Bruno Haible  <bruno@clisp.org>
+
 	remainderl: Bypass broken implementation in OpenBSD 5.1/SPARC.
 	* m4/remainderl.m4 (gl_FUNC_REMAINDERL_WORKS): New macro.
 	(gl_FUNC_REMAINDERL): Invoke it. If the function does not work, set

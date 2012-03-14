@@ -1,4 +1,4 @@
-# hypotl.m4 serial 3
+# hypotl.m4 serial 4
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,16 @@ AC_DEFUN([gl_FUNC_HYPOTL],
   LIBS="$save_LIBS"
   if test $ac_cv_func_hypotl = yes; then
     HYPOTL_LIBM="$HYPOT_LIBM"
+
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $HYPOTL_LIBM"
+    gl_FUNC_HYPOTL_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_hypotl_works" in
+      *yes) ;;
+      *) REPLACE_HYPOTL=1 ;;
+    esac
+
     m4_ifdef([gl_FUNC_HYPOTL_IEEE], [
       if test $gl_hypotl_required = ieee && test $REPLACE_HYPOTL = 0; then
         AC_CACHE_CHECK([whether hypotl works according to ISO C 99 with IEC 60559],
@@ -104,4 +114,56 @@ int main (int argc, char *argv[])
     fi
   fi
   AC_SUBST([HYPOTL_LIBM])
+])
+
+dnl Test whether hypotl() works.
+dnl On OpenBSD 5.1/SPARC,
+dnl hypotl (2.5541394760659556563446062497337725156L, 7.7893454113437840832487794525518765265L)
+dnl has rounding errors that eat up the last 8 to 9 decimal digits.
+AC_DEFUN([gl_FUNC_HYPOTL_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether hypotl works], [gl_cv_func_hypotl_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <float.h>
+#include <math.h>
+static long double
+my_ldexpl (long double x, int d)
+{
+  for (; d > 0; d--)
+    x *= 2.0L;
+  for (; d < 0; d++)
+    x *= 0.5L;
+  return x;
+}
+volatile long double x;
+volatile long double y;
+volatile long double z;
+int main ()
+{
+  long double err;
+
+  x = 2.5541394760659556563446062497337725156L;
+  y = 7.7893454113437840832487794525518765265L;
+  z = hypotl (x, y);
+  err = z * z - (x * x + y * y);
+  err = my_ldexpl (err, LDBL_MANT_DIG);
+  if (err < 0)
+    err = - err;
+  if (err > 1000.0L)
+    return 1;
+  return 0;
+}
+]])],
+        [gl_cv_func_hypotl_works=yes],
+        [gl_cv_func_hypotl_works=no],
+        [case "$host_os" in
+           openbsd*) gl_cv_func_hypotl_works="guessing no";;
+           *)        gl_cv_func_hypotl_works="guessing yes";;
+         esac
+        ])
+    ])
 ])
