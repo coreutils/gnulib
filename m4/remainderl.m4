@@ -1,4 +1,4 @@
-# remainderl.m4 serial 5
+# remainderl.m4 serial 6
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,16 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has remainderl() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECLS([remainderl], , [HAVE_DECL_REMAINDERL=0], [[#include <math.h>]])
+
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $REMAINDERL_LIBM"
+    gl_FUNC_REMAINDERL_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_remainderl_works" in
+      *yes) ;;
+      *) REPLACE_REMAINDERL=1 ;;
+    esac
+
     m4_ifdef([gl_FUNC_REMAINDERL_IEEE], [
       if test $gl_remainderl_required = ieee && test $REPLACE_REMAINDERL = 0; then
         AC_CACHE_CHECK([whether remainderl works according to ISO C 99 with IEC 60559],
@@ -128,4 +138,47 @@ int main (int argc, char *argv[])
     fi
   fi
   AC_SUBST([REMAINDERL_LIBM])
+])
+
+dnl Test whether remainderl() works.
+dnl It produces completely wrong values on OpenBSD 5.1/SPARC.
+AC_DEFUN([gl_FUNC_REMAINDERL_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether remainderl works], [gl_cv_func_remainderl_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double remainderl (long double, long double);
+volatile long double x;
+volatile long double y;
+long double z;
+int main ()
+{
+  /* This test fails on OpenBSD 5.1/SPARC.  */
+  x = 9.245907126L;
+  y = 3.141592654L;
+  z = remainderl (x, y);
+  if (z >= 0.0L)
+    return 1;
+  return 0;
+}
+]])],
+        [gl_cv_func_remainderl_works=yes],
+        [gl_cv_func_remainderl_works=no],
+        [case "$host_os" in
+           openbsd*) gl_cv_func_remainderl_works="guessing no";;
+           *)        gl_cv_func_remainderl_works="guessing yes";;
+         esac
+        ])
+    ])
 ])

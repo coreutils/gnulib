@@ -14,6 +14,9 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX
 @item
 This function is not declared on some platforms:
 IRIX 6.5.
+@item
+This function returns completely wrong values on some platforms:
+OpenBSD 5.1/SPARC.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{remainderl-ieee}:
