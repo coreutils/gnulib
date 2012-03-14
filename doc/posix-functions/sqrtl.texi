@@ -17,6 +17,9 @@ MSVC 9.
 @item
 This function is not declared on some platforms:
 MacOS X 10.3.
+@item
+This function produces very imprecise results on some platforms:
+OpenBSD 5.1/SPARC.
 @end itemize
 
 Portability problems not fixed by Gnulib:

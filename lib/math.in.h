@@ -1698,11 +1698,20 @@ _GL_WARN_ON_USE (sqrtf, "sqrtf is unportable - "
 #endif
 
 #if @GNULIB_SQRTL@
-# if !@HAVE_SQRTL@ || !@HAVE_DECL_SQRTL@
-#  undef sqrtl
+# if @REPLACE_SQRTL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sqrtl
+#   define sqrtl rpl_sqrtl
+#  endif
+_GL_FUNCDECL_RPL (sqrtl, long double, (long double x));
+_GL_CXXALIAS_RPL (sqrtl, long double, (long double x));
+# else
+#  if !@HAVE_SQRTL@ || !@HAVE_DECL_SQRTL@
+#   undef sqrtl
 _GL_FUNCDECL_SYS (sqrtl, long double, (long double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (sqrtl, long double, (long double x));
+# endif
 _GL_CXXALIASWARN (sqrtl);
 #elif defined GNULIB_POSIXCHECK
 # undef sqrtl

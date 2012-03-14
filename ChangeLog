@@ -1,3 +1,18 @@
+2012-03-13  Bruno Haible  <bruno@clisp.org>
+
+	sqrtl: Bypass broken implementation in OpenBSD 5.1/SPARC.
+	* lib/math.in.h (sqrtl): Replace it if REPLACE_SQRTL is 1.
+	* m4/sqrtl.m4 (gl_FUNC_SQRTL_WORKS): New macro.
+	(gl_FUNC_SQRTL): Invoke it. Set REPLACE_SQRTL to 1 if sqrtl() produces
+	too big rounding errors.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_SQRTL.
+	* modules/math (Makefile.am): Substitute REPLACE_SQRTL.
+	* modules/sqrtl (configure.ac): Consider REPLACE_SQRTL.
+	(Depends-on): Update conditions.
+	* tests/test-sqrtl.c (my_ldexpl): New function.
+	(main): Add test of a particular value.
+	* doc/posix-functions/sqrtl.texi: Mention the OpenBSD 5.1/SPARC bug.
+
 2012-03-13  Pádraig Brady  <P@draigBrady.com>
 
 	doc: Update timer_* platform portability notes.

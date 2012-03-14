@@ -35,6 +35,16 @@ SIGNATURE_CHECK (sqrtl, long double, (long double));
 #define RANDOM randoml
 #include "test-sqrt.h"
 
+static long double
+my_ldexpl (long double x, int d)
+{
+  for (; d > 0; d--)
+    x *= 2.0L;
+  for (; d < 0; d++)
+    x *= 0.5L;
+  return x;
+}
+
 int
 main ()
 {
@@ -46,6 +56,20 @@ main ()
   x = 0.6L;
   y = sqrtl (x);
   ASSERT (y >= 0.7745966692L && y <= 0.7745966693L);
+
+  /* Another particular value.  */
+  {
+    long double z;
+    long double err;
+
+    x = 8.1974099812331540680810141969554806865L;
+    y = sqrtl (x);
+    z = y * y - x;
+    err = my_ldexpl (z, LDBL_MANT_DIG);
+    if (err < 0)
+      err = - err;
+    ASSERT (err <= 100.0L);
+  }
 
   test_function ();
 
