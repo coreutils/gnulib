@@ -119,11 +119,13 @@ AC_DEFUN([gl_FUNC_SQRTL_WORKS],
         [AC_LANG_SOURCE([[
 #include <float.h>
 #include <math.h>
+#ifndef sqrtl /* for AIX */
 extern
 #ifdef __cplusplus
 "C"
 #endif
 long double sqrtl (long double);
+#endif
 static long double
 my_ldexpl (long double x, int d)
 {
