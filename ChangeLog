@@ -1,3 +1,9 @@
+2012-03-15  Bruno Haible  <bruno@clisp.org>
+
+	fmal: Avoid test failure on OpenBSD 5.1/SPARC64.
+	* lib/fma.c (VOLATILE): New macro.
+	(FUNC): Use it to work around a GCC compiler bug.
+
 2012-03-13  Bruno Haible  <bruno@clisp.org>
 
 	hypotl: Bypass broken implementation in OpenBSD 5.1/SPARC.

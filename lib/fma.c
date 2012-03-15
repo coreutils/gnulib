@@ -72,6 +72,13 @@
 # pragma fenv_access (off)
 #endif
 
+/* Work around GCC 4.2.1 bug on OpenBSD 5.1/SPARC64.  */
+#if defined __GNUC__ && defined __sparc__
+# define VOLATILE volatile
+#else
+# define VOLATILE
+#endif
+
 /* It is possible to write an implementation of fused multiply-add with
    floating-point operations alone.  See
      Sylvie Boldo, Guillaume Melquiond:
@@ -866,16 +873,22 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                     else
                       {
                         /* First loop round.  */
-                        fsum = (DOUBLE)
-                               ((sum[sum_len - k - 1] << (GMP_LIMB_BITS - shift))
-                                | (sum_len >= k + 2 ? sum[sum_len - k - 2] >> shift : 0));
+                        {
+                          VOLATILE mp_limb_t chunk =
+                            (sum[sum_len - k - 1] << (GMP_LIMB_BITS - shift))
+                            | (sum_len >= k + 2 ? sum[sum_len - k - 2] >> shift : 0);
+                          fsum = (DOUBLE) chunk;
+                        }
                         /* General loop.  */
                         while (--k >= 0)
                           {
                             fsum *= chunk_multiplier;
-                            fsum += (DOUBLE)
-                                    ((sum[sum_len - k - 1] << (GMP_LIMB_BITS - shift))
-                                     | (sum[sum_len - k - 2] >> shift));
+                            {
+                              VOLATILE mp_limb_t chunk =
+                                (sum[sum_len - k - 1] << (GMP_LIMB_BITS - shift))
+                                | (sum[sum_len - k - 2] >> shift);
+                              fsum += (DOUBLE) chunk;
+                            }
                           }
                       }
                   }
