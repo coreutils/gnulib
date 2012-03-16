@@ -1,3 +1,11 @@
+2012-03-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: some glibc x32 integer width issues
+	* doc/posix-headers/sys_types.texi (sys/types.h):
+	* doc/posix-headers/time.texi (time.h):
+	Mention that glibc x32 does not conform to POSIX in a couple of
+	areas related to integer widths.
+
 2012-03-15  Bruno Haible  <bruno@clisp.org>
 
 	fmal: Avoid test failure on OpenBSD 5.1/SPARC64.

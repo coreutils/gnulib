@@ -18,4 +18,9 @@ NetBSD 5.0
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms the @code{tv_nsec} member of @code{struct timespec}
+is not of type @code{long}, but is of type @code{long long} instead:
+glibc x32
+
 @end itemize

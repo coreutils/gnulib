@@ -23,4 +23,9 @@ MSVC 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms the types @code{blksize_t} and @code{suseconds_t}
+are signed integer types that are wider than @code{long}:
+glibc x32
+
 @end itemize
