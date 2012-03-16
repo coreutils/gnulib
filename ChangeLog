@@ -1,5 +1,20 @@
 2012-03-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: diagnose too-large repeat counts in EREs
+	Previously, the code did not diagnose the too-large repeat count
+	in EREs like 'b{1000000000}'; instead, it silently treated the ERE
+	as if it were 'b\{1000000000}', which is unexpected.
+	* lib/regcomp.c (parse_dup_op): Fail with REG_ESIZE if a repeat count
+	is too large.  REG_ESIZE is used nowhere else, and the diagnostic
+	is a reasonable one for this problem.  Another option would be to
+	create a new REG_OVERFLOW error for repeat counts that are too large.
+	(fetch_number): Return RE_DUP_MAX + 1, not REG_ERROR, if the repeat
+	count is too large, so that the caller can distinguish the two cases.
+	* lib/regex.h (_REG_ESIZE): Document that this is now a generic
+	"Too large" return code, and that repeat counts are one example of this.
+
+2012-03-16  Paul Eggert  <eggert@cs.ucla.edu>
+
 	doc: some glibc x32 integer width issues
 	* doc/posix-headers/sys_types.texi (sys/types.h):
 	* doc/posix-headers/time.texi (time.h):

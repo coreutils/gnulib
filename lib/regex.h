@@ -304,7 +304,7 @@ extern reg_syntax_t re_syntax_options;
 /* RE_DUP_MAX is 2**15 - 1 because an earlier implementation stored
    the counter as a 2-byte signed integer.  This is no longer true, so
    RE_DUP_MAX could be increased to (INT_MAX / 10 - 1), or to
-   ((SIZE_MAX - 2) / 10 - 1) if _REGEX_LARGE_OFFSETS is defined.
+   ((SIZE_MAX - 9) / 10) if _REGEX_LARGE_OFFSETS is defined.
    However, there would be a huge performance problem if someone
    actually used a pattern like a\{214748363\}, so RE_DUP_MAX retains
    its historical value.  */
@@ -375,7 +375,7 @@ typedef enum
 
   /* Error codes we've added.  */
   _REG_EEND,		/* Premature end.  */
-  _REG_ESIZE,		/* Compiled pattern bigger than 2^16 bytes.  */
+  _REG_ESIZE,		/* Too large (e.g., repeat count too large).  */
   _REG_ERPAREN		/* Unmatched ) or \); not returned from regcomp.  */
 } reg_errcode_t;
 

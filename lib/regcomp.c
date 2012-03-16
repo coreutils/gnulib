@@ -2571,6 +2571,12 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
 	  *err = REG_BADBR;
 	  return NULL;
 	}
+
+      if (BE (RE_DUP_MAX < (end == REG_MISSING ? start : end), 0))
+	{
+	  *err = REG_ESIZE;
+	  return NULL;
+	}
     }
   else
     {
@@ -3751,6 +3757,7 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
 /* This is intended for the expressions like "a{1,3}".
    Fetch a number from 'input', and return the number.
    Return REG_MISSING if the number field is empty like "{,1}".
+   Return RE_DUP_MAX + 1 if the number field is too large.
    Return REG_ERROR if an error occurred.  */
 
 static Idx
@@ -3769,8 +3776,9 @@ fetch_number (re_string_t *input, re_token_t *token, reg_syntax_t syntax)
       num = ((token->type != CHARACTER || c < '0' || '9' < c
 	      || num == REG_ERROR)
 	     ? REG_ERROR
-	     : ((num == REG_MISSING) ? c - '0' : num * 10 + c - '0'));
-      num = (num > RE_DUP_MAX) ? REG_ERROR : num;
+	     : num == REG_MISSING
+	     ? c - '0'
+	     : MIN (RE_DUP_MAX + 1, num * 10 + c - '0'));
     }
   return num;
 }
