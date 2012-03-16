@@ -1,3 +1,8 @@
+2012-03-15  Mark Wielaard  <mark@klomp.org>
+
+	git-merge-changelog: add specific example on how to use with hg.
+	* lib/git-merge-changelog.c: Add example on how to use in .hgrc.
+
 2012-03-18  Mark Wielaard  <mark@klomp.org>
 
 	lib/git-merge-changelog.c (status): Report bugs to bug-gnulib@gnu.org.

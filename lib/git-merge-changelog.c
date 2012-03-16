@@ -75,7 +75,15 @@
           $ bzr extmerge ChangeLog
 
    Additionally, for hg users:
-     - Add to your $HOME/.hgrc a couple of lines in a section [merge-tools].
+     - Add to your $HOME/.hgrc the lines
+
+        [merge-patterns]
+        ChangeLog = git-merge-changelog
+
+        [merge-tools]
+        git-merge-changelog.executable = /usr/local/bin/git-merge-changelog
+        git-merge-changelog.args = $base $local $other
+
        See <http://www.selenic.com/mercurial/hgrc.5.html> section merge-tools
        for reference.
  */
