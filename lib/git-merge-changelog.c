@@ -990,7 +990,7 @@ usage (int status)
       printf ("  -h, --help                  display this help and exit\n");
       printf ("  -V, --version               output version information and exit\n");
       printf ("\n");
-      fputs ("Report bugs to <bug-gnu-gettext@gnu.org>.\n",
+      fputs ("Report bugs to <bug-gnulib@gnu.org>.\n",
              stdout);
     }
 
