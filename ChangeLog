@@ -1,3 +1,10 @@
+2012-03-18  Andreas Oberritter  <obi@opendreambox.org>
+
+	git-version-gen: don't let "prefix" envvar cause trouble
+	* build-aux/git-version-gen (prefix): Initialize properly,
+	so as not to use a value specified via the environment.
+	Details here: http://thread.gmane.org/gmane.comp.gnu.parted.bugs/10810
+
 2012-03-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: diagnose too-large repeat counts in EREs
