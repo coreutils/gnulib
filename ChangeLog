@@ -1,3 +1,10 @@
+2012-03-20  Jim Meyering  <meyering@redhat.com>
+
+	tests: avoid gcc warnings about argv vs. const initializers
+	* tests/test-posix_spawn1.c (main): Cast to "(char *)" to avoid two
+	warnings about discarding 'const' qualifier from pointer target type.
+	* tests/test-posix_spawn2.c (main): Likewise.
+
 2012-03-20  Reuben Thomas  <rrt@sc3d.org>
 
 	README-release: simplify slightly

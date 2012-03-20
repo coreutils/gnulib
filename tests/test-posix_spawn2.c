@@ -53,7 +53,7 @@ fd_safer (int fd)
 int
 main ()
 {
-  char *argv[3] = { "/bin/sh", CHILD_PROGRAM_FILENAME, NULL };
+  char *argv[3] = { (char *) "/bin/sh", (char *) CHILD_PROGRAM_FILENAME, NULL };
   int ofd[2];
   sigset_t blocked_signals;
   sigset_t fatal_signal_set;
