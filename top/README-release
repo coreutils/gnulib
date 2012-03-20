@@ -1,6 +1,6 @@
 Here are most of the steps we (maintainers) follow when making a release.
 
-* Start from a clean, up-to-date git directory:
+* Start from a clean, up-to-date git directory on "master":
 
     make -k maintainer-clean || { ./configure && make maintainer-clean; }
     git checkout master
@@ -10,10 +10,10 @@ Here are most of the steps we (maintainers) follow when making a release.
   are in your PATH.  See the buildreq list in bootstrap.conf for
   the complete list of tools.
 
-* Ensure that you're on "master" with no uncommitted diffs.
-  This should produce no output:
+* Ensure that you have no uncommitted diffs.  This should produce no
+  output:
 
-    git checkout master; git diff
+    git diff
 
 * Ensure that you've pushed all changes that belong in the release:
 

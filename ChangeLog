@@ -1,3 +1,8 @@
+2012-03-20  Reuben Thomas  <rrt@sc3d.org>
+
+	README-release: simplify slightly
+	* top/README-release: Run "git checkout master" only once.
+
 2012-03-15  Mark Wielaard  <mark@klomp.org>
 
 	git-merge-changelog: add specific example on how to use with hg.
