@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 5, 2012
+@set lastupdate March 20, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -1361,18 +1361,21 @@ which subdirectory to find each file in.
 It's wise to test your patch by applying it to a copy of the old
 version, and checking that the result exactly matches the new version.
 
+
 @node Distribution on ftp.gnu.org
 @section Distribution on @code{ftp.gnu.org}
 @cindex GNU ftp site
 @cindex @code{ftp.gnu.org}, the GNU release site
 
-GNU packages are distributed through the directory @file{/gnu} on
-@code{ftp.gnu.org}, via both HTTP and FTP.  Each package should have a
-subdirectory named after the package, and all the distribution files
-for the package should go in that subdirectory.
+We strongly recommend using @code{ftp.gnu.org} to distribute official
+releases.  If you want to also distribute the package from a site of
+your own, that is fine.  To use some other site instead of
+@code{ftp.gnu.org} is acceptable, provided it allows connections from
+anyone anywhere.
 
-@xref{Automated FTP Uploads}, for procedural details of putting new
-versions on @code{ftp.gnu.org}.
+@xref{Automated FTP Uploads}, for the procedural details of putting
+new versions on @code{ftp.gnu.org}.
+
 
 @node Test Releases
 @section Test Releases
@@ -1387,8 +1390,8 @@ but send it only to a group of volunteers that you have recruited.  (Use
 a suitable GNU mailing list/newsgroup to recruit them.)
 
 We normally use the server @code{alpha.gnu.org} for pretests and
-prerelease versions.  @xref{Automated FTP Uploads}, for procedural details
-of putting new versions on @code{alpha.gnu.org}.
+prerelease versions.  @xref{Automated FTP Uploads}, for the procedural
+details of putting new versions on @code{alpha.gnu.org}.
 
 Once a program gets to be widely used and people expect it to work
 solidly, it is a good idea to do pretest releases before each ``real''
@@ -1754,7 +1757,7 @@ on the GNU Planet web page.
 
 @cindex announcement mailing list, project-specific
 You can maintain your own mailing list (typically
-@email{info-@var{package}@@gnu.org}) for announcements as well if you
+@indicateurl{info-@var{package}@@gnu.org}) for announcements as well if you
 like.  For your own list, of course you decide as you see fit what
 events are worth announcing.  (@xref{Mail}, for setting this up, and
 more suggestions on handling mail for your package.)
@@ -1776,7 +1779,7 @@ Your package's download location (normally
 @indicateurl{http://ftp.gnu.org/gnu/@var{package}/}).  It is also
 useful to mention the mirror list at
 @url{http://www.gnu.org/order/ftp.html}, and that
-@url{http://ftpmirror.gnu.org/@var{package/}} will automatically
+@indicateurl{http://ftpmirror.gnu.org/@var{package/}} will automatically
 redirect to a nearby mirror.
 
 @item
