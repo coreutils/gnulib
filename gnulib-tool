@@ -3151,7 +3151,7 @@ func_add_file ()
          || { test -n "$lsymbolic" \
               && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
        && test -z "$lookedup_tmp" \
-       && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+       && cmp -s "$lookedup_file" "$tmpfile"; then
       func_ln_if_changed "$lookedup_file" "$destdir/$g"
     else
       mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
@@ -3180,7 +3180,7 @@ func_add_file ()
 # - already_present  nonempty if the file should already exist, empty otherwise
 func_update_file ()
 {
-  if cmp "$destdir/$g" "$tmpfile" > /dev/null; then
+  if cmp -s "$destdir/$g" "$tmpfile"; then
     : # The file has not changed.
   else
     # Replace the file.
@@ -3195,7 +3195,7 @@ func_update_file ()
            || { test -n "$lsymbolic" \
                 && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
          && test -z "$lookedup_tmp" \
-         && cmp "$lookedup_file" "$tmpfile" > /dev/null; then
+         && cmp -s "$lookedup_file" "$tmpfile"; then
         func_ln_if_changed "$lookedup_file" "$destdir/$g"
       else
         mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
@@ -4909,7 +4909,7 @@ s,//*$,/,'
   modules="$main_modules"
   func_emit_lib_Makefile_am > "$tmpfile"
   if test -f "$destdir"/$sourcebase/$makefile_am; then
-    if cmp "$destdir"/$sourcebase/$makefile_am "$tmpfile" > /dev/null; then
+    if cmp -s "$destdir"/$sourcebase/$makefile_am "$tmpfile"; then
       rm -f "$tmpfile"
     else
       if $doit; then
@@ -4940,7 +4940,7 @@ s,//*$,/,'
       func_lookup_file build-aux/po/$file
       cat "$lookedup_file" > "$tmpfile"
       if test -f "$destdir"/$pobase/$file; then
-        if cmp "$destdir"/$pobase/$file "$tmpfile" > /dev/null; then
+        if cmp -s "$destdir"/$pobase/$file "$tmpfile"; then
           rm -f "$tmpfile"
         else
           if $doit; then
@@ -4967,7 +4967,7 @@ s,//*$,/,'
     func_dest_tmpfilename $pobase/Makevars
     func_emit_po_Makevars > "$tmpfile"
     if test -f "$destdir"/$pobase/Makevars; then
-      if cmp "$destdir"/$pobase/Makevars "$tmpfile" > /dev/null; then
+      if cmp -s "$destdir"/$pobase/Makevars "$tmpfile"; then
         rm -f "$tmpfile"
       else
         if $doit; then
@@ -4993,7 +4993,7 @@ s,//*$,/,'
     func_dest_tmpfilename $pobase/POTFILES.in
     func_emit_po_POTFILES_in > "$tmpfile"
     if test -f "$destdir"/$pobase/POTFILES.in; then
-      if cmp "$destdir"/$pobase/POTFILES.in "$tmpfile" > /dev/null; then
+      if cmp -s "$destdir"/$pobase/POTFILES.in "$tmpfile"; then
         rm -f "$tmpfile"
       else
         if $doit; then
@@ -5042,7 +5042,7 @@ s,//*$,/,'
           }
       ) > "$tmpfile"
       if test -f "$destdir"/$pobase/LINGUAS; then
-        if cmp "$destdir"/$pobase/LINGUAS "$tmpfile" > /dev/null; then
+        if cmp -s "$destdir"/$pobase/LINGUAS "$tmpfile"; then
           rm -f "$tmpfile"
         else
           echo "Updating $pobase/LINGUAS (backup in $pobase/LINGUAS~)"
@@ -5131,7 +5131,7 @@ s,//*$,/,'
     fi
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-cache.m4; then
-    if cmp "$destdir"/$m4base/gnulib-cache.m4 "$tmpfile" > /dev/null; then
+    if cmp -s "$destdir"/$m4base/gnulib-cache.m4 "$tmpfile"; then
       rm -f "$tmpfile"
     else
       if $doit; then
@@ -5270,7 +5270,7 @@ s,//*$,/,'
     echo "])"
   ) > "$tmpfile"
   if test -f "$destdir"/$m4base/gnulib-comp.m4; then
-    if cmp "$destdir"/$m4base/gnulib-comp.m4 "$tmpfile" > /dev/null; then
+    if cmp -s "$destdir"/$m4base/gnulib-comp.m4 "$tmpfile"; then
       rm -f "$tmpfile"
     else
       if $doit; then
@@ -5305,7 +5305,7 @@ s,//*$,/,'
     modules="$testsrelated_modules"
     func_emit_tests_Makefile_am "${macro_prefix}tests_WITNESS" > "$tmpfile"
     if test -f "$destdir"/$testsbase/$makefile_am; then
-      if cmp "$destdir"/$testsbase/$makefile_am "$tmpfile" > /dev/null; then
+      if cmp -s "$destdir"/$testsbase/$makefile_am "$tmpfile"; then
         rm -f "$tmpfile"
       else
         if $doit; then

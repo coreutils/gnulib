@@ -1,3 +1,9 @@
+2012-03-24  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Avoid unintended error output from 'cmp'.
+	* gnulib-tool (func_add_file, func_update_file, func_import): Use
+	"cmp -s", not "cmp > /dev/null".
+
 2012-03-23  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	gnulib-tool: fix imprecise comments w.r.t. an automake bug
