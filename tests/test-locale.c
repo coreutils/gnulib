@@ -68,14 +68,12 @@ main ()
   ls += sizeof (l.n_sep_by_space);
   ls += sizeof (*l.int_curr_symbol);
   ls += sizeof (l.int_frac_digits);
-#if 0
   ls += sizeof (l.int_p_cs_precedes);
   ls += sizeof (l.int_p_sign_posn);
   ls += sizeof (l.int_p_sep_by_space);
   ls += sizeof (l.int_n_cs_precedes);
   ls += sizeof (l.int_n_sign_posn);
   ls += sizeof (l.int_n_sep_by_space);
-#endif
 
   return 0;
 }

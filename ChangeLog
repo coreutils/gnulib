@@ -1,5 +1,11 @@
 2012-03-25  Bruno Haible  <bruno@clisp.org>
 
+	locale: Provide a complete 'struct lconv'.
+	* m4/locale_h.m4 (gl_LOCALE_H): Set REPLACE_STRUCT_LCONV to 1 if
+	'struct lconv' does not contain int_p_cs_precedes.
+	* tests/test-locale.c (main): Check that 'struct lconv' is complete.
+	* doc/posix-headers/locale.texi: Update.
+
 	locale: Provide a complete 'struct lconv' on Solaris 10, 11.
 	* m4/locale_h.m4 (gl_LOCALE_H): On Solaris, define _LCONV_C99.
 	* doc/posix-headers/locale.texi: Update.
