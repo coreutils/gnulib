@@ -1,5 +1,20 @@
 2012-03-24  Bruno Haible  <bruno@clisp.org>
 
+	Enable common subexpression optimization in GCC.
+	* lib/dirent.in.h (_GL_ATTRIBUTE_PURE): Define, like in string.in.h.
+	(alphasort): Declare with GCC attribute 'pure'.
+	* lib/stdlib.in.h (_GL_ATTRIBUTE_PURE): Define, like in string.in.h.
+	(atoll): Declare with GCC attribute 'pure'.
+	* lib/string.in.h (mbslen, mbsnlen, mbschr, mbsrchr, mbsstr,
+	mbscasecmp, mbsncasecmp, mbspcasecmp, mbscasestr, mbscspn, mbspbrk,
+	mbsspn, strverscmp): Declare with GCC attribute 'pure'.
+	* lib/wchar.in.h (_GL_ATTRIBUTE_PURE): Define, like in string.in.h.
+	(btowc, wctob, wcwidth, wmemchr, wmemcmp, wcslen, wcsnlen, wcscmp,
+	wcsncmp, wcscasecmp, wcsncasecmp, wcschr, wcsrchr, wcscspn, wcsspn,
+	wcspbrk, wcsstr, wcswidth): Declare with GCC attribute 'pure'.
+
+2012-03-24  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Avoid unintended error output from 'cmp'.
 	* gnulib-tool (func_add_file, func_update_file, func_import): Use
 	"cmp -s", not "cmp > /dev/null".

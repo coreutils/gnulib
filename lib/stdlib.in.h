@@ -94,6 +94,14 @@ struct random_data
 # include <unistd.h>
 #endif
 
+/* The __attribute__ feature is available in gcc versions 2.5 and later.
+   The attribute __pure__ was added in gcc 2.96.  */
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# define _GL_ATTRIBUTE_PURE __attribute__ ((__pure__))
+#else
+# define _GL_ATTRIBUTE_PURE /* empty */
+#endif
+
 /* The definition of _Noreturn is copied here.  */
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
@@ -138,7 +146,9 @@ _GL_WARN_ON_USE (_Exit, "_Exit is unportable - "
 /* Parse a signed decimal integer.
    Returns the value of the integer.  Errors are not detected.  */
 # if !@HAVE_ATOLL@
-_GL_FUNCDECL_SYS (atoll, long long, (const char *string) _GL_ARG_NONNULL ((1)));
+_GL_FUNCDECL_SYS (atoll, long long, (const char *string)
+                                    _GL_ATTRIBUTE_PURE
+                                    _GL_ARG_NONNULL ((1)));
 # endif
 _GL_CXXALIAS_SYS (atoll, long long, (const char *string));
 _GL_CXXALIASWARN (atoll);
