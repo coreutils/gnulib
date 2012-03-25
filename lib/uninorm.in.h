@@ -99,7 +99,8 @@ extern int
    Not all decompositions can be recombined using this function.  See the
    Unicode file CompositionExclusions.txt for details.  */
 extern ucs4_t
-       uc_composition (ucs4_t uc1, ucs4_t uc2);
+       uc_composition (ucs4_t uc1, ucs4_t uc2)
+       _UC_ATTRIBUTE_CONST;
 
 
 /* An object of type uninorm_t denotes a Unicode normalization form.  */
@@ -134,7 +135,9 @@ extern const struct unicode_normalization_form uninorm_nfkc;
 
 /* Return the decomposing variant of a normalization form.
    This maps NFC,NFD -> NFD and NFKC,NFKD -> NFKD.  */
-extern uninorm_t uninorm_decomposing_form (uninorm_t nf);
+extern uninorm_t
+       uninorm_decomposing_form (uninorm_t nf)
+       _UC_ATTRIBUTE_PURE;
 
 
 /* Return the specified normalization form of a string.  */

@@ -35,7 +35,8 @@ extern char *
 /* Looks up the Unicode character with a given name, in upper- or lowercase
    ASCII.  Returns the character if found, or UNINAME_INVALID if not found.  */
 extern ucs4_t
-       unicode_name_character (const char *name);
+       unicode_name_character (const char *name)
+       _UC_ATTRIBUTE_PURE;
 #define UNINAME_INVALID ((ucs4_t) 0xFFFF)
 
 #ifdef __cplusplus

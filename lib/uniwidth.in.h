@@ -39,27 +39,30 @@ extern "C" {
 /* Determine number of column positions required for UC.  */
 extern int
        uc_width (ucs4_t uc, const char *encoding)
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-       __attribute__ ((__pure__))
-#endif
-       ;
+       _UC_ATTRIBUTE_PURE;
 
 /* Determine number of column positions required for first N units
    (or fewer if S ends before this) in S.  */
 extern int
-       u8_width (const uint8_t *s, size_t n, const char *encoding);
+       u8_width (const uint8_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_width (const uint16_t *s, size_t n, const char *encoding);
+       u16_width (const uint16_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_width (const uint32_t *s, size_t n, const char *encoding);
+       u32_width (const uint32_t *s, size_t n, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 
 /* Determine number of column positions required for S.  */
 extern int
-       u8_strwidth (const uint8_t *s, const char *encoding);
+       u8_strwidth (const uint8_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u16_strwidth (const uint16_t *s, const char *encoding);
+       u16_strwidth (const uint16_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 extern int
-       u32_strwidth (const uint32_t *s, const char *encoding);
+       u32_strwidth (const uint32_t *s, const char *encoding)
+       _UC_ATTRIBUTE_PURE;
 
 
 #ifdef __cplusplus

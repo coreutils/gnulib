@@ -1,6 +1,60 @@
 2012-03-24  Bruno Haible  <bruno@clisp.org>
 
 	Enable common subexpression optimization in GCC.
+	* lib/unitypes.in.h (_UC_ATTRIBUTE_CONST, _UC_ATTRIBUTE_PURE): New
+	macros.
+	* lib/unicase.in.h (uc_toupper, uc_tolower, uc_totitle): Declare with
+	GCC attribute 'const'.
+	(uc_locale_language): Declare with GCC attribute 'pure'.
+	* lib/unicase/caseprop.h (uc_is_cased, uc_is_case_ignorable): Declare
+	with GCC attribute 'const'.
+	* lib/unictype.in.h (uc_is_general_category_withtable,
+	uc_combining_class, uc_combining_class_name,
+	uc_combining_class_long_name, uc_bidi_class_name,
+	uc_bidi_category_name, uc_bidi_class_long_name, uc_bidi_class,
+	uc_bidi_category, uc_is_bidi_class, uc_is_bidi_category,
+	uc_decimal_value, uc_digit_value, uc_numeric_value,
+	uc_joining_type_name, uc_joining_type_long_name, uc_joining_type,
+	uc_joining_group_name, uc_joining_group, uc_is_property_*, uc_script,
+	uc_block, uc_is_c_whitespace, uc_is_java_whitespace,
+	uc_c_ident_category, uc_java_ident_category, uc_is_alnum, uc_is_alpha,
+	uc_is_cntrl, uc_is_digit, uc_is_graph, uc_is_lower, uc_is_print,
+	uc_is_punct, uc_is_space, uc_is_upper, uc_is_xdigit, uc_is_blank):
+	Declare with GCC attribute 'const'.
+	(uc_general_category_name, uc_general_category_long_name,
+	uc_general_category_byname, uc_general_category,
+	uc_is_general_category, uc_combining_class_byname,
+	uc_bidi_class_byname, uc_bidi_category_byname, uc_joining_type_byname,
+	uc_joining_group_byname, uc_script_byname, uc_is_script, uc_is_block):
+	Declare with GCC attribute 'pure'.
+	* lib/unigbrk.in.h (uc_graphemeclusterbreak_property,
+	uc_is_grapheme_break, u8_grapheme_next, u16_grapheme_next,
+	u32_grapheme_next, u8_grapheme_prev, u16_grapheme_prev,
+	u32_grapheme_prev, lib/uniname.in.h (unicode_name_character): Declare
+	with GCC attribute 'pure'.
+	* lib/uninorm.in.h (uc_composition): Declare with GCC attribute
+	'const'.
+	(uninorm_decomposing_form): Declare with GCC attribute 'pure'.
+	* lib/unistr.in.h (): Declare with GCC attribute 'const'.
+	(u8_check, u16_check, u32_check, u8_mblen, u16_mblen, u32_mblen,
+	u8_cmp, u16_cmp, u32_cmp, u8_cmp2, u16_cmp2, u32_cmp2, u8_chr, u16_chr,
+	u32_chr, u8_mbsnlen, u16_mbsnlen, u32_mbsnlen, u8_strmblen,
+	u16_strmblen, u32_strmblen, u8_strlen, u16_strlen, u32_strlen,
+	u8_strnlen, u16_strnlen, u32_strnlen, u8_strcmp_gnu, u8_strcmp,
+	u16_strcmp, u32_strcmp, u8_strncmp, u16_strncmp, u32_strncmp,
+	u8_strchr, u16_strchr, u32_strchr, u8_strrchr, u16_strrchr,
+	u32_strrchr, u8_strcspn, u16_strcspn, u32_strcspn, u8_strspn,
+	u16_strspn, u32_strspn, u8_strpbrk, u16_strpbrk, u32_strpbrk,
+	u8_strstr, u16_strstr, u32_strstr, u8_startswith, u16_startswith,
+	u32_startswith, u8_endswith, u16_endswith, u32_endswith): Declare with
+	GCC attribute 'pure'.
+	* lib/uniwbrk.in.h (uc_wordbreak_property): Declare with GCC attribute
+	'const'.
+	* lib/uniwidth.in.h (uc_width): Simplify declaration.
+	(u8_width, u16_width, u32_width, u8_strwidth, u16_strwidth,
+	u32_strwidth): Declare with GCC attribute 'pure'.
+
+	Enable common subexpression optimization in GCC.
 	* lib/dirent.in.h (_GL_ATTRIBUTE_PURE): Define, like in string.in.h.
 	(alphasort): Declare with GCC attribute 'pure'.
 	* lib/stdlib.in.h (_GL_ATTRIBUTE_PURE): Define, like in string.in.h.

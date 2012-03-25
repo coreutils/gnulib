@@ -42,15 +42,18 @@ extern "C" {
 
 /* Return the uppercase mapping of a Unicode character.  */
 extern ucs4_t
-       uc_toupper (ucs4_t uc);
+       uc_toupper (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
 
 /* Return the lowercase mapping of a Unicode character.  */
 extern ucs4_t
-       uc_tolower (ucs4_t uc);
+       uc_tolower (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
 
 /* Return the titlecase mapping of a Unicode character.  */
 extern ucs4_t
-       uc_totitle (ucs4_t uc);
+       uc_totitle (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
 
 /* ========================================================================= */
 
@@ -63,7 +66,8 @@ extern ucs4_t
 /* Return the ISO 639 language code of the current locale.
    Return "" if it is unknown, or in the "C" locale.  */
 extern const char *
-       uc_locale_language (void);
+       uc_locale_language (void)
+       _UC_ATTRIBUTE_PURE;
 
 /* Conventions:
 

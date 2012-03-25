@@ -54,7 +54,8 @@ enum
 
 /* Return the Word_Break property of a Unicode character.  */
 extern int
-       uc_wordbreak_property (ucs4_t uc);
+       uc_wordbreak_property (ucs4_t uc)
+       _UC_ATTRIBUTE_CONST;
 
 /* ========================================================================= */
 
