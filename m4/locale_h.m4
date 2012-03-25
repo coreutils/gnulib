@@ -1,4 +1,4 @@
-# locale_h.m4 serial 14
+# locale_h.m4 serial 15
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,8 @@ AC_DEFUN([gl_LOCALE_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
 
-  dnl Persuade glibc <locale.h> to define locale_t.
+  dnl Persuade glibc <locale.h> to define locale_t and the int_p_*, int_n_*
+  dnl members of 'struct lconv'.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl If <stddef.h> is replaced, then <locale.h> must also be replaced.
@@ -21,7 +22,8 @@ AC_DEFUN([gl_LOCALE_H],
     [AC_COMPILE_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <locale.h>
-            int x = LC_MESSAGES;]],
+            int x = LC_MESSAGES;
+            int y = sizeof (((struct lconv *) 0)->decimal_point);]],
           [[]])],
        [gl_cv_header_locale_h_posix2001=yes],
        [gl_cv_header_locale_h_posix2001=no])])
@@ -54,6 +56,23 @@ AC_DEFUN([gl_LOCALE_H],
   fi
   AC_SUBST([HAVE_XLOCALE_H])
 
+  dnl Check whether 'struct lconv' is well-defined.
+  dnl Bionic libc's 'struct lconv' is just a dummy.
+  AC_CACHE_CHECK([whether struct lconv is properly defined],
+    [gl_cv_sys_struct_lconv_ok],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <locale.h>
+            struct lconv l;
+            int x = sizeof (l.decimal_point);]],
+          [[]])],
+       [gl_cv_sys_struct_lconv_ok=yes],
+       [gl_cv_sys_struct_lconv_ok=no])
+    ])
+  if test $gl_cv_sys_struct_lconv_ok = no; then
+    REPLACE_STRUCT_LCONV=1
+  fi
+
   dnl <locale.h> is always overridden, because of GNULIB_POSIXCHECK.
   gl_NEXT_HEADERS([locale.h])
 
@@ -82,7 +101,8 @@ AC_DEFUN([gl_LOCALE_H_DEFAULTS],
   GNULIB_SETLOCALE=0;  AC_SUBST([GNULIB_SETLOCALE])
   GNULIB_DUPLOCALE=0;  AC_SUBST([GNULIB_DUPLOCALE])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_DUPLOCALE=1;    AC_SUBST([HAVE_DUPLOCALE])
-  REPLACE_SETLOCALE=0; AC_SUBST([REPLACE_SETLOCALE])
-  REPLACE_DUPLOCALE=0; AC_SUBST([REPLACE_DUPLOCALE])
+  HAVE_DUPLOCALE=1;       AC_SUBST([HAVE_DUPLOCALE])
+  REPLACE_SETLOCALE=0;    AC_SUBST([REPLACE_SETLOCALE])
+  REPLACE_DUPLOCALE=0;    AC_SUBST([REPLACE_DUPLOCALE])
+  REPLACE_STRUCT_LCONV=0; AC_SUBST([REPLACE_STRUCT_LCONV])
 ])

@@ -47,6 +47,87 @@
 # define LC_MESSAGES 1729
 #endif
 
+/* Bionic libc's 'struct lconv' is just a dummy.  */
+#if @REPLACE_STRUCT_LCONV@
+# define lconv rpl_lconv
+struct lconv
+{
+  /* All 'char *' are actually 'const char *'.  */
+
+  /* Members that depend on the LC_NUMERIC category of the locale.  See
+     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_04> */
+
+  /* Symbol used as decimal point.  */
+  char *decimal_point;
+  /* Symbol used to separate groups of digits to the left of the decimal
+     point.  */
+  char *thousands_sep;
+  /* Definition of the size of groups of digits to the left of the decimal
+     point.  */
+  char *grouping;
+
+  /* Members that depend on the LC_MONETARY category of the locale.  See
+     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_03> */
+
+  /* Symbol used as decimal point.  */
+  char *mon_decimal_point;
+  /* Symbol used to separate groups of digits to the left of the decimal
+     point.  */
+  char *mon_thousands_sep;
+  /* Definition of the size of groups of digits to the left of the decimal
+     point.  */
+  char *mon_grouping;
+  /* Sign used to indicate a value >= 0.  */
+  char *positive_sign;
+  /* Sign used to indicate a value < 0.  */
+  char *negative_sign;
+
+  /* For formatting local currency.  */
+  /* Currency symbol (3 characters) followed by separator (1 character).  */
+  char *currency_symbol;
+  /* Number of digits after the decimal point.  */
+  char frac_digits;
+  /* For values >= 0: 1 if the currency symbol precedes the number, 0 if it
+     comes after the number.  */
+  char p_cs_precedes;
+  /* For values >= 0: Position of the sign.  */
+  char p_sign_posn;
+  /* For values >= 0: Placement of spaces between currency symbol, sign, and
+     number.  */
+  char p_sep_by_space;
+  /* For values < 0: 1 if the currency symbol precedes the number, 0 if it
+     comes after the number.  */
+  char n_cs_precedes;
+  /* For values < 0: Position of the sign.  */
+  char n_sign_posn;
+  /* For values < 0: Placement of spaces between currency symbol, sign, and
+     number.  */
+  char n_sep_by_space;
+
+  /* For formatting international currency.  */
+  /* Currency symbol (3 characters) followed by separator (1 character).  */
+  char *int_curr_symbol;
+  /* Number of digits after the decimal point.  */
+  char int_frac_digits;
+  /* For values >= 0: 1 if the currency symbol precedes the number, 0 if it
+     comes after the number.  */
+  char int_p_cs_precedes;
+  /* For values >= 0: Position of the sign.  */
+  char int_p_sign_posn;
+  /* For values >= 0: Placement of spaces between currency symbol, sign, and
+     number.  */
+  char int_p_sep_by_space;
+  /* For values < 0: 1 if the currency symbol precedes the number, 0 if it
+     comes after the number.  */
+  char int_n_cs_precedes;
+  /* For values < 0: Position of the sign.  */
+  char int_n_sign_posn;
+  /* For values < 0: Placement of spaces between currency symbol, sign, and
+     number.  */
+  char int_n_sep_by_space;
+};
+#endif
+
 #if @GNULIB_SETLOCALE@
 # if @REPLACE_SETLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

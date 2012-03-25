@@ -1,3 +1,16 @@
+2012-03-25  Bruno Haible  <bruno@clisp.org>
+
+	locale: Provide a working 'struct lconv'.
+	* lib/locale.in.h (lconv): Override if REPLACE_STRUCT_LCONV is 1.
+	* m4/locale_h.m4 (gl_LOCALE_H): Set REPLACE_STRUCT_LCONV to 1 if
+	'struct lconv' does not even contain decimal_point.
+	(gl_LOCALE_H_DEFAULTS): Initialize REPLACE_STRUCT_LCONV.
+	* modules/locale (Makefile.am): Substitute REPLACE_STRUCT_LCONV.
+	* tests/test-locale.c (main): Check that 'struct lconv' is complete.
+	* doc/posix-headers/locale.texi: Mention the problems with
+	'struct lconv'.
+	Reported by Gianluigi Tiesi <sherpya@netfarm.it>.
+
 2012-03-24  Bruno Haible  <bruno@clisp.org>
 
 	Enable common subexpression optimization in GCC.
