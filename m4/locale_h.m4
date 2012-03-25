@@ -1,4 +1,4 @@
-# locale_h.m4 serial 17
+# locale_h.m4 serial 18
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -110,10 +110,12 @@ AC_DEFUN([gl_LOCALE_MODULE_INDICATOR],
 
 AC_DEFUN([gl_LOCALE_H_DEFAULTS],
 [
+  GNULIB_LOCALECONV=0; AC_SUBST([GNULIB_LOCALECONV])
   GNULIB_SETLOCALE=0;  AC_SUBST([GNULIB_SETLOCALE])
   GNULIB_DUPLOCALE=0;  AC_SUBST([GNULIB_DUPLOCALE])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_DUPLOCALE=1;       AC_SUBST([HAVE_DUPLOCALE])
+  REPLACE_LOCALECONV=0;   AC_SUBST([REPLACE_LOCALECONV])
   REPLACE_SETLOCALE=0;    AC_SUBST([REPLACE_SETLOCALE])
   REPLACE_DUPLOCALE=0;    AC_SUBST([REPLACE_DUPLOCALE])
   REPLACE_STRUCT_LCONV=0; AC_SUBST([REPLACE_STRUCT_LCONV])

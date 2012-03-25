@@ -128,6 +128,30 @@ struct lconv
 };
 #endif
 
+#if @GNULIB_LOCALECONV@
+# if @REPLACE_LOCALECONV@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef localeconv
+#   define localeconv rpl_localeconv
+#  endif
+_GL_FUNCDECL_RPL (localeconv, struct lconv *, (void));
+_GL_CXXALIAS_RPL (localeconv, struct lconv *, (void));
+# else
+_GL_CXXALIAS_SYS (localeconv, struct lconv *, (void));
+# endif
+_GL_CXXALIASWARN (localeconv);
+#elif @REPLACE_STRUCT_LCONV@
+# undef localeconv
+# define localeconv localeconv_used_without_requesting_gnulib_module_localeconv
+#elif defined GNULIB_POSIXCHECK
+# undef localeconv
+# if HAVE_RAW_DECL_LOCALECONV
+_GL_WARN_ON_USE (localeconv,
+                 "localeconv returns too few information on some platforms - "
+                 "use gnulib module localeconv for portability");
+# endif
+#endif
+
 #if @GNULIB_SETLOCALE@
 # if @REPLACE_SETLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

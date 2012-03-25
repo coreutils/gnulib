@@ -7,6 +7,7 @@ m4/nl_langinfo.m4
 
 Depends-on:
 langinfo
+localeconv      [test $HAVE_NL_LANGINFO = 0 || test $REPLACE_NL_LANGINFO = 1]
 
 configure.ac:
 gl_FUNC_NL_LANGINFO

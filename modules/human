@@ -11,6 +11,7 @@ Depends-on:
 argmatch
 error
 intprops
+localeconv
 memmove
 xstrtoumax
 stdbool
