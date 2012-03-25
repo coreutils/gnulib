@@ -1,5 +1,9 @@
 2012-03-25  Bruno Haible  <bruno@clisp.org>
 
+	locale: Provide a complete 'struct lconv' on Solaris 10, 11.
+	* m4/locale_h.m4 (gl_LOCALE_H): On Solaris, define _LCONV_C99.
+	* doc/posix-headers/locale.texi: Update.
+
 	locale: Provide a working 'struct lconv'.
 	* lib/locale.in.h (lconv): Override if REPLACE_STRUCT_LCONV is 1.
 	* m4/locale_h.m4 (gl_LOCALE_H): Set REPLACE_STRUCT_LCONV to 1 if
