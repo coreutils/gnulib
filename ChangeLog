@@ -1,5 +1,9 @@
 2012-03-29  Eric Blake  <eblake@redhat.com>
 
+	strerror_r: avoid compiler warning
+	* lib/strerror_r.c (strerror_r): Hoist extern declaration to top
+	level.
+
 	fflush: avoid compiler warning
 	* lib/fflush.c (update_fpos_cache): Mark variables that are
 	potentially unused.
