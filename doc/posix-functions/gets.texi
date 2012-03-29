@@ -4,21 +4,21 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/gets.html}
 
-Gnulib module: stdio, nonblocking
+Gnulib module: ---
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib:
 @itemize
-@item
-When reading from a non-blocking pipe whose buffer is empty, this function
-fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
-some platforms:
-mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function should never be used, because it can overflow any given buffer.
+@item
+When reading from a non-blocking pipe whose buffer is empty, this function
+fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
+some platforms:
+mingw, MSVC 9.
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.

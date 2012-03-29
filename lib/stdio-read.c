@@ -131,13 +131,7 @@ fgets (char *s, int n, FILE *stream)
   CALL_WITH_ERRNO_FIX (char *, fgets (s, n, stream), ret == NULL)
 }
 
-char *
-gets (char *s)
-#undef gets
-{
-  FILE *stream = stdin;
-  CALL_WITH_ERRNO_FIX (char *, gets (s), ret == NULL)
-}
+/* We intentionally don't bother to fix gets.  */
 
 size_t
 fread (void *ptr, size_t s, size_t n, FILE *stream)

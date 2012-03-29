@@ -1,5 +1,16 @@
 2012-03-29  Eric Blake  <eblake@redhat.com>
 
+	stdio: don't assume gets any more
+	* m4/stdio_h.m4 (gl_STDIO_H, gl_STDIO_H_DEFAULTS): Drop gets
+	support.
+	* modules/stdio (Makefile.am): Likewise.
+	* lib/stdio-read.c (gets): Likewise.
+	* tests/test-stdio-c++.cc: Likewise.
+	* m4/warn-on-use.m4 (gl_WARN_ON_USE_PREPARE): Fix comment.
+	* lib/stdio.in.h (gets): Make warning occur in more places.
+	* doc/posix-functions/gets.texi (gets): Update documentation.
+	Reported by Christer Solskogen.
+
 	maint.mk: fix syntax checks without exclusions
 	* top/maint.mk (_sc_search_regexp): Allow for empty variable.
 	Reported by Daniel P. Berrange.

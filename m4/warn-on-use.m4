@@ -1,4 +1,4 @@
-# warn-on-use.m4 serial 4
+# warn-on-use.m4 serial 5
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,8 @@ dnl with or without modifications, as long as this notice is preserved.
 # some systems declare functions in the wrong header, then INCLUDES
 # should do likewise.
 #
-# If you assume C89, then it is generally safe to assume declarations
-# for functions declared in that standard (such as gets) without
+# It is generally safe to assume declarations for functions declared
+# in the intersection of C89 and C11 (such as printf) without
 # needing gl_WARN_ON_USE_PREPARE.
 AC_DEFUN([gl_WARN_ON_USE_PREPARE],
 [

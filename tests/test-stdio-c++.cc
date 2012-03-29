@@ -122,9 +122,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getline, ssize_t,
                  (char **, size_t *, FILE *));
 #endif
 
-#if GNULIB_TEST_GETS
-SIGNATURE_CHECK (GNULIB_NAMESPACE::gets, char *, (char *));
-#endif
+/* Don't bother testing gets; it should never be used.  */
 
 #if GNULIB_TEST_OBSTACK_PRINTF || GNULIB_TEST_OBSTACK_PRINTF_POSIX
 SIGNATURE_CHECK (GNULIB_NAMESPACE::obstack_printf, int,
