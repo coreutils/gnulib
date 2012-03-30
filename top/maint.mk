@@ -279,7 +279,7 @@ define _sc_search_regexp
    if test -n "$$files"; then						\
      if test -n "$$prohibit"; then					\
        grep $$with_grep_options $(_ignore_case) -nE "$$prohibit" $$files \
-         | grep -vE "$${exclude-^$$}"					\
+         | grep -vE "$${exclude:-^$$}"					\
          && { msg="$$halt" $(_sc_say_and_exit) } || :;			\
      else								\
        grep $$with_grep_options $(_ignore_case) -LE "$$require" $$files \

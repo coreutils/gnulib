@@ -1,5 +1,9 @@
 2012-03-29  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: fix syntax checks without exclusions
+	* top/maint.mk (_sc_search_regexp): Allow for empty variable.
+	Reported by Daniel P. Berrange.
+
 	strerror_r: avoid compiler warning
 	* lib/strerror_r.c (strerror_r): Hoist extern declaration to top
 	level.
