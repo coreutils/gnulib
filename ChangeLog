@@ -1,3 +1,13 @@
+2012-03-31  Bruno Haible  <bruno@clisp.org>
+
+	log10 tests: More tests.
+	* tests/test-log10.h: New file.
+	* modules/log10-tests (Files): Add tests/test-log10.h,
+	tests/minus-zero.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_log10_SOURCES.
+	* tests/test-log10.c: Include <float.h>, minus-zero.h, test-log10.h.
+	(main): Invoke test_function.
+
 2012-03-31  Simon Josefsson  <simon@josefsson.org>
 
 	fflush: Fix syntax error.
