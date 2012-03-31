@@ -1,7 +1,10 @@
 Files:
 tests/test-log10l.c
+tests/test-log10.h
+tests/minus-zero.h
 tests/signature.h
 tests/macros.h
+tests/randoml.c
 
 Depends-on:
 fpucw
@@ -11,4 +14,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-log10l
 check_PROGRAMS += test-log10l
+test_log10l_SOURCES = test-log10l.c randoml.c
 test_log10l_LDADD = $(LDADD) @LOG10L_LIBM@

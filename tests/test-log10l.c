@@ -23,11 +23,20 @@
 #include "signature.h"
 SIGNATURE_CHECK (log10l, long double, (long double));
 
+#include <float.h>
+
+#include "minus-zero.h"
 #include "fpucw.h"
 #include "macros.h"
 
-volatile long double x;
-long double y;
+#define DOUBLE long double
+#define HUGEVAL HUGE_VALL
+#define MANT_DIG LDBL_MANT_DIG
+#define L_(literal) literal##L
+#define MINUS_ZERO minus_zerol
+#define LOG10 log10l
+#define RANDOM randoml
+#include "test-log10.h"
 
 int
 main ()
@@ -40,6 +49,8 @@ main ()
   x = 0.6L;
   y = log10l (x);
   ASSERT (y >= -0.2218487497L && y <= -0.2218487496L);
+
+  test_function ();
 
   return 0;
 }
