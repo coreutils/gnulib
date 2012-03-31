@@ -8,12 +8,13 @@ m4/fflush.m4
 
 Depends-on:
 stdio
-fpurge          [test $REPLACE_FFLUSH = 1]
-ftello          [test $REPLACE_FFLUSH = 1]
-freading        [test $REPLACE_FFLUSH = 1]
-lseek           [test $REPLACE_FFLUSH = 1]
-unistd          [test $REPLACE_FFLUSH = 1]
-fseeko          [test $REPLACE_FFLUSH = 1]
+snippet/unused-parameter  [test $REPLACE_FFLUSH = 1]
+fpurge                    [test $REPLACE_FFLUSH = 1]
+ftello                    [test $REPLACE_FFLUSH = 1]
+freading                  [test $REPLACE_FFLUSH = 1]
+lseek                     [test $REPLACE_FFLUSH = 1]
+unistd                    [test $REPLACE_FFLUSH = 1]
+fseeko                    [test $REPLACE_FFLUSH = 1]
 
 configure.ac-early:
 AC_REQUIRE([AC_FUNC_FSEEKO])

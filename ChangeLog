@@ -1,3 +1,10 @@
+2012-03-31  Simon Josefsson  <simon@josefsson.org>
+
+	fflush: Fix syntax error.
+	* lib/fflush.c: Include unused-parameter.h, needed for
+	_GL_UNUSED_PARAMETER.
+	* modules/fflush (Depends-on): Add snippet/unused-parameter.
+
 2012-03-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: pacify GCC when compiling GRUB

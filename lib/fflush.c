@@ -28,6 +28,8 @@
 
 #include "stdio-impl.h"
 
+#include "unused-parameter.h"
+
 #undef fflush
 
 
