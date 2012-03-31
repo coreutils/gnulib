@@ -1,5 +1,12 @@
 2012-03-31  Bruno Haible  <bruno@clisp.org>
 
+	log10f tests: More tests.
+	* modules/log10f-tests (Files): Add tests/test-log10.h,
+	tests/minus-zero.h, tests/randomf.c.
+	(Makefile.am): Add randomf.c to test_log10f_SOURCES.
+	* tests/test-log10f.c: Include <float.h>, minus-zero.h, test-log10.h.
+	(main): Invoke test_function.
+
 	log10 tests: More tests.
 	* tests/test-log10.h: New file.
 	* modules/log10-tests (Files): Add tests/test-log10.h,
