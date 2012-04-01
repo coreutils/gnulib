@@ -1,5 +1,10 @@
 2012-04-01  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log10f-ieee'.
+	* modules/log10f-ieee: New file.
+
+2012-04-01  Bruno Haible  <bruno@clisp.org>
+
 	log10l: Work around AIX 5.1, IRIX 6.5, OSF/1 5.1 bug.
 	* lib/math.in.h (log10l): Override if REPLACE_LOG10L is 1.
 	* lib/log10l.c (log10l): If log10l exists, use it and provide just the

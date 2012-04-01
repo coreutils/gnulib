@@ -1,0 +1,24 @@
+Description:
+log10f() function according to ISO C 99 with IEC 60559.
+
+Files:
+
+Depends-on:
+log10f
+fpieee
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<math.h>
+
+Link:
+$(LOG10F_LIBM)
+
+License:
+LGPL
+
+Maintainer:
+Bruno Haible
