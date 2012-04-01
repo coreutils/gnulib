@@ -247,6 +247,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_LOGL''@|$(REPLACE_LOGL)|g' \
 	      -e 's|@''REPLACE_LOG10''@|$(REPLACE_LOG10)|g' \
 	      -e 's|@''REPLACE_LOG10F''@|$(REPLACE_LOG10F)|g' \
+	      -e 's|@''REPLACE_LOG10L''@|$(REPLACE_LOG10L)|g' \
 	      -e 's|@''REPLACE_LOG1P''@|$(REPLACE_LOG1P)|g' \
 	      -e 's|@''REPLACE_LOG1PF''@|$(REPLACE_LOG1PF)|g' \
 	      -e 's|@''REPLACE_LOG1PL''@|$(REPLACE_LOG1PL)|g' \

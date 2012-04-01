@@ -1,5 +1,20 @@
 2012-04-01  Bruno Haible  <bruno@clisp.org>
 
+	log10l: Work around AIX 5.1, IRIX 6.5, OSF/1 5.1 bug.
+	* lib/math.in.h (log10l): Override if REPLACE_LOG10L is 1.
+	* lib/log10l.c (log10l): If log10l exists, use it and provide just the
+	workaround.
+	* m4/log10l.m4 (gl_FUNC_LOG10L_WORKS): New macro.
+	(gl_FUNC_LOG10L): Invoke it. Set REPLACE_LOG10L.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_LOG10L.
+	* modules/math (Makefile.am): Substitute REPLACE_LOG10L.
+	* modules/log10l (configure.ac): Consider REPLACE_LOG10L.
+	(Depends-on): Update conditions.
+	* doc/posix-functions/log10l.texi: Mention the MSVC9, AIX 5.1,
+	IRIX 6.5, OSF/1 5.1 problems.
+
+2012-04-01  Bruno Haible  <bruno@clisp.org>
+
 	log10f: Work around OSF/1 5.1 bug.
 	* lib/math.in.h (log10f): Override if REPLACE_LOG10F is 1.
 	* lib/log10f.c (log10f): If logf exists, use it and provide just the

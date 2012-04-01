@@ -27,6 +27,19 @@ log10l (long double x)
   return log10 (x);
 }
 
+#elif HAVE_LOG10L
+
+long double
+log10l (long double x)
+# undef log10l
+{
+  /* Work around the OSF/1 5.1 bug.  */
+  if (x == 0.0L)
+    /* Return -Infinity.  */
+    return -1.0L / 0.0L;
+  return log10l (x);
+}
+
 #else
 
 /* 1 / log(10) */

@@ -1235,11 +1235,20 @@ _GL_WARN_ON_USE (log10, "log10 has portability problems - "
 #endif
 
 #if @GNULIB_LOG10L@
-# if !@HAVE_LOG10L@ || !@HAVE_DECL_LOG10L@
-#  undef log10l
+# if @REPLACE_LOG10L@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef log10l
+#   define log10l rpl_log10l
+#  endif
+_GL_FUNCDECL_RPL (log10l, long double, (long double x));
+_GL_CXXALIAS_RPL (log10l, long double, (long double x));
+# else
+#  if !@HAVE_LOG10L@ || !@HAVE_DECL_LOG10L@
+#   undef log10l
 _GL_FUNCDECL_SYS (log10l, long double, (long double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (log10l, long double, (long double x));
+# endif
 _GL_CXXALIASWARN (log10l);
 #elif defined GNULIB_POSIXCHECK
 # undef log10l

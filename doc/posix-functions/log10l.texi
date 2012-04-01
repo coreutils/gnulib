@@ -10,10 +10,19 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
+FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, older IRIX 6.5, Solaris 9, Cygwin, Interix 3.5, BeOS.
 @item
-This function is not declared on some platforms:
+This function is only defined as a macro with arguments on some platforms:
+MSVC 9.
+@item
+This function is not declared and does not work on some platforms:
 AIX 5.1.
+@item
+This function returns a wrong value for a minus zero argument on some platforms:
+OSF/1 5.1.
+@item
+This function returns an unnormalized negative infinity for a minus zero argument on some platforms:
+IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
