@@ -1,5 +1,12 @@
 2012-04-01  Bruno Haible  <bruno@clisp.org>
 
+	log10l: Work around log10l-ieee test failure on IRIX 6.5.
+	* lib/log10l.c: Include <float.h>
+	(log10l): On IRIX, normalize the +Infinity value.
+	* modules/log10l (Depends-on): Add 'float'.
+	* doc/posix-functions/log10l.texi: Mention the IRIX problem with
+	+Infinity.
+
 	log10f-ieee: Work around test failure on NetBSD 5.1.
 	* m4/log10f-ieee.m4: New file.
 	* m4/log10f.m4 (gl_FUNC_LOG10F): If gl_FUNC_LOG10F_IEEE is present,

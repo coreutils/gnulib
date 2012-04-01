@@ -29,6 +29,8 @@ log10l (long double x)
 
 #elif HAVE_LOG10L
 
+# include <float.h>
+
 long double
 log10l (long double x)
 # undef log10l
@@ -37,7 +39,15 @@ log10l (long double x)
   if (x == 0.0L)
     /* Return -Infinity.  */
     return -1.0L / 0.0L;
-  return log10l (x);
+  {
+    long double y = log10l (x);
+# ifdef __sgi
+    /* Normalize the +Infinity value.  */
+    if (y > LDBL_MAX)
+      y = 1.0L / 0.0L;
+# endif
+    return y;
+  }
 }
 
 #else

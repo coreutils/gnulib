@@ -23,6 +23,9 @@ OSF/1 5.1.
 @item
 This function returns an unnormalized negative infinity for a minus zero argument on some platforms:
 IRIX 6.5.
+@item
+This function returns an unnormalized positive infinity for a positive infinite argument on some platforms:
+IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
