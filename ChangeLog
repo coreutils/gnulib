@@ -1,3 +1,19 @@
+2012-04-01  Bruno Haible  <bruno@clisp.org>
+
+	log10: Work around OSF/1 5.1 bug.
+	* lib/math.in.h (log10): New declaration.
+	* lib/log10.c: New file.
+	* m4/log10.m4 (gl_FUNC_LOG10_WORKS): New macro.
+	(gl_FUNC_LOG10): Invoke it. Set REPLACE_LOG10.
+	* m4/math_h.m4 (gl_MATH_H): Test whether log10 is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOG10, REPLACE_LOG10.
+	* modules/math (Makefile.am): Substitute GNULIB_LOG10, REPLACE_LOG10.
+	* modules/log10 (Files): Add lib/log10.c.
+	(Depends-on): Add math.
+	(configure.ac): If REPLACE_LOG10 is 1, compile an override.
+	* tests/test-math-c++.cc: Check the declaration of log10.
+	* doc/posix-functions/log10.texi: Mention the OSF/1 5.1 problem.
+
 2012-03-31  Bruno Haible  <bruno@clisp.org>
 
 	log10l tests: More tests.

@@ -84,6 +84,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_LOG''@/$(GNULIB_LOG)/g' \
 	      -e 's/@''GNULIB_LOGF''@/$(GNULIB_LOGF)/g' \
 	      -e 's/@''GNULIB_LOGL''@/$(GNULIB_LOGL)/g' \
+	      -e 's/@''GNULIB_LOG10''@/$(GNULIB_LOG10)/g' \
 	      -e 's/@''GNULIB_LOG10F''@/$(GNULIB_LOG10F)/g' \
 	      -e 's/@''GNULIB_LOG10L''@/$(GNULIB_LOG10L)/g' \
 	      -e 's/@''GNULIB_LOG1P''@/$(GNULIB_LOG1P)/g' \
@@ -244,6 +245,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_LOG''@|$(REPLACE_LOG)|g' \
 	      -e 's|@''REPLACE_LOGF''@|$(REPLACE_LOGF)|g' \
 	      -e 's|@''REPLACE_LOGL''@|$(REPLACE_LOGL)|g' \
+	      -e 's|@''REPLACE_LOG10''@|$(REPLACE_LOG10)|g' \
 	      -e 's|@''REPLACE_LOG1P''@|$(REPLACE_LOG1P)|g' \
 	      -e 's|@''REPLACE_LOG1PF''@|$(REPLACE_LOG1PF)|g' \
 	      -e 's|@''REPLACE_LOG1PL''@|$(REPLACE_LOG1PL)|g' \

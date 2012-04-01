@@ -210,7 +210,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpl, long double, (long double, int));
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::lgamma, double, (double));
 
-//SIGNATURE_CHECK (GNULIB_NAMESPACE::log10, double, (double));
+#if GNULIB_TEST_LOG10
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log10, double, (double));
+#endif
 #if GNULIB_TEST_LOG10L
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log10l, long double, (long double));
 #endif
