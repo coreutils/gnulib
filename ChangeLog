@@ -697,7 +697,7 @@
 
 	logl: Work around OSF/1 5.1 bug.
 	* lib/math.in.h (logl): Override if REPLACE_LOGL is 1.
-	* lib/logl.c (logl): If logf exists, use it and provide just the
+	* lib/logl.c (logl): If logl exists, use it and provide just the
 	workaround.
 	* m4/logl.m4 (gl_FUNC_LOGL_WORKS): New macro.
 	(gl_FUNC_LOGL): Invoke it. Set REPLACE_LOGL.
