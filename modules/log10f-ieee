@@ -2,6 +2,7 @@ Description:
 log10f() function according to ISO C 99 with IEC 60559.
 
 Files:
+m4/log10f-ieee.m4
 
 Depends-on:
 log10f
@@ -9,7 +10,7 @@ fpieee
 log10-ieee      [test $HAVE_LOG10F = 0 || test $REPLACE_LOG10F = 1]
 
 configure.ac:
-AC_REQUIRE([gl_FUNC_LOG10F])
+gl_FUNC_LOG10F_IEEE
 
 Makefile.am:
 

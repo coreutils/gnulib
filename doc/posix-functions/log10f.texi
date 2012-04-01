@@ -4,9 +4,9 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/log10f.html}
 
-Gnulib module: log10f
+Gnulib module: log10f or log10f-ieee
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by either Gnulib module @code{log10f} or @code{log10f-ieee}:
 @itemize
 @item
 This function is missing on some platforms:
@@ -17,6 +17,13 @@ MSVC 9.
 @item
 This function returns a wrong value for a minus zero argument on some platforms:
 OSF/1 5.1.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{log10f-ieee}:
+@itemize
+@item
+This function returns a wrong value for a negative argument on some platforms:
+NetBSD 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

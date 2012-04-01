@@ -1,4 +1,4 @@
-# log10f.m4 serial 3
+# log10f.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_LOG10F],
 [
+  m4_divert_text([DEFAULTS], [gl_log10f_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_LOG10])
 
@@ -29,6 +30,51 @@ AC_DEFUN([gl_FUNC_LOG10F],
       *yes) ;;
       *) REPLACE_LOG10F=1 ;;
     esac
+
+    m4_ifdef([gl_FUNC_LOG10F_IEEE], [
+      if test $gl_log10f_required = ieee && test $REPLACE_LOG10F = 0; then
+        AC_CACHE_CHECK([whether log10f works according to ISO C 99 with IEC 60559],
+          [gl_cv_func_log10f_ieee],
+          [
+            save_LIBS="$LIBS"
+            LIBS="$LIBS $LOGF_LIBM"
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <math.h>
+/* Compare two numbers with ==.
+   This is a separate function because IRIX 6.5 "cc -O" miscompiles an
+   'x == x' test.  */
+static int
+numeric_equal (float x, float y)
+{
+  return x == y;
+}
+static float dummy (float x) { return 0; }
+int main (int argc, char *argv[])
+{
+  float (*my_log10f) (float) = argc ? log10f : dummy;
+  /* Test log10f(negative).
+     This test fails on NetBSD 5.1.  */
+  float y = my_log10f (-1.0f);
+  if (numeric_equal (y, y))
+    return 1;
+  return 0;
+}
+              ]])],
+              [gl_cv_func_log10f_ieee=yes],
+              [gl_cv_func_log10f_ieee=no],
+              [gl_cv_func_log10f_ieee="guessing no"])
+            LIBS="$save_LIBS"
+          ])
+        case "$gl_cv_func_log10f_ieee" in
+          *yes) ;;
+          *) REPLACE_LOG10F=1 ;;
+        esac
+      fi
+    ])
   else
     HAVE_LOG10F=0
   fi
