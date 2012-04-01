@@ -1,4 +1,4 @@
-# log10f.m4 serial 2
+# log10f.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,9 +20,55 @@ AC_DEFUN([gl_FUNC_LOG10F],
   LIBS="$save_LIBS"
   if test $ac_cv_func_log10f = yes; then
     LOG10F_LIBM="$LOG10_LIBM"
+
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $LOG10F_LIBM"
+    gl_FUNC_LOG10F_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_log10f_works" in
+      *yes) ;;
+      *) REPLACE_LOG10F=1 ;;
+    esac
   else
     HAVE_LOG10F=0
-    LOG10F_LIBM="$LOG10_LIBM"
+  fi
+  if test $HAVE_LOG10F = 0 || test $REPLACE_LOG10F = 1; then
+    dnl Find libraries needed to link lib/log10f.c.
+    if test $HAVE_LOG10F = 0; then
+      LOG10F_LIBM="$LOG10_LIBM"
+    fi
   fi
   AC_SUBST([LOG10F_LIBM])
+])
+
+dnl Test whether log10f() works.
+dnl On OSF/1 5.1, log10f(-0.0f) is NaN.
+AC_DEFUN([gl_FUNC_LOG10F_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether log10f works], [gl_cv_func_log10f_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <math.h>
+volatile float x;
+float y;
+int main ()
+{
+  x = -0.0f;
+  y = log10f (x);
+  if (!(y + y == y))
+    return 1;
+  return 0;
+}
+]])],
+        [gl_cv_func_log10f_works=yes],
+        [gl_cv_func_log10f_works=no],
+        [case "$host_os" in
+           osf*) gl_cv_func_log10f_works="guessing no";;
+           *)    gl_cv_func_log10f_works="guessing yes";;
+         esac
+        ])
+    ])
 ])
