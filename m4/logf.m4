@@ -1,4 +1,4 @@
-# logf.m4 serial 4
+# logf.m4 serial 5
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ numeric_equal (float x, float y)
 static float dummy (float x) { return 0; }
 int main (int argc, char *argv[])
 {
-  float (*my_log) (float) = argc ? logf : dummy;
+  float (*my_logf) (float) = argc ? logf : dummy;
   /* Test logf(negative).
      This test fails on NetBSD 5.1.  */
   float y = my_logf (-1.0f);

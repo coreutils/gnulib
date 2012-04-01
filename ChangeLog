@@ -1,5 +1,10 @@
 2012-04-01  Bruno Haible  <bruno@clisp.org>
 
+	logf-ieee: Fix test whether logf works.
+	* m4/logf.m4 (gl_FUNC_LOGF): Fix typo in test program.
+
+2012-04-01  Bruno Haible  <bruno@clisp.org>
+
 	log10l: Work around log10l-ieee test failure on IRIX 6.5.
 	* lib/log10l.c: Include <float.h>
 	(log10l): On IRIX, normalize the +Infinity value.
