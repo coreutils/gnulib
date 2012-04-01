@@ -1,5 +1,8 @@
 2012-04-01  Bruno Haible  <bruno@clisp.org>
 
+	New module 'log10l-ieee'.
+	* modules/log10l-ieee: New file.
+
 	Tests for module 'log10-ieee'.
 	* modules/log10-ieee-tests: New file.
 	* tests/test-log10-ieee.c: New file.
