@@ -1087,6 +1087,29 @@ _GL_WARN_ON_USE (hypotl, "hypotl is unportable - "
 #endif
 
 
+#if @GNULIB_ILOGBF@
+# if @REPLACE_ILOGBF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef ilogbf
+#   define ilogbf rpl_ilogbf
+#  endif
+_GL_FUNCDECL_RPL (ilogbf, int, (float x));
+_GL_CXXALIAS_RPL (ilogbf, int, (float x));
+# else
+#  if !@HAVE_ILOGBF@
+_GL_FUNCDECL_SYS (ilogbf, int, (float x));
+#  endif
+_GL_CXXALIAS_SYS (ilogbf, int, (float x));
+# endif
+_GL_CXXALIASWARN (ilogbf);
+#elif defined GNULIB_POSIXCHECK
+# undef ilogbf
+# if HAVE_RAW_DECL_ILOGBF
+_GL_WARN_ON_USE (ilogbf, "ilogbf is unportable - "
+                 "use gnulib module ilogbf for portability");
+# endif
+#endif
+
 #if @GNULIB_ILOGB@
 # if @REPLACE_ILOGB@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

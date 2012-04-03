@@ -73,6 +73,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_HYPOTF''@/$(GNULIB_HYPOTF)/g' \
 	      -e 's/@''GNULIB_HYPOTL''@/$(GNULIB_HYPOTL)/g' \
 	      -e 's/@''GNULIB_ILOGB''@/$(GNULIB_ILOGB)/g' \
+	      -e 's/@''GNULIB_ILOGBF''@/$(GNULIB_ILOGBF)/g' \
 	      -e 's/@''GNULIB_ISFINITE''@/$(GNULIB_ISFINITE)/g' \
 	      -e 's/@''GNULIB_ISINF''@/$(GNULIB_ISINF)/g' \
 	      -e 's/@''GNULIB_ISNAN''@/$(GNULIB_ISNAN)/g' \
@@ -152,6 +153,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_HYPOTF''@|$(HAVE_HYPOTF)|g' \
 	      -e 's|@''HAVE_HYPOTL''@|$(HAVE_HYPOTL)|g' \
 	      -e 's|@''HAVE_ILOGB''@|$(HAVE_ILOGB)|g' \
+	      -e 's|@''HAVE_ILOGBF''@|$(HAVE_ILOGBF)|g' \
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
 	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
 	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \
@@ -244,6 +246,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''REPLACE_HYPOTF''@|$(REPLACE_HYPOTF)|g' \
 	      -e 's|@''REPLACE_HYPOTL''@|$(REPLACE_HYPOTL)|g' \
 	      -e 's|@''REPLACE_ILOGB''@|$(REPLACE_ILOGB)|g' \
+	      -e 's|@''REPLACE_ILOGBF''@|$(REPLACE_ILOGBF)|g' \
 	      -e 's|@''REPLACE_ISFINITE''@|$(REPLACE_ISFINITE)|g' \
 	      -e 's|@''REPLACE_ISINF''@|$(REPLACE_ISINF)|g' \
 	      -e 's|@''REPLACE_ISNAN''@|$(REPLACE_ISNAN)|g' \

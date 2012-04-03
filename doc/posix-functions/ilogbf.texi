@@ -4,15 +4,21 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/ilogbf.html}
 
-Gnulib module: ---
+Gnulib module: ilogbf
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
 Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, MSVC 9.
+@item
+This function returns a wrong result for a zero argument on some platforms:
+OpenBSD 4.9.
+@item
+This function returns a wrong result for an infinite argument on some platforms:
+NetBSD 5.1, OpenBSD 4.9.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

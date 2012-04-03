@@ -1,5 +1,20 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ilogbf'.
+	* lib/math.in.h (ilogbf): New declaration.
+	* lib/ilogbf.c: New file.
+	* m4/ilogbf.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether ilogbf is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ILOGBF, HAVE_ILOGBF,
+	REPLACE_ILOGBF.
+	* modules/math (Makefile.am): Substitute GNULIB_ILOGBF, HAVE_ILOGBF,
+	REPLACE_ILOGBF.
+	* modules/ilogbf: New file.
+	* tests/test-math-c++.cc: Check the declaration of ilogbf.
+	* doc/posix-functions/ilogbf.texi: Mention the new module.
+
+2012-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'ilogb'.
 	* modules/ilogb-tests: New file.
 	* tests/test-ilogb.c: New file.

@@ -194,6 +194,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::hypotl, long double,
                  (long double, long double));
 #endif
 
+#if GNULIB_TEST_ILOGBF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ilogbf, int, (float));
+#endif
 #if GNULIB_TEST_ILOGB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ilogb, int, (double));
 #endif
