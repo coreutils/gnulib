@@ -200,6 +200,9 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ilogbf, int, (float));
 #if GNULIB_TEST_ILOGB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ilogb, int, (double));
 #endif
+#if GNULIB_TEST_ILOGBL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ilogbl, int, (long double));
+#endif
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::j0, double, (double));
 

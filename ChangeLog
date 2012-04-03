@@ -1,5 +1,20 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ilogbl'.
+	* lib/math.in.h (ilogbl): New declaration.
+	* lib/ilogbl.c: New file.
+	* m4/ilogbl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether ilogbl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ILOGBL, HAVE_ILOGBL.
+	* modules/math (Makefile.am): Substitute GNULIB_ILOGBL, HAVE_ILOGBL.
+	Split sed invocation, to avoid the limit of 100 substitutions of
+	HP-UX 'sed'.
+	* modules/ilogbl: New file.
+	* tests/test-math-c++.cc: Check the declaration of ilogbl.
+	* doc/posix-functions/ilogbl.texi: Mention the new module.
+
+2012-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'ilogbf'.
 	* modules/ilogbf-tests: New file.
 	* tests/test-ilogbf.c: New file.

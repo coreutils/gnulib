@@ -1,4 +1,4 @@
-# math_h.m4 serial 112
+# math_h.m4 serial 113
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -44,7 +44,7 @@ AC_DEFUN([gl_MATH_H],
      expf expl exp2 exp2f exp2l expm1 expm1f expm1l
      fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
-     ilogb ilogbf
+     ilogb ilogbf ilogbl
      ldexpf ldexpl
      log logf logl log10 log10f log10l log1p log1pf log1pl log2 log2f log2l
      logb logbf logbl
@@ -111,6 +111,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_HYPOTL=0;     AC_SUBST([GNULIB_HYPOTL])
   GNULIB_ILOGB=0;      AC_SUBST([GNULIB_ILOGB])
   GNULIB_ILOGBF=0;     AC_SUBST([GNULIB_ILOGBF])
+  GNULIB_ILOGBL=0;     AC_SUBST([GNULIB_ILOGBL])
   GNULIB_ISFINITE=0;   AC_SUBST([GNULIB_ISFINITE])
   GNULIB_ISINF=0;      AC_SUBST([GNULIB_ISINF])
   GNULIB_ISNAN=0;      AC_SUBST([GNULIB_ISNAN])
@@ -191,6 +192,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_HYPOTL=1;               AC_SUBST([HAVE_HYPOTL])
   HAVE_ILOGB=1;                AC_SUBST([HAVE_ILOGB])
   HAVE_ILOGBF=1;               AC_SUBST([HAVE_ILOGBF])
+  HAVE_ILOGBL=1;               AC_SUBST([HAVE_ILOGBL])
   HAVE_ISNANF=1;               AC_SUBST([HAVE_ISNANF])
   HAVE_ISNAND=1;               AC_SUBST([HAVE_ISNAND])
   HAVE_ISNANL=1;               AC_SUBST([HAVE_ISNANL])

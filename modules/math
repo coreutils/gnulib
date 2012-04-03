@@ -72,8 +72,10 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_HYPOT''@/$(GNULIB_HYPOT)/g' \
 	      -e 's/@''GNULIB_HYPOTF''@/$(GNULIB_HYPOTF)/g' \
 	      -e 's/@''GNULIB_HYPOTL''@/$(GNULIB_HYPOTL)/g' \
-	      -e 's/@''GNULIB_ILOGB''@/$(GNULIB_ILOGB)/g' \
+	      < $(srcdir)/math.in.h | \
+	  sed -e 's/@''GNULIB_ILOGB''@/$(GNULIB_ILOGB)/g' \
 	      -e 's/@''GNULIB_ILOGBF''@/$(GNULIB_ILOGBF)/g' \
+	      -e 's/@''GNULIB_ILOGBL''@/$(GNULIB_ILOGBL)/g' \
 	      -e 's/@''GNULIB_ISFINITE''@/$(GNULIB_ISFINITE)/g' \
 	      -e 's/@''GNULIB_ISINF''@/$(GNULIB_ISINF)/g' \
 	      -e 's/@''GNULIB_ISNAN''@/$(GNULIB_ISNAN)/g' \
@@ -122,7 +124,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's/@''GNULIB_TRUNC''@/$(GNULIB_TRUNC)/g' \
 	      -e 's/@''GNULIB_TRUNCF''@/$(GNULIB_TRUNCF)/g' \
 	      -e 's/@''GNULIB_TRUNCL''@/$(GNULIB_TRUNCL)/g' \
-	      < $(srcdir)/math.in.h | \
+	  | \
 	  sed -e 's|@''HAVE_ACOSF''@|$(HAVE_ACOSF)|g' \
 	      -e 's|@''HAVE_ACOSL''@|$(HAVE_ACOSL)|g' \
 	      -e 's|@''HAVE_ASINF''@|$(HAVE_ASINF)|g' \
@@ -154,6 +156,7 @@ math.h: math.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(
 	      -e 's|@''HAVE_HYPOTL''@|$(HAVE_HYPOTL)|g' \
 	      -e 's|@''HAVE_ILOGB''@|$(HAVE_ILOGB)|g' \
 	      -e 's|@''HAVE_ILOGBF''@|$(HAVE_ILOGBF)|g' \
+	      -e 's|@''HAVE_ILOGBL''@|$(HAVE_ILOGBL)|g' \
 	      -e 's|@''HAVE_ISNANF''@|$(HAVE_ISNANF)|g' \
 	      -e 's|@''HAVE_ISNAND''@|$(HAVE_ISNAND)|g' \
 	      -e 's|@''HAVE_ISNANL''@|$(HAVE_ISNANL)|g' \

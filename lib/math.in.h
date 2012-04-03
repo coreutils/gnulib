@@ -1133,6 +1133,20 @@ _GL_WARN_ON_USE (ilogb, "ilogb is unportable - "
 # endif
 #endif
 
+#if @GNULIB_ILOGBL@
+# if !@HAVE_ILOGBL@
+_GL_FUNCDECL_SYS (ilogbl, int, (long double x));
+# endif
+_GL_CXXALIAS_SYS (ilogbl, int, (long double x));
+_GL_CXXALIASWARN (ilogbl);
+#elif defined GNULIB_POSIXCHECK
+# undef ilogbl
+# if HAVE_RAW_DECL_ILOGBL
+_GL_WARN_ON_USE (ilogbl, "ilogbl is unportable - "
+                 "use gnulib module ilogbl for portability");
+# endif
+#endif
+
 
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPF@
