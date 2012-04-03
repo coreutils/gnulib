@@ -1,5 +1,9 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'logbl'.
+	* modules/logbl-tests: New file.
+	* tests/test-logbl.c: New file.
+
 	New module 'logbl'.
 	* lib/math.in.h (logbl): New declaration.
 	* lib/logbl.c: New file.
