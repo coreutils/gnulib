@@ -1087,6 +1087,30 @@ _GL_WARN_ON_USE (hypotl, "hypotl is unportable - "
 #endif
 
 
+#if @GNULIB_ILOGB@
+# if @REPLACE_ILOGB@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef ilogb
+#   define ilogb rpl_ilogb
+#  endif
+_GL_FUNCDECL_RPL (ilogb, int, (double x));
+_GL_CXXALIAS_RPL (ilogb, int, (double x));
+# else
+#  if !@HAVE_ILOGB@
+_GL_FUNCDECL_SYS (ilogb, int, (double x));
+#  endif
+_GL_CXXALIAS_SYS (ilogb, int, (double x));
+# endif
+_GL_CXXALIASWARN (ilogb);
+#elif defined GNULIB_POSIXCHECK
+# undef ilogb
+# if HAVE_RAW_DECL_ILOGB
+_GL_WARN_ON_USE (ilogb, "ilogb is unportable - "
+                 "use gnulib module ilogb for portability");
+# endif
+#endif
+
+
 /* Return x * 2^exp.  */
 #if @GNULIB_LDEXPF@
 # if !@HAVE_LDEXPF@

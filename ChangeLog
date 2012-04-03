@@ -1,5 +1,20 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	New module 'ilogb'.
+	* lib/math.in.h (ilogb): New declaration.
+	* lib/ilogb.c: New file.
+	* m4/ilogb.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether ilogb is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_ILOGB, HAVE_ILOGB,
+	REPLACE_ILOGB.
+	* modules/math (Makefile.am): Substitute GNULIB_ILOGB, HAVE_ILOGB,
+	REPLACE_ILOGB.
+	* modules/ilogb: New file.
+	* tests/test-math-c++.cc: Check the declaration of ilogb.
+	* doc/posix-functions/ilogb.texi: Mention the new module.
+
+2012-04-03  Bruno Haible  <bruno@clisp.org>
+
 	math: Provide FP_ILOGB0 and FP_ILOGBNAN.
 	* lib/math.in.h (FP_ILOGB0, FP_ILOGBNAN): Define fallback.
 	* tests/test-math.c: Check that FP_ILOGB0, FP_ILOGBNAN are defined.
