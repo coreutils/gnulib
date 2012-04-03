@@ -1,5 +1,9 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'ilogbl'.
+	* modules/ilogbl-tests: New file.
+	* tests/test-ilogbl.c: New file.
+
 	New module 'ilogbl'.
 	* lib/math.in.h (ilogbl): New declaration.
 	* lib/ilogbl.c: New file.
