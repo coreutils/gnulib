@@ -1,5 +1,9 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'logbl-ieee'.
+	* modules/logbl-ieee-tests: New file.
+	* tests/test-logbl-ieee.c: New file.
+
 	New module 'logbl-ieee'.
 	* modules/logbl-ieee: New file.
 
