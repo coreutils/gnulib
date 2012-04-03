@@ -1,4 +1,4 @@
-# logb.m4 serial 5
+# logb.m4 serial 6
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,8 +51,75 @@ AC_DEFUN([gl_FUNC_LOGB],
       [LOGB_LIBM="-lm"])
     LIBS="$save_LIBS"
   fi
-  if test "$LOGB_LIBM" = "?"; then
+  if test "$LOGB_LIBM" != "?"; then
+    HAVE_LOGB=1
+    save_LIBS="$LIBS"
+    LIBS="$LIBS $LOGB_LIBM"
+    gl_FUNC_LOGB_WORKS
+    LIBS="$save_LIBS"
+    case "$gl_cv_func_logb_works" in
+      *yes) ;;
+      *) REPLACE_LOGB=1 ;;
+    esac
+  else
+    HAVE_LOGB=0
+  fi
+  if test $HAVE_LOGB = 0 || test $REPLACE_LOGB = 1; then
+    dnl Find libraries needed to link lib/logb.c.
+    AC_REQUIRE([gl_FUNC_FREXP])
+    AC_REQUIRE([gl_FUNC_ISNAND])
     LOGB_LIBM=
+    dnl Append $FREXP_LIBM to LOGB_LIBM, avoiding gratuitous duplicates.
+    case " $LOGB_LIBM " in
+      *" $FREXP_LIBM "*) ;;
+      *) LOGB_LIBM="$LOGB_LIBM $FREXP_LIBM" ;;
+    esac
+    dnl Append $ISNAND_LIBM to LOGB_LIBM, avoiding gratuitous duplicates.
+    case " $LOGB_LIBM " in
+      *" $ISNAND_LIBM "*) ;;
+      *) LOGB_LIBM="$LOGB_LIBM $ISNAND_LIBM" ;;
+    esac
   fi
   AC_SUBST([LOGB_LIBM])
+])
+
+dnl Test whether logb() works.
+dnl On glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 10/SPARC,
+dnl Cygwin 1.5.x, the return value for subnormal (denormalized) arguments is
+dnl too large.
+AC_DEFUN([gl_FUNC_LOGB_WORKS],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether logb works], [gl_cv_func_logb_works],
+    [
+      AC_RUN_IFELSE(
+        [AC_LANG_SOURCE([[
+#include <float.h>
+#include <math.h>
+extern
+#ifdef __cplusplus
+"C"
+#endif
+double logb (double);
+volatile double x;
+int main ()
+{
+  int i;
+  for (i = 1, x = 1.0; i >= DBL_MIN_EXP; i--, x *= 0.5)
+    ;
+  /* Here i = DBL_MIN_EXP - 1. Either x = 2^(i-1) is subnormal or x = 0.0.  */
+  if (x > 0.0 && !(logb (x) == (double)(i - 1)))
+    return 1;
+  return 0;
+}
+]])],
+        [gl_cv_func_logb_works=yes],
+        [gl_cv_func_logb_works=no],
+        [case "$host_os" in
+           *gnu* | solaris* | cygwin*) gl_cv_func_logb_works="guessing no";;
+           *)                          gl_cv_func_logb_works="guessing yes";;
+         esac
+        ])
+    ])
 ])

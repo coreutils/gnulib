@@ -1108,19 +1108,6 @@ _GL_WARN_ON_USE (ldexpl, "ldexpl is unportable - "
 #endif
 
 
-#if @GNULIB_LOGB@
-# if !@HAVE_DECL_LOGB@
-_GL_EXTERN_C double logb (double x);
-# endif
-#elif defined GNULIB_POSIXCHECK
-# undef logb
-# if HAVE_RAW_DECL_LOGB
-_GL_WARN_ON_USE (logb, "logb is unportable - "
-                 "use gnulib module logb for portability");
-# endif
-#endif
-
-
 #if @GNULIB_LOGF@
 # if @REPLACE_LOGF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
@@ -1397,6 +1384,30 @@ _GL_CXXALIASWARN (log2l);
 # if HAVE_RAW_DECL_LOG2L
 _GL_WARN_ON_USE (log2l, "log2l is unportable - "
                  "use gnulib module log2l for portability");
+# endif
+#endif
+
+
+#if @GNULIB_LOGB@
+# if @REPLACE_LOGB@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef logb
+#   define logb rpl_logb
+#  endif
+_GL_FUNCDECL_RPL (logb, double, (double x));
+_GL_CXXALIAS_RPL (logb, double, (double x));
+# else
+#  if !@HAVE_DECL_LOGB@
+_GL_FUNCDECL_SYS (logb, double, (double x));
+#  endif
+_GL_CXXALIAS_SYS (logb, double, (double x));
+# endif
+_GL_CXXALIASWARN (logb);
+#elif defined GNULIB_POSIXCHECK
+# undef logb
+# if HAVE_RAW_DECL_LOGB
+_GL_WARN_ON_USE (logb, "logb is unportable - "
+                 "use gnulib module logb for portability");
 # endif
 #endif
 

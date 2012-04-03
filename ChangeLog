@@ -1,5 +1,22 @@
 2012-04-02  Bruno Haible  <bruno@clisp.org>
 
+	logb: Provide replacement and workarounds.
+	* lib/math.in.h (logb): Ensure declaration. Replace if REPLACE_LOGB
+	is 1.
+	* lib/logb.c: New file.
+	* m4/logb.m4 (gl_FUNC_LOGB_WORKS): New macro.
+	(gl_FUNC_LOGB): Invoke it. Set HAVE_LOGB, REPLACE_LOGB.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_LOGB.
+	* modules/math (Makefile.am): Substitute REPLACE_LOGB.
+	* modules/logb (Files): Add lib/logb.c.
+	(Depends-on): Add isfinite, frexp, isnand.
+	(configure.ac): Compile the replacement code logb.c if needed.
+	* tests/test-math-c++.cc: Check the declaration of logb.
+	* doc/posix-functions/logb.texi: Mention the replacement and the bug
+	with subnormal numbers.
+
+2012-04-02  Bruno Haible  <bruno@clisp.org>
+
 	log10* tests: Speed up.
 	* tests/test-log10.h (test_function): Reduce amount of random numbers
 	to test.

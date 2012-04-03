@@ -1,4 +1,4 @@
-# math_h.m4 serial 107
+# math_h.m4 serial 108
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,7 +45,8 @@ AC_DEFUN([gl_MATH_H],
      fabsf fabsl floorf floorl fma fmaf fmal
      fmod fmodf fmodl frexpf frexpl hypotf hypotl
      ldexpf ldexpl
-     logb log logf logl log10 log10f log10l log1p log1pf log1pl log2 log2f log2l
+     log logf logl log10 log10f log10l log1p log1pf log1pl log2 log2f log2l
+     logb
      modf modff modfl powf
      remainder remainderf remainderl
      rint rintf rintl round roundf roundl sinf sinl sinhf sqrtf sqrtl
@@ -115,7 +116,6 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_ISNANL=0;     AC_SUBST([GNULIB_ISNANL])
   GNULIB_LDEXPF=0;     AC_SUBST([GNULIB_LDEXPF])
   GNULIB_LDEXPL=0;     AC_SUBST([GNULIB_LDEXPL])
-  GNULIB_LOGB=0;       AC_SUBST([GNULIB_LOGB])
   GNULIB_LOG=0;        AC_SUBST([GNULIB_LOG])
   GNULIB_LOGF=0;       AC_SUBST([GNULIB_LOGF])
   GNULIB_LOGL=0;       AC_SUBST([GNULIB_LOGL])
@@ -128,6 +128,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   GNULIB_LOG2=0;       AC_SUBST([GNULIB_LOG2])
   GNULIB_LOG2F=0;      AC_SUBST([GNULIB_LOG2F])
   GNULIB_LOG2L=0;      AC_SUBST([GNULIB_LOG2L])
+  GNULIB_LOGB=0;       AC_SUBST([GNULIB_LOGB])
   GNULIB_MODF=0;       AC_SUBST([GNULIB_MODF])
   GNULIB_MODFF=0;      AC_SUBST([GNULIB_MODFF])
   GNULIB_MODFL=0;      AC_SUBST([GNULIB_MODFL])
@@ -227,12 +228,12 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   HAVE_DECL_FLOORL=1;          AC_SUBST([HAVE_DECL_FLOORL])
   HAVE_DECL_FREXPL=1;          AC_SUBST([HAVE_DECL_FREXPL])
   HAVE_DECL_LDEXPL=1;          AC_SUBST([HAVE_DECL_LDEXPL])
-  HAVE_DECL_LOGB=1;            AC_SUBST([HAVE_DECL_LOGB])
   HAVE_DECL_LOGL=1;            AC_SUBST([HAVE_DECL_LOGL])
   HAVE_DECL_LOG10L=1;          AC_SUBST([HAVE_DECL_LOG10L])
   HAVE_DECL_LOG2=1;            AC_SUBST([HAVE_DECL_LOG2])
   HAVE_DECL_LOG2F=1;           AC_SUBST([HAVE_DECL_LOG2F])
   HAVE_DECL_LOG2L=1;           AC_SUBST([HAVE_DECL_LOG2L])
+  HAVE_DECL_LOGB=1;            AC_SUBST([HAVE_DECL_LOGB])
   HAVE_DECL_REMAINDER=1;       AC_SUBST([HAVE_DECL_REMAINDER])
   HAVE_DECL_REMAINDERL=1;      AC_SUBST([HAVE_DECL_REMAINDERL])
   HAVE_DECL_RINTF=1;           AC_SUBST([HAVE_DECL_RINTF])
@@ -287,6 +288,7 @@ AC_DEFUN([gl_MATH_H_DEFAULTS],
   REPLACE_LOG2=0;              AC_SUBST([REPLACE_LOG2])
   REPLACE_LOG2F=0;             AC_SUBST([REPLACE_LOG2F])
   REPLACE_LOG2L=0;             AC_SUBST([REPLACE_LOG2L])
+  REPLACE_LOGB=0;              AC_SUBST([REPLACE_LOGB])
   REPLACE_MODF=0;              AC_SUBST([REPLACE_MODF])
   REPLACE_MODFF=0;             AC_SUBST([REPLACE_MODFF])
   REPLACE_MODFL=0;             AC_SUBST([REPLACE_MODFL])
