@@ -4,15 +4,18 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/logbl.html}
 
-Gnulib module: ---
+Gnulib module: logbl
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX 6.5, Solaris 9, Cygwin, MSVC 9, Interix 3.5, BeOS.
+@item
+This function produces wrong results for subnormal numbers on some platforms:
+glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 11 2011-11.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This function is missing on some platforms:
-FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, MSVC 9, Interix 3.5, BeOS.
 @end itemize

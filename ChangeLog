@@ -1,3 +1,18 @@
+2012-04-03  Bruno Haible  <bruno@clisp.org>
+
+	New module 'logbl'.
+	* lib/math.in.h (logbl): New declaration.
+	* lib/logbl.c: New file.
+	* m4/logbl.m4: New file.
+	* m4/math_h.m4 (gl_MATH_H): Test whether logbl is declared.
+	(gl_MATH_H_DEFAULTS): Initialize GNULIB_LOGBL, HAVE_LOGBL,
+	REPLACE_LOGBL.
+	* modules/math (Makefile.am): Substitute GNULIB_LOGBL, HAVE_LOGBL,
+	REPLACE_LOGBL.
+	* modules/logbl: New file.
+	* tests/test-math-c++.cc: Check the declaration of logbl.
+	* doc/posix-functions/logbl.texi: Mention the new module.
+
 2012-04-02  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'logbf'.
