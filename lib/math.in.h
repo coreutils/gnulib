@@ -179,6 +179,29 @@ _NaN ()
 # endif
 #endif
 
+
+/* Ensure FP_ILOGB0 and FP_ILOGBNAN are defined.  */
+#if !(defined FP_ILOGB0 && defined FP_ILOGBNAN)
+# if defined __NetBSD__ || defined __sgi
+  /* NetBSD, IRIX 6.5: match what ilogb() does */
+#  define FP_ILOGB0   (- 2147483647 - 1) /* INT_MIN */
+#  define FP_ILOGBNAN (- 2147483647 - 1) /* INT_MIN */
+# elif defined _AIX
+  /* AIX 5.1: match what ilogb() does in AIX >= 5.2 */
+#  define FP_ILOGB0   (- 2147483647 - 1) /* INT_MIN */
+#  define FP_ILOGBNAN 2147483647 /* INT_MAX */
+# elif defined __sun
+  /* Solaris 9: match what ilogb() does */
+#  define FP_ILOGB0   (- 2147483647) /* - INT_MAX */
+#  define FP_ILOGBNAN 2147483647 /* INT_MAX */
+# else
+  /* Gnulib defined values.  */
+#  define FP_ILOGB0   (- 2147483647) /* - INT_MAX */
+#  define FP_ILOGBNAN (- 2147483647 - 1) /* INT_MIN */
+# endif
+#endif
+
+
 #if @GNULIB_ACOSF@
 # if !@HAVE_ACOSF@
 #  undef acosf

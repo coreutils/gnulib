@@ -1,5 +1,14 @@
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
+	math: Provide FP_ILOGB0 and FP_ILOGBNAN.
+	* lib/math.in.h (FP_ILOGB0, FP_ILOGBNAN): Define fallback.
+	* tests/test-math.c: Check that FP_ILOGB0, FP_ILOGBNAN are defined.
+	(main): Check their values.
+	* doc/posix-headers/math.texi: Mention the FP_ILOGB0, FP_ILOGBNAN
+	problem.
+
+2012-04-03  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'logbl-ieee'.
 	* modules/logbl-ieee-tests: New file.
 	* tests/test-logbl-ieee.c: New file.
