@@ -1,7 +1,10 @@
 Files:
 tests/test-logb.c
+tests/test-logb.h
+tests/minus-zero.h
 tests/signature.h
 tests/macros.h
+tests/randomd.c
 
 Depends-on:
 
@@ -10,4 +13,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-logb
 check_PROGRAMS += test-logb
+test_logb_SOURCES = test-logb.c randomd.c
 test_logb_LDADD = $(LDADD) @LOGB_LIBM@

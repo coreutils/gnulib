@@ -1,5 +1,14 @@
 2012-04-02  Bruno Haible  <bruno@clisp.org>
 
+	logb tests: More tests.
+	* tests/test-logb.h: New file, based on tests/test-logb.c and
+	tests/test-frexp.h.
+	* tests/test-logb.c: Include minus-zero.h, test-logb.h.
+	(main): Just invoke test_function.
+	* modules/logb-tests (Files): Add tests/test-logb.h,
+	tests/minus-zero.h, tests/randomd.c.
+	(Makefile.am): Add randomd.c to test_logb_SOURCES.
+
 	logb: Provide replacement and workarounds.
 	* lib/math.in.h (logb): Ensure declaration. Replace if REPLACE_LOGB
 	is 1.
