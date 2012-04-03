@@ -85,8 +85,8 @@ test_function (void)
 #endif
        : L_(5.0));
 
-    for (i = 0; i < SIZEOF (RANDOM); i++)
-      for (j = 0; j < SIZEOF (RANDOM); j++)
+    for (i = 0; i < SIZEOF (RANDOM) / 5; i++)
+      for (j = 0; j < SIZEOF (RANDOM) / 5; j++)
         {
           DOUBLE x = L_(17.0) / (L_(16.0) - L_(15.0) * RANDOM[i]) - L_(1.0);
           DOUBLE y = L_(17.0) / (L_(16.0) - L_(15.0) * RANDOM[j]) - L_(1.0);
