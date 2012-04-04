@@ -272,7 +272,7 @@ int
 re_compile_fastmap (bufp)
     struct re_pattern_buffer *bufp;
 {
-  re_dfa_t *dfa = (re_dfa_t *) bufp->buffer;
+  re_dfa_t *dfa = bufp->buffer;
   char *fastmap = bufp->fastmap;
 
   memset (fastmap, '\0', sizeof (char) * SBC_MAX);
@@ -306,7 +306,7 @@ static void
 re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
 			 char *fastmap)
 {
-  re_dfa_t *dfa = (re_dfa_t *) bufp->buffer;
+  re_dfa_t *dfa = bufp->buffer;
   Idx node_cnt;
   bool icase = (dfa->mb_cur_max == 1 && (bufp->syntax & RE_ICASE));
   for (node_cnt = 0; node_cnt < init_state->nodes.nelem; ++node_cnt)
@@ -660,7 +660,7 @@ void
 regfree (preg)
     regex_t *preg;
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   if (BE (dfa != NULL, 1))
     free_dfa_content (dfa);
   preg->buffer = NULL;
@@ -767,7 +767,7 @@ re_compile_internal (regex_t *preg, const char * pattern, size_t length,
   preg->regs_allocated = REGS_UNALLOCATED;
 
   /* Initialize the dfa.  */
-  dfa = (re_dfa_t *) preg->buffer;
+  dfa = preg->buffer;
   if (BE (preg->allocated < sizeof (re_dfa_t), 0))
     {
       /* If zero allocated, but buffer is non-null, try to realloc
@@ -778,7 +778,7 @@ re_compile_internal (regex_t *preg, const char * pattern, size_t length,
       if (dfa == NULL)
 	return REG_ESPACE;
       preg->allocated = sizeof (re_dfa_t);
-      preg->buffer = (unsigned char *) dfa;
+      preg->buffer = dfa;
     }
   preg->used = sizeof (re_dfa_t);
 
@@ -993,7 +993,7 @@ init_word_char (re_dfa_t *dfa)
 static void
 free_workarea_compile (regex_t *preg)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_storage_t *storage, *next;
   for (storage = dfa->str_tree_storage; storage; storage = next)
     {
@@ -1177,7 +1177,7 @@ optimize_utf8 (re_dfa_t *dfa)
 static reg_errcode_t
 analyze (regex_t *preg)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   reg_errcode_t ret;
 
   /* Allocate arrays.  */
@@ -1358,7 +1358,7 @@ lower_subexps (void *extra, bin_tree_t *node)
 static bin_tree_t *
 lower_subexp (reg_errcode_t *err, regex_t *preg, bin_tree_t *node)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_t *body = node->left;
   bin_tree_t *op, *cls, *tree1, *tree;
 
@@ -2139,7 +2139,7 @@ static bin_tree_t *
 parse (re_string_t *regexp, regex_t *preg, reg_syntax_t syntax,
        reg_errcode_t *err)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_t *tree, *eor, *root;
   re_token_t current_token;
   dfa->syntax = syntax;
@@ -2173,7 +2173,7 @@ static bin_tree_t *
 parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	       reg_syntax_t syntax, Idx nest, reg_errcode_t *err)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_t *tree, *branch = NULL;
   tree = parse_branch (regexp, preg, token, syntax, nest, err);
   if (BE (*err != REG_NOERROR && tree == NULL, 0))
@@ -2215,7 +2215,7 @@ parse_branch (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	      reg_syntax_t syntax, Idx nest, reg_errcode_t *err)
 {
   bin_tree_t *tree, *expr;
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   tree = parse_expression (regexp, preg, token, syntax, nest, err);
   if (BE (*err != REG_NOERROR && tree == NULL, 0))
     return NULL;
@@ -2259,7 +2259,7 @@ static bin_tree_t *
 parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 		  reg_syntax_t syntax, Idx nest, reg_errcode_t *err)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_t *tree;
   switch (token->type)
     {
@@ -2475,7 +2475,7 @@ static bin_tree_t *
 parse_sub_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	       reg_syntax_t syntax, Idx nest, reg_errcode_t *err)
 {
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
   bin_tree_t *tree;
   size_t cur_nsub;
   cur_nsub = preg->re_nsub++;

@@ -228,7 +228,7 @@ regexec (preg, string, nmatch, pmatch, eflags)
   reg_errcode_t err;
   Idx start, length;
 #ifdef _LIBC
-  re_dfa_t *dfa = (re_dfa_t *) preg->buffer;
+  re_dfa_t *dfa = preg->buffer;
 #endif
 
   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
@@ -421,7 +421,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   regoff_t rval;
   int eflags = 0;
 #ifdef _LIBC
-  re_dfa_t *dfa = (re_dfa_t *) bufp->buffer;
+  re_dfa_t *dfa = bufp->buffer;
 #endif
   Idx last_start = start + range;
 
@@ -639,7 +639,7 @@ re_search_internal (const regex_t *preg,
 		    int eflags)
 {
   reg_errcode_t err;
-  const re_dfa_t *dfa = (const re_dfa_t *) preg->buffer;
+  const re_dfa_t *dfa = preg->buffer;
   Idx left_lim, right_lim;
   int incr;
   bool fl_longest_match;
@@ -1432,7 +1432,7 @@ internal_function __attribute_warn_unused_result__
 set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
 	  regmatch_t *pmatch, bool fl_backtrack)
 {
-  const re_dfa_t *dfa = (const re_dfa_t *) preg->buffer;
+  const re_dfa_t *dfa = preg->buffer;
   Idx idx, cur_node;
   re_node_set eps_via_nodes;
   struct re_fail_stack_t *fs;

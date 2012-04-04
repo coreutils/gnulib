@@ -421,10 +421,9 @@ typedef enum
 
 struct re_pattern_buffer
 {
-  /* Space that holds the compiled pattern.  It is declared as
-     'unsigned char *' because its elements are sometimes used as
-     array indexes.  */
-  unsigned char *__REPB_PREFIX(buffer);
+  /* Space that holds the compiled pattern.  The type
+     'struct re_dfa_t' is private and is not declared here.  */
+  struct re_dfa_t *__REPB_PREFIX(buffer);
 
   /* Number of bytes to which 'buffer' points.  */
   __re_long_size_t __REPB_PREFIX(allocated);

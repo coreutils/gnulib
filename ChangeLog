@@ -1,3 +1,18 @@
+2012-04-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: remove unnecessary type punning
+	Problem reported by Vladimir Serbinenko in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-04/msg00006.html>.
+	* lib/regex.h (struct re_pattern_buffer): Change the type of
+	__REPB_PREFIX(buffer) from unsigned char * to struct re_dfa_t *.
+	Fix comment to match code.
+	* lib/regcomp.c (re_compile_fastmap, re_compile_fastmap_iter, regfree)
+	(re_compile_internal, free_workarea_compile, analyze, lower_subexp)
+	(parse, parse_reg_exp, parse_branch, parse_expression, parse_sub_exp):
+	* lib/regexec.c (regexec, re_search_stub, re_search_internal)
+	(set_regs):
+	Omit no-longer-necessary casts.
+
 2012-04-03  Bruno Haible  <bruno@clisp.org>
 
 	Tests for module 'ilogbl'.
