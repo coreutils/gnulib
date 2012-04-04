@@ -1,3 +1,9 @@
+2012-04-04  Jim Meyering  <meyering@redhat.com>
+
+	regex: correct #pragma guard expression
+	* lib/regex.c: -Wsuggest-attribute=pure was introduced in gcc-4.6,
+	not 4.3.  Correct its cpp guard expression.
+
 2012-04-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: remove unnecessary type punning

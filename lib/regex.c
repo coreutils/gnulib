@@ -19,8 +19,10 @@
 #ifndef _LIBC
 # include <config.h>
 
-# if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+# if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
 #  pragma GCC diagnostic ignored "-Wsuggest-attribute=pure"
+# endif
+# if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
 #  pragma GCC diagnostic ignored "-Wtype-limits"
 # endif
 #endif
