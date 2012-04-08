@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 20, 2012
+@set lastupdate April 6, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -287,6 +287,8 @@ as you maintain the program, to avoid legal difficulties.
 @node Copyright Papers
 @section Copyright Papers
 @cindex copyright papers
+@cindex assignments, copyright
+@cindex disclaimers
 
 If you maintain an FSF-copyrighted package
 certain legal procedures are required when incorporating legally significant
@@ -368,13 +370,17 @@ papers to sign.  The @file{request-} file also raises the issue of
 getting an employer's disclaimer from the contributor's employer.
 
 When the contributor emails the form to the FSF, the FSF sends per an
-electronic (usually PDF) copy of the assignment.  All contributors
-then print the assignment and sign it.  Contributors residing outside
-the U.S. must mail the signed form to the FSF via the post.
-Contributors located in the U.S. can then email or fax a scanned copy
-back to the FSF (or use postal mail, if they prefer).  (To emphasize,
-the necessary distinction is between US residents and non-residents,
-citizenship does not matter.)
+electronic (usually PDF) copy of the assignment.  This, or whatever
+response is required, should happen within five business days of the
+initial request.  If no reply from the FSF comes after that time, it
+is good to send a reminder.
+
+After receiving the necessary form, all contributors then print it and
+sign it.  Contributors residing outside the U.S. must mail the signed
+form to the FSF via the post.  Contributors located in the U.S. can
+then email or fax a scanned copy back to the FSF (or use postal mail,
+if they prefer).  (To emphasize, the necessary distinction is between
+US residents and non-residents; citizenship does not matter.)
 
 For less common cases, we have template files you should send to the
 contributor.  Be sure to fill in the name of the person and the name

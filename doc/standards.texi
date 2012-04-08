@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 8, 2012
+@set lastupdate April 7, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -2384,6 +2384,7 @@ when writing GNU software.
 
 @cindex open brace
 @cindex braces, in C source
+@cindex function definitions, formatting
 It is important to put the open-brace that starts the body of a C
 function in column one, so that they will start a defun.  Several
 tools look for open-braces in column one to find the beginnings of C
@@ -2428,6 +2429,20 @@ int
 lots_of_args (int an_integer, long a_long, short a_short,
               double a_double, float a_float)
 @dots{}
+@end example
+
+@cindex @code{struct} types, formatting
+@cindex @code{enum} types, formatting
+For @code{struct} and @code{enum} types, likewise put the braces in
+column one, unless the whole contents fits on one line:
+
+@example
+struct foo
+@{
+  int a, b;
+@}
+@exdent @r{or}
+struct foo @{ int a, b; @}
 @end example
 
 The rest of this section gives our recommendations for other aspects of
@@ -2576,7 +2591,7 @@ about the value rather than the variable itself.  Thus, ``the inode
 number NODE_NUM'' rather than ``an inode''.
 
 There is usually no purpose in restating the name of the function in
-the comment before it, because the reader can see that for himself.
+the comment before it, because readers can see that for themselves.
 There might be an exception when the comment is so long that the function
 itself would be off the bottom of the screen.
 
