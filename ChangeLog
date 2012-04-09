@@ -1,3 +1,15 @@
+2012-05-08  Akim Demaille  <akim@lrde.epita.fr>
+
+	warnings.m4: provide a means to specify the program to compile.
+	* m4/warnings.m4 (gl_COMPILER_OPTION_IF): New, extracted from...
+	(gl_WARN_ADD): here.
+	Use gl_AS_VAR_APPEND.
+	Support an argument to specify the program to compile.
+	(gl_WARN_ADD): Accept an argument to specify the program to compile.
+	AC_SUBST the WARN_CFLAGS when they are used.
+	* modules/warnings (configure.ac): Don't AC_SUBST WARN_CFLAGS,
+	leave this to gl_WARN_ADD.
+
 2012-05-08  Eric Blake  <eblake@redhat.com>
 
 	doc: recommendations on gettext version
