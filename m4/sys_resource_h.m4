@@ -1,4 +1,4 @@
-# sys_resource_h.m4 serial 1
+# sys_resource_h.m4 serial 2
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,6 +15,19 @@ AC_DEFUN([gl_HEADER_SYS_RESOURCE],
     HAVE_SYS_RESOURCE_H=0
   fi
   AC_SUBST([HAVE_SYS_RESOURCE_H])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[
+#if HAVE_SYS_RESOURCE_H
+/* At least FreeBSD 5.0 needs extra headers before <sys/resource.h>
+   will compile.  */
+# include <sys/types.h>
+# include <sys/time.h>
+# include <sys/resource.h>
+#endif
+    ]],
+    [getrusage])
 ])
 
 AC_DEFUN([gl_SYS_RESOURCE_MODULE_INDICATOR],
@@ -28,4 +41,7 @@ AC_DEFUN([gl_SYS_RESOURCE_MODULE_INDICATOR],
 
 AC_DEFUN([gl_SYS_RESOURCE_H_DEFAULTS],
 [
+  GNULIB_GETRUSAGE=0;     AC_SUBST([GNULIB_GETRUSAGE])
+  dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_GETRUSAGE=1;       AC_SUBST([HAVE_GETRUSAGE])
 ])

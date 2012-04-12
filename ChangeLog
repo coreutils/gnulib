@@ -1,5 +1,24 @@
 2012-04-12  Bruno Haible  <bruno@clisp.org>
 
+	New module 'getrusage'.
+	* lib/sys_resource.in.h: Include arg-nonnull.h, c++defs.h,
+	warn-on-use.h.
+	(getrusage): New declaration.
+	* lib/getrusage.c: New file.
+	* m4/getrusage.m4: New file.
+	* m4/sys_resource_h.m4 (gl_HEADER_SYS_RESOURCE): Test whether getrusage
+	is declared.
+	(gl_SYS_RESOURCE_H_DEFAULTS): Initialize GNULIB_GETRUSAGE,
+	HAVE_GETRUSAGE.
+	* modules/sys_resource (Depends-on): Add snippet/arg-nonnull,
+	snippet/c++defs, snippet/warn-on-use.
+	(Makefile.am): Update generation of sys/resource.h. Substitute
+	GNULIB_GETRUSAGE, HAVE_GETRUSAGE.
+	* modules/getrusage: New file.
+	* doc/posix-functions/getrusage.texi: Mention the new module.
+
+2012-04-12  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'sys_resource'.
 	* modules/sys_resource-tests: New file.
 	* tests/test-sys_resource.c: New file.

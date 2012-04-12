@@ -81,5 +81,31 @@ struct rusage
 
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
+
+/* Declare overridden functions.  */
+
+
+#if @GNULIB_GETRUSAGE@
+# if !@HAVE_GETRUSAGE@
+_GL_FUNCDECL_SYS (getrusage, int, (int who, struct rusage *usage_p)
+                                  _GL_ARG_NONNULL ((2)));
+# endif
+_GL_CXXALIAS_SYS (getrusage, int, (int who, struct rusage *usage_p));
+_GL_CXXALIASWARN (getrusage);
+#elif defined GNULIB_POSIXCHECK
+# undef getrusage
+# if HAVE_RAW_DECL_GETRUSAGE
+_GL_WARN_ON_USE (getrusage, "getrusage is unportable - "
+                 "use gnulib module getrusage for portability");
+# endif
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_SYS_RESOURCE_H */
 #endif /* _@GUARD_PREFIX@_SYS_RESOURCE_H */
