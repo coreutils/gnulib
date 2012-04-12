@@ -1,5 +1,9 @@
 2012-04-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sys_resource'.
+	* modules/sys_resource-tests: New file.
+	* tests/test-sys_resource.c: New file.
+
 	New module 'sys_resource'.
 	* lib/sys_resource.in.h: New file.
 	* m4/sys_resource_h.m4: New file.
