@@ -3,20 +3,19 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/sys_resource.h.html}
 
-Gnulib module: ---
+Gnulib module: sys_resource
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
 mingw, MSVC 9.
-
 @item
 On some platforms, this header file requires that <sys/types.h> and
 <sys/time.h> already be included:
 FreeBSD 5.0.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @end itemize

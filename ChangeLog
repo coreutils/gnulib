@@ -1,3 +1,11 @@
+2012-04-12  Bruno Haible  <bruno@clisp.org>
+
+	New module 'sys_resource'.
+	* lib/sys_resource.in.h: New file.
+	* m4/sys_resource_h.m4: New file.
+	* modules/sys_resource: New file.
+	* doc/posix-headers/sys_resource.texi: Mention the new module.
+
 2012-04-12  LRN  <lrn1986@gmail.com>  (tiny change)
 
 	ioctl: Fix compilation error on mingw.
