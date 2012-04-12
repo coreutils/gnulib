@@ -1,5 +1,9 @@
 2012-04-12  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'getrusage'.
+	* modules/getrusage-tests: New file.
+	* tests/test-getrusage.c: New file.
+
 	New module 'getrusage'.
 	* lib/sys_resource.in.h: Include arg-nonnull.h, c++defs.h,
 	warn-on-use.h.
