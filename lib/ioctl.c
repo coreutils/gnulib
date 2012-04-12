@@ -46,6 +46,10 @@ rpl_ioctl (int fd, int request, ... /* {void *,char *} arg */)
 
 # include <errno.h>
 
+/* Get HANDLE.  */
+# define WIN32_LEAN_AND_MEAN
+# include <windows.h>
+
 # include "fd-hook.h"
 /* Get _get_osfhandle.  */
 # include "msvc-nothrow.h"

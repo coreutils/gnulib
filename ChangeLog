@@ -1,3 +1,9 @@
+2012-04-12  LRN  <lrn1986@gmail.com>  (tiny change)
+
+	ioctl: Fix compilation error on mingw.
+	* lib/ioctl.c: Include <windows.h>.
+	Also reported by Ray Satiro <raysatiro@yahoo.com>.
+
 2012-04-04  Jim Meyering  <meyering@redhat.com>
 
 	regex: correct #pragma guard expression
