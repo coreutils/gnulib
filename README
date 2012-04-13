@@ -258,15 +258,19 @@ as well.  Gnulib code makes the following additional assumptions:
  * There are no "holes" in integer values: all the bits of an integer
    contribute to its value in the usual way.
 
- * If two nonoverlapping objects have sizes S and T represented as
-   size_t values, then S + T cannot overflow.  This assumption is true
-   for all practical hosts with flat address spaces, but it is not
-   always true for hosts with segmented address spaces.
+ * Addresses and sizes behave as if objects reside in a flat address space.
+   In particular:
 
- * If an existing object has size S, and if T is sufficiently small
-   (e.g., 8 KiB), then S + T cannot overflow.  Overflow in this case
-   would mean that the rest of your program fits into T bytes, which
-   can't happen in realistic flat-address-space hosts.
+   - If two nonoverlapping objects have sizes S and T represented as
+     size_t values, then S + T cannot overflow.
+
+   - A pointer P points within an object O if and only if
+     (char *) &O <= (char *) P && (char *) P < (char *) (&O + 1).
+
+   - If an existing object has size S, and if T is sufficiently small
+     (e.g., 8 KiB), then S + T cannot overflow.  Overflow in this case
+     would mean that the rest of your program fits into T bytes, which
+     can't happen in realistic flat-address-space hosts.
 
  * Objects with all bits zero are treated as 0 or NULL.  For example,
    memset (A, 0, sizeof A) initializes an array A of pointers to NULL.
