@@ -27,6 +27,15 @@
 #include <sys/stat.h>
 #undef __need_system_sys_stat_h
 
+#if ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
+    && REPLACE_FUNC_STAT_FILE
+/* mingw64 has a broken stat() function, based on _stat(), in libmingwex.a.
+   Bypass it.  */
+# define stat _stat
+# define REPLACE_FUNC_STAT_DIR 1
+# undef REPLACE_FUNC_STAT_FILE
+#endif
+
 static inline int
 orig_stat (const char *filename, struct stat *buf)
 {

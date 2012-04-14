@@ -15,7 +15,7 @@ report the size of files or block devices larger than 2 GB.
 @item
 On some platforms, @code{stat("link-to-file/",buf)} succeeds instead
 of failing with @code{ENOTDIR}.
-FreeBSD 7.2, AIX 7.1, Solaris 9.
+FreeBSD 7.2, AIX 7.1, Solaris 9, mingw64.
 @item
 On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:

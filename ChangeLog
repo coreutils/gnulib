@@ -1,5 +1,12 @@
 2012-04-14  Bruno Haible  <bruno@clisp.org>
 
+	stat: Bypass buggy override in mingw64.
+	* m4/stat.m4 (gl_FUNC_STAT): Update comments.
+	* lib/stat.c (stat) [mingw64]: Define to _stat.
+	* doc/posix-functions/stat.texi: Mention mingw64 bug.
+
+2012-04-14  Bruno Haible  <bruno@clisp.org>
+
 	pathmax: Fix compilation error on MSVC 9.
 	* modules/pathmax (Depends-on): Add unistd.
 
