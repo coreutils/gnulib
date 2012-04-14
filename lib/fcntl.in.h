@@ -25,6 +25,8 @@
 #if defined __need_system_fcntl_h
 /* Special invocation convention.  */
 
+/* Needed before <sys/stat.h>.
+   May also define off_t to a 64-bit type on native Windows.  */
 #include <sys/types.h>
 /* On some systems other than glibc, <sys/stat.h> is a prerequisite of
    <fcntl.h>.  On glibc systems, we would like to avoid namespace pollution.
@@ -42,6 +44,8 @@
 
 #ifndef _@GUARD_PREFIX@_FCNTL_H
 
+/* Needed before <sys/stat.h>.
+   May also define off_t to a 64-bit type on native Windows.  */
 #include <sys/types.h>
 /* On some systems other than glibc, <sys/stat.h> is a prerequisite of
    <fcntl.h>.  On glibc systems, we would like to avoid namespace pollution.

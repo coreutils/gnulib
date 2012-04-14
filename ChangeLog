@@ -1,3 +1,79 @@
+2012-04-21  Bruno Haible  <bruno@clisp.org>
+
+	Large File Support for native Windows platforms.
+
+	* m4/largefile.m4 (gl_LARGEFILE): New macro.
+	* modules/largefile (configure.ac): Require gl_LARGEFILE.
+
+	* lib/sys_types.in.h (off_t) [WINDOWS_64_BIT_OFF_T]: Define to a 64-bit
+	type.
+	* m4/sys_types_h.m4 (gl_SYS_TYPES_H): Set WINDOWS_64_BIT_OFF_T.
+	* modules/sys_types (Makefile.am): Substitute WINDOWS_64_BIT_OFF_T.
+	* doc/posix-headers/sys_types.texi: Mention the effect of the
+	'largefile' module.
+
+	* lib/fcntl.in.h: Add comments about off_t.
+	* modules/fcntl-h (Depends-on): Add sys_types.
+
+	* lib/unistd.in.h [WINDOWS_64_BIT_OFF_T]: Include <sys/types.h>.
+	(ftruncate): Replace it if REPLACE_FTRUNCATE is 1.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Require gl_SYS_TYPES_H.
+	(gl_UNISTD_H_DEFAULTS): Initialize REPLACE_FTRUNCATE.
+	* modules/unistd (Depends-on): Add sys_types.
+	(Makefile.am): Substitute WINDOWS_64_BIT_OFF_T, REPLACE_FTRUNCATE.
+
+	* lib/lseek.c (rpl_lseek) [_GL_WINDOWS_64_BIT_OFF_T]: Use _lseeki64
+	instead of lseek.
+	* m4/lseek.m4 (gl_FUNC_LSEEK): Require gl_SYS_TYPES_H. Set
+	REPLACE_LSEEK if WINDOWS_64_BIT_OFF_T is 1.
+	* modules/lseek (Depends-on): Add sys_types.
+
+	* lib/ftruncate.c: Put under GPLv3+. Include <windows.h>,
+	msvc-nothrow.h.
+	(SetFileSize): New function.
+	(ftruncate) [_GL_WINDOWS_64_BIT_OFF_T]: New implementation.
+	* m4/ftruncate.m4 (gl_FUNC_FTRUNCATE): Set REPLACE_FTRUNCATE on Windows
+	if Large File Support is requested.
+	* modules/ftruncate (configure.ac): Consider REPLACE_FTRUNCATE.
+	(Depends-on): Add sys_types, msvc-nothrow. Update conditions.
+
+	* lib/stdio.in.h: Add comments about off_t.
+	* modules/stdio (Depends-on): Add sys_types.
+
+	* lib/ftello.c [_GL_WINDOWS_64_BIT_OFF_T]: Use _ftelli64 or ftello64
+	instead of ftello.
+	* m4/ftello.m4 (gl_FUNC_FTELLO): Require gl_SYS_TYPES_H. Set
+	REPLACE_FTELLO if WINDOWS_64_BIT_OFF_T is 1.
+	(gl_PREREQ_FTELLO): New macro.
+	* modules/ftello (Depends-on): Add sys_types.
+	(configure.ac): Incoke gl_PREREQ_FTELLO.
+
+	* lib/fseeko.c [_GL_WINDOWS_64_BIT_OFF_T]: Use _fseeki64 or fseeko64
+	instead of fseeko.
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO): Require gl_SYS_TYPES_H. Set
+	REPLACE_FSEEKO if WINDOWS_64_BIT_OFF_T is 1.
+	(gl_PREREQ_FSEEKO): New macro.
+	* modules/fseeko (Depends-on): Add sys_types.
+	(configure.ac): Invoke gl_PREREQ_FSEEKO.
+
+	* lib/sys_stat.in.h: Add comments about off_t.
+	(stat, fstat) [WINDOWS_64_BIT_ST_SIZE]: Define to variants that use a
+	64-bit integer for st_size in 'struct stat'.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Set WINDOWS_64_BIT_ST_SIZE.
+	Define _GL_WINDOWS_64_BIT_ST_SIZE.
+	* modules/sys_stat (Depends-on): Add sys_types.
+	(Makefile.am): Substitute WINDOWS_64_BIT_ST_SIZE.
+
+	* lib/stat.c (stat) [_GL_WINDOWS_64_BIT_ST_SIZE]: Define to _stati64
+	instead of stat or _stat.
+
+	* lib/fstat.c [_GL_WINDOWS_64_BIT_ST_SIZE]: Use _fstati64 and
+	'struct _stati64' instead of fstat and 'struct stat'.
+	* m4/fstat.m4 (gl_FUNC_FSTAT): Require gl_HEADER_SYS_STAT_H. Set
+	REPLACE_FSTAT if WINDOWS_64_BIT_ST_SIZE is 1.
+
+	Reported by Ray Satiro <raysatiro@yahoo.com>.
+
 2012-04-19  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: accommodate older libtool

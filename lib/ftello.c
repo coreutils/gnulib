@@ -31,6 +31,14 @@ ftello (FILE *fp)
 # undef ftell
 # define ftello ftell
 #endif
+#if _GL_WINDOWS_64_BIT_OFF_T
+# undef ftello
+# if HAVE__FTELLI64 /* msvc, mingw64 */
+#  define ftello _ftelli64
+# else /* mingw */
+#  define ftello ftello64
+# endif
+#endif
 {
 #if LSEEK_PIPE_BROKEN
   /* mingw gives bogus answers rather than failure on non-seekable files.  */

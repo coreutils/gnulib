@@ -59,5 +59,9 @@ rpl_lseek (int fd, off_t offset, int whence)
       return -1;
     }
 #endif
+#if _GL_WINDOWS_64_BIT_OFF_T
+  return _lseeki64 (fd, offset, whence);
+#else
   return lseek (fd, offset, whence);
+#endif
 }

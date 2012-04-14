@@ -10,6 +10,7 @@ configure.ac-early:
 AC_REQUIRE([AC_SYS_LARGEFILE])
 
 configure.ac:
+AC_REQUIRE([gl_LARGEFILE])
 
 Makefile.am:
 

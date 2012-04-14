@@ -27,13 +27,18 @@
 #include <sys/stat.h>
 #undef __need_system_sys_stat_h
 
-#if ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-    && REPLACE_FUNC_STAT_FILE
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if _GL_WINDOWS_64_BIT_ST_SIZE
+#  define stat _stati64
+#  define REPLACE_FUNC_STAT_DIR 1
+#  undef REPLACE_FUNC_STAT_FILE
+# elif REPLACE_FUNC_STAT_FILE
 /* mingw64 has a broken stat() function, based on _stat(), in libmingwex.a.
    Bypass it.  */
-# define stat _stat
-# define REPLACE_FUNC_STAT_DIR 1
-# undef REPLACE_FUNC_STAT_FILE
+#  define stat _stat
+#  define REPLACE_FUNC_STAT_DIR 1
+#  undef REPLACE_FUNC_STAT_FILE
+# endif
 #endif
 
 static inline int

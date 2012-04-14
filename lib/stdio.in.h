@@ -52,7 +52,8 @@
 #include <stddef.h>
 
 /* Get off_t and ssize_t.  Needed on many systems, including glibc 2.8
-   and eglibc 2.11.2.  */
+   and eglibc 2.11.2.
+   May also define off_t to a 64-bit type on native Windows.  */
 #include <sys/types.h>
 
 /* The __attribute__ feature is available in gcc versions 2.5 and later.

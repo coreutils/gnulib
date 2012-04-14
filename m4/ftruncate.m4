@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 
 # See if we need to emulate a missing ftruncate function using chsize.
 
@@ -11,7 +11,24 @@ AC_DEFUN([gl_FUNC_FTRUNCATE],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([ftruncate])
-  if test $ac_cv_func_ftruncate = no; then
+  if test $ac_cv_func_ftruncate = yes; then
+    m4_ifdef([gl_LARGEFILE], [
+      AC_REQUIRE([AC_CANONICAL_HOST])
+      case "$host_os" in
+        mingw*)
+          dnl Native Windows, and Large File Support is requested.
+          dnl The MSVCRT _chsize() function only accepts a 32-bit file size,
+          dnl and the mingw64 ftruncate64() function is unreliable (it may
+          dnl delete the file, see
+          dnl <http://mingw-w64.sourcearchive.com/documentation/2.0-1/ftruncate64_8c_source.html>).
+          dnl Use gnulib's ftruncate() implementation instead.
+          REPLACE_FTRUNCATE=1
+          ;;
+      esac
+    ], [
+      :
+    ])
+  else
     HAVE_FTRUNCATE=0
   fi
 ])

@@ -7,12 +7,14 @@ m4/ftruncate.m4
 
 Depends-on:
 unistd
+sys_types
 largefile
-msvc-inval      [test $HAVE_FTRUNCATE = 0]
+msvc-nothrow    [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]
+msvc-inval      [test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1]
 
 configure.ac:
 gl_FUNC_FTRUNCATE
-if test $HAVE_FTRUNCATE = 0; then
+if test $HAVE_FTRUNCATE = 0 || test $REPLACE_FTRUNCATE = 1; then
   AC_LIBOBJ([ftruncate])
   gl_PREREQ_FTRUNCATE
 fi

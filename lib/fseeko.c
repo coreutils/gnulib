@@ -31,6 +31,14 @@ fseeko (FILE *fp, off_t offset, int whence)
 # undef fseek
 # define fseeko fseek
 #endif
+#if _GL_WINDOWS_64_BIT_OFF_T
+# undef fseeko
+# if HAVE__FSEEKI64 /* msvc, mingw64 */
+#  define fseeko _fseeki64
+# else /* mingw */
+#  define fseeko fseeko64
+# endif
+#endif
 {
 #if LSEEK_PIPE_BROKEN
   /* mingw gives bogus answers rather than failure on non-seekable files.  */

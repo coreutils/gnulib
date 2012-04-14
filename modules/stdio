@@ -12,6 +12,7 @@ snippet/c++defs
 snippet/warn-on-use
 ssize_t
 stddef
+sys_types
 
 configure.ac:
 gl_STDIO_H

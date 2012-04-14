@@ -23,6 +23,10 @@
 /* Get the original definition of fstat.  It might be defined as a macro.  */
 #include <sys/types.h>
 #include <sys/stat.h>
+#if _GL_WINDOWS_64_BIT_ST_SIZE
+# define stat _stati64
+# define fstat _fstati64
+#endif
 #undef __need_system_sys_stat_h
 
 static inline int
