@@ -6,6 +6,7 @@ lib/pathmax.h
 m4/pathmax.m4
 
 Depends-on:
+unistd
 
 configure.ac:
 gl_PATHMAX

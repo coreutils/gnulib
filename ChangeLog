@@ -1,3 +1,8 @@
+2012-04-14  Bruno Haible  <bruno@clisp.org>
+
+	pathmax: Fix compilation error on MSVC 9.
+	* modules/pathmax (Depends-on): Add unistd.
+
 2012-04-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	README: document pointer comparison assumption
