@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 6, 2012
+@set lastupdate April 14, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -298,8 +298,18 @@ GPL-covered status in court if necessary.
 
 @strong{Before} incorporating significant changes, make sure that the
 person who wrote the changes has signed copyright papers and that the
-Free Software Foundation has received and signed them.  We may also need
-an employer's disclaimer from the person's employer.
+Free Software Foundation has received and signed them.  We may also
+need an employer's disclaimer from the person's employer, which
+confirms that the work was not part of the person's job and the
+employer makes no claim on it.  However, a copy of the person's
+employment contract, showing that the employer can't claim any rights
+to this work, is often sufficient.
+
+If the employer does claim the work was part of the person's job, and
+there is no clear basis to say that claim is invalid, then we have to
+consider it valid.  Then the person cannot assign copyright, but the
+employer can.  Many companies have done this.  Please ask the
+appropriate managers to contact @code{assign@@gnu.org}.
 
 @cindex data base of GNU copyright assignments
 To check whether papers have been received, look in
@@ -564,6 +574,21 @@ information in @file{AUTHORS}, such as bug-reporting information.
 @node Copying from Other Packages
 @section Copying from Other Packages
 
+This section explains legal considerations when merging code from
+other packages into your package.  Using an entire module as a whole,
+and maintaining its separate identity, is a different issue;
+see @ref{External Libraries}.
+
+@menu
+* Non-FSF-Copyrighted Package::
+* FSF-Copyrighted Package::
+@end menu
+
+@node Non-FSF-Copyrighted Package
+@subsection Non-FSF-Copyrighted Package
+
+Here we suppose that your package is not FSF-copyrighted.
+
 When you copy legally significant code from another free software
 package with a GPL-compatible license, you should look in the
 package's records to find out the authors of the part you are copying,
@@ -571,12 +596,11 @@ and list them as the contributors of the code that you copied.  If all
 you did was copy it, not write it, then for copyright purposes you are
 @emph{not} one of the contributors of @emph{this} code.
 
-Especially when code has been released into the public domain, authors
-sometimes fail to write a license statement in each file.  In this
-case, please first be sure that all the authors of the code have
-disclaimed copyright interest.  Then, when copying the new files into
-your project, add a brief note at the beginning of the files recording
-the authors, the public domain status, and anything else relevant.
+If the code is supposed to be in the public domain, make sure that is
+really true: that all the authors of the code have disclaimed
+copyright interest.  Then, when copying the new files into your
+project, add a brief note at the beginning of the files recording the
+authors, the public domain status, and anything else relevant.
 
 On the other hand, when merging some public domain code into an
 existing file covered by the GPL (or LGPL or other free software
@@ -584,13 +608,18 @@ license), there is no reason to indicate the pieces which are public
 domain.  The notice saying that the whole file is under the GPL (or
 other license) is legally sufficient.
 
-Using code that is released under a GPL-compatible free license,
-rather than being in the public domain, may require preserving
-copyright notices or other steps.  Of course, you should do what is
-needed.
+Using code that is not in the public domain, but rather released under
+a GPL-compatible free license, may require preserving copyright
+notices or other steps.  Of course, you should follow the requirements
+stated.
 
-If you are maintaining an FSF-copyrighted package, please verify we
-have papers for the code you are copying, @emph{before} copying it.
+@node FSF-Copyrighted Package
+@subsection FSF-Copyrighted Package
+
+If you are maintaining an FSF-copyrighted package, please don't copy
+in any code without verifying first that we have suitable legal papers
+for that code.
+
 If you are copying from another FSF-copyrighted package, then we
 presumably have papers for that package's own code, but you must check
 whether the code you are copying is part of an external library; if
