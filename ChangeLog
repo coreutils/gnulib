@@ -1,3 +1,10 @@
+2012-04-15  Bruno Haible  <bruno@clisp.org>
+
+	lseek: Make configure test independent of environment.
+	* m4/lseek.m4 (gl_FUNC_LSEEK): Require AC_CANONICAL_HOST. On native
+	Windows, we know that lseek() on pipes is broken; skip the runtime
+	test.
+
 2012-04-14  Bruno Haible  <bruno@clisp.org>
 
 	stat: Bypass buggy override in mingw64.
