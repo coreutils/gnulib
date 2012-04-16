@@ -1,3 +1,9 @@
+2012-04-16  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: use gnulib's po/Makefile.in.in, not the one from gettext
+	* build-aux/bootstrap: Use gnulib's po/Makefile.in.in, not
+	the one from gettext.  Reported by Akim Demaille.
+
 2012-04-16  Joel E. Denny  <joeldenny@joeldenny.org>
 
 	Fix recursion of install-* into po directories.

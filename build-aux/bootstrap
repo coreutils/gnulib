@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-02-11.09; # UTC
+scriptversion=2012-04-16.10; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -862,6 +862,8 @@ if test $with_gettext = yes; then
           '"$XGETTEXT_OPTIONS"' $${end_of_xgettext_options+}
     }
   ' po/Makevars.template >po/Makevars || exit 1
+
+  cat $build_aux/po/Makefile.in.in > po/Makefile.in.in || exit 1
 
   if test -d runtime-po; then
     # Similarly for runtime-po/Makevars, but not quite the same.
