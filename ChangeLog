@@ -1,3 +1,10 @@
+2012-04-16  Akim Demaille  <akim@lrde.epita.fr>
+	and Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: catch "see @xref{}" and similar
+	* top/maint.mk (prohibit_undesirable_word_seq_RE_): Also
+	prohibit "See also @xref{", "Also see @pxref{", and similar.
+
 2012-04-16  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: really use gnulib's po/Makefile.in.in

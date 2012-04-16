@@ -932,8 +932,15 @@ sc_prohibit_doubled_word:
 # A regular expression matching undesirable combinations of words like
 # "can not"; this matches them even when the two words appear on different
 # lines, but not when there is an intervening delimiter like "#" or "*".
+# Similarly undesirable, "See @xref{...}", since an @xref should start
+# a sentence.  Explicitly prohibit any prefix of "see" or "also".
+# Also prohibit a prefix matching "\w+ +".
+# @pxref gets the same see/also treatment and should be parenthesized;
+# presume it must *not* start a sentence.
+bad_xref_re_ ?= (?:[\w,:;] +|(?:see|also)\s+)\@xref\{
+bad_pxref_re_ ?= (?:[.!?]|(?:see|also))\s+\@pxref\{
 prohibit_undesirable_word_seq_RE_ ?=					\
-  /\bcan\s+not\b/gims
+  /(?:\bcan\s+not\b|$(bad_xref_re_)|$(bad_pxref_re_))/gims
 prohibit_undesirable_word_seq_ =					\
     -e 'while ($(prohibit_undesirable_word_seq_RE_))'			\
     $(perl_filename_lineno_text_)
