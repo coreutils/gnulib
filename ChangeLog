@@ -1,3 +1,9 @@
+2012-04-16  Jim Meyering  <meyering@redhat.com>
+
+	maint: avoid spurious "make sc_maint" failure
+	* cfg.mk (exclude_file_name_regexp--sc_trailing_blank): Also
+	exempt all *.class file names, for lib/javaversion.class.
+
 2012-04-15  Bruno Haible  <bruno@clisp.org>
 
 	lseek: Make configure test independent of environment.

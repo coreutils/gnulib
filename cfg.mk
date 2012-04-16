@@ -55,4 +55,4 @@ exclude_file_name_regexp--sc_prohibit_doubled_word = \
   ^(tests/test-init\.sh|lib/base(32|64)\.c)$$
 exclude_file_name_regexp--sc_prohibit_openat_without_use = ^lib/selinux-at\.c$$
 exclude_file_name_regexp--sc_trailing_blank = \
-  ^(build-aux/texinfo\.tex|doc/Copyright/assign\.future\.manual)$$
+  ^(.*\.class|build-aux/texinfo\.tex|doc/Copyright/assign\.future\.manual)$$
