@@ -1,5 +1,9 @@
 2012-04-16  Jim Meyering  <meyering@redhat.com>
 
+	bootstrap: really use gnulib's po/Makefile.in.in
+	* build-aux/bootstrap: Correct the source file name in previous change.
+	Reported by Akim Demaille.
+
 	configmake: correct minor inconsistency in Makefile rule
 	* modules/configmake (Makefile.am): All other rules like this one
 	run the final "mv -f ..." in the same backslash-continued command
