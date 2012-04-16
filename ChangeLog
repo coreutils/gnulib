@@ -1,5 +1,12 @@
 2012-04-16  Jim Meyering  <meyering@redhat.com>
 
+	configmake: correct minor inconsistency in Makefile rule
+	* modules/configmake (Makefile.am): All other rules like this one
+	run the final "mv -f ..." in the same backslash-continued command
+	as the one that does everything else.  This one put the mv -f ...
+	command on a separate, non-backslash-continued line.
+	Make it like the others.
+
 	bootstrap: use gnulib's po/Makefile.in.in, not the one from gettext
 	* build-aux/bootstrap: Use gnulib's po/Makefile.in.in, not
 	the one from gettext.  Reported by Akim Demaille.
