@@ -266,6 +266,7 @@ install-data-yes: all
 
 install-strip: install
 
+install-dvi install-html install-info install-pdf install-ps:
 installdirs: installdirs-exec installdirs-data
 installdirs-exec:
 installdirs-data: installdirs-data-@USE_NLS@
