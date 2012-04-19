@@ -1,3 +1,9 @@
+2012-04-19  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: accommodate older libtool
+	* build-aux/bootstrap (use_libtool): Cater to libtool 1.5.22.
+	Reported by Daniel P. Berrange.
+
 2012-04-19  Jim Meyering  <meyering@redhat.com>
 
 	announce-gen: avoid failure due to lack of Digest::SHA1
