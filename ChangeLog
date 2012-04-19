@@ -1,5 +1,12 @@
 2012-04-19  Jim Meyering  <meyering@redhat.com>
 
+	announce-gen: avoid failure due to lack of Digest::SHA1
+	Even with the preferred Digest::SHA available, this script
+	would fail when the backup module, Digest::SHA1, was not installed.
+	* build-aux/announce-gen: Quote the conditional use of "use".
+	Reported by Reuben Thomas in:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/30444
+
 	bootstrap: don't let a user's CDPATH setting affect this script
 	When CDPATH is set, cd will sometimes generate output.
 	When "cd" is run in a subshell whose output matters, that

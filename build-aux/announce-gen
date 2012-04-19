@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2012-03-20 23:17'; # UTC
+my $VERSION = '2012-04-19 14:36'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -31,7 +31,7 @@ use strict;
 use Getopt::Long;
 use Digest::MD5;
 eval { require Digest::SHA; }
-  or eval { use Digest::SHA1; };
+  or eval 'use Digest::SHA1';
 use POSIX qw(strftime);
 
 (my $ME = $0) =~ s|.*/||;
