@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-04-16.16; # UTC
+scriptversion=2012-04-19.14; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -35,6 +35,10 @@ nl='
 # Ensure file names are sorted consistently across platforms.
 LC_ALL=C
 export LC_ALL
+
+# Ensure that CDPATH is not set.  Otherwise, the output from cd
+# would cause trouble in at least one use below.
+(unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
 local_gl_dir=gl
 

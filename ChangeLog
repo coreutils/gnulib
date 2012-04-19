@@ -1,3 +1,16 @@
+2012-04-19  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: don't let a user's CDPATH setting affect this script
+	When CDPATH is set, cd will sometimes generate output.
+	When "cd" is run in a subshell whose output matters, that
+	surprising-to-some output can cause malfunction.
+	Unsetting CDPATH turns off this shell "feature."
+	* build-aux/bootstrap (CDPATH): Unset.
+	Reported by Reuben Thomas in:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/30435
+	and inspired by his patch here:
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/30440
+
 2012-04-16  Akim Demaille  <akim@lrde.epita.fr>
 	and Jim Meyering  <meyering@redhat.com>
 
