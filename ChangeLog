@@ -1,3 +1,9 @@
+2012-04-22  Bruno Haible  <bruno@clisp.org>
+
+	users.txt: Update.
+	* users.txt: Add freedink, wdiff. Update URLs for projects that have
+	switched from CVS to git, bzr, or svn.
+
 2012-04-21  Bruno Haible  <bruno@clisp.org>
 
 	Large File Support for native Windows platforms.
