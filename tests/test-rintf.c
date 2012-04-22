@@ -32,6 +32,9 @@ SIGNATURE_CHECK (rintf, float, (float));
 #include "nan.h"
 #include "macros.h"
 
+#undef INFINITY
+#undef NAN
+
 #define DOUBLE float
 #define ISNAN isnanf
 #define INFINITY Infinityf ()

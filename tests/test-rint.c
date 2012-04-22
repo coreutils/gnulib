@@ -32,6 +32,9 @@ SIGNATURE_CHECK (rint, double, (double));
 #include "nan.h"
 #include "macros.h"
 
+#undef INFINITY
+#undef NAN
+
 #define DOUBLE double
 #define ISNAN isnand
 #define INFINITY Infinityd ()

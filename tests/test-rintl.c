@@ -33,6 +33,9 @@ SIGNATURE_CHECK (rintl, long double, (long double));
 #include "nan.h"
 #include "macros.h"
 
+#undef INFINITY
+#undef NAN
+
 #define DOUBLE long double
 #define ISNAN isnanl
 #define INFINITY Infinityl ()
