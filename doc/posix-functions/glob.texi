@@ -12,8 +12,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 IRIX 5.3, mingw, MSVC 9, BeOS.
 @item
-This function may list symbolic links to nonexistent files among the results,
-on some platforms.
+This function does not list symbolic links to nonexistent files among the results,
+on some platforms:
+glibc 2.14, AIX 7.1, HP-UX 11, Solaris 11 2011-11.
 @item
 On platforms where @code{off_t} is a 32-bit type, this function may not
 work correctly on huge directories larger than 2 GB.

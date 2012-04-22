@@ -1,5 +1,26 @@
 2012-04-22  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention reason for replacement on glibc/Linux systems.
+	* doc/posix-functions/dprintf.texi: Mention the problem with special
+	'long double' values.
+	* doc/posix-functions/fprintf.texi: Likewise.
+	* doc/posix-functions/printf.texi: Likewise.
+	* doc/posix-functions/snprintf.texi: Likewise.
+	* doc/posix-functions/sprintf.texi: Likewise.
+	* doc/posix-functions/vdprintf.texi: Likewise.
+	* doc/posix-functions/vfprintf.texi: Likewise.
+	* doc/posix-functions/vprintf.texi: Likewise.
+	* doc/posix-functions/vsnprintf.texi: Likewise.
+	* doc/posix-functions/vsprintf.texi: Likewise.
+	* doc/posix-functions/fcntl.texi: Add glibc/Linux to the list of
+	platforms with F_DUPFD_CLOEXEC problems.
+	* doc/posix-functions/glob.texi: Mention which platforms are affected
+	by the problem with symbolic links.
+	* doc/posix-functions/linkat.texi: Mention the problem with
+	AT_SYMLINK_FOLLOW on Linux.
+
+2012-04-22  Bruno Haible  <bruno@clisp.org>
+
 	pwrite: Don't replace on all platforms.
 	* m4/pwrite.m4 (gl_FUNC_PWRITE): Fix syntax error in test program.
 

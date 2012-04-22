@@ -17,6 +17,9 @@ But the replacement function is not safe to be used in libraries and is not mult
 This function fails to reject trailing slashes on non-directories on
 some platforms:
 AIX 7.1, Solaris 11 2011-11.
+@item
+This functions does not support @code{AT_SYMLINK_FOLLOW} on some platforms:
+Linux kernel 2.6.17.
 @end itemize
 
 Portability problems not fixed by Gnulib:
