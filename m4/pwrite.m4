@@ -1,4 +1,4 @@
-# pwrite.m4 serial 4
+# pwrite.m4 serial 5
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -81,10 +81,6 @@ changequote([,])dnl
     if (buf[1] != '1')
       return 13;
   }
-  return 0;
-}
-
-
   return 0;
 }]])],
           [gl_cv_func_pwrite_works=yes],

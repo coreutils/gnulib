@@ -1,5 +1,10 @@
 2012-04-22  Bruno Haible  <bruno@clisp.org>
 
+	pwrite: Don't replace on all platforms.
+	* m4/pwrite.m4 (gl_FUNC_PWRITE): Fix syntax error in test program.
+
+2012-04-22  Bruno Haible  <bruno@clisp.org>
+
 	rint* tests: Avoid gcc warnings.
 	* tests/test-rint.c (INFINITY, NAN): Undefine before redefining.
 	* tests/test-rintf.c (INFINITY, NAN): Likewise.
