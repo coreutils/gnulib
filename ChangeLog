@@ -1,3 +1,10 @@
+2012-04-26  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	bootstrap: support Automake-NG in $buildreq
+	* bootstrap (check_versions): Handle automake and aclocal from
+	Automake-NG specially.  They can be specified as respectively
+	the "automake-ng" and "aclocal-ng" requirements.
+
 2012-04-25  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: only force latest Makefile.in.in for gettext module

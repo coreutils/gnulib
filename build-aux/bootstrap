@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-04-25.17; # UTC
+scriptversion=2012-04-26.13; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -432,6 +432,22 @@ check_versions() {
     case $appvar in
         GZIP) ;; # Do not use $GZIP:  it contains gzip options.
         *) eval "app=\${$appvar-$app}" ;;
+    esac
+
+    # Handle the still-experimental Automake-NG programs specially.
+    # They remain named as the mainstream Automake programs ("automake",
+    # and "aclocal") to avoid gratuitous incompatibilities with
+    # pre-existing usages (by, say, autoreconf, or custom autogen.sh
+    # scripts), but correctly identify themselves (as being part of
+    # "GNU automake-ng") when asked their version.
+    case $app in
+      automake-ng|aclocal-ng)
+        app=`echo "$app" | sed 's/-ng$//'`
+        ($app --version | grep '(GNU automake-ng)') >/dev/null 2>&1 || {
+          echo "$me: Error: '$app' not found or not from Automake-NG" >&2
+          ret=1
+          continue
+        } ;;
     esac
     if [ "$req_ver" = "-" ]; then
       # Merely require app to exist; not all prereq apps are well-behaved
