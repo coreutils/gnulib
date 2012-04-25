@@ -471,7 +471,9 @@ the copies brought in by @code{gettextize} and @code{autopoint}.  When a
 new @code{gettext} release is made, the copies of the files in Gnulib will
 be updated immediately.
 
-The solution is therefore:
+The choice of which version of gettext to require depends on the needs
+of your package.  For a package that wants to comply to GNU Coding
+Standards, the steps are:
 
 @enumerate
 @item
@@ -479,12 +481,13 @@ When you run @code{gettextize}, always use the @code{gettextize} from the
 matching GNU gettext release.  For the most recent Gnulib checkout, this is
 the newest release found on @url{http://ftp.gnu.org/gnu/gettext/}.  For an
 older Gnulib snapshot, it is the release that was the most recent release
-at the time the Gnulib snapshot was taken.  Then, after @code{gettextize},
-invoke @code{gnulib-tool}.
+at the time the Gnulib snapshot was taken.
 
 @item
-When a script of yours run @code{autopoint}, invoke @code{gnulib-tool}
-afterwards.
+After running @code{gettextize}, invoke @code{gnulib-tool} and import
+the @code{gettext} module.  Also, copy the latest version of gnulib's
+@file{build-aux/po/Makefile.in.in} to your @file{po/} directory (this
+is done for you if you use gnulib's @file{bootstrap} script).
 
 @item
 If you get an error message like
@@ -495,6 +498,32 @@ it means that a new GNU gettext release was made, and its autoconf macros
 were integrated into Gnulib and now mismatch the @file{po/} infrastructure.
 In this case, fetch and install the new GNU gettext release and run
 @code{gettextize} followed by @code{gnulib-tool}.
+@end enumerate
+
+On the other hand, if your package is not as concerned with compliance
+to the latest standards, but instead favors development on stable
+environments, the steps are:
+
+@enumerate
+@item
+Determine the oldest version of @code{gettext} that you intend to
+support during development (at this time, gnulib recommends going no
+older than version 0.17).  Run @code{autopoint} (not
+@code{gettextize}) to copy infrastructure into place (newer versions
+of gettext will install the older infrastructure that you requested).
+
+@item
+Invoke @code{gnulib-tool}, and import the @code{gettext-h} module.
+@end enumerate
+
+Regardless of which approach you used to get the infrastructure in
+place, the following steps must then be used to preserve that
+infrastructure (gnulib's @file{bootstrap} script follows these rules):
+
+@enumerate
+@item
+When a script of yours run @code{autopoint}, invoke @code{gnulib-tool}
+afterwards.
 
 @item
 When you invoke @code{autoreconf} after @code{gnulib-tool}, make sure to

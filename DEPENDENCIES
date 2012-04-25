@@ -101,8 +101,13 @@ at any time.
     ftp://ftp.gnu.org/gnu/grep/
 
 * GNU gettext.
-  + Always use the newest available gettext release, see
-    <http://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html>.
+  + If your project wants to follow GNU Coding Standards:
+    + Always use the newest available gettext release, see
+      <http://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html>.
+    + Use the 'gettext' module.
+  + If your project cares more about ease of development on older platforms:
+    + gettext 0.17 or newer.
+    + Use the 'gettext-h' module.
   + Recommended.
     Needed if you use modules that use internationalization (many do).
   + Homepage:
