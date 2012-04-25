@@ -1,3 +1,9 @@
+2012-04-25  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: only force latest Makefile.in.in for gettext module
+	* build-aux/bootstrap (with_gettext): Only install latest
+	Makefile.in.in for projects requesting bleeding edge gettext.
+
 2012-04-22  Bruno Haible  <bruno@clisp.org>
 
 	doc: Mention reason for replacement on glibc/Linux systems.
