@@ -341,8 +341,8 @@ Copyright (C) $year Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
-
-Written by" "Bruno Haible" "and" "Simon Josefsson"
+"
+  printf "Written by %s, %s, and %s.\n" "Bruno Haible" "Paul Eggert" "Simon Josefsson"
 }
 
 # func_emit_copyright_notice
