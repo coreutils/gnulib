@@ -110,28 +110,31 @@ struct exclude
     struct exclude_segment *head, *tail;
   };
 
-/* Return true if str has wildcard characters */
+/* Return true if STR has or may have wildcards, when matched with OPTIONS.
+   Return false if STR definitely does not have wildcards.  */
 bool
 fnmatch_pattern_has_wildcards (const char *str, int options)
 {
-  const char *cset = "\\?*[]";
-  if (options & FNM_NOESCAPE)
-    cset++;
-  while (*str)
+  while (1)
     {
-      size_t n = strcspn (str, cset);
-      if (str[n] == 0)
-        break;
-      else if (str[n] == '\\')
+      switch (*str++)
         {
-          str += n + 1;
-          if (*str)
-            str++;
+        case '\\':
+          str += ! (options & FNM_NOESCAPE) && *str;
+          break;
+
+        case '+': case '@': case '!':
+          if (options & FNM_EXTMATCH && *str == '(')
+            return true;
+          break;
+
+        case '?': case '*': case '[':
+          return true;
+
+        case '\0':
+          return false;
         }
-      else
-        return true;
     }
-  return false;
 }
 
 static void
