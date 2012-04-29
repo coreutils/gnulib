@@ -1,5 +1,13 @@
 2012-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	_Noreturn: future-proof non-GNU and non-MSVC compilers
+	* build-aux/snippet/_Noreturn.h (_Noreturn):
+	* m4/gnulib-common.m4 (gl_COMMON_BODY):
+	Do not define _Noreturn if __STDC_VERSION__ indicates this is
+	C11 or later.  This is more likely to work with random future C
+	compilers that are neither GNUish nor MSVCish.  See Vincent Lefevre in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-04/msg00195.html>.
+
 	exclude: handle wildcards with FNM_EXTMATCH
 	* lib/exclude.c (fnmatch_pattern_has_wildcards): Also treat '+(',
 	'+@', '!(' as wildcards, if FNM_EXTMATCH.  Make it clear in a
