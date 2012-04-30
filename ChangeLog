@@ -1,5 +1,11 @@
 2012-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	exclude: handle wildcards with FNM_NOESCAPE and with trailing \
+	* lib/exclude.c (unescape_pattern): Don't worry about unescaped [;
+	it's not possible here.  Handle the case of \ at end of pattern
+	without dumping core.
+	(add_exclude): Do not unescape the pattern if FNM_NOESCAPE is used.
+
 	_Noreturn: future-proof non-GNU and non-MSVC compilers
 	* build-aux/snippet/_Noreturn.h (_Noreturn):
 	* m4/gnulib-common.m4 (gl_COMMON_BODY):

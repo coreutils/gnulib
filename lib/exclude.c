@@ -140,20 +140,9 @@ fnmatch_pattern_has_wildcards (const char *str, int options)
 static void
 unescape_pattern (char *str)
 {
-  int inset = 0;
-  char *q = str;
+  char const *q = str;
   do
-    {
-      if (inset)
-        {
-          if (*q == ']')
-            inset = 0;
-        }
-      else if (*q == '[')
-        inset = 1;
-      else if (*q == '\\')
-        q++;
-    }
+    q += *q == '\\' && q[1];
   while ((*str++ = *q++));
 }
 
@@ -503,7 +492,7 @@ add_exclude (struct exclude *ex, char const *pattern, int options)
         seg = new_exclude_segment (ex, exclude_hash, options);
 
       str = xstrdup (pattern);
-      if (options & EXCLUDE_WILDCARDS)
+      if ((options & (EXCLUDE_WILDCARDS | FNM_NOESCAPE)) == EXCLUDE_WILDCARDS)
         unescape_pattern (str);
       p = hash_insert (seg->v.table, str);
       if (p != str)
