@@ -28,8 +28,8 @@ Baz
 EOT
 
 cat > expected <<EOT
-bar: 1
 bar: 0
+bar: 1
 EOT
 
 test-exclude in -include in -- bar > out || exit $?

@@ -1,5 +1,23 @@
 2012-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	exclude: process exclude and include directives in order
+	This restores the pre-2009 behavior, and is part of a fix of a
+	grep bug reported by Quentin Arce in
+	<http://lists.gnu.org/archive/html/bug-grep/2012-04/msg00056.html>.
+	* lib/exclude.c (struct exclude): Remove 'tail' member.
+	(new_exclude_segment): Prepend the new segment instead of appending.
+	Return void, since that's now more convenient.
+	(file_pattern_matches): Renamed from excluded_file_pattern_p.
+	(file_name_matches): Renamed from excluded_file_name_p.
+	(file_pattern_matches, file_name_matches):
+	Return true if the pattern matches, not if it excludes.
+	All callers changed.
+	(excluded_file_name): Process the list in reverse order;
+	since the list is now reversed this restores the pre-2009 behavior.
+	(add_exclude): Adjust to new reversed-order list.  Use local var
+	rather than macro, for clarity.
+	* tests/test-exclude7.sh: Adjust to corrected behavior.
+
 	exclude: handle wildcards with FNM_NOESCAPE and with trailing \
 	* lib/exclude.c (unescape_pattern): Don't worry about unescaped [;
 	it's not possible here.  Handle the case of \ at end of pattern
