@@ -1,4 +1,4 @@
-# serial 25
+# serial 26
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2012 Free Software
@@ -20,6 +20,7 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
   AC_REQUIRE([AC_TYPE_UID_T])
   AC_REQUIRE([AC_FUNC_CHOWN])
   AC_REQUIRE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([chown fchown])
 
   dnl mingw lacks chown altogether.
@@ -53,13 +54,22 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
         ]])],
         [gl_cv_func_chown_slash_works=yes],
         [gl_cv_func_chown_slash_works=no],
-        [gl_cv_func_chown_slash_works="guessing no"])
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_chown_slash_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_chown_slash_works="guessing no" ;;
+         esac
+        ])
       rm -f conftest.link conftest.file])
-    if test "$gl_cv_func_chown_slash_works" != yes; then
-      AC_DEFINE([CHOWN_TRAILING_SLASH_BUG], [1],
-        [Define to 1 if chown mishandles trailing slash.])
-      REPLACE_CHOWN=1
-    fi
+    case "$gl_cv_func_chown_slash_works" in
+      *yes) ;;
+      *)
+        AC_DEFINE([CHOWN_TRAILING_SLASH_BUG], [1],
+          [Define to 1 if chown mishandles trailing slash.])
+        REPLACE_CHOWN=1
+        ;;
+    esac
 
     dnl OpenBSD fails to update ctime if ownership does not change.
     AC_CACHE_CHECK([whether chown always updates ctime],
@@ -80,13 +90,22 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
         ]])],
         [gl_cv_func_chown_ctime_works=yes],
         [gl_cv_func_chown_ctime_works=no],
-        [gl_cv_func_chown_ctime_works="guessing no"])
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_chown_ctime_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_chown_ctime_works="guessing no" ;;
+         esac
+        ])
       rm -f conftest.file])
-    if test "$gl_cv_func_chown_ctime_works" != yes; then
-      AC_DEFINE([CHOWN_CHANGE_TIME_BUG], [1], [Define to 1 if chown fails
-        to change ctime when at least one argument was not -1.])
-      REPLACE_CHOWN=1
-    fi
+    case "$gl_cv_func_chown_ctime_works" in
+      *yes) ;;
+      *)
+        AC_DEFINE([CHOWN_CHANGE_TIME_BUG], [1], [Define to 1 if chown fails
+          to change ctime when at least one argument was not -1.])
+        REPLACE_CHOWN=1
+        ;;
+    esac
   fi
 ])
 

@@ -1,4 +1,4 @@
-# trunc.m4 serial 8
+# trunc.m4 serial 9
 dnl Copyright (C) 2007, 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,6 +43,7 @@ AC_DEFUN([gl_FUNC_TRUNC],
     fi
     m4_ifdef([gl_FUNC_TRUNC_IEEE], [
       if test $gl_trunc_required = ieee && test $REPLACE_TRUNC = 0; then
+        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether trunc works according to ISO C 99 with IEC 60559],
           [gl_cv_func_trunc_ieee],
           [
@@ -68,7 +69,13 @@ int main (int argc, char *argv[])
               ]])],
               [gl_cv_func_trunc_ieee=yes],
               [gl_cv_func_trunc_ieee=no],
-              [gl_cv_func_trunc_ieee="guessing no"])
+              [case "$host_os" in
+                         # Guess yes on glibc systems.
+                 *-gnu*) gl_cv_func_trunc_ieee="guessing yes" ;;
+                         # If we don't know, assume the worst.
+                 *)      gl_cv_func_trunc_ieee="guessing no" ;;
+               esac
+              ])
             LIBS="$save_LIBS"
           ])
         case "$gl_cv_func_trunc_ieee" in

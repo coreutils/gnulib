@@ -3,7 +3,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-dnl serial 6
+dnl serial 7
 
 AC_DEFUN([gl_UTIMENS],
 [
@@ -11,6 +11,7 @@ AC_DEFUN([gl_UTIMENS],
   AC_REQUIRE([gl_FUNC_UTIMES])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_TIMESPEC])
   AC_REQUIRE([gl_CHECK_TYPE_STRUCT_UTIMBUF])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([futimes futimesat futimens utimensat lutimes])
 
   if test $ac_cv_func_futimens = no && test $ac_cv_func_futimesat = yes; then
@@ -30,11 +31,20 @@ AC_DEFUN([gl_UTIMENS],
         ]])],
         [gl_cv_func_futimesat_works=yes],
         [gl_cv_func_futimesat_works=no],
-        [gl_cv_func_futimesat_works="guessing no"])
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_futimesat_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_futimesat_works="guessing no" ;;
+         esac
+        ])
       rm -f conftest.file])
-    if test "$gl_cv_func_futimesat_works" != yes; then
-      AC_DEFINE([FUTIMESAT_NULL_BUG], [1],
-        [Define to 1 if futimesat mishandles a NULL file name.])
-    fi
+    case "$gl_cv_func_futimesat_works" in
+      *yes) ;;
+      *)
+        AC_DEFINE([FUTIMESAT_NULL_BUG], [1],
+          [Define to 1 if futimesat mishandles a NULL file name.])
+        ;;
+    esac
   fi
 ])

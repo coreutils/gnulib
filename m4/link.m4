@@ -1,4 +1,4 @@
-# link.m4 serial 7
+# link.m4 serial 8
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_LINK],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([link])
   if test $ac_cv_func_link = no; then
     HAVE_LINK=0
@@ -36,10 +37,19 @@ AC_DEFUN([gl_FUNC_LINK],
              return result;
            ]])],
          [gl_cv_func_link_works=yes], [gl_cv_func_link_works=no],
-         [gl_cv_func_link_works="guessing no"])
+         [case "$host_os" in
+                    # Guess yes on glibc systems.
+            *-gnu*) gl_cv_func_link_works="guessing yes" ;;
+                    # If we don't know, assume the worst.
+            *)      gl_cv_func_link_works="guessing no" ;;
+          esac
+         ])
        rm -f conftest.a conftest.b conftest.lnk])
-    if test "$gl_cv_func_link_works" != yes; then
-      REPLACE_LINK=1
-    fi
+    case "$gl_cv_func_link_works" in
+      *yes) ;;
+      *)
+        REPLACE_LINK=1
+        ;;
+    esac
   fi
 ])

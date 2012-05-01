@@ -1,4 +1,4 @@
-# serial 25
+# serial 26
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -54,15 +54,24 @@ AC_DEFUN([gl_FUNC_RENAME],
       [gl_cv_func_rename_slash_dst_works=yes],
       [gl_cv_func_rename_slash_dst_works=no],
       dnl When crosscompiling, assume rename is broken.
-      [gl_cv_func_rename_slash_dst_works="guessing no"])
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_rename_slash_dst_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_rename_slash_dst_works="guessing no" ;;
+       esac
+      ])
     rm -rf conftest.f conftest.f1 conftest.f2 conftest.d1 conftest.d2 conftest.lnk
   ])
-  if test "x$gl_cv_func_rename_slash_dst_works" != xyes; then
-    REPLACE_RENAME=1
-    AC_DEFINE([RENAME_TRAILING_SLASH_DEST_BUG], [1],
-      [Define if rename does not correctly handle slashes on the destination
-       argument, such as on Solaris 10 or NetBSD 1.6.])
-  fi
+  case "$gl_cv_func_rename_slash_dst_works" in
+    *yes) ;;
+    *)
+      REPLACE_RENAME=1
+      AC_DEFINE([RENAME_TRAILING_SLASH_DEST_BUG], [1],
+        [Define if rename does not correctly handle slashes on the destination
+         argument, such as on Solaris 10 or NetBSD 1.6.])
+      ;;
+  esac
 
   dnl SunOS 4.1.1_U1 mistakenly forbids rename("dir/","name").
   dnl Solaris 9 mistakenly allows rename("file/","name").
@@ -97,15 +106,24 @@ AC_DEFUN([gl_FUNC_RENAME],
       [gl_cv_func_rename_slash_src_works=yes],
       [gl_cv_func_rename_slash_src_works=no],
       dnl When crosscompiling, assume rename is broken.
-      [gl_cv_func_rename_slash_src_works="guessing no"])
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_rename_slash_src_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_rename_slash_src_works="guessing no" ;;
+       esac
+      ])
     rm -rf conftest.f conftest.f1 conftest.d1 conftest.d2 conftest.d3 conftest.lnk
   ])
-  if test "x$gl_cv_func_rename_slash_src_works" != xyes; then
-    REPLACE_RENAME=1
-    AC_DEFINE([RENAME_TRAILING_SLASH_SOURCE_BUG], [1],
-      [Define if rename does not correctly handle slashes on the source
-       argument, such as on Solaris 9 or cygwin 1.5.])
-  fi
+  case "$gl_cv_func_rename_slash_src_works" in
+    *yes) ;;
+    *)
+      REPLACE_RENAME=1
+      AC_DEFINE([RENAME_TRAILING_SLASH_SOURCE_BUG], [1],
+        [Define if rename does not correctly handle slashes on the source
+         argument, such as on Solaris 9 or cygwin 1.5.])
+      ;;
+  esac
 
   dnl NetBSD 1.6 and cygwin 1.5.x mistakenly reduce hard link count
   dnl on rename("h1","h2").
@@ -137,7 +155,13 @@ AC_DEFUN([gl_FUNC_RENAME],
            [gl_cv_func_rename_link_works=yes],
            [gl_cv_func_rename_link_works=no],
            dnl When crosscompiling, assume rename is broken.
-           [gl_cv_func_rename_link_works="guessing no"])
+           [case "$host_os" in
+                      # Guess yes on glibc systems.
+              *-gnu*) gl_cv_func_rename_link_works="guessing yes" ;;
+                      # If we don't know, assume the worst.
+              *)      gl_cv_func_rename_link_works="guessing no" ;;
+            esac
+           ])
        else
          gl_cv_func_rename_link_works="guessing no"
        fi
@@ -146,12 +170,15 @@ AC_DEFUN([gl_FUNC_RENAME],
        gl_cv_func_rename_link_works=yes
      fi
     ])
-  if test "x$gl_cv_func_rename_link_works" != xyes; then
-    REPLACE_RENAME=1
-    AC_DEFINE([RENAME_HARD_LINK_BUG], [1],
-      [Define if rename fails to leave hard links alone, as on NetBSD 1.6
-       or Cygwin 1.5.])
-  fi
+  case "$gl_cv_func_rename_link_works" in
+    *yes) ;;
+    *)
+      REPLACE_RENAME=1
+      AC_DEFINE([RENAME_HARD_LINK_BUG], [1],
+        [Define if rename fails to leave hard links alone, as on NetBSD 1.6
+         or Cygwin 1.5.])
+      ;;
+  esac
 
   dnl Cygwin 1.5.x mistakenly allows rename("dir","file").
   dnl mingw mistakenly forbids rename("dir1","dir2").
@@ -177,13 +204,22 @@ AC_DEFUN([gl_FUNC_RENAME],
       [gl_cv_func_rename_dest_works=yes],
       [gl_cv_func_rename_dest_works=no],
       dnl When crosscompiling, assume rename is broken.
-      [gl_cv_func_rename_dest_works="guessing no"])
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_rename_dest_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_rename_dest_works="guessing no" ;;
+       esac
+      ])
     rm -rf conftest.f conftest.d1 conftest.d2
   ])
-  if test "x$gl_cv_func_rename_dest_works" != xyes; then
-    REPLACE_RENAME=1
-    AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
-      [Define if rename does not work when the destination file exists,
-       as on Cygwin 1.5 or Windows.])
-  fi
+  case "$gl_cv_func_rename_dest_works" in
+    *yes) ;;
+    *)
+      REPLACE_RENAME=1
+      AC_DEFINE([RENAME_DEST_EXISTS_BUG], [1],
+        [Define if rename does not work when the destination file exists,
+         as on Cygwin 1.5 or Windows.])
+      ;;
+  esac
 ])

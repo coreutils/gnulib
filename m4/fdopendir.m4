@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 # See if we need to provide fdopendir.
 
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
@@ -11,6 +11,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FDOPENDIR],
 [
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
@@ -43,9 +44,18 @@ DIR *fdopendir (int);
      return result;])],
          [gl_cv_func_fdopendir_works=yes],
          [gl_cv_func_fdopendir_works=no],
-         [gl_cv_func_fdopendir_works="guessing no"])])
-    if test "$gl_cv_func_fdopendir_works" != yes; then
-      REPLACE_FDOPENDIR=1
-    fi
+         [case "$host_os" in
+                    # Guess yes on glibc systems.
+            *-gnu*) gl_cv_func_fdopendir_works="guessing yes" ;;
+                    # If we don't know, assume the worst.
+            *)      gl_cv_func_fdopendir_works="guessing no" ;;
+          esac
+         ])])
+    case "$gl_cv_func_fdopendir_works" in
+      *yes) ;;
+      *)
+        REPLACE_FDOPENDIR=1
+        ;;
+    esac
   fi
 ])

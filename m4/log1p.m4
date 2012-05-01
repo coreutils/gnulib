@@ -1,4 +1,4 @@
-# log1p.m4 serial 2
+# log1p.m4 serial 3
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,6 +24,7 @@ AC_DEFUN([gl_FUNC_LOG1P],
     :
     m4_ifdef([gl_FUNC_LOG1P_IEEE], [
       if test $gl_log1p_required = ieee && test $REPLACE_LOG1P = 0; then
+        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether log1p works according to ISO C 99 with IEC 60559],
           [gl_cv_func_log1p_ieee],
           [
@@ -50,7 +51,13 @@ int main (int argc, char *argv[])
               ]])],
               [gl_cv_func_log1p_ieee=yes],
               [gl_cv_func_log1p_ieee=no],
-              [gl_cv_func_log1p_ieee="guessing no"])
+              [case "$host_os" in
+                         # Guess yes on glibc systems.
+                 *-gnu*) gl_cv_func_log1p_ieee="guessing yes" ;;
+                         # If we don't know, assume the worst.
+                 *)      gl_cv_func_log1p_ieee="guessing no" ;;
+               esac
+              ])
             LIBS="$save_LIBS"
           ])
         case "$gl_cv_func_log1p_ieee" in

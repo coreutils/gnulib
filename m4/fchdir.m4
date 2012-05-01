@@ -1,4 +1,4 @@
-# fchdir.m4 serial 20
+# fchdir.m4 serial 21
 dnl Copyright (C) 2006-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_FCHDIR],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   AC_CHECK_DECLS_ONCE([fchdir])
   if test $ac_cv_have_decl_fchdir = no; then
@@ -29,11 +30,20 @@ AC_DEFUN([gl_FUNC_FCHDIR],
 ]], [return open(".", O_RDONLY) < 0;])],
         [gl_cv_func_open_directory_works=yes],
         [gl_cv_func_open_directory_works=no],
-        [gl_cv_func_open_directory_works="guessing no"])])
-    if test "$gl_cv_func_open_directory_works" != yes; then
-      AC_DEFINE([REPLACE_OPEN_DIRECTORY], [1], [Define to 1 if open() should
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_open_directory_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_open_directory_works="guessing no" ;;
+         esac
+        ])])
+    case "$gl_cv_func_open_directory_works" in
+      *yes) ;;
+      *)
+        AC_DEFINE([REPLACE_OPEN_DIRECTORY], [1], [Define to 1 if open() should
 work around the inability to open a directory.])
-    fi
+        ;;
+    esac
   fi
 ])
 

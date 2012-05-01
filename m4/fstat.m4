@@ -1,4 +1,4 @@
-# fstat.m4 serial 2
+# fstat.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,9 +21,13 @@ AC_DEFUN([gl_FUNC_FSTAT],
   dnl Replace fstat() for supporting the gnulib-defined open() on directories.
   m4_ifdef([gl_FUNC_FCHDIR], [
     gl_TEST_FCHDIR
-    if test $HAVE_FCHDIR = 0 \
-       && test "$gl_cv_func_open_directory_works" != yes; then
-      REPLACE_FSTAT=1
+    if test $HAVE_FCHDIR = 0; then
+      case "$gl_cv_func_open_directory_works" in
+        *yes) ;;
+        *)
+          REPLACE_FSTAT=1
+          ;;
+      esac
     fi
   ])
 ])

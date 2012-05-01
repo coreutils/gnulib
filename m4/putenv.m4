@@ -1,4 +1,4 @@
-# putenv.m4 serial 18
+# putenv.m4 serial 19
 dnl Copyright (C) 2002-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,7 @@ dnl The putenv in libc on at least SunOS 4.1.4 does *not* do that.
 AC_DEFUN([gl_FUNC_PUTENV],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([for putenv compatible with GNU and SVID],
    [gl_cv_func_svid_putenv],
    [AC_RUN_IFELSE([AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT],[[
@@ -32,9 +33,18 @@ AC_DEFUN([gl_FUNC_PUTENV],
              gl_cv_func_svid_putenv=yes,
              gl_cv_func_svid_putenv=no,
              dnl When crosscompiling, assume putenv is broken.
-             gl_cv_func_svid_putenv=no)
+             [case "$host_os" in
+                        # Guess yes on glibc systems.
+                *-gnu*) gl_cv_func_svid_putenv="guessing yes" ;;
+                        # If we don't know, assume the worst.
+                *)      gl_cv_func_svid_putenv="guessing no" ;;
+              esac
+             ])
    ])
-  if test $gl_cv_func_svid_putenv = no; then
-    REPLACE_PUTENV=1
-  fi
+  case "$gl_cv_func_svid_putenv" in
+    *yes) ;;
+    *)
+      REPLACE_PUTENV=1
+      ;;
+  esac
 ])

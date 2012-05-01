@@ -1,4 +1,4 @@
-# floor.m4 serial 7
+# floor.m4 serial 8
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_FLOOR],
   fi
   m4_ifdef([gl_FUNC_FLOOR_IEEE], [
     if test $gl_floor_required = ieee && test $REPLACE_FLOOR = 0; then
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
       AC_CACHE_CHECK([whether floor works according to ISO C 99 with IEC 60559],
         [gl_cv_func_floor_ieee],
         [
@@ -40,7 +41,13 @@ int main (int argc, char *argv[])
             ]])],
             [gl_cv_func_floor_ieee=yes],
             [gl_cv_func_floor_ieee=no],
-            [gl_cv_func_floor_ieee="guessing no"])
+            [case "$host_os" in
+                       # Guess yes on glibc systems.
+               *-gnu*) gl_cv_func_floor_ieee="guessing yes" ;;
+                       # If we don't know, assume the worst.
+               *)      gl_cv_func_floor_ieee="guessing no" ;;
+             esac
+            ])
           LIBS="$save_LIBS"
         ])
       case "$gl_cv_func_floor_ieee" in

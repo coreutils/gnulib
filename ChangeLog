@@ -1,5 +1,158 @@
 2012-05-03  Bruno Haible  <bruno@clisp.org>
 
+	Avoid "guessing no" guesses when cross-compiling to glibc systems.
+	* m4/cbrtl.m4 (gl_FUNC_CBRTL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_cbrtl_ieee to "guessing yes".
+	* m4/ceil.m4 (gl_FUNC_CEIL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_ceil_ieee to "guessing yes".
+	* m4/ceilf.m4 (gl_FUNC_CEILF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_ceilf_ieee to "guessing yes".
+	* m4/ceill.m4 (gl_FUNC_CEILL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_ceill_ieee to "guessing yes".
+	* m4/chown.m4 (gl_FUNC_CHOWN): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_chown_slash_works,
+	gl_cv_func_chown_ctime_works to "guessing yes".
+	* m4/lchown.m4 (gl_FUNC_LCHOWN): Update.
+	* m4/exp2l.m4 (gl_FUNC_EXP2L): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_exp2l_ieee to "guessing yes".
+	* m4/expm1.m4 (gl_FUNC_EXPM1): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_expm1_ieee to "guessing yes".
+	* m4/fchdir.m4 (gl_FUNC_FCHDIR): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_open_directory_works to
+	"guessing yes".
+	* m4/fstat.m4 (gl_FUNC_FSTAT): Update.
+	* m4/fdopendir.m4 (gl_FUNC_FDOPENDIR): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_fdopendir_works to
+	"guessing yes".
+	* m4/floor.m4 (gl_FUNC_FLOOR): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_floor_ieee to "guessing yes".
+	* m4/floorf.m4 (gl_FUNC_FLOORF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_floorf_ieee to
+	"guessing yes".
+	* m4/fmod.m4 (gl_FUNC_FMOD): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_fmod_ieee to "guessing yes".
+	* m4/fmodf.m4 (gl_FUNC_FMODF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_fmodf_ieee to "guessing yes".
+	* m4/fmodl.m4 (gl_FUNC_FMODL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_fmodl_ieee to "guessing yes".
+	* m4/getgroups.m4 (gl_FUNC_GETGROUPS): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_getgroups_works to
+	"guessing yes".
+	* m4/hypot.m4 (gl_FUNC_HYPOT): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_hypot_ieee to "guessing yes".
+	* m4/hypotf.m4 (gl_FUNC_HYPOTF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_hypotf_ieee to
+	"guessing yes".
+	* m4/hypotl.m4 (gl_FUNC_HYPOTL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_hypotl_ieee to
+	"guessing yes".
+	* m4/link.m4 (gl_FUNC_LINK): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_link_works to "guessing yes".
+	* m4/log.m4 (gl_FUNC_LOG): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log_ieee to "guessing yes".
+	* m4/logf.m4 (gl_FUNC_LOGF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_logf_ieee to "guessing yes".
+	* m4/log10.m4 (gl_FUNC_LOG10): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log10_ieee to "guessing yes".
+	* m4/log10f.m4 (gl_FUNC_LOG10F): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log10f_ieee to
+	"guessing yes".
+	* m4/log1p.m4 (gl_FUNC_LOG1P): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log1p_ieee to "guessing yes".
+	* m4/log1pf.m4 (gl_FUNC_LOG1PF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log1pf_ieee to
+	"guessing yes".
+	* m4/log1pl.m4 (gl_FUNC_LOG1PL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log1pl_ieee to
+	"guessing yes".
+	* m4/log2.m4 (gl_FUNC_LOG2): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log2_ieee to "guessing yes".
+	* m4/log2f.m4 (gl_FUNC_LOG2F): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_log2f_ieee to "guessing yes".
+	* m4/mkdir.m4 (gl_FUNC_MKDIR): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_mkdir_trailing_slash_works,
+	gl_cv_func_mkdir_trailing_dot_works to "guessing yes".
+	* m4/mkfifo.m4 (gl_FUNC_MKFIFO): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_mkfifo_works to
+	"guessing yes".
+	* m4/mknod.m4 (gl_FUNC_MKNOD): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_mknod_works to
+	"guessing yes".
+	* m4/mkstemp.m4 (gl_FUNC_MKSTEMP): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_working_mkstemp to
+	"guessing yes".
+	* m4/modf.m4 (gl_FUNC_MODF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_modf_ieee to "guessing yes".
+	* m4/modff.m4 (gl_FUNC_MODFF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_modff_ieee to "guessing yes".
+	* m4/modfl.m4 (gl_FUNC_MODFL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_modfl_ieee to "guessing yes".
+	* m4/putenv.m4 (gl_FUNC_PUTENV): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_svid_putenv to
+	"guessing yes".
+	* m4/readlink.m4 (gl_FUNC_READLINK): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_readlink_works to
+	"guessing yes".
+	* m4/remainder.m4 (gl_FUNC_REMAINDER): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_remainder_ieee to
+	"guessing yes".
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF): Require AC_CANONICAL_HOST.
+	When cross-compiling to glibc systems, set gl_cv_func_remainderf_ieee
+	to "guessing yes".
+	* m4/remainderl.m4 (gl_FUNC_REMAINDERL): Require AC_CANONICAL_HOST.
+	When cross-compiling to glibc systems, set gl_cv_func_remainderl_ieee
+	to "guessing yes".
+	* m4/rmdir.m4 (gl_FUNC_RMDIR): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_rmdir_works to
+	"guessing yes".
+	* m4/unlink.m4 (gl_FUNC_UNLINK): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_unlink_honors_slashes,
+	gl_cv_func_unlink_parent_fails to "guessing yes".
+	* m4/remove.m4 (gl_FUNC_REMOVE): Update.
+	* m4/rename.m4 (gl_FUNC_RENAME): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_rename_slash_dst_works,
+	gl_cv_func_rename_slash_src_works, gl_cv_func_rename_link_works,
+	gl_cv_func_rename_dest_works to "guessing yes".
+	* m4/round.m4 (gl_FUNC_ROUND): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_round_ieee to "guessing yes".
+	* m4/roundf.m4 (gl_FUNC_ROUNDF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_roundf_ieee to
+	"guessing yes".
+	* m4/roundl.m4 (gl_FUNC_ROUNDL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_roundl_ieee to
+	"guessing yes".
+	* m4/setenv.m4 (gl_FUNC_SETENV): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_setenv_works to
+	"guessing yes".
+	(gl_FUNC_UNSETENV): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_unsetenv_works to
+	"guessing yes".
+	* m4/sleep.m4 (gl_FUNC_SLEEP): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_sleep_works to
+	"guessing yes".
+	* m4/stat.m4 (gl_FUNC_STAT): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_stat_file_slash to
+	"guessing yes".
+	* m4/symlink.m4 (gl_FUNC_SYMLINK): Require AC_CANONICAL_HOST. When
+	cross-compiling to glibc systems, set gl_cv_func_symlink_works to
+	"guessing yes".
+	* m4/trunc.m4 (gl_FUNC_TRUNC): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_trunc_ieee to "guessing yes".
+	* m4/truncf.m4 (gl_FUNC_TRUNCF): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_truncf_ieee to
+	"guessing yes".
+	* m4/truncl.m4 (gl_FUNC_TRUNCL): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_truncl_ieee to
+	"guessing yes".
+	* m4/usleep.m4 (gl_FUNC_USLEEP): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_usleep_works to
+	"guessing yes".
+	* m4/utimens.m4 (gl_UTIMENS): Require AC_CANONICAL_HOST. When cross-
+	compiling to glibc systems, set gl_cv_func_futimesat_works to
+	"guessing yes".
+
+2012-05-03  Bruno Haible  <bruno@clisp.org>
+
 	Say "guessing yes" or "guessing no" when cross-compiling.
 	* m4/dup2.m4 (gl_FUNC_DUP2): When cross-compiling, set
 	gl_cv_func_dup2_works to "guessing yes" or "guessing no".

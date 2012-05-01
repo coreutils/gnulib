@@ -1,4 +1,4 @@
-# unlink.m4 serial 9
+# unlink.m4 serial 10
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ AC_DEFUN([gl_FUNC_UNLINK],
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_HEADERS_ONCE([unistd.h])
+
   dnl Detect FreeBSD 7.2, AIX 7.1, Solaris 9 bug.
   AC_CACHE_CHECK([whether unlink honors trailing slashes],
     [gl_cv_func_unlink_honors_slashes],
@@ -41,8 +42,20 @@ AC_DEFUN([gl_FUNC_UNLINK],
          ]])],
       [gl_cv_func_unlink_honors_slashes=yes],
       [gl_cv_func_unlink_honors_slashes=no],
-      [gl_cv_func_unlink_honors_slashes="guessing no"])
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_unlink_honors_slashes="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_unlink_honors_slashes="guessing no" ;;
+       esac
+      ])
      rm -f conftest.file conftest.lnk])
+  case "$gl_cv_func_unlink_honors_slashes" in
+    *no)
+      REPLACE_UNLINK=1
+      ;;
+  esac
+
   dnl Detect MacOS X 10.5.6 bug: On read-write HFS mounts, unlink("..") or
   dnl unlink("../..") succeeds without doing anything.
   AC_CACHE_CHECK([whether unlink of a parent directory fails as it should],
@@ -93,7 +106,9 @@ AC_DEFUN([gl_FUNC_UNLINK],
               ]])],
              [gl_cv_func_unlink_parent_fails=yes],
              [gl_cv_func_unlink_parent_fails=no],
-             [gl_cv_func_unlink_parent_fails="guessing no"])
+             [# If we don't know, assume the worst.
+              gl_cv_func_unlink_parent_fails="guessing no"
+             ])
            unset GL_SUBDIR_FOR_UNLINK
            rm -rf "$tmp"
          else
@@ -107,16 +122,9 @@ AC_DEFUN([gl_FUNC_UNLINK],
     ])
   case "$gl_cv_func_unlink_parent_fails" in
     *no)
+      REPLACE_UNLINK=1
       AC_DEFINE([UNLINK_PARENT_BUG], [1],
         [Define to 1 if unlink() on a parent directory may succeed])
       ;;
   esac
-  if test "$gl_cv_func_unlink_honors_slashes" != yes \
-     || { case "$gl_cv_func_unlink_parent_fails" in
-            *yes) false;;
-            *no) true;;
-          esac
-        }; then
-    REPLACE_UNLINK=1
-  fi
 ])

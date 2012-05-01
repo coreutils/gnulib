@@ -1,4 +1,4 @@
-# remainderl.m4 serial 6
+# remainderl.m4 serial 7
 dnl Copyright (C) 2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -59,6 +59,7 @@ AC_DEFUN([gl_FUNC_REMAINDERL],
 
     m4_ifdef([gl_FUNC_REMAINDERL_IEEE], [
       if test $gl_remainderl_required = ieee && test $REPLACE_REMAINDERL = 0; then
+        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether remainderl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_remainderl_ieee],
           [
@@ -98,7 +99,13 @@ int main (int argc, char *argv[])
               ]])],
               [gl_cv_func_remainderl_ieee=yes],
               [gl_cv_func_remainderl_ieee=no],
-              [gl_cv_func_remainderl_ieee="guessing no"])
+              [case "$host_os" in
+                         # Guess yes on glibc systems.
+                 *-gnu*) gl_cv_func_remainderl_ieee="guessing yes" ;;
+                         # If we don't know, assume the worst.
+                 *)      gl_cv_func_remainderl_ieee="guessing no" ;;
+               esac
+              ])
             LIBS="$save_LIBS"
           ])
         case "$gl_cv_func_remainderl_ieee" in

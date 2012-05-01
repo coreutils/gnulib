@@ -1,4 +1,4 @@
-# usleep.m4 serial 2
+# usleep.m4 serial 3
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,7 @@ AC_DEFUN([gl_FUNC_USLEEP],
   dnl usleep was required in POSIX 2001, but dropped as obsolete in
   dnl POSIX 2008; therefore, it is not always exposed in headers.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([usleep])
   AC_CHECK_TYPE([useconds_t], [],
     [AC_DEFINE([useconds_t], [unsigned int], [Define to an unsigned 32-bit
@@ -27,9 +28,18 @@ AC_DEFUN([gl_FUNC_USLEEP],
 #include <unistd.h>
 ]], [[return !!usleep (1000000);]])],
         [gl_cv_func_usleep_works=yes], [gl_cv_func_usleep_works=no],
-        [gl_cv_func_usleep_works="guessing no"])])
-    if test "$gl_cv_func_usleep_works" != yes; then
-      REPLACE_USLEEP=1
-    fi
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_usleep_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_usleep_works="guessing no" ;;
+         esac
+        ])])
+    case "$gl_cv_func_usleep_works" in
+      *yes) ;;
+      *)
+        REPLACE_USLEEP=1
+        ;;
+    esac
   fi
 ])

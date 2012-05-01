@@ -1,4 +1,4 @@
-# truncl.m4 serial 10
+# truncl.m4 serial 11
 dnl Copyright (C) 2007-2008, 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -74,6 +74,7 @@ int main()
     esac
     m4_ifdef([gl_FUNC_TRUNCL_IEEE], [
       if test $gl_truncl_required = ieee && test $REPLACE_TRUNCL = 0; then
+        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether truncl works according to ISO C 99 with IEC 60559],
           [gl_cv_func_truncl_ieee],
           [
@@ -99,7 +100,13 @@ int main (int argc, char *argv[])
               ]])],
               [gl_cv_func_truncl_ieee=yes],
               [gl_cv_func_truncl_ieee=no],
-              [gl_cv_func_truncl_ieee="guessing no"])
+              [case "$host_os" in
+                         # Guess yes on glibc systems.
+                 *-gnu*) gl_cv_func_truncl_ieee="guessing yes" ;;
+                         # If we don't know, assume the worst.
+                 *)      gl_cv_func_truncl_ieee="guessing no" ;;
+               esac
+              ])
             LIBS="$save_LIBS"
           ])
         case "$gl_cv_func_truncl_ieee" in

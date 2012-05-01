@@ -1,4 +1,4 @@
-# setenv.m4 serial 25
+# setenv.m4 serial 26
 dnl Copyright (C) 2001-2004, 2006-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_SETENV],
 [
   AC_REQUIRE([gl_FUNC_SETENV_SEPARATE])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   if test $ac_cv_func_setenv = no; then
     HAVE_SETENV=0
   else
@@ -33,10 +34,19 @@ AC_DEFUN([gl_FUNC_SETENV],
        return result;
       ]])],
       [gl_cv_func_setenv_works=yes], [gl_cv_func_setenv_works=no],
-      [gl_cv_func_setenv_works="guessing no"])])
-    if test "$gl_cv_func_setenv_works" != yes; then
-      REPLACE_SETENV=1
-    fi
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_setenv_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_setenv_works="guessing no" ;;
+       esac
+      ])])
+    case "$gl_cv_func_setenv_works" in
+      *yes) ;;
+      *)
+        REPLACE_SETENV=1
+        ;;
+    esac
   fi
 ])
 
@@ -56,6 +66,7 @@ AC_DEFUN([gl_FUNC_SETENV_SEPARATE],
 AC_DEFUN([gl_FUNC_UNSETENV],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_DECLS_ONCE([unsetenv])
   if test $ac_cv_have_decl_unsetenv = no; then
     HAVE_DECL_UNSETENV=0
@@ -115,10 +126,19 @@ int unsetenv (const char *name);
        if (getenv ("a")) return 6;
       ]])],
       [gl_cv_func_unsetenv_works=yes], [gl_cv_func_unsetenv_works=no],
-      [gl_cv_func_unsetenv_works="guessing no"])])
-    if test "$gl_cv_func_unsetenv_works" != yes; then
-      REPLACE_UNSETENV=1
-    fi
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_unsetenv_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_unsetenv_works="guessing no" ;;
+       esac
+      ])])
+    case "$gl_cv_func_unsetenv_works" in
+      *yes) ;;
+      *)
+        REPLACE_UNSETENV=1
+        ;;
+    esac
   fi
 ])
 

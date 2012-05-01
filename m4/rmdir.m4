@@ -1,4 +1,4 @@
-# rmdir.m4 serial 12
+# rmdir.m4 serial 13
 dnl Copyright (C) 2002, 2005, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_RMDIR],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   dnl Detect cygwin 1.5.x bug.
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether rmdir works], [gl_cv_func_rmdir_works],
@@ -31,9 +32,18 @@ AC_DEFUN([gl_FUNC_RMDIR],
       return result;
     ]])],
        [gl_cv_func_rmdir_works=yes], [gl_cv_func_rmdir_works=no],
-       [gl_cv_func_rmdir_works="guessing no"])
+       [case "$host_os" in
+                  # Guess yes on glibc systems.
+          *-gnu*) gl_cv_func_rmdir_works="guessing yes" ;;
+                  # If we don't know, assume the worst.
+          *)      gl_cv_func_rmdir_works="guessing no" ;;
+        esac
+       ])
      rm -rf conftest.dir conftest.file])
-  if test x"$gl_cv_func_rmdir_works" != xyes; then
-    REPLACE_RMDIR=1
-  fi
+  case "$gl_cv_func_rmdir_works" in
+    *yes) ;;
+    *)
+      REPLACE_RMDIR=1
+      ;;
+  esac
 ])

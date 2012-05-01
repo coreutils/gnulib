@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 
 dnl From Jim Meyering.
 dnl A wrapper around AC_FUNC_GETGROUPS.
@@ -14,6 +14,7 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
   AC_REQUIRE([AC_FUNC_GETGROUPS])
   AC_REQUIRE([AC_TYPE_GETGROUPS])
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   if test "$ac_cv_func_getgroups" != yes; then
     HAVE_GETGROUPS=0
   elif test "$ac_cv_func_getgroups_works.$ac_cv_type_getgroups" != yes.gid_t
@@ -31,10 +32,17 @@ AC_DEFUN([gl_FUNC_GETGROUPS],
           return getgroups (-1, list) != -1;]])],
         [gl_cv_func_getgroups_works=yes],
         [gl_cv_func_getgroups_works=no],
-        [gl_cv_func_getgroups_works="guessing no"])])
-    if test "$gl_cv_func_getgroups_works" != yes; then
-      REPLACE_GETGROUPS=1
-    fi
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_getgroups_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_getgroups_works="guessing no" ;;
+         esac
+        ])])
+    case "$gl_cv_func_getgroups_works" in
+      *yes) ;;
+      *) REPLACE_GETGROUPS=1 ;;
+    esac
   fi
   test -n "$GETGROUPS_LIB" && LIBS="$GETGROUPS_LIB $LIBS"
 ])
