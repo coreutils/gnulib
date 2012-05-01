@@ -1,4 +1,4 @@
-# strstr.m4 serial 15
+# strstr.m4 serial 16
 dnl Copyright (C) 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,13 +46,16 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
   Lucky user
 #endif
            ],
-           [gl_cv_func_strstr_works_always=yes],
+           [gl_cv_func_strstr_works_always="guessing yes"],
            [gl_cv_func_strstr_works_always="guessing no"])
         ])
       ])
-    if test "$gl_cv_func_strstr_works_always" != yes; then
-      REPLACE_STRSTR=1
-    fi
+    case "$gl_cv_func_strstr_works_always" in
+      *yes) ;;
+      *)
+        REPLACE_STRSTR=1
+        ;;
+    esac
   fi
 ]) # gl_FUNC_STRSTR_SIMPLE
 
@@ -113,12 +116,15 @@ static void quit (int sig) { exit (sig + 128); }
  #endif
 #endif
            ],
-           [gl_cv_func_strstr_linear=yes],
+           [gl_cv_func_strstr_linear="guessing yes"],
            [gl_cv_func_strstr_linear="guessing no"])
         ])
       ])
-    if test "$gl_cv_func_strstr_linear" != yes; then
-      REPLACE_STRSTR=1
-    fi
+    case "$gl_cv_func_strstr_linear" in
+      *yes) ;;
+      *)
+        REPLACE_STRSTR=1
+        ;;
+    esac
   fi
 ]) # gl_FUNC_STRSTR

@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 15
+# stpncpy.m4 serial 16
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2012 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -74,15 +74,18 @@ int main ()
 #ifdef __GNU_LIBRARY__
   Thanks for using GNU
 #endif
-], [gl_cv_func_stpncpy=yes], [gl_cv_func_stpncpy=no])
+], [gl_cv_func_stpncpy="guessing yes"], [gl_cv_func_stpncpy="guessing no"])
         ])
     ])
-    if test $gl_cv_func_stpncpy = yes; then
-      AC_DEFINE([HAVE_STPNCPY], [1],
-        [Define if you have the stpncpy() function and it works.])
-    else
-      REPLACE_STPNCPY=1
-    fi
+    case "$gl_cv_func_stpncpy" in
+      *yes)
+        AC_DEFINE([HAVE_STPNCPY], [1],
+          [Define if you have the stpncpy() function and it works.])
+        ;;
+      *)
+        REPLACE_STPNCPY=1
+        ;;
+    esac
   else
     HAVE_STPNCPY=0
   fi

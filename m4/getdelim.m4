@@ -1,4 +1,4 @@
-# getdelim.m4 serial 9
+# getdelim.m4 serial 10
 
 dnl Copyright (C) 2005-2007, 2009-2012 Free Software Foundation, Inc.
 dnl
@@ -63,12 +63,14 @@ AC_DEFUN([gl_FUNC_GETDELIM],
  #endif
 #endif
          ],
-         [gl_cv_func_working_getdelim=yes],
-         [gl_cv_func_working_getdelim=no])]
+         [gl_cv_func_working_getdelim="guessing yes"],
+         [gl_cv_func_working_getdelim="guessing no"])]
     )])
-    if test $gl_cv_func_working_getdelim = no; then
-      REPLACE_GETDELIM=1
-    fi
+    case "$gl_cv_func_working_getdelim" in
+      *no)
+        REPLACE_GETDELIM=1
+        ;;
+    esac
   else
     HAVE_GETDELIM=0
   fi

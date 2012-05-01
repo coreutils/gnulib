@@ -1,4 +1,4 @@
-# getline.m4 serial 25
+# getline.m4 serial 26
 
 dnl Copyright (C) 1998-2003, 2005-2007, 2009-2012 Free Software Foundation,
 dnl Inc.
@@ -70,8 +70,8 @@ AC_DEFUN([gl_FUNC_GETLINE],
  #endif
 #endif
          ],
-         [am_cv_func_working_getline=yes],
-         [am_cv_func_working_getline=no])]
+         [am_cv_func_working_getline="guessing yes"],
+         [am_cv_func_working_getline="guessing no"])]
     )])
   fi
 
@@ -79,12 +79,14 @@ AC_DEFUN([gl_FUNC_GETLINE],
     HAVE_DECL_GETLINE=0
   fi
 
-  if test $am_cv_func_working_getline = no; then
-    dnl Set REPLACE_GETLINE always: Even if we have not found the broken
-    dnl getline function among $LIBS, it may exist in libinet and the
-    dnl executable may be linked with -linet.
-    REPLACE_GETLINE=1
-  fi
+  case "$am_cv_func_working_getline" in
+    *no)
+      dnl Set REPLACE_GETLINE always: Even if we have not found the broken
+      dnl getline function among $LIBS, it may exist in libinet and the
+      dnl executable may be linked with -linet.
+      REPLACE_GETLINE=1
+      ;;
+  esac
 ])
 
 # Prerequisites of lib/getline.c.

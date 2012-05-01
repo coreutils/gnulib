@@ -1,3 +1,32 @@
+2012-05-03  Bruno Haible  <bruno@clisp.org>
+
+	Say "guessing yes" or "guessing no" when cross-compiling.
+	* m4/dup2.m4 (gl_FUNC_DUP2): When cross-compiling, set
+	gl_cv_func_dup2_works to "guessing yes" or "guessing no".
+	* m4/getdelim.m4 (gl_FUNC_GETDELIM): When cross-compiling, set
+	gl_cv_func_working_getdelim to "guessing yes" or "guessing no".
+	* m4/getline.m4 (gl_FUNC_GETLINE): When cross-compiling, set
+	am_cv_func_working_getline to "guessing yes" or "guessing no".
+	* m4/memmem.m4 (gl_FUNC_MEMMEM_SIMPLE): When cross-compiling, set
+	gl_cv_func_memmem_works_always to "guessing yes" or "guessing no".
+	(gl_FUNC_MEMMEM): When cross-compiling, set
+	gl_cv_func_memmem_works_fast to "guessing yes" or "guessing no".
+	* m4/stpncpy.m4 (gl_FUNC_STPNCPY): When cross-compiling, set
+	gl_cv_func_stpncpy to "guessing yes" or "guessing no".
+	* m4/strcasestr.m4 (gl_FUNC_STRCASESTR_SIMPLE): When cross-compiling,
+	set gl_cv_func_strcasestr_works_always to "guessing yes" or
+	"guessing no".
+	(gl_FUNC_STRCASESTR): When cross-compiling, set
+	gl_cv_func_strcasestr_linear to "guessing yes" or "guessing no".
+	* m4/strstr.m4 (gl_FUNC_STRSTR_SIMPLE): When cross-compiling, set
+	gl_cv_func_strstr_works_always to "guessing yes" or "guessing no".
+	(gl_FUNC_STRSTR): When cross-compiling, set
+	gl_cv_func_strstr_linear to "guessing yes" or "guessing no".
+	* m4/strtod.m4 (gl_FUNC_STRTOD): When cross-compiling, set
+	gl_cv_func_strtod_works to "guessing yes" or "guessing no".
+	* m4/wctype_h.m4 (gl_WCTYPE_H): When cross-compiling, set
+	gl_cv_func_iswcntrl_works to "guessing yes" or "guessing no".
+
 2012-05-01  Bruno Haible  <bruno@clisp.org>
 
 	relocatable-prog: Enable ELF ORIGIN trick also on GNU/kFreeBSD.
