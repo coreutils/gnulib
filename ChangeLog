@@ -1,3 +1,8 @@
+2012-05-01  Bruno Haible  <bruno@clisp.org>
+
+	getcwd: Fix misindentation.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Fix indentation.
+
 2012-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	exclude: process exclude and include directives in order

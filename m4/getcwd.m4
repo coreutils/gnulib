@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 11
+# serial 12
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -45,15 +45,14 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
          ]])],
         [gl_cv_func_getcwd_null=yes],
         [gl_cv_func_getcwd_null=no],
-        [[
-       case "$host_os" in
-                               # Guess yes on glibc systems.
-         *-gnu*)               gl_cv_func_getcwd_null="guessing yes";;
-                               # Guess yes on Cygwin.
-         cygwin*)              gl_cv_func_getcwd_null="guessing yes";;
-                               # If we don't know, assume the worst.
-         *)                    gl_cv_func_getcwd_null="guessing no";;
-       esac
+        [[case "$host_os" in
+                     # Guess yes on glibc systems.
+            *-gnu*)  gl_cv_func_getcwd_null="guessing yes";;
+                     # Guess yes on Cygwin.
+            cygwin*) gl_cv_func_getcwd_null="guessing yes";;
+                     # If we don't know, assume the worst.
+            *)       gl_cv_func_getcwd_null="guessing no";;
+          esac
         ]])])
 ])
 
