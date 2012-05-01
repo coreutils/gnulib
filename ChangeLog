@@ -1,5 +1,11 @@
 2012-05-01  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Remove transitional code.
+	* gnulib-tool: Don't warn about --import with 0 arguments any more.
+	Reported by Dmitriy Selyutin <ghostman.sd@gmail.com>.
+
+2012-05-01  Bruno Haible  <bruno@clisp.org>
+
 	getcwd: Fix misindentation.
 	* m4/getcwd.m4 (gl_FUNC_GETCWD_NULL): Fix indentation.
 
