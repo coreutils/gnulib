@@ -1,5 +1,12 @@
 2012-05-01  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-prog: Enable ELF ORIGIN trick also on GNU/kFreeBSD.
+	* m4/relocatable.m4 (gl_RELOCATABLE_BODY): Treat kFreeBSD like Linux.
+	* build-aux/reloc-ldflags: Likewise.
+	Suggested by Steven Chamberlain <steven@pyro.eu.org>.
+
+2012-05-01  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Remove transitional code.
 	* gnulib-tool: Don't warn about --import with 0 arguments any more.
 	Reported by Dmitriy Selyutin <ghostman.sd@gmail.com>.

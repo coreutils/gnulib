@@ -54,7 +54,7 @@ case "$installdir" in
 esac
 
 case "$host_os" in
-  linux*) # Supported since Linux 2.1 and glibc 2.1.
+  linux* | kfreebsd*)
     rpath=
     save_IFS="$IFS"; IFS=":"
     for dir in $library_path_value; do
