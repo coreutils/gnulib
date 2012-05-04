@@ -4,6 +4,8 @@ Memory allocation with expensive empty allocations (glibc compatible).
 Files:
 lib/eealloc.h
 m4/eealloc.m4
+m4/malloc.m4
+m4/realloc.m4
 
 Depends-on:
 

@@ -1,5 +1,14 @@
 2012-05-03  Bruno Haible  <bruno@clisp.org>
 
+	*alloc-gnu, eealloc: Avoid "guessing no" when cross-compiling to glibc.
+	* m4/malloc.m4 (_AC_FUNC_MALLOC_IF): Override in autoconf < 2.70.
+	* m4/realloc.m4 (_AC_FUNC_REALLOC_IF): Override in autoconf < 2.70.
+	* m4/calloc.m4 (_AC_FUNC_CALLOC_IF): Require AC_CANONICAL_HOST. When
+	cross-compiling, choose the first alternative on glibc systems.
+	* modules/eealloc (Files): Add m4/malloc.m4, m4/realloc.m4.
+
+2012-05-03  Bruno Haible  <bruno@clisp.org>
+
 	getgroups: Avoid "guessing no" when cross-compiling to glibc systems.
 	* m4/getgroups.m4 (AC_FUNC_GETGROUPS): Override in autoconf < 2.70.
 	(gl_FUNC_GETGROUPS): Adapt to change of ac_cv_func_getgroups_works.

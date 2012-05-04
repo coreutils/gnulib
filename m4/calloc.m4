@@ -1,4 +1,4 @@
-# calloc.m4 serial 14
+# calloc.m4 serial 15
 
 # Copyright (C) 2004-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -18,6 +18,7 @@
 AC_DEFUN([_AC_FUNC_CALLOC_IF],
 [
   AC_REQUIRE([AC_TYPE_SIZE_T])dnl
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([for GNU libc compatible calloc],
     [ac_cv_func_calloc_0_nonnull],
     [AC_RUN_IFELSE(
@@ -32,8 +33,21 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
           ]])],
        [ac_cv_func_calloc_0_nonnull=yes],
        [ac_cv_func_calloc_0_nonnull=no],
-       [ac_cv_func_calloc_0_nonnull=no])])
-  AS_IF([test $ac_cv_func_calloc_0_nonnull = yes], [$1], [$2])
+       [case "$host_os" in
+                  # Guess yes on glibc systems.
+          *-gnu*) ac_cv_func_calloc_0_nonnull="guessing yes" ;;
+                  # If we don't know, assume the worst.
+          *)      ac_cv_func_calloc_0_nonnull="guessing no" ;;
+        esac
+       ])])
+  case "$ac_cv_func_calloc_0_nonnull" in
+    *yes)
+      $1
+      ;;
+    *)
+      $2
+      ;;
+  esac
 ])# AC_FUNC_CALLOC
 
 
