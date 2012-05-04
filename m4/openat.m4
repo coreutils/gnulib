@@ -1,4 +1,4 @@
-# serial 43
+# serial 44
 # See if we need to use our replacement for Solaris' openat et al functions.
 
 dnl Copyright (C) 2004-2012 Free Software Foundation, Inc.
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_OPENAT],
   AC_CHECK_FUNCS_ONCE([openat])
   AC_REQUIRE([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK])
   case $ac_cv_func_openat+$gl_cv_func_lstat_dereferences_slashed_symlink in
-  yes+yes)
+  yes+*yes)
     ;;
   yes+*)
     # Solaris 9 has *at functions, but uniformly mishandles trailing

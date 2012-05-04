@@ -1,5 +1,16 @@
 2012-05-03  Bruno Haible  <bruno@clisp.org>
 
+	lstat: Avoid "guessing no" when cross-compiling to glibc systems.
+	* m4/lstat.m4 (gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK): When cross-
+	compiling, set gl_cv_func_lstat_dereferences_slashed_symlink to
+	"guessing yes" or "guessing no".
+	(gl_FUNC_LSTAT): Update.
+	* m4/fstatat.m4 (gl_FUNC_FSTATAT): Update.
+	* m4/openat.m4 (gl_FUNC_OPENAT): Update.
+	* m4/unlinkat.m4 (gl_FUNC_UNLINKAT): Update.
+
+2012-05-03  Bruno Haible  <bruno@clisp.org>
+
 	*alloc-gnu, eealloc: Avoid "guessing no" when cross-compiling to glibc.
 	* m4/malloc.m4 (_AC_FUNC_MALLOC_IF): Override in autoconf < 2.70.
 	* m4/realloc.m4 (_AC_FUNC_REALLOC_IF): Override in autoconf < 2.70.

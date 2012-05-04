@@ -1,4 +1,4 @@
-# unlinkat.m4 serial 1
+# unlinkat.m4 serial 2
 dnl Copyright (C) 2004-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,15 +16,18 @@ AC_DEFUN([gl_FUNC_UNLINKAT],
   if test $ac_cv_func_unlinkat = no; then
     HAVE_UNLINKAT=0
   else
-    if test $gl_cv_func_lstat_dereferences_slashed_symlink != yes; then
-      # Solaris 9 has *at functions, but uniformly mishandles trailing
-      # slash in all of them.
-      REPLACE_UNLINKAT=1
-    else
-      # GNU/Hurd has unlinkat, but it has the same bug as unlink.
-      if test $REPLACE_UNLINK = 1; then
+    case "$gl_cv_func_lstat_dereferences_slashed_symlink" in
+      *no)
+        # Solaris 9 has *at functions, but uniformly mishandles trailing
+        # slash in all of them.
         REPLACE_UNLINKAT=1
-      fi
-    fi
+        ;;
+      *)
+        # GNU/Hurd has unlinkat, but it has the same bug as unlink.
+        if test $REPLACE_UNLINK = 1; then
+          REPLACE_UNLINKAT=1
+        fi
+        ;;
+    esac
   fi
 ])
