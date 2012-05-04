@@ -1,5 +1,10 @@
 2012-05-03  Bruno Haible  <bruno@clisp.org>
 
+	chown: Avoid "guessing no" when cross-compiling to glibc systems.
+	* m4/chown.m4 (AC_FUNC_CHOWN): Override in autoconf < 2.70.
+
+2012-05-03  Bruno Haible  <bruno@clisp.org>
+
 	Avoid "guessing no" guesses when cross-compiling to glibc systems.
 	* m4/cbrtl.m4 (gl_FUNC_CBRTL): Require AC_CANONICAL_HOST. When cross-
 	compiling to glibc systems, set gl_cv_func_cbrtl_ieee to "guessing yes".

@@ -1,4 +1,4 @@
-# serial 26
+# serial 27
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2012 Free Software
@@ -13,6 +13,56 @@ dnl with or without modifications, as long as this notice is preserved.
 # function.
 
 # From Jim Meyering.
+
+m4_version_prereq([2.70], [] ,[
+
+# This is taken from the following Autoconf patch:
+# http://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=commitdiff;h=7fbb553727ed7e0e689a17594b58559ecf3ea6e9
+AC_DEFUN([AC_FUNC_CHOWN],
+[
+  AC_REQUIRE([AC_TYPE_UID_T])dnl
+  AC_REQUIRE([AC_CANONICAL_HOST])dnl for cross-compiles
+  AC_CHECK_HEADERS([unistd.h])
+  AC_CACHE_CHECK([for working chown],
+    [ac_cv_func_chown_works],
+    [AC_RUN_IFELSE(
+       [AC_LANG_PROGRAM(
+          [AC_INCLUDES_DEFAULT
+           [#include <fcntl.h>
+          ]],
+          [[
+            char *f = "conftest.chown";
+            struct stat before, after;
+
+            if (creat (f, 0600) < 0)
+              return 1;
+            if (stat (f, &before) < 0)
+              return 1;
+            if (chown (f, (uid_t) -1, (gid_t) -1) == -1)
+              return 1;
+            if (stat (f, &after) < 0)
+              return 1;
+            return ! (before.st_uid == after.st_uid && before.st_gid == after.st_gid);
+          ]])
+       ],
+       [ac_cv_func_chown_works=yes],
+       [ac_cv_func_chown_works=no],
+       [case "$host_os" in # ((
+                  # Guess yes on glibc systems.
+          *-gnu*) ac_cv_func_chown_works=yes ;;
+                  # If we don't know, assume the worst.
+          *)      ac_cv_func_chown_works=no ;;
+        esac
+       ])
+     rm -f conftest.chown
+    ])
+  if test $ac_cv_func_chown_works = yes; then
+    AC_DEFINE([HAVE_CHOWN], [1],
+      [Define to 1 if your system has a working `chown' function.])
+  fi
+])# AC_FUNC_CHOWN
+
+])
 
 AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 [
