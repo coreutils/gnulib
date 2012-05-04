@@ -1,3 +1,17 @@
+2012-05-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	unistd_h: make it easier to avoid sys_types_h
+	This is useful for Emacs, which has its own method of porting to
+	Windows, and which therefore does not need the sys_types_h module.
+	* m4/off_t.m4: New file, defining gl_TYPE_OFF_T, which contains
+	code moved here from gl_SYS_TYPES_H.
+	* m4/sys_types_h.m4 (gl_SYS_TYPES_H): Require it instead of
+	using the code directly.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Require gl_TYPE_OFF_T, not
+	gl_SYS_TYPES_H.
+	* modules/sys_types (Files):
+	* modules/unistd (Files): Add m4/off_t.m4.
+
 2012-05-03  Bruno Haible  <bruno@clisp.org>
 
 	lstat: Avoid "guessing no" when cross-compiling to glibc systems.

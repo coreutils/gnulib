@@ -4,6 +4,7 @@ A GNU-like <unistd.h>.
 Files:
 m4/unistd_h.m4
 lib/unistd.in.h
+m4/off_t.m4
 
 Depends-on:
 include_next
