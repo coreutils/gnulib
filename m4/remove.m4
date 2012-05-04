@@ -10,16 +10,11 @@ AC_DEFUN([gl_FUNC_REMOVE],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_FUNC_RMDIR])
   AC_REQUIRE([gl_FUNC_UNLINK])
-  if { case "$gl_cv_func_rmdir_works" in
-         *yes) false;;
+  if { case "$gl_cv_func_rmdir_works:$gl_cv_func_unlink_works" in
+         *yes:*yes) false;;
          *) true;;
        esac
-     } \
-     || { case "$gl_cv_func_unlink_works" in
-            *yes) false;;
-            *) true;;
-          esac
-        }; then
+     }; then
     dnl If either underlying syscall is broken, then remove likely has
     dnl the same bug; blindly use our replacement.
     REPLACE_REMOVE=1
