@@ -1,3 +1,9 @@
+2012-05-04  Bruno Haible  <bruno@clisp.org>
+
+	Tweak last commit.
+	* m4/off_t.m4 (gl_TYPE_OFF_T): Tweak comments.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Likewise.
+
 2012-05-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	unistd_h: make it easier to avoid sys_types_h

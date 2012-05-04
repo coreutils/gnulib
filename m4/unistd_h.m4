@@ -24,7 +24,7 @@ AC_DEFUN([gl_UNISTD_H],
   dnl Ensure the type pid_t gets defined.
   AC_REQUIRE([AC_TYPE_PID_T])
 
-  dnl Whether to override the 'off_t' type.
+  dnl Determine WINDOWS_64_BIT_OFF_T.
   AC_REQUIRE([gl_TYPE_OFF_T])
 
   dnl Check for declarations of anything we want to poison if the
