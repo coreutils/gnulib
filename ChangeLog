@@ -1,5 +1,12 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	nanosleep: Avoid guessing wrong when cross-compiling to Linux.
+	* m4/nanosleep.m4 (gl_FUNC_NANOSLEEP): Require AC_CANONICAL_HOST. When
+	cross-compiling, set gl_cv_func_nanosleep to either 'guessing no'
+	or 'guessing no (mishandles large arguments)'.
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	link-follow: Avoid guessing wrong when cross-compiling to glibc/Linux.
 	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Require
 	AC_CANONICAL_HOST. When cross-compiling to a glibc/Linux platform,

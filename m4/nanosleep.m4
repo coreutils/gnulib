@@ -1,4 +1,4 @@
-# serial 34
+# serial 35
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -13,10 +13,12 @@ dnl
 
 AC_DEFUN([gl_FUNC_NANOSLEEP],
 [
+ AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
+ AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
  dnl Persuade glibc and Solaris <time.h> to declare nanosleep.
  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
- AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
  AC_CHECK_HEADERS_ONCE([sys/time.h])
  AC_REQUIRE([gl_FUNC_SELECT])
 
@@ -73,6 +75,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
             static struct timespec ts_sleep;
             static struct timespec ts_remaining;
             static struct sigaction act;
+            /* Test for major problems first.  */
             if (! nanosleep)
               return 2;
             act.sa_handler = check_for_SIGALRM;
@@ -83,6 +86,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
             alarm (1);
             if (nanosleep (&ts_sleep, NULL) != 0)
               return 3;
+            /* Test for a minor problem: the handling of large arguments.  */
             ts_sleep.tv_sec = TYPE_MAXIMUM (time_t);
             ts_sleep.tv_nsec = 999999999;
             alarm (1);
@@ -99,24 +103,37 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
         4|5|6) gl_cv_func_nanosleep='no (mishandles large arguments)';; dnl (
         *)   gl_cv_func_nanosleep=no;;
         esac],
-       [gl_cv_func_nanosleep=cross-compiling])
+       [case "$host_os" in dnl ((
+          linux*) # Guess it halfway works on when the kernel is Linux.
+            gl_cv_func_nanosleep='guessing no (mishandles large arguments)' ;;
+          *)      # If we don't know, assume the worst.
+            gl_cv_func_nanosleep='guessing no' ;;
+        esac
+       ])
     ])
-   if test "$gl_cv_func_nanosleep" = yes; then
-     REPLACE_NANOSLEEP=0
-   else
-     REPLACE_NANOSLEEP=1
-     if test "$gl_cv_func_nanosleep" = 'no (mishandles large arguments)'; then
-       AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], [1],
-         [Define to 1 if nanosleep mishandles large arguments.])
-     else
-       for ac_lib in $LIBSOCKET; do
-         case " $LIB_NANOSLEEP " in
-         *" $ac_lib "*) ;;
-         *) LIB_NANOSLEEP="$LIB_NANOSLEEP $ac_lib";;
-         esac
-       done
-     fi
-   fi
+   case "$gl_cv_func_nanosleep" in
+     *yes)
+       REPLACE_NANOSLEEP=0
+       ;;
+     *)
+       REPLACE_NANOSLEEP=1
+       case "$gl_cv_func_nanosleep" in
+         *"mishandles large arguments"*)
+           AC_DEFINE([HAVE_BUG_BIG_NANOSLEEP], [1],
+             [Define to 1 if nanosleep mishandles large arguments.])
+           ;;
+         *)
+           # The replacement uses select(). Add $LIBSOCKET to $LIB_NANOSLEEP.
+           for ac_lib in $LIBSOCKET; do
+             case " $LIB_NANOSLEEP " in
+               *" $ac_lib "*) ;;
+               *) LIB_NANOSLEEP="$LIB_NANOSLEEP $ac_lib";;
+             esac
+           done
+           ;;
+       esac
+       ;;
+   esac
  else
    HAVE_NANOSLEEP=0
  fi
