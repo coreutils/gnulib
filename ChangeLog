@@ -1,5 +1,12 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	link-follow: Avoid guessing wrong when cross-compiling to glibc/Linux.
+	* m4/link-follow.m4 (gl_FUNC_LINK_FOLLOWS_SYMLINK): Require
+	AC_CANONICAL_HOST. When cross-compiling to a glibc/Linux platform,
+	set gl_cv_func_link_follows_symlink to "guessing no".
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	tzset: Avoid guessing wrong when cross-compiling to glibc systems.
 	* m4/tzset.m4 (gl_FUNC_TZSET_CLOBBER): Require AC_CANONICAL_HOST. When
 	cross-compiling to a glibc platform, set gl_cv_func_tzset_clobber to
