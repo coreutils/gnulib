@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 23
+# canonicalize.m4 serial 24
 
 dnl Copyright (C) 2003-2007, 2009-2012 Free Software Foundation, Inc.
 
@@ -56,6 +56,7 @@ AC_DEFUN([gl_CANONICALIZE_LGPL_SEPARATE],
 AC_DEFUN([gl_FUNC_REALPATH_WORKS],
 [
   AC_CHECK_FUNCS_ONCE([realpath])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether realpath works], [gl_cv_func_realpath_works], [
     touch conftest.a
     mkdir conftest.d
@@ -89,13 +90,23 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
         }
         return result;
       ]])
-    ], [gl_cv_func_realpath_works=yes], [gl_cv_func_realpath_works=no],
-       [gl_cv_func_realpath_works="guessing no"])
+     ],
+     [gl_cv_func_realpath_works=yes],
+     [gl_cv_func_realpath_works=no],
+     [case "$host_os" in
+                # Guess yes on glibc systems.
+        *-gnu*) gl_cv_func_realpath_works="guessing yes" ;;
+                # If we don't know, assume the worst.
+        *)      gl_cv_func_realpath_works="guessing no" ;;
+      esac
+     ])
     rm -rf conftest.a conftest.d
   ])
-  if test "$gl_cv_func_realpath_works" = yes; then
-    AC_DEFINE([FUNC_REALPATH_WORKS], [1], [Define to 1 if realpath()
-      can malloc memory, always gives an absolute path, and handles
-      trailing slash correctly.])
-  fi
+  case "$gl_cv_func_realpath_works" in
+    *yes)
+      AC_DEFINE([FUNC_REALPATH_WORKS], [1], [Define to 1 if realpath()
+        can malloc memory, always gives an absolute path, and handles
+        trailing slash correctly.])
+      ;;
+  esac
 ])

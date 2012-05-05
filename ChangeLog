@@ -1,5 +1,12 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	canonicalize[-lgpl]: Avoid "guessing no" when cross-compiling to glibc.
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Require
+	AC_CANONICAL_HOST. When cross-compiling to a glibc system, set
+	gl_cv_func_realpath_works to "guessing yes".
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	gettimeofday: Avoid bad guess when cross-compiling to glibc systems.
 	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY_CLOBBER): Require
 	AC_CANONICAL_HOST. When cross-compiling, guess no on glibc platforms.
