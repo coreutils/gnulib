@@ -1,4 +1,4 @@
-# ungetc.m4 serial 2
+# ungetc.m4 serial 3
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   AC_CACHE_CHECK([whether ungetc works on arbitrary bytes],
     [gl_cv_func_ungetc_works],
@@ -27,10 +28,19 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
            if (fgetc (f) != 'c') return 11;
            fclose (f); remove ("conftest.tmp");])],
         [gl_cv_func_ungetc_works=yes], [gl_cv_func_ungetc_works=no],
-        [gl_cv_func_ungetc_works='guessing no'])
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_ungetc_works="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_ungetc_works="guessing no" ;;
+         esac
+        ])
     ])
-  if test "$gl_cv_func_ungetc_works" != yes; then
-    AC_DEFINE([FUNC_UNGETC_BROKEN], [1],
-      [Define to 1 if ungetc is broken when used on arbitrary bytes.])
-  fi
+  case "$gl_cv_func_ungetc_works" in
+    *yes) ;;
+    *)
+      AC_DEFINE([FUNC_UNGETC_BROKEN], [1],
+        [Define to 1 if ungetc is broken when used on arbitrary bytes.])
+      ;;
+  esac
 ])
