@@ -104,7 +104,7 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
         *)   gl_cv_func_nanosleep=no;;
         esac],
        [case "$host_os" in dnl ((
-          linux*) # Guess it halfway works on when the kernel is Linux.
+          linux*) # Guess it halfway works when the kernel is Linux.
             gl_cv_func_nanosleep='guessing no (mishandles large arguments)' ;;
           *)      # If we don't know, assume the worst.
             gl_cv_func_nanosleep='guessing no' ;;
