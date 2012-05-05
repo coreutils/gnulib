@@ -1,3 +1,9 @@
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
+	gettimeofday: Avoid bad guess when cross-compiling to glibc systems.
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY_CLOBBER): Require
+	AC_CANONICAL_HOST. When cross-compiling, guess no on glibc platforms.
+
 2012-05-04  Bruno Haible  <bruno@clisp.org>
 
 	Tweak last commit.
