@@ -1,5 +1,13 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	tzset: Avoid guessing wrong when cross-compiling to glibc systems.
+	* m4/tzset.m4 (gl_FUNC_TZSET_CLOBBER): Require AC_CANONICAL_HOST. When
+	cross-compiling to a glibc platform, set gl_cv_func_tzset_clobber to
+	"guessing no".
+	* m4/gettimeofday.m4 (gl_FUNC_GETTIMEOFDAY): Update.
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	d-ino: Avoid guessing "no" when cross-compiling to glibc/Linux systems.
 	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Require
 	AC_CANONICAL_HOST. When cross-compiling to a glibc/Linux platform,

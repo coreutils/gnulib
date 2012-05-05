@@ -1,4 +1,4 @@
-# serial 6
+# serial 7
 
 # Copyright (C) 2003, 2007, 2009-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -20,6 +20,7 @@ AC_DEFUN([gl_FUNC_TZSET], [])
 AC_DEFUN([gl_FUNC_TZSET_CLOBBER],
 [
   AC_REQUIRE([gl_HEADER_SYS_TIME_H])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether tzset clobbers localtime buffer],
                  gl_cv_func_tzset_clobber,
   [
@@ -47,7 +48,13 @@ main ()
   ]])],
        [gl_cv_func_tzset_clobber=no],
        [gl_cv_func_tzset_clobber=yes],
-       [gl_cv_func_tzset_clobber=yes])])
+       [case "$host_os" in
+                  # Guess all is fine on glibc systems.
+          *-gnu*) gl_cv_func_tzset_clobber="guessing no" ;;
+                  # If we don't know, assume the worst.
+          *)      gl_cv_func_tzset_clobber="guessing yes" ;;
+        esac
+       ])])
 
   AC_DEFINE([HAVE_RUN_TZSET_TEST], [1],
     [Define to 1 if you have run the test for working tzset.])
