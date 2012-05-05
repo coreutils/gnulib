@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 
 dnl From Jim Meyering.
 dnl
@@ -13,7 +13,8 @@ dnl
 # with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
-  [AC_CACHE_CHECK([for d_ino member in directory struct],
+  [AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+   AC_CACHE_CHECK([for d_ino member in directory struct],
                   gl_cv_struct_dirent_d_ino,
      [AC_RUN_IFELSE(
         [AC_LANG_PROGRAM(
@@ -37,10 +38,18 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
            ]])],
            [gl_cv_struct_dirent_d_ino=yes],
            [gl_cv_struct_dirent_d_ino=no],
-           [gl_cv_struct_dirent_d_ino=no])])
-   if test $gl_cv_struct_dirent_d_ino = yes; then
-     AC_DEFINE([D_INO_IN_DIRENT], [1],
-       [Define if struct dirent has a member d_ino that actually works.])
-   fi
+           [case "$host_os" in
+                           # Guess yes on glibc systems with Linux kernel.
+              linux*-gnu*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                           # If we don't know, assume the worst.
+              *)           gl_cv_struct_dirent_d_ino="guessing no" ;;
+            esac
+           ])])
+   case "$gl_cv_struct_dirent_d_ino" in
+     *yes)
+       AC_DEFINE([D_INO_IN_DIRENT], [1],
+         [Define if struct dirent has a member d_ino that actually works.])
+       ;;
+   esac
   ]
 )

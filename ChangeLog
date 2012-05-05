@@ -1,5 +1,12 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	d-ino: Avoid guessing "no" when cross-compiling to glibc/Linux systems.
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Require
+	AC_CANONICAL_HOST. When cross-compiling to a glibc/Linux platform,
+	set gl_cv_struct_dirent_d_ino to "guessing yes".
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	fseeko-tests, ftello-tests: Avoid "guessing no" when cross-compiling.
 	* m4/ungetc.m4 (gl_FUNC_UNGETC_WORKS): Require AC_CANONICAL_HOST. When
 	cross-compiling to a glibc platform, set gl_cv_func_ungetc_works to
