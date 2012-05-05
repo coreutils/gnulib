@@ -1,5 +1,14 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	strerror: Avoid "guessing no" when cross-compiling to glibc systems.
+	* m4/strerror.m4 (gl_FUNC_STRERROR): Require AC_CANONICAL_HOST. When
+	cross-compiling to a glibc platform, set gl_cv_func_working_strerror
+	to "guessing yes".
+	(gl_FUNC_STRERROR_0): Require AC_CANONICAL_HOST. When cross-compiling
+	to a glibc platform, set gl_cv_func_strerror_0_works to "guessing yes".
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	canonicalize[-lgpl]: Avoid "guessing no" when cross-compiling to glibc.
 	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Require
 	AC_CANONICAL_HOST. When cross-compiling to a glibc system, set

@@ -1,4 +1,4 @@
-# strerror.m4 serial 16
+# strerror.m4 serial 17
 dnl Copyright (C) 2002, 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ AC_DEFUN([gl_FUNC_STRERROR],
   AC_REQUIRE([gl_HEADER_STRING_H_DEFAULTS])
   AC_REQUIRE([gl_HEADER_ERRNO_H])
   AC_REQUIRE([gl_FUNC_STRERROR_0])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   m4_ifdef([gl_FUNC_STRERROR_R_WORKS], [
     AC_REQUIRE([gl_FUNC_STRERROR_R_WORKS])
   ])
@@ -22,14 +23,22 @@ AC_DEFUN([gl_FUNC_STRERROR],
            [[if (!*strerror (-2)) return 1;]])],
         [gl_cv_func_working_strerror=yes],
         [gl_cv_func_working_strerror=no],
-        [dnl Be pessimistic on cross-compiles for now.
-         gl_cv_func_working_strerror="guessing no"])
+        [case "$host_os" in
+                   # Guess yes on glibc systems.
+           *-gnu*) gl_cv_func_working_strerror="guessing yes" ;;
+                   # If we don't know, assume the worst.
+           *)      gl_cv_func_working_strerror="guessing no" ;;
+         esac
+        ])
     ])
-    if test "$gl_cv_func_working_strerror" != yes; then
-      dnl The system's strerror() fails to return a string for out-of-range
-      dnl integers. Replace it.
-      REPLACE_STRERROR=1
-    fi
+    case "$gl_cv_func_working_strerror" in
+      *yes) ;;
+      *)
+        dnl The system's strerror() fails to return a string for out-of-range
+        dnl integers. Replace it.
+        REPLACE_STRERROR=1
+        ;;
+    esac
     m4_ifdef([gl_FUNC_STRERROR_R_WORKS], [
       dnl If the system's strerror_r or __xpg_strerror_r clobbers strerror's
       dnl buffer, we must replace strerror.
@@ -48,6 +57,7 @@ dnl Detect if strerror(0) passes (that is, does not set errno, and does not
 dnl return a string that matches strerror(-1)).
 AC_DEFUN([gl_FUNC_STRERROR_0],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   REPLACE_STRERROR_0=0
   AC_CACHE_CHECK([whether strerror(0) succeeds],
    [gl_cv_func_strerror_0_works],
@@ -67,12 +77,20 @@ AC_DEFUN([gl_FUNC_STRERROR_0],
            return result;]])],
       [gl_cv_func_strerror_0_works=yes],
       [gl_cv_func_strerror_0_works=no],
-      [dnl Be pessimistic on cross-compiles for now.
-       gl_cv_func_strerror_0_works="guessing no"])
+      [case "$host_os" in
+                 # Guess yes on glibc systems.
+         *-gnu*) gl_cv_func_strerror_0_works="guessing yes" ;;
+                 # If we don't know, assume the worst.
+         *)      gl_cv_func_strerror_0_works="guessing no" ;;
+       esac
+      ])
   ])
-  if test "$gl_cv_func_strerror_0_works" != yes; then
-    REPLACE_STRERROR_0=1
-    AC_DEFINE([REPLACE_STRERROR_0], [1], [Define to 1 if strerror(0)
-      does not return a message implying success.])
-  fi
+  case "$gl_cv_func_strerror_0_works" in
+    *yes) ;;
+    *)
+      REPLACE_STRERROR_0=1
+      AC_DEFINE([REPLACE_STRERROR_0], [1], [Define to 1 if strerror(0)
+        does not return a message implying success.])
+      ;;
+  esac
 ])
