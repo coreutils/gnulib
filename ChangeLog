@@ -1,5 +1,12 @@
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
+	signbit: Avoid "guessing no" when cross-compiling to glibc systems.
+	* m4/signbit.m4 (gl_SIGNBIT): Require AC_CANONICAL_HOST. When cross-
+	compiling to a glibc system, set gl_cv_func_signbit and
+	gl_cv_func_signbit_gcc to "guessing yes".
+
+2012-05-05  Bruno Haible  <bruno@clisp.org>
+
 	strerror: Avoid "guessing no" when cross-compiling to glibc systems.
 	* m4/strerror.m4 (gl_FUNC_STRERROR): Require AC_CANONICAL_HOST. When
 	cross-compiling to a glibc platform, set gl_cv_func_working_strerror
