@@ -40,6 +40,8 @@ Portability problems not fixed by Gnulib:
 @item
 @code{@{uint,int@}_fast@{8,16,32,64@}_t} may not correspond to the fastest
 types available on the system.
+Other @code{<stdint.h>} substitutes may define these types differently,
+so public header files should avoid these types.
 @item
 Macros are used instead of typedefs.
 @item

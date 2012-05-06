@@ -1,3 +1,10 @@
+2012-05-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: document issues with int_fast8_t etc.
+	* doc/posix-headers/stdint.texi (stdint.h): Say that other
+	stdint.h substitutes may define these types differently.  See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-05/msg00071.html>.
+
 2012-05-05  Bruno Haible  <bruno@clisp.org>
 
 	nanosleep: Avoid guessing wrong when cross-compiling to Linux.
