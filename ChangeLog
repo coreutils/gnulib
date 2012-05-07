@@ -1,5 +1,11 @@
 2012-05-06  Bruno Haible  <bruno@clisp.org>
 
+	Tests for module 'sh-quote'.
+	* modules/sh-quote-tests: New file.
+	* tests/test-sh-quote.c: New file.
+
+2012-05-06  Bruno Haible  <bruno@clisp.org>
+
 	sh-quote: Improve shell_quote_argv's signature.
 	* lib/sh-quote.h (shell_quote_argv): Make argument array a 'const *'.
 	* lib/sh-quote.c (shell_quote_argv): Likewise.
