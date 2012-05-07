@@ -1,3 +1,8 @@
+2012-05-07  Eric Blake  <eblake@redhat.com>
+
+	isatty: relax license to LGPLv2+
+	* modules/isatty (License): Relax license.
+
 2012-05-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stat-size: comment fix
