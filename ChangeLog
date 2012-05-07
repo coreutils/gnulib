@@ -1,3 +1,18 @@
+2012-05-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: be more consistent with glibc, SunOS libc
+	* lib/stdint.in.h (gl_int_fast8_t, gl_uint_fast8_t)
+	(gl_int_fast16_t, gl_uint_fast16_t)
+	(gl_int_fast32_t, gl_uint_fast32_t)
+	(INT_FAST8_MIN, INT_FAST8_MAX, UINT_FAST8_MAX)
+	(INT_FAST16_MIN, INT_FAST16_MAX, UINT_FAST16_MAX)
+	(INT_FAST32_MIN, INT_FAST32_MAX, UINT_FAST32_MAX):
+	Be consistent with glibc by default, and with SunOS 5.10 and later
+	if __sun is defined.  This lessens the likelihood of clashes if
+	code compiled for older hosts is combined with code compiled for
+	newer ones.  Problem reported by Niels Möller in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-05/msg00074.html>.
+
 2012-05-07  Eric Blake  <eblake@redhat.com>
 
 	isatty: relax license to LGPLv2+
