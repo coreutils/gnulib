@@ -1,3 +1,9 @@
+2012-05-06  Bruno Haible  <bruno@clisp.org>
+
+	sh-quote: Improve shell_quote_argv's signature.
+	* lib/sh-quote.h (shell_quote_argv): Make argument array a 'const *'.
+	* lib/sh-quote.c (shell_quote_argv): Likewise.
+
 2012-05-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: document issues with int_fast8_t etc.

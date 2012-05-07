@@ -69,11 +69,11 @@ shell_quote (const char *string)
 /* Returns a freshly allocated string containing all argument strings, quoted,
    separated through spaces.  */
 char *
-shell_quote_argv (char **argv)
+shell_quote_argv (char * const *argv)
 {
   if (*argv != NULL)
     {
-      char **argp;
+      char * const *argp;
       size_t length;
       char *command;
       char *p;
