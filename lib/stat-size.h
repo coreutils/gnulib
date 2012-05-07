@@ -31,10 +31,6 @@
 #endif
 
 
-/* Much of the remainder of this file is not indented consistently
-   with the above, in order to make it easier to see that the text
-   is almost identical to part of the system.h header in coreutils.
-*/
 /* Get or fake the disk device blocksize.
    Usually defined by sys/param.h (if at all).  */
 #if !defined DEV_BSIZE && defined BSIZE
