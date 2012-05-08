@@ -1,3 +1,11 @@
+2012-05-08  Jim Meyering  <meyering@redhat.com>
+
+	init.sh: don't let bash aliases interfere with tests
+	* tests/init.sh: Undefine any pre-defined aliases if the selected shell
+	is bash.  This avoids problems for those who alias standard commands to
+	non-conforming uses, like those reported in http://bugs.gnu.org/11256.
+	Suggested by Tim Mooney <Tim.Mooney@ndsu.edu>.
+
 2012-05-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: be more consistent with glibc, SunOS libc

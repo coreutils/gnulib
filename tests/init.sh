@@ -207,6 +207,9 @@ else
   fi
 fi
 
+# If this is bash, turn off all aliases.
+test -n "$BASH_VERSION" && unalias -a
+
 test -n "$EXEEXT" && shopt -s expand_aliases
 
 # Enable glibc's malloc-perturbing option.
