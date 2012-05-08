@@ -1,5 +1,8 @@
 2012-05-08  Jim Meyering  <meyering@redhat.com>
 
+	init.sh: explain why EXEEXT support uses aliases rather than functions
+	* tests/init.sh: Add a comment.
+
 	init.sh: don't let bash aliases interfere with tests
 	* tests/init.sh: Undefine any pre-defined aliases if the selected shell
 	is bash.  This avoids problems for those who alias standard commands to
