@@ -43,6 +43,7 @@ check_one (const char *input, const char *expected)
   memset (buf, '\0', output_len + 1);
   buf[output_len + 1] = '%';
   bufend = shell_quote_copy (buf, input);
+  ASSERT (bufend == buf + output_len);
   ASSERT (memcmp (buf, output, output_len + 1) == 0);
   ASSERT (buf[output_len + 1] == '%');
 
@@ -68,6 +69,7 @@ main (void)
     /* Whitespace would be interpreted as argument separator by the shell.  */
     check_one ("foo\tbar", "'foo\tbar'");
     check_one ("foo\nbar", "'foo\nbar'");
+    check_one ("foo\rbar", "'foo\rbar'");
     check_one ("foo bar", "'foo bar'");
 
     /* '!' at the beginning of argv[0] would introduce a negated command.  */
@@ -154,7 +156,7 @@ main (void)
     check_one ("foo'bar\"baz", "'foo'\\''bar\"baz'"); /* or "\"foo'bar\\\"baz\"" */
 
     /* All other characters don't need quoting.  */
-    for (c = 1; c < UCHAR_MAX; c++)
+    for (c = 1; c <= UCHAR_MAX; c++)
       if (strchr ("\t\n\r !\"#$&'()*;<=>?^[\\]`{|}~", c) == NULL)
         {
           char s[5];

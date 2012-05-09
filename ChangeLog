@@ -1,3 +1,11 @@
+2012-05-08  Bruno Haible  <bruno@clisp.org>
+
+	sh-quote tests: Make tests stricter.
+	* tests/test-sh-quote.c (check_one): Check the return value of
+	shell_quote_copy.
+	(main): Check a string with a CR character. Check a string that
+	contains UCHAR_MAX.
+
 2012-05-08  Akim Demaille  <akim@lrde.epita.fr>
 
 	warnings.m4: provide a means to specify the program to compile.
