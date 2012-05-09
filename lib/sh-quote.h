@@ -15,11 +15,18 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#ifndef _SH_QUOTE_H
+#define _SH_QUOTE_H
+
 /* When passing a command to a shell, we must quote the program name and
    arguments, since Unix shells interpret characters like " ", "'", "<", ">",
    "$" etc. in a special way.  */
 
 #include <stddef.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Returns the number of bytes needed for the quoted string.  */
 extern size_t shell_quote_length (const char *string);
@@ -34,3 +41,9 @@ extern char * shell_quote (const char *string);
 /* Returns a freshly allocated string containing all argument strings, quoted,
    separated through spaces.  */
 extern char * shell_quote_argv (char * const *argv);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* _SH_QUOTE_H */

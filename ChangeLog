@@ -1,5 +1,11 @@
 2012-05-08  Bruno Haible  <bruno@clisp.org>
 
+	sh-quote: Make C++ safe and allow multiple inclusion.
+	* lib/sh-quote.h: Add double-inclusion guard. For C++, wrap function
+	declarations in extern "C".
+
+2012-05-08  Bruno Haible  <bruno@clisp.org>
+
 	sh-quote tests: Make tests stricter.
 	* tests/test-sh-quote.c (check_one): Check the return value of
 	shell_quote_copy.
