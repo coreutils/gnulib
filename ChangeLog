@@ -1,5 +1,10 @@
 2012-05-08  Bruno Haible  <bruno@clisp.org>
 
+	execute, spawn-pipe: Escape '*' characters in arguments on Windows.
+	* lib/w32spawn.h (SHELL_SPECIAL_CHARS): Add the '*' character.
+
+2012-05-08  Bruno Haible  <bruno@clisp.org>
+
 	Tests for module 'system-quote'.
 	* modules/system-quote-tests: New file.
 	* tests/test-system-quote.sh: New file.
