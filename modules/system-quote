@@ -1,0 +1,24 @@
+Description:
+Quoting for a system command.
+
+Files:
+lib/system-quote.h
+lib/system-quote.c
+
+Depends-on:
+sh-quote
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += system-quote.h system-quote.c
+
+Include:
+"system-quote.h"
+
+License:
+GPL
+
+Maintainer:
+Bruno Haible

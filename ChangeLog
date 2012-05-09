@@ -1,5 +1,12 @@
 2012-05-08  Bruno Haible  <bruno@clisp.org>
 
+	New module 'system-quote'.
+	* lib/system-quote.h: New file.
+	* lib/system-quote.c: New file.
+	* modules/system-quote: New file.
+
+2012-05-08  Bruno Haible  <bruno@clisp.org>
+
 	sh-quote: Make C++ safe and allow multiple inclusion.
 	* lib/sh-quote.h: Add double-inclusion guard. For C++, wrap function
 	declarations in extern "C".
