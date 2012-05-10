@@ -42,10 +42,15 @@
        \" -> "
        \\\" -> \"
        \\\\\" -> \\"
-   - '*' characters may get expanded or lead to a failure with error code
-     ERROR_PATH_NOT_FOUND.
+   - '*', '?' characters may get expanded through wildcard expansion in the
+     callee: By default, in the callee, the initialization code before main()
+     takes the result of GetCommandLine(), wildcard-expands it, and passes it
+     to main(). The exceptions to this rule are:
+       - programs that inspect GetCommandLine() and ignore argv,
+       - mingw programs that have a global variable 'int _CRT_glob = 0;',
+       - Cygwin programs, when invoked from a Cygwin program.
  */
-# define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*"
+# define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*?"
 # define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
 
 /* Copies the quoted string to p and returns the number of bytes needed.
@@ -112,7 +117,7 @@ windows_createprocess_quote (char *p, const char *string)
    double-quotes and the rest of the string inside double-quotes: %"var"%.
    This is guaranteed to not be a reference to an environment variable.
  */
-# define CMD_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037!%&'*+,;<=>[]^`{|}~"
+# define CMD_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037!%&'*+,;<=>?[]^`{|}~"
 # define CMD_FORBIDDEN_CHARS "\n\r"
 
 /* Copies the quoted string to p and returns the number of bytes needed.

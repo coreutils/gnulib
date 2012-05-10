@@ -248,6 +248,15 @@ check_all (enum system_command_interpreter interpreter,
 
     /* '?' would be interpreted as a wildcard character.  */
     check_one (interpreter, prog, "?");
+    check_one (interpreter, prog, "??");
+    check_one (interpreter, prog, "???");
+    check_one (interpreter, prog, "????");
+    check_one (interpreter, prog, "?????");
+    check_one (interpreter, prog, "??????");
+    check_one (interpreter, prog, "???????");
+    check_one (interpreter, prog, "????????");
+    check_one (interpreter, prog, "?????????");
+    check_one (interpreter, prog, "??????????");
     check_one (interpreter, prog, "foo?bar");
 
     /* '^' would be interpreted in old /bin/sh, e.g. SunOS 4.1.4.  */

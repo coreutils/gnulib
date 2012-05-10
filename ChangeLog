@@ -1,3 +1,13 @@
+2012-05-10  Bruno Haible  <bruno@clisp.org>
+
+	system-quote, execute, spawn-pipe: Escape '?' on Windows.
+	* lib/system-quote.c (SHELL_SPECIAL_CHARS, CMD_SPECIAL_CHARS): Add the
+	'?' character.
+	* lib/w32spawn.h (SHELL_SPECIAL_CHARS): Likewise.
+	* tests/test-system-quote-main.c (check_all): Check also strings like
+	"??????????".
+	Reported by Eli Zaretskii <eliz@gnu.org>.
+
 2012-05-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	_Noreturn: port config.h to gcc -Wundef
