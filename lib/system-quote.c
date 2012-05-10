@@ -28,6 +28,7 @@
 #include "xalloc.h"
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
 /* The native Windows CreateProcess() function interprets characters like
    ' ', '\t', '\\', '"' (but not '<' and '>') in a special way:
    - Space and tab are interpreted as delimiters. They are not treated as
@@ -46,6 +47,58 @@
  */
 # define SHELL_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037*"
 # define SHELL_SPACE_CHARS " \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037"
+
+/* Copies the quoted string to p and returns the number of bytes needed.
+   If p is non-NULL, there must be room for system_quote_length (string)
+   bytes at p.  */
+static size_t
+windows_createprocess_quote (char *p, const char *string)
+{
+  size_t len = strlen (string);
+  bool quote_around =
+    (len == 0 || strpbrk (string, SHELL_SPECIAL_CHARS) != NULL);
+  size_t backslashes = 0;
+  size_t i = 0;
+# define STORE(c) \
+  do                 \
+    {                \
+      if (p != NULL) \
+        p[i] = (c);  \
+      i++;           \
+    }                \
+  while (0)
+
+  if (quote_around)
+    STORE ('"');
+  for (; len > 0; string++, len--)
+    {
+      char c = *string;
+
+      if (c == '"')
+        {
+          size_t j;
+
+          for (j = backslashes + 1; j > 0; j--)
+            STORE ('\\');
+        }
+      STORE (c);
+      if (c == '\\')
+        backslashes++;
+      else
+        backslashes = 0;
+    }
+  if (quote_around)
+    {
+      size_t j;
+
+      for (j = backslashes; j > 0; j--)
+        STORE ('\\');
+      STORE ('"');
+    }
+# undef STORE
+  return i;
+}
+
 /* The native Windows cmd.exe command interpreter also interprets:
    - '\n', '\r' as a command terminator - no way to escape it,
    - '<', '>' as redirections,
@@ -61,6 +114,67 @@
  */
 # define CMD_SPECIAL_CHARS "\"\\ \001\002\003\004\005\006\007\010\011\012\013\014\015\016\017\020\021\022\023\024\025\026\027\030\031\032\033\034\035\036\037!%&'*+,;<=>[]^`{|}~"
 # define CMD_FORBIDDEN_CHARS "\n\r"
+
+/* Copies the quoted string to p and returns the number of bytes needed.
+   If p is non-NULL, there must be room for system_quote_length (string)
+   bytes at p.  */
+static size_t
+windows_cmd_quote (char *p, const char *string)
+{
+  size_t len = strlen (string);
+  bool quote_around =
+    (len == 0 || strpbrk (string, CMD_SPECIAL_CHARS) != NULL);
+  size_t backslashes = 0;
+  size_t i = 0;
+# define STORE(c) \
+  do                 \
+    {                \
+      if (p != NULL) \
+        p[i] = (c);  \
+      i++;           \
+    }                \
+  while (0)
+
+  if (quote_around)
+    STORE ('"');
+  for (; len > 0; string++, len--)
+    {
+      char c = *string;
+
+      if (c == '"')
+        {
+          size_t j;
+
+          for (j = backslashes + 1; j > 0; j--)
+            STORE ('\\');
+        }
+      if (c == '%')
+        {
+          size_t j;
+
+          for (j = backslashes; j > 0; j--)
+            STORE ('\\');
+          STORE ('"');
+        }
+      STORE (c);
+      if (c == '%')
+        STORE ('"');
+      if (c == '\\')
+        backslashes++;
+      else
+        backslashes = 0;
+    }
+  if (quote_around)
+    {
+      size_t j;
+
+      for (j = backslashes; j > 0; j--)
+        STORE ('\\');
+      STORE ('"');
+    }
+  return i;
+}
+
 #endif
 
 size_t
@@ -77,59 +191,11 @@ system_quote_length (enum system_command_interpreter interpreter,
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
     case SCI_WINDOWS_CREATEPROCESS:
-      {
-        size_t len = strlen (string);
-        bool quote_around =
-          (len == 0 || strpbrk (string, SHELL_SPECIAL_CHARS) != NULL);
-        size_t backslashes = 0;
-        size_t length = len;
-
-        if (quote_around)
-          length++;
-        for (; len > 0; string++, len--)
-          {
-            char c = *string;
-
-            if (c == '"')
-              length += backslashes + 1;
-            if (c == '\\')
-              backslashes++;
-            else
-              backslashes = 0;
-          }
-        if (quote_around)
-          length += backslashes + 1;
-        return length;
-      }
+      return windows_createprocess_quote (NULL, string);
 
     case SCI_SYSTEM:
     case SCI_WINDOWS_CMD:
-      {
-        size_t len = strlen (string);
-        bool quote_around =
-          (len == 0 || strpbrk (string, CMD_SPECIAL_CHARS) != NULL);
-        size_t backslashes = 0;
-        size_t length = len;
-
-        if (quote_around)
-          length++;
-        for (; len > 0; string++, len--)
-          {
-            char c = *string;
-
-            if (c == '"')
-              length += backslashes + 1;
-            if (c == '%')
-              length += backslashes + 2;
-            if (c == '\\')
-              backslashes++;
-            else
-              backslashes = 0;
-          }
-        if (quote_around)
-          length += backslashes + 1;
-        return length;
-      }
+      return windows_cmd_quote (NULL, string);
 #endif
 
     default:
@@ -153,91 +219,15 @@ system_quote_copy (char *p,
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
     case SCI_WINDOWS_CREATEPROCESS:
-      {
-        size_t len = strlen (string);
-        bool quote_around =
-          (len == 0 || strpbrk (string, SHELL_SPECIAL_CHARS) != NULL);
-        size_t backslashes = 0;
-
-        if (quote_around)
-          *p++ = '"';
-        for (; len > 0; string++, len--)
-          {
-            char c = *string;
-
-            if (c == '"')
-              {
-                size_t j;
-
-                for (j = backslashes + 1; j > 0; j--)
-                  *p++ = '\\';
-              }
-            *p++ = c;
-            if (c == '\\')
-              backslashes++;
-            else
-              backslashes = 0;
-          }
-        if (quote_around)
-          {
-            size_t j;
-
-            for (j = backslashes; j > 0; j--)
-              *p++ = '\\';
-            *p++ = '"';
-          }
-        *p = '\0';
-        return p;
-      }
+      p += windows_createprocess_quote (p, string);
+      *p = '\0';
+      return p;
 
     case SCI_SYSTEM:
     case SCI_WINDOWS_CMD:
-      {
-        size_t len = strlen (string);
-        bool quote_around =
-          (len == 0 || strpbrk (string, CMD_SPECIAL_CHARS) != NULL);
-        size_t backslashes = 0;
-
-        if (quote_around)
-          *p++ = '"';
-        for (; len > 0; string++, len--)
-          {
-            char c = *string;
-
-            if (c == '"')
-              {
-                size_t j;
-
-                for (j = backslashes + 1; j > 0; j--)
-                  *p++ = '\\';
-              }
-            if (c == '%')
-              {
-                size_t j;
-
-                for (j = backslashes; j > 0; j--)
-                  *p++ = '\\';
-                *p++ = '"';
-              }
-            *p++ = c;
-            if (c == '%')
-              *p++ = '"';
-            if (c == '\\')
-              backslashes++;
-            else
-              backslashes = 0;
-          }
-        if (quote_around)
-          {
-            size_t j;
-
-            for (j = backslashes; j > 0; j--)
-              *p++ = '\\';
-            *p++ = '"';
-          }
-        *p = '\0';
-        return p;
-      }
+      p += windows_cmd_quote (p, string);
+      *p = '\0';
+      return p;
 #endif
 
     default:

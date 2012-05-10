@@ -1,3 +1,12 @@
+2012-05-10  Bruno Haible  <bruno@clisp.org>
+
+	system-quote: Refactor.
+	* lib/system-quote.h (system_quote_copy): Fix comment.
+	* lib/system-quote.c (windows_createprocess_quote, windows_cmd_quote):
+	New functions, extracted from system_quote_copy.
+	(system_quote_length, system_quote_copy): Use these functions.
+	Reported by Paul Eggert.
+
 2012-05-08  Bruno Haible  <bruno@clisp.org>
 
 	execute, spawn-pipe: Escape '*' characters in arguments on Windows.
