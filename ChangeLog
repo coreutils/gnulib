@@ -1,3 +1,15 @@
+2012-05-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fsusage: check for GNU/Linux statvfs problem dynamically
+	* lib/fsusage.c [STAT_STATVFS && __linux__ && (__GLIBC__||__UCLIBC__)]:
+	Define STAT_STATFS2_BSIZE too, since in this case the code now
+	checks dynamically whether statvfs is reliable, falling back on
+	Linux-style statfs otherwise.
+	(statvfs_works): New function, for dynamically testing statvfs.
+	(get_fs_usage) [STAT_STATVFS]: Use it.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Remove static check for
+	statvfs on GNU/Linux hosts, since it's now done dynamically.
+
 2012-05-10  Bruno Haible  <bruno@clisp.org>
 
 	system-quote, execute, spawn-pipe: Escape '?' on Windows.

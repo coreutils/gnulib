@@ -84,6 +84,33 @@
    otherwise, use PROPAGATE_ALL_ONES.  */
 #define PROPAGATE_TOP_BIT(x) ((x) | ~ (EXTRACT_TOP_BIT (x) - 1))
 
+#ifdef STAT_STATVFS
+/* Return true if statvfs works.  This is false for statvfs on systems
+   with GNU libc on Linux kernels before 2.6.36, which stats all
+   preceding entries in /proc/mounts; that makes df hang if even one
+   of the corresponding file systems is hard-mounted but not available.  */
+# if ! (__linux__ && (__GLIBC__ || __UCLIBC__))
+static int statvfs_works (void) { return 1; }
+# else
+#  include <string.h> /* for strverscmp */
+#  include <sys/utsname.h>
+#  include <sys/statfs.h>
+#  define STAT_STATFS2_BSIZE 1
+
+static int
+statvfs_works (void)
+{
+  static int statvfs_works_cache = -1;
+  struct utsname name;
+  if (statvfs_works_cache < 0)
+    statvfs_works_cache = (uname (&name) == 0
+                           && 0 <= strverscmp (name.release, "2.6.36"));
+  return statvfs_works_cache;
+}
+# endif
+#endif
+
+
 /* Fill in the fields of FSP with information about space usage for
    the file system on which FILE resides.
    DISK is the device on which FILE is mounted, for space-getting
@@ -94,19 +121,32 @@
 int
 get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 {
-#if defined STAT_STATVFS                /* POSIX, except glibc/Linux */
+#ifdef STAT_STATVFS     /* POSIX, except pre-2.6.36 glibc/Linux */
 
-  struct statvfs fsd;
+  if (statvfs_works ())
+    {
+      struct statvfs vfsd;
 
-  if (statvfs (file, &fsd) < 0)
-    return -1;
+      if (statvfs (file, &vfsd) < 0)
+        return -1;
 
-  /* f_frsize isn't guaranteed to be supported.  */
-  fsp->fsu_blocksize = (fsd.f_frsize
-                        ? PROPAGATE_ALL_ONES (fsd.f_frsize)
-                        : PROPAGATE_ALL_ONES (fsd.f_bsize));
+      /* f_frsize isn't guaranteed to be supported.  */
+      fsp->fsu_blocksize = (vfsd.f_frsize
+                            ? PROPAGATE_ALL_ONES (vfsd.f_frsize)
+                            : PROPAGATE_ALL_ONES (vfsd.f_bsize));
 
-#elif defined STAT_STATVFS64            /* AIX */
+      fsp->fsu_blocks = PROPAGATE_ALL_ONES (vfsd.f_blocks);
+      fsp->fsu_bfree = PROPAGATE_ALL_ONES (vfsd.f_bfree);
+      fsp->fsu_bavail = PROPAGATE_TOP_BIT (vfsd.f_bavail);
+      fsp->fsu_bavail_top_bit_set = EXTRACT_TOP_BIT (vfsd.f_bavail) != 0;
+      fsp->fsu_files = PROPAGATE_ALL_ONES (vfsd.f_files);
+      fsp->fsu_ffree = PROPAGATE_ALL_ONES (vfsd.f_ffree);
+      return 0;
+    }
+
+#endif
+
+#if defined STAT_STATVFS64            /* AIX */
 
   struct statvfs64 fsd;
 
@@ -235,7 +275,7 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 
 #endif
 
-#if (defined STAT_STATVFS || defined STAT_STATVFS64 \
+#if (defined STAT_STATVFS64 \
      || (!defined STAT_STATFS2_FS_DATA && !defined STAT_READ_FILSYS))
 
   fsp->fsu_blocks = PROPAGATE_ALL_ONES (fsd.f_blocks);
