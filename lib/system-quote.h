@@ -20,14 +20,16 @@
 
 /* When passing a command the system's command interpreter, we must quote the
    program name and arguments, since
-     - Unix shells interpret characters like " ", "'", "<", ">", "$" etc. in a
-       special way,
+     - Unix shells interpret characters like " ", "'", "<", ">", "$", '*', '?'
+       etc. in a special way,
      - Windows CreateProcess() interprets characters like ' ', '\t', '\\', '"'
        etc. (but not '<' and '>') in a special way,
      - Windows cmd.exe also interprets characters like '<', '>', '&', '%', etc.
        in a special way.  Note that it is impossible to pass arguments that
        contain newlines or carriage return characters to programs through
-       cmd.exe.  */
+       cmd.exe.
+     - Windows programs usually perform wildcard expansion when they receive
+       arguments that contain unquoted '*', '?' characters.  */
 
 #include <stddef.h>
 

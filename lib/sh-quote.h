@@ -20,7 +20,7 @@
 
 /* When passing a command to a shell, we must quote the program name and
    arguments, since Unix shells interpret characters like " ", "'", "<", ">",
-   "$" etc. in a special way.  */
+   "$", '*', '?' etc. in a special way.  */
 
 #include <stddef.h>
 
