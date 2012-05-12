@@ -29,7 +29,22 @@
        contain newlines or carriage return characters to programs through
        cmd.exe.
      - Windows programs usually perform wildcard expansion when they receive
-       arguments that contain unquoted '*', '?' characters.  */
+       arguments that contain unquoted '*', '?' characters.
+
+  With this module, you can build a command that will invoke a program with
+  specific strings as arguments.
+
+  Note: If you want wildcard expansion to happen, you have to first do wildcard
+  expansion through the 'glob' module, then quote the resulting strings through
+  this module, and then invoke the system's command interpreter.
+
+  Limitations:
+    - When invoking native Windows programs on Windows Vista or newer,
+      wildcard expansion will occur in the invoked program nevertheless.
+    - On native Windows, for SCI_SYSTEM and SCI_WINDOWS_CMD, newlines and
+      carriage return characters are not supported.  Their undesired effect
+      is to truncate the entire command line.
+ */
 
 #include <stddef.h>
 

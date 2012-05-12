@@ -1,5 +1,9 @@
 2012-05-12  Bruno Haible  <bruno@clisp.org>
 
+	system-quote: Add more comments.
+	* lib/system-quote.h: Add more comments about wilcards and limitations.
+	Suggested by Eli Zaretskii <eliz@gnu.org>.
+
 	sh-quote, system-quote: Add comments about wildcards.
 	* lib/sh-quote.h: Clarify what happens with wildcard characters.
 	* lib/system-quote.h: Likewise.
