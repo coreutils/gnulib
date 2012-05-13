@@ -1,3 +1,15 @@
+2012-05-13  Bruno Haible  <bruno@clisp.org>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	binary-io: Define set_binary_mode function.
+	* lib/binary-io.h (set_binary_mode): New function.
+	(SET_BINARY): Define in terms of set_binary_mode.
+	* modules/binary-io (configure.ac): Require AC_C_INLINE.
+	* tests/test-binary-io.c (main): Accept an argument, and test either
+	set_binary_mode or SET_BINARY depending on the argument.
+	* tests/test-binary-io.sh: Invoke test-binary-io twice, with an
+	argument. Clean up also t-bin-out0.tmp.
+
 2012-05-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	bootstrap: take advantage of POSIX shell features

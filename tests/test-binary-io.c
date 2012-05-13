@@ -30,26 +30,40 @@
 #include "macros.h"
 
 int
-main ()
+main (int argc, char *argv[])
 {
   /* Test the O_BINARY macro.  */
   {
     int fd =
-      open ("t-bin-out2.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY, 0600);
+      open ("t-bin-out0.tmp", O_CREAT | O_TRUNC | O_RDWR | O_BINARY, 0600);
     if (write (fd, "Hello\n", 6) < 0)
       exit (1);
     close (fd);
   }
   {
     struct stat statbuf;
-    if (stat ("t-bin-out2.tmp", &statbuf) < 0)
+    if (stat ("t-bin-out0.tmp", &statbuf) < 0)
       exit (1);
     ASSERT (statbuf.st_size == 6);
   }
 
-  /* Test the SET_BINARY macro.  */
-  SET_BINARY (1);
-  fputs ("Hello\n", stdout);
+  switch (argv[1][0])
+    {
+    case '1':
+      /* Test the set_binary_mode() function.  */
+      set_binary_mode (1, O_BINARY);
+      fputs ("Hello\n", stdout);
+      break;
+
+    case '2':
+      /* Test the SET_BINARY macro.  */
+      SET_BINARY (1);
+      fputs ("Hello\n", stdout);
+      break;
+
+    default:
+      break;
+    }
 
   return 0;
 }
