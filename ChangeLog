@@ -1,3 +1,28 @@
+2012-05-13  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	bootstrap: take advantage of POSIX shell features
+
+	The 'bootstrap' script offered by Gnulib script already uses POSIX
+	shell features (like $((...)) arithmetic expansions) that are not
+	supported by legacy Bourne shells like Solaris 10 /bin/sh.  This
+	means that bootstrap must already be run using a proper POSIX shell,
+	which will thus provide more features, like ${var#pattern} parameter
+	expansion or inversion of a command exit status with '!'.  We can
+	thus use these features to improve the clarity and the performances
+	of the bootstrap script.
+
+	Suggested by Eric Blake.
+
+	* build-aux/bootstrap: Prefer xpg4 parameter expansions over use
+	of sed/expr plus command substitutions, to save some forks.  While
+	we are at it, prefer the POSIX $(...) form of command substitution,
+	rather than the legacy form `...` (since the former is visually
+	clearer and interacts better with quoting), and prefer the idiom:
+	  "if ! CMD; then ACTION ..."
+	over the idiom:
+	  "if CMD; then :; else ACTION ..."
+	which was required by legacy Bourne shells not supporting '!'.
+
 2012-05-12  Bruno Haible  <bruno@clisp.org>
 
 	system-quote: Add more comments.
