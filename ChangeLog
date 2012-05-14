@@ -1,3 +1,9 @@
+2012-05-14  Jim Meyering  <meyering@redhat.com>
+
+	ignore-value.h: remove unused _GL_ATTRIBUTE_DEPRECATED definition
+	* lib/ignore-value.h (_GL_ATTRIBUTE_DEPRECATED): Remove now-unused
+	definition.  Reported by Bruno Haible.
+
 2012-05-13  Bruno Haible  <bruno@clisp.org>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
