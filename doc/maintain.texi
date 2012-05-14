@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 14, 2012
+@set lastupdate May 13, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -69,6 +69,7 @@ Texts.  A copy of the license is included in the section entitled
 * Web Pages::
 * Ethical and Philosophical Consideration::
 * Terminology::
+* Interviews and Speeches::
 * Hosting::
 * Donations::
 * Free Software Directory::
@@ -382,8 +383,9 @@ getting an employer's disclaimer from the contributor's employer.
 When the contributor emails the form to the FSF, the FSF sends per an
 electronic (usually PDF) copy of the assignment.  This, or whatever
 response is required, should happen within five business days of the
-initial request.  If no reply from the FSF comes after that time, it
-is good to send a reminder.
+initial request.  If no reply from the FSF comes after that time,
+please send a reminder.  If you still get no response after an
+additional week, please write to @email{maintainers@@gnu.org} about it.
 
 After receiving the necessary form, all contributors then print it and
 sign it.  Contributors residing outside the U.S. must mail the signed
@@ -983,15 +985,33 @@ want to use a general-purpose free software module which offers a
 useful functionality, as a ``library'' facility (though the module is
 not always packaged technically as a library).
 
-In a case like this, it would be unreasonable to ask the author of that
-module to assign the copyright to the FSF.  After all, person did not
-write it specifically as a contribution to your package, so it would be
+Make sure the license of the module is compatible with current <em>and
+future</em> GPL versions.  ``GNU GPL version 3 or later'' is good, and
+so is anything which includes permission for use under those GPL
+versions (including ``GNU GPL version 2 or later'', ``LGPL version
+<em>n</em> or later'', ``LGPL version 2.1'', ``GNU Affero GPL version
+3 or later'').  Lax permissive licenses are ok too, since they are
+compatible with all GPL versions.
+
+``GPL version 2 only'' is obviously unacceptable because it is
+incompatble with GPL version 3.  ``GPL version 3 only'' and ``GPL
+version 2 or 3 only'' have a subtler problem: they will be incompatble
+with GPL version 4, if we ever make one, so the module would become an
+obstacle to upgrading your package's license to ``GPL version 4 or
+later''.
+
+One package you need to avoid is @code{goffice}, since it allows only
+GPL versions 2 and 3.
+
+It would be unreasonable to ask the author of the external module to
+assign its the copyright to the FSF.  After all, person did not write
+it specifically as a contribution to your package, so it would be
 impertinent to ask per, out of the blue, ``Please give the FSF your
 copyright.''
 
-So the thing to do in this case is to make your program use the module,
-but not consider it a part of your program.  There are two reasonable
-methods of doing this:
+So make your program use the module but without treating the module as
+a part of your program.  There are two reasonable methods of doing
+this:
 
 @enumerate
 @item
@@ -2212,6 +2232,73 @@ When referring to the collection of servers that is the higher level
 of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd''.
 Note that this uses a space, not a slash.
 
+@node Interviews and Speeches
+@chapter Interviews and Speeches
+
+Interviews and speeches about your package are an important channel
+for informing the public about the GNU system and the ideas of the
+free software movement.  Please avoid saying ``open source'' and avoid
+calling the GNU system ``Linux'', just as you would in the package
+itself (@pxref{Terminology}).  Likewise, avoid promoting nonfree
+programs (@pxref{References,,, standards, GNU Coding
+Standards}) as you would in the package itself.
+
+Many GNU users have erroneous ideas about GNU.  Outside of our
+community, most people think it is Linux.  Please use your opportunity
+to set them straight.  Start the presentation with the answers to
+these basic questions:
+
+@itemize @bullet
+@item
+What GNU is (an operating system developed to be Unix-like and totally
+free software).  It is good to mention @url{gnu.org}.
+
+@item
+What free software is (the users control it, so it doesn't control
+them).  It is good to state the four freedoms and/or refer to
+@url{gnu.org/philosophy/free-sw.html}.
+
+@item
+What GNU/Linux is (Linux filled the last gap in GNU).  It is useful to
+refer to @url{gnu.org/gnu/linux-and-gnu.html}.
+
+@item
+What the GNU Project is (the project to develop GNU).
+
+@item
+How your package fits in (it's part of GNU, and the work is part of
+the GNU Project).
+@end itemize
+
+If you feel a social pressure not to say these things, you may be
+coming in contact with some who would prefer that these things not be
+said.  That's precisely when we need your support most.
+
+Please don't include advertisements or plugs for any company, product
+or service.  Even if the product would meet the standards for the FSF
+to endorse it, an ad for it is out of place in a presentation about a
+GNU package.  Likewise, please don't include company slogans.  Mention
+a company only when called for by the subject matter.
+
+A few GNU packages are actually business activities of a particular
+company.  In that case, it is ok to say so at the start.  Otherwise,
+please show that this is a project of the GNU Project, and avoid
+suggesting it is any company's project.
+
+If you are paid by a company to work on the GNU package, it is
+appropriate to thank the company in a discreet way, but please don't
+go beyond that.
+
+Before you do a speech or interview, please contact the GNU Project
+leadership.  We can give you advice on how to deal with various
+eventualities.
+
+When your interviews and speech recordings or transcript are posted,
+please tell us about them.  Then we can publicize them.
+
+Please post them in formats that are friendly to free software: not in
+Doc or Docx format, not with Flash, not with QuickTime, not with MP3,
+MPEG2 or MPEG4.  Plain text, HTML and PDF are good.
 
 @node Hosting
 @chapter Hosting
