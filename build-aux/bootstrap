@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-05-13.09; # UTC
+scriptversion=2012-05-14.21; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -754,6 +754,22 @@ symlink_to_dir()
   }
 }
 
+version_controlled_file() {
+  parent=$1
+  file=$2
+  if test -d .git; then
+    git rm -n "$file" > /dev/null 2>&1
+  elif test -d .svn; then
+    svn log -r HEAD "$file" > /dev/null 2>&1
+  elif test -d CVS; then
+    grep -F "/${file##*/}/" "$parent/CVS/Entries" 2>/dev/null |
+             grep '^/[^/]*/[0-9]' > /dev/null
+  else
+    echo "$me: no version control for $file?" >&2
+    false
+  fi
+}
+
 # NOTE: we have to be careful to run both autopoint and libtoolize
 # before gnulib-tool, since gnulib-tool is likely to provide newer
 # versions of files "installed" by these two programs.
@@ -766,43 +782,56 @@ with_gettext=yes
 grep '^[	 ]*AM_GNU_GETTEXT_VERSION(' configure.ac >/dev/null || \
     with_gettext=no
 
-if test $with_gettext = yes; then
-  # Released autopoint has the tendency to install macros that have been
-  # obsoleted in current gnulib, so run this before gnulib-tool.
-  echo "$0: $AUTOPOINT --force"
-  $AUTOPOINT --force || exit
-fi
+if test $with_gettext = yes || test $use_libtool = 1; then
 
-# Autoreconf runs aclocal before libtoolize, which causes spurious
-# warnings if the initial aclocal is confused by the libtoolized
-# (or worse out-of-date) macro directory.
-# libtoolize 1.9b added the --install option; but we support back
-# to libtoolize 1.5.22, where the install action was default.
-if test $use_libtool = 1; then
-  install=
-  case $($LIBTOOLIZE --help) in
-    *--install*) install=--install ;;
-  esac
-  echo "running: $LIBTOOLIZE $install --copy"
-  $LIBTOOLIZE $install --copy
-fi
+  tempbase=.bootstrap$$
+  trap "rm -f $tempbase.0 $tempbase.1" 1 2 13 15
 
-version_controlled_file() {
-  dir=$1
-  file=$2
-  found=no
-  if test -d CVS; then
-    grep -F "/$file/" $dir/CVS/Entries 2>/dev/null |
-             grep '^/[^/]*/[0-9]' > /dev/null && found=yes
-  elif test -d .git; then
-    git rm -n "$dir/$file" > /dev/null 2>&1 && found=yes
-  elif test -d .svn; then
-    svn log -r HEAD "$dir/$file" > /dev/null 2>&1 && found=yes
-  else
-    echo "$me: no version control for $dir/$file?" >&2
+  > $tempbase.0 > $tempbase.1 &&
+  find . ! -type d -print | sort > $tempbase.0 || exit
+
+  if test $with_gettext = yes; then
+    # Released autopoint has the tendency to install macros that have been
+    # obsoleted in current gnulib, so run this before gnulib-tool.
+    echo "$0: $AUTOPOINT --force"
+    $AUTOPOINT --force || exit
   fi
-  test $found = yes
-}
+
+  # Autoreconf runs aclocal before libtoolize, which causes spurious
+  # warnings if the initial aclocal is confused by the libtoolized
+  # (or worse out-of-date) macro directory.
+  # libtoolize 1.9b added the --install option; but we support back
+  # to libtoolize 1.5.22, where the install action was default.
+  if test $use_libtool = 1; then
+    install=
+    case $($LIBTOOLIZE --help) in
+      *--install*) install=--install ;;
+    esac
+    echo "running: $LIBTOOLIZE $install --copy"
+    $LIBTOOLIZE $install --copy
+  fi
+
+  set -x
+  find . ! -type d -print | sort >$tempbase.1
+  old_IFS=$IFS
+  IFS=$nl
+  for file in $(comm -13 $tempbase.0 $tempbase.1); do
+    IFS=$old_IFS
+    parent=${file%/*}
+    version_controlled_file "$parent" "$file" || {
+      for dot_ig in x $vc_ignore; do
+        test $dot_ig = x && continue
+        ig=$parent/$dot_ig
+        insert_vc_ignore "$ig" "${file##*/}"
+      done
+    }
+  done
+  IFS=$old_IFS
+  set +x
+
+  rm -f $tempbase.0 $tempbase.1
+  trap - 1 2 13 15
+fi
 
 # Import from gnulib.
 

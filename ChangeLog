@@ -1,3 +1,17 @@
+2012-05-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bootstrap: .gitignore files created by autopoint, libtool
+	I ran into this problem when bootstrapping the latest diffutils.
+	After './bootstrap', 'git status' reported lots of untracked files
+	m4/codeset.m4, m4/gettext.m4, etc.  These files were created by
+	autopoint and do not need to be version-controlled.
+	* build-aux/bootstrap: Put into .gitignore the files that
+	autopoint and libtool create, by keeping track of files that exist
+	after but not before these programs are run.
+	(version_controlled_file): Move up.  2nd arg is now full file
+	name, not base name; this is more convenient.  Put CVS at the end,
+	as it's now somewhat deprecated.
+
 2012-05-14  Jim Meyering  <meyering@redhat.com>
 
 	ignore-value.h: remove unused _GL_ATTRIBUTE_DEPRECATED definition
