@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 13, 2012
+@set lastupdate May 14, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -2232,6 +2232,7 @@ When referring to the collection of servers that is the higher level
 of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd''.
 Note that this uses a space, not a slash.
 
+
 @node Interviews and Speeches
 @chapter Interviews and Speeches
 
@@ -2251,16 +2252,16 @@ these basic questions:
 @itemize @bullet
 @item
 What GNU is (an operating system developed to be Unix-like and totally
-free software).  It is good to mention @url{gnu.org}.
+free software).  It is good to mention @url{http://www.gnu.org}.
 
 @item
 What free software is (the users control it, so it doesn't control
 them).  It is good to state the four freedoms and/or refer to
-@url{gnu.org/philosophy/free-sw.html}.
+@url{http://www.gnu.org/philosophy/free-sw.html}.
 
 @item
 What GNU/Linux is (Linux filled the last gap in GNU).  It is useful to
-refer to @url{gnu.org/gnu/linux-and-gnu.html}.
+refer to @url{http://www.gnu.org/gnu/linux-and-gnu.html}.
 
 @item
 What the GNU Project is (the project to develop GNU).
