@@ -1,3 +1,14 @@
+2012-05-15  Pádraig Brady  <P@draigBrady.com>
+
+	fsusage: fix block size returned on older Linux 2.6
+
+	* lib/fsusage.c: Fall back to (struct statfs).f_frsize
+	which is available since Linux 2.6.
+	* m4/fsusage.m4 (STAT_STATFS2_FRSIZE): Always define
+	when the member is available so it can be used as a fallback.
+	* doc/posix-functions/statvfs.texi: Mention the hang issue
+	on Linux < 2.6.36.
+
 2012-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	bootstrap: suppress stderr chatter
