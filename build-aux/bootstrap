@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2012-05-14.21; # UTC
+scriptversion=2012-05-15.06; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -307,7 +307,7 @@ insert_sorted_if_absent() {
   file=$1
   str=$2
   test -f $file || touch $file
-  echo "$str" | sort_patterns - $file | cmp - $file > /dev/null \
+  echo "$str" | sort_patterns - $file | cmp -s - $file > /dev/null \
     || { echo "$str" | sort_patterns - $file > $file.bak \
       && mv $file.bak $file; } \
     || exit 1
@@ -811,7 +811,6 @@ if test $with_gettext = yes || test $use_libtool = 1; then
     $LIBTOOLIZE $install --copy
   fi
 
-  set -x
   find . ! -type d -print | sort >$tempbase.1
   old_IFS=$IFS
   IFS=$nl
@@ -827,7 +826,6 @@ if test $with_gettext = yes || test $use_libtool = 1; then
     }
   done
   IFS=$old_IFS
-  set +x
 
   rm -f $tempbase.0 $tempbase.1
   trap - 1 2 13 15

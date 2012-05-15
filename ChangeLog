@@ -1,5 +1,10 @@
 2012-05-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	bootstrap: suppress stderr chatter
+	* build-aux/bootstrap (insert_sorted_if_absent, main program):
+	Omit unnecessary chatter to stderr.  The main program chatter
+	was there only inadvertantly.
+
 	bootstrap: .gitignore files created by autopoint, libtool
 	I ran into this problem when bootstrapping the latest diffutils.
 	After './bootstrap', 'git status' reported lots of untracked files
