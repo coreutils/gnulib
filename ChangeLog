@@ -11,7 +11,8 @@
 	Don't assume the buffer length is less than 2**32.
 	* lib/sha512.c (sha512_process_block): Likewise.
 	Here, the bug is present only in the rare case where the host does
-	not support uint64_t; use u64size to work around the problem.
+	not support uint64_t or where size_t is wider than 64 bits.
+	Use u64size to work around the problems.
 	* lib/u64.h (u64size): New macro.
 
 2012-05-15  Pádraig Brady  <P@draigBrady.com>

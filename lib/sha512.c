@@ -485,14 +485,15 @@ sha512_process_block (const void *buffer, size_t len, struct sha512_ctx *ctx)
   u64 f = ctx->state[5];
   u64 g = ctx->state[6];
   u64 h = ctx->state[7];
-  u64 len64 = u64size (len);
+  u64 lolen = u64size (len);
 
   /* First increment the byte count.  FIPS PUB 180-2 specifies the possible
      length of the file up to 2^128 bits.  Here we only compute the
      number of bytes.  Do a double word increment.  */
-  ctx->total[0] = u64plus (ctx->total[0], len64);
-  if (u64lt (ctx->total[0], len64))
-    ctx->total[1] = u64plus (ctx->total[1], u64lo (1));
+  ctx->total[0] = u64plus (ctx->total[0], lolen);
+  ctx->total[1] = u64plus (ctx->total[1],
+                           u64plus (u64size (len >> 31 >> 31 >> 2),
+                                    u64lo (u64lt (ctx->total[0], lolen))));
 
 #define S0(x) u64xor (u64rol(x, 63), u64xor (u64rol (x, 56), u64shr (x, 7)))
 #define S1(x) u64xor (u64rol (x, 45), u64xor (u64rol (x, 3), u64shr (x, 6)))
