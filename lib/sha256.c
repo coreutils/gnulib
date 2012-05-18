@@ -454,13 +454,13 @@ sha256_process_block (const void *buffer, size_t len, struct sha256_ctx *ctx)
   uint32_t f = ctx->state[5];
   uint32_t g = ctx->state[6];
   uint32_t h = ctx->state[7];
+  uint32_t lolen = len;
 
   /* First increment the byte count.  FIPS PUB 180-2 specifies the possible
      length of the file up to 2^64 bits.  Here we only compute the
      number of bytes.  Do a double word increment.  */
-  ctx->total[0] += len;
-  if (ctx->total[0] < len)
-    ++ctx->total[1];
+  ctx->total[0] += lolen;
+  ctx->total[1] += (len >> 31 >> 1) + (ctx->total[0] < lolen);
 
 #define rol(x, n) (((x) << (n)) | ((x) >> (32 - (n))))
 #define S0(x) (rol(x,25)^rol(x,14)^(x>>3))

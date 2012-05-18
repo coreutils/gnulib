@@ -305,13 +305,13 @@ sha1_process_block (const void *buffer, size_t len, struct sha1_ctx *ctx)
   uint32_t c = ctx->C;
   uint32_t d = ctx->D;
   uint32_t e = ctx->E;
+  uint32_t lolen = len;
 
   /* First increment the byte count.  RFC 1321 specifies the possible
      length of the file up to 2^64 bits.  Here we only compute the
      number of bytes.  Do a double word increment.  */
-  ctx->total[0] += len;
-  if (ctx->total[0] < len)
-    ++ctx->total[1];
+  ctx->total[0] += lolen;
+  ctx->total[1] += (len >> 31 >> 1) + (ctx->total[0] < lolen);
 
 #define rol(x, n) (((x) << (n)) | ((uint32_t) (x) >> (32 - (n))))
 
