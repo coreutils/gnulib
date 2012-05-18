@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 14, 2012
+@set lastupdate May 17, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -985,12 +985,12 @@ want to use a general-purpose free software module which offers a
 useful functionality, as a ``library'' facility (though the module is
 not always packaged technically as a library).
 
-Make sure the license of the module is compatible with current <em>and
-future</em> GPL versions.  ``GNU GPL version 3 or later'' is good, and
+Make sure the license of the module is compatible with current @emph{and
+future} GPL versions.  ``GNU GPL version 3 or later'' is good, and
 so is anything which includes permission for use under those GPL
 versions (including ``GNU GPL version 2 or later'', ``LGPL version
-<em>n</em> or later'', ``LGPL version 2.1'', ``GNU Affero GPL version
-3 or later'').  Lax permissive licenses are ok too, since they are
+@var{n} or later'', ``LGPL version 2.1'', ``GNU Affero GPL version 3
+or later'').  Lax permissive licenses are ok too, since they are
 compatible with all GPL versions.
 
 ``GPL version 2 only'' is obviously unacceptable because it is
