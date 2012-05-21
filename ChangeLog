@@ -1,3 +1,9 @@
+2012-05-21  Simon Josefsson  <simon@josefsson.org>
+
+	* m4/gc.m4: Reject libgcrypt earlier than 1.4.4.  Collapse
+	copyright years because the file has been distributed every year
+	since it was created.
+
 2012-05-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	crypto: fix bug in large buffer handling
