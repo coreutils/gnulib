@@ -385,6 +385,10 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
         }
     }
 
+  /* Place a sentinel at the end of the array.  */
+  handle_array[nhandles] = NULL;
+
+restart:
   if (wait_timeout == 0 || nsock == 0)
     rc = 0;
   else
@@ -427,13 +431,44 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
   if (rc == 0 && nsock > 0)
     rc = select (0, &handle_rfds, &handle_wfds, &handle_xfds, &tv0);
 
+  if (nhandles > 1)
+    {
+      /* Count results that are not counted in the return value of select.  */
+      nhandles = 1;
+      for (i = 0; i < nfds; i++)
+        {
+          if ((anyfds_in[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))) == 0)
+            continue;
+
+          h = (HANDLE) _get_osfhandle (i);
+          if (h == handle_array[nhandles])
+            {
+              /* Not a socket.  */
+              nhandles++;
+              windows_poll_handle (h, i, &rbits, &wbits, &xbits);
+              if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
+                  || wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1)))
+                  || xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
+                rc++;
+            }
+        }
+
+      if (rc == 0 && wait_timeout == INFINITE)
+        {
+          /* Sleep 1 millisecond to avoid busy wait and retry with the
+             original fd_sets.  */
+          memcpy (&handle_rfds, rfds, sizeof (fd_set));
+          memcpy (&handle_wfds, wfds, sizeof (fd_set));
+          memcpy (&handle_xfds, xfds, sizeof (fd_set));
+          SleepEx (1, TRUE);
+          goto restart;
+        }
+    }
+
   /* Now fill in the results.  */
   FD_ZERO (rfds);
   FD_ZERO (wfds);
   FD_ZERO (xfds);
-
-  /* Place a sentinel at the end of the array.  */
-  handle_array[nhandles] = NULL;
   nhandles = 1;
   for (i = 0; i < nfds; i++)
     {
@@ -443,8 +478,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
       h = (HANDLE) _get_osfhandle (i);
       if (h != handle_array[nhandles])
         {
-          /* Perform handle->descriptor mapping.  Don't update rc, as these
-             results are counted in the return value of Winsock's select.  */
+          /* Perform handle->descriptor mapping.  */
           WSAEventSelect ((SOCKET) h, NULL, 0);
           if (FD_ISSET (h, &handle_rfds))
             FD_SET (i, rfds);
@@ -457,22 +491,12 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
         {
           /* Not a socket.  */
           nhandles++;
-          windows_poll_handle (h, i, &rbits, &wbits, &xbits);
           if (rbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            {
-              rc++;
-              FD_SET (i, rfds);
-            }
+            FD_SET (i, rfds);
           if (wbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            {
-              rc++;
-              FD_SET (i, wfds);
-            }
+            FD_SET (i, wfds);
           if (xbits.out[i / CHAR_BIT] & (1 << (i & (CHAR_BIT - 1))))
-            {
-              rc++;
-              FD_SET (i, xfds);
-            }
+            FD_SET (i, xfds);
         }
     }
 

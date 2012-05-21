@@ -1,3 +1,15 @@
+2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
+
+	poll/select: prevent busy-waiting.  SwitchToThread() only gives away
+	the rest of the current time slice to another thread in the current
+	process. So if the thread that feeds the file decscriptor we're
+	polling is not in the current process, we get busy-waiting.
+	* lib/poll.c: Use SleepEx(1, TRUE) instead of SwitchToThread().
+	Patch from Theodore Leblond.
+	* lib/select.c: Split polling out of the loop that sets the output
+	fd_sets.  Check for zero result and loop if the wait timeout is
+	infinite.
+
 2012-05-21  Eric Blake  <eblake@redhat.com>
 
 	strdup: undeprecate, IRIX 6.5 needs it
