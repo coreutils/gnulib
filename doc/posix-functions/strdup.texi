@@ -9,7 +9,8 @@ Gnulib module: strdup or strdup-posix
 Portability problems fixed by either Gnulib module @code{strdup} or @code{strdup-posix}:
 @itemize
 @item
-This function is missing on some old platforms.
+This function is missing on some platforms:
+IRIX 6.5.
 @item
 This function has no prototype in @code{<string.h>} on some old platforms.
 @end itemize
