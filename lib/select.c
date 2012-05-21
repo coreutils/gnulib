@@ -482,6 +482,7 @@ rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
 #else /* ! Native Windows.  */
 
 #include <sys/select.h>
+#include <stddef.h> /* NULL */
 
 #undef select
 
