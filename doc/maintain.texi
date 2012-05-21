@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 17, 2012
+@set lastupdate May 20, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -1495,6 +1495,7 @@ before they are made publicly available.
 @menu
 * Automated Upload Registration::
 * Automated Upload Procedure::
+* FTP Upload Directive File - v1.2::
 * FTP Upload Directive File - v1.1::
 * FTP Upload Directive File - v1.0::
 @end menu
@@ -1510,7 +1511,6 @@ Here is how to register your information so you can perform uploads
 for your GNU package:
 
 @enumerate
-
 @item
 Create an account for yourself at @url{http://savannah.gnu.org}, if
 you don't already have one.  By the way, this is also needed to
@@ -1598,7 +1598,7 @@ the file to be distributed, with an additional @file{.directive.asc}
 extension. If you do not follow this naming convention, the upload
 @emph{will not be processed}.
 
-Since v1.1 of the upload script, it is also possible to upload a
+Since v1.1 of the upload directives, it is also possible to upload a
 clearsigned directive file on its own (no accompanying @file{.sig} or
 any other file) to perform certain operations on the server.
 @xref{FTP Upload Directive File - v1.1}, for more information.
@@ -1639,6 +1639,43 @@ processed at
 @url{https://lists.gnu.org/archive/html/ftp-upload-report}.
 
 
+@node FTP Upload Directive File - v1.2
+@subsection FTP Upload Directive File - v1.2
+
+All the directives and documentation for v1.1 of the protocol still
+apply.  @xref{FTP Upload Directive File - v1.1}, for more information.
+
+@subheading New directive @code{replace}
+
+@cindex replacing uploaded files
+@cindex uploads, replacing
+As part of an uploaded triplet, a @file{foo.tar.gz.directive.asc} file
+might contain these lines (before being GPG-clearsigned):
+
+@example
+version: 1.2
+directory: bar/v1
+filename: foo.tar.gz
+comment: hello world!
+@end example
+
+If @file{foo.tar.gz} exists prior to upload, this directive file will
+result in an error.  Prior to May 2012, the behavior (of v1.1) was
+different: any existing files were automatically archived and replaced
+with the new upload.  Since May 2012, no files are replaced unless the
+(new) @code{replace} directive is set to @code{true} in the directive
+file.  That directive requires version 1.2 of the protocol.  For
+example:
+
+@example
+version: 1.2
+directory: bar/v1
+filename: foo.tar.gz
+replace: true
+comment: hello world!
+@end example
+
+
 @node FTP Upload Directive File - v1.1
 @subsection FTP Upload Directive File - v1.1
 
@@ -1646,7 +1683,7 @@ The directive file name must end in @file{directive.asc}.
 
 When part of a triplet, the directive file must always contain the
 directives @code{version}, @code{directory} and @code{filename}, as
-described. In addition, a 'comment' directive is allowed.
+described. In addition, a @code{comment} directive is allowed.
 
 The @code{version} directive must always have the value @samp{1.1}.
 
@@ -1676,17 +1713,19 @@ authenticates the signatures, the files @file{foo.tar.gz} and
 @file{gnu/bar/v1} of the @code{ftp.gnu.org} site.
 
 The directive file can be used to create currently non-existent
-directory trees, as long as they are under the package directory for
-your package (in the example above, that is @code{bar}).
+directory trees, as long as they are under the directory for your
+package (in the example above, the package directory is @code{bar}).
 
 If you upload a file that already exists in the FTP directory, the
 original will simply be archived and replaced with the new upload.
+There is no automated or online access to archived files; if you want
+to retrieve or view them, please email sysadmin.
 
 @subheading Standalone directives
 
-When uploaded by itself, the directive file must contain one or more
-of the directives @code{symlink}, @code{rmsymlink} or @code{archive},
-in addition to the obligatory @code{directory} and @code{version}
+When uploaded by itself, a directive file must contain one or more of
+the directives @code{symlink}, @code{rmsymlink} or @code{archive}, in
+addition to the obligatory @code{directory} and @code{version}
 directives.  A @code{filename} directive is not allowed, and a
 @code{comment} directive remains optional.
 
@@ -1758,11 +1797,8 @@ comment: now do everything at once
 @node FTP Upload Directive File - v1.0
 @subsection FTP Upload Directive File - v1.0
 
-@dfn{As of June 2006, the upload script is running in compatibility
-mode, allowing uploads with either version@tie{}1.1 or
-version@tie{}1.0 of the directive file syntax.  Support for v1.0
-uploads will be phased out by the end of 2006, so please upgrade
-to@tie{}v1.1.}
+Support for v1.0 uploads was phased out in May 2012; please upgrade
+to@tie{}v1.2.
 
 The directive file should contain one line, excluding the clearsigned
 data GPG that inserts, which specifies the final destination directory
