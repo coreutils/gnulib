@@ -1,3 +1,9 @@
+2012-05-15  Akim Demaille  <akim@lrde.epita.fr>
+
+	gitlog-to-changelog: support the log message format used in Bison.
+	* build-aux/gitlog-to-changelog: Support --strip-tab and
+	--strip-cherry-picked.
+
 2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
 
 	poll/select: prevent busy-waiting.  SwitchToThread() only gives away

@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-01-18 07:50'; # UTC
+my $VERSION = '2012-05-22 09:40'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -73,7 +73,10 @@ OPTIONS:
    --format=FMT set format string for commit subject and body;
                   see 'man git-log' for the list of format metacharacters;
                   the default is '%s%n%b%n'
-
+   --strip-tab  remove one additional leading TAB from commit message lines.
+   --strip-cherry-pick  remove data inserted by "git cherry-pick";
+                  this includes the "cherry picked from commit ..." line,
+                  and the possible final "Conflicts:" paragraph.
    --help       display this help and exit
    --version    output version information and exit
 
@@ -195,6 +198,8 @@ sub parse_amend_file($)
   my $amend_file;
   my $append_dot = 0;
   my $cluster = 1;
+  my $strip_tab = 0;
+  my $strip_cherry_pick = 0;
   GetOptions
     (
      help => sub { usage 0 },
@@ -204,6 +209,8 @@ sub parse_amend_file($)
      'amend=s' => \$amend_file,
      'append-dot' => \$append_dot,
      'cluster!' => \$cluster,
+     'strip-tab' => \$strip_tab,
+     'strip-cherry-pick' => \$strip_cherry_pick,
     ) or usage 1;
 
 
@@ -261,6 +268,13 @@ sub parse_amend_file($)
 
           # Update $rest upon success.
           $rest = $_;
+        }
+
+      # Remove lines inserted by "git cherry-pick".
+      if ($strip_cherry_pick)
+        {
+          $rest =~ s/^\s*Conflicts:\n.*//sm;
+          $rest =~ s/^\s*\(cherry picked from commit [\da-f]+\)\n//m;
         }
 
       my @line = split "\n", $rest;
@@ -346,6 +360,10 @@ sub parse_amend_file($)
                     or $line[0] .= '.';
                 }
             }
+
+          # Remove one additional leading TAB from each line.
+          $strip_tab
+            and map { s/^\t// } @line;
 
           # Prefix each non-empty line with a TAB.
           @line = map { length $_ ? "\t$_" : '' } @line;
