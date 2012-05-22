@@ -1,6 +1,12 @@
 Description:
 strdup() function: duplicate a string.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. But you may want to use the strdup-posix module.
+
 Files:
 lib/strdup.c
 m4/strdup.m4

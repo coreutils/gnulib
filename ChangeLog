@@ -10,12 +10,6 @@
 	fd_sets.  Check for zero result and loop if the wait timeout is
 	infinite.
 
-2012-05-21  Eric Blake  <eblake@redhat.com>
-
-	strdup: undeprecate, IRIX 6.5 needs it
-	* modules/strdup (Status): No longer obsolete.
-	* doc/posix-functions/strdup.texi (strdup): Document this.
-
 2012-05-21  Simon Josefsson  <simon@josefsson.org>
 
 	select: Fix build error on IRIX 6.5.
