@@ -506,7 +506,6 @@ restart:
 #else /* ! Native Windows.  */
 
 #include <sys/select.h>
-#include <stddef.h> /* NULL */
 
 #undef select
 

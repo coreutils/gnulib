@@ -12,11 +12,6 @@
 
 2012-05-21  Simon Josefsson  <simon@josefsson.org>
 
-	select: Fix build error on IRIX 6.5.
-	* lib/select.c: Include stddef.h for NULL.
-
-2012-05-21  Simon Josefsson  <simon@josefsson.org>
-
 	gc: fix libgcrypt detection on older machines.
 	* m4/gc.m4: Reject libgcrypt earlier than 1.4.4.  Collapse
 	copyright years because the file has been distributed every year
