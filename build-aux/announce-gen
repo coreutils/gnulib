@@ -103,13 +103,13 @@ sub sizes (@)
   my %res;
   foreach my $f (@file)
     {
-      my $cmd = "du --human $f";
+      my $cmd = "du -h $f";
       my $t = `$cmd`;
       # FIXME-someday: give a better diagnostic, a la $PROCESS_STATUS
       $@
         and (warn "command failed: '$cmd'\n"), $fail = 1;
       chomp $t;
-      $t =~ s/^([\d.]+[MkK]).*/${1}B/;
+      $t =~ s/^\s*([\d.]+[MkK]).*/${1}B/;
       $res{$f} = $t;
     }
   return $fail ? undef : %res;
