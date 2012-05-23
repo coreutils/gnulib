@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2012-04-19 14:36'; # UTC
+my $VERSION = '2012-05-23 08:55'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -107,7 +107,7 @@ sub sizes (@)
       my $t = `$cmd`;
       # FIXME-someday: give a better diagnostic, a la $PROCESS_STATUS
       $@
-        and (warn "$ME: command failed: '$cmd'\n"), $fail = 1;
+        and (warn "command failed: '$cmd'\n"), $fail = 1;
       chomp $t;
       $t =~ s/^([\d.]+[MkK]).*/${1}B/;
       $res{$f} = $t;
@@ -311,7 +311,7 @@ sub print_changelog_deltas ($$)
   # The exit code should be 1.
   # Allow in case there are no modified ChangeLog entries.
   $? == 256 || $? == 128
-    or warn "$ME: warning: '$cmd' had unexpected exit code or signal ($?)\n";
+    or warn "warning: '$cmd' had unexpected exit code or signal ($?)\n";
 }
 
 sub get_tool_versions ($$)
@@ -341,7 +341,7 @@ sub get_tool_versions ($$)
         {
           defined $first_line
             and $first_line = '';
-          warn "$ME: $t: unexpected --version output\n:$first_line";
+          warn "$t: unexpected --version output\n:$first_line";
           $fail = 1;
         }
     }
@@ -369,6 +369,15 @@ sub get_tool_versions ($$)
   my $gnulib_version;
   my $print_checksums_p = 1;
 
+  # Reformat the warnings before displaying them.
+  local $SIG{__WARN__} = sub
+    {
+      my ($msg) = @_;
+      # Warnings from GetOptions.
+      $msg =~ s/Option (\w)/option --$1/;
+      warn "$ME: $msg";
+    };
+
   GetOptions
     (
      'mail-headers=s'     => \$mail_headers,
@@ -389,32 +398,32 @@ sub get_tool_versions ($$)
     ) or usage 1;
 
   my $fail = 0;
-  # Ensure that sure each required option is specified.
+  # Ensure that each required option is specified.
   $release_type
-    or (warn "$ME: release type not specified\n"), $fail = 1;
+    or (warn "release type not specified\n"), $fail = 1;
   $package_name
-    or (warn "$ME: package name not specified\n"), $fail = 1;
+    or (warn "package name not specified\n"), $fail = 1;
   $prev_version
-    or (warn "$ME: previous version string not specified\n"), $fail = 1;
+    or (warn "previous version string not specified\n"), $fail = 1;
   $curr_version
-    or (warn "$ME: current version string not specified\n"), $fail = 1;
+    or (warn "current version string not specified\n"), $fail = 1;
   $gpg_key_id
-    or (warn "$ME: GnuPG key ID not specified\n"), $fail = 1;
+    or (warn "GnuPG key ID not specified\n"), $fail = 1;
   @url_dir_list
-    or (warn "$ME: URL directory name(s) not specified\n"), $fail = 1;
+    or (warn "URL directory name(s) not specified\n"), $fail = 1;
 
   my @tool_list = split ',', $bootstrap_tools;
 
   grep (/^gnulib$/, @tool_list) ^ defined $gnulib_version
-    and (warn "$ME: when specifying gnulib as a tool, you must also specify\n"
+    and (warn "when specifying gnulib as a tool, you must also specify\n"
         . "--gnulib-version=V, where V is the result of running git describe\n"
         . "in the gnulib source directory.\n"), $fail = 1;
 
   exists $valid_release_types{$release_type}
-    or (warn "$ME: '$release_type': invalid release type\n"), $fail = 1;
+    or (warn "'$release_type': invalid release type\n"), $fail = 1;
 
   @ARGV
-    and (warn "$ME: too many arguments:\n", join ("\n", @ARGV), "\n"),
+    and (warn "too many arguments:\n", join ("\n", @ARGV), "\n"),
       $fail = 1;
   $fail
     and usage 1;

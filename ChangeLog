@@ -1,5 +1,12 @@
 2012-05-23  Akim Demaille  <akim@lrde.epita.fr>
 
+	announce-gen: Improve diagnostics.
+	* build-aux/announce-gen: When parsing command line options,
+	prefer "announce-gen: option --release-type requires an argument"
+	to "Option release-type requires an argument".
+
+2012-05-23  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: gpg_key_ID: use sed more portably
 	* top/maint.mk (gpg_key_ID): End sed block with a semicolon before
 	the closing brace.
