@@ -1,3 +1,15 @@
+2012-05-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: sync from glibc
+	* config/srclist.txt: Uncomment mktime.c.
+	* lib/mktime.c: Sync from glibc master.  This incorporates 3 changes.
+	First, indent with tabs, since glibc uses tabs and doesn't want to
+	change and we'd rather be identical to glibc.  Also, two small
+	coding changes:
+	(isdst_differ): Use &&, not &, as && is the usual style.
+	(__mktime_internal): Rename local var from abs_diff to approx_abs_diff
+	for clarity.
+
 2012-05-23  Akim Demaille  <akim@lrde.epita.fr>
 
 	announce-gen: du -h is more portable than du --human
