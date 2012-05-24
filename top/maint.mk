@@ -1234,7 +1234,7 @@ bootstrap-tools ?= autoconf,automake,gnulib
 gpg_key_ID ?= \
   $$(git cat-file tag v$(VERSION) \
      | gpgv --status-fd 1 --keyring /dev/null - - 2>/dev/null \
-     | sed -n '/^\[GNUPG:\] ERRSIG /{s///;s/ .*//p;q;}')
+     | awk '/^\[GNUPG:\] ERRSIG / {print $3; exit}')
 
 translation_project_ ?= coordinator@translationproject.org
 

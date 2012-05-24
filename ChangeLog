@@ -1,3 +1,11 @@
+2012-05-24  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: compute $(gpg_key_ID) more portably
+	* top/maint.mk (gpg_key_ID): Use awk in place of sed '{...;...;}'.
+	That use of sed is not portable to some fringe systems.
+	Reported by Paul Eggert in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/30793/focus=30802
+
 2012-05-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: sync from glibc
