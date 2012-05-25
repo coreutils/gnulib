@@ -332,6 +332,14 @@ sc_prohibit_strcmp:
 	halt='$(ME): replace strcmp calls above with STREQ/STRNEQ'	\
 	  $(_sc_search_regexp)
 
+# Really.  You don't want to use this function.
+# It may fail to NUL-terminate the destination,
+# and always NUL-pads out to the specified length.
+sc_prohibit_strncpy:
+	@prohibit='\<strncpy *\('					\
+	halt='do not use strncpy, period'				\
+	  $(_sc_search_regexp)
+
 # Pass EXIT_*, not number, to usage, exit, and error (when exiting)
 # Convert all uses automatically, via these two commands:
 # git grep -l '\<exit *(1)' \

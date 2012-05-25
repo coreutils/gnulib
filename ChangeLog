@@ -1,3 +1,8 @@
+2012-05-25  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add strncpy-prohibiting syntax-check rule
+	* top/maint.mk (sc_prohibit_strncpy): New rule, from coreutils.
+
 2012-05-24  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: compute $(gpg_key_ID) more portably
