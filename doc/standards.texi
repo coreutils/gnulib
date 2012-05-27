@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 7, 2012
+@set lastupdate May 26, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -3558,9 +3558,9 @@ function, because there should be a comment before the function
 definition to explain what it does.
 
 In the past, we recommended not mentioning changes in non-software
-files (manuals, help files, etc.) in change logs.  However, we've been
-advised that it is a good idea to include them, for the sake of
-copyright records.
+files (manuals, help files, media files, etc.)@: in change logs.
+However, we've been advised that it is a good idea to include them,
+for the sake of copyright records.
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
 command @kbd{M-x add-change-log-entry}.  An entry should have an
