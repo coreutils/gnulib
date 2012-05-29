@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <string.h>
 
+/* Do not use any gnulib replacements, since this program should
+   link against as few libraries as possible.  */
+#undef fclose
+#undef fprintf
+
 #define EXPECTED_DATA_FILE "t-sq-data.tmp"
 
 int

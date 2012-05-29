@@ -1,3 +1,10 @@
+2012-05-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	system-quote-tests: port to CentOS 5
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-05/msg00255.html>.
+	* tests/test-system-quote-child.c (fclose, fprintf): Undef.
+
 2012-05-29  Jim Meyering  <meyering@redhat.com>
 
 	maint: fix typos in comments and ChangeLog
