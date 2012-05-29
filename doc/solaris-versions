@@ -22,7 +22,7 @@ Starting with 4.1.1B of SunOS we have the 'Solaris 1.0' release.
        SunOS 4.1.3_U1B == Solaris 1.1.1B
        SunOS 4.1.4     == Solaris 1.1.2
 
-The SunOS 5.x uname output maps to the Solaris 2.x numbers thru 2.6
+The SunOS 5.x uname output maps to the Solaris 2.x numbers through 2.6
 
        SunOS 5.0       == Solaris 2.0
        SunOS 5.1       == Solaris 2.1

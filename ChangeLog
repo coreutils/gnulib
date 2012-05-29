@@ -1,3 +1,15 @@
+2012-05-29  Jim Meyering  <meyering@redhat.com>
+
+	maint: fix typos in comments and ChangeLog
+	Culprits identified and fixed mostly automatically using these commands:
+	git ls-files | misspellings -f - |grep -v '^ERROR:' |perl -pe \
+	's/^(.*?)\[(\d+)\]: (\w+) -> "(.*?)"$/sed -i '\''${2}s!$3!$4!'\'' $1/'
+	using http://github.com/lyda/misspell-check
+	* ChangeLog: Fix typos.
+	* doc/solaris-versions: Likewise.
+	* lib/regexec.c (re_search_stub): Likewise.
+	* m4/mmap-anon.m4 (gl_FUNC_MMAP_ANON): Likewise.
+
 2012-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	manywarnings: remove duplicate -Wmultichar entry
@@ -21590,7 +21602,7 @@
 	behavior match Linux.
 	* tests/test-c-stack.c (main): Prefer NULL for pointers.
 
-	stdbool-tests: accomodate Haiku
+	stdbool-tests: accommodate Haiku
 	* tests/test-stdbool.c: Haiku's gcc 2.95 lacks native _Bool.
 
 	binary-io: fix O_TEXT on Haiku
@@ -26043,7 +26055,7 @@
 	* tests/test-sys_wait.c (main): Relax test.
 	* tests/test-stdlib.c (main): Likewise.
 
-	init.sh: accomodate directory with no .exes
+	init.sh: accommodate directory with no .exes
 	* tests/init.sh: Accomodate directory containing only scripts.
 
 	tests: avoid compiler warning
@@ -39159,7 +39171,7 @@
 
 2009-11-14  John W. Eaton  <jwe@gnu.org>
 
-	strftime.h: wrap funtion declaration in extern "C" block
+	strftime.h: wrap function declaration in extern "C" block
 	* lib/strftime.h (nstrftime) [__cplusplus]: Wrap declaration.
 
 2009-11-13  Eric Blake  <ebb9@byu.net>
@@ -41906,7 +41918,7 @@
 	reversed sense of yes and no in prior patch.  Avoid confusing
 	compilation failure with desired semantics.
 
-	link-follow: accomodate mingw and cross-compilation
+	link-follow: accommodate mingw and cross-compilation
 	* m4/link-follow.m4 (gl_AC_FUNC_LINK_FOLLOWS_SYMLINK): Rename...
 	(gl_FUNC_LINK_FOLLOWS_SYMLINK): ...to this.  Change
 	cross-compilation results to -1, to make linkat easier to
@@ -46919,7 +46931,7 @@
 
 	test-getaddrinfo: fix usage of skip return code 77
 	* tests/test-gettaddrinfo.c: Return skip code 77 only
-	for first occurance of skip (4x77 is not 77)
+	for first occurrence of skip (4x77 is not 77)
 
 2009-02-25  Gary V. Vaughan  <gary@gnu.org>
 
@@ -59373,7 +59385,7 @@
 2007-12-01  Eric Blake  <ebb9@byu.net>
 
 	* m4/stdio_h.m4 (gl_STDIN_LARGE_OFFSET) [__CYGWIN__]: Rewrite to
-	accomodate fix in cygwin 1.5.25.
+	accommodate fix in cygwin 1.5.25.
 
 2007-12-01  Jim Meyering  <meyering@redhat.com>
 
@@ -67350,7 +67362,7 @@
 	(SIZE): New macro.
 	(FUNC): Compare only SIZE bytes of the value.
 	* lib/vasnprintf.c: Include float+.h.
-	(VASNPRINTF): When comparing agains +0.0L or +0.0, compare only
+	(VASNPRINTF): When comparing against +0.0L or +0.0, compare only
 	SIZEOF_LDBL or SIZEOF_DBL bytes.
 	* modules/isnan-nolibm (Files): Add lib/float+.h.
 	* modules/isnanl-nolibm (Files): Add lib/float+.h.
@@ -83753,7 +83765,7 @@
 	(local_zone): Accumulate dsts_seen rather than relying on tm_isdst
 	not being INT_MAX.
 	(get_date): Initialize dsts_seen, and check that it doesn't go over 1.
-	Use pc_rels_seen to decide whther a date is absolute.
+	Use pc_rels_seen to decide whether a date is absolute.
 
 	* lib/getdate.y (number): Don't overwrite year.
 	(get_date): Initialize pc.year.digits to 0, not 4, to enable above
