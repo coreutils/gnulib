@@ -1,3 +1,9 @@
+2012-05-31  Jim Meyering  <meyering@redhat.com>
+
+	savewd: add missing dependency on sys_wait module
+	* modules/savewd (Depends-on): Add sys_wait, needed at least
+	for MSVC.  Report and suggested change by Michael Goffioul.
+
 2012-05-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	system-quote-tests: port to CentOS 5
