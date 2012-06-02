@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 26, 2012
+@set lastupdate June 1, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -3531,11 +3531,16 @@ history of how the conflicting concepts arose and who they came from.
 @node Change Log Concepts
 @subsection Change Log Concepts
 
+@cindex change set
+@cindex batch of changes
 You can think of the change log as a conceptual ``undo list'' which
 explains how earlier versions were different from the current version.
-People can see the current version; they don't need the change log
-to tell them what is in it.  What they want from a change log is a
-clear explanation of how the earlier version differed.
+People can see the current version; they don't need the change log to
+tell them what is in it.  What they want from a change log is a clear
+explanation of how the earlier version differed.  Each @dfn{entry} in
+a change log describes either an individual change or the smallest
+batch of changes that belong together, also known as a @dfn{change
+set}.
 
 The change log file is normally called @file{ChangeLog} and covers an
 entire directory.  Each directory can have its own change log, or a
@@ -3549,7 +3554,7 @@ to a @file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
 
 There's no need to describe the full purpose of the changes or how
 they work together.  However, sometimes it is useful to write one line
-to describe the overall purpose of a change or a batch of changes.  If
+to describe the overall purpose of a change log entry.  If
 you think that a change calls for explanation, you're probably right.
 Please do explain it---but please put the full explanation in comments
 in the code, where people will see it whenever they see the code.  For
@@ -3563,10 +3568,12 @@ However, we've been advised that it is a good idea to include them,
 for the sake of copyright records.
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
-command @kbd{M-x add-change-log-entry}.  An entry should have an
-asterisk, the name of the changed file, and then in parentheses the name
-of the changed functions, variables or whatever, followed by a colon.
-Then describe the changes you made to that function or variable.
+command @kbd{M-x add-change-log-entry}.  An individual change should
+have an asterisk, the name of the changed file, and then in
+parentheses the name of the changed functions, variables or whatever,
+followed by a colon.  Then describe the changes you made to that
+function or variable.
+
 
 @node Style of Change Logs
 @subsection Style of Change Logs
@@ -3605,10 +3612,10 @@ names by writing @samp{* register.el (@{insert,jump-to@}-register)};
 this is not a good idea, since searching for @code{jump-to-register} or
 @code{insert-register} would not find that entry.
 
-Separate unrelated change log entries with blank lines.  When two
-entries represent parts of the same change, so that they work together,
-then don't put blank lines between them.  Then you can omit the file
-name and the asterisk when successive entries are in the same file.
+Separate unrelated change log entries with blank lines.  Don't put
+blank lines between individual changes of an entry.  You can omit the
+file name and the asterisk when successive individual changes are in
+the same file.
 
 Break long lists of function names by closing continued lines with
 @samp{)}, rather than @samp{,}, and opening the continuation with
@@ -3733,8 +3740,9 @@ Finally, here is an entry for a change that takes effect only when
 a certain macro is @emph{not} defined:
 
 @example
-(gethostname) [!HAVE_SOCKETS]: Replace with winsock version.
+* host.c (gethostname) [!HAVE_SOCKETS]: Replace with winsock version.
 @end example
+
 
 @node Indicating the Part Changed
 @subsection Indicating the Part Changed
