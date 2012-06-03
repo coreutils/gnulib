@@ -1,3 +1,19 @@
+2012-06-03  Bruno Haible  <bruno@clisp.org>
+
+	error, strerror-override: Support new errno values from POSIX:2008.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Test also EOWNERDEAD and
+	ENOTRECOVERABLE.
+	* lib/errno.in.h (EOWNERDEAD, ENOTRECOVERABLE): Define on all
+	platforms.
+	* lib/strerror-override.c (strerror_override): Conditionalize the
+	EOWNERDEAD, ENOTRECOVERABLE handling on GNULIB_defined_EOWNERDEAD.
+	* lib/strerror-override.h (strerror_override): Declare also if
+	GNULIB_defined_EOWNERDEAD is defined.
+	* tests/test-errno.c (e130, e131): New variables.
+	* doc/posix-headers/errno.texi: Mention the status for EOWNERDEAD,
+	ENOTRECOVERABLE.
+	Reported by Paolo Bonzini.
+
 2012-05-31  Jim Meyering  <meyering@redhat.com>
 
 	savewd: add missing dependency on sys_wait module

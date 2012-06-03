@@ -84,6 +84,12 @@
 #   define GNULIB_defined_ECANCELED 1
 #  endif
 
+#  ifndef EOWNERDEAD
+#   define EOWNERDEAD      133
+#   define ENOTRECOVERABLE 127
+#   define GNULIB_defined_EOWNERDEAD 1
+#  endif
+
 #  ifndef EINPROGRESS
 #   define EINPROGRESS     112
 #   define EALREADY        103
@@ -112,8 +118,6 @@
 #   define ENODATA         120  /* not required by POSIX */
 #   define ENOSR           124  /* not required by POSIX */
 #   define ENOSTR          125  /* not required by POSIX */
-#   define ENOTRECOVERABLE 127  /* not required by POSIX */
-#   define EOWNERDEAD      133  /* not required by POSIX */
 #   define ETIME           137  /* not required by POSIX */
 #   define EOTHER          131  /* not required by POSIX */
 #   define GNULIB_defined_ESOCK 1
@@ -227,6 +231,35 @@
 #  define GNULIB_defined_ECANCELED 1
 # endif
 
+/* On many platforms, the macros EOWNERDEAD and ENOTRECOVERABLE are not
+   defined.  */
+
+# ifndef EOWNERDEAD
+#  if defined __sun
+    /* Use the same values as defined for Solaris >= 8, for
+       interoperability.  */
+#   define EOWNERDEAD      58
+#   define ENOTRECOVERABLE 59
+#  elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+    /* We have a conflict here: pthreads-win32 defines these values
+       differently than MSVC 10.  It's hairy to decide which one to use.  */
+#   if defined __MINGW32__ && !defined USE_WINDOWS_THREADS
+     /* Use the same values as defined by pthreads-win32, for
+        interoperability.  */
+#    define EOWNERDEAD      43
+#    define ENOTRECOVERABLE 44
+#   else
+     /* Use the same values as defined by MSVC 10, for
+        interoperability.  */
+#    define EOWNERDEAD      133
+#    define ENOTRECOVERABLE 127
+#   endif
+#  else
+#   define EOWNERDEAD      2013
+#   define ENOTRECOVERABLE 2014
+#  endif
+#  define GNULIB_defined_EOWNERDEAD 1
+# endif
 
 #endif /* _@GUARD_PREFIX@_ERRNO_H */
 #endif /* _@GUARD_PREFIX@_ERRNO_H */

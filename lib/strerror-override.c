@@ -97,10 +97,6 @@ strerror_override (int errnum)
       return "Out of streams resources";
     case ENOSTR:
       return "Device not a stream";
-    case ENOTRECOVERABLE:
-      return "State not recoverable";
-    case EOWNERDEAD:
-      return "Owner died";
     case ETIME:
       return "Timer expired";
     case EOTHER:
@@ -281,6 +277,13 @@ strerror_override (int errnum)
 #if GNULIB_defined_ECANCELED
     case ECANCELED:
       return "Operation canceled";
+#endif
+
+#if GNULIB_defined_EOWNERDEAD
+    case EOWNERDEAD:
+      return "Owner died";
+    case ENOTRECOVERABLE:
+      return "State not recoverable";
 #endif
 
     default:

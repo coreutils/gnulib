@@ -98,6 +98,8 @@ int e115 = EINPROGRESS;
 int e116 = ESTALE;
 int e122 = EDQUOT;
 int e125 = ECANCELED;
+int e130 = EOWNERDEAD;
+int e131 = ENOTRECOVERABLE;
 
 /* Don't verify that these errno values are all different, except for possibly
    EWOULDBLOCK == EAGAIN.  Even Linux/x86 does not pass this check: it has

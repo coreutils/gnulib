@@ -1,4 +1,4 @@
-# errno_h.m4 serial 10
+# errno_h.m4 serial 11
 dnl Copyright (C) 2004, 2006, 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,12 @@ booboo
 booboo
 #endif
 #if !defined ECANCELED
+booboo
+#endif
+#if !defined EOWNERDEAD
+booboo
+#endif
+#if !defined ENOTRECOVERABLE
 booboo
 #endif
       ],
