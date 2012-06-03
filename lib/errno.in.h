@@ -118,13 +118,17 @@
 #   define ELOOP           114
 #   define EHOSTUNREACH    110
 #   define EWOULDBLOCK     140
+#   define GNULIB_defined_ESOCK 1
+#  endif
+
+#  ifndef ETXTBSY
 #   define ETXTBSY         139
 #   define ENODATA         120  /* not required by POSIX */
 #   define ENOSR           124  /* not required by POSIX */
 #   define ENOSTR          125  /* not required by POSIX */
 #   define ETIME           137  /* not required by POSIX */
 #   define EOTHER          131  /* not required by POSIX */
-#   define GNULIB_defined_ESOCK 1
+#   define GNULIB_defined_ESTREAMS 1
 #  endif
 
 /* These are intentionally the same values as the WSA* error numbers, defined

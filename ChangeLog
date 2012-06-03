@@ -2,6 +2,17 @@
 	    Bruno Haible  <bruno@clisp.org>
 
 	error, strerror-override: Support mingw64 from Fedora 17.
+	* lib/errno.in.h (GNULIB_defined_ESTREAMS): Use a different indicator
+	for ETXTBSY, ENODATA, ENOSR, ENOSTR, ETIME, EOTHER, compared to
+	EINPROGRESS.
+	* lib/strerror-override.h (strerror_override): Test it.
+	* lib/strerror-override.c (strerror_override): Likewise.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Test also ETXTBSY.
+
+2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	error, strerror-override: Support mingw64 from Fedora 17.
 	* lib/errno.in.h (GNULIB_defined_ENOTRECOVERABLE): Use a different
 	indicator for ENOTRECOVERABLE, compared to EOWNERDEAD.
 	* lib/strerror-override.h (strerror_override): Test it.

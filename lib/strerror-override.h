@@ -30,6 +30,7 @@
    describing the error.  Otherwise return NULL.  */
 # if REPLACE_STRERROR_0 \
      || GNULIB_defined_ESOCK \
+     || GNULIB_defined_ESTREAMS \
      || GNULIB_defined_EWINSOCK \
      || GNULIB_defined_ENOMSG \
      || GNULIB_defined_EIDRM \

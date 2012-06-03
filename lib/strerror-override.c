@@ -89,6 +89,8 @@ strerror_override (int errnum)
       return "No route to host";
     case EWOULDBLOCK:
       return "Operation would block";
+#endif
+#if GNULIB_defined_ESTREAMS /* native Windows platforms with older <errno.h> */
     case ETXTBSY:
       return "Text file busy";
     case ENODATA:

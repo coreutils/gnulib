@@ -10,6 +10,9 @@ AC_DEFUN_ONCE([gl_HEADER_ERRNO_H],
   AC_CACHE_CHECK([for complete errno.h], [gl_cv_header_errno_h_complete], [
     AC_EGREP_CPP([booboo],[
 #include <errno.h>
+#if !defined ETXTBSY
+booboo
+#endif
 #if !defined ENOMSG
 booboo
 #endif
