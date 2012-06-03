@@ -85,9 +85,13 @@
 #  endif
 
 #  ifndef EOWNERDEAD
-#   define EOWNERDEAD      133
-#   define ENOTRECOVERABLE 127
+#   define EOWNERDEAD 133
 #   define GNULIB_defined_EOWNERDEAD 1
+#  endif
+
+#  ifndef ENOTRECOVERABLE
+#   define ENOTRECOVERABLE 127
+#   define GNULIB_defined_ENOTRECOVERABLE 1
 #  endif
 
 #  ifndef EINPROGRESS
@@ -259,6 +263,7 @@
 #   define ENOTRECOVERABLE 2014
 #  endif
 #  define GNULIB_defined_EOWNERDEAD 1
+#  define GNULIB_defined_ENOTRECOVERABLE 1
 # endif
 
 #endif /* _@GUARD_PREFIX@_ERRNO_H */

@@ -1,3 +1,12 @@
+2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	error, strerror-override: Support mingw64 from Fedora 17.
+	* lib/errno.in.h (GNULIB_defined_ENOTRECOVERABLE): Use a different
+	indicator for ENOTRECOVERABLE, compared to EOWNERDEAD.
+	* lib/strerror-override.h (strerror_override): Test it.
+	* lib/strerror-override.c (strerror_override): Likewise.
+
 2012-06-03  Bruno Haible  <bruno@clisp.org>
 
 	error, strerror-override: Support new errno values from POSIX:2008.

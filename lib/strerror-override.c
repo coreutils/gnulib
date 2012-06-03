@@ -282,6 +282,9 @@ strerror_override (int errnum)
 #if GNULIB_defined_EOWNERDEAD
     case EOWNERDEAD:
       return "Owner died";
+#endif
+
+#if GNULIB_defined_ENOTRECOVERABLE
     case ENOTRECOVERABLE:
       return "State not recoverable";
 #endif
