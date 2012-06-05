@@ -17,6 +17,9 @@ Files:
 top/README-release
 
 Depends-on:
+do-release-commit-and-tag
+gnupload
+gnu-web-doc-update
 
 configure.ac:
 

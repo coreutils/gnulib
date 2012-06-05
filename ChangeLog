@@ -1,3 +1,10 @@
+2012-06-05  Akim Demaille  <akim@lrde.epita.fr>
+
+	readme-release: require the promoted modules.
+	* modules/readme-release (Depends-on): Add
+	do-release-commit-and-tag, gnupload, and gnu-web-doc-update, used
+	in this text.
+
 2012-05-21  Paolo Bonzini  <bonzini@gnu.org>
 	    Bruno Haible  <bruno@clisp.org>
 
