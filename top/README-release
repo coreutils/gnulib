@@ -93,6 +93,8 @@ Once all the builds and tests have passed,
 
     http://www.gnu.org/software/@PACKAGE@/manual/
 
-  by running this:
+  by running this from top_srcdir:
 
     build-aux/gnu-web-doc-update
+
+  possibly with "-C <BUILDDIR>"

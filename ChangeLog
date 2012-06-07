@@ -1,3 +1,17 @@
+2012-06-12  Akim Demaille  <akim@lrde.epita.fr>
+
+	gnu-web-doc-update: VPATH builds
+	* build-aux/gnu-web-doc-update (--builddir): New option.
+	Revamp the handling of options.
+	Prefer $(...) to `...`.
+	Don't pass --tmpdir=. to mktemp, it is useless given that we specify
+	the template, and it is GNU mktemp specific.
+	Prefer set -e to long series of &&.
+	Restore the initial git branch, not "master".
+	Properly initialize submodules (don't rely only on bootstrap).
+	Do not reconfigure blindly, use config.status.
+	* top/README-release: Update instructions for gnu-web-doc-update.
+
 2012-06-11  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: revert most of the previous change re "all these"
