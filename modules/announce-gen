@@ -1,5 +1,5 @@
 Description:
-Generate a release announcement message.
+Generate a release announcement message.  See also readme-release.
 
 Files:
 build-aux/announce-gen

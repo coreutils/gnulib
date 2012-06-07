@@ -17,9 +17,11 @@ Files:
 top/README-release
 
 Depends-on:
+announce-gen
 do-release-commit-and-tag
-gnupload
 gnu-web-doc-update
+gnupload
+maintainer-makefile
 
 configure.ac:
 

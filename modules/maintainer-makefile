@@ -1,5 +1,6 @@
 Description:
 Helper GNUmakefile with syntax checks, build improvements, etc.
+See also readme-release.
 
 Files:
 top/maint.mk

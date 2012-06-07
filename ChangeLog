@@ -1,5 +1,13 @@
 2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
 
+	readme-release: also require announce-gen and maintainer-makefile
+	* modules/readme-release (Depends-on): here.
+	* modules/announce-gen, modules/do-release-commit-and-tag,
+	modules/gnu-web-doc-update, modules/maintainer-makefile
+	(Description): Point to readme-release.
+
+2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: fix VPATH issues.
 	* top/maint.mk (news-check): GNU Make understand $< very well.
 	(release-prep): NEWS is in $(srcdir).

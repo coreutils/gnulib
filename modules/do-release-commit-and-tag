@@ -1,5 +1,5 @@
 Description:
-Automate the release-commit and tag process.
+Automate the release-commit and tag process.  See also readme-release.
 
 Files:
 build-aux/do-release-commit-and-tag

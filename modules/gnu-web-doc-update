@@ -1,5 +1,6 @@
 Description:
-update the official GNU web documentation for your project
+Update the official GNU web documentation for your project.
+See also readme-release.
 
 Files:
 build-aux/gnu-web-doc-update
