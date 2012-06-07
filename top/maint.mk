@@ -1059,7 +1059,7 @@ sc_makefile_at_at_check:
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
-	if sed -n $(news-check-lines-spec)p $(srcdir)/NEWS		\
+	if sed -n $(news-check-lines-spec)p $<				\
 	    | grep -E $(news-check-regexp) >/dev/null; then		\
 	  :;								\
 	else								\
@@ -1367,7 +1367,7 @@ release-prep:
 	fi
 	echo $(VERSION) > $(prev_version_file)
 	$(MAKE) update-NEWS-hash
-	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' NEWS
+	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' $(srcdir)/NEWS
 	$(emit-commit-log) > .ci-msg
 	$(VC) commit -F .ci-msg -a
 	rm .ci-msg

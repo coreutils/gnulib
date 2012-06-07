@@ -1,3 +1,9 @@
+2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: fix VPATH issues.
+	* top/maint.mk (news-check): GNU Make understand $< very well.
+	(release-prep): NEWS is in $(srcdir).
+
 2012-06-05  Akim Demaille  <akim@lrde.epita.fr>
 
 	readme-release: require the promoted modules.
