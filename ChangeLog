@@ -1,5 +1,22 @@
 2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
 
+	do-release-commit-and-tag: support VPATH builds
+	* build-aux/do-release-commit-and-tag: Prefer $(...) to `...`.
+	(noteworthy): Defined earlier to factor its value.
+	(noteworthy_stub): New.
+	Use it to factor.
+	(help_version): Split into...
+	(help, version): these.
+	Adjust the option processing part.
+	Support "--option=value" in addition to "--option value".
+	(builddir): New.
+	(--builddir): New option.
+	* top/README-release: Document this.
+	Reword slightly so that the reader cannot understand that he
+	has to do these steps before calling do-release-commit-and-tag.
+
+2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
+
 	readme-release: also require announce-gen and maintainer-makefile
 	* modules/readme-release (Depends-on): here.
 	* modules/announce-gen, modules/do-release-commit-and-tag,

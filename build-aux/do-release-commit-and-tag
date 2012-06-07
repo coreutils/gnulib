@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2011-05-04.11 # UTC
+VERSION=2012-06-07.15 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -24,31 +24,35 @@ VERSION=2011-05-04.11 # UTC
 
 # Written by Jim Meyering
 
-ME=`basename "$0"`
+ME=$(basename "$0")
 warn() { printf '%s: %s\n' "$ME" "$*" >&2; }
 die() { warn "$*"; exit 1; }
 
-help_version()
+noteworthy='* Noteworthy changes in release'
+noteworthy_stub="$noteworthy ?.? (????-??-??) [?]"
+
+help()
 {
-  case $1 in
-    --help) cat <<EOF
+  cat <<EOF
 Usage: $ME [OPTION...] VERSION RELEASE_TYPE
 
-Run this script to perform the final pre-release NEWS update
-in which the date, release-type and version string are recorded.
-Commit that result with a log entry marking the release, and apply
-a signed tag.  Run it from your project's top-level directory.
+Run this script from top_srcdir to perform the final pre-release NEWS
+update in which the date, release-type and version string are
+recorded.  Commit that result with a log entry marking the release,
+and apply a signed tag.  Run it from your project's top-level
+directory.
 
 Requirements:
 - you use git for version-control
-- a NEWS file, with line 3 identical to this:
-* Noteworthy changes in release ?.? (????-??-??) [?]
 - a version-controlled .prev-version file
+- a NEWS file, with line 3 identical to this:
+$noteworthy_stub
 
 Options:
-  --branch BRANCH            set release branch (default: master)
-  --help                     print this help, then exit
-  --version                  print version number, then exit
+  --branch=BRANCH      set release branch (default: master)
+  -C, --builddir=DIR   location of (configured) Makefile (default: .)
+  --help               print this help, then exit
+  --version            print version number, then exit
 
 EXAMPLE:
 To update NEWS and tag the beta 8.1 release of coreutils, I would run this:
@@ -57,33 +61,48 @@ To update NEWS and tag the beta 8.1 release of coreutils, I would run this:
 
 Report bugs and patches to <bug-gnulib@gnu.org>.
 EOF
-      exit ;;
+  exit
+}
 
-    --version)
-      year=`echo "$VERSION" | sed 's/[^0-9].*//'`
-      cat <<EOF
+version()
+{
+  year=$(echo "$VERSION" | sed 's/[^0-9].*//')
+  cat <<EOF
 $ME $VERSION
 Copyright (C) $year Free Software Foundation, Inc,
 License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 EOF
-      exit ;;
-
-  *) die "unrecognized option: $1";;
-  esac
+  exit
 }
 
 branch=master
-case $1 in
-  --branch) shift; branch=$1; shift ;;
-esac
+builddir=.
 
-case $# in
-  1) help_version $1; exit 0;;
-  2) ;;
-  *) warn "Usage: $ME [OPTION...] VERSION TYPE"; exit 1;;
-esac
+while test $# != 0
+do
+  # Handle --option=value by splitting apart and putting back on argv.
+  case $1 in
+    --*=*)
+      opt=$(echo "$1" | sed -e 's/=.*//')
+      val=$(echo "$1" | sed -e 's/[^=]*=//')
+      shift
+      set dummy "$opt" "$val" ${1+"$@"}; shift
+      ;;
+  esac
+
+  case $1 in
+    --help|--version) ${1#--};;
+    --branch) shift; branch=$1; shift ;;
+    -C|--builddir) shift; builddir=$1; shift ;;
+    --*) die "unrecognized option: $1";;
+    *) break;;
+  esac
+done
+
+test $# = 2 \
+  || die "Usage: $ME [OPTION...] VERSION TYPE"
 
 ver=$1
 type=$2
@@ -97,7 +116,7 @@ prev_ver=$(cat .prev-version) \
 # Verify that $ver is sensible (> .prev-version).
 case $(printf "$prev_ver\n$ver\n"|sort -V -u|tr '\n' ':') in
   "$prev_ver:$ver:") ;;
-  *) die "invalid version: $ver";;
+  *) die "invalid version: $ver (<= $prev_ver)";;
 esac
 
 case $type in
@@ -106,12 +125,12 @@ case $type in
 esac
 
 # Extract package name from Makefile.
-pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' Makefile) \
-  || die 'failed to determine package name from Makefile'
+Makefile=$builddir/Makefile
+pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' "$Makefile") \
+  || die "failed to determine package name from $Makefile"
 
 # simple check: no question marks on line 3 of NEWS
-noteworthy='* Noteworthy changes in release'
-test "$(sed -n 3p NEWS)" = "$noteworthy ?.? (????-??-??) [?]" \
+test "$(sed -n 3p NEWS)" = "$noteworthy_stub" \
   || die 'line 3 of NEWS looks fishy!'
 
 # No dirt allowed.
