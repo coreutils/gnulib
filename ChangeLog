@@ -1,3 +1,10 @@
+2012-06-10  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: prohibit common grammar error: "all these"
+	* top/maint.mk (prohibit_undesirable_word_seq_RE_): Add "all these" to
+	the list of prohibited word sequences.  It should be "all of these".
+	* lib/tempname.c (__gen_tempname): Fix one of them.
+
 2012-06-07  Akim Demaille  <akim@lrde.epita.fr>
 
 	do-release-commit-and-tag: support VPATH builds

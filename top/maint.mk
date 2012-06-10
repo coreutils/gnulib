@@ -948,7 +948,7 @@ sc_prohibit_doubled_word:
 bad_xref_re_ ?= (?:[\w,:;] +|(?:see|also)\s+)\@xref\{
 bad_pxref_re_ ?= (?:[.!?]|(?:see|also))\s+\@pxref\{
 prohibit_undesirable_word_seq_RE_ ?=					\
-  /(?:\bcan\s+not\b|$(bad_xref_re_)|$(bad_pxref_re_))/gims
+  /(?:\bcan\s+not\b|\ball these\b|$(bad_xref_re_)|$(bad_pxref_re_))/gims
 prohibit_undesirable_word_seq_ =					\
     -e 'while ($(prohibit_undesirable_word_seq_RE_))'			\
     $(perl_filename_lineno_text_)
