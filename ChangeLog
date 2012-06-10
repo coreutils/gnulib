@@ -1,3 +1,8 @@
+2012-06-10  Bruce Korb  <bkorb@gnu.org>
+
+	parse-duration: Relicense under LGPLv2+.
+	* modules/parse-duration (License): Change to LGPLv2+.
+
 2012-06-10  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: prohibit common grammar error: "all these"
