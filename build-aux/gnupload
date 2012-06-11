@@ -249,11 +249,13 @@ unset passphrase
 # listings with their arguments...).
 # Remember this script runs with 'set -e', so if echo is not built-in
 # it will exit now.
-PATH=/empty echo -n "Enter GPG passphrase: "
-stty -echo
-read -r passphrase
-stty echo
-echo
+if $dry_run; then :; else
+  PATH=/empty echo -n "Enter GPG passphrase: "
+  stty -echo
+  read -r passphrase
+  stty echo
+  echo
+fi
 
 if test $# -ne 0; then
   for file
