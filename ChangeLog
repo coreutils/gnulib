@@ -1,3 +1,7 @@
+2012-06-10  Karl Berry  <karl@gnu.org>
+
+	* build-aux/gnupload: implement --replace, ftp-upload protocol v1.2.
+
 2012-06-10  Bruce Korb  <bkorb@gnu.org>
 
 	parse-duration: Relicense under LGPLv2+.
