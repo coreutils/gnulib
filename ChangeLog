@@ -1,3 +1,10 @@
+2012-06-11  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: revert most of the previous change re "all these"
+	* top/maint.mk (prohibit_undesirable_word_seq_RE_): Remove that pair.
+	For rationale, see the discussion at
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/30912
+
 2012-06-10  Karl Berry  <karl@gnu.org>
 
 	* build-aux/gnupload: with --dry-run, do not ask for gpg pw.
