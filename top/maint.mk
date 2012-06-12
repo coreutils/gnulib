@@ -1268,6 +1268,7 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --prev=$(PREV_VERSION)					\
 	    --curr=$(VERSION)						\
 	    --gpg-key-id=$(gpg_key_ID)					\
+	    --srcdir=$(srcdir)						\
 	    --news=$(srcdir)/NEWS					\
 	    --bootstrap-tools=$(bootstrap-tools)			\
 	    $$(case ,$(bootstrap-tools), in (*,gnulib,*)		\

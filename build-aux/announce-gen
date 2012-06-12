@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2012-05-23 08:55'; # UTC
+my $VERSION = '2012-06-08 06:53'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -38,6 +38,7 @@ use POSIX qw(strftime);
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta stable);
 my @archive_suffixes = ('tar.gz', 'tar.bz2', 'tar.lzma', 'tar.xz');
+my $srcdir = '.';
 
 sub usage ($)
 {
@@ -52,7 +53,7 @@ sub usage ($)
       my @types = sort keys %valid_release_types;
       print $STREAM <<EOF;
 Usage: $ME [OPTIONS]
-Generate an announcement message.
+Generate an announcement message.  Run this from builddir.
 
 OPTIONS:
 
@@ -67,7 +68,9 @@ These options must be specified:
 
 The following are optional:
 
-   --news=NEWS_FILE
+   --news=NEWS_FILE             include the NEWS section about this release
+                                from this NEWS_FILE; accumulates.
+   --srcdir=DIR                 where to find the NEWS_FILEs (default: $srcdir)
    --bootstrap-tools=TOOL_LIST  a comma-separated list of tools, e.g.,
                                 autoconf,automake,bison,gnulib
    --gnulib-version=VERSION     report VERSION as the gnulib version, where
@@ -182,7 +185,7 @@ sub print_news_deltas ($$$)
   my ($news_file, $prev_version, $curr_version) = @_;
 
   my $news_name = $news_file;
-  $news_name =~ s|^\./||;
+  $news_name =~ s|^\Q$srcdir\E/||;
 
   print "\n$news_name\n\n";
 
@@ -388,6 +391,7 @@ sub get_tool_versions ($$)
      'gpg-key-id=s'       => \$gpg_key_id,
      'url-directory=s'    => \@url_dir_list,
      'news=s'             => \@news_file,
+     'srcdir=s'           => \$srcdir,
      'bootstrap-tools=s'  => \$bootstrap_tools,
      'gnulib-version=s'   => \$gnulib_version,
      'print-checksums!'   => \$print_checksums_p,

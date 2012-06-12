@@ -1,5 +1,12 @@
 2012-06-12  Akim Demaille  <akim@lrde.epita.fr>
 
+	announce-gen: VPATH issues
+	* build-aux/announce-gen (--srcdir): New option, used to trim the
+	$srcdir part of the path from $builddir to NEWS.
+	* top/maint.mk (announcement): Adjust.
+
+2012-06-12  Akim Demaille  <akim@lrde.epita.fr>
+
 	gnu-web-doc-update: VPATH builds
 	* build-aux/gnu-web-doc-update (--builddir): New option.
 	Revamp the handling of options.
