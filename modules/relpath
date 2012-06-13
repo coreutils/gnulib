@@ -1,0 +1,28 @@
+Description:
+Convert absolute paths to relative.
+
+Files:
+lib/relpath.h
+lib/relpath.c
+
+Depends-on:
+canonicalize
+dirname
+error
+pathmax
+stdbool
+xalloc
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += relpath.c
+
+Include:
+"relpath.h"
+
+License:
+GPLv3+
+
+Maintainer:
+Pádraig Brady
