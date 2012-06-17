@@ -1,3 +1,8 @@
+2012-06-17  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: fix typo in code to derive GPG key at release time
+	* top/maint.mk (gpg_key_ID): Fix typo: $3 -> $$3
+
 2012-06-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: avoid warning when pointers are not long
