@@ -1,3 +1,9 @@
+2012-06-17  Bruno Haible  <bruno@clisp.org>
+
+	dummy: Relicense into the public domain.
+	* modules/dummy (License): Set to "public domain".
+	Suggested by Reuben Thomas.
+
 2012-06-12  Akim Demaille  <akim@lrde.epita.fr>
 
 	announce-gen: VPATH issues

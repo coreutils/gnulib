@@ -14,7 +14,7 @@ lib_SOURCES += dummy.c
 Include:
 
 License:
-LGPLv2+
+public domain
 
 Maintainer:
 all
