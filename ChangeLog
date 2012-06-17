@@ -1,3 +1,13 @@
+2012-06-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: avoid warning when pointers are not long
+	* lib/regcomp.c (parse_dup_op, mark_opt_subexp): Cast between void *
+	and uintptr_t, not long, for portability to hosts where pointers and
+	long have different sizes.  Issue noted by Daniel P. Berrange in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-06/msg00122.html>
+	and fix suggested by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-06/msg00128.html>.
+
 2012-06-17  Bruno Haible  <bruno@clisp.org>
 
 	dummy: Relicense into the public domain.
