@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 20, 2012
+@set lastupdate June 12, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -1521,7 +1521,7 @@ maintain the web pages at @url{http://www.gnu.org} for your project
 In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
 key you will use to sign your packages.  If you haven't created one
 before, you can do so with the command @code{gpg --gen-key} (you can
-accept all the default answers to its questions).
+accept and/or confirm the default answers to its questions).
 
 Optional but recommended: Send your key to a GPG public key server:
 @code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}}, where
