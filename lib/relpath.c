@@ -31,7 +31,6 @@
 #include "dirname.h"
 #include "error.h"
 #include "relpath.h"
-#include "xalloc.h"
 
 #include "pathmax.h"
 #ifndef PATH_MAX
@@ -98,8 +97,7 @@ buffer_or_output (const char* str, char **pbuf, size_t *plen)
   return false;
 }
 
-/* Output the relative representation if possible.
-   If BUF is non NULL, write to that buffer rather than to stdout.  */
+
 bool
 relpath (const char *can_fname, const char *can_reldir, char *buf, size_t len)
 {
@@ -138,8 +136,8 @@ relpath (const char *can_fname, const char *can_reldir, char *buf, size_t len)
     }
   else
     {
-        buf_err |= buffer_or_output (*fname_suffix ? fname_suffix : ".",
-                                     &buf, &len);
+      buf_err |= buffer_or_output (*fname_suffix ? fname_suffix : ".",
+                                   &buf, &len);
     }
 
   if (buf_err)
@@ -154,11 +152,27 @@ relpath (const char *can_fname, const char *can_reldir, char *buf, size_t len)
 char *
 convert_abs_rel (const char *from, const char *target)
 {
-  char *realtarget = canonicalize_filename_mode (target, CAN_MISSING);
-  char *realfrom = canonicalize_filename_mode (from, CAN_MISSING);
+  char *realtarget = NULL;
+  char *realfrom = NULL;
+  char *relative_from = NULL;
+  char *res = NULL;
+
+  realtarget = canonicalize_filename_mode (target, CAN_MISSING);
+  if (!realtarget)
+    goto end;
+  realfrom = canonicalize_filename_mode (from, CAN_MISSING);
+  if (!realfrom)
+    goto end;
 
   /* Write to a PATH_MAX buffer.  */
-  char *relative_from = xmalloc (PATH_MAX);
+  relative_from = malloc (PATH_MAX);
+  if (!relative_from)
+    {
+      /* It's easier to set errno to ENOMEM than to rely on the
+         'malloc-posix' gnulib module.  */
+      errno = ENOMEM;
+      goto end;
+    }
 
   /* Get dirname to generate paths relative to.  */
   realtarget[dir_len (realtarget)] = '\0';
@@ -168,9 +182,14 @@ convert_abs_rel (const char *from, const char *target)
       free (relative_from);
       relative_from = NULL;
     }
+  res = relative_from ? relative_from : xstrdup (from);
 
-  free (realtarget);
-  free (realfrom);
-
-  return relative_from ? relative_from : xstrdup (from);
+ end:
+  {
+    int saved_errno = errno;
+    free (realtarget);
+    free (realfrom);
+    errno = saved_errno;
+  }
+  return res;
 }
