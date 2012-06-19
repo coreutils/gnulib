@@ -1,4 +1,4 @@
-# getopt.m4 serial 39
+# getopt.m4 serial 40
 dnl Copyright (C) 2002-2006, 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -276,7 +276,7 @@ dnl is ambiguous with environment values that contain newlines.
                if (getopt (3, argv, "-p") != 1)
                  result |= 16;
                else if (getopt (3, argv, "-p") != 'p')
-                 result |= 32;
+                 result |= 16;
              }
              /* This code fails on glibc 2.11.  */
              {
@@ -286,9 +286,9 @@ dnl is ambiguous with environment values that contain newlines.
                char *argv[] = { program, b, a, NULL };
                optind = opterr = 0;
                if (getopt (3, argv, "+:a:b") != 'b')
-                 result |= 64;
+                 result |= 32;
                else if (getopt (3, argv, "+:a:b") != ':')
-                 result |= 64;
+                 result |= 32;
              }
              /* This code dumps core on glibc 2.14.  */
              {
@@ -298,7 +298,7 @@ dnl is ambiguous with environment values that contain newlines.
                char *argv[] = { program, w, dummy, NULL };
                optind = opterr = 1;
                if (getopt (3, argv, "W;") != 'W')
-                 result |= 128;
+                 result |= 64;
              }
              return result;
            ]])],
