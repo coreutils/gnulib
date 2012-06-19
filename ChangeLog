@@ -1,5 +1,11 @@
 2012-06-19  Bruno Haible  <bruno@clisp.org>
 
+	*printf-posix: Put more info into config.log.
+	* m4/printf.m4 (gl_PRINTF_ENOMEM): Emit conftest's error output and
+	exit code into config.log.
+
+2012-06-19  Bruno Haible  <bruno@clisp.org>
+
 	getopt-gnu: Fix exit code overflow in autoconf test.
 	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Squash exit code values,
 	to keep them below < 128.

@@ -1,4 +1,4 @@
-# printf.m4 serial 48
+# printf.m4 serial 49
 dnl Copyright (C) 2003, 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1028,8 +1028,9 @@ int main()
 changequote([,])dnl
           ])])
           if AC_TRY_EVAL([ac_link]) && test -s conftest$ac_exeext; then
-            (./conftest
+            (./conftest 2>&AS_MESSAGE_LOG_FD
              result=$?
+             _AS_ECHO_LOG([\$? = $result])
              if test $result != 0 && test $result != 77; then result=1; fi
              exit $result
             ) >/dev/null 2>/dev/null
