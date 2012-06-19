@@ -1,5 +1,54 @@
 2012-06-19  Bruno Haible  <bruno@clisp.org>
 
+	stdioext: Add support for musl libc.
+
+	* m4/fbufmode.m4 (gl_FUNC_FBUFMODE): Test whether __fbufsize exists.
+	* lib/fbufmode.c (fbufmode): Add conditional code for musl.
+
+	* m4/fseterr.m4: New file.
+	* lib/fseterr.h (fseterr): Define as an alias of __fseterr if that
+	function exists.
+	* modules/fseterr (Files): Add m4/fseterr.m4.
+	(configure.ac): Invoke gl_FUNC_FSETERR. Compile fseterr.c if
+	__fseterr does not exist.
+	(Makefile.am): Remove fseterr.c from lib_SOURCES.
+
+	* lib/freadable.h: Update comment.
+
+	* lib/fwritable.h: Update comment.
+
+	* lib/freading.h: Update comment.
+
+	* lib/fwriting.h: Update comment.
+
+	* m4/freadahead.m4: New file.
+	* lib/freadahead.h (freadahead): Define as an alias of __freadahead if
+	that function exists.
+	* modules/freadahead (Files): Add m4/freadahead.m4.
+	(configure.ac): Invoke gl_FUNC_FREADAHEAD. Compile freadahead.c if
+	__freadahead does not exist.
+	(Makefile.am): Remove freadahead.c from lib_SOURCES.
+
+	* m4/freadptr.m4: New file.
+	* lib/freadptr.h (freadptr): Define as an alias of __freadptr if that
+	function exists.
+	* modules/freadptr (Files): Add m4/freadptr.m4.
+	(configure.ac): Invoke gl_FUNC_FREADPTR. Compile freadptr.c if
+	__freadptr does not exist.
+	(Makefile.am): Remove freadptr.c from lib_SOURCES.
+
+	* m4/freadseek.m4: New file.
+	* lib/freadseek.c (freadptrinc): Use __freadptrinc if that function
+	exists.
+	* modules/freadseek (Files): Add m4/freadseek.m4.
+	(configure.ac): Invoke gl_FUNC_FREADSEEK.
+
+	* lib/fpurge.c (fpurge): Update comment.
+
+	Reported by and with help from Rich Felker <dalias@aerifal.cx>.
+
+2012-06-19  Bruno Haible  <bruno@clisp.org>
+
 	*printf-posix: Put more info into config.log.
 	* m4/printf.m4 (gl_PRINTF_ENOMEM): Emit conftest's error output and
 	exit code into config.log.

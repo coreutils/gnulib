@@ -33,7 +33,7 @@
    STREAM must not be wide-character oriented.  */
 
 #if HAVE___FREADING && (!defined __GLIBC__ || defined __UCLIBC__ || __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 7))
-/* Solaris >= 7, not glibc >= 2.2, but glibc >= 2.7  */
+/* Solaris >= 7, not glibc >= 2.2, but glibc >= 2.7, or musl libc  */
 
 # include <stdio_ext.h>
 # define freading(stream) (__freading (stream) != 0)

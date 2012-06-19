@@ -5,6 +5,7 @@ Files:
 lib/freadseek.h
 lib/freadseek.c
 lib/stdio-impl.h
+m4/freadseek.m4
 
 Depends-on:
 freadahead
@@ -13,7 +14,7 @@ fseeko
 lseek
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
+gl_FUNC_FREADSEEK
 
 Makefile.am:
 lib_SOURCES += freadseek.c

@@ -6,13 +6,17 @@ Files:
 lib/freadahead.h
 lib/freadahead.c
 lib/stdio-impl.h
+m4/freadahead.m4
 
 Depends-on:
 
 configure.ac:
+gl_FUNC_FREADAHEAD
+if test $ac_cv_func___freadahead = no; then
+  AC_LIBOBJ([freadahead])
+fi
 
 Makefile.am:
-lib_SOURCES += freadahead.c
 
 Include:
 "freadahead.h"

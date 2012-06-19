@@ -79,6 +79,10 @@ fbufmode (FILE *fp)
   if (fp->__linebuf)
     return _IOLBF;
   return (fp->__bufsize > 0 ? _IOFBF : _IONBF);
+#elif HAVE___FLBF && HAVE___FBUFSIZE /* musl libc */
+  if (__flbf (fp))
+    return _IOLBF;
+  return (__fbufsize (fp) > 0 ? _IOFBF : _IONBF);
 #elif defined EPLAN9                /* Plan9 */
   if (fp->flags & 2 /* LINEBUF */)
     return _IOLBF;

@@ -33,7 +33,7 @@
 
    STREAM must not be wide-character oriented.  */
 
-#if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7 */
+#if HAVE___FWRITING /* glibc >= 2.2, Solaris >= 7, musl libc */
 
 # include <stdio_ext.h>
 # define fwriting(stream) (__fwriting (stream) != 0)

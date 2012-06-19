@@ -19,19 +19,27 @@
 
 #include <stdio.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
 /* Set the error indicator of the stream FP.
    The "error indicator" is set when an I/O operation on the stream fails, and
    is cleared (together with the "end-of-file" indicator) by clearerr (FP).  */
+
+#if HAVE___FSETERR /* musl libc */
+
+# include <stdio_ext.h>
+# define fseterr(fp) __fseterr (fp)
+
+#else
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 extern void fseterr (FILE *fp);
 
-
-#ifdef __cplusplus
+# ifdef __cplusplus
 }
+# endif
+
 #endif
 
 #endif /* _FSETERR_H */

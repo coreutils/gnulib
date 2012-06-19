@@ -17,10 +17,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* Assuming the stream STREAM is open for reading:
    Return a pointer to the input buffer of STREAM, or NULL.
    If the returned pointer is non-NULL, *SIZEP is set to the (positive) size
@@ -32,8 +28,21 @@ extern "C" {
 
    STREAM must not be wide-character oriented.  */
 
+#if HAVE___FREADPTR /* musl libc */
+
+# include <stdio_ext.h>
+# define freadptr(stream,sizep) __freadptr (stream, sizep)
+
+#else
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 extern const char * freadptr (FILE *stream, size_t *sizep);
 
-#ifdef __cplusplus
+# ifdef __cplusplus
 }
+# endif
+
 #endif
