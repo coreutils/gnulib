@@ -591,7 +591,7 @@ func_warning ()
 
 # func_readlink SYMLINK
 # outputs the target of the given symlink.
-if (type -p readlink) > /dev/null 2>&1; then
+if (type readlink) > /dev/null 2>&1; then
   func_readlink ()
   {
     # Use the readlink program from GNU coreutils.

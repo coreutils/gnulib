@@ -1,3 +1,8 @@
+2012-06-20  Bernd Jendrissek  <bernd.jendrissek@gmail.com>  (tiny change)
+
+	gnulib-tool: Use readlink if it is available.
+	* gnulib-tool (func_readlink): Choose function more appropriately.
+
 2012-06-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	posixtm-tests: port to buggy compiler
