@@ -1,3 +1,14 @@
+2012-06-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	init.sh: do not rely on autoupated PWD
+	This addresses symptoms of the problem reported by Nelson H.F. Beebe in
+	<http://lists.gnu.org/archive/html/bug-gzip/2012-06/msg00008.html>.
+	Although Nelson's bug was not necessarily fixed by this patch,
+	it seems wise to make the change for safety.
+	* tests/init.sh (path_prepend_): Do not rely on PWD updating
+	automagically after 'cd'; this is not reliable on older shells.
+	(setup_): Fail if we cannot cd to temporary directory.
+
 2012-06-19  Bruno Haible  <bruno@clisp.org>
 
 	stat, fstat: Avoid warnings on mingw64.
