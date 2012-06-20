@@ -1,3 +1,10 @@
+2012-06-20  John Darrington  <john@darrington.wattle.id.au>  (tiny change)
+
+	tmpfile, clean-temp: Fix invocation of GetVersionEx.
+	* lib/tmpfile.c (supports_delete_on_close): Initialize parameter for
+	GetVersionEx correctly.
+	* lib/clean-temp.c (supports_delete_on_close): Likewise.
+
 2012-06-20  Bruno Haible  <bruno@clisp.org>
 
 	fdopen: Allow implementations that don't reject invalid fd arguments.
