@@ -11,4 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-parse-duration.sh
 check_PROGRAMS += test-parse-duration
-test_parse_duration_LDADD = $(LDADD) @LIBINTL@
+test_parse_duration_LDADD = $(LDADD)

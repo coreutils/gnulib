@@ -1,3 +1,8 @@
+2012-06-20  Simon Josefsson  <simon@josefsson.org>
+
+	* modules/parse-duration-tests (test_parse_duration_LDADD): Don't
+	bring in LIBINTL.
+
 2012-06-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	init.sh: do not rely on autoupated PWD
