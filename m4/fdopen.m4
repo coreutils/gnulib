@@ -1,4 +1,4 @@
-# fdopen.m4 serial 2
+# fdopen.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,10 +25,8 @@ main (void)
   FILE *fp;
   errno = 0;
   fp = fdopen (-1, "r");
-  if (fp != NULL)
+  if (fp == NULL && errno == 0)
     return 1;
-  if (errno == 0)
-    return 2;
   return 0;
 }]])],
           [gl_cv_func_fdopen_works=yes],
