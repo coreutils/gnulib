@@ -1,5 +1,13 @@
 2012-06-19  Bruno Haible  <bruno@clisp.org>
 
+	stat, fstat: Avoid warnings on mingw64.
+	* lib/stat.c (stat) [_GL_WINDOWS_64_BIT_ST_SIZE]: Undefine before
+	redefining.
+	* lib/fstat.c (stat, fstat) [_GL_WINDOWS_64_BIT_ST_SIZE]: Likewise.
+	Reported by Daniel P. Berrange <berrange@redhat.com>.
+
+2012-06-19  Bruno Haible  <bruno@clisp.org>
+
 	stdioext: Add support for musl libc.
 
 	* m4/fbufmode.m4 (gl_FUNC_FBUFMODE): Test whether __fbufsize exists.
