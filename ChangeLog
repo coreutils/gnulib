@@ -1,3 +1,8 @@
+2012-06-21  Bruce Korb  <bkorb@gnu.org>
+
+	parse-duration test: Avoid spurious output.
+	* tests/test-parse-duration.sh: Reindent with leading tabs.
+
 2012-06-21  Jim Meyering  <meyering@redhat.com>
 
 	maint: disable the strncpy prohibition
