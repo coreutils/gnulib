@@ -50,14 +50,14 @@ trap 'rm -rf "${tmp}"' EXIT
 tmpf="${tmp}/tests.txt"
 
 cat > "${tmpf}" <<- _EOF_
-  1 Y 2 M 3 W 4 d 5 h 6 m 7 s
-  P 00010225 T 05:06:07
-  P 1Y2M3W4D T 5H6M7S
-  1 Y 2 M 25 D 5:6:7
-  1 Y 2 M 25 d 5h 6:7
-  1 Y 2 M 25 d 5h 6m 7
-  P 1-2-25 T 5:6:7
-  _EOF_
+	1 Y 2 M 3 W 4 d 5 h 6 m 7 s
+	P 00010225 T 05:06:07
+	P 1Y2M3W4D T 5H6M7S
+	1 Y 2 M 25 D 5:6:7
+	1 Y 2 M 25 d 5h 6:7
+	1 Y 2 M 25 d 5h 6m 7
+	P 1-2-25 T 5:6:7
+	_EOF_
 
 exec 3< "${tmpf}"
 while read line <&3
