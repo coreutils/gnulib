@@ -164,15 +164,11 @@ Operation modes:
       --update              update the current package, restore files omitted
                             from version control
       --create-testdir      create a scratch package with the given modules
-                            (pass --with-tests to include the unit tests)
       --create-megatestdir  create a mega scratch package with the given modules
                             one by one and all together
-                            (pass --with-tests to include the unit tests)
       --test                test the combination of the given modules
-                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --megatest            test the given modules one by one and all together
-                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
       --extract-comment            extract the comment
@@ -210,21 +206,35 @@ Options for --import, --add/remove-import, --update:
 
       --dry-run             Only print what would have been done.
 
+Options for --import, --add/remove-import:
+
+      --with-tests          Include unit tests for the included modules.
+
+Options for --create-[mega]testdir, --[mega]test:
+
+      --without-tests       Don't include unit tests for the included modules.
+
 Options for --import, --add/remove-import,
             --create-[mega]testdir, --[mega]test:
 
-      --with-tests          Include unit tests for the included modules.
       --with-obsolete       Include obsolete modules when they occur among the
                             dependencies. By default, dependencies to obsolete
                             modules are ignored.
       --with-c++-tests      Include even unit tests for C++ interoperability.
+      --without-c++-tests   Exclude unit tests for C++ interoperability.
       --with-longrunning-tests
                             Include even unit tests that are long-runners.
+      --without-longrunning-tests
+                            Exclude unit tests that are long-runners.
       --with-privileged-tests
                             Include even unit tests that require root
                             privileges.
+      --without-privileged-tests
+                            Exclude unit tests that require root privileges.
       --with-unportable-tests
                             Include even unit tests that fail on some platforms.
+      --without-unportable-tests
+                            Exclude unit tests that fail on some platforms.
       --with-all-tests      Include all kinds of problematic unit tests.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
@@ -274,13 +284,6 @@ Options for --import, --add/remove-import:
 
 Options for --create-[mega]testdir, --[mega]test:
 
-      --without-c++-tests   Exclude unit tests for C++ interoperability.
-      --without-longrunning-tests
-                            Exclude unit tests that are long-runners.
-      --without-privileged-tests
-                            Exclude unit tests that require root privileges.
-      --without-unportable-tests
-                            Exclude unit tests that fail on some platforms.
       --single-configure    Generate a single configure file, not a separate
                             configure file for the tests directory.
 
@@ -908,8 +911,9 @@ fi
 
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
-# - mode            list or import or add-import or remove-import or update
-#                   or create-testdir or create-megatestdir
+# - mode            one of: list, find, import, add-import, remove-import,
+#                   update, create-testdir, create-megatestdir, test, megatest,
+#                   copy-file
 # - destdir         from --dir
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
@@ -921,7 +925,8 @@ fi
 # - docbase         from --doc-base
 # - testsbase       from --tests-base
 # - auxdir          from --aux-dir
-# - inctests        true if --with-tests was given, blank otherwise
+# - inctests        true if --with-tests was given, false if --without-tests
+#                   was given, blank otherwise
 # - incobsolete     true if --with-obsolete was given, blank otherwise
 # - inc_cxx_tests   true if --with-c++-tests was given, blank otherwise
 # - inc_longrunning_tests  true if --with-longrunning-tests was given, blank
@@ -1164,6 +1169,9 @@ fi
       --with-all-tests | --with-all-test | --with-all-tes | --with-all-te | --with-all-t | --with-all- | --with-all | --with-al | --with-a)
         inc_all_tests=true
         shift ;;
+      --without-tests | --without-test | --without-tes | --without-te | --without-t)
+        inctests=false
+        shift ;;
       --without-c++-tests | --without-c++-test | --without-c++-tes | --without-c++-te | --without-c++-t | --without-c++- | --without-c++ | --without-c+ | --without-c)
         excl_cxx_tests=true
         shift ;;
@@ -1339,6 +1347,23 @@ fi
   if test -z "$pobase" && test -n "$po_domain"; then
     func_warning "--po-domain has no effect without a --po-base option"
   fi
+  # Canonicalize the inctests variable.
+  case "$mode" in
+    import | add-import | remove-import)
+      if test -z "$inctests"; then
+        inctests=false
+      fi
+      ;;
+    create-testdir | create-megatestdir | test | megatest)
+      if test -z "$inctests"; then
+        inctests=true
+      fi
+      ;;
+  esac
+  if test "$inctests" = false; then
+    inctests=""
+  fi
+  # Now the only possible values of "$inctests" are true and the empty string.
   if test "$cond_dependencies" = true && test -n "$inctests"; then
     echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
     func_exit 1

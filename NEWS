@@ -3,6 +3,10 @@ Important notes
 
 Date        Modules         Changes
 
+2012-06-21  gnulib-tool     The option --with-tests is now implied by the
+                            options --create-testdir, --test,
+                            --create-megatestdir, --megatest.
+
 2012-01-07  quotearg        In the C locale, the function will no longer use
                             the grave accent character to begin a quoted
                             string (`like this').  It will use apostrophes

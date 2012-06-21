@@ -1,3 +1,12 @@
+2012-06-21  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: --create-[mega]testdir, --[mega]test implies --with-tests.
+	* gnulib-tool: Accept option --without-tests.
+	(func_usage): Document --without-tests option. Rearrange.
+	(inctests): Normalize according to the mode.
+	* NEWS: Mention the change.
+	Suggested by Simon Josefsson.
+
 2012-06-21  Bruce Korb  <bkorb@gnu.org>
 
 	parse-duration test: Avoid spurious output.
