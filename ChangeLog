@@ -1,3 +1,12 @@
+2012-06-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: fix integer overflow in 'configure'-time test
+	* m4/mktime.m4 (gl_FUNC_MKTIME): Do not rely on undefined behavior
+	after integer overflow.  Problem reported by Rich Felker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-06/msg00257.html>.
+	Also, don't look for further instances of a bug if we've already
+	found one instance; this helps 'configure' run faster.
+
 2012-06-20  John Darrington  <john@darrington.wattle.id.au>  (tiny change)
 
 	tmpfile, clean-temp: Fix invocation of GetVersionEx.

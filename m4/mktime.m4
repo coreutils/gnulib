@@ -1,4 +1,4 @@
-# serial 21
+# serial 22
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2012 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -192,20 +192,23 @@ main ()
       if (tz_strings[i])
         putenv (tz_strings[i]);
 
-      for (t = 0; t <= time_t_max - delta; t += delta)
+      for (t = 0; t <= time_t_max - delta && (result & 1) == 0; t += delta)
         if (! mktime_test (t))
           result |= 1;
-      if (! (mktime_test ((time_t) 1)
-             && mktime_test ((time_t) (60 * 60))
-             && mktime_test ((time_t) (60 * 60 * 24))))
+      if ((result & 2) == 0
+          && ! (mktime_test ((time_t) 1)
+                && mktime_test ((time_t) (60 * 60))
+                && mktime_test ((time_t) (60 * 60 * 24))))
         result |= 2;
 
-      for (j = 1; ; j <<= 1)
-        if (! bigtime_test (j))
-          result |= 4;
-        else if (INT_MAX / 2 < j)
-          break;
-      if (! bigtime_test (INT_MAX))
+      for (j = 1; (result & 4) == 0; j <<= 1)
+        {
+          if (! bigtime_test (j))
+            result |= 4;
+          if (INT_MAX / 2 < j)
+            break;
+        }
+      if ((result & 8) == 0 && ! bigtime_test (INT_MAX))
         result |= 8;
     }
   if (! irix_6_4_bug ())
