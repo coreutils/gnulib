@@ -72,6 +72,9 @@
       return ret;                                                             \
     }
 
+/* Enable this function definition only of gnulib's <stdio.h> has prepared it.
+   Otherwise we get a function definition conflict with mingw64's <stdio.h>.  */
+#  if GNULIB_SCANF
 int
 scanf (const char *format, ...)
 {
@@ -84,7 +87,11 @@ scanf (const char *format, ...)
 
   return retval;
 }
+#  endif
 
+/* Enable this function definition only of gnulib's <stdio.h> has prepared it.
+   Otherwise we get a function definition conflict with mingw64's <stdio.h>.  */
+#  if GNULIB_FSCANF
 int
 fscanf (FILE *stream, const char *format, ...)
 {
@@ -97,19 +104,28 @@ fscanf (FILE *stream, const char *format, ...)
 
   return retval;
 }
+#  endif
 
+/* Enable this function definition only of gnulib's <stdio.h> has prepared it.
+   Otherwise we get a function definition conflict with mingw64's <stdio.h>.  */
+#  if GNULIB_VSCANF
 int
 vscanf (const char *format, va_list args)
 {
   return vfscanf (stdin, format, args);
 }
+#  endif
 
+/* Enable this function definition only of gnulib's <stdio.h> has prepared it.
+   Otherwise we get a function definition conflict with mingw64's <stdio.h>.  */
+#  if GNULIB_VFSCANF
 int
 vfscanf (FILE *stream, const char *format, va_list args)
 #undef vfscanf
 {
   CALL_WITH_ERRNO_FIX (int, vfscanf (stream, format, args), ret == EOF)
 }
+#  endif
 
 int
 getchar (void)

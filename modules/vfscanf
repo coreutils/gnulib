@@ -8,6 +8,7 @@ stdio
 
 configure.ac:
 gl_STDIO_MODULE_INDICATOR([vfscanf])
+gl_MODULE_INDICATOR([vfscanf])
 
 Makefile.am:
 

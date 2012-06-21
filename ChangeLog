@@ -1,3 +1,14 @@
+2012-06-21  Bruno Haible  <bruno@clisp.org>
+
+	nonblocking: Avoid compilation error on mingw64.
+	* m4/stdio_h.m4 (gl_STDIO_H): Invoke gl_MODULE_INDICATOR for scanf,
+	fscanf.
+	* modules/vscanf (configure.ac): Invoke gl_MODULE_INDICATOR.
+	* modules/vfscanf (configure.ac): Likewise.
+	* lib/stdio-read.c (scanf, fscanf, vscanf, vfscanf): Enable function
+	definition only if stdio.h has prepared it.
+	Reported by Daniel P. Berrange <berrange@redhat.com>.
+
 2012-06-20  Bernd Jendrissek  <bernd.jendrissek@gmail.com>  (tiny change)
 
 	gnulib-tool: Use readlink if it is available.
