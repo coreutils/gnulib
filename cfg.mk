@@ -56,3 +56,6 @@ exclude_file_name_regexp--sc_prohibit_doubled_word = \
 exclude_file_name_regexp--sc_prohibit_openat_without_use = ^lib/selinux-at\.c$$
 exclude_file_name_regexp--sc_trailing_blank = \
   ^(.*\.class|build-aux/texinfo\.tex|doc/Copyright/assign\.future\.manual)$$
+
+# Disable strncpy prohibition completely, for now.
+exclude_file_name_regexp--sc_prohibit_strncpy = .*

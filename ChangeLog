@@ -1,3 +1,8 @@
+2012-06-21  Jim Meyering  <meyering@redhat.com>
+
+	maint: disable the strncpy prohibition
+	* cfg.mk: Do not prohibit strncpy here.
+
 2012-06-21  Bruno Haible  <bruno@clisp.org>
 
 	nonblocking: Avoid compilation error on mingw64.
