@@ -1360,11 +1360,9 @@ fi
       fi
       ;;
   esac
-  if test "$inctests" = false; then
-    inctests=""
-  fi
-  # Now the only possible values of "$inctests" are true and the empty string.
-  if test "$cond_dependencies" = true && test -n "$inctests"; then
+  # Now the only possible values of "$inctests" are true and false
+  # (or blank but then it is irrelevant).
+  if test "$cond_dependencies" = true && test "$inctests" = true; then
     echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
     func_exit 1
   fi
@@ -2637,7 +2635,7 @@ sed_dependencies_without_conditions='s/ *\[.*//'
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of specified modules
-# - inctests        true if tests should be included, blank otherwise
+# - inctests        true if tests should be included, false otherwise
 # - incobsolete     true if obsolete modules among dependencies should be
 #                   included, blank otherwise
 # - inc_cxx_tests   true if C++ interoperability tests should be included,
@@ -2722,7 +2720,7 @@ func_modules_transitive_closure ()
           if test -n "$duplicated_deps"; then
             func_warning "module $module has duplicated dependencies: "`echo $duplicated_deps`
           fi
-          if test -n "$inctests"; then
+          if $inctests; then
             testsmodule=`func_get_tests_module $module`
             if test -n "$testsmodule"; then
               deps="$deps $testsmodule"
@@ -2845,7 +2843,7 @@ func_show_module_list ()
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - specified_modules  list of specified modules
-# - inctests        true if tests should be included, blank otherwise
+# - inctests        true if tests should be included, false otherwise
 # - incobsolete     true if obsolete modules among dependencies should be
 #                   included, blank otherwise
 # - inc_cxx_tests   true if C++ interoperability tests should be included,
@@ -2883,7 +2881,7 @@ func_modules_transitive_closure_separately ()
 {
   # Determine main module list.
   saved_inctests="$inctests"
-  inctests=""
+  inctests=false
   modules="$specified_modules"
   func_modules_transitive_closure
   main_modules="$modules"
@@ -4100,7 +4098,7 @@ func_emit_autoconf_snippets ()
 # - docbase         directory relative to destdir where to place doc files
 # - testsbase       directory relative to destdir where to place unit test code
 # - auxdir          directory relative to destdir where to place build aux files
-# - inctests        true if --with-tests was given, blank otherwise
+# - inctests        true if --with-tests was given, false otherwise
 # - incobsolete     true if --with-obsolete was given, blank otherwise
 # - inc_cxx_tests   true if --with-c++-tests was given, blank otherwise
 # - inc_longrunning_tests  true if --with-longrunning-tests was given, blank
@@ -4394,8 +4392,11 @@ func_import ()
       fi
     fi
     # Require the tests if specified either way.
-    if test -z "$inctests"; then
+    if ! $inctests; then
       inctests="$cached_inctests"
+      if test -z "$inctests"; then
+        inctests=false
+      fi
     fi
     # The libname defaults to the cached one.
     if test -z "$supplied_libname"; then
@@ -4444,7 +4445,7 @@ func_import ()
       vc_files="$cached_vc_files"
     fi
     # Ensure constraints.
-    if test "$cond_dependencies" = true && test -n "$inctests"; then
+    if test "$cond_dependencies" = true && $inctests; then
       echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
       func_exit 1
     fi
@@ -4641,7 +4642,7 @@ s,^\(.................................................[^ ]*\) *,                
     if test -n "$docfiles"; then
       echo "$docbase"
     fi
-    if test -n "$inctests"; then
+    if $inctests; then
       echo "$testsbase"
     fi
     echo "$auxdir"
@@ -4790,7 +4791,7 @@ s,^\(.................................................[^ ]*\) *,                
   func_append actioncmd " --doc-base=$docbase"
   func_append actioncmd " --tests-base=$testsbase"
   func_append actioncmd " --aux-dir=$auxdir"
-  if test -n "$inctests"; then
+  if $inctests; then
     func_append actioncmd " --with-tests"
   fi
   if test -n "$incobsolete"; then
@@ -4887,7 +4888,7 @@ s,^\(.................................................[^ ]*\) *,                
     pobase_base=`basename "$pobase"`
     func_note_Makefile_am_edit "$pobase_dir" SUBDIRS "$pobase_base"
   fi
-  if test -n "$inctests"; then
+  if $inctests; then
     if test "$makefile_am" = Makefile.am; then
       testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
       testsbase_base=`basename "$testsbase"`
@@ -4906,7 +4907,7 @@ s,//*$,/,'
           && ! { test -f "${destdir}/${dir1}Makefile.am" \
                  || test "${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
                  || test "./${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
-                 || { test -n "$inctests" \
+                 || { $inctests \
                       && { test "${dir1}Makefile.am" = "$testsbase/$makefile_am" \
                            || test "./${dir1}Makefile.am" = "$testsbase/$makefile_am"; }; }; }; do
       dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
@@ -5119,7 +5120,9 @@ s,//*$,/,'
     echo "gl_PO_BASE([$pobase])"
     echo "gl_DOC_BASE([$docbase])"
     echo "gl_TESTS_BASE([$testsbase])"
-    test -z "$inctests" || echo "gl_WITH_TESTS"
+    if $inctests; then
+      echo "gl_WITH_TESTS"
+    fi
     echo "gl_LIB([$libname])"
     if test -n "$lgpl"; then
       if test "$lgpl" = yes; then
@@ -5310,7 +5313,7 @@ s,//*$,/,'
     fi
   fi
 
-  if test -n "$inctests"; then
+  if $inctests; then
     # Create tests makefile.
     func_dest_tmpfilename $testsbase/$makefile_am
     destfile="$testsbase/$makefile_am"
@@ -5498,7 +5501,7 @@ s,//*$,/,'
   if test -n "$pobase"; then
     echo "  - add \"$pobase/Makefile.in\" to AC_CONFIG_FILES in $configure_ac,"
   fi
-  if test -n "$inctests"; then
+  if $inctests; then
     if test "$makefile_am" = Makefile.am; then
       echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
     else
@@ -5533,7 +5536,7 @@ s,//*$,/,'
 # - local_gnulib_dir  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - auxdir          directory relative to destdir where to place build aux files
-# - inctests        true if tests should be included, blank otherwise
+# - inctests        true if tests should be included, false otherwise
 # - incobsolete     true if obsolete modules among dependencies should be
 #                   included, blank otherwise
 # - excl_cxx_tests   true if C++ interoperability tests should be excluded,
@@ -5582,7 +5585,7 @@ func_create_testdir ()
   # When computing transitive closures, don't consider $module to depend on
   # $module-tests. Need this because tests are implicitly GPL and may depend
   # on GPL modules - therefore we don't want a warning in this case.
-  inctests=""
+  inctests=false
   for requested_module in $specified_modules; do
     requested_license=`func_get_license "$requested_module"`
     if test "$requested_license" != GPL; then
@@ -5784,7 +5787,7 @@ func_create_testdir ()
     func_append subdirs " po"
   fi
 
-  if test -n "$inctests"; then
+  if $inctests; then
     test -d "$testdir/$testsbase" || mkdir "$testdir/$testsbase"
     if $single_configure; then
       # Create $testsbase/Makefile.am.
@@ -6057,7 +6060,7 @@ func_create_testdir ()
    func_execute_command ${AUTOHEADER} || func_exit 1
    func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
   ) || func_exit 1
-  if test -n "$inctests" && ! $single_configure; then
+  if $inctests && ! $single_configure; then
     # Create autogenerated files.
     (cd "$testdir/$testsbase" || func_exit 1
      # Do not use "${AUTORECONF} --force --install", because it may invoke
@@ -6098,7 +6101,7 @@ func_create_testdir ()
                                esac;
                              done`
   tests_distributed_built_sources=
-  if test -n "$inctests"; then
+  if $inctests; then
     # Likewise for built files in the $testsbase directory.
     tests_cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$testsbase/Makefile.am" \
                          | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`

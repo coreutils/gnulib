@@ -1,5 +1,11 @@
 2012-06-21  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Refactor inctests variable.
+	* gnulib-tool: Normalize inctests to 'true' or 'false', not ''.
+	(func_modules_transitive_closure,
+	func_modules_transitive_closure_separately,
+	func_import, func_create_testdir): Update.
+
 	gnulib-tool: --create-[mega]testdir, --[mega]test implies --with-tests.
 	* gnulib-tool: Accept option --without-tests.
 	(func_usage): Document --without-tests option. Rearrange.
