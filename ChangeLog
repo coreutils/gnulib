@@ -1,5 +1,16 @@
 2012-06-21  Paul Eggert  <eggert@cs.ucla.edu>
 
+	posixtm-tests: port to buggy compiler
+	Problem reported by Simon Josefsson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-06/msg00246.html>.
+	* modules/posixtm-tests (Depends-on): Add stdint.
+	* tests/test-posixtm.c (struct posixtm_test.t_expected):
+	Now of type int_least64_t, not int64_t, both because that's
+	what INT64_C returns and because int_least64_t works even
+	on 72-bit hosts.
+	(T): Use INT64_C on constants outside the traditional int range,
+	to work around compiler bug noted by Simon.
+
 	mktime: fix integer overflow in 'configure'-time test
 	* m4/mktime.m4 (gl_FUNC_MKTIME): Do not rely on undefined behavior
 	after integer overflow.  Problem reported by Rich Felker in
