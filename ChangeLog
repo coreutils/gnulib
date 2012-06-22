@@ -1,3 +1,10 @@
+2012-06-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time_r: fix typo that always overrode localtime_r decl
+	* m4/time_r.m4 (gl_TIME_R): Use AC_CHECK_DECLS, not
+	AC_CHECK_DECLS_ONCE, since localtime_r is declared in <time.h>,
+	not in a standard include.
+
 2012-06-22  Bruno Haible  <bruno@clisp.org>
 
 	Write "Mac OS X" instead of "MacOS X".
