@@ -15,7 +15,7 @@ Portability problems fixed by Gnulib module @code{getpass-gnu}:
 @itemize
 @item
 The returned password is truncated to PASS_MAX characters on some platforms:
-MacOS X 10.5 (128), FreeBSD 6.2 (128), NetBSD 3.0 (128), OpenBSD 4.0 (128), AIX 5.1 (32), HP-UX 11 (8), IRIX 6.5 (32), OSF/1 5.1 (80), Solaris 11 2010-11 (8, even less than PASS_MAX), Cygwin (128).
+Mac OS X 10.5 (128), FreeBSD 6.2 (128), NetBSD 3.0 (128), OpenBSD 4.0 (128), AIX 5.1 (32), HP-UX 11 (8), IRIX 6.5 (32), OSF/1 5.1 (80), Solaris 11 2010-11 (8, even less than PASS_MAX), Cygwin (128).
 The gnulib implementation returns the password untruncated.
 @end itemize
 

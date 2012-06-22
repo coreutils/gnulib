@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.4, OpenBSD 3.8, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.4, OpenBSD 3.8, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 The effects of this call are system and compiler optimization dependent,
 since it restores the contents of register-allocated variables but not

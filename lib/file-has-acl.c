@@ -32,7 +32,7 @@
 
 #if USE_ACL && HAVE_ACL_GET_FILE
 
-# if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+# if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
 
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
    Return 1 if the given ACL is non-trivial.
@@ -489,7 +489,7 @@ file_has_acl (char const *name, struct stat const *sb)
 # if HAVE_ACL_GET_FILE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-      /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+      /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
       int ret;
 
       if (HAVE_ACL_EXTENDED_FILE) /* Linux */
@@ -499,10 +499,10 @@ file_has_acl (char const *name, struct stat const *sb)
              ACL_TYPE_DEFAULT.  */
           ret = acl_extended_file (name);
         }
-      else /* FreeBSD, MacOS X, IRIX, Tru64 */
+      else /* FreeBSD, Mac OS X, IRIX, Tru64 */
         {
-#  if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
-          /* On MacOS X, acl_get_file (name, ACL_TYPE_ACCESS)
+#  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
+          /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
              and acl_get_file (name, ACL_TYPE_DEFAULT)
              always return NULL / EINVAL.  There is no point in making
              these two useless calls.  The real ACL is retrieved through

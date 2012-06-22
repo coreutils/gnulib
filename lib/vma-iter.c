@@ -32,7 +32,7 @@
 # include <sys/procfs.h> /* PIOC*, prmap_t */
 #endif
 
-#if defined __APPLE__ && defined __MACH__ /* MacOS X */
+#if defined __APPLE__ && defined __MACH__ /* Mac OS X */
 # include <mach/mach.h>
 #endif
 
@@ -359,7 +359,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   close (fd);
   return;
 
-#elif defined __APPLE__ && defined __MACH__ /* MacOS X */
+#elif defined __APPLE__ && defined __MACH__ /* Mac OS X */
 
   task_t task = mach_task_self ();
   vm_address_t address;
@@ -370,10 +370,10 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       int more;
       mach_port_t object_name;
       unsigned int flags;
-      /* In MacOS X 10.5, the types vm_address_t, vm_offset_t, vm_size_t have
+      /* In Mac OS X 10.5, the types vm_address_t, vm_offset_t, vm_size_t have
          32 bits in 32-bit processes and 64 bits in 64-bit processes. Whereas
          mach_vm_address_t and mach_vm_size_t are always 64 bits large.
-         MacOS X 10.5 has three vm_region like methods:
+         Mac OS X 10.5 has three vm_region like methods:
            - vm_region. It has arguments that depend on whether the current
              process is 32-bit or 64-bit. When linking dynamically, this
              function exists only in 32-bit processes. Therefore we use it only

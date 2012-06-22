@@ -16,13 +16,13 @@ This function is only defined as a macro with arguments on some platforms:
 MSVC 9.
 @item
 This function is not declared on some platforms:
-MacOS X 10.3.
+Mac OS X 10.3.
 @item
 This function does not work on finite numbers on some platforms:
-MacOS X 10.4/PowerPC, AIX 5.1, MSVC 9, BeOS.
+Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 9, BeOS.
 @item
 This function does not work on denormalized numbers on some platforms:
-MacOS X 10.5/i386.
+Mac OS X 10.5/i386.
 @item
 This function does not work on infinite numbers on some platforms:
 IRIX 6.5, mingw, MSVC 9.

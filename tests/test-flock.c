@@ -100,7 +100,7 @@ main (int argc, char *argv[])
 
 #if defined __linux__
   /* Invalid operation codes are rejected by the Linux implementation and by
-     the gnulib replacement,  but not by the MacOS X implementation.  */
+     the gnulib replacement,  but not by the Mac OS X implementation.  */
   ASSERT (flock (fd, LOCK_SH | LOCK_EX) == -1);
   ASSERT (errno == EINVAL);
   ASSERT (flock (fd, LOCK_SH | LOCK_UN) == -1);

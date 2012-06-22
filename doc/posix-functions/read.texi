@@ -23,7 +23,7 @@ Portability problems not fixed by Gnulib:
 @item
 This function may fail with error @code{EINTR}, even in programs that don't
 install any signal handlers, on some platforms:
-MacOS X 10.5.
+Mac OS X 10.5.
 @end itemize
 
 For handling @code{EINTR}, Gnulib provides a module @samp{safe-read} with a

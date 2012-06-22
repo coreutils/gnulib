@@ -17,7 +17,7 @@ OSF/1 5.1.
 @item
 This function has the return type @samp{void} instead of @samp{int} on some
 platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, OSF/1 5.1.
+Mac OS X 10.3, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, OSF/1 5.1.
 @item
 On some platforms, this function does not fail with @samp{EINVAL} when
 passed an empty string or a string containing @samp{=}:

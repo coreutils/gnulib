@@ -16,7 +16,7 @@ This function is only defined as a macro with arguments on some platforms:
 MSVC 9.
 @item
 This function has no prototype in @code{<math.h>} on some platforms:
-MacOS X.
+Mac OS X.
 @item
 This function does not work on finite numbers on some platforms:
 AIX 5.1.

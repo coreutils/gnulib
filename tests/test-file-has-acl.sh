@@ -111,7 +111,7 @@ cd "$builddir" ||
           acl_flavor=aix
         else
           if (fsaclctl -v >/dev/null) 2>/dev/null; then
-            # MacOS X.
+            # Mac OS X.
             acl_flavor=macosx
           else
             if test -f /sbin/chacl; then

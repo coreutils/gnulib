@@ -17,7 +17,7 @@ glibc 2.8.
 @item
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
-MacOS X 10.3, OpenBSD 5.0.
+Mac OS X 10.3, OpenBSD 5.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

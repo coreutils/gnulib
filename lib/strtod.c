@@ -193,7 +193,7 @@ static double underlying_strtod (const char *, char **);
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
-   to PowerPC on MacOS X 10.5.  */
+   to PowerPC on Mac OS X 10.5.  */
 #if defined __hpux || defined __sgi || defined __ICC
 static double
 compute_minus_zero (void)

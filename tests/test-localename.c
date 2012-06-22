@@ -715,7 +715,7 @@ test_locale_name_default (void)
 
   ASSERT (name != NULL);
 
-  /* Only MacOS X and Windows have a facility for the user to set the default
+  /* Only Mac OS X and Windows have a facility for the user to set the default
      locale.  */
 #if !((defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__ || defined __CYGWIN__))
   ASSERT (strcmp (name, "C") == 0);

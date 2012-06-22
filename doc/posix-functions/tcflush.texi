@@ -20,6 +20,6 @@ On some platforms, @code{tcflush} of @code{TCIFLUSH} on a non-tty fails with
 errno set to @code{EINVAL} rather than @code{ENOTTY}.
 @item
 On some platforms, @code{tcflush} of @code{TCOFLUSH} on a non-tty fails with
-errno set to @code{EINVAL} or, on IRIX, also @code{ENOSYS}, or, on MacOS X,
+errno set to @code{EINVAL} or, on IRIX, also @code{ENOSYS}, or, on Mac OS X,
 also @code{EOPNOTSUPP} or @code{ENODEV}, rather than @code{ENOTTY}.
 @end itemize

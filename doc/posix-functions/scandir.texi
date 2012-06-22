@@ -22,7 +22,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The fourth parameter of this function is declared as @code{int (*) (const void *, const void *)} on some platforms:
-glibc 2.3.6, MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Interix 3.5.
+glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Interix 3.5.
 @item
 The fourth parameter of this function is declared as @code{int (*) (void *, void *)} on some platforms:
 AIX 5.1.

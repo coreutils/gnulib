@@ -19,7 +19,7 @@ in @code{unistd.h}, on some platforms:
 OSF/1 5.1.
 @item
 The second argument is of type @code{int}, not @code{size_t}, on some platforms:
-MacOS X 10.5, FreeBSD 6.4, AIX 7.1, IRIX 6.5.
+Mac OS X 10.5, FreeBSD 6.4, AIX 7.1, IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -23,7 +23,7 @@
    ARGP_NO_EXIT flag is used).  Overridden by ARGP_PROGRAM_VERSION_HOOK.  */
 const char *argp_program_version
 /* This variable should be zero-initialized.  On most systems, putting it into
-   BSS is sufficient.  Not so on MacOS X 10.3 and 10.4, see
+   BSS is sufficient.  Not so on Mac OS X 10.3 and 10.4, see
    <http://lists.gnu.org/archive/html/bug-gnulib/2009-01/msg00329.html>
    <http://lists.gnu.org/archive/html/bug-gnulib/2009-08/msg00096.html>.  */
 #if defined __ELF__

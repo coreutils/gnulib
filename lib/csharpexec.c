@@ -47,7 +47,7 @@
   /* Native Windows, Cygwin */
   #define CLASSPATHVAR "PATH"
 #elif defined __APPLE__ && defined __MACH__
-  /* MacOS X */
+  /* Mac OS X */
   #define CLASSPATHVAR "DYLD_LIBRARY_PATH"
 #else
   /* Normal Unix */

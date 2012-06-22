@@ -1,4 +1,4 @@
-# fdatasync.m4 serial 3
+# fdatasync.m4 serial 4
 dnl Copyright (C) 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
 
   if test $ac_cv_have_decl_fdatasync = no; then
     HAVE_DECL_FDATASYNC=0
-    dnl MacOS X 10.7 has fdatasync but does not declare it.
+    dnl Mac OS X 10.7 has fdatasync but does not declare it.
     AC_CHECK_FUNCS([fdatasync])
     if test $ac_cv_func_fdatasync = no; then
       HAVE_FDATASYNC=0

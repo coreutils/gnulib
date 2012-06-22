@@ -1,4 +1,4 @@
-# frexp.m4 serial 13
+# frexp.m4 serial 14
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -107,7 +107,7 @@ AC_DEFUN([gl_FUNC_FREXP_WORKS],
 /* HP cc on HP-UX 10.20 has a bug with the constant expression -0.0.
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -DBL_MIN * DBL_MIN does not work when cross-compiling
-   to PowerPC on MacOS X 10.5.  */
+   to PowerPC on Mac OS X 10.5.  */
 #if defined __hpux || defined __sgi || defined __ICC
 static double
 compute_minus_zero (void)

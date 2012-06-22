@@ -21,7 +21,7 @@ OpenBSD 4.0.
 This function is missing on some platforms; however, the replacement
 fails on symlinks if @code{chown} is supported, and fails altogether
 with @code{ENOSYS} otherwise:
-MacOS X 10.3, Minix 3.1.8, mingw, MSVC 9, BeOS.
+Mac OS X 10.3, Minix 3.1.8, mingw, MSVC 9, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

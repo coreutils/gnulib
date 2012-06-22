@@ -1,4 +1,4 @@
-# lock.m4 serial 11 (gettext-0.18.2)
+# lock.m4 serial 12 (gettext-0.18.2)
 dnl Copyright (C) 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,7 +10,7 @@ AC_DEFUN([gl_LOCK],
 [
   AC_REQUIRE([gl_THREADLIB])
   if test "$gl_threads_api" = posix; then
-    # OSF/1 4.0 and MacOS X 10.1 lack the pthread_rwlock_t type and the
+    # OSF/1 4.0 and Mac OS X 10.1 lack the pthread_rwlock_t type and the
     # pthread_rwlock_* functions.
     AC_CHECK_TYPE([pthread_rwlock_t],
       [AC_DEFINE([HAVE_PTHREAD_RWLOCK], [1],

@@ -17,5 +17,5 @@ AIX 5.1, mingw, MSVC 9, Interix 3.5, BeOS.
 On platforms where @code{f_blocks} in @samp{struct statfs} is a 32-bit
 value, this function may not work correctly on files systems larger than
 4 TiB.  The fix is to use the @code{AC_SYS_LARGEFILE} macro.  This affects
-MacOS X.
+Mac OS X.
 @end itemize

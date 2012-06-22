@@ -1,4 +1,4 @@
-# serial 29
+# serial 30
 # Obtaining file system usage information.
 
 # Copyright (C) 1997-1998, 2000-2001, 2003-2012 Free Software Foundation, Inc.
@@ -33,7 +33,7 @@ dnl Enable large-file support. This has the effect of changing the size
 dnl of field f_blocks in 'struct statvfs' from 32 bit to 64 bit on
 dnl glibc/Hurd, HP-UX 11, Solaris (32-bit mode). It also changes the size
 dnl of field f_blocks in 'struct statfs' from 32 bit to 64 bit on
-dnl MacOS X >= 10.5 (32-bit mode).
+dnl Mac OS X >= 10.5 (32-bit mode).
 AC_REQUIRE([AC_SYS_LARGEFILE])
 
 AC_MSG_NOTICE([checking how to get file system space usage])
@@ -60,7 +60,7 @@ struct statvfs fsd;
 
 #if defined __APPLE__ && defined __MACH__
 #include <limits.h>
-/* On MacOS X >= 10.5, f_blocks in 'struct statvfs' is a 32-bit quantity;
+/* On Mac OS X >= 10.5, f_blocks in 'struct statvfs' is a 32-bit quantity;
    that commonly limits file systems to 4 TiB.  Whereas f_blocks in
    'struct statfs' is a 64-bit type, thanks to the large-file support
    that was enabled above.  In this case, don't use statvfs(); use statfs()
@@ -160,7 +160,7 @@ if test $fu_cv_sys_stat_statfs2_frsize = yes; then
 fi
 
 if test $ac_fsusage_space = no; then
-  # glibc/Linux, MacOS X, FreeBSD < 5.0, NetBSD < 3.0, OpenBSD < 4.4.
+  # glibc/Linux, Mac OS X, FreeBSD < 5.0, NetBSD < 3.0, OpenBSD < 4.4.
   # (glibc/{Hurd,kFreeBSD}, FreeBSD >= 5.0, NetBSD >= 3.0,
   # OpenBSD >= 4.4, AIX, HP-UX, OSF/1, Cygwin already handled above.)
   # (On IRIX you need to include <sys/statfs.h>, not only <sys/mount.h> and

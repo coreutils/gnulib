@@ -1,4 +1,4 @@
-# frexpl.m4 serial 19
+# frexpl.m4 serial 20
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_FREXPL],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   dnl Check whether it's declared.
-  dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
+  dnl Mac OS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
   AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [[#include <math.h>]])
 
   FREXPL_LIBM=
@@ -73,7 +73,7 @@ AC_DEFUN([gl_FUNC_FREXPL_NO_LIBM],
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
   dnl Check whether it's declared.
-  dnl MacOS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
+  dnl Mac OS X 10.3 has frexpl() in libc but doesn't declare it in <math.h>.
   AC_CHECK_DECL([frexpl], , [HAVE_DECL_FREXPL=0], [[#include <math.h>]])
   if test $HAVE_DECL_FREXPL = 1; then
     gl_CHECK_FREXPL_NO_LIBM
@@ -113,8 +113,8 @@ AC_DEFUN([gl_CHECK_FREXPL_NO_LIBM],
 ])
 
 dnl Test whether frexpl() works on finite numbers (this fails on
-dnl MacOS X 10.4/PowerPC, on AIX 5.1, and on BeOS), on denormalized numbers
-dnl (this fails on MacOS X 10.5/i386), and also on infinite numbers (this
+dnl Mac OS X 10.4/PowerPC, on AIX 5.1, and on BeOS), on denormalized numbers
+dnl (this fails on Mac OS X 10.5/i386), and also on infinite numbers (this
 dnl fails e.g. on IRIX 6.5 and mingw).
 AC_DEFUN([gl_FUNC_FREXPL_WORKS],
 [
@@ -162,7 +162,7 @@ int main()
     if (exp != 5)
       result |= 1;
   }
-  /* Test on finite numbers that fails on MacOS X 10.4, because its frexpl
+  /* Test on finite numbers that fails on Mac OS X 10.4, because its frexpl
      function returns an invalid (incorrectly normalized) value: it returns
                y = { 0x3fe028f5, 0xc28f5c28, 0x3c9eb851, 0xeb851eb8 }
      but the correct result is
@@ -201,7 +201,7 @@ int main()
         int exp;
         long double y = frexpl (x, &exp);
         /* On machines with IEEE854 arithmetic: x = 1.68105e-4932,
-           exp = -16382, y = 0.5.  On MacOS X 10.5: exp = -16384, y = 0.5.  */
+           exp = -16382, y = 0.5.  On Mac OS X 10.5: exp = -16384, y = 0.5.  */
         if (exp != LDBL_MIN_EXP - 1)
           result |= 8;
       }

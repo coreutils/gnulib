@@ -1,4 +1,4 @@
-# getopt.m4 serial 40
+# getopt.m4 serial 41
 dnl Copyright (C) 2002-2006, 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -173,7 +173,7 @@ main ()
     if (!(optind == 1))
       return 12;
   }
-  /* Detect MacOS 10.5, AIX 7.1 bug.  */
+  /* Detect Mac OS X 10.5, AIX 7.1 bug.  */
   {
     static char program[] = "program";
     static char ab[] = "-ab";
@@ -236,7 +236,7 @@ dnl is ambiguous with environment values that contain newlines.
              nocrash_init();
 
              /* This code succeeds on glibc 2.8, OpenBSD 4.0, Cygwin, mingw,
-                and fails on MacOS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
+                and fails on Mac OS X 10.5, AIX 5.2, HP-UX 11, IRIX 6.5,
                 OSF/1 5.1, Solaris 10.  */
              {
                static char conftest[] = "conftest";
@@ -247,7 +247,7 @@ dnl is ambiguous with environment values that contain newlines.
                  result |= 1;
              }
              /* This code succeeds on glibc 2.8, mingw,
-                and fails on MacOS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11,
+                and fails on Mac OS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11,
                 IRIX 6.5, OSF/1 5.1, Solaris 10, Cygwin 1.5.x.  */
              {
                static char program[] = "program";

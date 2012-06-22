@@ -170,7 +170,7 @@ main (void)
 
 #else
 
-  /* Try various master names of MacOS X: /dev/pty[p-w][0-9a-f]  */
+  /* Try various master names of Mac OS X: /dev/pty[p-w][0-9a-f]  */
   {
     int char1;
     int char2;

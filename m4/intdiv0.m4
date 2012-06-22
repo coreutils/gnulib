@@ -1,4 +1,4 @@
-# intdiv0.m4 serial 5 (gettext-0.18.2)
+# intdiv0.m4 serial 6 (gettext-0.18.2)
 dnl Copyright (C) 2002, 2007-2008, 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gt_INTDIV0],
 changequote(,)dnl
       case "$host_os" in
         macos* | darwin[6-9]* | darwin[1-9][0-9]*)
-          # On MacOS X 10.2 or newer, just assume the same as when cross-
+          # On Mac OS X 10.2 or newer, just assume the same as when cross-
           # compiling. If we were to perform the real test, 1 Crash Report
           # dialog window would pop up.
           case "$host_cpu" in

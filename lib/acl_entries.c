@@ -22,7 +22,7 @@
 #include "acl-internal.h"
 
 /* This file assumes POSIX-draft like ACLs
-   (Linux, FreeBSD, MacOS X, IRIX, Tru64).  */
+   (Linux, FreeBSD, Mac OS X, IRIX, Tru64).  */
 
 /* Return the number of entries in ACL.
    Return -1 and set errno upon failure to determine it.  */
@@ -34,8 +34,8 @@ acl_entries (acl_t acl)
 
   if (acl != NULL)
     {
-#if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD, MacOS X */
-# if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+#if HAVE_ACL_FIRST_ENTRY /* Linux, FreeBSD, Mac OS X */
+# if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
       /* acl_get_entry returns 0 when it successfully fetches an entry,
          and -1/EINVAL at the end.  */
       acl_entry_t ace;

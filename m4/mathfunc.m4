@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 10
+# mathfunc.m4 serial 11
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -113,7 +113,7 @@ AC_DEFUN([gl_MATHFUNC],
 # tests whether the function FUNC is available in libc or libm.
 # It sets FUNC_LIBM to empty or "-lm" accordingly.
 # FUNC must be one of the following functions, that are present on all systems
-# and provided by libm on all systems except MacOS X, BeOS, Haiku:
+# and provided by libm on all systems except Mac OS X, BeOS, Haiku:
 #   acos asin atan atan2 cbrt cos cosh erf erfc exp fmod hypot j0 j1 jn lgamma
 #   log log10 log1p pow remainder sin sinh sqrt tan tanh y0 y1 yn
 

@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 14
+# serial 15
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -23,7 +23,7 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
        FAULT_YIELDS_SIGBUS=1 ;;
      hpux*) # HP-UX
        FAULT_YIELDS_SIGBUS=1 ;;
-     macos* | darwin*) # MacOS X
+     macos* | darwin*) # Mac OS X
        FAULT_YIELDS_SIGBUS=1 ;;
      gnu*) # Hurd
        FAULT_YIELDS_SIGBUS=1 ;;

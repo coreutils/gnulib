@@ -30,7 +30,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-/* Get declaration of _NSGetExecutablePath on MacOS X 10.2 or newer.  */
+/* Get declaration of _NSGetExecutablePath on Mac OS X 10.2 or newer.  */
 #if HAVE_MACH_O_DYLD_H
 # include <mach-o/dyld.h>
 #endif
@@ -202,7 +202,7 @@ find_executable (const char *argv0)
   }
 # endif
 # if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
-  /* On MacOS X 10.2 or newer, the function
+  /* On Mac OS X 10.2 or newer, the function
        int _NSGetExecutablePath (char *buf, uint32_t *bufsize);
      can be used to retrieve the executable's full path.  */
   char location[4096];

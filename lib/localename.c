@@ -16,7 +16,7 @@
 
 /* Written by Ulrich Drepper <drepper@gnu.org>, 1995.  */
 /* Native Windows code written by Tor Lillqvist <tml@iki.fi>.  */
-/* MacOS X code written by Bruno Haible <bruno@clisp.org>.  */
+/* Mac OS X code written by Bruno Haible <bruno@clisp.org>.  */
 
 #include <config.h>
 
@@ -34,7 +34,7 @@
 #include <string.h>
 
 #if HAVE_USELOCALE
-/* MacOS X 10.5 defines the locale_t type in <xlocale.h>.  */
+/* Mac OS X 10.5 defines the locale_t type in <xlocale.h>.  */
 # if defined __APPLE__ && defined __MACH__
 #  include <xlocale.h>
 # endif
@@ -1128,11 +1128,11 @@
 
 
 #if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-/* MacOS X 10.2 or newer */
+/* Mac OS X 10.2 or newer */
 
-/* Canonicalize a MacOS X locale name to a Unix locale name.
+/* Canonicalize a Mac OS X locale name to a Unix locale name.
    NAME is a sufficiently large buffer.
-   On input, it contains the MacOS X locale name.
+   On input, it contains the Mac OS X locale name.
    On output, it contains the Unix locale name.  */
 # if !defined IN_LIBINTL
 static
@@ -1145,9 +1145,9 @@ gl_locale_name_canonicalize (char *name)
      http://lists.apple.com/archives/carbon-dev/2005/Mar/msg00293.html */
 
   /* Convert legacy (NeXTstep inherited) English names to Unix (ISO 639 and
-     ISO 3166) names.  Prior to MacOS X 10.3, there is no API for doing this.
+     ISO 3166) names.  Prior to Mac OS X 10.3, there is no API for doing this.
      Therefore we do it ourselves, using a table based on the results of the
-     MacOS X 10.3.8 function
+     Mac OS X 10.3.8 function
      CFLocaleCreateCanonicalLocaleIdentifierFromString().  */
   typedef struct { const char legacy[21+1]; const char unixy[5+1]; }
           legacy_entry;
@@ -1290,26 +1290,26 @@ gl_locale_name_canonicalize (char *name)
   typedef struct { const char langtag[7+1]; const char unixy[12+1]; }
           langtag_entry;
   static const langtag_entry langtag_table[] = {
-    /* MacOS X has "az-Arab", "az-Cyrl", "az-Latn".
+    /* Mac OS X has "az-Arab", "az-Cyrl", "az-Latn".
        The default script for az on Unix is Latin.  */
     { "az-Latn", "az" },
-    /* MacOS X has "ga-dots".  Does not yet exist on Unix.  */
+    /* Mac OS X has "ga-dots".  Does not yet exist on Unix.  */
     { "ga-dots", "ga" },
-    /* MacOS X has "kk-Cyrl".  Does not yet exist on Unix.  */
-    /* MacOS X has "mn-Cyrl", "mn-Mong".
+    /* Mac OS X has "kk-Cyrl".  Does not yet exist on Unix.  */
+    /* Mac OS X has "mn-Cyrl", "mn-Mong".
        The default script for mn on Unix is Cyrillic.  */
     { "mn-Cyrl", "mn" },
-    /* MacOS X has "ms-Arab", "ms-Latn".
+    /* Mac OS X has "ms-Arab", "ms-Latn".
        The default script for ms on Unix is Latin.  */
     { "ms-Latn", "ms" },
-    /* MacOS X has "tg-Cyrl".
+    /* Mac OS X has "tg-Cyrl".
        The default script for tg on Unix is Cyrillic.  */
     { "tg-Cyrl", "tg" },
-    /* MacOS X has "tk-Cyrl".  Does not yet exist on Unix.  */
-    /* MacOS X has "tt-Cyrl".
+    /* Mac OS X has "tk-Cyrl".  Does not yet exist on Unix.  */
+    /* Mac OS X has "tt-Cyrl".
        The default script for tt on Unix is Cyrillic.  */
     { "tt-Cyrl", "tt" },
-    /* MacOS X has "zh-Hans", "zh-Hant".
+    /* Mac OS X has "zh-Hans", "zh-Hant".
        Country codes are used to distinguish these on Unix.  */
     { "zh-Hans", "zh_CN" },
     { "zh-Hant", "zh_TW" }
@@ -2505,7 +2505,7 @@ gl_locale_name_from_win32_LCID (LCID lcid)
 #endif
 
 
-#if HAVE_USELOCALE /* glibc or MacOS X */
+#if HAVE_USELOCALE /* glibc or Mac OS X */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
@@ -2617,20 +2617,20 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
           name = thread_locale->__names[category];
         return name;
 #  endif
-#  if defined __APPLE__ && defined __MACH__ /* MacOS X */
+#  if defined __APPLE__ && defined __MACH__ /* Mac OS X */
         /* The locale name is found deep in an undocumented data structure.
            Since it's stored in a buffer of size 32 and newlocale() rejects
            locale names of length > 31, we can assume that it is NUL terminated
            in this buffer. But we need to make a copy of the locale name, of
            indefinite extent.  */
-        struct _xlocale_part1_v0 /* used in MacOS X 10.5 */
+        struct _xlocale_part1_v0 /* used in Mac OS X 10.5 */
           {
             int32_t __refcount;
             void (*__free_extra)(void *);
             __darwin_mbstate_t __mbs[10];
             int64_t __magic;
           };
-        struct _xlocale_part1_v1 /* used in MacOS X >= 10.6.0 */
+        struct _xlocale_part1_v1 /* used in Mac OS X >= 10.6.0 */
           {
             int32_t __refcount;
             void (*__free_extra)(void *);
@@ -2702,18 +2702,18 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
         struct _xlocale_part2 *tlp;
         if (((struct _xlocale_part1_v0 *) thread_locale)->__magic
             == 0x786C6F63616C6530LL)
-          /* MacOS X 10.5 */
+          /* Mac OS X 10.5 */
           tlp =
             (struct _xlocale_part2 *)
             &((struct _xlocale_part1_v0 *) thread_locale)->__magic;
         else if (((struct _xlocale_part1_v1 *) thread_locale)->__magic
                  == 0x786C6F63616C6530LL)
-          /* MacOS X >= 10.6.0 */
+          /* Mac OS X >= 10.6.0 */
           tlp =
             (struct _xlocale_part2 *)
             &((struct _xlocale_part1_v1 *) thread_locale)->__magic;
         else
-          /* Unsupported version of MacOS X: The internals of 'struct _xlocale'
+          /* Unsupported version of Mac OS X: The internals of 'struct _xlocale'
              have changed again.  */
           return "";
         switch (category)
@@ -2784,8 +2784,8 @@ gl_locale_name_posix (int category, const char *categoryname)
   /* On other systems we ignore what setlocale reports and instead look at the
      environment variables directly.  This is necessary
        1. on systems which have a facility for customizing the default locale
-          (MacOS X, native Windows, Cygwin) and where the system's setlocale()
-          function ignores this default locale (MacOS X, Cygwin), in two cases:
+          (Mac OS X, native Windows, Cygwin) and where the system's setlocale()
+          function ignores this default locale (Mac OS X, Cygwin), in two cases:
           a. when the user missed to use the setlocale() override from libintl
              (for example by not including <libintl.h>),
           b. when setlocale supports only the "C" locale, such as on Cygwin
@@ -2820,7 +2820,7 @@ gl_locale_name_environ (int category, const char *categoryname)
   if (retval != NULL && retval[0] != '\0')
     {
 #if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-      /* MacOS X 10.2 or newer.
+      /* Mac OS X 10.2 or newer.
          Ignore invalid LANG value set by the Terminal application.  */
       if (strcmp (retval, "UTF-8") != 0)
 #endif
@@ -2847,10 +2847,10 @@ gl_locale_name_default (void)
       locale, customizing it for each location.  POSIX:2001 does not require
       such a facility.
 
-     The systems with such a facility are MacOS X and Windows: They provide a
+     The systems with such a facility are Mac OS X and Windows: They provide a
      GUI that allows the user to choose a locale.
-       - On MacOS X, by default, none of LC_* or LANG are set.  Starting with
-         MacOS X 10.4 or 10.5, LANG is set for processes launched by the
+       - On Mac OS X, by default, none of LC_* or LANG are set.  Starting with
+         Mac OS X 10.4 or 10.5, LANG is set for processes launched by the
          'Terminal' application (but sometimes to an incorrect value "UTF-8").
          When no environment variable is set, setlocale (LC_ALL, "") uses the
          "C" locale.
@@ -2880,7 +2880,7 @@ gl_locale_name_default (void)
      codeset.  */
 
 # if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-  /* MacOS X 10.2 or newer */
+  /* Mac OS X 10.2 or newer */
   {
     /* Cache the locale name, since CoreFoundation calls are expensive.  */
     static const char *cached_localename;
@@ -2888,7 +2888,7 @@ gl_locale_name_default (void)
     if (cached_localename == NULL)
       {
         char namebuf[256];
-#  if HAVE_CFLOCALECOPYCURRENT /* MacOS X 10.3 or newer */
+#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.3 or newer */
         CFLocaleRef locale = CFLocaleCopyCurrent ();
         CFStringRef name = CFLocaleGetIdentifier (locale);
 
@@ -2899,7 +2899,7 @@ gl_locale_name_default (void)
             cached_localename = strdup (namebuf);
           }
         CFRelease (locale);
-#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.2 or newer */
+#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.2 or newer */
         CFTypeRef value =
           CFPreferencesCopyAppValue (CFSTR ("AppleLocale"),
                                      kCFPreferencesCurrentApplication);

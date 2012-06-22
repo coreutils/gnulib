@@ -111,7 +111,7 @@ As of 2011, the list of supported platforms is the following:
 glibc systems.  With glibc 2.8 or newer, they are frequently tested.  With
 glibc 2.3 or newer, they are occasionally tested.
 @item
-MacOS X.  In versions 10.5 and 10.6, it's frequently tested.  In version
+Mac OS X.  In versions 10.5 and 10.6, it's frequently tested.  In version
 10.4, it's rarely tested.
 @item
 FreeBSD 6.0 or newer is occasionally tested.  FreeBSD 5.x is rarely tested.

@@ -1,4 +1,4 @@
-# unlink.m4 serial 10
+# unlink.m4 serial 11
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,14 +56,14 @@ AC_DEFUN([gl_FUNC_UNLINK],
       ;;
   esac
 
-  dnl Detect MacOS X 10.5.6 bug: On read-write HFS mounts, unlink("..") or
+  dnl Detect Mac OS X 10.5.6 bug: On read-write HFS mounts, unlink("..") or
   dnl unlink("../..") succeeds without doing anything.
   AC_CACHE_CHECK([whether unlink of a parent directory fails as it should],
     [gl_cv_func_unlink_parent_fails],
     [case "$host_os" in
        darwin*)
          dnl Try to unlink a subdirectory of /tmp, because /tmp is usually on a
-         dnl HFS mount on MacOS X. Use a subdirectory, owned by the current
+         dnl HFS mount on Mac OS X. Use a subdirectory, owned by the current
          dnl user, because otherwise unlink() may fail due to permissions
          dnl reasons, and because when running as root we don't want to risk
          dnl destroying the entire /tmp.

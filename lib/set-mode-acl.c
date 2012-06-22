@@ -56,7 +56,7 @@ qset_acl (char const *name, int desc, mode_t mode)
 #if USE_ACL
 # if HAVE_ACL_GET_FILE
   /* POSIX 1003.1e draft 17 (abandoned) specific version.  */
-  /* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+  /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
 #  if !HAVE_ACL_TYPE_EXTENDED
   /* Linux, FreeBSD, IRIX, Tru64 */
 
@@ -141,19 +141,19 @@ qset_acl (char const *name, int desc, mode_t mode)
   return 0;
 
 #  else /* HAVE_ACL_TYPE_EXTENDED */
-  /* MacOS X */
+  /* Mac OS X */
 
-  /* On MacOS X,  acl_get_file (name, ACL_TYPE_ACCESS)
-     and          acl_get_file (name, ACL_TYPE_DEFAULT)
+  /* On Mac OS X,  acl_get_file (name, ACL_TYPE_ACCESS)
+     and           acl_get_file (name, ACL_TYPE_DEFAULT)
      always return NULL / EINVAL.  You have to use
-                  acl_get_file (name, ACL_TYPE_EXTENDED)
-     or           acl_get_fd (open (name, ...))
+                   acl_get_file (name, ACL_TYPE_EXTENDED)
+     or            acl_get_fd (open (name, ...))
      to retrieve an ACL.
      On the other hand,
-                  acl_set_file (name, ACL_TYPE_ACCESS, acl)
-     and          acl_set_file (name, ACL_TYPE_DEFAULT, acl)
+                   acl_set_file (name, ACL_TYPE_ACCESS, acl)
+     and           acl_set_file (name, ACL_TYPE_DEFAULT, acl)
      have the same effect as
-                  acl_set_file (name, ACL_TYPE_EXTENDED, acl):
+                   acl_set_file (name, ACL_TYPE_EXTENDED, acl):
      Each of these calls sets the file's ACL.  */
 
   acl_t acl;

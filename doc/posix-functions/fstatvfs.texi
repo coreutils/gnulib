@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.3, OpenBSD 3.8, mingw, MSVC 9.
+Mac OS X 10.3, OpenBSD 3.8, mingw, MSVC 9.
 @item
 On platforms where @code{f_blocks} in @samp{struct statvfs} is a 32-bit
 value, this function may not work correctly on files systems larger than

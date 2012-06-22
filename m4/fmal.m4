@@ -1,4 +1,4 @@
-# fmal.m4 serial 3
+# fmal.m4 serial 4
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -354,7 +354,7 @@ int main()
       failed_tests |= 16;
   }
   /* This test fails on glibc 2.11 x86,x86_64,powerpc glibc 2.7 hppa,sparc,
-     MacOS X 10.5, FreeBSD 6.4 x86, OSF/1 5.1, mingw.  */
+     Mac OS X 10.5, FreeBSD 6.4 x86, OSF/1 5.1, mingw.  */
   {
     volatile long double x = ldexpl (1.0L, LDBL_MAX_EXP - 1);
     volatile long double y = 2.0L;

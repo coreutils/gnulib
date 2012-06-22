@@ -17,11 +17,11 @@ glibc 2.11.
 @item
 The function @code{getopt_long_only} does not support the @samp{+}
 flag in the options string on some platforms:
-MacOS X 10.5, AIX 5.2, OSF/1 5.1, Solaris 10.
+Mac OS X 10.5, AIX 5.2, OSF/1 5.1, Solaris 10.
 @item
 The value of @code{optind} after a missing required argument is wrong
 on some platforms:
-MacOS 10.5.
+Mac OS X 10.5.
 @item
 The function @code{getopt_long_only} does not obey the @samp{-} flag
 in the options string when @env{POSIXLY_CORRECT} is set on some platforms:
@@ -33,10 +33,10 @@ NetBSD, Cygwin 1.7.0.
 @item
 The function @code{getopt_long_only} does not support options with
 optional arguments on some platforms:
-MacOS X 10.5, OpenBSD 4.0, AIX 5.2, Solaris 11 2010-11, Cygwin 1.5.x.
+Mac OS X 10.5, OpenBSD 4.0, AIX 5.2, Solaris 11 2010-11, Cygwin 1.5.x.
 @item
 This function is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5,
+Mac OS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5,
 OSF/1 5.1, mingw, MSVC 9, Interix 3.5.
 @item
 This function crashes if the option string includes @code{W;} but

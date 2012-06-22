@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.3, OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.3, OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 On some platforms, this function does not set @code{errno} or the
 stream error indicator on attempts to write to a read-only stream:

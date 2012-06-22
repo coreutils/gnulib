@@ -28,7 +28,7 @@ unlockpt (int fd)
   /* Platforms which have the TIOCSPTLCK ioctl (Linux) already have the
      unlockpt function.  */
 #if HAVE_REVOKE
-  /* MacOS X 10.3, OpenBSD 3.8 do not have the unlockpt function, but they
+  /* Mac OS X 10.3, OpenBSD 3.8 do not have the unlockpt function, but they
      have revoke().  */
   char *name = ptsname (fd);
   if (name == NULL)

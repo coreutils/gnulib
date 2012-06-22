@@ -27,7 +27,7 @@ accommodate all Unicode characters.
 @item
 The specification is not clear about whether this function should update the
 conversion state when the first argument (the destination pointer) is NULL.
-The glibc implementation does not update the state in this case; the MacOS X
+The glibc implementation does not update the state in this case; the Mac OS X
 and FreeBSD implementations do.
 For portability, when passing a NULL destination argument, it is best to pass
 a pointer to a temporary copy of the conversion state.

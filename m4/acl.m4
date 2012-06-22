@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 13
+# serial 14
 
 # Copyright (C) 2002, 2004-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_ACL],
     if test $ac_cv_header_sys_acl_h = yes; then
       ac_save_LIBS=$LIBS
 
-      dnl Test for POSIX-draft-like API (Linux, FreeBSD, MacOS X, IRIX, Tru64).
+      dnl Test for POSIX-draft-like API (Linux, FreeBSD, Mac OS X, IRIX, Tru64).
       dnl -lacl is needed on Linux, -lpacl is needed on OSF/1.
       if test $use_acl = 0; then
         AC_SEARCH_LIBS([acl_get_file], [acl pacl],
@@ -55,7 +55,7 @@ int type = ACL_FIRST_ENTRY;]])],
                AC_DEFINE([HAVE_ACL_FIRST_ENTRY], [1],
                  [Define to 1 if the constant ACL_FIRST_ENTRY exists.])
              fi
-             dnl On MacOS X, other types of ACLs are supported.
+             dnl On Mac OS X, other types of ACLs are supported.
              AC_CACHE_CHECK([for ACL_TYPE_EXTENDED],
                [gl_cv_acl_ACL_TYPE_EXTENDED],
                [AC_COMPILE_IFELSE([AC_LANG_PROGRAM(

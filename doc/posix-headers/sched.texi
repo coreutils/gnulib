@@ -12,7 +12,7 @@ This header file is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 9, BeOS.
 @item
 This header file does not define the type @code{pid_t} on some platforms:
-glibc 2.11, MacOS X 10.5.
+glibc 2.11, Mac OS X 10.5.
 @item
 @code{struct sched_param} is not defined on some platforms:
 Haiku.

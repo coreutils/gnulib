@@ -1,4 +1,4 @@
-# locale-ar.m4 serial 5
+# locale-ar.m4 serial 6
 dnl Copyright (C) 2003, 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,7 +72,7 @@ changequote([,])dnl
           ;;
         *)
           # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # otherwise on Mac OS X 10.3.5 the LC_TIME=C from the beginning of the
           # configure script would override the LC_ALL setting. Likewise for
           # LC_CTYPE, which is also set at the beginning of the configure script.
           # Values tested:

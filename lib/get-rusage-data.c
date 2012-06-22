@@ -50,7 +50,7 @@
      Note that malloc() falls back on mmap() for large allocations and also
      for small allocations if there is not enough room in the data segment.
 
-   MacOS X:
+   Mac OS X:
      a) setrlimit with RLIMIT_DATA succeeds but does not really work: The OS
         ignores RLIMIT_DATA. Therefore get_rusage_data_via_setrlimit() is
         always 0.
@@ -384,7 +384,7 @@ get_rusage_data_via_iterator (void)
 uintptr_t
 get_rusage_data (void)
 {
-#if (defined __APPLE__ && defined __MACH__) || defined __CYGWIN__ /* MacOS X, Cygwin */
+#if (defined __APPLE__ && defined __MACH__) || defined __CYGWIN__ /* Mac OS X, Cygwin */
   /* get_rusage_data_via_setrlimit() does not work.
      Prefer get_rusage_data_via_iterator().  */
   return get_rusage_data_via_iterator ();

@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 Some systems mistakenly succeed on @code{unlink("link-to-file/")}:
 GNU/Hurd, FreeBSD 7.2, AIX 7.1, Solaris 9.
 @item
-On MacOS X 10.5.6, in a writable HFS mount, @code{unlink("..")} succeeds
+On Mac OS X 10.5.6, in a writable HFS mount, @code{unlink("..")} succeeds
 without doing anything.
 @end itemize
 

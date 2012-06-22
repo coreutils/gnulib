@@ -17,7 +17,7 @@ on some platforms:
 HP-UX 11.
 @item
 This function has an incompatible declaration on some platforms:
-MacOS X 10.4, Solaris 11 2011-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+Mac OS X 10.4, Solaris 11 2011-11 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @item
 This function ignores the size argument, thus overwriting memory after the
 buffer, on some platforms:

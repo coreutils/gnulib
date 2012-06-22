@@ -12,7 +12,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-glibc 2.9, MacOS X 10.5, FreeBSD 5.2.1, Minix 3.1.8, AIX 5.2, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+glibc 2.9, Mac OS X 10.5, FreeBSD 5.2.1, Minix 3.1.8, AIX 5.2, HP-UX 11.31, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 On platforms where @code{off_t} is a 32-bit type, this function may not
 work correctly on files larger than 2 GB.  The fix is to use the

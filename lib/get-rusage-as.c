@@ -49,7 +49,7 @@
      get_rusage_as_via_iterator() is 4 KB higher than
      get_rusage_as_via_setrlimit().
 
-   MacOS X:
+   Mac OS X:
      a) setrlimit with RLIMIT_AS succeeds but does not really work: The OS
         ignores RLIMIT_AS. mmap() of a page always succeeds, therefore
         get_rusage_as_via_setrlimit() is always 0.
@@ -355,7 +355,7 @@ get_rusage_as_via_iterator (void)
 uintptr_t
 get_rusage_as (void)
 {
-#if (defined __APPLE__ && defined __MACH__) || defined _AIX || defined __CYGWIN__ /* MacOS X, AIX, Cygwin */
+#if (defined __APPLE__ && defined __MACH__) || defined _AIX || defined __CYGWIN__ /* Mac OS X, AIX, Cygwin */
   /* get_rusage_as_via_setrlimit() does not work.
      Prefer get_rusage_as_via_iterator().  */
   return get_rusage_as_via_iterator ();

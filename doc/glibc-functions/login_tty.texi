@@ -13,7 +13,7 @@ Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11 2011-11.
 This function requires linking with @code{-lutil} on some platforms:
 glibc 2.3.6, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8.
 It is available without link options on other platforms:
-MacOS X 10.5, OSF/1 5.1, Cygwin, Interix 3.5.
+Mac OS X 10.5, OSF/1 5.1, Cygwin, Interix 3.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -23,7 +23,7 @@ This function is missing on some platforms:
 mingw, MSVC 9.
 @item
 This function is declared in @code{<utmp.h>} on glibc, Cygwin,
-in @code{<util.h>} on MacOS X 10.5, NetBSD 5.0, OpenBSD 3.8,
+in @code{<util.h>} on Mac OS X 10.5, NetBSD 5.0, OpenBSD 3.8,
 in @code{<libutil.h>} on FreeBSD 6.0, Haiku, and not declared at all
 on OSF/1 5.1, Interix 3.5.  Also note that @code{<sys/types.h>} is
 a prerequisite of @code{<utmp.h>} on FreeBSD 8.0, OpenBSD 4.6 and

@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 4.3.2,
+Mac OS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 4.3.2,
 HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
 
@@ -22,7 +22,7 @@ accommodate all Unicode characters.
 @item
 The specification is not clear about whether this function should update the
 conversion state when the first argument (the destination pointer) is NULL.
-The glibc, MacOS X, FreeBSD implementations do update the state in this case.
+The glibc, Mac OS X, FreeBSD implementations do update the state in this case.
 For portability, when passing a NULL destination argument, it is best to pass
 a pointer to a temporary copy of the conversion state.
 @end itemize

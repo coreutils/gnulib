@@ -23,7 +23,7 @@
      Linux                           >= 7350000 (depends on circumstances)
      FreeBSD                         >= 107521
      OpenBSD                         >= 28673
-     MacOS X                         >= 680000 (depends on circumstances)
+     Mac OS X                        >= 680000 (depends on circumstances)
      AIX 5.1                         >= 125713
      AIX 7.1                         >= 200000 (depends on circumstances)
      HP-UX                           >= 114689
@@ -44,7 +44,7 @@
 # define SOCKET_DATA_BLOCK_SIZE 1000000
 #endif
 
-/* On Linux, MacOS X, Cygwin 1.5.x, native Windows,
+/* On Linux, Mac OS X, Cygwin 1.5.x, native Windows,
    sockets have very large buffers in the kernel, so that write() calls
    succeed before the reader has started reading, even if fd is blocking
    and the amount of data is larger than 1 MB.  */

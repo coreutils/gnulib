@@ -16,7 +16,7 @@ This function is only defined as a macro with arguments on some platforms:
 MSVC 9.
 @item
 This function is not declared on some platforms:
-MacOS X 10.3.
+Mac OS X 10.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

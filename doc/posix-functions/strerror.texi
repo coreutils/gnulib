@@ -17,7 +17,7 @@ This function reports failure for @code{strerror(0)} (by setting
 @code{errno} or using a string similar to out-of-range values),
 although POSIX requires this to leave @code{errno} unchanged and
 report success, on some platforms:
-FreeBSD 8.2, OpenBSD 4.7, MacOS X 10.5.
+FreeBSD 8.2, OpenBSD 4.7, Mac OS X 10.5.
 @item
 This function fails to return a string for out-of-range integers on
 some platforms:

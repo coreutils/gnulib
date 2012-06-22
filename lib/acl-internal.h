@@ -71,7 +71,7 @@ extern int aclsort (int, int, struct acl *);
 
 /* Recognize some common errors such as from an NFS mount that does
    not support ACLs, even when local drives do.  */
-#if defined __APPLE__ && defined __MACH__ /* MacOS X */
+#if defined __APPLE__ && defined __MACH__ /* Mac OS X */
 # define ACL_NOT_WELL_SUPPORTED(Err) \
      ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY || (Err) == ENOENT)
 #elif defined EOPNOTSUPP /* Tru64 NFS */
@@ -86,7 +86,7 @@ extern int aclsort (int, int, struct acl *);
 
 # if HAVE_ACL_GET_FILE
 /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-/* Linux, FreeBSD, MacOS X, IRIX, Tru64 */
+/* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
 
 #  ifndef MIN_ACL_ENTRIES
 #   define MIN_ACL_ENTRIES 4
@@ -149,7 +149,7 @@ rpl_acl_set_fd (int fd, acl_t acl)
 
 /* Set to 1 if a file's mode is implicit by the ACL.
    Set to 0 if a file's mode is stored independently from the ACL.  */
-#  if (HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP) || defined __sgi /* MacOS X, IRIX */
+#  if (HAVE_ACL_COPY_EXT_NATIVE && HAVE_ACL_CREATE_ENTRY_NP) || defined __sgi /* Mac OS X, IRIX */
 #   define MODE_INSIDE_ACL 0
 #  else
 #   define MODE_INSIDE_ACL 1
@@ -163,7 +163,7 @@ rpl_acl_set_fd (int fd, acl_t acl)
 extern int acl_entries (acl_t);
 #  endif
 
-#  if HAVE_ACL_TYPE_EXTENDED /* MacOS X */
+#  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
 /* ACL is an ACL, from a file, stored as type ACL_TYPE_EXTENDED.
    Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial.  */

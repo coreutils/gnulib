@@ -13,7 +13,7 @@ or @code{memmem}:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.5, FreeBSD 5.2.1, OpenBSD 4.0, Minix 3.1.8, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.5, FreeBSD 5.2.1, OpenBSD 4.0, Minix 3.1.8, AIX 4.3.2, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 10, mingw, MSVC 9, Interix 3.5, BeOS.
 @item
 This function has reversed arguments on some older platforms:
 Linux libc 5.0.9

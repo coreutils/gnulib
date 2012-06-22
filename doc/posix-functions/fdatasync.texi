@@ -10,10 +10,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is present but not declared on some platforms:
-MacOS X 10.7.
+Mac OS X 10.7.
 @item
 This function is missing on some platforms:
-MacOS X 10.5, FreeBSD 6.0, OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.5, FreeBSD 6.0, OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

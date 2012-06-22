@@ -17,5 +17,5 @@ Portability problems not fixed by Gnulib:
 @item
 System status macros such as @code{WEXITSTATUS} require an lvalue
 argument on some platforms.
-MacOS X 10.5.
+Mac OS X 10.5.
 @end itemize

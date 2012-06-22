@@ -9,7 +9,7 @@ Portability problems fixed by either Gnulib module
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{ostack-printf-posix}:
@@ -28,7 +28,7 @@ AIX 5.2, OSF/1 5.1, Solaris 11 2011-11, mingw, MSVC 9.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, MacOS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
+glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
 IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.5.x, mingw, MSVC 9, BeOS.
 @item
 This function does not support the @samp{F} directive on some platforms:
@@ -58,14 +58,14 @@ HP-UX 10.20.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes) on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.5.x, mingw, MSVC 9.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.5.x, mingw, MSVC 9.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
 Solaris 10/x86, mingw, MSVC 9, BeOS.
 @item
 This function can crash in out-of-memory conditions on some platforms:
-MacOS X 10.3, FreeBSD 6.0, NetBSD 5.0.
+Mac OS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
 HP-UX 11, mingw, MSVC 9.

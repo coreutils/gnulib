@@ -8,7 +8,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.4, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+Mac OS X 10.4, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

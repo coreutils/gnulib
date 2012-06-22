@@ -42,7 +42,7 @@ idpriv_drop (void)
      setresuid.  */
   if (setresgid (gid, gid, gid) < 0)
     return -1;
-#elif HAVE_SETREGID /* MacOS X, NetBSD, AIX, IRIX, Solaris, OSF/1, Cygwin */
+#elif HAVE_SETREGID /* Mac OS X, NetBSD, AIX, IRIX, Solaris, OSF/1, Cygwin */
   if (setregid (gid, gid) < 0)
     return -1;
 #elif HAVE_SETEGID /* Solaris 2.4 */
@@ -61,7 +61,7 @@ idpriv_drop (void)
      is used seems to vary a lot."  */
   if (setresuid (uid, uid, uid) < 0)
     return -1;
-#elif HAVE_SETREUID /* MacOS X, NetBSD, AIX, IRIX, Solaris, OSF/1, Cygwin */
+#elif HAVE_SETREUID /* Mac OS X, NetBSD, AIX, IRIX, Solaris, OSF/1, Cygwin */
   if (setreuid (uid, uid) < 0)
     return -1;
 #elif HAVE_SETEUID /* Solaris 2.4 */

@@ -45,7 +45,7 @@ main ()
     {
       /* Try various values.
          n = 0 gave a crash on Alpha with gcc-2.5.8.
-         Some versions of MacOS X have a stack size limit of 512 KB.  */
+         Some versions of Mac OS X have a stack size limit of 512 KB.  */
       func (34);
       func (134);
       func (399);

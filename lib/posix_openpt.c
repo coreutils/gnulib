@@ -28,12 +28,12 @@
 
 /* posix_openpt() is already provided on
      glibc >= 2.2.1 (but is a stub on GNU/Hurd),
-     MacOS X >= 10.4,
+     Mac OS X >= 10.4,
      FreeBSD >= 5.1 (lived in src/lib/libc/stdlib/grantpt.c before 8.0),
      NetBSD >= 3.0,
      AIX >= 5.2, HP-UX >= 11.31, Solaris >= 10, Cygwin >= 1.7.
    Thus, this replacement function is compiled on
-     MacOS X 10.3, OpenBSD 4.9, Minix 3.1.8,
+     Mac OS X 10.3, OpenBSD 4.9, Minix 3.1.8,
      AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
      Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
    Among these:
@@ -87,19 +87,19 @@ posix_openpt (int flags)
   else
     master = -1;
 
-#else /* MacOS X, Minix, HP-UX, IRIX, OSF/1, Solaris 9, Cygwin 1.5 */
+#else /* Mac OS X, Minix, HP-UX, IRIX, OSF/1, Solaris 9, Cygwin 1.5 */
 
   /* Most systems that lack posix_openpt() have /dev/ptmx.  */
   master = open ("/dev/ptmx", flags);
 
   /* If all this does not work, we could try to open, one by one:
-     - On MacOS X: /dev/pty[p-w][0-9a-f]
-     - On *BSD:    /dev/pty[p-sP-S][0-9a-v]
-     - On Minix:   /dev/pty[p-q][0-9a-f]
-     - On AIX:     /dev/ptyp[0-9a-f]
-     - On HP-UX:   /dev/pty[p-r][0-9a-f]
-     - On OSF/1:   /dev/pty[p-q][0-9a-f]
-     - On Solaris: /dev/pty[p-r][0-9a-f]
+     - On Mac OS X: /dev/pty[p-w][0-9a-f]
+     - On *BSD:     /dev/pty[p-sP-S][0-9a-v]
+     - On Minix:    /dev/pty[p-q][0-9a-f]
+     - On AIX:      /dev/ptyp[0-9a-f]
+     - On HP-UX:    /dev/pty[p-r][0-9a-f]
+     - On OSF/1:    /dev/pty[p-q][0-9a-f]
+     - On Solaris:  /dev/pty[p-r][0-9a-f]
    */
 
 #endif

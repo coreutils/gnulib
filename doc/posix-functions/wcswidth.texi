@@ -14,7 +14,7 @@ OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, mingw, MSVC 9, BeOS.
 @item
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
-MacOS X 10.3.
+Mac OS X 10.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

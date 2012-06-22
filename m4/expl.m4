@@ -1,4 +1,4 @@
-# expl.m4 serial 7
+# expl.m4 serial 8
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ AC_DEFUN([gl_FUNC_EXPL],
   if test $gl_cv_func_expl_no_libm = yes \
      || test $gl_cv_func_expl_in_libm = yes; then
     dnl Also check whether it's declared.
-    dnl MacOS X 10.3 has expl() in libc but doesn't declare it in <math.h>.
+    dnl Mac OS X 10.3 has expl() in libc but doesn't declare it in <math.h>.
     AC_CHECK_DECL([expl], , [HAVE_DECL_EXPL=0], [[#include <math.h>]])
   else
     HAVE_DECL_EXPL=0

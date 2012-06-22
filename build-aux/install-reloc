@@ -183,7 +183,7 @@ rm -f relocwrapper.o \
       strerror.o \
       c-ctype.o
 test $rc = 0 || exit $?
-# Clean up debugging information left over by the native C compiler on MacOS X.
+# Clean up debugging information left over by the native C compiler on Mac OS X.
 rm -rf "$destprog.wrapper$exeext.dSYM"
 test $rc = 0 || exit $?
 

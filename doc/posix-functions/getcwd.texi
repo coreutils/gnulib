@@ -34,7 +34,7 @@ This function is missing on some older platforms.
 @item
 This function does not handle long file names (greater than @code{PATH_MAX})
 correctly on some platforms:
-glibc on Linux 2.4.20, MacOS X 10.5, FreeBSD 6.4, NetBSD 5.1, OpenBSD 4.9, AIX 7.1.
+glibc on Linux 2.4.20, Mac OS X 10.5, FreeBSD 6.4, NetBSD 5.1, OpenBSD 4.9, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

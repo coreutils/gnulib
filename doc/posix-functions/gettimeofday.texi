@@ -26,7 +26,7 @@ appropriate type for use in avoiding a compiler warning if assigning
 @item
 On some platforms, @code{gettimeofday} clobbers the buffer in which
 @code{localtime} returns its result:
-MacOS X 10.0.
+Mac OS X 10.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -149,7 +149,7 @@ can use these instructions.
       set noexpandtab
 
   * For Eclipse: In the "Window|Preferences" dialog (or "Eclipse|Preferences"
-    dialog on MacOS),
+    dialog on Mac OS),
     1. Under "General|Editors|Text Editors", select the "Insert spaces for tabs"
        checkbox.
     2. Under "C/C++|Code Style", select a code style profile that has the

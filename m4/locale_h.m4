@@ -1,4 +1,4 @@
-# locale_h.m4 serial 18
+# locale_h.m4 serial 19
 dnl Copyright (C) 2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,7 @@ AC_DEFUN([gl_LOCALE_H],
   if test $ac_cv_header_xlocale_h = yes; then
     HAVE_XLOCALE_H=1
     dnl Check whether use of locale_t requires inclusion of <xlocale.h>,
-    dnl e.g. on MacOS X 10.5. If <locale.h> does not define locale_t by
+    dnl e.g. on Mac OS X 10.5. If <locale.h> does not define locale_t by
     dnl itself, we assume that <xlocale.h> will do so.
     AC_CACHE_CHECK([whether locale.h defines locale_t],
       [gl_cv_header_locale_has_locale_t],

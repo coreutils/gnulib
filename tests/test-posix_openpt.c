@@ -68,7 +68,7 @@ main (void)
   ASSERT (isatty (slave));
 
   /* Close the master side before the slave side gets closed.
-     This is necessary on MacOS X 10.4.11.  */
+     This is necessary on Mac OS X 10.4.11.  */
   ASSERT (close (master) == 0);
   ASSERT (close (slave) == 0);
 

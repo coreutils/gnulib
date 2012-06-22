@@ -63,7 +63,7 @@
 
 /* On OSF/1 4.0, <sys/select.h> provides only a forward declaration
    of 'struct timeval', and no definition of this type.
-   Also, MacOS X, AIX, HP-UX, IRIX, Solaris, Interix declare select()
+   Also, Mac OS X, AIX, HP-UX, IRIX, Solaris, Interix declare select()
    in <sys/time.h>.
    But avoid namespace pollution on glibc systems.  */
 # ifndef __GLIBC__

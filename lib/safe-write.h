@@ -17,7 +17,7 @@
 /* Some system calls may be interrupted and fail with errno = EINTR in the
    following situations:
      - The process is stopped and restarted (signal SIGSTOP and SIGCONT, user
-       types Ctrl-Z) on some platforms: MacOS X.
+       types Ctrl-Z) on some platforms: Mac OS X.
      - The process receives a signal for which a signal handler was installed
        with sigaction() with an sa_flags field that does not contain
        SA_RESTART.

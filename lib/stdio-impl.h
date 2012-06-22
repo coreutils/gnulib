@@ -28,7 +28,7 @@
 
 #include <errno.h>                             /* For detecting Plan9.  */
 
-#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, MacOS X, Cygwin */
+#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
 
 # if defined __DragonFly__          /* DragonFly */
   /* See <http://www.dragonflybsd.org/cvsweb/src/lib/libc/stdio/priv_stdio.h?rev=HEAD&content-type=text/x-cvsweb-markup>.  */
@@ -66,7 +66,7 @@
       /* More fields, not relevant here.  */
     };
 #  define fp_ub ((struct __sfileext *) fp->_ext._base)->_ub
-# else                                         /* FreeBSD, NetBSD <= 1.5Z, DragonFly, MacOS X, Cygwin */
+# else                                         /* FreeBSD, NetBSD <= 1.5Z, DragonFly, Mac OS X, Cygwin */
 #  define fp_ub fp_->_ub
 # endif
 

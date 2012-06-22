@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, IRIX 5.3, Solaris 2.4.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, IRIX 5.3, Solaris 2.4.
 @item
 This function is marked as ``legacy'' in POSIX.  Better use @code{gettimeofday}
 or @code{clock_gettime} instead, and use @code{ftime} only as a fallback for

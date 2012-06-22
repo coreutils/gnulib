@@ -44,7 +44,7 @@ int
 getdomainname (char *name, size_t len)
 #undef getdomainname
 {
-#if HAVE_GETDOMAINNAME                 /* MacOS X, FreeBSD, AIX, IRIX, OSF/1 */
+#if HAVE_GETDOMAINNAME                 /* Mac OS X, FreeBSD, AIX, IRIX, OSF/1 */
   extern int getdomainname (char *, int);
 
   if (len > INT_MAX)

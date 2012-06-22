@@ -24,7 +24,7 @@
      Linux/SPARC                     >= 126977
      Linux/IA-64, Linux/MIPS         >= 253953
      Linux/PPC64                     >= 1048576
-     FreeBSD, OpenBSD, MacOS X       >= 65537
+     FreeBSD, OpenBSD, Mac OS X      >= 65537
      AIX                             >= 32769
      HP-UX                           >= 8193
      IRIX                            >= 10241

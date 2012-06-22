@@ -1,4 +1,4 @@
-# threadlib.m4 serial 9 (gettext-0.18.2)
+# threadlib.m4 serial 10 (gettext-0.18.2)
 dnl Copyright (C) 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -319,50 +319,50 @@ AC_DEFUN([gl_DISABLE_THREADS], [
 
 dnl Survey of platforms:
 dnl
-dnl Platform          Available   Compiler    Supports   test-lock
-dnl                   flavours    option      weak       result
-dnl ---------------   ---------   ---------   --------   ---------
-dnl Linux 2.4/glibc   posix       -lpthread       Y      OK
+dnl Platform           Available  Compiler    Supports   test-lock
+dnl                    flavours   option      weak       result
+dnl ---------------    ---------  ---------   --------   ---------
+dnl Linux 2.4/glibc    posix      -lpthread       Y      OK
 dnl
-dnl GNU Hurd/glibc    posix
+dnl GNU Hurd/glibc     posix
 dnl
-dnl FreeBSD 5.3       posix       -lc_r           Y
-dnl                   posix       -lkse ?         Y
-dnl                   posix       -lpthread ?     Y
-dnl                   posix       -lthr           Y
+dnl FreeBSD 5.3        posix      -lc_r           Y
+dnl                    posix      -lkse ?         Y
+dnl                    posix      -lpthread ?     Y
+dnl                    posix      -lthr           Y
 dnl
-dnl FreeBSD 5.2       posix       -lc_r           Y
-dnl                   posix       -lkse           Y
-dnl                   posix       -lthr           Y
+dnl FreeBSD 5.2        posix      -lc_r           Y
+dnl                    posix      -lkse           Y
+dnl                    posix      -lthr           Y
 dnl
-dnl FreeBSD 4.0,4.10  posix       -lc_r           Y      OK
+dnl FreeBSD 4.0,4.10   posix      -lc_r           Y      OK
 dnl
-dnl NetBSD 1.6        --
+dnl NetBSD 1.6         --
 dnl
-dnl OpenBSD 3.4       posix       -lpthread       Y      OK
+dnl OpenBSD 3.4        posix      -lpthread       Y      OK
 dnl
-dnl MacOS X 10.[123]  posix       -lpthread       Y      OK
+dnl Mac OS X 10.[123]  posix      -lpthread       Y      OK
 dnl
-dnl Solaris 7,8,9     posix       -lpthread       Y      Sol 7,8: 0.0; Sol 9: OK
-dnl                   solaris     -lthread        Y      Sol 7,8: 0.0; Sol 9: OK
+dnl Solaris 7,8,9      posix      -lpthread       Y      Sol 7,8: 0.0; Sol 9: OK
+dnl                    solaris    -lthread        Y      Sol 7,8: 0.0; Sol 9: OK
 dnl
-dnl HP-UX 11          posix       -lpthread       N (cc) OK
+dnl HP-UX 11           posix      -lpthread       N (cc) OK
 dnl                                               Y (gcc)
 dnl
-dnl IRIX 6.5          posix       -lpthread       Y      0.5
+dnl IRIX 6.5           posix      -lpthread       Y      0.5
 dnl
-dnl AIX 4.3,5.1       posix       -lpthread       N      AIX 4: 0.5; AIX 5: OK
+dnl AIX 4.3,5.1        posix      -lpthread       N      AIX 4: 0.5; AIX 5: OK
 dnl
-dnl OSF/1 4.0,5.1     posix       -pthread (cc)   N      OK
+dnl OSF/1 4.0,5.1      posix      -pthread (cc)   N      OK
 dnl                               -lpthread (gcc) Y
 dnl
-dnl Cygwin            posix       -lpthread       Y      OK
+dnl Cygwin             posix      -lpthread       Y      OK
 dnl
-dnl Any of the above  pth         -lpth                  0.0
+dnl Any of the above   pth        -lpth                  0.0
 dnl
-dnl Mingw             windows                     N      OK
+dnl Mingw              windows                    N      OK
 dnl
-dnl BeOS 5            --
+dnl BeOS 5             --
 dnl
 dnl The test-lock result shows what happens if in test-lock.c EXPLICIT_YIELD is
 dnl turned off:

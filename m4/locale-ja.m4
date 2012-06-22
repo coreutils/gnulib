@@ -1,4 +1,4 @@
-# locale-ja.m4 serial 11
+# locale-ja.m4 serial 12
 dnl Copyright (C) 2003, 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ int main ()
   if (setlocale (LC_ALL, "") == NULL) return 1;
 #endif
   /* Check whether nl_langinfo(CODESET) is nonempty and not "ASCII" or "646".
-     On MacOS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
+     On Mac OS X 10.3.5 (Darwin 7.5) in the fr_FR locale, nl_langinfo(CODESET)
      is empty, and the behaviour of Tcl 8.4 in this locale is not useful.
      On OpenBSD 4.0, when an unsupported locale is specified, setlocale()
      succeeds but then nl_langinfo(CODESET) is "646". In this situation,
@@ -91,7 +91,7 @@ changequote([,])dnl
           ;;
         *)
           # Setting LC_ALL is not enough. Need to set LC_TIME to empty, because
-          # otherwise on MacOS X 10.3.5 the LC_TIME=C from the beginning of the
+          # otherwise on Mac OS X 10.3.5 the LC_TIME=C from the beginning of the
           # configure script would override the LC_ALL setting. Likewise for
           # LC_CTYPE, which is also set at the beginning of the configure script.
           # Test for the AIX locale name.

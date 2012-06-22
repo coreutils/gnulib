@@ -401,7 +401,7 @@ PRINTF_PARSE (const CHAR_T *format, DIRECTIVES *d, arguments *a)
                       cp++;
                     }
 #if defined __APPLE__ && defined __MACH__
-                  /* On MacOS X 10.3, PRIdMAX is defined as "qd".
+                  /* On Mac OS X 10.3, PRIdMAX is defined as "qd".
                      We cannot change it to "lld" because PRIdMAX must also
                      be understood by the system's printf routines.  */
                   else if (*cp == 'q')

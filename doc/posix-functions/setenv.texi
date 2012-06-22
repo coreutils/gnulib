@@ -17,7 +17,7 @@ OSF/1 5.1.
 @item
 On some platforms, this function does not fail with @samp{EINVAL} when
 passed an empty string or a string containing @samp{=}:
-MacOS X 10.5, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
+Mac OS X 10.5, FreeBSD 6.0, NetBSD 1.6, OpenBSD 3.8, Cygwin 1.5.x.
 @item
 On some platforms, this function removes a leading @samp{=} from the
 value argument:

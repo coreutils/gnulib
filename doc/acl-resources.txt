@@ -182,7 +182,7 @@ OpenBSD ACLs
 Not available.
 
 
-MacOS X ACLs
+Mac OS X ACLs
 
 Manual pages:
   http://developer.apple.com/documentation/Darwin/Reference/ManPages/man3/acl.3.html

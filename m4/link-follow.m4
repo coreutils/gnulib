@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -83,7 +83,7 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
            [gl_cv_func_link_follows_symlink=no], dnl GNU behavior
            [gl_cv_func_link_follows_symlink=yes], dnl Followed link/compile failed
            [dnl We're cross compiling.
-            dnl The past results are "yes" on MacOS X, FreeBSD, NetBSD,
+            dnl The past results are "yes" on Mac OS X, FreeBSD, NetBSD,
             dnl OpenBSD, Minix, AIX, HP-UX, OSF/1, and "no" on Linux, Cygwin.
             case "$host_os" in
                            # On glibc/Linux we know the result.

@@ -30,7 +30,7 @@
 /* NetBSD 5.0 mis-defines NULL.  */
 #include <stddef.h>
 
-/* MacOS X 10.5 defines the locale_t type in <xlocale.h>.  */
+/* Mac OS X 10.5 defines the locale_t type in <xlocale.h>.  */
 #if @HAVE_XLOCALE_H@
 # include <xlocale.h>
 #endif

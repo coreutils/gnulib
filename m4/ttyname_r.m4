@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 8
+# ttyname_r.m4 serial 9
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_TTYNAME_R],
     HAVE_TTYNAME_R=0
   else
     HAVE_TTYNAME_R=1
-    dnl On MacOS X 10.4 (and Solaris 10 without gl_USE_SYSTEM_EXTENSIONS)
+    dnl On Mac OS X 10.4 (and Solaris 10 without gl_USE_SYSTEM_EXTENSIONS)
     dnl the return type is 'char *', not 'int'.
     AC_CACHE_CHECK([whether ttyname_r is compatible with its POSIX signature],
       [gl_cv_func_ttyname_r_posix],

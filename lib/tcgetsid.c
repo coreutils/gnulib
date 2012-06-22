@@ -27,7 +27,7 @@
 pid_t
 tcgetsid (int fd)
 {
-#ifdef TIOCGSID /* MacOS X, OpenBSD */
+#ifdef TIOCGSID /* Mac OS X, OpenBSD */
   int sid;
 
   if (ioctl (fd, TIOCGSID, &sid) < 0)
