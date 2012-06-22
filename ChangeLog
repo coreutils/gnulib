@@ -1,3 +1,11 @@
+2012-06-22  Bruno Haible  <bruno@clisp.org>
+
+	fbufmode test: Don't test unportable behaviour.
+	* tests/test-fbufmode.c (test_mode): New function, extracted from main.
+	(main): Invoke it three times.
+	Reported by Szabolcs Nagy <nsz@port70.net>
+	and Rich Felker <dalias@aerifal.cx>.
+
 2012-06-21  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Refactor inctests variable.
