@@ -21,7 +21,6 @@
 
 #include <assert.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -50,8 +49,6 @@ grantpt (int fd)
 #if defined __OpenBSD__
   /* On OpenBSD, master and slave of a pseudo-terminal are allocated together,
      through an ioctl on /dev/ptm.  There is no need for grantpt().  */
-  if (fcntl (fd, F_GETFD) < 0)
-    return -1;
   return 0;
 #else
   /* This function is most often called from a process without 'root'

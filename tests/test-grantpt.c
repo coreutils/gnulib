@@ -28,22 +28,36 @@ SIGNATURE_CHECK (grantpt, int, (int));
 int
 main (void)
 {
-  /* Test behaviour for invalid file descriptors.  */
+  /* Test behaviour for invalid file descriptors.
+     These calls don't fail on OpenBSD (with gnulib's replacement) and on
+     musl libc.  */
   {
+    int ret;
+
     errno = 0;
-    ASSERT (grantpt (-1) == -1);
-    ASSERT (errno == EBADF
-            || errno == EINVAL /* seen on FreeBSD 6.4 */
-            || errno == 0 /* seen on Solaris 8 */
-           );
+    ret = grantpt (-1);
+    if (ret != 0)
+      {
+        ASSERT (ret == -1);
+        ASSERT (errno == EBADF
+                || errno == EINVAL /* seen on FreeBSD 6.4 */
+                || errno == 0 /* seen on Solaris 8 */
+               );
+      }
   }
   {
+    int ret;
+
     errno = 0;
-    ASSERT (grantpt (99) == -1);
-    ASSERT (errno == EBADF
-            || errno == EINVAL /* seen on FreeBSD 6.4 */
-            || errno == 0 /* seen on Solaris 8 */
-           );
+    ret = grantpt (99);
+    if (ret != 0)
+      {
+        ASSERT (ret == -1);
+        ASSERT (errno == EBADF
+                || errno == EINVAL /* seen on FreeBSD 6.4 */
+                || errno == 0 /* seen on Solaris 8 */
+               );
+      }
   }
 
   return 0;

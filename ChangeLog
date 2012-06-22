@@ -1,5 +1,17 @@
 2012-06-22  Bruno Haible  <bruno@clisp.org>
 
+	grantpt: Relax requirement regarding invalid file descriptors.
+	* lib/grantpt.c: Don't include <fcntl.h>.
+	(grantpt): Don't verify the validity of the file descriptor.
+	* modules/grantpt (Depends-on): Remove fcntl-h.
+	* tests/test-grantpt.c (main): Allow grantpt to succeed for invalid
+	file descriptors.
+	* doc/posix-functions/grantpt.texi: Document more platforms on which
+	grantpt succeeds for invalid file descriptors.
+	Reported by Rich Felker <dalias@aerifal.cx>.
+
+2012-06-22  Bruno Haible  <bruno@clisp.org>
+
 	fbufmode test: Don't test unportable behaviour.
 	* tests/test-fbufmode.c (test_mode): New function, extracted from main.
 	(main): Invoke it three times.

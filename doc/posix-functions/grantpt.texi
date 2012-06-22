@@ -20,5 +20,5 @@ This function is not declared on some platforms:
 IRIX 5.3.
 @item
 This function reports success for invalid file descriptors on some platforms:
-Cygwin 1.7.9.
+OpenBSD, Cygwin 1.7.9, musl libc.
 @end itemize
