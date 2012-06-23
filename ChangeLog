@@ -1,3 +1,11 @@
+2012-06-23  Bruno Haible  <bruno@clisp.org>
+
+	getopt-gnu: Handle suboptimal getopt_long's abbreviation handling.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): If getopt_long exists but
+	does not handle abbreviated long options with equivalent
+	disambiguations, set gl_replace_getopt to yes.
+	* doc/posix-functions/getopt.texi: Mention the OpenBSD 5.0 problem.
+
 2012-06-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_r: fix typo that always overrode localtime_r decl
