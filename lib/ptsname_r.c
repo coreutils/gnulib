@@ -42,6 +42,17 @@
 
 #endif
 
+#ifdef __sun
+/* Get ioctl() and 'struct strioctl'.  */
+# include <stropts.h>
+/* Get ISPTM.  */
+# include <sys/stream.h>
+# include <sys/ptms.h>
+/* Get the major, minor macros.  */
+# include <sys/sysmacros.h>
+# include <stdio.h>
+#endif
+
 
 /* Store at most BUFLEN characters of the pathname of the slave pseudo
    terminal associated with the master FD is open on in BUF.
@@ -59,6 +70,44 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       return EINVAL;
     }
 
+#if defined __sun /* Solaris */
+  if (fstat (fd, &st) < 0)
+    return errno;
+  if (!(S_ISCHR (st.st_mode) && major (st.st_rdev) == 0))
+    {
+      errno = ENOTTY;
+      return errno;
+    }
+  {
+    /* Master ptys can be recognized through a STREAMS ioctl.  See
+       "STREAMS-based Pseudo-Terminal Subsystem"
+       <http://docs.oracle.com/cd/E18752_01/html/816-4855/termsub15-44781.html>
+       and "STREAMS ioctl commands"
+       <http://docs.oracle.com/cd/E18752_01/html/816-5177/streamio-7i.html>
+     */
+    struct strioctl ioctl_arg;
+    ioctl_arg.ic_cmd = ISPTM;
+    ioctl_arg.ic_timout = 0;
+    ioctl_arg.ic_len = 0;
+    ioctl_arg.ic_dp = NULL;
+
+    if (ioctl (fd, I_STR, &ioctl_arg) < 0)
+      {
+        errno = ENOTTY;
+        return errno;
+      }
+  }
+  {
+    char tmpbuf[9 + 10 + 1];
+    int n = sprintf (tmpbuf, "/dev/pts/%u", minor (st.st_rdev));
+    if (n >= buflen)
+      {
+        errno = ERANGE;
+        return errno;
+      }
+    memcpy (buf, tmpbuf, n + 1);
+  }
+#else
   if (!__isatty (fd))
     {
 #if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
@@ -85,6 +134,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     }
 
   buf[sizeof (_PATH_DEV) - 1] = 't';
+#endif
 
   if (__stat (buf, &st) < 0)
     return errno;
