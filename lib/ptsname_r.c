@@ -138,7 +138,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     ret = ioctl (fd, ISPTM, NULL);
     dev = ret;
 # endif
-    if (dev < 0)
+    if (ret < 0)
       {
         errno = ENOTTY;
         return errno;
