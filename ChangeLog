@@ -1,5 +1,11 @@
 2012-06-24  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r: Make it consistent with ptsname on AIX.
+	* lib/ptsname_r.c (__ptsname_r): For AIX, use nearly the same
+	implementation as for OSF/1.
+	* tests/test-ptsname_r.c (main) [AIX]: Use the modern way of opening
+	a pty master.
+
 	ptsname_r: Make it consistent with ptsname on OSF/1.
 	* lib/ptsname_r.c (__ptsname_r): Add a different implementation for
 	OSF/1.
