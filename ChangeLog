@@ -1,3 +1,9 @@
+2012-06-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time: fix obsolete comment
+	* m4/time_h.m4 (gl_CHECK_TYPE_STRUCT_TIMESPEC): Remove obsolete
+	reference to HAVE_STRUCT_TIMESPEC in comment.
+
 2012-06-23  Bruno Haible  <bruno@clisp.org>
 
 	getopt-gnu: Handle suboptimal getopt_long's abbreviation handling.
