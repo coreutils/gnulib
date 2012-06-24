@@ -1,5 +1,11 @@
 2012-06-24  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r: Make it consistent with ptsname on OSF/1.
+	* lib/ptsname_r.c (__ptsname_r): Add a different implementation for
+	OSF/1.
+
+2012-06-24  Bruno Haible  <bruno@clisp.org>
+
 	ttyname_r: Fix result on OSF/1, Solaris.
 	* lib/ttyname_r.c (ttyname_r): Produce a NUL-terminated result.
 

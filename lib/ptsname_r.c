@@ -53,6 +53,14 @@
 # include <stdio.h>
 #endif
 
+#ifdef __osf__
+/* Get ioctl(), ISPTM.  */
+# include <sys/ioctl.h>
+/* Get the major, minor macros.  */
+# include <sys/sysmacros.h>
+# include <stdio.h>
+#endif
+
 
 /* Store at most BUFLEN characters of the pathname of the slave pseudo
    terminal associated with the master FD is open on in BUF.
@@ -100,6 +108,35 @@ __ptsname_r (int fd, char *buf, size_t buflen)
   {
     char tmpbuf[9 + 10 + 1];
     int n = sprintf (tmpbuf, "/dev/pts/%u", minor (st.st_rdev));
+    if (n >= buflen)
+      {
+        errno = ERANGE;
+        return errno;
+      }
+    memcpy (buf, tmpbuf, n + 1);
+  }
+#elif defined __osf__ /* OSF/1 */
+  /* This implementation returns /dev/pts/N, like ptsname() does.
+     Whereas the generic implementation below returns /dev/ttypN.
+     Both are correct, but let's be consistent with ptsname().  */
+  if (fstat (fd, &st) < 0)
+    return errno;
+  if (!S_ISCHR (st.st_mode))
+    {
+      errno = ENOTTY;
+      return errno;
+    }
+  {
+    int dev;
+    char tmpbuf[9 + 10 + 1];
+    int n;
+    dev = ioctl (fd, ISPTM, NULL);
+    if (dev < 0)
+      {
+        errno = ENOTTY;
+        return errno;
+      }
+    n = sprintf (tmpbuf, "/dev/pts/%u", minor (dev));
     if (n >= buflen)
       {
         errno = ERANGE;
