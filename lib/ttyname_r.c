@@ -45,7 +45,7 @@ ttyname_r (int fd, char *buf, size_t buflen)
     return err;
   if (buflen < sizeof (largerbuf))
     {
-      size_t namelen = strlen (largerbuf);
+      size_t namelen = strlen (largerbuf) + 1;
       if (namelen > buflen)
         return ERANGE;
       memcpy (buf, largerbuf, namelen);
