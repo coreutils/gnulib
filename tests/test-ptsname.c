@@ -21,6 +21,7 @@
 #include "signature.h"
 SIGNATURE_CHECK (ptsname, char *, (int));
 
+#include <errno.h>
 #include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
@@ -61,6 +62,17 @@ main (void)
   signal (SIGALRM, SIG_DFL);
   alarm (5);
 #endif
+
+  {
+    char *result;
+
+    errno = 0;
+    result = ptsname (-1);
+    ASSERT (result == NULL);
+    ASSERT (errno == EBADF
+            || errno == ENOTTY /* seen on glibc */
+           );
+  }
 
   {
     int fd;

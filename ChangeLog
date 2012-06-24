@@ -1,3 +1,9 @@
+2012-06-24  Bruno Haible  <bruno@clisp.org>
+
+	ptsname test: Extend test.
+	* tests/test-ptsname.c: Include <errno.h>.
+	(main): Test behaviour with invalid file descriptor.
+
 2012-06-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time: fix obsolete comment
