@@ -19,6 +19,7 @@
 #include <stdlib.h>
 
 #include <errno.h>
+#include <fcntl.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -59,8 +60,16 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     }
 
   if (!__isatty (fd))
-    /* We rely on isatty to set errno properly (i.e. EBADF or ENOTTY).  */
-    return errno;
+    {
+#if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
+      /* Set errno.  */
+      if (fcntl (fd, F_GETFL) != -1)
+        errno = ENOTTY;
+#else
+      /* We rely on isatty to set errno properly (i.e. EBADF or ENOTTY).  */
+#endif
+      return errno;
+    }
 
   if (buflen < strlen (_PATH_TTY) + 3)
     {

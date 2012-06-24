@@ -1,4 +1,4 @@
-# ptsname_r.m4 serial 2
+# ptsname_r.m4 serial 3
 dnl Copyright (C) 2010-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,5 +46,38 @@ AC_DEFUN([gl_FUNC_PTSNAME_R],
 
 # Prerequisites of lib/ptsname.c.
 AC_DEFUN([gl_PREREQ_PTSNAME_R], [
-  :
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether isatty sets errno when it fails],
+    [gl_cv_func_isatty_sets_errno],
+    [AC_RUN_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <errno.h>
+            #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+            # include <io.h>
+            #else
+            # include <unistd.h>
+            #endif
+          ]],
+          [[errno = 0;
+            isatty (-1);
+            return errno == 0;
+          ]])
+       ],
+       [gl_cv_func_isatty_sets_errno=yes],
+       [gl_cv_func_isatty_sets_errno=no],
+       [case "$host_os" in
+          irix* | solaris* | mingw*)
+            gl_cv_func_isatty_sets_errno="guessing no";;
+          *)
+            gl_cv_func_isatty_sets_errno="guessing yes";;
+        esac
+       ])
+    ])
+  case "$gl_cv_func_isatty_sets_errno" in
+    *yes) ;;
+    *)
+      AC_DEFINE([ISATTY_FAILS_WITHOUT_SETTING_ERRNO], [1],
+        [Define to 1 if isatty() may fail without setting errno.])
+      ;;
+  esac
 ])

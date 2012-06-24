@@ -1,5 +1,16 @@
 2012-06-24  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r: Fix test failures on IRIX, Solaris.
+	* m4/ptsname_r.m4 (gl_PREREQ_PTSNAME_R): Test whether isatty sets
+	errno when it fails. Define ISATTY_FAILS_WITHOUT_SETTING_ERRNO
+	accordingly.
+	* lib/ptsname_r.c: Include <fcntl.h>.
+	(__ptsname_r): When isatty returned false, then on IRIX, Solaris
+	set errno if fd is invalid.
+	* tests/test-isatty.c (main): Update comments.
+
+2012-06-24  Bruno Haible  <bruno@clisp.org>
+
 	ptsname test: Extend test.
 	* tests/test-ptsname.c: Include <errno.h>.
 	(main): Test behaviour with invalid file descriptor.
