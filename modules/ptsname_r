@@ -8,6 +8,7 @@ m4/ptsname_r.m4
 Depends-on:
 stdlib
 extensions
+isatty          [test $HAVE_PTSNAME_R = 0 || test $REPLACE_PTSNAME_R = 1]
 ttyname_r       [test $HAVE_PTSNAME_R = 0 || test $REPLACE_PTSNAME_R = 1]
 
 configure.ac:

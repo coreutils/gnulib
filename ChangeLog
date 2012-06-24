@@ -1,5 +1,8 @@
 2012-06-24  Bruno Haible  <bruno@clisp.org>
 
+	ptsname_r: Fix test failure on native Windows.
+	* modules/ptsname_r (Depends-on): Add isatty.
+
 	ptsname_r: Fix test failures on IRIX, Solaris.
 	* m4/ptsname_r.m4 (gl_PREREQ_PTSNAME_R): Test whether isatty sets
 	errno when it fails. Define ISATTY_FAILS_WITHOUT_SETTING_ERRNO
