@@ -3471,7 +3471,6 @@ func_all_modules ()
   func_module config-h
   func_module configmake
   func_module dummy
-  func_module elisp-comp
   func_module gperf
   func_module havelib
   func_module include_next

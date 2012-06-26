@@ -3,6 +3,9 @@ Important notes
 
 Date        Modules         Changes
 
+2012-06-27  elisp-comp      The module 'elisp-comp' is removed; the script is
+                            not independently useful outside of automake.
+
 2012-06-21  gnulib-tool     The option --with-tests is now implied by the
                             options --create-testdir, --test,
                             --create-megatestdir, --megatest.
