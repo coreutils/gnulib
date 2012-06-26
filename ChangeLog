@@ -1,3 +1,13 @@
+2012-06-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: use locale-independent comparison for codeset name
+	See Bruno Haible's comment in <http://bugs.gnu.org/10305#120>.
+	* lib/regcomp.c (init_dfa): Use just ASCII case comparison
+	for codeset name.
+	* lib/regex_internal.h: Do not include <strings.h>, since we
+	no longer use strcasecmp.
+	* modules/regex (Depends-on): Remove strcase.
+
 2012-06-23  Bruno Haible  <bruno@clisp.org>
 
 	getopt-posix: No longer guarantee that option processing is resettable.
