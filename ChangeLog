@@ -1,3 +1,10 @@
+2012-06-26  Bruno Haible  <bruno@clisp.org>
+
+	argp, regex: Ensure strcasecmp gets declared.
+	* lib/argp-help.c: Include <strings.h>.
+	* lib/regex_internal.h: Likewise.
+	Reported and suggested by Joachim Schmitz <jojo@schmitz-digital.de>.
+
 2012-06-24  Bruno Haible  <bruno@clisp.org>
 
 	ptsname_r: Make it consistent with ptsname on AIX.
