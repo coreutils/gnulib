@@ -13,20 +13,16 @@ it adds a header file @code{<getopt.h>} and a function @code{getopt_long}.
 Portability problems fixed by either Gnulib module @code{getopt-posix} or @code{getopt-gnu}:
 @itemize
 @item
-The @code{getopt} function keeps some internal state that cannot be explicitly
-reset on some platforms:
-mingw.
+This function is missing on some platforms:
+MSVC 9.
 @item
 The value of @code{optind} after a missing required argument is wrong
 on some platforms:
-Mac OS X 10.5, AIX 7.1.
+Mac OS X 10.5, AIX 7.1, mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getopt-gnu}:
 @itemize
-@item
-This function is missing on some platforms:
-MSVC 9.
 @item
 The function @code{getopt} does not support the @samp{+} flag in the options
 string on some platforms:

@@ -1,3 +1,14 @@
+2012-06-23  Bruno Haible  <bruno@clisp.org>
+
+	getopt-posix: No longer guarantee that option processing is resettable.
+	* doc/posix-functions/getopt.texi: Drop description of problem with
+	internal state. Fix info about mingw and msvc9.
+	* m4/getopt.m4 (gl_GETOPT_CHECK_HEADERS): Don't require a resettable
+	option processing by getopt(). Run three test programs instead of one.
+	Simplify cross-compilation guess.
+	* NEWS: Mention the change.
+	Reported by Rich Felker <dalias@aerifal.cx>.
+
 2012-06-26  Bruno Haible  <bruno@clisp.org>
 
 	argp, regex: Ensure strcasecmp gets declared.

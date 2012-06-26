@@ -25,6 +25,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2012-06-26  getopt-posix    This module no longer guarantees that option
+                            processing is resettable.  If your code uses
+                            'optreset' or 'optind = 0;', rewrite it to make
+                            only one pass over the argument array.
+
 2012-02-24  streq           This module no longer provides the STREQ macro.
                             Use STREQ_OPT instead.
 
