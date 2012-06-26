@@ -27,6 +27,8 @@
 #include <errno.h>
 #include <stdio.h>
 
+#include "root-uid.h"
+
 #include "macros.h"
 
 #define TESTHOSTNAME "gnulib-hostname"
@@ -35,7 +37,7 @@
    On Cygwin, geteuid() may return non-zero even for user accounts with
    administrator privileges, so use a dummy value as well.  */
 #if !HAVE_GETEUID || defined __CYGWIN__
-# define geteuid() 0
+# define geteuid() ROOT_UID
 #endif
 
 int
@@ -50,7 +52,7 @@ main (int argc, char *argv[] _GL_UNUSED)
      consider things like CAP_SYS_ADMIN (linux) or PRIV_SYS_ADMIN
      (solaris), etc.  systems without a working geteuid (mingw, MSVC
      9) will always skip this test. */
-  if (geteuid () != 0)
+  if (geteuid () != ROOT_UID)
     {
       fprintf (stderr, "Skipping test: insufficient permissions.\n");
       return 77;

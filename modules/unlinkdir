@@ -9,6 +9,7 @@ m4/unlinkdir.m4
 Depends-on:
 stdbool
 priv-set
+root-uid
 
 configure.ac:
 gl_UNLINKDIR

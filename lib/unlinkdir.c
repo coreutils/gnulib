@@ -21,6 +21,7 @@
 
 #include "unlinkdir.h"
 #include "priv-set.h"
+#include "root-uid.h"
 #include <unistd.h>
 
 #if ! UNLINK_CANNOT_UNLINK_DIR
@@ -43,7 +44,7 @@ cannot_unlink_dir (void)
       cannot = (priv_set_ismember (PRIV_SYS_LINKDIR) == 0);
 # else
       /* In traditional Unix, only root can unlink directories.  */
-      cannot = (geteuid () != 0);
+      cannot = (geteuid () != ROOT_UID);
 # endif
       initialized = true;
     }

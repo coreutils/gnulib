@@ -25,9 +25,16 @@ AC_DEFUN([gl_FUNC_MKNOD],
          [AC_LANG_PROGRAM(
            [[#include <sys/stat.h>
              #include <unistd.h>
+
+             /* Copied from root-uid.h.  FIXME: Just use root-uid.h.  */
+             #ifdef __TANDEM
+             # define ROOT_UID 65535
+             #else
+             # define ROOT_UID 0
+             #endif
 ]], [[/* Indeterminate for super-user, assume no.  Why are you running
          configure as root, anyway?  */
-      if (!geteuid ()) return 99;
+      if (geteuid () == ROOT_UID) return 99;
       if (mknod ("conftest.fifo", S_IFIFO | 0600, 0)) return 2;]])],
          [gl_cv_func_mknod_works=yes],
          [if test $? = 99 && test x"$FORCE_UNSAFE_CONFIGURE" = x; then

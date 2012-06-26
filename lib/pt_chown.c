@@ -25,6 +25,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
+#include "root-uid.h"
+
 #include "pty-private.h"
 
 /* For security reasons, we try to minimize the dependencies on libraries
@@ -75,7 +77,7 @@ main (int argc, char *argv[])
 {
   uid_t euid = geteuid ();
 
-  if (argc == 1 && euid == 0)
+  if (argc == 1 && euid == ROOT_UID)
     {
       /* Normal invocation of this program is with no arguments and
          with privileges.  */
@@ -152,7 +154,7 @@ main (int argc, char *argv[])
   }
 
   /* Check if we are properly installed.  */
-  if (euid != 0)
+  if (euid != ROOT_UID)
     {
       fprintf (stderr, "pt_chown: needs to be installed setuid 'root'\n");
       return FAIL_EXEC;

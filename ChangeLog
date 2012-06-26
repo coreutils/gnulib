@@ -1,5 +1,25 @@
 2012-06-26  Paul Eggert  <eggert@cs.ucla.edu>
 
+	root-uid: new module
+	This is for portability to Tandem's NonStop Kernel.
+	* lib/root-uid.h, modules/root-uid: New files.
+	* lib/euidaccess.c, lib/pt_chown.c, lib/unlinkdir.c:
+	* lib/write-any-file.c, tests/test-sethostname2.c:
+	Include "root-uid.h".
+	* lib/euidaccess.c (euidaccess):
+	* lib/pt_chown.c (main):
+	* lib/unlinkdir.c (cannot_unlink_dir):
+	* lib/write-any-file.c (can_write_any_file):
+	* m4/mknod.m4 (gl_FUNC_MKNOD):
+	* tests/test-sethostname2.c (geteuid, main):
+	Don't assume ROOT_UID == 0.
+	* modules/euidaccess (Depends-on):
+	* modules/pt_chown (Depends-on):
+	* modules/sethostname-tests (Depends-on):
+	* modules/unlinkdir (Depends-on):
+	* modules/write-any-file (Depends-on):
+	Add root-uid.
+
 	regex: use locale-independent comparison for codeset name
 	See Bruno Haible's comment in <http://bugs.gnu.org/10305#120>.
 	* lib/regcomp.c (init_dfa): Use just ASCII case comparison
