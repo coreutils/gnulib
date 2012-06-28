@@ -1,6 +1,6 @@
 2012-06-28  Bruno Haible  <bruno@clisp.org>
 
-	remove: No longer override on all platforms. Fixes bug from 2012-03-20.
+	remove: No longer override on all platforms. Fixes bug from 2010-03-20.
 	* m4/remove.m4 (gl_FUNC_REMOVE): Test gl_cv_func_unlink_honors_slashes,
 	not gl_cv_func_unlink_works.
 	Reported by Carlos O'Donell <carlos_odonell@mentor.com>.
