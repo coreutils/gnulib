@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 1, 2012
+@set lastupdate June 30, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -3541,6 +3541,16 @@ explanation of how the earlier version differed.  Each @dfn{entry} in
 a change log describes either an individual change or the smallest
 batch of changes that belong together, also known as a @dfn{change
 set}.
+@cindex title, change log entry
+@cindex description, change log entry
+For later reference or for summarizing, sometimes it is useful to
+start the entry with a one-line description (sometimes called a
+@dfn{title}) to describe its overall purpose.
+
+In the past, we recommended not mentioning changes in non-software
+files (manuals, help files, media files, etc.)@: in change logs.
+However, we've been advised that it is a good idea to include them,
+for the sake of copyright records.
 
 The change log file is normally called @file{ChangeLog} and covers an
 entire directory.  Each directory can have its own change log, or a
@@ -3552,20 +3562,18 @@ control system such as RCS or CVS.  This can be converted automatically
 to a @file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
 @kbd{C-x v a} (@code{vc-update-change-log}) does the job.
 
-There's no need to describe the full purpose of the changes or how
-they work together.  However, sometimes it is useful to write one line
-to describe the overall purpose of a change log entry.  If
-you think that a change calls for explanation, you're probably right.
-Please do explain it---but please put the full explanation in comments
-in the code, where people will see it whenever they see the code.  For
-example, ``New function'' is enough for the change log when you add a
-function, because there should be a comment before the function
-definition to explain what it does.
+For changes to code, there's no need to describe the full purpose of
+the changes or how they work together.  If you think that a change
+calls for explanation, you're probably right.  Please do explain
+it---but please put the full explanation in comments in the code,
+where people will see it whenever they see the code.  For example,
+``New function'' is enough for the change log when you add a function,
+because there should be a comment before the function definition to
+explain what it does.
 
-In the past, we recommended not mentioning changes in non-software
-files (manuals, help files, media files, etc.)@: in change logs.
-However, we've been advised that it is a good idea to include them,
-for the sake of copyright records.
+For changes to files that do not support a comment syntax (e.g., media
+files), it is ok to include the full explanation in the change log file,
+after the title and before the list of individual changes.
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
 command @kbd{M-x add-change-log-entry}.  An individual change should
