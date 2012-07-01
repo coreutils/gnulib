@@ -10,7 +10,7 @@ Depends-on:
 math
 
 configure.ac:
-gl_FUNC_LOG
+AC_REQUIRE([gl_FUNC_LOG])
 if test $REPLACE_LOG = 1; then
   AC_LIBOBJ([log])
 fi

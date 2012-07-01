@@ -1,3 +1,9 @@
+2012-07-01  Bruno Haible  <bruno@clisp.org>
+
+	log: Fix an autoconf >= 2.64 warning.
+	* modules/log (configure.ac): Require, not invoke, gl_FUNC_LOG.
+	Reported by Carlos O'Donell <carlos_odonell@mentor.com>.
+
 2012-06-28  Bruno Haible  <bruno@clisp.org>
 
 	log10f: Fix possible configuration problem.
