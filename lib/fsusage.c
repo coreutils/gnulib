@@ -31,6 +31,15 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <sys/stat.h>
+#if HAVE_SYS_PARAM_H
+# include <sys/param.h>
+#endif
+#if HAVE_SYS_MOUNT_H
+# include <sys/mount.h>
+#endif
+#if HAVE_SYS_VFS_H
+# include <sys/vfs.h>
+#endif
 # if HAVE_SYS_FS_S5PARAM_H      /* Fujitsu UXP/V */
 #  include <sys/fs/s5param.h>
 # endif
@@ -44,18 +53,6 @@
 #  include <sys/dustat.h>
 # endif
 # include "full-read.h"
-#endif
-
-/* These files are needed for 2.6 < glibc/Linux < 2.6.36, even though
-   it has statvfs, because they are used by the fallback.  */
-#if HAVE_SYS_PARAM_H
-# include <sys/param.h>
-#endif
-#if HAVE_SYS_MOUNT_H
-# include <sys/mount.h>
-#endif
-#if HAVE_SYS_VFS_H
-# include <sys/vfs.h>
 #endif
 
 /* The results of open() in this file are not used with fchdir,
@@ -93,6 +90,8 @@
    preceding entries in /proc/mounts; that makes df hang if even one
    of the corresponding file systems is hard-mounted but not available.  */
 # if ! (__linux__ && (__GLIBC__ || __UCLIBC__))
+/* The FRSIZE fallback is not required in this case.  */
+#  undef STAT_STATFS2_FRSIZE
 static int statvfs_works (void) { return 1; }
 # else
 #  include <string.h> /* for strverscmp */

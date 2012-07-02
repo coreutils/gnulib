@@ -1,3 +1,13 @@
+2012-07-02  Pádraig Brady  <P@draigBrady.com>
+
+	fsusage: remove code not needed on non GNU/Linux systems.
+
+	* lib/fsusage.c [STAT_STATVFS || STAT_STATVFS64]:
+	Don't include headers no longer needed in this case.
+	* lib/fsusage.c [STAT_STATVFS &&
+	! (__linux__ && (__GLIBC__||__UCLIBC__))]: Undefine
+	STAT_STATFS2_FRSIZE to exclude code not used in this case.
+
 2012-07-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fsusage: include files needed for glibc 2.6 fallback
