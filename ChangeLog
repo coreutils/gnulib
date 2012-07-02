@@ -1,5 +1,12 @@
 2012-07-02  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fsusage: include files needed for glibc 2.6 fallback
+	* lib/fsusage.c [STAT_STATVFS || STAT_STATVFS64]:
+	Include <sys/param.h>, <sys/mount.h>, <sys/vfs.h>
+	as they are needed for the 2.6 < glibc/Linux < 2.6.36 fallback.
+	Problem reported by Ludovic Courtès in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-07/msg00005.html>.
+
 	fsusage: avoid needless check on GNU/Linux
 	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Omit STAT_STATFS3_OSF1 check
 	on GNU/Linux systems, since it can't possibly work.
