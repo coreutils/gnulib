@@ -1,3 +1,9 @@
+2012-07-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fsusage: avoid needless check on GNU/Linux
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Omit STAT_STATFS3_OSF1 check
+	on GNU/Linux systems, since it can't possibly work.
+
 2012-07-01  Bruno Haible  <bruno@clisp.org>
 
 	log: Fix an autoconf >= 2.64 warning.
