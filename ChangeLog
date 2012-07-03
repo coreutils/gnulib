@@ -1,3 +1,13 @@
+2012-07-03  Jim Meyering  <meyering@redhat.com>
+
+	bootstrap: do not require now-removed build-aux/missing
+	Now that build-aux/missing is, er, missing, bootstrap would
+	silently fail.
+	* build-aux/bootstrap (gnulib_extra_files): Remove $build_aux/missing
+	from the list, now that (since commit v0.0-7489-gd0f486f) the file is
+	no longer part of gnulib.
+	Diagnose the failure.
+
 2012-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	alloca: add support for HP NonStop TNS/E native
