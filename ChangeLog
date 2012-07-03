@@ -1,3 +1,10 @@
+2012-07-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	alloca: add support for HP NonStop TNS/E native
+	* lib/alloca.in.h (alloca): Support the new host.
+	From a suggestion by Joachim Schmitz in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-06/msg00355.html>.
+
 2012-07-02  Pádraig Brady  <P@draigBrady.com>
 
 	fsusage: remove code not needed on non GNU/Linux systems.
