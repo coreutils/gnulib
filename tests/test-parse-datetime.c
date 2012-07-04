@@ -409,5 +409,9 @@ main (int argc _GL_UNUSED, char **argv)
   ASSERT (result.tv_sec == 24 * 3600
           && result.tv_nsec == now.tv_nsec);
 
+  /* Exercise a sign-extension bug.  Before July 2012, an input
+     starting with a high-bit-set byte would be treated like "0".  */
+  ASSERT ( ! parse_datetime (&result, "\xb0", &now));
+
   return 0;
 }

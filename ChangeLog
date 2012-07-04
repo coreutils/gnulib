@@ -1,3 +1,16 @@
+2012-07-04  Jim Meyering  <meyering@redhat.com>
+
+	parse-datetime: fix failure to diagnose invalid input
+	date -d "$(printf '\xb0')" would print 00:00:00 with today's date
+	rather than diagnosing the invalid input.  Now it reports this:
+	date: invalid date '\260'
+	* lib/parse-datetime.y (to_uchar): Define.
+	(yylex): Don't sign-extend "other" bytes.
+	* m4/parse-datetime.m4: Require AC_C_INLINE for first use of "inline".
+	Thanks to Bruno Haible for the patch to this file.
+	* tests/test-parse-datetime.c (main): Add a test to trigger the bug.
+	Peter Evans reported the bug in GNU date: http://bugs.gnu.org/11843
+
 2012-07-03  Jim Meyering  <meyering@redhat.com>
 
 	bootstrap: do not require now-removed build-aux/missing
