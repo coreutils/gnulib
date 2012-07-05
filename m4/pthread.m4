@@ -1,4 +1,4 @@
-# pthread.m4 serial 3
+# pthread.m4 serial 4
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -38,31 +38,12 @@ AC_DEFUN([gl_PTHREAD_CHECK],
 
    LIB_PTHREAD=
    if test $ac_cv_header_pthread_h = yes; then
-     dnl We cannot use AC_SEARCH_LIBS here, because on OSF/1 5.1 pthread_join
-     dnl is defined as a macro which expands to __phread_join, and libpthread
-     dnl contains a definition for __phread_join but none for pthread_join.
-     AC_CACHE_CHECK([for library containing pthread_join],
-       [gl_cv_search_pthread_join],
-       [gl_saved_libs="$LIBS"
-        gl_cv_search_pthread_join=
-        AC_LINK_IFELSE(
-          [AC_LANG_PROGRAM(
-             [[#include <pthread.h>]],
-             [[pthread_join (pthread_self (), (void **) 0);]])],
-          [gl_cv_search_pthread_join="none required"])
-        if test -z "$gl_cv_search_pthread_join"; then
-          LIBS="-lpthread $gl_saved_libs"
-          AC_LINK_IFELSE(
-            [AC_LANG_PROGRAM(
-               [[#include <pthread.h>]],
-               [[pthread_join (pthread_self (), (void **) 0);]])],
-            [gl_cv_search_pthread_join="-lpthread"])
-        fi
-        LIBS="$gl_saved_libs"
-       ])
-     if test "$gl_cv_search_pthread_join" != "none required"; then
-       LIB_PTHREAD="$gl_cv_search_pthread_join"
-     fi
+     gl_saved_libs=$LIBS
+     AC_SEARCH_LIBS([pthread_create], [pthread],
+       [if test "$ac_cv_search_pthread_create" != "none required"; then
+          LIB_PTHREAD="$ac_cv_search_pthread_create"
+        fi])
+     LIBS="$gl_saved_libs"
    fi
    AC_SUBST([LIB_PTHREAD])
 

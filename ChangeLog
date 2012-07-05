@@ -1,3 +1,12 @@
+2012-07-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread: check for pthread_create, not pthread_join
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Check for pthread_create, not
+	pthread_join.  On FreeBSD 9, pthread_create is in libpthread but
+	pthread_join in libc.  I hope this removes the need for all the
+	OSF/1 5.1 pthread_join business.  Reported by Richard Yao in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-07/msg00042.html>.
+
 2012-07-04  Jim Meyering  <meyering@redhat.com>
 
 	parse-datetime: fix failure to diagnose invalid input
