@@ -1,3 +1,9 @@
+2012-07-05  Akim Demaille  <akim@lrde.epita.fr>
+
+	do-release-commit-and-tag: fix typo
+	* build-aux/do-release-commit-and-tag: Be sure that NEWS does
+	_not_ start with a stub.
+
 2012-07-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread: check for pthread_create, not pthread_join

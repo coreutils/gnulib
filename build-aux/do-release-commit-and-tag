@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2012-06-07.15 # UTC
+VERSION=2012-07-05.13 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -130,7 +130,7 @@ pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' "$Makefile") \
   || die "failed to determine package name from $Makefile"
 
 # simple check: no question marks on line 3 of NEWS
-test "$(sed -n 3p NEWS)" = "$noteworthy_stub" \
+test "$(sed -n 3p NEWS)" != "$noteworthy_stub" \
   || die 'line 3 of NEWS looks fishy!'
 
 # No dirt allowed.
