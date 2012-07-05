@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2012-07-05.13 # UTC
+VERSION=2012-07-05.15 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -77,6 +77,10 @@ EOF
   exit
 }
 
+## ------ ##
+## Main.  ##
+## ------ ##
+
 branch=master
 builddir=.
 
@@ -107,6 +111,11 @@ test $# = 2 \
 ver=$1
 type=$2
 
+
+## ---------------------- ##
+## First, sanity checks.  ##
+## ---------------------- ##
+
 # Verify that $ver looks like a version number, and...
 echo "$ver"|grep -E '^[0-9][0-9.]*[0-9]$' > /dev/null \
   || die "invalid version: $ver"
@@ -124,31 +133,35 @@ case $type in
   *) die "invalid release type: $type";;
 esac
 
-# Extract package name from Makefile.
-Makefile=$builddir/Makefile
-pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' "$Makefile") \
-  || die "failed to determine package name from $Makefile"
-
-# simple check: no question marks on line 3 of NEWS
-test "$(sed -n 3p NEWS)" != "$noteworthy_stub" \
-  || die 'line 3 of NEWS looks fishy!'
-
-# No dirt allowed.
+# No local modifications allowed.
 case $(git diff-index --name-only HEAD) in
   '') ;;
   *) die 'this tree is dirty; commit your changes first';;
 esac
 
-# update NEWS to have today's date, plus desired version number and $type
+# Ensure the current branch name is correct:
+curr_br=$(git rev-parse --symbolic-full-name HEAD)
+test "$curr_br" = refs/heads/$branch || die not on branch $branch
+
+# Extract package name from Makefile.
+Makefile=$builddir/Makefile
+pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' "$Makefile") \
+  || die "failed to determine package name from $Makefile"
+
+# Check that line 3 of NEWS is the stub line about to be replaced.
+test "$(sed -n 3p NEWS)" = "$noteworthy_stub" \
+  || die "line 3 of NEWS must be exactly '$noteworthy_stub'"
+
+## --------------- ##
+## Then, changes.  ##
+## --------------- ##
+
+# Update NEWS to have today's date, plus desired version number and $type.
 perl -MPOSIX -ni -e 'my $today = strftime "%F", localtime time;' \
  -e 'my ($type, $ver) = qw('"$type $ver"');' \
  -e 'my $pfx = "'"$noteworthy"'";' \
  -e 'print $.==3 ? "$pfx $ver ($today) [$type]\n" : $_' \
      NEWS || die 'failed to update NEWS'
-
-# Ensure the current branch name is correct:
-curr_br=$(git rev-parse --symbolic-full-name HEAD)
-test "$curr_br" = refs/heads/$branch || die not on branch $branch
 
 printf "version $ver\n\n* NEWS: Record release date.\n" \
     | git commit -F -  -a || die 'git commit failed'

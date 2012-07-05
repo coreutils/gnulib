@@ -1,5 +1,11 @@
 2012-07-05  Akim Demaille  <akim@lrde.epita.fr>
 
+	do-release-commit-and-tag: fix the previous commit
+	* build-aux/do-release-commit-and-tag: Actually the test was right,
+	but the comment and the error message were misleading.
+	Fix comment, and improve error message.
+	Perform check first, so that NEWS is not modified uselessly.
+
 	do-release-commit-and-tag: fix typo
 	* build-aux/do-release-commit-and-tag: Be sure that NEWS does
 	_not_ start with a stub.
