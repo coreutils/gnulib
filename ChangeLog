@@ -1,3 +1,9 @@
+2012-07-06  Akim Demaille  <akim@lrde.epita.fr>
+
+	bootstrap: use a more consistent error reporting scheme
+	* build-aux/bootstrap (warn, die): New.
+	Use them.
+
 2012-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_time: allow too-wide tv_sec
