@@ -1,5 +1,13 @@
 2012-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sys_time: allow too-wide tv_sec
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_BODY): Allow struct
+	timeval even if tv_sec is wider than time_t.  This allows
+	OpenBSD 5.1 amd64 and fixes an Emacs porting glitch with utimens.c,
+	as without this patch gnulib replaces struct timeval
+	and OpenBSD futimes therefore has a type mismatch.
+	* doc/posix-headers/sys_time.texi: Mention this.
+
 	pthread: check for both pthread_create and pthread_join
 	* m4/pthread.m4 (gl_PTHREAD_CHECK): Revert previous change, but
 	alter the check so that it tests for both pthread_create and

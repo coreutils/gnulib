@@ -13,7 +13,8 @@ MSVC 9.
 @item
 @samp{struct timeval} is not defined on some platforms.
 @item
-@samp{struct timeval} is defined with an incompatible type for @code{tv_sec}
+@samp{struct timeval} is defined with a @code{tv_sec} type that is
+narrower than @code{time_t}
 on some native Windows platforms:
 mingw64 in 64-bit mode,
 mingw64 in 32-bit mode when @code{__MINGW_USE_VC2005_COMPAT} is defined,
@@ -23,4 +24,8 @@ MSVC 9 in 32-bit mode when @code{_USE_32BIT_TIME_T} is not defined.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+@samp{struct timeval} is defined with a @code{tv_sec} type that is
+wider than @code{time_t}:
+OpenBSD 5.1 in 64-bit mode.
 @end itemize
