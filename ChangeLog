@@ -1,3 +1,12 @@
+2012-07-10  Akim Demaille  <akim@lrde.epita.fr>
+
+	bootstrap: let warn be like tests/init.sh's warn_
+	Reported by Jim Meyering.
+	* build-aux/bootstrap (warn): Remove, replaced by...
+	(warnf_, warn_): these.
+	Adjust callers.
+	Shorten messages that no longer fit in 80 columns.
+
 2012-07-09  Bruno Haible  <bruno@clisp.org>
 
 	getopt: Simplify after Emacs changed.
