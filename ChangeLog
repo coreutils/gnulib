@@ -1,3 +1,9 @@
+2012-07-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	parse-datetime: doc tuneup
+	* doc/parse-datetime.texi: Index "leap seconds" and fix minor
+	spacing issues.
+
 2012-07-05  Akim Demaille  <akim@lrde.epita.fr>
 
 	do-release-commit-and-tag: fix the previous commit

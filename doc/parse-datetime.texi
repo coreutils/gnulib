@@ -117,10 +117,10 @@ abbreviations like @samp{AM}, @samp{DST}, @samp{EST}, @samp{first},
 The output of the @command{date} command
 is not always acceptable as a date string,
 not only because of the language problem, but also because there is no
-standard meaning for time zone items like @samp{IST}.  When using
+standard meaning for time zone items like @samp{IST}@.  When using
 @command{date} to generate a date string intended to be parsed later,
 specify a date format that is independent of language and that does not
-use time zone items other than @samp{UTC} and @samp{Z}.  Here are some
+use time zone items other than @samp{UTC} and @samp{Z}@.  Here are some
 ways to do this:
 
 @example
@@ -145,6 +145,7 @@ between round parentheses, as long as included parentheses are properly
 nested.  Hyphens not followed by a digit are currently ignored.  Leading
 zeros on numbers are ignored.
 
+@cindex leap seconds
 Invalid dates like @samp{2005-02-29} or times like @samp{24:00} are
 rejected.  In the typical case of a host that does not support leap
 seconds, a time like @samp{23:59:60} is rejected even if it
@@ -237,6 +238,7 @@ day.  Here are some examples, all of which represent the same time:
 20:02-0500      # In @sc{est} (U.S. Eastern Standard Time).
 @end example
 
+@cindex leap seconds
 More generally, the time of day may be given as
 @samp{@var{hour}:@var{minute}:@var{second}}, where @var{hour} is
 a number between 0 and 23, @var{minute} is a number between 0 and
@@ -497,6 +499,7 @@ integers and can represent times from 1901-12-13 20:45:52 through
 of seconds with nanosecond subcounts, and can represent all the times
 in the known lifetime of the universe to a resolution of 1 nanosecond.
 
+@cindex leap seconds
 On most hosts, these counts ignore the presence of leap seconds.
 For example, on most hosts @samp{@@915148799} represents 1998-12-31
 23:59:59 @sc{utc}, @samp{@@915148800} represents 1999-01-01 00:00:00
@@ -585,4 +588,4 @@ file, and lacks the thread-safety of @code{parse_datetime}.
 @cindex Berry, K.
 This chapter was originally produced by Fran@,{c}ois Pinard
 (@email{pinard@@iro.umontreal.ca}) from the @file{parse_datetime.y} source code,
-and then edited by K.@: Berry (@email{kb@@cs.umb.edu}).
+and then edited by K. Berry (@email{kb@@cs.umb.edu}).
