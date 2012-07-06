@@ -1,5 +1,12 @@
 2012-07-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pthread: check for both pthread_create and pthread_join
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Revert previous change, but
+	alter the check so that it tests for both pthread_create and
+	pthread_join.  This should be more portable to hosts like OSF/1 5.1.
+	Suggested by Bruno Haible and Richard Yao in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-07/msg00048.html>.
+
 	parse-datetime: doc tuneup
 	* doc/parse-datetime.texi: Index "leap seconds" and fix minor
 	spacing issues.
