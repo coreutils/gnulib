@@ -1,3 +1,9 @@
+2012-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	timespec-sub: avoid duplicate include
+	* lib/timespec-sub.c: Do not include <config.h> twice.
+	Reported by Juanma Barranquero.
+
 2012-07-06  Akim Demaille  <akim@lrde.epita.fr>
 
 	bootstrap: use a more consistent error reporting scheme
