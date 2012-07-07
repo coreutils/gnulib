@@ -1,4 +1,12 @@
 2012-07-07  Ludovic Courtès  <ludo@gnu.org>
+
+	canonicalize[-lgpl]: handle "guessing" values when cross-building
+	* m4/canonicalize.m4 (gl_FUNC_CANONICALIZE_FILENAME_MODE)
+	(gl_CANONICALIZE_LGPL): Check whether $gl_cv_func_realpath_works
+	matches "*yes" instead of just "yes".  Regression introduced in commit
+	e0bcf6626cde8dad4bfbdc4045c744f0cd8b9e24.
+
+2012-07-07  Ludovic Courtès  <ludo@gnu.org>
 	    Bruno Haible  <bruno@clisp.org>
 
 	canonicalize: make the right guess when cross-compiling to GNU
