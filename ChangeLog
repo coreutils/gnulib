@@ -1,3 +1,11 @@
+2012-07-07  Ludovic Courtès  <ludo@gnu.org>
+	    Bruno Haible  <bruno@clisp.org>
+
+	canonicalize: make the right guess when cross-compiling to GNU
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Match also "gnu*" to
+	determine whether cross-compiling to glibc systems, so as to
+	include GNU/Hurd.
+
 2012-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	timespec-sub: avoid duplicate include

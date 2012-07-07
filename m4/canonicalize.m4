@@ -1,4 +1,4 @@
-# canonicalize.m4 serial 24
+# canonicalize.m4 serial 25
 
 dnl Copyright (C) 2003-2007, 2009-2012 Free Software Foundation, Inc.
 
@@ -94,10 +94,10 @@ AC_DEFUN([gl_FUNC_REALPATH_WORKS],
      [gl_cv_func_realpath_works=yes],
      [gl_cv_func_realpath_works=no],
      [case "$host_os" in
-                # Guess yes on glibc systems.
-        *-gnu*) gl_cv_func_realpath_works="guessing yes" ;;
-                # If we don't know, assume the worst.
-        *)      gl_cv_func_realpath_works="guessing no" ;;
+                       # Guess yes on glibc systems.
+        *-gnu* | gnu*) gl_cv_func_realpath_works="guessing yes" ;;
+                       # If we don't know, assume the worst.
+        *)             gl_cv_func_realpath_works="guessing no" ;;
       esac
      ])
     rm -rf conftest.a conftest.d
