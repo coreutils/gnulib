@@ -1,3 +1,9 @@
+2012-07-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	timespec: mark functions with const attributes
+	* lib/timespec.h (timespec_add, timespec_sub, dtotimespec):
+	Mark with _GL_ATTRIBUTE_CONST.
+
 2012-07-07  Ludovic Courtès  <ludo@gnu.org>
 
 	canonicalize[-lgpl]: handle "guessing" values when cross-building
