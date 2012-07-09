@@ -1,3 +1,9 @@
+2012-07-09  Bruno Haible  <bruno@clisp.org>
+
+	getopt: Simplify after Emacs changed.
+	* m4/getopt.m4 (gl_FUNC_GETOPT_POSIX): Inline gl_GETOPT_IFELSE.
+	(gl_GETOPT_IFELSE): Remove macro.
+
 2012-07-09  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: add sc_vulnerable_makefile_CVE-2012-3386
