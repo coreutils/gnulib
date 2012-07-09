@@ -1223,6 +1223,15 @@ sc_vulnerable_makefile_CVE-2009-4029:
 	  '  see http://bugzilla.redhat.com/542609 for details')	\
 	  $(_sc_search_regexp)
 
+sc_vulnerable_makefile_CVE-2012-3386:
+	@prohibit='chmod a\+w \$$\(distdir\)'				\
+	in_files=(^\|/)Makefile\\.in$$					\
+	halt=$$(printf '%s\n'						\
+	  'the above files are vulnerable; beware of running'		\
+	  '  "make distcheck", and upgrade to fixed automake'		\
+	  '  see http://bugzilla.redhat.com/CVE-2012-3386 for details')	\
+	  $(_sc_search_regexp)
+
 vc-diff-check:
 	(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
 	if test -s vc-diffs; then				\

@@ -1,5 +1,8 @@
 2012-07-09  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: add sc_vulnerable_makefile_CVE-2012-3386
+	* top/maint.mk (sc_vulnerable_makefile_CVE-2012-3386): New rule.
+
 	maint.mk: _sc_search_regexp, sc_vulnerable_makefile_CVE-2009-4029: fix
 	Bugs in both of those conspired to make the
 	sc_vulnerable_makefile_CVE-2009-4029 rule 99% useless.
