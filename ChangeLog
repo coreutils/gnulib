@@ -1,3 +1,17 @@
+2012-07-09  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: _sc_search_regexp, sc_vulnerable_makefile_CVE-2009-4029: fix
+	Bugs in both of those conspired to make the
+	sc_vulnerable_makefile_CVE-2009-4029 rule 99% useless.
+	_sc_search_regexp's handling of non-empty $in_files would filter
+	out any offending file names.  sc_vulnerable_makefile_CVE-2009-4029's
+	choice of in_files value meant there would be no match in most
+	projects, due to the presence of two or more Makefile.in files.
+	* top/maint.mk (_sc_search_regexp) [in_vc_files,in_files]: Clarify.
+	Fix a bug in how a non-empty $$in_files was processed:
+	(sc_vulnerable_makefile_CVE-2009-4029): Fix erroneous use of in_files:
+	in spite of the name, it's a regexp, not a list of file names.
+
 2012-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getloadavg, getopt: fix commentary re configure.in

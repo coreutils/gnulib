@@ -187,9 +187,11 @@ syntax-check: $(local-check)
 #
 #  in_vc_files | in_files
 #
-#     grep-E-style regexp denoting the files to check.  If no files
-#     are specified the default are all the files that are under
-#     version control.
+#     grep-E-style regexp selecting the files to check.  For in_vc_files,
+#     the regexp is used to select matching files from the list of all
+#     version-controlled files; for in_files, it's from the names printed
+#     by "find $(srcdir)".  When neither is specified, use all files that
+#     are under version control.
 #
 #  containing | non_containing
 #
@@ -261,7 +263,7 @@ define _sc_search_regexp
    : Filter by file name;						\
    if test -n "$$in_files"; then					\
      files=$$(find $(srcdir) | grep -E "$$in_files"			\
-              | grep -Ev '$(exclude_file_name_regexp--$@)');		\
+              | grep -Ev '$(_sc_excl)');				\
    else									\
      files=$$($(VC_LIST_EXCEPT));					\
      if test -n "$$in_vc_files"; then					\
@@ -1214,7 +1216,7 @@ sc_prohibit_path_max_allocation:
 
 sc_vulnerable_makefile_CVE-2009-4029:
 	@prohibit='perm -777 -exec chmod a\+rwx|chmod 777 \$$\(distdir\)' \
-	in_files=$$(find $(srcdir) -name Makefile.in)			\
+	in_files=(^\|/)Makefile\\.in$$					\
 	halt=$$(printf '%s\n'						\
 	  'the above files are vulnerable; beware of running'		\
 	  '  "make dist*" rules, and upgrade to fixed automake'		\
