@@ -1,3 +1,12 @@
+2012-07-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getloadavg: clean out old Emacs and Autoconf cruft
+	See Glenn Morris in <http://bugs.gnu.org/11905>.
+	* lib/getloadavg.c: Include <config.h>, <stdbool.h> always.
+	Include <sys/param.h> if HAVE_SYS_PARAM_H, not if unix or __unix.
+	(LDAV_CVT): Remove no-longer-used LOAD_AVE_CVT hook.
+	* m4/getloadavg.m4 (gl_PREREQ_GETLOADAVG): Check for <sys/param.h>.
+
 2012-07-10  Akim Demaille  <akim@lrde.epita.fr>
 
 	bootstrap: let warn be like tests/init.sh's warn_
