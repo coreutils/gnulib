@@ -1,3 +1,11 @@
+2012-07-11  Jim Meyering  <meyering@redhat.com>
+
+	maint: enable the sc_avoid_if_before_free syntax-check rule
+	* cfg.mk (local-checks-to-skip): Enable sc_avoid_if_before_free.
+	(if_before_free_offenders_): Define.
+	(if_before_free_basename_re_): Define.
+	Exempt current files with useless if-before-free.
+
 2012-07-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gettext: do not assume '#define ... defined ...' behavior

@@ -3,7 +3,6 @@
 local-checks-to-skip =			\
   sc_GFDL_version			\
   sc_GPL_version			\
-  sc_avoid_if_before_free		\
   sc_bindtextdomain			\
   sc_cast_of_alloca_return_value	\
   sc_cast_of_argument_to_free		\
@@ -59,3 +58,22 @@ exclude_file_name_regexp--sc_trailing_blank = \
 
 # Disable strncpy prohibition completely, for now.
 exclude_file_name_regexp--sc_prohibit_strncpy = .*
+
+if_before_free_offenders_ =	\
+  clean-temp.c			\
+  csharpcomp.c			\
+  free.c			\
+  fstrcmp.c			\
+  gl_carray_list.c		\
+  glob.c			\
+  glthread/lock.c		\
+  propername.c			\
+  relocatable.c			\
+  vasnprintf.c
+
+if_before_free_basename_re_ = \
+  $(shell printf '%s\n' '$(if_before_free_offenders_)' \
+    |sed 's|\.c\>||g'|tr -s '[\n[:space:]]' '|')
+
+exclude_file_name_regexp--sc_avoid_if_before_free = \
+  ^lib/($(if_before_free_basename_re_))\.c$$
