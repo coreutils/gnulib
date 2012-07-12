@@ -1,3 +1,12 @@
+2012-07-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gettext: do not assume '#define ... defined ...' behavior
+	* lib/gettext.h (_LIBGETTEXT_HAVE_VARIABLE_SIZE_ARRAYS):
+	Do not use '#define FOO ... defined BAR ...', as the C standard says
+	it's not portable to expect that this works after macro expansion.
+	Problem reported for gzip by Steven M. Schweda in
+	<http://lists.gnu.org/archive/html/bug-gzip/2012-07/msg00000.html>.
+
 2012-07-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getloadavg: clean out old Emacs and Autoconf cruft
