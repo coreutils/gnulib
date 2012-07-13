@@ -1,5 +1,12 @@
 2012-07-13  Eric Blake  <eblake@redhat.com>
 
+	argp: make HAVE_DECL usage consistent
+	* lib/argp-parse.c (__argp_parse): Check contents of HAVE_DECL
+	macros, not whether they are defined.
+	* m4/argp.m4 (gl_ARGP): Always define HAVE_DECL_* macros, per
+	convention with other declaration checks.
+	Reported by Karel Zak, with suggestions from Paul Eggert.
+
 	stat-time: relax license to LGPLv2+
 	* modules/stat-time (License): Relax, with consent of all authors.
 
