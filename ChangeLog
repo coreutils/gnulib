@@ -1,5 +1,12 @@
 2012-07-13  Eric Blake  <eblake@redhat.com>
 
+	maint.mk: new syntax check for HAVE_DECL checks
+	* top/maint.mk (sc_prohibit_defined_have_decl_tests): New rule.
+	* cfg.mk
+	(exclude_file_name_regexp--sc_prohibit_defined_have_decl_tests):
+	Exempt some false positives.
+	Based on a report by Karel Zak.
+
 	argp: make HAVE_DECL usage consistent
 	* lib/argp-parse.c (__argp_parse): Check contents of HAVE_DECL
 	macros, not whether they are defined.

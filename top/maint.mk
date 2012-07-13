@@ -777,6 +777,11 @@ sc_prohibit_always_true_header_tests:
 	'  with the corresponding gnulib module, they are always true')	\
 	  $(_sc_search_regexp)
 
+sc_prohibit_defined_have_decl_tests:
+	prohibit='#[	 ]*if(n?def|.*\<defined)\>[	 (]+HAVE_DECL_'	\
+	halt='$(ME): HAVE_DECL macros are always defined'		\
+	  $(_sc_search_regexp)
+
 # ==================================================================
 gl_other_headers_ ?= \
   intprops.h	\
