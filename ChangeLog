@@ -1,5 +1,8 @@
 2012-07-13  Eric Blake  <eblake@redhat.com>
 
+	stat-time: relax license to LGPLv2+
+	* modules/stat-time (License): Relax, with consent of all authors.
+
 	strndup: fix m4 usage error
 	* m4/strndup.m4 (gl_FUNC_STRNDUP): HAVE_DECL_STRNDUP is always
 	defined, to either 0 or 1.

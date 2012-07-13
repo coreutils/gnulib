@@ -19,7 +19,7 @@ Include:
 "stat-time.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paul Eggert and Jim Meyering
