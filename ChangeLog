@@ -1,3 +1,10 @@
+2012-07-13  Eric Blake  <eblake@redhat.com>
+
+	strndup: fix m4 usage error
+	* m4/strndup.m4 (gl_FUNC_STRNDUP): HAVE_DECL_STRNDUP is always
+	defined, to either 0 or 1.
+	Reported by Karel Zak.
+
 2012-07-11  Jim Meyering  <meyering@redhat.com>
 
 	maint: enable the sc_avoid_if_before_free syntax-check rule
