@@ -1,3 +1,8 @@
+2012-07-15  Reuben Thomas  <rrt@sc3d.org>
+
+	README-release: make it more legible
+	* top/README-release: Improve typography slightly.
+
 2012-07-15  Jim Meyering  <meyering@redhat.com>
 
 	maint: require that each sc_... command start with "@"
