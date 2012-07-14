@@ -602,7 +602,7 @@ should be written as @file{$(datarootdir)/emacs/site-lisp}.
 
 If you are using Autoconf, write the default as @samp{@@lispdir@@}.
 In order to make @samp{@@lispdir@@} work, you need the following lines
-in your @file{configure.in} file:
+in your @file{configure.ac} file:
 
 @example
 lispdir='$@{datarootdir@}/emacs/site-lisp'
