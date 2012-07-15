@@ -1,3 +1,11 @@
+2012-07-15  Bruno Haible  <bruno@clisp.org>
+
+	fpending: Assume AC_CHECK_DECLS_ONCE invocation, like in fpending.m4.
+	* lib/fpending.h: Assume HAVE_DECL___FPENDING is defined.
+	* cfg.mk (exclude_file_name_regexp--sc_prohibit_defined_have_decl_tests)
+	Remove exemption for fpending.h.
+	Suggested by Eric Blake.
+
 2012-07-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread_sigmask: fix bug on FreeBSD 9
