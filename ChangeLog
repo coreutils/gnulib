@@ -1,3 +1,16 @@
+2012-07-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread_sigmask: fix bug on FreeBSD 9
+	* lib/pthread_sigmask.c [PTHREAD_SIGMASK_INEFFECTIVE]:
+	Include string.h.
+	(pthread_sigmask) [PTHREAD_SIGMASK_INEFFECTIVE]:
+	When calling pthread_sigmask (1729, NEW, OLD), specify non-null NEW;
+	this avoids a bug on FreeBSD 9, where pthread_sigmask is effective
+	but pthread_sigmask (1729, NULL, NULL) returns zero.
+	See <http://bugs.gnu.org/11884>.
+	Avoid the need to call pthread_sigmask (1729, ...) in most cases,
+	by inspecting whether the main call changed the old mask.
+
 2012-07-15  Reuben Thomas  <rrt@sc3d.org>
 
 	README-release: make it more legible
