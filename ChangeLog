@@ -1,3 +1,10 @@
+2012-07-15  Akim Demaille  <akim@lrde.epita.fr>
+
+	gitlog-to-changelog: VPATH build issues
+	If builddir is not a subdirectory of srcdir, running git from it will
+	fail.
+	* build-aux/gitlog-to-changelog (--srcdir): New option.
+
 2012-07-15  Bruno Haible  <bruno@clisp.org>
 
 	fpending: Assume AC_CHECK_DECLS_ONCE invocation, like in fpending.m4.

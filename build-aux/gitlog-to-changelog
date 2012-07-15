@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-05-22 09:40'; # UTC
+my $VERSION = '2012-07-16 18:34'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -68,6 +68,7 @@ OPTIONS:
                   header; the default is to cluster adjacent commit messages
                   if their headers are the same and neither commit message
                   contains multiple paragraphs.
+   --srcdir=DIR the root of the source tree, containing the '.git' directory.
    --since=DATE convert only the logs since DATE;
                   the default is to convert all log entries.
    --format=FMT set format string for commit subject and body;
@@ -200,6 +201,7 @@ sub parse_amend_file($)
   my $cluster = 1;
   my $strip_tab = 0;
   my $strip_cherry_pick = 0;
+  my $srcdir;
   GetOptions
     (
      help => sub { usage 0 },
@@ -211,8 +213,8 @@ sub parse_amend_file($)
      'cluster!' => \$cluster,
      'strip-tab' => \$strip_tab,
      'strip-cherry-pick' => \$strip_cherry_pick,
+     'srcdir=s' => \$srcdir,
     ) or usage 1;
-
 
   defined $since_date
     and unshift @ARGV, "--since=$since_date";
@@ -221,7 +223,9 @@ sub parse_amend_file($)
   # that makes a correction in the log or attribution of that commit.
   my $amend_code = defined $amend_file ? parse_amend_file $amend_file : {};
 
-  my @cmd = (qw (git log --log-size),
+  my @cmd = ('git',
+             defined $srcdir ? ("--git-dir=$srcdir/.git") : (),
+             qw(log --log-size),
              '--pretty=format:%H:%ct  %an  <%ae>%n%n'.$format_string, @ARGV);
   open PIPE, '-|', @cmd
     or die ("$ME: failed to run '". quoted_cmd (@cmd) ."': $!\n"
