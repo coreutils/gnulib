@@ -778,7 +778,7 @@ sc_prohibit_always_true_header_tests:
 	  $(_sc_search_regexp)
 
 sc_prohibit_defined_have_decl_tests:
-	prohibit='#[	 ]*if(n?def|.*\<defined)\>[	 (]+HAVE_DECL_'	\
+	@prohibit='#[	 ]*if(n?def|.*\<defined)\>[	 (]+HAVE_DECL_'	\
 	halt='$(ME): HAVE_DECL macros are always defined'		\
 	  $(_sc_search_regexp)
 

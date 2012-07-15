@@ -1,3 +1,8 @@
+2012-07-15  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: add leading "@" to quiet new "make syntax-check" rule
+	* top/maint.mk (sc_prohibit_defined_have_decl_tests): Add "@".
+
 2012-07-13  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: new syntax check for HAVE_DECL checks
