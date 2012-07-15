@@ -26,14 +26,14 @@ syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p'\
 check: $(syntax-check-rules)
 
 sc_prefer_ac_check_funcs_once:
-	if test -d .git; then						\
+	@if test -d .git; then						\
 	  git grep -w -l AC_CHECK_FUNCS modules				\
 	    && { echo use AC_CHECK_FUNCS_ONCE, not AC_CHECK_FUNCS	\
 		   in modules/ 1>&2; exit 1; } || :			\
 	else :; fi
 
 sc_prohibit_leading_TABs:
-	if test -d .git; then						\
+	@if test -d .git; then						\
 	  git grep -l '^ *	' lib m4 tests				\
 	    | grep -Ev '^lib/reg|Makefile|test-update-copyright'	\
 	    | grep .							\
@@ -42,16 +42,28 @@ sc_prohibit_leading_TABs:
 	else :; fi
 
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
-	if test -d .git; then						\
+	@if test -d .git; then						\
 	  url=http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/22874;	\
 	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
 	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
 	else :; fi
 
+# It's easy to forget the noise-suppressing "@" at the beginning
+# of each sc_ rule.  Check for it both in maint.mk and in this file.
+sc_prohibit_sc_omitted_at:
+	@if test -d .git; then						\
+	  git grep -n -A1 '^sc_[[:alnum:]_-]*:' top/maint.mk Makefile	\
+            | grep -vE ':sc_|[0-9][-]	@|--$$'				\
+            | sed 's/-\([0-9][0-9]*\)-/:\1:/'				\
+	    | grep .							\
+	    && { printf '*** %s\n' 'oops; missing "@"'			\
+		 1>&2; exit 1; } || :					\
+	else :; fi
+
 # Run all maint.mk syntax-check tests on gnulib's sources.
 sc_maint:
-	rm -f maint.mk; ln -s top/maint.mk maint.mk
+	@rm -f maint.mk; ln -s top/maint.mk maint.mk
 	$(MAKE) -s srcdir=. gnulib_dir=. _build-aux=build-aux \
             -f cfg.mk -f maint.mk syntax-check
 	rm -f maint.mk
@@ -83,7 +95,7 @@ allow_AC_LIBOBJ =	\
 allow_AC_LIBOBJ_or := $(shell echo $(allow_AC_LIBOBJ) | tr -s ' ' '|')
 
 sc_prohibit_AC_LIBOBJ_in_m4:
-	url=http://article.gmane.org/gmane.comp.lib.gnulib.bugs/26995;	\
+	@url=http://article.gmane.org/gmane.comp.lib.gnulib.bugs/26995;	\
 	if test -d .git; then						\
 	  git ls-files m4						\
 	     | grep -Ev '^m4/($(allow_AC_LIBOBJ_or))\.m4$$'		\
@@ -93,7 +105,7 @@ sc_prohibit_AC_LIBOBJ_in_m4:
 	else :; fi
 
 sc_pragma_columns:
-	if test -d .git; then						\
+	@if test -d .git; then						\
 	  git ls-files|grep '\.in\.h$$'					\
 	      | xargs grep -l '^@PRAGMA_SYSTEM_HEADER@'			\
 	      | xargs grep -L '^@PRAGMA_COLUMNS@'			\
@@ -107,7 +119,7 @@ sc_pragma_columns:
 # Verify that certain (for now, only Jim Meyering and Eric Blake's)
 # *.c files are consistently cpp indented.
 sc_cpp_indent_check:
-	./gnulib-tool --extract-filelist \
+	@./gnulib-tool --extract-filelist \
 	    $$(cd ./modules; grep -ilrE '(meyering|blake)' .) \
 	  | sort -u \
 	  | grep '\.c$$' \
@@ -119,7 +131,7 @@ sc_cpp_indent_check:
 # Extract the symbols from the .h file and compare with the list of
 # symbols extracted from the rule in maint.mk.
 sc_check_sym_list:
-	i=lib/intprops.h; \
+	@i=lib/intprops.h; \
 	diff -u <(perl -lne '/^# *define ([A-Z]\w+)\(/ and print $$1' $$i|fmt) \
 	  <(sed -n /^_intprops_name/,/^_intprops_syms_re/p top/maint.mk \
 	    |sed '/^_/d;s/^  //;s/	*\\$$//')
@@ -127,7 +139,7 @@ sc_check_sym_list:
 # Ensure that the copyright statements in files and in the module descriptions
 # are consistent.
 sc_check_copyright:
-	./check-copyright
+	@./check-copyright
 
 # Regenerate some files that are stored in the repository.
 regen: MODULES.html

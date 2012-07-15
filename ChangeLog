@@ -1,5 +1,11 @@
 2012-07-15  Jim Meyering  <meyering@redhat.com>
 
+	maint: require that each sc_... command start with "@"
+	* Makefile (sc_prohibit_sc_omitted_at): New rule so that
+	"make sc_maint" helps us avoid this nit.
+
+2012-07-15  Jim Meyering  <meyering@redhat.com>
+
 	maint.mk: add leading "@" to quiet new "make syntax-check" rule
 	* top/maint.mk (sc_prohibit_defined_have_decl_tests): Add "@".
 
