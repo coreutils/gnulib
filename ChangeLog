@@ -1,3 +1,9 @@
+2012-07-17  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: minor simplication.
+	* top/maint.mk (_sc_excl): Use $(or...) instead of $(if...)
+	for default values.
+
 2012-07-15  Akim Demaille  <akim@lrde.epita.fr>
 
 	gitlog-to-changelog: VPATH build issues

@@ -61,7 +61,7 @@ endif
 # (i.e., with no $(srcdir) prefix), this definition is careful to
 # remove any $(srcdir) prefix, and to restore what it removes.
 _sc_excl = \
-  $(if $(exclude_file_name_regexp--$@),$(exclude_file_name_regexp--$@),^$$)
+  $(or $(exclude_file_name_regexp--$@),^$$)
 VC_LIST_EXCEPT = \
   $(VC_LIST) | sed 's|^$(_dot_escaped_srcdir)/||' \
 	| if test -f $(srcdir)/.x-$@; then grep -vEf $(srcdir)/.x-$@; \
