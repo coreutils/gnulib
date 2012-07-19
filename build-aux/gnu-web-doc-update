@@ -24,9 +24,6 @@ VERSION=2009-07-21.16; # UTC
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Requirements: everything required to bootstrap your package,
-# plus these: git, cvs, cvsu, rsync, mktemp
-
 ME=$(basename "$0")
 warn() { printf '%s: %s\n' "$ME" "$*" >&2; }
 die() { warn "$*"; exit 1; }
@@ -64,6 +61,51 @@ EOF
   exit
 }
 
+# find_tool ENVVAR NAMES...
+# -------------------------
+# Search for a required program.  Use the value of ENVVAR, if set,
+# otherwise find the first of the NAMES that can be run (i.e.,
+# supports --version).  If found, set ENVVAR to the program name,
+# die otherwise.
+#
+# FIXME: code duplication, see also bootstrap.
+find_tool ()
+{
+  find_tool_envvar=$1
+  shift
+  find_tool_names=$@
+  eval "find_tool_res=\$$find_tool_envvar"
+  if test x"$find_tool_res" = x; then
+    for i
+    do
+      if ($i --version </dev/null) >/dev/null 2>&1; then
+       find_tool_res=$i
+       break
+      fi
+    done
+  else
+    find_tool_error_prefix="\$$find_tool_envvar: "
+  fi
+  test x"$find_tool_res" != x \
+    || die "one of these is required: $find_tool_names"
+  ($find_tool_res --version </dev/null) >/dev/null 2>&1 \
+    || die "${find_tool_error_prefix}cannot run $find_tool_res --version"
+  eval "$find_tool_envvar=\$find_tool_res"
+  eval "export $find_tool_envvar"
+}
+
+## ------ ##
+## Main.  ##
+## ------ ##
+
+# Requirements: everything required to bootstrap your package, plus
+# these.
+find_tool CVS cvs
+find_tool CVSU cvsu
+find_tool GIT git
+find_tool RSYNC rsync
+find_tool XARGS gxargs xargs
+
 builddir=.
 while test $# != 0
 do
@@ -93,15 +135,15 @@ version=$(cat $prev) || die "$ME: no $prev file?"
 pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' $builddir/Makefile) \
   || die "$ME: no Makefile?"
 tmp_branch=web-doc-$version-$$
-current_branch=$(git branch | sed -ne '/^\* /{s///;p;q;}')
+current_branch=$($GIT branch | sed -ne '/^\* /{s///;p;q;}')
 
 cleanup()
 {
   __st=$?
   rm -rf "$tmp"
-  git checkout "$current_branch"
-  git submodule update --recursive
-  git branch -d $tmp_branch
+  $GIT checkout "$current_branch"
+  $GIT submodule update --recursive
+  $GIT branch -d $tmp_branch
   exit $__st
 }
 trap cleanup 0
@@ -111,8 +153,8 @@ trap 'exit $?' 1 2 13 15
 # just-released version number, not some string like 7.6.18-20761.
 # That version string propagates into all documentation.
 set -e
-git checkout -b $tmp_branch v$version
-git submodule update --recursive
+$GIT checkout -b $tmp_branch v$version
+$GIT submodule update --recursive
 ./bootstrap
 srcdir=$(pwd)
 cd "$builddir"
@@ -125,16 +167,18 @@ set +e
 
 tmp=$(mktemp -d web-doc-update.XXXXXX) || exit 1
 ( cd $tmp \
-    && cvs -d $USER@cvs.sv.gnu.org:/webcvs/$pkg co $pkg )
-rsync -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
+    && $CVS -d $USER@cvs.sv.gnu.org:/webcvs/$pkg co $pkg )
+$RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
 
 (
   cd $tmp/$pkg/manual
 
   # Add any new files:
-  cvsu --types='?'|sed s/..// | xargs --no-run-if-empty -- cvs add -ko
+  $CVSU --types='?'                             \
+    | sed s/..//                                \
+    | $XARGS --no-run-if-empty -- $CVS add -ko
 
-  cvs ci -m $version
+  $CVS ci -m $version
 )
 
 # Local variables:
