@@ -128,12 +128,12 @@ do
 done
 
 test $# = 0 \
-  || die "$ME: too many arguments"
+  || die "too many arguments"
 
 prev=.prev-version
-version=$(cat $prev) || die "$ME: no $prev file?"
+version=$(cat $prev) || die "no $prev file?"
 pkg=$(sed -n 's/^PACKAGE = \(.*\)/\1/p' $builddir/Makefile) \
-  || die "$ME: no Makefile?"
+  || die "no Makefile?"
 tmp_branch=web-doc-$version-$$
 current_branch=$($GIT branch | sed -ne '/^\* /{s///;p;q;}')
 

@@ -1,5 +1,8 @@
 2012-07-19  Akim Demaille  <akim@lrde.epita.fr>
 
+	gnu-web-doc-update: fix error messages
+	* build-aux/gnu-web-doc-update: Don't pass $ME to die.
+
 	gnu-web-doc-update: check the requirements.
 	* build-aux/gnu-web-doc-update (find_tool): Import from bootstrap.
 	($CVS, $CVSU, $GIT, $RSYNC, $XARGS): New.
