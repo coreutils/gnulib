@@ -1,3 +1,10 @@
+2012-07-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fsusage: port back to Solaris
+	* lib/fsusage.c (get_fs_usage): Fix busted logic causing compile-time
+	error (fsd not declared) on Solaris 10.  Reported privately by
+	Andrew Borodin.
+
 2012-07-19  Akim Demaille  <akim@lrde.epita.fr>
 
 	gnu-web-doc-update: fix error messages
