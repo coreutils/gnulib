@@ -1,3 +1,11 @@
+2012-07-22  Bruno Haible  <bruno@clisp.org>
+
+	getpass: Assume AC_CHECK_DECLS_ONCE invocation, like in getpass.m4.
+	* lib/getpass.h: Assume HAVE_DECL_GETPASS is defined.
+	* cfg.mk (exclude_file_name_regexp--sc_prohibit_defined_have_decl_tests):
+	Remove exemption for getpass.h.
+	Suggested by Eric Blake.
+
 2012-07-20  Eric Blake  <eblake@redhat.com>
 
 	verify: document conflict with -Wnested-externs

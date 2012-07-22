@@ -79,4 +79,4 @@ exclude_file_name_regexp--sc_avoid_if_before_free = \
   ^lib/($(if_before_free_basename_re_))\.c$$
 
 exclude_file_name_regexp--sc_prohibit_defined_have_decl_tests = \
-  ^lib/((error|getopt|strtoimax)\.c|(argp-namefrob|getpass)\.h)$$
+  ^lib/((error|getopt|strtoimax)\.c|(argp-namefrob)\.h)$$
