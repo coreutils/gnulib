@@ -1349,7 +1349,7 @@ fi
   fi
   # Canonicalize the inctests variable.
   case "$mode" in
-    import | add-import | remove-import)
+    import | add-import | remove-import | update)
       if test -z "$inctests"; then
         inctests=false
       fi

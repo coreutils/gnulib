@@ -1,3 +1,9 @@
+2012-07-24  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Fix handling of inctests variable.
+	* gnulib-tool: Canonicalize $inctests also in 'update' mode.
+	Reported by Nick Bowler <nbowler@elliptictech.com>.
+
 2012-07-22  Bruno Haible  <bruno@clisp.org>
 
 	getpass: Assume AC_CHECK_DECLS_ONCE invocation, like in getpass.m4.
