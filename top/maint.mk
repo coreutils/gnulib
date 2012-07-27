@@ -1429,6 +1429,31 @@ gen-coverage:
 
 coverage: init-coverage build-coverage gen-coverage
 
+# Some projects carry local adjustments for gnulib modules via patches in
+# a gnulib patch directory whose default name is gl/ (defined in bootstrap
+# via local_gl_dir=gl).  Those patches become stale as the originals evolve
+# in gnulib.  Use this rule to refresh any stale patches.  It applies each
+# patch to the original in $(gnulib_dir) and uses the temporary result to
+# generate a fuzz-free .diff file.  If you customize the name of your local
+# gnulib patch directory via bootstrap.conf, this rule detects that name.
+# Run this from a non-VPATH (i.e., srcdir) build directory.
+.PHONY: refresh-gnulib-patches
+refresh-gnulib-patches:
+	gl=gl;								\
+	if test -f bootstrap.conf; then					\
+	  t=$$(perl -lne '/^\s*local_gl_dir=(\S+)/ and $$d=$$1;'	\
+	       -e 'END{defined $$d and print $$d}' bootstrap.conf);	\
+	  test -n "$$t" && gl=$$t;					\
+	fi;								\
+	for diff in $$(cd $$gl; git ls-files | grep '\.diff$$'); do	\
+	  b=$$(printf %s "$$diff"|sed 's/\.diff$$//');			\
+	  VERSION_CONTROL=none						\
+	    patch "$(gnulib_dir)/$$b" "$$gl/$$diff" || exit 1;		\
+	  ( cd $(gnulib_dir) || exit 1;					\
+	    git diff "$$b" > "../$$gl/$$diff";				\
+	    git checkout $$b ) || exit 1;				\
+	done
+
 # Update gettext files.
 PACKAGE ?= $(shell basename $(PWD))
 PO_DOMAIN ?= $(PACKAGE)

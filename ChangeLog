@@ -1,3 +1,10 @@
+2012-07-27  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: new rule: refresh-gnulib-patches
+	I noticed that 8 of coreutils' 9 gl/**/*.diff files was stale.
+	Use this rule to refresh them.
+	* top/maint.mk (refresh-gnulib-patches): New rule.
+
 2012-07-24  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fix handling of inctests variable.
