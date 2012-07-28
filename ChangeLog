@@ -1,3 +1,13 @@
+2012-08-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: new module
+	* modules/extern-inline, m4/extern-inline.m4: New files.
+	This is for better support of 'extern inline' a la ISO C99,
+	with a portable alternative on compilers that do not support
+	C99-style 'extern inline'.  Using 'extern inline' shrinks the size
+	of the Emacs executable, when compiled with debugging disabled,
+	which is a typical way that Emacs is built while developing.
+
 2012-08-01  Akim Demaille  <akim@lrde.epita.fr>
 
 	maint.mk: a "release-commit" wrapper to do-release-commit-and-tag
