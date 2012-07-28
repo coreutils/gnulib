@@ -3,14 +3,16 @@ uint64_t-like operations that work even on hosts lacking uint64_t
 
 Files:
 lib/u64.h
+lib/u64.c
 
 Depends-on:
+extern-inline
 stdint
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
+lib_SOURCES += u64.c
 
 Include:
 "u64.h"

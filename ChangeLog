@@ -1,5 +1,15 @@
 2012-08-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	u64: use extern-inline
+	* lib/u64.c: New file.
+	* lib/u64.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	(_GL_U64_INLINE): New macro.  Use it instead of 'static inline'.
+	* modules/u64 (Files): Add lib/u64.c.
+	(Depends-on): Add extern-inline.
+	(configure.ac): No need to require AC_C_INLINE, since extern-inline
+	does that now.
+	(lib_SOURCES): Add u64.c.
+
 	timespec: use extern-inline
 	* lib/timespec.c: New file.
 	* lib/timespec.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.

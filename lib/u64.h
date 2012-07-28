@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 
+_GL_INLINE_HEADER_BEGIN
+
 /* Return X rotated left by N bits, where 0 < N < 64.  */
 #define u64rol(x, n) u64or (u64shl (x, n), u64shr (x, 64 - n))
 
@@ -52,9 +54,13 @@ typedef struct { uint32_t lo, hi; } u64;
 #  define u64init(hi, lo) { lo, hi }
 # endif
 
+#ifndef _GL_U64_INLINE
+# define _GL_U64_INLINE _GL_INLINE
+#endif
+
 /* Given the high and low-order 32-bit quantities HI and LO, return a u64
    value representing (HI << 32) + LO.  */
-static inline u64
+_GL_U64_INLINE u64
 u64hilo (uint32_t hi, uint32_t lo)
 {
   u64 r;
@@ -64,7 +70,7 @@ u64hilo (uint32_t hi, uint32_t lo)
 }
 
 /* Return a u64 value representing LO.  */
-static inline u64
+_GL_U64_INLINE u64
 u64lo (uint32_t lo)
 {
   u64 r;
@@ -74,7 +80,7 @@ u64lo (uint32_t lo)
 }
 
 /* Return a u64 value representing SIZE.  */
-static inline u64
+_GL_U64_INLINE u64
 u64size (size_t size)
 {
   u64 r;
@@ -84,14 +90,14 @@ u64size (size_t size)
 }
 
 /* Return X < Y.  */
-static inline int
+_GL_U64_INLINE int
 u64lt (u64 x, u64 y)
 {
   return x.hi < y.hi || (x.hi == y.hi && x.lo < y.lo);
 }
 
 /* Return X & Y.  */
-static inline u64
+_GL_U64_INLINE u64
 u64and (u64 x, u64 y)
 {
   u64 r;
@@ -101,7 +107,7 @@ u64and (u64 x, u64 y)
 }
 
 /* Return X | Y.  */
-static inline u64
+_GL_U64_INLINE u64
 u64or (u64 x, u64 y)
 {
   u64 r;
@@ -111,7 +117,7 @@ u64or (u64 x, u64 y)
 }
 
 /* Return X ^ Y.  */
-static inline u64
+_GL_U64_INLINE u64
 u64xor (u64 x, u64 y)
 {
   u64 r;
@@ -121,7 +127,7 @@ u64xor (u64 x, u64 y)
 }
 
 /* Return X + Y.  */
-static inline u64
+_GL_U64_INLINE u64
 u64plus (u64 x, u64 y)
 {
   u64 r;
@@ -131,7 +137,7 @@ u64plus (u64 x, u64 y)
 }
 
 /* Return X << N.  */
-static inline u64
+_GL_U64_INLINE u64
 u64shl (u64 x, int n)
 {
   u64 r;
@@ -149,7 +155,7 @@ u64shl (u64 x, int n)
 }
 
 /* Return X >> N.  */
-static inline u64
+_GL_U64_INLINE u64
 u64shr (u64 x, int n)
 {
   u64 r;
@@ -167,3 +173,5 @@ u64shr (u64 x, int n)
 }
 
 #endif
+
+_GL_INLINE_HEADER_END
