@@ -1,3 +1,9 @@
+2012-07-29  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: absolute VPATH build fix
+	* top/maint.mk (gpg_key_ID): Help git find .git when, for instance,
+	$(srcdir) is not a parent of $(builddir).
+
 2012-07-28  John Darrington  <john@darrington.wattle.id.au>
 
 	clean-temp: Fix memory leak.

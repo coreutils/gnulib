@@ -1256,10 +1256,11 @@ bootstrap-tools ?= autoconf,automake,gnulib
 
 # If it's not already specified, derive the GPG key ID from
 # the signed tag we've just applied to mark this release.
-gpg_key_ID ?= \
-  $$(git cat-file tag v$(VERSION) \
-     | gpgv --status-fd 1 --keyring /dev/null - - 2>/dev/null \
-     | awk '/^\[GNUPG:\] ERRSIG / {print $$3; exit}')
+gpg_key_ID ?=								\
+  $$(cd $(srcdir)							\
+     && git cat-file tag v$(VERSION)					\
+        | gpgv --status-fd 1 --keyring /dev/null - - 2>/dev/null	\
+        | awk '/^\[GNUPG:\] ERRSIG / {print $$3; exit}')
 
 translation_project_ ?= coordinator@translationproject.org
 
