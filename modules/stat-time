@@ -3,17 +3,20 @@ stat-related time functions
 
 Files:
 lib/stat-time.h
+lib/stat-time.c
 m4/stat-time.m4
 
 Depends-on:
 time
 extensions
+extern-inline
 
 configure.ac:
 gl_STAT_TIME
 gl_STAT_BIRTHTIME
 
 Makefile.am:
+lib_SOURCES += stat-time.c
 
 Include:
 "stat-time.h"

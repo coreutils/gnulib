@@ -23,6 +23,8 @@
 #include <sys/stat.h>
 #include <time.h>
 
+_GL_INLINE_HEADER_BEGIN
+
 /* STAT_TIMESPEC (ST, ST_XTIM) is the ST_XTIM member for *ST of type
    struct timespec, if available.  If not, then STAT_TIMESPEC_NS (ST,
    ST_XTIM) is the nanosecond component of the ST_XTIM member for *ST,
@@ -45,8 +47,12 @@
 # define STAT_TIMESPEC_NS(st, st_xtim) ((st)->st_xtim.st__tim.tv_nsec)
 #endif
 
+#ifndef _GL_STAT_TIME_INLINE
+# define _GL_STAT_TIME_INLINE _GL_INLINE
+#endif
+
 /* Return the nanosecond component of *ST's access time.  */
-static inline long int
+_GL_STAT_TIME_INLINE long int
 get_stat_atime_ns (struct stat const *st)
 {
 # if defined STAT_TIMESPEC
@@ -59,7 +65,7 @@ get_stat_atime_ns (struct stat const *st)
 }
 
 /* Return the nanosecond component of *ST's status change time.  */
-static inline long int
+_GL_STAT_TIME_INLINE long int
 get_stat_ctime_ns (struct stat const *st)
 {
 # if defined STAT_TIMESPEC
@@ -72,7 +78,7 @@ get_stat_ctime_ns (struct stat const *st)
 }
 
 /* Return the nanosecond component of *ST's data modification time.  */
-static inline long int
+_GL_STAT_TIME_INLINE long int
 get_stat_mtime_ns (struct stat const *st)
 {
 # if defined STAT_TIMESPEC
@@ -85,7 +91,7 @@ get_stat_mtime_ns (struct stat const *st)
 }
 
 /* Return the nanosecond component of *ST's birth time.  */
-static inline long int
+_GL_STAT_TIME_INLINE long int
 get_stat_birthtime_ns (struct stat const *st)
 {
 # if defined HAVE_STRUCT_STAT_ST_BIRTHTIMESPEC_TV_NSEC
@@ -100,7 +106,7 @@ get_stat_birthtime_ns (struct stat const *st)
 }
 
 /* Return *ST's access time.  */
-static inline struct timespec
+_GL_STAT_TIME_INLINE struct timespec
 get_stat_atime (struct stat const *st)
 {
 #ifdef STAT_TIMESPEC
@@ -114,7 +120,7 @@ get_stat_atime (struct stat const *st)
 }
 
 /* Return *ST's status change time.  */
-static inline struct timespec
+_GL_STAT_TIME_INLINE struct timespec
 get_stat_ctime (struct stat const *st)
 {
 #ifdef STAT_TIMESPEC
@@ -128,7 +134,7 @@ get_stat_ctime (struct stat const *st)
 }
 
 /* Return *ST's data modification time.  */
-static inline struct timespec
+_GL_STAT_TIME_INLINE struct timespec
 get_stat_mtime (struct stat const *st)
 {
 #ifdef STAT_TIMESPEC
@@ -143,7 +149,7 @@ get_stat_mtime (struct stat const *st)
 
 /* Return *ST's birth time, if available; otherwise return a value
    with tv_sec and tv_nsec both equal to -1.  */
-static inline struct timespec
+_GL_STAT_TIME_INLINE struct timespec
 get_stat_birthtime (struct stat const *st)
 {
   struct timespec t;
@@ -185,5 +191,7 @@ get_stat_birthtime (struct stat const *st)
 
   return t;
 }
+
+_GL_INLINE_HEADER_END
 
 #endif
