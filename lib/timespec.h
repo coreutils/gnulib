@@ -21,6 +21,8 @@
 
 # include <time.h>
 
+_GL_INLINE_HEADER_BEGIN
+
 /* Return negative, zero, positive if A < B, A == B, A > B, respectively.
 
    For each time stamp T, this code assumes that either:
@@ -49,7 +51,11 @@
 
    The (int) cast avoids a gcc -Wconversion warning.  */
 
-static inline int
+#ifndef _GL_TIMESPEC_INLINE
+# define _GL_TIMESPEC_INLINE _GL_INLINE
+#endif
+
+_GL_TIMESPEC_INLINE int
 timespec_cmp (struct timespec a, struct timespec b)
 {
   return (a.tv_sec < b.tv_sec ? -1
@@ -59,7 +65,7 @@ timespec_cmp (struct timespec a, struct timespec b)
 
 /* Return -1, 0, 1, depending on the sign of A.  A.tv_nsec must be
    nonnegative.  */
-static inline int
+_GL_TIMESPEC_INLINE int
 timespec_sign (struct timespec a)
 {
   return a.tv_sec < 0 ? -1 : a.tv_sec || a.tv_nsec;
@@ -73,7 +79,7 @@ struct timespec dtotimespec (double)
   _GL_ATTRIBUTE_CONST;
 
 /* Return an approximation to A, of type 'double'.  */
-static inline double
+_GL_TIMESPEC_INLINE double
 timespectod (struct timespec a)
 {
   return a.tv_sec + a.tv_nsec / 1e9;
@@ -81,5 +87,7 @@ timespectod (struct timespec a)
 
 void gettime (struct timespec *);
 int settime (struct timespec const *);
+
+_GL_INLINE_HEADER_END
 
 #endif

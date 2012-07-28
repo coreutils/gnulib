@@ -1,5 +1,13 @@
 2012-08-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	timespec: use extern-inline
+	* lib/timespec.c: New file.
+	* lib/timespec.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	(_GL_TIMESPEC_INLINE): New macro.  Use it instead of 'static inline'.
+	* modules/timespec (Files): Add lib/timespec.c.
+	(Depends-on): Add extern-inline.
+	(lib_SOURCES): Add timespec.c.
+
 	stat-time: use extern-inline
 	* lib/stat-time.c: New file.
 	* lib/stat-time.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
