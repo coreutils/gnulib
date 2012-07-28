@@ -1,3 +1,9 @@
+2012-07-28  John Darrington  <john@darrington.wattle.id.au>
+
+	clean-temp: Fix memory leak.
+	* lib/clean-temp.c (cleanup_temp_dir): Free also the 'subdirs' and
+	'files' members of tmpdir.
+
 2012-07-27  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: new rule: refresh-gnulib-patches

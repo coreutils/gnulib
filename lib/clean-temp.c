@@ -556,7 +556,10 @@ cleanup_temp_dir (struct temp_dir *dir)
           }
         else
           cleanup_list.tempdir_list[i] = NULL;
-        /* Now only we can free the tmpdir->dirname and tmpdir itself.  */
+        /* Now only we can free the tmpdir->dirname, tmpdir->subdirs,
+           tmpdir->files, and tmpdir itself.  */
+        gl_list_free (tmpdir->files);
+        gl_list_free (tmpdir->subdirs);
         free (tmpdir->dirname);
         free (tmpdir);
         return err;
