@@ -10,6 +10,7 @@ m4/utimes.m4
 
 Depends-on:
 errno
+extern-inline
 fcntl-h
 fstat
 lstat

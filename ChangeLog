@@ -1,5 +1,12 @@
 2012-08-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	utimens: use extern-inline
+	* lib/utimens.c (_GL_UTIMENS_INLINE): Define when including utimens.h.
+	* lib/utimens.h: Add copyright notice, since this is now large enough
+	to copyright.  Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	(_GL_UTIMENS_INLINE): New macro.  Use it instead of 'static inline'.
+	* modules/utimens (Depends-on): Add extern-inline.
+
 	u64: use extern-inline
 	* lib/u64.c: New file.
 	* lib/u64.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
