@@ -1,5 +1,11 @@
 2012-07-29  Akim Demaille  <akim@lrde.epita.fr>
 
+	gitlog-to-changelog: fix previous change
+	* build-aux/gitlog-to-changelog: Fix condition.
+	Add missing ";".
+
+2012-07-29  Akim Demaille  <akim@lrde.epita.fr>
+
 	gitlog-to-changelog: don't expect .git to be in $srcdir
 	Reported by Bruno Haible.
 	<http://lists.gnu.org/archive/html/bug-gnulib/2012-07/msg00265.html>

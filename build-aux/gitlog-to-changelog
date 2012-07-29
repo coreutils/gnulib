@@ -210,8 +210,8 @@ sub git_dir_option($)
       my $git_dir = qx($cmd);
       defined $git_dir
         or die "$ME: cannot run $qcmd: $!\n";
-      $? != 0
-        or die "$ME: $qcmd had unexpected exit code or signal ($?)\n"
+      $? == 0
+        or die "$ME: $qcmd had unexpected exit code or signal ($?)\n";
       chomp $git_dir;
       push @res, "--git-dir=$git_dir/.git";
     }
