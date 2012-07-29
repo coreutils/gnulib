@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-07-16 18:34'; # UTC
+my $VERSION = '2012-07-29 06:11'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -68,7 +68,8 @@ OPTIONS:
                   header; the default is to cluster adjacent commit messages
                   if their headers are the same and neither commit message
                   contains multiple paragraphs.
-   --srcdir=DIR the root of the source tree, containing the '.git' directory.
+   --srcdir=DIR the root of the source tree, from which the .git/
+                  directory can be derived.
    --since=DATE convert only the logs since DATE;
                   the default is to convert all log entries.
    --format=FMT set format string for commit subject and body;
@@ -193,6 +194,30 @@ sub parse_amend_file($)
   return $h;
 }
 
+# git_dir_option $SRCDIR
+#
+# From $SRCDIR, the --git-dir option to pass to git (none if $SRCDIR
+# is undef).  Return as a list (0 or 1 element).
+sub git_dir_option($)
+{
+  my ($srcdir) = @_;
+  my @res = ();
+  if (defined $srcdir)
+    {
+      my $qdir = shell_quote $srcdir;
+      my $cmd = "cd $qdir && git rev-parse --show-toplevel";
+      my $qcmd = shell_quote $cmd;
+      my $git_dir = qx($cmd);
+      defined $git_dir
+        or die "$ME: cannot run $qcmd: $!\n";
+      $? != 0
+        or die "$ME: $qcmd had unexpected exit code or signal ($?)\n"
+      chomp $git_dir;
+      push @res, "--git-dir=$git_dir/.git";
+    }
+  @res;
+}
+
 {
   my $since_date;
   my $format_string = '%s%n%b%n';
@@ -224,7 +249,7 @@ sub parse_amend_file($)
   my $amend_code = defined $amend_file ? parse_amend_file $amend_file : {};
 
   my @cmd = ('git',
-             defined $srcdir ? ("--git-dir=$srcdir/.git") : (),
+             git_dir_option $srcdir,
              qw(log --log-size),
              '--pretty=format:%H:%ct  %an  <%ae>%n%n'.$format_string, @ARGV);
   open PIPE, '-|', @cmd
