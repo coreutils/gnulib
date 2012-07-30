@@ -1067,7 +1067,7 @@ sc_makefile_at_at_check:
 	  && { echo '$(ME): use $$(...), not @...@' 1>&2; exit 1; } || :
 
 news-check: NEWS
-	if sed -n $(news-check-lines-spec)p $<				\
+	$(AM_V_GEN)if sed -n $(news-check-lines-spec)p $<		\
 	    | grep -E $(news-check-regexp) >/dev/null; then		\
 	  :;								\
 	else								\
@@ -1239,8 +1239,8 @@ sc_vulnerable_makefile_CVE-2012-3386:
 	  $(_sc_search_regexp)
 
 vc-diff-check:
-	(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
-	if test -s vc-diffs; then				\
+	$(AM_V_GEN)(unset CDPATH; cd $(srcdir) && $(VC) diff) > vc-diffs || :
+	$(AM_V_at)if test -s vc-diffs; then			\
 	  cat vc-diffs;						\
 	  echo "Some files are locally modified:" 1>&2;		\
 	  exit 1;						\
@@ -1279,7 +1279,7 @@ else
 endif
 
 announcement: NEWS ChangeLog $(rel-files)
-	@$(srcdir)/$(_build-aux)/announce-gen				\
+	$(AM_V_GEN)$(srcdir)/$(_build-aux)/announce-gen			\
 	    --mail-headers='$(announcement_mail_headers_)'		\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
@@ -1321,7 +1321,7 @@ endef
 
 .PHONY: no-submodule-changes
 no-submodule-changes:
-	if test -d $(srcdir)/.git; then					\
+	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
 	  diff=$$(cd $(srcdir) && git submodule -q foreach		\
 		  git diff-index --name-only HEAD)			\
 	    || exit 1;							\
@@ -1360,16 +1360,16 @@ check: $(gl_public_submodule_commit)
 .PHONY: alpha beta stable
 ALL_RECURSIVE_TARGETS += alpha beta stable
 alpha beta stable: $(local-check) writable-files $(submodule-checks)
-	test $@ = stable						\
+	$(AM_V_GEN)test $@ = stable					\
 	  && { echo $(VERSION) | grep -E '^[0-9]+(\.[0-9]+)+$$'		\
 	       || { echo "invalid version string: $(VERSION)" 1>&2; exit 1;};}\
 	  || :
-	$(MAKE) vc-diff-check
-	$(MAKE) news-check
-	$(MAKE) distcheck
-	$(MAKE) dist
-	$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
-	$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
+	$(AM_V_at)$(MAKE) vc-diff-check
+	$(AM_V_at)$(MAKE) news-check
+	$(AM_V_at)$(MAKE) distcheck
+	$(AM_V_at)$(MAKE) dist
+	$(AM_V_at)$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
+	$(AM_V_at)$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep
@@ -1377,17 +1377,20 @@ release-prep-hook ?= release-prep
 gl_noteworthy_news_ = * Noteworthy changes in release ?.? (????-??-??) [?]
 .PHONY: release-prep
 release-prep:
-	case $$RELEASE_TYPE in alpha|beta|stable) ;; \
+	$(AM_V_GEN)case $$RELEASE_TYPE in alpha|beta|stable) ;; \
 	  *) echo "invalid RELEASE_TYPE: $$RELEASE_TYPE" 1>&2; exit 1;; esac
-	$(MAKE) --no-print-directory -s announcement > ~/announce-$(my_distdir)
-	if test -d $(release_archive_dir); then			\
+	$(AM_V_at)$(MAKE) --no-print-directory -s announcement \
+	  > ~/announce-$(my_distdir)
+	$(AM_V_at)if test -d $(release_archive_dir); then	\
 	  ln $(rel-files) $(release_archive_dir);		\
 	  chmod a-w $(rel-files);				\
 	fi
-	echo $(VERSION) > $(prev_version_file)
-	$(MAKE) update-NEWS-hash
-	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' $(srcdir)/NEWS
-	msg=$$($(emit-commit-log)) || exit 1;		\
+	$(AM_V_at)echo $(VERSION) > $(prev_version_file)
+	$(AM_V_at)$(MAKE) update-NEWS-hash
+	$(AM_V_at)perl -pi						\
+	  -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"'	\
+	  $(srcdir)/NEWS
+	$(AM_V_at)msg=$$($(emit-commit-log)) || exit 1;		\
 	cd $(srcdir) && $(VC) commit -m "$$msg" -a
 
 # Override this with e.g., -s $(srcdir)/some_other_name.texi
@@ -1396,14 +1399,14 @@ gendocs_options_ ?=
 
 .PHONY: web-manual
 web-manual:
-	@test -z "$(manual_title)" \
+	$(AM_V_GEN)test -z "$(manual_title)" \
 	  && { echo define manual_title in cfg.mk 1>&2; exit 1; } || :
-	@cd '$(srcdir)/doc'; \
+	$(AM_V_at)cd '$(srcdir)/doc'; \
 	  $(SHELL) ../$(_build-aux)/gendocs.sh $(gendocs_options_) \
 	     -o '$(abs_builddir)/doc/manual' \
 	     --email $(PACKAGE_BUGREPORT) $(PACKAGE) \
 	    "$(PACKAGE_NAME) - $(manual_title)"
-	@echo " *** Upload the doc/manual directory to web-cvs."
+	$(AM_V_at)echo " *** Upload the doc/manual directory to web-cvs."
 
 .PHONY: web-manual-update
 web-manual-update:
@@ -1493,7 +1496,7 @@ update-copyright-env ?=
 # in the file .x-update-copyright.
 .PHONY: update-copyright
 update-copyright:
-	grep -l -w Copyright                                             \
+	$(AM_V_GEN)grep -l -w Copyright                                  \
 	  $$(export VC_LIST_EXCEPT_DEFAULT=COPYING && $(VC_LIST_EXCEPT)) \
 	  | $(update-copyright-env) xargs $(srcdir)/$(_build-aux)/$@
 

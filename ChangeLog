@@ -11,6 +11,13 @@
 
 2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
 
+	maint.mk: use silent-rules support from Automake
+	* top/maint.mk (news-check, vc-diff-check, announcement)
+	(no-submodule-changes, alpha beta stable, release-prep)
+	(web-manual, update-copyright): Use $(AM_V_GEN) and $(AM_V_at).
+
+2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: provide a web-manual-update target
 	* top/maint.mk: here.
 	* top/README-release: Use it to simplify the web manual update step.
