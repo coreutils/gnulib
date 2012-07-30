@@ -11,6 +11,11 @@
 
 2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
 
+	README-release: shorten the circuit to post a news
+	* top/README-release: Point directly to the news submission form.
+
+2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
+
 	gnu-web-doc-update: fix --help
 	* build-aux/gnu-web-doc-update: The information "top level" was written
 	twice.

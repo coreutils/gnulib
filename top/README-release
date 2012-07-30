@@ -72,17 +72,17 @@ Once all the builds and tests have passed,
 * Announce it on Savannah first, so you can include the savannah.org
   announcement link in the email message.
 
-  From here:
+  Go to the news-submission form:
 
-    https://savannah.gnu.org/projects/@PACKAGE@/
+    https://savannah.gnu.org/news/submit.php?group=@PACKAGE@
 
-  click on "Submit news", then write something like the following:
-  (If there is no such button, then enable "News" for the project via
-  the "Main->Select Features" menu item, or via this link:
+  If it does not work, then enable "News" for the project via this
+  link:
 
     https://savannah.gnu.org/project/admin/editgroupfeatures.php?group=@PACKAGE@
 
-  )
+
+  Write something like the following:
 
     Subject: @PACKAGE@-X.Y released [stable]
     +verbatim+
