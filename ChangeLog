@@ -1,3 +1,9 @@
+2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: absolute VPATH issue
+	* top/maint.mk (release-prep): Help Git find .git/.
+	From Jim Meyering.
+
 2012-07-29  Akim Demaille  <akim@lrde.epita.fr>
 
 	gitlog-to-changelog: fix previous change
