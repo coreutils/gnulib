@@ -11,6 +11,12 @@
 
 2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
 
+	maint.mk: provide a web-manual-update target
+	* top/maint.mk: here.
+	* top/README-release: Use it to simplify the web manual update step.
+
+2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
+
 	README-release: shorten the circuit to post a news
 	* top/README-release: Point directly to the news submission form.
 

@@ -1405,6 +1405,12 @@ web-manual:
 	    "$(PACKAGE_NAME) - $(manual_title)"
 	@echo " *** Upload the doc/manual directory to web-cvs."
 
+.PHONY: web-manual-update
+web-manual-update:
+	$(AM_V_GEN)cd $(srcdir) \
+	  && $(_build-aux)/gnu-web-doc-update -C $(abs_builddir)
+
+
 # Code Coverage
 
 init-coverage:
