@@ -11,6 +11,12 @@
 
 2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
 
+	gnu-web-doc-update: fix --help
+	* build-aux/gnu-web-doc-update: The information "top level" was written
+	twice.
+
+2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: absolute VPATH issue
 	* top/maint.mk (release-prep): Help Git find .git/.
 	From Jim Meyering.

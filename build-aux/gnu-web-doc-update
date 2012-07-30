@@ -33,10 +33,9 @@ help()
   cat <<EOF
 Usage: $ME
 
-Run this script from top_srcdir (no options or arguments) after each
-non-alpha release, to update the web documentation at
-http://www.gnu.org/software/\$pkg/manual/ Run it from your project's
-the top-level directory.
+Run this script from top_srcdir (no arguments) after each non-alpha
+release, to update the web documentation at
+http://www.gnu.org/software/\$pkg/manual/
 
 Options:
   -C, --builddir=DIR  location of (configured) Makefile (default: .)
