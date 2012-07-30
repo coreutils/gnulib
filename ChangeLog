@@ -1,3 +1,8 @@
+2012-07-30  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: avoid a sub-shell
+	* top/maint.mk (release-prep): Remove unneeded sub-shell.
+
 2012-07-30  Akim Demaille  <akim@lrde.epita.fr>
 
 	maint.mk: absolute VPATH issue

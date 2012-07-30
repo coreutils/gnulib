@@ -1388,7 +1388,7 @@ release-prep:
 	$(MAKE) update-NEWS-hash
 	perl -pi -e '$$. == 3 and print "$(gl_noteworthy_news_)\n\n\n"' $(srcdir)/NEWS
 	msg=$$($(emit-commit-log)) || exit 1;		\
-	(cd $(srcdir) && $(VC) commit -m "$$msg" -a)
+	cd $(srcdir) && $(VC) commit -m "$$msg" -a
 
 # Override this with e.g., -s $(srcdir)/some_other_name.texi
 # if the default $(PACKAGE)-derived name doesn't apply.
