@@ -1,3 +1,9 @@
+2012-07-30  Eric Blake  <eblake@redhat.com>
+
+	passfd: fix comment on recvfd
+	* lib/passfd.c (recvfd): Fix comment.
+	Reported by Jann Horn <jannhorn@googlemail.com>.
+
 2012-07-30  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: avoid a sub-shell

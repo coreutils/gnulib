@@ -101,7 +101,7 @@ sendfd (int sock _GL_UNUSED, int fd _GL_UNUSED)
 /* recvfd receives a file descriptor through the socket.
    The flags are a bitmask, possibly including O_CLOEXEC (defined in <fcntl.h>).
 
-   Return 0 on success, or -1 with errno set in case of error.
+   Return the fd on success, or -1 with errno set in case of error.
 */
 int
 recvfd (int sock, int flags)
