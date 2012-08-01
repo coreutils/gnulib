@@ -10,7 +10,7 @@ AC_DEFUN([gl_EXTERN_INLINE],
   AC_REQUIRE([AC_C_INLINE])
   AH_VERBATIM([extern_inline],
 [/* _GL_INLINE is a portable alternative to ISO C99 plain 'inline'.
-   _GL_EXTERN_INLINE is a portable alternative to 'extern linline'.
+   _GL_EXTERN_INLINE is a portable alternative to 'extern inline'.
    _GL_INLINE_HEADER_BEGIN contains useful stuff to put
      in an include file, before uses of _GL_INLINE.
      It suppresses GCC's bogus "no previous prototype for 'FOO'" diagnostic,
