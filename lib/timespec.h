@@ -22,6 +22,9 @@
 # include <time.h>
 
 _GL_INLINE_HEADER_BEGIN
+#ifndef _GL_TIMESPEC_INLINE
+# define _GL_TIMESPEC_INLINE _GL_INLINE
+#endif
 
 /* Return negative, zero, positive if A < B, A == B, A > B, respectively.
 
@@ -50,10 +53,6 @@ _GL_INLINE_HEADER_BEGIN
    overflow.
 
    The (int) cast avoids a gcc -Wconversion warning.  */
-
-#ifndef _GL_TIMESPEC_INLINE
-# define _GL_TIMESPEC_INLINE _GL_INLINE
-#endif
 
 _GL_TIMESPEC_INLINE int
 timespec_cmp (struct timespec a, struct timespec b)

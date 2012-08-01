@@ -24,6 +24,9 @@
 #include <time.h>
 
 _GL_INLINE_HEADER_BEGIN
+#ifndef _GL_STAT_TIME_INLINE
+# define _GL_STAT_TIME_INLINE _GL_INLINE
+#endif
 
 /* STAT_TIMESPEC (ST, ST_XTIM) is the ST_XTIM member for *ST of type
    struct timespec, if available.  If not, then STAT_TIMESPEC_NS (ST,
@@ -45,10 +48,6 @@ _GL_INLINE_HEADER_BEGIN
 # define STAT_TIMESPEC_NS(st, st_xtim) ((st)->st_xtim##ensec)
 #elif defined HAVE_STRUCT_STAT_ST_ATIM_ST__TIM_TV_NSEC
 # define STAT_TIMESPEC_NS(st, st_xtim) ((st)->st_xtim.st__tim.tv_nsec)
-#endif
-
-#ifndef _GL_STAT_TIME_INLINE
-# define _GL_STAT_TIME_INLINE _GL_INLINE
 #endif
 
 /* Return the nanosecond component of *ST's access time.  */

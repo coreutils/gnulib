@@ -20,6 +20,9 @@
 #include <stdint.h>
 
 _GL_INLINE_HEADER_BEGIN
+#ifndef _GL_U64_INLINE
+# define _GL_U64_INLINE _GL_INLINE
+#endif
 
 /* Return X rotated left by N bits, where 0 < N < 64.  */
 #define u64rol(x, n) u64or (u64shl (x, n), u64shr (x, 64 - n))
@@ -53,10 +56,6 @@ typedef struct { uint32_t hi, lo; } u64;
 typedef struct { uint32_t lo, hi; } u64;
 #  define u64init(hi, lo) { lo, hi }
 # endif
-
-#ifndef _GL_U64_INLINE
-# define _GL_U64_INLINE _GL_INLINE
-#endif
 
 /* Given the high and low-order 32-bit quantities HI and LO, return a u64
    value representing (HI << 32) + LO.  */
