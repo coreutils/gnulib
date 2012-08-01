@@ -1294,6 +1294,12 @@ announcement: NEWS ChangeLog $(rel-files)
 	    --no-print-checksums					\
 	    $(addprefix --url-dir=, $(url_dir_list))
 
+.PHONY: release-commit
+release-commit:
+	$(AM_V_GEN)cd $(srcdir)				\
+	  && $(_build-aux)/do-release-commit-and-tag	\
+	       -C $(abs_builddir) $(RELEASE)
+
 ## ---------------- ##
 ## Updating files.  ##
 ## ---------------- ##

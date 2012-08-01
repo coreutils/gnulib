@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2012-07-05.15 # UTC
+VERSION=2012-08-01.09 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -28,9 +28,6 @@ ME=$(basename "$0")
 warn() { printf '%s: %s\n' "$ME" "$*" >&2; }
 die() { warn "$*"; exit 1; }
 
-noteworthy='* Noteworthy changes in release'
-noteworthy_stub="$noteworthy ?.? (????-??-??) [?]"
-
 help()
 {
   cat <<EOF
@@ -49,10 +46,10 @@ Requirements:
 $noteworthy_stub
 
 Options:
-  --branch=BRANCH      set release branch (default: master)
-  -C, --builddir=DIR   location of (configured) Makefile (default: .)
-  --help               print this help, then exit
-  --version            print version number, then exit
+  --branch=BRANCH     set release branch (default: $branch)
+  -C, --builddir=DIR  location of (configured) Makefile (default: $builddir)
+  --help              print this help, then exit
+  --version           print version number, then exit
 
 EXAMPLE:
 To update NEWS and tag the beta 8.1 release of coreutils, I would run this:
@@ -81,7 +78,12 @@ EOF
 ## Main.  ##
 ## ------ ##
 
-branch=master
+# Constants.
+noteworthy='* Noteworthy changes in release'
+noteworthy_stub="$noteworthy ?.? (????-??-??) [?]"
+
+# Variables.
+branch=$(git branch | sed -ne '/^\* /{s///;p;q;}')
 builddir=.
 
 while test $# != 0

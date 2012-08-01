@@ -1,3 +1,14 @@
+2012-08-01  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: a "release-commit" wrapper to do-release-commit-and-tag
+	* build-aux/do-release-commit-and-tag: Move variable definitions
+	together.
+	($branch): Instead of defaulting to "master", default to the current
+	branch (as gnu-web-doc-update does).
+	(help): Display the current values of the option arguments.
+	* top/maint.mk (release-commit): New.
+	* top/README-release: Simplify the corresponding step.
+
 2012-07-30  Eric Blake  <eblake@redhat.com>
 
 	passfd: fix comment on recvfd
