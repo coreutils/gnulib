@@ -1,3 +1,8 @@
+2012-08-02  Carlo de Falco  <carlo.defalco@polimi.it>  (tiny change)
+
+	base64: Use extern C scope in header file, for C++.
+	* lib/base64.h: Add C++ namespace protection.
+
 2012-08-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stat-time, timespec, u64: support naive out-of-dir builds

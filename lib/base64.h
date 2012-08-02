@@ -24,6 +24,10 @@
 /* Get bool. */
 # include <stdbool.h>
 
+# ifdef __cplusplus
+extern "C" {
+# endif
+
 /* This uses that the expression (n+(k-1))/k means the smallest
    integer >= n/k, i.e., the ceiling of n/k.  */
 # define BASE64_LENGTH(inlen) ((((inlen) + 2) / 3) * 4)
@@ -56,5 +60,9 @@ extern bool base64_decode_alloc_ctx (struct base64_decode_context *ctx,
 
 #define base64_decode_alloc(in, inlen, out, outlen) \
         base64_decode_alloc_ctx (NULL, in, inlen, out, outlen)
+
+# ifdef __cplusplus
+}
+# endif
 
 #endif /* BASE64_H */
