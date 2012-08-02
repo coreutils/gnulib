@@ -1,3 +1,12 @@
+2012-08-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stat-time, timespec, u64: support naive out-of-dir builds
+	* lib/stat-time.c, lib/timespec.c, lib/u64.c:
+	Use '#include "foo.h"', not '#include <foo.h>', when including
+	one's own interface.  This works better when configuring with
+	out-of-directory builds, since packages need not add an
+	otherwise-unnecessary -I$(topdir_src)/lib to DEFAULT_INCLUDES.
+
 2012-08-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	utimens: use extern-inline
