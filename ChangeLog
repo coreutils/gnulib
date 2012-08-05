@@ -1,5 +1,9 @@
 2012-08-05  Jim Meyering  <meyering@redhat.com>
 
+	extern-inline: also ignore -Wmissing-declarations
+	* m4/extern-inline.m4: Also ignore -Wmissing-declarations,
+	required with gcc-4.8.0-to-be.
+
 	maint.mk: sc_prohibit_magic_number_exit: avoid new false positives
 	* top/maint.mk (sc_prohibit_magic_number_exit): Also filter out matches
 	for /error ?([^,]*)/.  This avoids false-positives for strings like
