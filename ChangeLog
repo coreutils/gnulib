@@ -1,3 +1,10 @@
+2012-08-05  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: sc_prohibit_magic_number_exit: avoid new false positives
+	* top/maint.mk (sc_prohibit_magic_number_exit): Also filter out matches
+	for /error ?([^,]*)/.  This avoids false-positives for strings like
+	"Unknown error (252)", introduced via commit v0.0-7538-g92875a6.
+
 2012-08-02  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	gnumakefile: better interaction with Automake-NG

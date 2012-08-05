@@ -354,7 +354,7 @@ sc_prohibit_strncpy:
 #      perl -pi -e 's/(^|[^.])\b(exit ?)\(0\)/$1$2(EXIT_SUCCESS)/'
 sc_prohibit_magic_number_exit:
 	@prohibit='(^|[^.])\<(usage|exit|error) ?\(-?[0-9]+[,)]'	\
-	exclude='error ?\(0,'						\
+	exclude='error ?\((0,|[^,]*)'					\
 	halt='use EXIT_* values rather than magic number'		\
 	  $(_sc_search_regexp)
 
