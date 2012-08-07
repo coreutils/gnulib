@@ -1222,7 +1222,7 @@ sc_prohibit_path_max_allocation:
 
 sc_vulnerable_makefile_CVE-2009-4029:
 	@prohibit='perm -777 -exec chmod a\+rwx|chmod 777 \$$\(distdir\)' \
-	in_files=(^\|/)Makefile\\.in$$					\
+	in_files='(^|/)Makefile\.in$$'					\
 	halt=$$(printf '%s\n'						\
 	  'the above files are vulnerable; beware of running'		\
 	  '  "make dist*" rules, and upgrade to fixed automake'		\
@@ -1231,7 +1231,7 @@ sc_vulnerable_makefile_CVE-2009-4029:
 
 sc_vulnerable_makefile_CVE-2012-3386:
 	@prohibit='chmod a\+w \$$\(distdir\)'				\
-	in_files=(^\|/)Makefile\\.in$$					\
+	in_files='(^|/)Makefile\.in$$'					\
 	halt=$$(printf '%s\n'						\
 	  'the above files are vulnerable; beware of running'		\
 	  '  "make distcheck", and upgrade to fixed automake'		\

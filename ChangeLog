@@ -1,3 +1,10 @@
+2012-08-07  Simon Josefsson  <simon@josefsson.org>
+	    Jim Meyering  <meyering@redhat.com>
+
+	maintainer-makefile: Fix syntax error with dash.
+	* top/maint.mk (sc_vulnerable_makefile_CVE-2009-4029): Quote arguments.
+	(sc_vulnerable_makefile_CVE-2012-3386): Likewise.
+
 2012-08-05  Jim Meyering  <meyering@redhat.com>
 
 	extern-inline: also ignore -Wmissing-declarations
