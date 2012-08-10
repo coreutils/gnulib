@@ -1,0 +1,23 @@
+Description:
+Counts the number of leading 0-bits in a word.
+
+Files:
+lib/count-leading-zeros.h
+m4/count-leading-zeros.m4
+
+Depends-on:
+verify
+
+configure.ac:
+gl_COUNT_LEADING_ZEROS
+
+Makefile.am:
+
+Include:
+"count-leading-zeros.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Eric Blake

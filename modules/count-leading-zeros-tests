@@ -1,0 +1,11 @@
+Files:
+tests/test-count-leading-zeros.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-count-leading-zeros
+check_PROGRAMS += test-count-leading-zeros
