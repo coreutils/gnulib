@@ -1,3 +1,9 @@
+2012-08-11  Eric Blake  <eblake@redhat.com>
+
+	count-leading-zeros: use a lookup table on non-gcc compilers
+	* lib/count-leading-zeros.h (count_leading_zeros_32): Use an
+	alternate implementation, suggested by Jim Meyering.
+
 2012-08-10  Eric Blake  <eblake@redhat.com>
 
 	count-leading-zeros: new module

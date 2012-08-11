@@ -26,7 +26,7 @@
 /* Expand the code which computes the number of leading zeros of the local
    variable 'x' of type TYPE (an unsigned integer type) and returns it
    from the current function.  */
-#if 0 && __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
 # define COUNT_LEADING_ZEROS(BUILTIN, TYPE)     \
   return x ? BUILTIN (x) : CHAR_BIT * sizeof x;
 #else
@@ -47,30 +47,21 @@
 static inline int
 count_leading_zeros_32 (unsigned int x)
 {
-  int count = 0;
-  if (x & 0xffff0000U)
-    x >>= 16;
-  else
-    count += 16;
-  if (x & 0xff00)
-    x >>= 8;
-  else
-    count += 8;
-  if (x & 0xf0)
-    x >>= 4;
-  else
-    count += 4;
-  if (x & 0xc)
-    x >>= 2;
-  else
-    count += 2;
-  if (x & 2)
-    x >>= 1;
-  else
-    count++;
-  if (!(x & 1))
-    count++;
-  return count;
+  /* http://graphics.stanford.edu/~seander/bithacks.html */
+  static const char deBruijnLookup[32] = {
+    0, 9, 1, 10, 13, 21, 2, 29, 11, 14, 16, 18, 22, 25, 3, 30,
+    8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
+  };
+
+  x &= 0xffffffffU;
+  if (!x)
+    return 32;
+  x |= x >> 1;
+  x |= x >> 2;
+  x |= x >> 4;
+  x |= x >> 8;
+  x |= x >> 16;
+  return 31 - deBruijnLookup[(x * 0x07c4acddU) >> 27];
 }
 #endif
 
