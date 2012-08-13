@@ -5140,7 +5140,7 @@ s,//*$,/,'
     fi
     echo "gl_MACRO_PREFIX([$macro_prefix])"
     echo "gl_PO_DOMAIN([$po_domain])"
-    echo "gl_WITNESS_C_DOMAIN([$witness_c_macro])"
+    echo "gl_WITNESS_C_MACRO([$witness_c_macro])"
     if test -n "$vc_files"; then
       echo "gl_VC_FILES([$vc_files])"
     fi
