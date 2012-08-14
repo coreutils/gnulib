@@ -1,3 +1,10 @@
+2012-08-14  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Fix indentation of generated gnulib-comp.m4 file.
+	* gnulib-tool (func_emit_autoconf_snippet): Initialize indentation
+	from argument.
+	Reported and fix suggested by Dmitriy Selyutin <ghostman.sd@gmail.com>.
+
 2012-08-14  Eric Blake  <eblake@redhat.com>
 
 	ldexp: relax license

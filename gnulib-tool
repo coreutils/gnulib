@@ -3892,6 +3892,7 @@ func_emit_initmacro_done ()
 # func_emit_autoconf_snippet indentation
 # emits the autoconf snippet of a module.
 # Input:
+# - indentation       spaces to prepend on each line
 # - local_gnulib_dir  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
@@ -3905,9 +3906,9 @@ func_emit_initmacro_done ()
 #                     command line options.
 # - disable_gettext   true or false. It tells whether to disable AM_GNU_GETTEXT
 #                     invocations.
-# - indentation       spaces to prepend on each line
 func_emit_autoconf_snippet ()
 {
+  indentation="$1"
   if { case $module in
          gnumakefile | maintainer-makefile)
            # These modules are meant to be used only in the top-level directory.
