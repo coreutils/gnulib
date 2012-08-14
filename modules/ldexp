@@ -18,7 +18,7 @@ Link:
 $(LDEXP_LIBM)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Bruno Haible

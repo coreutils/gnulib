@@ -1,3 +1,9 @@
+2012-08-14  Eric Blake  <eblake@redhat.com>
+
+	ldexp: relax license
+	* modules/ldexp (License): Trivial relax, since the module only
+	provides a permissively licensed m4 file.
+
 2012-08-13  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fix persistence of --witness-c-macro option.
