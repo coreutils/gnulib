@@ -123,6 +123,12 @@ main (int argc _GL_UNUSED, char **argv)
 
   set_program_name (argv[0]);
 
+  /* Set the time zone to US Eastern time with the 2012 rules.  This
+     should disable any leap second support.  Otherwise, there will be
+     a problem with glibc on sites that default to leap seconds; see
+     <http://bugs.gnu.org/12206>.  */
+  setenv ("TZ", "EST5EDT,M3.2.0,M11.1.0", 1);
+
   gmtoff = gmt_offset (ref_time);
 
 

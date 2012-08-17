@@ -1,3 +1,10 @@
+2012-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	test-parse-datetime: avoid glibc leap-second glitch
+	* tests/test-parse-datetime.c (main): Set TZ to US Eastern time
+	with the 2012 rules.  Problem reported by Bruce Dubbs in
+	<http://bugs.gnu.org/12206>.
+
 2012-08-14  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Fix indentation of generated gnulib-comp.m4 file.
