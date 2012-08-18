@@ -1,5 +1,9 @@
 2012-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stat-time: omit unnecessary AC_C_INLINE
+	* m4/stat-time.m4 (gl_STAT_TIME, gl_STAT_BIRTHTIME):
+	Do not require AC_C_INLINE.
+
 	ignore-value: omit unnecessary AC_C_INLINE
 	* modules/ignore-value (configure.ac): Do not require AC_C_INLINE.
 
