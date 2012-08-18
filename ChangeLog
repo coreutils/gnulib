@@ -1,5 +1,8 @@
 2012-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	timespec: omit unnecessary AC_C_INLINE
+	* m4/timespec.m4 (gl_TIMESPEC): Do not require AC_C_INLINE.
+
 	stat-time: omit unnecessary AC_C_INLINE
 	* m4/stat-time.m4 (gl_STAT_TIME, gl_STAT_BIRTHTIME):
 	Do not require AC_C_INLINE.
