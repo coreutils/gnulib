@@ -1,5 +1,8 @@
 2012-08-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	ignore-value: omit unnecessary AC_C_INLINE
+	* modules/ignore-value (configure.ac): Do not require AC_C_INLINE.
+
 	sys_select: avoid 'static inline'
 	* lib/sys_select.in.h (rpl_fd_isset): Now static, not static inline.
 
