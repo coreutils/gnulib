@@ -5375,7 +5375,7 @@ s,//*$,/,'
             (echo "$dir_added" | sed -e '/^$/d' | LC_ALL=C sort -u \
                | LC_ALL=C join -v 1 - "$tmp"/ignore > "$tmp"/ignore-added
              echo "$dir_removed" | sed -e '/^$/d' | LC_ALL=C sort -u \
-               | LC_ALL=C join -v 1 - "$tmp"/ignore > "$tmp"/ignore-removed
+               > "$tmp"/ignore-removed
             )
             if test -s "$tmp"/ignore-added || test -s "$tmp"/ignore-removed; then
               if $doit; then
