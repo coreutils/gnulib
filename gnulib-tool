@@ -5341,7 +5341,7 @@ s,//*$,/,'
         echo "Create $testsbase/$makefile_am"
         rm -f "$tmpfile"
       fi
-    func_append added_files "$testsbase/$makefile_am$nl"
+      func_append added_files "$testsbase/$makefile_am$nl"
     fi
   fi
 

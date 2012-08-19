@@ -1,5 +1,10 @@
 2012-08-19  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Fix indentation.
+	* gnulib-tool (func_import): Fix indentation.
+
+2012-08-19  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Remove old file names from .cvsignore, .gitignore.
 	* gnulib-tool (func_update_ignorelist): Don't use 'join -v 1' command
 	on the list of removed files.
