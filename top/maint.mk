@@ -331,7 +331,7 @@ sp_ = strcmp *\(.+\)
 sc_prohibit_strcmp:
 	@prohibit='! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
 	exclude=':# *define STRN?EQ\('					\
-	halt='$(ME): replace strcmp calls above with STREQ/STRNEQ'	\
+	halt='replace strcmp calls above with STREQ/STRNEQ'		\
 	  $(_sc_search_regexp)
 
 # Really.  You don't want to use this function.
@@ -744,7 +744,7 @@ _gl_translatable_diag_func_re ?= error
 sc_unmarked_diagnostics:
 	@prohibit='\<$(_gl_translatable_diag_func_re) *\([^"]*"[^"]*[a-z]{3}' \
 	exclude='(_|ngettext ?)\('					\
-	halt='$(ME): found unmarked diagnostic(s)'			\
+	halt='found unmarked diagnostic(s)'				\
 	  $(_sc_search_regexp)
 
 # Avoid useless parentheses like those in this example:
@@ -780,7 +780,7 @@ sc_prohibit_always_true_header_tests:
 
 sc_prohibit_defined_have_decl_tests:
 	@prohibit='#[	 ]*if(n?def|.*\<defined)\>[	 (]+HAVE_DECL_'	\
-	halt='$(ME): HAVE_DECL macros are always defined'		\
+	halt='HAVE_DECL macros are always defined'			\
 	  $(_sc_search_regexp)
 
 # ==================================================================
@@ -1020,7 +1020,7 @@ sc_redundant_const:
 sc_const_long_option:
 	@prohibit='^ *static.*struct option '				\
 	exclude='const struct option|struct option const'		\
-	halt='$(ME): add "const" to the above declarations'		\
+	halt='add "const" to the above declarations'			\
 	  $(_sc_search_regexp)
 
 NEWS_hash =								\
@@ -1123,7 +1123,7 @@ sc_po_check:
 # Sometimes it is useful to change the PATH environment variable
 # in Makefiles.  When doing so, it's better not to use the Unix-centric
 # path separator of ':', but rather the automake-provided '$(PATH_SEPARATOR)'.
-msg = '$(ME): Do not use ":" above; use $$(PATH_SEPARATOR) instead'
+msg = 'Do not use ":" above; use $$(PATH_SEPARATOR) instead'
 sc_makefile_path_separator_check:
 	@prohibit='PATH[=].*:'						\
 	in_vc_files='akefile|\.mk$$'					\
