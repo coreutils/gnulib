@@ -2000,6 +2000,7 @@ func_all_modules ()
   func_module crc
   func_module diacrit
   func_module diffseq
+  func_module execinfo
   func_module getline
   func_module getdelim
   func_module getnline
