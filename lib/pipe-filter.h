@@ -167,7 +167,7 @@ struct pipe_filter_gi;
    true, otherwise return NULL and set errno.
 
    The caller will write to the subprocess through pipe_filter_gi_write
-   and finally call pipe_filter_gi_write.  During such calls, the
+   and finally call pipe_filter_gi_close.  During such calls, the
    prepare_read and done_read function may be called to process any data
    that the subprocess has written.
 

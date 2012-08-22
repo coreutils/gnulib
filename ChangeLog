@@ -1,3 +1,8 @@
+2012-08-22  Reuben Thomas  <rrt@sc3d.org>
+
+	pipe-filter: fix comment typo
+	* lib/pipe-filter.h: Mention correct function.
+
 2012-08-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	execinfo: new module
