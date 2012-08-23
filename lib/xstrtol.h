@@ -66,7 +66,7 @@ _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
 
    After reporting an error, exit with a failure status.  */
 
-void _Noreturn xstrtol_fatal (enum strtol_error,
+_Noreturn void xstrtol_fatal (enum strtol_error,
                               int, char, struct option const *,
                               char const *);
 

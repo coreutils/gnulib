@@ -1,3 +1,9 @@
+2012-08-23  Jim Meyering  <meyering@redhat.com>
+
+	xstrtol.h: avoid "_Noreturn is not at beginning of declaration" warning
+	* lib/xstrtol.h: Put "_Noreturn" before "void" in declaration,
+	to placate gcc's -Wold-style-declaration.
+
 2012-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: do not use @acronym
