@@ -15,17 +15,16 @@ AC_DEFUN([gl_STDNORETURN_H],
        [AC_LANG_PROGRAM(
           [[#include <stdlib.h>
             #include <stdnoreturn.h>
-            void noreturn foo1 (void) { exit (0); }
-            void _Noreturn foo2 (void) { exit (0); }
-            noreturn void foo3 (void) { exit (0); }
-            _Noreturn void foo4 (void) { exit (0); }
-            int main (int argc, char **argv) {
+            /* Do not check for 'noreturn' after the return type.
+               C11 allows it, but it's rarely done that way
+               and circa-2012 bleeding-edge GCC rejects it when given
+               -Werror=old-style-declaration.  */
+            noreturn void foo1 (void) { exit (0); }
+            _Noreturn void foo2 (void) { exit (0); }
+            int testit (int argc, char **argv) {
               if (argc & 1)
                 return 0;
-              ((argv[0][0]
-                ? (argv[0][1] ? foo1 : foo2)
-                : (argv[0][1] ? foo3 : foo4))
-               ());
+              (argv[0][0] ? foo1 : foo2) ();
             }
           ]])],
        [gl_cv_header_working_stdnoreturn_h=yes],
