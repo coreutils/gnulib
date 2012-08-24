@@ -482,15 +482,15 @@ supported by the internal representation is truncated toward minus
 infinity.  Such a number cannot be combined with any other date
 item, as it specifies a complete time stamp.
 
-@cindex beginning of time, for @acronym{POSIX}
-@cindex epoch, for @acronym{POSIX}
+@cindex beginning of time, for POSIX
+@cindex epoch, for POSIX
 Internally, computer times are represented as a count of seconds since
-an epoch---a well-defined point of time.  On @acronym{GNU} and
-@acronym{POSIX} systems, the epoch is 1970-01-01 00:00:00 @sc{utc}, so
+an epoch---a well-defined point of time.  On GNU and
+POSIX systems, the epoch is 1970-01-01 00:00:00 @sc{utc}, so
 @samp{@@0} represents this time, @samp{@@1} represents 1970-01-01
-00:00:01 @sc{utc}, and so forth.  @acronym{GNU} and most other
-@acronym{POSIX}-compliant systems support such times as an extension
-to @acronym{POSIX}, using negative counts, so that @samp{@@-1}
+00:00:01 @sc{utc}, and so forth.  GNU and most other
+POSIX-compliant systems support such times as an extension
+to POSIX, using negative counts, so that @samp{@@-1}
 represents 1969-12-31 23:59:59 @sc{utc}.
 
 Traditional Unix systems count seconds with 32-bit two's-complement
@@ -519,7 +519,7 @@ two quote characters (@samp{"}) must be present in the date, and any
 quotes or backslashes within @var{rule} must be escaped by a
 backslash.
 
-For example, with the @acronym{GNU} @command{date} command you can
+For example, with the GNU @command{date} command you can
 answer the question ``What time is it in New York when a Paris clock
 shows 6:30am on October 31, 2004?'' by using a date beginning with
 @samp{TZ="Europe/Paris"} as shown in the following shell transcript:
@@ -543,16 +543,16 @@ A @env{TZ} value is a rule that typically names a location in the
 @uref{http://www.twinsun.com/tz/tz-link.htm, @samp{tz} database}.
 A recent catalog of location names appears in the
 @uref{http://twiki.org/cgi-bin/xtra/tzdate, TWiki Date and Time
-Gateway}.  A few non-@acronym{GNU} hosts require a colon before a
+Gateway}.  A few non-GNU hosts require a colon before a
 location name in a @env{TZ} setting, e.g.,
 @samp{TZ=":America/New_York"}.
 
 The @samp{tz} database includes a wide variety of locations ranging
 from @samp{Arctic/Longyearbyen} to @samp{Antarctica/South_Pole}, but
 if you are at sea and have your own private time zone, or if you are
-using a non-@acronym{GNU} host that does not support the @samp{tz}
-database, you may need to use a @acronym{POSIX} rule instead.  Simple
-@acronym{POSIX} rules like @samp{UTC0} specify a time zone without
+using a non-GNU host that does not support the @samp{tz}
+database, you may need to use a POSIX rule instead.  Simple
+POSIX rules like @samp{UTC0} specify a time zone without
 daylight saving time; other rules can specify simple daylight saving
 regimes.  @xref{TZ Variable,, Specifying the Time Zone with @code{TZ},
 libc, The GNU C Library}.

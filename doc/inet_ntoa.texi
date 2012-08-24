@@ -17,6 +17,6 @@ is not required to be thread safe.  Implementations of
 If two threads call @code{inet_ntoa} at roughly the same time, you
 might end up with the wrong date in one of the threads, or some
 undefined string.  Further, @code{inet_ntoa} is specific for
-@acronym{IPv4} addresses.
+IPv4 addresses.
 
 A protocol independent function is @code{inet_ntop}.

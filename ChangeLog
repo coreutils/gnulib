@@ -1,3 +1,13 @@
+2012-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: do not use @acronym
+	* doc/inet_ntoa.texi (inet_ntoa):
+	* doc/parse-datetime.texi (Seconds since the Epoch)
+	(Specifying time zone rules):
+	* doc/posix-functions/inet_ntoa.texi (inet_ntoa):
+	Don't use @acronym.  Problem reported by John Darlington in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-08/msg00124.html>.
+
 2012-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdnoreturn: port to newer GCCs
