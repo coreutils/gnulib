@@ -1,3 +1,11 @@
+2012-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	execinfo: port to FreeBSD
+	* m4/execinfo.m4 (gl_EXECINFO_H): Set LIB_EXECINFO to -lexecinfo
+	if needed, as in FreeBSD.  Reported by Bastien Roucariès in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-08/msg00113.html>.
+	* modules/execinfo (Link): Add $(LIB_EXECINFO).
+
 2012-08-23  Jim Meyering  <meyering@redhat.com>
 
 	xstrtol.h: avoid "_Noreturn is not at beginning of declaration" warning

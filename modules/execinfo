@@ -33,6 +33,9 @@ MOSTLYCLEANFILES += execinfo.h execinfo.h-t
 Include:
 <execinfo.h>
 
+Link:
+$(LIB_EXECINFO)
+
 License:
 LGPLv2+
 
