@@ -1,5 +1,12 @@
 2012-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: remove fdl-1.2.texi
+	It is no longer used or maintained, and its use of @acronym
+	is problematic.  See the thread containing
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-08/msg00134.html>.
+	* config/srclist.txt: Remove doc/old-licenses/fdl-1.2.texi.
+	* doc/old-licenses/fdl-1.2.texi: Remove.
+
 	execinfo: port to FreeBSD
 	* m4/execinfo.m4 (gl_EXECINFO_H): Set LIB_EXECINFO to -lexecinfo
 	if needed, as in FreeBSD.  Reported by Bastien Roucariès in
