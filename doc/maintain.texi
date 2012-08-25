@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate June 12, 2012
+@set lastupdate August 24, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -2056,9 +2056,9 @@ gendocs.sh --email bug-texinfo@@gnu.org -o info info "GNU Info manual"
 gendocs.sh --email bug-texinfo@@gnu.org -o info-stnd info-stnd "GNU info-stnd manual"
 @end smallexample
 
-By default, the script uses @command{makeinfo} for generating
-@acronym{HTML} output.  If you prefer to use @command{texi2html}, use
-the @option{--texi2html} command line option, e.g.:
+By default, the script uses @command{makeinfo} for generating HTML
+output.  If you prefer to use @command{texi2html}, use the
+@option{--texi2html} command line option, e.g.:
 
 @smallexample
 gendocs --texi2html -o texinfo texinfo "GNU Texinfo manual"
