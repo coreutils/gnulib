@@ -280,7 +280,6 @@ Options for --import, --add/remove-import:
       --vc-files            Update version control related files.
       --no-vc-files         Don't update version control related files
                             (.gitignore and/or .cvsignore).
-      --no-changelog        Don't update or create ChangeLog files.
 
 Options for --create-[mega]testdir, --[mega]test:
 
@@ -957,7 +956,6 @@ fi
 # - vc_files        true if --vc-files was given, false if --no-vc-files was
 #                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
-# - do_changelog    false if --no-changelog was given, : otherwise
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if --symlink or --more-symlinks was given, blank
 #                   otherwise
@@ -998,7 +996,6 @@ fi
   po_domain=
   witness_c_macro=
   vc_files=
-  do_changelog=:
   doit=:
   symbolic=
   lsymbolic=
@@ -1268,7 +1265,7 @@ fi
         vc_files=false
         shift ;;
       --no-changelog | --no-changelo | --no-changel | --no-change | --no-chang | --no-chan | --no-cha | --no-ch )
-        do_changelog=false
+        # A no-op for backward compatibility.
         shift ;;
       --dry-run )
         doit=false
@@ -1337,7 +1334,6 @@ fi
       echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
       func_exit 1
     fi
-    do_changelog=false
   fi
   if test -n "$pobase" && test -z "$po_domain"; then
     echo "gnulib-tool: together with --po-base, you need to specify --po-domain" 1>&2
