@@ -1,3 +1,11 @@
+2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	misc: don't limit commentary to inline functions
+	* lib/binary-io.h, lib/malloca.h, lib/safe-alloc.c:
+	* lib/xalloc-oversized.h, lib/xsize.h:
+	Contrast macros to functions in general, not just to inline functions,
+	when the commentary does not apply only to inline functions.
+
 2012-09-20  Jim Meyering  <meyering@redhat.com>
 
 	non-recursive-gnulib-prefix-hack: new module

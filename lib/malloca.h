@@ -42,7 +42,7 @@ extern "C" {
    and a page size can be as small as 4096 bytes.  So we cannot safely
    allocate anything larger than 4096 bytes.  Also care for the possibility
    of a few compiler-allocated temporary stack slots.
-   This must be a macro, not an inline function.  */
+   This must be a macro, not a function.  */
 # define safe_alloca(N) ((N) < 4032 ? alloca (N) : NULL)
 #else
 # define safe_alloca(N) ((void) (N), NULL)

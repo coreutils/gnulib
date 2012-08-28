@@ -22,7 +22,7 @@
 
 /* Return 1 if an array of N objects, each of size S, cannot exist due
    to size arithmetic overflow.  S must be positive and N must be
-   nonnegative.  This is a macro, not an inline function, so that it
+   nonnegative.  This is a macro, not a function, so that it
    works correctly even when SIZE_MAX < N.
 
    By gnulib convention, SIZE_MAX represents overflow in size

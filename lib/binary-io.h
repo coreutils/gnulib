@@ -39,7 +39,7 @@
 # endif
 #else
   /* On reasonable systems, binary I/O is the only choice.  */
-  /* Use an inline function rather than a macro, to avoid gcc warnings
+  /* Use a function rather than a macro, to avoid gcc warnings
      "warning: statement with no effect".  */
 static inline int
 set_binary_mode (int fd, int mode)
