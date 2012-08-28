@@ -1,5 +1,14 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	utimens-tests: avoid unnecessary 'inline'
+	* modules/fdutimensat-tests (configure.ac):
+	* modules/futimens-tests (configure.ac):
+	* modules/utimens-tests (configure.ac):
+	* modules/utimensat-tests (configure.ac):
+	Remove AC_C_INLINE.
+	* tests/test-utimens-common.h (ctime_compare):
+	No longer inline.  Simplicity and portability trump efficiency here.
+
 	misc: don't limit commentary to inline functions
 	* lib/binary-io.h, lib/malloca.h, lib/safe-alloc.c:
 	* lib/xalloc-oversized.h, lib/xsize.h:

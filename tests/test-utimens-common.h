@@ -59,7 +59,7 @@ enum {
 
 /* Compare two st_ctime values.  Return -1, 0 or 1, respectively
    when A's st_ctime is smaller than, equal to or greater than B's.  */
-static inline int
+static int
 ctime_compare (struct stat const *a, struct stat const *b)
 {
   if (a->st_ctime < b->st_ctime)
