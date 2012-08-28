@@ -19,8 +19,6 @@
 : ${srcdir=.}
 . "$srcdir/init.sh"; path_prepend_ "$abs_aux_dir" .
 
-git --version || skip_ git required
-
 tmpdir=vc-git-$$
 GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE
 

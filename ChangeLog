@@ -1,5 +1,11 @@
 2012-08-28  Jim Meyering  <meyering@redhat.com>
 
+	revert last change: it was not needed
+	* tests/test-vc-list-files-git.sh: There's already a test for
+	a working git, just below.
+
+2012-08-28  Jim Meyering  <meyering@redhat.com>
+
 	tests: test-vc-list-files-git.sh: skip if git is not available
 	* tests/test-vc-list-files-git.sh: Skip this test when git is
 	not available.
