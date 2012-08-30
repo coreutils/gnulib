@@ -1,5 +1,8 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fdutimensat: omit unnecessary AC_C_INLINE
+	* modules/fdutimensat (configure.ac): Remove AC_C_INLINE.
+
 	fchmodat, fchownat, fstatat: use extern-inline
 	* lib/fchmodat.c, lib/openat.h (FCHMODAT_INLINE):
 	* lib/fchownat.c, lib/openat.h (FCHOWNAT_INLINE):
