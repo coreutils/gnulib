@@ -1,5 +1,9 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tls-tests: omit unnecessary 'inline'
+	* tests/test-tls.c (perhaps_yield): No longer inline.
+	Simplicity and portability trump efficiency in test cases.
+
 	utimens-tests: avoid unnecessary 'inline'
 	* modules/fdutimensat-tests (configure.ac):
 	* modules/futimens-tests (configure.ac):

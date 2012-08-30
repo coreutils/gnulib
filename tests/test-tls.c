@@ -66,7 +66,7 @@
 # define yield()
 #endif
 
-static inline void
+static void
 perhaps_yield (void)
 {
   /* Call yield () only with a certain probability, otherwise with GNU Pth
