@@ -3,10 +3,12 @@ Iterating through multibyte strings.
 
 Files:
 lib/mbiter.h
+lib/mbiter.c
 m4/mbiter.m4
 m4/mbrtowc.m4
 
 Depends-on:
+extern-inline
 mbchar
 mbrtowc
 mbsinit
@@ -17,7 +19,7 @@ configure.ac:
 gl_MBITER
 
 Makefile.am:
-lib_SOURCES += mbiter.h
+lib_SOURCES += mbiter.h mbiter.c
 
 Include:
 "mbiter.h"
@@ -27,4 +29,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-

@@ -62,6 +62,11 @@
 
 #include "mbchar.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef MBFILE_INLINE
+# define MBFILE_INLINE _GL_INLINE
+#endif
+
 struct mbfile_multi {
   FILE *fp;
   bool eof_seen;
@@ -72,7 +77,7 @@ struct mbfile_multi {
   struct mbchar pushback;
 };
 
-static inline void
+MBFILE_INLINE void
 mbfile_multi_getc (struct mbchar *mbc, struct mbfile_multi *mbf)
 {
   size_t bytes;
@@ -215,7 +220,7 @@ eof:
   return;
 }
 
-static inline void
+MBFILE_INLINE void
 mbfile_multi_ungetc (const struct mbchar *mbc, struct mbfile_multi *mbf)
 {
   mb_copy (&mbf->pushback, mbc);
@@ -238,5 +243,7 @@ typedef mbchar_t mbf_char_t;
 #define mbf_ungetc(mbc, mbf) mbfile_multi_ungetc (&(mbc), &(mbf))
 
 #define mb_iseof(mbc) ((mbc).bytes == 0)
+
+_GL_INLINE_HEADER_BEGIN
 
 #endif /* _MBFILE_H */

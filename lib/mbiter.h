@@ -97,6 +97,11 @@
 
 #include "mbchar.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef MBITER_INLINE
+# define MBITER_INLINE _GL_INLINE
+#endif
+
 struct mbiter_multi
 {
   const char *limit;    /* pointer to end of string */
@@ -112,7 +117,7 @@ struct mbiter_multi
         */
 };
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_next (struct mbiter_multi *iter)
 {
   if (iter->next_done)
@@ -172,14 +177,14 @@ mbiter_multi_next (struct mbiter_multi *iter)
   iter->next_done = true;
 }
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_reloc (struct mbiter_multi *iter, ptrdiff_t ptrdiff)
 {
   iter->cur.ptr += ptrdiff;
   iter->limit += ptrdiff;
 }
 
-static inline void
+MBITER_INLINE void
 mbiter_multi_copy (struct mbiter_multi *new_iter, const struct mbiter_multi *old_iter)
 {
   new_iter->limit = old_iter->limit;
@@ -211,5 +216,7 @@ typedef struct mbiter_multi mbi_iterator_t;
 
 /* Copying an iterator.  */
 #define mbi_copy mbiter_multi_copy
+
+_GL_INLINE_HEADER_END
 
 #endif /* _MBITER_H */

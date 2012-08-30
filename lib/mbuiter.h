@@ -106,6 +106,11 @@
 #include "mbchar.h"
 #include "strnlen1.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef MBUITER_INLINE
+# define MBUITER_INLINE _GL_INLINE
+#endif
+
 struct mbuiter_multi
 {
   bool in_shift;        /* true if next byte may not be interpreted as ASCII */
@@ -120,7 +125,7 @@ struct mbuiter_multi
         */
 };
 
-static inline void
+MBUITER_INLINE void
 mbuiter_multi_next (struct mbuiter_multi *iter)
 {
   if (iter->next_done)
@@ -181,13 +186,13 @@ mbuiter_multi_next (struct mbuiter_multi *iter)
   iter->next_done = true;
 }
 
-static inline void
+MBUITER_INLINE void
 mbuiter_multi_reloc (struct mbuiter_multi *iter, ptrdiff_t ptrdiff)
 {
   iter->cur.ptr += ptrdiff;
 }
 
-static inline void
+MBUITER_INLINE void
 mbuiter_multi_copy (struct mbuiter_multi *new_iter, const struct mbuiter_multi *old_iter)
 {
   if ((new_iter->in_shift = old_iter->in_shift))
@@ -218,5 +223,7 @@ typedef struct mbuiter_multi mbui_iterator_t;
 
 /* Copying an iterator.  */
 #define mbui_copy mbuiter_multi_copy
+
+_GL_INLINE_HEADER_END
 
 #endif /* _MBUITER_H */

@@ -27,6 +27,11 @@
 # include <stdint.h>
 #endif
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef XSIZE_INLINE
+# define XSIZE_INLINE _GL_INLINE
+#endif
+
 /* The size of memory objects is often computed through expressions of
    type size_t. Example:
       void* p = malloc (header_size + n * element_size).
@@ -48,7 +53,7 @@
   ((N) <= SIZE_MAX ? (size_t) (N) : SIZE_MAX)
 
 /* Sum of two sizes, with overflow check.  */
-static inline size_t
+XSIZE_INLINE size_t
 #if __GNUC__ >= 3
 __attribute__ ((__pure__))
 #endif
@@ -59,7 +64,7 @@ xsum (size_t size1, size_t size2)
 }
 
 /* Sum of three sizes, with overflow check.  */
-static inline size_t
+XSIZE_INLINE size_t
 #if __GNUC__ >= 3
 __attribute__ ((__pure__))
 #endif
@@ -69,7 +74,7 @@ xsum3 (size_t size1, size_t size2, size_t size3)
 }
 
 /* Sum of four sizes, with overflow check.  */
-static inline size_t
+XSIZE_INLINE size_t
 #if __GNUC__ >= 3
 __attribute__ ((__pure__))
 #endif
@@ -79,7 +84,7 @@ xsum4 (size_t size1, size_t size2, size_t size3, size_t size4)
 }
 
 /* Maximum of two sizes, with overflow check.  */
-static inline size_t
+XSIZE_INLINE size_t
 #if __GNUC__ >= 3
 __attribute__ ((__pure__))
 #endif
@@ -103,5 +108,7 @@ xmax (size_t size1, size_t size2)
 /* Check against overflow.  */
 #define size_in_bounds_p(SIZE) \
   ((SIZE) != SIZE_MAX)
+
+_GL_INLINE_HEADER_END
 
 #endif /* _XSIZE_H */

@@ -1,4 +1,4 @@
-# mbiter.m4 serial 6
+# mbiter.m4 serial 7
 dnl Copyright (C) 2005, 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,6 @@ dnl From Bruno Haible.
 
 AC_DEFUN([gl_MBITER],
 [
-  AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   :
 ])

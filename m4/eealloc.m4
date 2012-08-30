@@ -1,4 +1,4 @@
-# eealloc.m4 serial 2
+# eealloc.m4 serial 3
 dnl Copyright (C) 2003, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,6 @@ AC_DEFUN([gl_EEALLOC],
 [
   AC_REQUIRE([gl_EEMALLOC])
   AC_REQUIRE([gl_EEREALLOC])
-  AC_REQUIRE([AC_C_INLINE])
 ])
 
 AC_DEFUN([gl_EEMALLOC],

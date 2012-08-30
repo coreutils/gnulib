@@ -31,18 +31,23 @@
 
 #include <stdlib.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef EEALLOC_INLINE
+# define EEALLOC_INLINE _GL_INLINE
+#endif
+
 #if MALLOC_0_IS_NONNULL
 # define eemalloc malloc
 #else
 # if __GNUC__ >= 3
-static inline void *eemalloc (size_t n)
+EEALLOC_INLINE void *eemalloc (size_t n)
      __attribute__ ((__malloc__))
 #  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
      __attribute__ ((__alloc_size__ (1)))
 #  endif
   ;
 # endif
-static inline void *
+EEALLOC_INLINE void *
 eemalloc (size_t n)
 {
   /* If n is zero, allocate a 1-byte block.  */
@@ -56,10 +61,10 @@ eemalloc (size_t n)
 # define eerealloc realloc
 #else
 # if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-static inline void *eerealloc (void *p, size_t n)
+EEALLOC_INLINE void *eerealloc (void *p, size_t n)
      __attribute__ ((__alloc_size__ (2)));
 # endif
-static inline void *
+EEALLOC_INLINE void *
 eerealloc (void *p, size_t n)
 {
   /* If n is zero, allocate or keep a 1-byte block.  */
@@ -75,5 +80,7 @@ eerealloc (void *p, size_t n)
     eecalloc (size_t n, size_t s) - like eemalloc (n * s) followed by memset 0
     eenrealloc (void *p, size_t n, size_t s) - like eerealloc (p, n * s)
    If this would be useful in your application. please speak up.  */
+
+_GL_INLINE_HEADER_END
 
 #endif /* _EEALLOC_H */

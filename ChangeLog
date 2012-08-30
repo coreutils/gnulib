@@ -1,5 +1,32 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	binary-io, eealloc, mbfile, mbiter, mbutil, xsize: better 'inline'
+	* lib/binary-io.c, lib/eealloc.c, lib/mbfile.c, lib/mbiter.c:
+	* lib/mbuiter.c, lib/xsize.c: New files.
+	* lib/binary-io.h (BINARY_IO_INLINE):
+	* lib/eealloc.h (EEALLOC_INLINE):
+	* lib/mbfile.h (MBFILE_INLINE):
+	* lib/mbiter.h (MBITER_INLINE):
+	* lib/mbuiter.h (MBUITER_INLINE):
+	* lib/xsize.h (XSIZE_INLINE):
+	New macros.
+	Replace all uses of 'static inline' with them.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/eealloc.m4 (gl_EEALLOC):
+	* m4/mbfile.m4 (gl_MBFILE):
+	* m4/mbiter.m4 (gl_MBITER):
+	* m4/xsize.m4 (gl_XSIZE):
+	Do not require AC_C_INLINE.
+	* modules/binary-io (Files, lib_SOURCES): Add lib/binary-io.c
+	* modules/eealloc (Files, lib_SOURCES): Add lib/eealloc.c.
+	* modules/mbfile (Files, lib_SOURCES): Add lib/mbfile.c.
+	* modules/mbiter (Files, lib_SOURCES): Add lib/mbiter.c.
+	* modules/mbuiter (Files, lib_SOURCES): Add lib/mbuiter.c.
+	* modules/xsize (Files, lib_SOURCES): Add lib/xsize.c.
+	* modules/binary-io, modules/eealloc, modules/mbfile:
+	* modules/mbiter, modules/mbuiter:
+	(Depends-on): Add extern-inline.
+
 	pipe-filter-gi, pipe-filter-ii: better use of 'inline'
 	* lib/pipe-filter-aux.c: New file.
 	* lib/pipe-filter-aux.h (PIPE_FILTER_AUX_INLINE): New macro.
