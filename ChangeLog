@@ -1,5 +1,20 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	acl, mbchar, priv-set: use extern-inline
+	* lib/set-mode-acl.c, lib/acl-internal.h (ACL_INTERNAL_INLINE):
+	* lib/mbchar.c, lib/mbchar.h (MBCHAR_INLINE):
+	* lib/priv-set.c, lib/priv-set.h (PRIV_SET_INLINE):
+	New macros.
+	* lib/acl-internal.h, lib/mbchar.h, lib/priv-set.h:
+	Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/acl.m4 (gl_FUNC_ACL):
+	* m4/mbchar.m4 (gl_MBCHAR):
+	* m4/priv-set.m4 (gl_PRIV_SET):
+	Remove AC_C_INLINE, since 'inline' is no longer used directly.
+	* modules/acl, modules/mbchar, modules/priv-set (Depends-on):
+	Add extern-inline.
+
 	sockets, sys_stat: remove AC_C_INLINE in MSVC-only cases
 	* m4/sockets.m4 (gl_SOCKETS):
 	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H):

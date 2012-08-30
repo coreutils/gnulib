@@ -8,6 +8,7 @@ m4/priv-set.m4
 
 Depends-on:
 errno
+extern-inline
 stdbool
 
 configure.ac:

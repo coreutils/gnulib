@@ -8,6 +8,7 @@ m4/mbchar.m4
 
 Depends-on:
 extensions
+extern-inline
 stdbool
 wchar
 wctype-h

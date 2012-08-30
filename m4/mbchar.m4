@@ -1,4 +1,4 @@
-# mbchar.m4 serial 8
+# mbchar.m4 serial 9
 dnl Copyright (C) 2005-2007, 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,5 +10,4 @@ dnl From Bruno Haible.
 AC_DEFUN([gl_MBCHAR],
 [
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
-  AC_REQUIRE([AC_C_INLINE])
 ])

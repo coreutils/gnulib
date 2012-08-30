@@ -1,5 +1,5 @@
 # acl.m4 - check for access control list (ACL) primitives
-# serial 14
+# serial 15
 
 # Copyright (C) 2002, 2004-2012 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -16,7 +16,6 @@ AC_DEFUN([gl_FUNC_ACL],
 
   LIB_ACL=
   use_acl=0
-  AC_REQUIRE([AC_C_INLINE])
   if test "x$enable_acl" != "xno"; then
     dnl On all platforms, the ACL related API is declared in <sys/acl.h>.
     AC_CHECK_HEADERS([sys/acl.h])

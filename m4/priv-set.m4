@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 
 # Copyright (C) 2009-2012 Free Software Foundation, Inc.
 #
@@ -10,7 +10,6 @@
 
 AC_DEFUN([gl_PRIV_SET],
 [
-  AC_REQUIRE([AC_C_INLINE])
   AC_CHECK_FUNCS([getppriv])
   AC_CHECK_HEADERS_ONCE([priv.h])
 ])

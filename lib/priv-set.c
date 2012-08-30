@@ -18,6 +18,9 @@
    Written by David Bartley.  */
 
 #include <config.h>
+
+#define PRIV_SET_INLINE _GL_EXTERN_INLINE
+
 #include "priv-set.h"
 
 #if HAVE_GETPPRIV && HAVE_PRIV_H

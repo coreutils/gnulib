@@ -16,6 +16,8 @@
 
 #include <config.h>
 
+#define MBCHAR_INLINE _GL_EXTERN_INLINE
+
 #include <limits.h>
 
 #include "mbchar.h"

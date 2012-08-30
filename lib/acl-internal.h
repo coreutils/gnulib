@@ -82,6 +82,11 @@ extern int aclsort (int, int, struct acl *);
      ((Err) == ENOTSUP || (Err) == ENOSYS || (Err) == EINVAL || (Err) == EBUSY)
 #endif
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef ACL_INTERNAL_INLINE
+# define ACL_INTERNAL_INLINE _GL_INLINE
+#endif
+
 #if USE_ACL
 
 # if HAVE_ACL_GET_FILE
@@ -97,7 +102,7 @@ extern int aclsort (int, int, struct acl *);
 /* Most platforms have a 1-argument acl_get_fd, only OSF/1 has a 2-argument
    macro(!).  */
 #   if HAVE_ACL_FREE_TEXT /* OSF/1 */
-static inline acl_t
+ACL_INTERNAL_INLINE acl_t
 rpl_acl_get_fd (int fd)
 {
   return acl_get_fd (fd, ACL_TYPE_ACCESS);
@@ -116,7 +121,7 @@ rpl_acl_get_fd (int fd)
 /* Most platforms have a 2-argument acl_set_fd, only OSF/1 has a 3-argument
    macro(!).  */
 #   if HAVE_ACL_FREE_TEXT /* OSF/1 */
-static inline int
+ACL_INTERNAL_INLINE int
 rpl_acl_set_fd (int fd, acl_t acl)
 {
   return acl_set_fd (fd, ACL_TYPE_ACCESS, acl);
@@ -263,3 +268,5 @@ extern int acl_nontrivial (int count, struct acl *entries);
 # endif
 
 #endif
+
+_GL_INLINE_HEADER_END
