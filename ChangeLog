@@ -1,5 +1,18 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pipe-filter-gi, pipe-filter-ii: better use of 'inline'
+	* lib/pipe-filter-aux.c: New file.
+	* lib/pipe-filter-aux.h (PIPE_FILTER_AUX_INLINE): New macro.
+	Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* lib/pipe-filter-gi.c (filter_init, filter_cleanup)
+	(filter_retcode): No real need for inline here.
+	* modules/pipe-filter-gi, modules/pipe-filter-ii:
+	(Files): Add lib/pipe-filter-aux.c.
+	(Depends-on): Add extern-inline.
+	(configure.ac): Do not require AC_C_INLINE.
+	(lib_SOURCES): Add pipe-filter-aux.c.
+
 	fdutimensat: omit unnecessary AC_C_INLINE
 	* modules/fdutimensat (configure.ac): Remove AC_C_INLINE.
 

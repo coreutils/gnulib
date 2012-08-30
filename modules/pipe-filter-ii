@@ -5,11 +5,13 @@ Files:
 lib/pipe-filter.h
 lib/pipe-filter-ii.c
 lib/pipe-filter-aux.h
+lib/pipe-filter-aux.c
 
 Depends-on:
 spawn-pipe
 wait-process
 error
+extern-inline
 fcntl-h
 gettext-h
 stdbool
@@ -19,11 +21,10 @@ sys_select
 unistd
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
 AC_CHECK_FUNCS_ONCE([select])
 
 Makefile.am:
-lib_SOURCES += pipe-filter-ii.c
+lib_SOURCES += pipe-filter-ii.c pipe-filter-aux.c
 
 Include:
 "pipe-filter.h"
