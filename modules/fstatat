@@ -14,6 +14,7 @@ extensions
 at-internal     [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 dosname         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 errno           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+extern-inline   [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 fchdir          [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 fcntl-h         [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 lstat           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
@@ -26,7 +27,6 @@ gl_FUNC_FSTATAT
 if test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1; then
   AC_LIBOBJ([fstatat])
 fi
-AC_REQUIRE([AC_C_INLINE]) dnl because 'inline' is used in lib/openat.h
 gl_MODULE_INDICATOR([fstatat]) dnl for lib/openat.h
 gl_SYS_STAT_MODULE_INDICATOR([fstatat])
 

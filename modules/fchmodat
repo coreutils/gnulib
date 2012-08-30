@@ -13,6 +13,7 @@ extensions
 at-internal     [test $HAVE_FCHMODAT = 0]
 dosname         [test $HAVE_FCHMODAT = 0]
 errno           [test $HAVE_FCHMODAT = 0]
+extern-inline   [test $HAVE_FCHMODAT = 0]
 fchdir          [test $HAVE_FCHMODAT = 0]
 fcntl-h         [test $HAVE_FCHMODAT = 0]
 openat-die      [test $HAVE_FCHMODAT = 0]
@@ -24,7 +25,6 @@ gl_FUNC_FCHMODAT
 if test $HAVE_FCHMODAT = 0; then
   AC_LIBOBJ([fchmodat])
 fi
-AC_REQUIRE([AC_C_INLINE]) dnl because 'inline' is used in lib/openat.h
 gl_MODULE_INDICATOR([fchmodat]) dnl for lib/openat.h
 gl_SYS_STAT_MODULE_INDICATOR([fchmodat])
 

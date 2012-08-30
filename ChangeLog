@@ -1,5 +1,19 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fchmodat, fchownat, fstatat: use extern-inline
+	* lib/fchmodat.c, lib/openat.h (FCHMODAT_INLINE):
+	* lib/fchownat.c, lib/openat.h (FCHOWNAT_INLINE):
+	* lib/fstatat.c, lib/openat.h (FSTATAT_INLINE):
+	New macros.
+	* lib/openat.h:
+	Replace all uses of 'static inline' with them.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* modules/fchmodat, modules/fchownat, modules/fstatat:
+	* modules/openat-h:
+	(Depends-on):
+	Add extern-inline.
+	(configure.ac): Remove AC_C_INLINE.
+
 	acl, mbchar, priv-set: use extern-inline
 	* lib/set-mode-acl.c, lib/acl-internal.h (ACL_INTERNAL_INLINE):
 	* lib/mbchar.c, lib/mbchar.h (MBCHAR_INLINE):

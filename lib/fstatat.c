@@ -23,13 +23,15 @@
 #define __need_system_sys_stat_h
 #include <config.h>
 
+#include FSTATAT_INLINE _GL_EXTERN_INLINE
+
 /* Get the original definition of fstatat.  It might be defined as a macro.  */
 #include <sys/types.h>
 #include <sys/stat.h>
 #undef __need_system_sys_stat_h
 
 #if HAVE_FSTATAT
-static inline int
+static int
 orig_fstatat (int fd, char const *filename, struct stat *buf, int flags)
 {
   return fstatat (fd, filename, buf, flags);
@@ -97,7 +99,7 @@ rpl_fstatat (int fd, char const *file, struct stat *st, int flag)
    because the preprocessor sees a use of a macro that requires two
    arguments but is only given one.  Hence, we need an inline
    forwarder to get past the preprocessor.  */
-static inline int
+static int
 stat_func (char const *name, struct stat *st)
 {
   return stat (name, st);

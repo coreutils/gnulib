@@ -13,6 +13,7 @@ extensions
 at-internal     [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 dosname         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 errno           [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+extern-inline   [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fchdir          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fcntl-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
@@ -26,7 +27,6 @@ gl_FUNC_FCHOWNAT
 if test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1; then
   AC_LIBOBJ([fchownat])
 fi
-AC_REQUIRE([AC_C_INLINE]) dnl because 'inline' is used in lib/openat.h
 gl_MODULE_INDICATOR([fchownat]) dnl for lib/openat.h
 gl_UNISTD_MODULE_INDICATOR([fchownat])
 

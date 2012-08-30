@@ -26,6 +26,8 @@
 #include <unistd.h>
 #include <stdbool.h>
 
+_GL_INLINE_HEADER_BEGIN
+
 #if !HAVE_OPENAT
 
 int openat_permissive (int fd, char const *file, int flags, mode_t mode,
@@ -49,13 +51,17 @@ _Noreturn void openat_save_fail (int);
 
 #if GNULIB_FCHOWNAT
 
-static inline int
+# ifndef FCHOWNAT_INLINE
+#  define FCHOWNAT_INLINE _GL_INLINE
+# endif
+
+FCHOWNAT_INLINE int
 chownat (int fd, char const *file, uid_t owner, gid_t group)
 {
   return fchownat (fd, file, owner, group, 0);
 }
 
-static inline int
+FCHOWNAT_INLINE int
 lchownat (int fd, char const *file, uid_t owner, gid_t group)
 {
   return fchownat (fd, file, owner, group, AT_SYMLINK_NOFOLLOW);
@@ -65,13 +71,17 @@ lchownat (int fd, char const *file, uid_t owner, gid_t group)
 
 #if GNULIB_FCHMODAT
 
-static inline int
+# ifndef FCHMODAT_INLINE
+#  define FCHMODAT_INLINE _GL_INLINE
+# endif
+
+FCHMODAT_INLINE int
 chmodat (int fd, char const *file, mode_t mode)
 {
   return fchmodat (fd, file, mode, 0);
 }
 
-static inline int
+FCHMODAT_INLINE int
 lchmodat (int fd, char const *file, mode_t mode)
 {
   return fchmodat (fd, file, mode, AT_SYMLINK_NOFOLLOW);
@@ -81,13 +91,17 @@ lchmodat (int fd, char const *file, mode_t mode)
 
 #if GNULIB_FSTATAT
 
-static inline int
+# ifndef FSTATAT_INLINE
+#  define FSTATAT_INLINE _GL_INLINE
+# endif
+
+FSTATAT_INLINE int
 statat (int fd, char const *name, struct stat *st)
 {
   return fstatat (fd, name, st, 0);
 }
 
-static inline int
+FSTATAT_INLINE int
 lstatat (int fd, char const *name, struct stat *st)
 {
   return fstatat (fd, name, st, AT_SYMLINK_NOFOLLOW);
@@ -100,5 +114,7 @@ lstatat (int fd, char const *name, struct stat *st)
    since access rights on symlinks are of limited utility.  Likewise,
    wrappers are not provided for accessat or euidaccessat, so as to
    avoid dragging in -lgen on some platforms.  */
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GL_HEADER_OPENAT */

@@ -5,6 +5,7 @@ Files:
 lib/openat.h
 
 Depends-on:
+extern-inline
 fcntl-h
 stdbool
 sys_stat
