@@ -1,5 +1,12 @@
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sockets, sys_stat: remove AC_C_INLINE in MSVC-only cases
+	* m4/sockets.m4 (gl_SOCKETS):
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H):
+	Remove AC_C_INLINE.  Here, 'inline' is used only in MSVC
+	environments where it's already guaranteed to work, so we needn't
+	check for it at 'configure'-time.
+
 	tls-tests: omit unnecessary 'inline'
 	* tests/test-tls.c (perhaps_yield): No longer inline.
 	Simplicity and portability trump efficiency in test cases.
