@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2011-04-08.14
+scriptversion=2012-09-02.17
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
 # Foundation, Inc.
@@ -51,15 +51,16 @@ unset use_texi2html
 
 version="gendocs.sh $scriptversion
 
-Copyright 2010 Free Software Foundation, Inc.
+Copyright 2012 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
 
 usage="Usage: $prog [OPTION]... PACKAGE MANUAL-TITLE
 
-Generate various output formats from PACKAGE.texinfo (or .texi or .txi) source.
-See the GNU Maintainers document for a more extensive discussion:
+Generate output in various formats from PACKAGE.texinfo (or .texi or
+.txi) source.  See the GNU Maintainers document for a more extensive
+discussion:
   http://www.gnu.org/prep/maintain_toc.html
 
 Options:
@@ -68,6 +69,7 @@ Options:
   --email ADR use ADR as contact in generated web pages.
   --docbook   convert to DocBook too (xml, txt, html, pdf and ps).
   --html ARG  pass indicated ARG to makeinfo or texi2html for HTML targets.
+  --info ARG  pass indicated ARG to makeinfo for Info, instead of --no-split.
   --texi2html use texi2html to generate HTML targets.
   --help      display this help and exit successfully.
   --version   display version information and exit successfully.
@@ -80,11 +82,11 @@ Typical sequence:
   wget \"$templateurl\"
   $prog --email BUGLIST MANUAL \"GNU MANUAL - One-line description\"
 
-Output will be in a new subdirectory \"manual\" (by default, use -o OUTDIR
-to override).  Move all the new files into your web CVS tree, as
-explained in the Web Pages node of maintain.texi.
+Output will be in a new subdirectory \"manual\" (by default;
+use -o OUTDIR to override).  Move all the new files into your web CVS
+tree, as explained in the Web Pages node of maintain.texi.
 
-Please use the --email ADDRESS option to specify your bug-reporting
+Please do use the --email ADDRESS option to specify your bug-reporting
 address in the generated HTML pages.
 
 MANUAL-TITLE is included as part of the HTML <title> of the overall
@@ -101,6 +103,9 @@ with links to them all.
 If a manual's Texinfo sources are spread across several directories,
 first copy or symlink all Texinfo sources into a single directory.
 (Part of the script's work is to make a tar.gz of the sources.)
+
+As implied above, by default monolithic Info files are generated.
+If you want split Info, or other Info options, use --info to override.
 
 You can set the environment variables MAKEINFO, TEXI2DVI, TEXI2HTML, and
 DVIPS to control the programs that get executed, and
@@ -126,6 +131,7 @@ MANUAL_TITLE=
 PACKAGE=
 EMAIL=webmasters@gnu.org  # please override with --email
 htmlarg=
+infoarg=--no-split
 outdir=manual
 srcfile=
 
@@ -138,6 +144,7 @@ while test $# -gt 0; do
     -o) shift; outdir=$1;;
     --docbook) docbook=yes;;
     --html) shift; htmlarg=$1;;
+    --info) shift; infoarg=$1;;
     --texi2html) use_texi2html=1;;
     -*)
       echo "$0: Unknown option \`$1'." >&2
@@ -188,10 +195,10 @@ case $outdir in
   *)  abs_outdir=$srcdir/$outdir;;
 esac
 
-echo Generating output formats for $srcfile
+echo "Generating output formats for $srcfile"
 
-cmd="$SETLANG $MAKEINFO -o $PACKAGE.info \"$srcfile\""
-echo "Generating info files... ($cmd)"
+cmd="$SETLANG $MAKEINFO -o $PACKAGE.info $infoarg \"$srcfile\""
+echo "Generating info file(s)... ($cmd)"
 eval "$cmd"
 mkdir -p "$outdir/"
 tar czf "$outdir/$PACKAGE.info.tar.gz" $PACKAGE.info*
@@ -204,7 +211,7 @@ echo "Generating dvi ... ($cmd)"
 eval "$cmd"
 
 # now, before we compress dvi:
-echo Generating postscript...
+echo "Generating postscript..."
 ${DVIPS} $PACKAGE -o
 gzip -f -9 $PACKAGE.ps
 ps_gz_size=`calcsize $PACKAGE.ps.gz`
