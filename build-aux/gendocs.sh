@@ -4,8 +4,8 @@
 
 scriptversion=2012-09-02.17
 
-# Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010 Free Software
-# Foundation, Inc.
+# Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
+# Free Software Foundation, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
