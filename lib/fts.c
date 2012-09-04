@@ -1894,7 +1894,7 @@ fts_alloc (FTS *sp, const char *name, register size_t namelen)
                 return (NULL);
 
         /* Copy the name and guarantee NUL termination. */
-        memmove(p->fts_name, name, namelen);
+        memcpy(p->fts_name, name, namelen);
         p->fts_name[namelen] = '\0';
 
         p->fts_namelen = namelen;

@@ -1,3 +1,8 @@
+2012-09-04  Jim Meyering  <meyering@redhat.com>
+
+	fts: when there is no risk of overlap, use memcpy, not memmove
+	* lib/fts.c (fts_alloc): Fix unjustified memcopy: s/memmove/memcpy/
+
 2012-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdbool: be more compatible with mixed C/C++ compiles
