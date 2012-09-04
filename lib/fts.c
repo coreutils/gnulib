@@ -487,6 +487,14 @@ fts_open (char * const *argv,
         for (root = NULL, nitems = 0; *argv != NULL; ++argv, ++nitems) {
                 /* *Do* allow zero-length file names. */
                 size_t len = strlen(*argv);
+
+                /* If there are two or more trailing slashes, trim all but one,
+                   but don't change "//" to "/", and do map "///" to "/".  */
+                char const *v = *argv;
+                if (2 < len && v[len - 1] == '/')
+                  while (1 < len && v[len - 2] == '/')
+                    --len;
+
                 if ((p = fts_alloc(sp, *argv, len)) == NULL)
                         goto mem3;
                 p->fts_level = FTS_ROOTLEVEL;

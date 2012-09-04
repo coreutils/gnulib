@@ -1,5 +1,26 @@
 2012-09-04  Jim Meyering  <meyering@redhat.com>
 
+	fts: reduce two or more trailing spaces to just one, usually
+	* lib/fts.c (fts_open): Upon initialization, if a name ends in two
+	or more slashes, trim all but the final one.  But if a name consists
+	solely of two slashes, don't modify it.  If it consists solely of
+	three or more slashes, strip all but one.
+
+	This is part of the solution to a minor problem with rm:
+	it would print a bogus ELOOP diagnostic when failing to remove
+	the slash-decorated name of a symlink-to-directory:
+
+	    $ mkdir d && ln -s d s && env rm -r s/
+	    rm: cannot remove 's': Too many levels of symbolic links
+
+	With the change below and a trivial don't-trim-trailing-slashes
+	adjustment to remove.c, it does this:
+
+	    $ env rm -r s/
+	    rm: cannot remove 's/': Not a directory
+
+	Improved by: Eric Blake
+
 	fts: when there is no risk of overlap, use memcpy, not memmove
 	* lib/fts.c (fts_alloc): Fix unjustified memcopy: s/memmove/memcpy/
 
