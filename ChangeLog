@@ -1,3 +1,9 @@
+2012-09-05  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
+
+	readutmp: fix non-portable UT_PID use
+	* lib/readutmp.c (desirable_utmp_entry) <READ_UTMP_CHECK_PIDS>:
+	Use `UT_PID (u) > 0' as absolute condition.
+
 2012-09-04  Jim Meyering  <meyering@redhat.com>
 
 	fts: reduce two or more trailing spaces to just one, usually
