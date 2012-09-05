@@ -2430,6 +2430,7 @@ func_all_modules ()
   func_module mkfifo
   func_module mknod
   func_module mkstemp
+  func_module net_if
   func_module netdb
   func_module netinet_in
   func_module nl_langinfo

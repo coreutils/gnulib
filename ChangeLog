@@ -1,3 +1,14 @@
+2012-09-05  Eric Blake  <eblake@redhat.com>
+
+	net_if: new module
+	* modules/net_if: New module, borrowing ideas from netinet_in.
+	* m4/net_if_h.m4: New file.
+	* lib/net_if.in.h: Likewise.
+	* doc/posix-headers/net_if.texi (net/if.h): Document it.
+	* MODULES.html.sh (lacking POSIX:2008): Likewise.
+	* tests/test-net_if.c: Make function checks conditional.
+	Reported by Jasper Lievisse Adriaanse <jasper@humppa.nl>.
+
 2012-09-05  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
 
 	readutmp: fix non-portable UT_PID use
