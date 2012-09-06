@@ -1,3 +1,9 @@
+2012-10-02  Eric Blake  <eblake@redhat.com>
+
+	manywarnings: cater to more gcc infelicities
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add test for
+	-Wuninitialized without -O.
+
 2012-10-01  Ed Maste  <emaste@freebsd.org>  (tiny change)
 
 	select, poll tests: Make setsockopt invocation effective.
