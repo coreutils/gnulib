@@ -1,3 +1,8 @@
+2012-09-06  Eric Blake  <eblake@redhat.com>
+
+	net_if: give more details about the bug being fixed
+	* doc/posix-headers/net_if.texi: Add clarification.
+
 2012-09-05  Eric Blake  <eblake@redhat.com>
 
 	net_if: new module

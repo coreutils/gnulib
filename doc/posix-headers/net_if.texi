@@ -8,8 +8,9 @@ Gnulib module: net_if
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This header file is not self-contained on some platforms:
-FreeBSD 8.2, OpenBSD 5.1.
+This header file is not self-contained on some platforms (needing
+<sys/socket.h> to be included first):
+FreeBSD 8.2, OpenBSD 5.2.
 @end itemize
 
 Portability problems not fixed by Gnulib:
