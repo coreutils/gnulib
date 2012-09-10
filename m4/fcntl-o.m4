@@ -58,7 +58,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
                   if (fd >= 0)
                     {
                       close (fd);
-                      result |= 1;
+                      result |= 4;
                     }
                 }
               if (unlink (sym) != 0 || symlink (".", sym) != 0)
