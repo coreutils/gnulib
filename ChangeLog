@@ -1,3 +1,10 @@
+2012-09-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h: check for AIX 7.1 bug with O_NOFOLLOW and O_CREAT
+	* m4/fcntl-o.m4 (gl_FCNTL_O_FLAGS): Check for AIX 7.1 bug
+	that caused a GNU tar test failure.  Problem reported by Jez Wain; see
+	<http://lists.gnu.org/archive/html/bug-tar/2012-07/msg00018.html>.
+
 2012-09-06  Eric Blake  <eblake@redhat.com>
 
 	net_if: give more details about the bug being fixed
