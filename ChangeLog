@@ -1,3 +1,12 @@
+2012-09-13  Paolo Bonzini  <bonzini@gnu.org>
+
+	poll/select: document portability problems not fixed by Gnulib.
+	* doc/posix-functions/poll.texi: poll does not work well on
+	pipes under Windows.  It has the same limitations as select on
+       BeOS.
+	* doc/posix-functions/select.texi: select does not work well
+       on pipes under Windows.
+
 2012-09-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h: check for AIX 7.1 bug with O_NOFOLLOW and O_CREAT

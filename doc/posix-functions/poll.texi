@@ -19,4 +19,12 @@ Mac OS X 10.4.0, AIX 5.3.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Under BeOS, Gnulib's @code{poll} replacement can only be called on descriptors
+created by the @code{socket} function, not on regular file descriptors.
+
+@item
+Under Windows, when passing a pipe, Gnulib's @code{poll} replacement might
+return 0 even before the timeout has passed.  Programs using it with pipes can
+thus busy wait.
 @end itemize
