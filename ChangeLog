@@ -1,4 +1,10 @@
 2012-09-13  Joachim Schmitz <jojo@schmitz-digital.de>  (tiny change)
+
+	poll: fix poll(0, NULL, msec)
+	* lib/poll.c: don't exit early if NULL is the 1st arg to poll(),
+	but nfd is 0.  In that case poll should behave like select.
+
+2012-09-13  Joachim Schmitz <jojo@schmitz-digital.de>  (tiny change)
 	    Paolo Bonzini <bonzini@gnu.org>
 
 	poll: fix for systems that can't recv() on a non-socket
