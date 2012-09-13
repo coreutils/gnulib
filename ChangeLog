@@ -1,3 +1,11 @@
+2012-09-13  Joachim Schmitz <jojo@schmitz-digital.de>  (tiny change)
+	    Paolo Bonzini <bonzini@gnu.org>
+
+	poll: fix for systems that can't recv() on a non-socket
+	* lib/poll.c: if recv returns ENOTSOCK, assume the descriptor
+	is readable.  In this case POLLHUP will not be supported.
+	* doc/posix-functions/poll.texi: Document this.
+
 2012-09-13  Paolo Bonzini  <bonzini@gnu.org>
 
 	poll/select: document portability problems not fixed by Gnulib.
