@@ -1,3 +1,17 @@
+2012-09-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: document sticky-EOF issue
+	* doc/posix-functions/fgetc.texi (fgetc):
+	* doc/posix-functions/fgets.texi (fgets):
+	* doc/posix-functions/fread.texi (fread):
+	* doc/posix-functions/fscanf.texi (fscanf):
+	* doc/posix-functions/getc.texi (getc):
+	* doc/posix-functions/getchar.texi (getchar):
+	* doc/posix-functions/scanf.texi (scanf):
+	Mention that glibc and default Solaris do not conform to
+	C99 and POSIX-2001 or later, with respect to how getchar
+	etc. behave when feof reports nonzero.
+
 2012-09-13  Joachim Schmitz <jojo@schmitz-digital.de>  (tiny change)
 
 	poll: fix poll(0, NULL, msec)
