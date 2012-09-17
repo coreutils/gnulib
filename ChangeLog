@@ -1,3 +1,11 @@
+2012-09-17  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: relax sc_prohibit_strcmp, to avoid a false positive
+	* top/maint.mk (sc_prohibit_strcmp): Relax regexp, so as to match
+	all uses of #define, not just those that start in column 1.
+	Richard W.M. Jones reported a false positive in
+	http://thread.gmane.org/gmane.comp.emulators.guestfs/1902
+
 2012-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	localcharset: work around Mac OS X bug with UTF-8 and MB_CUR_MAX

@@ -330,7 +330,7 @@ sc_prohibit_atoi_atof:
 sp_ = strcmp *\(.+\)
 sc_prohibit_strcmp:
 	@prohibit='! *strcmp *\(|\<$(sp_) *[!=]=|[!=]= *$(sp_)'		\
-	exclude=':# *define STRN?EQ\('					\
+	exclude='# *define STRN?EQ\('					\
 	halt='replace strcmp calls above with STREQ/STRNEQ'		\
 	  $(_sc_search_regexp)
 
