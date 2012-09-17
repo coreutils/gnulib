@@ -1,5 +1,15 @@
 2012-09-17  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: teach sc_prohibit_magic_number_exit to accept 77
+	* top/maint.mk (sc_prohibit_magic_number_exit): Do not complain about
+	uses like "exit (77)".  "77" is automake's "skip this test" exit code.
+	It is not in the same category as "exit (0)" or "exit (1)", and
+	besides, I know of no symbolic name for that 77.  Reported by
+	Richard W.M. Jones in
+	http://thread.gmane.org/gmane.comp.emulators.guestfs/1902
+
+2012-09-17  Jim Meyering  <meyering@redhat.com>
+
 	maint.mk: relax sc_prohibit_strcmp, to avoid a false positive
 	* top/maint.mk (sc_prohibit_strcmp): Relax regexp, so as to match
 	all uses of #define, not just those that start in column 1.
