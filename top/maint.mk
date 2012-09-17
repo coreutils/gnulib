@@ -1216,7 +1216,7 @@ sc_Wundef_boolean:
 # not be constant, or might overflow a stack.  In general, use PATH_MAX as
 # a limit, not an array or alloca size.
 sc_prohibit_path_max_allocation:
-	@prohibit='(\balloca *\([^)]*|\[[^]]*)PATH_MAX'			\
+	@prohibit='(\balloca *\([^)]*|\[[^]]*)\bPATH_MAX'		\
 	halt='Avoid stack allocations of size PATH_MAX'			\
 	  $(_sc_search_regexp)
 
