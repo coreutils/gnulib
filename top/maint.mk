@@ -1576,6 +1576,7 @@ _gl_TS_obj_files ?= *.$(OBJEXT)
 # Files in which to search for the one-line style extern declarations.
 # $(_gl_TS_dir)-relative.
 _gl_TS_headers ?= $(noinst_HEADERS)
+_gl_TS_other_headers ?= *.h
 
 .PHONY: _gl_tight_scope
 _gl_tight_scope: $(bin_PROGRAMS)
@@ -1598,7 +1599,8 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	  && { echo the above functions should have static scope >&2;	\
 	       exit 1; } || : ;						\
 	( printf '^%s$$\n' '__.*' $(_gl_TS_unmarked_extern_vars);	\
-	  perl -lne '$(_gl_TS_var_match) and print "^$$1\$$"' $$hdr *.h	\
+	  perl -lne '$(_gl_TS_var_match) and print "^$$1\$$"'		\
+		$$hdr $(_gl_TS_other_headers)				\
 	) | sort -u > $$t;						\
 	nm -e $(_gl_TS_obj_files) | sed -n 's/.* [BCDGRS] //p'		\
             | sort -u | grep -Ev -f $$t					\

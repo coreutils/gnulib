@@ -1,5 +1,11 @@
 2012-09-18  Jim Meyering  <meyering@redhat.com>
 
+	maint.mk: generalize _gl_tight_scope for non-recursive make
+	* top/maint.mk (_gl_tight_scope): Remove a hard-coded assumption
+	that *.h would describe additional .h files in the directory
+	specified by $(_gl_TS_dir).  I.e., add this...
+	(_gl_TS_other_headers): New variable.
+
 	maint.mk: exempt trailing blanks found in "binary" files
 	* top/maint.mk (sc_trailing_blank): Filter out any matches found in
 	"binary" files, as reported by grep.  Suggested by Richard W.M. Jones
