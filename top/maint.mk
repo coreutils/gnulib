@@ -724,6 +724,7 @@ sc_require_test_exit_idiom:
 sc_trailing_blank:
 	@prohibit='[	 ]$$'						\
 	halt='found trailing blank(s)'					\
+	exclude='^Binary file .* matches$$'				\
 	  $(_sc_search_regexp)
 
 # Match lines like the following, but where there is only one space

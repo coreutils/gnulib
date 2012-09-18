@@ -1,3 +1,10 @@
+2012-09-18  Jim Meyering  <meyering@redhat.com>
+
+	maint.mk: exempt trailing blanks found in "binary" files
+	* top/maint.mk (sc_trailing_blank): Filter out any matches found in
+	"binary" files, as reported by grep.  Suggested by Richard W.M. Jones
+	in http://thread.gmane.org/gmane.comp.emulators.guestfs/1902
+
 2012-09-17  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: sc_prohibit_path_max_allocation: don't FP for UNIX_PATH_MAX
