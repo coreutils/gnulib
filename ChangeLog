@@ -76,9 +76,9 @@
 	poll/select: document portability problems not fixed by Gnulib.
 	* doc/posix-functions/poll.texi: poll does not work well on
 	pipes under Windows.  It has the same limitations as select on
-       BeOS.
+	BeOS.
 	* doc/posix-functions/select.texi: select does not work well
-       on pipes under Windows.
+	on pipes under Windows.
 
 2012-09-10  Paul Eggert  <eggert@cs.ucla.edu>
 
