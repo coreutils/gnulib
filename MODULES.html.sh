@@ -3527,6 +3527,7 @@ func_all_modules ()
   func_module gnupload
   func_module maintainer-makefile
   func_module mktempd
+  func_module non-recursive-gnulib-prefix-hack
   func_module readme-release
   func_module test-framework-sh
   func_module update-copyright

@@ -1,3 +1,14 @@
+2012-09-20  Jim Meyering  <meyering@redhat.com>
+
+	non-recursive-gnulib-prefix-hack: new module
+	* build-aux/prefix-gnulib-mk: Copied from coreutils, derived from
+	the file that originated in Bison.
+	* m4/non-recursive-gnulib-prefix-hack.m4: Likewise, this code is
+	largely copied from a snippet that resided in bison's configure.ac.
+	* modules/non-recursive-gnulib-prefix-hack: New file.
+	* MODULES.html.sh (Support for maintaining and releasing projects):
+	Add it.
+
 2012-09-18  Jim Meyering  <meyering@redhat.com>
 
 	maint.mk: generalize _gl_tight_scope for non-recursive make
