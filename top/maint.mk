@@ -107,6 +107,13 @@ my_distdir = $(PACKAGE)-$(VERSION)
 # Old releases are stored here.
 release_archive_dir ?= ../release
 
+# If RELEASE_TYPE is undefined, but RELEASE is, use its second word.
+# But overwrite VERSION.
+ifdef RELEASE
+  VERSION := $(word 1, $(RELEASE))
+  RELEASE_TYPE ?= $(word 2, $(RELEASE))
+endif
+
 # Validate and return $(RELEASE_TYPE), or die.
 RELEASE_TYPES = alpha beta stable
 release-type = $(call member-check,RELEASE_TYPE,$(RELEASE_TYPES))
@@ -1329,15 +1336,21 @@ ftp-gnu = ftp://ftp.gnu.org/gnu
 www-gnu = http://www.gnu.org
 
 upload_dest_dir_ ?= $(PACKAGE)
+upload_command =						\
+  $(srcdir)/$(_build-aux)/gnupload $(GNUPLOADFLAGS)		\
+  --to $(gnu_rel_host):$(upload_dest_dir_)			\
+  $(rel-files)
 emit_upload_commands:
 	@echo =====================================
 	@echo =====================================
-	@echo "$(srcdir)/$(_build-aux)/gnupload $(GNUPLOADFLAGS) \\"
-	@echo "    --to $(gnu_rel_host):$(upload_dest_dir_) \\"
-	@echo "  $(rel-files)"
+	@echo '$(upload_command)'
 	@echo '# send the ~/announce-$(my_distdir) e-mail'
 	@echo =====================================
 	@echo =====================================
+
+.PHONY: upload
+upload:
+	$(AM_V_GEN)$(upload_command)
 
 define emit-commit-log
   printf '%s\n' 'maint: post-release administrivia' ''			\
@@ -1384,7 +1397,7 @@ public-submodule-commit:
 gl_public_submodule_commit ?= public-submodule-commit
 check: $(gl_public_submodule_commit)
 
-.PHONY: alpha beta stable
+.PHONY: alpha beta stable release
 ALL_RECURSIVE_TARGETS += alpha beta stable
 alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	$(AM_V_GEN)test $@ = stable					\
@@ -1397,6 +1410,8 @@ alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	$(AM_V_at)$(MAKE) dist
 	$(AM_V_at)$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
 	$(AM_V_at)$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
+
+release: $(release-type)
 
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep

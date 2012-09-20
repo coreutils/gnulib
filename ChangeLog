@@ -10,6 +10,24 @@
 
 2012-09-20  Akim Demaille  <akim@lrde.epita.fr>
 
+	maint.mk: provide "make upload" to ease uploading
+	See
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-08/msg00028.html>.
+	Do not depend simply on the current $(VERSION), as there may have been
+	new commits since the tarball generation.  Rather, rely on $(RELEASE),
+	as "make release-commit" already does.
+
+	For consistency, add "make release RELEASE='X.Y TYPE'" as an alias for
+	"make TYPE".
+
+	* top/maint.mk (upload_command, upload, release): New.
+	(RELEASE_TYPE): If undefined, default to the second word of $(RELEASE).
+	(VERSION): first word of $(RELEASE) is always right.
+	(emit_upload_commands): Adjust.
+	* top/README-release: Update.
+
+2012-09-20  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: silent rules
 	With help from Stefano Lattarini.
 	* top/maint.mk (writable-files): Use $(AM_V_GEN).

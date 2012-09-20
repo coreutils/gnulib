@@ -31,18 +31,18 @@ Here are most of the steps we (maintainers) follow when making a release.
 
     make check syntax-check distcheck
 
-* To (i) set the date, version number, and release type [stable/alpha/beta]
-  on line 3 of NEWS, (ii) commit that, and (iii) tag the release, run
+* To (i) set the date, version number, and release TYPE on line 3 of
+  NEWS, (ii) commit that, and (iii) tag the release, run
 
-    make release-commit RELEASE='X.Y stable'
+    # "TYPE" must be stable, beta or alpha
+    make release-commit RELEASE='X.Y TYPE'
 
 * Run the following to create release tarballs.  Your choice selects the
   corresponding upload-to destination in the emitted gnupload command.
   The different destinations are specified in cfg.mk.  See the definitions
   of gnu_ftp_host-{alpha,beta,stable}.
 
-    # "TYPE" must be stable, beta or alpha
-    make TYPE
+    make release RELEASE='X.Y TYPE'
 
 * Test the tarball.  Copy it to a few odd-ball systems and ensure that
   it builds and passes all tests.
@@ -53,7 +53,10 @@ Here are most of the steps we (maintainers) follow when making a release.
 
 Once all the builds and tests have passed,
 
-* Run the gnupload command that was suggested by your "make TYPE" run above.
+* Run the gnupload command that was suggested by your "make release"
+  run above, or run
+
+    make upload RELEASE='X.Y TYPE'
 
 * Wait a few minutes (maybe up to 30?) and then use the release URLs to
   download all tarball/signature pairs and use gpg --verify to ensure
