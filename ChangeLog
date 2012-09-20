@@ -1,3 +1,10 @@
+2012-09-20  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: silent rules
+	With help from Stefano Lattarini.
+	* top/maint.mk (writable-files): Use $(AM_V_GEN).
+	(announcement): Use $(AM_V_at).
+
 2012-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	localename: port gl_locale_name_thread_unsafe to FreeBSD

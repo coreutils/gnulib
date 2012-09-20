@@ -1135,7 +1135,7 @@ sc_makefile_path_separator_check:
 # i.e., when pkg-M.N.tar.xz already exists (either in "." or in ../release)
 # and is read-only.
 writable-files:
-	if test -d $(release_archive_dir); then				\
+	$(AM_V_GEN)if test -d $(release_archive_dir); then		\
 	  for file in $(DIST_ARCHIVES); do				\
 	    for p in ./ $(release_archive_dir)/; do			\
 	      test -e $$p$$file || continue;				\
@@ -1280,7 +1280,9 @@ else
 endif
 
 announcement: NEWS ChangeLog $(rel-files)
-	$(AM_V_GEN)$(srcdir)/$(_build-aux)/announce-gen			\
+# Not $(AM_V_GEN) since the output of this command serves as
+# annoucement message: it would start with " GEN announcement".
+	$(AM_V_at)$(srcdir)/$(_build-aux)/announce-gen			\
 	    --mail-headers='$(announcement_mail_headers_)'		\
 	    --release-type=$(RELEASE_TYPE)				\
 	    --package=$(PACKAGE)					\
