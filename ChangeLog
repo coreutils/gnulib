@@ -1,3 +1,8 @@
+2012-09-25  Akim Demaille  <akim@lrde.epita.fr>
+
+	maint.mk: formatting changes
+	* top/maint.mk: Indent bodies of if's.
+
 2012-09-21  Akim Demaille  <akim@lrde.epita.fr>
 
 	maint.mk: factor the validation of RELEASE_TYPE

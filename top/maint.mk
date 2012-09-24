@@ -68,9 +68,9 @@ _dot_escaped_srcdir = $(subst .,\.,$(srcdir))
 # Post-process $(VC_LIST) output, prepending $(srcdir)/, but only
 # when $(srcdir) is not ".".
 ifeq ($(srcdir),.)
-_prepend_srcdir_prefix =
+  _prepend_srcdir_prefix =
 else
-_prepend_srcdir_prefix = | sed 's|^|$(srcdir)/|'
+  _prepend_srcdir_prefix = | sed 's|^|$(srcdir)/|'
 endif
 
 # In order to be able to consistently filter "."-relative names,
@@ -94,13 +94,13 @@ VERSION_REGEXP = $(subst .,\.,$(VERSION))
 PREV_VERSION_REGEXP = $(subst .,\.,$(PREV_VERSION))
 
 ifeq ($(VC),$(GIT))
-this-vc-tag = v$(VERSION)
-this-vc-tag-regexp = v$(VERSION_REGEXP)
+  this-vc-tag = v$(VERSION)
+  this-vc-tag-regexp = v$(VERSION_REGEXP)
 else
-tag-package = $(shell echo "$(PACKAGE)" | tr '[:lower:]' '[:upper:]')
-tag-this-version = $(subst .,_,$(VERSION))
-this-vc-tag = $(tag-package)-$(tag-this-version)
-this-vc-tag-regexp = $(this-vc-tag)
+  tag-package = $(shell echo "$(PACKAGE)" | tr '[:lower:]' '[:upper:]')
+  tag-this-version = $(subst .,_,$(VERSION))
+  this-vc-tag = $(tag-package)-$(tag-this-version)
+  this-vc-tag-regexp = $(this-vc-tag)
 endif
 my_distdir = $(PACKAGE)-$(VERSION)
 
@@ -127,9 +127,9 @@ gnu_ftp_host-stable = ftp.gnu.org
 gnu_rel_host ?= $(gnu_ftp_host-$(release-type))
 
 ifeq ($(gnu_rel_host),ftp.gnu.org)
-url_dir_list ?= http://ftpmirror.gnu.org/$(PACKAGE)
+  url_dir_list ?= http://ftpmirror.gnu.org/$(PACKAGE)
 else
-url_dir_list ?= ftp://$(gnu_rel_host)/gnu/$(PACKAGE)
+  url_dir_list ?= ftp://$(gnu_rel_host)/gnu/$(PACKAGE)
 endif
 
 # Override this in cfg.mk if you are using a different format in your
@@ -159,9 +159,9 @@ syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \
 .PHONY: $(syntax-check-rules)
 
 ifeq ($(shell $(VC_LIST) >/dev/null 2>&1; echo $$?),0)
-local-checks-available += $(syntax-check-rules)
+  local-checks-available += $(syntax-check-rules)
 else
-local-checks-available += no-vc-detected
+  local-checks-available += no-vc-detected
 no-vc-detected:
 	@echo "No version control files detected; skipping syntax check"
 endif
