@@ -2616,133 +2616,34 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
              nl_langinfo (_NL_LOCALE_NAME (category)).  */
           name = thread_locale->__names[category];
         return name;
-#  endif
-#  if defined __APPLE__ && defined __MACH__ /* Mac OS X */
-        /* The locale name is found deep in an undocumented data structure.
-           Since it's stored in a buffer of size 32 and newlocale() rejects
-           locale names of length > 31, we can assume that it is NUL terminated
-           in this buffer. But we need to make a copy of the locale name, of
-           indefinite extent.  */
-        struct _xlocale_part1_v0 /* used in Mac OS X 10.5 */
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            __darwin_mbstate_t __mbs[10];
-            int64_t __magic;
-          };
-        struct _xlocale_part1_v1 /* used in Mac OS X >= 10.6.0 */
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            __darwin_mbstate_t __mbs[10];
-            /*pthread_lock_t*/ int __lock;
-            int64_t __magic;
-          };
-        struct _xlocale_part2
-          {
-            int64_t __magic;
-            unsigned char __collate_load_error;
-            unsigned char __collate_substitute_nontrivial;
-            unsigned char _messages_using_locale;
-            unsigned char _monetary_using_locale;
-            unsigned char _numeric_using_locale;
-            unsigned char _time_using_locale;
-            unsigned char __mlocale_changed;
-            unsigned char __nlocale_changed;
-            unsigned char __numeric_fp_cvt;
-            struct __xlocale_st_collate *__lc_collate;
-            struct __xlocale_st_runelocale *__lc_ctype;
-            struct __xlocale_st_messages *__lc_messages;
-            struct __xlocale_st_monetary *__lc_monetary;
-            struct __xlocale_st_numeric *__lc_numeric;
-            struct _xlocale *__lc_numeric_loc;
-            struct __xlocale_st_time *__lc_time;
-            /* more */
-          };
-        struct __xlocale_st_collate
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char __encoding[32];
-            /* more */
-          };
-        struct __xlocale_st_runelocale
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char __ctype_encoding[32];
-            /* more */
-          };
-        struct __xlocale_st_messages
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char *_messages_locale_buf;
-            /* more */
-          };
-        struct __xlocale_st_monetary
-          {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char *_monetary_locale_buf;
-            /* more */
-          };
-        struct __xlocale_st_numeric {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char *_numeric_locale_buf;
-            /* more */
-          };
-        struct __xlocale_st_time {
-            int32_t __refcount;
-            void (*__free_extra)(void *);
-            char *_time_locale_buf;
-            /* more */
-          };
-        struct _xlocale_part2 *tlp;
-        if (((struct _xlocale_part1_v0 *) thread_locale)->__magic
-            == 0x786C6F63616C6530LL)
-          /* Mac OS X 10.5 */
-          tlp =
-            (struct _xlocale_part2 *)
-            &((struct _xlocale_part1_v0 *) thread_locale)->__magic;
-        else if (((struct _xlocale_part1_v1 *) thread_locale)->__magic
-                 == 0x786C6F63616C6530LL)
-          /* Mac OS X >= 10.6.0 */
-          tlp =
-            (struct _xlocale_part2 *)
-            &((struct _xlocale_part1_v1 *) thread_locale)->__magic;
-        else
-          /* Unsupported version of Mac OS X: The internals of 'struct _xlocale'
-             have changed again.  */
-          return "";
+#  elif defined __FreeBSD__ || (defined __APPLE__ && defined __MACH__)
+        /* FreeBSD, Mac OS X */
+        int mask;
+
         switch (category)
           {
           case LC_CTYPE:
-            return tlp->__lc_ctype->__ctype_encoding;
+            mask = LC_CTYPE_MASK;
+            break;
           case LC_NUMERIC:
-            return tlp->_numeric_using_locale
-                   ? tlp->__lc_numeric->_numeric_locale_buf
-                   : "C";
+            mask = LC_NUMERIC_MASK;
+            break;
           case LC_TIME:
-            return tlp->_time_using_locale
-                   ? tlp->__lc_time->_time_locale_buf
-                   : "C";
+            mask = LC_TIME_MASK;
+            break;
           case LC_COLLATE:
-            return !tlp->__collate_load_error
-                   ? tlp->__lc_collate->__encoding
-                   : "C";
+            mask = LC_COLLATE_MASK;
+            break;
           case LC_MONETARY:
-            return tlp->_monetary_using_locale
-                   ? tlp->__lc_monetary->_monetary_locale_buf
-                   : "C";
+            mask = LC_MONETARY_MASK;
+            break;
           case LC_MESSAGES:
-            return tlp->_messages_using_locale
-                   ? tlp->__lc_messages->_messages_locale_buf
-                   : "C";
+            mask = LC_MESSAGES_MASK;
+            break;
           default: /* We shouldn't get here.  */
             return "";
           }
+        return querylocale (mask, thread_locale);
 #  endif
       }
   }

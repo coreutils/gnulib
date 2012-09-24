@@ -1,3 +1,11 @@
+2012-09-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	localename: port gl_locale_name_thread_unsafe to FreeBSD
+	* lib/localename.c (gl_locale_name_thread_unsafe): Port to FreeBSD,
+	and use the simpler FreeBSD implementation on Mac OS X as well.
+	Original idea suggested by Ed Maste in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-09/msg00094.html>.
+
 2012-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	binary-io, eealloc, mbfile, mbiter, mbutil, xsize: better 'inline'
