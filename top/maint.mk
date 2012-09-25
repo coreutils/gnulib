@@ -32,17 +32,23 @@ endif
 _empty =
 _sp = $(_empty) $(_empty)
 
-# member-check VARIABLE,VALID-VALUES
+# _equal,S1,S2
+# ------------
+# If S1 == S2, return S1, otherwise the empty string.
+_equal = $(and $(findstring $(1),$(2)),$(findstring $(2),$(1)))
+
+# member-check,VARIABLE,VALID-VALUES
 # ----------------------------------
 # Check that $(VARIABLE) is in the space-separated list of VALID-VALUES, and
 # return it.  Die otherwise.
-member-check =                                                  \
-  $(if $($(1)),                                                 \
-    $(if $(findstring $(_sp),$($(1))),                          \
-        $(error invalid $(1): '$($(1))', expected $(2)),        \
-        $(or $(findstring $(_sp)$($(1))$(_sp),$(_sp)$(2)(_sp)), \
-          $(error invalid $(1): '$($(1))', expected $(2)))),    \
-    $(error $(1) undefined))
+member-check =								\
+  $(strip								\
+    $(if $($(1)),							\
+      $(if $(findstring $(_sp),$($(1))),				\
+          $(error invalid $(1): '$($(1))', expected $(2)),		\
+          $(or $(findstring $(_sp)$($(1))$(_sp),$(_sp)$(2)$(_sp)),	\
+            $(error invalid $(1): '$($(1))', expected $(2)))),		\
+      $(error $(1) undefined)))
 
 # Do not save the original name or timestamp in the .tar.gz file.
 # Use --rsyncable if available.
@@ -126,11 +132,9 @@ gnu_ftp_host-beta = alpha.gnu.org
 gnu_ftp_host-stable = ftp.gnu.org
 gnu_rel_host ?= $(gnu_ftp_host-$(release-type))
 
-ifeq ($(gnu_rel_host),ftp.gnu.org)
-  url_dir_list ?= http://ftpmirror.gnu.org/$(PACKAGE)
-else
-  url_dir_list ?= ftp://$(gnu_rel_host)/gnu/$(PACKAGE)
-endif
+url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
+                     http://ftpmirror.gnu.org/$(PACKAGE),		\
+                     ftp://$(gnu_rel_host)/gnu/$(PACKAGE))
 
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
@@ -1291,19 +1295,22 @@ gpg_key_ID ?=								\
 translation_project_ ?= coordinator@translationproject.org
 
 # Make info-gnu the default only for a stable release.
-ifeq ($(release-type),stable)
-  announcement_Cc_ ?= $(translation_project_), $(PACKAGE_BUGREPORT)
-  announcement_mail_headers_ ?=						\
-    To: info-gnu@gnu.org						\
-    Cc: $(announcement_Cc_)						\
-    Mail-Followup-To: $(PACKAGE_BUGREPORT)
-else
-  announcement_Cc_ ?= $(translation_project_)
-  announcement_mail_headers_ ?=						\
-    To: $(PACKAGE_BUGREPORT)						\
-    Cc: $(announcement_Cc_)
-endif
+announcement_Cc_stable = $(translation_project_), $(PACKAGE_BUGREPORT)
+announcement_mail_headers_stable =		\
+  To: info-gnu@gnu.org				\
+  Cc: $(announcement_Cc_)			\
+  Mail-Followup-To: $(PACKAGE_BUGREPORT)
 
+announcement_Cc_alpha = $(translation_project_)
+announcement_mail_headers_alpha =		\
+  To: $(PACKAGE_BUGREPORT)			\
+  Cc: $(announcement_Cc_)
+
+announcement_mail_Cc_beta = $(announcement_mail_Cc_alpha)
+announcement_mail_headers_beta = $(announcement_mail_headers_alpha)
+
+announcement_mail_Cc_ ?= $(announcement_mail_Cc_$(release-type))
+announcement_mail_headers_ ?= $(announcement_mail_headers_$(release-type))
 announcement: NEWS ChangeLog $(rel-files)
 # Not $(AM_V_GEN) since the output of this command serves as
 # annoucement message: it would start with " GEN announcement".
@@ -1411,7 +1418,8 @@ alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	$(AM_V_at)$(MAKE) $(release-prep-hook) RELEASE_TYPE=$@
 	$(AM_V_at)$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 
-release: $(release-type)
+release:
+	$(AM_V_GEN)$(MAKE) $(release-type)
 
 # Override this in cfg.mk if you follow different procedures.
 release-prep-hook ?= release-prep
