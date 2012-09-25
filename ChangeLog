@@ -1,3 +1,10 @@
+2012-09-28  Akim Demaille  <akim@lrde.epita.fr>
+
+	extern-inline: provide a -Wundef safe config.h
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE): Protect
+	"#if __GNUC_STDC_INLINE__" with "defined __GNUC_STDC_INLINE__"
+	to produce a -Wundef warning free config.h.
+
 2012-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	hash-pjw: relax license to LGPLv2+
