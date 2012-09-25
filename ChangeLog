@@ -1,5 +1,20 @@
 2012-09-25  Akim Demaille  <akim@lrde.epita.fr>
 
+	maint.mk: fix strict vs. lazy variable issues with RELEASE
+	* top/maint.mk (equal): New function.
+	(member_check): Strip the result to avoid spurious spaces.
+	(url_dir_list): Do not use ifeq, which is strict, as it will
+	require RELEASE_TYPE to be defined.
+	(announcement_Cc_, announcement_mail_headers_): Likewise: instead
+	of relying on ifeq, use $(release_type) to dispatch (lazily) onto...
+	(announcement_Cc_alpha,announcement_mail_headers_alpha)
+	(announcement_Cc_beta,announcement_mail_headers_beta)
+	(announcement_Cc_stable,announcement_mail_headers_stable): these.
+	(release): Do not depend on $(release-type), as it forces its
+	evaluation.  Bounce to it.
+
+2012-09-25  Akim Demaille  <akim@lrde.epita.fr>
+
 	maint.mk: formatting changes
 	* top/maint.mk: Indent bodies of if's.
 
