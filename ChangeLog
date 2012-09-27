@@ -1,3 +1,8 @@
+2012-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	hash-pjw: relax license to LGPLv2+
+	* modules/hash-pjw (License): Relax, with consent of author.
+
 2012-09-25  Akim Demaille  <akim@lrde.epita.fr>
 
 	maint.mk: fix strict vs. lazy variable issues with RELEASE
