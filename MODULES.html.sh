@@ -2011,6 +2011,7 @@ func_all_modules ()
   func_module obstack-printf
   func_module obstack-printf-posix
   func_module hash-pjw
+  func_module hash-pjw-bare
   func_module hash
   func_module readline
   func_module readtokens

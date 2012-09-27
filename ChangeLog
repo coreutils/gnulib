@@ -1,3 +1,11 @@
+2012-10-02:  Nikos Mavrogiannopoulos  <nmav@gnutls.org>  (tiny change)
+
+	hash-pjw-bare: new module
+	* lib/hash-pjw-bare.c: New file, very much like hash-pjw.c.
+	* lib/hash-pjw-bare.h: Likewise.
+	* modules/hash-pjw-bare: New file.
+	* MODULES.html.sh (Misc): Add it.
+
 2012-10-02  Eric Blake  <eblake@redhat.com>
 
 	manywarnings: cater to more gcc infelicities
