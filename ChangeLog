@@ -3,6 +3,7 @@
 	fstatat.c: fix a compile-impeding typo
 	* lib/fstatat.c (FSTATAT_INLINE): Fix typo: s/#include/#define/
 	Introduced in commit v0.0-7636-gd202279.
+	Mats Erik Andersson reported the resulting OpenBSD compilation failure.
 
 2012-09-28  Akim Demaille  <akim@lrde.epita.fr>
 
