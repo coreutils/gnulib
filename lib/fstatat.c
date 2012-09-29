@@ -23,7 +23,7 @@
 #define __need_system_sys_stat_h
 #include <config.h>
 
-#include FSTATAT_INLINE _GL_EXTERN_INLINE
+#define FSTATAT_INLINE _GL_EXTERN_INLINE
 
 /* Get the original definition of fstatat.  It might be defined as a macro.  */
 #include <sys/types.h>
