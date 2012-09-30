@@ -1,5 +1,12 @@
 2012-09-30  Bruno Haible  <bruno@clisp.org>
 
+	localeconv tests: Avoid test failure on OpenIndiana.
+	* tests/test-localeconv.c (main): On OpenIndiana (a Solaris 11 variant)
+	skip the 'grouping' and 'mon_grouping' tests.
+	Reported by Jim Meyering.
+
+2012-09-30  Bruno Haible  <bruno@clisp.org>
+
 	havelib: Follow libtool developments.
 	* m4/lib-ld.m4: Rebase on libtool.m4 from libtool-2.4.
 	Suggested by Simon Josefsson.
