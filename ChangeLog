@@ -1,3 +1,9 @@
+2012-09-30  Bruno Haible  <bruno@clisp.org>
+
+	havelib: Follow libtool developments.
+	* m4/lib-ld.m4: Rebase on libtool.m4 from libtool-2.4.
+	Suggested by Simon Josefsson.
+
 2012-09-29  Jim Meyering  <meyering@redhat.com>
 
 	fstatat.c: fix a compile-impeding typo
