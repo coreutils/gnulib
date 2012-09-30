@@ -1,3 +1,13 @@
+2012-09-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sockets, sys_stat: restore AC_C_INLINE
+	This undoes the 2012-09-22 patch.
+	* m4/sockets.m4 (gl_SOCKETS):
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H):
+	Restore AC_C_INLINE, since MSVC requires __inline or _inline
+	and does not support plain 'inline'.  Reported by Bruno Haible in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-09/msg00183.html>.
+
 2012-09-30  Bruno Haible  <bruno@clisp.org>
 
 	localeconv tests: Avoid test failure on OpenIndiana.
