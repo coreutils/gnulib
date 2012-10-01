@@ -96,6 +96,9 @@ open_server_socket ()
 
   s = socket (AF_INET, SOCK_STREAM, 0);
 
+  x = 1;
+  setsockopt (s, SOL_SOCKET, SO_REUSEPORT, &x, sizeof (x));
+
   memset (&ia, 0, sizeof (ia));
   ia.sin_family = AF_INET;
   inet_pton (AF_INET, "127.0.0.1", &ia.sin_addr);
@@ -105,9 +108,6 @@ open_server_socket ()
       perror ("bind");
       exit (77);
     }
-
-  x = 1;
-  setsockopt (s, SOL_SOCKET, SO_REUSEPORT, &x, sizeof (x));
 
   if (listen (s, 1) < 0)
     {

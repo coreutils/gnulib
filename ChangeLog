@@ -1,3 +1,10 @@
+2012-10-01  Ed Maste  <emaste@freebsd.org>  (tiny change)
+
+	select, poll tests: Make setsockopt invocation effective.
+	* tests/test-poll.c (open_server_socket): Move setsockopt() call before
+	the bind() call.
+	* tests/test-select.h (open_server_socket): Likewise.
+
 2012-09-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sockets, sys_stat: restore AC_C_INLINE
