@@ -8,6 +8,7 @@ m4/select.m4
 Depends-on:
 sys_select
 alloca          [test $REPLACE_SELECT = 1]
+dup2            [test $REPLACE_SELECT = 1]
 sockets         [test $REPLACE_SELECT = 1]
 sys_time        [test $REPLACE_SELECT = 1]
 msvc-nothrow    [test $REPLACE_SELECT = 1]

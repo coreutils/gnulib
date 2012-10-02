@@ -507,6 +507,8 @@ restart:
 
 #include <sys/select.h>
 #include <stddef.h> /* NULL */
+#include <errno.h>
+#include <unistd.h>
 
 #undef select
 
@@ -514,6 +516,23 @@ int
 rpl_select (int nfds, fd_set *rfds, fd_set *wfds, fd_set *xfds,
             struct timeval *timeout)
 {
+  int i;
+
+  /* FreeBSD 8.2 has a bug: it does not always detect invalid fds.  */
+  if (nfds < 0 || nfds > FD_SETSIZE)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+  for (i = 0; i < nfds; i++)
+    {
+      if (((rfds && FD_ISSET (i, rfds))
+           || (wfds && FD_ISSET (i, wfds))
+           || (xfds && FD_ISSET (i, xfds)))
+          && dup2 (i, i) != i)
+        return -1;
+    }
+
   /* Interix 3.5 has a bug: it does not support nfds == 0.  */
   if (nfds == 0)
     {
