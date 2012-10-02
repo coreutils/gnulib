@@ -9,6 +9,7 @@ Depends-on:
 sys_select
 pthread_sigmask [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1]
 select          [test $HAVE_PSELECT = 0 || test $REPLACE_PSELECT = 1]
+dup2            [test $REPLACE_PSELECT = 1]
 
 configure.ac:
 gl_FUNC_PSELECT

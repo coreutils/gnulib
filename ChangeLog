@@ -1,5 +1,11 @@
 2012-10-02  Eric Blake  <eblake@redhat.com>
 
+	pselect: reject invalid file descriptors
+	* m4/pselect.m4 (gl_FUNC_PSELECT): Probe for FreeBSD bug.
+	* lib/pselect.c (rpl_pselect) [!win32]: Work around it.
+	* modules/pselect (Depends-on): Add dup2.
+	* doc/posix-functions/pselect.texi (pselect): Document this.
+
 	select: reject invalid file descriptors
 	* m4/select.m4 (gl_FUNC_SELECT): Probe for FreeBSD bug.
 	* lib/select.c (rpl_select) [!win32]: Work around it.
