@@ -1,3 +1,14 @@
+2012-10-02  Eric Blake  <eblake@redhat.com>
+
+	ptsname: reject invalid file descriptors
+	http://www.austingroupbugs.net/view.php?id=503
+	* m4/ptsname.m4 (gl_FUNC_PTSNAME): Probe for FreeBSD bug.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS): Add new witness.
+	* modules/stdlib (Makefile.am): Replace witness.
+	* lib/stdlib.in.h (ptsname): Allow for replacement.
+	* modules/ptsname (configure.ac): Trigger replacement.
+	* doc/posix-functions/ptsname.texi (ptsname): Document this.
+
 2012-10-02:  Nikos Mavrogiannopoulos  <nmav@gnutls.org>  (tiny change)
 
 	hash-pjw-bare: new module

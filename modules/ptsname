@@ -12,7 +12,7 @@ ptsname_r       [test $HAVE_PTSNAME = 0]
 
 configure.ac:
 gl_FUNC_PTSNAME
-if test $HAVE_PTSNAME = 0; then
+if test $HAVE_PTSNAME = 0 || test $REPLACE_PTSNAME = 1; then
   AC_LIBOBJ([ptsname])
   gl_PREREQ_PTSNAME
 fi
