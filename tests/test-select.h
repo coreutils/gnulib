@@ -227,6 +227,29 @@ test_tty (select_fn my_select)
 #endif
 
 
+static int
+do_select_bad_nfd_nowait (int nfd, select_fn my_select)
+{
+  struct timeval tv0;
+  tv0.tv_sec = 0;
+  tv0.tv_usec = 0;
+  errno = 0;
+  return my_select (nfd, NULL, NULL, NULL, &tv0);
+}
+
+static void
+test_bad_nfd (select_fn my_select)
+{
+  if (do_select_bad_nfd_nowait (-1, my_select) != -1 || errno != EINVAL)
+    failed ("invalid errno after negative nfds");
+  /* Can't test FD_SETSIZE + 1 for EINVAL, since some systems allow
+     dynamically larger set size by redefining FD_SETSIZE anywhere up
+     to the actual maximum fd.  */
+  /* if (do_select_bad_nfd_nowait (FD_SETSIZE + 1, my_select) != -1 */
+  /*     || errno != EINVAL) */
+  /*   failed ("invalid errno after bogus nfds"); */
+}
+
 /* Test select(2) on invalid file descriptors.  */
 
 static int
@@ -243,6 +266,7 @@ do_select_bad_fd (int fd, int ev, struct timeval *timeout, select_fn my_select)
     FD_SET (fd, &wfds);
   if (ev & SEL_EXC)
     FD_SET (fd, &xfds);
+  errno = 0;
   return my_select (fd + 1, &rfds, &wfds, &xfds, timeout);
   /* In this case, when fd is invalid, on some platforms, the bit for fd
      is left alone in the fd_set, whereas on other platforms it is cleared.
@@ -426,6 +450,7 @@ test_function (select_fn my_select)
   test (test_tty, "TTY", my_select);
 #endif
 
+  result += test (test_bad_nfd, my_select, "Invalid nfd test");
   result += test (test_bad_fd, my_select, "Invalid fd test");
   result += test (test_connect_first, my_select, "Unconnected socket test");
   result += test (test_socket_pair, my_select, "Connected sockets test");

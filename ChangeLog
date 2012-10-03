@@ -1,5 +1,11 @@
 2012-10-02  Eric Blake  <eblake@redhat.com>
 
+	select: enhance test
+	* tests/test-select.h (do_select_bad_nfd_nowait, test_bad_nfd):
+	New functions.
+	(test_function): Enhance test.
+	(do_select_bad_fd): Avoid any stale errno values.
+
 	ptsname: reject invalid file descriptors
 	http://www.austingroupbugs.net/view.php?id=503
 	* m4/ptsname.m4 (gl_FUNC_PTSNAME): Probe for FreeBSD bug.
