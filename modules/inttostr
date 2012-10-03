@@ -30,7 +30,7 @@ Include:
 "inttostr.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paul Eggert

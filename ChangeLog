@@ -1,3 +1,8 @@
+2012-10-03  Simon Josefsson  <simon@josefsson.org>
+
+	inttostr: Relax license.
+	* modules/inttostr (License): Change from LGPL to LGPLv2+.
+
 2012-10-03  Eric Blake  <eblake@redhat.com>
 
 	ptsname_r: support ptys returned by FreeBSD posix_openpt
