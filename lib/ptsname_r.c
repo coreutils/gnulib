@@ -177,7 +177,8 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       return errno;
     }
 
-  buf[sizeof (_PATH_DEV) - 1] = 't';
+  if (strncmp(buf, "/dev/pts/", strlen("/dev/pts/")) != 0)
+    buf[sizeof (_PATH_DEV) - 1] = 't';
 #endif
 
   if (__stat (buf, &st) < 0)

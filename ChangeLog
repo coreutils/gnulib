@@ -1,3 +1,9 @@
+2012-10-03  Eric Blake  <eblake@redhat.com>
+
+	ptsname_r: support ptys returned by FreeBSD posix_openpt
+	* lib/ptsname_r.c (__ptsname_r): Don't munge name if it already
+	lives in /dev/pts/.
+
 2012-10-02  Eric Blake  <eblake@redhat.com>
 
 	pselect: reject invalid file descriptors
