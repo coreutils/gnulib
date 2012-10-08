@@ -1,3 +1,8 @@
+2012-10-08  Alexandre Duret-Lutz  <adl@lrde.epita.fr>  (tiny change)
+
+	gethrxtime: port to C++
+	* lib/gethrxtime.h, lib/xtime.h [__cplusplus]: Add extern "C".
+
 2012-10-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ptsname: fix macro-name typo

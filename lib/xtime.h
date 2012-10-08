@@ -37,6 +37,10 @@ typedef long int xtime_t;
 #  endif
 # endif
 
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
 /* Return an extended time value that contains S seconds and NS
    nanoseconds, without any overflow checking.  */
 static inline xtime_t
@@ -82,5 +86,9 @@ xtime_nsec (xtime_t t)
     ns += XTIME_PRECISION;
   return ns;
 }
+
+#ifdef  __cplusplus
+}
+#endif
 
 #endif
