@@ -21,52 +21,49 @@
 /* Specification.  */
 #include <unistd.h>
 
-#include <stdbool.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <stdlib.h>
 
-#include "xalloc.h"
+#include "xalloc-oversized.h"
+
+/* Most processes have no more than this many groups, and for these
+   processes we can avoid using malloc.  */
+enum { GROUPBUF_SIZE = 100 };
 
 struct group_info
   {
-    int n_groups;
     gid_t *group;
+    gid_t groupbuf[GROUPBUF_SIZE];
   };
 
 static void
 free_group_info (struct group_info const *g)
 {
-  free (g->group);
+  if (g->group != g->groupbuf)
+    free (g->group);
 }
 
-static bool
+static int
 get_group_info (struct group_info *gi)
 {
-  int n_groups;
-  int n_group_slots = getgroups (0, NULL);
-  gid_t *group;
+  int n_groups = getgroups (GROUPBUF_SIZE, gi->groupbuf);
+  gi->group = gi->groupbuf;
 
-  if (n_group_slots < 0)
-    return false;
-
-  /* Avoid xnmalloc, as it goes awry when SIZE_MAX < n_group_slots.  */
-  if (xalloc_oversized (n_group_slots, sizeof *group))
-    xalloc_die ();
-  group = xmalloc (n_group_slots * sizeof *group);
-  n_groups = getgroups (n_group_slots, group);
-
-  /* In case of error, the user loses. */
   if (n_groups < 0)
     {
-      free (group);
-      return false;
+      int n_group_slots = getgroups (0, NULL);
+      if (0 <= n_group_slots
+          && ! xalloc_oversized (n_group_slots, sizeof *gi->group))
+        {
+          gi->group = malloc (n_group_slots * sizeof *gi->group);
+          if (gi->group)
+            n_groups = getgroups (n_group_slots, gi->group);
+        }
     }
 
-  gi->n_groups = n_groups;
-  gi->group = group;
-
-  return true;
+  /* In case of error, the user loses.  */
+  return n_groups;
 }
 
 /* Return non-zero if GID is one that we have in our groups list.
@@ -80,13 +77,11 @@ group_member (gid_t gid)
   int i;
   int found;
   struct group_info gi;
-
-  if (! get_group_info (&gi))
-    return 0;
+  int n_groups = get_group_info (&gi);
 
   /* Search through the list looking for GID. */
   found = 0;
-  for (i = 0; i < gi.n_groups; i++)
+  for (i = 0; i < n_groups; i++)
     {
       if (gid == gi.group[i])
         {

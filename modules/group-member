@@ -8,9 +8,8 @@ m4/group-member.m4
 Depends-on:
 unistd
 extensions
-getgroups       [test $HAVE_GROUP_MEMBER = 0]
-xalloc          [test $HAVE_GROUP_MEMBER = 0]
-stdbool         [test $HAVE_GROUP_MEMBER = 0]
+getgroups        [test $HAVE_GROUP_MEMBER = 0]
+xalloc-oversized [test $HAVE_GROUP_MEMBER = 0]
 
 configure.ac:
 gl_FUNC_GROUP_MEMBER

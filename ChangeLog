@@ -1,3 +1,22 @@
+2012-10-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	group-member: omit unnecessary dependencies
+	This is for Emacs, which has its own allocator and where we
+	don't want to use xalloc.
+	* lib/group-member.c: Include xalloc-oversized.h, not xalloc.h,
+	since we no longer use xmalloc.  Do not include stdbool.h, since
+	the changes below happen to remove the only use of bool.
+	(GROUPBUF_SIZE): New constant.
+	(struct group_info): Remove n_groups member.  Add groupbuf member.
+	This lets us get the groups without using malloc, usually.
+	(free_group_info, get_group_info): Adjust to this.
+	(get_group_info): Return the number of groups found, or -1 on error.
+	Use plain malloc not xmalloc, and treat its failure as if there
+	are no groups, as the user already loses in case of error.
+	(group_member): Simplify, based on changes to get_group_info.
+	* modules/group-member (Depends-on): Remove dependencies on
+	xalloc and stdbool.  Add dependency on xalloc-oversized.
+
 2012-10-08  Alexandre Duret-Lutz  <adl@lrde.epita.fr>  (tiny change)
 
 	gethrxtime: port to C++
