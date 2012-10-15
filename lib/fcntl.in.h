@@ -216,6 +216,10 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_EXEC O_RDONLY /* This is often close enough in older systems.  */
 #endif
 
+#ifndef O_IGNORE_CTTY
+# define O_IGNORE_CTTY 0
+#endif
+
 #ifndef O_NDELAY
 # define O_NDELAY 0
 #endif
@@ -249,8 +253,16 @@ _GL_WARN_ON_USE (openat, "openat is not portable - "
 # define O_NOFOLLOW 0
 #endif
 
+#ifndef O_NOLINK
+# define O_NOLINK 0
+#endif
+
 #ifndef O_NOLINKS
 # define O_NOLINKS 0
+#endif
+
+#ifndef O_NOTRANS
+# define O_NOTRANS 0
 #endif
 
 #ifndef O_RSYNC

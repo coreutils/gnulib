@@ -45,8 +45,9 @@ portability to native Windows platforms) are defined on some platforms but
 not on others.
 
 @item
-@samp{O_DIRECT}, @samp{O_NDELAY}, @samp{O_NOATIME},
-and @samp{O_NOLINKS} (not specified by POSIX) are defined
+@samp{O_DIRECT}, @samp{O_IGNORE_CTTY}, @samp{O_NDELAY},
+@samp{O_NOATIME}, @samp{O_NOLINK}, @samp{O_NOLINKS}, and
+@samp{O_NOTRANS} (not specified by POSIX) are defined
 on some platforms but not on others.
 
 @item
@@ -77,7 +78,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
-@samp{F_SETLK}, @samp{F_SETLOKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
+@samp{F_SETLK}, @samp{F_SETLKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
 are not defined on some platforms:
 mingw, MSVC 9.
 

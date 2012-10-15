@@ -21,9 +21,9 @@
 #include <fcntl.h>
 
 /* Check that the various O_* macros are defined.  */
-int o = O_DIRECT | O_DIRECTORY | O_DSYNC | O_NDELAY | O_NOATIME | O_NONBLOCK
-        | O_NOCTTY | O_NOFOLLOW | O_NOLINKS | O_RSYNC | O_SYNC | O_TTY_INIT
-        | O_BINARY | O_TEXT;
+int o = (O_DIRECT | O_DIRECTORY | O_DSYNC | O_IGNORE_CTTY | O_NDELAY | O_NOATIME
+	 | O_NONBLOCK | O_NOCTTY | O_NOFOLLOW | O_NOLINK | O_NOLINKS | O_NOTRANS
+	 | O_RSYNC | O_SYNC | O_TTY_INIT | O_BINARY | O_TEXT);
 
 /* Check that the various SEEK_* macros are defined.  */
 int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };
@@ -84,6 +84,9 @@ main (void)
 #if O_DSYNC
     case O_DSYNC:
 #endif
+#if O_IGNORE_CTTY
+    case O_IGNORE_CTTY:
+#endif
 #if O_NOATIME
     case O_NOATIME:
 #endif
@@ -96,8 +99,14 @@ main (void)
 #if O_NOFOLLOW
     case O_NOFOLLOW:
 #endif
+#if O_NOLINK
+    case O_NOLINK:
+#endif
 #if O_NOLINKS
     case O_NOLINKS:
+#endif
+#if O_NOTRANS
+    case O_NOTRANS:
 #endif
 #if O_RSYNC && O_RSYNC != O_DSYNC
     case O_RSYNC:

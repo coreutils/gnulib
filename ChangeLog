@@ -1,3 +1,14 @@
+2012-10-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h: support GNU flags like O_IGNORE_CTTY
+	* doc/posix-headers/fcntl.texi (fcntl.h): Support O_IGNORE_CTTY,
+	O_NOLINK, and O_NOTRANS.  These flags are nonzero on GNU/Hurd
+	systems.  Discovered when using fcntl-h with GNU Emacs, which uses
+	O_IGNORE_CTTY.  Fix misspelling of F_SETLKW.
+	* lib/fcntl.in.h (O_IGNORE_CTTY, O_NOLINK, O_NOTRANS):
+	Define to 0 if not already defined.
+	* tests/test-fcntl-h.c: Test these new flags.
+
 2012-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	faccessat, etc.: support AT_FDCWD-only use
