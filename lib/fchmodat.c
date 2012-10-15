@@ -18,8 +18,6 @@
 
 #include <config.h>
 
-#define FCHMODAT_INLINE _GL_EXTERN_INLINE
-
 #include <sys/stat.h>
 
 #include <errno.h>

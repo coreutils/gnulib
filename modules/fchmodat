@@ -3,6 +3,7 @@ fchmodat() function: Change access permissions of a file at a directory.
 
 Files:
 lib/fchmodat.c
+lib/chmodat.c
 lib/at-func.c
 m4/fchmodat.m4
 
@@ -28,6 +29,7 @@ gl_MODULE_INDICATOR([fchmodat]) dnl for lib/openat.h
 gl_SYS_STAT_MODULE_INDICATOR([fchmodat])
 
 Makefile.am:
+lib_SOURCES += chmodat.c
 
 Include:
 <sys/stat.h>

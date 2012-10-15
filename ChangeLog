@@ -1,3 +1,18 @@
+2012-10-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fchmodat, fchownat, fstatat: port to non-inlining compilers
+	Problem reported for FreeBSD 9 by Jim Meyering in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-10/msg00070.html>.
+	* lib/chmodat.c, lib/chownat.c, lib/statat.c:
+	New files, which define FCHMODAT_INLINE etc.
+	* lib/fchmodat.c (FCHMODAT_INLINE):
+	* lib/fchownat.c (FCHOWNAT_INLINE):
+	* lib/fstatat.c (FSTATAT_INLINE):
+	Remove, as chmodat.c etc. now do this.
+	* modules/fchmodat (Files): Add lib/chmodat.c.
+	* modules/fchownat (Files): Add lib/chownat.c.
+	* modules/fstatat (Files): Add lib/statat.c.
+
 2012-10-15  Jim Meyering  <jim@meyering.net>
 
 	fchmodat.c, fchownat.c: compile-impeding typos

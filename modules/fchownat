@@ -3,6 +3,7 @@ fchownat() function: Change the owner of a file at a directory.
 
 Files:
 lib/fchownat.c
+lib/chownat.c
 lib/at-func.c
 m4/fchownat.m4
 
@@ -30,6 +31,7 @@ gl_MODULE_INDICATOR([fchownat]) dnl for lib/openat.h
 gl_UNISTD_MODULE_INDICATOR([fchownat])
 
 Makefile.am:
+lib_SOURCES += chownat.c
 
 Include:
 <unistd.h>
