@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 # See if we need to provide faccessat replacement.
 
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
@@ -24,5 +24,5 @@ AC_DEFUN([gl_FUNC_FACCESSAT],
 # Prerequisites of lib/faccessat.m4.
 AC_DEFUN([gl_PREREQ_FACCESSAT],
 [
-  AC_CHECK_FUNCS_ONCE([access])
+  AC_CHECK_FUNCS([access])
 ])

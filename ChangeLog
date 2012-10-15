@@ -1,5 +1,12 @@
 2012-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	faccessat: speed up 'configure' on mainstream hosts
+	* m4/faccessat.m4 (gl_PREREQ_FACCESSAT):
+	Use AT_CHECK_FUNCS for 'access', not AC_CHECK_FUNCS_ONCE,
+	since it's only on unusual platforms that we need to check for
+	'access', and it's better not to slow 'configure' down on all
+	platforms.
+
 	faccessat: port to Solaris 10
 	* lib/faccessat.c: Include <fcntl.h>, for AT_EACCESS.
 	Needed on Solaris 10, which doesn't have AT_EACCESS,
