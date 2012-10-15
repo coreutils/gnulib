@@ -4,7 +4,6 @@ faccessat() function: check user's permissions for a file.
 Files:
 lib/faccessat.c
 lib/at-func.c
-lib/openat-priv.h
 m4/faccessat.m4
 
 Depends-on:

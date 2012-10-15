@@ -4,7 +4,6 @@ mkdirat() function: Create a directory relative to a given directory.
 Files:
 lib/mkdirat.c
 lib/at-func.c
-lib/openat-priv.h
 m4/mkdirat.m4
 
 Depends-on:

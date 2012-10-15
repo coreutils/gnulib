@@ -4,7 +4,6 @@ unlinkat() function: Remove a file at a directory.
 Files:
 lib/unlinkat.c
 lib/at-func.c
-lib/openat-priv.h
 m4/unlinkat.m4
 m4/lstat.m4
 

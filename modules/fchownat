@@ -4,7 +4,6 @@ fchownat() function: Change the owner of a file at a directory.
 Files:
 lib/fchownat.c
 lib/at-func.c
-lib/openat-priv.h
 m4/fchownat.m4
 
 Depends-on:

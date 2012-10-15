@@ -4,7 +4,6 @@ fstatat() function: Return information about a file at a directory.
 Files:
 lib/fstatat.c
 lib/at-func.c
-lib/openat-priv.h
 m4/fstatat.m4
 m4/lstat.m4
 

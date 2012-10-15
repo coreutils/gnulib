@@ -1,5 +1,18 @@
 2012-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	faccessat, etc.: support AT_FDCWD-only use
+	* lib/at-func.c: If GNULIB_SUPPORT_ONLY_AT_FDCWD, then support
+	this function only if its first argument is AT_FDCWD.
+	Emacs wants faccessat for AT_EACCESS but not for any first-arg
+	values other than AT_FDCWD, so it doesn't want all the openat
+	machinery with fchdir etc.
+	* modules/faccessat, modules/fchmodat, modules/fchownat (Files):
+	* modules/fstatat, modules/mkdirat, modules/openat (Files):
+	* modules/unlinkat (Files):
+	Remove lib/openat-priv.h, as at-internal supplies this file.
+	Removing this file here allows us to support programs like Emacs
+	that avoid at-internal.
+
 	faccessat: speed up 'configure' on mainstream hosts
 	* m4/faccessat.m4 (gl_PREREQ_FACCESSAT):
 	Use AT_CHECK_FUNCS for 'access', not AC_CHECK_FUNCS_ONCE,
