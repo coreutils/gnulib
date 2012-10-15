@@ -19,6 +19,7 @@
 #include <config.h>
 
 #include <unistd.h>
+#include <fcntl.h>
 
 #ifndef HAVE_ACCESS
 /* Mingw lacks access, but it also lacks real vs. effective ids, so

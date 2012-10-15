@@ -1,3 +1,10 @@
+2012-10-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	faccessat: port to Solaris 10
+	* lib/faccessat.c: Include <fcntl.h>, for AT_EACCESS.
+	Needed on Solaris 10, which doesn't have AT_EACCESS,
+	so we need the Gnulib fcntl.h, which defines it.
+
 2012-10-14  Pádraig Brady  <P@draigBrady.com>
 	canonicalize: fix C89 compilation
 	* lib/canonicalize.c (canonicalize_filename_mode): Swap order of
