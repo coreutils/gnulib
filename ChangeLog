@@ -1,3 +1,11 @@
+2012-10-14  Pádraig Brady  <P@draigBrady.com>
+	canonicalize: fix C89 compilation
+	* lib/canonicalize.c (canonicalize_filename_mode): Swap order of
+	declarations so C89 is supported.  Also remove the comment
+	referencing memorty allocation as the suggested feature could
+	not be implemented as suggested.
+	Reported by Michael Goffioul.
+
 2012-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	group-member: omit unnecessary dependencies

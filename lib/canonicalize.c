@@ -99,9 +99,9 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
   Hash_table *ht = NULL;
   int saved_errno;
   int can_flags = can_mode & ~CAN_MODE_MASK;
-  can_mode &= CAN_MODE_MASK;
   bool logical = can_flags & CAN_NOLINKS;
-  /* Perhaps in future we might support CAN_NOALLOC with CAN_NOLINKS.  */
+
+  can_mode &= CAN_MODE_MASK;
 
   if (MULTIPLE_BITS_SET (can_mode))
     {
