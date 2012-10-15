@@ -1,3 +1,10 @@
+2012-10-15  Jim Meyering  <jim@meyering.net>
+
+	fchmodat.c, fchownat.c: compile-impeding typos
+	* lib/fchmodat.c (FCHMODAT_INLINE): Fix typo: s/#include/#define/
+	* lib/fchownat.c (FCHOWNAT_INLINE): Likewise.
+	Introduced in commit v0.0-7636-gd202279.
+
 2012-10-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h: support GNU flags like O_IGNORE_CTTY
