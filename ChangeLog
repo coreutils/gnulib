@@ -1,3 +1,7 @@
+2012-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/regexec.c (re_search_internal): Fix grammar in comment.
+
 2012-10-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fchmodat, fchownat, fstatat: port to non-inlining compilers

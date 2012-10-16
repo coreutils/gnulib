@@ -735,7 +735,7 @@ re_search_internal (const regex_t *preg,
   mctx.input.tip_context = (eflags & REG_NOTBOL) ? CONTEXT_BEGBUF
 			   : CONTEXT_NEWLINE | CONTEXT_BEGBUF;
 
-  /* Check incrementally whether of not the input string match.  */
+  /* Check incrementally whether the input string matches.  */
   incr = (last_start < start) ? -1 : 1;
   left_lim = (last_start < start) ? last_start : start;
   right_lim = (last_start < start) ? start : last_start;
