@@ -1,5 +1,13 @@
 2012-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	euidaccess: speed up 'configure' on GNU hosts
+	* m4/euidaccess.m4 (gl_FUNC_NONREENTRANT_EUIDACCESS):
+	Check for setregid here, not in gl_PREREQ_EUIDACCESS, since
+	it's needed only in this case.  Use AC_CHECK_DECLS, not
+	AC_CHECK_DECLS_ONCE.
+	(gl_PREREQ_EUIDACCESS): Do not use AC_CHECK_HEADERS_ONCE libgen.h
+	or AC_REQUIRE for AC_FUNC_GETGROUPS.
+
 	* lib/regexec.c (re_search_internal): Fix grammar in comment.
 
 2012-10-15  Paul Eggert  <eggert@cs.ucla.edu>
