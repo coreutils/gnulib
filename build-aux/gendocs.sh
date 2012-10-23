@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2012-09-02.17
+scriptversion=2012-10-23.16
 
 # Copyright 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012
 # Free Software Foundation, Inc.
@@ -66,6 +66,7 @@ discussion:
 Options:
   -s SRCFILE  read Texinfo from SRCFILE, instead of PACKAGE.{texinfo|texi|txi}
   -o OUTDIR   write files into OUTDIR, instead of manual/.
+  -I DIR      append DIR to the Texinfo search path.
   --email ADR use ADR as contact in generated web pages.
   --docbook   convert to DocBook too (xml, txt, html, pdf and ps).
   --html ARG  pass indicated ARG to makeinfo or texi2html for HTML targets.
@@ -130,6 +131,7 @@ calcsize()
 MANUAL_TITLE=
 PACKAGE=
 EMAIL=webmasters@gnu.org  # please override with --email
+commonarg= # Options passed to all the tools (-I dir).
 htmlarg=
 infoarg=--no-split
 outdir=manual
@@ -142,6 +144,7 @@ while test $# -gt 0; do
     --version) echo "$version"; exit 0;;
     -s) shift; srcfile=$1;;
     -o) shift; outdir=$1;;
+    -I) shift; commonarg="$commonarg -I '$1'";;
     --docbook) docbook=yes;;
     --html) shift; htmlarg=$1;;
     --info) shift; infoarg=$1;;
@@ -197,7 +200,7 @@ esac
 
 echo "Generating output formats for $srcfile"
 
-cmd="$SETLANG $MAKEINFO -o $PACKAGE.info $infoarg \"$srcfile\""
+cmd="$SETLANG $MAKEINFO -o $PACKAGE.info $commonarg $infoarg \"$srcfile\""
 echo "Generating info file(s)... ($cmd)"
 eval "$cmd"
 mkdir -p "$outdir/"
@@ -206,13 +209,13 @@ info_tgz_size=`calcsize "$outdir/$PACKAGE.info.tar.gz"`
 # do not mv the info files, there's no point in having them available
 # separately on the web.
 
-cmd="$SETLANG ${TEXI2DVI} \"$srcfile\""
+cmd="$SETLANG $TEXI2DVI $commonarg \"$srcfile\""
 echo "Generating dvi ... ($cmd)"
 eval "$cmd"
 
 # now, before we compress dvi:
 echo "Generating postscript..."
-${DVIPS} $PACKAGE -o
+$DVIPS $PACKAGE -o
 gzip -f -9 $PACKAGE.ps
 ps_gz_size=`calcsize $PACKAGE.ps.gz`
 mv $PACKAGE.ps.gz "$outdir/"
@@ -222,13 +225,14 @@ gzip -f -9 $PACKAGE.dvi
 dvi_gz_size=`calcsize $PACKAGE.dvi.gz`
 mv $PACKAGE.dvi.gz "$outdir/"
 
-cmd="$SETLANG ${TEXI2DVI} --pdf \"$srcfile\""
+cmd="$SETLANG $TEXI2DVI --pdf $commonarg \"$srcfile\""
 echo "Generating pdf ... ($cmd)"
 eval "$cmd"
 pdf_size=`calcsize $PACKAGE.pdf`
 mv $PACKAGE.pdf "$outdir/"
 
-cmd="$SETLANG $MAKEINFO -o $PACKAGE.txt --no-split --no-headers \"$srcfile\""
+opt="-o $PACKAGE.txt --no-split --no-headers $commonarg"
+cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
 echo "Generating ASCII... ($cmd)"
 eval "$cmd"
 ascii_size=`calcsize $PACKAGE.txt`
@@ -238,7 +242,7 @@ mv $PACKAGE.txt "$outdir/"
 
 html_split()
 {
-  opt="--split=$1 $htmlarg --node-files"
+  opt="--split=$1 $commonarg $htmlarg --node-files"
   cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $opt \"$srcfile\""
   echo "Generating html by $1... ($cmd)"
   eval "$cmd"
@@ -256,7 +260,7 @@ html_split()
 }
 
 if test -z "$use_texi2html"; then
-  opt="--no-split --html -o $PACKAGE.html $htmlarg"
+  opt="--no-split --html -o $PACKAGE.html $commonarg $htmlarg"
   cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
   echo "Generating monolithic html... ($cmd)"
   rm -rf $PACKAGE.html  # in case a directory is left over
@@ -266,7 +270,8 @@ if test -z "$use_texi2html"; then
   html_mono_gz_size=`calcsize "$outdir/$PACKAGE.html.gz"`
   mv $PACKAGE.html "$outdir/"
 
-  cmd="$SETLANG $MAKEINFO --html -o $PACKAGE.html $htmlarg \"$srcfile\""
+  opt="--html -o $PACKAGE.html $commonarg $htmlarg"
+  cmd="$SETLANG $MAKEINFO $opt \"$srcfile\""
   echo "Generating html by node... ($cmd)"
   eval "$cmd"
   split_html_dir=$PACKAGE.html
@@ -280,7 +285,8 @@ if test -z "$use_texi2html"; then
   mv ${split_html_dir}/*.html "$outdir/html_node/"
   rmdir ${split_html_dir}
 else
-  cmd="$SETLANG $TEXI2HTML --output $PACKAGE.html $htmlarg \"$srcfile\""
+  opt="--output $PACKAGE.html $commonarg $htmlarg"
+  cmd="$SETLANG $TEXI2HTML $opt \"$srcfile\""
   echo "Generating monolithic html... ($cmd)"
   rm -rf $PACKAGE.html  # in case a directory is left over
   eval "$cmd"
@@ -304,7 +310,8 @@ d=`dirname $srcfile`
 texi_tgz_size=`calcsize "$outdir/$PACKAGE.texi.tar.gz"`
 
 if test -n "$docbook"; then
-  cmd="$SETLANG $MAKEINFO -o - --docbook \"$srcfile\" > ${srcdir}/$PACKAGE-db.xml"
+  opt="-o - --docbook $commonarg"
+  cmd="$SETLANG $MAKEINFO $opt \"$srcfile\" > ${srcdir}/$PACKAGE-db.xml"
   echo "Generating docbook XML... ($cmd)"
   eval "$cmd"
   docbook_xml_size=`calcsize $PACKAGE-db.xml`
@@ -313,7 +320,8 @@ if test -n "$docbook"; then
   mv $PACKAGE-db.xml "$outdir/"
 
   split_html_db_dir=html_node_db
-  cmd="${DOCBOOK2HTML} -o $split_html_db_dir \"${outdir}/$PACKAGE-db.xml\""
+  opt="$commonarg -o $split_html_db_dir"
+  cmd="$DOCBOOK2HTML $opt \"${outdir}/$PACKAGE-db.xml\""
   echo "Generating docbook HTML... ($cmd)"
   eval "$cmd"
   (
@@ -326,20 +334,20 @@ if test -n "$docbook"; then
   mv ${split_html_db_dir}/*.html "$outdir/html_node_db/"
   rmdir ${split_html_db_dir}
 
-  cmd="${DOCBOOK2TXT} \"${outdir}/$PACKAGE-db.xml\""
+  cmd="$DOCBOOK2TXT \"${outdir}/$PACKAGE-db.xml\""
   echo "Generating docbook ASCII... ($cmd)"
   eval "$cmd"
   docbook_ascii_size=`calcsize $PACKAGE-db.txt`
   mv $PACKAGE-db.txt "$outdir/"
 
-  cmd="${DOCBOOK2PS} \"${outdir}/$PACKAGE-db.xml\""
+  cmd="$DOCBOOK2PS \"${outdir}/$PACKAGE-db.xml\""
   echo "Generating docbook PS... ($cmd)"
   eval "$cmd"
   gzip -f -9 -c $PACKAGE-db.ps >"$outdir/$PACKAGE-db.ps.gz"
   docbook_ps_gz_size=`calcsize "$outdir/$PACKAGE-db.ps.gz"`
   mv $PACKAGE-db.ps "$outdir/"
 
-  cmd="${DOCBOOK2PDF} \"${outdir}/$PACKAGE-db.xml\""
+  cmd="$DOCBOOK2PDF \"${outdir}/$PACKAGE-db.xml\""
   echo "Generating docbook PDF... ($cmd)"
   eval "$cmd"
   docbook_pdf_size=`calcsize $PACKAGE-db.pdf`
