@@ -1122,10 +1122,10 @@ fix_po_file_diag = \
 apply the above patch\n'
 
 # Verify that all source files using _() (more specifically, files that
-# contain the ERE translation-markers) are listed in po/POTFILES.in.
+# match $(_gl_translatable_string_re)) are listed in po/POTFILES.in.
 po_file ?= $(srcdir)/po/POTFILES.in
 generated_files ?= $(srcdir)/lib/*.[ch]
-translation-markers ?= \b(N?_|gettext *)\([^)"]*("|$$)
+_gl_translatable_string_re ?= \b(N?_|gettext *)\([^)"]*("|$$)
 sc_po_check:
 	@if test -f $(po_file); then					\
 	  grep -E -v '^(#|$$)' $(po_file)				\
@@ -1145,7 +1145,7 @@ sc_po_check:
 	    esac;							\
 	    files="$$files $$file";					\
 	  done;								\
-	  grep -E -l '$(translation-markers)' $$files			\
+	  grep -E -l '$(_gl_translatable_string_re)' $$files		\
 	    | sed 's|^$(_dot_escaped_srcdir)/||' | sort -u > $@-2;	\
 	  diff -u -L $(po_file) -L $(po_file) $@-1 $@-2			\
 	    || { printf '$(ME): '$(fix_po_file_diag) 1>&2; exit 1; };	\

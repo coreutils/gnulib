@@ -1,3 +1,10 @@
+2012-10-28  Jim Meyering  <jim@meyering.net>
+
+	maint.mk: rename a new configurable variable
+	* top/maint.mk (_gl_translatable_string_re): Rename from
+	translation-markers: _gl_ prefix to insulate from user Makefile code,
+	and the _re suffix to inform that it's a regular expression.
+
 2012-10-26  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: let packages tweak sc_po_check pattern
