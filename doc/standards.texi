@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate June 30, 2012
+@set lastupdate October 27, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -4063,6 +4063,7 @@ ignore most of its arguments.
 @section Making Releases
 @cindex packaging
 
+@cindex version numbers, for releases
 You should identify each release with a pair of version numbers, a
 major version and a minor.  We have no objection to using more than
 two numbers, but it is very unlikely that you really need them.
@@ -4079,20 +4080,28 @@ and never changed automatically; non-source files are produced from
 source files by programs under the control of the Makefile.
 
 @cindex @file{README} file
-The distribution should contain a file named @file{README} which gives
-the name of the package, and a general description of what it does.  It
-is also good to explain the purpose of each of the first-level
-subdirectories in the package, if there are any.  The @file{README} file
-should either state the version number of the package, or refer to where
-in the package it can be found.
+The distribution should contain a file named @file{README} with a
+general overview of the package:
 
-The @file{README} file should refer to the file @file{INSTALL}, which
-should contain an explanation of the installation procedure.
+@itemize
+@item the name of the package;
 
-The @file{README} file should also refer to the file which contains the
-copying conditions.  The GNU GPL, if used, should be in a file called
-@file{COPYING}.  If the GNU LGPL is used, it should be in a file called
+@item the version number of the package, or refer to where in the
+package the version can be found;
+
+@item a general description of what the package does;
+
+@item a reference to the the file @file{INSTALL}, which
+should in turn contain an explanation of the installation procedure;
+
+@item a brief explanation of any unusual top-level directories or
+files, or other hints for readers to find their way around the source;
+
+@item a reference to the file which contains the copying conditions.
+The GNU GPL, if used, should be in a file called @file{COPYING}.  If
+the GNU LGPL is used, it should be in a file called
 @file{COPYING.LESSER}.
+@end itemize
 
 Naturally, all the source files must be in the distribution.  It is
 okay to include non-source files in the distribution along with the
@@ -4100,9 +4109,10 @@ source files they are generated from, provided they are up-to-date
 with the source they are made from, and machine-independent, so that
 normal building of the distribution will never modify them.  We
 commonly include non-source files produced by Autoconf, Automake,
-Bison, @code{lex}, @TeX{}, and @code{makeinfo}; this helps avoid
+Bison, @code{flex}, @TeX{}, and @code{makeinfo}; this helps avoid
 unnecessary dependencies between our distributions, so that users can
-install whichever packages they want to install.
+install whichever versions of whichever packages they like.  Do not
+induce new dependencies on other software lightly.
 
 Non-source files that might actually be modified by building and
 installing the program should @strong{never} be included in the

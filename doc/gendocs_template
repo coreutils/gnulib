@@ -45,8 +45,6 @@
     (%%ASCII_GZ_SIZE%%K bytes gzipped)</a>.</li>
 <li><a href="%%PACKAGE%%.dvi.gz">TeX dvi file
     (%%DVI_GZ_SIZE%%K bytes gzipped)</a>.</li>
-<li><a href="%%PACKAGE%%.ps.gz">PostScript file
-    (%%PS_GZ_SIZE%%K bytes gzipped)</a>.</li>
 <li><a href="%%PACKAGE%%.pdf">PDF file
     (%%PDF_SIZE%%K bytes)</a>.</li>
 <li><a href="%%PACKAGE%%.texi.tar.gz">Texinfo source
