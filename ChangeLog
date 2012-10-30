@@ -1,5 +1,8 @@
 2012-10-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-raise: don't assume 199 is an invalid signal
+	* tests/test-raise.c (main): Don't assume 199 is not a signal number.
+
 	sh-quote-tests: port to Solaris 9
 	* modules/sh-quote-tests (test_sh_quote_LDADD): Add @LIBINTL@.
 	Problem reported by Dagobert Michelsen in
