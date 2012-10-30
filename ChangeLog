@@ -1,3 +1,10 @@
+2012-10-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sh-quote-tests: port to Solaris 9
+	* modules/sh-quote-tests (test_sh_quote_LDADD): Add @LIBINTL@.
+	Problem reported by Dagobert Michelsen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-10/msg00114.html>.
+
 2012-10-28  Jim Meyering  <jim@meyering.net>
 
 	maint.mk: rename a new configurable variable
