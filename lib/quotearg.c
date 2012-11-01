@@ -929,7 +929,7 @@ quotearg_custom_mem (char const *left_quote, char const *right_quote,
 }
 
 
-/* The quoting option used by quote_n and quote.  */
+/* The quoting option used by the functions of quote.h.  */
 struct quoting_options quote_quoting_options =
   {
     locale_quoting_style,
@@ -939,13 +939,25 @@ struct quoting_options quote_quoting_options =
   };
 
 char const *
-quote_n (int n, char const *name)
+quote_n_mem (int n, char const *arg, size_t argsize)
 {
-  return quotearg_n_options (n, name, SIZE_MAX, &quote_quoting_options);
+  return quotearg_n_options (n, arg, argsize, &quote_quoting_options);
 }
 
 char const *
-quote (char const *name)
+quote_mem (char const *arg, size_t argsize)
 {
-  return quote_n (0, name);
+  return quote_n_mem (0, arg, argsize);
+}
+
+char const *
+quote_n (int n, char const *arg)
+{
+  return quote_n_mem (n, arg, SIZE_MAX);
+}
+
+char const *
+quote (char const *arg)
+{
+  return quote_n (0, arg);
 }

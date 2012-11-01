@@ -1,3 +1,10 @@
+2012-11-01  Akim Demaille  <akim@lrde.epita.fr>
+
+	quote: provide a means to escape strings with nul characters
+	* lib/quote.h, lib/quotearg.c (quote_mem, quote_n_mem): New functions.
+	(quote, quote_n): Rename formal arguments for consistency with
+	quotearg.
+
 2012-10-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-raise: don't assume 199 is an invalid signal
