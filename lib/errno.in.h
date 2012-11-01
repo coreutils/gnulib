@@ -270,5 +270,10 @@
 #  define GNULIB_defined_ENOTRECOVERABLE 1
 # endif
 
+# ifndef EILSEQ
+#  define EILSEQ 2015
+#  define GNULIB_defined_EILSEQ 1
+# endif
+
 #endif /* _@GUARD_PREFIX@_ERRNO_H */
 #endif /* _@GUARD_PREFIX@_ERRNO_H */

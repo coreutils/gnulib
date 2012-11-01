@@ -1,5 +1,16 @@
 2012-11-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	errno: port to LynxOS 178 2.2.2
+	Problem reported by Joel Brobecker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-10/msg00088.html>.
+	* doc/posix-headers/errno.texi (errno.h): Document this.
+	* lib/errno.in.h (EILSEQ, GNULIB_defined_EILSEQ) [!EILSEQ]: New macros.
+	* lib/strerror-override.c, lib/strerror-override.h (strerror_override):
+	Supply a string for EILSEQ.
+	* m4/errno_h.m4 (gl_HEADER_ERRNO_H): Check for EILSEQ.
+
+2012-11-05  Paul Eggert  <eggert@cs.ucla.edu>
+
 	fcntl-h: default O_SEARCH, O_EXEC to O_PATH if available
 	Linux kernel 2.6.39 introduced O_PATH (see
 	<http://lwn.net/Articles/433854/>) and this is a better fallback

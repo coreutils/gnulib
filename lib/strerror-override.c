@@ -291,6 +291,11 @@ strerror_override (int errnum)
       return "State not recoverable";
 #endif
 
+#if GNULIB_defined_EILSEQ
+    case EILSEQ:
+      return "Invalid or incomplete multibyte or wide character";
+#endif
+
     default:
       return NULL;
     }

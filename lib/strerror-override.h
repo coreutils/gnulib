@@ -46,7 +46,8 @@
      || GNULIB_defined_EDQUOT \
      || GNULIB_defined_ECANCELED \
      || GNULIB_defined_EOWNERDEAD \
-     || GNULIB_defined_ENOTRECOVERABLE
+     || GNULIB_defined_ENOTRECOVERABLE \
+     || GNULIB_defined_EILSEQ
 extern const char *strerror_override (int errnum);
 # else
 #  define strerror_override(ignored) NULL
