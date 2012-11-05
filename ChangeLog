@@ -1,3 +1,16 @@
+2012-11-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h: default O_SEARCH, O_EXEC to O_PATH if available
+	Linux kernel 2.6.39 introduced O_PATH (see
+	<http://lwn.net/Articles/433854/>) and this is a better fallback
+	for O_SEARCH and O_EXEC than O_RDONLY, if O_PATH is available.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document this.
+	* lib/fcntl.in.h (O_EXEC, O_SEARCH) [O_PATH]: Default to O_PATH.
+	* lib/fcntl.in.h (O_ACCMODE):
+	* tests/test-fcntl-h.c (main):
+	Do not reject O_ACCMODE merely because it has more than the
+	minimal number of bits, as POSIX allows extensions here.
+
 2012-11-04  Andrew Warshall  <warshall@99main.com>  (tiny change)
 
 	mountlist: do not classify a bind-mounted dir entry as "dummy"

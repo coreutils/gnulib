@@ -61,7 +61,7 @@ main (void)
 #if O_SEARCH && O_EXEC != O_SEARCH && O_SEARCH != O_RDONLY
     case O_SEARCH:
 #endif
-      i = O_ACCMODE == (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH);
+      i = ! (~O_ACCMODE & (O_RDONLY | O_WRONLY | O_RDWR | O_EXEC | O_SEARCH));
       break;
 
       /* Everyone should have these */
