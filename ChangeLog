@@ -1,3 +1,11 @@
+2012-11-04  Andrew Warshall  <warshall@99main.com>  (tiny change)
+
+	mountlist: do not classify a bind-mounted dir entry as "dummy"
+	* lib/mountlist.c (ME_DUMMY_0): Rename from ME_DUMMY, but omit
+	the "none"-testing clause.
+	(ME_DUMMY) [MOUNTED_GETMNTENT1]: New macro to encapsulate the
+	exception for bind-mounted directories.
+
 2012-11-01  Akim Demaille  <akim@lrde.epita.fr>
 
 	quote: provide a means to escape strings with nul characters
