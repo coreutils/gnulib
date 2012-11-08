@@ -28,9 +28,10 @@ non-zero value; otherwise, the gnulib replacement is 0.
 
 @item
 @samp{O_EXEC} and @samp{O_SEARCH} are not defined on some platforms.
-On platforms such as GNU/Linux 2.6.39 and later that have @samp{O_PATH},
-Gnulib defines these macros to @samp{O_PATH}.
-On other platforms, it defines them to @samp{O_RDONLY}, which is typically 0.
+Gnulib defines these macros to @samp{O_RDONLY}, which is typically 0.
+The @samp{O_PATH} macro of GNU/Linux is not a suitable substitute, as
+fchmod fails with @samp{errno==EBADF} when invoked on a file
+descriptor that was opened with @samp{O_PATH}.
 
 @item
 @samp{O_ACCMODE} is not defined on some platforms:

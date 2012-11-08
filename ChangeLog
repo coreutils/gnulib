@@ -1,3 +1,13 @@
+2012-11-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fcntl-h: default O_SEARCH, O_EXEC back to O_RDONLY
+	O_PATH doesn't work with Linux kernel 3.6.5, as fchmod (fd, ...)
+	fails with errno == EBADF when fd is opened with O_PATH.
+	Reported by Jim Meyering in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-11/msg00026.html>.
+	* doc/posix-headers/fcntl.texi (fcntl.h): Document this.
+	* lib/fcntl.in.h (O_EXEC, O_SEARCH) [O_PATH]: Default back to O_RDONLY.
+
 2012-11-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-utimens: speed up by taking shorter naps
