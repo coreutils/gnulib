@@ -430,7 +430,7 @@ read_file_system_list (bool need_fs_type)
         me->me_mountdir = xstrdup (mnt->mnt_dir);
         me->me_type = xstrdup (mnt->mnt_type);
         me->me_type_malloced = 1;
-        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
+        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type, mnt);
         me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
         me->me_dev = dev_from_mount_options (mnt->mnt_opts);
 

@@ -1,3 +1,9 @@
+2012-11-07  Jim Meyering  <jim@meyering.net>
+
+	mountlist.c: fix a compilation failure
+	* lib/mountlist.c (read_file_system_list): Fix a compilation failure
+	I introduced while transforming commit v0.0-7683-g613bcb6
+
 2012-11-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	errno: port to LynxOS 178 2.2.2
