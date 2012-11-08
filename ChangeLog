@@ -1,3 +1,14 @@
+2012-11-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	test-utimens: speed up by taking shorter naps
+	* tests/nap.h (lt_mtime, get_mtime, nap_works, guess_delay):
+	New functions.
+	(nap): Use them, to do a better job of guessing the delay.
+	On Fedora 17 with ext4 atop md atop hard disks, this made
+	test-utimens run 10x faster, because the test napped for
+	1 ms at a time rather than 20 ms.  Reported by Stefano Lattarini in
+	<http://bugs.gnu.org/12820#11>.
+
 2012-11-07  Jim Meyering  <jim@meyering.net>
 
 	mountlist.c: fix a compilation failure
