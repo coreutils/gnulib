@@ -147,7 +147,11 @@ sub prefix ($)
    {prefix_assignment($1, $2)}gem;
 
   # These three guys escape all the other regular rules.
-  s{(charset\.alias|ref-add\.sed|ref-del\.sed)}{$prefix$1}g;
+  # Require the leading white space to avoid inserting the prefix
+  # on a line like this:
+  # charset_alias = $(DESTDIR)$(libdir)/charset.alias
+  # With $(libdir), it would be erroneous.
+  s{(\s)(charset\.alias|ref-add\.sed|ref-del\.sed)}{$1$prefix$2}g;
   # Unfortunately, as a result we sometimes have lib/lib.
   s{($prefix){2}}{$1}g;
 

@@ -1,3 +1,11 @@
+2012-11-08  Jim Meyering  <jim@meyering.net>
+
+	prefix-gnulib-mk: avoid overzealous "lib/"-prefix addition
+	* build-aux/prefix-gnulib-mk (prefix): Tighten a regexp to require
+	white space before each of the special-cased file names, to avoid
+	adding "lib/" after $(libdir)/.  Reported by Matias A. fonzo
+	in http://bugs.gnu.org/12830.
+
 2012-11-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fcntl-h: default O_SEARCH, O_EXEC back to O_RDONLY
