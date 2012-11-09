@@ -1,3 +1,13 @@
+2012-11-09  Pádraig Brady  <P@draigBrady.com>
+
+	getlogin-tests: allow errno == ENXIO
+	* tests/test-getlogin.c (main): Skip tests if getlogin fails
+	with errno == ENXIO (No controlling tty).
+	getlogin_r-tests: Likewise. Also allow errno == ENOENT
+	* tests/test-getlogin_r.c (main): Skip tests if getlogin_r fails
+	with errno == ENOENT.  This was reported to happen in various
+	situations on GNU/Linux.
+
 2012-11-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getlogin-tests: allow errno == ENOENT

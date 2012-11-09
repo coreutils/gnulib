@@ -49,6 +49,7 @@ main (void)
       /* getlogin() fails when stdin is not connected to a tty.  */
       ASSERT (errno == ENOTTY
               || errno == EINVAL /* seen on Linux/SPARC */
+              || errno == ENXIO
              );
 #if !defined __hpux /* On HP-UX 11.11 it fails anyway.  */
       ASSERT (! isatty (0));
