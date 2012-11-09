@@ -48,7 +48,6 @@ static int
 nap_works (int fd, int delay, struct stat *st)
 {
   struct stat old_st;
-  int result = 0;
   old_st = *st;
   usleep (delay);
   get_mtime (fd, st, 1);

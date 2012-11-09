@@ -1,5 +1,8 @@
 2012-11-08  Jim Meyering  <jim@meyering.net>
 
+	tests/nap.h: avoid warning about unused variable
+	* tests/nap.h (nap_works): Remove now-unused declaration of "result".
+
 	prefix-gnulib-mk: avoid overzealous "lib/"-prefix addition
 	* build-aux/prefix-gnulib-mk (prefix): Tighten a regexp to require
 	white space before each of the special-cased file names, to avoid
