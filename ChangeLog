@@ -1,3 +1,10 @@
+2012-11-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getlogin-tests: allow errno == ENOENT
+	* tests/test-getlogin.c (main): Skip tests if getlogin fails
+	with errno == ENOENT.  This happened to me on Ubuntu 12.04.1 x86,
+	when running a test in an Emacs shell buffer.
+
 2012-11-08  Jim Meyering  <jim@meyering.net>
 
 	tests/nap.h: avoid warning about unused variable

@@ -39,6 +39,13 @@ main (void)
   buf = getlogin ();
   if (buf == NULL)
     {
+      if (errno == ENOENT)
+        {
+          /* This can happen on GNU/Linux.  */
+          fprintf (stderr, "Skipping test: no entry in utmp file.\n");
+          return 77;
+        }
+
       /* getlogin() fails when stdin is not connected to a tty.  */
       ASSERT (errno == ENOTTY
               || errno == EINVAL /* seen on Linux/SPARC */
