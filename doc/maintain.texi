@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 27, 2012
+@set lastupdate November 15, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -388,11 +388,12 @@ please send a reminder.  If you still get no response after an
 additional week, please write to @email{maintainers@@gnu.org} about it.
 
 After receiving the necessary form, all contributors then print it and
-sign it.  Contributors residing outside the U.S. must mail the signed
-form to the FSF via the post.  Contributors located in the U.S. can
-then email or fax a scanned copy back to the FSF (or use postal mail,
-if they prefer).  (To emphasize, the necessary distinction is between
-US residents and non-residents; citizenship does not matter.)
+sign it.  Contributors located in the USA or Germany can then email or
+fax a scanned copy back to the FSF (or use postal mail, if they
+prefer).  Contributors residing outside the USA or Germany must mail
+the signed form to the FSF via postal mail.  To emphasize, the
+necessary distinction is between residents and non-residents of these
+countries; citizenship does not matter.
 
 For less common cases, we have template files you should send to the
 contributor.  Be sure to fill in the name of the person and the name
