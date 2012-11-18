@@ -1,3 +1,10 @@
+2012-11-17  Dmitry V. Levin  <ldv@altlinux.org>
+
+	fts: introduce FTS_VERBATIM
+	* lib/fts_.h (FTS_VERBATIM): New bit flag.
+	(FTS_OPTIONMASK, FTS_NAMEONLY, FTS_STOP): Adjust.
+	* lib/fts.c (fts_open): Honor it.
+
 2012-11-09  Pádraig Brady  <P@draigBrady.com>
 
 	getlogin-tests: allow errno == ENXIO
