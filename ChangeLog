@@ -1,3 +1,20 @@
+2012-11-20  Eli Zaretskii  <eliz@gnu.org>
+
+	canonicalize, canonicalize-lgpl: support MS-Windows file names
+	See <http://lists.gnu.org/archive/html/bug-gnulib/2012-11/msg00074.html>
+	for test cases, which it'd be nice to add at some point.
+	* lib/canonicalize.c, lib/canonicalize-lgpl.c: Include dosname.h.
+	* lib/canonicalize.c (canonicalize_filename_mode):
+	* lib/canonicalize-lgpl.c (__realpath):
+	Use FILE_SYSTEM_PREFIX_LEN instead of assuming that the first
+	slash is at the beginning of the file name.  Use ISSLASH, instead
+	of a literal '/'.  Use IS_ABSOLUTE_FILE_NAME instead of comparing
+	the first character with '/'.  Test for
+	DOUBLE_SLASH_IS_DISTINCT_ROOT only if the file name does not begin
+	with a drive letter.
+	* lib/canonicalize.c (SLASHES): New macro.
+	(canonicalize_filename_mode): Use SLASHES instead of a literal "/".
+
 2012-11-17  Dmitry V. Levin  <ldv@altlinux.org>
 
 	fts: introduce FTS_VERBATIM
