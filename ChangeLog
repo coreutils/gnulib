@@ -1,5 +1,16 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	count-leading-zeros: better 'inline'
+	* lib/count-leading-zeros.c: New file.
+	* lib/count-leading-zeros.h (COUNT_LEADING_ZEROS_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/count-leading-zeros.m4 (gl_COUNT_LEADING_ZEROS):
+	Do not require AC_C_INLINE.
+	* modules/count-leading-zeros (Files, lib_SOURCES):
+	Add lib/count-leading-zeros.c.
+	(Depends-on): Add extern-inline.
+
 	bitrotate: better 'inline'
 	* lib/bitrotate.c: New file.
 	* lib/bitrotate.h (BITROTATE_INLINE):

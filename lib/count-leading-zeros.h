@@ -23,6 +23,11 @@
 #include <stdlib.h>
 #include "verify.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef COUNT_LEADING_ZEROS_INLINE
+# define COUNT_LEADING_ZEROS_INLINE _GL_INLINE
+#endif
+
 /* Expand the code which computes the number of leading zeros of the local
    variable 'x' of type TYPE (an unsigned integer type) and returns it
    from the current function.  */
@@ -44,7 +49,7 @@
 
 /* Compute and return the number of leading zeros in the least
    significant 32 bits of X. */
-static inline int
+COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_32 (unsigned int x)
 {
   /* http://graphics.stanford.edu/~seander/bithacks.html */
@@ -66,14 +71,14 @@ count_leading_zeros_32 (unsigned int x)
 #endif
 
 /* Compute and return the number of leading zeros in X. */
-static inline int
+COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros (unsigned int x)
 {
   COUNT_LEADING_ZEROS (__builtin_clz, unsigned int);
 }
 
 /* Compute and return the number of leading zeros in X. */
-static inline int
+COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_l (unsigned long int x)
 {
   COUNT_LEADING_ZEROS (__builtin_clzl, unsigned long int);
@@ -81,11 +86,13 @@ count_leading_zeros_l (unsigned long int x)
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
 /* Compute and return the number of leading zeros in X. */
-static inline int
+COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_ll (unsigned long long int x)
 {
   COUNT_LEADING_ZEROS (__builtin_clzll, unsigned long long int);
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* COUNT_LEADING_ZEROS_H */
