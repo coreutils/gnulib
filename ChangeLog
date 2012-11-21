@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	unistd: better 'inline'
+	* lib/unistd.c: New file.
+	* lib/unistd.in.h (_GL_UNISTD_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/unistd_h.m4 (gl_UNISTD_H): Do not require AC_C_INLINE.
+	* modules/unistd (Files, lib_SOURCES): Add lib/unistd.c.
+	(Depends-on): Add extern-inline.
+
 	sys_socket: better 'inline'
 	* lib/sys_socket.c: New file.
 	* lib/sys_socket.in.h (_GL_SYS_SOCKET_INLINE):

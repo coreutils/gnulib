@@ -3,10 +3,12 @@ A GNU-like <unistd.h>.
 
 Files:
 m4/unistd_h.m4
+lib/unistd.c
 lib/unistd.in.h
 m4/off_t.m4
 
 Depends-on:
+extern-inline
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -20,6 +22,7 @@ gl_UNISTD_H
 
 Makefile.am:
 BUILT_SOURCES += unistd.h
+lib_SOURCES += unistd.c
 
 # We need the following in order to create an empty placeholder for
 # <unistd.h> when the system doesn't have one.
