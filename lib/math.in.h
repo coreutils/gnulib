@@ -28,6 +28,10 @@
 #ifndef _@GUARD_PREFIX@_MATH_H
 #define _@GUARD_PREFIX@_MATH_H
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GL_MATH_INLINE
+# define _GL_MATH_INLINE _GL_INLINE
+#endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -78,17 +82,17 @@ func (long double l)                                                \
    classification macros with an argument of real-floating (that is,
    one of float, double, or long double).  */
 #define _GL_WARN_REAL_FLOATING_DECL(func) \
-static inline int                                                   \
+_GL_MATH_INLINE int                                                 \
 rpl_ ## func ## f (float f)                                         \
 {                                                                   \
   return func (f);                                                  \
 }                                                                   \
-static inline int                                                   \
+_GL_MATH_INLINE int                                                 \
 rpl_ ## func ## d (double d)                                        \
 {                                                                   \
   return func (d);                                                  \
 }                                                                   \
-static inline int                                                   \
+_GL_MATH_INLINE int                                                 \
 rpl_ ## func ## l (long double l)                                   \
 {                                                                   \
   return func (l);                                                  \
@@ -124,7 +128,7 @@ static void (*_gl_math_fix_itold) (long double *, int) = _Qp_itoq;
   /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler
      choke on the expression 0.0 / 0.0.  */
 #  if defined __DECC || defined _MSC_VER
-static float
+_GL_MATH_INLINE float
 _NaN ()
 {
   static float zero = 0.0f;
@@ -2265,6 +2269,7 @@ _GL_WARN_REAL_FLOATING_DECL (signbit);
 # endif
 #endif
 
+_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_MATH_H */
 #endif /* _@GUARD_PREFIX@_MATH_H */

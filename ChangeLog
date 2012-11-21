@@ -1,5 +1,16 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	math: better 'inline'
+	* lib/math.c: New file.
+	* lib/math.in.h (_GL_MATH_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/math_h.m4 (gl_MATH_H):
+	Do not require AC_C_INLINE.
+	* modules/math (Files, lib_SOURCES):
+	Add lib/math.c.
+	(Depends-on): Add extern-inline.
+
 	count-one-bits: better 'inline'
 	* lib/count-one-bits.c: New file.
 	* lib/count-one-bits.h (COUNT_ONE_BITS_INLINE):

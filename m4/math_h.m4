@@ -1,4 +1,4 @@
-# math_h.m4 serial 113
+# math_h.m4 serial 114
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,6 @@ AC_DEFUN([gl_MATH_H],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   gl_CHECK_NEXT_HEADERS([math.h])
-  AC_REQUIRE([AC_C_INLINE])
 
   AC_CACHE_CHECK([whether NAN macro works], [gl_cv_header_math_nan_works],
     [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[@%:@include <math.h>]],

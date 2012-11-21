@@ -3,9 +3,11 @@ A GNU-like <math.h>.
 
 Files:
 lib/math.in.h
+lib/math.c
 m4/math_h.m4
 
 Depends-on:
+extern-inline
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -17,6 +19,7 @@ gl_MATH_H
 
 Makefile.am:
 BUILT_SOURCES += math.h
+lib_SOURCES += math.c
 
 # We need the following in order to create <math.h> when the system
 # doesn't have one that works with the given compiler.
