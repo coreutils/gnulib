@@ -29,7 +29,7 @@ struct gl_multiple_nodes
 #define MULTIPLE_NODES_MAGIC  (void *) -1
 
 /* Resize the hash table if needed, after list->count was incremented.  */
-static inline void
+static void
 hash_resize_after_add (gl_list_t list)
 {
   size_t count = (list->root != 0 ? list->root->branch_size : 0);
@@ -87,7 +87,7 @@ compare_position_threshold (const void *x, const void *threshold)
 }
 
 /* Return the first element of a non-empty ordered set of nodes.  */
-static inline gl_list_node_t
+static gl_list_node_t
 gl_oset_first (gl_oset_t set)
 {
   gl_oset_iterator_t iter = gl_oset_iterator (set);
@@ -272,7 +272,7 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
 /* Build up the hash table during initialization: Store all the nodes of
    list->root in the hash table.
    Return 0 upon success, -1 upon out-of-memory.  */
-static inline int
+static int
 add_nodes_to_buckets (gl_list_t list)
 {
   /* Iterate across all nodes.  */

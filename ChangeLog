@@ -1,5 +1,12 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	rbtree-list, rbtreehash-list: no 'static inline'
+	* lib/gl_anyrbtree_list2.h (rotate_left, rotate_right):
+	* lib/gl_anytree_list2.h (node_at):
+	* lib/gl_anytreehash_list1.h (hash_resize_after_add)
+	(gl_oset_first, add_nodes_to_buckets):
+	Now static, not static inline.
+
 	regex: no 'static inline'
 	* lib/regex_internal.c (calc_state_hash):
 	* lib/regex_internal.h (bitset_set, bitset_clear, bitset_contain)

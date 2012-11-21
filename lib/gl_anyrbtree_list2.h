@@ -163,7 +163,7 @@ gl_tree_nx_create (gl_list_implementation_t implementation,
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register D as child of its parent.  */
-static inline gl_list_node_t
+static gl_list_node_t
 rotate_left (gl_list_node_t b_node, gl_list_node_t d_node)
 {
   gl_list_node_t a_node = b_node->left;
@@ -197,7 +197,7 @@ rotate_left (gl_list_node_t b_node, gl_list_node_t d_node)
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register B as child of its parent.  */
-static inline gl_list_node_t
+static gl_list_node_t
 rotate_right (gl_list_node_t b_node, gl_list_node_t d_node)
 {
   gl_list_node_t a_node = b_node->left;
