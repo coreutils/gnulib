@@ -1,5 +1,9 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	snippet/warn-on-use: no 'static inline'
+	* build-aux/snippet/warn-on-use.h:
+	Remove unnecessary 'inline' in comment.
+
 	rbtree-list, rbtreehash-list: no 'static inline'
 	* lib/gl_anyrbtree_list2.h (rotate_left, rotate_right):
 	* lib/gl_anytree_list2.h (node_at):
