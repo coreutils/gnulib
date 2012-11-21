@@ -29,7 +29,7 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
-static inline char *
+static char *
 xstrcat (size_t argcount, va_list args)
 {
   char *result;

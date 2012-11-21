@@ -1,5 +1,11 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xvasprintf: no 'static inline'
+	* lib/xvasprintf.c (xstrcat):
+	Now static, not static inline.
+	* m4/xvasprintf.m4 (gl_XVASPRINTF):
+	Do not require AC_C_INLINE.
+
 	parse-datetime, parse-duration: no 'static inline'
 	* lib/parse-datetime.y (to_uchar):
 	* lib/parse-duration.c (str_const_to_ul, str_const_to_l)
