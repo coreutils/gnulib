@@ -1,5 +1,27 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	list, oset, xlist, xoset, xsublist: simplify via extern inline
+	* lib/gl_list.h, lib/gl_list.c (GL_LIST_INLINE):
+	* lib/gl_oset.c, lib/gl_oset.h (GL_OSET_INLINE):
+	* lib/gl_xlist.c, lib/gl_xlist.h (GL_XLIST_INLINE):
+	* lib/gl_xoset.c, lib/gl_xoset.h (GL_XOSET_INLINE):
+	* lib/gl_xsublist.c, lib/gl_xsublist.h (GL_XSUBLIST_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	[HAVE_INLINE]: Implement functions as *_INLINE functions,
+	instead of as macros FOO that are defined to static inline
+	functions FOO_inline.
+	* lib/gl_list.c, lib/gl_oset.c, lib/gl_xlist.c, lib/gl_xoset.c:
+	* lib/gl_xsublist.c:
+	Reimplement from scratch, by defining the corresponding *_INLINE
+	macro and including the corresponding .h file.  This is simpler.
+	* modules/list, modules/oset, modules/xlist, modules/xoset:
+	(Files): Remove m4/gl_list.m4.
+	(configure.ac): Remove gl_LIST.
+	* m4/gl_list.m4: Remove.
+	* modules/list, modules/oset, modules/xlist, modules/xoset:
+	* modules/xsublist:
+	(Depends-on): Depend on extern-inline, not inline.
+
 	xalloc: better 'inline'
 	* lib/xmalloc.c, lib/xalloc.h (XALLOC_INLINE):
 	New macro.  Replace all uses of 'static inline' with it.

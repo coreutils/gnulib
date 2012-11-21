@@ -21,6 +21,11 @@
 #include "gl_list.h"
 #include "xalloc.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef GL_XLIST_INLINE
+# define GL_XLIST_INLINE _GL_INLINE
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -55,10 +60,7 @@ extern gl_list_node_t gl_sortedlist_add (gl_list_t list,
                                          gl_listelement_compar_fn compar,
                                          const void *elt);
 
-#if HAVE_INLINE
-
-# define gl_list_create_empty gl_list_create_empty_inline
-static inline gl_list_t
+GL_XLIST_INLINE gl_list_t
 gl_list_create_empty (gl_list_implementation_t implementation,
                       gl_listelement_equals_fn equals_fn,
                       gl_listelement_hashcode_fn hashcode_fn,
@@ -73,8 +75,7 @@ gl_list_create_empty (gl_list_implementation_t implementation,
   return result;
 }
 
-# define gl_list_create gl_list_create_inline
-static inline gl_list_t
+GL_XLIST_INLINE gl_list_t
 gl_list_create (gl_list_implementation_t implementation,
                 gl_listelement_equals_fn equals_fn,
                 gl_listelement_hashcode_fn hashcode_fn,
@@ -90,8 +91,7 @@ gl_list_create (gl_list_implementation_t implementation,
   return result;
 }
 
-# define gl_list_node_set_value gl_list_node_set_value_inline
-static inline void
+GL_XLIST_INLINE void
 gl_list_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   int result = gl_list_node_nx_set_value (list, node, elt);
@@ -99,8 +99,7 @@ gl_list_node_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
     xalloc_die ();
 }
 
-# define gl_list_set_at gl_list_set_at_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_set_at (gl_list_t list, size_t position, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_set_at (list, position, elt);
@@ -109,8 +108,7 @@ gl_list_set_at (gl_list_t list, size_t position, const void *elt)
   return result;
 }
 
-# define gl_list_add_first gl_list_add_first_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_add_first (gl_list_t list, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_add_first (list, elt);
@@ -119,8 +117,7 @@ gl_list_add_first (gl_list_t list, const void *elt)
   return result;
 }
 
-# define gl_list_add_last gl_list_add_last_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_add_last (gl_list_t list, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_add_last (list, elt);
@@ -129,8 +126,7 @@ gl_list_add_last (gl_list_t list, const void *elt)
   return result;
 }
 
-# define gl_list_add_before gl_list_add_before_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_add_before (list, node, elt);
@@ -139,8 +135,7 @@ gl_list_add_before (gl_list_t list, gl_list_node_t node, const void *elt)
   return result;
 }
 
-# define gl_list_add_after gl_list_add_after_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_add_after (list, node, elt);
@@ -149,8 +144,7 @@ gl_list_add_after (gl_list_t list, gl_list_node_t node, const void *elt)
   return result;
 }
 
-# define gl_list_add_at gl_list_add_at_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_list_add_at (gl_list_t list, size_t position, const void *elt)
 {
   gl_list_node_t result = gl_list_nx_add_at (list, position, elt);
@@ -159,8 +153,7 @@ gl_list_add_at (gl_list_t list, size_t position, const void *elt)
   return result;
 }
 
-# define gl_sortedlist_add gl_sortedlist_add_inline
-static inline gl_list_node_t
+GL_XLIST_INLINE gl_list_node_t
 gl_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
                    const void *elt)
 {
@@ -170,10 +163,10 @@ gl_sortedlist_add (gl_list_t list, gl_listelement_compar_fn compar,
   return result;
 }
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GL_XLIST_H */

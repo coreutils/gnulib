@@ -4,16 +4,14 @@ Abstract ordered set data type, with out-of-memory checking.
 Files:
 lib/gl_xoset.h
 lib/gl_xoset.c
-m4/gl_list.m4
 
 Depends-on:
 oset
-inline
+extern-inline
 stdbool
 xalloc-die
 
 configure.ac:
-gl_LIST
 
 Makefile.am:
 lib_SOURCES += gl_xoset.h gl_xoset.c

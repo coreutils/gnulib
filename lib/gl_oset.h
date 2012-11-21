@@ -21,6 +21,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef GL_OSET_INLINE
+# define GL_OSET_INLINE _GL_INLINE
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -197,14 +202,10 @@ struct gl_oset_impl_base
   gl_setelement_dispose_fn dispose_fn;
 };
 
-#if HAVE_INLINE
+/* Define all functions of this file as accesses to the
+   struct gl_oset_implementation.  */
 
-/* Define all functions of this file as inline accesses to the
-   struct gl_oset_implementation.
-   Use #define to avoid a warning because of extern vs. static.  */
-
-# define gl_oset_nx_create_empty gl_oset_nx_create_empty_inline
-static inline gl_oset_t
+GL_OSET_INLINE gl_oset_t
 gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                          gl_setelement_compar_fn compar_fn,
                          gl_setelement_dispose_fn dispose_fn)
@@ -213,22 +214,19 @@ gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                                           dispose_fn);
 }
 
-# define gl_oset_size gl_oset_size_inline
-static inline size_t
+GL_OSET_INLINE size_t
 gl_oset_size (gl_oset_t set)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->size (set);
 }
 
-# define gl_oset_search gl_oset_search_inline
-static inline bool
+GL_OSET_INLINE bool
 gl_oset_search (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->search (set, elt);
 }
 
-# define gl_oset_search_atleast gl_oset_search_atleast_inline
-static inline bool
+GL_OSET_INLINE bool
 gl_oset_search_atleast (gl_oset_t set,
                         gl_setelement_threshold_fn threshold_fn,
                         const void *threshold, const void **eltp)
@@ -237,53 +235,47 @@ gl_oset_search_atleast (gl_oset_t set,
          ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
-# define gl_oset_nx_add gl_oset_nx_add_inline
-static inline int
+GL_OSET_INLINE int
 gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);
 }
 
-# define gl_oset_remove gl_oset_remove_inline
-static inline bool
+GL_OSET_INLINE bool
 gl_oset_remove (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
          ->remove_elt (set, elt);
 }
 
-# define gl_oset_free gl_oset_free_inline
-static inline void
+GL_OSET_INLINE void
 gl_oset_free (gl_oset_t set)
 {
   ((const struct gl_oset_impl_base *) set)->vtable->oset_free (set);
 }
 
-# define gl_oset_iterator gl_oset_iterator_inline
-static inline gl_oset_iterator_t
+GL_OSET_INLINE gl_oset_iterator_t
 gl_oset_iterator (gl_oset_t set)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->iterator (set);
 }
 
-# define gl_oset_iterator_next gl_oset_iterator_next_inline
-static inline bool
+GL_OSET_INLINE bool
 gl_oset_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
 {
   return iterator->vtable->iterator_next (iterator, eltp);
 }
 
-# define gl_oset_iterator_free gl_oset_iterator_free_inline
-static inline void
+GL_OSET_INLINE void
 gl_oset_iterator_free (gl_oset_iterator_t *iterator)
 {
   iterator->vtable->iterator_free (iterator);
 }
 
-#endif
-
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GL_OSET_H */
