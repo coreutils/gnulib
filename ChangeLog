@@ -1,5 +1,22 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	arctwo, md4, md5, sha1, sha256, sha512: no 'static inline'
+	* lib/arctwo.c (to_uchar):
+	* lib/md4.c (set_uint32):
+	* lib/md5.c (set_uint32):
+	* lib/sha1.c (set_uint32):
+	* lib/sha256.c (set_uint32):
+	* lib/sha512.c (set_uint64):
+	Now static, not static inline.  This is a bit simpler, and doesn't
+	affect performance with GCC and default optimization.
+	* m4/arctwo.m4 (gl_ARCTWO):
+	* m4/md4.m4 (gl_MD4):
+	* m4/md5.m4 (gl_MD5):
+	* m4/sha1.m4 (gl_SHA1):
+	* m4/sha256.m4 (gl_SHA256):
+	* m4/sha512.m4 (gl_SHA512):
+	Do not require AC_C_INLINE.
+
 	cond, lock, thread: better 'inline'
 	* lib/glthread/cond.c, lib/glthread/cond.h (_GLTHREAD_COND_INLINE):
 	* lib/glthread/thread.c, lib/glthread/thread.h (_GLTHREAD_THREAD_INLINE):
