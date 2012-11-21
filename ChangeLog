@@ -1,5 +1,9 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sys_stat: no 'static inline'
+	* lib/sys_stat.in.h (rpl_mkdir): Now static, not static inline.
+	* m4/sys_stat_h.m4 (gl_HEADER_SYS_STAT_H): Do not require AC_C_INLINE.
+
 	extern-inline: no 'static inline'
 	* m4/extern-inline.m4 (gl_EXTERN_INLINE):
 	Do not require AC_C_INLINE.
