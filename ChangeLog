@@ -1,5 +1,16 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	count-one-bits: better 'inline'
+	* lib/count-one-bits.c: New file.
+	* lib/count-one-bits.h (COUNT_ONE_BITS_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/count-one-bits.m4 (gl_COUNT_ONE_BITS):
+	Do not require AC_C_INLINE.
+	* modules/count-one-bits (Files, lib_SOURCES):
+	Add lib/count-one-bits.c.
+	(Depends-on): Add extern-inline.
+
 	count-leading-zeros: better 'inline'
 	* lib/count-leading-zeros.c: New file.
 	* lib/count-leading-zeros.h (COUNT_LEADING_ZEROS_INLINE):

@@ -22,6 +22,11 @@
 #include <stdlib.h>
 #include "verify.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef COUNT_ONE_BITS_INLINE
+# define COUNT_ONE_BITS_INLINE _GL_INLINE
+#endif
+
 /* Expand the code which computes the number of 1-bits of the local
    variable 'x' of type TYPE (an unsigned integer type) and returns it
    from the current function.  */
@@ -40,7 +45,7 @@
 
 /* Compute and return the number of 1-bits set in the least
    significant 32 bits of X. */
-static inline int
+COUNT_ONE_BITS_INLINE int
 count_one_bits_32 (unsigned int x)
 {
   x = ((x & 0xaaaaaaaaU) >> 1) + (x & 0x55555555U);
@@ -52,14 +57,14 @@ count_one_bits_32 (unsigned int x)
 #endif
 
 /* Compute and return the number of 1-bits set in X. */
-static inline int
+COUNT_ONE_BITS_INLINE int
 count_one_bits (unsigned int x)
 {
   COUNT_ONE_BITS (__builtin_popcount, unsigned int);
 }
 
 /* Compute and return the number of 1-bits set in X. */
-static inline int
+COUNT_ONE_BITS_INLINE int
 count_one_bits_l (unsigned long int x)
 {
   COUNT_ONE_BITS (__builtin_popcountl, unsigned long int);
@@ -67,11 +72,13 @@ count_one_bits_l (unsigned long int x)
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
 /* Compute and return the number of 1-bits set in X. */
-static inline int
+COUNT_ONE_BITS_INLINE int
 count_one_bits_ll (unsigned long long int x)
 {
   COUNT_ONE_BITS (__builtin_popcountll, unsigned long long int);
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* COUNT_ONE_BITS_H */
