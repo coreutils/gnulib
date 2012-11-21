@@ -36,7 +36,7 @@
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
 
 /* Clear the stream's ungetc buffer, preserving the value of ftello (fp).  */
-static inline void
+static void
 clear_ungetc_buffer_preserving_position (FILE *fp)
 {
   if (fp->_flags & _IO_IN_BACKUP)
@@ -47,7 +47,7 @@ clear_ungetc_buffer_preserving_position (FILE *fp)
 #else
 
 /* Clear the stream's ungetc buffer.  May modify the value of ftello (fp).  */
-static inline void
+static void
 clear_ungetc_buffer (FILE *fp)
 {
 # if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
@@ -71,9 +71,11 @@ clear_ungetc_buffer (FILE *fp)
 
 #endif
 
-#if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#if ! (defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */)
 
-static inline int
+# if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+
+static int
 disable_seek_optimization (FILE *fp)
 {
   int saved_flags = fp_->_flags & (__SOPT | __SNPT);
@@ -81,23 +83,23 @@ disable_seek_optimization (FILE *fp)
   return saved_flags;
 }
 
-static inline void
+static void
 restore_seek_optimization (FILE *fp, int saved_flags)
 {
   fp_->_flags = (fp_->_flags & ~(__SOPT | __SNPT)) | saved_flags;
 }
 
-#endif
+# else
 
-static inline void
+static void
 update_fpos_cache (FILE *fp _GL_UNUSED_PARAMETER,
                    off_t pos _GL_UNUSED_PARAMETER)
 {
-#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
-# if defined __CYGWIN__
+#  if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#   if defined __CYGWIN__
   /* fp_->_offset is typed as an integer.  */
   fp_->_offset = pos;
-# else
+#   else
   /* fp_->_offset is an fpos_t.  */
   /* Use a union, since on NetBSD, the compilation flags determine
      whether fpos_t is typedef'd to off_t or a struct containing a
@@ -109,10 +111,12 @@ update_fpos_cache (FILE *fp _GL_UNUSED_PARAMETER,
     } u;
   u.o = pos;
   fp_->_offset = u.f;
-# endif
+#   endif
   fp_->_flags |= __SOFF;
-#endif
+#  endif
 }
+# endif
+#endif
 
 /* Flush all pending data on STREAM according to POSIX rules.  Both
    output and seekable input streams are supported.  */

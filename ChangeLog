@@ -1,5 +1,18 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fflush, stat: no 'static inline'
+	* lib/fflush.c (clear_ungetc_buffer_preserving_position)
+	(clear_ungetc_buffer, disable_seek_optimization)
+	(restore_seek_optimization, update_fpos_cache):
+	* lib/stat.c (orig_stat):
+	Now static, not static inline.
+	* lib/fflush.c (disable_seek_optimization, restore_seek_optimization)
+	(update_fpos_cache):
+	Define only if ! (defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1).
+	* m4/fflush.m4 (gl_PREREQ_FFLUSH):
+	* m4/stat.m4 (gl_PREREQ_STAT):
+	Do not require AC_C_INLINE.
+
 	error, filevercmp: no 'static inline'
 	* lib/error.c (is_open, flush_stdout):
 	* lib/filevercmp.c (order):
