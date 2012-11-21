@@ -1,5 +1,11 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getaddrinfo: no 'static inline'
+	* lib/getaddrinfo.c (validate_family):
+	Now static, not static inline.
+	* m4/getaddrinfo.m4 (gl_PREREQ_GETADDRINFO):
+	Do not require AC_C_INLINE.
+
 	ftruncate, fts, lstat, openat, raise: no 'static inline'
 	* lib/ftruncate.c (chsize_nothrow):
 	* lib/fts.c (opendirat, diropen):

@@ -109,7 +109,7 @@ use_win32_p (void)
 }
 #endif
 
-static inline bool
+static bool
 validate_family (int family)
 {
   /* FIXME: Support more families. */
