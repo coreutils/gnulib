@@ -2,10 +2,12 @@ Description:
 Implement a trivial subset of the pthreads library.
 
 Files:
+lib/pthread.c
 lib/pthread.in.h
 m4/pthread.m4
 
 Depends-on:
+extern-inline
 sched
 time
 

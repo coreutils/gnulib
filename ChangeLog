@@ -1,5 +1,15 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	pthread: better 'inline'
+	* lib/pthread.c: New file.
+	* lib/pthread.in.h (_GL_PTHREAD_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK):
+	Add AC_LIBOBJ([pthread]).  Do not require AC_C_INLINE.
+	* modules/pthread (Files): Add lib/pthread.c.
+	(Depends-on): Add extern-inline.
+
 	math: better 'inline'
 	* lib/math.c: New file.
 	* lib/math.in.h (_GL_MATH_INLINE):

@@ -1,4 +1,4 @@
-# pthread.m4 serial 5
+# pthread.m4 serial 7
 dnl Copyright (C) 2009-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,7 @@ AC_DEFUN([gl_PTHREAD_CHECK],
       test $ac_cv_type_pthread_t != yes ||
       test $ac_cv_type_pthread_spinlock_t != yes; then
      PTHREAD_H='pthread.h'
+     AC_LIBOBJ([pthread])
    else
      PTHREAD_H=
    fi
@@ -72,7 +73,6 @@ AC_DEFUN([gl_PTHREAD_CHECK],
    fi
    AC_SUBST([LIB_PTHREAD])
 
-   AC_REQUIRE([AC_C_INLINE])
    AC_REQUIRE([AC_C_RESTRICT])
 ])
 
