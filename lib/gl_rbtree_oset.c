@@ -82,7 +82,7 @@ struct gl_oset_impl
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register D as child of its parent.  */
-static inline gl_oset_node_t
+static gl_oset_node_t
 rotate_left (gl_oset_node_t b_node, gl_oset_node_t d_node)
 {
   gl_oset_node_t c_node = d_node->left;
@@ -108,7 +108,7 @@ rotate_left (gl_oset_node_t b_node, gl_oset_node_t d_node)
 
    Change the tree structure, update the branch sizes.
    The caller must update the colors and register B as child of its parent.  */
-static inline gl_oset_node_t
+static gl_oset_node_t
 rotate_right (gl_oset_node_t b_node, gl_oset_node_t d_node)
 {
   gl_oset_node_t c_node = b_node->right;

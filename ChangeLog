@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	array-oset, linkedhash-list, rbtree-oset: no need for 'inline'
+	* lib/gl_array_oset.c (gl_array_nx_add_at):
+	(gl_array_remove_at):
+	* lib/gl_linkedhash_list.c (hash_resize_after_add)
+	(add_to_bucket, remove_from_bucket):
+	* lib/gl_rbtree_oset.c (rotate_left, rotate_right):
+	Change 'static inline' to 'static', as it's simpler to omit
+	'inline' unless there's a significant performance advantage.
+
 	list, oset, xlist, xoset, xsublist: simplify via extern inline
 	* lib/gl_list.h, lib/gl_list.c (GL_LIST_INLINE):
 	* lib/gl_oset.c, lib/gl_oset.h (GL_OSET_INLINE):

@@ -184,7 +184,7 @@ grow (gl_oset_t set)
 /* Add the given element ELT at the given position,
    0 <= position <= gl_oset_size (set).
    Return 1 upon success, -1 upon out-of-memory.  */
-static inline int
+static int
 gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
 {
   size_t count = set->count;
@@ -204,7 +204,7 @@ gl_array_nx_add_at (gl_oset_t set, size_t position, const void *elt)
 
 /* Remove the element at the given position,
    0 <= position < gl_oset_size (set).  */
-static inline void
+static void
 gl_array_remove_at (gl_oset_t set, size_t position)
 {
   size_t count = set->count;

@@ -43,7 +43,7 @@
 #include "gl_anyhash_list2.h"
 
 /* Resize the hash table if needed, after list->count was incremented.  */
-static inline void
+static void
 hash_resize_after_add (gl_list_t list)
 {
   size_t count = list->count;
@@ -53,7 +53,7 @@ hash_resize_after_add (gl_list_t list)
 }
 
 /* Add a node to the hash table structure.  */
-static inline void
+static void
 add_to_bucket (gl_list_t list, gl_list_node_t node)
 {
   size_t bucket = node->h.hashcode % list->table_size;
@@ -65,7 +65,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t node)
 #define add_to_bucket(list,node)  ((add_to_bucket) (list, node), 0)
 
 /* Remove a node from the hash table structure.  */
-static inline void
+static void
 remove_from_bucket (gl_list_t list, gl_list_node_t node)
 {
   size_t bucket = node->h.hashcode % list->table_size;
