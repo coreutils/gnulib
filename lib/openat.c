@@ -28,7 +28,7 @@
 #undef __need_system_fcntl_h
 
 #if HAVE_OPENAT
-static inline int
+static int
 orig_openat (int fd, char const *filename, int flags, mode_t mode)
 {
   return openat (fd, filename, flags, mode);

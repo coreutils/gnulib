@@ -157,7 +157,7 @@ ftruncate (int fd, off_t length)
 
 #  if HAVE_MSVC_INVALID_PARAMETER_HANDLER
 #   include "msvc-inval.h"
-static inline int
+static int
 chsize_nothrow (int fd, long length)
 {
   int result;

@@ -1,5 +1,19 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	ftruncate, fts, lstat, openat, raise: no 'static inline'
+	* lib/ftruncate.c (chsize_nothrow):
+	* lib/fts.c (opendirat, diropen):
+	* lib/lstat.c (orig_lstat):
+	* lib/openat.c (orig_openat):
+	* lib/raise.c (raise_nothrow):
+	Now static, not static inline.
+	* m4/ftruncate.m4 (gl_PREREQ_FTRUNCATE):
+	* m4/fts.m4 (gl_FUNC_FTS_CORE):
+	* m4/lstat.m4 (gl_PREREQ_LSTAT):
+	* m4/openat.m4 (gl_PREREQ_OPENAT):
+	* m4/raise.m4 (gl_PREREQ_RAISE):
+	Do not require AC_C_INLINE.
+
 	fflush, stat: no 'static inline'
 	* lib/fflush.c (clear_ungetc_buffer_preserving_position)
 	(clear_ungetc_buffer, disable_seek_optimization)

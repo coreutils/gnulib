@@ -32,7 +32,7 @@
 # undef raise
 
 # if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static int
 raise_nothrow (int sig)
 {
   int result;

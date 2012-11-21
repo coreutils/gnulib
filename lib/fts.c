@@ -290,7 +290,7 @@ fts_set_stat_required (FTSENT *p, bool required)
 
 /* file-descriptor-relative opendir.  */
 /* FIXME: if others need this function, move it into lib/openat.c */
-static inline DIR *
+static DIR *
 internal_function
 opendirat (int fd, char const *dir, int extra_flags, int *pdir_fd)
 {
@@ -360,7 +360,7 @@ restore_initial_cwd (FTS *sp)
    descriptor.  Return -1 and set errno on failure.  It doesn't matter
    whether the file descriptor has read or write access.  */
 
-static inline int
+static int
 internal_function
 diropen (FTS const *sp, char const *dir)
 {

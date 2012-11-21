@@ -1,4 +1,4 @@
-# raise.m4 serial 2
+# raise.m4 serial 3
 dnl Copyright (C) 2011-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,4 @@ AC_DEFUN([gl_FUNC_RAISE],
 ])
 
 # Prerequisites of lib/raise.c.
-AC_DEFUN([gl_PREREQ_RAISE], [
-  AC_REQUIRE([AC_C_INLINE])
-])
+AC_DEFUN([gl_PREREQ_RAISE], [:])
