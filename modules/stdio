@@ -2,10 +2,12 @@ Description:
 A GNU-like <stdio.h>.
 
 Files:
+lib/stdio.c
 lib/stdio.in.h
 m4/stdio_h.m4
 
 Depends-on:
+extern-inline
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -19,6 +21,7 @@ gl_STDIO_H
 
 Makefile.am:
 BUILT_SOURCES += stdio.h
+lib_SOURCES += stdio.c
 
 # We need the following in order to create <stdio.h> when the system
 # doesn't have one that works with the given compiler.

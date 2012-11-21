@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdio: better 'inline'
+	* lib/stdio.c: New file.
+	* lib/stdio.in.h (_GL_STDIO_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/stdio_h.m4 (gl_STDIO_H): Do not require AC_C_INLINE.
+	* modules/stdio (Files, lib_SOURCES): Add lib/stdio.c.
+	(Depends-on): Add extern-inline.
+
 	sigaction: better 'inline'
 	* lib/sig-handler.c: New file.
 	* lib/sig-handler.h (SIG_HANDLER_INLINE):
