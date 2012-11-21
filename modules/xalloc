@@ -7,7 +7,7 @@ lib/xmalloc.c
 m4/xalloc.m4
 
 Depends-on:
-inline
+extern-inline
 xalloc-die
 xalloc-oversized
 

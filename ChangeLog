@@ -1,5 +1,16 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xalloc: better 'inline'
+	* lib/xmalloc.c, lib/xalloc.h (XALLOC_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	(static_inline): Remove.
+	* lib/xalloc.h (xnmalloc, xnrealloc, x2nrealloc, xcharalloc):
+	Let 'extern inline' do the work automatically, instead of doing
+	it by hand.
+	* m4/xalloc.m4 (gl_PREREQ_XALLOC, gl_PREREQ_XMALLOC):
+	Remove.  All uses removed.
+	* modules/xalloc (Depends-on): Remove 'inline'.  Add 'extern-inline'.
+
 	gethrxtime: better 'inline'
 	* lib/xtime.c: New file.
 	* lib/gethrxtime.c, lib/gethrxtime.h (GETHRXTIME_INLINE):

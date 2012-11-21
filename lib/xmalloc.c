@@ -17,11 +17,9 @@
 
 #include <config.h>
 
-#if ! HAVE_INLINE
-# define static_inline
-#endif
+#define XALLOC_INLINE _GL_EXTERN_INLINE
+
 #include "xalloc.h"
-#undef static_inline
 
 #include <stdlib.h>
 #include <string.h>
