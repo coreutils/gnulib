@@ -1,5 +1,19 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	selinux-h: better 'inline'
+	* lib/se-context.c, lib/se-selinux.c: New files.
+	* lib/getfilecon.c (map_to_failure): Omit 'inline' for static function.
+	* lib/se-context.in.h (SE_CONTEXT_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* lib/se-selinux.in.h (SE_SELINUX_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* modules/selinux-h (Files, lib_SOURCES):
+	Add lib/se-context.c, lib/se-selinux.c.
+	(Depends-on): Add extern-inline.
+	(configure.ac): Do not require AC_C_INLINE.
+
 	pthread: better 'inline'
 	* lib/pthread.c: New file.
 	* lib/pthread.in.h (_GL_PTHREAD_INLINE):
