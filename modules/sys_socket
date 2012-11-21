@@ -2,12 +2,14 @@ Description:
 A POSIX-like <sys/socket.h>.
 
 Files:
+lib/sys_socket.c
 lib/sys_socket.in.h
 m4/sys_socket_h.m4
 m4/sockpfaf.m4
 
 Depends-on:
 errno
+extern-inline
 include_next
 snippet/arg-nonnull
 snippet/c++defs
@@ -23,6 +25,7 @@ AC_PROG_MKDIR_P
 
 Makefile.am:
 BUILT_SOURCES += sys/socket.h
+lib_SOURCES += sys_socket.c
 
 # We need the following in order to create <sys/socket.h> when the system
 # doesn't have one that works with the given compiler.
