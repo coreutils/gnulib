@@ -1,4 +1,4 @@
-# gethrxtime.m4 serial 11
+# gethrxtime.m4 serial 12
 dnl Copyright (C) 2005-2006, 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,10 @@ AC_DEFUN([gl_GETHRXTIME],
     dnl Find libraries needed to link lib/gethrxtime.c.
     AC_REQUIRE([gl_CLOCK_TIME])
     AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-    AC_CHECK_FUNCS_ONCE([nanouptime])
-    if test $ac_cv_func_nanouptime != yes; then
+    AC_CHECK_FUNCS_ONCE([microuptime nanouptime])
+    if test $ac_cv_func_nanouptime != yes \
+       && { test $ac_cv_have_decl_gethrtime = no \
+            || test $gl_cv_arithmetic_hrtime_t = no; }; then
       AC_CACHE_CHECK([whether CLOCK_MONOTONIC or CLOCK_REALTIME is defined],
         [gl_cv_have_clock_gettime_macro],
         [AC_EGREP_CPP([have_clock_gettime_macro],
@@ -60,14 +62,6 @@ AC_DEFUN([gl_ARITHMETIC_HRTIME_T],
 # Prerequisites of lib/xtime.h.
 AC_DEFUN([gl_XTIME],
 [
-  AC_REQUIRE([AC_C_INLINE])
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
-  :
-])
-
-# Prerequisites of lib/gethrxtime.c.
-AC_DEFUN([gl_PREREQ_GETHRXTIME],
-[
-  AC_CHECK_FUNCS_ONCE([microuptime])
   :
 ])

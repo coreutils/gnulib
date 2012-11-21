@@ -3,6 +3,7 @@ Get high resolution real time.
 
 Files:
 lib/xtime.h
+lib/xtime.c
 lib/gethrxtime.c
 lib/gethrxtime.h
 m4/gethrxtime.m4
@@ -11,17 +12,15 @@ m4/longlong.m4
 Depends-on:
 clock-time
 extensions
+extern-inline
 gettime
 sys_time
 
 configure.ac:
 gl_GETHRXTIME
-if test $ac_cv_have_decl_gethrtime = no || test $gl_cv_arithmetic_hrtime_t = no; then
-  AC_LIBOBJ([gethrxtime])
-  gl_PREREQ_GETHRXTIME
-fi
 
 Makefile.am:
+lib_SOURCES += gethrxtime.c xtime.c
 
 Include:
 "xtime.h"

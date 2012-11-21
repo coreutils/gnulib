@@ -1,5 +1,25 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gethrxtime: better 'inline'
+	* lib/xtime.c: New file.
+	* lib/gethrxtime.c, lib/gethrxtime.h (GETHRXTIME_INLINE):
+	* lib/xtime.h (XTIME_INCLUDE):
+	New macros.  Replace all uses of 'static inline' with them.
+	* lib/gethrxtime.c (gethrxtime): Define only if
+	! (HAVE_ARITHMETIC_HRTIME_T && HAVE_DECL_GETHRTIME), since
+	this source file is now always compiled, because of the extern inline.
+	* lib/gethrxtime.h, lib/xtime.h:
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/gethrxtime.m4 (gl_GETHRXTIME): Do not check for clock macros
+	if gethrtime works, as they're not needed in that case.
+	(gl_XTIME): Do not require AC_C_INLINE.
+	(gl_PREREQ_GETHRXTIME): Remove; all uses removed, as it's always
+	compiled now.  Move the check into gl_GETHRXTIME.
+	* modules/gethrxtime (Files, lib_SOURCES): Add lib/xtime.c.
+	(Depends-on): Add extern-inline.
+	(configure.ac): gethrxtime is always compiled now.
+	(lib_SOURCES): Add gethrxtime.c.
+
 	wctype-h: better 'inline'
 	* lib/wctype-h.c: New file.
 	* lib/wctype.in.h (_GL_WCTYPE_INLINE):
