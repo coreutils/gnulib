@@ -83,9 +83,6 @@
 # define BE(expr, val) __builtin_expect (expr, val)
 #else
 # define BE(expr, val) (expr)
-# ifdef _LIBC
-#  define inline
-# endif
 #endif
 
 /* Number of ASCII characters.  */
@@ -727,33 +724,33 @@ typedef struct
 } bracket_elem_t;
 
 
-/* Inline functions for bitset_t operation.  */
+/* Functions for bitset_t operation.  */
 
-static inline void
+static void
 bitset_set (bitset_t set, Idx i)
 {
   set[i / BITSET_WORD_BITS] |= (bitset_word_t) 1 << i % BITSET_WORD_BITS;
 }
 
-static inline void
+static void
 bitset_clear (bitset_t set, Idx i)
 {
   set[i / BITSET_WORD_BITS] &= ~ ((bitset_word_t) 1 << i % BITSET_WORD_BITS);
 }
 
-static inline bool
+static bool
 bitset_contain (const bitset_t set, Idx i)
 {
   return (set[i / BITSET_WORD_BITS] >> i % BITSET_WORD_BITS) & 1;
 }
 
-static inline void
+static void
 bitset_empty (bitset_t set)
 {
   memset (set, '\0', sizeof (bitset_t));
 }
 
-static inline void
+static void
 bitset_set_all (bitset_t set)
 {
   memset (set, -1, sizeof (bitset_word_t) * (SBC_MAX / BITSET_WORD_BITS));
@@ -762,13 +759,13 @@ bitset_set_all (bitset_t set)
       ((bitset_word_t) 1 << SBC_MAX % BITSET_WORD_BITS) - 1;
 }
 
-static inline void
+static void
 bitset_copy (bitset_t dest, const bitset_t src)
 {
   memcpy (dest, src, sizeof (bitset_t));
 }
 
-static inline void
+static void
 bitset_not (bitset_t set)
 {
   int bitset_i;
@@ -780,7 +777,7 @@ bitset_not (bitset_t set)
        & ~set[BITSET_WORDS - 1]);
 }
 
-static inline void
+static void
 bitset_merge (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
@@ -788,7 +785,7 @@ bitset_merge (bitset_t dest, const bitset_t src)
     dest[bitset_i] |= src[bitset_i];
 }
 
-static inline void
+static void
 bitset_mask (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
@@ -797,8 +794,8 @@ bitset_mask (bitset_t dest, const bitset_t src)
 }
 
 #ifdef RE_ENABLE_I18N
-/* Inline functions for re_string.  */
-static inline int
+/* Functions for re_string.  */
+static int
 internal_function __attribute ((pure))
 re_string_char_size_at (const re_string_t *pstr, Idx idx)
 {
@@ -811,7 +808,7 @@ re_string_char_size_at (const re_string_t *pstr, Idx idx)
   return byte_idx;
 }
 
-static inline wint_t
+static wint_t
 internal_function __attribute ((pure))
 re_string_wchar_at (const re_string_t *pstr, Idx idx)
 {

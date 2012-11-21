@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: no 'static inline'
+	* lib/regex_internal.c (calc_state_hash):
+	* lib/regex_internal.h (bitset_set, bitset_clear, bitset_contain)
+	(bitset_empty, bitset_set_all, bitset_copy, bitset_not, bitset_merge)
+	(bitset_mask, re_string_char_size_at, re_string_wchar_at):
+	Now static, not static inline.
+	(inline) [__GNUC__ < 3 && _LIBC]:
+	Remove macro; no longer needed.
+
 	xvasprintf: no 'static inline'
 	* lib/xvasprintf.c (xstrcat):
 	Now static, not static inline.
