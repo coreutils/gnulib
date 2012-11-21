@@ -57,7 +57,7 @@ match_suffix (const char **str)
 }
 
 /* verrevcmp helper function */
-static inline int
+static int
 order (unsigned char c)
 {
   if (c_isdigit (c))

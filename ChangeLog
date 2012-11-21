@@ -1,5 +1,13 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	error, filevercmp: no 'static inline'
+	* lib/error.c (is_open, flush_stdout):
+	* lib/filevercmp.c (order):
+	Now static, not static inline.
+	* m4/error.m4 (gl_PREREQ_ERROR):
+	* modules/filevercmp (configure.ac):
+	Do not require AC_C_INLINE.
+
 	dup, execute, fatal-signal, etc.: no 'static inline'
 	* lib/dup.c (dup_nothrow):
 	* lib/execute.c (nonintr_close, nonintr_open):
