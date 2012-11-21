@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	parse-datetime, parse-duration: no 'static inline'
+	* lib/parse-datetime.y (to_uchar):
+	* lib/parse-duration.c (str_const_to_ul, str_const_to_l)
+	(scale_n_add):
+	Now static, not static inline.
+	* m4/parse-datetime.m4 (gl_PARSE_DATETIME):
+	* modules/parse-duration (configure.ac):
+	Do not require AC_C_INLINE.
+
 	getaddrinfo: no 'static inline'
 	* lib/getaddrinfo.c (validate_family):
 	Now static, not static inline.

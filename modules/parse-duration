@@ -8,7 +8,6 @@ lib/parse-duration.c
 Depends-on:
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += parse-duration.c
@@ -21,4 +20,3 @@ LGPLv2+
 
 Maintainer:
 Bruce Korb
-
