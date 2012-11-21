@@ -150,7 +150,7 @@
 #  define errno_expected() (errno == EINVAL)
 # endif
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_data_via_setrlimit (void)
 {
   uintptr_t result;
@@ -306,7 +306,7 @@ get_rusage_data_via_setrlimit (void)
 
 #else
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_data_via_setrlimit (void)
 {
   return 0;
@@ -337,7 +337,7 @@ vma_iterate_callback (void *data, uintptr_t start, uintptr_t end,
   return 0;
 }
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_data_via_iterator (void)
 {
 # if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __BEOS__ || defined __HAIKU__
@@ -372,7 +372,7 @@ get_rusage_data_via_iterator (void)
 
 #else
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_data_via_iterator (void)
 {
   return 0;

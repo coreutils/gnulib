@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #undef __need_system_fcntl_h
 
-static inline int
+static int
 orig_open (const char *filename, int flags, mode_t mode)
 {
   return open (filename, flags, mode);

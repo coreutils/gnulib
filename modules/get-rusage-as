@@ -14,7 +14,6 @@ getpagesize
 vma-iter
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
 AC_CHECK_FUNCS_ONCE([setrlimit])
 gl_FUNC_MMAP_ANON
 AC_CHECK_HEADERS_ONCE([sys/mman.h])

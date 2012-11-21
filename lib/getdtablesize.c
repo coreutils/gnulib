@@ -27,7 +27,7 @@
 #include "msvc-inval.h"
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static int
 _setmaxstdio_nothrow (int newmax)
 {
   int result;

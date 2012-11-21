@@ -30,7 +30,7 @@
 /* Increment the in-memory pointer.  INCREMENT must be at most the buffer size
    returned by freadptr().
    This is very cheap (no system calls).  */
-static inline void
+static void
 freadptrinc (FILE *fp, size_t increment)
 {
   /* Keep this code in sync with freadptr!  */

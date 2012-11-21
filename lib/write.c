@@ -40,7 +40,7 @@
 # undef write
 
 # if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline ssize_t
+static ssize_t
 write_nothrow (int fd, const void *buf, size_t count)
 {
   ssize_t result;

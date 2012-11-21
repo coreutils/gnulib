@@ -26,7 +26,7 @@
 #include <stdio.h>
 #undef __need_FILE
 
-static inline FILE *
+static FILE *
 orig_fopen (const char *filename, const char *mode)
 {
   return fopen (filename, mode);

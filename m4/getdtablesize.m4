@@ -1,4 +1,4 @@
-# getdtablesize.m4 serial 3
+# getdtablesize.m4 serial 4
 dnl Copyright (C) 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,6 +14,4 @@ AC_DEFUN([gl_FUNC_GETDTABLESIZE],
 ])
 
 # Prerequisites of lib/getdtablesize.c.
-AC_DEFUN([gl_PREREQ_GETDTABLESIZE], [
-  AC_REQUIRE([AC_C_INLINE])
-])
+AC_DEFUN([gl_PREREQ_GETDTABLESIZE], [:])

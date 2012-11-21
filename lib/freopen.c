@@ -26,7 +26,7 @@
 #include <stdio.h>
 #undef __need_FILE
 
-static inline FILE *
+static FILE *
 orig_freopen (const char *filename, const char *mode, FILE *stream)
 {
   return freopen (filename, mode, stream);

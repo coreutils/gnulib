@@ -63,7 +63,7 @@
 typedef void (*handler_t) (int);
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline handler_t
+static handler_t
 signal_nothrow (int sig, handler_t handler)
 {
   handler_t result;

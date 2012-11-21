@@ -171,7 +171,7 @@ register_slave_subprocess (pid_t child)
 }
 
 /* Unregister a child from the list of slave subprocesses.  */
-static inline void
+static void
 unregister_slave_subprocess (pid_t child)
 {
   /* The easiest way to remove an entry from a list that can be used by

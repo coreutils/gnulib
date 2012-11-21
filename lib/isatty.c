@@ -37,7 +37,7 @@
 #define IsConsoleHandle(h) (((intptr_t) (h) & 3) == 3)
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static int
 _isatty_nothrow (int fd)
 {
   int result;

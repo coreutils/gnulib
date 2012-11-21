@@ -1,5 +1,47 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dup, execute, fatal-signal, etc.: no 'static inline'
+	* lib/dup.c (dup_nothrow):
+	* lib/execute.c (nonintr_close, nonintr_open):
+	* lib/fatal-signal.c (uninstall_handlers, install_handlers):
+	* lib/fopen.c (orig_fopen):
+	* lib/freadseek.c (freadptrinc):
+	* lib/freopen.c (orig_freopen):
+	* lib/fstat.c (orig_fstat, fstat_nothrow):
+	* lib/get-rusage-as.c (get_rusage_as_via_setrlimit)
+	(get_rusage_as_via_iterator):
+	* lib/get-rusage-data.c (get_rusage_data_via_setrlimit):
+	* lib/getdtablesize.c (_setmaxstdio_nothrow):
+	* lib/isatty.c (_isatty_nothrow):
+	* lib/open.c (orig_open):
+	* lib/read.c (read_nothrow):
+	* lib/sigprocmask.c (signal_nothrow):
+	* lib/spawn-pipe.c (nonintr_close, nonintr_open):
+	* lib/vasnprintf.c (MAX_ROOM_NEEDED):
+	* lib/wait-process.c (unregister_slave_subprocess):
+	* lib/write.c (write_nothrow):
+	Now static, not static inline.
+	* lib/spawn-pipe.c (nonintr_open): Define only if
+	(defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__.
+	* m4/dup.m4 (gl_PREREQ_DUP):
+	* m4/execute.m4 (gl_EXECUTE):
+	* m4/fatal-signal.m4 (gl_FATAL_SIGNAL):
+	* m4/fopen.m4 (gl_PREREQ_FOPEN):
+	* m4/freadseek.m4 (gl_FUNC_FREADSEEK):
+	* m4/freopen.m4 (gl_PREREQ_FREOPEN):
+	* m4/fstat.m4 (gl_PREREQ_FSTAT):
+	* m4/getdtablesize.m4 (gl_PREREQ_GETDTABLESIZE):
+	* m4/isatty.m4 (gl_PREREQ_ISATTY):
+	* m4/open.m4 (gl_PREREQ_OPEN):
+	* m4/read.m4 (gl_PREREQ_READ):
+	* m4/signalblocking.m4 (gl_PREREQ_SIGPROCMASK):
+	* m4/spawn-pipe.m4 (gl_SPAWN_PIPE):
+	* m4/vasnprintf.m4 (gl_PREREQ_VASNPRINTF):
+	* m4/wait-process.m4 (gl_WAIT_PROCESS):
+	* m4/write.m4 (gl_PREREQ_WRITE):
+	* modules/get-rusage-as, modules/get-rusage-data (configure.ac):
+	Do not require AC_C_INLINE.
+
 	c-strtod, memcoll, readutmp: no 'static inline'
 	* lib/c-strtod.c (c_locale):
 	* lib/memcoll.c (strcoll_loop):

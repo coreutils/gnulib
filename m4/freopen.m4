@@ -1,4 +1,4 @@
-# freopen.m4 serial 3
+# freopen.m4 serial 4
 dnl Copyright (C) 2007-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,4 @@ AC_DEFUN([gl_FUNC_FREOPEN],
 ])
 
 # Prerequisites of lib/freopen.c.
-AC_DEFUN([gl_PREREQ_FREOPEN],
-[
-  AC_REQUIRE([AC_C_INLINE])
-])
+AC_DEFUN([gl_PREREQ_FREOPEN], [:])

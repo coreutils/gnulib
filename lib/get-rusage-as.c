@@ -146,7 +146,7 @@
 
 #if HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_as_via_setrlimit (void)
 {
   uintptr_t result;
@@ -310,7 +310,7 @@ get_rusage_as_via_setrlimit (void)
 
 #else
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_as_via_setrlimit (void)
 {
   return 0;
@@ -331,7 +331,7 @@ vma_iterate_callback (void *data, uintptr_t start, uintptr_t end,
   return 0;
 }
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_as_via_iterator (void)
 {
   uintptr_t total = 0;
@@ -343,7 +343,7 @@ get_rusage_as_via_iterator (void)
 
 #else
 
-static inline uintptr_t
+static uintptr_t
 get_rusage_as_via_iterator (void)
 {
   return 0;

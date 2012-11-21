@@ -1530,7 +1530,7 @@ is_borderline (const char *digits, size_t precision)
 
 /* Returns the number of TCHAR_T units needed as temporary space for the result
    of sprintf or SNPRINTF of a single conversion directive.  */
-static inline size_t
+static size_t
 MAX_ROOM_NEEDED (const arguments *ap, size_t arg_index, FCHAR_T conversion,
                  arg_type type, int flags, size_t width, int has_precision,
                  size_t precision, int pad_ourselves)

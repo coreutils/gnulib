@@ -1,4 +1,4 @@
-# write.m4 serial 4
+# write.m4 serial 5
 dnl Copyright (C) 2008-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,4 @@ AC_DEFUN([gl_FUNC_WRITE],
 ])
 
 # Prerequisites of lib/write.c.
-AC_DEFUN([gl_PREREQ_WRITE],
-[
-  AC_REQUIRE([AC_C_INLINE])
-])
+AC_DEFUN([gl_PREREQ_WRITE], [:])

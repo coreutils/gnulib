@@ -60,7 +60,7 @@
    These functions can return -1/EINTR even though we don't have any
    signal handlers set up, namely when we get interrupted via SIGSTOP.  */
 
-static inline int
+static int
 nonintr_close (int fd)
 {
   int retval;
@@ -73,7 +73,7 @@ nonintr_close (int fd)
 }
 #define close nonintr_close
 
-static inline int
+static int
 nonintr_open (const char *pathname, int oflag, mode_t mode)
 {
   int retval;

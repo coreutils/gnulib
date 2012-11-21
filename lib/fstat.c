@@ -31,7 +31,7 @@
 #endif
 #undef __need_system_sys_stat_h
 
-static inline int
+static int
 orig_fstat (int fd, struct stat *buf)
 {
   return fstat (fd, buf);
@@ -51,7 +51,7 @@ orig_fstat (int fd, struct stat *buf)
 #endif
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static int
 fstat_nothrow (int fd, struct stat *buf)
 {
   int result;

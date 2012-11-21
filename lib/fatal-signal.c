@@ -131,7 +131,7 @@ static struct sigaction saved_sigactions[64];
 
 
 /* Uninstall the handlers.  */
-static inline void
+static void
 uninstall_handlers (void)
 {
   size_t i;
@@ -176,7 +176,7 @@ fatal_signal_handler (int sig)
 
 
 /* Install the handlers.  */
-static inline void
+static void
 install_handlers (void)
 {
   size_t i;

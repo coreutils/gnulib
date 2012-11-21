@@ -27,7 +27,7 @@
 #undef dup
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
-static inline int
+static int
 dup_nothrow (int fd)
 {
   int result;
