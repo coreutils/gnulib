@@ -3,10 +3,12 @@ A <wctype.h> that conforms better to C99.
 
 Files:
 lib/wctype.in.h
+lib/wctype-h.c
 m4/wctype_h.m4
 m4/wint_t.m4
 
 Depends-on:
+extern-inline
 include_next
 snippet/c++defs
 snippet/warn-on-use
@@ -16,6 +18,7 @@ gl_WCTYPE_H
 
 Makefile.am:
 BUILT_SOURCES += wctype.h
+lib_SOURCES += wctype-h.c
 
 # We need the following in order to create <wctype.h> when the system
 # doesn't have one that works with the given compiler.

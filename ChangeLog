@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	wctype-h: better 'inline'
+	* lib/wctype-h.c: New file.
+	* lib/wctype.in.h (_GL_WCTYPE_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/wctype_h.m4 (gl_WCTYPE_H): Do not require AC_C_INLINE.
+	* modules/wctype-h (Files, lib_SOURCES): Add lib/wctype-h.c.
+	(Depends-on): Add extern-inline.
+
 	unistd: better 'inline'
 	* lib/unistd.c: New file.
 	* lib/unistd.in.h (_GL_UNISTD_INLINE):
