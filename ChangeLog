@@ -1,5 +1,14 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sigaction: better 'inline'
+	* lib/sig-handler.c: New file.
+	* lib/sig-handler.h (SIG_HANDLER_INLINE):
+	New macro.  Replace all uses of 'static inline' with it.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/sigaction.m4 (gl_PREREQ_SIG_HANDLER_H): Do not require AC_C_INLINE.
+	* modules/sigaction (Files, lib_SOURCES): Add lib/sig-handler.c.
+	(Depends-on): Add extern-inline.
+
 	selinux-h: better 'inline'
 	* lib/se-context.c, lib/se-selinux.c: New files.
 	* lib/getfilecon.c (map_to_failure): Omit 'inline' for static function.

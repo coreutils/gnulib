@@ -20,13 +20,18 @@
 
 #include <signal.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef SIG_HANDLER_INLINE
+# define SIG_HANDLER_INLINE _GL_INLINE
+#endif
+
 /* Convenience type when working with signal handlers.  */
 typedef void (*sa_handler_t) (int);
 
 /* Return the handler of a signal, as a sa_handler_t value regardless
    of its true type.  The resulting function can be compared to
    special values like SIG_IGN but it is not portable to call it.  */
-static inline sa_handler_t
+SIG_HANDLER_INLINE sa_handler_t
 get_handler (struct sigaction const *a)
 {
 #ifdef SA_SIGINFO
@@ -40,5 +45,7 @@ get_handler (struct sigaction const *a)
 #endif
   return a->sa_handler;
 }
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GL_SIG_HANDLER_H */
