@@ -3,15 +3,16 @@ Rotate bits in unsigned 8, 16, and 32 bit integers.
 
 Files:
 lib/bitrotate.h
+lib/bitrotate.c
 
 Depends-on:
+extern-inline
 stdint
 
 configure.ac:
-AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
-lib_SOURCES += bitrotate.h
+lib_SOURCES += bitrotate.h bitrotate.c
 
 Include:
 "bitrotate.h"

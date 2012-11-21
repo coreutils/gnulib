@@ -1,3 +1,15 @@
+2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bitrotate: better 'inline'
+	* lib/bitrotate.c: New file.
+	* lib/bitrotate.h (BITROTATE_INLINE):
+	New macros.
+	Replace all uses of 'static inline' with them.
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* modules/bitrotate (Files, lib_SOURCES): Add lib/bitrotate.c.
+	(Depends-on): Add extern-inline.
+	(configure.ac): Do not require AC_C_INLINE.
+
 2012-11-20  Theophile Ranquet <ranquet@lrde.epita.fr>
 
 	maint.mk: avoid gratuitous failure
