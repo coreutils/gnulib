@@ -52,7 +52,7 @@ static volatile locale_t c_locale_cache;
 
 /* Return the C locale object, or (locale_t) 0 with errno set
    if it cannot be created.  */
-static inline locale_t
+static locale_t
 c_locale (void)
 {
   if (!c_locale_cache)

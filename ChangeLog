@@ -1,5 +1,15 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	c-strtod, memcoll, readutmp: no 'static inline'
+	* lib/c-strtod.c (c_locale):
+	* lib/memcoll.c (strcoll_loop):
+	* lib/readutmp.c (desirable_utmp_entry):
+	Now static, not static inline.
+	* m4/c-strtod.m4 (gl_C_STRTOD, gl_C_STRTOLD):
+	* m4/memcoll.m4 (gl_MEMCOLL):
+	* m4/readutmp.m4 (gl_READUTMP):
+	Do not require AC_C_INLINE.
+
 	arctwo, md4, md5, sha1, sha256, sha512: no 'static inline'
 	* lib/arctwo.c (to_uchar):
 	* lib/md4.c (set_uint32):

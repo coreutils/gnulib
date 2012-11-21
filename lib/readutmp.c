@@ -61,7 +61,7 @@ extract_trimmed_name (const STRUCT_UTMP *ut)
 
 /* Is the utmp entry U desired by the user who asked for OPTIONS?  */
 
-static inline bool
+static bool
 desirable_utmp_entry (STRUCT_UTMP const *u, int options)
 {
   bool user_proc = IS_USER_PROCESS (u);
