@@ -19,6 +19,8 @@
 
 #include <config.h>
 
+#define SAVEWD_INLINE _GL_EXTERN_INLINE
+
 #include "savewd.h"
 
 #include <assert.h>
@@ -254,7 +256,7 @@ savewd_finish (struct savewd *wd)
    This is why savewd_chdir is broken out into another function;
    savewd_chdir's callers _can_ inspect the file system to decide
    whether to call savewd_chdir.  */
-static inline bool
+static bool
 savewd_delegating (struct savewd const *wd)
 {
   return wd->state == FORKING_STATE && 0 < wd->val.child;

@@ -33,7 +33,7 @@
 
 /* Return true if I is a power of 2, or is zero.  */
 
-static inline bool
+static bool
 is_zero_or_power_of_two (uintmax_t i)
 {
   return (i & (i - 1)) == 0;

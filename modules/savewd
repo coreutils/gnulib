@@ -10,6 +10,7 @@ Depends-on:
 chdir
 dosname
 errno
+extern-inline
 fchdir
 fcntl-safer
 fcntl-h

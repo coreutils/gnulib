@@ -42,19 +42,19 @@ struct cd_buf
   int fd;
 };
 
-static inline void
+static void
 cdb_init (struct cd_buf *cdb)
 {
   cdb->fd = AT_FDCWD;
 }
 
-static inline int
+static int
 cdb_fchdir (struct cd_buf const *cdb)
 {
   return fchdir (cdb->fd);
 }
 
-static inline void
+static void
 cdb_free (struct cd_buf const *cdb)
 {
   if (0 <= cdb->fd)
@@ -83,7 +83,7 @@ cdb_advance_fd (struct cd_buf *cdb, char const *dir)
 }
 
 /* Return a pointer to the first non-slash in S.  */
-static inline char * _GL_ATTRIBUTE_PURE
+static char * _GL_ATTRIBUTE_PURE
 find_non_slash (char const *s)
 {
   size_t n_slash = strspn (s, "/");

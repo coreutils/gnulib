@@ -1,5 +1,21 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	chdir-long, cycle-check, savewd: better 'inline'
+	* lib/chdir-long.c (cdb_init, cdb_fchdir, cdb_free)
+	(find_non_slash):
+	* lib/cycle-check.c (is_zero_or_power_of_two):
+	* lib/savewd.c (savewd_delegating):
+	Change 'static inline' to 'inline'.
+	* lib/savewd.c, lib/savewd.h (SAVEWD_INLINE): New macro.
+	Replace all remaining uses of 'static inline' with it.
+	* lib/savewd.h:
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/chdir-long.m4 (gl_PREREQ_CHDIR_LONG):
+	* m4/cycle-check.m4 (gl_CYCLE_CHECK):
+	* m4/savewd.m4 (gl_SAVEWD):
+	Do not require AC_C_INLINE.
+	* modules/savewd (Depends-on): Add extern-inline.
+
 	base32, base64: no need for 'inline'
 	* lib/base32.c (to_uchar, get_8, decode_8):
 	* lib/base64.c (to_uchar, get_4, decode_4):

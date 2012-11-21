@@ -23,6 +23,11 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef SAVEWD_INLINE
+# define SAVEWD_INLINE _GL_INLINE
+#endif
+
 /* A saved working directory.  The member names and constants defined
    by this structure are private to the savewd module.  */
 struct savewd
@@ -67,7 +72,7 @@ struct savewd
 };
 
 /* Initialize a saved working directory object.  */
-static inline void
+SAVEWD_INLINE void
 savewd_init (struct savewd *wd)
 {
   wd->state = INITIAL_STATE;
@@ -117,7 +122,7 @@ int savewd_chdir (struct savewd *wd, char const *dir, int options,
 int savewd_restore (struct savewd *wd, int status);
 
 /* Return WD's error number, or 0 if WD is not in an error state.  */
-static inline int
+SAVEWD_INLINE int
 savewd_errno (struct savewd const *wd)
 {
   return (wd->state == ERROR_STATE ? wd->val.errnum : 0);
@@ -144,5 +149,7 @@ void savewd_finish (struct savewd *wd);
 int savewd_process_files (int n_files, char **file,
                           int (*act) (char *, struct savewd *, void *),
                           void *options);
+
+_GL_INLINE_HEADER_END
 
 #endif
