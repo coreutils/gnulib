@@ -1,5 +1,11 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	extern-inline: no 'static inline'
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE):
+	Do not require AC_C_INLINE.
+	(_GL_INLINE, _GL_EXTERN_INLINE): Define as 'static', not as
+	'static inline', for older compilers.
+
 	snippet/warn-on-use: no 'static inline'
 	* build-aux/snippet/warn-on-use.h:
 	Remove unnecessary 'inline' in comment.
