@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#define _GLTHREAD_COND_INLINE _GL_EXTERN_INLINE
 #include "glthread/cond.h"
 
 /* ========================================================================= */
@@ -90,7 +91,7 @@ struct gl_waitqueue_element
                    This field is immutable once initialized. */
 };
 
-static inline void
+static void
 gl_waitqueue_init (gl_waitqueue_t *wq)
 {
   wq->wq_list.wql_next = &wq->wq_list;
@@ -134,7 +135,7 @@ gl_waitqueue_add (gl_waitqueue_t *wq)
 /* Removes the current thread, represented by a 'struct gl_waitqueue_element *',
    from a wait queue.
    Returns true if is was found and removed, false if it was not present.  */
-static inline bool
+static bool
 gl_waitqueue_remove (gl_waitqueue_t *wq, struct gl_waitqueue_element *elt)
 {
   if (elt->link.wql_next != NULL && elt->link.wql_prev != NULL)
@@ -153,7 +154,7 @@ gl_waitqueue_remove (gl_waitqueue_t *wq, struct gl_waitqueue_element *elt)
 }
 
 /* Notifies the first thread from a wait queue and dequeues it.  */
-static inline void
+static void
 gl_waitqueue_notify_first (gl_waitqueue_t *wq)
 {
   if (wq->wq_list.wql_next != &wq->wq_list)
@@ -178,7 +179,7 @@ gl_waitqueue_notify_first (gl_waitqueue_t *wq)
 }
 
 /* Notifies all threads from a wait queue and dequeues them all.  */
-static inline void
+static void
 gl_waitqueue_notify_all (gl_waitqueue_t *wq)
 {
   struct gl_waitqueue_link *l;

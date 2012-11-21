@@ -55,6 +55,11 @@
 
 #include "glthread/lock.h"
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GLTHREAD_COND_INLINE
+# define _GLTHREAD_COND_INLINE _GL_INLINE
+#endif
+
 /* ========================================================================= */
 
 #if USE_POSIX_THREADS
@@ -369,7 +374,7 @@ extern "C" {
    while (0)
 #define gl_cond_timedwait(COND, LOCK, ABSTIME) \
   gl_cond_timedwait_func (&COND, &LOCK, ABSTIME)
-static inline bool
+_GLTHREAD_COND_INLINE bool
 gl_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime)
 {
   int err = glthread_cond_timedwait (cond, lock, abstime);
@@ -404,5 +409,7 @@ gl_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec *absti
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GLTHREAD_COND_H */

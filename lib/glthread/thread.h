@@ -74,6 +74,11 @@
 #include <errno.h>
 #include <stdlib.h>
 
+_GL_INLINE_HEADER_BEGIN
+#ifndef _GLTHREAD_THREAD_INLINE
+# define _GLTHREAD_THREAD_INLINE _GL_INLINE
+#endif
+
 /* ========================================================================= */
 
 #if USE_POSIX_THREADS
@@ -360,7 +365,7 @@ typedef int gl_thread_t;
 extern "C" {
 #endif
 
-static inline gl_thread_t
+_GLTHREAD_THREAD_INLINE gl_thread_t
 gl_thread_create (void *(*func) (void *arg), void *arg)
 {
   gl_thread_t thread;
@@ -396,5 +401,7 @@ gl_thread_create (void *(*func) (void *arg), void *arg)
 #ifdef __cplusplus
 }
 #endif
+
+_GL_INLINE_HEADER_END
 
 #endif /* _GLTHREAD_THREAD_H */

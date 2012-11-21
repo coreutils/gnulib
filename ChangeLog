@@ -1,5 +1,23 @@
 2012-11-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	cond, lock, thread: better 'inline'
+	* lib/glthread/cond.c, lib/glthread/cond.h (_GLTHREAD_COND_INLINE):
+	* lib/glthread/thread.c, lib/glthread/thread.h (_GLTHREAD_THREAD_INLINE):
+	New macros.  Use them instead of static inline, for header functions.
+	* lib/glthread/cond.c (gl_waitqueue_init, gl_waitqueue_remove)
+	(gl_waitqueue_notify_first, gl_waitqueue_notify_all):
+	* lib/glthread/lock.c (gl_waitqueue_init)
+	(gl_waitqueue_notify_first, gl_waitqueue_notify_all):
+	* lib/glthread/thread.c (get_current_thread_handle):
+	Change 'static inline' to 'inline'.
+	* lib/glthread/cond.h, lib/glthread/thread.h:
+	Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	* m4/cond.m4 (gl_COND):
+	* m4/lock.m4 (gl_PREREQ_LOCK):
+	* m4/thread.m4 (gl_THREAD):
+	Do not require AC_C_INLINE.
+	* modules/cond, modules/thread (Depends-on): Add extern-inline.
+
 	chdir-long, cycle-check, savewd: better 'inline'
 	* lib/chdir-long.c (cdb_init, cdb_fchdir, cdb_free)
 	(find_non_slash):

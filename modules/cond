@@ -10,6 +10,7 @@ Depends-on:
 threadlib
 lock
 errno
+extern-inline
 stdbool
 time
 gettimeofday
@@ -28,4 +29,3 @@ LGPLv2+
 
 Maintainer:
 Yoann Vandoorselaere
-

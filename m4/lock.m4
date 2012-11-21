@@ -1,4 +1,4 @@
-# lock.m4 serial 12 (gettext-0.18.2)
+# lock.m4 serial 13 (gettext-0.18.2)
 dnl Copyright (C) 2005-2012 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,7 +35,5 @@ return !x;
   gl_PREREQ_LOCK
 ])
 
-# Prerequisites of lib/lock.c.
-AC_DEFUN([gl_PREREQ_LOCK], [
-  AC_REQUIRE([AC_C_INLINE])
-])
+# Prerequisites of lib/glthread/lock.c.
+AC_DEFUN([gl_PREREQ_LOCK], [:])
