@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate October 27, 2012
+@set lastupdate November 25, 2012
 @c %**end of header
 
 @dircategory GNU organization
@@ -1047,7 +1047,8 @@ have legal significance.
 Finally, here is the table of our suggested license abbreviations.
 Any abbreviation can be followed by @samp{v@var{version}[+]}, meaning
 that particular version, or later versions with the @samp{+}, as shown
-above.
+above.  In the case of a GNU license, @emph{always} indicate the permitted
+versions in this way.
 
 In the case of exceptions for extra permissions with the GPL, we use
 @samp{/} for a separator; the version number can follow the license
