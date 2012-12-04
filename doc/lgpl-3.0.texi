@@ -137,10 +137,10 @@ be required to provide such information under section 6 of the
 GNU GPL, and only to the extent that such information is
 necessary to install and execute a modified version of the
 Combined Work produced by recombining or relinking the
-Application with a modified version of the Linked Version. (If
+Application with a modified version of the Linked Version.  (If
 you use option 4d0, the Installation Information must accompany
 the Minimal Corresponding Source and Corresponding Application
-Code. If you use option 4d1, you must provide the Installation
+Code.  If you use option 4d1, you must provide the Installation
 Information in the manner specified by section 6 of the GNU GPL
 for conveying Corresponding Source.)
 @end enumerate
@@ -167,16 +167,16 @@ accompanying uncombined form of the same work.
 @item Revised Versions of the GNU Lesser General Public License.
 
 The Free Software Foundation may publish revised and/or new versions
-of the GNU Lesser General Public License from time to time. Such new
+of the GNU Lesser General Public License from time to time.  Such new
 versions will be similar in spirit to the present version, but may
 differ in detail to address new problems or concerns.
 
-Each version is given a distinguishing version number. If the
+Each version is given a distinguishing version number.  If the
 Library as you received it specifies that a certain numbered version
 of the GNU Lesser General Public License ``or any later version''
 applies to it, you have the option of following the terms and
 conditions either of that published version or of any later version
-published by the Free Software Foundation. If the Library as you
+published by the Free Software Foundation.  If the Library as you
 received it does not specify a version number of the GNU Lesser
 General Public License, you may choose any version of the GNU Lesser
 General Public License ever published by the Free Software Foundation.
