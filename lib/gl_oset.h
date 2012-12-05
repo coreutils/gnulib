@@ -90,15 +90,16 @@ struct gl_oset_implementation;
 /* Type representing a ordered set datatype implementation.  */
 typedef const struct gl_oset_implementation * gl_oset_implementation_t;
 
+#if 0 /* Unless otherwise specified, these are defined inline below.  */
+
 /* Create an empty set.
    IMPLEMENTATION is one of GL_ARRAY_OSET, GL_AVLTREE_OSET, GL_RBTREE_OSET.
    COMPAR_FN is an element comparison function or NULL.
    DISPOSE_FN is an element disposal function or NULL.  */
-#if 0 /* declared in gl_xoset.h */
+/* declared in gl_xoset.h */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
                                        gl_setelement_dispose_fn dispose_fn);
-#endif
 /* Likewise.  Return NULL upon out-of-memory.  */
 extern gl_oset_t gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                                           gl_setelement_compar_fn compar_fn,
@@ -123,9 +124,8 @@ extern bool gl_oset_search_atleast (gl_oset_t set,
 
 /* Add an element to an ordered set.
    Return true if it was not already in the set and added, false otherwise.  */
-#if 0 /* declared in gl_xoset.h */
+/* declared in gl_xoset.h */
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
-#endif
 /* Likewise.  Return -1 upon out-of-memory.  */
 extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
@@ -140,6 +140,8 @@ extern bool gl_oset_remove (gl_oset_t set, const void *elt);
 /* Free an entire ordered set.
    (But this call does not free the elements of the set.)  */
 extern void gl_oset_free (gl_oset_t set);
+
+#endif /* End of inline and gl_xlist.h-defined functions.  */
 
 /* --------------------- gl_oset_iterator_t Data Type --------------------- */
 
@@ -160,6 +162,8 @@ typedef struct
   size_t i; size_t j;
 } gl_oset_iterator_t;
 
+#if 0 /* These are defined inline below.  */
+
 /* Create an iterator traversing an ordered set.
    The set's contents must not be modified while the iterator is in use,
    except for removing the last returned element.  */
@@ -172,6 +176,8 @@ extern bool gl_oset_iterator_next (gl_oset_iterator_t *iterator,
 
 /* Free an iterator.  */
 extern void gl_oset_iterator_free (gl_oset_iterator_t *iterator);
+
+#endif /* End of inline functions.  */
 
 /* ------------------------ Implementation Details ------------------------ */
 
@@ -236,6 +242,9 @@ gl_oset_search_atleast (gl_oset_t set,
 }
 
 GL_OSET_INLINE int
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
 gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);

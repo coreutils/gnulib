@@ -33,6 +33,7 @@ extern "C" {
 /* These functions are thin wrappers around the corresponding functions with
    _nx_ infix from gl_list.h.  Upon out-of-memory, they invoke xalloc_die (),
    instead of returning an error indicator.  */
+#if 0 /* These are defined inline below.  */
 extern gl_list_t gl_list_create_empty (gl_list_implementation_t implementation,
                                        gl_listelement_equals_fn equals_fn,
                                        gl_listelement_hashcode_fn hashcode_fn,
@@ -59,6 +60,7 @@ extern gl_list_node_t gl_list_add_at (gl_list_t list, size_t position,
 extern gl_list_node_t gl_sortedlist_add (gl_list_t list,
                                          gl_listelement_compar_fn compar,
                                          const void *elt);
+#endif
 
 GL_XLIST_INLINE gl_list_t
 gl_list_create_empty (gl_list_implementation_t implementation,

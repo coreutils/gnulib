@@ -34,10 +34,12 @@ extern "C" {
 /* These functions are thin wrappers around the corresponding functions with
    _nx_ infix from gl_oset.h.  Upon out-of-memory, they invoke xalloc_die (),
    instead of returning an error indicator.  */
+#if 0 /* These are defined inline below.  */
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
                                        gl_setelement_dispose_fn dispose_fn);
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
+#endif
 
 GL_XOSET_INLINE gl_oset_t
 gl_oset_create_empty (gl_oset_implementation_t implementation,
