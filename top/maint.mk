@@ -1315,7 +1315,7 @@ announcement_mail_Cc_ ?= $(announcement_mail_Cc_$(release-type))
 announcement_mail_headers_ ?= $(announcement_mail_headers_$(release-type))
 announcement: NEWS ChangeLog $(rel-files)
 # Not $(AM_V_GEN) since the output of this command serves as
-# annoucement message: it would start with " GEN announcement".
+# announcement message: it would start with " GEN announcement".
 	$(AM_V_at)$(srcdir)/$(_build-aux)/announce-gen			\
 	    --mail-headers='$(announcement_mail_headers_)'		\
 	    --release-type=$(release-type)				\
