@@ -1,3 +1,12 @@
+2012-12-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vasnprintf: fix ASCII_ONLY typo
+	* lib/unistdio/u8-vasnprintf.c (FCHAR_T_ONLY_ASCII):
+	* lib/unistdio/u16-vasnprintf.c (FCHAR_T_ONLY_ASCII):
+	* lib/unistdio/u32-vasnprintf.c (FCHAR_T_ONLY_ASCII):
+	New macro, replacing ASCII_ONLY.  This fixes a typo.  See thread at
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-12/msg00021.html>.
+
 2012-12-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	list, oset, xlist, xoset: fix extern inline issue with C99

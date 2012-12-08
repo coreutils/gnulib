@@ -36,7 +36,7 @@
 #define FCHAR_T char
 #define DIRECTIVE char_directive
 #define DIRECTIVES char_directives
-#define ASCII_ONLY 1
+#define FCHAR_T_ONLY_ASCII 1
 #define PRINTF_PARSE ulc_printf_parse
 #define DCHAR_T uint16_t
 #define DCHAR_T_IS_UINT16_T 1
