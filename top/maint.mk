@@ -155,7 +155,7 @@ export LC_ALL = C
 ## Sanity checks.  ##
 ## --------------- ##
 
-_cfg_mk := $(shell test -f $(srcdir)/cfg.mk && echo '$(srcdir)/cfg.mk')
+_cfg_mk := $(wildcard $(srcdir)/cfg.mk)
 
 # Collect the names of rules starting with 'sc_'.
 syntax-check-rules := $(sort $(shell sed -n 's/^\(sc_[a-zA-Z0-9_-]*\):.*/\1/p' \

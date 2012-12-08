@@ -1,3 +1,10 @@
+2012-12-08  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	maint.mk: avoid extra forks
+	* top/maint.mk (_cfg_mk): The GNU make manual documents that
+	"$(wildcard FILE)" expands to empty if FILE doesn't exist.
+	So use that instead of "$(shell test -f FILE && echo FILE)".
+
 2012-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	vasnprintf: fix ASCII_ONLY typo
