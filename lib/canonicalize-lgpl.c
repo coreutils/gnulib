@@ -157,6 +157,8 @@ __realpath (const char *name, char *resolved)
           goto error;
         }
       dest = strchr (rpath, '\0');
+      start = name;
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (rpath);
     }
   else
     {
@@ -173,9 +175,10 @@ __realpath (const char *name, char *resolved)
             *dest++ = '/';
           *dest = '\0';
         }
+      start = name + prefix_len;
     }
 
-  for (start = end = name + prefix_len; *start; start = end)
+  for (end = start; *start; start = end)
     {
 #ifdef _LIBC
       struct stat64 st;
@@ -200,7 +203,7 @@ __realpath (const char *name, char *resolved)
         {
           /* Back up to previous component, ignore if at root already.  */
           if (dest > rpath + prefix_len + 1)
-            for (--dest; !ISSLASH (dest[-1]); --dest)
+            for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
               continue;
           if (DOUBLE_SLASH_IS_DISTINCT_ROOT
               && dest == rpath + 1 && !prefix_len
@@ -334,7 +337,7 @@ __realpath (const char *name, char *resolved)
                   /* Back up to previous component, ignore if at root
                      already: */
                   if (dest > rpath + prefix_len + 1)
-                    for (--dest; !ISSLASH (dest[-1]); --dest)
+                    for (--dest; dest > rpath && !ISSLASH (dest[-1]); --dest)
                       continue;
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rpath + 1
                       && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)

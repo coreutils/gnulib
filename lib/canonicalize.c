@@ -150,6 +150,8 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
         {
           rname_limit = dest;
         }
+      start = name;
+      prefix_len = FILE_SYSTEM_PREFIX_LEN (rname);
     }
   else
     {
@@ -168,9 +170,10 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
             *dest++ = '/';
           *dest = '\0';
         }
+      start = name + prefix_len;
     }
 
-  for (start = name + prefix_len; *start; start = end)
+  for ( ; *start; start = end)
     {
       /* Skip sequence of multiple file name separators.  */
       while (ISSLASH (*start))
@@ -188,7 +191,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
         {
           /* Back up to previous component, ignore if at root already.  */
           if (dest > rname + prefix_len + 1)
-            for (--dest; !ISSLASH (dest[-1]); --dest)
+            for (--dest; dest > rname && !ISSLASH (dest[-1]); --dest)
               continue;
           if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
               && !prefix_len && ISSLASH (*dest) && !ISSLASH (dest[1]))
@@ -308,7 +311,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
                   /* Back up to previous component, ignore if at root
                      already: */
                   if (dest > rname + prefix_len + 1)
-                    for (--dest; !ISSLASH (dest[-1]); --dest)
+                    for (--dest; dest > rname && !ISSLASH (dest[-1]); --dest)
                       continue;
                   if (DOUBLE_SLASH_IS_DISTINCT_ROOT && dest == rname + 1
                       && ISSLASH (*dest) && !ISSLASH (dest[1]) && !prefix_len)
