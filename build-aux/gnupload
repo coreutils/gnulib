@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2012-06-11.00; # UTC
+scriptversion=2012-12-11.16; # UTC
 
 # Copyright (C) 2004-2012 Free Software Foundation, Inc.
 #
@@ -242,6 +242,8 @@ fi
 
 # Make sure passphrase is not exported in the environment.
 unset passphrase
+unset passphrase_fd_0
+GNUPGHOME=${GNUPGHOME:-$HOME/.gnupg}
 
 # Reset PATH to be sure that echo is a built-in.  We will later use
 # 'echo $passphrase' to output the passphrase, so it is important that
@@ -249,12 +251,13 @@ unset passphrase
 # listings with their arguments...).
 # Remember this script runs with 'set -e', so if echo is not built-in
 # it will exit now.
-if $dry_run; then :; else
+if $dry_run || grep -q "^use-agent" $GNUPGHOME/gpg.conf; then :; else
   PATH=/empty echo -n "Enter GPG passphrase: "
   stty -echo
   read -r passphrase
   stty echo
   echo
+  passphrase_fd_0="--passphrase-fd 0"
 fi
 
 if test $# -ne 0; then
@@ -262,7 +265,7 @@ if test $# -ne 0; then
   do
     echo "Signing $file ..."
     rm -f $file.sig
-    echo "$passphrase" | $dbg $GPG --passphrase-fd 0 -ba -o $file.sig $file
+    echo "$passphrase" | $dbg $GPG $passphrase_fd_0 -ba -o $file.sig $file
   done
 fi
 
@@ -320,12 +323,12 @@ upload ()
   case $dest in
     alpha.gnu.org:*)
       mkdirective "$destdir" "$base" "$file" "$stmt"
-      echo "$passphrase" | $dbg $GPG --passphrase-fd 0 --clearsign $base.directive
+      echo "$passphrase" | $dbg $GPG $passphrase_fd_0 --clearsign $base.directive
       $dbg ncftpput ftp-upload.gnu.org /incoming/alpha $files $base.directive.asc
       ;;
     ftp.gnu.org:*)
       mkdirective "$destdir" "$base" "$file" "$stmt"
-      echo "$passphrase" | $dbg $GPG --passphrase-fd 0 --clearsign $base.directive
+      echo "$passphrase" | $dbg $GPG $passphrase_fd_0 --clearsign $base.directive
       $dbg ncftpput ftp-upload.gnu.org /incoming/ftp $files $base.directive.asc
       ;;
     savannah.gnu.org:*)
@@ -344,7 +347,7 @@ upload ()
       destdir_p1=`echo "$destdir" | sed 's,^[^/]*/,,'`
       destdir_topdir=`echo "$destdir" | sed 's,/.*,,'`
       mkdirective "$destdir_p1" "$base" "$file" "$stmt"
-      echo "$passphrase" | $dbg $GPG --passphrase-fd 0 --clearsign $base.directive
+      echo "$passphrase" | $dbg $GPG $passphrase_fd_0 --clearsign $base.directive
       for f in $files $base.directive.asc
       do
         echo put $f
@@ -353,7 +356,7 @@ upload ()
     /*)
       dest_host=`echo "$dest" | sed 's,:.*,,'`
       mkdirective "$destdir" "$base" "$file" "$stmt"
-      echo "$passphrase" | $dbg $GPG --passphrase-fd 0 --clearsign $base.directive
+      echo "$passphrase" | $dbg $GPG $passphrase_fd_0 --clearsign $base.directive
       $dbg cp $files $base.directive.asc $dest_host
       ;;
     *)
