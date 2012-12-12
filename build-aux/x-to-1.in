@@ -44,9 +44,9 @@ progname=`basename $aux .x`
 case "$PERL" in *"/missing perl") perlok=no;; *) perlok=yes;; esac
 if test @CROSS_COMPILING@ = no && test -f $executable && test $perlok = yes; then
   echo "Updating man page $output"
-  echo "$HELP2MAN --include=$aux $executable > $output"
+  echo "$PERL $HELP2MAN --include=$aux $executable > $output"
   rm -f t-$progname.1
-  $HELP2MAN --include=$aux $executable > t-$progname.1 || exit 1
+  $PERL $HELP2MAN --include=$aux $executable > t-$progname.1 || exit 1
   if test -n "$update"; then
     # In --update mode, don't overwrite the output if nothing would change.
     if cmp t-$progname.1 $output >/dev/null 2>&1; then

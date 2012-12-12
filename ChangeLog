@@ -1,3 +1,12 @@
+2012-12-16  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
+
+	x-to-1: honor $PERL
+	* build-aux/x-to-1.in: Run $HELP2MAN via $PERL so that the user gets
+	a chance to use his preferred version of Perl.  This is typically
+	required by Darwin users whose default /usr/bin/perl does not have all
+	the libraries required by help2man, and who need to use their MacPorts
+	installation of Perl instead.
+
 2012-12-16  Akim Demaille  <akim@lrde.epita.fr>
 
 	gnu-web-doc-update: add all the new files, even in new directories
