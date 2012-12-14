@@ -1,5 +1,14 @@
 2012-12-16  Akim Demaille  <akim@lrde.epita.fr>
 
+	gnu-web-doc-update: add all the new files, even in new directories
+	See http://lists.gnu.org/archive/html/bug-gnulib/2012-12/msg00057.html
+	* build-aux/gnu-web-doc-update (--dry-run, $dryrun): New.
+	Use it.
+	(main): Don't use cvsutils to get the list of unknown files,
+	just add all the existing files and directories.
+
+2012-12-16  Akim Demaille  <akim@lrde.epita.fr>
+
 	gnu-web-doc-update: improve --help
 	* build-aux/gnu-web-doc-update: Move comments into --help.
 

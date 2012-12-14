@@ -39,6 +39,7 @@ assumes all documentation is in the doc/ sub-directory.
 
 Options:
   -C, --builddir=DIR  location of (configured) Makefile (default: .)
+  -n, --dry-run       don't actually commit anything
   --help              print this help, then exit
   --version           print version number, then exit
 
@@ -100,12 +101,12 @@ find_tool ()
 # Requirements: everything required to bootstrap your package, plus
 # these.
 find_tool CVS cvs
-find_tool CVSU cvsu
 find_tool GIT git
 find_tool RSYNC rsync
 find_tool XARGS gxargs xargs
 
 builddir=.
+dryrun=
 while test $# != 0
 do
   # Handle --option=value by splitting apart and putting back on argv.
@@ -121,6 +122,7 @@ do
   case $1 in
     --help|--version) ${1#--};;
     -C|--builddir) shift; builddir=$1; shift ;;
+    -n|--dry-run) dryrun=echo; shift;;
     --*) die "unrecognized option: $1";;
     *) break;;
   esac
@@ -139,7 +141,7 @@ current_branch=$($GIT branch | sed -ne '/^\* /{s///;p;q;}')
 cleanup()
 {
   __st=$?
-  rm -rf "$tmp"
+  $dryrun rm -rf "$tmp"
   $GIT checkout "$current_branch"
   $GIT submodule update --recursive
   $GIT branch -d $tmp_branch
@@ -172,12 +174,15 @@ $RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
 (
   cd $tmp/$pkg/manual
 
-  # Add any new files:
-  $CVSU --types='?'                             \
-    | sed s/..//                                \
-    | $XARGS --no-run-if-empty -- $CVS add -ko
+  # Add all the files.  This is simpler than trying to add only the
+  # new ones because of new directories: it would require iterating on
+  # adding the outer directories, and then their contents.
+  #
+  # find guarantees that we add outer directories first.
+  find . -name CVS -prune -o -print             \
+    | $XARGS --no-run-if-empty -- $dryrun $CVS add -ko
 
-  $CVS ci -m $version
+  $dryrun $CVS ci -m $version
 )
 
 # Local variables:
