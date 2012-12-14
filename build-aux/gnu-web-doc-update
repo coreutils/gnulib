@@ -1,13 +1,8 @@
 #!/bin/sh
 # Run this after each non-alpha release, to update the web documentation at
 # http://www.gnu.org/software/$pkg/manual/
-# This script must be run from the top-level directory,
-# assumes you're using git for revision control,
-# and requires a .prev-version file as well as a Makefile,
-# from which it extracts the version number and package name, respectively.
-# Also, it assumes all documentation is in the doc/ sub-directory.
 
-VERSION=2009-07-21.16; # UTC
+VERSION=2012-12-16.14; # UTC
 
 # Copyright (C) 2009-2012 Free Software Foundation, Inc.
 
@@ -36,6 +31,11 @@ Usage: $ME
 Run this script from top_srcdir (no arguments) after each non-alpha
 release, to update the web documentation at
 http://www.gnu.org/software/\$pkg/manual/
+
+This script assumes you're using git for revision control, and
+requires a .prev-version file as well as a Makefile, from which it
+extracts the version number and package name, respectively.  Also, it
+assumes all documentation is in the doc/ sub-directory.
 
 Options:
   -C, --builddir=DIR  location of (configured) Makefile (default: .)
