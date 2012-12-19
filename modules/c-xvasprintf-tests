@@ -1,0 +1,18 @@
+Files:
+tests/test-c-xvasprintf.c
+tests/test-c-xvasprintf.sh
+m4/locale-fr.m4
+tests/macros.h
+
+Depends-on:
+setlocale
+snprintf
+xalloc
+
+configure.ac:
+gt_LOCALE_FR
+
+Makefile.am:
+TESTS += test-c-xvasprintf.sh
+check_PROGRAMS += test-c-xvasprintf
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'

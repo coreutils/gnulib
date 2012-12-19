@@ -1,3 +1,46 @@
+2012-12-15  Ben Pfaff  <blp@cs.stanford.edu>
+
+	New 'c-*printf' modules for formatted output in C locale.
+
+	New module 'c-vasnprintf'.
+	* modules/c-vasnprintf: New file.
+	* lib/c-vasnprintf.c: New file.
+	* lib/c-vasnprintf.h: New file.
+
+	New module 'c-snprintf'.
+        * modules/c-snprintf: New file.
+        * modules/c-snprintf-tests: New file.
+        * lib/c-snprintf.c: New file.
+        * lib/c-snprintf.h: New file.
+        * tests/test-c-snprintf.c: New file.
+        * tests/test-c-snprintf.sh: New file.
+
+	New module 'c-vsnprintf'.
+        * modules/c-vsnprintf: New file.
+        * modules/c-vsnprintf-tests: New file.
+        * lib/c-vsnprintf.c: New file.
+        * lib/c-vsnprintf.h: New file.
+        * tests/test-c-vsnprintf.c: New file.
+        * tests/test-c-vsnprintf.sh: New file.
+
+	New module 'c-vasprintf'.
+        * modules/c-vasprintf: New file.
+        * modules/c-vasprintf-tests: New file.
+        * lib/c-asprintf.c: New file.
+        * lib/c-vasprintf.c: New file.
+        * lib/c-vasprintf.h: New file.
+        * tests/test-c-vasprintf.c  +: New file.
+        * tests/test-c-vasprintf.sh: New file.
+
+	New module 'c-xvasprintf'.
+        * modules/c-xvasprintf: New file.
+        * modules/c-xvasprintf-tests: New file.
+        * lib/c-xasprintf.c: New file.
+        * lib/c-xvasprintf.c: New file.
+        * lib/c-xvasprintf.h: New file.
+        * tests/test-c-xvasprintf.c: New file.
+        * tests/test-c-xvasprintf.sh: New file.
+
 2012-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	argp: better 'inline'

@@ -1,0 +1,17 @@
+Files:
+tests/test-c-vsnprintf.c
+tests/test-c-vsnprintf.sh
+m4/locale-fr.m4
+tests/macros.h
+
+Depends-on:
+setlocale
+snprintf
+
+configure.ac:
+gt_LOCALE_FR
+
+Makefile.am:
+TESTS += test-c-vsnprintf.sh
+check_PROGRAMS += test-c-vsnprintf
+TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
