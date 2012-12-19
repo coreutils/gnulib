@@ -197,6 +197,10 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
 #define __argp_fmtstream_point argp_fmtstream_point
 #define __argp_fmtstream_update _argp_fmtstream_update
 #define __argp_fmtstream_ensure _argp_fmtstream_ensure
+_GL_INLINE_HEADER_BEGIN
+#ifndef ARGP_FS_EI
+# define ARGP_FS_EI _GL_INLINE
+#endif
 #endif
 
 #ifndef ARGP_FS_EI
@@ -345,6 +349,7 @@ __argp_fmtstream_point (argp_fmtstream_t __fs)
 #undef __argp_fmtstream_point
 #undef __argp_fmtstream_update
 #undef __argp_fmtstream_ensure
+_GL_INLINE_HEADER_END
 #endif
 
 #endif /* __OPTIMIZE__ */

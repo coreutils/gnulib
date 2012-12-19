@@ -25,6 +25,7 @@ m4/argp.m4
 Depends-on:
 alloca
 dirname-lgpl
+extern-inline
 getopt-gnu
 strchrnul
 sysexits

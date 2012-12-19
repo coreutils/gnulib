@@ -20,7 +20,11 @@
 # include <config.h>
 #endif
 
-#define ARGP_FS_EI
+#ifdef _LIBC
+# define ARGP_FS_EI
+#else
+# define ARGP_FS_EI _GL_EXTERN_INLINE
+#endif
 #undef __OPTIMIZE__
 #define __OPTIMIZE__ 1
 #include "argp-fmtstream.h"

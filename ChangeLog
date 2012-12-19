@@ -1,3 +1,14 @@
+2012-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	argp: better 'inline'
+	Use extern-inline module to declare extern inline functions.
+	This avoids some bogus warning diagnostics.  Problem discovered
+	when modifying GNU tar to use the manywarnings module.
+	* lib/argp.h, lib/argp-xinl.c (ARGP_EI) [!_LIBC]:
+	* lib/argp-fmtstream.h, lib/argp-fs-xinl.c (ARGP_FS_EI) [!_LIBC]:
+	Define based on extern-inline.
+	* modules/argp (Depends-on): Add extern-inline.
+
 2012-12-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	filemode, sys_stat: Handle MPX files a la AIX.

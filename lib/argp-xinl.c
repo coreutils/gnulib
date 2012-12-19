@@ -27,7 +27,11 @@
 #ifndef __USE_EXTERN_INLINES
 # define __USE_EXTERN_INLINES   1
 #endif
-#define ARGP_EI
+#ifdef _LIBC
+# define ARGP_EI
+#else
+# define ARGP_EI _GL_EXTERN_INLINE
+#endif
 #undef __OPTIMIZE__
 #define __OPTIMIZE__ 1
 #include "argp.h"

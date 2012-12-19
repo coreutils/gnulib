@@ -579,6 +579,10 @@ extern void *__argp_input (const struct argp *__restrict __argp,
 #  define __argp_state_help argp_state_help
 #  define __option_is_short _option_is_short
 #  define __option_is_end _option_is_end
+_GL_INLINE_HEADER_BEGIN
+#  ifndef ARGP_EI
+#   define ARGP_EI _GL_INLINE
+#  endif
 # endif
 
 # ifndef ARGP_EI
@@ -635,6 +639,7 @@ __NTH (__option_is_end (const struct argp_option *__opt))
 #  undef __argp_state_help
 #  undef __option_is_short
 #  undef __option_is_end
+_GL_INLINE_HEADER_END
 # endif
 #endif /* Use extern inlines.  */
 
