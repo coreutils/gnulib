@@ -1,3 +1,14 @@
+2012-12-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	AC_PROG_MKDIR_P: don't workaround if not buggy
+	* m4/gnulib-common.m4 (AC_PROG_MKDIR_P):
+	Define only for Autoconf versions before 2.62.
+	(AC_C_RESTRICT): Use documented AC_AUTOCONF_VERSION, not
+	undocumented m4_PACKAGE_VERSION, for consistency with the
+	abovementioned change to AC_PROG_MKDIR_P.  This should suffice
+	since we're checking for 2.62 or later, and AC_AUTOCONF_VERSION
+	was introduced in 2.62.
+
 2012-12-15  Ben Pfaff  <blp@cs.stanford.edu>
 
 	New 'c-*printf' modules for formatted output in C locale.
