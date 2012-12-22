@@ -1,3 +1,20 @@
+2012-12-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	argp: port new 'inline' approach to Sun C 5.12 + Solaris 10
+	On this platform, we are not optimizing but we are using
+	the substitute for extern inlines, so compile as if
+	C99-style extern inline, or a substitute, is available.
+	* lib/argp-fmtstream.h (argp_fmtstream_set_lmargin)
+	(__argp_fmtstream_set_lmargin, argp_fmtstream_set_rmargin)
+	(__argp_fmtstream_set_rmargin, argp_fmtstream_set_wmargin)
+	(__argp_fmtstream_set_wmargin, argp_fmtstream_point)
+	(__argp_fmtstream_point) [!_LIBC && !__OPTIMIZE__]:
+	Declare as ARGP_FS_EI, not as extern.
+	* lib/argp.h (argp_usage, __argp_usage, _option_is_short)
+	(__option_is_short, _option_is_end, __option_is_end)
+	[!_LIBC && __USE_EXTERN_INLINES]:
+	Declare as ARGP_EI, not as extern.
+
 2012-12-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	AC_PROG_MKDIR_P: port workaround to pre-2.62 Autoconf

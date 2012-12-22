@@ -519,7 +519,7 @@ extern void __argp_state_help (const struct argp_state *__restrict __state,
                                FILE *__restrict __stream,
                                unsigned int __flags);
 
-#if _LIBC || !defined __USE_EXTERN_INLINES
+#if _LIBC
 /* Possibly output the standard usage message for ARGP to stderr and exit.  */
 extern void argp_usage (const struct argp_state *__state);
 extern void __argp_usage (const struct argp_state *__state);
@@ -552,7 +552,7 @@ extern void __argp_failure (const struct argp_state *__restrict __state,
                             const char *__restrict __fmt, ...)
      _GL_ATTRIBUTE_FORMAT ((__printf__, 4, 5));
 
-#if _LIBC || !defined __USE_EXTERN_INLINES
+#if _LIBC
 /* Returns true if the option OPT is a valid short option.  */
 extern int _option_is_short (const struct argp_option *__opt) __THROW;
 extern int __option_is_short (const struct argp_option *__opt) __THROW;
@@ -572,7 +572,7 @@ extern void *__argp_input (const struct argp *__restrict __argp,
                            const struct argp_state *__restrict __state)
      __THROW;
 
-#ifdef __USE_EXTERN_INLINES
+#if !_LIBC || defined __USE_EXTERN_INLINES
 
 # if !_LIBC
 #  define __argp_usage argp_usage
