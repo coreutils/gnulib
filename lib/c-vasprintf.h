@@ -39,7 +39,7 @@ extern "C" {
 /* asprintf() and vasprintf(), but formatting takes place in the C locale, that
    is, the decimal point used in floating-point formatting directives is always
    '.'. */
-int c_asprintf (char **resultp, const char *format, ...);
+int c_asprintf (char **resultp, const char *format, ...)
        _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 3));
 int c_vasprintf (char **resultp, const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((__printf__, 2, 0));
