@@ -18,7 +18,7 @@ mingw, MSVC 9.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-C99 and POSIX-2001 and later require end-of-file to be sticky, that
+C99 and POSIX.1-2001 and later require end-of-file to be sticky, that
 is, they require this function to act as if it reads end-of-file if
 @code{feof} would return nonzero.  However, on some systems this
 function attempts to read from the underlying file descriptor even if

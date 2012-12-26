@@ -1,5 +1,15 @@
 2012-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Correct name of POSIX.1-2001.
+	* doc/posix-functions/fgetc.texi (fgetc):
+	* doc/posix-functions/fgets.texi (fgets):
+	* doc/posix-functions/fread.texi (fread):
+	* doc/posix-functions/fscanf.texi (fscanf):
+	* doc/posix-functions/getc.texi (getc):
+	* doc/posix-functions/getchar.texi (getchar):
+	* doc/posix-functions/scanf.texi (scanf):
+	POSIX.1-2001, not POSIX-2001.
+
 	doc: move README into manual
 	* README: Move contents to new file doc/gnulib-readme.texi.
 	Replace with a one-line summary.
