@@ -1,3 +1,9 @@
+2012-12-25  Ben Pfaff  <blp@cs.stanford.edu>
+
+	c-xvasprintf: Fix "implicit declaration of function" GCC warning.
+	* lib/c-xvasprintf.c: Add missing #include "c-vasprintf.h", for
+	c_vasprintf() prototype.
+
 2012-12-24  Ben Pfaff  <blp@cs.stanford.edu>
 
 	c-vasprintf: Fix "empty declaration" warning reported by GCC.

@@ -22,6 +22,7 @@
 #include <errno.h>
 #include <stdio.h>
 
+#include "c-vasprintf.h"
 #include "xalloc.h"
 
 char *
