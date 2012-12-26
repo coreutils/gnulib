@@ -57,7 +57,8 @@ Documentation License''.
 @end ifnottex
 
 @menu
-* Introduction::
+* Brief Overview::
+* Philosophy::
 * Invoking gnulib-tool::
 * Writing modules::
 * Extending Gnulib::
@@ -87,8 +88,8 @@ If you need this particular \thing\, you may write to
 @end macro
 
 
-@node Introduction
-@chapter Introduction
+@node Brief Overview
+@chapter Brief Overview
 
 Gnulib is a source code library. It provides basic functionality to
 programs and libraries.  Currently (as of October 2006) more than 30
@@ -103,6 +104,15 @@ Resources:
 @item The Gnulib home page:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
+
+@include gnulib-readme.texi
+
+@node Philosophy
+@chapter Philosophy
+
+Gnulib's design and development philosophy is organized around steady,
+collaborative, and open development of reusable modules that are
+suitable for a reasonably wide variety of platforms.
 
 @menu
 * Benefits::

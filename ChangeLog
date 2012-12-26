@@ -1,3 +1,16 @@
+2012-12-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: move README into manual
+	* README: Move contents to new file doc/gnulib-readme.texi.
+	Replace with a one-line summary.
+	* doc/gnulib.texi (Brief Overview): New section,
+	with old intro preface.  Include gnulib-readme.texi for contents.
+	(Philosophy): Rename from "Introduction", since this
+	section no longer introduces the rest.  Write a new preface.
+	* doc/gnulib-readme.texi: New file, with the old contents of
+	README texinfo-ized.  This way, the README info appears
+	in the online and printed manual.
+
 2012-12-25  Ben Pfaff  <blp@cs.stanford.edu>
 
 	c-xvasprintf: Fix "implicit declaration of function" GCC warning.
