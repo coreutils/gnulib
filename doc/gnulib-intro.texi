@@ -60,8 +60,8 @@ access functions to the kernel's system calls, and little more.
 There is no clear borderline between both areas.
 
 For example, Gnulib has a facility for generating the name of backup
-files.  While this task is entirely at the application level --- no
-standard specifies an API for it --- the na@"{@dotless{i}}ve code has
+files.  While this task is entirely at the application level---no
+standard specifies an API for it---the na@"{@dotless{i}}ve code has
 some portability problems because on some platforms the length of file
 name components is limited to 30 characters or so.  Gnulib handles
 that.
@@ -79,8 +79,8 @@ failed.
 
 Gnulib supports a number of platforms that we call the ``reasonable
 portability targets''.  This class consists of widespread operating systems,
-for three years after their last availability, or --- for proprietary
-operating systems --- as long as the vendor provides commercial support for
+for three years after their last availability, or---for proprietary
+operating systems---as long as the vendor provides commercial support for
 it.  Already existing Gnulib code for older operating systems is usually
 left in place for longer than these three years.  So it comes that programs
 that use Gnulib run pretty well also on these older operating systems.
@@ -200,13 +200,13 @@ reside in the @file{lib/} subdirectory.  Autoconf macro files reside in
 the @file{m4/} subdirectory.  Build scripts reside in the
 @file{build-aux/} subdirectory.
 
-The module description contains the list of files --- @code{gnulib-tool}
+The module description contains the list of files; @code{gnulib-tool}
 copies these files.  It contains the module's
-dependencies --- @code{gnulib-tool} installs them as well.  It also
+dependencies; @code{gnulib-tool} installs them as well.  It also
 contains the autoconf macro invocation (usually a single line or
-nothing at all) --- @code{gnulib-tool} ensures this is invoked from the
+nothing at all); @code{gnulib-tool} ensures this is invoked from the
 package's @file{configure.ac} file.  And also a @file{Makefile.am}
-snippet --- @code{gnulib-tool} collects these into a @file{Makefile.am}
+snippet; @code{gnulib-tool} collects these into a @file{Makefile.am}
 for the tailored Gnulib part.  The module description and include file
 specification are for documentation purposes; they are combined into
 @file{MODULES.html}.
@@ -217,9 +217,9 @@ The module system serves two purposes:
 @item
 It ensures consistency of the used autoconf macros and @file{Makefile.am}
 rules with the source code.  For example, source code which uses the
-@code{getopt_long} function --- this is a common way to implement parsing
-of command line options in a way that complies with the GNU standards ---
-needs the source code (@file{lib/getopt.c} and others), the autoconf macro
+@code{getopt_long} function---this is a common way to implement parsing
+of command line options in a way that complies with the GNU standards---needs
+the source code (@file{lib/getopt.c} and others), the autoconf macro
 which detects whether the system's libc already has this function (in
 @file{m4/getopt.m4}), and a few @file{Makefile.am} lines that create the
 substitute @file{getopt.h} if not.  These three pieces belong together.
@@ -294,17 +294,17 @@ header file the system's one is used.
 @subsection Enhancements of ISO C or POSIX functions
 
 These are sometimes POSIX functions with GNU extensions also found in
-glibc --- examples: @samp{getopt}, @samp{fnmatch} --- and often new
-APIs --- for example, for all functions that allocate memory in one way
+glibc---examples: @samp{getopt}, @samp{fnmatch}---and often new
+APIs---for example, for all functions that allocate memory in one way
 or the other, we have variants which also include the error checking
 against the out-of-memory condition.
 
 @subsection Portable general use facilities
 
-Examples are a module for copying a file --- the portability problems
+Examples are a module for copying a file---the portability problems
 relate to the copying of the file's modification time, access rights,
-and extended attributes --- or a module for extracting the tail
-component of a file name --- here the portability to native Windows
+and extended attributes---or a module for extracting the tail
+component of a file name---here the portability to native Windows
 requires a different API than the classical POSIX @code{basename} function.
 
 @subsection Reusable application code
@@ -373,7 +373,7 @@ licenses apply to files in special directories:
 Module description files are under this copyright:
 
 @quotation
-Copyright @copyright{} 200X-200Y Free Software Foundation, Inc.@*
+Copyright @copyright{} 20XX--20YY Free Software Foundation, Inc.@*
 Copying and distribution of this file, with or without modification,
 in any medium, are permitted without royalty provided the copyright
 notice and this notice are preserved.
@@ -383,7 +383,7 @@ notice and this notice are preserved.
 Autoconf macro files are under this copyright:
 
 @quotation
-Copyright @copyright{} 200X-200Y Free Software Foundation, Inc.@*
+Copyright @copyright{} 20XX--20YY Free Software Foundation, Inc.@*
 This file is free software; the Free Software Foundation
 gives unlimited permission to copy and/or distribute it,
 with or without modifications, as long as this notice is preserved.
@@ -398,7 +398,7 @@ not a problem, since compiled tests are not installed by ``make install''.
 Documentation files are under this copyright:
 
 @quotation
-Copyright @copyright{} 2004-200Y Free Software Foundation, Inc.@*
+Copyright @copyright{} 2004--20YY Free Software Foundation, Inc.@*
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation; with no

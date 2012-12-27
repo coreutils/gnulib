@@ -18,8 +18,8 @@ platforms:
 mingw, MSVC 9.
 @item
 When writing to a non-blocking pipe on which no reader is currently waiting
-an amount of bytes that exceeds the pipe buffer's size, then -- even if the
-pipe's buffer is empty -- this function fails, instead of performing a partial
+an amount of bytes that exceeds the pipe buffer's size, then---even if the
+pipe's buffer is empty---this function fails, instead of performing a partial
 write into the pipe buffer, on some platforms:
 mingw, MSVC 9.
 @end itemize

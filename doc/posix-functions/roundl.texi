@@ -19,7 +19,7 @@ glibc 2.8, IRIX 6.5, OSF/1 5.1.
 Portability problems fixed by Gnulib module @code{roundl-ieee}:
 @itemize
 @item
-This function returns a positive zero for an argument between -0.5 and 0
+This function returns a positive zero for an argument between @minus{}0.5 and 0
 on some platforms:
 AIX 7.1.
 @item

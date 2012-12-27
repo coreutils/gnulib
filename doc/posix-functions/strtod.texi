@@ -31,7 +31,7 @@ platforms:
 glibc 2.4, Mac OS X 10.5, FreeBSD 6.2, AIX 7.1, Cygwin < 1.5.25-11.
 
 @item
-This function returns +0.0 (not -0.0) for @samp{-0} on some platforms:
+This function returns +0.0 (not @minus{}0.0) for @samp{-0} on some platforms:
 IRIX 6.5, OSF/1 4.0.
 
 @item
@@ -73,7 +73,7 @@ This function is missing on some old platforms.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function returns +0.0 (not -0.0) for negative underflow on some
+This function returns +0.0 (not @minus{}0.0) for negative underflow on some
 platforms:
 glibc 2.7, Cygwin 1.5.x, mingw, MSVC 9.
 

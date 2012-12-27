@@ -17,8 +17,8 @@ This header file is not self-contained on some platforms: it requires
 This header file does not define @code{struct timeval} on some platforms:
 OSF/1 4.0.
 @item
-This header file is not self-contained --- it requires @code{<string.h>}
-before @code{FD_ZERO} can be used --- on some platforms:
+This header file is not self-contained---it requires @code{<string.h>}
+before @code{FD_ZERO} can be used---on some platforms:
 AIX 7.1, Solaris 11 2011-11.
 @end itemize
 

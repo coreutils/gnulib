@@ -45,7 +45,7 @@ Allocate @code{sizeof(*ptr)} bytes of memory and store the address of
 allocated memory in @code{ptr}.  Fill the newly allocated memory with
 zeros.
 
-Returns -1 on failure, 0 on success.
+Returns @minus{}1 on failure, 0 on success.
 @end defmac
 
 @defmac {int} ALLOC_N (ptr, count)
@@ -54,7 +54,7 @@ Allocate an array of @code{count} elements, each @code{sizeof(*ptr)}
 bytes long, and store the address of allocated memory in
 @code{ptr}.  Fill the newly allocated memory with zeros.
 
-Returns -1 on failure, 0 on success.
+Returns @minus{}1 on failure, 0 on success.
 @end defmac
 
 @defmac {int} ALLOC_N_UNINITIALIZED (ptr, count)
@@ -63,7 +63,7 @@ Allocate an array of @code{count} elements, each @code{sizeof(*ptr)}
 bytes long, and store the address of allocated memory in
 @code{ptr}.  The allocated memory is not initialized.
 
-Returns -1 on failure, 0 on success.
+Returns @minus{}1 on failure, 0 on success.
 @end defmac
 
 @defmac {int} REALLOC_N (ptr, count)
@@ -73,7 +73,7 @@ at least @code{count} elements, each @code{sizeof(*ptr)} bytes long,
 and store the address of allocated memory in @code{ptr}.  If
 reallocation fails, the @code{ptr} variable is not modified.
 
-Returns -1 on failure, 0 on success.
+Returns @minus{}1 on failure, 0 on success.
 @end defmac
 
 @defmac {void} FREE (ptr)

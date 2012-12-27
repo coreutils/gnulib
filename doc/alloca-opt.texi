@@ -22,7 +22,7 @@ HAVE_ALLOCA.
 The user can @code{#include <alloca.h>} on all platforms, and use
 @code{alloca} on those platforms where the preprocessor macro HAVE_ALLOCA
 evaluates to true. If HAVE_ALLOCA is false, the code should use a heap-based
-memory allocation based on @code{malloc} or - in C++ - @code{new}. Note that
+memory allocation based on @code{malloc} or (in C++) @code{new}. Note that
 the @code{#include <alloca.h>} must be the first one after the
 autoconf-generated @file{config.h}, for AIX 3 compatibility. Thanks to IBM for
 this nice restriction!

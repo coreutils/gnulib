@@ -32,7 +32,7 @@ The third argument is of type @code{int} instead of @code{size_t} on some
 platforms:
 AIX 5.1, OSF/1 5.1.
 @item
-When this function fails, it returns -1 and sets @code{errno}, instead of
+When this function fails, it returns @minus{}1 and sets @code{errno}, instead of
 returning the error number, on some platforms:
 glibc 2.12 with @code{-D_POSIX_C_SOURCE=200112L}, AIX 6.1, OSF/1 5.1.
 @item

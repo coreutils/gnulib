@@ -16,8 +16,8 @@ opposite options in the @code{CFLAGS} variable at configuration time.
 @item
 You can make these warnings apply to selected directories only.  In
 projects where subprojects are maintained by different people, or where
-parts of the source code are imported from external sources -- for example
-from gnulib --, it is useful to apply different warning options to
+parts of the source code are imported from external sources (for example
+from gnulib), it is useful to apply different warning options to
 different directories.
 
 @item

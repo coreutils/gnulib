@@ -20,7 +20,7 @@ This function does nothing and always returns 0 in programs that are not
 linked with @code{-lpthread} on some platforms:
 FreeBSD 6.4, HP-UX 11.31, Solaris 9.
 @item
-When it fails, this functions returns -1 instead of the error number on
+When it fails, this functions returns @minus{}1 instead of the error number on
 some platforms:
 Cygwin 1.7.5.
 @item

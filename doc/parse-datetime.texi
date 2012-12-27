@@ -38,7 +38,7 @@ demanded a knowledge of five different languages.  It is no wonder then
 that we often look into our own immediate past or future, last Tuesday
 or a week from Sunday, with feelings of helpless confusion.  @dots{}
 
---- Robert Grudin, @cite{Time and the Art of Living}.
+---Robert Grudin, @cite{Time and the Art of Living}.
 @end quotation
 
 This section describes the textual date representations that @sc{gnu}

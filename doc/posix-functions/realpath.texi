@@ -37,5 +37,5 @@ Portability problems not fixed by Gnulib:
 @item
 This function does not allow to determine the required size of output buffer;
 the use of a non-NULL @samp{resolved} buffer is non-portable, since
-PATH_MAX --- if it is defined --- is nothing more than a guess.
+PATH_MAX, if it is defined, is nothing more than a guess.
 @end itemize

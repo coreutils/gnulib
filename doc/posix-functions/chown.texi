@@ -14,10 +14,10 @@ Some platforms fail to detect trailing slash on non-directories, as in
 FreeBSD 7.2, AIX 7.1, Solaris 9.
 @item
 Some platforms fail to update the change time when at least one
-argument was not -1, but no ownership changes resulted:
+argument was not @minus{}1, but no ownership changes resulted:
 OpenBSD 4.0.
 @item
-When passed an argument of -1, some implementations really set the owner
+When passed an argument of @minus{}1, some implementations really set the owner
 user/group id of the file to this value, rather than leaving that id of the
 file alone.
 @item

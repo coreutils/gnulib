@@ -30,7 +30,7 @@ This function was not correctly implemented in glibc versions before 2.2.
 When @code{iconv} encounters an input character that is valid but that
 cannot be converted to the output character set, glibc's and GNU libiconv's
 @code{iconv} stop the conversion.  Some other implementations put an
-implementation-defined character into the output buffer.  ---
+implementation-defined character into the output buffer.
 Gnulib provides higher-level facilities @code{striconv} and @code{striconveh}
 (wrappers around @code{iconv}) that deal with conversion errors in a platform
 independent way.

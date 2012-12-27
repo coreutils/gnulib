@@ -8,9 +8,9 @@ Fortran library archive files.
 
 The macros @code{AC_CHECK_LIB}, @code{AC_SEARCH_LIBS} from GNU Autoconf check
 for the presence of certain C, C++, or Fortran library archive files.
-The libraries are looked up in the default linker path -- a system dependent
-list of directories, that usually contains the @file{/usr/lib} directory --
- and those directories given by @code{-L} options in the @code{LDFLAGS}
+The libraries are looked up in the default linker path---a system dependent
+list of directories, that usually contains the @file{/usr/lib} directory---and
+those directories given by @code{-L} options in the @code{LDFLAGS}
 variable.
 
 @unnumberedsubsec Locating Libraries

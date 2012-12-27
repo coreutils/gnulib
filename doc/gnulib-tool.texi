@@ -577,8 +577,8 @@ When you use these options, the functions in Gnulib are built
 in such a way that they will always use this domain regardless of the
 default domain set by @code{textdomain}.
 
-In order to use this method, you must -- in each program that might use
-Gnulib code -- add an extra line to the part of the program that
+In order to use this method, you must---in each program that might use
+Gnulib code---add an extra line to the part of the program that
 initializes locale-dependent behavior.  Where you would normally write
 something like:
 
@@ -780,7 +780,7 @@ where the system's @code{timegm} function is missing or buggy, a replacement
 that is based on a function @code{mktime_internal}.  The module
 @code{mktime-internal} that provides this function provides it on all
 platforms.  So, by default, the file @file{mktime-internal.c} will be
-compiled on all platforms --- even on glibc and BSD systems which have a
+compiled on all platforms, even on glibc and BSD systems which have a
 working @code{timegm} function.  When the option
 @samp{--conditional-dependencies} is given, on the other hand, and if
 @code{mktime-internal} was not explicitly required on the command line,

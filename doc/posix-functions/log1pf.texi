@@ -12,7 +12,7 @@ Portability problems fixed by either Gnulib module @code{log1pf} or @code{log1pf
 This function is missing on some platforms:
 Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 9.
 @item
-This function returns a wrong value for the argument -1.0f on some platforms:
+This function returns a wrong value for the argument @code{-1.0f} on some platforms:
 IRIX 6.5.
 @end itemize
 
