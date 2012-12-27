@@ -1,5 +1,8 @@
 2012-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* doc/gnulib-readme.texi (Portability guidelines):
+	ctype.h, not ctime.h.
+
 	Correct name of POSIX.1-2001.
 	* doc/posix-functions/fgetc.texi (fgetc):
 	* doc/posix-functions/fgets.texi (fgets):
@@ -24147,7 +24150,7 @@
 
 	assume <ctype.h>, ..., <time.h> exist
 	For years gnulib has been assuming the existence of the headers
-	<ctime.h>, <errno.h>, <fcntl.h>, <locale.h>, <signal.h>,
+	<ctype.h>, <errno.h>, <fcntl.h>, <locale.h>, <signal.h>,
 	<stdio.h>, <stdlib.h>, <string.h>, and <time.h>.  Omit checks for
 	them, since they don't appear to be needed.
 	* README (Portability guidelines): Document this.
@@ -80131,7 +80134,7 @@
 
 	* lib/wcwidth.h: Declare nothing if !HAVE_WCHAR_T. Provide a fallback
 	declaration for wcwidth.
-	* lib/mbswidth.c: Restore the includes of <wchar.h> and <wctypes.h>.
+	* lib/mbswidth.c: Restore the includes of <wchar.h> and <wctype.h>.
 
 2006-06-28  Bruno Haible  <bruno@clisp.org>
 
