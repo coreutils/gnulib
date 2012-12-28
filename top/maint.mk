@@ -1370,7 +1370,8 @@ endef
 
 .PHONY: no-submodule-changes
 no-submodule-changes:
-	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
+	$(AM_V_GEN)if test -d $(srcdir)/.git				\
+		&& git --version >/dev/null 2>&1; then			\
 	  diff=$$(cd $(srcdir) && git submodule -q foreach		\
 		  git diff-index --name-only HEAD)			\
 	    || exit 1;							\
@@ -1388,7 +1389,8 @@ submodule-checks ?= no-submodule-changes public-submodule-commit
 # cannot be built from a fresh clone.
 .PHONY: public-submodule-commit
 public-submodule-commit:
-	$(AM_V_GEN)if test -d $(srcdir)/.git; then			\
+	$(AM_V_GEN)if test -d $(srcdir)/.git				\
+		&& git --version >/dev/null 2>&1; then			\
 	  cd $(srcdir) &&						\
 	  git submodule --quiet foreach					\
 	      test '"$$(git rev-parse "$$sha1")"'			\
