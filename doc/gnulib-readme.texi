@@ -46,8 +46,6 @@ Gnulib checkout.  For example:
 $ ln -s $HOME/gnu/src/gnulib.git/gnulib-tool $HOME/bin/gnulib-tool
 @end example
 
-The home page for Gnulib is @url{http://www.gnu.org/software/gnulib}.
-
 @node git and CVS
 @section git and CVS
 
@@ -71,14 +69,7 @@ git resources:
 @item Overview:
 @url{http://en.wikipedia.org/wiki/Git_(software)}
 @item Homepage:
-@url{http://git.or.cz/}
-@item Download:
-@url{http://www.kernel.org/pub/software/scm/git/}
-@item Tutorial:
-@url{http://git.or.cz/course/}
-@url{http://www.kernel.org/pub/software/scm/git/docs/tutorial.html}
-@item FAQ:
-@url{http://git.or.cz/gitwiki/GitFaq}
+@url{http://git-scm.com/}
 @end table
 
 When you use @code{git annotate} or @code{git blame} with Gnulib, it's
@@ -91,17 +82,18 @@ CVS checkouts are also supported:
 $ cvs -d :pserver:anonymous@@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
 @end example
 
-Gnulib is hosted on @samp{savannah.gnu.org}.  The project page is
-@url{http://savannah.gnu.org/projects/gnulib}.
-
 @node Keeping Up-to-date
 @section Keeping Up-to-date
 
 The best way to work with Gnulib is to check it out of git.
-Subscribing to the @email{bug-gnulib@@gnu.org} mailing list will help you to
-plan when to update your local copy of Gnulib (which you use to
-maintain your software) from git.  To synchronize, you can use @code{git pull},
+To synchronize, you can use @code{git pull},
 or @code{cvs update -dP} if you are still using CVS.
+
+Subscribing to the @email{bug-gnulib@@gnu.org} mailing list will help
+you to plan when to update your local copy of Gnulib (which you use to
+maintain your software) from git.  You can review the archives,
+subscribe, etc., via
+@url{https://lists.gnu.org/mailman/listinfo/bug-gnulib}.
 
 Sometimes, using an updated version of Gnulib will require you to use
 newer versions of GNU Automake or Autoconf.  You may find it helpful
@@ -116,9 +108,7 @@ to have filled out an assignment form for a project that uses the
 module for that contribution to be accepted here.
 
 If you have a piece of code that you would like to contribute, please
-email @email{bug-gnulib@@gnu.org}.  You can review the archives,
-subscribe, etc., via
-@url{http://lists.gnu.org/mailman/listinfo/bug-gnulib}.
+email @email{bug-gnulib@@gnu.org}.
 
 Generally we are looking for files that fulfill at least one of the
 following requirements:
@@ -194,9 +184,9 @@ For vi (vim): Add these lines to your @file{$HOME/.vimrc} file:
 set expandtab
 @end example
 
-For Makefile and ChangeLog files, compensate this by adding this to
-your @file{$HOME/.vim/after/indent/make.vim} and
-@file{$HOME/.vim/after/indent/changelog.vim} files:
+For Makefile and ChangeLog files, compensate for this by adding this
+to your @file{$HOME/.vim/after/indent/make.vim} file, and similarly
+for your @file{$HOME/.vim/after/indent/changelog.vim} file:
 
 @example
 " Use tabs for indentation, regardless of the global setting.
@@ -415,18 +405,3 @@ break.  This means that before any change can be committed to the
 repository, a test suite program must be produced that exposes the bug
 for regression testing.  All experimental work should be done on
 branches to help promote this.
-
-@c This copyright notice applies to this file.
-@c Generate it as output too, if the file is being formatted by itself.
-@c Otherwise, it should be formatted as part of a larger document
-@c that contains the relevant copyright notice.
-@ifset standalone
-Copyright @copyright{} 2001, 2003--2012 Free Software Foundation, Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with no
-Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
-Texts.  A copy of the license is included in the ``GNU Free
-Documentation License'' file as part of this distribution.
-@end ifset

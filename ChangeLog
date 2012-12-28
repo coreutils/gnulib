@@ -1,5 +1,10 @@
 2012-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* doc/gnulib-readme.texi: Minor fixups.
+	(Portability guidelines): Modernize URLs.  Remove some repetition.
+	(Indent with spaces not TABs): Reword to avoid too-long lines.
+	Remove some '@ifset standalone' stuff that isn't used.
+
 	* doc/gnulib-readme.texi (Portability guidelines):
 	ctype.h, not ctime.h.
 
