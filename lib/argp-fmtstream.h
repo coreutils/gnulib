@@ -133,7 +133,7 @@ extern ssize_t argp_fmtstream_printf (argp_fmtstream_t __fs,
                                       const char *__fmt, ...)
      _GL_ATTRIBUTE_FORMAT ((printf, 2, 3));
 
-#if _LIBC || !defined __OPTIMIZE__
+#if _LIBC
 extern int __argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
 extern int argp_fmtstream_putc (argp_fmtstream_t __fs, int __ch);
 

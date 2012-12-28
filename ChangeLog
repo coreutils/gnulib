@@ -1,5 +1,14 @@
 2012-12-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	argp: fix port of port new 'inline' approach to Sun C 5.12 + Solaris 10
+	The earlier patch forgot to update one of the #if conditions, causing
+	a problem on Debian testing i386 reported by Mats Erik Andersson
+	<http://lists.gnu.org/archive/html/bug-gnulib/2012-12/msg00124.html>.
+	* lib/argp-fmtstream.h (__argp_fmtstream_putc, argp_fmtstream_putc)
+	(__argp_fmtstream_puts, argp_fmtstream_puts)
+	(__argp_fmtstream_write, argp_fmtstream_write)
+	[!_LIBC && !__OPTIMIZE__]: Declare as ARGP_FS_EI, not as extern.
+
 	* doc/gnulib-readme.texi: Minor fixups.
 	(Portability guidelines): Modernize URLs.  Remove some repetition.
 	(Indent with spaces not TABs): Reword to avoid too-long lines.
