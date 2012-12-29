@@ -26,7 +26,7 @@ timestamp='2012-12-29'
 # program.  This Exception is an additional permission under section 7
 # of the GNU General Public License, version 3 ("GPLv3").
 #
-# Originally written by Per Bothner. 
+# Originally written by Per Bothner.
 #
 # You can get the latest version of this script from:
 # http://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD
