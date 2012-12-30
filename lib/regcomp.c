@@ -2712,7 +2712,6 @@ build_range_exp (const reg_syntax_t syntax,
     wchar_t wc;
     wint_t start_wc;
     wint_t end_wc;
-    wchar_t cmp_buf[6] = {L'\0', L'\0', L'\0', L'\0', L'\0', L'\0'};
 
     start_ch = ((start_elem->type == SB_CHAR) ? start_elem->opr.ch
 		: ((start_elem->type == COLL_SYM) ? start_elem->opr.name[0]
@@ -2726,11 +2725,7 @@ build_range_exp (const reg_syntax_t syntax,
 	      ? __btowc (end_ch) : end_elem->opr.wch);
     if (start_wc == WEOF || end_wc == WEOF)
       return REG_ECOLLATE;
-    cmp_buf[0] = start_wc;
-    cmp_buf[4] = end_wc;
-
-    if (BE ((syntax & RE_NO_EMPTY_RANGES)
-            && wcscoll (cmp_buf, cmp_buf + 4) > 0, 0))
+    else if (BE ((syntax & RE_NO_EMPTY_RANGES) && start_wc > end_wc, 0))
       return REG_ERANGE;
 
     /* Got valid collation sequence values, add them as a new entry.
@@ -2771,9 +2766,7 @@ build_range_exp (const reg_syntax_t syntax,
     /* Build the table for single byte characters.  */
     for (wc = 0; wc < SBC_MAX; ++wc)
       {
-	cmp_buf[2] = wc;
-	if (wcscoll (cmp_buf, cmp_buf + 2) <= 0
-	    && wcscoll (cmp_buf + 2, cmp_buf + 4) <= 0)
+	if (start_wc <= wc && wc <= end_wc)
 	  bitset_set (sbcset, wc);
       }
   }
@@ -2970,6 +2963,7 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 	      0))
 	return REG_ERANGE;
 
+      /* FIXME: Implement rational ranges here, too.  */
       start_collseq = lookup_collation_sequence_value (start_elem);
       end_collseq = lookup_collation_sequence_value (end_elem);
       /* Check start/end collation sequence values.  */

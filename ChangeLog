@@ -1,5 +1,12 @@
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: implement rational ranges
+	Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+	* lib/regcomp.c (build_range_exp) [!_LIBC]:
+	* lib/regexec.c (check_node_accept_bytes) [!_LIBC]:
+	Implement rational ranges.
+
 	regex: avoid redefining __wctype
 	Reported by Aharon Robbins in
 	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
