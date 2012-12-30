@@ -91,9 +91,9 @@ If you need this particular \thing\, you may write to
 @node Brief Overview
 @chapter Brief Overview
 
-Gnulib is a source code library. It provides basic functionality to
-programs and libraries.  Currently (as of October 2006) more than 30
-packages make use of Gnulib.
+Gnulib is a source code library that provides basic functionality to
+programs and libraries.  Many software packages make use of Gnulib
+to avoid reinventing the portability wheel.
 
 Resources:
 
@@ -3743,7 +3743,7 @@ by Gnulib.
 @chapter Past POSIX Function Substitutes
 
 This chapter describes which functions and function-like macros specified by
-older versions of POSIX (POSIX:2001) are substituted by Gnulib, which
+older versions of POSIX are substituted by Gnulib, which
 portability pitfalls are fixed by Gnulib, and which (known) portability
 problems are not worked around by Gnulib.
 

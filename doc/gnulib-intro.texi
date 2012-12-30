@@ -54,7 +54,7 @@ instead allow synergies between users on different operating systems.
 Another goal of Gnulib is to provide application code that can be shared
 between several applications.  Some people wonder: "What? glibc doesn't
 have a function to copy a file?"  Indeed, the scope of a system's libc is
-to implement the relevant standards (ISO C99, POSIX:2001) and to provide
+to implement the relevant standards (ISO C, POSIX) and to provide
 access functions to the kernel's system calls, and little more.
 
 There is no clear borderline between both areas.
