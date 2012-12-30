@@ -1,3 +1,10 @@
+2012-12-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: simplify based on Gawk version
+	* lib/regex_internal.c (re_dfa_add_node): Simplify.
+	Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: check that pattern char is single-byte
