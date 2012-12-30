@@ -1,5 +1,10 @@
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: port to C89
+	Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+	* lib/regcomp.c (init_word_char): Declaration before statement.
+
 	regex: merge glibc changes
 	Also, copy the license wording from glibc.  This simplifies
 	merging changes.  gnulib-tool will change the wording to GPL as
