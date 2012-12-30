@@ -464,6 +464,12 @@ static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 # endif
 #endif
 
+#ifdef _LIBC
+# define MALLOC_0_IS_NONNULL 1
+#elif !defined MALLOC_0_IS_NONNULL
+# define MALLOC_0_IS_NONNULL 0
+#endif
+
 #ifndef MAX
 # define MAX(a,b) ((a) < (b) ? (b) : (a))
 #endif

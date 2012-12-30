@@ -1,5 +1,14 @@
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: port to hosts where malloc (0) == NULL
+	Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+	* lib/regex_internal.c (re_node_set_alloc):
+	Don't assume that malloc (0) yields nonnull.
+	* lib/regex_internal.h (MALLOC_0_IS_NONNULL): New macro.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Require gl_EEMALLOC.
+	* modules/regex (Files): Add m4/eealloc.m4.
+
 	regex: port to C89
 	Reported by Aharon Robbins in
 	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
