@@ -1,5 +1,13 @@
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: merge glibc changes
+	Also, copy the license wording from glibc.  This simplifies
+	merging changes.  gnulib-tool will change the wording to GPL as
+	appropriate, when importing it to other packages.  The only
+	glibc change made since the last merge, which needs merging, is:
+	2012-05-24 Andreas Schwab <schwab@linux-m68k.org>
+	* lib/regex_internal.h (gettext): Remove use of INTUSE.
+
 	* users.txt: Add Emacs.
 
 	doc: omit mention of version when not needed
