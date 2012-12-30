@@ -3858,7 +3858,11 @@ check_node_accept_bytes (const re_dfa_t *dfa, Idx node_idx,
 
   elem_len = re_string_elem_size_at (input, str_idx);
   if ((elem_len <= 1 && char_len <= 1) || char_len == 0)
-    return 0;
+    {
+      wint_t wc = __btowc (input->mbs[str_idx]);
+      if (wc < SBC_MAX && wc != WEOF)
+	return 0;
+    }
 
   if (node->type == COMPLEX_BRACKET)
     {
