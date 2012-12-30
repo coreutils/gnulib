@@ -1,5 +1,7 @@
 2012-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	* users.txt: Add Emacs.
+
 	doc: omit mention of version when not needed
 	* doc/gnulib-intro.texi (Portability and Application Code):
 	* doc/gnulib.texi (Brief Overview, Legacy Function Substitutes):

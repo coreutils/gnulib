@@ -13,6 +13,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
   cvsps           http://sourceforge.net/projects/cvsps/
   diffutils       http://git.sv.gnu.org/cgit/diffutils.git/
+  emacs           http://bzr.savannah.gnu.org/lh/emacs/trunk/files
   febootstrap     http://people.redhat.com/~rjones/febootstrap/
   findutils       http://git.sv.gnu.org/gitweb/?p=findutils.git
   freedink        http://git.sv.gnu.org/gitweb/?p=freedink.git
