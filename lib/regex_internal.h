@@ -100,6 +100,8 @@
 
 /* Rename to standard API for using out of glibc.  */
 #ifndef _LIBC
+# undef __wctype
+# undef __iswctype
 # define __wctype wctype
 # define __iswctype iswctype
 # define __btowc btowc
