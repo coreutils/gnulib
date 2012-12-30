@@ -38,7 +38,7 @@ overflow-checking variant, and special testing methods.  For more
 information about these techniques, see: Dannenberg R, Dormann W,
 Keaton D @emph{et al.},
 @url{http://www.sei.cmu.edu/library/abstracts/reports/10tn008.cfm,
-As-if infinitely ranged integer model, 2nd ed.}, Software Engineering
+As-if infinitely ranged integer model}, 2nd ed., Software Engineering
 Institute Technical Note CMU/SEI-2010-TN-008, April 2010.
 
 Gnulib supports the precondition testing technique, as this is easy to
