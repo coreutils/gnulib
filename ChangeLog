@@ -1,5 +1,12 @@
 2012-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: revert single-byte change
+	* lib/regexec.c (check_node_accept_bytes): Revert previous change
+	to this function.  This was alredy fixed in a different way, at
+	bdb56bacd57070eced9998569ffe3f3c37ef5964 in the glibc git; see
+	<http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=510219> and
+	<http://sourceware.org/bugzilla/show_bug.cgi?id=9697>.
+
 	regex: simplify based on Gawk version
 	* lib/regex_internal.c (re_dfa_add_node): Simplify.
 	Reported by Aharon Robbins in
