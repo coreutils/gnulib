@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2012-12-31.22; # UTC
+scriptversion=2012-12-31.23; # UTC
 
 # Copyright (C) 2007-2012 Free Software Foundation, Inc.
 #
@@ -107,9 +107,9 @@ while test $# -gt 0; do
       echo "$0: Try '--help' for more information." >&2
       exit 1;;
     *)
-      if test -z "$tarball_version_file"; then
+      if test "x$tarball_version_file" = x; then
         tarball_version_file="$1"
-      elif test -z "$tag_sed_script"; then
+      elif test "x$tag_sed_script" = x; then
         tag_sed_script="$1"
       else
         echo "$0: extra non-option argument '$1'." >&2
@@ -119,7 +119,7 @@ while test $# -gt 0; do
   shift
 done
 
-if test -z "$tarball_version_file"; then
+if test "x$tarball_version_file" = x; then
     echo "$usage"
     exit 1
 fi
@@ -143,11 +143,11 @@ then
         [0-9]*) ;;
         *) v= ;;
     esac
-    test -z "$v" \
+    test "x$v" = x \
         && echo "$0: WARNING: $tarball_version_file is missing or damaged" 1>&2
 fi
 
-if test -n "$v"
+if test "x$v" != x
 then
     : # use $v
 # Otherwise, if there is at least one git commit involving the working
@@ -187,7 +187,7 @@ then
     # Remove the "g" in git describe's output string, to save a byte.
     v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
     v_from_git=1
-elif test -z "$fallback" || git --version >/dev/null 2>&1; then
+elif test "x$fallback" = x || git --version >/dev/null 2>&1; then
     v=UNKNOWN
 else
     v=$fallback
@@ -198,7 +198,7 @@ v=`echo "$v" |sed "s/^$prefix//"`
 # Test whether to append the "-dirty" suffix only if the version
 # string we're using came from git.  I.e., skip the test if it's "UNKNOWN"
 # or if it came from .tarball-version.
-if test -n "$v_from_git"; then
+if test "x$v_from_git" != x; then
   # Don't declare a version "dirty" merely because a time stamp has changed.
   git update-index --refresh > /dev/null 2>&1
 

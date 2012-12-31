@@ -1,3 +1,9 @@
+2012-12-31  Eric Blake  <eblake@redhat.com>
+
+	git-version-gen: avoid test -z portability glitch
+	* build-aux/git-version-gen: Prefer portable test spelling, since
+	git-version-gen is run on more than just developer machines.
+
 2012-12-31  Peter Rosin  <peda@lysator.liu.se>  (tiny change)
 
 	git-version-gen: add --fallback option to use if git is not present
