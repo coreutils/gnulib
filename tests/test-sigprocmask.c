@@ -44,8 +44,14 @@ int
 main (int argc, char *argv[])
 {
   sigset_t set;
-  int pid = getpid ();
+  pid_t pid = getpid ();
   char command[80];
+
+  if (sizeof (int) < sizeof pid && 0x7fffffff < pid)
+    {
+      fputs ("Skipping test: pid too large\n", stderr);
+      return 77;
+    }
 
   signal (SIGINT, sigint_handler);
 
@@ -60,7 +66,7 @@ main (int argc, char *argv[])
   ASSERT (sigprocmask (SIG_BLOCK, &set, NULL) == 0);
 
   /* Request a SIGINT signal from outside.  */
-  sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, pid);
+  sprintf (command, "sh -c 'sleep 1; kill -%d %d' &", SIGINT, (int) pid);
   ASSERT (system (command) == 0);
 
   /* Wait.  */
