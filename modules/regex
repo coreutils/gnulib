@@ -18,7 +18,6 @@ ssize_t
 alloca-opt      [test $ac_use_included_regex = yes]
 btowc           [test $ac_use_included_regex = yes]
 gettext-h       [test $ac_use_included_regex = yes]
-localcharset    [test $ac_use_included_regex = yes]
 malloc-gnu      [test $ac_use_included_regex = yes]
 memcmp          [test $ac_use_included_regex = yes]
 memmove         [test $ac_use_included_regex = yes]

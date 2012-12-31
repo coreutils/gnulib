@@ -27,9 +27,6 @@
 #include <string.h>
 
 #include <langinfo.h>
-#ifndef _LIBC
-# include "localcharset.h"
-#endif
 #include <locale.h>
 #include <wchar.h>
 #include <wctype.h>
