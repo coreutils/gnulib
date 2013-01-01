@@ -1,3 +1,12 @@
+2013-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: port __libc_lock_define usage to C89
+	* lib/regex_internal.h (__libc_lock_define) [!_LIBC]: Remove.
+	(struct re_dfa_t): Use #ifdef instead.  '__libc_lock_define (, lock)'
+	does not conform to C89, as it has an empty macro argument.
+	Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+
 2013-01-01  Eric Blake  <eblake@redhat.com>
 
 	maint: update all copyright year number ranges
