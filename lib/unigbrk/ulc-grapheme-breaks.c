@@ -1,5 +1,5 @@
 /* Grapheme cluster breaks function.
-   Copyright (C) 2001-2003, 2006-2012 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2006-2013 Free Software Foundation, Inc.
    Written by Ben Pfaff <blp@cs.stanford.edu>, 2010,
    based on code written by Bruno Haible <bruno@clisp.org>, 2009.
 

@@ -4,7 +4,7 @@ dnl From J. David Anglin.
 
 dnl HPUX and other systems can't unlink shared text that is being executed.
 
-# Copyright (C) 2000-2001, 2004, 2007, 2009-2012 Free Software Foundation, Inc.
+# Copyright (C) 2000-2001, 2004, 2007, 2009-2013 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.

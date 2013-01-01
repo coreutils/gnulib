@@ -1,5 +1,5 @@
 /* Locale dependent string transformation for comparison.
-   Copyright (C) 2010-2012 Free Software Foundation, Inc.
+   Copyright (C) 2010-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2010.
 
    This program is free software: you can redistribute it and/or modify it

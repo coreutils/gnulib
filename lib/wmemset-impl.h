@@ -1,5 +1,5 @@
 /* Fill wide character array.
-   Copyright (C) 1999, 2011-2012 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2011-2013 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 1999.
 
    This program is free software: you can redistribute it and/or modify

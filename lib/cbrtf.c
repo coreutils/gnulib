@@ -1,5 +1,5 @@
 /* Compute cubic root of float value.
-   Copyright (C) 1997, 2012 Free Software Foundation, Inc.
+   Copyright (C) 1997, 2012-2013 Free Software Foundation, Inc.
 
    Contributed by Dirk Alboth <dirka@uni-paderborn.de> and
    Ulrich Drepper <drepper@cygnus.com>, 1997.

@@ -1,5 +1,5 @@
 /* Determine name of the slave side of a pseudo-terminal.
-   Copyright (C) 1998, 2002, 2010-2012 Free Software Foundation, Inc.
+   Copyright (C) 1998, 2002, 2010-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

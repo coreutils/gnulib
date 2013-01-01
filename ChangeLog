@@ -1,5 +1,8 @@
 2013-01-01  Eric Blake  <eblake@redhat.com>
 
+	maint: update all copyright year number ranges
+	Run "make update-copyright".
+
 	version-etc: bump copyright year reported in --version
 	* lib/version-etc.c (COPYRIGHT_YEAR): Update to 2013.
 

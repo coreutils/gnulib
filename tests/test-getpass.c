@@ -1,5 +1,5 @@
 /* Test getpass implementation.
-   Copyright (C) 2005, 2009-2012 Free Software Foundation, Inc.
+   Copyright (C) 2005, 2009-2013 Free Software Foundation, Inc.
    Written by Simon Josefsson.
 
    This program is free software: you can redistribute it and/or modify

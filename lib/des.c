@@ -1,5 +1,5 @@
 /* des.c --- DES and Triple-DES encryption/decryption Algorithm
- * Copyright (C) 1998-1999, 2001-2007, 2009-2012 Free Software Foundation, Inc.
+ * Copyright (C) 1998-1999, 2001-2007, 2009-2013 Free Software Foundation, Inc.
  *
  * This file is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published

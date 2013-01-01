@@ -1,5 +1,5 @@
 ## Makefile for the autoconf-lib-link/tests subdirectory of GNU gettext
-## Copyright (C) 1995-1997, 2001-2003, 2006, 2009-2012 Free Software
+## Copyright (C) 1995-1997, 2001-2003, 2006, 2009-2013 Free Software
 ## Foundation, Inc.
 ##
 ## This program is free software: you can redistribute it and/or modify
