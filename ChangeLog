@@ -1,5 +1,13 @@
 2013-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: omit needless signed-pointer casts
+	* lib/regcomp.c (build_charclass, build_charclass_op):
+	Use char *, not unsigned char *, for class name and extra.
+	The char values are always nonnegative so there's no need to
+	insist on unsigned char * here, and using char * removes the need
+	for casts.  Reported by Aharon Robbins in
+	<http://sourceware.org/ml/libc-alpha/2012-12/msg00456.html>.
+
 	regex: support Gawk, which never uses alloca
 	* lib/regex_internal.h [!_LIBC && !HAVE_ALLOCA]:
 	Do not include in this case.  Gawk doesn't supply a substitute

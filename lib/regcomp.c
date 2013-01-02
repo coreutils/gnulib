@@ -94,20 +94,20 @@ static reg_errcode_t build_charclass (RE_TRANSLATE_TYPE trans,
 				      bitset_t sbcset,
 				      re_charset_t *mbcset,
 				      Idx *char_class_alloc,
-				      const unsigned char *class_name,
+				      const char *class_name,
 				      reg_syntax_t syntax);
 #else  /* not RE_ENABLE_I18N */
 static reg_errcode_t build_equiv_class (bitset_t sbcset,
 					const unsigned char *name);
 static reg_errcode_t build_charclass (RE_TRANSLATE_TYPE trans,
 				      bitset_t sbcset,
-				      const unsigned char *class_name,
+				      const char *class_name,
 				      reg_syntax_t syntax);
 #endif /* not RE_ENABLE_I18N */
 static bin_tree_t *build_charclass_op (re_dfa_t *dfa,
 				       RE_TRANSLATE_TYPE trans,
-				       const unsigned char *class_name,
-				       const unsigned char *extra,
+				       const char *class_name,
+				       const char *extra,
 				       bool non_match, reg_errcode_t *err);
 static bin_tree_t *create_tree (re_dfa_t *dfa,
 				bin_tree_t *left, bin_tree_t *right,
@@ -2422,8 +2422,8 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
     case OP_WORD:
     case OP_NOTWORD:
       tree = build_charclass_op (dfa, regexp->trans,
-				 (const unsigned char *) "alnum",
-				 (const unsigned char *) "_",
+				 "alnum",
+				 "_",
 				 token->type == OP_NOTWORD, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
@@ -2431,8 +2431,8 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
     case OP_SPACE:
     case OP_NOTSPACE:
       tree = build_charclass_op (dfa, regexp->trans,
-				 (const unsigned char *) "space",
-				 (const unsigned char *) "",
+				 "space",
+				 "",
 				 token->type == OP_NOTSPACE, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
@@ -3571,14 +3571,14 @@ static reg_errcode_t
 #ifdef RE_ENABLE_I18N
 build_charclass (RE_TRANSLATE_TYPE trans, bitset_t sbcset,
 		 re_charset_t *mbcset, Idx *char_class_alloc,
-		 const unsigned char *class_name, reg_syntax_t syntax)
+		 const char *class_name, reg_syntax_t syntax)
 #else /* not RE_ENABLE_I18N */
 build_charclass (RE_TRANSLATE_TYPE trans, bitset_t sbcset,
-		 const unsigned char *class_name, reg_syntax_t syntax)
+		 const char *class_name, reg_syntax_t syntax)
 #endif /* not RE_ENABLE_I18N */
 {
   int i;
-  const char *name = (const char *) class_name;
+  const char *name = class_name;
 
   /* In case of REG_ICASE "upper" and "lower" match the both of
      upper and lower cases.  */
@@ -3652,8 +3652,8 @@ build_charclass (RE_TRANSLATE_TYPE trans, bitset_t sbcset,
 
 static bin_tree_t *
 build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
-		    const unsigned char *class_name,
-		    const unsigned char *extra, bool non_match,
+		    const char *class_name,
+		    const char *extra, bool non_match,
 		    reg_errcode_t *err)
 {
   re_bitset_ptr_t sbcset;
