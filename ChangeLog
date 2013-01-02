@@ -1,5 +1,10 @@
 2013-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: support Gawk, which never uses alloca
+	* lib/regex_internal.h [!_LIBC && !HAVE_ALLOCA]:
+	Do not include in this case.  Gawk doesn't supply a substitute
+	alloca.h and doesn't need one.
+
 	regex: port __libc_lock_define usage to C89
 	* lib/regex_internal.h (__libc_lock_define) [!_LIBC]: Remove.
 	(struct re_dfa_t): Use #ifdef instead.  '__libc_lock_define (, lock)'
