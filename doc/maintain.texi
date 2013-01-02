@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 15, 2012
+@set lastupdate January 1, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,7 +24,7 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -995,8 +995,8 @@ or later'').  Lax permissive licenses are ok too, since they are
 compatible with all GPL versions.
 
 ``GPL version 2 only'' is obviously unacceptable because it is
-incompatble with GPL version 3.  ``GPL version 3 only'' and ``GPL
-version 2 or 3 only'' have a subtler problem: they will be incompatble
+incompatible with GPL version 3.  ``GPL version 3 only'' and ``GPL
+version 2 or 3 only'' have a subtler problem: they would be incompatible
 with GPL version 4, if we ever make one, so the module would become an
 obstacle to upgrading your package's license to ``GPL version 4 or
 later''.
@@ -1005,9 +1005,9 @@ One package you need to avoid is @code{goffice}, since it allows only
 GPL versions 2 and 3.
 
 It would be unreasonable to ask the author of the external module to
-assign its the copyright to the FSF.  After all, person did not write
+assign its copyright to the FSF.  After all, person did not write
 it specifically as a contribution to your package, so it would be
-impertinent to ask per, out of the blue, ``Please give the FSF your
+impertinent to ask, out of the blue, ``Please give the FSF your
 copyright.''
 
 So make your program use the module but without treating the module as

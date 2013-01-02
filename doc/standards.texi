@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 25, 2012
+@set lastupdate January 1, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -28,7 +28,7 @@ The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
-2011, 2012 Free Software Foundation, Inc.
+2011, 2012, 2013 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -339,20 +339,21 @@ system.
 
 @node Compatibility
 @section Compatibility with Other Implementations
-@cindex compatibility with C and @sc{posix} standards
-@cindex @sc{posix} compatibility
+@cindex compatibility with C and POSIX standards
+@cindex C compatibility
+@cindex POSIX compatibility
 
 With occasional exceptions, utility programs and libraries for GNU
 should be upward compatible with those in Berkeley Unix, and upward
 compatible with Standard C if Standard C specifies their
-behavior, and upward compatible with @sc{posix} if @sc{posix} specifies
+behavior, and upward compatible with POSIX if POSIX specifies
 their behavior.
 
 When these standards conflict, it is useful to offer compatibility
 modes for each of them.
 
 @cindex options for compatibility
-Standard C and @sc{posix} prohibit many kinds of extensions.  Feel
+Standard C and POSIX prohibit many kinds of extensions.  Feel
 free to make the extensions anyway, and include a @samp{--ansi},
 @samp{--posix}, or @samp{--compatible} option to turn them off.
 However, if the extension has a significant chance of breaking any real
@@ -360,7 +361,7 @@ programs or scripts, then it is not really upward compatible.  So you
 should try to redesign its interface to make it upward compatible.
 
 @cindex @code{POSIXLY_CORRECT}, environment variable
-Many GNU programs suppress extensions that conflict with @sc{posix} if the
+Many GNU programs suppress extensions that conflict with POSIX if the
 environment variable @code{POSIXLY_CORRECT} is defined (even if it is
 defined with a null value).  Please make your program recognize this
 variable if appropriate.
@@ -408,18 +409,24 @@ already.  That would be extremely troublesome in certain cases.
 
 @node Standard C
 @section Standard C and Pre-Standard C
-@cindex @sc{ansi} C standard
+@cindex ANSI C standard
 
 1989 Standard C is widespread enough now that it is ok to use its
-features in new programs.  There is one exception: do not ever use the
+features in programs.  There is one exception: do not ever use the
 ``trigraph'' feature of Standard C.
 
-1999 Standard C is not widespread yet, so please do not require its
-features in programs.  It is ok to use its features if they are present.
+The 1999 and 2011 editions of Standard C are not fully supported
+on all platforms.  If you aim to support compilation by
+compilers other than GCC, you should not require these C
+features in your programs.  It is ok to use these features
+conditionally when the compiler supports them.
+
+If your program is only meant to compile with GCC, then you can
+use these features if GCC supports them, when they give substantial
+benefit.
 
 However, it is easy to support pre-standard compilers in most programs,
-so if you know how to do that, feel free.  If a program you are
-maintaining has such support, you should try to keep it working.
+so if you know how to do that, feel free.
 
 @cindex function prototypes
 To support pre-standard C, instead of writing function definitions in
@@ -664,10 +671,10 @@ These are supported compatibly by GNU.
 
 @cindex signal handling
 The preferred signal handling facilities are the BSD variant of
-@code{signal}, and the @sc{posix} @code{sigaction} function; the
+@code{signal}, and the POSIX @code{sigaction} function; the
 alternative USG @code{signal} interface is an inferior design.
 
-Nowadays, using the @sc{posix} signal functions may be the easiest way
+Nowadays, using the POSIX signal functions may be the easiest way
 to make a program portable.  If you use @code{signal}, then on GNU/Linux
 systems running GNU libc version 1, you should include
 @file{bsd/signal.h} instead of @file{signal.h}, so as to get BSD
@@ -900,11 +907,11 @@ the graphical interface, these won't be much extra work.
 @cindex command-line interface
 
 @findex getopt
-It is a good idea to follow the @sc{posix} guidelines for the
+It is a good idea to follow the POSIX guidelines for the
 command-line options of a program.  The easiest way to do this is to use
 @code{getopt} to parse them.  Note that the GNU version of @code{getopt}
 will normally permit options anywhere among the arguments unless the
-special argument @samp{--} is used.  This is not what @sc{posix}
+special argument @samp{--} is used.  This is not what POSIX
 specifies; it is a GNU extension.
 
 @cindex long-named options
@@ -2865,7 +2872,7 @@ versions.  For a GNU program, this kind of portability is desirable, but
 not paramount.
 
 The primary purpose of GNU software is to run on top of the GNU kernel,
-compiled with the GNU C compiler, on various types of @sc{cpu}.  So the
+compiled with the GNU C compiler, on various types of CPU.  So the
 kinds of portability that are absolutely necessary are quite limited.
 But it is important to support Linux-based GNU systems, since they
 are the form of GNU that is popular.
@@ -2887,7 +2894,7 @@ written.
 Avoid using the format of semi-internal data bases (e.g., directories)
 when there is a higher-level alternative (@code{readdir}).
 
-@cindex non-@sc{posix} systems, and portability
+@cindex non-POSIX systems, and portability
 As for systems that are not like Unix, such as MSDOS, Windows, VMS, MVS,
 and older Macintosh systems, supporting them is often a lot of work.
 When that is the case, it is better to spend your time adding features
@@ -2916,11 +2923,11 @@ using their names for any other meanings.  Doing so would make it hard
 to move your code into other GNU programs.
 
 @node CPU Portability
-@section Portability between @sc{cpu}s
+@section Portability between CPUs
 
 @cindex data types, and portability
 @cindex portability, and data types
-Even GNU systems will differ because of differences among @sc{cpu}
+Even GNU systems will differ because of differences among CPU
 types---for example, difference in byte ordering and alignment
 requirements.  It is absolutely essential to handle these differences.
 However, don't make any effort to cater to the possibility that an
@@ -2991,12 +2998,12 @@ from zero.
 
 Historically, C implementations differed substantially, and many
 systems lacked a full implementation of ANSI/ISO C89.  Nowadays,
-however, very few systems lack a C89 compiler and GNU C supports
-almost all of C99.  Similarly, most systems implement POSIX.1-1993
-libraries and tools, and many have POSIX.1-2001.
+however, all practical systems have a C89 compiler and GNU C supports
+almost all of C99 and some of C11.  Similarly, most systems implement
+POSIX.1-2001 libraries and tools, and many have POSIX.1-2008.
 
 Hence, there is little reason to support old C or non-POSIX systems,
-and you may want to take advantage of C99 and POSIX-1.2001 to write
+and you may want to take advantage of standard C and POSIX to write
 clearer, more portable, or faster code.  You should use standard
 interfaces where possible; but if GNU extensions make your program
 more maintainable, powerful, or otherwise better, don't hesitate to
@@ -4092,7 +4099,7 @@ package the version can be found;
 
 @item a general description of what the package does;
 
-@item a reference to the the file @file{INSTALL}, which
+@item a reference to the file @file{INSTALL}, which
 should in turn contain an explanation of the installation procedure;
 
 @item a brief explanation of any unusual top-level directories or
