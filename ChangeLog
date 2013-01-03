@@ -1,3 +1,10 @@
+2013-01-03  Eric Blake  <eblake@redhat.com>
+
+	fwrite: silence __wur without using inline
+	* lib/stdio.in.h (fwrite): Limit warn_unused_result workaround to
+	just gcc, and in a way that avoids inline issues.
+	* modules/stdio (Depends-on): Drop extern-inline.
+
 2013-01-03  Jim Meyering  <jim@meyering.net>
 
 	update-copyright: avoid copyright notice date corruption
