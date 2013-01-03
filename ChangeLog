@@ -1,3 +1,8 @@
+2012-10-04  Simon Josefsson  <simon@josefsson.org>
+
+	stdint-tests: Fix expanded-before-required-warning.
+	* modules/stdint-tests (Depends-on): Use AC_REQUIRE.
+
 2013-01-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fwrite: silence __wur only for older glibc versions
