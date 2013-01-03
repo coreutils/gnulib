@@ -575,13 +575,15 @@ _GL_CXXALIAS_RPL (fwrite, size_t,
 _GL_CXXALIAS_SYS (fwrite, size_t,
                   (const void *ptr, size_t s, size_t n, FILE *stream));
 
-/* Work around glibc bug 11959
+/* Work around bug 11959 when fortifying glibc 2.4 through 2.15
    <http://sources.redhat.com/bugzilla/show_bug.cgi?id=11959>,
    which sometimes causes an unwanted diagnostic for fwrite calls.
    This affects only function declaration attributes under certain
    versions of gcc, and is not needed for C++.  */
-#  if !defined __cplusplus && 0 < __USE_FORTIFY_LEVEL \
-  && 3 < (__GNUC__ + (4 <= __GNUC_MINOR__))
+#  if (0 < __USE_FORTIFY_LEVEL                                          \
+       && __GLIBC__ == 2 && 4 <= __GLIBC_MINOR__ && __GLIBC_MINOR__ <= 15 \
+       && 3 < __GNUC__ + (4 <= __GNUC_MINOR__)                          \
+       && !defined __cplusplus)
 #   undef fwrite
 #   define fwrite(a, b, c, d) ({size_t __r = fwrite (a, b, c, d); __r; })
 #  endif

@@ -1,3 +1,9 @@
+2013-01-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fwrite: silence __wur only for older glibc versions
+	* lib/stdio.in.h (fwrite): Limit workaround to glibc 2.4 through 2.15.
+	This will help us remove this workaround some time in the far future.
+
 2013-01-03  Eric Blake  <eblake@redhat.com>
 
 	fwrite: silence __wur without using inline
