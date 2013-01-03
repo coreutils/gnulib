@@ -1,3 +1,21 @@
+2013-01-03  Jim Meyering  <jim@meyering.net>
+
+	update-copyright: avoid copyright notice date corruption
+	Given a sequence of copyright year numbers in which the final
+	one was a two-digit number that happened to be a substring of
+	a preceding four-digit year number, we would mistakenly update
+	the substring (from two- to four-digit) rather than the two-digit
+	number at the end, which, combined with the addition of the current
+	4-digit year number would yield two 5-digit year numbers, e.g.,
+	here, it would convert the first "99" to "1999, 2013" rather than
+	the final one:
+	  1991, 99
+	  11999, 20131, 1999
+	* build-aux/update-copyright: Tighten a regexp.
+	* tests/test-update-copyright.sh: Add a test case to trigger the bug.
+	Reported by Joseph Myers in
+	http://thread.gmane.org/gmane.comp.lib.gnulib.bugs/32281
+
 2013-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: omit needless signed-pointer casts

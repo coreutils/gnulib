@@ -505,6 +505,9 @@ cat > $TMP.extra-text-space <<EOF
  /* Copyright 1987, 1988, 1991, 1992 Free Software Foundation, Inc. ***
     * End of comments. */
 EOF
+cat > $TMP.two-digit-final-is-substr-of-first <<EOF
+ /* Copyright 1991, 99 Free Software Foundation, Inc. */
+EOF
 UPDATE_COPYRIGHT_YEAR=2010 \
   update-copyright $TMP.* 1> $TMP-stdout 2> $TMP-stderr
 compare /dev/null $TMP-stdout || exit 1
@@ -535,6 +538,9 @@ compare - $TMP.extra-text-space <<EOF || exit 1
  /* Copyright 1987, 1988, 1991, 1992, 2010 Free Software Foundation,
     Inc. ***
     * End of comments. */
+EOF
+compare - $TMP.two-digit-final-is-substr-of-first <<EOF || exit 1
+ /* Copyright 1991, 1999, 2010 Free Software Foundation, Inc. */
 EOF
 rm $TMP*
 
