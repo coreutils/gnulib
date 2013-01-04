@@ -6,7 +6,7 @@ lib/fprintftime.h
 lib/fprintftime.c
 
 Depends-on:
-ignore-value
+stdio
 strftime
 
 configure.ac:
