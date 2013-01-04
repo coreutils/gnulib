@@ -1,5 +1,8 @@
 2013-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fprintftime: bring back and reword fwrite comment
+	* lib/strftime.c (cpy) [FPRINTFTIME]: Re-add reworded comment.
+
 	stdio: remove now-unnecessary stdio.c
 	Since stdio.in.h no longer uses inline functions, we no longer
 	need to compile the extern versions.
