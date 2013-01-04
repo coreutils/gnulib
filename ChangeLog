@@ -1,5 +1,10 @@
 2013-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	unicodeio: depend on stdio, not ignore-value
+	* lib/unicodeio.c: Do not include ignore-value.h.
+	(fwrite_success_callback): Use plain fwrite, not ignore_value + fwrite.
+	* modules/unicodeio (Depends-on): Depend on stdio, not ignore-value.
+
 	fprintftime: depend on stdio, not ignore-value
 	* lib/strftime.c [FPRINTFTIME]: Do not include ignore-value.h.
 	(cpy) [FPRINTFTIME]: Use plain fwrite, not ignore_value of fwrite,

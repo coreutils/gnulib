@@ -13,7 +13,7 @@ iconv_open
 gettext-h
 localcharset
 error
-ignore-value
+stdio
 
 configure.ac:
 gl_UNICODEIO
@@ -32,4 +32,3 @@ GPL
 
 Maintainer:
 Bruno Haible
-

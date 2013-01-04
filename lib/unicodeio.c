@@ -38,7 +38,6 @@
 
 #include "localcharset.h"
 #include "unistr.h"
-#include "ignore-value.h"
 
 /* When we pass a Unicode character to iconv(), we must pass it in a
    suitable encoding. The standardized Unicode encodings are
@@ -169,7 +168,7 @@ fwrite_success_callback (const char *buf, size_t buflen, void *callback_arg)
      conditions (STREAM is an open stream and not wide-character oriented)
      when fwrite() returns a value != buflen it also sets STREAM's error
      indicator.  */
-  ignore_value (fwrite (buf, 1, buflen, stream));
+  fwrite (buf, 1, buflen, stream);
   return 0;
 }
 
