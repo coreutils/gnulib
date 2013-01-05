@@ -1,5 +1,9 @@
 2013-01-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: conform to strict C
+	* lib/regcomp.c (parse_bracket_exp): Add cast to conform to strict C.
+	From Aharon Robbins.
+
 	gnulib-tool: fix incompatibility with autopoint 0.18.2
 	* gnulib-tool: Don't indent AM_GNU_GETTEXT_VERSION line.
 	Problem reported by Tom G. Christensen in
