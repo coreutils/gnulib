@@ -3930,7 +3930,9 @@ func_emit_autoconf_snippet ()
       | { if $disable_gettext; then
             sed -e 's/AM_GNU_GETTEXT(\[external\])/dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac./'
           else
-            cat
+            # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
+            # autopoint through at least GNU gettext version 0.18.2.
+            sed -e 's/^ *AM_GNU_GETTEXT_VERSION/AM_GNU_GETTEXT_VERSION/'
           fi
         }
     if test "$module" = 'alloca' && test "$libtool" = true && ! $disable_libtool; then

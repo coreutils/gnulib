@@ -1,3 +1,10 @@
+2013-01-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-tool: fix incompatibility with autopoint 0.18.2
+	* gnulib-tool: Don't indent AM_GNU_GETTEXT_VERSION line.
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00053.html>.
+
 2013-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fprintftime: bring back and reword fwrite comment
