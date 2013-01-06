@@ -1,5 +1,8 @@
 2013-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: update main copyright year
+	* doc/gnulib.texi: Update copyright date.
+
 	doc: improve ISO 8601 discussion
 	* doc/parse-datetime.texi (Combined date and time of day items):
 	Specify more carefully what formats are supported and what is
