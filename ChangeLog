@@ -1,3 +1,10 @@
+2013-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: improve ISO 8601 discussion
+	* doc/parse-datetime.texi (Combined date and time of day items):
+	Specify more carefully what formats are supported and what is
+	done with excess precision.
+
 2013-01-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: avoid small caps

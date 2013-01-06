@@ -51,7 +51,7 @@ arguments to the various programs.  The C interface (via the
 * Calendar date items::            19 Dec 1994.
 * Time of day items::              9:20pm.
 * Time zone items::                EST, PDT, UTC, @dots{}
-* Combined date and time of day items:: 1972-09-24T20:02:00,000000-0500
+* Combined date and time of day items:: 1972-09-24T20:02:00,000000-0500.
 * Day of week items::              Monday and others.
 * Relative items in date strings:: next tuesday, 2 years ago.
 * Pure numbers in date strings::   19931219, 1440.
@@ -319,24 +319,27 @@ time stamps are interpreted using the rules of the default time zone
 @section Combined date and time of day items
 
 @cindex combined date and time of day item
-
-A @dfn{combined date and time of day item} specifies the time on a
-specific day of the year.  This type is needed for formats that cannot
-be represented by individual calendar date (@pxref{Calendar date items})
-and time of day (@pxref{Time of day items}) items due to ambiguity.
-
-@example
-# ISO 8601 extended date and time of day format
-1972-09-24T20:02:00,000000-0500
-@end example
-
 @cindex ISO 8601 date and time of day format
 @cindex date and time of day format, ISO 8601
 
-The ISO 8601 extended date and time of day format is an ISO
-8601 date, a @samp{T} character separator, followed by an ISO 8601 time
-of day.
+The ISO 8601 date and time of day extended format consists of an ISO
+8601 date, a @samp{T} character separator, and an ISO 8601 time of
+day.  This format is also recognized if the @samp{T} is replaced by a
+space.
 
+In this format, the time of day should use 24-hour notation.
+Fractional seconds are allowed, with either comma or period preceding
+the fraction.  ISO 8601 fractional minutes and hours are not
+supported.  Typically, hosts support nanosecond timestamp resolution;
+excess precision is silently discarded.
+
+Here are some examples:
+
+@example
+2012-09-24T20:02:00.052-0500
+2012-12-31T23:59:59,999999999+1100
+1970-01-01 00:00Z
+@end example
 
 @node Day of week items
 @section Day of week items
