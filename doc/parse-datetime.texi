@@ -41,7 +41,7 @@ or a week from Sunday, with feelings of helpless confusion.  @dots{}
 ---Robert Grudin, @cite{Time and the Art of Living}.
 @end quotation
 
-This section describes the textual date representations that @sc{gnu}
+This section describes the textual date representations that GNU
 programs accept.  These are the strings you, as a user, can supply as
 arguments to the various programs.  The C interface (via the
 @code{parse_datetime} function) is not described here.
@@ -50,7 +50,7 @@ arguments to the various programs.  The C interface (via the
 * General date syntax::            Common rules.
 * Calendar date items::            19 Dec 1994.
 * Time of day items::              9:20pm.
-* Time zone items::                @sc{est}, @sc{pdt}, @sc{gmt}.
+* Time zone items::                EST, PDT, UTC, @dots{}
 * Combined date and time of day items:: 1972-09-24T20:02:00,000000-0500
 * Day of week items::              Monday and others.
 * Relative items in date strings:: next tuesday, 2 years ago.
@@ -162,7 +162,7 @@ specified differently, depending on whether the month is specified
 numerically or literally.  All these strings specify the same calendar date:
 
 @example
-1972-09-24     # @sc{iso} 8601.
+1972-09-24     # ISO 8601.
 72-9-24        # Assume 19xx for 69 through 99,
                # 20xx for 00 through 68.
 72-09-24       # Leading zeros are ignored.
@@ -185,9 +185,9 @@ sep 24
 
 Here are the rules.
 
-@cindex @sc{iso} 8601 date format
-@cindex date format, @sc{iso} 8601
-For numeric months, the @sc{iso} 8601 format
+@cindex ISO 8601 date format
+@cindex date format, ISO 8601
+For numeric months, the ISO 8601 format
 @samp{@var{year}-@var{month}-@var{day}} is allowed, where @var{year} is
 any positive number, @var{month} is a number between 01 and 12, and
 @var{day} is a number between 01 and 31.  A leading zero must be present
@@ -235,7 +235,7 @@ day.  Here are some examples, all of which represent the same time:
 20:02:00.000000
 20:02
 8:02pm
-20:02-0500      # In @sc{est} (U.S. Eastern Standard Time).
+20:02-0500      # In EST (U.S. Eastern Standard Time).
 @end example
 
 @cindex leap seconds
@@ -274,10 +274,10 @@ the one- or two-digit correction is interpreted as a number of hours.
 You can also separate @var{hh} from @var{mm} with a colon.
 When a time zone correction is given this way, it
 forces interpretation of the time relative to
-Coordinated Universal Time (@sc{utc}), overriding any previous
+Coordinated Universal Time (UTC), overriding any previous
 specification for the time zone or the local time zone.  For example,
 @samp{+0530} and @samp{+05:30} both stand for the time zone 5.5 hours
-ahead of @sc{utc} (e.g., India).
+ahead of UTC (e.g., India).
 This is the best way to
 specify a time zone correction by fractional parts of an hour.
 The maximum zone correction is 24 hours.
@@ -330,11 +330,11 @@ and time of day (@pxref{Time of day items}) items due to ambiguity.
 1972-09-24T20:02:00,000000-0500
 @end example
 
-@cindex @sc{iso} 8601 date and time of day format
-@cindex date and time of day format, @sc{iso} 8601
+@cindex ISO 8601 date and time of day format
+@cindex date and time of day format, ISO 8601
 
-The @sc{iso} 8601 extended date and time of day format is an @sc{iso}
-8601 date, a @samp{T} character separator, followed by an @sc{iso} 8601 time
+The ISO 8601 extended date and time of day format is an ISO
+8601 date, a @samp{T} character separator, followed by an ISO 8601 time
 of day.
 
 
@@ -486,25 +486,25 @@ item, as it specifies a complete time stamp.
 @cindex epoch, for POSIX
 Internally, computer times are represented as a count of seconds since
 an epoch---a well-defined point of time.  On GNU and
-POSIX systems, the epoch is 1970-01-01 00:00:00 @sc{utc}, so
+POSIX systems, the epoch is 1970-01-01 00:00:00 UTC, so
 @samp{@@0} represents this time, @samp{@@1} represents 1970-01-01
-00:00:01 @sc{utc}, and so forth.  GNU and most other
+00:00:01 UTC, and so forth.  GNU and most other
 POSIX-compliant systems support such times as an extension
 to POSIX, using negative counts, so that @samp{@@-1}
-represents 1969-12-31 23:59:59 @sc{utc}.
+represents 1969-12-31 23:59:59 UTC.
 
 Traditional Unix systems count seconds with 32-bit two's-complement
 integers and can represent times from 1901-12-13 20:45:52 through
-2038-01-19 03:14:07 @sc{utc}.  More modern systems use 64-bit counts
+2038-01-19 03:14:07 UTC@.  More modern systems use 64-bit counts
 of seconds with nanosecond subcounts, and can represent all the times
 in the known lifetime of the universe to a resolution of 1 nanosecond.
 
 @cindex leap seconds
 On most hosts, these counts ignore the presence of leap seconds.
 For example, on most hosts @samp{@@915148799} represents 1998-12-31
-23:59:59 @sc{utc}, @samp{@@915148800} represents 1999-01-01 00:00:00
-@sc{utc}, and there is no way to represent the intervening leap second
-1998-12-31 23:59:60 @sc{utc}.
+23:59:59 UTC, @samp{@@915148800} represents 1999-01-01 00:00:00
+UTC, and there is no way to represent the intervening leap second
+1998-12-31 23:59:60 UTC.
 
 @node Specifying time zone rules
 @section Specifying time zone rules
@@ -576,7 +576,7 @@ implemented by Steven M. Bellovin
 at Chapel Hill.  The code was later tweaked by a couple of people on
 Usenet, then completely overhauled by Rich $alz (@email{rsalz@@bbn.com})
 and Jim Berets (@email{jberets@@bbn.com}) in August, 1990.  Various
-revisions for the @sc{gnu} system were made by David MacKenzie, Jim Meyering,
+revisions for the GNU system were made by David MacKenzie, Jim Meyering,
 Paul Eggert and others, including renaming it to @code{get_date} to
 avoid a conflict with the alternative Posix function @code{getdate},
 and a later rename to @code{parse_datetime}.  The Posix function

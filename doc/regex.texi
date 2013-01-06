@@ -39,10 +39,10 @@ number of times.
 The Regex library is used by including @file{regex.h}.
 @pindex regex.h
 Regex provides three groups of functions with which you can operate on
-regular expressions.  One group---the @sc{gnu} group---is more
+regular expressions.  One group---the GNU group---is more
 powerful but not completely compatible with the other two, namely the
-@sc{posix} and Berkeley @sc{unix} groups; its interface was designed
-specifically for @sc{gnu}.
+POSIX and Berkeley Unix groups; its interface was designed
+specifically for GNU.
 
 We wrote this chapter with programmers in mind, not users of
 programs---such as Emacs---that use Regex.  We describe the Regex
@@ -301,16 +301,16 @@ If you're programming with Regex, you can set a pattern buffer's
 syntax either to an arbitrary combination of syntax bits
 (@pxref{Syntax Bits}) or else to the configurations defined by Regex.
 These configurations define the syntaxes used by certain
-programs---@sc{gnu} Emacs,
+programs---GNU Emacs,
 @cindex Emacs
-@sc{posix} Awk,
+POSIX Awk,
 @cindex POSIX Awk
 traditional Awk,
 @cindex Awk
 Grep,
 @cindex Grep
 @cindex Egrep
-Egrep---in addition to syntaxes for @sc{posix} basic and extended
+Egrep---in addition to syntaxes for POSIX basic and extended
 regular expressions.
 
 The predefined syntaxes---taken directly from @file{regex.h}---are:
@@ -378,7 +378,7 @@ The predefined syntaxes---taken directly from @file{regex.h}---are:
 @node Collating Elements vs. Characters
 @section Collating Elements vs.@: Characters
 
-@sc{posix} generalizes the notion of a character to that of a
+POSIX generalizes the notion of a character to that of a
 collating element.  It defines a @dfn{collating element} to be ``a
 sequence of one or more bytes defined in the current collating sequence
 as a unit of collation.''
@@ -397,7 +397,7 @@ element @samp{s}.  Second, two or more characters can map into one
 collating element.  For example, the Spanish @samp{ll} collates after
 @samp{l} and before @samp{m}.
 
-Since @sc{posix}'s ``collating element'' preserves the essential idea of
+Since POSIX's ``collating element'' preserves the essential idea of
 a ``character,'' we use the latter, more familiar, term in this document.
 
 @node The Backslash Character
@@ -496,7 +496,7 @@ In all other cases, Regex ignores @samp{\}.  For example,
 
 You compose regular expressions from operators.  In the following
 sections, we describe the regular expression operators specified by
-@sc{posix}; @sc{gnu} also uses these.  Most operators have more than one
+POSIX; GNU also uses these.  Most operators have more than one
 representation as characters.  @xref{Regular Expression Syntax}, for
 what characters represent what operators under what circumstances.
 
@@ -506,7 +506,7 @@ preceded by @samp{\}.  For example, either @samp{(} or @samp{\(}
 represents the open-group operator.  Which one does depends on the
 setting of a syntax bit, in this case @code{RE_NO_BK_PARENS}.  Why is
 this so?  Historical reasons dictate some of the varying
-representations, while @sc{posix} dictates others.
+representations, while POSIX dictates others.
 
 Finally, almost all characters lose any special meaning inside a list
 (@pxref{List Operators}).
@@ -934,10 +934,10 @@ letters and digits
 letters
 
 @item blank
-system-dependent; for @sc{gnu}, a space or tab
+system-dependent; for GNU, a space or tab
 
 @item cntrl
-control characters (in the @sc{ascii} encoding, code 0177 and codes
+control characters (in the ASCII encoding, code 0177 and codes
 less than 040)
 
 @item digit
@@ -950,7 +950,7 @@ same as @code{print} except omits space
 lowercase letters
 
 @item print
-printable characters (in the @sc{ascii} encoding, space
+printable characters (in the ASCII encoding, space
 tilde---codes 040 through 0176)
 
 @item punct
@@ -1015,7 +1015,7 @@ Include a range whose starting point collates strictly lower than
 range is the first item in a list, a @samp{-} can't be its starting
 point, but @emph{can} be its ending point.  That is because Regex
 considers @samp{-} to be the range operator unless it is preceded by
-another @samp{-}.  For example, in the @sc{ascii} encoding, @samp{)},
+another @samp{-}.  For example, in the ASCII encoding, @samp{)},
 @samp{*}, @samp{+}, @samp{,}, @samp{-}, @samp{.}, and @samp{/} are
 contiguous characters in the collating sequence.  You might think that
 @samp{[)-+--/]} has two ranges: @samp{)-+} and @samp{--/}.  Rather, it
@@ -1028,7 +1028,7 @@ Put a range whose starting point is @samp{-} first in the list.
 @end itemize
 
 For example, @samp{[-a-z]} matches a lowercase letter or a hyphen (in
-English, in @sc{ascii}).
+English, in ASCII).
 
 
 @node Grouping Operators
@@ -1231,7 +1231,7 @@ exactly the dual of @samp{^}'s; see the previous section.  (That is,
 @node GNU Operators
 @chapter GNU Operators
 
-Following are operators that @sc{gnu} defines (and @sc{posix} doesn't).
+Following are operators that GNU defines (and POSIX doesn't).
 
 @menu
 * Word Operators::
@@ -1259,7 +1259,7 @@ part of a word, i.e., whether or not it is @dfn{word-constituent}.
 @subsection Non-Emacs Syntax Tables
 
 A @dfn{syntax table} is an array indexed by the characters in your
-character set.  In the @sc{ascii} encoding, therefore, a syntax table
+character set.  In the ASCII encoding, therefore, a syntax table
 has 256 elements.  Regex always uses a @code{char *} variable
 @code{re_syntax_table} as its syntax table.  In some cases, it
 initializes this variable and in others it expects you to initialize it.
@@ -1368,7 +1368,7 @@ end of the buffer.
 @node GNU Emacs Operators
 @chapter GNU Emacs Operators
 
-Following are operators that @sc{gnu} defines (and @sc{posix} doesn't)
+Following are operators that GNU defines (and POSIX doesn't)
 that you can use only when Regex is compiled with the preprocessor
 symbol @code{emacs} defined.
 
@@ -1393,7 +1393,7 @@ classes of characters.  Regex uses a syntax table to determine this.
 @subsection Emacs Syntax Tables
 
 A @dfn{syntax table} is an array indexed by the characters in your
-character set.  In the @sc{ascii} encoding, therefore, a syntax table
+character set.  In the ASCII encoding, therefore, a syntax table
 has 256 elements.
 
 If Regex is compiled with the preprocessor symbol @code{emacs} defined,
@@ -1446,11 +1446,11 @@ first subexpression.
 @chapter Programming with Regex
 
 Here we describe how you use the Regex data structures and functions in
-C programs.  Regex has three interfaces: one designed for @sc{gnu}, one
-compatible with @sc{posix} (as specified by @sc{posix}, draft
-1003.2/D11.2), and one compatible with Berkeley @sc{unix}.  The
-@sc{posix} interface is not documented here; see the documentation of
-GNU libc, or the POSIX man pages.  The Berkeley @sc{unix} interface is
+C programs.  Regex has three interfaces: one designed for GNU, one
+compatible with POSIX (as specified by POSIX, draft
+1003.2/D11.2), and one compatible with Berkeley Unix.  The
+POSIX interface is not documented here; see the documentation of
+GNU libc, or the POSIX man pages.  The Berkeley Unix interface is
 documented here for convenience, since its documentation is not
 otherwise readily available on GNU systems.
 
@@ -1464,7 +1464,7 @@ otherwise readily available on GNU systems.
 @section GNU Regex Functions
 
 If you're writing code that doesn't need to be compatible with either
-@sc{posix} or Berkeley @sc{unix}, you can use these functions.  They
+POSIX or Berkeley Unix, you can use these functions.  They
 provide more options than the other interfaces.
 
 @menu
@@ -1513,14 +1513,14 @@ following public fields:
 @node GNU Regular Expression Compiling
 @subsection GNU Regular Expression Compiling
 
-In @sc{gnu}, you can both match and search for a given regular
+In GNU, you can both match and search for a given regular
 expression.  To do either, you must first compile it in a pattern buffer
 (@pxref{GNU Pattern Buffers}).
 
 @cindex syntax initialization
 @vindex re_syntax_options @r{initialization}
 Regular expressions match according to the syntax with which they were
-compiled; with @sc{gnu}, you indicate what syntax you want by setting
+compiled; with GNU, you indicate what syntax you want by setting
 the variable @code{re_syntax_options} (declared in @file{regex.h})
 before calling the compiling function, @code{re_compile_pattern} (see
 below).  @xref{Syntax Bits}, and @ref{Predefined Syntaxes}.
@@ -1596,7 +1596,7 @@ to the number of subexpressions in @var{regex}.
 @end table
 
 If @code{re_compile_pattern} can't compile @var{regex}, it returns an
-error string corresponding to a @sc{posix} error code.
+error string corresponding to a POSIX error code.
 
 
 @node GNU Matching
@@ -1604,7 +1604,7 @@ error string corresponding to a @sc{posix} error code.
 
 @cindex matching with GNU functions
 
-Matching the @sc{gnu} way means trying to match as much of a string as
+Matching the GNU way means trying to match as much of a string as
 possible starting at a position within it you specify.  Once you've compiled
 a pattern into a pattern buffer (@pxref{GNU Regular Expression
 Compiling}), you can ask the matcher to match that pattern against a
@@ -1760,7 +1760,7 @@ string than it does to check in a table whether or not the character at
 that position could start a match.  A @dfn{fastmap} is such a table.
 
 More specifically, a fastmap is an array indexed by the characters in
-your character set.  Under the @sc{ascii} encoding, therefore, a fastmap
+your character set.  Under the ASCII encoding, therefore, a fastmap
 has 256 elements.  If you want the searcher to use a fastmap with a
 given pattern buffer, you must allocate the array and assign the array's
 address to the pattern buffer's @code{fastmap} field.  You either can
@@ -1815,12 +1815,12 @@ new pattern.
 @subsection GNU Translate Tables
 
 If you set the @code{translate} field of a pattern buffer to a translate
-table, then the @sc{gnu} Regex functions to which you've passed that
+table, then the GNU Regex functions to which you've passed that
 pattern buffer use it to apply a simple transformation
 to all the regular expression and string characters at which they look.
 
 A @dfn{translate table} is an array indexed by the characters in your
-character set.  Under the @sc{ascii} encoding, therefore, a translate
+character set.  Under the ASCII encoding, therefore, a translate
 table has 256 elements.  The array's elements are also characters in
 your character set.  When the Regex functions see a character @var{c},
 they use @code{translate[@var{c}]} in its place, with one exception: the
@@ -1833,7 +1833,7 @@ differences in case.@footnote{A table that maps all uppercase letters to
 the corresponding lowercase ones would work just as well for this
 purpose.}  Such a table would map all characters except lowercase letters
 to themselves, and lowercase letters to the corresponding uppercase
-ones.  Under the @sc{ascii} encoding, here's how you could initialize
+ones.  Under the ASCII encoding, here's how you could initialize
 such a table (we'll call it @code{case_fold}):
 
 @example
@@ -1859,7 +1859,7 @@ remembers the beginning and end of the substring matched by
 each group.
 
 To find out what they matched, pass a nonzero @var{regs} argument to a
-@sc{gnu} matching or searching function (@pxref{GNU Matching} and
+GNU matching or searching function (@pxref{GNU Matching} and
 @ref{GNU Searching}), i.e., the address of a structure of this type, as
 defined in @file{regex.h}:
 
@@ -2071,7 +2071,7 @@ string @samp{c}, you get:
 @node Freeing GNU Pattern Buffers
 @subsection Freeing GNU Pattern Buffers
 
-To free any allocated fields of a pattern buffer, use the @sc{posix}
+To free any allocated fields of a pattern buffer, use the POSIX
 function @code{regfree}:
 
 @findex regfree
@@ -2083,7 +2083,7 @@ regfree (regex_t *@var{preg})
 @noindent
 @var{preg} is the pattern buffer whose allocated fields you want freed;
 this works because since the type @code{regex_t}---the type for
-@sc{posix} pattern buffers---is equivalent to the type
+POSIX pattern buffers---is equivalent to the type
 @code{re_pattern_buffer}.
 
 @code{regfree} also sets @var{preg}'s @code{allocated} field to zero.
@@ -2094,9 +2094,9 @@ compiled in it before passing it to a matching or searching function.
 @node BSD Regex Functions
 @section BSD Regex Functions
 
-If you're writing code that has to be Berkeley @sc{unix} compatible,
+If you're writing code that has to be Berkeley Unix compatible,
 you'll need to use these functions whose interfaces are the same as those
-in Berkeley @sc{unix}.
+in Berkeley Unix.
 
 @menu
 * BSD Regular Expression Compiling::    re_comp ()
@@ -2106,7 +2106,7 @@ in Berkeley @sc{unix}.
 @node BSD Regular Expression Compiling
 @subsection  BSD Regular Expression Compiling
 
-With Berkeley @sc{unix}, you can only search for a given regular
+With Berkeley Unix, you can only search for a given regular
 expression; you can't match one.  To search for it, you must first
 compile it.  Before you compile it, you must indicate the regular
 expression syntax you want it compiled according to by setting the
@@ -2140,7 +2140,7 @@ Compiling}).
 @node BSD Searching
 @subsection BSD Searching
 
-Searching the Berkeley @sc{unix} way means searching in a string
+Searching the Berkeley Unix way means searching in a string
 starting at its first character and trying successive positions within
 it to find a match.  Once you've compiled a pattern using @code{re_comp}
 (@pxref{BSD Regular Expression Compiling}), you can ask Regex
@@ -2157,4 +2157,4 @@ re_exec (char *@var{string})
 want to search.
 
 @code{re_exec} returns either 1 for success or 0 for failure.  It
-automatically uses a @sc{gnu} fastmap (@pxref{Searching with Fastmaps}).
+automatically uses a GNU fastmap (@pxref{Searching with Fastmaps}).

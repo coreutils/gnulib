@@ -1,5 +1,10 @@
 2013-01-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: avoid small caps
+	* doc/parse-datetime.texi, doc/regex.texi: Don't use small caps;
+	they're more trouble than they're worth.  Suggested by Karl Berry
+	in <http://bugs.gnu.org/13360>.
+
 	regex: conform to strict C
 	* lib/regcomp.c (parse_bracket_exp): Add cast to conform to strict C.
 	From Aharon Robbins.
