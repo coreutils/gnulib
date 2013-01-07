@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 6, 2013
+@set lastupdate January 7, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1582,7 +1582,7 @@ Three related files (a ``triplet'') to upload a file destined for
 @code{ftp.gnu.org} or @code{alpha.gnu.org}: @pxref{FTP Upload Release
 File Triplet}.
 
-@item 
+@item
 A single (signed) standalone ``directive file'' to perform operations
 on the server: @pxref{FTP Upload Standalone Directives}.
 @end enumerate
@@ -1720,11 +1720,11 @@ Then you @samp{gpg --clearsign} the file as given above, and upload
 
 @noindent to the host @file{ftp-upload.gnu.org}, directory
 @file{/incoming/ftp} (for official releases), or the directory
-@file{/incoming/alpha} (for test releases).  
+@file{/incoming/alpha} (for test releases).
 
 After the system authenticates the signatures, the files
 @file{foo-1.0.tar.gz} and @file{foo-1.0.tar.gz.sig} are placed in
-the directory @file{gnu/foo/} on @code{ftp.gnu.org}.  That is, we'll 
+the directory @file{gnu/foo/} on @code{ftp.gnu.org}.  That is, we'll
 have made our release available at
 @indicateurl{http://ftp.gnu.org/gnu/foo/foo-1.0.tar.gz} (and then from
 our many mirrors via
