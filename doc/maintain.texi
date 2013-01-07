@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 1, 2013
+@set lastupdate January 6, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1496,7 +1496,11 @@ before they are made publicly available.
 @menu
 * Automated Upload Registration::
 * Automated Upload Procedure::
-* FTP Upload Directive File - v1.2::
+* FTP Upload Release File Triplet::
+* FTP Upload Directive File::
+* FTP Upload Directory Trees::
+* FTP Upload File Replacement::
+* FTP Upload Standalone Directives::
 * FTP Upload Directive File - v1.1::
 * FTP Upload Directive File - v1.0::
 @end menu
@@ -1569,70 +1573,48 @@ when an upload is made, either successfully or unsuccessfully.
 @cindex uploads
 
 Once you have registered your information as described in the previous
-section, you will be able to do ftp uploads for yourself using the
-following procedure.
-
-For each upload destined for @code{ftp.gnu.org} or
-@code{alpha.gnu.org}, three files (a @dfn{triplet}) need to be
-uploaded via ftp to the host @code{ftp-upload.gnu.org}.
+section, you can and should do ftp uploads for your package.  There
+are two basic kinds of uploads (details in the following sections):
 
 @enumerate
 @item
-The file to be distributed; for example, @file{foo.tar.gz}.
+Three related files (a ``triplet'') to upload a file destined for
+@code{ftp.gnu.org} or @code{alpha.gnu.org}: @pxref{FTP Upload Release
+File Triplet}.
 
-@item
-Detached GPG binary signature file for (1); for example,
-@file{foo.tar.gz.sig}.  Make this with @samp{gpg -b foo.tar.gz}.
-
-@item
-A clearsigned @dfn{directive file}; for example,
-@file{foo.tar.gz.directive.asc}.  Make this by preparing the plain
-text file @file{foo.tar.gz.directive} and then run @samp{gpg
---clearsign foo.tar.gz.directive}.  @xref{FTP Upload Directive File -
-v1.1}, for the contents of the directive file.
+@item 
+A single (signed) standalone ``directive file'' to perform operations
+on the server: @pxref{FTP Upload Standalone Directives}.
 @end enumerate
 
-The names of the files are important. The signature file must have the
-same name as the file to be distributed, with an additional
-@file{.sig} extension. The directive file must have the same name as
-the file to be distributed, with an additional @file{.directive.asc}
-extension. If you do not follow this naming convention, the upload
-@emph{will not be processed}.
-
-Since v1.1 of the upload directives, it is also possible to upload a
-clearsigned directive file on its own (no accompanying @file{.sig} or
-any other file) to perform certain operations on the server.
-@xref{FTP Upload Directive File - v1.1}, for more information.
-
-Upload the file(s) via anonymous ftp to @code{ftp-upload.gnu.org}. If
-the upload is destined for @code{ftp.gnu.org}, place the file(s) in
-the @file{/incoming/ftp} directory. If the upload is destined for
-@code{alpha.gnu.org}, place the file(s) in the @file{/incoming/alpha}
-directory.
+In either case, you upload the file(s) via anonymous ftp to the host
+@code{ftp-upload.gnu.org}.  If the upload is destined for
+@code{ftp.gnu.org}, place the file(s) in the directory
+@file{/incoming/ftp}.  If the upload is destined for
+@code{alpha.gnu.org}, place the file(s) in the directory
+@file{/incoming/alpha}.
 
 Uploads are processed every five minutes.  Uploads that are in
 progress while the upload processing script is running are handled
-properly, so do not worry about the timing of your upload.  Uploaded
-files that belong to an incomplete triplet are deleted automatically
-after 24 hours.
+properly, so do not worry about the timing of your upload.  Spurious
+and stale uploaded files are deleted automatically after 24 hours.
 
-Your designated upload email addresses (@pxref{Automated Upload Registration})
-are sent a message if there are any problems processing an upload for your
-package. You also receive a message when your upload has been successfully
-processed.
+Your designated upload email addresses (@pxref{Automated Upload
+Registration}) are sent a message if there are problems processing an
+upload for your package.  You also receive a message when an upload
+has been successfully processed.
 
-One automated way to create and transfer the necessary files is to use
-the @code{gnupload} script, which is available from the
+One programmatic way to create and transfer the necessary files is to
+use the @code{gnupload} script, which is available from the
 @file{build-aux/} directory of the @code{gnulib} project at
-@url{http://savannah.gnu.org/projects/gnulib}.  @code{gnupload} can
-also remove uploaded files.  Run @code{gnupload --help} for a
-description and examples.
+@url{http://savannah.gnu.org/projects/gnulib}.  Run
+@code{gnupload@tie{}--help} for a description and examples.
 
-@code{gnupload} uses the @code{ncftpput} program to do the actual
+@code{gnupload} invokes the program @code{ncftpput} to do the actual
 transfers; if you don't happen to have the @code{ncftp} package
 installed, the @code{ncftpput-ftp} script in the @file{build-aux/}
-directory of @code{gnulib} serves as a replacement which uses plain
-command line @code{ftp}.
+directory of @code{gnulib} can serve as a replacement.  It uses the
+plain command line @code{ftp} program.
 
 If you have difficulties with an upload, email
 @email{ftp-upload@@gnu.org}.  You can check the archive of uploads
@@ -1640,183 +1622,309 @@ processed at
 @url{https://lists.gnu.org/archive/html/ftp-upload-report}.
 
 
-@node FTP Upload Directive File - v1.2
-@subsection FTP Upload Directive File - v1.2
+@node FTP Upload Release File Triplet
+@subsection FTP Upload Release File Triplet
 
-All the directives and documentation for v1.1 of the protocol still
-apply.  @xref{FTP Upload Directive File - v1.1}, for more information.
+@cindex FTP uploads, of release files
 
-@subheading New directive @code{replace}
+Ordinarily, the goal is to upload a new release of your package, let's
+say, the source archive @file{foo-1.0.tar.gz}.  To do this, you
+simultaneously upload three files:
+
+@enumerate
+@item
+The file to be distributed; in our example, @file{foo-1.0.tar.gz}.
+
+@item
+Detached GPG binary signature file for (1); for example,
+@file{foo-1.0.tar.gz.sig}.  Make this with @samp{gpg -b foo-1.0.tar.gz}.
+
+@item
+A clearsigned @dfn{directive file}; for example,
+@file{foo-1.0.tar.gz.directive.asc}, created with @samp{gpg
+--clearsign foo-1.0.tar.gz.directive}.  Its contents are described in
+the next section.
+@end enumerate
+
+The names of the files are important.  The signature file must have
+the same name as the file to be distributed, with an additional
+@file{.sig} extension.  The directive file must have the same name as
+the file to be distributed, with an additional @file{.directive.asc}
+extension.  If you do not follow this naming convention, the upload
+@emph{will not be processed}.
+
+
+@node FTP Upload Directive File
+@subsection FTP Upload Directive File
+
+@cindex directive file, for FTP uploads
+
+To repeat, a (signed) @dfn{directive file} must be part of every
+upload.  The unsigned original is just a plain text file you can
+create with any text editor.  Its name must be, e.g.,
+@file{foo-1.0.tar.gz.directive} for accompanying an upload of
+@file{foo-1.0.tar.gz}.
+
+After creating the file, run @samp{gpg --clearsign
+foo-1.0.tar.gz.directive}, which will create
+@file{foo-1.0.tar.gz.directive.asc}; this is the file to be uploaded.
+
+When part of a triplet for uploading a release file, the directive
+file must always contain the directives @code{version},
+@code{filename} and @code{directory}.  In addition, a @code{comment}
+directive is optional.  These directives can be given in any order.
+
+Continuing our example of uploading @file{foo-1.0.tar.gz} for a
+package named @code{foo} to @code{ftp.gnu.org}, the values would be as
+follows:
+
+@table @code
+@item version
+must be the value @samp{1.2} (the current version, as of May@tie{}2012):@*
+@t{version: 1.2}
+
+@item filename
+must be the name of the file to be distributed:@*
+@t{filename: foo-1.0.tar.gz}
+
+@item directory
+specifies the final destination directory where the uploaded file and
+its @file{.sig} companion are to be placed.  Here we will put our file
+in the top level directory of the package, as is the most common
+practice:@*
+@t{directory: foo}
+
+@item comment
+is optional, and ignored if present:@*
+@t{comment: let's hope this works!}
+@end table
+
+Putting the above together, the complete contents of the directive
+file @file{foo-1.0.tar.gz.directive} for our example would be:
+
+@example
+version: 1.2
+directory: foo
+filename: foo-1.0.tar.gz
+comment: let's hope this works!
+@end example
+
+Then you @samp{gpg --clearsign} the file as given above, and upload
+(using anonymous ftp) the three files:
+
+@table @file
+@item foo-1.0.tar.gz
+@item foo-1.0.tar.gz.sig
+@item foo-1.0.tar.gz.directive
+@end table
+
+@noindent to the host @file{ftp-upload.gnu.org}, directory
+@file{/incoming/ftp} (for official releases), or the directory
+@file{/incoming/alpha} (for test releases).  
+
+After the system authenticates the signatures, the files
+@file{foo-1.0.tar.gz} and @file{foo-1.0.tar.gz.sig} are placed in
+the directory @file{gnu/foo/} on @code{ftp.gnu.org}.  That is, we'll 
+have made our release available at
+@indicateurl{http://ftp.gnu.org/gnu/foo/foo-1.0.tar.gz} (and then from
+our many mirrors via
+@indicateurl{http://ftpmirror.gnu.org/foo/foo-1.0.tar.gz}).  Whew.
+
+A common reason for the upload not succeeding is your GPG signature
+not being registered with the upload system.  There is nothing that
+makes this happen automatically.  You must email the system
+administrators as described above (@pxref{Automated Upload
+Registration}).
+
+
+@node FTP Upload Directory Trees
+@subsection FTP Upload Directory Trees
+
+@cindex directory trees, in ftp uploads
+@cindex hierarchy, under ftp upload directory
+@cindex uploads, directory trees in
+
+You can make any directory hierarchy you like under your package
+directory.  The system automatically creates any intermediate
+directories you specify in the @code{directory} directive.
+
+Slightly modifying the example above, the following directive file:
+
+@example
+version: 1.2
+directory: foo/foo-1.0
+filename: foo-1.0.tar.gz
+comment: creates per-version subdirectory as needed
+@end example
+
+@noindent
+would put the tar file in the @file{foo-1.0/} subdirectory of the
+package @code{foo}, thus ending up at
+@indicateurl{ftp.gnu.org:gnu/foo/foo-1.0/foo-1.0.tar.gz}.
+
+However, to keep things simpler for users, we recommend not using
+subdirectories, unless perhaps each release of your package consists
+of many separate files.
+
+
+@node FTP Upload File Replacement
+@subsection FTP Upload File Replacement
 
 @cindex replacing uploaded files
 @cindex uploads, replacing
-As part of an uploaded triplet, a @file{foo.tar.gz.directive.asc} file
-might contain these lines (before being GPG-clearsigned):
+
+You can replace existing files that have already been uploaded by
+including a directive line @code{replace:@tie{}true}.  For example,
+you might like to provide a README file in the release directory and
+update it from time to time.  The full directive file for that would
+look like this:
 
 @example
-version: 1.2
-directory: bar/v1
-filename: foo.tar.gz
-comment: hello world!
-@end example
-
-If @file{foo.tar.gz} exists prior to upload, this directive file will
-result in an error.  Prior to May 2012, the behavior (of v1.1) was
-different: any existing files were automatically archived and replaced
-with the new upload.  Since May 2012, no files are replaced unless the
-(new) @code{replace} directive is set to @code{true} in the directive
-file.  That directive requires version 1.2 of the protocol.  For
-example:
-
-@example
-version: 1.2
-directory: bar/v1
-filename: foo.tar.gz
 replace: true
-comment: hello world!
+version: 1.2
+directory: foo
+filename: README
+comment: replaces an existing README
 @end example
+
+It is ok if the file to be replaced doesn't already exist; then the
+new file is simply added, i.e., the @file{replace} directive has no
+effect.
+
+When an existing file is replaced, the original is archived to a
+private location.  There is no automated or public access to such
+archived files; if you want to retrieve or view them, please email
+@email{sysadmin@@fsf.org}.
+
+We very strongly discourage replacing an actual software release file,
+such as @file{foo-1.0.tar.gz}.  Releases should be unique, and
+forever.  If you need to make fixes, make another release.  If you
+have an exigent reason for a particular release file to no longer be
+available, it can be explicitly archived, as described in the next
+section.
+
+If you want to make the current release available under a generic
+name, such as @code{foo-latest.tar.gz}, that is better done with
+symlinks, also as described in the next section.
+
+
+@node FTP Upload Standalone Directives
+@subsection FTP Upload Standalone Directives
+
+@cindex standalone directives, for ftp uploads
+@cindex directives for ftp uploads, standalone
+
+The previous sections describe how to upload a file to be publicly
+released.  It's also possible to upload a directive file by itself to
+perform a few operations on the upload directory.  The supported
+directives are:
+
+@table @code
+@item symlink
+creates a symlink.
+
+@item rmsymlink
+removes a symlink.
+
+@item archive
+takes a file or directory offline.
+@end table
+
+As for the directives described above, the @code{directory} and
+@code{version} directives are still required, the @code{comment}
+directive remains optional, and the @code{filename} directive is not
+allowed.
+
+When uploaded by itself, the name of the directive file is not
+important.  But it must be still be signed, using @samp{gpg
+--clearsign}; the resulting @file{.asc} file is what should be
+uploaded.
+
+Here's an example of the full directive file to create a
+@file{foo-latest.tar.gz} symlink:
+
+@example
+version: 1.2
+directory: foo
+symlink: foo-1.1.tar.gz foo-latest.tar.gz
+comment: create a symlink
+@end example
+
+If you include more than one directive in a standalone upload, the
+directives are executed in the sequence they are specified in.  If a
+directive results in an error, further execution of the upload is
+aborted.
+
+Removing a symbolic link (with @code{rmsymlink}) which does not exist
+results in an error.  On the other hand, attempting to create a
+symbolic link that already exists (with @code{symlink}) is not an
+error.  In this case @code{symlink} behaves like the command
+@command{ln -s -f}: any existing symlink is removed before creating
+the link.  (But an existing regular file or directory is not replaced.)
+
+Here's an example of removing a symlink, e.g., if you decide not to
+maintain a @file{foo-latest} link any more:
+
+@example
+version: 1.2
+directory: foo
+rmsymlink: foo-latest.tar.gz
+comment: remove a symlink
+@end example
+
+@noindent
+And here's an example of archiving a file, e.g., an unintended upload:
+
+@example
+version: 1.2
+directory: foo
+archive: foo-1.1x.tar.gz
+comment: archive an old file; it will not be
+comment: publicly available any more.
+@end example
+
+The @code{archive} directive causes the specified items to become
+inaccessible.  This should only be used when it is actively bad for
+them to be available, e.g., you uploaded something by mistake.
+
+If all you want to do is reduce how much stuff is in your release
+directory, an alternative is to email @email{sysadmin@@fsf.org} and
+ask them to move old items to the @file{http://ftp.gnu.org/old-gnu/}
+directory; then they will still be available.  In general, however, we
+recommend leaving all official releases in the main release directory.
 
 
 @node FTP Upload Directive File - v1.1
 @subsection FTP Upload Directive File - v1.1
 
-The directive file name must end in @file{directive.asc}.
-
-When part of a triplet, the directive file must always contain the
-directives @code{version}, @code{directory} and @code{filename}, as
-described. In addition, a @code{comment} directive is allowed.
-
-The @code{version} directive must always have the value @samp{1.1}.
-
-The @code{directory} directive specifies the final destination
-directory where the uploaded file and its @file{.sig} companion are to
-be placed.
-
-The @code{filename} directive must contain the name of the file to be
-distributed (item@tie{}(1) above).
-
-For example, as part of an uploaded triplet, a
-@file{foo.tar.gz.directive.asc} file might contain these lines (before
-being gpg clearsigned):
-
-@example
-version: 1.1
-directory: bar/v1
-filename: foo.tar.gz
-comment: hello world!
-@end example
-
-This directory line indicates that @file{foo.tar.gz} and
-@file{foo.tar.gz.sig} are part of package @code{bar}.  If you uploaded
-this triplet to @file{/incoming/ftp} and the system positively
-authenticates the signatures, the files @file{foo.tar.gz} and
-@file{foo.tar.gz.sig} will be placed in the directory
-@file{gnu/bar/v1} of the @code{ftp.gnu.org} site.
-
-The directive file can be used to create currently non-existent
-directory trees, as long as they are under the directory for your
-package (in the example above, the package directory is @code{bar}).
-
-If you upload a file that already exists in the FTP directory, the
-original will simply be archived and replaced with the new upload.
-There is no automated or online access to archived files; if you want
-to retrieve or view them, please email sysadmin.
-
-@subheading Standalone directives
-
-When uploaded by itself, a directive file must contain one or more of
-the directives @code{symlink}, @code{rmsymlink} or @code{archive}, in
-addition to the obligatory @code{directory} and @code{version}
-directives.  A @code{filename} directive is not allowed, and a
-@code{comment} directive remains optional.
-
-If you use more than one directive, the directives are executed in the
-sequence they are specified in.  If a directive results in an error,
-further execution of the upload is aborted.
-
-Removing a symbolic link (with @code{rmsymlink}) which does not exist
-results in an error.  However, attempting to create a symbolic link
-that already exists (with @code{symlink}) is not an error.  In this
-case @code{symlink} behaves like the command @command{ln -s -f}: any
-existing symlink is removed before creating the link.  (But an
-existing regular file or directory is not removed.)
-
-Here are a few examples.  The first removes a symlink:
-
-@example
-version: 1.1
-directory: bar/v1
-rmsymlink: foo-latest.tgz
-comment: remove a symlink
-@end example
-
-@noindent
-Archive an old file, taking it offline:
-
-@example
-version: 1.1
-directory: bar/v1
-archive: foo-1.1.tar.gz
-comment: archive an old file; it will not be
-comment: available through FTP any more.
-@end example
-
-@noindent
-Archive an old directory (with all contents), taking it offline:
-
-@example
-version: 1.1
-directory: bar/v1
-archive: foo
-comment: archive an old directory; it and its entire
-comment: contents will not be available through FTP anymore
-@end example
-
-@noindent
-Create a new symlink:
-
-@example
-version: 1.1
-directory: bar/v1
-symlink: foo-1.2.tar.gz foo-latest.tgz
-comment: create a new symlink
-@end example
-
-@noindent
-Do everything at once:
-
-@example
-version: 1.1
-directory: bar/v1
-rmsymlink: foo-latest.tgz
-symlink: foo-1.2.tar.gz foo-latest.tgz
-archive: foo-1.1.tar.gz
-comment: now do everything at once
-@end example
+The v1.1 protocol for uploads lacked the @code{replace} directive;
+instead, file replacements were done automatically and silently
+(clearly undesirable).  This is the only difference between v1.2 and
+v1.1.
 
 
 @node FTP Upload Directive File - v1.0
 @subsection FTP Upload Directive File - v1.0
 
-Support for v1.0 uploads was phased out in May 2012; please upgrade
+Support for v1.0 uploads was discontinued in May 2012; please upgrade
 to@tie{}v1.2.
 
-The directive file should contain one line, excluding the clearsigned
-data GPG that inserts, which specifies the final destination directory
-where items (1) and (2) are to be placed.
+In v1.0, the directive file contained one line, excluding the
+clearsigned data GPG that inserts, which specifies the final
+destination directory where items (1) and (2) are to be placed.
 
-For example, the @file{foo.tar.gz.directive.asc} file might contain the
+For example, the @file{foo-1.0.tar.gz.directive.asc} file might contain the
 single line:
 
 @example
 directory: bar/v1
 @end example
 
-This directory line indicates that @file{foo.tar.gz} and
-@file{foo.tar.gz.sig} are part of package @code{bar}.  If you were to
+This directory line indicates that @file{foo-1.0.tar.gz} and
+@file{foo-1.0.tar.gz.sig} are part of package @code{bar}.  If you were to
 upload the triplet to @file{/incoming/ftp}, and the system can
 positively authenticate the signatures, then the files
-@file{foo.tar.gz} and @file{foo.tar.gz.sig} will be placed in the
+@file{foo-1.0.tar.gz} and @file{foo-1.0.tar.gz.sig} will be placed in the
 directory @file{gnu/bar/v1} of the @code{ftp.gnu.org} site.
 
 The directive file can be used to create currently non-existent
@@ -1878,6 +1986,11 @@ redirect to a nearby mirror.
 The @t{NEWS} (@pxref{NEWS File,,, standards, GNU Coding Standards}) for
 the present release.
 @end itemize
+
+You may find the @file{announce-gen} script useful for creating
+announcements, which is available from the @file{build-aux/} directory
+of the @code{gnulib} project at
+@url{http://savannah.gnu.org/projects/gnulib}.
 
 
 @node Web Pages
