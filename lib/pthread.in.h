@@ -32,8 +32,11 @@
 #ifndef _@GUARD_PREFIX@_PTHREAD_H_
 #define _@GUARD_PREFIX@_PTHREAD_H_
 
-#include <errno.h>
+#define __need_system_stdlib_h
 #include <stdlib.h>
+#undef __need_system_stdlib_h
+
+#include <errno.h>
 #include <sched.h>
 #include <sys/types.h>
 #include <time.h>

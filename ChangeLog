@@ -1,3 +1,18 @@
+2013-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdlib: port to Solaris 2.6
+	Also, the code worked on Solaris 7 through 9 only by accident.
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00059.html>.
+	* lib/stdlib.in.h: If __need_system_stdlib_h is defined,
+	simply include the system stdlib.h.
+	* lib/getopt.in.h (__need_system_stdlib_h):
+	* lib/pthread.in.h (__need_system_stdlib_h):
+	* lib/unistd.in.h (__need_system_stdlib_h) [!__GLIBC__]:
+	Define when including <stdlib.h>, to avoid problems at least for
+	the pthread case on Solaris 2.6 and 7.  These .h files can get by
+	with the system stdlib.h.
+
 2013-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: update main copyright year
