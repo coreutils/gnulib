@@ -1,3 +1,12 @@
+2013-01-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	locale: port to Solaris 2.6 and 7 + GNU gettext
+	* lib/locale.in.h: Just include_next <locale.h> when
+	being invoked recursively.  This prevents problems on Solaris 2.6 and 7
+	when combining the localename module with GNU gettext 0.18.2.
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00084.html>.
+
 2013-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdlib: port to Solaris 2.6

@@ -14,15 +14,29 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _@GUARD_PREFIX@_LOCALE_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
 
+#ifdef _GL_ALREADY_INCLUDING_LOCALE_H
+
+/* Special invocation conventions to handle Solaris header files
+   (through Solaris 10) when combined with gettext's libintl.h.  */
+
+#@INCLUDE_NEXT@ @NEXT_LOCALE_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _@GUARD_PREFIX@_LOCALE_H
+
+#define _GL_ALREADY_INCLUDING_LOCALE_H
+
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_LOCALE_H@
+
+#undef _GL_ALREADY_INCLUDING_LOCALE_H
 
 #ifndef _@GUARD_PREFIX@_LOCALE_H
 #define _@GUARD_PREFIX@_LOCALE_H
@@ -198,4 +212,5 @@ _GL_WARN_ON_USE (duplocale, "duplocale is buggy on some glibc systems - "
 #endif
 
 #endif /* _@GUARD_PREFIX@_LOCALE_H */
+#endif /* ! _GL_ALREADY_INCLUDING_LOCALE_H */
 #endif /* _@GUARD_PREFIX@_LOCALE_H */
