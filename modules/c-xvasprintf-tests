@@ -15,4 +15,5 @@ gt_LOCALE_FR
 Makefile.am:
 TESTS += test-c-xvasprintf.sh
 check_PROGRAMS += test-c-xvasprintf
+test_c_xvasprintf_LDADD = $(LDADD) @LIBINTL@
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
