@@ -1,3 +1,11 @@
+2013-01-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	net_if-tests: port to Solaris 7 + GCC 3.4.6
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00091.html>.
+	* tests/test-net_if.c (ni): Move to next the code that uses it,
+	so that it's declared only if needed.
+
 2013-01-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	net_if-tests: port to older Solaris

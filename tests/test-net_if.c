@@ -20,8 +20,6 @@
 
 #include <net/if.h>
 
-static struct if_nameindex ni;
-
 /* We do not yet have replacements for if_* functions on systems that
    lack a native <net/if.h>.  */
 #if HAVE_NET_IF_H && HAVE_IF_NAMEINDEX
@@ -90,7 +88,10 @@ main (int argc, char *argv[])
 #endif /* HAVE_NET_IF_H */
 
 #if !HAVE_NET_IF_H || HAVE_IF_NAMEINDEX
-  return !IF_NAMESIZE + ni.if_index + !!ni.if_name;
+  {
+    static struct if_nameindex ni;
+    return !IF_NAMESIZE + ni.if_index + !!ni.if_name;
+  }
 #else
   return 0;
 #endif
