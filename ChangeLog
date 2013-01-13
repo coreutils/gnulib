@@ -1,5 +1,13 @@
 2013-01-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	net_if-tests: port to older Solaris
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00086.html>.
+	* modules/net_if-tests (NET_IF_LIB): New substitution.
+	(test_net_if_LDADD): New makefile macro, which uses NET_IF_LIB.
+	(HAVE_IF_NAMEINDEX): New C macro.
+	* tests/test-net_if.c: Bypass most of the test if !HAVE_IF_NAMEINDEX.
+
 	system-quote-tests: port to older Solaris
 	Problem reported by Tom G. Christensen in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00086.html>.
