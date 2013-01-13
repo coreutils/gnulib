@@ -22,7 +22,9 @@
 /* Do not use any gnulib replacements, since this program should
    link against as few libraries as possible.  */
 #undef fclose
+#undef fopen
 #undef fprintf
+#undef fread
 
 #define EXPECTED_DATA_FILE "t-sq-data.tmp"
 
