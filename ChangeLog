@@ -1,3 +1,10 @@
+2013-01-15  Andoni Morales Alastruey  <ylatuya@gmail.com>  (tiny change)
+
+	stdint: fix build with Android's Bionic fox x86
+	* lib/stdint.in.h: fix check to test if included-fixed/sys/types.h
+	was already included as _SSIZE_T_DEFINED_ might also be defined
+	in include/machine/_types.h, which is included by stdio.h
+
 2013-01-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	net_if-tests: port to Solaris 7 + GCC 3.4.6
