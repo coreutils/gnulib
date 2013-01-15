@@ -1,3 +1,10 @@
+2013-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: clarify -Werror
+	* doc/warnings.texi (warnings): -Werror is not always a bad idea;
+	clarify that it's intended for developers, not for ordinary builds,
+	and mention --enable-gcc-warnings as one possible use.
+
 2013-01-15  Andoni Morales Alastruey  <ylatuya@gmail.com>  (tiny change)
 
 	stdint: fix build with Android's Bionic fox x86

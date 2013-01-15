@@ -21,10 +21,15 @@ from gnulib), it is useful to apply different warning options to
 different directories.
 
 @item
-It allows to use @samp{-Werror} at @samp{make distcheck} time, to verify
+It lets you use @samp{-Werror} at @samp{make distcheck} time, to verify
 that on the maintainer's system, no warnings remain.  (Note that use of
 @samp{-Werror} in @code{CFLAGS} does not work in general, because it may
 break autoconfiguration.)
+
+@item
+Similarly, it lets you use @samp{-Werror} when the builder runs
+@command{configure} with an option such as
+@option{--enable-gcc-warnings}.
 @end itemize
 
 To use this module, you need the following:
@@ -49,10 +54,12 @@ and before @code{CFLAGS} in build rules emitted by Automake.  This allows
 the user to provide @code{CFLAGS} that override the @code{WARN_CFLAGS}.
 @end enumerate
 
-Note that it is a bad idea to use @samp{gl_WARN_ADD([-Werror])}.  The
+@samp{gl_WARN_ADD([-Werror])} is intended for developers, and should be
+avoided in contexts where it would affect ordinary installation builds.  The
 warnings emitted by GCC depend, to some extent, on the contents of the
 system header files, on the size and signedness of built-in types, etc.
 Use of @samp{-Werror} would cause frustration to all users on platforms
 that the maintainer has not tested before the release.  It is better if
-maintainers use @samp{-Werror} only for themselves (for example, during
-@samp{make distcheck}, as mentioned above).
+@samp{-Werror} is off by default, and is enabled only by developers.
+For example, @samp{-Werror} could affect @samp{make distcheck} or
+@samp{configure --enable-gcc-warnings} as mentioned above.
