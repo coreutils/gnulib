@@ -1,3 +1,13 @@
+2013-01-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	largefile: port better to Mac OS X 10.5
+	This patch is backported from Autoconf git.
+	* m4/largefile.m4 (AC_SYS_LARGEFILE): Use AC_DEFINE, not
+	AH_VERBATIM, to define _DARWIN_USE_64_BIT_INODE, to avoid problems
+	with ino_t size being different for configuration time versus
+	build/run time.  Problem reported by PHO in
+	<http://lists.gnu.org/archive/html/bug-autoconf/2013-01/msg00040.html>.
+
 2013-01-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: clarify -Werror
