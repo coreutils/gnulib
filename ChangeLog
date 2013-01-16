@@ -1,5 +1,10 @@
 2013-01-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	unistd: port to recent mingw
+	* lib/unistd.in.h: Remove special invocation convention for mingw,
+	which breaks for the latest mingw version.  See John W. Eaton in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00100.html>.
+
 	largefile: port better to Mac OS X 10.5
 	This patch is backported from Autoconf git.
 	* m4/largefile.m4 (AC_SYS_LARGEFILE): Use AC_DEFINE, not
