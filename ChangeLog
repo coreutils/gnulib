@@ -1,3 +1,14 @@
+2013-01-20  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	bootstrap: remove the need for a sorted .gitignore file
+	* build-aux/bootstrap (insert_sorted_if_absent): Adjust and
+	rename to insert_if_absent(), so that we don't need or generate
+	a sorted .gitignore file.  We do require a .gitignore with no
+	existing duplicate entries and enforce that.
+	(sort_patterns): Remove this function as we now use the simpler
+	technigue of inserting blacklist entries at the top of the file,
+	assuming gnulib won't be inserting !whitelist entries.
+
 2013-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	readlinkat: don't depend on gl_FUNC_OPENAT
