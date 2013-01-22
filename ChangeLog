@@ -1,7 +1,7 @@
 2013-01-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stpncpy: port to OS X 10.8
-	* lib/stpncpy.c (__stpncpy): Parenthesize name when definining function.
+	* lib/stpncpy.c (__stpncpy): Parenthesize name when defining function.
 	Problem reported by Assaf Gordon in <http://bugs.gnu.org/13495>.
 
 2013-01-16  Paul Eggert  <eggert@cs.ucla.edu>
