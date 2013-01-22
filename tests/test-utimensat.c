@@ -76,6 +76,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (utimensat (99, "foo", NULL, 0) == -1);
     ASSERT (errno == EBADF);

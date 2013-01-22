@@ -49,6 +49,7 @@ main (void)
            );
   }
   {
+    close (99);
     errno = 0;
     ASSERT (isatty (99) == 0);
     ASSERT (errno == EBADF

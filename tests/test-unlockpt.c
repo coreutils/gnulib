@@ -38,6 +38,7 @@ main (void)
            );
   }
   {
+    close (99);
     errno = 0;
     ASSERT (unlockpt (99) == -1);
     ASSERT (errno == EBADF

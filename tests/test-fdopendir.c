@@ -54,6 +54,7 @@ main (int argc _GL_UNUSED, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fdopendir (99) == NULL);
     ASSERT (errno == EBADF);

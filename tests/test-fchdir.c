@@ -51,6 +51,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fchdir (99) == -1);
     ASSERT (errno == EBADF);

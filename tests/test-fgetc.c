@@ -77,7 +77,9 @@ main (int argc, char **argv)
       }
   }
   {
-    FILE *fp = fdopen (99, "r");
+    FILE *fp;
+    close (99);
+    fp = fdopen (99, "r");
     if (fp != NULL)
       {
         errno = 0;

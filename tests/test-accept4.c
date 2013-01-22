@@ -50,6 +50,7 @@ main (void)
     struct sockaddr_in addr;
     socklen_t addrlen = sizeof (addr);
 
+    close (99);
     errno = 0;
     ASSERT (accept4 (99, (struct sockaddr *) &addr, &addrlen,
                      O_CLOEXEC | O_BINARY)

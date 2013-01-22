@@ -60,6 +60,7 @@ main (void)
   }
   {
     char byte;
+    close (99);
     errno = 0;
     ASSERT (read (99, &byte, 1) == -1);
     ASSERT (errno == EBADF);

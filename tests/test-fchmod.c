@@ -35,6 +35,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fchmod (99, 0600) == -1);
     ASSERT (errno == EBADF);

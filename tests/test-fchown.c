@@ -35,6 +35,7 @@ main (int argc, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fchown (99, getuid (), getgid ()) == -1);
     ASSERT (errno == EBADF);

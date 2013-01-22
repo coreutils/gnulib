@@ -122,6 +122,7 @@ main (void)
   errno = 0;
   ASSERT (dup2 (-1, fd) == -1);
   ASSERT (errno == EBADF);
+  close (99);
   errno = 0;
   ASSERT (dup2 (99, fd) == -1);
   ASSERT (errno == EBADF);

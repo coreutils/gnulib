@@ -35,6 +35,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fchmodat (99, "foo", 0600, 0) == -1);
     ASSERT (errno == EBADF);

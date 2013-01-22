@@ -172,7 +172,9 @@ main (void)
       }
   }
   {
-    FILE *fp = fdopen (99, "w");
+    FILE *fp;
+    close (99);
+    fp = fdopen (99, "w");
     if (fp != NULL)
       {
         fputc ('x', fp);

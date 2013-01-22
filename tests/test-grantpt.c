@@ -48,6 +48,7 @@ main (void)
   {
     int ret;
 
+    close (99);
     errno = 0;
     ret = grantpt (99);
     if (ret != 0)

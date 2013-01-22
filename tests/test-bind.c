@@ -46,6 +46,7 @@ main (void)
       ASSERT (errno == EBADF);
     }
     {
+      close (99);
       errno = 0;
       ASSERT (bind (99, (const struct sockaddr *) &addr, sizeof (addr)) == -1);
       ASSERT (errno == EBADF);

@@ -38,6 +38,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (listen (99 ,1) == -1);
     ASSERT (errno == EBADF);

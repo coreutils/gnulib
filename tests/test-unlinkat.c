@@ -75,6 +75,7 @@ main (int argc _GL_UNUSED, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (unlinkat (99, "foo", 0) == -1);
     ASSERT (errno == EBADF);

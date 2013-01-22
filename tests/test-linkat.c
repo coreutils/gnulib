@@ -102,6 +102,7 @@ main (void)
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (linkat (99, "foo", AT_FDCWD, "bar", 0) == -1);
     ASSERT (errno == EBADF);

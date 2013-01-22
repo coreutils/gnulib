@@ -64,6 +64,7 @@ main (int argc _GL_UNUSED, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (mkdirat (99, "foo", 0700) == -1);
     ASSERT (errno == EBADF);

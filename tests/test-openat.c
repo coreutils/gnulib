@@ -72,6 +72,7 @@ main (int argc _GL_UNUSED, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (openat (99, "foo", O_RDONLY) == -1);
     ASSERT (errno == EBADF);

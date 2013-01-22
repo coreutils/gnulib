@@ -83,6 +83,7 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (func (99, NULL) == -1);
     ASSERT (errno == EBADF);

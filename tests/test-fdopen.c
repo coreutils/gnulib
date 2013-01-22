@@ -42,6 +42,7 @@ main (void)
   {
     FILE *fp;
 
+    close (99);
     errno = 0;
     fp = fdopen (99, "r");
     if (fp == NULL)

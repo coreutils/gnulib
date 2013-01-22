@@ -76,6 +76,7 @@ main (int argc _GL_UNUSED, char *argv[])
     ASSERT (errno == EBADF);
   }
   {
+    close (99);
     errno = 0;
     ASSERT (fchownat (99, "foo", getuid (), getgid (), 0) == -1);
     ASSERT (errno == EBADF);

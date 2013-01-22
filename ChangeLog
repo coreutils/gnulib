@@ -1,3 +1,30 @@
+2013-01-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: don't assume fd 99 is closed
+	* tests/test-accept.c, tests/test-accept4.c, tests/test-bind.c:
+	* tests/test-close.c, tests/test-connect.c, tests/test-dprintf.c:
+	* tests/test-dup.c, tests/test-dup2.c, tests/test-faccessat.c:
+	* tests/test-fchdir.c, tests/test-fchmod.c, tests/test-fchmodat.c:
+	* tests/test-fchown.c, tests/test-fchownat.c, tests/test-fclose.c:
+	* tests/test-fdatasync.c, tests/test-fdopen.c, tests/test-fdopendir.c:
+	* tests/test-fflush.c, tests/test-fgetc.c, tests/test-fputc.c:
+	* tests/test-fread.c, tests/test-freopen.c, tests/test-fseeko4.c:
+	* tests/test-fstat.c, tests/test-fstatat.c, tests/test-fsync.c:
+	* tests/test-ftello4.c, tests/test-ftruncate.c, tests/test-futimens.h:
+	* tests/test-fwrite.c, tests/test-getpeername.c:
+	* tests/test-getsockname.c, tests/test-getsockopt.c:
+	* tests/test-grantpt.c, tests/test-ioctl.c, tests/test-isatty.c:
+	* tests/test-linkat.c, tests/test-listen.c, tests/test-lseek.c:
+	* tests/test-mkdirat.c, tests/test-mkfifoat.c, tests/test-openat.c:
+	* tests/test-pread.c, tests/test-pwrite.c, tests/test-read.c:
+	* tests/test-readlinkat.c, tests/test-recv.c, tests/test-recvfrom.c:
+	* tests/test-renameat.c, tests/test-select.h, tests/test-send.c:
+	* tests/test-sendto.c, tests/test-setsockopt.c, tests/test-shutdown.c:
+	* tests/test-symlinkat.c, tests/test-ttyname_r.c:
+	* tests/test-unlinkat.c, tests/test-unlockpt.c:
+	* tests/test-utimensat.c, tests/test-vdprintf.c, tests/test-write.c:
+	Close file descriptor 99, instead of assuming it's already closed.
+
 2013-01-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stpncpy: port to OS X 10.8

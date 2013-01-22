@@ -92,6 +92,7 @@ main (void)
   }
   {
     char byte;
+    close (99);
     errno = 0;
     ASSERT (pread (99, &byte, 1, 0) == -1);
     ASSERT (errno == EBADF);

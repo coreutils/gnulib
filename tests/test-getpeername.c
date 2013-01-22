@@ -45,6 +45,7 @@ main (void)
     struct sockaddr_in addr;
     socklen_t addrlen = sizeof (addr);
 
+    close (99);
     errno = 0;
     ASSERT (getpeername (99, (struct sockaddr *) &addr, &addrlen) == -1);
     ASSERT (errno == EBADF);

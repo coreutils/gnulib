@@ -45,6 +45,7 @@ main (void)
     int value;
     socklen_t value_len = sizeof (value);
 
+    close (99);
     errno = 0;
     ASSERT (getsockopt (99, SOL_SOCKET, SO_REUSEADDR, &value, &value_len)
             == -1);

@@ -98,6 +98,7 @@ main (void)
                );
       }
       {
+        close (99);
         errno = 0;
         ASSERT (func (99, "foo", 0600) == -1);
         ASSERT (errno == EBADF

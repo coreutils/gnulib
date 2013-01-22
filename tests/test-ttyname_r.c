@@ -55,7 +55,9 @@ main (void)
            );
   }
   {
-    int err = ttyname_r (99, buf, sizeof (buf));
+    int err;
+    close (99);
+    err = ttyname_r (99, buf, sizeof (buf));
     ASSERT (err == EBADF
             || err == ENOTTY /* seen on FreeBSD 6.4 */
            );

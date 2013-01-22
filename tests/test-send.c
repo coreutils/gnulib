@@ -40,6 +40,7 @@ main (void)
   }
   {
     char byte = 'x';
+    close (99);
     errno = 0;
     ASSERT (send (99, &byte, 1, 0) == -1);
     ASSERT (errno == EBADF);

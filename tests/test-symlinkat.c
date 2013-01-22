@@ -67,6 +67,7 @@ main (void)
            );
   }
   {
+    close (99);
     errno = 0;
     ASSERT (symlinkat ("foo", 99, "bar") == -1);
     ASSERT (errno == EBADF

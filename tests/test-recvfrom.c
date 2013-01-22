@@ -50,6 +50,7 @@ main (void)
     struct sockaddr_in addr;
     socklen_t addrlen = sizeof (addr);
 
+    close (99);
     errno = 0;
     ASSERT (recvfrom (99, &byte, 1, 0, (struct sockaddr *) &addr, &addrlen)
             == -1);

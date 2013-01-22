@@ -78,6 +78,7 @@ main (int argc _GL_UNUSED, char *argv[])
   {
     struct stat statbuf;
 
+    close (99);
     errno = 0;
     ASSERT (fstatat (99, "foo", &statbuf, 0) == -1);
     ASSERT (errno == EBADF);
