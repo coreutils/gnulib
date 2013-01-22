@@ -31,7 +31,7 @@
 /* Copy no more than N bytes of SRC to DST, returning a pointer past the
    last non-NUL byte written into DST.  */
 char *
-__stpncpy (char *dest, const char *src, size_t n)
+(__stpncpy) (char *dest, const char *src, size_t n)
 {
   char c;
   char *s = dest;
