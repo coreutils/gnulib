@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (fstat, int, (int, struct stat *));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 

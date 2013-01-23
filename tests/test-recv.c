@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (recv, ssize_t, (int, void *, size_t, int));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "sockets.h"
 #include "macros.h"

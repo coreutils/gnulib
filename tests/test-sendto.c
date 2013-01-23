@@ -26,6 +26,7 @@ SIGNATURE_CHECK (sendto, ssize_t,
 #include <errno.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <unistd.h>
 
 #include "sockets.h"
 #include "macros.h"

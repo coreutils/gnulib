@@ -24,6 +24,7 @@ SIGNATURE_CHECK (accept4, int, (int, struct sockaddr *, socklen_t *, int));
 #include <errno.h>
 #include <fcntl.h>
 #include <netinet/in.h>
+#include <unistd.h>
 
 #include "binary-io.h"
 #include "sockets.h"

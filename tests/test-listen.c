@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (listen, int, (int, int));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "sockets.h"
 #include "macros.h"

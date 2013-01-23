@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (dprintf, int, (int, const char *, ...));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 

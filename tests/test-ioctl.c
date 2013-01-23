@@ -23,6 +23,7 @@
 SIGNATURE_CHECK (ioctl, int, (int, int, ...));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 

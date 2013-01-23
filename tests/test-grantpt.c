@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (grantpt, int, (int));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 

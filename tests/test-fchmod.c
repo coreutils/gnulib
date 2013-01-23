@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (fchmod, int, (int, mode_t));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 

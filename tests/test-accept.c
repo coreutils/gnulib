@@ -23,6 +23,7 @@ SIGNATURE_CHECK (accept, int, (int, struct sockaddr *, socklen_t *));
 
 #include <errno.h>
 #include <netinet/in.h>
+#include <unistd.h>
 
 #include "sockets.h"
 #include "macros.h"
