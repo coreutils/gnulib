@@ -1,3 +1,20 @@
+2013-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	statat: new module, split out from fstatat
+	GNU Emacs needs the POSIX-specified fstatat, but not the
+	gnulib-specified statat and lstat.  Split the latter two into a
+	new module 'statat'.
+	* lib/openat.h: Depend on GNULIB_STATAT, not GNULIB_FSTATAT.
+	* lib/openat.h, lib/statat.c (STATAT_INLINE):
+	Rename from FSTATAT_INLINE. All uses changed.
+	* modules/fstatat (Files): Remove lib/statat.c.
+	(gl_MODULE_INDICATOR([fstatat])): Remove.
+	(lib_SOURCES): Remove.
+	(Maintainer): Add self.
+	* modules/statat, modules/statat-tests, tests/test-statat.c: New files.
+	* tests/test-fstatat.c (BASE): Don't define if already defined.
+	(do_stat, do_lstat) [!TEST_STATAT]: Test fstatat instead.
+
 2013-01-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: don't assume fd 99 is closed

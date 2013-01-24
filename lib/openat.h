@@ -89,19 +89,19 @@ lchmodat (int fd, char const *file, mode_t mode)
 
 #endif
 
-#if GNULIB_FSTATAT
+#if GNULIB_STATAT
 
-# ifndef FSTATAT_INLINE
-#  define FSTATAT_INLINE _GL_INLINE
+# ifndef STATAT_INLINE
+#  define STATAT_INLINE _GL_INLINE
 # endif
 
-FSTATAT_INLINE int
+STATAT_INLINE int
 statat (int fd, char const *name, struct stat *st)
 {
   return fstatat (fd, name, st, 0);
 }
 
-FSTATAT_INLINE int
+STATAT_INLINE int
 lstatat (int fd, char const *name, struct stat *st)
 {
   return fstatat (fd, name, st, AT_SYMLINK_NOFOLLOW);

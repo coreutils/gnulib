@@ -3,7 +3,6 @@ fstatat() function: Return information about a file at a directory.
 
 Files:
 lib/fstatat.c
-lib/statat.c
 lib/at-func.c
 m4/fstatat.m4
 m4/lstat.m4
@@ -27,11 +26,9 @@ gl_FUNC_FSTATAT
 if test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1; then
   AC_LIBOBJ([fstatat])
 fi
-gl_MODULE_INDICATOR([fstatat]) dnl for lib/openat.h
 gl_SYS_STAT_MODULE_INDICATOR([fstatat])
 
 Makefile.am:
-lib_SOURCES += statat.c
 
 Include:
 <sys/stat.h>
@@ -40,4 +37,4 @@ License:
 GPL
 
 Maintainer:
-Jim Meyering, Eric Blake
+Jim Meyering, Eric Blake, Paul Eggert

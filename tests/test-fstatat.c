@@ -36,7 +36,9 @@ SIGNATURE_CHECK (fstatat, int, (int, char const *, struct stat *, int));
 #include "ignore-value.h"
 #include "macros.h"
 
-#define BASE "test-fstatat.t"
+#ifndef BASE
+# define BASE "test-fstatat.t"
+#endif
 
 #include "test-lstat.h"
 #include "test-stat.h"
@@ -47,14 +49,22 @@ static int dfd = AT_FDCWD;
 static int
 do_stat (char const *name, struct stat *st)
 {
+#ifdef TEST_STATAT
   return statat (dfd, name, st);
+#else
+  return fstatat (dfd, name, st, 0);
+#endif
 }
 
 /* Wrapper around fstatat to test lstat behavior.  */
 static int
 do_lstat (char const *name, struct stat *st)
 {
+#ifdef TEST_STATAT
   return lstatat (dfd, name, st);
+#else
+  return fstatat (dfd, name, st, AT_SYMLINK_NOFOLLOW);
+#endif
 }
 
 int
