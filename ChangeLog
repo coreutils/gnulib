@@ -1,5 +1,10 @@
 2013-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	readlinkat: don't depend on gl_FUNC_OPENAT
+	* m4/readlinkat.m4 (gl_FUNC_READLINKAT): Don't require gl_FUNC_OPENAT.
+	Perhaps a similar change needs to be made for linkat.m4, mkfifoat.m4,
+	renameat.m4, symlinkat.m4; but one thing at a time.
+
 	statat: new module, split out from fstatat
 	GNU Emacs needs the POSIX-specified fstatat, but not the
 	gnulib-specified statat and lstat.  Split the latter two into a
