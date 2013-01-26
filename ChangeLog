@@ -1,3 +1,8 @@
+2013-01-26  Eric Blake  <eblake@redhat.com>
+
+	test-getpeername: fix typo
+	* tests/test-getpeername.c: Fix typo introduced in fd cleanup.
+
 2013-01-20  Bernhard Voelker  <mail@bernhard-voelker.de>
 
 	bootstrap: remove the need for a sorted .gitignore file
