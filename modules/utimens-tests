@@ -9,6 +9,7 @@ tests/macros.h
 
 Depends-on:
 dup
+gettext
 ignore-value
 symlink
 timespec

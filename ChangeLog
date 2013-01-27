@@ -1,3 +1,11 @@
+2013-01-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	futimens-tests, utimens-tests: Depend on gettext.
+	This works around a problem introduced in my 2013-01-12 patch,
+	which added @LIBINTL@ to these modules.
+	* modules/futimens-tests (Depends-on):
+	* modules/utimens-tests (Depends-on): Add gettext.
+
 2013-01-26  Eric Blake  <eblake@redhat.com>
 
 	test-getpeername: fix typo
