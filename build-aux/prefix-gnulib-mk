@@ -189,10 +189,11 @@ sub process ($)
 {
   my ($file) = @_;
   my ($bak) = "$file.bak";
-  rename ($file, $bak) or die;
+  rename ($file, $bak) or die "$ME: rename $file $bak failed: $!\n";
   my $contents = contents ($bak);
   $contents = prefix ($contents);
-  my $out = new IO::File(">$file") or die;
+  my $out = new IO::File(">$file")
+    or die "$ME: $file: failed to open for writing: $!\n";
   print $out $contents;
 }
 
