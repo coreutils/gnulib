@@ -1,3 +1,9 @@
+2013-01-28  Pádraig Brady  <P@draigBrady.com>
+
+	mountlist: don't consider "devtmpfs" as dummy
+	* lib/mountlist.c (ME_DUMMY_0): Remove "devtmpfs"
+	as there is storage associcated with it.
+
 2013-01-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	futimens-tests, utimens-tests: Depend on gettext.
