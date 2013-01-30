@@ -1,3 +1,9 @@
+2013-01-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: test for buffer overrun
+	* m4/regex.m4 (gl_REGEX): Add test case, by Andreas Schwab,
+	for the just-fixed regex bug.
+
 2013-01-29  Andreas Schwab  <schwab@suse.de>
 
 	regex: fix buffer overrun in regexp matcher
