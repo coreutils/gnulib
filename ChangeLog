@@ -1,3 +1,11 @@
+2013-01-29  Andreas Schwab  <schwab@suse.de>
+
+	regex: fix buffer overrun in regexp matcher
+	* lib/regexec.c (extend_buffers): Add parameter min_len.
+	(check_matching): Pass minimum needed length.
+	(clean_state_log_if_needed): Likewise.
+	(get_subexp): Likewise.
+
 2013-01-28  Pádraig Brady  <P@draigBrady.com>
 
 	mountlist: don't consider "devtmpfs" as dummy
