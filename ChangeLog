@@ -1,3 +1,20 @@
+2013-01-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sys_time: port to Solaris 2.6
+	There is a circularity problem on Solaris 2.6, where <time.h> includes
+	<sys/time.h> for struct timespec.  The include nesting is gnulib
+	<time.h>, system <time.h>, gnulib <sys/time.h>, system
+	<sys/time.h>, gnulib <sys/types.h>, system <sys/types.h>, gnulib
+	<sys/select.h>, gnulib <signal.h>, system <sys/signal.h>, system
+	<sys/siginfo.h>; the last, innermost file needs struct
+	timestruc_t, which is defined in <sys/time.h>, which has not been
+	fully parsed.  Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00113.html>.
+	* lib/sys_select.in.h: Treat Solaris 2.6's problem with
+	<sys/time.h> and <sys/types.h> like OSF/1's similar problem.
+	* lib/sys_time.in.h: Redo to resemble sys_select.in.h, which
+	uses split double-inclusion guards.
+
 2013-01-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: test for buffer overrun
