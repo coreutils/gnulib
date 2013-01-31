@@ -1,3 +1,8 @@
+2013-01-31  Eric Blake  <eblake@redhat.com>
+
+	regex: avoid infinite configure test
+	* m4/regex.m4 (gl_REGEX): Add an alarm escape hatch.
+
 2013-01-31  Reuben Thomas  <rrt@sc3d.org>
 
 	openpty: fix bug where HAVE_OPENPTY wasn't defined
