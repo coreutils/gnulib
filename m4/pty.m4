@@ -122,16 +122,18 @@ AC_DEFUN([gl_FUNC_OPENPTY],
         ],
         [gl_cv_func_openpty_const=yes], [gl_cv_func_openpty_const=no])
       ])
-    if test $gl_cv_func_openpty_const != yes; then
-      REPLACE_OPENPTY=1
-      AC_DEFINE([HAVE_OPENPTY], [1],
-        [Define to 1 if the system has the 'openpty' function.])
-    fi
+  fi
+  if test $gl_cv_func_openpty_const = yes; then
+    HAVE_OPENPTY=1
   else
-    dnl The system does not have openpty.
-    HAVE_OPENPTY=0
+    dnl We need gnulib's openpty.
     dnl Prerequisites of lib/openpty.c in this case.
-    AC_CHECK_FUNCS([_getpty posix_openpt])
+    AC_CHECK_FUNCS([_getpty posix_openpt], [HAVE_OPENPTY=1], [HAVE_OPENPTY=0])
+    REPLACE_OPENPTY=$HAVE_OPENPTY
+  fi
+  if test $HAVE_OPENPTY = 1; then
+    AC_DEFINE([HAVE_OPENPTY], [1],
+      [Define to 1 if the system has the 'openpty' function.])
   fi
 ])
 

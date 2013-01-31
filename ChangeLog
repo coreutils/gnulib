@@ -1,3 +1,11 @@
+2013-01-31  Reuben Thomas  <rrt@sc3d.org>
+
+	openpty: fix bug where HAVE_OPENPTY wasn't defined
+	See the thread starting at:
+	http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00185.html
+	* m4/pty.m4 (gl_FUNC_OPENPTY): Define HAVE_OPENPTY when the
+	openpty function exists, not merely when we intend to replace it.
+
 2013-01-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_time: port to Solaris 2.6
