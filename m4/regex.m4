@@ -92,7 +92,7 @@ AC_DEFUN([gl_REGEX],
                     result |= 1;
                   else if (re_search (&regex, data, sizeof data - 1,
                                       0, sizeof data - 1, 0)
-                           != 20)
+                           != 21)
                     result |= 1;
                 }
 
