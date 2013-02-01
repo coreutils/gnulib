@@ -1,5 +1,8 @@
 2013-01-31  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex-tests: new module
+	* modules/regex-tests, tests/test-regex.c: New files.
+
 	regex: fix off-by-one error in configure test
 	* m4/regex.m4 (gl_REGEX): Test should return 21, not 20.
 
