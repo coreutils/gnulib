@@ -32,15 +32,16 @@ AC_DEFUN([gl_REGEX],
                    [gl_cv_func_re_compile_pattern_working],
       [AC_RUN_IFELSE(
         [AC_LANG_PROGRAM(
-          [AC_INCLUDES_DEFAULT[
-           #include <locale.h>
-           #include <limits.h>
-           #include <regex.h>
-           #if HAVE_ALARM
-           # include <unistd.h>
-           # include <signal.h>
-           #endif
-           ]],
+          [[#include <regex.h>
+
+            #include <locale.h>
+            #include <limits.h>
+            #include <string.h>
+            #if HAVE_ALARM
+            # include <unistd.h>
+            # include <signal.h>
+            #endif
+          ]],
           [[int result = 0;
             static struct re_pattern_buffer regex;
             unsigned char folded_chars[UCHAR_MAX + 1];

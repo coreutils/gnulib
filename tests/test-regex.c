@@ -20,7 +20,7 @@
 
 #include <locale.h>
 #include <limits.h>
-#include <regex.h>
+#include <string.h>
 #if HAVE_ALARM
 # include <unistd.h>
 # include <signal.h>

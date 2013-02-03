@@ -1,5 +1,14 @@
 2013-02-03  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex-tests, regex: fix bug: memset undeclared
+	* tests/test-regex.c: Don't include regex.h twice.  Include
+	string.h, to declare memset.  Christensen's report also mentioned
+	this issue.
+	* m4/regex.m4 (gl_REGEX): Keep test program more in sync with
+	test-regex.c, to avoid future problems like this.  Remove
+	AC_INCLUDES_DEFAULT.  Include <string.h>.  Don't include <regex.h>
+	twice.
+
 	regex-tests: fix link errors on older Solaris
 	These need to link with @LIBINTL@ to get libintl_gettext.
 	Problem reported by Tom G. Christensen in
