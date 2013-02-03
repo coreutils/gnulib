@@ -1,3 +1,11 @@
+2013-02-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex-tests: fix link errors on older Solaris
+	These need to link with @LIBINTL@ to get libintl_gettext.
+	Problem reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00003.html>.
+	* modules/regex-tests (test_regex_LDADD): New macro.
+
 2013-01-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex-tests: new module
