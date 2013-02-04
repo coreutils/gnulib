@@ -1,5 +1,19 @@
 2013-02-03  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getcwd: break fdopendir + save_cwd recursive loop (Bug#13516)
+	Reported for OS X 10.8.2 by Assaf Gordon in
+	<http://bugs.gnu.org/13516>.
+	* lib/getcwd.c (HAVE_OPENAT_SUPPORT): Do not define if
+	!HAVE_OPENAT && !HAVE_FDOPENDIR.
+	* m4/getcwd-abort-bug.m4: Reformat to match test-getcwd.c
+	so that they can be kept in sync more easily.  Avoid PATH_MAX
+	test on the Hurd.  Sync from test-getcwd.c for errno tests after
+	mkdir or chdir failure.
+	* tests/test-getcwd.c (HAVE_OPENAT_SUPPORT): New macro, from
+	lib/getcwd.c.
+	(test_abort_bug): Do not test for the deep directory bug unless we
+	have openat support.  Avoid PATH_MAX test on the Hurd.
+
 	regex-tests, regex: fix bug: memset undeclared
 	* tests/test-regex.c: Don't include regex.h twice.  Include
 	string.h, to declare memset.  Christensen's report also mentioned

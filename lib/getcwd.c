@@ -28,9 +28,9 @@
 #include <fcntl.h> /* For AT_FDCWD on Solaris 9.  */
 
 /* If this host provides the openat function or if we're using the
-   gnulib replacement function, then enable code below to make getcwd
-   more efficient and robust.  */
-#if defined HAVE_OPENAT || defined GNULIB_OPENAT
+   gnulib replacement function with a native fdopendir, then enable
+   code below to make getcwd more efficient and robust.  */
+#if defined HAVE_OPENAT || (defined GNULIB_OPENAT && defined HAVE_FDOPENDIR)
 # define HAVE_OPENAT_SUPPORT 1
 #else
 # define HAVE_OPENAT_SUPPORT 0
