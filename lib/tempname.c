@@ -68,10 +68,7 @@
 # define __mkdir mkdir
 # define __open open
 # define __lxstat64(version, file, buf) lstat (file, buf)
-#endif
-
-#if ! (HAVE___SECURE_GETENV || _LIBC)
-# define __secure_getenv getenv
+# define __secure_getenv secure_getenv
 #endif
 
 #ifdef _LIBC

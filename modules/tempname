@@ -11,6 +11,7 @@ extensions
 fcntl-h
 gettimeofday
 lstat
+secure_getenv
 stdint
 sys_stat
 sys_time

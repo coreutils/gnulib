@@ -1,5 +1,11 @@
 2013-02-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tempname: use secure_getenv
+	* lib/tempname.c (__secure_getenv) [!_LIBC]:
+	Define to secure_getenv, not getenv.
+	* modules/tempname (Depends-on):
+	Add secure_getenv.
+
 	secure_getenv: new module
 	* MODULES.html.sh (Extra functions based on ANSI C 89):
 	Add secure_getenv.
