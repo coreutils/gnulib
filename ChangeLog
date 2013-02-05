@@ -1,5 +1,12 @@
 2013-02-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tmpdir: use secure_getenv
+	* lib/tmpdir.c (__secure_getenv) [!LIBC]:
+	Define to secure_getenv, not getenv.
+	* m4/tmpdir.m4 (gt_TMPDIR): Don't check for __secure_getenv,
+	as that's now secure_getenv's job.
+	* modules/tmpdir (Depends-on): Add secure_getenv.
+
 	tempname: use secure_getenv
 	* lib/tempname.c (__secure_getenv) [!_LIBC]:
 	Define to secure_getenv, not getenv.

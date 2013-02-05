@@ -7,6 +7,7 @@ lib/tmpdir.c
 m4/tmpdir.m4
 
 Depends-on:
+secure_getenv
 stdbool
 sys_stat
 pathmax
@@ -25,4 +26,3 @@ LGPL
 
 Maintainer:
 Bruno Haible
-
