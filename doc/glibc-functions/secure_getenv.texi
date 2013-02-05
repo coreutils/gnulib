@@ -1,0 +1,22 @@
+@node secure_getenv
+@subsection @code{secure_getenv}
+@findex secure_getenv
+
+Gnulib module: secure_getenv
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.16, OS X 10.8, FreeBSD 9.1, NetBSD 6.0.1, OpenBSD 5.2, Minix 3.2.0,
+AIX 7.1, HP-UX 11, IRIX 6.5, Solaris 11, Cygwin, mingw, MSVC 9,
+Interix 6.1, BeOS.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+On platforms other than glibc 2.0 and later, the Gnulib replacement
+function always returns a null pointer, even when invoked in a
+non-setuid program.
+@end itemize

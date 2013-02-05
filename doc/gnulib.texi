@@ -5870,6 +5870,7 @@ This list of functions is sorted according to the header that declares them.
 * qsort_r::
 * random_r::
 * rpmatch::
+* secure_getenv::
 * seed48_r::
 * setstate_r::
 * srand48_r::
@@ -5914,6 +5915,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/qsort_r.texi
 @include glibc-functions/random_r.texi
 @include glibc-functions/rpmatch.texi
+@include glibc-functions/secure_getenv.texi
 @include glibc-functions/seed48_r.texi
 @include glibc-functions/setstate_r.texi
 @include glibc-functions/srand48_r.texi

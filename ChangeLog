@@ -1,3 +1,17 @@
+2013-02-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	secure_getenv: new module
+	* MODULES.html.sh (Extra functions based on ANSI C 89):
+	Add secure_getenv.
+	* doc/glibc-functions/secure_getenv.texi: New file.
+	* doc/gnulib.texi: Include it.
+	* lib/secure_getenv.c, m4/secure_getenv.m4, modules/secure_getenv:
+	New files.
+	* lib/stdlib.in.h (secure_getenv): New decl.
+	* m4/stdlib_h.m4 (gl_STDLIB_H, gl_STDLIB_H_DEFAULTS):
+	* modules/stdlib (stdlib.h):
+	Add secure_getenv checks.
+
 2013-02-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getcwd: break fdopendir + save_cwd recursive loop (Bug#13516)

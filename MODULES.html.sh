@@ -1772,6 +1772,7 @@ func_all_modules ()
 
   func_begin_table
   func_module putenv
+  func_module secure_getenv
   func_module setenv
   func_module unsetenv
   func_module xsetenv
