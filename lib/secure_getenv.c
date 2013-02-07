@@ -17,12 +17,23 @@
 
 #include <stdlib.h>
 
+#if !HAVE___SECURE_GETENV
+# if HAVE_ISSETUGID
+#  include <unistd.h>
+# else
+#  undef issetugid
+#  define issetugid() 1
+# endif
+#endif
+
 char *
 secure_getenv (char const *name)
 {
 #if HAVE___SECURE_GETENV
   return __secure_getenv (name);
 #else
-  return 0;
+  if (issetugid ())
+    return 0;
+  return getenv (name);
 #endif
 }

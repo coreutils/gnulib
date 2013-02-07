@@ -19,4 +19,7 @@ AC_DEFUN([gl_FUNC_SECURE_GETENV],
 # Prerequisites of lib/secure_getenv.c.
 AC_DEFUN([gl_PREREQ_SECURE_GETENV], [
   AC_CHECK_FUNCS([__secure_getenv])
+  if test $ac_cv_func___secure_getenv = no; then
+    AC_CHECK_FUNCS([issetugid])
+  fi
 ])

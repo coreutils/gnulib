@@ -1,3 +1,13 @@
+2013-02-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	secure_getenv: port better to FreeBSD and Solaris
+	* lib/secure_getenv.c [!HAVE___SECURE_GETENV]:
+	Include unistd.h if HAVE_ISSETUGID, otherwise define a dummy issetugid.
+	(secure_getenv) [!HAVE___SECURE_GETENV]: Use getenv if not issetugid.
+	This works better on BSDish platforms.
+	* m4/secure_getenv.m4 (gl_PREREQ_SECURE_GETENV):
+	Test for issetugid if __secure_getenv is missing.
+
 2013-02-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extensions: port better to MINUX 3, HP-UX, autoheader 2.62
