@@ -1,4 +1,4 @@
-# serial 12  -*- Autoconf -*-
+# serial 13  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2013 Free Software Foundation, Inc.
@@ -30,6 +30,7 @@
 # ------------------------
 # Enable extensions on systems that normally disable them,
 # typically due to standards-conformance issues.
+#
 # Remember that #undef in AH_VERBATIM gets replaced with #define by
 # AC_DEFINE.  The goal here is to define all known feature-enabling
 # macros, then, if reports of conflicts are made, disable macros that
@@ -37,8 +38,6 @@
 AC_DEFUN_ONCE([AC_USE_SYSTEM_EXTENSIONS],
 [AC_BEFORE([$0], [AC_COMPILE_IFELSE])dnl
 AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
-
-  AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_CHECK_HEADER([minix/config.h], [MINIX=yes], [MINIX=])
   if test "$MINIX" = yes; then
@@ -50,30 +49,29 @@ AC_BEFORE([$0], [AC_RUN_IFELSE])dnl
        except with this defined.])
     AC_DEFINE([_MINIX], [1],
       [Define to 1 if on MINIX.])
+    AC_DEFINE([_NETBSD_SOURCE], [1],
+      [Define to 1 to make NetBSD features available.  MINIX 3 needs this.])
   fi
 
-  dnl HP-UX 11.11 defines mbstate_t only if _XOPEN_SOURCE is defined to 500,
-  dnl regardless of whether the flags -Ae or _D_HPUX_SOURCE=1 are already
-  dnl provided.
-  case "$host_os" in
-    hpux*)
-      AC_DEFINE([_XOPEN_SOURCE], [500],
-        [Define to 500 only on HP-UX.])
-      ;;
-  esac
-
-  AH_VERBATIM([__EXTENSIONS__],
+dnl Use a different key than __EXTENSIONS__, as that name broke existing
+dnl configure.ac when using autoheader 2.62.
+  AH_VERBATIM([USE_SYSTEM_EXTENSIONS],
 [/* Enable extensions on AIX 3, Interix.  */
 #ifndef _ALL_SOURCE
 # undef _ALL_SOURCE
 #endif
-/* Enable general extensions on Mac OS X.  */
+/* Enable general extensions on OS X.  */
 #ifndef _DARWIN_C_SOURCE
 # undef _DARWIN_C_SOURCE
 #endif
 /* Enable GNU extensions on systems that have them.  */
 #ifndef _GNU_SOURCE
 # undef _GNU_SOURCE
+#endif
+/* HP-UX 11.11 defines mbstate_t only if _XOPEN_SOURCE is defined to 500,
+   regardless of whether compiling with -Ae or -D_HPUX_SOURCE=1.  */
+#ifdef __hpux
+# define _XOPEN_SOURCE 500
 #endif
 /* Enable threading extensions on Solaris.  */
 #ifndef _POSIX_PTHREAD_SEMANTICS
