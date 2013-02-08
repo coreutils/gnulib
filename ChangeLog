@@ -1,5 +1,8 @@
 2013-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	secure_getenv: fix include typo
+	* lib/secure_getenv.c: Include config.h.  Somehow I forgot!
+
 	secure_getenv: port better to FreeBSD and Solaris
 	* lib/secure_getenv.c [!HAVE___SECURE_GETENV]:
 	Include unistd.h if HAVE_ISSETUGID, otherwise define a dummy issetugid.
