@@ -13,13 +13,13 @@
 
 2013-02-06  Paul Eggert  <eggert@cs.ucla.edu>
 
-	extensions: port better to MINUX 3, HP-UX, autoheader 2.62
+	extensions: port better to MINIX 3, HP-UX, autoheader 2.62
 	Some of these changes are merged in from git Autoconf.
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):
 	When deciding whether to define _XOPEN_SOURCE, inspect the
 	preprocessor macro __hpux instead of the more-heavyweight
 	operation of requiring AC_CANONICAL_HOST.  Define _NETBSD_HOST on
-	MINUX, for MINUX 3.  Use USE_SYSTEM_EXTENSIONS, not __EXTENSIONS__,
+	MINIX, for MINIX 3.  Use USE_SYSTEM_EXTENSIONS, not __EXTENSIONS__,
 	as the key for __EXTENSIONS__.
 
 	unistd: avoid namespace pollution on non-glibc systems
