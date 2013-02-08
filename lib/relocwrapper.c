@@ -22,7 +22,7 @@
         -> areadlink
            -> careadlinkat
              -> allocator
-             -> readlink
+           -> readlink
         -> canonicalize-lgpl
            -> malloca
            -> readlink

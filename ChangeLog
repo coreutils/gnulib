@@ -1,5 +1,19 @@
 2013-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	careadlinkat: stop exporting careadlinkatcwd
+	Only Emacs used it directly, and Emacs no longer needs it.
+	* NEWS: Document this simplification.
+	* lib/areadlink.c (careadlinkatcwd): Move here from careadlinkat.c,
+	and make it static.  Include <stdlib.h>, for abort, and unistd.h,
+	for readlink.
+	* lib/careadlinkat.c (careadlinkatcwd): Move to areadlink.c.
+	Don't include stdlib.h; no longer needed.
+	* lib/careadlinkat.h (careadlinkatcwd): Remove decl.
+	* lib/relocwrapper.c: Adjust comment to match new dependencies.
+	* modules/areadlink (Depends-on): Add readlink.
+	(Maintainer): Add self.
+	* modules/careadlinkat (Depends-on): Remove readlink.
+
 	extensions: port better to HP-UX
 	This is merged from git Autoconf.
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):

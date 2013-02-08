@@ -26,6 +26,23 @@
 
 #include "careadlinkat.h"
 
+#include <stdlib.h>
+#include <unistd.h>
+
+/* Get the symbolic link value of FILENAME and put it into BUFFER, with
+   size BUFFER_SIZE.  This function acts like readlink but has
+   readlinkat's signature.  */
+static ssize_t
+careadlinkatcwd (int fd, char const *filename, char *buffer,
+                 size_t buffer_size)
+{
+  /* FD must be AT_FDCWD here, otherwise the caller is using this
+     function in contexts it was not meant for.  */
+  if (fd != AT_FDCWD)
+    abort ();
+  return readlink (filename, buffer, buffer_size);
+}
+
 /* Call readlink to get the symbolic link value of FILENAME.
    Return a pointer to that NUL-terminated string in malloc'd storage.
    If readlink fails, return NULL and set errno.

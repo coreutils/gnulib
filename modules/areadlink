@@ -7,6 +7,7 @@ lib/areadlink.c
 
 Depends-on:
 careadlinkat
+readlink
 
 configure.ac:
 
@@ -20,4 +21,4 @@ License:
 LGPLv2+
 
 Maintainer:
-Bruno Haible, Jim Meyering
+Paul Eggert, Bruno Haible, Jim Meyering

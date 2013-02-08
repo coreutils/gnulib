@@ -7,7 +7,6 @@ lib/careadlinkat.h
 
 Depends-on:
 allocator
-readlink
 ssize_t
 unistd
 

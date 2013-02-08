@@ -28,6 +28,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2013-02-08  careadlinkat    This module no longer provides the careadlinkatcwd
+                            function.
+
 2012-06-26  getopt-posix    This module no longer guarantees that option
                             processing is resettable.  If your code uses
                             'optreset' or 'optind = 0;', rewrite it to make
