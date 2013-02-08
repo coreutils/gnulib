@@ -1,3 +1,13 @@
+2013-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	openpty: fix bug where HAVE_OPENPTY is mistakenly 1
+	Problem reported by Mats Erik Andersson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00051.html>.
+	* m4/pty.m4 (gl_FUNC_OPENPTY): Define HAVE_OPENPTY when the
+	openpty function exists, not merely when we intend to replace it.
+	This corrects the 2013-01-31 patch, which mistakenly defined
+	HAVE_OPENPTY even on hosts that lacked it.
+
 2013-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	secure_getenv: fix include typo
