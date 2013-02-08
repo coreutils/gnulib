@@ -8,7 +8,7 @@
 
 # This definition of AC_USE_SYSTEM_EXTENSIONS is stolen from CVS
 # Autoconf.  Perhaps we can remove this once we can assume Autoconf
-# 2.62 or later everywhere, but since CVS Autoconf mutates rapidly
+# 2.70 or later everywhere, but since Autoconf mutates rapidly
 # enough in this area it's likely we'll need to redefine
 # AC_USE_SYSTEM_EXTENSIONS for quite some time.
 
@@ -68,11 +68,6 @@ dnl configure.ac when using autoheader 2.62.
 #ifndef _GNU_SOURCE
 # undef _GNU_SOURCE
 #endif
-/* HP-UX 11.11 defines mbstate_t only if _XOPEN_SOURCE is defined to 500,
-   regardless of whether compiling with -Ae or -D_HPUX_SOURCE=1.  */
-#ifdef __hpux
-# define _XOPEN_SOURCE 500
-#endif
 /* Enable threading extensions on Solaris.  */
 #ifndef _POSIX_PTHREAD_SEMANTICS
 # undef _POSIX_PTHREAD_SEMANTICS
@@ -80,6 +75,12 @@ dnl configure.ac when using autoheader 2.62.
 /* Enable extensions on HP NonStop.  */
 #ifndef _TANDEM_SOURCE
 # undef _TANDEM_SOURCE
+#endif
+/* Enable X/Open extensions if necessary.  HP-UX 11.11 defines
+   mbstate_t only if _XOPEN_SOURCE is defined to 500, regardless of
+   whether compiling with -Ae or -D_HPUX_SOURCE=1.  */
+#ifndef _XOPEN_SOURCE
+# undef _XOPEN_SOURCE
 #endif
 /* Enable general extensions on Solaris.  */
 #ifndef __EXTENSIONS__
@@ -101,6 +102,22 @@ dnl configure.ac when using autoheader 2.62.
   AC_DEFINE([_GNU_SOURCE])
   AC_DEFINE([_POSIX_PTHREAD_SEMANTICS])
   AC_DEFINE([_TANDEM_SOURCE])
+  AC_CACHE_CHECK([whether _XOPEN_SOURCE should be defined],
+    [ac_cv_should_define__xopen_source],
+    [ac_cv_should_define__xopen_source=no
+     AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM([[
+          #include <wchar.h>
+          mbstate_t x;]])],
+       [],
+       [AC_COMPILE_IFELSE(
+          [AC_LANG_PROGRAM([[
+             #define _XOPEN_SOURCE 500
+             #include <wchar.h>
+             mbstate_t x;]])],
+          [ac_cv_should_define__xopen_source=yes])])])
+  test $ac_cv_should_define__xopen_source = yes &&
+    AC_DEFINE([_XOPEN_SOURCE], [500])
 ])# AC_USE_SYSTEM_EXTENSIONS
 
 # gl_USE_SYSTEM_EXTENSIONS

@@ -1,5 +1,11 @@
 2013-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	extensions: port better to HP-UX
+	This is merged from git Autoconf.
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):
+	On hosts that need _XOPEN_SOURCE, define it when configuring, too,
+	so that it's compatible with the value used when compiling.
+
 	openpty: fix bug where HAVE_OPENPTY is mistakenly 1
 	Problem reported by Mats Erik Andersson in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00051.html>.
