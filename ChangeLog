@@ -1,3 +1,10 @@
+2013-02-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	secure_getenv: fix C++ declaration typo
+	* lib/stdlib.in.h (secure_getenv): Fix typo with return type
+	in _GL_CXXALIAS_SYS macro.  Reported by John W. Eaton in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00057.html>.
+
 2013-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	careadlinkat: stop exporting careadlinkatcwd
