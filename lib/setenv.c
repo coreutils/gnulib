@@ -15,13 +15,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #if !_LIBC
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   optimizes away the name == NULL test below.  */
+# define _GL_ARG_NONNULL(params)
+
 # define _GL_USE_STDLIB_ALLOC 1
 # include <config.h>
 #endif
-
-/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
-   optimizes away the name == NULL test below.  */
-#define _GL_ARG_NONNULL(params)
 
 #include <alloca.h>
 

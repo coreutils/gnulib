@@ -15,12 +15,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _LIBC
-# include <config.h>
-#endif
-
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
    optimizes away the pattern == NULL || pglob == NULL tests below.  */
-#define _GL_ARG_NONNULL(params)
+# define _GL_ARG_NONNULL(params)
+# include <config.h>
+#endif
 
 #include <glob.h>
 

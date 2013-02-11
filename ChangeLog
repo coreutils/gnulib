@@ -1,3 +1,15 @@
+2013-02-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	unsetenv etc.: port to Solaris 11 + GNU Emacs
+	* lib/canonicalize-lgpl.c, lib/getaddrinfo.c, lib/getdelim.c:
+	* lib/glob.c, lib/random_r.c, lib/setenv.c, lib/tsearch.c:
+	* lib/unsetenv.c (_GL_ARG_NONNULL): Define before including <config.h>.
+	GNU Emacs's <config.h> includes <stdlib.h> (which is not a great
+	idea but is too painful to fix right now), and without this gnulib
+	change <stdlib.h> was defining _GL_ARG_NONNULL incorrectly when
+	compiling unsetenv.c on Solaris 11.  Fix the problem for
+	unsetenv.c, and fix other similar occurrences.
+
 2013-02-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	secure_getenv: fix C++ declaration typo

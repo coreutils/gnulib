@@ -50,12 +50,12 @@
  * Rewritten to be reentrant by Ulrich Drepper, 1995
  */
 
-#include <config.h>
-
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
    optimizes away the buf == NULL, arg_state == NULL, result == NULL tests
    below.  */
 #define _GL_ARG_NONNULL(params)
+
+#include <config.h>
 
 /* Specification.  */
 #include <stdlib.h>

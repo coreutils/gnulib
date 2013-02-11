@@ -85,11 +85,11 @@
    In this case, A has been rotated left.  This preserves the ordering of the
    binary tree.  */
 
-#include <config.h>
-
 /* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
    optimizes away the rootp == NULL tests below.  */
 #define _GL_ARG_NONNULL(params)
+
+#include <config.h>
 
 /* Specification.  */
 #ifdef IN_LIBINTL
