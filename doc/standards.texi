@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 1, 2013
+@set lastupdate February 13, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -900,7 +900,6 @@ providing a library interface (for use from C), and perhaps a
 keyboard-driven console interface (for use by users from console
 mode).  Once you are doing the work to provide the functionality and
 the graphical interface, these won't be much extra work.
-
 
 @node Command-Line Interfaces
 @section Standards for Command Line Interfaces

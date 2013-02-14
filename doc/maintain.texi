@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 10, 2013
+@set lastupdate February 13, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -174,10 +174,11 @@ try not to burden them unnecessarily.
 The directory @file{/gd/gnuorg} mentioned throughout this document is
 available on the general GNU server, currently
 @code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
-you should have an account there.  If you don't have one already,
+you should have an account there.  If you don't have one already, see
 @url{http://www.gnu.org/software/README.accounts.html}.  You can also
 ask for accounts for people who significantly help you in working on
-the package.
+the package.  Such GNU login accounts include email
+(see @url{http://www.fsf.org/about/systems/sending-mail-via-fencepost}).
 @end macro
 
 @gdgnuorgtext{}
@@ -929,7 +930,8 @@ name.
 Please adjust the list of invariant sections as appropriate for your
 manual.  If there are none, then say ``with no Invariant Sections''.
 If your manual is not published by the FSF, and under 400 pages, you
-can omit both cover texts.
+can omit both cover texts.  However, if it is copyright FSF, always
+ask the FSF what to do.
 
 @xref{GNU Sample Texts,,, texinfo, Texinfo}, for a full example in a
 Texinfo manual, and see
@@ -2289,6 +2291,18 @@ software is now a major focus of the GNU project; to show that we are
 serious about the need for free documentation, we must not contradict
 our position by recommending use of documentation that isn't free.
 
+Please don't host discussions about your package in a service that
+requires nonfree software.  For instance, Google+ ``communities''
+require running a nonfree Javascript program to post a message, so
+they can't be used in the Free World.  To host discussions there would
+be excluding people who live by free software principles.
+
+Of course, you can't order people not to use such services to talk
+with each other.  What you can do is not legitimize them, and use your
+influence to lead people away from them.  For instance, where you say
+where to have discussions related to the program, don't list such a
+place.
+
 Finally, new issues concerning the ethics of software freedom come up
 frequently.  We ask that GNU maintainers, at least on matters that
 pertain specifically to their package, stand with the rest of the GNU
@@ -2540,9 +2554,14 @@ We don't recommend any specific payment service.  However, GNU
 developers should not use a service that requires them to sign a
 proprietary software license, such as Google's payment service.
 
-Of course, it is also good to encourage people to join or contribute
-to the FSF (@url{http://www.fsf.org}), either instead of or as well as
-package-specific donations.
+The FSF can collect donations for a limited number of projects; if you
+want to propose that for your project, write to
+@email{maintainers@@gnu.org}.  The FSF is required to supervise the
+spending of these funds.
+
+Of course, it is also good to encourage people to join the FSF
+(@url{http://www.fsf.org}) or make a general donation, either instead
+of or as well as package-specific donations.
 
 
 @node Free Software Directory
