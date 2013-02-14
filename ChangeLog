@@ -1,3 +1,13 @@
+2013-02-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	putenv: fix heap corruption with mixed putenv/_putenv
+	Problem reported by Michael Goffioul in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00061.html>.
+	* lib/putenv.c (putenv) [HAVE__PUTENV]:
+	Rely on _putenv to allocate the new environment.
+	* m4/putenv.m4 (gl_PREREQ_PUTENV): New macro.
+	* modules/putenv (configure.ac): Use it.
+
 2013-02-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	unsetenv etc.: port to Solaris 11 + GNU Emacs

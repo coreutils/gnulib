@@ -115,6 +115,37 @@ putenv (char *string)
 
   if (*ep == NULL)
     {
+#if HAVE__PUTENV
+      /* Rely on _putenv to allocate the new environment.  If other
+         parts of the application use _putenv, the !HAVE__PUTENV code
+         would fight over who owns the environ vector, causing a crash.  */
+      if (name_end[1])
+        return _putenv (string);
+      else
+        {
+          /* _putenv ("NAME=") unsets NAME, so invoke _putenv ("NAME=x")
+             to allocate the environ vector and then replace the new
+             entry with "NAME=".  */
+          int putenv_result, putenv_errno;
+          char *name_x = malloc (name_end - string + sizeof "=x");
+          if (!name_x)
+            return -1;
+          memcpy (name_x, string, name_end - string + 1);
+          name_x[name_end - string + 1] = 'x';
+          name_x[name_end - string + 2] = 0;
+          putenv_result = _putenv (name_x);
+          putenv_errno = errno;
+          for (ep = environ; *ep; ep++)
+            if (*ep == name_x)
+              {
+                *ep = string;
+                break;
+              }
+          free (name_x);
+          __set_errno (putenv_errno);
+          return putenv_result;
+        }
+#else
       static char **last_environ = NULL;
       char **new_environ = (char **) malloc ((size + 2) * sizeof (char *));
       if (new_environ == NULL)
@@ -126,6 +157,7 @@ putenv (char *string)
       free (last_environ);
       last_environ = new_environ;
       environ = new_environ;
+#endif
     }
   else
     *ep = string;
