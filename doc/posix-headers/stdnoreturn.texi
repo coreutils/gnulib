@@ -28,6 +28,7 @@ directly.  Although the resulting code operates correctly, the
 compiler is not informed whether @code{noreturn} functions do not
 return, so it may generate incorrect warnings at compile-time, or code
 that is slightly less optimized.  This problem does not occur with
+@code{_Noreturn}.
 @item
 Circa 2012 bleeding-edge GCC with @code{-Werror=old-style-declaration}
 requires @code{_Noreturn} or @code{noreturn} before the returned type
