@@ -1,3 +1,13 @@
+2013-02-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: avoid compilation error with HP-UX cc
+	Reported by Richard Lloyd in
+	<http://lists.gnu.org/archive/html/bug-texinfo/2013-02/msg00030.html>.
+	* m4/extern-inline.m4 (_GL_INLINE, _GL_EXTERN_INLINE):
+	Suppress extern inline with HP-UX cc.  This should be safe,
+	though it may hurt performance.  Perhaps someone with some HP-UX
+	experience can come up with a higher-performance fix.
+
 2013-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	putenv: fix heap corruption with mixed putenv/_putenv
