@@ -1,3 +1,11 @@
+2013-02-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mountlist: port to HP NonStop
+	Reported by Joachim Schmitz in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-02/msg00084.html>.
+	* lib/mountlist.c (hasmntopt) [!HAVE_HASMNTOPT]: New function.
+	(MNT_IGNORE) [MNTOPT_IGNORE]: Use it.
+
 2013-02-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: avoid compilation error with HP-UX cc
