@@ -344,24 +344,11 @@ strtod (const char *nptr, char **endptr)
   return negative ? -num : num;
 }
 
-/* The "underlying" strtod implementation.  This must be defined
+/* The underlying strtod implementation.  This must be defined
    after strtod because it #undefs strtod.  */
 static double
 underlying_strtod (const char *nptr, char **endptr)
 {
-  if (HAVE_RAW_DECL_STRTOD)
-    {
-      /* Prefer the native strtod if available.  Usually it should
-         work and it should give more-accurate results than our
-         approximation.  */
-      #undef strtod
-      return strtod (nptr, endptr);
-    }
-  else
-    {
-      /* Approximate strtod well enough for this module.  There's no
-         need to handle anything but finite unsigned decimal
-         numbers with nonnull ENDPTR.  */
-      return parse_number (nptr, 10, 10, 1, 'e', endptr);
-    }
+#undef strtod
+  return strtod (nptr, endptr);
 }
