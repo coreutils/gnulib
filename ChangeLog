@@ -1,3 +1,16 @@
+2013-02-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	putenv: port better to native Windows
+	* lib/putenv.c [(_WIN32 || __WIN32__) && ! __CYGWIN__]:
+	Define WIN32_LEAN_AND_MEAN and include <windows.h>.
+	(_unsetenv): Use _putenv if available.
+	(putenv): Temporarily set NAME=' ' rather than NAME='x' as that's
+	a bit less likely to cause damage.
+	(putenv) [(_WIN32 || __WIN32__) && ! __CYGWIN__]:
+	Fix the wrong value with SetEnvironmentVariable.
+	(putenv) [!HAVE__PUTENV]: Simplify and match the HAVE__PUTENV
+	code better.
+
 2013-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: ignore old-style-definition warnings
