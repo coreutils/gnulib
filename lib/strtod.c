@@ -31,9 +31,6 @@
 #ifndef HAVE_LDEXP_IN_LIBC
 #define HAVE_LDEXP_IN_LIBC 0
 #endif
-#ifndef HAVE_RAW_DECL_STRTOD
-#define HAVE_RAW_DECL_STRTOD 0
-#endif
 
 /* Return true if C is a space in the current locale, avoiding
    problems with signed char and isspace.  */

@@ -5,6 +5,7 @@
 	HAVE_RAW_DECL_STRTOD might not be correct in coreutils, which
 	disables the raw decl checks.  This assumes there is an underlying
 	strtod, but that's a safe assumption these days.
+	(HAVE_RAW_DECL_STRTOD): Remove; no longer used.
 
 	mountlist: port to HP NonStop
 	Reported by Joachim Schmitz in
