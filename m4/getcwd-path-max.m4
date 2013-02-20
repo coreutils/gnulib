@@ -52,6 +52,9 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
 # define is_ENAMETOOLONG(x) 0
 #endif
 
+/* Use the getcwd function, not any macro.  */
+#undef getcwd
+
 /* Don't get link errors because mkdir is redefined to rpl_mkdir.  */
 #undef mkdir
 

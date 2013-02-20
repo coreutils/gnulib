@@ -135,7 +135,7 @@ __getcwd (char *buf, size_t size)
   size_t allocated = size;
   size_t used;
 
-#if HAVE_RAW_DECL_GETCWD && HAVE_MINIMALLY_WORKING_GETCWD
+#if HAVE_MINIMALLY_WORKING_GETCWD
   /* If AT_FDCWD is not defined, the algorithm below is O(N**2) and
      this is much slower than the system getcwd (at least on
      GNU/Linux).  So trust the system getcwd's results unless they

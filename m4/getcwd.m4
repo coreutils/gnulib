@@ -123,7 +123,7 @@ AC_DEFUN([gl_FUNC_GETCWD],
   dnl Define HAVE_MINIMALLY_WORKING_GETCWD and HAVE_PARTLY_WORKING_GETCWD
   dnl if appropriate.
   case "$gl_cv_func_getcwd_path_max" in
-    "no, it has the AIX bug") ;;
+    "no"|"no, it has the AIX bug") ;;
     *)
       AC_DEFINE([HAVE_MINIMALLY_WORKING_GETCWD], [1],
         [Define to 1 if getcwd minimally works, that is, its result can be

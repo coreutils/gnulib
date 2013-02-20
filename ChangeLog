@@ -1,5 +1,18 @@
 2013-02-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getcwd: support coreutils better
+	Like strtod, getcwd incorrectly referred to HAVE_RAW_DECL_GETCWD,
+	but this might not be correct in coreutils, which disables
+	the raw decl checks.  Problem reported by Nagendra in
+	<http://bugs.gnu.org/10305#192>.
+	* lib/getcwd.c (__getcwd): Do not depend on HAVE_RAW_DECL_GETCWD.
+	* m4/getcwd-path-max.m4 (gl_FUNC_GETCWD_PATH_MAX):
+	Test the getcwd function, not any macro, since getcwd.c wants the
+	function.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD):
+	Don't define HAVE_MINIMALLY_WORKING_GETCWD if the code doesn't
+	compile, as might happen if there's a macro but no function.
+
 	strtod: support coreutils better
 	* lib/strtod.c (underlying_strtod): Just invoke the underlying strtod.
 	HAVE_RAW_DECL_STRTOD might not be correct in coreutils, which
