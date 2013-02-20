@@ -1,3 +1,9 @@
+2013-02-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: ignore old-style-definition warnings
+	* lib/regex.c: Add pragma to ignore these warnings.
+	Problem reported for GNU tar by Pavel Raiskup.
+
 2013-02-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getcwd: support coreutils better
