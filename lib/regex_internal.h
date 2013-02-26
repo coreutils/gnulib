@@ -107,10 +107,8 @@
 # define attribute_hidden
 #endif /* not _LIBC */
 
-#if __GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
-# define __attribute(arg) __attribute__ (arg)
-#else
-# define __attribute(arg)
+#if __GNUC__ < 3 + (__GNUC_MINOR__ < 1)
+# define __attribute__(arg)
 #endif
 
 typedef __re_idx_t Idx;
@@ -426,7 +424,7 @@ static void build_upper_buffer (re_string_t *pstr) internal_function;
 static void re_string_translate_buffer (re_string_t *pstr) internal_function;
 static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
 					  int eflags)
-     internal_function __attribute ((pure));
+     internal_function __attribute__ ((pure));
 #endif
 #define re_string_peek_byte(pstr, offset) \
   ((pstr)->mbs[(pstr)->cur_idx + offset])
@@ -774,7 +772,7 @@ bitset_copy (bitset_t dest, const bitset_t src)
   memcpy (dest, src, sizeof (bitset_t));
 }
 
-static void
+static void __attribute__ ((unused))
 bitset_not (bitset_t set)
 {
   int bitset_i;
@@ -786,7 +784,7 @@ bitset_not (bitset_t set)
        & ~set[BITSET_WORDS - 1]);
 }
 
-static void
+static void __attribute__ ((unused))
 bitset_merge (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
@@ -794,7 +792,7 @@ bitset_merge (bitset_t dest, const bitset_t src)
     dest[bitset_i] |= src[bitset_i];
 }
 
-static void
+static void __attribute__ ((unused))
 bitset_mask (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
@@ -805,7 +803,7 @@ bitset_mask (bitset_t dest, const bitset_t src)
 #ifdef RE_ENABLE_I18N
 /* Functions for re_string.  */
 static int
-internal_function __attribute ((pure))
+internal_function __attribute__ ((pure, unused))
 re_string_char_size_at (const re_string_t *pstr, Idx idx)
 {
   int byte_idx;
@@ -818,7 +816,7 @@ re_string_char_size_at (const re_string_t *pstr, Idx idx)
 }
 
 static wint_t
-internal_function __attribute ((pure))
+internal_function __attribute__ ((pure, unused))
 re_string_wchar_at (const re_string_t *pstr, Idx idx)
 {
   if (pstr->mb_cur_max == 1)
@@ -828,7 +826,7 @@ re_string_wchar_at (const re_string_t *pstr, Idx idx)
 
 # ifndef NOT_IN_libc
 static int
-internal_function __attribute ((pure))
+internal_function __attribute__ ((pure, unused))
 re_string_elem_size_at (const re_string_t *pstr, Idx idx)
 {
 #  ifdef _LIBC

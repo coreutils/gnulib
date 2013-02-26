@@ -1,3 +1,18 @@
+2013-02-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: merge patches from libc
+
+	2013-02-26  Siddhesh Poyarekar  <siddhesh@redhat.com>
+	* lib/regex_internal.h (__attribute__): Rename from __attribute.
+	All uses changed.
+	(bitset_not, bitset_merge, bitset_mask, re_string_char_size_at)
+	(re_string_wchar_at, re_string_elem_size_at):
+	Mark function as possibly unused.
+
+	2013-02-12  Andreas Schwab  <schwab@suse.de>  [BZ #11561]
+	* lib/regcomp.c (parse_bracket_exp) [_LIBC]: When looking up collating
+	elements compare against the byte sequence of it, not its name.
+
 2013-02-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	putenv: port better to native Windows
@@ -249,7 +264,7 @@
 
 2013-01-29  Andreas Schwab  <schwab@suse.de>
 
-	regex: fix buffer overrun in regexp matcher
+	regex: fix buffer overrun in regexp matcher [BZ #15078]
 	* lib/regexec.c (extend_buffers): Add parameter min_len.
 	(check_matching): Pass minimum needed length.
 	(clean_state_log_if_needed): Likewise.
