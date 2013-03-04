@@ -1,3 +1,8 @@
+2013-03-04  Eric Blake  <eblake@redhat.com>
+
+	test-getsockopt: avoid compiler warning
+	* tests/test-getsockopt.c (includes): Ensure close is declared.
+
 2013-03-02  Bruno Haible  <bruno@clisp.org>
 
 	sys_types: Avoid autoconf warning about gl_SYS_TYPES_H.

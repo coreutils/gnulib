@@ -22,6 +22,7 @@
 SIGNATURE_CHECK (getsockopt, int, (int, int, int, void *, socklen_t *));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "sockets.h"
 #include "macros.h"
