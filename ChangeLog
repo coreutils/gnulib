@@ -1,3 +1,11 @@
+2013-03-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	non-recursive-gnulib-prefix-hack: port coreutils 8.21 to HP NonStop
+	* m4/non-recursive-gnulib-prefix-hack.m4
+	(gl_NON_RECURSIVE_GNULIB_PREFIX_HACK): Don't mess with ALLOCA.
+	Problem reported for HP NonStop + coreutils 8.21 by Joachim Schmitz in
+	<http://bugs.gnu.org/10305#237>.
+
 2013-03-04  Eric Blake  <eblake@redhat.com>
 
 	test-getsockopt: avoid compiler warning

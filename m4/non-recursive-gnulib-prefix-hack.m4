@@ -29,7 +29,4 @@ AC_DEFUN([gl_NON_RECURSIVE_GNULIB_PREFIX_HACK],
       (*_H:*.h) eval "$ac_var=$1/\$$ac_var";;
     esac
   done
-
-  # If $ALLOCA is not empty, prefix its value with "lib/".
-  test -n "$ALLOCA" && ALLOCA="lib/$ALLOCA"
 ])
