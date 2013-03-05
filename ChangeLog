@@ -1,3 +1,8 @@
+2013-03-05  Eric Blake  <eblake@redhat.com>
+
+	execute: drop dead code
+	* lib/execute.c (nonintr_close, nonintr_open): Delete.
+
 2013-03-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	non-recursive-gnulib-prefix-hack: port coreutils 8.21 to HP NonStop
