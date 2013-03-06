@@ -54,6 +54,42 @@
 #undef close
 
 
+#if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+
+/* EINTR handling for close(), open().
+   These functions can return -1/EINTR even though we don't have any
+   signal handlers set up, namely when we get interrupted via SIGSTOP.  */
+
+static int
+nonintr_close (int fd)
+{
+  int retval;
+
+  do
+    retval = close (fd);
+  while (retval < 0 && errno == EINTR);
+
+  return retval;
+}
+#define close nonintr_close
+
+static int
+nonintr_open (const char *pathname, int oflag, mode_t mode)
+{
+  int retval;
+
+  do
+    retval = open (pathname, oflag, mode);
+  while (retval < 0 && errno == EINTR);
+
+  return retval;
+}
+#undef open /* avoid warning on VMS */
+#define open nonintr_open
+
+#endif
+
+
 /* Execute a command, optionally redirecting any of the three standard file
    descriptors to /dev/null.  Return its exit code.
    If it didn't terminate correctly, exit if exit_on_error is true, otherwise

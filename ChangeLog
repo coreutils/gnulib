@@ -1,3 +1,9 @@
+2013-03-06  Bruno Haible  <bruno@clisp.org>
+
+	execute: Revert last change, but use a different condition.
+	* lib/execute.c (nonintr_close, nonintr_open): Reintroduce, but only
+	on Windows.
+
 2013-03-05  Eric Blake  <eblake@redhat.com>
 
 	execute: drop dead code
