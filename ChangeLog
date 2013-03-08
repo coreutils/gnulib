@@ -1,3 +1,17 @@
+2013-03-08  Gary V. Vaughan  <gary@gnu.org>
+
+	regex: rename remaining __attribute calls to __attribute__.
+	2012-02-25 changed definition of __attribute, but left some uses
+	unchanged, preventing compilation of regex module on most non-gcc
+	environments.
+	* lib/regcomp.c (re_set_fastmap, seek_collating_symbol_entry)
+	(lookup_collation_sequence_value, build_range_exp)
+	(build_collating_symbol): Set attributes with newly renamed
+	__attribute__ decorator.
+	* lib/regex_internal.c (re_string_peek_byte_case)
+	(re_node_set_compare, re_node_set_contains): Likewise.
+	* lib/regexec.c (acquire_init_state_context): Likewise.
+
 2013-03-06  Bruno Haible  <bruno@clisp.org>
 
 	execute: Revert last change, but use a different condition.
