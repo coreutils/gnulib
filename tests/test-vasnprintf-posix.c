@@ -252,7 +252,8 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
     char *result =
       my_asnprintf (NULL, &length, "%.0a %d", 1.5, 33, 44, 55);
     ASSERT (result != NULL);
-    ASSERT (strcmp (result, "0x2p+0 33") == 0
+    ASSERT (strcmp (result, "0x1p+0 33") == 0
+            || strcmp (result, "0x2p+0 33") == 0
             || strcmp (result, "0x3p-1 33") == 0
             || strcmp (result, "0x6p-2 33") == 0
             || strcmp (result, "0xcp-3 33") == 0);
