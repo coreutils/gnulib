@@ -1,3 +1,10 @@
+2013-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bootstrap: port to FreeBSD
+	* build-aux/bootstrap (bootstrap_sync): Port sh -c usage to shells
+	that treat '--' differently.  Reported by Mats Erik Andersson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-03/msg00012.html>.
+
 2013-03-08  Gary V. Vaughan  <gary@gnu.org>
 
 	regex: rename remaining __attribute calls to __attribute__.
