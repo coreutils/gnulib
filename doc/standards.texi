@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate February 13, 2013
+@set lastupdate March 8, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -3373,13 +3373,13 @@ are purely tutorial and cover the basics of the subject.  These provide
 the framework for a beginner to understand the rest of the manual.  The
 Bison manual provides a good example of how to do this.
 
-To serve as a reference, a manual should have an Index that list all the
-functions, variables, options, and important concepts that are part of
-the program.  One combined Index should do for a short manual, but
-sometimes for a complex package it is better to use multiple indices.
-The Texinfo manual includes advice on preparing good index entries, see
-@ref{Index Entries, , Making Index Entries, texinfo, GNU Texinfo}, and
-see @ref{Indexing Commands, , Defining the Entries of an
+To serve as a reference, a manual should have an Index that lists all
+the functions, variables, options, and important concepts that are
+part of the program.  One combined Index should do for a short manual,
+but sometimes for a complex package it is better to use multiple
+indices.  The Texinfo manual includes advice on preparing good index
+entries, see @ref{Index Entries, , Making Index Entries, texinfo, GNU
+Texinfo}, and see @ref{Indexing Commands, , Defining the Entries of an
 Index, texinfo, GNU Texinfo}.
 
 Don't use Unix man pages as a model for how to write GNU documentation;
