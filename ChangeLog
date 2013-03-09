@@ -1,3 +1,11 @@
+2013-03-09  Gary V. Vaughan  <gary@gnu.org>
+
+	vasprintf-posix-tests: allow rounding 1.5 to 1, per the previous
+	changeset.
+	* tests/test-vasprintf-posix.c (test_function): Don't insist on
+	round-to-even, since POSIX says rounding is implementation-defined
+	and OS X 10.8.2 rounds 1.5 to 1 here.
+
 2013-03-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	vasnprintf-posix-tests: allow rounding 1.5 to 1
