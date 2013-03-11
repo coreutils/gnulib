@@ -21,7 +21,7 @@
 #include <locale.h>
 #include <limits.h>
 #include <string.h>
-#if HAVE_ALARM
+#if HAVE_DECL_ALARM
 # include <unistd.h>
 # include <signal.h>
 #endif
@@ -36,7 +36,7 @@ main (void)
   const char *s;
   struct re_registers regs;
 
-#if HAVE_ALARM
+#if HAVE_DECL_ALARM
   /* Some builds of glibc go into an infinite loop on this test.  */
   int alarm_value = 2;
   signal (SIGALRM, SIG_DFL);

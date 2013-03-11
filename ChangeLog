@@ -1,5 +1,15 @@
 2013-03-11  Eric Blake  <eblake@redhat.com>
 
+	regex: port to mingw's recent addition of undeclared alarm
+	* doc/posix-functions/alarm.texi (alarm): Document that alarm
+	exists but still doesn't work in newer mingw.
+	* m4/frexp.m4 (gl_FUNC_FREXP_WORKS): Check for alarm declaration,
+	not existence.  Ensure SIGALRM is not trapped.
+	* m4/mktime.m4 (gl_FUNC_MKTIME): Likewise.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+	* m4/remainderf.m4 (gl_FUNC_REMAINDERF_WORKS): Likewise.
+	* tests/test-regex.c (main): Use correct probe for alarm.
+
 	putenv: avoid compilation warning on mingw
 	* lib/putenv.c (_unsetenv): Protect variable declaration.
 	(putenv): Fix indentation.

@@ -1,4 +1,4 @@
-# remainderf.m4 serial 7
+# remainderf.m4 serial 8
 dnl Copyright (C) 2012-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,13 +150,14 @@ AC_DEFUN([gl_FUNC_REMAINDERF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  AC_CHECK_FUNCS_ONCE([alarm])
+  AC_CHECK_DECLS_ONCE([alarm])
   AC_CACHE_CHECK([whether remainderf works], [gl_cv_func_remainderf_works],
     [
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE([[
 #include <math.h>
-#if HAVE_ALARM
+#if HAVE_DECL_ALARM
+# include <signal.h>
 # include <unistd.h>
 #endif
 extern
@@ -169,7 +170,8 @@ volatile float y;
 float z;
 int main ()
 {
-#if HAVE_ALARM
+#if HAVE_DECL_ALARM
+  signal (SIGALRM, SIG_DFL);
   alarm (5);
 #endif
   /* This test fails on IRIX 6.5.  */

@@ -1,4 +1,4 @@
-# serial 63
+# serial 64
 
 # Copyright (C) 1996-2001, 2003-2013 Free Software Foundation, Inc.
 #
@@ -27,7 +27,7 @@ AC_DEFUN([gl_REGEX],
     # following run test, then default to *not* using the included regex.c.
     # If cross compiling, assume the test would fail and use the included
     # regex.c.
-    AC_CHECK_FUNCS_ONCE([alarm])
+    AC_CHECK_DECLS_ONCE([alarm])
     AC_CACHE_CHECK([for working re_compile_pattern],
                    [gl_cv_func_re_compile_pattern_working],
       [AC_RUN_IFELSE(
@@ -37,7 +37,7 @@ AC_DEFUN([gl_REGEX],
             #include <locale.h>
             #include <limits.h>
             #include <string.h>
-            #if HAVE_ALARM
+            #if HAVE_DECL_ALARM
             # include <unistd.h>
             # include <signal.h>
             #endif
@@ -49,7 +49,7 @@ AC_DEFUN([gl_REGEX],
             const char *s;
             struct re_registers regs;
 
-#if HAVE_ALARM
+#if HAVE_DECL_ALARM
             /* Some builds of glibc go into an infinite loop on this test.  */
             signal (SIGALRM, SIG_DFL);
             alarm (2);
