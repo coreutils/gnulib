@@ -1,3 +1,10 @@
+2013-03-11  Gary V. Vaughan  <gary@gnu.org>
+
+	unistd: don't prevent Tru64 Unix from using gnulib strtod.
+	* lib/unistd.in.h: be careful not to include un-needed system
+	stdlib.h from here, because that prevents gnulib stdlib.h from
+	defining rpl_strtod correctly.
+
 2013-03-09  Gary V. Vaughan  <gary@gnu.org>
 
 	vasprintf-posix-tests: allow rounding 1.51 to 1, per the previous
