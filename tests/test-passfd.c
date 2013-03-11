@@ -45,8 +45,9 @@ main ()
 
 # if HAVE_DECL_ALARM
   /* Avoid hanging on failure.  */
+  int alarm_value = 5;
   signal (SIGALRM, SIG_DFL);
-  alarm (5);
+  alarm (alarm_value);
 # endif
 
   fdnull = open ("/dev/null", O_RDWR);

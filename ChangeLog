@@ -1,5 +1,14 @@
 2013-03-11  Eric Blake  <eblake@redhat.com>
 
+	tests: make it easier to bypass alarm time in debugger
+	* tests/test-file-has-acl.c (main): Allow gdb to override alarm.
+	* tests/test-memmem.c (main): Likewise.
+	* tests/test-passfd.c (main): Likewise.
+	* tests/test-ptsname.c (main): Likewise.
+	* tests/test-ptsname_r.c (main): Likewise.
+	* tests/test-strcasestr.c (main): Likewise.
+	* tests/test-strstr.c (main): Likewise.
+
 	regex: port to mingw's recent addition of undeclared alarm
 	* doc/posix-functions/alarm.texi (alarm): Document that alarm
 	exists but still doesn't work in newer mingw.
