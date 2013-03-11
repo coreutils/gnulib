@@ -1,3 +1,9 @@
+2013-03-11  Eric Blake  <eblake@redhat.com>
+
+	putenv: avoid compilation warning on mingw
+	* lib/putenv.c (_unsetenv): Protect variable declaration.
+	(putenv): Fix indentation.
+
 2013-03-11  Gary V. Vaughan  <gary@gnu.org>
 
 	unistd: don't prevent Tru64 Unix from using gnulib strtod.
