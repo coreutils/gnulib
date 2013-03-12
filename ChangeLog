@@ -1,3 +1,9 @@
+2013-03-12  Eric Blake  <eblake@redhat.com>
+
+	regex-tests: skip UTF-8 test on mingw
+	* modules/regex-tests (Depends-on): Add localcharset.
+	* tests/test-regex.c (main): Use it to skip test on mingw.
+
 2013-03-11  Eric Blake  <eblake@redhat.com>
 
 	tests: make it easier to bypass alarm time in debugger
