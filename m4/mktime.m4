@@ -34,7 +34,7 @@ AC_DEFUN([gl_FUNC_MKTIME],
 # include <unistd.h>
 #endif
 
-#ifndef HAVE_DECL_ALARM
+#if HAVE_DECL_ALARM
 # include <signal.h>
 #endif
 

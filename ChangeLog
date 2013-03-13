@@ -1,3 +1,8 @@
+2013-03-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: fix configure typo
+	* m4/mktime.m4 (gl_FUNC_MKTIME): Fix typo in previous change.
+
 2013-03-12  Eric Blake  <eblake@redhat.com>
 
 	regex-tests: skip UTF-8 test on mingw
