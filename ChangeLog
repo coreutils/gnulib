@@ -1,3 +1,12 @@
+2013-03-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	putenv: port to Solaris 10
+	* lib/putenv.c (_unsetenv, putenv): Use HAVE_DECL__PUTENV, not
+	HAVE__PUTENV.  Solaris 10 has a _putenv that's not declared and
+	is not what is wanted here.
+	* m4/putenv.m4 (gl_PREREQ_PUTENV): Check for _putenv's
+	declaration, not for its existence.
+
 2013-03-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: fix configure typo
