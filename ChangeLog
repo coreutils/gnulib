@@ -1,3 +1,13 @@
+2013-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	copy-file, rpmatch: fix problems found by cppcheck
+	Reported by Arno Onken in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-03/msg00069.html>.
+	* lib/rpmatch.c (try): Fix memory leak.
+	* lib/copy-file.c: Include "ignore-value.h".
+	(qcopy_file_preserving): Ignore chown value.
+	* modules/copy-file (Depends-on): Add ignore-value.
+
 2013-01-27  Jim Meyering  <jim@meyering.net>
 
 	prefix-gnulib-mk: give better diagnostics

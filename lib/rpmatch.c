@@ -110,7 +110,10 @@ try (const char *response, const char *pattern, char **lastp, regex_t *re)
         return -1;
       /* Compile the pattern and cache it for future runs.  */
       if (regcomp (re, safe_pattern, REG_EXTENDED) != 0)
-        return -1;
+        {
+          free (safe_pattern);
+          return -1;
+        }
       *lastp = safe_pattern;
     }
 
