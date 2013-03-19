@@ -1,3 +1,16 @@
+2013-03-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sys_select, sys_time: port 2013-01-30 Solaris 2.6 fix to Cygwin
+	Problem reported by Marco Atzeri in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-03/msg00000.html>.
+	* lib/sys_select.in.h [HAVE_SYS_SELECT_H && _CYGWIN_SYS_TIME_H]:
+	Simply delegate to the system <sys/select.h> in this case too.
+	Also, pay attention to _GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TIME_H only
+	if OSF/1, since otherwise Cygwin breaks, and it doesn't seem to
+	be needed on Solaris either.
+	* lib/sys_time.in.h [_CYGWIN_SYS_TIME_H]:
+	Simply delgate to the system <sys/time.h> in this case.
+
 2013-03-19  Karl Berry  <karl@gnu.org>
 
 	* build-aux/gnupload: check for erroneous (with gnupload) use of
