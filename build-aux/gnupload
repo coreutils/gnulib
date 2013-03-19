@@ -1,7 +1,7 @@
 #!/bin/sh
 # Sign files and upload them.
 
-scriptversion=2012-12-11.16; # UTC
+scriptversion=2013-03-19.17; # UTC
 
 # Copyright (C) 2004-2013 Free Software Foundation, Inc.
 #
@@ -39,9 +39,8 @@ nl='
 
 usage="Usage: $0 [OPTION]... [CMD] FILE... [[CMD] FILE...]
 
-Sign all FILES, and process them at selected destinations according to CMD.
-<http://www.gnu.org/prep/maintain/html_node/Automated-FTP-Uploads.html>
-explains further.
+Sign all FILES, and process them at the destinations specified with --to.
+If CMD is not given, it defaults to uploading.  See examples below.
 
 Commands:
   --delete                 delete FILES from destination
@@ -50,8 +49,7 @@ Commands:
   --                       treat the remaining arguments as files to upload
 
 Options:
-  --help                   print this help text and exit
-  --to DEST                specify one destination for FILES
+  --to DEST                specify a destination DEST for FILES
                            (multiple --to options are allowed)
   --user NAME              sign with key NAME
   --replace                allow replacements of existing files
@@ -59,10 +57,10 @@ Options:
   --dry-run                do nothing, show what would have been done
                            (including the constructed directive file)
   --version                output version information and exit
+  --help                   print this help text and exit
 
 If --symlink-regex is given without EXPR, then the link target name
 is created by replacing the version information with '-latest', e.g.:
-
   foo-1.3.4.tar.gz -> foo-latest.tar.gz
 
 Recognized destinations are:
@@ -79,6 +77,9 @@ Options and commands are applied in order.  If the file $conffile exists
 in the current working directory, its contents are prepended to the
 actual command line options.  Use this to keep your defaults.  Comments
 (#) and empty lines in $conffile are allowed.
+
+<http://www.gnu.org/prep/maintain/html_node/Automated-FTP-Uploads.html>
+gives some further background.
 
 Examples:
 1. Upload foobar-1.0.tar.gz to ftp.gnu.org:
@@ -104,7 +105,7 @@ Examples:
            --delete oopsbar-0.9.91.tar.gz \\
            -- foobar-0.9.91.tar.gz
 
-gnupload uses the ncftpput program to do the transfers; if you don't
+gnupload executes a program ncftpput to do the transfers; if you don't
 happen to have an ncftp package installed, the ncftpput-ftp script in
 the build-aux/ directory of the gnulib package
 (http://savannah.gnu.org/projects/gnulib) may serve as a replacement.
@@ -131,6 +132,12 @@ while test -n "$1"; do
     --to)
       if test -z "$2"; then
         echo "$0: Missing argument for --to" 1>&2
+        exit 1
+      elif echo "$2" | grep 'ftp-upload\.gnu\.org' >/dev/null; then
+        echo "$0: Use ftp.gnu.org:PKGNAME or alpha.gnu.org:PKGNAME" >&2
+        echo "$0: for the destination, not ftp-upload.gnu.org (which" >&2
+        echo "$0:  is used for direct ftp uploads, not with gnupload)." >&2
+        echo "$0: See --help and its examples if need be." >&2
         exit 1
       else
         to="$to $2"

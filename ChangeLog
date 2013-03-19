@@ -1,3 +1,8 @@
+2013-03-19  Karl Berry  <karl@gnu.org>
+
+	* build-aux/gnupload: check for erroneous (with gnupload) use of
+	ftp-upload.gnu.org, tweak help.
+
 2013-03-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	copy-file, rpmatch: fix problems found by cppcheck
