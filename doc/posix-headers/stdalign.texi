@@ -25,6 +25,13 @@ the types @code{double} and @code{long long} in GCC 4.7.0.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+In ISO C11, the operand of @code{alignof}/@code{_Alignof} must be a
+parenthesized type.  Recent versions of GCC support an extension in
+which the operand can also be a unary expression, as with
+@code{sizeof}.  We don't know of any compilers that support
+@code{alignof}/@code{_Alignof} without also supporting this extension;
+if you find one please let us know.
+@item
 @code{_Alignas} and @code{alignas} are not always supported;
 on platforms lacking support, the
 macro @code{__alignas_is_defined} is not defined.
