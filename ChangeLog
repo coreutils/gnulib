@@ -1,3 +1,9 @@
+2013-03-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: doc fix
+	* doc/posix-headers/stdalign.texi (stdalign.h):
+	Gnulib doesn't support '_Alignof expr'.
+
 2013-03-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port to stricter ISO C11
