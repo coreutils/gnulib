@@ -1,3 +1,11 @@
+2013-04-11  Dmitry V. Levin  <ldv@altlinux.org>
+
+	regex-tests, regex: allow glibc re_search behavior
+	* tests/test-regex.c (main): In test for glibc bug 15078, reformat
+	re_search input data to make the multi-character collating element
+	in it clearly visible, and treat re_search return code 0 as valid.
+	* m4/regex.m4 (gl_REGEX): Likewise.
+
 2013-03-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: doc fix

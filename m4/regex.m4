@@ -84,17 +84,28 @@ AC_DEFUN([gl_REGEX],
                      */
                   static char const pat[] = "[^x]x";
                   static char const data[] =
-                    "\xe1\x80\x80\xe1\x80\xbb\xe1\x80\xbd\xe1\x80\x94\xe1\x80"
-                    "\xba\xe1\x80\xaf\xe1\x80\x95\xe1\x80\xbax";
+                    /* <U1000><U103B><U103D><U1014><U103A><U102F><U1015><U103A> */
+                    "\xe1\x80\x80"
+                    "\xe1\x80\xbb"
+                    "\xe1\x80\xbd"
+                    "\xe1\x80\x94"
+                    "\xe1\x80\xba"
+                    "\xe1\x80\xaf"
+                    "\xe1\x80\x95"
+                    "\xe1\x80\xba"
+                    "x";
                   re_set_syntax (0);
                   memset (&regex, 0, sizeof regex);
                   s = re_compile_pattern (pat, sizeof pat - 1, &regex);
                   if (s)
                     result |= 1;
-                  else if (re_search (&regex, data, sizeof data - 1,
-                                      0, sizeof data - 1, 0)
-                           != 21)
-                    result |= 1;
+                  else
+                    {
+                      i = re_search (&regex, data, sizeof data - 1,
+                                     0, sizeof data - 1, 0);
+                      if (i != 0 && i != 21)
+                        result |= 1;
+                    }
                 }
 
                 if (! setlocale (LC_ALL, "C"))
