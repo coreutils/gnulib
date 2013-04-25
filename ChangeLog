@@ -1,5 +1,12 @@
 2013-04-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gettext: now it's your responsibility to add -I$(top_builddir)/intl
+	Formerly, it was your responsibility to do this for all Makefile.ams
+	other than Gnulib's.  Now it's your responsibility to do it for
+	Gnulib's Makefile.am, too.
+	* NEWS: Document this.
+	* modules/gettext (AM_CPPFLAGS): Don't append -$(top_builddir)/intl.
+
 	acl: include errno.h to get errno
 	Reported by Daiki Ueno in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2013-04/msg00073.html>.

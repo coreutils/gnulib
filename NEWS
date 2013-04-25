@@ -3,6 +3,10 @@ Important notes
 
 Date        Modules         Changes
 
+2013-04-24  gettext         If your project uses 'gettextize --intl' it is now
+                            your responsibility to put -I$(top_builddir)/intl
+                            into the Makefile.am for gnulib.
+
 2012-06-27  elisp-comp      The module 'elisp-comp' is removed; the script is
                             not independently useful outside of automake.
 
