@@ -1,3 +1,11 @@
+2013-04-25  Daiki Ueno  <ueno@gnu.org>
+
+	wctype-h: fix gettext link error on mingw
+	Reported by Josue Andrade Gomes and Takayuki Tsunakawa in
+	<https://lists.gnu.org/archive/html/bug-gettext/2013-03/msg00086.html>.
+	* lib/wctype.in.h [__MINGW32__]: Include <ctype.h> before defining
+	rpl_towupper and rpl_towupper.
+
 2013-04-11  Dmitry V. Levin  <ldv@altlinux.org>
 
 	regex-tests, regex: allow glibc re_search behavior
