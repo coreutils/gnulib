@@ -41,7 +41,7 @@
    - when -malign-double is specified:      alignof_slot(double) = 8.
    Note: The result cannot be used as a value for an 'enum' constant,
    due to bugs in HP-UX 10.20 cc and AIX 3.2.5 xlc.  */
-#if defined __GNUC__
+#if defined __GNUC__ || defined __IBM__ALIGNOF__
 # define alignof_type __alignof__
 #else
 # define alignof_type alignof_slot

@@ -1,3 +1,10 @@
+2013-04-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	alignof, intprops, malloca: port better to IBM's C compiler
+	* lib/alignof.h (alignof_type) [__IBM_ALIGNOF__]: Use __alignof__.
+	* lib/intprops.h (_GL_HAVE___TYPEOF__) [__IBM_TYPEOF__]: Now 1.
+	* lib/malloca.h (sa_alignof): [__IBM_ALIGNOF__]: Use __alignof__.
+
 2013-04-25  Daiki Ueno  <ueno@gnu.org>
 
 	wctype-h: fix gettext link error on mingw
