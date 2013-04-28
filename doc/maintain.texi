@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate February 13, 2013
+@set lastupdate April 27, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1610,7 +1610,10 @@ One programmatic way to create and transfer the necessary files is to
 use the @code{gnupload} script, which is available from the
 @file{build-aux/} directory of the @code{gnulib} project at
 @url{http://savannah.gnu.org/projects/gnulib}.  Run
-@code{gnupload@tie{}--help} for a description and examples.
+@code{gnupload@tie{}--help} for a description and examples.  (With
+@code{gnupload}, you specify a destination such as
+@samp{ftp.gnu.org:}@var{pkgname} rather than using the
+@samp{ftp-upload} hostname.)
 
 @code{gnupload} invokes the program @code{ncftpput} to do the actual
 transfers; if you don't happen to have the @code{ncftp} package
@@ -1953,7 +1956,8 @@ Please also post release announcements in the news section of your
 Savannah project site.  Here, it is fine to also write news entries
 for test releases and any other newsworthy events.  The news feeds
 from all GNU projects at savannah are aggregated at
-@url{http://planet.gnu.org} (GNU Planet).  You can also post items
+@url{http://planet.gnu.org} (GNU Planet), unless the text of the entry
+contains the string @samp{::noplanet::}.  You can also post items
 directly, or arrange for feeds from other locations; see information
 on the GNU Planet web page.
 

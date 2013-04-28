@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 8, 2013
+@set lastupdate April 27, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1075,7 +1075,7 @@ The Apache Software Foundation license,
 @url{http://www.apache.org/@/licenses}.
 
 @item Artistic
-The Artistic license used for Perl, @url{http://www.perlfoundation.org/@/legal}.
+The Artistic license used for Perl, @url{http://dev.perl.org/licenses/artistic.html}.
 
 @item Expat
 The Expat license, @url{http://www.jclark.com/@/xml/@/copying.txt}.
