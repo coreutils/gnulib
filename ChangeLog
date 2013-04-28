@@ -1,5 +1,43 @@
 2013-04-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	qacl: new module, broken out from the acl module
+	This is for GNU Emacs, which wants the acl functions but does
+	not want 'error' invoked when they fail.
+	* lib/acl-internal.h: Do not include error.h, quote.h.
+	(ENOSYS, ENOTSUP): Remove; no longer needed.
+	(ACL_NOT_WELL_SUPPORTED): Remove; replaced by acl_errno_valid.
+	* lib/acl.h: Include <stdbool.h>.
+	(acl_errno_valid): New function.
+	* lib/copy-acl.c, lib/set-acl.c: Include errno,h, not acl-internal.h.
+	* lib/copy-acl.c (qcopy_acl): Move to lib/qcopy-acl.c.
+	* lib/set-acl.c: Rename from lib/set-mode-acl.c.
+	(chmod_or_fchmod, qset_acl): Move to lib/qset-acl.c.
+	(ACL_INTERNAL_INLINE): Remove; no longer needed.
+	* lib/file-has-acl.c (file_has_acl):
+	* lib/qcopy-acl.c (qcopy_acl):
+	* lib/qset-acl.c (qset_acl):
+	Use acl_errno_valid instead of ACL_NOT_WELL_SUPPORTED.
+	* modules/acl (Files): Move lib/acl.h, lib/acl-internal.h,
+	lib/acl_entries.c, lib/set-mode-acl.c (renamed to lib/set-acl.c),
+	lib/file-has-acl.c, m4/acl.m4 to qacl module.
+	Add lib/set-acl.c.
+	(Depends-on): Move extern-inline, fstat, sys_stat to qacl module.
+	Add qacl.
+	(configure.ac): Move gl_FUNC_ACL to qacl module.
+	(lib_SOURCES): Remove file-has-acl.c (moved to qacl module).
+	Rename set-mode-acl.c to set-acl.c.
+	* lib/acl-errno-valid.c: New file.
+	* lib/qcopy-acl.c: New file, moved from the old lib/copy-acl.c; the
+	copy_acl function remains in copy-acl.c.
+	* lib/qcopy-acl.c, lib/qset-acl.c: Do not include gettext.h.
+	(_): Remove; not needed.
+	* lib/qset-acl.c: New file, moved from the old lib/set-mode-acl.c; the
+	set_acl function remains in set-acl.c (renamed from set-mode-acl.c).
+	* modules/qacl: New file, moved from the old modules/acl.
+	(Files, lib_SOURCES): Add acl-errno-valid.c, qcopy-acl.c, qset-acl.c.
+	Remove set-mode-acl.c, copy-acl.c.
+	(Depends-on): Remove error, gettext-h, quote.  Add stdbool.
+
 	alignof, intprops, malloca: port better to IBM's C compiler
 	* lib/alignof.h (alignof_type) [__IBM_ALIGNOF__]: Use __alignof__.
 	* lib/intprops.h (_GL_HAVE___TYPEOF__) [__IBM_TYPEOF__]: Now 1.

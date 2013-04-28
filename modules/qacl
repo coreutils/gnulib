@@ -1,0 +1,36 @@
+Description:
+Access control lists of files.  (Unportable.)
+
+Files:
+lib/acl.h
+lib/acl-internal.h
+lib/acl-errno-valid.c
+lib/acl_entries.c
+lib/file-has-acl.c
+lib/qcopy-acl.c
+lib/qset-acl.c
+m4/acl.m4
+
+Depends-on:
+extern-inline
+fstat
+stdbool
+sys_stat
+
+configure.ac:
+gl_FUNC_ACL
+
+Makefile.am:
+lib_SOURCES += acl-errno-valid.c file-has-acl.c qcopy-acl.c qset-acl.c
+
+Include:
+"acl.h"
+
+Link:
+$(LIB_ACL)
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert, Jim Meyering, Bruno Haible

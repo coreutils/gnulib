@@ -1,28 +1,20 @@
 Description:
-Access control lists of files.  (Unportable.)
+Access control lists of files, with diagnostics.  (Unportable.)
 
 Files:
-lib/acl.h
-lib/acl-internal.h
-lib/acl_entries.c
-lib/set-mode-acl.c
 lib/copy-acl.c
-lib/file-has-acl.c
-m4/acl.m4
+lib/set-acl.c
 
 Depends-on:
 error
-extern-inline
-fstat
 gettext-h
+qacl
 quote
-sys_stat
 
 configure.ac:
-gl_FUNC_ACL
 
 Makefile.am:
-lib_SOURCES += set-mode-acl.c copy-acl.c file-has-acl.c
+lib_SOURCES += copy-acl.c set-acl.c
 
 Include:
 "acl.h"
