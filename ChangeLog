@@ -1,3 +1,9 @@
+2013-04-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: work around bug in Sun c99
+	* m4/extern-inline.m4 (_GL_INLINE, _GL_EXTERN_INLINE):
+	Work around bug in Sun C 5.12 c99's implementation of 'inline'.
+
 2013-04-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qacl: new module, broken out from the acl module
