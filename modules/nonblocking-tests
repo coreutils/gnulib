@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 close
+getdtablesize
 pipe-posix
 nonblocking-pipe-tests
 nonblocking-socket-tests

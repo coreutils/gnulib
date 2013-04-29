@@ -1,3 +1,26 @@
+2013-04-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: don't assume getdtablesize () <= 10000000
+	* modules/cloexec-tests:
+	* modules/dup2-tests:
+	* modules/dup3-tests:
+	* modules/nonblocking-tests:
+	* modules/posix_spawn_file_actions_addclose-tests:
+	* modules/posix_spawn_file_actions_adddup2-tests:
+	* modules/posix_spawn_file_actions_addopen-tests:
+	* modules/unistd-safer-tests:
+	Depend on the getdtablesize module.
+	* tests/test-cloexec.c:
+	* tests/test-dup-safer.c:
+	* tests/test-dup2.c:
+	* tests/test-dup3.c:
+	* tests/test-fcntl.c:
+	* tests/test-nonblocking.c:
+	* tests/test-posix_spawn_file_actions_addclose.c:
+	* tests/test-posix_spawn_file_actions_adddup2.c:
+	* tests/test-posix_spawn_file_actions_addopen.c:
+	Don't assume getdtablesize () <= 10000000.
+
 2013-04-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: work around bug in Sun c99

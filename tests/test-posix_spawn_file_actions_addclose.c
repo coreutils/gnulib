@@ -23,6 +23,7 @@ SIGNATURE_CHECK (posix_spawn_file_actions_addclose, int,
                  (posix_spawn_file_actions_t *, int));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 
@@ -40,7 +41,8 @@ main (void)
   }
   {
     errno = 0;
-    ASSERT (posix_spawn_file_actions_addclose (&actions, 10000000) == EBADF);
+    ASSERT (posix_spawn_file_actions_addclose (&actions, getdtablesize ())
+            == EBADF);
   }
 
   return 0;

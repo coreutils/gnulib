@@ -124,7 +124,7 @@ main (void)
   }
   {
     errno = 0;
-    ASSERT (set_nonblocking_flag (10000000, false) == -1);
+    ASSERT (set_nonblocking_flag (getdtablesize (), false) == -1);
     ASSERT (errno == EBADF);
   }
 

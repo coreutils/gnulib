@@ -4,6 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+getdtablesize
 posix_spawn_file_actions_init
 
 configure.ac:

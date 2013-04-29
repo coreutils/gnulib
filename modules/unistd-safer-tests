@@ -8,6 +8,7 @@ cloexec
 close
 dup
 fd-safer-flag
+getdtablesize
 msvc-nothrow
 stdbool
 

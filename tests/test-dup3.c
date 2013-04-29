@@ -76,6 +76,7 @@ int
 main ()
 {
   int use_cloexec;
+  int bad_fd = getdtablesize ();
 
 #if O_CLOEXEC
   for (use_cloexec = 0; use_cloexec <= 1; use_cloexec++)
@@ -124,7 +125,7 @@ main ()
       ASSERT (dup3 (fd, -2, o_flags) == -1);
       ASSERT (errno == EBADF);
       errno = 0;
-      ASSERT (dup3 (fd, 10000000, o_flags) == -1);
+      ASSERT (dup3 (fd, bad_fd, o_flags) == -1);
       ASSERT (errno == EBADF);
 
       /* Using dup3 can skip fds.  */

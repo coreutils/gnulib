@@ -23,12 +23,14 @@ SIGNATURE_CHECK (posix_spawn_file_actions_adddup2, int,
                  (posix_spawn_file_actions_t *, int, int));
 
 #include <errno.h>
+#include <unistd.h>
 
 #include "macros.h"
 
 int
 main (void)
 {
+  int bad_fd = getdtablesize ();
   posix_spawn_file_actions_t actions;
 
   ASSERT (posix_spawn_file_actions_init (&actions) == 0);
@@ -40,7 +42,7 @@ main (void)
   }
   {
     errno = 0;
-    ASSERT (posix_spawn_file_actions_adddup2 (&actions, 10000000, 2) == EBADF);
+    ASSERT (posix_spawn_file_actions_adddup2 (&actions, bad_fd, 2) == EBADF);
   }
   {
     errno = 0;
@@ -48,7 +50,7 @@ main (void)
   }
   {
     errno = 0;
-    ASSERT (posix_spawn_file_actions_adddup2 (&actions, 2, 10000000) == EBADF);
+    ASSERT (posix_spawn_file_actions_adddup2 (&actions, 2, bad_fd) == EBADF);
   }
 
   return 0;
