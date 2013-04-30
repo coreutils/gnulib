@@ -21,6 +21,8 @@
 
 #include "acl.h"
 
+#include <errno.h>
+
 #include "error.h"
 #include "gettext.h"
 #define _(msgid) gettext (msgid)

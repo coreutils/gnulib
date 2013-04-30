@@ -1,3 +1,10 @@
+2013-04-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl: include errno.h to get errno
+	Reported by Daiki Ueno in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-04/msg00073.html>.
+	* lib/copy-acl.c, lib/set-acl.c: Include errno.h.
+
 2013-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: don't assume getdtablesize () <= 10000000
