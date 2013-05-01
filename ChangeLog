@@ -1,5 +1,13 @@
 2013-04-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	utimens, utimensat: work around Solaris UTIME_OMIT bug
+	Solaris 11.1 and Solaris 10 have the same UTIME_OMIT bug that
+	Linux kernel 2.6.32 does.  Work around it in the same way.
+	* doc/posix-functions/futimens.texi (futimens):
+	* doc/posix-functions/utimensat.texi (utimensat): Document the bug.
+	* lib/utimens.c (fdutimens, lutimens):
+	* lib/utimensat.c (rpl_utimensat): Work around the bug.
+
 	gettext: now it's your responsibility to add -I$(top_builddir)/intl
 	Formerly, it was your responsibility to do this for all Makefile.ams
 	other than Gnulib's.  Now it's your responsibility to do it for
