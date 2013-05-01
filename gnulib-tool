@@ -767,23 +767,45 @@ func_relconcat ()
   done
 }
 
+# func_ln_s SRC DEST
+# Like ln -s, except use cp -p if ln -s fails.
+func_ln_s ()
+{
+  ln -s "$1" "$2" || {
+    echo "$progname: ln -s failed; falling back on cp -p" >>/tmp/log
+    echo "$progname: ln -s failed; falling back on cp -p" >&2
+    symbolic=
+    lsymbolic=
+    do_copyrights=true
+
+    case "$1" in
+      /* | ?:*) # SRC is absolute.
+        cp_src=$1 ;;
+      *) # SRC is relative to the directory of DEST.
+        cp_src=${2%/*}/$1 ;;
+    esac
+
+    cp -p "$cp_src" "$2"
+  }
+}
+
 # func_ln SRC DEST
-# Like ln -s, except that SRC is given relative to the current directory (or
+# Like func_ln_s, except that SRC is given relative to the current directory (or
 # absolute), not given relative to the directory of DEST.
 func_ln ()
 {
   case "$1" in
     /* | ?:*)
-      ln -s "$1" "$2" ;;
+      func_ln_s "$1" "$2" ;;
     *) # SRC is relative.
       case "$2" in
         /* | ?:*)
-          ln -s "`pwd`/$1" "$2" ;;
+          func_ln_s "`pwd`/$1" "$2" ;;
         *) # DEST is relative too.
           ln_destdir=`echo "$2" | sed -e 's,[^/]*$,,'`
           test -n "$ln_destdir" || ln_destdir="."
           func_relativize "$ln_destdir" "$1"
-          ln -s "$reldir" "$2"
+          func_ln_s "$reldir" "$2"
           ;;
       esac
       ;;

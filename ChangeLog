@@ -1,3 +1,10 @@
+2016-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+            KO Myung-Hun  <komh@chollian.net>
+
+	gnulib-tool: don't assume ln -s works
+	* gnulib-tool (func_ln_s): New function.
+	(func_ln): Use it.
+
 2016-01-15  KO Myung-Hun  <komh@chollian.net>
 
 	utimes: detect utimes() correctly on OS/2 kLIBC
