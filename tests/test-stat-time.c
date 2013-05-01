@@ -27,6 +27,9 @@
 
 #include "macros.h"
 
+#define BASE "test-stat-time.t"
+#include "nap.h"
+
 enum { NFILES = 4 };
 
 static int
@@ -77,48 +80,6 @@ static void
 do_stat (const char *filename, struct stat *p)
 {
   ASSERT (stat (filename, p) == 0);
-}
-
-/* Sleep long enough to notice a timestamp difference on the file
-   system in the current directory.  */
-static void
-nap (void)
-{
-  static long delay;
-  if (!delay)
-    {
-      /* Initialize only once, by sleeping for 20 milliseconds (needed
-         since xfs has a quantization of about 10 milliseconds, even
-         though it has a granularity of 1 nanosecond, and since NTFS
-         has a default quantization of 15.25 milliseconds, even though
-         it has a granularity of 100 nanoseconds).  If the seconds
-         differ, repeat the test one more time (in case we crossed a
-         quantization boundary on a file system with 1 second
-         resolution).  If we can't observe a difference in only the
-         nanoseconds, then fall back to 1 second if the time is odd,
-         and 2 seconds (needed for FAT) if time is even.  */
-      struct stat st1;
-      struct stat st2;
-      ASSERT (stat ("t-stt-stamp1", &st1) == 0);
-      ASSERT (force_unlink ("t-stt-stamp1") == 0);
-      delay = 20000;
-      usleep (delay);
-      create_file ("t-stt-stamp1");
-      ASSERT (stat ("t-stt-stamp1", &st2) == 0);
-      if (st1.st_mtime != st2.st_mtime)
-        {
-          /* Seconds differ, give it one more shot.  */
-          st1 = st2;
-          ASSERT (force_unlink ("t-stt-stamp1") == 0);
-          usleep (delay);
-          create_file ("t-stt-stamp1");
-          ASSERT (stat ("t-stt-stamp1", &st2) == 0);
-        }
-      if (! (st1.st_mtime == st2.st_mtime
-             && get_stat_mtime_ns (&st1) < get_stat_mtime_ns (&st2)))
-        delay = (st1.st_mtime & 1) ? 1000000 : 2000000;
-    }
-  usleep (delay);
 }
 
 static void

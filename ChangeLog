@@ -1,5 +1,49 @@
 2013-04-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	utimensat-tests, etc.: try to fix some races
+	Problem reported by Bernhard Voelker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-04/msg00071.html>.
+	I don't know whether this patch fixes that race condition, but it
+	fixes *some* race conditions, so it should be a win.
+	* modules/chown-tests (Depends-on):
+	* modules/fchownat-tests (Depends-on):
+	* modules/fdutimensat-tests (Depends-on):
+	* modules/futimens-tests (Depends-on):
+	* modules/lchown-tests (Depends-on):
+	* modules/stat-time-tests (Depends-on):
+	* modules/utimens-tests (Depends-on):
+	* modules/utimensat-tests (Depends-on):
+	Depend on nanosleep, not usleep.
+	* modules/chown-tests (test_chown_LDADD):
+	* modules/lchown-tests (test_lchown_LDADD):
+	* modules/stat-time-tests (test_stat_time_LDADD):
+	New macro.
+	* modules/fchownat-tests (test_fchownat_LDADD):
+	* modules/fdutimensat-tests (test_fdutimensat_LDADD):
+	* modules/futimens-tests (test_futimens_LDADD):
+	* modules/utimens-tests (test_utimens_LDADD):
+	* modules/utimensat-tests (test_utimensat_LDADD):
+	Add $(LIB_NANOSLEEP).
+	* modules/stat-time-tests (Files): Add tests/nap.h.
+	* tests/nap.h: Include <limits.h>, for INT_MAX.
+	(lt_mtime): Remove.
+	(diff_timespec): New function.
+	(get_stat): Rename from get_mtime.  All callers changed.
+	(nap_works): Determine the needed delay by inspecting the
+	file system's timestamp jumps; this should be more reliable.
+	Look at both mtime and ctime, and take the maximum of the two jumps.
+	(nap_works, guess_delay):
+	Return a nanosecond cound, not a microsecond count.
+	All callers changed.
+	(nap_works, nap): Use nanosleep, not usleep.  Check for nanosleep
+	failure.
+	(nap): Multiply the guess by 1.125, to accommodate the case where
+	the file system's clock is a bit slower than nanosleep's clock.
+	* tests/test-stat-time.c (BASE): New macro.
+	Include nap.h.
+	(nap): Remove; nap.h now defines this.  This removes a duplicate
+	implementation of 'nap'.
+
 	utimens, utimensat: work around Solaris UTIME_OMIT bug
 	Solaris 11.1 and Solaris 10 have the same UTIME_OMIT bug that
 	Linux kernel 2.6.32 does.  Work around it in the same way.

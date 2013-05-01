@@ -9,9 +9,9 @@ tests/macros.h
 Depends-on:
 ignore-value
 mgetgroups
+nanosleep
 openat-h
 progname
-usleep
 stat-time
 symlink
 
@@ -21,4 +21,4 @@ AC_CHECK_FUNCS_ONCE([getegid])
 Makefile.am:
 TESTS += test-fchownat
 check_PROGRAMS += test-fchownat
-test_fchownat_LDADD = $(LDADD) @LIBINTL@
+test_fchownat_LDADD = $(LDADD) $(LIB_NANOSLEEP) @LIBINTL@

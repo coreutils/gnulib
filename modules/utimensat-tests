@@ -9,8 +9,8 @@ tests/macros.h
 
 Depends-on:
 ignore-value
+nanosleep
 timespec
-usleep
 utimecmp
 
 configure.ac:
@@ -18,4 +18,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-utimensat
 check_PROGRAMS += test-utimensat
-test_utimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@
+test_utimensat_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) $(LIB_NANOSLEEP) @LIBINTL@

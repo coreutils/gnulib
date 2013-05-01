@@ -11,9 +11,9 @@ Depends-on:
 dup
 gettext
 ignore-value
+nanosleep
 symlink
 timespec
-usleep
 utimecmp
 
 configure.ac:
@@ -21,4 +21,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-utimens
 check_PROGRAMS += test-utimens
-test_utimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) @LIBINTL@
+test_utimens_LDADD = $(LDADD) $(LIB_CLOCK_GETTIME) $(LIB_NANOSLEEP) @LIBINTL@

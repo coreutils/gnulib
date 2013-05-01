@@ -9,7 +9,7 @@ Depends-on:
 ignore-value
 lstat
 mgetgroups
-usleep
+nanosleep
 stat-time
 stdbool
 symlink
@@ -20,3 +20,4 @@ AC_CHECK_FUNCS_ONCE([getegid])
 Makefile.am:
 TESTS += test-chown
 check_PROGRAMS += test-chown
+test_chown_LDADD = $(LDADD) $(LIB_NANOSLEEP)
