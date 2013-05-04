@@ -32,6 +32,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2013-05-04  gnulib-tool     CVS checkout of gnulib are no longer supported.
+
 2013-02-08  careadlinkat    This module no longer provides the careadlinkatcwd
                             function.
 

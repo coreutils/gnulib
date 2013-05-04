@@ -11,7 +11,7 @@
 
 @menu
 * Gnulib Basics::
-* git and CVS::
+* Git Checkout::
 * Keeping Up-to-date::
 * Contributing to Gnulib::
 * High Quality::
@@ -46,8 +46,8 @@ Gnulib checkout.  For example:
 $ ln -s $HOME/gnu/src/gnulib.git/gnulib-tool $HOME/bin/gnulib-tool
 @end example
 
-@node git and CVS
-@section git and CVS
+@node Git Checkout
+@section Git Checkout
 
 Gnulib is available for anonymous checkout.  In any Bourne-shell the
 following should work:
@@ -76,18 +76,11 @@ When you use @code{git annotate} or @code{git blame} with Gnulib, it's
 recommended that you use the @option{-w} option, in order to ignore
 massive whitespace changes that happened in 2009.
 
-CVS checkouts are also supported:
-
-@example
-$ cvs -d :pserver:anonymous@@pserver.git.sv.gnu.org:/gnulib.git co -d gnulib HEAD
-@end example
-
 @node Keeping Up-to-date
 @section Keeping Up-to-date
 
 The best way to work with Gnulib is to check it out of git.
-To synchronize, you can use @code{git pull},
-or @code{cvs update -dP} if you are still using CVS.
+To synchronize, you can use @code{git pull}.
 
 Subscribing to the @email{bug-gnulib@@gnu.org} mailing list will help
 you to plan when to update your local copy of Gnulib (which you use to

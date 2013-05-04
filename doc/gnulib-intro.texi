@@ -431,9 +431,7 @@ failure reports.  Gnulib is available in two qualities:
 
 @itemize
 @item
-There is the newest version of Gnulib from the Git repository.  The
-source tree can also be fetched from a read-only CVS that mirrors the Git
-repository.
+There is the newest version of Gnulib from the Git repository.
 
 @item
 We also make stable releases every two months, at

@@ -100,7 +100,7 @@ Resources:
 @itemize
 @item Gnulib is hosted at Savannah:
       @url{http://savannah.gnu.org/projects/gnulib}.  Get the sources
-      through Git or CVS from there.
+      through Git from there.
 @item The Gnulib home page:
       @url{http://www.gnu.org/software/gnulib/}.
 @end itemize
@@ -1073,7 +1073,7 @@ your favorite platform, you may perform these steps:
 @item Create gnulib directory
 
 On a machine with recent automake, autoconf, m4 installed and with a
-gnulib git or cvs checkout (typically a Linux machine), use
+gnulib git checkout (typically a Linux machine), use
 
 @example
 gnulib-tool --create-megatestdir --with-tests --dir=...

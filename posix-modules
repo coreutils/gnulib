@@ -52,18 +52,8 @@ q
     date=`date -d "$date" -u +"%Y-%m-%d %H:%M:%S"`
     version=' '`cd "$gnulib_dir" && ./build-aux/git-version-gen /dev/null | sed -e 's/-dirty/-modified/'`
   else
-    if test -d "$gnulib_dir"/CVS \
-       && (cvs --version) >/dev/null 2>/dev/null; then
-      # gnulib checked out from CVS.
-      sed_extract_first_date='/^date: /{
-s/^date: \([0-9][0-9][0-9][0-9]\).\([0-9][0-9]\).\([0-9][0-9]\) \([0-9][0-9]:[0-9][0-9]:[0-9][0-9]\).*/\1-\2-\3 \4/p
-q
-}'
-      date=`cd "$gnulib_dir" && cvs log -N ChangeLog 2>/dev/null | sed -n -e "$sed_extract_first_date"`
-    else
-      # gnulib copy without versioning information.
-      date=`sed -e 's/ .*//;q' "$gnulib_dir"/ChangeLog`
-    fi
+    # gnulib copy without versioning information.
+    date=`sed -e 's/ .*//;q' "$gnulib_dir"/ChangeLog`
     version=
   fi
   year=`"$gnulib_dir"/build-aux/mdate-sh "$self_abspathname" | sed 's,^.* ,,'`
