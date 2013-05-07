@@ -1,3 +1,9 @@
+2013-05-07  Mike Frysinger  <vapier@gentoo.org>
+
+	acl: include quote.h
+	* lib/copy-acl.c: Include quote.h.
+	* lib/set-acl.c: Likewise.
+
 2013-05-06  Mike Frysinger  <vapier@gentoo.org>
 
 	fchownat, renameat, unlinkat: update statat dependencies
