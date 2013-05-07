@@ -39,9 +39,13 @@ acl_errno_valid (int errnum)
     case ENOENT: return false;
 #endif
     case ENOSYS: return false;
+
 #if defined ENOTSUP && ENOTSUP != EOPNOTSUPP
+# if ENOTSUP != ENOSYS /* Needed for the MS-Windows port of GNU Emacs.  */
     case ENOTSUP: return false;
+# endif
 #endif
+
     case EOPNOTSUPP: return false;
     default: return true;
     }

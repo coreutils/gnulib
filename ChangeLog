@@ -1,3 +1,11 @@
+2013-05-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qacl: port to MS-Windows port of GNU Emacs
+	* lib/acl-errno-valid.c (acl_errno_valid) [ENOTSUP == ENOSYS]:
+	Omit the duplicate ENOTSUP case.  Needed for the MS-Windows
+	port of GNU Emacs.  Problem reported by Eli Zaretskii in
+	<http://bugs.gnu.org/14295#14>.
+
 2013-05-07  Mike Frysinger  <vapier@gentoo.org>
 
 	acl: include quote.h
