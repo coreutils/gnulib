@@ -1,3 +1,12 @@
+2013-05-06  Mike Frysinger  <vapier@gentoo.org>
+
+	fchownat, renameat, unlinkat: update statat dependencies
+	These modules use statat and lstatat, not fstatat; so depend on
+	the statat module, which was split out recently from fstatat.
+	* modules/fchownat, modules/unlinkat: Change fstatat to statat.
+	* modules/renameat: Likewise.  Also delete fstat.
+	URL: http://bugs.gentoo.org/468790
+
 2012-05-04  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	Assume gnulib is checked out from Git, not CVS
