@@ -1,3 +1,10 @@
+2013-05-08  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: AC_INIT may have more than four parameters
+	* build-aux/bootstrap (extract_package_name): Correctly extract
+	non-empty tarname field.  Avoid range in regex.
+	Based on a report by Sami Kerola <kerolasa@iki.fi>.
+
 2013-05-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qacl: port to MS-Windows port of GNU Emacs
