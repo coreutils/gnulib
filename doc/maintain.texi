@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 27, 2013
+@set lastupdate May 7, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1202,11 +1202,8 @@ have an account there, please read
 @url{http://www.gnu.org/software/README.accounts.html} (@pxref{GNU
 Accounts and Resources}).
 
-But if you don't want to learn how to do those things, you can
-alternatively ask @email{alias-file@@gnu.org} to add you to the
-bug-reporting list for your program.  To set up a new list, contact
-@email{new-mailing-list@@gnu.org}.  You can subscribe to a list managed
-by Mailman by sending mail to the corresponding @samp{-request} address.
+But if you don't want to learn how to do those things, you can ask
+@email{new-mailing-list@@gnu.org} to help you.
 
 @cindex spam prevention
 You should moderate postings from non-subscribed addresses on your
