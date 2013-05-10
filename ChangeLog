@@ -1,3 +1,21 @@
+2012-05-10  Stefano Lattarini  <stefano.lattarini@gmail.com>
+
+	deps: require Automake >= 1.9.6 in generated Makefile fragments
+
+	That is the same minimal version required in the DEPENDENCIES file.
+	Moreover, the old code generated a requirement of Automake >= 1.5,
+	and that is an insanely outdated version.
+
+	* gnulib-tool: Bump minimal version requirement in AUTOMAKE_OPTIONS.
+	* tests/havelib/rpathlx/Makefile.am: Likewise.
+	* tests/havelib/rpathly/Makefile.am: Likewise.
+	* tests/havelib/rpathlyx/Makefile.am: Likewise.
+	* tests/havelib/rpathlz/Makefile.am: Likewise.
+	* tests/havelib/rpathlzyx/Makefile.am: Likewise.
+	* tests/havelib/rpathx/Makefile.am: Likewise.
+	* tests/havelib/rpathy/Makefile.am: Likewise.
+	* tests/havelib/rpathz/Makefile.am: Likewise.
+
 2013-05-08  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: AC_INIT may have more than four parameters
