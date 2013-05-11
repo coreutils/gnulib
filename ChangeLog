@@ -1,3 +1,8 @@
+2013-05-10  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: catch more abuse of HAVE_DECL in syntax-check
+	* top/maint.mk (sc_prohibit_defined_have_decl_tests): Relax regex.
+
 2012-05-10  Stefano Lattarini  <stefano.lattarini@gmail.com>
 
 	deps: require Automake >= 1.9.6 in generated Makefile fragments
