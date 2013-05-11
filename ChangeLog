@@ -1,3 +1,12 @@
+2013-05-11  Daiki Ueno  <ueno@gnu.org>
+
+	lock: work around pthread recursive mutexes bug in Mac OS X 10.6
+	* m4/lock.m4: Don't define HAVE_PTHREAD_MUTEX_RECURSIVE if the
+	compilation target is Mac OS X 10.6.
+	Problem reported by parafin and Andoni Morales in
+	<http://savannah.gnu.org/bugs/?37844> and
+	<http://lists.gnu.org/archive/html/bug-gettext/2013-05/msg00007.html>.
+
 2013-05-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mkdir-p: remove assumptions about umask and mode
