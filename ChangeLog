@@ -1,3 +1,17 @@
+2013-05-11  Jim Meyering  <meyering@fb.com>
+
+	quotearg: do not read beyond end of buffer
+	* lib/quotearg.c (quotearg_buffer_restyled): Do not read beyond the
+	end of an ARG for which no length was specified.  With an N-byte
+	quote string, (e.g., N is 3 in the fr_FR.UTF-8 locale), this function
+	would read N-2 bytes beyond ARG's trailing NUL.  This was triggered
+	via coreutils' misc/sort-debug-keys.sh test and detected by running
+	the test against a binary compiled with gcc-4.8.0's -fsanitize=address.
+	* tests/test-quotearg-simple.c (main): Add a test to trigger the bug.
+	* modules/quotearg-simple-tests (Files): Add tests/zerosize-ptr.h.
+	Introduced via the 2000-01-15 commit, c4b7f3f8, "Quote multibyte
+	characters correctly."
+
 2013-05-11  Daiki Ueno  <ueno@gnu.org>
 
 	lock: work around pthread recursive mutexes bug in Mac OS X 10.6
