@@ -52,9 +52,9 @@
    is retained on return if the ancestor directories could not be
    created.
 
-   Create DIR as a new directory with using mkdir with permissions
-   MODE.  It is also OK if MAKE_ANCESTOR is not null and a
-   directory DIR already exists.
+   Create DIR as a new directory, using mkdir with permissions MODE;
+   here, MODE is affected by the umask in the usual way.  It is also
+   OK if MAKE_ANCESTOR is not null and a directory DIR already exists.
 
    Call ANNOUNCE (DIR, OPTIONS) just after successfully making DIR,
    even if some of the following actions fail.
@@ -65,15 +65,14 @@
    Set DIR's mode bits to MODE, except preserve any of the bits that
    correspond to zero bits in MODE_BITS.  In other words, MODE_BITS is
    a mask that specifies which of DIR's mode bits should be set or
-   cleared.  MODE should be a subset of MODE_BITS, which in turn
-   should be a subset of CHMOD_MODE_BITS.  Changing the mode in this
-   way is necessary if DIR already existed or if MODE and MODE_BITS
-   specify non-permissions bits like S_ISUID.
+   cleared.  Changing the mode in this way is necessary if DIR already
+   existed, if MODE and MODE_BITS specify non-permissions bits like
+   S_ISUID, or if MODE and MODE_BITS specify permissions bits that are
+   masked out by the umask.  MODE_BITS should be a subset of
+   CHMOD_MODE_BITS.
 
    However, if PRESERVE_EXISTING is true and DIR already exists,
    do not attempt to set DIR's ownership and file mode bits.
-
-   This implementation assumes the current umask is zero.
 
    Return true if DIR exists as a directory with the proper ownership
    and file mode bits when done, or if a child process has been
@@ -130,8 +129,13 @@ make_dir_parents (char *dir,
 
           if (mkdir (dir + prefix_len, mkdir_mode) == 0)
             {
+              /* True if the caller does not care about the umask's
+                 effect on the permissions.  */
+              bool umask_must_be_ok = (mode & mode_bits & S_IRWXUGO) == 0;
+
               announce (dir, options);
-              preserve_existing = keep_owner & keep_special_mode_bits;
+              preserve_existing = (keep_owner & keep_special_mode_bits
+                                   & umask_must_be_ok);
               savewd_chdir_options |=
                 (SAVEWD_CHDIR_NOFOLLOW
                  | (mode & S_IRUSR ? SAVEWD_CHDIR_READABLE : 0));
@@ -162,36 +166,17 @@ make_dir_parents (char *dir,
               else
                 {
                   bool chdir_ok = (chdir_result == 0);
-                  int chdir_errno = errno;
-                  int fd = open_result[0];
-                  bool chdir_failed_unexpectedly =
-                    (mkdir_errno == 0
-                     && ((! chdir_ok && (mode & S_IXUSR))
-                         || (fd < 0 && (mode & S_IRUSR))));
-
-                  if (chdir_failed_unexpectedly)
-                    {
-                      /* No need to save errno here; it's irrelevant.  */
-                      if (0 <= fd)
-                        close (fd);
-                    }
-                  else
-                    {
-                      char const *subdir = (chdir_ok ? "." : dir + prefix_len);
-                      if (dirchownmod (fd, subdir, mkdir_mode, owner, group,
-                                       mode, mode_bits)
-                          == 0)
-                        return true;
-                    }
+                  char const *subdir = (chdir_ok ? "." : dir + prefix_len);
+                  if (dirchownmod (open_result[0], subdir, mkdir_mode,
+                                   owner, group, mode, mode_bits)
+                      == 0)
+                    return true;
 
                   if (mkdir_errno == 0
                       || (mkdir_errno != ENOENT && make_ancestor
                           && errno != ENOTDIR))
                     {
-                      error (0,
-                             (! chdir_failed_unexpectedly ? errno
-                              : ! chdir_ok && (mode & S_IXUSR) ? chdir_errno
-                              : open_result[1]),
+                      error (0, errno,
                              _(keep_owner
                                ? "cannot change permissions of %s"
                                : "cannot change owner and permissions of %s"),

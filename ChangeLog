@@ -1,3 +1,9 @@
+2013-05-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mkdir-p: remove assumptions about umask and mode
+	* lib/mkdir-p.c (make_dir_parents): Do not assume that the current
+	umask is 0, or that MODE is a subset of MODE_BITS.
+
 2013-05-10  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: catch more abuse of HAVE_DECL in syntax-check
