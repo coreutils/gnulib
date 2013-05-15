@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	thread: port --enable-gcc-warnings to clang
+	* lib/glthread/thread.h [__clang__ && USE_POSIX_THREADS_WEAK]:
+	Include <signal.h>, to pacify a warning about pthread_sigmask.
+
 	stdio: use __REDIRECT for fwrite, fwrite_unlocked
 	* lib/stdio.in.h (fwrite):
 	When working around bug 11959, use __REDIRECT rather than '#define
