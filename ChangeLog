@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	malloca: port --enable-gcc-warnings to clang
+	* lib/malloca.c (struct header): New member 'magic', to avoid casts.
+	(mmalloca): Avoid casts from looser to stricter-aligned pointers.
+
 	inttostr: port --enable-gcc-warnings to clang
 	* lib/anytostr.c [__clang__]: Ignore -Wtautological-compare.
 
