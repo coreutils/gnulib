@@ -43,6 +43,7 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
   typedef unsigned long int longword;
 
   const unsigned char *char_ptr;
+  void const *void_ptr;
   const longword *longword_ptr;
   longword repeated_one;
   longword repeated_c1;
@@ -57,14 +58,18 @@ memchr2 (void const *s, int c1_in, int c2_in, size_t n)
     return memchr (s, c1, n);
 
   /* Handle the first few bytes by reading one byte at a time.
-     Do this until CHAR_PTR is aligned on a longword boundary.  */
-  for (char_ptr = (const unsigned char *) s;
-       n > 0 && (size_t) char_ptr % sizeof (longword) != 0;
-       --n, ++char_ptr)
-    if (*char_ptr == c1 || *char_ptr == c2)
-      return (void *) char_ptr;
+     Do this until VOID_PTR is aligned on a longword boundary.  */
+  for (void_ptr = s;
+       n > 0 && (uintptr_t) void_ptr % sizeof (longword) != 0;
+       --n)
+    {
+      char_ptr = void_ptr;
+      if (*char_ptr == c1 || *char_ptr == c2)
+        return (void *) void_ptr;
+      void_ptr = char_ptr + 1;
+    }
 
-  longword_ptr = (const longword *) char_ptr;
+  longword_ptr = void_ptr;
 
   /* All these elucidatory comments refer to 4-byte longwords,
      but the theory applies equally well to any size longwords.  */
