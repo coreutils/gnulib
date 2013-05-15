@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mbsstr: port --enable-gcc-warnings to clang
+	* lib/mbsstr.c (knuth_morris_pratt_multibyte):
+	Avoid casts from looser to stricter-aligned pointers.
+
 	malloca: port --enable-gcc-warnings to clang
 	* lib/malloca.c (struct header): New member 'magic', to avoid casts.
 	(mmalloca): Avoid casts from looser to stricter-aligned pointers.
