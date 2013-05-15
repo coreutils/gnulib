@@ -1,5 +1,8 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	inttostr: port --enable-gcc-warnings to clang
+	* lib/anytostr.c [__clang__]: Ignore -Wtautological-compare.
+
 	warnings: port to clang
 	Problem reported by Daniel P. Berrange via Eric Blake in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2013-05/msg00055.html>.
