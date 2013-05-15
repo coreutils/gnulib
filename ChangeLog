@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getaddrinfo-tests: port --enable-gcc-warnings to clang
+	* tests/test-getaddrinfo.c (simple):
+	Avoid casts from looser to stricter-aligned pointers.
+
 	thread: port --enable-gcc-warnings to clang
 	* lib/glthread/thread.h [__clang__ && USE_POSIX_THREADS_WEAK]:
 	Include <signal.h>, to pacify a warning about pthread_sigmask.
