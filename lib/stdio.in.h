@@ -579,13 +579,16 @@ _GL_CXXALIAS_SYS (fwrite, size_t,
    <http://sources.redhat.com/bugzilla/show_bug.cgi?id=11959>,
    which sometimes causes an unwanted diagnostic for fwrite calls.
    This affects only function declaration attributes under certain
-   versions of gcc, and is not needed for C++.  */
+   versions of gcc and clang, and is not needed for C++.  */
 #  if (0 < __USE_FORTIFY_LEVEL                                          \
        && __GLIBC__ == 2 && 4 <= __GLIBC_MINOR__ && __GLIBC_MINOR__ <= 15 \
-       && 3 < __GNUC__ + (4 <= __GNUC_MINOR__)                          \
        && !defined __cplusplus)
-#   undef fwrite
-#   define fwrite(a, b, c, d) ({size_t __r = fwrite (a, b, c, d); __r; })
+#   ifdef __clang__
+#    pragma clang diagnostic ignored "-Wunused-value"
+#   elif 3 < __GNUC__ + (4 <= __GNUC_MINOR__)
+#    undef fwrite
+#    define fwrite(a, b, c, d) ({size_t __r = fwrite (a, b, c, d); __r; })
+#   endif
 #  endif
 # endif
 _GL_CXXALIASWARN (fwrite);

@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdio: port --enable-gcc-warnings to clang
+	* lib/stdio.in.h (fwrite) [__clang__]: Ignore -Wunused-value entirely,
+	since the GCC workaround for fwrite does not pacify clang.
+
 	sig2str: port --enable-gcc-warnings to clang
 	* lib/sig2str.c (sig2str): Avoid warning about unused printf argument.
 
