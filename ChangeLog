@@ -1,5 +1,9 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	obstack: port --enable-gcc-warnings to clang
+	* lib/obstack.h (obstack_ptr_grow_fast, obstack_int_grow_fast):
+	Avoid casts from looser to stricter-aligned pointers.
+
 	memchr2: port --enable-gcc-warnings to clang
 	* lib/memchr2.c (memchr2):
 	Avoid casts from looser to stricter-aligned pointers.
