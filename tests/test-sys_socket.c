@@ -47,7 +47,7 @@ main (void)
   sa_family_t i;
 
   /* Check some errno values.  */
-  switch (0)
+  switch (ENOTSOCK)
     {
     case ENOTSOCK:
     case EADDRINUSE:

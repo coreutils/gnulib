@@ -1,5 +1,11 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	spawn-tests, sys_socket-tests, sys_wait-tests: port to clang
+	* tests/test-spawn.c (main):
+	* tests/test-sys_socket.c (main):
+	* tests/test-sys_wait.c (main):
+	Don't have a switch value that isn't covered by a case.
+
 	getaddrinfo-tests: port --enable-gcc-warnings to clang
 	* tests/test-getaddrinfo.c (simple):
 	Avoid casts from looser to stricter-aligned pointers.
