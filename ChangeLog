@@ -1,5 +1,15 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdio: use __REDIRECT for fwrite, fwrite_unlocked
+	* lib/stdio.in.h (fwrite):
+	When working around bug 11959, use __REDIRECT rather than '#define
+	fwrite(...) ... fwrite (...) ...'.  This is a more-targeted way to
+	fix the -Wunused-value issue with clang, and it works with GCC too.
+	Problem with targeting reported by Eric Blake in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-05/msg00067.html>.
+	(fwrite_unlocked): Treat like fwrite.  I ran into this issue while
+	debugging the fwrite issue.
+
 	stdio: port --enable-gcc-warnings to clang
 	* lib/stdio.in.h (fwrite) [__clang__]: Ignore -Wunused-value entirely,
 	since the GCC workaround for fwrite does not pacify clang.
