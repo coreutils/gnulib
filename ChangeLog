@@ -1,5 +1,13 @@
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	manywarnings: update for GCC 4.8.0
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC):
+	Add -Waggressive-loop-optimizations, -Wreturn-local-addr, which
+	are new to GCC 4.8.  Remove -Wformat=2, -Wmissing-format-attribute,
+	-Wmissing-noreturn, as they are duplicates of other warnings.
+	Remove -Wunreachable-code, as it is removed in GCC 4.8 and
+	was documented to be flaky in earlier versions of GCC.
+
 	spawn-tests, sys_socket-tests, sys_wait-tests: port to clang
 	* tests/test-spawn.c (main):
 	* tests/test-sys_socket.c (main):
