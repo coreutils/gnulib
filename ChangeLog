@@ -1,3 +1,8 @@
+2013-05-17  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
+
+	argp: typo fix
+	* lib/argp-help.c: Typo in comment.
+
 2013-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	manywarnings: update for GCC 4.8.0

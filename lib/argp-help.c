@@ -649,7 +649,7 @@ hol_find_entry (struct hol *hol, const char *name)
   return 0;
 }
 
-/* If an entry with the long option NAME occurs in HOL, set it's special
+/* If an entry with the long option NAME occurs in HOL, set its special
    sort position to GROUP.  */
 static void
 hol_set_group (struct hol *hol, const char *name, int group)
