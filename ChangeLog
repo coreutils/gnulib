@@ -1,5 +1,8 @@
 2013-05-17  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
 
+	argmatch: port to C++
+	* lib/argmatch.h [__cplusplus]: Add extern "C".
+
 	argp: typo fix
 	* lib/argp-help.c: Typo in comment.
 
