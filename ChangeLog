@@ -1,3 +1,14 @@
+2013-05-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	malloca: port to compilers that reject size-zero arrays
+	This fixes a bug introduced in my previous patch.
+	* lib/malloca.c (struct preliminary_header): Use an int
+	rather than a character array of size int; that's simpler.
+	(struct header): Remove, replacing with ...
+	(union header): New type.  This avoids the need for declaring a
+	character array of size zero, which is not allowed on some platforms.
+	All uses changed.
+
 2013-05-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	parse-datetime, tests: don't use "string" + int
