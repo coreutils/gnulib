@@ -228,9 +228,7 @@ regexec (preg, string, nmatch, pmatch, eflags)
 {
   reg_errcode_t err;
   Idx start, length;
-#ifdef _LIBC
   re_dfa_t *dfa = preg->buffer;
-#endif
 
   if (eflags & ~(REG_NOTBOL | REG_NOTEOL | REG_STARTEND))
     return REG_BADPAT;
@@ -421,9 +419,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
   Idx nregs;
   regoff_t rval;
   int eflags = 0;
-#ifdef _LIBC
   re_dfa_t *dfa = bufp->buffer;
-#endif
   Idx last_start = start + range;
 
   /* Check for out-of-range.  */

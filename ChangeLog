@@ -1,5 +1,24 @@
 2013-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: fix dfa race in multithreaded uses
+	Problem reported by Ludovic Courtès in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-05/msg00058.html>.
+	* lib/regex_internal.h (lock_define, lock_init, lock_fini):
+	New macros.  All uses of __libc_lock_define, __libc_lock_init
+	changed to use the first two of these.
+	(__libc_lock_lock, __libc_lock_unlock): New macros, for
+	non-glibc platforms.
+	(struct re_dfa_t): Define the lock unconditionally.
+	* lib/regexec.c (regexec, re_search_stub): Remove some now-incorrect
+	'#ifdef _LIBC"s.
+	* modules/regex (Depends-on): Add pthread, if we use the
+	included regex.
+
+	* lib/regcomp.c: Do actions that are not needed for glibc,
+	but may be needed elsewhere.
+	(regfree, re_compile_internal): Destroy the lock.
+	(re_compile_internal): Check for lock-initialization failure.
+
 	malloca: port to compilers that reject size-zero arrays
 	This fixes a bug introduced in my previous patch.
 	* lib/malloca.c (struct preliminary_header): Use an int
