@@ -1,3 +1,21 @@
+2013-05-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	parse-datetime, tests: don't use "string" + int
+	Recent versions of 'clang' complain about C source code that
+	uses expressions of the form '"string literal" + integer',
+	I guess on the theory that it's confusing for readers who are
+	used to C++.  On those grounds I suppose it's OK to make this
+	minor style change.
+	* lib/parse-datetime.y (parse_datetime):
+	* tests/test-fchdir.c (main):
+	* tests/test-snprintf-posix.h (test_function):
+	* tests/test-snprintf.c (main):
+	* tests/test-vasnprintf-posix.c (test_function):
+	* tests/test-vasnprintf.c (test_function):
+	* tests/test-vsnprintf.c (main):
+	* tests/unistdio/test-ulc-asnprintf1.h (test_function):
+	Rewrite '"str" + E' to '&"str"[E]'.
+
 2013-05-17  Alexandre Duret-Lutz  <adl@lrde.epita.fr>
 
 	argmatch: port to C++

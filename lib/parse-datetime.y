@@ -1472,7 +1472,7 @@ parse_datetime (struct timespec *result, char const *p,
                           + sizeof pc.time_zone * CHAR_BIT / 3];
               if (!tz_was_altered)
                 tz0 = get_tz (tz0buf);
-              sprintf (tz1buf, "XXX%s%ld:%02d", "-" + (time_zone < 0),
+              sprintf (tz1buf, "XXX%s%ld:%02d", &"-"[time_zone < 0],
                        abs_time_zone_hour, abs_time_zone_min);
               if (setenv ("TZ", tz1buf, 1) != 0)
                 goto fail;

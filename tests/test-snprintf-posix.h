@@ -96,7 +96,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
               ASSERT (memcmp (buf, "12345", size - 1) == 0);
               ASSERT (buf[size - 1] == '\0');
             }
-          ASSERT (memcmp (buf + size, "DEADBEEF" + size, 8 - size) == 0);
+          ASSERT (memcmp (buf + size, &"DEADBEEF"[size], 8 - size) == 0);
         }
       else
         {

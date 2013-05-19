@@ -70,7 +70,7 @@ main (void)
   /* Repeat test twice, once in '.' and once in '..'.  */
   for (i = 0; i < 2; i++)
     {
-      ASSERT (chdir (".." + 1 - i) == 0);
+      ASSERT (chdir (&".."[1 - i]) == 0);
       ASSERT (fchdir (fd) == 0);
       {
         size_t len = strlen (cwd) + 1;
