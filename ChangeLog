@@ -1,3 +1,10 @@
+2013-05-22  Bernhard Voelker <mail@bernhard-voelker.de>
+
+	test-lchown, test-chown: also skip test if chown fails with EPERM
+	* tests/test-lchown.h (test_lchown): Add EPERM to the condition to
+	skip this test, to handle FAT file systems.
+	* tests/test-chown.h (test_chown): Likewise.
+
 2013-05-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: fix dfa race in multithreaded uses
