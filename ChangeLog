@@ -1,3 +1,15 @@
+2013-05-22  Eric Blake  <eblake@redhat.com>
+
+	getgroups: document portability issues
+	* doc/glibc-functions/initgroups.texi (initgroups): Mention
+	multithread safety.
+	* doc/posix-functions/getpwuid.texi (getpwuid): Likewise.
+	* doc/posix-functions/getpwuid_r.texi (getpwuid_r): Likewise.
+	* doc/glibc-functions/getgrouplist.texi (getgrouplist): Mention
+	getugroups.
+	* doc/posix-functions/getgroups.texi (getgroups): Mention
+	multithread safety and mgetgroups.
+
 2013-05-22  Bernhard Voelker <mail@bernhard-voelker.de>
 
 	test-lchown, test-chown: also skip test if chown fails with EPERM

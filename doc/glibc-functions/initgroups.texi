@@ -11,6 +11,11 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+This function is unsafe to call between @code{fork} and @code{exec} if
+the parent process is multi-threaded.  Instead, use @code{getgroups} or
+@code{getgrouplist} (or use the gnulib module @code{mgetgroups})
+before forking, and @code{setgroups} in the child.
+@item
 This function is missing on some platforms:
 mingw, MSVC 9, Interix 3.5, BeOS.
 @end itemize
