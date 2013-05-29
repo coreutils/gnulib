@@ -1,3 +1,8 @@
+2013-05-30  Eric Blake  <eblake@redhat.com>
+
+	vasnprintf: silence mingw compiler warning
+	* lib/vasnprintf.c (VASNPRINTF): Avoid unused variable warning.
+
 2013-05-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	c-ctype, regex, verify: port to gcc -std=c90 -pedantic
