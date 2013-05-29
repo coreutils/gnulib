@@ -33,24 +33,33 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#if defined _LIBC
+#ifdef _LIBC
 # include <bits/libc-lock.h>
-#endif
-/* Use __libc_lock_define (, NAME) if the library defines the macro,
-   and if the compiler is known to support empty macro arguments.  */
-#if (defined __libc_lock_define                                         \
-     && ((defined __GNUC__ && !defined __STRICT_ANSI__)                 \
-         || (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__)))
 # define lock_define(name) __libc_lock_define (, name)
 # define lock_init(lock) (__libc_lock_init (lock), 0)
 # define lock_fini(lock) 0
-#else
+# define lock_lock(lock) __libc_lock_lock (lock)
+# define lock_unlock(lock) __libc_lock_unlock (lock)
+#elif defined GNULIB_LOCK
+# include "glthread/lock.h"
+# define lock_define(name) gl_lock_define (, name)
+# define lock_init(lock) glthread_lock_init (&(lock))
+# define lock_fini(lock) glthread_lock_destroy (&(lock))
+# define lock_lock(lock) glthread_lock_lock (&(lock))
+# define lock_unlock(lock) glthread_lock_unlock (&(lock))
+#elif defined GNULIB_PTHREAD
 # include <pthread.h>
 # define lock_define(name) pthread_mutex_t name;
 # define lock_init(lock) pthread_mutex_init (&(lock), 0)
 # define lock_fini(lock) pthread_mutex_destroy (&(lock))
-# define __libc_lock_lock(lock) pthread_mutex_lock (&(lock))
-# define __libc_lock_unlock(lock) pthread_mutex_unlock (&(lock))
+# define lock_lock(lock) pthread_mutex_lock (&(lock))
+# define lock_unlock(lock) pthread_mutex_unlock (&(lock))
+#else
+# define lock_define(name)
+# define lock_init(lock) 0
+# define lock_fini(lock) 0
+# define lock_lock(lock) ((void) 0)
+# define lock_unlock(lock) ((void) 0)
 #endif
 
 /* In case that the system doesn't have isblank().  */

@@ -13,6 +13,7 @@ time
 
 configure.ac:
 gl_PTHREAD_CHECK
+gl_MODULE_INDICATOR([pthread])
 
 Makefile.am:
 BUILT_SOURCES += $(PTHREAD_H)

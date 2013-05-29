@@ -11,6 +11,7 @@ threadlib
 
 configure.ac:
 gl_LOCK
+gl_MODULE_INDICATOR([lock])
 
 Makefile.am:
 lib_SOURCES += glthread/lock.h glthread/lock.c

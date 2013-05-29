@@ -1,3 +1,19 @@
+2013-05-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: adapt to locking regime instead of depending on pthread
+	Instead of depending on pthread, adapt to whatever thread
+	modules are in use.  Problem reported by Ludovic Courtès in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-05/msg00082.html>
+	and by Mats Erik Andersson in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-05/msg00100.html>.
+	* lib/regex_internal.h (lock_define, lock_init, lock_fini):
+	Support either the 'lock' module, or the 'pthread' module, or
+	no module.
+	(lock_lock, lock_unlock): New macros.
+	* lib/regexec.c (regexec, re_search_stub): Use the new macros.
+	* modules/lock, modules/pthread (configure.ac): Add module indicator.
+	* modules/regex (Depends-on): Remove pthread.
+
 2013-05-22  Eric Blake  <eblake@redhat.com>
 
 	getgroups: document portability issues
