@@ -1,5 +1,8 @@
 2013-05-30  Eric Blake  <eblake@redhat.com>
 
+	docs: mention cygwin shortcoming in <sys/un.h>
+	* doc/posix-headers/sys_un.texi (sys/un.h): Mention problem.
+
 	vasnprintf: silence mingw compiler warning
 	* lib/vasnprintf.c (VASNPRINTF): Avoid unused variable warning.
 

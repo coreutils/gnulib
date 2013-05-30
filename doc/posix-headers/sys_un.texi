@@ -14,4 +14,8 @@ Portability problems not fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 mingw, MSVC 9, BeOS.
+@item
+This header requires <code>sys/socket.h</code> to be included first on
+some platforms:
+Cygwin 1.7.18.
 @end itemize
