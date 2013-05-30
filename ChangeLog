@@ -1,5 +1,16 @@
 2013-05-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	c-ctype, regex, verify: port to gcc -std=c90 -pedantic
+	Avoid constructions that are rejected by gcc -std=c90 -pedantic.
+	This fixes a porting bug I recently reintroduced in regex, and
+	some other instances that I discovered while testing the fix.
+	* lib/c-ctype.h [__STRICT_ANSI__]: Avoid ({ ... }).
+	* lib/regcomp.c (utf8_sb_map) [__STRICT_ANSI__]: Avoid [0 ... N] = E.
+	* lib/regex_internal.h [!_LIBC && GNULIB_LOCK]: Do not use a macro
+	with an empty argument if this is a pedantic pre-C99 GCC.
+	* lib/verify.h: Do not use _Static_assert if this is a pedantic
+	pre-C11 GCC.
+
 	regex: adapt to locking regime instead of depending on pthread
 	Instead of depending on pthread, adapt to whatever thread
 	modules are in use.  Problem reported by Ludovic Courtès in
