@@ -20,6 +20,10 @@
 # define GLTEST_NAP_H
 
 # include <limits.h>
+# include <stdbool.h>
+
+/* File descriptor used for the witness file.  */
+static int nap_fd = -1;
 
 /* Return A - B, in ns.
    Return 0 if the true result would be negative.
@@ -53,86 +57,72 @@ get_stat (int fd, struct stat *st, int do_write)
 }
 
 /* Given a file whose descriptor is FD, see whether delaying by DELAY
-   nanoseconds causes a change in a file's time stamp.  *ST is the
-   file's status, recently gotten.  Update *ST to reflect the latest
-   status gotten.  If successful, return the needed delay, in
-   nanoseconds as determined by the observed time stamps; this may be
-   greater than DELAY if we crossed a quantization boundary.  If
-   unsuccessful, return 0.  */
-static int
-nap_works (int fd, int delay, struct stat *st)
+   nanoseconds causes a change in a file's ctime and mtime.
+   OLD_ST is the file's status, recently gotten.  */
+static bool
+nap_works (int fd, int delay, struct stat old_st)
 {
-  struct stat old_st = *st;
+  struct stat st;
   struct timespec delay_spec;
-  int cdiff, mdiff;
   delay_spec.tv_sec = delay / 1000000000;
   delay_spec.tv_nsec = delay % 1000000000;
   ASSERT (nanosleep (&delay_spec, 0) == 0);
-  get_stat (fd, st, 1);
+  get_stat (fd, &st, 1);
 
-  /* Return the greater of the ctime and the mtime differences, or
-     zero if it cannot be determined, or INT_MAX if either overflows.  */
-  cdiff = diff_timespec (get_stat_ctime (st), get_stat_ctime (&old_st));
-  if (cdiff != 0)
-    {
-      mdiff = diff_timespec (get_stat_mtime (st), get_stat_mtime (&old_st));
-      if (mdiff != 0)
-        return cdiff < mdiff ? mdiff : cdiff;
-    }
-  return 0;
+  if (   diff_timespec (get_stat_ctime (&st), get_stat_ctime (&old_st))
+      && diff_timespec (get_stat_mtime (&st), get_stat_mtime (&old_st)))
+    return true;
+
+  return false;
 }
 
-static int
-guess_delay (void)
+#define TEMPFILE BASE "nap.tmp"
+
+static void
+clear_temp_file (void)
 {
-  /* Try a 1-ns sleep first, for speed.  If that doesn't work, try 100
-     ns, 1 microsecond, 1 ms, etc.  xfs has a quantization of about 10
-     milliseconds, even though it has a granularity of 1 nanosecond,
-     and NTFS has a default quantization of 15.25 milliseconds, even
-     though it has a granularity of 100 nanoseconds, so 15.25 ms is a
-     good quantization to try.  If that doesn't work, try 1 second.
-     The worst case is 2 seconds, needed for FAT.  */
-  static int const delaytab[] = {1, 1000, 1000000, 15250000, 1000000000 };
-  int fd = creat (BASE "tmp", 0600);
-  int i;
-  int delay = 2000000000;
-  struct stat st;
-  ASSERT (0 <= fd);
-  get_stat (fd, &st, 0);
-  for (i = 0; i < sizeof delaytab / sizeof delaytab[0]; i++)
+  if (0 <= nap_fd)
     {
-      int d = nap_works (fd, delaytab[i], &st);
-      if (d != 0)
-        {
-          delay = d;
-          break;
-        }
+      ASSERT (close (nap_fd) != -1);
+      ASSERT (unlink (TEMPFILE) != -1);
     }
-  ASSERT (close (fd) == 0);
-  ASSERT (unlink (BASE "tmp") == 0);
-  return delay;
 }
 
 /* Sleep long enough to notice a timestamp difference on the file
-   system in the current directory.  Assumes that BASE is defined,
-   and requires that the test module depends on nanosleep.  */
+   system in the current directory.  Use an adaptive approach, trying
+   to find the smallest delay which works on the current file system
+   to make the timestamp difference appear.  Assert a maximum delay of
+   ~2 seconds, more precisely sum(2^n) from 0 to 30 = 2^31 - 1 = 2.1s.
+   Assumes that BASE is defined, and requires that the test module
+   depends on nanosleep.  */
 static void
 nap (void)
 {
-  static struct timespec delay;
-  if (!delay.tv_sec && !delay.tv_nsec)
-    {
-      int d = guess_delay ();
+  struct stat old_st;
+  static int delay = 1;
 
-      /* Multiply by 1.125 (rounding up), to avoid problems if the
-         file system's clock is a bit slower than nanosleep's.
-         Ceiling it at INT_MAX, though.  */
-      int delta = (d >> 3) + ((d & 7) != 0);
-      d = delta < INT_MAX - d ? d + delta : INT_MAX;
-      delay.tv_sec = d / 1000000000;
-      delay.tv_nsec = d % 1000000000;
+  if (-1 == nap_fd)
+    {
+      atexit (clear_temp_file);
+      ASSERT ((nap_fd = creat (TEMPFILE, 0600)) != -1);
+      get_stat (nap_fd, &old_st, 0);
     }
-  ASSERT (nanosleep (&delay, 0) == 0);
+  else
+    {
+      ASSERT (0 <= nap_fd);
+      get_stat (nap_fd, &old_st, 1);
+    }
+
+  if (1 < delay)
+    delay = delay / 2;  /* Try half of the previous delay.  */
+  ASSERT (0 < delay);
+
+  for ( ; delay <= 2147483647; delay = delay * 2)
+    if (nap_works (nap_fd, delay, old_st))
+      return;
+
+  /* Bummer: even the highest nap delay didn't work. */
+  ASSERT (0);
 }
 
 #endif /* GLTEST_NAP_H */

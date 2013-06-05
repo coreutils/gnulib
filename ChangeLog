@@ -1,3 +1,38 @@
+2013-06-04  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	tests/nap.h: use an adaptive delay to avoid ctime update issues
+	The recent change in nap.h (5191133e) decreased the probability of lost
+	races to about a third, however such problems could still be observed
+	in virtual machines and openSUSE's OBS.
+	Before, nap() detected the needed time once empirically and then used
+	that delay (together with a small correction multiplier) in further
+	calls.  This problem has been reported and discussed several times,
+	including guesses about possible kernel issues:
+	https://lists.gnu.org/archive/html/bug-gnulib/2013-04/msg00071.html
+	http://lists.gnu.org/archive/html/coreutils/2012-03/msg00088.html
+	https://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00226.html
+	http://bugs.gnu.org/12820
+	https://lists.gnu.org/archive/html/bug-gnulib/2010-11/msg00113.html
+	https://lists.gnu.org/archive/html/bug-gnulib/2009-11/msg00007.html
+	Now, nap() avoids the race alltogether by verifying on a reference
+	file whether a timestamp difference has happened.
+	* tests/nap.h (nap_fd): Define file descriptor variable for the
+	witness file.
+	(nap_works): Change return value to bool.  Change passing
+	the old file's status by value instead of by reference as this function
+	does no longer update that timestamp; rename the function argument from
+	st to old_st.  Remove the local variables cdiff and mdiff because that
+	function now returns true/false instead of the precise delay.
+	(guess_delay): Remove function.
+	(clear_tmp_file): Add new function to close and unlink the witness file.
+	(nap): Instead of re-using the delay which has been calculated during
+	the first call, avoid the race by actually verifying that a timestamp
+	difference can be observed on the current file system.  Use an adaptive
+	approach for the delay to minimize execution time.  Assert that the
+	maximum delay is <= ~2 seconds, more precisely sum(2^n) from 0 to 30
+	= 2^31 - 1 = 2.1s.
+	Use atexit to call clear_tmp_file when the process terminates.
+
 2013-06-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sig2str: port to C++
