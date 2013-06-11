@@ -1,3 +1,15 @@
+2013-06-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: port large-fd POSIX spawn tests to OS X
+	Problem reported by Daiki Ueno in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-06/msg00031.html>.
+	* tests/test-posix_spawn_file_actions_addclose.c:
+	* tests/test-posix_spawn_file_actions_adddup2.c:
+	* tests/test-posix_spawn_file_actions_addopen.c:
+	Include <limits.h>, for OPEN_MAX, if available.
+	(big_fd): New static function.
+	(main): Use it.
+
 2013-06-04  Bernhard Voelker  <mail@bernhard-voelker.de>
 
 	tests/nap.h: use an adaptive delay to avoid ctime update issues
