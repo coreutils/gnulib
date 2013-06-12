@@ -1,5 +1,10 @@
 2013-06-11  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getcwd-lgpl: port to Tru64
+	* lib/getcwd-lgpl.c: Include <stdlib.h>, for malloc etc.
+	Problem reported by Steven M. Schweda in
+	<http://lists.gnu.org/archive/html/bug-gzip/2013-06/msg00010.html>.
+
 	tests: port large-fd POSIX spawn tests to OS X
 	Problem reported by Daiki Ueno in
 	<http://lists.gnu.org/archive/html/bug-gnulib/2013-06/msg00031.html>.
