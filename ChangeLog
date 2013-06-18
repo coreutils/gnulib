@@ -1,3 +1,22 @@
+2013-06-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fflush, fseeko: port to musl cross-compiles
+	* lib/fseeko.c (fseeko): Assume that fflushing stdin works if
+	on some implementation that (1) is not known to be buggy,
+	(2) claims conformance to POSIX.1-2008 or later, and (3) is being
+	cross-compiled to so we can't easily check for lack of
+	conformance.  This is for cross-compiling to musl.
+	Reported by Rich Felker in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-06/msg00043.html>.
+	* m4/fclose.m4 (gl_FUNC_FCLOSE):
+	* m4/fflush.m4 (gl_FUNC_FFLUSH):
+	* m4/fseeko.m4 (gl_FUNC_FSEEKO):
+	Adjust to above change.
+	* m4/fflush.m4 (gl_FUNC_FFLUSH_STDIN): Set gl_cv_func_fflush_stdin
+	to 'cross', not to 'no', when cross-compiling.  AC_DEFINE
+	FUNC_FFLUSH_STDIN to 1, 0, -1 if fflushing stdin is known to work,
+	known not to work, or unknown.
+
 2013-06-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	msvc-inval: port to mingw-w64

@@ -1,4 +1,4 @@
-# fflush.m4 serial 14
+# fflush.m4 serial 15
 
 # Copyright (C) 2007-2013 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   gl_FUNC_FFLUSH_STDIN
-  if test $gl_cv_func_fflush_stdin = no; then
+  if test $gl_cv_func_fflush_stdin != yes; then
     REPLACE_FFLUSH=1
   fi
 ])
@@ -72,10 +72,17 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
            return 7;
          return 0;
        ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
-     [dnl Pessimistically assume fflush is broken.
-      gl_cv_func_fflush_stdin=no])
+     [gl_cv_func_fflush_stdin=cross])
      rm conftest.txt
     ])
+  case $gl_cv_func_fflush_stdin in
+    yes) gl_func_fflush_stdin=1 ;;
+    no)  gl_func_fflush_stdin=0 ;;
+    *)   gl_func_fflush_stdin='(-1)' ;;
+  esac
+  AC_DEFINE_UNQUOTED([FUNC_FFLUSH_STDIN], [$gl_func_fflush_stdin],
+    [Define to 1 if fflush is known to work on stdin as per POSIX.1-2008,
+     0 if fflush is known to not work, -1 if unknown.])
 ])
 
 # Prerequisites of lib/fflush.c.
