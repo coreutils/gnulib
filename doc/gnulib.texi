@@ -6679,6 +6679,7 @@ This list of functions is sorted according to the header that declares them.
 * Safe Allocation Macros::
 * Compile-time Assertions::
 * Integer Properties::
+* extern inline::
 * String Functions in C Locale::
 * Quoting::
 * error and progname::
@@ -6711,6 +6712,8 @@ This list of functions is sorted according to the header that declares them.
 @include verify.texi
 
 @include intprops.texi
+
+@include extern-inline.texi
 
 @node String Functions in C Locale
 @section Character and String Functions in C Locale

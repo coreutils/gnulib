@@ -1,5 +1,11 @@
 2013-06-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: document extern-inline
+	* doc/extern-inline.texi: New file.
+	* doc/gnulib.texi (alloca-opt): Include it.
+	* m4/extern-inline.m4: Move some comments to documentation,
+	and others closer to what they describe.
+
 	doc: chatter less
 	* doc/Makefile (NEWEST_GNULIB_TEXI_FILE): New macro.
 	(updated-stamp): Use it.  This causes 'make' to output just
