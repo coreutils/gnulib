@@ -1,5 +1,10 @@
 2013-06-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: chatter less
+	* doc/Makefile (NEWEST_GNULIB_TEXI_FILE): New macro.
+	(updated-stamp): Use it.  This causes 'make' to output just
+	one file name rather than zillions.
+
 	fflush, fseeko: port to musl cross-compiles
 	* lib/fseeko.c (fseeko): Assume that fflushing stdin works if
 	on some implementation that (1) is not known to be buggy,

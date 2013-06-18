@@ -55,10 +55,11 @@ INSTALL.UTF-8: INSTALL
 	sed -e "s/\`\([^']*\)'/‘\1’/g" $< > $@
 
 GNULIB_TEXI_FILES = $(filter-out maintain.texi make-stds.texi standards.texi,$(wildcard *.texi)) $(wildcard posix-headers/*.texi) $(wildcard posix-functions/*.texi) $(wildcard glibc-headers/*.texi) $(wildcard glibc-functions/*.texi)
+NEWEST_GNULIB_TEXI_FILE = $(shell ls -t $(GNULIB_TEXI_FILES) | sed 1q)
 
 # Date of last update. Requires GNU date.
 updated-stamp: $(GNULIB_TEXI_FILES)
-	date -u -r `ls -t $^ | sed 1q` +"@set UPDATED %F %T" > $@
+	date -u -r $(NEWEST_GNULIB_TEXI_FILE) +"@set UPDATED %F %T" > $@
 
 # Dependencies. Search for @include to find them all.
 gnulib.info gnulib.html gnulib.dvi gnulib.pdf: $(GNULIB_TEXI_FILES) updated-stamp
