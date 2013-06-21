@@ -1,3 +1,9 @@
+2013-07-18  Werner Lemberg <wl@gnu.org>  (tiny change)
+
+	bootstrap: use correct source when copying build-aux files
+	* build-aux/bootstrap (gnulib_extra_files): This variable is
+	relative to upstream gnulib layout, not downstream.
+
 2013-07-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tmpdir: fix bug in VMS port
