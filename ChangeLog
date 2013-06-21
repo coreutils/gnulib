@@ -1,3 +1,9 @@
+2013-06-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: port to gcc -std=c89
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE):
+	Do not use __gnu_inline__ if pedantic and pre-C99.
+
 2013-06-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: document extern-inline
