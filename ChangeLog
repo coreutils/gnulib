@@ -1,3 +1,11 @@
+2013-06-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ignore-value: port to gcc -pedantic
+	* lib/ignore-value.h (ignore_value):
+	Port to gcc -pedantic, by using __extension__.
+	Reindent as per usual gnulib style nowadays.
+	Simplify GCC version check.
+
 2013-06-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: port to gcc -std=c89
