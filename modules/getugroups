@@ -19,7 +19,7 @@ Include:
 "getugroups.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering

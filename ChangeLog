@@ -1,5 +1,10 @@
 2013-07-03  Eric Blake  <eblake@redhat.com>
 
+	mgetgroups: relax license to LGPLv2+
+	* modules/getugroups (License): Change from GPLv3+.
+	* modules/mgetgroups (License): Likewise.
+	* modules/getgroups (License): Change from LGPLv3+.
+
 	xalloc-oversized: relax license to LGPLv2+
 	* modules/xalloc-oversized (License): Change from GPLv3+.
 

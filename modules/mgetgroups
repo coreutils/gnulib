@@ -22,7 +22,7 @@ Include:
 "mgetgroups.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering, Eric Blake
