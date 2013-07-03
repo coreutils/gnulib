@@ -14,7 +14,7 @@ Include:
 "xalloc-oversized.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all

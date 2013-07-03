@@ -1,5 +1,8 @@
 2013-07-03  Eric Blake  <eblake@redhat.com>
 
+	xalloc-oversized: relax license to LGPLv2+
+	* modules/xalloc-oversized (License): Change from GPLv3+.
+
 	nproc: relax license to LGPLv2+
 	* modules/nproc (License): Change from LGPLv3+.
 
