@@ -21,7 +21,7 @@ Include:
 "nproc.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Glen Lenker and Paul Eggert

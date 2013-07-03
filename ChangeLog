@@ -1,5 +1,8 @@
 2013-07-03  Eric Blake  <eblake@redhat.com>
 
+	nproc: relax license to LGPLv2+
+	* modules/nproc (License): Change from LGPLv3+.
+
 	bootstrap: honor --no-git
 	* build-aux/bootstrap: Don't even try to use git when user is
 	pointing to a static checkout.
