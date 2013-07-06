@@ -1,3 +1,10 @@
+2013-07-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pipe2: decouple from binary-io a bit
+	This is for Emacs, which needs pipe2 but not binary-io.
+	* lib/pipe2.c [!GNULIB_BINARY_IO]: Don't include binary-io.h.
+	* modules/binary-io (Depends-on): Add module indicator.
+
 2013-07-03  Eric Blake  <eblake@redhat.com>
 
 	mgetgroups: relax license to LGPLv2+
