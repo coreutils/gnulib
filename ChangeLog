@@ -1,3 +1,13 @@
+2013-07-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign, verify: port to FreeBSD 9.1, to C11, and to C++11
+	Problem reported by Ulrich Mueller in <http://bugs.gnu.org/14812>.
+	* lib/stdalign.in.h (_Alignas, _Alignof):
+	Port to FreeBSD 9.1, and to C11 and C++11.
+	(_Alignas): Also support ICC.
+	* lib/verify.h (_Static_assert): Undef if <stddef.h> defines it.
+	* m4/stdalign.m4 (gl_STDALIGN_H): Port to ICC and to C++11.
+
 2013-07-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fnmatch: don't goto over declaration
