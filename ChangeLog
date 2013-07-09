@@ -1,5 +1,10 @@
 2013-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: port to --with-included-regex --enable-gcc-warnings non-threaded
+	* lib/regex_internal.h (lock_fini, lock_lock): Rework to avoid
+	gcc warnings in the non-threaded case.  Reported by Charlie Brown in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-07/msg00015.html>.
+
 	accept4, dup3, pipe2: port to Cygwin
 	Problem reported for Emacs by Ken Brown in <http://bugs.gnu.org/14821>.
 	* lib/accept4.c (accept4) [O_BINARY]:
