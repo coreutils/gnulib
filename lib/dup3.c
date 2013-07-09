@@ -92,9 +92,9 @@ dup3 (int oldfd, int newfd, int flags)
 
 #if O_BINARY
   if (flags & O_BINARY)
-    setmode (newfd, O_BINARY);
+    set_binary_mode (newfd, O_BINARY);
   else if (flags & O_TEXT)
-    setmode (newfd, O_TEXT);
+    set_binary_mode (newfd, O_TEXT);
 #endif
 
   return newfd;

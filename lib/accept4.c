@@ -119,9 +119,9 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 
 #if O_BINARY
   if (flags & O_BINARY)
-    setmode (fd, O_BINARY);
+    set_binary_mode (fd, O_BINARY);
   else if (flags & O_TEXT)
-    setmode (fd, O_TEXT);
+    set_binary_mode (fd, O_TEXT);
 #endif
 
   return fd;

@@ -10,7 +10,6 @@ extern-inline
 fcntl-h
 
 configure.ac:
-gl_MODULE_INDICATOR([binary-io])
 
 Makefile.am:
 lib_SOURCES += binary-io.h binary-io.c

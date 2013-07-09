@@ -1,3 +1,15 @@
+2013-07-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	accept4, dup3, pipe2: port to Cygwin
+	Problem reported for Emacs by Ken Brown in <http://bugs.gnu.org/14821>.
+	* lib/accept4.c (accept4) [O_BINARY]:
+	* lib/dup3.c (dup3) [O_BINARY]:
+	* lib/pipe2.c (pipe2) [O_BINARY]:
+	Use set_binary_mode, not setmode.
+	* lib/pipe2.c [!GNULIB_BINARY_IO]: Include binary-io.h.
+	* modules/binary-io (Depends-on): Remove module indicator.
+	These last two bits undo the previous change to pipe2 and binary-io.
+
 2013-07-09  Pádraig Brady  <P@draigBrady.com>
 
 	mountlist: add support for deallocating returned list entries
