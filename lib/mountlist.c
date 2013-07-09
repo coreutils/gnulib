@@ -961,15 +961,22 @@ read_file_system_list (bool need_fs_type)
     while (mount_list)
       {
         me = mount_list->me_next;
-        free (mount_list->me_devname);
-        free (mount_list->me_mountdir);
-        if (mount_list->me_type_malloced)
-          free (mount_list->me_type);
-        free (mount_list);
+        free_mount_entry (mount_list);
         mount_list = me;
       }
 
     errno = saved_errno;
     return NULL;
   }
+}
+
+/* Free a mount entry as returned from read_file_system_list ().  */
+
+void free_mount_entry (struct mount_entry *me)
+{
+  free (me->me_devname);
+  free (me->me_mountdir);
+  if (me->me_type_malloced)
+    free (me->me_type);
+  free (me);
 }

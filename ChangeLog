@@ -1,3 +1,11 @@
+2013-07-09  Pádraig Brady  <P@draigBrady.com>
+
+	mountlist: add support for deallocating returned list entries
+	* lib/mountlist.c (free_mount_entry): A new exported function
+	to deallocate a mount list entry.
+	(read_file_system_list): Refactor to use the new deallocation function.
+	Suggested by Anton Ovchinnikov.
+
 2013-07-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign, verify: port to FreeBSD 9.1, to C11, and to C++11
