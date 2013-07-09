@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2012-06-08 06:53'; # UTC
+my $VERSION = '2013-07-09 06:39'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -29,15 +29,18 @@ my $VERSION = '2012-06-08 06:53'; # UTC
 use strict;
 
 use Getopt::Long;
-use Digest::MD5;
-eval { require Digest::SHA; }
-  or eval 'use Digest::SHA1';
 use POSIX qw(strftime);
 
 (my $ME = $0) =~ s|.*/||;
 
 my %valid_release_types = map {$_ => 1} qw (alpha beta stable);
 my @archive_suffixes = ('tar.gz', 'tar.bz2', 'tar.lzma', 'tar.xz');
+my %digest_classes =
+  (
+   'md5' => (eval { require Digest::MD5; } and 'Digest::MD5'),
+   'sha1' => ((eval { require Digest::SHA; } and 'Digest::SHA')
+              or (eval { require Digest::SHA1; } and 'Digest::SHA1'))
+  );
 my $srcdir = '.';
 
 sub usage ($)
@@ -157,15 +160,13 @@ sub print_checksums (@)
 
   foreach my $meth (qw (md5 sha1))
     {
+      my $class = $digest_classes{$meth} or next;
       foreach my $f (@file)
         {
           open IN, '<', $f
             or die "$ME: $f: cannot open for reading: $!\n";
           binmode IN;
-          my $dig =
-            ($meth eq 'md5'
-             ? Digest::MD5->new->addfile(*IN)->hexdigest
-             : Digest::SHA1->new->addfile(*IN)->hexdigest);
+          my $dig = $class->new->addfile(*IN)->hexdigest;
           close IN;
           print "$dig  $f\n";
         }

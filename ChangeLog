@@ -1,3 +1,12 @@
+2014-07-14  Daiki Ueno  <ueno@gnu.org>
+
+	announce-gen: avoid failure when Digest::SHA is installed
+	When Digest::SHA is available, Digest::SHA1 is not loaded and thus
+	Digest::SHA1->new in print_checksums fails.
+	* build-aux/announce-gen (digest_classes): New associative array
+	for available message digest implementations.
+	(print_locations): Use it.
+
 2014-07-13  Pádraig Brady  <P@draigBrady.com>
 
 	gettext: revert "update macros to version 0.19"
