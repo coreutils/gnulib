@@ -1,3 +1,15 @@
+2013-07-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tmpdir: port to VMS, to // != /, and to long dirs
+	* lib/tmpdir.c (__libc_secure_getenv) [!_LIBC]: Rename from
+	__secure_getenv, so that we're more like the glibc version.
+	All uses changed.
+	(path_search): Don't put slash after directory if __VMS.
+	Problem reported by Steven M. Schweda in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-07/msg00019.html>.
+	Do not remove trailing slash from "//".
+	Do not assume dlen <= INT_MAX.
+
 2013-07-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: port to --with-included-regex --enable-gcc-warnings non-threaded

@@ -53,7 +53,7 @@
 # define struct_stat64 struct stat64
 #else
 # define struct_stat64 struct stat
-# define __secure_getenv secure_getenv
+# define __libc_secure_getenv secure_getenv
 # define __xstat64(version, path, buf) stat (path, buf)
 #endif
 
@@ -89,6 +89,11 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
 {
   const char *d;
   size_t dlen, plen;
+#ifdef __VMS
+  bool add_slash = false;
+#else
+  bool add_slash = true;
+#endif
 
   if (!pfx || !pfx[0])
     {
@@ -104,7 +109,7 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
 
   if (try_tmpdir)
     {
-      d = __secure_getenv ("TMPDIR");
+      d = __libc_secure_getenv ("TMPDIR");
       if (d != NULL && direxists (d))
         dir = d;
       else if (dir != NULL && direxists (dir))
@@ -138,17 +143,22 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
         }
     }
 
+  /* Remove trailing slashes, except remove just one from "//".  */
   dlen = strlen (dir);
-  while (dlen >= 1 && ISSLASH (dir[dlen - 1]))
-    dlen--;                     /* remove trailing slashes */
+  if (dlen == 2 && ISSLASH (dir[0]) && ISSLASH (dir[1]))
+    dlen--;
+  else
+    while (0 < dlen && ISSLASH (dir[dlen - 1]))
+      dlen--;
 
   /* check we have room for "${dir}/${pfx}XXXXXX\0" */
-  if (tmpl_len < dlen + 1 + plen + 6 + 1)
+  if (tmpl_len < dlen + add_slash + plen + 6 + 1)
     {
       __set_errno (EINVAL);
       return -1;
     }
 
-  sprintf (tmpl, "%.*s/%.*sXXXXXX", (int) dlen, dir, (int) plen, pfx);
+  memcpy (tmpl, dir, dlen);
+  sprintf (tmpl + dlen, &"/%.*sXXXXXX"[!add_slash], pfx, (int) plen);
   return 0;
 }
