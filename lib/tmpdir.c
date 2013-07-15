@@ -154,6 +154,6 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
     }
 
   memcpy (tmpl, dir, dlen);
-  sprintf (tmpl + dlen, &"/%.*sXXXXXX"[!add_slash], pfx, (int) plen);
+  sprintf (tmpl + dlen, &"/%.*sXXXXXX"[!add_slash], (int) plen, pfx);
   return 0;
 }
