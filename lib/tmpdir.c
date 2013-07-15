@@ -89,11 +89,7 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
 {
   const char *d;
   size_t dlen, plen;
-#ifdef __VMS
-  bool add_slash = false;
-#else
-  bool add_slash = true;
-#endif
+  bool add_slash;
 
   if (!pfx || !pfx[0])
     {
@@ -143,13 +139,12 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
         }
     }
 
-  /* Remove trailing slashes, except remove just one from "//".  */
   dlen = strlen (dir);
-  if (dlen == 2 && ISSLASH (dir[0]) && ISSLASH (dir[1]))
-    dlen--;
-  else
-    while (0 < dlen && ISSLASH (dir[dlen - 1]))
-      dlen--;
+  add_slash = dlen != 0 && !ISSLASH (dir[dlen - 1]);
+#ifdef __VMS
+  if (dlen != 0 && dir[dlen - 1] == ':')
+    add_slash = false;
+#endif
 
   /* check we have room for "${dir}/${pfx}XXXXXX\0" */
   if (tmpl_len < dlen + add_slash + plen + 6 + 1)
