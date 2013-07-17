@@ -140,10 +140,10 @@ path_search (char *tmpl, size_t tmpl_len, const char *dir, const char *pfx,
     }
 
   dlen = strlen (dir);
-  add_slash = dlen != 0 && !ISSLASH (dir[dlen - 1]);
 #ifdef __VMS
-  if (dlen != 0 && dir[dlen - 1] == ':')
-    add_slash = false;
+  add_slash = 0;
+#else
+  add_slash = dlen != 0 && !ISSLASH (dir[dlen - 1]);
 #endif
 
   /* check we have room for "${dir}/${pfx}XXXXXX\0" */
