@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 27, 2013
+@set lastupdate July 19, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -291,34 +291,11 @@ account when designing your program.
 @cindex programming languages
 
 When you want to use a language that gets compiled and runs at high
-speed, the best language to use is C.  Using another language is like
-using a non-standard feature: it will cause trouble for users.  Even if
-GCC supports the other language, users may find it inconvenient to have
-to install the compiler for that other language in order to build your
-program.  For example, if you write your program in C++, people will
-have to install the GNU C++ compiler in order to compile your program.
-
-C has one other advantage over C++ and other compiled languages: more
-people know C, so more people will find it easy to read and modify the
-program if it is written in C.
-
-So in general it is much better to use C, rather than the
-comparable alternatives.
-
-But there are two exceptions to that conclusion:
-
-@itemize @bullet
-@item
-It is no problem to use another language to write a tool specifically
-intended for use with that language.  That is because the only people
-who want to build the tool will be those who have installed the other
-language anyway.
-
-@item
-If an application is of interest only to a narrow part of the community,
-then the question of which language it is written in has less effect on
-other people, so you may as well please yourself.
-@end itemize
+speed, the best language to use is C.  C++ is ok too, but please don't
+make heavy use of templates.  Other languages commonly used in the
+free software community, such as Java, Python and Ruby, are ok too.
+Please implement the GNU configure and make interface no matter which
+language you use.
 
 Many programs are designed to be extensible: they include an interpreter
 for a language that is higher level than C.  Often much of the program
@@ -333,8 +310,8 @@ language Scheme (an especially clean and simple dialect of Lisp).
 Guile also includes bindings for GTK+/GNOME, making it practical to
 write modern GUI functionality within Guile.  We don't reject programs
 written in other ``scripting languages'' such as Perl and Python, but
-using Guile is very important for the overall consistency of the GNU
-system.
+using Guile is the path that will lead to overall consistency of the
+GNU system.
 
 
 @node Compatibility

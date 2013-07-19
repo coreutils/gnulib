@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 7, 2013
+@set lastupdate July 19, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -1523,9 +1523,11 @@ maintain the web pages at @url{http://www.gnu.org} for your project
 
 @item
 In the @samp{My Account Conf} page on @code{savannah}, upload the GPG
-key you will use to sign your packages.  If you haven't created one
-before, you can do so with the command @code{gpg --gen-key} (you can
-accept and/or confirm the default answers to its questions).
+key (in ASCII-armored format) that you will use to sign your packages.
+If you haven't created one before, you can do so with the command
+@code{gpg --gen-key} (you can accept and/or confirm the default
+answers to its questions).  Then, to get the ASCII-armored version,
+run @samp{gpg --export --armor @var{your_key_id}}.
 
 Optional but recommended: Send your key to a GPG public key server:
 @code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}}, where
@@ -1545,8 +1547,7 @@ Name of package(s) that you are the maintainer for, your
 preferred email address, and your Savannah username.
 
 @item
-An ASCII armored copy of your GPG key, as an attachment.  (@samp{gpg
---export -a @var{your_key_id} >mykey.asc} should give you this.)
+The ASCII armored copy of your GPG key, as an attachment.
 
 @item
 A list of names and preferred email addresses of other individuals you
@@ -2294,7 +2295,7 @@ our position by recommending use of documentation that isn't free.
 
 Please don't host discussions about your package in a service that
 requires nonfree software.  For instance, Google+ ``communities''
-require running a nonfree Javascript program to post a message, so
+require running a nonfree JavaScript program to post a message, so
 they can't be used in the Free World.  To host discussions there would
 be excluding people who live by free software principles.
 
@@ -2554,6 +2555,14 @@ Thanks for your support!
 We don't recommend any specific payment service.  However, GNU
 developers should not use a service that requires them to sign a
 proprietary software license, such as Google's payment service.
+Please also avoid sites that requires users to run nonfree software in
+order to donate.  (This includes JavaScript software, so try it with
+LibreJS or with JavaScript disabled.)
+
+In the text you post on the site, please pay attention to the
+terminological issues we care about (@pxref{Terminology}).
+
+We have no objections to using Bitcoin to receive donations.
 
 The FSF can collect donations for a limited number of projects; if you
 want to propose that for your project, write to
