@@ -1,4 +1,10 @@
-2013-07-08  Daiki Ueno  <ueno@gnu.org>
+2013-07-20  Daiki Ueno  <ueno@gnu.org>
+
+	localecharset: make locale_charset thread-safe on Mac OS X
+	* lib/localcharset.c (locale_charset) [DARWIN7]: Use MB_CUR_MAX_L
+	instead of MB_CUR_MAX.
+
+2013-07-20  Daiki Ueno  <ueno@gnu.org>
 
 	gettext: update to version 0.18.3
 	* m4/intl.m4, m4/po.m4: Update from gettext-0.18.3.  In particular,
