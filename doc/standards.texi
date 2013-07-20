@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 19, 2013
+@set lastupdate July 20, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -292,10 +292,12 @@ account when designing your program.
 
 When you want to use a language that gets compiled and runs at high
 speed, the best language to use is C.  C++ is ok too, but please don't
-make heavy use of templates.  Other languages commonly used in the
-free software community, such as Java, Python and Ruby, are ok too.
-Please implement the GNU configure and make interface no matter which
-language you use.
+make heavy use of templates.  So is Java, if you compile it.
+
+When highest efficiency is not required, other languages commonly used
+in the free software community, such as Python and Ruby, are ok too.
+We encourage use of Lisp and Scheme as well.  Please implement the GNU
+configure and make interface no matter which language you use.
 
 Many programs are designed to be extensible: they include an interpreter
 for a language that is higher level than C.  Often much of the program
