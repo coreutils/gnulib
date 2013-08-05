@@ -1,3 +1,15 @@
+2013-08-05  Jim Meyering  <meyering@fb.com>
+
+	regex: port to non-glibc/lock-using systems
+	Since 29-05-2013 commit, 55ba71f4, compilation on a non-glibc
+	system with GNULIB_LOCK would fail due to absence of the
+	included "glthread/lock.h".  This would affect any package
+	for which the "lock" module is used only by the regex module,
+	and not explicitly used.
+	* m4/regex.m4 (gl_PREREQ_REGEX): Require gl_GLIBC21.
+	* modules/regex (Depends-on) [!GLIBC && $ac_use_included_regex]:
+	Add a dependency on the "lock" module.
+
 2013-07-20  Daiki Ueno  <ueno@gnu.org>
 
 	localecharset: make locale_charset thread-safe on Mac OS X
