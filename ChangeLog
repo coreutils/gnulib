@@ -1,3 +1,20 @@
+2013-08-09  Pádraig Brady <P@draigBrady.com>
+
+	bootstrap: support checksum utils having -c but not --status
+	* build-aux/bootstrap: Only look for sha1sum if updating po files.
+	Add sha1 to the list of supported checksum utils since it's now
+	supported through adjustments below.
+	(update_po_files): Remove the use of --status
+	in a way that will suppress all error messages, but since this is
+	only used to minimize updates, it shouldn't cause an issue.
+	Exit early if there is a problem updating the po file checksums.
+	(find_tool): Remove the check for --version support as this
+	is optional as per commit 86186b17.  Don't even check for the
+	presence of the command as if that is needed, it's supported
+	through configuring prerequisites in bootstrap.conf.
+	Prompt that when a tool isn't found, one can define an environment
+	variable to add to the hardcoded search list.
+
 2013-08-05  Jim Meyering  <meyering@fb.com>
 
 	regex: port to non-glibc/lock-using systems
