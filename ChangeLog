@@ -691,7 +691,7 @@
 	if OSF/1, since otherwise Cygwin breaks, and it doesn't seem to
 	be needed on Solaris either.
 	* lib/sys_time.in.h [_CYGWIN_SYS_TIME_H]:
-	Simply delgate to the system <sys/time.h> in this case.
+	Simply delegate to the system <sys/time.h> in this case.
 
 2013-03-19  Karl Berry  <karl@gnu.org>
 
