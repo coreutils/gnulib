@@ -39,7 +39,7 @@ INSTALL_PRELUDE = echo '@firstparagraphindent insert'
 
 OMIT_TRAILING_EMPTY_LINES = /^$$/H; /^$$/d; x; s/\n//p; s/\n*//; x
 
-# INSTALL file with old ASCII quotation marks (looks ugly on modern machines).
+# INSTALL file with directed ASCII quotation marks.
 INSTALL: install.texi
 	$(INSTALL_PRELUDE) | cat - $< > tmp.texi
 	$(MAKEINFO) --plaintext --no-validate tmp.texi \
