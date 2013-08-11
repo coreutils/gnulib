@@ -1,3 +1,17 @@
+2013-08-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fpending: port to recent Cygwin change to stdio_ext.h
+	Reported by LRN in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-08/msg00028.html>.
+	* lib/fpending.h: Don't worry about HAVE_DECL___FPENDING;
+	just declare __fpending unless it's a macro.
+	A duplicate decl shouldn't hurt.
+	* m4/fpending.m4 (gl_FUNC_FPENDING): Check that an __fpending
+	call compiles and links, instead of separately checking for
+	decl and lib function.
+	* modules/fpending (configure-ac):
+	Adjust to fpending.m4's renaming of shell variable.
+
 2013-08-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_time: port to OpenBSD
