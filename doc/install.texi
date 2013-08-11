@@ -18,7 +18,8 @@ warranty of any kind.
 @node Basic Installation
 @section Basic Installation
 
-Briefly, the shell commands @samp{./configure; make; make install}
+Briefly, the shell command
+@samp{./configure@tie{}&& make@tie{}&& make@tie{}install}
 should configure, build, and install this package.  The following
 more-detailed instructions are generic; see the @file{README} file for
 instructions specific to this package.
