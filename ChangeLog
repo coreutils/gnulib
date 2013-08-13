@@ -1,3 +1,9 @@
+2013-08-12  Mike Miller  <mtmiller@ieee.org>  (tiny change)
+
+	bootstrap: port to OpenBSD sed
+	* build-aux/bootstrap (insert_if_absent): Port to OpenBSD sed which
+	does not interpret `-' as a file argument to mean stdin.
+
 2013-08-15  Eric Blake  <eblake@redhat.com>
 
 	warnings: minor optimization

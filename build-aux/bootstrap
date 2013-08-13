@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2013-08-09.15; # UTC
+scriptversion=2013-08-15.22; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -320,7 +320,7 @@ insert_if_absent() {
     die "Error: Duplicate entries in $file: " $duplicate_entries
   fi
   linesold=$(gitignore_entries $file | wc -l)
-  linesnew=$(echo "$str" | gitignore_entries - $file | sort -u | wc -l)
+  linesnew=$( { echo "$str"; cat $file; } | gitignore_entries | sort -u | wc -l)
   if [ $linesold != $linesnew ] ; then
     { echo "$str" | cat - $file > $file.bak && mv $file.bak $file; } \
       || die "insert_if_absent $file $str: failed"
