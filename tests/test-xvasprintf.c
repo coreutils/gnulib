@@ -93,9 +93,11 @@ test_xasprintf (void)
     }
 
   {
-    /* Silence gcc warning about zero-length format string.  */
+    /* Silence gcc warning about zero-length format string,
+       and about "format not a string literal and no format"
+       (whatever that means) .  */
     const char *empty = "";
-    result = xasprintf (empty);
+    result = xasprintf (empty, empty);
     ASSERT (result != NULL);
     ASSERT (strcmp (result, "") == 0);
     free (result);

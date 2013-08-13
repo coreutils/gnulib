@@ -1,3 +1,10 @@
+2013-08-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xvasprintf-tests: port to GCC with hardening flags
+	* tests/test-xvasprintf.c (test_xasprintf): Pass another arg to
+	xasprintf, to pacify GCC.  Reported by Santiago Vila in:
+	http://lists.gnu.org/archive/html/bug-diffutils/2013-08/msg00002.html
+
 2013-08-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fpending: port to recent Cygwin change to stdio_ext.h
