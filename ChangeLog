@@ -1,3 +1,9 @@
+2013-08-15  Karl Berry  <karl@gnu.org>
+
+	* config/srclist-update: add option "doclicense" to placate
+	pulling *.texi files from Emacs.  Write terse usage
+	documentation at the top.
+
 2013-08-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xvasprintf-tests: port to GCC with hardening flags

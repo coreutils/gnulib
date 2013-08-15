@@ -1,6 +1,20 @@
 #!/bin/sh
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
+# 
+# Empty (or only whitespace) input lines are ignored.
+# Lines beginning with # are ignored.
+# Lines with just one word are ignored.
+# Otherwise, the line has two or more whitespace-separated words:
+#   the first word is the source, the second word is the destination,
+#   other optional words are options.
+# The possible options are "gpl" (to replace the license with the GPL)
+#   and "doclicense" (to replace @include doclicense.texi with fdl.texi).
+#   Unrecognized options are ignored.
+# $VARIABLE expansions are done (with sh eval).
+# 
+# This script is used in gnulib and texinfo; the input files are named
+# srclist.txt.
 #
 # Copyright (C) 2002-2003, 2005, 2007-2013 Free Software Foundation, Inc.
 #
@@ -83,6 +97,9 @@ fixfile() \
   case " $options " in
   *' gpl '*)
     sed_command="$sed_command; $fixlicense";;
+
+  *' doclicense '*)
+    sed_command="$sed_command; s/@include doclicense.texi/@include fdl.texi/";;
   esac
 
   sed "$sed_command" $1 >$2
