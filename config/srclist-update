@@ -1,7 +1,7 @@
 #!/bin/sh
 # Check for files in directory $1 being up to date, according to the
 # list on stdin.  Don't actually make any changes, just show the diffs.
-# 
+#
 # Empty (or only whitespace) input lines are ignored.
 # Lines beginning with # are ignored.
 # Lines with just one word are ignored.
@@ -12,7 +12,7 @@
 #   and "doclicense" (to replace @include doclicense.texi with fdl.texi).
 #   Unrecognized options are ignored.
 # $VARIABLE expansions are done (with sh eval).
-# 
+#
 # This script is used in gnulib and texinfo; the input files are named
 # srclist.txt.
 #
