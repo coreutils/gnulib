@@ -1,4 +1,4 @@
-# warnings.m4 serial 9
+# warnings.m4 serial 10
 dnl Copyright (C) 2008-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ AS_LITERAL_IF([$1],
   [m4_pushdef([gl_Positive], m4_bpatsubst([$1], [^-Wno-], [-W]))],
   [gl_positive="$1"
 case $gl_positive in
-  -Wno-*) gl_positive=`echo ".$gl_positive" | sed 's/^.//; s/^-Wno-/-W/'`;;
+  -Wno-*) gl_positive=-W`expr "X$gl_positive" : 'X-Wno-\(.*\)'` ;;
 esac
 m4_pushdef([gl_Positive], [$gl_positive])])dnl
 AC_CACHE_CHECK([whether _AC_LANG compiler handles $1], m4_defn([gl_Warn]), [

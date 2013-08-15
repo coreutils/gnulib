@@ -1,5 +1,8 @@
 2013-08-15  Eric Blake  <eblake@redhat.com>
 
+	warnings: minor optimization
+	* m4/warnings.m4 (gl_COMPILER_OPTION_IF): Use fewer processes.
+
 	warnings: check -Wfoo rather than -Wno-foo
 	* m4/warnings.m4 (gl_COMPILER_OPTION_IF): If name begins with
 	-Wno-, test if the compiler recognizes the positive form instead.
