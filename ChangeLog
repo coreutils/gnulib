@@ -1,3 +1,12 @@
+2013-08-29  Pádraig Brady  <P@draigBrady.com>
+
+	bootstrap: remove the --version requirement from ancillary tools
+	* build-aux/bootstrap (check_exists): A new refactored function to
+	determine if a command exists.
+	(find_tool): Use the new function which does not require the
+	--version option to be supported.
+	(check_versions): Use the new function.
+
 2013-08-26  Simon Josefsson  <simon@josefsson.org>
 
 	gc: support HMAC-SHA256 and HMAC-SHA512.
