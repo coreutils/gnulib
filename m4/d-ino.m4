@@ -1,4 +1,4 @@
-# serial 13
+# serial 14
 
 dnl From Jim Meyering.
 dnl
@@ -30,7 +30,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
              e = readdir (dp);
              if (! e)
                return 2;
-             if (stat (e->d_name, &st) != 0)
+             if (lstat (e->d_name, &st) != 0)
                return 3;
              if (e->d_ino != st.st_ino)
                return 4;

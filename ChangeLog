@@ -1,3 +1,9 @@
+2013-08-21  Eric Blake  <eblake@redhat.com>
+
+	d-ino: avoid false negative on symlink
+	* m4/d-ino.m4 (gl_CHECK_TYPE_STRUCT_DIRENT_D_INO): Use lstat.
+	Reported by Stephane Chazelas.
+
 2013-08-12  Mike Miller  <mtmiller@ieee.org>  (tiny change)
 
 	bootstrap: port to OpenBSD sed
