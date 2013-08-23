@@ -26,7 +26,6 @@
 #include <errno.h>
 #include <fcntl.h>
 
-#include "dirname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 #include "save-cwd.h"
 
 #include "openat-priv.h"

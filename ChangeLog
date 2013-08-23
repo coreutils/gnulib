@@ -1,3 +1,10 @@
+2013-08-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	selinux-at: omit unnecessary include
+	* lib/selinux-at.c: Don't include dosname.h; not needed, since
+	this source file doesn't use its macros, and subsidiary files that
+	use the macros already include it.
+
 2013-08-21  Eric Blake  <eblake@redhat.com>
 
 	d-ino: avoid false negative on symlink
