@@ -1,3 +1,8 @@
+2013-08-24  Daiki Ueno  <ueno@gnu.org>
+
+	* m4/intl.m4: Update from gettext-0.18.3.1, which fixes a misuse
+	of AC_CHECK_DECLS.
+
 2013-08-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	selinux-at: omit unnecessary include
