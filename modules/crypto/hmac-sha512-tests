@@ -1,0 +1,10 @@
+Files:
+tests/test-hmac-sha512.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-hmac-sha512
+check_PROGRAMS += test-hmac-sha512

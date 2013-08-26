@@ -1,0 +1,24 @@
+Description:
+Compute hashed message authentication codes with SHA512.
+
+Files:
+lib/hmac.h
+lib/hmac-sha512.c
+
+Depends-on:
+memxor
+crypto/sha512
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += hmac-sha512.c
+
+Include:
+"hmac.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+Simon Josefsson

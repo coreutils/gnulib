@@ -159,6 +159,10 @@ extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
                           const void *in, size_t inlen, char *resbuf);
 extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
                            const void *in, size_t inlen, char *resbuf);
+extern Gc_rc gc_hmac_sha256 (const void *key, size_t keylen,
+                             const void *in, size_t inlen, char *resbuf);
+extern Gc_rc gc_hmac_sha512 (const void *key, size_t keylen,
+                             const void *in, size_t inlen, char *resbuf);
 
 /* Derive cryptographic keys from a password P of length PLEN, with
    salt S of length SLEN, placing the result in pre-allocated buffer
