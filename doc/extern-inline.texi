@@ -45,6 +45,9 @@ To avoid this code bloat, @file{aaa.h} can do this:
 @example
 /* aaa.h */
 /* #include any other headers here */
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef AAA_INLINE
 # define AAA_INLINE _GL_INLINE

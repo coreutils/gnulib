@@ -20,6 +20,9 @@
 #ifndef XTIME_H_
 #define XTIME_H_ 1
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef XTIME_INLINE
 # define XTIME_INLINE _GL_INLINE

@@ -20,6 +20,9 @@
 
 #include <signal.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef SIG_HANDLER_INLINE
 # define SIG_HANDLER_INLINE _GL_INLINE

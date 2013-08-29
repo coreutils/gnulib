@@ -31,6 +31,9 @@
 #  include <sys/types.h>
 #  include <errno.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #  ifndef SE_SELINUX_INLINE
 #   define SE_SELINUX_INLINE _GL_INLINE
@@ -108,6 +111,9 @@ matchpathcon_init_prefix (char const *path _GL_UNUSED_PARAMETER,
 #   define GNULIB_defined_security_types 1
 #  endif
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 
 # endif

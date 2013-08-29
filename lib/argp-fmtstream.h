@@ -197,6 +197,9 @@ extern int __argp_fmtstream_ensure (argp_fmtstream_t __fs, size_t __amount);
 #define __argp_fmtstream_point argp_fmtstream_point
 #define __argp_fmtstream_update _argp_fmtstream_update
 #define __argp_fmtstream_ensure _argp_fmtstream_ensure
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef ARGP_FS_EI
 # define ARGP_FS_EI _GL_INLINE

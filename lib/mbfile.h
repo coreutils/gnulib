@@ -62,6 +62,9 @@
 
 #include "mbchar.h"
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBFILE_INLINE
 # define MBFILE_INLINE _GL_INLINE
@@ -244,6 +247,9 @@ typedef mbchar_t mbf_char_t;
 
 #define mb_iseof(mbc) ((mbc).bytes == 0)
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 
 #endif /* _MBFILE_H */

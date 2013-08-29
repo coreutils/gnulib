@@ -23,6 +23,9 @@
 #include <stdbool.h>
 #include <sys/types.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef SAVEWD_INLINE
 # define SAVEWD_INLINE _GL_INLINE

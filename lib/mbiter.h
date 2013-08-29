@@ -97,6 +97,9 @@
 
 #include "mbchar.h"
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef MBITER_INLINE
 # define MBITER_INLINE _GL_INLINE

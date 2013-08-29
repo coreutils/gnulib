@@ -1,3 +1,24 @@
+2013-08-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	headers: check that _GL_INLINE_HEADER_BEGIN is defined
+	Suggested by Bruce Korb in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2013-08/msg00070.html
+	* doc/extern-inline.texi (extern inline):
+	Suggest checking that _GL_INLINE_HEADER_BEGIN is defined.
+	* lib/acl-internal.h, lib/argp-fmtstream.h, lib/argp.h:
+	* lib/binary-io.h, lib/bitrotate.h, lib/count-leading-zeros.h:
+	* lib/count-one-bits.h, lib/eealloc.h, lib/execinfo.in.h:
+	* lib/gethrxtime.h, lib/gl_list.h, lib/gl_oset.h, lib/gl_xlist.h:
+	* lib/gl_xoset.h, lib/gl_xsublist.h, lib/glthread/cond.h:
+	* lib/glthread/thread.h, lib/math.in.h, lib/mbchar.h, lib/mbfile.h:
+	* lib/mbiter.h, lib/mbuiter.h, lib/openat.h, lib/pipe-filter-aux.h:
+	* lib/priv-set.h, lib/pthread.in.h, lib/savewd.h, lib/se-context.in.h:
+	* lib/se-selinux.in.h, lib/sig-handler.h, lib/stat-time.h:
+	* lib/sys_socket.in.h, lib/timespec.h, lib/u64.h, lib/unistd.in.h:
+	* lib/utimens.h, lib/wctype.in.h, lib/xalloc.h, lib/xsize.h:
+	* lib/xtime.h:
+	Check that _GL_INLINE_HEADER_BEGIN is defined.
+
 2013-08-29  Pádraig Brady  <P@draigBrady.com>
 
 	bootstrap: remove the --version requirement from ancillary tools

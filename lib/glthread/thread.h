@@ -74,6 +74,9 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GLTHREAD_THREAD_INLINE
 # define _GLTHREAD_THREAD_INLINE _GL_INLINE

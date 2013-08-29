@@ -23,6 +23,9 @@
 #include <stdint.h>
 #include <sys/types.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef BITROTATE_INLINE
 # define BITROTATE_INLINE _GL_INLINE

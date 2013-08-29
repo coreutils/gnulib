@@ -41,6 +41,9 @@
 #include <sys/types.h>
 #include <time.h>
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GL_PTHREAD_INLINE
 # define _GL_PTHREAD_INLINE _GL_INLINE

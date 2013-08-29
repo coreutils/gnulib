@@ -54,6 +54,9 @@
 #include <time.h>
 
 #include "glthread/lock.h"
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 
 _GL_INLINE_HEADER_BEGIN
 #ifndef _GLTHREAD_COND_INLINE

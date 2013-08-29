@@ -17,6 +17,9 @@
 
    Written by David Bartley.  */
 
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
+#endif
 _GL_INLINE_HEADER_BEGIN
 #ifndef PRIV_SET_INLINE
 # define PRIV_SET_INLINE _GL_INLINE
