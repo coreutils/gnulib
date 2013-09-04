@@ -1,3 +1,11 @@
+2013-09-04  Eric Blake  <eblake@redhat.com>
+
+	glob: avoid -Wattribute warnings on glibc
+	* lib/glob.c (next_brace_sub, prefix_array, collated_compare): Use
+	__THROWNL, not __THROW, on static functions.
+	* lib/glob.in.h (__THROW): Adjust...
+	(__THROWNL): ...accordingly.
+
 2013-08-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	headers: check that _GL_INLINE_HEADER_BEGIN is defined

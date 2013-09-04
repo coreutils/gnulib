@@ -40,8 +40,8 @@
 #  define __END_DECLS
 # endif
 #endif
-#ifndef __THROW
-# define __THROW
+#ifndef __THROWNL
+# define __THROWNL
 #endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
