@@ -104,7 +104,7 @@ regex_quote_spec_pcre (int options, bool anchored)
   char *p;
 
   p = result.special;
-  memcpy (p, bre_special, sizeof (pcre_special) - 1);
+  memcpy (p, pcre_special, sizeof (pcre_special) - 1);
   p += sizeof (pcre_special) - 1;
   if (options & PCRE_EXTENDED)
     {

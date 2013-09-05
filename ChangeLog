@@ -1,3 +1,10 @@
+2013-09-04  Anton Ovchinnikov  <revolver112@gmail.com>  (tiny change)
+
+	regex-quote: fix buffer access out of bounds
+	http://lists.gnu.org/archive/html/bug-gnulib/2013-09/msg00001.html
+	* lib/regex-quote.c (regex_quote_spec_pcre):
+	Fix typo that resulted in an out-of-bounds read.
+
 2013-09-04  Eric Blake  <eblake@redhat.com>
 
 	glob: avoid -Wattribute warnings on glibc
