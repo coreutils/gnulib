@@ -1,3 +1,8 @@
+2013-09-07  Eric Blake  <eblake@redhat.com>
+
+	glob: fix build for platforms without __THROW
+	* lib/glob.in.h (__THROW): Add definition again.
+
 2013-09-04  Anton Ovchinnikov  <revolver112@gmail.com>  (tiny change)
 
 	regex-quote: fix buffer access out of bounds
