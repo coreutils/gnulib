@@ -42,6 +42,7 @@
 #endif
 #ifndef __THROW
 # define __THROW
+#endif
 #ifndef __THROWNL
 # define __THROWNL
 #endif

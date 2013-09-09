@@ -1,3 +1,8 @@
+2013-09-09  Eric Blake  <eblake@redhat.com>
+
+	glob: fix compilation
+	* lib/glob.in.h (__THROW): Fix missing line in previous commit.
+
 2013-09-07  Eric Blake  <eblake@redhat.com>
 
 	glob: fix build for platforms without __THROW
