@@ -1,3 +1,10 @@
+2013-09-23  Eric Blake  <eblake@redhat.com>
+
+	configmake: support new --runstatedir option
+	* m4/configmake.m4 (gl_CONFIGMAKE_PREP): Substitute runstatedir
+	even if autoconf was too old to provide the command line option.
+	* modules/configmake (Makefile.am): Propagate it to .h file.
+
 2013-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ctype, string: depend on extern-inline
