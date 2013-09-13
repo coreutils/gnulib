@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 22, 2013
+@set lastupdate September 7, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -147,11 +147,11 @@ committee members.  Additional information is in
 
 @cindex down, when GNU machines are
 @cindex outage, of GNU machines
-@cindex @url{http://identi.ca/group/fsfstatus}
+@cindex @url{https://pumprock.net/fsfstatus}
 If you find that any GNU computer systems (@code{fencepost.gnu.org},
 @code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
 @dots{}) seem to be down, you can check the current status at
-@url{http://identi.ca/group/fsfstatus}.  Most likely the problem, if
+@url{http://pumprock.net/fsfstatus}.  Most likely the problem, if
 it can be alleviated at the FSF end, is already being worked on.
 
 @cindex sysadmin, FSF

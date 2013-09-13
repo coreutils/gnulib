@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 15, 2013
+@set lastupdate September 13, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -3908,7 +3908,8 @@ corresponding to most of the standard directory variables
 
 @example
 --prefix --exec-prefix --bindir --sbindir --libexecdir --sysconfdir
---sharedstatedir --localstatedir --libdir --includedir --oldincludedir
+--sharedstatedir --localstatedir --runstatedir
+--libdir --includedir --oldincludedir
 --datarootdir --datadir --infodir --localedir --mandir --docdir
 --htmldir --dvidir --pdfdir --psdir
 @end example

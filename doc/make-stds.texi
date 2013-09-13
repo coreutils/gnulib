@@ -8,7 +8,7 @@
 @cindex standards for makefiles
 
 @c Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005, 2006, 2007, 2008, 2010 Free Software Foundation, Inc.
+@c 2004, 2005, 2006, 2007, 2008, 2010, 2013 Free Software Foundation, Inc.
 @c
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.3
@@ -518,6 +518,19 @@ in @file{$(datadir)} or @file{$(sysconfdir)}.  @file{$(localstatedir)}
 should normally be @file{/usr/local/var}, but write it as
 @file{$(prefix)/var}.
 (If you are using Autoconf, write it as @samp{@@localstatedir@@}.)
+
+@item runstatedir
+The directory for installing data files which the programs modify
+while they run, that pertain to one specific machine, and which need
+not persist longer than the execution of the program---which is
+generally long-lived, for example, until the next reboot.  PID files
+for system daemons are a typical use.  In addition, this directory
+should not be cleaned except perhaps at reboot, while the general
+@file{/tmp} (@code{TMPDIR}) may be cleaned arbitrarily.  This should
+normally be @file{/var/run}, but write it as
+@file{$(localstatedir)/run}.  Having it as a separate variable allows
+the use of @file{/run} if desired, for example.  (If you are using
+Autoconf 2.70 or later, write it as @samp{@@runstatedir@@}.)
 @end table
 
 These variables specify the directory for installing certain specific
