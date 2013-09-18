@@ -1,3 +1,9 @@
+2013-09-17  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
+
+	getgroups: statement without effect
+	* lib/getgroups.c (rpl_getgroups) [HAVE_GETGROUPS]:
+	Change equality conditional to expected assignment.
+
 2013-09-09  Eric Blake  <eblake@redhat.com>
 
 	glob: fix compilation
