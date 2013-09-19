@@ -1,5 +1,15 @@
 2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	signal: OS X port of sigaddset etc. + extern inline
+	* lib/signal.in.h (sigaddset, sigdelset, sigemptyset, sigfillset)
+	(sigismember): #undef on problematic Apple platforms.
+	* doc/posix-functions/sigaddset.texi:
+	* doc/posix-functions/sigdelset.texi:
+	* doc/posix-functions/sigemptyset.texi:
+	* doc/posix-functions/sigfillset.texi:
+	* doc/posix-functions/sigismember.texi:
+	Document this portability problem.
+
 	extern-inline: do not always suppress extern inline on OS X
 	* m4/extern-inline.m4 (gl_EXTERN_INLINE): Suppress the use of
 	extern inline on Apple only if the particular compile-time
