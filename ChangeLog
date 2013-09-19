@@ -1,5 +1,16 @@
 2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	timespec: new function make_timespec, and new constants
+	* lib/timespec.h: Incorporate recent changes on the Emacs trunk.
+	(TIMESPEC_RESOLUTION, LOG10_TIMESPEC_RESOLUTION): New constants.
+	(make_timespec): New function.
+	* lib/dtotimespec.c (dtotimespec):
+	* lib/timespec-add.c (timespec_add):
+	* lib/timespec-sub.c (timespec_sub):
+	* lib/utimens.c (validate_timespec):
+	* lib/utimensat.c (rpl_utimensat):
+	Use these new constants and functions.
+
 	stdio: OS X port of putc_unlocked + extern inline
 	* lib/stdio.in.h (putc_unlocked): #undef on problematic Apple platforms.
 	* doc/posix-functions/putc_unlocked.texi:

@@ -93,11 +93,11 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
          values.  */
       else if (times
                && ((times[0].tv_nsec != UTIME_NOW
-                    && (times[0].tv_nsec < 0
-                        || times[0].tv_nsec >= 1000000000))
+                    && ! (0 <= times[0].tv_nsec
+                          && times[0].tv_nsec < TIMESPEC_RESOLUTION))
                    || (times[1].tv_nsec != UTIME_NOW
-                       && (times[1].tv_nsec < 0
-                           || times[1].tv_nsec >= 1000000000))))
+                       && ! (0 <= times[1].tv_nsec
+                             && times[1].tv_nsec < TIMESPEC_RESOLUTION))))
         {
           errno = EINVAL;
           return -1;
