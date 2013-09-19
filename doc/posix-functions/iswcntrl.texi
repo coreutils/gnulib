@@ -14,6 +14,10 @@ Minix 3.1.8, IRIX 5.3, Solaris 2.5.1.
 @item
 This function returns 0 for all possible arguments on some platforms:
 Linux libc5.
+@item
+This function cannot be called from plain inline or extern inline functions
+on some platforms:
+OS X 10.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

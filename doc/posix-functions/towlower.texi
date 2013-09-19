@@ -15,6 +15,10 @@ IRIX 5.3, Solaris 2.5.1.
 This function returns values of which the upper 16 bits are incorrect
 on some platforms:
 mingw.
+@item
+This function cannot be called from plain inline or extern inline functions
+on some platforms:
+OS X 10.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

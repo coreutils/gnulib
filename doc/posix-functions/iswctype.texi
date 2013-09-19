@@ -15,6 +15,10 @@ Minix 3.1.8, IRIX 5.3, Solaris 2.5.1.
 This function is declared in @code{<wchar.h>}, not in @code{<wctype.h>}, on
 some platforms:
 HP-UX 11.00.
+@item
+This function cannot be called from plain inline or extern inline functions
+on some platforms:
+OS X 10.8.
 @end itemize
 
 Portability problems not fixed by Gnulib:

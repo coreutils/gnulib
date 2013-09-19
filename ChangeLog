@@ -1,3 +1,30 @@
+2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: document fixes for ctype and wctype macros
+	* doc/posix-functions/isalnum.texi, doc/posix-functions/isalpha.texi:
+	* doc/posix-functions/isascii.texi, doc/posix-functions/isblank.texi:
+	* doc/posix-functions/iscntrl.texi, doc/posix-functions/isdigit.texi:
+	* doc/posix-functions/isgraph.texi, doc/posix-functions/islower.texi:
+	* doc/posix-functions/isprint.texi, doc/posix-functions/ispunct.texi:
+	* doc/posix-functions/isspace.texi, doc/posix-functions/isupper.texi:
+	* doc/posix-functions/iswalnum.texi, doc/posix-functions/iswalpha.texi:
+	* doc/posix-functions/iswcntrl.texi, doc/posix-functions/iswctype.texi:
+	* doc/posix-functions/iswdigit.texi, doc/posix-functions/iswgraph.texi:
+	* doc/posix-functions/iswlower.texi, doc/posix-functions/iswprint.texi:
+	* doc/posix-functions/iswpunct.texi, doc/posix-functions/iswspace.texi:
+	* doc/posix-functions/iswupper.texi, doc/posix-functions/iswxdigit.texi:
+	* doc/posix-functions/isxdigit.texi, doc/posix-functions/toascii.texi:
+	* doc/posix-functions/memcpy.texi, doc/posix-functions/memmove.texi:
+	* doc/posix-functions/memset.texi, doc/posix-functions/stpcpy.texi:
+	* doc/posix-functions/stpncpy.texi, doc/posix-functions/strcat.texi:
+	* doc/posix-functions/strcpy.texi, doc/posix-functions/strncat.texi:
+	* doc/posix-functions/strncpy.texi:
+	* doc/posix-functions/tolower.texi, doc/posix-functions/toupper.texi:
+	* doc/posix-functions/towlower.texi, doc/posix-functions/towupper.texi:
+	Document that Gnulib fixes portability problems with these
+	functions on OS X 10.8 and earlier when called from plain inline
+	or extern inline functions.
+
 2013-09-17  Kevin Cernekee  <cernekee@gmail.com>
 
 	fflush, freadahead, fseeko: Fix for Android
