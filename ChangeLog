@@ -1,5 +1,11 @@
 2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdio: OS X port of putc_unlocked + extern inline
+	* lib/stdio.in.h (putc_unlocked): #undef on problematic Apple platforms.
+	* doc/posix-functions/putc_unlocked.texi:
+	* doc/posix-functions/putchar_unlocked.texi:
+	Document this portability problem.
+
 	signal: OS X port of sigaddset etc. + extern inline
 	* lib/signal.in.h (sigaddset, sigdelset, sigemptyset, sigfillset)
 	(sigismember): #undef on problematic Apple platforms.
