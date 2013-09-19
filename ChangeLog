@@ -1,3 +1,16 @@
+2013-09-17  Mats Erik Andersson  <gnu@gisladisker.se>
+
+	pmccabe2html: Portability to other awk versions.
+	The functions systime() and strftime() are available
+	in Gawk only.  Properly close two HTML-tags 'style'
+	and 'span'.
+	* build-aux/pmccabe2html (BEGIN): Store timing
+	strings in EPOCH_TIME and CHRONOS_TIME.  Replace
+	systime() in HTML_COMMENT.
+	(html_header): Correctly close tag 'style'.
+	(END): Replace strftime() by CHRONOS_TIME.  Close
+	tag 'span' correctly, not as 'div'.
+
 2013-09-17  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
 
 	getgroups: statement without effect
