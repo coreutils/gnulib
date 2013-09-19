@@ -1,5 +1,13 @@
 2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	extern-inline: do not always suppress extern inline on OS X
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE): Suppress the use of
+	extern inline on Apple only if the particular compile-time
+	configuration is known to have the problem.
+	(_GL_EXTERN_INLINE_APPLE_BUG): New private macro, to implement this.
+	(_GL_EXTERN_LNLINE_IN_USE): New macro, intended for use by
+	other Gnulib modules.
+
 	extern-inline: document fixes for ctype and wctype macros
 	* doc/posix-functions/isalnum.texi, doc/posix-functions/isalpha.texi:
 	* doc/posix-functions/isascii.texi, doc/posix-functions/isblank.texi:
