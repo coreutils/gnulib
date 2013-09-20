@@ -181,6 +181,17 @@ main (void)
         }
     }
 
+  /* Ensure NULL parameters are ignored.  */
+  {
+    uid_t uid = (uid_t) -1;
+    char const *diag = parse_user_spec ("", &uid, NULL, NULL, NULL);
+    if (diag)
+      {
+        printf ("unexpected error: %s\n", diag);
+        fail = 1;
+      }
+  }
+
   return fail;
 }
 

@@ -114,10 +114,13 @@ parse_with_separator (char const *spec, char const *separator,
   char const *g;
   char *gname = NULL;
   uid_t unum = *uid;
-  gid_t gnum = *gid;
+  gid_t gnum = gid ? *gid : -1;
 
   error_msg = NULL;
-  *username = *groupname = NULL;
+  if (username)
+    *username = NULL;
+  if (groupname)
+    *groupname = NULL;
 
   /* Set U and G to nonzero length strings corresponding to user and
      group specifiers or to NULL.  If U is not NULL, it is a newly
@@ -215,20 +218,29 @@ parse_with_separator (char const *spec, char const *separator,
   if (error_msg == NULL)
     {
       *uid = unum;
-      *gid = gnum;
-      *username = u;
-      *groupname = gname;
-      u = NULL;
+      if (gid)
+        *gid = gnum;
+      if (username)
+        {
+          *username = u;
+          u = NULL;
+        }
+      if (groupname)
+        {
+          *groupname = gname;
+          gname = NULL;
+        }
     }
-  else
-    free (gname);
 
   free (u);
+  free (gname);
   return _(error_msg);
 }
 
 /* Extract from SPEC, which has the form "[user][:.][group]",
    a USERNAME, UID U, GROUPNAME, and GID G.
+   If the GID parameter is NULL the entire SPEC is treated as a user.
+   If the USERNAME and GROUPNAME parameters are NULL they're ignored.
    Either user or group, or both, must be present.
    If the group is omitted but the separator is given,
    use the given user's login group.
@@ -247,11 +259,11 @@ char const *
 parse_user_spec (char const *spec, uid_t *uid, gid_t *gid,
                  char **username, char **groupname)
 {
-  char const *colon = strchr (spec, ':');
+  char const *colon = gid ? strchr (spec, ':') : NULL;
   char const *error_msg =
     parse_with_separator (spec, colon, uid, gid, username, groupname);
 
-  if (!colon && error_msg)
+  if (gid && !colon && error_msg)
     {
       /* If there's no colon but there is a dot, and if looking up the
          whole spec failed (i.e., the spec is not an owner name that

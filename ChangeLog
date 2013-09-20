@@ -1,3 +1,11 @@
+2013-09-19  Pádraig Brady  <P@draigBrady.com>
+
+	userspec: support optional parameters to parse_user_spec()
+	* lib/userspec.c (parse_user_spec): If the GID param is NULL,
+	then avoid group processing and treat the full spec as a user.
+	(parse_with_separator): Allow the USERNAME and GROUPNAME to
+	be optional params (NULL), in which case they're ignored.
+
 2013-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	timespec: new function make_timespec, and new constants
