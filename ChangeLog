@@ -1,3 +1,10 @@
+2013-09-21  Jim Meyering  <meyering@fb.com>
+
+	timespec: use the new TIMESPEC_RESOLUTION in a few more places
+	* lib/timespec-add.c (timespec_add): Also replace 999999999
+	with TIMESPEC_RESOLUTION - 1.
+	* lib/timespec-sub.c (timespec_sub): Likewise.
+
 2013-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	warnings: port --enable-gcc-warnings to Solaris Studio 12.3
