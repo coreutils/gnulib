@@ -12,6 +12,7 @@ lib/memcpy.c
 m4/memcpy.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_MEMCPY
@@ -30,4 +31,3 @@ GPL
 
 Maintainer:
 Jim Meyering
-

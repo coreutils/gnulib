@@ -4,7 +4,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/isalpha.html}
 
-Gnulib module: ---
+Gnulib module: ctype
 
 Portability problems fixed by Gnulib:
 @itemize

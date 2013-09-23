@@ -12,6 +12,7 @@ lib/memset.c
 m4/memset.m4
 
 Depends-on:
+string
 
 configure.ac:
 gl_FUNC_MEMSET

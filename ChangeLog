@@ -1,3 +1,24 @@
+2013-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ctype, string: depend on extern-inline
+	This is needed to complete the recent OS X fixes.
+	Also, fix related documentation as suggested by Eric Blake.
+	* doc/posix-functions/isalnum.texi, doc/posix-functions/isalpha.texi:
+	* doc/posix-functions/isascii.texi, doc/posix-functions/iscntrl.texi:
+	* doc/posix-functions/isdigit.texi, doc/posix-functions/isgraph.texi:
+	* doc/posix-functions/islower.texi, doc/posix-functions/isprint.texi:
+	* doc/posix-functions/ispunct.texi, doc/posix-functions/isspace.texi:
+	* doc/posix-functions/isupper.texi, doc/posix-functions/isxdigit.texi:
+	* doc/posix-functions/toascii.texi, doc/posix-functions/tolower.texi:
+	* doc/posix-functions/toupper.texi:
+	List the 'ctype' gnulib module.
+	* doc/posix-functions/strcat.texi, doc/posix-functions/strcpy.texi:
+	* doc/posix-functions/strncpy.texi:
+	List the 'string' gnulib module.
+	* modules/memcpy, modules/memmove, modules/memset (Depends-on):
+	Add string.
+	* modules/ctype, modules/string (Depends-on): Add extern-inline.
+
 2013-09-19  Pádraig Brady  <P@draigBrady.com>
 
 	userspec: support optional parameters to parse_user_spec()
@@ -40,7 +61,7 @@
 	extern inline on Apple only if the particular compile-time
 	configuration is known to have the problem.
 	(_GL_EXTERN_INLINE_APPLE_BUG): New private macro, to implement this.
-	(_GL_EXTERN_LNLINE_IN_USE): New macro, intended for use by
+	(_GL_EXTERN_INLINE_IN_USE): New macro, intended for use by
 	other Gnulib modules.
 
 	extern-inline: document fixes for ctype and wctype macros
