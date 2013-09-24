@@ -1,3 +1,9 @@
+2013-09-24  Eric Blake  <eblake@redhat.com>
+
+	manywarnings: enable nicer gcc warning messages
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Older gcc requires
+	some -f options for optimal warnings.
+
 2013-09-21  Jim Meyering  <meyering@fb.com>
 
 	timespec: use the new TIMESPEC_RESOLUTION in a few more places
