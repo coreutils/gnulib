@@ -422,9 +422,9 @@ function html_fnc (nfun,
 
             while ((getline codeline < (fname nfun "_fn.txt")) > 0)
             {
-                sub(/\\</, "&lt;", codeline)
-                sub(/\\>/, "&gt;", codeline)
-                sub(/&/, "&amp;", codeline)
+                gsub(/&/, "\&amp;", codeline)	# Must come first.
+                gsub(/</, "\&lt;", codeline)
+                gsub(/>/, "\&gt;", codeline)
 
                 print codeline
             }

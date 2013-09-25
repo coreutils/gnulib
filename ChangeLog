@@ -1,3 +1,14 @@
+2013-09-25  Mats Erik Andersson  <gnu@gisladisker.se>
+
+	pmccabe2html: escaping of special characters
+	Escape all '<', '>', and '&' in HTML output.
+	* build-aux/pmccabe2html (html_fnc): Call gsub()
+	instead of sub() to capture all '<', '>', and '&'.
+	Neither of '<' and '>' is special in a regexp,
+	so first arguments to gsub() are corrected. Also,
+	in replacement strings, ampersand must be escaped.
+	Finally, '&' must be handled first, then '<' and '>'.
+
 2013-09-24  Eric Blake  <eblake@redhat.com>
 
 	manywarnings: enable nicer gcc warning messages
