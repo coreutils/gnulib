@@ -9,6 +9,11 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 mingw, MSVC 9.
+
+@item
+This function does not represent the true @code{RLIMIT_NOFILE} soft
+limit on some platforms:
+Cygwin 1.7.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:

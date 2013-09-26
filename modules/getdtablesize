@@ -7,11 +7,12 @@ m4/getdtablesize.m4
 
 Depends-on:
 unistd
+extensions
 msvc-inval      [test $HAVE_GETDTABLESIZE = 0]
 
 configure.ac:
 gl_FUNC_GETDTABLESIZE
-if test $HAVE_GETDTABLESIZE = 0; then
+if test $HAVE_GETDTABLESIZE = 0 || test $REPLACE_GETDTABLESIZE = 1; then
   AC_LIBOBJ([getdtablesize])
   gl_PREREQ_GETDTABLESIZE
 fi
@@ -26,5 +27,5 @@ License:
 LGPLv2+
 
 Maintainer:
-Bruno Haible
+Bruno Haible, Eric Blake
 

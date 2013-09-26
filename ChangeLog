@@ -1,3 +1,15 @@
+2013-09-26  Eric Blake  <eblake@redhat.com>
+
+	getdtablesize: work around cygwin issue
+	* m4/getdtablesize.m4 (gl_FUNC_GETDTABLESIZE): Detect problem.
+	* modules/getdtablesize (configure.ac): Build replacement.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Set up a witness.
+	* modules/unistd (Makefile.am): Expose the witness.
+	* lib/unistd.in.h (getdtablesize): Declare replacement.
+	* lib/getdtablesize.c (rpl_getdtablesize): Work around it.
+	* tests/test-getdtablesize.c (main): Test it.
+	* doc/glibc-functions/getdtablesize.texi (getdtablesize): Document it.
+
 2013-09-25  Mats Erik Andersson  <gnu@gisladisker.se>
 
 	pmccabe2html: escaping of special characters
