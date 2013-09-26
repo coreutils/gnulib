@@ -1,4 +1,4 @@
-# dup3.m4 serial 4
+# dup3.m4 serial 5
 dnl Copyright (C) 2009-2013 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,7 @@ AC_DEFUN([gl_FUNC_DUP3],
   dnl Persuade glibc <unistd.h> to declare dup3().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS_ONCE([dup3])
+  AC_CHECK_FUNCS_ONCE([dup3 setdtablesize])
   if test $ac_cv_func_dup3 != yes; then
     HAVE_DUP3=0
   fi

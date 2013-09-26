@@ -21,6 +21,10 @@ This function crashes when invoked with invalid arguments on some platforms:
 Cygwin 1.7.17, MSVC 9.
 
 @item
+This function crashes when invoked with valid arguments on some platforms:
+Cygwin 1.7.25.
+
+@item
 This function resets the @code{FD_CLOEXEC} flag when duplicating an fd
 to itself on some platforms:
 Haiku.

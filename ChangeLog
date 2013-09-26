@@ -1,5 +1,14 @@
 2013-09-26  Eric Blake  <eblake@redhat.com>
 
+	dup2, dup3: work around another cygwin crasher
+	* m4/dup2.m4 (gl_FUNC_DUP2): Expose the bug.
+	* m4/dup3.m4 (gl_FUNC_DUP3): Likewise.
+	* tests/test-dup2.c (main): Likewise.
+	* lib/dup2.c (rpl_dup2): Use setdtablesize to avoid it.
+	* lib/dup3.c (dup3): Likewise.
+	* doc/posix-functions/dup2.texi (dup2): Document it.
+	* doc/glibc-functions/dup3.texi (dup3): Likewise.
+
 	getdtablesize: work around cygwin issue
 	* m4/getdtablesize.m4 (gl_FUNC_GETDTABLESIZE): Detect problem.
 	* modules/getdtablesize (configure.ac): Build replacement.

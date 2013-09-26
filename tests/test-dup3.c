@@ -124,6 +124,15 @@ main ()
       errno = 0;
       ASSERT (dup3 (fd, -2, o_flags) == -1);
       ASSERT (errno == EBADF);
+      if (bad_fd > 256)
+        {
+          ASSERT (dup3 (fd, 255, 0) == 255);
+          ASSERT (dup3 (fd, 256, 0) == 256);
+          ASSERT (close (255) == 0);
+          ASSERT (close (256) == 0);
+        }
+      ASSERT (dup3 (fd, bad_fd - 1, 0) == bad_fd - 1);
+      ASSERT (close (bad_fd - 1) == 0);
       errno = 0;
       ASSERT (dup3 (fd, bad_fd, o_flags) == -1);
       ASSERT (errno == EBADF);

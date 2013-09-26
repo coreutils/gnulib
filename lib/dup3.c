@@ -30,6 +30,10 @@ dup3 (int oldfd, int newfd, int flags)
 {
 #if HAVE_DUP3
 # undef dup3
+# if HAVE_SETDTABLESIZE
+  /* Avoid a cygwin crasher. */
+  setdtablesize (newfd + 1);
+# endif
   /* Try the system call first, if it exists.  (We may be running with a glibc
      that has the function but with an older kernel that lacks it.)  */
   {
