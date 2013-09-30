@@ -1,3 +1,13 @@
+2013-09-30  Jim Meyering  <meyering@fb.com>
+
+	fpending, obstack, strerror-override: use pure+const function attrs
+	* lib/fpending.h (__fpending): Declare with the "pure" attribute.
+	* lib/obstack.c (_obstack_allocated_p): Likewise.
+	* lib/obstack.h (_obstack_memory_used): Likewise.
+	(_obstack_memory_used): Likewise.
+	* lib/strerror-override.h (strerror_override): Declare with
+	the "const" attribute.
+
 2013-10-18  Eric Blake  <eblake@redhat.com>
 
 	extern-inline: make safe for -Wundef usage

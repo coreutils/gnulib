@@ -183,7 +183,7 @@ extern int _obstack_begin (struct obstack *, int, int,
 extern int _obstack_begin_1 (struct obstack *, int, int,
                              void *(*) (void *, long),
                              void (*) (void *, void *), void *);
-extern int _obstack_memory_used (struct obstack *);
+extern int _obstack_memory_used (struct obstack *) _GL_ATTRIBUTE_PURE;
 
 /* The default name of the function for freeing a chunk is 'obstack_free',
    but gnulib users can override this by defining '__obstack_free'.  */

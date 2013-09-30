@@ -313,7 +313,7 @@ libc_hidden_def (_obstack_newchunk)
 
 /* Suppress -Wmissing-prototypes warning.  We don't want to declare this in
    obstack.h because it is just for debugging.  */
-int _obstack_allocated_p (struct obstack *h, void *obj);
+int _obstack_allocated_p (struct obstack *h, void *obj) _GL_ATTRIBUTE_PURE;
 
 int
 _obstack_allocated_p (struct obstack *h, void *obj)
