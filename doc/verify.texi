@@ -16,16 +16,18 @@
 @findex verify
 @findex verify_expr
 
-The @samp{verify} module supports compile-time tests, as opposed to
-the standard @code{assert} macro which supports only runtime tests.
-Since the tests occur at compile-time, they are more reliable, and
-they require no runtime overhead.
+This module provides a header file @file{verify.h} that defines
+macros related to compile-time verification.
 
-This module provides a header file @file{verify.h} that defines two
-macros: @code{verify (@var{V})} and @code{verify_expr
+Two of these macros are @code{verify (@var{V})} and @code{verify_expr
 (@var{V}, @var{EXPR})}.  Both accept an integer constant expression
 argument @var{V} and verify that it is nonzero.  If not, a compile-time error
 results.
+
+These two macros implement compile-time tests, as opposed to
+the standard @code{assert} macro which supports only runtime tests.
+Since the tests occur at compile-time, they are more reliable, and
+they require no runtime overhead.
 
 @code{verify (@var{V});} is a declaration; it can occur outside of
 functions.  In contrast, @code{verify_expr (@var{V}, @var{EXPR})} is
@@ -60,6 +62,15 @@ within a @code{struct} or @code{union} specifier, in place of an
 ordinary member declaration.  Second, they require the programmer to
 specify a compile-time diagnostic as a string literal.
 
+The @file{verify.h} header defines one more macro, @code{assume
+(@var{E})}.  This macro expands to an expression of type @code{void}
+that causes the compiler to assume that the expression @var{E} yields
+a nonzero value.  @var{E} should be of a scalar type, and should not
+have side effects; it may or may not be evaluated.  The behavior is
+undefined if @var{E} would yield zero.  The main use of @code{assume}
+is optimization, as the compiler may be able to generate better code
+if it knows that @var{E} is true.
+
 Here are some example uses of @code{verify} and @code{verify_expr}.
 
 @example
@@ -87,4 +98,18 @@ verify (~ (time_t) -1 == 0);
    even when T is narrower than unsigned int.  */
 #define MAX_UNSIGNED_VAL(t) \
    ((T) verify_expr (0 < (T) -1, -1))
+
+/* Return T divided by UCHAR_MAX + 1.  Behavior is undefined
+   if T is negative, and in the typical case where UCHAR_MAX
+   is 255 the compiler can therefore implement the division
+   by shifting T right 8 bits, an optimization that would
+   not be valid if T were negative.  */
+time_t
+time_index (time_t t)
+@{
+  assume (0 <= t);
+  return t / (UCHAR_MAX + 1);
+@}
+
+
 @end example

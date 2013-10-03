@@ -1,3 +1,11 @@
+2013-10-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: new macro 'assume'
+	This is taken from Emacs, and should be generally useful.
+	* doc/verify.texi (assume): Document it.
+	* lib/verify.h (assume): New macro.
+	(__has_builtin): Expand to 0 if not defined.
+
 2013-09-26  Eric Blake  <eblake@redhat.com>
 
 	dup2, dup3: work around another cygwin crasher
