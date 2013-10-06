@@ -48,8 +48,8 @@
     {                                                                        \
       if (!(expr))                                                           \
         {                                                                    \
-          fprintf (ASSERT_STREAM, "%s:%d: assertion failed\n",               \
-                   __FILE__, __LINE__);                                      \
+          fprintf (ASSERT_STREAM, "%s:%d: assertion '%s' failed\n",     \
+                   __FILE__, __LINE__, #expr);                          \
           fflush (ASSERT_STREAM);                                            \
           abort ();                                                          \
         }                                                                    \
