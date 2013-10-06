@@ -946,6 +946,7 @@ read_file_system_list (bool need_fs_type)
             mtail = &me->me_next;
           }
       }
+    closedir (dirp);
   }
 #endif /* MOUNTED_INTERIX_STATVFS */
 

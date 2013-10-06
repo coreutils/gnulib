@@ -1,3 +1,9 @@
+2013-10-06  Andrew Borodin  <aborodin@vmail.ru>
+
+	mountlist: fix resource leak with MOUNTED_INTERIX_STATVFS
+	* lib/mountlist.c (read_file_system_list): fix leak of directory
+	streams in case of #ifdef MOUNTED_INTERIX_STATVFS.
+
 2013-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: improve diagnostic when an assertion fails
