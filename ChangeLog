@@ -1,5 +1,16 @@
 2013-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	count-leading-zeros: port to MSC; support types wider than 64 bits
+	The ideas behind the MSC port are stolen from Emacs.
+	* lib/count-leading-zeros.h:
+	Don't include verify.h: it's no longer needed, as types wider than
+	64 bits are now supported.
+	(COUNT_LEADING_ZEROS): New arg MSC_BUILTIN, for better
+	performance with MSC.  All uses changed.  Do not assume that TYPE
+	has at most 64 bits.
+	(count_leading_zeros_32): Assume 0 < X < 2**32, for speed.
+	All uses changed.  Fold the subtraction from 31 into the table.
+
 	count-one-bits: port to MSC; support types wider than 64 bits
 	The ideas behind the MSC port are stolen from Emacs.
 	* lib/count-one-bits.c (popcount_support) [_MSC_VER]: New variable.

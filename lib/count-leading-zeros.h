@@ -17,11 +17,10 @@
 /* Written by Eric Blake.  */
 
 #ifndef COUNT_LEADING_ZEROS_H
-# define COUNT_LEADING_ZEROS_H 1
+#define COUNT_LEADING_ZEROS_H 1
 
 #include <limits.h>
 #include <stdlib.h>
-#include "verify.h"
 
 #ifndef _GL_INLINE_HEADER_BEGIN
  #error "Please include config.h first."
@@ -31,45 +30,58 @@ _GL_INLINE_HEADER_BEGIN
 # define COUNT_LEADING_ZEROS_INLINE _GL_INLINE
 #endif
 
-/* Expand the code which computes the number of leading zeros of the local
-   variable 'x' of type TYPE (an unsigned integer type) and returns it
+/* Assuming the GCC builtin is BUILTIN and the MSC builtin is MSC_BUILTIN,
+   expand to code that computes the number of leading zeros of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
    from the current function.  */
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-# define COUNT_LEADING_ZEROS(BUILTIN, TYPE)     \
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
   return x ? BUILTIN (x) : CHAR_BIT * sizeof x;
+#elif _MSC_VER
+# pragma intrinsic _BitReverse
+# pragma intrinsic _BitReverse64
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
+    do                                                                  \
+      {                                                                 \
+        unsigned long result;                                           \
+        return MSC_BUILTIN (&result, x) ? result : CHAR_BIT * sizeof x; \
+      }                                                                 \
+    while (0)
 #else
-# define COUNT_LEADING_ZEROS(BUILTIN, TYPE)                             \
-  /* This condition is written so as to avoid shifting by more than     \
-     31 bits at once, and also avoids a random HP-UX cc bug.  */        \
-  verify (((TYPE) -1 >> 31 >> 31 >> 2) == 0); /* TYPE has at most 64 bits */ \
-  int count = 0;                                                        \
-  if (1 < (TYPE) -1 >> 31) { /* TYPE has more than 32 bits? */          \
-    count = count_leading_zeros_32 (x >> 31 >> 1);                      \
-    if (count < 32)                                                     \
-      return count;                                                     \
-  }                                                                     \
-  return count + count_leading_zeros_32 (x);
+# define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
+    do                                                                  \
+      {                                                                 \
+        int count;                                                      \
+        unsigned int leading_32;                                        \
+        if (! x)                                                        \
+          return CHAR_BIT * sizeof x;                                   \
+        for (count = 0;                                                 \
+             (leading_32 = ((x >> (sizeof (TYPE) * CHAR_BIT - 32))      \
+                            & 0xffffffffU),                             \
+              count < CHAR_BIT * sizeof x - 32 && !leading_32);         \
+             count += 32)                                               \
+          x = x << 31 << 1;                                             \
+        return count + count_leading_zeros_32 (leading_32);             \
+      }                                                                 \
+    while (0)
 
-/* Compute and return the number of leading zeros in the least
-   significant 32 bits of X. */
+/* Compute and return the number of leading zeros in X,
+   where 0 < X < 2**32.  */
 COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_32 (unsigned int x)
 {
   /* http://graphics.stanford.edu/~seander/bithacks.html */
-  static const char deBruijnLookup[32] = {
-    0, 9, 1, 10, 13, 21, 2, 29, 11, 14, 16, 18, 22, 25, 3, 30,
-    8, 12, 20, 28, 15, 17, 24, 7, 19, 27, 23, 6, 26, 5, 4, 31
+  static const char de_Bruijn_lookup[32] = {
+    31, 22, 30, 21, 18, 10, 29, 2, 20, 17, 15, 13, 9, 6, 28, 1,
+    23, 19, 11, 3, 16, 14, 7, 24, 12, 4, 8, 25, 5, 26, 27, 0
   };
 
-  x &= 0xffffffffU;
-  if (!x)
-    return 32;
   x |= x >> 1;
   x |= x >> 2;
   x |= x >> 4;
   x |= x >> 8;
   x |= x >> 16;
-  return 31 - deBruijnLookup[(x * 0x07c4acddU) >> 27];
+  return de_Bruijn_lookup[((x * 0x07c4acddU) & 0xffffffffU) >> 27];
 }
 #endif
 
@@ -77,14 +89,14 @@ count_leading_zeros_32 (unsigned int x)
 COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros (unsigned int x)
 {
-  COUNT_LEADING_ZEROS (__builtin_clz, unsigned int);
+  COUNT_LEADING_ZEROS (__builtin_clz, _BitScanReverse, unsigned int);
 }
 
 /* Compute and return the number of leading zeros in X. */
 COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_l (unsigned long int x)
 {
-  COUNT_LEADING_ZEROS (__builtin_clzl, unsigned long int);
+  COUNT_LEADING_ZEROS (__builtin_clzl, _BitScanReverse, unsigned long int);
 }
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
@@ -92,7 +104,8 @@ count_leading_zeros_l (unsigned long int x)
 COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_ll (unsigned long long int x)
 {
-  COUNT_LEADING_ZEROS (__builtin_clzll, unsigned long long int);
+  COUNT_LEADING_ZEROS (__builtin_clzll, _BitScanReverse64,
+                       unsigned long long int);
 }
 #endif
 
