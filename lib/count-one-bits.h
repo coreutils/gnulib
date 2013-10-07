@@ -17,10 +17,10 @@
 /* Written by Ben Pfaff.  */
 
 #ifndef COUNT_ONE_BITS_H
-# define COUNT_ONE_BITS_H 1
+#define COUNT_ONE_BITS_H 1
 
+#include <limits.h>
 #include <stdlib.h>
-#include "verify.h"
 
 #ifndef _GL_INLINE_HEADER_BEGIN
  #error "Please include config.h first."
@@ -30,21 +30,30 @@ _GL_INLINE_HEADER_BEGIN
 # define COUNT_ONE_BITS_INLINE _GL_INLINE
 #endif
 
-/* Expand the code which computes the number of 1-bits of the local
-   variable 'x' of type TYPE (an unsigned integer type) and returns it
+/* Expand to code that computes the number of 1-bits of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
+   from the current function.  */
+#define COUNT_ONE_BITS_GENERIC(TYPE)                                   \
+    do                                                                  \
+      {                                                                 \
+        int count = 0;                                                  \
+        int bits;                                                       \
+        for (bits = 0; bits < sizeof (TYPE) * CHAR_BIT; bits += 32)     \
+          {                                                             \
+            count += count_one_bits_32 (x);                             \
+            x = x >> 31 >> 1;                                           \
+          }                                                             \
+        return count;                                                   \
+      }                                                                 \
+    while (0)
+
+/* Assuming the GCC builtin is BUILTIN and the MSC builtin is MSC_BUILTIN,
+   expand to code that computes the number of 1-bits of the local
+   variable 'x' of type TYPE (an unsigned integer type) and return it
    from the current function.  */
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-#define COUNT_ONE_BITS(BUILTIN, TYPE)              \
-        return BUILTIN (x);
+# define COUNT_ONE_BITS(BUILTIN, MSC_BUILTIN, TYPE) return BUILTIN (x)
 #else
-#define COUNT_ONE_BITS(BUILTIN, TYPE)                                       \
-        /* This condition is written so as to avoid shifting by more than   \
-           31 bits at once, and also avoids a random HP-UX cc bug.  */      \
-        verify (((TYPE) -1 >> 31 >> 31 >> 2) == 0); /* TYPE has at most 64 bits */ \
-        int count = count_one_bits_32 (x);                                  \
-        if (1 < (TYPE) -1 >> 31) /* TYPE has more than 32 bits? */          \
-          count += count_one_bits_32 (x >> 31 >> 1);                        \
-        return count;
 
 /* Compute and return the number of 1-bits set in the least
    significant 32 bits of X. */
@@ -57,20 +66,60 @@ count_one_bits_32 (unsigned int x)
   x = ((x & 0xf0f0) >> 4) + (x & 0x0f0f);
   return (x >> 8) + (x & 0x00ff);
 }
+
+# if 1500 <= _MSC_VER && (defined _M_IX86 || defined _M_X64)
+
+/* While gcc falls back to its own generic code if the machine
+   on which it's running doesn't support popcount, with Microsoft's
+   compiler we need to detect and fallback ourselves.  */
+#  pragma intrinsic __cpuid
+#  pragma intrinsic __popcnt
+#  pragma intrinsic __popcnt64
+
+/* Return nonzero if popcount is supported.  */
+
+/* 1 if supported, 0 if not supported, -1 if unknown.  */
+extern int popcount_support;
+
+COUNT_ONE_BITS_INLINE int
+popcount_supported (void)
+{
+  if (popcount_support < 0)
+    {
+      int cpu_info[4];
+      __cpuid (cpu_info, 1);
+      popcount_support = (cpu_info[2] >> 23) & 1;  /* See MSDN.  */
+    }
+  return popcount_support;
+}
+
+#  define COUNT_ONE_BITS(BUILTIN, MSC_BUILTIN, TYPE)    \
+     do                                                 \
+       {                                                \
+         if (popcount_supported ())                     \
+           return MSC_BUILTIN (x);                      \
+         else                                           \
+           COUNT_ONE_BITS_GENERIC (TYPE);               \
+       }                                                \
+     while (0)
+# else
+#  define COUNT_ONE_BITS(BUILTIN, MSC_BUILTIN, TYPE)	\
+     COUNT_ONE_BITS_GENERIC (TYPE)
+# endif
 #endif
 
 /* Compute and return the number of 1-bits set in X. */
 COUNT_ONE_BITS_INLINE int
 count_one_bits (unsigned int x)
 {
-  COUNT_ONE_BITS (__builtin_popcount, unsigned int);
+  COUNT_ONE_BITS (__builtin_popcount, __popcnt, unsigned int);
 }
 
 /* Compute and return the number of 1-bits set in X. */
 COUNT_ONE_BITS_INLINE int
 count_one_bits_l (unsigned long int x)
 {
-  COUNT_ONE_BITS (__builtin_popcountl, unsigned long int);
+  COUNT_ONE_BITS (__builtin_popcountl, __popcnt, unsigned long int);
 }
 
 #if HAVE_UNSIGNED_LONG_LONG_INT
@@ -78,7 +127,7 @@ count_one_bits_l (unsigned long int x)
 COUNT_ONE_BITS_INLINE int
 count_one_bits_ll (unsigned long long int x)
 {
-  COUNT_ONE_BITS (__builtin_popcountll, unsigned long long int);
+  COUNT_ONE_BITS (__builtin_popcountll, __popcnt64, unsigned long long int);
 }
 #endif
 

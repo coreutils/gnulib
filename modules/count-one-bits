@@ -8,7 +8,6 @@ m4/count-one-bits.m4
 
 Depends-on:
 extern-inline
-verify
 
 configure.ac:
 gl_COUNT_ONE_BITS
