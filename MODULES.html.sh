@@ -1757,6 +1757,7 @@ func_all_modules ()
   func_begin_table
   func_module count-leading-zeros
   func_module count-one-bits
+  func_module count-trailing-zeros
   func_module ffs
   func_module ffsl
   func_module ffsll
