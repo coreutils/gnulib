@@ -15,7 +15,7 @@ strtoull        [test $ac_cv_func_strtoumax = no && test $ac_cv_type_unsigned_lo
 
 configure.ac:
 gl_FUNC_STRTOUMAX
-if test $ac_cv_func_strtoumax = no; then
+if test $HAVE_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; then
   AC_LIBOBJ([strtoumax])
   gl_PREREQ_STRTOUMAX
 fi

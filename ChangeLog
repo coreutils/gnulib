@@ -1,3 +1,20 @@
+2013-10-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoimax, strtoumax: port to HP-UX 11.11
+	Problem reported by Daniel Richard G. in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00023.html>.
+	* lib/inttypes.in.h (strtoumax): Replace strtoumax if
+	REPLACE_STRTOUMAX, thus treating it consistently with strtoimax.
+	* m4/inttypes.m4 (gl_INTTYPES_H_DEFAULTS): Add default for
+	REPLACE_STRTOUMAX.
+	* m4/strtoimax.m4 (gl_FUNC_STRTOIMAX):
+	* m4/strtoumax.m4 (gl_FUNC_STRTOUMAX):
+	Replace the function if defined as a macro but not as a function.
+	* modules/inttypes-incomplete (inttypes.h): Substitute
+	REPLACE_STRTOUMAX.
+	* modules/strtoumax (configure.ac): Replace strtoumax if
+	REPLACE_STRTOUMAX.
+
 2013-10-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoimax: port to HP-UX 11.11
