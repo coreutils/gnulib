@@ -1,3 +1,11 @@
+2013-10-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoimax: port to HP-UX 11.11
+	Problem reported by Daniel Richard G.
+	* lib/strtoimax.c (Strtoimax, Strtol, Strtoll): New macros.
+	(strtoimax, strtol, strtoll) [UNSIGNED]: Remove, since
+	they might clash with inttypes.h.
+
 2013-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	New module 'count-trailing-zeros'.
