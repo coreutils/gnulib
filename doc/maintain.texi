@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 7, 2013
+@set lastupdate October 9, 2013
 @c %**end of header
 
 @dircategory GNU organization
@@ -292,13 +292,19 @@ as you maintain the program, to avoid legal difficulties.
 @cindex assignments, copyright
 @cindex disclaimers
 
-If you maintain an FSF-copyrighted package
-certain legal procedures are required when incorporating legally significant
-changes written by other people.  This ensures that the FSF has the
-legal right to distribute the package, and the standing to defend its
-GPL-covered status in court if necessary.
+If you maintain an FSF-copyrighted package, certain legal procedures
+are required when incorporating legally significant changes written by
+other people.  This ensures that the FSF has the legal right to
+distribute the package, and the standing to defend its GPL-covered
+status in court if necessary.
 
-@strong{Before} incorporating significant changes, make sure that the
+GNU packages need not be FSF-copyrighted; this is up to the author(s),
+generally at the time the package is dubbed GNU.  When copyright is
+assigned to the FSF, the FSF can act to stop GPL violations about the
+package.  Otherwise, legal actions are up to the author(s).  The rest
+of this section is about the case when a package is FSF-copyrighted.
+
+@emph{Before} incorporating significant changes, make sure that the
 person who wrote the changes has signed copyright papers and that the
 Free Software Foundation has received and signed them.  We may also
 need an employer's disclaimer from the person's employer, which
@@ -1569,6 +1575,10 @@ corresponding packages.
 The upload system will email receipts to the given email addresses
 when an upload is made, either successfully or unsuccessfully.
 
+Should you later have to update your GPG key, you'll have to re-submit
+it to both Savannah and @email{ftp-upload@@gnu.org}, as these systems
+are not connected.
+
 
 @node Automated Upload Procedure
 @subsection Automated Upload Procedure
@@ -1705,8 +1715,9 @@ is optional, and ignored if present:@*
 @t{comment: let's hope this works!}
 @end table
 
-Putting the above together, the complete contents of the directive
-file @file{foo-1.0.tar.gz.directive} for our example would be:
+Putting all of the above together, the complete contents of the
+directive file @file{foo-1.0.tar.gz.directive} for our example would
+be:
 
 @example
 version: 1.2
