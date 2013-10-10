@@ -1,3 +1,12 @@
+2013-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoumax: port to Solaris 8
+	This problem was introduced in the recent HP-UX patch.
+	Reported by Tom G. Christensen in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00037.html>.
+	* modules/strtoumax (Depends-on): Test HAVE_STRTOUMAX
+	and REPLACE_STRTOUMAX rather than ac_cv_func_strtoumax.
+
 2013-10-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoimax, strtoumax: port to HP-UX 11.11

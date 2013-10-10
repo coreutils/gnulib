@@ -9,9 +9,9 @@ m4/strtoumax.m4
 
 Depends-on:
 inttypes-incomplete
-verify          [test $ac_cv_func_strtoumax = no]
-stdint          [test $ac_cv_func_strtoumax = no]
-strtoull        [test $ac_cv_func_strtoumax = no && test $ac_cv_type_unsigned_long_long_int = yes]
+verify          [test $HAVE_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
+stdint          [test $HAVE_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1]
+strtoull        [{ test $HAVE_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; } && test $ac_cv_type_unsigned_long_long_int = yes]
 
 configure.ac:
 gl_FUNC_STRTOUMAX
