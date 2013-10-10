@@ -15,7 +15,7 @@ strtoull        [{ test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1;
 
 configure.ac:
 gl_FUNC_STRTOUMAX
-if test $HAVE_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; then
+if test $HAVE_DECL_STRTOUMAX = 0 || test $REPLACE_STRTOUMAX = 1; then
   AC_LIBOBJ([strtoumax])
   gl_PREREQ_STRTOUMAX
 fi
