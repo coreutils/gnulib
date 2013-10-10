@@ -1,3 +1,9 @@
+2013-10-10  Eric Blake  <eblake@redhat.com>
+
+	strtoumax: fix typo in previous commit.
+	* modules/strtoumax (Depends-on): Fix typo.
+	* modules/strtoimax (Depends-on): Likewise.
+
 2013-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoumax: port to Solaris 8
