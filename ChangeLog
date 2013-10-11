@@ -1,3 +1,10 @@
+2013-10-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	verify: document some 'assume' pitfalls
+	* doc/verify.texi (Compile-time Assertions):
+	Mention that 'assume (E)' can sometimes slow things down.
+	Use CHAR_MAX + 1, not UCHAR_MAX + 1.
+
 2013-10-10  Eric Blake  <eblake@redhat.com>
 
 	strtoumax: fix typo in previous commit.

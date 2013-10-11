@@ -63,15 +63,19 @@ ordinary member declaration.  Second, they require the programmer to
 specify a compile-time diagnostic as a string literal.
 
 The @file{verify.h} header defines one more macro, @code{assume
-(@var{E})}.  This macro expands to an expression of type @code{void}
-that causes the compiler to assume that the expression @var{E} yields
-a nonzero value.  @var{E} should be of a scalar type, and should not
+(@var{E})}, which expands to an expression of type @code{void}
+that causes the compiler to assume that @var{E} yields a nonzero
+value.  @var{E} should be a scalar expression, and should not
 have side effects; it may or may not be evaluated.  The behavior is
 undefined if @var{E} would yield zero.  The main use of @code{assume}
 is optimization, as the compiler may be able to generate better code
-if it knows that @var{E} is true.
+if it assumes @var{E}.  For best results, @var{E} should be simple
+enough that a compiler can determine that it has no side effects: if
+@var{E} calls an external function or accesses volatile storage the
+compiler may not be able to optimize @var{E} away and @code{assume
+(@var{E})} may therefore slow down the program.
 
-Here are some example uses of @code{verify} and @code{verify_expr}.
+Here are some example uses of these macros.
 
 @example
 #include <verify.h>
@@ -99,16 +103,16 @@ verify (~ (time_t) -1 == 0);
 #define MAX_UNSIGNED_VAL(t) \
    ((T) verify_expr (0 < (T) -1, -1))
 
-/* Return T divided by UCHAR_MAX + 1.  Behavior is undefined
-   if T is negative, and in the typical case where UCHAR_MAX
-   is 255 the compiler can therefore implement the division
-   by shifting T right 8 bits, an optimization that would
+/* Return T divided by CHAR_MAX + 1, where behavior is
+   undefined if T < 0.  In the common case where CHAR_MAX
+   is 127 the compiler can therefore implement the division
+   by shifting T right 7 bits, an optimization that would
    not be valid if T were negative.  */
 time_t
 time_index (time_t t)
 @{
   assume (0 <= t);
-  return t / (UCHAR_MAX + 1);
+  return t / (CHAR_MAX + 1);
 @}
 
 
