@@ -10,4 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-regex
 check_PROGRAMS += test-regex
-test_regex_LDADD = $(LDADD) @LIBINTL@
+test_regex_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD) $(LIB_PTHREAD)

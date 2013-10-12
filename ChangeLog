@@ -1,3 +1,10 @@
+2013-10-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex-tests: port to HP-UX 11.11
+	Problem reported by Daniel Richard G. in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00052.html>.
+	* modules/regex-tests (test_regex_LDADD): Add LIBTHREAD, LIB_PTHREAD.
+
 2013-10-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	verify: document some 'assume' pitfalls
