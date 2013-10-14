@@ -1,3 +1,11 @@
+2013-10-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl: allow cross-compilation to Gentoo
+	Problem reported by Gabriel Marcano in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00058.html>.
+	* m4/acl.m4 (gl_ACL_GET_FILE): When cross-compiling,
+	test only whether it links.
+
 2013-10-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mgetgroups: remove dependency on realloc-gnu
