@@ -1,3 +1,15 @@
+2013-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mgetgroups: remove dependency on realloc-gnu
+	The dependency violates the comment in realloc-gnu, which
+	says that tests can't depend on realloc-gnu; some tests depend
+	on mgetgroups, so mgetgroups can't depend on realloc-gnu.
+	Problem reported by Daniel Richard G. in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00056.html>.
+	* lib/mgetgroups.c (mgetgroups): Don't call realloc (NULL, 0).
+	* modules/mgetgroups (Depends-on): Depend on realloc-posix,
+	not realloc-gnu.
+
 2013-10-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex-tests: port to HP-UX 11.11

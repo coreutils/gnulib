@@ -133,7 +133,7 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
       return -1;
     }
 
-  if (!username && gid != (gid_t) -1)
+  if (max_n_groups == 0 || (!username && gid != (gid_t) -1))
     max_n_groups++;
   g = realloc_groupbuf (NULL, max_n_groups);
   if (g == NULL)
