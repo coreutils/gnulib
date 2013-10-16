@@ -19,4 +19,8 @@ mingw, MSVC 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+If the argument exists and is a directory, this function fails with
+@code{EISDIR} instead of the correct @code{EEXIST}:
+HP-UX 11.11.
 @end itemize

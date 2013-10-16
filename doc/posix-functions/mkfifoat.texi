@@ -20,6 +20,9 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The gnulib replacement function always fails with @samp{ENOSYS} on
-some platforms:
-mingw, MSVC 9.
+some platforms: mingw, MSVC 9.
+@item
+If the argument exists and is a directory, the gnulib replacement
+function fails with @code{EISDIR} instead of the correct
+@code{EEXIST}: HP-UX 11.11.
 @end itemize

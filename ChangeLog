@@ -1,3 +1,16 @@
+2013-10-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mkfifo-tests, etc.: allow HP-UX 11.11 bug
+	Problem reported by Daniel Richard G. in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00068.html>.
+	* doc/posix-functions/mkfifo.texi (mkfifo):
+	* doc/posix-functions/mkfifoat.texi (mkfifoat):
+	* doc/posix-functions/mknod.texi (mknod):
+	* doc/posix-functions/mknodat.texi (mknodat):
+	Document the HP-UX 11.11 bug.
+	* tests/test-mkfifo.h (test_mkfifo):
+	Allow the HP-UX 11.11 bug.
+
 2013-10-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl: allow cross-compilation to Gentoo
