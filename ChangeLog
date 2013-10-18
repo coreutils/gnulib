@@ -1,3 +1,10 @@
+2013-10-18  Eric Blake  <eblake@redhat.com>
+
+	extern-inline: make safe for -Wundef usage
+	Reported by Vladimir 'phcoder' Serbinenko in
+	https://lists.gnu.org/archive/html/bug-gnulib/2013-10/msg00078.html
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE): Port to older gcc.
+
 2013-10-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mkfifo-tests, etc.: allow HP-UX 11.11 bug
