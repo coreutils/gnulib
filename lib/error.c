@@ -195,7 +195,7 @@ print_errno_message (int errnum)
 #endif
 }
 
-static void
+static void _GL_ATTRIBUTE_FORMAT_PRINTF (3, 0) _GL_ARG_NONNULL ((3))
 error_tail (int status, int errnum, const char *message, va_list args)
 {
 #if _LIBC

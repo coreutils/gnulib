@@ -1,3 +1,9 @@
+2013-10-20  Jim Meyering  <meyering@fb.com>
+
+	error: add the printf attribute to a static function
+	* lib/error.c (error_tail): Add the printf attribute, to placate
+	gcc's -Werror=suggest-attribute=format option.
+
 2013-10-12  Jim Meyering  <meyering@fb.com>
 
 	error: make the module depend on vfprintf-posix
