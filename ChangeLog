@@ -1,3 +1,9 @@
+2013-10-21  Jim Meyering  <meyering@fb.com>
+
+	regex: don't depend on wcscoll
+	* m4/regex.m4 (gl_PREREQ_REGEX): Don't check for wcscoll.
+	It is no longer used.
+
 2013-10-20  Jim Meyering  <meyering@fb.com>
 
 	error: add the printf attribute to a static function

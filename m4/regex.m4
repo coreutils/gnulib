@@ -268,6 +268,6 @@ AC_DEFUN([gl_PREREQ_REGEX],
   AC_REQUIRE([gl_EEMALLOC])
   AC_REQUIRE([gl_GLIBC21])
   AC_CHECK_HEADERS([libintl.h])
-  AC_CHECK_FUNCS_ONCE([isblank iswctype wcscoll])
+  AC_CHECK_FUNCS_ONCE([isblank iswctype])
   AC_CHECK_DECLS([isblank], [], [], [[#include <ctype.h>]])
 ])
