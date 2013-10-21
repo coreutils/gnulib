@@ -1,4 +1,4 @@
-/* a wrapper for frepoen
+/* a wrapper for freopen
    Copyright (C) 2008-2013 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

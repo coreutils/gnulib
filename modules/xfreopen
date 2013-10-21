@@ -1,5 +1,5 @@
 Description:
-a wrapper for frepoen
+a wrapper for freopen
 
 Files:
 lib/xfreopen.c
