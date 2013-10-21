@@ -110,7 +110,7 @@
 # define gettext_noop(String) String
 #endif
 
-#if (defined MB_CUR_MAX && HAVE_WCTYPE_H && HAVE_ISWCTYPE && HAVE_WCSCOLL) || _LIBC
+#if (defined MB_CUR_MAX && HAVE_WCTYPE_H && HAVE_ISWCTYPE) || _LIBC
 # define RE_ENABLE_I18N
 #endif
 

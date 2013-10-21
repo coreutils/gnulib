@@ -1,3 +1,8 @@
+2013-10-21  Jim Meyering  <meyering@fb.com>
+
+	regex: also remove dependency on HAVE_WCSCOLL
+	* lib/regex_internal.h: Remove final vestige of the wcscoll dependency.
+
 2013-10-21  Reuben Thomas <rrt@sc3d.org>
 
 	xfreopen: Fix typo. s/frepoen/freopen/
