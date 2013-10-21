@@ -1,3 +1,9 @@
+2013-10-21  Michael Haubenwallner <michael.haubenwallner@salomon.at>
+
+	selinux-h: Really build without selinux when library is missing.
+	* m4/selinux-selinux-h.m4: When the selinux library is missing, really
+	continue without selinux, as already told in the warning message.
+
 2013-10-21  Jim Meyering  <meyering@fb.com>
 
 	regex: also remove dependency on HAVE_WCSCOLL

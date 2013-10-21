@@ -61,9 +61,11 @@ AC_DEFUN([gl_LIBSELINUX],
   AC_SUBST([LIB_SELINUX])
 
   # Warn if SELinux is found but libselinux is absent;
-  if test "$ac_cv_search_setfilecon" = no &&
-     test "$host" = "$build" && test -d /selinux; then
-    AC_MSG_WARN([This system supports SELinux but libselinux is missing.])
-    AC_MSG_WARN([AC_PACKAGE_NAME will be compiled without SELinux support.])
+  if test "$ac_cv_search_setfilecon" = no; then
+    if test "$host" = "$build" && test -d /selinux; then
+      AC_MSG_WARN([This system supports SELinux but libselinux is missing.])
+      AC_MSG_WARN([AC_PACKAGE_NAME will be compiled without SELinux support.])
+    fi
+    with_selinux=no
   fi
 ])
