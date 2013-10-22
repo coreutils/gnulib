@@ -1,3 +1,13 @@
+2013-10-21  Ben Pfaff  <blp@cs.stanford.edu>
+
+	install-reloc: Support multi-binary installation.
+	* build-aux/install-reloc: Support installing multiple programs in
+	one invocation, as done by Automake starting with commit
+	4295fe33eb23f (Multi-file install for PROGRAMS.).  From Bruno
+	Haible <bruno@clisp.org>, archived at
+	http://lists.debian.org/debian-bsd/2012/05/msg00032.html.
+	Reported by Sylvain <beuc@gnu.org>.
+
 2013-10-21  Michael Haubenwallner <michael.haubenwallner@salomon.at>
 
 	selinux-h: Really build without selinux when library is missing.
