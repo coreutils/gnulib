@@ -1,3 +1,14 @@
+2013-10-26  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: fix "release" target to build _version
+	This fixes a bug in README-release whereby following the outlined
+	steps, one would publish a tarball whose programs would report
+	--version output not consistent with the package version number.
+	This bug caused grep-2.15 to produce a grep program whose
+	--version option made it print 2.14.56-1e3d rather than 2.15.
+	* top/maint.mk (release): Making this target build "_version"
+	ensures that the new version number is reflected in configure.
+
 2013-10-21  Ben Pfaff  <blp@cs.stanford.edu>
 
 	install-reloc: Support multi-binary installation.

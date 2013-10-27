@@ -1424,6 +1424,7 @@ alpha beta stable: $(local-check) writable-files $(submodule-checks)
 	$(AM_V_at)$(MAKE) -s emit_upload_commands RELEASE_TYPE=$@
 
 release:
+	$(AM_V_GEN)$(MAKE) _version
 	$(AM_V_GEN)$(MAKE) $(release-type)
 
 # Override this in cfg.mk if you follow different procedures.
