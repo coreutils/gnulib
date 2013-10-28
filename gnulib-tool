@@ -898,6 +898,9 @@ if test "X$1" = "X--no-reexec"; then
   shift
 fi
 
+# Unset CDPATH.  Otherwise, output from 'cd dir' can surprise callers.
+(unset CDPATH) >/dev/null 2>&1 && unset CDPATH
+
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            one of: list, find, import, add-import, remove-import,

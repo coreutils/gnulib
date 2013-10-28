@@ -1,5 +1,12 @@
 2013-10-28  Jim Meyering  <meyering@fb.com>
 
+	gnulib-tool: protect against CDPATH
+	* gnulib-tool: Many "cd" built-in functions print a directory name
+	to stdout when CDPATH is set, e.g.,
+	  $ bash -c 'CDPATH=/; cd tmp'
+	  /tmp
+	Unset it, when possible.  Prompted by a comment from Bruce Korb.
+
 	maint.mk: restore functionality removed by recent change...
 	Sunday's change, v0.0-8062-g6b24f60, may have appeared correct from
 	the context of a shallow-cloned gnulib repository: "git describe"
