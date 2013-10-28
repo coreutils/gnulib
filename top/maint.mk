@@ -1283,7 +1283,8 @@ vc-diff-check:
 rel-files = $(DIST_ARCHIVES)
 
 gnulib_dir ?= $(srcdir)/gnulib
-gnulib-version = $$(cd $(gnulib_dir) && git rev-parse --short HEAD)
+gnulib-version = $$(cd $(gnulib_dir)				\
+                    && { git describe || git rev-parse --short=10 HEAD; } )
 bootstrap-tools ?= autoconf,automake,gnulib
 
 # If it's not already specified, derive the GPG key ID from
