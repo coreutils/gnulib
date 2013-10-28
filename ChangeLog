@@ -48,12 +48,6 @@
 	* lib/error.c (error_tail): Add the printf attribute, to placate
 	gcc's -Werror=suggest-attribute=format option.
 
-2013-10-12  Jim Meyering  <meyering@fb.com>
-
-	error: make the module depend on vfprintf-posix
-	* modules/error (Depends-on): Add vfprintf-posix, since error
-	calls vfprintf unconditionally, via error_tail.
-
 2013-09-30  Jim Meyering  <meyering@fb.com>
 
 	fpending, obstack, strerror-override: use pure+const function attrs
