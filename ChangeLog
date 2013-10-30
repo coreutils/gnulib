@@ -1,3 +1,10 @@
+2013-10-29  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: prefer gpgv2 over gpgv
+	* top/maint.mk (gpgv): Use gpgv2 if present, else gpgv.
+	(gpg_key_ID): Use $(gpgv), rather than hard-coding "gpgv".
+	Reported by Gary Vaughan.
+
 2013-10-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	isnan: port to VAX
