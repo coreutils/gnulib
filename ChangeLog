@@ -1,3 +1,13 @@
+2013-10-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: pacify HP C
+	* lib/obstack.h (obstack_free) [!__GNUC__]: Rewrite to avoid
+	warning "conversion from pointer to smaller integer" from HP
+	C-ANSI-C - cc version B9007AA/B3910B A.06.26.  It's safe to assume
+	C89 or later nowadays, so cast to void instead of int.  Privately
+	reported by H.Merijn Brand.  Also, change header to match glibc's,
+	to make checking against glibc easier.
+
 2013-10-29  Jim Meyering  <meyering@fb.com>
 
 	maint.mk: prefer gpgv2 over gpgv
