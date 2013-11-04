@@ -1,3 +1,9 @@
+2013-11-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: port to Oracle Studio c99
+	* lib/intprops.h (_GL_HAVE___TYPEOF__) [__SUNPRO_C && __STDC__]:
+	Define to 0, to avoid diagnostics when Oracle Studio is pedantic.
+
 2013-10-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: pacify HP C
