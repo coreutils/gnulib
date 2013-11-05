@@ -20,7 +20,7 @@ Include:
 "hash.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering

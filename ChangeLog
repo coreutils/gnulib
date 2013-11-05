@@ -1,3 +1,8 @@
+2013-11-05  Jim Meyering  <meyering@fb.com>
+
+	hash: relax license to LGPLv2+, for libguestfs
+	* modules/hash (License): Change from GPL to LGPLv2+.
+
 2013-11-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: port to Oracle Studio c99
