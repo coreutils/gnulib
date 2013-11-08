@@ -1,3 +1,11 @@
+2013-11-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: port better to OS X 10.9
+	* m4/extern-inline.m4: Omit serial number; this file doesn't use them.
+	(gl_EXTERN_INLINE): Do not suppress the use of extern inline on
+	OS X 10.9, except for g++ where the bug is still present.
+	See <http://trac.macports.org/ticket/41033>.
+
 2013-11-08  Eric Blake  <eblake@redhat.com>
 
 	fpending: fix regression on DragonFly BSD
