@@ -1,3 +1,14 @@
+2013-11-11  Pádraig Brady <P@draigBrady.com>
+
+	base64: provide a fast path for encoding well sized buffers
+	Avoid conditionals in the base64 encoding loop,
+	which was seen to give 60% better throughput.
+	* lib/base64.c (base64_encode_fast): A new function to be called
+	when we don't want to NUL terminate, and we have enough space
+	in the output to encode the given input.
+	(base64_encode): Call the _fast() version when appropriate.
+	Also remove a redundant mask with 0x3F on the first encoded byte.
+
 2013-11-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: port better to OS X 10.9
