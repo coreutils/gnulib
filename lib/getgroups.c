@@ -53,10 +53,10 @@ getgroups (int n _GL_UNUSED, GETGROUPS_T *groups _GL_UNUSED)
    says that the behavior is dubious if you compile different sections
    of a program with different _DARWIN_C_SOURCE settings, so fix only
    the offending symbol.  */
-#ifdef __APPLE__
+# ifdef __APPLE__
 int posix_getgroups (int, gid_t []) __asm ("_getgroups");
-# define getgroups posix_getgroups
-#endif
+#  define getgroups posix_getgroups
+# endif
 
 /* On at least Ultrix 4.3 and NextStep 3.2, getgroups (0, NULL) always
    fails.  On other systems, it returns the number of supplemental
