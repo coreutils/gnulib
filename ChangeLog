@@ -1,3 +1,9 @@
+2013-11-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	* lib/getgroups.c (posix_getgroups, getgroups) [__APPLE__]:
+	New function and macro, to work around _DARWIN_C_SOURCE problem.
+	Reported by Jack Howarth in <http://bugs.gnu.org/14463>.
+
 2013-11-11  Pádraig Brady <P@draigBrady.com>
 
 	base64: provide a fast path for encoding well sized buffers
