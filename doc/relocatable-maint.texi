@@ -8,7 +8,7 @@ and have it work correctly (including i18n).  So many users need to go
 through @code{configure; make; make install} with all its
 dependencies, options, and hurdles.
 
-Red Hat, Debian, and similar package systems solve the ``ease of
+Red Hat, Debian, and other binary distributions solve the ``ease of
 installation'' problem, but they hardwire path names, usually to
 @file{/usr} or @file{/usr/local}.  This means that users need root
 privileges to install a binary package, and prevents installing two

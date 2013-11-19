@@ -1,3 +1,9 @@
+2013-11-18  Ben Pfaff  <blp@cs.stanford.edu>
+
+	* doc/relocatable-maint.texi (Supporting Relocation): Improve
+	wording.
+	Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2013-11-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	* lib/getgroups.c (posix_getgroups, getgroups) [__APPLE__]:
