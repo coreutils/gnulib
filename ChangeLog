@@ -1,3 +1,15 @@
+2013-11-18  Jim Meyering  <meyering@fb.com>
+	and Paul Eggert  <eggert@cs.ucla.edu>
+
+	quotearg: don't attempt to store 1 << 31 into an "int"
+	* lib/quotearg.c (quotearg_buffer_restyled): Building coreutils with
+	gcc's new -fsanitize=undefined and running its tests triggered some
+	new test failures due to undefined behavior, all with this diagnostic:
+	  lib/quotearg.c:629:62: runtime error: left shift of 1 by 31 places \
+	    cannot be represented in type int
+	Rather than shifting "1" left to form a mask, shift the bits right and
+	simply use "1" as the mask.
+
 2013-11-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	error: depend on stdio

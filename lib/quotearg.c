@@ -626,7 +626,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
       if (! ((backslash_escapes || elide_outer_quotes)
              && quote_these_too
-             && quote_these_too[c / INT_BITS] & (1 << (c % INT_BITS)))
+             && quote_these_too[c / INT_BITS] >> (c % INT_BITS) & 1)
           && !is_right_quote)
         goto store_c;
 
