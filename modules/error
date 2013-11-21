@@ -12,6 +12,7 @@ lib/error.c
 m4/error.m4
 
 Depends-on:
+stdio           [test $ac_cv_lib_error_at_line = no]
 strerror        [test $ac_cv_lib_error_at_line = no]
 unistd          [test $ac_cv_lib_error_at_line = no]
 msvc-nothrow    [test $ac_cv_lib_error_at_line = no]
