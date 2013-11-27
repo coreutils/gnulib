@@ -1,3 +1,14 @@
+2013-11-27  Pádraig Brady <P@draigBrady.com>
+
+	selinux-h: improve stub types and add more stub functions
+
+	* lib/se-selinux.in.h: Change security_context_t to a typedef
+	rather than a define, as it's a pointer type and so is better
+	as a typedef to avoid issues declaring multiple variables
+	with the comma operator.  Also add stub for string_to_security_class().
+	* lib/se-context.in.h: Add stub functions for
+	context_{type,range,role,user}_get().
+
 2013-11-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ignore-value: prefer GCC version back through 2.0

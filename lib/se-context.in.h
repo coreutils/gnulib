@@ -32,6 +32,14 @@ SE_CONTEXT_INLINE int context_range_set (context_t sc _GL_UNUSED_PARAMETER,
 SE_CONTEXT_INLINE int context_type_set (context_t sc _GL_UNUSED_PARAMETER,
                                         char const *s _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
+SE_CONTEXT_INLINE char *context_type_get (context_t sc _GL_UNUSED_PARAMETER)
+  { errno = ENOTSUP; return (void *) 0; }
+SE_CONTEXT_INLINE char *context_range_get (context_t sc _GL_UNUSED_PARAMETER)
+  { errno = ENOTSUP; return (void *) 0; }
+SE_CONTEXT_INLINE char *context_role_get (context_t sc _GL_UNUSED_PARAMETER)
+  { errno = ENOTSUP; return (void *) 0; }
+SE_CONTEXT_INLINE char *context_user_get (context_t sc _GL_UNUSED_PARAMETER)
+  { errno = ENOTSUP; return (void *) 0; }
 
 _GL_INLINE_HEADER_END
 

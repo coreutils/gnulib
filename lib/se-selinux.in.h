@@ -44,7 +44,7 @@ _GL_INLINE_HEADER_BEGIN
 #  if !GNULIB_defined_security_types
 
 typedef unsigned short security_class_t;
-#   define security_context_t char*
+typedef char *security_context_t;
 #   define is_selinux_enabled() 0
 
 SE_SELINUX_INLINE int
@@ -103,6 +103,9 @@ security_compute_create (security_context_t scon _GL_UNUSED_PARAMETER,
                          security_class_t tclass _GL_UNUSED_PARAMETER,
                          security_context_t *newcon _GL_UNUSED_PARAMETER)
   { errno = ENOTSUP; return -1; }
+SE_SELINUX_INLINE security_class_t
+string_to_security_class (char const *name)
+  { errno = ENOTSUP; return 0; }
 SE_SELINUX_INLINE int
 matchpathcon_init_prefix (char const *path _GL_UNUSED_PARAMETER,
                           char const *prefix _GL_UNUSED_PARAMETER)
