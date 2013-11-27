@@ -1,3 +1,13 @@
+2013-11-25  Mats Erik Andersson  <gnu@gisladisker.se>
+
+	pty: Activate the signature wrapper of forkpty.
+	The intended preprocessor macro HAVE_FORKPTY is
+	never defined, yet `lib/forkpty.c' depends on it.
+
+	* m4/pty.m4 (gl_FUNC_FORKPTY): At completed analysis,
+	apply AC_DEFINE_UNQUOTED to HAVE_FORKPTY with value
+	$HAVE_FORKPTY for access to wrapper in `lib/forkpty.c'.
+
 2013-11-18  Jim Meyering  <meyering@fb.com>
 	and Paul Eggert  <eggert@cs.ucla.edu>
 
