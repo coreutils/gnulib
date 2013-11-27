@@ -35,10 +35,10 @@
 #ifndef _GL_IGNORE_VALUE_H
 #define _GL_IGNORE_VALUE_H
 
-/* The __attribute__((__warn_unused_result__)) feature
-   is available in gcc versions 3.4 and newer,
-   while the typeof feature has been available since 2.7 at least.  */
-#if 3 < __GNUC__ + (4 <= __GNUC_MINOR__)
+/* The __attribute__((__warn_unused_result__)) feature is available in
+   gcc versions 3.4 and newer, while __typeof__ and __extension__ have
+   been available since 2.0 at least.  */
+#if 2 <= __GNUC__
 # define ignore_value(x) \
     (__extension__ ({ __typeof__ (x) __x = (x); (void) __x; }))
 #else

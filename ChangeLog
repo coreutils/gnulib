@@ -1,3 +1,12 @@
+2013-11-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ignore-value: prefer GCC version back through 2.0
+	The code didn't match the comments, so I did a bit of software
+	archaeology.  GCC 2.0 seems to support __extension__ and
+	__typeof__, so fix both code and comments to use 2.0.
+	* lib/ignore-value.h (ignore_value): Use __extension__ and
+	__typeof__ for GCC 2.0 through 3.3, too.
+
 2013-11-25  Mats Erik Andersson  <gnu@gisladisker.se>
 
 	pty: Activate the signature wrapper of forkpty.
