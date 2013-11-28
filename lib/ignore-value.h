@@ -35,10 +35,12 @@
 #ifndef _GL_IGNORE_VALUE_H
 #define _GL_IGNORE_VALUE_H
 
-/* The __attribute__((__warn_unused_result__)) feature is available in
-   gcc versions 3.4 and newer, while __typeof__ and __extension__ have
-   been available since 2.0 at least.  */
-#if 2 <= __GNUC__
+/* Normally casting an expression to void discards its value, but GCC
+   versions 3.4 and newer have __attribute__ ((__warn_unused_result__))
+   which may cause unwanted diagnostics in that case.  Use __typeof__
+   and __extension__ to work around the problem, if the workaround is
+   known to be needed.  */
+#if 3 < __GNUC__ + (4 <= __GNUC_MINOR__)
 # define ignore_value(x) \
     (__extension__ ({ __typeof__ (x) __x = (x); (void) __x; }))
 #else
