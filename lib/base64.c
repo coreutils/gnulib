@@ -96,7 +96,10 @@ base64_encode (const char *restrict in, size_t inlen,
      large inputs is to have both constraints satisfied, so we depend
      on both in base_encode_fast().  */
   if (outlen % 4 == 0 && inlen == outlen / 4 * 3)
-    return base64_encode_fast (in, inlen, out);
+    {
+      base64_encode_fast (in, inlen, out);
+      return;
+    }
 
   while (inlen && outlen)
     {
