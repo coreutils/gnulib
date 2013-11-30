@@ -8,3 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-md5
 check_PROGRAMS += test-md5
+test_md5_LDADD = $(LDADD) @LIB_CRYPTO@

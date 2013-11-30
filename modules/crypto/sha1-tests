@@ -8,3 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-sha1
 check_PROGRAMS += test-sha1
+test_sha1_LDADD = $(LDADD) @LIB_CRYPTO@

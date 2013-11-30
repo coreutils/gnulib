@@ -8,3 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-hmac-sha512
 check_PROGRAMS += test-hmac-sha512
+test_hmac_sha512_LDADD = $(LDADD) @LIB_CRYPTO@

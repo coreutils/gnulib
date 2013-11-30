@@ -2,11 +2,14 @@ Description:
 Compute SHA1 checksum.
 
 Files:
+lib/gl_openssl.h
 lib/sha1.h
 lib/sha1.c
+m4/gl-openssl.m4
 m4/sha1.m4
 
 Depends-on:
+extern-inline
 stdalign
 stdint
 
@@ -18,6 +21,9 @@ lib_SOURCES += sha1.c
 
 Include:
 "sha1.h"
+
+Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+

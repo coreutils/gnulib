@@ -1,3 +1,45 @@
+2013-12-02  Pádraig Brady <P@draigBrady.com>
+
+	md5, sha1, sha256, sha512: use openssl routines if available.
+	--with-openssl the libcrypto md5, sha1, sha224, sha256, sha384, sha256
+	routines will be used if available, requiring apps to link @LIB_CRYPTO@
+	* lib/gl_openssl.h: Provide wrappers for specified openssl hash.
+	* m4/gl-openssl.m4 (gl_CRYPTO_CHECK): New function to lookup libcrypto
+	in the standard system location.
+	* m4/sha1.m4: Call gl_CRYPTO_CHECK() for SHA1.
+	* m4/sha256.m4: Likewise with SHA256.
+	* m4/sha512.m4: Likewise with SHA512.
+	* m4/md5.m4: Likewise with MD5.
+	* m4/gc.m4: Ensure @LIB_CRYPTO@ set for tests.
+	* lib/sha1.h: Include wrappers if HAVE_OPENSSL_SHA1.
+	* lib/sha256.h: Likewise with SHA256.
+	* lib/sha512.h: Likewise with SHA512.
+	* lib/md5.h: Likewise with MD5.
+	* lib/sha1.c: Exlude functionality if HAVE_OPENSSL_SHA1.
+	* lib/sha256.c: Likewise with SHA256.
+	* lib/sha512.c: Likewise with SHA512.
+	* lib/md5.c: Likewise with MD5.
+	* modules/crypto/sha1 (Link:): Add the new optional lib.
+	(Depends-on:): Add dependency on extern-inline.
+	* modules/crypto/sha256: Likewise.
+	* modules/crypto/sha512: Likewise.
+	* modules/crypto/md5: Likewise.
+	* modules/crypto/sha1-tests: Reference the lib here too.
+	* modules/crypto/md5-tests: Likewise.
+	* modules/crypto/gc-des-tests: Likewise.
+	* modules/crypto/gc-hmac-md5-tests: Likewise.
+	* modules/crypto/gc-hmac-sha1-tests: Likewise.
+	* modules/crypto/gc-hmac-sha256-tests: Likewise.
+	* modules/crypto/gc-hmac-sha512-tests: Likewise.
+	* modules/crypto/gc-md5-tests: Likewise.
+	* modules/crypto/gc-pbkdf2-sha1-tests: Likewise.
+	* modules/crypto/gc-sha1-tests: Likewise.
+	* modules/crypto/gc-tests: Likewise.
+	* modules/crypto/hmac-md5-tests: Likewise.
+	* modules/crypto/hmac-sha1-tests: Likewise.
+	* modules/crypto/hmac-sha256-tests: Likewise.
+	* modules/crypto/hmac-sha512-tests: Likewise.
+
 2013-11-29  RV1971  <rv1971@web.de>
 
 	base64: (trivial) fix compilation regression on some compilers

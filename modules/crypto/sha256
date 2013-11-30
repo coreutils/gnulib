@@ -2,11 +2,14 @@ Description:
 Compute SHA224 and SHA256 checksums.
 
 Files:
+lib/gl_openssl.h
 lib/sha256.h
 lib/sha256.c
+m4/gl-openssl.m4
 m4/sha256.m4
 
 Depends-on:
+extern-inline
 stdalign
 stdint
 
@@ -18,6 +21,9 @@ lib_SOURCES += sha256.c
 
 Include:
 "sha256.h"
+
+Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+

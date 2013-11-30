@@ -6,6 +6,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_GC],
 [
+  LIB_CRYPTO=
+  AC_SUBST([LIB_CRYPTO])
   AC_ARG_WITH([libgcrypt],
     AS_HELP_STRING([--with-libgcrypt], [use libgcrypt for low-level crypto]),
     libgcrypt=$withval, libgcrypt=no)

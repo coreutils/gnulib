@@ -8,3 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc-des
 check_PROGRAMS += test-gc-des
+test_gc_des_LDADD = $(LDADD) @LIB_CRYPTO@
