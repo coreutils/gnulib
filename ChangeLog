@@ -1,3 +1,9 @@
+2013-12-03  Ivailo  <xakepa10@gmail.com>
+
+	test-xvasprintf: (trivial) fix to disable some -Wformat-security diags
+	* tests/test-xvasprintf.c: Disable -Wformat-zero-length and
+	-Wformat-nonliteral checks, as these edge cases are part of the test.
+
 2013-12-03  Eric Blake  <eblake@redhat.com>
 
 	regex: avoid glibc deadlock during configure
