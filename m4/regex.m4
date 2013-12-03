@@ -1,4 +1,4 @@
-# serial 64
+# serial 65
 
 # Copyright (C) 1996-2001, 2003-2013 Free Software Foundation, Inc.
 #
@@ -28,6 +28,7 @@ AC_DEFUN([gl_REGEX],
     # If cross compiling, assume the test would fail and use the included
     # regex.c.
     AC_CHECK_DECLS_ONCE([alarm])
+    AC_CHECK_HEADERS_ONCE([malloc.h])
     AC_CACHE_CHECK([for working re_compile_pattern],
                    [gl_cv_func_re_compile_pattern_working],
       [AC_RUN_IFELSE(
@@ -41,6 +42,9 @@ AC_DEFUN([gl_REGEX],
             # include <unistd.h>
             # include <signal.h>
             #endif
+            #if HAVE_MALLOC_H
+            # include <malloc.h>
+            #endif
           ]],
           [[int result = 0;
             static struct re_pattern_buffer regex;
@@ -49,11 +53,17 @@ AC_DEFUN([gl_REGEX],
             const char *s;
             struct re_registers regs;
 
+            /* Some builds of glibc go into an infinite loop on this
+               test.  Use alarm to force death, and mallopt to avoid
+               malloc recursion in diagnosing the corrupted heap. */
 #if HAVE_DECL_ALARM
-            /* Some builds of glibc go into an infinite loop on this test.  */
             signal (SIGALRM, SIG_DFL);
             alarm (2);
 #endif
+#ifdef M_CHECK_ACTION
+            mallopt(M_CHECK_ACTION, 2);
+#endif
+
             if (setlocale (LC_ALL, "en_US.UTF-8"))
               {
                 {
