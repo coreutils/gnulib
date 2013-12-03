@@ -8,7 +8,8 @@ AC_DEFUN([gl_CRYPTO_CHECK],
 [
   AC_ARG_WITH([openssl],
     [AS_HELP_STRING([--with-openssl],
-      [use libcrypto hash routines if available: default=no])],
+      [use libcrypto hash routines. Valid ARGs are:
+       'yes', 'no', 'optional' => use if available])],
     [],
     [with_openssl=no])
 
@@ -26,8 +27,10 @@ AC_DEFUN([gl_CRYPTO_CHECK],
         [LIB_CRYPTO='-lcrypto'
          AC_DEFINE([HAVE_OPENSSL_$1],[1],
            [Define to 1 if libcrypto is used for $1])])])
-    if test "x$with_openssl" = xyes; then
-      if test "x$LIB_CRYPTO" = x; then
+    if test "x$LIB_CRYPTO" = x; then
+      if test "x$with_openssl" = xyes; then
+        AC_MSG_ERROR([openssl development library not found for $1])
+      else
         AC_MSG_WARN([openssl development library not found for $1])
       fi
     fi

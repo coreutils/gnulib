@@ -1,3 +1,14 @@
+2013-12-03  Pádraig Brady <P@draigBrady.com>
+
+	md5, sha1, sha256, sha512: support mandating use of openssl
+	* m4/gl-openssl.m4 (gl_crypto_check): Adjust the --with-openssl
+	description, to list the now 3 separate options.  also don't
+	mention the default=no, since this is implicit given the option
+	is described as --with-openssl rather than --without-openssl.
+	If projects change the default they're free to document that.
+	with --with-openssl[=yes] we now error out when the specified
+	hash algorithm is not available in libcrypto.
+
 2013-12-03  Ivailo  <xakepa10@gmail.com>
 
 	test-xvasprintf: (trivial) fix to disable some -Wformat-security diags
