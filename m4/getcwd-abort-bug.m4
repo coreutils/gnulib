@@ -27,6 +27,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
      AC_RUN_IFELSE(
        [AC_LANG_SOURCE(
           [[
+#include <errno.h>
 #include <stdlib.h>
 #if HAVE_UNISTD_H
 # include <unistd.h>
