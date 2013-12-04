@@ -5,6 +5,7 @@ Files:
 m4/include_next.m4
 
 Depends-on:
+absolute-header
 
 configure.ac:
 

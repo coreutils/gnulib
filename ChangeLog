@@ -1,3 +1,10 @@
+2013-12-04  Eric Blake  <eblake@redhat.com>
+
+	include_next: minimize code duplication
+	* modules/include_next (Depends-on): Add absolute-header.
+	* m4/include_next.m4 (gl_NEXT_HEADERS_INTERNAL): Reuse
+	gl_ABSOLUTE_HEADER_ONE instead of open-coding it.
+
 2013-12-04  Pádraig Brady <P@draigBrady.com>
 
 	getcwd: fix compile error in configure check
