@@ -38,12 +38,19 @@ AC_DEFUN([gl_REGEX],
             #include <locale.h>
             #include <limits.h>
             #include <string.h>
-            #if HAVE_DECL_ALARM
-            # include <unistd.h>
+
+            #if defined M_CHECK_ACTION || HAVE_DECL_ALARM
             # include <signal.h>
+            # include <unistd.h>
             #endif
+
             #if HAVE_MALLOC_H
             # include <malloc.h>
+            #endif
+
+            #ifdef M_CHECK_ACTION
+            /* Exit with distinguishable exit code.  */
+            static void sigabrt_no_core (int sig) { raise (SIGTERM); }
             #endif
           ]],
           [[int result = 0;
@@ -61,7 +68,8 @@ AC_DEFUN([gl_REGEX],
             alarm (2);
 #endif
 #ifdef M_CHECK_ACTION
-            mallopt(M_CHECK_ACTION, 2);
+            signal (SIGABRT, sigabrt_no_core);
+            mallopt (M_CHECK_ACTION, 2);
 #endif
 
             if (setlocale (LC_ALL, "en_US.UTF-8"))
