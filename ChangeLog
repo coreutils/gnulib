@@ -1,5 +1,14 @@
 2013-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	md5, sha1, sha256, sha512: add gl_SET_CRYPTO_CHECK_DEFAULT
+	This provides a new way to specify the default for
+	gl_CRYPTO_CHECK, one that is reflected in the --help message.
+	Emacs uses this, as well as the old way.
+	This attempts to implement a suggestion by Pádraig Brady in
+	<http://lists.gnu.org/archive/html/coreutils/2013-12/msg00080.html>.
+	* m4/gl-openssl.m4(gl_SET_CRYPTO_CHECK_DEFAULT): New macro.
+	(gl_CRYPTO_CHECK): Use it.  Mention the default in --help output.
+
 	md5, sha1, sha256, sha512: add 'auto', and a way to specify default
 	* m4/gl-openssl.m4 (gl_CRYPTO_CHECK):
 	Add support for a new option, --with-openssl=auto, which causes
