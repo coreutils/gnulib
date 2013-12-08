@@ -1,3 +1,12 @@
+2013-12-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	md5, sha1, sha256, sha512: add 'auto', and a way to specify default
+	* m4/gl-openssl.m4 (gl_CRYPTO_CHECK):
+	Add support for a new option, --with-openssl=auto, which causes
+	the library to be used if available and silently ignored if not.
+	Add support to allow allow configure.ac to specify its own
+	default, by setting with_openssl_default before invoking gl_INIT.
+
 2013-12-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	open-tests: port to glibc with _FORTIFY_SOURCE and -O1
