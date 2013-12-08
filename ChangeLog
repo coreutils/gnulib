@@ -1,3 +1,11 @@
+2013-12-07  Pádraig Brady <P@draigBrady.com>
+
+	md5, sha1, sha256, sha512: fix link error with partial libcrypto
+	* m4/gl-openssl.m4 (gl_CRYPTO_CHECK): Only clear LIB_CRYPTO at
+	init time, so that if early checks find crypto routines,
+	while the last does not, then @LIB_CRYPTO@ is replaced correctly,
+	avoiding link failures.
+
 2013-12-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	md5, sha1, sha256, sha512: add gl_SET_CRYPTO_CHECK_DEFAULT
