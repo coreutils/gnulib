@@ -1,5 +1,10 @@
 2013-12-07  Pádraig Brady <P@draigBrady.com>
 
+	open-tests: fix build failure with -Werror=old-style-declaration
+	* tests/test-open.h: Reorder the inline to avoid the issue.
+
+2013-12-07  Pádraig Brady <P@draigBrady.com>
+
 	md5, sha1, sha256, sha512: fix link error with partial libcrypto
 	* m4/gl-openssl.m4 (gl_CRYPTO_CHECK): Only clear LIB_CRYPTO at
 	init time, so that if early checks find crypto routines,

@@ -31,7 +31,7 @@
    appropriate headers are already included.  If PRINT, warn before
    skipping symlink tests with status 77.  */
 
-static int __always_inline
+static __always_inline int
 test_open (int (*func) (char const *, int, ...), bool print)
 {
   int fd;
