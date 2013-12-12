@@ -1,3 +1,8 @@
+2013-12-12  Alexander V. Lukyanov  <lav@netis.ru>
+
+	md5, sha1, sha256, sha512: fix (trivial) compile error in c++ mode.
+	* lib/gl_openssl.h: Cast void pointers to a specific type.
+
 2013-12-07  Pádraig Brady <P@draigBrady.com>
 
 	open-tests: fix build failure with -Werror=old-style-declaration

@@ -91,18 +91,18 @@ GL_CRYPTO_FN (_process_block) (const void *buf, size_t len, struct _gl_ctx *ctx)
 
 GL_OPENSSL_INLINE void *
 GL_CRYPTO_FN (_finish_ctx) (struct _gl_ctx *ctx, void *res)
-{ OPENSSL_FN (_Final) (res, (_gl_CTX *) ctx); return res; }
+{ OPENSSL_FN (_Final) ((unsigned char *) res, (_gl_CTX *) ctx); return res; }
 
 GL_OPENSSL_INLINE void *
 GL_CRYPTO_FN (_buffer) (const char *buf, size_t len, void *res)
-{ return OPENSSL_FN () ((const unsigned char *) buf, len, res); }
+{ return OPENSSL_FN () ((const unsigned char *) buf, len, (unsigned char *) res); }
 
 GL_OPENSSL_INLINE void *
 GL_CRYPTO_FN (_read_ctx) (const struct _gl_ctx *ctx, void *res)
 {
   /* Assume any unprocessed bytes in ctx are not to be ignored.  */
   _gl_CTX tmp_ctx = *(_gl_CTX *) ctx;
-  OPENSSL_FN (_Final) (res, &tmp_ctx);
+  OPENSSL_FN (_Final) ((unsigned char *) res, &tmp_ctx);
   return res;
 }
 
