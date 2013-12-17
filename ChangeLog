@@ -1,3 +1,23 @@
+2013-12-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gettimeofday: port recent C++ fix to Emacs
+	Without this further patch, Emacs won't build due to
+	the portcheck failing.  Also, this simplifies the patch a bit.
+	* lib/time.in.h (localtime, gmtime): Don't replace unless
+	GNULIB_GETTIMEOFDAY.  Treat them more like mktime.
+	* lib/time.in.h (localtime, gmtime):
+	* m4/gettimeofday.m4 (gl_GETTIMEOFDAY_REPLACE_LOCALTIME):
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS):
+	* modules/time (time.h):
+	Don't worry about about the possibility of localtime and gmtime
+	being absent; they're present in all C libraries we know about.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS):
+	Don't assume sys_time is present and has been initialized.
+	Instead, use a hack that should work even if it hasn't been.
+	Don't use a portcheck for gmtime or localtime; this supports
+	the hack.
+	* modules/time (time.h): Substitute GNULIB_GETTIMEOFDAY.
+
 2013-12-17  John W. Eaton  <jwe@gnu.org>
 
 	gettimeofday: fix C++ crosscompilation

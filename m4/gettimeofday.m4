@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 
 # Copyright (C) 2001-2003, 2005, 2007, 2009-2013 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -127,13 +127,6 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY_CLOBBER],
 ])
 
 AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
-  AC_CHECK_FUNCS_ONCE([gmtime localtime])
-  if test $ac_cv_func_gmtime != yes; then
-    HAVE_GMTIME=0
-  fi
-  if test $ac_cv_func_localtime != yes; then
-    HAVE_LOCALTIME=0
-  fi
   REPLACE_GMTIME=1
   REPLACE_LOCALTIME=1
 ])
