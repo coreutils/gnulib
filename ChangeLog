@@ -1,3 +1,12 @@
+2013-12-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qacl: port to Windows better
+	See Eli Zaretskii in
+	<http://lists.gnu.org/archive/html/emacs-devel/2013-12/msg00593.html>.
+	* lib/file-has-acl.c (acl_access_nontrivial):
+	Return -1 and set errno if !HAVE_ACL_FIRST_ENTRY &&
+	!HAVE_ACL_TO_SHORT_TEXT && !HAVE_ACL_FREE_TEXT.
+
 2013-12-12  Alexander V. Lukyanov  <lav@netis.ru>
 
 	md5, sha1, sha256, sha512: fix (trivial) compile error in c++ mode.
