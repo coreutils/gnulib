@@ -1,3 +1,20 @@
+2013-12-17  John W. Eaton  <jwe@gnu.org>
+
+	gettimeofday: fix C++ crosscompilation
+
+	Never replace gmtime and localtime by macros when compiling with
+	C++, this prevents <ctime> from being included.
+
+	* m4/gettimeofday.m4 (gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Do not
+	define gmtime and localtime as preprocessor macros.  Instead
+	define some HAVE_GMTIME, HAVE_LOCALTIME, REPLACE_GMTIME, and
+	REPLACE_LOCALTIME substitutions.
+	* lib/time.in.h: Declare gmtime and localtime when needed.
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): AC_SUBST HAVE_GMTIME,
+	HAVE_LOCALTIME, REPLACE_GMTIME, and REPLACE_LOCALTIME.
+	* modules/time: Depend on gettimeofday, and substitute the above
+	variables in time.h.
+
 2013-12-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qacl: port to Windows better

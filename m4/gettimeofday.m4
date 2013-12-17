@@ -127,10 +127,15 @@ AC_DEFUN([gl_FUNC_GETTIMEOFDAY_CLOBBER],
 ])
 
 AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
-  AC_DEFINE([gmtime], [rpl_gmtime],
-    [Define to rpl_gmtime if the replacement function should be used.])
-  AC_DEFINE([localtime], [rpl_localtime],
-    [Define to rpl_localtime if the replacement function should be used.])
+  AC_CHECK_FUNCS_ONCE([gmtime localtime])
+  if test $ac_cv_func_gmtime != yes; then
+    HAVE_GMTIME=0
+  fi
+  if test $ac_cv_func_localtime != yes; then
+    HAVE_LOCALTIME=0
+  fi
+  REPLACE_GMTIME=1
+  REPLACE_LOCALTIME=1
 ])
 
 # Prerequisites of lib/gettimeofday.c.

@@ -187,6 +187,40 @@ _GL_CXXALIASWARN (gmtime_r);
 #  endif
 # endif
 
+/* Convert TIMER to RESULT, assuming local time and UTC respectively.  See
+   <http://www.opengroup.org/susv3xsh/localtime.html> and
+   <http://www.opengroup.org/susv3xsh/gmtime.html>.  */
+# if @REPLACE_LOCALTIME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef localtime
+#   define localtime rpl_localtime
+#  endif
+_GL_FUNCDECL_RPL (localtime, struct tm *, (time_t const *__timer)
+		                          _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (localtime, struct tm *, (time_t const *__timer));
+# else
+#  if ! @HAVE_LOCALTIME@
+_GL_FUNCDECL_SYS (localtime, struct tm *, (time_t const *__timer)
+                                          _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (localtime, struct tm *, (time_t const *__timer));
+# endif
+# if @REPLACE_GMTIME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef gmtime
+#   define gmtime rpl_gmtime
+#  endif
+_GL_FUNCDECL_RPL (gmtime, struct tm *, (time_t const *__timer)
+                                       _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (gmtime, struct tm *, (time_t const *__timer));
+# else
+#  if ! @HAVE_GMTIME@
+_GL_FUNCDECL_SYS (gmtime, struct tm *, (time_t const *__timer)
+                                       _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (gmtime, struct tm *, (time_t const *__timer));
+# endif
+
 /* Parse BUF as a time stamp, assuming FORMAT specifies its layout, and store
    the resulting broken-down time into TM.  See
    <http://www.opengroup.org/susv3xsh/strptime.html>.  */
