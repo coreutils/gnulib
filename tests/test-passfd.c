@@ -83,6 +83,7 @@ main ()
   /* father */
   else
     {
+      ASSERT (close (pair[1]) == 0);
       fd = recvfd (pair[0], 0);
       if (fd == -1)
         {
@@ -116,6 +117,13 @@ main ()
           perror ("fstat");
           return 80;
         }
+
+      /* Check behavior when sender no longer around */
+      errno = 0;
+      fd = recvfd (pair[0], 0);
+      ASSERT (fd == -1);
+      ASSERT (errno == ENOTCONN);
+
       return 0;
     }
 #else
