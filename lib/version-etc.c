@@ -38,7 +38,7 @@
 # define PACKAGE PACKAGE_TARNAME
 #endif
 
-enum { COPYRIGHT_YEAR = 2013 };
+enum { COPYRIGHT_YEAR = 2014 };
 
 /* The three functions below display the --version information the
    standard way.

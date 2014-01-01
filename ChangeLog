@@ -1,3 +1,8 @@
+2014-01-01  Eric Blake  <eblake@redhat.com>
+
+	version-etc: new year
+	* lib/version-etc.c (COPYRIGHT_YEAR): Bump to 2014.
+
 2013-12-24  Eric Blake  <eblake@redhat.com>
 
 	passfd: give nicer error for recvfd at eof
