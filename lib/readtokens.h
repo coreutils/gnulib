@@ -1,6 +1,6 @@
 /* readtokens.h -- Functions for reading tokens from an input stream.
 
-   Copyright (C) 1990-1991, 1999, 2001-2004, 2009-2013 Free Software
+   Copyright (C) 1990-1991, 1999, 2001-2004, 2009-2014 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

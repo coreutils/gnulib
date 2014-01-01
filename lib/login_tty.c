@@ -1,6 +1,6 @@
 /* Assign a given terminal as controlling terminal and as standard input,
    standard output, standard error of the current process.
-   Copyright (C) 2010-2013 Free Software Foundation, Inc.
+   Copyright (C) 2010-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

@@ -2,6 +2,7 @@
 
 	version-etc: new year
 	* lib/version-etc.c (COPYRIGHT_YEAR): Bump to 2014.
+	* all files: run 'make update-copyright'
 
 2013-12-24  Eric Blake  <eblake@redhat.com>
 
@@ -101153,7 +101154,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2013 Free Software Foundation, Inc.
+	Copyright (C) 1997-2014 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice

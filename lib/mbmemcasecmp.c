@@ -1,5 +1,5 @@
 /* Compare two memory areas with possibly different lengths, case-insensitive.
-   Copyright (C) 1998-1999, 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 1998-1999, 2005-2014 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009,
    based on earlier glibc code.
 

@@ -1,4 +1,4 @@
-@c Copyright (C) 1994, 1996, 1998, 2000-2001, 2003-2007, 2009-2013 Free
+@c Copyright (C) 1994, 1996, 1998, 2000-2001, 2003-2007, 2009-2014 Free
 @c Software Foundation, Inc.
 @c
 @c Permission is granted to copy, distribute and/or modify this document

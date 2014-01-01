@@ -1,6 +1,6 @@
 dnl Configuration of librpathx.
 dnl
-dnl Copyright (C) 2002-2003, 2005, 2010-2013 Free Software Foundation, Inc.
+dnl Copyright (C) 2002-2003, 2005, 2010-2014 Free Software Foundation, Inc.
 dnl
 dnl This program is free software: you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by

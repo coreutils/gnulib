@@ -1,5 +1,5 @@
 /* Search character in UTF-16 string.
-   Copyright (C) 1999, 2002, 2006-2007, 2009-2013 Free Software Foundation,
+   Copyright (C) 1999, 2002, 2006-2007, 2009-2014 Free Software Foundation,
    Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 

@@ -1,5 +1,5 @@
 /* Advance in a wide string, skipping any of a set of wide characters.
-   Copyright (C) 1999, 2011-2013 Free Software Foundation, Inc.
+   Copyright (C) 1999, 2011-2014 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 1999.
 
    This program is free software: you can redistribute it and/or modify

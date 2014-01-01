@@ -1,5 +1,5 @@
 /* Formatted output to strings in C locale.
-   Copyright (C) 2004, 2006-2013 Free Software Foundation, Inc.
+   Copyright (C) 2004, 2006-2014 Free Software Foundation, Inc.
    Written by Simon Josefsson and Paul Eggert.
    Modified for C locale by Ben Pfaff.
 

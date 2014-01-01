@@ -1,5 +1,5 @@
 /* Word breaks in Unicode strings.
-   Copyright (C) 2001-2003, 2005-2013 Free Software Foundation, Inc.
+   Copyright (C) 2001-2003, 2005-2014 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify it

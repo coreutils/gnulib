@@ -1,6 +1,6 @@
 /* Which POSIX version to conform to, for utilities.
 
-   Copyright (C) 2002-2006, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 2002-2006, 2009-2014 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

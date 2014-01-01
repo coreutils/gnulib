@@ -1,5 +1,5 @@
 /* pt_chown - helper program for 'grantpt'.
-   Copyright (C) 1998-1999, 2009-2013 Free Software Foundation, Inc.
+   Copyright (C) 1998-1999, 2009-2014 Free Software Foundation, Inc.
    Contributed by C. Scott Ananian <cananian@alumni.princeton.edu>, 1998.
 
    This program is free software: you can redistribute it and/or modify
