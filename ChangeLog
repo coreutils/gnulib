@@ -1,3 +1,8 @@
+2014-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: update main copyright year
+	* doc/gnulib.texi: Update copyright date.
+
 2014-01-01  Eric Blake  <eblake@redhat.com>
 
 	version-etc: new year
