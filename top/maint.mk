@@ -1395,8 +1395,8 @@ public-submodule-commit:
 		&& git --version >/dev/null 2>&1; then			\
 	  cd $(srcdir) &&						\
 	  git submodule --quiet foreach					\
-	      test '"$$(git rev-parse "$$sha1")"'			\
-	      = '"$$(git merge-base origin "$$sha1")"'			\
+	      'test "$$(git rev-parse "$$sha1")"			\
+		  = "$$(git merge-base origin "$$sha1")"'		\
 	    || { echo '$(ME): found non-public submodule commit' >&2;	\
 		 exit 1; };						\
 	else								\

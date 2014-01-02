@@ -1,3 +1,13 @@
+2014-01-01  Jim Meyering  <meyering@fb.com>
+
+	maint: fix public-submodule-commit to work with newer git
+	* top/maint.mk (public-submodule-commit): Remove excess quoting.
+	We were over-quoting the test arguments, and somewhere prior to
+	version 1.8.5.2.229, git stopped removing those excess quotes,
+	which made the test fail, since the unexpanded strings would
+	always differ; using GIT_TRACE=1 confirmed that the git merge-base
+	command wasn't even being run.
+
 2014-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: update main copyright year
