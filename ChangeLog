@@ -1,3 +1,10 @@
+2014-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	relocatable-script: remove unused code
+	Problem reported by Reuben Thomas in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2013-12/msg00117.html
+	* build-aux/relocatable.sh.in (func_tmpdir): Remove unused function.
+
 2014-01-01  Jim Meyering  <meyering@fb.com>
 
 	maint: fix public-submodule-commit to work with newer git
