@@ -1768,7 +1768,7 @@ compile the fastmap yourself or have @code{re_search} do it for you;
 when @code{fastmap} is nonzero, it automatically compiles a fastmap the
 first time you search using a particular compiled pattern.
 
-By setting the buffer’s @code{fastmap} field before calling
+By setting the buffer's @code{fastmap} field before calling
 @code{re_compile_pattern}, you can reuse a buffer data structure across
 multiple searches with different patterns, and allocate the fastmap only
 once.  Nonetheless, the fastmap must be recompiled each time the buffer

@@ -1,3 +1,10 @@
+2014-01-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: use ASCII in .texi files where UTF-8 isn't needed
+	* doc/posix-functions/crypt.texi, doc/posix-functions/encrypt.texi:
+	* doc/posix-functions/setkey.texi, doc/regex.texi:
+	Use ASCII input, not UTF-8.
+
 2014-01-02  Jim Meyering  <meyering@fb.com>
 
 	freading: declare with the "pure" attribute

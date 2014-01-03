@@ -18,5 +18,5 @@ NetBSD 5.0, Minix 3.1.8, Cygwin, mingw, MSVC 9, BeOS.
 @item
 This function is not declared in @code{<stdlib.h>}
 (without @code{-D_GNU_SOURCE}) on some platforms:
-glibc (at least 2.11–2.13).
+glibc (at least 2.11--2.13).
 @end itemize
