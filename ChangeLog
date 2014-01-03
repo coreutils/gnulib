@@ -1,3 +1,9 @@
+2014-01-02  Jim Meyering  <meyering@fb.com>
+
+	manywarnings: remove -Wmudflap
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Remove -Wmudflap, since
+	it is no longer supported in gcc-4.9-to-be.
+
 2014-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	relocatable-script: remove unused code
