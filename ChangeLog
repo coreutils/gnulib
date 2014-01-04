@@ -1,3 +1,12 @@
+2014-01-03  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: adapt openat.h-include-without-use test
+	* top/maint.mk (sc_prohibit_openat_without_use): Also check for
+	FCHMODAT_INLINE, FCHOWNAT_INLINE and STATAT_INLINE, to avoid
+	failing on gnulib's own lib/{chmod,chown,stat}at.c files.
+	With this change, running "make sc_maint" in gnulib's top-level
+	directory now passes for me.
+
 2014-01-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: use ASCII in .texi files where UTF-8 isn't needed
