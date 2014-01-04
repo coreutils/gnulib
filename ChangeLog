@@ -1,5 +1,11 @@
 2014-01-03  Jim Meyering  <meyering@fb.com>
 
+	freadable, fwritable, fwriting: declare with the "pure" attribute
+	* lib/freadable.h (freadable): Declare with the "pure" attribute.
+	* lib/fwritable.h (fwritable): Likewise.
+	* lib/fwriting.h (fwriting): Likewise.
+	Suggested by Bruno Haible.
+
 	maint.mk: adapt openat.h-include-without-use test
 	* top/maint.mk (sc_prohibit_openat_without_use): Also check for
 	FCHMODAT_INLINE, FCHOWNAT_INLINE and STATAT_INLINE, to avoid

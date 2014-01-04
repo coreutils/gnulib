@@ -33,7 +33,7 @@
 extern "C" {
 # endif
 
-extern bool freadable (FILE *stream);
+extern bool freadable (FILE *stream) _GL_ATTRIBUTE_PURE;
 
 # ifdef __cplusplus
 }
