@@ -1,5 +1,17 @@
 # This file is used via the maint.mk-using rule in Makefile.
 
+# This is a gnulib-specific rule to keep non-ascii characters
+# from creeping into our .texi files.  There is nothing inherently
+# wrong with e.g., UTF-8 characters in texinfo sources, but here,
+# we had accumulated some non-ascii apostrophes and hyphens, and
+# they were recently replaced with their ascii analogs.  This rule
+# should help keep things consistent.
+sc_keep_gnulib_texi_files_mostly_ascii:
+	@prohibit='[^][	 a-zA-Z0-9'\''`~!\@#$$%^&*(){}=+";:,./<>?|\_-]'	\
+	in_vc_files='\.texi$$'						\
+	halt='invalid bytes in gnulib .texi file'			\
+	  $(_sc_search_regexp)
+
 local-checks-to-skip =			\
   sc_GFDL_version			\
   sc_GPL_version			\

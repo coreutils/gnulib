@@ -1,3 +1,10 @@
+2014-01-04  Jim Meyering  <meyering@fb.com>
+
+	maint: add a gnulib-local rule to keep non-ascii out of .texi files
+	* cfg.mk (sc_keep_gnulib_texi_files_mostly_ascii): New rule,
+	so that "make sc_maint" will ding anyone who puts non-ascii
+	in any of gnulib's .texi files.
+
 2014-01-03  Jim Meyering  <meyering@fb.com>
 
 	freadable, fwritable, fwriting: declare with the "pure" attribute
