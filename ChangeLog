@@ -1,3 +1,8 @@
+2014-01-06  Eric Blake  <eblake@redhat.com>
+
+	include_next: port to autoconf 2.63
+	* m4/gnulib-common.m4 (AS_VAR_COPY): Define if missing.
+
 2014-01-04  Jim Meyering  <meyering@fb.com>
 
 	maint: add a gnulib-local rule to keep non-ascii out of .texi files
