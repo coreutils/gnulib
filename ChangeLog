@@ -1,3 +1,11 @@
+2014-01-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests: simplify porting to Solaris 10 /bin/sh
+	Some test cases in 'grep' need a shell that groks '$(';
+	export re_shell_ for their benefit.  Problem reported for 'grep'
+	by Dagobert Michelsen in <http://bugs.gnu.org/16380>.
+	* tests/init.sh (re_shell_): Export if it's used.
+
 2014-01-06  Eric Blake  <eblake@redhat.com>
 
 	md5, sha1, sha256, sha512: support older autoconf
