@@ -201,7 +201,8 @@ else
       *x*) opts_=-x ;;
       *) opts_= ;;
     esac
-    export re_shell_
+    re_shell=$re_shell_
+    export re_shell
     exec "$re_shell_" $opts_ "$0" --no-reexec "$@"
     echo "$ME_: exec failed" 1>&2
     exit 127

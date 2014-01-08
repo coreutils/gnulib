@@ -1,5 +1,10 @@
 2014-01-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tests: fix export bug in previous patch
+	Problem reported by Jim Meyering.
+	* tests/init.sh (re_shell): New var, which is exported instead of
+	re_shell_.
+
 	tests: simplify porting to Solaris 10 /bin/sh
 	Some test cases in 'grep' need a shell that groks '$(';
 	export re_shell_ for their benefit.  Problem reported for 'grep'
