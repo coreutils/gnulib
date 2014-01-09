@@ -1,0 +1,64 @@
+# The functions in this file provide support for relocatability of
+# Perl scripts.  They should be included near the beginning of each
+# Perl script in a relocatable program, by adding @relocatable_pl@
+# and causing the script to be expanded with AC_CONFIG_FILES.  A
+# small amount of additional code must be added and adapted to the
+# package by hand; see doc/relocatable-maint.texi (in Gnulib) for
+# details.
+#
+# This code is based on relocatable.sh.in, and design changes (and
+# bugs) should probably be cross-checked with it.
+#
+# Copyright (C) 2013 Free Software Foundation, Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+use Config;
+use File::Basename;
+use File::Spec::Functions;
+use Cwd 'realpath';
+
+# Support for relocatability.
+sub find_curr_installdir {
+  # Determine curr_installdir, even taking into account symlinks.
+  my $curr_executable = $0;
+  my $basename = basename($0);
+  if ($curr_executable eq $basename) {
+    LOOP: for my $dir (split /$Config{path_sep}/, $ENV{PATH}) {
+      $dir = "." unless $dir;
+      for my $ext ('') {
+        my $filename = catfile($dir, "$curr_executable$ext");
+        if (-f $filename) {
+          $curr_executable = $filename;
+          last LOOP;
+        }
+      }
+    }
+  }
+  # Resolve symlinks and canonicalize.
+  return realpath(dirname($curr_executable));
+}
+sub find_prefixes {
+  # Compute the original/current installation prefixes by stripping the
+  # trailing directories off the original/current installation directories.
+  my ($orig_installprefix, $curr_installprefix) = @_;
+  my $orig_last = basename($orig_installprefix);
+  my $curr_last = basename($curr_installprefix);
+  if ($orig_last && $curr_last && $orig_last eq $curr_last) {
+    $orig_installprefix = dirname($orig_installprefix);
+    $curr_installprefix = dirname($curr_installprefix);
+  }
+  return $orig_installprefix, $curr_installprefix;
+}

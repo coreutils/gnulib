@@ -144,6 +144,37 @@ where the script gets installed.  Also, at the end, instead of
 that you need.
 
 @item
+If your package installs Perl scripts, also import the
+@code{relocatable-perl} module.  Then, near the beginning of each
+Perl script that your package installs, add the following:
+
+@example
+@@relocatable_pl@@
+if ("@@RELOCATABLE@@" eq "yes") {
+  my $exec_prefix = "@@exec_prefix@@";
+  my $orig_installdir = "@@bindir@@"; # see Makefile.am's *_SCRIPTS variables
+  my ($orig_installprefix, $curr_installprefix) = find_prefixes($orig_installdir, find_curr_installdir());
+  sub relocate { # the subroutine is defined whether or not the enclosing block is executed
+    my ($dir) = @@_;
+    if ("@@RELOCATABLE@@" eq "yes") {
+      $dir =~ s%^$orig_installprefix/%$curr_installprefix/%;
+      $dir =~ s,/$,,;
+    }
+    return $dir;
+  }
+}
+
+# Get some relocated directory names.
+$sysconfdir = relocate("@@sysconfdir@@");
+$some_datadir = relocate(@@datadir@@/something");
+@end example
+
+You must adapt the definition of @code{$orig_installdir}, depending on
+where the script gets installed.  Also, at the end, instead of
+@code{sysconfdir} and @code{some_datadir}, transform those variables
+that you need.
+
+@item
 In your @file{Makefile.am}, for every program @command{foo} that gets
 installed in, say, @file{$(bindir)}, you add:
 

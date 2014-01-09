@@ -1,3 +1,10 @@
+2014-01-09  Reuben Thomas  <rrt@sc3d.org>
+
+	relocatable-perl: like relocatable-script, but for Perl scripts
+	* build-aux/relocatable.pl.in: Add.
+	* doc/relocatable-maint.texi: Add documentation.
+	* modules/relocatable-perl: Add.
+
 2014-01-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: fix export bug in previous patch
