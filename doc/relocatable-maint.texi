@@ -122,17 +122,26 @@ if test "@@RELOCATABLE@@" = yes; then
   orig_installdir="$bindir" # see Makefile.am's *_SCRIPTS variables
   func_find_curr_installdir # determine curr_installdir
   func_find_prefixes
-  # Relocate the directory variables that we use.
-  gettext_dir=`
-    echo "$gettext_dir/" \
+  relocate () @{
+    echo "$1/" \
     | sed -e "s%^$@{orig_installprefix@}/%$@{curr_installprefix@}/%" \
-    | sed -e 's,/$,,'`
+    | sed -e 's,/$,,'
+  @}
+else
+  relocate () @{
+    echo "$1"
+  @}
 fi
+
+# Get some relocated directory names.
+sysconfdir=`relocate "@@sysconfdir@@"`
+some_datadir=`relocate "@@datadir@@/something"`
 @end example
 
 You must adapt the definition of @code{orig_installdir}, depending on
 where the script gets installed.  Also, at the end, instead of
-@code{gettext_dir}, transform those variables that you need.
+@code{sysconfdir} and @code{some_datadir}, transform those variables
+that you need.
 
 @item
 In your @file{Makefile.am}, for every program @command{foo} that gets
