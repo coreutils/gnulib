@@ -1,3 +1,10 @@
+2014-02-21  Pádraig Brady <P@draigBrady.com>
+
+	spawn: fix link error on uclibc
+	* m4/spawn_h.m4 (gl_HAVE_POSIX_SPAWN): use AC_SEARCH_LIBS,
+	to incorporate -lrt if needed (on uclibc for example).
+	* modules/posix_spawn: Reference the substituted LIB.
+
 2014-02-21  Thomas Petazzoni  <thomas.petazzoni@free-electrons.com>  (tiny change)
 	timer: fix uClibc detection of threading
 	* m4/time_time.m4 (gl_TIMER_TIME): Detect whether threads are

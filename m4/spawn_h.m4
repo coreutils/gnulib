@@ -64,7 +64,15 @@ AC_DEFUN([gl_HAVE_POSIX_SPAWN],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_SPAWN_H_DEFAULTS])
 
-  AC_CHECK_FUNCS_ONCE([posix_spawn])
+  LIB_POSIX_SPAWN=
+  AC_SUBST([LIB_POSIX_SPAWN])
+  gl_saved_libs=$LIBS
+    AC_SEARCH_LIBS([posix_spawn], [rt],
+                   [test "$ac_cv_search_posix_spawn" = "none required" ||
+                    LIB_POSIX_SPAWN=$ac_cv_search_posix_spawn])
+    AC_CHECK_FUNCS([posix_spawn])
+  LIBS=$gl_saved_libs
+
   if test $ac_cv_func_posix_spawn != yes; then
     HAVE_POSIX_SPAWN=0
   fi
