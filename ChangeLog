@@ -1,3 +1,8 @@
+2014-01-16  Daniel Albers  <daniel@lbe.rs>  (tiny change)
+
+	relocatable-perl: fix texi syntax
+	* doc/relocatable-maint.texi: Escape braces.
+
 2014-01-09  Reuben Thomas  <rrt@sc3d.org>
 
 	relocatable-perl: like relocatable-script, but for Perl scripts
