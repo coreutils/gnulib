@@ -1,3 +1,14 @@
+2014-01-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtoimax: port to platforms lacking 'long long'
+	VMS's pre-C99 compiler lacks 'long long', so 'configure' doesn't
+	check whether strtoll is declared, which causes the C file to
+	wrongly report an error.  Problem reported by Steven M. Schweda in:
+	http://lists.gnu.org/archive/html/bug-diffutils/2014-01/msg00003.html
+	* lib/strtoimax.c (strtoull):
+	Declare only if HAVE_UNSIGNED_LONG_LONG_INT.
+	(strtoll): Declare only if HAVE_LONG_LONG_INT.
+
 2014-01-16  Daniel Albers  <daniel@lbe.rs>  (tiny change)
 
 	relocatable-perl: fix texi syntax
