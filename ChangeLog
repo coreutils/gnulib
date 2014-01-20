@@ -1,3 +1,9 @@
+2014-01-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: port to HP-UX compilers
+	* lib/stdalign.in.h (_Alignas): Use __attribute__ (__aligned__ (x))
+	if __HP_cc or __HP_aCC are nonzero.
+
 2014-01-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtoimax: port to platforms lacking 'long long'
