@@ -2,7 +2,7 @@
 
 	fdopen-tests: port to Tru64
 	* tests/test-fdopen.c (main): Don't invoke fdopen on a file
-	descriptors that is not open, as POSIX doesn't specify the
+	descriptor that is not open, as POSIX doesn't specify the
 	resulting behavior and the test does not work on Tru64.
 	Problem reported by Steven M. Schweda in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2014-01/msg00079.html
