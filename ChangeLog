@@ -1,5 +1,12 @@
 2014-01-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fdopen-tests: port to Tru64
+	* tests/test-fdopen.c (main): Don't invoke fdopen on a file
+	descriptors that is not open, as POSIX doesn't specify the
+	resulting behavior and the test does not work on Tru64.
+	Problem reported by Steven M. Schweda in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-01/msg00079.html
+
 	stdalign: port to HP-UX compilers
 	* lib/stdalign.in.h (_Alignas): Use __attribute__ (__aligned__ (x))
 	if __HP_cc or __HP_aCC are nonzero.
