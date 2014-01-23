@@ -1,3 +1,9 @@
+2014-01-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qacl: check for fchmod
+	* m4/acl.m4 (gl_FUNC_ACL): Check for fchmod, since acl-internal.h
+	and qset-acl.c both use HAVE_FCHMOD.
+
 2014-01-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fdopen-tests: port to Tru64
