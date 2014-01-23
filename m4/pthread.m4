@@ -1,4 +1,4 @@
-# pthread.m4 serial 7
+# pthread.m4 serial 8
 dnl Copyright (C) 2009-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,19 @@ AC_DEFUN([gl_PTHREAD_CHECK],
    gl_CHECK_NEXT_HEADERS([pthread.h])
    if test $ac_cv_header_pthread_h = yes; then
      HAVE_PTHREAD_H=1
+     # mingw 3.0 uses winpthreads which installs broken macros via <pthread.h>
+     AC_CACHE_CHECK([whether <pthread.h> pollutes the namespace],
+      [gl_cv_header_pthread_h_pollution],
+      [AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM(
+          [[#include <pthread.h>
+            #ifdef strtok_r
+            #error
+             break me
+            #endif
+          ]])],
+        [gl_cv_header_pthread_h_pollution=no],
+        [gl_cv_header_pthread_h_pollution=yes])])
    else
      HAVE_PTHREAD_H=0
    fi
@@ -31,6 +44,8 @@ AC_DEFUN([gl_PTHREAD_CHECK],
       test $ac_cv_type_pthread_spinlock_t != yes; then
      PTHREAD_H='pthread.h'
      AC_LIBOBJ([pthread])
+   elif test $gl_cv_header_pthread_h_pollution = yes; then
+     PTHREAD_H=pthread.h
    else
      PTHREAD_H=
    fi

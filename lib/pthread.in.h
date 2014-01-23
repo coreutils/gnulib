@@ -36,6 +36,15 @@
 #include <stdlib.h>
 #undef __need_system_stdlib_h
 
+
+/* The pthreads-win32 <pthread.h> defines a couple of broken macros.  */
+#undef asctime_r
+#undef ctime_r
+#undef gmtime_r
+#undef localtime_r
+#undef rand_r
+#undef strtok_r
+
 #include <errno.h>
 #include <sched.h>
 #include <sys/types.h>

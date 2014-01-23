@@ -3,15 +3,22 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/pthread.h.html}
 
-Gnulib module: ---
+Gnulib module: pthread
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This header pollutes the namespace with some broken macro
+implementations for various functions such as @code{strtok_r} and
+@code{gmtime_r}:
+mingw 3.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This header file is missing on some platforms:
-Minix 3.1.8, mingw, MSVC 9, BeOS.
+This header file is missing on some platforms; the replacement does
+not offer threads, so much as lightweight stubs that make conditional
+compilation easier for fallbacks to single-threaded programs.
+Minix 3.1.8, mingw 2.x, MSVC 9, BeOS.
 @end itemize
