@@ -1,3 +1,11 @@
+2014-02-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	file-type: add support for doors and other less-common file types
+	Problem with S_ISDOOR reported by Rich Burridge.
+	* lib/file-type.c (file_type): Do S_ISLNK early too.  Do S_TYPEIS*
+	macros before the rest.  Add S_ISCTG, S_ISDOOR, S_ISMPB, S_ISMPC,
+	S_ISMPX, S_ISNAM, S_ISNWK, S_ISOFD, S_ISOFL, S_ISPORT, S_ISWHT.
+
 2014-01-23  Eric Blake  <eblake@redhat.com>
 
 	pthread: work around winpthread header pollution on mingw
