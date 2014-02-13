@@ -1,3 +1,21 @@
+2014-02-11  Sergey Poznyakoff  <gray@gnu.org.ua>
+	    Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: add sorting arg to savedir, streamsavedir; remove fdsavedir
+	Patch based on an idea by Dick Streefland in
+	<https://savannah.gnu.org/patch/?7892>.
+	* NEWS: Document this.
+	* lib/savedir.c (NAME_SIZE_DEFAULT): Remove.
+	(direntry_t, comparison_function): New types.
+	(direntry_cmp_name): New function.
+	(direntry_cmp_inode) [D_INO_IN_DIRENT]: New function.
+	(streamsavedir, savedir): New arg OPTION.
+	(streamsavedir): Simplify memory allocation.
+	(fdsavedir): Remove.
+	* lib/savedir.h (enum savedir_option): New type.
+	(streamsavedir, savedir): New arg OPTION.
+	(fdsavedir): Remove.
+
 2014-02-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-type: add support for doors and other less-common file types

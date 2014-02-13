@@ -37,28 +37,71 @@
 
 #include "xalloc.h"
 
-#ifndef NAME_SIZE_DEFAULT
-# define NAME_SIZE_DEFAULT 512
+typedef struct
+{
+  char *name;
+  size_t size;
+#if D_INO_IN_DIRENT
+  ino_t ino;
 #endif
+} direntry_t;
+
+/* Compare the names of two directory entries */
+
+static int
+direntry_cmp_name (void const *a, void const *b)
+{
+  direntry_t const *dea = a;
+  direntry_t const *deb = b;
+
+  return strcmp (dea->name, deb->name);
+}
+
+#if D_INO_IN_DIRENT
+/* Compare the inode numbers of two directory entries */
+
+static int
+direntry_cmp_inode (void const *a, void const *b)
+{
+  direntry_t const *dea = a;
+  direntry_t const *deb = b;
+
+  return dea->ino < deb->ino ? -1 : dea->ino > deb->ino;
+}
+#endif
+
+typedef int (*comparison_function) (void const *, void const *);
+
+static comparison_function const comparison_function_table[] =
+  {
+    0,
+    direntry_cmp_name
+#if D_INO_IN_DIRENT
+    , direntry_cmp_inode
+#endif
+  };
 
 /* Return a freshly allocated string containing the file names
    in directory DIRP, separated by '\0' characters;
    the end is marked by two '\0' characters in a row.
+   Returned values are sorted according to OPTION.
    Return NULL (setting errno) if DIRP cannot be read.
    If DIRP is NULL, return NULL without affecting errno.  */
 
 char *
-streamsavedir (DIR *dirp)
+streamsavedir (DIR *dirp, enum savedir_option option)
 {
-  char *name_space;
-  size_t allocated = NAME_SIZE_DEFAULT;
+  char *name_space = NULL;
+  size_t allocated = 0;
+  direntry_t *entries = NULL;
+  size_t entries_allocated = 0;
+  size_t entries_used = 0;
   size_t used = 0;
-  int save_errno;
+  int readdir_errno;
+  comparison_function cmp = comparison_function_table[option];
 
   if (dirp == NULL)
     return NULL;
-
-  name_space = xmalloc (allocated);
 
   for (;;)
     {
@@ -76,48 +119,65 @@ streamsavedir (DIR *dirp)
       if (entry[entry[0] != '.' ? 0 : entry[1] != '.' ? 1 : 2] != '\0')
         {
           size_t entry_size = _D_EXACT_NAMLEN (dp) + 1;
-          if (used + entry_size < used)
-            xalloc_die ();
-          if (allocated <= used + entry_size)
+          if (cmp)
             {
-              do
+              if (entries_allocated == entries_used)
                 {
-                  if (2 * allocated < allocated)
-                    xalloc_die ();
-                  allocated *= 2;
+                  size_t n = entries_allocated;
+                  entries = x2nrealloc (entries, &n, sizeof *entries);
+                  entries_allocated = n;
                 }
-              while (allocated <= used + entry_size);
-
-              name_space = xrealloc (name_space, allocated);
+              entries[entries_used].name = xstrdup (entry);
+	      entries[entries_used].size = entry_size;
+#if D_INO_IN_DIRENT
+              entries[entries_used].ino = dp->d_ino;
+#endif
+              entries_used++;
             }
-          memcpy (name_space + used, entry, entry_size);
-          used += entry_size;
+	  else
+	    {
+	      if (allocated - used <= entry_size)
+		{
+		  size_t n = used + entry_size;
+		  if (n < used)
+		    xalloc_die ();
+		  name_space = x2nrealloc (name_space, &n, 1);
+		  allocated = n;
+		}
+	      memcpy (name_space + used, entry, entry_size);
+	    }
+	  used += entry_size;
         }
     }
+
+  readdir_errno = errno;
+  if (readdir_errno != 0)
+    {
+      free (entries);
+      free (name_space);
+      errno = readdir_errno;
+      return NULL;
+    }
+
+  if (cmp)
+    {
+      size_t i;
+
+      qsort (entries, entries_used, sizeof *entries, cmp);
+      name_space = xmalloc (used + 1);
+      used = 0;
+      for (i = 0; i < entries_used; i++)
+        {
+          memcpy (name_space + used, entries[i].name, entries[i].size);
+          used += entries[i].size;
+	  free (entries[i].name);
+        }
+      free (entries);
+    }
+  else if (used == allocated)
+    name_space = xrealloc (name_space, used + 1);
+
   name_space[used] = '\0';
-  save_errno = errno;
-  if (save_errno != 0)
-    {
-      free (name_space);
-      errno = save_errno;
-      return NULL;
-    }
-  return name_space;
-}
-
-/* Like streamsavedir (DIRP), except also close DIRP.  */
-
-static char *
-savedirstream (DIR *dirp)
-{
-  char *name_space = streamsavedir (dirp);
-  if (dirp && closedir (dirp) != 0)
-    {
-      int save_errno = errno;
-      free (name_space);
-      errno = save_errno;
-      return NULL;
-    }
   return name_space;
 }
 
@@ -127,19 +187,21 @@ savedirstream (DIR *dirp)
    Return NULL (setting errno) if DIR cannot be opened, read, or closed.  */
 
 char *
-savedir (char const *dir)
+savedir (char const *dir, enum savedir_option option)
 {
-  return savedirstream (opendir (dir));
-}
-
-/* Return a freshly allocated string containing the file names
-   in directory FD, separated by '\0' characters;
-   the end is marked by two '\0' characters in a row.
-   Return NULL (setting errno) if FD cannot be read or closed.  */
-
-/* deprecated */
-char *
-fdsavedir (int fd)
-{
-  return savedirstream (fdopendir (fd));
+  DIR *dirp = opendir (dir);
+  if (! dirp)
+    return NULL;
+  else
+    {
+      char *name_space = streamsavedir (dirp, option);
+      if (closedir (dirp) != 0)
+        {
+          int closedir_errno = errno;
+          free (name_space);
+          errno = closedir_errno;
+          return NULL;
+        }
+      return name_space;
+    }
 }

@@ -22,8 +22,17 @@
 #define _GL_SAVEDIR_H
 
 #include <dirent.h>
-char *streamsavedir (DIR *dirp);
-char *savedir (char const *dir);
-char *fdsavedir (int fd); /* deprecated */
+
+enum savedir_option
+  {
+    SAVEDIR_SORT_NONE,
+    SAVEDIR_SORT_NAME
+#if D_INO_IN_DIRENT
+    , SAVEDIR_SORT_INODE
+#endif
+  };
+
+char *streamsavedir (DIR *, enum savedir_option);
+char *savedir (char const *, enum savedir_option);
 
 #endif

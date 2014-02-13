@@ -3,6 +3,10 @@ Important notes
 
 Date        Modules         Changes
 
+2014-02-11  savedir         The savedir and streamsavedir functions have a
+                            new argument specifying how to sort the result.
+                            The fdsavedir function is removed.
+
 2013-04-24  gettext         If your project uses 'gettextize --intl' it is now
                             your responsibility to put -I$(top_builddir)/intl
                             into the Makefile.am for gnulib.
