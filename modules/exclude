@@ -6,10 +6,12 @@ lib/exclude.h
 lib/exclude.c
 
 Depends-on:
+filename
 fnmatch
 hash
 mbscasecmp
 mbuiter
+regex
 stdbool
 verify
 xalloc

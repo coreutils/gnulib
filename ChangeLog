@@ -1,3 +1,35 @@
+2014-02-21  Sergey Poznyakoff  <gray@gnu.org.ua>
+
+	exclude: add support for posix regexps
+
+	This commit adds support for POSIX extended regular expressions
+	and fixes a long-standing memory leak (pattern buffer was never
+	freed).  It also implements a new interface function to read
+	exclude patterns from a FILE, which passes an additional parameter
+	to its callback function, thereby allowing to preserve its state
+	between invocations.
+
+	* lib/exclude.c (struct patopts): Pack regex and pattern into union.
+	(pattern_buffer): New struct.
+	(exclude): New member patbuf.
+	(exclude_add_pattern_buffer): New function.
+	(free_exclude_segment): Free regexps.
+	(free_exclude): Free allocated pattern buffers.
+	(exclude_patopts): New function.
+	(file_pattern_matches): Use exclude_patopts.
+	(add_exclude): support regexps.
+	(add_exclude_fp): New function.
+	(add_exclude_file): Rewrite using add_exclude_fp.
+	(fnmatch_pattern_has_wildcards): Support posix extended regexps.
+	* lib/exclude.h (EXCLUDE_REGEX, EXCLUDE_ALLOC): New flags.
+	(add_exclude_fp)
+	(add_exclude_file): Rewrite using add_exclude_fp.
+	(fnmatch_pattern_has_wildcards): Support posix extended regexps.
+	* lib/exclude.h (EXCLUDE_REGEX, EXCLUDE_ALLOC): New flags.
+	(add_exclude_fp)
+	(exclude_add_pattern_buffer): New prototypes.
+	* modules/exclude: Depends on regex and filename.
+
 2014-02-20  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefiles: use $(SED) for syntax check
