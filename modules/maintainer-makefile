@@ -13,6 +13,7 @@ vc-list-files
 configure.ac:
 AC_CONFIG_COMMANDS_PRE([m4_ifdef([AH_HEADER],
   [AC_SUBST([CONFIG_INCLUDE], m4_defn([AH_HEADER]))])])
+AC_REQUIRE([AC_PROG_SED])
 
 License:
 GPLed build tool

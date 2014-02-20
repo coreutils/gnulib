@@ -1,3 +1,9 @@
+2014-02-20  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefiles: use $(SED) for syntax check
+	* modules/maintainer-makefile (configure.ac): Check for sane sed.
+	* top/maint.mk: Change sed to $(SED).
+
 2014-02-11  Sergey Poznyakoff  <gray@gnu.org.ua>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
