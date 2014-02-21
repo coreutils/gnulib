@@ -1,3 +1,8 @@
+2014-02-21  Thomas Petazzoni  <thomas.petazzoni@free-electrons.com>  (tiny change)
+	timer: fix uClibc detection of threading
+	* m4/time_time.m4 (gl_TIMER_TIME): Detect whether threads are
+	enabled in uClibc.
+
 2014-02-21  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefiles: provide AC_PROG_SED for older autoconf
