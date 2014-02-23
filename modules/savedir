@@ -12,6 +12,7 @@ dirent-safer
 fdopendir
 opendir
 readdir
+stpcpy
 xalloc
 
 configure.ac:

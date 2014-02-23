@@ -40,7 +40,6 @@
 typedef struct
 {
   char *name;
-  size_t size;
 #if D_INO_IN_DIRENT
   ino_t ino;
 #endif
@@ -128,25 +127,24 @@ streamsavedir (DIR *dirp, enum savedir_option option)
                   entries_allocated = n;
                 }
               entries[entries_used].name = xstrdup (entry);
-	      entries[entries_used].size = entry_size;
 #if D_INO_IN_DIRENT
               entries[entries_used].ino = dp->d_ino;
 #endif
               entries_used++;
             }
-	  else
-	    {
-	      if (allocated - used <= entry_size)
-		{
-		  size_t n = used + entry_size;
-		  if (n < used)
-		    xalloc_die ();
-		  name_space = x2nrealloc (name_space, &n, 1);
-		  allocated = n;
-		}
-	      memcpy (name_space + used, entry, entry_size);
-	    }
-	  used += entry_size;
+          else
+            {
+              if (allocated - used <= entry_size)
+                {
+                  size_t n = used + entry_size;
+                  if (n < used)
+                    xalloc_die ();
+                  name_space = x2nrealloc (name_space, &n, 1);
+                  allocated = n;
+                }
+              memcpy (name_space + used, entry, entry_size);
+            }
+          used += entry_size;
         }
     }
 
@@ -168,9 +166,9 @@ streamsavedir (DIR *dirp, enum savedir_option option)
       used = 0;
       for (i = 0; i < entries_used; i++)
         {
-          memcpy (name_space + used, entries[i].name, entries[i].size);
-          used += entries[i].size;
-	  free (entries[i].name);
+          char *dest = name_space + used;
+          used += stpcpy (dest, entries[i].name) - dest + 1;
+          free (entries[i].name);
         }
       free (entries);
     }

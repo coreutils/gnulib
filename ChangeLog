@@ -1,3 +1,10 @@
+2014-02-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: simplify by using stpcpy
+	* lib/savedir.c (direntry_t): Remove size member.  All uses removed.
+	(streamsavedir): Use stpcpy instead.
+	* modules/savedir (Depends-on): Add stpcpy.
+
 2014-02-21  Pádraig Brady <P@draigBrady.com>
 
 	spawn: fix link error on uclibc
