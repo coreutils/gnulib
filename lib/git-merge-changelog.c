@@ -678,11 +678,10 @@ compute_differences (struct changelog_file *file1, struct changelog_file *file2,
     ctxt.index_mapping_reverse[j] = 0;
   ctxt.fdiag = XNMALLOC (2 * (n1 + n2 + 3), ssize_t) + n2 + 1;
   ctxt.bdiag = ctxt.fdiag + n1 + n2 + 3;
-  ctxt.too_expensive = n1 + n2;
 
   /* Store in ctxt.index_mapping and ctxt.index_mapping_reverse a -1 for
      each removed or added entry.  */
-  compareseq (0, n1, 0, n2, 0, &ctxt);
+  compareseq (0, n1, 0, n2, &ctxt);
 
   /* Complete the index_mapping and index_mapping_reverse arrays.  */
   i = 0;

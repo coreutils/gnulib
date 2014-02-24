@@ -1,5 +1,26 @@
 2014-02-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	diffseq: remove TOO_EXPENSIVE heuristic
+	Problem with diffutils reported by Vincent Lefevre in
+	<http://bugs.gnu.org/16848>.  The simplest solution is to remove
+	the TOO_EXPENSIVE heuristic that I added to GNU diff in 1993.
+	Although appropriate for circa-1993 hardware, these days the heuristic
+	seems to be more trouble than it's worth.
+	* lib/diffseq.h: Modernize citations.
+	(struct context): Remove member too_expensive.
+	All uses changed.
+	(struct partition): Remove members lo_minimal, hi_minimal.
+	All uses changed.
+	(diag, compareseq): Remove arg find_minimal.  All uses changed.
+	(diag): Remove the TOO_EXPENSIVE heuristic that I added back in
+	1993 to make 'diff' run faster (but not as well) on large inputs.
+	These days, computers are fast enough that it's typically better
+	to run slower but more accurately.
+	* lib/fstrcmp.c: Remove duplicate comment.
+	* lib/fstrcmp.c (strcmp_bounded):
+	* lib/git-merge-changelog.c (compute_differences):
+	Adjust to diffseq.h changes.
+
 	savedir: simplify by using stpcpy
 	* lib/savedir.c (direntry_t): Remove size member.  All uses removed.
 	(streamsavedir): Use stpcpy instead.
