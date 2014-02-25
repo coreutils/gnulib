@@ -1,3 +1,11 @@
+2014-02-25  Paul Eggert  <eggert@penguin.cs.ucla.edu>
+
+	unistd: port readlink to Mac OS X 10.3.9
+	* lib/unistd.in.h (_GL_INCLUDING_UNISTD_H): New macro, to work
+	around self-include problem in Mac OS X 10.3.9 when combined with
+	readlink module.  Problem reported by Klaus Zietler in
+	<http://bugs.gnu.org/16825>.
+
 2014-02-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	diffseq: remove TOO_EXPENSIVE heuristic
