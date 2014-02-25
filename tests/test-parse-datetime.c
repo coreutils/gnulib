@@ -419,5 +419,21 @@ main (int argc _GL_UNUSED, char **argv)
      starting with a high-bit-set byte would be treated like "0".  */
   ASSERT ( ! parse_datetime (&result, "\xb0", &now));
 
+  /* Exercise TZ="" parsing code.  */
+  /* These two would infloop or segfault before Feb 2014.  */
+  ASSERT ( ! parse_datetime (&result, "TZ=\"\"\"", &now));
+  ASSERT ( ! parse_datetime (&result, "TZ=\"\" \"", &now));
+  /* Exercise invalid patterns.  */
+  ASSERT ( ! parse_datetime (&result, "TZ=\"", &now));
+  ASSERT ( ! parse_datetime (&result, "TZ=\"\\\"", &now));
+  ASSERT ( ! parse_datetime (&result, "TZ=\"\\n", &now));
+  ASSERT ( ! parse_datetime (&result, "TZ=\"\\n\"", &now));
+  /* Exercise valid patterns.  */
+  ASSERT (   parse_datetime (&result, "TZ=\"\"", &now));
+  ASSERT (   parse_datetime (&result, "TZ=\"\" ", &now));
+  ASSERT (   parse_datetime (&result, " TZ=\"\"", &now));
+  ASSERT (   parse_datetime (&result, "TZ=\"\\\\\"", &now));
+  ASSERT (   parse_datetime (&result, "TZ=\"\\\"\"", &now));
+
   return 0;
 }

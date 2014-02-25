@@ -1,3 +1,12 @@
+2014-02-26  Pádraig Brady <P@draigBrady.com>
+
+	parse-datetime: fix crash or infloop in TZ="" parsing
+	* lib/parse-datetime.y (parse_datetime): Break out of the
+	TZ="" parsing loop once the second significant " is found.
+	Also skip over any subsequent whitespace to be consistent
+	with the non TZ= case.
+	* tests/test-parse-datetime.c: Add test cases for TZ="" parsing.
+
 2014-02-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	savedir: new symbol for fast-read version
