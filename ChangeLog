@@ -1,3 +1,11 @@
+2014-02-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	savedir: new symbol for fast-read version
+	* lib/savedir.h (SAVEDIR_SORT_FASTREAD): New symbol, for programs
+	like GNU cp that want to use SAVEDIR_SORT_INODE if available,
+	SAVEDIR_SORT_NONE otherwise.  Problem reported by Bernhard Voelker in:
+	http://lists.gnu.org/archive/html/coreutils/2014-02/msg00037.html
+
 2014-02-25  Paul Eggert  <eggert@penguin.cs.ucla.edu>
 
 	unistd: port readlink to Mac OS X 10.3.9
