@@ -1,3 +1,15 @@
+2014-03-04  Kevin Cernekee <cernekee@gmail.com>
+
+	stdint, read-file: fix missing SIZE_MAX on Android
+	* lib/sys_types.in.h (_GL_INCLUDING_UNISTD_H): New macro, to work
+	around potential circular dependencies when stdint.h is included
+	by the system's sys/types.h.
+	* lib/stdint.in.h: Use _GL_INCLUDING_UNISTD_H to figure out if
+	we're being included from sys/types.h, as merely checking
+	_SYS_TYPES_H_ could return true if sys/types.h had been previously
+	included.
+	* modules/stdint (Depends-on): Add sys_types.
+
 2014-02-26  Pádraig Brady <P@draigBrady.com>
 
 	parse-datetime: fix crash or infloop in TZ="" parsing
