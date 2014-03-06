@@ -1,13 +1,10 @@
 2014-03-04  Kevin Cernekee <cernekee@gmail.com>
 
-	stdint, read-file: fix missing SIZE_MAX on Android
-	* lib/sys_types.in.h (_GL_INCLUDING_UNISTD_H): New macro, to work
-	around potential circular dependencies when stdint.h is included
-	by the system's sys/types.h.
-	* lib/stdint.in.h: Use _GL_INCLUDING_UNISTD_H to figure out if
-	we're being included from sys/types.h, as merely checking
-	_SYS_TYPES_H_ could return true if sys/types.h had been previously
-	included.
+	stdint, read-file: fix missing SIZE_MAX on Android (tiny change)
+	This is basically one of the options Bruno Haible proposed in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2012-01/msg00282.html
+	* lib/sys_types.in.h (_GL_INCLUDING_UNISTD_H): New macro.
+	* lib/stdint.in.h: Use it.
 	* modules/stdint (Depends-on): Add sys_types.
 
 2014-02-26  Pádraig Brady <P@draigBrady.com>
