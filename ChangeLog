@@ -1,3 +1,17 @@
+2014-03-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: port to OS X 10.8.5 en_US.UTF-8 locale
+	This fixes a bug when ignoring case and when comparing the
+	titlecase letter 'ǈ' (U+01C8 LATIN CAPITAL LETTER L WITH SMALL
+	LETTER J) to the corresponding uppercase letter 'Ǉ' (U+01C7 LATIN
+	CAPITAL LETTER LJ).  In the OS X 10.8.5 en_US.UTF-8 locale, the
+	titlecase letter is neither lowercase nor uppercase, but
+	uppercasing the titlecase letter (via towupper) yields the
+	uppercase letter, so the two letters should match when ignoring case.
+	Problem reported by Jim Meyering in <http://debbugs.gnu.org/16911#16>.
+	* lib/regex_internal.c (build_wcs_upper_buffer, build_upper_buffer):
+	Don't test whether a character is lowercase before uppercasing it.
+
 2014-03-04  Kevin Cernekee <cernekee@gmail.com>
 
 	stdint, read-file: fix missing SIZE_MAX on Android (tiny change)
