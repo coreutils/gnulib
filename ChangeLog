@@ -1,3 +1,9 @@
+2014-03-13  Jim Meyering  <meyering@fb.com>
+
+	gitlog-to-changelog: also include the file, git-log-fix
+	* modules/gitlog-to-changelog (Files): Add git-log-fix.
+	Reported by Assaf Gordon.
+
 2014-03-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: port to OS X 10.8.5 en_US.UTF-8 locale

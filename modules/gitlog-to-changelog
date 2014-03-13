@@ -3,6 +3,7 @@ Convert git log to ChangeLog
 
 Files:
 build-aux/gitlog-to-changelog
+build-aux/git-log-fix
 
 Depends-on:
 
