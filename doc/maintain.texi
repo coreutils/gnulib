@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 9, 2013
+@set lastupdate March 19, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,7 +24,7 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014 Free Software Foundation, Inc.
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -284,6 +284,7 @@ as you maintain the program, to avoid legal difficulties.
 * Copyright Notices::
 * License Notices::
 * External Libraries::
+* Crediting Authors::
 @end menu
 
 @node Copyright Papers
@@ -1048,6 +1049,18 @@ methods only for general-purpose modules that were written for other
 programs and released separately for general use.  For anything that was
 written as a contribution to your package, please get papers signed.
 
+@node Crediting Authors
+@section Crediting Authors
+@cindex crediting authors
+
+Strictly speaking, this is not a legal issue, but it seems to belong
+with copyright notices.
+
+In any FSF-copyrighted GNU package, the authors of a file are not
+named in the copyright notice.  Therefore, it is nice to include a
+comment line @samp{Authors: @var{authors of this file}} at the top
+near the copyright notice, to give them credit in close association
+with their contribution.
 
 @node Clean Ups
 @chapter Cleaning Up Changes
@@ -1082,7 +1095,6 @@ Standards}).  The Emacs Lisp manual contains an appendix that gives
 coding standards for Emacs Lisp programs; it is good to urge Lisp authors to
 read it (@pxref{Tips, , Tips and Conventions, elisp, The GNU Emacs Lisp
 Reference Manual}).
-
 
 @node Platforms
 @chapter Platforms to Support
@@ -1332,6 +1344,7 @@ distributions.
 @menu
 * Distribution tar Files::
 * Distribution Patches::
+* Binary Distribution::
 * Distribution on ftp.gnu.org::
 * Test Releases::
 * Automated FTP Uploads::
@@ -1425,6 +1438,22 @@ which subdirectory to find each file in.
 It's wise to test your patch by applying it to a copy of the old
 version, and checking that the result exactly matches the new version.
 
+@node Binary Distribution
+@section Binary Distribution for Nonfree Platforms
+
+Some package maintainers release pre-compiled binaries proprietary
+for systems such as Microsoft Windows or MacOS.  It's entirely up to you
+whether to do that; we don't ask you to do it, but we don't object.
+Please do not let anyone make you feel you have an obligation to do
+this.
+
+If you distribute them, please inform their users prominently that
+those non-free platforms trample their freedom.  It is useful to refer
+them to
+@url{http://www.gnu.org/philosophy/free-software-even-more-important.html}.
+You can say, ``This program respects your freedom, but Windows does
+not.  To have freedom, you need to stop using Windows and other
+software that denies your freedom.''
 
 @node Distribution on ftp.gnu.org
 @section Distribution on @code{ftp.gnu.org}
@@ -2047,7 +2076,7 @@ on @code{www.gnu.org} link to that site.
 
 The best way to maintain the web pages for your project is to register
 the project on @code{savannah.gnu.org}.  Then you can edit the pages
-using CVS, using the separate ``web repository'' available on
+using CVS, using the separate ``web pages repository'' available on
 Savannah, which corresponds to
 @indicateurl{http://www.gnu.org/software/@var{package}/}.  You can
 keep your source files there too (using any of a variety of version
@@ -2363,7 +2392,7 @@ However, due to the much greater publicity that the term ``open source''
 receives, the GNU Project needs to overcome a widespread
 mistaken impression that GNU is @emph{and always was} an ``open
 source'' activity.  For this reason, please use the term ``free
-software'', not ``open source'', in GNU software releases, GNU
+software'', not ``open source'' or ``FOSS'', in GNU software releases, GNU
 documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  A reference to the URL given
 above, to explain the difference, is a useful thing to include as
@@ -2409,15 +2438,17 @@ forms such as ``Linux-based systems'' because those fail to highlight
 the difference between the kernel and the system, and could encourage
 readers to overlook the distinction.
 
-To contrast the GNU system properly with respect to GNU/Linux, you can
-call it ``GNU/Hurd'' or ``the GNU/Hurd system''.  However, when that
-contrast is not specifically the focus, please call it just ``GNU'' or
-``the GNU system''.
+To contrast the GNU system proper with GNU/Linux, you can call it
+``GNU/Hurd'' or ``the GNU/Hurd system''.  However, when that contrast
+is not specifically the focus, please call it just ``GNU'' or ``the
+GNU system''.
 
 When referring to the collection of servers that is the higher level
 of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd''.
 Note that this uses a space, not a slash.
 
+For more about this point, see
+@url{http://www.gnu.org/gnu/gnu-linux-faq.html}.
 
 @node Interviews and Speeches
 @chapter Interviews and Speeches
