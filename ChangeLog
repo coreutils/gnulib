@@ -1,5 +1,16 @@
 2014-03-26  Bernhard Voelker  <mail@bernhard-voelker.de>
 
+	strftime: wrap macros in "do {...} while(0)"
+	* lib/strftime.c (DO_NUMBER): Wrap multi-statement code block of
+	this macro in "do {...} while(0)" to prevent false use as a
+	single statement, e.g., in an un-braced "{}" else-block.
+	(DO_SIGNED_NUMBER, DO_TZ_OFFSET, DO_NUMBER_SPACEPAD): Likewise.
+	(strftime_case_): Remove 'else' after 'goto' - which was the
+	only non-fatal, un-braced use of one of the above macros.
+	Spotted by coverity (NESTING_INDENT_MISMATCH).
+
+2014-03-26  Bernhard Voelker  <mail@bernhard-voelker.de>
+
 	modechange: avoid memory leaks for invalid octal modes
 	* lib/modechange.c (mode_compile): During the parsing of
 	notations like +40, free the 'mc' buffer for invalid mode
