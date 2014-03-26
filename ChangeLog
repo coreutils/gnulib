@@ -1,3 +1,17 @@
+2014-03-26  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	modechange: avoid memory leaks for invalid octal modes
+	* lib/modechange.c (mode_compile): During the parsing of
+	notations like +40, free the 'mc' buffer for invalid mode
+	strings like +17777 (greater than the maximum octal mode),
+	=18 (bad octal mode characters) or u=1 ('affected' with
+	octal modes).
+	Reproducer, e.g.:
+	    $ valgrind --leak-check=full chmod +17777 file
+	Introduced via the 2012-03-09 commit, 4730c3e3, "modechange:
+	add notations +40, 00440, etc.".
+	Spotted by coverity (RESOURCE_LEAK).
+
 2014-03-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gitlog-to-changelog: include a dummy git-log-fix file

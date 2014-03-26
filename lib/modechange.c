@@ -220,12 +220,12 @@ mode_compile (char const *mode_string)
                   {
                     octal_mode = 8 * octal_mode + *p++ - '0';
                     if (ALLM < octal_mode)
-                      return NULL;
+                      goto invalid;
                   }
                 while ('0' <= *p && *p < '8');
 
                 if (affected || (*p && *p != ','))
-                  return NULL;
+                  goto invalid;
                 affected = mentioned = CHMOD_MODE_BITS;
                 value = octal_to_mode (octal_mode);
                 flag = MODE_ORDINARY_CHANGE;
