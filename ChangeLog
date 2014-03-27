@@ -1,5 +1,16 @@
 2014-03-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	obstack: Remove ancient NeXTSTEP gcc support conditional
+	This change will ease merging with glibc.  The "#if ... __NEXT__"
+	causes a warning with -Wundef which glibc now enables by default.
+	Problem reported by Will Newton in
+	<http://lists.gnu.org/archive/html/bug-gnulib/2014-03/msg00032.html>.
+	glibc <sys/cdefs.h> now uses __extension__ for GCC 2.8 or later,
+	so go with that.
+	* lib/obstack.h (__extension__):
+
+2014-03-27  Paul Eggert  <eggert@cs.ucla.edu>
+
 	obstack: merge with glibc changes
 	* lib/obstack.c, lib/obstack.h: Merge from glibc.
 	This is mostly indenting and commentary changes.
