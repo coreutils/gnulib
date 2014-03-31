@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 19, 2014
+@set lastupdate March 31, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -845,6 +845,13 @@ pipe, then it is usually best to make the default behavior the one that
 is useful with output to a terminal, and have an option for the other
 behavior.
 
+There is an exception for programs whose output in certain cases is
+binary data.  Sending such output to a terminal is useless and can
+cause trouble.  If such a program normally sends its output to stdout,
+it should detect, in these cases, when the output is a terminal and
+give an error message instead.  The @code{-f} option should override
+this exception, thus permitting the output to go to the terminal.
+
 Compatibility requires certain programs to depend on the type of output
 device.  It would be disastrous if @code{ls} or @code{sh} did not do so
 in the way all users expect.  In some of these cases, we supplement the
@@ -852,7 +859,6 @@ program with a preferred alternate version that does not depend on the
 output device type.  For example, we provide a @code{dir} program much
 like @code{ls} except that its default output format is always
 multi-column format.
-
 
 @node Graphical Interfaces
 @section Standards for Graphical Interfaces
