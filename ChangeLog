@@ -1,3 +1,9 @@
+2014-04-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fts: avoid unnecessary strlen calls
+	* lib/fts.c (fts_build): Go back to using _D_EXECT_NAMLEN
+	when that can be faster than strlen.
+
 2014-03-26  Bernhard Voelker  <mail@bernhard-voelker.de>
 
 	fts: avoid unnecessary strlen calls

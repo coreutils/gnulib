@@ -1451,8 +1451,9 @@ fts_build (register FTS *sp, int type)
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
                         continue;
 
-                d_namelen = strlen (dp->d_name);
-                if ((p = fts_alloc (sp, dp->d_name, d_namelen)) == NULL)
+                d_namelen = _D_EXACT_NAMLEN (dp);
+                p = fts_alloc (sp, dp->d_name, d_namelen);
+                if (!p)
                         goto mem1;
                 if (d_namelen >= maxlen) {
                         /* include space for NUL */
