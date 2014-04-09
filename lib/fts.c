@@ -79,9 +79,6 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <dirent.h>
-#ifndef _D_EXACT_NAMLEN
-# define _D_EXACT_NAMLEN(dirent) strlen ((dirent)->d_name)
-#endif
 
 #if HAVE_STRUCT_DIRENT_D_TYPE
 /* True if the type of the directory entry D is known.  */
@@ -1447,19 +1444,20 @@ fts_build (register FTS *sp, int type)
         nitems = 0;
         while (cur->fts_dirp) {
                 bool is_dir;
+                size_t d_namelen;
                 struct dirent *dp = readdir(cur->fts_dirp);
                 if (dp == NULL)
                         break;
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
                         continue;
 
-                if ((p = fts_alloc (sp, dp->d_name,
-                                    _D_EXACT_NAMLEN (dp))) == NULL)
+                d_namelen = strlen (dp->d_name);
+                if ((p = fts_alloc (sp, dp->d_name, d_namelen)) == NULL)
                         goto mem1;
-                if (_D_EXACT_NAMLEN (dp) >= maxlen) {
+                if (d_namelen >= maxlen) {
                         /* include space for NUL */
                         oldaddr = sp->fts_path;
-                        if (! fts_palloc(sp, _D_EXACT_NAMLEN (dp) + len + 1)) {
+                        if (! fts_palloc(sp, d_namelen + len + 1)) {
                                 /*
                                  * No more memory.  Save
                                  * errno, free up the current structure and the
@@ -1483,7 +1481,7 @@ mem1:                           saved_errno = errno;
                         maxlen = sp->fts_pathlen - len;
                 }
 
-                new_len = len + _D_EXACT_NAMLEN (dp);
+                new_len = len + d_namelen;
                 if (new_len < len) {
                         /*
                          * In the unlikely event that we would end up

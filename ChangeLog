@@ -1,3 +1,13 @@
+2014-03-26  Bernhard Voelker  <mail@bernhard-voelker.de>
+
+	fts: avoid unnecessary strlen calls
+	* lib/fts.c (_D_EXACT_NAMLEN): Remove macro.
+	(fts_build): Store the length of the dp->d_name entry in a local variable
+	instead of calling strlen() several times via the above, removed macro.
+	For 'rm -rf some-dir' with e.g. 1M directory entries, this speeds up the
+	run by ~4%, yet this reduces the execution time by about a third if run
+	via "ltrace -c rm -rf some-dir".
+
 2014-03-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: Remove ancient NeXTSTEP gcc support conditional
