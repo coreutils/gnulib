@@ -79,6 +79,9 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #endif
 
 #include <dirent.h>
+#ifndef _D_EXACT_NAMLEN
+# define _D_EXACT_NAMLEN(dirent) strlen ((dirent)->d_name)
+#endif
 
 #if HAVE_STRUCT_DIRENT_D_TYPE
 /* True if the type of the directory entry D is known.  */

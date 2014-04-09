@@ -1,3 +1,8 @@
+2014-04-09  Eric Blake  <eblake@redhat.com>
+
+	fts: avoid unnecessary strlen calls
+	* lib/fts.c (_D_EXACT_NAMLEN): Restore definition when needed.
+
 2014-04-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fts: avoid unnecessary strlen calls
