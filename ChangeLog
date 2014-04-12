@@ -1,3 +1,11 @@
+2014-04-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc: allow x2nrealloc (P, PN, S) where P && !*PN
+	* lib/xalloc.h (x2nrealloc): Extend slightly, to allow the current
+	size to be zero even when the pointer is nonnull.  This
+	accommodates the use case where P is malloc (0) and *PN is 0 on a
+	host where malloc (0) yields nonnull.
+
 2014-04-09  Eric Blake  <eblake@redhat.com>
 
 	fts: avoid unnecessary strlen calls
