@@ -53,6 +53,34 @@ AC_DEFUN([gl_FUNC_EXPL],
       EXPL_LIBM=-lm
     fi
   fi
+  dnl On OpenBSD5.4 the system's native expl() is buggy:
+  dnl it returns 'nan' for small values. Test for this anomaly.
+  if test $gl_cv_func_expl_no_libm = yes \
+     || test $gl_cv_func_expl_in_libm = yes; then
+    AC_CACHE_CHECK([whether expl() breaks with small values],
+        [gl_cv_func_expl_buggy],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$EXPL_LIBM"
+          AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM(
+             [[#include <math.h>]],
+             [[return isnan(expl(-1.0))||
+                      isnan(expl(-0.8))||
+                      isnan(expl(-0.4)); ]])],
+             [gl_cv_func_expl_buggy=no], [gl_cv_func_expl_buggy=yes],
+             [case $host_os in
+                openbsd*) gl_cv_func_expl_buggy="guessing yes";;
+                *) gl_cv_func_expl_buggy="guessing no";;
+              esac])
+          LIBS="$save_LIBS"
+        ])
+    case "$gl_cv_func_expl_buggy" in
+      *yes)
+        gl_cv_func_expl_in_libm=no
+        gl_cv_func_expl_no_libm=no ;;
+    esac
+  fi
   if test $gl_cv_func_expl_no_libm = yes \
      || test $gl_cv_func_expl_in_libm = yes; then
     dnl Also check whether it's declared.
