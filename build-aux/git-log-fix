@@ -1,9 +1,0 @@
-# This file is expected to be used via gitlog-to-changelog's --amend=FILE
-# option.  It specifies what changes to make to each given SHA1's commit
-# log and metadata, using Perl-eval'able expressions.
-
-# Here is an example, with leading "#" to comment it out:
-#
-#3a169f4c5d9159283548178668d2fae6fced3030
-## fix title:
-#s/all tile types/all file types/

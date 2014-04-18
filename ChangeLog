@@ -1,3 +1,10 @@
+2014-04-18  Pádraig Brady  <P@draigBrady.com>
+
+	gitlog-to-changelog: revert inclusion of git-log-fix file
+	* build-aux/git-log-fix: Delete dummy file.
+	* modules/gitlog-to-changelog: Don't reference (overwrite)
+	the project specific git-log-fix file.
+
 2014-04-18  Assaf Gordon  <agordon@wi.mit.edu>
 
 	maint.mk: Relax the copyright check to cater for non FSF projects
