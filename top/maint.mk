@@ -1192,7 +1192,7 @@ sc_copyright_check:
 	in_vc_files=$(sample-test)					\
 	halt='out of date copyright in $(sample-test); update it'	\
 	  $(_sc_search_regexp)
-	@require='Copyright @copyright\{\} .*'$$(date +%Y)' Free'	\
+	@require='Copyright @copyright\{\} .*'$$(date +%Y)		\
 	in_vc_files=$(texi)						\
 	halt='out of date copyright in $(texi); update it'		\
 	  $(_sc_search_regexp)

@@ -1,3 +1,9 @@
+2014-04-18  Assaf Gordon  <agordon@wi.mit.edu>
+
+	maint.mk: Relax the copyright check to cater for non FSF projects
+	* top/maint.mk (sc_copyright_check): Relax the check for $PACKAGE.texi
+	to not require the "Free" suffix after the copyright years.
+
 2014-04-18  Natanael Copa  <ncopa@alpinelinux.org>
 
 	physmem: use sysinfo on linux-gnu if _SC_PHYS_PAGES unavailable
