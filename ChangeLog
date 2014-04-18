@@ -1,3 +1,11 @@
+2014-04-18  Natanael Copa  <ncopa@alpinelinux.org>
+
+	physmem: use sysinfo on linux-gnu if _SC_PHYS_PAGES unavailable
+	* lib/physmem.c (physmem_total): Some systems like musl libc don't yet
+	support _SC_PHYS_PAGES.  Use the linux syscall sysinfo as fallback
+	if _SC_PHYS_PAGES or _SC_PAGESIZE fails.
+	(physmem_available): Likewise for _SC_AVPHYS_PAGES.
+
 2014-04-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	exclude: port to strict C99

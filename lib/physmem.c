@@ -32,8 +32,11 @@
 # include <sys/sysmp.h>
 #endif
 
-#if HAVE_SYS_SYSINFO_H && HAVE_MACHINE_HAL_SYSINFO_H
+#if HAVE_SYS_SYSINFO_H
 # include <sys/sysinfo.h>
+#endif
+
+#if HAVE_MACHINE_HAL_SYSINFO_H
 # include <machine/hal_sysinfo.h>
 #endif
 
@@ -87,6 +90,14 @@ physmem_total (void)
     double pagesize = sysconf (_SC_PAGESIZE);
     if (0 <= pages && 0 <= pagesize)
       return pages * pagesize;
+  }
+#endif
+
+#if HAVE_SYSINFO && HAVE_STRUCT_SYSINFO_MEM_UNIT
+  { /* This works on linux.  */
+    struct sysinfo si;
+    if (sysinfo(&si) == 0)
+      return (double) si.totalram * si.mem_unit;
   }
 #endif
 
@@ -191,6 +202,14 @@ physmem_available (void)
     double pagesize = sysconf (_SC_PAGESIZE);
     if (0 <= pages && 0 <= pagesize)
       return pages * pagesize;
+  }
+#endif
+
+#if HAVE_SYSINFO && HAVE_STRUCT_SYSINFO_MEM_UNIT
+  { /* This works on linux.  */
+    struct sysinfo si;
+    if (sysinfo(&si) == 0)
+      return ((double) si.freeram + si.bufferram) * si.mem_unit;
   }
 #endif
 

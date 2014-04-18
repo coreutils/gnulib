@@ -40,6 +40,7 @@ AC_DEFUN([gl_PHYSMEM],
      #endif
     ])
 
-  AC_CHECK_FUNCS([pstat_getstatic pstat_getdynamic sysmp getsysinfo sysctl table])
+  AC_CHECK_FUNCS([pstat_getstatic pstat_getdynamic sysmp getsysinfo sysctl table sysinfo])
+  AC_CHECK_MEMBERS([struct sysinfo.mem_unit],,, [[#include <sys/sysinfo.h>]])
   AC_REQUIRE([gl_SYS__SYSTEM_CONFIGURATION])
 ])
