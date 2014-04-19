@@ -1,3 +1,12 @@
+2014-04-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	exclude: port to strict C99
+	Strict C does not allow converting a function pointer to void *
+	and vice versa.  Pass a pointer to a function pointer instead.
+	* lib/exclude.c (add_exclude_file):
+	Pass the address of the function pointer.
+	(call_addfn): And deference the address here, to match.
+
 2014-04-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: do not depend on malloc-gnu

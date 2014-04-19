@@ -668,8 +668,8 @@ add_exclude_fp (void (*add_func) (struct exclude *, char const *, int, void *),
 static void
 call_addfn (struct exclude *ex, char const *pattern, int options, void *data)
 {
-  void (*addfn) (struct exclude *, char const *, int) = data;
-  addfn (ex, pattern, options);
+  void (**addfnptr) (struct exclude *, char const *, int) = data;
+  (*addfnptr) (ex, pattern, options);
 }
 
 int
@@ -686,7 +686,7 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
   else if (! (in = fopen (file_name, "r")))
     return -1;
 
-  rc = add_exclude_fp (call_addfn, ex, in, options, line_end, add_func);
+  rc = add_exclude_fp (call_addfn, ex, in, options, line_end, &add_func);
 
   if (!use_stdin && fclose (in) != 0)
     rc = -1;
