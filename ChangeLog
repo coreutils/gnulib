@@ -1,3 +1,14 @@
+2014-05-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mbsstr, quotearg, xstrtol: pacify IRIX 6.5 cc
+	These were found when building the latest grep snapshot on IRIX 6.5.
+	* lib/mbsstr.c (knuth_morris_pratt_multibyte): Break "a=b=c;" into
+	"b=c; a=b;", since IRIX 6.5 cc complains about the former if b is
+	never used later.
+	* lib/quotearg.c (quoting_options_from_style):
+	* lib/xstrtol.c (__xstrtol):
+	Use enum instead of 0, to pacify IRIX 6.5 cc.
+
 2014-04-18  Pádraig Brady  <P@draigBrady.com>
 
 	gitlog-to-changelog: revert inclusion of git-log-fix file

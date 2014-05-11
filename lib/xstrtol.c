@@ -182,7 +182,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
           break;
 
         case 'c':
-          overflow = 0;
+          overflow = LONGINT_OK;
           break;
 
         case 'E': /* exa or exbi */
