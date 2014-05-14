@@ -1,3 +1,12 @@
+2014-05-14  Guilherme de Almeida Suckevicz  <guito.linux@gmail.com>
+
+	getlogin-tests: avoid false failure under sudo/ssh etc.
+	* modules/getlogin-tests (configure.ac): Check for ttyname().
+	* tests/test-getlogin.c (main): Don't depend on environment variables
+	to correlate with getlogin(), since sudo and ssh etc. can tamper
+	with the LOGNAME and USER env vars.  Instead lookup the name from
+	the uid associated with the stdin tty.
+
 2014-05-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mbsstr, quotearg, xstrtol: pacify IRIX 6.5 cc
