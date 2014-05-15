@@ -15,4 +15,8 @@ Portability problems not fixed by Gnulib:
 @item
 On some platforms, a script without executable permission is still run:
 Cygwin 1.5.x.
+@item
+On Windows platforms (excluding Cygwin), this function operates by spawning
+and then by exiting the current process, which means the current
+process's parent may incorrectly proceed as if its child had exited.
 @end itemize

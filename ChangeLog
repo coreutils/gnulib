@@ -1,3 +1,16 @@
+2014-05-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: document exec* = spawn+exit bug with non-Cygwin Windows platforms
+	Problem reported by Eli Zaretskii in:
+	http://lists.gnu.org/archive/html/bug-grep/2014-05/msg00118.html
+	* doc/posix-functions/execl.texi (execl):
+	* doc/posix-functions/execle.texi (execle):
+	* doc/posix-functions/execlp.texi (execlp):
+	* doc/posix-functions/execv.texi (execv):
+	* doc/posix-functions/execve.texi (execve):
+	* doc/posix-functions/execvp.texi (execvp):
+	Mention spawn+exit problem on non-Cygwin Windows platforms.
+
 2014-05-14  Guilherme de Almeida Suckevicz  <guito.linux@gmail.com>
 
 	getlogin-tests: avoid false failure under sudo/ssh etc.
