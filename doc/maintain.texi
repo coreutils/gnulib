@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate March 19, 2014
+@set lastupdate May 13, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -2062,13 +2062,15 @@ databases (including mail archives and bug tracking) are an exception;
 set them up on whatever site is convenient for you, and make the pages
 on @code{www.gnu.org} link to that site.
 
+Please follow the best practices of accessibility in your web pages
+(see @url{http://www.gnu.org/accessibility/accessibility.html}).
+
 @menu
 * Hosting for Web Pages::
 * Freedom for Web Pages::
 * Manuals on Web Pages::
 * CVS Keywords in Web Pages::
 @end menu
-
 
 @node Hosting for Web Pages
 @section Hosting for Web Pages
@@ -2289,7 +2291,6 @@ In Texinfo source, the recommended way to literally specify a
 The @code{@@w} prevents keyword expansion in the Texinfo source
 itself.  Also, @code{makeinfo} notices the @code{@@w} and generates
 output avoiding the literal keyword string.
-
 
 @node Ethical and Philosophical Consideration
 @chapter Ethical and Philosophical Consideration

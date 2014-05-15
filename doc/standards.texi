@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 31, 2014
+@set lastupdate May 13, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -295,7 +295,7 @@ speed, the best language to use is C.  C++ is ok too, but please don't
 make heavy use of templates.  So is Java, if you compile it.
 
 When highest efficiency is not required, other languages commonly used
-in the free software community, such as Scheme, Python, Ruby, and
+in the free software community, such as Lisp, Scheme, Python, Ruby, and
 Java, are OK too.  Scheme, as implemented by GNU@tie{}Guile, plays a
 particular role in the GNU System: it is the preferred language to
 extend programs written in C/C++, and also a fine language for a wide
@@ -828,22 +828,25 @@ Please don't make the behavior of a utility depend on the name used
 to invoke it.  It is useful sometimes to make a link to a utility
 with a different name, and that should not change what it does.
 
-Instead, use a run time option or a compilation switch or both
-to select among the alternate behaviors.
+Instead, use a run time option or a compilation switch or both to
+select among the alternate behaviors.  You can also build two versions
+of the program, with different names and different default behaviors.
 
 @cindex output device and program's behavior
-Likewise, please don't make the behavior of the program depend on the
-type of output device it is used with.  Device independence is an
-important principle of the system's design; do not compromise it merely
-to save someone from typing an option now and then.  (Variation in error
-message syntax when using a terminal is ok, because that is a side issue
-that people do not depend on.)
+Likewise, please don't make the behavior of a command-line program
+depend on the type of output device it gets as standard output or
+standard input.  Device independence is an important principle of the
+system's design; do not compromise it merely to save someone from
+typing an option now and then.  (Variation in error message syntax
+when using a terminal is ok, because that is a side issue that people
+do not depend on.)
 
 If you think one behavior is most useful when the output is to a
 terminal, and another is most useful when the output is a file or a
-pipe, then it is usually best to make the default behavior the one that
-is useful with output to a terminal, and have an option for the other
-behavior.
+pipe, then it is usually best to make the default behavior the one
+that is useful with output to a terminal, and have an option for the
+other behavior.  You can also build two different versions of the
+program with different names.
 
 There is an exception for programs whose output in certain cases is
 binary data.  Sending such output to a terminal is useless and can
@@ -889,6 +892,11 @@ providing a library interface (for use from C), and perhaps a
 keyboard-driven console interface (for use by users from console
 mode).  Once you are doing the work to provide the functionality and
 the graphical interface, these won't be much extra work.
+
+Please make your program interoperate with access technology such as
+screen readers (see
+@url{http://www.gnu.org/accessibility/accessibility.html}).  This should
+be automatic if you use GTK+.
 
 @node Command-Line Interfaces
 @section Standards for Command Line Interfaces
