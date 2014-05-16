@@ -12,6 +12,14 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
 @item
+This function returns 0 instead of @code{(size_t) -2} when the input
+is empty:
+glibc 2.19.
+@item
+This function returns @code{(size_t) -1} instead of @code{(size_t) -2}
+when the input is empty:
+AIX 5.1.
+@item
 This function does not put the state into non-initial state when parsing an
 incomplete multibyte character on some platforms:
 AIX 5.1, OSF/1 5.1.
