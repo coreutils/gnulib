@@ -1,3 +1,13 @@
+2014-05-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mbrlen, mbrtowc: fix bug with empty input
+	* lib/mbrtowc.c (rpl_mbrtowc) [MBRTOWC_EMPTY_INPUT_BUG]: Fix the bug.
+	* m4/mbrlen.m4 (gl_MBRLEN_EMPTY_INPUT): New macro.  It's not used,
+	so this is mainly for documentation.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_EMPTY_INPUT): New macro.
+	(gl_FUNC_MBRTOWC): Use it.
+	* tests/test-mbrtowc.c (main): Test for the bug.
+
 2014-05-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: document mbrtowc and mbrlen problem with empty input
