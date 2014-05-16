@@ -1,3 +1,9 @@
+2014-05-16  Jim Meyering  <meyering@fb.com>
+
+	mbrtowc.m4: fix a comment typo
+	* m4/mbrtowc.m4 (gl_FUNC_MBRTOWC): Fix typo s/2/-2/ in
+	emitted documentation string.
+
 2014-05-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mbrlen, mbrtowc: fix bug with empty input

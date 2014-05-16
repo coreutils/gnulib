@@ -71,7 +71,7 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
       case "$gl_cv_func_mbrtowc_empty_input" in
         *yes) ;;
         *) AC_DEFINE([MBRTOWC_EMPTY_INPUT_BUG], [1],
-             [Define if the mbrtowc function does not return (size_t) 2
+             [Define if the mbrtowc function does not return (size_t) -2
               for empty input.])
            REPLACE_MBRTOWC=1
            ;;
