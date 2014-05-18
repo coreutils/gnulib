@@ -75,8 +75,6 @@ main (void)
     tty = ttyname (STDIN_FILENO);
     if (tty == NULL)
       {
-         ASSERT (errno == ENOTTY);
-
          fprintf (stderr, "Skipping test: stdin is not a tty.\n");
          return 77;
       }

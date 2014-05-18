@@ -1,3 +1,10 @@
+2014-05-18  Pádraig Brady  <P@draigBrady.com>
+
+	getlogin-tests: avoid false failure under cron
+	* tests/test-getlogin.c (main): Avoid verifying errnos from ttyname()
+	since that's not what's under test.  Centos 6 was seen to return
+	EINVAL for ttyname() when run from cron.
+
 2014-05-16  Jim Meyering  <meyering@fb.com>
 
 	mbrtowc.m4: fix a comment typo
