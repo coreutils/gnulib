@@ -1,3 +1,9 @@
+2014-05-19  Pádraig Brady  <P@draigBrady.com>
+
+	getlogin_r-tests: avoid false failure under sudo/ssh etc.
+	* tests/test-getlogin_r.c (main): Sync up with test-getlogin.c
+	changes from commit 97249cf29 to not depend on environment variables.
+
 2014-05-18  Pádraig Brady  <P@draigBrady.com>
 
 	getlogin-tests: avoid false failure under cron
