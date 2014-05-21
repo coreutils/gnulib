@@ -1,3 +1,11 @@
+2014-05-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc: don't potentially generate invalid code for xmemdup calls
+	* lib/xalloc.h (xmemdup): Do not mark with _GL_ATTRIBUTE_ALLOC, as
+	this function can initialize the newly-allocated storage with new
+	pointers, which means this function is not malloc-like.  See:
+	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56955
+
 2014-05-19  Pádraig Brady  <P@draigBrady.com>
 
 	getlogin_r-tests: avoid false failure under sudo/ssh etc.

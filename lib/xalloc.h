@@ -64,7 +64,7 @@ void *xrealloc (void *p, size_t s)
       _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 void *x2realloc (void *p, size_t *pn);
 void *xmemdup (void const *p, size_t s)
-      _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((2));
+      _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 char *xstrdup (char const *str)
       _GL_ATTRIBUTE_MALLOC;
 
