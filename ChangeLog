@@ -1,3 +1,12 @@
+2014-05-22  Pádraig Brady  <P@draigBrady.com>
+
+	getlogin_r-tests: fix various issues in recent change
+	* tests/test-getlogin_r.c: Include required headers that were
+	missed in recent commit eec20b4e.
+	Also consistently check the errno rather than the return value from
+	getlogin_r as POSIX only specifies that non zero is returned on error.
+	* modules/getlogin_r-tests (configure.ac): Add the check for ttyname().
+
 2014-05-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fchdir: port 'open' and 'close' redefinitions to AIX 7.1
