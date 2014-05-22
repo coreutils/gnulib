@@ -1,3 +1,19 @@
+2014-05-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fchdir: port 'open' and 'close' redefinitions to AIX 7.1
+	* lib/chown.c, lib/clean-temp.c, lib/copy-file.c, lib/execute.c:
+	* lib/fsusage.c, lib/gc-gnulib.c, lib/javacomp.c, lib/mountlist.c:
+	* lib/openat-proc.c, lib/pagealign_alloc.c, lib/progreloc.c:
+	* lib/spawn-pipe.c:
+	Do not #undef 'open' and 'close'.  AIX 7 does '#define open open64'
+	and then 'int open64(const char *, int, ...);', which means the
+	declaration for 'open' gets lost if we later '#undef open'.
+	Discovered while building grep pretest 2.18.151-1c770 on AIX 7.1,
+	where the compilation reported the non-fatal error "In function
+	'openat_proc_name' ... warning: implicit declaration of function
+	'open'".  In this case the error is relatively harmless, but in
+	other cases it might not be so minor.
+
 2014-05-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc: don't potentially generate invalid code for xmemdup calls

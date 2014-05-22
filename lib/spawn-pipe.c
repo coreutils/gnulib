@@ -48,11 +48,6 @@
 
 #endif
 
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
-
 
 #ifdef EINTR
 

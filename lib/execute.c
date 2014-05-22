@@ -48,11 +48,6 @@
 
 #endif
 
-/* The results of open() in this file are not used with fchdir,
-   therefore save some unnecessary work in fchdir.c.  */
-#undef open
-#undef close
-
 
 #if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
 
