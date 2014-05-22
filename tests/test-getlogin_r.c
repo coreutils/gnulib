@@ -45,7 +45,7 @@ main (void)
   err = getlogin_r (buf, sizeof (buf));
   if (err != 0)
     {
-      if (errno == ENOENT)
+      if (err == ENOENT)
         {
           /* This can happen on GNU/Linux.  */
           fprintf (stderr, "Skipping test: no entry in utmp file.\n");
@@ -53,9 +53,9 @@ main (void)
         }
 
       /* getlogin_r() fails when stdin is not connected to a tty.  */
-      ASSERT (errno == ENOTTY
-              || errno == EINVAL /* seen on Linux/SPARC */
-              || errno == ENXIO
+      ASSERT (err == ENOTTY
+              || err == EINVAL /* seen on Linux/SPARC */
+              || err == ENXIO
              );
 #if !defined __hpux /* On HP-UX 11.11 it fails anyway.  */
       ASSERT (! isatty (0));

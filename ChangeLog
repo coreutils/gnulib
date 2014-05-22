@@ -1,5 +1,11 @@
 2014-05-22  Pádraig Brady  <P@draigBrady.com>
 
+	getlogin_r-tests: check return value rather than errno
+	* tests/test-getlogin_r.c (main): As per POSIX we should be
+	verifying the return value from getlogin_r() rather than errno.
+
+2014-05-22  Pádraig Brady  <P@draigBrady.com>
+
 	getlogin_r-tests: fix various issues in recent change
 	* tests/test-getlogin_r.c: Include required headers that were
 	missed in recent commit eec20b4e.
