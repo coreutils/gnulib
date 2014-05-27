@@ -1,3 +1,9 @@
+2014-05-27  Sylvain Beucler  <beuc@beuc.net>.
+
+	gnulib-tool: wget translations using --no-verbose rather than --quiet
+	This allows the user to see error messages if any (--quiet hides them)
+	* gnulib-tool: Invoke wget with --no-verbose, rather than --quiet.
+
 2014-05-27  Sylvain Beucler  <beuc@beuc.net>
 
 	gnulib-tool: adjust translation wget to avoid a https redirection
