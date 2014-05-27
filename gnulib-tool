@@ -5031,7 +5031,7 @@ s,//*$,/,'
             if type rsync 2>/dev/null | grep / > /dev/null; then
               rsync -Lrtz "${TP_RSYNC_URI}gnulib/" .
             else
-              wget --quiet -r -l1 -nd -np -A.po "${TP_URL}gnulib"
+              wget --quiet -r -l1 -nd -np -A.po "${TP_URL}gnulib/"
             fi
           }
       )

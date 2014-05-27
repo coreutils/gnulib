@@ -1,3 +1,16 @@
+2014-05-27  Sylvain Beucler  <beuc@beuc.net>
+
+	gnulib-tool: adjust translation wget to avoid a https redirection
+	Context: http://translationproject.org/latest/gnulib redirects to
+	   https://translationproject.org/latest/gnulib/
+	Rationale: if the user falls back to wget, she doesn't have rsync and
+	is probably in a minimal build environment, where packages such as
+	'ca-certificates' are missing as well, resulting in a failed (and
+	difficult to detect since ignored) translation initial fetch.
+	Consequently let's avoid https if possible, and add the missing
+	trailing slash.  This also avoids an unnecessary 302 redirection.
+	* gnulib-tool: Add trailing slash to gnulib URL.
+
 2014-05-22  Pádraig Brady  <P@draigBrady.com>
 
 	getlogin_r-tests: check return value rather than errno
