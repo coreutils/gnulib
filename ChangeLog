@@ -1,3 +1,17 @@
+2014-05-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread_sigmask, timer-time: use gl_THREADLIB only if needed
+	Without this fix, Emacs would sometimes call sigprocmask instead
+	of pthread_sigmask, which is a no-no in multithreaded applications.
+	Problem reported by Jorgen Schaefer in <http://bugs.gnu.org/17561>.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK):
+	Suppress check for pthread_sigmask working without -lpthread if
+	the application always links with -lpthread.  Do not link with
+	$LIBMULTITHREAD if gl_THREADLIB is not defined.
+	* m4/timer_time.m4 (gl_TIMER_TIME):
+	Require gl_THREADLIB only if it is defined.  Do not append
+	$LIBMULTITHREAD to LIB_TIMER_TIME if gl_THREADLIB is not defined.
+
 2014-05-27  Sylvain Beucler  <beuc@beuc.net>.
 
 	gnulib-tool: wget translations using --no-verbose rather than --quiet
