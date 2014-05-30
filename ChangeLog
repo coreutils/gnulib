@@ -1,3 +1,10 @@
+2014-05-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	exclude-tests: port to AIX 7.1
+	* modules/exclude-tests (test_exclude_LDADD): Add $(LIBTHREAD).
+	Needed on AIX 7.1 with xlc V12.1, otherwise it won't link because
+	the regex code uses locks.
+
 2014-05-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread_sigmask, timer-time: use gl_THREADLIB only if needed

@@ -27,4 +27,4 @@ TESTS += \
  test-exclude8.sh
 
 check_PROGRAMS += test-exclude
-test_exclude_LDADD = $(LDADD) @LIBINTL@
+test_exclude_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
