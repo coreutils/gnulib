@@ -1,5 +1,17 @@
 2014-05-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	printf, config.rpath: Port to FreeBSD 10.
+	Problem reported by Tijl Coosemans in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-05/msg00078.html
+	* build-aux/config.rpath (hardcode_libdir_flag_spec)
+	(hardcode_direct): Simplify FreeBSD configuration.
+	(library_names_spec): Don't mishandle FreeBSD 10+.
+	* m4/printf.m4 (gl_PRINTF_SIZES_C99, gl_PRINTF_LONG_DOUBLE)
+	(gl_PRINTF_INFINITE_LONG_DOUBLE, gl_PRINTF_DIRECTIVE_F)
+	(gl_SNPRINTF_TRUNCATION_C99, gl_SNPRINTF_RETVAL_C99)
+	(gl_SNPRINTF_DIRECTIVE_N, gl_VSNPRINTF_ZEROSIZE_C99):
+	Don't mishandle FreeBSD 10+ when cross-compiling.
+
 	ftoastr: work around compiler bug in IBM xlc 12.1
 	* lib/ftoastr.h (_GL_FLT_PREC_BOUND, _GL_DBL_PREC_BOUND)
 	(_GL_LDBL_PREC_BOUND): Make these macros, not enums, to work
