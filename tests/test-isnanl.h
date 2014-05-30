@@ -51,6 +51,15 @@ main ()
   /* A bit pattern that is different from a Quiet NaN.  With a bit of luck,
      it's a Signalling NaN.  */
   {
+#if defined __powerpc__ && LDBL_MANT_DIG == 106
+    /* This is PowerPC "double double", a pair of two doubles.  Inf and Nan are
+       represented as the corresponding 64-bit IEEE values in the first double;
+       the second is ignored.  Manipulate only the first double.  */
+    #undef NWORDS
+    #define NWORDS \
+      ((sizeof (double) + sizeof (unsigned int) - 1) / sizeof (unsigned int))
+#endif
+
     memory_long_double m;
     m.value = NaNl ();
 # if LDBL_EXPBIT0_BIT > 0

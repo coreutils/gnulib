@@ -1,3 +1,13 @@
+2014-05-30  Ulrich Weigand  <uweigand@de.ibm.com>
+
+	isfinite, isinf, isnan tests: fix for little-endian PowerPC
+	* tests/test-isfinite.c (test_isfinitel): Only manipulate the
+	first double of a PowerPC "double double" pair.
+	* tests/test-isinf.c (test_isinfl): Likewise.
+	* tests/test-isnan.c (test_long_double): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+	* tests/test-signbit.c (test_signbitl): Likewise.
+
 2014-05-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	exclude-tests: port to AIX 7.1
