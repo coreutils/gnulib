@@ -12,8 +12,8 @@ dnl From Simon Josefsson
 AC_DEFUN([gl_VALGRIND_TESTS],
 [
   AC_ARG_ENABLE(valgrind-tests,
-    AS_HELP_STRING([--enable-valgrind-tests],
-                   [run self tests under valgrind]),
+    AS_HELP_STRING([--disable-valgrind-tests],
+                   [don't try to run self tests under valgrind]),
     [opt_valgrind_tests=$enableval], [opt_valgrind_tests=yes])
 
   # Run self-tests under valgrind?
