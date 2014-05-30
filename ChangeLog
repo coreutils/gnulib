@@ -1,3 +1,12 @@
+2014-05-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: work around compiler bug in IBM xlc 12.1
+	* lib/ftoastr.h (_GL_FLT_PREC_BOUND, _GL_DBL_PREC_BOUND)
+	(_GL_LDBL_PREC_BOUND): Make these macros, not enums, to work
+	around a compiler bug in IBM xlc 12.1.0.0: it complains
+	'"ftoastr.c", line 80.37: 1506-045 (S) Undeclared identifier
+	_GL_FLT_PREC_BOUND.'
+
 2014-05-30  Kieran Colford  <colfordk@gmail.com>
 
 	valgrind-tests: fixed misleading help message
