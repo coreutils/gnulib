@@ -48,6 +48,11 @@ portability to native Windows platforms) are defined on some platforms but
 not on others.
 
 @item
+@samp{O_CLOEXEC}, @samp{O_NOFOLLOW}, and @samp{O_TTY_INIT}
+are defined to values that are too large for an @code{int} on some platforms:
+AIX 7.1 with XL C 12.1.
+
+@item
 @samp{O_DIRECT}, @samp{O_IGNORE_CTTY}, @samp{O_NDELAY},
 @samp{O_NOATIME}, @samp{O_NOLINK}, @samp{O_NOLINKS}, and
 @samp{O_NOTRANS} (not specified by POSIX) are defined

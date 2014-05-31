@@ -1,3 +1,21 @@
+2014-05-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dup2, fcntl, fcntl-h: port to AIX 7.1
+	This fixes some porting problems discovered when testing the latest
+	grep snapshot on AIX 7.1.  I don't think if fixes any bugs
+	in grep but it could be important for other applications.
+	* doc/posix-functions/dup2.texi:
+	* doc/posix-functions/fcntl.texi:
+	* doc/posix-headers/fcntl.texi:
+	Document AIX bugs.
+	* lib/fcntl.in.h (O_CLOEXEC, O_NOFOLLOW, O_TTY_INIT) [_AIX]:
+	Define to 0 if outside 'int' range.
+	* m4/dup2.m4 (gl_FUNC_DUP2):
+	* m4/fcntl.m4 (gl_FUNC_FCNTL):
+	Check for getdtablesize.  If it's available, test a value just
+	outside its range instead of testing 1000000.  When cross-compiling,
+	guess that AIX will fail this improved test.
+
 2014-05-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	printf, config.rpath: Port to FreeBSD 10.
