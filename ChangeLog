@@ -1,3 +1,9 @@
+2014-06-01  Pádraig Brady  <P@draigBrady.com>
+
+	gnulib-common.m4: add _GL_UNUSED_LABEL
+	* m4/gnulib-common.m4: Add _GL_UNUSED_LABEL which is similar to
+	_GL_UNUSED, but handles g++ < 4.5 not supporting this syntax.
+
 2014-05-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup2, fcntl, fcntl-h: port to AIX 7.1
