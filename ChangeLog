@@ -1,3 +1,9 @@
+2014-06-02  Ben Walton  <bdwalton@gmail.com>
+
+	acl: apply pure attribute to two functions
+	* lib/acl-internal.h (acl_nontrivial, acl_ace_nontrivial):
+	Mark as "pure" as flagged by gcc 4.9 on Solaris 10.
+
 2014-06-01  Pádraig Brady  <P@draigBrady.com>
 
 	gnulib-common.m4: add _GL_UNUSED_LABEL
