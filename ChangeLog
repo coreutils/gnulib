@@ -1,3 +1,8 @@
+2014-06-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-common.m4: Fix typo in _GL_UNUSED_LABEL.
+	* m4/gnulib-common.m4 (_GL_UNUSED_LABEL): Omit trailing semicolon.
+
 2014-06-02  Ben Walton  <bdwalton@gmail.com>
 
 	acl: apply pure attribute to two functions

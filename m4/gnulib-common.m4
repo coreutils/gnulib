@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 34
+# gnulib-common.m4 serial 35
 dnl Copyright (C) 2007-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,7 +53,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    g++ has since version 4.5.  */
 #if !defined __cplusplus || __GNUC__ > 4 \
     || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5)
-# define _GL_UNUSED_LABEL _GL_UNUSED;
+# define _GL_UNUSED_LABEL _GL_UNUSED
 #else
 # define _GL_UNUSED_LABEL
 #endif
