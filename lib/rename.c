@@ -462,7 +462,9 @@ rpl_rename (char const *src, char const *dst)
 
   ret_val = rename (src_temp, dst_temp);
   rename_errno = errno;
- out:
+
+ out: _GL_UNUSED_LABEL;
+
   if (src_temp != src)
     free (src_temp);
   if (dst_temp != dst)
