@@ -1,3 +1,10 @@
+2014-06-02  Ben Walton  <bdwalton@gmail.com>
+
+	rename: mark a label as potentially unused
+	* lib/rename.c (rpl_rename): Avoid compiler warnings seen on Solaris,
+	by marking the out label as potentially unused.
+	* m4/gnulib-common.m4: Mention the need for the trailing ; for C++.
+
 2014-06-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-common.m4: Fix typo in _GL_UNUSED_LABEL.
