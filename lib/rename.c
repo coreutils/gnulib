@@ -285,7 +285,7 @@ rpl_rename (char const *src, char const *dst)
   char *dst_temp = (char *) dst;
   bool src_slash;
   bool dst_slash;
-  bool dst_exists;
+  bool dst_exists _GL_UNUSED;
   int ret_val = -1;
   int rename_errno = ENOTDIR;
   struct stat src_st;

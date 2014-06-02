@@ -1,3 +1,10 @@
+2014-06-03  Ben Walton  <bdwalton@gmail.com>
+
+	rename: avoid unused-but-set-variable compiler warning
+	* lib/rename.c (rpl_rename):  In the non-Win32 variant of rpl_rename,
+	it is possible that dst_exists may be set but not used.  Mark it with
+	the unused attribute to avoid compiler warnings.
+
 2014-06-02  Ben Walton  <bdwalton@gmail.com>
 
 	rename: mark a label as potentially unused
