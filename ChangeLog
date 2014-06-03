@@ -1,3 +1,11 @@
+2014-06-06  Ben Walton  <bdwalton@gmail.com>
+
+	mountlist: avoid hasmntopt const type warning on solaris
+	* lib/mountlist.c: Solaris defines the OPT param of hasmntopt()
+	with char * instead of const char *.  Passing the constant string
+	"ignore" generates a compiler warning.  For Solaris cast MNT_IGNORE
+	to avoid the warning.
+
 2014-06-04  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: delete obsolete code
