@@ -155,6 +155,7 @@ export LC_ALL = C
 ## Sanity checks.  ##
 ## --------------- ##
 
+ifneq ($(_gl-Makefile),)
 _cfg_mk := $(wildcard $(srcdir)/cfg.mk)
 
 # Collect the names of rules starting with 'sc_'.
@@ -196,6 +197,7 @@ local-check :=								\
     $(filter-out $(local-checks-to-skip), $(local-checks-available)))
 
 syntax-check: $(local-check)
+endif
 
 # _sc_search_regexp
 #

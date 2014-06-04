@@ -1,3 +1,9 @@
+2014-06-04  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: avoid spurious error messages
+	* top/maint.mk (syntax-check): Guard definition and use of
+	$(shell) by whether Makefile is present.
+
 2014-06-03  Ben Walton  <bdwalton@gmail.com>
 
 	rename: avoid unused-but-set-variable compiler warning
