@@ -1,5 +1,8 @@
 2014-06-04  Eric Blake  <eblake@redhat.com>
 
+	maintainer-makefile: delete obsolete code
+	* top/maint.mk (build_aux): Drop old code, as threatened.
+
 	maintainer-makefile: avoid spurious error messages
 	* top/maint.mk (syntax-check): Guard definition and use of
 	$(shell) by whether Makefile is present.

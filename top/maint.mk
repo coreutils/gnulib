@@ -21,13 +21,6 @@
 # ME := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ME := maint.mk
 
-# Diagnostic for continued use of deprecated variable.
-# Remove in 2013
-ifneq ($(build_aux),)
- $(error "$(ME): \
-set $$(_build-aux) relative to $$(srcdir) instead of $$(build_aux)")
-endif
-
 # Helper variables.
 _empty =
 _sp = $(_empty) $(_empty)
