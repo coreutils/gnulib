@@ -1,3 +1,10 @@
+2014-06-10  Eli Zaretskii  <eliz@gnu.org>
+
+	times: fix to return non constant value on MS-Windows
+	* lib/times.c (times): Don't use the process creation time,
+	rather clock() which on windows returns the number of
+	clock ticks since the process started.
+
 2014-06-09  Michael Goffioul  <michael.goffioul@gmail.com>
 
 	isatty: fix to work on windows 8

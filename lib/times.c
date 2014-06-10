@@ -62,5 +62,5 @@ times (struct tms * buffer)
   buffer->tms_cutime = 0;
   buffer->tms_cstime = 0;
 
-  return filetime2clock (creation_time);
+  return clock ();
 }
