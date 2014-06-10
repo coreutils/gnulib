@@ -1,5 +1,13 @@
 2014-06-10  Eli Zaretskii  <eliz@gnu.org>
 
+	select: fix waiting on anonymous pipes on MS-Windows
+	* lib/select.c (rpl_select): Fall back to polling when select()
+	indicates there is nothing to check, while due to the timeout not
+	expiring, activity is indicated on one of the handles.
+	Also clear the TIMEOUT argument if the timer does expire.
+
+2014-06-10  Eli Zaretskii  <eliz@gnu.org>
+
 	times: fix to return non constant value on MS-Windows
 	* lib/times.c (times): Don't use the process creation time,
 	rather clock() which on windows returns the number of
