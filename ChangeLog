@@ -1,3 +1,10 @@
+2014-06-10  Pádraig Brady  <P@draigBrady.com>
+
+	select,poll: fix console handle check on windows 8
+	lib/poll.c (IsConsoleHandle): Change from testing the lower
+	2 bits of the handle to the more expensive but accurate syscall.
+	lib/select.c: Likewise.
+
 2014-06-10  Eli Zaretskii  <eliz@gnu.org>
 
 	select: fix waiting on anonymous pipes on MS-Windows

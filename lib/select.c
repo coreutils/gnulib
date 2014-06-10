@@ -82,9 +82,11 @@ typedef DWORD (WINAPI *PNtQueryInformationFile)
 #define PIPE_BUF        512
 #endif
 
-/* Optimized test whether a HANDLE refers to a console.
-   See <http://lists.gnu.org/archive/html/bug-gnulib/2009-08/msg00065.html>.  */
-#define IsConsoleHandle(h) (((intptr_t) (h) & 3) == 3)
+static BOOL IsConsoleHandle (HANDLE h)
+{
+  DWORD mode;
+  return GetConsoleMode (h, &mode) != 0;
+}
 
 static BOOL
 IsSocketHandle (HANDLE h)
