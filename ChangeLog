@@ -1,3 +1,10 @@
+2014-06-11  Daiki Ueno  <ueno@gnu.org>
+
+	gettext: update macros to version 0.19
+	* m4/intl.m4, m4/po.m4: Update from gettext-0.19.  In particular,
+	depend on gl_EXTERN_INLINE and drop support for older Bison
+	versions.
+
 2014-06-10  Pádraig Brady  <P@draigBrady.com>
 
 	select,poll: fix console handle check on windows 8
