@@ -1,3 +1,9 @@
+2014-06-14  Pádraig Brady  <P@draigBrady.com>
+
+	pthread: define thread-safe macros on some platforms
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Define macros needed
+	for thread-safe operation on some platforms.
+
 2014-06-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: don't be multithreaded if USE_UNLOCKED_IO.
