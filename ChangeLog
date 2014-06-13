@@ -1,3 +1,11 @@
+2014-06-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: don't be multithreaded if USE_UNLOCKED_IO.
+	Problem reported by Michael Felt in: http://bugs.gnu.org/17773
+	* lib/regex_internal.h: Do not use multithreaded version if
+	USE_UNLOCKED_IO is defined.  This is a hack, but it works
+	around a porting bug with coreutils 8.22 on AIX 7.1.
+
 2014-06-11  Daiki Ueno  <ueno@gnu.org>
 
 	gettext: update macros to version 0.19
