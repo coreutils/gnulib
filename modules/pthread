@@ -7,9 +7,14 @@ lib/pthread.in.h
 m4/pthread.m4
 
 Depends-on:
+extensions
 extern-inline
 sched
 time
+
+configure.ac-early:
+AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
+AC_DEFINE([_THREAD_SAFE], 1, [For thread-safety on AIX, FreeBSD.])
 
 configure.ac:
 gl_PTHREAD_CHECK

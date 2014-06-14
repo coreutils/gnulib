@@ -88,20 +88,6 @@ AC_DEFUN([gl_PTHREAD_CHECK],
    fi
    AC_SUBST([LIB_PTHREAD])
 
-   dnl Some systems optimize for single-threaded programs by default, and
-   dnl need special flags to disable these optimizations. For example, the
-   dnl definition of 'errno' in <errno.h>.
-   case "$host_os" in
-     aix* | freebsd*)
-       AC_DEFINE([_THREAD_SAFE], 1,
-         [Define on some systems, to enable only thread-safe operations.])
-     ;;
-     osf* | solaris*)
-       AC_DEFINE([_REENTRANT], 1,
-         [Define on some systems, to enable only thread-safe operations.])
-     ;;
-   esac
-
    AC_REQUIRE([AC_C_RESTRICT])
 ])
 

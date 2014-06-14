@@ -1,3 +1,12 @@
+2014-06-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread: don't assume AC_CANONICAL_HOST, port better to Solaris, etc.
+	* modules/pthread (Depends-on): Add 'extensions', as it defines
+	_POSIX_PTHREAD_SEMANTICS, which is needed on Solaris.
+	(configure.ac-early): New section.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Revert previous change, as
+	it is no longer needed.
+
 2014-06-14  Pádraig Brady  <P@draigBrady.com>
 
 	pthread: define thread-safe macros on some platforms
