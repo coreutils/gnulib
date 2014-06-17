@@ -1,3 +1,13 @@
+2014-06-11  Bruce Korb  <bkorb@gnu.org>
+	Jim Meyering  <meyering@fb.com>
+
+	parse-duration: eliminate 68-year duration limit
+	* lib/parse-duration.c: Include "intprops.h".
+	(TIME_MAX): Rename to MAX_DURATION and define to
+	TYPE_MAXIMUM(time_t).
+	* modules/parse-duration (Depends-on): Add intprops.
+	Reported by Jonas 'Sortie' Termansen.
+
 2014-06-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread: don't assume AC_CANONICAL_HOST, port better to Solaris, etc.
