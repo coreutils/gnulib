@@ -1,3 +1,11 @@
+2014-06-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl: port to gcc -Wredundant-decls
+	From a request by Dmitry Antipov in:
+	http://lists.gnu.org/archive/html/emacs-devel/2014-06/msg00263.html
+	* lib/acl.h (_GL_ACL_H): New macro.  Protect entire contents with
+	"#ifndef _GL_ACL_H".
+
 2014-06-11  Bruce Korb  <bkorb@gnu.org>
 	Jim Meyering  <meyering@fb.com>
 
