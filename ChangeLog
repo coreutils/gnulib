@@ -1,5 +1,11 @@
 2014-06-19  Paul Eggert  <eggert@penguin.cs.ucla.edu>
 
+	regex: fix memory leak in compiler
+	Fix by Andreas Schwab in:
+	https://sourceware.org/ml/libc-alpha/2014-06/msg00462.html
+	* lib/regcomp.c (parse_expression): Deallocate partially
+	constructed tree before returning error.
+
 	regex: merge patch from libc
 	2014-02-12  Joseph Myers  <joseph@codesourcery.com>
 	Combine __USE_BSD and __USE_SVID into __USE_MISC.
