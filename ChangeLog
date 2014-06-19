@@ -1,3 +1,10 @@
+2014-06-19  Paul Eggert  <eggert@penguin.cs.ucla.edu>
+
+	regex: merge patch from libc
+	2014-02-12  Joseph Myers  <joseph@codesourcery.com>
+	Combine __USE_BSD and __USE_SVID into __USE_MISC.
+	* lib/regex.h [__USE_BSD]: Change condition to [__USE_MISC].
+
 2014-06-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl: port to gcc -Wredundant-decls
