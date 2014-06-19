@@ -1,3 +1,9 @@
+2014-06-20  Alfred M. Szmidt  <ams@gnu.org>
+
+	git-version-gen: improve option descriptions
+	* build-aux/git-version-gen: Mention that --prefix and --fallback
+	have a mandatory argument.
+
 2014-06-19  Paul Eggert  <eggert@penguin.cs.ucla.edu>
 
 	regex: fix memory leak in compiler

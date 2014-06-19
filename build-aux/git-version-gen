@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2012-12-31.23; # UTC
+scriptversion=2014-06-19.19; # UTC
 
 # Copyright (C) 2007-2014 Free Software Foundation, Inc.
 #
@@ -85,8 +85,9 @@ Print a version string.
 
 Options:
 
-   --prefix           prefix of git tags (default 'v')
-   --fallback         fallback version to use if \"git --version\" fails
+   --prefix PREFIX    prefix of git tags (default 'v')
+   --fallback VERSION
+                      fallback version to use if \"git --version\" fails
 
    --help             display this help and exit
    --version          output version information and exit
