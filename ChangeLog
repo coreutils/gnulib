@@ -1,3 +1,523 @@
+2014-07-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Bruno Haible has stepped down as maintainer.
+	See Karl Berry in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00004.html
+	Daiki Ueno has volunteered to maintain libunistring; see:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00005.html
+	* modules/gen-uni-tables, modules/libunistring:
+	* modules/libunistring-optional, modules/ucs4-utf16, modules/ucs4-utf8:
+	* modules/unicase/base, modules/unicase/cased:
+	* modules/unicase/empty-prefix-context:
+	* modules/unicase/empty-suffix-context, modules/unicase/ignorable:
+	* modules/unicase/locale-language, modules/unicase/special-casing:
+	* modules/unicase/tocasefold, modules/unicase/tolower:
+	* modules/unicase/totitle, modules/unicase/toupper:
+	* modules/unicase/u16-casecmp, modules/unicase/u16-casecoll:
+	* modules/unicase/u16-casefold, modules/unicase/u16-casemap:
+	* modules/unicase/u16-casexfrm, modules/unicase/u16-ct-casefold:
+	* modules/unicase/u16-ct-tolower, modules/unicase/u16-ct-totitle:
+	* modules/unicase/u16-ct-toupper, modules/unicase/u16-is-cased:
+	* modules/unicase/u16-is-casefolded, modules/unicase/u16-is-invariant:
+	* modules/unicase/u16-is-lowercase, modules/unicase/u16-is-titlecase:
+	* modules/unicase/u16-is-uppercase, modules/unicase/u16-prefix-context:
+	* modules/unicase/u16-suffix-context, modules/unicase/u16-tolower:
+	* modules/unicase/u16-totitle, modules/unicase/u16-toupper:
+	* modules/unicase/u32-casecmp, modules/unicase/u32-casecoll:
+	* modules/unicase/u32-casefold, modules/unicase/u32-casemap:
+	* modules/unicase/u32-casexfrm, modules/unicase/u32-ct-casefold:
+	* modules/unicase/u32-ct-tolower, modules/unicase/u32-ct-totitle:
+	* modules/unicase/u32-ct-toupper, modules/unicase/u32-is-cased:
+	* modules/unicase/u32-is-casefolded, modules/unicase/u32-is-invariant:
+	* modules/unicase/u32-is-lowercase, modules/unicase/u32-is-titlecase:
+	* modules/unicase/u32-is-uppercase, modules/unicase/u32-prefix-context:
+	* modules/unicase/u32-suffix-context, modules/unicase/u32-tolower:
+	* modules/unicase/u32-totitle, modules/unicase/u32-toupper:
+	* modules/unicase/u8-casecmp, modules/unicase/u8-casecoll:
+	* modules/unicase/u8-casefold, modules/unicase/u8-casemap:
+	* modules/unicase/u8-casexfrm, modules/unicase/u8-ct-casefold:
+	* modules/unicase/u8-ct-tolower, modules/unicase/u8-ct-totitle:
+	* modules/unicase/u8-ct-toupper, modules/unicase/u8-is-cased:
+	* modules/unicase/u8-is-casefolded, modules/unicase/u8-is-invariant:
+	* modules/unicase/u8-is-lowercase, modules/unicase/u8-is-titlecase:
+	* modules/unicase/u8-is-uppercase, modules/unicase/u8-prefix-context:
+	* modules/unicase/u8-suffix-context, modules/unicase/u8-tolower:
+	* modules/unicase/u8-totitle, modules/unicase/u8-toupper:
+	* modules/unicase/ulc-casecmp, modules/unicase/ulc-casecoll:
+	* modules/unicase/ulc-casexfrm, modules/unicodeio:
+	* modules/uniconv/base, modules/uniconv/u16-conv-from-enc:
+	* modules/uniconv/u16-conv-to-enc:
+	* modules/uniconv/u16-strconv-from-enc:
+	* modules/uniconv/u16-strconv-from-locale:
+	* modules/uniconv/u16-strconv-to-enc:
+	* modules/uniconv/u16-strconv-to-locale:
+	* modules/uniconv/u32-conv-from-enc, modules/uniconv/u32-conv-to-enc:
+	* modules/uniconv/u32-strconv-from-enc:
+	* modules/uniconv/u32-strconv-from-locale:
+	* modules/uniconv/u32-strconv-to-enc:
+	* modules/uniconv/u32-strconv-to-locale:
+	* modules/uniconv/u8-conv-from-enc, modules/uniconv/u8-conv-to-enc:
+	* modules/uniconv/u8-strconv-from-enc:
+	* modules/uniconv/u8-strconv-from-locale:
+	* modules/uniconv/u8-strconv-to-enc:
+	* modules/uniconv/u8-strconv-to-locale, modules/unictype/base:
+	* modules/unictype/bidicategory-all:
+	* modules/unictype/bidicategory-byname:
+	* modules/unictype/bidicategory-name, modules/unictype/bidicategory-of:
+	* modules/unictype/bidicategory-test, modules/unictype/bidiclass-all:
+	* modules/unictype/bidiclass-byname:
+	* modules/unictype/bidiclass-longname, modules/unictype/bidiclass-name:
+	* modules/unictype/bidiclass-of, modules/unictype/bidiclass-test:
+	* modules/unictype/block-all, modules/unictype/block-list:
+	* modules/unictype/block-of, modules/unictype/block-test:
+	* modules/unictype/category-C, modules/unictype/category-Cc:
+	* modules/unictype/category-Cf, modules/unictype/category-Cn:
+	* modules/unictype/category-Co, modules/unictype/category-Cs:
+	* modules/unictype/category-L, modules/unictype/category-LC:
+	* modules/unictype/category-Ll, modules/unictype/category-Lm:
+	* modules/unictype/category-Lo, modules/unictype/category-Lt:
+	* modules/unictype/category-Lu, modules/unictype/category-M:
+	* modules/unictype/category-Mc, modules/unictype/category-Me:
+	* modules/unictype/category-Mn, modules/unictype/category-N:
+	* modules/unictype/category-Nd, modules/unictype/category-Nl:
+	* modules/unictype/category-No, modules/unictype/category-P:
+	* modules/unictype/category-Pc, modules/unictype/category-Pd:
+	* modules/unictype/category-Pe, modules/unictype/category-Pf:
+	* modules/unictype/category-Pi, modules/unictype/category-Po:
+	* modules/unictype/category-Ps, modules/unictype/category-S:
+	* modules/unictype/category-Sc, modules/unictype/category-Sk:
+	* modules/unictype/category-Sm, modules/unictype/category-So:
+	* modules/unictype/category-Z, modules/unictype/category-Zl:
+	* modules/unictype/category-Zp, modules/unictype/category-Zs:
+	* modules/unictype/category-all, modules/unictype/category-and:
+	* modules/unictype/category-and-not, modules/unictype/category-byname:
+	* modules/unictype/category-longname, modules/unictype/category-name:
+	* modules/unictype/category-none, modules/unictype/category-of:
+	* modules/unictype/category-or, modules/unictype/category-test:
+	* modules/unictype/category-test-withtable:
+	* modules/unictype/combining-class:
+	* modules/unictype/combining-class-all:
+	* modules/unictype/combining-class-byname:
+	* modules/unictype/combining-class-longname:
+	* modules/unictype/combining-class-name, modules/unictype/ctype-alnum:
+	* modules/unictype/ctype-alpha, modules/unictype/ctype-blank:
+	* modules/unictype/ctype-cntrl, modules/unictype/ctype-digit:
+	* modules/unictype/ctype-graph, modules/unictype/ctype-lower:
+	* modules/unictype/ctype-print, modules/unictype/ctype-punct:
+	* modules/unictype/ctype-space, modules/unictype/ctype-upper:
+	* modules/unictype/ctype-xdigit, modules/unictype/decimal-digit:
+	* modules/unictype/digit, modules/unictype/joininggroup-all:
+	* modules/unictype/joininggroup-byname:
+	* modules/unictype/joininggroup-name, modules/unictype/joininggroup-of:
+	* modules/unictype/joiningtype-all:
+	* modules/unictype/joiningtype-byname:
+	* modules/unictype/joiningtype-longname:
+	* modules/unictype/joiningtype-name, modules/unictype/joiningtype-of:
+	* modules/unictype/mirror, modules/unictype/numeric:
+	* modules/unictype/property-all, modules/unictype/property-alphabetic:
+	* modules/unictype/property-ascii-hex-digit:
+	* modules/unictype/property-bidi-arabic-digit:
+	* modules/unictype/property-bidi-arabic-right-to-left:
+	* modules/unictype/property-bidi-block-separator:
+	* modules/unictype/property-bidi-boundary-neutral:
+	* modules/unictype/property-bidi-common-separator:
+	* modules/unictype/property-bidi-control:
+	* modules/unictype/property-bidi-embedding-or-override:
+	* modules/unictype/property-bidi-eur-num-separator:
+	* modules/unictype/property-bidi-eur-num-terminator:
+	* modules/unictype/property-bidi-european-digit:
+	* modules/unictype/property-bidi-hebrew-right-to-left:
+	* modules/unictype/property-bidi-left-to-right:
+	* modules/unictype/property-bidi-non-spacing-mark:
+	* modules/unictype/property-bidi-other-neutral:
+	* modules/unictype/property-bidi-pdf:
+	* modules/unictype/property-bidi-segment-separator:
+	* modules/unictype/property-bidi-whitespace:
+	* modules/unictype/property-byname:
+	* modules/unictype/property-case-ignorable:
+	* modules/unictype/property-cased:
+	* modules/unictype/property-changes-when-casefolded:
+	* modules/unictype/property-changes-when-casemapped:
+	* modules/unictype/property-changes-when-lowercased:
+	* modules/unictype/property-changes-when-titlecased:
+	* modules/unictype/property-changes-when-uppercased:
+	* modules/unictype/property-combining:
+	* modules/unictype/property-composite:
+	* modules/unictype/property-currency-symbol:
+	* modules/unictype/property-dash:
+	* modules/unictype/property-decimal-digit:
+	* modules/unictype/property-default-ignorable-code-point:
+	* modules/unictype/property-deprecated:
+	* modules/unictype/property-diacritic:
+	* modules/unictype/property-extender:
+	* modules/unictype/property-format-control:
+	* modules/unictype/property-grapheme-base:
+	* modules/unictype/property-grapheme-extend:
+	* modules/unictype/property-grapheme-link:
+	* modules/unictype/property-hex-digit:
+	* modules/unictype/property-hyphen:
+	* modules/unictype/property-id-continue:
+	* modules/unictype/property-id-start:
+	* modules/unictype/property-ideographic:
+	* modules/unictype/property-ids-binary-operator:
+	* modules/unictype/property-ids-trinary-operator:
+	* modules/unictype/property-ignorable-control:
+	* modules/unictype/property-iso-control:
+	* modules/unictype/property-join-control:
+	* modules/unictype/property-left-of-pair:
+	* modules/unictype/property-line-separator:
+	* modules/unictype/property-logical-order-exception:
+	* modules/unictype/property-lowercase, modules/unictype/property-math:
+	* modules/unictype/property-non-break:
+	* modules/unictype/property-not-a-character:
+	* modules/unictype/property-numeric:
+	* modules/unictype/property-other-alphabetic:
+	* modules/unictype/property-other-default-ignorable-code-point:
+	* modules/unictype/property-other-grapheme-extend:
+	* modules/unictype/property-other-id-continue:
+	* modules/unictype/property-other-id-start:
+	* modules/unictype/property-other-lowercase:
+	* modules/unictype/property-other-math:
+	* modules/unictype/property-other-uppercase:
+	* modules/unictype/property-paired-punctuation:
+	* modules/unictype/property-paragraph-separator:
+	* modules/unictype/property-pattern-syntax:
+	* modules/unictype/property-pattern-white-space:
+	* modules/unictype/property-private-use:
+	* modules/unictype/property-punctuation:
+	* modules/unictype/property-quotation-mark:
+	* modules/unictype/property-radical:
+	* modules/unictype/property-sentence-terminal:
+	* modules/unictype/property-soft-dotted:
+	* modules/unictype/property-space:
+	* modules/unictype/property-terminal-punctuation:
+	* modules/unictype/property-test, modules/unictype/property-titlecase:
+	* modules/unictype/property-unassigned-code-value:
+	* modules/unictype/property-unified-ideograph:
+	* modules/unictype/property-uppercase:
+	* modules/unictype/property-variation-selector:
+	* modules/unictype/property-white-space:
+	* modules/unictype/property-xid-continue:
+	* modules/unictype/property-xid-start:
+	* modules/unictype/property-zero-width, modules/unictype/scripts:
+	* modules/unictype/scripts-all, modules/unictype/syntax-c-ident:
+	* modules/unictype/syntax-c-whitespace:
+	* modules/unictype/syntax-java-ident:
+	* modules/unictype/syntax-java-whitespace, modules/unigbrk/base:
+	* modules/unigbrk/u16-grapheme-breaks:
+	* modules/unigbrk/u16-grapheme-next, modules/unigbrk/u16-grapheme-prev:
+	* modules/unigbrk/u32-grapheme-breaks:
+	* modules/unigbrk/u32-grapheme-next, modules/unigbrk/u32-grapheme-prev:
+	* modules/unigbrk/u8-grapheme-breaks, modules/unigbrk/u8-grapheme-next:
+	* modules/unigbrk/u8-grapheme-prev, modules/unigbrk/uc-gbrk-prop:
+	* modules/unigbrk/uc-is-grapheme-break:
+	* modules/unigbrk/ulc-grapheme-breaks, modules/unilbrk/base:
+	* modules/unilbrk/tables, modules/unilbrk/u16-possible-linebreaks:
+	* modules/unilbrk/u16-width-linebreaks:
+	* modules/unilbrk/u32-possible-linebreaks:
+	* modules/unilbrk/u32-width-linebreaks:
+	* modules/unilbrk/u8-possible-linebreaks:
+	* modules/unilbrk/u8-width-linebreaks, modules/unilbrk/ulc-common:
+	* modules/unilbrk/ulc-possible-linebreaks:
+	* modules/unilbrk/ulc-width-linebreaks, modules/uniname/base:
+	* modules/uniname/uniname, modules/uninorm/base:
+	* modules/uninorm/canonical-decomposition:
+	* modules/uninorm/compat-decomposition, modules/uninorm/composition:
+	* modules/uninorm/decompose-internal, modules/uninorm/decomposing-form:
+	* modules/uninorm/decomposition, modules/uninorm/decomposition-table:
+	* modules/uninorm/filter, modules/uninorm/nfc, modules/uninorm/nfd:
+	* modules/uninorm/nfkc, modules/uninorm/nfkd:
+	* modules/uninorm/u16-normalize, modules/uninorm/u16-normcmp:
+	* modules/uninorm/u16-normcoll, modules/uninorm/u16-normxfrm:
+	* modules/uninorm/u32-normalize, modules/uninorm/u32-normcmp:
+	* modules/uninorm/u32-normcoll, modules/uninorm/u32-normxfrm:
+	* modules/uninorm/u8-normalize, modules/uninorm/u8-normcmp:
+	* modules/uninorm/u8-normcoll, modules/uninorm/u8-normxfrm:
+	* modules/unistdio/base, modules/unistdio/u-printf-args:
+	* modules/unistdio/u16-asnprintf, modules/unistdio/u16-asprintf:
+	* modules/unistdio/u16-printf-parse, modules/unistdio/u16-snprintf:
+	* modules/unistdio/u16-sprintf, modules/unistdio/u16-u16-asnprintf:
+	* modules/unistdio/u16-u16-asprintf, modules/unistdio/u16-u16-snprintf:
+	* modules/unistdio/u16-u16-sprintf:
+	* modules/unistdio/u16-u16-vasnprintf:
+	* modules/unistdio/u16-u16-vasprintf:
+	* modules/unistdio/u16-u16-vsnprintf:
+	* modules/unistdio/u16-u16-vsprintf, modules/unistdio/u16-vasnprintf:
+	* modules/unistdio/u16-vasprintf, modules/unistdio/u16-vsnprintf:
+	* modules/unistdio/u16-vsprintf, modules/unistdio/u32-asnprintf:
+	* modules/unistdio/u32-asprintf, modules/unistdio/u32-printf-parse:
+	* modules/unistdio/u32-snprintf, modules/unistdio/u32-sprintf:
+	* modules/unistdio/u32-u32-asnprintf:
+	* modules/unistdio/u32-u32-asprintf, modules/unistdio/u32-u32-snprintf:
+	* modules/unistdio/u32-u32-sprintf:
+	* modules/unistdio/u32-u32-vasnprintf:
+	* modules/unistdio/u32-u32-vasprintf:
+	* modules/unistdio/u32-u32-vsnprintf:
+	* modules/unistdio/u32-u32-vsprintf, modules/unistdio/u32-vasnprintf:
+	* modules/unistdio/u32-vasprintf, modules/unistdio/u32-vsnprintf:
+	* modules/unistdio/u32-vsprintf, modules/unistdio/u8-asnprintf:
+	* modules/unistdio/u8-asprintf, modules/unistdio/u8-printf-parse:
+	* modules/unistdio/u8-snprintf, modules/unistdio/u8-sprintf:
+	* modules/unistdio/u8-u8-asnprintf, modules/unistdio/u8-u8-asprintf:
+	* modules/unistdio/u8-u8-snprintf, modules/unistdio/u8-u8-sprintf:
+	* modules/unistdio/u8-u8-vasnprintf, modules/unistdio/u8-u8-vasprintf:
+	* modules/unistdio/u8-u8-vsnprintf, modules/unistdio/u8-u8-vsprintf:
+	* modules/unistdio/u8-vasnprintf, modules/unistdio/u8-vasprintf:
+	* modules/unistdio/u8-vsnprintf, modules/unistdio/u8-vsprintf:
+	* modules/unistdio/ulc-asnprintf, modules/unistdio/ulc-asprintf:
+	* modules/unistdio/ulc-fprintf, modules/unistdio/ulc-printf-parse:
+	* modules/unistdio/ulc-snprintf, modules/unistdio/ulc-sprintf:
+	* modules/unistdio/ulc-vasnprintf, modules/unistdio/ulc-vasprintf:
+	* modules/unistdio/ulc-vfprintf, modules/unistdio/ulc-vsnprintf:
+	* modules/unistdio/ulc-vsprintf, modules/unistr/base:
+	* modules/unistr/u16-check, modules/unistr/u16-chr:
+	* modules/unistr/u16-cmp, modules/unistr/u16-cmp2:
+	* modules/unistr/u16-cpy, modules/unistr/u16-cpy-alloc:
+	* modules/unistr/u16-endswith, modules/unistr/u16-mblen:
+	* modules/unistr/u16-mbsnlen, modules/unistr/u16-mbtouc:
+	* modules/unistr/u16-mbtouc-unsafe, modules/unistr/u16-mbtoucr:
+	* modules/unistr/u16-move, modules/unistr/u16-next:
+	* modules/unistr/u16-prev, modules/unistr/u16-set:
+	* modules/unistr/u16-startswith, modules/unistr/u16-stpcpy:
+	* modules/unistr/u16-stpncpy, modules/unistr/u16-strcat:
+	* modules/unistr/u16-strchr, modules/unistr/u16-strcmp:
+	* modules/unistr/u16-strcoll, modules/unistr/u16-strcpy:
+	* modules/unistr/u16-strcspn, modules/unistr/u16-strdup:
+	* modules/unistr/u16-strlen, modules/unistr/u16-strmblen:
+	* modules/unistr/u16-strmbtouc, modules/unistr/u16-strncat:
+	* modules/unistr/u16-strncmp, modules/unistr/u16-strncpy:
+	* modules/unistr/u16-strnlen, modules/unistr/u16-strpbrk:
+	* modules/unistr/u16-strrchr, modules/unistr/u16-strspn:
+	* modules/unistr/u16-strstr, modules/unistr/u16-strtok:
+	* modules/unistr/u16-to-u32, modules/unistr/u16-to-u8:
+	* modules/unistr/u16-uctomb, modules/unistr/u32-check:
+	* modules/unistr/u32-chr, modules/unistr/u32-cmp:
+	* modules/unistr/u32-cmp2, modules/unistr/u32-cpy:
+	* modules/unistr/u32-cpy-alloc, modules/unistr/u32-endswith:
+	* modules/unistr/u32-mblen, modules/unistr/u32-mbsnlen:
+	* modules/unistr/u32-mbtouc, modules/unistr/u32-mbtouc-unsafe:
+	* modules/unistr/u32-mbtoucr, modules/unistr/u32-move:
+	* modules/unistr/u32-next, modules/unistr/u32-prev:
+	* modules/unistr/u32-set, modules/unistr/u32-startswith:
+	* modules/unistr/u32-stpcpy, modules/unistr/u32-stpncpy:
+	* modules/unistr/u32-strcat, modules/unistr/u32-strchr:
+	* modules/unistr/u32-strcmp, modules/unistr/u32-strcoll:
+	* modules/unistr/u32-strcpy, modules/unistr/u32-strcspn:
+	* modules/unistr/u32-strdup, modules/unistr/u32-strlen:
+	* modules/unistr/u32-strmblen, modules/unistr/u32-strmbtouc:
+	* modules/unistr/u32-strncat, modules/unistr/u32-strncmp:
+	* modules/unistr/u32-strncpy, modules/unistr/u32-strnlen:
+	* modules/unistr/u32-strpbrk, modules/unistr/u32-strrchr:
+	* modules/unistr/u32-strspn, modules/unistr/u32-strstr:
+	* modules/unistr/u32-strtok, modules/unistr/u32-to-u16:
+	* modules/unistr/u32-to-u8, modules/unistr/u32-uctomb:
+	* modules/unistr/u8-check, modules/unistr/u8-chr:
+	* modules/unistr/u8-cmp, modules/unistr/u8-cmp2, modules/unistr/u8-cpy:
+	* modules/unistr/u8-cpy-alloc, modules/unistr/u8-endswith:
+	* modules/unistr/u8-mblen, modules/unistr/u8-mbsnlen:
+	* modules/unistr/u8-mbtouc, modules/unistr/u8-mbtouc-unsafe:
+	* modules/unistr/u8-mbtoucr, modules/unistr/u8-move:
+	* modules/unistr/u8-next, modules/unistr/u8-prev:
+	* modules/unistr/u8-set, modules/unistr/u8-startswith:
+	* modules/unistr/u8-stpcpy, modules/unistr/u8-stpncpy:
+	* modules/unistr/u8-strcat, modules/unistr/u8-strchr:
+	* modules/unistr/u8-strcmp, modules/unistr/u8-strcoll:
+	* modules/unistr/u8-strcpy, modules/unistr/u8-strcspn:
+	* modules/unistr/u8-strdup, modules/unistr/u8-strlen:
+	* modules/unistr/u8-strmblen, modules/unistr/u8-strmbtouc:
+	* modules/unistr/u8-strncat, modules/unistr/u8-strncmp:
+	* modules/unistr/u8-strncpy, modules/unistr/u8-strnlen:
+	* modules/unistr/u8-strpbrk, modules/unistr/u8-strrchr:
+	* modules/unistr/u8-strspn, modules/unistr/u8-strstr:
+	* modules/unistr/u8-strtok, modules/unistr/u8-to-u16:
+	* modules/unistr/u8-to-u32, modules/unistr/u8-uctomb, modules/unitypes:
+	* modules/uniwbrk/base, modules/uniwbrk/table:
+	* modules/uniwbrk/u16-wordbreaks, modules/uniwbrk/u32-wordbreaks:
+	* modules/uniwbrk/u8-wordbreaks, modules/uniwbrk/ulc-wordbreaks:
+	* modules/uniwbrk/wordbreak-property, modules/uniwidth/base:
+	* modules/uniwidth/u16-strwidth, modules/uniwidth/u16-width:
+	* modules/uniwidth/u32-strwidth, modules/uniwidth/u32-width:
+	* modules/uniwidth/u8-strwidth, modules/uniwidth/u8-width:
+	* modules/uniwidth/width, modules/utf16-ucs4:
+	* modules/utf16-ucs4-unsafe, modules/utf8-ucs4:
+	* modules/utf8-ucs4-unsafe:
+	Change maintainer from Bruno Haible to Daiki Ueno.
+	This is my guess at the libunistring modules; please feel free
+	to fix if I guessed incorrectly.
+	* modules/accept4, modules/acl, modules/acos, modules/acosf:
+	* modules/alignof, modules/amemxfrm, modules/ansi-c++-opt:
+	* modules/areadlink, modules/array-list, modules/array-mergesort:
+	* modules/array-oset, modules/asin, modules/asinf, modules/astrxfrm:
+	* modules/atan, modules/atan2, modules/atan2f, modules/atanf:
+	* modules/avltree-list, modules/avltree-oset, modules/avltreehash-list:
+	* modules/binary-io, modules/bison-i18n, modules/btowc:
+	* modules/c-ctype, modules/c-strcase, modules/c-strcaseeq:
+	* modules/c-strcasestr, modules/c-strstr, modules/calloc-posix:
+	* modules/canonicalize-lgpl, modules/careadlinkat, modules/carray-list:
+	* modules/cbrt, modules/cbrt-ieee, modules/cbrtf, modules/cbrtf-ieee:
+	* modules/cbrtl, modules/cbrtl-ieee, modules/ceil, modules/ceil-ieee:
+	* modules/ceilf, modules/ceilf-ieee, modules/ceill, modules/ceill-ieee:
+	* modules/chdir, modules/classpath, modules/clean-temp, modules/close:
+	* modules/closedir, modules/concat-filename, modules/copy-file:
+	* modules/copysign, modules/copysignf, modules/copysignl, modules/cos:
+	* modules/cosf, modules/cosh, modules/coshf, modules/csharpcomp:
+	* modules/csharpcomp-script, modules/csharpexec:
+	* modules/csharpexec-script, modules/ctype, modules/diffseq:
+	* modules/dprintf, modules/dprintf-posix, modules/dup:
+	* modules/dup2-obsolete, modules/dup3, modules/duplocale:
+	* modules/eealloc, modules/environ, modules/erf, modules/erfc:
+	* modules/errno, modules/execute, modules/exp, modules/exp-ieee:
+	* modules/exp2, modules/exp2-ieee, modules/exp2f, modules/exp2f-ieee:
+	* modules/exp2l, modules/exp2l-ieee, modules/expf, modules/expf-ieee:
+	* modules/expl, modules/expl-ieee, modules/expm1, modules/expm1-ieee:
+	* modules/expm1f, modules/expm1f-ieee, modules/expm1l:
+	* modules/expm1l-ieee, modules/fabs, modules/fabs-ieee, modules/fabsf:
+	* modules/fabsf-ieee, modules/fabsl, modules/fabsl-ieee:
+	* modules/fatal-signal, modules/fbufmode, modules/fchdir:
+	* modules/fclose, modules/fd-hook, modules/fdopen, modules/filename:
+	* modules/findprog, modules/findprog-lgpl, modules/floor:
+	* modules/floor-ieee, modules/floorf, modules/floorf-ieee:
+	* modules/floorl, modules/floorl-ieee, modules/fma, modules/fma-ieee:
+	* modules/fmaf, modules/fmaf-ieee, modules/fmal, modules/fmal-ieee:
+	* modules/fmod, modules/fmod-ieee, modules/fmodf, modules/fmodf-ieee:
+	* modules/fmodl, modules/fmodl-ieee, modules/fopen, modules/fpieee:
+	* modules/fprintf-posix, modules/fpucw, modules/fpurge:
+	* modules/freadable, modules/freadahead, modules/freadptr:
+	* modules/freadseek, modules/freopen, modules/frexp:
+	* modules/frexp-ieee, modules/frexp-nolibm, modules/frexpf:
+	* modules/frexpf-ieee, modules/frexpl, modules/frexpl-ieee:
+	* modules/frexpl-nolibm, modules/fseek, modules/fseeko:
+	* modules/fseterr, modules/fstat, modules/fstrcmp, modules/ftell:
+	* modules/ftello, modules/full-read, modules/full-write:
+	* modules/fwritable, modules/fwriteerror, modules/gcd:
+	* modules/get-rusage-as, modules/get-rusage-data:
+	* modules/getdtablesize, modules/getrusage, modules/gettext:
+	* modules/gettext-h, modules/git-merge-changelog, modules/gperf:
+	* modules/grantpt, modules/havelib, modules/host-cpu-c-abi:
+	* modules/hostent, modules/hypot, modules/hypot-ieee, modules/hypotf:
+	* modules/hypotf-ieee, modules/hypotl, modules/hypotl-ieee:
+	* modules/iconv, modules/iconv-h, modules/iconv_open:
+	* modules/iconv_open-utf, modules/idpriv-drop, modules/idpriv-droptemp:
+	* modules/ilogb, modules/ilogbf, modules/ilogbl, modules/imaxabs:
+	* modules/imaxdiv, modules/integer_length, modules/integer_length_l:
+	* modules/integer_length_ll, modules/ioctl, modules/isatty:
+	* modules/isblank, modules/isnand, modules/isnand-nolibm:
+	* modules/isnanf, modules/isnanf-nolibm, modules/isnanl:
+	* modules/isnanl-nolibm, modules/iswblank, modules/iswctype:
+	* modules/j0, modules/j1, modules/javacomp, modules/javacomp-script:
+	* modules/javaexec, modules/javaexec-script, modules/javaversion:
+	* modules/jn, modules/langinfo, modules/ldd, modules/ldexp:
+	* modules/ldexp-ieee, modules/ldexpf, modules/ldexpf-ieee:
+	* modules/ldexpl, modules/ldexpl-ieee, modules/lgamma:
+	* modules/lib-symbol-visibility, modules/libsigsegv:
+	* modules/linked-list, modules/linkedhash-list, modules/list:
+	* modules/localcharset, modules/locale, modules/localeconv:
+	* modules/localename, modules/lock, modules/log, modules/log-ieee:
+	* modules/log10, modules/log10-ieee, modules/log10f:
+	* modules/log10f-ieee, modules/log10l, modules/log10l-ieee:
+	* modules/log1p, modules/log1p-ieee, modules/log1pf:
+	* modules/log1pf-ieee, modules/log1pl, modules/log1pl-ieee:
+	* modules/log2, modules/log2-ieee, modules/log2f, modules/log2f-ieee:
+	* modules/log2l, modules/log2l-ieee, modules/logb, modules/logb-ieee:
+	* modules/logbf, modules/logbf-ieee, modules/logbl, modules/logbl-ieee:
+	* modules/logf, modules/logf-ieee, modules/login_tty:
+	* modules/logl-ieee, modules/malloc-posix, modules/malloca:
+	* modules/mbchar, modules/mbfile, modules/mbiter, modules/mbmemcasecmp:
+	* modules/mbmemcasecoll, modules/mbrlen, modules/mbrtowc:
+	* modules/mbscasecmp, modules/mbscasestr, modules/mbschr:
+	* modules/mbscspn, modules/mbsinit, modules/mbslen:
+	* modules/mbsncasecmp, modules/mbsnlen, modules/mbsnrtowcs:
+	* modules/mbspbrk, modules/mbspcasecmp, modules/mbsrchr:
+	* modules/mbsrtowcs, modules/mbssep, modules/mbsspn, modules/mbsstr:
+	* modules/mbstok_r, modules/mbswidth, modules/mbtowc, modules/mbuiter:
+	* modules/memchr-obsolete, modules/memcmp2, modules/minmax:
+	* modules/mkdtemp, modules/mkostemp, modules/mktime-internal:
+	* modules/modf, modules/modf-ieee, modules/modff, modules/modff-ieee:
+	* modules/modfl, modules/modfl-ieee, modules/msvc-inval:
+	* modules/msvc-nothrow, modules/multiarch, modules/nextafter:
+	* modules/nl_langinfo, modules/no-c++, modules/nocrash:
+	* modules/nonblocking, modules/open, modules/opendir, modules/openmp:
+	* modules/oset, modules/pclose, modules/pipe, modules/pipe-filter-gi:
+	* modules/pipe-filter-ii, modules/pipe2, modules/poll-h:
+	* modules/posix_spawn, modules/posix_spawn-internal:
+	* modules/posix_spawn_file_actions_addclose:
+	* modules/posix_spawn_file_actions_adddup2:
+	* modules/posix_spawn_file_actions_addopen:
+	* modules/posix_spawn_file_actions_destroy:
+	* modules/posix_spawn_file_actions_init:
+	* modules/posix_spawnattr_destroy, modules/posix_spawnattr_getflags:
+	* modules/posix_spawnattr_getpgroup:
+	* modules/posix_spawnattr_getschedparam:
+	* modules/posix_spawnattr_getschedpolicy:
+	* modules/posix_spawnattr_getsigdefault:
+	* modules/posix_spawnattr_getsigmask, modules/posix_spawnattr_init:
+	* modules/posix_spawnattr_setflags, modules/posix_spawnattr_setpgroup:
+	* modules/posix_spawnattr_setschedparam:
+	* modules/posix_spawnattr_setschedpolicy:
+	* modules/posix_spawnattr_setsigdefault:
+	* modules/posix_spawnattr_setsigmask, modules/posix_spawnp:
+	* modules/pow, modules/powf, modules/printf-frexp:
+	* modules/printf-frexpl, modules/printf-posix, modules/printf-safe:
+	* modules/progname, modules/propername, modules/pselect:
+	* modules/pthread_sigmask, modules/ptsname, modules/ptsname_r:
+	* modules/qacl, modules/quotearg-simple, modules/raise, modules/random:
+	* modules/rbtree-list, modules/rbtree-oset, modules/rbtreehash-list:
+	* modules/read, modules/readdir, modules/readlink:
+	* modules/realloc-posix, modules/regex-quote, modules/relocatable-lib:
+	* modules/relocatable-lib-lgpl, modules/relocatable-perl:
+	* modules/relocatable-prog, modules/relocatable-prog-wrapper:
+	* modules/relocatable-script, modules/remainder:
+	* modules/remainder-ieee, modules/remainderf, modules/remainderf-ieee:
+	* modules/remainderl, modules/remainderl-ieee, modules/rewinddir:
+	* modules/rint, modules/rint-ieee, modules/rintf, modules/rintf-ieee:
+	* modules/rintl, modules/rintl-ieee, modules/round-ieee:
+	* modules/roundf-ieee, modules/roundl-ieee, modules/safe-read:
+	* modules/safe-write, modules/sched, modules/servent, modules/setenv:
+	* modules/setlocale, modules/sh-quote, modules/shutdown:
+	* modules/signal, modules/signbit, modules/sigpipe:
+	* modules/sigpipe-die, modules/sigprocmask, modules/sin, modules/sinf:
+	* modules/sinh, modules/sinhf, modules/size_max, modules/sleep:
+	* modules/snippet/arg-nonnull, modules/snippet/c++defs:
+	* modules/snippet/link-warning, modules/snippet/unused-parameter:
+	* modules/snprintf, modules/snprintf-posix, modules/spawn:
+	* modules/spawn-pipe, modules/sprintf-posix, modules/sqrt:
+	* modules/sqrt-ieee, modules/sqrtf, modules/sqrtf-ieee:
+	* modules/sqrtl-ieee, modules/stdalign, modules/stdarg:
+	* modules/stdbool, modules/stpcpy, modules/stpncpy, modules/strcase:
+	* modules/strcasestr, modules/strcasestr-simple, modules/strcspn:
+	* modules/streq, modules/strerror_r-posix, modules/striconv:
+	* modules/striconveh, modules/striconveha, modules/strncat:
+	* modules/strnlen1, modules/strpbrk, modules/strtod-obsolete:
+	* modules/sublist, modules/sys_resource, modules/sys_utsname:
+	* modules/sys_wait, modules/system-posix, modules/system-quote:
+	* modules/tan, modules/tanf, modules/tanh, modules/tanhf:
+	* modules/tcgetsid, modules/termios, modules/threadlib, modules/tls:
+	* modules/tmpdir, modules/towctrans, modules/trunc, modules/trunc-ieee:
+	* modules/truncf, modules/truncf-ieee, modules/truncl:
+	* modules/truncl-ieee, modules/ttyname_r, modules/uname:
+	* modules/unlockpt, modules/unsetenv, modules/vasnprintf:
+	* modules/vasnprintf-posix, modules/vasprintf, modules/vasprintf-posix:
+	* modules/vdprintf, modules/vdprintf-posix, modules/vfprintf-posix:
+	* modules/vfscanf, modules/vma-iter, modules/vprintf-posix:
+	* modules/vscanf, modules/vsnprintf-posix, modules/vsprintf-posix:
+	* modules/wait-process, modules/waitpid, modules/wcpcpy:
+	* modules/wcpncpy, modules/wcrtomb, modules/wcscasecmp, modules/wcscat:
+	* modules/wcschr, modules/wcscmp, modules/wcscoll, modules/wcscpy:
+	* modules/wcscspn, modules/wcsdup, modules/wcslen, modules/wcsncasecmp:
+	* modules/wcsncat, modules/wcsncmp, modules/wcsncpy, modules/wcsnlen:
+	* modules/wcsnrtombs, modules/wcspbrk, modules/wcsrchr:
+	* modules/wcsrtombs, modules/wcsspn, modules/wcsstr, modules/wcstok:
+	* modules/wcswidth, modules/wcsxfrm, modules/wctob, modules/wctomb:
+	* modules/wctrans, modules/wctype, modules/wcwidth, modules/wmemchr:
+	* modules/wmemcmp, modules/wmemcpy, modules/wmemmove, modules/wmemset:
+	* modules/write, modules/xconcat-filename, modules/xlist:
+	* modules/xmalloca, modules/xoset, modules/xprintf-posix:
+	* modules/xreadlink, modules/xsetenv, modules/xsize, modules/xstriconv:
+	* modules/xstriconveh, modules/xsublist, modules/xvasprintf-posix:
+	* modules/y0, modules/y1, modules/yn:
+	Remove Bruno Haible as maintainer; if he's the sole maintainer,
+	change the maintainer to 'all'.  Let's hope someone volunteers.
+
 2014-06-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: merge #if/#ifdef usage from glibc
