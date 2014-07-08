@@ -1,3 +1,9 @@
+2014-07-08  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: less syntax-check noise when SIGPIPE is ignored
+	* top/maint.mk (_sc_header_without_use)
+	(sc_require_config_h_first): Parse full list.
+
 2014-07-07  Eli Zaretskii  <eliz@gnu.org>
 	    Paul Eggert  <eggert@cs.ucla.edu>
 
