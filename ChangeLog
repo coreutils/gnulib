@@ -1,3 +1,9 @@
+2014-07-09  Andrew D Warshall  <warshall@99main.com>
+
+	mountlist: do not classify a bind-mounted dir entry as "dummy"
+	* m4/ls-mntd-fs.m4: Check for hasmntopt() on platforms with
+	1-argument getmntent() (instead of assuming absence).
+
 2014-07-08  Eric Blake  <eblake@redhat.com>
 
 	maint.mk: less syntax-check noise when SIGPIPE is ignored
