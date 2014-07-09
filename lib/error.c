@@ -77,9 +77,9 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 # define error_at_line __error_at_line
 
 # include <libio/iolibio.h>
-# define fflush(s) INTUSE(_IO_fflush) (s)
+# define fflush(s) _IO_fflush (s)
 # undef putc
-# define putc(c, fp) INTUSE(_IO_putc) (c, fp)
+# define putc(c, fp) _IO_putc (c, fp)
 
 # include <bits/libc-lock.h>
 
@@ -201,7 +201,6 @@ error_tail (int status, int errnum, const char *message, va_list args)
 #if _LIBC
   if (_IO_fwide (stderr, 0) > 0)
     {
-# define ALLOCA_LIMIT 2000
       size_t len = strlen (message) + 1;
       wchar_t *wmessage = NULL;
       mbstate_t st;
@@ -237,7 +236,7 @@ error_tail (int status, int errnum, const char *message, va_list args)
           if (res != len)
             break;
 
-          if (__builtin_expect (len >= SIZE_MAX / 2, 0))
+          if (__builtin_expect (len >= SIZE_MAX / sizeof (wchar_t) / 2, 0))
             {
               /* This really should not happen if everything is fine.  */
               res = (size_t) -1;
@@ -342,7 +341,10 @@ error_at_line (int status, int errnum, const char *file_name,
 
       if (old_line_number == line_number
           && (file_name == old_file_name
-              || strcmp (old_file_name, file_name) == 0))
+              || (old_file_name != NULL
+                  && file_name != NULL
+                  && strcmp (old_file_name, file_name) == 0)))
+
         /* Simply return and print nothing.  */
         return;
 

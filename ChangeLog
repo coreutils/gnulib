@@ -1,3 +1,11 @@
+2014-07-10  Siddhesh Poyarekar  <siddhesh@redhat.com>
+
+	error: Sync from glibc master
+	* lib/error.c [_LIBC]: Remove INTUSE usage.
+	(error_tail): Remove unused macro ALLOCA_LIMIT.
+	Fix potential buffer overflow.  Fix potential NULL dereference
+	in strcmp.
+
 2014-07-09  Pavel Hrdina  <phrdina@redhat.com> (tiny change)
 
 	nl_langinfo: fix build under mingw
