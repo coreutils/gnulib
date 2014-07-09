@@ -1,5 +1,12 @@
 2014-07-10  Assaf Gordon  <assafgordon@gmail.com>
 
+	announce-gen: avoid perl warnings
+	* build-aux/announce-gen: add two minor checks to avoid
+	"use of uninitialized value" warnings when command-line parameters are
+	missing.
+
+2014-07-10  Assaf Gordon  <assafgordon@gmail.com>
+
 	localename: avoid -Wsuggest-attribute={const,pure} warnings
 	* lib/localename.c (string_has): Tag internal function as pure.
 	* lib/localename.h (gl_locale_name_default): Tag extern declaration
