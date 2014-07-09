@@ -1,5 +1,11 @@
 2014-07-10  Siddhesh Poyarekar  <siddhesh@redhat.com>
 
+	error: Fix -Wundef warnings in glibc
+	* lib/error.c [_LIBC]: Define default macros for
+	glibc.
+	(print_errno_message) [defined HAVE_STRERROR_R || _LIBC]:
+	Check _LIBC before STRERROR_R_CHAR_P.
+
 	error: Sync from glibc master
 	* lib/error.c [_LIBC]: Remove INTUSE usage.
 	(error_tail): Remove unused macro ALLOCA_LIMIT.

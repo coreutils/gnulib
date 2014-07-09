@@ -39,6 +39,9 @@
 # include <stdint.h>
 # include <wchar.h>
 # define mbsrtowcs __mbsrtowcs
+# define USE_UNLOCKED_IO 0
+# define _GL_ATTRIBUTE_FORMAT_PRINTF(a, b)
+# define _GL_ARG_NONNULL(a)
 #endif
 
 #if USE_UNLOCKED_IO
@@ -171,7 +174,7 @@ print_errno_message (int errnum)
 
 #if defined HAVE_STRERROR_R || _LIBC
   char errbuf[1024];
-# if STRERROR_R_CHAR_P || _LIBC
+# if _LIBC || STRERROR_R_CHAR_P
   s = __strerror_r (errnum, errbuf, sizeof errbuf);
 # else
   if (__strerror_r (errnum, errbuf, sizeof errbuf) == 0)
