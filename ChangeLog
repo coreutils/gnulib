@@ -1,3 +1,8 @@
+2014-07-09  Pavel Hrdina  <phrdina@redhat.com> (tiny change)
+
+	nl_langinfo: fix build under mingw
+	* lib/nl_langinfo.c (includes): Pick up <windows.h> for GetACP().
+
 2014-07-09  Andrew D Warshall  <warshall@99main.com>
 
 	mountlist: do not classify a bind-mounted dir entry as "dummy"
