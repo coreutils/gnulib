@@ -1,3 +1,10 @@
+2014-07-10  Assaf Gordon  <assafgordon@gmail.com>
+
+	localename: avoid -Wsuggest-attribute={const,pure} warnings
+	* lib/localename.c (string_has): Tag internal function as pure.
+	* lib/localename.h (gl_locale_name_default): Tag extern declaration
+	as const when appropriate.
+
 2014-07-10  Eli Zaretskii <eliz@gnu.org>
 
 	nl_langinfo: Fix last change.
