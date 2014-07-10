@@ -23,6 +23,7 @@
 #include <locale.h>
 #include <string.h>
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 # include <stdio.h>
 #endif
@@ -140,22 +141,9 @@ rpl_nl_langinfo (nl_item item)
 
 #else
 
-/* Provide nl_langinfo from scratch.  */
-
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-
-/* Native Windows platforms.  */
-
-#  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
-#  include <windows.h>
-
-#  include <stdio.h>
-
-# else
-
-/* An old Unix platform without locales, such as Linux libc5 or BeOS.  */
-
-# endif
+/* Provide nl_langinfo from scratch, either for native MS-Windows, or
+   for old Unix platforms without locales, such as Linux libc5 or
+   BeOS.  */
 
 # include <time.h>
 

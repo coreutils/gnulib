@@ -1,3 +1,8 @@
+2014-07-10  Eli Zaretskii <eliz@gnu.org>
+
+	nl_langinfo: Fix last change.
+	* lib/nl_langinfo.c (includes): Drop redundant include.
+
 2014-07-10  Siddhesh Poyarekar  <siddhesh@redhat.com>
 
 	error: Fix -Wundef warnings in glibc
