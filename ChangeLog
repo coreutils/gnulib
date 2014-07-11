@@ -1,3 +1,11 @@
+2014-07-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: fix memory leak in compiler
+	Fix by Andreas Schwab in:
+	https://sourceware.org/ml/libc-alpha/2014-06/msg00503.html
+	* lib/regcomp.c (parse_reg_exp): Deallocate partially
+	constructed tree before returning error.
+
 2014-07-10  Assaf Gordon  <assafgordon@gmail.com>
 
 	announce-gen: avoid perl warnings
