@@ -711,7 +711,7 @@ sc_changelog:
 # Ensure that each .c file containing a "main" function also
 # calls set_program_name.
 sc_program_name:
-	@require='set_program_name *\(m?argv\[0\]\);'			\
+	@require='set_program_name *\(.*\);'				\
 	in_vc_files='\.c$$'						\
 	containing='\<main *('						\
 	halt='the above files do not call set_program_name'		\
