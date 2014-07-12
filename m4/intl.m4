@@ -1,4 +1,4 @@
-# intl.m4 serial 26 (gettext-0.19)
+# intl.m4 serial 27 (gettext-0.18.3)
 dnl Copyright (C) 1995-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,6 @@ AC_DEFUN([AM_INTL_SUBDIR],
   AC_REQUIRE([gl_XSIZE])dnl
   AC_REQUIRE([gl_FCNTL_O_FLAGS])dnl
   AC_REQUIRE([gt_INTL_MACOSX])dnl
-  AC_REQUIRE([gl_EXTERN_INLINE])dnl
 
   dnl Support for automake's --enable-silent-rules.
   case "$enable_silent_rules" in
@@ -241,7 +240,8 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
 
   dnl intl/plural.c is generated from intl/plural.y. It requires bison,
   dnl because plural.y uses bison specific features. It requires at least
-  dnl bison-2.7 for %define api.pure.
+  dnl bison-1.26 because earlier versions generate a plural.c that doesn't
+  dnl compile.
   dnl bison is only needed for the maintainer (who touches plural.y). But in
   dnl order to avoid separate Makefiles or --enable-maintainer-mode, we put
   dnl the rule in general Makefile. Now, some people carelessly touch the
@@ -258,7 +258,7 @@ changequote(<<,>>)dnl
     ac_prog_version=`$INTLBISON --version 2>&1 | sed -n 's/^.*GNU Bison.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
     case $ac_prog_version in
       '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
-      2.[7-9]* | [3-9].*)
+      1.2[6-9]* | 1.[3-9][0-9]* | [2-9].*)
 changequote([,])dnl
          ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
       *) ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
