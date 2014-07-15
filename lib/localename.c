@@ -60,6 +60,7 @@
 #if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+# include <winnls.h>
 /* List of language codes, sorted by value:
    0x01 LANG_ARABIC
    0x02 LANG_BULGARIAN
@@ -1123,6 +1124,9 @@
 /* GetLocaleInfoA operations.  */
 # ifndef LOCALE_SNAME
 # define LOCALE_SNAME 0x5c
+# endif
+# ifndef LOCALE_NAME_MAX_LENGTH
+# define LOCALE_NAME_MAX_LENGTH 85
 # endif
 #endif
 
@@ -2502,6 +2506,68 @@ gl_locale_name_from_win32_LCID (LCID lcid)
   return gl_locale_name_from_win32_LANGID (langid);
 }
 
+# ifdef WINDOWS_NATIVE
+
+/* Two variables to interface between get_lcid and the EnumLocales
+   callback function below.  */
+static LCID found_lcid;
+static char lname[LC_MAX * (LOCALE_NAME_MAX_LENGTH + 1) + 1];
+
+/* Callback function for EnumLocales.  */
+static BOOL CALLBACK
+enum_locales_fn (LPTSTR locale_num_str)
+{
+  char *endp;
+  char locval[2 * LOCALE_NAME_MAX_LENGTH + 1 + 1];
+  LCID try_lcid = strtoul (locale_num_str, &endp, 16);
+
+  if (GetLocaleInfo (try_lcid, LOCALE_SENGLANGUAGE,
+                    locval, LOCALE_NAME_MAX_LENGTH))
+    {
+      strcat (locval, "_");
+      if (GetLocaleInfo (try_lcid, LOCALE_SENGCOUNTRY,
+                        locval + strlen (locval), LOCALE_NAME_MAX_LENGTH))
+       {
+         size_t locval_len = strlen (locval);
+
+         if (strncmp (locval, lname, locval_len) == 0
+             && (lname[locval_len] == '.'
+                 || lname[locval_len] == '\0'))
+           {
+             found_lcid = try_lcid;
+             return FALSE;
+           }
+       }
+    }
+  return TRUE;
+}
+
+/* Return the Locale ID (LCID) number given the locale's name, a
+   string, in LOCALE_NAME.  This works by enumerating all the locales
+   supported by the system, until we find one whose name matches
+   LOCALE_NAME.  */
+static LCID
+get_lcid (const char *locale_name)
+{
+  /* A simple cache.  */
+  static LCID last_lcid;
+  static char last_locale[1000];
+
+  if (last_lcid > 0 && strcmp (locale_name, last_locale) == 0)
+    return last_lcid;
+  strncpy (lname, locale_name, sizeof (lname) - 1);
+  lname[sizeof (lname) - 1] = '\0';
+  found_lcid = 0;
+  EnumSystemLocales (enum_locales_fn, LCID_SUPPORTED);
+  if (found_lcid > 0)
+    {
+      last_lcid = found_lcid;
+      strcpy (last_locale, locale_name);
+    }
+  return found_lcid;
+}
+
+# endif
 #endif
 
 
@@ -2660,6 +2726,26 @@ gl_locale_name_thread (int category, const char *categoryname)
   const char *name = gl_locale_name_thread_unsafe (category, categoryname);
   if (name != NULL)
     return struniq (name);
+#elif defined WINDOWS_NATIVE
+  if (LC_MIN <= category && category <= LC_MAX)
+    {
+      char *locname = setlocale (category, NULL);
+
+      /* If CATEGORY is LC_ALL, the result might be a semi-colon
+        separated list of locales.  We need only one, so we take the
+        one corresponding to LC_CTYPE, as the most important for
+        character translations.  */
+      if (strchr (locname, ';'))
+       locname = setlocale (LC_CTYPE, NULL);
+
+    /* Convert locale name to LCID.  We don't want to use
+       LocaleNameToLCID because (a) it is only available since Vista,
+       and (b) it doesn't accept locale names returned by 'setlocale'.  */
+    LCID lcid = get_lcid (locname);
+
+    if (lcid > 0)
+      return gl_locale_name_from_win32_LCID (lcid);
+  }
 #endif
   return NULL;
 }

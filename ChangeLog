@@ -1,3 +1,20 @@
+2014-07-15  Eli Zaretskii  <eliz@gnu.org>
+
+	localcharset, localename: MS-Windows support for non-default locales
+	* lib/localcharset.c (locale_charset) [WINDOWS_NATIVE]: Before
+	falling back on the default system codepage, try extracting
+	the codepage from what 'setlocale' returns.  This allows to
+	take into account changes of the codeset due to non-default
+	locale set by a previous call to 'setlocale'.
+	* lib/localename.c (LOCALE_NAME_MAX_LENGTH) [WINDOWS_NATIVE]:
+	Define if not already defined.
+	(enum_locales_fn, get_lcid) [WINDOWS_NATIVE]: New functions.
+	(gl_locale_name_thread) [WINDOWS_NATIVE]: Produce the
+	current locale by calling 'setlocale', then converting the
+	locale name into LCID by calling 'get_lcid'.  This allows to
+	take into account changes in the current locale from the
+	default one, in contrast to GetThreadLocale.
+
 2014-07-14  Daiki Ueno  <ueno@gnu.org>
 
 	announce-gen: avoid failure when Digest::SHA is installed
