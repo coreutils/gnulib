@@ -45,30 +45,30 @@ struct test
 
 static struct test T[] =
   {
-    { "",                      -1, -1, "",   "",   NULL},
-    { ":",                     -1, -1, "",   "",   NULL},
-    { "0:0",                    0,  0, "",   "",   NULL},
-    { ":1",                    -1,  1, "",   "",   NULL},
-    { "1",                      1, -1, "",   "",   NULL},
-    { ":+0",                   -1,  0, "",   "",   NULL},
-    { "22:42",                 22, 42, "",   "",   NULL},
+    { "",                       -1, -1, "",   "",   NULL},
+    { ":",                      -1, -1, "",   "",   NULL},
+    { "+0:+0",                   0,  0, "",   "",   NULL},
+    { ":+1",                    -1,  1, "",   "",   NULL},
+    { "+1",                      1, -1, "",   "",   NULL},
+    { ":+0",                    -1,  0, "",   "",   NULL},
+    { "+22:+42",                22, 42, "",   "",   NULL},
     /* (uint32_t)-1 should be invalid everywhere */
-    { "4294967295:4294967295",  0,  0, NULL, NULL, "invalid user"},
+    { "+4294967295:+4294967295", 0,  0, NULL, NULL, "invalid user"},
     /* likewise, but with only the group being invalid */
-    { "0:4294967295",           0,  0, NULL, NULL, "invalid group"},
-    { ":4294967295",            0,  0, NULL, NULL, "invalid group"},
+    { "+0:+4294967295",          0,  0, NULL, NULL, "invalid group"},
+    { ":+4294967295",            0,  0, NULL, NULL, "invalid group"},
     /* and only the user being invalid */
-    { "4294967295:0",           0,  0, NULL, NULL, "invalid user"},
+    { "+4294967295:+0",          0,  0, NULL, NULL, "invalid user"},
     /* and using 2^32 */
-    { "4294967296:4294967296",  0,  0, NULL, NULL, "invalid user"},
-    { "0:4294967296",           0,  0, NULL, NULL, "invalid group"},
-    { ":4294967296",            0,  0, NULL, NULL, "invalid group"},
-    { "4294967296:0",           0,  0, NULL, NULL, "invalid user"},
+    { "+4294967296:+4294967296", 0,  0, NULL, NULL, "invalid user"},
+    { "+0:+4294967296",          0,  0, NULL, NULL, "invalid group"},
+    { ":+4294967296",            0,  0, NULL, NULL, "invalid group"},
+    { "+4294967296:+0",          0,  0, NULL, NULL, "invalid user"},
     /* numeric user and no group is invalid */
-    { "4294967295:",            0,  0, NULL, NULL, "invalid spec"},
-    { "4294967296:",            0,  0, NULL, NULL, "invalid spec"},
-    { "1:",                     0,  0, NULL, NULL, "invalid spec"},
-    { "+0:",                    0,  0, NULL, NULL, "invalid spec"},
+    { "+4294967295:",            0,  0, NULL, NULL, "invalid spec"},
+    { "+4294967296:",            0,  0, NULL, NULL, "invalid spec"},
+    { "+1:",                     0,  0, NULL, NULL, "invalid spec"},
+    { "+0:",                     0,  0, NULL, NULL, "invalid spec"},
 
     /* "username:" must expand to UID:GID where GID is username's login group */
     /* Add an entry like the following to the table, if possible.

@@ -1,3 +1,11 @@
+2014-07-18  Jim Meyering  <meyering@fb.com>
+
+	test-userspec: don't look up numeric user names
+	* tests/test-userspec.c: I found a system for which getpwnam("0")
+	returned a pointer to a non-root user's entry, and that made the
+	test fail.
+	(T): Prefix each numeric input with "+", to inhibit lookup.
+
 2014-07-15  Eli Zaretskii  <eliz@gnu.org>
 
 	localcharset, localename: MS-Windows support for non-default locales
