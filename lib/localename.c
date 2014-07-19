@@ -2730,6 +2730,7 @@ gl_locale_name_thread (int category, const char *categoryname)
   if (LC_MIN <= category && category <= LC_MAX)
     {
       char *locname = setlocale (category, NULL);
+      LCID lcid = 0;
 
       /* If CATEGORY is LC_ALL, the result might be a semi-colon
         separated list of locales.  We need only one, so we take the
@@ -2738,14 +2739,14 @@ gl_locale_name_thread (int category, const char *categoryname)
       if (strchr (locname, ';'))
        locname = setlocale (LC_CTYPE, NULL);
 
-    /* Convert locale name to LCID.  We don't want to use
-       LocaleNameToLCID because (a) it is only available since Vista,
-       and (b) it doesn't accept locale names returned by 'setlocale'.  */
-    LCID lcid = get_lcid (locname);
+      /* Convert locale name to LCID.  We don't want to use
+         LocaleNameToLCID because (a) it is only available since Vista,
+         and (b) it doesn't accept locale names returned by 'setlocale'.  */
+      lcid = get_lcid (locname);
 
-    if (lcid > 0)
-      return gl_locale_name_from_win32_LCID (lcid);
-  }
+      if (lcid > 0)
+        return gl_locale_name_from_win32_LCID (lcid);
+    }
 #endif
   return NULL;
 }
