@@ -1,3 +1,10 @@
+2014-07-31  Eric Blake  <eblake@redhat.com>
+
+	openat-die: use _Noreturn markup
+	* modules/openat-die (Depends-on): Add snippet/_Noreturn.
+	* lib/openat-die.c (openat_save_fail, openat_restore_fail): Mark
+	_Noreturn.
+
 2014-07-30  Eric Blake  <eblake@redhat.com>
 
 	test-open: port to cygwin, which lacks Fortify

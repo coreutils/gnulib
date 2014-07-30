@@ -30,7 +30,7 @@
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 
-void
+_Noreturn void
 openat_save_fail (int errnum)
 {
 #ifndef GNULIB_LIBPOSIX
@@ -49,7 +49,7 @@ openat_save_fail (int errnum)
    during an openat emulation.  The caller must ensure that fd 2 is
    not a just-opened fd, even when openat_safer is not in use.  */
 
-void
+_Noreturn void
 openat_restore_fail (int errnum)
 {
 #ifndef GNULIB_LIBPOSIX
