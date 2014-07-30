@@ -1,3 +1,9 @@
+2014-07-30  Eric Blake  <eblake@redhat.com>
+
+	test-open: port to cygwin, which lacks Fortify
+	* tests/test-open.h (ALWAYS_INLINE): New macro.
+	(__always_inline): Don't abuse internal symbol on non-glibc.
+
 2014-07-19  Eli Zaretskii  <eliz@gnu.org>
 
 	localename: Enforce declarations before statements.
