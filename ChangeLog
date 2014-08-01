@@ -1,3 +1,10 @@
+2014-08-01  Siddhesh Poyarekar  <siddhesh@redhat.com>
+
+	regex: Make #if/#ifdef usage consistent for DEBUG
+	* lib/regex_internal.c: Use "#if defined DEBUG && DEBUG" instead
+	of the inconsistent usage of #if and #ifdef as that works with
+	both Glibc and Gnulib's style.
+
 2014-07-31  Eric Blake  <eblake@redhat.com>
 
 	openat-die: use _Noreturn markup
