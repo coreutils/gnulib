@@ -1,3 +1,15 @@
+2014-08-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: port to FreeBSD, DragonFly
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE): Also assume the bug
+	is present if either __DragonFly__ or __FreeBSD__ is defined.
+	FreeBSD problem reported by Andrey Borzenkov in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-07/msg00104.html
+	Also, worry about __APPLE__ only if __MACH__ is also defined,
+	as this is more consistent with the rest of gnulib.
+	(_GL_EXTERN_INLINE_STDHEADER_BUG): Rename this internal macro from
+	_GL_EXTERN_INLINE_APPLE_BUG, since the bug is not limited to Apple.
+
 2014-08-01  Siddhesh Poyarekar  <siddhesh@redhat.com>
 
 	regex: Make #if/#ifdef usage consistent for DEBUG
