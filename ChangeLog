@@ -1,3 +1,9 @@
+2014-08-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	accept: document Solaris 10 type glitch
+	* doc/posix-functions/accept.texi (accept): Mention that
+	Solaris 10 'accept' takes void * last arg, not socklen_t *.
+
 2014-08-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: port to FreeBSD, DragonFly
