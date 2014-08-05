@@ -1,5 +1,16 @@
 2014-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sys_select: fix FD_ZERO problem on Solaris 10
+	* lib/sys_select.in.h: Fix Solaris 10 bug where "#include
+	<sys/time.h>" followed by "#include <sys/select.h>" caused FD_ZERO
+	to expand to an expression that invoked memset without necessarily
+	including <string.h>.  The problem was that the first include
+	defined _SYS_TIME_H, causing the second include to short-circuit.
+	Fix a similar problem with <sys/types.h> followed by <sys/select.h>.
+	Also, fix what appears to be a cut-and-paste typo, by replacing
+	_GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TIME_H with
+	_GL_SYS_SELECT_H_REDIRECT_FROM_SYS_TYPES_H.
+
 	accept: document Solaris 10 type glitch
 	* doc/posix-functions/accept.texi (accept): Mention that
 	Solaris 10 'accept' takes void * last arg, not socklen_t *.
