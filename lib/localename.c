@@ -55,6 +55,9 @@
 
 #if defined _WIN32 || defined __WIN32__
 # define WINDOWS_NATIVE
+# if !defined IN_LIBINTL
+#  include "glthread/lock.h"
+# endif
 #endif
 
 #if defined WINDOWS_NATIVE || defined __CYGWIN__ /* Native Windows or Cygwin */
@@ -2542,6 +2545,9 @@ enum_locales_fn (LPTSTR locale_num_str)
   return TRUE;
 }
 
+/* This lock protects the get_lcid against multiple simultaneous calls.  */
+gl_lock_define_initialized(static, get_lcid_lock)
+
 /* Return the Locale ID (LCID) number given the locale's name, a
    string, in LOCALE_NAME.  This works by enumerating all the locales
    supported by the system, until we find one whose name matches
@@ -2553,8 +2559,14 @@ get_lcid (const char *locale_name)
   static LCID last_lcid;
   static char last_locale[1000];
 
+  /* Lock while looking for an LCID, to protect access to static
+     variables: last_lcid, last_locale, found_lcid, and lname.  */
+  gl_lock_lock (get_lcid_lock);
   if (last_lcid > 0 && strcmp (locale_name, last_locale) == 0)
-    return last_lcid;
+    {
+      gl_lock_unlock (get_lcid_lock);
+      return last_lcid;
+    }
   strncpy (lname, locale_name, sizeof (lname) - 1);
   lname[sizeof (lname) - 1] = '\0';
   found_lcid = 0;
@@ -2564,6 +2576,7 @@ get_lcid (const char *locale_name)
       last_lcid = found_lcid;
       strcpy (last_locale, locale_name);
     }
+  gl_lock_unlock (get_lcid_lock);
   return found_lcid;
 }
 

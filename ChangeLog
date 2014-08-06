@@ -1,3 +1,11 @@
+2014-08-07  Daiki Ueno  <ueno@gnu.org>
+
+	localename: make gl_locale_name_thread really thread-safe on Windows
+	* lib/localename.c [WINDOWS_NATIVE && !IN_LIBINTL]: Include
+	"glthread/lock.h".
+	(get_lcid_lock) [WINDOWS_NATIVE]: New variable.
+	(get_lcid) [WINDOWS_NATIVE]: Lock while looking for an LCID.
+
 2014-08-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getpass: don't assume struct termios
