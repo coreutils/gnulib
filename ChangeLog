@@ -1,3 +1,9 @@
+2014-08-07  Alessandro Degano  <degano@cern.ch>  (tiny change)
+
+	relocatable-prog-wrapper: port gettext to OS X 10.8 + GCC 4.8.1
+	* build-aux/install-reloc (func_create_wrapper): Also wrap
+	strerror-override, stat, stat.
+
 2014-08-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_select: fix FD_ZERO problem on Solaris 10
