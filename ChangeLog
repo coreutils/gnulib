@@ -1,5 +1,11 @@
 2014-08-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getdtablesize: fall back on sysconf (_SC_OPEN_MAX)
+	Problem reported by Jonas 'Sortie' Termansen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-08/msg00023.html
+	* lib/getdtablesize.c (getdtablesize) [_SC_OPEN_MAX]:
+	Implement via sysconf for platforms that lack getdtablesize.
+
 	vararrays: modernize AC_C_VARARRAYS for C11
 	This backports a change I recently made to Autoconf.
 	* m4/vararrays.m4 (AC_C_VARARRAYS): Define __STDC_NO_VLA__ if
