@@ -1,3 +1,11 @@
+2014-08-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vla: new module
+	GNU RCS can use this, mostly for documentation I expect.  See:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-08/msg00025.html
+	* MODULES.html.sh: Add vla.
+	* lib/vla.h, modules/vla: New files.
+
 2014-08-07  Daiki Ueno  <ueno@gnu.org>
 
 	localename: make gl_locale_name_thread really thread-safe on Windows

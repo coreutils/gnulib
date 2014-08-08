@@ -2043,6 +2043,7 @@ func_all_modules ()
   func_module snippet/unused-parameter
   func_module va-args
   func_module vararrays
+  func_module vla
   func_end_table
 
   element="Sizes of integer types <limits.h>"
