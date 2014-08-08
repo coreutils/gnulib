@@ -1,3 +1,12 @@
+2014-08-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vararrays: modernize AC_C_VARARRAYS for C11
+	This backports a change I recently made to Autoconf.
+	* m4/vararrays.m4 (AC_C_VARARRAYS): Define __STDC_NO_VLA__ if
+	VLAs are not supported, as this is what C11 does.  The old macro
+	HAVE_C_VARARRAYS is still defined if they are supported, but is
+	now obsolescent.  Also, check for VLA bug in GCC 3.4.3.
+
 2014-08-07  Alessandro Degano  <degano@cern.ch>  (tiny change)
 
 	relocatable-prog-wrapper: port gettext to OS X 10.8 + GCC 4.8.1
