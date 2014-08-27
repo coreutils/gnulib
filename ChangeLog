@@ -1,3 +1,16 @@
+2014-09-09  Fridolin Pokorny  <fpokorny@redhat.com>
+
+	mountlist: use /proc/self/mountinfo when available
+	Use libmount to propagate device IDs provided by Linux in
+	/proc/self/mountinfo.  This will give more accurate output when
+	using df in chroot'ed environments as the device IDs are not
+	determined by stat() which may be inaccurate within the chroot.
+	* lib/mountlist.c (read_file_system_list): Use the libmount routines
+	from util-linux to parse "/proc/self/mountinfo" or fall back to
+	standard getmntent() processing.
+	* m4/ls-mntd-fs.m4: Check for libmount only when 1-argument
+	getmntent() is used, as is the case on GNU/Linux.
+
 2014-09-07  Eric Wong  <normalperson@yhbt.net>
 
 	users.txt: add cmogstored

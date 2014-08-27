@@ -162,3 +162,10 @@ at any time.
   + Download:
     http://ftp.gnu.org/gnu/libtool/
     ftp://ftp.gnu.org/gnu/libtool/
+
+* util-linux
+  + Optional.
+    Needed if you want to support /proc/self/mountinfo available on Linux.
+    This will give an ability to propagate device ID of a mounted file system.
+  + Download:
+    http://www.kernel.org/pub/linux/utils/util-linux/
