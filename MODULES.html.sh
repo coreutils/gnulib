@@ -1712,6 +1712,7 @@ func_all_modules ()
   func_begin_table
   func_module array-mergesort
   func_module mpsort
+  func_module qsort_r
   func_end_table
 
   element="Date and time <time.h>"

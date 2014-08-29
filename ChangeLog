@@ -1,3 +1,19 @@
+2014-08-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qsort_r: new module, for GNU-style qsort_r
+	This works even on FreeBSD, which has an incompatible qsort_r API.
+	* MODULES.html.sh: Add it.
+	* doc/glibc-functions/qsort_r.texi: It's now supported.
+	* lib/qsort.c: New file, taken from glibc with minor changes
+	inside "#ifndef _LIBC" and with an unnecessary "#include <alloca.h>"
+	removed.
+	* lib/qsort_r.c: New file, compiled only on FreeBSD.
+	* lib/stdlib.in.h (qsort_r): Declare in the usual way.
+	* m4/stdlib_h.m4 (gl_STDLIB_H_DEFAULTS):
+	* modules/qsort_r, modules/qsort_r-tests: New files.
+	* modules/stdlib (Makefile): Set up its defaults.
+	* tests/test-qsort_r.c: New file.
+
 2014-08-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	vla: new module
