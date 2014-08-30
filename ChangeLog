@@ -1,3 +1,10 @@
+2013-08-30  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
+
+	parse-datetime: Avoid pointer difference.
+	* lib/parse-datetime.y (yylex): Compare pointer to end of buffer,
+	instead of calculating difference of pointers.  This removes an
+	annoying warning, devoid of any use.
+
 2014-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qsort_r: new module, for GNU-style qsort_r
