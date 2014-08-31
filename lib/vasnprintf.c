@@ -3356,7 +3356,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                   }
                 /* The generated string now extends from tmp to p, with the
                    zero padding insertion point being at pad_ptr.  */
-                if (has_width && p - tmp < width)
+                if (has_width && p < tmp + width)
                   {
                     size_t pad = width - (p - tmp);
                     DCHAR_T *end = p + pad;

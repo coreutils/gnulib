@@ -1,3 +1,9 @@
+2014-08-31  Thien-Thi Nguyen  <ttn@gnu.org>  (tiny change)
+
+	vasnprintf: Avoid signed/unsigned comparison warning.
+	* lib/vasnprintf.c (VASNPRINTF): To calculate padding,
+	compare end addr of generated string w/ maximum end addr.
+
 2013-08-30  Mats Erik Andersson  <gnu@gisladisker.se>  (tiny change)
 
 	parse-datetime: Avoid pointer difference.
