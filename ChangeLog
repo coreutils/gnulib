@@ -1,3 +1,17 @@
+2014-09-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	manywarnings: add GCC 4.9 warnings
+	Also, make it easier to maintain this in the future.
+	* build-aux/gcc-warning.spec: Add -Wabi-tag,
+	-Wconditionally-supported, -Wdelete-incomplete,
+	-Winherited-variadic-ctor, -Wvirtual-move-assign, -Wzerotrip.
+	Remove duplicates.  Use tabs uniformly, as that's what 'cut' wants.
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add -Wdate-time,
+	-Wopenmp-simd.  Use -fdiagnostics-show-option and -funit-at-a-time
+	only for older GCC versions that need them.  Handke
+	-Wnormalized=nfc specially, so that the 'comm' command used
+	for maintenance doesn't get confused.
+
 2014-08-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	vasnprintf: fix bugs in width computation
