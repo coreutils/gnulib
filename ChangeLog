@@ -1,3 +1,12 @@
+2014-08-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vasnprintf: fix bugs in width computation
+	* lib/vasnprintf.c (VASNPRINTF):
+	Rework previous change, which introduced a bug,
+	to avoid the warning in a different way.
+	Avoid undefined behavior if the width arg is less than -INT_MAX.
+	Avoid unnecessary use of HAS_WIDTH local.
+
 2014-08-31  Thien-Thi Nguyen  <ttn@gnu.org>  (tiny change)
 
 	vasnprintf: Avoid signed/unsigned comparison warning.
