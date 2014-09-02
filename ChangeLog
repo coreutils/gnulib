@@ -1,3 +1,12 @@
+2014-09-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-common.m4: port to GCC 4.2.1 and Sun Studio 12 C++
+	* m4/gnulib-common.m4 (AC_C_RESTRICT):
+	Override AC_C_RESTRICT unconditionally.
+	Update from autoconf, incorporating:
+	2014-09-02 autoconf: port 'restrict' to GCC 4.2.1
+	2009-01-28 Fix AC_C_RESTRICT for Sun Studio 12 C++.
+
 2014-09-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	manywarnings: add GCC 4.9 warnings
