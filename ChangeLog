@@ -1,3 +1,8 @@
+2014-09-05  Mathieu Anquetin  <mathieu@anquetin.eu>
+
+	Trivial change.
+	* gnulib-tool: Fallback to wget when rsync of PO files fails.
+
 2014-09-04  Eric Blake  <eblake@redhat.com>
 
 	maintainer-makefile: add syntax check for useless ';;'
