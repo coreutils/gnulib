@@ -1,3 +1,8 @@
+2014-09-04  Eric Blake  <eblake@redhat.com>
+
+	error: drop spurious semicolon
+	* lib/error.c (__error_at_line): Fix ';;'.
+
 2014-09-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-common.m4: port to GCC 4.2.1 and Sun Studio 12 C++
