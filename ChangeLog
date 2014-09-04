@@ -1,3 +1,8 @@
+2014-09-04  Eric Blake  <eblake@redhat.com>
+
+	maintainer-makefile: add syntax check for useless ';;'
+	* top/maint.mk (sc_prohibit_double_semicolon): New rule.
+
 2014-09-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	pthread, pthread_sigmask, threadlib: port to Ubuntu 14.04
