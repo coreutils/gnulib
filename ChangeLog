@@ -1,3 +1,16 @@
+2014-09-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	pthread, pthread_sigmask, threadlib: port to Ubuntu 14.04
+	Problem reported by Assaf Gordon in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-09/msg00023.html
+	Apparently Ubuntu is doing some fancy link-time optimization
+	that doesn't work with -lpthread but does work with -pthread.
+	Work around the bug by preferring -pthread to -lpthread.
+	* m4/pthread.m4 (gl_PTHREAD_CHECK):
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Prefer -pthread to -lpthread.
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK):
+	Treat -pthread like -lpthread.
+
 2014-09-04  Eric Blake  <eblake@redhat.com>
 
 	error: drop spurious semicolon
