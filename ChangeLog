@@ -1,3 +1,9 @@
+2014-09-07  Eric Wong  <normalperson@yhbt.net>
+
+	users.txt: add cmogstored
+	cmogstored has used gnulib since the beginning in 2012 to support
+	GNU/Linux, FreeBSD, and GNU/kFreeBSD.
+
 2014-09-05  Mathieu Anquetin  <mathieu@anquetin.eu>
 
 	Trivial change.

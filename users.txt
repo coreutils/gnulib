@@ -8,6 +8,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   bison           http://git.sv.gnu.org/gitweb/?p=bison.git
   clisp           http://clisp.cvs.sourceforge.net/clisp/clisp/
   coreutils       http://git.sv.gnu.org/gitweb/?p=coreutils.git
+  cmogstored      http://bogomips.org/cmogstored/
   cpio            http://git.sv.gnu.org/gitweb/?p=cpio.git
   CSSC            http://git.savannah.gnu.org/cgit/cssc.git
   cvs             http://cvs.sv.gnu.org/viewcvs/cvs/ccvs/
