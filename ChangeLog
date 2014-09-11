@@ -1,3 +1,8 @@
+2014-09-11  Johannes Zarl  <johannes.zarl@jku.at>
+
+	fcntl-h: fix compilation with Intel C++ compiler (trivial)
+	* lib/fcntl.in.h: ICC has the same issue as GCC <= 4.2.
+
 2014-09-09  Fridolin Pokorny  <fpokorny@redhat.com>
 
 	mountlist: use /proc/self/mountinfo when available
