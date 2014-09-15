@@ -1,3 +1,8 @@
+2014-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qsort_r: new module, for GNU-style qsort_r
+	* m4/qsort_r.m4: New file.  Forgot to add this earlier.
+
 2014-09-15  Werner LEMBERG  <wl@gnu.org>
 
 	strerror_r-posix: support compilation with C++
