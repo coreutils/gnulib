@@ -1,3 +1,8 @@
+2014-09-15  Werner LEMBERG  <wl@gnu.org>
+
+	strerror_r-posix: support compilation with C++
+	* lib/strerror_r.c: Add necessary C linkage declarations.
+
 2014-09-11  Johannes Zarl  <johannes.zarl@jku.at>
 
 	fcntl-h: fix compilation with Intel C++ compiler (trivial)
