@@ -37,7 +37,9 @@
 #include "gl_anytree_list2.h"
 
 /* For debugging.  */
-static unsigned int
+extern void gl_avltree_list_check_invariants (gl_list_t list);
+
+static unsigned int _GL_ATTRIBUTE_PURE
 check_invariants (gl_list_node_t node, gl_list_node_t parent)
 {
   unsigned int left_height =
@@ -59,11 +61,12 @@ check_invariants (gl_list_node_t node, gl_list_node_t parent)
 
   return 1 + (left_height > right_height ? left_height : right_height);
 }
-void
+
+void _GL_ATTRIBUTE_CONST
 gl_avltree_list_check_invariants (gl_list_t list)
 {
   if (list->root != NULL)
-    check_invariants (list->root, NULL);
+    (void) check_invariants (list->root, NULL);
 }
 
 const struct gl_list_implementation gl_avltree_list_implementation =

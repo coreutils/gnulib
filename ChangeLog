@@ -1,3 +1,18 @@
+2014-09-16  Dylan Cali  <calid1984@gmail.com>
+
+	avltree-list: avoid compiler warnings (trivial)
+	* lib/gl_anytree_list2.h: Add _GL_ATTRIBUTE_PURE to avoid
+	-Werror=suggest-attribute=pure.
+	* lib/gl_array_list.c: Likewise.
+	* lib/gl_avltree_list.c (gl_avltree_list_check_invariants): Add extern
+	declaration to avoid -Werror=missing-prototypes.  This is not added
+	to a header as only exported for tests.  Add (void) to the
+	check_invariants() call to indicate we're discarding the result
+	in this context which avoids -Werror=unused-value.  Note we don't
+	use ignore_value here to avoid a dependency as we know we'll not
+	be adding __attribute__((warn_unused_result)) to check_invariants().
+	Add _GL_ATTRIBUTE_CONST to avoid -Werror=suggest-attribute=const.
+
 2014-09-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qsort_r: new module, for GNU-style qsort_r

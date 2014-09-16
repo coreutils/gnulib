@@ -100,7 +100,7 @@ gl_tree_node_nx_set_value (gl_list_t list, gl_list_node_t node, const void *elt)
   return 0;
 }
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_next_node (gl_list_t list, gl_list_node_t node)
 {
   if (node->right != NULL)
@@ -118,7 +118,7 @@ gl_tree_next_node (gl_list_t list, gl_list_node_t node)
   return node;
 }
 
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
 {
   if (node->left != NULL)
@@ -137,7 +137,7 @@ gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
 }
 
 /* Return the node at the given position < gl_tree_size (list).  */
-static gl_list_node_t
+static gl_list_node_t _GL_ATTRIBUTE_PURE
 node_at (gl_list_node_t root, size_t position)
 {
   /* Here we know that root != NULL.  */
@@ -162,7 +162,7 @@ node_at (gl_list_node_t root, size_t position)
   return node;
 }
 
-static const void *
+static const void * _GL_ATTRIBUTE_PURE
 gl_tree_get_at (gl_list_t list, size_t position)
 {
   gl_list_node_t node = list->root;
