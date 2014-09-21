@@ -31,6 +31,10 @@
 #  define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
 # endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 # if GNULIB_DIRNAME
 char *base_name (char const *file);
 char *dir_name (char const *file);
@@ -42,5 +46,9 @@ size_t dir_len (char const *file) _GL_ATTRIBUTE_PURE;
 char *last_component (char const *file) _GL_ATTRIBUTE_PURE;
 
 bool strip_trailing_slashes (char *file);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif
 
 #endif /* not DIRNAME_H_ */
