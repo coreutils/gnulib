@@ -1,3 +1,11 @@
+2014-09-24  Jim Meyering  <meyering@fb.com>
+
+	exclude: declare exclude_patopts static
+	* lib/exclude.c (exclude_patopts): Declare static,
+	to avoid triggering a -Wmissing-prototypes warning.
+	The alternative (declaring it in the .h file) would
+	require publicizing the private "struct patopts".
+
 2014-09-21  Werner Lemberg  <wl@gnu.org>
 
 	dirname: support compilation with C++

@@ -392,7 +392,7 @@ exclude_fnmatch (char const *pattern, char const *f, int options)
   return matched;
 }
 
-bool
+static bool
 exclude_patopts (struct patopts const *opts, char const *f)
 {
   int options = opts->options;
