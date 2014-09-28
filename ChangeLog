@@ -1,3 +1,12 @@
+2014-09-28  Ben Pfaff  <blp@cs.stanford.edu>
+
+	basename, dirname: Improve documentation.
+	* doc/posix-functions/basename.texi: Mention dirname module and
+	base_name() function.
+	* doc/posix-functions/dirname.texi: Mention dir_name() and
+	mdir_name() functions.
+	Suggested by Werner LEMBERG <wl@gnu.org>.
+
 2014-09-24  Jim Meyering  <meyering@fb.com>
 
 	exclude: declare exclude_patopts static

@@ -20,5 +20,6 @@ IRIX 6.5, Solaris 2.5.1, mingw, MSVC 9, BeOS.
 names in Windows syntax.
 @end itemize
 
-The Gnulib module @code{dirname} provides similar API that also works with
-Windows file names.
+The Gnulib module @code{dirname} provides similar API, with functions
+@code{dir_name} and @{code{mdir_name}, that also works with Windows
+file names.

@@ -22,3 +22,6 @@ the GNU version.
 @code{basename} assumes file names in POSIX syntax; it does not work with file
 names in Windows syntax.
 @end itemize
+
+The Gnulib module @code{dirname} provides similar API, with function
+@code{base_name}, that also works with Windows file names.
