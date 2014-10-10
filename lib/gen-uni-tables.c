@@ -1035,6 +1035,8 @@ output_category (const char *filename, const char *version)
 
       for (log2_value = 0; value > 1; value >>= 1, log2_value++);
 
+      assert (log2_value <= 0x1f);
+
       category_table_add (&t, ch, log2_value);
     }
 
@@ -1523,6 +1525,8 @@ output_bidi_category (const char *filename, const char *version)
   for (ch = 0; ch < 0x110000; ch++)
     {
       int value = get_bidi_category (ch);
+
+      assert (value <= 0x1f);
 
       bidi_category_table_add (&t, ch, value);
     }
@@ -3973,6 +3977,8 @@ output_joining_type (const char *filename, const char *version)
     {
       uint8_t value = unicode_joining_type[ch];
 
+      assert (value == (uint8_t)~(uint8_t)0 || value <= 0x0f);
+
       joining_type_table_add (&t, ch, value);
     }
 
@@ -5110,6 +5116,9 @@ output_ident_category (const char *filename, int (*predicate) (unsigned int), co
   for (ch = 0; ch < 0x110000; ch++)
     {
       int syntaxcode = predicate (ch);
+
+      assert (syntaxcode <= 0x03);
+
       if (syntaxcode != UC_IDENTIFIER_INVALID)
         identsyntax_table_add (&t, ch, syntaxcode);
     }
