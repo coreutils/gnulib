@@ -1,3 +1,7 @@
+2014-10-12  Karl Berry  <karl@gnu.org>
+
+	* doc/posix-functions/dirname.texi: remove spurious {.
+
 2014-09-28  Ben Pfaff  <blp@cs.stanford.edu>
 
 	basename, dirname: Improve documentation.

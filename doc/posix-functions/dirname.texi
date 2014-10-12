@@ -21,5 +21,5 @@ names in Windows syntax.
 @end itemize
 
 The Gnulib module @code{dirname} provides similar API, with functions
-@code{dir_name} and @{code{mdir_name}, that also works with Windows
+@code{dir_name} and @code{mdir_name}, that also works with Windows
 file names.
