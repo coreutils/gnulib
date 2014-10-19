@@ -1,5 +1,17 @@
 2014-10-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	symlinkat: port to AIX 7.1
+	* doc/posix-functions/symlinkat.texi (symlinkat):
+	Mention AIX porting problem.
+	* lib/symlinkat.c: Always include errno.h.
+	(rpl_symlinkat) [HAVE_SYMLINKAT]: New function.
+	* lib/unistd.in.h (symlinkat): Add replacement machinery.
+	* m4/symlinkat.m4 (gl_FUNC_SYMLINKAT): Check symlinkat behavior.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add REPLACE_SYMLINKAT.
+	* modules/symlinkat (Depends-on): Add fstatat if REPLACE_SYMLINKAT.
+	(configure.ac): Also compile replacement if REPLACE_SYMLINKAT.
+	* modules/unistd (unistd.h): Substitute REPLACE_SYMLINKAT.
+
 	readlinkat: port to AIX 7.1
 	* doc/posix-functions/readlink.texi (readlink):
 	* doc/posix-functions/readlinkat.texi (readlinkat):

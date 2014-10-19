@@ -1418,13 +1418,25 @@ _GL_WARN_ON_USE (symlink, "symlink is not portable - "
 
 
 #if @GNULIB_SYMLINKAT@
-# if !@HAVE_SYMLINKAT@
+# if @REPLACE_SYMLINKAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef symlinkat
+#   define symlinkat rpl_symlinkat
+#  endif
+_GL_FUNCDECL_RPL (symlinkat, int,
+                  (char const *contents, int fd, char const *file)
+                  _GL_ARG_NONNULL ((1, 3)));
+_GL_CXXALIAS_RPL (symlinkat, int,
+                  (char const *contents, int fd, char const *file));
+# else
+#  if !@HAVE_SYMLINKAT@
 _GL_FUNCDECL_SYS (symlinkat, int,
                   (char const *contents, int fd, char const *file)
                   _GL_ARG_NONNULL ((1, 3)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (symlinkat, int,
                   (char const *contents, int fd, char const *file));
+# endif
 _GL_CXXALIASWARN (symlinkat);
 #elif defined GNULIB_POSIXCHECK
 # undef symlinkat
