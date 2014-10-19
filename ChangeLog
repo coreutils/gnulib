@@ -1,3 +1,18 @@
+2014-10-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	readlinkat: port to AIX 7.1
+	* doc/posix-functions/readlink.texi (readlink):
+	* doc/posix-functions/readlinkat.texi (readlinkat):
+	Mention AIX porting problem.
+	* lib/readlinkat.c (rpl_readlinkat) [HAVE_READLINKAT]:
+	New function.
+	* lib/unistd.in.h (readlinkat): Add replacement machinery.
+	* m4/readlinkat.m4 (gl_FUNC_READLINKAT): Check readlinkat signature.
+	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Add REPLACE_READLINKAT.
+	* modules/readlinkat (configure.ac): Also compile replacement
+	if REPLACE_READLINKAT.
+	* modules/unistd (unistd.h): Substitute REPLACE_READLINKAT.
+
 2014-10-12  Karl Berry  <karl@gnu.org>
 
 	* doc/posix-functions/dirname.texi: remove spurious {.

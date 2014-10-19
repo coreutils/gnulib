@@ -1287,13 +1287,24 @@ _GL_WARN_ON_USE (readlink, "readlink is unportable - "
 
 
 #if @GNULIB_READLINKAT@
-# if !@HAVE_READLINKAT@
+# if @REPLACE_READLINKAT@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define readlinkat rpl_readlinkat
+#  endif
+_GL_FUNCDECL_RPL (readlinkat, ssize_t,
+                  (int fd, char const *file, char *buf, size_t len)
+                  _GL_ARG_NONNULL ((2, 3)));
+_GL_CXXALIAS_RPL (readlinkat, ssize_t,
+                  (int fd, char const *file, char *buf, size_t len));
+# else
+#  if !@HAVE_READLINKAT@
 _GL_FUNCDECL_SYS (readlinkat, ssize_t,
                   (int fd, char const *file, char *buf, size_t len)
                   _GL_ARG_NONNULL ((2, 3)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (readlinkat, ssize_t,
                   (int fd, char const *file, char *buf, size_t len));
+# endif
 _GL_CXXALIASWARN (readlinkat);
 #elif defined GNULIB_POSIXCHECK
 # undef readlinkat
