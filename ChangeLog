@@ -1,3 +1,14 @@
+2014-10-24  Daiki Ueno  <ueno@gnu.org>
+
+	iconv: avoid false detection of non-working iconv
+	The INBUF arguments of iconv can be either 'const char **'
+	or 'char **'.  If CC is g++, the difference causes a compile error
+	and thus leads to a false detection of non-working iconv.
+	Reported by Eli Zaretskii and Werner LEMBERG in:
+	<https://lists.gnu.org/archive/html/bug-gnulib/2014-10/msg00023.html>.
+	* m4/iconv.m4 (AM_ICONV_LINK): Try all possible argument types of
+	iconv.  Bump serial number.
+
 2014-10-23  Pádraig Brady  <P@draigBrady.com>
 
 	bootstrap: print more diagnostics for missing programs
