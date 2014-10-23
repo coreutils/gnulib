@@ -1,3 +1,9 @@
+2014-10-23  Pádraig Brady  <P@draigBrady.com>
+
+	bootstrap: only update the gnulib submodule
+	* build-aux/bootstrap: Restrict the "submodule update" command
+	to the gnulib path.
+
 2014-10-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	symlinkat: port to AIX 7.1
