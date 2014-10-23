@@ -1,5 +1,12 @@
 2014-10-23  Pádraig Brady  <P@draigBrady.com>
 
+	bootstrap: print more diagnostics for missing programs
+	* build-aux/bootstrap: only suppress stderr when checking for
+	alternative program names.  This supports programs issuing non
+	standard error messages.
+
+2014-10-23  Pádraig Brady  <P@draigBrady.com>
+
 	bootstrap: only update the gnulib submodule
 	* build-aux/bootstrap: Restrict the "submodule update" command
 	to the gnulib path.

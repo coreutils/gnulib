@@ -210,7 +210,17 @@ bootstrap_sync=false
 use_git=true
 
 check_exists() {
-  ($1 --version </dev/null) >/dev/null 2>&1
+  if test "$1" = "--verbose"; then
+    ($2 --version </dev/null) >/dev/null 2>&1
+    if test $? -ge 126; then
+      # If not found, run with diagnostics as one may be
+      # presented with env variables to set to find the right version
+      ($2 --version </dev/null)
+    fi
+  else
+    ($1 --version </dev/null) >/dev/null 2>&1
+  fi
+
   test $? -lt 126
 }
 
@@ -408,7 +418,7 @@ sort_ver() { # sort -V is not generally available
 get_version() {
   app=$1
 
-  $app --version >/dev/null 2>&1 || return 1
+  $app --version >/dev/null 2>&1 || { $app --version; return 1; }
 
   $app --version 2>&1 |
   sed -n '# Move version to start of line.
@@ -467,7 +477,7 @@ check_versions() {
     if [ "$req_ver" = "-" ]; then
       # Merely require app to exist; not all prereq apps are well-behaved
       # so we have to rely on $? rather than get_version.
-      if ! check_exists $app; then
+      if ! check_exists --verbose $app; then
         warn_ "Error: '$app' not found"
         ret=1
       fi
