@@ -5362,12 +5362,6 @@ is_digit (unsigned int ch)
 }
 
 static bool
-is_outdigit (unsigned int ch)
-{
-  return (ch >= 0x0030 && ch <= 0x0039);
-}
-
-static bool
 is_alnum (unsigned int ch)
 {
   return is_alpha (ch) || is_digit (ch);
@@ -9755,26 +9749,25 @@ main (int argc, char * argv[])
 /*
  * For Emacs M-x compile
  * Local Variables:
- * compile-command: "
-   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables && \
-   ./gen-uni-tables \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/ArabicShaping.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Scripts.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Blocks.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/EastAsianWidth.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/LineBreak.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/WordBreakProperty.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CompositionExclusions.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/SpecialCasing.txt \
-        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CaseFolding.txt \
-        6.0.0 \
-   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt \
-   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt
-   "
+ * compile-command: "\
+ *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&	\\
+ *   ./gen-uni-tables							\\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/ArabicShaping.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Scripts.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/Blocks.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/3.0.1/PropList-3.0.1.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/EastAsianWidth.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/LineBreak.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/WordBreakProperty.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CompositionExclusions.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/SpecialCasing.txt \\
+ *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CaseFolding.txt \\
+ *        6.0.0								\\
+ *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt		\\
+ *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt"
  * End:
  */

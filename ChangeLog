@@ -1,3 +1,10 @@
+2014-11-13  Daiki Ueno  <ueno@gnu.org>
+
+	gen-uni-tables: cosmetic improvements
+	* lib/gen-uni-tables.c: Escape newlines in the Emacs file local
+	variables specification.
+	(is_outdigit): Remove unused function.
+
 2014-11-12  Jeroen Roovers  <jer@gentoo.org>  (tiny change)
 
 	fcntl-h-tests: port to PA-RISC GNU/Linux
