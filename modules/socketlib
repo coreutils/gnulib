@@ -8,7 +8,7 @@ m4/sys_socket_h.m4
 Depends-on:
 
 configure.ac:
-gl_SOCKETLIB
+AC_REQUIRE([gl_SOCKETLIB])
 
 Makefile.am:
 

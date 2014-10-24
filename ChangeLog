@@ -1,3 +1,12 @@
+2014-10-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	socketlib, sockets, sys_socket: Use AC_REQUIRE to pacify autoconf.
+	Without this change, in bleeding-edge fileutils Autoconf complains
+	that gl_SOCKETLIB etc. are AC_REQUIREd after being invoked.
+	* modules/socketlib (configure.ac): AC_REQUIRE gl_SOCKETLIB.
+	* modules/sockets (configure.ac): AC_REQUIRE gl_SOCKETS.
+	* modules/sys_socket (configure.ac): AC_REQUIRE gl_HEADER_SYS_SOCKET.
+
 2014-10-24  Daiki Ueno  <ueno@gnu.org>
 
 	iconv: avoid false detection of non-working iconv
