@@ -118,7 +118,7 @@ typedef void (*freefun_type) (void *, struct _obstack_chunk *);
 
 static int
 _obstack_begin_worker (struct obstack *h,
-                       int size, int alignment,
+                       _OBSTACK_SIZE_T size, int alignment,
                        chunkfun_type chunkfun, freefun_type freefun)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
@@ -162,7 +162,7 @@ _obstack_begin_worker (struct obstack *h,
 
 int
 _obstack_begin (struct obstack *h,
-                int size, int alignment,
+                _OBSTACK_SIZE_T size, int alignment,
                 void *(*chunkfun) (size_t),
                 void (*freefun) (void *))
 {
@@ -174,7 +174,7 @@ _obstack_begin (struct obstack *h,
 
 int
 _obstack_begin_1 (struct obstack *h,
-                  int size, int alignment,
+                  _OBSTACK_SIZE_T size, int alignment,
                   void *(*chunkfun) (void *, size_t),
                   void (*freefun) (void *, void *),
                   void *arg)
@@ -193,12 +193,12 @@ _obstack_begin_1 (struct obstack *h,
    to the beginning of the new one.  */
 
 void
-_obstack_newchunk (struct obstack *h, int length)
+_obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
 {
   struct _obstack_chunk *old_chunk = h->chunk;
   struct _obstack_chunk *new_chunk;
-  long new_size;
-  long obj_size = h->next_free - h->object_base;
+  size_t new_size;
+  size_t obj_size = h->next_free - h->object_base;
   char *object_base;
 
   /* Compute size for new chunk.  */
@@ -306,11 +306,11 @@ _obstack_free (struct obstack *h, void *obj)
 strong_alias (_obstack_free, obstack_free)
 # endif
 
-int
+_OBSTACK_SIZE_T
 _obstack_memory_used (struct obstack *h)
 {
   struct _obstack_chunk *lp;
-  int nbytes = 0;
+  _OBSTACK_SIZE_T nbytes = 0;
 
   for (lp = h->chunk; lp != 0; lp = lp->prev)
     {
