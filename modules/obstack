@@ -6,9 +6,9 @@ lib/obstack.h
 lib/obstack.c
 
 Depends-on:
+alignof
 gettext-h
 exitfail
-stdalign
 stdint
 stdlib
 

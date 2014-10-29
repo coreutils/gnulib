@@ -48,26 +48,30 @@
 #endif
 
 #ifndef _OBSTACK_ELIDE_CODE
-# include <stdalign.h>
+# if !defined _LIBC && !defined __GNUC__
+#  include <alignof.h>
+#  define __alignof__(type) alignof_type (type)
+# endif
 # include <stdlib.h>
 # include <stdint.h>
 
+# ifndef MAX
+#  define MAX(a,b) ((a) > (b) ? (a) : (b))
+# endif
+
 /* Determine default alignment.  */
-union fooround
-{
-  uintmax_t i;
-  long double d;
-  void *p;
-};
+
 /* If malloc were really smart, it would round addresses to DEFAULT_ALIGNMENT.
    But in fact it might be less smart and round addresses to as much as
-   DEFAULT_ROUNDING.  So we prepare for it to do that.  */
-enum
-{
-  DEFAULT_ALIGNMENT = alignof (union fooround),
-  DEFAULT_ROUNDING = sizeof (union fooround)
-};
+   DEFAULT_ROUNDING.  So we prepare for it to do that.
 
+   DEFAULT_ALIGNMENT cannot be an enum constant; see gnulib's alignof.h.  */
+#define DEFAULT_ALIGNMENT MAX (__alignof__ (long double),		      \
+                               MAX (__alignof__ (uintmax_t),		      \
+                                    __alignof__ (void *)))
+#define DEFAULT_ROUNDING MAX (sizeof (long double),			      \
+                               MAX (sizeof (uintmax_t),			      \
+                                    sizeof (void *)))
 
 /* Define a macro that either calls functions with the traditional malloc/free
    calling interface, or calls functions with the mmalloc/mfree interface

@@ -1,5 +1,16 @@
 2014-10-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	obstack: prefer __alignof__ to alignof
+	This is for portability to pre-4.7 GCC when compiling glibc.
+	See Joseph S. Myers in:
+	http://sourceware.org/ml/libc-alpha/2014-10/msg00703.html
+	* lib/obstack.c (__alignof__) [!_LIBC && !__GNUC__]:
+	New macro, defined by including and using <alignof.h>.
+	(MAX): New macro.
+	(DEFAULT_ALIGNMENT, DEFAULT_ROUNDING): Redefine in terms of these.
+	Do not use enums as they are not portable to some broken compilers.
+	* modules/obstack (Depends-on): Depend on alignof, not stdalign.
+
 	obstack: prefer alignof to calculating alignments by hand
 	* lib/obstack.c: Include <stdalign.h>.
 	(struct fooalign): Remove.
