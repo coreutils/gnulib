@@ -94,7 +94,7 @@ compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
 # define CALL_CHUNKFUN(h, size) \
   (((h)->use_extra_arg)							      \
    ? (*(h)->chunkfun)((h)->extra_arg, (size))				      \
-   : (*(struct _obstack_chunk *(*)(long))(h)->chunkfun)((size)))
+   : (*(struct _obstack_chunk *(*)(size_t))(h)->chunkfun)((size)))
 
 # define CALL_FREEFUN(h, old_chunk) \
   do { \
@@ -113,11 +113,13 @@ compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
    Return nonzero if successful, calls obstack_alloc_failed_handler if
    allocation fails.  */
 
-int
-_obstack_begin (struct obstack *h,
-                int size, int alignment,
-                void *(*chunkfun) (long),
-                void (*freefun) (void *))
+typedef struct _obstack_chunk * (*chunkfun_type) (void *, size_t);
+typedef void (*freefun_type) (void *, struct _obstack_chunk *);
+
+static int
+_obstack_begin_worker (struct obstack *h,
+                       int size, int alignment,
+                       chunkfun_type chunkfun, freefun_type freefun)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
 
@@ -140,11 +142,10 @@ _obstack_begin (struct obstack *h,
       size = 4096 - extra;
     }
 
-  h->chunkfun = (struct _obstack_chunk * (*) (void *, long)) chunkfun;
-  h->freefun = (void (*) (void *, struct _obstack_chunk *)) freefun;
+  h->chunkfun = chunkfun;
+  h->freefun = freefun;
   h->chunk_size = size;
   h->alignment_mask = alignment - 1;
-  h->use_extra_arg = 0;
 
   chunk = h->chunk = CALL_CHUNKFUN (h, h->chunk_size);
   if (!chunk)
@@ -160,51 +161,29 @@ _obstack_begin (struct obstack *h,
 }
 
 int
-_obstack_begin_1 (struct obstack *h, int size, int alignment,
-                  void *(*chunkfun) (void *, long),
+_obstack_begin (struct obstack *h,
+                int size, int alignment,
+                void *(*chunkfun) (size_t),
+                void (*freefun) (void *))
+{
+  h->use_extra_arg = 0;
+  return _obstack_begin_worker (h, size, alignment,
+                                (chunkfun_type) chunkfun,
+                                (freefun_type) freefun);
+}
+
+int
+_obstack_begin_1 (struct obstack *h,
+                  int size, int alignment,
+                  void *(*chunkfun) (void *, size_t),
                   void (*freefun) (void *, void *),
                   void *arg)
 {
-  struct _obstack_chunk *chunk; /* points to new chunk */
-
-  if (alignment == 0)
-    alignment = DEFAULT_ALIGNMENT;
-  if (size == 0)
-    /* Default size is what GNU malloc can fit in a 4096-byte block.  */
-    {
-      /* 12 is sizeof (mhead) and 4 is EXTRA from GNU malloc.
-         Use the values for range checking, because if range checking is off,
-         the extra bytes won't be missed terribly, but if range checking is on
-         and we used a larger request, a whole extra 4096 bytes would be
-         allocated.
-
-         These number are irrelevant to the new GNU malloc.  I suspect it is
-         less sensitive to the size of the request.  */
-      int extra = ((((12 + DEFAULT_ROUNDING - 1) & ~(DEFAULT_ROUNDING - 1))
-                    + 4 + DEFAULT_ROUNDING - 1)
-                   & ~(DEFAULT_ROUNDING - 1));
-      size = 4096 - extra;
-    }
-
-  h->chunkfun = (struct _obstack_chunk * (*)(void *,long)) chunkfun;
-  h->freefun = (void (*) (void *, struct _obstack_chunk *)) freefun;
-  h->chunk_size = size;
-  h->alignment_mask = alignment - 1;
   h->extra_arg = arg;
   h->use_extra_arg = 1;
-
-  chunk = h->chunk = CALL_CHUNKFUN (h, h->chunk_size);
-  if (!chunk)
-    (*obstack_alloc_failed_handler) ();
-  h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
-                                               alignment - 1);
-  h->chunk_limit = chunk->limit
-                     = (char *) chunk + h->chunk_size;
-  chunk->prev = 0;
-  /* The initial chunk now contains no empty object.  */
-  h->maybe_empty_object = 0;
-  h->alloc_failed = 0;
-  return 1;
+  return _obstack_begin_worker (h, size, alignment,
+                                (chunkfun_type) chunkfun,
+                                (freefun_type) freefun);
 }
 
 /* Allocate a new current chunk for the obstack *H
