@@ -52,6 +52,7 @@
 #ifndef ELIDE_CODE
 
 
+# include <stdlib.h>
 # include <stdint.h>
 
 /* Determine default alignment.  */
@@ -83,24 +84,6 @@ enum
 #  define COPYING_UNIT int
 # endif
 
-
-/* The functions allocating more room by calling 'obstack_chunk_alloc'
-   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
-   This can be set to a user defined function which should either
-   abort gracefully or use longjump - but shouldn't return.  This
-   variable by default points to the internal function
-   'print_and_abort'.  */
-static _Noreturn void print_and_abort (void);
-void (*obstack_alloc_failed_handler) (void) = print_and_abort;
-
-/* Exit value used when 'print_and_abort' is used.  */
-# include <stdlib.h>
-# ifdef _LIBC
-int obstack_exit_failure = EXIT_FAILURE;
-# else
-#  include "exitfail.h"
-#  define obstack_exit_failure exit_failure
-# endif
 
 # ifdef _LIBC
 #  if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_3_4)
@@ -391,6 +374,15 @@ _obstack_memory_used (struct obstack *h)
 }
 
 /* Define the error handler.  */
+
+/* Exit value used when 'print_and_abort' is used.  */
+# ifdef _LIBC
+int obstack_exit_failure = EXIT_FAILURE;
+# else
+#  include "exitfail.h"
+#  define obstack_exit_failure exit_failure
+# endif
+
 # ifdef _LIBC
 #  include <libintl.h>
 # else
@@ -420,4 +412,11 @@ print_and_abort (void)
   exit (obstack_exit_failure);
 }
 
+/* The functions allocating more room by calling 'obstack_chunk_alloc'
+   jump to the handler pointed to by 'obstack_alloc_failed_handler'.
+   This can be set to a user defined function which should either
+   abort gracefully or use longjump - but shouldn't return.  This
+   variable by default points to the internal function
+   'print_and_abort'.  */
+void (*obstack_alloc_failed_handler) (void) = print_and_abort;
 #endif  /* !ELIDE_CODE */
