@@ -19,16 +19,14 @@
 
 #ifdef _LIBC
 # include <obstack.h>
-# include <shlib-compat.h>
 #else
 # include <config.h>
 # include "obstack.h"
 #endif
 
-/* NOTE BEFORE MODIFYING THIS FILE: This version number must be
-   incremented whenever callers compiled using an old obstack.h can no
-   longer properly call the functions in this obstack.c.  */
-#define OBSTACK_INTERFACE_VERSION 1
+/* NOTE BEFORE MODIFYING THIS FILE: _OBSTACK_INTERFACE_VERSION in
+   obstack.h must be incremented whenever callers compiled using an old
+   obstack.h can no longer properly call the functions in this file.  */
 
 /* Comment out all this code if we are using the GNU C Library, and are not
    actually compiling the library itself, and the installed library
@@ -38,18 +36,18 @@
    (especially if it is a shared library).  Rather than having every GNU
    program understand 'configure --with-gnu-libc' and omit the object
    files, it is simpler to just do this in the source for each such file.  */
-
-#include <stdio.h>              /* Random thing to get __GNU_LIBRARY__.  */
 #if !defined _LIBC && defined __GNU_LIBRARY__ && __GNU_LIBRARY__ > 1
 # include <gnu-versions.h>
-# if _GNU_OBSTACK_INTERFACE_VERSION == OBSTACK_INTERFACE_VERSION
-#  define ELIDE_CODE
+# if (_GNU_OBSTACK_INTERFACE_VERSION == _OBSTACK_INTERFACE_VERSION	      \
+      || (_GNU_OBSTACK_INTERFACE_VERSION == 1				      \
+          && _OBSTACK_INTERFACE_VERSION == 2				      \
+          && defined SIZEOF_INT && defined SIZEOF_SIZE_T		      \
+          && SIZEOF_INT == SIZEOF_SIZE_T))
+#  define _OBSTACK_ELIDE_CODE
 # endif
 #endif
 
-#ifndef ELIDE_CODE
-
-
+#ifndef _OBSTACK_ELIDE_CODE
 # include <stdlib.h>
 # include <stdint.h>
 
@@ -74,16 +72,6 @@ enum
   DEFAULT_ROUNDING = sizeof (union fooround)
 };
 
-
-# ifdef _LIBC
-#  if SHLIB_COMPAT (libc, GLIBC_2_0, GLIBC_2_3_4)
-/* A looong time ago (before 1994, anyway; we're not sure) this global variable
-   was used by non-GNU-C macros to avoid multiple evaluation.  The GNU C
-   library still exports it because somebody might use it.  */
-struct obstack *_obstack_compat = 0;
-compat_symbol (libc, _obstack_compat, _obstack, GLIBC_2_0);
-#  endif
-# endif
 
 /* Define a macro that either calls functions with the traditional malloc/free
    calling interface, or calls functions with the mmalloc/mfree interface
@@ -238,9 +226,6 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
   /* The new chunk certainly contains no empty object yet.  */
   h->maybe_empty_object = 0;
 }
-# ifdef _LIBC
-libc_hidden_def (_obstack_newchunk)
-# endif
 
 /* Return nonzero if object OBJ has been allocated from obstack H.
    This is here for debugging.
@@ -300,11 +285,6 @@ _obstack_free (struct obstack *h, void *obj)
     /* obj is not in any of the chunks! */
     abort ();
 }
-# ifdef _LIBC
-/* Older versions of libc defined both _obstack_free and obstack_free.  */
-#  undef obstack_free
-strong_alias (_obstack_free, obstack_free)
-# endif
 
 _OBSTACK_SIZE_T
 _obstack_memory_used (struct obstack *h)
@@ -319,28 +299,30 @@ _obstack_memory_used (struct obstack *h)
   return nbytes;
 }
 
+# ifndef _OBSTACK_NO_ERROR_HANDLER
 /* Define the error handler.  */
+#  include <stdio.h>
 
 /* Exit value used when 'print_and_abort' is used.  */
-# ifdef _LIBC
+#  ifdef _LIBC
 int obstack_exit_failure = EXIT_FAILURE;
-# else
-#  include "exitfail.h"
-#  define obstack_exit_failure exit_failure
-# endif
+#  else
+#   include "exitfail.h"
+#   define obstack_exit_failure exit_failure
+#  endif
 
-# ifdef _LIBC
-#  include <libintl.h>
-# else
-#  include "gettext.h"
-# endif
-# ifndef _
-#  define _(msgid) gettext (msgid)
-# endif
+#  ifdef _LIBC
+#   include <libintl.h>
+#  else
+#   include "gettext.h"
+#  endif
+#  ifndef _
+#   define _(msgid) gettext (msgid)
+#  endif
 
-# ifdef _LIBC
-#  include <libio/iolibio.h>
-# endif
+#  ifdef _LIBC
+#   include <libio/iolibio.h>
+#  endif
 
 static _Noreturn void
 print_and_abort (void)
@@ -350,11 +332,11 @@ print_and_abort (void)
      happen because the "memory exhausted" message appears in other places
      like this and the translation should be reused instead of creating
      a very similar string which requires a separate translation.  */
-# ifdef _LIBC
+#  ifdef _LIBC
   (void) __fxprintf (NULL, "%s\n", _("memory exhausted"));
-# else
+#  else
   fprintf (stderr, "%s\n", _("memory exhausted"));
-# endif
+#  endif
   exit (obstack_exit_failure);
 }
 
@@ -365,4 +347,5 @@ print_and_abort (void)
    variable by default points to the internal function
    'print_and_abort'.  */
 void (*obstack_alloc_failed_handler) (void) = print_and_abort;
-#endif  /* !ELIDE_CODE */
+# endif /* !_OBSTACK_NO_ERROR_HANDLER */
+#endif /* !_OBSTACK_ELIDE_CODE */

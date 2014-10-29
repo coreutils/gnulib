@@ -104,10 +104,23 @@
 #ifndef _OBSTACK_H
 #define _OBSTACK_H 1
 
-#include <stddef.h>
+#ifndef _OBSTACK_INTERFACE_VERSION
+# define _OBSTACK_INTERFACE_VERSION 2
+#endif
 
-#define _OBSTACK_SIZE_T unsigned int
-#define _CHUNK_SIZE_T unsigned long
+#include <stddef.h>             /* For size_t and ptrdiff_t.  */
+#include <string.h>             /* For __GNU_LIBRARY__, and memcpy.  */
+
+#if _OBSTACK_INTERFACE_VERSION == 1
+/* For binary compatibility with obstack version 1, which used "int"
+   and "long" for these two types.  */
+# define _OBSTACK_SIZE_T unsigned int
+# define _CHUNK_SIZE_T unsigned long
+#else
+/* Version 2 with sane types, especially for 64-bit hosts.  */
+# define _OBSTACK_SIZE_T size_t
+# define _CHUNK_SIZE_T size_t
+#endif
 
 /* If B is the base of an object addressed by P, return the result of
    aligning P to the next multiple of A + 1.  B and P must be of type
@@ -125,8 +138,6 @@
 #define __PTR_ALIGN(B, P, A)						      \
   __BPTR_ALIGN (sizeof (ptrdiff_t) < sizeof (void *) ? (B) : (char *) 0,      \
                 P, A)
-
-#include <string.h>
 
 #ifndef __attribute_pure__
 # define __attribute_pure__ _GL_ATTRIBUTE_PURE
