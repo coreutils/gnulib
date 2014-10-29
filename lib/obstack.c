@@ -48,6 +48,7 @@
 #endif
 
 #ifndef _OBSTACK_ELIDE_CODE
+# include <stdalign.h>
 # include <stdlib.h>
 # include <stdint.h>
 
@@ -58,17 +59,12 @@ union fooround
   long double d;
   void *p;
 };
-struct fooalign
-{
-  char c;
-  union fooround u;
-};
 /* If malloc were really smart, it would round addresses to DEFAULT_ALIGNMENT.
    But in fact it might be less smart and round addresses to as much as
    DEFAULT_ROUNDING.  So we prepare for it to do that.  */
 enum
 {
-  DEFAULT_ALIGNMENT = offsetof (struct fooalign, u),
+  DEFAULT_ALIGNMENT = alignof (union fooround),
   DEFAULT_ROUNDING = sizeof (union fooround)
 };
 

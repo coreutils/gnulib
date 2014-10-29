@@ -1,3 +1,11 @@
+2014-10-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: prefer alignof to calculating alignments by hand
+	* lib/obstack.c: Include <stdalign.h>.
+	(struct fooalign): Remove.
+	(DEFAULT_ALIGNMENT): Use alignof rather than the old offsetof hack.
+	* modules/obstack (Depends-on): Add stdalign.
+
 2014-10-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: use size_t alignments and check for overflow

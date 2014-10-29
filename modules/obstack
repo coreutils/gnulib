@@ -8,6 +8,7 @@ lib/obstack.c
 Depends-on:
 gettext-h
 exitfail
+stdalign
 stdint
 stdlib
 
