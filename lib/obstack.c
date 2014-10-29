@@ -106,7 +106,7 @@ typedef void (*freefun_type) (void *, struct _obstack_chunk *);
 
 static int
 _obstack_begin_worker (struct obstack *h,
-                       _OBSTACK_SIZE_T size, int alignment,
+                       _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
                        chunkfun_type chunkfun, freefun_type freefun)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
@@ -150,7 +150,7 @@ _obstack_begin_worker (struct obstack *h,
 
 int
 _obstack_begin (struct obstack *h,
-                _OBSTACK_SIZE_T size, int alignment,
+                _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
                 void *(*chunkfun) (size_t),
                 void (*freefun) (void *))
 {
@@ -162,7 +162,7 @@ _obstack_begin (struct obstack *h,
 
 int
 _obstack_begin_1 (struct obstack *h,
-                  _OBSTACK_SIZE_T size, int alignment,
+                  _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
                   void *(*chunkfun) (void *, size_t),
                   void (*freefun) (void *, void *),
                   void *arg)
@@ -184,18 +184,22 @@ void
 _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
 {
   struct _obstack_chunk *old_chunk = h->chunk;
-  struct _obstack_chunk *new_chunk;
-  size_t new_size;
+  struct _obstack_chunk *new_chunk = 0;
   size_t obj_size = h->next_free - h->object_base;
   char *object_base;
 
   /* Compute size for new chunk.  */
-  new_size = (obj_size + length) + (obj_size >> 3) + h->alignment_mask + 100;
+  size_t sum1 = obj_size + length;
+  size_t sum2 = sum1 + h->alignment_mask;
+  size_t new_size = sum2 + (obj_size >> 3) + 100;
+  if (new_size < sum2)
+    new_size = sum2;
   if (new_size < h->chunk_size)
     new_size = h->chunk_size;
 
   /* Allocate and initialize the new chunk.  */
-  new_chunk = CALL_CHUNKFUN (h, new_size);
+  if (obj_size <= sum1 && sum1 <= sum2)
+    new_chunk = CALL_CHUNKFUN (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
   h->chunk = new_chunk;

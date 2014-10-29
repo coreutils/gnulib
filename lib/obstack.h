@@ -166,7 +166,7 @@ struct obstack          /* control current object in current chunk */
     _OBSTACK_SIZE_T i;
     void *p;
   } temp;                       /* Temporary for some macros.  */
-  int alignment_mask;           /* Mask of alignment for each object. */
+  _OBSTACK_SIZE_T alignment_mask;  /* Mask of alignment for each object. */
   /* These prototypes vary based on 'use_extra_arg', and we use
      casts to the prototypeless function type in all assignments,
      but having prototypes here quiets -Wstrict-prototypes.  */
@@ -187,9 +187,11 @@ struct obstack          /* control current object in current chunk */
 
 extern void _obstack_newchunk (struct obstack *, _OBSTACK_SIZE_T);
 extern void _obstack_free (struct obstack *, void *);
-extern int _obstack_begin (struct obstack *, _OBSTACK_SIZE_T, int,
+extern int _obstack_begin (struct obstack *,
+                           _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
                            void *(*)(size_t), void (*)(void *));
-extern int _obstack_begin_1 (struct obstack *, _OBSTACK_SIZE_T, int,
+extern int _obstack_begin_1 (struct obstack *,
+                             _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
                              void *(*)(void *, size_t),
                              void (*)(void *, void *), void *);
 extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *)

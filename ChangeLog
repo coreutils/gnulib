@@ -1,3 +1,13 @@
+2014-10-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: use size_t alignments and check for overflow
+	* lib/obstack.c, lib/obstack.h (_obstack_begin, _obstack_begin_1):
+	* lib/obstack.c (_obstack_begin_worker, _obstack_newchunk):
+	* lib/obstack.h (struct obstack.alignment_mask):
+	Use _OBSTACK_SIZE_T, not int, for alignments.
+	* lib/obstack.c (_obstack_newchunk): Fail if the size calculation
+	overflows, e.g., when adding the alignment.
+
 2014-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	socketlib, sockets, sys_socket: Use AC_REQUIRE to pacify autoconf.
