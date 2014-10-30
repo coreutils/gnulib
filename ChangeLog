@@ -27,6 +27,116 @@
 	* lib/obstack.c (_obstack_newchunk): Fail if the size calculation
 	overflows, e.g., when adding the alignment.
 
+2014-10-29  Alan Modra  <amodra@gmail.com>
+
+	obstack: 64-bit obstack support, part 3
+	This finally enables full 64-bit obstack support.  The glibc
+	shared library specific code is removed from obstack.c too, and
+	the error handling code conditionally compiled under control of
+	another macro, _OBSTACK_NO_ERROR_HANDLER.
+	* lib/obstack.h: Include string.h earlier.
+	(_OBSTACK_INTERFACE_VERSION): Define.
+	(_OBSTACK_SIZE_T, _CHUNK_SIZE_T): Define as size_t for version 2.
+	* lib/obstack.c: Don't include shlib-compat.h.
+	(OBSTACK_INTERFACE_VERSION): Delete.
+	(_OBSTACK_ELIDE_CODE): Rename from ELIDE_CODE.  Define when version 1
+	glibc code is compatible with version 2.  Don't include stdio.h for
+	__GNU_LIBRARY.
+	(obstack_exit_failure, print_and_abort, obstack_alloc_failed_handler):
+	Omit when _OBSTACK_NO_ERROR_HANDLER defined.  Include stdio.h here.
+	(_obstack_compat, _obstack, _obstack_newchunk, obstack_free): Delete
+	glibc shared library specific source.
+
+	obstack: 64-bit obstack support, part 2
+	This gets us 4G obstack support, without changing ABI
+	compatibility, apart from possibly introducing some
+	signed/unsigned comparison warnings in code that uses obstack.h.
+	a) Replace "int" size parameters, return values, and macro local vars
+	   with _OBSTACK_SIZE_T, an "unsigned int" for now.
+	b) Make obstack.chunk_size a _CHUNK_SIZE_T, an "unsigned long" for now.
+	c) Make all obstack macros checking available room use obstack_room.
+	   "next_free + desired > chunk_limit" may wrap the lhs for chunks
+	   allocated near the top of memory.
+	d) Use unsigned comparisons, and macro locals to support >2G on 32-bit.
+	* lib/obstack.h (_OBSTACK_SIZE_T): Define.  Use throughout
+	in place of "int" size parameters, return values and local vars.
+	(_CHUNK_SIZE_T): Define.
+	(struct obstack): Make chunk_size a _CHUNK_SIZE_T.  Make temp
+	union use an _OBSTACK_SIZE_T integer type.
+	For __GNUC__ versions of the following macros...
+	(obstack_room): Rename local var.
+	(obstack_make_room): Use obstack_room.
+	(obstack_grow, obstack_grow0, obstack_1grow, obstack_ptr_grow,
+	obstack_int_grow, obstack_blank): Likewise.
+	(obstack_finish): Use unsigned comparison when comparing aligned
+	next_free against chunk_limit.
+	(obstack_free): Cast OBJ to remove possible const qualifier.
+	For !__GNUC__ versions of the following macros...
+	(obstack_make_room): Use obstack_room.
+	(obstack_grow, obstack_grow0, obstack_1grow, obstack_ptr_grow,
+	obstack_int_grow, obstack_blank): Likewise.
+	(obstack_finish): Use unsigned comparision when comparing aligned
+	next_free against chunk_limit.
+	(obstack_free): Use temp.p and same comparisons as __GNUC__ version.
+	* lib/obstack.c (_obstack_begin_worker): Make "size" parameter
+	_OBSTACK_SIZE_T.
+	(_obstack_begin, _obstack_begin_1): Likewise.
+	(_obstack_newchunk): Likewise for length parameter.  Use size_t locals.
+	(_obstack_memory_used): Return and use _OBSTACK_SIZE_T local.
+
+	obstack: 64-bit obstack support, part 1
+	a) Correct calls to alloc function, to use a size_t arg.  "long" is
+	   just wrong on targets like x86_64-mingw64 where "long" is 32 bits
+	   and "size_t" 64 bits.
+	b) Consolidate _obstack_begin and _obstack_begin1 code.
+	* lib/obstack.h (struct obstack <chunkfun>): Correct prototype to
+	use "size_t" rather than "long".
+	(_obstack_begin, _obstack_begin1): Likewise.
+	(obstack_init, obstack_begin, obstack_specify_allocation_with_arg,
+	obstack_chunkfun): Update alloc function casts.
+	* lib/obstack.c (CALL_CHUNKFUN): Update chunkfun cast.
+	(chunkfun_type, freefun_type): New typdefs.
+	(_obstack_begin_worker): Split out from ..
+	(_obstack_begin, _obstack_begin_1): ..here.
+
+	obstack: tidy part 2
+	a) Don't be concerned about "not polluting the namespace with stddef.h
+	   symbols" in obstack.h, since gnulib string.h includes stddef.h
+	   anyway, and it seems unlikely that anyone would care.
+	b) Don't roll our own slow memcpy in _obstack_newchunk.
+	c) Rename obstack_free to _obstack_free.  This makes the naming
+	   consistent with other obstack functions and obviates the need for
+	   __obstack_free.  Ancient obstack.c defined both obstack_free and
+	   _obstack_free.  We continue to do that for _LIBC via an alias.
+	d) Miscellaneous macro fixes.  The expression used to test for gcc-2.8
+	   is clever, but nowadays gcc warns on undefined macros.  You'll get
+	   an undefined macro warning if simulating an old gcc with -U__GNUC__
+	   -U__GNUC_MINOR__ -D__GNUC__=1.
+	* lib/obstack.h: Include stddef.h unconditionally.  Formatting fixes.
+	(PTR_INT_TYPE): Delete, replace with ptrdiff_t.
+	(__obstack_free): Delete, update refs.
+	(_obstack_free): Rename from obstack_free.
+	(__extension__): Avoid undefined macro warning for __GNUC_MINOR__.
+	(obstack_object_size, obstack_room): Parenthesise !__GNUC__ versions.
+	* lib/obstack.c: Don't include stddef.h.
+	(COPYING_UNIT): Delete.
+	(_obstack_begin): Formatting fix.
+	(_obstack_newchunk): Use memcpy to move existing object to new chunk.
+	(_obstack_free): Rename from __obstack_free, update alias.  Move
+	undef of obstack_free to where it is needed.
+
+	obstack: tidy part 1
+	a) Rename temp fields.  temp.tempint and temp.tempptr just looks ugly
+	   to me, and result in overlong lines after later patches.
+	b) Move error handling code, to avoid a forward declaration and to
+	   simplify later patches in this series.
+	* lib/obstack.h (struct obstack <temp>): Rename fields of union
+	and update all uses.
+	* lib/obstack.c: Include stdlib.h earlier.
+	(obstack_exit_failure, obstack_alloc_failed_handler): Move later
+	in file.
+	(print_and_abort): Remove now redundant forward declaration.
+
 2014-10-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	socketlib, sockets, sys_socket: Use AC_REQUIRE to pacify autoconf.
