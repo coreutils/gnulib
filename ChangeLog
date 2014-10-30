@@ -1,3 +1,14 @@
+2014-10-30  Pádraig Brady  <P@draigBrady.com>
+
+	mountlist: don't use libmount to decide on dummy/remote
+	* lib/mountlist.c (read_file_system_list): Don't use the libmount
+	routines to determine whether a file system is dummy or remote,
+	as they're not currently compatible.  For example the remoteness
+	is determined on file system type (for which the list seems incomplete),
+	rather than simply checking for a ':' in the device name.
+	Also libmount currently determines that 'tmpfs' is a dummy file system
+	even though it has associated storage.
+
 2014-10-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: prefer __alignof__ to alignof
