@@ -1,3 +1,8 @@
+2014-10-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: add NEWS entry for recent incompatible changes
+	* NEWS: Describe recent changes.
+
 2014-10-30  Pádraig Brady  <P@draigBrady.com>
 
 	mountlist: don't use libmount to decide on dummy/remote

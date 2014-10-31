@@ -32,8 +32,16 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2014-10-29  obstack         The obstack functions are no longer limited to
+                            int sizes; size values are now of type size_t.
+                            This changes both the ABI and the API.
+                            obstack_blank no longer accepts a negative size to
+                            shrink the current object; callers must now use
+                            obstack_blank_fast with a "negative" (actually,
+                            large positive) size for that.
+
 2014-02-23  diffseq         The members too_expensive, lo_minimal and hi_minimal
-                            were removed from public structureas, and the
+                            were removed from public structures, and the
                             find_minimal argument was removed from diag
                             and compareseq.
 
