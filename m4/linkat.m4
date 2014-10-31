@@ -20,6 +20,27 @@ AC_DEFUN([gl_FUNC_LINKAT],
   if test $ac_cv_func_linkat = no; then
     HAVE_LINKAT=0
   else
+    dnl OS X Yosemite has linkat() but it's not sufficient
+    dnl to our needs since it doesn't support creating
+    dnl hardlinks to symlinks.  Therefore check for that
+    dnl capability before considering using the system version.
+    AC_CACHE_CHECK([whether linkat() can link symlinks],
+      [gl_cv_func_linkat_nofollow],
+      [rm -rf conftest.l1 conftest.l2
+       ln -s target conftest.l1
+       AC_RUN_IFELSE([AC_LANG_PROGRAM(
+                        [[#include <fcntl.h>
+                          #include <unistd.h>
+                        ]],
+                        [return linkat (AT_FDCWD, "conftest.l1", AT_FDCWD,
+                                            "conftest.l2", 0);
+                        ])],
+         [gl_cv_func_linkat_nofollow=yes
+          LINKAT_SYMLINK_NOTSUP=0],
+         [gl_cv_func_linkat_nofollow=no
+          LINKAT_SYMLINK_NOTSUP=1])
+       rm -rf conftest.l1 conftest.l2])
+
     AC_CACHE_CHECK([whether linkat(,AT_SYMLINK_FOLLOW) works],
       [gl_cv_func_linkat_follow],
       [rm -rf conftest.f1 conftest.f2
@@ -37,6 +58,7 @@ choke me
          [gl_cv_func_linkat_follow=yes],
          [gl_cv_func_linkat_follow="need runtime check"])
        rm -rf conftest.f1 conftest.f2])
+
     AC_CACHE_CHECK([whether linkat handles trailing slash correctly],
       [gl_cv_func_linkat_slash],
       [rm -rf conftest.a conftest.b conftest.c conftest.d
@@ -85,11 +107,15 @@ choke me
       *yes) gl_linkat_slash_bug=0 ;;
       *)    gl_linkat_slash_bug=1 ;;
     esac
+
     if test "$gl_cv_func_linkat_follow" != yes \
+       || test "$gl_cv_func_linkat_nofollow" != yes \
        || test $gl_linkat_slash_bug = 1; then
       REPLACE_LINKAT=1
       AC_DEFINE_UNQUOTED([LINKAT_TRAILING_SLASH_BUG], [$gl_linkat_slash_bug],
         [Define to 1 if linkat fails to recognize a trailing slash.])
+      AC_DEFINE_UNQUOTED([LINKAT_SYMLINK_NOTSUP], [$LINKAT_SYMLINK_NOTSUP],
+        [Define to 1 if linkat can create hardlinks to symlinks])
     fi
   fi
 ])

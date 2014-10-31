@@ -43,7 +43,7 @@
 # endif
 #endif
 
-#if !HAVE_LINKAT
+#if !HAVE_LINKAT || LINKAT_SYMLINK_NOTSUP
 
 /* Create a link.  If FILE1 is a symlink, either create a hardlink to
    that symlink, or fake it by creating an identical symlink.  */
@@ -195,6 +195,10 @@ solaris_optimized_link_follow (char const *file1, char const *file2)
 
 # endif
 
+#endif /* !HAVE_LINKAT || LINKAT_SYMLINK_NOTSUP  */
+
+#if !HAVE_LINKAT
+
 /* Create a link to FILE1, in the directory open on descriptor FD1, to FILE2,
    in the directory open on descriptor FD2.  If FILE1 is a symlink, FLAG
    controls whether to dereference FILE1 first.  If possible, do it without
@@ -321,7 +325,17 @@ rpl_linkat (int fd1, char const *file1, int fd2, char const *file2, int flag)
 # endif
 
   if (!flag)
-    return linkat (fd1, file1, fd2, file2, flag);
+    {
+      int result = linkat (fd1, file1, fd2, file2, flag);
+# if LINKAT_SYMLINK_NOTSUP
+      /* OS X 10.10 has linkat() but it doesn't support
+         hardlinks to symlinks.  Fallback to our emulation
+         in that case.  */
+      if (result == -1 && (errno == ENOTSUP || errno == EOPNOTSUPP))
+        return at_func2 (fd1, file1, fd2, file2, link_immediate);
+# endif
+      return result;
+    }
 
   /* Cache the information on whether the system call really works.  */
   {

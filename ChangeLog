@@ -1,3 +1,11 @@
+2014-11-03  Pádraig Brady  <P@draigBrady.com>
+
+	linkat: wrap to handle symlinks on OS X 10.10
+	* m4/linkat.m4 (gl_FUNC_LINKAT): linkat() is available on Yosemite
+	but not usable because it doesn't support creating hardlinks
+	to symlinks.  Therefore add a generic test for this capability
+	and fallback to our emulation if linkat() fails with ENOTSUP.
+
 2014-11-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	open, openat: document nonstandard FreeBSD, NetBSD O_NOFOLLOW errno
