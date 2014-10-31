@@ -1,5 +1,15 @@
 2014-11-03  Pádraig Brady  <P@draigBrady.com>
 
+	linkat: don't unconditionally replace on GNU/Linux
+	* m4/linkat.m4 (gl_FUNC_LINKAT): The compile check for AT_SYMLINK_FOLLOW
+	was redundant for a few reasons.  It was present to support compiling
+	on new systems but running on the old narrow window of Linux 2.6.1[67].
+	It setup and cleaned up test files which weren't actually used.
+	On non __linux__ it compile tested AT_SYMLINK_FOLLOW, but that is
+	implicit in the following check.
+
+2014-11-03  Pádraig Brady  <P@draigBrady.com>
+
 	linkat: wrap to handle symlinks on OS X 10.10
 	* m4/linkat.m4 (gl_FUNC_LINKAT): linkat() is available on Yosemite
 	but not usable because it doesn't support creating hardlinks
