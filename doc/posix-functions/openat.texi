@@ -25,4 +25,14 @@ Solaris 9.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+@code{openat (fd, "symlink", O_NOFOLLOW ...)} fails with @code{errno}
+set to @code{EMLINK} instead of the POSIX-required @code{ELOOP} on
+some platforms:
+FreeBSD 10.1.
+@item
+@code{openat (fd, "symlink", O_NOFOLLOW ...)} fails with @code{errno}
+set to @code{EFTYPE} instead of the POSIX-required @code{ELOOP} on
+some platforms:
+NetBSD 6.1.
 @end itemize

@@ -1,3 +1,11 @@
+2014-11-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	open, openat: document nonstandard FreeBSD, NetBSD O_NOFOLLOW errno
+	* doc/posix-functions/open.texi (open):
+	* doc/posix-functions/openat.texi (openat):
+	Document that these functions do not set errno to ELOOP when
+	a symlink is opened with O_NOFOLLOW.
+
 2014-10-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: add NEWS entry for recent incompatible changes
