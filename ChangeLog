@@ -1,3 +1,14 @@
+2014-11-03  Alan Modra  <amodra@gmail.com>
+
+	obstack: fix macro return values
+	* lib/obstack.h (obstack_next_free): Return void *.
+	(obstack_1grow_fast, obstack_blank_fast): Return void.
+	For __GNUC__ macros:
+	(obstack_1grow, obstack_blank): Remove now unnecessary (void) 0.
+	For !__GNUC__ macros:
+	(obstack_make_room, obstack_grow, obstack_grow0)
+	(obstack_ptr_grow_fast, obstack_int_grow_fast): Return void.
+
 2014-11-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: do not assume system-supplied obstack is size_t safe
