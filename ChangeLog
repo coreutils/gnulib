@@ -1,3 +1,11 @@
+2014-11-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: port to platforms that #define __alignof__
+	* lib/obstack.c: Include <alignof.h> if !defined __alignof__,
+	not if !_LIBC.  We don't know of any platforms that #define
+	__alignof__, but it might be useful in tests.  Conversely,
+	glibc assumes GCC.
+
 2014-11-03  Pádraig Brady  <P@draigBrady.com>
 
 	linkat: don't unconditionally replace on GNU/Linux
