@@ -1,3 +1,20 @@
+2014-11-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: avoid potentially-nonportable function casts
+	* lib/obstack.c (CALL_CHUNKFUN, CALL_FREEFUN):
+	Remove, replacing with ...
+	(call_chunkfun, call_freefun): New static functions.
+	All uses changed.  Avoid potentially-nonportable casts.
+	(chunkfun_type, freefun_type): Remove typedefs; no longer used.
+	(_obstack_begin_worker): Omit last two args, since they
+	rely on potentially-nonportable casts.  All callers changed.
+	* lib/obstack.h (_OBSTACK_CAST): New macro.
+	Use it everywhere the old API used a potentially-nonportable cast.
+	The new API doesn't cast.
+	(struct obstack): Use unions rather than requiring
+	potentially-nonportable casts.
+	(obstack_chunkfun, obstack_freefun): Return void.
+
 2014-11-03  Alan Modra  <amodra@gmail.com>
 
 	obstack: fix macro return values

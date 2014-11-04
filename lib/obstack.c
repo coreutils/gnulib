@@ -76,41 +76,38 @@
                                MAX (sizeof (uintmax_t),			      \
                                     sizeof (void *)))
 
-/* Define a macro that either calls functions with the traditional malloc/free
-   calling interface, or calls functions with the mmalloc/mfree interface
-   (that adds an extra first argument), based on the state of use_extra_arg.
-   For free, do not use ?:, since some compilers, like the MIPS compilers,
-   do not allow (expr) ? void : void.  */
+/* Call functions with either the traditional malloc/free calling
+   interface, or the mmalloc/mfree interface (that adds an extra first
+   argument), based on the value of use_extra_arg.  */
 
-# define CALL_CHUNKFUN(h, size) \
-  (((h)->use_extra_arg)							      \
-   ? (*(h)->chunkfun)((h)->extra_arg, (size))				      \
-   : (*(struct _obstack_chunk *(*)(size_t))(h)->chunkfun)((size)))
+static void *
+call_chunkfun (struct obstack *h, size_t size)
+{
+  if (h->use_extra_arg)
+    return h->chunkfun.extra (h->extra_arg, size);
+  else
+    return h->chunkfun.plain (size);
+}
 
-# define CALL_FREEFUN(h, old_chunk) \
-  do { \
-      if ((h)->use_extra_arg)						      \
-        (*(h)->freefun)((h)->extra_arg, (old_chunk));			      \
-      else								      \
-        (*(void (*)(void *))(h)->freefun)((old_chunk));			      \
-    } while (0)
+static void
+call_freefun (struct obstack *h, void *old_chunk)
+{
+  if (h->use_extra_arg)
+    h->freefun.extra (h->extra_arg, old_chunk);
+  else
+    h->freefun.plain (old_chunk);
+}
 
 
 /* Initialize an obstack H for use.  Specify chunk size SIZE (0 means default).
    Objects start on multiples of ALIGNMENT (0 means use default).
-   CHUNKFUN is the function to use to allocate chunks,
-   and FREEFUN the function to free them.
 
    Return nonzero if successful, calls obstack_alloc_failed_handler if
    allocation fails.  */
 
-typedef struct _obstack_chunk * (*chunkfun_type) (void *, size_t);
-typedef void (*freefun_type) (void *, struct _obstack_chunk *);
-
 static int
 _obstack_begin_worker (struct obstack *h,
-                       _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment,
-                       chunkfun_type chunkfun, freefun_type freefun)
+                       _OBSTACK_SIZE_T size, _OBSTACK_SIZE_T alignment)
 {
   struct _obstack_chunk *chunk; /* points to new chunk */
 
@@ -133,12 +130,10 @@ _obstack_begin_worker (struct obstack *h,
       size = 4096 - extra;
     }
 
-  h->chunkfun = chunkfun;
-  h->freefun = freefun;
   h->chunk_size = size;
   h->alignment_mask = alignment - 1;
 
-  chunk = h->chunk = CALL_CHUNKFUN (h, h->chunk_size);
+  chunk = h->chunk = call_chunkfun (h, h->chunk_size);
   if (!chunk)
     (*obstack_alloc_failed_handler) ();
   h->next_free = h->object_base = __PTR_ALIGN ((char *) chunk, chunk->contents,
@@ -157,10 +152,10 @@ _obstack_begin (struct obstack *h,
                 void *(*chunkfun) (size_t),
                 void (*freefun) (void *))
 {
+  h->chunkfun.plain = chunkfun;
+  h->freefun.plain = freefun;
   h->use_extra_arg = 0;
-  return _obstack_begin_worker (h, size, alignment,
-                                (chunkfun_type) chunkfun,
-                                (freefun_type) freefun);
+  return _obstack_begin_worker (h, size, alignment);
 }
 
 int
@@ -170,11 +165,11 @@ _obstack_begin_1 (struct obstack *h,
                   void (*freefun) (void *, void *),
                   void *arg)
 {
+  h->chunkfun.extra = chunkfun;
+  h->freefun.extra = freefun;
   h->extra_arg = arg;
   h->use_extra_arg = 1;
-  return _obstack_begin_worker (h, size, alignment,
-                                (chunkfun_type) chunkfun,
-                                (freefun_type) freefun);
+  return _obstack_begin_worker (h, size, alignment);
 }
 
 /* Allocate a new current chunk for the obstack *H
@@ -202,7 +197,7 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
 
   /* Allocate and initialize the new chunk.  */
   if (obj_size <= sum1 && sum1 <= sum2)
-    new_chunk = CALL_CHUNKFUN (h, new_size);
+    new_chunk = call_chunkfun (h, new_size);
   if (!new_chunk)
     (*obstack_alloc_failed_handler)();
   h->chunk = new_chunk;
@@ -225,7 +220,7 @@ _obstack_newchunk (struct obstack *h, _OBSTACK_SIZE_T length)
                           h->alignment_mask)))
     {
       new_chunk->prev = old_chunk->prev;
-      CALL_FREEFUN (h, old_chunk);
+      call_freefun (h, old_chunk);
     }
 
   h->object_base = object_base;
@@ -276,7 +271,7 @@ _obstack_free (struct obstack *h, void *obj)
   while (lp != 0 && ((void *) lp >= obj || (void *) (lp)->limit < obj))
     {
       plp = lp->prev;
-      CALL_FREEFUN (h, lp);
+      call_freefun (h, lp);
       lp = plp;
       /* If we switch chunks, we can't tell whether the new current
          chunk contains an empty object, so assume that it may.  */

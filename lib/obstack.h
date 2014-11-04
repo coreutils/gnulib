@@ -116,10 +116,12 @@
    and "long" for these two types.  */
 # define _OBSTACK_SIZE_T unsigned int
 # define _CHUNK_SIZE_T unsigned long
+# define _OBSTACK_CAST(type, expr) ((type) (expr))
 #else
 /* Version 2 with sane types, especially for 64-bit hosts.  */
 # define _OBSTACK_SIZE_T size_t
 # define _CHUNK_SIZE_T size_t
+# define _OBSTACK_CAST(type, expr) (expr)
 #endif
 
 /* If B is the base of an object addressed by P, return the result of
@@ -167,11 +169,19 @@ struct obstack          /* control current object in current chunk */
     void *p;
   } temp;                       /* Temporary for some macros.  */
   _OBSTACK_SIZE_T alignment_mask;  /* Mask of alignment for each object. */
-  /* These prototypes vary based on 'use_extra_arg', and we use
-     casts to the prototypeless function type in all assignments,
-     but having prototypes here quiets -Wstrict-prototypes.  */
-  struct _obstack_chunk *(*chunkfun) (void *, size_t);
-  void (*freefun) (void *, struct _obstack_chunk *);
+
+  /* These prototypes vary based on 'use_extra_arg'.  */
+  union
+  {
+    void *(*plain) (size_t);
+    void *(*extra) (void *, size_t);
+  } chunkfun;
+  union
+  {
+    void (*plain) (void *);
+    void (*extra) (void *, void *);
+  } freefun;
+
   void *extra_arg;              /* first arg for chunk alloc/dealloc funcs */
   unsigned use_extra_arg : 1;     /* chunk alloc/dealloc funcs take extra arg */
   unsigned maybe_empty_object : 1; /* There is a possibility that the current
@@ -189,11 +199,11 @@ extern void _obstack_newchunk (struct obstack *, _OBSTACK_SIZE_T);
 extern void _obstack_free (struct obstack *, void *);
 extern int _obstack_begin (struct obstack *,
                            _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
-                           void *(*)(size_t), void (*)(void *));
+                           void *(*) (size_t), void (*) (void *));
 extern int _obstack_begin_1 (struct obstack *,
                              _OBSTACK_SIZE_T, _OBSTACK_SIZE_T,
-                             void *(*)(void *, size_t),
-                             void (*)(void *, void *), void *);
+                             void *(*) (void *, size_t),
+                             void (*) (void *, void *), void *);
 extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *)
   __attribute_pure__;
 
@@ -228,29 +238,31 @@ extern int obstack_exit_failure;
 /* To prevent prototype warnings provide complete argument list.  */
 #define obstack_init(h)							      \
   _obstack_begin ((h), 0, 0,						      \
-                  (void *(*)(size_t))obstack_chunk_alloc,		      \
-                  (void (*)(void *))obstack_chunk_free)
+                  _OBSTACK_CAST (void *(*) (size_t), obstack_chunk_alloc),    \
+                  _OBSTACK_CAST (void (*) (void *), obstack_chunk_free))
 
 #define obstack_begin(h, size)						      \
   _obstack_begin ((h), (size), 0,					      \
-                  (void *(*)(size_t))obstack_chunk_alloc,		      \
-                  (void (*)(void *))obstack_chunk_free)
+                  _OBSTACK_CAST (void *(*) (size_t), obstack_chunk_alloc), \
+                  _OBSTACK_CAST (void (*) (void *), obstack_chunk_free))
 
 #define obstack_specify_allocation(h, size, alignment, chunkfun, freefun)     \
   _obstack_begin ((h), (size), (alignment),				      \
-                  (void *(*)(size_t))(chunkfun),			      \
-                  (void (*)(void *))(freefun))
+                  _OBSTACK_CAST (void *(*) (size_t), chunkfun),		      \
+                  _OBSTACK_CAST (void (*) (void *), freefun))
 
 #define obstack_specify_allocation_with_arg(h, size, alignment, chunkfun, freefun, arg) \
   _obstack_begin_1 ((h), (size), (alignment),				      \
-                    (void *(*)(void *, size_t))(chunkfun),		      \
-                    (void (*)(void *, void *))(freefun), (arg))
+                    _OBSTACK_CAST (void *(*) (void *, size_t), chunkfun),     \
+                    _OBSTACK_CAST (void (*) (void *, void *), freefun), arg)
 
 #define obstack_chunkfun(h, newchunkfun)				      \
-  ((h)->chunkfun = (struct _obstack_chunk *(*)(void *, size_t))(newchunkfun))
+  ((void) ((h)->chunkfun.extra = _OBSTACK_CAST (void *(*) (void *, size_t),   \
+                                                newchunkfun)))
 
 #define obstack_freefun(h, newfreefun)					      \
-  ((h)->freefun = (void (*)(void *, struct _obstack_chunk *))(newfreefun))
+  ((void) ((h)->freefun.extra = _OBSTACK_CAST (void (*) (void *, void *),     \
+                                               newfreefun)))
 
 #define obstack_1grow_fast(h, achar) ((void) (*((h)->next_free)++ = (achar)))
 
