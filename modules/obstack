@@ -4,6 +4,7 @@ Memory allocation, optimized for stack-like allocation patterns.
 Files:
 lib/obstack.h
 lib/obstack.c
+m4/obstack.m4
 
 Depends-on:
 alignof
