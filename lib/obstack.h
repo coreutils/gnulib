@@ -257,12 +257,10 @@ extern int obstack_exit_failure;
                     _OBSTACK_CAST (void (*) (void *, void *), freefun), arg)
 
 #define obstack_chunkfun(h, newchunkfun)				      \
-  ((void) ((h)->chunkfun.extra = _OBSTACK_CAST (void *(*) (void *, size_t),   \
-                                                newchunkfun)))
+  ((void) ((h)->chunkfun.extra = (void *(*) (void *, size_t)) (newchunkfun)))
 
 #define obstack_freefun(h, newfreefun)					      \
-  ((void) ((h)->freefun.extra = _OBSTACK_CAST (void (*) (void *, void *),     \
-                                               newfreefun)))
+  ((void) ((h)->freefun.extra = (void *(*) (void *, void *)) (newfreefun)))
 
 #define obstack_1grow_fast(h, achar) ((void) (*((h)->next_free)++ = (achar)))
 

@@ -1,3 +1,12 @@
+2014-11-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	obstack: do not reject malloc-style obstack_chunkfun, obstack_freefun
+	Problem reported by Alan Modra in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-11/msg00007.html
+	* lib/obstack.h (obstack_chunkfun, obstack_freefun):
+	Always cast the function arg, reverting this part of the previous
+	change.
+
 2014-11-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	obstack: avoid potentially-nonportable function casts
