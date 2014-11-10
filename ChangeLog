@@ -1,3 +1,10 @@
+2014-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fts: port to C89
+	Problem reported for MSVC 16 by Gisle Vanem in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-11/msg00027.html
+	* lib/fts.c (fts_build): Avoid declaration before statement.
+
 2014-11-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	unistd: port to iOS
