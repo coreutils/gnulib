@@ -1,3 +1,8 @@
+2014-11-12  Jeroen Roovers  <jer@gentoo.org>  (tiny change)
+
+	fcntl-h-tests: port to PA-RISC GNU/Linux
+	* tests/test-fcntl-h.c (main): Check O_SYNC is different from O_DSYNC.
+
 2014-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fts: port to C89
