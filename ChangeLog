@@ -1,5 +1,10 @@
 2014-11-13  Daiki Ueno  <ueno@gnu.org>
 
+	gen-uni-tables: untabify
+	* lib/gen-uni-tables.c: Untabify.
+
+2014-11-13  Daiki Ueno  <ueno@gnu.org>
+
 	gen-uni-tables: check out-of-range values added to 3-level tables
 	* lib/gen-uni-tables.c (output_category, output_bidi_category)
 	(output_joining_type, output_ident_category): Check out-of-range

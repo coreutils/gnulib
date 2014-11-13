@@ -8180,7 +8180,7 @@ get_decomposition (unsigned int ch,
             decomposition++;
         }
       /* Make sure that *DECOMPOSITION is not NULL-terminated.
-	 Otherwise MAX_DECOMP_LENGTH is too small.  */
+         Otherwise MAX_DECOMP_LENGTH is too small.  */
       assert (*decomposition == '\0');
 
       *lengthp = length;
@@ -8228,7 +8228,7 @@ output_decomposition (FILE *stream1, FILE *stream2)
           decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
 
           /* Produce length 3-bytes entries.  */
-	  /* We would need a special representation of zero-length entries.  */
+          /* We would need a special representation of zero-length entries.  */
           assert (length != 0);
           for (i = 0; i < length; i++)
             {
@@ -9719,8 +9719,8 @@ main (int argc, char * argv[])
  * For Emacs M-x compile
  * Local Variables:
  * compile-command: "\
- *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&	\\
- *   ./gen-uni-tables							\\
+ *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
+ *   ./gen-uni-tables                                                   \\
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/UnicodeData.txt \\
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/PropList.txt \\
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/DerivedCoreProperties.txt \\
@@ -9735,8 +9735,8 @@ main (int argc, char * argv[])
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CompositionExclusions.txt \\
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/SpecialCasing.txt \\
  *        /gfs/petix/Volumes/ExtData/www-archive/software/i18n/unicode/ftp.unicode.org/ArchiveVersions/6.0.0/ucd/CaseFolding.txt \\
- *        6.0.0								\\
- *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt		\\
+ *        6.0.0                                                         \\
+ *   && diff unilbrk/lbrkprop_org.txt unilbrk/lbrkprop.txt              \\
  *   && diff uniwbrk/wbrkprop_org.txt uniwbrk/wbrkprop.txt"
  * End:
  */
