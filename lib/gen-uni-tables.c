@@ -35,6 +35,7 @@
                       6.0.0
  */
 
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -1030,8 +1031,7 @@ output_category (const char *filename, const char *version)
         continue;
 
       /* Now value should contain exactly one bit.  */
-      if (value == 0 || ((value & (value - 1)) != 0))
-        abort ();
+      assert (value != 0 && (value & (value - 1)) == 0);
 
       for (log2_value = 0; value > 1; value >>= 1, log2_value++);
 
@@ -1185,8 +1185,7 @@ output_combclass (const char *filename, const char *version)
     if (unicode_attributes[ch].name != NULL)
       {
         int value = atoi (unicode_attributes[ch].combining);
-        if (!(value >= 0 && value <= 255))
-          abort ();
+        assert (value >= 0 && value <= 255);
         combclass_table_add (&t, ch, value);
       }
 
@@ -1679,8 +1678,7 @@ output_decimal_digit_test (const char *filename, const char *version)
     {
       int value = get_decdigit_value (ch);
 
-      if (!(value >= -1 && value < 10))
-        abort ();
+      assert (value >= -1 && value < 10);
 
       if (value >= 0)
         {
@@ -1729,8 +1727,7 @@ output_decimal_digit (const char *filename, const char *version)
     {
       int value = 1 + get_decdigit_value (ch);
 
-      if (!(value >= 0 && value <= 10))
-        abort ();
+      assert (value >= 0 && value <= 10);
 
       decdigit_table_add (&t, ch, value);
     }
@@ -1866,8 +1863,7 @@ output_digit_test (const char *filename, const char *version)
     {
       int value = get_digit_value (ch);
 
-      if (!(value >= -1 && value < 10))
-        abort ();
+      assert (value >= -1 && value < 10);
 
       if (value >= 0)
         {
@@ -1916,8 +1912,7 @@ output_digit (const char *filename, const char *version)
     {
       int value = 1 + get_digit_value (ch);
 
-      if (!(value >= 0 && value <= 10))
-        abort ();
+      assert (value >= 0 && value <= 10);
 
       decdigit_table_add (&t, ch, value);
     }
@@ -2133,8 +2128,7 @@ output_numeric (const char *filename, const char *version)
           break;
       if (i == nfractions)
         {
-          if (nfractions == 128)
-            abort ();
+          assert (nfractions != 128);
           for (i = 0; i < nfractions; i++)
             if (value.denominator < fractions[i].denominator
                 || (value.denominator == fractions[i].denominator
@@ -2172,8 +2166,7 @@ output_numeric (const char *filename, const char *version)
         if (value.numerator == fractions[i].numerator
             && value.denominator == fractions[i].denominator)
           break;
-      if (i == nfractions)
-        abort ();
+      assert (i != nfractions);
 
       numeric_table_add (&t, ch, i);
     }
@@ -2371,8 +2364,7 @@ get_mirror_value (unsigned int ch)
     return (int) mirror_char - (int) ch;
   else
     {
-      if (mirror_char != 0xfffd)
-        abort ();
+      assert (mirror_char == 0xfffd);
       return 0;
     }
 }
@@ -2694,8 +2686,7 @@ fill_properties (const char *proplist_filename)
                    proplist_filename);
           exit (1);
         }
-      if (!(i1 <= i2 && i2 < 0x110000))
-        abort ();
+      assert (i1 <= i2 && i2 < 0x110000);
 
       for (i = i1; i <= i2; i++)
         unicode_properties[i] |= 1ULL << propvalue;
@@ -2771,8 +2762,7 @@ fill_property30 (char array[0x110000], const char *proplist_filename, const char
                    proplist_filename);
           exit (1);
         }
-      if (!(i1 <= i2 && i2 < 0x110000))
-        abort ();
+      assert (i1 <= i2 && i2 < 0x110000);
       for (i = i1; i <= i2; i++)
         array[i] = 1;
     }
@@ -2835,8 +2825,7 @@ is_property_alphabetic (unsigned int ch)
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_ALPHABETIC)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -2871,8 +2860,7 @@ is_property_default_ignorable_code_point (unsigned int ch)
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_DEFAULT_IGNORABLE_CODE_POINT)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -2932,8 +2920,7 @@ is_property_uppercase (unsigned int ch)
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_UPPERCASE)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -2955,8 +2942,7 @@ is_property_lowercase (unsigned int ch)
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_LOWERCASE)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -2983,8 +2969,7 @@ is_property_cased (unsigned int ch)
                   || is_category_Lt (ch));
   bool result2 = ((unicode_properties[ch] & (1ULL << PROP_CASED)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -3000,8 +2985,7 @@ is_property_case_ignorable (unsigned int ch)
                   || is_category_Sk (ch));
   bool result2 = ((unicode_properties[ch] & (1ULL << PROP_CASE_IGNORABLE)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -3014,8 +2998,7 @@ is_property_changes_when_lowercased (unsigned int ch)
                   && unicode_attributes[ch].lower != NONE
                   && unicode_attributes[ch].lower != ch);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -3366,8 +3349,7 @@ is_property_iso_control (unsigned int ch)
   bool result2 =
     is_category_Cc (ch);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -3456,8 +3438,7 @@ is_property_math (unsigned int ch)
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_MATH)) != 0);
 
-  if (result1 != result2)
-    abort ();
+  assert (result1 == result2);
   return result1;
 }
 
@@ -3797,8 +3778,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
                    arabicshaping_filename, lineno);
           exit (1);
         }
-      if (i >= 0x110000)
-        abort ();
+      assert (i < 0x110000);
 
 #define TRY(name) else if (strcmp (joining_type_name, #name + 16) == 0) joining_type = name;
       if (false) {}
@@ -4238,13 +4218,11 @@ output_joining_group (const char *filename, const char *version)
         break;
       }
 
-  if (!(ch_min <= ch_max))
-    abort ();
+  assert (ch_min <= ch_max);
 
   /* If the interval [ch_min, ch_max] is too large, we should better use a
      3-level table.  */
-  if (!(ch_max - ch_min < 0x200))
-    abort ();
+  assert (ch_max - ch_min < 0x200);
 
   fprintf (stream, "#define joining_group_header_0 0x%x\n", ch_min);
   fprintf (stream, "static const unsigned char u_joining_group[0x%x - 0x%x] =\n",
@@ -4326,10 +4304,8 @@ fill_scripts (const char *scripts_filename)
             }
           i2 = i1;
         }
-      if (i2 < i1)
-        abort ();
-      if (i2 >= 0x110000)
-        abort ();
+      assert (i2 >= i1);
+      assert (i2 < 0x110000);
 
       for (script = numscripts - 1; script >= 0; script--)
         if (strcmp (scripts[script], scriptname) == 0)
@@ -4339,8 +4315,7 @@ fill_scripts (const char *scripts_filename)
           scripts[numscripts] = strdup (scriptname);
           script = numscripts;
           numscripts++;
-          if (numscripts == 256)
-            abort ();
+          assert (numscripts != 256);
         }
 
       for (i = i1; i <= i2; i++)
@@ -4634,11 +4609,9 @@ fill_blocks (const char *blocks_filename)
       blocks[numblocks].end = i2;
       blocks[numblocks].name = strdup (blockname);
       /* It must be sorted.  */
-      if (numblocks > 0 && !(blocks[numblocks-1].end < blocks[numblocks].start))
-        abort ();
+      assert (numblocks == 0 || blocks[numblocks-1].end < blocks[numblocks].start);
       numblocks++;
-      if (numblocks == 256)
-        abort ();
+      assert (numblocks != 256);
     }
 
   if (ferror (stream) || fclose (stream))
@@ -7128,8 +7101,7 @@ output_lbp (FILE *stream1, FILE *stream2)
       int64_t attr = get_lbp (i);
 
       /* Now attr should contain exactly one bit.  */
-      if (attr == 0 || ((attr & (attr - 1)) != 0))
-        abort ();
+      assert (attr != 0 && (attr & (attr - 1)) == 0);
 
       if (attr != (int64_t) 1 << LBP_XX)
         {
@@ -7551,8 +7523,7 @@ fill_org_wbp (const char *wordbreakproperty_filename)
                    wordbreakproperty_filename);
           exit (1);
         }
-      if (!(i1 <= i2 && i2 < 0x110000))
-        abort ();
+      assert (i1 <= i2 && i2 < 0x110000);
 
       for (i = i1; i <= i2; i++)
         unicode_org_wbp[i] = propvalue;
@@ -7643,8 +7614,7 @@ output_wbp (FILE *stream)
       int attr = get_wbp (i);
 
       /* Now attr should contain exactly one bit.  */
-      if (attr == 0 || ((attr & (attr - 1)) != 0))
-        abort ();
+      assert (attr != 0 && (attr & (attr - 1)) == 0);
 
       if (attr != 1 << WBP_OTHER)
         {
@@ -8097,8 +8067,7 @@ fill_org_gbp (const char *graphemebreakproperty_filename)
                    graphemebreakproperty_filename, lineno);
           exit (1);
         }
-      if (!(i1 <= i2 && i2 < 0x110000))
-        abort ();
+      assert (i1 <= i2 && i2 < 0x110000);
 
       for (i = i1; i <= i2; i++)
         unicode_org_gbp[i] = propvalue;
@@ -8161,8 +8130,7 @@ get_decomposition (unsigned int ch,
           size_t typelen;
 
           rangle = strchr (decomposition + 1, '>');
-          if (rangle == NULL)
-            abort ();
+          assert (rangle != NULL);
           typelen = rangle + 1 - decomposition;
 #define TYPE(t1,t2) \
           if (typelen == (sizeof (t1) - 1) && memcmp (decomposition, t1, typelen) == 0) \
@@ -8202,9 +8170,9 @@ get_decomposition (unsigned int ch,
           if (decomposition[0] == ' ')
             decomposition++;
         }
-      if (*decomposition != '\0')
-        /* MAX_DECOMP_LENGTH is too small.  */
-        abort ();
+      /* Make sure that *DECOMPOSITION is not NULL-terminated.
+	 Otherwise MAX_DECOMP_LENGTH is too small.  */
+      assert (*decomposition == '\0');
 
       *lengthp = length;
       return type;
@@ -8247,22 +8215,19 @@ output_decomposition (FILE *stream1, FILE *stream2)
 
       if (type >= 0)
         {
-          if (!(offset < (1 << 15)))
-            abort ();
+          assert (offset < (1 << 15));
           decomp_table_add (&t, ch, ((type == UC_DECOMP_CANONICAL ? 0 : 1) << 15) | offset);
 
           /* Produce length 3-bytes entries.  */
-          if (length == 0)
-            /* We would need a special representation of zero-length entries.  */
-            abort ();
+	  /* We would need a special representation of zero-length entries.  */
+          assert (length != 0);
           for (i = 0; i < length; i++)
             {
               if (offset > 0)
                 fprintf (stream2, ",");
               if ((offset % 4) == 0)
                 fprintf (stream2, "\n ");
-              if (!(decomposed[i] < (1 << 18)))
-                abort ();
+              assert (decomposed[i] < (1 << 18));
               fprintf (stream2, " 0x%02X, 0x%02X, 0x%02X",
                        (((i+1 < length ? (1 << 23) : 0)
                          | (i == 0 ? (type << 18) : 0)
@@ -8439,8 +8404,7 @@ fill_composition_exclusions (const char *compositionexclusions_filename)
           fprintf (stderr, "parse error in '%s'\n", compositionexclusions_filename);
           exit (1);
         }
-      if (!(i < 0x110000))
-        abort ();
+      assert (i < 0x110000);
 
       unicode_composition_exclusions[i] = 1;
     }
@@ -8488,8 +8452,7 @@ debug_output_composition_tables (const char *filename)
             {
               /* The combined character must now also be a starter.
                  Verify this.  */
-              if (strcmp (unicode_attributes[combined].combining, "0") != 0)
-                abort ();
+              assert (strcmp (unicode_attributes[combined].combining, "0") == 0);
 
               fprintf (stream, "0x%04X\t0x%04X\t0x%04X\t%s\n",
                        code1,
@@ -8599,8 +8562,7 @@ output_composition_tables (const char *filename, const char *version)
             {
               /* The combined character must now also be a starter.
                  Verify this.  */
-              if (strcmp (unicode_attributes[combined].combining, "0") != 0)
-                abort ();
+              assert (strcmp (unicode_attributes[combined].combining, "0") == 0);
 
               fprintf (stream, "\"\\x%02x\\x%02x\\x%02x\\x%02x\\x%02x\\x%02x\", 0x%04x\n",
                        (code1 >> 16) & 0xff, (code1 >> 8) & 0xff, code1 & 0xff,
@@ -9270,8 +9232,7 @@ redistribute_casefolding_rules (void)
       if (cfrule->language == NULL && cfrule->mapping[1] == 0)
         {
           ch = cfrule->code;
-          if (!(ch < 0x110000))
-            abort ();
+          assert (ch < 0x110000);
           unicode_casefold[ch] = cfrule->mapping[0];
         }
     }
@@ -9497,8 +9458,7 @@ output_casing_rules (const char *filename, const char *version)
 
       if (rule->language != NULL)
         {
-          if (strlen (rule->language) != 2)
-            abort ();
+          assert (strlen (rule->language) == 2);
           fprintf (stream, "{  '%c',  '%c' }, ", rule->language[0], rule->language[1]);
         }
       else

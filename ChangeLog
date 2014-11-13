@@ -1,5 +1,26 @@
 2014-11-13  Daiki Ueno  <ueno@gnu.org>
 
+	gen-uni-tables: utilize 'assert'
+	* lib/gen-uni-tables.c: Include <assert.h>.
+	(output_category, output_combclass, output_decimal_digit_test)
+	(output_decimal_digit, output_digit_test, output_digit)
+	(output_numeric, get_mirror_value, fill_properties)
+	(fill_property30, is_property_alphabetic)
+	(is_property_default_ignorable_code_point)
+	(is_property_uppercase, is_property_lowercase)
+	(is_property_cased, is_property_case_ignorable)
+	(is_property_changes_when_lowercased, is_property_iso_control)
+	(is_property_math, fill_arabicshaping, output_joining_group)
+	(fill_scripts, fill_blocks, output_lbp, fill_org_wbp)
+	(output_wbp, fill_org_gbp, get_decomposition)
+	(output_decomposition, fill_composition_exclusions)
+	(debug_output_composition_tables, output_composition_tables)
+	(redistribute_casefolding_rules, output_casing_rules): Use
+	'assert (EXPR);' instead of 'if (!EXPR) abort ();' for better error
+	reporting.
+
+2014-11-13  Daiki Ueno  <ueno@gnu.org>
+
 	gen-uni-tables: cosmetic improvements
 	* lib/gen-uni-tables.c: Escape newlines in the Emacs file local
 	variables specification.
