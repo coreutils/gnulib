@@ -1,3 +1,8 @@
+2014-11-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: update commentary about GCC bugs
+	* m4/extern-inline.m4: Add another GCC bug number to comments.
+
 2014-11-13  Daiki Ueno  <ueno@gnu.org>
 
 	gen-uni-tables: untabify
