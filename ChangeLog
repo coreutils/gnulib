@@ -1,3 +1,13 @@
+2014-11-22  Daiki Ueno  <ueno@gnu.org>
+
+	pipe-filter-gi, pipe-filter-ii: port to AIX
+	On AIX 7.1, 'select' is defined as static and cannot be referred
+	to from inline function.
+	* lib/pipe-filter-aux.h (nointr_select): Remove, manually expand
+	the definition...
+	* lib/pipe-filter-gi.c (filter_loop): ...here, and...
+	* lib/pipe-filter-ii.c (pipe_filter_ii_execute): ...here.
+
 2014-11-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gitlog-to-changelog: add --until

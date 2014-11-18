@@ -302,7 +302,7 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
       /* Here, if done_writing, filter->reader_terminated is false.  When
          filter->reader_terminated becomes true, this loop is terminated.  */
 # if HAVE_SELECT
-      int n;
+      int n, retval;
 
       /* See whether reading or writing is possible.  */
       n = 1;
@@ -317,10 +317,16 @@ filter_loop (struct pipe_filter_gi *filter, const char *wbuf, size_t count)
           if (n <= filter->fd[1])
             n = filter->fd[1] + 1;
         }
-      n = select (n,
-                  (!filter->reader_terminated ? &filter->readfds : NULL),
-                  (!done_writing ? &filter->writefds : NULL),
-                  NULL, NULL);
+      /* Do EINTR handling here instead of in pipe-filter-aux.h,
+         because select() cannot be referred to from an inline
+         function on AIX 7.1.  */
+      do
+        retval = select (n,
+                         (!filter->reader_terminated ? &filter->readfds : NULL),
+                         (!done_writing ? &filter->writefds : NULL),
+                         NULL, NULL);
+      while (retval < 0 && errno == EINTR);
+      n = retval;
 
       if (n < 0)
         {
