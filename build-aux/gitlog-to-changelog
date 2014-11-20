@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2012-07-29 06:11'; # UTC
+my $VERSION = '2014-11-20 17:25'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -72,6 +72,7 @@ OPTIONS:
                   directory can be derived.
    --since=DATE convert only the logs since DATE;
                   the default is to convert all log entries.
+   --until=DATE convert only the logs older than DATE.
    --format=FMT set format string for commit subject and body;
                   see 'man git-log' for the list of format metacharacters;
                   the default is '%s%n%b%n'
@@ -220,6 +221,7 @@ sub git_dir_option($)
 
 {
   my $since_date;
+  my $until_date;
   my $format_string = '%s%n%b%n';
   my $amend_file;
   my $append_dot = 0;
@@ -232,6 +234,7 @@ sub git_dir_option($)
      help => sub { usage 0 },
      version => sub { print "$ME version $VERSION\n"; exit },
      'since=s' => \$since_date,
+     'until=s' => \$until_date,
      'format=s' => \$format_string,
      'amend=s' => \$amend_file,
      'append-dot' => \$append_dot,
@@ -243,6 +246,8 @@ sub git_dir_option($)
 
   defined $since_date
     and unshift @ARGV, "--since=$since_date";
+  defined $until_date
+    and unshift @ARGV, "--until=$until_date";
 
   # This is a hash that maps an SHA1 to perl code (i.e., s/old/new/)
   # that makes a correction in the log or attribution of that commit.

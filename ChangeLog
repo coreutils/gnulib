@@ -1,3 +1,9 @@
+2014-11-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gitlog-to-changelog: add --until
+	* build-aux/gitlog-to-changelog: Support new --until option.
+	Need described by Eli Zaretskii in: http://bugs.gnu.org/19113
+
 2014-11-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: update commentary about GCC bugs
