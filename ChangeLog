@@ -1,3 +1,9 @@
+2014-11-27  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname-tests: skip if system's libunistring is used
+	* modules/uniname/uniname-tests (Makefile.am): Skip test if
+	uniname/uniname module is not compiled.
+
 2014-11-27  Pádraig Brady  <P@draigBrady.com>
 
 	printf: fix configure check on big endian systems

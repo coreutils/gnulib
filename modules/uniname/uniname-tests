@@ -10,8 +10,10 @@ progname
 configure.ac:
 
 Makefile.am:
+if LIBUNISTRING_COMPILE_UNINAME_UNINAME
 TESTS += uniname/test-uninames.sh
 check_PROGRAMS += test-uninames
 test_uninames_SOURCES = uniname/test-uninames.c
 test_uninames_LDADD = $(LDADD) $(LIBUNISTRING) @LIBINTL@
+endif
 
