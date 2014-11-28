@@ -1,3 +1,14 @@
+2016-01-15  KO Myung-Hun  <komh@chollian.net>
+
+	utimes: detect utimes() correctly on OS/2 kLIBC
+	utimes() of OS/2 kLIBC has some limitations.
+	1. OS/2 itself supports a file date since 1980 year in local time.
+	2. OS/2 itself supports only even seconds for a file time.
+	3. utimes() of OS/2 kLIBC does not work on an opened file.
+	* m4/utimes.m4: Detect utimes() correctly on OS/2 kLIBC.
+	* doc/posix-functions/utimes.texi: Document the above limitations of
+	utimes() on OS/2 kLIBC.
+
 2016-01-15  Paul Eggert  <eggert@cs.ucla.edu>
             KO Myung-Hun  <komh@chollian.net>
 
