@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 13, 2014
+@set lastupdate November 22, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -2340,8 +2340,9 @@ our position by recommending use of documentation that isn't free.
 Please don't host discussions about your package in a service that
 requires nonfree software.  For instance, Google+ ``communities''
 require running a nonfree JavaScript program to post a message, so
-they can't be used in the Free World.  To host discussions there would
-be excluding people who live by free software principles.
+they can't be used in the Free World.  Google Groups has the same
+problem.  To host discussions there would be excluding people who live
+by free software principles.
 
 Of course, you can't order people not to use such services to talk
 with each other.  What you can do is not legitimize them, and use your
