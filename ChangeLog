@@ -1,3 +1,13 @@
+2014-12-02  Andrei Borzenkov  <arvidjaar@gmail.com>
+
+	argp: avoid extraneous translation and mem leak with empty pre doc
+	* lib/argp-help.c (argp_doc): Never translate the empty string,
+	when "\v" is the first or last character of the string, as that
+	has a reserved meaning to return the header info from a po file.
+	This also fixes a small memory leak in the !post case.
+	The issue can be seen with this command for example:
+	LC_MESSAGES=en_US grub2-mknetdir --help
+
 2014-11-27  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname-tests: skip if system's libunistring is used
