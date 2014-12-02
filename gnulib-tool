@@ -386,7 +386,7 @@ func_exit ()
 func_gnulib_dir ()
 {
   case "$progname" in
-    /*) self_abspathname="$progname" ;;
+    /* | ?:*) self_abspathname="$progname" ;;
     */*) self_abspathname=`pwd`/"$progname" ;;
     *)
       # Look in $PATH.
@@ -449,7 +449,7 @@ func_gnulib_dir ()
     linkval=`func_readlink "$self_abspathname"`
     test -n "$linkval" || break
     case "$linkval" in
-      /* ) self_abspathname="$linkval" ;;
+      /* | ?:* ) self_abspathname="$linkval" ;;
       * ) self_abspathname=`echo "$self_abspathname" | sed -e 's,/[^/]*$,,'`/"$linkval" ;;
     esac
   done
@@ -697,11 +697,11 @@ func_relconcat ()
 func_ln ()
 {
   case "$1" in
-    /*)
+    /* | ?:*)
       ln -s "$1" "$2" ;;
     *) # SRC is relative.
       case "$2" in
-        /*)
+        /* | ?:*)
           ln -s "`pwd`/$1" "$2" ;;
         *) # DEST is relative too.
           ln_destdir=`echo "$2" | sed -e 's,[^/]*$,,'`

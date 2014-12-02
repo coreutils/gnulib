@@ -1,3 +1,9 @@
+2014-12-02  KO Myung-Hun  <komh78@gmail.com>
+
+	gnulib-tool: recognize x:* as an absolute path
+	* gnulib-tool (func_gnulib_dir): Add ?:* case.
+	(func_relconcat): Likewise.
+
 2014-12-02  Andrei Borzenkov  <arvidjaar@gmail.com>
 
 	argp: avoid extraneous translation and mem leak with empty pre doc
