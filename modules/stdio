@@ -6,6 +6,7 @@ lib/stdio.in.h
 m4/stdio_h.m4
 
 Depends-on:
+extensions
 include_next
 snippet/arg-nonnull
 snippet/c++defs
