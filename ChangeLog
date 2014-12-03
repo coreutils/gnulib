@@ -1,5 +1,11 @@
 2014-12-08  KO Myung-Hun  <komh78@gmail.com>
 
+	get_shared_library_fullname: port to EMX
+	* lib/relocatable.c: Define strcmp and strncmp to stricmp and strnicmp
+	on EMX, respectively.
+	(_DLL_InitTerm): New on EMX.
+	(get_shared_library_fullname): Implement on EMX.
+
 	find_executable: port to EMX
 	* lib/progreloc.c (find_executable): Implement on EMX.
 
