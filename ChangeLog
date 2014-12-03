@@ -1,5 +1,8 @@
 2014-12-08  KO Myung-Hun  <komh78@gmail.com>
 
+	find_executable: port to EMX
+	* lib/progreloc.c (find_executable): Implement on EMX.
+
 	sched: check struct sched_param in spawn.h as well
 	* lib/sched.in.h: Include spawn.h on kLIBC.
 	* lib/sched_h.m4: Check struct sched_param in spawn.h as well.
