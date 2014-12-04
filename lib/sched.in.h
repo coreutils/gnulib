@@ -35,6 +35,13 @@
    and Mac OS X 10.5.  */
 #include <sys/types.h>
 
+#ifdef __KLIBC__
+
+/* On OS/2 kLIBC, struct sched_param is in spawn.h */
+# include <spawn.h>
+
+#endif
+
 #if !@HAVE_STRUCT_SCHED_PARAM@
 
 # if !GNULIB_defined_struct_sched_param

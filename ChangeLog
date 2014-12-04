@@ -1,3 +1,9 @@
+2014-12-08  KO Myung-Hun  <komh78@gmail.com>
+
+	sched: check struct sched_param in spawn.h as well
+	* lib/sched.in.h: Include spawn.h on kLIBC.
+	* lib/sched_h.m4: Check struct sched_param in spawn.h as well.
+
 2014-12-08  Martin Kletzander  <mkletzan@redhat.com>  (tiny change)
 
 	bootstrap: Allow perl modules in $buildreq
