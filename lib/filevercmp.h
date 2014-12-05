@@ -37,6 +37,6 @@
    PREFIX VER2 SUFFIX) < 0.
 
    This function is intended to be a replacement for strverscmp. */
-int filevercmp (const char *s1, const char *s2);
+int filevercmp (const char *s1, const char *s2) _GL_ATTRIBUTE_PURE;
 
 #endif /* FILEVERCMP_H */

@@ -27,6 +27,13 @@
 #include <sys/types.h>
 #include <string.h>
 
+/* Use this to suppress gcc's "...may be used uninitialized" warnings. */
+#ifdef lint
+# define IF_LINT(Code) Code
+#else
+# define IF_LINT(Code) /* empty */
+#endif
+
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -117,6 +124,8 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
 
   if (len != 8 && len != 10 && len != 12)
     return 1;
+
+  IF_LINT(if (len < 8) return 1;)
 
   if (dot)
     {

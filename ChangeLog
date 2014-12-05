@@ -1,3 +1,11 @@
+2014-12-05  Pádraig Brady  <P@draigBrady.com>
+
+	filevercmp, posixtm: avoid compiler warnings with -O3
+	* lib/filevercmp.h (filevercmp): Tag with _GL_ATTRIBUTE_PURE
+	* lib/posixtm.c: (IF_LINT): Define.
+	(posix_time_parse): Use it to void a "may be used uninitialized"
+	warning, seen only with -O3.
+
 2014-12-05  Bruno Haible  <bruno@clisp.org>
 
 	Fix LDBL80_WORDS macro on big endian platforms.
