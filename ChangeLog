@@ -1,5 +1,9 @@
 2014-12-08  KO Myung-Hun  <komh78@gmail.com>
 
+	freopen: workaround freopen() on OS/2 kLIBC
+	* lib/freopen.c (rpl_freopen): Workaround.
+	* m4/freopen.m4: Add os2* case.
+
 	get_shared_library_fullname: port to EMX
 	* lib/relocatable.c: Define strcmp and strncmp to stricmp and strnicmp
 	on EMX, respectively.

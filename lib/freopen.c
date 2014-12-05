@@ -26,6 +26,8 @@
 #include <stdio.h>
 #undef __need_FILE
 
+#include <errno.h>
+
 static FILE *
 orig_freopen (const char *filename, const char *mode, FILE *stream)
 {
@@ -42,10 +44,24 @@ orig_freopen (const char *filename, const char *mode, FILE *stream)
 FILE *
 rpl_freopen (const char *filename, const char *mode, FILE *stream)
 {
+  FILE *result;
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   if (filename != NULL && strcmp (filename, "/dev/null") == 0)
     filename = "NUL";
 #endif
 
-  return orig_freopen (filename, mode, stream);
+  /* Clear errno to check the success of freopen() with it */
+  errno = 0;
+
+  result = orig_freopen (filename, mode, stream);
+
+#ifdef __KLIBC__
+  /* On OS/2 kLIBC, freopen() returns NULL even if it is successful
+     if filename is NULL. */
+  if (!filename && !result && !errno)
+    result = stream;
+#endif
+
+  return result;
 }
