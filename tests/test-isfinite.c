@@ -181,7 +181,7 @@ test_isfinitel ()
 # ifdef WORDS_BIGENDIAN
 #  define LDBL80_WORDS(exponent,manthi,mantlo) \
      { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
-       ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+       ((unsigned int) (manthi) << 16) | ((unsigned int) (mantlo) >> 16),   \
        (unsigned int) (mantlo) << 16                                        \
      }
 # else

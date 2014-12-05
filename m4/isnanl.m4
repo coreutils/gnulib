@@ -1,4 +1,4 @@
-# isnanl.m4 serial 17
+# isnanl.m4 serial 18
 dnl Copyright (C) 2007-2014 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -177,7 +177,7 @@ int main ()
 # ifdef WORDS_BIGENDIAN
 #  define LDBL80_WORDS(exponent,manthi,mantlo) \
      { ((unsigned int) (exponent) << 16) | ((unsigned int) (manthi) >> 16), \
-       ((unsigned int) (manthi) << 16) | (unsigned int) (mantlo) >> 16),    \
+       ((unsigned int) (manthi) << 16) | ((unsigned int) (mantlo) >> 16),   \
        (unsigned int) (mantlo) << 16                                        \
      }
 # else

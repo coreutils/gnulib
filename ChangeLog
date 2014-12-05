@@ -1,3 +1,20 @@
+2014-12-05  Bruno Haible  <bruno@clisp.org>
+
+	Fix LDBL80_WORDS macro on big endian platforms.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS): Add missing parenthesis in
+	LDBL80_WORDS macro.
+	* m4/isinf.m4 (gl_ISINFL_WORKS): Likewise.
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS): Likewise.
+	* tests/test-isfinite.c (test_isfinitel): Likewise.
+	* tests/test-isinf.c (test_isinfl): Likewise.
+	* tests/test-isnan.c (test_long_double): Likewise.
+	* tests/test-isnanl.h (main): Likewise.
+	* tests/test-snprintf-posix.h (LDBL80_WORDS): Add missing parenthesis.
+	* tests/test-sprintf-posix.h (LDBL80_WORDS): Likewise.
+	* tests/test-vasnprintf-posix.c (LDBL80_WORDS): Likewise.
+	* tests/test-vasprintf-posix.c (LDBL80_WORDS): Likewise.
+	Reported by Pádraig Brady.
+
 2014-12-02  KO Myung-Hun  <komh78@gmail.com>
 
 	git-version-gen: do not print new line characters
