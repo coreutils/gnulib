@@ -1,3 +1,9 @@
+2014-12-06  Pádraig Brady  <P@draigBrady.com>
+
+	vasnprintf: fix potential use after free
+	* lib/vasnprintf.c (VASNPRINTF): Fix free-memory read,
+	flagged by clang-analyzer 3.4.2.
+
 2014-12-05  Pádraig Brady  <P@draigBrady.com>
 
 	filevercmp, posixtm: avoid compiler warnings with -O3
