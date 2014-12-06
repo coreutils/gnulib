@@ -1,3 +1,12 @@
+2014-12-08  Pádraig Brady  <P@draigBrady.com>
+
+	apply _GL_ATTRIBUTE_PURE to some inline functions
+	clang 3.4.2 flagged these inline functions as pure
+	* lib/savewd.h (savewd_errno): Set _GL_ATTRIBUTE_PURE.
+	* lib/sig-handler.h (get_handler): Likewise.
+	* lib/stat-time.h (get_stat_{a,c,m,birth}time{,_ns}): Likewise.
+	* lib/timespec.h (timespec_cmp, timespec_sign): Likewise.
+
 2014-12-06  Pádraig Brady  <P@draigBrady.com>
 
 	vasnprintf: fix potential use after free
