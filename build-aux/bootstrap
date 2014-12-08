@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2013-12-05.23; # UTC
+scriptversion=2014-12-08.12; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -41,6 +41,9 @@ export LC_ALL
 (unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
 local_gl_dir=gl
+
+# Honour $PERL, but work even if there is none
+PERL="${PERL-perl}"
 
 me=$0
 
@@ -456,6 +459,7 @@ check_versions() {
     test "$appvar" = TAR && appvar=AMTAR
     case $appvar in
         GZIP) ;; # Do not use $GZIP:  it contains gzip options.
+        PERL::*) ;; # Keep perl modules as-is
         *) eval "app=\${$appvar-$app}" ;;
     esac
 
@@ -473,6 +477,17 @@ check_versions() {
           ret=1
           continue
         } ;;
+      # Another check is for perl modules.  These can be written as
+      # e.g. perl::XML::XPath in case of XML::XPath module, etc.
+      perl::*)
+        # Extract module name
+        app="${app#perl::}"
+        if ! $PERL -m"$app" -e 'exit 0' >/dev/null 2>&1; then
+          warn_ "Error: perl module '$app' not found"
+          ret=1
+        fi
+        continue
+        ;;
     esac
     if [ "$req_ver" = "-" ]; then
       # Merely require app to exist; not all prereq apps are well-behaved

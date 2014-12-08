@@ -1,3 +1,8 @@
+2014-12-08  Martin Kletzander  <mkletzan@redhat.com>  (tiny change)
+
+	bootstrap: Allow perl modules in $buildreq
+	* build-aux/bootstrap: Add case for perl modules.
+
 2014-12-08  Pádraig Brady  <P@draigBrady.com>
 
 	apply _GL_ATTRIBUTE_PURE to some inline functions
