@@ -537,6 +537,27 @@ relocate (const char *pathname)
             }
         }
     }
+
+#ifdef __EMX__
+  if (pathname && ISSLASH (pathname[0]))
+    {
+      const char *unixroot = getenv ("UNIXROOT");
+
+      if (unixroot && HAS_DEVICE (unixroot) && !unixroot[2])
+        {
+          char *result = (char *) xmalloc (2 + strlen (pathname) + 1);
+#ifdef NO_XMALLOC
+          if (result != NULL)
+#endif
+            {
+              strcpy (result, unixroot);
+              strcpy (result + 2, pathname);
+              return result;
+            }
+        }
+    }
+#endif
+
   /* Nothing to relocate.  */
   return pathname;
 }

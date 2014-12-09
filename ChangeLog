@@ -1,5 +1,10 @@
 2014-12-08  KO Myung-Hun  <komh78@gmail.com>
 
+	* lib/relocatable.c (relocate): Prepend $UNIXROOT to pathname if it is
+	started with '/' on EMX.
+
+2014-12-08  KO Myung-Hun  <komh78@gmail.com>
+
 	freopen: workaround freopen() on OS/2 kLIBC
 	* lib/freopen.c (rpl_freopen): Workaround.
 	* m4/freopen.m4: Add os2* case.
