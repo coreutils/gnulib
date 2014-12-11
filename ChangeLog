@@ -1,3 +1,13 @@
+2014-12-11  Daiki Ueno  <ueno@gnu.org>
+
+	unistd: fix iOS check conditional
+	On Mac OS X 10.8, the TARGET_* macros are unconditonally defined
+	as 0 or 1 in <TargetConditionals.h>, and the previous check always
+	yielded true on non-iOS environment.
+	* lib/unistd.in.h (environ) [__APPLE__]: Check the values of
+	TARGET_OS_IPHONE and TARGET_IPHONE_SIMULATOR, instead of whether
+	they are defined.
+
 2014-12-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	posixtm: avoid compiler warning in a better way
