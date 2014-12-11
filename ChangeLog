@@ -1,3 +1,8 @@
+2015-04-16  Ludovic Courtès  <ludo@gnu.org>
+
+	gendocs.sh: default to a common CSS style sheet for HTML output
+	* build-aux/gendocs.sh (htmlarg): Change default value.
+
 2015-04-15  Mats Erik Andersson  <gnu@gisladisker.se>
 
 	gnulib-tool: output bold attribute more portably

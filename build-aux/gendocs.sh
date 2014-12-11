@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2015-04-04.08
+scriptversion=2015-04-16.10
 
 # Copyright 2003-2015 Free Software Foundation, Inc.
 #
@@ -142,7 +142,7 @@ EMAIL=webmasters@gnu.org  # please override with --email
 commonarg= # passed to all makeinfo/texi2html invcations.
 dirargs=   # passed to all tools (-I dir).
 dirs=      # -I directories.
-htmlarg=
+htmlarg="--css-ref=/software/gnulib/manual.css"
 infoarg=--no-split
 generate_ascii=true
 generate_html=true
