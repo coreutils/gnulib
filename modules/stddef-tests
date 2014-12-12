@@ -2,6 +2,7 @@ Files:
 tests/test-stddef.c
 
 Depends-on:
+stdalign
 verify
 
 configure.ac:

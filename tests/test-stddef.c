@@ -19,13 +19,14 @@
 #include <config.h>
 
 #include <stddef.h>
-
+#include <stdalign.h>
 #include "verify.h"
 
 /* Check that appropriate types are defined.  */
 wchar_t a = 'c';
 ptrdiff_t b = 1;
 size_t c = 2;
+max_align_t x;
 
 /* Check that NULL can be passed through varargs as a pointer type,
    per POSIX 2008.  */
@@ -44,6 +45,16 @@ struct d
 verify (sizeof (offsetof (struct d, e)) == sizeof (size_t));
 verify (offsetof (struct d, e) < -1); /* Must be unsigned.  */
 verify (offsetof (struct d, f) == 1);
+
+/* Check max_align_t's alignment.  */
+verify (alignof (double) <= alignof (max_align_t));
+verify (alignof (int) <= alignof (max_align_t));
+verify (alignof (long double) <= alignof (max_align_t));
+verify (alignof (long int) <= alignof (max_align_t));
+verify (alignof (ptrdiff_t) <= alignof (max_align_t));
+verify (alignof (size_t) <= alignof (max_align_t));
+verify (alignof (wchar_t) <= alignof (max_align_t));
+verify (alignof (struct d) <= alignof (max_align_t));
 
 int
 main (void)

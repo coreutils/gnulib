@@ -8,6 +8,9 @@ Gnulib module: stddef
 Portability problems fixed by Gnulib:
 @itemize
 @item
+Some platforms fail to provide @code{max_align_t}, which was added in C11.
+
+@item
 Some old platforms fail to provide @code{wchar_t}.
 
 @item

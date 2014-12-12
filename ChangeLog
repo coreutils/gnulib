@@ -1,3 +1,17 @@
+2014-12-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stddef: support C11's max_align_t
+	* doc/posix-headers/stddef.texi (stddef.h): Document max_align_t.
+	* lib/stddef.in.h (_@GUARD_PREFIX@_STDDEF_H) [__need_wint_t]:
+	Do not undef, as that might cause max_align_t to be defined twice.
+	Instead, change use to check for _GL_STDDEF_WINT_T too.
+	(max_align_t) [!HAVE_MAX_ALIGN_T]: New decl.
+	* m4/stddef_h.m4 (gl_STDDEF_H, gl_STDDEF_H_DEFAULTS):
+	Check for max_align_t.
+	* modules/stddef (stddef.h): Substitute HAVE_MAX_ALIGN_T.
+	* modules/stddef-tests (Depends-on): Add stdalign.
+	* tests/test-stddef.c: Test max_align_t.
+
 2014-12-11  Daiki Ueno  <ueno@gnu.org>
 
 	unistd: fix iOS check conditional
