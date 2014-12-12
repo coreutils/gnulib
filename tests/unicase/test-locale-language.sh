@@ -3,8 +3,8 @@
 LC_ALL=C                       ./test-locale-language${EXEEXT} '' || exit 1
 
 : ${LOCALE_FR=fr_FR}
-if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8       ./test-locale-language${EXEEXT} fr || exit 1
+if test $LOCALE_FR != none; then
+  LC_ALL=$LOCALE_FR            ./test-locale-language${EXEEXT} fr || exit 1
 fi
 
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
