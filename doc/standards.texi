@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate May 13, 2014
+@set lastupdate December 10, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -870,10 +870,12 @@ multi-column format.
 @cindex user interface styles
 
 @cindex GTK+
+@cindex GNUstep
 When you write a program that provides a graphical user interface,
-please make it work with the X Window System and the GTK+ toolkit
-unless the functionality specifically requires some alternative (for
-example, ``displaying jpeg images while in console mode'').
+please make it work with the X Window System, using the GTK+ toolkit
+or the GNUstep toolkit, unless the functionality specifically requires
+some alternative (for example, ``displaying jpeg images while in
+console mode'').
 
 In addition, please provide a command-line interface to control the
 functionality.  (In many cases, the graphical user interface can be a
