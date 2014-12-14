@@ -1,3 +1,10 @@
+2014-12-14  Tim Rühsen  <tim.ruehsen@gmx.de>
+
+	parse-datetime: avoid a compiler warning with byacc (trivial)
+	* lib/parse-datetime.y (yylex): Use the same prototype in the
+	function definition as the declaration, to avoid a -Wstrict-prototypes
+	warning seen when using byacc.
+
 2014-12-12  Daiki Ueno  <ueno@gnu.org>
 
 	unicase/locale-language-tests: fix LOCALE_FR test

@@ -1031,7 +1031,7 @@ lookup_word (parser_control const *pc, char *word)
 }
 
 static int
-yylex (YYSTYPE *lvalp, parser_control *pc)
+yylex (union YYSTYPE *lvalp, parser_control *pc)
 {
   unsigned char c;
   size_t count;
