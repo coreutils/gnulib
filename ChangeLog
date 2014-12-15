@@ -1,3 +1,9 @@
+2015-01-05  Daniel P. Berrange  <berrange@redhat.com>  (tiny change)
+
+	pthread: detect git mingw builds with only partial pollution
+	* m4/pthread.m4 (gl_PTHREAD_CHECK): Check for additional
+	pollution, as seen temporarily in Fedora 21.
+
 2015-01-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	lib-symbol-versions: cache script check
