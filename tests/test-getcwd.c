@@ -153,7 +153,13 @@ test_long_name (void)
 
   while (1)
     {
+# ifdef HAVE_GETCWD_SHORTER
+      /* On OS/X <= 10.9 for example, we're restricted to shorter paths
+         as lstat() doesn't support more than PATH_MAX.  */
+      size_t dotdot_max = PATH_MAX * 2;
+# else
       size_t dotdot_max = PATH_MAX * (DIR_NAME_SIZE / DOTDOTSLASH_LEN);
+# endif
       char *c = NULL;
 
       cwd_len += DIR_NAME_SIZE;
@@ -202,7 +208,7 @@ test_long_name (void)
                   fail = 6;
                   break;
                 }
-              if (AT_FDCWD || errno == ERANGE || errno == ENOENT)
+              if (HAVE_OPENAT_SUPPORT || errno == ERANGE || errno == ENOENT)
                 {
                   fail = 7;
                   break;

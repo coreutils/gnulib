@@ -122,6 +122,8 @@ main ()
 
       if (PATH_MAX <= cwd_len && cwd_len < PATH_MAX + DIR_NAME_SIZE)
         {
+          struct stat sb;
+
           c = getcwd (buf, PATH_MAX);
           if (!c && errno == ENOENT)
             {
@@ -136,6 +138,16 @@ main ()
           if (! (errno == ERANGE || is_ENAMETOOLONG (errno)))
             {
               fail = 21;
+              break;
+            }
+
+          /* Our replacement needs to be able to stat() long ../../paths,
+             so generate a path larger than PATH_MAX to check,
+             avoiding the replacement if we can't stat().  */
+          c = getcwd (buf, cwd_len + 1);
+          if (c && !AT_FDCWD && stat (c, &sb) != 0 && is_ENAMETOOLONG (errno))
+            {
+              fail = 32;
               break;
             }
         }
@@ -194,6 +206,7 @@ main ()
     [case $? in
      10|11|12) gl_cv_func_getcwd_path_max='no, but it is partly working';;
      31) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
+     32) gl_cv_func_getcwd_path_max='yes, but with shorter paths';;
      *) gl_cv_func_getcwd_path_max=no;;
      esac],
     [case "$host_os" in

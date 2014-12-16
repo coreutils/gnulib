@@ -136,11 +136,16 @@ AC_DEFUN([gl_FUNC_GETCWD],
         [Define to 1 if getcwd works, except it sometimes fails when it
          shouldn't, setting errno to ERANGE, ENAMETOOLONG, or ENOENT.])
       ;;
+    "yes, but with shorter paths")
+      AC_DEFINE([HAVE_GETCWD_SHORTER], [1],
+        [Define to 1 if getcwd works, but with shorter paths
+         than is generally tested with the replacement.])
+      ;;
   esac
 
   if { case "$gl_cv_func_getcwd_null" in *yes) false;; *) true;; esac; } \
      || test $gl_cv_func_getcwd_posix_signature != yes \
-     || test "$gl_cv_func_getcwd_path_max" != yes \
+     || { case "$gl_cv_func_getcwd_path_max" in *yes*) false;; *) true;; esac; } \
      || test $gl_abort_bug = yes; then
     REPLACE_GETCWD=1
   fi

@@ -1,3 +1,19 @@
+2014-12-16  Pádraig Brady  <P@draigBrady.com>
+
+	getcwd: fix test failure on OS X 10.9
+	* m4/getcwd-path-max.m4: Avoid the replacement if it
+	won't be effective due to the PATH_MAX limitation of lstat().
+	(gl_cv_func_getcwd_path_max): Adjust to indicate this case.
+	* m4/getcwd.m4 (gl_FUNC_GETCWD): Define HAVE_GETCWD_SHORTER
+	for this case for use in tests, and also exclude this
+	case when setting REPLACE_GETCWD.
+	* tests/test-getcwd.c (test_long_name): Restrict the
+	tested path length so that lstat() will not be passed
+	a path greater than PATH_MAX.
+	Also key a test condition on HAVE_OPENAT_SUPPORT rather
+	than AT_FDCWD, since the latter is set unconditionally
+	since Sep 2009 in commit 52c658e9.
+
 2014-12-14  Tim Rühsen  <tim.ruehsen@gmx.de>
 
 	parse-datetime: avoid a compiler warning with byacc (trivial)
