@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 22, 2014
+@set lastupdate December 18, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -2163,18 +2163,18 @@ will do so based on the contents of your @file{manual} directory.
 The script @command{gendocs.sh} eases the task of generating the
 Texinfo documentation output for your web pages
 section above.  It has a companion template file, used as the basis
-for the HTML index pages.  Both are available from the Texinfo CVS
-sources:
+for the HTML index pages.  Both are available from the Gnulib
+development:
 
 @smallformat
-@uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs.sh}
-@uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template}
+@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/build-aux/gendocs.sh}
+@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template}
 @end smallformat
 
 There is also a minimalistic template, available from:
 
 @smallformat
-@uref{http://savannah.gnu.org/cgi-bin/viewcvs/texinfo/texinfo/util/gendocs_template_min}
+@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template_min}
 @end smallformat
 
 Invoke the script like this, in the directory containing the Texinfo
