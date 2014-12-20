@@ -34,13 +34,13 @@
    need stderr defined if assertion checking is enabled.  */
 #include <stdio.h>
 
-#include <assert.h>
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
+#include "assure.h"
 #include "intprops.h"
 
 /* xstrtoll.c and xstrtoull.c, which include this file, require that
@@ -93,7 +93,7 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
   __strtol_t tmp;
   strtol_error err = LONGINT_OK;
 
-  assert (0 <= strtol_base && strtol_base <= 36);
+  assure (0 <= strtol_base && strtol_base <= 36);
 
   p = (ptr ? ptr : &t_ptr);
 

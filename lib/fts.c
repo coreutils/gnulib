@@ -189,7 +189,7 @@ enum Fts_stat
 #endif
 
 #ifdef NDEBUG
-# define fts_assert(expr) ((void) 0)
+# define fts_assert(expr) ((void) (0 && (expr)))
 #else
 # define fts_assert(expr)       \
     do                          \

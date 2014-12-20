@@ -7,6 +7,7 @@ m4/fchdir.m4
 
 Depends-on:
 unistd
+assure           [test $HAVE_FCHDIR = 0]
 chdir            [test $HAVE_FCHDIR = 0]
 close            [test $HAVE_FCHDIR = 0]
 dirent           [test $HAVE_FCHDIR = 0]

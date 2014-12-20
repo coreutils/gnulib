@@ -33,7 +33,6 @@
 
 #include <errno.h>
 #include <limits.h>
-#include <assert.h>
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WINDOWS_NATIVE
@@ -58,6 +57,8 @@
 #endif
 
 #include <time.h>
+
+#include "assure.h"
 
 #ifndef INFTIM
 # define INFTIM (-1)
@@ -480,7 +481,7 @@ restart:
         continue;
 
       h = (HANDLE) _get_osfhandle (pfd[i].fd);
-      assert (h != NULL);
+      assure (h != NULL);
       if (IsSocketHandle (h))
         {
           int requested = FD_CLOSE;

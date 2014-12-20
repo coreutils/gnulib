@@ -1,3 +1,19 @@
+2014-12-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	assure: new module
+	This works better than 'assert' when compiling with -DNDEBUG,
+	as it avoids some compiler diagnostics in that case.
+	Reported by Norihiro Tanaka in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2014-12/msg00215.html
+	* MODULES.html.sh (func_all_modules): Add 'assure'.
+	* lib/assure.h, modules/assure: New files.
+	* lib/chdir-long.c, lib/cycle-check.c, lib/fchdir.c, lib/fts.c:
+	* lib/poll.c, lib/savewd.c, lib/utimens.c, lib/xstrtol.c:
+	Prefer 'assure' to 'assert'.
+	* modules/chdir-long, modules/cycle-check, modules/fchdir:
+	* modules/poll, modules/savewd, modules/utimens, modules/xstrtol:
+	Depend on 'assure'.
+
 2014-12-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port better to HP compilers

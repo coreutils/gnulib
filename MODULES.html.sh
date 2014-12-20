@@ -1663,6 +1663,7 @@ func_all_modules ()
 
   func_begin_table
   func_module assert
+  func_module assure
   func_module verify
   func_end_table
 

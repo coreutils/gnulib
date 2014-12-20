@@ -9,6 +9,7 @@ lib/xstrtol-error.c
 m4/xstrtol.m4
 
 Depends-on:
+assure
 exitfail
 error
 getopt-gnu

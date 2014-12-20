@@ -8,6 +8,7 @@ m4/poll.m4
 Depends-on:
 poll-h
 alloca          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
+assure          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 select          [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sockets         [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
 sys_select      [test $HAVE_POLL = 0 || test $REPLACE_POLL = 1]
