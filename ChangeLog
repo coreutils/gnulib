@@ -1,3 +1,8 @@
+2014-12-22  Eric Blake  <eblake@redhat.com>
+
+	docs: mention why libgen.h is bad
+	* doc/posix-headers/libgen.texi (libgen.h): Refer to dirname module.
+
 2014-12-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	assure: new module
