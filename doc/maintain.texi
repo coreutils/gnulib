@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 18, 2014
+@set lastupdate December 24, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -2279,7 +2279,7 @@ cvs add -ko @var{file1} @var{file2} ...
 @c The CVS manual is now built with numeric references and no nonsplit
 @c form, so it's not worth trying to give a direct link.
 See the ``Keyword Substitution'' section in the CVS manual, available
-at @url{http://ximbiot.com/cvs/manual}.
+from @url{http://cvs.nongnu.org}.
 
 In Texinfo source, the recommended way to literally specify a
 ``dollar'' keyword is:

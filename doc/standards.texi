@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate December 10, 2014
+@set lastupdate December 24, 2014
 @c %**end of header
 
 @dircategory GNU organization
@@ -1094,7 +1094,8 @@ The non-license that is being in the public domain,
 @url{http://www.gnu.org/@/licenses/@/license-list.html#PublicDomain}.
 
 @item Python
-The license for Python, @url{http://www.python.org/@/2.0.1/@/license.html}.
+The license for Python,
+@url{http://directory.fsf.org/wiki?title=License:Python2.0.1}.
 
 @item RBSD
 The revised (3-clause) BSD, compatible with the GNU GPL,@*
