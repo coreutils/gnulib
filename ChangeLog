@@ -1,3 +1,9 @@
+2014-12-28  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimens: fix dependency typo
+	* modules/utimens (Depends-on): Remove 'assure'.
+	This bug was introduced in the recent 'assure' patch.
+
 2014-12-22  Eric Blake  <eblake@redhat.com>
 
 	docs: mention why libgen.h is bad
@@ -13,8 +19,9 @@
 	* MODULES.html.sh (func_all_modules): Add 'assure'.
 	* lib/assure.h, modules/assure: New files.
 	* lib/chdir-long.c, lib/cycle-check.c, lib/fchdir.c, lib/fts.c:
-	* lib/poll.c, lib/savewd.c, lib/utimens.c, lib/xstrtol.c:
+	* lib/poll.c, lib/savewd.c, lib/xstrtol.c:
 	Prefer 'assure' to 'assert'.
+	* lib/utimens.c: Stop using 'assert'; it wasn't helpful.
 	* modules/chdir-long, modules/cycle-check, modules/fchdir:
 	* modules/poll, modules/savewd, modules/utimens, modules/xstrtol:
 	Depend on 'assure'.
