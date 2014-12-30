@@ -97,6 +97,8 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
 
   p = (ptr ? ptr : &t_ptr);
 
+  errno = 0;
+
   if (! TYPE_SIGNED (__strtol_t))
     {
       const char *q = s;
@@ -107,7 +109,6 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
         return LONGINT_INVALID;
     }
 
-  errno = 0;
   tmp = __strtol (s, p, strtol_base);
 
   if (*p == s)

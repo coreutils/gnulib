@@ -1,3 +1,11 @@
+2014-12-30  Pádraig Brady  <P@draigBrady.com>
+
+	xstrtol: ensure errno is reset
+	Since commit 3bf75404, on 26-09-1998, errno may not have been reset.
+	Noticed with a spurious coreutils test failure on Darwin 14.0.0.
+
+	* lib/xstrtol.c (__xstrtol): Always reset errno before returning.
+
 2014-12-28  Paul Eggert  <eggert@cs.ucla.edu>
 
 	utimens: fix dependency typo
