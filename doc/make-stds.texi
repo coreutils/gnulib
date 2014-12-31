@@ -45,7 +45,7 @@ Autoconf}.
 * DESTDIR::                     Supporting staged installs.
 * Directory Variables::         Variables for installation directories.
 * Standard Targets::            Standard targets for users.
-* Install Command Categories::  Three categories of commands in the 'install'
+* Install Command Categories::  Three categories of commands in the @samp{install}
                                   rule: normal, pre-install and post-install.
 @end menu
 
