@@ -1,3 +1,10 @@
+2015-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	version-etc: new year
+	* doc/gnulib.texi:
+	* lib/version-etc.c (COPYRIGHT_YEAR): Update copyright date.
+	* all files: Run 'make update-copyright'.
+
 2014-12-30  Pádraig Brady  <P@draigBrady.com>
 
 	xstrtol: ensure errno is reset
@@ -103450,7 +103457,7 @@
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2014 Free Software Foundation, Inc.
+	Copyright (C) 1997-2015 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
