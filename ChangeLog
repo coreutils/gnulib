@@ -1,3 +1,14 @@
+2015-01-01  Karl Berry  <karl@gnu.org>
+
+	* doc/install.texi,
+	* build-aux/mdate-sh,
+	* build-aux/depcomp,
+	* build-aux/config.guess,
+	* build-aux/config.sub,
+	* build-aux/ar-lib,
+	* build-aux/compile: revert copyright updates (some from last
+	year) in slaved files.
+
 2015-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	version-etc: new year
