@@ -3,6 +3,10 @@
 	Suggested by Paul Eggert <eggert@cs.ucla.edu>.
 	* module/gendocs: Add 'doc/gendocs_template_min'.
 
+	* build-aux/gendocs.sh: Change email addresses and upstream URLs
+	from to Gnulib's.
+	(scripturl, templateurl): Adjust accordingly.
+
 2015-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gendocs: copyright date and version fix
