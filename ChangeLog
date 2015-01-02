@@ -1,3 +1,8 @@
+2015-01-02  Ludovic Courtès  <ludo@gnu.org>
+
+	Suggested by Paul Eggert <eggert@cs.ucla.edu>.
+	* module/gendocs: Add 'doc/gendocs_template_min'.
+
 2015-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gendocs: copyright date and version fix

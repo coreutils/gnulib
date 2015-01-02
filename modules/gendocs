@@ -5,6 +5,7 @@ Can be used for http://www.gnu.org/software/PKG/manual/ directories.
 Files:
 build-aux/gendocs.sh
 doc/gendocs_template
+doc/gendocs_template_min
 
 Depends-on:
 
