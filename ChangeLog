@@ -1,3 +1,11 @@
+2015-01-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	lib-symbol-versions: cache script check
+	* m4/ld-version-script.m4 (gl_LD_VERSION_SCRIPT):
+	Cache the check for linker version scripts.
+	From a suggestion by Christophe Curis in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-01/msg00011.html
+
 2015-01-04  Benno Schulenberg  <bensberg@justemail.net>
 
 	maint: fix grammar nits in propername (trivial change)
