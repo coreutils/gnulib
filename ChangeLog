@@ -1,3 +1,9 @@
+2015-01-04  Benno Schulenberg  <bensberg@justemail.net>
+
+	maint: fix grammar nits in propername (trivial change)
+	* lib/propername.h: Remove a mistaken comma and a duplicate "from",
+	and use an adequate verb and tense.
+
 2015-01-02  Ludovic Courtès  <ludo@gnu.org>
 
 	Suggested by Paul Eggert <eggert@cs.ucla.edu>.
