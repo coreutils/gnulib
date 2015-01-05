@@ -1,5 +1,11 @@
 2015-01-05  Eric Blake  <eblake@redhat.com>
 
+	doc: update INSTALL from autoconf
+	* doc/install.texi: Resync from autoconf.
+	* doc/INSTALL: Reflect recent autoconf update.
+	* doc/INSTALL.ISO: Likewise.
+	* doc/INSTALL.UTF-8: Likewise.
+
 	stdio: fix use of PRIdMAX on modern mingw
 	* m4/stdio_h.m4 (gl_STDIO_H): Probe for printf flavor via inttypes.
 	* lib/stdio.in.h (_GL_ATTRIBUTE_FORMAT_PRINTF_SYSTEM): Use result
