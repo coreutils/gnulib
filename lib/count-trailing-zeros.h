@@ -96,8 +96,13 @@ count_trailing_zeros_l (unsigned long int x)
 COUNT_TRAILING_ZEROS_INLINE int
 count_trailing_zeros_ll (unsigned long long int x)
 {
+# if _MSC_VER && ! defined _M_X64
+  int count = count_trailing_zeros (x);
+  return count < 32 ? count : 32 + count_trailing_zeros (x >> 31 >> 1);
+# else
   COUNT_TRAILING_ZEROS (__builtin_ctzll, _BitScanForward64,
                         unsigned long long int);
+# endif
 }
 #endif
 

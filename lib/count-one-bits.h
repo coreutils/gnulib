@@ -127,7 +127,11 @@ count_one_bits_l (unsigned long int x)
 COUNT_ONE_BITS_INLINE int
 count_one_bits_ll (unsigned long long int x)
 {
+# if _MSC_VER && ! defined _M_X64
+  return count_one_bits (x >> 31 >> 1) + count_one_bits (x);
+# else
   COUNT_ONE_BITS (__builtin_popcountll, __popcnt64, unsigned long long int);
+# endif
 }
 #endif
 

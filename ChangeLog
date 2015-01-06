@@ -1,3 +1,11 @@
+2015-01-06  Pádraig Brady  <P@draigBrady.com>
+
+	count-leading-zeros: avoid 64-bit intrinsics on 32-bit Windows
+	* lib/count-leading-zeros.h (count_leading_zeros_ll): Use 32 bit
+	intrinsics in this case.
+	* lib/count-trailing-zeros.h: Likewise.
+	* lib/count-one-bits.h: Likewise.
+
 2015-01-06  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname: update to Unicode 7.0.0 To accommodate new
