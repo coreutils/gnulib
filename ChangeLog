@@ -1,5 +1,13 @@
 2015-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	count-leading-zeros: use 64-bit intrinsics on 32-bit Windows
+	This reverts the last patch but one, as it shouldn't be needed now
+	that the typo is fixed.
+	* lib/count-leading-zeros.h (count_leading_zeros_ll):
+	* lib/count-trailing-zeros.h:
+	* lib/count-one-bits.h:
+	Go back to using 64-bit intrinsics.
+
 	count-leading-zeros: fix pragma typos
 	* lib/count-leading-zeros.h (_BitScanReverse, _BitScanReverse64):
 	Fix typos in declaration of intrinsics when _MSC_VER.

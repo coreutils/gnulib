@@ -104,13 +104,8 @@ count_leading_zeros_l (unsigned long int x)
 COUNT_LEADING_ZEROS_INLINE int
 count_leading_zeros_ll (unsigned long long int x)
 {
-# if _MSC_VER && ! defined _M_X64
-  int count = count_leading_zeros (x >> 31 >> 1);
-  return count < 32 ? count : 32 + count_leading_zeros (x);
-# else
   COUNT_LEADING_ZEROS (__builtin_clzll, _BitScanReverse64,
                        unsigned long long int);
-# endif
 }
 #endif
 
