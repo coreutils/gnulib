@@ -1,3 +1,25 @@
+2015-01-06  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname: update to Unicode 7.0.0 To accommodate new
+	characters added since Unicode 5.1.0, this changes the internal
+	representation of codepoint ranges.  Previously, we grouped
+	codepoint ranges by manually assigned 4-bit tag, which only
+	allowed 16 groups.  This removes the limitation by switching to
+	binary search on a table.  For the detail rationale and the
+	benchmark results, see:
+	https://lists.gnu.org/archive/html/bug-libunistring/2014-06/msg00001.html
+	* lib/uniname/gen-uninames.lisp (unicode-char): Rename CODE member
+	to INDEX, as it no longer represents a codepoint.
+	(range): New struct.
+	(main): Switch to intervals list from a bit-pattern based
+	classification.
+	* lib/uniname/uninames.h: Regenerate.
+	* tests/uniname/UnicodeDataNames.txt: Update to Unicode 7.0.0.
+	* modules/uniname/base (configure.ac): Bump minimum version to
+	0.9.5.
+	* modules/uniname/uniname (configure.ac): Bump minimum version to
+	0.9.5.
+
 2015-01-05  Eric Blake  <eblake@redhat.com>
 
 	doc: update INSTALL from autoconf

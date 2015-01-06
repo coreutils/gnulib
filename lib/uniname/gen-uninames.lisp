@@ -6,10 +6,16 @@
 (defparameter add-comments nil)
 
 (defstruct unicode-char
-  (code nil :type integer)
+  (index nil :type integer)
   (name nil :type string)
   word-indices
   word-indices-index
+)
+
+(defstruct range
+  (index nil :type integer)
+  (start-code nil :type integer)
+  (end-code nil :type integer)
 )
 
 (defstruct word-list
@@ -22,7 +28,10 @@
 (defun main (inputfile outputfile)
   (declare (type string inputfile outputfile))
   #+UNICODE (setq *default-file-encoding* charset:utf-8)
-  (let ((all-chars '()))
+  (let ((all-chars '())
+        (all-ranges '())
+        (name-index 0)
+        range)
     ;; Read all characters and names from the input file.
     (with-open-file (istream inputfile :direction :input)
       (loop
@@ -41,40 +50,26 @@
                 ; specially as well.
                 (unless (or (<= #xF900 code #xFA2D) (<= #xFA30 code #xFA6A)
                             (<= #xFA70 code #xFAD9) (<= #x2F800 code #x2FA1D))
-                  ; Transform the code so that it fits in 16 bits. In
-                  ; Unicode 5.1 the following ranges are used.
-                  ;   0x00000..0x04DFF  >>12=  0x00..0x04  -> 0x0..0x4
-                  ;   0x0A000..0x0AAFF  >>12=  0x0A        -> 0x5
-                  ;   0x0F900..0x0FFFF  >>12=  0x0F        -> 0x6
-                  ;   0x10000..0x10A58  >>12=  0x10        -> 0x7
-                  ;   0x12000..0x12473  >>12=  0x12        -> 0x8
-                  ;   0x1D000..0x1D7FF  >>12=  0x1D        -> 0x9
-                  ;   0x1F000..0x1F093  >>12=  0x1F        -> 0xA
-                  ;   0x2F800..0x2FAFF  >>12=  0x2F        -> 0xB
-                  ;   0xE0000..0xE00FF  >>12=  0xE0        -> 0xC
-                  (flet ((transform (x)
-                           (dpb
-                             (case (ash x -12)
-                               ((#x00 #x01 #x02 #x03 #x04) (ash x -12))
-                               (#x0A 5)
-                               (#x0F 6)
-                               (#x10 7)
-                               (#x12 8)
-                               (#x1D 9)
-                               (#x1F #xA)
-                               (#x2F #xB)
-                               (#xE0 #xC)
-                               (t (error "Update the transform function for 0x~5,'0X" x))
-                             )
-                             (byte 8 12)
-                             x
-                        )) )
-                    (push (make-unicode-char :code (transform code)
-                                             :name name-string)
-                          all-chars
-            ) ) ) ) )
+                  (push (make-unicode-char :index name-index
+                                           :name name-string)
+                        all-chars)
+                  ;; Update the contiguous range, or start a new range.
+                  (if (and range (= (1+ (range-end-code range)) code))
+                      (setf (range-end-code range) code)
+                    (progn
+                      (when range
+                        (push range all-ranges))
+                      (setq range (make-range :index name-index
+                                              :start-code code
+                                              :end-code code))))
+                  (incf name-index)
+                  (setq last-code code)
+                  ) ) )
     ) ) ) )
     (setq all-chars (nreverse all-chars))
+    (if range
+        (push range all-ranges))
+    (setq all-ranges (nreverse all-ranges))
     ;; Split into words.
     (let ((words-by-length (make-array 0 :adjustable t)))
       (dolist (name (list* "HANGUL SYLLABLE" "CJK COMPATIBILITY" (mapcar #'unicode-char-name all-chars)))
@@ -257,14 +252,14 @@
             (incf i (length (unicode-char-word-indices uc)))
         ) )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t code; uint32_t name:24; }~%")
+        (format ostream "static const struct { uint16_t index; uint32_t name:24; }~%")
         (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
-        (format ostream "unicode_name_to_code[~D] = {~%"
+        (format ostream "unicode_name_to_index[~D] = {~%"
                         (length all-chars)
         )
         (dolist (uc all-chars)
           (format ostream "  { 0x~4,'0X, ~D },"
-                          (unicode-char-code uc)
+                          (unicode-char-index uc)
                           (unicode-char-word-indices-index uc)
           )
           (when add-comments
@@ -273,14 +268,14 @@
           (format ostream "~%")
         )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t code; uint32_t name:24; }~%")
+        (format ostream "static const struct { uint16_t index; uint32_t name:24; }~%")
         (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
-        (format ostream "unicode_code_to_name[~D] = {~%"
+        (format ostream "unicode_index_to_name[~D] = {~%"
                         (length all-chars)
         )
-        (dolist (uc (sort (copy-list all-chars) #'< :key #'unicode-char-code))
+        (dolist (uc (sort (copy-list all-chars) #'< :key #'unicode-char-index))
           (format ostream "  { 0x~4,'0X, ~D },"
-                          (unicode-char-code uc)
+                          (unicode-char-index uc)
                           (unicode-char-word-indices-index uc)
           )
           (when add-comments
@@ -295,6 +290,15 @@
         (format ostream "#define UNICODE_CHARNAME_MAX_WORDS ~D~%"
                         (reduce #'max (mapcar (lambda (uc) (length (unicode-char-word-indices uc))) all-chars))
         )
+        (format ostream "static const struct { uint16_t index; uint32_t gap; uint16_t length; } unicode_ranges[~D] = {~%"
+                        (length all-ranges))
+        (dolist (range all-ranges)
+          (format ostream "  { ~D, ~D, ~D },~%"
+                  (range-index range)
+                  (- (range-start-code range) (range-index range))
+                  (1+ (- (range-end-code range) (range-start-code range))))
+        )
+        (format ostream "};~%")
       )
 ) ) )
 
