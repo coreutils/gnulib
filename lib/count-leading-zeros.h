@@ -38,8 +38,8 @@ _GL_INLINE_HEADER_BEGIN
 # define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
   return x ? BUILTIN (x) : CHAR_BIT * sizeof x;
 #elif _MSC_VER
-# pragma intrinsic _BitReverse
-# pragma intrinsic _BitReverse64
+# pragma intrinsic _BitScanReverse
+# pragma intrinsic _BitScanReverse64
 # define COUNT_LEADING_ZEROS(BUILTIN, MSC_BUILTIN, TYPE)                \
     do                                                                  \
       {                                                                 \

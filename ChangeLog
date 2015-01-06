@@ -1,3 +1,9 @@
+2015-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	count-leading-zeros: fix pragma typos
+	* lib/count-leading-zeros.h (_BitScanReverse, _BitScanReverse64):
+	Fix typos in declaration of intrinsics when _MSC_VER.
+
 2015-01-06  Pádraig Brady  <P@draigBrady.com>
 
 	count-leading-zeros: avoid 64-bit intrinsics on 32-bit Windows
