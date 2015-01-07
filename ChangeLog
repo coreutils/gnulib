@@ -1,3 +1,14 @@
+2015-01-07  KO Myung-Hun  <komh@chollian.net>
+
+	localcharset: improve charset detection on OS/2
+	Use system codepage when appropriate.  Map OS/2 codepages to
+	GNU canonical charset names if possible.
+	* lib/config.charset: Don't output aliases if "$os" is os2*.
+	* lib/localcharset.c (get_charset_aliases) [OS2]: Hardcode the
+	result for OS/2.
+	(locale_charset) [OS2]: Use system codepage if codeset is omitted
+	from the locale name which is neither "C" nor "POSIX".
+
 2015-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	count-leading-zeros: use 64-bit intrinsics on 32-bit Windows
