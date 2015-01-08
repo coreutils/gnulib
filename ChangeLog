@@ -1,3 +1,11 @@
+2015-01-08  Pádraig Brady  <P@draigBrady.com>
+
+	maint.mk: fix compatibility with OS X nm
+	* top/maint.mk (_gl_tight_scope): Use the -g option to
+	show exported items rather than the -e option which is
+	ignored on all platforms except OS X where it gives an error.
+	Reported by Assaf Gordon.
+
 2015-01-07  KO Myung-Hun  <komh@chollian.net>
 
 	localcharset: improve charset detection on OS/2

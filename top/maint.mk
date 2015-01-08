@@ -1648,14 +1648,14 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	  perl -lne							\
 	     '$(_gl_TS_function_match) and print "^$$1\$$"' $$hdr;	\
 	) | sort -u > $$t;						\
-	nm -e $(_gl_TS_obj_files)|$(SED) -n 's/.* T //p'|grep -Ev -f $$t \
+	nm -g $(_gl_TS_obj_files)|$(SED) -n 's/.* T //p'|grep -Ev -f $$t \
 	  && { echo the above functions should have static scope >&2;	\
 	       exit 1; } || : ;						\
 	( printf '^%s$$\n' '__.*' $(_gl_TS_unmarked_extern_vars);	\
 	  perl -lne '$(_gl_TS_var_match) and print "^$$1\$$"'		\
 		$$hdr $(_gl_TS_other_headers)				\
 	) | sort -u > $$t;						\
-	nm -e $(_gl_TS_obj_files) | $(SED) -n 's/.* [BCDGRS] //p'	\
+	nm -g $(_gl_TS_obj_files) | $(SED) -n 's/.* [BCDGRS] //p'	\
             | sort -u | grep -Ev -f $$t					\
 	  && { echo the above variables should have static scope >&2;	\
 	       exit 1; } || :
