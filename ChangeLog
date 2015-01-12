@@ -1,3 +1,9 @@
+2015-01-11  Jim Meyering  <meyering@fb.com>
+
+	update-copyright: recognize groff's \(co marker
+	* build-aux/update-copyright (circle_c_re): Also accept
+	uses of \(co, as found in gzip.1.
+
 2015-01-08  Pádraig Brady  <P@draigBrady.com>
 
 	maint.mk: fix compatibility with OS X nm
