@@ -1,5 +1,8 @@
 2015-01-11  Jim Meyering  <meyering@fb.com>
 
+	test-strstr.c: avoid a trivial leak
+	* tests/test-strstr.c (main): Free haystack.
+
 	update-copyright: recognize groff's \(co marker
 	* build-aux/update-copyright (circle_c_re): Also accept
 	uses of \(co, as found in gzip.1.
