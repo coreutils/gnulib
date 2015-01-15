@@ -112,8 +112,13 @@ FUNC (const UNIT *s, size_t n, char *p)
             }
 
           last_char_prop = prop;
-          /* Ignore Format and Extend characters, except at the start of the string.  */
-          if (last_compchar_prop < 0 || !(prop == WBP_EXTEND || prop == WBP_FORMAT))
+          /* Ignore Format and Extend characters, except at the start
+             of the line.  */
+          if (last_compchar_prop < 0
+              || last_compchar_prop == WBP_CR
+              || last_compchar_prop == WBP_LF
+              || last_compchar_prop == WBP_NEWLINE
+              || !(prop == WBP_EXTEND || prop == WBP_FORMAT))
             {
               secondlast_compchar_prop = last_compchar_prop;
               last_compchar_prop = prop;

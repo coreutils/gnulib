@@ -1,3 +1,10 @@
+2015-01-15  Daiki Ueno  <ueno@gnu.org>
+
+	uniwbrk: ignore Extended/Format characters at BOL not BOS
+	* lib/uniwbrk/u-wordbreaks.h (FUNC): Ignore Extend and Format
+	characters if the previous character property is one of
+	WBP_NEWLINE, WBP_CR, and WBP_LF.
+
 2015-01-11  Jim Meyering  <meyering@fb.com>
 
 	test-strstr.c: avoid a trivial leak
