@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
 static const uc_interval_t script_common_intervals[] =
 {
   { 0x0000, 1, 0 }, { 0x0040, 0, 1 },
@@ -39,7 +39,7 @@ static const uc_interval_t script_common_intervals[] =
   { 0x1CF5, 1, 0 }, { 0x1CF6, 0, 1 },
   { 0x2000, 1, 0 }, { 0x200B, 0, 1 },
   { 0x200E, 1, 0 }, { 0x2064, 0, 1 },
-  { 0x206A, 1, 0 }, { 0x2070, 0, 1 },
+  { 0x2066, 1, 0 }, { 0x2070, 0, 1 },
   { 0x2074, 1, 0 }, { 0x207E, 0, 1 },
   { 0x2080, 1, 0 }, { 0x208E, 0, 1 },
   { 0x20A0, 1, 0 }, { 0x20BA, 0, 1 },
@@ -75,6 +75,7 @@ static const uc_interval_t script_common_intervals[] =
   { 0xA700, 1, 0 }, { 0xA721, 0, 1 },
   { 0xA788, 1, 0 }, { 0xA78A, 0, 1 },
   { 0xA830, 1, 0 }, { 0xA839, 0, 1 },
+  { 0xA9CF, 1, 1 },
   { 0xFD3E, 1, 0 }, { 0xFD3F, 0, 1 },
   { 0xFDFD, 1, 1 },
   { 0xFE10, 1, 0 }, { 0xFE19, 0, 1 },
@@ -266,6 +267,7 @@ static const uc_interval_t script_arabic_intervals[] =
   { 0x0600, 1, 0 }, { 0x0604, 0, 1 },
   { 0x0606, 1, 0 }, { 0x060B, 0, 1 },
   { 0x060D, 1, 0 }, { 0x061A, 0, 1 },
+  { 0x061C, 1, 1 },
   { 0x061E, 1, 1 },
   { 0x0620, 1, 0 }, { 0x063F, 0, 1 },
   { 0x0641, 1, 0 }, { 0x064A, 0, 1 },
@@ -947,7 +949,7 @@ static const uc_interval_t script_bamum_intervals[] =
 static const uc_interval_t script_javanese_intervals[] =
 {
   { 0xA980, 1, 0 }, { 0xA9CD, 0, 1 },
-  { 0xA9CF, 1, 0 }, { 0xA9D9, 0, 1 },
+  { 0xA9D0, 1, 0 }, { 0xA9D9, 0, 1 },
   { 0xA9DE, 1, 0 }, { 0xA9DF, 0, 1 }
 };
 static const uc_interval_t script_meetei_mayek_intervals[] =
@@ -1986,7 +1988,7 @@ u_script =
       6,   6,   6,   6,   6, 255,   6,   6,
       6,   6,   6,   6,   0,   6,   6,   6,
       6,   6,   6,   6,   6,   6,   6,   6,
-      6,   6,   6,   0, 255, 255,   6,   0,
+      6,   6,   6,   0,   6, 255,   6,   0,
       6,   6,   6,   6,   6,   6,   6,   6,
       6,   6,   6,   6,   6,   6,   6,   6,
       6,   6,   6,   6,   6,   6,   6,   6,
@@ -2715,8 +2717,8 @@ u_script =
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   0,
-      0,   0,   0,   0,   0, 255, 255, 255,
-    255, 255,   0,   0,   0,   0,   0,   0,
+      0,   0,   0,   0,   0, 255,   0,   0,
+      0,   0,   0,   0,   0,   0,   0,   0,
       0,   1, 255, 255,   0,   0,   0,   0,
       0,   0,   0,   0,   0,   0,   0,   1,
       0,   0,   0,   0,   0,   0,   0,   0,
@@ -3304,7 +3306,7 @@ u_script =
      84,  84,  84,  84,  84,  84,  84,  84,
      84,  84,  84,  84,  84,  84,  84,  84,
      84,  84,  84,  84,  84,  84,  84,  84,
-     84,  84,  84,  84,  84,  84, 255,  84,
+     84,  84,  84,  84,  84,  84, 255,   0,
      84,  84,  84,  84,  84,  84,  84,  84,
      84,  84, 255, 255, 255, 255,  84,  84,
     255, 255, 255, 255, 255, 255, 255, 255,

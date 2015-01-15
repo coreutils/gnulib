@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Decimal digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
     { 0x0030, 0 },
     { 0x0031, 1 },
     { 0x0032, 2 },

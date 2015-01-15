@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Line breaking properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
 
 /* Copyright (C) 2000-2002, 2004, 2008 Free Software Foundation, Inc.
 

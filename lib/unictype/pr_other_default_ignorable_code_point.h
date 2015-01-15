@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -304,7 +304,7 @@ u_property_other_default_ignorable_code_point =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00300000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x000003E0,
+    0x00000000, 0x00000000, 0x00000000, 0x00000020,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

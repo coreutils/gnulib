@@ -69,31 +69,41 @@ FUNC (const UNIT *s, size_t n, char *p)
 
                       secondlast          last             current
 
-                       ALetter   (MidLetter | MidNumLet) × ALetter      (WB7)
-                       ALetter × (MidLetter | MidNumLet)   ALetter      (WB6)
-                       Numeric   (MidNum | MidNumLet)    × Numeric      (WB11)
-                       Numeric × (MidNum | MidNumLet)      Numeric      (WB12)
-                                                 ALetter × ALetter      (WB5)
-                                                 ALetter × Numeric      (WB9)
-                                                 Numeric × ALetter      (WB10)
+    (ALetter | HL)   (MidLetter | MidNumLet | SQ) × (ALetter | HL)      (WB7)
+    (ALetter | HL) × (MidLetter | MidNumLet | SQ)   (ALetter | HL)      (WB6)
+                  Numeric   (MidNum | MidNumLet | SQ)    × Numeric      (WB11)
+                  Numeric × (MidNum | MidNumLet | SQ)      Numeric      (WB12)
+                                                        HL × DQ HL      (WB7b)
+                                                        HL DQ × HL      (WB7c)
+                                   (ALetter | HL) × (ALetter | HL)      (WB5)
+                                          (ALetter | HL) × Numeric      (WB9)
+                                          Numeric × (ALetter | HL)      (WB10)
                                                  Numeric × Numeric      (WB8)
+                                                      HL × SQ           (WB7a)
                                                 Katakana × Katakana     (WB13)
-                          (ALetter | Numeric | Katakana) × ExtendNumLet (WB13a)
+                     (ALetter | HL | Numeric | Katakana) × ExtendNumLet (WB13a)
                                             ExtendNumLet × ExtendNumLet (WB13a)
-                         ExtendNumLet × (ALetter | Numeric | Katakana)  (WB13b)
+                    ExtendNumLet × (ALetter | HL | Numeric | Katakana)  (WB13b)
                                Regional_Indicator × Regional_Indicator  (WB13c)
                    */
                   /* No break across certain punctuation.  Also, disable word
                      breaks that were recognized earlier (due to lookahead of
                      only one complex character).  */
-                  if ((prop == WBP_ALETTER
+                  if (((prop == WBP_ALETTER
+                        || prop == WBP_HL)
                        && (last_compchar_prop == WBP_MIDLETTER
-                           || last_compchar_prop == WBP_MIDNUMLET)
-                       && secondlast_compchar_prop == WBP_ALETTER)
+                           || last_compchar_prop == WBP_MIDNUMLET
+                           || last_compchar_prop == WBP_SQ)
+                       && (secondlast_compchar_prop == WBP_ALETTER
+                           || secondlast_compchar_prop == WBP_HL))
                       || (prop == WBP_NUMERIC
                           && (last_compchar_prop == WBP_MIDNUM
-                              || last_compchar_prop == WBP_MIDNUMLET)
-                          && secondlast_compchar_prop == WBP_NUMERIC))
+                              || last_compchar_prop == WBP_MIDNUMLET
+                              || last_compchar_prop == WBP_SQ)
+                          && secondlast_compchar_prop == WBP_NUMERIC)
+                      || (prop == WBP_HL
+                          && last_compchar_prop == WBP_DQ
+                          && secondlast_compchar_prop == WBP_HL))
                     {
                       *last_compchar_ptr = 0;
                       /* *p = 0; */

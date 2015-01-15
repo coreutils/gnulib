@@ -312,7 +312,11 @@ enum
   UC_BIDI_B,   /* Paragraph Separator */
   UC_BIDI_S,   /* Segment Separator */
   UC_BIDI_WS,  /* Whitespace */
-  UC_BIDI_ON   /* Other Neutral */
+  UC_BIDI_ON,  /* Other Neutral */
+  UC_BIDI_LRI, /* Left-to-Right Isolate */
+  UC_BIDI_RLI, /* Right-to-Left Isolate */
+  UC_BIDI_FSI, /* First Strong Isolate */
+  UC_BIDI_PDI  /* Pop Directional Isolate */
 };
 
 /* Return the name of a bidi class.  */

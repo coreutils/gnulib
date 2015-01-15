@@ -19,14 +19,18 @@ CS, UC_BIDI_CS
 EN, UC_BIDI_EN
 ES, UC_BIDI_ES
 ET, UC_BIDI_ET
+FSI, UC_BIDI_FSI
 L, UC_BIDI_L
 LRE, UC_BIDI_LRE
+LRI, UC_BIDI_LRI
 LRO, UC_BIDI_LRO
 NSM, UC_BIDI_NSM
 ON, UC_BIDI_ON
 PDF, UC_BIDI_PDF
+PDI, UC_BIDI_PDI
 R, UC_BIDI_R
 RLE, UC_BIDI_RLE
+RLI, UC_BIDI_RLI
 RLO, UC_BIDI_RLO
 S, UC_BIDI_S
 WS, UC_BIDI_WS
@@ -46,10 +50,14 @@ European Separator, UC_BIDI_ES
 EuropeanSeparator, UC_BIDI_ES
 European Terminator, UC_BIDI_ET
 EuropeanTerminator, UC_BIDI_ET
+First Strong Isolate, UC_BIDI_FSI
+FirstStrongIsolate, UC_BIDI_FSI
 Left To Right, UC_BIDI_L
 LeftToRight, UC_BIDI_L
 Left To Right Embedding, UC_BIDI_LRE
 LeftToRightEmbedding, UC_BIDI_LRE
+Left To Right Isolate, UC_BIDI_LRI
+LeftToRightIsolate, UC_BIDI_LRI
 Left To Right Override, UC_BIDI_LRO
 LeftToRightOverride, UC_BIDI_LRO
 Nonspacing Mark, UC_BIDI_NSM
@@ -58,10 +66,14 @@ Other Neutral, UC_BIDI_ON
 OtherNeutral, UC_BIDI_ON
 Pop Directional Format, UC_BIDI_PDF
 PopDirectionalFormat, UC_BIDI_PDF
+Pop Directional Isolate, UC_BIDI_PDI
+PopDirectionalIsolate, UC_BIDI_PDI
 Right To Left, UC_BIDI_R
 RightToLeft, UC_BIDI_R
 Right To Left Embedding, UC_BIDI_RLE
 RightToLeftEmbedding, UC_BIDI_RLE
+Right To Left Isolate, UC_BIDI_RLI
+RightToLeftIsolate, UC_BIDI_RLI
 Right To Left Override, UC_BIDI_RLO
 RightToLeftOverride, UC_BIDI_RLO
 Segment Separator, UC_BIDI_S

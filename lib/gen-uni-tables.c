@@ -32,7 +32,7 @@
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
-                      6.2.0
+                      6.3.0
  */
 
 #include <assert.h>
@@ -1305,7 +1305,11 @@ enum
   UC_BIDI_B,   /* Paragraph Separator */
   UC_BIDI_S,   /* Segment Separator */
   UC_BIDI_WS,  /* Whitespace */
-  UC_BIDI_ON   /* Other Neutral */
+  UC_BIDI_ON,  /* Other Neutral */
+  UC_BIDI_LRI, /* Left-to-Right Isolate */
+  UC_BIDI_RLI, /* Right-to-Left Isolate */
+  UC_BIDI_FSI, /* First Strong Isolate */
+  UC_BIDI_PDI  /* Pop Directional Isolate */
 };
 
 static int
@@ -1363,7 +1367,20 @@ bidi_category_byname (const char *category_name)
           break;
         }
       break;
-    case 'L':
+    case 'F':
+      switch (category_name[1])
+        {
+        case 'S':
+          switch (category_name[2])
+            {
+            case 'I':
+              if (category_name[3] == '\0')
+                return UC_BIDI_FSI;
+              break;
+            }
+        }
+      break;
+   case 'L':
       switch (category_name[1])
         {
         case '\0':
@@ -1379,7 +1396,11 @@ bidi_category_byname (const char *category_name)
               if (category_name[3] == '\0')
                 return UC_BIDI_LRO;
               break;
-            }
+            case 'I':
+              if (category_name[3] == '\0')
+                return UC_BIDI_LRI;
+              break;
+           }
           break;
         }
       break;
@@ -1416,6 +1437,10 @@ bidi_category_byname (const char *category_name)
               if (category_name[3] == '\0')
                 return UC_BIDI_PDF;
               break;
+            case 'I':
+              if (category_name[3] == '\0')
+                return UC_BIDI_PDI;
+              break;
             }
           break;
         }
@@ -1436,7 +1461,11 @@ bidi_category_byname (const char *category_name)
               if (category_name[3] == '\0')
                 return UC_BIDI_RLO;
               break;
-            }
+            case 'I':
+              if (category_name[3] == '\0')
+                return UC_BIDI_RLI;
+              break;
+           }
           break;
         }
       break;
@@ -2508,7 +2537,7 @@ output_mirror (const char *filename, const char *version)
 static bool
 is_WBP_MIDNUMLET (unsigned int ch)
 {
-  return (ch == 0x0027 || ch == 0x002E || ch == 0x2018 || ch == 0x2019
+  return (ch == 0x002E || ch == 0x2018 || ch == 0x2019
           || ch == 0x2024 || ch == 0xFE52 || ch == 0xFF07 || ch == 0xFF0E);
 }
 
@@ -2516,7 +2545,8 @@ static bool
 is_WBP_MIDLETTER (unsigned int ch)
 {
   return (ch == 0x00B7 || ch == 0x05F4 || ch == 0x2027 || ch == 0x003A
-          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A);
+          || ch == 0x0387 || ch == 0xFE13 || ch == 0xFE55 || ch == 0xFF1A
+          || ch == 0x02D7);
 }
 
 /* ========================================================================= */
@@ -2982,6 +3012,7 @@ static bool
 is_property_case_ignorable (unsigned int ch)
 {
   bool result1 = (is_WBP_MIDLETTER (ch) || is_WBP_MIDNUMLET (ch)
+                  || ch == 0x0027
                   || is_category_Mn (ch)
                   || is_category_Me (ch)
                   || is_category_Cf (ch)
@@ -6224,6 +6255,10 @@ get_lbp (unsigned int ch)
 {
   int64_t attr = 0;
 
+  /* U+20BB..U+20CF is reserved for prefixes.  */
+  if (ch >= 0x20BB && ch <= 0x20CF)
+    return (int64_t) 1 << LBP_PR;
+
   if (unicode_attributes[ch].name != NULL)
     {
       /* mandatory break */
@@ -6282,6 +6317,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2009 /* THIN SPACE */
           || ch == 0x200A /* HAIR SPACE */
           || ch == 0x205F /* MEDIUM MATHEMATICAL SPACE */
+          || ch == 0x3000 /* IDEOGRAPHIC SPACE */
           /* Tabs */
           || ch == 0x0009 /* tab */
           /* Conditional Hyphens */
@@ -6463,7 +6499,9 @@ get_lbp (unsigned int ch)
       /* closing punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
            && unicode_attributes[ch].category[1] == 'e'
-           && !(attr & ((int64_t) 1 << LBP_CP)))
+           && !(attr & ((int64_t) 1 << LBP_CP))
+           && ch != 0x2309
+           && ch != 0x230B)
           || ch == 0x3001 /* IDEOGRAPHIC COMMA */
           || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
           || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
@@ -6564,7 +6602,9 @@ get_lbp (unsigned int ch)
 
       /* opening punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
-           && unicode_attributes[ch].category[1] == 's')
+           && unicode_attributes[ch].category[1] == 's'
+           && ch != 0x2308
+           && ch != 0x230A)
           || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
           || ch == 0x00BF /* INVERTED QUESTION MARK */
           || ch == 0x2E18 /* INVERTED INTERROBANG */
@@ -6725,7 +6765,8 @@ get_lbp (unsigned int ch)
           || (unicode_attributes[ch].category[0] == 'C'
               && (unicode_attributes[ch].category[1] == 'c'
                   || unicode_attributes[ch].category[1] == 'f')
-              && ch != 0x110BD /* KAITHI NUMBER SIGN */))
+              && ch != 0x110BD /* KAITHI NUMBER SIGN */)
+          || ch == 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
         if (!(attr & (((int64_t) 1 << LBP_BK) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_WJ) | ((int64_t) 1 << LBP_ZW))))
           attr |= (int64_t) 1 << LBP_CM;
 
@@ -6802,7 +6843,6 @@ get_lbp (unsigned int ch)
           || ch == 0x270C /* VICTORY HAND */
           || ch == 0x270D /* WRITING HAND */
           || (ch >= 0x2E80 && ch <= 0x2FFF) /* CJK RADICAL, KANGXI RADICAL, IDEOGRAPHIC DESCRIPTION */
-          || ch == 0x3000 /* IDEOGRAPHIC SPACE */
           || (ch >= 0x3040 && ch <= 0x309F) /* HIRAGANA */
           || (ch >= 0x30A0 && ch <= 0x30FF) /* KATAKANA */
           || (ch >= 0x3400 && ch <= 0x4DBF) /* CJK Ideograph Extension A */
@@ -6820,7 +6860,7 @@ get_lbp (unsigned int ch)
           || (ch >= 0x2F800 && ch <= 0x2FA1D) /* CJK COMPATIBILITY IDEOGRAPH */
           || strstr (unicode_attributes[ch].name, "FULLWIDTH LATIN ") != NULL
           || (ch >= 0x3000 && ch <= 0x33FF
-              && !(attr & (((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP))))
+              && !(attr & (((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_CM) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP))))
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0xFE30 /* PRESENTATION FORM FOR VERTICAL TWO DOT LEADER */
           || ch == 0xFE31 /* PRESENTATION FORM FOR VERTICAL EM DASH */
@@ -6948,9 +6988,14 @@ get_lbp (unsigned int ch)
           || ch == 0x2062 /* INVISIBLE TIMES */
           || ch == 0x2063 /* INVISIBLE SEPARATOR */
           || ch == 0x2064 /* INVISIBLE PLUS */
+          || ch == 0x2308 /* LEFT CEILING */
+          || ch == 0x2309 /* RIGHT CEILING */
+          || ch == 0x230A /* LEFT FLOOR */
+          || ch == 0x230B /* RIGHT FLOOR */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x110BD /* KAITHI NUMBER SIGN */)
-        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID))))
+        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID)))
+            && ch != 0x3035 /* VERTICAL KANA REPEAT MARK LOWER HALF */)
           {
             /* ambiguous (alphabetic) ? */
             if ((unicode_width[ch] != NULL
@@ -7549,7 +7594,10 @@ enum
   WBP_MIDNUM       = 5,
   WBP_NUMERIC      = 6,
   WBP_EXTENDNUMLET = 7,
-  WBP_RI           = 13
+  WBP_RI           = 13,
+  WBP_DQ           = 14,
+  WBP_SQ           = 15,
+  WBP_HL           = 16
 };
 
 /* Returns the word breaking property for ch, as a bit mask.  */
@@ -7588,6 +7636,11 @@ get_wbp (unsigned int ch)
           || ch == 0xFF70)
         attr |= 1 << WBP_KATAKANA;
 
+      if ((unicode_scripts[ch] < numscripts
+           && strcmp (scripts[unicode_scripts[ch]], "Hebrew") == 0)
+          && strcmp (unicode_attributes[ch].category, "Lo") == 0)
+        attr |= 1 << WBP_HL;
+
       if ((((unicode_properties[ch] >> PROP_ALPHABETIC) & 1) != 0
            || ch == 0x05F3)
           && ((unicode_properties[ch] >> PROP_IDEOGRAPHIC) & 1) == 0
@@ -7595,7 +7648,8 @@ get_wbp (unsigned int ch)
           && ((get_lbp (ch) >> LBP_SA) & 1) == 0
           && !(unicode_scripts[ch] < numscripts
                && strcmp (scripts[unicode_scripts[ch]], "Hiragana") == 0)
-          && (attr & (1 << WBP_EXTEND)) == 0)
+          && (attr & (1 << WBP_EXTEND)) == 0
+          && (attr & (1 << WBP_HL)) == 0)
         attr |= 1 << WBP_ALETTER;
 
       if (is_WBP_MIDNUMLET (ch))
@@ -7620,6 +7674,12 @@ get_wbp (unsigned int ch)
 
       if (((get_lbp (ch) >> LBP_RI) & 1) != 0)
         attr |= 1 << WBP_RI;
+
+      if (ch == 0x0022)
+        attr |= 1 << WBP_DQ;
+
+      if (ch == 0x0027)
+        attr |= 1 << WBP_SQ;
     }
 
   if (attr == 0)
@@ -7667,6 +7727,12 @@ debug_output_wbp (FILE *stream)
             fprintf (stream, " ExtendNumLet");
           if (attr & (1 << WBP_RI))
             fprintf (stream, " Regional_Indicator");
+          if (attr & (1 << WBP_DQ))
+            fprintf (stream, " Double_Quote");
+          if (attr & (1 << WBP_SQ))
+            fprintf (stream, " Single_Quote");
+          if (attr & (1 << WBP_HL))
+            fprintf (stream, " Hebrew_Letter");
          fprintf (stream, "\n");
         }
     }
@@ -7753,6 +7819,9 @@ fill_org_wbp (const char *wordbreakproperty_filename)
       PROP ("Numeric", WBP_NUMERIC)
       PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
       PROP ("Regional_Indicator", WBP_RI)
+      PROP ("Double_Quote", WBP_DQ)
+      PROP ("Single_Quote", WBP_SQ)
+      PROP ("Hebrew_Letter", WBP_HL)
 #undef PROP
         {
           fprintf (stderr, "unknown property value '%s' in '%s'\n", propname,
@@ -7799,6 +7868,9 @@ debug_output_org_wbp (FILE *stream)
           PROP ("Numeric", WBP_NUMERIC)
           PROP ("ExtendNumLet", WBP_EXTENDNUMLET)
           PROP ("Regional_Indicator", WBP_RI)
+          PROP ("Double_Quote", WBP_DQ)
+          PROP ("Single_Quote", WBP_SQ)
+          PROP ("Hebrew_Letter", WBP_HL)
 #undef PROP
           fprintf (stream, " ??");
           fprintf (stream, "\n");
@@ -7951,6 +8023,9 @@ output_wbp (FILE *stream)
           CASE(WBP_NUMERIC);
           CASE(WBP_EXTENDNUMLET);
           CASE(WBP_RI);
+          CASE(WBP_DQ);
+          CASE(WBP_SQ);
+          CASE(WBP_HL);
 #undef CASE
           default:
             abort ();

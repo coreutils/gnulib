@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -598,7 +598,7 @@ u_property_bidi_left_to_right =
     0xFFFFFFFF, 0xFFFFFDFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xF1FBFE78, 0xFFFFFFCE, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x3FFFFFFF, 0x00000000,
-    0xFE7FFFFF, 0xFFFFFFFF, 0x80BFFFFF, 0x6007E01A,
+    0xF67FFFFF, 0xFFFFFFFF, 0x80BFFFFF, 0x6007E01A,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFF0, 0xE82FFFFF, 0xFFFFFFFB, 0xFFF007FF,
     0xFFFFFFFC, 0xFFFFF4C3, 0xFFFFFFFF, 0xFFFC5CBF,

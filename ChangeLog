@@ -1,5 +1,34 @@
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
+	libunistring: update to Unicode 6.3.0
+	* lib/uniwbrk.in.h (WBP_DQ, WBP_SQ, WBP_HL): New enumeration values.
+	* lib/uniwbrk/u-wordbreaks.h (FUNC): Support WB7a, WB7b, and WB7c.
+	Update WB5, WB6, WB7, WB9, WB11, WB12, WB13a, and WB13b.
+	* lib/uniwbrk/wbrktable.h (uniwbrk_table): Adjust table size.
+	* lib/uniwbrk/wbrktable.c (uniwbrk_table): Support rule WB7a.
+	Update WB5, WB9, WB10, WB13a, and WB13b.
+	* tests/uniwbrk/test-uc-wordbreaks.c
+	(wordbreakproperty_to_string): Support WBP_DQ, WBP_SQ, and WBP_HL.
+	* lib/gen-uni-tables.c (UC_BIDI_LRI, UC_BIDI_RLI, UC_BIDI_FSI)
+	(UC_BIDI_PDI): New enumeration values.
+	(bidi_category_byname): Support those enum values.
+	(is_WBP_MIDNUMLET): Exclude 0x0027 (SINGLE QUOTE), which is now a
+	dedicated property assigned.
+	(is_property_case_ignorable): Check 0x0027.
+	(WBP_DQ, WBP_SQ, WBP_HL): New enumeration values.
+	(get_wbp, debug_output_wbp, fill_org_wbp, debug_output_org_wbp)
+	(output_wbp): Support those enum values.
+	* lib/unictype.in.h (UC_BIDI_LRI, UC_BIDI_RLI, UC_BIDI_FSI)
+	(UC_BIDI_PDI): New enumeration values.
+	* lib/unictype/bidi_byname.gperf: Add those property names.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+061C,
+	U+180E, U+1A1B, and U+2066..U+2069.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* all generated files under lib/uni* and tests/uni*: Regenerate.
+
+2015-01-14  Daiki Ueno  <ueno@gnu.org>
+
 	libunistring: update to Unicode 6.2.0
 	* lib/unilbrk/lbrktables.h (LBP_RI): New enumeration value.
 	(unilbrk_table): Adjust table size.

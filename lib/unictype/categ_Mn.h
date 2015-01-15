@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Categories of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -464,7 +464,7 @@ u_categ_Mn =
     0x00000000, 0x00000200, 0x00000000, 0x00000000,
     0x00000000, 0x0E040187, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x01800000, 0x00000000, 0x7F400000, 0x9FF81FE5,
+    0x09800000, 0x00000000, 0x7F400000, 0x9FF81FE5,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x0000000F, 0x17D00000, 0x00000004, 0x000FF800,
     0x00000003, 0x00000B3C, 0x00000000, 0x0003A340,

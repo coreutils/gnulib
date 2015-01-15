@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining group of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
     { 0x0620, UC_JOINING_GROUP_YEH },
     { 0x0622, UC_JOINING_GROUP_ALEF },
     { 0x0623, UC_JOINING_GROUP_ALEF },

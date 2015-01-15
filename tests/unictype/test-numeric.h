@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Numeric values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
     { 0x0030, 0, 1 },
     { 0x0031, 1, 1 },
     { 0x0032, 2, 1 },
@@ -1064,8 +1064,8 @@
     { 0x12453, 4, 1 },
     { 0x12454, 5, 1 },
     { 0x12455, 5, 1 },
-    { 0x12456, -1, 1 },
-    { 0x12457, -1, 1 },
+    { 0x12456, 2, 1 },
+    { 0x12457, 3, 1 },
     { 0x12458, 1, 1 },
     { 0x12459, 2, 1 },
     { 0x1245A, 1, 3 },
