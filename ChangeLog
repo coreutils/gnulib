@@ -1,3 +1,8 @@
+2015-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	update-copyright: apply to self
+	* build-aux/update-copyright: Fix copyright date.  How ironic!
+
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
 	libunistring: update to Unicode 7.0.0
