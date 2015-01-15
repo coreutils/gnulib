@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Simple character mapping of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
 #define mapping_header_0 16
 #define mapping_header_1 2
 #define mapping_header_2 7

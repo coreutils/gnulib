@@ -32,21 +32,21 @@
   (ALetter | Numeric | Katakana) × ExtendNumLet                    (WB13a)
                     ExtendNumLet × ExtendNumLet                    (WB13a)
                     ExtendNumLet × (ALetter | Numeric | Katakana)  (WB13b)
+              Regional_Indicator × Regional_Indicator              (WB13c)
  */
 
-const unsigned char uniwbrk_table[10][8] =
+const unsigned char uniwbrk_table[9][9] =
 {        /* current:      OTHER            MIDNUMLET         NUMERIC         */
          /*                   KATAKANA           MIDLETTER      EXTENDNUMLET */
-         /*                          ALETTER            MIDNUM               */
+         /*                          ALETTER            MIDNUM           RI  */
   /* last */
-  /* WBP_OTHER */        {  1,    1,    1,    1,    1,    1,    1,    1 },
-  /* WBP_KATAKANA */     {  1,    0,    1,    1,    1,    1,    1,    0 },
-  /* WBP_ALETTER */      {  1,    1,    0,    1,    1,    1,    0,    0 },
-  /* WBP_MIDNUMLET */    {  1,    1,    1,    1,    1,    1,    1,    1 },
-  /* WBP_MIDLETTER */    {  1,    1,    1,    1,    1,    1,    1,    1 },
-  /* WBP_MIDNUM */       {  1,    1,    1,    1,    1,    1,    1,    1 },
-  /* WBP_NUMERIC */      {  1,    1,    0,    1,    1,    1,    0,    0 },
-  /* WBP_EXTENDNUMLET */ {  1,    0,    0,    1,    1,    1,    0,    0 },
-  /* WBP_EXTEND */       {  1,    1,    1,    1,    1,    1,    1,    1 },
-  /* WBP_FORMAT */       {  1,    1,    1,    1,    1,    1,    1,    1 }
+  /* WBP_OTHER */        {  1,    1,    1,    1,    1,    1,    1,    1,    1 },
+  /* WBP_KATAKANA */     {  1,    0,    1,    1,    1,    1,    1,    0,    1 },
+  /* WBP_ALETTER */      {  1,    1,    0,    1,    1,    1,    0,    0,    1 },
+  /* WBP_MIDNUMLET */    {  1,    1,    1,    1,    1,    1,    1,    1,    1 },
+  /* WBP_MIDLETTER */    {  1,    1,    1,    1,    1,    1,    1,    1,    1 },
+  /* WBP_MIDNUM */       {  1,    1,    1,    1,    1,    1,    1,    1,    1 },
+  /* WBP_NUMERIC */      {  1,    1,    0,    1,    1,    1,    0,    0,    1 },
+  /* WBP_EXTENDNUMLET */ {  1,    0,    0,    1,    1,    1,    0,    0,    1 },
+  /* WBP_RI */           {  1,    1,    1,    1,    1,    1,    1,    1,    0 }
 };

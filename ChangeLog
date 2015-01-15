@@ -1,5 +1,39 @@
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
+	libunistring: update to Unicode 6.2.0
+	* lib/unilbrk/lbrktables.h (LBP_RI): New enumeration value.
+	(unilbrk_table): Adjust table size.
+	* lib/unilbrk/lbrktables.c (unilbrk_table): Add a row and column
+	for LBP_RI.
+	* lib/uniwbrk.in.h (WBP_RI): New enumeration value.
+	* lib/uniwbrk/u-wordbreaks.h (FUNC): Support rule WB13c.
+	Normalize table index skipping ignored properties.
+	* lib/uniwbrk/wbrktable.c (uniwbrk_table): Support WBP_RI.  Remove
+	WBP_EXTEND and WBP_FORMAT, which are now computed without using
+	the table.
+	* lib/uniwbrk/wbrktable.h: Adjust table size.
+	* lib/unigbrk.in.h (GBP_RI): New enumeration value.
+	* lib/unigbrk/uc-is-grapheme-break.c (UC_IS_GRAPHEME_BREAK):
+	Support rule GB8a.
+	(UC_GRAPHEME_BREAKS_FOR, gb_table): Support GBP_RI.
+	* tests/unigbrk/test-uc-is-grapheme-break.c
+	(graphemebreakproperty_to_string): Support GBP_RI.
+	* tests/uniwbrk/test-uc-wordbreaks.c
+	(wordbreakproperty_to_string): Support WBP_RI.
+	* lib/gen-uni-tables.c (LBP_RI): New enumeration value.
+	(get_lbp, debug_output_lbp, fill_org_lbp, debug_output_org_lbp)
+	(output_lbp): Support LBP_RI.  Adjust some characters changed from
+	LBP_AL to LBP_ID.
+	(output_lbp): Support LBP_RI.
+	(WBP_RI): New enumeration value.
+	(debug_output_wbp, fill_org_wbp, debug_output_org_wbp)
+	(output_wbp): Support WBP_RI.
+	(GBP_RI): New enumeration value.
+	(output_gbp_test, fill_org_gbp): Support GBP_RI.
+	* all generated files under lib/uni* and tests/uni*: Regenerate.
+
+2015-01-14  Daiki Ueno  <ueno@gnu.org>
+
 	libunistring: update to Unicode 6.1.0
 	* lib/gen-uni-tables.c (output_joining_group): Switch to
 	3-level table to accommodate joining groups defined with higher

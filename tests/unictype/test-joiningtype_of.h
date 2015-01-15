@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining type of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
     { 0x0600, UC_JOINING_TYPE_U },
     { 0x0601, UC_JOINING_TYPE_U },
     { 0x0602, UC_JOINING_TYPE_U },

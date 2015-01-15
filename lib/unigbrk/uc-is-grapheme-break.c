@@ -47,6 +47,9 @@
    /* GB8 */                                                            \
    ((A) == GBP_LVT || (A) == GBP_T) && (B) == GBP_T ? false :           \
                                                                         \
+   /* GB8a */								\
+   (A) == GBP_RI && (B) == GBP_RI ? false :				\
+									\
    /* GB9 */                                                            \
    (B) == GBP_EXTEND ? false :                                          \
                                                                         \
@@ -71,9 +74,10 @@
    | (UC_IS_GRAPHEME_BREAK(A, GBP_V)           << GBP_V)                \
    | (UC_IS_GRAPHEME_BREAK(A, GBP_T)           << GBP_T)                \
    | (UC_IS_GRAPHEME_BREAK(A, GBP_LV)          << GBP_LV)               \
-   | (UC_IS_GRAPHEME_BREAK(A, GBP_LVT)         << GBP_LVT))
+   | (UC_IS_GRAPHEME_BREAK(A, GBP_LVT)         << GBP_LVT)              \
+   | (UC_IS_GRAPHEME_BREAK(A, GBP_RI)          << GBP_RI))
 
-static const unsigned short int gb_table[12] =
+static const unsigned short int gb_table[13] =
   {
     UC_GRAPHEME_BREAKS_FOR(0),  /* GBP_OTHER */
     UC_GRAPHEME_BREAKS_FOR(1),  /* GBP_CR */
@@ -87,6 +91,7 @@ static const unsigned short int gb_table[12] =
     UC_GRAPHEME_BREAKS_FOR(9),  /* GBP_T */
     UC_GRAPHEME_BREAKS_FOR(10), /* GBP_LV */
     UC_GRAPHEME_BREAKS_FOR(11), /* GBP_LVT */
+    UC_GRAPHEME_BREAKS_FOR(12), /* GBP_RI */
   };
 
 bool

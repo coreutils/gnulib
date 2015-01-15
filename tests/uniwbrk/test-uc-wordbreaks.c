@@ -47,6 +47,7 @@ wordbreakproperty_to_string (int wbp)
       CASE(MIDNUM)
       CASE(NUMERIC)
       CASE(EXTENDNUMLET)
+      CASE(RI)
     }
   abort ();
 }

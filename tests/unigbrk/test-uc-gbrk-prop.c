@@ -50,6 +50,7 @@ graphemebreakproperty_to_string (int gbp)
       CASE(T)
       CASE(LV)
       CASE(LVT)
+      CASE(RI)
     }
   abort ();
 }

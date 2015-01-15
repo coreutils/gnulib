@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -473,7 +473,7 @@ u_property_grapheme_base =
     0x3F3FFFFF, 0xFFFFFFFF, 0xAAFF3F3F, 0x3FFFFFFF,
     0xFFFFFFFF, 0xFFDFFFFF, 0xEFCFFFDF, 0x7FDCFFFF,
     0xFFFF07FF, 0xFFFF80FF, 0xFFFFFFFF, 0xFFF30000,
-    0x1FFF7FFF, 0x03FFFFFF, 0x00000000, 0x00000000,
+    0x1FFF7FFF, 0x07FFFFFF, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFF03FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,

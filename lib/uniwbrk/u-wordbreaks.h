@@ -55,16 +55,12 @@ FUNC (const UNIT *s, size_t n, char *p)
               if (last_char_prop == WBP_CR && prop == WBP_LF)
                 /* *p = 0 */;
               /* Break before and after newlines.  */
-              else if (last_char_prop >= WBP_NEWLINE
-                       /* same as:
-                          last_char_prop == WBP_CR
-                          || last_char_prop == WBP_LF
-                          || last_char_prop == WBP_NEWLINE */
-                       || prop >= WBP_NEWLINE
-                          /* same as:
-                             prop == WBP_CR
-                             || prop == WBP_LF
-                             || prop == WBP_NEWLINE */)
+              else if ((last_char_prop == WBP_CR
+                        || last_char_prop == WBP_LF
+                        || last_char_prop == WBP_NEWLINE)
+                       || (prop == WBP_CR
+                           || prop == WBP_LF
+                           || prop == WBP_NEWLINE))
                 *p = 1;
               /* Ignore Format and Extend characters.  */
               else if (!(prop == WBP_EXTEND || prop == WBP_FORMAT))
@@ -85,6 +81,7 @@ FUNC (const UNIT *s, size_t n, char *p)
                           (ALetter | Numeric | Katakana) × ExtendNumLet (WB13a)
                                             ExtendNumLet × ExtendNumLet (WB13a)
                          ExtendNumLet × (ALetter | Numeric | Katakana)  (WB13b)
+                               Regional_Indicator × Regional_Indicator  (WB13c)
                    */
                   /* No break across certain punctuation.  Also, disable word
                      breaks that were recognized earlier (due to lookahead of
@@ -101,10 +98,27 @@ FUNC (const UNIT *s, size_t n, char *p)
                       *last_compchar_ptr = 0;
                       /* *p = 0; */
                     }
+                  /* Break after Format and Extend characters.  */
+                  else if (last_compchar_prop == WBP_EXTEND
+                           || last_compchar_prop == WBP_FORMAT)
+                    *p = 1;
                   else
                     {
+                      /* Normalize property value to table index,
+                         skipping 5 properties: WBP_EXTEND,
+                         WBP_FORMAT, WBP_NEWLINE, WBP_CR, and
+                         WBP_LF.  */
+                      int last_compchar_prop_index = last_compchar_prop;
+                      int prop_index = prop;
+
+                      if (last_compchar_prop_index >= WBP_EXTEND)
+                        last_compchar_prop_index -= 5;
+
+                      if (prop_index >= WBP_EXTEND)
+                        prop_index -= 5;
+
                       /* Perform a single table lookup.  */
-                      if (uniwbrk_table[last_compchar_prop][prop])
+                      if (uniwbrk_table[last_compchar_prop_index][prop_index])
                         *p = 1;
                       /* else *p = 0; */
                     }

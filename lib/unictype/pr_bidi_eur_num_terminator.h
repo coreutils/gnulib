@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -177,7 +177,7 @@ u_property_bidi_eur_num_terminator =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x08000000, 0x00000000,
     0x00000000, 0x001F0000, 0x00000000, 0x00000000,
-    0x00000000, 0x03FFFFFF, 0x00000000, 0x00000000,
+    0x00000000, 0x07FFFFFF, 0x00000000, 0x00000000,
     0x00000000, 0x00004000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00080000, 0x00000000, 0x00000000, 0x00000000,

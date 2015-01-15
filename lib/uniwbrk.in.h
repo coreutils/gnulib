@@ -49,7 +49,8 @@ enum
   WBP_MIDLETTER    = 4,
   WBP_MIDNUM       = 5,
   WBP_NUMERIC      = 6,
-  WBP_EXTENDNUMLET = 7
+  WBP_EXTENDNUMLET = 7,
+  WBP_RI           = 13
 };
 
 /* Return the Word_Break property of a Unicode character.  */

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Line breaking properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
 
 /* Copyright (C) 2000-2002, 2004, 2007-2009 Free Software Foundation, Inc.
 
@@ -27,7 +27,7 @@ typedef struct
   {
     int level1[15];
     int level2[3 << 9];
-    unsigned char level3[131 << 7];
+    unsigned char level3[132 << 7];
   }
 wbrkprop_t;
 static const wbrkprop_t uniwbrkprop =
@@ -161,11 +161,11 @@ static const wbrkprop_t uniwbrkprop =
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1, 16128, 16256,    -1,    -1,
+       -1,    -1,    -1, 16384,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-    16384,    -1, 16512, 16640,    -1,    -1,    -1,    -1,
+    16512,    -1, 16640, 16768,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
        -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
@@ -4327,6 +4327,38 @@ static const wbrkprop_t uniwbrkprop =
     WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
     WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
     WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
+    WBP_OTHER, WBP_OTHER, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
+    WBP_RI, WBP_RI, WBP_RI, WBP_RI,
     WBP_OTHER, WBP_FORMAT, WBP_OTHER, WBP_OTHER,
     WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,
     WBP_OTHER, WBP_OTHER, WBP_OTHER, WBP_OTHER,

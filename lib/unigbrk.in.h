@@ -51,7 +51,8 @@ enum
   GBP_V            = 8,
   GBP_T            = 9,
   GBP_LV           = 10,
-  GBP_LVT          = 11
+  GBP_LVT          = 11,
+  GBP_RI           = 12
 };
 
 /* Return the Grapheme_Cluster_Break property of a Unicode character. */

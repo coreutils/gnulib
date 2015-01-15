@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* ISO C <ctype.h> like properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.2.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -615,7 +615,7 @@ u_is_punct =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0xA0000000, 0xE000E003, 0x6000E000,
     0xFFFFF880, 0xFFFFFCFF, 0x7FFFFFFF, 0x7FF1FC1F,
-    0x00007FFF, 0x03FFFFFF, 0xFFFF0000, 0x0001FFFF,
+    0x00007FFF, 0x07FFFFFF, 0xFFFF0000, 0x0001FFFF,
     0xC1D0037B, 0x0C0040AF, 0xFFFFBC1F, 0x00000000,
     0xFFFF0200, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
