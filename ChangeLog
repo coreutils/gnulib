@@ -1,5 +1,18 @@
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
+	uniwbrk/u32-wordbreaks-tests: add conformance test
+	* modules/uniwbrk/u32-wordbreaks-tests (Files): Add
+	tests/uniwbrk/test-uc-wordbreaks.c,
+	tests/uniwbrk/test-uc-wordbreaks.sh, and
+	tests/uniwbrk/WordBreakTest.txt.
+	(Makefile.am): Add uniwbrk/test-uc-wordbreaks.sh to $(TESTS), add
+	test-uc-wordbreaks to $(check_PROGRAMS), and define
+	test_uc_wordbreaks_SOURCES and test_uc_wordbreaks_LDADD.
+	* tests/uniwbrk/test-uc-wordbreaks.sh: New file.
+	* tests/uniwbrk/test-uc-wordbreaks.c: New file.
+
+2015-01-15  Daiki Ueno  <ueno@gnu.org>
+
 	uniwbrk: ignore Extended/Format characters at BOL not BOS
 	* lib/uniwbrk/u-wordbreaks.h (FUNC): Ignore Extend and Format
 	characters if the previous character property is one of
