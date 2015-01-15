@@ -20,14 +20,33 @@
 /* Specification.  */
 #include "unictype.h"
 
-#include "unictype/joininggroup_of.h"
+/* Define u_joining_group table.  */
+#include "joininggroup_of.h"
 
 int
 uc_joining_group (ucs4_t uc)
 {
-  if (uc >= joining_group_header_0
-      && uc < joining_group_header_0
-              + sizeof (u_joining_group) / sizeof (u_joining_group[0]))
-    return u_joining_group[uc - joining_group_header_0];
+  unsigned int index1 = uc >> joining_group_header_0;
+  if (index1 < joining_group_header_1)
+    {
+      int lookup1 = u_joining_group.level1[index1];
+      if (lookup1 >= 0)
+        {
+          unsigned int index2 = (uc >> joining_group_header_2) & joining_group_header_3;
+          int lookup2 = u_joining_group.level2[lookup1 + index2];
+          if (lookup2 >= 0)
+            {
+              unsigned int index3 = ((uc & joining_group_header_4) + lookup2) * 7;
+              /* level3 contains 7-bit values, packed into 16-bit words.  */
+              unsigned int lookup3 =
+                ((u_joining_group.level3[index3>>4]
+                  | (u_joining_group.level3[(index3>>4)+1] << 16))
+                 >> (index3 % 16))
+                & 0x7f;
+
+              return lookup3;
+            }
+        }
+    }
   return UC_JOINING_GROUP_NONE;
 }

@@ -1,5 +1,33 @@
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
+	libunistring: update to Unicode 6.1.0
+	* lib/gen-uni-tables.c (output_joining_group): Switch to
+	3-level table to accommodate joining groups defined with higher
+	codepoint value.  Since there are only 88 groups defined in
+	Unicode 7.0.0, use 7-bit packed format for level3 entries.
+	(get_lbp): Update for Unicode 6.1.0.
+	* lib/unictype/joininggroup_of.c (uc_joining_group): Adjust to use
+	3-level table.
+	* lib/unictype/joininggroup_byname.gperf: Add Rohingya Yeh
+	joining group name.
+	* lib/unictype/joininggroup_name.h: Likewise.
+	* lib/unilbrk/lbrktables.h (LBP_HL): New enumeration value.
+	(unilbrk_table): Adjust table size.
+	* lib/unilbrk/lbrktables.c (unilbrk_table): Add a row and column
+	for LBP_HL.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+0604,
+	U+08E4..U+08FE, U+1BAB, U+1CF4, U+A674..U+A67B, U+A69F,
+	U+AAEC..U+AAED, U+AAF6, U+11100..U+11102, U+11127..U+1112B,
+	U+1112D..U+11134, U+11180..U+11181, U+111B6..U+111BE, U+116AB,
+	U+116AD, U+116B0..U+116B5, U+116B7, U+16F8F..U+16F92.  Remove
+	U+302E..U+302F.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* all generated files under lib/uni* and tests/uni*: Regenerate.
+	* modules/uni*/* (configure.ac): Bump minimum version to 0.9.5.
+
+2015-01-15  Daiki Ueno  <ueno@gnu.org>
+
 	uniwbrk/u32-wordbreaks-tests: add conformance test
 	* modules/uniwbrk/u32-wordbreaks-tests (Files): Add
 	tests/uniwbrk/test-uc-wordbreaks.c,

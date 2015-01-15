@@ -32,7 +32,7 @@
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
-                      6.0.0
+                      6.1.0
  */
 
 #include <assert.h>
@@ -2855,7 +2855,7 @@ is_property_default_ignorable_code_point (unsigned int ch)
   bool result1 =
     (is_category_Cf (ch)
      && !(ch >= 0xFFF9 && ch <= 0xFFFB) /* Annotations */
-     && !((ch >= 0x0600 && ch <= 0x0603) || ch == 0x06DD || ch == 0x070F)
+     && !((ch >= 0x0600 && ch <= 0x0604) || ch == 0x06DD || ch == 0x070F)
      /* For some reason, the following are not listed as having property
         Default_Ignorable_Code_Point.  */
      && !(ch == 0x110BD))
@@ -3725,7 +3725,8 @@ enum
   UC_JOINING_GROUP_YUDH,                  /* Yudh */
   UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
   UC_JOINING_GROUP_ZAIN,                  /* Zain */
-  UC_JOINING_GROUP_ZHAIN                  /* Zhain */
+  UC_JOINING_GROUP_ZHAIN,                 /* Zhain */
+  UC_JOINING_GROUP_ROHINGYA_YEH           /* Rohingya_Yeh */
 };
 
 static uint8_t unicode_joining_group[0x110000];
@@ -3864,6 +3865,7 @@ fill_arabicshaping (const char *arabicshaping_filename)
       TRY(UC_JOINING_GROUP_YUDH_HE,               "YUDH HE")
       TRY(UC_JOINING_GROUP_ZAIN,                  "ZAIN")
       TRY(UC_JOINING_GROUP_ZHAIN,                 "ZHAIN")
+      TRY(UC_JOINING_GROUP_ROHINGYA_YEH,          "ROHINGYA YEH")
 #undef TRY
       else
         {
@@ -4144,6 +4146,7 @@ joining_group_as_c_identifier (int joining_group)
   TRY(UC_JOINING_GROUP_YUDH_HE)
   TRY(UC_JOINING_GROUP_ZAIN)
   TRY(UC_JOINING_GROUP_ZHAIN)
+  TRY(UC_JOINING_GROUP_ROHINGYA_YEH)
 #undef TRY
   abort ();
 }
@@ -4190,11 +4193,22 @@ output_joining_group_test (const char *filename, const char *version)
     }
 }
 
+/* Construction of sparse 3-level tables.  */
+#define TABLE joining_group_table
+#define ELEMENT uint8_t
+#define DEFAULT UC_JOINING_GROUP_NONE
+#define xmalloc malloc
+#define xrealloc realloc
+#include "3level.h"
+
 static void
 output_joining_group (const char *filename, const char *version)
 {
   FILE *stream;
-  unsigned int ch_min, ch_max, ch, i;
+  unsigned int ch, i;
+  struct joining_group_table t;
+  unsigned int level1_offset, level2_offset, level3_offset;
+  uint16_t *level3_packed;
 
   stream = fopen (filename, "w");
   if (stream == NULL)
@@ -4204,53 +4218,118 @@ output_joining_group (const char *filename, const char *version)
     }
 
   fprintf (stream, "/* DO NOT EDIT! GENERATED AUTOMATICALLY! */\n");
-  fprintf (stream, "/* Arabic joining type of Unicode characters.  */\n");
+  fprintf (stream, "/* Arabic joining group of Unicode characters.  */\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);
 
-  ch_min = 0x10FFFF;
+  t.p = 7;
+  t.q = 9;
+  joining_group_table_init (&t);
+
   for (ch = 0; ch < 0x110000; ch++)
-    if (unicode_joining_group[ch] != UC_JOINING_GROUP_NONE)
-      {
-        ch_min = ch;
-        break;
-      }
-
-  ch_max = 0;
-  for (ch = 0x10FFFF; ch > 0; ch--)
-    if (unicode_joining_group[ch] != UC_JOINING_GROUP_NONE)
-      {
-        ch_max = ch;
-        break;
-      }
-
-  assert (ch_min <= ch_max);
-
-  /* If the interval [ch_min, ch_max] is too large, we should better use a
-     3-level table.  */
-  assert (ch_max - ch_min < 0x200);
-
-  fprintf (stream, "#define joining_group_header_0 0x%x\n", ch_min);
-  fprintf (stream, "static const unsigned char u_joining_group[0x%x - 0x%x] =\n",
-           ch_max + 1, ch_min);
-  fprintf (stream, "{");
-  for (i = 0; i <= ch_max - ch_min; i++)
     {
-      const char *s;
+      uint8_t value = unicode_joining_group[ch];
 
-      ch = ch_min + i;
-      if ((i % 2) == 0)
-        fprintf (stream, "\n ");
-      s = joining_group_as_c_identifier (unicode_joining_group[ch]);
-      fprintf (stream, " %s", s);
-      if (i+1 <= ch_max - ch_min)
-        {
-          fprintf (stream, ",");
-          if (((i+1) % 2) != 0)
-            fprintf (stream, "%*s", 38 - (int) strlen (s), "");
-        }
+      assert (value <= 0x7f);
+
+      joining_group_table_add (&t, ch, value);
     }
-  fprintf (stream, "\n");
+
+  joining_group_table_finalize (&t);
+
+  /* Offsets in t.result, in memory of this process.  */
+  level1_offset =
+    5 * sizeof (uint32_t);
+  level2_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t);
+  level3_offset =
+    5 * sizeof (uint32_t)
+    + t.level1_size * sizeof (uint32_t)
+    + (t.level2_size << t.q) * sizeof (uint32_t);
+
+  for (i = 0; i < 5; i++)
+    fprintf (stream, "#define joining_group_header_%d %d\n", i,
+             ((uint32_t *) t.result)[i]);
+  fprintf (stream, "static const\n");
+  fprintf (stream, "struct\n");
+  fprintf (stream, "  {\n");
+  fprintf (stream, "    int level1[%zu];\n", t.level1_size);
+  fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
+  fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
+           (1 << t.p) * 7 / 16);
+  fprintf (stream, "  }\n");
+  fprintf (stream, "u_joining_group =\n");
+  fprintf (stream, "{\n");
+  fprintf (stream, "  {");
+  if (t.level1_size > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level1_size; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level1_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level2_offset) / sizeof (uint32_t));
+      if (i+1 < t.level1_size)
+        fprintf (stream, ",");
+    }
+  if (t.level1_size > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  fprintf (stream, "  {");
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < t.level2_size << t.q; i++)
+    {
+      uint32_t offset;
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      offset = ((uint32_t *) (t.result + level2_offset))[i];
+      if (offset == 0)
+        fprintf (stream, " %5d", -1);
+      else
+        fprintf (stream, " %5zu",
+                 (offset - level3_offset) / sizeof (uint8_t));
+      if (i+1 < t.level2_size << t.q)
+        fprintf (stream, ",");
+    }
+  if (t.level2_size << t.q > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " },\n");
+  /* Pack the level3 array.  Each entry needs 7 bits only.  Use 16-bit units,
+     not 32-bit units, in order to make the lookup function easier.  */
+  level3_packed =
+    (uint16_t *)
+    calloc ((t.level3_size << t.p) * 7 / 16 + 1, sizeof (uint16_t));
+  for (i = 0; i < t.level3_size << t.p; i++)
+    {
+      unsigned int j = (i * 7) / 16;
+      unsigned int k = (i * 7) % 16;
+      uint32_t value = ((unsigned char *) (t.result + level3_offset))[i];
+      value = level3_packed[j] | (level3_packed[j+1] << 16) | (value << k);
+      level3_packed[j] = value & 0xffff;
+      level3_packed[j+1] = value >> 16;
+    }
+  fprintf (stream, "  {");
+  if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
+    fprintf (stream, "\n   ");
+  for (i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
+    {
+      if (i > 0 && (i % 8) == 0)
+        fprintf (stream, "\n   ");
+      fprintf (stream, " 0x%04x", level3_packed[i]);
+      if (i+1 < (t.level3_size << t.p) * 7 / 16 + 1)
+        fprintf (stream, ",");
+    }
+  if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
+    fprintf (stream, "\n ");
+  fprintf (stream, " }\n");
+  free (level3_packed);
   fprintf (stream, "};\n");
 
   if (ferror (stream) || fclose (stream))
@@ -6096,22 +6175,22 @@ output_width_property_test (const char *filename)
 
 enum
 {
-  /* Values >= 25 are resolved at run time. */
-  LBP_BK = 25, /* mandatory break */
+  /* Values >= 26 are resolved at run time. */
+  LBP_BK = 26, /* mandatory break */
 /*LBP_CR,         carriage return - not used here because it's a DOSism */
 /*LBP_LF,         line feed - not used here because it's a DOSism */
-  LBP_CM = 26, /* attached characters and combining marks */
+  LBP_CM = 27, /* attached characters and combining marks */
 /*LBP_NL,         next line - not used here because it's equivalent to LBP_BK */
 /*LBP_SG,         surrogates - not used here because they are not characters */
   LBP_WJ =  0, /* word joiner */
-  LBP_ZW = 27, /* zero width space */
+  LBP_ZW = 28, /* zero width space */
   LBP_GL =  1, /* non-breaking (glue) */
-  LBP_SP = 28, /* space */
+  LBP_SP = 29, /* space */
   LBP_B2 =  2, /* break opportunity before and after */
   LBP_BA =  3, /* break opportunity after */
   LBP_BB =  4, /* break opportunity before */
   LBP_HY =  5, /* hyphen */
-  LBP_CB = 29, /* contingent break opportunity */
+  LBP_CB = 30, /* contingent break opportunity */
   LBP_CL =  6, /* closing punctuation */
   LBP_CP =  7, /* closing parenthesis */
   LBP_EX =  8, /* exclamation/interrogation */
@@ -6124,16 +6203,18 @@ enum
   LBP_PO = 15, /* postfix (numeric) */
   LBP_PR = 16, /* prefix (numeric) */
   LBP_SY = 17, /* symbols allowing breaks */
-  LBP_AI = 30, /* ambiguous (alphabetic or ideograph) */
+  LBP_AI = 31, /* ambiguous (alphabetic or ideograph) */
   LBP_AL = 18, /* ordinary alphabetic and symbol characters */
+/*LBP_CJ,         conditional Japanese starter, resolved to NS */
   LBP_H2 = 19, /* Hangul LV syllable */
   LBP_H3 = 20, /* Hangul LVT syllable */
+  LBP_HL = 25, /* Hebrew letter */
   LBP_ID = 21, /* ideographic */
   LBP_JL = 22, /* Hangul L Jamo */
   LBP_JV = 23, /* Hangul V Jamo */
   LBP_JT = 24, /* Hangul T Jamo */
-  LBP_SA = 31, /* complex context (South East Asian) */
-  LBP_XX = 32  /* unknown */
+  LBP_SA = 32, /* complex context (South East Asian) */
+  LBP_XX = 33  /* unknown */
 };
 
 /* Returns the line breaking classification for ch, as a bit mask.  */
@@ -6181,7 +6262,9 @@ get_lbp (unsigned int ch)
         attr |= (int64_t) 1 << LBP_SP;
 
       /* break opportunity before and after */
-      if (ch == 0x2014 /* EM DASH */)
+      if (ch == 0x2014 /* EM DASH */
+          || ch == 0x2E3A /* TWO-EM DASH */
+          || ch == 0x2E3B /* THREE-EM DASH */)
         attr |= (int64_t) 1 << LBP_B2;
 
       /* break opportunity after */
@@ -6234,6 +6317,8 @@ get_lbp (unsigned int ch)
           || ch == 0x2E2D /* FIVE DOT PUNCTUATION */
           || ch == 0x2E30 /* RING POINT */
           || ch == 0x2E31 /* WORD SEPARATOR MIDDLE DOT */
+          || ch == 0x2E33 /* RAISED DOT */
+          || ch == 0x2E34 /* RAISED COMMA */
           || ch == 0x10100 /* AEGEAN WORD SEPARATOR LINE */
           || ch == 0x10101 /* AEGEAN WORD SEPARATOR DOT */
           || ch == 0x10102 /* AEGEAN CHECK MARK */
@@ -6310,6 +6395,8 @@ get_lbp (unsigned int ch)
           || ch == 0xA9C7 /* JAVANESE PADA PANGKAT */
           || ch == 0xA9C8 /* JAVANESE PADA LINGSA */
           || ch == 0xA9C9 /* JAVANESE PADA LUNGSI */
+          || ch == 0xAAF0 /* MEETEI MAYEK CHEIKHAN */
+          || ch == 0xAAF1 /* MEETEI MAYEK AHANG KHUDAM */
           || ch == 0xABEB /* MEETEI MAYEK CHEIKHEI */
           || ch == 0x10857 /* IMPERIAL ARAMAIC SECTION SIGN */
           || ch == 0x10B39 /* AVESTAN ABBREVIATION MARK */
@@ -6325,6 +6412,13 @@ get_lbp (unsigned int ch)
           || ch == 0x110BF /* KAITHI DOUBLE SECTION MARK */
           || ch == 0x110C0 /* KAITHI DANDA */
           || ch == 0x110C1 /* KAITHI DOUBLE DANDA */
+          || ch == 0x11140 /* CHAKMA SECTION MARK */
+          || ch == 0x11141 /* CHAKMA DANDA */
+          || ch == 0x11142 /* CHAKMA DOUBLE DANDA */
+          || ch == 0x11143 /* CHAKMA QUESTION MARK */
+          || ch == 0x111C5 /* SHARADA DANDA */
+          || ch == 0x111C6 /* SHARADA DOUBLE DANDA */
+          || ch == 0x111C8 /* SHARADA SEPARATOR */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
           || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
@@ -6578,6 +6672,10 @@ get_lbp (unsigned int ch)
       if (ch >= 0xAC00 && ch <= 0xD7A3 && ((ch - 0xAC00) % 28) != 0)
         attr |= (int64_t) 1 << LBP_H3;
 
+      if ((ch >= 0x05D0 && ch <= 0x05F2) || ch == 0xFB1D
+          || (ch >= 0xFB1F && ch <= 0xFB28) || (ch >= 0xFB2A && ch <= 0xFB4F))
+        attr |= (int64_t) 1 << LBP_HL;
+
       if ((ch >= 0x1100 && ch <= 0x115F) || (ch >= 0xA960 && ch <= 0xA97C))
         attr |= (int64_t) 1 << LBP_JL;
 
@@ -6731,6 +6829,7 @@ get_lbp (unsigned int ch)
           || ch == 0x0601 /* ARABIC SIGN SANAH */
           || ch == 0x0602 /* ARABIC FOOTNOTE MARKER */
           || ch == 0x0603 /* ARABIC SIGN SAFHA */
+          || ch == 0x0604 /* ARABIC SIGN SAMVAT */
           || ch == 0x06DD /* ARABIC END OF AYAH */
           || ch == 0x070F /* SYRIAC ABBREVIATION MARK */
           || ch == 0x2061 /* FUNCTION APPLICATION */
@@ -6739,7 +6838,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2064 /* INVISIBLE PLUS */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x110BD /* KAITHI NUMBER SIGN */)
-        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID))))
+        if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID))))
           {
             /* ambiguous (alphabetic) ? */
             if ((unicode_width[ch] != NULL
@@ -6859,6 +6958,7 @@ debug_output_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_AL);
           PRINT_BIT(attr,LBP_H2);
           PRINT_BIT(attr,LBP_H3);
+          PRINT_BIT(attr,LBP_HL);
           PRINT_BIT(attr,LBP_ID);
           PRINT_BIT(attr,LBP_JL);
           PRINT_BIT(attr,LBP_JV);
@@ -6973,6 +7073,7 @@ fill_org_lbp (const char *linebreak_filename)
       TRY(LBP_AL)
       TRY(LBP_H2)
       TRY(LBP_H3)
+      TRY(LBP_HL)
       TRY(LBP_ID)
       TRY(LBP_JL)
       TRY(LBP_JV)
@@ -6984,6 +7085,7 @@ fill_org_lbp (const char *linebreak_filename)
       else if (strcmp (field1, "CR") == 0) value = LBP_BK;
       else if (strcmp (field1, "NL") == 0) value = LBP_BK;
       else if (strcmp (field1, "SG") == 0) value = LBP_XX;
+      else if (strcmp (field1, "CJ") == 0) value = LBP_NS;
       else
         {
           fprintf (stderr, "unknown property value \"%s\" in '%s':%d\n",
@@ -7053,6 +7155,7 @@ debug_output_org_lbp (FILE *stream)
           PRINT_BIT(attr,LBP_AL);
           PRINT_BIT(attr,LBP_H2);
           PRINT_BIT(attr,LBP_H3);
+          PRINT_BIT(attr,LBP_HL);
           PRINT_BIT(attr,LBP_ID);
           PRINT_BIT(attr,LBP_JL);
           PRINT_BIT(attr,LBP_JV);
@@ -7225,6 +7328,7 @@ output_lbp (FILE *stream1, FILE *stream2)
           CASE(LBP_AL);
           CASE(LBP_H2);
           CASE(LBP_H3);
+          CASE(LBP_HL);
           CASE(LBP_ID);
           CASE(LBP_JL);
           CASE(LBP_JV);

@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Decomposition of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
 
 extern const unsigned char gl_uninorm_decomp_chars_table[];
 
@@ -13,8 +13,8 @@ extern const unsigned char gl_uninorm_decomp_chars_table[];
 typedef struct
   {
     int level1[191];
-    int level2[20 << 5];
-    unsigned short level3[263 << 5];
+    int level2[21 << 5];
+    unsigned short level3[272 << 5];
   }
 decomp_index_table_t;
 extern const decomp_index_table_t gl_uninorm_decomp_index_table;

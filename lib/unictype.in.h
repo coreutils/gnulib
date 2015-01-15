@@ -518,7 +518,8 @@ enum
   UC_JOINING_GROUP_YUDH,                  /* Yudh */
   UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
   UC_JOINING_GROUP_ZAIN,                  /* Zain */
-  UC_JOINING_GROUP_ZHAIN                  /* Zhain */
+  UC_JOINING_GROUP_ZHAIN,                 /* Zhain */
+  UC_JOINING_GROUP_ROHINGYA_YEH           /* Rohingya_Yeh */
 };
 
 /* Return the name of a joining group.  */

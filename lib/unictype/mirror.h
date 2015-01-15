@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Mirrored Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
 #define mirror_header_0 16
 #define mirror_header_1 2
 #define mirror_header_2 7
@@ -332,7 +332,7 @@ u_mirror =
         0,     0,     0,     0,     0,     0,     0,     0,
         0,     0,     0,     0,     0,     0,     0,     0,
     55357,     0,     0, 55354, 55353, 55352, 55351,     0,
-    55349, 55348,     0,     0, 55345,     0,     0,     0,
+    55349, 55348,     0, 55346, 55345, 55344,     0,     0,
         0,     0,     0, 55338, 55337, 55336, 55335,     0,
         0,     0,     0,     0, 55329, 55328, 55327,     0,
         0,     0, 55323, 55322, 55321, 55320, 55319, 55318,

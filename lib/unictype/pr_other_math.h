@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 6.1.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[10 << 4];
+    /*unsigned*/ int level3[11 << 4];
   }
 u_property_other_math =
 {
@@ -268,7 +268,7 @@ u_property_other_math =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   160,
        -1,
        -1,
        -1,
@@ -318,6 +318,10 @@ u_property_other_math =
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFF3F, 0xF7FFFFFD, 0xF7FFFFFF,
     0xFFDFFFFF, 0xFFDFFFFF, 0xFFFF7FFF, 0xFFFF7FFF,
-    0xFFFFFDFF, 0xFFFFFDFF, 0xFFFFCFF7, 0xFFFFFFFF
+    0xFFFFFDFF, 0xFFFFFDFF, 0xFFFFCFF7, 0xFFFFFFFF,
+    0xFFFFFFEF, 0x0AF7FE96, 0xAA96EA84, 0x5EF7F796,
+    0x0FFFFBFF, 0x0FFFFBEE, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };
