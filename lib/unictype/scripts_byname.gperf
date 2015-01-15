@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Unicode scripts.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 struct named_script { int name; unsigned int index; };
 %struct-type
 %language=ANSI-C
@@ -114,3 +114,26 @@ Miao, 98
 Sharada, 99
 Sora_Sompeng, 100
 Takri, 101
+Caucasian_Albanian, 102
+Bassa_Vah, 103
+Duployan, 104
+Elbasan, 105
+Grantha, 106
+Pahawh_Hmong, 107
+Khojki, 108
+Linear_A, 109
+Mahajani, 110
+Manichaean, 111
+Mende_Kikakui, 112
+Modi, 113
+Mro, 114
+Old_North_Arabian, 115
+Nabataean, 116
+Palmyrene, 117
+Pau_Cin_Hau, 118
+Old_Permic, 119
+Psalter_Pahlavi, 120
+Siddham, 121
+Khudawadi, 122
+Tirhuta, 123
+Warang_Citi, 124

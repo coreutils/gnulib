@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[1];
     short level2[1 << 7];
-    /*unsigned*/ int level3[7 << 4];
+    /*unsigned*/ int level3[8 << 4];
   }
 u_property_other_lowercase =
 {
@@ -103,7 +103,7 @@ u_property_other_lowercase =
        -1,
         2 +   128 * sizeof (short) / sizeof (int) +    96,
        -1,
-       -1,
+        2 +   128 * sizeof (short) / sizeof (int) +   112,
        -1,
        -1,
        -1,
@@ -173,8 +173,12 @@ u_property_other_lowercase =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x30000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00010000,
-    0x00000000, 0x00000000, 0x00000000, 0x03000000
+    0x00000000, 0x00000000, 0x00000000, 0x03000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0xF0000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

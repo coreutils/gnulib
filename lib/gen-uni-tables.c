@@ -32,7 +32,7 @@
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
-                      6.3.0
+                      7.0.0
  */
 
 #include <assert.h>
@@ -114,7 +114,7 @@ fill_attribute (unsigned int i,
 }
 
 /* Maximum length of a field in the UnicodeData.txt file.  */
-#define FIELDLEN 120
+#define FIELDLEN 160
 
 /* Reads the next field from STREAM.  The buffer BUFFER has size FIELDLEN.
    Reads up to (but excluding) DELIM.
@@ -2855,7 +2855,7 @@ is_property_alphabetic (unsigned int ch)
     || (ch == 0x10341) /* GOTHIC LETTER NINETY */
     || (ch == 0x1034A) /* GOTHIC LETTER NINE HUNDRED */
     || (ch >= 0x103D1 && ch <= 0x103D5) /* OLD PERSIAN NUMBERS */
-    || (ch >= 0x12400 && ch <= 0x12462); /* CUNEIFORM NUMERIC SIGNS */
+    || (ch >= 0x12400 && ch <= 0x1246E); /* CUNEIFORM NUMERIC SIGNS */
   bool result2 =
     ((unicode_properties[ch] & (1ULL << PROP_ALPHABETIC)) != 0);
 
@@ -2885,7 +2885,7 @@ is_property_default_ignorable_code_point (unsigned int ch)
   bool result1 =
     (is_category_Cf (ch)
      && !(ch >= 0xFFF9 && ch <= 0xFFFB) /* Annotations */
-     && !((ch >= 0x0600 && ch <= 0x0604) || ch == 0x06DD || ch == 0x070F)
+     && !((ch >= 0x0600 && ch <= 0x0605) || ch == 0x06DD || ch == 0x070F)
      /* For some reason, the following are not listed as having property
         Default_Ignorable_Code_Point.  */
      && !(ch == 0x110BD))
@@ -3757,7 +3757,35 @@ enum
   UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
   UC_JOINING_GROUP_ZAIN,                  /* Zain */
   UC_JOINING_GROUP_ZHAIN,                 /* Zhain */
-  UC_JOINING_GROUP_ROHINGYA_YEH           /* Rohingya_Yeh */
+  UC_JOINING_GROUP_ROHINGYA_YEH,          /* Rohingya_Yeh */
+  UC_JOINING_GROUP_STRAIGHT_WAW,          /* Straight_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ALEPH,      /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_BETH,       /* Manichaean_Beth */
+  UC_JOINING_GROUP_MANICHAEAN_GIMEL,      /* Manichaean_Gimel */
+  UC_JOINING_GROUP_MANICHAEAN_DALETH,     /* Manichaean_Daleth */
+  UC_JOINING_GROUP_MANICHAEAN_WAW,        /* Manichaean_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ZAYIN,      /* Manichaean_Zayin */
+  UC_JOINING_GROUP_MANICHAEAN_HETH,       /* Manichaean_Heth */
+  UC_JOINING_GROUP_MANICHAEAN_TETH,       /* Manichaean_Teth */
+  UC_JOINING_GROUP_MANICHAEAN_YODH,       /* Manichaean_Yodh */
+  UC_JOINING_GROUP_MANICHAEAN_KAPH,       /* Manichaean_Kaph */
+  UC_JOINING_GROUP_MANICHAEAN_LAMEDH,     /* Manichaean_Lamedh */
+  UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,    /* Manichaean_Dhamedh */
+  UC_JOINING_GROUP_MANICHAEAN_THAMEDH,    /* Manichaean_Thamedh */
+  UC_JOINING_GROUP_MANICHAEAN_MEM,        /* Manichaean_Mem */
+  UC_JOINING_GROUP_MANICHAEAN_NUN,        /* Manichaean_Nun */
+  UC_JOINING_GROUP_MANICHAEAN_SAMEKH,     /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_AYIN,       /* Manichaean_Ayin */
+  UC_JOINING_GROUP_MANICHAEAN_PE,         /* Manichaean_Pe */
+  UC_JOINING_GROUP_MANICHAEAN_SADHE,      /* Manichaean_Sadhe */
+  UC_JOINING_GROUP_MANICHAEAN_QOPH,       /* Manichaean_Qoph */
+  UC_JOINING_GROUP_MANICHAEAN_RESH,       /* Manichaean_Resh */
+  UC_JOINING_GROUP_MANICHAEAN_TAW,        /* Manichaean_Taw */
+  UC_JOINING_GROUP_MANICHAEAN_ONE,        /* Manichaean_One */
+  UC_JOINING_GROUP_MANICHAEAN_FIVE,       /* Manichaean_Five */
+  UC_JOINING_GROUP_MANICHAEAN_TEN,        /* Manichaean_Ten */
+  UC_JOINING_GROUP_MANICHAEAN_TWENTY,     /* Manichaean_Twenty */
+  UC_JOINING_GROUP_MANICHAEAN_HUNDRED     /* Manichaean_Hundred */
 };
 
 static uint8_t unicode_joining_group[0x110000];
@@ -3897,6 +3925,34 @@ fill_arabicshaping (const char *arabicshaping_filename)
       TRY(UC_JOINING_GROUP_ZAIN,                  "ZAIN")
       TRY(UC_JOINING_GROUP_ZHAIN,                 "ZHAIN")
       TRY(UC_JOINING_GROUP_ROHINGYA_YEH,          "ROHINGYA YEH")
+      TRY(UC_JOINING_GROUP_STRAIGHT_WAW,          "STRAIGHT WAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ALEPH,      "MANICHAEAN ALEPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_BETH,       "MANICHAEAN BETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_GIMEL,      "MANICHAEAN GIMEL")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_DALETH,     "MANICHAEAN DALETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_WAW,        "MANICHAEAN WAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ZAYIN,      "MANICHAEAN ZAYIN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_HETH,       "MANICHAEAN HETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TETH,       "MANICHAEAN TETH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_YODH,       "MANICHAEAN YODH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_KAPH,       "MANICHAEAN KAPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_LAMEDH,     "MANICHAEAN LAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,    "MANICHAEAN DHAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_THAMEDH,    "MANICHAEAN THAMEDH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_MEM,        "MANICHAEAN MEM")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_NUN,        "MANICHAEAN NUN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_SAMEKH,     "MANICHAEAN SAMEKH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_AYIN,       "MANICHAEAN AYIN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_PE,         "MANICHAEAN PE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_SADHE,      "MANICHAEAN SADHE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_QOPH,       "MANICHAEAN QOPH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_RESH,       "MANICHAEAN RESH")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TAW,        "MANICHAEAN TAW")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_ONE,        "MANICHAEAN ONE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_FIVE,       "MANICHAEAN FIVE")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TEN,        "MANICHAEAN TEN")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_TWENTY,     "MANICHAEAN TWENTY")
+      TRY(UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    "MANICHAEAN HUNDRED")
 #undef TRY
       else
         {
@@ -4178,6 +4234,34 @@ joining_group_as_c_identifier (int joining_group)
   TRY(UC_JOINING_GROUP_ZAIN)
   TRY(UC_JOINING_GROUP_ZHAIN)
   TRY(UC_JOINING_GROUP_ROHINGYA_YEH)
+  TRY(UC_JOINING_GROUP_STRAIGHT_WAW)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_ALEPH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_BETH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_GIMEL)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_DALETH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_WAW)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_ZAYIN)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_HETH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_TETH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_YODH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_KAPH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_LAMEDH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_DHAMEDH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_THAMEDH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_MEM)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_NUN)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_SAMEKH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_AYIN)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_PE)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_SADHE)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_QOPH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_RESH)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_TAW)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_ONE)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_FIVE)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_TEN)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_TWENTY)
+  TRY(UC_JOINING_GROUP_MANICHAEAN_HUNDRED)
 #undef TRY
   abort ();
 }
@@ -6255,8 +6339,8 @@ get_lbp (unsigned int ch)
 {
   int64_t attr = 0;
 
-  /* U+20BB..U+20CF is reserved for prefixes.  */
-  if (ch >= 0x20BB && ch <= 0x20CF)
+  /* U+20BC..U+20CF is reserved for prefixes.  */
+  if (ch >= 0x20BC && ch <= 0x20CF)
     return (int64_t) 1 << LBP_PR;
 
   if (unicode_attributes[ch].name != NULL)
@@ -6410,6 +6494,11 @@ get_lbp (unsigned int ch)
           || ch == 0x2CFF /* COPTIC MORPHOLOGICAL DIVIDER */
           || (ch >= 0x2E0E && ch <= 0x2E15) /* EDITORIAL CORONIS .. UPWARDS ANCORA */
           || ch == 0x2E17 /* DOUBLE OBLIQUE HYPHEN */
+          || ch == 0x2E3C /* STENOGRAPHIC FULL STOP */
+          || ch == 0x2E3D /* VERTICAL SIX DOTS */
+          || ch == 0x2E3E /* WIGGLY VERTICAL LINE */
+          || ch == 0x2E40 /* DOUBLE HYPHEN */
+          || ch == 0x2E41 /* REVERSED COMMA */
           || ch == 0xA60D /* VAI COMMA */
           || ch == 0xA60F /* VAI QUESTION MARK */
           || ch == 0xA92E /* KAYAH LI SIGN CWI */
@@ -6436,6 +6525,7 @@ get_lbp (unsigned int ch)
           || ch == 0xAAF1 /* MEETEI MAYEK AHANG KHUDAM */
           || ch == 0xABEB /* MEETEI MAYEK CHEIKHEI */
           || ch == 0x10857 /* IMPERIAL ARAMAIC SECTION SIGN */
+          || (ch >= 0x10AF0 && ch <= 0x10AF5) /* MANICHAEAN PUNCTUATION STAR..MANICHAEAN PUNCTUATION TWO DOTS */
           || ch == 0x10B39 /* AVESTAN ABBREVIATION MARK */
           || ch == 0x10B3A /* TINY TWO DOTS OVER ONE DOT PUNCTUATION */
           || ch == 0x10B3B /* SMALL TWO DOTS OVER ONE DOT PUNCTUATION */
@@ -6456,9 +6546,27 @@ get_lbp (unsigned int ch)
           || ch == 0x111C5 /* SHARADA DANDA */
           || ch == 0x111C6 /* SHARADA DOUBLE DANDA */
           || ch == 0x111C8 /* SHARADA SEPARATOR */
+          || ch == 0x11238 /* KHOJKI DANDA */
+          || ch == 0x11239 /* KHOJKI DOUBLE DANDA */
+          || ch == 0x1123B /* KHOJKI SECTION MARK */
+          || ch == 0x1123C /* KHOJKI DOUBLE SECTION MARK */
+          || ch == 0x115C2 /* SIDDHAM DANDA */
+          || ch == 0x115C3 /* SIDDHAM DOUBLE DANDA */
+          || ch == 0x115C9 /* SIDDHAM END OF TEXT MARK */
+          || ch == 0x11641 /* MODI DANDA */
+          || ch == 0x11642 /* MODI DOUBLE DANDA */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
-          || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */)
+          || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */
+          || ch == 0x12474 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL QUADCOLON */
+          || ch == 0x16A6E /* MRO DANDA */
+          || ch == 0x16A6F /* MRO DOUBLE DANDA */
+          || ch == 0x16AF5 /* BASSA VAH FULL STOP */
+          || ch == 0x16B37 /* PAHAWH HMONG SIGN VOS THOM */
+          || ch == 0x16B38 /* PAHAWH HMONG SIGN VOS TSHAB CEEB */
+          || ch == 0x16B39 /* PAHAWH HMONG SIGN CIM CHEEM */
+          || ch == 0x16B44 /* PAHAWH HMONG SIGN XAUS */
+          || ch == 0x1BC9F /* DUPLOYAN PUNCTUATION CHINOOK FULL STOP */)
         attr |= (int64_t) 1 << LBP_BA;
 
       /* break opportunity before */
@@ -6480,7 +6588,9 @@ get_lbp (unsigned int ch)
           || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
           || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
           || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
-          || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */)
+          || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */
+          || ch == 0x11175 /* MAHAJANI SECTION MARK */
+          || ch == 0x115C1 /* SIDDHAM SIGN SIDDHAM */)
         attr |= (int64_t) 1 << LBP_BB;
 
       /* hyphen */
@@ -6499,9 +6609,7 @@ get_lbp (unsigned int ch)
       /* closing punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
            && unicode_attributes[ch].category[1] == 'e'
-           && !(attr & ((int64_t) 1 << LBP_CP))
-           && ch != 0x2309
-           && ch != 0x230B)
+           && !(attr & ((int64_t) 1 << LBP_CP)))
           || ch == 0x3001 /* IDEOGRAPHIC COMMA */
           || ch == 0x3002 /* IDEOGRAPHIC FULL STOP */
           || ch == 0xFE11 /* PRESENTATION FORM FOR VERTICAL IDEOGRAPHIC COMMA */
@@ -6557,14 +6665,17 @@ get_lbp (unsigned int ch)
           || ch == 0xFE56 /* SMALL QUESTION MARK */
           || ch == 0xFE57 /* SMALL EXCLAMATION MARK */
           || ch == 0xFF01 /* FULLWIDTH EXCLAMATION MARK */
-          || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */)
+          || ch == 0xFF1F /* FULLWIDTH QUESTION MARK */
+          || ch == 0x115C4 /* SIDDHAM SEPARATOR DOT */
+          || ch == 0x115C5 /* SIDDHAM SEPARATOR BAR */)
         attr |= (int64_t) 1 << LBP_EX;
 
       /* inseparable */
       if (ch == 0x2024 /* ONE DOT LEADER */
           || ch == 0x2025 /* TWO DOT LEADER */
           || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
-          || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */)
+          || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */
+          || ch == 0x10AF6 /* MANICHAEAN PUNCTUATION LINE FILLER */)
         attr |= (int64_t) 1 << LBP_IN;
 
       /* non starter */
@@ -6596,15 +6707,16 @@ get_lbp (unsigned int ch)
           || ch == 0xFF70 /* HALFWIDTH KATAKANA-HIRAGANA PROLONGED SOUND MARK */
           || ch == 0xFF9E /* HALFWIDTH KATAKANA VOICED SOUND MARK */
           || ch == 0xFF9F /* HALFWIDTH KATAKANA SEMI-VOICED SOUND MARK */
+          || ch == 0x1F679 /* HEAVY INTERROBANG ORNAMENT */
+          || ch == 0x1F67A /* SANS-SERIF INTERROBANG ORNAMENT */
+          || ch == 0x1F67B /* HEAVY SANS-SERIF INTERROBANG ORNAMENT */
           || strstr (unicode_attributes[ch].name, "HIRAGANA LETTER SMALL ") != NULL
           || strstr (unicode_attributes[ch].name, "KATAKANA LETTER SMALL ") != NULL)
         attr |= (int64_t) 1 << LBP_NS;
 
       /* opening punctuation */
       if ((unicode_attributes[ch].category[0] == 'P'
-           && unicode_attributes[ch].category[1] == 's'
-           && ch != 0x2308
-           && ch != 0x230A)
+           && unicode_attributes[ch].category[1] == 's')
           || ch == 0x00A1 /* INVERTED EXCLAMATION MARK */
           || ch == 0x00BF /* INVERTED QUESTION MARK */
           || ch == 0x2E18 /* INVERTED INTERROBANG */
@@ -6627,12 +6739,17 @@ get_lbp (unsigned int ch)
           || ch == 0x275C /* HEAVY SINGLE COMMA QUOTATION MARK ORNAMENT */
           || ch == 0x275D /* HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT */
           || ch == 0x275E /* HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x275F /* HEAVY LOW SINGLE COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x2760 /* HEAVY LOW DOUBLE COMMA QUOTATION MARK ORNAMENT */
           || ch == 0x2E00 /* RIGHT ANGLE SUBSTITUTION MARKER */
           || ch == 0x2E01 /* RIGHT ANGLE DOTTED SUBSTITUTION MARKER */
           || ch == 0x2E06 /* RAISED INTERPOLATION MARKER */
           || ch == 0x2E07 /* RAISED DOTTED INTERPOLATION MARKER */
           || ch == 0x2E08 /* DOTTED TRANSPOSITION MARKER */
-          || ch == 0x2E0B /* RAISED SQUARE */)
+          || ch == 0x2E0B /* RAISED SQUARE */
+          || ch == 0x1F676 /* SANS-SERIF HEAVY DOUBLE TURNED COMMA QUOTATION MARK ORNAMENT  */
+          || ch == 0x1F677 /* SANS-SERIF HEAVY DOUBLE COMMA QUOTATION MARK ORNAMENT */
+          || ch == 0x1F678 /* SANS-SERIF HEAVY LOW DOUBLE COMMA QUOTATION MARK ORNAMENT */)
         attr |= (int64_t) 1 << LBP_QU;
 
       /* infix separator (numeric) */
@@ -6674,6 +6791,7 @@ get_lbp (unsigned int ch)
           || ch == 0x2036 /* REVERSED DOUBLE PRIME */
           || ch == 0x2037 /* REVERSED TRIPLE PRIME */
           || ch == 0x20A7 /* PESETA SIGN */
+          || ch == 0x20BB /* NORDIC MARK SIGN */
           || ch == 0x2103 /* DEGREE CELSIUS */
           || ch == 0x2109 /* DEGREE FAHRENHEIT */
           || ch == 0xFDFC /* RIAL SIGN */
@@ -6747,6 +6865,8 @@ get_lbp (unsigned int ch)
            || ch == 0x19DE /* NEW TAI LUE SIGN LAE */
            || ch == 0x19DF /* NEW TAI LUE SIGN LAEV */
            || (ch >= 0x1AA0 && ch <= 0x1AAD) /* TAI THAM SIGN */
+           || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
+           || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
            || (ch >= 0xAA77 && ch <= 0xAA79) /* MYANMAR SYMBOL AITON */
            || (ch >= 0xAADE && ch <= 0xAADF) /* TAI VIET SYMBOL */)
           && ((ch >= 0x0E00 && ch <= 0x0EFF) /* Thai, Lao */
@@ -6754,6 +6874,8 @@ get_lbp (unsigned int ch)
               || (ch >= 0x1780 && ch <= 0x17FF) /* Khmer */
               || (ch >= 0x1950 && ch <= 0x19DF) /* Tai Le, New Tai Lue */
               || (ch >= 0x1A20 && ch <= 0x1AAF) /* Tai Tham */
+              || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
+              || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
               || (ch >= 0xAA60 && ch <= 0xAADF) /* Myanmar Extended-A, Tai Viet */))
         attr |= (int64_t) 1 << LBP_SA;
 
@@ -6832,6 +6954,7 @@ get_lbp (unsigned int ch)
           || ch == 0x26FD /* FUEL PUMP */
           || ch == 0x26FE /* CUP ON BLACK SQUARE */
           || ch == 0x26FF /* WHITE FLAG WITH HORIZONTAL MIDDLE BLACK STRIPE */
+          || ch == 0x2700 /* BLACK SAFETY SCISSORS */
           || ch == 0x2701 /* UPPER BLADE SCISSORS */
           || ch == 0x2702 /* BLACK SCISSORS */
           || ch == 0x2703 /* LOWER BLADE SCISSORS */
@@ -6908,18 +7031,23 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1B000 && ch <= 0x1B001) /* Kana Supplement */
           || (ch >= 0x1F000 && ch <= 0x1F02B) /* Mahjong Tiles */
           || (ch >= 0x1F030 && ch <= 0x1F093) /* Domino Tiles */
-          || (ch >= 0x1F0A0 && ch <= 0x1F0DF) /* Playing Cards */
+          || (ch >= 0x1F0A0 && ch <= 0x1F0F5) /* Playing Cards */
           || (ch >= 0x1F200 && ch <= 0x1F248) /* Enclosed Ideographic Supplement */
           || (ch >= 0x1F250 && ch <= 0x1F251) /* Enclosed Ideographic Supplement */
           || (ch >= 0x1F300 && ch <= 0x1F5FF /* Miscellaneous Symbols and Pictographs */
               && ch != 0x1F3B5 && ch != 0x1F3B6 && ch != 0x1F3BC
               && ch != 0x1F4A0 && ch != 0x1F4A2 && ch != 0x1F4A4
               && ch != 0x1F4AF && ch != 0x1F4B1 && ch != 0x1F4B2
+              && !(ch >= 0x1F39C && ch <= 0x1F39D)
               && !(ch >= 0x1F500 && ch <= 0x1F506)
               && !(ch >= 0x1F517 && ch <= 0x1F524)
-              && !(ch >= 0x1F532 && ch <= 0x1F543))
+              && !(ch >= 0x1F532 && ch <= 0x1F549)
+              && !(ch >= 0x1F5D4 && ch <= 0x1F5DB)
+              && !(ch >= 0x1F5F4 && ch <= 0x1F5F9))
           || (ch >= 0x1F600 && ch <= 0x1F64F) /* Emoticons */
-          || (ch >= 0x1F680 && ch <= 0x1F6C5) /* Transport and Map Symbols */
+          || (ch >= 0x1F680 && ch <= 0x1F6CF) /* Transport and Map Symbols */
+          || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
+          || (ch >= 0x1F6F0 && ch <= 0x1F6F3) /* Transport and Map Symbols */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM))))
@@ -6982,16 +7110,13 @@ get_lbp (unsigned int ch)
           || ch == 0x0602 /* ARABIC FOOTNOTE MARKER */
           || ch == 0x0603 /* ARABIC SIGN SAFHA */
           || ch == 0x0604 /* ARABIC SIGN SAMVAT */
+          || ch == 0x0605 /* ARABIC NUMBER MARK ABOVE */
           || ch == 0x06DD /* ARABIC END OF AYAH */
           || ch == 0x070F /* SYRIAC ABBREVIATION MARK */
           || ch == 0x2061 /* FUNCTION APPLICATION */
           || ch == 0x2062 /* INVISIBLE TIMES */
           || ch == 0x2063 /* INVISIBLE SEPARATOR */
           || ch == 0x2064 /* INVISIBLE PLUS */
-          || ch == 0x2308 /* LEFT CEILING */
-          || ch == 0x2309 /* RIGHT CEILING */
-          || ch == 0x230A /* LEFT FLOOR */
-          || ch == 0x230B /* RIGHT FLOOR */
           /* Extra characters for compatibility with Unicode LineBreak.txt.  */
           || ch == 0x110BD /* KAITHI NUMBER SIGN */)
         if (!(attr & (((int64_t) 1 << LBP_GL) | ((int64_t) 1 << LBP_B2) | ((int64_t) 1 << LBP_BA) | ((int64_t) 1 << LBP_BB) | ((int64_t) 1 << LBP_HY) | ((int64_t) 1 << LBP_CB) | ((int64_t) 1 << LBP_CL) | ((int64_t) 1 << LBP_CP) | ((int64_t) 1 << LBP_EX) | ((int64_t) 1 << LBP_IN) | ((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_OP) | ((int64_t) 1 << LBP_QU) | ((int64_t) 1 << LBP_IS) | ((int64_t) 1 << LBP_NU) | ((int64_t) 1 << LBP_PO) | ((int64_t) 1 << LBP_PR) | ((int64_t) 1 << LBP_SY) | ((int64_t) 1 << LBP_H2) | ((int64_t) 1 << LBP_H3) | ((int64_t) 1 << LBP_HL) | ((int64_t) 1 << LBP_JL) | ((int64_t) 1 << LBP_JV) | ((int64_t) 1 << LBP_JT) | ((int64_t) 1 << LBP_RI) | ((int64_t) 1 << LBP_SA) | ((int64_t) 1 << LBP_ID)))
@@ -7045,7 +7170,9 @@ get_lbp (unsigned int ch)
                 || ch == 0x2155 /* VULGAR FRACTION ONE FIFTH */
                 || ch == 0x2574 /* BOX DRAWINGS LIGHT LEFT */
                 || ch == 0x2616 /* WHITE SHOGI PIECE */
-                || ch == 0x2617 /* BLACK SHOGI PIECE */)
+                || ch == 0x2617 /* BLACK SHOGI PIECE */
+                || ch == 0x1F10B /* DINGBAT CIRCLED SANS-SERIF DIGIT ZERO */
+                || ch == 0x1F10C /* DINGBAT NEGATIVE CIRCLED SANS-SERIF DIGIT ZERO */)
               attr |= (int64_t) 1 << LBP_AI;
             else
               attr |= (int64_t) 1 << LBP_AL;

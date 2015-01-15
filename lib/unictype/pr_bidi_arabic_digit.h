@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -279,7 +279,7 @@ u_property_bidi_arabic_digit =
        -1
   },
   {
-    0x0000001F, 0x00000000, 0x00000000, 0x00001BFF,
+    0x0000003F, 0x00000000, 0x00000000, 0x00001BFF,
     0x00000000, 0x00000000, 0x20000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

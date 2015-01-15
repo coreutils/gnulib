@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[13 << 4];
+    /*unsigned*/ int level3[15 << 4];
   }
 u_property_grapheme_link =
 {
@@ -158,9 +158,9 @@ u_property_grapheme_link =
        -1,
        -1,
         3 +   256 * sizeof (short) / sizeof (int) +   176,
-       -1,
-       -1,
         3 +   256 * sizeof (short) / sizeof (int) +   192,
+        3 +   256 * sizeof (short) / sizeof (int) +   208,
+        3 +   256 * sizeof (short) / sizeof (int) +   224,
        -1,
        -1,
        -1,
@@ -323,11 +323,19 @@ u_property_grapheme_link =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000040, 0x00000000,
+    0x00000000, 0x00000000, 0x00000040, 0x80000000,
     0x00000000, 0x02000000, 0x00000000, 0x00000000,
     0x00000000, 0x00180000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000001, 0x00000000,
+    0x00000000, 0x00200000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000400,
+    0x00000000, 0x00000000, 0x00002000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000004, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x80000000, 0x00000000, 0x00000000,
+    0x00000000, 0x80000000, 0x00000000, 0x00000000,
     0x00000000, 0x00400000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000

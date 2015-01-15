@@ -28,7 +28,7 @@
     { 0x10341, 0x10341 },
     { 0x1034A, 0x1034A },
     { 0x103D1, 0x103D5 },
-    { 0x12400, 0x12462 }
+    { 0x12400, 0x1246E }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Nl)
 #include "test-predicate-part2.h"

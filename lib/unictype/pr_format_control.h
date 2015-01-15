@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[15];
     short level2[3 << 7];
-    /*unsigned*/ int level3[5 << 4];
+    /*unsigned*/ int level3[6 << 4];
   }
 u_property_format_control =
 {
@@ -256,16 +256,6 @@ u_property_format_control =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +    48,
        -1,
        -1,
@@ -276,21 +266,31 @@ u_property_format_control =
        -1,
        -1,
        -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
-       -1,
        16 +   384 * sizeof (short) / sizeof (int) +    64,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       -1,
+       16 +   384 * sizeof (short) / sizeof (int) +    80,
        -1,
        -1,
        -1,
@@ -430,6 +430,10 @@ u_property_format_control =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000800, 0x00000000, 0x00000000, 0x0000FC1F,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x0000000F, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,

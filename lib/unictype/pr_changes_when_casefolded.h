@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 6.3.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[12 << 4];
+    /*unsigned*/ int level3[13 << 4];
   }
 u_property_changes_when_casefolded =
 {
@@ -161,7 +161,7 @@ u_property_changes_when_casefolded =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   192,
        -1,
        -1,
        -1,
@@ -285,11 +285,11 @@ u_property_changes_when_casefolded =
     0xB1DBCED6, 0x11AED2D5, 0x4AAAADB0, 0x55D65555,
     0x55555555, 0x6C055555, 0x0000557A, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000020, 0x00450000,
+    0x00000000, 0x00000000, 0x00000020, 0x80450000,
     0xFFFED740, 0x00000FFB, 0x55638004, 0xE6B35555,
     0xFFFFFFFF, 0x0000FFFF, 0x00000000, 0x55555555,
     0x55555401, 0x55555555, 0x55552AAB, 0x55555555,
-    0x55555555, 0xFFFE0055, 0x007FFFFF, 0x00000000,
+    0x55555555, 0xFFFE5555, 0x007FFFFF, 0x00000000,
     0x00000080, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0xFFFFFFFF, 0x000020BF, 0x00000000,
@@ -312,9 +312,9 @@ u_property_changes_when_casefolded =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x55555555, 0x00001555,
-    0x00555555, 0x00000000, 0x00000000, 0x00000000,
+    0x05555555, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x55545554, 0x55555555, 0x6A005555,
-    0x00052855, 0x00000555, 0x00000000, 0x00000000,
+    0x55452855, 0x00033D55, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00F8007F, 0x00000000, 0x00000000, 0x00000000,
@@ -325,6 +325,10 @@ u_property_changes_when_casefolded =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0x000000FF, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0xFFFFFFFF, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }

@@ -523,7 +523,35 @@ enum
   UC_JOINING_GROUP_YUDH_HE,               /* Yudh_He */
   UC_JOINING_GROUP_ZAIN,                  /* Zain */
   UC_JOINING_GROUP_ZHAIN,                 /* Zhain */
-  UC_JOINING_GROUP_ROHINGYA_YEH           /* Rohingya_Yeh */
+  UC_JOINING_GROUP_ROHINGYA_YEH,          /* Rohingya_Yeh */
+  UC_JOINING_GROUP_STRAIGHT_WAW,          /* Straight_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ALEPH,      /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_BETH,       /* Manichaean_Beth */
+  UC_JOINING_GROUP_MANICHAEAN_GIMEL,      /* Manichaean_Gimel */
+  UC_JOINING_GROUP_MANICHAEAN_DALETH,     /* Manichaean_Daleth */
+  UC_JOINING_GROUP_MANICHAEAN_WAW,        /* Manichaean_Waw */
+  UC_JOINING_GROUP_MANICHAEAN_ZAYIN,      /* Manichaean_Zayin */
+  UC_JOINING_GROUP_MANICHAEAN_HETH,       /* Manichaean_Heth */
+  UC_JOINING_GROUP_MANICHAEAN_TETH,       /* Manichaean_Teth */
+  UC_JOINING_GROUP_MANICHAEAN_YODH,       /* Manichaean_Yodh */
+  UC_JOINING_GROUP_MANICHAEAN_KAPH,       /* Manichaean_Kaph */
+  UC_JOINING_GROUP_MANICHAEAN_LAMEDH,     /* Manichaean_Lamedh */
+  UC_JOINING_GROUP_MANICHAEAN_DHAMEDH,    /* Manichaean_Dhamedh */
+  UC_JOINING_GROUP_MANICHAEAN_THAMEDH,    /* Manichaean_Thamedh */
+  UC_JOINING_GROUP_MANICHAEAN_MEM,        /* Manichaean_Mem */
+  UC_JOINING_GROUP_MANICHAEAN_NUN,        /* Manichaean_Nun */
+  UC_JOINING_GROUP_MANICHAEAN_SAMEKH,     /* Manichaean_Aleph */
+  UC_JOINING_GROUP_MANICHAEAN_AYIN,       /* Manichaean_Ayin */
+  UC_JOINING_GROUP_MANICHAEAN_PE,         /* Manichaean_Pe */
+  UC_JOINING_GROUP_MANICHAEAN_SADHE,      /* Manichaean_Sadhe */
+  UC_JOINING_GROUP_MANICHAEAN_QOPH,       /* Manichaean_Qoph */
+  UC_JOINING_GROUP_MANICHAEAN_RESH,       /* Manichaean_Resh */
+  UC_JOINING_GROUP_MANICHAEAN_TAW,        /* Manichaean_Taw */
+  UC_JOINING_GROUP_MANICHAEAN_ONE,        /* Manichaean_One */
+  UC_JOINING_GROUP_MANICHAEAN_FIVE,       /* Manichaean_Five */
+  UC_JOINING_GROUP_MANICHAEAN_TEN,        /* Manichaean_Ten */
+  UC_JOINING_GROUP_MANICHAEAN_TWENTY,     /* Manichaean_Twenty */
+  UC_JOINING_GROUP_MANICHAEAN_HUNDRED     /* Manichaean_Hundred */
 };
 
 /* Return the name of a joining group.  */

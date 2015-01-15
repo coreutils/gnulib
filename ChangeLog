@@ -1,5 +1,37 @@
 2015-01-15  Daiki Ueno  <ueno@gnu.org>
 
+	libunistring: update to Unicode 7.0.0
+	* lib/unictype/joininggroup_byname.gperf: Add Straight Waw and
+	Manichaean names.
+	* lib/unictype/joininggroup_name.h: Likewise.
+	* lib/unictype.in.h (UC_JOINING_GROUP_STRAIGHT_WAW)
+	(UC_JOINING_GROUP_MANICHAEAN_ALEPH): New enumeration values.
+	* lib/gen-uni-tables.c (UC_JOINING_GROUP_STRAIGHT_WAW)
+	(UC_JOINING_GROUP_MANICHAEAN_*): New enumeration values.
+	(fill_arabicshaping, joining_group_as_c_identifier): Support those
+	enum values.
+	(is_property_alphabetic): Accept newly added characters to
+	cuneiform numeric signs.
+	(is_property_default_ignorable_code_point): Reject U+0605.
+	(FIELDLEN): Increase from 120 to 160.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+0605,
+	U+08FF, U+0C00, U+0C81, U+0D01, U+1AB0..U+1ABE, U+1BAC..U+1BAD,
+	U+1CF8..U+1CF9, U+1DE7..U+1DF5, U+A9E5, U+AA7C, U+FE27..U+FE2D,
+	U+102E0, U+10376..U+1037A, U+10AE5..U+10AE6, U+1107F, U+11173,
+	U+1122F..U+11231, U+11234, U+11236..U+11237, U+112DF,
+	U+112E3..U+112EA, U+11301, U+1133C, U+11340, U+11366..U+1136C,
+	U+11370..U+11374, U+114B3..U+114B8, U+114BA, U+114BF..U+114C0,
+	U+114C2..U+114C3, U+115B2..U+115B5, U+115BC..U+115C0,
+	U+11633..U+1163A, U+1163D, U+1163F..U+11640, U+16AF0..U+16AF4,
+	U+16B30..U+16B36, U+1BC9D..U+1BC9E, U+1BCA0..U+1BCA3, and
+	U+1E8D0..U+1E8D6.
+	(uc_width): Adjust nonspacing_table_ind boundary from 240 to 248.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* all generated files under lib/uni* and tests/uni*: Regenerate.
+
+2015-01-14  Daiki Ueno  <ueno@gnu.org>
+
 	libunistring: update to Unicode 6.3.0
 	* lib/uniwbrk.in.h (WBP_DQ, WBP_SQ, WBP_HL): New enumeration values.
 	* lib/uniwbrk/u-wordbreaks.h (FUNC): Support WB7a, WB7b, and WB7c.
