@@ -1,5 +1,14 @@
 2015-01-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time: port to MinGW32 3.21
+	Problem reported by Eli Zaretskii in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-01/msg00042.html
+	* lib/time.in.h:
+	* m4/time_h.m4 (gl_CHECK_TYPE_STRUCT_TIMESPEC):
+	* modules/time (Depends-on):
+	Fall back on unistd.h if the other include files don't define
+	struct timespec.
+
 	update-copyright: apply to self
 	* build-aux/update-copyright: Fix copyright date.  How ironic!
 
