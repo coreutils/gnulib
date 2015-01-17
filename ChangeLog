@@ -1,3 +1,83 @@
+2016-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+            KO Myung-Hun  <komh@chollian.net>
+
+	openat_proc_name: port to OS/2 kLIBC
+	OS/2 kLIBC provides a function to retrive a path from a fd. Use it
+	instead of /proc/self/fd.
+	* lib/openat-proc.c (openat_proc_name):
+	Don't assume file name length is less than INT_MAX.
+	Port to OS/2 kLIBC with __libc_Back_ioFHToPath().
+
+2016-01-14  KO Myung-Hun  <komh@chollian.net>
+
+	stdint: check _INTPTR_T_DECLARED for intptr_t etc.
+	OS/2 kLIBC's stdint.h defines _INTPTR_T_DECLARED and needs its own
+	definitions of intptr_t and uintptr_t (which use int and unsigned)
+	to avoid clashes with declarations of system functions like sbrk.
+	* lib/stdint.in.h (intptr_t, uintptr_t): Check
+	_INTPTR_T_DECLARED before defining them.
+
+	opendir, closedir, dirfd, fdopendir: port to OS/2 kLIBC
+	* lib/closedir.c (closedir): Unregister fd if closedir() succeeds.
+	* lib/dirent.in.h (_gl_register_dirp_fd, _gl_unregister_dirp_fd):
+	Declare on kLIBC.
+	* lib/dirfd.c (struct dirp_fd_list): New. Structures to keep track of
+	fd associated with dirp.
+	(_gl_register_dirp_fd): New. Register fd associated with dirp to
+	dirp_fd_list.
+	(_gl_unregister_dirp_fd): New. Unregister fd with closing it.
+	(dirfd): Implemented for kLIBC.
+	* lib/fdopendir.c (fdopendir): Implemented for kLIBC.
+	* lib/opendir.c (opendir): New. Register fd and dirp pair if open()
+	succeeds.
+	* m4/closedir.m4 (gl_FUNC_CLOSEDIR): Replace if OS/2.
+	* m4/dirfd.m4 (gl_FUNC_DIRFD): Likewise.
+	(REPLACE_DIRFD): Define to 1 if replaced.
+	* m4/opendir.m4 (gl_FUNC_OPENDIR): Likewise.
+	* modules/closedir (Depends-on): Add dirfd.
+	* modules/dirfd (Depends-on): Add 'test $REPLACE_DIRFD = 1' to errno
+	condition.
+	(configure.ac): Add dirfd to LIBOBJS if $REPLACE_DIRFD = 1 as well.
+	* modules/opendir (Depends-on): Add dirfd.
+
+	dup, dup2, fcntl: support a directory fd on OS/2 kLIBC
+	On OS/2 kLIBC, dup(), dup2() and fcntl() do not work on a directory fd.
+	* lib/dup.c (dup_nothrow): New.
+	* lib/dup2.c (klibc_dup2dirfd): New. dup2() for a directory fd.
+	(klibc_dup2): New.
+	* lib/fcntl.c (klibc_fcntl): New.
+	* m4/dup.m4 (gl_FUNC_DUP): Check if dup() works on a directory fd.
+	* m4/dup2.m4 (gl_FUNC_DUP2): Check if dup2() works on a directory fd.
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): Check if F_DUPFD works on a directory
+	fd.
+
+	pipe_filter_ii_execute: port to OS/2 kLIBC
+	Pipes on kLIBC do not support O_NONBLOCK like Win32.
+	* lib/pipe-filter-ii.c (start_wrapper, _beginthreadex, CloseHandle,
+	WaiForSingleObject, WaitForMultipleObjects): New on OS/2 kLIBC.
+	Reuse Win32 code on OS/2 kLIBC.
+	* lib/spawn-pipe.c: Reuse Win32 code on OS/2 kLIBC.
+	* lib/w32spawn.h: Do not include windows.h on OS/2 kLIBC.
+
+	wchar: fix "conflicting types" error for __wcwidth on OS/2 kLIBC
+	On OS/2 kLIBC, wcwidth is a macro that expands to the name of a
+	static inline function.  The implementation of wcwidth in wcwidth.c
+	causes a "conflicting types" error.
+	* lib/wchar.in.h: Undefine wcwidth on OS/2 kLIBC.
+
+	w32spawn: clear SHELL_SPECIAL_CHARS and SHELL_SPACE_CHAR on OS/2 kLIBC
+	spawn() on OS/2 kLIBC is not silly like one on Windows
+	* libc/w32spawn.h (SHELL_SPECIAL_CHARS, SHELL_SPACE_CHAR): Set both to
+	empty string on OS/2 kLIBC.
+
+	pipe-filter-aux: undefine HAVE_SELECT on KLIBC
+	On OS/2 kLIBC, select() works only on sockets.
+	* lib/pipe-filter-aux.h (HAVE_SELECT): Undefine on OS/2 kLIBC.
+
+	binary-io: don't put fd in binary mode if it is a console on EMX
+	* lib/binary-io.h (SET_BINARY): Don't put fd in binary mode if it is
+	a console on EMX.
+
 2016-01-15  Pádraig Brady  <P@draigBrady.com>
 
 	doc: mention unfixed issues with unsupported localtime() values
