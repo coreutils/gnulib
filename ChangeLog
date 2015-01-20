@@ -1,5 +1,15 @@
 2015-01-20  Daiki Ueno  <ueno@gnu.org>
 
+	unictype/category-none: fix link with libunistring
+	Since _UC_CATEGORY_NONE is not a public symbol, it will be
+	prefixed with "libstring_" when compiled as part of libunistring.
+	To avoid undefined symbol at link time, increase the minimum
+	version when the dependant modules are updated.
+	* modules/unictype/category-none (configure.ac): Bump minimum
+	version to 0.9.5.
+
+2015-01-20  Daiki Ueno  <ueno@gnu.org>
+
 	unitypes: fix build with installed libunistring
 	The minimum version has not bumped after _UC_ATTRIBUTE_CONST and
 	_UC_ATTRIBUTE_PURE were added to unitypes.in.h.
