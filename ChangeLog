@@ -1,3 +1,10 @@
+2015-01-20  Daiki Ueno  <ueno@gnu.org>
+
+	unitypes: fix build with installed libunistring
+	The minimum version has not bumped after _UC_ATTRIBUTE_CONST and
+	_UC_ATTRIBUTE_PURE were added to unitypes.in.h.
+	* modules/unitypes (configure.ac): Bump minimum version to 0.9.4.
+
 2015-01-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time: port to MinGW32 3.21
