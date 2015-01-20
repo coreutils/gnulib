@@ -1,5 +1,21 @@
 2015-01-20  Daiki Ueno  <ueno@gnu.org>
 
+	libunistring: bump version of unitypes dependants
+	Due to the header file search order, all the headers which depend
+	on unitypes.h need to be generated, when the preinstalled
+	libunistring is older.
+	* modules/unicase/base (configure.ac): Bump minimum version to
+	0.9.4.
+	* modules/uniconv/base (configure.ac): Likewise.
+	* modules/unilbrk/base (configure.ac): Likewise.
+	* modules/uninorm/base (configure.ac): Likewise.
+	* modules/unistdio/base (configure.ac): Likewise.
+	* modules/unistr/base (configure.ac): Likewise.
+	* modules/uniwbrk/base (configure.ac): Likewise.
+	* modules/uniwidth/base (configure.ac): Likewise.
+
+2015-01-20  Daiki Ueno  <ueno@gnu.org>
+
 	unictype/category-none: fix link with libunistring
 	Since _UC_CATEGORY_NONE is not a public symbol, it will be
 	prefixed with "libstring_" when compiled as part of libunistring.
