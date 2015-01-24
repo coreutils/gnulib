@@ -40,7 +40,7 @@ lookup_withtable (ucs4_t uc)
               /* level3 contains 5-bit values, packed into 16-bit words.  */
               unsigned int lookup3 =
                 ((u_category.level3[index3>>4]
-                  | (u_category.level3[(index3>>4)+1] << 16))
+                  | ((unsigned int) u_category.level3[(index3>>4)+1] << 16))
                  >> (index3 % 16))
                 & 0x1f;
 

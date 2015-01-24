@@ -1,3 +1,14 @@
+2015-01-24  Daiki Ueno  <ueno@gnu.org>
+
+	unictype: avoid undefined left-shift behavior
+	* lib/unictype/bidi_of.c (uc_bidi_class): Building libunistring with
+	gcc's -fsanitize=shift and running its tests triggered:
+	  unictype/bidi_of.c:43:60: runtime error: left shift of 40167 by 16 \
+	    places cannot be represented in type 'int'
+	Cast LHS to 'unsigned int' after integer promotion.
+	* lib/unictype/categ_of.c (lookup_withtable): Likewise.
+	* lib/unictype/joininggroup_of.c (uc_joining_group): Likewise.
+
 2015-01-20  Daiki Ueno  <ueno@gnu.org>
 
 	libunistring: bump version of unitypes dependants
