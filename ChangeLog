@@ -1,3 +1,11 @@
+2015-01-29  Pádraig Brady  <P@draigBrady.com>
+
+	localename: support Solaris 12 and illumos
+	* lib/localename.c (gl_locale_name_thread_unsafe): call
+	getlocalename_l() on newer __sun platforms.
+	Reported by Alexander Pyhalov.
+	Fix suggested by Rich Burridge.
+
 2015-01-29  Alexander Pyhalov  <alp@rsu.ru>
 
 	locale: fix tests on illumos (trivial)

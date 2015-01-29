@@ -42,6 +42,10 @@
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
 # endif
+# if defined __sun
+/* Solaris >= 12.  */
+extern char * getlocalename_l(int, locale_t);
+# endif
 #endif
 
 #if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
@@ -2584,7 +2588,7 @@ get_lcid (const char *locale_name)
 #endif
 
 
-#if HAVE_USELOCALE /* glibc or Mac OS X */
+#if HAVE_USELOCALE /* glibc, Solaris >= 12 or Mac OS X */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
    code here.  */
@@ -2723,6 +2727,9 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
             return "";
           }
         return querylocale (mask, thread_locale);
+#  elif defined __sun
+        /* Solaris >= 12.  */
+        return getlocalename_l (category, thread_locale);
 #  endif
       }
   }
