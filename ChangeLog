@@ -1,3 +1,9 @@
+2015-01-29  Alexander Pyhalov  <alp@rsu.ru>
+
+	locale: fix tests on illumos (trivial)
+	* tests/test-locale.c: LC_GLOBAL_LOCALE is a function call on illumos,
+	so move from global scope to main().
+
 2015-01-24  Daiki Ueno  <ueno@gnu.org>
 
 	unictype: avoid undefined left-shift behavior
