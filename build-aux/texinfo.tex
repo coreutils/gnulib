@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2015-01-30.15}
+\def\texinfoversion{2015-01-30.16}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -9332,6 +9332,11 @@ directory should work if nowhere else does.}
       \expandafter\expandafter\expandafter\expandafter
        \expandafter\expandafter\expandafter
        \gdef\UTFviiiTmp{#2}%
+      % 
+      \expandafter\ifx\csname uni:#1\endcsname \relax \else
+       \errmessage{Internal error, already defined: #1}%
+      \fi
+      %
       % define an additional control sequence for this code point.
       \expandafter\globallet\csname uni:#1\endcsname \UTFviiiTmp
     \endgroup}
@@ -9565,7 +9570,7 @@ directory should work if nowhere else does.}
   \DeclareUnicodeCharacter{014A}{\missingcharmsg{ENG}}
   \DeclareUnicodeCharacter{014B}{\missingcharmsg{eng}}
   \DeclareUnicodeCharacter{014C}{\=O}
-  \DeclareUnicodeCharacter{014C}{\=o}
+  \DeclareUnicodeCharacter{014D}{\=o}
   \DeclareUnicodeCharacter{014E}{\u{O}}
   \DeclareUnicodeCharacter{014F}{\u{o}}
 
