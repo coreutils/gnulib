@@ -24,6 +24,9 @@
 #if HAVE_SYMLINKAT
 # undef symlinkat
 
+#include <sys/stat.h>
+#include <string.h>
+
 /* Create a symlink, but reject trailing slash.  */
 int
 rpl_symlinkat (char const *contents, int fd, char const *name)

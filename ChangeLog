@@ -1,3 +1,11 @@
+2015-02-02  Andreas Gruenbacher  <agruen@gnu.org>
+
+	symlinkat: include all required header files
+	* lib/symlinkat.c (HAVE_SYMLINK_AT): Add <sys/stat.h> for fstatat(),
+	and string.h for strlen(), required at least on OS X 10.10 (Yosemite).
+	Reported at https://savannah.gnu.org/bugs/index.php?44151
+	and by Jack Howarth.
+
 2015-01-29  Pádraig Brady  <P@draigBrady.com>
 
 	localename: support Solaris 12 and illumos
