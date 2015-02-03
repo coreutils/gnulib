@@ -1,5 +1,12 @@
 2015-02-03  Pádraig Brady  <P@draigBrady.com>
 
+	gnulib-tool: fix handling of patch(1) diagnostics
+	* gnulib-tool: Send diagnostics from patch(1) to stderr,
+	as otherwise gnulib-tool will reparse that output and attempt
+	to lookup modules.
+
+2015-02-03  Pádraig Brady  <P@draigBrady.com>
+
 	bootstrap: exit immediately upon gnulib-tool failure
 	* build-aux/bootstrap: Exit immediately if gnulib-tool fails.
 	This was noticed when gnulib-tool exited early due to failure

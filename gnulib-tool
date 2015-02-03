@@ -1477,7 +1477,7 @@ func_lookup_file ()
         lkbase=`echo "$lkfile" | sed -e 's,^.*/,,'`
         rm -f "$tmp/$lkbase"
         cp "$gnulib_dir/$lkfile" "$tmp/$lkbase"
-        patch -s "$tmp/$lkbase" < "$local_gnulib_dir/$lkfile.diff" \
+        patch -s "$tmp/$lkbase" < "$local_gnulib_dir/$lkfile.diff" >&2 \
           || func_fatal_error "patch file $local_gnulib_dir/$lkfile.diff didn't apply cleanly"
         lookedup_file="$tmp/$lkbase"
         lookedup_tmp=true
