@@ -1,3 +1,11 @@
+2015-02-03  Pádraig Brady  <P@draigBrady.com>
+
+	bootstrap: exit immediately upon gnulib-tool failure
+	* build-aux/bootstrap: Exit immediately if gnulib-tool fails.
+	This was noticed when gnulib-tool exited early due to failure
+	to apply a patch in coreutils at http://hydra.nixos.org/eval/1172233,
+	but various confusing errors were then given as the build proceeded.
+
 2015-02-02  Andreas Gruenbacher  <agruen@gnu.org>
 
 	symlinkat: include all required header files
