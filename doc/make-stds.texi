@@ -8,7 +8,7 @@
 @cindex standards for makefiles
 
 @c Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
-@c 2004, 2005, 2006, 2007, 2008, 2010, 2013, 2014
+@c 2004, 2005, 2006, 2007, 2008, 2010, 2013, 2014, 2015
 @c Free Software Foundation, Inc.
 @c
 @c Permission is granted to copy, distribute and/or modify this document
@@ -361,7 +361,7 @@ variants of it are used in GNU/Linux and other modern operating
 systems.
 
 Installers are expected to override these values when calling
-@command{make} (e.g., @kbd{make prefix=/usr install} or
+@command{make} (e.g., @kbd{make prefix=/usr install}) or
 @command{configure} (e.g., @kbd{configure --prefix=/usr}).  GNU
 packages should not try to guess which value should be appropriate for
 these variables on the system they are being installed onto: use the
