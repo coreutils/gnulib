@@ -1,5 +1,9 @@
 2015-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	full-read: fix license notice typo
+	* lib/full-read.h: Remove a stray line in the license notice.
+	Reported by Sam Ellis in: http://bugs.gnu.org/19808
+
 	crypto/gc: fix a -Wswitch warning
 	Reported by Bruce Korb in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00046.html
