@@ -1,5 +1,16 @@
 2015-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fstrcmp: don't assume strlen < INT_MAX
+	* lib/fstrcmp.c: Include stddef.h and stdint.h.
+	(uintptr_t): Remove, as we're now assuming stdint.
+	(OFFSET, EXTRA_CONTEXT_FIELDS, fstrcmp_bounded):
+	Prefer ptrdiff_t to int when the value could exceed INT_MAX
+	if the input string is long.
+	(fstrcmp_bounded): Check for size-calculation overflow.  Prefer
+	uintptr_t to size_t when the underlying value is a pointer casted
+	to an unsigned integer.  Avoid unnecessary 'buffer != NULL' test.
+	* modules/fstrcmp (Depends-on): Add stdint.
+
 	diffseq: prefer ptrdiff_t to ssize_t
 	* lib/diffseq.h: In commentary, prefer ptrdiff_t to ssize_t.
 	ptrdiff_t is the natural type for signed indexes.

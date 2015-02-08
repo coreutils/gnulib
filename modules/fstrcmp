@@ -10,6 +10,7 @@ diffseq
 lock
 tls
 minmax
+stdint
 xalloc
 
 configure.ac:
