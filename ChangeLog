@@ -1,5 +1,11 @@
 2015-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xalloc: fix typo that suppressed warnings
+	* lib/xalloc.h: Add missing _GL_INLINE_HEADER_END.
+	This typo, introduced a couple of years ago, mistakenly suppressed
+	some -Wsuggest-attribute=const, -Wmissing-prototypes, and
+	-Wmissing-declarations warnings.
+
 	full-read: fix license notice typo
 	* lib/full-read.h: Remove a stray line in the license notice.
 	Reported by Sam Ellis in: http://bugs.gnu.org/19808

@@ -258,5 +258,6 @@ xmemdup (T const *p, size_t s)
 
 #endif
 
+_GL_INLINE_HEADER_END
 
 #endif /* !XALLOC_H_ */
