@@ -1,5 +1,10 @@
 2015-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
+	diffseq: prefer ptrdiff_t to ssize_t
+	* lib/diffseq.h: In commentary, prefer ptrdiff_t to ssize_t.
+	ptrdiff_t is the natural type for signed indexes.
+	On a few older platforms, ssize_t is narrower than size_t.
+
 	xalloc: fix typo that suppressed warnings
 	* lib/xalloc.h: Add missing _GL_INLINE_HEADER_END.
 	This typo, introduced a couple of years ago, mistakenly suppressed
