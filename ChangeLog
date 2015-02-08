@@ -1,3 +1,10 @@
+2015-02-08  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/unimame-tests: don't link with -lunistring
+	* modules/uniname/uniname-tests (Makefile.am): Don't link against
+	$(LIBUNISTRING).  Document the rationale why we need to
+	conditionalize the test.
+
 2015-02-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fstrcmp: don't assume strlen < INT_MAX
