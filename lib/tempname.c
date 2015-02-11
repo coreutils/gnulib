@@ -178,7 +178,8 @@ static const char letters[] =
 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 int
-__try_tempname (char *tmpl, int suffixlen, void *args, int (*try) (char *, void *))
+__try_tempname (char *tmpl, int suffixlen, void *args,
+                int (*try) (char *, void *))
 {
   int len;
   char *XXXXXX;
@@ -263,8 +264,8 @@ try_file (char *tmpl, void *flags)
 {
   int *openflags = flags;
   return __open (tmpl,
-		 (*openflags & ~O_ACCMODE)
-		 | O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
+                 (*openflags & ~O_ACCMODE)
+                 | O_RDWR | O_CREAT | O_EXCL, S_IRUSR | S_IWUSR);
 }
 
 static int

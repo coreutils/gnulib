@@ -1,5 +1,12 @@
 2015-02-11  Pádraig Brady  <P@draigBrady.com>
 
+	maint: various whitespace cleanups in tempname
+	* lib/tempname.c: Normalize spacing and line length.
+	* lib/tempname.h: Likewise.
+	* modules/tempname: Likewise.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
 	tests: provide returns_() to simplify exit status checking
 	* tests/init.sh (returns_): A new function for use in tests,
 	to allow for easier checking of return values, where you expect

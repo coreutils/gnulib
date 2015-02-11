@@ -51,7 +51,7 @@ extern int gen_tempname (char *tmpl, int suffixlen, int flags, int kind);
    name to try.  If TRY returns a non-negative number, TRY_GEN_TEMPNAME
    returns with this value.  Otherwise, if errno is set to EEXIST, another
    name is tried, or else TRY_GEN_TEMPNAME returns -1. */
-extern int try_tempname(char *tmpl, int suffixlen, void *args,
-			int (*try) (char *, void *));
+extern int try_tempname (char *tmpl, int suffixlen, void *args,
+                         int (*try) (char *, void *));
 
 #endif /* GL_TEMPNAME_H */
