@@ -51,7 +51,8 @@ fseeko (FILE *fp, off_t offset, int whence)
   if (fp->_IO_read_end == fp->_IO_read_ptr
       && fp->_IO_write_ptr == fp->_IO_write_base
       && fp->_IO_save_base == NULL)
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
 # if defined __SL64 && defined __SCLE /* Cygwin */
   if ((fp->_flags & __SL64) == 0)
     {
@@ -115,7 +116,8 @@ fseeko (FILE *fp, off_t offset, int whence)
       off_t pos = lseek (fileno (fp), offset, whence);
       if (pos == -1)
         {
-#if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+          /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
           fp_->_flags &= ~__SOFF;
 #endif
           return -1;
@@ -124,7 +126,8 @@ fseeko (FILE *fp, off_t offset, int whence)
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
       fp->_flags &= ~_IO_EOF_SEEN;
       fp->_offset = pos;
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+      /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
 # if defined __CYGWIN__
       /* fp_->_offset is typed as an integer.  */
       fp_->_offset = pos;

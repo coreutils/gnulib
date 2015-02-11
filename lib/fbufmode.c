@@ -42,7 +42,8 @@ fbufmode (FILE *fp)
   if (fp->_flags & _IO_UNBUFFERED)
     return _IONBF;
   return _IOFBF;
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
   if (fp_->_flags & __SLBF)
     return _IOLBF;
   if (fp_->_flags & __SNBF)

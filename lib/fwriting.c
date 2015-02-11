@@ -29,7 +29,8 @@ fwriting (FILE *fp)
      fast macros.  */
 #if defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */
   return (fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) != 0;
-#elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
   return (fp_->_flags & __SWR) != 0;
 #elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOWRT) != 0;

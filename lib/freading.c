@@ -35,7 +35,8 @@ freading (FILE *fp)
   return ((fp->_flags & _IO_NO_WRITES) != 0
           || ((fp->_flags & (_IO_NO_READS | _IO_CURRENTLY_PUTTING)) == 0
               && fp->_IO_read_base != NULL));
-# elif defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+# elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
   return (fp_->_flags & __SRD) != 0;
 # elif defined __EMX__               /* emx+gcc */
   return (fp->_flags & _IOREAD) != 0;

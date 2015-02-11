@@ -50,7 +50,8 @@ clear_ungetc_buffer_preserving_position (FILE *fp)
 static void
 clear_ungetc_buffer (FILE *fp)
 {
-# if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+# if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
   if (HASUB (fp))
     {
       fp_->_p += fp_->_r;
@@ -73,7 +74,8 @@ clear_ungetc_buffer (FILE *fp)
 
 #if ! (defined _IO_ftrylockfile || __GNU_LIBRARY__ == 1 /* GNU libc, BeOS, Haiku, Linux libc5 */)
 
-# if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+# if (defined __sferror || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
+/* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
 
 static int
 disable_seek_optimization (FILE *fp)
@@ -95,7 +97,8 @@ static void
 update_fpos_cache (FILE *fp _GL_UNUSED_PARAMETER,
                    off_t pos _GL_UNUSED_PARAMETER)
 {
-#  if defined __sferror || defined __DragonFly__ /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+#  if defined __sferror || defined __DragonFly__ || defined __ANDROID__
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
 #   if defined __CYGWIN__
   /* fp_->_offset is typed as an integer.  */
   fp_->_offset = pos;
@@ -195,7 +198,8 @@ rpl_fflush (FILE *stream)
         return result;
     }
 
-# if (defined __sferror || defined __DragonFly__) && defined __SNPT /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin */
+# if (defined __sferror || defined __DragonFly__ || defined __ANDROID__) && defined __SNPT
+    /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
 
     {
       /* Disable seek optimization for the next fseeko call.  This tells the
