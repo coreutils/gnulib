@@ -1,3 +1,12 @@
+2015-02-16  Kamil Dudka  <kdudka@redhat.com>
+
+	fts: avoid crash when a cycle is added while traversing
+	This could be triggered by auto-mounting a recursive bind mount.
+	Reported by Michael Chapman in: https://bugzilla.redhat.com/1188498
+	* lib/fts.c (fts_read): Avoid removing the original hash table item
+	when leaving a directory that caused a cycle, and preserve the FTS_DC
+	flag.
+
 2015-02-16  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname: support character alias
