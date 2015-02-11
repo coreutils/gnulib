@@ -41,6 +41,10 @@
 	localename: Fix Android build
 	* modules/localename (Depends-on): Add langinfo.
 
+	getugroups: Fix Android build
+	* lib/getugroups.c: Don't reference unsupported {get,set,end}grent
+	functions.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring

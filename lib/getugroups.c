@@ -27,10 +27,13 @@
 #include <string.h>
 #include <unistd.h>
 
-#if !HAVE_GRP_H
+#if !HAVE_GRP_H || defined __ANDROID__
 
 /* Mingw lacks all things related to group management.  The best we
-   can do is fail with ENOSYS.  */
+   can do is fail with ENOSYS.
+
+   Bionic declares e.g. getgrent() in <grp.h> but it isn't actually
+   defined in the library.  */
 
 int
 getugroups (int maxcount _GL_UNUSED,
