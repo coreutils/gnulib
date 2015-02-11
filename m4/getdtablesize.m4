@@ -26,7 +26,9 @@ AC_DEFUN([gl_FUNC_GETDTABLESIZE],
         [gl_cv_func_getdtablesize_works=yes],
         [gl_cv_func_getdtablesize_works=no],
         [case "$host_os" in
-          cygwin*) # on cygwin 1.5.25, getdtablesize() automatically grows
+          cygwin*|*-android*)
+          # on cygwin 1.5.25, getdtablesize() automatically grows
+          # on Android API level >= 21, the declaration is missing from unistd.h
             gl_cv_func_getdtablesize_works="guessing no" ;;
           *) gl_cv_func_getdtablesize_works="guessing yes" ;;
          esac])
