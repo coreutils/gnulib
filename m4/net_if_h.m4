@@ -9,7 +9,8 @@ AC_DEFUN([gl_HEADER_NET_IF],
   AC_CACHE_CHECK([whether <net/if.h> is self-contained],
     [gl_cv_header_net_if_h_selfcontained],
     [
-      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <net/if.h>]], [[]])],
+      AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <net/if.h>]],
+                                         [[struct if_nameindex ni;]])],
         [gl_cv_header_net_if_h_selfcontained=yes],
         [gl_cv_header_net_if_h_selfcontained=no])
     ])

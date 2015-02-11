@@ -52,6 +52,10 @@
 	linkat_nofollow: Add fallback case for cross compiling
 	* m4/linkat.m4: Guess no for Darwin, yes otherwise.
 
+	net_if: Handle content-free <net/if.h> system headers
+	* m4/net_if_h.m4: Check to make sure <net/if.h> actually defines
+	struct if_nameindex.  If not, enable the replacement header.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring
