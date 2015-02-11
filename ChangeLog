@@ -49,6 +49,9 @@
 	* modules/euidaccess (Depends-on): Add fcntl-h to ensure that
 	AT_EACCESS gets declared.
 
+	linkat_nofollow: Add fallback case for cross compiling
+	* m4/linkat.m4: Guess no for Darwin, yes otherwise.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring

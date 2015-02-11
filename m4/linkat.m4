@@ -38,7 +38,16 @@ AC_DEFUN([gl_FUNC_LINKAT],
          [gl_cv_func_linkat_nofollow=yes
           LINKAT_SYMLINK_NOTSUP=0],
          [gl_cv_func_linkat_nofollow=no
-          LINKAT_SYMLINK_NOTSUP=1])
+          LINKAT_SYMLINK_NOTSUP=1],
+         [case "$host_os" in
+           darwin*)
+             gl_cv_func_linkat_nofollow="guessing no"
+             LINKAT_SYMLINK_NOTSUP=1 ;;
+           *)
+             gl_cv_func_linkat_nofollow="guessing yes"
+             LINKAT_SYMLINK_NOTSUP=0 ;;
+          esac])
+
        rm -rf conftest.l1 conftest.l2])
 
     AC_CACHE_CHECK([whether linkat handles trailing slash correctly],
@@ -90,7 +99,12 @@ AC_DEFUN([gl_FUNC_LINKAT],
       *)    gl_linkat_slash_bug=1 ;;
     esac
 
-    if test "$gl_cv_func_linkat_nofollow" != yes \
+    case "$gl_cv_func_linkat_nofollow" in
+      *yes) linkat_nofollow=yes ;;
+      *) linkat_nofollow=no ;;
+    esac
+
+    if test "$linkat_nofollow" != yes \
        || test $gl_linkat_slash_bug = 1; then
       REPLACE_LINKAT=1
       AC_DEFINE_UNQUOTED([LINKAT_TRAILING_SLASH_BUG], [$gl_linkat_slash_bug],
