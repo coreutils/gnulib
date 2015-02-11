@@ -38,6 +38,9 @@
 	platforms) but are missing the declaration in the header file,
 	causing the m4 logic to guess incorrectly.
 
+	localename: Fix Android build
+	* modules/localename (Depends-on): Add langinfo.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring

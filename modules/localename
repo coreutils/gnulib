@@ -11,6 +11,7 @@ m4/lcmessage.m4
 Depends-on:
 strdup
 lock
+langinfo
 
 configure.ac:
 gl_LOCALENAME
