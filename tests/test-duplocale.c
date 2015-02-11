@@ -20,7 +20,7 @@
 
 #include <locale.h>
 
-#if HAVE_DUPLOCALE
+#if HAVE_DUPLOCALE && HAVE_MONETARY_H
 
 #include "signature.h"
 SIGNATURE_CHECK (duplocale, locale_t, (locale_t));

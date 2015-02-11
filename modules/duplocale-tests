@@ -4,9 +4,11 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+langinfo
 
 configure.ac:
 AC_CHECK_FUNCS_ONCE([duplocale])
+AC_CHECK_HEADERS([monetary.h])
 
 Makefile.am:
 TESTS += test-duplocale

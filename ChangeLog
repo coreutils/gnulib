@@ -60,6 +60,14 @@
 	* lib/signal.in.h: Add Android to the list of platforms that declare
 	pthread_sigmask() in <pthread.h> instead of <signal.h>.
 
+	duplocale: Fix Android build of duplocale-tests
+	* modules/duplocale-tests (Depends-on): Add langinfo, as the header
+	is included by test-duplocale.c (but not by duplocale.c).
+	* modules/duplocale-tests (configure.ac): Check for monetary.h.
+	* tests/test-duplocale.c: Skip test if monetary.h is absent.
+	* doc/posix-headers/monetary.texi: Add Android to the list of
+	platforms missing monetary.h.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring
