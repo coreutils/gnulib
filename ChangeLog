@@ -56,6 +56,10 @@
 	* m4/net_if_h.m4: Check to make sure <net/if.h> actually defines
 	struct if_nameindex.  If not, enable the replacement header.
 
+	signal_h: Fix Android build
+	* lib/signal.in.h: Add Android to the list of platforms that declare
+	pthread_sigmask() in <pthread.h> instead of <signal.h>.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring
