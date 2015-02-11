@@ -29,8 +29,9 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
            fclose (f); remove ("conftest.tmp");])],
         [gl_cv_func_ungetc_works=yes], [gl_cv_func_ungetc_works=no],
         [case "$host_os" in
-                   # Guess yes on glibc systems.
-           *-gnu*) gl_cv_func_ungetc_works="guessing yes" ;;
+                   # Guess yes on glibc and bionic systems.
+           *-gnu*|*-android*)
+                   gl_cv_func_ungetc_works="guessing yes" ;;
                    # If we don't know, assume the worst.
            *)      gl_cv_func_ungetc_works="guessing no" ;;
          esac

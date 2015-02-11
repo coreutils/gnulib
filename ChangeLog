@@ -27,6 +27,11 @@
 	Therefore don't enable by default.
 	* m4/ls-mntd-fs.m4: Use --with-libmount to enable at build time.
 
+	Assume unbroken ungetc() on Android
+	* m4/ungetc.m4: Add Android case to host OS check.  The ungetc()
+	test case passed when running on an Android host, and the code
+	hasn't really changed since 2009.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring
