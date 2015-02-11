@@ -1,5 +1,11 @@
 2015-02-11  Pádraig Brady  <P@draigBrady.com>
 
+	tests: avoid recent -Werror=unused-variable regression in test-locale
+	* tests/test-locale.c (main): Reference the variable to avoid the
+	"unused variable" warning.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
 	maint: various whitespace cleanups in tempname
 	* lib/tempname.c: Normalize spacing and line length.
 	* lib/tempname.h: Likewise.

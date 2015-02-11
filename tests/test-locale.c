@@ -47,6 +47,7 @@ main ()
 #if HAVE_NEWLOCALE
   /* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
   locale_t b = LC_GLOBAL_LOCALE;
+  (void) b;
 #endif
 
   /* Check that 'struct lconv' has the ISO C and POSIX specified members.  */
