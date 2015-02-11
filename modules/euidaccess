@@ -9,6 +9,7 @@ Depends-on:
 unistd
 extensions
 root-uid
+fcntl-h
 group-member    [test $HAVE_EUIDACCESS = 0]
 stat            [test $HAVE_EUIDACCESS = 0]
 sys_stat        [test $HAVE_EUIDACCESS = 0]

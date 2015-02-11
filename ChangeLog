@@ -45,6 +45,10 @@
 	* lib/getugroups.c: Don't reference unsupported {get,set,end}grent
 	functions.
 
+	euidaccess: Fix Android build
+	* modules/euidaccess (Depends-on): Add fcntl-h to ensure that
+	AT_EACCESS gets declared.
+
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/unimame-tests: don't link with -lunistring
