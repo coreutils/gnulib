@@ -1,5 +1,13 @@
 2015-02-11  Pádraig Brady  <P@draigBrady.com>
 
+	tests: provide returns_() to simplify exit status checking
+	* tests/init.sh (returns_): A new function for use in tests,
+	to allow for easier checking of return values, where you expect
+	a command to exit with failure status.  By checking for a particular
+	exit code, you don't hide any crashes for example.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
 	mountlist: only use libmount when specified
 	There are currently many shared libs dependencies introduced by
 	libmount with associated runtime and virt mem overhead.
