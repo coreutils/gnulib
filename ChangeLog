@@ -1,29 +1,21 @@
-2015-02-11  Pádraig Brady  <P@draigBrady.com>
+2015-02-11  Paul Eggert  <eggert@cs.ucla.edu>
 
-	tests: avoid recent -Werror=unused-variable regression in test-locale
-	* tests/test-locale.c (main): Reference the variable to avoid the
-	"unused variable" warning.
+	Fix FILE struct compatibility with Android API level >= 21
+	* lib/stdio-impl.h: Test explicitly for __ANDROID__ instead of
+	__sferror.  Recent versions of Bionic's stdio.h no longer define
+	__sferror.
+	* lib/fbufmode.c: Likewise.
+	* lib/fflush.c: Likewise.
+	* lib/fpurge.c: Likewise.
+	* lib/freadable.c: Likewise.
+	* lib/freadahead.c: Likewise.
+	* lib/freading.c: Likewise.
+	* lib/freadptr.c: Likewise.
+	* lib/freadseek.c: Likewise.
+	* lib/fseeko.c: Likewise.
+	* lib/fseterr.c: Likewise.
+	* lib/fwritable.c: Likewise.
 
-2015-02-11  Pádraig Brady  <P@draigBrady.com>
-
-	maint: various whitespace cleanups in tempname
-	* lib/tempname.c: Normalize spacing and line length.
-	* lib/tempname.h: Likewise.
-	* modules/tempname: Likewise.
-
-2015-02-11  Pádraig Brady  <P@draigBrady.com>
-
-	tests: provide returns_() to simplify exit status checking
-	* tests/init.sh (returns_): A new function for use in tests,
-	to allow for easier checking of return values, where you expect
-	a command to exit with failure status.  By checking for a particular
-	exit code, you don't hide any crashes for example.
-
-2015-02-11  Pádraig Brady  <P@draigBrady.com>
-
-	mountlist: only use libmount when specified
-	There are currently many shared libs dependencies introduced by
-	libmount with associated runtime and virt mem overhead.
 	Therefore don't enable by default.
 	* m4/ls-mntd-fs.m4: Use --with-libmount to enable at build time.
 
@@ -67,6 +59,33 @@
 	* tests/test-duplocale.c: Skip test if monetary.h is absent.
 	* doc/posix-headers/monetary.texi: Add Android to the list of
 	platforms missing monetary.h.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
+	tests: avoid recent -Werror=unused-variable regression in test-locale
+	* tests/test-locale.c (main): Reference the variable to avoid the
+	"unused variable" warning.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
+	maint: various whitespace cleanups in tempname
+	* lib/tempname.c: Normalize spacing and line length.
+	* lib/tempname.h: Likewise.
+	* modules/tempname: Likewise.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
+	tests: provide returns_() to simplify exit status checking
+	* tests/init.sh (returns_): A new function for use in tests,
+	to allow for easier checking of return values, where you expect
+	a command to exit with failure status.  By checking for a particular
+	exit code, you don't hide any crashes for example.
+
+2015-02-11  Pádraig Brady  <P@draigBrady.com>
+
+	mountlist: only use libmount when specified
+	There are currently many shared libs dependencies introduced by
+	libmount with associated runtime and virt mem overhead.
 
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
