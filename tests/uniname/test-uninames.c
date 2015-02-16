@@ -27,7 +27,19 @@
 
 /* The names according to the UnicodeData.txt file, modified to contain the
    Hangul syllable names, as described in the Unicode 3.0 book.  */
-const char * unicode_names [0x110000];
+static const char * unicode_names [0x110000];
+
+/* Maximum entries in unicode_aliases.  */
+#define ALIASLEN 0x200
+
+/* The aliases according to the NameAliases.txt file.  */
+struct unicode_alias
+{
+  const char *name;
+  unsigned int uc;
+};
+
+static struct unicode_alias unicode_aliases [ALIASLEN];
 
 /* Maximum length of a field in the UnicodeData.txt file.  */
 #define FIELDLEN 120
@@ -109,6 +121,62 @@ fill_names (const char *unicodedata_filename)
   if (ferror (stream) || fclose (stream))
     {
       fprintf (stderr, "error reading from '%s'\n", unicodedata_filename);
+      exit (1);
+    }
+}
+
+/* Stores in unicode_aliases[] the relevant contents of the NameAliases.txt
+   file.  */
+static void
+fill_aliases (const char *namealiases_filename)
+{
+  int i;
+  FILE *stream;
+  char field0[FIELDLEN];
+  char field1[FIELDLEN];
+  int lineno = 0;
+
+  for (i = 0; i < ALIASLEN; i++)
+    unicode_aliases[i].uc = UNINAME_INVALID;
+
+  stream = fopen (namealiases_filename, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "error during fopen of '%s'\n", namealiases_filename);
+      exit (EXIT_FAILURE);
+    }
+
+  for (i = 0; i < ALIASLEN; i++)
+    {
+      int n;
+      int c;
+      unsigned int uc;
+
+      lineno++;
+      n = getfield (stream, field0, ';');
+      n += getfield (stream, field1, ';');
+      if (n == 0)
+        break;
+      if (n != 2)
+        {
+          fprintf (stderr, "short line in '%s':%d\n",
+                   namealiases_filename, lineno);
+          exit (EXIT_FAILURE);
+        }
+      for (; (c = getc (stream)), (c != EOF && c != '\n'); )
+        ;
+      uc = strtoul (field0, NULL, 16);
+      if (uc >= 0x110000)
+        {
+          fprintf (stderr, "index too large\n");
+          exit (EXIT_FAILURE);
+        }
+      unicode_aliases[i].name = xstrdup (field1);
+      unicode_aliases[i].uc = uc;
+    }
+  if (ferror (stream) || fclose (stream))
+    {
+      fprintf (stderr, "error reading from '%s'\n", namealiases_filename);
       exit (1);
     }
 }
@@ -246,6 +314,38 @@ test_inverse_lookup ()
   return error;
 }
 
+/* Perform a test of the unicode_name_character function for aliases.  */
+static int
+test_alias_lookup ()
+{
+  int error = 0;
+  unsigned int i;
+  char buf[UNINAME_MAX];
+
+  /* Verify all valid character names are recognized.  */
+  for (i = 0; i < ALIASLEN; i++)
+    if (unicode_aliases[i].uc != UNINAME_INVALID
+        /* Skip if the character has no canonical name (e.g. control
+           characters).  */
+        && unicode_character_name (unicode_aliases[i].uc, buf))
+      {
+        unsigned int result = unicode_name_character (unicode_aliases[i].name);
+        if (result != unicode_aliases[i].uc)
+          {
+            if (result == UNINAME_INVALID)
+              fprintf (stderr, "inverse name lookup of \"%s\" failed\n",
+                       unicode_aliases[i]);
+            else
+              fprintf (stderr,
+                       "inverse name lookup of \"%s\" returned 0x%04X\n",
+                       unicode_aliases[i], result);
+            error = 1;
+          }
+      }
+
+  return error;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -257,6 +357,12 @@ main (int argc, char *argv[])
 
   error |= test_name_lookup ();
   error |= test_inverse_lookup ();
+
+  if (argc > 2)
+    {
+      fill_aliases (argv[2]);
+      error |= test_alias_lookup ();
+    }
 
   return error;
 }

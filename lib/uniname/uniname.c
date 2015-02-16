@@ -278,6 +278,16 @@ unicode_character_name (ucs4_t c, char *buf)
       *ptr = '\0';
       return buf;
     }
+  else if ((c >= 0xFE00 && c <= 0xFE0F) || (c >= 0xE0100 && c <= 0xE01EF))
+    {
+      /* Special case for variation selectors. Keeps the tables
+         small.  */
+
+      /* buf needs to have at least 19 + 3 bytes here.  */
+      sprintf (buf, "VARIATION SELECTOR-%d",
+               c <= 0xFE0F ? c - 0xFE00 + 1 : c - 0xE0100 + 17);
+      return buf;
+    }
   else
     {
       uint16_t index = unicode_code_to_index (c);
@@ -365,6 +375,37 @@ unicode_name_character (const char *name)
       if (false)
       filled_buf:
         {
+          {
+            /* Special case for variation selector aliases. Keeps the
+               tables small.  */
+            const char *p1 = buf;
+            if (ptr >= buf + 3 && *p1++ == 'V')
+              {
+                if (*p1++ == 'S')
+                  {
+                    if (*p1 != '0')
+                      {
+                        unsigned int c = 0;
+                        for (;;)
+                          {
+                            if (*p1 >= '0' && *p1 <= '9')
+                              c += (*p1 - '0');
+                            p1++;
+                            if (p1 == ptr)
+                              {
+                                if (c >= 1 && c <= 16)
+                                  return c - 1 + 0xFE00;
+                                else if (c >= 17 && c <= 256)
+                                  return c - 17 + 0xE0100;
+                                else
+                                  break;
+                              }
+                            c = c * 10;
+                          }
+                      }
+                  }
+              }
+          }
           /* Convert the constituents to uint16_t words.  */
           uint16_t words[UNICODE_CHARNAME_MAX_WORDS];
           uint16_t *wordptr = words;
@@ -493,6 +534,38 @@ unicode_name_character (const char *name)
                                   break;
                               }
                             c = c << 4;
+                          }
+                      }
+                  }
+                /* Special case for variation selectors. Keeps the
+                   tables small.  */
+                if (wordptr == &words[1]
+                    && words[0] == UNICODE_CHARNAME_WORD_VARIATION
+                    && p1 + 10 <= ptr
+                    && p1 + 12 >= ptr
+                    && memcmp (p1, "SELECTOR-", 9) == 0)
+                  {
+                    const char *p2 = p1 + 9;
+
+                    if (*p2 != '0')
+                      {
+                        unsigned int c = 0;
+
+                        for (;;)
+                          {
+                            if (*p2 >= '0' && *p2 <= '9')
+                              c += (*p2 - '0');
+                            p2++;
+                            if (p2 == ptr)
+                              {
+                                if (c >= 1 && c <= 16)
+                                  return c - 1 + 0xFE00;
+                                else if (c >= 17 && c <= 256)
+                                  return c - 17 + 0xE0100;
+                                else
+                                  break;
+                              }
+                            c = c * 10;
                           }
                       }
                   }

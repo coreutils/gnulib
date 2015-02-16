@@ -1,3 +1,29 @@
+2015-02-16  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname: support character alias
+	* lib/uniname/gen-uninames.lisp (main): New argument ALIASFILE.
+	Generate one-way mapping from aliases to codepoints in the
+	generated tables.  Special case variation selectors to reduce
+	table size.
+	* lib/uniname/uniname.c (unicode_character_name): Special case
+	variation selectors.
+	(unicode_name_character): Special case variation selectors and
+	their aliases.
+	* lib/uniname/uninames.h: Regenerate.
+	* tests/uniname/NameAliases.txt: New file, taken from UCD 7.0.0.
+	* modules/uniname/uniname-tests (Files): Add
+	tests/uniname/NameAliases.txt.
+	* tests/uniname/test-uninames.c: Mark as static.
+	(ALIASLEN): Define.
+	(struct unicode_alias): New struct.
+	(unicode_aliases): New variable.
+	(fill_aliases): New function.
+	(test_alias_lookup): New test function.
+	(main): Run the 'test_alias_lookup' test if the second argument is
+	given.
+	* tests/uniname/test-uninames.sh: Supply NameAliases.txt as the
+	second argument.
+
 2015-02-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Fix FILE struct compatibility with Android API level >= 21

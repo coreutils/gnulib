@@ -2,6 +2,7 @@ Files:
 tests/uniname/test-uninames.sh
 tests/uniname/test-uninames.c
 tests/uniname/UnicodeDataNames.txt
+tests/uniname/NameAliases.txt
 
 Depends-on:
 xalloc
