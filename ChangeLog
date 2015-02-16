@@ -1,3 +1,10 @@
+2015-02-24  Pádraig Brady  <P@draigBrady.com>
+
+	tests: support stderr verification with returns_()
+	* tests/init.sh (returns_): Disable tracing for this wrapper
+	function, so that stderr of the wrapped command is unchanged,
+	allowing for verification of the contents.
+
 2015-02-24  Pavel Hrdina  <phrdina@redhat.com>
 
 	passfd: avoid valgrind uninitalised data warning
