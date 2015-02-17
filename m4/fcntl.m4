@@ -1,4 +1,4 @@
-# fcntl.m4 serial 5
+# fcntl.m4 serial 6
 dnl Copyright (C) 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_FCNTL],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gl_FCNTL_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_FUNCS_ONCE([fcntl getdtablesize])
+  AC_CHECK_FUNCS_ONCE([fcntl])
   if test $ac_cv_func_fcntl = no; then
     gl_REPLACE_FCNTL
   else
@@ -28,16 +28,16 @@ AC_DEFUN([gl_FUNC_FCNTL],
     AC_CACHE_CHECK([whether fcntl handles F_DUPFD correctly],
       [gl_cv_func_fcntl_f_dupfd_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#ifdef HAVE_GETDTABLESIZE
-# include <unistd.h>
-#endif
+#include <limits.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 ]], [[int result = 0;
-#ifdef HAVE_GETDTABLESIZE
-      int bad_fd = getdtablesize ();
-#else
-      int bad_fd = 1000000;
+      int bad_fd = INT_MAX;
+#ifdef _SC_OPEN_MAX
+      long int open_max = sysconf (_SC_OPEN_MAX);
+      if (0 <= open_max && open_max <= INT_MAX)
+        bad_fd = open_max;
 #endif
       if (fcntl (0, F_DUPFD, -1) != -1) result |= 1;
       if (errno != EINVAL) result |= 2;

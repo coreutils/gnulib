@@ -1,3 +1,21 @@
+2015-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getdtablesize, dup2, fcntl: port to Android
+	Problem reported by Kevin Cernekee in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00092.html
+	* doc/glibc-functions/getdtablesize.texi (getdtablesize):
+	Mention that getdtablesize doesn't work on Android.
+	* lib/getdtablesize.c: Use getrlimit substitute only if
+	getdtablesize is declared.  This should suffice for Cygwin
+	while not breaking Android.
+	* m4/dup2.m4 (gl_FUNC_DUP2):
+	* m4/fcntl.m4 (gl_FUNC_FCNTL):
+	Prefer sysconf (_SC_OPEN_MAX) to getdtablesize, as the former is
+	standardized but the latter is not, and sysconf works on Android.
+	* m4/getdtablesize.m4 (gl_FUNC_GETDTABLESIZE):
+	Also check that getdtablesize is declared.
+	This removes the need for a special case for Android.
+
 2015-02-16  Kevin Cernekee  <cernekee@google.com>
 
 	localename: Implement gl_locale_name_thread_unsafe for Android

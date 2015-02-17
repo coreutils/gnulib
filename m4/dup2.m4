@@ -1,4 +1,4 @@
-#serial 20
+#serial 21
 dnl Copyright (C) 2002, 2005, 2007, 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,7 +8,6 @@ AC_DEFUN([gl_FUNC_DUP2],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_CHECK_FUNCS_ONCE([getdtablesize])
   m4_ifdef([gl_FUNC_DUP2_OBSOLETE], [
     AC_CHECK_FUNCS_ONCE([dup2])
     if test $ac_cv_func_dup2 = no; then
@@ -22,12 +21,14 @@ AC_DEFUN([gl_FUNC_DUP2],
       [AC_RUN_IFELSE([
          AC_LANG_PROGRAM([[#include <unistd.h>
 #include <fcntl.h>
+#include <limits.h>
 #include <errno.h>]],
            [int result = 0;
-#ifdef HAVE_GETDTABLESIZE
-            int bad_fd = getdtablesize ();
-#else
-            int bad_fd = 1000000;
+            int bad_fd = INT_MAX;
+#ifdef _SC_OPEN_MAX
+            long int open_max = sysconf (_SC_OPEN_MAX);
+            if (0 <= open_max && open_max <= INT_MAX)
+              bad_fd = open_max;
 #endif
 #ifdef FD_CLOEXEC
             if (fcntl (1, F_SETFD, FD_CLOEXEC) == -1)

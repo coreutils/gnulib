@@ -84,7 +84,7 @@ getdtablesize (void)
   return dtablesize;
 }
 
-#elif HAVE_GETDTABLESIZE
+#elif HAVE_GETDTABLESIZE && HAVE_DECL_GETDTABLESIZE
 
 # include <sys/resource.h>
 # undef getdtablesize
