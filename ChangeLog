@@ -1,3 +1,10 @@
+2015-02-16  Kevin Cernekee  <cernekee@google.com>
+
+	localename: Implement gl_locale_name_thread_unsafe for Android
+	* lib/localename.c: Android API level >= 21 supports two hardcoded
+	locales: C (POSIX) and C.UTF-8.  Distinguish them by checking
+	the internal __locale_t struct.
+
 2015-02-16  Kamil Dudka  <kdudka@redhat.com>
 
 	fts: avoid crash when a cycle is added while traversing

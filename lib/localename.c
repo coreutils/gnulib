@@ -2730,6 +2730,8 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
 #  elif defined __sun
         /* Solaris >= 12.  */
         return getlocalename_l (category, thread_locale);
+#  elif defined __ANDROID__
+        return MB_CUR_MAX == 4 ? "C.UTF-8" : "C";
 #  endif
       }
   }
