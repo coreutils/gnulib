@@ -33,7 +33,7 @@
 	* tests/uniname/test-uninames.sh: Supply NameAliases.txt as the
 	second argument.
 
-2015-02-11  Paul Eggert  <eggert@cs.ucla.edu>
+2015-02-11  Kevin Cernekee  <cernekee@google.com>
 
 	Fix FILE struct compatibility with Android API level >= 21
 	* lib/stdio-impl.h: Test explicitly for __ANDROID__ instead of
@@ -50,9 +50,6 @@
 	* lib/fseeko.c: Likewise.
 	* lib/fseterr.c: Likewise.
 	* lib/fwritable.c: Likewise.
-
-	Therefore don't enable by default.
-	* m4/ls-mntd-fs.m4: Use --with-libmount to enable at build time.
 
 	Assume unbroken ungetc() on Android
 	* m4/ungetc.m4: Add Android case to host OS check.  The ungetc()
@@ -121,6 +118,8 @@
 	mountlist: only use libmount when specified
 	There are currently many shared libs dependencies introduced by
 	libmount with associated runtime and virt mem overhead.
+	Therefore don't enable by default.
+	* m4/ls-mntd-fs.m4: Use --with-libmount to enable at build time.
 
 2015-02-08  Daiki Ueno  <ueno@gnu.org>
 
