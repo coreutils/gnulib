@@ -527,6 +527,8 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
                 pfound = p;
                 indfound = option_index;
               }
+            else if (ambig)
+              ; /* Taking simpler path to handling ambiguities.  */
             else if (long_only
                      || pfound->has_arg != p->has_arg
                      || pfound->flag != p->flag
@@ -539,10 +541,9 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
                 struct option_list *newp = malloc (sizeof (*newp));
                 if (newp == NULL)
                   {
-                    ambig = 1; /* Use simpler fallback message.  */
                     free_option_list (ambig_list);
                     ambig_list = NULL;
-                    break;
+                    ambig = 1; /* Use simpler fallback message.  */
                   }
                 else
 #endif
