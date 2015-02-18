@@ -27,24 +27,28 @@ AC_DEFUN([gl_FUNC_FCNTL],
     dnl haiku alpha 2 F_DUPFD has wrong errno
     AC_CACHE_CHECK([whether fcntl handles F_DUPFD correctly],
       [gl_cv_func_fcntl_f_dupfd_works],
-      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
-#include <limits.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <errno.h>
-]], [[int result = 0;
-      int bad_fd = INT_MAX;
-#ifdef _SC_OPEN_MAX
-      long int open_max = sysconf (_SC_OPEN_MAX);
-      if (0 <= open_max && open_max <= INT_MAX)
-        bad_fd = open_max;
-#endif
-      if (fcntl (0, F_DUPFD, -1) != -1) result |= 1;
-      if (errno != EINVAL) result |= 2;
-      if (fcntl (0, F_DUPFD, bad_fd) != -1) result |= 4;
-      if (errno != EINVAL) result |= 8;
-      return result;
-         ]])],
+      [AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <errno.h>
+              #include <fcntl.h>
+              #include <limits.h>
+              #include <sys/resource.h>
+              #include <unistd.h>
+            ]],
+            [[int result = 0;
+              int bad_fd = INT_MAX;
+              struct rlimit rlim;
+              if (getrlimit (RLIMIT_NOFILE, &rlim) == 0
+                  && 0 <= rlim.rlim_cur && rlim.rlim_cur <= INT_MAX
+                  && rlim.rlim_cur != RLIM_INFINITY
+                  && rlim.rlim_cur != RLIM_SAVED_MAX
+                  && rlim.rlim_cur != RLIM_SAVED_CUR)
+                bad_fd = rlim.rlim_cur;
+              if (fcntl (0, F_DUPFD, -1) != -1) result |= 1;
+              if (errno != EINVAL) result |= 2;
+              if (fcntl (0, F_DUPFD, bad_fd) != -1) result |= 4;
+              if (errno != EINVAL) result |= 8;
+              return result;]])],
          [gl_cv_func_fcntl_f_dupfd_works=yes],
          [gl_cv_func_fcntl_f_dupfd_works=no],
          [# Guess that it works on glibc systems
