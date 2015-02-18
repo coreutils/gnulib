@@ -1,3 +1,13 @@
+2015-02-18  Pádraig Brady  <P@draigBrady.com>
+
+	getopt: don't crash on memory exhaustion
+	* lib/getopt.c (_getopt_internal_r): Use degraded diagnostics on
+	memory exhaustion.  In the _LIBC case we use alloca() as is
+	already done in glibc, so we don't need to consider the separate
+	error path in that awkward case.  Also fix a memory leak when
+	ambiguous options are present.
+	Reported by Tobias Stoeckmann
+
 2015-02-17  Mike Miller  <mtmiller@ieee.org>
 
 	tempname: allow compilation with C++ (trivial)
