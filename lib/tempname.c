@@ -179,7 +179,7 @@ static const char letters[] =
 
 int
 __try_tempname (char *tmpl, int suffixlen, void *args,
-                int (*try) (char *, void *))
+                int (*tryfunc) (char *, void *))
 {
   int len;
   char *XXXXXX;
@@ -244,7 +244,7 @@ __try_tempname (char *tmpl, int suffixlen, void *args,
       v /= 62;
       XXXXXX[5] = letters[v % 62];
 
-      fd = try (tmpl, args);
+      fd = tryfunc (tmpl, args);
       if (fd >= 0)
         {
           __set_errno (save_errno);
@@ -300,25 +300,25 @@ try_nocreate (char *tmpl, void *flags)
 int
 __gen_tempname (char *tmpl, int suffixlen, int flags, int kind)
 {
-  int (*try) (char *, void *);
+  int (*tryfunc) (char *, void *);
 
   switch (kind)
     {
     case __GT_FILE:
-      try = try_file;
+      tryfunc = try_file;
       break;
 
     case __GT_DIR:
-      try = try_dir;
+      tryfunc = try_dir;
       break;
 
     case __GT_NOCREATE:
-      try = try_nocreate;
+      tryfunc = try_nocreate;
       break;
 
     default:
       assert (! "invalid KIND in __gen_tempname");
       abort ();
     }
-  return __try_tempname (tmpl, suffixlen, &flags, try);
+  return __try_tempname (tmpl, suffixlen, &flags, tryfunc);
 }

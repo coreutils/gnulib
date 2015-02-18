@@ -1,3 +1,11 @@
+2015-02-17  Mike Miller  <mtmiller@ieee.org>
+
+	tempname: allow compilation with C++ (trivial)
+	* lib/tempname.h [C++]: Specify extern "C" linkage.
+	* lib/tempname.h (try_tempname):
+	* lib/tempname.c (__try_tempname, __gen_tempname):
+	Rename 'try' to 'tryfunc'.
+
 2015-02-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup2, fcntl: port to AIX
