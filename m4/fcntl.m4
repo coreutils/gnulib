@@ -1,4 +1,4 @@
-# fcntl.m4 serial 6
+# fcntl.m4 serial 7
 dnl Copyright (C) 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -51,10 +51,10 @@ AC_DEFUN([gl_FUNC_FCNTL],
               return result;]])],
          [gl_cv_func_fcntl_f_dupfd_works=yes],
          [gl_cv_func_fcntl_f_dupfd_works=no],
-         [# Guess that it works on glibc systems
-          case $host_os in #((
-            *-gnu*) gl_cv_func_fcntl_f_dupfd_works="guessing yes";;
-            *)      gl_cv_func_fcntl_f_dupfd_works="guessing no";;
+         [case $host_os in
+            aix* | cygwin* | haiku*)
+               gl_cv_func_dup2_works="guessing no" ;;
+            *) gl_cv_func_dup2_works="guessing yes" ;;
           esac])])
     case $gl_cv_func_fcntl_f_dupfd_works in
       *yes) ;;

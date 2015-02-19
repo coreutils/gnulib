@@ -1,3 +1,14 @@
+2015-02-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dup2, fcntl: cross-compiler better for Android
+	Problem reported by Kevin Cernekee in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00109.html
+	* m4/dup2.m4 (gl_FUNC_DUP2): Don't guess no when cross-compiling
+	for a Linux kernel.  That kernel bug was fixed on 2009-05-11, and
+	there's little need to cross-compile for older kernels nowadays.
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): When cross-compiling, guess no only
+	for systems where the bug is known to occur (AIX, Cygwin, Haiku).
+
 2015-02-18  Pádraig Brady  <P@draigBrady.com>
 
 	getopt: don't crash on memory exhaustion

@@ -1,4 +1,4 @@
-#serial 21
+#serial 22
 dnl Copyright (C) 2002, 2005, 2007, 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,9 +63,6 @@ AC_DEFUN([gl_FUNC_DUP2],
            mingw*) # on this platform, dup2 always returns 0 for success
              gl_cv_func_dup2_works="guessing no" ;;
            cygwin*) # on cygwin 1.5.x, dup2(1,1) returns 0
-             gl_cv_func_dup2_works="guessing no" ;;
-           linux*) # On linux between 2008-07-27 and 2009-05-11, dup2 of a
-                   # closed fd may yield -EBADF instead of -1 / errno=EBADF.
              gl_cv_func_dup2_works="guessing no" ;;
            aix* | freebsd*)
                    # on AIX 7.1 and FreeBSD 6.1, dup2 (1,toobig) gives EMFILE,
