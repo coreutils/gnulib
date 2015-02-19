@@ -1,3 +1,9 @@
+2015-02-19  Kevin Cernekee  <cernekee@google.com>
+
+	fcntl: Fix cross compiling
+	* m4/fcntl.m4 (gl_FUNC_FCNTL): Assign the guessed result to the
+	correct variable name (gl_cv_func_fcntl_f_dupfd_works).
+
 2015-02-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dup2, fcntl: cross-compiler better for Android
