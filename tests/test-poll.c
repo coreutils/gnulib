@@ -166,7 +166,7 @@ poll1 (int fd, int ev, int time)
 
   pfd.fd = fd;
   pfd.events = ev;
-  pfd.revents = 0;
+  pfd.revents = -1;
   r = poll (&pfd, 1, time);
   if (r < 0)
     return r;
