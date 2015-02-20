@@ -1079,9 +1079,6 @@ cd_dot_dot:
                 }
         } else if (p->fts_flags & FTS_SYMFOLLOW) {
                 if (FCHDIR(sp, p->fts_symfd)) {
-                        int saved_errno = errno;
-                        (void)close(p->fts_symfd);
-                        __set_errno (saved_errno);
                         p->fts_errno = errno;
                         SET(FTS_STOP);
                 }

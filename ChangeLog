@@ -1,3 +1,9 @@
+2015-02-20  Jaroslav Skarvada  <jskarvad@redhat.com>
+
+	fts: remove redundant close() (trivial)
+	* lib/fts.c (fts_read): Remove redundant call to close().
+	Spotted by coverity.
+
 2015-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getdtablesize: port better for Android
