@@ -1,5 +1,12 @@
 2015-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getdtablesize: port better for Android
+	Problem reported by Kevin Cernekee in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00112.html
+	* doc/glibc-functions/getdtablesize.texi (getdtablesize): Mention bug.
+	* lib/getdtablesize.c (getdtablesize): Don't fall back on _SC_OPEN_MAX.
+	Instead, just use getrlimit, taking care to avoid Cygwin bug.
+
 	poll: fixes for large fds
 	* lib/poll.c (poll): Don't check directly for NFD too large.
 	Don't rely on undefined behavior in FD_SET when an arg exceeds
@@ -15,7 +22,7 @@
 
 2015-02-18  Paul Eggert  <eggert@cs.ucla.edu>
 
-	dup2, fcntl: cross-compiler better for Android
+	dup2, fcntl: cross-compile better for Android
 	Problem reported by Kevin Cernekee in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00109.html
 	* m4/dup2.m4 (gl_FUNC_DUP2): Don't guess no when cross-compiling

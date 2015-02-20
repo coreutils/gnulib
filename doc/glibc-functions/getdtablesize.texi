@@ -17,7 +17,7 @@ Android LP32.
 @item
 This function does not represent the true @code{RLIMIT_NOFILE} soft
 limit on some platforms:
-Cygwin 1.7.25.
+Android LP32, Cygwin 1.7.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:
