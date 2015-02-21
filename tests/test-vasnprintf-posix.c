@@ -1396,7 +1396,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -1407,7 +1407,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -1418,7 +1418,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -1429,7 +1429,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -1440,7 +1440,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Lf %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif
@@ -2374,7 +2374,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   {
@@ -2386,7 +2386,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   /* asnprintf should print something even for noncanonical values.  */
@@ -2398,7 +2398,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Infinity.  */
@@ -2409,7 +2409,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Zero.  */
@@ -2420,7 +2420,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Unnormalized number.  */
@@ -2431,7 +2431,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
   { /* Pseudo-Denormal.  */
@@ -2442,7 +2442,7 @@ test_function (char * (*my_asnprintf) (char *, size_t *, const char *, ...))
       my_asnprintf (NULL, &length, "%Le %d", x.value, 33, 44, 55);
     ASSERT (result != NULL);
     ASSERT (length == strlen (result));
-    ASSERT (3 <= length && strcmp (result + length - 3, " 33") == 0);
+    ASSERT (3 < length && strcmp (result + length - 3, " 33") == 0);
     free (result);
   }
 #endif

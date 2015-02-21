@@ -1,3 +1,9 @@
+2015-02-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vasnprintf-posix-tests: use consistent test
+	* tests/test-vasnprintf-posix.c (test_function):
+	Use "<" in assert instead of "<=", for consistency with other tests.
+
 2015-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	printf, isinf, etc.: noncanonical != NaN
