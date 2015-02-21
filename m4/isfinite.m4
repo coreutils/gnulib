@@ -1,4 +1,4 @@
-# isfinite.m4 serial 14
+# isfinite.m4 serial 15
 dnl Copyright (C) 2007-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,13 +34,8 @@ AC_DEFUN([gl_ISFINITE],
   AC_SUBST([ISFINITE_LIBM])
 ])
 
-dnl Test whether isfinite() on 'long double' recognizes all numbers which are
-dnl neither finite nor infinite. This test fails e.g. on i686, x86_64, ia64,
-dnl because of
-dnl - pseudo-denormals on x86_64,
-dnl - pseudo-zeroes, unnormalized numbers, and pseudo-denormals on i686,
-dnl - pseudo-NaN, pseudo-Infinity, pseudo-zeroes, unnormalized numbers, and
-dnl   pseudo-denormals on ia64.
+dnl Test whether isfinite() on 'long double' recognizes all canonical values
+dnl which are neither finite nor infinite.
 AC_DEFUN([gl_ISFINITEL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -114,52 +109,41 @@ int main ()
     if (isfinite (x.value))
       result |= 2;
   }
-  /* The isfinite macro should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* isfinite should return something even for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static memory_long_double x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
-    if (isfinite (x.value))
+    if (isfinite (x.value) && !isfinite (x.value))
       result |= 4;
   }
   { /* Pseudo-Infinity.  */
     static memory_long_double x =
       { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
-    if (isfinite (x.value))
+    if (isfinite (x.value) && !isfinite (x.value))
       result |= 8;
   }
   { /* Pseudo-Zero.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
-    if (isfinite (x.value))
+    if (isfinite (x.value) && !isfinite (x.value))
       result |= 16;
   }
   { /* Unnormalized number.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
-    if (isfinite (x.value))
+    if (isfinite (x.value) && !isfinite (x.value))
       result |= 32;
   }
   { /* Pseudo-Denormal.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
-    if (isfinite (x.value))
+    if (isfinite (x.value) && !isfinite (x.value))
       result |= 64;
   }
 #endif
 
   return result;
 }]])], [gl_cv_func_isfinitel_works=yes], [gl_cv_func_isfinitel_works=no],
-      [case "$host_cpu" in
-                               # Guess no on ia64, x86_64, i386.
-         ia64 | x86_64 | i*86) gl_cv_func_isfinitel_works="guessing no";;
-         *)                    gl_cv_func_isfinitel_works="guessing yes";;
-       esac
-      ])
+      [gl_cv_func_isfinitel_works="guessing yes"])
     ])
 ])

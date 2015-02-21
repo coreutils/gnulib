@@ -19,17 +19,12 @@ on pre-C99 systems.
 IRIX 6.5, OSF/1 5.1 with gcc, Solaris 11 2011-11.
 @item
 On IRIX 6.5 with @code{cc}, @code{isnan} does not recognize some NaNs.
-@item
-On NetBSD/i386 and glibc/ia64, @code{isnan} does not recognize some
-forms of NaNs, such as pseudo-NaNs, pseudo-Infinities, and
-unnormalized numbers.
-@item
-On i686 and @var{x}86-64, @code{__builtin_isnanl} (and thus
-@code{isnan} implementations based on it) in GCC 4.0 and later does
-not recognize pseudo-denormals as NaNs, and similarly for
-pseudo-zeroes, unnormalized numbers, and pseudo-denormals on ia64.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This macro returns an unspecified result when given noncanonical values
+such as unnormalized numbers, pseudo-denormals, pseudo-NaNs,
+pseudo-Infinities, and pseudo-zeroes.
 @end itemize

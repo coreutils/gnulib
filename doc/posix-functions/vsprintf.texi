@@ -20,10 +20,6 @@ printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
 AIX 5.2, OSF/1 5.1, Solaris 11 2011-11, mingw, MSVC 9.
 @item
-printf of @samp{long double} numbers outside the IEEE 754 range produces
-no meaningful results on some platforms:
-glibc and others, on x86, x86_64, IA-64 CPUs.
-@item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
@@ -73,6 +69,10 @@ Mac OS X 10.3, FreeBSD 6.0, NetBSD 5.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Formatting noncanonical @samp{long double} numbers produces
+nonmeaningful results on some platforms:
+glibc and others, on x86, x86_64, IA-64 CPUs.
 @item
 When formatting an integer with grouping flag, this function inserts thousands
 separators even in the "C" locale on some platforms:

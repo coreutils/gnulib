@@ -1,4 +1,4 @@
-# isinf.m4 serial 10
+# isinf.m4 serial 11
 dnl Copyright (C) 2007-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,13 +37,8 @@ AC_DEFUN([gl_ISINF],
 
 dnl Test whether isinf() works:
 dnl 1) Whether it correctly returns false for LDBL_MAX.
-dnl 2) Whether on 'long double' recognizes all numbers which are neither
-dnl    finite nor infinite. This test fails on OpenBSD/x86, but could also
-dnl    fail e.g. on i686, x86_64, ia64, because of
-dnl    - pseudo-denormals on x86_64,
-dnl    - pseudo-zeroes, unnormalized numbers, and pseudo-denormals on i686,
-dnl    - pseudo-NaN, pseudo-Infinity, pseudo-zeroes, unnormalized numbers, and
-dnl      pseudo-denormals on ia64.
+dnl 2) Whether on 'long double' recognizes all canonical values which are
+dnl    infinite.
 AC_DEFUN([gl_ISINFL_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])
@@ -121,55 +116,41 @@ int main ()
     if (isinf (x.value))
       result |= 2;
   }
-  /* The isinf macro should recognize Pseudo-NaNs, Pseudo-Infinities,
-     Pseudo-Zeroes, Unnormalized Numbers, and Pseudo-Denormals, as defined in
-       Intel IA-64 Architecture Software Developer's Manual, Volume 1:
-       Application Architecture.
-       Table 5-2 "Floating-Point Register Encodings"
-       Figure 5-6 "Memory to Floating-Point Register Data Translation"
-   */
+  /* isinf should return something even for noncanonical values.  */
   { /* Pseudo-NaN.  */
     static memory_long_double x =
       { LDBL80_WORDS (0xFFFF, 0x40000001, 0x00000000) };
-    if (isinf (x.value))
+    if (isinf (x.value) && !isinf (x.value))
       result |= 4;
   }
   { /* Pseudo-Infinity.  */
     static memory_long_double x =
       { LDBL80_WORDS (0xFFFF, 0x00000000, 0x00000000) };
-    if (isinf (x.value))
+    if (isinf (x.value) && !isinf (x.value))
       result |= 8;
   }
   { /* Pseudo-Zero.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x4004, 0x00000000, 0x00000000) };
-    if (isinf (x.value))
+    if (isinf (x.value) && !isinf (x.value))
       result |= 16;
   }
   { /* Unnormalized number.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x4000, 0x63333333, 0x00000000) };
-    if (isinf (x.value))
+    if (isinf (x.value) && !isinf (x.value))
       result |= 32;
   }
   { /* Pseudo-Denormal.  */
     static memory_long_double x =
       { LDBL80_WORDS (0x0000, 0x83333333, 0x00000000) };
-    if (isinf (x.value))
+    if (isinf (x.value) && !isinf (x.value))
       result |= 64;
   }
 #endif
 
   return result;
 }]])], [gl_cv_func_isinfl_works=yes], [gl_cv_func_isinfl_works=no],
-      [
-       case "$host" in
-           # Guess no on OpenBSD ia64, x86_64, i386.
-         ia64-*-openbsd* | x86_64-*-openbsd* | i*86-*-openbsd*)
-            gl_cv_func_isinfl_works="guessing no";;
-         *)
-            gl_cv_func_isinfl_works="guessing yes";;
-       esac
-      ])
+      [gl_cv_func_isinfl_works="guessing yes"])
     ])
 ])

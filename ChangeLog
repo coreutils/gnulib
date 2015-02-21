@@ -1,3 +1,40 @@
+2015-02-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	printf, isinf, etc.: noncanonical != NaN
+	Do not require that isinf, printf, etc. treat noncanonical
+	values as NaNs.  Instead, require only that they do not crash.
+	Problem reported by Joseph Myers in:
+	https://sourceware.org/ml/libc-alpha/2015-02/msg00244.html
+	* doc/posix-functions/dprintf.texi (dprintf):
+	* doc/posix-functions/fprintf.texi (fprintf):
+	* doc/posix-functions/isfinite.texi (isfinite):
+	* doc/posix-functions/isinf.texi (isinf):
+	* doc/posix-functions/isnan.texi (isnan):
+	* doc/posix-functions/printf.texi (printf):
+	* doc/posix-functions/snprintf.texi (snprintf):
+	* doc/posix-functions/sprintf.texi (sprintf):
+	* doc/posix-functions/vdprintf.texi (vdprintf):
+	* doc/posix-functions/vfprintf.texi (vfprintf):
+	* doc/posix-functions/vprintf.texi (vprintf):
+	* doc/posix-functions/vsnprintf.texi (vsnprintf):
+	* doc/posix-functions/vsprintf.texi (vsprintf):
+	Document this.
+	* m4/isfinite.m4 (gl_ISFINITEL_WORKS):
+	* m4/isinf.m4 (gl_ISINFL_WORKS):
+	* m4/isnanl.m4 (gl_FUNC_ISNANL_WORKS):
+	* m4/printf.m4 (gl_PRINTF_INFINITE_LONG_DOUBLE):
+	* tests/test-isfinite.c (test_isfinitel):
+	* tests/test-isinf.c (test_isinfl):
+	* tests/test-isnan.c (test_long_double):
+	* tests/test-isnanl.h (main):
+	* tests/test-snprintf-posix.h (test_function):
+	* tests/test-sprintf-posix.h (test_function):
+	* tests/test-vasnprintf-posix.c (test_function):
+	* tests/test-vasprintf-posix.c (test_function):
+o	Test only that noncanonical values do not cause crashes, not that
+	they are treated as NaNs.  In some cases this means a larger
+	output buffer is needed.
+
 2015-02-20  Jaroslav Skarvada  <jskarvad@redhat.com>
 
 	fts: remove redundant close() (trivial)

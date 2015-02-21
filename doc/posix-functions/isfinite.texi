@@ -15,12 +15,6 @@ Mac OS X 10.5, OpenBSD 3.8, AIX 5.1, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, In
 This macro incorrectly yields true for some @samp{double} arguments, on some
 platforms:
 Linux/ia64 (signalling NaNs).
-@item
-This macro incorrectly yields true for some @samp{long double} arguments, on
-some platforms:
-x86 (pseudo-zeroes, unnormalized numbers, pseudo-denormals),
-x86_64 (pseudo-denormals),
-ia64 (pseudo-NaN, pseudo-Infinity, pseudo-zeroes, unnormalized numbers, pseudo-denormals).
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -28,4 +22,8 @@ Portability problems not fixed by Gnulib:
 @item
 It is implementation-dependent whether @code{isfinite} raises an
 exception given a signaling NaN operand.
+@item
+This macro returns an unspecified result when given noncanonical values
+such as unnormalized numbers, pseudo-denormals, pseudo-NaNs,
+pseudo-Infinities, and pseudo-zeroes.
 @end itemize
