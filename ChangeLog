@@ -1,5 +1,8 @@
 2015-02-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	uniwbrk/u32-wordbreaks-tests: fix copyright
+	* tests/uniwbrk/test-uc-wordbreaks.c: Fix copyright date.
+
 	dup2: doc and test for Android bug
 	Reported by Kevin Cernekee in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00125.html
