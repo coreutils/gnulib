@@ -76,6 +76,8 @@ AC_DEFUN([gl_FUNC_DUP2],
              gl_cv_func_dup2_works="guessing no" ;;
            haiku*) # on Haiku alpha 2, dup2(1, 1) resets FD_CLOEXEC.
              gl_cv_func_dup2_works="guessing no" ;;
+           *-android*) # implemented using dup3(), which fails if oldfd == newfd
+             gl_cv_func_dup2_works="guessing no" ;;
            *) gl_cv_func_dup2_works="guessing yes" ;;
          esac])
       ])

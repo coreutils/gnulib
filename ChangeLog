@@ -1,3 +1,11 @@
+2015-02-23  Kevin Cernekee  <cernekee@google.com>
+
+	Replace dup2() on Android
+	* m4/dup2.m4 (gl_FUNC_DUP2): Android implements dup2() using dup3().
+	Since dup3(fd, fd) fails but dup2(fd, fd) should pass, test-dup2
+	fails.  Using rpl_dup2() fixes this because it has an explicit test
+	for this condition.
+
 2015-02-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Android doesn't define RLIM_SAVED_*
