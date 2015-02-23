@@ -18,4 +18,8 @@ FreeBSD 5.0.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On some platforms, this header does not define some or all of the
+symbolic constants required by POSIX@.  For example, Android does not
+define @code{RLIM_SAVED_CUR} or @code{RLIM_SAVED_MAX}.
 @end itemize

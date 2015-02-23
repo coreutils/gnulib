@@ -1,4 +1,4 @@
-#serial 22
+#serial 23
 dnl Copyright (C) 2002, 2005, 2007, 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,6 +25,12 @@ AC_DEFUN([gl_FUNC_DUP2],
              #include <limits.h>
              #include <sys/resource.h>
              #include <unistd.h>
+             #ifndef RLIM_SAVED_CUR
+             # define RLIM_SAVED_CUR RLIM_INFINITY
+             #endif
+             #ifndef RLIM_SAVED_MAX
+             # define RLIM_SAVED_MAX RLIM_INFINITY
+             #endif
            ]],
            [[int result = 0;
              int bad_fd = INT_MAX;

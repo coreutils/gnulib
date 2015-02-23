@@ -1,3 +1,16 @@
+2015-02-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Android doesn't define RLIM_SAVED_*
+	Portability problem reported by Kevin Cernekee in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00122.html
+	* doc/posix-headers/sys_resource.texi (sys/resource.h):
+	Mention the portability problem.
+	* lib/getdtablesize.c (RLIM_SAVED_CUR, RLIM_SAVED_MAX):
+	Define if not defined.
+	* m4/dup2.m4 (gl_FUNC_DUP2):
+	* m4/fcntl.m4 (gl_FUNC_FCNTL):
+	Likewise.
+
 2015-02-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	vasnprintf-posix-tests: use consistent test
