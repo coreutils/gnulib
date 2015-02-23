@@ -1,4 +1,4 @@
-#serial 23
+#serial 24
 dnl Copyright (C) 2002, 2005, 2007, 2009-2015 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,7 +45,7 @@ AC_DEFUN([gl_FUNC_DUP2],
                if (fcntl (1, F_SETFD, FD_CLOEXEC) == -1)
                  result |= 1;
              #endif
-             if (dup2 (1, 1) == 0)
+             if (dup2 (1, 1) != 1)
                result |= 2;
              #ifdef FD_CLOEXEC
                if (fcntl (1, F_GETFD) != FD_CLOEXEC)
