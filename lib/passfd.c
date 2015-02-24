@@ -75,6 +75,7 @@ sendfd (int sock, int fd)
   cmsg->cmsg_len = CMSG_LEN (sizeof fd);
   /* Initialize the payload: */
   memcpy (CMSG_DATA (cmsg), &fd, sizeof fd);
+  msg.msg_controllen = cmsg->cmsg_len;
 # elif HAVE_STRUCT_MSGHDR_MSG_ACCRIGHTS
   msg.msg_accrights = &fd;
   msg.msg_accrightslen = sizeof fd;
