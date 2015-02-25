@@ -1,5 +1,12 @@
 2015-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	glob, etc.: port to MSVC v18 on MS-Windows 8.1
+	* lib/dirent--.h (GNULIB_defined_opendir):
+	* lib/dirent.in.h (GNULIB_defined_opendir)
+	(GNULIB_defined_closedir):
+	* lib/getcwd.c, lib/glob.c, lib/mountlist.c (opendir, closedir):
+	#undef only if Gnulib defined it.
+
 	poll: port to MSVC v18 on MS-Windows 8.1
 	Problem reported by Gisle Vanem in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00139.html

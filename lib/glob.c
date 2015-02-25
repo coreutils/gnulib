@@ -188,8 +188,12 @@ static const char *next_brace_sub (const char *begin, int flags) __THROWNL;
    therefore save some unnecessary recursion in fchdir.c and opendir_safer.c.
    FIXME - if the kernel ever adds support for multi-thread safety for
    avoiding standard fds, then we should use opendir_safer.  */
-# undef opendir
-# undef closedir
+# ifdef GNULIB_defined_opendir
+#  undef opendir
+# endif
+# ifdef GNULIB_defined_closedir
+#  undef closedir
+# endif
 
 # if HAVE_ALLOCA
 /* The OS usually guarantees only one guard page at the bottom of the stack,
