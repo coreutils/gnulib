@@ -1,3 +1,12 @@
+2015-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	poll: port to MSVC v18 on MS-Windows 8.1
+	Problem reported by Gisle Vanem in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00139.html
+	* lib/poll.c: Always include <sys/select.h> and <sys/socket.h>.
+	* modules/poll (Depends-on) [!HAVE_POLL || REPLACE_POLL]:
+	Add sys_socket.
+
 2015-02-24  Pádraig Brady  <P@draigBrady.com>
 
 	tests: support stderr verification with returns_()

@@ -44,10 +44,11 @@
 # include "msvc-nothrow.h"
 #else
 # include <sys/time.h>
-# include <sys/socket.h>
-# include <sys/select.h>
 # include <unistd.h>
 #endif
+
+#include <sys/select.h>
+#include <sys/socket.h>
 
 #ifdef HAVE_SYS_IOCTL_H
 # include <sys/ioctl.h>
