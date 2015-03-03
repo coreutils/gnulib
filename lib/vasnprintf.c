@@ -1886,7 +1886,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
             else
               {
                 do
-                  result[length++] = (unsigned char) *cp++;
+                  result[length++] = *cp++;
                 while (--n > 0);
               }
           }
@@ -4793,7 +4793,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           {
                             const FCHAR_T *mp = dp->width_start;
                             do
-                              *fbp++ = (unsigned char) *mp++;
+                              *fbp++ = *mp++;
                             while (--n > 0);
                           }
                       }
@@ -4814,7 +4814,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                           {
                             const FCHAR_T *mp = dp->precision_start;
                             do
-                              *fbp++ = (unsigned char) *mp++;
+                              *fbp++ = *mp++;
                             while (--n > 0);
                           }
                       }
@@ -5382,7 +5382,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                             tmpsrc += count;
                             tmpdst += count;
                             for (n = count; n > 0; n--)
-                              *--tmpdst = (unsigned char) *--tmpsrc;
+                              *--tmpdst = *--tmpsrc;
                           }
                       }
 #endif

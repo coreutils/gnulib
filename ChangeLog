@@ -1,3 +1,11 @@
+2015-03-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	vasnprintf: pacify clang 3.5.0
+	Problem reported by Werner Lemberg in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-03/msg00000.html
+	* lib/vasnprintf.c (VASNPRINTF): Omit casts that clang objects to.
+	The casts aren't needed, since the characters in question are ASCII.
+
 2015-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	glob, etc.: port to MSVC v18 on MS-Windows 8.1
