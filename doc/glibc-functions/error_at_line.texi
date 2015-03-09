@@ -2,7 +2,7 @@
 @subsection @code{error_at_line}
 @findex error_at_line
 
-Gnulib module: ---
+Gnulib module: error
 
 Portability problems fixed by Gnulib:
 @itemize
