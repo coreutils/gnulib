@@ -93,7 +93,7 @@ fdopendir (int fd)
    That way, barring race conditions, fd_clone_opendir returns a
    stream whose file descriptor is FD.
 
-   If REPLACE_CHDIR or CWD is null, use opendir ("/proc/self/fd/...",
+   If REPLACE_FCHDIR or CWD is null, use opendir ("/proc/self/fd/...",
    falling back on fchdir metadata.  Otherwise, CWD is a saved version
    of the working directory; use fchdir/opendir(".")/restore_cwd(CWD).  */
 static DIR *

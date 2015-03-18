@@ -1,3 +1,8 @@
+2015-03-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fdopendir: fix typo in comment
+	* lib/fdopendir.c (fdopendir_with_dup): REPLACE_FCHDIR was misspelled.
+
 2015-03-09  Eric Blake  <eblake@redhat.com>
 
 	error: document all entry points provided
