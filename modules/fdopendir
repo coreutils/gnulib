@@ -9,6 +9,7 @@ Depends-on:
 dirent
 extensions
 at-internal     [test $HAVE_FDOPENDIR = 0]
+dirfd           [test $HAVE_FDOPENDIR = 0]
 dup             [test $HAVE_FDOPENDIR = 0]
 errno           [test $HAVE_FDOPENDIR = 0]
 fchdir          [test $HAVE_FDOPENDIR = 0]

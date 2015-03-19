@@ -156,7 +156,16 @@ fd_clone_opendir (int fd, struct saved_cwd const *cwd)
       if (! dir && EXPECTED_ERRNO (saved_errno))
         {
           char const *name = _gl_directory_name (fd);
-          return (name ? opendir (name) : NULL);
+          DIR *dp = name ? opendir (name) : NULL;
+
+          /* The caller has done an elaborate dance to arrange for opendir to
+             consume just the right file descriptor.  If dirfd returns -1,
+             though, we're on a system like mingw where opendir does not
+             consume a file descriptor.  Consume it via 'dup' instead.  */
+          if (dp && dirfd (dp) < 0)
+            dup (fd);
+
+          return dp;
         }
 # endif
       errno = saved_errno;
