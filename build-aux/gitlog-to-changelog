@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2014-11-20 17:25'; # UTC
+my $VERSION = '2015-03-20 22:09'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -73,6 +73,7 @@ OPTIONS:
    --since=DATE convert only the logs since DATE;
                   the default is to convert all log entries.
    --until=DATE convert only the logs older than DATE.
+   --ignore-matching=PAT ignore commit messages whose first lines match PAT.
    --format=FMT set format string for commit subject and body;
                   see 'man git-log' for the list of format metacharacters;
                   the default is '%s%n%b%n'
@@ -226,6 +227,7 @@ sub git_dir_option($)
   my $amend_file;
   my $append_dot = 0;
   my $cluster = 1;
+  my $ignore_matching;
   my $strip_tab = 0;
   my $strip_cherry_pick = 0;
   my $srcdir;
@@ -239,6 +241,7 @@ sub git_dir_option($)
      'amend=s' => \$amend_file,
      'append-dot' => \$append_dot,
      'cluster!' => \$cluster,
+     'ignore-matching=s' => \$ignore_matching,
      'strip-tab' => \$strip_tab,
      'strip-cherry-pick' => \$strip_cherry_pick,
      'srcdir=s' => \$srcdir,
@@ -341,68 +344,73 @@ sub git_dir_option($)
           while ($line[$#line] =~ /^\s*$/) { pop @line; }
         }
 
-      # Record whether there are two or more paragraphs.
-      my $multi_paragraph = grep /^\s*$/, @line;
-
-      # Format 'Co-authored-by: A U Thor <email@example.com>' lines in
-      # standard multi-author ChangeLog format.
-      for (@coauthors)
+      # Ignore commits that match the --ignore-matching pattern, if specified.
+      if (! (defined $ignore_matching
+             && @line && $line[0] =~ /$ignore_matching/))
         {
-          s/^Co-authored-by:\s*/\t    /;
-          s/\s*</  </;
+          # Record whether there are two or more paragraphs.
+          my $multi_paragraph = grep /^\s*$/, @line;
 
-          /<.*?@.*\..*>/
-            or warn "$ME: warning: missing email address for "
-              . substr ($_, 5) . "\n";
-        }
-
-      # If clustering of commit messages has been disabled, if this header
-      # would be different from the previous date/name/email/coauthors header,
-      # or if this or the previous entry consists of two or more paragraphs,
-      # then print the header.
-      if ( ! $cluster
-          || $date_line ne $prev_date_line
-          || "@coauthors" ne "@prev_coauthors"
-          || $multi_paragraph
-          || $prev_multi_paragraph)
-        {
-          $prev_date_line eq ''
-            or print "\n";
-          print $date_line;
-          @coauthors
-            and print join ("\n", @coauthors), "\n";
-        }
-      $prev_date_line = $date_line;
-      @prev_coauthors = @coauthors;
-      $prev_multi_paragraph = $multi_paragraph;
-
-      # If there were any lines
-      if (@line == 0)
-        {
-          warn "$ME: warning: empty commit message:\n  $date_line\n";
-        }
-      else
-        {
-          if ($append_dot)
+          # Format 'Co-authored-by: A U Thor <email@example.com>' lines in
+          # standard multi-author ChangeLog format.
+          for (@coauthors)
             {
-              # If the first line of the message has enough room, then
-              if (length $line[0] < 72)
-                {
-                  # append a dot if there is no other punctuation or blank
-                  # at the end.
-                  $line[0] =~ /[[:punct:]\s]$/
-                    or $line[0] .= '.';
-                }
+              s/^Co-authored-by:\s*/\t    /;
+              s/\s*</  </;
+
+              /<.*?@.*\..*>/
+                or warn "$ME: warning: missing email address for "
+                  . substr ($_, 5) . "\n";
             }
 
-          # Remove one additional leading TAB from each line.
-          $strip_tab
-            and map { s/^\t// } @line;
+          # If clustering of commit messages has been disabled, if this header
+          # would be different from the previous date/name/etc. header,
+          # or if this or the previous entry consists of two or more paragraphs,
+          # then print the header.
+          if ( ! $cluster
+              || $date_line ne $prev_date_line
+              || "@coauthors" ne "@prev_coauthors"
+              || $multi_paragraph
+              || $prev_multi_paragraph)
+            {
+              $prev_date_line eq ''
+                or print "\n";
+              print $date_line;
+              @coauthors
+                and print join ("\n", @coauthors), "\n";
+            }
+          $prev_date_line = $date_line;
+          @prev_coauthors = @coauthors;
+          $prev_multi_paragraph = $multi_paragraph;
 
-          # Prefix each non-empty line with a TAB.
-          @line = map { length $_ ? "\t$_" : '' } @line;
+          # If there were any lines
+          if (@line == 0)
+            {
+              warn "$ME: warning: empty commit message:\n  $date_line\n";
+            }
+          else
+            {
+              if ($append_dot)
+                {
+                  # If the first line of the message has enough room, then
+                  if (length $line[0] < 72)
+                    {
+                      # append a dot if there is no other punctuation or blank
+                      # at the end.
+                      $line[0] =~ /[[:punct:]\s]$/
+                        or $line[0] .= '.';
+                    }
+                }
 
-          print "\n", join ("\n", @line), "\n";
+              # Remove one additional leading TAB from each line.
+              $strip_tab
+                and map { s/^\t// } @line;
+
+              # Prefix each non-empty line with a TAB.
+              @line = map { length $_ ? "\t$_" : '' } @line;
+
+              print "\n", join ("\n", @line), "\n";
+            }
         }
 
       defined ($in = <PIPE>)

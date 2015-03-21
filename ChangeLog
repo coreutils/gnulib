@@ -1,3 +1,10 @@
+2015-03-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gitlog-to-changelog: new option --ignore-matching
+	* build-aux/gitlog-to-changelog (usage, git_dir_option, main):
+	Support new option --ignore-matching=PAT, which ignores all
+	commit messages whose first line matches PAT.
+
 2015-03-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fdopendir: port better to MinGW
