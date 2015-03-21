@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Convert git log output to ChangeLog format.
 
-my $VERSION = '2015-03-20 22:09'; # UTC
+my $VERSION = '2015-03-21 01:01'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -314,7 +314,7 @@ sub git_dir_option($)
           $rest =~ s/^\s*\(cherry picked from commit [\da-f]+\)\n//m;
         }
 
-      my @line = split "\n", $rest;
+      my @line = split /\s*\n/, $rest;
       my $author_line = shift @line;
       defined $author_line
         or die "$ME:$.: unexpected EOF\n";

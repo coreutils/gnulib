@@ -1,5 +1,11 @@
 2015-03-20  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gitlog-to-changelog: trim trailing white space
+	* build-aux/gitlog-to-changelog (main):
+	Trim trailing white space from commit message lines.
+	This is helpful for processing the GNU Emacs repository,
+	which dates back to 1985 and contains a lot of such lines.
+
 	gitlog-to-changelog: new option --ignore-matching
 	* build-aux/gitlog-to-changelog (usage, git_dir_option, main):
 	Support new option --ignore-matching=PAT, which ignores all
