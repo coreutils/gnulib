@@ -64,11 +64,15 @@ main (int argc _GL_UNUSED, char *argv[])
   fd = open (".", O_RDONLY);
   ASSERT (0 <= fd);
   d = fdopendir (fd);
-  /* We know that fd is now out of our reach, but it is not specified
-     whether it is closed now or at the closedir.  We also can't
-     guarantee whether dirfd returns fd, some other descriptor, or
-     -1.  */
   ASSERT (d);
+  /* fdopendir should not close fd.  */
+  ASSERT (dup2 (fd, fd) == fd);
+
+  /* Don't test dirfd here.  dirfd (d) must return fd on current POSIX
+     platforms, but on pre-2008 platforms or on non-POSIX platforms
+     dirfd (fd) might return some other descriptor, or -1, and gnulib
+     does not work around this porting problem.  */
+
   ASSERT (closedir (d) == 0);
   /* Now we can guarantee that fd must be closed.  */
   errno = 0;

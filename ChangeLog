@@ -1,3 +1,10 @@
+2015-03-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fdopendir-tests: test it does not close its arg
+	* tests/test-fdopendir.c (main): Test that fdopendir does not
+	close its argument.  From a suggestion by David Grayson in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-03/msg00039.html
+
 2015-03-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gitlog-to-changelog: trim trailing white space
