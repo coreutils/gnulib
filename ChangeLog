@@ -1,3 +1,8 @@
+2015-03-24  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg-simple-tests: add missing gl_FUNC_MMAP_ANON dependency
+	* modules/quotearg-simple-tests: Reference m4/mmap-anon.m4
+
 2015-03-24  Tobias Stoeckmann  <tobias@stoeckmann.org>
 
 	yesno: make EOL optional in ENABLE_NLS case also (trival)

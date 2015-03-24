@@ -3,6 +3,7 @@ tests/test-quotearg-simple.c
 tests/test-quotearg.h
 tests/macros.h
 tests/zerosize-ptr.h
+m4/mmap-anon.m4
 
 Depends-on:
 progname
