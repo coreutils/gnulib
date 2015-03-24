@@ -42,7 +42,10 @@ yesno (void)
     yes = false;
   else
     {
-      response[response_len - 1] = '\0';
+      /* Remove EOL if present as that's not part of the matched response,
+         and not matched by $ for example.  */
+      if (response[response_len - 1] == '\n')
+        response[response_len - 1] = '\0';
       yes = (0 < rpmatch (response));
     }
 

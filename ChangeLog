@@ -1,3 +1,9 @@
+2015-03-24  Tobias Stoeckmann  <tobias@stoeckmann.org>
+
+	yesno: make EOL optional in ENABLE_NLS case also (trival)
+	* lib/yesno.c (yesno): Check for EOL before replacing.
+	* tests/test-yesno.sh: Add a test case (test along with gettext).
+
 2015-03-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fdopendir-tests: test it does not close its arg
