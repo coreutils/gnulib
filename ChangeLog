@@ -1,3 +1,14 @@
+2015-04-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stddef: port to pre-C11 GCC on x86
+	On this platform, max_align_t should have an alignment of 8 even
+	though the storage alignments of double, long, etc. max out at 4.
+	Inspired by a comment of Andreas Schwab's here:
+	https://sourceware.org/ml/libc-alpha/2015-04/msg00017.html
+	* lib/stddef.in.h (_GL_STDDEF_ALIGNAS) [!HAVE_MAX_ALIGN_T]: New macro.
+	(max_align_t) [!HAVE_MAX_ALIGN_T]: Use it.
+	* tests/test-stddef.c: Test __alignof__ too, if available.
+
 2015-03-24  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg-simple-tests: add missing gl_FUNC_MMAP_ANON dependency
