@@ -1,3 +1,16 @@
+2015-04-02  Pádraig Brady  <P@draigBrady.com>
+
+	mountlist: remove dependency on libmount
+	* lib/mountlist.c (read_file_system_list): Parse /proc/self/mountinfo
+	directly, rather than depending on libmount, which has many
+	dependencies due to its dependence on libselinux, as detailed at:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-01/msg00063.html
+	Note we restrict this to __linux__ as that's probably where this
+	interface will remain.  If ever porting, it would be best
+	to first pull the makedev() wrapper from coreutils to a gnulib module.
+	Note also we don't add a getline dependency to the mountlist module,
+	as all Linux versions are sufficient.
+
 2015-04-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stddef: port to pre-C11 GCC on x86
