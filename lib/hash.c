@@ -1116,14 +1116,6 @@ hash_insert_if_absent (Hash_table *table, void const *entry,
   return 1;
 }
 
-/* hash_insert0 is the deprecated name for hash_insert_if_absent.
-   .  */
-int
-hash_insert0 (Hash_table *table, void const *entry, void const **matched_ent)
-{
-  return hash_insert_if_absent (table, entry, matched_ent);
-}
-
 /* If ENTRY matches an entry already in the hash table, return the pointer
    to the entry from the table.  Otherwise, insert ENTRY and return ENTRY.
    Return NULL if the storage required for insertion cannot be allocated.

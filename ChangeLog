@@ -1,3 +1,9 @@
+2015-04-03  Giuseppe Scrivano  <gscrivan@redhat.com>
+
+	hash: remove deprecated hash_insert0 function
+	* lib/hash.h (hash_insert0): Remove deprecated function.
+	* lib/hash.c (hash_insert0): Likewise.
+
 2015-04-02  Pádraig Brady  <P@draigBrady.com>
 
 	mountlist: remove dependency on libmount
