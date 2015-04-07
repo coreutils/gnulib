@@ -1,3 +1,13 @@
+2015-04-07  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname-tests: fix failure due to alias
+	Reported by Jack Howarth in:
+	<https://lists.gnu.org/archive/html/bug-libunistring/2015-04/msg00000.html>.
+	* tests/uniname/test-uninames.c (name_has_alias): New function.
+	(test_inverse_lookup): Exclude character name with valid alias,
+	from randomly generated character names.
+	(main): Fill unicode_aliases before calling test functions.
+
 2015-04-03  Giuseppe Scrivano  <gscrivan@redhat.com>
 
 	hash: remove deprecated hash_insert0 function

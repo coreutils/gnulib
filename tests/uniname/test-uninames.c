@@ -181,6 +181,16 @@ fill_aliases (const char *namealiases_filename)
     }
 }
 
+static int
+name_has_alias (unsigned int uc)
+{
+  int i;
+  for (i = 0; i < ALIASLEN; i++)
+    if (unicode_aliases[i].uc == uc)
+      return 1;
+  return 0;
+}
+
 /* Perform an exhaustive test of the unicode_character_name function.  */
 static int
 test_name_lookup ()
@@ -296,6 +306,7 @@ test_inverse_lookup ()
 
                 result = unicode_name_character (buf);
                 if (result != UNINAME_INVALID
+                    && !name_has_alias (result)
                     && !(unicode_names[result] != NULL
                          && strcmp (unicode_names[result], buf) == 0))
                   {
@@ -354,15 +365,14 @@ main (int argc, char *argv[])
   set_program_name (argv[0]);
 
   fill_names (argv[1]);
+  if (argc > 2)
+    fill_aliases (argv[2]);
 
   error |= test_name_lookup ();
   error |= test_inverse_lookup ();
 
   if (argc > 2)
-    {
-      fill_aliases (argv[2]);
-      error |= test_alias_lookup ();
-    }
+    error |= test_alias_lookup ();
 
   return error;
 }
