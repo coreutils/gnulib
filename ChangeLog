@@ -1,3 +1,11 @@
+2015-04-07  Karl Berry  <karl@gnu.org>
+
+	* config/srclistvars.sh (GETTEXT): new definition.
+	* config/srclist.txt: use it for gettext .m4 files.
+	Thread starting at http://lists.gnu.org/archive/html/bug-gnulib/201
+	and confirmed at http://lists.gnu.org/archive/html/bug-gnulib/2015-02/msg00146.html
+	and continuing into April.
+
 2015-04-07  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname-tests: fix failure due to alias

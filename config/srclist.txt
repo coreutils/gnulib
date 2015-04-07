@@ -3,38 +3,38 @@
 
 $GNUCONFIG/config.guess		build-aux
 $GNUCONFIG/config.sub		build-aux
-#
+
 $AUTOMAKE/lib/ar-lib		build-aux
 $AUTOMAKE/lib/compile		build-aux
 $AUTOMAKE/lib/depcomp		build-aux
 $AUTOMAKE/lib/install-sh	build-aux
 $AUTOMAKE/lib/mdate-sh		build-aux
 $AUTOMAKE/lib/mkinstalldirs	build-aux
-#
+
 $TEXINFOSRC/doc/texinfo.tex		build-aux
-#
+
 # we generate INSTALL from this via a rule in doc/Makefile.
 $AUTOCONF/doc/install.texi	doc
-#
+
 $GNUSTANDARDS/maintain.texi	doc
 $GNUSTANDARDS/standards.texi	doc
 $GNUSTANDARDS/make-stds.texi	doc
 $GNUSTANDARDS/gnu-oids.texi	doc
 $GNUSTANDARDS/fdl.texi		doc
-#
+
 $GNUWWWLICENSES/lgpl-3.0.txt			doc/COPYING.LESSERv3
 $GNUWWWLICENSES/old-licenses/lgpl-2.1.txt	doc/COPYING.LESSERv2
 $GNUWWWLICENSES/gpl-3.0.txt			doc/COPYINGv3
 $GNUWWWLICENSES/old-licenses/gpl-2.0.txt	doc/COPYINGv2
 $GNUWWWLICENSES/old-licenses/lgpl-2.1.texi	doc
 $GNUWWWLICENSES/old-licenses/gpl-2.0.texi	doc
-# no longer used or maintained and fails @acronym checks
+# no longer modified and fails @acronym checks
 #$GNUWWWLICENSES/old-licenses/fdl-1.2.texi	doc
 $GNUWWWLICENSES/agpl-3.0.texi			doc
 $GNUWWWLICENSES/fdl-1.3.texi			doc
 $GNUWWWLICENSES/gpl-3.0.texi			doc
 $GNUWWWLICENSES/lgpl-3.0.texi			doc
-#
+
 # The official forms for contributors to fill out, mentioned in maintain.
 $GNUORG/conditions.text				doc/Copyright
 $GNUORG/Copyright/request-assign.changes	doc/Copyright
@@ -48,6 +48,21 @@ $GNUORG/assign.translation.manual		doc/Copyright
 $GNUORG/disclaim.manual				doc/Copyright
 $GNUORG/disclaim.changes.manual			doc/Copyright
 $GNUORG/disclaim.program			doc/Copyright
+
+# Although gettext-runtime/m4 has other .m4 files, they are maintained
+# in gnulib.
+$GETTEXT/gettext-runtime/m4/codeset.m4		m4
+$GETTEXT/gettext-runtime/m4/gettext.m4		m4
+$GETTEXT/gettext-runtime/m4/iconv.m4		m4
+$GETTEXT/gettext-runtime/m4/intl.m4		m4
+$GETTEXT/gettext-runtime/m4/intldir.m4		m4
+$GETTEXT/gettext-runtime/m4/intlmacosx.m4	m4
+$GETTEXT/gettext-runtime/m4/lcmessage.m4	m4
+$GETTEXT/gettext-runtime/m4/nls.m4		m4
+$GETTEXT/gettext-runtime/m4/po.m4		m4
+
+# 
+# All below here commented out in forlorn hope of future syncs.
 
 # new argp not in glibc yet --13feb06.
 #$LIBCSRC/argp/argp-ba.c			lib gpl

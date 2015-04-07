@@ -1,8 +1,7 @@
 # Variables for srclist-update and srclist.txt.
-# Will change for each user.
+# Will likely change for each user.
 
-# Copyright (C) 2002, 2003, 2004 2005, 2006, 2008
-# Free Software Foundation, Inc.
+# Copyright 2002-2015 Free Software Foundation, Inc.
 
 # This file is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by
@@ -21,6 +20,7 @@
 case $LOGNAME in
 karl)
   : ${ACLOCAL=/usr/local/gnu/share/aclocal}
+  : ${GETTEXT=/usr/local/gnu/src/dist-gettext}
   : ${GNUBIN=/usr/local/gnu/bin}
   : ${GNUORG=$HOME/gnu/gnuorg}
   : ${GNUWWWLICENSES=$HOME/gnu/www/www/licenses}
