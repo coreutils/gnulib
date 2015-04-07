@@ -1,5 +1,13 @@
 2015-04-07  Karl Berry  <karl@gnu.org>
 
+	gendocs: new option --tex for passing args to texi2dvi.
+	* build-aux/gendocs.sh: new option --tex, default -t @finalout.
+	(TEXI2DVI): cut to just command name.
+	(usage): mention new option, and update copyright.
+	<generate_tex>: use it.
+
+2015-04-07  Karl Berry  <karl@gnu.org>
+
 	* config/srclistvars.sh (GETTEXT): new definition.
 	* config/srclist.txt: use it for gettext .m4 files.
 	Thread starting at http://lists.gnu.org/archive/html/bug-gnulib/201
