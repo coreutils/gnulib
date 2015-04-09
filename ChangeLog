@@ -1,3 +1,11 @@
+2015-04-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gitlog-to-changelog: port to MS-Windows
+	* build-aux/gitlog-to-changelog (git_dir_option):
+	Use strftime with "%Y-%m-%d", not "%F", to avoid a bug in
+	MS-Windows Perl.  Reported by Eli Zaretskii in:
+	http://lists.gnu.org/archive/html/emacs-devel/2015-04/msg00504.html
+
 2015-04-07  Karl Berry  <karl@gnu.org>
 
 	gendocs: new option --tex for passing args to texi2dvi.
