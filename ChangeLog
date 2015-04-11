@@ -1,5 +1,36 @@
 2015-05-27  Andreas Gruenbacher  <agruenba@redhat.com>
 
+	qacl: Reimplement qset_acl and qcopy_acl (Bug#20666)
+	Implement get_permissions and set_permissions primitives for getting all
+	the permissions of a file, storing them, and later setting them. (In the
+	minimal case, the permissions consist only of a file mode.) Reimplement
+	qset_acl and qcopy_acl based on these new primitives: this avoids code
+	duplication and makes error handling more consistent.
+	The Solaris and Cygwin code still uses duplicate code paths for setting
+	a file mode while making sure that no acls exist and setting an explicit
+	acl; this is no worse than before, but could be cleaned up.  The AIX
+	code still doesn't read ACLs, it only makes sure that acls don't get in
+	the way when setting a file mode.
+	* lib/acl-internal.h (struct permission_context): New data structure.
+	(get_permissions, set_permissions, free_permission_context): Declare.
+	* lib/acl-internal.c (free_permission_context): New helper function.
+	* lib/get-permissions.c (get_permissions): New helper function split off
+	from qcopy_acl.
+	* lib/set-permissions.c: (set_acls_from_mode): On Solaris, Cygwin, and
+	AIX, set a file's permissions based only on a file mode.
+	(acl_from_mode, context_acl_from_mode, context_aclv_from_mode): All
+	other platforms construct a temporary acl from the file mode and set
+	that acl in the same way as setting an acl read from the source file.
+	This should help avoid code duplication and inconsistent / buggy
+	behavior.
+	(set_acls): New helper function Split off from qcopy_acl.
+	(chmod_or_fchmod): Moved here from qset-acl.c.
+	(set_permissions): New helper function.
+	* lib/qcopy-acl.c (qcopy_acl): Rewrite using get_permissions and
+	set_permissions.
+	* lib/qset-acl.c (qset_acl): Rewrite using set_permissions.
+	* modules/qacl: Add get-permissions.c and set-permissions.c.
+
 	file-has-acl: Split feature tests again (Bug#20667)
 	* lib/file-has-acl.c: Instead of testing for
 	XATTR_NAME_POSIX_ACL_ACCESS and XATTR_NAME_POSIX_ACL_DEFAULT,
