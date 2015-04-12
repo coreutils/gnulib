@@ -2,6 +2,7 @@ Description:
 Access control lists of files, with diagnostics.  (Unportable.)
 
 Files:
+lib/file-has-acl.c
 lib/copy-acl.c
 lib/set-acl.c
 
@@ -14,7 +15,7 @@ quote
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += copy-acl.c set-acl.c
+lib_SOURCES += file-has-acl.c copy-acl.c set-acl.c
 
 Include:
 "acl.h"
