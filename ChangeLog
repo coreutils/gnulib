@@ -1,3 +1,14 @@
+2015-04-15  Andreas Gruenbacher  <andreas.gruenbacher@gmail.com>
+
+	qacl: Simplify HP-UX acl_nontrivial check
+	* lib/acl-internal.c: Remove struct stat parameter from HP-UX's version of
+	acl_nontrivial. Check if the acl has at most three entries instead (it must
+	have exactly three entries according to the HP-UX documentation). Ignore
+	uids and gids as long as an entry is either for a user (i.e., the owner),
+	a group (i.e., the owning group), or others.
+	* lib/acl-internal.h: Change HP-UX's acl_nontrivial prototype.
+	* lib/qcopy-acl.c (qcopy_acl): With that, we no longer need to stat the file.
+
 2015-04-15  Andreas Gruenbacher   <andreas.gruenbacher@gmail.com>
 
 	acl: On Linux, check for acls without libacl

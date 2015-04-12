@@ -336,18 +336,19 @@ acl_ace_nontrivial (int count, ace_t *entries)
 /* Return 1 if the given ACL is non-trivial.
    Return 0 if it is trivial, i.e. equivalent to a simple stat() mode.  */
 int
-acl_nontrivial (int count, struct acl_entry *entries, struct stat *sb)
+acl_nontrivial (int count, struct acl_entry *entries)
 {
   int i;
+
+  if (count > 3)
+    return 1;
 
   for (i = 0; i < count; i++)
     {
       struct acl_entry *ace = &entries[i];
 
-      if (!((ace->uid == sb->st_uid && ace->gid == ACL_NSGROUP)
-            || (ace->uid == ACL_NSUSER && ace->gid == sb->st_gid)
-            || (ace->uid == ACL_NSUSER && ace->gid == ACL_NSGROUP)))
-        return 1;
+      if (ace->uid != ACL_NSUSER && ace->gid != ACL_NSGROUP)
+	return 1;
     }
   return 0;
 }
