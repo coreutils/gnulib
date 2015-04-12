@@ -11,6 +11,7 @@ error
 gettext-h
 qacl
 quote
+stdbool
 
 configure.ac:
 
@@ -22,6 +23,7 @@ Include:
 
 Link:
 $(LIB_ACL)
+$(LIB_HAS_ACL)
 
 License:
 GPL

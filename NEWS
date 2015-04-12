@@ -3,6 +3,11 @@ Important notes
 
 Date        Modules         Changes
 
+2015-04-15  acl             If your project only uses the file_has_acl()
+                            detection routine, then the requirements are
+                            potentially reduced by using $LIB_HAS_ACL rather
+                            than $LIB_ACL.
+
 2013-04-24  gettext         If your project uses 'gettextize --intl' it is now
                             your responsibility to put -I$(top_builddir)/intl
                             into the Makefile.am for gnulib.

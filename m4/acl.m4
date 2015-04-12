@@ -16,6 +16,7 @@ AC_DEFUN([gl_FUNC_ACL],
 
   AC_CHECK_FUNCS_ONCE([fchmod])
   LIB_ACL=
+  LIB_HAS_ACL=
   use_acl=0
   if test "x$enable_acl" != "xno"; then
     dnl On all platforms, the ACL related API is declared in <sys/acl.h>.
@@ -124,6 +125,21 @@ int type = ACL_TYPE_EXTENDED;]])],
 
       LIBS=$ac_save_LIBS
     fi
+
+    dnl On Linux, testing if a file has an acl can be done with the getxattr
+    dnl syscall which doesn't require linking against additional libraries.
+    use_xattrs=0
+    AC_CHECK_HEADERS([sys/xattr.h linux/xattr.h])
+    if test $ac_cv_header_sys_xattr_h = yes && test $ac_cv_header_linux_xattr_h = yes; then
+      AC_CHECK_FUNCS([getxattr])
+      if test $ac_cv_func_getxattr = yes; then
+	use_xattrs=1
+      fi
+    fi
+    if test use_xattrs = 0; then
+      LIB_HAS_ACL=$LIB_ACL
+    fi
+
     if test "x$enable_acl$use_acl" = "xyes0"; then
       AC_MSG_ERROR([ACLs enabled but support not detected])
     elif test "x$enable_acl$use_acl" = "xauto0"; then
@@ -132,6 +148,7 @@ int type = ACL_TYPE_EXTENDED;]])],
     fi
   fi
   AC_SUBST([LIB_ACL])
+  AC_SUBST([LIB_HAS_ACL])
   AC_DEFINE_UNQUOTED([USE_ACL], [$use_acl],
     [Define to nonzero if you want access control list support.])
   USE_ACL=$use_acl

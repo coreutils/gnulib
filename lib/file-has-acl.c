@@ -29,6 +29,13 @@
 
 #include "acl-internal.h"
 
+#if HAVE_SYS_XATTR_H
+# include <sys/xattr.h>
+#endif
+
+#if HAVE_LINUX_XATTR_H
+# include <linux/xattr.h>
+#endif
 
 /* Return 1 if NAME has a nontrivial access control list, 0 if NAME
    only has no or a base access control list, and -1 (setting errno)
@@ -41,7 +48,33 @@ file_has_acl (char const *name, struct stat const *sb)
 #if USE_ACL
   if (! S_ISLNK (sb->st_mode))
     {
-# if HAVE_ACL_GET_FILE
+
+# if HAVE_GETXATTR && defined XATTR_NAME_POSIX_ACL_ACCESS && defined XATTR_NAME_POSIX_ACL_DEFAULT
+
+      ssize_t ret;
+
+      ret = getxattr (name, XATTR_NAME_POSIX_ACL_ACCESS, NULL, 0);
+      if (ret < 0)
+	{
+	  if (errno != ENODATA)
+	    return -1;
+	}
+      else if (ret > 0)
+	return 1;
+      if (S_ISDIR (sb->st_mode))
+	{
+	  ret = getxattr (name, XATTR_NAME_POSIX_ACL_DEFAULT, NULL, 0);
+	  if (ret < 0)
+	    {
+	      if (errno != ENODATA)
+		return -1;
+	    }
+	  else if (ret > 0)
+	    return 1;
+	}
+      return 0;
+
+# elif HAVE_ACL_GET_FILE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
       /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */

@@ -1,3 +1,13 @@
+2015-04-15  Andreas Gruenbacher   <andreas.gruenbacher@gmail.com>
+
+	acl: On Linux, check for acls without libacl
+	On Linux, use the getxattr syscall instead of the acl_extended_file libacl
+	library function to check for the presence of acls, avoiding a library.
+	* lib/file-has-acl.c: Include xattr headers if we have them.
+	(file_has_acl): On Linux, use getxattr().
+	* m4/acl.m4 (gl_FUNC_ACL): Define LIB_HAS_ACL as the libraries to link with for
+	file_has_acl(). Check for xattr headers and getxattr().
+
 2015-04-14  Ángel González  <keisial@gmail.com>
 
 	tempname: avoid unused parameter warnings (trivial)
