@@ -1,3 +1,9 @@
+2015-04-14  HIRAMATSU Yoshifumi  <hiramatu@boreas.dti.ne.jp>
+
+	fseeko: fix build failure on NetBSD >= 6 (trivial)
+	* lib/fseeko.c (feeko): NetBSD 6 changed the definition of _offset
+	from 'fpos_t struct' to __off_t, which is a typedef of __int64_t.
+
 2015-04-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gitlog-to-changelog: port to MS-Windows

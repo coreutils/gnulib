@@ -128,7 +128,7 @@ fseeko (FILE *fp, off_t offset, int whence)
       fp->_offset = pos;
 #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
       /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
-# if defined __CYGWIN__
+# if defined __CYGWIN__ || (defined __NetBSD__ && __NetBSD_Version__ >= 600000000)
       /* fp_->_offset is typed as an integer.  */
       fp_->_offset = pos;
 # else
