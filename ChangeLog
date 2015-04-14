@@ -1,3 +1,9 @@
+2015-04-14  Ángel González  <keisial@gmail.com>
+
+	tempname: avoid unused parameter warnings (trivial)
+	* lib/tempname.c (try_dir): Tag with __GL_UNUSED.
+	(try_nocreate): Likewise.
+
 2015-04-14  Mats Erik Andersson  <gnu@gisladisker.se>
 
 	git-version-gen: detect untagged revisions
