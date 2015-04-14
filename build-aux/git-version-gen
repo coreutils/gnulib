@@ -189,16 +189,12 @@ then
     v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
     v_from_git=1
 elif test "x$fallback" = x || git --version >/dev/null 2>&1; then
-    if v=g`git describe --always HEAD 2>/dev/null`; then
-	v_from_git=1
-    else
-	v=UNKNOWN
-    fi
+    v=UNKNOWN
 else
     v=$fallback
 fi
 
-v=`echo "$v" | sed "s/^$prefix//"`
+v=`echo "$v" |sed "s/^$prefix//"`
 
 # Test whether to append the "-dirty" suffix only if the version
 # string we're using came from git.  I.e., skip the test if it's "UNKNOWN"

@@ -4,14 +4,6 @@
 	* lib/tempname.c (try_dir): Tag with __GL_UNUSED.
 	(try_nocreate): Likewise.
 
-2015-04-14  Mats Erik Andersson  <gnu@gisladisker.se>
-
-	git-version-gen: detect untagged revisions
-	* build-aux/git-version-gen: If fallback string is empty,
-	but git is available, use "git describe --always" to extract
-	a revision, and prefix it with "g".  This is much better than
-	responding "UNKNOWN" and it applies to shallow clones!
-
 2015-04-14  HIRAMATSU Yoshifumi  <hiramatu@boreas.dti.ne.jp>
 
 	fseeko: fix build failure on NetBSD >= 6 (trivial)
