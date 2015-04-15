@@ -1,3 +1,11 @@
+2015-04-15  Mats Erik Andersson  <gnu@gisladisker.se>
+
+	gnulib-tool: output bold attribute more portably
+	* gnulib-tool (func_show_module_list): Change hexadecimal
+	numbers to octal in BOLD_ON and BOLD_OFF.  The use of hex
+	encoded numbers as arguments to `printf' is not portable,
+	and is not claimed by POSIX.  This is the case with FreeBSD.
+
 2015-04-15  Andreas Gruenbacher  <andreas.gruenbacher@gmail.com>
 
 	qacl: Simplify HP-UX acl_nontrivial check

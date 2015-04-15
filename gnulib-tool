@@ -2803,8 +2803,8 @@ func_show_module_list ()
        *) false;;
      esac; then
     # Assume xterm compatible escape sequences.
-    bold_on=`printf '\x1b[1m'`
-    bold_off=`printf '\x1b[0m'`
+    bold_on=`printf '\033[1m'`
+    bold_off=`printf '\033[0m'`
   else
     bold_on=
     bold_off=
