@@ -1,3 +1,29 @@
+2015-04-21  Simon Josefsson  <simon@josefsson.org>
+
+	doc: update FDL template to match FDL examples.
+	* doc/alloca-opt.texi:
+	* doc/alloca.texi:
+	* doc/c-ctype.texi:
+	* doc/c-strcase.texi:
+	* doc/c-strcaseeq.texi:
+	* doc/c-strcasestr.texi:
+	* doc/c-strstr.texi:
+	* doc/c-strtod.texi:
+	* doc/c-strtold.texi:
+	* doc/ctime.texi:
+	* doc/error.texi:
+	* doc/gcd.texi:
+	* doc/gnulib-tool.texi:
+	* doc/inet_ntoa.texi:
+	* doc/intprops.texi:
+	* doc/lib-symbol-visibility.texi:
+	* doc/maintain.texi:
+	* doc/parse-datetime.texi:
+	* doc/quote.texi:
+	* doc/regexprops-generic.texi:
+	* doc/standards.texi: Remove spurious 'with' in FDL license
+	template.
+
 2015-04-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	lstat: fix cross-compilation 'ln -s' problem
