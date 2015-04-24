@@ -1,3 +1,21 @@
+2015-04-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	manywarnings: add GCC 5.1 warnings
+	* build-aux/gcc-warning.spec: Add -Wabi=, -Warray-bounds,
+	-Warray-bounds=, -Wc++14-compat, -Wc90-c99-compat,
+	-Wc99-c11-compat, -Wshadow-ivar, -Wsized-deallocation,
+	-Wsuggest-override, -Wuse-without-only.  Change
+	-Wnormalized=... operands to match 5.1.
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add -Wbool-compare,
+	-Wchkp, -Wdesignated-init, -Wdiscarded-array-qualifiers,
+	-Wdiscarded-qualifiers, -Wformat-signedness,
+	-Wincompatible-pointer-types, -Wint-conversion,
+	-Wlogical-not-parentheses, -Wmemset-transposed-args, -Wodr,
+	-Wshift-count-negative, -Wshift-count-overflow,
+	-Wsizeof-array-argument, -Wsuggest-final-methods,
+	-Wsuggest-final-types, -Wswitch-bool.  Remove -Warray-bounds,
+	and add -Warray-bounds=2 as a special case.
+
 2015-04-21  Simon Josefsson  <simon@josefsson.org>
 
 	doc: update FDL template to match FDL examples.
@@ -1662,7 +1680,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	Remove duplicates.  Use tabs uniformly, as that's what 'cut' wants.
 	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add -Wdate-time,
 	-Wopenmp-simd.  Use -fdiagnostics-show-option and -funit-at-a-time
-	only for older GCC versions that need them.  Handke
+	only for older GCC versions that need them.  Handle
 	-Wnormalized=nfc specially, so that the 'comm' command used
 	for maintenance doesn't get confused.
 
