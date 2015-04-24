@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 24, 2014
+@set lastupdate April 23, 2015
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,16 +24,14 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015 Free Software Foundation, Inc.
 
-@quotation
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
 any later version published by the Free Software Foundation; with no
 Invariant Sections, no Front-Cover Texts, and no Back-Cover
 Texts.  A copy of the license is included in the section entitled
 ``GNU Free Documentation License''.
-@end quotation
 @end copying
 
 @titlepage
@@ -2330,6 +2328,15 @@ GNU/Linux systems are widely available, all GNU packages should
 provide full functionality on a 100% free GNU/Linux system, and should
 not require any non-free software to build or function.
 The GNU Coding Standards say a lot more about this issue.
+
+Similarly, a GNU package should not require the use of non-free
+software, including JavaScript, for the coordination of its
+development.  For example, please don't use Transifex for translation
+of your software because it requires your translators to use non-free,
+JavaScript-based editing tools.  Instead, a service without any
+ethical concerns should be used, such as GNU's Pootle instance
+(@url{https://chapters.gnu.org/pootle}) or The Translation Project
+(@url{http://translationproject.org}).
 
 A GNU package should not refer the user to any non-free documentation
 for free software.  The need for free documentation to come with free
