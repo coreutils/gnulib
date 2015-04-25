@@ -1,0 +1,26 @@
+Description:
+Whether a file has an ACL.
+
+Files:
+lib/file-has-acl.c
+
+Depends-on:
+qacl  [test $gl_need_lib_has_acl]
+
+configure.ac:
+gl_FILE_HAS_ACL
+
+Makefile.am:
+lib_SOURCES += file-has-acl.c
+
+Include:
+"acl.h"
+
+Link:
+$(LIB_HAS_ACL)
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert, Jim Meyering

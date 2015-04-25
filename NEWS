@@ -3,6 +3,11 @@ Important notes
 
 Date        Modules         Changes
 
+2015-04-24  acl             This module no longer defines file_has_acl.
+                            Use the new file-has-acl module for that.
+                            Using only the latter module makes for fewer
+                            link-time dependencies on GNU/Linux.
+
 2015-04-15  acl             If your project only uses the file_has_acl()
                             detection routine, then the requirements are
                             potentially reduced by using $LIB_HAS_ACL rather

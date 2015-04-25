@@ -1,5 +1,30 @@
 2015-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	file-has-acl: new module, split from acl
+	And add a new module file-has-acl-tests to match.
+	I ran into a problem with the recent changes to the acl module,
+	as they introduced a typo 'test use_xattrs = 0' into 'configure'.
+	When using the fixed version with Emacs, I discovered that
+	file-has-acl wasn't separated out well enough for Emacs (e.g., it
+	had multiple libraries, but needed only one), so I fixed that too.
+	* NEWS: Document this incompatible change.
+	* modules/file-has-acl, modules/file-has-acl-tests: New files.
+	* m4/acl.m4 (gl_FUNC_ACL_ARG): New macro, split from gl_FUNC_ACL.
+	Initialize gl_need_lib_has_acl.
+	(gl_FUNC_ACL): Require it.
+	Simplify use of 'test'.  Set LIB_HAS_ACL if gl_need_lib_has_acl.
+	Move the file-has-acl.c-relevant stuff to ...
+	(gl_FILE_HAS_ACL): ... this new macro.  Rewrite to fix 'test
+	use_xattrs = 0' typo, and omit some needless work.  Set
+	gl_need_lib_has_acl=1 if we'll need LIB_HAS_ACL to be set
+	when gl_FUNC_ACL is called.
+	* modules/acl (Files, lib_SOURCES): Remove lib/file-has-acl.c.
+	(Link): Remove $(LIB_HAS_ACL).
+	* modules/acl-tests (Files, Depends-on, configure.ac, TESTS)
+	(check_PROGRAMS): Move stuff relevant to file-has-acl to
+	modules/file-has-acl-tests.
+	(test_file_has_acl_LDADD): Move to modules/file-has-acl-tests.
+
 	manywarnings: add GCC 5.1 warnings
 	* build-aux/gcc-warning.spec: Add -Wabi=, -Warray-bounds,
 	-Warray-bounds=, -Wc++14-compat, -Wc90-c99-compat,
