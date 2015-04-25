@@ -37,10 +37,12 @@
 # include <linux/xattr.h>
 #endif
 
-/* Return 1 if NAME has a nontrivial access control list, 0 if NAME
-   only has no or a base access control list, and -1 (setting errno)
-   on error.  SB must be set to the stat buffer of NAME, obtained
-   through stat() or lstat().  */
+/* Return 1 if NAME has a nontrivial access control list,
+   0 if ACLs are not supported, or if NAME has no or only a base ACL,
+   and -1 (setting errno) on error.  Note callers can determine
+   if ACLs are not supported as errno is set in that case also.
+   SB must be set to the stat buffer of NAME,
+   obtained through stat() or lstat().  */
 
 int
 file_has_acl (char const *name, struct stat const *sb)
@@ -54,25 +56,23 @@ file_has_acl (char const *name, struct stat const *sb)
       ssize_t ret;
 
       ret = getxattr (name, XATTR_NAME_POSIX_ACL_ACCESS, NULL, 0);
-      if (ret < 0)
-	{
-	  if (errno != ENODATA)
-	    return -1;
-	}
+      if (ret < 0 && errno == ENODATA)
+        ret = 0;
       else if (ret > 0)
-	return 1;
-      if (S_ISDIR (sb->st_mode))
-	{
-	  ret = getxattr (name, XATTR_NAME_POSIX_ACL_DEFAULT, NULL, 0);
-	  if (ret < 0)
-	    {
-	      if (errno != ENODATA)
-		return -1;
-	    }
-	  else if (ret > 0)
-	    return 1;
-	}
-      return 0;
+        return 1;
+
+      if (ret == 0 && S_ISDIR (sb->st_mode))
+        {
+          ret = getxattr (name, XATTR_NAME_POSIX_ACL_DEFAULT, NULL, 0);
+          if (ret < 0 && errno == ENODATA)
+            ret = 0;
+          else if (ret > 0)
+            return 1;
+        }
+
+      if (ret < 0)
+        return - acl_errno_valid (errno);
+      return ret;
 
 # elif HAVE_ACL_GET_FILE
 

@@ -1,3 +1,12 @@
+2015-04-26  Pádraig Brady  <P@draigBrady.com>
+
+	file-has-acl: always return false when ACLs aren't supported
+	* lib/file-has-acl.c (file_has_acl): Consistent with other paths,
+	change the GNU/Linux getxattr path, to transform "not supported"
+	errors to a false return rather than an error.  This is handled
+	within file_has_acl() due to the platform specific tests to
+	determine if ACLs are not supported.
+
 2015-04-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gettext: propagate po/Makefile.in.in too
