@@ -29,11 +29,8 @@
 
 #include "acl-internal.h"
 
-#if HAVE_SYS_XATTR_H
+#if GETXATTR_WITH_POSIX_ACLS
 # include <sys/xattr.h>
-#endif
-
-#if HAVE_LINUX_XATTR_H
 # include <linux/xattr.h>
 #endif
 
@@ -51,7 +48,7 @@ file_has_acl (char const *name, struct stat const *sb)
   if (! S_ISLNK (sb->st_mode))
     {
 
-# if HAVE_GETXATTR && defined XATTR_NAME_POSIX_ACL_ACCESS && defined XATTR_NAME_POSIX_ACL_DEFAULT
+# if GETXATTR_WITH_POSIX_ACLS
 
       ssize_t ret;
 

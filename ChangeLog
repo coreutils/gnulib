@@ -1,3 +1,16 @@
+2015-04-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	file-has-acl: port to CentOS 6
+	Problem reported by Tom G. Christensen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-04/msg00074.html
+	* lib/file-has-acl.c: Use GETXATTR_WITH_POSIX_ACLS instead of a
+	combination of HAVE_SYS_XATTR_H, HAVE_LINUX_XATTR_H, and
+	HAVE_GETXATTR.
+	* m4/acl.m4 (gl_FILE_HAS_ACL): Test fot the entire combination of
+	linux/xattr.h, sys/xattr.h, getxattr, XATTR_NAME_POSIX_ACL_ACCESS,
+	and XATTR_NAME_POSIX_ACL_DEFAULT, since that's what what
+	file-has-acl.c actually needs.
+
 2015-04-26  Pádraig Brady  <P@draigBrady.com>
 
 	file-has-acl: always return false when ACLs aren't supported
