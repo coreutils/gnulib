@@ -1,3 +1,11 @@
+2015-04-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gettext: propagate po/Makefile.in.in too
+	* build-aux/po/Makefile.in.in: Copy from latest gettext.
+	* config/srclist.txt: In build-aux/po, copy Makefile.in.in and
+	remove-potcdate.sin from $GETTEXT.  This fixes a version mismatch
+	between Makefile.in.in and the gettext-runtime m4 files.
+
 2015-04-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-has-acl: new module, split from acl

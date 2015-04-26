@@ -61,6 +61,9 @@ $GETTEXT/gettext-runtime/m4/lcmessage.m4	m4
 $GETTEXT/gettext-runtime/m4/nls.m4		m4
 $GETTEXT/gettext-runtime/m4/po.m4		m4
 
+$GETTEXT/gettext-runtime/po/Makefile.in.in	build-aux/po
+$GETTEXT/gettext-runtime/po/remove-potcdate.sin	build-aux/po
+
 # 
 # All below here commented out in forlorn hope of future syncs.
 
