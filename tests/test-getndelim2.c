@@ -103,7 +103,7 @@ main (void)
   {
     int i;
     for (i = 0; i < 16; i++)
-      fprintf (f, "%500x%c", i, i % 2 ? '\n' : '\r');
+      fprintf (f, "%500x%c", i + 0u, i % 2 ? '\n' : '\r');
   }
   rewind (f);
   {

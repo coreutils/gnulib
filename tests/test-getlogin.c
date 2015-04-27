@@ -84,9 +84,9 @@ main (void)
     pwd = getpwuid (stat_buf.st_uid);
     if (! pwd)
       {
-         fprintf (stderr, "Skipping test: no name found for uid %d\n",
-                  stat_buf.st_uid);
-         return 77;
+        long int uid = stat_buf.st_uid;
+        fprintf (stderr, "Skipping test: no name found for uid %ld\n", uid);
+        return 77;
       }
 
     ASSERT (strcmp (pwd->pw_name, buf) == 0);

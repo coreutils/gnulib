@@ -1,5 +1,18 @@
 2015-04-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tests: pacify GCC 5.1's stricter printf checking
+	* tests/test-dirname.c (main):
+	* tests/test-getaddrinfo.c (simple):
+	* tests/test-getlogin.c (main):
+	* tests/test-getndelim2.c (main):
+	* tests/test-inttostr.c (CK):
+	* tests/test-md5.c (main):
+	* tests/test-read-file.c (main):
+	* tests/test-sha1.c (main):
+	Fix mismatches between printf format and value signedness.
+	* tests/test-inttostr.c (FMT, CAST_VAL, V_min, V_max):
+	Remove, as CAST_VAL always returned a value of type uintmax_t.
+
 	fts: port to GCC 5.1 with --enable-gcc-warnings
 	Without this fix, GCC 5.1 (correctly) warns about a subscript
 	error on the fts_name component of FTSENT.  It's actually a

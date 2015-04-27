@@ -116,11 +116,11 @@ simple (char const *host, char const *service)
     {
       void *ai_addr = ai->ai_addr;
       struct sockaddr_in *sock_addr = ai_addr;
-      dbgprintf ("\tflags %x\n", ai->ai_flags);
-      dbgprintf ("\tfamily %x\n", ai->ai_family);
-      dbgprintf ("\tsocktype %x\n", ai->ai_socktype);
-      dbgprintf ("\tprotocol %x\n", ai->ai_protocol);
-      dbgprintf ("\taddrlen %ld: ", (unsigned long) ai->ai_addrlen);
+      dbgprintf ("\tflags %x\n", ai->ai_flags + 0u);
+      dbgprintf ("\tfamily %x\n", ai->ai_family + 0u);
+      dbgprintf ("\tsocktype %x\n", ai->ai_socktype + 0u);
+      dbgprintf ("\tprotocol %x\n", ai->ai_protocol + 0u);
+      dbgprintf ("\taddrlen %lu: ", (unsigned long) ai->ai_addrlen);
       dbgprintf ("\tFound %s\n",
                  inet_ntop (ai->ai_family,
                             &sock_addr->sin_addr,

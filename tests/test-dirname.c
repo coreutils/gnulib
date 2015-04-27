@@ -150,7 +150,7 @@ main (void)
         {
           ok = false;
           printf ("dir_name '%s': got '%s' len %d,"
-                  " expected '%s' len %ld\n",
+                  " expected '%s' len %lu\n",
                   t->name, dir, dirlen,
                   t->dir, (unsigned long) strlen (t->dir));
         }
@@ -167,7 +167,7 @@ main (void)
         {
           ok = false;
           printf ("base_name '%s': got '%s' len %d,"
-                  " expected '%s' len %ld\n",
+                  " expected '%s' len %lu\n",
                   t->name, base, baselen,
                   t->base, (unsigned long) strlen (t->base));
         }
