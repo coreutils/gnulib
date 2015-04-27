@@ -19,6 +19,7 @@ fchdir
 fcntl-h
 fcntl-safer
 fdopendir
+flexmember
 fstat
 hash
 i-ring

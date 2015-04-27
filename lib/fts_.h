@@ -51,7 +51,13 @@
 
 # ifdef _LIBC
 #  include <features.h>
+#  if __STDC_VERSION__ < 199901L
+#   define __FLEXIBLE_ARRAY_MEMBER 1
+#  else
+#   define __FLEXIBLE_ARRAY_MEMBER
+#  endif
 # else
+#  define __FLEXIBLE_ARRAY_MEMBER FLEXIBLE_ARRAY_MEMBER
 #  undef __THROW
 #  define __THROW
 #  undef __BEGIN_DECLS
@@ -243,7 +249,7 @@ typedef struct _ftsent {
         unsigned short int fts_instr;   /* fts_set() instructions */
 
         struct stat fts_statp[1];       /* stat(2) information */
-        char fts_name[1];               /* file name */
+        char fts_name[__FLEXIBLE_ARRAY_MEMBER]; /* file name */
 } FTSENT;
 
 #ifndef __GNUC_PREREQ

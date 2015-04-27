@@ -1,3 +1,15 @@
+2015-04-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fts: port to GCC 5.1 with --enable-gcc-warnings
+	Without this fix, GCC 5.1 (correctly) warns about a subscript
+	error on the fts_name component of FTSENT.  It's actually a
+	flexible member, so define it that way on C99 or later hosts.
+	* lib/fts.c (fts_alloc): Use offsetof, not sizeof, for a
+	structure that now has a flexible array member.
+	* lib/fts_.h (__FLEXIBLE_ARRAY_MEMBER): New macro.
+	(FTSENT): fts_name is now flexible on C99-or-later platforms.
+	* modules/fts (Depends-on): Add flexmember.
+
 2015-04-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-has-acl: port to CentOS 6

@@ -1905,7 +1905,7 @@ fts_alloc (FTS *sp, const char *name, register size_t namelen)
          * The file name is a variable length array.  Allocate the FTSENT
          * structure and the file name in one chunk.
          */
-        len = sizeof(FTSENT) + namelen;
+        len = offsetof(FTSENT, fts_name) + namelen + 1;
         if ((p = malloc(len)) == NULL)
                 return (NULL);
 
