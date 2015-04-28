@@ -39,17 +39,24 @@ _GL_INLINE_HEADER_BEGIN
 # define EEALLOC_INLINE _GL_INLINE
 #endif
 
+#if __GNUC__ >= 3
+# define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+#else
+# define _GL_ATTRIBUTE_MALLOC
+#endif
+
+#if ! defined __clang__ && \
+    (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
+# define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+#else
+# define _GL_ATTRIBUTE_ALLOC_SIZE(args)
+#endif
+
 #if MALLOC_0_IS_NONNULL
 # define eemalloc malloc
 #else
-# if __GNUC__ >= 3
 EEALLOC_INLINE void *eemalloc (size_t n)
-     __attribute__ ((__malloc__))
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-     __attribute__ ((__alloc_size__ (1)))
-#  endif
-  ;
-# endif
+     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 EEALLOC_INLINE void *
 eemalloc (size_t n)
 {
@@ -63,10 +70,8 @@ eemalloc (size_t n)
 #if REALLOC_0_IS_NONNULL
 # define eerealloc realloc
 #else
-# if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
 EEALLOC_INLINE void *eerealloc (void *p, size_t n)
-     __attribute__ ((__alloc_size__ (2)));
-# endif
+     _GL_ATTRIBUTE_ALLOC_SIZE ((2));
 EEALLOC_INLINE void *
 eerealloc (void *p, size_t n)
 {

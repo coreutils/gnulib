@@ -1,3 +1,14 @@
+2015-04-28  Pádraig Brady  <P@draigBrady.com>
+
+	eealloc, pagealign_alloc, xalloc: avoid clang warnings
+	Avoid [-Wunknown-attributes] warnings like:
+	warning: unknown attribute '__alloc_size__' ignored
+	* lib/xalloc.h: Don't use the __alloc_size__  attribute
+	with clang, as support has been fully removed as of clang 3.5:
+	https://github.com/llvm-mirror/clang/commit/c047507a
+	* lib/eealloc.h: Likewise.
+	* lib/pagealign_alloc.h: Likewise.
+
 2015-04-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: pacify GCC 5.1's stricter printf checking

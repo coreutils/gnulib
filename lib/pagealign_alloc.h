@@ -20,6 +20,19 @@
 
 # include <stddef.h>
 
+#if __GNUC__ >= 3
+# define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
+#else
+# define _GL_ATTRIBUTE_MALLOC
+#endif
+
+#if ! defined __clang__ && \
+    (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
+# define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
+#else
+# define _GL_ATTRIBUTE_ALLOC_SIZE(args)
+#endif
+
 /* Allocate a block of memory of SIZE bytes, aligned on a system page
    boundary.
    If SIZE is not a multiple of the system page size, it will be rounded up
@@ -27,24 +40,12 @@
    Return a pointer to the start of the memory block. Upon allocation failure,
    return NULL and set errno.  */
 extern void *pagealign_alloc (size_t size)
-# if __GNUC__ >= 3
-     __attribute__ ((__malloc__))
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-     __attribute__ ((__alloc_size__ (1)))
-#  endif
-# endif
-     ;
+     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 
 /* Like pagealign_alloc, except it exits the program if the allocation
    fails.  */
 extern void *pagealign_xalloc (size_t size)
-# if __GNUC__ >= 3
-     __attribute__ ((__malloc__))
-#  if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3)
-     __attribute__ ((__alloc_size__ (1)))
-#  endif
-# endif
-     ;
+     _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
 
 /* Free a memory block.
    PTR must be a non-NULL pointer returned by pagealign_alloc or
