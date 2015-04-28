@@ -1,3 +1,12 @@
+2015-05-27  Andreas Gruenbacher  <agruenba@redhat.com>
+
+	file-has-acl: Split feature tests again (Bug#20667)
+	* lib/file-has-acl.c: Instead of testing for
+	XATTR_NAME_POSIX_ACL_ACCESS and XATTR_NAME_POSIX_ACL_DEFAULT,
+	define them when needed.
+	* m4/acl.m4 (gl_FILE_HAS_ACL): With that, Paul's
+	GETXATTR_WITH_POSIX_ACLS change shouldn't be needed anymore.
+
 2015-05-27  Pádraig Brady  <P@draigBrady.com>
 
 	string: fix build failure on BSD/OSX with FORTIFY_SOURCE
