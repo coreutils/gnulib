@@ -1,3 +1,12 @@
+2015-04-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extern-inline: no need for workaround in GCC 5.1
+	* doc/extern-inline.texi (extern inline):
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE):
+	GCC bugs 54113 and 63877 are fixed in GCC 5.1, so don't work
+	around these bugs in GCC 5.1 and later.  Maybe in a decade or
+	two we can remove these workarounds.
+
 2015-04-28  Pádraig Brady  <P@draigBrady.com>
 
 	eealloc, pagealign_alloc, xalloc: avoid clang warnings

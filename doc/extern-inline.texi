@@ -90,7 +90,8 @@ platforms and will die out eventually.
 
 @findex _GL_INLINE_HEADER_BEGIN
 Invoke @code{_GL_INLINE_HEADER_BEGIN} before all uses of
-@code{_GL_INLINE} in an include file.  If an include file includes
+@code{_GL_INLINE} in an include file.  This suppresses some
+bogus warnings in GCC versions before 5.1.  If an include file includes
 other files, it is better to invoke this macro after including the
 other files.
 
