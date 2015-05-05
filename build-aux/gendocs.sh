@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2015-04-16.10
+scriptversion=2015-05-05.16
 
 # Copyright 2003-2015 Free Software Foundation, Inc.
 #
@@ -73,7 +73,8 @@ Options:
   -o OUTDIR    write files into OUTDIR, instead of manual/.
   -I DIR       append DIR to the Texinfo search path.
   --common ARG pass ARG in all invocations.
-  --html ARG   pass ARG to makeinfo or texi2html for HTML targets.
+  --html ARG   pass ARG to makeinfo or texi2html for HTML targets,
+                 instead of --css-ref=/software/gnulib/manual.css.
   --info ARG   pass ARG to makeinfo for Info, instead of --no-split.
   --no-ascii   skip generating the plain text output.
   --no-html    skip generating the html output.
@@ -142,7 +143,7 @@ EMAIL=webmasters@gnu.org  # please override with --email
 commonarg= # passed to all makeinfo/texi2html invcations.
 dirargs=   # passed to all tools (-I dir).
 dirs=      # -I directories.
-htmlarg="--css-ref=/software/gnulib/manual.css"
+htmlarg=--css-ref=/software/gnulib/manual.css
 infoarg=--no-split
 generate_ascii=true
 generate_html=true

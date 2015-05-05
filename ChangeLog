@@ -1,3 +1,8 @@
+2015-05-05  Karl Berry  <karl@freefriends.org>
+
+	* build-aux/gendocs.sh (usage): document new css default
+	for HTML (--htmlarg).
+
 2015-04-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extern-inline: no need for workaround in GCC 5.1
