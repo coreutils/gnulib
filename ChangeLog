@@ -1,3 +1,9 @@
+2015-05-06  Pádraig Brady  <P@draigBrady.com>
+
+	doc: document glibc posix_fallocate() issues
+	* doc/posix-functions/posix_fallocate.texi: Mention the
+	glibc efficiency problems and issues with NFS.
+
 2015-05-05  Karl Berry  <karl@freefriends.org>
 
 	* build-aux/gendocs.sh (usage): document new css default
