@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 23, 2015
+@set lastupdate May 7, 2015
 @c %**end of header
 
 @dircategory GNU organization
@@ -1353,11 +1353,13 @@ distributions.
 @section Distribution tar Files
 @cindex distribution, tar files
 
-The tar file for version @var{m}.@var{n} of program @code{foo} should be
-named @file{foo-@var{m}.@var{n}.tar}.  It should unpack into a
-subdirectory named @file{foo-@var{m}.@var{n}}.  Tar files should not
-unpack into files in the current directory, because this is inconvenient
-if the user happens to unpack into a directory with other files in it.
+All packages should provide tar files for the distribution of their
+releases.  The tar file for version @var{m}.@var{n} of program
+@code{foo} should be named @file{foo-@var{m}.@var{n}.tar}.  It should
+unpack into a subdirectory named @file{foo-@var{m}.@var{n}}.  Tar
+files should not unpack into files in the current directory, because
+this is inconvenient if the user happens to unpack into a directory
+with other files in it.
 
 Here is how the @file{Makefile} for Bison creates the tar file.
 This method is good for other programs.
