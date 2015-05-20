@@ -1,3 +1,9 @@
+2015-05-26  Eric Blake  <eblake@redhat.com>
+
+	stdio: fix probe on mingw under gcc 5.1
+	* m4/stdio_h.m4 (gl_STDIO_H): Change to compile test, to work
+	around new gcc preprocessor rules.
+
 2015-05-07  Glenn Morris  <rgm@gnu.org>
 
 	gitlog-to-changelog: parse "Tiny-change"
