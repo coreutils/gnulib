@@ -1,5 +1,8 @@
 2015-05-26  Eric Blake  <eblake@redhat.com>
 
+	error: use correct printf attributes on mingw
+	* lib/stdio.in.h (_GL_ATTRIBUTE_SPEC_PRINTF): New define.
+
 	inttypes: force correct mingw PRIdMAX even without <stdio.h>
 	* modules/inttypes (Depends-on): Require extensions, so that mingw
 	always uses GNU style inttypes.
