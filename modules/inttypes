@@ -6,6 +6,7 @@ m4/inttypes-pri.m4
 
 Depends-on:
 inttypes-incomplete
+extensions
 
 configure.ac:
 gl_INTTYPES_H
