@@ -1,3 +1,10 @@
+2015-05-27  Glenn Morris  <rgm@gnu.org>
+
+	gitlog-to-changelog: new option --ignore-line
+	(This patch is imported from the GNU Emacs master.)
+	This option ignores individual commit lines matching a pattern.
+	* build-aux/gitlog-to-changelog: Add --ignore-line option.
+
 2015-05-27  Andreas Gruenbacher  <agruenba@redhat.com>
 
 	qacl: Reimplement qset_acl and qcopy_acl (Bug#20666)
