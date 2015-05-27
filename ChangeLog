@@ -1,3 +1,14 @@
+2015-05-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	qacl: split into qcopy-acl and qset-acl
+	Emacs needs the former, but not the latter.
+	* modules/acl-permissions: New file, containing most of the old qacl.
+	* modules/file-has-acl (Depends-on): Depend on acl-permissions, not qacl.
+	* modules/qacl: Now merely depends on qcopy-acl and qset-acl.
+	* modules/qcopy-acl, modules/qset-acl: New files.
+	* MODULES.html.sh (File system functions):
+	Mention the new modules, and mention qacl while we're at it.
+
 2015-05-27  Glenn Morris  <rgm@gnu.org>
 
 	gitlog-to-changelog: new option --ignore-line

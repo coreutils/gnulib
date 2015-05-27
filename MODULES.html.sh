@@ -2614,6 +2614,7 @@ func_all_modules ()
 
   func_begin_table
   func_module acl
+  func_module acl-permissions
   func_module areadlink
   func_module areadlink-with-size
   func_module areadlinkat
@@ -2654,6 +2655,9 @@ func_all_modules ()
   func_module openat
   func_module openat-die
   func_module pathmax
+  func_module qacl
+  func_module qcopy-acl
+  func_module qset-acl
   func_module read-file
   func_module readlinkat
   func_module same

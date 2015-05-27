@@ -5,7 +5,7 @@ Files:
 lib/file-has-acl.c
 
 Depends-on:
-qacl  [test $gl_need_lib_has_acl]
+acl-permissions  [test $gl_need_lib_has_acl]
 
 configure.ac:
 gl_FILE_HAS_ACL
