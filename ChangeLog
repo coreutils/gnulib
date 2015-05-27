@@ -1,3 +1,12 @@
+2015-05-27  Pádraig Brady  <P@draigBrady.com>
+
+	string: fix build failure on BSD/OSX with FORTIFY_SOURCE
+	This avoids a conflict with "FORTIFY_SOURCE" variants
+	of the string functions when they're replaced on NetBSD-6.0.1
+	and Darwin-14.3.0 at least.
+	* lib/string.in.h: Avoid including our "lib/string.h" while
+	including the system <string.h>.
+
 2015-05-26  Eric Blake  <eblake@redhat.com>
 
 	stdio: limit __gnu_printf__ witness to gcc 4.4+
