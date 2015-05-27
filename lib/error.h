@@ -34,8 +34,7 @@
 /* On mingw, the flavor of printf depends on whether the extensions module
  * is in use; the check for <stdio.h> determines the witness macro.  */
 #ifndef _GL_ATTRIBUTE_SPEC_PRINTF
-# if GNULIB_PRINTF_ATTRIBUTE_FLAVOR_GNU && \
-  (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 4))
+# if GNULIB_PRINTF_ATTRIBUTE_FLAVOR_GNU
 #  define _GL_ATTRIBUTE_SPEC_PRINTF __gnu_printf__
 # else
 #  define _GL_ATTRIBUTE_SPEC_PRINTF __printf__

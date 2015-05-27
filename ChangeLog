@@ -1,5 +1,9 @@
 2015-05-26  Eric Blake  <eblake@redhat.com>
 
+	stdio: limit __gnu_printf__ witness to gcc 4.4+
+	* lib/error.h (_GL_ATTRIBUTE_SPEC_PRINTF): Move gcc version probe...
+	* m4/stdio_h.m4 (gl_STDIO_H): ...here.
+
 	error: use correct printf attributes on mingw
 	* lib/stdio.in.h (_GL_ATTRIBUTE_SPEC_PRINTF): New define.
 
