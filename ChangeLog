@@ -1,3 +1,15 @@
+2015-05-28  Pádraig Brady  <P@draigBrady.com>
+
+	unlinkat: handle ignoring of ".." on Darwin 14
+	* lib/unlinkat.c: unlinkat() has the same bug as unlink()
+	on Mac OS X 10.10, where it ignores paths with a trailing "..",
+	so handle in the same manner.
+	* m4/unlinkat.m4: Comment on this Darwin issue.
+	* doc/posix-functions/unlink.texi: Update the latest version
+	where the issue was seen.
+	* doc/posix-functions/unlinkat.texi: Mention this issue.
+	Fixes a test failure in test-unlinkat.c.
+
 2015-05-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	qacl: split into qcopy-acl and qset-acl

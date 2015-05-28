@@ -24,6 +24,7 @@ AC_DEFUN([gl_FUNC_UNLINKAT],
         ;;
       *)
         # GNU/Hurd has unlinkat, but it has the same bug as unlink.
+        # Darwin has unlinkat, but it has the same UNLINK_PARENT_BUG.
         if test $REPLACE_UNLINK = 1; then
           REPLACE_UNLINKAT=1
         fi

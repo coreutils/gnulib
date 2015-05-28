@@ -35,9 +35,12 @@
 
 # undef unlinkat
 
-/* unlinkat without AT_REMOVEDIR does not honor trailing / on Solaris
-   9.  Solve it in a similar manner to unlink.  Hurd has the same
-   issue. */
+/* unlinkat without AT_REMOVEDIR does not honor trailing / on Solaris 9.
+   Hurd has the same issue.
+
+   unlinkat without AT_REMOVEDIR erroneously ignores ".." on Darwin 14.
+
+   Solve these in a similar manner to unlink.  */
 
 int
 rpl_unlinkat (int fd, char const *name, int flag)
@@ -78,7 +81,17 @@ rpl_unlinkat (int fd, char const *name, int flag)
         }
     }
   if (!result)
-    result = unlinkat (fd, name, flag);
+    {
+# if UNLINK_PARENT_BUG
+      if (len >= 2 && name[len - 1] == '.' && name[len - 2] == '.'
+          && (len == 2 || ISSLASH (name[len - 3])))
+        {
+          errno = EISDIR; /* could also use EPERM */
+          return -1;
+        }
+# endif
+      result = unlinkat (fd, name, flag);
+    }
   return result;
 }
 
