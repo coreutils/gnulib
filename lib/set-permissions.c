@@ -611,13 +611,13 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
   if (ret == 0 && ctx->count)
     {
       if (desc != -1)
-	ret = facl (desc, SETACL, count, entries);
+	ret = facl (desc, SETACL, ctx->count, ctx->entries);
       else
-	ret = acl (name, SETACL, count, entries);
+	ret = acl (name, SETACL, ctx->count, ctx->entries);
       if (ret < 0)
 	{
 	  if ((errno == ENOSYS || errno == EOPNOTSUPP || errno == EINVAL)
-	      && acl_nontrivial (count, entries) == 0)
+	      && acl_nontrivial (ctx->count, ctx->entries) == 0)
 	    ret = 0;
 	}
       else
@@ -628,13 +628,13 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
   if (ret == 0 && ctx->ace_count)
     {
       if (desc != -1)
-	ret = facl (desc, ACE_SETACL, ace_count, ace_entries);
+	ret = facl (desc, ACE_SETACL, ctx->ace_count, ctx->ace_entries);
       else
-	ret = acl (name, ACE_SETACL, ace_count, ace_entries);
+	ret = acl (name, ACE_SETACL, ctx->ace_count, ctx->ace_entries);
       if (ret < 0)
 	{
 	  if ((errno == ENOSYS || errno == EINVAL || errno == ENOTSUP)
-	      && acl_ace_nontrivial (ace_count, ace_entries) == 0)
+	      && acl_ace_nontrivial (ctx->ace_count, ctx->ace_entries) == 0)
 	    ret = 0;
 	}
       else
