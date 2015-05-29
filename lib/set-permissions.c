@@ -566,7 +566,7 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
 	{
 	  acl_free (acl);
 
-	  acl = acl_init (acl);
+	  acl = acl_init (0);
 	  if (acl)
 	    {
 	      if (HAVE_ACL_SET_FD && desc != -1)
@@ -582,12 +582,13 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
   else
     {
       if (HAVE_ACL_SET_FD && desc != -1)
-	ret = acl_set_fd (desc, acl);
+	ret = acl_set_fd (desc, ctx->acl);
       else
-	ret = acl_set_file (name, ACL_TYPE_EXTENDED, acl);
+	ret = acl_set_file (name, ACL_TYPE_EXTENDED, ctx->acl);
       if (ret != 0)
 	{
-	  if (! acl_errno_valid (saved_errno) && ! acl_extended_nontrivial (acl))
+	  if (! acl_errno_valid (errno)
+	      && ! acl_extended_nontrivial (ctx->acl))
 	    ret = 0;
 	}
     }
@@ -696,9 +697,9 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
   if (ret == 0 && ctx->have_u)
     {
       if (desc != -1)
-	ret = fchacl (desc, &u.a, u.a.acl_len);
+	ret = fchacl (desc, &ctx->u.a, ctx->u.a.acl_len);
       else
-	ret = chacl (name, &u.a, u.a.acl_len);
+	ret = chacl (name, &ctx->u.a, ctx->u.a.acl_len);
       if (ret < 0)
 	{
 	  if (errno == ENOSYS && from_mode)

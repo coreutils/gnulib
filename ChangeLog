@@ -1,5 +1,9 @@
 2015-05-29  Andreas Gruenbacher  <andreas.gruenbacher@gmail.com>
 
+	acl-permissions: Fix build on Mac OS X and older AIX (Bug#20681)
+	* lib/set-permissions.c (set_acls): Fix more errors introduced in the acl
+	module rewrite.
+
 	acl-permissions: Fix build on Solaris and Cygwin
 	Reported by Tom G. Christensen <tgc@jupiterrise.com>:
 	* lib/set-permissions.c (set_acls): The count, entries, ace_count, and
