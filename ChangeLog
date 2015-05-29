@@ -1,3 +1,17 @@
+2015-05-29  Pádraig Brady  <P@draigBrady.com>
+
+	linkat: avoid OS X 10.10 trailing slash with symlink bug
+	On Darwin 14.3.0 linkat(,"path1",,"dangling_symlink/",)
+	causes the symlink to be dereferenced, and if it points
+	to a non existent file, that file will be created as
+	a hard link to "path1".
+	This fixes a test failure in test-linkat.c.
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Augment the test with
+	this case.  The existing workaround in linkat.c for
+	trailing slash issues, suffices for this case.
+	* doc/posix-functions/linkat.texi: Add OS X 10.10 to
+	the list of platforms with trailing slash issues.
+
 2015-05-28  Pádraig Brady  <P@draigBrady.com>
 
 	unlinkat: handle ignoring of ".." on Darwin 14

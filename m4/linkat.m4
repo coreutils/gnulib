@@ -52,7 +52,7 @@ AC_DEFUN([gl_FUNC_LINKAT],
 
     AC_CACHE_CHECK([whether linkat handles trailing slash correctly],
       [gl_cv_func_linkat_slash],
-      [rm -rf conftest.a conftest.b conftest.c conftest.d
+      [rm -rf conftest.a conftest.b conftest.c conftest.d conftest.e conftest.s
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [[#include <unistd.h>
@@ -83,6 +83,16 @@ AC_DEFUN([gl_FUNC_LINKAT],
               if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.d/",
                           AT_SYMLINK_FOLLOW) == 0)
                 result |= 8;
+
+              /* On OS X 10.10 a trailing "/" will cause the second path to be
+                 dereferenced, and thus will succeed on a dangling symlink.  */
+              if (symlink ("conftest.e", "conftest.s") == 0)
+                {
+                  if (linkat (AT_FDCWD, "conftest.a", AT_FDCWD, "conftest.s/",
+                      AT_SYMLINK_FOLLOW) == 0)
+                    result |= 16;
+                }
+
               return result;
             ]])],
          [gl_cv_func_linkat_slash=yes],
@@ -93,7 +103,7 @@ AC_DEFUN([gl_FUNC_LINKAT],
             *)      gl_cv_func_linkat_slash="guessing no";;
           esac
          ])
-       rm -rf conftest.a conftest.b conftest.c conftest.d])
+       rm -rf conftest.a conftest.b conftest.c conftest.d conftest.e conftest.s])
     case "$gl_cv_func_linkat_slash" in
       *yes) gl_linkat_slash_bug=0 ;;
       *)    gl_linkat_slash_bug=1 ;;

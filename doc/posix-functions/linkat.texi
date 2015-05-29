@@ -19,7 +19,7 @@ Mac OS X 10.10.
 @item
 This function fails to reject trailing slashes on non-directories on
 some platforms:
-AIX 7.1, Solaris 11 2011-11.
+AIX 7.1, Solaris 11 2011-11, Mac OS X 10.10.
 @item
 This functions does not support @code{AT_SYMLINK_FOLLOW} on some platforms:
 Linux kernel 2.6.17.
