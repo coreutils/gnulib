@@ -1,5 +1,17 @@
 2015-06-02  Pádraig Brady  <P@draigBrady.com>
 
+	file-has-acl: fix build on Mac OS X 10
+	This reverts commit f1b37e3a which doesn't work on Mac OS X >= 10.4
+	which has an incompatible 6 parameter getxattr() call.
+	* doc/glibc-functions/getxattr.texi: Mention the divergent getxattr()
+	call on Mac OS X >= 10.4.
+	* doc/glibc-functions/fgetxattr.texi: Likewise.
+	* lib/file-has-acl.c: Revert to more complete combined check.
+	* m4/acl.m4 (gl_FILE_HAS_ACL): Likewise.
+	Reported by Jack Howarth.
+
+2015-06-02  Pádraig Brady  <P@draigBrady.com>
+
 	prefix-gnulib-mk: remove no longer needed special case
 	* build-aux/prefix-gnulib-mk (prefix): Since commit e3704b9c,
 	continued lib_SOURCES lines are no longer present,
