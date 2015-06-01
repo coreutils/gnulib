@@ -2185,6 +2185,19 @@ func_get_autoconf_snippet ()
   fi
 }
 
+# Concatenate lines with trailing slash.
+# $1 is an optional filter to restrict the
+# concatenation to groups starting with that expression
+combine_lines() {
+  sed -e "/$1.*"'\\$/{
+    :a
+    N
+    s/\\\n/ /
+    s/\\$/\\/
+    ta
+  }'
+}
+
 # func_get_automake_snippet_conditional module
 # returns the part of the Makefile.am snippet that can be put inside Automake
 # conditionals.
@@ -2235,13 +2248,6 @@ func_get_automake_snippet_unconditional ()
       ;;
     *)
       # Synthesize an EXTRA_DIST augmentation.
-      sed_combine_lines='/\\$/{
-        :a
-        N
-        s/\\\n/ /
-        s/\\$/\\/
-        ta
-      }'
       sed_extract_mentioned_files='s/^lib_SOURCES[	 ]*+=[	 ]*//p'
       already_mentioned_files=` \
         { if ! $modcache; then
@@ -2262,7 +2268,7 @@ func_get_automake_snippet_unconditional ()
             fi
           fi
         } \
-        | sed -e "$sed_combine_lines" \
+        | combine_lines \
         | sed -n -e "$sed_extract_mentioned_files" | sed -e 's/#.*//'`
       all_files=`func_get_filelist $1`
       func_filter_filelist lib_files "$nl" "$all_files" 'lib/' '' 'lib/' ''
@@ -2930,18 +2936,12 @@ func_modules_add_dummy ()
 {
   # Determine whether any module provides a lib_SOURCES augmentation.
   have_lib_SOURCES=
-  sed_remove_backslash_newline=':a
-/\\$/{
-s/\\$//
-N
-s/\n//
-ba
-}'
   for module in $modules; do
     func_verify_nontests_module
     if test -n "$module"; then
       # Extract the value of "lib_SOURCES += ...".
-      for file in `func_get_automake_snippet "$module" | sed -e "$sed_remove_backslash_newline" | sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
+      for file in `func_get_automake_snippet "$module" | combine_lines |
+                   sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
         # Ignore .h files since they are not compiled.
         case "$file" in
           *.h) ;;
@@ -3292,7 +3292,7 @@ func_emit_lib_Makefile_am ()
             echo "${libname}_${libext}_LIBADD += @${perhapsLT}ALLOCA@"
             echo "${libname}_${libext}_DEPENDENCIES += @${perhapsLT}ALLOCA@"
           fi
-        } > "$tmp"/amsnippet1
+        } | combine_lines "${libname}_${libext}_SOURCES" > "$tmp"/amsnippet1
         {
           func_get_automake_snippet_unconditional "$module" |
             LC_ALL=C sed -e 's,lib_\([A-Z][A-Z]*\),'"${libname}_${libext}"'_\1,g'
@@ -6078,12 +6078,12 @@ func_create_testdir ()
   # distributed (such as parse-datetime.c).
   sed_remove_make_variables='s,[$]([A-Za-z0-9_]*),,g'
   # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
-  cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
+  cleaned_files=`combine_lines < "$testdir/$sourcebase/Makefile.am" \
                  | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`
   cleaned_files=`for file in $cleaned_files; do echo " $file "; done`
   # Extract the value of "BUILT_SOURCES += ...". Remove variable references
   # such $(FOO_H) because they don't refer to distributed files.
-  built_sources=`sed -e "$sed_remove_backslash_newline" < "$testdir/$sourcebase/Makefile.am" \
+  built_sources=`combine_lines < "$testdir/$sourcebase/Makefile.am" \
                  | sed -n -e 's,^BUILT_SOURCES[	 ]*+=\([^#]*\).*$,\1,p' \
                  | sed -e "$sed_remove_make_variables"`
   distributed_built_sources=`for file in $built_sources; do
@@ -6095,10 +6095,10 @@ func_create_testdir ()
   tests_distributed_built_sources=
   if $inctests; then
     # Likewise for built files in the $testsbase directory.
-    tests_cleaned_files=`sed -e "$sed_remove_backslash_newline" < "$testdir/$testsbase/Makefile.am" \
+    tests_cleaned_files=`combine_lines < "$testdir/$testsbase/Makefile.am" \
                          | sed -n -e 's,^CLEANFILES[	 ]*+=\([^#]*\).*$,\1,p' -e 's,^MOSTLYCLEANFILES[	 ]*+=\([^#]*\).*$,\1,p'`
     tests_cleaned_files=`for file in $tests_cleaned_files; do echo " $file "; done`
-    tests_built_sources=`sed -e "$sed_remove_backslash_newline" < "$testdir/$testsbase/Makefile.am" \
+    tests_built_sources=`combine_lines < "$testdir/$testsbase/Makefile.am" \
                          | sed -n -e 's,^BUILT_SOURCES[	 ]*+=\([^#]*\).*$,\1,p' \
                          | sed -e "$sed_remove_make_variables"`
     tests_distributed_built_sources=`for file in $tests_built_sources; do

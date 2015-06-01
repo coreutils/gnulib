@@ -1,3 +1,12 @@
+2015-06-01  Pádraig Brady  <P@draigBrady.com>
+
+	gnulib-tool: concatenate lib_SOURCES to a single line
+	* gnulib-tool: Refactor the line merging sed logic,
+	and use that to output a single lib_SOURCES line for each module.
+	gnulib using projects often postprocess this output to prepend
+	subdir paths to each item, and having a single line simplifies this
+	processing allowing better decoupling from the gnulib-tool output.
+
 2015-06-01  Pavel Fedin  <p.fedin@samsung.com>
 
 	pthread_sigmask: discount system version if a simple macro (trivial)
