@@ -155,16 +155,6 @@ sub prefix ($)
   # Unfortunately, as a result we sometimes have lib/lib.
   s{($prefix){2}}{$1}g;
 
-  # lib_libcoreutils_a_SOURCES += \
-  #   imaxtostr.c \
-  #   inttostr.c \
-  #   offtostr.c \
-  #   uinttostr.c \
-  #   umaxtostr.c
-  # The above are not handled since they're on continued lines, so
-  # deal with them manually:
-  s{^(\s*)((?:[ui]max|u?int|off)tostr\.c(:? \\)?)$}{$1$prefix$2}gm;
-
   # $(srcdir)/ is actually $(top_srcdir)/$prefix/.
   # The trailing slash is required to avoid matching this rule:
   #   test '$(srcdir)' = . || rm -f $(top_builddir)/GNUmakefile

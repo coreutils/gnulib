@@ -1,3 +1,10 @@
+2015-06-02  Pádraig Brady  <P@draigBrady.com>
+
+	prefix-gnulib-mk: remove no longer needed special case
+	* build-aux/prefix-gnulib-mk (prefix): Since commit e3704b9c,
+	continued lib_SOURCES lines are no longer present,
+	so special case handling of such entries is not required.
+
 2015-06-01  Pádraig Brady  <P@draigBrady.com>
 
 	acl: don't depend on the deprecated qacl module
