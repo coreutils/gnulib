@@ -1,3 +1,10 @@
+2015-06-01  Pavel Fedin  <p.fedin@samsung.com>
+
+	pthread_sigmask: discount system version if a simple macro (trivial)
+	MinGW64 has: #define pthread_sigmask(H, S1, S2) 0
+	* m4/pthread_sigmask.m4 (gl_FUNC_PTHREAD_SIGMASK): Call the
+	function to ensure it's available.
+
 2015-05-31  Pádraig Brady  <P@draigBrady.com>
 
 	readlinkat: avoid OS X 10.10 trailing slash bug
