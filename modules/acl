@@ -8,7 +8,8 @@ lib/set-acl.c
 Depends-on:
 error
 gettext-h
-qacl
+qcopy-acl
+qset-acl
 quote
 stdbool
 

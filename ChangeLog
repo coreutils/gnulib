@@ -1,5 +1,10 @@
 2015-06-01  Pádraig Brady  <P@draigBrady.com>
 
+	acl: don't depend on the deprecated qacl module
+	* modules/acl (Depends-on): Use q{copy,set}-acl instead.
+
+2015-06-01  Pádraig Brady  <P@draigBrady.com>
+
 	gnulib-tool: concatenate lib_SOURCES to a single line
 	* gnulib-tool: Refactor the line merging sed logic,
 	and use that to output a single lib_SOURCES line for each module.
