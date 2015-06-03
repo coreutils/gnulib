@@ -1,3 +1,10 @@
+2015-06-03  Pádraig Brady  <P@draigBrady.com>
+
+	vasprintf-posix: avoid compiling vasnprintf where possible
+	* modules/vasprintf-posix: Avoid compiling the large vasnprintf
+	module where not required.  For example on a GNU/Linux system
+	when gnulib-tool is run with the --conditional-dependencies option.
+
 2015-06-02  Pádraig Brady  <P@draigBrady.com>
 
 	file-has-acl: fix build on Mac OS X 10

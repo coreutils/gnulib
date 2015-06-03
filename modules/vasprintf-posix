@@ -14,7 +14,7 @@ m4/math_h.m4
 
 Depends-on:
 vasprintf
-vasnprintf
+vasnprintf     [test $HAVE_VASPRINTF = 0 || test $REPLACE_VASPRINTF = 1]
 isnand-nolibm
 isnanl-nolibm
 frexp-nolibm
