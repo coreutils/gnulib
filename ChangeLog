@@ -1,3 +1,8 @@
+2015-06-05  Jonathan Perkin  <jperkin@joyent.com>  (tiny change)
+
+	stdio: Don't redefine gets when using C++
+	* lib/stdio.in.h (gets): Disable warning on C++.
+
 2015-06-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl-permissions: port to older AIX, C89 HP-UX
