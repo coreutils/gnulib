@@ -5,11 +5,20 @@
 
 2015-06-05  Paul Eggert  <eggert@cs.ucla.edu>
 
-	acl-permissions: port to older AIX, C89 HP-UX
+	acl-permissions: port to AIX, C89 HP-UX
+	Problems reported by Michael Felt.
+	* lib/file-has-acl.c (file_has_acl) [HAVE_STATACL]:
+	* lib/get-permissions.c (get_permissions) [USE_ACL && HAVE_STATACL]:
+	* lib/readutmp.c (read_utmp) [UTMP_NAME_FUNCTION]:
+	* lib/set-permissions.c (set_acls) [HAVE_ACLX_GET && ACL_AIX_WIP]:
+	Add cast for AIX, whose system calls are declared to accept
+	char * even though the arguments are really char const *.
 	* lib/get-permissions.c (get_permissions):
 	If USE_ACL && HAVE_GETACL /* HP-UX */, don't assume C99.
 	If USE_ACL && HAVE_STATACL /* older AIX */, add missing decl
-	that broke a build, reported by Michael Felt.
+	that broke a build.
+	* lib/mountlist.c (read_file_system_list) [MOUNTED_VMOUNT]:
+	Rework types to pacify xlc.
 
 2015-06-03  Pádraig Brady  <P@draigBrady.com>
 

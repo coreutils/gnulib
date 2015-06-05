@@ -457,7 +457,7 @@ file_has_acl (char const *name, struct stat const *sb)
 
       union { struct acl a; char room[4096]; } u;
 
-      if (statacl (name, STX_NORMAL, &u.a, sizeof (u)) < 0)
+      if (statacl ((char *) name, STX_NORMAL, &u.a, sizeof (u)) < 0)
         return -1;
 
       return acl_nontrivial (&u.a);

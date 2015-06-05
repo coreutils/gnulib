@@ -97,7 +97,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
      Solaris' utmpname returns 1 upon success -- which is contrary
      to what the GNU libc version does.  In addition, older GNU libc
      versions are actually void.   */
-  UTMP_NAME_FUNCTION (file);
+  UTMP_NAME_FUNCTION ((char *) file);
 
   SET_UTMP_ENT ();
 
