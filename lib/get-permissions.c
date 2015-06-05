@@ -261,7 +261,7 @@ get_permissions (const char *name, int desc, mode_t mode,
     if (desc != -1)
       ret = fstatacl (desc, STX_NORMAL, &ctx->u.a, sizeof ctx->u);
     else
-      ret = statacl (name, STX_NORMAL, &ctx->u.a, sizeof ctx->u);
+      ret = statacl ((char *) name, STX_NORMAL, &ctx->u.a, sizeof ctx->u);
     if (ret == 0)
       ctx->have_u = true;
   }
