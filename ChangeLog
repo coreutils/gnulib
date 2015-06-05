@@ -1,3 +1,11 @@
+2015-06-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl-permissions: port to older AIX, C89 HP-UX
+	* lib/get-permissions.c (get_permissions):
+	If USE_ACL && HAVE_GETACL /* HP-UX */, don't assume C99.
+	If USE_ACL && HAVE_STATACL /* older AIX */, add missing decl
+	that broke a build, reported by Michael Felt.
+
 2015-06-03  Pádraig Brady  <P@draigBrady.com>
 
 	vasprintf-posix: avoid compiling vasnprintf where possible
