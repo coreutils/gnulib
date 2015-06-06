@@ -1,3 +1,9 @@
+2015-06-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fsync: document AIX misbehavior
+	* doc/posix-functions/fsync.texi (fsync):
+	Document failure on AIX with read-only file descriptor.
+
 2015-06-05  Jonathan Perkin  <jperkin@joyent.com>  (tiny change)
 
 	stdio: Don't redefine gets when using C++
