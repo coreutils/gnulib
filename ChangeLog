@@ -1,5 +1,11 @@
 2015-06-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	acl-permissions: pacify -Wsuggest-attribute=const
+	Problem reported by Masanari Iida in: http://bugs.gnu.org/20753
+	* lib/acl-internal.h (free_permission_context):
+	Declare with attribute const if ! (defined USE_ACL &&
+	(HAVE_ACL_GET_FILE || defined GETACL)).
+
 	fsync: document AIX misbehavior
 	* doc/posix-functions/fsync.texi (fsync):
 	Document failure on AIX with read-only file descriptor.
