@@ -1,3 +1,11 @@
+2015-06-16  Pádraig Brady  <P@draigBrady.com>
+
+	gnu-web-doc-update: add --mirror to remove stale files
+	* build-aux/gnu-web-doc-update: Add a --mirror option to remove
+	out of date files from the CVS server.  Since this is usually
+	appropriate, a prompt is given when the option is not specified,
+	along with the `cvs remove` command that would be run.
+
 2015-06-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl-permissions: pacify -Wsuggest-attribute=const
