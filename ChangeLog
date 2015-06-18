@@ -1,5 +1,12 @@
 2015-06-18  Daiki Ueno  <ueno@gnu.org>
 
+	uniname/uniname: update to Unicode 8.0.0
+	* lib/uniname/uninames.h: Regenerate.
+	* tests/uniname/NameAliases.txt: Update from Unicode 8.0.0.
+	* tests/uniname/UnicodeDataNames.txt: Update from Unicode 8.0.0.
+
+2015-06-18  Daiki Ueno  <ueno@gnu.org>
+
 	libunistring: update to Unicode 8.0.0
 	* lib/gen-uni-tables.c (SIZEOF): New macro.
 	(output_numeric): Increase the maximum number of fractions from
