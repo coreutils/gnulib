@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[40 << 4];
+    /*unsigned*/ int level3[39 << 4];
   }
 u_property_bidi_other_neutral =
 {
@@ -270,10 +270,10 @@ u_property_bidi_other_neutral =
        -1,
         3 +   256 * sizeof (short) / sizeof (int) +   544,
         3 +   256 * sizeof (short) / sizeof (int) +   560,
+        3 +   256 * sizeof (short) / sizeof (int) +   256,
         3 +   256 * sizeof (short) / sizeof (int) +   576,
         3 +   256 * sizeof (short) / sizeof (int) +   592,
         3 +   256 * sizeof (short) / sizeof (int) +   608,
-        3 +   256 * sizeof (short) / sizeof (int) +   624,
        -1,
        -1,
        -1
@@ -330,7 +330,7 @@ u_property_bidi_other_neutral =
     0xFFFF0000, 0xFFE000FF, 0x7FFFFFEF, 0x70000000,
     0x00007000, 0x00000000, 0x00000000, 0x00000000,
     0xC1D0037B, 0x0C0002AF, 0xFFFF3C1F, 0x00000000,
-    0xFFFF0200, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFF0E00, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFF3FFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0x003FFFFF, 0x00000000, 0xF8000000,
@@ -350,7 +350,7 @@ u_property_bidi_other_neutral =
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFCFFFFF,
-    0xFF3FFFFF, 0xE3FFFFFF, 0x0003FDFF, 0x00000000,
+    0xFF3FFFFF, 0xE3FFFFFF, 0x0003FDFF, 0x0000F000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0xFE0007E0,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -423,21 +423,17 @@ u_property_bidi_other_neutral =
     0x000FFFFF, 0xFFFE7FFF, 0xFFFEFFFE, 0x003FFFFF,
     0x00001800, 0x00000000, 0x00000000, 0x00000C00,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0xFFFFFFFF, 0xFFFF1FFF, 0xFFFFFFFF, 0x3FFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFF07FFF, 0x00FFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x7FFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFF07FF, 0xFBFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFBFFFFFF,
     0xFFFFFFFF, 0xFFFFFFEF, 0xFFFFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFE7, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFFFFFFF, 0x0000FFFF, 0x000F1FFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
+    0xFFFFFFFF, 0xFFFFFFFF, 0x0001FFFF, 0x000F1FFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x000FFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x001FFFFF, 0x00000000,
     0xFFFF0FFF, 0xFFFFFFFF, 0x03FF00FF, 0xFFFFFFFF,
     0xFFFF00FF, 0x00003FFF, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000
+    0x01FF0000, 0x00000000, 0x00000000, 0x00000000,
+    0x0000001F, 0x00000000, 0x00000001, 0x00000000
   }
 };

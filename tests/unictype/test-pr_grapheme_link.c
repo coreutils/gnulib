@@ -56,7 +56,8 @@
     { 0x114C2, 0x114C2 },
     { 0x115BF, 0x115BF },
     { 0x1163F, 0x1163F },
-    { 0x116B6, 0x116B6 }
+    { 0x116B6, 0x116B6 },
+    { 0x1172B, 0x1172B }
 
 #define PREDICATE(c) uc_is_property_grapheme_link (c)
 #include "test-predicate-part2.h"

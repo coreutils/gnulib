@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Digit values of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
     { 0x0030, 0 },
     { 0x0031, 1 },
     { 0x0032, 2 },
@@ -578,6 +578,16 @@
     { 0x116C7, 7 },
     { 0x116C8, 8 },
     { 0x116C9, 9 },
+    { 0x11730, 0 },
+    { 0x11731, 1 },
+    { 0x11732, 2 },
+    { 0x11733, 3 },
+    { 0x11734, 4 },
+    { 0x11735, 5 },
+    { 0x11736, 6 },
+    { 0x11737, 7 },
+    { 0x11738, 8 },
+    { 0x11739, 9 },
     { 0x118E0, 0 },
     { 0x118E1, 1 },
     { 0x118E2, 2 },

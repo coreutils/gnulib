@@ -1,3 +1,28 @@
+2015-06-18  Daiki Ueno  <ueno@gnu.org>
+
+	libunistring: update to Unicode 8.0.0
+	* lib/gen-uni-tables.c (SIZEOF): New macro.
+	(output_numeric): Increase the maximum number of fractions from
+	128 to 160.  Increase the level3 value width from 7 bits to 8
+	bits.  Use SIZEOF instead of a hard-coded integer.
+	(output_blocks): Decrease the cut-off threshold from 0x30000 to
+	0x28000.
+	(fill_blocks): Increase the maximum number of blocks from 256 to
+	384.  Use SIZEOF instead of a hard-coded integer.
+	(get_lbp): Adjust to new characters added in Unicode 8.0.0.
+	* lib/unictype/numeric.c (uc_numeric_value): Adjust the level3
+	value width.
+	* lib/unilbrk/lbrktables.c (unilbrk_table): Implement LBP21b and
+	a new case added to LBP22.
+	* lib/uniwidth/width.c (nonspacing_table_data): Add U+08E3,
+	U+A69E, U+FE2E..U+FE2F, U+111CA..U+111CC, U+11300,
+	U+115DC..U+115DD, U+1171D..U+1171F, U+11722..U+11725,
+	U+11727..U+1172B, U+1DA00..U+1DA36, U+1DA3B..U+1DA6C, U+1DA75,
+	U+1DA84, U+1DA9B..U+1DA9F, and U+1DAA1..U+1DAAF.
+	* tests/uniwidth/test-uc_width2.sh: Same updates as in
+	lib/uniwidth/width.c.
+	* all generated files under lib/uni* and tests/uni*: Regenerate.
+
 2015-06-16  Pádraig Brady  <P@draigBrady.com>
 
 	gnu-web-doc-update: add --mirror to remove stale files

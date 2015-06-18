@@ -44,7 +44,8 @@
     { 0xFBB2, 0xFBC1 },
     { 0xFF3E, 0xFF3E },
     { 0xFF40, 0xFF40 },
-    { 0xFFE3, 0xFFE3 }
+    { 0xFFE3, 0xFFE3 },
+    { 0x1F3FB, 0x1F3FF }
 
 #define PREDICATE(c) uc_is_general_category (c, UC_CATEGORY_Sk)
 #include "test-predicate-part2.h"

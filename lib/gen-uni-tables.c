@@ -43,6 +43,8 @@
 #include <string.h>
 #include <time.h>
 
+#define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
+
 /* ========================================================================= */
 
 /* Reading UnicodeData.txt.  */
@@ -2130,7 +2132,7 @@ static void
 output_numeric (const char *filename, const char *version)
 {
   FILE *stream;
-  uc_fraction_t fractions[128];
+  uc_fraction_t fractions[160];
   unsigned int nfractions;
   unsigned int ch, i, j;
   struct numeric_table t;
@@ -2161,7 +2163,7 @@ output_numeric (const char *filename, const char *version)
           break;
       if (i == nfractions)
         {
-          assert (nfractions != 128);
+          assert (nfractions != SIZEOF (fractions));
           for (i = 0; i < nfractions; i++)
             if (value.denominator < fractions[i].denominator
                 || (value.denominator == fractions[i].denominator
@@ -2226,7 +2228,7 @@ output_numeric (const char *filename, const char *version)
   fprintf (stream, "    int level1[%zu];\n", t.level1_size);
   fprintf (stream, "    short level2[%zu << %d];\n", t.level2_size, t.q);
   fprintf (stream, "    unsigned short level3[%zu * %d + 1];\n", t.level3_size,
-           (1 << t.p) * 7 / 16);
+           (1 << t.p) * 8 / 16);
   fprintf (stream, "  }\n");
   fprintf (stream, "u_numeric =\n");
   fprintf (stream, "{\n");
@@ -2270,32 +2272,32 @@ output_numeric (const char *filename, const char *version)
   if (t.level2_size << t.q > 8)
     fprintf (stream, "\n ");
   fprintf (stream, " },\n");
-  /* Pack the level3 array.  Each entry needs 7 bits only.  Use 16-bit units,
+  /* Pack the level3 array.  Each entry needs 8 bits only.  Use 16-bit units,
      not 32-bit units, in order to make the lookup function easier.  */
   level3_packed =
     (uint16_t *)
-    calloc ((t.level3_size << t.p) * 7 / 16 + 1, sizeof (uint16_t));
+    calloc ((t.level3_size << t.p) * 8 / 16 + 1, sizeof (uint16_t));
   for (i = 0; i < t.level3_size << t.p; i++)
     {
-      unsigned int j = (i * 7) / 16;
-      unsigned int k = (i * 7) % 16;
+      unsigned int j = (i * 8) / 16;
+      unsigned int k = (i * 8) % 16;
       uint32_t value = ((unsigned char *) (t.result + level3_offset))[i];
       value = level3_packed[j] | (level3_packed[j+1] << 16) | (value << k);
       level3_packed[j] = value & 0xffff;
       level3_packed[j+1] = value >> 16;
     }
   fprintf (stream, "  {");
-  if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
+  if ((t.level3_size << t.p) * 8 / 16 + 1 > 8)
     fprintf (stream, "\n   ");
-  for (i = 0; i < (t.level3_size << t.p) * 7 / 16 + 1; i++)
+  for (i = 0; i < (t.level3_size << t.p) * 8 / 16 + 1; i++)
     {
       if (i > 0 && (i % 8) == 0)
         fprintf (stream, "\n   ");
       fprintf (stream, " 0x%04x", level3_packed[i]);
-      if (i+1 < (t.level3_size << t.p) * 7 / 16 + 1)
+      if (i+1 < (t.level3_size << t.p) * 8 / 16 + 1)
         fprintf (stream, ",");
     }
-  if ((t.level3_size << t.p) * 7 / 16 + 1 > 8)
+  if ((t.level3_size << t.p) * 8 / 16 + 1 > 8)
     fprintf (stream, "\n ");
   fprintf (stream, " }\n");
   free (level3_packed);
@@ -4772,7 +4774,7 @@ output_scripts_byname (const char *version)
 
 typedef struct { unsigned int start; unsigned int end; const char *name; }
   block_t;
-static block_t blocks[256];
+static block_t blocks[384];
 static unsigned int numblocks;
 
 static void
@@ -4811,7 +4813,7 @@ fill_blocks (const char *blocks_filename)
       /* It must be sorted.  */
       assert (numblocks == 0 || blocks[numblocks-1].end < blocks[numblocks].start);
       numblocks++;
-      assert (numblocks != 256);
+      assert (numblocks != SIZEOF (blocks));
     }
 
   if (ferror (stream) || fclose (stream))
@@ -4869,7 +4871,7 @@ output_blocks (const char *version)
 {
   const char *filename = "unictype/blocks.h";
   const unsigned int shift = 8; /* bits to shift away for array access */
-  const unsigned int threshold = 0x30000; /* cut-off table here to save space */
+  const unsigned int threshold = 0x28000; /* cut-off table here to save space */
   FILE *stream;
   unsigned int i;
   unsigned int i1;
@@ -6339,8 +6341,8 @@ get_lbp (unsigned int ch)
 {
   int64_t attr = 0;
 
-  /* U+20BC..U+20CF is reserved for prefixes.  */
-  if (ch >= 0x20BC && ch <= 0x20CF)
+  /* U+20BC..U+20CF are reserved for prefixes.  */
+  if (unicode_attributes[ch].name == NULL && (ch >= 0x20BC && ch <= 0x20CF))
     return (int64_t) 1 << LBP_PR;
 
   if (unicode_attributes[ch].name != NULL)
@@ -6546,15 +6548,18 @@ get_lbp (unsigned int ch)
           || ch == 0x111C5 /* SHARADA DANDA */
           || ch == 0x111C6 /* SHARADA DOUBLE DANDA */
           || ch == 0x111C8 /* SHARADA SEPARATOR */
+	  || (ch >= 0x111DD && ch <= 0x111DF) /* SHARADA CONTINUATION SIGN..SHARADA SECTION MARK-2 */
           || ch == 0x11238 /* KHOJKI DANDA */
           || ch == 0x11239 /* KHOJKI DOUBLE DANDA */
           || ch == 0x1123B /* KHOJKI SECTION MARK */
           || ch == 0x1123C /* KHOJKI DOUBLE SECTION MARK */
+	  || ch == 0x112A9 /* MULTANI SECTION MARK */
           || ch == 0x115C2 /* SIDDHAM DANDA */
           || ch == 0x115C3 /* SIDDHAM DOUBLE DANDA */
-          || ch == 0x115C9 /* SIDDHAM END OF TEXT MARK */
+          || (ch >= 0x115C9 && ch <= 0x115D7) /* SIDDHAM END OF TEXT MARK..SIDDHAM SECTION MARK WITH CIRCLES AND FOUR ENCLOSURES */
           || ch == 0x11641 /* MODI DANDA */
           || ch == 0x11642 /* MODI DOUBLE DANDA */
+	  || (ch >= 0x1173C && ch <= 0x1173E) /* AHOM SIGN SMALL SECTION..AHOM SIGN RULAI */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
           || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */
@@ -6566,7 +6571,8 @@ get_lbp (unsigned int ch)
           || ch == 0x16B38 /* PAHAWH HMONG SIGN VOS TSHAB CEEB */
           || ch == 0x16B39 /* PAHAWH HMONG SIGN CIM CHEEM */
           || ch == 0x16B44 /* PAHAWH HMONG SIGN XAUS */
-          || ch == 0x1BC9F /* DUPLOYAN PUNCTUATION CHINOOK FULL STOP */)
+          || ch == 0x1BC9F /* DUPLOYAN PUNCTUATION CHINOOK FULL STOP */
+	  || (ch >= 0x1DA87 && ch <= 0x1DA8A) /* SIGNWRITING COMMA..SIGNWRITING COLON */)
         attr |= (int64_t) 1 << LBP_BA;
 
       /* break opportunity before */
@@ -6588,8 +6594,10 @@ get_lbp (unsigned int ch)
           || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
           || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
           || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
+	  || ch == 0xA8FC /* DEVANAGARI SIGN SIDDHAM */
           || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */
           || ch == 0x11175 /* MAHAJANI SECTION MARK */
+	  || ch == 0x111DB /* SHARADA SIGN SIDDHAM */
           || ch == 0x115C1 /* SIDDHAM SIGN SIDDHAM */)
         attr |= (int64_t) 1 << LBP_BB;
 
@@ -6628,7 +6636,8 @@ get_lbp (unsigned int ch)
           || ch == 0x13287 /* EGYPTIAN HIEROGLYPH O036B */
           || ch == 0x13289 /* EGYPTIAN HIEROGLYPH O036D */
           || ch == 0x1337A /* EGYPTIAN HIEROGLYPH V011B */
-          || ch == 0x1337B /* EGYPTIAN HIEROGLYPH V011C */)
+          || ch == 0x1337B /* EGYPTIAN HIEROGLYPH V011C */
+	  || ch == 0x145CF /* ANATOLIAN HIEROGLYPH A410A END LOGOGRAM MARK */)
         attr |= (int64_t) 1 << LBP_CL;
 
       /* exclamation/interrogation */
@@ -6674,6 +6683,7 @@ get_lbp (unsigned int ch)
       if (ch == 0x2024 /* ONE DOT LEADER */
           || ch == 0x2025 /* TWO DOT LEADER */
           || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
+	  || ch == 0x22EF /* MIDLINE HORIZONTAL ELLIPSIS */
           || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */
           || ch == 0x10AF6 /* MANICHAEAN PUNCTUATION LINE FILLER */)
         attr |= (int64_t) 1 << LBP_IN;
@@ -6726,7 +6736,8 @@ get_lbp (unsigned int ch)
           || ch == 0x1325A /* EGYPTIAN HIEROGLYPH O006C */
           || ch == 0x13286 /* EGYPTIAN HIEROGLYPH O036A */
           || ch == 0x13288 /* EGYPTIAN HIEROGLYPH O036C */
-          || ch == 0x13379 /* EGYPTIAN HIEROGLYPH V011A */)
+          || ch == 0x13379 /* EGYPTIAN HIEROGLYPH V011A */
+	  || ch == 0x145CE /* ANATOLIAN HIEROGLYPH A410 BEGIN LOGOGRAM MARK */)
         attr |= (int64_t) 1 << LBP_OP;
 
       /* ambiguous quotation */
@@ -6806,6 +6817,7 @@ get_lbp (unsigned int ch)
           || ch == 0x09F9 /* BENGALI CURRENCY DENOMINATOR SIXTEEN */
           || ch == 0x0D79 /* MALAYALAM DATE MARK */
           || ch == 0x20B6 /* LIVRE TOURNOIS SIGN */
+          || ch == 0x20BE /* LARI SIGN */
           || ch == 0xA838 /* NORTH INDIC RUPEE MARK */)
         attr |= (int64_t) 1 << LBP_PO;
 
@@ -6868,7 +6880,9 @@ get_lbp (unsigned int ch)
            || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
            || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
            || (ch >= 0xAA77 && ch <= 0xAA79) /* MYANMAR SYMBOL AITON */
-           || (ch >= 0xAADE && ch <= 0xAADF) /* TAI VIET SYMBOL */)
+           || (ch >= 0xAADE && ch <= 0xAADF) /* TAI VIET SYMBOL */
+	   || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
+	   || ch == 0x1173F /* Ahom */)
           && ((ch >= 0x0E00 && ch <= 0x0EFF) /* Thai, Lao */
               || (ch >= 0x1000 && ch <= 0x109F) /* Myanmar */
               || (ch >= 0x1780 && ch <= 0x17FF) /* Khmer */
@@ -6876,7 +6890,11 @@ get_lbp (unsigned int ch)
               || (ch >= 0x1A20 && ch <= 0x1AAF) /* Tai Tham */
               || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
               || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
-              || (ch >= 0xAA60 && ch <= 0xAADF) /* Myanmar Extended-A, Tai Viet */))
+              || (ch >= 0xAA60 && ch <= 0xAADF) /* Myanmar Extended-A, Tai Viet */
+	      || (ch >= 0x11700 && ch <= 0x11719) /* Ahom */
+	      || (ch >= 0x1171D && ch <= 0x1172B) /* Ahom */
+	      || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
+	      || ch == 0x1173F /* Ahom */))
         attr |= (int64_t) 1 << LBP_SA;
 
       /* attached characters and combining marks */
@@ -7039,17 +7057,20 @@ get_lbp (unsigned int ch)
               && ch != 0x1F4A0 && ch != 0x1F4A2 && ch != 0x1F4A4
               && ch != 0x1F4AF && ch != 0x1F4B1 && ch != 0x1F4B2
               && !(ch >= 0x1F39C && ch <= 0x1F39D)
+	      && !(ch >= 0x1F3FB && ch <= 0x1F3FF)
               && !(ch >= 0x1F500 && ch <= 0x1F506)
               && !(ch >= 0x1F517 && ch <= 0x1F524)
               && !(ch >= 0x1F532 && ch <= 0x1F549)
               && !(ch >= 0x1F5D4 && ch <= 0x1F5DB)
               && !(ch >= 0x1F5F4 && ch <= 0x1F5F9))
           || (ch >= 0x1F600 && ch <= 0x1F64F) /* Emoticons */
-          || (ch >= 0x1F680 && ch <= 0x1F6CF) /* Transport and Map Symbols */
+          || (ch >= 0x1F680 && ch <= 0x1F6D0) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
           || (ch >= 0x1F6F0 && ch <= 0x1F6F3) /* Transport and Map Symbols */
+	  || (ch >= 0x1F900 && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
-          || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */)
+          || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
+	  || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM))))
           {
             /* ambiguous (ideograph) ? */

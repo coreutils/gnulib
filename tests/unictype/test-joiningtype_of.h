@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Arabic joining type of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 7.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
     { 0x0600, UC_JOINING_TYPE_U },
     { 0x0601, UC_JOINING_TYPE_U },
     { 0x0602, UC_JOINING_TYPE_U },
@@ -284,7 +284,7 @@
     { 0x0844, UC_JOINING_TYPE_D },
     { 0x0845, UC_JOINING_TYPE_D },
     { 0x0846, UC_JOINING_TYPE_R },
-    { 0x0847, UC_JOINING_TYPE_D },
+    { 0x0847, UC_JOINING_TYPE_R },
     { 0x0848, UC_JOINING_TYPE_D },
     { 0x0849, UC_JOINING_TYPE_R },
     { 0x084A, UC_JOINING_TYPE_D },
@@ -292,7 +292,7 @@
     { 0x084C, UC_JOINING_TYPE_D },
     { 0x084D, UC_JOINING_TYPE_D },
     { 0x084E, UC_JOINING_TYPE_D },
-    { 0x084F, UC_JOINING_TYPE_R },
+    { 0x084F, UC_JOINING_TYPE_D },
     { 0x0850, UC_JOINING_TYPE_D },
     { 0x0851, UC_JOINING_TYPE_D },
     { 0x0852, UC_JOINING_TYPE_D },
@@ -321,6 +321,8 @@
     { 0x08B0, UC_JOINING_TYPE_D },
     { 0x08B1, UC_JOINING_TYPE_R },
     { 0x08B2, UC_JOINING_TYPE_R },
+    { 0x08B3, UC_JOINING_TYPE_D },
+    { 0x08B4, UC_JOINING_TYPE_D },
     { 0x1806, UC_JOINING_TYPE_U },
     { 0x1807, UC_JOINING_TYPE_D },
     { 0x180A, UC_JOINING_TYPE_C },

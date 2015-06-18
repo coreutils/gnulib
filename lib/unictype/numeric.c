@@ -36,13 +36,13 @@ uc_numeric_value (ucs4_t uc)
           int lookup2 = u_numeric.level2[lookup1 + index2];
           if (lookup2 >= 0)
             {
-              unsigned int index3 = ((uc & numeric_header_4) + lookup2) * 7;
-              /* level3 contains 7-bit values, packed into 16-bit words.  */
+              unsigned int index3 = ((uc & numeric_header_4) + lookup2) * 8;
+              /* level3 contains 8-bit values, packed into 16-bit words.  */
               unsigned int lookup3 =
                 ((u_numeric.level3[index3>>4]
                   | (u_numeric.level3[(index3>>4)+1] << 16))
                  >> (index3 % 16))
-                & 0x7f;
+                & 0xff;
 
               return u_numeric_values[lookup3];
             }
