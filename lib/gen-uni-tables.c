@@ -32,7 +32,7 @@
                       /usr/local/share/Unidata/CompositionExclusions.txt \
                       /usr/local/share/Unidata/SpecialCasing.txt \
                       /usr/local/share/Unidata/CaseFolding.txt \
-                      7.0.0
+                      8.0.0
  */
 
 #include <assert.h>
@@ -6548,18 +6548,18 @@ get_lbp (unsigned int ch)
           || ch == 0x111C5 /* SHARADA DANDA */
           || ch == 0x111C6 /* SHARADA DOUBLE DANDA */
           || ch == 0x111C8 /* SHARADA SEPARATOR */
-	  || (ch >= 0x111DD && ch <= 0x111DF) /* SHARADA CONTINUATION SIGN..SHARADA SECTION MARK-2 */
+          || (ch >= 0x111DD && ch <= 0x111DF) /* SHARADA CONTINUATION SIGN..SHARADA SECTION MARK-2 */
           || ch == 0x11238 /* KHOJKI DANDA */
           || ch == 0x11239 /* KHOJKI DOUBLE DANDA */
           || ch == 0x1123B /* KHOJKI SECTION MARK */
           || ch == 0x1123C /* KHOJKI DOUBLE SECTION MARK */
-	  || ch == 0x112A9 /* MULTANI SECTION MARK */
+          || ch == 0x112A9 /* MULTANI SECTION MARK */
           || ch == 0x115C2 /* SIDDHAM DANDA */
           || ch == 0x115C3 /* SIDDHAM DOUBLE DANDA */
           || (ch >= 0x115C9 && ch <= 0x115D7) /* SIDDHAM END OF TEXT MARK..SIDDHAM SECTION MARK WITH CIRCLES AND FOUR ENCLOSURES */
           || ch == 0x11641 /* MODI DANDA */
           || ch == 0x11642 /* MODI DOUBLE DANDA */
-	  || (ch >= 0x1173C && ch <= 0x1173E) /* AHOM SIGN SMALL SECTION..AHOM SIGN RULAI */
+          || (ch >= 0x1173C && ch <= 0x1173E) /* AHOM SIGN SMALL SECTION..AHOM SIGN RULAI */
           || ch == 0x12471 /* CUNEIFORM PUNCTUATION SIGN VERTICAL COLON */
           || ch == 0x12472 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL COLON */
           || ch == 0x12473 /* CUNEIFORM PUNCTUATION SIGN DIAGONAL TRICOLON */
@@ -6572,7 +6572,7 @@ get_lbp (unsigned int ch)
           || ch == 0x16B39 /* PAHAWH HMONG SIGN CIM CHEEM */
           || ch == 0x16B44 /* PAHAWH HMONG SIGN XAUS */
           || ch == 0x1BC9F /* DUPLOYAN PUNCTUATION CHINOOK FULL STOP */
-	  || (ch >= 0x1DA87 && ch <= 0x1DA8A) /* SIGNWRITING COMMA..SIGNWRITING COLON */)
+          || (ch >= 0x1DA87 && ch <= 0x1DA8A) /* SIGNWRITING COMMA..SIGNWRITING COLON */)
         attr |= (int64_t) 1 << LBP_BA;
 
       /* break opportunity before */
@@ -6594,10 +6594,10 @@ get_lbp (unsigned int ch)
           || ch == 0x0FD3 /* TIBETAN MARK INITIAL BRDA RNYING YIG MGO MDUN MA */
           || ch == 0xA874 /* PHAGS-PA SINGLE HEAD MARK */
           || ch == 0xA875 /* PHAGS-PA DOUBLE HEAD MARK */
-	  || ch == 0xA8FC /* DEVANAGARI SIGN SIDDHAM */
+          || ch == 0xA8FC /* DEVANAGARI SIGN SIDDHAM */
           || ch == 0x1806 /* MONGOLIAN TODO SOFT HYPHEN */
           || ch == 0x11175 /* MAHAJANI SECTION MARK */
-	  || ch == 0x111DB /* SHARADA SIGN SIDDHAM */
+          || ch == 0x111DB /* SHARADA SIGN SIDDHAM */
           || ch == 0x115C1 /* SIDDHAM SIGN SIDDHAM */)
         attr |= (int64_t) 1 << LBP_BB;
 
@@ -6637,7 +6637,7 @@ get_lbp (unsigned int ch)
           || ch == 0x13289 /* EGYPTIAN HIEROGLYPH O036D */
           || ch == 0x1337A /* EGYPTIAN HIEROGLYPH V011B */
           || ch == 0x1337B /* EGYPTIAN HIEROGLYPH V011C */
-	  || ch == 0x145CF /* ANATOLIAN HIEROGLYPH A410A END LOGOGRAM MARK */)
+          || ch == 0x145CF /* ANATOLIAN HIEROGLYPH A410A END LOGOGRAM MARK */)
         attr |= (int64_t) 1 << LBP_CL;
 
       /* exclamation/interrogation */
@@ -6683,7 +6683,7 @@ get_lbp (unsigned int ch)
       if (ch == 0x2024 /* ONE DOT LEADER */
           || ch == 0x2025 /* TWO DOT LEADER */
           || ch == 0x2026 /* HORIZONTAL ELLIPSIS */
-	  || ch == 0x22EF /* MIDLINE HORIZONTAL ELLIPSIS */
+          || ch == 0x22EF /* MIDLINE HORIZONTAL ELLIPSIS */
           || ch == 0xFE19 /* PRESENTATION FORM FOR VERTICAL HORIZONTAL ELLIPSIS */
           || ch == 0x10AF6 /* MANICHAEAN PUNCTUATION LINE FILLER */)
         attr |= (int64_t) 1 << LBP_IN;
@@ -6737,7 +6737,7 @@ get_lbp (unsigned int ch)
           || ch == 0x13286 /* EGYPTIAN HIEROGLYPH O036A */
           || ch == 0x13288 /* EGYPTIAN HIEROGLYPH O036C */
           || ch == 0x13379 /* EGYPTIAN HIEROGLYPH V011A */
-	  || ch == 0x145CE /* ANATOLIAN HIEROGLYPH A410 BEGIN LOGOGRAM MARK */)
+          || ch == 0x145CE /* ANATOLIAN HIEROGLYPH A410 BEGIN LOGOGRAM MARK */)
         attr |= (int64_t) 1 << LBP_OP;
 
       /* ambiguous quotation */
@@ -6881,8 +6881,8 @@ get_lbp (unsigned int ch)
            || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
            || (ch >= 0xAA77 && ch <= 0xAA79) /* MYANMAR SYMBOL AITON */
            || (ch >= 0xAADE && ch <= 0xAADF) /* TAI VIET SYMBOL */
-	   || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
-	   || ch == 0x1173F /* Ahom */)
+           || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
+           || ch == 0x1173F /* Ahom */)
           && ((ch >= 0x0E00 && ch <= 0x0EFF) /* Thai, Lao */
               || (ch >= 0x1000 && ch <= 0x109F) /* Myanmar */
               || (ch >= 0x1780 && ch <= 0x17FF) /* Khmer */
@@ -6891,10 +6891,10 @@ get_lbp (unsigned int ch)
               || (ch >= 0xA9E0 && ch <= 0xA9EF) /* Myanmar */
               || (ch >= 0xA9FA && ch <= 0xA9FE) /* Myanmar */
               || (ch >= 0xAA60 && ch <= 0xAADF) /* Myanmar Extended-A, Tai Viet */
-	      || (ch >= 0x11700 && ch <= 0x11719) /* Ahom */
-	      || (ch >= 0x1171D && ch <= 0x1172B) /* Ahom */
-	      || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
-	      || ch == 0x1173F /* Ahom */))
+              || (ch >= 0x11700 && ch <= 0x11719) /* Ahom */
+              || (ch >= 0x1171D && ch <= 0x1172B) /* Ahom */
+              || (ch >= 0x1173A && ch <= 0x1173B) /* Ahom */
+              || ch == 0x1173F /* Ahom */))
         attr |= (int64_t) 1 << LBP_SA;
 
       /* attached characters and combining marks */
@@ -7057,7 +7057,7 @@ get_lbp (unsigned int ch)
               && ch != 0x1F4A0 && ch != 0x1F4A2 && ch != 0x1F4A4
               && ch != 0x1F4AF && ch != 0x1F4B1 && ch != 0x1F4B2
               && !(ch >= 0x1F39C && ch <= 0x1F39D)
-	      && !(ch >= 0x1F3FB && ch <= 0x1F3FF)
+              && !(ch >= 0x1F3FB && ch <= 0x1F3FF)
               && !(ch >= 0x1F500 && ch <= 0x1F506)
               && !(ch >= 0x1F517 && ch <= 0x1F524)
               && !(ch >= 0x1F532 && ch <= 0x1F549)
@@ -7067,10 +7067,10 @@ get_lbp (unsigned int ch)
           || (ch >= 0x1F680 && ch <= 0x1F6D0) /* Transport and Map Symbols */
           || (ch >= 0x1F6E0 && ch <= 0x1F6EC) /* Transport and Map Symbols */
           || (ch >= 0x1F6F0 && ch <= 0x1F6F3) /* Transport and Map Symbols */
-	  || (ch >= 0x1F900 && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
+          || (ch >= 0x1F900 && ch <= 0x1F9FF) /* Supplemental Symbols and Pictographs */
           || (ch >= 0x2A700 && ch <= 0x2B734) /* CJK Ideograph Extension C */
           || (ch >= 0x2B740 && ch <= 0x2B81D) /* CJK Ideograph Extension D */
-	  || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */)
+          || (ch >= 0x2B820 && ch <= 0x2CEAF) /* CJK Ideograph Extension E */)
         if (!(attr & (((int64_t) 1 << LBP_NS) | ((int64_t) 1 << LBP_CM))))
           {
             /* ambiguous (ideograph) ? */
