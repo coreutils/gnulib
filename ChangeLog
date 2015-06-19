@@ -1,3 +1,9 @@
+2015-06-19  Pádraig Brady  <P@draigBrady.com>
+
+	linked-list, linkedhash-list: avoid compiler warnings
+	* lib/gl_anytree_list2.h: Add _GL_ATTRIBUTE_PURE to avoid
+	-Werror=suggest-attribute=pure (from GCC 5.1.1).
+
 2015-06-19  Daiki Ueno  <ueno@gnu.org>
 
 	libunistring: bump minimum version to 0.9.6
