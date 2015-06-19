@@ -1,3 +1,13 @@
+2015-06-19  Daiki Ueno  <ueno@gnu.org>
+
+	libunistring: bump minimum version to 0.9.6
+	* all modules depending on updated Unicode data: Regenerate.
+	The modules are listed by a script that does:
+	- for each file listed by: git show --oneline --name-only 705f4efc
+	  - deduce the containing modules, based on "Files:"
+	- deduce the modules which depend on the containing modules, based
+	  on "Depends-on:"
+
 2015-06-18  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname: update to Unicode 8.0.0
