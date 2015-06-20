@@ -1,3 +1,23 @@
+2015-06-20  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname-tests: use pristine data files
+	For copyright and maintenance reasons, use the data files from UCD
+	without modification.
+	* tests/uniname/test-uninames.c (FIELDLEN): Remove.
+	(getfield): Remove.
+	(aliases_count): New global variable.
+	(fill_names): Skip comments and empty lines in the input.  Don't
+	use getfield.
+	(fill_aliases): Likewise.
+	(main): Change the expected command line arguments to:
+	NAMES... ["--" ALIASES...].
+	* tests/uniname/test-uninames.sh: Adjust to the change in
+	test-uninames.c.
+	* tests/uniname/UnicodeDataNames.txt: Remove.
+	* tests/uniname/UnicodeData.txt: New file, from Unicode 8.0.0.
+	* tests/uniname/NameAliases.txt: Use the pristine copy of the data
+	file from Unicode 8.0.0.
+
 2015-06-19  Pádraig Brady  <P@draigBrady.com>
 
 	linked-list, linkedhash-list: avoid compiler warnings

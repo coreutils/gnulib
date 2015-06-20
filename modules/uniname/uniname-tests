@@ -1,7 +1,8 @@
 Files:
 tests/uniname/test-uninames.sh
 tests/uniname/test-uninames.c
-tests/uniname/UnicodeDataNames.txt
+tests/uniname/UnicodeData.txt
+tests/uniname/HangulSyllableNames.txt
 tests/uniname/NameAliases.txt
 
 Depends-on:
