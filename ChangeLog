@@ -1,3 +1,10 @@
+2015-06-20  Glenn Morris  <rgm@gnu.org>
+
+	gitlog-to-changelog: improve gitmerge.el commits
+	Let the Emacs ChangeLog generation process exclude "skipped"
+	messages from merge commits (Bug#20717).
+	* build-aux/gitlog-to-changelog: Handle gitmerge.el skipped commits.
+
 2015-06-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	wchar: fix MinGW compilation warnings
