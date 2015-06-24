@@ -1,5 +1,13 @@
 2015-06-24  Pádraig Brady  <P@draigBrady.com>
 
+	savedir: avoid undefined behavior in qsort call
+	GCC 5.1.1 -fsanitize=undefined with glibc 2.21 is returning:
+	"runtime error: null pointer passed as argument 1,
+	 which is declared to never be null"
+	* lib/savedir.c (streamsavedir): Avoid the call with no entries.
+
+2015-06-24  Pádraig Brady  <P@draigBrady.com>
+
 	userspec: avoid undefined behavior in gettext call
 	GCC 5.1.1 -fsanitize=undefined with glibc 2.21 is returning:
 	"runtime error: null pointer passed as argument 2,

@@ -161,7 +161,8 @@ streamsavedir (DIR *dirp, enum savedir_option option)
     {
       size_t i;
 
-      qsort (entries, entries_used, sizeof *entries, cmp);
+      if (entries_used)
+        qsort (entries, entries_used, sizeof *entries, cmp);
       name_space = xmalloc (used + 1);
       used = 0;
       for (i = 0; i < entries_used; i++)
