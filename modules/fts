@@ -29,6 +29,7 @@ openat-h
 openat-safer
 opendir
 readdir
+stdalign
 stdbool
 unistd-safer
 

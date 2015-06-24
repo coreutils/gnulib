@@ -1,3 +1,13 @@
+2015-06-25  Pádraig Brady  <P@draigBrady.com>
+
+	fts: avoid reading beyond the heap allocation
+	GCC 5.1.1 with -O2 and -fsanitize=address reports
+	a read of size 4 from a heap object of size 3 is indeed invalid,
+	though this may be due to incorrect padding assumptions by GCC, see:
+	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66661
+	* lib/fts.c (fts_alloc): Increase allocation to alignof(FTSENT).
+	* modules/fts: Depend on stdalign.
+
 2015-06-24  Pádraig Brady  <P@draigBrady.com>
 
 	savedir: avoid undefined behavior in qsort call
