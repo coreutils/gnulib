@@ -1,3 +1,11 @@
+2015-06-24  Pádraig Brady  <P@draigBrady.com>
+
+	userspec: avoid undefined behavior in gettext call
+	GCC 5.1.1 -fsanitize=undefined with glibc 2.21 is returning:
+	"runtime error: null pointer passed as argument 2,
+	 which is declared to never be null"
+	* lib/userspec.c (parse_with_separator): Avoid passing NULL to gettext()
+
 2015-06-20  Glenn Morris  <rgm@gnu.org>
 
 	gitlog-to-changelog: improve gitmerge.el commits

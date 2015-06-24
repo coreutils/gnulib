@@ -234,7 +234,7 @@ parse_with_separator (char const *spec, char const *separator,
 
   free (u);
   free (gname);
-  return _(error_msg);
+  return error_msg ? _(error_msg) : NULL;
 }
 
 /* Extract from SPEC, which has the form "[user][:.][group]",
