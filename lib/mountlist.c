@@ -1082,7 +1082,7 @@ read_file_system_list (bool need_fs_type)
   return mount_list;
 
 
- free_then_fail:
+ free_then_fail: _GL_UNUSED_LABEL
   {
     int saved_errno = errno;
     *mtail = NULL;

@@ -1,5 +1,10 @@
 2015-06-28  Jim Meyering  <meyering@fb.com>
 
+	mountlist: avoid an unused-label warning on OS X
+	* lib/mountlist.c (read_file_system_list) [MOUNTED_GETMNTINFO]:
+	Building on OS X, I saw a warning about the "free_then_fail" label
+	being unused.  Give it the _GL_UNUSED_LABEL attribute.
+
 	error.c: correct printf-style format: %d -> %u
 	* lib/error.c (error_at_line): Correct __fxprintf format to use %u,
 	rather than %d, to match the type of "line_number", unsigned int.
