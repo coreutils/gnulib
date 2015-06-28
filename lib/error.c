@@ -379,10 +379,10 @@ error_at_line (int status, int errnum, const char *file_name,
     }
 
 #if _LIBC
-  __fxprintf (NULL, file_name != NULL ? "%s:%d: " : " ",
+  __fxprintf (NULL, file_name != NULL ? "%s:%u: " : " ",
               file_name, line_number);
 #else
-  fprintf (stderr, file_name != NULL ? "%s:%d: " : " ",
+  fprintf (stderr, file_name != NULL ? "%s:%u: " : " ",
            file_name, line_number);
 #endif
 

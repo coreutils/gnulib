@@ -1,3 +1,9 @@
+2015-06-28  Jim Meyering  <meyering@fb.com>
+
+	error.c: correct printf-style format: %d -> %u
+	* lib/error.c (error_at_line): Correct __fxprintf format to use %u,
+	rather than %d, to match the type of "line_number", unsigned int.
+
 2015-06-25  Pádraig Brady  <P@draigBrady.com>
 
 	fts: avoid reading beyond the heap allocation
