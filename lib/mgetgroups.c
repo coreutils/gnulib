@@ -64,6 +64,11 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
   gid_t *g;
 
 #if HAVE_GETGROUPLIST
+# if HAVE_GETGROUPLIST_WITH_INT
+#  define getgrouplist_gids(g) ((int *) (g))
+# else
+#  define getgrouplist_gids(g) (g)
+# endif
   /* We prefer to use getgrouplist if available, because it has better
      performance characteristics.
 
@@ -87,7 +92,8 @@ mgetgroups (char const *username, gid_t gid, gid_t **groups)
           int last_n_groups = max_n_groups;
 
           /* getgrouplist updates max_n_groups to num required.  */
-          ng = getgrouplist (username, gid, g, &max_n_groups);
+          ng = getgrouplist (username, gid, getgrouplist_gids (g),
+                             &max_n_groups);
 
           /* Some systems (like Darwin) have a bug where they
              never increase max_n_groups.  */
