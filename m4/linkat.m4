@@ -1,4 +1,4 @@
-# serial 6
+# serial 7
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2015 Free Software Foundation, Inc.
@@ -35,20 +35,19 @@ AC_DEFUN([gl_FUNC_LINKAT],
                         [return linkat (AT_FDCWD, "conftest.l1", AT_FDCWD,
                                             "conftest.l2", 0);
                         ])],
-         [gl_cv_func_linkat_nofollow=yes
-          LINKAT_SYMLINK_NOTSUP=0],
-         [gl_cv_func_linkat_nofollow=no
-          LINKAT_SYMLINK_NOTSUP=1],
+         [gl_cv_func_linkat_nofollow=yes],
+         [gl_cv_func_linkat_nofollow=no],
          [case "$host_os" in
-           darwin*)
-             gl_cv_func_linkat_nofollow="guessing no"
-             LINKAT_SYMLINK_NOTSUP=1 ;;
-           *)
-             gl_cv_func_linkat_nofollow="guessing yes"
-             LINKAT_SYMLINK_NOTSUP=0 ;;
+           darwin*) gl_cv_func_linkat_nofollow="guessing no" ;;
+           *)       gl_cv_func_linkat_nofollow="guessing yes" ;;
           esac])
 
        rm -rf conftest.l1 conftest.l2])
+
+    case $gl_cv_func_linkat_nofollow in
+      *no) LINKAT_SYMLINK_NOTSUP=1 ;;
+      *yes) LINKAT_SYMLINK_NOTSUP=0 ;;
+    esac
 
     AC_CACHE_CHECK([whether linkat handles trailing slash correctly],
       [gl_cv_func_linkat_slash],

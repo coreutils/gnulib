@@ -1,3 +1,42 @@
+2015-06-29  Jim Meyering  <meyering@fb.com>
+
+	linkat: fix invalid definition of LINKAT_SYMLINK_NOTSUP on OS X
+	It started like this when building coreutils' latest on OS X,
+	invoking ./configure with a nonempty --cache=.cache:
+
+	  lib/linkat.c:46:42: error: operator '||' has no right operand
+	  lib/linkat.c: In function 'rpl_linkat':
+	  lib/linkat.c:330:27: error: #if with no expression
+
+	Here's linkat.c's line 46:
+
+	  #if !HAVE_LINKAT || LINKAT_SYMLINK_NOTSUP
+
+	Here's some context:
+
+	  $ grep linkat_nofoll .cache
+	  gl_cv_func_linkat_nofollow=${gl_cv_func_linkat_nofollow=no}
+	  $ grep LINKAT_SYM lib/config.h
+	  #define LINKAT_SYMLINK_NOTSUP
+
+	The problem is that m4/linkat.m4's gl_FUNC_LINKAT
+	uses AC_CACHE_CHECK to set LINKAT_SYMLINK_NOTSUP,
+	but that violates a tenet of AC_CACHE_CHECK: it must
+	have no side effect other than setting its cache variable.
+
+	What happens is that when the cache is set, we'd skip the
+	code in that AC_CACHE_CHECK call, and leave LINKAT_SYMLINK_NOTSUP
+	defined to whatever value it happened to have in configure's
+        environment.  In my case, it was not defined, so this later code:
+
+	  AC_DEFINE_UNQUOTED([LINKAT_SYMLINK_NOTSUP], [$LINKAT_SYMLINK_NOTSUP],
+	    [Define to 1 if linkat can create hardlinks to symlinks])
+
+	would emit code with an empty RHS.
+
+	* m4/linkat.m4 (gl_FUNC_LINKAT): Move the setting of
+	$LINKAT_SYMLINK_NOTSUP out of the AC_CACHE_CHECK code block.
+
 2015-06-28  Jim Meyering  <meyering@fb.com>
 
 	mountlist: avoid an unused-label warning on OS X
