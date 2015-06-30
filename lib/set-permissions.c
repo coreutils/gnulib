@@ -307,19 +307,19 @@ context_aclv_from_mode (struct permission_context *ctx)
 
   ctx->aclv_entries[0].a_type = USER_OBJ;
   ctx->aclv_entries[0].a_id = 0; /* irrelevant */
-  ctx->aclv_entries[0].a_perm = (mode >> 6) & 7;
+  ctx->aclv_entries[0].a_perm = (ctx->mode >> 6) & 7;
   ctx->aclv_entries[1].a_type = GROUP_OBJ;
   ctx->aclv_entries[1].a_id = 0; /* irrelevant */
-  ctx->aclv_entries[1].a_perm = (mode >> 3) & 7;
+  ctx->aclv_entries[1].a_perm = (ctx->mode >> 3) & 7;
   ctx->aclv_entries[2].a_type = CLASS_OBJ;
   ctx->aclv_entries[2].a_id = 0;
-  ctx->aclv_entries[2].a_perm = (mode >> 3) & 7;
+  ctx->aclv_entries[2].a_perm = (ctx->mode >> 3) & 7;
   ctx->aclv_entries[3].a_type = OTHER_OBJ;
   ctx->aclv_entries[3].a_id = 0;
-  ctx->aclv_entries[3].a_perm = mode & 7;
+  ctx->aclv_entries[3].a_perm = ctx->mode & 7;
   ctx->aclv_count = 4;
 
-  ret = aclsort (ctx->aclv_count, 1, entries);
+  ret = aclsort (ctx->aclv_count, 1, ctx->aclv_entries);
   if (ret > 0)
     abort ();
   return ret;
