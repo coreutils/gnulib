@@ -1,3 +1,14 @@
+2015-06-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mgetgroups: port to strict OS X
+	* doc/glibc-functions/getgrouplist.texi (getgrouplist):
+	Document the getgrouplist problem.
+	* lib/mgetgroups.c (getgrouplist_gids) [HAVE_GETGROUPLIST]:
+	New macro.
+	(mgetgroups): Use it.
+	* m4/mgetgroups.m4 (gl_MGETGROUPS):
+	Check for OS X signature for getgrouplist.
+
 2015-06-29  Jim Meyering  <meyering@fb.com>
 
 	linkat: fix invalid definition of LINKAT_SYMLINK_NOTSUP on OS X
