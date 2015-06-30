@@ -1,3 +1,9 @@
+2015-06-30  Pádraig Brady  <P@draigBrady.com>
+
+	readutmp: port to FreeBSD >= 9
+	* lib/readutmp.h: Map utmpxname() to setutxdb().
+	With that coreutils who(1) and pinky(1) tests pass.
+
 2015-06-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mgetgroups: port to strict OS X

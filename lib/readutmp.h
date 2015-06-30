@@ -47,6 +47,8 @@
 #  define END_UTMP_ENT endutxent
 #  ifdef HAVE_UTMPXNAME
 #   define UTMP_NAME_FUNCTION utmpxname
+#  elif defined UTXDB_ACTIVE
+#   define UTMP_NAME_FUNCTION(x) setutxdb (UTXDB_ACTIVE, x)
 #  endif
 
 #  if HAVE_STRUCT_UTMPX_UT_EXIT_E_TERMINATION
