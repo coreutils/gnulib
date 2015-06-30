@@ -1,3 +1,15 @@
+2015-07-01  Pádraig Brady  <P@draigBrady.com>
+
+	acl: fix definition of acl_from_mode on FreeBSD
+	This was causing basic coreutils copy operations to fail
+	with ENOTSUP or ENOENT error messages.
+	* lib/acl-internal.h (acl_from_mode): Only define when
+	! defined HAVE_ACL_FROM_TEXT.  That allows the version
+	of acl_from_mode() defined in lib/set-permissions.c to
+	be used on FreeBSD at least.
+	* lib/set-permissions.c: Fix up comment spelling,
+	and a redundant variable assignment; noticed in passing.
+
 2015-06-30  Pádraig Brady  <P@draigBrady.com>
 
 	readutmp: port to FreeBSD >= 9

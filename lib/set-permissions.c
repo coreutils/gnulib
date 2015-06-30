@@ -801,10 +801,9 @@ set_permissions (struct permission_context *ctx, const char *name, int desc)
       int saved_errno = ret ? errno : 0;
 
       /* If we can't set an acl which we expect to be able to set, try setting
-	 the permissions to ctx->mode. Doe to possible inherited permissions,
+	 the permissions to ctx->mode. Due to possible inherited permissions,
 	 we cannot simply chmod.  */
 
-      acls_set = false;
       ret = set_acls (ctx, name, desc, true, &must_chmod, &acls_set);
       if (! acls_set)
 	must_chmod = true;
