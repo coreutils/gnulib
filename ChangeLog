@@ -1,3 +1,12 @@
+2015-07-01  Pavel Raiskup  <praiskup@redhat.com>
+
+	selinux-h: avoid double free after *getfilecon()
+	Originally reported by Ben Shelton on bug-tar:
+	http://lists.gnu.org/archive/html/bug-tar/2015-04/msg00009.html
+	* lib/getfilecon.c (map_to_failure): Set the already freed '*con'
+	pointer to NULL.  Man getfilecon(3) says that any non-NULL '*con'
+	param should be freed by freecon(3) (regardless the return value).
+
 2015-07-01  Pavel Fedin  <p.fedin@samsung.com>
 
 	fix pty related tests issues on Windows (trivial)

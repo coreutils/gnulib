@@ -57,6 +57,7 @@ map_to_failure (int ret, security_context_t *con)
   if (ret == 10 && strcmp (*con, "unlabeled") == 0)
     {
       freecon (*con);
+      *con = NULL;
       errno = ENODATA;
       return -1;
     }
