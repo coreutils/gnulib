@@ -34,6 +34,7 @@ int
 main ()
 {
   {
+#ifndef _WIN32
     int master;
     int slave;
 
@@ -103,6 +104,7 @@ main ()
     /* Close the master side before the slave side gets closed.
        This is necessary on Mac OS X 10.4.11.  */
     close (master);
+#endif
   }
 
   return 0;

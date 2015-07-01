@@ -1,3 +1,13 @@
+2015-07-01  Pavel Fedin  <p.fedin@samsung.com>
+
+	fix pty related tests issues on Windows (trivial)
+	* lib/grantpt.c (grantpt): grantpt.c seems to be never used on Windows,
+	however it's still present in tests/ subdirectory of the final project.
+	Therefore avoid it to pass `make check`.
+	* tests/test-openpty.c (main): Windows has no PTYs and gnulib's openpty()
+	will just return -ENOSYS, so avoid this non applicable test allowing
+	the build to proceed.
+
 2015-07-01  Pádraig Brady  <P@draigBrady.com>
 
 	acl: fix definition of acl_from_mode on FreeBSD
