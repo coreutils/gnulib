@@ -1,5 +1,17 @@
 2015-07-01  Pavel Raiskup  <praiskup@redhat.com>
 
+	gnulib-common.m4: change the ARFLAGS default to 'cr'
+	In some GNU/Linux distributions people started to compile 'ar'
+	binary with --enable-deterministic-archives (binutils project).
+	That, however, in combination with previous autotools long time
+	working default AR{_,}FLAGS=cru causes warnings on such
+	installations:
+	ar: `u' modifier ignored since `D' is the default (see `U')
+	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB): Set ARFLAGS='cr' if not
+	set already.
+
+2015-07-01  Pavel Raiskup  <praiskup@redhat.com>
+
 	selinux-h: avoid double free after *getfilecon()
 	Originally reported by Ben Shelton on bug-tar:
 	http://lists.gnu.org/archive/html/bug-tar/2015-04/msg00009.html
