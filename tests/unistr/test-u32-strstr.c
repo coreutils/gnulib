@@ -38,7 +38,7 @@ main (void)
   /* Declare failure if test takes too long, by using default abort
      caused by SIGALRM.  */
   signal (SIGALRM, SIG_DFL);
-  alarm (5);
+  alarm (10);
 #endif
 
   test_u_strstr ();

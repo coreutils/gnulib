@@ -1,3 +1,14 @@
+2015-07-02  Daiki Ueno  <ueno@gnu.org>
+
+	u{16,32}-strstr-tests: relax timeout condition
+	On slower platforms (e.g., Solaris 10/SPARC), u{16,32}-strstr
+	tests can take longer than 5 seconds to complete.
+	Reported by Dagobert Michelsen in:
+	https://lists.gnu.org/archive/html/bug-libunistring/2015-06/msg00006.html
+	* tests/unistr/test-u16-strstr.c (main): Increase timeout from 5
+	seconds to 10 seconds.
+	* tests/unistr/test-u32-strstr.c (main): Likewise.
+
 2015-07-01  Pavel Raiskup  <praiskup@redhat.com>
 
 	gnulib-common.m4: change the ARFLAGS default to 'cr'
