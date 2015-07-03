@@ -1,3 +1,29 @@
+2015-07-03  Seiya Kawashima <skawashima@uchicago.edu>  (tiny-change)
+	and Daiki Ueno  <ueno@gnu.org>
+
+	unistr/uN-strtok: handle multibyte delimiters
+	Previously, uN_strtok moved PTR to the next unit to the token end.
+	When DELIM contained a multibyte character, the new position could
+	be a middle of a multibyte character.
+	* lib/unistr/u-strtok.h (FUNC): Place PTR at the next character
+	after the token.
+	* lib/unistr/u8-strtok.c (U_STRMBLEN): New macro.
+	* lib/unistr/u16-strtok.c (U_STRMBLEN): New macro.
+	* lib/unistr/u32-strtok.c (U_STRMBLEN): New macro.
+	* modules/unistr/u8-strtok (Depends-on): Depend on
+	unistr/u8-strmblen.
+	* modules/unistr/u16-strtok (Depends-on): Depend on
+	unistr/u16-strmblen.
+	* modules/unistr/u32-strtok (Depends-on): Depend on
+	unistr/u32-strmblen.
+	* tests/unistr/test-u-strtok.h: New file.
+	* tests/unistr/test-u8-strtok.c: New file.
+	* tests/unistr/test-u16-strtok.c: New file.
+	* tests/unistr/test-u32-strtok.c: New file.
+	* modules/unistr/u8-strtok-tests: New file.
+	* modules/unistr/u32-strtok-tests: New file.
+	* modules/unistr/u16-strtok-tests: New file.
+
 2015-07-02  Friedrich Haubensak  <hsk@fli-leibniz.de>
 
 	update-copyright: fix test failure with perl >= 5.22 (trivial)

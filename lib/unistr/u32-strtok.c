@@ -24,4 +24,5 @@
 #define UNIT uint32_t
 #define U_STRSPN u32_strspn
 #define U_STRPBRK u32_strpbrk
+#define U_STRMBLEN u32_strmblen
 #include "u-strtok.h"

@@ -40,9 +40,9 @@ FUNC (UNIT *str, const UNIT *delim, UNIT **ptr)
     UNIT *token_end = U_STRPBRK (str, delim);
     if (token_end)
       {
+        *ptr = token_end + U_STRMBLEN (token_end);
         /* NUL-terminate the token.  */
         *token_end = 0;
-        *ptr = token_end + 1;
       }
     else
       *ptr = NULL;

@@ -9,6 +9,7 @@ Depends-on:
 unistr/base
 unistr/u32-strspn
 unistr/u32-strpbrk
+unistr/u32-strmblen
 
 configure.ac:
 gl_LIBUNISTRING_MODULE([0.9], [unistr/u32-strtok])
