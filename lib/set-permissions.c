@@ -25,6 +25,8 @@
 
 #if USE_ACL
 # if ! defined HAVE_ACL_FROM_MODE && defined HAVE_ACL_FROM_TEXT /* FreeBSD, IRIX, Tru64 */
+#  if HAVE_ACL_GET_FILE && !HAVE_ACL_TYPE_EXTENDED
+
 static acl_t
 acl_from_mode (mode_t mode)
 {
@@ -46,6 +48,7 @@ acl_from_mode (mode_t mode)
 
   return acl_from_text (acl_text);
 }
+#  endif
 # endif
 
 # if HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
@@ -269,7 +272,7 @@ set_acls_from_mode (const char *name, int desc, mode_t mode, bool *must_chmod)
   }
 }
 
-#elif HAVE_GETACL /* HP-UX */
+# elif HAVE_GETACL /* HP-UX */
 static int
 context_acl_from_mode (struct permission_context *ctx, const char *name, int desc)
 {
@@ -321,7 +324,7 @@ context_aclv_from_mode (struct permission_context *ctx)
     abort ();
   return ret;
 }
-#endif
+#  endif
 
 # elif HAVE_ACLX_GET && defined ACL_AIX_WIP /* AIX */
 static int
@@ -483,18 +486,18 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
 {
   int ret = 0;
 
-#if HAVE_ACL_GET_FILE
+# if HAVE_ACL_GET_FILE
   /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
   /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
 #  if !HAVE_ACL_TYPE_EXTENDED
   /* Linux, FreeBSD, IRIX, Tru64 */
 
-#    ifndef HAVE_ACL_FROM_TEXT
-#     error Must have acl_from_text (see POSIX 1003.1e draft 17).
-#    endif
-#    ifndef HAVE_ACL_DELETE_DEF_FILE
-#     error Must have acl_delete_def_file (see POSIX 1003.1e draft 17).
-#    endif
+#   ifndef HAVE_ACL_FROM_TEXT
+#    error Must have acl_from_text (see POSIX 1003.1e draft 17).
+#   endif
+#   ifndef HAVE_ACL_DELETE_DEF_FILE
+#    error Must have acl_delete_def_file (see POSIX 1003.1e draft 17).
+#   endif
 
   if (! ctx->acls_not_supported)
     {
@@ -641,9 +644,9 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
       else
 	*acls_set = true;
     }
-# endif
+#  endif
 
-#elif HAVE_GETACL /* HP-UX */
+# elif HAVE_GETACL /* HP-UX */
 
   if (from_mode)
     ret = context_acl_from_mode (ctx, name, desc);
@@ -730,7 +733,7 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
 
   /* Nothing to do. */
 
-#endif
+# endif
 
   return ret;
 }

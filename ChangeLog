@@ -1,3 +1,13 @@
+2015-07-03  Jim Meyering  <meyering@fb.com>
+
+	set-permissions.c: adjust acl_from_mode's cpp guard
+	* lib/set-permissions.c (acl_from_mode): Guard with #ifdef
+	directives identical to those guarding the sole use.
+	Otherwise, on some systems, we'd get a warning about
+	the function being defined but not used.
+	Also, filter through cppi to correct misleading indentation
+	of cpp directives.
+
 2015-07-03  Pádraig Brady  <P@draigBrady.com>
 
 	tests: restrict shells to those that support 'local'
