@@ -1,3 +1,12 @@
+2015-07-03  Pádraig Brady  <P@draigBrady.com>
+
+	tests: restrict shells to those that support 'local'
+	The local keyword is very widely supported and used
+	in tests in coreutils and grep at least.  Therefore
+	restrict to testing with shells that support it.
+	This mainly excludes /bin/sh on Solaris.
+	* tests/init.sh (gl_shell_test_script_): Add a test for 'local'.
+
 2015-07-03  Seiya Kawashima <skawashima@uchicago.edu>  (tiny change)
 	and Daiki Ueno  <ueno@gnu.org>
 
