@@ -1,4 +1,4 @@
-2015-07-03  Seiya Kawashima <skawashima@uchicago.edu>  (tiny-change)
+2015-07-03  Seiya Kawashima <skawashima@uchicago.edu>  (tiny change)
 	and Daiki Ueno  <ueno@gnu.org>
 
 	unistr/uN-strtok: handle multibyte delimiters
@@ -1487,13 +1487,13 @@ o	Test only that noncanonical values do not cause crashes, not that
 
 2015-01-06  Daiki Ueno  <ueno@gnu.org>
 
-	uniname/uniname: update to Unicode 7.0.0 To accommodate new
-	characters added since Unicode 5.1.0, this changes the internal
-	representation of codepoint ranges.  Previously, we grouped
-	codepoint ranges by manually assigned 4-bit tag, which only
-	allowed 16 groups.  This removes the limitation by switching to
-	binary search on a table.  For the detail rationale and the
-	benchmark results, see:
+	uniname/uniname: update to Unicode 7.0.0
+	To accommodate new characters added since Unicode 5.1.0, this
+	changes the internal representation of codepoint ranges.
+	Previously, we grouped codepoint ranges by manually assigned 4-bit
+	tag, which only allowed 16 groups.  This removes the limitation by
+	switching to binary search on a table.  For the detail rationale
+	and the benchmark results, see:
 	https://lists.gnu.org/archive/html/bug-libunistring/2014-06/msg00001.html
 	* lib/uniname/gen-uninames.lisp (unicode-char): Rename CODE member
 	to INDEX, as it no longer represents a codepoint.
