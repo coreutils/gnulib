@@ -1,5 +1,13 @@
 2015-07-04  Paul Eggert  <eggert@cs.ucla.edu>
 
+	file-has-acl, acl-permissions: fix HP-UX typos
+	Problem reported by John David Anglin in: http://bugs.gnu.org/20979
+	* lib/file-has-acl.c (file_has_acl):
+	* lib/set-permissions.c (context_acl_from_mode)
+	(context_aclv_from_mode, set_acls):
+	Fix some obvious typos when HAVE_GETCL /* HP-UX */.
+	They were introduced by the recent ACL changes.
+
 	regex: match current GNU grep behavior
 	These symbols have not matched GNU grep behavior for quite some time.
 	Fix prompted by Balazs Kezes bug report at: http://bugs.gnu.org/20974

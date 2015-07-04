@@ -288,13 +288,13 @@ context_acl_from_mode (struct permission_context *ctx, const char *name, int des
 
   ctx->entries[0].uid = statbuf.st_uid;
   ctx->entries[0].gid = ACL_NSGROUP;
-  ctx->entries[0].mode = (mode >> 6) & 7;
+  ctx->entries[0].mode = (ctx->mode >> 6) & 7;
   ctx->entries[1].uid = ACL_NSUSER;
   ctx->entries[1].gid = statbuf.st_gid;
-  ctx->entries[1].mode = (mode >> 3) & 7;
+  ctx->entries[1].mode = (ctx->mode >> 3) & 7;
   ctx->entries[2].uid = ACL_NSUSER;
   ctx->entries[2].gid = ACL_NSGROUP;
-  ctx->entries[2].mode = mode & 7;
+  ctx->entries[2].mode = ctx->mode & 7;
   ctx->count = 3;
   return 0;
 }
@@ -319,7 +319,7 @@ context_aclv_from_mode (struct permission_context *ctx)
   ctx->aclv_entries[3].a_perm = mode & 7;
   ctx->aclv_count = 4;
 
-  ret = aclsort (sizeof (entries) / sizeof (struct acl), 1, entries);
+  ret = aclsort (ctx->aclv_count, 1, entries);
   if (ret > 0)
     abort ();
   return ret;
@@ -461,19 +461,19 @@ context_acl_from_mode (struct permission_context *ctx)
 
   ctx->entries[0].a_type = USER_OBJ;
   ctx->entries[0].a_id = 0; /* irrelevant */
-  ctx->entries[0].a_perm = (mode >> 6) & 7;
+  ctx->entries[0].a_perm = (ctx->mode >> 6) & 7;
   ctx->entries[1].a_type = GROUP_OBJ;
   ctx->entries[1].a_id = 0; /* irrelevant */
-  ctx->entries[1].a_perm = (mode >> 3) & 7;
+  ctx->entries[1].a_perm = (ctx->mode >> 3) & 7;
   ctx->entries[2].a_type = CLASS_OBJ;
   ctx->entries[2].a_id = 0;
-  ctx->entries[2].a_perm = (mode >> 3) & 7;
+  ctx->entries[2].a_perm = (ctx->mode >> 3) & 7;
   ctx->entries[3].a_type = OTHER_OBJ;
   ctx->entries[3].a_id = 0;
-  ctx->entries[3].a_perm = mode & 7;
+  ctx->entries[3].a_perm = ctx->mode & 7;
   ctx->count = 4;
 
-  ret = aclsort (sizeof (entries) / sizeof (struct acl), 1, entries);
+  ret = aclsort (ctx->count, 1, entries);
   if (ret > 0)
     abort ();
   return ret;
@@ -660,7 +660,7 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
       if (ret < 0)
 	{
 	  if ((errno == ENOSYS || errno == EOPNOTSUPP || errno == ENOTSUP)
-	      && (from_mode || !acl_nontrivial (ctx->count, ctx->entries, &source_statbuf)))
+	      && (from_mode || !acl_nontrivial (ctx->count, ctx->entries)))
 	    ret = 0;
 	}
       else

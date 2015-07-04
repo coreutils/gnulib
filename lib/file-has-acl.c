@@ -349,7 +349,7 @@ file_has_acl (char const *name, struct stat const *sb)
               if (stat (name, &statbuf) < 0)
                 return -1;
 
-              return acl_nontrivial (count, entries, &statbuf);
+              return acl_nontrivial (count, entries);
             }
           }
       }
