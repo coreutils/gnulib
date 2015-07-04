@@ -1,3 +1,13 @@
+2015-07-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: match current GNU grep behavior
+	These symbols have not matched GNU grep behavior for quite some time.
+	Fix prompted by Balazs Kezes bug report at: http://bugs.gnu.org/20974
+	* lib/regex.h (RE_SYNTAX_GREP, RE_SYNTAX_EGREP):
+	Change to match current GNU behavior.
+	Simplify by expressing it as differences from POSIX BREs and EREs.
+	(RE_SYNTAX_POSIX_EGREP): No longer differs from GNU behavior.
+
 2015-07-03  Jim Meyering  <meyering@fb.com>
 
 	set-permissions.c: adjust acl_from_mode's cpp guard
