@@ -541,6 +541,15 @@ set_acls (struct permission_context *ctx, const char *name, int desc,
 	}
     }
 
+# if HAVE_ACL_TYPE_NFS4  /* FreeBSD */
+
+  /* File systems either support POSIX ACLs (for example, ufs) or NFS4 ACLs
+     (for example, zfs). */
+
+  /* TODO: Implement setting ACLs once get_permissions() reads them. */
+
+# endif
+
 #  else /* HAVE_ACL_TYPE_EXTENDED */
   /* Mac OS X */
 
