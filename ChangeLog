@@ -1,3 +1,9 @@
+2015-07-07  Daiki Ueno  <ueno@gnu.org>
+
+	unistr/uN-strtok-tests: avoid a trivial leak
+	* tests/unistr/test-u-strtok.h (test_u_strtok): Untabify.  Free
+	input and delim after the multibyte delimiter tests.
+
 2015-07-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	file-has-acl, acl-permissions: fix HP-UX typos

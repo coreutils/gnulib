@@ -28,7 +28,7 @@ test_u_strtok (void)
   {
     UNIT input[] =
       { 'A', 'B', 'C', ' ', 'A', 'B', 'C', 'D', 'A', 'B', ' ', '\t',
-	'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'D', 'E', 0
+        'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'D', 'E', 0
       };
     const UNIT delim[] = { ' ', '\t', 0 };
     UNIT *state;
@@ -47,7 +47,7 @@ test_u_strtok (void)
   {
     ucs4_t u_input[] =
       { 'A', 'B', 'C', 0x3000, 'A', 'B', 'C', 'D', 'A', 'B', 0x3000, 0x3001,
-	'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'D', 'E', 0
+        'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'D', 'E', 0
       };
     ucs4_t u_delim[] = { 0x3000, 0x3001, 0 };
     size_t input_len = 6 * SIZEOF (u_input);
@@ -60,18 +60,18 @@ test_u_strtok (void)
     size_t i;
     for (i = 0, ptr = input; i < SIZEOF (u_input) && u_input[i] != 0; i++)
       {
-	int ret = U_UCTOMB (ptr, u_input[i], input_len - (ptr - input));
-	if (i == 4)
-	  first_ptr = ptr;
-	if (i == 12)
-	  second_ptr = ptr;
-	ptr += ret;
+        int ret = U_UCTOMB (ptr, u_input[i], input_len - (ptr - input));
+        if (i == 4)
+          first_ptr = ptr;
+        if (i == 12)
+          second_ptr = ptr;
+        ptr += ret;
       }
     *ptr = 0;
     for (i = 0, ptr = delim; i < SIZEOF (u_delim) && u_delim[i] != 0; i++)
       {
-	int ret = U_UCTOMB (ptr, u_delim[i], delim_len - (ptr - delim));
-	ptr += ret;
+        int ret = U_UCTOMB (ptr, u_delim[i], delim_len - (ptr - delim));
+        ptr += ret;
       }
     *ptr = 0;
     result = U_STRTOK (input, delim, &state);
@@ -82,5 +82,7 @@ test_u_strtok (void)
     ASSERT (result == second_ptr);
     result = U_STRTOK (NULL, delim, &state);
     ASSERT (result == NULL);
+    free (input);
+    free (delim);
   }
 }
