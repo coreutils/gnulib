@@ -42,7 +42,7 @@
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
 # endif
-# if defined __sun
+# if defined __sun && HAVE_GETLOCALENAME_L
 /* Solaris >= 12.  */
 extern char * getlocalename_l(int, locale_t);
 # endif
@@ -2727,7 +2727,7 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
             return "";
           }
         return querylocale (mask, thread_locale);
-#  elif defined __sun
+#  elif defined __sun && HAVE_GETLOCALENAME_L
         /* Solaris >= 12.  */
         return getlocalename_l (category, thread_locale);
 #  elif defined __ANDROID__

@@ -1,5 +1,15 @@
 2015-07-07  Daiki Ueno  <ueno@gnu.org>
 
+	localename: fix link error on Illumos
+	Illumos defines __sun, but does not have getlocalename_l nor the
+	equivalent.  This partially reverts commit 387c214.
+	* m4/localename.m4 (gl_LOCALENAME): Check if getlocalename_l is
+	available, as well as uselocale.
+	* lib/localename.c [HAVE_USELOCALE && __sun]: Don't fallback to
+	use getlocalename_l if it is not available.
+
+2015-07-07  Daiki Ueno  <ueno@gnu.org>
+
 	unistr/uN-strtok-tests: avoid a trivial leak
 	* tests/unistr/test-u-strtok.h (test_u_strtok): Untabify.  Free
 	input and delim after the multibyte delimiter tests.

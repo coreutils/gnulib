@@ -9,4 +9,9 @@ AC_DEFUN([gl_LOCALENAME],
   AC_REQUIRE([gt_LC_MESSAGES])
   AC_REQUIRE([gt_INTL_MACOSX])
   AC_CHECK_FUNCS([setlocale uselocale])
+  dnl Solaris 12 provides getlocalename_l, while Illumos doesn't have
+  dnl it nor the equivalent.
+  if test $ac_cv_func_uselocale = yes; then
+    AC_CHECK_FUNCS([getlocalename_l])
+  fi
 ])
