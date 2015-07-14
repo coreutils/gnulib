@@ -1,4 +1,4 @@
-Legal Issues about Contributing Code to GNU	last updated 8 Feb 2009
+Legal Issues about Contributing Code to GNU	last updated 14 July 2015
 
 Project GNU has to be careful to obey copyright laws, even though
 these laws are wrong when they stop people from sharing generally
@@ -15,14 +15,14 @@ ways this can be done:
 This allows the FSF to act to stop violations of the GPL.
 
 * Keep the copyright and release the program yourself under the GNU
-GPL.  (This alternative too impractical for contributions to a
+GPL.  (This alternative is too impractical for contributions to a
 preexisting FSF-copyrighted GNU program.)
 
 * Put the code in the public domain.  Then there is nothing to stop
 hoarding of modified versions, but we can still use the program in GNU.
 
-Most of these alternatives require a signed piece of paper to make it
-happen.
+Most of these alternatives require a signed piece of paper, or in some
+cases a digital signature, to make it happen.
 
 * Assigning copyright.
 
@@ -93,20 +93,20 @@ signed by a vice president or general manager of the company.  If you
 can't get at them, it is almost as good to find someone who signs licenses
 for software that is purchased.  Here is a sample wording:
 
-  Digital Stimulation Corporation hereby disclaims all copyright interest
-  in the program "seduce.el" (a program to direct assemblers to make passes
-  at compilers under GNU Emacs) written by Hugh Heffner.
+  Digital Simulation Corporation hereby disclaims all copyright interest
+  in the program "sample.el" (a program to direct assemblers to make passes
+  at compilers under GNU Emacs) written by Hugh Hacker.
 
-  <signature of Ty Coon>, 1 April 1987
-  Ty Coon, President of Vice, Digital Stimulation Corp.
+  <signature of Mo Ghoul>, 1 April 1987
+  Mo Ghoul, President of Vice, Digital Simulation Corp.
 
 The description of what the program does is just to make it clearer
 what the disclaimer covers.
 
 If what you did was change an existing program, it should say this:
 
-  ...in the changes and enhancements made by Hugh Heffner to the
-  program "seduce.el".
+  ...in the changes and enhancements made by Hugh Hacker to the
+  program "sample.el".
 
 * Did anyone else contribute?
 

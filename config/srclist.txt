@@ -36,18 +36,14 @@ $GNUWWWLICENSES/gpl-3.0.texi			doc
 $GNUWWWLICENSES/lgpl-3.0.texi			doc
 
 # The official forms for contributors to fill out, mentioned in maintain.
+# We intentionally do not mirror assign.* or disclaim.* files; the
+# request-* files are sufficient to give the copyright clerk enough
+# information to tell the candidate of the right procedures to use.
 $GNUORG/conditions.text				doc/Copyright
 $GNUORG/Copyright/request-assign.changes	doc/Copyright
 $GNUORG/Copyright/request-assign.future		doc/Copyright
 $GNUORG/Copyright/request-assign.program	doc/Copyright
 $GNUORG/Copyright/request-disclaim.changes	doc/Copyright
-$GNUORG/assign.manual				doc/Copyright
-$GNUORG/assign.changes.manual			doc/Copyright
-$GNUORG/assign.future.manual			doc/Copyright
-$GNUORG/assign.translation.manual		doc/Copyright
-$GNUORG/disclaim.manual				doc/Copyright
-$GNUORG/disclaim.changes.manual			doc/Copyright
-$GNUORG/disclaim.program			doc/Copyright
 
 # Although gettext-runtime/m4 has other .m4 files, they are maintained
 # in gnulib.

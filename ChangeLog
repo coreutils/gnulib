@@ -1,3 +1,16 @@
+2015-07-15  Eric Blake  <eblake@redhat.com>
+
+	maint: update copyright paper procedures
+	* config/srclist.txt: Drop outdated files.
+	* doc/Copyright/conditions.txt: Update to latest.
+	* doc/Copyright/assign.changes.manual: Delete.
+	* doc/Copyright/assign.future.manual: Likewise.
+	* doc/Copyright/assign.manual: Likewise.
+	* doc/Copyright/assign.translation.manual: Likewise.
+	* doc/Copyright/disclaim.changes.manual: Likewise.
+	* doc/Copyright/disclaim.manual: Likewise.
+	* doc/Copyright/disclaim.program: Likewise.
+
 2015-07-07  Daiki Ueno  <ueno@gnu.org>
 
 	localename: fix link error on Illumos
