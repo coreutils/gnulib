@@ -8,6 +8,7 @@ lib/fprintftime.c
 Depends-on:
 stdio
 strftime
+time_rz
 
 configure.ac:
 

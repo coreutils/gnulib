@@ -10,7 +10,7 @@ m4/strftime.m4
 Depends-on:
 extensions
 stdbool
-time_r
+time_rz
 
 configure.ac:
 gl_FUNC_GNU_STRFTIME

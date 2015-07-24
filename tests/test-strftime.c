@@ -54,11 +54,10 @@ main (void)
       time_t t = T[i].in;
       struct tm *tm = gmtime (&t);
       size_t n;
-      int utc = 1;
 
       ASSERT (tm);
 
-      n = nstrftime (buf, sizeof buf, T[i].fmt, tm, utc, T[i].in_ns);
+      n = nstrftime (buf, sizeof buf, T[i].fmt, tm, 0, T[i].in_ns);
       if (n == 0)
         {
           fail = 1;

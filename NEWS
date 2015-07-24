@@ -42,6 +42,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2015-07-24  fprintftime     Exported functions' time zone arguments are now of
+            strftime        type timezone_t (with NULL denoting UTC) instead of
+                            type int (with nonzero denoting UTC).  These
+                            modules now depend on time_rz.
+
 2015-04-03  hash            hash_insert0 function removed (deprecated in 2011).
 
 2014-10-29  obstack         The obstack functions are no longer limited to

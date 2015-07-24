@@ -1,5 +1,26 @@
 2015-07-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fprintftime, strftime: use timezone_t args
+	* NEWS: Document the change.
+	* lib/fprintftime.h (fprintftime):
+	* lib/strftime.c (extra_args) [my_strftime]:
+	* lib/strftime.h (nstrftime):
+	Time zone arg is now of type timezone_t, not int.
+	* lib/strftime.c (mktime_z) [_LIBC]: New macro.
+	(__gmtime_r, __localtime_r) [!HAVE_TM_GMTOFF]: Remove; no longer used.
+	(my_strftime) [emacs && !my_strftime]:
+	(emacs_strftimeu) [emacs && !FPRINTFTIME]:
+	Remove; Emacs doesn't need this any more.
+	(HAVE_TZSET) [my_strftime]: Unset, since we no longer want
+	fprintftime and nstrftime to call tzset.
+	(ut) [!my_strftime]: Remove, replacing with ...
+	(tz) [!my_stftime]: ... this new macro.  All uses changed.
+	(strftime_case_): Use localtime_rz and mktime_z instead
+	of localtime_r and mktime.
+	* modules/fprintftime (Depends-on): Add time_rz.
+	* modules/strftime (Depends-on): Add time_rz.  Remove time_r.
+	* tests/test-strftime.c (main): Adjust to new nstrftime API.
+
 	time_rz: new module
 	* MODULES.html.sh: Add time_rz.
 	* lib/time_rz.c, m4/time_rz.m4, modules/time_rz: New files.

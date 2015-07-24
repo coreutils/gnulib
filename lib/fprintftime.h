@@ -23,7 +23,7 @@
    large buffer that nstrftime would require.
 
    Output to stream FP the result of formatting (according to the
-   nstrftime format string, FMT) the time data, *TM, and the UTC
+   nstrftime format string, FMT) the time data, *TM, and the ZONE
    and NANOSECONDS values.  */
 size_t fprintftime (FILE *fp, char const *fmt, struct tm const *tm,
-                    int utc, int nanoseconds);
+                    timezone_t zone, int nanoseconds);
