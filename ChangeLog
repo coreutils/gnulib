@@ -1,3 +1,9 @@
+2015-07-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flexmember: license is now unlimited
+	* modules/flexmember (License): Change to unlimited,
+	since its only source file gives an unlimited license.
+
 2015-07-15  Eric Blake  <eblake@redhat.com>
 
 	maint: update copyright paper procedures
