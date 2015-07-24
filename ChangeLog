@@ -1,5 +1,16 @@
 2015-07-23  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: new module
+	* MODULES.html.sh: Add time_rz.
+	* lib/time_rz.c, m4/time_rz.m4, modules/time_rz: New files.
+	* lib/time.in.h (timezone_t, tzalloc, tzfree, localtime_rz, mktime_z):
+	New decls if _GNU_SOURCE && @GNULIB_TIME_RZ@ && ! @HAVE_TIMEZONE_T@.
+	* m4/sys_time_h.m4 (gl_HEADER_SYS_TIME_H_DEFAULTS):
+	New var HAVE_TIMEZONE_T (default 0).
+	* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS):
+	New var GNULIB_TIME_RZ (default 0).
+	* modules/time (time.h): Substitute the new vars.
+
 	flexmember: license is now unlimited
 	* modules/flexmember (License): Change to unlimited,
 	since its only source file gives an unlimited license.

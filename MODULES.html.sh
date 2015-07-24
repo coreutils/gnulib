@@ -1725,6 +1725,7 @@ func_all_modules ()
   func_begin_table
   func_module fprintftime
   func_module strftime
+  func_module time_rz
   func_end_table
 
   element="Extra functions based on ANSI C 89"

@@ -1,0 +1,44 @@
+Description:
+Reentrant time zone functions: localtime_rz, mktime_z, etc.
+
+Comment:
+This implements the NetBSD-inspired extensions to <time.h>, which
+defines a type timezone_t and associated allocation functions tzalloc
+and tzfree, along with two functions localtime_rz and mktime_z that
+are like localtime_r and mktime except they have a new leading
+timezone_t argument.  Time zone abbreviation strings have lifetimes
+equal to the corresponding struct tm or timezone_t object (whichever
+is less).  tzalloc (X) yields a time zone object equivalent to setting
+the TZ environment variable to X.  tzalloc (NULL) is the same as an
+unset TZ environment variable.  (timezone_t) 0 stands for UTC.
+
+Files:
+lib/time_rz.c
+m4/time_rz.m4
+
+Depends-on:
+extensions
+flexmember     [test "$HAVE_TIMEZONE_T" = 0]
+setenv         [test "$HAVE_TIMEZONE_T" = 0]
+stdbool        [test "$HAVE_TIMEZONE_T" = 0]
+time_r         [test "$HAVE_TIMEZONE_T" = 0]
+timegm         [test "$HAVE_TIMEZONE_T" = 0]
+unsetenv       [test "$HAVE_TIMEZONE_T" = 0]
+
+configure.ac:
+gl_TIME_RZ
+if test "$HAVE_TIMEZONE_T" = 0; then
+  AC_LIBOBJ([time_rz])
+fi
+gl_TIME_MODULE_INDICATOR([time_rz])
+
+Makefile.am:
+
+Include:
+<time.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+Paul Eggert
