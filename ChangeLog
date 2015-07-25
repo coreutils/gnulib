@@ -1,3 +1,8 @@
+2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time_rz: fix off-by-one typo
+	* lib/time_rz.c (extend_abbrs): Fix off-by-one typo.
+
 2015-07-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fprintftime, strftime: use timezone_t args

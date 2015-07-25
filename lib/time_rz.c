@@ -109,7 +109,7 @@ static void
 extend_abbrs (char *abbrs, char const *abbr, size_t abbr_size)
 {
   memcpy (abbrs, abbr, abbr_size);
-  abbrs[abbr_size + 1] = '\0';
+  abbrs[abbr_size] = '\0';
 }
 
 /* Return a newly allocated time zone for NAME, or NULL on failure.
