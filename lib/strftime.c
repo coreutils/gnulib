@@ -481,7 +481,12 @@ strftime_case_ (bool upcase, STREAM_OR_CHAR_T *s,
       tzset ();
 # endif
     }
+  /* The tzset() call might have changed the value.  */
+  if (!(zone && *zone) && tp->tm_isdst >= 0)
+    zone = tzname[tp->tm_isdst != 0];
 #endif
+  if (! zone)
+    zone = "";
 
   if (hour12 > 12)
     hour12 -= 12;
@@ -1303,14 +1308,6 @@ strftime_case_ (bool upcase, STREAM_OR_CHAR_T *s,
               to_uppcase = false;
               to_lowcase = true;
             }
-
-#if HAVE_TZNAME
-          /* The tzset() call might have changed the value.  */
-          if (!(zone && *zone) && tp->tm_isdst >= 0)
-            zone = tzname[tp->tm_isdst != 0];
-#endif
-          if (! zone)
-            zone = "";
 
 #ifdef COMPILE_WIDE
           {

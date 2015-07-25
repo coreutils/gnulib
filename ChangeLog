@@ -1,5 +1,13 @@
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	strftime: fix newly-introduced bug on Solaris
+	* lib/strftime.c (strftime_case_): Set the local variable 'zone'
+	consistently at the start, rather than doing some of the setup at
+	the start and some in the %Z format spec.  This is cleaner, and
+	works better with time_rz on platforms like Solaris where struct
+	tm lacks a tm_zone member, as when !HAVE_TM_GMTOFF %z's calls to
+	mktime_z and localtime_rz can mess up the tzname cache.
+
 	test-strftime: test for Solaris bug
 	* modules/strftime-tests (Depends-on): Add strerror.
 	* tests/test-strftime.c: Include <errno.h>.
