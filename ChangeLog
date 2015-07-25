@@ -1,5 +1,14 @@
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-strftime: test for Solaris bug
+	* modules/strftime-tests (Depends-on): Add strerror.
+	* tests/test-strftime.c: Include <errno.h>.
+	(posixtm_test): New function, containing the old 'main'.
+	(struct tzalloc_test, struct localtime_rz_test): New types.
+	(TZ, LT): New static vars.
+	(tzalloc_test): New function.
+	(main): Rewrite in terms of posixtm_test and tzalloc_test.
+
 	time_rz: port to Solaris etc.
 	Works around a tzname problem on platforms like Solaris that have
 	tzname but not tm_zone, by setting tzname at the appropriate time

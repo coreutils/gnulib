@@ -20,6 +20,7 @@
 
 #include "strftime.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -42,8 +43,8 @@ static struct posixtm_test const T[] =
     { 0,          0,            NULL, NULL }
   };
 
-int
-main (void)
+static int
+posixtm_test (void)
 {
   int fail = 0;
   unsigned int i;
@@ -72,6 +73,134 @@ main (void)
         }
     }
 
+  return fail;
+}
+
+struct tzalloc_test
+{
+  timezone_t tz;
+  char const *setting;
+};
+
+static struct tzalloc_test TZ[] =
+  {
+#define Pacific 0
+    { 0, "PST8PDT,M3.2.0,M11.1.0"      },
+#define Arizona 1
+    { 0, "MST7"                        },
+#define UTC 2
+    { 0, 0                             },
+#define CentEur 3
+    { 0, "CET-1CEST,M3.5.0,M10.5.0/3"  },
+#define Japan 4
+    { 0, "JST-9"                       },
+#define NZ 5
+    { 0, "NZST-12NZDT,M9.5.0,M4.1.0/3" },
+    { 0 }
+  };
+
+struct localtime_rz_test
+{
+  /* Input parameters.  */
+  struct tzalloc_test *tza;
+  time_t t;
+
+  /* Expected result.  */
+  char const *exp;
+};
+
+/* Entries marked "!" are ahistorical, but that's OK; we're just
+   testing the API here.  */
+static struct localtime_rz_test LT[] =
+  {
+    { TZ+Pacific,          0, "1969-12-31 16:00:00 -0800 (PST)"  },
+    { TZ+Arizona,          0, "1969-12-31 17:00:00 -0700 (MST)"  },
+    { TZ+UTC    ,          0, "1970-01-01 00:00:00 +0000 (UTC)"  },
+    { TZ+CentEur,          0, "1970-01-01 01:00:00 +0100 (CET)"  },
+    { TZ+Japan  ,          0, "1970-01-01 09:00:00 +0900 (JST)"  },
+    { TZ+NZ     ,          0, "1970-01-01 13:00:00 +1300 (NZDT)" }, /* ! */
+    { TZ+Pacific,  500000001, "1985-11-04 16:53:21 -0800 (PST)"  },
+    { TZ+Arizona,  500000001, "1985-11-04 17:53:21 -0700 (MST)"  },
+    { TZ+UTC    ,  500000001, "1985-11-05 00:53:21 +0000 (UTC)"  },
+    { TZ+CentEur,  500000001, "1985-11-05 01:53:21 +0100 (CET)"  }, /* ! */
+    { TZ+Japan  ,  500000001, "1985-11-05 09:53:21 +0900 (JST)"  },
+    { TZ+NZ     ,  500000001, "1985-11-05 13:53:21 +1300 (NZDT)" },
+    { TZ+Pacific, 1000000002, "2001-09-08 18:46:42 -0700 (PDT)"  },
+    { TZ+Arizona, 1000000002, "2001-09-08 18:46:42 -0700 (MST)"  },
+    { TZ+UTC    , 1000000002, "2001-09-09 01:46:42 +0000 (UTC)"  },
+    { TZ+CentEur, 1000000002, "2001-09-09 03:46:42 +0200 (CEST)" },
+    { TZ+Japan  , 1000000002, "2001-09-09 10:46:42 +0900 (JST)"  },
+    { TZ+NZ     , 1000000002, "2001-09-09 13:46:42 +1200 (NZST)" },
+    { 0 }
+  };
+
+static int
+tzalloc_test (void)
+{
+  int fail = 0;
+  int i;
+
+  for (i = 0; LT[i].tza; i++)
+    {
+      struct tzalloc_test *tza = LT[i].tza;
+      long lt = LT[i].t;
+      timezone_t tz = tza->tz;
+      char const *setting;
+      static char const format[] = "%Y-%m-%d %H:%M:%S %z (%Z)";
+      char buf[1000];
+      struct tm tm;
+      size_t n;
+
+      if (!tz && tza->setting)
+        {
+          tz = tzalloc (tza->setting);
+          if (!tz)
+            {
+              fail = 1;
+              printf ("%s: tzalloc: %s\n", TZ[i].setting, strerror (errno));
+              continue;
+            }
+          tza->tz = tz;
+        }
+
+      setting = tza->setting ? tza->setting : "UTC";
+
+      if (!localtime_rz (tz, &LT[i].t, &tm))
+        {
+          fail = 1;
+          printf ("%s: %ld: localtime_rz: %s\n", setting, lt,
+                  strerror (errno));
+          continue;
+        }
+
+      n = nstrftime (buf, sizeof buf, format, &tm, tz, 0);
+      if (n == 0)
+        {
+          fail = 1;
+          printf ("%s: %ld: nstrftime failed\n", setting, lt);
+          continue;
+        }
+
+      if (! (STREQ (buf, LT[i].exp)
+             || (!tz && n == strlen (LT[i].exp)
+                 && memcmp (buf, LT[i].exp, n - sizeof "(GMT)" + 1) == 0
+                 && STREQ (buf + n - sizeof "(GMT)" + 1, "(GMT)"))))
+        {
+          fail = 1;
+          printf ("%s: expected \"%s\", got \"%s\"\n",
+                  setting, LT[i].exp, buf);
+        }
+    }
+
+  return fail;
+}
+
+int
+main (void)
+{
+  int fail = 0;
+  fail |= posixtm_test ();
+  fail |= tzalloc_test ();
   return fail;
 }
 
