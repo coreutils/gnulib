@@ -1,5 +1,8 @@
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: now LGPL
+	* modules/time_rz (License): Now LGPL, because strftime depends on it.
+
 	time_rz: make a constant 'const'
 	* lib/time_rz.c (local_tz): Now const.
 
