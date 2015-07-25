@@ -75,7 +75,7 @@ static char const TZ[] = "TZ";
 /* Magic cookie timezone_t value, for local time.  It differs from
    NULL and from all other timezone_t values.  Only the address
    matters; the pointer is never dereferenced.  */
-static timezone_t local_tz = (timezone_t) 1;
+static timezone_t const local_tz = (timezone_t) 1;
 
 #if HAVE_TM_ZONE || HAVE_TZNAME
 

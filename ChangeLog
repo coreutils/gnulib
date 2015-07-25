@@ -1,5 +1,8 @@
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: make a constant 'const'
+	* lib/time_rz.c (local_tz): Now const.
+
 	time_rz: fix off-by-one typo
 	* lib/time_rz.c (extend_abbrs): Fix off-by-one typo.
 
