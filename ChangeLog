@@ -1,5 +1,16 @@
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: port to Solaris etc.
+	Works around a tzname problem on platforms like Solaris that have
+	tzname but not tm_zone, by setting tzname at the appropriate time
+	and restoring it later.
+	* lib/time_rz.c (tzname_address, tzname_value) [HAVE_TZNAME]:
+	New static vars.
+	(save_abbr) [HAVE_TZNAME]: Set them.
+	(revert_tz) [HAVE_TZNAME]: Clear or use them.
+	(restore_tzname): New function.
+	(localtime_rz, mktime_z): Use it.
+
 	time_rz: now LGPL
 	* modules/time_rz (License): Now LGPL, because strftime depends on it.
 

@@ -130,8 +130,19 @@ tzalloc (char const *name)
   return tz;
 }
 
+#if HAVE_TZNAME
+/* If TZNAME_ADDRESS is nonnull, an assignment of a saved abbreviation.
+   TZNAME_ADDRESS should be either null, or &tzname[0], or &tzname[1].
+   *TZNAME_ADDRESS = TZNAME_VALUE should be done after revert_tz
+   (indirectly) calls tzset, so that revert_tz can overwrite tzset's
+   assignment to tzname.  Also, it should be done at the start of
+   the next localtime_tz or mktime_z, to undo the overwrite.  */
+static char **tzname_address;
+static char *tzname_value;
+#endif
+
 /* Save into TZ any nontrivial time zone abbreviation used by TM,
-   and update *TM or tzname if they point to the abbreviation.
+   and update *TM (or prepare to update tzname) if they use the abbreviation.
    Return true if successful, false (setting errno) otherwise.  */
 static bool
 save_abbr (timezone_t tz, struct tm *tm)
@@ -189,8 +200,8 @@ save_abbr (timezone_t tz, struct tm *tm)
     tm->tm_zone = zone_copy;
 # endif
 # if HAVE_TZNAME
-  if (tzname_zone)
-    *tzname_zone = zone_copy;
+  tzname_address = tzname_zone;
+  tzname_value = zone_copy;
 # endif
 #endif
   return true;
@@ -281,16 +292,41 @@ revert_tz (timezone_t tz)
       bool ok = change_env (tz);
       if (!ok)
         saved_errno = errno;
+#if HAVE_TZNAME
+      if (!ok)
+        tzname_address = NULL;
+      if (tzname_address)
+        {
+          char *old_value = *tzname_address;
+          *tzname_address = tzname_value;
+          tzname_value = old_value;
+        }
+#endif
       tzfree (tz);
       errno = saved_errno;
       return ok;
     }
 }
 
+/* Restore an old tzname setting that was temporarily munged by revert_tz.  */
+static void
+restore_tzname (void)
+{
+#if HAVE_TZNAME
+  if (tzname_address)
+    {
+      *tzname_address = tzname_value;
+      tzname_address = NULL;
+    }
+#endif
+}
+
 /* Use time zone TZ to compute localtime_r (T, TM).  */
 struct tm *
 localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
 {
+  restore_tzname ();
+
   if (!tz)
     return gmtime_r (t, tm);
   else
@@ -312,6 +348,8 @@ localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
 time_t
 mktime_z (timezone_t tz, struct tm *tm)
 {
+  restore_tzname ();
+
   if (!tz)
     return timegm (tm);
   else
