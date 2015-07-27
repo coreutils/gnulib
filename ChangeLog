@@ -1,5 +1,28 @@
 2015-07-27  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: port better to MinGW
+	Don't change tzname, as this makes MinGW dump core (Bug#21020).
+	Instead, store the tzname copy in the struct tm_zone object.
+	Problem reported by Eli Zaretskii in: http://bugs.gnu.org/21020#48
+	* lib/strftime.c [!_LIBC]:
+	* lib/time_rz.c: Include time-internal.h.
+	* lib/strftime.c (strftime_case_) [!HAVE_TM_ZONE]: Infer the zone
+	name from *TZ rather than from TZNAME, doable because *TZ now has
+	a tzname_copy member.
+	* lib/time-internal.h: New file, with contents taken from
+	lib/time_rz.c.  It's separate because strftime.c now accesses
+	struct tm_zone members.
+	(struct tm_zone) [HAVE_TZNAME && !HAVE_TM_ZONE]:
+	New member tzname_copy.
+	* lib/time_rz.c (struct tm_zone): Move to time-internal.h.
+	(tzalloc) [HAVE_TZNAME && !HAVE_TM_ZONE]:
+	Initialize tzname_copy member.
+	(save_abbr) [HAVE_TZNAME && !HAVE_TM_ZONE]: Save abbreviation
+	in tzname_copy member.
+	(revert_tz) [HAVE_TZNAME]: Remove no-longer-needed tzname saving.
+	(restore_tzname): Remove; no longer needed.  All calls removed.
+	* modules/time_rz (Files): Add lib/time-internal.h.
+
 	time: port __need_time_t to MinGW
 	* lib/time.in.h (__need_time_t): Do not treat specially on MinGW.
 	Fix reported by Eli Zaretskii in: http://bugs.gnu.org/21020#36

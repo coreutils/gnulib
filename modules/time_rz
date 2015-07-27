@@ -13,6 +13,7 @@ the TZ environment variable to X.  tzalloc (NULL) is the same as an
 unset TZ environment variable.  (timezone_t) 0 stands for UTC.
 
 Files:
+lib/time-internal.h
 lib/time_rz.c
 m4/time_rz.m4
 
