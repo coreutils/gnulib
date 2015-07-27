@@ -1,3 +1,9 @@
+2015-07-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time: port __need_time_t to MinGW
+	* lib/time.in.h (__need_time_t): Do not treat specially on MinGW.
+	Fix reported by Eli Zaretskii in: http://bugs.gnu.org/21020#36
+
 2015-07-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strftime: fix newly-introduced bug on Solaris
