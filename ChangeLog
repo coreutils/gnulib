@@ -1,3 +1,9 @@
+2015-07-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time_rz: port to pedantic memcpy
+	* lib/time_rz.c (tzalloc): Pacify pedantic memcpy implementations
+	that reject memcpy (..., NULL, 0).
+
 2015-07-27  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_rz: port better to MinGW
