@@ -1,3 +1,11 @@
+2015-08-01  Assaf Gordon  <assafgordon@gmail.com>  (tiny change)
+
+	pmccabe2html: fix gawk regex escaping
+	* build-aux/pmccabe2html: Add one more backslash to properly
+	escape the gsub replacement value.  Fixes this error:
+	gawk: ./build-aux/pmccabe2html:425: \
+	warning: escape sequence `\&' treated as plain `&'
+
 2015-07-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_rz: port to pedantic memcpy
