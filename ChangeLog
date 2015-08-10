@@ -1,3 +1,19 @@
+2015-08-10  Daiki Ueno  <ueno@gnu.org>
+
+	gperf: respect silent rules
+	* modules/gperf (Makefile.am): Define V_GPERF, V_GPERF_, and
+	V_GPERF_0 for silent rules.
+	* modules/iconv_open (Makefile.am): Use V_GPERF.
+	* modules/unicase/locale-language (Makefile.am): Likewise.
+	* modules/unicase/special-casing (Makefile.am): Likewise.
+	* modules/unictype/category-byname (Makefile.am): Likewise.
+	* modules/unictype/combining-class-byname (Makefile.am): Likewise.
+	* modules/unictype/joininggroup-byname (Makefile.am): Likewise.
+	* modules/unictype/joiningtype-byname (Makefile.am): Likewise.
+	* modules/unictype/property-byname (Makefile.am): Likewise.
+	* modules/unictype/scripts (Makefile.am): Likewise.
+	* modules/uninorm/composition (Makefile.am): Likewise.
+
 2015-08-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Improve port of stdalign to C++11

@@ -9,6 +9,9 @@ configure.ac:
 
 Makefile.am:
 GPERF = gperf
+V_GPERF = $(V_GPERF_@AM_V@)
+V_GPERF_ = $(V_GPERF_@AM_DEFAULT_V@)
+V_GPERF_0 = @echo "  GPERF   " $@;
 
 Include:
 
