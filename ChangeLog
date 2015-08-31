@@ -1,3 +1,14 @@
+2015-09-08  Dave Chiluk  <chiluk@canonical.com>
+
+	mountlist: add me_mntroot field on Linux machines
+	* lib/mountlist.c (read_file_system_list): Populate me_mntroot in
+	mount_entry so Linux machines based on /proc/self/mountinfo can
+	distinguish between bind mounts and original mounts.  In reality bind
+	mounts aren't treated differently than mountroot=/ mounts by the
+	kernel, but the user often wants these bind mounts distinguished.
+	* lib/mountlist.h (struct mount_entry): Add me_mntroot element.
+	More details at https://pad.lv/1432871
+
 2015-09-08  Christian Egli  <christian.egli@sbs.ch>
 
 	doc: Describe to use multiple instances of gnulib
