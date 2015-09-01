@@ -34,7 +34,7 @@ struct base32_decode_context
   char buf[8];
 };
 
-extern bool isbase32 (char ch);
+extern bool isbase32 (char ch) _GL_ATTRIBUTE_CONST;
 
 extern void base32_encode (const char *restrict in, size_t inlen,
                            char *restrict out, size_t outlen);
