@@ -1,3 +1,10 @@
+2015-09-08  Christian Egli  <christian.egli@sbs.ch>
+
+	doc: Describe to use multiple instances of gnulib
+	* doc/gnulib-tool.texi: Add a section to the manual outlining how two
+	instances of gnulib with different modules can be used, for example one
+	for a lib and another one for associated tools.
+
 2015-09-01  Pádraig Brady  <P@draigBrady.com>
 
 	base32: mark function as __attribute__ const

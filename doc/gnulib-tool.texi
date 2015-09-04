@@ -44,6 +44,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* Multiple instances::          Using Gnulib for both a library and a binary
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
@@ -447,6 +448,114 @@ This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
 
+
+@node Multiple instances
+@section Using Gnulib for both a library and a binary
+
+Your project might build both a library and some accompanying binaries
+in the same source tree. In that case you might want to use different
+modules for the library than for the binaries. Typically the binaries
+might want to make use of @code{getopt-posix} or @code{version-etc},
+while the library wants to stay clear of these modules for technical
+or licensing reasons.
+
+Let's assume that your project contains a @file{lib} directory where
+the source of the library resides and a @file{src} directory for the
+sources of the binaries as follows.
+
+@example
+.
+|-- configure.ac
+|-- lib
+|   |-- foo.c
+|   `-- Makefile.am
+|-- Makefile.am
+`-- src
+    |-- bar.c
+    `-- Makefile.am
+@end example
+
+You can now add two instances of Gnulib to your project in separate
+source trees:
+
+@example
+~/src/libfoo$ gnulib-tool --import --lib=libgnu --source-base=gnulib \
+              --m4-base=gnulib/m4 --macro-prefix=gl strndup
+~/src/libfoo$ gnulib-tool --import --lib=libgnutools \
+              --source-base=src/gnulib --m4-base=src/gnulib/m4 \
+              --macro-prefix=gl_tools getopt-gnu
+@end example
+
+The first one will import the module @code{strndup} in @file{gnulib}
+and the second one will import @code{getopt-gnu} in @file{src/gnulib}
+and you will end up with the following source tree (many files omitted
+in the interest of brevity):
+
+@example
+.
+|-- configure.ac
+|-- gnulib
+|   |-- m4
+|   |-- strndup.c
+|-- lib
+|   |-- foo.c
+|   `-- Makefile.am
+|-- Makefile.am
+`-- src
+    |-- bar.c
+    |-- gnulib
+    |   |-- getopt.c
+    |   |-- getopt.in.h
+    |   |-- m4
+    `-- Makefile.am
+@end example
+
+Integration with your code is basically the same as outlined in
+@ref{Initial import} with the one exception that you have to add both
+the macro @code{gl_EARLY} and the macro @code{gl_tools_EARLY} to your
+@file{configure.ac} (and of course also both macros @code{gl_INIT} and
+@code{gl_tools_INIT}). Obviously the name of the second macro is
+dependent on the value of the @option{--macro-prefix} option in your
+@command{gnulib-tool} invocation.
+
+@example
+...
+AC_PROG_CC
+gl_EARLY
+gl_tools_EARLY
+...
+# For gnulib.
+gl_INIT
+gl_tools_INIT
+...
+@end example
+
+Also as outlined in @ref{Initial import} you will have to add compiler
+and linker flags. For the library you might have to add something
+along the line of the following to your @file{Makefile.am}:
+
+@example
+...
+AM_CPPFLAGS = -I$(top_srcdir)/gnulib -I$(top_builddir)/gnulib
+...
+libfoo_la_LIBADD = $(top_builddir)/gnulib/libgnu.la
+...
+@end example
+
+Correspondingly for the binary you will have to add something along
+the lines of to the following:
+
+@example
+...
+AM_CPPFLAGS = -I$(top_srcdir)/src/gnulib -I$(top_builddir)/src/gnulib
+...
+LIBADD = $(top_builddir)/src/gnulib/libgnutools.la
+...
+@end example
+
+The name of the library that you have pass in the linker option
+depends on the @option{--lib} option in @command{gnulib-tool}
+invocation.
 
 @node gettextize and autopoint
 @section Caveat: @code{gettextize} and @code{autopoint} users
