@@ -1,3 +1,10 @@
+2015-09-08   Assaf Gordon  <assafgordon@gmail.com>
+
+	ceill: detect buggy OpenBSD implementation
+	* m4/ceill.m4 (gl_FUNC_CEILL): Detect buggy openBSD implementation
+	which returns zero for small values.  Discussed here:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-08/msg00010.html
+
 2015-09-08  Dave Chiluk  <chiluk@canonical.com>
 
 	mountlist: add me_mntroot field on Linux machines

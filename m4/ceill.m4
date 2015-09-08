@@ -69,6 +69,31 @@ int main (int argc, char *argv[])
   else
     HAVE_DECL_CEILL=0
   fi
+  dnl On OpenBSD5.6 the system's native ceill() is buggy:
+  dnl it returns '0' for small values. Test for this anomaly.
+  if test $REPLACE_CEILL = 0 ; then
+    AC_CACHE_CHECK([whether ceill() breaks with small values],
+        [gl_cv_func_ceill_buggy],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$CEILL_LIBM"
+          AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM(
+             [[#include <math.h>
+long double d = 0.3L;]],
+             [[return (!(ceill (d) == 1)); ]])],
+             [gl_cv_func_ceill_buggy=no], [gl_cv_func_ceill_buggy=yes],
+             [case $host_os in
+                openbsd*) gl_cv_func_ceill_buggy="guessing yes";;
+                *) gl_cv_func_ceill_buggy="guessing no";;
+              esac])
+          LIBS="$save_LIBS"
+        ])
+    case "$gl_cv_func_ceill_buggy" in
+      *yes)
+        REPLACE_CEILL=1 ;;
+    esac
+  fi
   if test $HAVE_DECL_CEILL = 0 || test $REPLACE_CEILL = 1; then
     dnl Find libraries needed to link lib/ceill.c.
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
