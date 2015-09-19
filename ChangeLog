@@ -1,15 +1,5 @@
 2015-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
-	regex: fix dangling-backreference bug
-	This should fix the following bugs:
-	http://bugs.gnu.org/21513 assertion error in pop_fail_stack
-	http://bugs.gnu.org/19775 Test failing after the CVE fix
-	https://sourceware.org/bugzilla/show_bug.cgi?id=11053
-	Wrong results with backreferences
-	https://sourceware.org/bugzilla/show_bug.cgi?id=17356
-	regex assertion violation with triple backreferences
-	* lib/regexec.c (set_regs): Don't pop an empty failure stack.
-
 	regex: merge patches from libc
 
 	2015-09-08  Joseph Myers  <joseph@codesourcery.com>
