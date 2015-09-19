@@ -2191,6 +2191,7 @@ parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
 {
   re_dfa_t *dfa = preg->buffer;
   bin_tree_t *tree, *branch = NULL;
+  bitset_word_t initial_bkref_map = dfa->completed_bkref_map;
   tree = parse_branch (regexp, preg, token, syntax, nest, err);
   if (BE (*err != REG_NOERROR && tree == NULL, 0))
     return NULL;
@@ -2201,6 +2202,8 @@ parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
       if (token->type != OP_ALT && token->type != END_OF_RE
 	  && (nest == 0 || token->type != OP_CLOSE_SUBEXP))
 	{
+	  bitset_word_t accumulated_bkref_map = dfa->completed_bkref_map;
+	  dfa->completed_bkref_map = initial_bkref_map;
 	  branch = parse_branch (regexp, preg, token, syntax, nest, err);
 	  if (BE (*err != REG_NOERROR && branch == NULL, 0))
 	    {
@@ -2208,6 +2211,7 @@ parse_reg_exp (re_string_t *regexp, regex_t *preg, re_token_t *token,
 		postorder (tree, free_tree, NULL);
 	      return NULL;
 	    }
+	  dfa->completed_bkref_map |= accumulated_bkref_map;
 	}
       else
 	branch = NULL;
