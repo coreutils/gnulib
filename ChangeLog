@@ -1,3 +1,60 @@
+2015-09-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: merge patches from libc
+
+	2015-09-08  Joseph Myers  <joseph@codesourcery.com>
+	Move bits/libc-lock.h and bits/libc-lockP.h out of bits/ (bug 14912).
+	* lib/regex_internal.h:
+	Include <libc-lock.h> instead of <bits/libc-lock.h>.
+
+	2015-06-09  Joseph Myers  <joseph@codesourcery.com>
+	Fix regcomp wcscoll, wcscmp namespace (bug 18497).
+	* lib/regcomp.c (build_range_exp): Call __wcscoll instead of
+	wcscoll.
+	* lib/regexec.c (check_node_accept_bytes): Likewise.
+
+	2015-06-05  Joseph Myers  <joseph@codesourcery.com>
+	Fix regex wcrtomb namespace (bug 18496).
+	* lib/regex_internal.c (build_wcs_upper_buffer): Call __wcrtomb
+	instead of wcrtomb.
+
+	2015-06-05  Joseph Myers  <joseph@codesourcery.com>
+	Fix regex wctype namespace (bug 18495).
+	* lib/regcomp.c (re_compile_fastmap_iter): Call __towlower
+	instead of towlower.
+	* lib/regex_internal.c (build_wcs_upper_buffer): Call __iswlower
+	instead of iswlower.  Call __towupper instead of towupper.
+	* lib/regex_internal.h (IS_WIDE_WORD_CHAR): Call __iswalnum
+	instead of iswalnum.
+
+	2015-01-07  Chris Metcalf  <cmetcalf@ezchip.com>
+	* lib/regcomp.c (parse_bracket_exp): Initialize type to
+	COLL_SYM in a couple of places to avoid uninitialized variable
+	wanings on tilegx gcc 4.8.2.
+
+	2014-11-24  Siddhesh Poyarekar  <siddhesh@redhat.com>
+	* lib/regex_internal.h: Remove NOT_IN_libc.
+
+	2014-11-17  Andreas Schwab  <schwab@suse.de>
+	* lib/regex_internal.h: Don't include <locale/elem-hash.h>.
+
+	2014-09-11  Roland McGrath  <roland@hack.frob.com>
+	Move findidx nested functions to top-level.
+	* lib/regcomp.c [_LIBC]: #include <locale/weight.h>.
+	(build_equiv_class) [_LIBC]: Don't #include it inside the function.
+	Pass new arguments to findidx.
+	* lib/regexec.c [RE_ENABLE_I18N] [_LIBC]: #include <locale/weight.h>.
+	[RE_ENABLE_I18N] (check_node_accept_bytes) [_LIBC]:
+	Don't #include it inside the function.  Pass new arguments to findidx.
+	* lib/regex_internal.h:
+	[!NOT_IN_libc] [_LIBC]: #include <locale/weight.h>.
+	(re_string_elem_size_at): Don't #include it inside the function.
+	Pass new arguments to findidx.
+
+	2014-08-01  Siddhesh Poyarekar  <siddhesh@redhat.com>
+	Check if DEBUG is defined in regex_internal.c
+	* lib/regex_internal.c: Check if DEBUG is defined and is set.
+
 2015-09-08   Assaf Gordon  <assafgordon@gmail.com>
 
 	ceill: detect buggy OpenBSD implementation
