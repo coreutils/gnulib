@@ -1513,7 +1513,7 @@ set_regs (const regex_t *preg, const re_match_context_t *mctx, size_t nmatch,
 	      free_fail_stack_return (fs);
 	      return REG_ESPACE;
 	    }
-	  if (fs)
+	  if (fs && fs->num)
 	    cur_node = pop_fail_stack (fs, &idx, nmatch, pmatch,
 				       &eps_via_nodes);
 	  else
