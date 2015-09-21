@@ -1,3 +1,11 @@
+2015-09-21  Pádraig Brady  <P@draigBrady.com>
+
+	nanosleep: fix return code for interrupted replacement
+	* lib/nanosleep.c (nanosleep): In the replaced nanosleep, ensure
+	that we return -1 in the case the call is interrupted by a signal,
+	rather than the current value of 1.
+	Diagnosed and tested by Daniel Richard G.
+
 2015-09-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Diagnose ERE '()|\1'

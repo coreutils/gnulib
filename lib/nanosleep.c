@@ -202,7 +202,7 @@ sighandler (int sig)
 
 /* Suspend execution for at least *TS_DELAY seconds.  */
 
-static void
+static int
 my_usleep (const struct timespec *ts_delay)
 {
   struct timeval tv_delay;
@@ -218,7 +218,7 @@ my_usleep (const struct timespec *ts_delay)
           tv_delay.tv_usec = 0;
         }
     }
-  select (0, NULL, NULL, NULL, &tv_delay);
+  return select (0, NULL, NULL, NULL, &tv_delay);
 }
 
 /* Suspend execution for at least *REQUESTED_DELAY seconds.  The
@@ -256,19 +256,21 @@ nanosleep (const struct timespec *requested_delay,
 
   suspended = 0;
 
-  my_usleep (requested_delay);
-
-  if (suspended)
+  if (my_usleep (requested_delay) == -1)
     {
-      /* Calculate time remaining.  */
-      /* FIXME: the code in sleep doesn't use this, so there's no
-         rush to implement it.  */
+      if (suspended)
+        {
+          /* Calculate time remaining.  */
+          /* FIXME: the code in sleep doesn't use this, so there's no
+             rush to implement it.  */
 
-      errno = EINTR;
+          errno = EINTR;
+        }
+      return -1;
     }
 
   /* FIXME: Restore sig handler?  */
 
-  return suspended;
+  return 0;
 }
 #endif
