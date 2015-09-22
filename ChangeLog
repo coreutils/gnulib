@@ -1,3 +1,29 @@
+2015-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-ctype: port better to EBCDIC
+	Problems reported by Daniel Richard G. in
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-09/msg00020.html
+	* lib/c-ctype.c: Include <limits.h>, for CHAR_MIN and CHAR_MAX.
+	Include "verify.h".
+	(C_CTYPE_ASCII, C_CTYPE_CONSECUTIVE_DIGITS)
+	(C_CTYPE_CONSECUTIVE_LOWERCASE, C_CTYPE_CONSECUTIVE_UPPERCASE):
+	Define as enum constants with value false, if not defined, so that
+	code can use 'if' instead of 'ifdef'.  Using 'if' helps make the
+	code more portable, as both branches of the 'if' are compiled on
+	all platforms.
+	(C_CTYPE_EBCDIC): New constant.
+	(to_char): New static function.
+	(c_isalnum, c_isalpha, c_isdigit, c_islower, c_isgraph, c_isprint)
+	(c_ispunct, c_isupper, c_isxdigit, c_tolower, c_toupper):
+	Rewrite to use 'if' instead of 'ifdef'.
+	Use to_char if non-ASCII.  Prefer <= to >=.
+	Prefer true and false to 1 and 0, for booleans.
+	(c_iscntrl): Use 'if', not 'ifdef'.  Special case for EBCDIC.
+	Verify that the character set is either ASCII or EBCDIC.
+	* tests/test-c-ctype.c: Include <limits.h>, for CHAR_MIN
+	(to_char): New function.
+	(test_all): Port to EBCDIC.  Add some more tests, e.g., for c_ispunct.
+
 2015-09-21  Pádraig Brady  <P@draigBrady.com>
 
 	nanosleep: fix return code for interrupted replacement

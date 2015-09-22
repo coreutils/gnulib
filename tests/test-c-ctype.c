@@ -20,9 +20,18 @@
 
 #include "c-ctype.h"
 
+#include <limits.h>
 #include <locale.h>
 
 #include "macros.h"
+
+static char
+to_char (int c)
+{
+  if (CHAR_MIN < 0 && CHAR_MAX < c)
+    return c - CHAR_MAX - 1 + CHAR_MIN;
+  return c;
+}
 
 static void
 test_all (void)
@@ -31,49 +40,32 @@ test_all (void)
 
   for (c = -0x80; c < 0x100; c++)
     {
+      if (c < 0)
+        {
+          ASSERT (c_isascii (c) == c_isascii (c + 0x100));
+          ASSERT (c_isalnum (c) == c_isalnum (c + 0x100));
+          ASSERT (c_isalpha (c) == c_isalpha (c + 0x100));
+          ASSERT (c_isblank (c) == c_isblank (c + 0x100));
+          ASSERT (c_iscntrl (c) == c_iscntrl (c + 0x100));
+          ASSERT (c_isdigit (c) == c_isdigit (c + 0x100));
+          ASSERT (c_islower (c) == c_islower (c + 0x100));
+          ASSERT (c_isgraph (c) == c_isgraph (c + 0x100));
+          ASSERT (c_isprint (c) == c_isprint (c + 0x100));
+          ASSERT (c_ispunct (c) == c_ispunct (c + 0x100));
+          ASSERT (c_isspace (c) == c_isspace (c + 0x100));
+          ASSERT (c_isupper (c) == c_isupper (c + 0x100));
+          ASSERT (c_isxdigit (c) == c_isxdigit (c + 0x100));
+          ASSERT (to_char (c_tolower (c)) == to_char (c_tolower (c + 0x100)));
+          ASSERT (to_char (c_toupper (c)) == to_char (c_toupper (c + 0x100)));
+        }
+
       ASSERT (c_isascii (c) == (c >= 0 && c < 0x80));
 
-      switch (c)
-        {
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-        case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
-        case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
-        case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-        case 'Y': case 'Z':
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-        case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
-        case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
-        case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-        case 'y': case 'z':
-        case '0': case '1': case '2': case '3': case '4': case '5':
-        case '6': case '7': case '8': case '9':
-          ASSERT (c_isalnum (c) == 1);
-          break;
-        default:
-          ASSERT (c_isalnum (c) == 0);
-          break;
-        }
+      ASSERT (c_isalnum (c) == (c_isalpha (c) || c_isdigit (c)));
 
-      switch (c)
-        {
-        case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
-        case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
-        case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
-        case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
-        case 'Y': case 'Z':
-        case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
-        case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
-        case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
-        case 's': case 't': case 'u': case 'v': case 'w': case 'x':
-        case 'y': case 'z':
-          ASSERT (c_isalpha (c) == 1);
-          break;
-        default:
-          ASSERT (c_isalpha (c) == 0);
-          break;
-        }
+      ASSERT (c_isalpha (c) == (c_islower (c) || c_isupper (c)));
 
-      switch (c)
+      switch (to_char (c))
         {
         case '\t': case ' ':
           ASSERT (c_isblank (c) == 1);
@@ -83,9 +75,13 @@ test_all (void)
           break;
         }
 
+#ifdef C_CTYPE_ASCII
       ASSERT (c_iscntrl (c) == ((c >= 0 && c < 0x20) || c == 0x7f));
+#endif
 
-      switch (c)
+      ASSERT (! (c_iscntrl (c) && c_isprint (c)));
+
+      switch (to_char (c))
         {
         case '0': case '1': case '2': case '3': case '4': case '5':
         case '6': case '7': case '8': case '9':
@@ -96,7 +92,7 @@ test_all (void)
           break;
         }
 
-      switch (c)
+      switch (to_char (c))
         {
         case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
         case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
@@ -110,13 +106,31 @@ test_all (void)
           break;
         }
 
+#ifdef C_CTYPE_ASCII
       ASSERT (c_isgraph (c) == ((c >= 0x20 && c < 0x7f) && c != ' '));
 
       ASSERT (c_isprint (c) == (c >= 0x20 && c < 0x7f));
+#endif
 
-      ASSERT (c_ispunct (c) == (c_isgraph (c) && !c_isalnum (c)));
+      ASSERT (c_isgraph (c) == (c_isalnum (c) || c_ispunct (c)));
 
-      switch (c)
+      ASSERT (c_isprint (c) == (c_isgraph (c) || c == ' '));
+
+      switch (to_char (c))
+        {
+        case '!': case '"': case '#': case '$': case '%': case '&': case '\'':
+        case '(': case ')': case '*': case '+': case ',': case '-': case '.':
+        case '/': case ':': case ';': case '<': case '=': case '>': case '?':
+        case '@': case '[': case'\\': case ']': case '^': case '_': case '`':
+        case '{': case '|': case '}': case '~':
+          ASSERT (c_ispunct (c) == 1);
+          break;
+        default:
+          ASSERT (c_ispunct (c) == 0);
+          break;
+        }
+
+      switch (to_char (c))
         {
         case ' ': case '\t': case '\n': case '\v': case '\f': case '\r':
           ASSERT (c_isspace (c) == 1);
@@ -126,7 +140,7 @@ test_all (void)
           break;
         }
 
-      switch (c)
+      switch (to_char (c))
         {
         case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
         case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
@@ -140,7 +154,7 @@ test_all (void)
           break;
         }
 
-      switch (c)
+      switch (to_char (c))
         {
         case '0': case '1': case '2': case '3': case '4': case '5':
         case '6': case '7': case '8': case '9':
@@ -153,7 +167,7 @@ test_all (void)
           break;
         }
 
-      switch (c)
+      switch (to_char (c))
         {
         case 'A':
           ASSERT (c_tolower (c) == 'a');
