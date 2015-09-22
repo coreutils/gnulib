@@ -131,17 +131,37 @@ c_isblank (int c)
 bool
 c_iscntrl (int c)
 {
-  enum { C_CTYPE_EBCDIC = (' ' == 64 && '0' == 240
-                           && 'A' == 193 && 'J' == 209 && 'S' == 226
-                           && 'A' == 129 && 'J' == 145 && 'S' == 162) };
-  verify (C_CTYPE_ASCII || C_CTYPE_EBCDIC);
-
-  if (0 <= c && c < ' ')
-    return true;
+  enum { C_CTYPE_EBCDIC = (' ' == '\x40' && '0' == '\xf0'
+                           && 'A' == '\xc1' && 'J' == '\xd1' && 'S' == '\xe2'
+                           && 'a' == '\x81' && 'j' == '\x91' && 's' == '\xa2') };
   if (C_CTYPE_ASCII)
-    return c == 0x7f;
+    return (0 <= c && c < ' ') || c == 0x7f;
   else
-    return c == 0xff || c == -1;
+    {
+      /* Return true if C corresponds to an ASCII control character.
+         Assume EBCDIC code page 1047, and verify that the compiler
+         agrees with this.  */
+      verify (C_CTYPE_ASCII
+              || (C_CTYPE_EBCDIC
+                  && '!' == '\x5a' && '#' == '\x7b' && '$' == '\x5b'
+                  && '@' == '\x7c' && '[' == '\xad' && '\\' == '\xe0'
+                  && ']' == '\xbd' && '^' == '\x5f' && '_' == '\x6d'
+                  && '`' == '\x79'));
+      switch (c)
+        {
+        case '\x00': case '\x01': case '\x02': case '\x03': case '\x05':
+        case '\x0b': case '\x0c': case '\x0d': case '\x0e': case '\x0f':
+        case '\x10': case '\x11': case '\x12': case '\x13': case '\x15':
+        case '\x16': case '\x18': case '\x19': case '\x1c': case '\x1d':
+        case '\x1e': case '\x1f': case '\x26': case '\x27': case '\x2d':
+        case '\x2e': case '\x2f': case '\x32': case '\x37': case '\x3c':
+        case '\x3d': case '\x3f': case '\xff':
+        case '\xff' < 0 ? 0xff : -1:
+          return true;
+        default:
+          return false;
+        }
+    }
 }
 
 bool
