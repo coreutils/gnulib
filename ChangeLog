@@ -20,6 +20,7 @@
 	Prefer true and false to 1 and 0, for booleans.
 	(c_iscntrl): Use 'if', not 'ifdef'.  Special case for EBCDIC.
 	Verify that the character set is either ASCII or EBCDIC.
+	* modules/c-ctype (Depends-on): Add verify.
 	* tests/test-c-ctype.c: Include <limits.h>, for CHAR_MIN
 	(to_char): New function.
 	(test_all): Port to EBCDIC.  Add some more tests, e.g., for c_ispunct.
