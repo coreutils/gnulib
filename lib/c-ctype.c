@@ -37,6 +37,17 @@ enum { C_CTYPE_CONSECUTIVE_LOWERCASE = false };
 enum { C_CTYPE_CONSECUTIVE_UPPERCASE = false };
 #endif
 
+enum
+  {
+    /* True if this appears to be a host using EBCDIC.  */
+    C_CTYPE_EBCDIC = (' ' == '\x40' && '0' == '\xf0'
+                      && 'A' == '\xc1' && 'J' == '\xd1' && 'S' == '\xe2'
+                      && 'a' == '\x81' && 'j' == '\x91' && 's' == '\xa2')
+  };
+
+/* The implementation currently supports ASCII and EBCDIC.  */
+verify (C_CTYPE_ASCII || C_CTYPE_EBCDIC);
+
 /* Convert an int, which may be promoted from either an unsigned or a
    signed char, to the corresponding char.  */
 
@@ -54,7 +65,45 @@ to_char (int c)
 bool
 c_isascii (int c)
 {
-  return (c >= 0x00 && c <= 0x7f);
+  if (C_CTYPE_ASCII)
+    return 0 <= c && c <= 0x7f;
+
+  /* Use EBCDIC code page 1047's assignments for ASCII control chars;
+     assume all EBCDIC code pages agree about these assignments.  */
+  switch (to_char (c))
+    {
+    case '\x00': case '\x01': case '\x02': case '\x03': case '\x05':
+    case '\x0b': case '\x0c': case '\x0d': case '\x0e': case '\x0f':
+    case '\x10': case '\x11': case '\x12': case '\x13': case '\x15':
+    case '\x16': case '\x18': case '\x19': case '\x1c': case '\x1d':
+    case '\x1e': case '\x1f': case '\x26': case '\x27': case '\x2d':
+    case '\x2e': case '\x2f': case '\x32': case '\x37': case '\x3c':
+    case '\x3d': case '\x3f': case '\xff':
+    case '\xff' < 0 ? 0xff : -1:
+
+    case ' ': case '!': case '"': case '#': case '$': case '%':
+    case '&': case '\'': case '(': case ')': case '*': case '+':
+    case ',': case '-': case '.': case '/':
+    case '0': case '1': case '2': case '3': case '4': case '5':
+    case '6': case '7': case '8': case '9':
+    case ':': case ';': case '<': case '=': case '>': case '?':
+    case '@':
+    case 'A': case 'B': case 'C': case 'D': case 'E': case 'F':
+    case 'G': case 'H': case 'I': case 'J': case 'K': case 'L':
+    case 'M': case 'N': case 'O': case 'P': case 'Q': case 'R':
+    case 'S': case 'T': case 'U': case 'V': case 'W': case 'X':
+    case 'Y': case 'Z':
+    case '[': case '\\': case ']': case '^': case '_': case '`':
+    case 'a': case 'b': case 'c': case 'd': case 'e': case 'f':
+    case 'g': case 'h': case 'i': case 'j': case 'k': case 'l':
+    case 'm': case 'n': case 'o': case 'p': case 'q': case 'r':
+    case 's': case 't': case 'u': case 'v': case 'w': case 'x':
+    case 'y': case 'z':
+    case '{': case '|': case '}': case '~':
+      return true;
+    default:
+      return false;
+    }
 }
 
 bool
@@ -131,36 +180,24 @@ c_isblank (int c)
 bool
 c_iscntrl (int c)
 {
-  enum { C_CTYPE_EBCDIC = (' ' == '\x40' && '0' == '\xf0'
-                           && 'A' == '\xc1' && 'J' == '\xd1' && 'S' == '\xe2'
-                           && 'a' == '\x81' && 'j' == '\x91' && 's' == '\xa2') };
   if (C_CTYPE_ASCII)
     return (0 <= c && c < ' ') || c == 0x7f;
-  else
+
+  /* Use EBCDIC code page 1047's assignments for ASCII control chars;
+     assume all EBCDIC code pages agree about these assignments.  */
+  switch (c)
     {
-      /* Return true if C corresponds to an ASCII control character.
-         Assume EBCDIC code page 1047, and verify that the compiler
-         agrees with this.  */
-      verify (C_CTYPE_ASCII
-              || (C_CTYPE_EBCDIC
-                  && '!' == '\x5a' && '#' == '\x7b' && '$' == '\x5b'
-                  && '@' == '\x7c' && '[' == '\xad' && '\\' == '\xe0'
-                  && ']' == '\xbd' && '^' == '\x5f' && '_' == '\x6d'
-                  && '`' == '\x79'));
-      switch (c)
-        {
-        case '\x00': case '\x01': case '\x02': case '\x03': case '\x05':
-        case '\x0b': case '\x0c': case '\x0d': case '\x0e': case '\x0f':
-        case '\x10': case '\x11': case '\x12': case '\x13': case '\x15':
-        case '\x16': case '\x18': case '\x19': case '\x1c': case '\x1d':
-        case '\x1e': case '\x1f': case '\x26': case '\x27': case '\x2d':
-        case '\x2e': case '\x2f': case '\x32': case '\x37': case '\x3c':
-        case '\x3d': case '\x3f': case '\xff':
-        case '\xff' < 0 ? 0xff : -1:
-          return true;
-        default:
-          return false;
-        }
+    case '\x00': case '\x01': case '\x02': case '\x03': case '\x05':
+    case '\x0b': case '\x0c': case '\x0d': case '\x0e': case '\x0f':
+    case '\x10': case '\x11': case '\x12': case '\x13': case '\x15':
+    case '\x16': case '\x18': case '\x19': case '\x1c': case '\x1d':
+    case '\x1e': case '\x1f': case '\x26': case '\x27': case '\x2d':
+    case '\x2e': case '\x2f': case '\x32': case '\x37': case '\x3c':
+    case '\x3d': case '\x3f': case '\xff':
+    case '\xff' < 0 ? 0xff : -1:
+      return true;
+    default:
+      return false;
     }
 }
 
