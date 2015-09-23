@@ -20,10 +20,13 @@
 
 #include "c-ctype.h"
 
+#include <ctype.h>
 #include <limits.h>
 #include <locale.h>
 
 #include "macros.h"
+
+enum { NCHARS = UCHAR_MAX + 1 };
 
 static char
 to_char (int c)
@@ -34,30 +37,58 @@ to_char (int c)
 }
 
 static void
+test_agree_with_C_locale (void)
+{
+  int c;
+
+  for (c = 0; c <= UCHAR_MAX; c++)
+    {
+      ASSERT (c_isascii (c) == (isascii (c) != 0));
+      if (c_isascii (c))
+        {
+          ASSERT (c_isalnum (c) == (isalnum (c) != 0));
+          ASSERT (c_isalpha (c) == (isalpha (c) != 0));
+          ASSERT (c_isblank (c) == (isblank (c) != 0));
+          ASSERT (c_iscntrl (c) == (iscntrl (c) != 0));
+          ASSERT (c_isdigit (c) == (isdigit (c) != 0));
+          ASSERT (c_islower (c) == (islower (c) != 0));
+          ASSERT (c_isgraph (c) == (isgraph (c) != 0));
+          ASSERT (c_isprint (c) == (isprint (c) != 0));
+          ASSERT (c_ispunct (c) == (ispunct (c) != 0));
+          ASSERT (c_isspace (c) == (isspace (c) != 0));
+          ASSERT (c_isupper (c) == (isupper (c) != 0));
+          ASSERT (c_isxdigit (c) == (isxdigit (c) != 0));
+          ASSERT (c_tolower (c) == tolower (c));
+          ASSERT (c_toupper (c) == toupper (c));
+        }
+    }
+}
+
+static void
 test_all (void)
 {
   int c;
   int n_isascii = 0;
 
-  for (c = -0x80; c < 0x100; c++)
+  for (c = SCHAR_MIN; c <= UCHAR_MAX; c++)
     {
       if (c < 0)
         {
-          ASSERT (c_isascii (c) == c_isascii (c + 0x100));
-          ASSERT (c_isalnum (c) == c_isalnum (c + 0x100));
-          ASSERT (c_isalpha (c) == c_isalpha (c + 0x100));
-          ASSERT (c_isblank (c) == c_isblank (c + 0x100));
-          ASSERT (c_iscntrl (c) == c_iscntrl (c + 0x100));
-          ASSERT (c_isdigit (c) == c_isdigit (c + 0x100));
-          ASSERT (c_islower (c) == c_islower (c + 0x100));
-          ASSERT (c_isgraph (c) == c_isgraph (c + 0x100));
-          ASSERT (c_isprint (c) == c_isprint (c + 0x100));
-          ASSERT (c_ispunct (c) == c_ispunct (c + 0x100));
-          ASSERT (c_isspace (c) == c_isspace (c + 0x100));
-          ASSERT (c_isupper (c) == c_isupper (c + 0x100));
-          ASSERT (c_isxdigit (c) == c_isxdigit (c + 0x100));
-          ASSERT (to_char (c_tolower (c)) == to_char (c_tolower (c + 0x100)));
-          ASSERT (to_char (c_toupper (c)) == to_char (c_toupper (c + 0x100)));
+          ASSERT (c_isascii (c) == c_isascii (c + NCHARS));
+          ASSERT (c_isalnum (c) == c_isalnum (c + NCHARS));
+          ASSERT (c_isalpha (c) == c_isalpha (c + NCHARS));
+          ASSERT (c_isblank (c) == c_isblank (c + NCHARS));
+          ASSERT (c_iscntrl (c) == c_iscntrl (c + NCHARS));
+          ASSERT (c_isdigit (c) == c_isdigit (c + NCHARS));
+          ASSERT (c_islower (c) == c_islower (c + NCHARS));
+          ASSERT (c_isgraph (c) == c_isgraph (c + NCHARS));
+          ASSERT (c_isprint (c) == c_isprint (c + NCHARS));
+          ASSERT (c_ispunct (c) == c_ispunct (c + NCHARS));
+          ASSERT (c_isspace (c) == c_isspace (c + NCHARS));
+          ASSERT (c_isupper (c) == c_isupper (c + NCHARS));
+          ASSERT (c_isxdigit (c) == c_isxdigit (c + NCHARS));
+          ASSERT (to_char (c_tolower (c)) == to_char (c_tolower (c + NCHARS)));
+          ASSERT (to_char (c_toupper (c)) == to_char (c_toupper (c + NCHARS)));
         }
 
       if (0 <= c)
@@ -394,6 +425,8 @@ test_all (void)
 int
 main ()
 {
+  test_agree_with_C_locale ();
+
   test_all ();
 
   setlocale (LC_ALL, "de_DE");
