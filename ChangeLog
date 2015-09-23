@@ -2,7 +2,7 @@
 
 	savewd: remove SAVEWD_CHDIR_READABLE
 	It was problematic in the light of file systems that ignore umask.
-	Problem reported by Sebastian Ungar in: http://bugs.gnu.org/21534
+	Problem reported by Sebastian Unger in: http://bugs.gnu.org/21534
 	* NEWS: Document this.
 	* lib/mkancesdirs.c (mkancesdirs): MAKE_DIR now returns 0 if
 	successful, -1 (setting errno) on failure, rather than something
