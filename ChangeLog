@@ -12,14 +12,16 @@
 	code more portable, as both branches of the 'if' are compiled on
 	all platforms.
 	(C_CTYPE_EBCDIC): New constant.
+	Verify that the character set is either ASCII or EBCDIC.
 	(to_char): New static function.
+	(c_isascii, c_iscntrl):
+	Assume standard control-character assignments for EBCDIC.
 	(c_isalnum, c_isalpha, c_isdigit, c_islower, c_isgraph, c_isprint)
 	(c_ispunct, c_isupper, c_isxdigit, c_tolower, c_toupper):
 	Rewrite to use 'if' instead of 'ifdef'.
 	Use to_char if non-ASCII.  Prefer <= to >=.
 	Prefer true and false to 1 and 0, for booleans.
-	(c_iscntrl): Use 'if', not 'ifdef'.  Special case for EBCDIC.
-	Verify that the character set is either ASCII or EBCDIC.
+	(c_iscntrl): Use 'if', not 'ifdef'.
 	* modules/c-ctype (Depends-on): Add verify.
 	* tests/test-c-ctype.c: Include <limits.h>, for CHAR_MIN
 	(to_char): New function.
