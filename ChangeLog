@@ -1,3 +1,9 @@
+2015-09-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-ctype: improve c_isascii testing
+	* tests/test-c-ctype.c (test_all): Port c_isascii test to EBCDIC.
+	Add a test to count the number of ASCII characters.
+
 2015-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	savewd: remove SAVEWD_CHDIR_READABLE

@@ -37,6 +37,7 @@ static void
 test_all (void)
 {
   int c;
+  int n_isascii = 0;
 
   for (c = -0x80; c < 0x100; c++)
     {
@@ -59,7 +60,10 @@ test_all (void)
           ASSERT (to_char (c_toupper (c)) == to_char (c_toupper (c + 0x100)));
         }
 
-      ASSERT (c_isascii (c) == (c >= 0 && c < 0x80));
+      if (0 <= c)
+        n_isascii += c_isascii (c);
+
+      ASSERT (c_isascii (c) == (c_isprint (c) || c_iscntrl (c)));
 
       ASSERT (c_isalnum (c) == (c_isalpha (c) || c_isdigit (c)));
 
@@ -383,6 +387,8 @@ test_all (void)
           break;
         }
     }
+
+  ASSERT (n_isascii == 128);
 }
 
 int
