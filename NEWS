@@ -42,6 +42,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2015-09-22  savewd          SAVEWD_CHDIR_READABLE constant removed.
+
 2015-07-24  fprintftime     Exported functions' time zone arguments are now of
             strftime        type timezone_t (with NULL denoting UTC) instead of
                             type int (with nonzero denoting UTC).  These

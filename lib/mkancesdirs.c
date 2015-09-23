@@ -42,11 +42,9 @@
 
    Create any ancestor directories that don't already exist, by
    invoking MAKE_DIR (FILE, COMPONENT, MAKE_DIR_ARG).  This function
-   should return 0 if successful and the resulting directory is
-   readable, 1 if successful but the resulting directory might not be
-   readable, -1 (setting errno) otherwise.  If COMPONENT is relative,
-   it is relative to the temporary working directory, which may differ
-   from *WD.
+   should return 0 if successful, -1 (setting errno) otherwise.  If
+   COMPONENT is relative, it is relative to the temporary working
+   directory, which may differ from *WD.
 
    Ordinarily MAKE_DIR is executed with the working directory changed
    to reflect the already-made prefix, and mkancesdirs returns with
@@ -112,20 +110,10 @@ mkancesdirs (char *file, struct savewd *wd,
             if (sep - component == 2
                 && component[0] == '.' && component[1] == '.')
               made_dir = false;
+            else if (make_dir (file, component, make_dir_arg) < 0)
+              make_dir_errno = errno;
             else
-              switch (make_dir (file, component, make_dir_arg))
-                {
-                case -1:
-                  make_dir_errno = errno;
-                  break;
-
-                case 0:
-                  savewd_chdir_options |= SAVEWD_CHDIR_READABLE;
-                  /* Fall through.  */
-                case 1:
-                  made_dir = true;
-                  break;
-                }
+              made_dir = true;
 
             if (made_dir)
               savewd_chdir_options |= SAVEWD_CHDIR_NOFOLLOW;

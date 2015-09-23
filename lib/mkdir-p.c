@@ -136,9 +136,7 @@ make_dir_parents (char *dir,
               announce (dir, options);
               preserve_existing = (keep_owner & keep_special_mode_bits
                                    & umask_must_be_ok);
-              savewd_chdir_options |=
-                (SAVEWD_CHDIR_NOFOLLOW
-                 | (mode & S_IRUSR ? SAVEWD_CHDIR_READABLE : 0));
+              savewd_chdir_options |= SAVEWD_CHDIR_NOFOLLOW;
             }
           else
             {

@@ -1,5 +1,18 @@
 2015-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	savewd: remove SAVEWD_CHDIR_READABLE
+	It was problematic in the light of file systems that ignore umask.
+	Problem reported by Sebastian Ungar in: http://bugs.gnu.org/21534
+	* NEWS: Document this.
+	* lib/mkancesdirs.c (mkancesdirs): MAKE_DIR now returns 0 if
+	successful, -1 (setting errno) on failure, rather than something
+	more complicated than that.
+	* lib/mkdir-p.c (make_dir_parents):
+	Do not use SAVEWD_CHDIR_READABLE.
+	* lib/savewd.c (savewd_chdir):
+	Remove support for SAVEWD_CHDIR_READABLE.
+	* lib/savewd.h (SAVEWD_CHDIR_READABLE): Remove.
+
 	c-ctype: port better to EBCDIC
 	Problems reported by Daniel Richard G. in
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-09/msg00020.html

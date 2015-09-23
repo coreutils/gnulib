@@ -82,20 +82,15 @@ savewd_init (struct savewd *wd)
 }
 
 
-/* Options for savewd_chdir.  */
+/* Options for savewd_chdir.  Can be ORed together.  */
 enum
   {
     /* Do not follow symbolic links, if supported.  */
     SAVEWD_CHDIR_NOFOLLOW = 1,
 
-    /* The directory should be readable, so fail if it happens to be
-       discovered that the directory is not readable.  (Unreadable
-       directories are not necessarily diagnosed, though.)  */
-    SAVEWD_CHDIR_READABLE = 2,
-
     /* Do not chdir if the directory is readable; simply succeed
        without invoking chdir if the directory was opened.  */
-    SAVEWD_CHDIR_SKIP_READABLE = 4
+    SAVEWD_CHDIR_SKIP_READABLE = 2
   };
 
 /* Change the directory, and if successful, record into *WD the fact

@@ -116,7 +116,7 @@ savewd_chdir (struct savewd *wd, char const *dir, int options,
           open_result[1] = errno;
         }
 
-      if (fd < 0 && (errno != EACCES || (options & SAVEWD_CHDIR_READABLE)))
+      if (fd < 0 && errno != EACCES)
         result = -1;
     }
 
