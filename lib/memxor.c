@@ -1,4 +1,4 @@
-/* memxor.c -- perform binary exclusive OR operation of two memory blocks.
+/* Binary exclusive OR operation of two memory blocks.  -*- coding: utf-8 -*-
    Copyright (C) 2005-2006, 2009-2015 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify

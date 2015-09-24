@@ -499,3 +499,9 @@ FUNC (const UNIT *s, size_t n,
     }
   return NULL;
 }
+
+/*
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */

@@ -1,4 +1,4 @@
-# Makefile for gnulib doc.
+# Makefile for gnulib doc.  -*- coding: utf-8 -*-
 # Copyright (C) 2004, 2006-2015 Free Software Foundation, Inc.
 #
 # Copying and distribution of this file, with or without modification,

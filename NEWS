@@ -727,6 +727,7 @@ Date        Modules         Changes
 
 # This is for Emacs.
 # Local Variables:
+# coding: utf-8
 # indent-tabs-mode: nil
 # whitespace-check-buffer-indent: nil
 # End:

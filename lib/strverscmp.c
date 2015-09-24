@@ -1,4 +1,4 @@
-/* Compare strings while treating digits characters numerically.
+/* Compare strings while treating digits numerically.  -*- coding: utf-8 -*-
    Copyright (C) 1997, 2000, 2002, 2004, 2006, 2009-2015 Free Software
    Foundation, Inc.
    This file is part of the GNU C Library.

@@ -1,4 +1,4 @@
-/* Substring test for UTF-8/UTF-16/UTF-32 strings.
+/* Substring test for UTF-8/UTF-16/UTF-32 strings.  -*- coding: utf-8 -*-
    Copyright (C) 1999, 2002, 2006, 2010-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002, 2005.
 

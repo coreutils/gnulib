@@ -1,4 +1,4 @@
-/* Abstract sequential list data type.
+/* Abstract sequential list data type.  -*- coding: utf-8 -*-
    Copyright (C) 2006-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2006.
 

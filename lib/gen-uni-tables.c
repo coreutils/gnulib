@@ -10171,8 +10171,8 @@ main (int argc, char * argv[])
 }
 
 /*
- * For Emacs M-x compile
  * Local Variables:
+ * coding: utf-8
  * compile-command: "\
  *   gcc -O -Wall gen-uni-tables.c -Iunictype -o gen-uni-tables &&      \\
  *   ./gen-uni-tables                                                   \\

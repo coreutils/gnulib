@@ -1,4 +1,4 @@
-/* Convert string to double, using the C locale.
+/* Convert string to double, using the C locale.  -*- coding: utf-8 -*-
 
    Copyright (C) 2003-2004, 2009-2015 Free Software Foundation, Inc.
 

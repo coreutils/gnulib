@@ -1,4 +1,4 @@
-/* Declarations for sinl, cosl, tanl internal functions
+/* Declarations for sinl, cosl, tanl internal functions.  -*- coding: utf-8 -*-
    Contributed by Paolo Bonzini
 
    Copyright 2002-2003, 2009-2015 Free Software Foundation, Inc.

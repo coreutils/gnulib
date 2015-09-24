@@ -4312,7 +4312,7 @@ func_import ()
             fi
           done
         else
-          # This loop has O(N²) worst-case run time.
+          # This loop has O(N**2) worst-case run time.
           for module in $cached_specified_modules; do
             to_remove=
             for m in $1; do

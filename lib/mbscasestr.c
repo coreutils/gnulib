@@ -1,4 +1,4 @@
-/* Case-insensitive searching in a string.
+/* Case-insensitive searching in a string.  -*- coding: utf-8 -*-
    Copyright (C) 2005-2015 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2005.
 

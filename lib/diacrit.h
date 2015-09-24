@@ -1,4 +1,4 @@
-/* Diacritics processing for a few character codes.
+/* Diacritics processing for a few character codes.  -*- coding: utf-8 -*-
    Copyright (C) 1990-1993, 2009-2015 Free Software Foundation, Inc.
    François Pinard <pinard@iro.umontreal.ca>, 1988.
 

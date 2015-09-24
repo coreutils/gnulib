@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 26
+# mbrtowc.m4 serial 26  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2015 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation

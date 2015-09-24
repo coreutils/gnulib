@@ -118,6 +118,7 @@ with or without modifications, as long as this notice is preserved.
 
 Hey Emacs!
 Local Variables:
+coding: utf-8
 indent-tabs-mode: nil
 whitespace-check-buffer-indent: nil
 End:
