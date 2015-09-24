@@ -1,3 +1,15 @@
+2015-09-24  Pavel Raiskup  <praiskup@redhat.com>
+
+	gitlog-to-changelog: trim only trailing whitespaces
+	This is fix for --format regression introduced by commit
+	2b93079a5d1baa4d;  it caused that --format='%s%n%n%b%n' (see the
+	doubled %n string) had no effect anymore.  This format
+	specification has been used e.g. by GNU paxuitils (commit
+	edfd8bcc3).
+
+	* build-aux/gitlog-to-changelog (main): Stop squashing multiple
+	newlines in commmit messages.
+
 2015-09-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Test that c_iscntrl agrees with iscntrl, etc.
