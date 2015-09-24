@@ -5898,7 +5898,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	file system's timestamp jumps; this should be more reliable.
 	Look at both mtime and ctime, and take the maximum of the two jumps.
 	(nap_works, guess_delay):
-	Return a nanosecond cound, not a microsecond count.
+	Return a nanosecond count, not a microsecond count.
 	All callers changed.
 	(nap_works, nap): Use nanosleep, not usleep.  Check for nanosleep
 	failure.
