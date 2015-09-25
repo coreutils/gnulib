@@ -1,3 +1,10 @@
+2015-09-25  Mats Erik Andersson  <gnu@gisladisker.se>
+
+	gc: fix detection of installed libgcrypt version
+	* m4/gc.m4: Use AM_PATH_LIBCRYPT to test for libcrypt versions
+	at least as recent as 1.4.4.  The previously used macro is not
+	available now, since modules were removed in version 1.6.0.
+
 2015-09-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	c-ctype: rewrite to use inline functions
