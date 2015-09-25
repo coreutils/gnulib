@@ -121,8 +121,11 @@ gl_sockets_startup (int version _GL_UNUSED)
       if (err != 0)
         return 1;
 
-      if (data.wVersion < version)
-        return 2;
+      if (data.wVersion != version)
+        {
+          WSACleanup ();
+          return 2;
+        }
 
       if (initialized_sockets_version == 0)
         register_fd_hook (close_fd_maybe_socket, ioctl_fd_maybe_socket,

@@ -20,11 +20,11 @@
 #ifndef SOCKETS_H
 # define SOCKETS_H 1
 
-#define SOCKETS_1_0 0x100  /* don't use - does not work on Windows XP */
-#define SOCKETS_1_1 0x101
-#define SOCKETS_2_0 0x200  /* don't use - does not work on Windows XP */
-#define SOCKETS_2_1 0x201
-#define SOCKETS_2_2 0x202
+#define SOCKETS_1_0 0x0001
+#define SOCKETS_1_1 0x0101
+#define SOCKETS_2_0 0x0002
+#define SOCKETS_2_1 0x0102
+#define SOCKETS_2_2 0x0202
 
 int gl_sockets_startup (int version)
 #if !WINDOWS_SOCKETS

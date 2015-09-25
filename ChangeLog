@@ -1,3 +1,13 @@
+2015-09-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sockets: MS Windows initalization fixes
+	Problem reported by Test User in:
+	http://lists.gnu.org/archive/html/help-shishi/2015-09/msg00001.html
+	* lib/sockets.h (SOCKETS_1_0, SOCKETS_2_0, SOCKETS_2_1):
+	Correct the endianness.
+	* lib/sockets.c (gl_sockets_startup): Return 2 on any version
+	number mismatch, not just on <.  Cleanup before any such failure.
+
 2015-09-25  Mats Erik Andersson  <gnu@gisladisker.se>
 
 	gc: fix detection of installed libgcrypt version
