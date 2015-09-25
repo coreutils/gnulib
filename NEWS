@@ -42,6 +42,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2015-09-25  c-ctype         The following macros were removed:
+                            C_CTYPE_CONSECUTIVE_DIGITS
+                            C_CTYPE_CONSECUTIVE_LOWERCASE
+                            C_CTYPE_CONSECUTIVE_UPPERCASE
+
 2015-09-22  savewd          SAVEWD_CHDIR_READABLE constant removed.
 
 2015-07-24  fprintftime     Exported functions' time zone arguments are now of

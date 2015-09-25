@@ -1,3 +1,39 @@
+2015-09-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-ctype: rewrite to use inline functions
+	This simplifies maintenance, since it makes for just one
+	implementation of each function, letting the compiler have the fun
+	of optimization.  In practice this works well nowadays with GCC.
+	E.g., c_isascii might need only three instructions even though the
+	source code lists every ASCII character individually in a large
+	switch statement.
+	Also, fix some z/OS porting bugs reported by Daniel Richard G. in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-09/msg00037.html
+	* NEWS: Document the API change.
+	* lib/c-ctype.c: Drastically simplify, since this now just expands
+	inline functions.
+	* lib/c-ctype.h: Use _GL_INLINE_HEADER_BEGIN, _GL_INLINE_HEADER_END.
+	(C_CTYPE_INLINE): New macro.
+	(C_CTYPE_CONSECUTIVE_DIGITS, C_CTYPE_CONSECUTIVE_LOWERCASE)
+	(C_CTYPE_CONSECUTIVE_UPPERCASE): Remove.
+	Verify that either ASCII or EBCDIC is being used.
+	(_C_CTYPE_SIGNED_EBCDIC, _C_CTYPE_CNTRL, _C_CTYPE_A_THRU_F_N)
+	(_C_CTYPE_DIGIT_N, _C_CTYPE_LOWER_N, _C_CTYPE_UPPER_N)
+	(_C_CTYPE_CASES, _C_CTYPE_A_THRU_F, _C_CTYPE_DIGIT, _C_CTYPE_LOWER)
+	(_C_CTYPE_UPPER, _C_CTYPE_PUNCT_PLAIN):
+	New private macros.
+	(_C_CTYPE_CNTRL): In EBCDIC, '\x07' is a control, not '\xff'.
+	(c_isalnum, c_isalpha, c_isascii, c_isblank, c_iscntrl, c_isdigit)
+	(c_isgraph, c_islower, c_isprint, c_ispunct, c_isspace, c_isupper)
+	(c_isxdigit, c_tolower, c_toupper): Now inline functions.
+	(c_tolower, c_toupper): When converting, return the unsigned char,
+	as that is what z/OS does.
+	* lib/c-strcaseeq.h (CASEEQ): Simplify in the light of the removal
+	of some c-ctype.h macros.
+	* modules/c-ctype (Depends-on): Add extern-inline; remove verify.
+	* tests/test-c-ctype.c (test_all): Fix test for c_toupper and
+	c_tolower promotion to be compatible with z/OS.
+
 2015-09-24  Pavel Raiskup  <praiskup@redhat.com>
 
 	gitlog-to-changelog: trim only trailing whitespaces

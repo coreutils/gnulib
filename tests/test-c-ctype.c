@@ -204,218 +204,64 @@ test_all (void)
 
       switch (to_char (c))
         {
-        case 'A':
-          ASSERT (c_tolower (c) == 'a');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'B':
-          ASSERT (c_tolower (c) == 'b');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'C':
-          ASSERT (c_tolower (c) == 'c');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'D':
-          ASSERT (c_tolower (c) == 'd');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'E':
-          ASSERT (c_tolower (c) == 'e');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'F':
-          ASSERT (c_tolower (c) == 'f');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'G':
-          ASSERT (c_tolower (c) == 'g');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'H':
-          ASSERT (c_tolower (c) == 'h');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'I':
-          ASSERT (c_tolower (c) == 'i');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'J':
-          ASSERT (c_tolower (c) == 'j');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'K':
-          ASSERT (c_tolower (c) == 'k');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'L':
-          ASSERT (c_tolower (c) == 'l');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'M':
-          ASSERT (c_tolower (c) == 'm');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'N':
-          ASSERT (c_tolower (c) == 'n');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'O':
-          ASSERT (c_tolower (c) == 'o');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'P':
-          ASSERT (c_tolower (c) == 'p');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'Q':
-          ASSERT (c_tolower (c) == 'q');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'R':
-          ASSERT (c_tolower (c) == 'r');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'S':
-          ASSERT (c_tolower (c) == 's');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'T':
-          ASSERT (c_tolower (c) == 't');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'U':
-          ASSERT (c_tolower (c) == 'u');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'V':
-          ASSERT (c_tolower (c) == 'v');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'W':
-          ASSERT (c_tolower (c) == 'w');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'X':
-          ASSERT (c_tolower (c) == 'x');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'Y':
-          ASSERT (c_tolower (c) == 'y');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'Z':
-          ASSERT (c_tolower (c) == 'z');
-          ASSERT (c_toupper (c) == c);
-          break;
-        case 'a':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'A');
-          break;
-        case 'b':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'B');
-          break;
-        case 'c':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'C');
-          break;
-        case 'd':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'D');
-          break;
-        case 'e':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'E');
-          break;
-        case 'f':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'F');
-          break;
-        case 'g':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'G');
-          break;
-        case 'h':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'H');
-          break;
-        case 'i':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'I');
-          break;
-        case 'j':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'J');
-          break;
-        case 'k':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'K');
-          break;
-        case 'l':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'L');
-          break;
-        case 'm':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'M');
-          break;
-        case 'n':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'N');
-          break;
-        case 'o':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'O');
-          break;
-        case 'p':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'P');
-          break;
-        case 'q':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'Q');
-          break;
-        case 'r':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'R');
-          break;
-        case 's':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'S');
-          break;
-        case 't':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'T');
-          break;
-        case 'u':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'U');
-          break;
-        case 'v':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'V');
-          break;
-        case 'w':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'W');
-          break;
-        case 'x':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'X');
-          break;
-        case 'y':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'Y');
-          break;
-        case 'z':
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == 'Z');
-          break;
-        default:
-          ASSERT (c_tolower (c) == c);
-          ASSERT (c_toupper (c) == c);
-          break;
+        case 'A': ASSERT (to_char (c_tolower (c)) == 'a'); break;
+        case 'B': ASSERT (to_char (c_tolower (c)) == 'b'); break;
+        case 'C': ASSERT (to_char (c_tolower (c)) == 'c'); break;
+        case 'D': ASSERT (to_char (c_tolower (c)) == 'd'); break;
+        case 'E': ASSERT (to_char (c_tolower (c)) == 'e'); break;
+        case 'F': ASSERT (to_char (c_tolower (c)) == 'f'); break;
+        case 'G': ASSERT (to_char (c_tolower (c)) == 'g'); break;
+        case 'H': ASSERT (to_char (c_tolower (c)) == 'h'); break;
+        case 'I': ASSERT (to_char (c_tolower (c)) == 'i'); break;
+        case 'J': ASSERT (to_char (c_tolower (c)) == 'j'); break;
+        case 'K': ASSERT (to_char (c_tolower (c)) == 'k'); break;
+        case 'L': ASSERT (to_char (c_tolower (c)) == 'l'); break;
+        case 'M': ASSERT (to_char (c_tolower (c)) == 'm'); break;
+        case 'N': ASSERT (to_char (c_tolower (c)) == 'n'); break;
+        case 'O': ASSERT (to_char (c_tolower (c)) == 'o'); break;
+        case 'P': ASSERT (to_char (c_tolower (c)) == 'p'); break;
+        case 'Q': ASSERT (to_char (c_tolower (c)) == 'q'); break;
+        case 'R': ASSERT (to_char (c_tolower (c)) == 'r'); break;
+        case 'S': ASSERT (to_char (c_tolower (c)) == 's'); break;
+        case 'T': ASSERT (to_char (c_tolower (c)) == 't'); break;
+        case 'U': ASSERT (to_char (c_tolower (c)) == 'u'); break;
+        case 'V': ASSERT (to_char (c_tolower (c)) == 'v'); break;
+        case 'W': ASSERT (to_char (c_tolower (c)) == 'w'); break;
+        case 'X': ASSERT (to_char (c_tolower (c)) == 'x'); break;
+        case 'Y': ASSERT (to_char (c_tolower (c)) == 'y'); break;
+        case 'Z': ASSERT (to_char (c_tolower (c)) == 'z'); break;
+        default: ASSERT (c_tolower (c) == c); break;
+        }
+
+      switch (to_char (c))
+        {
+        case 'a': ASSERT (to_char (c_toupper (c)) == 'A'); break;
+        case 'b': ASSERT (to_char (c_toupper (c)) == 'B'); break;
+        case 'c': ASSERT (to_char (c_toupper (c)) == 'C'); break;
+        case 'd': ASSERT (to_char (c_toupper (c)) == 'D'); break;
+        case 'e': ASSERT (to_char (c_toupper (c)) == 'E'); break;
+        case 'f': ASSERT (to_char (c_toupper (c)) == 'F'); break;
+        case 'g': ASSERT (to_char (c_toupper (c)) == 'G'); break;
+        case 'h': ASSERT (to_char (c_toupper (c)) == 'H'); break;
+        case 'i': ASSERT (to_char (c_toupper (c)) == 'I'); break;
+        case 'j': ASSERT (to_char (c_toupper (c)) == 'J'); break;
+        case 'k': ASSERT (to_char (c_toupper (c)) == 'K'); break;
+        case 'l': ASSERT (to_char (c_toupper (c)) == 'L'); break;
+        case 'm': ASSERT (to_char (c_toupper (c)) == 'M'); break;
+        case 'n': ASSERT (to_char (c_toupper (c)) == 'N'); break;
+        case 'o': ASSERT (to_char (c_toupper (c)) == 'O'); break;
+        case 'p': ASSERT (to_char (c_toupper (c)) == 'P'); break;
+        case 'q': ASSERT (to_char (c_toupper (c)) == 'Q'); break;
+        case 'r': ASSERT (to_char (c_toupper (c)) == 'R'); break;
+        case 's': ASSERT (to_char (c_toupper (c)) == 'S'); break;
+        case 't': ASSERT (to_char (c_toupper (c)) == 'T'); break;
+        case 'u': ASSERT (to_char (c_toupper (c)) == 'U'); break;
+        case 'v': ASSERT (to_char (c_toupper (c)) == 'V'); break;
+        case 'w': ASSERT (to_char (c_toupper (c)) == 'W'); break;
+        case 'x': ASSERT (to_char (c_toupper (c)) == 'X'); break;
+        case 'y': ASSERT (to_char (c_toupper (c)) == 'Y'); break;
+        case 'z': ASSERT (to_char (c_toupper (c)) == 'Z'); break;
+        default: ASSERT (c_toupper (c) == c); break;
         }
     }
 

@@ -6,8 +6,8 @@ lib/c-ctype.h
 lib/c-ctype.c
 
 Depends-on:
+extern-inline
 stdbool
-verify
 
 configure.ac:
 
