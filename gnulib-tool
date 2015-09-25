@@ -5195,6 +5195,15 @@ s,//*$,/,'
     echo "  m4_pattern_allow([^gl_ES\$])dnl a valid locale name"
     echo "  m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
     echo "  m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
+
+    # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.  Doing
+    # AC_REQUIRE in configure-ac.early is not early enough.
+    case "${nl}${final_modules}${nl}" in
+        *${nl}extensions${nl}*)
+            echo "  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])"
+            ;;
+    esac
+
     echo "  AC_REQUIRE([gl_PROG_AR_RANLIB])"
     if test -n "$uses_subdirs"; then
       echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
