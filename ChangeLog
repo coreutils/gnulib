@@ -1,3 +1,16 @@
+2015-09-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-ctype: port better to z/OS EBCDIC
+	Problems reported by Daniel Richard G. in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-09/msg00050.html
+	* lib/c-ctype.h (_C_CTYPE_CNTRL): Rewrite in terms of
+	the C standard escapes and _C_CTYPE_OTHER_CNTRL.
+	(_C_CTYPE_OTHER_CNTRL): New macro.
+	* tests/test-c-ctype.c (test_all): Test from CHAR_MIN, not
+	from SCHAR_MIN, as the functions are defined only from values
+	promoted from char or from unsigned char, not necessarily from
+	signed char.
+
 2015-09-25  Pavel Raiskup  <praiskup@redhat.com>
 
 	gnulib-common.m4: fix gl_PROG_AR_RANLIB/AM_PROG_AR clash

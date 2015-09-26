@@ -70,7 +70,7 @@ test_all (void)
   int c;
   int n_isascii = 0;
 
-  for (c = SCHAR_MIN; c <= UCHAR_MAX; c++)
+  for (c = CHAR_MIN; c <= UCHAR_MAX; c++)
     {
       if (c < 0)
         {

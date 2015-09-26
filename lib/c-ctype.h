@@ -80,30 +80,35 @@ extern "C" {
 
 #define _C_CTYPE_SIGNED_EBCDIC ('A' < 0)
 
+/* Cases for control characters.  */
+
+#define _C_CTYPE_CNTRL \
+   case '\a': case '\b': case '\f': case '\n': \
+   case '\r': case '\t': case '\v': \
+   _C_CTYPE_OTHER_CNTRL
+
+/* ASCII control characters other than those with \-letter escapes.  */
+
 #if C_CTYPE_ASCII
-# define _C_CTYPE_CNTRL \
+# define _C_CTYPE_OTHER_CNTRL \
     case '\x00': case '\x01': case '\x02': case '\x03': \
-    case '\x04': case '\x05': case '\x06': case '\x07': \
-    case '\x08': case '\x09': case '\x0a': case '\x0b': \
-    case '\x0c': case '\x0d': case '\x0e': case '\x0f': \
-    case '\x10': case '\x11': case '\x12': case '\x13': \
-    case '\x14': case '\x15': case '\x16': case '\x17': \
-    case '\x18': case '\x19': case '\x1a': case '\x1b': \
-    case '\x1c': case '\x1d': case '\x1e': case '\x1f': \
-    case '\x7f'
+    case '\x04': case '\x05': case '\x06': case '\x0e': \
+    case '\x0f': case '\x10': case '\x11': case '\x12': \
+    case '\x13': case '\x14': case '\x15': case '\x16': \
+    case '\x17': case '\x18': case '\x19': case '\x1a': \
+    case '\x1b': case '\x1c': case '\x1d': case '\x1e': \
+    case '\x1f': case '\x7f'
 #else
    /* Use EBCDIC code page 1047's assignments for ASCII control chars;
       assume all EBCDIC code pages agree about these assignments.  */
-# define _C_CTYPE_CNTRL \
+# define _C_CTYPE_OTHER_CNTRL \
     case '\x00': case '\x01': case '\x02': case '\x03': \
-    case '\x05': case '\x07': case '\x0b': case '\x0c': \
-    case '\x0d': case '\x0e': case '\x0f': case '\x10': \
-    case '\x11': case '\x12': case '\x13': case '\x16': \
-    case '\x18': case '\x19': case '\x1c': case '\x1d': \
-    case '\x1e': case '\x1f': case '\x25': case '\x26': \
-    case '\x27': case '\x2d': case '\x2e': case '\x2f': \
-    case '\x32': case '\x37': case '\x3c': case '\x3d': \
-    case '\x3f'
+    case '\x07': case '\x0e': case '\x0f': case '\x10': \
+    case '\x11': case '\x12': case '\x13': case '\x18': \
+    case '\x19': case '\x1c': case '\x1d': case '\x1e': \
+    case '\x1f': case '\x26': case '\x27': case '\x2d': \
+    case '\x2e': case '\x32': case '\x37': case '\x3c': \
+    case '\x3d': case '\x3f'
 #endif
 
 /* Cases for hex letter digits, digits, lower, and upper, offset by N.  */
