@@ -432,7 +432,6 @@ read_file_system_list (bool need_fs_type)
   {
     struct tabmntent *mntlist, *p;
     struct mntent *mnt;
-    struct mount_entry *me;
 
     /* the third and fourth arguments could be used to filter mounts,
        but Crays doesn't seem to have any mounts that we want to
