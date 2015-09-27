@@ -78,7 +78,9 @@ extern "C" {
 # error "Only ASCII and EBCDIC are supported"
 #endif
 
-#define _C_CTYPE_SIGNED_EBCDIC ('A' < 0)
+#if 'A' < 0
+# error "EBCDIC and char is signed -- not supported"
+#endif
 
 /* Cases for control characters.  */
 
@@ -111,54 +113,30 @@ extern "C" {
     case '\x3d': case '\x3f'
 #endif
 
-/* Cases for hex letter digits, digits, lower, and upper, offset by N.  */
+/* Cases for lowercase hex letters, and lowercase letters, all offset by N.  */
 
-#define _C_CTYPE_A_THRU_F_N(n) \
+#define _C_CTYPE_LOWER_A_THRU_F_N(n) \
    case 'a' + (n): case 'b' + (n): case 'c' + (n): case 'd' + (n): \
-   case 'e' + (n): case 'f' + (n): \
-   case 'A' + (n): case 'B' + (n): case 'C' + (n): case 'D' + (n): \
-   case 'E' + (n): case 'F' + (n)
-#define _C_CTYPE_DIGIT_N(n) \
-   case '0' + (n): case '1' + (n): case '2' + (n): case '3' + (n): \
-   case '4' + (n): case '5' + (n): case '6' + (n): case '7' + (n): \
-   case '8' + (n): case '9' + (n)
+   case 'e' + (n): case 'f' + (n)
 #define _C_CTYPE_LOWER_N(n) \
-   case 'a' + (n): case 'b' + (n): case 'c' + (n): case 'd' + (n): \
-   case 'e' + (n): case 'f' + (n): case 'g' + (n): case 'h' + (n): \
-   case 'i' + (n): case 'j' + (n): case 'k' + (n): case 'l' + (n): \
-   case 'm' + (n): case 'n' + (n): case 'o' + (n): case 'p' + (n): \
-   case 'q' + (n): case 'r' + (n): case 's' + (n): case 't' + (n): \
-   case 'u' + (n): case 'v' + (n): case 'w' + (n): case 'x' + (n): \
-   case 'y' + (n): case 'z' + (n)
-#define _C_CTYPE_UPPER_N(n) \
-   case 'A' + (n): case 'B' + (n): case 'C' + (n): case 'D' + (n): \
-   case 'E' + (n): case 'F' + (n): case 'G' + (n): case 'H' + (n): \
-   case 'I' + (n): case 'J' + (n): case 'K' + (n): case 'L' + (n): \
-   case 'M' + (n): case 'N' + (n): case 'O' + (n): case 'P' + (n): \
-   case 'Q' + (n): case 'R' + (n): case 'S' + (n): case 'T' + (n): \
-   case 'U' + (n): case 'V' + (n): case 'W' + (n): case 'X' + (n): \
-   case 'Y' + (n): case 'Z' + (n)
+   _C_CTYPE_LOWER_A_THRU_F_N(n): \
+   case 'g' + (n): case 'h' + (n): case 'i' + (n): case 'j' + (n): \
+   case 'k' + (n): case 'l' + (n): case 'm' + (n): case 'n' + (n): \
+   case 'o' + (n): case 'p' + (n): case 'q' + (n): case 'r' + (n): \
+   case 's' + (n): case 't' + (n): case 'u' + (n): case 'v' + (n): \
+   case 'w' + (n): case 'x' + (n): case 'y' + (n): case 'z' + (n)
 
-/* Given MACRO_N, expand to all the cases for the corresponding class.  */
-#if _C_CTYPE_SIGNED_EBCDIC
-# define _C_CTYPE_CASES(macro_n) macro_n (0): macro_n (256)
-#else
-# define _C_CTYPE_CASES(macro_n) macro_n (0)
-#endif
+/* Cases for hex letters, digits, lower, punct, and upper.  */
 
-/* Cases for hex letter digits, digits, lower, and upper, with another
-   case for unsigned char if the original char is negative.  */
-
-#define _C_CTYPE_A_THRU_F _C_CTYPE_CASES (_C_CTYPE_A_THRU_F_N)
-#define _C_CTYPE_DIGIT _C_CTYPE_CASES (_C_CTYPE_DIGIT_N)
-#define _C_CTYPE_LOWER _C_CTYPE_CASES (_C_CTYPE_LOWER_N)
-#define _C_CTYPE_UPPER _C_CTYPE_CASES (_C_CTYPE_UPPER_N)
-
-/* The punct class differs because some punctuation characters may be
-   negative while others are nonnegative.  Instead of attempting to
-   define _C_CTYPE_PUNCT, define just the plain chars here, and do any
-   cases-plus-256 by hand after using this macro.  */
-#define _C_CTYPE_PUNCT_PLAIN \
+#define _C_CTYPE_A_THRU_F \
+   _C_CTYPE_LOWER_A_THRU_F_N (0): \
+   _C_CTYPE_LOWER_A_THRU_F_N ('A' - 'a')
+#define _C_CTYPE_DIGIT                     \
+   case '0': case '1': case '2': case '3': \
+   case '4': case '5': case '6': case '7': \
+   case '8': case '9'
+#define _C_CTYPE_LOWER _C_CTYPE_LOWER_N (0)
+#define _C_CTYPE_PUNCT \
    case '!': case '"': case '#': case '$':  \
    case '%': case '&': case '\'': case '(': \
    case ')': case '*': case '+': case ',':  \
@@ -167,6 +145,8 @@ extern "C" {
    case '?': case '@': case '[': case '\\': \
    case ']': case '^': case '_': case '`':  \
    case '{': case '|': case '}': case '~'
+#define _C_CTYPE_UPPER _C_CTYPE_LOWER_N ('A' - 'a')
+
 
 /* Function definitions.  */
 
@@ -194,7 +174,6 @@ c_isalnum (int c)
     _C_CTYPE_LOWER:
     _C_CTYPE_UPPER:
       return true;
-
     default:
       return false;
     }
@@ -208,7 +187,6 @@ c_isalpha (int c)
     _C_CTYPE_LOWER:
     _C_CTYPE_UPPER:
       return true;
-
     default:
       return false;
     }
@@ -225,107 +203,9 @@ c_isascii (int c)
     _C_CTYPE_CNTRL:
     _C_CTYPE_DIGIT:
     _C_CTYPE_LOWER:
+    _C_CTYPE_PUNCT:
     _C_CTYPE_UPPER:
-
-    _C_CTYPE_PUNCT_PLAIN:
-#if '!' < 0
-    case '!' + 256:
-#endif
-#if '"' < 0
-    case '"' + 256:
-#endif
-#if '#' < 0
-    case '#' + 256:
-#endif
-#if '$' < 0
-    case '$' + 256:
-#endif
-#if '%' < 0
-    case '%' + 256:
-#endif
-#if '&' < 0
-    case '&' + 256:
-#endif
-#if '\'' < 0
-    case '\'' + 256:
-#endif
-#if '(' < 0
-    case '(' + 256:
-#endif
-#if ')' < 0
-    case ')' + 256:
-#endif
-#if '*' < 0
-    case '*' + 256:
-#endif
-#if '+' < 0
-    case '+' + 256:
-#endif
-#if ',' < 0
-    case ',' + 256:
-#endif
-#if '-' < 0
-    case '-' + 256:
-#endif
-#if '.' < 0
-    case '.' + 256:
-#endif
-#if '/' < 0
-    case '/' + 256:
-#endif
-#if ':' < 0
-    case ':' + 256:
-#endif
-#if ';' < 0
-    case ';' + 256:
-#endif
-#if '<' < 0
-    case '<' + 256:
-#endif
-#if '=' < 0
-    case '=' + 256:
-#endif
-#if '>' < 0
-    case '>' + 256:
-#endif
-#if '?' < 0
-    case '?' + 256:
-#endif
-#if '@' < 0
-    case '@' + 256:
-#endif
-#if '[' < 0
-    case '[' + 256:
-#endif
-#if '\\' < 0
-    case '\\' + 256:
-#endif
-#if ']' < 0
-    case ']' + 256:
-#endif
-#if '^' < 0
-    case '^' + 256:
-#endif
-#if '_' < 0
-    case '_' + 256:
-#endif
-#if '`' < 0
-    case '`' + 256:
-#endif
-#if '{' < 0
-    case '{' + 256:
-#endif
-#if '|' < 0
-    case '|' + 256:
-#endif
-#if '}' < 0
-    case '}' + 256:
-#endif
-#if '~' < 0
-    case '~' + 256:
-#endif
       return true;
-
     default:
       return false;
     }
@@ -368,107 +248,9 @@ c_isgraph (int c)
     {
     _C_CTYPE_DIGIT:
     _C_CTYPE_LOWER:
+    _C_CTYPE_PUNCT:
     _C_CTYPE_UPPER:
-
-    _C_CTYPE_PUNCT_PLAIN:
-#if '!' < 0
-    case '!' + 256:
-#endif
-#if '"' < 0
-    case '"' + 256:
-#endif
-#if '#' < 0
-    case '#' + 256:
-#endif
-#if '$' < 0
-    case '$' + 256:
-#endif
-#if '%' < 0
-    case '%' + 256:
-#endif
-#if '&' < 0
-    case '&' + 256:
-#endif
-#if '\'' < 0
-    case '\'' + 256:
-#endif
-#if '(' < 0
-    case '(' + 256:
-#endif
-#if ')' < 0
-    case ')' + 256:
-#endif
-#if '*' < 0
-    case '*' + 256:
-#endif
-#if '+' < 0
-    case '+' + 256:
-#endif
-#if ',' < 0
-    case ',' + 256:
-#endif
-#if '-' < 0
-    case '-' + 256:
-#endif
-#if '.' < 0
-    case '.' + 256:
-#endif
-#if '/' < 0
-    case '/' + 256:
-#endif
-#if ':' < 0
-    case ':' + 256:
-#endif
-#if ';' < 0
-    case ';' + 256:
-#endif
-#if '<' < 0
-    case '<' + 256:
-#endif
-#if '=' < 0
-    case '=' + 256:
-#endif
-#if '>' < 0
-    case '>' + 256:
-#endif
-#if '?' < 0
-    case '?' + 256:
-#endif
-#if '@' < 0
-    case '@' + 256:
-#endif
-#if '[' < 0
-    case '[' + 256:
-#endif
-#if '\\' < 0
-    case '\\' + 256:
-#endif
-#if ']' < 0
-    case ']' + 256:
-#endif
-#if '^' < 0
-    case '^' + 256:
-#endif
-#if '_' < 0
-    case '_' + 256:
-#endif
-#if '`' < 0
-    case '`' + 256:
-#endif
-#if '{' < 0
-    case '{' + 256:
-#endif
-#if '|' < 0
-    case '|' + 256:
-#endif
-#if '}' < 0
-    case '}' + 256:
-#endif
-#if '~' < 0
-    case '~' + 256:
-#endif
       return true;
-
     default:
       return false;
     }
@@ -494,107 +276,9 @@ c_isprint (int c)
     case ' ':
     _C_CTYPE_DIGIT:
     _C_CTYPE_LOWER:
+    _C_CTYPE_PUNCT:
     _C_CTYPE_UPPER:
-
-    _C_CTYPE_PUNCT_PLAIN:
-#if '!' < 0
-    case '!' + 256:
-#endif
-#if '"' < 0
-    case '"' + 256:
-#endif
-#if '#' < 0
-    case '#' + 256:
-#endif
-#if '$' < 0
-    case '$' + 256:
-#endif
-#if '%' < 0
-    case '%' + 256:
-#endif
-#if '&' < 0
-    case '&' + 256:
-#endif
-#if '\'' < 0
-    case '\'' + 256:
-#endif
-#if '(' < 0
-    case '(' + 256:
-#endif
-#if ')' < 0
-    case ')' + 256:
-#endif
-#if '*' < 0
-    case '*' + 256:
-#endif
-#if '+' < 0
-    case '+' + 256:
-#endif
-#if ',' < 0
-    case ',' + 256:
-#endif
-#if '-' < 0
-    case '-' + 256:
-#endif
-#if '.' < 0
-    case '.' + 256:
-#endif
-#if '/' < 0
-    case '/' + 256:
-#endif
-#if ':' < 0
-    case ':' + 256:
-#endif
-#if ';' < 0
-    case ';' + 256:
-#endif
-#if '<' < 0
-    case '<' + 256:
-#endif
-#if '=' < 0
-    case '=' + 256:
-#endif
-#if '>' < 0
-    case '>' + 256:
-#endif
-#if '?' < 0
-    case '?' + 256:
-#endif
-#if '@' < 0
-    case '@' + 256:
-#endif
-#if '[' < 0
-    case '[' + 256:
-#endif
-#if '\\' < 0
-    case '\\' + 256:
-#endif
-#if ']' < 0
-    case ']' + 256:
-#endif
-#if '^' < 0
-    case '^' + 256:
-#endif
-#if '_' < 0
-    case '_' + 256:
-#endif
-#if '`' < 0
-    case '`' + 256:
-#endif
-#if '{' < 0
-    case '{' + 256:
-#endif
-#if '|' < 0
-    case '|' + 256:
-#endif
-#if '}' < 0
-    case '}' + 256:
-#endif
-#if '~' < 0
-    case '~' + 256:
-#endif
       return true;
-
     default:
       return false;
     }
@@ -605,105 +289,8 @@ c_ispunct (int c)
 {
   switch (c)
     {
-    _C_CTYPE_PUNCT_PLAIN:
-#if '!' < 0
-    case '!' + 256:
-#endif
-#if '"' < 0
-    case '"' + 256:
-#endif
-#if '#' < 0
-    case '#' + 256:
-#endif
-#if '$' < 0
-    case '$' + 256:
-#endif
-#if '%' < 0
-    case '%' + 256:
-#endif
-#if '&' < 0
-    case '&' + 256:
-#endif
-#if '\'' < 0
-    case '\'' + 256:
-#endif
-#if '(' < 0
-    case '(' + 256:
-#endif
-#if ')' < 0
-    case ')' + 256:
-#endif
-#if '*' < 0
-    case '*' + 256:
-#endif
-#if '+' < 0
-    case '+' + 256:
-#endif
-#if ',' < 0
-    case ',' + 256:
-#endif
-#if '-' < 0
-    case '-' + 256:
-#endif
-#if '.' < 0
-    case '.' + 256:
-#endif
-#if '/' < 0
-    case '/' + 256:
-#endif
-#if ':' < 0
-    case ':' + 256:
-#endif
-#if ';' < 0
-    case ';' + 256:
-#endif
-#if '<' < 0
-    case '<' + 256:
-#endif
-#if '=' < 0
-    case '=' + 256:
-#endif
-#if '>' < 0
-    case '>' + 256:
-#endif
-#if '?' < 0
-    case '?' + 256:
-#endif
-#if '@' < 0
-    case '@' + 256:
-#endif
-#if '[' < 0
-    case '[' + 256:
-#endif
-#if '\\' < 0
-    case '\\' + 256:
-#endif
-#if ']' < 0
-    case ']' + 256:
-#endif
-#if '^' < 0
-    case '^' + 256:
-#endif
-#if '_' < 0
-    case '_' + 256:
-#endif
-#if '`' < 0
-    case '`' + 256:
-#endif
-#if '{' < 0
-    case '{' + 256:
-#endif
-#if '|' < 0
-    case '|' + 256:
-#endif
-#if '}' < 0
-    case '}' + 256:
-#endif
-#if '~' < 0
-    case '~' + 256:
-#endif
+    _C_CTYPE_PUNCT:
       return true;
-
     default:
       return false;
     }
@@ -741,7 +328,6 @@ c_isxdigit (int c)
     _C_CTYPE_DIGIT:
     _C_CTYPE_A_THRU_F:
       return true;
-
     default:
       return false;
     }
@@ -752,14 +338,8 @@ c_tolower (int c)
 {
   switch (c)
     {
-    _C_CTYPE_UPPER_N (0):
-#if _C_CTYPE_SIGNED_EBCDIC
-      c += 256;
-      /* Fall through.  */
-    _C_CTYPE_UPPER_N (256):
-#endif
+    _C_CTYPE_UPPER:
       return c - 'A' + 'a';
-
     default:
       return c;
     }
@@ -770,14 +350,8 @@ c_toupper (int c)
 {
   switch (c)
     {
-    _C_CTYPE_LOWER_N (0):
-#if _C_CTYPE_SIGNED_EBCDIC
-      c += 256;
-      /* Fall through.  */
-    _C_CTYPE_LOWER_N (256):
-#endif
+    _C_CTYPE_LOWER:
       return c - 'a' + 'A';
-
     default:
       return c;
     }

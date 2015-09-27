@@ -1,3 +1,19 @@
+2015-09-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-ctype: do not worry about EBCDIC + char signed
+	Drop support for EBCDIC with char being signed, as this breaks too
+	many programs.  Problem reported by Ben Pfaff in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-09/msg00053.html
+	* lib/c-ctype.h: Verify that we are not using EBCDIC with
+	char being signed.
+	(_C_CTYPE_LOWER_A_THRU_F_N): New macro.
+	(_C_CTYPE_LOWER_N, _C_CTYPE_A_THRU_F): Use it.
+	(_C_CTYPE_DIGIT, _C_CTYPE_LOWER, _C_CTYPE_PUNCT, _C_CTYPE_UPPER):
+	(c_isascii, c_isgraph, c_isprint, c_ispunct, c_tolower, c_toupper):
+	* tests/test-c-ctype.c (test_all):
+	Simplify by assuming standard char values cannot be negative.
+	* tests/test-c-ctype.c (NCHARS, to_char): Remove; all uses removed.
+
 2015-09-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	c-ctype: port better to z/OS EBCDIC
