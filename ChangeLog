@@ -1,3 +1,10 @@
+2015-10-02  Daiki Ueno  <ueno@gnu.org>
+
+	uniname/uniname-tests: avoid compiler warnings
+	* tests/uniname/test-uninames.c (fill_names, fill_aliases): Remove
+	unused local variables.
+	(test_alias_lookup): Fix alias name display in failure cases.
+
 2015-09-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	c-ctype: do not worry about EBCDIC + char signed
