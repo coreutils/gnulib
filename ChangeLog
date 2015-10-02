@@ -1,3 +1,11 @@
+2015-10-02  Pádraig Brady  <P@draigBrady.com>
+
+	xalloc: avoid GCC 5.1 warning on 32 bit
+	* lib/xalloc.h: Disable -Wstrict-overflow for uses of
+	xalloc_oversized(), which was seen to give this warning
+	on GCC 5.1 on 32 bit: "assuming signed overflow does not occur
+	when simplifying conditional".
+
 2015-10-02  Daiki Ueno  <ueno@gnu.org>
 
 	uniname/uniname-tests: avoid compiler warnings

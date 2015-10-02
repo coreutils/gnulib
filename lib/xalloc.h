@@ -94,6 +94,12 @@ char *xstrdup (char const *str)
 #define XCALLOC(n, t) \
    ((t *) (sizeof (t) == 1 ? xzalloc (n) : xcalloc (n, sizeof (t))))
 
+/* GCC 5.1 gives an erroneous warning on 32 bit for xalloc_oversized():
+   "assuming signed overflow does not occur when simplifying conditional".  */
+#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wstrict-overflow"
+#endif
 
 /* Allocate an array of N objects, each with S bytes of memory,
    dynamically, with error checking.  S must be nonzero.  */
@@ -120,6 +126,10 @@ xnrealloc (void *p, size_t n, size_t s)
     xalloc_die ();
   return xrealloc (p, n * s);
 }
+
+#if (__GNUC__ == 4 && 6 <= __GNUC_MINOR__) || 4 < __GNUC__
+# pragma GCC diagnostic pop
+#endif
 
 /* If P is null, allocate a block of at least *PN such objects;
    otherwise, reallocate P so that it contains more than *PN objects
