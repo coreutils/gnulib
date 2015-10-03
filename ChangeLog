@@ -1,3 +1,9 @@
+2015-10-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc: do not worry about GCC 5 warning on 32 bit
+	* lib/xalloc.h: Revert previous change.
+	I found a better way to fix this in coreutils.
+
 2015-10-02  Pádraig Brady  <P@draigBrady.com>
 
 	xalloc: avoid GCC 5.1 warning on 32 bit
