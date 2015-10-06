@@ -4075,6 +4075,31 @@ func_emit_autoconf_snippets ()
   fi
 }
 
+# func_emit_pre_early_macros require indentation modules
+# The require parameter can be ':' (AC_REQUIRE) or 'false' (direct call).
+func_emit_pre_early_macros ()
+{
+  echo
+  echo "${2}# Pre-early section."
+  if $1; then
+    _pre_early_snippet="echo \"${2}AC_REQUIRE([\$_pre_early_macro])\""
+  else
+    _pre_early_snippet="echo \"${2}\$_pre_early_macro\""
+  fi
+
+  # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.  Doing
+  # AC_REQUIRE in configure-ac.early is not early enough.
+  _pre_early_macro="gl_USE_SYSTEM_EXTENSIONS"
+  case "${nl}${3}${nl}" in
+    *${nl}extensions${nl}*) eval "$_pre_early_snippet" ;;
+  esac
+
+  _pre_early_macro="gl_PROG_AR_RANLIB"
+  eval "$_pre_early_snippet"
+  echo
+}
+
+
 # func_import modules
 # Uses also the variables
 # - mode            import or add-import or remove-import or update
@@ -5196,15 +5221,8 @@ s,//*$,/,'
     echo "  m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
     echo "  m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
 
-    # We need to call gl_USE_SYSTEM_EXTENSIONS before gl_PROG_AR_RANLIB.  Doing
-    # AC_REQUIRE in configure-ac.early is not early enough.
-    case "${nl}${final_modules}${nl}" in
-        *${nl}extensions${nl}*)
-            echo "  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])"
-            ;;
-    esac
+    func_emit_pre_early_macros : '  ' "$final_modules"
 
-    echo "  AC_REQUIRE([gl_PROG_AR_RANLIB])"
     if test -n "$uses_subdirs"; then
       echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
     fi
@@ -5822,8 +5840,9 @@ func_create_testdir ()
        echo "AC_PROG_CC"
        echo "AC_PROG_INSTALL"
        echo "AC_PROG_MAKE_SET"
-       echo "gl_PROG_AR_RANLIB"
-       echo
+
+       func_emit_pre_early_macros false '' "$modules"
+
        if test -n "$uses_subdirs"; then
          echo "AM_PROG_CC_C_O"
          echo
@@ -5936,9 +5955,9 @@ func_create_testdir ()
    echo "m4_pattern_allow([^gl_ES\$])dnl a valid locale name"
    echo "m4_pattern_allow([^gl_LIBOBJS\$])dnl a variable"
    echo "m4_pattern_allow([^gl_LTLIBOBJS\$])dnl a variable"
-   echo
-   echo "gl_PROG_AR_RANLIB"
-   echo
+
+   func_emit_pre_early_macros false '' "$final_modules"
+
    if test -n "$any_uses_subdirs"; then
      echo "AM_PROG_CC_C_O"
      echo

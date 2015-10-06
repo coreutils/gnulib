@@ -1,3 +1,12 @@
+2015-10-06  Pavel Raiskup  <praiskup@redhat.com>
+
+	gnulib-tool: fix tests of 'extensions' module
+	This complements f8fe25fab60e3c687a124 commit.
+	* gnulib-tool (func_emit_pre_early_macros): New function, it wraps
+	emitting of initial gl_EARLY macros.
+	(func_import, func_create_testdir): All dumps of gl_PROG_AR_RANLIB
+	replaced with func_emit_pre_early_macros call.
+
 2015-10-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	unicase/locale-language: fix typo in utf-8 cookie
