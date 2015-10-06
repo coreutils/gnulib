@@ -268,10 +268,9 @@
 "zh", /* Chinese" */
 "zu", /* Zulu" */
 "zap", /* Zapotec" */
-%{
+%%
 /*
  * Local Variables:
  * coding: utf-8
  * End:
  */
-%}

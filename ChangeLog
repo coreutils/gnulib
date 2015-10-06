@@ -1,3 +1,9 @@
+2015-10-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	unicase/locale-language: fix typo in utf-8 cookie
+	* lib/unicase/locale-languages.gperf: Fix gperf input file format.
+	Problem reported by Zbigniew Jędrzejewski-Szmek.
+
 2015-10-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc: do not worry about GCC 5 warning on 32 bit
