@@ -16,4 +16,7 @@ programs that spawn child processes.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+SOCK_CLOEXEC and SOCK_NONBLOCK may not be defined
+as they're also significant to the socket() function.
 @end itemize

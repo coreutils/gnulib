@@ -1,3 +1,12 @@
+2015-10-12  Pino Toscano  <ptoscano@redhat.com>
+
+	accept4-tests: fix to avoid non portable flags
+	* tests/test-accept4.c (main): Pass only SOCK_* flags to accept4(),
+	as they are the only documented ones, and passing others may trigger
+	EINVAL (seen on FreeBSD 10.1-RELEASE).
+	* doc/glibc-functions/accept4.texi: Mention that we don't provide
+	the SOCK_CLOEXEC or SOCK_NONBLOCK defines.
+
 2015-10-06  Pavel Raiskup  <praiskup@redhat.com>
 
 	gnulib-tool: fix tests of 'extensions' module

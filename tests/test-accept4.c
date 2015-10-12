@@ -31,6 +31,10 @@ SIGNATURE_CHECK (accept4, int, (int, struct sockaddr *, socklen_t *, int));
 
 #include "macros.h"
 
+#ifndef SOCK_CLOEXEC
+# define SOCK_CLOEXEC 0
+#endif
+
 int
 main (void)
 {
@@ -43,7 +47,7 @@ main (void)
 
     errno = 0;
     ASSERT (accept4 (-1, (struct sockaddr *) &addr, &addrlen,
-                     O_CLOEXEC | O_BINARY)
+                     SOCK_CLOEXEC)
             == -1);
     ASSERT (errno == EBADF);
   }
@@ -54,7 +58,7 @@ main (void)
     close (99);
     errno = 0;
     ASSERT (accept4 (99, (struct sockaddr *) &addr, &addrlen,
-                     O_CLOEXEC | O_BINARY)
+                     SOCK_CLOEXEC)
             == -1);
     ASSERT (errno == EBADF);
   }
