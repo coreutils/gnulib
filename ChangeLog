@@ -1,3 +1,11 @@
+2015-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	binary-io, math, pthread, sys_socket, u64, unistd: port to strict C
+	* lib/binary-io.c, lib/math.c, lib/pthread.c, lib/sys_socket.c:
+	* lib/u64.c, lib/unistd.c:
+	Append 'typedef int dummy;', to pacify compilers that are picky
+	about empty translation units.
+
 2015-10-12  Pino Toscano  <ptoscano@redhat.com>
 
 	accept4-tests: fix to avoid non portable flags
