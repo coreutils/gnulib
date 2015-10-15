@@ -1,3 +1,9 @@
+2015-10-15  Simon Reinhardt  <simon@keinstein.org>
+
+	copy-file: fix mem leak in error case
+	* lib/copy-file.c (qcopy_file_preserving): Free the 32KiB buffer
+	upon error opening or performing I/O to the src and dest files.
+
 2015-10-15  Mike Frysinger  <vapier@chromium.org>
 
 	localename: control langinfo.h inclusion
