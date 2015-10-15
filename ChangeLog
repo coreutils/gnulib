@@ -1,3 +1,14 @@
+2015-10-15  Mike Frysinger  <vapier@chromium.org>
+
+	localename: control langinfo.h inclusion
+	This header is only used to work around buggy behavior in old
+	versions of glibc, so do not include it all the time.  Otherwise
+	we get build failures on systems that do not provide langinfo.h.
+	* lib/localename.c: Wrap langinfo.h include with same ifdefs used
+	in the source later on.
+	The patch was originally submitted to gettext as:
+	https://lists.gnu.org/archive/html/bug-gettext/2015-10/msg00011.html
+
 2015-10-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	binary-io, math, pthread, sys_socket, u64, unistd: port to strict C
