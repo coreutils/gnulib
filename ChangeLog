@@ -1,3 +1,8 @@
+2015-10-16  Dmitry Smirnov  <onlyjob@member.fsf.org>
+
+	safe-alloc-tests: fix typo in license header
+	* tests/test-safe-alloc.c: Mention LGPL 2.1, not 3.1
+
 2015-10-15  Simon Reinhardt  <simon@keinstein.org>
 
 	copy-file: fix mem leak in error case
