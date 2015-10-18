@@ -1600,7 +1600,7 @@ ifeq (a,b)
 # do not need to be marked.  Symbols matching '__.*' are
 # reserved by the compiler, so are automatically excluded below.
 _gl_TS_unmarked_extern_functions ?= main usage
-_gl_TS_function_match ?= /^(?:$(_gl_TS_extern)) +.*?(\S+) *\(/
+_gl_TS_function_match ?= /^(?:$(_gl_TS_extern)) +.*?(\w+) *\(/
 
 # If your project uses a macro like "XTERN", then put
 # the following in cfg.mk to override this default:

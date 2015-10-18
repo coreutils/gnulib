@@ -1,5 +1,13 @@
 2015-10-17  Jim Meyering  <meyering@fb.com>
 
+	maint.mk: _gl_TS_function_match: fix "extern" name extracting regexp
+	* top/maint.mk (_gl_TS_function_match): This heuristic extern-function-
+	name-extraction regexp mistakenly used \S+, and would mistakenly
+	extract "*F" from "extern int *F()" rather than the desired "F".
+	Use \w+ instead.
+
+2015-10-17  Jim Meyering  <meyering@fb.com>
+
 	maint.mk: sc_tight_scope: factor and support OS X
 	* top/maint.mk (_gl_tight_scope): Address three issues:
 	- factor out four instances of code that wraps a string in "^...$"
