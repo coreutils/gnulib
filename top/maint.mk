@@ -1645,7 +1645,7 @@ _gl_tight_scope: $(bin_PROGRAMS)
 	       test -f $$f && d= || d=$(srcdir)/; echo $$d$$f; done`;	\
 	( printf '%s\n' '__.*' $(_gl_TS_unmarked_extern_functions);	\
 	  grep -h -A1 '^extern .*[^;]$$' $$src				\
-	    | grep -vE '^(extern |--)' | $(SED) 's/ .*//';		\
+	    | grep -vE '^(extern |--|#)' | $(SED) 's/ .*//; /^$$/d';	\
 	  perl -lne							\
 	     '$(_gl_TS_function_match) and print $$1' $$hdr;		\
 	) | sort -u | $(SED) "$$sed_wrap" > $$t;			\

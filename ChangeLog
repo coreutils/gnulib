@@ -1,3 +1,11 @@
+2015-10-18  Pádraig Brady  <P@draigBrady.com>
+
+	maint.mk: sc_tight_scope: remove extraneous expressions
+	* top/maint.mk (tight_scope): This is not really required since
+	commit 3ef58f46 as sed_wrap ensures we don't get an empty expression
+	that matches all nm entries.  But it does remove extraneous entries
+	that may be confusing or cause issue in future maintenance.
+
 2015-10-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_rz: return NULL if localtime_r fails
