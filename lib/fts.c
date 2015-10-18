@@ -64,6 +64,7 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #include <errno.h>
 #include <stdalign.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -1907,12 +1908,16 @@ fts_alloc (FTS *sp, const char *name, register size_t namelen)
          * structure and the file name in one chunk.
          */
         len = offsetof(FTSENT, fts_name) + namelen + 1;
-        /* Round the allocation up so it has the same alignment as FTSENT,
+        /* Align the allocation size so that it works for FTSENT,
            so that trailing padding may be referenced by direct access
            to the flexible array members, without triggering undefined behavior
            by accessing bytes beyond the heap allocation.  This implicit access
-           was seen for example with ISDOT() and GCC 5.1.1 at -O2.  */
-        len = (len + alignof(FTSENT) - 1) & ~(alignof(FTSENT) - 1);
+           was seen for example with ISDOT() and GCC 5.1.1 at -O2.
+           Do not use alignof (FTSENT) here, since C11 prohibits
+           taking the alignment of a structure containing a flexible
+           array member.  */
+        len += alignof (max_align_t) - 1;
+        len &= ~ (alignof (max_align_t) - 1);
         if ((p = malloc(len)) == NULL)
                 return (NULL);
 

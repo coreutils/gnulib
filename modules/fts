@@ -31,6 +31,7 @@ opendir
 readdir
 stdalign
 stdbool
+stddef
 unistd-safer
 
 configure.ac:

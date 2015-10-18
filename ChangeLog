@@ -1,3 +1,12 @@
+2015-10-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	fts: port to C11 alignof
+	* doc/posix-headers/stdalign.texi (stdalign.h):
+	Document the C11 restriction.
+	* lib/fts.c: Include stddef.h, for max_align_t.
+	(fts_alloc): Align using max_align_t, not FTSENT.
+	* modules/fts (Depends-on): Add stddef.
+
 2015-10-18  Jim Meyering  <meyering@fb.com>
 
 	time_rz: avoid warning from bleeding-edge gcc's -Wnonnull
