@@ -1,3 +1,12 @@
+2015-10-17  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: sc_tight_scope: factor and support OS X
+	* top/maint.mk (_gl_tight_scope): Address three issues:
+	- factor out four instances of code that wraps a string in "^...$"
+	- allow nm-reported symbol names to have an optional leading "_"
+	- add "main" to the list of ignored variable names, because on os x,
+	"main" has nm-reported type "S" in the variable-checking section.
+
 2015-10-16  Dmitry Smirnov  <onlyjob@member.fsf.org>
 
 	safe-alloc-tests: fix typo in license header
