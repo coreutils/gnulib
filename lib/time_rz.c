@@ -288,8 +288,7 @@ localtime_rz (timezone_t tz, time_t const *t, struct tm *tm)
       timezone_t old_tz = set_tz (tz);
       if (old_tz)
         {
-          tm = localtime_r (t, tm);
-          if (tm && !save_abbr (tz, tm))
+          if (localtime_r (t, tm) && !save_abbr (tz, tm))
             tm = NULL;
           if (revert_tz (old_tz))
             return tm;

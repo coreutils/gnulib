@@ -1,3 +1,20 @@
+2015-10-18  Jim Meyering  <meyering@fb.com>
+
+	time_rz: avoid warning from bleeding-edge gcc's -Wnonnull
+	Compiling with gcc version 6.0.0 20151017 (experimental) (GCC), I
+	would see this:
+
+	lib/time_rz.c: In function 'localtime_rz':
+	lib/time_rz.c:292:15: error: nonnull argument 'tm' compared to NULL \
+	  [-Werror=nonnull]
+	           if (tm && !save_abbr (tz, tm))
+	               ^
+
+	That was complaining about "tm" because it is a parameter that was
+	declared with the __nonnull__ attribute.
+	* lib/time_rz.c (localtime_rz): Don't bother setting "tm" to the
+	result of localtime_r.
+
 2015-10-17  Jim Meyering  <meyering@fb.com>
 
 	maint.mk: _gl_TS_function_match: fix "extern" name extracting regexp
