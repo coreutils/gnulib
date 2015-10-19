@@ -1,3 +1,10 @@
+2015-10-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: work around pre-4.9 GCC x86 bug
+	* lib/stdalign.in.h (_Alignof): Work around bug in pre-4.9 GCC on
+	x86, when -std=gnu11 is used.  Problem reported by Jim Meyering in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-10/msg00038.html
+
 2015-10-18  Pádraig Brady  <P@draigBrady.com>
 
 	maint.mk: sc_tight_scope: remove extraneous expressions
