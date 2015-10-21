@@ -1,3 +1,8 @@
+2015-10-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	time_rz: fix comment about tzalloc
+	* lib/time_rz.c (tzalloc): Fix comment.
+
 2015-10-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: work around pre-4.9 GCC x86 bug

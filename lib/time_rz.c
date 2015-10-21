@@ -90,8 +90,7 @@ extend_abbrs (char *abbrs, char const *abbr, size_t abbr_size)
 }
 
 /* Return a newly allocated time zone for NAME, or NULL on failure.
-   As a special case, return a nonzero constant for wall clock time, a
-   constant that survives freeing.  */
+   A null NAME stands for wall clock time (which is like unset TZ).  */
 timezone_t
 tzalloc (char const *name)
 {
