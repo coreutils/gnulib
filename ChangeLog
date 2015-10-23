@@ -1,3 +1,10 @@
+2015-10-30  Pádraig Brady  <P@draigBrady.com>
+
+	doc: use extended timezone format in iso-8601 example
+	* doc/parse-datetime.texi: The standard states that extended format
+	is to be used consistently throughout.
+	Note that lib/parse-datetime.y can handle either tz format.
+
 2015-10-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port to Sun C 5.9
