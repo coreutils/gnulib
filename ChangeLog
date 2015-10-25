@@ -1,3 +1,10 @@
+2015-10-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: port to Sun C 5.9
+	* doc/posix-headers/stdalign.texi: Document this.
+	* lib/stdalign.in.h (_Alignas): Sun C 5.9 also supports
+	__attribute__ ((__aligned__ (...))).
+
 2015-10-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_rz: fix comment about tzalloc

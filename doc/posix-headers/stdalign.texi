@@ -38,7 +38,7 @@ member.  The Gnulib substitute does not support this extension.
 @code{_Alignas} and @code{alignas} are not always supported;
 on platforms lacking support, the
 macro @code{__alignas_is_defined} is not defined.
-Supported compilers include GCC, IBM C, Sun C 5.11 and later,
+Supported compilers include GCC, IBM C, Sun C 5.9 and later,
 and MSVC 7.0 and later.
 @item
 Some compilers do not support alignment via
