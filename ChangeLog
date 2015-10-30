@@ -1,5 +1,16 @@
 2015-11-02  Pádraig Brady  <P@draigBrady.com>
 
+	quotearg: add support for $'' shell escaping
+	* lib/quotearg.h: Add "shell-escape" and "shell-escape-always"
+	items and descriptions.
+	* lib/quotearg.c (quotearg_buffer_restyled): Add support for the
+	above types by quoting like "shell", but using $'...' syntax
+	for non printable characters, which should provide unambiguous
+	printable output for any input.
+	* tests/test-quotearg-simple.c: Update accordingly.
+
+2015-11-02  Pádraig Brady  <P@draigBrady.com>
+
 	maint: use a more standard return from mbrtowc test
 	* m4/mbrtowc.m4 (gl_MBRTOWC_EMPTY_INPUT): Don't return 1
 	from the test program as this is non standard and often

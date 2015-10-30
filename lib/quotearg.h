@@ -73,6 +73,37 @@ enum quoting_style
     */
     shell_always_quoting_style,
 
+    /* Quote names for the shell if they contain shell metacharacters
+       or other problematic characters (ls --quoting-style=shell-escape).
+       Non printable characters are quoted using the $'...' syntax,
+       which originated in ksh93 and is widely supported by most shells,
+       and proposed for inclusion in POSIX.
+
+       quotearg_buffer:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\\'", "a:b"
+       quotearg:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\\'", "a:b"
+       quotearg_colon:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\\'", "'a:b'"
+    */
+    shell_escape_quoting_style,
+
+    /* Quote names for the shell even if they would normally not
+       require quoting (ls --quoting-style=shell-escape).
+       Non printable characters are quoted using the $'...' syntax,
+       which originated in ksh93 and is widely supported by most shells,
+       and proposed for inclusion in POSIX.  Behaves like
+       shell_escape_quoting_style if QA_ELIDE_OUTER_QUOTES is in effect.
+
+       quotearg_buffer:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\'", "a:b"
+       quotearg:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\'", "a:b"
+       quotearg_colon:
+       "simple", "''$'\\0'' '$'\\t\\n'\\''\"'$'\\033''??/\'", "'a:b'"
+    */
+    shell_escape_always_quoting_style,
+
     /* Quote names as for a C language string (ls --quoting-style=c).
        Behaves like c_maybe_quoting_style if QA_ELIDE_OUTER_QUOTES is
        in effect.  Split into consecutive strings if
