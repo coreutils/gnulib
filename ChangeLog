@@ -1,3 +1,37 @@
+2015-10-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: add WRAPV and const flavors for GCC 5
+	If available, use GCC 5's builtin functions for efficient integer
+	overflow checking.  Also, add macros like INT_ADD_WRAPV efficently
+	and safely compute the low-order bits of the correct answer.
+	A downside of these efficient functions is that they cannot be
+	used in constant expressions, so add macros like INT_CONST_ADD_OVERFLOW
+	and INT_CONST_ADD_WRAPV that can be used even in constant expressions.
+	* NEWS: Document the incompatible changes to INT_ADD_OVERFLOW etc.
+	* doc/intprops.texi (Integer Properties, Integer Type Overflow):
+	Document the changes.
+	(Wraparound Arithmetic): New section.
+	(Integer Range Overflow):
+	Put this subsection last, since it's least useful.
+	* lib/intprops.h (INT_CONST_ADD_OVERFLOW)
+	(INT_CONST_SUBTRACT_OVERFLOW, INT_CONST_MULTIPLY_OVERFLOW):
+	New macros, with the meaning that INT_ADD_OVERFLOW etc. used to have.
+	(INT_CONST_ADD_WRAPV, INT_CONST_SUBTRACT_WRAPV)
+	(INT_NEGATE_WRAPV, INT_CONST_MULTIPLY_WRAPV, INT_DIVIDE_WRAPV)
+	(INT_REMAINDER_WRAPV, _GL_INT_OP_WRAPV, _GL_EXPR_CAST)
+	(_GL_INT_OP_WRAPV_LONGISH, INT_ADD_WRAPV, INT_SUBTRACT_WRAPV)
+	(INT_MULTIPLY_WRAPV, _GL_OP_OVERFLOW, _GL_OP_WRAPV, _GL_OP_WRAPV_GENSYM):
+	New macros.
+	(INT_ADD_OVERFLOW, INT_SUBTRACT_OVERFLOW, INT_MULTIPLY_OVERFLOW):
+	Generate calls to GCC builtins if available, for speed.
+	* tests/test-intprops.c (INT_CONST_DIVIDE_OVERFLOW)
+	(INT_CONST_REMAINDER_OVERFLOW, INT_CONST_LEFT_SHIFT_OVERFLOW)
+	(INT_CONST_DIVIDE_WRAPV, INT_CONST_REMAINDER_WRAPV)
+	(INT_CONST_LEFT_SHIFT_WRAPV): New macros.
+	(main, CHECK_BINOP, CHECK_UNOP, CHECK_SUM, CHECK_PRODUCT)
+	(CHECK_QUOTIENT, CHECK_REMAINDER):
+	Test WRAPV and CONST flavors (when available) too.
+
 2015-10-30  Pádraig Brady  <P@draigBrady.com>
 
 	doc: use extended timezone format in iso-8601 example

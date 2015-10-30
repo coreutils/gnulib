@@ -30,42 +30,39 @@ the resulting behavior is well-defined, but programs may still
 misbehave badly after overflow occurs.
 
 Many techniques have been proposed to attack these problems.  These
-include precondition testing, GCC's @option{-ftrapv} option, GCC's
-no-undefined-overflow branch, the as-if infinitely ranged (AIR) model
-implemented in Clang, saturation semantics where overflow reliably
-yields an extreme value, the RICH static transformer to an
-overflow-checking variant, and special testing methods.  For more
-information about these techniques, see: Dannenberg R, Dormann W,
-Keaton D @emph{et al.},
-@url{http://www.sei.cmu.edu/library/abstracts/reports/10tn008.cfm,
-As-if infinitely ranged integer model}, 2nd ed., Software Engineering
-Institute Technical Note CMU/SEI-2010-TN-008, April 2010.
+include precondition testing, wraparound behavior where signed integer
+arithmetic is guaranteed to be modular, saturation semantics where
+overflow reliably yields an extreme value, undefined behavior
+sanitizers where overflow is guaranteed to trap, and various static
+analysis techniques.
 
-Gnulib supports the precondition testing technique, as this is easy to
-support portably.  There are two families of precondition tests: the
-first, for integer ranges, has a simple and straightforward implementation,
-while the second, for integer types, is easier to use.
+Gnulib supports wraparound arithmetic and precondition testing, as
+these are relatively easy to support portably and efficiently.  There
+are two families of precondition tests: the first, for integer types,
+is easier to use, while the second, for integer ranges, has a simple
+and straightforward portable implementation.
 
 @menu
 * Integer Type Determination::  Whether a type has integer properties.
 * Integer Bounds::              Bounds on integer values and representations.
-* Integer Range Overflow::      Integer overflow checking if bounds are known.
+* Wraparound Arithmetic::       Well-defined behavior on signed overflow.
 * Integer Type Overflow::       General integer overflow checking.
+* Integer Range Overflow::      Integer overflow checking if bounds are known.
 @end menu
 
 @node Integer Type Determination
 @subsection Integer Type Determination
 
 @findex TYPE_IS_INTEGER
-@code{TYPE_IS_INTEGER (@var{t})} expands to a constant
+@code{TYPE_IS_INTEGER (@var{t})} is a constant
 expression that is 1 if the arithmetic type @var{t} is an integer type.
 @code{_Bool} counts as an integer type.
 
 @findex TYPE_SIGNED
-@code{TYPE_SIGNED (@var{t})} expands to a constant expression
+@code{TYPE_SIGNED (@var{t})} is a constant expression
 that is 1 if the arithmetic type @var{t} is a signed integer type or a
 floating type.  If @var{t} is an integer type, @code{TYPE_SIGNED (@var{t})}
-expands to an integer constant expression.
+is an integer constant expression.
 
 Example usage:
 
@@ -85,7 +82,7 @@ enum
 @cindex integer bounds
 
 @findex INT_BUFSIZE_BOUND
-@code{INT_BUFSIZE_BOUND (@var{t})} expands to an integer constant
+@code{INT_BUFSIZE_BOUND (@var{t})} is an integer constant
 expression that is a bound on the size of the string representing an
 integer type or expression @var{t} in decimal notation, including the
 terminating null character and any leading @code{-} character.  For
@@ -107,7 +104,7 @@ int_strlen (int i)
 @end example
 
 @findex INT_STRLEN_BOUND
-@code{INT_STRLEN_BOUND (@var{t})} expands to an integer constant
+@code{INT_STRLEN_BOUND (@var{t})} is an integer constant
 expression that is a bound on the length of the string representing an
 integer type or expression @var{t} in decimal notation, including any
 leading @code{-} character.  This is one less than
@@ -115,8 +112,8 @@ leading @code{-} character.  This is one less than
 
 @findex TYPE_MINIMUM
 @findex TYPE_MAXIMUM
-@code{TYPE_MINIMUM (@var{t})} and @code{TYPE_MAXIMUM (@var{t})} expand
-to integer constant expressions equal to the minimum and maximum
+@code{TYPE_MINIMUM (@var{t})} and @code{TYPE_MAXIMUM (@var{t})} are
+integer constant expressions equal to the minimum and maximum
 values of the integer type @var{t}.  These expressions are of the type
 @var{t} (or more precisely, the type @var{t} after integer
 promotions).
@@ -134,6 +131,254 @@ in_off_t_range (intmax_t a)
 @}
 @end example
 
+@node Wraparound Arithmetic
+@subsection Wraparound Arithmetic with Signed Integers
+
+@cindex wraparound integer arithmetic
+
+Signed integer arithmetic has undefined behavior on overflow in C@.
+Although almost all modern computers use two's complement signed
+arithmetic that is well-defined to wrap around, C compilers routinely
+optimize assuming that signed integer overflow cannot occur, which
+means that a C program cannot easily get at the underlying machine
+arithmetic.  For example, on a typical machine with 32-bit two's
+complement @code{int} the expression @code{INT_MAX + 1} does not
+necessarily yield @code{INT_MIN}, because the compiler may do
+calculations with a 64-bit register, or may generate code that
+traps on signed integer overflow.
+
+The following macros work around this problem by yielding the
+wraparound value, i.e., the low-order bits of the correct answer.  For
+example, @code{INT_ADD_WRAPV (INT_MAX, 1)} reliably yields
+@code{INT_MIN} on a two's complement machine.  You can also use
+overflow-checking macros to check whether wraparound occurred.
+@xref{Integer Type Overflow}.
+
+@noindent
+These macros have the following restrictions:
+
+@itemize @bullet
+@item
+Their arguments must be integer expressions.
+
+@item
+They may evaluate their arguments zero or multiple times, so the
+arguments should not have side effects.
+
+@item
+On non-GCC-compatible compilers that do not support C11, the type of
+@code{INT_ADD_WRAPV (@var{a}, @var{b})} might differ from the native
+type of @code{@var{a} + @var{b}}, so it is wise to convert the result
+to the native type.  Such a conversion is safe and cannot trap.  This
+issue applies to all the @code{_WRAP} macros.
+@end itemize
+
+These macros are tuned for their last argument being a constant.
+
+@table @code
+@item INT_ADD_WRAP (@var{a}, @var{b})
+@findex INT_ADD_WRAP
+Return the low-order bits of @code{@var{a} + @var{b}}.  See above for
+restrictions.
+
+@item INT_CONST_ADD_WRAP (@var{a}, @var{b})
+@findex INT_CONST_ADD_WRAP
+Return the low-order bits of @code{@var{a} + @var{b}}.  See above for
+restrictions.  This macro differs from @code{INT_ADD_WRAP} in that
+although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_SUBTRACT_WRAP (@var{a}, @var{b})
+@findex INT_SUBTRACT_WRAP
+Return the low-order bits of @code{@var{a} - @var{b}}.  See above for
+restrictions.
+
+@item INT_CONST_SUBTRACT_WRAP (@var{a}, @var{b})
+@findex INT_CONST_SUBTRACT_WRAP
+Return the low-order bits of @code{@var{a} - @var{b}}.  See above for
+restrictions.  This macro differs from @code{INT_SUBTRACT_WRAP} in
+that although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_NEGATE_WRAP (@var{a})
+@findex INT_NEGATE_WRAP
+Return the low-order bits of @code{-@var{a}}.  See above for restrictions.
+This macro is an integer constant expression if its arguments are.
+
+@item INT_MULTIPLY_WRAP (@var{a}, @var{b})
+@findex INT_MULTIPLY_WRAP
+Return the low-order bits of @code{@var{a} * @var{b}}.  See above for
+restrictions.
+
+@item INT_CONST_MULTIPLY_WRAP (@var{a}, @var{b})
+@findex INT_CONST_MULTIPLY_WRAP
+Return the low-order bits of @code{@var{a} * @var{b}}.  See above for
+restrictions.  This macro differs from @code{INT_MULTIPLY_WRAP} in
+that although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_DIVIDE_WRAP (@var{a}, @var{b})
+@findex INT_DIVIDE_WRAP
+Return the low-order bits of @code{@var{a} / @var{b}}.  See above for
+restrictions.  This macro does not check for division by zero.  This
+macro is an integer constant expression if its arguments are.
+
+@item INT_REMAINDER_WRAP (@var{a}, @var{b})
+@findex INT_REMAINDER_WRAP
+Return the low-order bits of @code{@var{a} % @var{b}}.  See above for
+restrictions.  This macro does not check for division by zero.  This
+macro is an integer constant expression if its arguments are.
+
+@item INT_LEFT_SHIFT_WRAP (@var{a}, @var{b})
+@findex INT_LEFT_SHIFT_WRAP
+Return the low-order bits of @code{@var{a} << @var{b}}.  See above for
+restrictions.  The C standard says that behavior is undefined for
+shifts unless 0@leq{}@var{b}<@var{w} where @var{w} is @var{a}'s word
+width, and that when @var{a} is negative then @code{@var{a} <<
+@var{b}} has undefined behavior, but this macro does not check these
+other restrictions.  This macro is an integer constant expression if
+its arguments are.
+@end table
+
+@node Integer Type Overflow
+@subsection Integer Type Overflow
+
+@cindex integer type overflow
+@cindex overflow, integer type
+
+Although unsigned integer arithmetic wraps around modulo a power of
+two, signed integer arithmetic has undefined behavior on overflow in
+C@.  Almost all modern computers use two's complement signed
+arithmetic that is well-defined to wrap around, but C compilers
+routinely optimize based on the assumption that signed integer
+overflow cannot occur, which means that a C program cannot easily get
+at the underlying machine behavior.  For example, the signed integer
+expression @code{(a + b < b) != (a < 0)} is not a reliable test for
+whether @code{a + b} overflows, because a compiler can assume that
+signed overflow cannot occur and treat the entire expression as if it
+were false.
+
+These macros yield 1 if the corresponding C operators might not yield
+numerically correct answers due to arithmetic overflow of an integer
+type.  They work correctly on all known practical hosts, and do not
+rely on undefined behavior due to signed arithmetic overflow.  They
+are typically easier to use than the integer range overflow macros
+(@pxref{Integer Range Overflow}).
+
+Example usages:
+
+@example
+#include <intprops.h>
+#include <limits.h>
+
+/* Print the low order bits of A * B,
+   reporting whether overflow occurred.
+   When optimized this code typically
+   multiplies A and B only once.  */
+void
+print_product (long int a, long int b)
+@{
+  long int result = INT_MULTIPLY_WRAPV (a, b);
+  printf ("result is %ld (%s)\n", result,
+          (INT_MULTIPLY_OVERFLOW (a, b)
+           ? "after overflow"
+           : "no overflow"));
+@}
+
+/* Does the product of two ints always fit
+   in a long int?  */
+enum @{
+  INT_PRODUCTS_FIT_IN_LONG
+    = ! (INT_CONST_MULTIPLY_OVERFLOW
+         ((long int) INT_MIN, INT_MIN))
+@};
+@end example
+
+@noindent
+These macros have the following restrictions:
+
+@itemize @bullet
+@item
+Their arguments must be integer expressions.
+
+@item
+They may evaluate their arguments zero or multiple times, so the
+arguments should not have side effects.
+@end itemize
+
+These macros are tuned for their last argument being a constant.
+
+@table @code
+@item INT_ADD_OVERFLOW (@var{a}, @var{b})
+@findex INT_ADD_OVERFLOW
+Yield 1 if @code{@var{a} + @var{b}} would overflow.  See above for
+restrictions.
+
+@item INT_CONST_ADD_OVERFLOW (@var{a}, @var{b})
+@findex INT_CONST_ADD_OVERFLOW
+Yield 1 if @code{@var{a} + @var{b}} would overflow.  See above for
+restrictions.  This macro differs from @code{INT_ADD_OVERFLOW} in that
+although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_SUBTRACT_OVERFLOW (@var{a}, @var{b})
+@findex INT_SUBTRACT_OVERFLOW
+Yield 1 if @code{@var{a} - @var{b}} would overflow.  See above for
+restrictions.
+
+@item INT_CONST_SUBTRACT_OVERFLOW (@var{a}, @var{b})
+@findex INT_CONST_SUBTRACT_OVERFLOW
+Yield 1 if @code{@var{a} - @var{b}} would overflow.  See above for
+restrictions.  This macro differs from @code{INT_SUBTRACT_OVERFLOW} in
+that although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_NEGATE_OVERFLOW (@var{a})
+@findex INT_NEGATE_OVERFLOW
+Yields 1 if @code{-@var{a}} would overflow.  See above for restrictions.
+This macro is an integer constant expression if its arguments are.
+
+@item INT_MULTIPLY_OVERFLOW (@var{a}, @var{b})
+@findex INT_MULTIPLY_OVERFLOW
+Yield 1 if @code{@var{a} * @var{b}} would overflow.  See above for
+restrictions.
+
+@item INT_CONST_MULTIPLY_OVERFLOW (@var{a}, @var{b})
+@findex INT_CONST_MULTIPLY_OVERFLOW
+Yield 1 if @code{@var{a} * @var{b}} would overflow.  See above for
+restrictions.  This macro differs from @code{INT_SUBTRACT_OVERFLOW} in
+that although its implementation is typically slower, it is an integer
+constant expression if its arguments are.
+
+@item INT_DIVIDE_OVERFLOW (@var{a}, @var{b})
+@findex INT_DIVIDE_OVERFLOW
+Yields 1 if @code{@var{a} / @var{b}} would overflow.  See above for
+restrictions.  Division overflow can happen on two's complement hosts
+when dividing the most negative integer by @minus{}1.  This macro does
+not check for division by zero.  This macro is an integer constant
+expression if its arguments are.
+
+@item INT_REMAINDER_OVERFLOW (@var{a}, @var{b})
+@findex INT_REMAINDER_OVERFLOW
+Yield 1 if @code{@var{a} % @var{b}} would overflow.  See above for
+restrictions.  Remainder overflow can happen on two's complement hosts
+when dividing the most negative integer by @minus{}1; although the
+mathematical result is always 0, in practice some implementations
+trap, so this counts as an overflow.  This macro does not check for
+division by zero.  This macro is an integer constant expression if its
+arguments are.
+
+@item INT_LEFT_SHIFT_OVERFLOW (@var{a}, @var{b})
+@findex INT_LEFT_SHIFT_OVERFLOW
+Yield 1 if @code{@var{a} << @var{b}} would overflow.  See above for
+restrictions.  The C standard says that behavior is undefined for
+shifts unless 0@leq{}@var{b}<@var{w} where @var{w} is @var{a}'s word
+width, and that when @var{a} is negative then @code{@var{a} <<
+@var{b}} has undefined behavior, but this macro does not check these
+other restrictions.  This macro is an integer constant expression if
+its arguments are.
+@end table
+
 @node Integer Range Overflow
 @subsection Integer Range Overflow
 
@@ -142,7 +387,7 @@ in_off_t_range (intmax_t a)
 
 These macros yield 1 if the corresponding C operators might not yield
 numerically correct answers due to arithmetic overflow.  They do not
-rely on undefined or implementation-defined behavior.  They expand to
+rely on undefined or implementation-defined behavior.  They are
 integer constant expressions if their arguments are.  Their
 implementations are simple and straightforward, but they are typically
 harder to use than the integer type overflow macros.  @xref{Integer
@@ -242,96 +487,6 @@ Here, @var{min} and @var{max} are for @var{a} only, and @var{b} need
 not be of the same type as the other arguments.  The C standard says
 that behavior is undefined for shifts unless 0@leq{}@var{b}<@var{w}
 where @var{w} is @var{a}'s word width, and that when @var{a} is negative
-then @code{@var{a} << @var{b}} has undefined behavior and
-@code{@var{a} >> @var{b}} has implementation-defined behavior, but
-this macro does not check these other restrictions.
-@end table
-
-@node Integer Type Overflow
-@subsection Integer Type Overflow
-
-@cindex integer type overflow
-@cindex overflow, integer type
-
-These macros yield 1 if the corresponding C operators might not yield
-numerically correct answers due to arithmetic overflow of an integer
-type.  They work correctly on all known practical hosts, and do not
-rely on undefined behavior due to signed arithmetic overflow.  They
-expand to integer constant expressions if their arguments are.  They
-are easier to use than the integer range overflow macros
-(@pxref{Integer Range Overflow}).
-
-Example usage:
-
-@example
-#include <intprops.h>
-void
-print_product (long int a, long int b)
-@{
-  if (INT_MULTIPLY_OVERFLOW (a, b))
-    printf ("multiply would overflow");
-  else
-    printf ("product is %ld", a * b);
-@}
-@end example
-
-@noindent
-These macros have the following restrictions:
-
-@itemize @bullet
-@item
-Their arguments must be integer expressions.
-
-@item
-They may evaluate their arguments zero or multiple times, so the
-arguments should not have side effects.
-@end itemize
-
-These macros are tuned for their last argument being a constant.
-
-@table @code
-@item INT_ADD_OVERFLOW (@var{a}, @var{b})
-@findex INT_ADD_OVERFLOW
-Yield 1 if @code{@var{a} + @var{b}} would overflow.  See above for
-restrictions.
-
-@item INT_SUBTRACT_OVERFLOW (@var{a}, @var{b})
-@findex INT_SUBTRACT_OVERFLOW
-Yield 1 if @code{@var{a} - @var{b}} would overflow.  See above for
-restrictions.
-
-@item INT_NEGATE_OVERFLOW (@var{a})
-@findex INT_NEGATE_OVERFLOW
-Yields 1 if @code{-@var{a}} would overflow.  See above for restrictions.
-
-@item INT_MULTIPLY_OVERFLOW (@var{a}, @var{b})
-@findex INT_MULTIPLY_OVERFLOW
-Yield 1 if @code{@var{a} * @var{b}} would overflow.  See above for
-restrictions.
-
-@item INT_DIVIDE_OVERFLOW (@var{a}, @var{b})
-@findex INT_DIVIDE_OVERFLOW
-Yields 1 if @code{@var{a} / @var{b}} would overflow.  See above for
-restrictions.  Division overflow can happen on two's complement hosts
-when dividing the most negative integer by @minus{}1.  This macro does
-not check for division by zero.
-
-@item INT_REMAINDER_OVERFLOW (@var{a}, @var{b})
-@findex INT_REMAINDER_OVERFLOW
-Yield 1 if @code{@var{a} % @var{b}} would overflow.  See above for
-restrictions.  Remainder overflow can happen on two's complement hosts
-when dividing the most negative integer by @minus{}1; although the
-mathematical result is always 0, in practice some implementations
-trap, so this counts as an overflow.  This macro does not check for
-division by zero.
-
-@item INT_LEFT_SHIFT_OVERFLOW (@var{a}, @var{b})
-@findex INT_LEFT_SHIFT_OVERFLOW
-Yield 1 if @code{@var{a} << @var{b}} would overflow.  See above for
-restrictions.  The C standard says that behavior is undefined for
-shifts unless 0@leq{}@var{b}<@var{w} where @var{w} is @var{a}'s word
-width, and that when @var{a} is negative then @code{@var{a} <<
-@var{b}} has undefined behavior and @code{@var{a} >> @var{b}} has
-implementation-defined behavior, but this macro does not check these
-other restrictions.
+then @code{@var{a} << @var{b}} has undefined behavior, but this macro
+does not check these other restrictions.
 @end table
