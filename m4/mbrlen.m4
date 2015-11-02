@@ -253,10 +253,10 @@ changequote([,])dnl
            int
            main (void)
            {
-             return mbrlen ("", 0, &mbs) == (size_t) -2;
+             return ! mbrlen ("", 0, &mbs) == (size_t) -2;
            }]])],
-        [gl_cv_func_mbrlen_empty_input=no],
         [gl_cv_func_mbrlen_empty_input=yes],
+        [gl_cv_func_mbrlen_empty_input=no],
         [:])
     ])
 ])

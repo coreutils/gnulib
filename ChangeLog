@@ -1,3 +1,11 @@
+2015-11-02  Pádraig Brady  <P@draigBrady.com>
+
+	maint: use a more standard return from mbrtowc test
+	* m4/mbrtowc.m4 (gl_MBRTOWC_EMPTY_INPUT): Don't return 1
+	from the test program as this is non standard and often
+	indicates an unhandled case in the test program.
+	* m4/mbrlen.m4 (gl_MBRLEN_EMPTY_INPUT): Likewise.
+
 2015-10-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: add WRAPV and const flavors for GCC 5
