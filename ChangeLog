@@ -1,3 +1,10 @@
+2015-11-03  Jim Meyering  <meyering@fb.com>
+
+	intprops: add parentheses for when OP has precedence lower than "-"
+	* lib/intprops.h (_GL_INT_OP_WRAPV_VIA_UNSIGNED): In "a OP b - c",
+	"a OP b" must be parenthesized for when OP is like "<<", which has
+	lower precedence than the following "-". Reported by Pádraig Brady.
+
 2015-11-03  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: constify get_quoting_style parameters

@@ -401,7 +401,7 @@
 #define _GL_INT_OP_WRAPV_VIA_UNSIGNED(a, b, op, t) \
   ((unsigned t) (a) op (unsigned t) (b) <= TYPE_MAXIMUM (t) \
    ? (t) ((unsigned t) (a) op (unsigned t) (b)) \
-   : ((t) ((unsigned t) (a) op (unsigned t) (b) - TYPE_MINIMUM (t)) \
+   : ((t) (((unsigned t) (a) op (unsigned t) (b)) - TYPE_MINIMUM (t)) \
       + TYPE_MINIMUM (t)))
 
 /* Calls to the INT_<op>_<result> macros are like their INT_CONST_<op>_<result>
