@@ -1,3 +1,9 @@
+2015-11-03  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg: constify get_quoting_style parameters
+	* lib/quotearg.h (get_quoting_style): Mark parameter as const.
+	* lib/quotearg.c (get_quoting_style): Likewise.
+
 2015-11-02  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: add support for $'' shell escaping

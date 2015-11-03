@@ -278,7 +278,7 @@ struct quoting_options;
 struct quoting_options *clone_quoting_options (struct quoting_options *o);
 
 /* Get the value of O's quoting style.  If O is null, use the default.  */
-enum quoting_style get_quoting_style (struct quoting_options *o);
+enum quoting_style get_quoting_style (struct quoting_options const *o);
 
 /* In O (or in the default if O is null),
    set the value of the quoting style to S.  */

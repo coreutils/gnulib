@@ -120,7 +120,7 @@ clone_quoting_options (struct quoting_options *o)
 
 /* Get the value of O's quoting style.  If O is null, use the default.  */
 enum quoting_style
-get_quoting_style (struct quoting_options *o)
+get_quoting_style (struct quoting_options const *o)
 {
   return (o ? o : &default_quoting_options)->style;
 }
