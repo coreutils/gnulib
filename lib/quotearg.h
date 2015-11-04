@@ -393,6 +393,9 @@ char *quotearg_colon (char const *arg);
 /* Like quotearg_colon (ARG), except it can quote null bytes.  */
 char *quotearg_colon_mem (char const *arg, size_t argsize);
 
+/* Like quotearg_n_style, except with ':' quoting enabled.  */
+char *quotearg_n_style_colon (int n, enum quoting_style s, char const *arg);
+
 /* Like quotearg_n_style (N, S, ARG) but with S as custom_quoting_style
    with left quote as LEFT_QUOTE and right quote as RIGHT_QUOTE.  See
    set_custom_quoting for a description of acceptable LEFT_QUOTE and

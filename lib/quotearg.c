@@ -955,6 +955,15 @@ quotearg_colon_mem (char const *arg, size_t argsize)
 }
 
 char *
+quotearg_n_style_colon (int n, enum quoting_style s, char const *arg)
+{
+  struct quoting_options options;
+  options = quoting_options_from_style (s);
+  set_char_quoting (&options, ':', 1);
+  return quotearg_n_options (n, arg, SIZE_MAX, &options);
+}
+
+char *
 quotearg_n_custom (int n, char const *left_quote,
                    char const *right_quote, char const *arg)
 {
