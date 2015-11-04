@@ -1,3 +1,11 @@
+2015-11-03  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg: add quotearg_n_style_colon()
+	This quotes with default options of the specified style,
+	but with quoting enabled for instances of ':'.
+	* lib/quotearg.h (quotearg_n_style_colon): Description and declaration.
+	* lib/quotearg.c (quotearg_n_style_colon): New function implementation.
+
 2015-11-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: revise _WRAPV macros, revert _OVERFLOW
