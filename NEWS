@@ -42,14 +42,6 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
-2015-10-30  intprops        The macros INT_ADD_OVERFLOW, INT_SUBTRACT_OVERFLOW,
-                            and INT_MULTIPLY_OVERFLOW are no longer constant
-                            expressions even when their arguments are constants.
-                            Use the new macros INT_CONST_ADD_OVERFLOW,
-                            INT_CONST_SUBTRACT_OVERFLOW, and
-                            INT_CONST_MULTIPLY_OVERFLOW if you need
-                            overflow checking in constant expressions.
-
 2015-09-25  c-ctype         The following macros were removed:
                             C_CTYPE_CONSECUTIVE_DIGITS
                             C_CTYPE_CONSECUTIVE_LOWERCASE

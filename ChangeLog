@@ -1,3 +1,41 @@
+2015-11-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: revise _WRAPV macros, revert _OVERFLOW
+	The incompatible changes to the _OVERFLOW macros were too much of
+	a hassle in practice, so revert them.  Instead, change the new
+	_WRAPV macros to make them closer in behavior to GCC 5's new
+	builtin_add_overflow etc. functions.  No other software was using
+	these newly-added macros yet, so this should be OK.
+	* NEWS: Revert previous change, since the incompatible change
+	has been reverted, and nobody used the incompatible version.
+	* doc/intprops.texi (Wraparound Arithmetic, Integer Type Overflow):
+	Document revised behavior.
+	(Integer Range Overflow): Adjust example to match above revisions.
+	* lib/intprops.h (INT_ADD_OVERFLOW, INT_SUBTRACT_OVERFLOW)
+	(INT_MULTIPLY_OVERFLOW): Revert previous change, so that
+	these can be used in integer constant expressions again.
+	(INT_CONST_ADD_OVERFLOW, INT_CONST_SUBTRACT_OVERFLOW)
+	(INT_CONST_MULTIPLY_OVERFLOW): Remove, as these are no longer
+	needed.
+	(INT_CONST_ADD_WRAPV, INT_CONST_SUBTRACT_WRAPV)
+	(INT_NEGATE_WRAPV, INT_CONST_MULTIPLY_WRAPV, INT_DIVIDE_WRAPV)
+	(INT_REMAINDER_WRAPV, INT_LEFT_SHIFT_WRAPV):
+	Remove, as they did not seem that useful.
+	(INT_ADD_WRAPV, INT_SUBTRACT_WRAPV, INT_MULTIPLY_WRAPV)
+	(_GL_INT_OP_WRAPV, _GL_INT_OP_WRAPV_LONGISH)
+	(_GL_INT_OP_WRAPV_VIA_UNSIGNED):
+	Support new semantics.
+	(__has_builtin): New macro, if not alreay defined.
+	(_GL__GENERIC_BOGUS, _GL_INT_OP_CALC, _GL_INT_OP_CALC1): New macros.
+	* tests/test-intprops.c (INT_CONST_DIVIDE_OVERFLOW)
+	(INT_CONST_REMAINDER_OVERFLOW, INT_CONST_LEFT_SHIFT_OVERFLOW)
+	(INT_CONST_DIVIDE_WRAPV, INT_CONST_REMAINDER_WRAPV)
+	(INT_CONST_LEFT_SHIFT_WRAPV): Remove.
+	(CHECK_SBINOP, CHECK_SSUM, CHECK_SUM1, CHECK_SSUM1)
+	(CHECK_SDIFFERENCE, CHECK_SPRODUCT, CHECK_PRODUCT1, CHECK_SPRODUCT1):
+	New macros.
+	(CHECK_BINOP, CHECK_UNOP, main, CHECK_SUM): Test new behavior.
+
 2015-11-03  Jim Meyering  <meyering@fb.com>
 
 	intprops: add parentheses for when OP has precedence lower than "-"
