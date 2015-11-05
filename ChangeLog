@@ -1,3 +1,12 @@
+2015-11-05  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops-test: suppress -Woverlength-strings
+	Problem reported by Pádraig Brady in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-11/msg00008.html
+	It is not worth the hassle to port this test to compilers that
+	cannot handle long strings in diagnostics.
+	* tests/test-intprops.c [__GNUC__]: Ignore -Woverlength-strings.
+
 2015-11-03  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: add quotearg_n_style_colon()

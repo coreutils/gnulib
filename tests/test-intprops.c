@@ -16,9 +16,10 @@
 
 /* Written by Paul Eggert.  */
 
-/* Tell gcc not to warn about the many (X < 0) expressions that
-   the overflow macros expand to.  */
-#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
+/* Tell gcc not to warn about the long expressions that the overflow
+   macros expand to, or about the (X < 0) expressions.  */
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Woverlength-strings"
 # pragma GCC diagnostic ignored "-Wtype-limits"
 #endif
 
