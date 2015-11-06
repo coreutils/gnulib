@@ -1,5 +1,8 @@
 2015-11-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-timespec: fix typo in previous change
+	* tests/test-timespec.c (main): Fix typo that reduced test quality.
+
 	timespec-sub: fix overflow bug; add tests
 	* lib/timespec-add.c (timespec_add):
 	* lib/timespec-sub.c (timespec_sub):

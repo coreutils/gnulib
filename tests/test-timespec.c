@@ -144,7 +144,7 @@ main (void)
 
 		    for (k = 0; k < ntests; k++)
 		      {
-			struct timespec c = test[j];
+			struct timespec c = test[k];
 			if (valid (c))
 			  {
 			    struct timespec sumbc = timespec_add (b, c);
