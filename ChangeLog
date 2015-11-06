@@ -1,5 +1,14 @@
 2015-11-05  Paul Eggert  <eggert@cs.ucla.edu>
 
+	timespec-sub: fix overflow bug; add tests
+	* lib/timespec-add.c (timespec_add):
+	* lib/timespec-sub.c (timespec_sub):
+	Work even if time_t is narrower than int (a theoretical
+	possibility).  Redo code for a bit more clarity.
+	* lib/timespec-sub.c (timespec_sub):
+	Fix off-by-2 bug if a.tv_sec == TYPE_MINIMUM (time_t) and 0 < b.tv_sec.
+	* modules/timespec-tests, tests/test-timespec.c: New files.
+
 	intprops-test: suppress -Woverlength-strings
 	Problem reported by Pádraig Brady in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2015-11/msg00008.html
