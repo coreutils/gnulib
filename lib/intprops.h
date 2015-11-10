@@ -354,7 +354,7 @@
 /* Store A <op> B into *R, where OP specifies the operation.
    BUILTIN is the builtin operation, and OVERFLOW the overflow predicate.
    See above for restrictions.  */
-#if 5 <= __GNUC__ || __has_builtin (__builtin_add_oveflow)
+#if 5 <= __GNUC__ || __has_builtin (__builtin_add_overflow)
 # define _GL_INT_OP_WRAPV(a, b, r, op, builtin, overflow) builtin (a, b, r)
 #elif 201112 <= __STDC_VERSION__ && !_GL__GENERIC_BOGUS
 # define _GL_INT_OP_WRAPV(a, b, r, op, builtin, overflow) \

@@ -1,3 +1,9 @@
+2015-11-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: fix typo in clang port
+	* lib/intprops.h (_GL_INT_OP_WRAPV): Fix misspelling of
+	'__builtin_add_overflow' that is not caught by compiler.
+
 2015-11-05  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-timespec: fix typo in previous change
