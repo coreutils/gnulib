@@ -1,5 +1,15 @@
 2015-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: new public macro EXPR_SIGNED
+	Emacs can use this macro, so make it public.
+	* doc/intprops.texi (Arithmetic Type Properties): Rename from
+	'Integer Type Determination', since some of these macros apply
+	to non-integer types.  Clarify what kinds of constant expressions
+	these macros return.  Say when the arguments can be non-integers.
+	Mention newly published macro EXPR_SIGNED.
+	* lib/intprops.h (EXPR_SIGNED): Rename from _GL_INT_SIGNED, to
+	make it public.  All uses changed.
+
 	intprops: fix typo in clang port
 	* lib/intprops.h (_GL_INT_OP_WRAPV): Fix misspelling of
 	'__builtin_add_overflow' that is not caught by compiler.

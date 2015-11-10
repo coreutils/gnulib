@@ -43,37 +43,52 @@ is easier to use, while the second, for integer ranges, has a simple
 and straightforward portable implementation.
 
 @menu
-* Integer Type Determination::  Whether a type has integer properties.
+* Arithmetic Type Properties::  Determining properties of arithmetic types.
 * Integer Bounds::              Bounds on integer values and representations.
 * Wraparound Arithmetic::       Well-defined behavior on signed overflow.
 * Integer Type Overflow::       General integer overflow checking.
 * Integer Range Overflow::      Integer overflow checking if bounds are known.
 @end menu
 
-@node Integer Type Determination
-@subsection Integer Type Determination
+@node Arithmetic Type Properties
+@subsection Arithmetic Type Properties
 
 @findex TYPE_IS_INTEGER
-@code{TYPE_IS_INTEGER (@var{t})} is a constant
+@code{TYPE_IS_INTEGER (@var{t})} is an arithmetic constant
 expression that is 1 if the arithmetic type @var{t} is an integer type.
 @code{_Bool} counts as an integer type.
 
 @findex TYPE_SIGNED
-@code{TYPE_SIGNED (@var{t})} is a constant expression
-that is 1 if the arithmetic type @var{t} is a signed integer type or a
+@code{TYPE_SIGNED (@var{t})} is an arithmetic constant expression
+that is 1 if the real type @var{t} is a signed integer type or a
 floating type.  If @var{t} is an integer type, @code{TYPE_SIGNED (@var{t})}
 is an integer constant expression.
+
+@findex EXPR_SIGNED
+@code{EXPR_SIGNED (@var{e})} is 1 if the real expression @var{e}
+has a signed integer type or a floating type.  If @var{e} is an
+integer constant expression or an arithmetic constant expression,
+@code{EXPR_SIGNED (@var{e})} is likewise.  Although @var{e} is
+evaluated, if @var{e} is free of side effects then @code{EXPR_SIGNED
+(@var{e})} is typically optimized to a constant.
 
 Example usage:
 
 @example
 #include <intprops.h>
 #include <time.h>
+
 enum
 @{
   time_t_is_signed_integer =
     TYPE_IS_INTEGER (time_t) && TYPE_SIGNED (time_t)
 @};
+
+int
+CLOCKS_PER_SEC_is_signed (void)
+@{
+  return EXPR_SIGNED (CLOCKS_PER_SEC);
+@}
 @end example
 
 @node Integer Bounds
