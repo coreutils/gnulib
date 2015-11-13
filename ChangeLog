@@ -1,3 +1,9 @@
+2015-11-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc-oversized: improve performance with GCC 5
+	* lib/xalloc-oversized.h (xalloc_oversized):
+	Improve performance with GCC 5 by using __builtin_mul_overflow.
+
 2015-11-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: new public macro EXPR_SIGNED
