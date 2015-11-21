@@ -1,3 +1,36 @@
+2015-12-09  Pavel Raiskup  <praiskup@redhat.com>
+
+	gnulib-tool: allow multiple --local-dir usage
+	* gnulib-tool: Use --local-dir to construct compound
+	$local_gnulib_path path instead of $local_gnulib_dir.  Determine
+	PATH_SEPARATOR early.
+	(local_gnulib_dir): Rename into $local_gnulib_path everywhere.
+	(func_gnulib_dir): Cut out PATH_SEPARATOR detection code into
+	func_determine_path_separator because that needs to be detected
+	earlier now.
+	(func_determine_path_separator): New function.
+	(func_path_foreach, func_path_foreach_inner): New functions.
+	(func_path_prepend, func_path_append): Likewise.
+	(func_lookup_local_file, func_lookup_local_file_cb): Likewise.
+	(func_lookup_file, func_all_modules): Use new functions to work
+	with local_gnulib_path.
+	(func_modules_in_dir, func_exists_module): New callbacks for
+	func_path_foreach.
+	(func_exists_module, func_get_tests_module): Likewise.
+	(func_is_local_file, func_should_symlink): New helper methods.
+	(func_add_file, func_update_file): Use new func_should_symlink
+	instead, DRY.
+	(func_reconstruct_cached_local_gnulib_path): New helper.
+	(func_reconstruct_cached_dir): New callback.
+	(func_import): The cached_local_gnulib_dir renamed to
+	cached_local_gnulib_path similarly to local_gnulib_dir.
+	Use new func_reconstruct_cached_local_gnulib_path.
+	(func_count_relative_local_gnulib_path): New sub-method.
+	(func_create_testdir): Use func_should_symlink, DRY.
+	(func_create_megatestdir): Use new functions to work with
+	local_gnulib_path correctly.
+	(func_append_local_dir): New helper.
+
 2015-12-08  Pádraig Brady  <P@draigBrady.com>
 
 	fix freadptr to work with ungetc on all uClibc configs

@@ -406,16 +406,6 @@ func_gnulib_dir ()
       # The 'case' statement is an optimization, to avoid evaluating the
       # explicit canonicalization command when $PATH contains no empty fields.
       self_abspathname=
-      if test "${PATH_SEPARATOR+set}" != set; then
-        # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
-        # contains only /bin. Note that ksh looks also at the FPATH variable,
-        # so we have to set that as well for the test.
-        PATH_SEPARATOR=:
-        (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
-          && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
-                 || PATH_SEPARATOR=';'
-             }
-      fi
       if test "$PATH_SEPARATOR" = ";"; then
         # On Windows, programs are searched in "." before $PATH.
         pathx=".;$PATH"
@@ -534,6 +524,92 @@ else
   }
   fast_func_remove_prefix=false
 fi
+
+# Determine whether we should use ':' or ';' as PATH_SEPARATOR.
+func_determine_path_separator ()
+{
+  if test "${PATH_SEPARATOR+set}" != set; then
+    # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+    # contains only /bin. Note that ksh looks also at the FPATH variable,
+    # so we have to set that as well for the test.
+    PATH_SEPARATOR=:
+    (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+      && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+             || PATH_SEPARATOR=';'
+         }
+  fi
+}
+
+# func_path_prepend pathvar directory
+# puts directory before pathvar, delimiting directories by PATH_SEPARATOR.
+# Newly added directory into pathvar has the highest priority.
+func_path_prepend ()
+{
+  if eval "test -n \"\$$1\""; then
+    eval "$1=\$2\$PATH_SEPARATOR\$$1"
+  else
+    eval "$1=\$2"
+  fi
+}
+
+# func_path_append pathvar directory
+# Similar to func_path_prepend except that the newest directory has the lowest
+# priority.
+func_path_append ()
+{
+  if eval "test -n \"\$$1\""; then
+    func_append "$1" "$PATH_SEPARATOR$2"
+  else
+    eval "$1=\$2"
+  fi
+}
+
+# func_path_foreach_inner
+# helper for func_path_foreach because we need new 'args' array
+# Input:
+# - fpf_dir     directory from local_gnulib_path
+# - fpf_cb      callback to be run for fpf_dir
+func_path_foreach_inner ()
+{
+  set %start% "$@"
+  for _fpf_arg
+  do
+    case $_fpf_arg in
+      %start%)
+        set dummy
+        ;;
+      %dir%)
+        set "$@" "$fpf_dir"
+        ;;
+      *)
+        set "$@" "$_fpf_arg"
+        ;;
+    esac
+  done
+  shift
+
+  "$fpf_cb" "$@"
+}
+
+# func_path_foreach path method args
+# Execute method for each directory in path.  The method will be called
+# like `method args` while any argument '%dir%' within args will be replaced
+# with processed directory from path.
+func_path_foreach ()
+{
+  fpf_save_IFS=$IFS
+  fpf_dirs=$1 ; shift
+  fpf_cb=$1 ; shift
+  fpf_rc=false
+
+  IFS=$PATH_SEPARATOR
+  for fpf_dir in $fpf_dirs
+  do
+    func_path_foreach_inner "$@" && fpf_rc=:
+  done
+  IFS=$fpf_save_IFS
+  $fpf_rc
+}
 
 # func_remove_suffix var suffix
 # removes the given suffix from the value of the shell variable var.
@@ -901,13 +977,17 @@ fi
 # Unset CDPATH.  Otherwise, output from 'cd dir' can surprise callers.
 (unset CDPATH) >/dev/null 2>&1 && unset CDPATH
 
+# Determine the path separator early because the following option parsing code
+# requires that.
+func_determine_path_separator
+
 # Command-line option processing.
 # Removes the OPTIONS from the arguments. Sets the variables:
 # - mode            one of: list, find, import, add-import, remove-import,
 #                   update, create-testdir, create-megatestdir, test, megatest,
 #                   copy-file
 # - destdir         from --dir
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - libname, supplied_libname  from --lib
@@ -957,7 +1037,7 @@ fi
 {
   mode=
   destdir=
-  local_gnulib_dir=
+  local_gnulib_path=
   modcache=true
   verbose=0
   libname=libgnu
@@ -1049,10 +1129,11 @@ fi
         if test $# = 0; then
           func_fatal_error "missing argument for --local-dir"
         fi
-        local_gnulib_dir=$1
+        func_path_prepend local_gnulib_path "$1"
         shift ;;
       --local-dir=* )
-        local_gnulib_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
+        local_dir=`echo "X$1" | sed -e 's/^X--local-dir=//'`
+        func_path_prepend local_gnulib_path "$local_dir"
         shift ;;
       --cache-modules | --cache-module | --cache-modul | --cache-modu | --cache-mod | --cache-mo | --cache-m | --cache- | --cache | --cach | --cac | --ca )
         modcache=true
@@ -1309,7 +1390,7 @@ fi
       echo "you need to use 'gnulib --import' - at your own risk!" 1>&2
       func_exit 1
     fi
-    if test -n "$local_gnulib_dir" || test -n "$supplied_libname" \
+    if test -n "$local_gnulib_path" || test -n "$supplied_libname" \
        || test -n "$sourcebase" || test -n "$m4base" || test -n "$pobase" \
        || test -n "$docbase" || test -n "$testsbase" || test -n "$auxdir" \
        || test -n "$inctests" || test -n "$incobsolete" \
@@ -1412,9 +1493,18 @@ fi
   # Remove trailing slashes from the directory names. This is necessary for
   # m4base (to avoid an error in func_import) and optional for the others.
   sed_trimtrailingslashes='s,\([^/]\)//*$,\1,'
-  case "$local_gnulib_dir" in
-    */ ) local_gnulib_dir=`echo "$local_gnulib_dir" | sed -e "$sed_trimtrailingslashes"` ;;
-  esac
+  old_local_gnulib_path=$local_gnulib_path
+  save_IFS=$IFS
+  IFS=:
+  local_gnulib_path=
+  for dir in $old_local_gnulib_path
+  do
+    case "$dir" in
+      */ ) dir=`echo "$dir" | sed -e "$sed_trimtrailingslashes"` ;;
+    esac
+    func_path_append local_gnulib_path "$dir"
+  done
+  IFS=$save_IFS
   case "$sourcebase" in
     */ ) sourcebase=`echo "$sourcebase" | sed -e "$sed_trimtrailingslashes"` ;;
   esac
@@ -1457,28 +1547,52 @@ else
   have_associative=false
 fi
 
+# func_lookup_local_file_cb dir file
+# return true and set func_lookup_local_file_result if the file 'dir/file'
+# exists
+func_lookup_local_file_cb ()
+{
+  test -n "$func_lookup_local_file_result" && return 1 # already found?
+  test -f "$1/$2" || return 1
+  func_lookup_local_file_result=$1/$2
+  :
+}
+
+# func_lookup_local_file file
+# looks up a file in $local_gnulib_path.
+# Input:
+# - local_gnulib_path  from --local-dir
+# Output:
+# - func_lookup_local_file_result  name of the file, valid only when the
+#                   function succeeded.
+func_lookup_local_file ()
+{
+  func_lookup_local_file_result=
+  func_path_foreach "$local_gnulib_path" func_lookup_local_file_cb %dir% "$1"
+}
+
 # func_lookup_file file
-# looks up a file in $local_gnulib_dir or $gnulib_dir, or combines it through
+# looks up a file in $local_gnulib_path or $gnulib_dir, or combines it through
 # 'patch'.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # Output:
 # - lookedup_file   name of the merged (combined) file
 # - lookedup_tmp    true if it is located in the tmp directory, blank otherwise
 func_lookup_file ()
 {
   lkfile="$1"
-  if test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$lkfile"; then
-    lookedup_file="$local_gnulib_dir/$lkfile"
+  if func_lookup_local_file "$lkfile"; then
+    lookedup_file=$func_lookup_local_file_result
     lookedup_tmp=
   else
     if test -f "$gnulib_dir/$lkfile"; then
-      if test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$lkfile.diff"; then
+      if func_lookup_local_file "$lkfile.diff"; then
         lkbase=`echo "$lkfile" | sed -e 's,^.*/,,'`
         rm -f "$tmp/$lkbase"
         cp "$gnulib_dir/$lkfile" "$tmp/$lkbase"
-        patch -s "$tmp/$lkbase" < "$local_gnulib_dir/$lkfile.diff" >&2 \
-          || func_fatal_error "patch file $local_gnulib_dir/$lkfile.diff didn't apply cleanly"
+        patch -s "$tmp/$lkbase" < "$func_lookup_local_file_result" >&2 \
+          || func_fatal_error "patch file $func_lookup_local_file_result didn't apply cleanly"
         lookedup_file="$tmp/$lkbase"
         lookedup_tmp=true
       else
@@ -1507,9 +1621,17 @@ func_sanitize_modulelist ()
       -e '/~$/d'
 }
 
+
+# func_modules_in_dir dir
+# outputs all module files in dir to standard output.
+func_modules_in_dir ()
+{
+  (test -d "$1" && cd "$1" && find modules -type f -print)
+}
+
 # func_all_modules
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 func_all_modules ()
 {
   # Filter out metainformation files like README, which are not modules.
@@ -1517,24 +1639,28 @@ func_all_modules ()
   # --extract-tests-module if desired.
   {
     (cd "$gnulib_dir" && find modules -type f -print | sed -e 's,^modules/,,')
-    if test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules"; then
-      (cd "$local_gnulib_dir" && find modules -type f -print | sed -e 's,^modules/,,' -e 's,\.diff$,,')
-    fi
+    func_path_foreach "$local_gnulib_path" func_modules_in_dir %dir% | sed -e 's,^modules/,,' -e 's,\.diff$,,'
   } \
       | func_sanitize_modulelist \
       | sed -e '/-tests$/d' \
       | LC_ALL=C sort -u
 }
 
+# func_exists_local_module dir module
+# returns true if module exists in dir
+func_exists_local_module ()
+{
+    test -d "$1/modules" && test -f "$1/modules/$2";
+}
+
 # func_exists_module module
 # tests whether a module, given by name, exists
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 func_exists_module ()
 {
   { test -f "$gnulib_dir/modules/$1" \
-    || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
-         && test -f "$local_gnulib_dir/modules/$1"; }; } \
+    || func_path_foreach "$local_gnulib_path" func_exists_local_module %dir% "$1" ; } \
   && test "ChangeLog" != "$1" \
   && test "COPYING" != "$1" \
   && test "README" != "$1" \
@@ -1546,7 +1672,7 @@ func_exists_module ()
 # func_verify_module
 # verifies a module name
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - module          module name argument
 func_verify_module ()
 {
@@ -1563,7 +1689,7 @@ func_verify_module ()
 # func_verify_nontests_module
 # verifies a module name, excluding tests modules
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - module          module name argument
 func_verify_nontests_module ()
 {
@@ -1576,7 +1702,7 @@ func_verify_nontests_module ()
 # func_verify_tests_module
 # verifies a module name, considering only tests modules
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - module          module name argument
 func_verify_tests_module ()
 {
@@ -1882,7 +2008,7 @@ fi
 
 # func_get_description module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_description ()
 {
@@ -1908,7 +2034,7 @@ func_get_description ()
 
 # func_get_comment module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_comment ()
 {
@@ -1934,7 +2060,7 @@ func_get_comment ()
 
 # func_get_status module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_status ()
 {
@@ -1960,7 +2086,7 @@ func_get_status ()
 
 # func_get_notice module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_notice ()
 {
@@ -1986,7 +2112,7 @@ func_get_notice ()
 
 # func_get_applicability module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # The expected result (on stdout) is either 'main', or 'tests', or 'all'.
 func_get_applicability ()
@@ -2016,7 +2142,7 @@ func_get_applicability ()
 
 # func_get_filelist module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_filelist ()
 {
@@ -2096,7 +2222,7 @@ func_filter_filelist ()
 
 # func_get_dependencies module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_dependencies ()
 {
@@ -2135,7 +2261,7 @@ func_get_dependencies ()
 
 # func_get_autoconf_early_snippet module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_autoconf_early_snippet ()
 {
@@ -2161,7 +2287,7 @@ func_get_autoconf_early_snippet ()
 
 # func_get_autoconf_snippet module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_autoconf_snippet ()
 {
@@ -2202,7 +2328,7 @@ combine_lines() {
 # returns the part of the Makefile.am snippet that can be put inside Automake
 # conditionals.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_automake_snippet_conditional ()
 {
@@ -2230,7 +2356,7 @@ func_get_automake_snippet_conditional ()
 # returns the part of the Makefile.am snippet that must stay outside of
 # Automake conditionals.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_automake_snippet_unconditional ()
 {
@@ -2322,7 +2448,7 @@ func_get_automake_snippet_unconditional ()
 
 # func_get_automake_snippet module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_automake_snippet ()
 {
@@ -2332,7 +2458,7 @@ func_get_automake_snippet ()
 
 # func_get_include_directive module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_include_directive ()
 {
@@ -2360,7 +2486,7 @@ func_get_include_directive ()
 
 # func_get_link_directive module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_link_directive ()
 {
@@ -2386,7 +2512,7 @@ func_get_link_directive ()
 
 # func_get_license_raw module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_license_raw ()
 {
@@ -2412,7 +2538,7 @@ func_get_license_raw ()
 
 # func_get_license module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_license ()
 {
@@ -2435,7 +2561,7 @@ func_get_license ()
 
 # func_get_maintainer module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 func_get_maintainer ()
 {
@@ -2461,13 +2587,12 @@ func_get_maintainer ()
 
 # func_get_tests_module module
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 func_get_tests_module ()
 {
   # The naming convention for tests modules is hardwired: ${module}-tests.
   if test -f "$gnulib_dir/modules/$1"-tests \
-     || { test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules" \
-          && test -f "$local_gnulib_dir/modules/$1"-tests; }; then
+     || func_path_foreach "$local_gnulib_path" func_exists_local_module %dir% "$1-tests"; then
     echo "$1"-tests
   fi
 }
@@ -2625,7 +2750,7 @@ sed_dependencies_without_conditions='s/ *\[.*//'
 
 # func_modules_transitive_closure
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of specified modules
 # - inctests        true if tests should be included, false otherwise
@@ -2833,7 +2958,7 @@ func_show_module_list ()
 # dependencies of *-tests modules) go into $testsbase/. It may contain GPLed
 # source, even if --lgpl is specified.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - specified_modules  list of specified modules
 # - inctests        true if tests should be included, false otherwise
@@ -2900,7 +3025,7 @@ func_modules_transitive_closure_separately ()
 # func_determine_use_libtests
 # Determines whether a $testsbase/libtests.a is needed.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - testsrelated_modules  list of tests-related modules, including dependencies
 # Output:
@@ -2927,7 +3052,7 @@ func_determine_use_libtests ()
 
 # func_modules_add_dummy
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of modules, including dependencies
 # Output:
@@ -2963,7 +3088,7 @@ func_modules_add_dummy ()
 
 # func_modules_add_dummy_separately
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - main_modules    list of modules, including dependencies
 # - testsrelated_modules  list of tests-related modules, including dependencies
@@ -2989,7 +3114,7 @@ func_modules_add_dummy_separately ()
 
 # func_modules_notice
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - modules         list of modules, including dependencies
@@ -3011,7 +3136,7 @@ func_modules_notice ()
 
 # func_modules_to_filelist
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of modules, including dependencies
 # Output:
@@ -3036,7 +3161,7 @@ func_modules_to_filelist ()
 # if they are in the tests-related file list. Furthermore lib/dummy.c
 # can be in both.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - main_modules    list of modules, including dependencies
 # - testsrelated_modules  list of tests-related modules, including dependencies
@@ -3124,12 +3249,36 @@ func_dest_tmpfilename ()
   fi
 }
 
+# func_is_local_file lookedup_file file
+# check whether file should be instantiated from local gnulib directory
+func_is_local_file ()
+{
+  dname=$1
+  func_remove_suffix dname "/$2"
+  func_path_foreach "$local_gnulib_path" test %dir% = "$dname"
+}
+
+# func_should_symlink
+# returns 0 when the file $f should be symlinked
+# Input:
+# - symbolic        true if files should be symlinked, copied otherwise
+# - lsymbolic       true if files from local_gnulib_path should be symlinked,
+#                   copied otherwise
+# - f               the original file name
+# - lookedup_file   name of the merged (combined) file
+func_should_symlink ()
+{
+  test -n "$symbolic" \
+    || { test -n "$lsymbolic" \
+         && func_is_local_file "$lookedup_file" "$f"; }
+}
+
 # func_add_file
 # copies a file from gnulib into the destination directory. The destination
 # is known to not exist.
 # Input:
 # - destdir         target directory
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - f               the original file name
 # - lookedup_file   name of the merged (combined) file
@@ -3138,15 +3287,13 @@ func_dest_tmpfilename ()
 # - tmpfile         absolute filename of the temporary file
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+# - lsymbolic       true if files from local_gnulib_path should be symlinked,
 #                   copied otherwise
 func_add_file ()
 {
   if $doit; then
     echo "Copying file $g"
-    if { test -n "$symbolic" \
-         || { test -n "$lsymbolic" \
-              && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
+    if func_should_symlink \
        && test -z "$lookedup_tmp" \
        && cmp -s "$lookedup_file" "$tmpfile"; then
       func_ln_if_changed "$lookedup_file" "$destdir/$g"
@@ -3163,7 +3310,7 @@ func_add_file ()
 # is known to exist.
 # Input:
 # - destdir         target directory
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - f               the original file name
 # - lookedup_file   name of the merged (combined) file
@@ -3172,7 +3319,7 @@ func_add_file ()
 # - tmpfile         absolute filename of the temporary file
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+# - lsymbolic       true if files from local_gnulib_path should be symlinked,
 #                   copied otherwise
 # - already_present  nonempty if the file should already exist, empty otherwise
 func_update_file ()
@@ -3188,9 +3335,7 @@ func_update_file ()
         echo "Replacing file $g (non-gnulib code backed up in ${g}~) !!"
       fi
       mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
-      if { test -n "$symbolic" \
-           || { test -n "$lsymbolic" \
-                && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; } \
+      if func_should_symlink \
          && test -z "$lookedup_tmp" \
          && cmp -s "$lookedup_file" "$tmpfile"; then
         func_ln_if_changed "$lookedup_file" "$destdir/$g"
@@ -3210,7 +3355,7 @@ func_update_file ()
 # func_emit_lib_Makefile_am
 # emits the contents of library makefile to standard output.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of modules, including dependencies
 # - libname         library name
@@ -3456,7 +3601,7 @@ func_emit_lib_Makefile_am ()
 # func_emit_po_Makevars
 # emits the contents of po/ makefile parameterization to standard output.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - sourcebase      directory relative to destdir where to place source code
 # - pobase          directory relative to destdir where to place *.po files
@@ -3518,7 +3663,7 @@ EOF
 # func_emit_po_POTFILES_in
 # emits the file list to be passed to xgettext to standard output.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - sourcebase      directory relative to destdir where to place source code
 # - files           list of new files
@@ -3534,7 +3679,7 @@ func_emit_po_POTFILES_in ()
 # func_emit_tests_Makefile_am witness_macro
 # emits the contents of tests makefile to standard output.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of modules, including dependencies
 # - libname         library name
@@ -3882,7 +4027,7 @@ func_emit_initmacro_done ()
 # emits the autoconf snippet of a module.
 # Input:
 # - indentation       spaces to prepend on each line
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
 # - sed_replace_include_guard_prefix
@@ -3938,7 +4083,7 @@ func_emit_autoconf_snippet ()
 # func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
 # collects and emit the autoconf snippets of a set of modules.
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache          true or false, from --cache-modules/--no-cache-modules
 # - sed_replace_build_aux  sed expression that replaces reference to build-aux
 # - sed_replace_include_guard_prefix
@@ -4099,12 +4244,49 @@ func_emit_pre_early_macros ()
   echo
 }
 
+# func_reconstruct_cached_dir
+# callback for func_reconstruct_cached_local_gnulib_path
+# Input:
+# - destdir         from --dir
+# Output:
+# - local_gnulib_path  restored '--local-dir' path from cache
+func_reconstruct_cached_dir ()
+{
+  cached_dir=$1
+  if test -n "$cached_dir"; then
+    case "$destdir" in
+      /*)
+        func_path_append local_gnulib_path "$destdir/$cached_dir" ;;
+      *)
+        case "$cached_dir" in
+          /*)
+            func_path_append local_gnulib_path "$destdir/$cached_dir" ;;
+          *)
+            func_relconcat "$destdir" "$cached_dir"
+            func_path_append local_gnulib_path "$relconcat" ;;
+        esac ;;
+    esac
+  fi
+}
+
+# func_reconstruct_cached_local_gnulib_path
+# reconstruct local_gnulib_path from cached_local_gnulib_path to be set
+# relatively to $destdir again.
+# Input:
+# - cached_local_gnulib_path  local_gnulib_path stored within gnulib-cache.m4
+# - destdir         from --dir
+# Output:
+# - local_gnulib_path  restored '--local-dir' path from cache
+func_reconstruct_cached_local_gnulib_path ()
+{
+  func_path_foreach "$cached_local_gnulib_path" func_reconstruct_cached_dir %dir%
+}
 
 # func_import modules
 # Uses also the variables
 # - mode            import or add-import or remove-import or update
 # - destdir         target directory
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - verbose         integer, default 0, inc/decremented by --verbose/--quiet
 # - libname         library name
@@ -4142,7 +4324,7 @@ func_emit_pre_early_macros ()
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
 # - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+# - lsymbolic       true if files from local_gnulib_path should be symlinked,
 #                   copied otherwise
 # - do_copyrights   true if copyright notices in files should be replaced,
 #                   blank otherwise
@@ -4151,7 +4333,7 @@ func_import ()
   # Get the cached settings.
   # In 'import' mode, we read them only for the purpose of knowing the old
   # installed file list, and don't use them as defaults.
-  cached_local_gnulib_dir=
+  cached_local_gnulib_path=
   cached_specified_modules=
   cached_incobsolete=
   cached_inc_cxx_tests=
@@ -4183,7 +4365,7 @@ func_import ()
       s,^dnl .*$,,
       s, dnl .*$,,
       /gl_LOCAL_DIR(/ {
-        s,^.*gl_LOCAL_DIR([[ ]*\([^]"$`\\)]*\).*$,cached_local_gnulib_dir="\1",p
+        s,^.*gl_LOCAL_DIR([[ ]*\([^]"$`\\)]*\).*$,cached_local_gnulib_path="\1",p
       }
       /gl_MODULES(/ {
         ta
@@ -4298,23 +4480,10 @@ func_import ()
     if test -n "$cached_m4base" && test "$cached_m4base" != "$m4base"; then
       func_fatal_error "$m4base/gnulib-cache.m4 is expected to contain gl_M4_BASE([$m4base])"
     fi
-    # The local_gnulib_dir defaults to the cached one. Recall that the cached one
+    # The local_gnulib_path defaults to the cached one. Recall that the cached one
     # is relative to $destdir, whereas the one we use is relative to . or absolute.
-    if test -z "$local_gnulib_dir"; then
-      if test -n "$cached_local_gnulib_dir"; then
-        case "$destdir" in
-          /*)
-            local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
-          *)
-            case "$cached_local_gnulib_dir" in
-              /*)
-                local_gnulib_dir="$destdir/$cached_local_gnulib_dir" ;;
-              *)
-                func_relconcat "$destdir" "$cached_local_gnulib_dir"
-                local_gnulib_dir="$relconcat" ;;
-            esac ;;
-        esac
-      fi
+    if test -z "$local_gnulib_path"; then
+      func_reconstruct_cached_local_gnulib_path
     fi
     case $mode in
       add-import)
@@ -4802,10 +4971,14 @@ s,^\(.................................................[^ ]*\) *,                
 
   # Command-line invocation printed in a comment in generated gnulib-cache.m4.
   actioncmd="gnulib-tool --import"
-  func_append actioncmd " --dir=$destdir"
-  if test -n "$local_gnulib_dir"; then
-    func_append actioncmd " --local-dir=$local_gnulib_dir"
-  fi
+
+  # Local helper.
+  func_append_local_dir ()
+  {
+    func_append "$1" " --local-dir=$2"
+  }
+  func_path_foreach "$local_gnulib_path" func_append_local_dir actioncmd %dir%
+
   func_append actioncmd " --lib=$libname"
   func_append actioncmd " --source-base=$sourcebase"
   func_append actioncmd " --m4-base=$m4base"
@@ -5100,6 +5273,38 @@ s,//*$,/,'
     fi
   fi
 
+  # func_count_relative_local_gnulib_path
+  # gl_LOCAL_DIR requires local_gnulib_path to be set relatively to destdir
+  # Input:
+  # - local_gnulib_path  from --local-dir
+  # - destdir           from --dir
+  # Output:
+  # - relative_local_dir  path to be stored into gl_LOCAL_DIR
+  func_count_relative_local_gnulib_path ()
+  {
+    save_IFS=$IFS
+    IFS=$PATH_SEPARATOR
+    relative_local_gnulib_path=
+    for local_dir in $local_gnulib_path
+    do
+      # Store the local_dir relative to destdir.
+      case "$local_dir" in
+        "" | /*)
+          relative_local_dir="$local_dir" ;;
+        * )
+          case "$destdir" in
+            /*) relative_local_dir="$local_dir" ;;
+            *)
+              # destdir, local_dir are both relative.
+              func_relativize "$destdir" "$local_dir"
+              relative_local_dir="$reldir" ;;
+          esac ;;
+      esac
+      func_path_append relative_local_gnulib_path "$relative_local_dir"
+    done
+    IFS=$save_IFS
+  }
+
   # Create m4/gnulib-cache.m4.
   func_dest_tmpfilename $m4base/gnulib-cache.m4
   (
@@ -5115,20 +5320,8 @@ s,//*$,/,'
     echo "#   $actioncmd"
     echo
     echo "# Specification in the form of a few gnulib-tool.m4 macro invocations:"
-    # Store the local_gnulib_dir relative to destdir.
-    case "$local_gnulib_dir" in
-      "" | /*)
-        relative_local_gnulib_dir="$local_gnulib_dir" ;;
-      * )
-        case "$destdir" in
-          /*) relative_local_gnulib_dir="$local_gnulib_dir" ;;
-          *)
-            # destdir, local_gnulib_dir are both relative.
-            func_relativize "$destdir" "$local_gnulib_dir"
-            relative_local_gnulib_dir="$reldir" ;;
-        esac ;;
-    esac
-    echo "gl_LOCAL_DIR([$relative_local_gnulib_dir])"
+    func_count_relative_local_gnulib_path
+    echo "gl_LOCAL_DIR([$relative_local_gnulib_path])"
     echo "gl_MODULES(["
     echo "$specified_modules" | sed -e 's/^/  /g'
     echo "])"
@@ -5559,7 +5752,7 @@ s,//*$,/,'
 
 # func_create_testdir testdir modules
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - auxdir          directory relative to destdir where to place build aux files
 # - inctests        true if tests should be included, false otherwise
@@ -5581,7 +5774,7 @@ s,//*$,/,'
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
 # - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_dir should be symlinked,
+# - lsymbolic       true if files from local_gnulib_path should be symlinked,
 #                   copied otherwise
 func_create_testdir ()
 {
@@ -5758,9 +5951,7 @@ func_create_testdir ()
         cp -p "$lookedup_file" "$testdir/$g"
       else
         ln "$lookedup_file" "$testdir/$g" 2>/dev/null ||
-        if { test -n "$symbolic" \
-             || { test -n "$lsymbolic" \
-                  && test "$lookedup_file" = "$local_gnulib_dir/$f"; }; }; then
+        if func_should_symlink; then
           func_ln "$lookedup_file" "$testdir/$g"
         else
           cp -p "$lookedup_file" "$testdir/$g"
@@ -6171,7 +6362,7 @@ func_create_testdir ()
 
 # func_create_megatestdir megatestdir allmodules
 # Input:
-# - local_gnulib_dir  from --local-dir
+# - local_gnulib_path  from --local-dir
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - auxdir          directory relative to destdir where to place build aux files
 func_create_megatestdir ()
@@ -6287,15 +6478,13 @@ s/\([.*$]\)/[\1]/g'
     for filename
     do
       if test -f "$gnulib_dir/$filename" \
-         || { test -n "$local_gnulib_dir" && test -f "$local_gnulib_dir/$filename"; }; then
+         || func_lookup_local_file "$filename"; then
         filename_anywhere_regex=`echo "$filename" | sed -e "$sed_literal_to_basic_regex"`
         filename_line_regex='^'"$filename_anywhere_regex"'$'
         module_candidates=`
           {
             (cd "$gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filename_line_regex" /dev/null | sed -e 's,^modules/,,')
-            if test -n "$local_gnulib_dir" && test -d "$local_gnulib_dir/modules"; then
-              (cd "$local_gnulib_dir" && find modules -type f -print | xargs -n 100 grep -l "$filename_anywhere_regex" /dev/null | sed -e 's,^modules/,,' -e 's,\.diff$,,')
-            fi
+            func_path_foreach "$local_gnulib_path" func_modules_in_dir %dir% | xargs -n 100 grep -l "$filename_anywhere_regex" /dev/null | sed -e 's,^modules/,,' -e 's,\.diff$,,'
           } \
             | func_sanitize_modulelist \
             | LC_ALL=C sort -u
@@ -6442,7 +6631,7 @@ s/\([.*$]\)/[\1]/g'
               for m4base in $m4dirs; do
                 # Perform func_import in a subshell, so that variable values
                 # such as
-                #   local_gnulib_dir, incobsolete, inc_cxx_tests,
+                #   local_gnulib_path, incobsolete, inc_cxx_tests,
                 #   inc_longrunning_tests, inc_privileged_tests,
                 #   inc_unportable_tests, inc_all_tests, avoidlist, sourcebase,
                 #   m4base, pobase, docbase, testsbase, inctests, libname, lgpl,
