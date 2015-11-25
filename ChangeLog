@@ -1,3 +1,9 @@
+2016-01-01  Pádraig Brady  <P@draigBrady.com>
+
+	tests: for compare_(), use cmp -s where available
+	* tests/init.sh (compare_): Only fall back to cmp without
+	the POSIX defined -s option, where this is not available.
+
 2016-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	version-etc: new year
