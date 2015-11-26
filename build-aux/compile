@@ -1,7 +1,7 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand '-c -o'.
 
-scriptversion=2012-10-14.11; # UTC
+scriptversion=2015-11-24.11; # UTC
 
 # Copyright (C) 1999-2015 Free Software Foundation, Inc.
 # Written by Tom Tromey <tromey@cygnus.com>.
@@ -255,7 +255,8 @@ EOF
     echo "compile $scriptversion"
     exit $?
     ;;
-  cl | *[/\\]cl | cl.exe | *[/\\]cl.exe )
+  cl | *[/\\]cl | cl.exe | *[/\\]cl.exe | \
+  icl | *[/\\]icl | icl.exe | *[/\\]icl.exe )
     func_cl_wrapper "$@"      # Doesn't return...
     ;;
 esac
