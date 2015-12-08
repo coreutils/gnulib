@@ -77,6 +77,8 @@ freadptr (FILE *fp, size_t *sizep)
 # ifdef __STDIO_BUFFERS
   if (fp->__modeflags & __FLAG_WRITING)
     return NULL;
+  if (fp->__modeflags & __FLAG_UNGOT)
+    return NULL;
   size = fp->__bufread - fp->__bufpos;
   if (size == 0)
     return NULL;

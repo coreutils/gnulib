@@ -1,3 +1,13 @@
+2015-12-08  Pádraig Brady  <P@draigBrady.com>
+
+	fix freadptr to work with ungetc on all uClibc configs
+	Reported at https://bugs.busybox.net/show_bug.cgi?id=4099
+	where GNU coreutils cut(1) generates invalid output on uClibc
+	when __UCLIBC_HAS_STDIO_GETC_MACRO__ is not defined.
+	* lib/freadptr.c (freadptr): Return NULL if there are
+	ungotten chars.  In this case freadseek() will iterate
+	again to process the ungotten character.
+
 2015-11-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc-oversized: improve performance with GCC 5
