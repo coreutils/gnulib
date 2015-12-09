@@ -718,6 +718,11 @@ leaf_optimization_applies (int dir_fd)
 
   switch (fs_buf.f_type)
     {
+    case S_MAGIC_NFS:
+      /* NFS provides usable dirent.d_type but not necessarily for all entries
+         of large directories.  See <https://bugzilla.redhat.com/1252549>.  */
+      return true;
+
       /* List here the file system types that lack usable dirent.d_type
          info, yet for which the optimization does apply.  */
     case S_MAGIC_REISERFS:

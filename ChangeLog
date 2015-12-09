@@ -1,3 +1,10 @@
+2015-12-20  Kamil Dudka  <kdudka@redhat.com>
+
+	fts: ensure leaf optimization is used for NFS
+	NFS provides usable dirent.d_type but not necessarily for all entries
+	of large directories.  See <https://bugzilla.redhat.com/1252549>
+	* lib/fts.c (leaf_optimization_applies): Append NFS on the white list.
+
 2015-12-20  Pádraig Brady  <P@draigBrady.com>
 
 	fts: enable leaf optimization for XFS
