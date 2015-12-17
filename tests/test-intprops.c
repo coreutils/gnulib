@@ -21,6 +21,14 @@
 #if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
 # pragma GCC diagnostic ignored "-Woverlength-strings"
 # pragma GCC diagnostic ignored "-Wtype-limits"
+
+/* Work around a bug in GCC 5.3.1 and earlier; see:
+   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68971
+   Hope it will be fixed by the time GCC 6 comes out.  */
+# if __GNUC__ < 6
+#  pragma GCC diagnostic ignored "-Woverflow"
+# endif
+
 #endif
 
 #include <config.h>
@@ -30,6 +38,7 @@
 
 #include <stdbool.h>
 #include <inttypes.h>
+#include <limits.h>
 
 #include "macros.h"
 
@@ -327,6 +336,18 @@ main (void)
     ASSERT (INT_MULTIPLY_WRAPV (INT_MIN, INT_MIN, &result)
             || result == INT_MIN * (long int) INT_MIN);
   }
+
+# ifdef LLONG_MAX
+  {
+    long long int result;
+    ASSERT (INT_MULTIPLY_WRAPV (LONG_MAX, LONG_MAX, &result)
+            == (LLONG_MAX / LONG_MAX < LONG_MAX));
+    ASSERT (INT_MULTIPLY_WRAPV (LONG_MAX, LONG_MAX, &result)
+            || result == LONG_MAX * (long long int) LONG_MAX);
+    ASSERT (INT_MULTIPLY_WRAPV (LONG_MIN, LONG_MIN, &result)
+            || result == LONG_MIN * (long long int) LONG_MIN);
+  }
+# endif
 
   #define CHECK_QUOTIENT(a, b, v) VERIFY (INT_DIVIDE_OVERFLOW (a, b) == (v))
 

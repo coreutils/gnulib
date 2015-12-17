@@ -1,3 +1,11 @@
+2015-12-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops-test: work around GCC bug 68971
+	Problem reported by Pádraig Brady in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2015-12/msg00011.html
+	* tests/test-intprops.c: Ignore -Woverflow in GCC 6 and earlier.
+	(main): Add a case that better tests 64-bit long in this area.
+
 2015-12-09  Pavel Raiskup  <praiskup@redhat.com>
 
 	gnulib-tool: allow multiple --local-dir usage
