@@ -91,7 +91,7 @@ sub prefix_assignment ($$)
 
   # Some variables are initialized by gnulib.mk, and we don't want
   # that.  Change '=' to '+='.
-  if ($lhs_and_assign_op =~ /^GPERF =$/)
+  if ($lhs_and_assign_op =~ /^(GPERF|V_GPERF.*) =$/)
     {
       # Do not change the RHS, which specifies the GPERF program.
     }
