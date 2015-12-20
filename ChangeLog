@@ -1,3 +1,10 @@
+2015-12-20  Pádraig Brady  <P@draigBrady.com>
+
+	fts: enable leaf optimization for XFS
+	XFS provides usable dirent.d_type only for DT_DIR,
+	but the noleaf optimization still applies.
+	* lib/fts.c (leaf_optimization_applies): Add XFS to the white list.
+
 2015-12-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: comment fix
