@@ -1,3 +1,11 @@
+2015-12-23  Pádraig Brady  <P@draigBrady.com>
+
+	strftime-tests: avoid false failure on OS X
+	* tests/test-strftime.c (struct localtime_rz_test): Add an
+	ahistorical member which is used to warn rather than fail
+	when tm_isdst isn't set for such entries.  This is the case for
+	"1970-01-01 13:00:00 +1300 (NZDT)" on Darwin 13/14 at least.
+
 2015-12-20  Kamil Dudka  <kdudka@redhat.com>
 
 	fts: ensure leaf optimization is used for NFS
