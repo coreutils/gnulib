@@ -1,3 +1,11 @@
+2015-12-23  James Youngman  <jay@gnu.org>
+
+	regexprops-generic: update from regex.h
+	* doc/regexprops-generic.texi: update by running the regexprops binary
+	from findutils (the command line is 'regexprops "Regular Expressions"
+	generic').  The recent (ish) change (5a5a9388) to regex.h aligning
+	gnulib with GNU grep had made this document out-of-date.
+
 2015-12-23  Pádraig Brady  <P@draigBrady.com>
 
 	strftime-tests: avoid false failure on OS X
