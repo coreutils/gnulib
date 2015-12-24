@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 23, 2015
+@set lastupdate December 23, 2015
 @c %**end of header
 
 @dircategory GNU organization
@@ -3409,6 +3409,18 @@ Please do not write @samp{()} after a function name just to indicate
 it is a function.  @code{foo ()} is not a function, it is a function
 call with no arguments.
 
+Whenever possible, please stick to the active voice, avoiding the
+passive, and use the present tense, not the future teste.  For
+instance, write ``The function @code{foo} returns a list containing
+@var{a} and @var{b}'' rather than ``A list containing @var{a} and
+@var{b} will be returned.''  One advantage of the active voice is it
+requires you to state the subject of the sentence; with the passive
+voice, you might omit the subject, which leads to vagueness.
+
+It is proper to use the future tense when grammar demands it, as in,
+``If you type @kbd{x}, the computer will self-destruct in 10
+seconds.''
+
 @node Doc Strings and Manuals
 @section Doc Strings and Manuals
 
@@ -3582,7 +3594,7 @@ it---but please put the full explanation in comments in the code,
 where people will see it whenever they see the code.  For example,
 ``New function'' is enough for the change log when you add a function,
 because there should be a comment before the function definition to
-explain what it does.
+explain what it does, how to call it, and so on.
 
 For changes to files that do not support a comment syntax (e.g., media
 files), it is ok to include the full explanation in the change log file,
@@ -4269,11 +4281,22 @@ reasons.
 
 Thus, for example, you should not refer to AT&T's web site if that
 recommends AT&T's non-free software packages; you should not refer to
-a site that links to AT&T's site presenting it as a place to get some
-non-free program, because that link recommends and legitimizes the
-non-free program.  However, that a site contains a link to AT&T's web
-site for some other purpose (such as long-distance telephone service)
-is not an objection against it.
+a page P that links to AT&T's site presenting it as a place to get
+some non-free program, because that part of the page P itself
+recommends and legitimizes the non-free program.  However, that P
+contains a link to AT&T's web site for some other purpose (such as
+long-distance telephone service) is not an objection against it.
+
+There are web sites which depend on nonfree Javascript code even to
+<em>see</em> the contents of the pages.  Any site hosted on wix.com
+has this problem, and so do some other sites.  Referring people to
+such pages to read their contents is, in effect, urging them to run
+those nonfree programs---so please don't refer to those pages.  (Such
+pages also break the Web, so they deserve condemnation for two
+reasons.)
+
+Instead, please quote excerpts from the page to make your point,
+or find another place to refer to that information.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License

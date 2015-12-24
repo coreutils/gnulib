@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate May 7, 2015
+@set lastupdate December 23, 2015
 @c %**end of header
 
 @dircategory GNU organization
@@ -155,10 +155,10 @@ it can be alleviated at the FSF end, is already being worked on.
 @cindex sysadmin, FSF
 @cindex FSF system administrators
 @cindex GNU system administrators
-The FSF system administrators are responsible for the network and GNU
-hardware.  You can email them at @email{sysadmin@@fsf.org}, but please
-try not to burden them unnecessarily.
-
+The FSF system administrators maintain the GNU network and server
+hardware.  You can email them at @email{sysadmin@@fsf.org}.  Please
+report any failures in GNU servers to them without delay.  Aside from
+that, please try not to burden them unnecessarily.
 
 @node GNU Accounts and Resources
 @chapter GNU Accounts and Resources
@@ -2120,6 +2120,12 @@ Consideration}).  Although the GIF patents expired in 2006, using GIF
 images is still not recommended, as the PNG and JPEG formats are
 generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
 
+Please make sure that any Javascript code in your web pages is covered
+by a free license, and has its license indicated in a way LibreJS can
+recognize.  See @url{http://gnu.org/philosophy/javascript-trap.html}.
+If the Javascript in the page is minified, or for any other reason is
+not the source code, it must point to its source code as described
+there.
 
 @node Manuals on Web Pages
 @section Manuals on Web Pages
