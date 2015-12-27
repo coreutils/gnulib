@@ -1,3 +1,15 @@
+2015-12-28  Daiki Ueno  <ueno@gnu.org>
+
+	maint: fix operator precedence in mbrtowc test
+	This is a fix for test breakage introduced by commit 45228d96; the
+	equality expression must be parenthesized when negated with '!',
+	otherwise we always get:
+
+	  test-mbrtowc.c:49: assertion 'ret == (size_t)(-2)' failed
+
+	* m4/mbrtowc.m4 (gl_MBRTOWC_EMPTY_INPUT): Negate the entire expression.
+	* m4/mbrlen.m4 (gl_MBRLEN_EMPTY_INPUT): Likewise.
+
 2015-12-23  James Youngman  <jay@gnu.org>
 
 	regexprops-generic: update from regex.h
