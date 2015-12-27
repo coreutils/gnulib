@@ -569,7 +569,7 @@ changequote([,])dnl
            int
            main (void)
            {
-             return ! mbrtowc (&wc, "", 0, &mbs) == (size_t) -2;
+             return mbrtowc (&wc, "", 0, &mbs) != (size_t) -2;
            }]])],
         [gl_cv_func_mbrtowc_empty_input=yes],
         [gl_cv_func_mbrtowc_empty_input=no],
