@@ -1,3 +1,9 @@
+2015-12-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	human: fix output buffer overrun by 1
+	* lib/human.c (human_readable): Fix off-by-one typo in buffer
+	calculation that could lead to a one-byte buffer overrun.
+
 2015-12-28  Daiki Ueno  <ueno@gnu.org>
 
 	maint: fix operator precedence in mbrtowc test

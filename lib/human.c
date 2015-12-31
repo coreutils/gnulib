@@ -185,7 +185,8 @@ human_readable (uintmax_t n, char *buf, int opts,
   if (strlen (l->thousands_sep) <= MB_LEN_MAX)
     thousands_sep = l->thousands_sep;
 
-  psuffix = buf + LONGEST_HUMAN_READABLE - HUMAN_READABLE_SUFFIX_LENGTH_MAX;
+  /* Leave room for a trailing space and following suffix.  */
+  psuffix = buf + LONGEST_HUMAN_READABLE - 1 - HUMAN_READABLE_SUFFIX_LENGTH_MAX;
   p = psuffix;
 
   /* Adjust AMT out of FROM_BLOCK_SIZE units and into TO_BLOCK_SIZE
