@@ -1,3 +1,14 @@
+2016-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	version-etc: new year
+	* build-aux/gendocs.sh (version):
+	* doc/gendocs_template:
+	* doc/gendocs_template_min:
+	* doc/gnulib.texi:
+	* lib/version-etc.c (COPYRIGHT_YEAR):
+	Update copyright dates by hand in templates and the like.
+	* all files: Run 'make update-copyright'.
+
 2015-12-31  Paul Eggert  <eggert@cs.ucla.edu>
 
 	human: fix output buffer overrun by 1
@@ -105941,7 +105952,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2015 Free Software Foundation, Inc.
+	Copyright (C) 1997-2016 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
