@@ -11,7 +11,7 @@ Depends-on:
 msvc-inval
 
 configure.ac:
-gl_MSVC_NOTHROW
+AC_REQUIRE([gl_MSVC_NOTHROW])
 if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
   AC_LIBOBJ([msvc-nothrow])
 fi
