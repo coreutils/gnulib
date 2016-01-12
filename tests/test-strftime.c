@@ -165,7 +165,7 @@ tzalloc_test (void)
           tza->tz = tz;
         }
 
-      setting = tza->setting ? tza->setting : "UTC";
+      setting = tza->setting ? tza->setting : "UTC0";
 
       if (!localtime_rz (tz, &LT[i].t, &tm))
         {

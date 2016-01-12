@@ -1,3 +1,16 @@
+2016-01-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Port Universal Time settings to strict POSIX
+	* build-aux/announce-gen, build-aux/bootstrap:
+	* build-aux/do-release-commit-and-tag, build-aux/git-version-gen:
+	* build-aux/gitlog-to-changelog, build-aux/gnu-web-doc-update:
+	* build-aux/gnupload, build-aux/mkinstalldirs:
+	* build-aux/move-if-change, build-aux/prefix-gnulib-mk:
+	* build-aux/update-copyright, build-aux/useless-if-before-free:
+	* build-aux/vc-list-files, tests/test-strftime.c:
+	Use TZ="UTC0", not TZ="UTC".  Either works on GNU platforms,
+	but POSIX says the behavior of TZ="UTC" is undefined.
+
 2016-01-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	msvc-inval: fix problem with unset shell var

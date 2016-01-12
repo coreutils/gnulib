@@ -3,7 +3,7 @@ eval '(exit $?0)' && eval 'exec perl -wS "$0" ${1+"$@"}'
     if 0;
 # Generate a release announcement message.
 
-my $VERSION = '2013-07-09 06:39'; # UTC
+my $VERSION = '2016-01-11 22:03'; # UTC
 # The definition above must lie within the first 8 lines in order
 # for the Emacs time-stamp write hook (at end) to update it.
 # If you change this file with Emacs, please let the write hook
@@ -552,6 +552,6 @@ EOF
 ## eval: (add-hook 'write-file-hooks 'time-stamp)
 ## time-stamp-start: "my $VERSION = '"
 ## time-stamp-format: "%:y-%02m-%02d %02H:%02M"
-## time-stamp-time-zone: "UTC"
+## time-stamp-time-zone: "UTC0"
 ## time-stamp-end: "'; # UTC"
 ## End:
