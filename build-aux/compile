@@ -1,7 +1,7 @@
 #! /bin/sh
 # Wrapper for compilers which do not understand '-c -o'.
 
-scriptversion=2015-11-24.11; # UTC
+scriptversion=2016-01-11.22; # UTC
 
 # Copyright (C) 1999-2015 Free Software Foundation, Inc.
 # Written by Tom Tromey <tromey@cygnus.com>.
@@ -343,6 +343,6 @@ exit $ret
 # eval: (add-hook 'write-file-hooks 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
-# time-stamp-time-zone: "UTC"
+# time-stamp-time-zone: "UTC0"
 # time-stamp-end: "; # UTC"
 # End:
