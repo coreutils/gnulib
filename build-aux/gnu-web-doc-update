@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # http://www.gnu.org/software/$pkg/manual/
 
-VERSION=2016-01-11.22; # UTC
+VERSION=2016-01-12.23; # UTC
 
 # Copyright (C) 2009-2016 Free Software Foundation, Inc.
 
@@ -117,7 +117,7 @@ do
       opt=$(echo "$1" | sed -e 's/=.*//')
       val=$(echo "$1" | sed -e 's/[^=]*=//')
       shift
-      set dummy "$opt" "$val" ${1+"$@"}; shift
+      set dummy "$opt" "$val" "$@"; shift
       ;;
   esac
 

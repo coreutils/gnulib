@@ -1,5 +1,16 @@
 2016-01-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	Port "$@" to OpenIndiana ksh93
+	In http://lists.gnu.org/archive/html/bug-autoconf/2015-12/msg00000.html
+	Pavel Raiskup reports that ${1+"$@"} runs afoul of a bug in /bin/sh
+	(derived from ksh 93t+ 2010-03-05).  ${1+"$@"} works around an ancient
+	bug long-dead shells, so remove the workaround.
+	* build-aux/announce-gen, build-aux/do-release-commit-and-tag:
+	* build-aux/gitlog-to-changelog, build-aux/gnu-web-doc-update:
+	* build-aux/prefix-gnulib-mk, build-aux/update-copyright:
+	* build-aux/useless-if-before-free, tests/test-update-copyright.sh:
+	Use "$@" instead of ${1+"$@"}.
+
 	Port Universal Time settings to strict POSIX
 	* build-aux/announce-gen, build-aux/bootstrap:
 	* build-aux/do-release-commit-and-tag, build-aux/git-version-gen:

@@ -37,7 +37,7 @@ trap 'rm -f $TMP_BASE*' 0 1 2 3 15
 TMP=$TMP_BASE
 s=$TMP-script
 cat <<\EOF > $s
-eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" ${1+"$@"}'
+eval '(exit $?0)' && eval 'exec perl -wS -0777 -pi "$0" "$@"'
   & eval 'exec perl -wS -0777 -pi "$0" $argv:q'
     if 0;
 s/a/b/
