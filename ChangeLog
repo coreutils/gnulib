@@ -1,3 +1,9 @@
+2016-01-12  Martin Sebor  <msebor@redhat.com>
+
+	mktime: rename macro to avoid glibc clash
+	* lib/mktime.c [DEBUG] (DEBUG): Rename to DEBUG_MKTIME.  See:
+	https://sourceware.org/ml/libc-alpha/2016-01/msg00267.html
+
 2016-01-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port "$@" to OpenIndiana ksh93
