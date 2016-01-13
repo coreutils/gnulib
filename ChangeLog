@@ -1,3 +1,15 @@
+2016-01-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	acl-permissions: port to USE_ACL==0 platforms
+	I ran into this problem when building bleeding-edge GNU Emacs
+	with gcc -fsanitize=address on Fedora 23.  On this platform
+	the ACL library does not pass the 'configure' test and Emacs
+	then does not build due in part to what appear to be typos in the
+	ACL part of Gnulib.
+	* lib/acl-internal.c (free_permission_context):
+	* lib/acl-internal.h (struct permission_context):
+	Test whether USE_ACL is nonzero, not whether it is defined.
+
 2016-01-12  Martin Sebor  <msebor@redhat.com>
 
 	mktime: rename macro to avoid glibc clash
