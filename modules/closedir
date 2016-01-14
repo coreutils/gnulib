@@ -8,6 +8,7 @@ m4/closedir.m4
 
 Depends-on:
 dirent
+dirfd           [test $HAVE_CLOSEDIR = 0 || test $REPLACE_CLOSEDIR = 1]
 
 configure.ac:
 gl_FUNC_CLOSEDIR

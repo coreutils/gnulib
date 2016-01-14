@@ -1,4 +1,4 @@
-# serial 22   -*- Autoconf -*-
+# serial 23   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -35,11 +35,15 @@ AC_DEFUN([gl_FUNC_DIRFD],
        gl_cv_func_dirfd_macro=yes,
        gl_cv_func_dirfd_macro=no)])
 
-  # Use the replacement only if we have no function or macro with that name.
-  if test $ac_cv_func_dirfd = no && test $gl_cv_func_dirfd_macro = no; then
+  # Use the replacement if we have no function or macro with that name,
+  # or if OS/2 kLIBC whose dirfd() does not work.
+  if test $ac_cv_func_dirfd = no && test $gl_cv_func_dirfd_macro = no \
+     || test -z "${host_os##os2*}" ; then
     if test $ac_cv_have_decl_dirfd = yes; then
       # If the system declares dirfd already, let's declare rpl_dirfd instead.
       REPLACE_DIRFD=1
+      AC_DEFINE([REPLACE_DIRFD], [1],
+        [Define to 1 if gnulib's dirfd() replacement is used.])
     fi
   fi
 ])

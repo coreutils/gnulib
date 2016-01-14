@@ -40,6 +40,11 @@
 # include <unistd.h>
 #endif
 
+#ifdef __KLIBC__
+# include <io.h>
+# include <fcntl.h>
+#endif
+
 DIR *
 opendir (const char *dir_name)
 {
@@ -51,6 +56,22 @@ opendir (const char *dir_name)
   if (dirp == NULL)
     return NULL;
 
+# ifdef __KLIBC__
+  {
+    int fd = open (dir_name, O_RDONLY);
+    if (fd == -1 || _gl_register_dirp_fd (fd, dirp))
+      {
+        int saved_errno = errno;
+
+        close (fd);
+        closedir (dirp);
+
+        errno = saved_errno;
+
+        return NULL;
+      }
+  }
+# endif
 #else
 
   char dir_name_mask[MAX_PATH + 1 + 1 + 1];
