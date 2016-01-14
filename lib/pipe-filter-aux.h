@@ -35,8 +35,9 @@ _GL_INLINE_HEADER_BEGIN
    looping while waiting for the child.  Not good.  But hardly any platform
    lacks select() nowadays.)  */
 
-/* On BeOS select() works only on sockets, not on normal file descriptors.  */
-#ifdef __BEOS__
+/* On BeOS and OS/2 kLIBC select() works only on sockets, not on normal file
+   descriptors.  */
+#if defined __BEOS__ || defined __KLIBC__
 # undef HAVE_SELECT
 #endif
 
