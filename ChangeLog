@@ -1,3 +1,12 @@
+2016-01-14  Pádraig Brady  <P@draigBrady.com>
+
+	sig2str: list all signals on FreeBSD >= 7
+	FreeBSD >= 7 is contravening POSIX by not defining NSIG
+	to the maximal statically defined signal value.
+	It does define _SIG_MAXSIG though, so base SIGNUM_BOUND on that.
+	* lib/sig2str.h (SIGNUM_BOUND): Define to (_SIG_MAXSIG - 2)
+	where available, even when NSIG is defined.
+
 2016-01-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	acl-permissions: port to USE_ACL==0 platforms
