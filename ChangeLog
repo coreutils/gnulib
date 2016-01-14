@@ -1,5 +1,11 @@
 2016-01-14  Pádraig Brady  <P@draigBrady.com>
 
+	doc: mention setlocale() issues on OpenBSD
+	* doc/posix-functions/setlocale.texi: Mention setlocale(LC_ALL,"")
+	never fails, and the need to check categories individually.
+
+2016-01-14  Pádraig Brady  <P@draigBrady.com>
+
 	sig2str: list all signals on FreeBSD >= 7
 	FreeBSD >= 7 is contravening POSIX by not defining NSIG
 	to the maximal statically defined signal value.

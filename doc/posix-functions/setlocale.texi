@@ -29,4 +29,12 @@ On Cygwin 1.5.x, which doesn't have locales,
 @code{setlocale(LC_ALL,NULL)} always returns @code{"C"}.
 @item
 On Cygwin 1.7.0, only the charset portion of a locale designation is honored.
+@item
+On OpenBSD, @code{setlocale(LC_ALL,"")} will only update categories that
+are deemed appropriate for the @code{LC_ALL} environment value, even if
+there are other categories set to different values in the environment.
+In addition any value is accepted for @code{LC_CTYPE}, and so NULL
+is never returned to indicate a failure to set locale.
+To verify category values, each category must be set individually
+with @code{setlocale(LC_COLLATE,"")} etc.
 @end itemize
