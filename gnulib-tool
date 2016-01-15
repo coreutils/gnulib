@@ -772,7 +772,6 @@ func_relconcat ()
 func_ln_s ()
 {
   ln -s "$1" "$2" || {
-    echo "$progname: ln -s failed; falling back on cp -p" >>/tmp/log
     echo "$progname: ln -s failed; falling back on cp -p" >&2
     symbolic=
     lsymbolic=
