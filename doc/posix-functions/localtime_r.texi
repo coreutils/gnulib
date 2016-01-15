@@ -22,4 +22,7 @@ HP-UX 10.
 
 Portability problems not fixed by Gnulib:
 @itemize
+On some platforms, this function returns nonsense values for
+unsupported arguments (like @math{2^56}), rather than failing:
+FreeBSD 10.
 @end itemize

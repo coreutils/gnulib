@@ -1,3 +1,10 @@
+2016-01-15  Pádraig Brady  <P@draigBrady.com>
+
+	doc: mention unfixed issues with unsupported localtime() values
+	* doc/posix-functions/localtime.texi: Mention that FreeBSD 10
+	returns nonsense for localtime(2^56).
+	* doc/posix-functions/localtime_r.texi: Likewise.
+
 2016-01-14  Pádraig Brady  <P@draigBrady.com>
 
 	doc: mention setlocale() issues on OpenBSD
