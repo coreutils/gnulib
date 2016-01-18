@@ -1,9 +1,14 @@
 2016-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: fix [ diagnostic
+	Problem and fix reported by Aharon Robbins in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00082.html
+	* lib/regcomp.c (REG_EBRACK_IDX): Fix misleading diagnostic about [.
+
 	regex: fix memory leaks
 	Problem and draft fix reported by Aharon Robbins in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00082.html
-	* lib/regcomp.c (build_range_exp, build_charclass_op):
+	* lib/regcomp.c (build_range_exp, build_charclass_op)
 	* lib/regex_internal.c (re_dfa_add_node):
 	Fix memory leak on failure.
 
