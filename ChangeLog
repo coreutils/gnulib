@@ -1,3 +1,18 @@
+2016-01-19  Daiki Ueno  <ueno@gnu.org>
+
+	utimens-tests: avoid pulling gettext .m4 files
+	Although this is not the right fix to the original problem:
+	http://lists.gnu.org/archive/html/bug-gnulib/2013-01/msg00086.html
+	it makes it possible again for consumer projects to use arbitrary
+	version of gettext, through the steps described at:
+	http://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html
+	See here for details:
+	https://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00079.html
+	* modules/futimens-tests (Depends-on): Add 'gettext-h' in place of
+	'gettext'.
+	* modules/utimens-tests (Depends-on): Add 'gettext-h' in place of
+	'gettext'.
+
 2016-01-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: pacify static checkers

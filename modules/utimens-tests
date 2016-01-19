@@ -9,7 +9,7 @@ tests/macros.h
 
 Depends-on:
 dup
-gettext
+gettext-h
 ignore-value
 nanosleep
 symlink

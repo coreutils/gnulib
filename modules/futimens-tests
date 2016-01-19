@@ -7,7 +7,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-gettext
+gettext-h
 fcntl-h
 ignore-value
 nanosleep
