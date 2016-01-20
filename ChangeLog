@@ -1,3 +1,13 @@
+2016-01-20  Pádraig Brady  <P@draigBrady.com>
+
+	gnu-web-doc-update: fix addition of new files
+	If there were already added (emnpty) dirs,
+	then cvs aborts the add with the message:
+	  cvs [add aborted]: there is a version in <./dirname> already
+	* build-aux/gnu-web-doc-update: Add directories separately
+	to the addition of files, to avoid the above issue
+	impacting the addition of files.
+
 2016-01-19  Daiki Ueno  <ueno@gnu.org>
 
 	utimens-tests: avoid pulling gettext .m4 files

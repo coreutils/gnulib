@@ -179,11 +179,12 @@ $RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
   cd $tmp/$pkg/manual
 
   # Add all the files.  This is simpler than trying to add only the
-  # new ones because of new directories: it would require iterating on
-  # adding the outer directories, and then their contents.
-  #
-  # find guarantees that we add outer directories first.
-  find . -name CVS -prune -o -print             \
+  # new ones because of new directories
+  # First add non empty dirs individually
+  find . -name CVS -prune -o -type d \! -empty -print             \
+    | $XARGS -n1 --no-run-if-empty -- $dryrun $CVS add -ko
+  # Now add all files
+  find . -name CVS -prune -o -type f -print             \
     | $XARGS --no-run-if-empty -- $dryrun $CVS add -ko
 
   # Report/Remove stale files
