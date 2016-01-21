@@ -20,5 +20,5 @@
    and return the hash code.  Note that unlike hash_pjw(), it does not
    return it modulo a table size.
    The result is platform dependent: it depends on the size of the 'size_t'
-   type and on the signedness of the 'char' type.  */
+   type.  */
 extern size_t hash_pjw_bare (const void *x, size_t n) _GL_ATTRIBUTE_PURE;

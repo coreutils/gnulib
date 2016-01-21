@@ -1,5 +1,8 @@
 2016-01-21  Bruno Haible  <bruno@clisp.org>
 
+	hash-pjw-bare: fix comment
+	* lib/hash-pjw-bare.h (hash_pjw_bare): Fix comment.
+
 	wcwidth: Replace also on OpenBSD 5.8
 	* m4/wcwidth.m4 (gl_FUNC_WCWIDTH): Check the value of wcwidth(0xFF1A).
 	* doc/posix-functions/wcwidth.texi: Update.
