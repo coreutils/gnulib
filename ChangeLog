@@ -1,3 +1,8 @@
+2016-01-22  Karl Berry  <karl@freefriends.org>
+
+	* doc/posix-functions/localtime.texi,
+	* doc/posix-functions/localtime_r.texi: @item needed for @itemize text.
+
 2016-01-21  Bruno Haible  <bruno@clisp.org>
 
 	hash-pjw-bare: fix comment
