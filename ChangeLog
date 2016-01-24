@@ -1,3 +1,11 @@
+2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	closedir: fix OS/2-related typos
+	Problem reported by KO Myung-Hun in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00107.html
+	* m4/closedir.m4 (gl_FUNC_CLOSEDIR): Fix a couple of typos
+	in the last couple of changes.
+
 2016-01-24  KO Myung-Hun  <komh78@gmail.com>
 
 	openat_proc_name: fix that last '/' is overwritten on OS/2 kLIBC
