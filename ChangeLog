@@ -1,3 +1,13 @@
+2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	closedir, dirfd, opendir: port to OpenSolaris 5.10
+	* m4/closedir.m4 (gl_FUNC_CLOSEDIR):
+	* m4/dirfd.m4 (gl_FUNC_DIRFD):
+	* m4/opendir.m4 (gl_FUNC_OPENDIR):
+	Don't use ${word##pat} substitution, as it doesn't work in
+	OpenSolaris 5.10 /bin/sh.  Problem reported by Assaf Gordon in:
+	http://bugs.gnu.org/22443#11
+
 2016-01-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	bootstrap: use American spelling
