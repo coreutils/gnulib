@@ -1,5 +1,11 @@
 2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gnulib-tool: don't give up on ln -s so easily
+	* gnulib-tool (func_ln_s): Don't give up on a later ln -s merely
+	because an earlier one failed.  The targets could be on different
+	file systems.  Problem reported by KO Myung-Hun in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00081.html
+
 	closedir: fix OS/2-related typos
 	Problem reported by KO Myung-Hun in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00107.html

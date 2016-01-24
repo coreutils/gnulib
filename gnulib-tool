@@ -773,9 +773,6 @@ func_ln_s ()
 {
   ln -s "$1" "$2" || {
     echo "$progname: ln -s failed; falling back on cp -p" >&2
-    symbolic=
-    lsymbolic=
-    do_copyrights=true
 
     case "$1" in
       /* | ?:*) # SRC is absolute.
