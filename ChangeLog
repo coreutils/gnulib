@@ -1,3 +1,8 @@
+2016-01-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	bootstrap: use American spelling
+	* build-aux/bootstrap: Honor American spelling.
+
 2016-01-22  Karl Berry  <karl@freefriends.org>
 
 	* doc/posix-functions/localtime.texi,
