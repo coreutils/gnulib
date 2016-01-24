@@ -1,5 +1,11 @@
 2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: treat [x] as x if x is a unibyte encoding error
+	Problem reported by Aharon Robbins in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00091.html
+	* lib/regcomp.c (parse_byte) [!_LIBC && RE_ENABLE_I18N]: New function.
+	(build_range_exp) [!_LIBC && RE_ENABLE_I18N]: Use it.
+
 	closedir, dirfd, opendir: port to OpenSolaris 5.10
 	* m4/closedir.m4 (gl_FUNC_CLOSEDIR):
 	* m4/dirfd.m4 (gl_FUNC_DIRFD):
