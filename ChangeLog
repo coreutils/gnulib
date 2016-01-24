@@ -1,3 +1,9 @@
+2016-01-24  KO Myung-Hun  <komh78@gmail.com>
+
+	openat_proc_name: fix that last '/' is overwritten on OS/2 kLIBC
+	* lib/openat-proc.c (openat_proc_name): Increase dirlen by 1 after
+	copying a directory.
+
 2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: treat [x] as x if x is a unibyte encoding error
