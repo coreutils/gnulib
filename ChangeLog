@@ -1,3 +1,9 @@
+2016-01-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	get-permissions, strftime: fix grammar in comments
+	* lib/get-permissions.c, lib/strftime.c: Merge into the comments
+	some grammar fixes Alan Mackenzie made to GNU Emacs.
+
 2016-01-25  Daiki Ueno  <ueno@gnu.org>
 
 	gettext: mark as obsolete
