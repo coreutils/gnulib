@@ -1,5 +1,5 @@
 Description:
-Translate messages to user's native language if the gettext module is also used.
+Translate messages to user's native language if GNU gettext is also used.
 
 Files:
 lib/gettext.h

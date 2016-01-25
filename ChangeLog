@@ -1,3 +1,13 @@
+2016-01-25  Daiki Ueno  <ueno@gnu.org>
+
+	gettext: mark as obsolete
+	Suggested by Paul Eggert in:
+	https://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00101.html
+	* modules/gettext (Status): Mark as obsolete.
+	(Notice): Suggest to use 'gettext-h' instead.
+	* modules/gettext-h (Description): Suggest GNU gettext, instead of
+	the 'gettext' module.
+
 2016-01-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-tool: don't give up on ln -s so easily

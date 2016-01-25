@@ -1,8 +1,13 @@
 Description:
 Translate messages to user's native language.
 
+Status:
+obsolete
+
 Notice:
-You must add an invocation of AM_GNU_GETTEXT([external]) to configure.ac.
+This module is obsolete. Use the module 'gettext-h' instead to make
+your program capable of internationalization, when GNU gettext is also
+used.
 
 Files:
 m4/codeset.m4
