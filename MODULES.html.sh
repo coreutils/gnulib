@@ -2338,7 +2338,7 @@ func_all_modules ()
   func_module mbfile
   func_end_table
 
-  element="Support for systems lacking ISO C11"
+  element="Support for systems lacking ISO C 11"
   func_section_wrap c11_sup
   func_wrap H2
   func_echo "$element"
@@ -2350,6 +2350,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module std-gnu11
   func_module stdalign
   func_end_table
 

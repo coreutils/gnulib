@@ -1,3 +1,14 @@
+2016-02-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	std-gnu11: new module
+	This makes it easier for applications to prefer C11 and C++11
+	to older variants, when compiling C and C++ code.
+	Unlike most m4/*.m4 files, m4/std-gnu11.m4 is GPLed, as it copies
+	a nontrivial chunk of GPLed Autoconf source code.
+	* COPYING: Mention the m4/*.m4 copyright situation.
+	* MODULES.html.sh (std-gnu11): New module.
+	* m4/std-gnu11.m4, modules/std-gnu11: New files.
+
 2016-01-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	get-permissions, strftime: fix grammar in comments

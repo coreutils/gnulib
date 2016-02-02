@@ -14,4 +14,5 @@ were not licensed under LGPL.
 
 Some of the source files in lib/ have different licenses.  Also, the
 copy of maintain.texi in doc/ has a verbatim-copying license, and
-doc/standards.texi and make-stds.texi are GFDL.
+doc/standards.texi and make-stds.texi are GFDL.  Most (but not all)
+m4/*.m4 files have nearly unlimited licenses.
