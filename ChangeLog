@@ -1,3 +1,12 @@
+2016-02-02  Jim Meyering  <meyering@fb.com>
+
+	verify-tests: also remove stray test-verify.Tpo
+	* modules/verify-tests (Makefile.am): Arrange for "make clean"
+	to remove the test-verify.Tpo file that is left behind by
+	the automake-generated rule upon compilation failure.
+	Otherwise, that .Tpo file would cause a failed "make distcheck"
+	at least for grep.
+
 2016-02-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	std-gnu11: new module
