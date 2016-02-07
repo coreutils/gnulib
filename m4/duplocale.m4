@@ -1,4 +1,4 @@
-# duplocale.m4 serial 7
+# duplocale.m4 serial 8
 dnl Copyright (C) 2009-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,8 +25,10 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
 #endif
 int main ()
 {
-  if (duplocale (LC_GLOBAL_LOCALE) == (locale_t)0)
+  locale_t loc = duplocale (LC_GLOBAL_LOCALE);
+  if (!loc)
     return 1;
+  freelocale (loc);
   return 0;
 }]])],
          [gl_cv_func_duplocale_works=yes],

@@ -58,6 +58,7 @@ main ()
   struct locale_dependent_values expected_results;
   locale_t mixed1;
   locale_t mixed2;
+  locale_t perthread;
 
   /* Set up a locale which is a mix between different system locales.  */
   setlocale (LC_ALL, "en_US.UTF-8");
@@ -70,7 +71,8 @@ main ()
   ASSERT (mixed1 != NULL);
 
   /* Use a per-thread locale.  */
-  uselocale (newlocale (LC_ALL_MASK, "es_ES.UTF-8", NULL));
+  perthread = newlocale (LC_ALL_MASK, "es_ES.UTF-8", NULL);
+  uselocale (perthread);
 
   /* Save the locale in a locale_t object again.  */
   mixed2 = duplocale (LC_GLOBAL_LOCALE);
@@ -108,6 +110,10 @@ main ()
     ASSERT (strcmp (results.time, expected_results.time) == 0);
   }
 
+  setlocale (LC_ALL, "C");
+  freelocale (mixed1);
+  freelocale (mixed2);
+  freelocale (perthread);
   return 0;
 }
 

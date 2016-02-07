@@ -1,4 +1,4 @@
-# asm-underscore.m4 serial 2
+# asm-underscore.m4 serial 3
 dnl Copyright (C) 2010-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,7 +29,7 @@ int foo(void) { return 0; }
 EOF
      # Look for the assembly language name in the .s file.
      AC_TRY_COMMAND(${CC-cc} $CFLAGS $CPPFLAGS $gl_c_asm_opt conftest.c) >/dev/null 2>&1
-     if grep _foo conftest.$gl_asmext >/dev/null ; then
+     if LC_ALL=C grep -E '(^|[^a-zA-Z0-9_])_foo([^a-zA-Z0-9_]|$)' conftest.$gl_asmext >/dev/null; then
        gl_cv_prog_as_underscore=yes
      else
        gl_cv_prog_as_underscore=no

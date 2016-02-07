@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 12
+# serial 13
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -15,6 +15,7 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
    AC_CACHE_CHECK([whether getcwd (NULL, 0) allocates memory for result],
      [gl_cv_func_getcwd_null],
      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+#	 include <stdlib.h>
 #        if HAVE_UNISTD_H
 #         include <unistd.h>
 #        else /* on Windows with MSVC */
@@ -39,6 +40,7 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
                  return 3;
                if (f[1] != '\0')
                  return 4;
+               free (f);
                return 0;
              }
 #endif

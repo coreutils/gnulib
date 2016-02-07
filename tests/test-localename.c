@@ -183,6 +183,8 @@ test_locale_name (void)
         ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
         name = gl_locale_name (LC_MESSAGES, "LC_MESSAGES");
         ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+        uselocale (LC_GLOBAL_LOCALE);
+        freelocale (locale);
       }
   }
 
@@ -194,10 +196,10 @@ test_locale_name (void)
     for (i = 0; i < SIZEOF (categories); i++)
       {
         int category_mask = categories[i].mask;
-        locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
-        if (locale != NULL)
+        locale_t loc = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+        if (loc != NULL)
           {
-            locale = newlocale (category_mask, "de_DE.UTF-8", locale);
+            locale_t locale = newlocale (category_mask, "de_DE.UTF-8", loc);
             if (locale != NULL)
               {
                 unsigned int j;
@@ -212,7 +214,10 @@ test_locale_name (void)
                     else
                       ASSERT (strcmp (name_j, "fr_FR.UTF-8") == 0);
                   }
+                uselocale (LC_GLOBAL_LOCALE);
+                freelocale (locale);
               }
+            freelocale (loc);
           }
       }
   }
@@ -245,6 +250,8 @@ test_locale_name_thread (void)
         ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
         name = gl_locale_name_thread (LC_MESSAGES, "LC_MESSAGES");
         ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
+        uselocale (LC_GLOBAL_LOCALE);
+        freelocale (locale);
       }
   }
 
@@ -256,10 +263,10 @@ test_locale_name_thread (void)
     for (i = 0; i < SIZEOF (categories); i++)
       {
         int category_mask = categories[i].mask;
-        locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
-        if (locale != NULL)
+        locale_t loc = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
+        if (loc != NULL)
           {
-            locale = newlocale (category_mask, "de_DE.UTF-8", locale);
+            locale_t locale = newlocale (category_mask, "de_DE.UTF-8", loc);
             if (locale != NULL)
               {
                 unsigned int j;
@@ -275,7 +282,10 @@ test_locale_name_thread (void)
                     else
                       ASSERT (strcmp (name_j, "fr_FR.UTF-8") == 0);
                   }
+                uselocale (LC_GLOBAL_LOCALE);
+                freelocale (locale);
               }
+            freelocale (loc);
           }
       }
   }
@@ -444,6 +454,7 @@ test_locale_name_thread (void)
                 ASSERT (strcmp (unsaved_names[j][i], name) == 0);
               }
             uselocale (LC_GLOBAL_LOCALE);
+            freelocale (locale);
           }
       }
     /* Verify the unsaved_names are still valid.  */
@@ -590,6 +601,8 @@ test_locale_name_posix (void)
         uselocale (locale);
         name = gl_locale_name_posix (LC_MESSAGES, "LC_MESSAGES");
         ASSERT (strcmp (name, "C") == 0);
+        uselocale (LC_GLOBAL_LOCALE);
+        freelocale (locale);
       }
   }
 #endif
@@ -702,6 +715,8 @@ test_locale_name_environ (void)
         uselocale (locale);
         name = gl_locale_name_environ (LC_MESSAGES, "LC_MESSAGES");
         ASSERT (strcmp (name, "C") == 0);
+        uselocale (LC_GLOBAL_LOCALE);
+        freelocale (locale);
       }
   }
 #endif
@@ -729,6 +744,8 @@ test_locale_name_default (void)
       {
         uselocale (locale);
         ASSERT (strcmp (gl_locale_name_default (), name) == 0);
+        uselocale (LC_GLOBAL_LOCALE);
+        freelocale (locale);
       }
   }
 #endif

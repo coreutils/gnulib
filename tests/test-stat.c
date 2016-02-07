@@ -30,6 +30,7 @@ SIGNATURE_CHECK (stat, int, (char const *, struct stat *));
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 

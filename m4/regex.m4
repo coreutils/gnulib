@@ -1,4 +1,4 @@
-# serial 65
+# serial 66
 
 # Copyright (C) 1996-2001, 2003-2016 Free Software Foundation, Inc.
 #
@@ -93,6 +93,7 @@ AC_DEFUN([gl_REGEX],
                                       0, sizeof data - 1, &regs)
                            != -1)
                     result |= 1;
+                  regfree (&regex);
                 }
 
                 {
@@ -124,6 +125,7 @@ AC_DEFUN([gl_REGEX],
                       if (i != 0 && i != 21)
                         result |= 1;
                     }
+                  regfree (&regex);
                 }
 
                 if (! setlocale (LC_ALL, "C"))

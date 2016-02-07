@@ -95,6 +95,7 @@ test_stat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (unlink (BASE "link2") == 0);
   ASSERT (unlink (BASE "link3") == 0);
   ASSERT (unlink (BASE "link4") == 0);
+  free (cwd);
 
   return 0;
 }

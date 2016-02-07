@@ -74,5 +74,6 @@ main (int argc, char **argv _GL_UNUSED)
       for (i = 0; i < result; i++)
         printf ("%d\n", (int) groups[i]);
     }
+  free (groups);
   return 0;
 }

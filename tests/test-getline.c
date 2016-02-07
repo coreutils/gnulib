@@ -71,8 +71,8 @@ main (void)
   free (line);
 
   /* Test growth of buffer, must not leak.  */
-  line = malloc (1);
-  len = 0;
+  len = 1;
+  line = malloc (len);
   result = getline (&line, &len, f);
   ASSERT (result == 3);
   ASSERT (strcmp (line, "bc\n") == 0);

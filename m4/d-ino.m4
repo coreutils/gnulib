@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 dnl From Jim Meyering.
 dnl
@@ -34,6 +34,7 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
                return 3;
              if (e->d_ino != st.st_ino)
                return 4;
+             closedir (dp);
              return 0;
            ]])],
            [gl_cv_struct_dirent_d_ino=yes],

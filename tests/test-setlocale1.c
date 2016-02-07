@@ -54,6 +54,8 @@ main (int argc, char *argv[])
 
   /* Test that the two results are the same.  */
   ASSERT (strcmp (name1, name2) == 0);
+  free (name1);
+  free (name2);
 
   return 0;
 }
