@@ -1,8 +1,8 @@
 Installation Instructions
 *************************
 
-Copyright (C) 1994-1996, 1999-2002, 2004-2016 Free Software Foundation,
-Inc.
+   Copyright (C) 1994-1996, 1999-2002, 2004-2016 Free Software
+Foundation, Inc.
 
    Copying and distribution of this file, with or without modification,
 are permitted in any medium without royalty provided the copyright
@@ -30,11 +30,10 @@ you can run in the future to recreate the current configuration, and a
 file 'config.log' containing compiler output (useful mainly for
 debugging 'configure').
 
-   It can also use an optional file (typically called 'config.cache'
-and enabled with '--cache-file=config.cache' or simply '-C') that saves
-the results of its tests to speed up reconfiguring.  Caching is
-disabled by default to prevent problems with accidental use of stale
-cache files.
+   It can also use an optional file (typically called 'config.cache' and
+enabled with '--cache-file=config.cache' or simply '-C') that saves the
+results of its tests to speed up reconfiguring.  Caching is disabled by
+default to prevent problems with accidental use of stale cache files.
 
    If you need to do unusual things to compile the package, please try
 to figure out how 'configure' could check whether to do them, and mail
@@ -45,8 +44,8 @@ may remove or edit it.
 
    The file 'configure.ac' (or 'configure.in') is used to create
 'configure' by a program called 'autoconf'.  You need 'configure.ac' if
-you want to change it or regenerate 'configure' using a newer version
-of 'autoconf'.
+you want to change it or regenerate 'configure' using a newer version of
+'autoconf'.
 
    The simplest way to compile this package is:
 
@@ -88,7 +87,7 @@ of 'autoconf'.
      uninstallation works correctly, even though it is required by the
      GNU Coding Standards.
 
-  8. Some packages, particularly those that use Automake, provide `make
+  8. Some packages, particularly those that use Automake, provide 'make
      distcheck', which can by used by developers to test that all other
      targets like 'make install' and 'make uninstall' work correctly.
      This target is generally not run by end users.
@@ -101,8 +100,8 @@ the 'configure' script does not know about.  Run './configure --help'
 for details on some of the pertinent environment variables.
 
    You can give 'configure' initial values for configuration parameters
-by setting variables in the command line or in the environment.  Here
-is an example:
+by setting variables in the command line or in the environment.  Here is
+an example:
 
      ./configure CC=c99 CFLAGS=-g LIBS=-lposix
 
@@ -115,9 +114,9 @@ Compiling For Multiple Architectures
 same time, by placing the object files for each architecture in their
 own directory.  To do this, you can use GNU 'make'.  'cd' to the
 directory where you want the object files and executables to go and run
-the 'configure' script.  'configure' automatically checks for the
-source code in the directory that 'configure' is in and in '..'.  This
-is known as a "VPATH" build.
+the 'configure' script.  'configure' automatically checks for the source
+code in the directory that 'configure' is in and in '..'.  This is known
+as a "VPATH" build.
 
    With a non-GNU 'make', it is safer to compile the package for one
 architecture at a time in the source code directory.  After you have
@@ -156,8 +155,8 @@ Documentation and other data files still use the regular prefix.
    In addition, if you use an unusual directory layout you can give
 options like '--bindir=DIR' to specify different values for particular
 kinds of files.  Run 'configure --help' for a list of the directories
-you can set and what kinds of files go in them.  In general, the
-default for these options is expressed in terms of '${prefix}', so that
+you can set and what kinds of files go in them.  In general, the default
+for these options is expressed in terms of '${prefix}', so that
 specifying just '--prefix' will affect all of the other directory
 specifications that were not explicitly provided.
 
@@ -168,17 +167,17 @@ both of the following shortcuts of passing variable assignments to the
 having to reconfigure or recompile.
 
    The first method involves providing an override variable for each
-affected directory.  For example, `make install
+affected directory.  For example, 'make install
 prefix=/alternate/directory' will choose an alternate location for all
 directory configuration variables that were expressed in terms of
 '${prefix}'.  Any directories that were specified during 'configure',
-but not in terms of '${prefix}', must each be overridden at install
-time for the entire installation to be relocated.  The approach of
-makefile variable overrides for each directory variable is required by
-the GNU Coding Standards, and ideally causes no recompilation.
-However, some platforms have known limitations with the semantics of
-shared libraries that end up requiring recompilation when using this
-method, particularly noticeable in packages that use GNU Libtool.
+but not in terms of '${prefix}', must each be overridden at install time
+for the entire installation to be relocated.  The approach of makefile
+variable overrides for each directory variable is required by the GNU
+Coding Standards, and ideally causes no recompilation.  However, some
+platforms have known limitations with the semantics of shared libraries
+that end up requiring recompilation when using this method, particularly
+noticeable in packages that use GNU Libtool.
 
    The second method involves providing the 'DESTDIR' variable.  For
 example, 'make install DESTDIR=/alternate/directory' will prepend
@@ -209,32 +208,31 @@ you can use the 'configure' options '--x-includes=DIR' and
 '--x-libraries=DIR' to specify their locations.
 
    Some packages offer the ability to configure how verbose the
-execution of 'make' will be.  For these packages, running `./configure
+execution of 'make' will be.  For these packages, running './configure
 --enable-silent-rules' sets the default to minimal output, which can be
-overridden with 'make V=1'; while running `./configure
+overridden with 'make V=1'; while running './configure
 --disable-silent-rules' sets the default to verbose, which can be
 overridden with 'make V=0'.
 
 Particular systems
 ==================
 
-   On HP-UX, the default C compiler is not ANSI C compatible.  If GNU
-CC is not installed, it is recommended to use the following options in
+   On HP-UX, the default C compiler is not ANSI C compatible.  If GNU CC
+is not installed, it is recommended to use the following options in
 order to use an ANSI C compiler:
 
      ./configure CC="cc -Ae -D_XOPEN_SOURCE=500"
 
 and if that doesn't work, install pre-built binaries of GCC for HP-UX.
 
-   HP-UX 'make' updates targets which have the same time stamps as
-their prerequisites, which makes it generally unusable when shipped
-generated files such as 'configure' are involved.  Use GNU 'make'
-instead.
+   HP-UX 'make' updates targets which have the same time stamps as their
+prerequisites, which makes it generally unusable when shipped generated
+files such as 'configure' are involved.  Use GNU 'make' instead.
 
    On OSF/1 a.k.a. Tru64, some versions of the default C compiler cannot
-parse its '<wchar.h>' header file.  The option '-nodtk' can be used as
-a workaround.  If GNU CC is not installed, it is therefore recommended
-to try
+parse its '<wchar.h>' header file.  The option '-nodtk' can be used as a
+workaround.  If GNU CC is not installed, it is therefore recommended to
+try
 
      ./configure CC="cc"
 
@@ -308,9 +306,9 @@ them in the 'configure' command line, using 'VAR=value'.  For example:
 causes the specified 'gcc' to be used as the C compiler (unless it is
 overridden in the site shell script).
 
-Unfortunately, this technique does not work for 'CONFIG_SHELL' due to
-an Autoconf limitation.  Until the limitation is lifted, you can use
-this workaround:
+Unfortunately, this technique does not work for 'CONFIG_SHELL' due to an
+Autoconf limitation.  Until the limitation is lifted, you can use this
+workaround:
 
      CONFIG_SHELL=/bin/bash ./configure CONFIG_SHELL=/bin/bash
 
@@ -327,9 +325,9 @@ operates.
 '--help=short'
 '--help=recursive'
      Print a summary of the options unique to this package's
-     'configure', and exit.  The 'short' variant lists options used
-     only in the top level, while the 'recursive' variant lists options
-     also present in any nested packages.
+     'configure', and exit.  The 'short' variant lists options used only
+     in the top level, while the 'recursive' variant lists options also
+     present in any nested packages.
 
 '--version'
 '-V'
@@ -357,9 +355,9 @@ operates.
      'configure' can determine that directory automatically.
 
 '--prefix=DIR'
-     Use DIR as the installation prefix.  *note Installation Names::
-     for more details, including other options available for fine-tuning
-     the installation locations.
+     Use DIR as the installation prefix.  *note Installation Names:: for
+     more details, including other options available for fine-tuning the
+     installation locations.
 
 '--no-create'
 '-n'
