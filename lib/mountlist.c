@@ -1068,6 +1068,8 @@ read_file_system_list (bool need_fs_type)
         struct dirent entry;
         struct dirent *result;
 
+        /* FIXME: readdir_r is planned to be withdrawn from POSIX and
+           marked obsolescent in glibc.  Use readdir instead.  */
         if (readdir_r (dirp, &entry, &result) || result == NULL)
           break;
 

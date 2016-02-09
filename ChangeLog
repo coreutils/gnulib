@@ -1,3 +1,9 @@
+2016-02-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	readdir_r: now obsolescent
+	* doc/posix-functions/readdir_r.texi (readdir_r): Now obsolescent.
+	* lib/mountlist.c (read_file_system_list): Add a FIXME.
+
 2016-02-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	misc: port better to gcc -fsanitize=address
