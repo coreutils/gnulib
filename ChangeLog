@@ -1,3 +1,11 @@
+2016-02-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: port to older HP and IBM cc
+	* lib/stdalign.in.h (_Alignas): Port better to older HP and IBM
+	C compilers, by checking their version numbers.  These version
+	numbers appear in MariaDB and in Qt code that dates way back and
+	that conditiionally uses the 'aligned' attribute.
+
 2016-02-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port to clang 3.7.0
