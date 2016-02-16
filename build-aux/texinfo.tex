@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-02-15.17}
+\def\texinfoversion{2016-02-16.15}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -3667,9 +3667,9 @@ end
 \def\oddheadingmarks{\headingmarks{odd}{heading}}
 \def\evenfootingmarks{\headingmarks{even}{footing}}
 \def\oddfootingmarks{\headingmarks{odd}{footing}}
-\def\everyheadingmarks#1 {\headingmarks{even}{heading}{#1}
+\parseargdef\everyheadingmarks{\headingmarks{even}{heading}{#1}
                           \headingmarks{odd}{heading}{#1} }
-\def\everyfootingmarks#1 {\headingmarks{even}{footing}{#1}
+\parseargdef\everyfootingmarks{\headingmarks{even}{footing}{#1}
                           \headingmarks{odd}{footing}{#1} }
 % #1 = even/odd, #2 = heading/footing, #3 = top/bottom.
 \def\headingmarks#1#2#3 {%
@@ -3690,7 +3690,7 @@ end
 % By default, they are off at the start of a document,
 % and turned `on' after @end titlepage.
 
-\def\headings #1 {\csname HEADINGS#1\endcsname}
+\parseargdef\headings{\csname HEADINGS#1\endcsname}
 
 \def\headingsoff{% non-global headings elimination
   \evenheadline={\hfil}\evenfootline={\hfil}%
@@ -6225,7 +6225,7 @@ end
   \fi
 }
 
-\def\setchapternewpage #1 {\csname CHAPPAG#1\endcsname}
+\parseargdef\setchapternewpage{\csname CHAPPAG#1\endcsname}
 
 \def\CHAPPAGoff{%
 \global\let\contentsalignmacro = \chappager
@@ -6374,7 +6374,7 @@ end
 % I don't think this chapter style is supported any more, so I'm not
 % updating it with the new noderef stuff.  We'll see.  --karl, 11aug03.
 %
-\def\setchapterstyle #1 {\csname CHAPF#1\endcsname}
+\parseargdef\setchapterstyle{\csname CHAPF#1\endcsname}
 %
 \def\unnchfopen #1{%
   \chapoddpage
@@ -11408,9 +11408,10 @@ directory should work if nowhere else does.}
   @global@let\ = @eatinput%
   @catcode`@^^M=13%
   @def@c{@fixbackslash@c}%
+  % Definition for the newline at the end of this file.
   @def ^^M{@let^^M@secondlinenl}%
-  @gdef @secondlinenl{@let^^M@thirdlinenl}%
-  @gdef @thirdlinenl{@fixbackslash}%
+  % Definition for a newline in the main Texinfo file.
+  @gdef @secondlinenl{@fixbackslash}%
 }}
 
 {@catcode`@^=7 @catcode`@^^M=13%
