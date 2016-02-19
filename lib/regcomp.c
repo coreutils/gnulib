@@ -1397,7 +1397,7 @@ calc_first (void *extra, bin_tree_t *node)
     {
       node->first = node;
       node->node_idx = re_dfa_add_node (dfa, node->token);
-      if (BE (node->node_idx == REG_MISSING, 0))
+      if (BE (node->node_idx == -1, 0))
 	return REG_ESPACE;
       if (node->token.type == ANCHOR)
 	dfa->nodes[node->node_idx].constraint = node->token.opr.ctx_type;
@@ -1458,8 +1458,8 @@ link_nfa_nodes (void *extra, bin_tree_t *node)
 	  right = node->right->first->node_idx;
 	else
 	  right = node->next->node_idx;
-	assert (REG_VALID_INDEX (left));
-	assert (REG_VALID_INDEX (right));
+	assert (left > -1);
+	assert (right > -1);
 	err = re_node_set_init_2 (dfa->edests + idx, left, right);
       }
       break;
@@ -1509,7 +1509,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	  org_dest = dfa->nexts[org_node];
 	  re_node_set_empty (dfa->edests + clone_node);
 	  clone_dest = duplicate_node (dfa, org_dest, constraint);
-	  if (BE (clone_dest == REG_MISSING, 0))
+	  if (BE (clone_dest == -1, 0))
 	    return REG_ESPACE;
 	  dfa->nexts[clone_node] = dfa->nexts[org_node];
 	  ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
@@ -1542,7 +1542,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	  /* In case the node has another constraint, append it.  */
 	  constraint |= dfa->nodes[org_node].constraint;
 	  clone_dest = duplicate_node (dfa, org_dest, constraint);
-	  if (BE (clone_dest == REG_MISSING, 0))
+	  if (BE (clone_dest == -1, 0))
 	    return REG_ESPACE;
 	  ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	  if (BE (! ok, 0))
@@ -1556,12 +1556,12 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 	  re_node_set_empty (dfa->edests + clone_node);
 	  /* Search for a duplicated node which satisfies the constraint.  */
 	  clone_dest = search_duplicated_node (dfa, org_dest, constraint);
-	  if (clone_dest == REG_MISSING)
+	  if (clone_dest == -1)
 	    {
 	      /* There is no such duplicated node, create a new one.  */
 	      reg_errcode_t err;
 	      clone_dest = duplicate_node (dfa, org_dest, constraint);
-	      if (BE (clone_dest == REG_MISSING, 0))
+	      if (BE (clone_dest == -1, 0))
 		return REG_ESPACE;
 	      ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	      if (BE (! ok, 0))
@@ -1582,7 +1582,7 @@ duplicate_node_closure (re_dfa_t *dfa, Idx top_org_node, Idx top_clone_node,
 
 	  org_dest = dfa->edests[org_node].elems[1];
 	  clone_dest = duplicate_node (dfa, org_dest, constraint);
-	  if (BE (clone_dest == REG_MISSING, 0))
+	  if (BE (clone_dest == -1, 0))
 	    return REG_ESPACE;
 	  ok = re_node_set_insert (dfa->edests + clone_node, clone_dest);
 	  if (BE (! ok, 0))
@@ -1608,18 +1608,18 @@ search_duplicated_node (const re_dfa_t *dfa, Idx org_node,
 	  && constraint == dfa->nodes[idx].constraint)
 	return idx; /* Found.  */
     }
-  return REG_MISSING; /* Not found.  */
+  return -1; /* Not found.  */
 }
 
 /* Duplicate the node whose index is ORG_IDX and set the constraint CONSTRAINT.
-   Return the index of the new node, or REG_MISSING if insufficient storage is
+   Return the index of the new node, or -1 if insufficient storage is
    available.  */
 
 static Idx
 duplicate_node (re_dfa_t *dfa, Idx org_idx, unsigned int constraint)
 {
   Idx dup_idx = re_dfa_add_node (dfa, dfa->nodes[org_idx]);
-  if (BE (dup_idx != REG_MISSING, 1))
+  if (BE (dup_idx != -1, 1))
     {
       dfa->nodes[dup_idx].constraint = constraint;
       dfa->nodes[dup_idx].constraint |= dfa->nodes[org_idx].constraint;
@@ -1678,7 +1678,7 @@ calc_eclosure (re_dfa_t *dfa)
 	}
 
 #ifdef DEBUG
-      assert (dfa->eclosures[node_idx].nelem != REG_MISSING);
+      assert (dfa->eclosures[node_idx].nelem != -1);
 #endif
 
       /* If we have already calculated, skip it.  */
@@ -1714,7 +1714,7 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 
   /* This indicates that we are calculating this node now.
      We reference this value to avoid infinite loop.  */
-  dfa->eclosures[node].nelem = REG_MISSING;
+  dfa->eclosures[node].nelem = -1;
 
   /* If the current node has constraints, duplicate all nodes
      since they must inherit the constraints.  */
@@ -1736,7 +1736,7 @@ calc_eclosure_iter (re_node_set *new_set, re_dfa_t *dfa, Idx node, bool root)
 	Idx edest = dfa->edests[node].elems[i];
 	/* If calculating the epsilon closure of 'edest' is in progress,
 	   return intermediate result.  */
-	if (dfa->eclosures[edest].nelem == REG_MISSING)
+	if (dfa->eclosures[edest].nelem == -1)
 	  {
 	    incomplete = true;
 	    continue;
@@ -2533,7 +2533,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
     {
       end = 0;
       start = fetch_number (regexp, token, syntax);
-      if (start == REG_MISSING)
+      if (start == -1)
 	{
 	  if (token->type == CHARACTER && token->opr.c == ',')
 	    start = 0; /* We treat "{,m}" as "{0,m}".  */
@@ -2543,14 +2543,14 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
 	      return NULL;
 	    }
 	}
-      if (BE (start != REG_ERROR, 1))
+      if (BE (start != -2, 1))
 	{
 	  /* We treat "{n}" as "{n,n}".  */
 	  end = ((token->type == OP_CLOSE_DUP_NUM) ? start
 		 : ((token->type == CHARACTER && token->opr.c == ',')
-		    ? fetch_number (regexp, token, syntax) : REG_ERROR));
+		    ? fetch_number (regexp, token, syntax) : -2));
 	}
-      if (BE (start == REG_ERROR || end == REG_ERROR, 0))
+      if (BE (start == -2 || end == -2, 0))
 	{
 	  /* Invalid sequence.  */
 	  if (BE (!(syntax & RE_INVALID_INTERVAL_ORD), 0))
@@ -2572,7 +2572,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
 	  return elem;
 	}
 
-      if (BE ((end != REG_MISSING && start > end)
+      if (BE ((end != -1 && start > end)
 	      || token->type != OP_CLOSE_DUP_NUM, 0))
 	{
 	  /* First number greater than second.  */
@@ -2580,7 +2580,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
 	  return NULL;
 	}
 
-      if (BE (RE_DUP_MAX < (end == REG_MISSING ? start : end), 0))
+      if (BE (RE_DUP_MAX < (end == -1 ? start : end), 0))
 	{
 	  *err = REG_ESIZE;
 	  return NULL;
@@ -2589,7 +2589,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
   else
     {
       start = (token->type == OP_DUP_PLUS) ? 1 : 0;
-      end = (token->type == OP_DUP_QUESTION) ? 1 : REG_MISSING;
+      end = (token->type == OP_DUP_QUESTION) ? 1 : -1;
     }
 
   fetch_token (token, regexp, syntax);
@@ -2633,7 +2633,7 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
     }
 
   tree = create_tree (dfa, elem, NULL,
-		      (end == REG_MISSING ? OP_DUP_ASTERISK : OP_ALT));
+		      (end == -1 ? OP_DUP_ASTERISK : OP_ALT));
   if (BE (tree == NULL, 0))
     goto parse_dup_op_espace;
 
@@ -2641,10 +2641,10 @@ parse_dup_op (bin_tree_t *elem, re_string_t *regexp, re_dfa_t *dfa,
    True if the arithmetic type T is signed.  */
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 
-  /* This loop is actually executed only when end != REG_MISSING,
+  /* This loop is actually executed only when end != -1,
      to rewrite <re>{0,n} as (<re>(<re>...<re>?)?)?...  We have
      already created the start+1-th copy.  */
-  if (TYPE_SIGNED (Idx) || end != REG_MISSING)
+  if (TYPE_SIGNED (Idx) || end != -1)
     for (i = start + 2; i <= end; ++i)
       {
 	elem = duplicate_tree (elem, dfa);
@@ -3761,27 +3761,26 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
 
 /* This is intended for the expressions like "a{1,3}".
    Fetch a number from 'input', and return the number.
-   Return REG_MISSING if the number field is empty like "{,1}".
+   Return -1 if the number field is empty like "{,1}".
    Return RE_DUP_MAX + 1 if the number field is too large.
-   Return REG_ERROR if an error occurred.  */
+   Return -2 if an error occurred.  */
 
 static Idx
 fetch_number (re_string_t *input, re_token_t *token, reg_syntax_t syntax)
 {
-  Idx num = REG_MISSING;
+  Idx num = -1;
   unsigned char c;
   while (1)
     {
       fetch_token (token, input, syntax);
       c = token->opr.c;
       if (BE (token->type == END_OF_RE, 0))
-	return REG_ERROR;
+	return -2;
       if (token->type == OP_CLOSE_DUP_NUM || c == ',')
 	break;
-      num = ((token->type != CHARACTER || c < '0' || '9' < c
-	      || num == REG_ERROR)
-	     ? REG_ERROR
-	     : num == REG_MISSING
+      num = ((token->type != CHARACTER || c < '0' || '9' < c || num == -2)
+	     ? -2
+	     : num == -1
 	     ? c - '0'
 	     : MIN (RE_DUP_MAX + 1, num * 10 + c - '0'));
     }
@@ -3845,7 +3844,7 @@ create_token_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
   tree->token.opt_subexp = 0;
   tree->first = NULL;
   tree->next = NULL;
-  tree->node_idx = REG_MISSING;
+  tree->node_idx = -1;
 
   if (left != NULL)
     left->parent = tree;
