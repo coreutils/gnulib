@@ -219,12 +219,8 @@ static reg_errcode_t extend_buffers (re_match_context_t *mctx, int min_len)
    We return 0 if we find a match and REG_NOMATCH if not.  */
 
 int
-regexec (preg, string, nmatch, pmatch, eflags)
-    const regex_t *_Restrict_ preg;
-    const char *_Restrict_ string;
-    size_t nmatch;
-    regmatch_t pmatch[_Restrict_arr_];
-    int eflags;
+regexec (const regex_t *_Restrict_ preg, const char *_Restrict_ string,
+	 size_t nmatch, regmatch_t pmatch[], int eflags)
 {
   reg_errcode_t err;
   Idx start, length;
@@ -305,11 +301,8 @@ compat_symbol (libc, __compat_regexec, regexec, GLIBC_2_0);
    match was found and -2 indicates an internal error.  */
 
 regoff_t
-re_match (bufp, string, length, start, regs)
-    struct re_pattern_buffer *bufp;
-    const char *string;
-    Idx length, start;
-    struct re_registers *regs;
+re_match (struct re_pattern_buffer *bufp, const char *string, Idx length,
+	  Idx start, struct re_registers *regs)
 {
   return re_search_stub (bufp, string, length, start, 0, length, regs, true);
 }
@@ -318,12 +311,8 @@ weak_alias (__re_match, re_match)
 #endif
 
 regoff_t
-re_search (bufp, string, length, start, range, regs)
-    struct re_pattern_buffer *bufp;
-    const char *string;
-    Idx length, start;
-    regoff_t range;
-    struct re_registers *regs;
+re_search (struct re_pattern_buffer *bufp, const char *string, Idx length,
+	   Idx start, regoff_t range, struct re_registers *regs)
 {
   return re_search_stub (bufp, string, length, start, range, length, regs,
 			 false);
@@ -333,11 +322,9 @@ weak_alias (__re_search, re_search)
 #endif
 
 regoff_t
-re_match_2 (bufp, string1, length1, string2, length2, start, regs, stop)
-    struct re_pattern_buffer *bufp;
-    const char *string1, *string2;
-    Idx length1, length2, start, stop;
-    struct re_registers *regs;
+re_match_2 (struct re_pattern_buffer *bufp, const char *string1, Idx length1,
+	    const char *string2, Idx length2, Idx start,
+	    struct re_registers *regs, Idx stop)
 {
   return re_search_2_stub (bufp, string1, length1, string2, length2,
 			   start, 0, regs, stop, true);
@@ -347,12 +334,9 @@ weak_alias (__re_match_2, re_match_2)
 #endif
 
 regoff_t
-re_search_2 (bufp, string1, length1, string2, length2, start, range, regs, stop)
-    struct re_pattern_buffer *bufp;
-    const char *string1, *string2;
-    Idx length1, length2, start, stop;
-    regoff_t range;
-    struct re_registers *regs;
+re_search_2 (struct re_pattern_buffer *bufp, const char *string1, Idx length1,
+	     const char *string2, Idx length2, Idx start, regoff_t range,
+	     struct re_registers *regs, Idx stop)
 {
   return re_search_2_stub (bufp, string1, length1, string2, length2,
 			   start, range, regs, stop, false);
@@ -362,10 +346,10 @@ weak_alias (__re_search_2, re_search_2)
 #endif
 
 static regoff_t
-re_search_2_stub (struct re_pattern_buffer *bufp,
-		  const char *string1, Idx length1,
-		  const char *string2, Idx length2,
-		  Idx start, regoff_t range, struct re_registers *regs,
+internal_function
+re_search_2_stub (struct re_pattern_buffer *bufp, const char *string1,
+		  Idx length1, const char *string2, Idx length2, Idx start,
+		  regoff_t range, struct re_registers *regs,
 		  Idx stop, bool ret_len)
 {
   const char *str;
@@ -409,8 +393,8 @@ re_search_2_stub (struct re_pattern_buffer *bufp,
    otherwise the position of the match is returned.  */
 
 static regoff_t
-re_search_stub (struct re_pattern_buffer *bufp,
-		const char *string, Idx length,
+internal_function
+re_search_stub (struct re_pattern_buffer *bufp, const char *string, Idx length,
 		Idx start, regoff_t range, Idx stop, struct re_registers *regs,
 		bool ret_len)
 {
@@ -499,6 +483,7 @@ re_search_stub (struct re_pattern_buffer *bufp,
 }
 
 static unsigned
+internal_function
 re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
 	      int regs_allocated)
 {
@@ -577,11 +562,8 @@ re_copy_regs (struct re_registers *regs, regmatch_t *pmatch, Idx nregs,
    freeing the old data.  */
 
 void
-re_set_registers (bufp, regs, num_regs, starts, ends)
-    struct re_pattern_buffer *bufp;
-    struct re_registers *regs;
-    __re_size_t num_regs;
-    regoff_t *starts, *ends;
+re_set_registers (struct re_pattern_buffer *bufp, struct re_registers *regs,
+		  __re_size_t num_regs, regoff_t *starts, regoff_t *ends)
 {
   if (num_regs)
     {
@@ -609,8 +591,7 @@ int
 # ifdef _LIBC
 weak_function
 # endif
-re_exec (s)
-     const char *s;
+re_exec (const char *s)
 {
   return 0 == regexec (&re_comp_buf, s, 0, NULL, 0);
 }
@@ -628,12 +609,10 @@ re_exec (s)
    (0 <= LAST_START && LAST_START <= LENGTH)  */
 
 static reg_errcode_t
-__attribute_warn_unused_result__
-re_search_internal (const regex_t *preg,
-		    const char *string, Idx length,
-		    Idx start, Idx last_start, Idx stop,
-		    size_t nmatch, regmatch_t pmatch[],
-		    int eflags)
+__attribute_warn_unused_result__ internal_function
+re_search_internal (const regex_t *preg, const char *string, Idx length,
+		    Idx start, Idx last_start, Idx stop, size_t nmatch,
+		    regmatch_t pmatch[], int eflags)
 {
   reg_errcode_t err;
   const re_dfa_t *dfa = preg->buffer;
@@ -964,7 +943,7 @@ re_search_internal (const regex_t *preg,
 }
 
 static reg_errcode_t
-__attribute_warn_unused_result__
+internal_function __attribute_warn_unused_result__
 prune_impossible_nodes (re_match_context_t *mctx)
 {
   const re_dfa_t *const dfa = mctx->dfa;

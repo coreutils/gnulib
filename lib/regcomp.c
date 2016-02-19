@@ -213,17 +213,9 @@ static const size_t __re_error_msgid_idx[] =
    Assumes the 'allocated' (and perhaps 'buffer') and 'translate' fields
    are set in BUFP on entry.  */
 
-#ifdef _LIBC
-const char *
-re_compile_pattern (pattern, length, bufp)
-    const char *pattern;
-    size_t length;
-    struct re_pattern_buffer *bufp;
-#else /* size_t might promote */
 const char *
 re_compile_pattern (const char *pattern, size_t length,
 		    struct re_pattern_buffer *bufp)
-#endif
 {
   reg_errcode_t ret;
 
@@ -261,8 +253,7 @@ reg_syntax_t re_syntax_options;
    defined in regex.h.  We return the old syntax.  */
 
 reg_syntax_t
-re_set_syntax (syntax)
-    reg_syntax_t syntax;
+re_set_syntax (reg_syntax_t syntax)
 {
   reg_syntax_t ret = re_syntax_options;
 
@@ -274,8 +265,7 @@ weak_alias (__re_set_syntax, re_set_syntax)
 #endif
 
 int
-re_compile_fastmap (bufp)
-    struct re_pattern_buffer *bufp;
+re_compile_fastmap (struct re_pattern_buffer *bufp)
 {
   re_dfa_t *dfa = bufp->buffer;
   char *fastmap = bufp->fastmap;
@@ -474,10 +464,7 @@ re_compile_fastmap_iter (regex_t *bufp, const re_dfastate_t *init_state,
    the return codes and their meanings.)  */
 
 int
-regcomp (preg, pattern, cflags)
-    regex_t *_Restrict_ preg;
-    const char *_Restrict_ pattern;
-    int cflags;
+regcomp (regex_t *__restrict preg, const char *__restrict pattern, int cflags)
 {
   reg_errcode_t ret;
   reg_syntax_t syntax = ((cflags & REG_EXTENDED) ? RE_SYNTAX_POSIX_EXTENDED
@@ -535,18 +522,9 @@ weak_alias (__regcomp, regcomp)
 /* Returns a message corresponding to an error code, ERRCODE, returned
    from either regcomp or regexec.   We don't use PREG here.  */
 
-#ifdef _LIBC
 size_t
-regerror (errcode, preg, errbuf, errbuf_size)
-    int errcode;
-    const regex_t *_Restrict_ preg;
-    char *_Restrict_ errbuf;
-    size_t errbuf_size;
-#else /* size_t might promote */
-size_t
-regerror (int errcode, const regex_t *_Restrict_ preg,
-	  char *_Restrict_ errbuf, size_t errbuf_size)
-#endif
+regerror (int errcode, const regex_t *__restrict preg, char *__restrict errbuf,
+	  size_t errbuf_size)
 {
   const char *msg;
   size_t msg_size;
@@ -662,8 +640,7 @@ free_dfa_content (re_dfa_t *dfa)
 /* Free dynamically allocated space used by PREG.  */
 
 void
-regfree (preg)
-    regex_t *preg;
+regfree (regex_t *preg)
 {
   re_dfa_t *dfa = preg->buffer;
   if (BE (dfa != NULL, 1))
@@ -699,8 +676,7 @@ char *
    regcomp/regexec above without link errors.  */
 weak_function
 # endif
-re_comp (s)
-     const char *s;
+re_comp (const char *s)
 {
   reg_errcode_t ret;
   char *fastmap;

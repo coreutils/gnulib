@@ -1,3 +1,18 @@
+2016-02-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	regex: merge patches from libc
+
+	2015-10-21  Joseph Myers  <joseph@codesourcery.com>
+	2015-10-20  Joseph Myers  <joseph@codesourcery.com>
+	Convert miscellaneous function definitions to prototype style.
+	* lib/regcomp.c (re_compile_pattern, re_set_syntax)
+	(re_compile_fastmap, regcomp, regerror, regfree, re_comp):
+	* lib/regexec.c (regexec, re_match, re_search, re_match_2, re_search_2)
+	(re_search_2_stub, re_search_stub, re_set_registers, re_exec)
+	(re_search_internal):
+	Convert to prototype-style function definition.
+	Use internal_function for internal functions.
+
 2016-02-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: port to older HP and IBM cc
