@@ -1,3 +1,10 @@
+2016-02-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	signbit: port back to pre-C++11 GCC
+	* lib/math.in.h (signbit): Do previous change only if
+	__cplusplus < 201103.  See Jonathan Wakely in:
+	https://lists.fedoraproject.org/archives/list/devel@lists.fedoraproject.org/message/UY3VX3W7XEXYTUKHG5BALU4ACUD7ZLGE/
+
 2016-02-19  Kamil Dudka  <kdudka@redhat.com>
 
 	mountlist: recognize autofs-mounted remote file systems, too
