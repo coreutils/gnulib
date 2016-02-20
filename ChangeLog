@@ -1,5 +1,10 @@
 2016-02-19  Paul Eggert  <eggert@cs.ucla.edu>
 
+	signbit: port to C++ with GCC 6
+	* lib/math.in.h (signbit) [__cplusplus]:
+	Do not replace with GCC builtin.  Reported by Orion Poplawski in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-02/msg00005.html
+
 	* lib/regex_internal.h (IDX_MAX) [_REGEX_LARGE_OFFSETS]: Now SSIZE_MAX.
 
 	regex: make it closer to libc

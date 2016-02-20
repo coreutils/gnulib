@@ -2205,7 +2205,7 @@ _GL_WARN_REAL_FLOATING_DECL (isnan);
 
 
 #if @GNULIB_SIGNBIT@
-# if @REPLACE_SIGNBIT_USING_GCC@
+# if @REPLACE_SIGNBIT_USING_GCC@ && !defined __cplusplus
 #  undef signbit
    /* GCC 4.0 and newer provides three built-ins for signbit.  */
 #  define signbit(x) \
