@@ -1,3 +1,11 @@
+2016-03-05  Bruno Haible  <bruno@clisp.org>
+
+	extern-inline: port to PGI CC
+	* m4/extern-inline.m4 (gl_EXTERN_INLINE): For PGI CC, don't use the
+	keyword 'inline'.
+	Reported by Adam James Stewart in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-03/msg00006.html
+
 2016-02-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	signbit: port back to pre-C++11 GCC
