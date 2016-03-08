@@ -1,3 +1,9 @@
+2016-03-08  Eric Blake  <eblake@redhat.com>
+
+	acl: fix missing return on Cygwin
+	* lib/set-permissions.c (set_acls) [HAVE_FACL && GETACL]: Don't
+	fall off end of function. Fixes http://bugs.gnu.org/22949
+
 2016-03-05  Bruno Haible  <bruno@clisp.org>
 
 	extern-inline: port to PGI CC
