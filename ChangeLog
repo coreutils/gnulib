@@ -1,3 +1,10 @@
+2016-03-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: make .h file license match module
+	* lib/intprops.h: Change the license wording to match glibc format.
+	This is what is in modules/intprops anyway.  See:
+	https://sourceware.org/bugzilla/show_bug.cgi?id=19738#c8
+
 2016-03-08  Eric Blake  <eblake@redhat.com>
 
 	acl: fix missing return on Cygwin
