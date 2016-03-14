@@ -1,3 +1,13 @@
+2016-03-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	localename-tests: memory allocation fixes
+	* tests/test-localename.c (test_locale_name)
+	(test_locale_name_thread): Don't call freelocale on a locale
+	that was the base of a successful newlocale, as that
+	results in a double free.  Problem reported by Assaf Gordon.
+	(test_locale_name_thread): Free saved names after use, to pacify
+	gcc -fsanitize=address.
+
 2016-03-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: make .h file license match module

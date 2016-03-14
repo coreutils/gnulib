@@ -200,7 +200,9 @@ test_locale_name (void)
         if (loc != NULL)
           {
             locale_t locale = newlocale (category_mask, "de_DE.UTF-8", loc);
-            if (locale != NULL)
+            if (locale == NULL)
+              freelocale (loc);
+            else
               {
                 unsigned int j;
 
@@ -217,7 +219,6 @@ test_locale_name (void)
                 uselocale (LC_GLOBAL_LOCALE);
                 freelocale (locale);
               }
-            freelocale (loc);
           }
       }
   }
@@ -267,7 +268,9 @@ test_locale_name_thread (void)
         if (loc != NULL)
           {
             locale_t locale = newlocale (category_mask, "de_DE.UTF-8", loc);
-            if (locale != NULL)
+            if (locale == NULL)
+              freelocale (loc);
+            else
               {
                 unsigned int j;
 
@@ -285,7 +288,6 @@ test_locale_name_thread (void)
                 uselocale (LC_GLOBAL_LOCALE);
                 freelocale (locale);
               }
-            freelocale (loc);
           }
       }
   }
@@ -464,7 +466,10 @@ test_locale_name_thread (void)
           unsigned int i;
 
           for (i = 0; i < SIZEOF (categories); i++)
-            ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
+            {
+              ASSERT (strcmp (unsaved_names[j][i], saved_names[j][i]) == 0);
+              free (saved_names[j][i]);
+            }
         }
   }
 #else
