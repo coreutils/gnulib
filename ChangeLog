@@ -1,5 +1,8 @@
 2016-03-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	time_rz: port to clang -Wunused-const-variable
+	* lib/time_rz.c (TZ): Remove.  All uses removed.
+
 	std-gnu11: improve clang support
 	* m4/std-gnu11.m4: Sync with autoconf, incorporating:
 	2016-03-15 Also try clang
