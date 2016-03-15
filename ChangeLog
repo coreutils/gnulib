@@ -1,5 +1,10 @@
 2016-03-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	std-gnu11: improve clang support
+	* m4/std-gnu11.m4: Sync with autoconf, incorporating:
+	2016-03-15 Also try clang
+	2016-03-15 Port C11 and C++11 testing to clang
+
 	select: port more to Intel 2016.1.150 compiler
 	Problem reported by Balázs Hajgató in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2016-03/msg00036.html
