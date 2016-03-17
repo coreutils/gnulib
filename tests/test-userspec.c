@@ -173,12 +173,9 @@ main (void)
       if (!diag && !T[i].result)
         continue;
 
-        {
-          printf ("%s diagnostic mismatch (-: expected uid,gid; +:actual)\n"
-                  "-%s\n+%s\n",
-                  T[i].in, T[i].result, diag);
-          fail = 1;
-        }
+      printf ("%s diagnostic mismatch (-: expected uid,gid; +:actual)\n"
+              "-%s\n+%s\n", T[i].in, T[i].result, diag);
+      fail = 1;
     }
 
   /* Ensure NULL parameters are ignored.  */

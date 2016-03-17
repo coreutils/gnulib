@@ -1,3 +1,16 @@
+2016-03-17  Jim Meyering  <meyering@fb.com>
+
+	test-userspec.c: do not trigger gcc's new -Wmisleading-indentation
+	* tests/test-userspec.c (main): Remove unnecessary braces and fix
+	misleading indentation. Here is the diagnostic gcc-6.0-to-be issued:
+	  test-userspec.c:176:9: error: statement is indented as if it were \
+            guarded by... [-Werror=misleading-indentation]
+	           {
+	           ^
+	  test-userspec.c:173:7: note: ...this 'if' clause, but it is not
+	         if (!diag && !T[i].result)
+	         ^~
+
 2016-03-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	time_rz: port to clang -Wunused-const-variable
