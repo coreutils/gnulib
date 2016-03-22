@@ -1,3 +1,9 @@
+2016-03-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gitlog-to-changelog: suppress ignored chatter
+	* build-aux/gitlog-to-changelog: Do not warn about skipping
+	an SHA if it would have been ignored anyway.
+
 2016-03-22  Geert Janssens  <janssens-geert@telenet.be>
 
 	setlocale: add "sv" to Windows language table
