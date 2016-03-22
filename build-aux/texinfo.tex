@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-03-21.10}
+\def\texinfoversion{2016-03-22.07}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -7807,7 +7807,7 @@ end
   % Process the macro body under the current catcode regime.
   \scantokens{#1\texinfoc}\aftermacro%
   %
-  % The \c is to remove the \newlinechar added by \scantokens, and
+  % The \texinfoc is to remove the \newlinechar added by \scantokens, and
   % can be noticed by \parsearg.
   %   The \aftermacro allows a \comment at the end of the macro definition
   % to duplicate itself past the final \newlinechar added by \scantokens:
@@ -7820,15 +7820,7 @@ end
 
 % Used for copying and captions
 \def\scanexp#1{%
-  \bgroup
-  % Undo catcode changes of \startcontents and \printindex
-  % When called from @insertcopying or (short)caption, we need active
-  % backslash to get it printed correctly.
-  % FIXME: This may not be needed.
-  %\catcode`\@=0 \catcode`\\=\active \escapechar=`\@
-  \edef\temp{\noexpand\scanmacro{#1}}%
-  \temp
-  \egroup
+  \expandafter\scanmacro\expandafter{#1}%
 }
 
 \newcount\paramno   % Count of parameters
@@ -9374,7 +9366,7 @@ end
     %
     \ifx\thiscaption\empty \else
       \ifx\floatident\empty \else
-	\appendtomacro\captionline{: }% had ident, so need a colon between
+        \appendtomacro\captionline{: }% had ident, so need a colon between
       \fi
       %
       % caption text.
@@ -9401,29 +9393,16 @@ end
         \requireauxfile
         \atdummies
         %
-        % since we read the caption text in the macro world, where ^^M
-        % is turned into a normal character, we have to scan it back, so
-        % we don't write the literal three characters "^^M" into the aux file.
-	\scanexp{%
-	  \xdef\noexpand\gtemp{%
-	    \ifx\thisshortcaption\empty
-	      \thiscaption
-	    \else
-	      \thisshortcaption
-	    \fi
-	  }%
-	}%
+        \ifx\thisshortcaption\empty
+          \def\gtemp{\thiscaption}%
+        \else
+          \def\gtemp{\thisshortcaption}%
+        \fi
         \immediate\write\auxfile{@xrdef{\floatlabel-lof}{\floatident
-	  \ifx\gtemp\empty \else : \gtemp \fi}}%
+          \ifx\gtemp\empty \else : \gtemp \fi}}%
       }%
     \fi
   \egroup  % end of \vtop
-  %
-  % place the captured inserts
-  %
-  % BEWARE: when the floats start floating, we have to issue warning
-  % whenever an insert appears inside a float which could possibly
-  % float. --kasal, 26may04
   %
   \checkinserts
 }
