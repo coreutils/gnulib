@@ -1,3 +1,9 @@
+2016-03-22  Geert Janssens  <janssens-geert@telenet.be>
+
+	setlocale: add "sv" to Windows language table
+	* lib/setlocale.c (language_table) [W32]: Add "sv".
+	Reported in <https://savannah.gnu.org/bugs/?44588>.
+
 2016-03-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_select: port to new Cygwin

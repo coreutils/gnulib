@@ -381,6 +381,7 @@ static const struct table_entry language_table[] =
     { "sq", "Albanian" },
     { "sr", "Serbian (Latin)" },
     { "sr@cyrillic", "SRB" }, /* Serbian (Cyrillic) */
+    { "sv", "Swedish" },
     { "sw", "Swahili" },
     { "syr", "Syriac" },
     { "ta", "Tamil" },
