@@ -1,5 +1,13 @@
 2016-03-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-framework-sh: revert port to NetBSD 7.0
+	It was a false alarm; I misinterpreted Assaf Gordon's report.
+	* tests/init.sh (testdir_prefix_, pfx_, template_length_):
+	Restore.
+	(test_dir_): Adjust to mktempd_ change.
+	(mktempd_): Restore 2nd arg.  Use -t again.
+	(base_template_, template_, nx_): Resurrect old code.
+
 	Port better to Alpine Linux
 	Its diff implementation does not support -c, but does support -U3.
 	Problem reported by Assaf Gordon in: http://bugs.gnu.org/23107#13
