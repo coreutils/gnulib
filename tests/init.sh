@@ -308,13 +308,19 @@ if diff_out_=`exec 2>/dev/null; diff -u "$0" "$0" < /dev/null` \
       fi
     }
   fi
-elif diff_out_=`exec 2>/dev/null; diff -c "$0" "$0" < /dev/null`; then
+elif
+  for diff_opt_ in -U3 -c '' no; do
+    test "$diff_opt_" = no && break
+    diff_out_=`exec 2>/dev/null; diff $diff_opt_ "$0" "$0" </dev/null` && break
+  done
+  test "$diff_opt_" != no
+then
   if test -z "$diff_out_"; then
-    compare_ () { diff -c "$@"; }
+    compare_ () { diff $diff_opt_ "$@"; }
   else
     compare_ ()
     {
-      if diff -c "$@" > diff.out; then
+      if diff $diff_opt_ "$@" > diff.out; then
         # No differences were found, but AIX and HP-UX 'diff' produce output
         # "No differences encountered" or "There are no differences between the
         # files.". Hide this output.

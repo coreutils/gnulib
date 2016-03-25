@@ -1,3 +1,11 @@
+2016-03-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Port better to Alpine Linux
+	Its diff implementation does not support -c, but does support -U3.
+	Problem reported by Assaf Gordon in: http://bugs.gnu.org/23107#13
+	* tests/init.sh (diff_opt_): New var.
+	(compare_): Prefer diff -U3 to diff -c to plain diff.
+
 2016-03-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-framework-sh: port to NetBSD 7.0
