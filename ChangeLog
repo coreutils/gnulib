@@ -1,5 +1,14 @@
 2016-03-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	test-framework-sh: minor cleanups
+	* tests/init.sh (testdir_prefix_): Output a trailing newline,
+	since strictly speaking POSIX requires this.
+	(setup_): Do not use the variable 'fail', as that makes the
+	trace output harder to read ('fail' is typically used by
+	tests to mean the test failed).  Treat // portably.
+	Check that new directory is not merely a sibling of the tmp dir.
+	Avoid unnecessary invocation of tr.
+
 	test-framework-sh: revert port to NetBSD 7.0
 	It was a false alarm; I misinterpreted Assaf Gordon's report.
 	* tests/init.sh (testdir_prefix_, pfx_, template_length_):

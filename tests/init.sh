@@ -472,7 +472,6 @@ setup_ ()
   fi
 
   initial_cwd_=$PWD
-  fail=0
 
   pfx_=`testdir_prefix_`
   test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
@@ -556,8 +555,9 @@ mktempd_ ()
   # Disallow any trailing slash on specified destdir:
   # it would subvert the post-mktemp "case"-based destdir test.
   case $destdir_ in
-  /) ;;
+  / | //) destdir_slash_=$destdir;;
   */) fail_ "invalid destination dir: remove trailing slash(es)";;
+  *) destdir_slash_=$destdir_/;;
   esac
 
   case $template_ in
@@ -567,20 +567,17 @@ mktempd_ ()
   esac
 
   # First, try to use mktemp.
-  d=`unset TMPDIR; { mktemp -d -t -p "$destdir_" "$template_"; } 2>/dev/null` \
-    || fail=1
+  d=`unset TMPDIR; { mktemp -d -t -p "$destdir_" "$template_"; } 2>/dev/null` &&
 
   # The resulting name must be in the specified directory.
-  case $d in "$destdir_"*);; *) fail=1;; esac
+  case $d in "$destdir_slash_"*) :;; *) false;; esac &&
 
   # It must have created the directory.
-  test -d "$d" || fail=1
+  test -d "$d" &&
 
   # It must have 0700 permissions.  Handle sticky "S" bits.
-  perms=`ls -dgo "$d" 2>/dev/null|tr S -` || fail=1
-  case $perms in drwx------*) ;; *) fail=1;; esac
-
-  test $fail = 0 && {
+  perms=`ls -dgo "$d" 2>/dev/null` &&
+  case $perms in drwx--[-S]---*) :;; *) false;; esac && {
     echo "$d"
     return
   }
@@ -599,7 +596,7 @@ mktempd_ ()
   i_=1
   while :; do
     X_=`rand_bytes_ $nx_`
-    candidate_dir_="$destdir_/$base_template_$X_"
+    candidate_dir_="$destdir_slash_$base_template_$X_"
     err_=`mkdir -m 0700 "$candidate_dir_" 2>&1` \
       && { echo "$candidate_dir_"; return; }
     test $MAX_TRIES_ -le $i_ && break;
