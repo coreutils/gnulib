@@ -352,9 +352,6 @@ compare ()
   fi
 }
 
-# An arbitrary prefix to help distinguish test directories.
-testdir_prefix_ () { printf gt; }
-
 # Run the user-overridable cleanup_ function, remove the temporary
 # directory and exit with the incoming value of $?.
 remove_tmp_ ()
@@ -468,8 +465,7 @@ setup_ ()
   initial_cwd_=$PWD
   fail=0
 
-  pfx_=`testdir_prefix_`
-  test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
+  test_dir_=`mktempd_ "$initial_cwd_"` \
     || fail_ "failed to create temporary directory in $initial_cwd_"
   cd "$test_dir_" || fail_ "failed to cd to temporary directory"
 
@@ -490,7 +486,7 @@ setup_ ()
 # Create a temporary directory, much like mktemp -d does.
 # Written by Jim Meyering.
 #
-# Usage: mktempd_ /tmp phoey.XXXXXXXXXX
+# Usage: mktempd_ /tmp
 #
 # First, try to use the mktemp program.
 # Failing that, we'll roll our own mktemp-like function:
@@ -538,12 +534,16 @@ rand_bytes_ ()
 mktempd_ ()
 {
   case $# in
-  2);;
-  *) fail_ "Usage: mktempd_ DIR TEMPLATE";;
+  1);;
+  *) fail_ "Usage: mktempd_ DIR";;
   esac
 
   destdir_=$1
-  template_=$2
+  base_template_=tmp.
+  template_=$base_template_.XXXXXXXXXX
+
+  # How many X's are at the end of the template.
+  nx_=10
 
   MAX_TRIES_=4
 
@@ -554,14 +554,8 @@ mktempd_ ()
   */) fail_ "invalid destination dir: remove trailing slash(es)";;
   esac
 
-  case $template_ in
-  *XXXX) ;;
-  *) fail_ \
-       "invalid template: $template_ (must have a suffix of at least 4 X's)";;
-  esac
-
   # First, try to use mktemp.
-  d=`unset TMPDIR; { mktemp -d -t -p "$destdir_" "$template_"; } 2>/dev/null` \
+  d=`unset TMPDIR; { mktemp -d -p "$destdir_"; } 2>/dev/null` \
     || fail=1
 
   # The resulting name must be in the specified directory.
@@ -581,14 +575,6 @@ mktempd_ ()
 
   # If we reach this point, we'll have to create a directory manually.
 
-  # Get a copy of the template without its suffix of X's.
-  base_template_=`echo "$template_"|sed 's/XX*$//'`
-
-  # Calculate how many X's we've just removed.
-  template_length_=`echo "$template_" | wc -c`
-  nx_=`echo "$base_template_" | wc -c`
-  nx_=`expr $template_length_ - $nx_`
-
   err_=
   i_=1
   while :; do
@@ -602,8 +588,7 @@ mktempd_ ()
   fail_ "$err_"
 }
 
-# If you want to override the testdir_prefix_ function,
-# or to add more utility functions, use this file.
+# To add more utility functions, use this file.
 test -f "$srcdir/init.cfg" \
   && . "$srcdir/init.cfg"
 
