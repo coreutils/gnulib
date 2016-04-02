@@ -1,3 +1,11 @@
+2016-04-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stddef: support configuring with g++
+	Problem reported by Ángel González in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-04/msg00003.html
+	* lib/stddef.in.h (_GL_STDDEF_ALIGNAS, max_align_t):
+	Do not define if _GCC_MAX_ALIGN_T is defined.
+
 2016-03-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	test-framework-sh: minor cleanups
