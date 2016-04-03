@@ -1,5 +1,5 @@
 /* Hierarchical argument parsing, layered over getopt
-   Copyright (C) 1995-2000, 2002-2004, 2009-2016 Free Software Foundation, Inc.
+   Copyright (C) 1995-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -34,7 +34,7 @@
 # include <libintl.h>
 # undef dgettext
 # define dgettext(domain, msgid) \
-   INTUSE(__dcgettext) (domain, msgid, LC_MESSAGES)
+   __dcgettext (domain, msgid, LC_MESSAGES)
 #else
 # include "gettext.h"
 #endif
@@ -80,9 +80,10 @@ static const struct argp_option argp_default_options[] =
 {
   {"help",        '?',          0, 0,  N_("give this help list"), -1},
   {"usage",       OPT_USAGE,    0, 0,  N_("give a short usage message"), 0},
-  {"program-name",OPT_PROGNAME,N_("NAME"), OPTION_HIDDEN, N_("set the program name"), 0},
+  {"program-name",OPT_PROGNAME, N_("NAME"), OPTION_HIDDEN,
+   N_("set the program name"), 0},
   {"HANG",        OPT_HANG,    N_("SECS"), OPTION_ARG_OPTIONAL | OPTION_HIDDEN,
-     N_("hang for SECS seconds (default 3600)"), 0},
+   N_("hang for SECS seconds (default 3600)"), 0},
   {NULL, 0, 0, 0, NULL, 0}
 };
 

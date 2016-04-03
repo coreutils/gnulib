@@ -1,5 +1,5 @@
 /* Hierarchical argument parsing, layered over getopt.
-   Copyright (C) 1995-1999, 2003-2016 Free Software Foundation, Inc.
+   Copyright (C) 1995-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -146,15 +146,14 @@ struct argp_option
 /* Valid only in conjunction with OPTION_DOC. This option disables translation
    of option name. */
 #define OPTION_NO_TRANS         0x20
-
 
 struct argp;                    /* fwd declare this type */
 struct argp_state;              /* " */
 struct argp_child;              /* " */
 
 /* The type of a pointer to an argp parsing function.  */
-typedef error_t (*argp_parser_t) (int key, char *arg,
-                                  struct argp_state *state);
+typedef error_t (*argp_parser_t) (int __key, char *__arg,
+                                  struct argp_state *__state);
 
 /* What to return for unrecognized keys.  For special ARGP_KEY_ keys, such
    returns will simply be ignored.  For user keys, this error will be turned
@@ -589,28 +588,7 @@ _GL_INLINE_HEADER_BEGIN
 # endif
 
 # ifndef ARGP_EI
-#  ifdef __GNUC__
-    /* GCC 4.3 and above with -std=c99 or -std=gnu99 implements ISO C99
-       inline semantics, unless -fgnu89-inline is used.  It defines a macro
-       __GNUC_STDC_INLINE__ to indicate this situation or a macro
-       __GNUC_GNU_INLINE__ to indicate the opposite situation.
-       GCC 4.2 with -std=c99 or -std=gnu99 implements the GNU C inline
-       semantics but warns, unless -fgnu89-inline is used:
-         warning: C99 inline functions are not supported; using GNU89
-         warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
-       It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.  */
-#   if defined __GNUC_STDC_INLINE__
-#    define ARGP_EI __inline__
-#   elif defined __GNUC_GNU_INLINE__
-#    define ARGP_EI extern __inline__ __attribute__ ((__gnu_inline__))
-#   else
-#    define ARGP_EI extern __inline__
-#   endif
-#  else
-    /* With other compilers, assume the ISO C99 meaning of 'inline', if
-       the compiler supports 'inline' at all.  */
-#   define ARGP_EI inline
-#  endif
+#  define ARGP_EI __extern_inline
 # endif
 
 ARGP_EI void

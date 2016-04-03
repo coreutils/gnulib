@@ -1,3 +1,17 @@
+2016-04-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	argp: merge changes from glibc
+	Among other things, this should fix problems found by a Coverity
+	scan and reported by Andrei Borzenkov:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00015.html
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-01/msg00016.html
+	* lib/argp-ba.c, lib/argp-fmtstream.c, lib/argp-fmtstream.h:
+	* lib/argp-fs-xinl.c, lib/argp-help.c, lib/argp-namefrob.h:
+	* lib/argp-parse.c, lib/argp-pv.c, lib/argp-pvh.c, lib/argp-xinl.c:
+	* lib/argp.h:
+	Merge changes from glibc.
+	* tests/test-argp-2.sh: Adjust to match new behavior.
+
 2016-04-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stddef: support configuring with g++

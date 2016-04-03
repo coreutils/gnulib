@@ -1,5 +1,5 @@
 /* Word-wrapping and line-truncating streams.
-   Copyright (C) 1997, 2006-2016 Free Software Foundation, Inc.
+   Copyright (C) 1997-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -40,8 +40,7 @@
 # define _GL_ATTRIBUTE_FORMAT(spec) /* empty */
 #endif
 
-#if    (_LIBC - 0 && !defined (USE_IN_LIBIO)) \
-    || (defined (__GNU_LIBRARY__) && defined (HAVE_LINEWRAP_H))
+#if defined (__GNU_LIBRARY__) && defined (HAVE_LINEWRAP_H)
 /* line_wrap_stream is available, so use that.  */
 #define ARGP_FMTSTREAM_USE_LINEWRAP
 #endif
@@ -87,6 +86,7 @@ typedef FILE *argp_fmtstream_t;
 
 #else /* !ARGP_FMTSTREAM_USE_LINEWRAP */
 /* Guess we have to define our own version.  */
+
 
 struct argp_fmtstream
 {
@@ -207,63 +207,11 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 
 #ifndef ARGP_FS_EI
-# ifdef __GNUC__
-   /* GCC 4.3 and above with -std=c99 or -std=gnu99 implements ISO C99
-      inline semantics, unless -fgnu89-inline is used.  It defines a macro
-      __GNUC_STDC_INLINE__ to indicate this situation or a macro
-      __GNUC_GNU_INLINE__ to indicate the opposite situation.
-
-      GCC 4.2 with -std=c99 or -std=gnu99 implements the GNU C inline
-      semantics but warns, unless -fgnu89-inline is used:
-        warning: C99 inline functions are not supported; using GNU89
-        warning: to disable this warning use -fgnu89-inline or the gnu_inline function attribute
-      It defines a macro __GNUC_GNU_INLINE__ to indicate this situation.
-
-      Whereas Apple GCC 4.0.1 build 5479 without -std=c99 or -std=gnu99
-      implements the GNU C inline semantics and defines the macro
-      __GNUC_GNU_INLINE__, but it does not warn and does not support
-      __attribute__ ((__gnu_inline__)).
-
-      All in all, these are the possible combinations.  For every compiler,
-      we need to choose ARGP_FS_EI so that the corresponding table cell
-      contains an "ok".
-
-        \    ARGP_FS_EI                      inline   extern    extern
-          \                                           inline    inline
-      CC    \                                                   __attribute__
-                                                                ((gnu_inline))
-
-      gcc 4.3.0                              error    ok        ok
-      gcc 4.3.0 -std=gnu99 -fgnu89-inline    error    ok        ok
-      gcc 4.3.0 -std=gnu99                   ok       error     ok
-
-      gcc 4.2.2                              error    ok        ok
-      gcc 4.2.2 -std=gnu99 -fgnu89-inline    error    ok        ok
-      gcc 4.2.2 -std=gnu99                   error    warning   ok
-
-      gcc 4.1.2                              error    ok        warning
-      gcc 4.1.2 -std=gnu99                   error    ok        warning
-
-      Apple gcc 4.0.1                        error    ok        warning
-      Apple gcc 4.0.1 -std=gnu99             ok       error     warning
-    */
-#  if defined __GNUC_STDC_INLINE__
-#   define ARGP_FS_EI inline
-#  elif __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2)
-#   define ARGP_FS_EI extern inline __attribute__ ((__gnu_inline__))
-#  else
-#   define ARGP_FS_EI extern inline
-#  endif
-# else
-   /* With other compilers, assume the ISO C99 meaning of 'inline', if
-      the compiler supports 'inline' at all.  */
-#  define ARGP_FS_EI inline
-# endif
+#define ARGP_FS_EI extern inline
 #endif
 
 ARGP_FS_EI size_t
-__argp_fmtstream_write (argp_fmtstream_t __fs,
-                        const char *__str, size_t __len)
+__argp_fmtstream_write (argp_fmtstream_t __fs, const char *__str, size_t __len)
 {
   if (__fs->p + __len <= __fs->end || __argp_fmtstream_ensure (__fs, __len))
     {

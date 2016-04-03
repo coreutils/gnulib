@@ -1,5 +1,5 @@
 /* Name frobnication for compiling argp outside of glibc
-   Copyright (C) 1997, 2003, 2007, 2009-2016 Free Software Foundation, Inc.
+   Copyright (C) 1997-2016 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Miles Bader <miles@gnu.ai.mit.edu>.
 
@@ -138,7 +138,7 @@
 #endif /* !_LIBC */
 
 #ifndef __set_errno
-# define __set_errno(e) (errno = (e))
+#define __set_errno(e) (errno = (e))
 #endif
 
 #if defined GNULIB_ARGP_DISABLE_DIRNAME

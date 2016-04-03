@@ -35,8 +35,8 @@ func_compare() {
 cat > $TMP <<EOT
 Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
             [--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga]
-            [--sonet] [--option] [--optional[=ARG]] [--limerick] [--poem]
-            [--help] [--usage] [--version] ARGS...
+            [--sonet] [--option] [--optional[=ARG]] [--many] [--one] [--two]
+            [--limerick] [--poem] [--help] [--usage] [--version] ARGS...
 EOT
 
 ./test-argp$EXEEXT --usage | func_compare || ERR=1
@@ -47,8 +47,8 @@ EOT
 cat > $TMP <<EOT
 Usage: test-argp [-tvCSOlp?V] [-f FILE] [-r FILE] [-o[ARG]] [--test]
 [--file=FILE] [--input=FILE] [--read=FILE] [--verbose] [--cantiga] [--sonet]
-[--option] [--optional[=ARG]] [--limerick] [--poem] [--help] [--usage]
-[--version] ARGS...
+[--option] [--optional[=ARG]] [--many] [--one] [--two] [--limerick] [--poem]
+[--help] [--usage] [--version] ARGS...
 EOT
 
 ARGP_HELP_FMT='usage-indent=0' ./test-argp$EXEEXT --usage | func_compare || ERR=1
