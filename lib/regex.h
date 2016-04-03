@@ -533,7 +533,7 @@ extern reg_syntax_t re_set_syntax (reg_syntax_t __syntax);
    BUFFER.  Return NULL if successful, and an error string if not.
 
    To free the allocated storage, you must call 'regfree' on BUFFER.
-   Note that the translate table must either have been initialised by
+   Note that the translate table must either have been initialized by
    'regcomp', with a malloc'ed value, or set to NULL before calling
    'regfree'.  */
 extern const char *re_compile_pattern (const char *__pattern, size_t __length,

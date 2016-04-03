@@ -2345,7 +2345,7 @@
 
 	passfd: avoid valgrind uninitalised data warning
 	* lib/passfd.c (sendfd): Reset the msg_controllen of msghdr,
-	to include just the fd we've initialised, rather than including
+	to include just the fd we've initialized, rather than including
 	the extra space used for alignment.
 
 2015-02-23  Paul Eggert  <eggert@cs.ucla.edu>
