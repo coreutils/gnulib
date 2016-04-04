@@ -1,3 +1,19 @@
+2016-04-03  Pedro Alves  <palves@redhat.com>
+
+	stdint: detect good enough pre-C++11 stdint.h in C++ mode
+	When gnulib is configured in C++ mode for a system with a working C99
+	implementation of stdint.h that predates C++11, gnulib ends up
+	substituting stdint.h anyway.  This works on most targets, but on e.g.,
+	64-bit MinGW, it doesn't, as gnulib's substitute assumes LP64, while
+	MinGW is LLP64.  Instead of trying to detect the right types, detect
+	good-enough-pre-C++11 stdint.h and in such case define
+	__STDC_CONSTANT_MACROS/__STDC_LIMIT_MACROS in config.h.
+	* m4/stdint.m4 (gl_STDINT_H): Always define __STDC_CONSTANT_MACROS
+	/ __STDC_LIMIT_MACROS while checking whether the system stdint.h
+	conforms to C99.  If it does, check whether it hides symbols
+	behind the __STDC_{CONSTANT|LIMIT}_MACROS macros.  Then if it
+	does, define those macros in config.h.
+
 2016-04-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	argp: merge changes from glibc
