@@ -3,6 +3,7 @@ tests/test-mbrtowc1.sh
 tests/test-mbrtowc2.sh
 tests/test-mbrtowc3.sh
 tests/test-mbrtowc4.sh
+tests/test-mbrtowc5.sh
 tests/test-mbrtowc.c
 tests/test-mbrtowc-w32-1.sh
 tests/test-mbrtowc-w32-2.sh
@@ -31,6 +32,7 @@ gt_LOCALE_ZH_CN
 Makefile.am:
 TESTS += \
   test-mbrtowc1.sh test-mbrtowc2.sh test-mbrtowc3.sh test-mbrtowc4.sh \
+  test-mbrtowc5.sh \
   test-mbrtowc-w32-1.sh test-mbrtowc-w32-2.sh test-mbrtowc-w32-3.sh \
   test-mbrtowc-w32-4.sh test-mbrtowc-w32-5.sh
 TESTS_ENVIRONMENT += \
@@ -39,4 +41,3 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbrtowc test-mbrtowc-w32
-

@@ -20,7 +20,7 @@ Include:
 "hard-locale.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 Paul Eggert

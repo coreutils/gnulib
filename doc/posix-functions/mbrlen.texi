@@ -12,6 +12,10 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, mingw, Interix 3.5.
 @item
+In the C or POSIX locales, this function can return @code{(size_t) -1}
+and set @code{errno} to @code{EILSEQ}:
+glibc 2.23.
+@item
 This function returns 0 instead of @code{(size_t) -2} when the input
 is empty:
 glibc 2.19.

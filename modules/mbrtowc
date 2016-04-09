@@ -13,6 +13,7 @@ m4/codeset.m4
 Depends-on:
 wchar
 extensions
+hard-locale     [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 mbsinit         [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 localcharset    [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 streq           [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]

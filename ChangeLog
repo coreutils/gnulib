@@ -1,3 +1,27 @@
+2016-04-09  Paul Eggert  <eggert@penguin.cs.ucla.edu>
+
+	mbrtowc: work around glibc bug#19932
+	Fix mbrtowc so that it never returns -1 in the C locale,
+	as this conflicts with a future version of POSIX
+	http://austingroupbugs.net/view.php?id=663#c2738
+	and causes problems with GNU grep: http://bugs.gnu.org/23234
+	See glibc bug 19932:
+	https://sourceware.org/bugzilla/show_bug.cgi?id=19932
+	* doc/posix-functions/mbrlen.texi (mbrlen):
+	* doc/posix-functions/mbrtowc.texi (mbrtowc):
+	Document the glibc bug.
+	* lib/mbrtowc.c [C_LOCALE_MAYBE_EILSEQ]:
+	Include hard-locale.h, locale.h.
+	(rpl_mbrtowc): Work around the C_LOCALE_MAYBE_EILSEQ bug,
+	if the bug is possible.
+	* m4/mbrtowc.m4 (gl_MBRTOWC_C_LOCALE): New macro.
+	(gl_FUNC_MBRTOWC): Use it, and define C_LOCALE_MAYBE_EILSEQ as needed.
+	* modules/hard-locale (License): Now LGPLv2+, for mbrtowc.
+	* modules/mbrtowc (Depends-on): Add hard-locale.
+	* modules/mbrtowc-tests (Files, TESTS): Add tests/test-mbrtowc5.sh.
+	* tests/test-mbrtowc.c (main): Test for bug fix if arg is '5'.
+	* tests/test-mbrtowc5.sh: New file.
+
 2016-04-03  Pedro Alves  <palves@redhat.com>
 
 	stdint: detect good enough pre-C++11 stdint.h in C++ mode
