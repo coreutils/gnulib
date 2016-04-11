@@ -1,3 +1,11 @@
+2016-04-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: port to strict C11 left shift
+	* lib/stdint.in.h (_STDINT_MIN, _STDINT_MAX):
+	Pacify clang -Wshift-negative-value, which should be an issue only
+	on clang setups where stdint.h does not conform to C11 or to C++11.
+	Problem reported by Philipp Stephani in: http://bugs.gnu.org/23261
+
 2016-04-09  Paul Eggert  <eggert@penguin.cs.ucla.edu>
 
 	mbrtowc: work around glibc bug#19932
