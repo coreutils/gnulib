@@ -21,6 +21,7 @@
 #define _GL_INTPROPS_H
 
 #include <limits.h>
+#include <verify.h>
 
 /* Return a value with the common real type of E and V and the value of V.  */
 #define _GL_INT_CONVERT(e, v) (0 * (e) + (v))
@@ -44,10 +45,7 @@
 #define EXPR_SIGNED(e) (_GL_INT_NEGATE_CONVERT (e, 1) < 0)
 
 
-/* Minimum and maximum values for integer types and expressions.
-   These macros have undefined behavior for signed types that either
-   have padding bits or do not use two's complement.  If this is a
-   problem for you, please let us know how to fix it for your host.  */
+/* Minimum and maximum values for integer types and expressions.  */
 
 /* The maximum and minimum values for the integer type T.  */
 #define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
@@ -69,8 +67,25 @@
 #define _GL_SIGNED_INT_MAXIMUM(e)                                       \
   (((_GL_INT_CONVERT (e, 1) << (sizeof ((e) + 0) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
+/* This include file assumes that signed types are two's complement without
+   padding bits; the above macros have undefined behavior otherwise.
+   If this is a problem for you, please let us know how to fix it for your host.
+   As a sanity check, test the assumption for some signed types that
+   <limits.h> bounds.  */
+verify (TYPE_MINIMUM (signed char) == SCHAR_MIN);
+verify (TYPE_MAXIMUM (signed char) == SCHAR_MAX);
+verify (TYPE_MINIMUM (short int) == SHRT_MIN);
+verify (TYPE_MAXIMUM (short int) == SHRT_MAX);
+verify (TYPE_MINIMUM (int) == INT_MIN);
+verify (TYPE_MAXIMUM (int) == INT_MAX);
+verify (TYPE_MINIMUM (long int) == LONG_MIN);
+verify (TYPE_MAXIMUM (long int) == LONG_MAX);
+#ifdef LLONG_MAX
+verify (TYPE_MINIMUM (long long int) == LLONG_MIN);
+verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
+#endif
 
-/* Return 1 if the __typeof__ keyword works.  This could be done by
+/* Does the __typeof__ keyword work?  This could be done by
    'configure', but for now it's easier to do it by hand.  */
 #if (2 <= __GNUC__ || defined __IBM__TYPEOF__ \
      || (0x5110 <= __SUNPRO_C && !__STDC__))

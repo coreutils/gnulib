@@ -1,5 +1,12 @@
 2016-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: check two's complement assumption
+	Suggested by Eric Blake in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-04/msg00016.html
+	* lib/intprops.h: Include <verify.h>.  Verify that signed char,
+	short, int, long, and (if available) long long are two's complement.
+	* modules/intprops (Depends-on): Add 'verify'.
+
 	intprops, mktime, strtol: assume two's complement
 	These macros were not portable to every conforming C11 ones'
 	complement platform.  It's not worth the hassle of porting to some
