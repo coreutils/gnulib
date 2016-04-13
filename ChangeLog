@@ -1,3 +1,22 @@
+2016-04-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops, mktime, strtol: assume two's complement
+	These macros were not portable to every conforming C11 ones'
+	complement platform.  It's not worth the hassle of porting to some
+	platforms that use ones' complement or signed magnitude, as such
+	platforms are almost purely theoretical nowadays and porting even
+	to some of them makes the code harder to review for little
+	practical benefit.  Problem reported by Florian Weimer in:
+	https://sourceware.org/ml/libc-alpha/2016-04/msg00295.html
+	* lib/intprops.h (TYPE_TWOS_COMPLEMENT, TYPE_ONES_COMPLEMENT)
+	(TYPE_SIGNED_MAGNITUDE, _GL_INT_TWOS_COMPLEMENT):
+	* lib/mktime.c (TYPE_TWOS_COMPLEMENT):
+	* lib/strtol.c (TYPE_TWOS_COMPLEMENT, TYPE_ONES_COMPLEMENT)
+	(TYPE_SIGNED_MAGNITUDE):
+	Remove.  All uses rewritten to assume two's complement, which is
+	all we can reasonably test nowadays anyway.
+	* top/maint.mk (_intprops_names): Remove the removed macros.
+
 2016-04-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: port to strict C11 left shift

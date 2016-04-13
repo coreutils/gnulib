@@ -103,25 +103,20 @@ verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
    an integer.  */
 #define TYPE_IS_INTEGER(t) ((t) 1.5 == 1)
 
-/* True if negative values of the signed integer type T use two's
-   complement, or if T is an unsigned integer type.  */
-#define TYPE_TWOS_COMPLEMENT(t) ((t) ~ (t) 0 == (t) -1)
-
 /* True if the arithmetic type T is signed.  */
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 
-/* The maximum and minimum values for the integer type T.  These
-   macros have undefined behavior if T is signed and has padding bits.
-   If this is a problem for you, please let us know how to fix it for
-   your host.  */
-#define TYPE_MINIMUM(t) \
-  ((t) (! TYPE_SIGNED (t) \
-	? (t) 0 \
-	: ~ TYPE_MAXIMUM (t)))
-#define TYPE_MAXIMUM(t) \
-  ((t) (! TYPE_SIGNED (t) \
-	? (t) -1 \
-	: ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
+/* Minimum and maximum values for integer types.
+   These macros have undefined behavior for signed types that either
+   have padding bits or do not use two's complement.  If this is a
+   problem for you, please let us know how to fix it for your host.  */
+
+/* The maximum and minimum values for the integer type T.  */
+#define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
+#define TYPE_MAXIMUM(t)                                                 \
+  ((t) (! TYPE_SIGNED (t)                                               \
+        ? (t) -1                                                        \
+        : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
 
 #ifndef TIME_T_MIN
 # define TIME_T_MIN TYPE_MINIMUM (time_t)
@@ -132,10 +127,6 @@ verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
 #define TIME_T_MIDPOINT (SHR (TIME_T_MIN + TIME_T_MAX, 1) + 1)
 
 verify (time_t_is_integer, TYPE_IS_INTEGER (time_t));
-verify (twos_complement_arithmetic,
-	(TYPE_TWOS_COMPLEMENT (int)
-	 && TYPE_TWOS_COMPLEMENT (long_int)
-	 && TYPE_TWOS_COMPLEMENT (time_t)));
 
 #define EPOCH_YEAR 1970
 #define TM_YEAR_BASE 1900

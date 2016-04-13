@@ -36,17 +36,6 @@
    an integer.  */
 #define TYPE_IS_INTEGER(t) ((t) 1.5 == 1)
 
-/* True if negative values of the signed integer type T use two's
-   complement, ones' complement, or signed magnitude representation,
-   respectively.  Much GNU code assumes two's complement, but some
-   people like to be portable to all possible C hosts.  */
-#define TYPE_TWOS_COMPLEMENT(t) ((t) ~ (t) 0 == (t) -1)
-#define TYPE_ONES_COMPLEMENT(t) ((t) ~ (t) 0 == 0)
-#define TYPE_SIGNED_MAGNITUDE(t) ((t) ~ (t) 0 < (t) -1)
-
-/* True if the signed integer expression E uses two's complement.  */
-#define _GL_INT_TWOS_COMPLEMENT(e) (~ _GL_INT_CONVERT (e, 0) == -1)
-
 /* True if the real type T is signed.  */
 #define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
 
@@ -55,18 +44,13 @@
 #define EXPR_SIGNED(e) (_GL_INT_NEGATE_CONVERT (e, 1) < 0)
 
 
-/* Minimum and maximum values for integer types and expressions.  These
-   macros have undefined behavior if T is signed and has padding bits.
-   If this is a problem for you, please let us know how to fix it for
-   your host.  */
+/* Minimum and maximum values for integer types and expressions.
+   These macros have undefined behavior for signed types that either
+   have padding bits or do not use two's complement.  If this is a
+   problem for you, please let us know how to fix it for your host.  */
 
 /* The maximum and minimum values for the integer type T.  */
-#define TYPE_MINIMUM(t)                                                 \
-  ((t) (! TYPE_SIGNED (t)                                               \
-        ? (t) 0                                                         \
-        : TYPE_SIGNED_MAGNITUDE (t)                                     \
-        ? ~ (t) 0                                                       \
-        : ~ TYPE_MAXIMUM (t)))
+#define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
 #define TYPE_MAXIMUM(t)                                                 \
   ((t) (! TYPE_SIGNED (t)                                               \
         ? (t) -1                                                        \
@@ -76,7 +60,7 @@
    after integer promotion.  E should not have side effects.  */
 #define _GL_INT_MINIMUM(e)                                              \
   (EXPR_SIGNED (e)                                                      \
-   ? - _GL_INT_TWOS_COMPLEMENT (e) - _GL_SIGNED_INT_MAXIMUM (e)         \
+   ? ~ _GL_SIGNED_INT_MAXIMUM (e)                                       \
    : _GL_INT_CONVERT (e, 0))
 #define _GL_INT_MAXIMUM(e)                                              \
   (EXPR_SIGNED (e)                                                      \

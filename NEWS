@@ -42,6 +42,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2016-04-12  intprops        The following macros were removed:
+                            TYPE_TWOS_COMPLEMENT  TYPE_ONES_COMPLEMENT
+                            TYPE_SIGNED_MAGNITUDE
+
 2015-09-25  c-ctype         The following macros were removed:
                             C_CTYPE_CONSECUTIVE_DIGITS
                             C_CTYPE_CONSECUTIVE_LOWERCASE

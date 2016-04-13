@@ -132,7 +132,6 @@ utimecmp (char const *dst_name,
      time_t might be unsigned.  */
 
   verify (TYPE_IS_INTEGER (time_t));
-  verify (TYPE_TWOS_COMPLEMENT (int));
 
   /* Destination and source time stamps.  */
   time_t dst_s = dst_stat->st_mtime;
