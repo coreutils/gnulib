@@ -35,8 +35,10 @@
 #include <time.h>
 
 #include <limits.h>
+#include <stdbool.h>
 
-#include <string.h>		/* For the real memcpy prototype.  */
+#include <intprops.h>
+#include <verify.h>
 
 #if defined DEBUG_MKTIME && DEBUG_MKTIME
 # include <stdio.h>
@@ -49,27 +51,10 @@
 /* Some of the code in this file assumes that signed integer overflow
    silently wraps around.  This assumption can't easily be programmed
    around, nor can it be checked for portably at compile-time or
-   easily eliminated at run-time.
-
-   Define WRAPV to 1 if the assumption is valid and if
-     #pragma GCC optimize ("wrapv")
-   does not trigger GCC bug 51793
-   <http://gcc.gnu.org/bugzilla/show_bug.cgi?id=51793>.
-   Otherwise, define it to 0; this forces the use of slower code that,
-   while not guaranteed by the C Standard, works on all production
-   platforms that we know about.  */
-#ifndef WRAPV
-# if (((__GNUC__ == 4 && 4 <= __GNUC_MINOR__) || 4 < __GNUC__) \
-      && defined __GLIBC__)
-#  pragma GCC optimize ("wrapv")
-#  define WRAPV 1
-# else
-#  define WRAPV 0
-# endif
+   easily eliminated at run-time.  */
+#if 4 < __GNUC__ + (4 <= __GNUC_MINOR__)
+# pragma GCC optimize ("wrapv")
 #endif
-
-/* Verify a requirement at compile-time (unlike assert, which is runtime).  */
-#define verify(name, assertion) struct name { char a[(assertion) ? 1 : -1]; }
 
 /* A signed type that is at least one bit wider than int.  */
 #if INT_MAX <= LONG_MAX / 2
@@ -77,7 +62,7 @@ typedef long int long_int;
 #else
 typedef long long int long_int;
 #endif
-verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
+verify (INT_MAX <= TYPE_MAXIMUM (long_int) / 2);
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
@@ -96,28 +81,6 @@ verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
    ? (a) >> (b)                                                 \
    : (a) / (1 << (b)) - ((a) % (1 << (b)) < 0))
 
-/* The extra casts in the following macros work around compiler bugs,
-   e.g., in Cray C 5.0.3.0.  */
-
-/* True if the arithmetic type T is an integer type.  bool counts as
-   an integer.  */
-#define TYPE_IS_INTEGER(t) ((t) 1.5 == 1)
-
-/* True if the arithmetic type T is signed.  */
-#define TYPE_SIGNED(t) (! ((t) 0 < (t) -1))
-
-/* Minimum and maximum values for integer types.
-   These macros have undefined behavior for signed types that either
-   have padding bits or do not use two's complement.  If this is a
-   problem for you, please let us know how to fix it for your host.  */
-
-/* The maximum and minimum values for the integer type T.  */
-#define TYPE_MINIMUM(t) ((t) ~ TYPE_MAXIMUM (t))
-#define TYPE_MAXIMUM(t)                                                 \
-  ((t) (! TYPE_SIGNED (t)                                               \
-        ? (t) -1                                                        \
-        : ((((t) 1 << (sizeof (t) * CHAR_BIT - 2)) - 1) * 2 + 1)))
-
 #ifndef TIME_T_MIN
 # define TIME_T_MIN TYPE_MINIMUM (time_t)
 #endif
@@ -126,14 +89,14 @@ verify (long_int_is_wide_enough, INT_MAX == INT_MAX * (long_int) 2 / 2);
 #endif
 #define TIME_T_MIDPOINT (SHR (TIME_T_MIN + TIME_T_MAX, 1) + 1)
 
-verify (time_t_is_integer, TYPE_IS_INTEGER (time_t));
+verify (TYPE_IS_INTEGER (time_t));
 
 #define EPOCH_YEAR 1970
 #define TM_YEAR_BASE 1900
-verify (base_year_is_a_multiple_of_100, TM_YEAR_BASE % 100 == 0);
+verify (TM_YEAR_BASE % 100 == 0);
 
-/* Return 1 if YEAR + TM_YEAR_BASE is a leap year.  */
-static int
+/* Is YEAR + TM_YEAR_BASE a leap year?  */
+static bool
 leapyear (long_int year)
 {
   /* Don't add YEAR to TM_YEAR_BASE, as that might overflow.
@@ -168,9 +131,9 @@ const unsigned short int __mon_yday[2][13] =
 # include "mktime-internal.h"
 #endif
 
-/* Return 1 if the values A and B differ according to the rules for
-   tm_isdst: A and B differ if one is zero and the other positive.  */
-static int
+/* Do the values A and B differ according to the rules for tm_isdst?
+   A and B differ if one is zero and the other positive.  */
+static bool
 isdst_differ (int a, int b)
 {
   return (!a != !b) && (0 <= a) && (0 <= b);
@@ -191,7 +154,7 @@ static time_t
 ydhms_diff (long_int year1, long_int yday1, int hour1, int min1, int sec1,
 	    int year0, int yday0, int hour0, int min0, int sec0)
 {
-  verify (C99_integer_division, -1 / 2 == 0);
+  verify (-1 / 2 == 0);
 
   /* Compute intervening leap days correctly even if year is negative.
      Take care to avoid integer overflow here.  */
@@ -221,44 +184,37 @@ time_t_avg (time_t a, time_t b)
   return SHR (a, 1) + SHR (b, 1) + (a & b & 1);
 }
 
-/* Return 1 if A + B does not overflow.  If time_t is unsigned and if
-   B's top bit is set, assume that the sum represents A - -B, and
-   return 1 if the subtraction does not wrap around.  */
-static int
+/* Does A + B fit into time_t, without overflow?
+
+   If time_t is unsigned and B's top bit is set, assume that the sum
+   represents A - -B, and report overflow if subtraction wraps around.  */
+static bool
 time_t_add_ok (time_t a, time_t b)
 {
-  if (! TYPE_SIGNED (time_t))
-    {
-      time_t sum = a + b;
-      return (sum < a) == (TIME_T_MIDPOINT <= b);
-    }
-  else if (WRAPV)
-    {
-      time_t sum = a + b;
-      return (sum < a) == (b < 0);
-    }
+  time_t sum;
+
+  if (TYPE_SIGNED (time_t))
+    return ! INT_ADD_WRAPV (a, b, &sum);
   else
     {
-      time_t avg = time_t_avg (a, b);
-      return TIME_T_MIN / 2 <= avg && avg <= TIME_T_MAX / 2;
+      sum = a + b;
+      return (sum < a) == (TIME_T_MIDPOINT <= b);
     }
 }
 
-/* Return 1 if A + B does not overflow.  */
+/* Does A + B fit into time_t, without overflow?  */
 static int
 time_t_int_add_ok (time_t a, int b)
 {
-  verify (int_no_wider_than_time_t, INT_MAX <= TIME_T_MAX);
-  if (WRAPV)
-    {
-      time_t sum = a + b;
-      return (sum < a) == (b < 0);
-    }
+  time_t sum;
+  verify (TYPE_SIGNED (time_t) || INT_MAX <= TIME_T_MAX);
+
+  if (TYPE_SIGNED (time_t))
+    return ! INT_ADD_WRAPV (a, b, &sum);
   else
     {
-      int a_odd = a & 1;
-      time_t avg = SHR (a, 1) + (SHR (b, 1) + (a_odd & b));
-      return TIME_T_MIN / 2 <= avg && avg <= TIME_T_MAX / 2;
+      sum = a + b;
+      return (sum < a) == (b < 0);
     }
 }
 

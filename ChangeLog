@@ -1,5 +1,17 @@
 2016-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: improve integer overflow checking
+	* lib/mktime.c: Include stdbool.h, intprops.h, verify.h.
+	(WRAPV): Remove; no longer needed.
+	(verify): Remove.  Replace all uses with call to verify.h 'verify'.
+	(TYPE_IS_INTEGER, TYPE_SIGNED, TYPE_MINIMUM, TYPE_MAXIMUM):
+	Remove.  Use intprops.h defns instead.
+	(leapyear, isdst_differ, time_t_add_ok, time_t_int_ok):
+	Use bool for Boolean, for clarity.
+	(time_t_add_ok, time_t_int_add_ok): Use INT_ADD_WRAPV to
+	detect integer overflow.
+	* modules/mktime (Depends-on): Add intprops, stdbool, verify.
+
 	intprops: check two's complement assumption
 	Suggested by Eric Blake in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2016-04/msg00016.html
