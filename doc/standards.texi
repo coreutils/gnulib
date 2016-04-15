@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 4, 2016
+@set lastupdate April 14, 2016
 @c %**end of header
 
 @dircategory GNU organization
@@ -4300,12 +4300,12 @@ subscribing fail to work if the user's browser blocks the nonfree
 Javascript code, then don't refer to that page.
 
 The extreme case is that of web sites which depend on nonfree
-Javascript code even to @emph{see} the contents of the pages.  Any site
-hosted on @url{wix.com} has this problem, and so do some other sites.
-Referring people to such pages to read their contents is, in effect,
-urging them to run those nonfree programs---so please don't refer to
-those pages.  (Such pages also break the Web, so they deserve
-condemnation for two reasons.)
+Javascript code even to @emph{see} the contents of the pages.  Any
+site hosted on @indicateurl{wix.com} has this problem, and so do some
+other sites.  Referring people to such pages to read their contents
+is, in effect, urging them to run those nonfree programs---so please
+don't refer to those pages.  (Such pages also break the Web, so they
+deserve condemnation for two reasons.)
 
 Instead, please quote excerpts from the page to make your point,
 or find another place to refer to that information.
