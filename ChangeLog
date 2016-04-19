@@ -1,3 +1,9 @@
+2016-04-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	btowc: document problems in C locale
+	* doc/posix-functions/btowc.texi (btowc): Mention incompatibility
+	with mbrtowc.  See: http://bugs.gnu.org/23269#32
+
 2016-04-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: improve integer overflow checking

@@ -24,4 +24,8 @@ Portability problems not fixed by Gnulib:
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+In the C or POSIX locales, this function is not consistent with
+Gnulib's @code{mbrtowc} and can return @code{WEOF}:
+glibc 2.23, MirOS BSD #10.
 @end itemize
