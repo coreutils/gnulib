@@ -1,3 +1,8 @@
+2016-04-20  Tino Calancha  <f92capac@gmail.com>  (tiny change)
+
+	xstrtod: modify *result only if no errors
+	* lib/xstrtod.c (XSTRTOD).
+
 2016-04-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	btowc: document problems in C locale

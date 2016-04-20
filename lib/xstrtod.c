@@ -66,6 +66,7 @@ XSTRTOD (char const *str, char const **ptr, DOUBLE *result,
   if (ptr != NULL)
     *ptr = terminator;
 
-  *result = val;
+  if (ok)
+    *result = val;
   return ok;
 }
