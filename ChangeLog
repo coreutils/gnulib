@@ -1,3 +1,9 @@
+2016-04-21  Pádraig Brady  <P@draigBrady.com>
+
+	xstrtod: reinstate setting of *result upon ERANGE
+	* lib/xstrtod.c (XSTRTOD): The user may decide to use
+	the returned limits upon ERANGE, so allow and document that.
+
 2016-04-20  Tino Calancha  <f92capac@gmail.com>  (tiny change)
 
 	xstrtod: modify *result only if no errors
