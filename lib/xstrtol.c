@@ -148,8 +148,11 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
           return err | LONGINT_INVALID_SUFFIX_CHAR;
         }
 
-      if (strchr (valid_suffixes, '0'))
+      switch (**p)
         {
+        case 'E': case 'G': case 'g': case 'k': case 'K': case 'M': case 'm':
+        case 'P': case 'T': case 't': case 'Y': case 'Z':
+
           /* The "valid suffix" '0' is a special flag meaning that
              an optional second suffix is allowed, which can change
              the base.  A suffix "B" (e.g. "100MB") stands for a power
@@ -157,19 +160,20 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
              a power of 1024.  If no suffix (e.g. "100M"), assume
              power-of-1024.  */
 
-          switch (p[0][1])
-            {
-            case 'i':
-              if (p[0][2] == 'B')
-                suffixes += 2;
-              break;
+          if (strchr (valid_suffixes, '0'))
+            switch (p[0][1])
+              {
+              case 'i':
+                if (p[0][2] == 'B')
+                  suffixes += 2;
+                break;
 
-            case 'B':
-            case 'D': /* 'D' is obsolescent */
-              base = 1000;
-              suffixes++;
-              break;
-            }
+              case 'B':
+              case 'D': /* 'D' is obsolescent */
+                base = 1000;
+                suffixes++;
+                break;
+              }
         }
 
       switch (**p)
@@ -179,6 +183,9 @@ __xstrtol (const char *s, char **ptr, int strtol_base,
           break;
 
         case 'B':
+          /* This obsolescent first suffix is distinct from the 'B'
+             second suffix above.  E.g., 'tar -L 1000B' means change
+             the tape after writing 1000 KiB of data.  */
           overflow = bkm_scale (&tmp, 1024);
           break;
 

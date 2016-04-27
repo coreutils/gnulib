@@ -1,3 +1,11 @@
+2016-04-27  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xstrtol: prohibit monstrosities like "1bB"
+	Problem reported by Young Mo Kang in: http://bugs.gnu.org/23388
+	* lib/xstrtol.c (__xstrtol): Allow trailing second suffixes like
+	"B" only if the first suffix needs a base.
+	* tests/test-xstrtol.sh: Test this.
+
 2016-04-21  Pádraig Brady  <P@draigBrady.com>
 
 	xstrtod: reinstate setting of *result upon ERANGE

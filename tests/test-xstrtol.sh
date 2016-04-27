@@ -16,6 +16,7 @@ test-xstrtol 9x >> out 2>&1 && result=1
 test-xstrtol 010 >> out 2>&1 || result=1
 # suffix without integer is valid
 test-xstrtol MiB >> out 2>&1 || result=1
+test-xstrtol 1bB >> out 2>&1 && result=1
 
 # test xstrtoul
 test-xstrtoul 1 >> out 2>&1 || result=1
@@ -27,6 +28,7 @@ test-xstrtoul x >> out 2>&1 && result=1
 test-xstrtoul 9x >> out 2>&1 && result=1
 test-xstrtoul 010 >> out 2>&1 || result=1
 test-xstrtoul MiB >> out 2>&1 || result=1
+test-xstrtoul 1bB >> out 2>&1 && result=1
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.
@@ -51,6 +53,7 @@ invalid X argument 'x'
 invalid suffix in X argument '9x'
 010->8 ()
 MiB->1048576 ()
+invalid suffix in X argument '1bB'
 1->1 ()
 invalid X argument '-1'
 1k->1024 ()
@@ -60,6 +63,7 @@ invalid X argument 'x'
 invalid suffix in X argument '9x'
 010->8 ()
 MiB->1048576 ()
+invalid suffix in X argument '1bB'
 EOF
 
 compare expected out || result=1
