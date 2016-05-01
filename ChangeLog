@@ -1,5 +1,15 @@
 2016-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: speed up DEBUG_MKTIME benchmarks
+	Call tzset just once, at the start, rather than for every test
+	case.  This lets us measure the CPU cost of mktime as opposed to
+	that of tzset.  This is relevant when TZ is not set and glibc is
+	being used.  This speeds up tests by a factor of 40 on my Fedora
+	23 x86-64 platform.
+	* lib/mktime.c (main) [DEBUG_MKTIME]: Call localtime at the start,
+	to call tzset and as a sanity check.  Later on, use localtime_r
+	instead of localtime.
+
 	mktime: resurrect DEBUG_MKTIME testing
 	* lib/mktime.c [DEBUG_MKTIME]: Do not include <config.h>.
 	Include <string.h>, for strcmp.

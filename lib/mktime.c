@@ -600,6 +600,14 @@ main (int argc, char **argv)
   time_t tk, tl, tl1;
   char trailer;
 
+  /* Sanity check, plus call tzset.  */
+  tl = 0;
+  if (! localtime (&tl))
+    {
+      printf ("localtime (0) fails\n");
+      status = 1;
+    }
+
   if ((argc == 3 || argc == 4)
       && (sscanf (argv[1], "%d-%d-%d%c",
 		  &tm.tm_year, &tm.tm_mon, &tm.tm_mday, &trailer)
@@ -613,12 +621,7 @@ main (int argc, char **argv)
       tm.tm_isdst = argc == 3 ? -1 : atoi (argv[3]);
       tmk = tm;
       tl = mktime (&tmk);
-      lt = localtime (&tl);
-      if (lt)
-	{
-	  tml = *lt;
-	  lt = &tml;
-	}
+      lt = localtime_r (&tl, &tml);
       printf ("mktime returns %ld == ", (long int) tl);
       print_tm (&tmk);
       printf ("\n");
@@ -633,16 +636,16 @@ main (int argc, char **argv)
       if (argc == 4)
 	for (tl = from; by < 0 ? to <= tl : tl <= to; tl = tl1)
 	  {
-	    lt = localtime (&tl);
+	    lt = localtime_r (&tl, &tml);
 	    if (lt)
 	      {
-		tmk = tml = *lt;
+		tmk = tml;
 		tk = mktime (&tmk);
 		status |= check_result (tk, tmk, tl, &tml);
 	      }
 	    else
 	      {
-		printf ("localtime (%ld) yields 0\n", (long int) tl);
+		printf ("localtime_r (%ld) yields 0\n", (long int) tl);
 		status = 1;
 	      }
 	    tl1 = tl + by;
@@ -653,16 +656,16 @@ main (int argc, char **argv)
 	for (tl = from; by < 0 ? to <= tl : tl <= to; tl = tl1)
 	  {
 	    /* Null benchmark.  */
-	    lt = localtime (&tl);
+	    lt = localtime_r (&tl, &tml);
 	    if (lt)
 	      {
-		tmk = tml = *lt;
+		tmk = tml;
 		tk = tl;
 		status |= check_result (tk, tmk, tl, &tml);
 	      }
 	    else
 	      {
-		printf ("localtime (%ld) yields 0\n", (long int) tl);
+		printf ("localtime_r (%ld) yields 0\n", (long int) tl);
 		status = 1;
 	      }
 	    tl1 = tl + by;
