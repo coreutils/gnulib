@@ -120,7 +120,9 @@ const unsigned short int __mon_yday[2][13] =
   };
 
 
-#ifndef _LIBC
+#ifdef _LIBC
+typedef time_t mktime_offset_t;
+#else
 /* Portable standalone applications should supply a <time.h> that
    declares a POSIX-compliant localtime_r, for the benefit of older
    implementations that lack localtime_r or have a nonstandard one.
@@ -296,7 +298,7 @@ ranged_convert (struct tm *(*convert) (const time_t *, struct tm *),
 time_t
 __mktime_internal (struct tm *tp,
 		   struct tm *(*convert) (const time_t *, struct tm *),
-		   time_t *offset)
+		   mktime_offset_t *offset)
 {
   time_t t, gt, t0, t1, t2;
   struct tm tm;
@@ -518,11 +520,7 @@ __mktime_internal (struct tm *tp,
 }
 
 
-/* FIXME: This should use a signed type wide enough to hold any UTC
-   offset in seconds.  'int' should be good enough for GNU code.  We
-   can't fix this unilaterally though, as other modules invoke
-   __mktime_internal.  */
-static time_t localtime_offset;
+static mktime_offset_t localtime_offset;
 
 /* Convert *TP to a time_t value.  */
 time_t
