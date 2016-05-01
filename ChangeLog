@@ -1,11 +1,16 @@
 2016-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: simplify DEBUG_MKTIME
+	* lib/mktime.c (DEBUG_MKTIME): Define to 0 if not defined.
+	Simplify later usage accordingly.
+
 	Port mktime_internal offset to unsigned time_t
 	This avoids some assumptions about wraparound arithmetic on
 	signed integer overflow.
 	* lib/mktime-internal.h (mktime_offset_t): New type.
 	(mktime_internal): Use it in decl.
 	* lib/mktime.c, lib/timegm.c (mktime_offset_t) [_LIBC]: New type.
+
 	* lib/mktime.c (__mktime_internal, localtime_offset):
 	* lib/timegm.c (timegm): Use it.
 	* m4/mktime.m4 (gl_TIME_T_IS_SIGNED): New macro.

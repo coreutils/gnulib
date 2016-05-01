@@ -17,9 +17,11 @@
    License along with the GNU C Library; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-/* Define this to have a standalone program to test this implementation of
+/* Define this to 1 to have a standalone program to test this implementation of
    mktime.  */
-/* #define DEBUG_MKTIME 1 */
+#ifndef DEBUG_MKTIME
+# define DEBUG_MKTIME 0
+#endif
 
 #ifndef _LIBC
 # include <config.h>
@@ -40,13 +42,13 @@
 #include <intprops.h>
 #include <verify.h>
 
-#if defined DEBUG_MKTIME && DEBUG_MKTIME
+#if DEBUG_MKTIME
 # include <stdio.h>
 # include <stdlib.h>
 /* Make it work even if the system's libc has its own mktime routine.  */
 # undef mktime
 # define mktime my_mktime
-#endif /* DEBUG_MKTIME */
+#endif
 
 /* Some of the code in this file assumes that signed integer overflow
    silently wraps around.  This assumption can't easily be programmed
@@ -545,7 +547,7 @@ libc_hidden_def (mktime)
 libc_hidden_weak (timelocal)
 #endif
 
-#if defined DEBUG_MKTIME && DEBUG_MKTIME
+#if DEBUG_MKTIME
 
 static int
 not_equal_tm (const struct tm *a, const struct tm *b)
