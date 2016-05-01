@@ -1,5 +1,9 @@
 2016-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: resurrect DEBUG_MKTIME testing
+	* lib/mktime.c [DEBUG_MKTIME]: Do not include <config.h>.
+	Include <string.h>, for strcmp.
+
 	mktime: simplify DEBUG_MKTIME
 	* lib/mktime.c (DEBUG_MKTIME): Define to 0 if not defined.
 	Simplify later usage accordingly.

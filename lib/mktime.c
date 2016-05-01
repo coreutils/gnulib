@@ -23,7 +23,7 @@
 # define DEBUG_MKTIME 0
 #endif
 
-#ifndef _LIBC
+#if !defined _LIBC && !DEBUG_MKTIME
 # include <config.h>
 #endif
 
@@ -45,6 +45,7 @@
 #if DEBUG_MKTIME
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 /* Make it work even if the system's libc has its own mktime routine.  */
 # undef mktime
 # define mktime my_mktime
