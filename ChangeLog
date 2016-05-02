@@ -1,5 +1,30 @@
 2016-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	mktime: port to stricter signed overflow checking
+	* lib/mktime.c: Omit 'pragma GCC optimize ("wrapv")'.
+	(long_int): Require width for INT_MAX * 3 * (seconds per year),
+	instead of merely for INT_MAX * 2.  In practice platforms that
+	do the latter also do the former.
+	(TIME_T_MIN, TIME_T_MAX, TIME_T_MIDPOINT, SHR): Remove.
+	(shr): New static function, replacing SHR.  All uses changed.
+	(mktime_min, mktime_max): New constants, replacing TIME_T_MIN
+	and TIME_T_MAX.  All uses changed.
+	(ydhms_diff, guess_time_tm, ranged_convert, __mktime_internal):
+	Use long_int, not time_t.
+	(long_int_avg): New static function, replacing time_t_avg.
+	All uses changed.  Round toward positive infinity, as that
+	generates slightly better code.
+	(time_t_add_ok, time_t_int_add_ok): Remove.  All uses replaced
+	by INT_ADD_WRAPV.
+	(guess_time_tm): Accept time, not a pointer to it.  All uses changed.
+	(convert_time): New static function.
+	(ranged_convert): Use it
+	(ranged_convert): Check for *T out of [mktime_min, mktime_max] range.
+	Use simpler test for loop exit.
+	(__mktime_internal): Store negative of guessed offset, to simplify
+	overflow checking.  Remove no-longer-needed test for small time_t
+	overflows.
+
 	mktime: speed up DEBUG_MKTIME benchmarks
 	Call tzset just once, at the start, rather than for every test
 	case.  This lets us measure the CPU cost of mktime as opposed to

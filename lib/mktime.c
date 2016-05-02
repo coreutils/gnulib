@@ -51,46 +51,53 @@
 # define mktime my_mktime
 #endif
 
-/* Some of the code in this file assumes that signed integer overflow
-   silently wraps around.  This assumption can't easily be programmed
-   around, nor can it be checked for portably at compile-time or
-   easily eliminated at run-time.  */
-#if 4 < __GNUC__ + (4 <= __GNUC_MINOR__)
-# pragma GCC optimize ("wrapv")
-#endif
+/* A signed type that can represent an integer number of years
+   multiplied by three times the number of seconds in a year.  It is
+   needed when converting a tm_year value times the number of seconds
+   in a year.  The factor of three comes because these products need
+   to be subtracted from each other, and sometimes with an offset
+   added to them, without worrying about overflow.
 
-/* A signed type that is at least one bit wider than int.  */
-#if INT_MAX <= LONG_MAX / 2
+   Much of the code uses long_int to represent time_t values, to
+   lessen the hassle of dealing with platforms where time_t is
+   unsigned, and because long_int should suffice to represent all
+   time_t values that mktime can generate even on platforms where
+   time_t is excessively wide.  */
+
+#if INT_MAX <= LONG_MAX / 3 / 366 / 24 / 60 / 60
 typedef long int long_int;
 #else
 typedef long long int long_int;
 #endif
-verify (INT_MAX <= TYPE_MAXIMUM (long_int) / 2);
+verify (INT_MAX <= TYPE_MAXIMUM (long_int) / 3 / 366 / 24 / 60 / 60);
 
 /* Shift A right by B bits portably, by dividing A by 2**B and
-   truncating towards minus infinity.  A and B should be free of side
-   effects, and B should be in the range 0 <= B <= INT_BITS - 2, where
-   INT_BITS is the number of useful bits in an int.  GNU code can
-   assume that INT_BITS is at least 32.
+   truncating towards minus infinity.  B should be in the range 0 <= B
+   <= LONG_INT_BITS - 2, where LONG_INT_BITS is the number of useful
+   bits in a long_int.  LONG_INT_BITS is at least 32.
 
    ISO C99 says that A >> B is implementation-defined if A < 0.  Some
    implementations (e.g., UNICOS 9.0 on a Cray Y-MP EL) don't shift
    right in the usual way when A < 0, so SHR falls back on division if
    ordinary A >> B doesn't seem to be the usual signed shift.  */
-#define SHR(a, b)                                               \
-  ((-1 >> 1 == -1                                               \
-    && (long_int) -1 >> 1 == -1                                 \
-    && ((time_t) -1 >> 1 == -1 || ! TYPE_SIGNED (time_t)))      \
-   ? (a) >> (b)                                                 \
-   : (a) / (1 << (b)) - ((a) % (1 << (b)) < 0))
 
-#ifndef TIME_T_MIN
-# define TIME_T_MIN TYPE_MINIMUM (time_t)
-#endif
-#ifndef TIME_T_MAX
-# define TIME_T_MAX TYPE_MAXIMUM (time_t)
-#endif
-#define TIME_T_MIDPOINT (SHR (TIME_T_MIN + TIME_T_MAX, 1) + 1)
+static long_int
+shr (long_int a, int b)
+{
+  long_int one = 1;
+  return (-one >> 1 == -1
+	  ? a >> b
+	  : a / (one << b) - (a % (one << b) < 0));
+}
+
+/* Bounds for the intersection of time_t and long_int.  */
+
+static long_int const mktime_min
+  = ((TYPE_SIGNED (time_t) && TYPE_MINIMUM (time_t) < TYPE_MINIMUM (long_int))
+     ? TYPE_MINIMUM (long_int) : TYPE_MINIMUM (time_t));
+static long_int const mktime_max
+  = (TYPE_MAXIMUM (long_int) < TYPE_MAXIMUM (time_t)
+     ? TYPE_MAXIMUM (long_int) : TYPE_MAXIMUM (time_t));
 
 verify (TYPE_IS_INTEGER (time_t));
 
@@ -149,13 +156,11 @@ isdst_differ (int a, int b)
    were not adjusted between the time stamps.
 
    The YEAR values uses the same numbering as TP->tm_year.  Values
-   need not be in the usual range.  However, YEAR1 must not be less
-   than 2 * INT_MIN or greater than 2 * INT_MAX.
+   need not be in the usual range.  However, YEAR1 must not overflow
+   when multiplied by three times the number of seconds in a year, and
+   likewise for YDAY1 and three times the number of seconds in a day.  */
 
-   The result may overflow.  It is the caller's responsibility to
-   detect overflow.  */
-
-static time_t
+static long_int
 ydhms_diff (long_int year1, long_int yday1, int hour1, int min1, int sec1,
 	    int year0, int yday0, int hour0, int min0, int sec0)
 {
@@ -163,83 +168,53 @@ ydhms_diff (long_int year1, long_int yday1, int hour1, int min1, int sec1,
 
   /* Compute intervening leap days correctly even if year is negative.
      Take care to avoid integer overflow here.  */
-  int a4 = SHR (year1, 2) + SHR (TM_YEAR_BASE, 2) - ! (year1 & 3);
-  int b4 = SHR (year0, 2) + SHR (TM_YEAR_BASE, 2) - ! (year0 & 3);
+  int a4 = shr (year1, 2) + shr (TM_YEAR_BASE, 2) - ! (year1 & 3);
+  int b4 = shr (year0, 2) + shr (TM_YEAR_BASE, 2) - ! (year0 & 3);
   int a100 = a4 / 25 - (a4 % 25 < 0);
   int b100 = b4 / 25 - (b4 % 25 < 0);
-  int a400 = SHR (a100, 2);
-  int b400 = SHR (b100, 2);
+  int a400 = shr (a100, 2);
+  int b400 = shr (b100, 2);
   int intervening_leap_days = (a4 - b4) - (a100 - b100) + (a400 - b400);
 
-  /* Compute the desired time in time_t precision.  Overflow might
-     occur here.  */
-  time_t tyear1 = year1;
-  time_t years = tyear1 - year0;
-  time_t days = 365 * years + yday1 - yday0 + intervening_leap_days;
-  time_t hours = 24 * days + hour1 - hour0;
-  time_t minutes = 60 * hours + min1 - min0;
-  time_t seconds = 60 * minutes + sec1 - sec0;
+  /* Compute the desired time without overflowing.  */
+  long_int years = year1 - year0;
+  long_int days = 365 * years + yday1 - yday0 + intervening_leap_days;
+  long_int hours = 24 * days + hour1 - hour0;
+  long_int minutes = 60 * hours + min1 - min0;
+  long_int seconds = 60 * minutes + sec1 - sec0;
   return seconds;
 }
 
-/* Return the average of A and B, even if A + B would overflow.  */
-static time_t
-time_t_avg (time_t a, time_t b)
+/* Return the average of A and B, even if A + B would overflow.
+   Round toward positive infinity.  */
+static long_int
+long_int_avg (long_int a, long_int b)
 {
-  return SHR (a, 1) + SHR (b, 1) + (a & b & 1);
-}
-
-/* Does A + B fit into time_t, without overflow?
-
-   If time_t is unsigned and B's top bit is set, assume that the sum
-   represents A - -B, and report overflow if subtraction wraps around.  */
-static bool
-time_t_add_ok (time_t a, time_t b)
-{
-  time_t sum;
-
-  if (TYPE_SIGNED (time_t))
-    return ! INT_ADD_WRAPV (a, b, &sum);
-  else
-    {
-      sum = a + b;
-      return (sum < a) == (TIME_T_MIDPOINT <= b);
-    }
-}
-
-/* Does A + B fit into time_t, without overflow?  */
-static int
-time_t_int_add_ok (time_t a, int b)
-{
-  time_t sum;
-  verify (TYPE_SIGNED (time_t) || INT_MAX <= TIME_T_MAX);
-
-  if (TYPE_SIGNED (time_t))
-    return ! INT_ADD_WRAPV (a, b, &sum);
-  else
-    {
-      sum = a + b;
-      return (sum < a) == (b < 0);
-    }
+  return shr (a, 1) + shr (b, 1) + ((a | b) & 1);
 }
 
 /* Return a time_t value corresponding to (YEAR-YDAY HOUR:MIN:SEC),
-   assuming that *T corresponds to *TP and that no clock adjustments
+   assuming that T corresponds to *TP and that no clock adjustments
    occurred between *TP and the desired time.
-   If TP is null, return a value not equal to *T; this avoids false matches.
-   If overflow occurs, yield the minimal or maximal value, except do not
-   yield a value equal to *T.  */
-static time_t
+   Although T and the returned value are of type long_int,
+   they represent time_t values and must be in time_t range.
+   If TP is null, return a value not equal to T; this avoids false matches.
+   YEAR and YDAY must not be so large that multiplying them by three times the
+   number of seconds in a year (or day, respectively) would overflow long_int.
+   If the returned value would be out of range, yield the minimal or
+   maximal in-range value, except do not yield a value equal to T.  */
+static long_int
 guess_time_tm (long_int year, long_int yday, int hour, int min, int sec,
-	       const time_t *t, const struct tm *tp)
+	       long_int t, const struct tm *tp)
 {
   if (tp)
     {
-      time_t d = ydhms_diff (year, yday, hour, min, sec,
-			     tp->tm_year, tp->tm_yday,
-			     tp->tm_hour, tp->tm_min, tp->tm_sec);
-      if (time_t_add_ok (*t, d))
-	return *t + d;
+      long_int result;
+      long_int d = ydhms_diff (year, yday, hour, min, sec,
+			       tp->tm_year, tp->tm_yday,
+			       tp->tm_hour, tp->tm_min, tp->tm_sec);
+      if (! INT_ADD_WRAPV (t, d, &result))
+	return result;
     }
 
   /* Overflow occurred one way or another.  Return the nearest result
@@ -247,32 +222,51 @@ guess_time_tm (long_int year, long_int yday, int hour, int min, int sec,
      if the actual difference is nonzero, as that would cause a false
      match; and don't oscillate between two values, as that would
      confuse the spring-forward gap detector.  */
-  return (*t < TIME_T_MIDPOINT
-	  ? (*t <= TIME_T_MIN + 1 ? *t + 1 : TIME_T_MIN)
-	  : (TIME_T_MAX - 1 <= *t ? *t - 1 : TIME_T_MAX));
+  return (t < long_int_avg (mktime_min, mktime_max)
+	  ? (t <= mktime_min + 1 ? t + 1 : mktime_min)
+	  : (mktime_max - 1 <= t ? t - 1 : mktime_max));
+}
+
+/* Use CONVERT to convert T to a struct tm value in *TM.  T must be in
+   range for time_t.  Return TM if successfull, NULL if T is out of
+   range for CONVERT.  */
+static struct tm *
+convert_time (struct tm *(*convert) (const time_t *, struct tm *),
+	      long_int t, struct tm *tm)
+{
+  time_t x = t;
+  return convert (&x, tm);
 }
 
 /* Use CONVERT to convert *T to a broken down time in *TP.
    If *T is out of range for conversion, adjust it so that
-   it is the nearest in-range value and then convert that.  */
+   it is the nearest in-range value and then convert that.
+   A value is in range if it fits in both time_t and long_int.  */
 static struct tm *
 ranged_convert (struct tm *(*convert) (const time_t *, struct tm *),
-		time_t *t, struct tm *tp)
+		long_int *t, struct tm *tp)
 {
-  struct tm *r = convert (t, tp);
+  struct tm *r;
+  if (*t < mktime_min)
+    *t = mktime_min;
+  else if (mktime_max < *t)
+    *t = mktime_max;
+  r = convert_time (convert, *t, tp);
 
   if (!r && *t)
     {
-      time_t bad = *t;
-      time_t ok = 0;
+      long_int bad = *t;
+      long_int ok = 0;
 
-      /* BAD is a known unconvertible time_t, and OK is a known good one.
+      /* BAD is a known unconvertible value, and OK is a known good one.
 	 Use binary search to narrow the range between BAD and OK until
 	 they differ by 1.  */
-      while (bad != ok + (bad < 0 ? -1 : 1))
+      while (true)
 	{
-	  time_t mid = *t = time_t_avg (ok, bad);
-	  r = convert (t, tp);
+	  long_int mid = long_int_avg (ok, bad);
+	  if (mid != ok && mid != bad)
+	    break;
+	  r = convert_time (convert, mid, tp);
 	  if (r)
 	    ok = mid;
 	  else
@@ -283,14 +277,12 @@ ranged_convert (struct tm *(*convert) (const time_t *, struct tm *),
 	{
 	  /* The last conversion attempt failed;
 	     revert to the most recent successful attempt.  */
-	  *t = ok;
-	  r = convert (t, tp);
+	  r = convert_time (convert, ok, tp);
 	}
     }
 
   return r;
 }
-
 
 /* Convert *TP to a time_t value, inverting
    the monotonic and mostly-unit-linear conversion function CONVERT.
@@ -303,7 +295,7 @@ __mktime_internal (struct tm *tp,
 		   struct tm *(*convert) (const time_t *, struct tm *),
 		   mktime_offset_t *offset)
 {
-  time_t t, gt, t0, t1, t2;
+  long_int t, gt, t0, t1, t2, dt;
   struct tm tm;
 
   /* The maximum number of probes (calls to CONVERT) should be enough
@@ -333,9 +325,7 @@ __mktime_internal (struct tm *tp,
   long_int year = lyear_requested + mon_years;
 
   /* The other values need not be in range:
-     the remaining code handles minor overflows correctly,
-     assuming int and time_t arithmetic wraps around.
-     Major overflows are caught at the end.  */
+     the remaining code handles overflows correctly.  */
 
   /* Calculate day of year from year, month, and day of month.
      The result need not be in range.  */
@@ -345,7 +335,7 @@ __mktime_internal (struct tm *tp,
   long_int lmday = mday;
   long_int yday = mon_yday + lmday;
 
-  time_t guessed_offset = *offset;
+  int negative_offset_guess;
 
   int sec_requested = sec;
 
@@ -362,71 +352,14 @@ __mktime_internal (struct tm *tp,
   /* Invert CONVERT by probing.  First assume the same offset as last
      time.  */
 
+  INT_SUBTRACT_WRAPV (0, *offset, &negative_offset_guess);
   t0 = ydhms_diff (year, yday, hour, min, sec,
-		   EPOCH_YEAR - TM_YEAR_BASE, 0, 0, 0, - guessed_offset);
-
-  if (TIME_T_MAX / INT_MAX / 366 / 24 / 60 / 60 < 3)
-    {
-      /* time_t isn't large enough to rule out overflows, so check
-	 for major overflows.  A gross check suffices, since if t0
-	 has overflowed, it is off by a multiple of TIME_T_MAX -
-	 TIME_T_MIN + 1.  So ignore any component of the difference
-	 that is bounded by a small value.  */
-
-      /* Approximate log base 2 of the number of time units per
-	 biennium.  A biennium is 2 years; use this unit instead of
-	 years to avoid integer overflow.  For example, 2 average
-	 Gregorian years are 2 * 365.2425 * 24 * 60 * 60 seconds,
-	 which is 63113904 seconds, and rint (log2 (63113904)) is
-	 26.  */
-      int ALOG2_SECONDS_PER_BIENNIUM = 26;
-      int ALOG2_MINUTES_PER_BIENNIUM = 20;
-      int ALOG2_HOURS_PER_BIENNIUM = 14;
-      int ALOG2_DAYS_PER_BIENNIUM = 10;
-      int LOG2_YEARS_PER_BIENNIUM = 1;
-
-      int approx_requested_biennia =
-	(SHR (year_requested, LOG2_YEARS_PER_BIENNIUM)
-	 - SHR (EPOCH_YEAR - TM_YEAR_BASE, LOG2_YEARS_PER_BIENNIUM)
-	 + SHR (mday, ALOG2_DAYS_PER_BIENNIUM)
-	 + SHR (hour, ALOG2_HOURS_PER_BIENNIUM)
-	 + SHR (min, ALOG2_MINUTES_PER_BIENNIUM)
-	 + (LEAP_SECONDS_POSSIBLE
-	    ? 0
-	    : SHR (sec, ALOG2_SECONDS_PER_BIENNIUM)));
-
-      int approx_biennia = SHR (t0, ALOG2_SECONDS_PER_BIENNIUM);
-      int diff = approx_biennia - approx_requested_biennia;
-      int approx_abs_diff = diff < 0 ? -1 - diff : diff;
-
-      /* IRIX 4.0.5 cc miscalculates TIME_T_MIN / 3: it erroneously
-	 gives a positive value of 715827882.  Setting a variable
-	 first then doing math on it seems to work.
-	 (ghazi@caip.rutgers.edu) */
-      time_t time_t_max = TIME_T_MAX;
-      time_t time_t_min = TIME_T_MIN;
-      time_t overflow_threshold =
-	(time_t_max / 3 - time_t_min / 3) >> ALOG2_SECONDS_PER_BIENNIUM;
-
-      if (overflow_threshold < approx_abs_diff)
-	{
-	  /* Overflow occurred.  Try repairing it; this might work if
-	     the time zone offset is enough to undo the overflow.  */
-	  time_t repaired_t0 = -1 - t0;
-	  approx_biennia = SHR (repaired_t0, ALOG2_SECONDS_PER_BIENNIUM);
-	  diff = approx_biennia - approx_requested_biennia;
-	  approx_abs_diff = diff < 0 ? -1 - diff : diff;
-	  if (overflow_threshold < approx_abs_diff)
-	    return -1;
-	  guessed_offset += repaired_t0 - t0;
-	  t0 = repaired_t0;
-	}
-    }
+		   EPOCH_YEAR - TM_YEAR_BASE, 0, 0, 0, negative_offset_guess);
 
   /* Repeatedly use the error to improve the guess.  */
 
   for (t = t1 = t2 = t0, dst2 = 0;
-       (gt = guess_time_tm (year, yday, hour, min, sec, &t,
+       (gt = guess_time_tm (year, yday, hour, min, sec, t,
 			    ranged_convert (convert, &t, &tm)),
 	t != gt);
        t1 = t2, t2 = t, t = gt, dst2 = tm.tm_isdst != 0)
@@ -483,39 +416,42 @@ __mktime_internal (struct tm *tp,
 
       for (delta = stride; delta < delta_bound; delta += stride)
 	for (direction = -1; direction <= 1; direction += 2)
-	  if (time_t_int_add_ok (t, delta * direction))
-	    {
-	      time_t ot = t + delta * direction;
-	      struct tm otm;
-	      ranged_convert (convert, &ot, &otm);
-	      if (! isdst_differ (isdst, otm.tm_isdst))
-		{
-		  /* We found the desired tm_isdst.
-		     Extrapolate back to the desired time.  */
-		  t = guess_time_tm (year, yday, hour, min, sec, &ot, &otm);
-		  ranged_convert (convert, &t, &tm);
-		  goto offset_found;
-		}
-	    }
+	  {
+	    long_int ot;
+	    if (! INT_ADD_WRAPV (t, delta * direction, &ot))
+	      {
+		struct tm otm;
+		ranged_convert (convert, &ot, &otm);
+		if (! isdst_differ (isdst, otm.tm_isdst))
+		  {
+		    /* We found the desired tm_isdst.
+		       Extrapolate back to the desired time.  */
+		    t = guess_time_tm (year, yday, hour, min, sec, ot, &otm);
+		    ranged_convert (convert, &t, &tm);
+		    goto offset_found;
+		  }
+	      }
+	  }
     }
 
  offset_found:
-  *offset = guessed_offset + t - t0;
+  /* Set *OFFSET to the low-order bits of T - T0 - NEGATIVE_OFFSET_GUESS.
+     This is just a heuristic to speed up the next mktime call, and
+     correctness is unaffected if integer overflow occurs here.  */
+  INT_SUBTRACT_WRAPV (t, t0, &dt);
+  INT_SUBTRACT_WRAPV (dt, negative_offset_guess, offset);
 
   if (LEAP_SECONDS_POSSIBLE && sec_requested != tm.tm_sec)
     {
       /* Adjust time to reflect the tm_sec requested, not the normalized value.
 	 Also, repair any damage from a false match due to a leap second.  */
-      int sec_adjustment = (sec == 0 && tm.tm_sec == 60) - sec;
-      if (! time_t_int_add_ok (t, sec_requested))
+      long_int sec_adjustment = sec == 0 && tm.tm_sec == 60;
+      sec_adjustment -= sec;
+      sec_adjustment += sec_requested;
+      if (INT_ADD_WRAPV (t, sec_adjustment, &t)
+	  || ! (mktime_min <= t && t <= mktime_max)
+	  || ! convert_time (convert, t, &tm))
 	return -1;
-      t1 = t + sec_requested;
-      if (! time_t_int_add_ok (t1, sec_adjustment))
-	return -1;
-      t2 = t1 + sec_adjustment;
-      if (! convert (&t2, &tm))
-	return -1;
-      t = t2;
     }
 
   *tp = tm;
