@@ -1,3 +1,32 @@
+2016-05-04  Paul Eggert  <eggert@cs.ucla.edu>
+
+	glob: merge glibc changes into lib/glob.c
+	* lib/glob.c (glob_in_dir): Sync with glibc/posix/glob.c,
+	dated 2016-05-04 12:09:35 2016 +0200.  Here are the changes:
+	2016-05-04 CVE-2016-1234: glob: Do not copy d_name field of
+	  struct dirent [BZ #19779]
+	2016-04-29 glob: Simplify the interface for the GLOB_ALTDIRFUNC
+	  callback gl_readdir
+	2015-10-20 Convert miscellaneous function definitions to prototype style
+	2015-10-20 Convert 113 more function definitions to prototype style
+	  (files with assertions)
+	2015-06-12 Fix getlogin_r namespace (bug 18527).
+	2014-02-10 Use glibc_likely instead __builtin_expect.
+	2013-10-20 When glob pattern contains a trailing slash match only
+	  directories. Fixes bug 10278.
+	2013-09-04 glob: silence -Wattribute warnings
+	2013-06-07 Avoid use of "register" as optimization hint.
+	2012-09-25 Use size_t instead of int for internal variables in glob
+	  (bug 14621)
+	2011-07-20 Check for overflows in expressions
+	2011-05-28 Remove unused variable
+	2011-05-22 Add a few more alloca size checks
+	2010-03-27 Whitespace fixes
+	2010-03-27 Fix one more issue with the glob patch
+	2010-03-24 Fix glob with empty pattern
+	2008-05-27 Remove useless more "if" tests before "free"
+	* modules/glob (Depends-on): Add stdint.
+
 2016-05-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: port to stricter signed overflow checking
