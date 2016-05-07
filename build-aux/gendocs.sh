@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2016-01-01.00
+scriptversion=2016-05-20.09
 
 # Copyright 2003-2016 Free Software Foundation, Inc.
 #
@@ -52,6 +52,24 @@ templateurl="http://git.savannah.gnu.org/cgit/gnulib.git/plain/doc/gendocs_templ
 unset CDPATH
 unset use_texi2html
 
+MANUAL_TITLE=
+PACKAGE=
+EMAIL=webmasters@gnu.org  # please override with --email
+commonarg= # passed to all makeinfo/texi2html invcations.
+dirargs=   # passed to all tools (-I dir).
+dirs=      # -I directories.
+htmlarg="--css-ref=/software/gnulib/manual.css -c TOP_NODE_UP_URL=/manual"
+infoarg=--no-split
+generate_ascii=true
+generate_html=true
+generate_info=true
+generate_tex=true
+outdir=manual
+source_extra=
+split=node
+srcfile=
+texarg="-t @finalout"
+
 version="gendocs.sh $scriptversion
 
 Copyright 2016 Free Software Foundation, Inc.
@@ -74,7 +92,7 @@ Options:
   -I DIR       append DIR to the Texinfo search path.
   --common ARG pass ARG in all invocations.
   --html ARG   pass ARG to makeinfo or texi2html for HTML targets,
-                 instead of --css-ref=/software/gnulib/manual.css.
+                 instead of '$htmlarg'.
   --info ARG   pass ARG to makeinfo for Info, instead of --no-split.
   --no-ascii   skip generating the plain text output.
   --no-html    skip generating the html output.
@@ -136,24 +154,6 @@ SETLANG setting in the source.
 
 Email bug reports or enhancement requests to bug-gnulib@gnu.org.
 "
-
-MANUAL_TITLE=
-PACKAGE=
-EMAIL=webmasters@gnu.org  # please override with --email
-commonarg= # passed to all makeinfo/texi2html invcations.
-dirargs=   # passed to all tools (-I dir).
-dirs=      # -I directories.
-htmlarg=--css-ref=/software/gnulib/manual.css
-infoarg=--no-split
-generate_ascii=true
-generate_html=true
-generate_info=true
-generate_tex=true
-outdir=manual
-source_extra=
-split=node
-srcfile=
-texarg="-t @finalout"
 
 while test $# -gt 0; do
   case $1 in
