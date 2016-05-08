@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2016-01-11.22; # UTC
+scriptversion=2016-05-08.18; # UTC
 
 # Copyright (C) 2007-2016 Free Software Foundation, Inc.
 #
@@ -101,8 +101,8 @@ while test $# -gt 0; do
   case $1 in
     --help) echo "$usage"; exit 0;;
     --version) echo "$version"; exit 0;;
-    --prefix) shift; prefix="$1";;
-    --fallback) shift; fallback="$1";;
+    --prefix) shift; prefix=${1?};;
+    --fallback) shift; fallback=${1?};;
     -*)
       echo "$0: Unknown option '$1'." >&2
       echo "$0: Try '--help' for more information." >&2
