@@ -1,3 +1,10 @@
+2016-05-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	glob: don't assume INT_MAX < SIZE_MAX
+	* lib/glob.c (glob): Prefer SIZE_MAX to ~((size_t) 0), as the
+	latter is not portable to (probably theoretical) hosts where
+	SIZE_MAX <= INT_MAX.
+
 2016-05-09  Bruno Haible  <bruno@clisp.org>
 
 	Fix undefined behaviour in gettext.h.

@@ -478,7 +478,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         {
           size_t i;
 
-          if (pglob->gl_offs >= ~((size_t) 0) / sizeof (char *))
+          if (pglob->gl_offs >= SIZE_MAX / sizeof (char *))
             return GLOB_NOSPACE;
 
           pglob->gl_pathv = malloc ((pglob->gl_offs + 1) * sizeof (char *));
@@ -1028,7 +1028,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           char **new_gl_pathv;
 
           if (newcount > UINTPTR_MAX - (1 + 1)
-              || newcount + 1 + 1 > ~((size_t) 0) / sizeof (char *))
+              || newcount + 1 + 1 > SIZE_MAX / sizeof (char *))
             {
             nospace:
               free (pglob->gl_pathv);
@@ -1181,7 +1181,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               char **new_gl_pathv;
 
               if (newcount > UINTPTR_MAX - 2
-                  || newcount + 2 > ~((size_t) 0) / sizeof (char *))
+                  || newcount + 2 > SIZE_MAX / sizeof (char *))
                 {
                 nospace2:
                   globfree (&dirs);
