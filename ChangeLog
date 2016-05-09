@@ -1,3 +1,11 @@
+2016-05-09  Bruno Haible  <bruno@clisp.org>
+
+	Fix undefined behaviour in gettext.h.
+	* lib/gettext.h (dcpgettext_expr, dcnpgettext_expr): Avoid accessing a
+	pointer's value after the storage it points to has been freed.
+	Reported by Michael Pyne in https://savannah.gnu.org/bugs/?47847.
+	Spotted by Coverity.
+
 2016-05-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	git-version-gen: avoid undefined shift
