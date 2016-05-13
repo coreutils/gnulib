@@ -38,7 +38,7 @@ static void
 sigfpe_handler (int sig)
 {
   /* Exit with code 0 if SIGFPE, with code 1 if any other signal.  */
-  exit (sig != SIGFPE);
+  _exit (sig != SIGFPE);
 }
 
 int x = 1;
