@@ -1,5 +1,11 @@
 2016-05-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	glob: size_t overflow checks
+	* lib/glob.c (__has_builtin): New macro.
+	(size_add_wrapv, glob_use_alloca): New static functions.
+	(glob, glob_in_dir): Check for size_t overflow in several places,
+	and fix some size_t checks that were not quite right.
+
 	glob: don't assume INT_MAX < SIZE_MAX
 	* lib/glob.c (glob): Prefer SIZE_MAX to ~((size_t) 0), as the
 	latter is not portable to (probably theoretical) hosts where
