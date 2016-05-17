@@ -31,13 +31,16 @@
 -Wdelete-non-virtual-dtor		c++
 -Weffc++				c++
 -Werror-implicit-function-declaration	deprecated
+-Wfloat-conversion			FIXME maybe? borderline.  some will want this
 -Wfloat-equal				FIXME maybe? borderline.  some will want this
 -Wformat				covered by -Wformat=2
 -Wformat=				gcc --help=warnings artifact
+-Wframe-larger-than=<number>		FIXME: choose something sane?
 -Wfunction-elimination			fortran
 -Wimplicit-interface			fortran
 -Wimplicit-procedure			fortran
 -Winherited-variadic-ctor		c++
+-Winteger-division			fortran
 -Wintrinsic-shadow			fortran
 -Wintrinsics-std			fortran
 -Winvalid-offsetof			c++ and objc++
@@ -46,14 +49,23 @@
 -Wline-truncation			fortran
 -Wliteral-suffix			c++ and objc++
 -Wlong-long				obsolescent
+-Wlto-type-mismatch			c++ and objc++
+-Wmissing-format-attribute		obsolescent
+-Wmissing-noreturn			obsolescent
+-Wmultiple-inheritance			c++ and objc++
+-Wnamespaces				c++
 -Wnoexcept				c++
 -Wnon-template-friend			c++
 -Wnon-virtual-dtor			c++
+-Wnormalized				covered by -Wnormalized=
 -Wnormalized=<none|id|nfc|nfkc>		handled specially by gl_MANYWARN_ALL_GCC
 -Wold-style-cast			c++ and objc++
 -Woverloaded-virtual			c++
+-Woverride-init-side-effects		c++ and objc++
 -Wpadded				FIXME maybe?  warns about "stabil" member in /usr/include/bits/timex.h
 -Wpedantic				FIXME: too strict?
+-Wplacement-new				c++
+-Wplacement-new=			c++
 -Wpmf-conversions			c++ and objc++
 -Wproperty-assign-default		objc++
 -Wprotocol				objc++
@@ -64,6 +76,8 @@
 -Wreorder				c++ and objc++
 -Wselector				objc and objc++
 -Wshadow-ivar				objc
+-Wshift-overflow			covered by -Wshift-overflow=2
+-Wshift-overflow=			gcc --help=warnings artifact
 -Wsign-compare				FIXME maybe? borderline.  some will want this
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wsign-promo				c++ and objc++
@@ -73,21 +87,28 @@
 -Wstrict-null-sentinel			c++ and objc++
 -Wstrict-overflow=			FIXME: choose something sane?
 -Wstrict-selector-match			objc and objc++
+-Wsubobject-linkage			c++ and objc++
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
 -Wswitch-enum				FIXME maybe? borderline.  some will want this
 -Wsynth					deprecated
 -Wtabs					fortran
 -Wtarget-lifetime			fortran
+-Wtemplates				c++ and objc++
+-Wterminate				c++ and objc++
 -Wtraditional				obsolescent
 -Wtraditional-conversion		obsolescent
 -Wundeclared-selector			objc and objc++
 -Wundef					FIXME maybe? too many false positives
 -Wunderflow				fortran
+-Wunreachable-code			obsolescent no-op
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
+-Wunused-const-variable			covered by -Wunusec-const-variable=2
+-Wunused-const-variable=		gcc --help=warnings artifact
 -Wunused-dummy-argument			fortran
 -Wuse-without-only			fortran
 -Wuseless-cast				c++ and objc++
+-Wvirtual-inheritance			c++
 -Wvirtual-move-assign			c++
 -Wzero-as-null-pointer-constant		c++ and objc++
 -Wzerotrip				fortran

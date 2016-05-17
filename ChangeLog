@@ -1,3 +1,11 @@
+2016-05-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	manywarnings: update for GCC 6.1
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC):
+	Add GCC 6.1 options that apply to C.
+	* build-aux/gcc-warning.spec: Add GCC 6.1 options that
+	do not apply to C, are obsolescent, etc.
+
 2016-05-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	glob: size_t overflow checks
