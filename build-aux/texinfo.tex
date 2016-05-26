@@ -3,7 +3,7 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2016-05-07.20}
+\def\texinfoversion{2016-05-26.20}
 %
 % Copyright 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
 % 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006,
@@ -4606,6 +4606,19 @@ end
   \fi
 }
 
+% Like \expandablevalue, but completely expandable (the \message in the
+% definition above operates at the execution level of TeX).  Used when
+% writing to auxiliary files, due to the expansion that \write does.
+%
+% NB flag names containing - or _ may not work here.
+\def\dummyvalue#1{%
+  \expandafter\ifx\csname SET#1\endcsname\relax
+    [No value for ``#1'']%
+  \else
+    \csname SET#1\endcsname
+  \fi
+}
+
 % @ifset VAR ... @end ifset reads the `...' iff VAR has been defined
 % with @set.
 % 
@@ -4892,7 +4905,7 @@ end
   %
   % We want to disable all macros so that they are not expanded by \write.
   \macrolist
-  \definedummyword\value
+  \let\value\dummyvalue
   %
   \normalturnoffactive
 }
@@ -8707,6 +8720,8 @@ end
     {%
       \requireauxfile
       \atdummies  % preserve commands, but don't expand them
+      % match definition in \xrdef, \refx, \xrefX.
+      \def\value##1{##1}%
       \edef\writexrdef##1##2{%
 	\write\auxfile{@xrdef{#1-% #1 of \setref, expanded by the \edef
 	  ##1}{##2}}% these are parameters of \writexrdef
