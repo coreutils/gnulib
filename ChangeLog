@@ -1,3 +1,8 @@
+2016-05-26  Eric Blake  <eblake@redhat.com>
+
+	unsetenv: relax to LGPLv2+
+	* modules/unsetenv (License): Match setenv license.
+
 2016-05-20  Ludovic Courtès  <ludo@gnu.org>
 
 	gendocs.sh: Set default TOP_NODE_UP_URL in HTML output.
