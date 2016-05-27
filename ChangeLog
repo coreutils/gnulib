@@ -1,3 +1,9 @@
+2016-05-27  Eric Blake  <eblake@redhat.com>
+
+	canonicalize: Fix broken probe for realpath.
+	* m4/canonicalize.m4 (gl_FUNC_REALPATH_WORKS): Fix regression
+	in logic introduced in 54615b95.
+
 2016-05-26  Eric Blake  <eblake@redhat.com>
 
 	unsetenv: relax to LGPLv2+
