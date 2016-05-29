@@ -15,8 +15,4 @@ Interix 6.1, BeOS.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms other than glibc 2.0 and later, the Gnulib replacement
-function always returns a null pointer, even when invoked in a
-non-setuid program.
 @end itemize

@@ -1,3 +1,13 @@
+2016-05-29  Bruno Haible  <bruno@clisp.org>
+
+	secure_getenv: Port to many more platforms.
+	* m4/secure_getenv.m4 (gl_PREREQ_SECURE_GETENV): Also check for get*id
+	functions.
+	* lib/secure_getenv.c (secure_getenv): Add alternate implementations
+	for non-BSD Unix platforms and for native Windows.
+	* doc/glibc-functions/secure_getenv.texi: Remove known issue.
+	Prompted by a request from Nikos Mavrogiannopoulos.
+
 2016-05-27  Eric Blake  <eblake@redhat.com>
 
 	canonicalize: Fix broken probe for realpath.
