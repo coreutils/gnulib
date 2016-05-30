@@ -5,7 +5,7 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-#serial 5
+#serial 6
 
 # Prepare for substituting <stdbool.h> if it is not supported.
 
@@ -43,23 +43,26 @@ AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
         [AC_LANG_PROGRAM(
            [[
              #include <stdbool.h>
-             #ifndef bool
-              "error: bool is not defined"
-             #endif
-             #ifndef false
-              "error: false is not defined"
-             #endif
-             #if false
-              "error: false is not 0"
-             #endif
-             #ifndef true
-              "error: true is not defined"
-             #endif
-             #if true != 1
-              "error: true is not 1"
-             #endif
-             #ifndef __bool_true_false_are_defined
-              "error: __bool_true_false_are_defined is not defined"
+
+             #if __cplusplus < 201103L
+              #ifndef bool
+               "error: bool is not defined"
+              #endif
+              #ifndef false
+               "error: false is not defined"
+              #endif
+              #if false
+               "error: false is not 0"
+              #endif
+              #ifndef true
+               "error: true is not defined"
+              #endif
+              #if true != 1
+               "error: true is not 1"
+              #endif
+              #ifndef __bool_true_false_are_defined
+               "error: __bool_true_false_are_defined is not defined"
+              #endif
              #endif
 
              struct s { _Bool s: 1; _Bool t; } s;
