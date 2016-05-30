@@ -46,9 +46,9 @@
 
 #include <config.h>
 
-#if defined(LIBC_SCCS) && !defined(lint)
+#if defined LIBC_SCCS && !defined GCC_LINT && !defined lint
 static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
-#endif /* LIBC_SCCS and not lint */
+#endif
 
 #include "fts_.h"
 

@@ -22,6 +22,11 @@ Portability problems not fixed by Gnulib:
 You cannot assume that @code{_Noreturn} is a reserved word;
 it might be a macro.
 @item
+When the macro @code{lint} is defined, standard headers define
+@code{_Noreturn} (and therefore @code{noreturn}) to be a macro that
+expands to the empty token sequence on some platforms:
+Cygwin 2.5.1, FreeBSD 10.3.
+@item
 On MSVC 9, @code{noreturn} expands to the empty token sequence, to avoid
 problems with standard headers that use @code{__declspec (noreturn)}
 directly.  Although the resulting code operates correctly, the

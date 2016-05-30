@@ -1,3 +1,34 @@
+2016-05-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Use GCC_LINT, not lint
+	FreeBSD and Cygwin #define _Noreturn to empty if 'lint' is defined.
+	Problem reported by Ken Brown in: http://bugs.gnu.org/23640
+	* doc/posix-headers/stdnoreturn.texi (stdnoreturn.h):
+	Document problem with lint and _Noreturn.
+	* lib/diffseq.h (IF_LINT, IF_LINT2):
+	* lib/fts.c (sccsid):
+	* lib/getndelim2.c (IF_LINT):
+	* lib/gl_anylinked_list2.h (gl_linked_iterator)
+	(gl_linked_iterator_from_to):
+	* lib/gl_anytree_list2.h (gl_tree_iterator)
+	(gl_tree_iterator_from_to):
+	* lib/gl_anytree_oset.h (gl_tree_iterator):
+	* lib/gl_array_list.c (gl_array_iterator)
+	(gl_array_iterator_from_to):
+	* lib/gl_array_oset.c (gl_array_iterator):
+	* lib/gl_carray_list.c (gl_carray_iterator)
+	(gl_carray_iterator_from_to):
+	* lib/idcache.c:
+	* lib/inet_ntop.c (IF_LINT):
+	* lib/regcomp.c (build_charclass_op, create_tree):
+	* lib/regex_internal.c (re_acquire_state)
+	(re_acquire_state_context):
+	* lib/trigl.c (rcsid):
+	* lib/trim.c (IF_LINT):
+	* lib/vasnprintf.c (IF_LINT):
+	* lib/verify.h (assume):
+	Treat GCC_LINT like lint.
+
 2016-05-29  Bruno Haible  <bruno@clisp.org>
 
 	secure_getenv: Port to many more platforms.

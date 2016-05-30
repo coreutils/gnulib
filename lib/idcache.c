@@ -46,7 +46,7 @@ struct userid
 
 /* FIXME: provide a function to free any malloc'd storage and reset lists,
    so that an application can use code like this just before exiting:
-   #ifdef lint
+   #if defined GCC_LINT || defined lint
      idcache_clear ();
    #endif
 */

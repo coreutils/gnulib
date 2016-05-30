@@ -76,7 +76,7 @@
 /* Use this to suppress gcc's "...may be used before initialized" warnings.
    Beware: The Code argument must not contain commas.  */
 #ifndef IF_LINT
-# ifdef lint
+# if defined GCC_LINT || defined lint
 #  define IF_LINT(Code) Code
 # else
 #  define IF_LINT(Code) /* empty */
@@ -85,7 +85,7 @@
 
 /* As above, but when Code must contain one comma. */
 #ifndef IF_LINT2
-# ifdef lint
+# if defined GCC_LINT || defined lint
 #  define IF_LINT2(Code1, Code2) Code1, Code2
 # else
 #  define IF_LINT2(Code1, Code2) /* empty */

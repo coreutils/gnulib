@@ -289,7 +289,7 @@ ieee754_rem_pio2l (long double x, long double *y)
  * ====================================================
  */
 
-#if defined(LIBM_SCCS) && !defined(lint)
+#if defined LIBM_SCCS && !defined GCC_LINT && !defined lint
 static char rcsid[] =
   "$NetBSD: k_rem_pio2.c,v 1.7 1995/05/10 20:46:25 jtc Exp $";
 #endif

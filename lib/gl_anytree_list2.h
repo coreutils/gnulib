@@ -564,7 +564,7 @@ gl_tree_iterator (gl_list_t list)
   result.p = node;
   /* End point is past the rightmost node.  */
   result.q = NULL;
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
   result.count = 0;
@@ -588,7 +588,7 @@ gl_tree_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
   result.p = (start_index < count ? node_at (list->root, start_index) : NULL);
   /* End point is the node at position end_index.  */
   result.q = (end_index < count ? node_at (list->root, end_index) : NULL);
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
   result.count = 0;

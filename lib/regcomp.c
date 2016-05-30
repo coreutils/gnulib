@@ -3716,7 +3716,7 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
 #endif
 
   /* Build a tree for simple bracket.  */
-#ifdef lint
+#if defined GCC_LINT || defined lint
   memset (&br_token, 0, sizeof br_token);
 #endif
   br_token.type = SIMPLE_BRACKET;
@@ -3812,7 +3812,7 @@ create_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
 	     re_token_type_t type)
 {
   re_token_t t;
-#ifdef lint
+#if defined GCC_LINT || defined lint
   memset (&t, 0, sizeof t);
 #endif
   t.type = type;

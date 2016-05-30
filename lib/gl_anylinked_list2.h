@@ -923,7 +923,7 @@ gl_linked_iterator (gl_list_t list)
   result.list = list;
   result.p = list->root.next;
   result.q = &list->root;
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
   result.count = 0;
@@ -994,7 +994,7 @@ gl_linked_iterator_from_to (gl_list_t list,
       result.q = node;
     }
 
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
   result.count = 0;

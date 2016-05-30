@@ -454,7 +454,7 @@ gl_array_iterator (gl_list_t list)
   result.count = list->count;
   result.p = list->elements + 0;
   result.q = list->elements + list->count;
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
 #endif
@@ -475,7 +475,7 @@ gl_array_iterator_from_to (gl_list_t list, size_t start_index, size_t end_index)
   result.count = list->count;
   result.p = list->elements + start_index;
   result.q = list->elements + end_index;
-#ifdef lint
+#if defined GCC_LINT || defined lint
   result.i = 0;
   result.j = 0;
 #endif
