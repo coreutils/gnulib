@@ -44,7 +44,7 @@ AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
            [[
              #include <stdbool.h>
 
-             #if __cplusplus < 201103L
+             #if __cplusplus < 201103
               #ifndef bool
                "error: bool is not defined"
               #endif
@@ -60,9 +60,10 @@ AC_DEFUN([AC_CHECK_HEADER_STDBOOL],
               #if true != 1
                "error: true is not 1"
               #endif
-              #ifndef __bool_true_false_are_defined
-               "error: __bool_true_false_are_defined is not defined"
-              #endif
+             #endif
+
+             #ifndef __bool_true_false_are_defined
+              "error: __bool_true_false_are_defined is not defined"
              #endif
 
              struct s { _Bool s: 1; _Bool t; } s;

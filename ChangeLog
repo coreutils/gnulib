@@ -1,3 +1,9 @@
+2016-05-31  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdbool: Restore __bool_true_false_are_defined check
+	* m4/stdbool.m4 (AC_CHECK_HEADER_STDBOOL):
+	__bool_true_false_are_defined is still defined, even with C++11.
+
 2016-05-31  David Seifert <soap@gentoo.org>  (tiny change)
 
 	stdbool: Port AC_CHECK_HEADER_STDBOOL to C++11
