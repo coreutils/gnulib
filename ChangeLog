@@ -1,3 +1,14 @@
+2016-06-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc-oversized: port to GCC 7; fewer warnings
+	GCC 7 will have a better way to deal with integer overflow.
+	Plus, fix a warnings problem reported by Tim Ruehsen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-06/msg00022.html
+	* lib/xalloc-oversized.h (__xalloc_oversized): New macro.
+	(xalloc_oversized): Use plain __builtin_mul_overflow if GCC 7 or later.
+	For GCC 5, use __xalloc_oversized if both args are constants,
+	or if pedantic.
+
 2016-06-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: port to Sun C
