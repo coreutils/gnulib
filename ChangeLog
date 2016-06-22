@@ -1,3 +1,12 @@
+2016-06-26  Pádraig Brady  <P@draigBrady.com>
+
+	fts: handle readdir() errors
+	* lib/fts.c (fts_build): readdir(3) returns NULL when finished,
+	but also upon error when it will also set errno.  Therefore
+	flag the error case from readdir().  We treat the case where
+	no items are read the same as if the dir can't be accessed,
+	i.e. by setting fts_errno to FTS_DNR.
+
 2016-06-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: port better to GCC 7

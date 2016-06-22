@@ -1461,9 +1461,18 @@ fts_build (register FTS *sp, int type)
         while (cur->fts_dirp) {
                 bool is_dir;
                 size_t d_namelen;
+                __set_errno (0);
                 struct dirent *dp = readdir(cur->fts_dirp);
-                if (dp == NULL)
+                if (dp == NULL) {
+                        if (errno) {
+                                cur->fts_errno = errno;
+                                /* If we've not read any items yet, treat
+                                   the error as if we can't access the dir.  */
+                                cur->fts_info = (continue_readdir || nitems)
+                                                ? FTS_ERR : FTS_DNR;
+                        }
                         break;
+                }
                 if (!ISSET(FTS_SEEDOT) && ISDOT(dp->d_name))
                         continue;
 
@@ -1622,7 +1631,8 @@ mem1:                           saved_errno = errno;
 
         /* If didn't find anything, return NULL. */
         if (!nitems) {
-                if (type == BREAD)
+                if (type == BREAD
+                    && cur->fts_info != FTS_DNR && cur->fts_info != FTS_ERR)
                         cur->fts_info = FTS_DP;
                 fts_lfree(head);
                 return (NULL);
