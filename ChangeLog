@@ -1,3 +1,9 @@
+2016-06-23  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops-test: port to GCC 6
+	* tests/test-intprops.c: Ignore -Woverflow if any GCC version,
+	since the bug is not fixed in GCC 6.1.
+
 2016-06-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc-oversized: port to GCC 7; fewer warnings

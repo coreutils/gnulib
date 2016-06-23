@@ -22,12 +22,9 @@
 # pragma GCC diagnostic ignored "-Woverlength-strings"
 # pragma GCC diagnostic ignored "-Wtype-limits"
 
-/* Work around a bug in GCC 5.3.1 and earlier; see:
-   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68971
-   Hope it will be fixed by the time GCC 6 comes out.  */
-# if __GNUC__ < 6
-#  pragma GCC diagnostic ignored "-Woverflow"
-# endif
+/* Work around a bug in GCC 6.1 and earlier; see:
+   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68971  */
+# pragma GCC diagnostic ignored "-Woverflow"
 
 #endif
 
