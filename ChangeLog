@@ -1,3 +1,17 @@
+2016-06-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: port better to GCC 7
+	GCC 7 __builtin_add_overflow supports a new usage form, where the
+	last argument is a null pointer, and which merely returns 1 if an
+	overflow would occur.  This is a constant expression if all
+	arguments are constants, and should generate faster code when code
+	needs to be generated.
+	* lib/intprops.h (_GL_HAS_BUILTIN_OVERFLOW_WITH_NULL): New macro.
+	(_GL_ADD_OVERFLOW, _GL_SUBTRACT_OVERFLOW, _GL_MULTIPLY_OVERFLOW):
+	Use builtin operations if available.
+	(INT_NEGATE_OVERFLOW): Prefer INT_SUBTRACT_OVERFLOW if builtin
+	operations are available, as it's almost surely faster.
+
 2016-06-23  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops-test: port to GCC 6
