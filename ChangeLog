@@ -1,3 +1,11 @@
+2016-07-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	mktime: call tzset as per POSIX
+	Problem reported by Ludovic Courtès in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-06/msg00068.html
+	* lib/mktime.c (mktime) [!_LIBC && HAVE_TZSET]: Call tzset.
+	* m4/mktime.m4 (gl_FUNC_MKTIME): Check for tzset.
+
 2016-06-26  Pádraig Brady  <P@draigBrady.com>
 
 	fts: handle readdir() errors
