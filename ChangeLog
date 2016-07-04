@@ -1,3 +1,19 @@
+2016-07-04  Martin Kletzander  <mkletzan@redhat.com>
+
+	printf-posix: Fix mingw build
+	Commit 54615b95ff238e235e806855efc46a9abad09f2e changed the regular
+	expression for detecting C symbol prefixes but forgot to qoute square
+	brackets in the command line arguments for grep.  That way when
+	building with mingw the condition was false although it ought to be
+	true instead.  In particular scenarios this led to the following
+	compile error:
+
+	    Cannot export rpl_printf: symbol not found
+	    Cannot export rpl_scanf: symbol not found
+	    collect2: error: ld returned 1 exit status
+
+	Fix this by properly quoting square brackets.
+
 2016-07-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	mktime: call tzset as per POSIX
