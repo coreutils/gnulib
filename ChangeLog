@@ -1,3 +1,9 @@
+2016-07-13  Eric Blake  <eblake@redhat.com>
+
+	doc: mention glibc, OS X, Cygwin [S]SIZE_MAX buglet
+	* doc/posix-headers/stdint.texi (stdint.h): Document the bugs.
+	* doc/posix-headers/limits.texi (limits.h): Document the bugs.
+
 2016-07-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: mention glibc SSIZE_MAX buglet

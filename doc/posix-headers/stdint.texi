@@ -45,6 +45,10 @@ so public header files should avoid these types.
 @item
 Macros are used instead of typedefs.
 @item
+The macro @code{SIZE_MAX} has the wrong type,
+albeit with the correct value:
+32-bit glibc 2.24 (on s390 architecture), Mac OS X 10.7.
+@item
 Some C preprocessors mishandle constants that do not fit in @code{long int}.
 For example, as of 2007, Sun C mishandles @code{#if LLONG_MIN < 0} on
 a platform with 32-bit @code{long int} and 64-bit @code{long long int}.
