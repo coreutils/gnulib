@@ -23,6 +23,10 @@ AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1 with gcc.
 The macros @code{WORD_BIT}, @code{LONG_BIT} are not defined on some platforms:
 glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 9.
 @item
+The macro @code{SSIZE_MAX} has the wrong type,
+albeit with the correct value:
+glibc 2.24.
+@item
 The macro @code{SSIZE_MAX} is not defined on some platforms:
 MSVC 9.
 @end itemize

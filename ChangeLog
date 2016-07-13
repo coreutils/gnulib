@@ -1,3 +1,8 @@
+2016-07-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	doc: mention glibc SSIZE_MAX buglet
+	* doc/posix-headers/limits.texi (limits.h): Document the bug.
+
 2016-07-04  Martin Kletzander  <mkletzan@redhat.com>
 
 	printf-posix: Fix mingw build
