@@ -145,6 +145,15 @@
 # define __attribute_pure__ _GL_ATTRIBUTE_PURE
 #endif
 
+/* Not the same as _Noreturn, since it also works with function pointers.  */
+#ifndef __attribute_noreturn__
+# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__) || 0x5110 <= __SUNPRO_C
+#  define __attribute_noreturn__ __attribute__ ((__noreturn__))
+# else
+#  define __attribute_noreturn__
+# endif
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -212,7 +221,7 @@ extern _OBSTACK_SIZE_T _obstack_memory_used (struct obstack *)
    more memory.  This can be set to a user defined function which
    should either abort gracefully or use longjump - but shouldn't
    return.  The default action is to print a message and abort.  */
-extern void (*obstack_alloc_failed_handler) (void);
+extern __attribute_noreturn__ void (*obstack_alloc_failed_handler) (void);
 
 /* Exit value used when 'print_and_abort' is used.  */
 extern int obstack_exit_failure;
