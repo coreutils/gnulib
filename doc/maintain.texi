@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 23, 2015
+@set lastupdate July 18, 2016
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,7 +24,7 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -1182,15 +1182,16 @@ reports.
 
 @cindex help for users, mailing list for
 Some GNU programs with many users have another mailing list,
-@samp{help-@var{package}.org}, for people to ask other users for help.
-If your program has many users, you should create such a list for it.
-For a fairly new program, which doesn't have a large user base yet, it
-is better not to bother with this.
+@samp{help-@var{package}@@gnu.org}, for people to ask other users for
+help.  If your program has many users, you should create such a list
+for it.  For a fairly new program, which doesn't have a large user
+base yet, it is better not to bother with this.
 
 @cindex announcements, mailing list for
 If you wish, you can also have a mailing list
-@samp{info-@var{package}} for announcements (@pxref{Announcements}).
-Any other mailing lists you find useful can also be created.
+@samp{info-@var{package}@@gnu.org} for announcements
+(@pxref{Announcements}).  Any other mailing lists you find useful can
+also be created.
 
 The package distribution should state the name of all the package's
 mailing lists in a prominent place, and ask users to help us by
@@ -1441,8 +1442,8 @@ version, and checking that the result exactly matches the new version.
 @node Binary Distribution
 @section Binary Distribution for Nonfree Platforms
 
-Some package maintainers release pre-compiled binaries proprietary
-for systems such as Microsoft Windows or MacOS.  It's entirely up to you
+Some package maintainers release pre-compiled binaries for proprietary
+systems such as Microsoft Windows or MacOS.  It's entirely up to you
 whether to do that; we don't ask you to do it, but we don't object.
 Please do not let anyone make you feel you have an obligation to do
 this.
