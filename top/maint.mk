@@ -437,17 +437,26 @@ sc_require_config_h:
 	halt='the above files do not include <config.h>'		\
 	  $(_sc_search_regexp)
 
+# Print each file name for which the first #include does not match
+# $(config_h_header).  Like grep -m 1, this only looks at the first match.
+perl_config_h_first_ =							\
+  -e 'BEGIN {$$ret = 0}'						\
+  -e 'if (/^\# *include\b/) {'						\
+  -e '  if (not m{^\# *include $(config_h_header)}) {'			\
+  -e '    print "$$ARGV\n";'						\
+  -e '    $$ret = 1;'							\
+  -e '  }'								\
+  -e '  \# Move on to next file after first include'			\
+  -e '  close ARGV;'							\
+  -e '}'								\
+  -e 'END {exit $$ret}'
+
 # You must include <config.h> before including any other header file.
 # This can possibly be via a package-specific header, if given by cfg.mk.
 sc_require_config_h_first:
 	@if $(VC_LIST_EXCEPT) | grep '\.c$$' > /dev/null; then		\
-	  fail=0;							\
-	  for i in $$($(VC_LIST_EXCEPT) | grep '\.c$$'); do		\
-	    grep '^# *include\>' $$i | $(SED) 1q			\
-		| grep -E '^# *include $(config_h_header)' > /dev/null	\
-	      || { echo $$i; fail=1; };					\
-	  done;								\
-	  test $$fail = 1 &&						\
+	  files=$$($(VC_LIST_EXCEPT) | grep '\.c$$') &&			\
+	  perl -n $(perl_config_h_first_) $$files ||			\
 	    { echo '$(ME): the above files include some other header'	\
 		'before <config.h>' 1>&2; exit 1; } || :;		\
 	else :;								\

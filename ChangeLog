@@ -1,3 +1,11 @@
+2016-07-30  Ján Tomko  <jtomko@redhat.com>
+
+	maint.mk: speed up require_config_h_first
+	Instead of spawning three processes per file,
+	rewrite the check in perl and run it once for all the files.
+	* top/maint.mk (perl_config_h_first_): Define.
+	(sc_require_config_h_first): Use it in place of shell code.
+
 2016-07-26  Ján Tomko  <jtomko@redhat.com>
 
 	maint.mk: speed up sc_po_check
