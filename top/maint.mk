@@ -1123,6 +1123,21 @@ fix_po_file_diag = \
 'you have changed the set of files with translatable diagnostics;\n\
 apply the above patch\n'
 
+# Generate a list of files in which to search for translatable strings.
+perl_translatable_files_list_ =						\
+  -e 'foreach $$file (@ARGV) {'						\
+  -e '	\# Consider only file extensions with one or two letters'	\
+  -e '	$$file =~ /\...?$$/ or next;'					\
+  -e '	\# Ignore m4 and mk files'					\
+  -e '	$$file =~ /\.m[4k]$$/ and next;'				\
+  -e '	\# Ignore a .c or .h file with a corresponding .l or .y file'	\
+  -e '	$$file =~ /(.+)\.[ch]$$/ && (-e "$${1}.l" || -e "$${1}.y")'	\
+  -e '	  and next;'							\
+  -e '	\# Skip unreadable files'					\
+  -e '	-r $$file or next;'						\
+  -e '	print "$$file ";'						\
+  -e '}'
+
 # Verify that all source files using _() (more specifically, files that
 # match $(_gl_translatable_string_re)) are listed in po/POTFILES.in.
 po_file ?= $(srcdir)/po/POTFILES.in
@@ -1132,21 +1147,8 @@ sc_po_check:
 	@if test -f $(po_file); then					\
 	  grep -E -v '^(#|$$)' $(po_file)				\
 	    | grep -v '^src/false\.c$$' | sort > $@-1;			\
-	  files=;							\
-	  for file in $$($(VC_LIST_EXCEPT)) $(generated_files); do	\
-	    test -r $$file || continue;					\
-	    case $$file in						\
-	      *.m4|*.mk) continue ;;					\
-	      *.?|*.??) ;;						\
-	      *) continue;;						\
-	    esac;							\
-	    case $$file in						\
-	    *.[ch])							\
-	      base=`expr " $$file" : ' \(.*\)\..'`;			\
-	      { test -f $$base.l || test -f $$base.y; } && continue;;	\
-	    esac;							\
-	    files="$$files $$file";					\
-	  done;								\
+	  files=$$(perl $(perl_translatable_files_list_)		\
+	    $$($(VC_LIST_EXCEPT)) $(generated_files));			\
 	  grep -E -l '$(_gl_translatable_string_re)' $$files		\
 	    | $(SED) 's|^$(_dot_escaped_srcdir)/||' | sort -u > $@-2;	\
 	  diff -u -L $(po_file) -L $(po_file) $@-1 $@-2			\
