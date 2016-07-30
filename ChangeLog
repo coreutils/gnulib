@@ -1,3 +1,12 @@
+2016-07-26  Ján Tomko  <jtomko@redhat.com>
+
+	maint.mk: speed up sc_po_check
+	sc_po_check would skip files based on their names, or on the
+	existence of files with derived names. Rewrite it to use perl
+	instead of shell to make the check faster.
+	* top/maint.mk (perl_translatable_files_list_): Define.
+	(sc_po_check): Use it.
+
 2016-07-30  Ján Tomko  <jtomko@redhat.com>
 
 	maint.mk: speed up require_config_h_first
