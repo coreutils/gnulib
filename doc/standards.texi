@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 14, 2016
+@set lastupdate July 25, 2016
 @c %**end of header
 
 @dircategory GNU organization
@@ -599,16 +599,13 @@ are silently truncated''.  This is not acceptable in a GNU utility.
 @cindex @code{NUL} characters
 @findex libiconv
 Utilities reading files should not drop NUL characters, or any other
-nonprinting characters @emph{including those with codes above 0177}.
-The only sensible exceptions would be utilities specifically intended
-for interface to certain types of terminals or printers that can't
-handle those characters.  Whenever possible, try to make programs work
-properly with sequences of bytes that represent multibyte characters;
-UTF-8 is the most important.
+nonprinting characters.  Programs should work properly with multibyte
+character encodings, such as UTF-8.  You can use libiconv to deal with
+a range of encodings.
 
 @cindex error messages
 Check every system call for an error return, unless you know you wish
-to ignore errors.  Include the system error text (from @code{perror},
+to ignore errors.  Include the system error text (from
 @code{strerror}, or equivalent) in @emph{every} error message
 resulting from a failing system call, as well as the name of the file
 if any and the name of the utility.  Just ``cannot open foo.c'' or
@@ -617,15 +614,9 @@ if any and the name of the utility.  Just ``cannot open foo.c'' or
 @cindex @code{malloc} return value
 @cindex memory allocation failure
 Check every call to @code{malloc} or @code{realloc} to see if it
-returned zero.  Check @code{realloc} even if you are making the block
-smaller; in a system that rounds block sizes to a power of 2,
+returned @code{NULL}.  Check @code{realloc} even if you are making the
+block smaller; in a system that rounds block sizes to a power of 2,
 @code{realloc} may get a different block if you ask for less space.
-
-In Unix, @code{realloc} can destroy the storage block if it returns
-zero.  GNU @code{realloc} does not have this bug: if it fails, the
-original block is unchanged.  Feel free to assume the bug is fixed.  If
-you wish to run your program on Unix, and wish to avoid lossage in this
-case, you can use the GNU @code{malloc}.
 
 You must expect @code{free} to alter the contents of the block that was
 freed.  Anything you want to fetch from the block, you must fetch before
@@ -642,8 +633,10 @@ Use @code{getopt_long} to decode arguments, unless the argument syntax
 makes this unreasonable.
 
 When static storage is to be written in during program execution, use
-explicit C code to initialize it.  Reserve C initialized declarations
-for data that will not be changed.
+explicit C code to initialize it.  This way, restarting the program
+(without reloading it), or part of it, will reinitialize those
+variables.  Reserve C initialized declarations for data that will not
+be changed.
 @c ADR: why?
 
 Try to avoid low-level interfaces to obscure Unix data structures (such
@@ -2338,7 +2331,7 @@ this is not very hard and users will want to be able to operate on input
 files that are bigger than will fit in memory all at once.
 
 If your program creates complicated data structures, just make them in
-memory and give a fatal error if @code{malloc} returns zero.
+memory and give a fatal error if @code{malloc} returns @code{NULL}.
 
 @pindex valgrind
 @cindex memory leak
@@ -2795,7 +2788,7 @@ inside @code{while}-conditions are ok).  For example, don't write
 this:
 
 @example
-if ((foo = (char *) malloc (sizeof *foo)) == 0)
+if ((foo = (char *) malloc (sizeof *foo)) == NULL)
   fatal ("virtual memory exhausted");
 @end example
 
@@ -2804,13 +2797,9 @@ instead, write this:
 
 @example
 foo = (char *) malloc (sizeof *foo);
-if (foo == 0)
+if (foo == NULL)
   fatal ("virtual memory exhausted");
 @end example
-
-This example uses zero without a cast as a null pointer constant.
-This is perfectly fine, except that a cast is needed when calling a
-varargs function or when using @code{sizeof}.
 
 @node Names
 @section Naming Variables, Functions, and Files
