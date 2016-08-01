@@ -1,5 +1,13 @@
 2016-07-26  Ján Tomko  <jtomko@redhat.com>
 
+	useless-if-before-free: skip non-matching lines early
+	* build-aux/useless-if-before-free: First match each line with the
+	simple/quick /\bif\b/ and reject if there is no match. This often
+	saves the cost of the much more involved regular expression.
+	For libvirt, this decreases the cost from 1.44s to 1.02s.
+
+2016-07-26  Ján Tomko  <jtomko@redhat.com>
+
 	maint.mk: speed up sc_po_check
 	sc_po_check would skip files based on their names, or on the
 	existence of files with derived names. Rewrite it to use perl
