@@ -1,3 +1,11 @@
+2016-08-06  Jim Meyering  <meyering@fb.com>
+
+	tests/init.sh: exclude dash with bad "local" semantics
+	* tests/init.sh (gl_shell_test_script_): Add a function to
+	eliminate a shell like "dash" (unlike bash, zsh) that has
+	surprising/risky "local var='...'" semantics.  Inspired by
+	the problem and discussion in https://bugs.gnu.org/24116#11.
+
 2016-08-02  Ján Tomko  <jtomko@redhat.com>
 
 	maint.mk: expand the prohibit_doubled_word regex
