@@ -1,3 +1,13 @@
+2016-08-02  Ján Tomko  <jtomko@redhat.com>
+
+	maint.mk: expand the prohibit_doubled_word regex
+	This check has a static list of words that are checked for
+	repetitions.  Expand it before running the perl script to
+	avoid using expensive captures.  This decreases the cost
+	for libvirt from 1.66s to 0.66s.
+	* top/maint.mk (prohibit_doubled_word_expanded_): Define.
+	(sc_prohibit_doubled_word): Use it.
+
 2016-07-26  Ján Tomko  <jtomko@redhat.com>
 
 	useless-if-before-free: skip non-matching lines early
