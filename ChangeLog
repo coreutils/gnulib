@@ -1,3 +1,28 @@
+2016-08-09  Assaf Gordon  <assafgordon@gmail.com>
+
+	parse-datetime: add optional debug printing
+	Print parsing information, warnings, and errors to stderr.
+	* lib/parse-datetime.h (parse_datetimte_debug): New global variable.
+	* lib/parse-datetime.y:
+	(DEBUG_*):  Macros calling debug functions if debugging is enabled.
+	(PROGRESS*): Same as DEBUG, for progress reporting.
+	(dbg_printf): Print message to stderr, with 'date' prefix.
+	(struct parser_control): Add 'debug_*_seen' variables.
+	(str_days): Converts day ordinal/number to string (e.g. 'last wed').
+	(debug_print_current_time, debug_print_relateive_time): Prints the
+	current/relative date/time value of parser_control.
+	(YACC parser syntax): Print parsed parts with DEBUG_* macros.
+	(to_year): Warn about 2-digit year parsing.
+	(yylex):   Warn about unrecognized words.
+	(get_effective_timezone): Returns current timezone in minutes.
+	(debug_strf{time,date,datetime}): Convert 'struct tm' to string as
+	clearly and unambigiously as possible.
+	(debug_mktime_not_ok): Print detailed information about failed
+	date/time values.
+	(parse_datetime): Add DEBUG messages for failures, warnings. Add
+	PROGRESS messages for status messages.
+	* modules/parse-datetime: Add 'timegm', 'gettext-h' dependencies.
+
 2016-08-06  Jim Meyering  <meyering@fb.com>
 
 	tests/init.sh: exclude dash with bad "local" semantics
