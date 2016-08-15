@@ -37,6 +37,7 @@
 #include "intprops.h"
 #include "timespec.h"
 #include "verify.h"
+#include "strftime.h"
 
 /* There's no need to extend the stack, so there's no need to involve
    alloca.  */
@@ -123,50 +124,6 @@ typedef time_t long_time_t;
    a bit safer than casting to unsigned char, since it catches some type
    errors that the cast doesn't.  */
 static unsigned char to_uchar (char ch) { return ch; }
-
-/* Enable diagnostic debug output to STDERR */
-bool parse_datetime_debug = false;
-
-/* Debug message without parameters */
-#define DEBUG0(msg)                             \
-  do {                                          \
-    if (parse_datetime_debug)                   \
-      dbg_printf (msg);                         \
-  } while (0)
-
-/* Debug message with printf-style parameters */
-#define DEBUG(x,...)                            \
-  do {                                          \
-    if (parse_datetime_debug)                   \
-      dbg_printf (x,__VA_ARGS__);               \
-  } while (0)
-
-/* Progress messages treated the same as debug messages */
-#define PROGRESS  DEBUG
-#define PROGRESS0 DEBUG0
-
-/* Print the date/time of the parser_control struct */
-#define DEBUG_PRINT_CURRENT_TIME(item,pc)  \
-  do {                                     \
-    if (parse_datetime_debug)              \
-      debug_print_current_time (item, pc); \
-  } while (0)
-
-/* Print the relative date/time of the parser control struct */
-#define DEBUG_PRINT_RELATIVE_TIME(item,pc) \
-  do {                                     \
-    if (parse_datetime_debug)              \
-      debug_print_rel_time (item, pc);     \
-  } while (0)
-
-/* if 'mktime_ok' failed, print informative message with possible reasons */
-#define DEBUG_MKTIME_NOT_OK(tm0,tm1,pc,zones_seen)      \
-  do {                                                  \
-    if (parse_datetime_debug)                           \
-      debug_mktime_not_ok (tm0, tm1, pc, zones_seen);   \
-   } while (0)
-
-
 
 static void
 dbg_printf (const char *msg,...)
@@ -272,6 +229,9 @@ typedef struct
   size_t dsts_seen;
   size_t times_seen;
   size_t zones_seen;
+
+  /* if true, print debugging output to stderr */
+  bool parse_datetime_debug;
 
   /* which of the 'seen' parts has been printed when debugging */
   size_t debug_dates_seen;
@@ -438,7 +398,12 @@ debug_print_current_time (const char* item, parser_control *pc)
 {
   char tmp[100] = {0};
   int space = 0; /* if true, add space delimiter */
-  DEBUG (_("parsed %s part: "), item); /* no newline, more items printed below */
+
+  if (!pc->parse_datetime_debug)
+    return;
+
+  /* no newline, more items printed below */
+  dbg_printf (_("parsed %s part: "), item);
 
   if (pc->dates_seen != pc->debug_dates_seen)
     {
@@ -517,10 +482,15 @@ debug_print_current_time (const char* item, parser_control *pc)
 
 /* debugging: print the current relative values. */
 static void
-debug_print_rel_time (const char* item, const parser_control *pc)
+debug_print_relative_time (const char* item, const parser_control *pc)
 {
   int space = 0; /* if true, add space delimiter */
-  DEBUG (_("parsed %s part: "), item); /* no newline, more items printed below */
+
+  if (!pc->parse_datetime_debug)
+    return;
+
+  /* no newline, more items printed below */
+  dbg_printf (_("parsed %s part: "), item);
 
   if (pc->rel.year==0 && pc->rel.month==0 && pc->rel.day==0
       && pc->rel.hour==0 && pc->rel.minutes==00 && pc->rel.seconds == 0
@@ -603,7 +573,7 @@ timespec:
       {
         pc->seconds = $2;
         pc->timespec_seen = true;
-        DEBUG_PRINT_CURRENT_TIME (_("number of seconds"), pc);
+        debug_print_current_time (_("number of seconds"), pc);
       }
   ;
 
@@ -616,44 +586,44 @@ item:
     datetime
       {
         pc->times_seen++; pc->dates_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("datetime"), pc);
+        debug_print_current_time (_("datetime"), pc);
       }
   | time
       {
         pc->times_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("time"), pc);
+        debug_print_current_time (_("time"), pc);
       }
   | local_zone
       {
         pc->local_zones_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("local_zone"), pc);
+        debug_print_current_time (_("local_zone"), pc);
       }
   | zone
       {
         pc->zones_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("zone"), pc);
+        debug_print_current_time (_("zone"), pc);
       }
   | date
       {
         pc->dates_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("date"), pc);
+        debug_print_current_time (_("date"), pc);
       }
   | day
       {
         pc->days_seen++;
-        DEBUG_PRINT_CURRENT_TIME (_("day"), pc);
+        debug_print_current_time (_("day"), pc);
       }
   | rel
       {
-        DEBUG_PRINT_RELATIVE_TIME (_("relative"), pc);
+        debug_print_relative_time (_("relative"), pc);
       }
   | number
       {
-        DEBUG_PRINT_RELATIVE_TIME (_("number"), pc);
+        debug_print_relative_time (_("number"), pc);
       }
   | hybrid
       {
-        DEBUG_PRINT_RELATIVE_TIME (_("hybrid"), pc);
+        debug_print_relative_time (_("hybrid"), pc);
       }
   ;
 
@@ -789,8 +759,9 @@ date:
            you want portability, use the ISO 8601 format.  */
         if (4 <= $1.digits)
           {
-            DEBUG (_("warning: value %ld has %"PRIuMAX" digits. " \
-                     "Assuming YYYY/MM/DD\n"), $1.value, $1.digits);
+            if (pc->parse_datetime_debug)
+              dbg_printf (_("warning: value %ld has %"PRIuMAX" digits. " \
+                            "Assuming YYYY/MM/DD\n"), $1.value, $1.digits);
 
             pc->year = $1;
             pc->month = $3.value;
@@ -798,8 +769,9 @@ date:
           }
         else
           {
-            DEBUG (_("warning: value %ld has less than 4 digits. " \
-                     "Assuming MM/DD/YY[YY]\n"), $1.value);
+            if (pc->parse_datetime_debug)
+              dbg_printf (_("warning: value %ld has less than 4 digits. "    \
+                            "Assuming MM/DD/YY[YY]\n"), $1.value);
 
             pc->month = $1.value;
             pc->day = $3.value;
@@ -1204,7 +1176,7 @@ to_hour (long int hours, int meridian)
 }
 
 static long int
-to_year (textint textyear)
+to_year (textint textyear, bool debug)
 {
   long int year = textyear.value;
 
@@ -1216,8 +1188,9 @@ to_year (textint textyear)
   else if (textyear.digits == 2)
     {
       year += year < 69 ? 2000 : 1900;
-      DEBUG (_("warning: adjusting year value %ld to %ld\n"),
-             textyear.value, year);
+      if (debug)
+        dbg_printf (_("warning: adjusting year value %ld to %ld\n"),
+                    textyear.value, year);
     }
 
   return year;
@@ -1484,7 +1457,8 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
           tp = lookup_word (pc, buff);
           if (! tp)
             {
-              DEBUG (_("error: unknown word '%s'\n"), buff);
+              if (pc->parse_datetime_debug)
+                dbg_printf (_("error: unknown word '%s'\n"), buff);
               return '?';
             }
           lvalp->intval = tp->value;
@@ -1595,9 +1569,7 @@ debug_strfdatetime (const struct tm *tm, const parser_control *pc,
      or '2016-19-2016' .  These are the values as parsed from the user
      string, before validation.
   */
-  int m = snprintf (buf,n,"(Y-M-D) %04d-%02d-%02d %02d:%02d:%02d",
-                    tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday,
-                    tm->tm_hour, tm->tm_min, tm->tm_sec);
+  int m = nstrftime (buf, n, "(Y-M-D) %Y-%m-%d %H:%M:%S", tm, 0, 0);
 
   /* if parser_control information was provided (for timezone),
      and there's enough space in the buffer - add timezone info */
@@ -1655,11 +1627,14 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
   const bool dst_shift = eq_sec && eq_min && !eq_hour
                          && eq_mday && eq_month && eq_year;
 
-  DEBUG0 (_("error: invalid date/time value:\n"));
-  DEBUG (_("    user provided time: '%s'\n"),
-        debug_strfdatetime (tm0, pc, tmp, sizeof (tmp)));
-  DEBUG (_("       normalized time: '%s'\n"),
-        debug_strfdatetime (tm1, pc, tmp, sizeof (tmp)));
+  if (!pc->parse_datetime_debug)
+    return;
+
+  dbg_printf (_("error: invalid date/time value:\n"));
+  dbg_printf (_("    user provided time: '%s'\n"),
+              debug_strfdatetime (tm0, pc, tmp, sizeof (tmp)));
+  dbg_printf (_("       normalized time: '%s'\n"),
+              debug_strfdatetime (tm1, pc, tmp, sizeof (tmp)));
   /* NOTEs: the format must be aligned with debug_strfdatetime() and the two
             DEBUG statements above. this string is not translated. */
   i = snprintf (tmp, sizeof(tmp),
@@ -1673,16 +1648,16 @@ debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
         --i;
       tmp[i] = '\0';
     }
-  DEBUG ("%s\n", tmp);
+  dbg_printf ("%s\n", tmp);
 
-  DEBUG0 (_("     possible reasons:\n"));
+  dbg_printf (_("     possible reasons:\n"));
   if (dst_shift)
-    DEBUG0 (_("       non-existing due to daylight-saving time;\n"));
+    dbg_printf (_("       non-existing due to daylight-saving time;\n"));
   if (!eq_mday && !eq_month)
-    DEBUG0 (_("       invalid day/month combination;\n"));
-  DEBUG0 (_("       numeric values overflow;\n"));
-  DEBUG ("       %s\n",time_zone_seen?_("incorrect timezone")
-                                      :_("missing timezone"));
+    dbg_printf (_("       invalid day/month combination;\n"));
+  dbg_printf (_("       numeric values overflow;\n"));
+  dbg_printf ("       %s\n",time_zone_seen?_("incorrect timezone")
+                                          :_("missing timezone"));
 }
 
 
@@ -1699,14 +1674,21 @@ get_effective_timezone (void)
   return (long int)lz;
 }
 
+/* The original interface: run with debug=false */
+bool
+parse_datetime (struct timespec *result, char const *p,
+                struct timespec const *now)
+{
+  return parse_datetime2 (result, p, now, 0);
+}
 
 /* Parse a date/time string, storing the resulting time value into *RESULT.
    The string itself is pointed to by P.  Return true if successful.
    P can be an incomplete or relative time specification; if so, use
    *NOW as the basis for the returned time.  */
 bool
-parse_datetime (struct timespec *result, char const *p,
-                struct timespec const *now)
+parse_datetime2 (struct timespec *result, char const *p,
+                 struct timespec const *now, unsigned int flags)
 {
   time_t Start;
   long int Start_ns;
@@ -1807,6 +1789,7 @@ parse_datetime (struct timespec *result, char const *p,
   pc.local_zones_seen = 0;
   pc.dsts_seen = 0;
   pc.zones_seen = 0;
+  pc.parse_datetime_debug = (flags & PARSE_DATETIME_DEBUG)!=0;
   pc.debug_dates_seen = 0;
   pc.debug_days_seen = 0;
   pc.debug_times_seen = 0;
@@ -1878,12 +1861,13 @@ parse_datetime (struct timespec *result, char const *p,
 
   if (yyparse (&pc) != 0)
     {
-      DEBUG (_("error: parsing failed, stopped at '%s'\n"), pc.input);
+      if (pc.parse_datetime_debug)
+        dbg_printf (_("error: parsing failed, stopped at '%s'\n"), pc.input);
       goto fail;
     }
 
   /* determine effective timezone source */
-  if (parse_datetime_debug)
+  if (pc.parse_datetime_debug)
     {
       long int tz = pc.debug_default_input_timezone;
       const char* tz_env;
@@ -1924,8 +1908,9 @@ parse_datetime (struct timespec *result, char const *p,
           tz_src = _("system default");
         }
 
-      PROGRESS (_("input timezone: %+03d:%02d (set from %s)\n"),
-                (int)(tz/60), abs ((int)tz)%60, tz_src);
+      if (pc.parse_datetime_debug)
+        dbg_printf (_("input timezone: %+03d:%02d (set from %s)\n"),
+                    (int)(tz/60), abs ((int)tz)%60, tz_src);
 
     }
 
@@ -1936,23 +1921,23 @@ parse_datetime (struct timespec *result, char const *p,
       if (1 < (pc.times_seen | pc.dates_seen | pc.days_seen | pc.dsts_seen
                | (pc.local_zones_seen + pc.zones_seen)))
         {
-          if (parse_datetime_debug)
+          if (pc.parse_datetime_debug)
             {
               if (pc.times_seen > 1)
-                DEBUG0 ("error: seen multiple time parts\n");
+                dbg_printf ("error: seen multiple time parts\n");
               if (pc.dates_seen > 1)
-                DEBUG0 ("error: seen multiple date parts\n");
+                dbg_printf ("error: seen multiple date parts\n");
               if (pc.days_seen > 1)
-                DEBUG0 ("error: seen multiple days parts\n");
+                dbg_printf ("error: seen multiple days parts\n");
               if (pc.dsts_seen > 1)
-                DEBUG0 ("error: seen multiple daylight-saving parts\n");
+                dbg_printf ("error: seen multiple daylight-saving parts\n");
               if ( (pc.local_zones_seen + pc.zones_seen) > 1)
-                DEBUG0 ("error: seen multiple time-zone parts\n");
+                dbg_printf ("error: seen multiple time-zone parts\n");
             }
           goto fail;
         }
 
-      tm.tm_year = to_year (pc.year) - TM_YEAR_BASE;
+      tm.tm_year = to_year (pc.year, pc.parse_datetime_debug) - TM_YEAR_BASE;
       tm.tm_mon = pc.month - 1;
       tm.tm_mday = pc.day;
       if (pc.times_seen || (pc.rels_seen && ! pc.dates_seen && ! pc.days_seen))
@@ -1962,21 +1947,24 @@ parse_datetime (struct timespec *result, char const *p,
             {
               const char* mrd = (pc.meridian==MERam)?"am":
                                   (pc.meridian==MERpm)?"pm":"";
-              DEBUG (_("error: invalid hour %ld%s\n"), pc.hour, mrd);
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: invalid hour %ld%s\n"), pc.hour, mrd);
 
               goto fail;
             }
           tm.tm_min = pc.minutes;
           tm.tm_sec = pc.seconds.tv_sec;
-          PROGRESS (_("using %s time as starting value: '%s'\n"),
-                    (pc.times_seen)?_("specified"):_("current"),
-                    debug_strftime (&tm,dbg_tm,sizeof (dbg_tm)));
+          if (pc.parse_datetime_debug)
+            dbg_printf (_("using %s time as starting value: '%s'\n"),
+                        (pc.times_seen)?_("specified"):_("current"),
+                        debug_strftime (&tm,dbg_tm,sizeof (dbg_tm)));
         }
       else
         {
           tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
           pc.seconds.tv_nsec = 0;
-          DEBUG0 ("warning: using midnight as starting time: 00:00:00\n");
+          if (pc.parse_datetime_debug)
+            dbg_printf ("warning: using midnight as starting time: 00:00:00\n");
         }
 
       /* Let mktime deduce tm_isdst if we have an absolute time stamp.  */
@@ -1996,7 +1984,7 @@ parse_datetime (struct timespec *result, char const *p,
         {
           if (! pc.zones_seen)
             {
-              DEBUG_MKTIME_NOT_OK (&tm0, &tm, &pc, pc.zones_seen);
+              debug_mktime_not_ok (&tm0, &tm, &pc, pc.zones_seen);
 
               goto fail;
             }
@@ -2025,7 +2013,8 @@ parse_datetime (struct timespec *result, char const *p,
               if (setenv ("TZ", tz1buf, 1) != 0)
                 {
                   /* TODO: was warn () + print errno? */
-                  DEBUG (_("error: setenv('TZ','%s') failed\n"), tz1buf);
+                  if (pc.parse_datetime_debug)
+                    dbg_printf (_("error: setenv('TZ','%s') failed\n"), tz1buf);
 
                   goto fail;
                 }
@@ -2034,7 +2023,7 @@ parse_datetime (struct timespec *result, char const *p,
               Start = mktime (&tm);
               if (! mktime_ok (&tm0, &tm, Start))
                 {
-                  DEBUG_MKTIME_NOT_OK (&tm0, &tm, &pc, pc.zones_seen);
+                  debug_mktime_not_ok (&tm0, &tm, &pc, pc.zones_seen);
 
                   goto fail;
                 }
@@ -2051,44 +2040,53 @@ parse_datetime (struct timespec *result, char const *p,
           Start = mktime (&tm);
           if (Start == (time_t) -1)
             {
-              DEBUG (_("error: day '%s' (day ordinal=%ld number=%d) " \
-                       "resulted in an invalid date: '%s'\n"),
-                     str_days (&pc,dbg_ord,sizeof (dbg_ord)),
-                     pc.day_ordinal,pc.day_number,
-                     debug_strfdatetime (&tm, &pc, dbg_tm,sizeof (dbg_tm)));
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: day '%s' (day ordinal=%ld number=%d) "   \
+                              "resulted in an invalid date: '%s'\n"),
+                            str_days (&pc,dbg_ord,sizeof (dbg_ord)),
+                            pc.day_ordinal,pc.day_number,
+                            debug_strfdatetime (&tm, &pc, dbg_tm,
+                                                sizeof (dbg_tm)));
 
               goto fail;
             }
 
-          PROGRESS (_("new start date: '%s' is '%s'\n"),
-                    str_days (&pc,dbg_ord,sizeof (dbg_ord)),
-                    debug_strfdatetime (&tm, &pc, dbg_tm,sizeof (dbg_tm)));
+          if (pc.parse_datetime_debug)
+            dbg_printf (_("new start date: '%s' is '%s'\n"),
+                        str_days (&pc,dbg_ord,sizeof (dbg_ord)),
+                        debug_strfdatetime (&tm, &pc, dbg_tm,sizeof (dbg_tm)));
 
         }
 
-      if (!pc.dates_seen && !pc.days_seen)
-        PROGRESS (_("using current date as starting value: '%s'\n"),
-                  debug_strfdate (&tm,dbg_tm,sizeof (dbg_tm)));
+      if (pc.parse_datetime_debug)
+        {
+          if (!pc.dates_seen && !pc.days_seen)
+            dbg_printf (_("using current date as starting value: '%s'\n"),
+                        debug_strfdate (&tm,dbg_tm,sizeof (dbg_tm)));
 
-      if (pc.days_seen && pc.dates_seen)
-        DEBUG (_("warning: day (%s) ignored when explicit dates are given\n"),
-               str_days (&pc,dbg_ord,sizeof (dbg_ord)));
+          if (pc.days_seen && pc.dates_seen)
+            dbg_printf (_("warning: day (%s) ignored when explicit dates " \
+                          "are given\n"),
+                        str_days (&pc,dbg_ord,sizeof (dbg_ord)));
 
-      PROGRESS (_("starting date/time: '%s'\n"),
-                debug_strfdatetime (&tm, &pc, dbg_tm,sizeof (dbg_tm)));
-
+          dbg_printf (_("starting date/time: '%s'\n"),
+                      debug_strfdatetime (&tm, &pc, dbg_tm,sizeof (dbg_tm)));
+        }
 
       /* Add relative date.  */
       if (pc.rel.year | pc.rel.month | pc.rel.day)
         {
-          if ((pc.rel.year != 0 || pc.rel.month !=0) && tm.tm_mday==1)
-            DEBUG0 ("warning: when adding relative months/years, "  \
-                    "it is recommended to specify the 15th of the months\n");
+          if (pc.parse_datetime_debug)
+            {
+              if ((pc.rel.year != 0 || pc.rel.month !=0) && tm.tm_mday==1)
+                dbg_printf (_("warning: when adding relative months/years, " \
+                              "it is recommended to specify the 15th of the " \
+                              "months\n"));
 
-
-          if (pc.rel.day != 0 && tm.tm_hour==0)
-            DEBUG0 ("warning: when adding relative days, "  \
-                    "it is recommended to specify 12:00pm\n");
+              if (pc.rel.day != 0 && tm.tm_hour==0)
+                dbg_printf (_("warning: when adding relative days, "    \
+                              "it is recommended to specify 12:00pm\n"));
+            }
 
           int year = tm.tm_year + pc.rel.year;
           int month = tm.tm_mon + pc.rel.month;
@@ -2098,7 +2096,8 @@ parse_datetime (struct timespec *result, char const *p,
               | ((day < tm.tm_mday) ^ (pc.rel.day < 0)))
             {
               /* TODO: what is the actual error? int-value wrap-around? */
-              DEBUG (_("error: %s:%d\n"), __FILE__,__LINE__);
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: %s:%d\n"), __FILE__,__LINE__);
 
               goto fail;
             }
@@ -2112,18 +2111,24 @@ parse_datetime (struct timespec *result, char const *p,
           Start = mktime (&tm);
           if (Start == (time_t) -1)
             {
-              DEBUG (_("error: adding relative date resulted "  \
-                       "in an invalid date: '%s'\n"),
-                     debug_strfdatetime (&tm, &pc, dbg_tm, sizeof (dbg_tm)));
+              if (pc.parse_datetime_debug)
+                dbg_printf(_("error: adding relative date resulted " \
+                             "in an invalid date: '%s'\n"),
+                           debug_strfdatetime (&tm, &pc, dbg_tm,
+                                               sizeof (dbg_tm)));
 
               goto fail;
             }
 
-          PROGRESS (_("after date adjustment "\
-                      "(%+ld years, %+ld months, %+ld days),\n"),
-                    pc.rel.year, pc.rel.month, pc.rel.day);
-          PROGRESS (_("    new date/time = '%s'\n"),
-                    debug_strfdatetime (&tm, &pc, dbg_tm, sizeof (dbg_tm)));
+          if (pc.parse_datetime_debug)
+            {
+              dbg_printf (_("after date adjustment "                    \
+                            "(%+ld years, %+ld months, %+ld days),\n"),
+                          pc.rel.year, pc.rel.month, pc.rel.day);
+              dbg_printf (_("    new date/time = '%s'\n"),
+                          debug_strfdatetime (&tm, &pc, dbg_tm,
+                                              sizeof (dbg_tm)));
+            }
 
         }
 
@@ -2141,7 +2146,8 @@ parse_datetime (struct timespec *result, char const *p,
           if (! gmt)
             {
               /* TODO: use 'warn(3)' + print errno ? */
-              DEBUG (_("error: gmtime failed for t=%ld\n"),t);
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: gmtime failed for t=%ld\n"),t);
 
               goto fail;
             }
@@ -2150,17 +2156,19 @@ parse_datetime (struct timespec *result, char const *p,
           t1 = Start - delta;
           if ((Start < t1) != (delta < 0))
             {
-              DEBUG (_("error: timezone %ld caused time_t overflow\n"),
-                     pc.time_zone);
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: timezone %ld caused time_t overflow\n"),
+                            pc.time_zone);
 
               goto fail;  /* time_t overflow */
             }
           Start = t1;
         }
 
-      PROGRESS (_("'%s' = %ld epoch-seconds\n"),
-                debug_strfdatetime (&tm, &pc, dbg_tm, sizeof (dbg_tm)),
-                Start);
+      if (pc.parse_datetime_debug)
+        dbg_printf (_("'%s' = %ld epoch-seconds\n"),
+                    debug_strfdatetime (&tm, &pc, dbg_tm, sizeof (dbg_tm)),
+                    Start);
 
       /* Add relative hours, minutes, and seconds.  On hosts that support
          leap seconds, ignore the possibility of leap seconds; e.g.,
@@ -2191,17 +2199,20 @@ parse_datetime (struct timespec *result, char const *p,
             | ((t4 < t3) ^ (d4 < 0))
             | (t5 != t4))
             {
-              DEBUG0 (" error: adding relative time caused an overflow\n");
+              if (pc.parse_datetime_debug)
+                dbg_printf (_("error: adding relative time caused an " \
+                              "overflow\n"));
 
               goto fail;
             }
 
-          if (pc.rel.hour | pc.rel.minutes | pc.rel.seconds | pc.rel.ns )
+          if (pc.parse_datetime_debug
+              && (pc.rel.hour | pc.rel.minutes | pc.rel.seconds | pc.rel.ns))
             {
-              PROGRESS (_("after time adjustment "     \
-                    "(%+ld hours, %+ld minutes, %+ld seconds, %+ld ns),\n"),
-                    pc.rel.hour,pc.rel.minutes,pc.rel.seconds,pc.rel.ns);
-              PROGRESS (_("    new time = %ld epoch-seconds\n"),t5);
+              dbg_printf (_("after time adjustment (%+ld hours, " \
+                            "%+ld minutes, %+ld seconds, %+ld ns),\n"),
+                          pc.rel.hour,pc.rel.minutes,pc.rel.seconds,pc.rel.ns);
+              dbg_printf (_("    new time = %ld epoch-seconds\n"),t5);
             }
 
         result->tv_sec = t5;
@@ -2219,7 +2230,7 @@ parse_datetime (struct timespec *result, char const *p,
   if (tz0 != tz0buf)
     free (tz0);
 
-  if (ok && parse_datetime_debug)
+  if (ok && pc.parse_datetime_debug)
     {
       /* print local timezone AFTER restoring TZ (if tz_was_altered)*/
       const long int otz = get_effective_timezone ();
@@ -2245,20 +2256,23 @@ parse_datetime (struct timespec *result, char const *p,
           tz_src = _("system default");
         }
 
-      PROGRESS (_("output timezone: %+03d:%02d (set from %s)\n"),
-                (int)(otz/60), abs ((int)otz)%60, tz_src);
+      if (pc.parse_datetime_debug)
+        {
+          dbg_printf (_("output timezone: %+03d:%02d (set from %s)\n"),
+                      (int)(otz/60), abs ((int)otz)%60, tz_src);
 
 
-      PROGRESS (_("final: %ld.%09ld (epoch-seconds)\n"),
-                result->tv_sec,result->tv_nsec);
+          dbg_printf (_("final: %ld.%09ld (epoch-seconds)\n"),
+                      result->tv_sec,result->tv_nsec);
 
-      struct tm const *gmt = gmtime (&result->tv_sec);
-      PROGRESS (_("final: %s (UTC0)\n"),
-                debug_strfdatetime (gmt, NULL, dbg_tm, sizeof (dbg_tm)));
-      struct tm const *lmt = localtime (&result->tv_sec);
-      PROGRESS (_("final: %s (output timezone TZ=%+03d:%02d)\n"),
-                debug_strfdatetime (lmt, NULL, dbg_tm, sizeof (dbg_tm)),
-                (int)(otz/60), abs ((int)otz)%60);
+          struct tm const *gmt = gmtime (&result->tv_sec);
+          dbg_printf (_("final: %s (UTC0)\n"),
+                      debug_strfdatetime (gmt, NULL, dbg_tm, sizeof (dbg_tm)));
+          struct tm const *lmt = localtime (&result->tv_sec);
+          dbg_printf (_("final: %s (output timezone TZ=%+03d:%02d)\n"),
+                      debug_strfdatetime (lmt, NULL, dbg_tm, sizeof (dbg_tm)),
+                      (int)(otz/60), abs ((int)otz)%60);
+        }
     }
 
   return ok;

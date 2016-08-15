@@ -17,6 +17,7 @@ gettext-h
 intprops
 mktime
 setenv
+strftime
 unsetenv
 time
 timegm

@@ -1,3 +1,27 @@
+2016-08-19  Assaf Gordon  <assafgordon@gmail.com>
+
+	parse-datetime: improve debug implementation
+	Follow-up to commit 12ad79069 ("add optional debug printing").
+	Improve parse-datetime's debug implementation: remove macros,
+	replace global debug flag variable with a function parameter,
+	use nstrftime for formatting.
+	See: https://lists.gnu.org/archive/html/bug-gnulib/2016-08/msg00021.html
+	* lib/parse-datetime.h: (parse_datetime_debug): Remove global extern.
+	(parse_datetime2): New function, accepts 'flags' parameter, supporting
+	debug flag. Existing interface 'parse_datetime' left unmodified.
+	* lib/parse-datetime.c: (parse_datetime_debug): Remove global variable.
+	(struct parser_control): add 'parse_datetime_debug' member variable.
+	(parse_datetime): Call new function 'parse_datetime2' without debug.
+	(parse_datetime2): Adapted from previous 'parse_datetime', initialize
+	pc.parse_datetime_debug variable as needed.
+	(to_year): Accept new flags parameter, instead of using global variable.
+	(debug_print_current_time,debug_print_relative_time,debug_mktime_not_ok):
+	use struct 'debug' variable instead of global variable.
+	(DEBUG,DEBUG_PRINT_CURRENT_TIME,DEBUG_PRINT_RELATIVE_TIME,
+	DEBUG_MKTIME_NOT_OK,PROGRESS,PROGRESS0): Remove macros. Call
+	correspnding functions directly instead of using macros.
+	* modules/parse-datetime: Add gnulib's strftime module.
+
 2016-08-19  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
 	c-strcase-tests: port to EBCDIC
