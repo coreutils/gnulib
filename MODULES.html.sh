@@ -3445,6 +3445,7 @@ func_all_modules ()
   func_module argz
   func_module bitrotate
   func_module byteswap
+  func_module dfa
   func_module exitfail
   func_module error
   func_module extensions

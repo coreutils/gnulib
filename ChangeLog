@@ -1,3 +1,20 @@
+2016-08-16  Jim Meyering  <meyering@fb.com>
+
+	dfa: new module, importing grep's DFA matcher
+	Since grep's DFA matcher is now being used by two gnulib-enabled
+	projects, grep and sed, it makes sense to version-control its
+	sources and unit tests in one place: here.
+	* modules/dfa: New module.
+	* modules/dfa-tests: New file.
+	* lib/dfa.c: New file, from grep.
+	* lib/dfa.h: Likewise.
+	* lib/localeinfo.c: Likewise.
+	* lib/localeinfo.h: Likewise.
+	* tests/dfa-match-aux.c: Likewise.
+	* tests/dfa-invalid-char-class.sh: Likewise.
+	* tests/dfa-match.sh: Likewise, with minor changes.
+	* MODULES.html.sh (Misc): Add "dfa" to this list.
+
 2016-09-09  Jim Meyering  <meyering@fb.com>
 
 	getprogname-tests: don't depend on assert-h

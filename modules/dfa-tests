@@ -1,0 +1,21 @@
+Files:
+tests/dfa-match.sh
+tests/dfa-match-aux.c
+tests/dfa-invalid-char-class.sh
+
+Depends-on:
+getprogname
+stdio
+stdlib
+string
+regex
+
+configure.ac:
+
+Makefile.am:
+TESTS +=			\
+  dfa-invalid-char-class.sh	\
+  dfa-match.sh
+
+check_PROGRAMS += dfa-match-aux
+test_stat_LDADD = $(LDADD) $(LIBINTL)
