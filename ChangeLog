@@ -1,3 +1,13 @@
+2016-08-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getdelim: remove dependency on realloc-posix
+	* lib/canonicalize-lgpl.c (alloc_failed)
+	[!FUNC_REALPATH_WORKS || defined _LIBC]: New function,
+	(__realpath) [!FUNC_REALPATH_WORKS || defined _LIBC]: Use it.
+	Use __set_errno where needed, for consistency.
+	* lib/getdelim.c (alloc_failed): New function.
+	(getdelim): Use it.
+
 2016-08-09  Assaf Gordon  <assafgordon@gmail.com>
 
 	parse-datetime: add optional debug printing

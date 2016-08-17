@@ -9,7 +9,6 @@ Depends-on:
 stdio
 extensions
 stdint          [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
-realloc-posix   [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 errno           [test $HAVE_GETDELIM = 0 || test $REPLACE_GETDELIM = 1]
 
 configure.ac:
