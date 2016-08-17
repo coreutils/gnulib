@@ -33,7 +33,7 @@
 
 #include <pthread.h>
 
-#ifdef PTW32_VERSION
+#if defined PTW32_VERSION || defined __MVS__
 
 const gl_thread_t gl_null_thread /* = { .p = NULL } */;
 

@@ -1,5 +1,9 @@
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	thread: port to z/OS
+	* lib/glthread/thread.c, lib/glthread/thread.h:
+	Rudimentary gl_thread support for z/OS.
+
 	maint: port tests to z/OS errno behavior
 	* tests/test-nonblocking-reader.h:
 	* tests/test-nonblocking-writer.h:

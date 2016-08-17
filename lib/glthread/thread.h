@@ -172,6 +172,15 @@ typedef pthread_t gl_thread_t;
 #  define gl_thread_self_pointer() \
      (pthread_in_use () ? pthread_self ().p : NULL)
 extern const gl_thread_t gl_null_thread;
+# elif defined __MVS__
+   /* On IBM z/OS, pthread_t is a struct with an 8-byte '__' field.
+      The first three bytes of this field appear to uniquely identify a
+      pthread_t, though not necessarily representing a pointer.  */
+#  define gl_thread_self() \
+     (pthread_in_use () ? pthread_self () : gl_null_thread)
+#  define gl_thread_self_pointer() \
+     (pthread_in_use () ? *((void **) pthread_self ().__) : NULL)
+extern const gl_thread_t gl_null_thread;
 # else
 #  define gl_thread_self() \
      (pthread_in_use () ? pthread_self () : (pthread_t) NULL)
