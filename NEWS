@@ -42,6 +42,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2016-08-17  stdbool         This no longer supports _Bool for C++.
+                            Programs intended to be portable to C++
+                            compilers should use plain 'bool' instead.
+
 2016-04-12  intprops        The following macros were removed:
                             TYPE_TWOS_COMPLEMENT  TYPE_ONES_COMPLEMENT
                             TYPE_SIGNED_MAGNITUDE

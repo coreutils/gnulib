@@ -1,3 +1,13 @@
+2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdbool: don't require _Bool for C++
+	Problem reported by David Seifert in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-06/msg00005.html
+	* NEWS, doc/posix-headers/stdbool.texi (stdbool.h): Document this.
+	* m4/stdbool.m4 (AC_CHECK_HEADER_STDBOOL): Make the check
+	more-forgiving for C++, in that it requires only 'bool'.  Be a bit
+	stricter about checking that bool and _Bool are compatible in C.
+
 2016-08-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getdelim: remove dependency on realloc-posix

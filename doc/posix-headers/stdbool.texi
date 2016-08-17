@@ -20,7 +20,8 @@ OpenBSD 4.7 with gcc 2.95.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-@code{<stdbool.h>} must be #included before @samp{_Bool} can be used.
+@samp{_Bool} cannot be used before @code{<stdbool.h>} is included, or if
+the program is intended to be compiled by a C++ compiler.
 @item
 You cannot assume that @code{_Bool} is a typedef; it might be a macro.
 @item
