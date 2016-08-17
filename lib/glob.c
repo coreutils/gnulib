@@ -80,7 +80,9 @@
 # define __stat64(fname, buf)   stat (fname, buf)
 # define __fxstatat64(_, d, f, st, flag) fstatat (d, f, st, flag)
 # define struct_stat64          struct stat
-# define __alloca               alloca
+# ifndef __MVS__
+#  define __alloca              alloca
+# endif
 # define __readdir              readdir
 # define __glob_pattern_p       glob_pattern_p
 # define COMPILE_GLOB64

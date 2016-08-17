@@ -191,12 +191,16 @@ main (void)
     ASSERT (result2);
     ASSERT (stat ("/", &st1) == 0);
     ASSERT (stat ("//", &st2) == 0);
+    /* On IBM z/OS, "/" and "//" are distinct, yet they both have
+       st_dev == st_ino == 1.  */
+#ifndef __MVS__
     if (SAME_INODE (st1, st2))
       {
         ASSERT (strcmp (result1, "/") == 0);
         ASSERT (strcmp (result2, "/") == 0);
       }
     else
+#endif
       {
         ASSERT (strcmp (result1, "//") == 0);
         ASSERT (strcmp (result2, "//") == 0);

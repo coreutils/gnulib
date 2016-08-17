@@ -1,5 +1,11 @@
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	maint: preprocessor changes to support z/OS
+	* lib/alloca.in.h, lib/fnmatch.c, lib/get-rusage-as.c:
+	* lib/glob.c, lib/math.in.h, lib/ptsname_r.c:
+	* tests/infinity.h, tests/nan.h, tests/test-canonicalize-lgpl.c:
+	* tests/test-nonblocking-pipe.h:
+
 	fclose, strstr-simple, wchar: port to z/OS
 	* m4/fclose.m4, m4/strstr.m4, m4/wchar_h.m4:
 	Changes to the Autoconf M4 code to support z/OS.  Note that

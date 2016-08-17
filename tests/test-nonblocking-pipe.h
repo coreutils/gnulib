@@ -31,10 +31,11 @@
      OSF/1                           >= 262145
      Solaris <= 7                    >= 10241
      Solaris >= 8                    >= 20481
+     z/OS                            >= 131073
      Cygwin                          >= 65537
      native Windows                  >= 4097 (depends on the _pipe argument)
  */
-#if defined __osf__ || (defined __linux__ && (defined __ia64__ || defined __mips__))
+#if defined __MVS__ || defined __osf__ || (defined __linux__ && (defined __ia64__ || defined __mips__))
 # define PIPE_DATA_BLOCK_SIZE 270000
 #elif defined __linux__ && defined __sparc__
 # define PIPE_DATA_BLOCK_SIZE 140000

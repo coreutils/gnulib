@@ -22,7 +22,7 @@
 # define _GNU_SOURCE    1
 #endif
 
-#if ! defined __builtin_expect && __GNUC__ < 3
+#if ! defined __builtin_expect && defined __GNUC__ && __GNUC__ < 3
 # define __builtin_expect(expr, expected) (expr)
 #endif
 

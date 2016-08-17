@@ -406,6 +406,7 @@ _GL_WARN_ON_USE (ceilf, "ceilf is unportable - "
 #if @GNULIB_CEIL@
 # if @REPLACE_CEIL@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef ceil
 #   define ceil rpl_ceil
 #  endif
 _GL_FUNCDECL_RPL (ceil, double, (double x));
@@ -753,6 +754,7 @@ _GL_WARN_ON_USE (floorf, "floorf is unportable - "
 #if @GNULIB_FLOOR@
 # if @REPLACE_FLOOR@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef floor
 #   define floor rpl_floor
 #  endif
 _GL_FUNCDECL_RPL (floor, double, (double x));
@@ -973,6 +975,7 @@ _GL_WARN_ON_USE (frexpf, "frexpf is unportable - "
 #if @GNULIB_FREXP@
 # if @REPLACE_FREXP@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef frexp
 #   define frexp rpl_frexp
 #  endif
 _GL_FUNCDECL_RPL (frexp, double, (double x, int *expptr) _GL_ARG_NONNULL ((2)));
@@ -1958,6 +1961,7 @@ _GL_WARN_ON_USE (tanhf, "tanhf is unportable - "
 #if @GNULIB_TRUNCF@
 # if @REPLACE_TRUNCF@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef truncf
 #   define truncf rpl_truncf
 #  endif
 _GL_FUNCDECL_RPL (truncf, float, (float x));
@@ -1980,6 +1984,7 @@ _GL_WARN_ON_USE (truncf, "truncf is unportable - "
 #if @GNULIB_TRUNC@
 # if @REPLACE_TRUNC@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef trunc
 #   define trunc rpl_trunc
 #  endif
 _GL_FUNCDECL_RPL (trunc, double, (double x));

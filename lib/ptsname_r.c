@@ -34,6 +34,11 @@
 #  define _PATH_DEV "/dev/"
 # endif
 
+# undef __set_errno
+# undef __stat
+# undef __ttyname_r
+# undef __ptsname_r
+
 # define __set_errno(e) errno = (e)
 # define __isatty isatty
 # define __stat stat

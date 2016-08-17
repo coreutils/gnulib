@@ -15,11 +15,18 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 
+/* IBM z/OS supports both hexadecimal and IEEE floating-point formats. The
+   former does not support NaN and its isnan() implementation returns zero
+   for all values.  */
+#if defined __MVS__ && defined __IBMC__ && !defined __BFP__
+# error "NaN is not supported with IBM's hexadecimal floating-point format; please re-compile with -qfloat=ieee"
+#endif
+
 /* NaNf () returns a 'float' not-a-number.  */
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
-   on the expression 0.0 / 0.0.  */
-#if defined __DECC || defined _MSC_VER
+   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.  */
+#if defined __DECC || defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
 static float
 NaNf ()
 {
@@ -34,8 +41,8 @@ NaNf ()
 /* NaNd () returns a 'double' not-a-number.  */
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
-   on the expression 0.0 / 0.0.  */
-#if defined __DECC || defined _MSC_VER
+   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.  */
+#if defined __DECC || defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
 static double
 NaNd ()
 {
@@ -51,14 +58,15 @@ NaNd ()
 
 /* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
    runtime type conversion.
-   The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.  */
+   The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.
+   The IBM XL C compiler on z/OS complains.  */
 #ifdef __sgi
 static long double NaNl ()
 {
   double zero = 0.0;
   return zero / zero;
 }
-#elif defined _MSC_VER
+#elif defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
 static long double
 NaNl ()
 {

@@ -355,7 +355,7 @@ get_rusage_as_via_iterator (void)
 uintptr_t
 get_rusage_as (void)
 {
-#if (defined __APPLE__ && defined __MACH__) || defined _AIX || defined __CYGWIN__ /* Mac OS X, AIX, Cygwin */
+#if (defined __APPLE__ && defined __MACH__) || defined _AIX || defined __CYGWIN__ || defined __MVS__ /* Mac OS X, AIX, Cygwin, z/OS */
   /* get_rusage_as_via_setrlimit() does not work.
      Prefer get_rusage_as_via_iterator().  */
   return get_rusage_as_via_iterator ();
