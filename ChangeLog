@@ -1,5 +1,15 @@
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	iconv_open-utf-tests, iconv-tests: port to EBCDIC
+	* tests/test-iconv-utf.c, tests/test-iconv.c:
+	Added appropriately conditional #pragmas so that the test strings
+	in test-iconv-utf.c are correctly interpreted in ASCII instead of
+	EBCDIC (i.e. 'J' == 0x4A and not 0xD1). This issue could be
+	addressed in a more portable way by simply rewriting all the ASCII
+	literal characters as octal escapes, but then you would lose the
+	partial readability that the strings have now. Also, iconv_open()
+	on z/OS does not recognize "ISO-8859-1", but "ISO8859-1" works.
+
 	c-strcase-tests, wcwidth-tests: port to EBCDIC
 	* tests/test-c-strcasecmp.c: Include c-ctype.h.
 	(main) [!C_CTYPE_ASCII]: Skip tests that assume ASCII.

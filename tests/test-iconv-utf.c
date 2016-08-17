@@ -27,20 +27,38 @@
 
 #include "macros.h"
 
+/* If compiling on an EBCDIC system, keep the test strings in ASCII.  */
+#if defined __IBMC__ && 'A' != 0x41
+# pragma convert("ISO8859-1")
+# define CONVERT_ENABLED
+#endif
+
+/* The text is "Japanese (日本語) [\U0001D50D\U0001D51E\U0001D52D]".  */
+
+const char test_utf8_string[] = "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
+
+const char test_utf16be_string[] = "\000J\000a\000p\000a\000n\000e\000s\000e\000 \000(\145\345\147\054\212\236\000)\000 \000[\330\065\335\015\330\065\335\036\330\065\335\055\000]";
+
+const char test_utf16le_string[] = "J\000a\000p\000a\000n\000e\000s\000e\000 \000(\000\345\145\054\147\236\212)\000 \000[\000\065\330\015\335\065\330\036\335\065\330\055\335]\000";
+
+const char test_utf32be_string[] = "\000\000\000J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\145\345\000\000\147\054\000\000\212\236\000\000\000)\000\000\000 \000\000\000[\000\001\325\015\000\001\325\036\000\001\325\055\000\000\000]";
+
+const char test_utf32le_string[] = "J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\000\345\145\000\000\054\147\000\000\236\212\000\000)\000\000\000 \000\000\000[\000\000\000\015\325\001\000\036\325\001\000\055\325\001\000]\000\000\000";
+
+#ifdef CONVERT_ENABLED
+# pragma convert(pop)
+#endif
+
 int
 main ()
 {
 #if HAVE_ICONV
   /* Assume that iconv() supports at least the encoding UTF-8.  */
 
-  /* The text is "Japanese (日本語) [\U0001D50D\U0001D51E\U0001D52D]".  */
-
   /* Test conversion from UTF-8 to UTF-16BE with no errors.  */
   {
-    static const char input[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
-    static const char expected[] =
-      "\000J\000a\000p\000a\000n\000e\000s\000e\000 \000(\145\345\147\054\212\236\000)\000 \000[\330\065\335\015\330\065\335\036\330\065\335\055\000]";
+#define input    test_utf8_string
+#define expected test_utf16be_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -64,14 +82,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-8 to UTF-16LE with no errors.  */
   {
-    static const char input[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
-    static const char expected[] =
-      "J\000a\000p\000a\000n\000e\000s\000e\000 \000(\000\345\145\054\147\236\212)\000 \000[\000\065\330\015\335\065\330\036\335\065\330\055\335]\000";
+#define input    test_utf8_string
+#define expected test_utf16le_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -95,14 +114,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-8 to UTF-32BE with no errors.  */
   {
-    static const char input[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
-    static const char expected[] =
-      "\000\000\000J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\145\345\000\000\147\054\000\000\212\236\000\000\000)\000\000\000 \000\000\000[\000\001\325\015\000\001\325\036\000\001\325\055\000\000\000]";
+#define input    test_utf8_string
+#define expected test_utf32be_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -126,14 +146,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-8 to UTF-32LE with no errors.  */
   {
-    static const char input[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
-    static const char expected[] =
-      "J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\000\345\145\000\000\054\147\000\000\236\212\000\000)\000\000\000 \000\000\000[\000\000\000\015\325\001\000\036\325\001\000\055\325\001\000]\000\000\000";
+#define input    test_utf8_string
+#define expected test_utf32le_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -157,14 +178,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-16BE to UTF-8 with no errors.  */
   {
-    static const char input[] =
-      "\000J\000a\000p\000a\000n\000e\000s\000e\000 \000(\145\345\147\054\212\236\000)\000 \000[\330\065\335\015\330\065\335\036\330\065\335\055\000]";
-    static const char expected[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
+#define input    test_utf16be_string
+#define expected test_utf8_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -188,14 +210,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-16LE to UTF-8 with no errors.  */
   {
-    static const char input[] =
-      "J\000a\000p\000a\000n\000e\000s\000e\000 \000(\000\345\145\054\147\236\212)\000 \000[\000\065\330\015\335\065\330\036\335\065\330\055\335]\000";
-    static const char expected[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
+#define input    test_utf16le_string
+#define expected test_utf8_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -219,14 +242,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-32BE to UTF-8 with no errors.  */
   {
-    static const char input[] =
-      "\000\000\000J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\145\345\000\000\147\054\000\000\212\236\000\000\000)\000\000\000 \000\000\000[\000\001\325\015\000\001\325\036\000\001\325\055\000\000\000]";
-    static const char expected[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
+#define input    test_utf32be_string
+#define expected test_utf8_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -250,14 +274,15 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 
   /* Test conversion from UTF-32LE to UTF-8 with no errors.  */
   {
-    static const char input[] =
-      "J\000\000\000a\000\000\000p\000\000\000a\000\000\000n\000\000\000e\000\000\000s\000\000\000e\000\000\000 \000\000\000(\000\000\000\345\145\000\000\054\147\000\000\236\212\000\000)\000\000\000 \000\000\000[\000\000\000\015\325\001\000\036\325\001\000\055\325\001\000]\000\000\000";
-    static const char expected[] =
-      "Japanese (\346\227\245\346\234\254\350\252\236) [\360\235\224\215\360\235\224\236\360\235\224\255]";
+#define input    test_utf32le_string
+#define expected test_utf8_string
     iconv_t cd;
     char buf[100];
     const char *inptr;
@@ -281,6 +306,9 @@ main ()
     ASSERT (memcmp (buf, expected, sizeof (expected) - 1) == 0);
 
     ASSERT (iconv_close (cd) == 0);
+
+#undef input
+#undef expected
   }
 #endif
 
