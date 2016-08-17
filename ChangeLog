@@ -1,5 +1,11 @@
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	fclose, strstr-simple, wchar: port to z/OS
+	* m4/fclose.m4, m4/strstr.m4, m4/wchar_h.m4:
+	Changes to the Autoconf M4 code to support z/OS.  Note that
+	fclose() is broken in a different way on z/OS than it is on other
+	systems, thus the special-case in fclose.m4.
+
 	iconv_open-utf-tests, iconv-tests: port to EBCDIC
 	* tests/test-iconv-utf.c, tests/test-iconv.c:
 	Added appropriately conditional #pragmas so that the test strings
