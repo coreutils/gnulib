@@ -1,5 +1,12 @@
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	maint: port tests to z/OS errno behavior
+	* tests/test-nonblocking-reader.h:
+	* tests/test-nonblocking-writer.h:
+	Accommodate z/OS errno code preferences. (I believe this should
+	still be within spec; IBM is good at following the letter if not
+	the spirit of such things.)
+
 	maint: preprocessor changes to support z/OS
 	* lib/alloca.in.h, lib/fnmatch.c, lib/get-rusage-as.c:
 	* lib/glob.c, lib/math.in.h, lib/ptsname_r.c:

@@ -124,7 +124,7 @@ main_writer_loop (int test, size_t data_block_size, int fd,
                         (long) ret, dbgstrerror (ret < 0, saved_errno));
             if (ret < 0 && bytes_written >= data_block_size)
               {
-                ASSERT (saved_errno == EAGAIN);
+                ASSERT (saved_errno == EAGAIN || saved_errno == EWOULDBLOCK);
                 ASSERT (spent_time < 0.5);
                 break;
               }
@@ -133,7 +133,7 @@ main_writer_loop (int test, size_t data_block_size, int fd,
             ASSERT (spent_time < 0.5);
             if (ret < 0)
               {
-                ASSERT (saved_errno == EAGAIN);
+                ASSERT (saved_errno == EAGAIN || saved_errno == EWOULDBLOCK);
                 usleep (SMALL_DELAY);
               }
             else
@@ -165,7 +165,7 @@ main_writer_loop (int test, size_t data_block_size, int fd,
             ASSERT (spent_time < 0.5);
             if (ret < 0)
               {
-                ASSERT (saved_errno == EAGAIN);
+                ASSERT (saved_errno == EAGAIN || saved_errno == EWOULDBLOCK);
                 usleep (SMALL_DELAY);
               }
             else

@@ -110,7 +110,7 @@ full_read_from_nonblocking_fd (size_t fd, void *buf, size_t count)
       ASSERT (spent_time < 0.5);
       if (ret < 0)
         {
-          ASSERT (saved_errno == EAGAIN);
+          ASSERT (saved_errno == EAGAIN || saved_errno == EWOULDBLOCK);
           usleep (SMALL_DELAY);
         }
       else
