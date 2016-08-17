@@ -19,6 +19,7 @@
 #include <config.h>
 
 #include "c-strcase.h"
+#include "c-ctype.h"
 
 #include <locale.h>
 #include <string.h>
@@ -57,9 +58,11 @@ main (int argc, char *argv[])
   ASSERT (c_strcasecmp ("\303\266zg\303\274r", "\303\226ZG\303\234R") > 0); /* özgür */
   ASSERT (c_strcasecmp ("\303\226ZG\303\234R", "\303\266zg\303\274r") < 0); /* özgür */
 
+#if C_CTYPE_ASCII
   /* This test shows how strings of different size cannot compare equal.  */
   ASSERT (c_strcasecmp ("turkish", "TURK\304\260SH") < 0);
   ASSERT (c_strcasecmp ("TURK\304\260SH", "turkish") > 0);
+#endif
 
   return 0;
 }

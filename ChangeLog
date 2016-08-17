@@ -1,3 +1,10 @@
+2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
+
+	c-strcase-tests, wcwidth-tests: port to EBCDIC
+	* tests/test-c-strcasecmp.c: Include c-ctype.h.
+	(main) [!C_CTYPE_ASCII]: Skip tests that assume ASCII.
+	* tests/test-wcwidth.c: Likewise.
+
 2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdbool: don't require _Bool for C++
