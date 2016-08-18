@@ -3,7 +3,6 @@ tests/test-parse-datetime.c
 tests/macros.h
 
 Depends-on:
-progname
 setenv
 
 configure.ac:

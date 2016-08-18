@@ -27,7 +27,6 @@
 #include <signal.h>
 
 #include "full-write.h"
-#include "progname.h"
 #include "macros.h"
 
 /* 0.1 sec pause */
@@ -72,8 +71,6 @@ main (int argc, char **argv)
 {
   struct pipe_filter_gi *f;
   const char *path[] = { NULL, NULL };
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 2);
 

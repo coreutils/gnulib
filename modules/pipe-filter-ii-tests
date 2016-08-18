@@ -12,7 +12,6 @@ binary-io
 c-ctype
 read-file
 full-write
-progname
 
 configure.ac:
 

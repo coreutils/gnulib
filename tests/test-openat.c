@@ -29,7 +29,6 @@ SIGNATURE_CHECK (openat, int, (int, char const *, int, ...));
 #include <stdio.h>
 #include <unistd.h>
 
-#include "progname.h"
 #include "macros.h"
 
 #define BASE "test-openat.t"
@@ -62,8 +61,6 @@ int
 main (int argc _GL_UNUSED, char *argv[])
 {
   int result;
-
-  set_program_name (argv[0]);
 
   /* Test behaviour for invalid file descriptors.  */
   {

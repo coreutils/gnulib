@@ -7,7 +7,6 @@ tests/macros.h
 
 Depends-on:
 ignore-value
-progname
 symlink
 unlinkdir
 

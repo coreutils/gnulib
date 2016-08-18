@@ -27,7 +27,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "progname.h"
 #include "macros.h"
 
 int
@@ -39,8 +38,6 @@ main (int argc, char *argv[])
   struct stat statbuf;
   int mode;
   int fd2;
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 3);
 

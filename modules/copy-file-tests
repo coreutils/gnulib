@@ -8,7 +8,6 @@ tests/macros.h
 Depends-on:
 acl
 acl-tests
-progname
 read-file
 xalloc
 

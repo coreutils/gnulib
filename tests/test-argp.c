@@ -25,7 +25,6 @@
 #if HAVE_STRINGS_H
 # include <strings.h>
 #endif
-#include "progname.h"
 
 struct test_args
 {
@@ -458,8 +457,6 @@ main (int argc, char **argv)
 {
   struct argp_child argp_children[3], group1_children[2], group2_children[2];
   test_fp *fun;
-
-  set_program_name (argv[0]);
 
   group1_children[0] = group1_1_child;
   group1_children[1].argp = NULL;

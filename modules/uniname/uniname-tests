@@ -7,7 +7,6 @@ tests/uniname/NameAliases.txt
 
 Depends-on:
 xalloc
-progname
 
 configure.ac:
 

@@ -23,7 +23,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "progname.h"
 #include "macros.h"
 
 int
@@ -31,8 +30,6 @@ main (int argc, char **argv)
 {
   char buffer[10] = { 'a', 'b', 'c', 'd', '\0',
                       'f', 'g', 'h', 'i', 'j'   };
-
-  set_program_name (argv[0]);
 
   /* Empty string.  */
   {

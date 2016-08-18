@@ -27,8 +27,6 @@
 #include "binary-io.h"
 #include "ignore-value.h"
 
-char *program_name;
-
 /* With no arguments, do nothing.  With arguments, attempt to consume
    first 6 bytes of stdin.  In either case, let exit() take care of
    closing std streams and changing exit status if ferror(stdin).  */
@@ -37,7 +35,6 @@ main (int argc, char **argv)
 {
   char buf[7];
   atexit (close_stdin);
-  program_name = argv[0];
 
   /* close_stdin currently relies on ftell, but mingw ftell is
      unreliable on text mode input.  */

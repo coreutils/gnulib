@@ -4,7 +4,6 @@ tests/test-argp-version-etc-1.sh
 
 Depends-on:
 argp
-progname
 version-etc-fsf
 
 Makefile.am:

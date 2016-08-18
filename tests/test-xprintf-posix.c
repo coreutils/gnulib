@@ -24,7 +24,6 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "progname.h"
 #include "macros.h"
 
 #include "test-printf-posix.h"
@@ -32,8 +31,6 @@
 int
 main (int argc _GL_UNUSED, char *argv[])
 {
-  set_program_name (argv[0]);
-
   test_function (xprintf);
   return 0;
 }

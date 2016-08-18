@@ -29,8 +29,6 @@
 # define __spec "ld"
 #endif
 
-char *program_name;
-
 /* Don't show the program name in error messages.  */
 static void
 print_no_progname (void)
@@ -43,7 +41,6 @@ main (int argc, char **argv)
   strtol_error s_err;
   int i;
 
-  program_name = argv[0];
   error_print_progname = print_no_progname;
 
   for (i = 1; i < argc; i++)

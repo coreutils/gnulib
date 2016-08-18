@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #include "gl_array_list.h"
-#include "progname.h"
 #include "macros.h"
 
 extern void gl_rbtree_list_check_invariants (gl_list_t list);
@@ -61,8 +60,6 @@ int
 main (int argc, char *argv[])
 {
   gl_list_t list1, list2, list3;
-
-  set_program_name (argv[0]);
 
   /* Allow the user to provide a non-default random seed on the command line.  */
   if (argc > 1)

@@ -3,7 +3,6 @@ tests/test-xalloc-die.c
 tests/test-xalloc-die.sh
 
 Depends-on:
-progname
 test-framework-sh
 
 Makefile.am:

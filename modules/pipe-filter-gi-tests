@@ -13,7 +13,6 @@ c-ctype
 read-file
 full-write
 usleep
-progname
 
 configure.ac:
 

@@ -16,7 +16,6 @@ unistr/u16-cmp
 unistr/u32-cmp
 unistr/u32-strlen
 xalloc
-progname
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

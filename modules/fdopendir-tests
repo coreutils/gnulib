@@ -7,7 +7,6 @@ Depends-on:
 open
 opendir
 closedir
-progname
 
 configure.ac:
 

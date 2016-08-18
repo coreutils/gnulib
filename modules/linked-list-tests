@@ -4,7 +4,6 @@ tests/macros.h
 
 Depends-on:
 array-list
-progname
 
 configure.ac:
 

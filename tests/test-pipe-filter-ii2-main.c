@@ -27,7 +27,6 @@
 #include <signal.h>
 
 #include "full-write.h"
-#include "progname.h"
 #include "macros.h"
 
 struct locals
@@ -86,8 +85,6 @@ int
 main (int argc, char **argv)
 {
   const char *path[] = { NULL, NULL };
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 2);
 

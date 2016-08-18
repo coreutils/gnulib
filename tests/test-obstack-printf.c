@@ -32,7 +32,6 @@ SIGNATURE_CHECK (obstack_vprintf, int, (struct obstack *, char const *,
 #include <stdlib.h>
 #include <string.h>
 
-#include "progname.h"
 #include "macros.h"
 
 #define obstack_chunk_alloc xmalloc
@@ -130,8 +129,6 @@ test_obstack_printf ()
 int
 main (int argc, char *argv[])
 {
-  set_program_name (argv[0]);
-
   test_obstack_vprintf ();
   test_obstack_printf ();
   return 0;

@@ -6,7 +6,6 @@ tests/zerosize-ptr.h
 m4/mmap-anon.m4
 
 Depends-on:
-progname
 stdint
 
 configure.ac:

@@ -33,7 +33,6 @@
 # include <aclv.h>
 #endif
 
-#include "progname.h"
 #include "read-file.h"
 #include "xalloc.h"
 #include "macros.h"
@@ -43,8 +42,6 @@ main (int argc, char *argv[])
 {
   const char *file1;
   const char *file2;
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 3);
 

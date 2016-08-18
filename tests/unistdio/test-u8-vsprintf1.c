@@ -29,7 +29,6 @@
 
 #include "unistr.h"
 #include "xalloc.h"
-#include "progname.h"
 #include "macros.h"
 
 #include "test-u8-printf1.h"
@@ -63,8 +62,6 @@ test_vsprintf ()
 int
 main (int argc, char *argv[])
 {
-  set_program_name (argv[0]);
-
   test_vsprintf ();
 
   return 0;

@@ -19,12 +19,10 @@
 #include <config.h>
 
 #include "xalloc.h"
-#include "progname.h"
 
 int
 main (int argc _GL_UNUSED, char **argv)
 {
-  set_program_name (argv[0]);
   xalloc_die ();
   return 0;
 }

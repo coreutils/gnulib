@@ -27,8 +27,6 @@
 #include "closein.h"
 #include "binary-io.h"
 
-char *program_name;
-
 /* Test yesno.  Without arguments, read one line.  If first argument
    is zero, close stdin before attempting to read one line.
    Otherwise, read the number of lines specified by first
@@ -37,7 +35,6 @@ int
 main (int argc, char **argv)
 {
   int i = 1;
-  program_name = argv[0];
 
   /* yesno recommends that all clients use close_stdin in main.  */
   atexit (close_stdin);

@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "progname.h"
 #include "macros.h"
 
 static char *
@@ -129,8 +128,6 @@ test_xasprintf (void)
 int
 main (int argc _GL_UNUSED, char *argv[])
 {
-  set_program_name (argv[0]);
-
   test_xvasprintf ();
   test_xasprintf ();
 

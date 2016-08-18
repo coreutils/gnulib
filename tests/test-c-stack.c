@@ -30,8 +30,6 @@
 
 #include "macros.h"
 
-char *program_name;
-
 static volatile int *
 recurse_1 (volatile int n, volatile int *p)
 {
@@ -60,7 +58,6 @@ main (int argc, char **argv)
   setrlimit (RLIMIT_STACK, &rl);
 #endif
 
-  program_name = argv[0];
   if (c_stack_action (NULL) == 0)
     {
       if (1 < argc)

@@ -23,7 +23,6 @@
 
 #include "xalloc.h"
 #include "uniname.h"
-#include "progname.h"
 
 /* The names according to the UnicodeData.txt file, modified to contain the
    Hangul syllable names, as described in the Unicode 3.0 book.  */
@@ -366,8 +365,6 @@ main (int argc, char *argv[])
 {
   int error = 0;
   int i;
-
-  set_program_name (argv[0]);
 
   for (i = 1; i < argc && strcmp (argv[i], "--") != 0; i++)
     fill_names (argv[i]);

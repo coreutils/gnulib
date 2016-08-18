@@ -27,7 +27,6 @@
 #include <string.h>
 
 #include "localcharset.h"
-#include "progname.h"
 #include "macros.h"
 #include "zerosize-ptr.h"
 
@@ -250,8 +249,6 @@ main (int argc _GL_UNUSED, char *argv[])
 {
   int i;
   bool ascii_only = MB_CUR_MAX == 1 && !isprint ((unsigned char) LQ[0]);
-
-  set_program_name (argv[0]);
 
   /* This part of the program is hard-wired to the C locale since it
      does not call setlocale.  However, according to POSIX, the use of

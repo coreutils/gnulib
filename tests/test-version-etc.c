@@ -19,14 +19,12 @@
 
 #include "version-etc.h"
 
-#include "progname.h"
 
 #define AUTHORS "Sergey Poznyakoff", "Eric Blake"
 
 int
 main (int argc _GL_UNUSED, char **argv)
 {
-  set_program_name (argv[0]);
   version_etc (stdout, "test-version-etc", "dummy", "0", AUTHORS,
                (const char *) NULL);
   return 0;

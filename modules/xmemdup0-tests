@@ -3,7 +3,6 @@ tests/test-xmemdup0.c
 tests/macros.h
 
 Depends-on:
-progname
 
 configure.ac:
 

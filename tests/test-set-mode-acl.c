@@ -22,7 +22,6 @@
 
 #include <stdlib.h>
 
-#include "progname.h"
 #include "macros.h"
 
 int
@@ -30,8 +29,6 @@ main (int argc, char *argv[])
 {
   const char *file;
   int mode;
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 3);
 

@@ -22,7 +22,6 @@
 #include "binary-io.h"
 #include "c-ctype.h"
 #include "read-file.h"
-#include "progname.h"
 #include "macros.h"
 
 
@@ -74,8 +73,6 @@ main (int argc, char *argv[])
   const char *input_filename;
   size_t input_size;
   char *input;
-
-  set_program_name (argv[0]);
 
   ASSERT (argc == 3);
 

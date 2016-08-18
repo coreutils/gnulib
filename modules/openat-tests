@@ -5,7 +5,6 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
-progname
 symlink
 
 configure.ac:

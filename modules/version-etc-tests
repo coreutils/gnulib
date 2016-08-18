@@ -3,7 +3,6 @@ tests/test-version-etc.c
 tests/test-version-etc.sh
 
 Depends-on:
-progname
 version-etc-fsf
 
 Makefile.am:

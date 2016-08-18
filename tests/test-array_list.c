@@ -21,7 +21,6 @@
 
 #include <stdlib.h>
 
-#include "progname.h"
 #include "macros.h"
 
 static const char *objects[15] =
@@ -49,8 +48,6 @@ int
 main (int argc, char *argv[])
 {
   gl_list_t list1, list2;
-
-  set_program_name (argv[0]);
 
   /* Allow the user to provide a non-default random seed on the command line.  */
   if (argc > 1)

@@ -23,7 +23,6 @@
 
 #include <stdlib.h>
 
-#include "progname.h"
 #include "macros.h"
 
 /* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
@@ -63,8 +62,6 @@ static const enum backup_type backup_vals[] =
 int
 main (int argc, char *argv[])
 {
-  set_program_name (argv[0]);
-
   /* Not found.  */
   ASSERT (ARGMATCH ("klingon", backup_args, backup_vals) == -1);
 

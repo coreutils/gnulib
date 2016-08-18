@@ -12,7 +12,6 @@ tests/test-exclude8.sh
 Depends-on:
 argmatch
 error
-progname
 test-framework-sh
 
 Makefile.am:

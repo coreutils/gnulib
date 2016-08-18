@@ -47,7 +47,6 @@ write_nul_delimited_argv (char **argv)
 int
 main (void)
 {
-  /* set_program_name (argv[0]); placate overzealous "syntax-check" test.  */
   static char one[] = "1";
   static char two[] = "2";
   static char three[] = "3";

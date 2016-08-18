@@ -26,7 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "progname.h"
 #include "gettext.h"
 #include "macros.h"
 
@@ -63,8 +62,6 @@ static struct result_groups locale_results[] = {
 int
 main (int argc _GL_UNUSED, char *argv[])
 {
-  set_program_name (argv[0]);
-
 #if ENABLE_NLS
   /* Clean up environment.  */
   unsetenv ("LANGUAGE");

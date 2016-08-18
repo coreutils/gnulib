@@ -1,5 +1,129 @@
 2016-08-18  Pino Toscano  <ptoscano@redhat.com>
 
+	Port tests away from progname, since modules that need the
+	program name already depend on getprogname.
+	* modules/acl-tests (Depends-on): Remove progname.
+	* modules/argmatch (Depends-on): Likewise.
+	* modules/argmatch-tests (Depends-on): Likewise.
+	* modules/argp-tests (Depends-on): Likewise.
+	* modules/argp-version-etc-tests (Depends-on): Likewise.
+	* modules/array-list-tests (Depends-on): Likewise.
+	* modules/array-oset-tests (Depends-on): Likewise.
+	* modules/avltree-list-tests (Depends-on): Likewise.
+	* modules/avltree-oset-tests (Depends-on): Likewise.
+	* modules/avltreehash-list-tests (Depends-on): Likewise.
+	* modules/carray-list-tests (Depends-on): Likewise.
+	* modules/copy-file-tests (Depends-on): Likewise.
+	* modules/exclude-tests (Depends-on): Likewise.
+	* modules/fchownat-tests (Depends-on): Likewise.
+	* modules/fdopendir-tests (Depends-on): Likewise.
+	* modules/filenamecat-tests (Depends-on): Likewise.
+	* modules/fstatat-tests (Depends-on): Likewise.
+	* modules/fstrcmp-tests (Depends-on): Likewise.
+	* modules/linked-list-tests (Depends-on): Likewise.
+	* modules/linkedhash-list-tests (Depends-on): Likewise.
+	* modules/mkdirat-tests (Depends-on): Likewise.
+	* modules/nonblocking-pipe-tests (Depends-on): Likewise.
+	* modules/nonblocking-socket-tests (Depends-on): Likewise.
+	* modules/obstack-printf-tests (Depends-on): Likewise.
+	* modules/openat-tests (Depends-on): Likewise.
+	* modules/parse-datetime-tests (Depends-on): Likewise.
+	* modules/pipe-filter-gi-tests (Depends-on): Likewise.
+	* modules/pipe-filter-ii-tests (Depends-on): Likewise.
+	* modules/quotearg-simple-tests (Depends-on): Likewise.
+	* modules/quotearg-tests (Depends-on): Likewise.
+	* modules/rbtree-list-tests (Depends-on): Likewise.
+	* modules/rbtree-oset-tests (Depends-on): Likewise.
+	* modules/rbtreehash-list-tests (Depends-on): Likewise.
+	* modules/spawn-pipe-tests (Depends-on): Likewise.
+	* modules/system-quote-tests (Depends-on): Likewise.
+	* modules/uniname/uniname-tests (Depends-on): Likewise.
+	* modules/uninorm/nfc-tests (Depends-on): Likewise.
+	* modules/uninorm/nfd-tests (Depends-on): Likewise.
+	* modules/uninorm/nfkc-tests (Depends-on): Likewise.
+	* modules/uninorm/nfkd-tests (Depends-on): Likewise.
+	* modules/unistdio/u16-vsnprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/u16-vsprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/u32-vsnprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/u32-vsprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/u8-vsnprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/u8-vsprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/ulc-vsnprintf-tests (Depends-on): Likewise.
+	* modules/unistdio/ulc-vsprintf-tests (Depends-on): Likewise.
+	* modules/unlinkat-tests (Depends-on): Likewise.
+	* modules/version-etc-tests (Depends-on): Likewise.
+	* modules/xalloc-die-tests (Depends-on): Likewise.
+	* modules/xmemdup0-tests (Depends-on): Likewise.
+	* modules/xprintf-posix-tests (Depends-on): Likewise.
+	* modules/xvasprintf-tests (Depends-on): Likewise.
+	* tests/test-argmatch.c: Do not include progname.h.
+	(main) Stop calling set_program_name.
+	* tests/test-argp-version-etc.c: Likewise.
+	* tests/test-argp.c: Likewise.
+	* tests/test-argv-iter.c: Likewise.
+	* tests/test-array_list.c: Likewise.
+	* tests/test-array_oset.c: Likewise.
+	* tests/test-avltree_list.c: Likewise.
+	* tests/test-avltree_oset.c: Likewise.
+	* tests/test-avltreehash_list.c: Likewise.
+	* tests/test-carray_list.c: Likewise.
+	* tests/test-copy-acl.c: Likewise.
+	* tests/test-copy-file.c: Likewise.
+	* tests/test-exclude.c: Likewise.
+	* tests/test-fchownat.c: Likewise.
+	* tests/test-fdopendir.c: Likewise.
+	* tests/test-filenamecat.c: Likewise.
+	* tests/test-fstatat.c: Likewise.
+	* tests/test-fstrcmp.c: Likewise.
+	* tests/test-linked_list.c: Likewise.
+	* tests/test-linkedhash_list.c: Likewise.
+	* tests/test-mkdirat.c: Likewise.
+	* tests/test-nonblocking-pipe-main.c: Likewise.
+	* tests/test-nonblocking-socket-main.c: Likewise.
+	* tests/test-obstack-printf.c: Likewise.
+	* tests/test-openat.c: Likewise.
+	* tests/test-parse-datetime.c: Likewise.
+	* tests/test-pipe-filter-gi1.c: Likewise.
+	* tests/test-pipe-filter-gi2-main.c: Likewise.
+	* tests/test-pipe-filter-ii1.c: Likewise.
+	* tests/test-pipe-filter-ii2-main.c: Likewise.
+	* tests/test-quotearg-simple.c: Likewise.
+	* tests/test-quotearg.c: Likewise.
+	* tests/test-rbtree_list.c: Likewise.
+	* tests/test-rbtree_oset.c: Likewise.
+	* tests/test-rbtreehash_list.c: Likewise.
+	* tests/test-sameacls.c: Likewise.
+	* tests/test-set-mode-acl.c: Likewise.
+	* tests/test-spawn-pipe-main.c: Likewise.
+	* tests/test-system-quote-main.c: Likewise.
+	* tests/test-unlinkat.c: Likewise.
+	* tests/test-version-etc.c: Likewise.
+	* tests/test-xalloc-die.c: Likewise.
+	* tests/test-xfprintf-posix.c: Likewise.
+	* tests/test-xmemdup0.c: Likewise.
+	* tests/test-xprintf-posix.c: Likewise.
+	* tests/test-xvasprintf.c: Likewise.
+	* tests/uniname/test-uninames.c: Likewise.
+	* tests/uninorm/test-u32-nfc-big.c: Likewise.
+	* tests/uninorm/test-u32-nfd-big.c: Likewise.
+	* tests/uninorm/test-u32-nfkc-big.c: Likewise.
+	* tests/uninorm/test-u32-nfkd-big.c: Likewise.
+	* tests/unistdio/test-u16-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u16-vsprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u32-vsprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-u8-vsprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vsnprintf1.c: Likewise.
+	* tests/unistdio/test-ulc-vsprintf1.c: Likewise.
+	* tests/test-c-stack.c: (program_name): Do not define.
+	(main): Do not set program_name.
+	* tests/test-closein.c: Likewise.
+	* tests/test-xstrtol.c: Likewise.
+	* tests/test-yesno.c: Likewise.
+
+2016-08-18  Pino Toscano  <ptoscano@redhat.com>
+
 	Port modules to use getprogname explicitly, instead of requiring
 	progname to be used (or program_name to be provided).
 	* lib/argmatch.c: Do not include progname.h.

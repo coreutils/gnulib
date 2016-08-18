@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "progname.h"
 #include "macros.h"
 
 #ifdef DEBUG
@@ -120,8 +119,6 @@ main (int argc _GL_UNUSED, char **argv)
   int i;
   long gmtoff;
   time_t ref_time = 1304250918;
-
-  set_program_name (argv[0]);
 
   /* Set the time zone to US Eastern time with the 2012 rules.  This
      should disable any leap second support.  Otherwise, there will be

@@ -27,7 +27,6 @@
 #include <string.h>
 
 #include "xalloc.h"
-#include "progname.h"
 #include "macros.h"
 
 #include "test-ulc-printf1.h"
@@ -56,8 +55,6 @@ test_vsnprintf ()
 int
 main (int argc, char *argv[])
 {
-  set_program_name (argv[0]);
-
   test_vsnprintf ();
 
   return 0;

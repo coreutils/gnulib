@@ -32,7 +32,6 @@
 
 #include "nonblocking.h"
 #include "wait-process.h"
-#include "progname.h"
 
 #include "macros.h"
 #include "test-nonblocking-pipe.h"
@@ -47,8 +46,6 @@ main (int argc, char *argv[])
   int fd[2];
   int child;
   int exitcode;
-
-  set_program_name (argv[0]);
 
   child_path = argv[1];
   test = atoi (argv[2]);

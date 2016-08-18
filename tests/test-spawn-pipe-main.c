@@ -18,7 +18,6 @@
 
 #include "spawn-pipe.h"
 #include "wait-process.h"
-#include "progname.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -79,8 +78,6 @@ main (int argc, char *argv[])
 {
   int test;
   int fd;
-
-  set_program_name (argv[0]);
 
   if (argc != 3)
     {

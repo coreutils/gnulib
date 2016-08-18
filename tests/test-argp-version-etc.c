@@ -18,7 +18,6 @@
 #include <config.h>
 #include "argp-version-etc.h"
 #include "argp.h"
-#include "progname.h"
 
 static char doc[] = "test for the argp-version-etc module";
 
@@ -42,7 +41,6 @@ const char *authors[] =
 int
 main (int argc, char **argv)
 {
-  set_program_name (argv[0]);
   argp_version_setup ("test-argp-version-etc", authors);
   return argp_parse (&test_argp, argc, argv, 0, NULL, NULL);
 }

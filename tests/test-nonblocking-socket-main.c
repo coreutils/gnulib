@@ -33,7 +33,6 @@
 
 #include "nonblocking.h"
 #include "wait-process.h"
-#include "progname.h"
 
 #include "macros.h"
 #include "socket-server.h"
@@ -51,8 +50,6 @@ main (int argc, char *argv[])
   int child;
   int server_socket;
   int exitcode;
-
-  set_program_name (argv[0]);
 
   child_path = argv[1];
   test = atoi (argv[2]);

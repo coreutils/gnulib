@@ -12,7 +12,6 @@ tests/macros.h
 
 Depends-on:
 file-has-acl-tests
-progname
 read-file
 unistd
 xalloc

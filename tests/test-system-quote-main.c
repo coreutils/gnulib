@@ -36,7 +36,6 @@
 # include <windows.h>
 #endif
 
-#include "progname.h"
 #include "macros.h"
 
 #define EXPECTED_DATA_FILE "t-sq-data.tmp"
@@ -317,8 +316,6 @@ int
 main (int argc, char *argv[])
 {
   char *prog;
-
-  set_program_name (argv[0]);
 
   if (argc != 2)
     {

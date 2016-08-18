@@ -3,7 +3,6 @@ tests/test-argp.c
 tests/test-argp-2.sh
 
 Depends-on:
-progname
 
 Makefile.am:
 TESTS += test-argp test-argp-2.sh

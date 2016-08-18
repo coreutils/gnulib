@@ -25,7 +25,6 @@
 #include <stdlib.h>
 
 #include "unistr.h"
-#include "progname.h"
 #include "test-u32-normalize-big.h"
 
 static int
@@ -99,7 +98,6 @@ main (int argc, char *argv[])
 {
   struct normalization_test_file file;
 
-  set_program_name (argv[0]);
   read_normalization_test_file (argv[1], &file);
 
   test_specific (&file, check);
