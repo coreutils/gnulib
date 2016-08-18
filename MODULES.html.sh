@@ -3453,6 +3453,7 @@ func_all_modules ()
   func_module xgetdomainname
   func_module getloadavg
   func_module getpagesize
+  func_module getprogname
   func_module getusershell
   func_module lib-symbol-visibility
   func_module login_tty

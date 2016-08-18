@@ -42,6 +42,14 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2016-09-05  progname        This module is deprecated.  Please switch to the
+                            'getprogname' module and its getprogname()
+                            function to obtain the name of the current program.
+                            Note that there is no longer any need to export a
+                            'const char *program_name' variable.
+                            Currently there is no replacement for
+                            set_program_name().
+
 2016-08-17  stdbool         This no longer supports _Bool for C++.
                             Programs intended to be portable to C++
                             compilers should use plain 'bool' instead.

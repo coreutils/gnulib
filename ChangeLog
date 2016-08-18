@@ -1,3 +1,16 @@
+2016-09-05  Pino Toscano  <ptoscano@redhat.com>
+
+	* NEWS: Document the deprecation of the 'progname' module.
+
+2016-08-18  Pino Toscano  <ptoscano@redhat.com>
+
+	getprogname: new module
+	This provides a LGPL module for getting the name of the current
+	program, using the same API found on *BSD systems.
+	* lib/getprogname.c, lib/getprogname.h, m4/getprogname.m4:
+	* modules/getprogname: New files.
+	* MODULES.html.sh (Misc): Add getprogname.
+
 2016-09-02  Jim Meyering  <meyering@fb.com>
 
 	manywarnings: add -fno-common
