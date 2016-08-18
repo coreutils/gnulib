@@ -1,3 +1,9 @@
+2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	c-strcase-tests, wcwidth-tests: depend on c-ctype
+	* modules/c-strcase-tests, modules/wcwidth-tests (Depends-on):
+	Add c-ctype.
+
 2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
 	thread: port to z/OS

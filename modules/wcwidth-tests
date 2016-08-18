@@ -4,6 +4,7 @@ tests/signature.h
 tests/macros.h
 
 Depends-on:
+c-ctype
 localcharset
 
 configure.ac:
@@ -11,4 +12,3 @@ configure.ac:
 Makefile.am:
 TESTS += test-wcwidth
 check_PROGRAMS += test-wcwidth
-
