@@ -1,4 +1,14 @@
+2016-08-17  Daniel Richard G.  <skunk@iSKUNK.ORG>
+
+	strtod: port to z/OS
+	* lib/strtod.c (strtod): Address a couple quirks in the z/OS
+	implementation.
+
 2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strtod: port to z/OS
+	* lib/strtod.c (strtod): Address a couple quirks in the z/OS
+	implementation.
 
 	regex, string: rename to avoid '__string'
 	* lib/regex.h, lib/string.in.h: Do not use the identifier

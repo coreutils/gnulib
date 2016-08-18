@@ -239,7 +239,12 @@ strtod (const char *nptr, char **endptr)
       if (*s == '0' && c_tolower (s[1]) == 'x')
         {
           if (! c_isxdigit (s[2 + (s[2] == '.')]))
-            end = s + 1;
+            {
+              end = s + 1;
+
+              /* strtod() on z/OS returns ERANGE for "0x".  */
+              errno = 0;
+            }
           else if (end <= s + 2)
             {
               num = parse_number (s + 2, 16, 2, 4, 'p', &endbuf);
@@ -321,7 +326,7 @@ strtod (const char *nptr, char **endptr)
          better to use the underlying implementation's result, since a
          nice implementation populates the bits of the NaN according
          to interpreting n-char-sequence as a hexadecimal number.  */
-      if (s != end)
+      if (s != end || num == num)
         num = NAN;
       errno = saved_errno;
     }
