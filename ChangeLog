@@ -1,5 +1,9 @@
 2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex, string: rename to avoid '__string'
+	* lib/regex.h, lib/string.in.h: Do not use the identifier
+	'__string', as it is effectively reserved by string.h on z/OS.
+
 	c-strcase-tests, wcwidth-tests: depend on c-ctype
 	* modules/c-strcase-tests, modules/wcwidth-tests (Depends-on):
 	Add c-ctype.
