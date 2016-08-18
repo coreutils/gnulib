@@ -164,7 +164,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "progname.h"
 #include "error.h"
 #include "read-file.h"
 #include "gl_xlist.h"
@@ -178,6 +177,7 @@
 #include "minmax.h"
 #include "c-strstr.h"
 #include "fwriteerror.h"
+#include "getprogname.h"
 
 #define ASSERT(expr) \
   do                                                                         \
@@ -971,11 +971,11 @@ usage (int status)
 {
   if (status != EXIT_SUCCESS)
     fprintf (stderr, "Try '%s --help' for more information.\n",
-             program_name);
+             getprogname ());
   else
     {
       printf ("Usage: %s [OPTION] O-FILE-NAME A-FILE-NAME B-FILE-NAME\n",
-              program_name);
+              getprogname ());
       printf ("\n");
       printf ("Merges independent modifications of a ChangeLog style file.\n");
       printf ("O-FILE-NAME names the original file, the ancestor of the two others.\n");
@@ -1012,9 +1012,6 @@ main (int argc, char *argv[])
   bool do_version;
   bool split_merged_entry;
 
-  /* Set program name for messages.  */
-  set_program_name (argv[0]);
-
   /* Set default values for variables.  */
   do_help = false;
   do_version = false;
@@ -1041,7 +1038,7 @@ main (int argc, char *argv[])
   if (do_version)
     {
       /* Version information is requested.  */
-      printf ("%s\n", program_name);
+      printf ("%s\n", getprogname ());
       printf ("Copyright (C) %s Free Software Foundation, Inc.\n\
 License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\

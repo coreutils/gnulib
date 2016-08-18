@@ -212,8 +212,6 @@ chdir_long (char *dir)
 # include "closeout.h"
 # include "error.h"
 
-char *program_name;
-
 int
 main (int argc, char *argv[])
 {
@@ -221,7 +219,6 @@ main (int argc, char *argv[])
   size_t n = 0;
   int len;
 
-  program_name = argv[0];
   atexit (close_stdout);
 
   len = getline (&line, &n, stdin);

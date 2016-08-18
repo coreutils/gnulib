@@ -15,6 +15,7 @@ unistd
 raise
 sigaction
 libsigsegv
+getprogname
 
 configure.ac:
 gl_C_STACK

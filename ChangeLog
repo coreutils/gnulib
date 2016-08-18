@@ -1,3 +1,31 @@
+2016-08-18  Pino Toscano  <ptoscano@redhat.com>
+
+	Port modules to use getprogname explicitly, instead of requiring
+	progname to be used (or program_name to be provided).
+	* lib/argmatch.c: Do not include progname.h.
+	[TEST] (program_name): Do not define.
+	[TEST] (main): Call getprogname instead of using program_name.
+	* lib/c-stack.c: Do not include progname.h.
+	(program_name): Do not define.
+	(die): Call getprogname instead of using program_name.
+	* lib/chdir-long.c: Do not include progname.h.
+	[TEST_CHDIR] (main): Do not set program_name.
+	* lib/error.c [!_LIBC]: Include progname.h.
+	[!_LIBC] (program_name): Define using getprogname.
+	* lib/euidaccess.c: Do not include progname.h.
+	[TEST] (main): Do not set program_name.
+	* lib/git-merge-changelog.c: Include getprogname.h instead of
+	progname.h.
+	(usage): Call getprogname instead of using program_name.
+	(main): Likewise.  Stop calling set_program_name.
+	* lib/group-member.c: Do not include progname.h.
+	[TEST] (main): Do not set program_name.
+	* modules/argmatch (Depends-on): Add getprogname.
+	* modules/c-stack (Depends-on): Likewise.
+	* modules/error (Depends-on): Likewise.
+	* modules/git-merge-changelog (Depends-on): Likewise.
+	Also remove progname.
+
 2016-09-05  Pino Toscano  <ptoscano@redhat.com>
 
 	* NEWS: Document the deprecation of the 'progname' module.

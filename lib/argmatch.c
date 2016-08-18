@@ -35,6 +35,7 @@
 #include "error.h"
 #include "quotearg.h"
 #include "quote.h"
+#include "getprogname.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -209,7 +210,6 @@ argmatch_to_argument (const char *value,
 /*
  * Based on "getversion.c" by David MacKenzie <djm@gnu.ai.mit.edu>
  */
-char *program_name;
 
 /* When to make backup files.  */
 enum backup_type
@@ -253,11 +253,9 @@ main (int argc, const char *const *argv)
   const char *cp;
   enum backup_type backup_type = no_backups;
 
-  program_name = (char *) argv[0];
-
   if (argc > 2)
     {
-      fprintf (stderr, "Usage: %s [VERSION_CONTROL]\n", program_name);
+      fprintf (stderr, "Usage: %s [VERSION_CONTROL]\n", getprogname ());
       exit (1);
     }
 
@@ -266,7 +264,7 @@ main (int argc, const char *const *argv)
                              backup_args, backup_vals);
 
   if (argc == 2)
-    backup_type = XARGMATCH (program_name, argv[1],
+    backup_type = XARGMATCH (getprogname (), argv[1],
                              backup_args, backup_vals);
 
   printf ("The version control is '%s'\n",

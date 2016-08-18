@@ -8,7 +8,6 @@ Depends-on:
 getopt-gnu
 stdbool
 stdlib
-progname
 error
 read-file
 xlist
@@ -24,6 +23,7 @@ c-strstr
 fwriteerror
 memchr
 memcmp
+getprogname
 
 configure.ac:
 
