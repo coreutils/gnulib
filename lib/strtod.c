@@ -215,7 +215,7 @@ strtod (const char *nptr, char **endptr)
   const char *s = nptr;
   const char *end;
   char *endbuf;
-  int saved_errno;
+  int saved_errno = errno;
 
   /* Eat whitespace.  */
   while (locale_isspace (*s))
@@ -226,7 +226,6 @@ strtod (const char *nptr, char **endptr)
   if (*s == '-' || *s == '+')
     ++s;
 
-  saved_errno = errno;
   num = underlying_strtod (s, &endbuf);
   end = endbuf;
 
@@ -243,7 +242,7 @@ strtod (const char *nptr, char **endptr)
               end = s + 1;
 
               /* strtod() on z/OS returns ERANGE for "0x".  */
-              errno = 0;
+              errno = saved_errno;
             }
           else if (end <= s + 2)
             {
