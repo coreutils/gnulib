@@ -717,15 +717,6 @@ sc_changelog:
 	  $(_sc_search_regexp)
 
 # Ensure that each .c file containing a "main" function also
-# calls set_program_name.
-sc_program_name:
-	@require='set_program_name *\(.*\);'				\
-	in_vc_files='\.c$$'						\
-	containing='\<main *('						\
-	halt='the above files do not call set_program_name'		\
-	  $(_sc_search_regexp)
-
-# Ensure that each .c file containing a "main" function also
 # calls bindtextdomain.
 sc_bindtextdomain:
 	@require='bindtextdomain *\('					\

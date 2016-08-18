@@ -27,7 +27,6 @@ local-checks-to-skip =			\
   sc_makefile_at_at_check		\
   sc_makefile_path_separator_check	\
   sc_obsolete_symbols			\
-  sc_program_name			\
   sc_prohibit_HAVE_MBRTOWC		\
   sc_prohibit_S_IS_definition		\
   sc_prohibit_always_true_header_tests	\

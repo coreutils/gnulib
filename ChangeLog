@@ -1,5 +1,13 @@
 2016-08-18  Pino Toscano  <ptoscano@redhat.com>
 
+	main.mk: remove sc_program_name, since there is no more need to
+	use set_program_name in tools (getprogname is enough for most
+	of the cases).
+	* cfg.mk (local-checks-to-skip): Remove sc_program_name.
+	* top/maint.mk (sc_program_name): Remove.
+
+2016-08-18  Pino Toscano  <ptoscano@redhat.com>
+
 	Port tests away from progname, since modules that need the
 	program name already depend on getprogname.
 	* modules/acl-tests (Depends-on): Remove progname.
