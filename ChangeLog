@@ -1,3 +1,11 @@
+2016-08-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	canonicalize-lgpl: fix errno after malloca fails
+	This fixes a typo I recently introduced.  Suggested by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-08/msg00039.html
+	* lib/canonicalize-lgpl.c (__realpath):
+	Don't assume malloca sets errno on failure.
+
 2016-08-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strtod: port errno handling to z/OS

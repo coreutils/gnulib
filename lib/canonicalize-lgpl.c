@@ -285,7 +285,7 @@ __realpath (const char *name, char *resolved)
               buf = malloca (path_max);
               if (!buf)
                 {
-                  alloc_failed ();
+                  __set_errno (ENOMEM);
                   goto error;
                 }
 
