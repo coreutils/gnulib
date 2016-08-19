@@ -1,5 +1,10 @@
 2016-08-19  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
+	c-strcase-tests: port to EBCDIC
+	* tests/test-c-strncasecmp.c: Allow two c_strncasecmp calls
+	which assume ASCII encoding semantics to run only in ASCII
+	mode, as they fail in EBCDIC.
+
 	sigpipe-tests: fix typo
 	* tests/test-sigpipe.sh: C, not B.
 
