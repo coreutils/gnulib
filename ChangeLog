@@ -1,3 +1,8 @@
+2016-08-19  Daniel Richard G.  <skunk@iSKUNK.ORG>
+
+	sigpipe-tests: fix typo
+	* tests/test-sigpipe.sh: C, not B.
+
 2016-08-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	canonicalize-lgpl: fix errno after malloca fails

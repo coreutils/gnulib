@@ -21,7 +21,7 @@ fi
 
 # Test signal's behaviour when a handler is installed.
 tmpfiles="$tmpfiles t-sigpipeC.tmp"
-./test-sigpipe${EXEEXT} B 2> t-sigpipeC.tmp | head -1 > /dev/null
+./test-sigpipe${EXEEXT} C 2> t-sigpipeC.tmp | head -1 > /dev/null
 if test -s t-sigpipeC.tmp; then
   LC_ALL=C tr -d '\r' < t-sigpipeC.tmp
   rm -fr $tmpfiles; exit 1
