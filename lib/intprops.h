@@ -67,6 +67,12 @@
 #define _GL_SIGNED_INT_MAXIMUM(e)                                       \
   (((_GL_INT_CONVERT (e, 1) << (sizeof ((e) + 0) * CHAR_BIT - 2)) - 1) * 2 + 1)
 
+/* Work around OpenVMS incompatibility with C99.  */
+#if !defined LLONG_MAX && defined __INT64_MAX
+# define LLONG_MAX __INT64_MAX
+# define LLONG_MIN __INT64_MIN
+#endif
+
 /* This include file assumes that signed types are two's complement without
    padding bits; the above macros have undefined behavior otherwise.
    If this is a problem for you, please let us know how to fix it for your host.

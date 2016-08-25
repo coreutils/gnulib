@@ -1,3 +1,11 @@
+2016-08-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: port to OpenVMS
+	Problem reported by John E. Malmberg in: https://bugs.gnu.org/24300
+	* doc/posix-headers/limits.texi: Document the problem.
+	* lib/intprops.h (LLONG_MAX, LLONG_MIN) [__INT64_MAX]:
+	Define if not already defined.
+
 2016-08-19  Assaf Gordon  <assafgordon@gmail.com>
 
 	parse-datetime: improve debug implementation

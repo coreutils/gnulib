@@ -18,7 +18,7 @@ Portability problems not fixed by Gnulib:
 @item
 The macros @code{LLONG_MIN}, @code{LLONG_MAX}, @code{ULLONG_MAX} are not
 defined on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1 with gcc.
+AIX 5.1, HP-UX 11, IRIX 6.5, OpenVMS, OSF/1 5.1 with gcc.
 @item
 The macros @code{WORD_BIT}, @code{LONG_BIT} are not defined on some platforms:
 glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 9.
