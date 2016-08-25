@@ -1,5 +1,13 @@
 2016-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: fix paren typo on old platforms
+	Problem reported by John E. Malmberg in: https://bugs.gnu.org/24300#13
+	* lib/intprops.h (_GL_INT_OP_WRAPV_LONGISH)
+	[__GNUC__ < 5 && !__has_builtin (__builtin_add_overflow)
+	&& (__STDC_VERSION__ < 201112 || _GL__GENERIC_BOGUS)
+	&& !defined LLONG_MAX]:
+	Remove stray paren.
+
 	intprops: port to OpenVMS
 	Problem reported by John E. Malmberg in: https://bugs.gnu.org/24300
 	* doc/posix-headers/limits.texi: Document the problem.

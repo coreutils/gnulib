@@ -418,7 +418,7 @@ verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
 # else
 #  define _GL_INT_OP_WRAPV_LONGISH(a, b, r, op, overflow) \
     _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned long int, \
-                     long int, LONG_MIN, LONG_MAX))
+                     long int, LONG_MIN, LONG_MAX)
 # endif
 #endif
 
