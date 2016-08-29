@@ -43,19 +43,8 @@
    nonnegative.  This is a macro, not a function, so that it
    works correctly even when SIZE_MAX < N.  */
 
-#if 7 <= __GNUC__
+#if 7 <= __GNUC__ || __has_builtin (__builtin_add_overflow_p)
 # define xalloc_oversized(n, s) __builtin_mul_overflow_p (n, s, (size_t) 1)
-
-/* GCC 6 __builtin_mul_overflow should easily compute this.  See:
-   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68120  */
-#elif 6 == __GNUC__
-# define xalloc_oversized(n, s) __builtin_mul_overflow (n, s, (size_t *) NULL)
-
-/* GCC 5 and Clang __builtin_mul_overflow needs a temporary, and
-   should be used only for non-constant operands, so that
-   xalloc_oversized is a constant expression if both arguments are.
-   Do not use this if pedantic, since pedantic GCC issues a diagnostic
-   for ({ ... }).  */
 #elif ((5 <= __GNUC__ \
         || (__has_builtin (__builtin_mul_overflow) \
             && __has_builtin (__builtin_constant_p))) \

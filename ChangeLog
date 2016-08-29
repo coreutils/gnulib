@@ -1,3 +1,9 @@
+2016-08-29  Jim Meyering  <meyering@fb.com>
+
+	xalloc-oversized.h: port __builtin_mul_overflow change to GCC 6.2.0
+	* lib/xalloc-oversized.h: Port this change to GCC 6.2.0, too,
+	similarly to how it was done to intprops.h.
+
 2016-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops.h: port recent changes to GCC 6.2.0
