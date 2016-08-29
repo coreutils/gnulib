@@ -43,9 +43,12 @@
    nonnegative.  This is a macro, not a function, so that it
    works correctly even when SIZE_MAX < N.  */
 
-/* GCC 7 __builtin_mul_overflow should easily compute this.  See:
-   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68120  */
 #if 7 <= __GNUC__
+# define xalloc_oversized(n, s) __builtin_mul_overflow_p (n, s, (size_t) 1)
+
+/* GCC 6 __builtin_mul_overflow should easily compute this.  See:
+   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=68120  */
+#elif 6 == __GNUC__
 # define xalloc_oversized(n, s) __builtin_mul_overflow (n, s, (size_t *) NULL)
 
 /* GCC 5 and Clang __builtin_mul_overflow needs a temporary, and

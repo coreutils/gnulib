@@ -229,13 +229,23 @@ verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
    : (max) >> (b) < (a))
 
 /* True if __builtin_add_overflow (A, B, P) works when P is null.  */
-#define _GL_HAS_BUILTIN_OVERFLOW_WITH_NULL (7 <= __GNUC__)
+#define _GL_HAS_BUILTIN_OVERFLOW_WITH_NULL (6 == __GNUC__)
+
+/* True if __builtin_add_overflow_p (A, B, C) works.  */
+#define _GL_HAS_BUILTIN_OVERFLOW_P (7 <= __GNUC__)
 
 /* The _GL*_OVERFLOW macros have the same restrictions as the
    *_RANGE_OVERFLOW macros, except that they do not assume that operands
    (e.g., A and B) have the same type as MIN and MAX.  Instead, they assume
    that the result (e.g., A + B) has that type.  */
-#if _GL_HAS_BUILTIN_OVERFLOW_WITH_NULL
+#if _GL_HAS_BUILTIN_OVERFLOW_P
+# define _GL_ADD_OVERFLOW(a, b, min, max)                               \
+   __builtin_add_overflow_p (a, b, (a) + (b))
+# define _GL_SUBTRACT_OVERFLOW(a, b, min, max)                          \
+   __builtin_sub_overflow_p (a, b, (a) - (b))
+# define _GL_MULTIPLY_OVERFLOW(a, b, min, max)                          \
+   __builtin_mul_overflow_p (a, b, (a) * (b))
+#elif _GL_HAS_BUILTIN_OVERFLOW_WITH_NULL
 # define _GL_ADD_OVERFLOW(a, b, min, max)                               \
    __builtin_add_overflow (a, b, (__typeof__ ((a) + (b)) *) 0)
 # define _GL_SUBTRACT_OVERFLOW(a, b, min, max)                          \

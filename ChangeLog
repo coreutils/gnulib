@@ -1,5 +1,19 @@
 2016-08-29  Jim Meyering  <meyering@fb.com>
 
+	intprops.h, xalloc-oversized.h: work with gcc 7
+	In gcc 6, __builtin_add_overflow, __builtin_sub_overflow and
+	__builtin_mul_overflow each accept a NULL pointer as the third
+	argument.  However in gcc 7, that is no longer accepted.
+	Instead, one must use the "_p"-suffixed names, with which, the
+	third parameter is no longer a pointer.
+	* lib/intprops.h (_GL_HAS_BUILTIN_OVERFLOW_WITH_NULL): Correct
+	the definition: not true for gcc 7 and subsequent.
+	(_GL_HAS_BUILTIN_OVERFLOW_P): Define.
+	(_GL_ADD_OVERFLOW, _GL_SUBTRACT_OVERFLOW, _GL_MULTIPLY_OVERFLOW):
+	Provide new definitions for gcc 7 and subsequent.
+	* lib/xalloc-oversized.h (xalloc_oversized): Provide a definition
+	that works with gcc-7.
+
 	intprops.h: fix missing-backslash problems
 	* lib/intprops.h (_GL_ADD_OVERFLOW): Add backslash.
 	(_GL_SUBTRACT_OVERFLOW,_GL_MULTIPLY_OVERFLOW): Likewise.
