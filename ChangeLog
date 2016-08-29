@@ -1,3 +1,9 @@
+2016-08-29  Jim Meyering  <meyering@fb.com>
+
+	intprops.h: fix missing-backslash problems
+	* lib/intprops.h (_GL_ADD_OVERFLOW): Add backslash.
+	(_GL_SUBTRACT_OVERFLOW,_GL_MULTIPLY_OVERFLOW): Likewise.
+
 2016-08-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: fix paren typo on old platforms
