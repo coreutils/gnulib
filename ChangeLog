@@ -1,5 +1,17 @@
 2016-08-29  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops.h: port recent changes to GCC 6.2.0
+	* lib/intprops.h (__has_builtin): Move earlier.
+	(_GL_HAS_BUILTIN_OVERFLOW): Rename from
+	_GL_HAS_BUILTIN_OVERFLOW_WITH_NULL and don't worry about whether
+	the last argument can be null.  All uses changed.
+	(_GL_HAS_BUILTIN_OVERFLOW_P): Also test __has_builtin.
+	(_GL_ADD_OVERFLOW, _GL_SUBTRACT_OVERFLOW, _GL_MULTIPLY_OVERFLOW):
+	Don't try to use 3rd arg null, as this doesn't work on GCC 6.2.0
+	and it's not clear which GCC versions it works for.
+	(_GL_INT_OP_WRAPV): Use _GL_HAS_BUILTIN_OVERFLOW instead of
+	its definiens.
+
 	intprops.h: use __typeof__ with GCC 7
 	* lib/intprops.h (_GL_ADD_OVERFLOW, _GL_SUBTRACT_OVERFLOW)
 	(_GL_MULTIPLY_OVERFLOW): Use __typeof__ as in the GCC manual.
