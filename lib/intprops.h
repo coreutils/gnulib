@@ -240,11 +240,11 @@ verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
    that the result (e.g., A + B) has that type.  */
 #if _GL_HAS_BUILTIN_OVERFLOW_P
 # define _GL_ADD_OVERFLOW(a, b, min, max)                               \
-   __builtin_add_overflow_p (a, b, (a) + (b))
+   __builtin_add_overflow_p (a, b, (__typeof__ ((a) + (b))) 0)
 # define _GL_SUBTRACT_OVERFLOW(a, b, min, max)                          \
-   __builtin_sub_overflow_p (a, b, (a) - (b))
+   __builtin_sub_overflow_p (a, b, (__typeof__ ((a) - (b))) 0)
 # define _GL_MULTIPLY_OVERFLOW(a, b, min, max)                          \
-   __builtin_mul_overflow_p (a, b, (a) * (b))
+   __builtin_mul_overflow_p (a, b, (__typeof__ ((a) * (b))) 0)
 #elif _GL_HAS_BUILTIN_OVERFLOW_WITH_NULL
 # define _GL_ADD_OVERFLOW(a, b, min, max)                               \
    __builtin_add_overflow (a, b, (__typeof__ ((a) + (b)) *) 0)

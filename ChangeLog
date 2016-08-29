@@ -1,3 +1,10 @@
+2016-08-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops.h: use __typeof__ with GCC 7
+	* lib/intprops.h (_GL_ADD_OVERFLOW, _GL_SUBTRACT_OVERFLOW)
+	(_GL_MULTIPLY_OVERFLOW): Use __typeof__ as in the GCC manual.
+	This avoids computing the expression's value (which might overflow!).
+
 2016-08-29  Jim Meyering  <meyering@fb.com>
 
 	intprops.h, xalloc-oversized.h: work with gcc 7
