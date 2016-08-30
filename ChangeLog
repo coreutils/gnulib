@@ -1,5 +1,14 @@
 2016-08-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: tune INT_NEGATE_OVERFLOW for GCC 5 and 6
+	* lib/intprops.h (INT_NEGATE_OVERFLOW): Tune for platforms like
+	GCC 5 and 6 that have __builtin_sub_overflow but not
+	__builtin_sub_overflow_p.  With the recent changes, these
+	platforms are a tiny bit faster with the INT_NEGATE_RANGE_OVERFLOW
+	implementation than with INT_SUBTRACT_OVERFLOW implementation,
+	since the former needs just one runtime comparison whereas the
+	latter needs two.
+
 	strverscmp: sync with glibc
 	Although this doesn't exactly synchronize with glibc
 	byte-for-byte, it makes the code behave the same as glibc.
