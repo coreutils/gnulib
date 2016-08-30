@@ -41,5 +41,19 @@ main (void)
   ASSERT (strverscmp ("09", "0") < 0);
   ASSERT (strverscmp ("9", "10") < 0);
   ASSERT (strverscmp ("0a", "0") > 0);
+
+  /* From glibc bug 9913.  */
+  {
+    static char const a[] = "B0075022800016.gbp.corp.com";
+    static char const b[] = "B007502280067.gbp.corp.com";
+    static char const c[] = "B007502357019.GBP.CORP.COM";
+    ASSERT (strverscmp (a, b) < 0);
+    ASSERT (strverscmp (b, c) < 0);
+    ASSERT (strverscmp (a, c) < 0);
+    ASSERT (strverscmp (b, a) > 0);
+    ASSERT (strverscmp (c, b) > 0);
+    ASSERT (strverscmp (c, a) > 0);
+  }
+
   return 0;
 }

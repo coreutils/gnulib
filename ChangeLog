@@ -1,3 +1,18 @@
+2016-08-30  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strverscmp: sync with glibc
+	Although this doesn't exactly synchronize with glibc
+	byte-for-byte, it makes the code behave the same as glibc.
+	* lib/strverscmp.c (S_I, S_F, S_Z): Now masks, not powers of 2.
+	(ISDIGIT): Remove, as glibc is sticking with isdigit, and the
+	difference shouldn't matter in practical use.  All uses changed
+	back to isdigit.
+	(__strverscmp, strverscmp): Use new glibc method for weak aliases.
+	(next_state): Now unsigned char array; redo elements.
+	(result_type): Now signed char array; redo elements.
+	(__strverscmp): Fix glibc bug 9913 by using new states.
+	* tests/test-strverscmp.c (main): Test glibc bug 9913.
+
 2016-08-29  Jim Meyering  <meyering@fb.com>
 
 	xalloc-oversized.h: port __builtin_mul_overflow change to GCC 6.2.0
