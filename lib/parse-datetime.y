@@ -2242,7 +2242,7 @@ parse_datetime2 (struct timespec *result, char const *p,
           /* Special case: using 'date -u' simply set TZ=UTC0 */
           if (STREQ(tz_env,"UTC0"))
             {
-              tz_src = _("TZ=UTC0 envionment value or -u");
+              tz_src = _("TZ=UTC0 environment value or -u");
             }
           else
             {
