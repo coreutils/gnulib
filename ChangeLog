@@ -1,3 +1,15 @@
+2016-09-02  Jim Meyering  <meyering@fb.com>
+
+	manywarnings: add -fno-common
+	* m4/manywarnings.m4 (gl_MANYWARN_ALL_GCC): Add -fno-common
+	to the list.  Quoting the manual, "Compiling with -fno-common is
+	useful on targets for which it provides better performance, or if
+	you wish to verify that the program will work on other systems that
+	always treat uninitialized variable declarations this way [putting
+	it in the data section]."  If diffutils had been using this sooner,
+	it would have prevented this duplicate declaration issue:
+	http://git.sv.gnu.org/cgit/diffutils.git/commit/?id=v3.4-10-gc2dc91f
+
 2016-08-31  Simon Josefsson  <simon@josefsson.org>
 
 	parse-datetime: Fix typo.
