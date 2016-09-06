@@ -30,10 +30,9 @@ parenthesized type.  Recent versions of GCC support an extension in
 which the operand can also be a unary expression, as with
 @code{sizeof}.  The Gnulib substitute does not support this extension.
 @item
-In ISO C11, the operand of @code{alignof}/@code{_Alignof} must be a
-complete type.  Recent versions of GCC support an extension in which
-the operand can also be structure type containing a flexible array
-member.  The Gnulib substitute does not support this extension.
+On most pre-C11 platforms, the operand of
+@code{alignof}/@code{_Alignof} cannot be a structure type containing a
+flexible array member.
 @item
 @code{_Alignas} and @code{alignas} are not always supported;
 on platforms lacking support, the
