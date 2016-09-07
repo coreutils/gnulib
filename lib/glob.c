@@ -90,6 +90,8 @@
 
 #include <fnmatch.h>
 
+#include "flexmember.h"
+
 #ifdef _SC_GETPW_R_SIZE_MAX
 # define GETPW_R_SIZE_MAX()     sysconf (_SC_GETPW_R_SIZE_MAX)
 #else
@@ -1677,7 +1679,8 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
                           struct globnames *newnames;
                           size_t count = names->count * 2;
                           size_t nameoff = offsetof (struct globnames, name);
-                          size_t size = nameoff + count * sizeof (char *);
+                          size_t size = FLEXSIZEOF (struct globnames, name,
+                                                    count * sizeof (char *));
                           if ((SIZE_MAX - nameoff) / 2 / sizeof (char *)
                               < names->count)
                             goto memory_error;

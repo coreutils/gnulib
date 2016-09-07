@@ -27,6 +27,7 @@
 
 #include <unistd.h>
 
+#include "flexmember.h"
 #include "xalloc.h"
 
 #ifdef __DJGPP__
@@ -83,7 +84,7 @@ getuser (uid_t uid)
     {
       struct passwd *pwent = getpwuid (uid);
       char const *name = pwent ? pwent->pw_name : "";
-      match = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
+      match = xmalloc (FLEXSIZEOF (struct userid, name, strlen (name) + 1));
       match->id.u = uid;
       strcpy (match->name, name);
 
@@ -127,7 +128,7 @@ getuidbyname (const char *user)
     }
 #endif
 
-  tail = xmalloc (offsetof (struct userid, name) + strlen (user) + 1);
+  tail = xmalloc (FLEXSIZEOF (struct userid, name, strlen (user) + 1));
   strcpy (tail->name, user);
 
   /* Add to the head of the list, so most recently used is first.  */
@@ -165,7 +166,7 @@ getgroup (gid_t gid)
     {
       struct group *grent = getgrgid (gid);
       char const *name = grent ? grent->gr_name : "";
-      match = xmalloc (offsetof (struct userid, name) + strlen (name) + 1);
+      match = xmalloc (FLEXSIZEOF (struct userid, name, strlen (name) + 1));
       match->id.g = gid;
       strcpy (match->name, name);
 
@@ -209,7 +210,7 @@ getgidbyname (const char *group)
     }
 #endif
 
-  tail = xmalloc (offsetof (struct userid, name) + strlen (group) + 1);
+  tail = xmalloc (FLEXSIZEOF (struct userid, name, strlen (group) + 1));
   strcpy (tail->name, group);
 
   /* Add to the head of the list, so most recently used is first.  */

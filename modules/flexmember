@@ -2,6 +2,7 @@ Description:
 Flexible array member support
 
 Files:
+lib/flexmember.h
 m4/flexmember.m4
 
 Depends-on:

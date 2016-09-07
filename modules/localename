@@ -9,6 +9,7 @@ m4/intlmacosx.m4
 m4/lcmessage.m4
 
 Depends-on:
+flexmember
 strdup
 lock
 langinfo

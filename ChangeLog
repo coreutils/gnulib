@@ -1,3 +1,37 @@
+2016-09-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flexmember: port better to GCC + valgrind
+	With a char[] flexible array member in a struct with nontrivial
+	alignment, GCC-generated code can access past the end of the
+	array, because GCC assumes there are padding bytes to get the
+	struct aligned.  So the common idiom of malloc (offsetof (struct
+	s, m), n) does not properly allocate an n-byte trailing member, as
+	malloc’s argument should be the next multiple of alignof (struct s).
+	See GCC Bug#66661: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=66661
+	Although C11 apparently permits this GCC optimization (i.e., there
+	was a bug in Gnulib not in GCC), possibly this is a defect in C11.
+	See the thread containing:
+	https://gcc.gnu.org/ml/gcc-patches/2016-09/msg00317.html
+	* lib/flexmember.h: New file.
+	* lib/fnmatch.c, lib/fts.c, lib/glob.c, lib/idcache.c:
+	* lib/localename.c, lib/time_rz.c:
+	Include flexmember.h.
+	* lib/fnmatch_loop.c (struct patternlist):
+	* lib/localename.c (struct hash_node):
+	Use FLEXIBLE_ARRAY_MEMBER.
+	* lib/fnmatch_loop.c (EXT):
+	* lib/fts.c (fts_alloc):
+	* lib/glob.c (glob_in_dir):
+	* lib/idcache.c (getuser, getuidbyname, getgroup, getgidbyname):
+	* lib/localename.c (gl_lock_define_initialized):
+	* lib/time_rz.c (tzalloc):
+	Use FLEXSIZEOF instead of offsetof.
+	* m4/flexmember.m4 (AC_C_FLEXIBLE_ARRAY_MEMBER):
+	Check that the size of the struct can be taken.
+	* modules/flexmember (Files): Add lib/flexmember.h.
+	* modules/fnmatch, modules/glob, modules/localename (Depends-on):
+	Add flexmember.
+
 2016-09-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getprogname: port to Solaris 10

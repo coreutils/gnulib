@@ -33,6 +33,8 @@
 #include <locale.h>
 #include <string.h>
 
+#include "flexmember.h"
+
 #if HAVE_USELOCALE
 /* Mac OS X 10.5 defines the locale_t type in <xlocale.h>.  */
 # if defined __APPLE__ && defined __MACH__
@@ -2619,7 +2621,7 @@ string_hash (const void *x)
 struct hash_node
   {
     struct hash_node * volatile next;
-    char contents[100]; /* has variable size */
+    char contents[FLEXIBLE_ARRAY_MEMBER];
   };
 
 # define HASH_TABLE_SIZE 257
@@ -2646,7 +2648,7 @@ struniq (const char *string)
   size = strlen (string) + 1;
   new_node =
     (struct hash_node *)
-    malloc (offsetof (struct hash_node, contents[0]) + size);
+    malloc (FLEXSIZEOF (struct hash_node, contents, size));
   if (new_node == NULL)
     /* Out of memory.  Return a statically allocated string.  */
     return "C";

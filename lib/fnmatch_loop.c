@@ -1031,7 +1031,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
   struct patternlist
   {
     struct patternlist *next;
-    CHAR str[1];
+    CHAR str[FLEXIBLE_ARRAY_MEMBER];
   } *list = NULL;
   struct patternlist **lastp = &list;
   size_t pattern_len = STRLEN (pattern);
@@ -1083,7 +1083,7 @@ EXT (INT opt, const CHAR *pattern, const CHAR *string, const CHAR *string_end,
                     ? pattern_len                                             \
                     : p - startp + 1UL);                                      \
             plensize = plen * sizeof (CHAR);                                  \
-            newpsize = offsetof (struct patternlist, str) + plensize;         \
+            newpsize = FLEXSIZEOF (struct patternlist, str, plensize);        \
             if ((size_t) -1 / sizeof (CHAR) < plen                            \
                 || newpsize < offsetof (struct patternlist, str)              \
                 || ALLOCA_LIMIT <= newpsize)                                  \

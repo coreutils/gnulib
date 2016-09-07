@@ -1,4 +1,4 @@
-# serial 3
+# serial 4
 # Check for flexible array member support.
 
 # Copyright (C) 2006, 2009-2016 Free Software Foundation, Inc.
@@ -19,8 +19,10 @@ AC_DEFUN([AC_C_FLEXIBLE_ARRAY_MEMBER],
             #include <stddef.h>
             struct s { int n; double d[]; };]],
           [[int m = getchar ();
-            struct s *p = malloc (offsetof (struct s, d)
-                                  + m * sizeof (double));
+            size_t nbytes = offsetof (struct s, d) + m * sizeof (double);
+            nbytes += sizeof (struct s) - 1;
+            nbytes -= nbytes % sizeof (struct s);
+            struct s *p = malloc (nbytes);
             p->d[0] = 0.0;
             return p->d != (double *) NULL;]])],
        [ac_cv_c_flexmember=yes],
