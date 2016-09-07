@@ -26,6 +26,6 @@ int
 main (void)
 {
   char const *p = getprogname ();
-  assert (STREQ (p, "test-getprogname"));
+  assert (STREQ (p, "test-getprogname" EXEEXT));
   return 0;
 }

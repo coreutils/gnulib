@@ -1,3 +1,10 @@
+2016-09-07  Jim Meyering  <meyering@fb.com>
+
+	getprogname-tests: work also when EXEEXT is nonempty
+	* modules/getprogname-tests (Makefile.am): Define EXEEXT.
+	* tests/test-getprogname.c (main): Use it.
+	Suggested by Gisle Vanem.
+
 2016-09-07  Gisle Vanem  <gvanem@yahoo.no>
 
 	getprogname: fix errors in previous change
