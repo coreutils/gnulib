@@ -1,3 +1,16 @@
+2016-09-07  Jim Meyering  <meyering@fb.com>
+
+	getprogname: port to systems with __argv (mingw, msvc)
+	* lib/getprogname.c (getprogname): Include "dirname.h" and use
+	last_component: more general than open coding it with hard-coded "/".
+	* lib/getprogname.h (getprogname): Prefer "char const *" consistently.
+	* modules/getprogname (Depends-on): Add dirname-lgpl.
+	(configure.ac): Check for __argv in <stdlib.h>.
+	* modules/getprogname-tests: New file.
+	* tests/test-getprogname.c: New file.
+	Suggested by Gisle Vanem in
+	https://lists.gnu.org/archive/html/bug-gnulib/2016-09/msg00014.html
+
 2016-09-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	flexmember: port better to GCC + valgrind

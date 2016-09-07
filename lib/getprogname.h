@@ -24,7 +24,7 @@ extern "C" {
 #endif
 
 #ifndef HAVE_GETPROGNAME
-extern const char *getprogname (void)
+extern char const *getprogname (void)
 # ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME
   _GL_ATTRIBUTE_PURE
 # endif

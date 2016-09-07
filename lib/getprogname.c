@@ -20,34 +20,29 @@
 #include "getprogname.h"
 
 #include <errno.h> /* get program_invocation_name declaration */
-#include <stdlib.h>
-#include <string.h>
+#include <stdlib.h> /* get __argv declaration */
 
+#include "dirname.h"
 
 #ifndef HAVE_GETPROGNAME
-const char *
+
+char const *
 getprogname (void)
 {
-#if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+# if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
   return program_invocation_short_name;
-#elif HAVE_DECL_PROGRAM_INVOCATION_NAME || HAVE_GETEXECNAME
-
-  const char *slash;
-# if HAVE_DECL_PROGRAM_INVOCATION_NAME
-  const char *base = program_invocation_name;
-# else
+# elif HAVE_DECL_PROGRAM_INVOCATION_NAME
+  return last_component (program_invocation_name);
+# elif HAVE_GETEXECNAME
   const char *base = getexecname ();
   if (!base)
     base = "?";
+  return last_component (program_invocation_name);
+# elif HAVE_DECL___ARGV
+  return last_component (__argv);
+# else
+#  error "getprogname module not ported to this OS"
 # endif
-
-  slash = strrchr (base, '/');
-  if (slash != NULL)
-    base = slash + 1;
-
-  return base;
-#else
- #error "getprogname module not ported to this OS"
-#endif
 }
+
 #endif

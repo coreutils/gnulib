@@ -1,0 +1,13 @@
+Files:
+tests/test-getprogname.c
+
+Depends-on:
+assert-h
+string
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getprogname
+check_PROGRAMS += test-getprogname
+test_getprogname_LDADD = $(LDADD)
