@@ -20,6 +20,7 @@
 #include "getprogname.h"
 
 #include <errno.h> /* get program_invocation_name declaration */
+#include <stdlib.h>
 #include <string.h>
 
 
@@ -29,9 +30,16 @@ getprogname (void)
 {
 #if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
   return program_invocation_short_name;
-#elif HAVE_DECL_PROGRAM_INVOCATION_NAME
-  const char *base = program_invocation_name;
+#elif HAVE_DECL_PROGRAM_INVOCATION_NAME || HAVE_GETEXECNAME
+
   const char *slash;
+# if HAVE_DECL_PROGRAM_INVOCATION_NAME
+  const char *base = program_invocation_name;
+# else
+  const char *base = getexecname ();
+  if (!base)
+    base = "?";
+# endif
 
   slash = strrchr (base, '/');
   if (slash != NULL)

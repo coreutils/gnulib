@@ -1,5 +1,10 @@
 2016-09-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getprogname: port to Solaris 10
+	* lib/getprogname.c: Include stdlib.h, for getexecname decl.
+	(getprogname) [HAVE_GETEXECNAME]: Use that, for Solaris 10.
+	* m4/getprogname.m4 (gl_FUNC_GETPROGNAME): Check for getexecname.
+
 	stdalign: correct mistake in alignof doc
 	Problem reported by Joseph Myers in:
 	https://gcc.gnu.org/ml/gcc-patches/2016-09/msg00340.html

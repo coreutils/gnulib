@@ -5,9 +5,9 @@
 # gives unlimited permission to copy and/or distribute it,
 # with or without modifications, as long as this notice is preserved.
 
-# serial 1
+# serial 2
 
 AC_DEFUN([gl_FUNC_GETPROGNAME],
 [
-  AC_CHECK_FUNCS_ONCE([getprogname])
+  AC_CHECK_FUNCS_ONCE([getprogname getexecname])
 ])
