@@ -17,23 +17,26 @@
 
    Written by Paul Eggert.  */
 
+#include <stddef.h>
+
 /* Nonzero multiple of alignment of TYPE, suitable for FLEXSIZEOF below.
    On older platforms without _Alignof, use a pessimistic bound that is
    safe in practice even if FLEXIBLE_ARRAY_MEMBER is 1.
    On newer platforms, use _Alignof to get a tighter bound.  */
 
 #if !defined __STDC_VERSION__ || __STDC_VERSION__ < 201112
-# define _GL_XALLOC_ALIGNOF(type) (sizeof (type) & ~ (sizeof (type) - 1))
+# define FLEXALIGNOF(type) (sizeof (type) & ~ (sizeof (type) - 1))
 #else
-# define _GL_XALLOC_ALIGNOF(type) _Alignof (type)
+# define FLEXALIGNOF(type) _Alignof (type)
 #endif
 
 /* Upper bound on the size of a struct of type TYPE with a flexible
    array member named MEMBER that is followed by N bytes of other data.
    This is not simply sizeof (TYPE) + N, since it may require
-   alignment and FLEXIBLE_ARRAY_MEMBER may be 1.  Yield a value less
-   than N if and only if arithmetic overflow occurs.  */
+   alignment on unusually picky C11 platforms, and
+   FLEXIBLE_ARRAY_MEMBER may be 1 on pre-C11 platforms.
+   Yield a value less than N if and only if arithmetic overflow occurs.  */
 
 #define FLEXSIZEOF(type, member, n) \
-   ((offsetof (type, member) + _GL_XALLOC_ALIGNOF (type) - 1 + (n)) \
-    & ~ (_GL_XALLOC_ALIGNOF (type) - 1))
+   ((offsetof (type, member) + FLEXALIGNOF (type) - 1 + (n)) \
+    & ~ (FLEXALIGNOF (type) - 1))

@@ -1,3 +1,10 @@
+2016-09-07  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flexmember: new macro FLEXALIGNOF
+	* lib/flexmember.h: Include <stddef.h>, for offsetof.
+	(FLEXALIGNOF): Rename from _GL_XALLOC_ALIGNOF, as Emacs can use
+	this macro.  Update comments.
+
 2016-09-07  Jim Meyering  <meyering@fb.com>
 
 	getprogname: port to systems with __argv (mingw, msvc)
