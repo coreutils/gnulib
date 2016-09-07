@@ -34,12 +34,13 @@ getprogname (void)
 # elif HAVE_DECL_PROGRAM_INVOCATION_NAME
   return last_component (program_invocation_name);
 # elif HAVE_GETEXECNAME
-  const char *base = getexecname ();
-  if (!base)
-    base = "?";
-  return last_component (program_invocation_name);
+  const char *p = getexecname ();
+  if (!p)
+    p = "?";
+  return last_component (p);
 # elif HAVE_DECL___ARGV
-  return last_component (__argv);
+  const char *p = __argv && __argv[0] ? __argv[0] : "?";
+  return last_component (p);
 # else
 #  error "getprogname module not ported to this OS"
 # endif

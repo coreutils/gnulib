@@ -1,3 +1,10 @@
+2016-09-07  Gisle Vanem  <gvanem@yahoo.no>
+
+	getprogname: fix errors in previous change
+	* lib/getprogname.c (getprogname) [HAVE_GETEXECNAME]:
+	s/program_invocation_name/base/
+	[HAVE_DECL___ARGV]: Handle NULL __argv or __argv[0].
+
 2016-09-08  Pádraig Brady  <P@draigBrady.com>
 
 	parse-datetime: restrict debug output to input string
