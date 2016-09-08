@@ -1704,6 +1704,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   bool ok = true;
   char dbg_ord[DBGBUFSIZE];
   char dbg_tm[DBGBUFSIZE];
+  char const *input_sentinel = p + strlen (p);
 
   if (! now)
     {
@@ -1862,7 +1863,15 @@ parse_datetime2 (struct timespec *result, char const *p,
   if (yyparse (&pc) != 0)
     {
       if (pc.parse_datetime_debug)
-        dbg_printf (_("error: parsing failed, stopped at '%s'\n"), pc.input);
+        {
+          if (input_sentinel <= pc.input)
+            dbg_printf (_("error: parsing failed\n"), pc.input);
+          else
+            {
+              dbg_printf (_("error: parsing failed, stopped at '%s'\n"),
+                          pc.input);
+            }
+         }
       goto fail;
     }
 

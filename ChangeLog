@@ -1,3 +1,11 @@
+2016-09-08  Pádraig Brady  <P@draigBrady.com>
+
+	parse-datetime: restrict debug output to input string
+	* lib/parse-datetime.y (parse_datetime2): If we parse
+	all of the input but determine it's invalid, ensure
+	we don't output the now invalid input pointer.
+	This issue was seen with `date -d 'now +1'`.
+
 2016-09-07  Paul Eggert  <eggert@cs.ucla.edu>
 
 	flexmember: new macro FLEXALIGNOF
