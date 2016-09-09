@@ -2,7 +2,6 @@ Files:
 tests/test-getprogname.c
 
 Depends-on:
-assert-h
 string
 
 configure.ac:

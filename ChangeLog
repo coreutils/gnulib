@@ -1,3 +1,11 @@
+2016-09-09  Jim Meyering  <meyering@fb.com>
+
+	getprogname-tests: don't depend on assert-h
+	* modules/getprogname-tests (Depends-on): Remove assert-h.
+	It was not needed, and in fact would cause build failure for
+	coreutils on some systems.  Reported by Assaf Gordon in https:
+	//lists.gnu.org/archive/html/coreutils/2016-09/msg00016.html
+
 2016-09-07  Jim Meyering  <meyering@fb.com>
 
 	getprogname-tests: work also when EXEEXT is nonempty
