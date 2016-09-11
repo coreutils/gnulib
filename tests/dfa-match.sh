@@ -21,7 +21,11 @@
 # Add "." to PATH for the use of dfa-match-aux.
 path_prepend_ .
 
-require_timeout_
+if (type timeout) >/dev/null 2>&1; then
+  timeout_10='timeout 10'
+else
+  timeout_10=
+fi
 
 fail=0
 
@@ -29,7 +33,7 @@ dfa-match-aux a ba 0 > out || fail=1
 compare /dev/null out || fail=1
 
 in=$(printf "bb\nbb")
-timeout 10 dfa-match-aux a "$in" 1 > out || fail=1
+$timeout_10 dfa-match-aux a "$in" 1 > out || fail=1
 compare /dev/null out || fail=1
 
 Exit $fail

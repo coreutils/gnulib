@@ -1,3 +1,13 @@
+2016-09-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: port to Solaris 9
+	Problems reported by Tom G. Christensen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-09/msg00031.html
+	* modules/dfa (Depends-on): Add isblank.
+	* modules/dfa-tests (dfa_match_aux_LDADD):
+	Rename from test_stat_LDADD, to fix typo.
+	* tests/dfa-match.sh: Don't require 'timeout'; use it if available.
+
 2016-09-10  Jim Meyering  <meyering@fb.com>
 
 	strverscmp: avoid link failure on OS X
