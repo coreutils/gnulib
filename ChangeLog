@@ -1,3 +1,9 @@
+2016-09-10  Jim Meyering  <meyering@fb.com>
+
+	strverscmp: avoid link failure on OS X
+	* lib/strverscmp.c [!weak_alias]: Define __strverscmp to strverscmp.
+	Reported by Assaf Gordon in https://bugs.gnu.org/24256#26
+
 2016-08-16  Jim Meyering  <meyering@fb.com>
 
 	dfa: new module, importing grep's DFA matcher

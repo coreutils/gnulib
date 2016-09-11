@@ -35,6 +35,9 @@
 #define  CMP    2
 #define  LEN    3
 
+#ifndef weak_alias
+# define __strverscmp strverscmp
+#endif
 
 /* Compare S1 and S2 as strings holding indices/version numbers,
    returning less than, equal to or greater than zero if S1 is less than,
