@@ -1,3 +1,12 @@
+2016-09-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extensions: port to recent ISO C TRs
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):
+	Sync from Autoconf master, to add support for recent ISO C TRs.
+	* m4/stdio_h.m4 (gl_STDIO_H): Define __USE_MINGW_ANSI_STDIO here,
+	since AC_USE_SYSTEM_EXTENSIONS no longer does that as
+	the MinGW option is not an extension.
+
 2016-09-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: port to Solaris 9
