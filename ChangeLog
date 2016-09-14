@@ -1,5 +1,12 @@
 2016-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
+	intprops: new macro TYPE_WIDTH
+	* lib/intprops.h (TYPE_WIDTH): New macro.
+	(TYPE_MAXIMUM, _GL_SIGNED_INT_MAXIMUM, INT_STRLEN_BOUND):
+	* lib/ftoastr.h (_GL_FLOAT_DIG_BITS_BOUND):
+	* lib/parse-datetime.y (parse_datetime2):
+	Use it.
+
 	extensions: port to recent ISO C TRs
 	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS):
 	Sync from Autoconf master, to add support for recent ISO C TRs.

@@ -2013,8 +2013,7 @@ parse_datetime2 (struct timespec *result, char const *p,
               long int abs_time_zone = time_zone < 0 ? - time_zone : time_zone;
               long int abs_time_zone_hour = abs_time_zone / 60;
               int abs_time_zone_min = abs_time_zone % 60;
-              char tz1buf[sizeof "XXX+0:00"
-                          + sizeof pc.time_zone * CHAR_BIT / 3];
+              char tz1buf[sizeof "XXX+0:00" + TYPE_WIDTH (pc.time_zone) / 3];
               if (!tz_was_altered)
                 tz0 = get_tz (tz0buf);
               sprintf (tz1buf, "XXX%s%ld:%02d", &"-"[time_zone < 0],
