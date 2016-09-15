@@ -1,5 +1,12 @@
 2016-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	limits-h: new module
+	This adds ISO/IEC TS 18661-1:2014 support to limits.h.
+	* MODULES.html.sh: Add limits-h,and move size_max to stdint section.
+	* doc/posix-headers/limits.texi: Document new module.
+	* lib/limits.in.h, m4/limits-h.m4, modules/limits-h:
+	* modules/limit-h-tests, tests/test-limits-h.c: New files.
+
 	stdio: don't redefine __USE_MINGW_ANSI_STDIO
 	* m4/stdio_h.m4 (gl_STDIO_H): Don't define __USE_MINGW_ANSI_STDIO
 	if it is already defined.  Apparently GNU Emacs relies on this.  See:

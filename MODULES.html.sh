@@ -2049,16 +2049,6 @@ func_all_modules ()
   func_module vla
   func_end_table
 
-  element="Sizes of integer types <limits.h>"
-  element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
-  func_section_wrap isoc_sup_limits
-  func_wrap H3
-  func_echo "$element"
-
-  func_begin_table
-  func_module size_max
-  func_end_table
-
   element="Variable arguments <stdarg.h>"
   element=`printf "%s" "$element" | sed -e "$sed_lt" -e "$sed_gt"`
   func_section_wrap isoc_sup_stdarg
@@ -2096,6 +2086,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module size_max
   func_module stdint
   func_end_table
 
@@ -2352,6 +2343,15 @@ func_all_modules ()
   func_begin_table
   func_module std-gnu11
   func_module stdalign
+  func_end_table
+
+  element="Support for standard extensions to ISO C 11"
+  func_section_wrap c11_ext
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module limits-h
   func_end_table
 
   element="Support for obsolete systems lacking POSIX:2008"

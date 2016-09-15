@@ -1,0 +1,12 @@
+Files:
+tests/test-limits-h.c
+
+Depends-on:
+extensions
+verify
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-limits-h
+check_PROGRAMS += test-limits-h
