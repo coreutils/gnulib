@@ -1,5 +1,6 @@
 Description:
-A <stdint.h> that nearly conforms to C99.
+A GNU-like <stdint.h>.
+It nearly conforms to C99 and to ISO/IEC TS 18661-1:2014.
 Assumes typical host with 8-bit bytes, two's complement
 representation, and no padding or trap representations, with int
 widths equal to 8, 16, 32, and 64 bits.  {uint,int}_fast{8,16,32,64}_t
@@ -13,6 +14,7 @@ m4/longlong.m4
 
 Depends-on:
 include_next
+limits-h
 multiarch
 sys_types
 
@@ -34,6 +36,7 @@ stdint.h: stdint.in.h $(top_builddir)/config.status
 	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_STDINT_H''@|$(NEXT_STDINT_H)|g' \
+	      -e 's/@''HAVE_C99_STDINT_H''@/$(HAVE_C99_STDINT_H)/g' \
 	      -e 's/@''HAVE_SYS_TYPES_H''@/$(HAVE_SYS_TYPES_H)/g' \
 	      -e 's/@''HAVE_INTTYPES_H''@/$(HAVE_INTTYPES_H)/g' \
 	      -e 's/@''HAVE_SYS_INTTYPES_H''@/$(HAVE_SYS_INTTYPES_H)/g' \

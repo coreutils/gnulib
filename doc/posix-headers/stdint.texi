@@ -33,6 +33,9 @@ On some hosts that predate C++11, when using C++ one must define
 constant macros such as @code{INTMAX_C}, and one must define
 @code{__STDC_LIMIT_MACROS} to make visible the definitions of limit
 macros such as @code{INTMAX_MAX}.
+@item
+Macros like @code{INTMAX_WIDTH} are not defined on some platforms:
+glibc 2.24, many others.
 @end itemize
 
 Portability problems not fixed by Gnulib:

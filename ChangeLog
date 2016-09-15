@@ -1,5 +1,16 @@
 2016-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	stdint: support new _WIDTH macros
+	* doc/posix-headers/stdint.texi: Document this.
+	* lib/stdint.in.h: Add support for INTMAX_WIDTH. etc.
+	* m4/stdint.m4 (gl_STDINT_H): Require gl_LIMITS_H.  Check for
+	support for INTMAX_WIDTH, etc. as well as for support for just C99.
+	* modules/stdint (Depends-on): Add limits-h.
+	(Makefile.am): Substitute HAVE_C99_STDINT_H.
+	* modules/stdint-tests (Depends-on): Add extensions, so that
+	INTMAX_MAX etc. are defined.
+	* tests/test-stdint.c: Verify the new macros.
+
 	limits-h: new module
 	This adds ISO/IEC TS 18661-1:2014 support to limits.h.
 	* MODULES.html.sh: Add limits-h,and move size_max to stdint section.

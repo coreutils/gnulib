@@ -351,6 +351,64 @@ verify_same_types (INTMAX_C (17), (intmax_t)0 + 0);
 verify (UINTMAX_C (17) == 17);
 verify_same_types (UINTMAX_C (17), (uintmax_t)0 + 0);
 
+/* Macros specified by ISO/IEC TS 18661-1:2014.  */
+
+#define verify_width(width, min, max) \
+  verify ((max) >> ((width) - 1 - ((min) < 0)) == 1)
+
+#ifdef INT8_MAX
+verify_width (INT8_WIDTH, INT8_MIN, INT8_MAX);
+#endif
+#ifdef UINT8_MAX
+verify_width (UINT8_WIDTH, 0, UINT8_MAX);
+#endif
+#ifdef INT16_MAX
+verify_width (INT16_WIDTH, INT16_MIN, INT16_MAX);
+#endif
+#ifdef UINT16_MAX
+verify_width (UINT16_WIDTH, 0, UINT16_MAX);
+#endif
+#ifdef INT32_MAX
+verify_width (INT32_WIDTH, INT32_MIN, INT32_MAX);
+#endif
+#ifdef UINT32_MAX
+verify_width (UINT32_WIDTH, 0, UINT32_MAX);
+#endif
+#ifdef INT64_MAX
+verify_width (INT64_WIDTH, INT64_MIN, INT64_MAX);
+#endif
+#ifdef UINT64_MAX
+verify_width (UINT64_WIDTH, 0, UINT64_MAX);
+#endif
+verify_width (INT_LEAST8_WIDTH, INT_LEAST8_MIN, INT_LEAST8_MAX);
+verify_width (UINT_LEAST8_WIDTH, 0, UINT_LEAST8_MAX);
+verify_width (INT_LEAST16_WIDTH, INT_LEAST16_MIN, INT_LEAST16_MAX);
+verify_width (UINT_LEAST16_WIDTH, 0, UINT_LEAST16_MAX);
+verify_width (INT_LEAST32_WIDTH, INT_LEAST32_MIN, INT_LEAST32_MAX);
+verify_width (UINT_LEAST32_WIDTH, 0, UINT_LEAST32_MAX);
+verify_width (INT_LEAST64_WIDTH, INT_LEAST64_MIN, INT_LEAST64_MAX);
+verify_width (UINT_LEAST64_WIDTH, 0, UINT_LEAST64_MAX);
+verify_width (INT_FAST8_WIDTH, INT_FAST8_MIN, INT_FAST8_MAX);
+verify_width (UINT_FAST8_WIDTH, 0, UINT_FAST8_MAX);
+verify_width (INT_FAST16_WIDTH, INT_FAST16_MIN, INT_FAST16_MAX);
+verify_width (UINT_FAST16_WIDTH, 0, UINT_FAST16_MAX);
+verify_width (INT_FAST32_WIDTH, INT_FAST32_MIN, INT_FAST32_MAX);
+verify_width (UINT_FAST32_WIDTH, 0, UINT_FAST32_MAX);
+verify_width (INT_FAST64_WIDTH, INT_FAST64_MIN, INT_FAST64_MAX);
+verify_width (UINT_FAST64_WIDTH, 0, UINT_FAST64_MAX);
+verify_width (INTPTR_WIDTH, INTPTR_MIN, INTPTR_MAX);
+verify_width (UINTPTR_WIDTH, 0, UINTPTR_MAX);
+verify_width (INTMAX_WIDTH, INTMAX_MIN, INTMAX_MAX);
+verify_width (UINTMAX_WIDTH, 0, UINTMAX_MAX);
+verify_width (PTRDIFF_WIDTH, PTRDIFF_MIN, PTRDIFF_MAX);
+verify_width (SIZE_WIDTH, 0, SIZE_MAX);
+verify_width (WCHAR_WIDTH, WCHAR_MIN, WCHAR_MAX);
+#ifdef WINT_MAX
+verify_width (WINT_WIDTH, WINT_MIN, WINT_MAX);
+#endif
+#ifdef SIG_ATOMIC_MAX
+verify_width (SIG_ATOMIC_WIDTH, SIG_ATOMIC_MIN, SIG_ATOMIC_MAX);
+#endif
 
 int
 main (void)
