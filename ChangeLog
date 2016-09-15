@@ -1,5 +1,8 @@
 2016-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	extensions: fix typo in comment
+	* m4/extensions.m4: Sync from Autoconf master.
+
 	stdint: support new _WIDTH macros
 	* doc/posix-headers/stdint.texi: Document this.
 	* lib/stdint.in.h: Add support for INTMAX_WIDTH. etc.

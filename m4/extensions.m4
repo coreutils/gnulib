@@ -1,4 +1,4 @@
-# serial 14  -*- Autoconf -*-
+# serial 15  -*- Autoconf -*-
 # Enable extensions on systems that normally disable them.
 
 # Copyright (C) 2003, 2006-2016 Free Software Foundation, Inc.
@@ -96,7 +96,7 @@ dnl configure.ac when using autoheader 2.62.
 #ifndef __STDC_WANT_LIB_EXT2__
 # undef __STDC_WANT_LIB_EXT2__
 #endif
-/* Enable extensions specified by ISO/IEC TR 24747:2009.  */
+/* Enable extensions specified by ISO/IEC 24747:2009.  */
 #ifndef __STDC_WANT_MATH_SPEC_FUNCS__
 # undef __STDC_WANT_MATH_SPEC_FUNCS__
 #endif
