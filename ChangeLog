@@ -1,3 +1,9 @@
+2016-09-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	extensions: port to more ISO C TSes
+	* m4/extensions.m4 (AC_USE_SYSTEM_EXTENSIONS): Sync from Autoconf
+	master, to add support for more recent ISO C TRs and TSes.
+
 2016-09-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: new macro TYPE_WIDTH
