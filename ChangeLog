@@ -1,5 +1,13 @@
 2016-09-15  Eric Blake  <eblake@redhat.com>
 
+	sys_types: avoid glibc 2.25 warnings about major()
+	* m4/sys_types_h.m4 (AC_HEADER_MAJOR): Replace broken version in
+	older autoconf.
+	* doc/posix-headers/sys_types.texi (sys/types.h): Document fix.
+	* doc/glibc-functions/gnu_dev_major.texi (gnu_dev_major): Likewise.
+	* doc/glibc-functions/gnu_dev_makedev.texi (gnu_dev_makedev): Likewise.
+	* doc/glibc-functions/gnu_dev_minor.texi (gnu_dev_minor): Likewise.
+
 	mountlist: include sysmacros.h for glibc
 	* m4/mountlist.m4 (gl_PREREQ_MOUTLIST_EXTRA): Include
 	AC_HEADER_MAJOR.

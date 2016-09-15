@@ -19,6 +19,12 @@ MSVC 9.
 @item
 The type @code{mode_t} is not defined on some platforms:
 MSVC 9.
+@item
+Some systems leak definitions of @code{major}, @code{minor}, and
+@code{makedev} through this header; however, when
+@file{sys/sysmacros.h} exists, that file should also be included to
+avoid deprecation warnings from the versions in this header:
+glibc 2.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:

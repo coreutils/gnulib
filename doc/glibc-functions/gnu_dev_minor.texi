@@ -6,6 +6,10 @@ Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
+The @code{AC_HEADER_MAJOR} macro in Autoconf 2.69 and earlier fails to
+set @code{MAJOR_IN_SYSMACROS} when it detects namespace pollution in
+@file{sys/types.h}; which in turn provokes deprecation warnings in
+glibc 2.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:
