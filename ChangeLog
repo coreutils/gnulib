@@ -1,3 +1,10 @@
+2016-09-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdio: don't redefine __USE_MINGW_ANSI_STDIO
+	* m4/stdio_h.m4 (gl_STDIO_H): Don't define __USE_MINGW_ANSI_STDIO
+	if it is already defined.  Apparently GNU Emacs relies on this.  See:
+	http://lists.gnu.org/archive/html/emacs-devel/2016-09/msg00416.html
+
 2016-09-15  Eric Blake  <eblake@redhat.com>
 
 	sys_types: avoid glibc 2.25 warnings about major()
