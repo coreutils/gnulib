@@ -1,3 +1,13 @@
+2016-09-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	limits-h, stdint: Don't assume extensions, fix typo
+	* m4/limits-h.m4 (gl_LIMITS_H):
+	* m4/stdint.m4 (gl_STDINT_H):
+	Don't assume AC_USE_SYSTEM_EXTENSIONS.
+	* m4/stdint.m4 (gl_STDINT_H): Fix typo in setting of LIMITS_H,
+	reported by Jim Meyering in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-09/msg00050.html
+
 2016-09-21  Jim Meyering  <meyering@fb.com>
 
 	getprogname: port to AIX
