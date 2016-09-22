@@ -34,7 +34,6 @@ static char *
 ctype_codeset (void)
 {
   static char buf[2 + 10 + 1];
-  size_t buflen = 0;
   char const *locale = setlocale (LC_CTYPE, NULL);
   char *codeset = buf;
   size_t codesetlen;
@@ -99,14 +98,14 @@ rpl_nl_langinfo (nl_item item)
 # endif
 # if GNULIB_defined_T_FMT_AMPM
     case T_FMT_AMPM:
-      return "%I:%M:%S %p";
+      return (char *) "%I:%M:%S %p";
 # endif
 # if GNULIB_defined_ERA
     case ERA:
       /* The format is not standardized.  In glibc it is a sequence of strings
          of the form "direction:offset:start_date:end_date:era_name:era_format"
          with an empty string at the end.  */
-      return "";
+      return (char *) "";
     case ERA_D_FMT:
       /* The %Ex conversion in strftime behaves like %x if the locale does not
          have an alternative time format.  */
@@ -125,13 +124,13 @@ rpl_nl_langinfo (nl_item item)
     case ALT_DIGITS:
       /* The format is not standardized.  In glibc it is a sequence of 10
          strings, appended in memory.  */
-      return "\0\0\0\0\0\0\0\0\0\0";
+      return (char *) "\0\0\0\0\0\0\0\0\0\0";
 # endif
 # if GNULIB_defined_YESEXPR || !FUNC_NL_LANGINFO_YESEXPR_WORKS
     case YESEXPR:
-      return "^[yY]";
+      return (char *) "^[yY]";
     case NOEXPR:
-      return "^[nN]";
+      return (char *) "^[nN]";
 # endif
     default:
       break;
@@ -163,9 +162,9 @@ nl_langinfo (nl_item item)
           return codeset;
       }
 # ifdef __BEOS__
-      return "UTF-8";
+      return (char *) "UTF-8";
 # else
-      return "ISO-8859-1";
+      return (char *) "ISO-8859-1";
 # endif
     /* nl_langinfo items of the LC_NUMERIC category */
     case RADIXCHAR:
@@ -178,23 +177,23 @@ nl_langinfo (nl_item item)
        TODO: Really use the locale.  */
     case D_T_FMT:
     case ERA_D_T_FMT:
-      return "%a %b %e %H:%M:%S %Y";
+      return (char *) "%a %b %e %H:%M:%S %Y";
     case D_FMT:
     case ERA_D_FMT:
-      return "%m/%d/%y";
+      return (char *) "%m/%d/%y";
     case T_FMT:
     case ERA_T_FMT:
-      return "%H:%M:%S";
+      return (char *) "%H:%M:%S";
     case T_FMT_AMPM:
-      return "%I:%M:%S %p";
+      return (char *) "%I:%M:%S %p";
     case AM_STR:
       if (!strftime (nlbuf, sizeof nlbuf, "%p", &tmm))
-        return "AM";
+        return (char *) "AM";
       return nlbuf;
     case PM_STR:
       tmm.tm_hour = 12;
       if (!strftime (nlbuf, sizeof nlbuf, "%p", &tmm))
-        return "PM";
+        return (char *) "PM";
       return nlbuf;
     case DAY_1:
     case DAY_2:
@@ -274,9 +273,9 @@ nl_langinfo (nl_item item)
         return nlbuf;
       }
     case ERA:
-      return "";
+      return (char *) "";
     case ALT_DIGITS:
-      return "\0\0\0\0\0\0\0\0\0\0";
+      return (char *) "\0\0\0\0\0\0\0\0\0\0";
     /* nl_langinfo items of the LC_MONETARY category.  */
     case CRNCYSTR:
       return localeconv () ->currency_symbol;
@@ -311,11 +310,11 @@ nl_langinfo (nl_item item)
     /* nl_langinfo items of the LC_MESSAGES category
        TODO: Really use the locale. */
     case YESEXPR:
-      return "^[yY]";
+      return (char *) "^[yY]";
     case NOEXPR:
-      return "^[nN]";
+      return (char *) "^[nN]";
     default:
-      return "";
+      return (char *) "";
     }
 }
 

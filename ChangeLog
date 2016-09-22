@@ -1,5 +1,9 @@
 2016-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
+	nl_langinfo: pacify GCC
+	* lib/nl_langinfo.c (ctype_codeset): Remove unused local.
+	(rpl_nl_langinfo): Cast string literals to char *, to pacify GCC.
+
 	stdint: also set GL_GENERATE_LIMITS_H
 	Problem reported by Jim Meyering in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2016-09/msg00052.html
