@@ -1,4 +1,4 @@
-# stdint.m4 serial 46
+# stdint.m4 serial 47
 dnl Copyright (C) 2001-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -347,6 +347,7 @@ int32_t i32 = INT32_C (0x7fffffff);
 
   # The substitute stdint.h needs the substitute limit.h's _GL_INTEGER_WIDTH.
   LIMITS_H=limits.h
+  AM_CONDITIONAL([GL_GENERATE_LIMITS_H], [test -n "$LIMITS_H"])
 
   AC_SUBST([HAVE_C99_STDINT_H])
   AC_SUBST([HAVE_SYS_BITYPES_H])
