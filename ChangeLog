@@ -1,3 +1,13 @@
+2016-09-21  Jim Meyering  <meyering@fb.com>
+
+	getprogname: port to AIX
+	* lib/getprogname.c (getprogname) [_AIX]: Use getpid, getprocs64
+	and strdup to obtain a short program name string.  Using code from
+	Bruno Haible and an idea from Bastien ROUCARIÈS, in
+	https://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00249.html
+	Assaf Gordon reported that this new file would fail to compile on
+	AIX-7.1 32bit.
+
 2016-09-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	extensions: fix typo in comment

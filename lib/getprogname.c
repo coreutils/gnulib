@@ -22,6 +22,12 @@
 #include <errno.h> /* get program_invocation_name declaration */
 #include <stdlib.h> /* get __argv declaration */
 
+#ifdef _AIX
+# include <unistd.h>
+# include <procinfo.h>
+# include <string.h>
+#endif
+
 #include "dirname.h"
 
 #ifndef HAVE_GETPROGNAME
@@ -41,6 +47,26 @@ getprogname (void)
 # elif HAVE_DECL___ARGV
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
+# elif _AIX
+  /* Idea by Bastien ROUCARIÈS <address@hidden>,
+     http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
+     Reference: http://
+   ibm.biz/knowctr#ssw_aix_53/com.ibm.aix.basetechref/doc/basetrf1/getprocs.htm
+  */
+  static char *p;
+  static int first = 1;
+  if (first)
+    {
+      first = 0;
+      pid_t pid = getpid ();
+      struct procentry64 procs;
+      p = (0 < getprocs64 (&procs, sizeof procs, NULL, 0, &pid, 1)
+           ? strdup (procs.pi_comm)
+           : NULL);
+      if (!p)
+        p = "?";
+    }
+  return p;
 # else
 #  error "getprogname module not ported to this OS"
 # endif
