@@ -1,5 +1,16 @@
 2016-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
+	sched: port to GCC 6.2.1 on macOS Sierra
+	Problem reported by Denis Davydov in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-09/msg00056.html
+	* lib/sched.in.h [HAVE_SYS_CDEFS_H]:
+	Include <sys/cdefs.h> before <sched.h>.
+	* m4/nproc.m4 (gl_PREREQ_NPROC): Include errno.h before sched.h,
+	so that we needn’t worry about the sched.h include bug here.
+	* m4/sched_h.m4 (gl_SCHED_H): Check for sys/cdefs.h,
+	and include it before <sched.h> if it exists, when
+	checking for <sched.h>.
+
 	tests/init.sh: port Alpine fix to AIX 7.1
 	* tests/init.sh (compare_): When attempting to use diff -U3,
 	prefer diff -u to -U3 to -c to plain diff.  Do not insist on

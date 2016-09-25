@@ -1,4 +1,4 @@
-# sched_h.m4 serial 7
+# sched_h.m4 serial 8
 dnl Copyright (C) 2008-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ dnl Written by Bruno Haible.
 
 AC_DEFUN([gl_SCHED_H],
 [
+  AC_CHECK_HEADERS_ONCE([sys/cdefs.h])
   AC_COMPILE_IFELSE(
     [AC_LANG_PROGRAM([[
        #include <sched.h>
@@ -17,10 +18,14 @@ AC_DEFUN([gl_SCHED_H],
      ]])],
     [SCHED_H=''],
     [SCHED_H='sched.h'
+     AC_CHECK_HEADERS([sched.h], [], [],
+       [[#if HAVE_SYS_CDEFS_H
+          #include <sys/cdefs.h>
+         #endif
+       ]])
+     gl_NEXT_HEADERS([sched.h])
 
-     gl_CHECK_NEXT_HEADERS([sched.h])
-
-     if test $ac_cv_header_sched_h = yes; then
+     if test "$ac_cv_header_sched_h" = yes; then
        HAVE_SCHED_H=1
      else
        HAVE_SCHED_H=0
@@ -30,7 +35,11 @@ AC_DEFUN([gl_SCHED_H],
      if test "$HAVE_SCHED_H" = 1; then
        AC_CHECK_TYPE([struct sched_param],
          [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
-         [#include <sched.h>])
+         [[#if HAVE_SYS_CDEFS_H
+            #include <sys/cdefs.h>
+           #endif
+           #include <sched.h>
+         ]])
      else
        dnl On OS/2 kLIBC, struct sched_param is in spawn.h.
        AC_CHECK_TYPE([struct sched_param],
