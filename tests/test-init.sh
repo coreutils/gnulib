@@ -57,7 +57,8 @@ EOF
     # Also remove the @@ line, since Solaris 5.10 and GNU diff formats differ:
     # -@@ -0,0 +1 @@
     # +@@ -1,0 +1,1 @@
-    sed 's/	.*//;/^@@/d' out > k && mv k out
+    # Also, remove space after leading '+', since AIX 7.1 diff outputs a space.
+    sed 's/	.*//;/^@@/d;s/^+ /+/' out > k && mv k out
     cat <<\EOF > exp
 --- empty
 +++ in

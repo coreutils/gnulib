@@ -1,3 +1,15 @@
+2016-09-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	tests/init.sh: port Alpine fix to AIX 7.1
+	* tests/init.sh (compare_): When attempting to use diff -U3,
+	prefer diff -u to -U3 to -c to plain diff.  Do not insist on
+	diff -u not outputting a space after leading '+', as the users
+	of 'compare' should not be that picky about its output format.
+	In the AIX 7.1 case, return with diff exit status (or with 2 if
+	trouble), instead of some random nonzero exit status.
+	* tests/test-init.sh (test_compare): Remove space after leading
+	'+', so that AIX 7.1 'diff' passes the test.
+
 2016-09-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	nl_langinfo: pacify GCC
