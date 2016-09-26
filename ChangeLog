@@ -1,3 +1,13 @@
+2016-10-03  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg: minimize shell quoting using double quotes
+	* lib/quotearg.c (quotearg_buffer_restyled): If an ASCII single
+	quote in encountered then use double quotes (c style quoting)
+	when possible, as it simplifies the quoting.
+	* tests/test-quotearg-simple.c: Add test cases.
+	* tests/test-quotearg.h (use_quotearg_buffer): Adjust to account
+	for the fact we now may write beyond the returned length.
+
 2016-10-02  Jim Meyering  <meyering@fb.com>
 
 	vasnprintf.c: avoid spurious warning from GCC 7

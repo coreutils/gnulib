@@ -258,6 +258,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
   bool unibyte_locale = MB_CUR_MAX == 1;
   bool elide_outer_quotes = (flags & QA_ELIDE_OUTER_QUOTES) != 0;
   bool pending_shell_escape_end = false;
+  bool encountered_single_quote = false;
+  bool all_c_and_shell_quote_compat = true;
 
 #define STORE(c) \
     do \
@@ -388,6 +390,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
       unsigned char esc;
       bool is_right_quote = false;
       bool escaping = false;
+      bool c_and_shell_quote_compat = false;
 
       if (backslash_escapes
           && quoting_style != shell_always_quoting_style
@@ -515,6 +518,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             break;
           /* Fall through.  */
         case ' ':
+          c_and_shell_quote_compat = true;
+          /* Fall through.  */
         case '!': /* special in bash */
         case '"': case '$': case '&':
         case '(': case ')': case '*': case ';':
@@ -533,6 +538,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           break;
 
         case '\'':
+          encountered_single_quote = true;
+          c_and_shell_quote_compat = true;
           if (quoting_style == shell_always_quoting_style)
             {
               if (elide_outer_quotes)
@@ -566,6 +573,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
              them.  Also, a digit or a special letter would cause
              trouble if it appeared in quote_these_too, but that's also
              documented as not accepting them.  */
+          c_and_shell_quote_compat = true;
           break;
 
         default:
@@ -644,6 +652,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
                 while (! mbsinit (&mbstate));
               }
 
+            c_and_shell_quote_compat = printable;
+
             if (1 < m || (backslash_escapes && ! printable))
               {
                 /* Output a multibyte sequence, or an escaped
@@ -689,11 +699,25 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
     store_c:
       END_ESC ();
       STORE (c);
+
+      if (! c_and_shell_quote_compat)
+        all_c_and_shell_quote_compat = false;
     }
 
   if (len == 0 && quoting_style == shell_always_quoting_style
       && elide_outer_quotes)
     goto force_outer_quoting_style;
+
+  /* Single shell quotes (') are commonly enough used as an apostrophe,
+     that we attempt to minimize the quoting in this case.  Note itʼs
+     better to use the apostrophe modifier "\u02BC" if possible, as that
+     renders better and works with the word match regex \W+ etc.  */
+  if (quoting_style == shell_always_quoting_style && ! elide_outer_quotes
+      && all_c_and_shell_quote_compat && encountered_single_quote)
+    return quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
+                                     c_quoting_style,
+                                     flags, quote_these_too,
+                                     left_quote, right_quote);
 
   if (quote_string && !elide_outer_quotes)
     for (; *quote_string; quote_string++)
