@@ -1,3 +1,14 @@
+2016-09-28  Jim Meyering  <meyering@fb.com>
+
+	getprogname: port to OpenBSD 5.1
+	* lib/getprogname.c (__progname) [HAVE_DECL___PROGNAME]: Declare.
+	(getprogname) [HAVE_DECL___PROGNAME]: Return __progname or "?".
+	* modules/getprogname (configure.ac): Move most of this code...
+	* m4/getprogname.m4 (gl_FUNC_GETPROGNAME): ... to this function,
+	increment serial number, and add a test for __progname.
+	https://bugs.gnu.org/24562
+	Reported by Nelson H. F. Beebe.
+
 2016-09-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sched: port to GCC 6.2.1 on macOS Sierra

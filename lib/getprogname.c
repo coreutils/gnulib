@@ -32,6 +32,10 @@
 
 #ifndef HAVE_GETPROGNAME
 
+# ifdef HAVE_DECL___PROGNAME
+char *__progname;
+# endif
+
 char const *
 getprogname (void)
 {
@@ -47,6 +51,11 @@ getprogname (void)
 # elif HAVE_DECL___ARGV
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
+# elif HAVE_DECL___PROGNAME
+  /* This variable exists at least on OpenBSD 5.1 and glibc-2.23,
+     and appears always to be the basename component of argv[0].  */
+  const char *p = __progname;
+  return p && p[0] ? p : "?";
 # elif _AIX
   /* Idea by Bastien ROUCARIÈS <address@hidden>,
      http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
