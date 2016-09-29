@@ -1,5 +1,9 @@
 2016-09-28  Jim Meyering  <meyering@fb.com>
 
+	u8-uctomb-aux.c: build: placate GCC 7's new -Wimplicit-fallthrough
+	* lib/unistr/u8-uctomb-aux.c (u8_uctomb_aux): Mark each end of
+	fall-through case with a /* fallthrough */ comment.
+
 	dfa: build: avoid warning from GCC 7's new -Wimplicit-fallthrough
 	* lib/dfa.c (dfassbuild): Mark the end of this case with a
 	/* fallthrough */ comment.
