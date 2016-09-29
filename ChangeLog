@@ -1,5 +1,13 @@
 2016-09-28  Jim Meyering  <meyering@fb.com>
 
+	getprogname: avoid __progname vs program_invocation_short_name pitfall
+	I.e., don't let the OpenBSD 5.1 fix induce failure when using newer
+	glibc.  Would have caused failure with Fedora 25's glibc-2.24-3, but
+	not with Fedora 24's glibc-2.23.1-10.
+	* lib/getprogname.c (__progname): Move this declaration down...
+	(getprogname): ... into the #elif block where used, and make it
+	explicitly "extern".
+
 	getprogname: port to OpenBSD 5.1
 	* lib/getprogname.c (__progname) [HAVE_DECL___PROGNAME]: Declare.
 	(getprogname) [HAVE_DECL___PROGNAME]: Return __progname or "?".

@@ -32,10 +32,6 @@
 
 #ifndef HAVE_GETPROGNAME
 
-# ifdef HAVE_DECL___PROGNAME
-char *__progname;
-# endif
-
 char const *
 getprogname (void)
 {
@@ -52,8 +48,11 @@ getprogname (void)
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
 # elif HAVE_DECL___PROGNAME
-  /* This variable exists at least on OpenBSD 5.1 and glibc-2.23,
-     and appears always to be the basename component of argv[0].  */
+  /* Be careful to declare this only when we absolutely need it
+     (OpenBSD 5.1), rather than when it's available.  Otherwise,
+     its mere declaration makes program_invocation_short_name
+     malfunction (have zero length) with Fedora 25's glibc.  */
+  extern char *__progname;
   const char *p = __progname;
   return p && p[0] ? p : "?";
 # elif _AIX
