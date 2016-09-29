@@ -1,5 +1,9 @@
 2016-09-28  Jim Meyering  <meyering@fb.com>
 
+	dfa: build: avoid warning from GCC 7's new -Wimplicit-fallthrough
+	* lib/dfa.c (dfassbuild): Mark the end of this case with a
+	/* fallthrough */ comment.
+
 	getprogname: avoid __progname vs program_invocation_short_name pitfall
 	I.e., don't let the OpenBSD 5.1 fix induce failure when using newer
 	glibc.  Would have caused failure with Fedora 25's glibc-2.24-3, but

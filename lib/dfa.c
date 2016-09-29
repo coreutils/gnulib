@@ -3434,6 +3434,7 @@ dfassbuild (struct dfa *d)
               sup->tokens[j++] = EMPTY;
               break;
             }
+          /* fallthrough */
         default:
           sup->tokens[j++] = d->tokens[i];
           if ((0 <= d->tokens[i] && d->tokens[i] < NOTCHAR)
