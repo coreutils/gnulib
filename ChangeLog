@@ -1,3 +1,13 @@
+2016-10-01  Jim Meyering  <meyering@fb.com>
+
+	getprogname: correct the test for a __progname variable
+	* m4/getprogname.m4 (gl_FUNC_GETPROGNAME): Use AC_CACHE_CHECK
+	and AC_LINK_IFELSE to check for a global __progname.  If found,
+	define HAVE_VAR___PROGNAME.
+	* lib/getprogname.c (getprogname): Reflect the new name of the
+	feature- checked preprocessor symbol:
+	s/HAVE_DECL___PROGNAME/HAVE_VAR___PROGNAME/
+
 2016-09-28  Jim Meyering  <meyering@fb.com>
 
 	u8-uctomb-aux.c: build: placate GCC 7's new -Wimplicit-fallthrough

@@ -47,7 +47,7 @@ getprogname (void)
 # elif HAVE_DECL___ARGV
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
-# elif HAVE_DECL___PROGNAME
+# elif HAVE_VAR___PROGNAME
   /* Be careful to declare this only when we absolutely need it
      (OpenBSD 5.1), rather than when it's available.  Otherwise,
      its mere declaration makes program_invocation_short_name
