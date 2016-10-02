@@ -1,3 +1,14 @@
+2016-10-02  Jim Meyering  <meyering@fb.com>
+
+	vasnprintf.c: avoid spurious warning from GCC 7
+	The presence of cpp directives renders this "FALLTHROUGH" comment
+	ineffective, so does not suppress the -Wimplicit-fallthrough warning
+	from GCC 7 built from git on 2016-10-02.
+	* lib/vasnprintf.c (VASNPRINTF): Move comment down past two cpp
+	directives, so that it takes effect once again.  This is clearly
+	not a proper change, and I will revert it once this bug is fixed:
+	https://gcc.gnu.org/bugzilla/show_bug.cgi?id=77817
+
 2016-10-01  Jim Meyering  <meyering@fb.com>
 
 	getprogname: correct the test for a __progname variable

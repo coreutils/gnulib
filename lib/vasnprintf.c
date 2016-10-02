@@ -4832,9 +4832,9 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     break;
 # else
                     *fbp++ = 'l';
-                    /*FALLTHROUGH*/
 # endif
 #endif
+                    /*FALLTHROUGH*/
                   case TYPE_LONGINT:
                   case TYPE_ULONGINT:
 #if HAVE_WINT_T
