@@ -64,6 +64,7 @@ parse_long_options (int argc,
         {
         case 'h':
           (*usage_func) (EXIT_SUCCESS);
+          break;
 
         case 'v':
           {
