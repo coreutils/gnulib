@@ -1,5 +1,18 @@
 2016-10-05  Jim Meyering  <meyering@fb.com>
 
+	long-options: avoid new GCC 7 warning from -Wimplicit-fallthrough
+	* lib/long-options.c (parse_long_options): Add a break statement
+	to avoid this new warning/failure:
+	$ CFLAGS='-O -Werror=implicit-fallthrough' ./gnulib-tool \
+	  --create-testdir --dir=/t/x --with-tests --test long-options
+	../../gllib/long-options.c: In function 'parse_long_options':
+	../../gllib/long-options.c:66:12: error: this statement may \
+	  fall through [-Werror=implicit-fallthrough]
+	           (*usage_func) (EXIT_SUCCESS);
+	           ~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2016-10-05  Jim Meyering  <meyering@fb.com>
+
 	utimecmp: avoid new GCC 7 warning from -Wbool-operation
 	Testing this module would fail when using GCC 7 like this:
 	$ CFLAGS='-O -Werror=bool-operation' ./gnulib-tool --create-testdir \
