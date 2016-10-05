@@ -1,3 +1,21 @@
+2016-10-05  Jim Meyering  <meyering@fb.com>
+
+	utimecmp: avoid new GCC 7 warning from -Wbool-operation
+	Testing this module would fail when using GCC 7 like this:
+	$ CFLAGS='-O -Werror=bool-operation' ./gnulib-tool --create-testdir \
+	  --dir=/tmp/x --with-tests --test utimecmp
+	../../gllib/utimecmp.c: In function ‘utimecmp’:
+	../../gllib/utimecmp.c:291:36: error: ‘~’ on a boolean expression \
+	  [-Werror=bool-operation]
+	                 time_t s = src_s & ~ (res == 2 * BILLION);
+	                                    ^
+	../../gllib/utimecmp.c:370:16: error: ‘~’ on a boolean expression \
+	  [-Werror=bool-operation]
+	       src_s &= ~ (res == 2 * BILLION);
+	                ^
+	* lib/utimecmp.c (utimecmp): Do not apply "~" to a boolean.
+	Instead, make it explicit that we intend to apply it to 0 or 1.
+
 2016-10-03  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: minimize shell quoting using double quotes

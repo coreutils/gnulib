@@ -288,7 +288,7 @@ utimecmp (char const *dst_name,
                  to interrogate the file system to deduce the exact time
                  stamp resolution; return the answer directly.  */
               {
-                time_t s = src_s & ~ (res == 2 * BILLION);
+                time_t s = src_s & ~ (res == 2 * BILLION ? 1 : 0);
                 if (src_s < dst_s || (src_s == dst_s && src_ns <= dst_ns))
                   return 1;
                 if (dst_s < s
@@ -367,7 +367,7 @@ utimecmp (char const *dst_name,
         }
 
       /* Truncate the source's time stamp according to the resolution.  */
-      src_s &= ~ (res == 2 * BILLION);
+      src_s &= ~ (res == 2 * BILLION ? 1 : 0);
       src_ns -= src_ns % res;
     }
 
