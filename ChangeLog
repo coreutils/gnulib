@@ -1,3 +1,13 @@
+2016-10-10  Eli Zaretskii  <eliz@gnu.org>
+
+	wchar, wctype-h: fix for MinGW 3.22.2
+	* lib/wchar.in.h [__MINGW32__]: Add one more condition for
+	special invocation, to fix issues with MinGW 3.22.2 wchar.h
+	when included from <string.h>.
+	* lib/wctype.in.h [__MINGW32__]: Add special invocation
+	convention for MinGW 3.22.2, to solve issues with their
+	wctype.h when included from <ctype.h>.
+
 2016-10-05  Jim Meyering  <meyering@fb.com>
 
 	long-options: avoid new GCC 7 warning from -Wimplicit-fallthrough

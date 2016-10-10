@@ -25,12 +25,24 @@
  * wctrans_t, and wctype_t are not yet implemented.
  */
 
-#ifndef _@GUARD_PREFIX@_WCTYPE_H
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
+
+#if (defined __MINGW32__ && defined __CTYPE_H_SOURCED__)
+
+/* Special invocation convention:
+   - With MinGW 3.22, when <ctype.h> includes <wctype.h>, only some part of
+     <wctype.h> is being processed, which doesn't include the idempotency
+     guard.   */
+
+#@INCLUDE_NEXT@ @NEXT_WCTYPE_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _@GUARD_PREFIX@_WCTYPE_H
 
 #if @HAVE_WINT_T@
 /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.
@@ -512,3 +524,4 @@ _GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_WCTYPE_H */
 #endif /* _@GUARD_PREFIX@_WCTYPE_H */
+#endif
