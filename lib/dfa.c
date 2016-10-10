@@ -3105,6 +3105,39 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
   unsigned char saved_end;
   size_t nlcount = 0;
 
+  if (MAX_TRCOUNT <= d->sindex)
+    {
+      for (s = d->min_trcount; s < d->sindex; s++)
+        {
+          free (d->states[s].elems.elems);
+          free (d->states[s].mbps.elems);
+        }
+      d->sindex = d->min_trcount;
+
+      if (d->trans)
+        {
+          for (s = 0; s < d->tralloc; s++)
+            {
+              free (d->trans[s]);
+              free (d->fails[s]);
+              d->trans[s] = d->fails[s] = NULL;
+            }
+          d->trcount = 0;
+        }
+
+      if (d->localeinfo.multibyte && d->mb_trans)
+        {
+          for (s = -1; s < d->tralloc; s++)
+            {
+              free (d->mb_trans[s]);
+              d->mb_trans[s] = NULL;
+            }
+          for (s = 0; s < d->min_trcount; s++)
+            d->states[s].mb_trindex = -1;
+          d->mb_trcount = 0;
+        }
+    }
+
   if (!d->tralloc)
     {
       realloc_trans_if_necessary (d, 1);
