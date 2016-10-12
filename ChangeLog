@@ -1,3 +1,9 @@
+2016-10-11  Jim Meyering  <meyering@fb.com>
+
+	maint: remove stray space after "." in AC_DEFINE comment.
+	* m4/st_dm_mode.m4 (AC_STRUCT_ST_DM_MODE): Remove space-after-".".
+	* m4/utimes.m4 (gl_FUNC_UTIMES): Likewise.
+
 2016-10-05  Jim Meyering  <meyering@fb.com>
 
 	long-options: avoid new GCC 7 warning from -Wimplicit-fallthrough
