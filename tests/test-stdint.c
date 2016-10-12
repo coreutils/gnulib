@@ -351,10 +351,19 @@ verify_same_types (INTMAX_C (17), (intmax_t)0 + 0);
 verify (UINTMAX_C (17) == 17);
 verify_same_types (UINTMAX_C (17), (uintmax_t)0 + 0);
 
-/* Macros specified by ISO/IEC TS 18661-1:2014.  */
+/* Use _GL_VERIFY (with a fixed-length diagnostic string) rather than verify,
+   because the latter would require forming each stringified expression, and
+   many of these would be so long as to trigger a warning/error like this:
 
+   test-stdint.c:407:1: error: string length '6980' is greater than the \
+     length '4095' ISO C99 compilers are required to support \
+     [-Werror=overlength-strings]
+  */
 #define verify_width(width, min, max) \
-  verify ((max) >> ((width) - 1 - ((min) < 0)) == 1)
+  _GL_VERIFY ((max) >> ((width) - 1 - ((min) < 0)) == 1, \
+              "verify_width check")
+
+/* Macros specified by ISO/IEC TS 18661-1:2014.  */
 
 #ifdef INT8_MAX
 verify_width (INT8_WIDTH, INT8_MIN, INT8_MAX);

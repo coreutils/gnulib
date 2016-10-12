@@ -1,3 +1,11 @@
+2016-10-12  Jim Meyering  <meyering@fb.com>
+
+	test-stdint: use _GL_VERIFY rather than "verify" for some tests
+	* tests/test-stdint.c (verify_width): Implement with _GL_VERIFY
+	and an abbreviated diagnostic rather than verify with the full one,
+	because the full-length strings would evoke warnings from gcc with
+	-Woverlength-strings.
+
 2016-10-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdint: port SIZE_MAX to glibc s390
