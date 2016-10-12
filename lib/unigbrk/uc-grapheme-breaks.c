@@ -1,4 +1,4 @@
-/* Grapheme cluster break property function.
+/* Grapheme cluster breaks function.
    Copyright (C) 2010-2017 Free Software Foundation, Inc.
    Written by Ben Pfaff <blp@cs.stanford.edu>, 2010.
 
@@ -13,32 +13,27 @@
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #include <config.h>
 
 /* Specification.  */
 #include "unigbrk.h"
 
-#include "gbrkprop.h"
+#include <string.h>
 
-int
-uc_graphemeclusterbreak_property (ucs4_t uc)
+#include "unistr.h"
+
+/* This is similar to u32_mbtouc_unsafe(), but doesn't check invalid
+   characters.  */
+static int
+uc_grapheme_breaks_mbtouc (ucs4_t *puc, const ucs4_t *s, size_t n)
 {
-  unsigned int index1 = uc >> gbrkprop_header_0;
-  if (index1 < gbrkprop_header_1)
-    {
-      int lookup1 = unigbrkprop.level1[index1];
-      if (lookup1 >= 0)
-        {
-          unsigned int index2 = (uc >> gbrkprop_header_2) & gbrkprop_header_3;
-          int lookup2 = unigbrkprop.level2[lookup1 + index2];
-          if (lookup2 >= 0)
-            {
-              unsigned int index3 = uc & gbrkprop_header_4;
-              return unigbrkprop.level3[lookup2 + index3];
-            }
-        }
-    }
-  return GBP_OTHER;
+  *puc = *s;
+  return 1;
 }
+
+#define FUNC uc_grapheme_breaks
+#define UNIT ucs4_t
+#define U_MBTOUC uc_grapheme_breaks_mbtouc
+#include "u-grapheme-breaks.h"

@@ -51,6 +51,11 @@ graphemebreakproperty_to_string (int gbp)
       CASE(LV)
       CASE(LVT)
       CASE(RI)
+      CASE(ZWJ)
+      CASE(EB)
+      CASE(EM)
+      CASE(GAZ)
+      CASE(EBG)
     }
   abort ();
 }

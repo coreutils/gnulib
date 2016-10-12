@@ -12,7 +12,7 @@
    Lesser General Public License for more details.
 
    You should have received a copy of the GNU Lesser General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* Written by Ben Pfaff <blp@cs.stanford.edu>, 2010. */
 
@@ -25,7 +25,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char *
+#include "macros.h"
+
+static const char *
 graphemebreakproperty_to_string (int gbp)
 {
   printf ("%d\n", gbp);
@@ -52,6 +54,42 @@ graphemebreakproperty_to_string (int gbp)
       CASE(EBG)
     }
   abort ();
+}
+
+static void
+test_uc_grapheme_breaks (const char *expected, ucs4_t *s, size_t n,
+                          const char *filename, int lineno)
+{
+  char breaks[16];
+  size_t i;
+
+  ASSERT (n <= 16);
+
+  uc_grapheme_breaks (s, n, breaks);
+  for (i = 0; i < n; i++)
+    if (breaks[i] != (expected[i] == '#'))
+      {
+        size_t j;
+
+        fprintf (stderr, "wrong grapheme breaks:\n");
+
+        fprintf (stderr, "   input:");
+        for (j = 0; j < n; j++)
+          fprintf (stderr, " %02x", s[j]);
+        putc ('\n', stderr);
+
+        fprintf (stderr, "expected:");
+        for (j = 0; j < n; j++)
+          fprintf (stderr, "  %d", expected[j] == '#');
+        putc ('\n', stderr);
+
+        fprintf (stderr, "  actual:");
+        for (j = 0; j < n; j++)
+          fprintf (stderr, "  %d", breaks[j]);
+        putc ('\n', stderr);
+
+        abort ();
+      }
 }
 
 int
@@ -85,9 +123,9 @@ main (int argc, char *argv[])
     {
       char *comment;
       const char *p;
-      ucs4_t prev;
-      int last_compchar_prop;
-      size_t ri_count;
+      ucs4_t s[16];
+      char breaks[16];
+      size_t i = 0;
 
       lineno++;
 
@@ -97,24 +135,21 @@ main (int argc, char *argv[])
       if (line[strspn (line, " \t\r\n")] == '\0')
         continue;
 
-      last_compchar_prop = -1;
-      ri_count = 0;
-      prev = 0;
+      s[0] = 0;
       p = line;
       do
         {
-          bool should_break;
           ucs4_t next;
 
           p += strspn (p, " \t\r\n");
           if (!strncmp (p, "\303\267" /* ÷ */, 2))
             {
-              should_break = true;
+              breaks[i] = '#';
               p += 2;
             }
           else if (!strncmp (p, "\303\227" /* × */, 2))
             {
-              should_break = false;
+              breaks[i] = '_';
               p += 2;
             }
           else
@@ -126,7 +161,7 @@ main (int argc, char *argv[])
 
           p += strspn (p, " \t\r\n");
           if (*p == '\0')
-            next = 0;
+            s[i] = 0;
           else
             {
               unsigned int next_int;
@@ -141,59 +176,15 @@ main (int argc, char *argv[])
                 }
               p += n;
 
-              next = next_int;
+              s[i] = next_int;
             }
-
-          if ((last_compchar_prop == GBP_EB
-               || last_compchar_prop == GBP_EBG)
-              && uc_graphemeclusterbreak_property (next) == GBP_EM)
-            {
-              int prev_gbp = uc_graphemeclusterbreak_property (prev);
-              int next_gbp = uc_graphemeclusterbreak_property (next);
-              fprintf (stderr, "%s:%d: skipping GB10: should join U+%04X (%s) "
-                       "and U+%04X (%s)\n",
-                       filename, lineno,
-                       prev, graphemebreakproperty_to_string (prev_gbp),
-                       next, graphemebreakproperty_to_string (next_gbp));
-            }
-          else if (uc_graphemeclusterbreak_property (next) == GBP_RI
-                   && ri_count % 2 != 0)
-            {
-              int prev_gbp = uc_graphemeclusterbreak_property (prev);
-              int next_gbp = uc_graphemeclusterbreak_property (next);
-              fprintf (stderr, "%s:%d: skipping GB12: should join U+%04X (%s) "
-                       "and U+%04X (%s)\n",
-                       filename, lineno,
-                       prev, graphemebreakproperty_to_string (prev_gbp),
-                       next, graphemebreakproperty_to_string (next_gbp));
-            }
-          else if (uc_is_grapheme_break (prev, next) != should_break)
-            {
-              int prev_gbp = uc_graphemeclusterbreak_property (prev);
-              int next_gbp = uc_graphemeclusterbreak_property (next);
-              fprintf (stderr, "%s:%d: should %s U+%04X (%s) and "
-                       "U+%04X (%s)\n",
-                       filename, lineno,
-                       should_break ? "break" : "join",
-                       prev, graphemebreakproperty_to_string (prev_gbp),
-                       next, graphemebreakproperty_to_string (next_gbp));
-              exit_code = 1;
-            }
-
           p += strspn (p, " \t\r\n");
-          prev = next;
-
-          if (!(uc_graphemeclusterbreak_property (next) == GBP_EXTEND
-                && (last_compchar_prop == GBP_EB
-                    || last_compchar_prop == GBP_EBG)))
-            last_compchar_prop = uc_graphemeclusterbreak_property (next);
-
-          if (uc_graphemeclusterbreak_property (next) == GBP_RI)
-            ri_count++;
-          else
-            ri_count = 0;
+          i++;
         }
       while (*p != '\0');
+
+      if (i > 0)
+        test_uc_grapheme_breaks (breaks, s, i, filename, lineno);
     }
 
   return exit_code;

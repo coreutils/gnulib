@@ -196,7 +196,7 @@
         ) ) )
         (format ostream "};~%")
         |#
-        (format ostream "static const struct { uint16_t extra_offset; uint16_t ind_offset; } unicode_name_by_length[~D] = {~%"
+        (format ostream "static const struct { uint32_t extra_offset; uint16_t ind_offset; } unicode_name_by_length[~D] = {~%"
                         (1+ (length words-by-length))
         )
         (let ((extra-offset 0)

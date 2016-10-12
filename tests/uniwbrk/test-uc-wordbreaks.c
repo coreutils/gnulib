@@ -51,6 +51,11 @@ wordbreakproperty_to_string (int wbp)
       CASE(DQ)
       CASE(SQ)
       CASE(HL)
+      CASE(ZWJ)
+      CASE(EB)
+      CASE(EM)
+      CASE(GAZ)
+      CASE(EBG)
     }
   abort ();
 }
