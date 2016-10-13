@@ -1,3 +1,8 @@
+2016-10-13  Daniel Richard G.  <skunk@iSKUNK.ORG>
+
+	getprogname: port to IBM z/OS
+	* lib/getprogname.c (getprogname): Use w_getpsent() to get the name.
+
 2016-10-11  Jim Meyering  <meyering@fb.com>
 
 	maint: remove stray space after "." in AC_DEFINE comment.

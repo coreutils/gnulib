@@ -28,6 +28,14 @@
 # include <string.h>
 #endif
 
+#ifdef __MVS__
+# ifndef _OPEN_SYS
+#  define _OPEN_SYS
+# endif
+# include <string.h>
+# include <sys/ps.h>
+#endif
+
 #include "dirname.h"
 
 #ifndef HAVE_GETPROGNAME
@@ -73,6 +81,37 @@ getprogname (void)
            : NULL);
       if (!p)
         p = "?";
+    }
+  return p;
+#elif __MVS__
+  /* https://www.ibm.com/support/knowledgecenter/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtwgetp.htm */
+  static char *p = "?";
+  static int first = 1;
+  if (first)
+    {
+      pid_t pid = getpid ();
+      int token;
+      W_PSPROC buf;
+      first = 0;
+      memset (&buf, 0, sizeof(buf));
+      buf.ps_cmdptr    = (char *) malloc (buf.ps_cmdlen    = PS_CMDBLEN_LONG);
+      buf.ps_conttyptr = (char *) malloc (buf.ps_conttylen = PS_CONTTYBLEN);
+      buf.ps_pathptr   = (char *) malloc (buf.ps_pathlen   = PS_PATHBLEN);
+      if (buf.ps_cmdptr && buf.ps_conttyptr && buf.ps_pathptr)
+        {
+          for (token = 0; token >= 0;
+               token = w_getpsent (token, &buf, sizeof(buf)))
+            {
+              if (token > 0 && buf.ps_pid == pid)
+                {
+                  p = strdup (last_component (buf.ps_pathptr));
+                  break;
+                }
+            }
+        }
+      free (buf.ps_cmdptr);
+      free (buf.ps_conttyptr);
+      free (buf.ps_pathptr);
     }
   return p;
 # else
