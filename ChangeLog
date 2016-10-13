@@ -49,6 +49,12 @@
 	* lib/utimecmp.c (utimecmp): Do not apply "~" to a boolean.
 	Instead, make it explicit that we intend to apply it to 0 or 1.
 
+2016-10-10  Norihiro Tanaka  <noritnk@kcn.ne.jp>
+
+	dfa: save memory for states
+	* src/dfa (dfaexec_main): Beginning of dfa execution, release caches of
+	states if dfa has a lot of caches.
+
 2016-10-10  Eli Zaretskii  <eliz@gnu.org>
 
 	wchar, wctype-h: fix for MinGW 3.22.2
