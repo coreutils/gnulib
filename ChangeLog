@@ -1,3 +1,12 @@
+2016-10-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdint: port SIZE_MAX to glibc s390
+	Problem reported by Eric Blake in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-10/msg00031.html
+	* doc/posix-headers/stdint.texi (stdint.h): Document the fix.
+	* m4/stdint.m4 (gl_STDINT_H): Check that SIZE_MAX has the
+	correct type, if possible.
+
 2016-10-13  Daniel Richard G.  <skunk@iSKUNK.ORG>
 
 	getprogname: port to IBM z/OS
