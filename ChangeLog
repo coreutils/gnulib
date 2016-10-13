@@ -1,3 +1,9 @@
+2016-10-13  Jim Meyering  <meyering@fb.com>
+
+	getprogname: IBM z/OS: avoid NULL-dereference
+	* lib/getprogname.c (getprogname) [__MVS__]: Don't dereference NULL
+	upon strdup failure.
+
 2016-10-12  Jim Meyering  <meyering@fb.com>
 
 	test-stdint: use _GL_VERIFY rather than "verify" for some tests

@@ -104,7 +104,9 @@ getprogname (void)
             {
               if (token > 0 && buf.ps_pid == pid)
                 {
-                  p = strdup (last_component (buf.ps_pathptr));
+                  char *s = strdup (last_component (buf.ps_pathptr));
+                  if (s)
+                    p = s;
                   break;
                 }
             }
