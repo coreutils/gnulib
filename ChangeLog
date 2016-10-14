@@ -1,3 +1,10 @@
+2016-10-14  Bruno Haible  <bruno@clisp.org>
+            Pádraig Brady  <P@draigBrady.com>
+
+	canonicalize-lgpl: Support the case path_max > INT_MAX.
+	* lib/canonicalize-lgpl.c (__realpath): Declare n as ssize_t, not int.
+	Fix overflow check, for platforms where 'size_t' is larger than 'long'.
+
 2016-10-13  Jim Meyering  <meyering@fb.com>
 
 	getprogname: IBM z/OS: avoid NULL-dereference
