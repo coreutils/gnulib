@@ -1,3 +1,10 @@
+2016-10-15  Bruno Haible  <bruno@clisp.org>
+
+	opendir, readdir, closedir: Relicense under LGPLv2+.
+	* modules/opendir (License): Change to LGPLv2+.
+	* modules/readdir (License): Likewise.
+	* modules/closedir (License): Likewise.
+
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
 	Fix conflict between strerror_r-posix module and AC_FUNC_STRERROR_R.
