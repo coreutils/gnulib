@@ -22,6 +22,10 @@
 
 #include "verify.h"
 
+#if 4 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# pragma GCC diagnostic ignored "-Woverlength-strings"
+#endif
+
 /* Macros specified by ISO/IEC TS 18661-1:2014.  */
 
 #define verify_width(width, min, max) \

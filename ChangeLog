@@ -1,3 +1,8 @@
+2016-10-16  Pádraig Brady  <P@draigBrady.com>
+
+	test-limits-h: suppress -Woverlength-strings
+	* tests/test-limits-h.c [__GNUC__]: Ignore -Woverlength-strings.
+
 2016-10-15  Bruno Haible  <bruno@clisp.org>
 
 	gettime, timespec, utimens: Relicense under LGPL.
