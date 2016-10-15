@@ -25,7 +25,7 @@ Link:
 $(LIB_CLOCK_GETTIME)
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paul Eggert, Jim Meyering

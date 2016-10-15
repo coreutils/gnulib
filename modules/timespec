@@ -20,7 +20,7 @@ Include:
 "timespec.h"
 
 License:
-GPL
+LGPL
 
 Maintainer:
 Paul Eggert and Jim Meyering
