@@ -2570,11 +2570,21 @@ func_get_license ()
       fi
       ;;
   esac
-  {
-    func_get_license_raw "$1"
-    # The default is GPL.
-    echo "GPL"
-  } | sed -e 's,^ *$,,' | sed -e 1q
+  case "$1" in
+    parse-datetime )
+      # These modules are under a weaker license only for the purpose of some
+      # users who hand-edit it and don't use gnulib-tool. For the regular
+      # gnulib users they are under a stricter license.
+      echo "GPL"
+      ;;
+    * )
+      {
+        func_get_license_raw "$1"
+        # The default is GPL.
+        echo "GPL"
+      } | sed -e 's,^ *$,,' | sed -e 1q
+      ;;
+  esac
 }
 
 # func_get_maintainer module

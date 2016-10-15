@@ -1,3 +1,9 @@
+2016-10-15  Bruno Haible  <bruno@clisp.org>
+
+	Avoid gnulib-tool warnings about the dependencies of 'parse-datetime'.
+	* gnulib-tool (func_get_license): Special-case the 'parse-datetime'
+	module.
+
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
 	system-quote tests: Avoid compiler warning on AIX.
