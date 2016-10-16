@@ -38,24 +38,29 @@
 
 #include "dirname.h"
 
-#ifndef HAVE_GETPROGNAME
-
+#ifndef HAVE_GETPROGNAME             /* not Mac OS X, FreeBSD, NetBSD, OpenBSD >= 5.4, Cygwin */
 char const *
 getprogname (void)
 {
-# if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME
+# if HAVE_DECL_PROGRAM_INVOCATION_SHORT_NAME                /* glibc, BeOS */
+  /* https://www.gnu.org/software/libc/manual/html_node/Error-Messages.html */
   return program_invocation_short_name;
-# elif HAVE_DECL_PROGRAM_INVOCATION_NAME
+# elif HAVE_DECL_PROGRAM_INVOCATION_NAME                    /* glibc, BeOS */
+  /* https://www.gnu.org/software/libc/manual/html_node/Error-Messages.html */
   return last_component (program_invocation_name);
-# elif HAVE_GETEXECNAME
+# elif HAVE_GETEXECNAME                                     /* Solaris */
+  /* http://docs.oracle.com/cd/E19253-01/816-5168/6mbb3hrb1/index.html */
   const char *p = getexecname ();
   if (!p)
     p = "?";
   return last_component (p);
-# elif HAVE_DECL___ARGV
+# elif HAVE_DECL___ARGV                                     /* mingw, MSVC */
+  /* https://msdn.microsoft.com/en-us/library/dn727674.aspx */
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
-# elif HAVE_VAR___PROGNAME
+# elif HAVE_VAR___PROGNAME                                  /* OpenBSD, QNX */
+  /* http://man.openbsd.org/style.9 */
+  /* http://www.qnx.de/developers/docs/6.5.0/index.jsp?topic=%2Fcom.qnx.doc.neutrino_lib_ref%2Fp%2F__progname.html */
   /* Be careful to declare this only when we absolutely need it
      (OpenBSD 5.1), rather than when it's available.  Otherwise,
      its mere declaration makes program_invocation_short_name
@@ -63,8 +68,8 @@ getprogname (void)
   extern char *__progname;
   const char *p = __progname;
   return p && p[0] ? p : "?";
-# elif _AIX
-  /* Idea by Bastien ROUCARIÈS <address@hidden>,
+# elif _AIX                                                 /* AIX */
+  /* Idea by Bastien ROUCARIÈS,
      http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
      Reference: http://
    ibm.biz/knowctr#ssw_aix_53/com.ibm.aix.basetechref/doc/basetrf1/getprocs.htm
@@ -83,7 +88,7 @@ getprogname (void)
         p = "?";
     }
   return p;
-#elif __MVS__
+# elif __MVS__                                              /* z/OS */
   /* https://www.ibm.com/support/knowledgecenter/SSLTBW_2.1.0/com.ibm.zos.v2r1.bpxbd00/rtwgetp.htm */
   static char *p = "?";
   static int first = 1;

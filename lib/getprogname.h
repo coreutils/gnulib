@@ -23,6 +23,8 @@
 extern "C" {
 #endif
 
+/* Return the base name of the executing program.
+   On native Windows this will usually end in ".exe" or ".EXE". */
 #ifndef HAVE_GETPROGNAME
 extern char const *getprogname (void)
 # ifdef HAVE_DECL_PROGRAM_INVOCATION_NAME

@@ -1,5 +1,13 @@
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
+	getprogname: Fix test failure on Cygwin. Comments.
+	* lib/getprogname.h: Add comments.
+	* lib/getprogname.c: Add comments. Fix #elif indentation.
+	* tests/test-getprogname.c (main): On Cygwin, expect a result without
+	".exe" suffix.
+
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
 	Make sure the libunistring detection rejects older versions with a
 	known bug.
 	* modules/unistr/u8-strtok (configure.ac): Bump required version.

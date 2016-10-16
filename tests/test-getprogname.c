@@ -26,6 +26,22 @@ int
 main (void)
 {
   char const *p = getprogname ();
+
+  /* Note: You can make this test fail
+     a) by running it on a case-insensitive file system (such as on Windows,
+        Cygwin, or on Mac OS X with a case-insensitive HFS+ file system),
+        with an invocation that contains upper case characters, e.g.
+        test-GETPROGNAME,
+     b) by hardlinking or symlinking it to a different name (e.g. test-foo)
+        and invoking it through that name.
+     That's not the intended use. The Makefile always invokes it as
+     'test-getprogname${EXEEXT}'. */
+#if defined __CYGWIN__
+  /* The Cygwin getprogname() function strips the ".exe" suffix. */
+  assert (STREQ (p, "test-getprogname"));
+#else
   assert (STREQ (p, "test-getprogname" EXEEXT));
+#endif
+
   return 0;
 }
