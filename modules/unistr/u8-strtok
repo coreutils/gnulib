@@ -12,7 +12,7 @@ unistr/u8-strpbrk
 unistr/u8-strmblen
 
 configure.ac:
-gl_LIBUNISTRING_MODULE([0.9], [unistr/u8-strtok])
+gl_LIBUNISTRING_MODULE([0.9.6], [unistr/u8-strtok])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNISTR_U8_STRTOK

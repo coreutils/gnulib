@@ -1,3 +1,11 @@
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
+	Make sure the libunistring detection rejects older versions with a
+	known bug.
+	* modules/unistr/u8-strtok (configure.ac): Bump required version.
+	* modules/unistr/u16-strtok (configure.ac): Likewise.
+	* modules/unistr/u32-strtok (configure.ac): Likewise.
+
 2016-10-18  Bruno Haible  <bruno@clisp.org>
 
 	sh-quote, system-quote: revert regression of unit test.
