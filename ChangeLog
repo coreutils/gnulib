@@ -1,3 +1,15 @@
+2016-10-16  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg: fix stale tests
+	* tests/test-quotearg.c [locale_results]: Add the missing str7
+	entries to the expected results.
+	tests/test-system-quote-main.c (check_one): Don't enforce that we
+	don't write beyond the returned length, since that's no longer the
+	case if we switch to a more concise quoting style.
+	* tests/test-sh-quote.c (check_one): Likewise.
+	(main): Adjust for the new more concise quoting style.
+	Reported by Bruno Haible.
+
 2016-10-16  Jim Meyering  <meyering@fb.com>
 
 	non-recursive-gnulib-prefix-hack: fix inconsequential typo
