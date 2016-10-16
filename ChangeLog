@@ -1,3 +1,15 @@
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
+	qsort_r: Fix macrology for platforms that lack the function.
+	* m4/stdlib_h.m4 (gl_STDLIB_H): Check for qsort_r.
+	(gl_STDLIB_H_DEFAULTS): Initialize HAVE_QSORT_R.
+	* modules/stdlib (Makefile.am): Substitute HAVE_QSORT_R.
+	* lib/stdlib.in.h (qsort_r): Provide declaration if the function does
+	not exist.
+	* m4/qsort_r.m4 (gl_FUNC_QSORT_R): Use AC_CHECK_FUNCS to test whether
+	the function exists.
+	* modules/qsort_r: Add comments.
+
 2016-10-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sys_types: fix Texinfo typos
