@@ -10,7 +10,7 @@ dnl in the directory specified by LIB_DIR.
 AC_DEFUN([gl_NON_RECURSIVE_GNULIB_PREFIX_HACK],
 [
   # Tell AC_LIBSOURCES where to find source files like alloca.c.
-  AC_CONFIG_LIBOBJ_DIR([lib])
+  AC_CONFIG_LIBOBJ_DIR([$1])
 
   # This hack originated in bison.  It is required when using non-recursive
   # automake rules to build from gnulib-provided lib/ sources.  Hence, LIB_DIR
