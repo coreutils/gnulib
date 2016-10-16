@@ -1,5 +1,14 @@
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
+	Fix some "gcc -Wall" warnings.
+	* tests/test-ffsl.c (main): Use variable x, not i.
+	* tests/test-posix_spawn3.c (parent_main): Consider the return value of
+	freopen.
+	* tests/test-sethostname1.c (main): Explicitly ignore the return value
+	of sethostname.
+
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Make --create-testdir on all modules work again.
 	* gnulib-tool (func_create_testdir): Don't include the
 	non-recursive-gnulib-prefix-hack module.

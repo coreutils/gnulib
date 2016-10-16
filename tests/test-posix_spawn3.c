@@ -75,7 +75,11 @@ parent_main (void)
     }
 
   /* Avoid reading from our stdin, as it could block.  */
-  freopen ("/dev/null", "rb", stdin);
+  if (freopen ("/dev/null", "rb", stdin) == NULL)
+    {
+      perror ("cannot redirect stdin");
+      return 1;
+    }
 
   /* Test whether posix_spawn_file_actions_addopen with this file name
      actually works, but spawning a child that reads from this file.  */

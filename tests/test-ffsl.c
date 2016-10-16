@@ -44,8 +44,8 @@ main (int argc, char *argv[])
   long int x;
   int i;
 
-  for (i = -128; i <= 128; i++)
-    ASSERT (ffsl (i) == naive (i));
+  for (x = -128; x <= 128; x++)
+    ASSERT (ffsl (x) == naive (x));
   for (i = 0; i < NBITS; i++)
     {
       ASSERT (ffsl (1UL << i) == naive (1UL << i));

@@ -30,8 +30,11 @@ main ()
   /* Some code that has a link-time dependency to the sethostname() function
      and that is likely not optimized away by compilers.  */
   if (do_dangerous_things)
-    /* Never executed.  */
-    sethostname ("oprah", 5);
+    {
+      /* Never executed.  */
+      int ret = sethostname ("oprah", 5);
+      (void) ret;
+    }
 
   return 0;
 }
