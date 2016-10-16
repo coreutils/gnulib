@@ -72,6 +72,11 @@ main ()
 
   /* Use a per-thread locale.  */
   perthread = newlocale (LC_ALL_MASK, "es_ES.UTF-8", NULL);
+  if (perthread == NULL)
+    {
+      fprintf (stderr, "Skipping test: Spanish Unicode locale is not installed\n");
+      return 77;
+    }
   uselocale (perthread);
 
   /* Save the locale in a locale_t object again.  */

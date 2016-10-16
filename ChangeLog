@@ -1,3 +1,9 @@
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
+	Fix a test crash.
+	* tests/test-duplocale.c (main): Skip the test if the 'newlocale' call
+	fails.
+
 2016-10-16  Pádraig Brady  <P@draigBrady.com>
 
 	test-limits-h: suppress -Woverlength-strings
