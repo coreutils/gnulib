@@ -1,3 +1,10 @@
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
+	Simplify "configure: checking ..." messages.
+	* m4/fsusage.m4 (gl_FILE_SYSTEM_USAGE): Use AC_MSG_CHECKING instead of
+	AC_MSG_NOTICE.
+	* m4/getaddrinfo.m4 (gl_GETADDRINFO): Likewise.
+
 2016-10-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	quotearg-tests: pacify gcc -Wall
