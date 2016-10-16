@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 15
+# strerror_r.m4 serial 16
 dnl Copyright (C) 2002, 2007-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,8 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
   if test $ac_cv_have_decl_strerror_r = no; then
     HAVE_DECL_STRERROR_R=0
   fi
+  AC_DEFINE_UNQUOTED([HAVE_DECL_STRERROR_R_ORIG], [$HAVE_DECL_STRERROR_R],
+    [Define to 1 if you have the declaration of 'strerror_r' in the system include files, or to 0 otherwise.])
 
   if test $ac_cv_func_strerror_r = yes; then
     if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
@@ -36,6 +38,11 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
       REPLACE_STRERROR_R=1
     fi
   fi
+
+  # Overwrite the findings of AC_FUNC_STRERROR_R (for code that uses that).
+  AC_REQUIRE([AC_FUNC_STRERROR_R])
+  AC_DEFINE([HAVE_DECL_STRERROR_R], [1])
+  AC_DEFINE([STRERROR_R_CHAR_P], [0])
 ])
 
 # Prerequisites of lib/strerror_r.c.

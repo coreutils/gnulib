@@ -1,5 +1,13 @@
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
+	Fix conflict between strerror_r-posix module and AC_FUNC_STRERROR_R.
+	* m4/strerror_r.m4 (gl_FUNC_STRERROR_R): Override the values set by the
+	AC_FUNC_STRERROR_R macro. Define HAVE_DECL_STRERROR_R_ORIG.
+	* lib/strerror_r.c: Use HAVE_DECL_STRERROR_R_ORIG instead of
+	HAVE_DECL_STRERROR_R.
+
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
 	Make the 'argp' module work without the 'error' module.
 	* m4/argp.m4 (gl_ARGP): Require AC_FUNC_STRERROR_R.
 
