@@ -1,5 +1,11 @@
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
+	system-quote tests: Avoid compiler warning on AIX.
+	* tests/test-system-quote-child.c (fopen): Redefine like the system's
+	<stdio.h> does.
+
+2016-10-16  Bruno Haible  <bruno@clisp.org>
+
 	Fix some "gcc -Wall" warnings.
 	* tests/test-ffsl.c (main): Use variable x, not i.
 	* tests/test-posix_spawn3.c (parent_main): Consider the return value of

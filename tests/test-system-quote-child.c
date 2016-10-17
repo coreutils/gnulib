@@ -25,6 +25,10 @@
 #undef fopen
 #undef fprintf
 #undef fread
+/* Restore the original fopen definition on AIX.  */
+#if defined _AIX && defined _LARGE_FILES
+# define fopen fopen64
+#endif
 
 #define EXPECTED_DATA_FILE "t-sq-data.tmp"
 
