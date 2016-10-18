@@ -1,3 +1,15 @@
+2016-10-19  Pádraig Brady  <P@draigBrady.com>
+
+	quotearg: never write beyond the returned length
+	* lib/quotearg.c (quotearg_buffer_restyled): Switch to a read-only
+	scan of the string when we initially encounter a single quote when
+	shell quoting, so that if we then switch to a more concise quoting method
+	we will not have written beyond that returned length.
+	This is significant for sh-quote, which has separate routines
+	to determine the length and do the actual quoting.
+	* tests/test-quotearg.h: Reinstate the buffer bounds checking
+	now that we never write more than the returned length.
+
 2016-10-18  Bruno Haible  <bruno@clisp.org>
 
 	getprogname tests: Avoid failure in packages that use libtool.

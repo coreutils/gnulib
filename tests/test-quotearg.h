@@ -104,10 +104,9 @@ use_quotearg_buffer (const char *str, size_t *len)
   static char buf[100];
   size_t size;
   memset (buf, 0xa5, 100);
-  size = quotearg_buffer (buf, 50, str, *len, NULL);
+  size = quotearg_buffer (buf, 100, str, *len, NULL);
   *len = size;
-  ASSERT ((unsigned char) buf[size] == '\0');
-  ASSERT ((unsigned char) buf[50] == 0xa5);
+  ASSERT ((unsigned char) buf[size + 1] == 0xa5);
   return buf;
 }
 

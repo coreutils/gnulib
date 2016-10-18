@@ -252,6 +252,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 {
   size_t i;
   size_t len = 0;
+  size_t orig_buffersize = 0;
   char const *quote_string = 0;
   size_t quote_string_len = 0;
   bool backslash_escapes = false;
@@ -299,6 +300,8 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           } \
       } \
     while (0)
+
+ process_input:
 
   switch (quoting_style)
     {
@@ -544,6 +547,16 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
             {
               if (elide_outer_quotes)
                 goto force_outer_quoting_style;
+
+              if (buffersize && ! orig_buffersize)
+                {
+                  /* Just scan string to see if supports a more concise
+                     representation, rather than writing a longer string
+                     but returning the length of the more concise form.  */
+                  orig_buffersize = buffersize;
+                  buffersize = 0;
+                }
+
               STORE ('\'');
               STORE ('\\');
               STORE ('\'');
@@ -713,11 +726,21 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
      better to use the apostrophe modifier "\u02BC" if possible, as that
      renders better and works with the word match regex \W+ etc.  */
   if (quoting_style == shell_always_quoting_style && ! elide_outer_quotes
-      && all_c_and_shell_quote_compat && encountered_single_quote)
-    return quotearg_buffer_restyled (buffer, buffersize, arg, argsize,
-                                     c_quoting_style,
-                                     flags, quote_these_too,
-                                     left_quote, right_quote);
+      && encountered_single_quote)
+    {
+      if (all_c_and_shell_quote_compat)
+        return quotearg_buffer_restyled (buffer, orig_buffersize, arg, argsize,
+                                         c_quoting_style,
+                                         flags, quote_these_too,
+                                         left_quote, right_quote);
+      else if (! buffersize && orig_buffersize)
+        {
+          /* Disable read-only scan, and reprocess to write quoted string.  */
+          buffersize = orig_buffersize;
+          len = 0;
+          goto process_input;
+        }
+    }
 
   if (quote_string && !elide_outer_quotes)
     for (; *quote_string; quote_string++)
