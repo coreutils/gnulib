@@ -58,9 +58,11 @@ check_one (enum system_command_interpreter interpreter, const char *prog,
 
   ASSERT (output_len <= sizeof (buf) - 2);
   memset (buf, '\0', output_len + 1);
+  buf[output_len + 1] = '%';
   bufend = system_quote_copy (buf, interpreter, input);
   ASSERT (bufend == buf + output_len);
   ASSERT (memcmp (buf, output, output_len + 1) == 0);
+  ASSERT (buf[output_len + 1] == '%');
 
   /* Store INPUT in EXPECTED_DATA_FILE, for verification by the child
      process.  */

@@ -1,9 +1,15 @@
+2016-10-18  Bruno Haible  <bruno@clisp.org>
+
+	sh-quote, system-quote: revert regression of unit test.
+	* tests/test-sh-quote.c (check_one): Do detect buffer overruns.
+	* tests/test-system-quote-main.c (check_one): Likewise.
+
 2016-10-16  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: fix stale tests
 	* tests/test-quotearg.c [locale_results]: Add the missing str7
 	entries to the expected results.
-	tests/test-system-quote-main.c (check_one): Don't enforce that we
+	* tests/test-system-quote-main.c (check_one): Don't enforce that we
 	don't write beyond the returned length, since that's no longer the
 	case if we switch to a more concise quoting style.
 	* tests/test-sh-quote.c (check_one): Likewise.
