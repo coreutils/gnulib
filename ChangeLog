@@ -1,3 +1,9 @@
+2016-10-18  Bruno Haible  <bruno@clisp.org>
+
+	getprogname tests: Avoid failure in packages that use libtool.
+	* tests/test-getprogname.c (main): Strip "lt-" prefix.
+	Based on a patch by Jim Meyering.
+
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
 	getprogname: Fix test failure on Cygwin. Comments.

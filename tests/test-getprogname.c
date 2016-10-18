@@ -27,6 +27,13 @@ main (void)
 {
   char const *p = getprogname ();
 
+  /* libtool creates a temporary executable whose name is sometimes prefixed
+     with "lt-" (depends on the platform).  But the name of the temporary
+     executable is a detail that should not be visible to the end user and to
+     the test suite.  Remove this "lt-" prefix here.  */
+  if (strncmp (p, "lt-", 3) == 0)
+    p += 3;
+
   /* Note: You can make this test fail
      a) by running it on a case-insensitive file system (such as on Windows,
         Cygwin, or on Mac OS X with a case-insensitive HFS+ file system),
