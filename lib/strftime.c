@@ -1115,6 +1115,10 @@ strftime_case_ (bool upcase, STREAM_OR_CHAR_T *s,
           goto underlying_strftime;
 #endif
 
+        case L_('q'):           /* GNU extension.  */
+          DO_SIGNED_NUMBER (1, tp->tm_mon < -3, tp->tm_mon / 3 + 1U);
+          break;
+
         case L_('R'):
           subfmt = L_("%H:%M");
           goto subformat;

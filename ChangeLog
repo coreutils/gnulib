@@ -1,3 +1,10 @@
+2016-11-05  Pádraig Brady  <pbrady@fb.com>
+
+	strftime,strptime: support %q to represent the quarter
+	* lib/strftime.c (strftime_case_): Add %q case.
+	* lib/strptime.c (__strptime_internal): Likewise.
+	* tests/test-strftime.c (quarter_test): A new test case.
+
 2016-11-03  Eric Blake  <eblake@redhat.com>
 
 	bootstrap: Fix get_version() for AIX 5.3

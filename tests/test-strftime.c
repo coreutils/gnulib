@@ -200,12 +200,48 @@ tzalloc_test (void)
   return fail;
 }
 
+
+static int
+quarter_test (void)
+{
+  int result = 0;
+  size_t mon;
+
+  /* Check %q.  */
+  for (mon = 1; mon <= 12; mon++)
+    {
+      char out[2];
+      char exp[2] = {0,};
+      struct tm qtm = { .tm_mon = mon - 1 };
+      char fmt[3] = {'%','q','\0'};
+
+      size_t r = nstrftime (out, sizeof (out), fmt, &qtm, 0, 0);
+      if (r == 0)
+        {
+          puts ("nstrftime(\"%q\") failed");
+          result = 1;
+          break;
+        }
+
+      exp[0] = mon < 4 ? '1' : mon < 7 ? '2' : mon < 10 ? '3' : '4';
+      if (strcmp (out, exp) != 0)
+        {
+          printf ("nstrftime %%q: expected \"%s\", got \"%s\"\n", exp, out);
+          result = 1;
+          break;
+        }
+    }
+
+  return result;
+}
+
 int
 main (void)
 {
   int fail = 0;
   fail |= posixtm_test ();
   fail |= tzalloc_test ();
+  fail |= quarter_test ();
   return fail;
 }
 

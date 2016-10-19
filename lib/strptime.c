@@ -525,6 +525,15 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
                 return NULL;
             }
           break;
+        case 'q':
+          /* Match quarter of year.  GNU extension.  */
+          get_number (1, 4, 1);
+          tm->tm_mon = (val - 1) * 3;
+          tm->tm_mday = 1;
+          s.have_mon = 1;
+          s.have_mday = 1;
+          s.want_xday = 1;
+          break;
         case 'r':
 #ifdef _NL_CURRENT
           if (*decided != raw)
@@ -981,6 +990,15 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
               /* Match minutes using alternate numeric symbols.  */
               get_alt_number (0, 59, 2);
               tm->tm_min = val;
+              break;
+            case 'q':
+              /* Match quarter using alternate numeric symbols.  */
+              get_alt_number (1, 4, 1);
+              tm->tm_mon = (val - 1) * 3;
+              tm->tm_mday = 1;
+              s.have_mon = 1;
+              s.have_mday = 1;
+              s.want_xday = 1;
               break;
             case 'S':
               /* Match seconds using alternate numeric symbols.  */
