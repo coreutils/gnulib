@@ -1,3 +1,12 @@
+2016-10-20  Jim Meyering  <meyering@fb.com>
+
+	printf.m4: fix a bug in detecting printf %j support
+	* m4/printf.m4 (gl_PRINTF_SIZES_C99): Fail any system for which
+	uintmax_t is defined in neither stdint.h nor inttypes.h.
+	Before, this macro might have mistakenly set
+	gl_cv_func_printf_sizes_c99=yes on such a system.
+	Spotted by Zev Weiss.
+
 2016-10-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	sched: substitute HAVE_SYS_CDEFS_H too

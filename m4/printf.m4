@@ -38,6 +38,8 @@ int main ()
   if (sprintf (buf, "%ju %d", (uintmax_t) 12345671, 33, 44, 55) < 0
       || strcmp (buf, "12345671 33") != 0)
     result |= 1;
+#else
+  result |= 1;
 #endif
   buf[0] = '\0';
   if (sprintf (buf, "%zu %d", (size_t) 12345672, 33, 44, 55) < 0
