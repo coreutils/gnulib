@@ -83,6 +83,11 @@
 # define DOUBLE_SLASH_IS_DISTINCT_ROOT 0
 #endif
 
+/* Define this independently so that stdint.h is not a prerequisite.  */
+#ifndef SIZE_MAX
+# define SIZE_MAX ((size_t) -1)
+#endif
+
 #if !FUNC_REALPATH_WORKS || defined _LIBC
 
 static void

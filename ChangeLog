@@ -1,3 +1,9 @@
+2016-10-20  Pádraig Brady  <P@draigBrady.com>
+
+	canonicalize-lgpl: fix for missing SIZE_MAX on older systems
+	* lib/canonicalize-lgpl.c [SIZE_MAX]: Define if needed.
+	Needed on Centos <= 4.
+
 2016-10-20  Jim Meyering  <meyering@fb.com>
 
 	printf.m4: fix a bug in detecting printf %j support
