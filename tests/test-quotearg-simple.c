@@ -245,6 +245,15 @@ static struct result_groups custom_results[] = {
       "\"'a' b'\"", "\"'" LQ_ENC RQ_ENC "'\"", "\"'" LQ RQ "'\"" } }
 };
 
+static char *
+use_quote_double_quotes (const char *str, size_t *len)
+{
+  char *p = *len == SIZE_MAX ? quotearg_char (str, '"')
+                               : quotearg_char_mem (str, *len, '"');
+  *len = strlen (p);
+  return p;
+}
+
 int
 main (int argc _GL_UNUSED, char *argv[])
 {

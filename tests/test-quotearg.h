@@ -119,15 +119,6 @@ use_quotearg (const char *str, size_t *len)
 }
 
 static char *
-use_quote_double_quotes (const char *str, size_t *len)
-{
-  char *p = *len == SIZE_MAX ? quotearg_char (str, '"')
-                               : quotearg_char_mem (str, *len, '"');
-  *len = strlen (p);
-  return p;
-}
-
-static char *
 use_quotearg_colon (const char *str, size_t *len)
 {
   char *p = (*len == SIZE_MAX ? quotearg_colon (str)
