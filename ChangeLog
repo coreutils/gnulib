@@ -1,3 +1,15 @@
+2016-10-21  Daiki Ueno  <ueno@gnu.org>
+
+	libunistring: change the maintainer to 'all'
+	* modules/gen-uni-tables, modules/libunistring:
+	* modules/ucs4-utf16, modules/ucs4-utf8, modules/unicodeio:
+	* modules/unitypes, modules/utf16-ucs4, modules/utf16-ucs4-unsafe:
+	* modules/utf8-ucs4, modules/utf8-ucs4-unsafe:
+	* modules/unicase/*, modules/uniconv/*, modules/unictype/*:
+	* modules/unilbrk/*, modules/uniname/*, modules/uninorm/*:
+	* modules/unistdio/*, modules/unistr/*, modules/uniwbrk/*:
+	* modules/uniwidth/*: Change the maintainer to 'all'.
+
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
 	Simplify "configure: checking ..." messages.
