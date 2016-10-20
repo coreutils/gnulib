@@ -1,4 +1,4 @@
-# sched_h.m4 serial 8
+# sched_h.m4 serial 9
 dnl Copyright (C) 2008-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,13 @@ AC_DEFUN([gl_SCHED_H],
          [#include <spawn.h>])
      fi
      AC_SUBST([HAVE_STRUCT_SCHED_PARAM])
+
+     if test "$ac_cv_header_sys_cdefs_h" = yes; then
+       HAVE_SYS_CDEFS_H=1
+     else
+       HAVE_SYS_CDEFS_H=0
+     fi
+     AC_SUBST([HAVE_SYS_CDEFS_H])
 
      dnl Ensure the type pid_t gets defined.
      AC_REQUIRE([AC_TYPE_PID_T])

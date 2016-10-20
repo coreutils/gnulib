@@ -1,3 +1,11 @@
+2016-10-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	sched: substitute HAVE_SYS_CDEFS_H too
+	Problem reported by Tom G. Christensen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-10/msg00084.html
+	* m4/sched_h.m4 (gl_SCHED_H): Set and substitute HAVE_SYS_CDEFS_H.
+	* modules/sched (Depends-on): Substitute HAVE_SYS_CDEFS_H.
+
 2016-10-19  Pádraig Brady  <P@draigBrady.com>
 
 	quotearg: never write beyond the returned length
