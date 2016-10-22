@@ -1,3 +1,9 @@
+2016-10-22  Bruno Haible  <bruno@clisp.org>
+
+	iconv: Avoid compilation error when bootstrapping GNU libiconv.
+	* m4/iconv.m4 (AM_ICONV): When the system does not have an iconv()
+	declaration yet, define ICONV_CONST to empty.
+
 2016-10-15  Bruno Haible  <bruno@clisp.org>
 
 	Avoid gnulib-tool warnings about the dependencies of 'parse-datetime'.
