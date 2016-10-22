@@ -12,7 +12,7 @@ configure.ac:
 dnl Run our hack near the end, just before config.status creation.
 dnl It must happen late, i.e., after gl_LIBOBJS has been finalized.
 AC_CONFIG_COMMANDS_PRE([
-  gl_NON_RECURSIVE_GNULIB_PREFIX_HACK([lib])
+  gl_NON_RECURSIVE_GNULIB_PREFIX_HACK([$gl_source_base])
   ])
 
 Makefile.am:
