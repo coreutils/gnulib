@@ -34,7 +34,12 @@
    The basic algorithm was independently discovered as described in:
    "Algorithms for Approximate String Matching", Esko Ukkonen,
    Information and Control Vol. 64, 1985, pp. 100-118,
-   <http://dx.doi.org/10.1016/S0019-9958(85)80046-2>.  */
+   <http://dx.doi.org/10.1016/S0019-9958(85)80046-2>.
+
+   Unless the 'find_minimal' flag is set, this code uses the TOO_EXPENSIVE
+   heuristic, by Paul Eggert, to limit the cost to O(N**1.5 log N)
+   at the price of producing suboptimal output for large inputs with
+   many differences.  */
 
 /* Before including this file, you need to define:
      ELEMENT                 The element type of the vectors being compared.
@@ -123,6 +128,9 @@ struct context
   bool heuristic;
   #endif
 
+  /* Edit scripts longer than this are too expensive to compute.  */
+  OFFSET too_expensive;
+
   /* Snakes bigger than this are considered "big".  */
   #define SNAKE_LIMIT 20
 };
@@ -132,6 +140,12 @@ struct partition
   /* Midpoints of this partition.  */
   OFFSET xmid;
   OFFSET ymid;
+
+  /* True if low half will be analyzed minimally.  */
+  bool lo_minimal;
+
+  /* Likewise for high half.  */
+  bool hi_minimal;
 };
 
 
@@ -143,9 +157,16 @@ struct partition
    When the two searches meet, we have found the midpoint of the shortest
    edit sequence.
 
-   Set *PART to the midpoint (XMID,YMID).  The diagonal number
+   If FIND_MINIMAL is true, find the minimal edit script regardless of
+   expense.  Otherwise, if the search is too expensive, use heuristics to
+   stop the search and report a suboptimal answer.
+
+   Set PART->(xmid,ymid) to the midpoint (XMID,YMID).  The diagonal number
    XMID - YMID equals the number of inserted elements minus the number
    of deleted elements (counting only elements before the midpoint).
+
+   Set PART->lo_minimal to true iff the minimal edit script for the
+   left half of the partition is known; similarly for PART->hi_minimal.
 
    This function assumes that the first elements of the specified portions
    of the two vectors do not match, and likewise that the last elements do not
@@ -156,7 +177,7 @@ struct partition
    suboptimal diff output.  It cannot cause incorrect diff output.  */
 
 static void
-diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
+diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim, bool find_minimal,
       struct partition *part, struct context *ctxt)
 {
   OFFSET *const fd = ctxt->fdiag;       /* Give the compiler a chance. */
@@ -216,6 +237,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
             {
               part->xmid = x;
               part->ymid = y;
+              part->lo_minimal = part->hi_minimal = true;
               return;
             }
         }
@@ -248,9 +270,13 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
             {
               part->xmid = x;
               part->ymid = y;
+              part->lo_minimal = part->hi_minimal = true;
               return;
             }
         }
+
+      if (find_minimal)
+        continue;
 
 #ifdef USE_HEURISTIC
       /* Heuristic: check occasionally for a diagonal that has made lots
@@ -295,7 +321,11 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
                   }
               }
             if (best > 0)
-	      return;
+              {
+                part->lo_minimal = true;
+                part->hi_minimal = false;
+                return;
+              }
           }
 
           {
@@ -330,10 +360,77 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
                   }
               }
             if (best > 0)
-	      return;
+              {
+                part->lo_minimal = false;
+                part->hi_minimal = true;
+                return;
+              }
           }
         }
 #endif /* USE_HEURISTIC */
+
+      /* Heuristic: if we've gone well beyond the call of duty, give up
+         and report halfway between our best results so far.  */
+      if (c >= ctxt->too_expensive)
+        {
+          OFFSET fxybest;
+          OFFSET fxbest IF_LINT (= 0);
+          OFFSET bxybest;
+          OFFSET bxbest IF_LINT (= 0);
+
+          /* Find forward diagonal that maximizes X + Y.  */
+          fxybest = -1;
+          for (d = fmax; d >= fmin; d -= 2)
+            {
+              OFFSET x = MIN (fd[d], xlim);
+              OFFSET y = x - d;
+              if (ylim < y)
+                {
+                  x = ylim + d;
+                  y = ylim;
+                }
+              if (fxybest < x + y)
+                {
+                  fxybest = x + y;
+                  fxbest = x;
+                }
+            }
+
+          /* Find backward diagonal that minimizes X + Y.  */
+          bxybest = OFFSET_MAX;
+          for (d = bmax; d >= bmin; d -= 2)
+            {
+              OFFSET x = MAX (xoff, bd[d]);
+              OFFSET y = x - d;
+              if (y < yoff)
+                {
+                  x = yoff + d;
+                  y = yoff;
+                }
+              if (x + y < bxybest)
+                {
+                  bxybest = x + y;
+                  bxbest = x;
+                }
+            }
+
+          /* Use the better of the two diagonals.  */
+          if ((xlim + ylim) - bxybest < fxybest - (xoff + yoff))
+            {
+              part->xmid = fxbest;
+              part->ymid = fxybest - fxbest;
+              part->lo_minimal = true;
+              part->hi_minimal = false;
+            }
+          else
+            {
+              part->xmid = bxbest;
+              part->ymid = bxybest - bxbest;
+              part->lo_minimal = false;
+              part->hi_minimal = true;
+            }
+          return;
+        }
     }
   #undef XREF_YREF_EQUAL
 }
@@ -347,6 +444,9 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
    Note that XLIM, YLIM are exclusive bounds.  All indices into the vectors
    are origin-0.
 
+   If FIND_MINIMAL, find a minimal difference no matter how
+   expensive it is.
+
    The results are recorded by invoking NOTE_DELETE and NOTE_INSERT.
 
    Return false if terminated normally, or true if terminated through early
@@ -354,7 +454,7 @@ diag (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
 
 static bool
 compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
-            struct context *ctxt)
+            bool find_minimal, struct context *ctxt)
 {
 #ifdef ELEMENT
   ELEMENT const *xv = ctxt->xvec; /* Help the compiler.  */
@@ -400,12 +500,12 @@ compareseq (OFFSET xoff, OFFSET xlim, OFFSET yoff, OFFSET ylim,
       struct partition part IF_LINT2 (= { .xmid = 0, .ymid = 0 });
 
       /* Find a point of correspondence in the middle of the vectors.  */
-      diag (xoff, xlim, yoff, ylim, &part, ctxt);
+      diag (xoff, xlim, yoff, ylim, find_minimal, &part, ctxt);
 
       /* Use the partitions to split this problem into subproblems.  */
-      if (compareseq (xoff, part.xmid, yoff, part.ymid, ctxt))
+      if (compareseq (xoff, part.xmid, yoff, part.ymid, part.lo_minimal, ctxt))
         return true;
-      if (compareseq (part.xmid, xlim, part.ymid, ylim, ctxt))
+      if (compareseq (part.xmid, xlim, part.ymid, ylim, part.hi_minimal, ctxt))
         return true;
     }
 

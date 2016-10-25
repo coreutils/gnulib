@@ -183,6 +183,14 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
   ctxt.xvec = string1;
   ctxt.yvec = string2;
 
+  /* Set TOO_EXPENSIVE to be approximate square root of input size,
+     bounded below by 4096.  */
+  ctxt.too_expensive = 1;
+  for (i = xvec_length + yvec_length; i != 0; i >>= 2)
+    ctxt.too_expensive <<= 1;
+  if (ctxt.too_expensive < 4096)
+    ctxt.too_expensive = 4096;
+
   /* Allocate memory for fdiag and bdiag from a thread-local pool.  */
   fdiag_len = length_sum + 3;
   gl_once (keys_init_once, keys_init);
@@ -221,7 +229,7 @@ fstrcmp_bounded (const char *string1, const char *string2, double lower_bound)
 
   /* Now do the main comparison algorithm */
   ctxt.edit_count = - ctxt.edit_count_limit;
-  if (compareseq (0, xvec_length, 0, yvec_length, &ctxt)) /* Prob: 98% */
+  if (compareseq (0, xvec_length, 0, yvec_length, 0, &ctxt)) /* Prob: 98% */
     /* The edit_count passed the limit.  Hence the result would be
        < lower_bound.  We can return any value < lower_bound instead.  */
     return 0.0;

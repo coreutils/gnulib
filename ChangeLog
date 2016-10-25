@@ -1,3 +1,20 @@
+2016-10-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	diffseq: restore TOO_EXPENSIVE heuristic
+	* lib/diffseq.h: Problem with diffutils reported by Andreas Schwab
+	(Bug#24715).  The simplest solution is to restore the
+	TOO_EXPENSIVE heuristic that I added to GNU diff in 1993, while
+	using a higher threshold to avoid Bug#16848 on smaller files.
+	* lib/diffseq.h (struct context): Restore member too_expensive.
+	(struct partition): Restore members lo_minimal, hi_minimal.
+	(diag, compareseq): Restore arg find_minimal.  All uses changed.
+	(diag): Restore the TOO_EXPENSIVE heuristic that I added back in
+	1993 to make 'diff' run faster (but not as well) on large inputs,
+	but use a threshold of 4096 instead of the old 256.
+	* lib/fstrcmp.c (strcmp_bounded):
+	* lib/git-merge-changelog.c (compute_differences):
+	Adjust to diffseq.h changes.
+
 2016-10-22  Bruno Haible  <bruno@clisp.org>
 
 	non-recursive-gnulib-prefix-hack: Don't make assumptions about
