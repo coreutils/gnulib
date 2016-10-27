@@ -21,13 +21,19 @@ How to update gnulib manual on www.gnu.org
    do
 
    GNULIB_WWW_CHECKOUT=`cd $GNULIB_WWW_CHECKOUT && pwd`
+   cd $GNULIB_WWW_CHECKOUT
+   tar -cf html-CVS.tar manual/html_node/CVS manual/html_node/.symlinks
    cd $GNULIB_CHECKOUT/doc
    make updated-stamp
-   ../build-aux/gendocs.sh -o "$GNULIB_WWW_CHECKOUT/manual" \
+   ../build-aux/gendocs.sh \
+     --email bug-gnulib@gnu.org \
+     -o "$GNULIB_WWW_CHECKOUT/manual" \
      gnulib "The GNU Portability Library"
    cd $GNULIB_WWW_CHECKOUT
+   tar -xf html-CVS.tar
+   rm html-CVS.tar
 
-   Verify that the result looks sane.
+   Run 'cvs diff -u' and verify that the output looks sane.
 
 4) Commit the modified and the new files.
 
