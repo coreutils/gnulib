@@ -36,6 +36,13 @@
 # include <sys/ps.h>
 #endif
 
+#ifdef __hpux
+# include <unistd.h>
+# include <sys/param.h>
+# include <sys/pstat.h>
+# include <string.h>
+#endif
+
 #include "dirname.h"
 
 #ifndef HAVE_GETPROGNAME             /* not Mac OS X, FreeBSD, NetBSD, OpenBSD >= 5.4, Cygwin */
@@ -83,6 +90,21 @@ getprogname (void)
       struct procentry64 procs;
       p = (0 < getprocs64 (&procs, sizeof procs, NULL, 0, &pid, 1)
            ? strdup (procs.pi_comm)
+           : NULL);
+      if (!p)
+        p = "?";
+    }
+  return p;
+# elif defined __hpux
+  static char *p;
+  static int first = 1;
+  if (first)
+    {
+      first = 0;
+      pid_t pid = getpid ();
+      struct pst_status status;
+      p = (0 < pstat_getproc (&status, sizeof status, 0, pid)
+           ? strdup (status.pst_ucomm)
            : NULL);
       if (!p)
         p = "?";

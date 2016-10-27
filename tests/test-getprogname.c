@@ -20,7 +20,11 @@
 #include <string.h>
 #include <assert.h>
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
+#ifdef __hpux
+# define STREQ(a, b) (strncmp (a, b, 14) == 0)
+#else
+# define STREQ(a, b) (strcmp (a, b) == 0)
+#endif
 
 int
 main (void)
