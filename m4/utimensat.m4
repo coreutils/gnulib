@@ -1,4 +1,4 @@
-# serial 5
+# serial 6
 # See if we need to provide utimensat replacement.
 
 dnl Copyright (C) 2009-2016 Free Software Foundation, Inc.
@@ -51,20 +51,10 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
               }
               return result;
             ]])],
-dnl FIXME: simplify this in 2012, when file system bugs are no longer common
-         [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifdef __linux__
-/* The Linux kernel added utimensat in 2.6.22, but has bugs with UTIME_OMIT
-   in several file systems as recently as 2.6.32.  Always replace utimensat
-   to support older kernels.  */
-choke me
-#endif
-      ]])],
-           [gl_cv_func_utimensat_works=yes],
-           [gl_cv_func_utimensat_works="needs runtime check"])],
+         [gl_cv_func_utimensat_works=yes],
          [gl_cv_func_utimensat_works=no],
-         [gl_cv_func_utimensat_works="guessing no"])])
-    if test "$gl_cv_func_utimensat_works" != yes; then
+         [gl_cv_func_utimensat_works="guessing yes"])])
+    if test "$gl_cv_func_utimensat_works" = no; then
       REPLACE_UTIMENSAT=1
     fi
   fi

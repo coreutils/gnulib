@@ -1,3 +1,12 @@
+2016-11-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	utimensat: remove FIXME for old Linux kernels
+	* lib/utimensat.c (rpl_utimensat): Update FIXME comment.
+	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Belatedy do a "simplify
+	this in 2012" FIXME, by assuming the file system bug is absent
+	unless demonstrated to be present.  We no longer need to worry
+	about Linux kernel 2.6.32 when building with newer kernels.
+
 2016-10-16  Bruno Haible  <bruno@clisp.org>
 
 	qsort_r: Fix macrology for platforms that lack the function.

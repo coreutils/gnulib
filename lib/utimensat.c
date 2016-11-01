@@ -69,8 +69,8 @@ rpl_utimensat (int fd, char const *file, struct timespec const times[2],
 
          The same bug occurs in Solaris 11.1 (Apr 2013).
 
-         FIXME: Simplify this for Linux in 2016 and for Solaris in
-         2024, when file system bugs are no longer common.  */
+         FIXME: Simplify this in 2024, when these file system bugs are
+         no longer common on Gnulib target platforms.  */
       if (times && (times[0].tv_nsec == UTIME_OMIT
                     || times[1].tv_nsec == UTIME_OMIT))
         {
