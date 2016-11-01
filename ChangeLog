@@ -1,5 +1,9 @@
 2016-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	futimens: remove FIXME for old Linux kernels
+	* m4/futimens.m4 (gl_FUNC_FUTIMENS): Belatedy do a "simplify
+	this in 2012" FIXME, like that for utimensat.
+
 	utimensat: remove FIXME for old Linux kernels
 	* lib/utimensat.c (rpl_utimensat): Update FIXME comment.
 	* m4/utimensat.m4 (gl_FUNC_UTIMENSAT): Belatedy do a "simplify
