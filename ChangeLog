@@ -1,3 +1,10 @@
+2016-11-02  Pádraig Brady  <P@draigBrady.com>
+
+	backupfile: initialize default suffix within the implementation
+	* lib/backupfile.c (find_backup_file_name): Initialize the
+	global variable here, to simplify usage, and to only call
+	getenv() when needed.
+
 2016-11-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	futimens: remove FIXME for old Linux kernels

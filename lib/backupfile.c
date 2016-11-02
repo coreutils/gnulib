@@ -80,7 +80,7 @@
 
 /* The extension added to file names to produce a simple (as opposed
    to numbered) backup file name. */
-char const *simple_backup_suffix = "~";
+char const *simple_backup_suffix = NULL;
 
 
 /* If FILE (which was of length FILELEN before an extension was
@@ -267,6 +267,16 @@ find_backup_file_name (char const *file, enum backup_type backup_type)
   char *s;
   size_t ssize;
   bool simple = true;
+
+  /* Initialize the default simple backup suffix.  */
+  if (! simple_backup_suffix)
+    {
+      char const *env_suffix = getenv ("SIMPLE_BACKUP_SUFFIX");
+      if (env_suffix && *env_suffix)
+        simple_backup_suffix = env_suffix;
+      else
+        simple_backup_suffix = "~";
+    }
 
   /* Allow room for simple or ".~N~" backups.  The guess must be at
      least sizeof ".~1~", but otherwise will be adjusted as needed.  */
