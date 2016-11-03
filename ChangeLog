@@ -1,3 +1,10 @@
+2016-11-03  Eric Blake  <eblake@redhat.com>
+
+	bootstrap: Fix get_version() for AIX 5.3
+	* build-aux/bootstrap (get_version): Factor out sed script, since
+	indented comments choke AIX 5.3 sed.
+	Reported-by: Michael Felt <aixtools@gmail.com>
+
 2016-11-03  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: port to older XL C
