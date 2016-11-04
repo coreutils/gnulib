@@ -1,3 +1,13 @@
+2016-11-03  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: port to older XL C
+	Problem reported by Alexander Samoilov in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-10/msg00166.html
+	http://savannah.nongnu.org/bugs/?49448
+	* lib/intprops.h (_GL_HAVE___TYPEOF__) [__IBM__TYPEOF__]:
+	Define to 1 only for XL C 12.1 or later, since this bug
+	occurs in XL C for AIX 6.0 but not in 12.1.
+
 2016-11-02  Pádraig Brady  <P@draigBrady.com>
 
 	backupfile: initialize default suffix within the implementation
