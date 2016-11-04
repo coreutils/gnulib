@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 16
+# strerror_r.m4 serial 17
 dnl Copyright (C) 2002, 2007-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,8 +41,17 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
 
   # Overwrite the findings of AC_FUNC_STRERROR_R (for code that uses that).
   AC_REQUIRE([AC_FUNC_STRERROR_R])
-  AC_DEFINE([HAVE_DECL_STRERROR_R], [1])
-  AC_DEFINE([STRERROR_R_CHAR_P], [0])
+])
+
+# If this module is in use, we unconditionally want POSIX semantics; so
+# replace autoconf's macro with a version that does not probe
+AC_DEFUN([AC_FUNC_STRERROR_R], [
+  AC_DEFINE([HAVE_DECL_STRERROR_R], [1],
+    [Define to 1, since you should have the declaration of strerror_r.])
+  AC_DEFINE([HAVE_STRERROR_R], [1],
+    [Define to 1, since you should have the function strerror_r.])
+  AC_DEFINE([STRERROR_R_CHAR_P], [0],
+    [Define to 0, since strerror_r should not return char *.])
 ])
 
 # Prerequisites of lib/strerror_r.c.
