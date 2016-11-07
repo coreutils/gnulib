@@ -113,13 +113,6 @@
 
 2016-10-22  Bruno Haible  <bruno@clisp.org>
 
-	non-recursive-gnulib-prefix-hack: Don't make assumptions about
-	gnulib-tool's --source-base option value.
-	* modules/non-recursive-gnulib-prefix-hack (configure.ac): Use
-	gl_source_base.
-
-2016-10-22  Bruno Haible  <bruno@clisp.org>
-
 	iconv: Avoid compilation error when bootstrapping GNU libiconv.
 	* m4/iconv.m4 (AM_ICONV): When the system does not have an iconv()
 	declaration yet, define ICONV_CONST to empty.
