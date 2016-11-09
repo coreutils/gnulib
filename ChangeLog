@@ -1,3 +1,10 @@
+2016-11-09  Frediano Ziglio  <fziglio@redhat.com>
+
+	manywarnings: fix -Wno-missing-field-initializers detection
+	* m4/manywarnings.m4: Fix -Wno-missing-field-initializers detection
+	to be independent of -Wunused-variable.  I.E. ensure the latter
+	warning doesn't occur so that detection of the former is accurate.
+
 2016-11-05  Pádraig Brady  <pbrady@fb.com>
 
 	strftime,strptime: support %q to represent the quarter
