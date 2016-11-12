@@ -206,6 +206,14 @@
 	(gl_FUNC_STRERROR_R): Don't reuse AC_DEFINE() with a potentially
 	different value.
 
+2006-11-12  Pedro Alves  <palves@redhat.com>
+
+	GNULIB_NAMESPACE::func need not pull in rpl_func
+	* build-aux/snippet/c++defs.h [__cplusplus && GNULIB_NAMESPACE]
+	(_GL_CXXALIAS_RPL_1, _GL_CXXALIAS_RPL_CAST_1, _GL_CXXALIAS_SYS)
+	(_GL_CXXALIAS_SYS_CAST, _GL_CXXALIAS_SYS_CAST2): Define a wrapper
+	struct instead of a function pointer.
+
 2016-11-09  Frediano Ziglio  <fziglio@redhat.com>
 
 	manywarnings: fix -Wno-missing-field-initializers detection
