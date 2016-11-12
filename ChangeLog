@@ -208,6 +208,12 @@
 
 2006-11-12  Pedro Alves  <palves@redhat.com>
 
+	Fix gnulib C++ namespace support and std::frexp
+	* lib/math.in.h (frexp): Use _GL_CXXALIASWARN1 instead of
+	_GL_CXXALIASWARN.
+
+2006-11-12  Pedro Alves  <palves@redhat.com>
+
 	GNULIB_NAMESPACE::func need not pull in rpl_func
 	* build-aux/snippet/c++defs.h [__cplusplus && GNULIB_NAMESPACE]
 	(_GL_CXXALIAS_RPL_1, _GL_CXXALIAS_RPL_CAST_1, _GL_CXXALIAS_SYS)
