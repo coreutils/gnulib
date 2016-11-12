@@ -983,7 +983,7 @@ _GL_CXXALIAS_RPL (frexp, double, (double x, int *expptr));
 # else
 _GL_CXXALIAS_SYS (frexp, double, (double x, int *expptr));
 # endif
-_GL_CXXALIASWARN (frexp);
+_GL_CXXALIASWARN1 (frexp, double, (double x, int *expptr));
 #elif defined GNULIB_POSIXCHECK
 # undef frexp
 /* Assume frexp is always declared.  */
