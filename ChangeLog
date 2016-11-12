@@ -1,3 +1,21 @@
+2016-11-11  Bruno Haible  <bruno@clisp.org>
+
+	libunistring: Relicense under dual "LGPLv3+ or GPLv2" license.
+	* modules/libunistring: (License): Change from LGPL to
+	"LGPLv3+ or GPLv2".
+	* modules/libunistring-optional: Likewise.
+	* modules/unicase/*: Likewise.
+	* modules/uniconv/*: Likewise.
+	* modules/unictype/*: Likewise.
+	* modules/unigbrk/*: Likewise.
+	* modules/unilbrk/*: Likewise.
+	* modules/uniname/*: Likewise.
+	* modules/uninorm/*: Likewise.
+	* modules/unistdio/*: Likewise.
+	* modules/unistr/*: Likewise.
+	* modules/uniwbrk/*: Likewise.
+	* modules/uniwidth/*: Likewise.
+
 2016-11-12  Bruno Haible  <bruno@clisp.org>
 
 	Relicense some modules under LGPLv2+.

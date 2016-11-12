@@ -26,7 +26,7 @@ Include:
 "unistdio/u-printf-parse.h"
 
 License:
-LGPL
+LGPLv3+ or GPLv2
 
 Maintainer:
 all
