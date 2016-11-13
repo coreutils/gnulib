@@ -1,3 +1,26 @@
+2016-11-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	Merge strftime.c changes from glibc
+	This incorporates:
+	2007-10-16 [BZ #5184] Add tzset_called argument
+	2008-06-13 [BZ #6612] pass reference to tzset_called around
+	2009-10-30 Implement Burmese language locale for Myanmar
+	2010-01-09 Add support for XPG7 testing
+	2015-09-26 [BZ #18985] out of range data to strftime() causes a segfault
+	2015-10-20 Convert miscellaneous function definitions to prototype style
+	* lib/strftime.c: Copy glibc license, since gnulib-tool rewrites
+	it anyway and this lessens the difference between gnulib and glibc.
+	(USE_IN_EXTENDED_LOCALE_MODEL) [_LIBC]: Define.
+	(__THROW): Define if standard headers do not.
+	(LOCALE_PARAM): Rename from LOCALE_PARAM_PROTO.  All uses changed.
+	(memcpy_locase, memcpy_uppcase, tm_diff, __strftime_internal):
+	Declare with __THROW.
+	(__strftime_internal): Rename from strftime_case_. Add arg for
+	whether tzset is called.  All uses changed.  Call tzset at most
+	once.  Allow %OC, for Burmese.
+	(a_wkday, f_wkday, a_month, f_month) [_NL_CURRENT]:
+	Don't assume values are in range.
+
 2016-11-12  Eric Blake  <eblake@redhat.com>
 
 	strerror_r-posix: Fix override of AC_FUNC_STRERROR_R
