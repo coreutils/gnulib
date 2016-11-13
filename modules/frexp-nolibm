@@ -22,7 +22,7 @@ Include:
 <math.h>
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Paolo Bonzini

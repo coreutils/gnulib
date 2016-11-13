@@ -1,3 +1,23 @@
+2016-11-19  Bruno Haible  <bruno@clisp.org>
+
+	Relicense some modules under LGPLv2+.
+	lib/float+.h is already under LGPLv2+ since 2007-07-13, per
+	modules/vasnprintf.
+	Paolo Bonzini's approval for lib/frexp.c and lib/frexpl.c is in
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-11/msg00074.html.
+	All other significant changes to the files in lib/ of these modules
+	are from me.
+	* modules/memcmp2 (License): Change to LGPLv2+.
+	* modules/amemxfrm (License): Likewise.
+	* modules/fpieee (License): Likewise.
+	* modules/fpucw (License): Likewise.
+	* modules/frexp-nolibm (License): Likewise.
+	* modules/frexpl-nolibm (License): Likewise.
+	* modules/printf-frexp (License): Likewise.
+	* modules/printf-frexpl (License): Likewise.
+	* modules/printf-safe (License): Likewise.
+	* modules/signbit (License): Likewise.
+
 2016-11-17  Bruno Haible  <bruno@clisp.org>
 
 	Enable Unicode decoder safety unconditionally.
