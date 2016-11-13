@@ -1,5 +1,8 @@
 2016-11-12  Paul Eggert  <eggert@cs.ucla.edu>
 
+	strftime: tune %q
+	* lib/strftime.c (__strftime_internal): Assume tp->tm_mon is in range.
+
 	Merge strftime.c changes from glibc
 	This incorporates:
 	2007-10-16 [BZ #5184] Add tzset_called argument
