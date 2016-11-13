@@ -1,3 +1,11 @@
+2016-11-11  Bruno Haible  <bruno@clisp.org>
+
+	gnulib-tool: Support for the dual "LGPLv3+ or GPLv2" license.
+	* gnulib-tool (--lgpl): Accept value 3orGPLv2.
+	(func_import): Extend determination of license_incompatibilities.
+	(func_create_testdir): Extend table of license compatibility. Handle
+	also the licenses GPLv3+, GPL, LGPLv3+.
+
 2016-11-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strftime: tune %q

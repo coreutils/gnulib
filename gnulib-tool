@@ -264,7 +264,8 @@ Options for --import, --add/remove-import:
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default comes from configure.ac).
-      --lgpl[=2|=3]         Abort if modules aren't available under the LGPL.
+      --lgpl[=2|=3orGPLv2|=3]
+                            Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
                             the default is currently LGPLv3.
@@ -1299,7 +1300,7 @@ func_determine_path_separator
       --lgpl=* )
         arg=`echo "X$1" | sed -e 's/^X--lgpl=//'`
         case "$arg" in
-          2 | 3) ;;
+          2 | 3orGPLv2 | 3) ;;
           *) func_fatal_error "invalid LGPL version number for --lgpl" ;;
         esac
         lgpl=$arg
@@ -4707,7 +4708,13 @@ func_import ()
           case "$lgpl" in
             yes | 3)
               case $license in
-                LGPL | LGPLv2+ | LGPLv3+) ;;
+                LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL) ;;
+                *) func_append license_incompatibilities "$module $license$nl" ;;
+              esac
+              ;;
+            3orGPLv2)
+              case $license in
+                LGPLv2+ | 'LGPLv3+ or GPLv2') ;;
                 *) func_append license_incompatibilities "$module $license$nl" ;;
               esac
               ;;
@@ -4751,7 +4758,7 @@ s,^\(.................................................[^ ]*\) *,                
     if test -n "$lgpl"; then
       # Update license.
       case "$lgpl" in
-        yes | 3)
+        yes | 3 | 3orGPLv2)
           sed_transform_main_lib_file=$sed_transform_main_lib_file'
             s/GNU General/GNU Lesser General/g
             s/General Public License/Lesser General Public License/g
@@ -5851,15 +5858,27 @@ func_create_testdir ()
           'public domain' | 'unlimited' | 'unmodifiable license text') ;;
           *)
             case "$requested_license" in
-              GPLv2+)
+              GPLv3+ | GPL)
                 case "$license" in
-                  GPLv2+ | LGPLv2+) ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL | GPLv2+ | GPLv3+ | GPL) ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
-              LGPL)
+              GPLv2+)
                 case "$license" in
-                  LGPL | LGPLv2+) ;;
+                  LGPLv2+ | 'LGPLv3+ or GPLv2' |                  GPLv2+) ;;
+                  *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
+                esac
+                ;;
+              LGPLv3+ | LGPL)
+                case "$license" in
+                  LGPLv2+ | 'LGPLv3+ or GPLv2' | LGPLv3+ | LGPL) ;;
+                  *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
+                esac
+                ;;
+              'LGPLv3+ or GPLv2')
+                case "$license" in
+                  LGPLv2+ | 'LGPLv3+ or GPLv2') ;;
                   *) func_warning "module $requested_module depends on a module with an incompatible license: $module" ;;
                 esac
                 ;;
