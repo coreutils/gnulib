@@ -28,7 +28,7 @@ Include:
 "isnanl-nolibm.h"
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
