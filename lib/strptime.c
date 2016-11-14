@@ -530,9 +530,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
           get_number (1, 4, 1);
           tm->tm_mon = (val - 1) * 3;
           tm->tm_mday = 1;
-          s.have_mon = 1;
-          s.have_mday = 1;
-          s.want_xday = 1;
+          have_mon = 1;
+          have_mday = 1;
+          want_xday = 1;
           break;
         case 'r':
 #ifdef _NL_CURRENT
@@ -996,9 +996,9 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
               get_alt_number (1, 4, 1);
               tm->tm_mon = (val - 1) * 3;
               tm->tm_mday = 1;
-              s.have_mon = 1;
-              s.have_mday = 1;
-              s.want_xday = 1;
+              have_mon = 1;
+              have_mday = 1;
+              want_xday = 1;
               break;
             case 'S':
               /* Match seconds using alternate numeric symbols.  */

@@ -1,3 +1,8 @@
+2016-11-14  Pádraig Brady  <P@draigBrady.com>
+
+	strptime: fix compile error in recent change
+	* lib/strptime.c (__strptime_internal): Fix ported code.
+
 2016-11-11  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Support for the dual "LGPLv3+ or GPLv2" license.
