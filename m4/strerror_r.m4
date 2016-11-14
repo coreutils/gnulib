@@ -1,4 +1,4 @@
-# strerror_r.m4 serial 17
+# strerror_r.m4 serial 18
 dnl Copyright (C) 2002, 2007-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,10 +14,8 @@ AC_DEFUN([gl_FUNC_STRERROR_R],
 
   dnl Some systems don't declare strerror_r() if _THREAD_SAFE and _REENTRANT
   dnl are not defined.
-  AC_CHECK_DECLS_ONCE([strerror_r])
-  if test $ac_cv_have_decl_strerror_r = no; then
-    HAVE_DECL_STRERROR_R=0
-  fi
+  AC_CHECK_DECL([strerror_r],
+    [HAVE_DECL_STRERROR_R=1], [HAVE_DECL_STRERROR_R=0])
   AC_DEFINE_UNQUOTED([HAVE_DECL_STRERROR_R_ORIG], [$HAVE_DECL_STRERROR_R],
     [Define to 1 if you have the declaration of 'strerror_r' in the system include files, or to 0 otherwise.])
 
@@ -70,7 +68,7 @@ AC_DEFUN([gl_FUNC_STRERROR_R_WORKS],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_REQUIRE([gl_FUNC_STRERROR_0])
 
-  AC_CHECK_FUNCS_ONCE([strerror_r])
+  AC_CHECK_FUNC([strerror_r])
   if test $ac_cv_func_strerror_r = yes; then
     if test "$ERRNO_H:$REPLACE_STRERROR_0" = :0; then
       dnl The POSIX prototype is:  int strerror_r (int, char *, size_t);
