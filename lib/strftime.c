@@ -89,10 +89,6 @@ extern char *tzname[];
 
 #endif
 
-#ifndef __THROW
-# define __THROW
-#endif
-
 /* Shift A right by B bits portably, by dividing A by 2**B and
    truncating towards minus infinity.  A and B should be free of side
    effects, and B should be in the range 0 <= B <= INT_BITS - 2, where
@@ -309,7 +305,7 @@ fwrite_uppcase (FILE *fp, const CHAR_T *src, size_t len)
 }
 #else
 static CHAR_T *memcpy_lowcase (CHAR_T *dest, const CHAR_T *src,
-                               size_t len LOCALE_PARAM) __THROW;
+                               size_t len LOCALE_PARAM);
 
 static CHAR_T *
 memcpy_lowcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
@@ -320,7 +316,7 @@ memcpy_lowcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
 }
 
 static CHAR_T *memcpy_uppcase (CHAR_T *dest, const CHAR_T *src,
-                               size_t len LOCALE_PARAM) __THROW;
+                               size_t len LOCALE_PARAM);
 
 static CHAR_T *
 memcpy_uppcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
@@ -336,7 +332,7 @@ memcpy_uppcase (CHAR_T *dest, const CHAR_T *src, size_t len LOCALE_PARAM)
 /* Yield the difference between *A and *B,
    measured in seconds, ignoring leap seconds.  */
 # define tm_diff ftime_tm_diff
-static int tm_diff (const struct tm *, const struct tm *) __THROW;
+static int tm_diff (const struct tm *, const struct tm *);
 static int
 tm_diff (const struct tm *a, const struct tm *b)
 {
@@ -368,7 +364,7 @@ tm_diff (const struct tm *a, const struct tm *b)
 #define ISO_WEEK_START_WDAY 1 /* Monday */
 #define ISO_WEEK1_WDAY 4 /* Thursday */
 #define YDAY_MINIMUM (-366)
-static int iso_week_days (int, int) __THROW;
+static int iso_week_days (int, int);
 #ifdef __GNUC__
 __inline__
 #endif
@@ -414,7 +410,7 @@ iso_week_days (int yday, int wday)
 static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
                                    const CHAR_T *, const struct tm *,
                                    bool, bool *
-                                   extra_args_spec LOCALE_PARAM) __THROW;
+                                   extra_args_spec LOCALE_PARAM);
 
 /* Write information from TP into S according to the format
    string FORMAT, writing no more that MAXSIZE characters

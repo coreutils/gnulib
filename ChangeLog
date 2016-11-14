@@ -1,3 +1,17 @@
+2016-11-13  Jim Meyering  <meyering@fb.com>
+
+	strftime: don't use __THROW
+	Each use of __THROW would provoke this from gcc-7-to-be:
+
+	  lib/strftime.c:371:1: warning: '__leaf__' attribute has no effect \
+	    on unit local functions [-Wattributes]
+	  static int iso_week_days (int, int) __THROW;
+	  ^~~~~~
+	* lib/strftime.c (__THROW): Don't define.
+	Remove each use of __THROW.
+	* lib/strftime.c (memcpy_lowcase, memcpy_uppcase): Remove __THROW.
+	(tm_diff, iso_week_days, __strftime_internal): Likewise.
+
 2016-11-14  Paul Eggert  <eggert@union>
 
 	obstack: port to gcc -fcheck-pointer-bounds
