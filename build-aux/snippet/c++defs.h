@@ -17,6 +17,15 @@
 #ifndef _GL_CXXDEFS_H
 #define _GL_CXXDEFS_H
 
+/* Begin/end the GNULIB_NAMESPACE namespace.  */
+#if defined __cplusplus && defined GNULIB_NAMESPACE
+# define _GL_BEGIN_NAMESPACE namespace GNULIB_NAMESPACE {
+# define _GL_END_NAMESPACE }
+#else
+# define _GL_BEGIN_NAMESPACE
+# define _GL_END_NAMESPACE
+#endif
+
 /* The three most frequent use cases of these macros are:
 
    * For providing a substitute for a function that is missing on some

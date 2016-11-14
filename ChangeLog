@@ -1,3 +1,18 @@
+2016-11-14  Pedro Alves  <palves@redhat.com>
+
+	snippet/c++defs: fix real-floating arg functions in C++ mode
+	Also, define isfinite, isinf, isnan, signbit in the gnulib
+	namespace instead of in the global namespace.
+	* build-aux/snippet/c++defs.h (_GL_BEGIN_NAMESPACE)
+	(_GL_END_NAMESPACE): New.
+	* lib/math.in.h (_GL_MATH_CXX_REAL_FLOATING_DECL_2): Use them.
+	(isfinite, isinf, isnan, signbit) [__cplusplus &&
+	GNULIB_NAMESPACE]: Define them in the GNULIB_NAMESPACE namespace
+	instead of in the global namespace.
+	* tests/test-math-c++.cc: Check that the isfinite, isinf, isnan,
+	signbit overloads exist in the GNULIB_NAMESPACE namespace, instead
+	of in the global namespace.
+
 2016-11-13  Jim Meyering  <meyering@fb.com>
 
 	strftime: don't use __THROW
