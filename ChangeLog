@@ -1,3 +1,10 @@
+2016-11-15  Pedro Alves  <palves@redhat.com>
+
+	sys_time: add gnulib::timeval for C++
+	* lib/sys_time.in.h [__cplusplus && defined GNULIB_NAMESPACE]:
+	Define "timeval" in the GNULIB_NAMESPACE namespace, and #undef any
+	timeval macro.
+
 2016-11-14  Pedro Alves  <palves@redhat.com>
 
 	snippet/c++defs: fix real-floating arg functions in C++ mode
