@@ -1,3 +1,15 @@
+2016-11-14  Paul Eggert  <eggert@union>
+
+	obstack: port to gcc -fcheck-pointer-bounds
+	Problem found by 'make check' failure on bleeding-edge coreutils
+	on an MPX-enabled CPU (Intel Core i3-7100U) running GCC (Ubuntu
+	6.2.0-5ubuntu12), configured via "./configure
+	--enable-gcc-warnings CFLAGS='-mmpx -fcheck-pointer-bounds -g3
+	-O2' LDFLAGS='-static-libmpx -static-libmpxwrappers'".
+	* lib/obstack.h (__FLEXIBLE_ARRAY_MEMBER):
+	New macro, copied from fts_.h.
+	(struct _obstack_chunk.contents): Use it.
+
 2016-11-14  Eric Blake  <eblake@redhat.com>
 
 	strerror_r-posix: Another fix, for HAVE_DECL_STRERROR_R on mingw.
