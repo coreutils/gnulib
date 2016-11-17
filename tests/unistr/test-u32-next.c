@@ -71,7 +71,6 @@ main ()
     ASSERT (uc == 0x1D51F);
   }
 
-#if CONFIG_UNICODE_SAFETY
   /* Test incomplete/invalid 1-unit input.  */
   {
     static const uint32_t input[] = { 0x340000, 0 };
@@ -80,7 +79,6 @@ main ()
     ASSERT (ret == NULL);
     ASSERT (uc == 0xFFFD);
   }
-#endif
 
   return 0;
 }

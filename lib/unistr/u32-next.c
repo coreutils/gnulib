@@ -30,10 +30,8 @@ u32_next (ucs4_t *puc, const uint32_t *s)
     return s + count;
   else
     {
-#if CONFIG_UNICODE_SAFETY
       if (count < 0)
         *puc = 0xfffd;
-#endif
       return NULL;
     }
 }

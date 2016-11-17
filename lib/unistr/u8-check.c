@@ -63,40 +63,12 @@ u8_check (const uint8_t *s, size_t n)
                   && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
                   && (s[3] ^ 0x80) < 0x40
                   && (c >= 0xf1 || s[1] >= 0x90)
-#if 1
-                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90))
-#endif
-                 )
+                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
                 {
                   s += 4;
                   continue;
                 }
             }
-#if 0
-          else if (c < 0xfc)
-            {
-              if (s + 5 <= s_end
-                  && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-                  && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-                  && (c >= 0xf9 || s[1] >= 0x88))
-                {
-                  s += 5;
-                  continue;
-                }
-            }
-          else if (c < 0xfe)
-            {
-              if (s + 6 <= s_end
-                  && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-                  && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-                  && (s[5] ^ 0x80) < 0x40
-                  && (c >= 0xfd || s[1] >= 0x84))
-                {
-                  s += 6;
-                  continue;
-                }
-            }
-#endif
         }
       /* invalid or incomplete multibyte character */
       return s;

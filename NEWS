@@ -3,6 +3,9 @@ Important notes
 
 Date        Modules         Changes
 
+2016-11-17  unistr/u32-strmblen   The function u32_strmblen can now return -1.
+2016-11-17  unistr/u32-strmbtouc  The function u32_strmbtouc can now return -1.
+
 2015-04-24  acl             This module no longer defines file_has_acl.
                             Use the new file-has-acl module for that.
                             Using only the latter module makes for fewer

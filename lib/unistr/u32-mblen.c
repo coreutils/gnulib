@@ -27,9 +27,7 @@ u32_mblen (const uint32_t *s, size_t n)
     {
       uint32_t c = *s;
 
-#if CONFIG_UNICODE_SAFETY
       if (c < 0xd800 || (c >= 0xe000 && c < 0x110000))
-#endif
         return (c != 0 ? 1 : 0);
     }
   /* invalid or incomplete multibyte character */

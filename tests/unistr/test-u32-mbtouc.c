@@ -22,9 +22,6 @@
 
 #include "macros.h"
 
-/* Enable all tests that may be skipped when testing u32_mbtouc_unsafe.  */
-#define FULL_SAFETY 1
-
 #include "test-u32-mbtouc.h"
 
 int

@@ -68,14 +68,12 @@ main ()
     ASSERT (ret == 1);
   }
 
-#if CONFIG_UNICODE_SAFETY
   /* Test incomplete/invalid 1-unit input.  */
   {
     static const uint32_t input[] = { 0x340000 };
     ret = u32_mblen (input, 1);
     ASSERT (ret == -1);
   }
-#endif
 
   return 0;
 }

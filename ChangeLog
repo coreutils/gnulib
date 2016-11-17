@@ -1,3 +1,45 @@
+2016-11-17  Bruno Haible  <bruno@clisp.org>
+
+	Enable Unicode decoder safety unconditionally.
+	* lib/unistr.in.h (u32_mbtouc_unsafe): Assume CONFIG_UNICODE_SAFETY.
+	* lib/unistr/u8-mblen.c (u8_mblen): Likewise.
+	* lib/unistr/u8-mbtouc-unsafe.c (u8_mbtouc_unsafe): Likewise.
+	* lib/unistr/u8-mbtouc-unsafe-aux.c (u8_mbtouc_unsafe_aux): Likewise.
+	* lib/unistr/u8-prev.c (u8_prev): Likewise.
+	* lib/unistr/u8-strmblen.c (u8_strmblen): Likewise.
+	* lib/unistr/u8-strmbtouc.c (u8_strmbtouc): Likewise.
+	* lib/unistr/u16-mblen.c (u16_mblen): Likewise.
+	* lib/unistr/u16-mbtouc-unsafe.c (u16_mbtouc_unsafe): Likewise.
+	* lib/unistr/u16-mbtouc-unsafe-aux.c (u16_mbtouc_unsafe_aux): Likewise.
+	* lib/unistr/u16-prev.c (u16_prev): Likewise.
+	* lib/unistr/u16-strmblen.c (u16_strmblen): Likewise.
+	* lib/unistr/u16-strmbtouc.c (u16_strmbtouc): Likewise.
+	* lib/unistr/u32-mblen.c (u32_mblen): Likewise.
+	* lib/unistr/u32-mbtouc-unsafe.c (u32_mbtouc_unsafe): Likewise.
+	* lib/unistr/u32-prev.c (u32_prev): Likewise.
+	* lib/unistr/u32-next.c (u32_next): Likewise.
+	* lib/unistr/u32-strmblen.c (u32_strmblen): Likewise.
+	* lib/unistr/u32-strmbtouc.c (u32_strmbtouc): Likewise.
+	* lib/uniconv/u8-conv-to-enc.c (u8_conv_to_encoding): Likewise.
+	* lib/uniconv/u8-strconv-to-enc.c (u8_strconv_to_encoding): Likewise.
+	* tests/unistr/test-u16-prev.c (check_invalid): Enable the
+	CONFIG_UNICODE_SAFETY tests unconditionally.
+	* tests/unistr/test-u32-mblen.c (main): Likewise.
+	* tests/unistr/test-u32-mbtouc.h (test_function): Likewise.
+	* tests/unistr/test-u32-prev.c (check_invalid): Likewise.
+	* tests/unistr/test-u32-next.c (main): Likewise.
+	* tests/unistr/test-u32-strmblen.c (main): Likewise.
+	* tests/unistr/test-u32-strmbtouc.c (main): Likewise.
+	* tests/unistr/test-u32-mbtouc.c (FULL_SAFETY): Remove macro.
+	* lib/unistr/u8-check.c (u8_check): Remove old dead code.
+	* lib/unistr/u8-mbtouc.c (u8_mbtouc): Likewise.
+	* lib/unistr/u8-mbtouc-aux.c (u8_mbtouc_aux): Likewise.
+	* lib/unistr/u8-mbtoucr.c (u8_mbtoucr): Likewise.
+	* lib/unistr/u8-uctomb.c (u8_uctomb): Likewise.
+	* lib/unistr/u8-uctomb-aux.c (u8_uctomb_aux): Likewise.
+	* lib/unistr/u16-check.c (u16_check): Update comment.
+	* NEWS: Mention the changes that callers should be aware of.
+
 2016-11-19  Bruno Haible  <bruno@clisp.org>
 
 	relocatable-prog-wrapper: Fix breakage on Cygwin.

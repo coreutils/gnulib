@@ -37,17 +37,8 @@ u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
       else
         return -1;
     }
-#if 0
-  else if (uc < 0x200000)
-    count = 4;
-  else if (uc < 0x4000000)
-    count = 5;
-  else if (uc <= 0x7fffffff)
-    count = 6;
-#else
   else if (uc < 0x110000)
     count = 4;
-#endif
   else
     return -1;
 
@@ -56,10 +47,6 @@ u8_uctomb_aux (uint8_t *s, ucs4_t uc, int n)
 
   switch (count) /* note: code falls through cases! */
     {
-#if 0
-    case 6: s[5] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x4000000;
-    case 5: s[4] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x200000;
-#endif
     case 4: s[3] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x10000;
       /* fallthrough */
     case 3: s[2] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x800;

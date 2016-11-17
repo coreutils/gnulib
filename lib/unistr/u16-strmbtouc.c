@@ -24,7 +24,7 @@
 int
 u16_strmbtouc (ucs4_t *puc, const uint16_t *s)
 {
-  /* Keep in sync with unistr.h and utf16-ucs4.c.  */
+  /* Keep in sync with unistr.h and u16-mbtouc-aux.c.  */
   uint16_t c = *s;
 
   if (c < 0xd800 || c >= 0xe000)
@@ -32,15 +32,9 @@ u16_strmbtouc (ucs4_t *puc, const uint16_t *s)
       *puc = c;
       return (c != 0 ? 1 : 0);
     }
-#if CONFIG_UNICODE_SAFETY
   if (c < 0xdc00)
-#endif
     {
-#if CONFIG_UNICODE_SAFETY
       if (s[1] >= 0xdc00 && s[1] < 0xe000)
-#else
-      if (s[1] != 0)
-#endif
         {
           *puc = 0x10000 + ((c - 0xd800) << 10) + (s[1] - 0xdc00);
           return 2;

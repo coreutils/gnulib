@@ -84,7 +84,6 @@ check_invalid (const uint16_t *input, size_t input_length)
   if (uc != 0xBADFACE)
     return 2;
 
-#if CONFIG_UNICODE_SAFETY
   /* Test recognition when preceded by a 1-unit character.  */
   {
     uint16_t buf[100];
@@ -121,7 +120,6 @@ check_invalid (const uint16_t *input, size_t input_length)
     if (uc != 0xBADFACE)
       return 6;
   }
-#endif
 
   return 0;
 }

@@ -41,13 +41,11 @@ u8_conv_to_encoding (const char *tocode,
       char *result;
 
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
-#if CONFIG_UNICODE_SAFETY
       if (u8_check (src, srclen))
         {
           errno = EILSEQ;
           return NULL;
         }
-#endif
 
       /* Memory allocation.  */
       if (resultbuf != NULL && *lengthp >= srclen)

@@ -41,13 +41,11 @@ u8_strconv_to_encoding (const uint8_t *string,
     {
       /* Conversion from UTF-8 to UTF-8.  No need to go through iconv().  */
       length = u8_strlen (string) + 1;
-#if CONFIG_UNICODE_SAFETY
       if (u8_check (string, length))
         {
           errno = EILSEQ;
           return NULL;
         }
-#endif
       result = (char *) malloc (length);
       if (result == NULL)
         {

@@ -36,62 +36,26 @@ u8_mblen (const uint8_t *s, size_t n)
           if (c < 0xe0)
             {
               if (n >= 2
-#if CONFIG_UNICODE_SAFETY
-                  && (s[1] ^ 0x80) < 0x40
-#endif
-                 )
+                  && (s[1] ^ 0x80) < 0x40)
                 return 2;
             }
           else if (c < 0xf0)
             {
               if (n >= 3
-#if CONFIG_UNICODE_SAFETY
                   && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
                   && (c >= 0xe1 || s[1] >= 0xa0)
-                  && (c != 0xed || s[1] < 0xa0)
-#endif
-                 )
+                  && (c != 0xed || s[1] < 0xa0))
                 return 3;
             }
           else if (c < 0xf8)
             {
               if (n >= 4
-#if CONFIG_UNICODE_SAFETY
                   && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
                   && (s[3] ^ 0x80) < 0x40
                   && (c >= 0xf1 || s[1] >= 0x90)
-#if 1
-                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90))
-#endif
-#endif
-                 )
+                  && (c < 0xf4 || (c == 0xf4 && s[1] < 0x90)))
                 return 4;
             }
-#if 0
-          else if (c < 0xfc)
-            {
-              if (n >= 5
-#if CONFIG_UNICODE_SAFETY
-                  && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-                  && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-                  && (c >= 0xf9 || s[1] >= 0x88)
-#endif
-                 )
-                return 5;
-            }
-          else if (c < 0xfe)
-            {
-              if (n >= 6
-#if CONFIG_UNICODE_SAFETY
-                  && (s[1] ^ 0x80) < 0x40 && (s[2] ^ 0x80) < 0x40
-                  && (s[3] ^ 0x80) < 0x40 && (s[4] ^ 0x80) < 0x40
-                  && (s[5] ^ 0x80) < 0x40
-                  && (c >= 0xfd || s[1] >= 0x84)
-#endif
-                 )
-                return 6;
-            }
-#endif
         }
     }
   /* invalid or incomplete multibyte character */

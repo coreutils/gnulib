@@ -197,15 +197,11 @@ u32_mbtouc_unsafe (ucs4_t *puc,
 {
   uint32_t c = *s;
 
-#  if CONFIG_UNICODE_SAFETY
   if (c < 0xd800 || (c >= 0xe000 && c < 0x110000))
-#  endif
     *puc = c;
-#  if CONFIG_UNICODE_SAFETY
   else
     /* invalid multibyte character */
     *puc = 0xfffd;
-#  endif
   return 1;
 }
 # endif

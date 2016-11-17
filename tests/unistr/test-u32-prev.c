@@ -56,7 +56,6 @@ check (const uint32_t *input, size_t input_length, ucs4_t *puc)
 static int
 check_invalid (const uint32_t *input, size_t input_length)
 {
-#if CONFIG_UNICODE_SAFETY
   ucs4_t uc;
 
   /* Test recognition when at the beginning of the string.  */
@@ -83,7 +82,6 @@ check_invalid (const uint32_t *input, size_t input_length)
     if (uc != 0xBADFACE)
       return 4;
   }
-#endif
 
   return 0;
 }

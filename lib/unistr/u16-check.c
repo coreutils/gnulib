@@ -27,7 +27,7 @@ u16_check (const uint16_t *s, size_t n)
 
   while (s < s_end)
     {
-      /* Keep in sync with unistr.h and utf16-ucs4.c.  */
+      /* Keep in sync with unistr.h and u16-mbtouc-aux.c.  */
       uint16_t c = *s;
 
       if (c < 0xd800 || c >= 0xe000)
