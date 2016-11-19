@@ -15,9 +15,11 @@ lib/careadlinkat.c
 lib/allocator.h
 lib/allocator.c
 lib/readlink.c
+lib/stat.c
 lib/canonicalize-lgpl.c
 lib/malloca.h
 lib/malloca.c
+lib/lstat.c
 lib/relocatable.h
 lib/relocatable.c
 lib/setenv.c
@@ -43,7 +45,6 @@ stdint
 stdlib
 unistd
 environ
-intprops
 string
 verify
 

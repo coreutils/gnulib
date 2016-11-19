@@ -1,5 +1,15 @@
 2016-11-19  Bruno Haible  <bruno@clisp.org>
 
+	relocatable-prog-wrapper: Fix breakage on Cygwin.
+	* modules/relocatable-prog-wrapper (Files): Add lib/stat.c, lib/lstat.c.
+	(Depends-on): Remove intprops.
+	* lib/relocwrapper.c: Update dependency tree.
+	(strerror): Undefine.
+	* build-aux/install-reloc (func_create_wrapper): Do not compile
+	strerror.c and strerror-override.c. Erase stat.o and lstat.o.
+
+2016-11-19  Bruno Haible  <bruno@clisp.org>
+
 	strerror: Make it compile in C++ mode.
 	* lib/strerror.c (strerror): Ignore the return value of memcpy().
 

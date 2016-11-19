@@ -232,15 +232,13 @@ func_create_wrapper ()
                "$srcdir"/areadlink.c \
                "$srcdir"/careadlinkat.c \
                "$srcdir"/allocator.c \
-               "$srcdir"/strerror-override.c \
-               "$srcdir"/stat.c \
-               "$srcdir"/lstat.c \
                "$srcdir"/readlink.c \
+               "$srcdir"/stat.c \
                "$srcdir"/canonicalize-lgpl.c \
                "$srcdir"/malloca.c \
+               "$srcdir"/lstat.c \
                "$srcdir"/relocatable.c \
                "$srcdir"/setenv.c \
-               "$srcdir"/strerror.c \
                "$srcdir"/c-ctype.c \
                -o "$destprog.wrapper$exeext"
   rc=$?
@@ -253,11 +251,12 @@ func_create_wrapper ()
         careadlinkat.o \
         allocator.o \
         readlink.o \
+        stat.o \
         canonicalize-lgpl.o \
         malloca.o \
+        lstat.o \
         relocatable.o \
         setenv.o \
-        strerror.o \
         c-ctype.o
   test $rc = 0 || exit $?
   # Clean up debugging information left over by the native C compiler on MacOS X.
