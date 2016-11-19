@@ -66,5 +66,6 @@ strerror (int n)
   if (sizeof buf <= len)
     abort ();
 
-  return memcpy (buf, msg, len + 1);
+  memcpy (buf, msg, len + 1);
+  return buf;
 }

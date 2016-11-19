@@ -1,3 +1,8 @@
+2016-11-19  Bruno Haible  <bruno@clisp.org>
+
+	strerror: Make it compile in C++ mode.
+	* lib/strerror.c (strerror): Ignore the return value of memcpy().
+
 2016-11-15  Pedro Alves  <palves@redhat.com>
 
 	sys_time: add gnulib::timeval for C++
