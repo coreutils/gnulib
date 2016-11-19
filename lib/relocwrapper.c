@@ -27,10 +27,10 @@
                 -> dosname
                 -> pathmax
                 -> verify
-      -> canonicalize-lgpl
-         -> malloca
-         -> lstat
-         -> readlink
+       -> canonicalize-lgpl
+          -> malloca
+          -> lstat
+          -> readlink
     -> relocatable
     -> setenv
        -> malloca
