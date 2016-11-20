@@ -1,3 +1,11 @@
+2016-11-21  Bruno Haible  <bruno@clisp.org>
+
+	snippet/c++defs: Simplify _GL_CXXALIAS_* macros.
+	* build-aux/snippet/c++defs.h [__cplusplus && GNULIB_NAMESPACE]
+	(_GL_CXXALIAS_RPL_1, _GL_CXXALIAS_RPL_CAST_1,
+	_GL_CXXALIAS_SYS, _GL_CXXALIAS_SYS_CAST, _GL_CXXALIAS_SYS_CAST2):
+	Inline and remove member function 'rpl ()' of the wrapper struct.
+
 2016-11-20  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: fix logic typo
