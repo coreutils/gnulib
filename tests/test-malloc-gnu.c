@@ -22,8 +22,10 @@ int
 main ()
 {
   /* Check that malloc (0) is not a NULL pointer.  */
-  if (malloc (0) == NULL)
+  char *p = malloc (0);
+  if (p == NULL)
     return 1;
 
+  free (p);
   return 0;
 }

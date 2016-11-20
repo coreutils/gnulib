@@ -1,3 +1,14 @@
+2016-11-20  Jim Meyering  <meyering@fb.com>
+
+	fix test driver leaks: exclude, malloc, realloc
+	* tests/test-exclude.c (main): Fix trivial leak.
+	* tests/test-malloc-gnu.c (main): Likewise.
+	* tests/test-realloc-gnu.c (main): Likewise.
+	With these changes, grep's tests are now leak free.
+	I.e., running them with ASAN elicits no failure:
+	  make CFLAGS='-O0 -ggdb3' AM_CFLAGS=-fsanitize=address \
+	    AM_LDFLAGS='-fsanitize=address -static-libasan' check
+
 2016-11-11  Bruno Haible  <bruno@clisp.org>
 
 	libunistring: Relicense under dual "LGPLv3+ or GPLv2" license.

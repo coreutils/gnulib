@@ -122,5 +122,7 @@ main (int argc, char **argv)
 
       printf ("%s: %d\n", word, excluded_file_name (exclude, word));
     }
+
+  free_exclude (exclude);
   return 0;
 }

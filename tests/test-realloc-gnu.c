@@ -22,8 +22,10 @@ int
 main ()
 {
   /* Check that realloc (NULL, 0) is not a NULL pointer.  */
-  if (realloc (NULL, 0) == NULL)
+  char *p = realloc (NULL, 0);
+  if (p == NULL)
     return 1;
 
+  free (p);
   return 0;
 }
