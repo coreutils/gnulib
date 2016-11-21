@@ -1,3 +1,10 @@
+2016-11-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: fix logic typo
+	Problem reported by Stephane Chazelas (Bug#24973).
+	* lib/dfa.c (using_simple_locale): Fix typo that caused some
+	non-simple locales like fr_FR to be treated as simple.
+
 2016-11-20  Jim Meyering  <meyering@fb.com>
 
 	fix test driver leaks: exclude, malloc, realloc

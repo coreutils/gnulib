@@ -815,8 +815,8 @@ using_simple_locale (bool multibyte)
      && '}' == 125 && '~' == 126)
   };
 
-  if (native_c_charset && !multibyte)
-    return true;
+  if (!native_c_charset || multibyte)
+    return false;
   else
     {
       /* Treat C and POSIX locales as being compatible.  Also, treat
