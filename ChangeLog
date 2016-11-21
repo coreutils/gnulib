@@ -1,3 +1,9 @@
+2016-12-02  Nikos Mavrogiannopoulos <nmav@gnutls.org>
+
+	* gnulib-tool (func_import): Adhere to the license guideline when
+	rewriting the license text to "LGPLv3+ or GPLv2":
+	https://www.gnu.org/prep/maintain/maintain.html#Licensing-of-GNU-Packages
+
 2016-12-02  Bruno Haible  <bruno@clisp.org>
 
 	localcharset: Avoid theoretical buffer overrun.
