@@ -6,10 +6,16 @@
 # Lines beginning with # are ignored.
 # Lines with just one word are ignored.
 # Otherwise, the line has two or more whitespace-separated words:
-#   the first word is the source, the second word is the destination,
-#   other optional words are options.
+#   the first word is the source directory, which can be a top-level
+#   directory of source archive,
+#   the second word is the source file name relative to the source
+#   directory, and
+#   the third word is the destination, other optional words are
+#   options.
 # The possible options are "gpl" (to replace the license with the GPL)
-#   and "doclicense" (to replace @include doclicense.texi with fdl.texi).
+#   and "doclicense" (to replace @include doclicense.texi with fdl.texi)
+#   and "release" (to use the release version instead of the
+#   development version).
 #   Unrecognized options are ignored.
 # $VARIABLE expansions are done (with sh eval).
 #
@@ -85,10 +91,10 @@ fixlicense='
 # Quote the $ so that CVS does not expand it in this script.
 remove_id_lines='/[$]Id:.*[$]/d'
 
-# $1 is input file, $2 is output.
-# Remove $Id lines, since they'll differ between source locations.
-# If $options contains "gpl", change the license to be the standard
-# GPL.  We use this for libc files, et al.
+# $1 is the root directory of input file, $2 is input file, $3 is
+# output.  Remove $Id lines, since they'll differ between source
+# locations.  If $options contains "gpl", change the license to be the
+# standard GPL.  We use this for libc files, et al.
 #
 fixfile() \
 {
@@ -102,20 +108,34 @@ fixfile() \
     sed_command="$sed_command; s/@include doclicense.texi/@include fdl.texi/";;
   esac
 
-  sed "$sed_command" $1 >$2
+  sed "$sed_command" $1 >$2-t && mv $2-t $2
 }
 
 
 # 
-cat | while read src dst options; do
-  #echo "src=$src, dst=$dst, options=$options" >&2
-  case $src:$dst in
-    *: ) continue;;    # skip lines without second element
+cat | while read top src dst options; do
+  #echo "top=$top, src=$src, dst=$dst, options=$options" >&2
+  case $top:$src:$dst in
+    *: ) continue;;    # skip lines without last element
     '#'* ) continue;;  # skip comment-only lines
   esac
 
+  release=false
+  case " $options " in
+    *' release '*)
+      release=true
+      ;;
+  esac
+
+  eval top=$top
+  if $release && test ! -d $top/.git; then
+    echo "$0: 'release' option only works with git checkout"
+    release=false
+  fi
+
   # Expand variables and make sure we have an input file.
-  eval src=$src
+  src1=$src
+  eval src=$top/$src
   if test ! -r $src; then
     echo "$0: cannot read $src" >&2
     continue
@@ -126,6 +146,13 @@ cat | while read src dst options; do
   # then write destination file dst/foo.c.
   eval dst=$dst
   test -d $dst && dst=$dst/`basename $src`
+
+  if $release; then
+    rev=$(git --git-dir=$top/.git describe --abbrev=0)
+    reltmp=$TMPDIR/`basename $src1`:$rev
+    git --git-dir=$top/.git show $rev:$src1 > $reltmp
+    fixfile $reltmp $reltmp
+  fi
 
   # Fix files in both src and dst, for the sake
   # of a clean comparison.
@@ -139,6 +166,8 @@ cat | while read src dst options; do
   if test ! -e $dst; then
     echo "## $srctmp $dst  # new"
     $chicken cp -p $srctmp $dst
+  elif $release && cmp -s $reltmp $dsttmp; then
+    $verbose && echo "## $reltmp $dst  # unchanged"
   elif cmp -s $srctmp $dsttmp; then
     $verbose && echo "## $srctmp $dst  # unchanged"
   else

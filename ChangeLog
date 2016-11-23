@@ -1,3 +1,12 @@
+2016-11-24  Daiki Ueno  <ueno@gnu.org>
+
+	srclist: add "release" option
+	* config/srclist.txt: Change the format so that the first column
+	of each line points to the top-level directory of the source
+	archive.
+	* config/srclist-update: Accept "release" option that checks files
+	from the most recently tagged revision in the source archive.
+
 2016-11-21  Bruno Haible  <bruno@clisp.org>
 
 	snippet/c++defs: Simplify _GL_CXXALIAS_* macros.
