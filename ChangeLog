@@ -1,5 +1,11 @@
 2016-11-24  Daiki Ueno  <ueno@gnu.org>
 
+	srclist: sync with released gettext
+	* config/srclist.txt: Set "release" option to the files under
+	$GETTEXT.
+
+2016-11-24  Daiki Ueno  <ueno@gnu.org>
+
 	srclist: add "release" option
 	* config/srclist.txt: Change the format so that the first column
 	of each line points to the top-level directory of the source
