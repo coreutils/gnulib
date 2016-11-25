@@ -1,5 +1,9 @@
 2016-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: simplify with new function fillset
+	* lib/dfa.c (fillset): New function.
+	Use it for clarity when applicable.
+
 	dfa: fix glitches with on-demand states
 	Also, adjust commentary to better match new code.
 	Some of these glitches predate the recent change.

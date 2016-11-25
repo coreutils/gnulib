@@ -695,10 +695,17 @@ zeroset (charclass s)
 }
 
 static void
+fillset (charclass s)
+{
+  int i;
+  for (i = 0; i < CHARCLASS_WORDS; i++)
+    s[i] = CHARCLASS_WORD_MASK;
+}
+
+static void
 notset (charclass s)
 {
   int i;
-
   for (i = 0; i < CHARCLASS_WORDS; ++i)
     s[i] = CHARCLASS_WORD_MASK & ~s[i];
 }
@@ -1409,8 +1416,7 @@ lex (struct dfa *dfa)
             goto normal_char;
           if (dfa->canychar == (size_t) -1)
             {
-              zeroset (ccl);
-              notset (ccl);
+              fillset (ccl);
               if (!(dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
                 clrbit ('\n', ccl);
               if (dfa->syntax.syntax_bits & RE_DOT_NOT_NULL)
@@ -2536,8 +2542,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
   group.elems = xnmalloc (d->nleaves, sizeof *group.elems);
   group.nelem = 0;
 
-  zeroset (label);
-  notset (label);
+  fillset (label);
 
   for (i = 0; i < d->states[s].elems.nelem; ++i)
     {
@@ -3333,7 +3338,6 @@ static void
 dfassbuild (struct dfa *d)
 {
   size_t i, j;
-  charclass ccl;
   bool have_achar = false;
   bool have_nchar = false;
   struct dfa *sup = dfaalloc ();
@@ -3370,14 +3374,16 @@ dfassbuild (struct dfa *d)
         case ANYCHAR:
         case MBCSET:
         case BACKREF:
-          zeroset (ccl);
-          notset (ccl);
-          sup->tokens[j++] = CSET + charclass_index (sup, ccl);
-          sup->tokens[j++] = STAR;
-          if (d->tokens[i + 1] == QMARK || d->tokens[i + 1] == STAR
-              || d->tokens[i + 1] == PLUS)
-            i++;
-          have_achar = true;
+          {
+            charclass ccl;
+            fillset (ccl);
+            sup->tokens[j++] = CSET + charclass_index (sup, ccl);
+            sup->tokens[j++] = STAR;
+            if (d->tokens[i + 1] == QMARK || d->tokens[i + 1] == STAR
+                || d->tokens[i + 1] == PLUS)
+              i++;
+            have_achar = true;
+          }
           break;
         case BEGWORD:
         case ENDWORD:
