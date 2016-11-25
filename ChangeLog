@@ -1,3 +1,16 @@
+2016-11-25  Norihiro Tanaka  <noritnk@kcn.ne.jp>
+
+	dfa: addition of new state on demand
+	* src/dfa.c (dfastate): Add argument UC, the current input character.
+	Fill only a group including the character in transition table.
+	(realloc_trans_if_necessary): Add the dummy state which means that a
+	transition table is assigned but the next state is not assigned.
+	(build_state): Return the next state.  All callers updated.
+	(transit_state_singlebyte): If we get the dummy state,
+	fill the transition table.
+	(dfaexec_main): Handle the dummy state.
+	(free_mbdata, dfafree): Consider the dummy state.
+
 2016-11-24  Daiki Ueno  <ueno@gnu.org>
 
 	srclist: sync with released gettext
