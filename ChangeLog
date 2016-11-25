@@ -1,3 +1,21 @@
+2016-11-25  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: fix glitches with on-demand states
+	Also, adjust commentary to better match new code.
+	Some of these glitches predate the recent change.
+	* lib/dfa.c (dfaanalyze): Clear trcount here, so that it counts
+	only non-initial states.
+	(dfastate): Rename locals to better match new roles.
+	Move them into nested scopes if this is easy.
+	Omit unnecessary cdalls to zeroset.
+	Simplify test for whether to throw in the positions of state 0.
+	Omit C99-ism (decl after statement) since Gawk still wants C89.
+	(build_state): Omit unnecessary test and assignment.
+	Fix some confusion that counted transition tables inaccurately
+	and could cause a memory leak.
+	(dfaexec_main): Redo to make it clearer to the compiler that
+	-1 and -2 are the only negative state numbers here.
+
 2016-11-25  Norihiro Tanaka  <noritnk@kcn.ne.jp>
 
 	dfa: addition of new state on demand
