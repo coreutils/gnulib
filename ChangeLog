@@ -11,7 +11,7 @@
 	only non-initial states.
 	(dfastate): Rename locals to better match new roles.
 	Move them into nested scopes if this is easy.
-	Omit unnecessary cdalls to zeroset.
+	Omit unnecessary calls to zeroset.
 	Simplify test for whether to throw in the positions of state 0.
 	Omit C99-ism (decl after statement) since Gawk still wants C89.
 	(build_state): Omit unnecessary test and assignment.
