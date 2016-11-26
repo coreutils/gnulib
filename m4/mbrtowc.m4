@@ -164,7 +164,7 @@ int main ()
       memset (&state, '\0', sizeof (mbstate_t));
       if (mbrtowc (&wc, input + 1, 1, &state) == (size_t)(-2))
         if (mbsinit (&state))
-          return 1;
+          return 2;
     }
   return 0;
 }]])],
@@ -224,7 +224,7 @@ int main ()
       memset (&state, '\0', sizeof (mbstate_t));
       if (mbrtowc (&wc, input + 3, 6, &state) != 4
           && mbtowc (&wc, input + 3, 6) == 4)
-        return 1;
+        return 2;
     }
   return 0;
 }]])],
@@ -352,7 +352,7 @@ int main ()
       mbrtowc (&wc, NULL, 5, &state);
       /* Check that wc was not modified.  */
       if (wc != (wchar_t) 0xBADFACE)
-        return 1;
+        return 2;
     }
   return 0;
 }]])],
@@ -539,7 +539,7 @@ int main ()
 
       memset (&state, '\0', sizeof (mbstate_t));
       if (mbrtowc (&wc, "", 1, &state) != 0)
-        return 1;
+        return 2;
     }
   return 0;
 }]])],
@@ -608,7 +608,7 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
             int i;
             char *locale = setlocale (LC_ALL, "C");
             if (! locale)
-              return 1;
+              return 2;
             for (i = CHAR_MIN; i <= CHAR_MAX; i++)
               {
                 char c = i;
@@ -616,7 +616,7 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
                 mbstate_t mbs = { 0, };
                 size_t ss = mbrtowc (&wc, &c, 1, &mbs);
                 if (1 < ss)
-                  return 1;
+                  return 3;
               }
             return 0;
           ]])],

@@ -1,3 +1,14 @@
+2016-11-27  Pádraig Brady  <P@draigBrady.com>
+
+	maint: use a more standard return from mbrtowc test
+	* m4/mbrtowc.m4 (gl_MBRTOWC_C_LOCALE): Don't return 1
+	from the test program as this often indicates an
+	unhandled case in the test program.
+	(gl_MBRTOWC_INCOMPLETE_STATE): Likewise.
+	(gl_MBRTOWC_SANITYCHECK): Likewise.
+	(gl_MBRTOWC_NULL_ARG2): Likewise.
+	(gl_MBRTOWC_NUL_RETVAL): Likewise.
+
 2016-11-26  Paul Eggert  <eggert@cs.ucla.edu>
 
 	freopen: work around glibc bug with closed fd
