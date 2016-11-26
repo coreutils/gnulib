@@ -1,5 +1,9 @@
 2016-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
+	fnmatch: fix typo introduced on 2016-08-17
+	This fixes the port to non-GCC compilers that lack __builtin_expect.
+	* lib/fnmatch.c (__builtin_expect): Change A&&B to !A||B.
+
 	dfa: simplify with new function fillset
 	* lib/dfa.c (fillset): New function.
 	Use it for clarity when applicable.
