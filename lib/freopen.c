@@ -41,6 +41,7 @@ orig_freopen (const char *filename, const char *mode, FILE *stream)
 
 #include <fcntl.h>
 #include <string.h>
+#include <unistd.h>
 
 FILE *
 rpl_freopen (const char *filename, const char *mode, FILE *stream)
