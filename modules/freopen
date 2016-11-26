@@ -6,6 +6,7 @@ lib/freopen.c
 m4/freopen.m4
 
 Depends-on:
+fcntl-h        [test $REPLACE_FREOPEN = 1]
 stdio
 largefile
 

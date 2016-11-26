@@ -19,12 +19,12 @@
 /* If the user's config.h happens to include <stdio.h>, let it include only
    the system's <stdio.h> here, so that orig_freopen doesn't recurse to
    rpl_freopen.  */
-#define __need_FILE
+#define _GL_ALREADY_INCLUDING_STDIO_H
 #include <config.h>
 
 /* Get the original definition of freopen.  It might be defined as a macro.  */
 #include <stdio.h>
-#undef __need_FILE
+#undef _GL_ALREADY_INCLUDING_STDIO_H
 
 #include <errno.h>
 
@@ -39,29 +39,53 @@ orig_freopen (const char *filename, const char *mode, FILE *stream)
    this include because of the preliminary #include <stdio.h> above.  */
 #include "stdio.h"
 
+#include <fcntl.h>
 #include <string.h>
 
 FILE *
 rpl_freopen (const char *filename, const char *mode, FILE *stream)
 {
   FILE *result;
-
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  if (filename != NULL && strcmp (filename, "/dev/null") == 0)
-    filename = "NUL";
+  char const *null_device = "NUL";
+  if (filename && strcmp (filename, "/dev/null") == 0)
+    filename = null_device;
+#else
+  char const *null_device = "/dev/null";
 #endif
 
-  /* Clear errno to check the success of freopen() with it */
+#ifdef __KLIBC__
   errno = 0;
+#endif
 
   result = orig_freopen (filename, mode, stream);
 
+  if (!result)
+    {
 #ifdef __KLIBC__
-  /* On OS/2 kLIBC, freopen() returns NULL even if it is successful
-     if filename is NULL. */
-  if (!filename && !result && !errno)
-    result = stream;
+      /* On OS/2 kLIBC, freopen returns NULL even if it is successful
+         if filename is NULL. */
+      if (!filename && !errno)
+        result = stream;
 #endif
+    }
+  else if (filename)
+    {
+      int fd = fileno (result);
+      if (dup2 (fd, fd) < 0 && errno == EBADF)
+        {
+          int nullfd = open (null_device, O_RDONLY | O_CLOEXEC);
+          int err = 0;
+          if (nullfd != fd)
+            {
+              if (dup2 (nullfd, fd) < 0)
+                err = 1;
+              close (nullfd);
+            }
+          if (!err)
+            result = orig_freopen (filename, mode, result);
+        }
+    }
 
   return result;
 }

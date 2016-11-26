@@ -1,4 +1,4 @@
-# freopen.m4 serial 5
+# freopen.m4 serial 6
 dnl Copyright (C) 2007-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,27 @@ AC_DEFUN([gl_FUNC_FREOPEN],
     mingw* | pw* | os2*)
       REPLACE_FREOPEN=1
       ;;
+    *)
+      AC_CACHE_CHECK([whether freopen works on closed fds],
+        [gl_cv_func_freopen_works_on_closed],
+        [AC_RUN_IFELSE(
+           [AC_LANG_PROGRAM(
+              [[#include <stdio.h>
+                #include <unistd.h>
+              ]],
+              [[close (0);
+                return !(freopen ("/dev/null", "r", stdin)
+                         && getchar () == EOF
+                         && !ferror (stdin) && feof (stdin));]])],
+           [gl_cv_func_freopen_works_on_closed=yes],
+           [gl_cv_func_freopen_works_on_closed=no],
+           [case $host_os in
+              *gnu*) gl_cv_func_freopen_works_on_closed="guessing no" ;;
+              *)     gl_cv_func_freopen_works_on_closed="guessing yes";;
+            esac])])
+      case $gl_cv_func_freopen_works_on_closed in
+        *no) REPLACE_FREOPEN=1;;
+      esac
   esac
 ])
 

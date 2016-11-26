@@ -33,7 +33,11 @@ main ()
 {
   const char *filename = "test-freopen.txt";
 
+  close (STDIN_FILENO);
   ASSERT (freopen ("/dev/null", "r", stdin) != NULL);
+  ASSERT (getchar () == EOF);
+  ASSERT (!ferror (stdin));
+  ASSERT (feof (stdin));
 
 #if 0 /* freopen (NULL, ...) is unsupported on most platforms.  */
   /* Test that freopen() sets errno if someone else closes the stream

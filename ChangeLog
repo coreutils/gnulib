@@ -1,3 +1,17 @@
+2016-11-26  Paul Eggert  <eggert@cs.ucla.edu>
+
+	freopen: work around glibc bug with closed fd
+	Work around glibc bug#15589, where freopen mishandles the case
+	where stdin etc. are already closed.
+	* doc/posix-functions/freopen.texi (freopen): Document the bug.
+	* lib/freopen.c (_GL_ALREADY_INCLUDING_STDIO_H): Define this
+	instead of __need_FILE, as the latter does not work with glibc.
+	Include <fcntl.h>, for open flags.
+	(rpl_freopen): Work around glibc bug.
+	* m4/freopen.m4 (gl_FUNC_FREOPEN): Check for bug.
+	* modules/freopen (Depends-on): Add fcntl-h.
+	* tests/test-freopen.c (main): Test for bug.
+
 2016-11-25  Paul Eggert  <eggert@cs.ucla.edu>
 
 	fnmatch: fix typo introduced on 2016-08-17
