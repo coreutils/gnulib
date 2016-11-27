@@ -3272,6 +3272,12 @@ free_mbdata (struct dfa *d)
 static bool _GL_ATTRIBUTE_PURE
 dfa_supported (struct dfa const *d)
 {
+  /* Declare any non-UTF8 multibyte locale "not supported."  Otherwise, a
+     regexp like ".*7" would mistakenly match \uC9, e.g., via this command:
+     (export LC_ALL=zh_CN.gb18030; printf '\uC9\n' | grep '.*7')  */
+  if (d->localeinfo.multibyte && !d->localeinfo.using_utf8)
+    return false;
+
   size_t i;
   for (i = 0; i < d->tindex; i++)
     {

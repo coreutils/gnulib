@@ -1,3 +1,12 @@
+2016-11-27  Jim Meyering  <meyering@fb.com>
+
+	dfa: avoid false match in non-UTF8 multibyte locales
+	* lib/dfa.c (dfa_supported): Treat any non-UTF8 multibyte locale
+	as "not supported" so that callers will resort to using regex-based
+	matcher.  This will surely hurt performance, but correctness trumps
+	performance here, and the affected locales are less and less relevant,
+	these days.  See grep's bug report https://bugs.gnu.org/24975.
+
 2016-11-27  Mike Frysinger  <vapier@gentoo.org>
 
 	ptsname_r: leverage AC_HEADER_MAJOR to provide major()
