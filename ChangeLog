@@ -1,5 +1,15 @@
 2016-11-27  Pádraig Brady  <P@draigBrady.com>
 
+	md4,md5,sha*: allow _STRING_INLINE_unaligned enable unaligned operation
+	* lib/md4.c (md4_process_bytes): The existing define is made internal
+	in recent versions of glibc, so also use this new public define.
+	* lib/md5.c (md5_process_bytes): Likewise.
+	* lib/sha1.c (sha1_process_bytes): Likewise.
+	* lib/sha256.c (sha256_process_bytes): Likewise.
+	* lib/sha512.c (sha512_process_bytes): Likewise.
+
+2016-11-27  Pádraig Brady  <P@draigBrady.com>
+
 	maint: use a more standard return from mbrtowc test
 	* m4/mbrtowc.m4 (gl_MBRTOWC_C_LOCALE): Don't return 1
 	from the test program as this often indicates an
