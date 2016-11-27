@@ -42,6 +42,8 @@ AC_DEFUN([gl_FUNC_PTSNAME_R],
       REPLACE_PTSNAME_R=1
     fi
   fi
+
+  AC_REQUIRE([AC_HEADER_MAJOR])
 ])
 
 # Prerequisites of lib/ptsname.c.

@@ -1,3 +1,11 @@
+2016-11-27  Mike Frysinger  <vapier@gentoo.org>
+
+	ptsname_r: leverage AC_HEADER_MAJOR to provide major()
+	* lib/ptsname_r.c: Include the appropriate headers.
+	[__sun]: Delete sys/sysmacros.h include.
+	[_AIX || __osf__]: Likewise.
+	* m4/ptsname_r.m4 (gl_FUNC_PTSNAME_R): Depend on AC_HEADER_MAJOR.
+
 2016-11-27  Pádraig Brady  <P@draigBrady.com>
 
 	md4,md5,sha*: allow _STRING_INLINE_unaligned enable unaligned operation

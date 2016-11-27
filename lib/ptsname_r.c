@@ -47,22 +47,26 @@
 
 #endif
 
+/* Get the major, minor macros.  */
+#if MAJOR_IN_MKDEV
+# include <sys/mkdev.h>
+#endif
+#if MAJOR_IN_SYSMACROS
+# include <sys/sysmacros.h>
+#endif
+
 #ifdef __sun
 /* Get ioctl() and 'struct strioctl'.  */
 # include <stropts.h>
 /* Get ISPTM.  */
 # include <sys/stream.h>
 # include <sys/ptms.h>
-/* Get the major, minor macros.  */
-# include <sys/sysmacros.h>
 # include <stdio.h>
 #endif
 
 #if defined _AIX || defined __osf__
 /* Get ioctl(), ISPTM.  */
 # include <sys/ioctl.h>
-/* Get the major, minor macros.  */
-# include <sys/sysmacros.h>
 # include <stdio.h>
 #endif
 
