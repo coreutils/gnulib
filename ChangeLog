@@ -1,3 +1,11 @@
+2016-11-27  Norihiro Tanaka <noritnk@kcn.ne.jp>
+
+        dfa: avoid match middle in multibyte character
+        * lib/dfa.c (transit_state): If fails in matching single byte characters
+        on a state including period expression in non-UTF8 multibyte locales,
+        skip trailing bytes.
+        (dfa_supported): Revert previous change.
+
 2016-11-27  Jim Meyering  <meyering@fb.com>
 
 	dfa: avoid false match in non-UTF8 multibyte locales

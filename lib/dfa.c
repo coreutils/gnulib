@@ -2913,7 +2913,7 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
   /* Calculate the state which can be reached from the state 's' by
      consuming 'mbclen' single bytes from the buffer.  */
   s1 = s;
-  for (i = 0; i < mbclen && 0 <= s; i++)
+  for (i = 0; i < mbclen && (i == 0 || d->min_trcount <= s); i++)
     s = transit_state_singlebyte (d, s, pp);
   *pp += mbclen - i;
 
@@ -3272,12 +3272,6 @@ free_mbdata (struct dfa *d)
 static bool _GL_ATTRIBUTE_PURE
 dfa_supported (struct dfa const *d)
 {
-  /* Declare any non-UTF8 multibyte locale "not supported."  Otherwise, a
-     regexp like ".*7" would mistakenly match \uC9, e.g., via this command:
-     (export LC_ALL=zh_CN.gb18030; printf '\uC9\n' | grep '.*7')  */
-  if (d->localeinfo.multibyte && !d->localeinfo.using_utf8)
-    return false;
-
   size_t i;
   for (i = 0; i < d->tindex; i++)
     {
