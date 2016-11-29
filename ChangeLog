@@ -1,3 +1,14 @@
+2016-11-29  Jim Meyering  <meyering@fb.com>
+
+	dfa: avoid new infinite loop
+	This would infloop: echo cx | LC_ALL=C grep -E 'c\b[x ]'
+	* lib/dfa.c (dfastate): When constructing a new state table, we could
+	initially declare that we had found a match, and later find that
+	constraints eliminate that possibility, yet continue to use the
+	now stale "matched" indicator.  That would lead to an infinite loop.
+	The solution is to update "matched" when necessary.
+	Introduced by commit v0.1-983-g403adf1.
+
 2016-11-27  Norihiro Tanaka <noritnk@kcn.ne.jp>
 
         dfa: avoid match middle in multibyte character

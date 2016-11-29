@@ -2609,6 +2609,12 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
             continue;
           if (j == CHARCLASS_WORDS)
             continue;
+
+          /* If we have reset the bit that made us declare "matched", reset
+             that indicator, too.  This is required to avoid an infinite loop
+             with this command: echo cx | LC_ALL=C grep -E 'c\b[x ]'  */
+          if (!tstbit (uc, matches))
+            matched = false;
         }
 
 #ifdef DEBUG
