@@ -1,5 +1,11 @@
 2016-12-01  KO Myung-Hun  <komh78@gmail.com>
 
+	scandir: Fix _D_ALLOC_NAMLEN() on OS/2 kLIBC
+	* lib/scandir.c (_D_ALLOC_NAMLEN): Consider the fields after d_name on
+	OS/2 kLIBC.
+
+2016-12-01  KO Myung-Hun  <komh78@gmail.com>
+
 	alphasort, scandir: Port to OS/2 kLIBC
 	* lib/alphasort.c (alphasort): Implement according to OS/2 kLIBC
 	declaration.

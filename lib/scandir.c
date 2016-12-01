@@ -36,7 +36,15 @@
 # define _D_EXACT_NAMLEN(d) strlen ((d)->d_name)
 #endif
 #ifndef _D_ALLOC_NAMLEN
-# define _D_ALLOC_NAMLEN(d) (_D_EXACT_NAMLEN (d) + 1)
+# ifndef __KLIBC__
+#  define _D_ALLOC_NAMLEN(d) (_D_EXACT_NAMLEN (d) + 1)
+# else
+/* On OS/2 kLIBC, d_name is not the last field of struct dirent. See
+   <http://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/sys/dirent.h#L68>.  */
+#  include <stddef.h>
+#  define _D_ALLOC_NAMLEN(d) (sizeof (struct dirent) - \
+                              offsetof (struct dirent, d_name))
+# endif
 #endif
 
 #if _LIBC
