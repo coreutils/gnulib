@@ -89,10 +89,19 @@ cancel_handler (void *arg)
 
 
 int
+#ifndef __KLIBC__
 SCANDIR (const char *dir,
          DIRENT_TYPE ***namelist,
          int (*select) (const DIRENT_TYPE *),
          int (*cmp) (const DIRENT_TYPE **, const DIRENT_TYPE **))
+#else
+/* On OS/2 kLIBC, scandir() declaration is different from POSIX. See
+   <http://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/dirent.h#L141>.  */
+SCANDIR (const char *dir,
+         DIRENT_TYPE ***namelist,
+         int (*select) (DIRENT_TYPE *),
+         int (*cmp) (const void *, const void *))
+#endif
 {
   DIR *dp = __opendir (dir);
   DIRENT_TYPE **v = NULL;

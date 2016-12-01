@@ -1,5 +1,12 @@
 2016-12-01  KO Myung-Hun  <komh78@gmail.com>
 
+	alphasort, scandir: Port to OS/2 kLIBC
+	* lib/alphasort.c (alphasort): Implement according to OS/2 kLIBC
+	declaration.
+	* lib/scandir.c (scandir): Add declaration for OS/2 kLIBC.
+
+2016-12-01  KO Myung-Hun  <komh78@gmail.com>
+
 	relocatable: Fix that /@unixroot prefix is not working on OS/2 kLIBC
 	* lib/relocatable.c (relocate): Do not touch pathname if it is started
 	with '/@unixroot'.
