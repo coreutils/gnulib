@@ -1,3 +1,9 @@
+2016-12-01  KO Myung-Hun  <komh78@gmail.com>
+
+	sys_socket: typedef sa_family_t correctly on OS/2 kLIBC
+	* lib/sys_socket.in.h (sa_family_t): Typedef to unsigned char on
+	OS/2 kLIBC unless TCPV40HDRS is defined.
+
 2016-11-29  Jim Meyering  <meyering@fb.com>
 
 	dfa: avoid new infinite loop
@@ -11,11 +17,11 @@
 
 2016-11-27  Norihiro Tanaka <noritnk@kcn.ne.jp>
 
-        dfa: avoid match middle in multibyte character
-        * lib/dfa.c (transit_state): If fails in matching single byte characters
-        on a state including period expression in non-UTF8 multibyte locales,
-        skip trailing bytes.
-        (dfa_supported): Revert previous change.
+	dfa: avoid match middle in multibyte character
+	* lib/dfa.c (transit_state): If fails in matching single byte characters
+	on a state including period expression in non-UTF8 multibyte locales,
+	skip trailing bytes.
+	(dfa_supported): Revert previous change.
 
 2016-11-27  Jim Meyering  <meyering@fb.com>
 
