@@ -539,6 +539,18 @@ relocate (const char *pathname)
     }
 
 #ifdef __EMX__
+# ifdef __KLIBC__
+#  undef strncmp
+
+  if (pathname && strncmp (pathname, "/@unixroot", 10) == 0
+      && (pathname[10] == '\0' || pathname[10] == '/' || pathname[10] == '\\'))
+    {
+      /* kLIBC itself processes /@unixroot prefix */
+
+      return pathname;
+    }
+  else
+# endif
   if (pathname && ISSLASH (pathname[0]))
     {
       const char *unixroot = getenv ("UNIXROOT");

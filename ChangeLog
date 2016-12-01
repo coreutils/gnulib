@@ -1,5 +1,11 @@
 2016-12-01  KO Myung-Hun  <komh78@gmail.com>
 
+	relocatable: Fix that /@unixroot prefix is not working on OS/2 kLIBC
+	* lib/relocatable.c (relocate): Do not touch pathname if it is started
+	with '/@unixroot'.
+
+2016-12-01  KO Myung-Hun  <komh78@gmail.com>
+
 	sys_socket: typedef sa_family_t correctly on OS/2 kLIBC
 	* lib/sys_socket.in.h (sa_family_t): Typedef to unsigned char on
 	OS/2 kLIBC unless TCPV40HDRS is defined.
