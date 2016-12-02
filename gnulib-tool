@@ -4767,7 +4767,7 @@ s,^\(.................................................[^ ]*\) *,                
           ;;
         3orGPLv2)
           sed_transform_main_lib_file=$sed_transform_main_lib_file'
-            /under the terms of /,/(at your option) any later version/d
+            /under the terms of /,/any later version/d
             /you can redistribute it and\/or modify it/a\
    under the terms of either:\
 \

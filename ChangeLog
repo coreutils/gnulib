@@ -1,3 +1,8 @@
+2016-12-02  Daiki Ueno  <ueno@gnu.org>
+
+	* gnulib-tool (func_import): Relax the regex for the end marker of
+	original license text.
+
 2016-12-02  Nikos Mavrogiannopoulos <nmav@gnutls.org>
 
 	* gnulib-tool (func_import): Adhere to the license guideline when
