@@ -4767,9 +4767,9 @@ s,^\(.................................................[^ ]*\) *,                
           ;;
         3orGPLv2)
           sed_transform_main_lib_file=$sed_transform_main_lib_file'
-            /under the terms of /,/any later version/d
-            /you can redistribute it and\/or modify it/a\
-   under the terms of either:\
+            /^ *This program is free software/i\
+   This program is free software: you can redistribute it and\/or\
+   modify it under the terms of either:\
 \
      * the GNU Lesser General Public License as published by the Free\
        Software Foundation; either version 3 of the License, or (at your\
@@ -4782,6 +4782,7 @@ s,^\(.................................................[^ ]*\) *,                
        option) any later version.\
 \
    or both in parallel, as here.
+            /^ *This program is free software/,/^$/d
           '
           ;;
         2)

@@ -1,7 +1,7 @@
 2016-12-02  Daiki Ueno  <ueno@gnu.org>
 
-	* gnulib-tool (func_import): Relax the regex for the end marker of
-	original license text.
+	* gnulib-tool (func_import): Relax the regex used for "LGPLv3+ or
+	GPLv2" rewriting.
 
 2016-12-02  Nikos Mavrogiannopoulos <nmav@gnutls.org>
 
