@@ -1,3 +1,9 @@
+2016-12-02  Bruno Haible  <bruno@clisp.org>
+
+	localcharset: Avoid theoretical buffer overrun.
+	* lib/localcharset.c (locale_charset) [WINDOWS_NATIVE]: Don't use the
+	return value from setlocale if it would lead to a buffer overrun.
+
 2016-12-01  Bruno Haible  <bruno@clisp.org>
 
 	Relicense some modules under LGPLv2+.

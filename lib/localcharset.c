@@ -507,7 +507,7 @@ locale_charset (void)
     current_locale = setlocale (LC_CTYPE, NULL);
 
   pdot = strrchr (current_locale, '.');
-  if (pdot)
+  if (pdot && 2 + strlen (pdot + 1) + 1 <= sizeof (buf))
     sprintf (buf, "CP%s", pdot + 1);
   else
     {
