@@ -1,3 +1,14 @@
+2016-12-01  Bruno Haible  <bruno@clisp.org>
+
+	Relicense some modules under LGPLv2+.
+	Kevin Cernekee's approval is in
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-11/msg00090.html.
+	* modules/fseterr (License): Change to LGPLv2+.
+	* modules/mbchar (License): Likewise.
+	* modules/mbiter (License): Likewise.
+	* modules/mbsnlen (License): Likewise.
+	* modules/wcwidth (License): Likewise.
+
 2016-12-01  KO Myung-Hun  <komh78@gmail.com>
 
 	scandir: Fix _D_ALLOC_NAMLEN() on OS/2 kLIBC
