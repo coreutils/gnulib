@@ -1,3 +1,9 @@
+2016-12-04  Bruno Haible  <bruno@clisp.org>
+
+	javacomp: Support Java 7 and 8.
+	* m4/javacomp.m4 (gt_JAVACOMP): Accept source-version 1.7, 1.8 and
+	target-version 1.7, 1.8.
+
 2016-12-02  Daiki Ueno  <ueno@gnu.org>
 
 	* gnulib-tool (func_import): Relax the regex used for "LGPLv3+ or
