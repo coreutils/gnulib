@@ -1,3 +1,13 @@
+2016-12-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	same-inode: port to MinGW
+	Here st_ino is always 0, so change the definition of SAME_INODE so
+	that 1 means the two files are the same, 0 with st_ino != 0 means
+	they differ, and 0 with st_ino == 0 means we don’t know.  Problem
+	reported by Bruno Haible (Bug#25146).
+	* doc/posix-headers/sys_stat.texi (sys/stat.h): Update.
+	* lib/same-inode.h (SAME_INODE): Return 0 on MinGW.
+
 2016-12-04  Bruno Haible  <bruno@clisp.org>
 
 	javacomp: Support Java 7 and 8.

@@ -44,8 +44,8 @@ not a single value.
 @item
 To partially work around the previous two problems, you can test for
 nonzero @code{st_ino} and use the Gnulib @code{same-inode} module to
-compare nonzero values.  For example, @code{(a.st_ino && SAME_INODE
-(a, b))} is true if the @code{struct stat} values @code{a} and
+compare nonzero values.  For example, @code{SAME_INODE (a, b)}
+is true if the @code{struct stat} values @code{a} and
 @code{b} are known to represent the same file, @code{(a.st_ino &&
 !SAME_INODE (a, b))} is true if they are known to represent different
 files, and @code{!a.st_ino} is true if it is not known whether they
