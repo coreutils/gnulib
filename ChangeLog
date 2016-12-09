@@ -1,5 +1,11 @@
 2016-12-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: fix performance bug that recomputes trans
+	* lib/dfa.c (build_state): Fix performance bug introduced in Nov
+	25 on-demand changes.  The bug caused build_state to reset all
+	d->trans elements to -2 even when d->trans was already non-null.
+	Use C99 style decls after statements in this function.
+
 	same-inode: port to MinGW
 	Here st_ino is always 0, so change the definition of SAME_INODE so
 	that 1 means the two files are the same, 0 with st_ino != 0 means

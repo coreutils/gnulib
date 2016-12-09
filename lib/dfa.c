@@ -2807,39 +2807,33 @@ realloc_trans_if_necessary (struct dfa *d, state_num new_state)
 static state_num
 build_state (state_num s, struct dfa *d, unsigned char uc)
 {
-  state_num *trans;             /* The new transition table.  */
-  state_num i, maxstate;
+  /* A pointer to the new transition table, and the table itself.  */
+  state_num **ptrans = (ACCEPTING (s, *d) ? d->fails : d->trans) + s;
+  state_num *trans = *ptrans;
 
-  if (d->fails[s] != NULL)
-    trans = d->fails[s];
-  else
+  if (!trans)
     {
-      state_num **ptrans = (ACCEPTING (s, *d) ? d->fails : d->trans) + s;
-      if (!*ptrans)
+      /* MAX_TRCOUNT is an arbitrary upper limit on the number of
+         transition tables that can exist at once, other than for
+         initial states.  Often-used transition tables are quickly
+         rebuilt, whereas rarely-used ones are cleared away.  */
+      if (MAX_TRCOUNT <= d->trcount)
         {
-          /* MAX_TRCOUNT is an arbitrary upper limit on the number of
-             transition tables that can exist at once, other than for
-             initial states.  Often-used transition tables are quickly
-             rebuilt, whereas rarely-used ones are cleared away.  */
-          if (MAX_TRCOUNT <= d->trcount)
+          for (state_num i = d->min_trcount; i < d->tralloc; i++)
             {
-              for (i = d->min_trcount; i < d->tralloc; i++)
-                {
-                  free (d->trans[i]);
-                  free (d->fails[i]);
-                  d->trans[i] = d->fails[i] = NULL;
-                }
-              d->trcount = 0;
+              free (d->trans[i]);
+              free (d->fails[i]);
+              d->trans[i] = d->fails[i] = NULL;
             }
-
-          d->trcount++;
-          *ptrans = xmalloc (NOTCHAR * sizeof *trans);
+          d->trcount = 0;
         }
-      trans = *ptrans;
+
+      d->trcount++;
+      *ptrans = trans = xmalloc (NOTCHAR * sizeof *trans);
 
       /* Fill transition table with a default value which means that the
          transited state has not been calculated yet.  */
-      for (i = 0; i < NOTCHAR; i++)
+      for (int i = 0; i < NOTCHAR; i++)
         trans[i] = -2;
     }
 
@@ -2857,8 +2851,8 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
   /* Now go through the new transition table, and make sure that the trans
      and fail arrays are allocated large enough to hold a pointer for the
      largest state mentioned in the table.  */
-  maxstate = -1;
-  for (i = 0; i < NOTCHAR; ++i)
+  state_num maxstate = -1;
+  for (int i = 0; i < NOTCHAR; i++)
     if (maxstate < trans[i])
       maxstate = trans[i];
   realloc_trans_if_necessary (d, maxstate);
