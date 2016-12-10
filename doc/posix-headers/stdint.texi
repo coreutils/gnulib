@@ -24,6 +24,11 @@ The values of @code{INT8_MAX}, @code{UINT8_MAX} etc. are not usable in
 preprocessor expressions on some platforms:
 HP-UX 11.23.
 @item
+The values of @code{INTPTR_MAX} and @code{UINTPTR_MAX}, although correctly
+defined in @code{<stdint.h>}, are replaced by empty values when
+@code{<limits.h>} or @code{<inttypes.h>} gets included later on some platforms:
+Solaris 9 with GCC 4.5 or newer.
+@item
 The macros @code{WCHAR_MIN} and @code{WCHAR_MAX} are not defined in
 @code{<stdint.h>} (only in @code{<wchar.h>}) on some platforms:
 Dragonfly, BSDI.
