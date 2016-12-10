@@ -1,4 +1,4 @@
-# threadlib.m4 serial 11 (gettext-0.18.2)
+# threadlib.m4 serial 12
 dnl Copyright (C) 2005-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -195,8 +195,10 @@ int main ()
              # Therefore pthread_in_use() needs to actually try to create a
              # thread: pthread_create from libc will fail, whereas
              # pthread_create will actually create a thread.
+             # On Solaris 10 or newer, this test is no longer needed, because
+             # libc contains the fully functional pthread functions.
              case "$host_os" in
-               solaris* | hpux*)
+               solaris | solaris2.[1-9] | solaris2.[1-9].* | hpux*)
                  AC_DEFINE([PTHREAD_IN_USE_DETECTION_HARD], [1],
                    [Define if the pthread_in_use() detection is hard.])
              esac

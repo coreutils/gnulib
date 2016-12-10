@@ -1,5 +1,12 @@
 2016-12-10  Bruno Haible  <bruno@clisp.org>
 
+	threadlib: Optimize out runtime test on Solaris >= 10.
+	* m4/threadlib.m4 (gl_THREADLIB_BODY): Don't set
+	PTHREAD_IN_USE_DETECTION_HARD if configuring on Solaris 10 or newer.
+	Reported by Peter Felecan at <https://savannah.gnu.org/bugs/?32087>.
+
+2016-12-10  Bruno Haible  <bruno@clisp.org>
+
 	stdint: Update doc about Solaris 9.
 	* doc/posix-headers/stdint.texi: Add info about Solaris 9.
 
