@@ -1,3 +1,9 @@
+2016-12-09  Bruno Haible  <bruno@clisp.org>
+
+	c-ctype tests: Fix link error on Solaris 9.
+	* modules/c-ctype-tests (Depends-on): Add 'isblank'.
+	Reported at <https://savannah.gnu.org/bugs/?46827>.
+
 2016-12-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: fix performance bug that recomputes trans
