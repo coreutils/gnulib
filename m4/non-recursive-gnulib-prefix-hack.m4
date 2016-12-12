@@ -26,7 +26,7 @@ AC_DEFUN([gl_NON_RECURSIVE_GNULIB_PREFIX_HACK],
   do
     eval "ac_val=\$$ac_var"
     case $ac_var:$ac_val in
-      (*_H:*.h) eval "$ac_var=$1/\$$ac_var";;
+      *_H:*.h) eval "$ac_var=$1/\$$ac_var";;
     esac
   done
 ])

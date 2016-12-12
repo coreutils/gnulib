@@ -1,3 +1,13 @@
+2016-12-11  Jim Meyering  <meyering@fb.com>
+
+	non-recursive-gnulib-prefix-hack.m4: remove leading "(" in case stmt
+	* m4/non-recursive-gnulib-prefix-hack.m4: That leading "(" happens
+	to work with most shells, but not with the one provided by many
+	Solaris 10 systems, so running configure with such a /bin/sh evokes
+	e.g., "./configure: syntax error at line 33602: `(' unexpected".
+	Reported by Assaf Gordon in
+	https://lists.gnu.org/archive/html/sed-devel/2016-12/msg00002.html
+
 2016-12-10  Bruno Haible  <bruno@clisp.org>
 
 	threadlib: Optimize out runtime test on Solaris >= 10.
