@@ -1,5 +1,15 @@
 2016-12-12  Bruno Haible  <bruno@clisp.org>
 
+	fpending: Port to native Windows with MSVC.
+	* lib/fpending.c: Include stdio-impl.h.
+	(__fpending): Include all known implementations. Err out if it's not
+	ported.
+	* m4/fpending.m4 (gl_PREREQ_FPENDING): Remove macro.
+	* modules/fpending (Files): Add lib/stdio-impl.h.
+	(configure.ac): Don't invoke gl_PREREQ_FPENDING.
+
+2016-12-12  Bruno Haible  <bruno@clisp.org>
+
 	stdioext: Port to native Windows with MSVC.
 	* lib/stdio-impl.h (WINDOWS_OPAQUE_FILE): New macro.
 	(struct _gl_real_FILE): New type.

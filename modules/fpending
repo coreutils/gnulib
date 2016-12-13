@@ -4,6 +4,7 @@ Determine the number of bytes waiting in the output buffer of a stream.
 Files:
 lib/fpending.h
 lib/fpending.c
+lib/stdio-impl.h
 m4/fpending.m4
 
 Depends-on:
@@ -12,7 +13,6 @@ configure.ac:
 gl_FUNC_FPENDING
 if test $gl_cv_func___fpending = no; then
   AC_LIBOBJ([fpending])
-  gl_PREREQ_FPENDING
 fi
 
 Makefile.am:
