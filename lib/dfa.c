@@ -3992,7 +3992,7 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
   dfa->canychar = -1;
   dfa->lex.cur_mb_len = 1;
   dfa->syntax.syntax_bits_set = true;
-  dfa->syntax.case_fold = (dfaopts & DFA_CASE_FOLD) != 0;
+  dfa->syntax.case_fold = (bits & RE_ICASE) != 0
   dfa->syntax.anchor = (dfaopts & DFA_ANCHOR) != 0;
   dfa->syntax.eolbyte = dfaopts & DFA_EOL_NUL ? '\0' : '\n';
   dfa->syntax.syntax_bits = bits;

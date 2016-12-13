@@ -58,11 +58,8 @@ enum
        possibly true for other apps.  */
     DFA_ANCHOR = 1 << 0,
 
-    /* Ignore case while matching.  */
-    DFA_CASE_FOLD = 1 << 1,
-
     /* '\0' in data is end-of-line, instead of the traditional '\n'.  */
-    DFA_EOL_NUL = 1 << 2
+    DFA_EOL_NUL = 1 << 1
   };
 
 /* Initialize or reinitialize a DFA.  This must be called before
