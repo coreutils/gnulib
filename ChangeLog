@@ -1,3 +1,25 @@
+2016-12-12  Bruno Haible  <bruno@clisp.org>
+
+	stdioext: Port to native Windows with MSVC.
+	* lib/stdio-impl.h (WINDOWS_OPAQUE_FILE): New macro.
+	(struct _gl_real_FILE): New type.
+	(fp_, _IOREAD, _IOWRT, _IORW, _IOEOF, _IOERR): New macros, for native
+	Windows.
+	* lib/fbufmode.c (fbufmode): Add code for native Windows.
+	* lib/fflush.c (clear_ungetc_buffer): Treat native Windows like the
+	other SystemV derived implementations.
+	* lib/fpurge.c (fpurge): Likewise.
+	* lib/freadable.c (freadable): Likewise.
+	* lib/freadahead.c (freadahead): Likewise.
+	* lib/freading.c (freading): Likewise.
+	* lib/freadptr.c (freadptr): Likewise.
+	* lib/freadseek.c (freadptrinc): Likewise.
+	* lib/fseeko.c (fseeko): Likewise.
+	* lib/fseterr.c (fseterr): Likewise.
+	* lib/fwritable.c (fwritable): Likewise.
+	* lib/fwriting.c (fwriting): Likewise.
+	Reported by Gisle Vanem <gvanem@yahoo.no>.
+
 2016-12-11  Jim Meyering  <meyering@fb.com>
 
 	non-recursive-gnulib-prefix-hack.m4: remove leading "(" in case stmt
