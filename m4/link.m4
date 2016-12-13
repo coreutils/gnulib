@@ -22,6 +22,7 @@ AC_DEFUN([gl_FUNC_LINK],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
            [[#include <unistd.h>
+             #include <stdio.h>
            ]],
            [[int result = 0;
              if (!link ("conftest.a", "conftest.b/"))

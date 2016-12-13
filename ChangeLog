@@ -1,3 +1,9 @@
+2016-12-13  John W. Eaton  <gnu@jweaton.org>
+
+	link: fix test to declare use of rename()
+	* m4/link.m4 (gl_FUNC_LINK): Include <stdio.h> needed with
+	-Werror=implicit-function-declaration
+
 2016-12-12  Bruno Haible  <bruno@clisp.org>
 
 	fpending: Port to native Windows with MSVC.
