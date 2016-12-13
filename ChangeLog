@@ -1,3 +1,9 @@
+2016-12-12  Jim Meyering  <meyering@fb.com>
+
+	dfa: add an assertion to avoid coverity false positive
+	* lib/dfa.c (realloc_trans_if_necessary): Otherwise, coverity
+	warned that "newalloc1 - 2" could overflow.
+
 2016-12-13   Arnold D. Robbins  <arnold@skeeve.com>
 
 	dfa: remove DFA_CASE_FOLD flag in favor of RE_ICASE

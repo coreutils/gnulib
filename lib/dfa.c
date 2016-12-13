@@ -2778,6 +2778,7 @@ realloc_trans_if_necessary (struct dfa *d, state_num new_state)
       realtrans = x2nrealloc (realtrans, &newalloc1, sizeof *realtrans);
       realtrans[0] = realtrans[1] = NULL;
       d->trans = realtrans + 2;
+      assert (2 <= newalloc1);
       d->tralloc = newalloc = newalloc1 - 2;
       d->fails = xnrealloc (d->fails, newalloc, sizeof *d->fails);
       d->success = xnrealloc (d->success, newalloc, sizeof *d->success);
