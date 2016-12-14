@@ -1,3 +1,37 @@
+2016-12-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: fix some unlikely integer overflows
+	I found these while reviewing the recent Coverity-related fix.
+	This patch changes part of dfa.c to prefer ptrdiff_t instead of
+	size_t for object counts.  Using ptrdiff_t is the style typically
+	used in Emacs; although it wastes a sign bit as sizes can never be
+	negative, it makes -fsanitize=undefined more likely to catch
+	integer overflows in index calculation, and nowadays the upside is
+	typically more important than the downside.  Although perhaps the
+	rest of dfa.c should be changed to prefer ptrdiff_t as well (much
+	of dfa.c already does, since it uses state_num which is signed),
+	that is a bigger change and is not needed to fix the bugs I found.
+	* lib/dfa.c: Include stdint.h and intprops.h.
+	(TOKEN_MAX): New macro.
+	(position_set, struct mb_char_classes, struct dfa, maybe_realloc)
+	(charclass_index, parse_bracket_exp, addtok, insert, merge)
+	(realloc_trans_if_necessary, free_mbdata):
+	Use ptrdiff_t instead of size_t for object counts related to xpalloc.
+	This is safe because xpalloc checks that the sizes do not exceed
+	either SIZE_MAX or PTRDIFF_MAX.
+	(xpalloc): New function, mostly taken from Emacs.
+	(maybe_realloc, copy, realloc_trans_if_necessary): Use it.
+	(maybe_realloc): Add NITEMS_MAX to signature.  All callers changed.
+	(charclass_index): Check for integer overflow in computing
+	charclass index; it must not exceed TOKEN_MAX - CSET, as CSET is
+	added to it later.
+	(alloc_position_set): Check for integer overflow.  On typical
+	platforms this check has zero overhead, since the constant
+	expression is false.
+	(realloc_trans_if_necessary):
+	Remove assertion, which I hope Coverity no longer needs.
+	* modules/dfa (Depends-on): Add intprops, stdint.
+
 2016-12-12  Jim Meyering  <meyering@fb.com>
 
 	dfa: add an assertion to avoid coverity false positive

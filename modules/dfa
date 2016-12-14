@@ -10,11 +10,13 @@ lib/localeinfo.h
 Depends-on:
 assert
 ctype
+intprops
 isblank
 locale
 regex
 stdbool
 stddef
+stdint
 stdio
 stdlib
 string
