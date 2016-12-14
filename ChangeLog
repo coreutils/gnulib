@@ -1,5 +1,10 @@
 2016-12-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: fix glitches in previous commit
+	Sorry, I don't know how I managed to commit the wrong version.
+	* lib/dfa.c (MIN): Move up.
+	(xpalloc): Now static.
+
 	dfa: fix some unlikely integer overflows
 	I found these while reviewing the recent Coverity-related fix.
 	This patch changes part of dfa.c to prefer ptrdiff_t instead of
@@ -30,6 +35,7 @@
 	expression is false.
 	(realloc_trans_if_necessary):
 	Remove assertion, which I hope Coverity no longer needs.
+
 	* modules/dfa (Depends-on): Add intprops, stdint.
 
 2016-12-12  Jim Meyering  <meyering@fb.com>

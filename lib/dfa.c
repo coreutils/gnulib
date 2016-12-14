@@ -54,6 +54,10 @@
 #include "xalloc.h"
 #include "localeinfo.h"
 
+#ifndef MIN
+# define MIN(a,b) ((a) < (b) ? (a) : (b))
+#endif
+
 /* HPUX defines these as macros in sys/param.h.  */
 #ifdef setbit
 # undef setbit
@@ -749,7 +753,7 @@ emptyset (charclass const s)
    Thus, to grow an array A without saving its old contents, do
    { free (A); A = xpalloc (NULL, &AITEMS, ...); }.  */
 
-void *
+static void *
 xpalloc (void *pa, ptrdiff_t *nitems, ptrdiff_t nitems_incr_min,
 	 ptrdiff_t nitems_max, ptrdiff_t item_size)
 {
@@ -931,10 +935,6 @@ using_simple_locale (bool multibyte)
         (dfa)->lex.left -= nbytes;		\
       }						\
   } while (false)
-
-#ifndef MIN
-# define MIN(a,b) ((a) < (b) ? (a) : (b))
-#endif
 
 typedef int predicate (int);
 
