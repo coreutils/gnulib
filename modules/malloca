@@ -12,6 +12,7 @@ m4/longlong.m4
 Depends-on:
 alloca-opt
 stdint
+xalloc-oversized
 verify
 
 configure.ac:

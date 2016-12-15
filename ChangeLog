@@ -1,5 +1,12 @@
 2016-12-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	malloca: do not exceed PTRDIFF_MAX
+	* lib/malloca.h: Include xalloc-oversized.
+	(nmalloca): Use xalloc_oversized instead of rolling our own.
+	* modules/malloca (Depends-on):
+	* modules/relocatable-prog-wrapper (Depends-on):
+	Add xalloc-oversized.
+
 	quotearg: pacify GCC better
 	* modules/quotearg (Depends-on): Add minmax, stdint.
 	* lib/quotearg.c: Include minmax.h, stdint.h.
