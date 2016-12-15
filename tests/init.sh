@@ -45,6 +45,9 @@
 # Running a single test, with verbose output:
 #   $ make check TESTS=test-foo.sh VERBOSE=yes
 #
+# Running a single test, keeping the temporary directory:
+#   $ make check TESTS=test-foo.sh KEEP=yes
+#
 # Running a single test, with single-stepping:
 #   1. Go into a sub-shell:
 #   $ bash
@@ -349,11 +352,15 @@ remove_tmp_ ()
 {
   __st=$?
   cleanup_
-  # cd out of the directory we're about to remove
-  cd "$initial_cwd_" || cd / || cd /tmp
-  chmod -R u+rwx "$test_dir_"
-  # If removal fails and exit status was to be 0, then change it to 1.
-  rm -rf "$test_dir_" || { test $__st = 0 && __st=1; }
+  if test "$KEEP" = yes; then
+    echo "Not removing temporary directory $test_dir_"
+  else
+    # cd out of the directory we're about to remove
+    cd "$initial_cwd_" || cd / || cd /tmp
+    chmod -R u+rwx "$test_dir_"
+    # If removal fails and exit status was to be 0, then change it to 1.
+    rm -rf "$test_dir_" || { test $__st = 0 && __st=1; }
+  fi
   exit $__st
 }
 

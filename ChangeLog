@@ -1,3 +1,9 @@
+2016-12-15  Bruno Haible  <bruno@clisp.org>
+
+	init.sh: Add possibility to not delete temporary files.
+	* tests/init.sh (remove_tmp_): If the environment variable KEEP is set
+	to yes, don't erase the temporary directory.
+
 2016-12-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	regex: fix integer-overflow bug in never-used code
