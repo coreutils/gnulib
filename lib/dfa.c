@@ -2085,17 +2085,62 @@ merge (position_set const *s1, position_set const *s2, position_set *m)
 }
 
 /* Delete a position from a set.  */
-static void
-delete (position p, position_set *s)
+static position
+delete (size_t del, position_set *s)
 {
-  size_t i;
+  position p;
+  size_t count = s->nelem;
+  size_t lo = 0, hi = count;
+  while (lo < hi)
+    {
+      size_t mid = (lo + hi) >> 1;
+      if (s->elems[mid].index > del)
+        lo = mid + 1;
+      else
+        hi = mid;
+    }
 
-  for (i = 0; i < s->nelem; ++i)
-    if (p.index == s->elems[i].index)
-      break;
-  if (i < s->nelem)
-    for (--s->nelem; i < s->nelem; ++i)
-      s->elems[i] = s->elems[i + 1];
+  if (lo < count && del == s->elems[lo].index)
+    {
+      p = s->elems[lo];
+      for (size_t i = lo + 1; i < s->nelem; i++)
+        s->elems[i - 1] = s->elems[i];
+      --s->nelem;
+    }
+  else
+    {
+      p.index = -1;
+      p.constraint = NO_CONSTRAINT;
+    }
+      return p;
+}
+
+/* Replace a position with the followed set.  */
+static void
+replace (position_set *dst, size_t del, position_set *add,
+         unsigned int constraint, position_set *tmp)
+{
+  position pos;
+
+  pos = delete (del, dst);
+
+  if (pos.index == (size_t) -1)
+    return;
+
+  copy (add, tmp);
+
+  pos.constraint &= constraint;
+
+  for (size_t i = 0; i < tmp->nelem; i++)
+    {
+      tmp->elems[i].constraint &= pos.constraint;
+
+      while (i < tmp->nelem && tmp->elems[i].constraint == 0)
+        delete (tmp->elems[i].index, tmp);
+    }
+
+  for (size_t i = 0; i < tmp->nelem; i++)
+    insert (tmp->elems[i], dst);
 }
 
 /* Find the index of the state corresponding to the given position set with
@@ -2187,63 +2232,48 @@ state_index (struct dfa *d, position_set const *s, int context)
    constraint.  Repeat exhaustively until no funny positions are left.
    S->elems must be large enough to hold the result.  */
 static void
-epsclosure (position_set *s, struct dfa const *d, char *visited)
+epsclosure (position_set *initial, struct dfa const *d)
 {
-  size_t i, j;
-  position p, old;
-  bool initialized = false;
-
-  for (i = 0; i < s->nelem; ++i)
-    if (d->tokens[s->elems[i].index] >= NOTCHAR
-        && d->tokens[s->elems[i].index] != BACKREF
-        && d->tokens[s->elems[i].index] != ANYCHAR
-        && d->tokens[s->elems[i].index] != MBCSET
-        && d->tokens[s->elems[i].index] < CSET)
+  position_set tmp;
+  alloc_position_set (&tmp, d->nleaves);
+  for (size_t i = 0; i < d->tindex; ++i)
+    if (d->follows[i].nelem > 0 && d->tokens[i] >= NOTCHAR
+        && d->tokens[i] != BACKREF && d->tokens[i] != ANYCHAR
+        && d->tokens[i] != MBCSET && d->tokens[i] < CSET)
       {
-        if (!initialized)
-          {
-            memset (visited, 0, d->tindex * sizeof (*visited));
-            initialized = true;
-          }
-        old = s->elems[i];
-        p.constraint = old.constraint;
-        delete (s->elems[i], s);
-        if (visited[old.index])
-          {
-            --i;
-            continue;
-          }
-        visited[old.index] = 1;
-        switch (d->tokens[old.index])
+        unsigned int constraint;
+        switch (d->tokens[i])
           {
           case BEGLINE:
-            p.constraint &= BEGLINE_CONSTRAINT;
+            constraint = BEGLINE_CONSTRAINT;
             break;
           case ENDLINE:
-            p.constraint &= ENDLINE_CONSTRAINT;
+            constraint = ENDLINE_CONSTRAINT;
             break;
           case BEGWORD:
-            p.constraint &= BEGWORD_CONSTRAINT;
+            constraint = BEGWORD_CONSTRAINT;
             break;
           case ENDWORD:
-            p.constraint &= ENDWORD_CONSTRAINT;
+            constraint = ENDWORD_CONSTRAINT;
             break;
           case LIMWORD:
-            p.constraint &= LIMWORD_CONSTRAINT;
+            constraint = LIMWORD_CONSTRAINT;
             break;
           case NOTLIMWORD:
-            p.constraint &= NOTLIMWORD_CONSTRAINT;
+            constraint = NOTLIMWORD_CONSTRAINT;
             break;
           default:
+            constraint = NO_CONSTRAINT;
             break;
           }
-        for (j = 0; j < d->follows[old.index].nelem; ++j)
-          {
-            p.index = d->follows[old.index].elems[j].index;
-            insert (p, s);
-          }
-        /* Force rescan to start at the beginning.  */
-        i = -1;
+
+        delete (i, &d->follows[i]);
+
+        for (size_t j = 0; j < d->tindex; j++)
+          if (i != j && d->follows[j].nelem > 0)
+            replace (&d->follows[j], i, &d->follows[i], constraint, &tmp);
+
+        replace (initial, i, &d->follows[i], constraint, &tmp);
       }
 }
 
@@ -2370,7 +2400,6 @@ dfaanalyze (struct dfa *d, bool searchflag)
   int separate_contexts;        /* Context wanted by some position.  */
   size_t i, j;
   position *pos;
-  char *visited = xnmalloc (d->tindex, sizeof *visited);
 
 #ifdef DEBUG
   fprintf (stderr, "dfaanalyze:\n");
@@ -2511,14 +2540,12 @@ dfaanalyze (struct dfa *d, bool searchflag)
 #endif
     }
 
-  /* For each follow set that is the follow set of a real position, replace
-     it with its epsilon closure.  */
+#ifdef DEBUG
   for (i = 0; i < d->tindex; ++i)
     if (d->tokens[i] < NOTCHAR || d->tokens[i] == BACKREF
         || d->tokens[i] == ANYCHAR || d->tokens[i] == MBCSET
         || d->tokens[i] >= CSET)
       {
-#ifdef DEBUG
         fprintf (stderr, "follows(%zu:", i);
         prtok (d->tokens[i]);
         fprintf (stderr, "):");
@@ -2528,18 +2555,18 @@ dfaanalyze (struct dfa *d, bool searchflag)
             prtok (d->tokens[d->follows[i].elems[j].index]);
           }
         putc ('\n', stderr);
-#endif
-        copy (&d->follows[i], &merged);
-        epsclosure (&merged, d, visited);
-        copy (&merged, &d->follows[i]);
       }
+#endif
 
   /* Get the epsilon closure of the firstpos of the regexp.  The result will
      be the set of positions of state 0.  */
   merged.nelem = 0;
   for (i = 0; i < stk[-1].nfirstpos; ++i)
     insert (firstpos[i], &merged);
-  epsclosure (&merged, d, visited);
+
+  /* For each follow set that is the follow set of a real position, replace
+     it with its epsilon closure.  */
+  epsclosure (&merged, d);
 
   /* Build the initial state.  */
   separate_contexts = state_separate_contexts (&merged);
@@ -2555,7 +2582,6 @@ dfaanalyze (struct dfa *d, bool searchflag)
   free (posalloc);
   free (stkalloc);
   free (merged.elems);
-  free (visited);
 }
 
 

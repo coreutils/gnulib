@@ -1,3 +1,11 @@
+2016-12-18  Norihiro Tanaka  <noritnk@kcn.ne.jp>
+
+	dfa: performance improvement for removal of epsilon closure
+	See Bug#22357#32.
+	* lib/dfa.c (delete): Use binary search to find deleted index.
+	(replace): New function.  It replaces a position with the followed set.
+	(epsclosure): Replace it with a new algorithm.  Update caller.
+
 2016-12-18  Bruno Haible  <bruno@clisp.org>
 
 	Split tests for getopt-posix and getopt-gnu.
