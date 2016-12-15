@@ -93,11 +93,11 @@ void *
 xcalloc (size_t n, size_t s)
 {
   void *p;
-  /* Test for overflow, since some calloc implementations don't have
-     proper overflow checks.  But omit overflow and size-zero tests if
-     HAVE_GNU_CALLOC, since GNU calloc catches overflow and never
-     returns NULL if successful.  */
-  if ((! HAVE_GNU_CALLOC && xalloc_oversized (n, s))
+  /* Test for overflow, since objects with size greater than
+     PTRDIFF_MAX cause pointer subtraction to go awry.  Omit size-zero
+     tests if HAVE_GNU_CALLOC, since GNU calloc never returns NULL if
+     successful.  */
+  if (xalloc_oversized (n, s)
       || (! (p = calloc (n, s)) && (HAVE_GNU_CALLOC || n != 0)))
     xalloc_die ();
   return p;

@@ -1,5 +1,10 @@
 2016-12-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xalloc: do not exceed PTRDIFF_MAX
+	* lib/xmalloc.c (xcalloc) [HAVE_GNU_CALLOC]: Do not omit
+	xalloc_oversized check, since objects larger than PTRDIFF_MAX
+	bytes have pointer-subtraction problems.
+
 	malloca: do not exceed PTRDIFF_MAX
 	* lib/malloca.h: Include xalloc-oversized.
 	(nmalloca): Use xalloc_oversized instead of rolling our own.
