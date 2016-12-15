@@ -1,5 +1,13 @@
 2016-12-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	xalloc-oversized: check for PTRDIFF_MAX too
+	This avoids undefined behavior when subtracting pointers to
+	objects containing more than PTRDIFF_MAX bytes.
+	* lib/xalloc-oversized.h (__xalloc_oversized, xalloc_oversized):
+	Also return 1 if the result would exceed PTRDIFF_MAX>
+	* modules/xalloc-oversized (Depends-on):
+	Add stdint.
+
 	dfa: fix glitches in previous commit
 	Sorry, I don't know how I managed to commit the wrong version.
 	* lib/dfa.c (MIN): Move up.

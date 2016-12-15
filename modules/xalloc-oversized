@@ -5,6 +5,7 @@ Files:
 lib/xalloc-oversized.h
 
 Depends-on:
+stdint
 
 configure.ac:
 
