@@ -1,5 +1,10 @@
 2016-12-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	safe-alloc: use xalloc-oversized
+	* lib/safe-alloc.c: Include xalloc-oversized.h.
+	(safe_alloc_oversized): Remove.  All uses changed to xalloc_oversized.
+	* modules/safe-alloc (Depends-on): Add xalloc-oversized.
+
 	xalloc: do not exceed PTRDIFF_MAX
 	* lib/xmalloc.c (xcalloc) [HAVE_GNU_CALLOC]: Do not omit
 	xalloc_oversized check, since objects larger than PTRDIFF_MAX

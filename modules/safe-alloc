@@ -6,6 +6,9 @@ lib/safe-alloc.h
 lib/safe-alloc.c
 m4/safe-alloc.m4
 
+Depends-on:
+xalloc-oversized
+
 configure.ac:
 gl_SAFE_ALLOC
 
