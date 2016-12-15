@@ -29,6 +29,7 @@
 #include "quotearg.h"
 #include "quote.h"
 
+#include "minmax.h"
 #include "xalloc.h"
 #include "c-strcaseeq.h"
 #include "localcharset.h"
@@ -37,6 +38,7 @@
 #include <errno.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <wchar.h>
@@ -830,7 +832,7 @@ struct slotvec
 /* Preallocate a slot 0 buffer, so that the caller can always quote
    one small component of a "memory exhausted" message in slot 0.  */
 static char slot0[256];
-static unsigned int nslots = 1;
+static int nslots = 1;
 static struct slotvec slotvec0 = {sizeof slot0, slot0};
 static struct slotvec *slotvec = &slotvec0;
 
@@ -838,7 +840,7 @@ void
 quotearg_free (void)
 {
   struct slotvec *sv = slotvec;
-  unsigned int i;
+  int i;
   for (i = 1; i < nslots; i++)
     free (sv[i].val);
   if (sv[0].val != slot0)
@@ -869,30 +871,23 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
 {
   int e = errno;
 
-  unsigned int n0 = n;
   struct slotvec *sv = slotvec;
 
   if (n < 0)
     abort ();
 
-  if (nslots <= n0)
+  if (nslots <= n)
     {
-      /* FIXME: technically, the type of n1 should be 'unsigned int',
-         but that evokes an unsuppressible warning from gcc-4.0.1 and
-         older.  If gcc ever provides an option to suppress that warning,
-         revert to the original type, so that the test in xalloc_oversized
-         is once again performed only at compile time.  */
-      size_t n1 = n0 + 1;
       bool preallocated = (sv == &slotvec0);
 
-      if (xalloc_oversized (n1, sizeof *sv))
+      if (MIN (INT_MAX, MIN (PTRDIFF_MAX, SIZE_MAX) / sizeof *sv) <= n)
         xalloc_die ();
 
-      slotvec = sv = xrealloc (preallocated ? NULL : sv, n1 * sizeof *sv);
+      slotvec = sv = xrealloc (preallocated ? NULL : sv, (n + 1) * sizeof *sv);
       if (preallocated)
         *sv = slotvec0;
-      memset (sv + nslots, 0, (n1 - nslots) * sizeof *sv);
-      nslots = n1;
+      memset (sv + nslots, 0, (n + 1 - nslots) * sizeof *sv);
+      nslots = n + 1;
     }
 
   {

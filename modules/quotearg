@@ -16,9 +16,11 @@ gettext-h
 mbrtowc
 mbsinit
 memcmp
+minmax
 quotearg-simple
 localcharset
 stdbool
+stdint
 wchar
 wctype-h
 xalloc

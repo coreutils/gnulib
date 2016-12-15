@@ -1,3 +1,14 @@
+2016-12-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	quotearg: pacify GCC better
+	* modules/quotearg (Depends-on): Add minmax, stdint.
+	* lib/quotearg.c: Include minmax.h, stdint.h.
+	(nslots): Now int, as there seems little point to going to extra
+	work merely to support the INT_MAX slot, which nobody ever uses.
+	(quotearg_n_options): Redo size-overflow checks to pacify GCC
+	and to catch (mostly-theoretical) ptrdiff_t problems too.
+	This can be done via one comparison.
+
 2016-12-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc-oversized: check for PTRDIFF_MAX too
