@@ -33,6 +33,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "intprops.h"
+
 #ifdef _LIBC
 # include <libc-lock.h>
 # define lock_define(name) __libc_lock_define (, name)

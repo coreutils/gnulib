@@ -354,10 +354,12 @@ re_search_2_stub (struct re_pattern_buffer *bufp, const char *string1,
 {
   const char *str;
   regoff_t rval;
-  Idx len = length1 + length2;
+  Idx len;
   char *s = NULL;
 
-  if (BE (length1 < 0 || length2 < 0 || stop < 0 || len < length1, 0))
+  if (BE ((length1 < 0 || length2 < 0 || stop < 0
+           || INT_ADD_WRAPV (length1, length2, &len)),
+          0))
     return -2;
 
   /* Concatenate the strings.  */

@@ -1,5 +1,13 @@
 2016-12-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: fix integer-overflow bug in never-used code
+	Problem reported by Clément Pit–Claudel in:
+	http://lists.gnu.org/archive/html/emacs-devel/2016-12/msg00654.html
+	* lib/regex_internal.h: Include intprops.h.
+	* lib/regexec.c (re_search_2_stub): Use it to avoid undefined
+	behavior on integer overflow.
+	* modules/regex (Depends-on): Add intprops.
+
 	fpending: fix port to MinGW on Emacs
 	* lib/stdio-impl.h [__MINGW32__]: Do not include errno.h.
 	Problem reported by Eli Zaretskii in:
