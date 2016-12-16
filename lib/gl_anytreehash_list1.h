@@ -185,10 +185,8 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
   return 0;
 }
 /* Tell GCC that the likely return value is 0.  */
-#if __GNUC__ >= 3
-# define add_to_bucket(list,node) \
+#define add_to_bucket(list,node) \
     __builtin_expect ((add_to_bucket) (list, node), 0)
-#endif
 
 /* Remove a node from the hash table structure.
    If duplicates are allowed, this function performs in average time

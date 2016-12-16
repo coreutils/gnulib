@@ -7,6 +7,7 @@ lib/memmem.c
 m4/memmem.m4
 
 Depends-on:
+builtin-expect
 extensions
 string
 stdint

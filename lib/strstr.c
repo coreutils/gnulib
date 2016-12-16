@@ -26,10 +26,6 @@
 
 #include <stdbool.h>
 
-#ifndef _LIBC
-# define __builtin_expect(expr, val)   (expr)
-#endif
-
 #define RETURN_TYPE char *
 #define AVAILABLE(h, h_l, j, n_l)                       \
   (!memchr ((h) + (h_l), '\0', (j) + (n_l) - (h_l))     \

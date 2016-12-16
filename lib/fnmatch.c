@@ -22,10 +22,6 @@
 # define _GNU_SOURCE    1
 #endif
 
-#if ! defined __builtin_expect && (!defined __GNUC__ || __GNUC__ < 3)
-# define __builtin_expect(expr, expected) (expr)
-#endif
-
 #include <fnmatch.h>
 
 #include <alloca.h>

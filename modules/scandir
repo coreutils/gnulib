@@ -6,6 +6,7 @@ lib/scandir.c
 m4/scandir.m4
 
 Depends-on:
+builtin-expect
 closedir
 dirent
 extensions
@@ -31,4 +32,3 @@ LGPL
 
 Maintainer:
 all, glibc
-

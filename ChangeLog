@@ -1,3 +1,24 @@
+2016-12-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	builtin-expect: new module
+	Fix fnmatch to use it.
+	Problem reported for z/OS by Daniel Richard G.
+	* lib/fnmatch.c (__builtin_expect):
+	* lib/glob.c (__builtin_expect):
+	* lib/grantpt.c (__builtin_expect) [!_LIBC]:
+	* lib/memmem.c (__builtin_expect) [!_LIBC]:
+	* lib/scandir.c (__builtin_expect):
+	* lib/strstr.c (__builtin_expect) [!_LIBC]:
+	Remove macro; config.h now does this.
+	* lib/gl_anytreehash_list1.h (add_to_bucket):
+	* lib/regex_internal.h (BE):
+	Assume __builtin_expect.
+	* m4/builtin-expect.m4, modules/builtin-expect: New files.
+	* modules/avltreehash-list, modules/fnmatch, modules/glob:
+	* modules/grantpt, modules/memmem-simple, modules/rbtreehash-list:
+	* modules/scandir, modules/strstr-simple:
+	Depend on builtin-expect.
+
 2016-12-15  Bruno Haible  <bruno@clisp.org>
 
 	init.sh: Add possibility to not delete temporary files.

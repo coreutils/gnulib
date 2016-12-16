@@ -26,10 +26,6 @@
 # include <bits/libc-lock.h>
 #endif
 
-#if ! defined __builtin_expect && __GNUC__ < 3
-# define __builtin_expect(expr, expected) (expr)
-#endif
-
 #undef select
 
 #ifndef _D_EXACT_NAMLEN

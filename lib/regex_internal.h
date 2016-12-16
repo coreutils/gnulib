@@ -115,11 +115,7 @@
 # define RE_ENABLE_I18N
 #endif
 
-#if __GNUC__ >= 3
-# define BE(expr, val) __builtin_expect (expr, val)
-#else
-# define BE(expr, val) (expr)
-#endif
+#define BE(expr, val) __builtin_expect (expr, val)
 
 /* Number of ASCII characters.  */
 #define ASCII_CHARS 0x80

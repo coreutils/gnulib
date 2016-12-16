@@ -222,10 +222,6 @@ convert_dirent64 (const struct dirent64 *source)
 # endif
 #endif
 
-#if ! defined __builtin_expect && __GNUC__ < 3
-# define __builtin_expect(expr, expected) (expr)
-#endif
-
 #ifndef __glibc_unlikely
 # define __glibc_unlikely(expr) __builtin_expect (expr, 0)
 #endif

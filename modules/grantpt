@@ -9,6 +9,7 @@ m4/grantpt.m4
 Depends-on:
 stdlib
 extensions
+builtin-expect  [test $HAVE_GRANTPT = 0]
 pt_chown        [test $HAVE_GRANTPT = 0]
 waitpid         [test $HAVE_GRANTPT = 0]
 configmake      [test $HAVE_GRANTPT = 0]

@@ -35,7 +35,6 @@
 #include "pty-private.h"
 
 #ifndef _LIBC
-# define __builtin_expect(expr,val) (expr)
 # define __set_errno(e) errno = (e)
 # define __dup2 dup2
 # define __fork fork
