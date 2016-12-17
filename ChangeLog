@@ -1,6 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
 	Avoid redefinition errors on MSVC.
+	* m4/snprintf.m4 (gl_REPLACE_SNPRINTF): Set REPLACE_SNPRINTF to 1 if
+	the function may be defined as an inline function.
+	* m4/vsnprintf.m4 (gl_REPLACE_VSNPRINTF): Set REPLACE_VSNPRINTF to 1 if
+	the function may be defined as an inline function.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
+	Avoid redefinition errors on MSVC.
 	* lib/stdio.in.h: Include <stdlib.h> and <io.h> when necessary.
 	* lib/unistd.in.h: Include <stdio.h> when necessary.
 
