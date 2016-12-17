@@ -42,6 +42,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2016-12-17  getlogin        The link requirements of these modules are changed
+            getlogin_r      from empty to $(LIB_GETLOGIN).
+
 2016-12-13  dfa             Remove DFA_CASE_FOLD flag. Now based on RE_ICASE.
 
 2016-11-17  unistr/u32-strmblen   The function u32_strmblen can now return -1.

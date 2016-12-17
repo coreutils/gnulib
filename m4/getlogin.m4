@@ -1,4 +1,4 @@
-# getlogin.m4 serial 4
+# getlogin.m4 serial 5
 dnl Copyright (C) 2010-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,4 +15,18 @@ AC_DEFUN([gl_FUNC_GETLOGIN],
   if test $ac_cv_func_getlogin = no; then
     HAVE_GETLOGIN=0
   fi
+])
+
+dnl Determines the library needed by the implementation of the
+dnl getlogin and getlogin_r functions.
+AC_DEFUN([gl_LIB_GETLOGIN],
+[
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  case $host_os in
+    mingw*)
+      LIB_GETLOGIN='-ladvapi32' ;;
+    *)
+      LIB_GETLOGIN= ;;
+  esac
+  AC_SUBST([LIB_GETLOGIN])
 ])

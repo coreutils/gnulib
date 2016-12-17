@@ -1,5 +1,18 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	getlogin, getlogin_r: Fix link errors on MSVC.
+	* m4/getlogin.m4 (gl_LIB_GETLOGIN): New macro.
+	* modules/getlogin (configure.ac): Require gl_LIB_GETLOGIN.
+	(Link): New section.
+	* modules/getlogin_r (Files): Add m4/getlogin.m4.
+	(configure.ac): Require gl_LIB_GETLOGIN.
+	(Link): New section.
+	* NEWS: Mention the new link requirements.
+	* modules/getlogin-tests (test_getlogin_LDADD): New variable.
+	* modules/getlogin_r-tests (test_getlogin_r_LDADD): New variable.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	Un-deprecate the 'progname' module.
 	* NEWS: Describe the appropriate use-cases of 'progname' versus
 	'getprogname'. Based on discussion summary at

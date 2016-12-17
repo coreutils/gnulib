@@ -11,3 +11,4 @@ AC_CHECK_FUNCS_ONCE([ttyname])
 Makefile.am:
 TESTS += test-getlogin
 check_PROGRAMS += test-getlogin
+test_getlogin_LDADD = $(LDADD) $(LIB_GETLOGIN)
