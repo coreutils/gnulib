@@ -1,4 +1,4 @@
-# log10f.m4 serial 6
+# log10f.m4 serial 7
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,6 +84,10 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_LOG10F=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_log10f, not log10f.
+    AC_CHECK_DECLS([log10f], [REPLACE_LOG10F=1], , [[#include <math.h>]])
   fi
   if test $HAVE_LOG10F = 0 || test $REPLACE_LOG10F = 1; then
     dnl Find libraries needed to link lib/log10f.c.
