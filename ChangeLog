@@ -1,5 +1,13 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	stdint: Fix WINT_MAX to match the gnulib provided wint_t on MSVC.
+	* m4/stdint.m4 (gl_STDINT_H): Define GNULIB_OVERRIDES_WINT_T.
+	* modules/stdint (Makefile.am): Substitute GNULIB_OVERRIDES_WINT_T.
+	* lib/stdint.in.h [GNULIB_OVERRIDES_WINT_T]: Redefine WINT_MIN and
+	WINT_MAX.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	Avoid autoconf warning.
 	* modules/frexpl (configure.ac): Require, not invoke, gl_FUNC_FREXPL.
 	* modules/frexp (configure.ac): Require, not invoke, gl_FUNC_FREXP.
@@ -22,7 +30,7 @@
 	getlogin: Port to newer mingw.
 	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_DECL_GETLOGIN.
 	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Set HAVE_DECL_GETLOGIN.
-	* modules/unistd (Makefile.am): Substibute HAVE_DECL_GETLOGIN, not
+	* modules/unistd (Makefile.am): Substitute HAVE_DECL_GETLOGIN, not
 	HAVE_GETLOGIN.
 	* lib/unistd.in.h (getlogin): Test HAVE_DECL_GETLOGIN, not
 	HAVE_GETLOGIN.
@@ -79211,7 +79219,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	(signbit): New macro.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize GNULIB_SIGNBIT and
 	REPLACE_SIGNBIT.
-	* modules/math (Makefile.am): Substibute also GNULIB_SIGNBIT and
+	* modules/math (Makefile.am): Substitute also GNULIB_SIGNBIT and
 	REPLACE_FREXPL into math.h.
 
 2007-04-06  Bruno Haible  <bruno@clisp.org>
@@ -79898,7 +79906,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	* lib/math_.h (frexpl): Define as a replacement macro if REPLACE_FREXPL
 	is set. Don't provide a prototype if REPLACE_FREXPL is not set.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Initialize REPLACE_FREXPL.
-	* modules/math (Makefile.am): Substibute also REPLACE_FREXPL into
+	* modules/math (Makefile.am): Substitute also REPLACE_FREXPL into
 	math.h.
 
 2007-03-25  Bruno Haible  <bruno@clisp.org>
