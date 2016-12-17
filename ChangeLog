@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	acosf: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_ACOSF.
+	* m4/acosf.m4 (gl_FUNC_ACOSF): Set REPLACE_ACOSF to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_ACOSF.
+	* lib/math.in.h (acosf): Override if REPLACE_ACOSF is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	Avoid redefinition errors on MSVC.
 	* m4/snprintf.m4 (gl_REPLACE_SNPRINTF): Set REPLACE_SNPRINTF to 1 if
 	the function may be defined as an inline function.

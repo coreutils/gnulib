@@ -212,11 +212,20 @@ _NaN ()
 
 
 #if @GNULIB_ACOSF@
-# if !@HAVE_ACOSF@
-#  undef acosf
+# if @REPLACE_ACOSF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef acosf
+#   define acosf rpl_acosf
+#  endif
+_GL_FUNCDECL_RPL (acosf, float, (float x));
+_GL_CXXALIAS_RPL (acosf, float, (float x));
+# else
+#  if !@HAVE_ACOSF@
+#   undef acosf
 _GL_FUNCDECL_SYS (acosf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (acosf, float, (float x));
+# endif
 _GL_CXXALIASWARN (acosf);
 #elif defined GNULIB_POSIXCHECK
 # undef acosf
