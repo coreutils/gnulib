@@ -1890,11 +1890,20 @@ _GL_WARN_ON_USE (roundl, "roundl is unportable - "
 
 
 #if @GNULIB_SINF@
-# if !@HAVE_SINF@
-#  undef sinf
+# if @REPLACE_SINF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sinf
+#   define sinf rpl_sinf
+#  endif
+_GL_FUNCDECL_RPL (sinf, float, (float x));
+_GL_CXXALIAS_RPL (sinf, float, (float x));
+# else
+#  if !@HAVE_SINF@
+ #  undef sinf
 _GL_FUNCDECL_SYS (sinf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (sinf, float, (float x));
+# endif
 _GL_CXXALIASWARN (sinf);
 #elif defined GNULIB_POSIXCHECK
 # undef sinf
