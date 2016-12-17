@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	log10l: Avoid redefinition error on MSVC.
+	* m4/log10l.m4 (gl_FUNC_LOG10L): Set REPLACE_LOG10L to 1 if the function
+	may be defined as an inline function.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	log10f: Avoid redefinition error on MSVC.
 	* m4/log10f.m4 (gl_FUNC_LOG10F): Set REPLACE_LOG10F to 1 if the function
 	may be defined as an inline function.

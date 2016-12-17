@@ -1,4 +1,4 @@
-# log10l.m4 serial 3
+# log10l.m4 serial 4
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,6 +35,10 @@ AC_DEFUN([gl_FUNC_LOG10L],
     esac
   else
     HAVE_LOG10L=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_log10l, not log10l.
+    AC_CHECK_DECLS([log10l], [REPLACE_LOG10L=1], , [[#include <math.h>]])
   fi
   if test $HAVE_LOG10L = 0 || test $REPLACE_LOG10L = 1; then
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
