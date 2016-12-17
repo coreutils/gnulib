@@ -12,7 +12,7 @@ AC_DEFUN([gl___BUILTIN_EXPECT],
   AC_CACHE_CHECK([for __builtin_expect],
     [gl_cv___builtin_expect],
     [AC_LINK_IFELSE(
-       [AC_LANG_SOURCE([[
+       [AC_LANG_SOURCE([AC_INCLUDES_DEFAULT[
          int
          main (int argc, char **argv)
          {
@@ -25,7 +25,8 @@ AC_DEFUN([gl___BUILTIN_EXPECT],
     AC_DEFINE([HAVE___BUILTIN_EXPECT], [1])
   fi
   AH_VERBATIM([HAVE___BUILTIN_EXPECT],
-    [/* Define to 1 if the compiler understands __builtin_expect.  */
+    [/* Define to 1 if the compiler or standard include files support
+   __builtin_expect.  */
 #undef HAVE___BUILTIN_EXPECT
 #ifndef HAVE___BUILTIN_EXPECT
 # define __builtin_expect(e, c) (e)
