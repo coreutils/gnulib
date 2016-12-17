@@ -2004,11 +2004,20 @@ _GL_WARN_ON_USE (sqrtl, "sqrtl is unportable - "
 
 
 #if @GNULIB_TANF@
-# if !@HAVE_TANF@
-#  undef tanf
+# if @REPLACE_TANF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef tanf
+#   define tanf rpl_tanf
+#  endif
+_GL_FUNCDECL_RPL (tanf, float, (float x));
+_GL_CXXALIAS_RPL (tanf, float, (float x));
+# else
+#  if !@HAVE_TANF@
+#   undef tanf
 _GL_FUNCDECL_SYS (tanf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (tanf, float, (float x));
+# endif
 _GL_CXXALIASWARN (tanf);
 #elif defined GNULIB_POSIXCHECK
 # undef tanf
