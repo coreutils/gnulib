@@ -1,4 +1,4 @@
-# hypotf.m4 serial 4
+# hypotf.m4 serial 5
 dnl Copyright (C) 2012-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,7 @@ AC_DEFUN([gl_FUNC_HYPOTF],
   LIBS="$save_LIBS"
   if test $ac_cv_func_hypotf = yes; then
     HYPOTF_LIBM="$HYPOT_LIBM"
+
     save_LIBS="$LIBS"
     LIBS="$LIBS $HYPOTF_LIBM"
     gl_FUNC_HYPOTF_WORKS
@@ -29,6 +30,7 @@ AC_DEFUN([gl_FUNC_HYPOTF],
       *yes) ;;
       *) REPLACE_HYPOTF=1 ;;
     esac
+
     m4_ifdef([gl_FUNC_HYPOTF_IEEE], [
       if test $gl_hypotf_required = ieee && test $REPLACE_HYPOTF = 0; then
         AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
@@ -85,6 +87,10 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_HYPOTF=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_hypotf, not hypotf.
+    AC_CHECK_DECLS([hypotf], [REPLACE_HYPOTF=1], , [[#include <math.h>]])
   fi
   if test $HAVE_HYPOTF = 0 || test $REPLACE_HYPOTF = 1; then
     dnl Find libraries needed to link lib/hypotf.c.
