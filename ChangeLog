@@ -1,5 +1,10 @@
 2016-12-16  Paul Eggert  <eggert@cs.ucla.edu>
 
+	regex: fix dependency
+	Problem reported by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-12/msg00073.html
+	* modules/regex: Depend on builtin-expect.
+
 	builtin-expect: new module
 	Fix fnmatch to use it.
 	Problem reported for z/OS by Daniel Richard G.
