@@ -24,9 +24,14 @@ package=gnulib
 func_usage ()
 {
   echo "\
-Usage: posix-modules
+Usage: posix-modules [option]
 
 Lists the gnulib modules that implement POSIX interfaces.
+
+Options:
+
+      --for-mingw           list only modules that work on mingw
+      --for-msvc            list only modules that work on MSVC
 
 Report bugs to <bug-gnulib@gnu.org>."
 }
@@ -217,9 +222,27 @@ else
   }
 fi
 
+# Excludes for mingw.
+exclude_for_mingw=
+# <grp.h> does not exist.
+exclude_for_mingw="$exclude_for_mingw pt_chown grantpt posix_openpt-tests posix_openpt"
+# The functions getuid, getgid, geteuid, getegid don't exist.
+exclude_for_mingw="$exclude_for_mingw euidaccess faccessat"
+exclude_for_mingw="$exclude_for_mingw fchownat-tests fchownat"
+
+# Excludes for MSVC.
+exclude_for_msvc="$exclude_for_mingw"
+
 # Command-line option processing.
+exclude=
 while test $# -gt 0; do
   case "$1" in
+    --for-mingw | --for-ming | --for-min | --for-mi )
+      exclude="$exclude $exclude_for_mingw"
+      shift ;;
+    --for-msvc | --for-msv | --for-ms )
+      exclude="$exclude $exclude_for_msvc"
+      shift ;;
     --help | --hel | --he | --h )
       func_usage
       exit $? ;;
@@ -238,6 +261,18 @@ while test $# -gt 0; do
 done
 
 func_gnulib_dir
+func_tmpdir
+trap 'exit_status=$?
+      if test "$signal" != 0; then
+        echo "caught signal $signal" >&2
+      fi
+      rm -rf "$tmp"
+      exit $exit_status' 0
+for signal in 1 2 3 13 15; do
+  trap '{ signal='$signal'; func_exit 1; }' $signal
+done
+signal=0
+
 (
   # Get the header modules.
   LC_ALL=C grep -h '^Gnulib module: ' "$gnulib_dir"/doc/posix-headers/*.texi 2>/dev/null \
@@ -250,7 +285,16 @@ func_gnulib_dir
   | { # Then filter out the words "---", "and", "or" and remove *-gnu modules.
       tr ' ' '\012' | sed -e '/^---$/d' -e '/^and$/d' -e '/^or$/d' -e '/-gnu$/d'
     } \
-  | LC_ALL=C sort | LC_ALL=C uniq
+  | LC_ALL=C sort | LC_ALL=C uniq \
+  | { # Then filter out the excludes.
+      if test -n "$exclude"; then
+        for m in $exclude; do echo $m; done | LC_ALL=C sort -u > "$tmp"/excludes
+        LC_ALL=C join -v 1 - "$tmp"/excludes
+        rm -f "$tmp"/excludes
+      else
+        cat
+      fi
+    }
 
 # Local Variables:
 # indent-tabs-mode: nil

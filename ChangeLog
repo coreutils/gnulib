@@ -1,5 +1,12 @@
 2016-12-18  Bruno Haible  <bruno@clisp.org>
 
+	posix-modules: Add options for specific platforms.
+	* posix-modules (func_usage): Document options --for-mingw, --for-msvc.
+	(exclude_for_mingw, exclude_for_msvc, exclude): New variables.
+	Invoke func_tmpdir. Filter out the excludes.
+
+2016-12-18  Bruno Haible  <bruno@clisp.org>
+
 	getopt: Fix link error for users of getopt() in <unistd.h>.
 	* lib/getopt.in.h (getopt etc.): Do the macro definitions also when
 	__need_getopt is defined. Undefine all macros before defining them.
