@@ -1,4 +1,4 @@
-# tanhf.m4 serial 2
+# tanhf.m4 serial 3
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,10 @@ AC_DEFUN([gl_FUNC_TANHF],
     TANHF_LIBM="$TANH_LIBM"
   else
     HAVE_TANHF=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_tanhf, not tanhf.
+    AC_CHECK_DECLS([tanhf], [REPLACE_TANHF=1], , [[#include <math.h>]])
     TANHF_LIBM="$TANH_LIBM"
   fi
   AC_SUBST([TANHF_LIBM])

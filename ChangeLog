@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	tanhf: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_TANHF.
+	* m4/tanhf.m4 (gl_FUNC_TANHF): Set REPLACE_TANHF to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_TANHF.
+	* lib/math.in.h (tanhf): Override if REPLACE_TANHF is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	tanf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_TANF.
 	* m4/tanf.m4 (gl_FUNC_TANF): Set REPLACE_TANF to 1 if the function
