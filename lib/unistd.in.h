@@ -776,7 +776,7 @@ _GL_WARN_ON_USE (gethostname, "gethostname is unportable - "
      ${LOGNAME-$USER}        on Unix platforms,
      $USERNAME               on native Windows platforms.
  */
-# if !@HAVE_GETLOGIN@
+# if !@HAVE_DECL_GETLOGIN@
 _GL_FUNCDECL_SYS (getlogin, char *, (void));
 # endif
 _GL_CXXALIAS_SYS (getlogin, char *, (void));
