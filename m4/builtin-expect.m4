@@ -12,7 +12,7 @@ AC_DEFUN([gl___BUILTIN_EXPECT],
   AC_CACHE_CHECK([for __builtin_expect],
     [gl_cv___builtin_expect],
     [AC_LINK_IFELSE(
-       [AC_LANG_SOURCE([AC_INCLUDES_DEFAULT[
+       [AC_LANG_SOURCE([[
          int
          main (int argc, char **argv)
          {
@@ -20,16 +20,30 @@ AC_DEFUN([gl___BUILTIN_EXPECT],
            return argv[argc != 100][0];
          }]])],
        [gl_cv___builtin_expect=yes],
-       [gl_cv___builtin_expect=no])])
+       [AC_LINK_IFELSE(
+          [AC_LANG_SOURCE([[
+             #include <builtins.h>
+             int
+             main (int argc, char **argv)
+             {
+               argc = __builtin_expect (argc, 100);
+               return argv[argc != 100][0];
+             }]])],
+          [gl_cv___builtin_expect="in <builtins.h>"],
+          [gl_cv___builtin_expect=no])])])
   if test "$gl_cv___builtin_expect" = yes; then
     AC_DEFINE([HAVE___BUILTIN_EXPECT], [1])
+  elif test "$gl_cv___builtin_expect" = "in <builtins.h>"; then
+    AC_DEFINE([HAVE___BUILTIN_EXPECT], [2])
   fi
   AH_VERBATIM([HAVE___BUILTIN_EXPECT],
-    [/* Define to 1 if the compiler or standard include files support
-   __builtin_expect.  */
+    [/* Define to 1 if the compiler supports __builtin_expect,
+   and to 2 if <builtins.h> does.  */
 #undef HAVE___BUILTIN_EXPECT
 #ifndef HAVE___BUILTIN_EXPECT
 # define __builtin_expect(e, c) (e)
+#elif HAVE___BUILTIN_EXPECT == 2
+# include <builtins.h>
 #endif
     ])
 ])
