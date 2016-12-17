@@ -1,5 +1,12 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	fpending: Revert workaround against Emacs bug.
+	* lib/stdio-impl.h [__MINGW32__]: Revert conditional.
+	The Emacs bug is fixed by Eli Zaretskii in
+	http://lists.gnu.org/archive/html/emacs-devel/2016-12/msg00715.html
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	getlogin_r tests: Port to mingw.
 	* tests/test-getlogin_r.c: Don't include <pwd.h> on native Windows. Fixes
 	regression introduced on 2014-05-19.
