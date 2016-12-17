@@ -252,11 +252,20 @@ _GL_WARN_ON_USE (acosl, "acosl is unportable - "
 
 
 #if @GNULIB_ASINF@
-# if !@HAVE_ASINF@
-#  undef asinf
+# if @REPLACE_ASINF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef asinf
+#   define asinf rpl_asinf
+#  endif
+_GL_FUNCDECL_RPL (asinf, float, (float x));
+_GL_CXXALIAS_RPL (asinf, float, (float x));
+# else
+#  if !@HAVE_ASINF@
+#   undef asinf
 _GL_FUNCDECL_SYS (asinf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (asinf, float, (float x));
+# endif
 _GL_CXXALIASWARN (asinf);
 #elif defined GNULIB_POSIXCHECK
 # undef asinf
