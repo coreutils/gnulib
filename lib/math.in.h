@@ -524,11 +524,20 @@ _GL_WARN_ON_USE (copysign, "copysignl is unportable - "
 
 
 #if @GNULIB_COSF@
-# if !@HAVE_COSF@
-#  undef cosf
+# if @REPLACE_COSF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef cosf
+#   define cosf rpl_cosf
+#  endif
+_GL_FUNCDECL_RPL (cosf, float, (float x));
+_GL_CXXALIAS_RPL (cosf, float, (float x));
+# else
+#  if !@HAVE_COSF@
+#   undef cosf
 _GL_FUNCDECL_SYS (cosf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (cosf, float, (float x));
+# endif
 _GL_CXXALIASWARN (cosf);
 #elif defined GNULIB_POSIXCHECK
 # undef cosf
