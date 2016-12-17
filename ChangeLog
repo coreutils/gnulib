@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	atan2f: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_ATAN2F.
+	* m4/atan2f.m4 (gl_FUNC_ATAN2F): Set REPLACE_ATAN2F to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_ATAN2F.
+	* lib/math.in.h (atan2f): Override if REPLACE_ATAN2F is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	atanf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_ATANF.
 	* m4/atanf.m4 (gl_FUNC_ATANF): Set REPLACE_ATANF to 1 if the function
