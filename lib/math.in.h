@@ -589,11 +589,20 @@ _GL_WARN_ON_USE (coshf, "coshf is unportable - "
 
 
 #if @GNULIB_EXPF@
-# if !@HAVE_EXPF@
-#  undef expf
+# if @REPLACE_EXPF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef expf
+#   define expf rpl_expf
+#  endif
+_GL_FUNCDECL_RPL (expf, float, (float x));
+_GL_CXXALIAS_RPL (expf, float, (float x));
+# else
+#  if !@HAVE_EXPF@
+#   undef expf
 _GL_FUNCDECL_SYS (expf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (expf, float, (float x));
+# endif
 _GL_CXXALIASWARN (expf);
 #elif defined GNULIB_POSIXCHECK
 # undef expf

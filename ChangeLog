@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	expf: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_EXPF.
+	* m4/expf.m4 (gl_FUNC_EXPF): Set REPLACE_EXPF to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_EXPF.
+	* lib/math.in.h (expf): Override if REPLACE_EXPF is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	coshf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_COSHF.
 	* m4/coshf.m4 (gl_FUNC_COSHF): Set REPLACE_COSHF to 1 if the function

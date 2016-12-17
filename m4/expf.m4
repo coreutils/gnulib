@@ -1,4 +1,4 @@
-# expf.m4 serial 2
+# expf.m4 serial 3
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,10 @@ AC_DEFUN([gl_FUNC_EXPF],
     EXPF_LIBM="$EXP_LIBM"
   else
     HAVE_EXPF=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_expf, not expf.
+    AC_CHECK_DECLS([expf], [REPLACE_EXPF=1], , [[#include <math.h>]])
     EXPF_LIBM="$EXP_LIBM"
   fi
   AC_SUBST([EXPF_LIBM])
