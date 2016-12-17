@@ -1955,11 +1955,20 @@ _GL_WARN_ON_USE (sinhf, "sinhf is unportable - "
 
 
 #if @GNULIB_SQRTF@
-# if !@HAVE_SQRTF@
-#  undef sqrtf
+# if @REPLACE_SQRTF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sqrtf
+#   define sqrtf rpl_sqrtf
+#  endif
+_GL_FUNCDECL_RPL (sqrtf, float, (float x));
+_GL_CXXALIAS_RPL (sqrtf, float, (float x));
+# else
+#  if !@HAVE_SQRTF@
+#   undef sqrtf
 _GL_FUNCDECL_SYS (sqrtf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (sqrtf, float, (float x));
+# endif
 _GL_CXXALIASWARN (sqrtf);
 #elif defined GNULIB_POSIXCHECK
 # undef sqrtf

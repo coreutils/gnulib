@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	sqrtf: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_SQRTF.
+	* m4/sqrtf.m4 (gl_FUNC_SQRTF): Set REPLACE_SQRTF to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_SQRTF.
+	* lib/math.in.h (sqrtf): Override if REPLACE_SQRTF is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	sinhf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_SINHF.
 	* m4/sinhf.m4 (gl_FUNC_SINHF): Set REPLACE_SINHF to 1 if the function
