@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	Reorganize NEWS a bit.
+	* NEWS: Move some not so important changes away from section
+	"Important Notes".
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	tanhf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_TANHF.
 	* m4/tanhf.m4 (gl_FUNC_TANHF): Set REPLACE_TANHF to 1 if the function
