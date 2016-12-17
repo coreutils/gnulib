@@ -1,4 +1,4 @@
-# coshf.m4 serial 2
+# coshf.m4 serial 3
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,10 @@ AC_DEFUN([gl_FUNC_COSHF],
     COSHF_LIBM="$COSH_LIBM"
   else
     HAVE_COSHF=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_coshf, not coshf.
+    AC_CHECK_DECLS([coshf], [REPLACE_COSHF=1], , [[#include <math.h>]])
     COSHF_LIBM="$COSH_LIBM"
   fi
   AC_SUBST([COSHF_LIBM])

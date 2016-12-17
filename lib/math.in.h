@@ -564,11 +564,20 @@ _GL_WARN_ON_USE (cosl, "cosl is unportable - "
 
 
 #if @GNULIB_COSHF@
-# if !@HAVE_COSHF@
-#  undef coshf
+# if @REPLACE_COSHF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef coshf
+#   define coshf rpl_coshf
+#  endif
+_GL_FUNCDECL_RPL (coshf, float, (float x));
+_GL_CXXALIAS_RPL (coshf, float, (float x));
+# else
+#  if !@HAVE_COSHF@
+#   undef coshf
 _GL_FUNCDECL_SYS (coshf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (coshf, float, (float x));
+# endif
 _GL_CXXALIASWARN (coshf);
 #elif defined GNULIB_POSIXCHECK
 # undef coshf
