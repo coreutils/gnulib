@@ -3,6 +3,16 @@ Important general notes
 
 Date        Modules         Changes
 
+2016-09-05  progname        There is now an alternate module 'getprogname'. It
+                            defines a getprogname() function; use it to obtain
+                            the name of the current program.
+                            Recommended use:
+                            - In a program's main() function, and associated
+                              usage() and help() functions, use 'progname'.
+                            - In library code, or more generally any code that
+                              is not near the main() function, use
+                              'getprogname'.
+
 2013-04-24  gettext         If your project uses 'gettextize --intl' it is now
                             your responsibility to put -I$(top_builddir)/intl
                             into the Makefile.am for gnulib.
@@ -36,14 +46,6 @@ Date        Modules         Changes
 
 2016-11-17  unistr/u32-strmblen   The function u32_strmblen can now return -1.
 2016-11-17  unistr/u32-strmbtouc  The function u32_strmbtouc can now return -1.
-
-2016-09-05  progname        This module is deprecated.  Please switch to the
-                            'getprogname' module and its getprogname()
-                            function to obtain the name of the current program.
-                            Note that there is no longer any need to export a
-                            'const char *program_name' variable.
-                            Currently there is no replacement for
-                            set_program_name().
 
 2016-08-17  stdbool         This no longer supports _Bool for C++.
                             Programs intended to be portable to C++
