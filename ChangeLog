@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	Avoid redefinition errors on MSVC.
+	* lib/stdio.in.h: Include <stdlib.h> and <io.h> when necessary.
+	* lib/unistd.in.h: Include <stdio.h> when necessary.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	stdint: Fix WINT_MAX to match the gnulib provided wint_t on MSVC.
 	* m4/stdint.m4 (gl_STDINT_H): Define GNULIB_OVERRIDES_WINT_T.
 	* modules/stdint (Makefile.am): Substitute GNULIB_OVERRIDES_WINT_T.
