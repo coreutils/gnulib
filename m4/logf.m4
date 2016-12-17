@@ -1,4 +1,4 @@
-# logf.m4 serial 6
+# logf.m4 serial 7
 dnl Copyright (C) 2011-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,6 +84,10 @@ int main (int argc, char *argv[])
     ])
   else
     HAVE_LOGF=0
+    dnl If the function is declared but does not appear to exist, it may be
+    dnl defined as an inline function. In order to avoid a conflict, we have
+    dnl to define rpl_logf, not logf.
+    AC_CHECK_DECLS([logf], [REPLACE_LOGF=1], , [[#include <math.h>]])
   fi
   if test $HAVE_LOGF = 0 || test $REPLACE_LOGF = 1; then
     dnl Find libraries needed to link lib/logf.c.
