@@ -1930,11 +1930,20 @@ _GL_WARN_ON_USE (sinl, "sinl is unportable - "
 
 
 #if @GNULIB_SINHF@
-# if !@HAVE_SINHF@
-#  undef sinhf
+# if @REPLACE_SINHF@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef sinhf
+#   define sinhf rpl_sinhf
+#  endif
+_GL_FUNCDECL_RPL (sinhf, float, (float x));
+_GL_CXXALIAS_RPL (sinhf, float, (float x));
+# else
+#  if !@HAVE_SINHF@
+#   undef sinhf
 _GL_FUNCDECL_SYS (sinhf, float, (float x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (sinhf, float, (float x));
+# endif
 _GL_CXXALIASWARN (sinhf);
 #elif defined GNULIB_POSIXCHECK
 # undef sinhf

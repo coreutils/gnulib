@@ -1,5 +1,14 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	sinhf: Avoid redefinition error on MSVC.
+	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_SINHF.
+	* m4/sinhf.m4 (gl_FUNC_SINHF): Set REPLACE_SINHF to 1 if the function
+	may be defined as an inline function.
+	* modules/math (Makefile.am): Substitute REPLACE_SINHF.
+	* lib/math.in.h (sinhf): Override if REPLACE_SINHF is 1.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	sinf: Avoid redefinition error on MSVC.
 	* m4/math_h.m4 (gl_MATH_H_DEFAULTS): Define REPLACE_SINF.
 	* m4/sinf.m4 (gl_FUNC_SINF): Set REPLACE_SINF to 1 if the function
