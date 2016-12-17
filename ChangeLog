@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	Avoid autoconf warning.
+	* modules/frexpl (configure.ac): Require, not invoke, gl_FUNC_FREXPL.
+	* modules/frexp (configure.ac): Require, not invoke, gl_FUNC_FREXP.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	fpending: Revert workaround against Emacs bug.
 	* lib/stdio-impl.h [__MINGW32__]: Revert conditional.
 	The Emacs bug is fixed by Eli Zaretskii in
