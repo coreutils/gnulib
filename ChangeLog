@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	getlogin_r tests: Port to mingw.
+	* tests/test-getlogin_r.c: Don't include <pwd.h> on native Windows. Fixes
+	regression introduced on 2014-05-19.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	getlogin: Port to newer mingw.
 	* m4/unistd_h.m4 (gl_UNISTD_H_DEFAULTS): Initialize HAVE_DECL_GETLOGIN.
 	* m4/getlogin.m4 (gl_FUNC_GETLOGIN): Set HAVE_DECL_GETLOGIN.
