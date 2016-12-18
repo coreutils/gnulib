@@ -38,7 +38,17 @@ SIGNATURE_CHECK (getopt_long_only, int, (int, char *__getopt_argv_const *,
 
 #endif
 
-#include <unistd.h>
+/* POSIX and glibc provide the getopt() function in <unistd.h>, see
+   http://pubs.opengroup.org/onlinepubs/9699919799/functions/getopt.html
+   https://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
+   But gnulib provides the getopt() function in <getopt.h>, not in <unistd.h>.
+   Nevertheless the getopt() function should also be found in <unistd.h>.
+   We can test it either way.  */
+#if 0
+# include <getopt.h>
+#else
+# include <unistd.h>
+#endif
 
 #include "signature.h"
 SIGNATURE_CHECK (getopt, int, (int, char * const[], char const *));

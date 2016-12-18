@@ -1,3 +1,12 @@
+2016-12-18  Bruno Haible  <bruno@clisp.org>
+
+	getopt: Fix link error for users of getopt() in <unistd.h>.
+	* lib/getopt.in.h (getopt etc.): Do the macro definitions also when
+	__need_getopt is defined. Undefine all macros before defining them.
+	* modules/getopt (Include): Clarify that including <unistd.h> is also
+	OK.
+	* tests/test-getopt.c: Add comment.
+
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
 	getaddrinfo tests: Avoid compilation error on MSVC.
