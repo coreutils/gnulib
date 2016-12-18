@@ -1,5 +1,19 @@
 2016-12-18  Bruno Haible  <bruno@clisp.org>
 
+	Split tests for getopt-posix and getopt-gnu.
+	* tests/test-getopt-posix.c: New file.
+	* tests/test-getopt-gnu.c: New file, with code from test-getopt.c.
+	* tests/test-getopt-main.h: Renamed from tests/test-getopt.c. Remove
+	stuff moved to test-getopt-gnu.c. Test TEST_GETOPT_GNU instead of
+	GNULIB_TEST_GETOPT_GNU.
+	* modules/getopt-posix-tests (Files): Add test-getopt-posix.c,
+	test-getopt-main.h. Remove test-getopt.c, test-getopt_long.h.
+	(Makefile.am): Test test-getopt-posix instead of test-getopt.
+	* modules/getopt-gnu-tests: New file.
+	* modules/getopt-gnu (configure.ac): Don't define GNULIB_TEST_GETOPT_GNU.
+
+2016-12-18  Bruno Haible  <bruno@clisp.org>
+
 	posix-modules: Add options for specific platforms.
 	* posix-modules (func_usage): Document options --for-mingw, --for-msvc.
 	(exclude_for_mingw, exclude_for_msvc, exclude): New variables.

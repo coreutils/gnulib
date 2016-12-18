@@ -16,46 +16,13 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2009.  */
 
-#include <config.h>
-
-/* None of the files accessed by this test are large, so disable the
-   ftell link warning if we are not using the gnulib ftell module.  */
-#define _GL_NO_LARGE_FILES
-
-#if GNULIB_TEST_GETOPT_GNU
-# include <getopt.h>
-
-# ifndef __getopt_argv_const
-#  define __getopt_argv_const const
-# endif
-# include "signature.h"
-SIGNATURE_CHECK (getopt_long, int, (int, char *__getopt_argv_const *,
-                                    char const *, struct option const *,
-                                    int *));
-SIGNATURE_CHECK (getopt_long_only, int, (int, char *__getopt_argv_const *,
-                                         char const *, struct option const *,
-                                         int *));
-
-#endif
-
-/* POSIX and glibc provide the getopt() function in <unistd.h>, see
-   http://pubs.opengroup.org/onlinepubs/9699919799/functions/getopt.html
-   https://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
-   But gnulib provides the getopt() function in <getopt.h>, not in <unistd.h>.
-   Nevertheless the getopt() function should also be found in <unistd.h>.
-   We can test it either way.  */
-#if 0
-# include <getopt.h>
-#else
-# include <unistd.h>
-#endif
-
 #include "signature.h"
 SIGNATURE_CHECK (getopt, int, (int, char * const[], char const *));
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* This test intentionally remaps stderr.  So, we arrange to have fd 10
    (outside the range of interesting fd's during the test) set up to
@@ -68,7 +35,7 @@ SIGNATURE_CHECK (getopt, int, (int, char * const[], char const *));
 static FILE *myerr;
 
 #include "test-getopt.h"
-#if GNULIB_TEST_GETOPT_GNU
+#if TEST_GETOPT_GNU
 # include "test-getopt_long.h"
 #endif
 
@@ -90,14 +57,14 @@ main (void)
   setenv ("POSIXLY_CORRECT", "1", 1);
   test_getopt ();
 
-#if GNULIB_TEST_GETOPT_GNU
+#if TEST_GETOPT_GNU
   test_getopt_long_posix ();
 #endif
 
   unsetenv ("POSIXLY_CORRECT");
   test_getopt ();
 
-#if GNULIB_TEST_GETOPT_GNU
+#if TEST_GETOPT_GNU
   test_getopt_long ();
   test_getopt_long_only ();
 #endif

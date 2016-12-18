@@ -1,9 +1,10 @@
 Files:
 tests/macros.h
 tests/signature.h
-tests/test-getopt-posix.c
+tests/test-getopt-gnu.c
 tests/test-getopt-main.h
 tests/test-getopt.h
+tests/test-getopt_long.h
 
 Depends-on:
 dup2
@@ -15,6 +16,6 @@ unsetenv
 configure.ac:
 
 Makefile.am:
-TESTS += test-getopt-posix
-check_PROGRAMS += test-getopt-posix
-test_getopt_posixLDADD = $(LDADD) $(LIBINTL)
+TESTS += test-getopt-gnu
+check_PROGRAMS += test-getopt-gnu
+test_getopt_gnu_LDADD = $(LDADD) $(LIBINTL)
