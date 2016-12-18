@@ -1,5 +1,11 @@
 2016-12-17  Bruno Haible  <bruno@clisp.org>
 
+	getaddrinfo tests: Avoid compilation error on MSVC.
+	* tests/test-getaddrinfo.c: Don't check the prototypes of freeaddrinfo,
+	getaddrinfo on native Windows.
+
+2016-12-17  Bruno Haible  <bruno@clisp.org>
+
 	getlogin, getlogin_r: Fix link errors on MSVC.
 	* m4/getlogin.m4 (gl_LIB_GETLOGIN): New macro.
 	* modules/getlogin (configure.ac): Require gl_LIB_GETLOGIN.
@@ -84860,7 +84866,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 
 2006-11-16  Paul Eggert  <eggert@cs.ucla.edu>
 
-	* modules/getaddinfo (Depends-on): Remove inttostr; add snprintf.
+	* modules/getaddrinfo (Depends-on): Remove inttostr; add snprintf.
 	* lib/getaddrinfo.c: Include snprintf.h rather than intprops.h
 	and inttostr.h.  Use snprintf rather than uinttostr, so that
 	LGPLed code doesn't depend on GPLed.
