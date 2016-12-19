@@ -424,7 +424,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   /* Windows platform.  Use the native Windows API.  */
 
   MEMORY_BASIC_INFORMATION info;
-  unsigned long address = 0;
+  uintptr_t address = 0;
 
   while (VirtualQuery ((void*)address, &info, sizeof(info)) == sizeof(info))
     {
@@ -435,10 +435,10 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
            distinguished from areas reserved for future malloc().  */
         if (info.State != MEM_RESERVE)
           {
-            unsigned long start, end;
+            uintptr_t start, end;
             unsigned int flags;
 
-            start = (unsigned long)info.BaseAddress;
+            start = (uintptr_t)info.BaseAddress;
             end = start + info.RegionSize;
             switch (info.Protect & ~(PAGE_GUARD|PAGE_NOCACHE))
               {
@@ -468,7 +468,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
             if (callback (data, start, end, flags))
               break;
           }
-      address = (unsigned long)info.BaseAddress + info.RegionSize;
+      address = (uintptr_t)info.BaseAddress + info.RegionSize;
     }
 
 #elif defined __BEOS__ || defined __HAIKU__

@@ -1,5 +1,11 @@
 2016-12-19  Bruno Haible  <bruno@clisp.org>
 
+	vma-iter: Fix endless loop on 64-bit Windows.
+	* lib/vma-iter.c (vma_iterate): On Windows, use 'uintptr_t' instead of
+	'unsigned long'.
+
+2016-12-19  Bruno Haible  <bruno@clisp.org>
+
 	stdint: Fix WINT_MAX to match the gnulib provided wint_t on minw.
 	* m4/wint_t.m4 (gt_TYPE_WINT_T): Define GNULIB_OVERRIDES_WINT_T here.
 	* m4/stdint.m4 (gl_STDINT_H): Don't define GNULIB_OVERRIDES_WINT_T.
