@@ -1,3 +1,17 @@
+2016-12-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: improve worst-case 'replace' performance
+	See my note in Bug#22357#71.
+	* lib/dfa.c (insert, delete): Rework to avoid duplicate test.
+	(merge_constrained): New function, which is like
+	the old 'merge' function, except with a new argument C2.
+	Simplify the body by avoiding the need for different sections
+	of code depending on whether one input is exhausted.
+	(merge): Use the new function.
+	(delete): Return the constraint of the deleted position,
+	not the entire position.  Caller changed.
+	(replace): Change from O(N*(N + log N)) to O(N log N) algorithm.
+
 2016-12-18  Norihiro Tanaka  <noritnk@kcn.ne.jp>
 
 	dfa: performance improvement for removal of epsilon closure

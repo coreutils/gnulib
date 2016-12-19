@@ -2037,14 +2037,13 @@ insert (position p, position_set *s)
       ptrdiff_t mid = (lo + hi) >> 1;
       if (s->elems[mid].index > p.index)
         lo = mid + 1;
+      else if (s->elems[mid].index == p.index)
+        {
+          s->elems[mid].constraint |= p.constraint;
+          return;
+        }
       else
         hi = mid;
-    }
-
-  if (lo < count && p.index == s->elems[lo].index)
-    {
-      s->elems[lo].constraint |= p.constraint;
-      return;
     }
 
   s->elems = maybe_realloc (s->elems, count, &s->alloc, -1, sizeof *s->elems);
@@ -2054,10 +2053,12 @@ insert (position p, position_set *s)
   ++s->nelem;
 }
 
-/* Merge two sets of positions into a third.  The result is exactly as if
-   the positions of both sets were inserted into an initially empty set.  */
+/* Merge S1 and S2 (with the additional constraint C2) into M.  The
+   result is as if the positions of S1, and of S2 with the additional
+   constraint C2, were inserted into an initially empty set.  */
 static void
-merge (position_set const *s1, position_set const *s2, position_set *m)
+merge_constrained (position_set const *s1, position_set const *s2,
+                   unsigned int c2, position_set *m)
 {
   ptrdiff_t i = 0, j = 0;
 
@@ -2068,27 +2069,41 @@ merge (position_set const *s1, position_set const *s2, position_set *m)
       m->elems = xpalloc (NULL, &m->alloc, s2->nelem, -1, sizeof *m->elems);
     }
   m->nelem = 0;
-  while (i < s1->nelem && j < s2->nelem)
-    if (s1->elems[i].index > s2->elems[j].index)
-      m->elems[m->nelem++] = s1->elems[i++];
-    else if (s1->elems[i].index < s2->elems[j].index)
-      m->elems[m->nelem++] = s2->elems[j++];
+  while (i < s1->nelem || j < s2->nelem)
+    if (! (j < s2->nelem)
+        || (i < s1->nelem && s1->elems[i].index >= s2->elems[j].index))
+      {
+        unsigned int c = ((i < s1->nelem && j < s2->nelem
+                           && s1->elems[i].index == s2->elems[j].index)
+                          ? s2->elems[j++].constraint & c2
+                          : 0);
+        m->elems[m->nelem].index = s1->elems[i].index;
+        m->elems[m->nelem++].constraint = s1->elems[i++].constraint | c;
+      }
     else
       {
-        m->elems[m->nelem] = s1->elems[i++];
-        m->elems[m->nelem++].constraint |= s2->elems[j++].constraint;
+        if (s2->elems[j].constraint & c2)
+          {
+            m->elems[m->nelem].index = s2->elems[j].index;
+            m->elems[m->nelem++].constraint = s2->elems[j].constraint & c2;
+          }
+        j++;
       }
-  while (i < s1->nelem)
-    m->elems[m->nelem++] = s1->elems[i++];
-  while (j < s2->nelem)
-    m->elems[m->nelem++] = s2->elems[j++];
 }
 
-/* Delete a position from a set.  */
-static position
+/* Merge two sets of positions into a third.  The result is exactly as if
+   the positions of both sets were inserted into an initially empty set.  */
+static void
+merge (position_set const *s1, position_set const *s2, position_set *m)
+{
+  return merge_constrained (s1, s2, -1, m);
+}
+
+/* Delete a position from a set.  Return the nonzero constraint of the
+   deleted position, or zero if there was no such position.  */
+static unsigned int
 delete (size_t del, position_set *s)
 {
-  position p;
   size_t count = s->nelem;
   size_t lo = 0, hi = count;
   while (lo < hi)
@@ -2096,23 +2111,19 @@ delete (size_t del, position_set *s)
       size_t mid = (lo + hi) >> 1;
       if (s->elems[mid].index > del)
         lo = mid + 1;
+      else if (s->elems[mid].index == del)
+        {
+          unsigned int c = s->elems[mid].constraint;
+          size_t i;
+          for (i = mid; i + 1 < count; i++)
+            s->elems[i] = s->elems[i + 1];
+          s->nelem = i;
+          return c;
+        }
       else
         hi = mid;
     }
-
-  if (lo < count && del == s->elems[lo].index)
-    {
-      p = s->elems[lo];
-      for (size_t i = lo + 1; i < s->nelem; i++)
-        s->elems[i - 1] = s->elems[i];
-      --s->nelem;
-    }
-  else
-    {
-      p.index = -1;
-      p.constraint = NO_CONSTRAINT;
-    }
-      return p;
+  return 0;
 }
 
 /* Replace a position with the followed set.  */
@@ -2120,27 +2131,13 @@ static void
 replace (position_set *dst, size_t del, position_set *add,
          unsigned int constraint, position_set *tmp)
 {
-  position pos;
+  unsigned int c = delete (del, dst) & constraint;
 
-  pos = delete (del, dst);
-
-  if (pos.index == (size_t) -1)
-    return;
-
-  copy (add, tmp);
-
-  pos.constraint &= constraint;
-
-  for (size_t i = 0; i < tmp->nelem; i++)
+  if (c)
     {
-      tmp->elems[i].constraint &= pos.constraint;
-
-      while (i < tmp->nelem && tmp->elems[i].constraint == 0)
-        delete (tmp->elems[i].index, tmp);
+      copy (dst, tmp);
+      merge_constrained (tmp, add, c, dst);
     }
-
-  for (size_t i = 0; i < tmp->nelem; i++)
-    insert (tmp->elems[i], dst);
 }
 
 /* Find the index of the state corresponding to the given position set with
