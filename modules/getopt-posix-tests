@@ -17,4 +17,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getopt-posix
 check_PROGRAMS += test-getopt-posix
-test_getopt_posixLDADD = $(LDADD) $(LIBINTL)
+test_getopt_posix_LDADD = $(LDADD) $(LIBINTL)

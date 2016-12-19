@@ -1,3 +1,12 @@
+2016-12-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getopt-posix-tests: fix Makefile typo
+	* modules/getopt-posix-tests (test_getopt_posix_LDADD):
+	Fix typo: the last ‘_’ was missing in the name.
+	I suspect that the typo explains this build failure:
+	https://buildfarm.opencsw.org/buildbot/builders/ggrep-solaris10-sparc/builds/39
+	although I can’t reproduce the problem on Solaris 10 sparc.
+
 2016-12-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: improve worst-case 'replace' performance
