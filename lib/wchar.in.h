@@ -113,10 +113,10 @@
 #  define WEOF -1
 # endif
 #else
-/* MSVC defines wint_t as 'unsigned short' in <crtdefs.h>.
+/* mingw and MSVC define wint_t as 'unsigned short' in <crtdefs.h>.
    This is too small: ISO C 99 section 7.24.1.(2) says that wint_t must be
    "unchanged by default argument promotions".  Override it.  */
-# if defined _MSC_VER
+# if @GNULIB_OVERRIDES_WINT_T@
 #  if !GNULIB_defined_wint_t
 #   include <crtdefs.h>
 typedef unsigned int rpl_wint_t;

@@ -1,4 +1,4 @@
-# stdint.m4 serial 49
+# stdint.m4 serial 50
 dnl Copyright (C) 2001-2016 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,6 +12,7 @@ AC_DEFUN_ONCE([gl_STDINT_H],
   AC_PREREQ([2.59])dnl
 
   AC_REQUIRE([gl_LIMITS_H])
+  AC_REQUIRE([gt_TYPE_WINT_T])
 
   dnl Check for long long int and unsigned long long int.
   AC_REQUIRE([AC_TYPE_LONG_LONG_INT])
@@ -354,32 +355,6 @@ int32_t i32 = INT32_C (0x7fffffff);
     gl_STDINT_TYPE_PROPERTIES
   fi
 
-  dnl Determine whether gnulib's <wchar.h> or <wctype.h> would, if present,
-  dnl override 'wint_t'.
-  AC_CACHE_CHECK([whether wint_t is too small],
-    [gl_cv_type_wint_t_too_small],
-    [AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM([[
-/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
-   <wchar.h>.
-   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
-   included before <wchar.h>.  */
-#if !(defined __GLIBC__ && !defined __UCLIBC__)
-# include <stddef.h>
-# include <stdio.h>
-# include <time.h>
-#endif
-#include <wchar.h>
-            int verify[sizeof (wint_t) < sizeof (int) ? -1 : 1];
-            ]])],
-         [gl_cv_type_wint_t_too_small=no],
-         [gl_cv_type_wint_t_too_small=yes])])
-  if test $gl_cv_type_wint_t_too_small = yes; then
-    GNULIB_OVERRIDES_WINT_T=1
-  else
-    GNULIB_OVERRIDES_WINT_T=0
-  fi
-
   dnl The substitute stdint.h needs the substitute limit.h's _GL_INTEGER_WIDTH.
   LIMITS_H=limits.h
   AM_CONDITIONAL([GL_GENERATE_LIMITS_H], [test -n "$LIMITS_H"])
@@ -388,7 +363,6 @@ int32_t i32 = INT32_C (0x7fffffff);
   AC_SUBST([HAVE_SYS_BITYPES_H])
   AC_SUBST([HAVE_SYS_INTTYPES_H])
   AC_SUBST([STDINT_H])
-  AC_SUBST([GNULIB_OVERRIDES_WINT_T])
   AM_CONDITIONAL([GL_GENERATE_STDINT_H], [test -n "$STDINT_H"])
 ])
 
@@ -555,7 +529,7 @@ AC_DEFUN([gl_STDINT_TYPE_PROPERTIES],
   dnl requirement that wint_t is "unchanged by default argument promotions".
   dnl In this case gnulib's <wchar.h> and <wctype.h> override wint_t.
   dnl Set the variable BITSIZEOF_WINT_T accordingly.
-  if test $BITSIZEOF_WINT_T -lt 32; then
+  if test $GNULIB_OVERRIDES_WINT_T = 1; then
     BITSIZEOF_WINT_T=32
   fi
 ])

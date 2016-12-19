@@ -10,6 +10,7 @@ Macros are used instead of typedefs.
 Files:
 lib/stdint.in.h
 m4/stdint.m4
+m4/wint_t.m4
 m4/longlong.m4
 
 Depends-on:

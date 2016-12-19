@@ -1,3 +1,17 @@
+2016-12-19  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Fix WINT_MAX to match the gnulib provided wint_t on minw.
+	* m4/wint_t.m4 (gt_TYPE_WINT_T): Define GNULIB_OVERRIDES_WINT_T here.
+	* m4/stdint.m4 (gl_STDINT_H): Don't define GNULIB_OVERRIDES_WINT_T.
+	Invoke gt_TYPE_WINT_T instead.
+	(gl_STDINT_TYPE_PROPERTIES): Test GNULIB_OVERRIDES_WINT_T.
+	* modules/stdint (Files): Add m4/wint_t.m4.
+	* modules/wchar (Makefile.am): Substitute GNULIB_OVERRIDES_WINT_T.
+	* modules/wctype-h (Makefile.am): Likewise.
+	* lib/wchar.in.h (wint_t): Override if GNULIB_OVERRIDES_WINT_T is set,
+	not only on MSVC.
+	* lib/wctype.in.h (wint_t): Likewise.
+
 2016-12-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getopt-posix-tests: fix Makefile typo
