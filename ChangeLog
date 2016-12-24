@@ -1,3 +1,19 @@
+2016-12-24  Bruno Haible  <bruno@clisp.org>
+
+	lock test: Fix performance problem on multi-core machines.
+	* tests/test-lock.c (USE_VOLATILE): New macro.
+	(struct atomic_int): New type.
+	(init_atomic_int, get_atomic_int_value, set_atomic_int_value): New
+	functions.
+	(lock_checker_done, rwlock_checker_done, reclock_checker_done): Define
+	as 'struct atomic_int'.
+	(lock_checker_thread, test_lock, rwlock_checker_thread, test_rwlock,
+	reclock_checker_thread, test_recursive_lock): Use the new functions.
+	Reported by Eric Blake in
+	https://www.redhat.com/archives/libvir-list/2012-March/msg00854.html
+	and by Pádraig Brady in
+	http://lists.gnu.org/archive/html/bug-gnulib/2016-12/msg00117.html.
+
 2016-12-19  Bruno Haible  <bruno@clisp.org>
 
 	vma-iter: Fix endless loop on 64-bit Windows.
