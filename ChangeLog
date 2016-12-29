@@ -1,3 +1,9 @@
+2016-12-29  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xalloc: x2nrealloc check for ptrdiff_t overflow
+	* lib/xalloc.h (x2nrealloc): Check for ptrdiff_t overflow, too.
+	* modules/xalloc, modules/xvasprintf (Depends-on): Add stdint.
+
 2016-12-24  Bruno Haible  <bruno@clisp.org>
 
 	lock test: Fix performance problem on multi-core machines.

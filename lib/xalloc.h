@@ -19,6 +19,7 @@
 #define XALLOC_H_
 
 #include <stddef.h>
+#include <stdint.h>
 
 #include "xalloc-oversized.h"
 
@@ -197,10 +198,11 @@ x2nrealloc (void *p, size_t *pn, size_t s)
   else
     {
       /* Set N = floor (1.5 * N) + 1 so that progress is made even if N == 0.
-         Check for overflow, so that N * S stays in size_t range.
-         The check may be slightly conservative, but an exact check isn't
-         worth the trouble.  */
-      if ((size_t) -1 / 3 * 2 / s <= n)
+         Check for overflow, so that N * S stays in both ptrdiff_t and
+         size_t range.  The check may be slightly conservative, but an
+         exact check isn't worth the trouble.  */
+      if ((PTRDIFF_MAX < SIZE_MAX ? PTRDIFF_MAX : SIZE_MAX) / 3 * 2 / s
+          <= n)
         xalloc_die ();
       n += n / 2 + 1;
     }

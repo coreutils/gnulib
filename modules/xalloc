@@ -8,6 +8,7 @@ m4/xalloc.m4
 
 Depends-on:
 extern-inline
+stdint
 xalloc-die
 xalloc-oversized
 
