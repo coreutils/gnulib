@@ -41,4 +41,5 @@ SIGNATURE_CHECK (getopt_long_only, int, (int, char *__getopt_argv_const *,
                                          int *));
 
 #define TEST_GETOPT_GNU 1
+#define TEST_GETOPT_TMP_NAME "test-getopt-gnu.tmp"
 #include "test-getopt-main.h"

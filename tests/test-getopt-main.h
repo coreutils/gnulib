@@ -48,7 +48,7 @@ main (void)
       || (myerr = fdopen (BACKUP_STDERR_FILENO, "w")) == NULL)
     return 2;
 
-  ASSERT (freopen ("test-getopt.tmp", "w", stderr) == stderr);
+  ASSERT (freopen (TEST_GETOPT_TMP_NAME, "w", stderr) == stderr);
 
   /* These default values are required by POSIX.  */
   ASSERT (optind == 1);
@@ -70,7 +70,7 @@ main (void)
 #endif
 
   ASSERT (fclose (stderr) == 0);
-  ASSERT (remove ("test-getopt.tmp") == 0);
+  ASSERT (remove (TEST_GETOPT_TMP_NAME) == 0);
 
   return 0;
 }

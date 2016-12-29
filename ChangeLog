@@ -1,3 +1,11 @@
+2016-12-29  Eric Blake  <eblake@redhat.com>
+
+	getopt: fix parallel test failure
+	* tests/test-getopt-posix.c (TEST_GETOPT_TMP_NAME): Set name.
+	* tests/test-getopt-gnu.c (TEST_GETOPT_TMP_NAME): Likewise.
+	* tests/test-getopt-main.h (main): Use different file names
+	in case test-getopt-gnu and test-getopt-posix run in parallel.
+
 2016-12-29  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xalloc: x2nrealloc check for ptrdiff_t overflow
