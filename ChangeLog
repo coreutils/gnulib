@@ -3,7 +3,7 @@
 	maint.mk: update list of intprops.h symbol names
 	* top/maint.mk (_intprops_names): Regenerate the list of symbol names.
 	This avoids a false failure of the sc_prohibit_intprops_without_use
-	in grep.
+	rule in grep.
 
 2016-12-29  Eric Blake  <eblake@redhat.com>
 
