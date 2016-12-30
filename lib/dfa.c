@@ -353,7 +353,7 @@ struct regex_syntax
   unsigned char eolbyte;
 
   /* Cache of char-context values.  */
-  int sbit[NOTCHAR];
+  char sbit[NOTCHAR];
 
   /* If never_trail[B], the byte B cannot be a non-initial byte in a
      multibyte character.  */
@@ -501,7 +501,7 @@ struct dfa
                                    on a state that potentially could do so.
                                    If trans[i] is non-null, fails[i] must
                                    be null.  */
-  int *success;                 /* Table of acceptance conditions used in
+  char *success;                /* Table of acceptance conditions used in
                                    dfaexec and computed in build_state.  */
   state_num *newlines;          /* Transitions on newlines.  The entry for a
                                    newline in any transition table is always

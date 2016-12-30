@@ -1,5 +1,10 @@
 2016-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: shorten sbit, success
+	* lib/dfa.c (struct regex_syntax.sbit):
+	(struct dfa.success): Use char, not int, for array elements, since
+	they are all in the range 0..7.
+
 	dfa: simplify multibyte_prop etc.
 	This follows up on a change made when dfa.c was in grep, namely grep
 	commit c797046c7c13c2647182b919a79a4c5b4ecf82b1
