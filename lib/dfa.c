@@ -851,7 +851,7 @@ static bool
 setbit_wc (wint_t wc, charclass *c)
 {
   int b = wctob (wc);
-  if (b == EOF)
+  if (b < 0)
     return false;
 
   setbit (b, c);

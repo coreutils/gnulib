@@ -1,5 +1,8 @@
 2016-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: minor performance tweak
+	* lib/dfa.c (setbit_wc): Test < 0, not == EOF.
+
 	dfa: wrap charclass inside a struct
 	On my platform (gcc Ubuntu 5.4.0-6ubuntu1~16.04.4 x86-64,
 	en_US.utf8 locale) this makes 'grep -Fi -f list.txt list.txt >out'
