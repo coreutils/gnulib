@@ -87,10 +87,10 @@ enum { CHARCLASS_WORD_BITS = 64 };
 
 /* An initializer for a charclass whose 32-bit words are A through H.  */
 #define CHARCLASS_INIT(a, b, c, d, e, f, g, h)		\
-    {							\
+   {{							\
       CHARCLASS_PAIR (a, b), CHARCLASS_PAIR (c, d),	\
       CHARCLASS_PAIR (e, f), CHARCLASS_PAIR (g, h)	\
-    }
+   }}
 
 /* The maximum useful value of a charclass_word; all used bits are 1.  */
 static charclass_word const CHARCLASS_WORD_MASK
@@ -103,7 +103,7 @@ enum
 };
 
 /* Sets of unsigned characters are stored as bit vectors in arrays of ints.  */
-typedef charclass_word charclass[CHARCLASS_WORDS];
+typedef struct { charclass_word w[CHARCLASS_WORDS]; } charclass;
 
 /* Convert a possibly-signed character to an unsigned character.  This is
    a bit safer than casting to unsigned char, since it catches some type
@@ -671,69 +671,64 @@ prtok (token t)
 /* Stuff pertaining to charclasses.  */
 
 static bool
-tstbit (unsigned int b, charclass const c)
+tstbit (unsigned int b, charclass const *c)
 {
-  return c[b / CHARCLASS_WORD_BITS] >> b % CHARCLASS_WORD_BITS & 1;
+  return c->w[b / CHARCLASS_WORD_BITS] >> b % CHARCLASS_WORD_BITS & 1;
 }
 
 static void
-setbit (unsigned int b, charclass c)
+setbit (unsigned int b, charclass *c)
 {
-  c[b / CHARCLASS_WORD_BITS] |= (charclass_word) 1 << b % CHARCLASS_WORD_BITS;
+  charclass_word one = 1;
+  c->w[b / CHARCLASS_WORD_BITS] |= one << b % CHARCLASS_WORD_BITS;
 }
 
 static void
-clrbit (unsigned int b, charclass c)
+clrbit (unsigned int b, charclass *c)
 {
-  c[b / CHARCLASS_WORD_BITS] &= ~((charclass_word) 1
-                                  << b % CHARCLASS_WORD_BITS);
+  charclass_word one = 1;
+  c->w[b / CHARCLASS_WORD_BITS] &= ~(one << b % CHARCLASS_WORD_BITS);
 }
 
 static void
-copyset (charclass const src, charclass dst)
+zeroset (charclass *s)
 {
-  memcpy (dst, src, sizeof (charclass));
+  memset (s, 0, sizeof *s);
 }
 
 static void
-zeroset (charclass s)
-{
-  memset (s, 0, sizeof (charclass));
-}
-
-static void
-fillset (charclass s)
+fillset (charclass *s)
 {
   int i;
   for (i = 0; i < CHARCLASS_WORDS; i++)
-    s[i] = CHARCLASS_WORD_MASK;
+    s->w[i] = CHARCLASS_WORD_MASK;
 }
 
 static void
-notset (charclass s)
+notset (charclass *s)
 {
   int i;
   for (i = 0; i < CHARCLASS_WORDS; ++i)
-    s[i] = CHARCLASS_WORD_MASK & ~s[i];
+    s->w[i] = CHARCLASS_WORD_MASK & ~s->w[i];
 }
 
 static bool
-equal (charclass const s1, charclass const s2)
+equal (charclass const *s1, charclass const *s2)
 {
   charclass_word w = 0;
   int i;
   for (i = 0; i < CHARCLASS_WORDS; i++)
-    w |= s1[i] ^ s2[i];
+    w |= s1->w[i] ^ s2->w[i];
   return w == 0;
 }
 
 static bool
-emptyset (charclass const s)
+emptyset (charclass const *s)
 {
   charclass_word w = 0;
   int i;
   for (i = 0; i < CHARCLASS_WORDS; i++)
-    w |= s[i];
+    w |= s->w[i];
   return w == 0;
 }
 
@@ -817,17 +812,17 @@ maybe_realloc (void *pa, ptrdiff_t i, ptrdiff_t *nitems,
 
 /* In DFA D, find the index of charclass S, or allocate a new one.  */
 static ptrdiff_t
-charclass_index (struct dfa *d, charclass const s)
+charclass_index (struct dfa *d, charclass *s)
 {
   ptrdiff_t i;
 
   for (i = 0; i < d->cindex; ++i)
-    if (equal (s, d->charclasses[i]))
+    if (equal (s, &d->charclasses[i]))
       return i;
   d->charclasses = maybe_realloc (d->charclasses, d->cindex, &d->calloc,
                                   TOKEN_MAX - CSET, sizeof *d->charclasses);
   ++d->cindex;
-  copyset (s, d->charclasses[i]);
+  d->charclasses[i] = *s;
   return i;
 }
 
@@ -853,7 +848,7 @@ char_context (struct dfa const *dfa, unsigned char c)
    dotless i/dotted I are not included in the chosen character set.
    Return whether a bit was set in the charclass.  */
 static bool
-setbit_wc (wint_t wc, charclass c)
+setbit_wc (wint_t wc, charclass *c)
 {
   int b = wctob (wc);
   if (b == EOF)
@@ -866,7 +861,7 @@ setbit_wc (wint_t wc, charclass c)
 /* Set a bit for B and its case variants in the charclass C.
    MB_CUR_MAX must be 1.  */
 static void
-setbit_case_fold_c (int b, charclass c)
+setbit_case_fold_c (int b, charclass *c)
 {
   int ub = toupper (b);
   int i;
@@ -1021,7 +1016,7 @@ parse_bracket_exp (struct dfa *dfa)
   else
     work_mbc = NULL;
 
-  memset (ccl, 0, sizeof ccl);
+  zeroset (&ccl);
   FETCH_WC (dfa, c, wc, _("unbalanced ["));
   if (c == '^')
     {
@@ -1087,7 +1082,7 @@ parse_bracket_exp (struct dfa *dfa)
                   else
                     for (c2 = 0; c2 < NOTCHAR; ++c2)
                       if (pred->func (c2))
-                        setbit (c2, ccl);
+                        setbit (c2, &ccl);
                 }
               else
                 known_bracket_exp = false;
@@ -1148,7 +1143,7 @@ parse_bracket_exp (struct dfa *dfa)
                     {
                       int ci;
                       for (ci = c; ci <= c2; ci++)
-                        setbit (ci, ccl);
+                        setbit (ci, &ccl);
                       if (dfa->syntax.case_fold)
                         {
                           int uc = toupper (c);
@@ -1157,7 +1152,7 @@ parse_bracket_exp (struct dfa *dfa)
                             {
                               int uci = toupper (ci);
                               if (uc <= uci && uci <= uc2)
-                                setbit (ci, ccl);
+                                setbit (ci, &ccl);
                             }
                         }
                     }
@@ -1174,9 +1169,9 @@ parse_bracket_exp (struct dfa *dfa)
       if (!dfa->localeinfo.multibyte)
         {
           if (dfa->syntax.case_fold)
-            setbit_case_fold_c (c, ccl);
+            setbit_case_fold_c (c, &ccl);
           else
-            setbit (c, ccl);
+            setbit (c, &ccl);
           continue;
         }
 
@@ -1191,7 +1186,7 @@ parse_bracket_exp (struct dfa *dfa)
                             : 1);
           folded[0] = wc;
           for (i = 0; i < n; i++)
-            if (!setbit_wc (folded[i], ccl))
+            if (!setbit_wc (folded[i], &ccl))
               {
                 work_mbc->chars
                   = maybe_realloc (work_mbc->chars, work_mbc->nchars,
@@ -1211,19 +1206,19 @@ parse_bracket_exp (struct dfa *dfa)
   if (dfa->localeinfo.multibyte)
     {
       work_mbc->invert = invert;
-      work_mbc->cset = emptyset (ccl) ? -1 : charclass_index (dfa, ccl);
+      work_mbc->cset = emptyset (&ccl) ? -1 : charclass_index (dfa, &ccl);
       return MBCSET;
     }
 
   if (invert)
     {
       assert (!dfa->localeinfo.multibyte);
-      notset (ccl);
+      notset (&ccl);
       if (dfa->syntax.syntax_bits & RE_HAT_LISTS_NOT_NEWLINE)
-        clrbit ('\n', ccl);
+        clrbit ('\n', &ccl);
     }
 
-  return CSET + charclass_index (dfa, ccl);
+  return CSET + charclass_index (dfa, &ccl);
 }
 
 struct lexptr
@@ -1480,16 +1475,16 @@ lex (struct dfa *dfa)
             goto normal_char;
           if (dfa->canychar == (size_t) -1)
             {
-              fillset (ccl);
+              fillset (&ccl);
               if (!(dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
-                clrbit ('\n', ccl);
+                clrbit ('\n', &ccl);
               if (dfa->syntax.syntax_bits & RE_DOT_NOT_NULL)
-                clrbit ('\0', ccl);
+                clrbit ('\0', &ccl);
               if (dfa->localeinfo.multibyte)
                 for (c2 = 0; c2 < NOTCHAR; c2++)
                   if (dfa->localeinfo.sbctowc[c2] == WEOF)
-                    clrbit (c2, ccl);
-              dfa->canychar = charclass_index (dfa, ccl);
+                    clrbit (c2, &ccl);
+              dfa->canychar = charclass_index (dfa, &ccl);
             }
           dfa->lex.laststart = false;
           return dfa->lex.lasttok = (dfa->localeinfo.multibyte
@@ -1502,14 +1497,14 @@ lex (struct dfa *dfa)
             goto normal_char;
           if (!dfa->localeinfo.multibyte)
             {
-              zeroset (ccl);
+              zeroset (&ccl);
               for (c2 = 0; c2 < NOTCHAR; ++c2)
                 if (isspace (c2))
-                  setbit (c2, ccl);
+                  setbit (c2, &ccl);
               if (c == 'S')
-                notset (ccl);
+                notset (&ccl);
               dfa->lex.laststart = false;
-              return dfa->lex.lasttok = CSET + charclass_index (dfa, ccl);
+              return dfa->lex.lasttok = CSET + charclass_index (dfa, &ccl);
             }
 
           /* FIXME: see if optimizing this, as is done with ANYCHAR and
@@ -1535,14 +1530,14 @@ lex (struct dfa *dfa)
 
           if (!dfa->localeinfo.multibyte)
             {
-              zeroset (ccl);
+              zeroset (&ccl);
               for (c2 = 0; c2 < NOTCHAR; ++c2)
                 if (dfa->syntax.sbit[c2] == CTX_LETTER)
-                  setbit (c2, ccl);
+                  setbit (c2, &ccl);
               if (c == 'W')
-                notset (ccl);
+                notset (&ccl);
               dfa->lex.laststart = false;
-              return dfa->lex.lasttok = CSET + charclass_index (dfa, ccl);
+              return dfa->lex.lasttok = CSET + charclass_index (dfa, &ccl);
             }
 
           /* FIXME: see if optimizing this, as is done with ANYCHAR and
@@ -1577,9 +1572,9 @@ lex (struct dfa *dfa)
 
           if (dfa->syntax.case_fold && isalpha (c))
             {
-              zeroset (ccl);
-              setbit_case_fold_c (c, ccl);
-              return dfa->lex.lasttok = CSET + charclass_index (dfa, ccl);
+              zeroset (&ccl);
+              setbit_case_fold_c (c, &ccl);
+              return dfa->lex.lasttok = CSET + charclass_index (dfa, &ccl);
             }
 
           return dfa->lex.lasttok = c;
@@ -1730,16 +1725,15 @@ add_utf8_anychar (struct dfa *dfa)
   if (dfa->utf8_anychar_classes[0] == 0)
     for (i = 0; i < n; i++)
       {
-        charclass c;
-        copyset (utf8_classes[i], c);
+        charclass c = utf8_classes[i];
         if (i == 1)
           {
             if (!(dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
-              clrbit ('\n', c);
+              clrbit ('\n', &c);
             if (dfa->syntax.syntax_bits & RE_DOT_NOT_NULL)
-              clrbit ('\0', c);
+              clrbit ('\0', &c);
           }
-        dfa->utf8_anychar_classes[i] = CSET + charclass_index (dfa, c);
+        dfa->utf8_anychar_classes[i] = CSET + charclass_index (dfa, &c);
       }
 
   /* A valid UTF-8 character is
@@ -2278,18 +2272,18 @@ epsclosure (position_set *initial, struct dfa const *d)
    character included in C.  */
 
 static int
-charclass_context (struct dfa const *dfa, charclass c)
+charclass_context (struct dfa const *dfa, charclass const *c)
 {
   int context = 0;
   unsigned int j;
 
   for (j = 0; j < CHARCLASS_WORDS; ++j)
     {
-      if (c[j] & dfa->syntax.newline[j])
+      if (c->w[j] & dfa->syntax.newline.w[j])
         context |= CTX_NEWLINE;
-      if (c[j] & dfa->syntax.letters[j])
+      if (c->w[j] & dfa->syntax.letters.w[j])
         context |= CTX_LETTER;
-      if (c[j] & ~(dfa->syntax.letters[j] | dfa->syntax.newline[j]))
+      if (c->w[j] & ~(dfa->syntax.letters.w[j] | dfa->syntax.newline.w[j]))
         context |= CTX_NONE;
     }
 
@@ -2631,7 +2625,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
   group.elems = xnmalloc (d->nleaves, sizeof *group.elems);
   group.nelem = 0;
 
-  fillset (label);
+  fillset (&label);
 
   for (i = 0; i < d->states[s].elems.nelem; ++i)
     {
@@ -2640,21 +2634,21 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
       bool matched = false;
       if (d->tokens[pos.index] >= 0 && d->tokens[pos.index] < NOTCHAR)
         {
-          zeroset (matches);
-          setbit (d->tokens[pos.index], matches);
+          zeroset (&matches);
+          setbit (d->tokens[pos.index], &matches);
           if (d->tokens[pos.index] == uc)
             matched = true;
         }
       else if (d->tokens[pos.index] >= CSET)
         {
-          copyset (d->charclasses[d->tokens[pos.index] - CSET], matches);
-          if (tstbit (uc, d->charclasses[d->tokens[pos.index] - CSET]))
+          matches = d->charclasses[d->tokens[pos.index] - CSET];
+          if (tstbit (uc, &d->charclasses[d->tokens[pos.index] - CSET]))
             matched = true;
         }
-       else if (d->tokens[pos.index] == ANYCHAR)
-         {
-          copyset (d->charclasses[d->canychar], matches);
-          if (tstbit (uc, d->charclasses[d->canychar]))
+      else if (d->tokens[pos.index] == ANYCHAR)
+        {
+          matches = d->charclasses[d->canychar];
+          if (tstbit (uc, &d->charclasses[d->canychar]))
             matched = true;
 
           /* ANYCHAR must match with a single character, so we must put
@@ -2683,18 +2677,18 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
           if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
                                     d->states[s].context, CTX_NEWLINE))
             for (j = 0; j < CHARCLASS_WORDS; ++j)
-              matches[j] &= ~d->syntax.newline[j];
+              matches.w[j] &= ~d->syntax.newline.w[j];
           if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
                                     d->states[s].context, CTX_LETTER))
             for (j = 0; j < CHARCLASS_WORDS; ++j)
-              matches[j] &= ~d->syntax.letters[j];
+              matches.w[j] &= ~d->syntax.letters.w[j];
           if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
                                     d->states[s].context, CTX_NONE))
             for (j = 0; j < CHARCLASS_WORDS; ++j)
-              matches[j] &= d->syntax.letters[j] | d->syntax.newline[j];
+              matches.w[j] &= d->syntax.letters.w[j] | d->syntax.newline.w[j];
 
           /* If there are no characters left, there's no point in going on.  */
-          for (j = 0; j < CHARCLASS_WORDS && !matches[j]; ++j)
+          for (j = 0; j < CHARCLASS_WORDS && !matches.w[j]; j++)
             continue;
           if (j == CHARCLASS_WORDS)
             continue;
@@ -2702,7 +2696,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
           /* If we have reset the bit that made us declare "matched", reset
              that indicator, too.  This is required to avoid an infinite loop
              with this command: echo cx | LC_ALL=C grep -E 'c\b[x ]'  */
-          if (!tstbit (uc, matches))
+          if (!tstbit (uc, &matches))
             matched = false;
         }
 
@@ -2711,7 +2705,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
       prtok (d->tokens[pos.index]);
       fprintf (stderr, " of");
       for (j = 0; j < NOTCHAR; j++)
-        if (tstbit (j, matches))
+        if (tstbit (j, &matches))
           fprintf (stderr, " 0x%02zx", j);
       fprintf (stderr, "\n");
 #endif
@@ -2719,13 +2713,13 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
       if (matched)
         {
           for (k = 0; k < CHARCLASS_WORDS; ++k)
-            label[k] &= matches[k];
+            label.w[k] &= matches.w[k];
           group.elems[group.nelem++] = pos.index;
         }
       else
         {
           for (k = 0; k < CHARCLASS_WORDS; ++k)
-            label[k] &= ~matches[k];
+            label.w[k] &= ~matches.w[k];
         }
     }
 
@@ -2778,7 +2772,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
         }
 
       /* Find out if the new state will want any context information.  */
-      possible_contexts = charclass_context (d, label);
+      possible_contexts = charclass_context (d, &label);
       separate_contexts = state_separate_contexts (&follows);
 
       /* Find the state(s) corresponding to the union of the follows.  */
@@ -2814,7 +2808,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
 
   /* Set the transitions for each character in the label.  */
   for (i = 0; i < NOTCHAR; i++)
-    if (tstbit (i, label))
+    if (tstbit (i, &label))
       switch (d->syntax.sbit[i])
         {
         case CTX_NEWLINE:
@@ -2845,7 +2839,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
 
   /* Keep the newline transition in a special place so we can use it as
      a sentinel.  */
-  if (tstbit (d->syntax.eolbyte, label))
+  if (tstbit (d->syntax.eolbyte, &label))
     {
       d->newlines[s] = trans[d->syntax.eolbyte];
       trans[d->syntax.eolbyte] = -1;
@@ -3466,8 +3460,8 @@ dfassbuild (struct dfa *d)
         case BACKREF:
           {
             charclass ccl;
-            fillset (ccl);
-            sup->tokens[j++] = CSET + charclass_index (sup, ccl);
+            fillset (&ccl);
+            sup->tokens[j++] = CSET + charclass_index (sup, &ccl);
             sup->tokens[j++] = STAR;
             if (d->tokens[i + 1] == QMARK || d->tokens[i + 1] == STAR
                 || d->tokens[i + 1] == PLUS)
@@ -3984,7 +3978,7 @@ dfamust (struct dfa const *d)
               charclass *ccl = &d->charclasses[t - CSET];
               int j;
               for (j = 0; j < NOTCHAR; j++)
-                if (tstbit (j, *ccl))
+                if (tstbit (j, ccl))
                   break;
               if (! (j < NOTCHAR))
                 {
@@ -3993,7 +3987,7 @@ dfamust (struct dfa const *d)
                 }
               t = j;
               while (++j < NOTCHAR)
-                if (tstbit (j, *ccl)
+                if (tstbit (j, ccl)
                     && ! (case_fold_unibyte
                           && toupper (j) == toupper (t)))
                   break;
@@ -4095,10 +4089,10 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
       switch (dfa->syntax.sbit[uc])
         {
         case CTX_LETTER:
-          setbit (uc, dfa->syntax.letters);
+          setbit (uc, &dfa->syntax.letters);
           break;
         case CTX_NEWLINE:
-          setbit (uc, dfa->syntax.newline);
+          setbit (uc, &dfa->syntax.newline);
           break;
         }
 
