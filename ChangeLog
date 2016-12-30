@@ -1,3 +1,9 @@
+2016-12-30  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: improve sc_prohibit_intprops_without_use
+	* top/maint.mk (_intprops_names): Don't hard-code the list of
+	symbol names.  Instead, derive it on the fly.
+
 2016-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: shorten sbit, success
