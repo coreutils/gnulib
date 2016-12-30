@@ -333,6 +333,7 @@ struct mb_char_classes
   bool invert;
   wchar_t *chars;               /* Normal characters.  */
   ptrdiff_t nchars;
+  ptrdiff_t nchars_alloc;
 };
 
 struct regex_syntax
@@ -384,6 +385,9 @@ struct lexer_state
 
   /* Length of the multibyte representation of wctok.  */
   int cur_mb_len;
+
+  /* The most recently analyzed multibyte bracket expression.  */
+  struct mb_char_classes brack;
 
   /* We're separated from beginning or (, | only by zero-width characters.  */
   bool laststart;
@@ -442,9 +446,6 @@ struct dfa
      bit 1 : tokens[i] is the last byte of a character, including
      single-byte characters.
 
-     if tokens[i] = MBCSET
-     ("the index of mbcsets corresponding to this operator" << 2) + 3
-
      e.g.
      tokens
      = 'single_byte_a', 'multi_byte_A', single_byte_b'
@@ -452,12 +453,7 @@ struct dfa
      multibyte_prop
      = 3     , 1               ,  0              ,  2              , 3
    */
-  int *multibyte_prop;
-
-  /* Array of the bracket expression in the DFA.  */
-  struct mb_char_classes *mbcsets;
-  ptrdiff_t nmbcsets;
-  ptrdiff_t mbcsets_alloc;
+  char *multibyte_prop;
 
   /* Fields filled by the superset.  */
   struct dfa *superset;             /* Hint of the dfa.  */
@@ -970,8 +966,8 @@ find_pred (const char *str)
   return NULL;
 }
 
-/* Multibyte character handling sub-routine for lex.
-   Parse a bracket expression and build a struct mb_char_classes.  */
+/* Parse a bracket expression, which possibly includes multibyte
+   characters.  */
 static token
 parse_bracket_exp (struct dfa *dfa)
 {
@@ -994,28 +990,7 @@ parse_bracket_exp (struct dfa *dfa)
   wint_t wc2;
   wint_t wc1 = 0;
 
-  /* Work area to build a mb_char_classes.  */
-  struct mb_char_classes *work_mbc;
-  ptrdiff_t chars_al;
-
-  chars_al = 0;
-  if (dfa->localeinfo.multibyte)
-    {
-      dfa->mbcsets = maybe_realloc (dfa->mbcsets, dfa->nmbcsets,
-                                    &dfa->mbcsets_alloc, -1,
-                                    sizeof *dfa->mbcsets);
-
-      /* dfa->multibyte_prop[] hold the index of dfa->mbcsets.
-         We will update dfa->multibyte_prop[] in addtok, because we can't
-         decide the index in dfa->tokens[].  */
-
-      /* Initialize work area.  */
-      work_mbc = &dfa->mbcsets[dfa->nmbcsets++];
-      memset (work_mbc, 0, sizeof *work_mbc);
-    }
-  else
-    work_mbc = NULL;
-
+  dfa->lex.brack.nchars = 0;
   zeroset (&ccl);
   FETCH_WC (dfa, c, wc, _("unbalanced ["));
   if (c == '^')
@@ -1188,10 +1163,11 @@ parse_bracket_exp (struct dfa *dfa)
           for (i = 0; i < n; i++)
             if (!setbit_wc (folded[i], &ccl))
               {
-                work_mbc->chars
-                  = maybe_realloc (work_mbc->chars, work_mbc->nchars,
-                                   &chars_al, -1, sizeof *work_mbc->chars);
-                work_mbc->chars[work_mbc->nchars++] = folded[i];
+                dfa->lex.brack.chars
+                  = maybe_realloc (dfa->lex.brack.chars, dfa->lex.brack.nchars,
+                                   &dfa->lex.brack.nchars_alloc, -1,
+                                   sizeof *dfa->lex.brack.chars);
+                dfa->lex.brack.chars[dfa->lex.brack.nchars++] = folded[i];
               }
         }
     }
@@ -1205,8 +1181,8 @@ parse_bracket_exp (struct dfa *dfa)
 
   if (dfa->localeinfo.multibyte)
     {
-      work_mbc->invert = invert;
-      work_mbc->cset = emptyset (&ccl) ? -1 : charclass_index (dfa, &ccl);
+      dfa->lex.brack.invert = invert;
+      dfa->lex.brack.cset = emptyset (&ccl) ? -1 : charclass_index (dfa, &ccl);
       return MBCSET;
     }
 
@@ -1588,7 +1564,7 @@ lex (struct dfa *dfa)
 }
 
 static void
-addtok_mb (struct dfa *dfa, token t, int mbprop)
+addtok_mb (struct dfa *dfa, token t, char mbprop)
 {
   if (dfa->talloc == dfa->tindex)
     {
@@ -1638,25 +1614,24 @@ addtok (struct dfa *dfa, token t)
   if (dfa->localeinfo.multibyte && t == MBCSET)
     {
       bool need_or = false;
-      struct mb_char_classes *work_mbc = &dfa->mbcsets[dfa->nmbcsets - 1];
       ptrdiff_t i;
 
       /* Extract wide characters into alternations for better performance.
          This does not require UTF-8.  */
-      for (i = 0; i < work_mbc->nchars; i++)
+      for (i = 0; i < dfa->lex.brack.nchars; i++)
         {
-          addtok_wc (dfa, work_mbc->chars[i]);
+          addtok_wc (dfa, dfa->lex.brack.chars[i]);
           if (need_or)
             addtok (dfa, OR);
           need_or = true;
         }
-      work_mbc->nchars = 0;
+      dfa->lex.brack.nchars = 0;
 
-      /* Characters have been handled above, so it is possible
-         that the mbcset is empty now.  Do nothing in that case.  */
-      if (work_mbc->cset != -1)
+      /* Wide characters have been handled above, so it is possible
+         that the set is empty now.  Do nothing in that case.  */
+      if (dfa->lex.brack.cset != -1)
         {
-          addtok (dfa, CSET + work_mbc->cset);
+          addtok (dfa, CSET + dfa->lex.brack.cset);
           if (need_or)
             addtok (dfa, OR);
         }
@@ -1963,12 +1938,6 @@ dfaparse (char const *s, size_t len, struct dfa *d)
   d->lex.left = len;
   d->lex.lasttok = END;
   d->lex.laststart = true;
-  d->lex.parens = 0;
-  if (d->localeinfo.multibyte)
-    {
-      d->lex.cur_mb_len = 0;
-      memset (&d->mbs, 0, sizeof d->mbs);
-    }
 
   if (!d->syntax.syntax_bits_set)
     dfaerror (_("no syntax specified"));
@@ -3333,14 +3302,8 @@ dfaisfast (struct dfa const *d)
 static void
 free_mbdata (struct dfa *d)
 {
-  ptrdiff_t i;
-
   free (d->multibyte_prop);
-
-  for (i = 0; i < d->nmbcsets; ++i)
-    free (d->mbcsets[i].chars);
-
-  free (d->mbcsets);
+  free (d->lex.brack.chars);
   free (d->mb_follows.elems);
 
   if (d->mb_trans)
@@ -3430,7 +3393,6 @@ dfassbuild (struct dfa *d)
   sup->localeinfo.multibyte = false;
   sup->dfaexec = dfaexec_sb;
   sup->multibyte_prop = NULL;
-  sup->mbcsets = NULL;
   sup->superset = NULL;
   sup->states = NULL;
   sup->sindex = 0;

@@ -1,5 +1,23 @@
 2016-12-30  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: simplify multibyte_prop etc.
+	This follows up on a change made when dfa.c was in grep, namely grep
+	commit c797046c7c13c2647182b919a79a4c5b4ecf82b1
+	dated 2015-08-12 07:35:03 -0700, which removed unused multibyte support.
+	That earlier simplification allows for some more simplification
+	and trimming down here.
+	* lib/dfa.c (struct mb_char_classes): New member nchars_alloc.
+	(struct lexer_state): New mamber brack.
+	(struct dfa, addtok_mb): multibyte_prop elements are now char, not int,
+	since they must be in the range 0..3 now.
+	Remove members mbcsets, nmbcsets, mbcsets_alloc, since
+	the brack member now supersedes them.
+	(parse_bracket_exp): Update dfa->lex.brack instead of dfa->mbcsets.
+	(addtok): Use dfa->lex.brack instead of dfa->mbcsets.
+	(dfaparse): Remove unnecessary initializations of already-0 storage.
+	(free_mbdata): Free d->lex.brack.chars instead of d->mbcsets.
+	(dfassbuild): No need to clear sup->mbcsets.
+
 	dfa: minor performance tweak
 	* lib/dfa.c (setbit_wc): Test < 0, not == EOF.
 
