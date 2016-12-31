@@ -1,5 +1,9 @@
 2016-12-31  Eric Blake  <eblake@redhat.com>
 
+	do-release-commit-and-tag: avoid shell syntax error
+	* build-aux/do-release-commit-and-tag (curr_br): $branch can
+	contain spaces when rebasing.
+
 	maint.mk: hoist gnulib_dir definition earlier
 	* top/maint.mk (gnulib_dir): Move near top of file.
 

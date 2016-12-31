@@ -3,7 +3,7 @@
 # controlled .prev-version file, automate the procedure by which we record
 # the date, release-type and version string in the NEWS file.  That commit
 # will serve to identify the release, so apply a signed tag to it as well.
-VERSION=2016-01-12.23 # UTC
+VERSION=2016-12-31.14 # UTC
 
 # Note: this is a bash script (could be zsh or dash)
 
@@ -143,7 +143,7 @@ esac
 
 # Ensure the current branch name is correct:
 curr_br=$(git rev-parse --symbolic-full-name HEAD)
-test "$curr_br" = refs/heads/$branch || die not on branch $branch
+test "$curr_br" = "refs/heads/$branch" || die not on branch $branch
 
 # Extract package name from Makefile.
 Makefile=$builddir/Makefile
