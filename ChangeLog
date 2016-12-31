@@ -1,3 +1,13 @@
+2016-12-31  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: do not always evaluate intprops-related shell
+	* top/maint.mk (_intprops_names): Change := to just "=" to avoid
+	using gnulib_dir undefined (gnulib_dir is defined later in the
+	file, which will be fixed separately), and besides, there is no
+	need to incur the cost of this shell invocation for every single
+	use of this .mk file.  Reported by Eric Blake in
+	https://lists.gnu.org/archive/html/bug-gnulib/2016-12/msg00137.html
+
 2016-12-30  Jim Meyering  <meyering@fb.com>
 
 	maint.mk: improve sc_prohibit_intprops_without_use

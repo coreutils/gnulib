@@ -661,7 +661,7 @@ sc_prohibit_strings_without_use:
 gl_extract_define_simple = \
   /^\# *define ([A-Z]\w+)\(/ and print $$1
 # Filter out duplicates and convert to a space-separated list:
-_intprops_names := \
+_intprops_names = \
   $(shell f=$(gnulib_dir)/lib/intprops.h;				\
     perl -lne '$(gl_extract_define_simple)' $$f | sort -u | tr '\n' ' ')
 # Remove trailing space and convert to a regular expression:
