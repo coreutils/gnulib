@@ -1,3 +1,11 @@
+2016-12-31  Jim Meyering  <meyering@fb.com>
+
+	dfa: narrow the scope of many local variables
+	* lib/dfa.c: Now that we are no longer constrained to c89, move
+	declarations of many variables (often indices) "down" into the
+	scope(s) where used or to the point of definition.  This is a
+	no-semantic-change diff.
+
 2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	version-etc: new year
