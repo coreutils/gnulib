@@ -55,6 +55,10 @@ VC = $(GIT)
 
 VC_LIST = $(srcdir)/$(_build-aux)/vc-list-files -C $(srcdir)
 
+# You can override this variable in cfg.mk if your gnulib submodule lives
+# in a different location.
+gnulib_dir ?= $(srcdir)/gnulib
+
 # You can override this variable in cfg.mk to set your own regexp
 # matching files to ignore.
 VC_LIST_ALWAYS_EXCLUDE_REGEX ?= ^$$
@@ -1288,7 +1292,6 @@ vc-diff-check:
 
 rel-files = $(DIST_ARCHIVES)
 
-gnulib_dir ?= $(srcdir)/gnulib
 gnulib-version = $$(cd $(gnulib_dir)				\
                     && { git describe || git rev-parse --short=10 HEAD; } )
 bootstrap-tools ?= autoconf,automake,gnulib

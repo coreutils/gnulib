@@ -1,3 +1,8 @@
+2016-12-31  Eric Blake  <eblake@redhat.com>
+
+	maint.mk: hoist gnulib_dir definition earlier
+	* top/maint.mk (gnulib_dir): Move near top of file.
+
 2016-12-31  Jim Meyering  <meyering@fb.com>
 
 	maint.mk: do not always evaluate intprops-related shell
