@@ -1,3 +1,14 @@
+2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	version-etc: new year
+	* build-aux/gendocs.sh (version):
+	* doc/gendocs_template:
+	* doc/gendocs_template_min:
+	* doc/gnulib.texi:
+	* lib/version-etc.c (COPYRIGHT_YEAR):
+	Update copyright dates by hand in templates and the like.
+	* all files: Run 'make update-copyright'.
+
 2016-12-31  Eric Blake  <eblake@redhat.com>
 
 	do-release-commit-and-tag: avoid shell syntax error
@@ -109188,7 +109199,7 @@ o	Test only that noncanonical values do not cause crashes, not that
 	coding: utf-8
 	End:
 
-	Copyright (C) 1997-2016 Free Software Foundation, Inc.
+	Copyright (C) 1997-2017 Free Software Foundation, Inc.
 
 	Copying and distribution of this file, with or without
 	modification, are permitted provided the copyright notice
