@@ -20,7 +20,7 @@
 case $LOGNAME in
 karl)
   : ${ACLOCAL=/usr/local/gnu/share/aclocal}
-  : ${GETTEXT=/usr/local/gnu/src/dist-gettext}
+  : ${GETTEXT=$HOME/gnu/src/gettext}
   : ${GNUBIN=/usr/local/gnu/bin}
   : ${GNUORG=$HOME/gnu/gnuorg}
   : ${GNUWWWLICENSES=$HOME/gnu/www/www/licenses}
