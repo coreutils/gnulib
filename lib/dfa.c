@@ -964,7 +964,6 @@ find_pred (const char *str)
 static token
 parse_bracket_exp (struct dfa *dfa)
 {
-  bool invert;
   int c;
   charclass ccl;
 
@@ -986,14 +985,13 @@ parse_bracket_exp (struct dfa *dfa)
   dfa->lex.brack.nchars = 0;
   zeroset (&ccl);
   FETCH_WC (dfa, c, wc, _("unbalanced ["));
-  if (c == '^')
+  bool invert = c == '^';
+  if (invert)
     {
       FETCH_WC (dfa, c, wc, _("unbalanced ["));
       invert = true;
       known_bracket_exp = dfa->simple_locale;
     }
-  else
-    invert = false;
 
   int c1;
   colon_warning_state = (c == ':');
@@ -1608,11 +1606,10 @@ addtok (struct dfa *dfa, token t)
   if (dfa->localeinfo.multibyte && t == MBCSET)
     {
       bool need_or = false;
-      ptrdiff_t i;
 
       /* Extract wide characters into alternations for better performance.
          This does not require UTF-8.  */
-      for (i = 0; i < dfa->lex.brack.nchars; i++)
+      for (ptrdiff_t i = 0; i < dfa->lex.brack.nchars; i++)
         {
           addtok_wc (dfa, dfa->lex.brack.chars[i]);
           if (need_or)
@@ -1823,8 +1820,6 @@ atom (struct dfa *dfa)
 static size_t _GL_ATTRIBUTE_PURE
 nsubtoks (struct dfa const *dfa, size_t tindex)
 {
-  size_t ntoks1;
-
   switch (dfa->tokens[tindex - 1])
     {
     default:
@@ -1835,8 +1830,10 @@ nsubtoks (struct dfa const *dfa, size_t tindex)
       return 1 + nsubtoks (dfa, tindex - 1);
     case CAT:
     case OR:
-      ntoks1 = nsubtoks (dfa, tindex - 1);
-      return 1 + ntoks1 + nsubtoks (dfa, tindex - 1 - ntoks1);
+      {
+        size_t ntoks1 = nsubtoks (dfa, tindex - 1);
+        return 1 + ntoks1 + nsubtoks (dfa, tindex - 1 - ntoks1);
+      }
     }
 }
 
@@ -1984,7 +1981,6 @@ insert (position p, position_set *s)
 {
   ptrdiff_t count = s->nelem;
   ptrdiff_t lo = 0, hi = count;
-  ptrdiff_t i;
   while (lo < hi)
     {
       ptrdiff_t mid = (lo + hi) >> 1;
@@ -2000,7 +1996,7 @@ insert (position p, position_set *s)
     }
 
   s->elems = maybe_realloc (s->elems, count, &s->alloc, -1, sizeof *s->elems);
-  for (i = count; i > lo; i--)
+  for (ptrdiff_t i = count; i > lo; i--)
     s->elems[i] = s->elems[i - 1];
   s->elems[lo] = p;
   ++s->nelem;
@@ -2101,7 +2097,7 @@ state_index (struct dfa *d, position_set const *s, int context)
 {
   size_t hash = 0;
   int constraint = 0;
-  state_num i, j;
+  state_num i;
   token first_end = 0;
 
   for (i = 0; i < s->nelem; ++i)
@@ -2113,6 +2109,7 @@ state_index (struct dfa *d, position_set const *s, int context)
       if (hash != d->states[i].hash || s->nelem != d->states[i].elems.nelem
           || context != d->states[i].context)
         continue;
+      state_num j;
       for (j = 0; j < s->nelem; ++j)
         if (s->elems[j].constraint != d->states[i].elems.elems[j].constraint
             || s->elems[j].index != d->states[i].elems.elems[j].index)
@@ -2123,7 +2120,7 @@ state_index (struct dfa *d, position_set const *s, int context)
 
 #ifdef DEBUG
   fprintf (stderr, "new state %zd\n nextpos:", i);
-  for (j = 0; j < s->nelem; ++j)
+  for (state_num j = 0; j < s->nelem; j++)
     {
       fprintf (stderr, " %zu:", s->elems[j].index);
       prtok (d->tokens[s->elems[j].index]);
@@ -2143,7 +2140,7 @@ state_index (struct dfa *d, position_set const *s, int context)
   fprintf (stderr, "\n");
 #endif
 
-  for (j = 0; j < s->nelem; ++j)
+  for (state_num j = 0; j < s->nelem; j++)
     {
       int c = s->elems[j].constraint;
       if (d->tokens[s->elems[j].index] < 0)
@@ -2258,9 +2255,8 @@ static int _GL_ATTRIBUTE_PURE
 state_separate_contexts (position_set const *s)
 {
   int separate_contexts = 0;
-  size_t j;
 
-  for (j = 0; j < s->nelem; ++j)
+  for (size_t j = 0; j < s->nelem; j++)
     {
       if (PREV_NEWLINE_DEPENDENT (s->elems[j].constraint))
         separate_contexts |= CTX_NEWLINE;
@@ -2344,10 +2340,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
     size_t nlastpos;
   } *stkalloc = xnmalloc (d->depth, sizeof *stkalloc), *stk = stkalloc;
 
-  position_set tmp;             /* Temporary set for merging sets.  */
   position_set merged;          /* Result of merging sets.  */
-  int separate_contexts;        /* Context wanted by some position.  */
-  position *pos;
 
 #ifdef DEBUG
   fprintf (stderr, "dfaanalyze:\n");
@@ -2380,14 +2373,17 @@ dfaanalyze (struct dfa *d, bool searchflag)
         case PLUS:
           /* Every element in the firstpos of the argument is in the follow
              of every element in the lastpos.  */
-          tmp.nelem = stk[-1].nfirstpos;
-          tmp.elems = firstpos;
-          pos = lastpos;
-          for (size_t j = 0; j < stk[-1].nlastpos; ++j)
-            {
-              merge (&tmp, &d->follows[pos[j].index], &merged);
-              copy (&merged, &d->follows[pos[j].index]);
-            }
+          {
+            position_set tmp;
+            tmp.nelem = stk[-1].nfirstpos;
+            tmp.elems = firstpos;
+            position *pos = lastpos;
+            for (size_t j = 0; j < stk[-1].nlastpos; j++)
+              {
+                merge (&tmp, &d->follows[pos[j].index], &merged);
+                copy (&merged, &d->follows[pos[j].index]);
+              }
+          }
           /* fallthrough */
 
         case QMARK:
@@ -2399,14 +2395,17 @@ dfaanalyze (struct dfa *d, bool searchflag)
         case CAT:
           /* Every element in the firstpos of the second argument is in the
              follow of every element in the lastpos of the first argument.  */
-          tmp.nelem = stk[-1].nfirstpos;
-          tmp.elems = firstpos;
-          pos = lastpos + stk[-1].nlastpos;
-          for (size_t j = 0; j < stk[-2].nlastpos; ++j)
-            {
-              merge (&tmp, &d->follows[pos[j].index], &merged);
-              copy (&merged, &d->follows[pos[j].index]);
-            }
+          {
+            position_set tmp;
+            tmp.nelem = stk[-1].nfirstpos;
+            tmp.elems = firstpos;
+            position *pos = lastpos + stk[-1].nlastpos;
+            for (size_t j = 0; j < stk[-2].nlastpos; j++)
+              {
+                merge (&tmp, &d->follows[pos[j].index], &merged);
+                copy (&merged, &d->follows[pos[j].index]);
+              }
+          }
 
           /* The firstpos of a CAT node is the firstpos of the first argument,
              union that of the second argument if the first is nullable.  */
@@ -2421,7 +2420,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
             stk[-2].nlastpos += stk[-1].nlastpos;
           else
             {
-              pos = lastpos + stk[-2].nlastpos;
+              position *pos = lastpos + stk[-2].nlastpos;
               for (size_t j = stk[-1].nlastpos; j-- > 0;)
                 pos[j] = lastpos[j];
               lastpos += stk[-2].nlastpos;
@@ -2516,8 +2515,10 @@ dfaanalyze (struct dfa *d, bool searchflag)
      it with its epsilon closure.  */
   epsclosure (&merged, d);
 
+  /* Context wanted by some position.  */
+  int separate_contexts = state_separate_contexts (&merged);
+
   /* Build the initial state.  */
-  separate_contexts = state_separate_contexts (&merged);
   if (separate_contexts & CTX_NEWLINE)
     state_index (d, &merged, CTX_NEWLINE);
   d->initstate_notbol = d->min_trcount
@@ -2685,9 +2686,6 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
 
   if (group.nelem > 0)
     {
-      int possible_contexts;    /* Contexts that the group can match.  */
-      int separate_contexts;    /* Context that new state wants to know.  */
-
       follows.nelem = 0;
 
       /* Find the union of the follows of the positions of the group.
@@ -2731,9 +2729,11 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
             }
         }
 
-      /* Find out if the new state will want any context information.  */
-      possible_contexts = charclass_context (d, &label);
-      separate_contexts = state_separate_contexts (&follows);
+      /* Find out if the new state will want any context information,
+         by calculating possible contexts that the group can match,
+         and separate contexts that the new state wants to know.  */
+      int possible_contexts = charclass_context (d, &label);
+      int separate_contexts = state_separate_contexts (&follows);
 
       /* Find the state(s) corresponding to the union of the follows.  */
       if (possible_contexts & ~separate_contexts)
@@ -2816,13 +2816,12 @@ realloc_trans_if_necessary (struct dfa *d, state_num new_state)
   if (oldalloc <= new_state)
     {
       state_num **realtrans = d->trans ? d->trans - 2 : NULL;
-      ptrdiff_t newalloc, newalloc1;
-      newalloc1 = realtrans ? d->tralloc + 2 : 0;
+      ptrdiff_t newalloc1 = realtrans ? d->tralloc + 2 : 0;
       realtrans = xpalloc (realtrans, &newalloc1, new_state - oldalloc + 1,
                            -1, sizeof *realtrans);
       realtrans[0] = realtrans[1] = NULL;
       d->trans = realtrans + 2;
-      d->tralloc = newalloc = newalloc1 - 2;
+      ptrdiff_t newalloc = d->tralloc = newalloc1 - 2;
       d->fails = xnrealloc (d->fails, newalloc, sizeof *d->fails);
       d->success = xnrealloc (d->success, newalloc, sizeof *d->success);
       d->newlines = xnrealloc (d->newlines, newalloc, sizeof *d->newlines);
@@ -2944,10 +2943,7 @@ static state_num
 transit_state (struct dfa *d, state_num s, unsigned char const **pp,
                unsigned char const *end)
 {
-  state_num s1, s2;
   wint_t wc;
-  int separate_contexts;
-  size_t i;
 
   int mbclen = mbs_to_wchar (&wc, (char const *) *pp, end - *pp, d);
 
@@ -2956,10 +2952,11 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
 
   /* Calculate the state which can be reached from the state 's' by
      consuming 'mbclen' single bytes from the buffer.  */
-  s1 = s;
-  for (i = 0; i < mbclen && (i == 0 || d->min_trcount <= s); i++)
+  state_num s1 = s;
+  int mbci;
+  for (mbci = 0; mbci < mbclen && (mbci == 0 || d->min_trcount <= s); mbci++)
     s = transit_state_singlebyte (d, s, pp);
-  *pp += mbclen - i;
+  *pp += mbclen - mbci;
 
   if (wc == WEOF)
     {
@@ -2981,7 +2978,7 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
               d->mb_trans[s3] = NULL;
             }
 
-          for (i = 0; i < d->sindex; i++)
+          for (state_num i = 0; i < d->sindex; i++)
             d->states[i].mb_trindex = -1;
           d->mb_trcount = 0;
         }
@@ -2993,7 +2990,7 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
       enum { TRANSPTR_SIZE = sizeof *d->mb_trans[s] };
       enum { TRANSALLOC_SIZE = MAX_TRCOUNT * TRANSPTR_SIZE };
       d->mb_trans[s] = xmalloc (TRANSALLOC_SIZE);
-      for (i = 0; i < MAX_TRCOUNT; i++)
+      for (int i = 0; i < MAX_TRCOUNT; i++)
         d->mb_trans[s][i] = -1;
     }
   else if (d->mb_trans[s][d->states[s1].mb_trindex] >= 0)
@@ -3004,8 +3001,8 @@ transit_state (struct dfa *d, state_num s, unsigned char const **pp,
   else
     merge (&d->states[s1].mbps, &d->states[s].elems, &d->mb_follows);
 
-  separate_contexts = state_separate_contexts (&d->mb_follows);
-  s2 = state_index (d, &d->mb_follows, separate_contexts ^ CTX_ANY);
+  int separate_contexts = state_separate_contexts (&d->mb_follows);
+  state_num s2 = state_index (d, &d->mb_follows, separate_contexts ^ CTX_ANY);
   realloc_trans_if_necessary (d, s2);
 
   d->mb_trans[s][d->states[s1].mb_trindex] = s2;
@@ -3032,12 +3029,14 @@ static unsigned char const *
 skip_remains_mb (struct dfa *d, unsigned char const *p,
                  unsigned char const *mbp, char const *end)
 {
-  wint_t wc;
   if (d->syntax.never_trail[*p])
     return p;
   while (mbp < p)
-    mbp += mbs_to_wchar (&wc, (char const *) mbp,
-                         end - (char const *) mbp, d);
+    {
+      wint_t wc;
+      mbp += mbs_to_wchar (&wc, (char const *) mbp,
+                           end - (char const *) mbp, d);
+    }
   return mbp;
 }
 
@@ -3101,9 +3100,13 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
   if (!d->tralloc)
     realloc_trans_if_necessary (d, 0);
 
-  state_num s = 0, s1 = 0;              /* Current state.  */
-  unsigned char const *p, *mbp; /* Current input character.  */
-  p = mbp = (unsigned char const *) begin;
+  /* Current state.  */
+  state_num s = 0, s1 = 0;
+
+  /* Current input character.  */
+  unsigned char const *p = (unsigned char const *) begin;
+  unsigned char const *mbp = p;
+
   /* Copy of d->trans so it can be optimized into a register.  */
   state_num **trans = d->trans;
   unsigned char eol = d->syntax.eolbyte;  /* Likewise for eolbyte.  */
@@ -3628,8 +3631,7 @@ enlist (char **cpp, char *new, size_t len)
         return cpp;
       }
   /* Eliminate any obsoleted strings.  */
-  size_t j = 0;
-  while (cpp[j] != NULL)
+  for (size_t j = 0; cpp[j] != NULL; )
     if (strstr (new, cpp[j]) == NULL)
       ++j;
     else
@@ -3653,9 +3655,8 @@ static char **
 comsubs (char *left, char const *right)
 {
   char **cpp = xzalloc (sizeof *cpp);
-  char *lcp;
 
-  for (lcp = left; *lcp != '\0'; ++lcp)
+  for (char *lcp = left; *lcp != '\0'; lcp++)
     {
       size_t len = 0;
       char *rcp = strchr (right, *lcp);
@@ -3761,7 +3762,6 @@ dfamust (struct dfa const *d)
   bool need_begline = false;
   bool need_endline = false;
   bool case_fold_unibyte = d->syntax.case_fold && MB_CUR_MAX == 1;
-  struct dfamust *dm;
 
   for (size_t ri = 0; ri < d->tindex; ++ri)
     {
@@ -3968,7 +3968,7 @@ dfamust (struct dfa const *d)
     }
  done:;
 
-  dm = NULL;
+  struct dfamust *dm = NULL;
   if (*result)
     {
       dm = xmalloc (sizeof *dm);

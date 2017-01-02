@@ -1,3 +1,9 @@
+2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: narrow more local var scopes
+	* lib/dfa.c: Move some more local decls down to nearer where
+	they're needed.
+
 2016-12-31  Jim Meyering  <meyering@fb.com>
 
 	dfa: narrow the scope of many local variables
