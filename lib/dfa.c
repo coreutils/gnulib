@@ -1019,7 +1019,6 @@ parse_bracket_exp (struct dfa *dfa)
   if (invert)
     {
       FETCH_WC (dfa, c, wc, _("unbalanced ["));
-      invert = true;
       known_bracket_exp = dfa->simple_locale;
     }
 

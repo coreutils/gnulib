@@ -1,3 +1,10 @@
+2017-01-02  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: remove duplicate assignment
+	Problem reported by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-01/msg00007.html
+	* lib/dfa.c (parse_bracket_exp): Simplify.
+
 2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: simplify constraint-dependency checking
