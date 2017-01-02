@@ -33,17 +33,17 @@
 #include <string.h>
 #include <locale.h>
 
-#define STREQ(a, b) (strcmp (a, b) == 0)
+static bool
+streq (char const *a, char const *b)
+{
+  return strcmp (a, b) == 0;
+}
 
-/* ISASCIIDIGIT differs from isdigit, as follows:
-   - Its arg may be any int or unsigned int; it need not be an unsigned char.
-   - It's guaranteed to evaluate its argument exactly once.
-   - It's typically faster.
-   Posix 1003.2-1992 section 2.5.2.1 page 50 lines 1556-1558 says that
-   only '0' through '9' are digits.  Prefer ISASCIIDIGIT to isdigit unless
-   it's important to use the locale's definition of "digit" even when the
-   host does not conform to Posix.  */
-#define ISASCIIDIGIT(c) ((unsigned) (c) - '0' <= 9)
+static bool
+isasciidigit (char c)
+{
+  return '0' <= c && c <= '9';
+}
 
 #include "gettext.h"
 #define _(str) gettext (str)
@@ -126,10 +126,13 @@ to_uchar (char ch)
    character is a word constituent.  A state whose context is CTX_ANY
    might have transitions from any character.  */
 
-#define CTX_NONE	1
-#define CTX_LETTER	2
-#define CTX_NEWLINE	4
-#define CTX_ANY		7
+enum
+  {
+    CTX_NONE = 1,
+    CTX_LETTER = 2,
+    CTX_NEWLINE = 4,
+    CTX_ANY = 7
+  };
 
 /* Sometimes characters can only be matched depending on the surrounding
    context.  Such context decisions depend on what the previous character
@@ -142,48 +145,86 @@ to_uchar (char ch)
    bit 4-7  - valid contexts when next character is CTX_LETTER
    bit 0-3  - valid contexts when next character is CTX_NONE
 
-   The macro SUCCEEDS_IN_CONTEXT determines whether a given constraint
+   succeeds_in_context determines whether a given constraint
    succeeds in a particular context.  Prev is a bitmask of possible
    context values for the previous character, curr is the (single-bit)
    context value for the lookahead character.  */
-#define NEWLINE_CONSTRAINT(constraint) (((constraint) >> 8) & 0xf)
-#define LETTER_CONSTRAINT(constraint)  (((constraint) >> 4) & 0xf)
-#define OTHER_CONSTRAINT(constraint)    ((constraint)       & 0xf)
+static int
+newline_constraint (int constraint)
+{
+  return (constraint >> 8) & 0xf;
+}
+static int
+letter_constraint (int constraint)
+{
+  return (constraint >> 4) & 0xf;
+}
+static int
+other_constraint (int constraint)
+{
+  return constraint & 0xf;
+}
 
-#define SUCCEEDS_IN_CONTEXT(constraint, prev, curr) \
-  ((((curr) & CTX_NONE      ? OTHER_CONSTRAINT (constraint) : 0) \
-    | ((curr) & CTX_LETTER  ? LETTER_CONSTRAINT (constraint) : 0) \
-    | ((curr) & CTX_NEWLINE ? NEWLINE_CONSTRAINT (constraint) : 0)) \
-   & (prev))
+static bool
+succeeds_in_context (int constraint, int prev, int curr)
+{
+  return !! (((curr & CTX_NONE      ? other_constraint (constraint) : 0) \
+              | (curr & CTX_LETTER  ? letter_constraint (constraint) : 0) \
+              | (curr & CTX_NEWLINE ? newline_constraint (constraint) : 0)) \
+             & prev);
+}
 
-/* The following macros describe what a constraint depends on.  */
-#define PREV_NEWLINE_CONSTRAINT(constraint) (((constraint) >> 2) & 0x111)
-#define PREV_LETTER_CONSTRAINT(constraint)  (((constraint) >> 1) & 0x111)
-#define PREV_OTHER_CONSTRAINT(constraint)    ((constraint)       & 0x111)
+/* The following describe what a constraint depends on.  */
+static int
+prev_newline_constraint (int constraint)
+{
+  return (constraint >> 2) & 0x111;
+}
+static int
+prev_letter_constraint (int constraint)
+{
+  return (constraint >> 1) & 0x111;
+}
+static int
+prev_other_constraint (int constraint)
+{
+  return constraint & 0x111;
+}
 
-#define PREV_NEWLINE_DEPENDENT(constraint) \
-  (PREV_NEWLINE_CONSTRAINT (constraint) != PREV_OTHER_CONSTRAINT (constraint))
-#define PREV_LETTER_DEPENDENT(constraint) \
-  (PREV_LETTER_CONSTRAINT (constraint) != PREV_OTHER_CONSTRAINT (constraint))
+static bool
+prev_newline_dependent (int constraint)
+{
+  return (prev_newline_constraint (constraint)
+          != prev_other_constraint (constraint));
+}
+static bool
+prev_letter_dependent (int constraint)
+{
+  return (prev_letter_constraint (constraint)
+          != prev_other_constraint (constraint));
+}
 
 /* Tokens that match the empty string subject to some constraint actually
    work by applying that constraint to determine what may follow them,
    taking into account what has gone before.  The following values are
    the constraints corresponding to the special tokens previously defined.  */
-#define NO_CONSTRAINT         0x777
-#define BEGLINE_CONSTRAINT    0x444
-#define ENDLINE_CONSTRAINT    0x700
-#define BEGWORD_CONSTRAINT    0x050
-#define ENDWORD_CONSTRAINT    0x202
-#define LIMWORD_CONSTRAINT    0x252
-#define NOTLIMWORD_CONSTRAINT 0x525
+enum
+  {
+    NO_CONSTRAINT = 0x777,
+    BEGLINE_CONSTRAINT = 0x444,
+    ENDLINE_CONSTRAINT = 0x700,
+    BEGWORD_CONSTRAINT = 0x050,
+    ENDWORD_CONSTRAINT = 0x202,
+    LIMWORD_CONSTRAINT = 0x252,
+    NOTLIMWORD_CONSTRAINT = 0x525
+  };
 
 /* The regexp is parsed into an array of tokens in postfix form.  Some tokens
    are operators and others are terminal symbols.  Most (but not all) of these
    codes are returned by the lexical analyzer.  */
 
 typedef ptrdiff_t token;
-#define TOKEN_MAX PTRDIFF_MAX
+static ptrdiff_t const TOKEN_MAX = PTRDIFF_MAX;
 
 /* States are indexed by state_num values.  These are normally
    nonnegative but -1 is used as a special value.  */
@@ -536,14 +577,21 @@ struct dfa
   struct localeinfo localeinfo;
 };
 
-/* Some macros for user access to dfa internals.  */
+/* User access to dfa internals.  */
 
 /* S could possibly be an accepting state of R.  */
-#define ACCEPTING(s, r) ((r).states[s].constraint)
+static bool
+accepting (state_num s, struct dfa const *r)
+{
+  return r->states[s].constraint != 0;
+}
 
 /* STATE accepts in the specified context.  */
-#define ACCEPTS_IN_CONTEXT(prev, curr, state, dfa) \
-  SUCCEEDS_IN_CONTEXT ((dfa).states[state].constraint, prev, curr)
+static bool
+accepts_in_context (int prev, int curr, state_num state, struct dfa const *dfa)
+{
+  return succeeds_in_context (dfa->states[state].constraint, prev, curr);
+}
 
 static void regexp (struct dfa *dfa);
 
@@ -888,7 +936,7 @@ using_simple_locale (bool multibyte)
       /* Treat C and POSIX locales as being compatible.  Also, treat
          errors as compatible, as these are invariably from stubs.  */
       char const *loc = setlocale (LC_ALL, NULL);
-      return !loc || STREQ (loc, "C") || STREQ (loc, "POSIX");
+      return !loc || streq (loc, "C") || streq (loc, "POSIX");
     }
 }
 
@@ -954,7 +1002,7 @@ static const struct dfa_ctype *_GL_ATTRIBUTE_PURE
 find_pred (const char *str)
 {
   for (unsigned int i = 0; prednames[i].name; ++i)
-    if (STREQ (str, prednames[i].name))
+    if (streq (str, prednames[i].name))
       return &prednames[i];
   return NULL;
 }
@@ -1037,8 +1085,8 @@ parse_bracket_exp (struct dfa *dfa)
                    worry about that possibility.  */
                 {
                   char const *class
-                    = (dfa->syntax.case_fold && (STREQ (str, "upper")
-                                                 || STREQ (str, "lower"))
+                    = (dfa->syntax.case_fold && (streq (str, "upper")
+                                                 || streq (str, "lower"))
                        ? "alpha" : str);
                   const struct dfa_ctype *pred = find_pred (class);
                   if (!pred)
@@ -1367,7 +1415,7 @@ lex (struct dfa *dfa)
             char const *p = dfa->lex.ptr;
             char const *lim = p + dfa->lex.left;
             dfa->lex.minrep = dfa->lex.maxrep = -1;
-            for (; p != lim && ISASCIIDIGIT (*p); p++)
+            for (; p != lim && isasciidigit (*p); p++)
               dfa->lex.minrep = (dfa->lex.minrep < 0
                                  ? *p - '0'
                                  : MIN (RE_DUP_MAX + 1,
@@ -1380,7 +1428,7 @@ lex (struct dfa *dfa)
                   {
                     if (dfa->lex.minrep < 0)
                       dfa->lex.minrep = 0;
-                    while (++p != lim && ISASCIIDIGIT (*p))
+                    while (++p != lim && isasciidigit (*p))
                       dfa->lex.maxrep
                         = (dfa->lex.maxrep < 0
                            ? *p - '0'
@@ -2145,7 +2193,7 @@ state_index (struct dfa *d, position_set const *s, int context)
       int c = s->elems[j].constraint;
       if (d->tokens[s->elems[j].index] < 0)
         {
-          if (SUCCEEDS_IN_CONTEXT (c, context, CTX_ANY))
+          if (succeeds_in_context (c, context, CTX_ANY))
             constraint |= c;
           if (!first_end)
             first_end = d->tokens[s->elems[j].index];
@@ -2258,9 +2306,9 @@ state_separate_contexts (position_set const *s)
 
   for (size_t j = 0; j < s->nelem; j++)
     {
-      if (PREV_NEWLINE_DEPENDENT (s->elems[j].constraint))
+      if (prev_newline_dependent (s->elems[j].constraint))
         separate_contexts |= CTX_NEWLINE;
-      if (PREV_LETTER_DEPENDENT (s->elems[j].constraint))
+      if (prev_letter_dependent (s->elems[j].constraint))
         separate_contexts |= CTX_LETTER;
     }
 
@@ -2614,7 +2662,7 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
              positions which has ANYCHAR does not depend on context of
              next character, we put the follows instead of it to
              D->states[s].mbps to optimize.  */
-          if (SUCCEEDS_IN_CONTEXT (pos.constraint, d->states[s].context,
+          if (succeeds_in_context (pos.constraint, d->states[s].context,
                                    CTX_NONE))
             {
               if (d->states[s].mbps.nelem == 0)
@@ -2631,15 +2679,15 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
          they fail in the current context.  */
       if (pos.constraint != NO_CONSTRAINT)
         {
-          if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
+          if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_NEWLINE))
             for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
               matches.w[j] &= ~d->syntax.newline.w[j];
-          if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
+          if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_LETTER))
             for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
               matches.w[j] &= ~d->syntax.letters.w[j];
-          if (!SUCCEEDS_IN_CONTEXT (pos.constraint,
+          if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_NONE))
             for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
               matches.w[j] &= d->syntax.letters.w[j] | d->syntax.newline.w[j];
@@ -2851,7 +2899,7 @@ static state_num
 build_state (state_num s, struct dfa *d, unsigned char uc)
 {
   /* A pointer to the new transition table, and the table itself.  */
-  state_num **ptrans = (ACCEPTING (s, *d) ? d->fails : d->trans) + s;
+  state_num **ptrans = (accepting (s, d) ? d->fails : d->trans) + s;
   state_num *trans = *ptrans;
 
   if (!trans)
@@ -2882,11 +2930,11 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
 
   /* Set up the success bits for this state.  */
   d->success[s] = 0;
-  if (ACCEPTS_IN_CONTEXT (d->states[s].context, CTX_NEWLINE, s, *d))
+  if (accepts_in_context (d->states[s].context, CTX_NEWLINE, s, d))
     d->success[s] |= CTX_NEWLINE;
-  if (ACCEPTS_IN_CONTEXT (d->states[s].context, CTX_LETTER, s, *d))
+  if (accepts_in_context (d->states[s].context, CTX_LETTER, s, d))
     d->success[s] |= CTX_LETTER;
-  if (ACCEPTS_IN_CONTEXT (d->states[s].context, CTX_NONE, s, *d))
+  if (accepts_in_context (d->states[s].context, CTX_NONE, s, d))
     d->success[s] |= CTX_NONE;
 
   s = dfastate (s, d, uc, trans);
@@ -3204,8 +3252,8 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
         {
           if ((d->success[s] & d->syntax.sbit[*p])
               || ((char *) p == end
-                  && ACCEPTS_IN_CONTEXT (d->states[s].context, CTX_NEWLINE, s,
-                                         *d)))
+                  && accepts_in_context (d->states[s].context, CTX_NEWLINE, s,
+                                         d)))
             goto done;
 
           if (multibyte && s < d->min_trcount)
@@ -3806,7 +3854,7 @@ dfamust (struct dfa const *d)
             size_t j, ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
-            if (STREQ (lmp->is, rmp->is))
+            if (streq (lmp->is, rmp->is))
               {
                 lmp->begline &= rmp->begline;
                 lmp->endline &= rmp->endline;
@@ -3851,7 +3899,7 @@ dfamust (struct dfa const *d)
           for (size_t i = 0; mp->in[i] != NULL; ++i)
             if (strlen (mp->in[i]) > strlen (result))
               result = mp->in[i];
-          if (STREQ (result, mp->is))
+          if (streq (result, mp->is))
             {
               if ((!need_begline || mp->begline) && (!need_endline
                                                      || mp->endline))

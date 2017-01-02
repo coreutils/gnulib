@@ -1,5 +1,15 @@
 2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: prefer functions and constants to macros
+	* lib/dfa.c: Prefer constants to macros where either will do.
+	(streq, isasciidigit, newline_constraint)
+	(letter_constraint, other_constraint, succeeds_in_context)
+	(prev_newline_constraint, prev_letter_constraint)
+	(prev_other_constraint, prev_newline_dependent)
+	(prev_letter_dependent, accepting, accepts_in_context):
+	Now static functions instead of function-like macros.
+	Use lower-case names accordingly.  All uses changed.
+
 	dfa: narrow more local var scopes
 	* lib/dfa.c: Move some more local decls down to nearer where
 	they're needed.
