@@ -995,7 +995,6 @@ static token
 parse_bracket_exp (struct dfa *dfa)
 {
   int c;
-  charclass ccl;
 
   /* This is a bracket expression that dfaexec is known to
      process correctly.  */
@@ -1013,6 +1012,7 @@ parse_bracket_exp (struct dfa *dfa)
   wint_t wc1 = 0;
 
   dfa->lex.brack.nchars = 0;
+  charclass ccl;
   zeroset (&ccl);
   FETCH_WC (dfa, c, wc, _("unbalanced ["));
   bool invert = c == '^';
@@ -1255,7 +1255,6 @@ lex (struct dfa *dfa)
   for (int i = 0; i < 2; ++i)
     {
       int c;
-      charclass ccl;
       FETCH_WC (dfa, c, dfa->lex.wctok, NULL);
 
       switch (c)
@@ -1472,6 +1471,7 @@ lex (struct dfa *dfa)
             goto normal_char;
           if (dfa->canychar == (size_t) -1)
             {
+              charclass ccl;
               fillset (&ccl);
               if (!(dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
                 clrbit ('\n', &ccl);
@@ -1494,6 +1494,7 @@ lex (struct dfa *dfa)
             goto normal_char;
           if (!dfa->localeinfo.multibyte)
             {
+              charclass ccl;
               zeroset (&ccl);
               for (int c2 = 0; c2 < NOTCHAR; ++c2)
                 if (isspace (c2))
@@ -1527,6 +1528,7 @@ lex (struct dfa *dfa)
 
           if (!dfa->localeinfo.multibyte)
             {
+              charclass ccl;
               zeroset (&ccl);
               for (int c2 = 0; c2 < NOTCHAR; ++c2)
                 if (dfa->syntax.sbit[c2] == CTX_LETTER)
@@ -1569,6 +1571,7 @@ lex (struct dfa *dfa)
 
           if (dfa->syntax.case_fold && isalpha (c))
             {
+              charclass ccl;
               zeroset (&ccl);
               setbit_case_fold_c (c, &ccl);
               return dfa->lex.lasttok = CSET + charclass_index (dfa, &ccl);
@@ -2596,8 +2599,6 @@ dfaanalyze (struct dfa *d, bool searchflag)
 static state_num
 dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
 {
-  leaf_set group;               /* Positions that match the input char.  */
-  charclass label;              /* The group's label.  */
   position_set follows;         /* Union of the follows of the group.  */
   position_set tmp;             /* Temporary space for merging sets.  */
   state_num state;              /* New state.  */
@@ -2608,9 +2609,13 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
   fprintf (stderr, "build state %td\n", s);
 #endif
 
+  /* Positions that match the input char.  */
+  leaf_set group;
   group.elems = xnmalloc (d->nleaves, sizeof *group.elems);
   group.nelem = 0;
 
+  /* The group's label.  */
+  charclass label;
   fillset (&label);
 
   for (size_t i = 0; i < d->states[s].elems.nelem; ++i)

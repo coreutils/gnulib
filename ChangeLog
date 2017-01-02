@@ -1,5 +1,8 @@
 2017-01-02  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: narrow more local var scopes
+	* lib/dfa.c: Move more local decls to be more local.
+
 	dfa: remove duplicate assignment
 	Problem reported by Bruno Haible in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2017-01/msg00007.html
