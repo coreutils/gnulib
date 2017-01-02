@@ -1,5 +1,12 @@
 2017-01-02  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: prefer functions to FETCH_WC macro
+	* lib/dfa.c (FETCH_WC): Remove, replacing with ...
+	(fetch_wc, bracket_fetch_wc): ... new functions.  These store the
+	wint_t result into DFA->lex.wctok instead of to a separate arg.
+	All callers changed.  Move more local decls closer to where
+	they're used.
+
 	dfa: narrow more local var scopes
 	* lib/dfa.c: Move more local decls to be more local.
 

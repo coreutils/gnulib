@@ -922,34 +922,33 @@ using_simple_locale (bool multibyte)
     }
 }
 
-/* Fetch the next lexical input character.  Set C (of type int) to the
-   next input byte, except set C to EOF if the input is a multibyte
-   character of length greater than 1.  Set WC (of type wint_t) to the
-   value of the input if it is a valid multibyte character (possibly
-   of length 1); otherwise set WC to WEOF.  If there is no more input,
-   report EOFERR if EOFERR is not null, and return lasttok = END
-   otherwise.  */
-# define FETCH_WC(dfa, c, wc, eoferr)		\
-  do {						\
-    if (! (dfa)->lex.left)			\
-      {						\
-        if ((eoferr) != 0)			\
-          dfaerror (eoferr);			\
-        else					\
-          return (dfa)->lex.lasttok = END;	\
-      }						\
-    else					\
-      {						\
-        wint_t _wc;				\
-        size_t nbytes = mbs_to_wchar (&_wc, (dfa)->lex.ptr, \
-                                      (dfa)->lex.left, dfa); \
-        (dfa)->lex.cur_mb_len = nbytes;		\
-        (wc) = _wc;				\
-        (c) = nbytes == 1 ? to_uchar ((dfa)->lex.ptr[0]) : EOF; \
-        (dfa)->lex.ptr += nbytes;		\
-        (dfa)->lex.left -= nbytes;		\
-      }						\
-  } while (false)
+/* Fetch the next lexical input character from the pattern.  There
+   must at least one byte of pattern input.  Set DFA->lex.wctok to the
+   value of the character or to WEOF depending on whether the input is
+   a valid multibyte character (possibly of length 1).  Then return
+   the next input byte value, except return EOF if the input is a
+   multibyte character of length greater than 1.  */
+static int
+fetch_wc (struct dfa *dfa)
+{
+  size_t nbytes = mbs_to_wchar (&dfa->lex.wctok, dfa->lex.ptr, dfa->lex.left,
+                                dfa);
+  dfa->lex.cur_mb_len = nbytes;
+  int c = nbytes == 1 ? to_uchar (dfa->lex.ptr[0]) : EOF;
+  dfa->lex.ptr += nbytes;
+  dfa->lex.left -= nbytes;
+  return c;
+}
+
+/* If there is no more input, report an error about unbalanced brackets.
+   Otherwise, behave as with fetch_wc (DFA).  */
+static int
+bracket_fetch_wc (struct dfa *dfa)
+{
+  if (! dfa->lex.left)
+    dfaerror (_("unbalanced ["));
+  return fetch_wc (dfa);
+}
 
 typedef int predicate (int);
 
@@ -994,8 +993,6 @@ find_pred (const char *str)
 static token
 parse_bracket_exp (struct dfa *dfa)
 {
-  int c;
-
   /* This is a bracket expression that dfaexec is known to
      process correctly.  */
   bool known_bracket_exp = true;
@@ -1007,22 +1004,20 @@ parse_bracket_exp (struct dfa *dfa)
      Bit 3 = includes ranges, char/equiv classes or collation elements.  */
   int colon_warning_state;
 
-  wint_t wc;
-  wint_t wc2;
-  wint_t wc1 = 0;
-
   dfa->lex.brack.nchars = 0;
   charclass ccl;
   zeroset (&ccl);
-  FETCH_WC (dfa, c, wc, _("unbalanced ["));
+  int c = bracket_fetch_wc (dfa);
   bool invert = c == '^';
   if (invert)
     {
-      FETCH_WC (dfa, c, wc, _("unbalanced ["));
+      c = bracket_fetch_wc (dfa);
+      invert = true;
       known_bracket_exp = dfa->simple_locale;
     }
-
+  wint_t wc = dfa->lex.wctok;
   int c1;
+  wint_t wc1;
   colon_warning_state = (c == ':');
   do
     {
@@ -1035,7 +1030,8 @@ parse_bracket_exp (struct dfa *dfa)
          dfa is ever called.  */
       if (c == '[')
         {
-          FETCH_WC (dfa, c1, wc1, _("unbalanced ["));
+          c1 = bracket_fetch_wc (dfa);
+          wc1 = dfa->lex.wctok;
 
           if ((c1 == ':' && (dfa->syntax.syntax_bits & RE_CHAR_CLASSES))
               || c1 == '.' || c1 == '=')
@@ -1045,7 +1041,7 @@ parse_bracket_exp (struct dfa *dfa)
               size_t len = 0;
               for (;;)
                 {
-                  FETCH_WC (dfa, c, wc, _("unbalanced ["));
+                  c = bracket_fetch_wc (dfa);
                   if (dfa->lex.left == 0
                       || (c == c1 && dfa->lex.ptr[0] == ']'))
                     break;
@@ -1058,7 +1054,8 @@ parse_bracket_exp (struct dfa *dfa)
               str[len] = '\0';
 
               /* Fetch bracket.  */
-              FETCH_WC (dfa, c, wc, _("unbalanced ["));
+              c = bracket_fetch_wc (dfa);
+              wc = dfa->lex.wctok;
               if (c1 == ':')
                 /* Build character class.  POSIX allows character
                    classes to match multicharacter collating elements,
@@ -1086,7 +1083,8 @@ parse_bracket_exp (struct dfa *dfa)
               colon_warning_state |= 8;
 
               /* Fetch new lookahead character.  */
-              FETCH_WC (dfa, c1, wc1, _("unbalanced ["));
+              c1 = bracket_fetch_wc (dfa);
+              wc1 = dfa->lex.wctok;
               continue;
             }
 
@@ -1096,16 +1094,22 @@ parse_bracket_exp (struct dfa *dfa)
 
       if (c == '\\'
           && (dfa->syntax.syntax_bits & RE_BACKSLASH_ESCAPE_IN_LISTS))
-        FETCH_WC (dfa, c, wc, _("unbalanced ["));
+        {
+          c = bracket_fetch_wc (dfa);
+          wc = dfa->lex.wctok;
+        }
 
       if (c1 == NOTCHAR)
-        FETCH_WC (dfa, c1, wc1, _("unbalanced ["));
+        {
+          c1 = bracket_fetch_wc (dfa);
+          wc1 = dfa->lex.wctok;
+        }
 
       if (c1 == '-')
         /* build range characters.  */
         {
-          int c2;
-          FETCH_WC (dfa, c2, wc2, _("unbalanced ["));
+          int c2 = bracket_fetch_wc (dfa);
+          wint_t wc2 = dfa->lex.wctok;
 
           /* A bracket expression like [a-[.aa.]] matches an unknown set.
              Treat it like [-a[.aa.]] while parsing it, and
@@ -1127,10 +1131,14 @@ parse_bracket_exp (struct dfa *dfa)
             {
               if (c2 == '\\' && (dfa->syntax.syntax_bits
                                  & RE_BACKSLASH_ESCAPE_IN_LISTS))
-                FETCH_WC (dfa, c2, wc2, _("unbalanced ["));
+                {
+                  c2 = bracket_fetch_wc (dfa);
+                  wc2 = dfa->lex.wctok;
+                }
 
               colon_warning_state |= 8;
-              FETCH_WC (dfa, c1, wc1, _("unbalanced ["));
+              c1 = bracket_fetch_wc (dfa);
+              wc1 = dfa->lex.wctok;
 
               /* Treat [x-y] as a range if x != y.  */
               if (wc != wc2 || wc == WEOF)
@@ -1254,8 +1262,9 @@ lex (struct dfa *dfa)
      "if (backslash) ...".  */
   for (int i = 0; i < 2; ++i)
     {
-      int c;
-      FETCH_WC (dfa, c, dfa->lex.wctok, NULL);
+      if (! dfa->lex.left)
+        return dfa->lex.lasttok = END;
+      int c = fetch_wc (dfa);
 
       switch (c)
         {
