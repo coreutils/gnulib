@@ -1501,7 +1501,10 @@ gen-coverage:
 		--highlight --frames --legend \
 		--title "$(PACKAGE_NAME)"
 
-coverage: init-coverage build-coverage gen-coverage
+coverage:
+	$(MAKE) init-coverage
+	$(MAKE) build-coverage
+	$(MAKE) gen-coverage
 
 # Some projects carry local adjustments for gnulib modules via patches in
 # a gnulib patch directory whose default name is gl/ (defined in bootstrap

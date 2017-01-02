@@ -1,3 +1,10 @@
+2017-01-05  Pádraig Brady  <P@draigBrady.com>
+
+	maint.mk: support parallel execution of coverage
+	* top/maint.mk (coverage): Run dependencies serially,
+	thus supporting parallel processing of each one,
+	particularly build-coverage, which builds and runs tests.
+
 2017-01-05  Bruno Haible  <bruno@clisp.org>
 
 	lock: Provide guarantee to avoid writer starvation for rwlocks.
