@@ -1,5 +1,11 @@
 2017-01-01  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: simplify constraint-dependency checking
+	* lib/dfa.c (prev_newline_constraint, prev_letter_constraint)
+	(prev_other_constraint): Remove.
+	(prev_newline_dependent, prev_letter_dependent):
+	Simplify, to avoid an unnecessary bitwise AND operation.
+
 	dfa: prefer functions and constants to macros
 	* lib/dfa.c: Prefer constants to macros where either will do.
 	(streq, isasciidigit, newline_constraint)

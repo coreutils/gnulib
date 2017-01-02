@@ -175,33 +175,15 @@ succeeds_in_context (int constraint, int prev, int curr)
 }
 
 /* The following describe what a constraint depends on.  */
-static int
-prev_newline_constraint (int constraint)
-{
-  return (constraint >> 2) & 0x111;
-}
-static int
-prev_letter_constraint (int constraint)
-{
-  return (constraint >> 1) & 0x111;
-}
-static int
-prev_other_constraint (int constraint)
-{
-  return constraint & 0x111;
-}
-
 static bool
 prev_newline_dependent (int constraint)
 {
-  return (prev_newline_constraint (constraint)
-          != prev_other_constraint (constraint));
+  return ((constraint ^ constraint >> 2) & 0x111) != 0;
 }
 static bool
 prev_letter_dependent (int constraint)
 {
-  return (prev_letter_constraint (constraint)
-          != prev_other_constraint (constraint));
+  return ((constraint ^ constraint >> 1) & 0x111) != 0;
 }
 
 /* Tokens that match the empty string subject to some constraint actually
