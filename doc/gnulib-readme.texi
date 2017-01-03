@@ -299,8 +299,8 @@ possibly operating with a C library that predates C89; with time this
 assumption will likely be strengthened to later versions of the C
 standard.  Old platforms currently supported include AIX 6.1, HP-UX
 11i v1 and Solaris 10, though these platforms are rarely tested.
-Gnulib itself is so old that it contains contains many fixes for
-obsolete platforms, fixes that may be removed in the future.
+Gnulib itself is so old that it contains many fixes for obsolete
+platforms, fixes that may be removed in the future.
 
 Because of the freestanding C89 assumption, Gnulib code can include
 @code{<float.h>}, @code{<limits.h>}, @code{<stdarg.h>}, and
