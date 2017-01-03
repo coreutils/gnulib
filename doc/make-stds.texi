@@ -7,8 +7,9 @@
 @cindex conventions for makefiles
 @cindex standards for makefiles
 
-@c Copyright 1992-1998, 2000-2001, 2004-2008, 2010, 2013-2015, 2017 Free
-@c Software Foundation, Inc.
+@c Copyright 1992, 1993, 1994, 1995, 1996, 1997, 1998, 2000, 2001,
+@c 2004, 2005, 2006, 2007, 2008, 2010, 2013, 2014, 2015
+@c Free Software Foundation, Inc.
 @c
 @c Permission is granted to copy, distribute and/or modify this document
 @c under the terms of the GNU Free Documentation License, Version 1.3

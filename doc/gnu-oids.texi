@@ -1,6 +1,6 @@
 @c This table of OID's is included in the GNU Coding Standards.
 @c
-@c Copyright 2008-2010, 2013, 2017 Free Software Foundation, Inc.
+@c Copyright 2008, 2009, 2010, 2013 Free Software Foundation, Inc.
 @c
 @c Copying and distribution of this file, with or without modification,
 @c are permitted in any medium without royalty provided the copyright
