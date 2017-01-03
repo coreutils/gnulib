@@ -1,5 +1,13 @@
 2017-01-05  Pádraig Brady  <P@draigBrady.com>
 
+	parse-datetime: fix generated paths for coverage files
+	* modules/parse-datetime: Adjust the paths for parse-datetime.y
+	within parse-datetime.c, so that gcc generates appropriate .gcno
+	files, allowing lcov to proceed without error.  Previously it
+	would error trying to find "lib/lib/parse-datetime.y".
+
+2017-01-05  Pádraig Brady  <P@draigBrady.com>
+
 	maint.mk: support parallel execution of coverage
 	* top/maint.mk (coverage): Run dependencies serially,
 	thus supporting parallel processing of each one,
