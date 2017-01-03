@@ -1,5 +1,10 @@
 2017-01-02  Paul Eggert  <eggert@cs.ucla.edu>
 
+	doc: modernize for C11 etc.
+	* doc/gnulib-readme.texi (Portability guidelines): Modernize a bit
+	for C11, MinGW, etc.  This responds to Paul Smith's question in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-01/msg00014.html
+
 	dfa: prefer functions to FETCH_WC macro
 	* lib/dfa.c (FETCH_WC): Remove, replacing with ...
 	(fetch_wc, bracket_fetch_wc): ... new functions.  These store the
