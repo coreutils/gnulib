@@ -1,3 +1,11 @@
+2017-01-05  Bruno Haible  <bruno@clisp.org>
+
+	thread: Fix pth port.
+	* lib/glthread/thread.h (pth_init): Declare weak.
+	(glthread_create, glthread_sigmask, glthread_join, gl_thread_self,
+	gl_thread_exit): Make sure Pth is initialized before invoking any Pth
+	function.
+
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
 	parse-datetime: fix debug message on lone year number

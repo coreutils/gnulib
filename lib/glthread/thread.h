@@ -219,6 +219,7 @@ extern "C" {
 
 /* Use weak references to the GNU Pth threads library.  */
 
+#  pragma weak pth_init
 #  pragma weak pth_spawn
 #  pragma weak pth_sigmask
 #  pragma weak pth_join
@@ -237,17 +238,17 @@ extern "C" {
 
 typedef pth_t gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) \
-    (pth_in_use () ? ((*(THREADP) = pth_spawn (NULL, FUNC, ARG)) ? 0 : errno) : 0)
+    (pth_in_use () ? (pth_init (), ((*(THREADP) = pth_spawn (NULL, FUNC, ARG)) ? 0 : errno)) : 0)
 # define glthread_sigmask(HOW, SET, OSET) \
-    (pth_in_use () && !pth_sigmask (HOW, SET, OSET) ? errno : 0)
+    (pth_in_use () ? (pth_init (), (pth_sigmask (HOW, SET, OSET) ? 0 : errno)) : 0)
 # define glthread_join(THREAD, RETVALP) \
-    (pth_in_use () && !pth_join (THREAD, RETVALP) ? errno : 0)
+    (pth_in_use () ? (pth_init (), (pth_join (THREAD, RETVALP) ? 0 : errno)) : 0)
 # define gl_thread_self() \
-    (pth_in_use () ? (void *) pth_self () : NULL)
+    (pth_in_use () ? (pth_init (), (void *) pth_self ()) : NULL)
 # define gl_thread_self_pointer() \
     gl_thread_self ()
 # define gl_thread_exit(RETVAL) \
-    (pth_in_use () ? pth_exit (RETVAL) : 0)
+    (pth_in_use () ? (pth_init (), pth_exit (RETVAL)) : 0)
 # define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
 
 # ifdef __cplusplus
