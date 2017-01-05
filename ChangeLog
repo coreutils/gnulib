@@ -1,5 +1,31 @@
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
+	parse-datetime: add debug warning about date arithmetic
+	Date arithmetic are done directly on the fields of 'struct tm',
+	which can result in invalid dates. Normalization with 'mktime(3)'
+	will then produce a different date - which might cause unexpected
+	results.
+	Examples:
+	  '2016-10-31 - 1 month' => 2016-09-31 normalized to 2016-10-01.
+	  '2016-02-29 + 1 year'  => 2017-02-29 normalized to 2017-03-01.
+	Note that date normalization is not inherently wrong and not rejected,
+	as it has legitimate uses:
+	  '2016-12-29 + 5 days' => 2016-12-34 noramlized to 2017-01-03.
+	If the user asked to adjust months but 'mday' changed,
+	or user asked to adjust years but 'month' changed - warn about it.
+	    $ ./src/date --debug -d '2016-10-31 - 1 month'
+	    ...
+	    date: warning: when adding relative months/years, \
+	                   it is recommended to specify the 15th of the month
+	    ...
+	    date: warning: month/year adjustment resulted in shifted dates:
+	    date:      adjusted Y M D: 2016 09 31
+	    date:    normalized Y M D: 2010 10 01
+	    ...
+	* lib/parse-datetime.y (parse_datetime2): Detect such cases and print
+	a warning message. Improve recommendation of when to use 15 of the
+	month or noon for date arithmetic.
+
 	parse-datetime: fix debug message of relative part after timezone
 	Relative part (e.g '+8 days') after a timezone string was not
 	reported (was only reported after a timezone number). Due to the

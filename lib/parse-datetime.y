@@ -2090,12 +2090,12 @@ parse_datetime2 (struct timespec *result, char const *p,
         {
           if (pc.parse_datetime_debug)
             {
-              if ((pc.rel.year != 0 || pc.rel.month !=0) && tm.tm_mday==1)
+              if ((pc.rel.year != 0 || pc.rel.month !=0) && tm.tm_mday!=15)
                 dbg_printf (_("warning: when adding relative months/years, " \
                               "it is recommended to specify the 15th of the " \
                               "months\n"));
 
-              if (pc.rel.day != 0 && tm.tm_hour==0)
+              if (pc.rel.day != 0 && tm.tm_hour!=12)
                 dbg_printf (_("warning: when adding relative days, "    \
                               "it is recommended to specify 12:00pm\n"));
             }
@@ -2140,6 +2140,30 @@ parse_datetime2 (struct timespec *result, char const *p,
               dbg_printf (_("    new date/time = '%s'\n"),
                           debug_strfdatetime (&tm, &pc, dbg_tm,
                                               sizeof (dbg_tm)));
+
+              /* warn if the user did not ask to adjust days but mday changed,
+                 or
+                 user did not ask to adjust months/days but the month changed.
+
+                 Example for first case:
+                 2016-05-31 + 1 month => 2016-06-31 => 2016-07-01.
+                 User asked to adjust month, but the day changed from 31 to 01.
+
+                 Example for second case:
+                 2016-02-29 + 1 year => 2017-02-29 => 2017-03-01.
+                 User asked to adjust year, but the month changed from 02 to 03.
+              */
+              if (((pc.rel.day==0) && (tm.tm_mday != day))
+                  || ((pc.rel.day==0) && (pc.rel.month==0)
+                      && (tm.tm_mon != month)))
+                {
+                  dbg_printf (_("warning: month/year adjustment resulted in "\
+                                "shifted dates:\n"));
+                  dbg_printf (_("     adjusted Y M D: %04d %02d %02d\n"),
+                              year+1900, month+1, day);
+                  dbg_printf (_("   normalized Y M D: %04d %02d %02d\n"),
+                              tm.tm_year+1900, tm.tm_mon+1, tm.tm_mday);
+                }
             }
 
         }
