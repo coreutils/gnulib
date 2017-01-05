@@ -619,7 +619,7 @@ item:
       }
   | number
       {
-        debug_print_relative_time (_("number"), pc);
+        debug_print_current_time (_("number"), pc);
       }
   | hybrid
       {

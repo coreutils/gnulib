@@ -1,3 +1,16 @@
+2017-01-04  Assaf Gordon <assafgordon@gmail.com>
+
+	parse-datetime: fix incorrect debug message on lone number
+	A lone number is an absolute value, not a relative time part.
+	before:
+	   $ date --debug -d '20130101'
+	   date: parsed number part: today/this/now
+	After:
+	   $ ./src/date --debug -d '20130101'
+	   date: parsed number part: (Y-M-D) 2013-01-01
+	* lib/parse-datetime.y ('item'/'number' tokens): Call
+	'debug_print_current_time' instead of 'debug_print_relative_time'.
+
 2017-01-02  Paul Eggert  <eggert@cs.ucla.edu>
 
 	doc: modernize for C11 etc.
