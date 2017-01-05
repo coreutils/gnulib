@@ -1,5 +1,25 @@
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
+	parse-datetime: fix local timezone debug messages
+	"Local timezones" are strings that affect only DST relative to the
+	default timezone. The debug messages in parse-datetime.y printed
+	wrong information when encountering local timezones.
+	Examples:
+	Here EET/EEST are time zones ('zone' token, with values +02:00/+03:00):
+	     TZ=Asia/Tokyo ./src/date --debug -d '2011-12-11 EET'
+	     TZ=Asia/Tokyo ./src/date --debug -d '2011-06-11 EEST'
+	When the default timezone relates to the zone strings, EET/EEST are
+	parsed as local timezones (tLOCAL_ZONE), and only change the DST
+	value (0/1, respectively):
+	     TZ=Europe/Helsinki ./src/date --debug -d '2011-12-11 EET'
+	     TZ=Europe/Helsinki ./src/date --debug -d '2011-06-11 EEST'
+	* lib/parse-datetime.y (debug_print_current_time): If local timezone
+	was seen, inform about DST change, don't print actual timezone.
+	(debug_strfdatetime): If local timezone was seen, use default timezone
+	(and adjust as needed) instead of using incorrect timezone.
+	(parse_datetime2): Use correct time-zone source string, and adjust
+	default timezone as needed.
+
 	parse-datetime: add debug warning about DST changes
 	Incorrect date arithmetic due to daylight saving time (DST) are a
 	common (false) bug report in coreutils.

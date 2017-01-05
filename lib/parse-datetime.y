@@ -440,6 +440,20 @@ debug_print_current_time (const char* item, parser_control *pc)
       space = 1;
     }
 
+  /* local zone strings only change the DST settings,
+     not the timezone value. If seen, inform about the DST.
+     its value (0 or 1) will be printed in the next 'if' block */
+  if (pc->local_zones_seen != pc->debug_local_zones_seen)
+    {
+      if (space)
+        fputc (' ',stderr);
+      fputs ( (pc->dsts_seen == pc->debug_dsts_seen)?
+              _("DST unchanged"):_("DST changed:"),
+              stderr);
+      pc->debug_local_zones_seen = pc->local_zones_seen;
+      space = 1;
+    }
+
   if (pc->dsts_seen != pc->debug_dsts_seen)
     {
       if (space)
@@ -457,16 +471,6 @@ debug_print_current_time (const char* item, parser_control *pc)
       fprintf (stderr,_("TZ=%+03d:%02d"), (int)(pc->time_zone/60),
               abs ((int)pc->time_zone%60));
       pc->debug_zones_seen = pc->zones_seen;
-      space = 1;
-    }
-
-  if (pc->local_zones_seen != pc->debug_local_zones_seen)
-    {
-      if (space)
-        fputc (' ',stderr);
-      fprintf (stderr,_("Local-TZ=%+03d:%02d"), (int)(pc->time_zone/60),
-              abs ((int)pc->time_zone%60));
-      pc->debug_local_zones_seen = pc->local_zones_seen;
       space = 1;
     }
 
@@ -685,6 +689,23 @@ zone_offset:
       }
   ;
 
+/* Local zone strings only affect DST setting,
+   and only take affect if the current TZ setting is relevant.
+
+   Example 1:
+   'EEST' is parsed as tLOCAL_ZONE, as it relates to the effective TZ:
+        TZ=Europe/Helsinki date -d '2016-12-30 EEST'
+
+   Example 2:
+   'EEST' is parsed as 'zone' (TZ=+03:00):
+         TZ=Asia/Tokyo ./src/date --debug -d '2011-06-11 EEST'
+
+   This is implemented by probing the next three calendar quarters
+   of the effective timezone and looking for DST changes -
+   if found, the timezone name (EEST) is inserted into
+   the lexical lookup table with type tLOCAL_ZONE.
+   (Search for 'quarter' comment in  'parse_datetime2').
+*/
 local_zone:
     tLOCAL_ZONE
       {
@@ -1579,9 +1600,14 @@ debug_strfdatetime (const struct tm *tm, const parser_control *pc,
      and there's enough space in the buffer - add timezone info */
   if (pc != NULL && ((n-m)>0))
     {
-      const long int tz = (pc->zones_seen || pc->local_zones_seen)
-                          ? pc->time_zone
-                          : pc->debug_default_input_timezone;
+      long int tz = (pc->zones_seen)
+                    ? pc->time_zone
+                    : pc->debug_default_input_timezone;
+
+      /* Account for DST if tLOCAL_ZONE was seen */
+      if (pc->local_zones_seen && !pc->zones_seen && pc->local_isdst==1)
+        tz += 60;
+
       snprintf (&buf[m],n-m," TZ=%+03d:%02d", (int)(tz/60), abs ((int)tz)%60);
     }
   return buf;
@@ -1890,7 +1916,7 @@ parse_datetime2 (struct timespec *result, char const *p,
           tz = 0 ;
           strncpy (dbg_tm, _("'@timespec' - always UTC0"), sizeof (dbg_tm)-1);
         }
-      else if (pc.local_zones_seen || pc.zones_seen)
+      else if (pc.zones_seen)
         {
           tz = pc.time_zone;
           strncpy (dbg_tm, _("parsed date/time string"), sizeof (dbg_tm)-1);
