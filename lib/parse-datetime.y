@@ -707,10 +707,14 @@ zone:
       { pc->time_zone = HOUR(7); }
   | tZONE relunit_snumber
       { pc->time_zone = $1;
-        apply_relative_time (pc, $2, 1); }
+        apply_relative_time (pc, $2, 1);
+        debug_print_relative_time (_("relative"), pc);
+      }
   | 'T' relunit_snumber
       { pc->time_zone = HOUR(7);
-        apply_relative_time (pc, $2, 1); }
+        apply_relative_time (pc, $2, 1);
+        debug_print_relative_time (_("relative"), pc);
+      }
   | tZONE tSNUMBER o_colon_minutes
       { pc->time_zone = $1 + time_zone_hhmm (pc, $2, $3); }
   | tDAYZONE

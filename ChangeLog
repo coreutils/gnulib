@@ -1,5 +1,21 @@
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
+	parse-datetime: fix debug message of relative part after timezone
+	Relative part (e.g '+8 days') after a timezone string was not
+	reported (was only reported after a timezone number). Due to the
+	parser's structure, timezone strings with numbers were handled
+	separately.
+	before:
+	     # Timezone number + relative part: OK
+	     $ ./src/date --debug +%F -d '2013-10-30 00:00:00 +00:00 -8 days'
+	     ...
+	     date: parsed relative part: -8 day(s)
+	     # Timezone string + relative part: missing
+	     $ ./src/date --debug +%F -d '2013-10-30 00:00:00 UTC -8 days'
+	     [ missing message ]
+	After: messages are printed in both cases.
+	* lib/parse-datetime.y ('zone' token): Call debug_print_relative_time.
+
 	parse-datetime: fix incorrect debug message on lone number
 	A lone number is an absolute value, not a relative time part.
 	before:
