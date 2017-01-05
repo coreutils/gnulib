@@ -15,6 +15,14 @@
 
 2017-01-05  Bruno Haible  <bruno@clisp.org>
 
+	lock tests: Prefer semaphore over mutex.
+	* tests/test-lock.c (USE_SEMAPHORE): New constant.
+	(struct atomic_int, init_atomic_int, get_atomic_int_value,
+	set_atomic_int_value) [USE_SEMAPHORE]: Define using a POSIX semaphore.
+	Suggested by Torvald Riegel <triegel@redhat.com>.
+
+2017-01-05  Bruno Haible  <bruno@clisp.org>
+
 	lock: Provide guarantee to avoid writer starvation for rwlocks.
 	The rationale is: 1) Read-preferring read-write locks are prone to
 	writer starvation if the number of reader threads multiplied by the

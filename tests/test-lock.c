@@ -51,11 +51,19 @@
 #define EXPLICIT_YIELD 1
 
 /* Whether to use 'volatile' on some variables that communicate information
-   between threads.  If set to 0, a lock is used to protect these variables.
-   If set to 1, 'volatile' is used; this is theoretically equivalent but can
-   lead to much slower execution (e.g. 30x slower total run time on a 40-core
-   machine.  */
+   between threads.  If set to 0, a semaphore or a lock is used to protect
+   these variables.  If set to 1, 'volatile' is used; this is theoretically
+   equivalent but can lead to much slower execution (e.g. 30x slower total
+   run time on a 40-core machine), because 'volatile' does not imply any
+   synchronization/communication between different CPUs.  */
 #define USE_VOLATILE 0
+
+#if USE_POSIX_THREADS
+/* Whether to use a semaphore to communicate information between threads.
+   If set to 0, a lock is used. If set to 1, a semaphore is used.
+   Uncomment this to reduce the dependencies of this test.  */
+# define USE_SEMAPHORE 1
+#endif
 
 /* Whether to print debugging messages.  */
 #define ENABLE_DEBUGGING 0
@@ -97,6 +105,10 @@
 
 #include "glthread/thread.h"
 #include "glthread/yield.h"
+#if USE_SEMAPHORE
+# include <errno.h>
+# include <semaphore.h>
+#endif
 
 #if ENABLE_DEBUGGING
 # define dbgprintf printf
@@ -127,6 +139,41 @@ static void
 set_atomic_int_value (struct atomic_int *ai, int new_value)
 {
   ai->value = new_value;
+}
+#elif USE_SEMAPHORE
+/* This atomic_int implementation can only support the values 0 and 1.
+   It is initially 0 and can be set to 1 only once.  */
+struct atomic_int {
+  sem_t semaphore;
+};
+static void
+init_atomic_int (struct atomic_int *ai)
+{
+  sem_init (&ai->semaphore, 0, 0);
+}
+static int
+get_atomic_int_value (struct atomic_int *ai)
+{
+  if (sem_trywait (&ai->semaphore) == 0)
+    {
+      if (sem_post (&ai->semaphore))
+        abort ();
+      return 1;
+    }
+  else if (errno == EAGAIN)
+    return 0;
+  else
+    abort ();
+}
+static void
+set_atomic_int_value (struct atomic_int *ai, int new_value)
+{
+  if (new_value == 0)
+    /* It's already initialized with 0.  */
+    return;
+  /* To set the value 1: */
+  if (sem_post (&ai->semaphore))
+    abort ();
 }
 #else
 struct atomic_int {
