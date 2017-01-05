@@ -1,5 +1,40 @@
 2017-01-05  Bruno Haible  <bruno@clisp.org>
 
+	lock: Provide guarantee to avoid writer starvation for rwlocks.
+	The rationale is: 1) Read-preferring read-write locks are prone to
+	writer starvation if the number of reader threads multiplied by the
+	percentage of time they have the lock held is too high. 2) Write-
+	preferring read-write locks are the only reliable way to avoid this.
+	3) There have been reports of 'test-lock' hanging on glibc systems
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-01/msg00009.html,
+	and glibc indeed implements read-preferring rwlocks by default, see
+	http://man7.org/linux/man-pages/man3/pthread_rwlockattr_setkind_np.3.html
+	and https://sourceware.org/bugzilla/show_bug.cgi?id=13701 .
+	* m4/pthread_rwlock_rdlock.m4: New file.
+	* m4/lock.m4 (gl_LOCK): Invoke gl_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER.
+	* lib/glthread/lock.h [USE_POSIX_THREADS]: Test
+	HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER. Use a different implementation
+	of rwlock initialization on glibc systems without
+	HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER. Use a different implementation
+	of rwlocks altogether on non-glibc systems without
+	HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER.
+	[USE_PTH_THREADS]: Use a different implementation of rwlocks altogether.
+	* lib/glthread/lock.c [USE_POSIX_THREADS]
+	(glthread_rwlock_init_for_glibc): New function.
+	[USE_POSIX_THREADS] (glthread_rwlock_rdlock_multithreaded): Update
+	comment.
+	[USE_PTH_THREADS]: New implementation of rwlocks.
+	[USE_WINDOWS_THREADS] (glthread_rwlock_rdlock_func): Prefer writers over
+	readers.
+	* modules/lock (Files): Add m4/pthread_rwlock_rdlock.m4.
+	(Depends-on): Add 'extensions'.
+	* tests/test-rwlock1.c: New file.
+	* lock-tests (Files): Add it.
+	(Depends-on): Add usleep.
+	(Makefile.am): Add test-rwlock1 to the tests.
+
+2017-01-05  Bruno Haible  <bruno@clisp.org>
+
 	thread: Fix pth port.
 	* lib/glthread/thread.h (pth_init): Declare weak.
 	(glthread_create, glthread_sigmask, glthread_join, gl_thread_self,

@@ -5,8 +5,10 @@ Files:
 lib/glthread/lock.h
 lib/glthread/lock.c
 m4/lock.m4
+m4/pthread_rwlock_rdlock.m4
 
 Depends-on:
+extensions
 threadlib
 
 configure.ac:

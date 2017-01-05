@@ -1,13 +1,16 @@
 Files:
+tests/test-rwlock1.c
 tests/test-lock.c
 
 Depends-on:
 thread
+usleep
 yield
 
 configure.ac:
 
 Makefile.am:
-TESTS += test-lock
-check_PROGRAMS += test-lock
+TESTS += test-rwlock1 test-lock
+check_PROGRAMS += test-rwlock1 test-lock
+test_rwlock1_LDADD = $(LDADD) @LIBMULTITHREAD@
 test_lock_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
