@@ -1884,17 +1884,16 @@ parse_datetime2 (struct timespec *result, char const *p,
     {
       long int tz = pc.debug_default_input_timezone;
       const char* tz_env;
-      const char* tz_src;
 
       if (pc.timespec_seen)
         {
           tz = 0 ;
-          tz_src = _("'@timespec' - always UTC0");
+          strncpy (dbg_tm, _("'@timespec' - always UTC0"), sizeof (dbg_tm)-1);
         }
       else if (pc.local_zones_seen || pc.zones_seen)
         {
           tz = pc.time_zone;
-          tz_src = _("parsed date/time string");
+          strncpy (dbg_tm, _("parsed date/time string"), sizeof (dbg_tm)-1);
         }
       else if ((tz_env = getenv("TZ")))
         {
@@ -1902,28 +1901,40 @@ parse_datetime2 (struct timespec *result, char const *p,
             {
               snprintf (dbg_tm, sizeof(dbg_tm), _("TZ=\"%s\" in date string"),
                         tz_env);
-              tz_src = dbg_tm;
             }
           else if (STREQ(tz_env,"UTC0"))
             {
               /* Special case: using 'date -u' simply set TZ=UTC0 */
-              tz_src = _("TZ=UTC0 environment value or -u");
+              strncpy (dbg_tm, _("TZ=UTC0 environment value or -u"),
+                       sizeof (dbg_tm)-1);
             }
           else
             {
               snprintf (dbg_tm, sizeof(dbg_tm),
                         _("TZ=\"%s\" environment value"), tz_env);
-              tz_src = dbg_tm;
             }
         }
       else
         {
-          tz_src = _("system default");
+          strncpy (dbg_tm, _("system default"), sizeof (dbg_tm)-1);
+        }
+
+      /* Ensure it's NUL terminated after strncpy */
+      dbg_tm[sizeof (dbg_tm)-1] = '\0';
+
+      /* Account for DST changes if tLOCAL_ZONE was seen.
+         local timezone only changes DST and is relative to the
+         default timezone.*/
+      if (pc.local_zones_seen && !pc.zones_seen && pc.local_isdst==1)
+        {
+          tz += 60;
+          strncat (dbg_tm, ", dst",
+                   sizeof (dbg_tm) - strlen (dbg_tm) - 1);
         }
 
       if (pc.parse_datetime_debug)
         dbg_printf (_("input timezone: %+03d:%02d (set from %s)\n"),
-                    (int)(tz/60), abs ((int)tz)%60, tz_src);
+                    (int)(tz/60), abs ((int)tz)%60, dbg_tm);
 
     }
 
@@ -2141,6 +2152,24 @@ parse_datetime2 (struct timespec *result, char const *p,
                           debug_strfdatetime (&tm, &pc, dbg_tm,
                                               sizeof (dbg_tm)));
 
+              /* warn about crossing DST due to time adjustment.
+                 Example: https://bugs.gnu.org/8357
+                 env TZ=Europe/Helsinki \
+                   date --debug \
+                        -d 'Mon Mar 28 00:36:07 2011 EEST 1 day ago'
+
+                 This case is different than DST changes due to time adjustment,
+                 i.e. "1 day ago" vs "24 hours ago" are calculated in different
+                 places.
+
+                 'tm0.tm_isdst' contains the DST of the input date,
+                 'tm.tm_isdst' is the normalized result after calling
+                 mktime(&tm).
+              */
+              if ((tm0.tm_isdst!=-1) && (tm.tm_isdst != tm0.tm_isdst))
+                dbg_printf (_("warning: daylight saving time changed after " \
+                              "date adjustment\n"));
+
               /* warn if the user did not ask to adjust days but mday changed,
                  or
                  user did not ask to adjust months/days but the month changed.
@@ -2249,6 +2278,23 @@ parse_datetime2 (struct timespec *result, char const *p,
                             "%+ld minutes, %+ld seconds, %+ld ns),\n"),
                           pc.rel.hour,pc.rel.minutes,pc.rel.seconds,pc.rel.ns);
               dbg_printf (_("    new time = %ld epoch-seconds\n"),t5);
+
+              /* warn about crossing DST due to time adjustment.
+                 Example: https://bugs.gnu.org/8357
+                 env TZ=Europe/Helsinki \
+                   date --debug \
+                        -d 'Mon Mar 28 00:36:07 2011 EEST 24 hours ago'
+
+                 This case is different than DST changes due to days adjustment,
+                 i.e. "1 day ago" vs "24 hours ago" are calculated in different
+                 places.
+
+                 'tm.tm_isdst' contains the date after date adjustment.
+              */
+              struct tm const *lmt = localtime (&t5);
+              if ((tm.tm_isdst!=-1) && (tm.tm_isdst != lmt->tm_isdst))
+                dbg_printf (_("warning: daylight saving time changed after " \
+                              "time adjustment\n"));
             }
 
         result->tv_sec = t5;

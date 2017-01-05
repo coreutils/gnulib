@@ -1,5 +1,33 @@
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
+	parse-datetime: add debug warning about DST changes
+	Incorrect date arithmetic due to daylight saving time (DST) are a
+	common (false) bug report in coreutils.
+	Detect two such cases and print a warning:
+	1. year/month/day adjustments (performed on 'struct tm'),
+	   where 'mktime' returns a different isdst value.
+	2. hour/minute/seconds/ns adjustments (performed on 'time_t'),
+	   where the result of 'localtime(3)' on the value will return a
+	   different isdst value.
+	Note: DST changes could be harmless or unnoticeable.
+	Examples (with 'TZ=America/New_York'):
+	Unnoticeable: result is 2016-Dec-14
+	   $ date -d '2016-06-15 EDT + 6 months' +%b
+	   Dec
+	Unnoticeable: result is 2016-Dec-15 11:00:00
+	   $ date -d '2016-06-15 12:00:00 EDT + 6 months' +%F
+	   2016-12-15
+	This is unexpected:
+	   $ date -d '2016-06-01 EDT + 6 months' +%F
+	   2016-11-30
+	The new debug warnings will show:
+	   $ ./src/date --debug -d '2016-06-01 EDT + 6 months' +%F
+	   ...
+	   date: warning: daylight saving time changed after date adjustment
+	   ...
+	* lib/parse-datetime.y (parse_datetime2): Detect DST changes, and
+	print an appropriate warning message.
+
 	parse-datetime: add debug warning about date arithmetic
 	Date arithmetic are done directly on the fields of 'struct tm',
 	which can result in invalid dates. Normalization with 'mktime(3)'
