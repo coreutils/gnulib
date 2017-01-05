@@ -1,5 +1,28 @@
 2017-01-04  Assaf Gordon <assafgordon@gmail.com>
 
+	parse-datetime: fix debug message on lone year number
+	Input dates such as
+	  date -d "Apr 11 22:59:00 2011"
+	are parsed as date (Apr 11, with default year 2016), then time, then a
+	number (2011). Based on the combination of previously seen tokens,
+	'digits_to_date_time' determines 2011 to be a year value.
+	This fixes the debug messages to correctly show the updated year.
+	Before:
+	    $ date --debug -d 'Apr 11 22:59:00 2011'
+	    date: parsed date part: (Y-M-D) 2016-04-11
+	    date: parsed time part: 22:59:00
+	    date: parsed number part: today/this/now
+	After:
+	    $ ./src/date --debug -d 'Apr 11 22:59:00 2011'
+	    date: parsed date part: (Y-M-D) 2016-04-11
+	    date: parsed time part: 22:59:00
+	    date: parsed number part: year: 2011
+	* lib/parse-datetime.y (struct parser_control): Add 'year_seen',
+	'debug_year_seen' member fields.
+	(digits_to_date_time): Update 'year_seen' as needed.
+	(debug_print_current_time): Inform about year updates.
+	(parse_datetime2): Initialize year_seen,debug_year_seen member fields.
+
 	parse-datetime: fix local timezone debug messages
 	"Local timezones" are strings that affect only DST relative to the
 	default timezone. The debug messages in parse-datetime.y printed

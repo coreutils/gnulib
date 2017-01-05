@@ -229,6 +229,7 @@ typedef struct
   size_t dsts_seen;
   size_t times_seen;
   size_t zones_seen;
+  size_t year_seen;
 
   /* if true, print debugging output to stderr */
   bool parse_datetime_debug;
@@ -240,6 +241,7 @@ typedef struct
   size_t debug_dsts_seen;
   size_t debug_times_seen;
   size_t debug_zones_seen;
+  size_t debug_year_seen;
 
   /* true if the user specified explicit ordinal day value, */
   bool debug_ordinal_day_seen;
@@ -264,7 +266,10 @@ digits_to_date_time (parser_control *pc, textint text_int)
 {
   if (pc->dates_seen && ! pc->year.digits
       && ! pc->rels_seen && (pc->times_seen || 2 < text_int.digits))
-    pc->year = text_int;
+    {
+      pc->year_seen++;
+      pc->year = text_int;
+    }
   else
     {
       if (4 < text_int.digits)
@@ -411,6 +416,16 @@ debug_print_current_time (const char* item, parser_control *pc)
       fprintf (stderr,"(Y-M-D) %04ld-%02ld-%02ld",
               pc->year.value, pc->month, pc->day);
       pc->debug_dates_seen = pc->dates_seen;
+      space = 1;
+    }
+
+  if (pc->year_seen != pc->debug_year_seen)
+    {
+      if (space)
+        fputc (' ',stderr);
+      fprintf (stderr, _("year: %04ld"), pc->year.value);
+
+      pc->debug_year_seen = pc->year_seen;
       space = 1;
     }
 
@@ -1820,6 +1835,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   pc.local_zones_seen = 0;
   pc.dsts_seen = 0;
   pc.zones_seen = 0;
+  pc.year_seen = 0;
   pc.parse_datetime_debug = (flags & PARSE_DATETIME_DEBUG)!=0;
   pc.debug_dates_seen = 0;
   pc.debug_days_seen = 0;
@@ -1827,6 +1843,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   pc.debug_local_zones_seen = 0;
   pc.debug_dsts_seen = 0;
   pc.debug_zones_seen = 0;
+  pc.debug_year_seen = 0;
   pc.debug_ordinal_day_seen = false;
   pc.debug_default_input_timezone = 0;
 
