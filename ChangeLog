@@ -1,5 +1,10 @@
 2017-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	localename-tests: port to NetBSD 7
+	Problem reported by Nelson H. F. Beebe.
+	* tests/test-localename.c:
+	Test newlocale and uselocale only if both exist.
+
 	glob, intprops, xalloc: work around Clang bug
 	Work around LLVM bug 16404, which is still not fixed.
 	https://llvm.org/bugs/show_bug.cgi?id=16404

@@ -27,7 +27,7 @@
 #include "macros.h"
 
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
 
 static struct { int cat; int mask; const char *string; } const categories[] =
   {
@@ -70,7 +70,7 @@ test_locale_name (void)
 
   /* Get into a defined state,  */
   setlocale (LC_ALL, "en_US.UTF-8");
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   uselocale (LC_GLOBAL_LOCALE);
 #endif
 
@@ -172,7 +172,7 @@ test_locale_name (void)
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   /* Check that gl_locale_name considers the thread locale.  */
   {
     locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
@@ -232,7 +232,7 @@ test_locale_name_thread (void)
   /* Get into a defined state,  */
   setlocale (LC_ALL, "en_US.UTF-8");
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   /* Check that gl_locale_name_thread returns NULL when no thread locale is
      set.  */
   uselocale (LC_GLOBAL_LOCALE);
@@ -487,7 +487,7 @@ test_locale_name_posix (void)
 
   /* Get into a defined state,  */
   setlocale (LC_ALL, "en_US.UTF-8");
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   uselocale (LC_GLOBAL_LOCALE);
 #endif
 
@@ -592,7 +592,7 @@ test_locale_name_posix (void)
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   /* Check that gl_locale_name_posix ignores the thread locale.  */
   {
     locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
@@ -621,7 +621,7 @@ test_locale_name_environ (void)
 
   /* Get into a defined state,  */
   setlocale (LC_ALL, "en_US.UTF-8");
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   uselocale (LC_GLOBAL_LOCALE);
 #endif
 
@@ -706,7 +706,7 @@ test_locale_name_environ (void)
   name = gl_locale_name_environ (LC_MESSAGES, "LC_MESSAGES");
   ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   /* Check that gl_locale_name_environ ignores the thread locale.  */
   {
     locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
@@ -741,7 +741,7 @@ test_locale_name_default (void)
   ASSERT (strcmp (name, "C") == 0);
 #endif
 
-#if HAVE_NEWLOCALE
+#if HAVE_NEWLOCALE && HAVE_USELOCALE
   /* Check that gl_locale_name_default ignores the thread locale.  */
   {
     locale_t locale = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", NULL);
