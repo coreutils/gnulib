@@ -1,5 +1,16 @@
 2017-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	glob, intprops, xalloc: work around Clang bug
+	Work around LLVM bug 16404, which is still not fixed.
+	https://llvm.org/bugs/show_bug.cgi?id=16404
+	Problem reported by Nelson H. F. Beebe.
+	* lib/glob.c, lib/intprops.h, lib/xalloc-oversized.h (__has_builtin):
+	Remove.
+	* lib/glob.c (size_add_wrapv):
+	* lib/intprops.h (_GL_HAS_BUILTIN_OVERFLOW, _GL_HAS_BUILTIN_OVERFLOW_P):
+	* lib/xalloc-oversized.h (xalloc_oversized):
+	Do not use overflow builtins if Clang.
+
 	dfa: fix 'return' typo
 	Problem reported by Nelson H. F. Beebe.
 	* lib/dfa.c (merge): Fix typo that Sun compilers rejected.

@@ -246,10 +246,6 @@ convert_dirent64 (const struct dirent64 *source)
     ((void) (buf), (void) (len), (void) (newlen), (void) (avar), (void *) 0)
 #endif
 
-#ifndef __has_builtin
-# define __has_builtin(x) 0
-#endif
-
 /* Set *R = A + B.  Return true if the answer is mathematically
    incorrect due to overflow; in this case, *R is the low order
    bits of the correct answer..  */
@@ -257,7 +253,7 @@ convert_dirent64 (const struct dirent64 *source)
 static bool
 size_add_wrapv (size_t a, size_t b, size_t *r)
 {
-#if 5 <= __GNUC__ || __has_builtin (__builtin_add_overflow)
+#if 5 <= __GNUC__
   return __builtin_add_overflow (a, b, r);
 #else
   *r = a + b;
