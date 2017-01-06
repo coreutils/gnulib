@@ -2086,7 +2086,7 @@ merge_constrained (position_set const *s1, position_set const *s2,
 static void
 merge (position_set const *s1, position_set const *s2, position_set *m)
 {
-  return merge_constrained (s1, s2, -1, m);
+  merge_constrained (s1, s2, -1, m);
 }
 
 /* Delete a position from a set.  Return the nonzero constraint of the

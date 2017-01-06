@@ -1,3 +1,9 @@
+2017-01-06  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: fix 'return' typo
+	Problem reported by Nelson H. F. Beebe.
+	* lib/dfa.c (merge): Fix typo that Sun compilers rejected.
+
 2017-01-05  Pádraig Brady  <P@draigBrady.com>
 
 	parse-datetime: fix generated paths for coverage files
