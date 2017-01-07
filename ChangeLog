@@ -1,5 +1,12 @@
 2017-01-06  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getprogname: port to IRIX
+	* lib/getprogname.c (getprogname): Port to IRIX.
+	Based on an idea by Bastien Roucariès at:
+	http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00096.html
+	via code from Bruno Haible at:
+	https://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00249.html
+
 	localename-tests: port to NetBSD 7
 	Problem reported by Nelson H. F. Beebe.
 	* tests/test-localename.c:
