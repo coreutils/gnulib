@@ -43,7 +43,7 @@ fbufmode (FILE *fp)
     return _IONBF;
   return _IOFBF;
 #elif defined __sferror || defined __DragonFly__ || defined __ANDROID__
-  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Android */
+  /* FreeBSD, NetBSD, OpenBSD, DragonFly, Mac OS X, Cygwin, Minix 3, Android */
   if (fp_->_flags & __SLBF)
     return _IOLBF;
   if (fp_->_flags & __SNBF)
