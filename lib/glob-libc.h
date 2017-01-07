@@ -158,7 +158,7 @@ typedef struct
   } glob64_t;
 #endif
 
-#if __USE_FILE_OFFSET64 && __GNUC__ < 2 && !defined __GLOB_GNULIB
+#if defined __USE_FILE_OFFSET64 && __GNUC__ < 2 && !defined __GLOB_GNULIB
 # define glob glob64
 # define globfree globfree64
 #endif

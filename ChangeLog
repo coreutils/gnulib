@@ -1,3 +1,8 @@
+2017-01-07  Tim Rühsen  <tim.ruehsen@gmx.de>  (tiny change)
+
+	Avoid -Wundef warning about undefined __USE_FILE_OFFSET64.
+	* lib/glob-libc.h: Test if __USE_FILE_OFFSET64 is defined.
+
 2017-01-07  Bruno Haible  <bruno@clisp.org>
 
 	stdioext: Port to Minix 3.2 and newer.
