@@ -1,5 +1,10 @@
 2017-01-07  Tim Rühsen  <tim.ruehsen@gmx.de>  (tiny change)
 
+	Avoid -Wundef warning about undefined WINDOWS_SOCKETS.
+	* lib/sockets.h: Test if WINDOWS_SOCKETS is defined.
+
+2017-01-07  Tim Rühsen  <tim.ruehsen@gmx.de>  (tiny change)
+
 	Avoid -Wundef warning about undefined __USE_FILE_OFFSET64.
 	* lib/glob-libc.h: Test if __USE_FILE_OFFSET64 is defined.
 

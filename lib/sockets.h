@@ -27,13 +27,13 @@
 #define SOCKETS_2_2 0x0202
 
 int gl_sockets_startup (int version)
-#if !WINDOWS_SOCKETS
+#ifndef WINDOWS_SOCKETS
   _GL_ATTRIBUTE_CONST
 #endif
   ;
 
 int gl_sockets_cleanup (void)
-#if !WINDOWS_SOCKETS
+#ifndef WINDOWS_SOCKETS
   _GL_ATTRIBUTE_CONST
 #endif
   ;
@@ -41,7 +41,7 @@ int gl_sockets_cleanup (void)
 /* This function is useful it you create a socket using gnulib's
    Winsock wrappers but needs to pass on the socket handle to some
    other library that only accepts sockets. */
-#if WINDOWS_SOCKETS
+#ifdef WINDOWS_SOCKETS
 
 #include <sys/socket.h>
 
