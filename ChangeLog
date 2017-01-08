@@ -1,3 +1,11 @@
+2017-01-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: fix reallocation bug when matching newlines
+	Problem reported for sed by S. Gilles (Bug#25390).
+	* lib/dfa.c (realloc_trans_if_necessary): Move earlier.
+	(dfastate): Reallocate before moving any newline transition ...
+	(build_state): ... instead of reallocating here, where it is too late.
+
 2017-01-07  Tim Rühsen  <tim.ruehsen@gmx.de>  (tiny change)
 
 	Avoid -Wundef warning about undefined WINDOWS_SOCKETS.
