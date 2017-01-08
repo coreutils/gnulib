@@ -2609,8 +2609,10 @@ realloc_trans_if_necessary (struct dfa *d)
     }
 }
 
-/* Return the transition out of state s of d for the input character uc,
-   updating the slots in trans accordingly.
+/*
+   Calculate the transition table for a new state derived from state s
+   for a compiled dfa d after input character uc, and return the new
+   state number.
 
    Do not worry about all possible input characters; calculate just the group
    of positions that match uc.  Label it with the set of characters that
@@ -2639,8 +2641,9 @@ realloc_trans_if_necessary (struct dfa *d)
    If after comparing with every group there are characters remaining in C,
    create a new group labeled with the characters of C and insert this
    position in that group.  */
+
 static state_num
-dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
+build_state (state_num s, struct dfa *d, unsigned char uc)
 {
   position_set follows;         /* Union of the follows of the group.  */
   position_set tmp;             /* Temporary space for merging sets.  */
@@ -2651,6 +2654,45 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
 #ifdef DEBUG
   fprintf (stderr, "build state %td\n", s);
 #endif
+
+  /* A pointer to the new transition table, and the table itself.  */
+  state_num **ptrans = (accepting (s, d) ? d->fails : d->trans) + s;
+  state_num *trans = *ptrans;
+
+  if (!trans)
+    {
+      /* MAX_TRCOUNT is an arbitrary upper limit on the number of
+         transition tables that can exist at once, other than for
+         initial states.  Often-used transition tables are quickly
+         rebuilt, whereas rarely-used ones are cleared away.  */
+      if (MAX_TRCOUNT <= d->trcount)
+        {
+          for (state_num i = d->min_trcount; i < d->tralloc; i++)
+            {
+              free (d->trans[i]);
+              free (d->fails[i]);
+              d->trans[i] = d->fails[i] = NULL;
+            }
+          d->trcount = 0;
+        }
+
+      d->trcount++;
+      *ptrans = trans = xmalloc (NOTCHAR * sizeof *trans);
+
+      /* Fill transition table with a default value which means that the
+         transited state has not been calculated yet.  */
+      for (int i = 0; i < NOTCHAR; i++)
+        trans[i] = -2;
+    }
+
+  /* Set up the success bits for this state.  */
+  d->success[s] = 0;
+  if (accepts_in_context (d->states[s].context, CTX_NEWLINE, s, d))
+    d->success[s] |= CTX_NEWLINE;
+  if (accepts_in_context (d->states[s].context, CTX_LETTER, s, d))
+    d->success[s] |= CTX_LETTER;
+  if (accepts_in_context (d->states[s].context, CTX_NONE, s, d))
+    d->success[s] |= CTX_NONE;
 
   /* Positions that match the input char.  */
   leaf_set group;
@@ -2887,55 +2929,6 @@ dfastate (state_num s, struct dfa *d, unsigned char uc, state_num trans[])
     }
 
   return trans[uc];
-}
-
-/* Calculate the transition table for a new state derived from state s
-   for a compiled dfa d after input character uc, and return the new
-   state number.  */
-
-static state_num
-build_state (state_num s, struct dfa *d, unsigned char uc)
-{
-  /* A pointer to the new transition table, and the table itself.  */
-  state_num **ptrans = (accepting (s, d) ? d->fails : d->trans) + s;
-  state_num *trans = *ptrans;
-
-  if (!trans)
-    {
-      /* MAX_TRCOUNT is an arbitrary upper limit on the number of
-         transition tables that can exist at once, other than for
-         initial states.  Often-used transition tables are quickly
-         rebuilt, whereas rarely-used ones are cleared away.  */
-      if (MAX_TRCOUNT <= d->trcount)
-        {
-          for (state_num i = d->min_trcount; i < d->tralloc; i++)
-            {
-              free (d->trans[i]);
-              free (d->fails[i]);
-              d->trans[i] = d->fails[i] = NULL;
-            }
-          d->trcount = 0;
-        }
-
-      d->trcount++;
-      *ptrans = trans = xmalloc (NOTCHAR * sizeof *trans);
-
-      /* Fill transition table with a default value which means that the
-         transited state has not been calculated yet.  */
-      for (int i = 0; i < NOTCHAR; i++)
-        trans[i] = -2;
-    }
-
-  /* Set up the success bits for this state.  */
-  d->success[s] = 0;
-  if (accepts_in_context (d->states[s].context, CTX_NEWLINE, s, d))
-    d->success[s] |= CTX_NEWLINE;
-  if (accepts_in_context (d->states[s].context, CTX_LETTER, s, d))
-    d->success[s] |= CTX_LETTER;
-  if (accepts_in_context (d->states[s].context, CTX_NONE, s, d))
-    d->success[s] |= CTX_NONE;
-
-  return dfastate (s, d, uc, trans);
 }
 
 /* Multibyte character handling sub-routines for dfaexec.  */
