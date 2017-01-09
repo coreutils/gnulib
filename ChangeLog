@@ -1,5 +1,9 @@
 2017-01-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getprogname: fix port to IRIX
+	* lib/getprogname.c (getprogname) [__sgi]:
+	Don't dump core if malloc returns NULL.
+
 	dfa: fix reallocation bug when matching newlines
 	Problem reported for sed by S. Gilles (Bug#25390).
 	* lib/dfa.c (realloc_trans_if_necessary): Move earlier.

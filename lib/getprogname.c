@@ -169,8 +169,11 @@ getprogname (void)
           char *namenul = memchr (name, '\0', namesize);
           size_t namelen = namenul ? namenul - name : namesize;
           char *namecopy = malloc (namelen + 1);
-          namecopy[namelen] = 0;
-          return memcpy (namecopy, name, namelen);
+          if (namecopy)
+            {
+              namecopy[namelen] = 0;
+              return memcpy (namecopy, name, namelen);
+            }
         }
     }
   return NULL;
