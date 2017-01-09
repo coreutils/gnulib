@@ -1,5 +1,5 @@
 Description:
-compare file time stamps
+compare file timestamps
 
 Files:
 lib/utimecmp.h

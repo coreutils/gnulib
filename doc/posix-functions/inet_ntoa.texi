@@ -18,7 +18,7 @@ mingw, MSVC 9.
 @item
 The @code{inet_ntoa} function need not be reentrant, and consequently
 is not required to be thread safe.  Implementations of
-@code{inet_ntoa} typically write the time stamp into static buffer.
+@code{inet_ntoa} typically write the timestamp into static buffer.
 If two threads call @code{inet_ntoa} at roughly the same time, you
 might end up with the wrong date in one of the threads, or some
 undefined string.

@@ -311,7 +311,7 @@ unambiguous numeric time zone corrections like @samp{-0500}, as
 described in the previous section.
 
 If neither a time zone item nor a time zone correction is supplied,
-time stamps are interpreted using the rules of the default time zone
+timestamps are interpreted using the rules of the default time zone
 (@pxref{Specifying time zone rules}).
 
 
@@ -478,12 +478,12 @@ year.
 @node Seconds since the Epoch
 @section Seconds since the Epoch
 
-If you precede a number with @samp{@@}, it represents an internal time
-stamp as a count of seconds.  The number can contain an internal
+If you precede a number with @samp{@@}, it represents an internal
+timestamp as a count of seconds.  The number can contain an internal
 decimal point (either @samp{.} or @samp{,}); any excess precision not
 supported by the internal representation is truncated toward minus
 infinity.  Such a number cannot be combined with any other date
-item, as it specifies a complete time stamp.
+item, as it specifies a complete timestamp.
 
 @cindex beginning of time, for POSIX
 @cindex epoch, for POSIX

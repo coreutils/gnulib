@@ -1,4 +1,4 @@
-/* Parse a string into an internal time stamp.
+/* Parse a string into an internal timestamp.
 
    Copyright (C) 1995, 1997-1998, 2003-2004, 2007, 2009-2017 Free Software
    Foundation, Inc.

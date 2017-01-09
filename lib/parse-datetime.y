@@ -1,5 +1,5 @@
 %{
-/* Parse a string into an internal time stamp.
+/* Parse a string into an internal timestamp.
 
    Copyright (C) 1999-2000, 2002-2017 Free Software Foundation, Inc.
 
@@ -24,7 +24,7 @@
    Modified by Paul Eggert <eggert@twinsun.com> in August 1999 to do
    the right thing about local DST.  Also modified by Paul Eggert
    <eggert@cs.ucla.edu> in February 2004 to support
-   nanosecond-resolution time stamps, and in October 2004 to support
+   nanosecond-resolution timestamps, and in October 2004 to support
    TZ strings in dates.  */
 
 /* FIXME: Check for arithmetic overflow in all cases, not just
@@ -1066,8 +1066,8 @@ static table const relative_time_table[] =
 };
 
 /* The universal time zone table.  These labels can be used even for
-   time stamps that would not otherwise be valid, e.g., GMT time
-   stamps in London during summer.  */
+   timestamps that would not otherwise be valid, e.g., GMT timestamps
+   oin London during summer.  */
 static table const universal_time_zone_table[] =
 {
   { "GMT",      tZONE,     HOUR ( 0) }, /* Greenwich Mean */
@@ -1540,9 +1540,9 @@ mktime_ok (struct tm const *tm0, struct tm const *tm1, time_t t)
 {
   if (t == (time_t) -1)
     {
-      /* Guard against falsely reporting an error when parsing a time
-         stamp that happens to equal (time_t) -1, on a host that
-         supports such a time stamp.  */
+      /* Guard against falsely reporting an error when parsing a
+         timestamp that happens to equal (time_t) -1, on a host that
+         supports such a timestamp.  */
       tm1 = localtime (&t);
       if (!tm1)
         return false;
@@ -2034,7 +2034,7 @@ parse_datetime2 (struct timespec *result, char const *p,
             dbg_printf ("warning: using midnight as starting time: 00:00:00\n");
         }
 
-      /* Let mktime deduce tm_isdst if we have an absolute time stamp.  */
+      /* Let mktime deduce tm_isdst if we have an absolute timestamp.  */
       if (pc.dates_seen | pc.days_seen | pc.times_seen)
         tm.tm_isdst = -1;
 

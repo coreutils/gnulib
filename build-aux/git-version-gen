@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2016-05-08.18; # UTC
+scriptversion=2017-01-09.19; # UTC
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 #
@@ -200,7 +200,7 @@ v=`echo "$v" |sed "s/^$prefix//"`
 # string we're using came from git.  I.e., skip the test if it's "UNKNOWN"
 # or if it came from .tarball-version.
 if test "x$v_from_git" != x; then
-  # Don't declare a version "dirty" merely because a time stamp has changed.
+  # Don't declare a version "dirty" merely because a timestamp has changed.
   git update-index --refresh > /dev/null 2>&1
 
   dirty=`exec 2>/dev/null;git diff-index --name-only HEAD` || dirty=

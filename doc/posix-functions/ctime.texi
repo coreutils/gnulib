@@ -17,7 +17,7 @@ This function may overflow its internal buffer if an invalid year is passed.
 @item
 The @code{ctime} function need not be reentrant, and consequently is
 not required to be thread safe.  Implementations of @code{ctime}
-typically write the time stamp into static buffer.  If two threads
+typically write the timestamp into static buffer.  If two threads
 call @code{ctime} at roughly the same time, you might end up with the
 wrong date in one of the threads, or some undefined string.  There is
 a re-entrant interface @code{ctime_r}.

@@ -1,4 +1,4 @@
-/* xtime -- extended-resolution integer time stamps
+/* xtime -- extended-resolution integer timestamps
 
    Copyright (C) 2005-2006, 2009-2017 Free Software Foundation, Inc.
 
@@ -28,7 +28,7 @@ _GL_INLINE_HEADER_BEGIN
 # define XTIME_INLINE _GL_INLINE
 #endif
 
-/* xtime_t is a signed type used for time stamps.  It is an integer
+/* xtime_t is a signed type used for timestamps.  It is an integer
    type that is a count of nanoseconds -- except for obsolescent hosts
    without sufficiently-wide integers, where it is a count of
    seconds.  */

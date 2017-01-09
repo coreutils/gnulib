@@ -262,7 +262,7 @@ use an ANSI C compiler:
 @noindent
 and if that doesn't work, install pre-built binaries of GCC for HP-UX.
 
-HP-UX @command{make} updates targets which have the same time stamps as
+HP-UX @command{make} updates targets which have the same timestamps as
 their prerequisites, which makes it generally unusable when shipped
 generated files such as @command{configure} are involved.  Use GNU
 @command{make} instead.

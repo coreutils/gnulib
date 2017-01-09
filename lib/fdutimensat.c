@@ -27,14 +27,14 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 
-/* Set the access and modification time stamps of FD (a.k.a. FILE) to be
+/* Set the access and modification timestamps of FD (a.k.a. FILE) to be
    TIMESPEC[0] and TIMESPEC[1], respectively; relative to directory DIR.
    FD must be either negative -- in which case it is ignored --
    or a file descriptor that is open on FILE.
    If FD is nonnegative, then FILE can be NULL, which means
    use just futimes (or equivalent) instead of utimes (or equivalent),
    and fail if on an old system without futimes (or equivalent).
-   If TIMESPEC is null, set the time stamps to the current time.
+   If TIMESPEC is null, set the timestamps to the current time.
    ATFLAG is passed to utimensat if FD is negative or futimens was
    unsupported, which can allow operation on FILE as a symlink.
    Return 0 on success, -1 (setting errno) on failure.  */

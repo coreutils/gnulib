@@ -1,4 +1,4 @@
-/* utimecmp.c -- compare file time stamps
+/* utimecmp.c -- compare file timestamps
 
    Copyright (C) 2004-2007, 2009-2017 Free Software Foundation, Inc.
 
@@ -56,13 +56,13 @@ enum { SYSCALL_RESOLUTION = 1000 };
 enum { SYSCALL_RESOLUTION = BILLION };
 #endif
 
-/* Describe a file system and its time stamp resolution in nanoseconds.  */
+/* Describe a file system and its timestamp resolution in nanoseconds.  */
 struct fs_res
 {
   /* Device number of file system.  */
   dev_t dev;
 
-  /* An upper bound on the time stamp resolution of this file system,
+  /* An upper bound on the timestamp resolution of this file system,
      ignoring any resolution that cannot be set via utimens.  It is
      represented by an integer count of nanoseconds.  It must be
      either 2 billion, or a power of 10 that is no greater than a
@@ -108,9 +108,9 @@ dev_info_compare (void const *x, void const *y)
    If OPTIONS & UTIMECMP_TRUNCATE_SOURCE, do the comparison after SRC is
    converted to the destination's timestamp resolution as filtered through
    utimens.  In this case, return -2 if the exact answer cannot be
-   determined; this can happen only if the time stamps are very close and
+   determined; this can happen only if the timestamps are very close and
    there is some trouble accessing the file system (e.g., the user does not
-   have permission to futz with the destination's time stamps).  */
+   have permission to futz with the destination's timestamps).  */
 
 int
 utimecmp (char const *dst_name,
@@ -133,7 +133,7 @@ utimecmp (char const *dst_name,
 
   verify (TYPE_IS_INTEGER (time_t));
 
-  /* Destination and source time stamps.  */
+  /* Destination and source timestamps.  */
   time_t dst_s = dst_stat->st_mtime;
   time_t src_s = src_stat->st_mtime;
   int dst_ns = get_stat_mtime_ns (dst_stat);
@@ -141,7 +141,7 @@ utimecmp (char const *dst_name,
 
   if (options & UTIMECMP_TRUNCATE_SOURCE)
     {
-      /* Look up the time stamp resolution for the destination device.  */
+      /* Look up the timestamp resolution for the destination device.  */
 
       /* Hash table for caching information learned about devices.  */
       static Hash_table *ht;
@@ -151,7 +151,7 @@ utimecmp (char const *dst_name,
       struct fs_res *dst_res = NULL;
       struct fs_res tmp_dst_res;
 
-      /* Time stamp resolution in nanoseconds.  */
+      /* timestamp resolution in nanoseconds.  */
       int res;
 
       /* Quick exit, if possible.  Since the worst resolution is 2
@@ -280,13 +280,13 @@ utimecmp (char const *dst_name,
               struct timespec timespec[2];
               struct stat dst_status;
 
-              /* Ignore source time stamp information that must necessarily
+              /* Ignore source timestamp information that must necessarily
                  be lost when filtered through utimens.  */
               src_ns -= src_ns % SYSCALL_RESOLUTION;
 
-              /* If the time stamps disagree widely enough, there's no need
-                 to interrogate the file system to deduce the exact time
-                 stamp resolution; return the answer directly.  */
+              /* If the timestamps disagree widely enough, there's no need
+                 to interrogate the file system to deduce the exact
+                 timestamp resolution; return the answer directly.  */
               {
                 time_t s = src_s & ~ (res == 2 * BILLION ? 1 : 0);
                 if (src_s < dst_s || (src_s == dst_s && src_ns <= dst_ns))
@@ -296,9 +296,9 @@ utimecmp (char const *dst_name,
                   return -1;
               }
 
-              /* Determine the actual time stamp resolution for the
+              /* Determine the actual timestamp resolution for the
                  destination file system (after truncation due to
-                 SYSCALL_RESOLUTION) by setting the access time stamp of the
+                 SYSCALL_RESOLUTION) by setting the access timestamp of the
                  destination to the existing access time, except with
                  trailing nonzero digits.  */
 
@@ -366,12 +366,12 @@ utimecmp (char const *dst_name,
           dst_res->exact = true;
         }
 
-      /* Truncate the source's time stamp according to the resolution.  */
+      /* Truncate the source's timestamp according to the resolution.  */
       src_s &= ~ (res == 2 * BILLION ? 1 : 0);
       src_ns -= src_ns % res;
     }
 
-  /* Compare the time stamps and return -1, 0, 1 accordingly.  */
+  /* Compare the timestamps and return -1, 0, 1 accordingly.  */
   return (dst_s < src_s ? -1
           : dst_s > src_s ? 1
           : dst_ns < src_ns ? -1

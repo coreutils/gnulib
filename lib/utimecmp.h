@@ -1,4 +1,4 @@
-/* utimecmp.h -- compare file time stamps
+/* utimecmp.h -- compare file timestamps
 
    Copyright (C) 2004, 2009-2017 Free Software Foundation, Inc.
 
@@ -26,7 +26,7 @@
 /* Options for utimecmp.  */
 enum
 {
-  /* Before comparing, truncate the source time stamp to the
+  /* Before comparing, truncate the source timestamp to the
      resolution of the destination file system and to the resolution
      of utimens.  */
   UTIMECMP_TRUNCATE_SOURCE = 1
