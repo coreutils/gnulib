@@ -1,3 +1,10 @@
+2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
+
+	maint: remove stray .texi files
+	Although these were superseded by other files like
+	doc/posix-functions/ctime.texi, the old files were not removed.
+	* doc/ctime.texi, doc/inet_ntoa.texi: Remove.
+
 2017-01-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getprogname: fix port to IRIX
