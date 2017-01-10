@@ -11,53 +11,47 @@ at any time.
   + Mandatory. Using the platform's native 'cc' gives good portability
     exposure, but you can also use GCC 2.95 or newer.
   + GCC Homepage:
-    http://gcc.gnu.org/
+    https://gcc.gnu.org/
   + Download:
-    http://ftp.gnu.org/gnu/gcc/
-    ftp://ftp.gnu.org/gnu/gcc/
+    https://ftp.gnu.org/gnu/gcc/
 
 * A 'make' utility.
   + Mandatory. Using the platform's native 'make' gives good portability
     exposure for in-tree builds, but VPATH builds require GNU Make 3.79.1 or
     newer.
   + GNU Make Homepage:
-    http://www.gnu.org/software/make/
+    https://www.gnu.org/software/make/
   + Download:
-    http://ftp.gnu.org/gnu/make/
-    ftp://ftp.gnu.org/gnu/make/
+    https://ftp.gnu.org/gnu/make/
 
 * GNU M4 1.4.5 or newer.
   + 1.4.5 or newer is mandatory, but 1.4.9 or newer is recommended.
   + Homepage:
-    http://www.gnu.org/software/m4/
+    https://www.gnu.org/software/m4/
   + Download:
-    http://ftp.gnu.org/gnu/m4/
-    ftp://ftp.gnu.org/gnu/m4/
+    https://ftp.gnu.org/gnu/m4/
 
-* Autoconf 2.59 or newer.
+* Autoconf 2.60 or newer.
   + Mandatory.
   + Homepage:
-    http://www.gnu.org/software/autoconf/
+    https://www.gnu.org/software/autoconf/
   + Download:
-    http://ftp.gnu.org/gnu/autoconf/
-    ftp://ftp.gnu.org/gnu/autoconf/
+    https://ftp.gnu.org/gnu/autoconf/
 
-* Automake 1.9.6 or newer.
+* Automake 1.11.1 or newer.
   + Mandatory.
   + Homepage:
-    http://www.gnu.org/software/automake/
+    https://www.gnu.org/software/automake/
   + Download:
-    http://ftp.gnu.org/gnu/automake/
-    ftp://ftp.gnu.org/gnu/automake/
+    https://ftp.gnu.org/gnu/automake/
 
 * A shell
   + Mandatory. Using the platform's native 'sh' gives good portability
     exposure, but you can also use Bash.
   + Homepage:
-    http://www.gnu.org/software/bash/
+    https://www.gnu.org/software/bash/
   + Download:
-    http://ftp.gnu.org/gnu/bash/
-    ftp://ftp.gnu.org/gnu/bash/
+    https://ftp.gnu.org/gnu/bash/
 
 * Core POSIX utilities, including:
     [ basename cat chgrp chmod chown cp dd echo expand expr
@@ -67,43 +61,39 @@ at any time.
   + Mandatory. Using the platform's native utilities gives good portability
     exposure, but you can also use GNU coreutils.
   + Homepage:
-    http://www.gnu.org/software/coreutils/
+    https://www.gnu.org/software/coreutils/
   + Download:
-    http://ftp.gnu.org/gnu/coreutils/
-    ftp://ftp.gnu.org/gnu/coreutils/
+    https://ftp.gnu.org/gnu/coreutils/
 
 * The comparison utilities 'cmp' and 'diff'.
   + Mandatory. Using the platform's native utilities gives good portability
     exposure, but you can also use GNU diffutils.
   + Homepage:
-    http://www.gnu.org/software/diffutils/
+    https://www.gnu.org/software/diffutils/
   + Download:
-    http://ftp.gnu.org/gnu/diffutils/
-    ftp://ftp.gnu.org/gnu/diffutils/
+    https://ftp.gnu.org/gnu/diffutils/
 
 * The patch utility 'patch'.
   + Mandatory if you use gnulib-local diffs. Using the platform's native
     utilities gives good portability exposure, but you can also use GNU
     patch.
   + Homepage:
-    http://www.gnu.org/software/patch/
+    https://www.gnu.org/software/patch/
   + Download:
-    http://ftp.gnu.org/gnu/patch/
-    ftp://ftp.gnu.org/gnu/patch/
+    https://ftp.gnu.org/gnu/patch/
 
 * Grep.
   + Mandatory. Using the platform's native grep gives good portability
     exposure, but you can also use GNU grep.
   + Homepage:
-    http://www.gnu.org/software/grep/
+    https://www.gnu.org/software/grep/
   + Download:
-    http://ftp.gnu.org/gnu/grep/
-    ftp://ftp.gnu.org/gnu/grep/
+    https://ftp.gnu.org/gnu/grep/
 
 * GNU gettext.
   + If your project wants to follow GNU Coding Standards:
     + Always use the newest available gettext release, see
-      <http://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html>.
+      <https://www.gnu.org/software/gnulib/manual/html_node/gettextize-and-autopoint.html>.
     + Use the 'gettext' module.
   + If your project cares more about ease of development on older platforms:
     + gettext 0.17 or newer.
@@ -111,46 +101,41 @@ at any time.
   + Recommended.
     Needed if you use modules that use internationalization (many do).
   + Homepage:
-    http://www.gnu.org/software/gettext/
+    https://www.gnu.org/software/gettext/
   + Download:
-    http://ftp.gnu.org/gnu/gettext/
-    ftp://ftp.gnu.org/gnu/gettext/
+    https://ftp.gnu.org/gnu/gettext/
 
 * Bison 2.0 or newer.
   + Recommended.
     Needed if you use the 'parse-datetime' module.
   + Homepage:
-    http://www.gnu.org/software/bison/
+    https://www.gnu.org/software/bison/
   + Download:
-    http://ftp.gnu.org/gnu/bison/
-    ftp://ftp.gnu.org/gnu/bison/
+    https://ftp.gnu.org/gnu/bison/
 
 * GNU gperf 3.0.1 or newer.
-  + Recommended.
+  + 3.0.1 or newer is mandatory, but 3.1 or newer is recommended.
     Needed if you use the 'iconv_open' module.
   + Homepage:
-    http://www.gnu.org/software/gperf/
+    https://www.gnu.org/software/gperf/
   + Download:
-    http://ftp.gnu.org/gnu/gperf/
-    ftp://ftp.gnu.org/gnu/gperf/
+    https://ftp.gnu.org/gnu/gperf/
 
 * Texinfo 4.6 or newer.
   + Recommended.
     Needed if you use modules that include documentation.
   + Homepage:
-    http://www.gnu.org/software/texinfo/
+    https://www.gnu.org/software/texinfo/
   + Download:
-    http://ftp.gnu.org/gnu/texinfo/
-    ftp://ftp.gnu.org/gnu/texinfo/
+    https://ftp.gnu.org/gnu/texinfo/
 
 * GNU sed.
   + Recommended.
     Needed on platforms where the vendor's 'sed' program is too buggy.
   + Homepage:
-    http://www.gnu.org/software/sed/
+    https://www.gnu.org/software/sed/
   + Download:
-    http://ftp.gnu.org/gnu/sed/
-    ftp://ftp.gnu.org/gnu/sed/
+    https://ftp.gnu.org/gnu/sed/
 
 * GNU libtool 1.5.22 or newer.
   + Optional.
@@ -158,7 +143,6 @@ at any time.
     libtool 2.2.x or newer is needed if you want to invoke gnulib-tool
     with options --create-testdir/--test  and --libtool.
   + Homepage:
-    http://www.gnu.org/software/libtool/
+    https://www.gnu.org/software/libtool/
   + Download:
-    http://ftp.gnu.org/gnu/libtool/
-    ftp://ftp.gnu.org/gnu/libtool/
+    https://ftp.gnu.org/gnu/libtool/
