@@ -1,3 +1,9 @@
+2017-01-10  Jim Meyering  <meyering@fb.com>
+
+	maint.mk: enforce spelling of "timestamp" (i.e., no space)
+	* top/maint.mk (prohibit_undesirable_word_seq_RE_): Also
+	disallow /\btime\s+stamps?\b/.  Prefer "timestamp".
+
 2017-01-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: minor simplification with emptyset
