@@ -9,6 +9,7 @@ lib/localeinfo.h
 
 Depends-on:
 assert
+c99
 ctype
 intprops
 isblank
