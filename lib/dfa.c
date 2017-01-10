@@ -2760,10 +2760,7 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
               matches.w[j] &= d->syntax.letters.w[j] | d->syntax.newline.w[j];
 
           /* If there are no characters left, there's no point in going on.  */
-          size_t j;
-          for (j = 0; j < CHARCLASS_WORDS && !matches.w[j]; j++)
-            continue;
-          if (j == CHARCLASS_WORDS)
+          if (emptyset (&matches))
             continue;
 
           /* If we have reset the bit that made us declare "matched", reset

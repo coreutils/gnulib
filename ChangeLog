@@ -1,3 +1,8 @@
+2017-01-10  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: minor simplification with emptyset
+	* lib/dfa.c (build_state): Simplify by using emptyset.
+
 2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: shrink constraints from 4 bits to 3
