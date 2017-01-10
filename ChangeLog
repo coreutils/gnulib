@@ -1,5 +1,8 @@
 2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: omit unused local
+	* lib/dfa.c (build_state): Fix up recent change.
+
 	maint: remove stray .texi files
 	Although these were superseded by other files like
 	doc/posix-functions/ctime.texi, the old files were not removed.

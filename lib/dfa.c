@@ -2889,7 +2889,6 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
     }
 
   /* Set the transitions for each character in the label.  */
-  state_num maxstate = -1;
   for (size_t i = 0; i < NOTCHAR; i++)
     if (tstbit (i, &label))
       switch (d->syntax.sbit[i])
