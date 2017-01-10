@@ -1,5 +1,9 @@
 2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: omit unnecessary allocation
+	* lib/dfa.c (dfaanalyze): Do not allocate follow set, since
+	an all-zero follow set works just fine.
+
 	dfa: omit unused local
 	* lib/dfa.c (build_state): Fix up recent change.
 
