@@ -1,5 +1,14 @@
 2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: shrink constraints from 4 bits to 3
+	* lib/dfa.c (newline_constraint, letter_constraint)
+	(other_constraint, prev_newline_dependent)
+	(prev_letter_dependent, NO_CONSTRAINT, BEGLINE_CONSTRAINT)
+	(ENDLINE_CONSTRAINT, BEGWORD_CONSTRAINT, ENDWORD_CONSTRAINT)
+	(LIMWORD_CONSTRAINT, NOTLIMWORD_CONSTRAINT):
+	Constraints need only 3 bits, not 4.  Using smaller integers
+	shrinks the code a bit and makes grep a tad faster on x86-64.
+
 	dfa: omit unnecessary ptrdiff_t check
 	* lib/dfa.c (alloc_position_set): Do not worry about ptrdiff_t
 	overflow, since xnmalloc does that now.
