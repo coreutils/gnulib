@@ -2007,8 +2007,6 @@ static void
 alloc_position_set (position_set *s, size_t size)
 {
   s->elems = xnmalloc (size, sizeof *s->elems);
-  if (PTRDIFF_MAX < SIZE_MAX / sizeof *s->elems && PTRDIFF_MAX < size)
-    xalloc_die ();
   s->alloc = size;
   s->nelem = 0;
 }

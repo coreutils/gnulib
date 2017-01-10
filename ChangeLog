@@ -1,5 +1,9 @@
 2017-01-09  Paul Eggert  <eggert@cs.ucla.edu>
 
+	dfa: omit unnecessary ptrdiff_t check
+	* lib/dfa.c (alloc_position_set): Do not worry about ptrdiff_t
+	overflow, since xnmalloc does that now.
+
 	dfa: omit unnecessary allocation
 	* lib/dfa.c (dfaanalyze): Do not allocate follow set, since
 	an all-zero follow set works just fine.
