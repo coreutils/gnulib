@@ -1,3 +1,13 @@
+2017-01-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	strftime: %z is -00 if unknown
+	* lib/strftime.c (DO_TZ_OFFSET): Omit arg 'negative'; it's now
+	the caller's responsibility to set 'negative_number'.  All uses changed.
+	(__strftime_internal): Put '-' before a zero UTC offset if the time
+	zone abbreviation starts with "-", which is the recently-introduced
+	tzdb convention for an unknown UTC offset that is arbitrarily set to 0.
+	* tests/test-strftime.c: Test for this.
+
 2017-01-10  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: port to older GCC
