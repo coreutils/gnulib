@@ -51,4 +51,4 @@ extern void init_localeinfo (struct localeinfo *);
    itself.  This is a generous upper bound.  */
 enum { CASE_FOLDED_BUFSIZE = 32 };
 
-extern int case_folded_counterparts (wchar_t, wchar_t[CASE_FOLDED_BUFSIZE]);
+extern int case_folded_counterparts (wint_t, wchar_t[CASE_FOLDED_BUFSIZE]);

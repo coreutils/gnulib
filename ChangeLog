@@ -1,5 +1,11 @@
 2017-01-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	localeinfo: case_folded_counterparts and WEOF
+	* NEWS: Document this.
+	* lib/localeinfo.c (case_folded_counterparts):
+	First arg is now wint_t, not wchar_t.  This generalizes the
+	function to also work on WEOF, where it returns 0.
+
 	dfa: port to gcc -fsanitize=undefined
 	* lib/dfa.c (copy): Don’t pass NULL with size 0 to memcpy,
 	as this runs afoul of gcc -fsanitize=undefined.

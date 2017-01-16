@@ -42,6 +42,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-01-15  localeinfo      Change case_folded_counterparts's first arg's type
+                            from wchar_t to wint_t, so it now accepts WEOF.
+
 2016-12-17  getlogin        The link requirements of these modules are changed
             getlogin_r      from empty to $(LIB_GETLOGIN).
 

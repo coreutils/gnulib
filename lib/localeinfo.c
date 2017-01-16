@@ -90,10 +90,10 @@ verify (1 + 1 + sizeof lonesome_lower / sizeof *lonesome_lower
 
 /* Find the characters equal to C after case-folding, other than C
    itself, and store them into FOLDED.  Return the number of characters
-   stored.  */
+   stored; this is zero if C is WEOF.  */
 
 int
-case_folded_counterparts (wchar_t c, wchar_t folded[CASE_FOLDED_BUFSIZE])
+case_folded_counterparts (wint_t c, wchar_t folded[CASE_FOLDED_BUFSIZE])
 {
   int i;
   int n = 0;
