@@ -1,3 +1,9 @@
+2017-01-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: port to gcc -fsanitize=undefined
+	* lib/dfa.c (copy): Don’t pass NULL with size 0 to memcpy,
+	as this runs afoul of gcc -fsanitize=undefined.
+
 2017-01-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	strftime: %z is -00 if unknown
