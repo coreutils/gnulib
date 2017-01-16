@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 1
+# host-cpu-c-abi.m4 serial 2
 dnl Copyright (C) 2002-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,6 +46,7 @@ dnl   See <http://en.wikipedia.org/wiki/X86_instruction_listings>.
 AC_DEFUN([gl_HOST_CPU_C_ABI],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_REQUIRE([gl_C_ASM])
   AC_CACHE_CHECK([host CPU and C ABI], [gl_cv_host_cpu_c_abi],
     [case "$host_cpu" in
 
@@ -56,13 +57,23 @@ changequote([,])dnl
          ;;
 
        x86_64 )
-         # On x86_64 systems, the C compiler may still be generating
-         # 32-bit code.
+         # On x86_64 systems, the C compiler may be generating code in one of
+         # these ABIs:
+         # - 64-bit instruction set, 64-bit pointers, 64-bit 'long': x86_64.
+         # - 64-bit instruction set, 64-bit pointers, 32-bit 'long': x86_64
+         #   with native Windows (mingw, MSVC).
+         # - 64-bit instruction set, 32-bit pointers, 32-bit 'long': x32.
+         # - 32-bit instruction set, 32-bit pointers, 32-bit 'long': i386.
          AC_EGREP_CPP([yes],
-           [#if defined __LP64__ || defined __x86_64__ || defined __amd64__
+           [#if defined __x86_64__ || defined __amd64__ || defined _M_X64 || defined _M_AMD64
             yes
             #endif],
-           [gl_cv_host_cpu_c_abi=x86_64],
+           [AC_EGREP_CPP([yes],
+              [#if defined __ILP32__ || defined _ILP32
+               yes
+               #endif],
+              [gl_cv_host_cpu_c_abi=x32],
+              [gl_cv_host_cpu_c_abi=x86_64])],
            [gl_cv_host_cpu_c_abi=i386])
          ;;
 
@@ -73,12 +84,35 @@ changequote([,])dnl
          ;;
 
        arm* )
+         # Assume arm with EABI.
+         # On arm64, the C compiler may be generating 64-bit (= aarch64) code
+         # or 32-bit (= arm) code.
          AC_EGREP_CPP([yes],
-           [#if defined __ARMEL__
+           [#if defined(__aarch64__) || defined(__ARM_64BIT_STATE) || defined(__ARM_PCS_AAPCS64)
             yes
             #endif],
-           [gl_cv_host_cpu_c_abi=armel],
-           [gl_cv_host_cpu_c_abi=arm])
+           [gl_cv_host_cpu_c_abi=arm64],
+           [# Don't distinguish little-endian and big-endian arm, since they
+            # don't require different machine code for simple operations and
+            # since the user can distinguish them through the preprocessot
+            # defines __ARMEL__ vs. __ARMEB__.
+            # But distinguish arm which passes floating-point arguments and
+            # return values in integer registers (r0, r1, ...) - this is
+            # gcc -mfloat-abi=soft or gcc -mfloat-abi=softfp - from arm which
+            # passes them in float registers (s0, s1, ...) and double registers
+            # (d0, d1, ...) - rhis is gcc -mfloat-abi=hard. GCC 4.6 or newer
+            # sets the preprocessor defines __ARM_PCS (for the first case) and
+            # __ARM_PCS_VFP (for the second case), but older GCC does not.
+            echo 'double ddd; void func (double dd) { ddd = dd; }' > conftest.c
+            # Look for a reference to the register d0 in the .s file.
+            AC_TRY_COMMAND(${CC-cc} $CFLAGS $CPPFLAGS $gl_c_asm_opt conftest.c) >/dev/null 2>&1
+            if LC_ALL=C grep -E 'd0,' conftest.$gl_asmext >/dev/null; then
+              gl_cv_host_cpu_c_abi=armhf
+            else
+              gl_cv_host_cpu_c_abi=arm
+            fi
+            rm -f conftest*
+           ])
          ;;
 
        hppa1.0 | hppa1.1 | hppa2.0* | hppa64 )
@@ -107,6 +141,9 @@ changequote([,])dnl
          ;;
 
        powerpc64 )
+         # Different ABIs are in use on AIX vs. Mac OS X vs. Linux,*BSD.
+         # No need to distinguish them here; the caller may distinguish
+         # them based on the OS.
          # On powerpc64 systems, the C compiler may still be generating
          # 32-bit code.
          AC_EGREP_CPP([yes],
@@ -121,7 +158,16 @@ changequote([,])dnl
          gl_cv_host_cpu_c_abi=powerpc
          ;;
 
-       # TODO: Distinguish s390 and s390x correctly.
+       s390* )
+         # On s390x, the C compiler may be generating 64-bit (= s390x) code
+         # or 31-bit (= s390) code.
+         AC_EGREP_CPP([yes],
+           [#if defined(__LP64__) || defined(__s390x__)
+            yes
+            #endif],
+           [gl_cv_host_cpu_c_abi=s390x],
+           [gl_cv_host_cpu_c_abi=s390])
+         ;;
 
        sparc | sparc64 )
          # UltraSPARCs running Linux have `uname -m` = "sparc64", but the
@@ -154,6 +200,9 @@ EOF
 #ifndef __i386__
 #undef __i386__
 #endif
+#ifndef __x32__
+#undef __x32__
+#endif
 #ifndef __x86_64__
 #undef __x86_64__
 #endif
@@ -163,8 +212,11 @@ EOF
 #ifndef __arm__
 #undef __arm__
 #endif
-#ifndef __armel__
-#undef __armel__
+#ifndef __armhf__
+#undef __armhf__
+#endif
+#ifndef __arm64__
+#undef __arm64__
 #endif
 #ifndef __hppa__
 #undef __hppa__

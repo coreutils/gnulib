@@ -42,6 +42,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-01-16  host-cpu-c-abi  On ARM platforms, HOST_CPU_C_ABI is now set to
+                            'arm' or 'armhf' instead of 'armel'.
+
 2017-01-15  localeinfo      Change case_folded_counterparts's first arg's type
                             from wchar_t to wint_t, so it now accepts WEOF.
 
