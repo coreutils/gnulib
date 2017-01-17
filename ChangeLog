@@ -1,3 +1,8 @@
+2017-01-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	intprops: update doc URLs
+	* doc/intprops.texi (Integer Range Overflow): Update URLs.
+
 2017-01-16  Bruno Haible  <bruno@clisp.org>
 
 	host-cpu-c-abi: Add support for armhf, arm64, x32, s390x.
