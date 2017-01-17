@@ -1,3 +1,9 @@
+2017-01-17  Pádraig Brady  <P@draigBrady.com>
+
+	parse-datetime: fix dependence on AC_PROG_SED
+	* modules/parse-datetime: Use `sed` directly like all other modules.
+	Reported by J William Piggott
+
 2017-01-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	intprops: update doc URLs

@@ -37,7 +37,7 @@ parse-datetime.c: parse-datetime.y
 	                              y.tab.h parse-datetime.h \
 	                              y.output parse-datetime.output \
 	                              -- $(YACC) $(YFLAGS) $(AM_YFLAGS) && \
-	$(SED) 's|".*/parse-datetime.y"|"parse-datetime.y"|' \
+	sed -e 's|".*/parse-datetime.y"|"parse-datetime.y"|' \
 	 < parse-datetime.c > parse-datetime.c-t && \
 	mv parse-datetime.c-t $(srcdir)/parse-datetime.c
 lib_SOURCES += parse-datetime.y
