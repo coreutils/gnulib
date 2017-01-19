@@ -91,6 +91,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   vc-dwim         http://git.sv.gnu.org/gitweb/?p=vc-dwim.git
   wdiff           http://bzr.savannah.gnu.org/lh/wdiff/trunk/files
   wget            http://hg.addictivecode.org/wget/mainline/
+  wget2           http://git.savannah.gnu.org/gitweb/?p=wget/wget2.git
   wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
   wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/
   zile            http://www.gnu.org/software/zile/
