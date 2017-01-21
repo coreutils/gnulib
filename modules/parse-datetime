@@ -20,9 +20,10 @@ setenv
 strftime
 unsetenv
 time
+time_r
+time_rz
 timegm
 verify
-xalloc
 
 configure.ac:
 gl_PARSE_DATETIME

@@ -26,4 +26,4 @@ bool parse_datetime (struct timespec *, char const *, struct timespec const *);
 
 /* same as above, supporting additional flags */
 bool parse_datetime2 (struct timespec *, char const *, struct timespec const *,
-                      unsigned int flags);
+                      unsigned int flags, timezone_t, char const *);

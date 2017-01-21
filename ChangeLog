@@ -1,3 +1,21 @@
+2017-01-20  Paul Eggert  <eggert@cs.ucla.edu>
+
+	parse-datetime: handle timezones reentrantly
+	This API change was prompted by a report by Pádraig Brady in:
+	https://bug.debian.org/851934#10
+	To help fix the bug, make parse_datetime2 more reentrant.
+	* NEWS: Document this incompatible change.
+	* lib/parse-datetime.h, lib/parse-datetime.y (parse_datetime2):
+	Add two arguments, the timezone and the timezone name.
+	All callers changed.  If TZ="..." is specified, use it for
+	calculating defaults.
+	* lib/parse-datetime.y: Don't include xalloc.h or use xmalloc, as
+	this code should be usable in a library.
+	(mktime_ok, get_effective_timezone):
+	Accept timezone arg too.  All callers changed.
+	(get_tz): Remove.
+	(get_effective_timezone): Check for failures.
+
 2017-01-20  Eric Blake  <eblake@redhat.com>
 
 	localename: port to cygwin 2.6
