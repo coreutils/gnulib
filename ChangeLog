@@ -1,3 +1,11 @@
+2017-01-31  Bruno Haible  <bruno@clisp.org>
+
+	lock: Fix link error (regression from 2017-01-05).
+	* lib/glthread/lock.h [USE_POSIX_THREADS_WEAK]: Declare also
+	pthread_rwlockattr_init, pthread_rwlockattr_setkind_np,
+	pthread_rwlockattr_destroy weak.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
 2017-01-30  Paul Eggert  <eggert@cs.ucla.edu>
 
 	Port to PGI 16.10 x86-64

@@ -139,6 +139,9 @@ extern int glthread_in_use (void);
 #  pragma weak pthread_mutexattr_init
 #  pragma weak pthread_mutexattr_settype
 #  pragma weak pthread_mutexattr_destroy
+#  pragma weak pthread_rwlockattr_init
+#  pragma weak pthread_rwlockattr_setkind_np
+#  pragma weak pthread_rwlockattr_destroy
 #  ifndef pthread_self
 #   pragma weak pthread_self
 #  endif
