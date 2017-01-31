@@ -29,7 +29,7 @@
    and we use 'volatile' assignments to prevent the compiler from reordering
    such assignments.  */
 #ifdef SIGNAL_SAFE_LIST
-# define ASYNCSAFE(type) *(volatile type *)&
+# define ASYNCSAFE(type) *(type volatile *)&
 #else
 # define ASYNCSAFE(type)
 #endif

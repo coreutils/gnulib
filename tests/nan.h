@@ -25,8 +25,11 @@
 /* NaNf () returns a 'float' not-a-number.  */
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
-   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.  */
-#if defined __DECC || defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
+#if (defined __DECC || defined _MSC_VER \
+     || (defined __MVS__ && defined __IBMC__)   \
+     || defined __PGI)
 static float
 NaNf ()
 {
@@ -41,8 +44,11 @@ NaNf ()
 /* NaNd () returns a 'double' not-a-number.  */
 
 /* The Compaq (ex-DEC) C 6.4 compiler and the Microsoft MSVC 9 compiler choke
-   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.  */
-#if defined __DECC || defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+   on the expression 0.0 / 0.0.  The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
+#if (defined __DECC || defined _MSC_VER \
+     || (defined __MVS__ && defined __IBMC__)   \
+     || defined __PGI)
 static double
 NaNd ()
 {
@@ -59,14 +65,15 @@ NaNd ()
 /* On Irix 6.5, gcc 3.4.3 can't compute compile-time NaN, and needs the
    runtime type conversion.
    The Microsoft MSVC 9 compiler chokes on the expression 0.0L / 0.0L.
-   The IBM XL C compiler on z/OS complains.  */
+   The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
 #ifdef __sgi
 static long double NaNl ()
 {
   double zero = 0.0;
   return zero / zero;
 }
-#elif defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+#elif defined _MSC_VER || (defined __MVS__ && defined __IBMC__) || defined __PGI
 static long double
 NaNl ()
 {

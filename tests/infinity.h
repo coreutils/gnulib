@@ -18,8 +18,9 @@
 /* Infinityf () returns a 'float' +Infinity.  */
 
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0f / 0.0f.
-   The IBM XL C compiler on z/OS complains.  */
-#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+   The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
+#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__) || defined __PGI
 static float
 Infinityf ()
 {
@@ -34,8 +35,9 @@ Infinityf ()
 /* Infinityd () returns a 'double' +Infinity.  */
 
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0 / 0.0.
-   The IBM XL C compiler on z/OS complains.  */
-#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+   The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
+#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__) || defined __PGI
 static double
 Infinityd ()
 {
@@ -50,8 +52,9 @@ Infinityd ()
 /* Infinityl () returns a 'long double' +Infinity.  */
 
 /* The Microsoft MSVC 9 compiler chokes on the expression 1.0L / 0.0L.
-   The IBM XL C compiler on z/OS complains.  */
-#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__)
+   The IBM XL C compiler on z/OS complains.
+   PGI 16.10 complains.  */
+#if defined _MSC_VER || (defined __MVS__ && defined __IBMC__) || defined __PGI
 static long double
 Infinityl ()
 {
