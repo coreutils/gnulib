@@ -12,5 +12,5 @@ configure.ac:
 Makefile.am:
 TESTS += test-rwlock1 test-lock
 check_PROGRAMS += test-rwlock1 test-lock
-test_rwlock1_LDADD = $(LDADD) @LIBMULTITHREAD@
+test_rwlock1_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
 test_lock_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
