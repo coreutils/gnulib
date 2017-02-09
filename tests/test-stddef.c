@@ -19,6 +19,7 @@
 #include <config.h>
 
 #include <stddef.h>
+#include <limits.h>
 #include <stdalign.h>
 #include "verify.h"
 
@@ -43,8 +44,11 @@ struct d
    unlikely to bite real code, we ignore that short-coming.  */
 /* verify (sizeof offsetof (struct d, e) == sizeof (size_t)); */
 verify (sizeof (offsetof (struct d, e)) == sizeof (size_t));
-verify (offsetof (struct d, e) < -1); /* Must be unsigned.  */
 verify (offsetof (struct d, f) == 1);
+
+/* offsetof promotes to an unsigned integer if and only if sizes do
+   not fit in int.  */
+verify ((offsetof (struct d, e) < -1) == (INT_MAX < (size_t) -1));
 
 /* Check max_align_t's alignment.  */
 verify (alignof (double) <= alignof (max_align_t));
