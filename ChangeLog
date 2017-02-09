@@ -1,3 +1,10 @@
+2017-02-09  Bruno Haible  <bruno@clisp.org>
+
+	doc: Don't mention obsolete AC_LIBTOOL_WIN32_DLL macro.
+	* doc/gnulib.texi (Libtool and Windows): Recommend
+	LT_INIT([win32-dll]) instead of AC_LIBTOOL_WIN32_DLL.
+	Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2017-02-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stddef-tests: port to SIZE_MAX <= INT_MAX

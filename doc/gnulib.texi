@@ -1023,10 +1023,11 @@ available.
 @section Libtool and Windows
 
 If you want it to be possible to cross-compile your program to MinGW
-and you use Libtool, you need to put:
+and you use Libtool, you need to use the @code{win32-dll} option of
+@code{LT_INIT}. In other words, put:
 
 @example
-AC_LIBTOOL_WIN32_DLL
+LT_INIT([win32-dll])
 @end example
 
 in your @file{configure.ac}.  This sets the correct names for the
