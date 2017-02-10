@@ -52,7 +52,7 @@
        <http://www.opengroup.org/susv3xsh/tsearch.html>
    for details.  */
 
-# if !@HAVE_TSEARCH@
+# if !@HAVE_TYPE_VISIT@
 #  if !GNULIB_defined_search_types
 typedef enum
 {

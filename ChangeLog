@@ -1,3 +1,10 @@
+2017-02-10  Bruno Haible  <bruno@clisp.org>
+
+	search: Don't assume that tsearch() exists if 'VISIT' is defined.
+	* m4/search_h.m4 (gl_SEARCH_H): Determine HAVE_TYPE_VISIT.
+	* modules/search (Makefile.am): Substitute HAVE_TYPE_VISIT.
+	* lib/search.in.h (VISIT): Define if HAVE_TYPE_VISIT is 0.
+
 2017-02-09  Bruno Haible  <bruno@clisp.org>
 
 	doc: Don't mention obsolete AC_LIBTOOL_WIN32_DLL macro.
