@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 2
+# host-cpu-c-abi.m4 serial 3
 dnl Copyright (C) 2002-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,9 +6,11 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible and Sam Steingold.
 
+dnl Sets the HOST_CPU variable to the canonical name of the CPU.
 dnl Sets the HOST_CPU_C_ABI variable to the canonical name of the CPU with its
 dnl C language ABI (application binary interface).
-dnl Also defines __${HOST_CPU_C_ABI}__ as a C macro in config.h.
+dnl Also defines __${HOST_CPU}__ and __${HOST_CPU_C_ABI}__ as C macros in
+dnl config.h.
 dnl
 dnl This canonical name can be used to select a particular assembly language
 dnl source file that will interoperate with C code on the given host.
@@ -29,9 +31,11 @@ dnl   instruction set of 'mipsn32'.
 dnl * 'mipsn32' and 'mips64' are different canonical names, because they use
 dnl   different sizes for the C types like 'int' and 'void *', and although
 dnl   the instruction sets of 'mipsn32' and 'mips64' are the same.
-dnl * 'arm' and 'armel' are different canonical names, because they use
-dnl   different memory ordering for the C types like 'int', and although
-dnl   the instruction sets of 'arm' and 'armel' are the same.
+dnl * The same canonical name is used for different endiannesses. You can
+dnl   determine the endianness through preprocessor symbols:
+dnl   - 'arm': test __ARMEL__.
+dnl   - 'mips', 'mipsn32', 'mips64': test _MIPSEB vs. _MIPSEL.
+dnl   - 'powerpc64': test _BIG_ENDIAN vs. _LITTLE_ENDIAN.
 dnl * The same name 'i386' is used for CPUs of type i386, i486, i586
 dnl   (Pentium), AMD K7, Pentium II, Pentium IV, etc., because
 dnl   - Instructions that do not exist on all of these CPUs (cmpxchg,
@@ -62,7 +66,7 @@ changequote([,])dnl
          # - 64-bit instruction set, 64-bit pointers, 64-bit 'long': x86_64.
          # - 64-bit instruction set, 64-bit pointers, 32-bit 'long': x86_64
          #   with native Windows (mingw, MSVC).
-         # - 64-bit instruction set, 32-bit pointers, 32-bit 'long': x32.
+         # - 64-bit instruction set, 32-bit pointers, 32-bit 'long': x86_64-x32.
          # - 32-bit instruction set, 32-bit pointers, 32-bit 'long': i386.
          AC_EGREP_CPP([yes],
            [#if defined __x86_64__ || defined __amd64__ || defined _M_X64 || defined _M_AMD64
@@ -72,7 +76,7 @@ changequote([,])dnl
               [#if defined __ILP32__ || defined _ILP32
                yes
                #endif],
-              [gl_cv_host_cpu_c_abi=x32],
+              [gl_cv_host_cpu_c_abi=x86_64-x32],
               [gl_cv_host_cpu_c_abi=x86_64])],
            [gl_cv_host_cpu_c_abi=i386])
          ;;
@@ -83,7 +87,7 @@ changequote([,])dnl
          gl_cv_host_cpu_c_abi=alpha
          ;;
 
-       arm* )
+       arm* | aarch64 )
          # Assume arm with EABI.
          # On arm64, the C compiler may be generating 64-bit (= aarch64) code
          # or 32-bit (= arm) code.
@@ -116,8 +120,14 @@ changequote([,])dnl
          ;;
 
        hppa1.0 | hppa1.1 | hppa2.0* | hppa64 )
-         # TODO: Distinguish hppa and hppa64 correctly.
-         gl_cv_host_cpu_c_abi=hppa
+         # On hppa, the C compiler may be generating 32-bit code or 64-bit
+         # code. In the latter case, it defines _LP64 and __LP64__.
+         AC_EGREP_CPP([yes],
+           [#if defined(__LP64__)
+            yes
+            #endif],
+           [gl_cv_host_cpu_c_abi=hppa64],
+           [gl_cv_host_cpu_c_abi=hppa])
          ;;
 
        mips* )
@@ -140,17 +150,26 @@ changequote([,])dnl
               [gl_cv_host_cpu_c_abi=mips])])
          ;;
 
-       powerpc64 )
+       powerpc* )
          # Different ABIs are in use on AIX vs. Mac OS X vs. Linux,*BSD.
          # No need to distinguish them here; the caller may distinguish
          # them based on the OS.
          # On powerpc64 systems, the C compiler may still be generating
-         # 32-bit code.
+         # 32-bit code. And on powerpc-ibm-aix systems, the C compiler may
+         # be generating 64-bit code.
          AC_EGREP_CPP([yes],
            [#if defined __powerpc64__ || defined _ARCH_PPC64
             yes
             #endif],
-           [gl_cv_host_cpu_c_abi=powerpc64],
+           [# On powerpc64, there are two ABIs on Linux: The AIX compatible
+            # one and the ELFv2 one. The latter defines _CALL_ELF=2.
+            AC_EGREP_CPP([yes],
+              [#if defined _CALL_ELF && _CALL_ELF == 2
+               yes
+               #endif],
+              [gl_cv_host_cpu_c_abi=powerpc64-elfv2],
+              [gl_cv_host_cpu_c_abi=powerpc64])
+           ],
            [gl_cv_host_cpu_c_abi=powerpc])
          ;;
 
@@ -186,22 +205,30 @@ changequote([,])dnl
      esac
     ])
 
+  dnl In most cases, $HOST_CPU and $HOST_CPU_C_ABI are the same.
+  HOST_CPU=`echo "$gl_cv_host_cpu_c_abi" | sed -e 's/-.*//'`
   HOST_CPU_C_ABI="$gl_cv_host_cpu_c_abi"
+  AC_SUBST([HOST_CPU])
   AC_SUBST([HOST_CPU_C_ABI])
 
-  # This was AC_DEFINE_UNQUOTED([__${gl_cv_host_cpu_c_abi}__]) earlier,
-  # but KAI C++ 3.2d doesn't like this.
-  cat >> confdefs.h <<EOF
-#ifndef __${gl_cv_host_cpu_c_abi}__
-#define __${gl_cv_host_cpu_c_abi}__ 1
+  # This was
+  #   AC_DEFINE_UNQUOTED([__${HOST_CPU}__])
+  #   AC_DEFINE_UNQUOTED([__${HOST_CPU_C_ABI}__])
+  # earlier, but KAI C++ 3.2d doesn't like this.
+  sed -e 's/-/_/g' >> confdefs.h <<EOF
+#ifndef __${HOST_CPU}__
+#define __${HOST_CPU}__ 1
+#endif
+#ifndef __${HOST_CPU_C_ABI}__
+#define __${HOST_CPU_C_ABI}__ 1
 #endif
 EOF
   AH_TOP([/* CPU and C ABI indicator */
 #ifndef __i386__
 #undef __i386__
 #endif
-#ifndef __x32__
-#undef __x32__
+#ifndef __x86_64_x32__
+#undef __x86_64_x32__
 #endif
 #ifndef __x86_64__
 #undef __x86_64__
@@ -244,6 +271,9 @@ EOF
 #endif
 #ifndef __powerpc64__
 #undef __powerpc64__
+#endif
+#ifndef __powerpc64_elfv2__
+#undef __powerpc64_elfv2__
 #endif
 #ifndef __s390__
 #undef __s390__

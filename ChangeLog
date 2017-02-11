@@ -1,3 +1,13 @@
+2017-02-11  Bruno Haible  <bruno@clisp.org>
+
+	host-cpu-c-abi: Support for 64-bit AIX, 32-bit armhf on arm64, hppa64.
+	* m4/host-cpu-c-abi.m4 (gl_HOST_CPU_C_ABI): Define also HOST_CPU.
+	For the x32 ABI on x86_64, set HOST_CPU_C_ABI to 'x86_64-x32' and define
+	both __x86_64__ and __x86_64_x32__. For the ELFv2 ABI on powerpc64,
+	define both __powerpc64__ and __powerpc64_elfv2__. Recognize 64-bit
+	compilation on AIX. Recognize 32-bit compilation on arm64/Linux.
+	Distinguish hppa64 from hppa.
+
 2017-02-10  Bruno Haible  <bruno@clisp.org>
 
 	search: Don't assume that tsearch() exists if 'VISIT' is defined.
