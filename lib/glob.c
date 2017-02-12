@@ -705,12 +705,12 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               if (success)
                 {
                   struct passwd *p;
+                  char *malloc_pwtmpbuf = NULL;
+                  char *pwtmpbuf;
 #   if defined HAVE_GETPWNAM_R || defined _LIBC
                   long int pwbuflenmax = GETPW_R_SIZE_MAX ();
                   size_t pwbuflen = pwbuflenmax;
-                  char *pwtmpbuf;
                   struct passwd pwbuf;
-                  char *malloc_pwtmpbuf = NULL;
                   int save = errno;
 
 #    ifndef _LIBC
@@ -919,11 +919,11 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           /* Look up specific user's home directory.  */
           {
             struct passwd *p;
+            char *malloc_pwtmpbuf = NULL;
 #  if defined HAVE_GETPWNAM_R || defined _LIBC
             long int buflenmax = GETPW_R_SIZE_MAX ();
             size_t buflen = buflenmax;
             char *pwtmpbuf;
-            char *malloc_pwtmpbuf = NULL;
             struct passwd pwbuf;
             int save = errno;
 
