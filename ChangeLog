@@ -1,3 +1,11 @@
+2017-02-13  Darshit Shah  <darnir@gnu.org>
+
+	unicase: Update function protoype to match definition.
+	* lib/unicase/special-casing.h (gl_unicase_special_lookup): Gperf 3.1
+	uses 'size_t' as the datatype for the 'len' parameter in the functions
+	it generates. Update the prototype specified here to match the newly
+	generated function.
+
 2017-02-12  Bruno Haible  <bruno@clisp.org>
 
 	times test: Avoid gcc warnings on Linux/x32.

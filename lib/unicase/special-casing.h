@@ -15,6 +15,7 @@
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#include <stddef.h>
 
 /* A special casing context.
    A context is negated through x -> -x.  */
@@ -57,4 +58,4 @@ struct special_casing_rule
 };
 
 extern const struct special_casing_rule *
-       gl_unicase_special_lookup (const char *str, unsigned int len);
+       gl_unicase_special_lookup (const char *str, size_t len);
