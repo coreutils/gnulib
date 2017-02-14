@@ -1,5 +1,9 @@
 2017-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	headers: fix begin-end typos
+	* lib/mbfile.h, lib/se-selinux.in.h: Fix typos by replacing
+	_GL_INLINE_HEADER_BEGIN with _GL_INLINE_HEADER_END.
+
 	selinux-h: port to PGI 16.10
 	* lib/se-selinux.in.h: Don't assume that include_next skips over
 	duplicate -I DIR options.

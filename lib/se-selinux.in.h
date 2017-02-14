@@ -113,10 +113,7 @@ matchpathcon_init_prefix (char const *path _GL_UNUSED_PARAMETER,
 #   define GNULIB_defined_security_types 1
 #  endif
 
-#  ifndef _GL_INLINE_HEADER_BEGIN
-    #error "Please include config.h first."
-#  endif
-_GL_INLINE_HEADER_BEGIN
+_GL_INLINE_HEADER_END
 
 # endif
 #endif
