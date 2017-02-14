@@ -14,26 +14,25 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _@GUARD_PREFIX@_SELINUX_SELINUX_H
-# define _@GUARD_PREFIX@_SELINUX_SELINUX_H
-
-# if __GNUC__ >= 3
+#if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
-# endif
+#endif
 @PRAGMA_COLUMNS@
 
-# if HAVE_SELINUX_SELINUX_H
+#if HAVE_SELINUX_SELINUX_H
 
 #@INCLUDE_NEXT@ @NEXT_SELINUX_SELINUX_H@
 
-# else
+#else
+# if !defined _@GUARD_PREFIX@_SELINUX_SELINUX_H
+#  define _@GUARD_PREFIX@_SELINUX_SELINUX_H
 
 #  include <sys/types.h>
 #  include <errno.h>
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
+#  ifndef _GL_INLINE_HEADER_BEGIN
+    #error "Please include config.h first."
+#  endif
 _GL_INLINE_HEADER_BEGIN
 #  ifndef SE_SELINUX_INLINE
 #   define SE_SELINUX_INLINE _GL_INLINE
@@ -114,10 +113,10 @@ matchpathcon_init_prefix (char const *path _GL_UNUSED_PARAMETER,
 #   define GNULIB_defined_security_types 1
 #  endif
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
+#  ifndef _GL_INLINE_HEADER_BEGIN
+    #error "Please include config.h first."
+#  endif
 _GL_INLINE_HEADER_BEGIN
 
 # endif
-#endif /* _@GUARD_PREFIX@_SELINUX_SELINUX_H */
+#endif

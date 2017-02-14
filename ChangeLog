@@ -1,5 +1,9 @@
 2017-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	selinux-h: port to PGI 16.10
+	* lib/se-selinux.in.h: Don't assume that include_next skips over
+	duplicate -I DIR options.
+
 	argp: port to PGI 16.10
 	* lib/argp-pin.c (dummy): Declare as needed to make file nonempty.
 
