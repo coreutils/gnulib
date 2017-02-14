@@ -24,3 +24,10 @@ char *program_invocation_short_name = 0;
 #ifndef HAVE_PROGRAM_INVOCATION_NAME
 char *program_invocation_name = 0;
 #endif
+
+#if (defined HAVE_PROGRAM_INVOCATION_SHORT_NAME \
+     && defined HAVE_PROGRAM_INVOCATION_NAME)
+/* This declaration is solely to ensure that after preprocessing
+   this file is never empty.  */
+typedef int dummy;
+#endif
