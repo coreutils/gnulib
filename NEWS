@@ -42,6 +42,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-02-15  binary-io       On MS-DOS and OS/2, set_binary_mode now fails
+                            on ttys, and sets errno == ENOTTY.  SET_BINARY
+                            has been removed; use set_binary_mode instead.
+
 2017-01-20  parse-datetime  The parse_datetime2 function now takes two
                             more arguments TZ and TZSTRING, for the
                             time zone and its name.

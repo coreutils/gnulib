@@ -1,0 +1,28 @@
+Description:
+Checked Binary mode I/O.
+
+Files:
+lib/xsetmode.h
+lib/xsetmode.c
+
+Depends-on:
+binary-io
+error
+exitfail
+extern-inline
+stdbool
+verify
+
+configure.ac:
+
+Makefile.am:
+lib_SOURCES += xsetmode.h xsetmode.c
+
+Include:
+"xsetmode.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all

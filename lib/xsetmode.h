@@ -1,4 +1,4 @@
-/* Binary mode I/O.
+/* Binary mode I/O with checking
    Copyright 2017 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -14,24 +14,32 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
+#ifndef _XSETMODE_H
+#define _XSETMODE_H
 
-#define BINARY_IO_INLINE _GL_EXTERN_INLINE
 #include "binary-io.h"
 
-#if defined __DJGPP__ || defined __EMX__
-# include <errno.h>
-# include <unistd.h>
-
-int
-__gl_setmode_check (int fd)
-{
-  if (isatty (fd))
-    {
-      errno = ENOTTY;
-      return -1;
-    }
-  else
-    return 0;
-}
+#ifndef _GL_INLINE_HEADER_BEGIN
+ #error "Please include config.h first."
 #endif
+_GL_INLINE_HEADER_BEGIN
+#ifndef XSETMODE_INLINE
+# define XSETMODE_INLINE _GL_INLINE
+#endif
+
+#if O_BINARY
+extern _Noreturn void xsetmode_error (void);
+#else
+XSETMODE_INLINE void xsetmode_error (void) {}
+#endif
+
+XSETMODE_INLINE void
+xsetmode (int fd, int mode)
+{
+  if (set_binary_mode (fd, mode) < 0)
+    xsetmode_error ();
+}
+
+_GL_INLINE_HEADER_END
+
+#endif /* _XSETMODE_H */

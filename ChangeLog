@@ -1,3 +1,17 @@
+2017-02-15  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xsetmode: new module
+	This is to fix a problem noted by Eric Blake.
+	Code was using xfreopen to change files to binary mode, but this
+	fails for stdout when in append mode.  Such code should use
+	xsetmode instead.
+	* NEWS: Document incompatible changes to binary-io module.
+	* lib/binary-io.c (__gl_setmode_check) [__DJGPP__ || __EMX__]:
+	New function.
+	* lib/binary-io.h (__gl_setmode): Rename from set_binary_mode.
+	(set_binary_mode): New function, which also checks for tty.
+	* lib/xsetmode.c, lib/xsetmode.h, modules/xsetmode: New files.
+
 2017-02-14  Paul Eggert  <eggert@cs.ucla.edu>
 
 	headers: fix begin-end typos

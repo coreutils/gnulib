@@ -1,4 +1,4 @@
-/* Binary mode I/O.
+/* Binary mode I/O with checking
    Copyright 2017 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,22 +16,23 @@
 
 #include <config.h>
 
-#define BINARY_IO_INLINE _GL_EXTERN_INLINE
-#include "binary-io.h"
+#define XSETMODE_INLINE _GL_EXTERN_INLINE
+#include "xsetmode.h"
 
-#if defined __DJGPP__ || defined __EMX__
-# include <errno.h>
-# include <unistd.h>
+#include <errno.h>
+#include <error.h>
+#include <stdbool.h>
+#include "exitfail.h"
+#include "verify.h"
 
-int
-__gl_setmode_check (int fd)
+#if O_BINARY
+
+_Noreturn void
+xsetmode_error (void)
 {
-  if (isatty (fd))
-    {
-      errno = ENOTTY;
-      return -1;
-    }
-  else
-    return 0;
+  error (exit_failure, errno,
+         _("failed to set file descriptor text/binary mode"));
+  assume (false);
 }
+
 #endif
