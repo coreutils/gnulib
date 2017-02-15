@@ -47,7 +47,7 @@ main (int argc, char **argv)
      position and the last filled buffer end position.  (I.e. the repositioning
      from the end-of-buffer to the expected position does not work if the input
      file contains end-of-line markers in Unix convention.)  */
-  SET_BINARY (0);
+  set_binary_mode (0, O_BINARY);
 
   if (1 < argc)
     i = atoi (argv[1]);

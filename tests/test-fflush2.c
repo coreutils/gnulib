@@ -28,7 +28,7 @@ main (int argc, char **argv)
 
   /* Avoid the well-known bugs of fflush() on streams in O_TEXT mode
      on native Windows platforms.  */
-  SET_BINARY (0);
+  set_binary_mode (0, O_BINARY);
 
   if (argc > 1)
     switch (argv[1][0])

@@ -55,12 +55,6 @@ main (int argc, char *argv[])
       fputs ("Hello\n", stdout);
       break;
 
-    case '2':
-      /* Test the SET_BINARY macro.  */
-      SET_BINARY (1);
-      fputs ("Hello\n", stdout);
-      break;
-
     default:
       break;
     }

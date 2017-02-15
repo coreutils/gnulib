@@ -46,7 +46,7 @@ main (int argc, char **argv _GL_UNUSED)
     }
 
   /* mingw ftell is unreliable on text mode input.  */
-  SET_BINARY (0);
+  set_binary_mode (0, O_BINARY);
 
   /* Simple tests.  For each test, make sure ftell and ftello agree.  */
   ASSERT (ftell (stdin) == 0);

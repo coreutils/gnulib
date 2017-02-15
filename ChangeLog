@@ -1,5 +1,12 @@
 2017-02-15  Paul Eggert  <eggert@cs.ucla.edu>
 
+	tests: Adjust to recent SET_BINARY change
+	* tests/test-binary-io.c (main):
+	* tests/test-binary-io.sh: Remove test for SET_BINARY.
+	* tests/test-closein.c, tests/test-fflush2.c, tests/test-ftell.c:
+	* tests/test-ftello.c, tests/test-nonblocking-pipe-child.c:
+	* tests/test-yesno.c: Use set_binary_mode, not SET_BINARY.
+
 	xsetmode: new module
 	This is to fix a problem noted by Eric Blake.
 	Code was using xfreopen to change files to binary mode, but this

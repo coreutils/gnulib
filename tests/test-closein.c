@@ -38,7 +38,7 @@ main (int argc, char **argv)
 
   /* close_stdin currently relies on ftell, but mingw ftell is
      unreliable on text mode input.  */
-  SET_BINARY (0);
+  set_binary_mode (0, O_BINARY);
 
   if (argc > 2)
     close (0);

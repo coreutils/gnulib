@@ -45,7 +45,7 @@ main (int argc, char **argv)
     }
 
   /* mingw ftell is unreliable on text mode input.  */
-  SET_BINARY (0);
+  set_binary_mode (0, O_BINARY);
 
   /* Simple tests.  */
   ASSERT (ftell (stdin) == 0);

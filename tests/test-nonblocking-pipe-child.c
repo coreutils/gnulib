@@ -42,7 +42,7 @@ main (int argc, char *argv[])
   /* STDIN_FILENO was created as binary in the parent process.  But since an
      fd's mode is stored in the process, not in the kernel, on native Windows
      we need to set it as binary in the child process again.  */
-  SET_BINARY (STDIN_FILENO);
+  set_binary_mode (STDIN_FILENO, O_BINARY);
 
   main_reader_loop (test, PIPE_DATA_BLOCK_SIZE, STDIN_FILENO);
 
