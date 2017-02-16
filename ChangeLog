@@ -1,3 +1,8 @@
+2017-02-16  Bruno Haible  <bruno@clisp.org>
+
+	xbinary-io: Fix inlining.
+	* lib/xbinary-io.c: Set XBINARY_IO_INLINE, not XSETMODE_INLINE.
+
 2017-02-16  Paul Eggert  <eggert@cs.ucla.edu>
 
 	xbinary-io: rename from xsetmode

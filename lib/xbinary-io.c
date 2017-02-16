@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#define XSETMODE_INLINE _GL_EXTERN_INLINE
+#define XBINARY_IO_INLINE _GL_EXTERN_INLINE
 #include "xbinary-io.h"
 
 #include <errno.h>
