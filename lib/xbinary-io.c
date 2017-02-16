@@ -14,32 +14,25 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _XSETMODE_H
-#define _XSETMODE_H
+#include <config.h>
 
-#include "binary-io.h"
+#define XSETMODE_INLINE _GL_EXTERN_INLINE
+#include "xbinary-io.h"
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
-_GL_INLINE_HEADER_BEGIN
-#ifndef XSETMODE_INLINE
-# define XSETMODE_INLINE _GL_INLINE
-#endif
+#include <errno.h>
+#include <error.h>
+#include <stdbool.h>
+#include "exitfail.h"
+#include "verify.h"
 
 #if O_BINARY
-extern _Noreturn void xsetmode_error (void);
-#else
-XSETMODE_INLINE void xsetmode_error (void) {}
-#endif
 
-XSETMODE_INLINE void
-xsetmode (int fd, int mode)
+_Noreturn void
+xset_binary_mode_error (void)
 {
-  if (set_binary_mode (fd, mode) < 0)
-    xsetmode_error ();
+  error (exit_failure, errno,
+         _("failed to set file descriptor text/binary mode"));
+  assume (false);
 }
 
-_GL_INLINE_HEADER_END
-
-#endif /* _XSETMODE_H */
+#endif

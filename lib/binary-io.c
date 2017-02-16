@@ -28,7 +28,7 @@ __gl_setmode_check (int fd)
 {
   if (isatty (fd))
     {
-      errno = ENOTTY;
+      errno = EINVAL;
       return -1;
     }
   else

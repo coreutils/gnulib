@@ -2,8 +2,8 @@ Description:
 Checked Binary mode I/O.
 
 Files:
-lib/xsetmode.h
-lib/xsetmode.c
+lib/xbinary-io.h
+lib/xbinary-io.c
 
 Depends-on:
 binary-io
@@ -16,13 +16,13 @@ verify
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += xsetmode.h xsetmode.c
+lib_SOURCES += xbinary-io.h xbinary-io.c
 
 Include:
-"xsetmode.h"
+"xbinary-io.h"
 
 License:
-LGPLv2+
+LGPL
 
 Maintainer:
 all

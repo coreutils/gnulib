@@ -55,9 +55,6 @@ __gl_setmode (int fd, int mode)
 }
 #endif
 
-/* Set FD's mode to MODE.  Return the old mode if successful, -1
-   (setting errno) on failure.  */
-
 #if defined __DJGPP__ || defined __EMX__
 extern int __gl_setmode_check (int);
 #else
@@ -65,12 +62,21 @@ BINARY_IO_INLINE int
 __gl_setmode_check (int fd) { return 0; }
 #endif
 
+/* Set FD's mode to MODE, which should be either O_TEXT or O_BINARY.
+   Return the old mode if successful, -1 (setting errno) on failure.
+   Ordinarily this function would be called 'setmode', since that is
+   its name on MS-Windows, but it is called 'set_binary_mode' here
+   to avoid colliding with a BSD function of another name.  */
+
 BINARY_IO_INLINE int
 set_binary_mode (int fd, int mode)
 {
   int r = __gl_setmode_check (fd);
   return r != 0 ? r : __gl_setmode (fd, mode);
 }
+
+/* This macro is obsolescent.  */
+#define SET_BINARY(fd) ((void) set_binary_mode (fd, O_BINARY))
 
 _GL_INLINE_HEADER_END
 

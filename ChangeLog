@@ -1,3 +1,22 @@
+2017-02-16  Paul Eggert  <eggert@cs.ucla.edu>
+
+	xbinary-io: rename from xsetmode
+	This patch is taken from suggestions by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-02/msg00060.html
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-02/msg00061.html
+	* lib/binary-io.c (__gl_setmode_check): Set errno to EINVAL,
+	not ENOTTY, when it is an inappropriate device.
+	* lib/binary-io.h (SET_BINARY): Resurrect.
+	* lib/xbinary-io.c: Rename from lib/xsetmode.c.
+	(xset_binary_mode_error): Rename from xsetmode_error.
+	* lib/xbinary-io.h: Rename from lib/xsetmode.h.
+	(xset_binary_mode): Rename from xsetmode.
+	All uses changed.
+	* modules/xbinary-io: Rename from modules/xsetmode.
+	Update file names.
+	* tests/test-binary-io.sh (tmpfiles): Remove no-longer-used file name.
+	* NEWS: Update to match revised behavior.
+
 2017-02-15  Paul Eggert  <eggert@cs.ucla.edu>
 
 	tests: Adjust to recent SET_BINARY change
