@@ -1,3 +1,9 @@
+2017-02-16  Tim Rühsen  <tim.ruehsen@gmx.de>
+
+	users.txt: Update links, use HTTPS where possible
+	* users.txt: Updated to HTTPS where possible,
+	fixed some links to new locations.
+
 2017-02-16  Bruno Haible  <bruno@clisp.org>
 
 	xbinary-io: Fix inlining.
