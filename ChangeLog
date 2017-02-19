@@ -1,5 +1,10 @@
 2017-02-19  Bruno Haible  <bruno@clisp.org>
 
+	havelib: Support overriding the result of AC_LIB_PREPARE_MULTILIB.
+	* m4/lib-prefix.m4 (AC_LIB_PREPARE_MULTILIB): Use AC_CACHE_CHECK.
+
+2017-02-19  Bruno Haible  <bruno@clisp.org>
+
 	gnulib-tool: Avoid conflict of havelib-tests with --single-configure.
 	* gnulib_tool (func_create_testdir): Avoid havelib-tests when
 	--with-tests --single-configure is specified.
