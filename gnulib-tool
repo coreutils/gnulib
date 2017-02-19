@@ -5850,6 +5850,12 @@ func_create_testdir ()
   # Canonicalize the list of specified modules.
   specified_modules=`for m in $specified_modules; do echo $m; done | LC_ALL=C sort -u`
 
+  # Test modules which invoke AC_CONFIG_FILES cannot be used with
+  # --with-tests --single-configure. Avoid them.
+  if $inctests && $single_configure; then
+    avoidlist="$avoidlist havelib-tests"
+  fi
+
   # Unlike in func_import, here we want to include all kinds of tests for the
   # directly specified modules, but not for dependencies.
   inc_all_direct_tests=true
