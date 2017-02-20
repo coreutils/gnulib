@@ -8,6 +8,7 @@ usleep
 yield
 
 configure.ac:
+AC_CHECK_HEADERS_ONCE([semaphore.h])
 
 Makefile.am:
 TESTS += test-rwlock1 test-lock

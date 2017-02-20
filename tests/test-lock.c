@@ -58,7 +58,7 @@
    synchronization/communication between different CPUs.  */
 #define USE_VOLATILE 0
 
-#if USE_POSIX_THREADS
+#if USE_POSIX_THREADS && HAVE_SEMAPHORE_H
 /* Whether to use a semaphore to communicate information between threads.
    If set to 0, a lock is used. If set to 1, a semaphore is used.
    Uncomment this to reduce the dependencies of this test.  */
