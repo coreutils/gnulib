@@ -54,7 +54,13 @@
 # include <windows.h>
 #endif
 
+#if defined(_OPENMP)
+# include <omp.h>
+#endif
+
 #include "c-ctype.h"
+
+#include "minmax.h"
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
 
@@ -196,35 +202,67 @@ num_processors_via_affinity_mask (void)
   return 0;
 }
 
+/* Parse OMP environment variables without dependence on OMP.
+   Return > 0 for valid values.  */
+static unsigned long int
+parse_omp_threads (char const* threads)
+{
+  unsigned long int ret = 0;
+
+  if (threads == NULL)
+    return ret;
+
+  /* The OpenMP spec says that the value assigned to the environment variables
+     "may have leading and trailing white space".  */
+  while (*threads != '\0' && c_isspace (*threads))
+    threads++;
+
+  /* Convert it from decimal to 'unsigned long'.  */
+  if (c_isdigit (*threads))
+    {
+      char *endptr = NULL;
+      unsigned long int value = strtoul (threads, &endptr, 10);
+
+      if (endptr != NULL)
+        {
+          while (*endptr != '\0' && c_isspace (*endptr))
+            endptr++;
+          if (*endptr == '\0')
+            return (value > 0 ? value : 1);
+          /* Also accept the first value in a nesting level,
+             since we can't determine the nesting level from env vars.  */
+          else if (*endptr == ',')
+            return (value > 0 ? value : 1);
+        }
+    }
+
+  return ret;
+}
+
 unsigned long int
 num_processors (enum nproc_query query)
 {
   if (query == NPROC_CURRENT_OVERRIDABLE)
     {
-      /* Test the environment variable OMP_NUM_THREADS, recognized also by all
-         programs that are based on OpenMP.  The OpenMP spec says that the
-         value assigned to the environment variable "may have leading and
-         trailing white space". */
-      const char *envvalue = getenv ("OMP_NUM_THREADS");
+      unsigned long int omp_env_threads;
+      unsigned long int omp_env_limit;
 
-      if (envvalue != NULL)
+/* If OPENMP is enabled with AC_OPENMP, then use OPENMP to
+   get the number of threads for the current nesting level.  */
+#if defined(_OPENMP)
+      return omp_get_num_threads ();
+#endif
+
+      /* Honor the OpenMP environment variables, recognized also by all
+         programs that are based on OpenMP.  */
+      omp_env_threads = parse_omp_threads (getenv ("OMP_NUM_THREADS"));
+      if (omp_env_threads)
         {
-          while (*envvalue != '\0' && c_isspace (*envvalue))
-            envvalue++;
-          /* Convert it from decimal to 'unsigned long'.  */
-          if (c_isdigit (*envvalue))
-            {
-              char *endptr = NULL;
-              unsigned long int value = strtoul (envvalue, &endptr, 10);
+          omp_env_limit = parse_omp_threads (getenv ("OMP_THREADS_LIMIT"));
+          if (omp_env_limit > 1)
+            omp_env_threads = MIN (omp_env_threads, omp_env_limit);
 
-              if (endptr != NULL)
-                {
-                  while (*endptr != '\0' && c_isspace (*endptr))
-                    endptr++;
-                  if (*endptr == '\0')
-                    return (value > 0 ? value : 1);
-                }
-            }
+          return omp_env_threads;
         }
 
       query = NPROC_CURRENT;

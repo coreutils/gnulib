@@ -9,6 +9,7 @@ m4/nproc.m4
 Depends-on:
 c-ctype
 extensions
+minmax
 unistd
 
 configure.ac:
