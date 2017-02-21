@@ -1,3 +1,13 @@
+2017-02-21  Bruno Haible  <bruno@clisp.org>
+
+	lock tests: Fix build failure on GNU/Hurd (regression from 2017-01-05).
+	Reported by Rene Saavedra <rennes@openmailbox.org> in
+	https://debbugs.gnu.org/cgi/bugreport.cgi?bug=25821 via Paul Eggert.
+	* lib/glthread/lock.h: On glibc systems without
+	PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP, use the fallback
+	implementation of rwlocks.
+	* lib/glthread/lock.c: Likewise.
+
 2017-02-20  Bruno Haible  <bruno@clisp.org>
 
 	lock tests: Fix build failure on z/OS.
