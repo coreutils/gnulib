@@ -1,3 +1,10 @@
+2017-02-24  Paul Eggert  <eggert@cs.ucla.edu>
+
+	ftoastr: port to -Wdouble-promotion
+	Work around -Wdouble-promotion false alarm in recent GCCs.
+	* lib/ftoastr.c (PROMOTED_FLOAT): New macro.
+	(ftoastr_snprintf, FTOASTR): Use it.
+
 2017-02-21  Bruno Haible  <bruno@clisp.org>
 
 	lock tests: Fix build failure on GNU/Hurd (regression from 2017-01-05).
