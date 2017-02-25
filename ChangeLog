@@ -1,3 +1,8 @@
+2017-02-25  Bruno Haible  <bruno@clisp.org>
+
+	maintainer-makefile: Fix AC_PROG_SED with autoconf cache.
+	* m4/gnulib-common.m4 (AC_PROG_SED): Fix AC_CACHE_CHECK invocation.
+
 2017-02-24  Paul Eggert  <eggert@cs.ucla.edu>
 
 	ftoastr: port to -Wdouble-promotion
