@@ -1,3 +1,10 @@
+2017-02-26  Bruno Haible  <bruno@clisp.org>
+
+	nproc: Refactor large function.
+	* lib/nproc.c (num_processors_ignoring_omp): New function, extracted
+	from num_processors.
+	(num_processors): In this function, only deal with OMP.
+
 2017-02-26  Pádraig Brady  <P@draigBrady.com>
 
 	nproc: adjust handling of OpenMP environment variables

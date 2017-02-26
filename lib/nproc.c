@@ -199,6 +199,137 @@ num_processors_via_affinity_mask (void)
   return 0;
 }
 
+
+/* Return the total number of processors.  Here QUERY must be one of
+   NPROC_ALL, NPROC_CURRENT.  The result is guaranteed to be at least 1.  */
+static unsigned long int
+num_processors_ignoring_omp (enum nproc_query query)
+{
+  /* On systems with a modern affinity mask system call, we have
+         sysconf (_SC_NPROCESSORS_CONF)
+            >= sysconf (_SC_NPROCESSORS_ONLN)
+               >= num_processors_via_affinity_mask ()
+     The first number is the number of CPUs configured in the system.
+     The second number is the number of CPUs available to the scheduler.
+     The third number is the number of CPUs available to the current process.
+
+     Note! On Linux systems with glibc, the first and second number come from
+     the /sys and /proc file systems (see
+     glibc/sysdeps/unix/sysv/linux/getsysstats.c).
+     In some situations these file systems are not mounted, and the sysconf
+     call returns 1, which does not reflect the reality.  */
+
+  if (query == NPROC_CURRENT)
+    {
+      /* Try the modern affinity mask system call.  */
+      {
+        unsigned long nprocs = num_processors_via_affinity_mask ();
+
+        if (nprocs > 0)
+          return nprocs;
+      }
+
+#if defined _SC_NPROCESSORS_ONLN
+      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
+           Cygwin, Haiku.  */
+        long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
+        if (nprocs > 0)
+          return nprocs;
+      }
+#endif
+    }
+  else /* query == NPROC_ALL */
+    {
+#if defined _SC_NPROCESSORS_CONF
+      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
+           Cygwin, Haiku.  */
+        long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
+
+# if __GLIBC__ >= 2 && defined __linux__
+        /* On Linux systems with glibc, this information comes from the /sys and
+           /proc file systems (see glibc/sysdeps/unix/sysv/linux/getsysstats.c).
+           In some situations these file systems are not mounted, and the
+           sysconf call returns 1.  But we wish to guarantee that
+           num_processors (NPROC_ALL) >= num_processors (NPROC_CURRENT).  */
+        if (nprocs == 1)
+          {
+            unsigned long nprocs_current = num_processors_via_affinity_mask ();
+
+            if (nprocs_current > 0)
+              nprocs = nprocs_current;
+          }
+# endif
+
+        if (nprocs > 0)
+          return nprocs;
+      }
+#endif
+    }
+
+#if HAVE_PSTAT_GETDYNAMIC
+  { /* This works on HP-UX.  */
+    struct pst_dynamic psd;
+    if (pstat_getdynamic (&psd, sizeof psd, 1, 0) >= 0)
+      {
+        /* The field psd_proc_cnt contains the number of active processors.
+           In newer releases of HP-UX 11, the field psd_max_proc_cnt includes
+           deactivated processors.  */
+        if (query == NPROC_CURRENT)
+          {
+            if (psd.psd_proc_cnt > 0)
+              return psd.psd_proc_cnt;
+          }
+        else
+          {
+            if (psd.psd_max_proc_cnt > 0)
+              return psd.psd_max_proc_cnt;
+          }
+      }
+  }
+#endif
+
+#if HAVE_SYSMP && defined MP_NAPROCS && defined MP_NPROCS
+  { /* This works on IRIX.  */
+    /* MP_NPROCS yields the number of installed processors.
+       MP_NAPROCS yields the number of processors available to unprivileged
+       processes.  */
+    int nprocs =
+      sysmp (query == NPROC_CURRENT && getpid () != 0
+             ? MP_NAPROCS
+             : MP_NPROCS);
+    if (nprocs > 0)
+      return nprocs;
+  }
+#endif
+
+  /* Finally, as fallback, use the APIs that don't distinguish between
+     NPROC_CURRENT and NPROC_ALL.  */
+
+#if HAVE_SYSCTL && defined HW_NCPU
+  { /* This works on Mac OS X, FreeBSD, NetBSD, OpenBSD.  */
+    int nprocs;
+    size_t len = sizeof (nprocs);
+    static int mib[2] = { CTL_HW, HW_NCPU };
+
+    if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
+        && len == sizeof (nprocs)
+        && 0 < nprocs)
+      return nprocs;
+  }
+#endif
+
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  { /* This works on native Windows platforms.  */
+    SYSTEM_INFO system_info;
+    GetSystemInfo (&system_info);
+    if (0 < system_info.dwNumberOfProcessors)
+      return system_info.dwNumberOfProcessors;
+  }
+#endif
+
+  return 1;
+}
+
 /* Parse OMP environment variables without dependence on OMP.
    Return 0 for invalid values.  */
 static unsigned long int
@@ -257,128 +388,8 @@ num_processors (enum nproc_query query)
       query = NPROC_CURRENT;
     }
   /* Here query is one of NPROC_ALL, NPROC_CURRENT.  */
-
-  /* On systems with a modern affinity mask system call, we have
-         sysconf (_SC_NPROCESSORS_CONF)
-            >= sysconf (_SC_NPROCESSORS_ONLN)
-               >= num_processors_via_affinity_mask ()
-     The first number is the number of CPUs configured in the system.
-     The second number is the number of CPUs available to the scheduler.
-     The third number is the number of CPUs available to the current process.
-
-     Note! On Linux systems with glibc, the first and second number come from
-     the /sys and /proc file systems (see
-     glibc/sysdeps/unix/sysv/linux/getsysstats.c).
-     In some situations these file systems are not mounted, and the sysconf
-     call returns 1, which does not reflect the reality.  */
-
-  if (query == NPROC_CURRENT)
-    {
-      /* Try the modern affinity mask system call.  */
-      {
-        unsigned long nprocs = num_processors_via_affinity_mask ();
-
-        if (nprocs > 0)
-          return MIN (nprocs, omp_env_limit);
-      }
-
-#if defined _SC_NPROCESSORS_ONLN
-      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-           Cygwin, Haiku.  */
-        long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
-        if (nprocs > 0)
-          return MIN (nprocs, omp_env_limit);
-      }
-#endif
-    }
-  else /* query == NPROC_ALL */
-    {
-#if defined _SC_NPROCESSORS_CONF
-      { /* This works on glibc, Mac OS X 10.5, FreeBSD, AIX, OSF/1, Solaris,
-           Cygwin, Haiku.  */
-        long int nprocs = sysconf (_SC_NPROCESSORS_CONF);
-
-# if __GLIBC__ >= 2 && defined __linux__
-        /* On Linux systems with glibc, this information comes from the /sys and
-           /proc file systems (see glibc/sysdeps/unix/sysv/linux/getsysstats.c).
-           In some situations these file systems are not mounted, and the
-           sysconf call returns 1.  But we wish to guarantee that
-           num_processors (NPROC_ALL) >= num_processors (NPROC_CURRENT).  */
-        if (nprocs == 1)
-          {
-            unsigned long nprocs_current = num_processors_via_affinity_mask ();
-
-            if (nprocs_current > 0)
-              nprocs = nprocs_current;
-          }
-# endif
-
-        if (nprocs > 0)
-          return nprocs;
-      }
-#endif
-    }
-
-#if HAVE_PSTAT_GETDYNAMIC
-  { /* This works on HP-UX.  */
-    struct pst_dynamic psd;
-    if (pstat_getdynamic (&psd, sizeof psd, 1, 0) >= 0)
-      {
-        /* The field psd_proc_cnt contains the number of active processors.
-           In newer releases of HP-UX 11, the field psd_max_proc_cnt includes
-           deactivated processors.  */
-        if (query == NPROC_CURRENT)
-          {
-            if (psd.psd_proc_cnt > 0)
-              return MIN (psd.psd_proc_cnt, omp_env_limit);
-          }
-        else
-          {
-            if (psd.psd_max_proc_cnt > 0)
-              return psd.psd_max_proc_cnt;
-          }
-      }
+  {
+    unsigned long nprocs = num_processors_ignoring_omp (query);
+    return MIN (nprocs, omp_env_limit);
   }
-#endif
-
-#if HAVE_SYSMP && defined MP_NAPROCS && defined MP_NPROCS
-  { /* This works on IRIX.  */
-    /* MP_NPROCS yields the number of installed processors.
-       MP_NAPROCS yields the number of processors available to unprivileged
-       processes.  */
-    int nprocs =
-      sysmp (query == NPROC_CURRENT && getpid () != 0
-             ? MP_NAPROCS
-             : MP_NPROCS);
-    if (nprocs > 0)
-      return MIN (nprocs, omp_env_limit);
-  }
-#endif
-
-  /* Finally, as fallback, use the APIs that don't distinguish between
-     NPROC_CURRENT and NPROC_ALL.  */
-
-#if HAVE_SYSCTL && defined HW_NCPU
-  { /* This works on Mac OS X, FreeBSD, NetBSD, OpenBSD.  */
-    int nprocs;
-    size_t len = sizeof (nprocs);
-    static int mib[2] = { CTL_HW, HW_NCPU };
-
-    if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
-        && len == sizeof (nprocs)
-        && 0 < nprocs)
-      return MIN (nprocs, omp_env_limit);
-  }
-#endif
-
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-  { /* This works on native Windows platforms.  */
-    SYSTEM_INFO system_info;
-    GetSystemInfo (&system_info);
-    if (0 < system_info.dwNumberOfProcessors)
-      return MIN (system_info.dwNumberOfProcessors, omp_env_limit);
-  }
-#endif
-
-  return 1;
 }
