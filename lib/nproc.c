@@ -20,6 +20,7 @@
 #include <config.h>
 #include "nproc.h"
 
+#include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -52,10 +53,6 @@
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
-#endif
-
-#if defined(_OPENMP)
-# include <omp.h>
 #endif
 
 #include "c-ctype.h"
@@ -203,7 +200,7 @@ num_processors_via_affinity_mask (void)
 }
 
 /* Parse OMP environment variables without dependence on OMP.
-   Return > 0 for valid values.  */
+   Return 0 for invalid values.  */
 static unsigned long int
 parse_omp_threads (char const* threads)
 {
@@ -217,7 +214,7 @@ parse_omp_threads (char const* threads)
   while (*threads != '\0' && c_isspace (*threads))
     threads++;
 
-  /* Convert it from decimal to 'unsigned long'.  */
+  /* Convert it from positive decimal to 'unsigned long'.  */
   if (c_isdigit (*threads))
     {
       char *endptr = NULL;
@@ -228,11 +225,11 @@ parse_omp_threads (char const* threads)
           while (*endptr != '\0' && c_isspace (*endptr))
             endptr++;
           if (*endptr == '\0')
-            return (value > 0 ? value : 1);
+            return value;
           /* Also accept the first value in a nesting level,
              since we can't determine the nesting level from env vars.  */
           else if (*endptr == ',')
-            return (value > 0 ? value : 1);
+            return value;
         }
     }
 
@@ -242,28 +239,20 @@ parse_omp_threads (char const* threads)
 unsigned long int
 num_processors (enum nproc_query query)
 {
+  unsigned long int omp_env_limit = ULONG_MAX;
+
   if (query == NPROC_CURRENT_OVERRIDABLE)
     {
       unsigned long int omp_env_threads;
-      unsigned long int omp_env_limit;
-
-/* If OPENMP is enabled with AC_OPENMP, then use OPENMP to
-   get the number of threads for the current nesting level.  */
-#if defined(_OPENMP)
-      return omp_get_num_threads ();
-#endif
-
       /* Honor the OpenMP environment variables, recognized also by all
          programs that are based on OpenMP.  */
       omp_env_threads = parse_omp_threads (getenv ("OMP_NUM_THREADS"));
-      if (omp_env_threads)
-        {
-          omp_env_limit = parse_omp_threads (getenv ("OMP_THREADS_LIMIT"));
-          if (omp_env_limit > 1)
-            omp_env_threads = MIN (omp_env_threads, omp_env_limit);
+      omp_env_limit = parse_omp_threads (getenv ("OMP_THREAD_LIMIT"));
+      if (! omp_env_limit)
+        omp_env_limit = ULONG_MAX;
 
-          return omp_env_threads;
-        }
+      if (omp_env_threads)
+        return MIN (omp_env_threads, omp_env_limit);
 
       query = NPROC_CURRENT;
     }
@@ -290,7 +279,7 @@ num_processors (enum nproc_query query)
         unsigned long nprocs = num_processors_via_affinity_mask ();
 
         if (nprocs > 0)
-          return nprocs;
+          return MIN (nprocs, omp_env_limit);
       }
 
 #if defined _SC_NPROCESSORS_ONLN
@@ -298,7 +287,7 @@ num_processors (enum nproc_query query)
            Cygwin, Haiku.  */
         long int nprocs = sysconf (_SC_NPROCESSORS_ONLN);
         if (nprocs > 0)
-          return nprocs;
+          return MIN (nprocs, omp_env_limit);
       }
 #endif
     }
@@ -341,7 +330,7 @@ num_processors (enum nproc_query query)
         if (query == NPROC_CURRENT)
           {
             if (psd.psd_proc_cnt > 0)
-              return psd.psd_proc_cnt;
+              return MIN (psd.psd_proc_cnt, omp_env_limit);
           }
         else
           {
@@ -362,7 +351,7 @@ num_processors (enum nproc_query query)
              ? MP_NAPROCS
              : MP_NPROCS);
     if (nprocs > 0)
-      return nprocs;
+      return MIN (nprocs, omp_env_limit);
   }
 #endif
 
@@ -378,7 +367,7 @@ num_processors (enum nproc_query query)
     if (sysctl (mib, ARRAY_SIZE (mib), &nprocs, &len, NULL, 0) == 0
         && len == sizeof (nprocs)
         && 0 < nprocs)
-      return nprocs;
+      return MIN (nprocs, omp_env_limit);
   }
 #endif
 
@@ -387,7 +376,7 @@ num_processors (enum nproc_query query)
     SYSTEM_INFO system_info;
     GetSystemInfo (&system_info);
     if (0 < system_info.dwNumberOfProcessors)
-      return system_info.dwNumberOfProcessors;
+      return MIN (system_info.dwNumberOfProcessors, omp_env_limit);
   }
 #endif
 
