@@ -2,9 +2,11 @@
 : ${srcdir=.}
 . "$srcdir/init.sh"; path_prepend_ .
 
-# Test NULL prefix. Result should not contain a number.
+# Test NULL prefix. Result should not contain a number, except in lines that
+# start with 'EDC' (IBM z/OS libc produces an error identifier before the
+# error message).
 test-perror 2>&1 >/dev/null | LC_ALL=C tr -d '\r' > t-perror.tmp
-grep '[0-9]' t-perror.tmp > /dev/null \
+grep -v '^EDC' t-perror.tmp | grep '[0-9]' > /dev/null \
   && fail_ "result should not contain a number"
 
 # Test empty prefix. Result should be the same.
