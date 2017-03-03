@@ -1,5 +1,12 @@
 2017-03-03  Bruno Haible  <bruno@clisp.org>
 
+	doc: Mention Mac OS X deficiencies regarding semaphores.
+	* doc/posix-functions/sem_init.texi: Mention status on Mac OS X.
+	* doc/posix-functions/sem_destroy.texi: Likewise.
+	* doc/posix-functions/sem_getvalue.texi: Likewise.
+
+2017-03-03  Bruno Haible  <bruno@clisp.org>
+
 	lock tests: Fix test failure on Mac OS X (regression from 2017-01-05).
 	Reported by Assaf Gordon <assafgordon@gmail.com> via
 	Pádraig Brady <P@draigBrady.com>.
