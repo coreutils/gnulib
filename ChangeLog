@@ -1,3 +1,13 @@
+2017-03-03  Bruno Haible  <bruno@clisp.org>
+
+	lock tests: Fix test failure on Mac OS X (regression from 2017-01-05).
+	Reported by Assaf Gordon <assafgordon@gmail.com> via
+	Pádraig Brady <P@draigBrady.com>.
+	* tests/test-lock.c: On Mac OS X, use named semaphores, not unnamed
+	semaphores.
+	(USE_NAMED_SEMAPHORE, USE_UNNAMED_SEMAPHORE): New macros.
+	(atomic_int_semaphore): New macro.
+
 2017-02-28  Bruno Haible  <bruno@clisp.org>
 
 	perror tests: Tweak for z/OS.
