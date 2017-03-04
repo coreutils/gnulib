@@ -1,7 +1,8 @@
 Files:
 tests/test-memmem.c
-tests/zerosize-ptr.h
 tests/signature.h
+tests/null-ptr.h
+tests/zerosize-ptr.h
 tests/macros.h
 m4/mmap-anon.m4
 

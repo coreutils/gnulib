@@ -1,6 +1,7 @@
 Files:
 tests/test-canonicalize-lgpl.c
 tests/signature.h
+tests/null-ptr.h
 tests/macros.h
 
 Depends-on:

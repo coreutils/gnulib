@@ -1,6 +1,7 @@
 Files:
 tests/test-ptsname_r.c
 tests/signature.h
+tests/null-ptr.h
 tests/macros.h
 
 Depends-on:

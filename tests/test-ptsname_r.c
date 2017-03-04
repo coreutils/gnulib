@@ -31,6 +31,7 @@ SIGNATURE_CHECK (ptsname_r, int, (int, char *, size_t));
 
 #include "same-inode.h"
 
+#include "null-ptr.h"
 #include "macros.h"
 
 /* Compare two slave names.
@@ -51,12 +52,6 @@ same_slave (const char *slave_name1, const char *slave_name2)
           || (stat (slave_name1, &statbuf1) >= 0
               && stat (slave_name2, &statbuf2) >= 0
               && SAME_INODE (statbuf1, statbuf2)));
-}
-
-static char *
-null_ptr (void)
-{
-  return NULL;
 }
 
 static void

@@ -33,15 +33,11 @@ SIGNATURE_CHECK (canonicalize_file_name, char *, (const char *));
 
 #include "same-inode.h"
 #include "ignore-value.h"
+
+#include "null-ptr.h"
 #include "macros.h"
 
 #define BASE "t-can-lgpl.tmp"
-
-static void *
-null_ptr (void)
-{
-  return NULL;
-}
 
 int
 main (void)

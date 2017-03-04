@@ -1,3 +1,18 @@
+2017-03-04  Bruno Haible  <bruno@clisp.org>
+
+	tests: Avoid compiler warning about uses of null_ptr.
+	* tests/null-ptr.h: New file.
+	* tests/test-canonicalize.c: Include null-ptr.h.
+	(null_ptr): Remove function.
+	* tests/test-canonicalize-lgpl.c: Likewise.
+	* tests/test-memmem.c: Likewise.
+	* tests/test-ptsname_r.c: Likewise.
+	* modules/canonicalize-tests (Files): Add tests/null-ptr.h.
+	* modules/canonicalize-lgpl-tests: Likewise.
+	* modules/memmem-tests: Likewise.
+	* modules/ptsname_r-tests: Likewise.
+	Reported by Jim Meyering.
+
 2017-03-03  Bruno Haible  <bruno@clisp.org>
 
 	doc: Mention Mac OS X deficiencies regarding semaphores.

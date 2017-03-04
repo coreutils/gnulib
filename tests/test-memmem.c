@@ -26,14 +26,9 @@ SIGNATURE_CHECK (memmem, void *, (void const *, size_t, void const *, size_t));
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "null-ptr.h"
 #include "zerosize-ptr.h"
 #include "macros.h"
-
-static void *
-null_ptr (void)
-{
-  return NULL;
-}
 
 int
 main (int argc, char *argv[])
