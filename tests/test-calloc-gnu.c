@@ -27,6 +27,10 @@ main ()
     return 1;
   free (p);
 
+#if __GNUC__ < 7
+  /* GCC7's -Werror=alloc-size-larger-than= would cause the following error
+     to be detected at compile time, so skip the test for GCC7 and newer.  */
+
   /* Check that calloc fails when requested to allocate a block of memory
      larger than SIZE_MAX bytes.  */
   p = calloc ((size_t) -1 / 8 + 1, 8);
@@ -35,6 +39,7 @@ main ()
       free (p);
       return 1;
     }
+#endif
 
   return 0;
 }
