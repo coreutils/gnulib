@@ -1,3 +1,9 @@
+2017-03-04  Bruno Haible  <bruno@clisp.org>
+
+	test-calloc-gnu: Reenable test also for GCC 7.
+	* tests/test-calloc-gnu.c (eight): New function.
+	(main): Don't skip test; use eight() instead.
+
 2017-03-04  Jim Meyering  <meyering@fb.com>
 
 	test-calloc-gnu: port to GCC7
