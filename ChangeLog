@@ -1,3 +1,9 @@
+2017-03-05  Bruno Haible  <bruno@clisp.org>
+
+	Fix value of LD for 64-bit compilers on AIX.
+	* m4/lib-ld.m4 (AC_LIB_PROG_LD): For 64-bit compilers on AIX
+	("gcc -maix64" and "xlc -q64"), add option -b64 to $LD.
+
 2017-03-04  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dtotimespec: simplify
