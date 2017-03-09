@@ -40,6 +40,7 @@ parse-datetime.c: parse-datetime.y
 	                              -- $(YACC) $(YFLAGS) $(AM_YFLAGS) && \
 	sed -e 's|".*/parse-datetime.y"|"parse-datetime.y"|' \
 	 < parse-datetime.c > parse-datetime.c-t && \
+	rm -f parse-datetime.c && \
 	mv parse-datetime.c-t $(srcdir)/parse-datetime.c
 lib_SOURCES += parse-datetime.y
 BUILT_SOURCES += parse-datetime.c
