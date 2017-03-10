@@ -1,3 +1,9 @@
+2017-03-10  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Let callers know about error.
+	* lib/vma-iter.h (vma_iterate): Return 'int', not 'void'.
+	* lib/vma-iter.c (vma_iterate): Return -1 in case of error.
+
 2017-03-05  Bruno Haible  <bruno@clisp.org>
 
 	Fix value of LD for 64-bit compilers on AIX.

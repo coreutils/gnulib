@@ -157,7 +157,7 @@ rof_close (struct rofile *rof)
 #endif
 
 
-void
+int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
 #if defined __linux__ /* || defined __CYGWIN__ */
@@ -167,7 +167,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
   if (rof_open (&rof, "/proc/self/maps") < 0)
-    return;
+    return -1;
 
   for (;;)
     {
@@ -199,6 +199,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
         break;
     }
   rof_close (&rof);
+  return 0;
 
 #elif defined __FreeBSD__ || defined __NetBSD__
 
@@ -207,7 +208,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
   if (rof_open (&rof, "/proc/curproc/map") < 0)
-    return;
+    return -1;
 
   for (;;)
     {
@@ -246,6 +247,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
         break;
     }
   rof_close (&rof);
+  return 0;
 
 #elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 
@@ -284,7 +286,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
   fd = open (fname, O_RDONLY);
   if (fd < 0)
-    return;
+    return -1;
 
   if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
     goto fail2;
@@ -351,13 +353,13 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
     }
   munmap (auxmap, memneed);
   close (fd);
-  return;
+  return 0;
 
  fail1:
   munmap (auxmap, memneed);
  fail2:
   close (fd);
-  return;
+  return -1;
 
 #elif defined __APPLE__ && defined __MACH__ /* Mac OS X */
 
@@ -419,6 +421,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       if (callback (data, address, address + size, flags))
         break;
     }
+  return 0;
 
 #elif (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__
   /* Windows platform.  Use the native Windows API.  */
@@ -470,6 +473,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
           }
       address = (uintptr_t)info.BaseAddress + info.RegionSize;
     }
+  return 0;
 
 #elif defined __BEOS__ || defined __HAIKU__
   /* Use the BeOS specific API.  */
@@ -494,6 +498,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       if (callback (data, start, end, flags))
         break;
     }
+  return 0;
 
 #elif HAVE_MQUERY /* OpenBSD */
 
@@ -587,6 +592,12 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       if (address + pagesize - 1 < pagesize) /* wrap around? */
         break;
     }
+  return 0;
+
+#else
+
+  /* Not implemented.  */
+  return -1;
 
 #endif
 }
