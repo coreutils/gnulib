@@ -1,3 +1,10 @@
+2017-03-11  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-common.m4: avoid aclocal.m4 bloat
+	* m4/gnulib-common.m4 (gl_PROG_AR_RANLIB):
+	Hide AM_PROG_AR from aclocal, so that aclocal does not
+	install irrelevant macro definitions into aclocal.m4.
+
 2017-03-10  Bruno Haible  <bruno@clisp.org>
 
 	vma-iter: Let callers know about error.
