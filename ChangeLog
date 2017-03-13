@@ -1,3 +1,16 @@
+2017-03-12  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-tool: new option --gnu-make
+	This is for applications like GNU Emacs that use GNU Make
+	features instead of Automake.
+	* doc/gnulib-tool.texi (Initial import): Mention --gnu-make.
+	* doc/gnulib.texi (Unit test modules, Build robot for gnulib):
+	Do not assume Automake.
+	* gnulib-tool (func_determine_path_separator)
+	(func_modules_transitive_closure, func_update_file)
+	(func_emit_lib_Makefile_am, func_emit_tests_Makefile_am)
+	(func_import): Add support for --gnu-make.
+
 2017-03-11  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-common.m4: avoid aclocal.m4 bloat

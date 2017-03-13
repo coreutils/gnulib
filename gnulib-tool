@@ -264,14 +264,16 @@ Options for --import, --add/remove-import:
                             placed (default \"tests\").
       --aux-dir=DIRECTORY   Directory relative to --dir where auxiliary build
                             tools are placed (default comes from configure.ac).
+      --gnu-make            Output for GNU Make instead of for the default
+                            Automake
       --lgpl[=2|=3orGPLv2|=3]
                             Abort if modules aren't available under the LGPL.
                             Also modify license template from GPL to LGPL.
                             The version number of the LGPL can be specified;
                             the default is currently LGPLv3.
-      --makefile-name=NAME  Name of makefile in automake syntax in the
-                            source-base and tests-base directories
-                            (default \"Makefile.am\").
+      --makefile-name=NAME  Name of makefile in the source-base and tests-base
+                            directories (default \"Makefile.am\", or
+                            \"Makefile.in\" if --gnu-make).
       --macro-prefix=PREFIX  Specify the prefix of the macros 'gl_EARLY' and
                             'gl_INIT'. Default is 'gl'.
       --po-domain=NAME      Specify the prefix of the i18n domain. Usually use
@@ -1039,6 +1041,7 @@ func_determine_path_separator
 # - cond_dependencies  true if --conditional-dependencies was given, false if
 #                      --no-conditional-dependencies was given, blank otherwise
 # - lgpl            yes or a number if --lgpl was given, blank otherwise
+# - gnu_make        true if --gnu-make was given, false otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
@@ -1082,6 +1085,7 @@ func_determine_path_separator
   avoidlist=
   cond_dependencies=
   lgpl=
+  gnu_make=false
   makefile_name=
   libtool=
   macro_prefix=
@@ -1304,6 +1308,9 @@ func_determine_path_separator
           *) func_fatal_error "invalid LGPL version number for --lgpl" ;;
         esac
         lgpl=$arg
+        shift ;;
+      --gnu-make )
+        gnu_make=true
         shift ;;
       --makefile-name )
         shift
@@ -2780,6 +2787,7 @@ sed_dependencies_without_conditions='s/ *\[.*//'
 # func_modules_transitive_closure
 # Input:
 # - local_gnulib_path  from --local-dir
+# - gnu_make        true if --gnu-make was given, false otherwise
 # - modcache        true or false, from --cache-modules/--no-cache-modules
 # - modules         list of specified modules
 # - inctests        true if tests should be included, false otherwise
@@ -2846,7 +2854,9 @@ func_modules_transitive_closure ()
         if func_acceptable $module; then
           func_append outmodules " $module"
           if test "$cond_dependencies" = true; then
-            if func_get_automake_snippet_conditional $module | grep '^if ' > /dev/null; then
+            if ! $gnu_make \
+               && func_get_automake_snippet_conditional $module \
+                  | grep '^if ' > /dev/null; then
               # A module whose Makefile.am snippet contains a reference to an
               # automake conditional. If we were to use it conditionally, we
               # would get an error
@@ -3390,6 +3400,7 @@ func_update_file ()
 # - libname         library name
 # - pobase          directory relative to destdir where to place *.po files
 # - auxdir          directory relative to destdir where to place build aux files
+# - gnu_make        true if --gnu-make was given, false otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - macro_prefix    prefix of gl_LIBOBJS macros to use
@@ -3407,9 +3418,10 @@ func_update_file ()
 # - uses_subdirs    nonempty if object files in subdirs exist
 func_emit_lib_Makefile_am ()
 {
-  # When creating an includable Makefile.am snippet, augment variables with
-  # += instead of assigning them.
-  if test -n "$makefile_name"; then
+
+  # When using GNU make, or when creating an includable Makefile.am snippet,
+  # augment variables with += instead of assigning them.
+  if $gnu_make || test -n "$makefile_name"; then
     assign='+='
   else
     assign='='
@@ -3474,20 +3486,33 @@ func_emit_lib_Makefile_am ()
         # Skip the contents if it's entirely empty.
         if grep '[^	 ]' "$tmp"/amsnippet1 "$tmp"/amsnippet2 > /dev/null ; then
           echo "## begin gnulib module $module"
+          if $gnu_make; then
+            echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
+            convert_to_gnu_make='s/^if \(.*\)/ifneq (,$(\1))/'
+          else
+            convert_to_gnu_make=
+          fi
           echo
           if test "$cond_dependencies" = true; then
             if func_cond_module_p "$module"; then
               func_module_conditional_name "$module"
-              echo "if $conditional"
+              if $gnu_make; then
+                echo "ifneq (,\$($conditional))"
+              else
+                echo "if $conditional"
+              fi
             fi
           fi
-          cat "$tmp"/amsnippet1
+          sed "$convert_to_gnu_make" "$tmp"/amsnippet1
           if test "$cond_dependencies" = true; then
             if func_cond_module_p "$module"; then
               echo "endif"
             fi
           fi
-          cat "$tmp"/amsnippet2
+          sed "$convert_to_gnu_make" "$tmp"/amsnippet2
+          if $gnu_make; then
+            echo "endif"
+          fi
           echo "## end   gnulib module $module"
           echo
         fi
@@ -3538,6 +3563,15 @@ func_emit_lib_Makefile_am ()
     echo "CLEANFILES ="
     echo "DISTCLEANFILES ="
     echo "MAINTAINERCLEANFILES ="
+  fi
+  if $gnu_make; then
+    echo "# Start of GNU Make output."
+    echo 'gl_EARLY;gl_INIT' \
+      | ${AUTOCONF} -t 'AC_SUBST:$1 = @$1@' "$configure_ac" \
+      | LC_ALL=C sort -u
+    echo "# End of GNU Make output."
+  else
+    echo "# No GNU Make output."
   fi
   # Execute edits that apply to the Makefile.am being generated.
   edit=0
@@ -3616,6 +3650,25 @@ func_emit_lib_Makefile_am ()
   fi
   cat "$tmp"/allsnippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
+  # Determine variables the automake snippet mentions.
+  if false && $gnu_make; then
+    sed_get_makefile_vars='
+      :again
+      /@/!d
+      s/^[^@]*@//
+      h
+      /^[a-zA-Z_][a-zA-Z_0-9]*@/{
+        s/@.*//p
+        g
+        s/^[^@]*@//
+        h
+      }
+      g
+      b again
+    '
+    substs=`func_get_automake_snippet "$module" \
+            | LC_ALL=C sed -e "$sed_get_makefile_vars"`
+  fi
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
@@ -3713,6 +3766,7 @@ func_emit_po_POTFILES_in ()
 # - modules         list of modules, including dependencies
 # - libname         library name
 # - auxdir          directory relative to destdir where to place build aux files
+# - gnu_make        true if --gnu-make was given, false otherwise
 # - makefile_name   from --makefile-name
 # - libtool         true if libtool will be used, false or blank otherwise
 # - sourcebase      relative directory containing lib source code
@@ -3794,8 +3848,14 @@ func_emit_tests_Makefile_am ()
             fi
           done
           { echo "## begin gnulib module $module"
+            if $gnu_make; then
+              echo "ifeq (,\$(OMIT_GNULIB_MODULE_$module))"
+            fi
             echo
             cat "$tmp"/amsnippet
+            if $gnu_make; then
+              echo "endif"
+            fi
             echo "## end   gnulib module $module"
             echo
           } >&$ofd
@@ -5471,7 +5531,7 @@ s,//*$,/,'
 
     func_emit_pre_early_macros : '  ' "$final_modules"
 
-    if test -n "$uses_subdirs"; then
+    if ! $gnu_make && test -n "$uses_subdirs"; then
       echo "  AC_REQUIRE([AM_PROG_CC_C_O])"
     fi
     for module in $final_modules; do

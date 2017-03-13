@@ -84,11 +84,13 @@ module that contains this source file, you can use the command
 @cindex initial import
 
 Gnulib assumes that your project uses Autoconf.  When using Gnulib, you
-will need to have Autoconf and Automake among your build tools.  Note that
-while the use of Automake in your project's top level directory is an
-easy way to fulfil the Makefile conventions of the GNU coding standards,
-Gnulib does not require it.  But when you use Gnulib, Automake will be
-used at least in a subdirectory of your project.
+will need to have Autoconf among your build tools.
+
+Unless you use @command{gnulib-tool}'s @option{--gnu-make} option,
+Gnulib also assumes that your project uses Automake at least in a
+subdirectory of your project.  While the use of Automake in your
+project's top level directory is an easy way to fulfil the Makefile
+conventions of the GNU coding standards, Gnulib does not require it.
 
 Invoking @samp{gnulib-tool --import} will copy source files, create a
 @file{Makefile.am} to build them, generate a file @file{gnulib-comp.m4} with
@@ -244,7 +246,7 @@ gl_INIT
 
 @code{gl_INIT} will in turn call the macros related with the
 gnulib functions, be it specific gnulib macros, like @code{gl_FUNC_ALLOCA}
-or autoconf or automake macros like @code{AC_FUNC_ALLOCA} or
+or Autoconf or Automake macros like @code{AC_FUNC_ALLOCA} or
 @code{AM_FUNC_GETLINE}.  So there is no need to call those macros yourself
 when you use the corresponding gnulib modules.
 
@@ -564,7 +566,7 @@ invocation.
 @cindex autopoint, caveat
 The programs @code{gettextize} and @code{autopoint}, part of
 GNU @code{gettext}, import or update the internationalization infrastructure.
-Some of this infrastructure, namely ca.@: 20 autoconf macro files and the
+Some of this infrastructure, namely ca.@: 20 Autoconf macro files and the
 @file{config.rpath} file, is also contained in Gnulib and may be imported
 by @code{gnulib-tool}.  The use of @code{gettextize} or @code{autopoint}
 will therefore overwrite some of the files that @code{gnulib-tool} has
@@ -602,8 +604,8 @@ is done for you if you use gnulib's @file{bootstrap} script).
 If you get an error message like
 @code{*** error: gettext infrastructure mismatch:
 using a Makefile.in.in from gettext version ...
-but the autoconf macros are from gettext version ...},
-it means that a new GNU gettext release was made, and its autoconf macros
+but the Autoconf macros are from gettext version ...},
+it means that a new GNU gettext release was made, and its Autoconf macros
 were integrated into Gnulib and now mismatch the @file{po/} infrastructure.
 In this case, fetch and install the new GNU gettext release and run
 @code{gettextize} followed by @code{gnulib-tool}.
@@ -870,9 +872,9 @@ in this case.
 
 @cindex conditional dependencies
 In some cases, a module is needed by another module only on specific
-platforms.  But when a module is present, its autoconf checks are always
+platforms.  But when a module is present, its Autoconf checks are always
 executed, and its @code{Makefile.am} additions are always enabled.  So
-it can happen that some autoconf checks are executed and some source files
+it can happen that some Autoconf checks are executed and some source files
 are compiled, although no other module needs them on this particular
 platform, just @emph{in case} some other module would need them.
 
