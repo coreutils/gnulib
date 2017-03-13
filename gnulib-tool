@@ -3650,25 +3650,6 @@ func_emit_lib_Makefile_am ()
   fi
   cat "$tmp"/allsnippets \
     | sed -e 's|\$(top_srcdir)/build-aux/|$(top_srcdir)/'"$auxdir"'/|g'
-  # Determine variables the automake snippet mentions.
-  if false && $gnu_make; then
-    sed_get_makefile_vars='
-      :again
-      /@/!d
-      s/^[^@]*@//
-      h
-      /^[a-zA-Z_][a-zA-Z_0-9]*@/{
-        s/@.*//p
-        g
-        s/^[^@]*@//
-        h
-      }
-      g
-      b again
-    '
-    substs=`func_get_automake_snippet "$module" \
-            | LC_ALL=C sed -e "$sed_get_makefile_vars"`
-  fi
   echo
   echo "mostlyclean-local: mostlyclean-generic"
   echo "	@for dir in '' \$(MOSTLYCLEANDIRS); do \\"
@@ -5133,6 +5114,9 @@ s,^\(.................................................[^ ]*\) *,                
     else
       func_append actioncmd " --lgpl=$lgpl"
     fi
+  fi
+  if test -n "$gnu_make"; then
+    func_append actioncmd " --gnu-make"
   fi
   if test -n "$makefile_name"; then
     func_append actioncmd " --makefile-name=$makefile_name"

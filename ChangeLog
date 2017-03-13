@@ -1,3 +1,12 @@
+2017-03-13  Paul Eggert  <eggert@cs.ucla.edu>
+
+	gnulib-tool: minor --gnu-make fixups
+	* gnulib-tool (func_emit_lib_Makefile_am):
+	Remove useless code that was a blind alley during implementation.
+	Problem reported by Thien-Thi Nguyen in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00029.html
+	(func_import): Note the "--gnu-make" option in the output comment.
+
 2017-03-12  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-tool: new option --gnu-make
