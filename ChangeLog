@@ -1,3 +1,21 @@
+2017-03-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	snippets: move unadjusted snippet sources to lib
+	Problem reported by Michal Privoznik in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00039.html
+	* lib/_Noreturn.h: Rename from build-aux/snippet/_Noreturn.h.
+	* lib/arg-nonnull.h: Rename from build-aux/snippet/arg-nonnull.h.
+	* lib/c++defs.h: Rename from build-aux/snippet/c++defs.h.
+	* lib/unused-parameter.h: Rename from
+	build-aux/snippet/unused-parameter.h.
+	* lib/warn-on-use.h: Rename from build-aux/snippet/warn-on-use.h.
+	* modules/snippet/_Noreturn (Files:, _NORETURN_H):
+	* modules/snippet/arg-nonnull (Files:, ARG_NONNULL_H):
+	* modules/snippet/c++defs (Files:, CXXDEFS_H):
+	* modules/snippet/unused-parameter (Files:, UNUSED_PARAMETER_H):
+	* modules/snippet/warn-on-use (Files: WARN_ON_USE_H):
+	Adjust to file renamings.
+
 2017-03-14  Mathieu Lirzin  <mthl@gnu.org>
 
 	gnulib-tool: don't automatically distribute files from top/

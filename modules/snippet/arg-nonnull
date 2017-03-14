@@ -5,7 +5,7 @@ Applicability:
 all
 
 Files:
-build-aux/snippet/arg-nonnull.h
+lib/arg-nonnull.h
 
 Depends-on:
 
@@ -16,7 +16,7 @@ Makefile.am:
 # gnulib Makefile snippets, it must be present in all makefiles that
 # need it. This is ensured by the applicability 'all' defined above.
 
-ARG_NONNULL_H=$(top_srcdir)/build-aux/snippet/arg-nonnull.h
+ARG_NONNULL_H=$(srcdir)/arg-nonnull.h
 
 Include:
 

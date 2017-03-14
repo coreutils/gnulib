@@ -5,7 +5,7 @@ Applicability:
 all
 
 Files:
-build-aux/snippet/unused-parameter.h
+lib/unused-parameter.h
 
 Depends-on:
 
@@ -16,7 +16,7 @@ Makefile.am:
 # gnulib Makefile snippets, it must be present in all makefiles that
 # need it. This is ensured by the applicability 'all' defined above.
 
-UNUSED_PARAMETER_H=$(top_srcdir)/build-aux/snippet/unused-parameter.h
+UNUSED_PARAMETER_H=$(srcdir)/unused-parameter.h
 
 Include:
 
