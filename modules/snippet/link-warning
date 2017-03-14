@@ -15,13 +15,14 @@ AC_REQUIRE([gl_FEATURES_H])
 Makefile.am:
 # The BUILT_SOURCES created by this Makefile snippet are not used via #include
 # statements but through direct file reference. Therefore this snippet must be
-# present in all Makefile.am that need it. This is ensured by the applicability
+# present in all Makefiles that need it. This is ensured by the applicability
 # 'all' defined above.
 
+# FIXME: The link-warning.h rule probably does not work if
+# gnulib-tool's --gnu-make option is used, when the build is an
+# out-of-source build that relies on VPATH.
+
 BUILT_SOURCES += link-warning.h
-# The link-warning.h that gets inserted into generated .h files is the same as
-# build-aux/snippet/link-warning.h, except that it has the copyright header cut
-# off.
 link-warning.h: $(top_srcdir)/build-aux/snippet/link-warning.h
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	sed -n -e '/HAVE_FEATURES_H/,$$p' \

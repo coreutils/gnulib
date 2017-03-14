@@ -13,7 +13,7 @@ configure.ac:
 
 Makefile.am:
 # Because this Makefile snippet defines a variable used by other
-# gnulib Makefile snippets, it must be present in all Makefile.am that
+# gnulib Makefile snippets, it must be present in all makefiles that
 # need it. This is ensured by the applicability 'all' defined above.
 
 _NORETURN_H=$(top_srcdir)/build-aux/snippet/_Noreturn.h

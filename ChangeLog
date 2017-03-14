@@ -1,3 +1,31 @@
+2017-03-14  Paul Eggert  <eggert@cs.ucla.edu>
+
+	snippets: work around GNU Make 3.82 VPATH
+	When using 'gnulib-tool --gnu-make' on Emacs, and building
+	the resulting tarball on Solaris 10 which bundles GNU Make 3.82,
+	an out-of-source (VPATH) build failed because the sans-copyright
+	snippet file was not built before the file that used it.
+	Presumably this is some sort of VPATH thing.  Work around the
+	problem by using the original snippet, i.e., don’t bother to
+	remove its copyright notice.
+	* modules/snippet/_Noreturn, modules/snippet/link-warning:
+	Don’t assume Automake in comments.  Omit long-incorrect comment.
+	* modules/snippet/arg-nonnull (BUILT_SOURCES, arg-nonnull.h)
+	(MOSTLYCLEANFILES):
+	* modules/snippet/c++defs (BUILT_SOURCES, c++defs.h)
+	(MOSTLYCLEANFILES):
+	* modules/snippet/unused-parameter (BUILT_SOURCES, unused-parameter.h)
+	(MOSTLYCLEANFILES):
+	* modules/snippet/warn-on-use (BUILT_SOURCES, warn-on-use.h)
+	(MOSTLYCLEANFILES):
+	Remove.
+	* modules/snippet/arg-nonnull (ARG_NONNULL_H):
+	* modules/snippet/c++defs (CXXDEFS_H):
+	* modules/snippet/unused-parameter (UNUSED_PARAMETER_H):
+	* modules/snippet/warn-on-use (WARN_ON_USE_H):
+	Don’t bother to remove the copyright notice; just use the
+	original snippet as-is.
+
 2017-03-13  Paul Eggert  <eggert@cs.ucla.edu>
 
 	gnulib-tool: minor --gnu-make fixups
