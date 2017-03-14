@@ -1,5 +1,8 @@
 2017-03-14  Paul Eggert  <eggert@cs.ucla.edu>
 
+	gnulib-tool: fix typo in comment output
+	* gnulib-tool (func_import): Fix typo with previous change.
+
 	snippets: work around GNU Make 3.82 VPATH
 	When using 'gnulib-tool --gnu-make' on Emacs, and building
 	the resulting tarball on Solaris 10 which bundles GNU Make 3.82,

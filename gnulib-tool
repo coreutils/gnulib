@@ -5115,7 +5115,7 @@ s,^\(.................................................[^ ]*\) *,                
       func_append actioncmd " --lgpl=$lgpl"
     fi
   fi
-  if test -n "$gnu_make"; then
+  if $gnu_make; then
     func_append actioncmd " --gnu-make"
   fi
   if test -n "$makefile_name"; then
