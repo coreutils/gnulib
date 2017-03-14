@@ -49,6 +49,10 @@
 # include <sys/mman.h> /* mquery */
 #endif
 
+/* Note: On AIX, there is a /proc/$pic/map file, that contains records of type
+   prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
+   areas that are connected to a file, not the anonymous ones.  */
+
 
 /* Support for reading text files in the /proc file system.  */
 
