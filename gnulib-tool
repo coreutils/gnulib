@@ -2461,13 +2461,6 @@ func_get_automake_snippet_unconditional ()
         echo "EXTRA_DIST += "`echo "$buildaux_files" | sed -e "$sed_prepend_auxdir"`
         echo
       fi
-      # Synthesize an EXTRA_DIST augmentation also for the files from top/.
-      func_filter_filelist top_files "$nl" "$all_files" 'top/' '' 'top/' ''
-      if test -n "$top_files"; then
-        sed_prepend_topdir='s,^,$(top_srcdir)/,'
-        echo "EXTRA_DIST += "`echo "$top_files" | sed -e "$sed_prepend_topdir"`
-        echo
-      fi
       ;;
   esac
 }

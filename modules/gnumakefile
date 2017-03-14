@@ -19,6 +19,7 @@ m4_if(m4_version_compare([2.61a.100],
         [GNUmakefile=$GNUmakefile])])
 
 Makefile.am:
+EXTRA_DIST += $(top_srcdir)/GNUmakefile
 distclean-local: clean-GNUmakefile
 clean-GNUmakefile:
 	test '$(srcdir)' = . || rm -f $(top_builddir)/GNUmakefile
