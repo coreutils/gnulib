@@ -1,5 +1,11 @@
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
+	limits-h: Make it work with HP-UX cc.
+	* lib/limits.in.h (LLONG_MIN, LLONG_MAX, ULLONG_MAX): Define if not
+	defined.
+
+2017-03-14  Bruno Haible  <bruno@clisp.org>
+
 	Fix test failures on DragonFlyBSD.
 	* tests/test-localeconv.c (main): Treat DragonFlyBSD like FreeBSD.
 	* tests/test-select.h (test_bad_fd): Likewise.
