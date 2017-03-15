@@ -55,7 +55,7 @@ main ()
       ASSERT (value2 >= value1);
       ASSERT (value3 >= value2);
 
-#if !((defined __APPLE__ && defined __MACH__) || defined __OpenBSD__ || (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__)
+#if !((defined __APPLE__ && defined __MACH__) || defined __DragonFly__ || defined __OpenBSD__ || (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__)
       /* Allocating 2.5 MB of memory should increase the data segment size.  */
       ASSERT (value3 > value1);
 #endif

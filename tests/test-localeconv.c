@@ -37,13 +37,13 @@ main ()
 
     ASSERT (STREQ (l->decimal_point, "."));
     ASSERT (STREQ (l->thousands_sep, ""));
-#if !(defined __FreeBSD__ || defined __sun)
+#if !((defined __FreeBSD__ || defined __DragonFly__) || defined __sun)
     ASSERT (STREQ (l->grouping, ""));
 #endif
 
     ASSERT (STREQ (l->mon_decimal_point, ""));
     ASSERT (STREQ (l->mon_thousands_sep, ""));
-#if !(defined __FreeBSD__ || defined __sun)
+#if !((defined __FreeBSD__ || defined __DragonFly__) || defined __sun)
     ASSERT (STREQ (l->mon_grouping, ""));
 #endif
     ASSERT (STREQ (l->positive_sign, ""));

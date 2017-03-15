@@ -1,5 +1,12 @@
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
+	Fix test failures on DragonFlyBSD.
+	* tests/test-localeconv.c (main): Treat DragonFlyBSD like FreeBSD.
+	* tests/test-select.h (test_bad_fd): Likewise.
+	* tests/test-get-rusage-data.c (main): Treat DragonFlyBSD like OpenBSD.
+
+2017-03-14  Bruno Haible  <bruno@clisp.org>
+
 	freadahead: Silence warning on DragonFlyBSD.
 	* lib/freadahead.c (__sreadahead): Declare ourselves.
 
