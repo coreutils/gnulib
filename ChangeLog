@@ -1,3 +1,10 @@
+2017-03-17  Bruno Haible  <bruno@clisp.org>
+
+	stdalign: Make it work with HP-UX cc.
+	* lib/stdalign.in.h (_Alignas): Don't define for HP-UX cc.
+	* m4/stdalign.m4 (gl_STDALIGN_H): No need to enable the extra test
+	for HP-UX cc.
+
 2017-03-17  Paul Eggert  <eggert@cs.ucla.edu>
 
 	flexmember: try to detect HP-UX 11.31 cc bug

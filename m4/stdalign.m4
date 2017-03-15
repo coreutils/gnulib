@@ -35,7 +35,7 @@ AC_DEFUN([gl_STDALIGN_H],
                  || (defined __APPLE__ && defined __MACH__ \
                      ? 4 < __GNUC__ + (1 <= __GNUC_MINOR__) \
                      : __GNUC__) \
-                 || __HP_cc || __HP_aCC || __IBMC__ || __IBMCPP__ \
+                 || __HP_aCC || __IBMC__ || __IBMCPP__ \
                  || __ICC || 0x5110 <= __SUNPRO_C \
                  || 1300 <= _MSC_VER)
               struct alignas_test { char c; char alignas (8) alignas_8; };
