@@ -1,5 +1,15 @@
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
+	vma-iter: Add support for HP-UX.
+	* modules/vma-iter (configure.ac): Check for 'pstat_getprocvm'.
+	* lib/vma-iter.c (vma_iterate): On HP-UX, use pstat_getprocvm().
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define also on HP-UX.
+	* lib/get-rusage-as.c: Update comment about HP-UX.
+	* lib/get-rusage-data.c: Likewise.
+	(get_rusage_data): Use get_rusage_data_via_setrlimit.
+
+2017-03-14  Bruno Haible  <bruno@clisp.org>
+
 	limits-h: Make it work with HP-UX cc.
 	* lib/limits.in.h (LLONG_MIN, LLONG_MAX, ULLONG_MAX): Define if not
 	defined.

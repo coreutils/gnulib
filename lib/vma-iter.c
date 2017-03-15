@@ -49,6 +49,10 @@
 # include <sys/mman.h> /* mquery */
 #endif
 
+#if HAVE_PSTAT_GETPROCVM /* HP-UX */
+# include <sys/pstat.h> /* pstat_getprocvm */
+#endif
+
 /* Note: On AIX, there is a /proc/$pic/map file, that contains records of type
    prmap_t, defined in <sys/procfs.h>.  But it lists only the virtual memory
    areas that are connected to a file, not the anonymous ones.  */
@@ -597,6 +601,35 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
         break;
     }
   return 0;
+
+#elif HAVE_PSTAT_GETPROCVM /* HP-UX */
+
+  unsigned long pagesize = getpagesize ();
+  int i;
+
+  for (i = 0; ; i++)
+    {
+      struct pst_vm_status info;
+      int ret = pstat_getprocvm (&info, sizeof (info), 0, i);
+      if (ret < 0)
+        return -1;
+      if (ret == 0)
+        break;
+      {
+        unsigned long start = info.pst_vaddr;
+        unsigned long end = start + info.pst_length * pagesize;
+        unsigned int flags = 0;
+        if (info.pst_permission & PS_PROT_READ)
+          flags |= VMA_PROT_READ;
+        if (info.pst_permission & PS_PROT_WRITE)
+          flags |= VMA_PROT_WRITE;
+        if (info.pst_permission & PS_PROT_EXECUTE)
+          flags |= VMA_PROT_EXECUTE;
+
+        if (callback (data, start, end, flags))
+          break;
+      }
+    }
 
 #else
 

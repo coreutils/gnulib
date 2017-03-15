@@ -83,7 +83,10 @@
      a) setrlimit with RLIMIT_DATA works, except on HP-UX 11.00, where it
         cannot restore the previous limits, and except on HP-UX 11.11, where
         it sometimes has no effect.
-     b) No VMA iteration API exists.
+     b) pstat_getprocvm() can be used to find out about the virtual memory
+        areas.
+     Both methods agree, except that the value of get_rusage_data_via_iterator()
+     is sometimes 4 KB larger than get_rusage_data_via_setrlimit().
 
    IRIX:
      a) setrlimit with RLIMIT_DATA works.
@@ -389,7 +392,7 @@ get_rusage_data (void)
      Prefer get_rusage_data_via_iterator().  */
   return get_rusage_data_via_iterator ();
 #elif HAVE_SETRLIMIT && defined RLIMIT_DATA
-# if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __sgi || defined __osf__ || defined __sun /* Linux, FreeBSD, NetBSD, OpenBSD, AIX, IRIX, OSF/1, Solaris */
+# if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __hpux || defined __sgi || defined __osf__ || defined __sun /* Linux, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris */
   /* get_rusage_data_via_setrlimit() works.  */
   return get_rusage_data_via_setrlimit ();
 # else
