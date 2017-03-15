@@ -1,5 +1,10 @@
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
+	freadahead: Silence warning on DragonFlyBSD.
+	* lib/freadahead.c (__sreadahead): Declare ourselves.
+
+2017-03-14  Bruno Haible  <bruno@clisp.org>
+
 	vma-iter: Add comment about AIX.
 	* lib/vma-iter.c: Add comment about why this module is not implemented
 	on AIX.

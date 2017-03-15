@@ -22,6 +22,11 @@
 #include <stdlib.h>
 #include "stdio-impl.h"
 
+#if defined __DragonFly__
+/* Defined in libc, but not declared in <stdio.h>.  */
+extern size_t __sreadahead (FILE *);
+#endif
+
 size_t
 freadahead (FILE *fp)
 {
