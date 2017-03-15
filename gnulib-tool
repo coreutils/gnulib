@@ -3048,6 +3048,18 @@ func_modules_transitive_closure_separately ()
                           fi
                         done \
                         | LC_ALL=C sort -u | LC_ALL=C join -v 2 - "$tmp"/final-modules`
+  # If testsrelated_modules consists only of modules with applicability 'all',
+  # set it to empty (because such modules are only helper modules for other modules).
+  have_nontrivial_testsrelated_modules=
+  for module in $testsrelated_modules; do
+    if test `func_get_applicability $module` != all; then
+      have_nontrivial_testsrelated_modules=yes
+      break
+    fi
+  done
+  if test -z "$have_nontrivial_testsrelated_modules"; then
+    testsrelated_modules=
+  fi
   if test $verbose -ge 1; then
     echo "Tests-related module list:"
     echo "$testsrelated_modules" | sed -e 's/^/  /'

@@ -1,5 +1,12 @@
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
+	gnulib-tool: Don't produce a tests directory with only snippet .h files.
+	* gnulib-tool (func_modules_transitive_closure_separately): If
+	testsrelated_modules ends up with no "real" modules, aside from
+	modules with applicability 'all', set it to empty.
+
+2017-03-14  Bruno Haible  <bruno@clisp.org>
+
 	vma-iter: Add support for HP-UX.
 	* modules/vma-iter (configure.ac): Check for 'pstat_getprocvm'.
 	* lib/vma-iter.c (vma_iterate): On HP-UX, use pstat_getprocvm().
