@@ -1,3 +1,11 @@
+2017-03-16  Bruno Haible  <bruno@clisp.org>
+
+	stdint: Fix test compilation failure with HP-UX 11 cc.
+	* lib/stdint.in.h (_STDINT_MIN): Remove macro.
+	(_STDINT_UNSIGNED_MIN, _STDINT_SIGNED_MIN): New macros.
+	(PTRDIFF_MIN, SIG_ATOMIC_MIN, WCHAR_MIN, WINT_MIN): Define using
+	_STDINT_UNSIGNED_MIN, _STDINT_SIGNED_MIN.
+
 2017-03-14  Bruno Haible  <bruno@clisp.org>
 
 	gnulib-tool: Don't produce a tests directory with only snippet .h files.
