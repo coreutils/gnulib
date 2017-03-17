@@ -1,3 +1,11 @@
+2017-03-17  Paul Eggert  <eggert@cs.ucla.edu>
+
+	flexmember: try to detect HP-UX 11.31 cc bug
+	Problem reported by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00066.html
+	* m4/flexmember.m4 (AC_C_FLEXIBLE_ARRAY_MEMBER):
+	Attempt to detect bug in HP-UX 11.31 cc.
+
 2017-03-16  Bruno Haible  <bruno@clisp.org>
 
 	stdint: Fix test compilation failure with HP-UX 11 cc.
