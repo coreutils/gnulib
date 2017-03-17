@@ -1,5 +1,11 @@
 2017-03-17  Bruno Haible  <bruno@clisp.org>
 
+	stat-time, timespec: Support use of the header files in C++ mode.
+	* lib/stat-time.h: Add "C" linkage declaration.
+	* lib/timespec.h: Likewise.
+
+2017-03-17  Bruno Haible  <bruno@clisp.org>
+
 	stdalign: Make it work with HP-UX cc.
 	* lib/stdalign.in.h (_Alignas): Don't define for HP-UX cc.
 	* m4/stdalign.m4 (gl_STDALIGN_H): No need to enable the extra test
