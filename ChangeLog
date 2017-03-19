@@ -1,3 +1,10 @@
+2017-03-19  Bruno Haible  <bruno@clisp.org>
+
+	vma-iter: Prefer HP-UX specific API on HP-UX.
+	* lib/vma-iter.c (vma_iterate): Move HP-UX specific implementation up.
+	* lib/vma-iter.h: Update.
+	Just in case HP-UX ever implements mquery().
+
 2017-03-18  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: restore previous behavior for HP-UX IA64
