@@ -1,3 +1,15 @@
+2017-03-19  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: tweak version# and test for HP-UX IA64
+	Problems reported by Bruno Haible in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00078.html
+	* lib/stdalign.in.h (_Alignas):
+	* m4/stdalign.m4 (gl_STDALIGN_H):
+	Use octal, not decimal, for __HP_cc version.  Perhaps HP formerly
+	used octal (as that is how they document it), but it is decimal in
+	practice now and the ancient implementations no longer matter.
+	* tests/test-stdalign.c (main) [__HP_cc && __ia64]: Skip test.
+
 2017-03-19  Bruno Haible  <bruno@clisp.org>
 
 	vma-iter: Add support for Solaris.

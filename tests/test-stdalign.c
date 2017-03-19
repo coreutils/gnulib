@@ -84,6 +84,11 @@ main ()
   /* Avoid a test failure due to Sun Studio Developer Bug Report #2125432.  */
   fputs ("Skipping test: known Sun C compiler bug\n", stderr);
   return 77;
+#elif defined __HP_cc && __ia64
+  /* Avoid a test failure due to HP-UX Itanium cc bug; see:
+     http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00078.html  */
+  fputs ("Skipping test: known HP-UX Itanium cc compiler bug\n", stderr);
+  return 77;
 #else
   CHECK_ALIGNED (static_char_alignas);
   CHECK_ALIGNED (static_char_Alignas);
