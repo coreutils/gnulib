@@ -101,7 +101,10 @@
 
    Solaris:
      a) setrlimit with RLIMIT_DATA works.
-     b) No VMA iteration API exists.
+     b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP, and the
+        /proc/self/maps file contains a list of the virtual memory areas.
+     get_rusage_data_via_setrlimit() ignores the data segment of the executable,
+     whereas get_rusage_data_via_iterator() includes it.
 
    Cygwin:
      a) setrlimit with RLIMIT_DATA always fails.

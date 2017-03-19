@@ -23,13 +23,22 @@
 #include <errno.h> /* errno */
 #include <stdlib.h> /* size_t */
 #include <fcntl.h> /* open, O_RDONLY */
-#include <unistd.h> /* getpagesize, read, close */
+#include <unistd.h> /* getpagesize, read, close, getpid */
 
 #if defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
 # include <sys/procfs.h> /* PIOC*, prmap_t */
+#endif
+
+#if defined __sun /* Solaris */
+# include <string.h> /* memcpy */
+# include <sys/types.h>
+# include <sys/mman.h> /* mmap, munmap */
+/* Try to use the newer ("structured") /proc filesystem API, if supported.  */
+# define _STRUCTURED_PROC 1
+# include <sys/procfs.h> /* prmap_t, optionally PIOC* */
 #endif
 
 #if HAVE_PSTAT_GETPROCVM /* HP-UX */
@@ -368,6 +377,248 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
  fail2:
   close (fd);
   return -1;
+
+#elif defined __sun /* Solaris */
+
+  /* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
+     _STRUCTURED_PROC than without! Here's a table of sizeof(prmap_t):
+                                  32-bit   64-bit
+         _STRUCTURED_PROC = 0       32       56
+         _STRUCTURED_PROC = 1       96      104
+     Therefore, if the include files provide the newer API, prmap_t has
+     the bigger size, and thus you MUST use the newer API.  And if the
+     include files provide the older API, prmap_t has the smaller size,
+     and thus you MUST use the older API.  */
+
+# if defined PIOCNMAP && defined PIOCMAP
+  /* We must use the older /proc interface.  */
+
+  size_t pagesize;
+  char fnamebuf[6+10+1];
+  char *fname;
+  int fd;
+  int nmaps;
+  size_t memneed;
+  void *auxmap;
+  unsigned long auxmap_start;
+  unsigned long auxmap_end;
+  prmap_t* maps;
+  prmap_t* mp;
+
+  pagesize = getpagesize ();
+
+  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u", getpid ()).  */
+  fname = fnamebuf + sizeof (fnamebuf) - 1;
+  *fname = '\0';
+  {
+    unsigned int value = getpid ();
+    do
+      *--fname = (value % 10) + '0';
+    while ((value = value / 10) > 0);
+  }
+  fname -= 6;
+  memcpy (fname, "/proc/", 6);
+
+  fd = open (fname, O_RDONLY);
+  if (fd < 0)
+    return -1;
+
+  if (ioctl (fd, PIOCNMAP, &nmaps) < 0)
+    goto fail2;
+
+  memneed = (nmaps + 10) * sizeof (prmap_t);
+  /* Allocate memneed bytes of memory.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
+     So use mmap(), and ignore the resulting VMA.  */
+  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (auxmap == (void *) -1)
+    goto fail2;
+  auxmap_start = (unsigned long) auxmap;
+  auxmap_end = auxmap_start + memneed;
+  maps = (prmap_t *) auxmap;
+
+  if (ioctl (fd, PIOCMAP, maps) < 0)
+    goto fail1;
+
+  for (mp = maps;;)
+    {
+      unsigned long start, end;
+      unsigned int flags;
+
+      start = (unsigned long) mp->pr_vaddr;
+      end = start + mp->pr_size;
+      if (start == 0 && end == 0)
+        break;
+      flags = 0;
+      if (mp->pr_mflags & MA_READ)
+        flags |= VMA_PROT_READ;
+      if (mp->pr_mflags & MA_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (mp->pr_mflags & MA_EXEC)
+        flags |= VMA_PROT_EXECUTE;
+      mp++;
+      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+        {
+          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
+        }
+      else
+        {
+          if (callback (data, start, end, flags))
+            break;
+        }
+    }
+  munmap (auxmap, memneed);
+  close (fd);
+  return 0;
+
+ fail1:
+  munmap (auxmap, memneed);
+ fail2:
+  close (fd);
+  return -1;
+
+# else
+  /* We must use the newer /proc interface.
+     Documentation:
+     https://docs.oracle.com/cd/E23824_01/html/821-1473/proc-4.html
+     The contents of /proc/<pid>/map consists of records of type
+     prmap_t.  These are different in 32-bit and 64-bit processes,
+     but here we are fortunately accessing only the current process.  */
+
+  size_t pagesize;
+  char fnamebuf[6+10+4+1];
+  char *fname;
+  int fd;
+  int nmaps;
+  size_t memneed;
+  void *auxmap;
+  unsigned long auxmap_start;
+  unsigned long auxmap_end;
+  prmap_t* maps;
+  prmap_t* maps_end;
+  prmap_t* mp;
+
+  pagesize = getpagesize ();
+
+  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
+  fname = fnamebuf + sizeof (fnamebuf) - 1 - 4;
+  memcpy (fname, "/map", 4 + 1);
+  {
+    unsigned int value = getpid ();
+    do
+      *--fname = (value % 10) + '0';
+    while ((value = value / 10) > 0);
+  }
+  fname -= 6;
+  memcpy (fname, "/proc/", 6);
+
+  fd = open (fname, O_RDONLY);
+  if (fd < 0)
+    return -1;
+
+  {
+    struct stat statbuf;
+    if (fstat (fd, &statbuf) < 0)
+      goto fail2;
+    nmaps = statbuf.st_size / sizeof (prmap_t);
+  }
+
+  memneed = (nmaps + 10) * sizeof (prmap_t);
+  /* Allocate memneed bytes of memory.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
+     So use mmap(), and ignore the resulting VMA.  */
+  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (auxmap == (void *) -1)
+    goto fail2;
+  auxmap_start = (unsigned long) auxmap;
+  auxmap_end = auxmap_start + memneed;
+  maps = (prmap_t *) auxmap;
+
+  /* Read up to memneed bytes from fd into maps.  */
+  {
+    size_t remaining = memneed;
+    size_t total_read = 0;
+    char *ptr = (char *) maps;
+
+    do
+      {
+        size_t nread = read (fd, ptr, remaining);
+        if (nread == (size_t)-1)
+          {
+            if (errno == EINTR)
+              continue;
+            goto fail1;
+          }
+        if (nread == 0)
+          /* EOF */
+          break;
+        total_read += nread;
+        ptr += nread;
+        remaining -= nread;
+      }
+    while (remaining > 0);
+
+    nmaps = (memneed - remaining) / sizeof (prmap_t);
+    maps_end = maps + nmaps;
+  }
+
+  for (mp = maps; mp < maps_end; mp++)
+    {
+      unsigned long start, end;
+      unsigned int flags;
+
+      start = (unsigned long) mp->pr_vaddr;
+      end = start + mp->pr_size;
+      flags = 0;
+      if (mp->pr_mflags & MA_READ)
+        flags |= VMA_PROT_READ;
+      if (mp->pr_mflags & MA_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (mp->pr_mflags & MA_EXEC)
+        flags |= VMA_PROT_EXECUTE;
+      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+        {
+          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
+        }
+      else
+        {
+          if (callback (data, start, end, flags))
+            break;
+        }
+    }
+  munmap (auxmap, memneed);
+  close (fd);
+  return 0;
+
+ fail1:
+  munmap (auxmap, memneed);
+ fail2:
+  close (fd);
+  return -1;
+
+# endif
 
 #elif HAVE_PSTAT_GETPROCVM /* HP-UX */
 

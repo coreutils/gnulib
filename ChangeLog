@@ -1,5 +1,14 @@
 2017-03-19  Bruno Haible  <bruno@clisp.org>
 
+	vma-iter: Add support for Solaris.
+	* lib/vma-iter.c (vma_iterate): On Solaris, use the /proc filesystem
+	approach.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Define also on Solaris.
+	* lib/get-rusage-as.c: Update comment about Solaris.
+	* lib/get-rusage-data.c: Likewise.
+
+2017-03-19  Bruno Haible  <bruno@clisp.org>
+
 	vma-iter: Prefer HP-UX specific API on HP-UX.
 	* lib/vma-iter.c (vma_iterate): Move HP-UX specific implementation up.
 	* lib/vma-iter.h: Update.

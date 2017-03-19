@@ -95,7 +95,9 @@
 
    Solaris:
      a) setrlimit with RLIMIT_AS works.
-     b) No VMA iteration API exists.
+     b) The /proc/$pid file supports ioctls PIOCNMAP and PIOCMAP, and the
+        /proc/self/maps file contains a list of the virtual memory areas.
+     Both methods agree,
 
    Cygwin:
      a) setrlimit with RLIMIT_AS always fails when the limit is < 0x80000000.
