@@ -1,3 +1,13 @@
+2017-03-18  Paul Eggert  <eggert@cs.ucla.edu>
+
+	stdalign: restore previous behavior for HP-UX IA64
+	See Bruno Haible's email in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00066.html
+	which cites p 150 of a manual saying that 'aligned' works on Itanium.
+	* lib/stdalign.in.h (_Alignas):
+	Assume the '061200' applies to Itanium, not to PA-RISC.
+	* m4/stdalign.m4 (gl_STDALIGN_H): Adjust to match stdalign.in.h.
+
 2017-03-17  Bruno Haible  <bruno@clisp.org>
 
 	stat-time, timespec: Support use of the header files in C++ mode.
