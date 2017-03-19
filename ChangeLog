@@ -1,3 +1,9 @@
+2017-03-19  Bruno Haible  <bruno@clisp.org>
+
+	lock: Fix compilation error with HP-UX IA64 cc.
+	* lib/glthread/lock.h (pthread_rwlockattr_setkind_np): Don't declare
+	weak on non-glibc platforms.
+
 2017-03-19  Paul Eggert  <eggert@cs.ucla.edu>
 
 	stdalign: tweak version# and test for HP-UX IA64
