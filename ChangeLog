@@ -1,3 +1,16 @@
+2017-03-22  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getopt: merge from glibc
+	This does not change anything substantial; it merely simplifies
+	hypothetical merges back to glibc.
+	* lib/getopt.c, lib/getopt.in.h, lib/getopt1.c, lib/getopt_int.h:
+	Change copyright notice to match what is in glibc.
+	* lib/getopt.c: Reorder includes to match glibc.  Remove uses of
+	USE_IN_LIBIO.  Remove 'register'.  In __LIBC code, use
+	__open_memstream rather than open_memstream and __glibc_likely
+	instead of __builtin_expect.
+	* lib/getopt.in.h (__posix_getopt) [!__GETOPT_PREFIX]: New decl.
+
 2017-03-21  Paul Eggert  <eggert@cs.ucla.edu>
 
 	dfa: make [0-9] faster in non-C locales
