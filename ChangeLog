@@ -1,3 +1,12 @@
+2017-03-21  Paul Eggert  <eggert@cs.ucla.edu>
+
+	dfa: make [0-9] faster in non-C locales
+	Problem reported by John P. Linderman (Bug#26193).
+	* lib/dfa.c (parse_bracket_exp): Remove redundant assignment.
+	If both ends of the range are ASCII digits, do not worry about
+	multi-character collating sequences and the like.  Be consistent
+	about using isalpha as a precondition for setbit_case_fold_c.
+
 2017-03-19  Bruno Haible  <bruno@clisp.org>
 
 	lock: Fix compilation error with HP-UX IA64 cc.
