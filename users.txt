@@ -29,6 +29,7 @@ The following packages appear to be using gnulib and gnulib-tool:
                   https://gitlab.com/gnutls/gnutls.git
   gpg             https://gnupg.org/
                   https://git.gnupg.org/
+  grub            https://git.savannah.gnu.org/cgit/grub.git
   gsasl           https://git.sv.gnu.org/gitweb/?p=gsasl.git
   gss             https://git.sv.gnu.org/gitweb/?p=gss.git
   gtkreindeer     https://git.sv.gnu.org/gitweb/?p=gtkreindeer.git
