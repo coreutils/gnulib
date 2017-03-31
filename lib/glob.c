@@ -809,7 +809,10 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                   goto out;
                 }
               else
-                home_dir = (char *) "~"; /* No luck.  */
+                {
+                  home_dir = (char *) "~"; /* No luck.  */
+                  malloc_home_dir = 0;
+                }
             }
 #  endif /* WINDOWS32 */
 # endif

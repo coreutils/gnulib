@@ -1,5 +1,12 @@
 2017-03-31  Bruno Haible  <bruno@clisp.org>
 
+	glob: Fix invalid free() call.
+	* lib/glob.c (glob): Reset malloc_home_dir when assigning a pointer to
+	static storage to home_dir.
+	Reported by Coverity via Tim Rühsen.
+
+2017-03-31  Bruno Haible  <bruno@clisp.org>
+
 	glob: Fix memory leaks.
 	* lib/glob.c (glob): Free allocated memory before returning.
 	Reported by Coverity via Tim Rühsen.
