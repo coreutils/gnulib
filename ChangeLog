@@ -1,3 +1,16 @@
+2017-03-31  Bruno Haible  <bruno@clisp.org>
+
+	md5, sha1, sha256, sha512: Add comments regarding correctness.
+	* lib/md5.h (buflen): Add comments regarding range.
+	* lib/sha1.h (buflen): Likewise.
+	* lib/sha256.h (buflen): Likewise.
+	* lib/sha512.h (buflen): Likewise.
+	* lib/md5.c (md5_process_bytes): Add comment why memmove is not needed.
+	* lib/sha1.c (sha1_process_bytes): Likewise.
+	* lib/sha256.c (sha256_process_bytes): Likewise.
+	* lib/sha512.c (sha512_process_bytes): Likewise.
+	Reported by Coverity via Tim Rühsen.
+
 2017-03-22  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getopt: merge from glibc
