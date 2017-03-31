@@ -1,5 +1,11 @@
 2017-03-31  Bruno Haible  <bruno@clisp.org>
 
+	glob: Fix memory leaks.
+	* lib/glob.c (glob): Free allocated memory before returning.
+	Reported by Coverity via Tim Rühsen.
+
+2017-03-31  Bruno Haible  <bruno@clisp.org>
+
 	md5, sha1, sha256, sha512: Add comments regarding correctness.
 	* lib/md5.h (buflen): Add comments regarding range.
 	* lib/sha1.h (buflen): Likewise.
