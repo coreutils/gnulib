@@ -1,3 +1,11 @@
+2017-04-02  Bruno Haible  <bruno@clisp.org>
+
+	relocatable-lib-lgpl: Fix link error (regression from 2011-06-16).
+	* modules/relocatable-lib-lgpl (configure.ac): Add AC_LIBOBJ invocation,
+	like it was done in modules/relocatable-lib on 2011-05-21 and in
+	modules/relocatable-prog on 2011-08-15.
+	Reported by Reuben Thomas <rrt@sc3d.org>.
+
 2017-03-31  Bruno Haible  <bruno@clisp.org>
 
 	glob: Fix invalid free() call.
