@@ -109,9 +109,9 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 "this configure-time declaration test was not run"
 #  endif
 #  if STRERROR_R_CHAR_P
-char *strerror_r ();
+char *strerror_r (int errnum, char *buf, size_t buflen);
 #  else
-int strerror_r ();
+int strerror_r (int errnum, char *buf, size_t buflen);
 #  endif
 # endif
 
