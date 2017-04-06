@@ -1,3 +1,15 @@
+2017-04-06  Zack Weinberg  <zackw@panix.com>
+
+	getopt: tabify, in preparation for merge with glibc
+
+	glibc sticks to the GNU default of indenting with a mix of
+	8-column tabs and spaces; make the gnulib copy match.
+
+	getopt.h is not included because it is *not* going to be merged in its
+	present form.
+
+	* getopt.c, getopt1.c, getopt_int.h: Tabify.
+
 2017-04-02  Bruno Haible  <bruno@clisp.org>
 
 	relocatable-lib-lgpl: Fix link error (regression from 2011-06-16).
