@@ -16,25 +16,12 @@
    License along with the GNU C Library; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-#ifdef _LIBC
-# include <getopt.h>
-#else
-# include <config.h>
-# include "getopt.h"
+#ifndef _LIBC
+#include "config.h"
 #endif
+
+#include "getopt.h"
 #include "getopt_int.h"
-
-#include <stdio.h>
-
-/* This needs to come after some library #include
-   to get __GNU_LIBRARY__ defined.  */
-#ifdef __GNU_LIBRARY__
-#include <stdlib.h>
-#endif
-
-#ifndef NULL
-#define NULL 0
-#endif
 
 int
 getopt_long (int argc, char *__getopt_argv_const *argv, const char *options,
@@ -80,6 +67,7 @@ _getopt_long_only_r (int argc, char **argv, const char *options,
 #ifdef TEST
 
 #include <stdio.h>
+#include <stdlib.h>
 
 int
 main (int argc, char **argv)

@@ -360,9 +360,3 @@ AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
      should be used.])
   AC_SUBST([GETOPT_H])
 ])
-
-# Prerequisites of lib/getopt*.
-AC_DEFUN([gl_PREREQ_GETOPT],
-[
-  AC_CHECK_DECLS_ONCE([getenv])
-])

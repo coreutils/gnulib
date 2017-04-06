@@ -1,5 +1,25 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: clean up getopt.c and getopt1.c file headers
+
+	In getopt.c, there is no need to include wchar.h at all, and it is
+	safe nowadays to assume that stdlib.h does declare getenv (several
+	other gnulib modules make this assumption).
+
+	In getopt1.c, the #ifdef _LIBC block at the top can be simplified
+	by using "" inclusions consistently, and there is no actual need to
+	include stdlib.h (except in the #ifdef TEST block, where it should be
+	unconditional), nor to provide a backup definition of NULL at all.
+
+	* lib/getopt1.c: Simplify #ifdeffage at top of file.
+	Move inclusion of stdlib.h to #ifdef TEST block and make
+	unconditional.  Do not define NULL.
+	* lib/getopt.c: Don't include wchar.h. No need to declare getenv.
+	* m4/getopt.m4 (gl_PREREQ_GETENV): Delete.
+	* modules/getopt-gnu, modules/getopt-posix: Don't call
+	gl_PREREQ_GETENV.
+
+
 	getopt: harmonize comments with glibc
 
 	The comments explaining how the behavior of 'getopt' varies depending

@@ -37,10 +37,6 @@
 # define _(msgid) gettext (msgid)
 #endif
 
-#if defined _LIBC
-# include <wchar.h>
-#endif
-
 /* This implementation of 'getopt' has three modes for handling
    options interspersed with non-option arguments.  It can stop
    scanning for options at the first non-option argument encountered,
@@ -102,11 +98,6 @@ int optopt = '?';
 /* Keep a global copy of all internal members of getopt_data.  */
 
 static struct _getopt_data getopt_data;
-
-
-#if defined HAVE_DECL_GETENV && !HAVE_DECL_GETENV
-extern char *getenv ();
-#endif
 
 /* Exchange two adjacent subsequences of ARGV.
    One subsequence is elements [first_nonopt,last_nonopt)
