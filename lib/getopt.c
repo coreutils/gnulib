@@ -318,7 +318,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 
 	  if (d->__first_nonopt != d->__last_nonopt
 	      && d->__last_nonopt != d->optind)
-	    exchange ((char **) argv, d);
+	    exchange (argv, d);
 	  else if (d->__last_nonopt != d->optind)
 	    d->__first_nonopt = d->optind;
 
@@ -341,7 +341,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 
 	  if (d->__first_nonopt != d->__last_nonopt
 	      && d->__last_nonopt != d->optind)
-	    exchange ((char **) argv, d);
+	    exchange (argv, d);
 	  else if (d->__first_nonopt == d->__last_nonopt)
 	    d->__first_nonopt = d->optind;
 	  d->__last_nonopt = argc;
@@ -824,32 +824,23 @@ _getopt_internal (int argc, char **argv, const char *optstring,
   return result;
 }
 
-/* glibc gets a LSB-compliant getopt.
-   Standalone applications get a POSIX-compliant getopt.  */
-#if _LIBC
-enum { POSIXLY_CORRECT = 0 };
-#else
-enum { POSIXLY_CORRECT = 1 };
-#endif
-
-int
-getopt (int argc, char *const *argv, const char *optstring)
-{
-  return _getopt_internal (argc, (char **) argv, optstring,
-			   (const struct option *) 0,
-			   (int *) 0,
-			   0, POSIXLY_CORRECT);
-}
+/* glibc gets a LSB-compliant getopt and a POSIX-complaint __posix_getopt.
+   Standalone applications just get a POSIX-compliant getopt.
+   POSIX and LSB both require these functions to take 'char *const *argv'
+   even though this is incorrect (because of the permutation).  */
+#define GETOPT_ENTRY(NAME, POSIXLY_CORRECT)			\
+  int								\
+  NAME (int argc, char *const *argv, const char *optstring)	\
+  {								\
+    return _getopt_internal (argc, (char **)argv, optstring,	\
+			     0, 0, 0, POSIXLY_CORRECT);		\
+  }
 
 #ifdef _LIBC
-int
-__posix_getopt (int argc, char *const *argv, const char *optstring)
-{
-  return _getopt_internal (argc, argv, optstring,
-			   (const struct option *) 0,
-			   (int *) 0,
-			   0, 1);
-}
+GETOPT_ENTRY(getopt, 0)
+GETOPT_ENTRY(__posix_getopt, 1)
+#else
+GETOPT_ENTRY(getopt, 1)
 #endif
 
 

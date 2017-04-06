@@ -1,5 +1,21 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: merge from glibc: repetition reduction
+
+	The definitions of the entry point functions 'getopt' and
+	'__posix_getopt' can be made substantially less repetitive with a
+	helper macro.
+
+	While I was merging the const-correctness changes from gnulib into
+	glibc I noticed there are still some unnecessary casts in
+	_getopt_internal_r.
+
+	* lib/getopt.c (getopt, __posix_getopt): Eliminate repetition with
+	a macro.  Consistently cast 'argv' to 'char **' when calling
+	_getopt_internal.
+	(_getopt_internal_r): Remove unnecessary casts when calling exchange.
+
+
 	getopt: clean up error reporting
 
 	getopt can print a whole bunch of error messages, and when used
