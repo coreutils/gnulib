@@ -32,28 +32,20 @@ extern int _getopt_internal (int ___argc, char **___argv,
 
 /* Describe how to deal with options that follow non-option ARGV-elements.
 
-   If the caller did not specify anything,
-   the default is REQUIRE_ORDER if the environment variable
-   POSIXLY_CORRECT is defined, PERMUTE otherwise.
+   REQUIRE_ORDER means don't recognize them as options; stop option
+   processing when the first non-option is seen.  This is what POSIX
+   specifies should happen.
 
-   REQUIRE_ORDER means don't recognize them as options;
-   stop option processing when the first non-option is seen.
-   This is what Unix does.
-   This mode of operation is selected by either setting the environment
-   variable POSIXLY_CORRECT, or using '+' as the first character
-   of the list of option characters, or by calling getopt.
-
-   PERMUTE is the default.  We permute the contents of ARGV as we
-   scan, so that eventually all the non-options are at the end.
-   This allows options to be given in any order, even with programs
-   that were not written to expect this.
+   PERMUTE means permute the contents of ARGV as we scan, so that
+   eventually all the non-options are at the end.  This allows options
+   to be given in any order, even with programs that were not written
+   to expect this.
 
    RETURN_IN_ORDER is an option available to programs that were
    written to expect options and other ARGV-elements in any order
    and that care about the ordering of the two.  We describe each
    non-option ARGV-element as if it were the argument of an option
-   with character code 1.  Using '-' as the first character of the
-   list of option characters selects this mode of operation.
+   with character code 1.
 
    The special argument '--' forces an end of option-scanning regardless
    of the value of 'ordering'.  In the case of RETURN_IN_ORDER, only
@@ -91,8 +83,7 @@ struct _getopt_data
   /* See __ord above.  */
   enum __ord __ordering;
 
-  /* If the POSIXLY_CORRECT environment variable is set
-     or getopt was called.  */
+  /* True if behaving strictly as specified by POSIX.  */
   int __posixly_correct;
 
 

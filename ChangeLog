@@ -1,5 +1,15 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: harmonize comments with glibc
+
+	The comments explaining how the behavior of 'getopt' varies depending
+	on whether it's the standalone version and whether there are special
+	characters at the beginning of the options string were inconsistent
+	between gnulib and glibc, and also out of sync with the code.
+
+	* lib/getopt.c, lib/getopt_int.h: Harmonize comments with glibc.
+
+
 	getopt: remove USE_NONOPTION_FLAGS
 
 	getopt includes code to parse an environment variable named

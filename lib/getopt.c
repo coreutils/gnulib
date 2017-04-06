@@ -41,20 +41,27 @@
 # include <wchar.h>
 #endif
 
-/* This version of 'getopt' appears to the caller like standard Unix 'getopt'
-   but it behaves differently for the user, since it allows the user
-   to intersperse the options with the other arguments.
+/* This implementation of 'getopt' has three modes for handling
+   options interspersed with non-option arguments.  It can stop
+   scanning for options at the first non-option argument encountered,
+   as POSIX specifies.  It can continue scanning for options after the
+   first non-option argument, but permute 'argv' as it goes so that,
+   after 'getopt' is done, all the options precede all the non-option
+   arguments and 'optind' points to the first non-option argument.
+   Or, it can report non-option arguments as if they were arguments to
+   the option character '\x01'.
 
-   As 'getopt_long' works, it permutes the elements of ARGV so that,
-   when it is done, all the options precede everything else.  Thus
-   all application programs are extended to handle flexible argument order.
-
-   Using 'getopt' or setting the environment variable POSIXLY_CORRECT
+   The default behavior of 'getopt_long' is to permute the argument list.
+   When this implementation is used standalone, the default behavior of
+   'getopt' is to stop at the first non-option argument, but when it is
+   used as part of GNU libc it also permutes the argument list.  In both
+   cases, setting the environment variable POSIXLY_CORRECT to any value
    disables permutation.
-   Then the behavior is completely standard.
 
-   GNU application programs can use a third alternative mode in which
-   they can distinguish the relative order of options and other arguments.  */
+   If the first character of the OPTSTRING argument to 'getopt' or
+   'getopt_long' is '+', both functions will stop at the first
+   non-option argument.  If it is '-', both functions will report
+   non-option arguments as arguments to the option character '\x01'.  */
 
 #include "getopt_int.h"
 
