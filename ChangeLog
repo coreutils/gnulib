@@ -1,5 +1,30 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: remove USE_NONOPTION_FLAGS
+
+	getopt includes code to parse an environment variable named
+	_XXX_GNU_nonoption_argv_flags_ (where XXX is the current process's PID
+	in decimal); but all of it has been #ifdefed out since 2001, with no
+	official way to turn it back on.
+
+	According to commentary in glibc's config.h.in, bash version 2.0
+	set this environment variable to indicate argv elements that were
+	the result of glob expansion and therefore should not be treated
+	as options, but the feature was "disabled later" because "it
+	caused problems".  According to bash's CHANGES file, "later" was
+	release 2.01; it gives no more detail about what the problems
+	were.
+
+	Version 2.0 of bash was released on the last day of 1996, and version
+	2.01 in June of 1997.  Twenty years later, I think it is safe to
+	assume that this environment variable isn't coming back.
+
+	* lib/getopt_int.h: Remove all #ifdef USE_NONOPTION_FLAGS blocks.
+	* lib/getopt.c: Likewise. Also remove SWAP_FLAGS and the
+	__libc_argc and __libc_argv externs, which were only used by
+	#ifdef USE_NONOPTION_FLAGS blocks.
+
+
 	getopt: tabify, in preparation for merge with glibc
 
 	glibc sticks to the GNU default of indenting with a mix of
