@@ -10,13 +10,6 @@ getopt-posix
 
 configure.ac:
 gl_FUNC_GETOPT_GNU
-if test $REPLACE_GETOPT = 1; then
-  AC_LIBOBJ([getopt])
-  AC_LIBOBJ([getopt1])
-  dnl Arrange for unistd.h to include getopt.h.
-  GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT=1
-fi
-AC_SUBST([GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT])
 
 Makefile.am:
 

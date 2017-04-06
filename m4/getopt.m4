@@ -1,4 +1,4 @@
-# getopt.m4 serial 44
+# getopt.m4 serial 45
 dnl Copyright (C) 2002-2006, 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,8 +33,6 @@ AC_DEFUN([gl_FUNC_GETOPT_POSIX],
 AC_DEFUN([gl_FUNC_GETOPT_GNU],
 [
   m4_divert_text([INIT_PREPARE], [gl_getopt_required=GNU])
-
-  AC_REQUIRE([gl_FUNC_GETOPT_POSIX])
 ])
 
 # Determine whether to replace the entire getopt facility.
