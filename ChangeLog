@@ -1,5 +1,34 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: better handling of ambiguous options
+
+	glibc's getopt uses alloca to construct a linked list of possibilities
+	for an "ambiguous" long option.  In gnulib, malloc should be used
+	instead.  Providing for both cases complicates things a fair bit.
+
+	This patch rewrites ambiguous-option handling to use a boolean vector
+	instead of a linked list.  There is then only one allocation that
+	might need freeing; in glibc it can honor __libc_use_alloca as usual,
+	and in gnulib we define __libc_use_alloca to always be false, so we
+	don't need ifdefs in the middle of the function.  This should also be
+	slightly more efficient in the normal case of long options being fully
+	spelled out -- I think most people aren't even aware they _can_
+	sometimes abbreviate long options.
+
+	One interesting consequence is that the list of possibilities is now
+	printed in exactly the order they appear in the list of long options,
+	instead of the first possibility being shuffled to the end.
+
+	(The patch looks bigger than it really is because there's a fair bit
+	of reindentation and code rearrangement.)
+
+	* lib/getopt.c: When used standalone, define __libc_use_alloca
+	as always false and alloca to abort if called.
+	(process_long_option): Rewrite handling of ambiguous long options
+	to use a single boolean vector, not a linked list; use
+	__libc_use_alloca to decide whether to allocate this using alloca.
+
+
 	getopt: refactor long-option handling
 
 	There were two copies of the bulk of the code to handle long options.
