@@ -1,5 +1,22 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: tidy up _getopt_initialize a bit
+
+	_getopt_data.__posixly_correct is completely redundant to
+	_getopt_data.__ordering, and some work that logically belongs in
+	_getopt_initialize was being done by _getopt_internal_r, making the
+	code harder to understand.
+
+	As a side effect, getenv will no longer be called if the first
+	character of the options string is '+' or '-', which is probably a
+	Good Thing.  (Perhaps we should have a flag character that
+	specifically asks for the permutation behavior?)
+
+	* lib/getopt_int.h (_getopt_data): Remove __posixly_correct field.
+	* lib/getopt.c (_getopt_internal_r): Move some initialization code...
+	(_getopt_initialize): ...here. Don't set d->__posixly_correct.
+
+
 	getopt: merge from glibc: repetition reduction
 
 	The definitions of the entry point functions 'getopt' and
