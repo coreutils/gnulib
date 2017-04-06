@@ -354,9 +354,19 @@ dnl is ambiguous with environment values that contain newlines.
 
 AC_DEFUN([gl_GETOPT_SUBSTITUTE_HEADER],
 [
-  GETOPT_H=getopt.h
+  AC_CHECK_HEADERS_ONCE([sys/cdefs.h])
+  if test $ac_cv_header_sys_cdefs_h = yes; then
+    HAVE_SYS_CDEFS_H=1
+  else
+    HAVE_SYS_CDEFS_H=0
+  fi
+  AC_SUBST([HAVE_SYS_CDEFS_H])
+
   AC_DEFINE([__GETOPT_PREFIX], [[rpl_]],
     [Define to rpl_ if the getopt replacement functions and variables
      should be used.])
+  GETOPT_H=getopt.h
+  GETOPT_CDEFS_H=getopt_cdefs.h
   AC_SUBST([GETOPT_H])
+  AC_SUBST([GETOPT_CDEFS_H])
 ])

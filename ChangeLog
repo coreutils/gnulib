@@ -1,5 +1,44 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: split up getopt.in.h and eliminate __need_getopt
+
+	Over in glibc, all of the __need macros are being phased out in favor
+	of small headers that declare only the necessary components, as this
+	is much simpler and less prone to bugs.  As getopt is shared with
+	glibc, gnulib needs to do the same for __need_getopt.
+
+	__need_getopt is misnamed; what it really means is "we want only the
+	getopt features specified in POSIX, not the GNU extensions".  glibc
+	placed the "meat" of getopt.h into getopt_core.h and getopt_ext.h;
+	these files can be shared verbatim with gnulib.  The portability
+	wrapper, on the other hand, they have renounced altogether; glibc's
+	getopt.h will no longer be shared with gnulib at all.  In exchange,
+	certain glibc-specific quirks (having to do with __posix_getopt) no
+	longer need appear in gnulib's headers at all.
+
+	This patch merges getopt_core.h and getopt_ext.h from glibc, and
+	splits up the current gnulib-side portability wrapper into three
+	additional headers: getopt_pfx_core.h and getopt_pfx_ext.h handle
+	__GETOPT_PREFIX for their respective headers, getopt_cdefs.in.h
+	handles things like __BEGIN_DECLS and __THROW, and getopt.in.h and
+	unistd.in.h just use them.  All new files are clearly marked with
+	whether they are shared with glibc.
+
+	* lib/getopt.in.h: Eliminate __need_getopt.  Break up into ...
+	* lib/getopt_core.h, lib/getopt_ext.h: ... these new files shared
+	with glibc, and ...
+	* lib/getopt_cdefs.in.h, lib/getopt_pfx_core.h
+	* lib/getopt_pfx_ext.h: ... these new files not shared with glibc.
+	* lib/unistd.in.h: Include getopt_cdefs.h and getopt_pfx_core.h,
+	instead of defining __need_getopt and including the full getopt.h.
+
+	* m4/getopt.m4 (gl_GETOPT_SUBSTITUTE_HEADER): Check for sys/cdefs.h.
+	Define substitution variables GETOPT_CDEFS_H and HAVE_SYS_CDEFS_H.
+	* modules/getopt-posix (Files): Add new headers and sort list.
+	(Depends-on): No longer need snippet/arg-nonnull.
+	(Makefile.am): Generate getopt_cdefs.h.
+
+
 	getopt: better handling of ambiguous options
 
 	glibc's getopt uses alloca to construct a linked list of possibilities
