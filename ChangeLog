@@ -1,5 +1,19 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: refactor long-option handling
+
+	There were two copies of the bulk of the code to handle long options.
+	Now there is only one.
+
+	This change temporarily removes the logic to avoid using alloca when
+	standalone; the next patch in the series will restore it.
+
+	* lib/getopt.c (process_long_option): New function split out
+	from _getopt_internal_r.
+	(_getopt_internal_r): Replace both copies of the long-option
+	processing code with calls to process_long_option.
+
+
 	getopt: tidy up _getopt_initialize a bit
 
 	_getopt_data.__posixly_correct is completely redundant to
