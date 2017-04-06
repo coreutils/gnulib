@@ -1,5 +1,16 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: annotate files with relationship to glibc
+
+	As the final act in this patchset, adjust the message at the top of
+	each file to indicate which files are synced with glibc.  (This has
+	already been done for most of the headers.)
+
+	* lib/getopt.c, lib/getopt1.c, lib/getopt_int.h:
+	Mention in top-of-file boilerplate that these files are shared
+	between glibc and gnulib.
+
+
 	getopt: split up getopt.in.h and eliminate __need_getopt
 
 	Over in glibc, all of the __need macros are being phased out in favor
