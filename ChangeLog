@@ -1,5 +1,29 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: clean up error reporting
+
+	getopt can print a whole bunch of error messages, and when used
+	standalone (from gnulib) it uses fprintf to do that.  But fprintf is a
+	cancellation point and getopt isn't, and also applying fprintf to a
+	stream in wide-character mode is not allowed.  So every single error
+	reporting case has an #ifdef _LIBC block in which it calls internal
+	libc functions instead.  The counterpart patch series in glibc makes
+	it possible to simplify all of that down to a set of #defines at the
+	top of the file; core code is written as if it is safe to just call
+	fprintf, flockfile, and funlockfile.  (One caveat: it's *not* safe to
+	call any *other* stdio functions.)
+
+	* lib/getopt.c: When _LIBC is defined, define fprintf to
+	__fxprintf_nocancel, flockfile to _IO_flockfile, and funlockfile
+	to _IO_funlockfile.  When neither _LIBC nor
+	_POSIX_THREAD_SAFE_FUNCTIONS is defined, define flockfile and
+	funlockfile as no-ops.
+	(_getopt_internal_r): Remove all internal #ifdef _LIBC blocks; the
+	standalone error-printing code can now be used for libc as well.
+	Add an flockfile/funlockfile pair around one case where the error
+	message is printed in several chunks.  Don't use fputc.
+
+
 	getopt: fix fencepost error in ambiguous-W-option handling
 
 	getopt_long contains an undocumented (AFAICT) feature in which, if you

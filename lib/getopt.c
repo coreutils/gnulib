@@ -27,14 +27,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
 
 #ifdef _LIBC
+/* When used as part of glibc, error printing must be done differently
+   for standards compliance.  getopt is not a cancellation point, so
+   it must not call functions that are, and it is specified by an
+   older standard than stdio locking, so it must not refer to
+   functions in the "user namespace" related to stdio locking.
+   Finally, it must use glibc's internal message translation so that
+   the messages are looked up in the proper text domain.  */
 # include <libintl.h>
+# define fprintf __fxprintf_nocancel
+# define flockfile(fp) _IO_flockfile (fp)
+# define funlockfile(fp) _IO_funlockfile (fp)
 #else
 # include "gettext.h"
 # define _(msgid) gettext (msgid)
+/* When used standalone, flockfile and funlockfile might not be
+   available.  */
+# ifndef _POSIX_THREAD_SAFE_FUNCTIONS
+#  define flockfile(fp) /* nop */
+#  define funlockfile(fp) /* nop */
+# endif
 #endif
 
 /* This implementation of 'getopt' has three modes for handling
@@ -271,7 +287,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
   if (d->optind == 0 || !d->__initialized)
     {
       if (d->optind == 0)
-	d->optind = 1;	/* Don't scan ARGV[0], the program name.  */
+	d->optind = 1;  /* Don't scan ARGV[0], the program name.  */
       optstring = _getopt_initialize (argc, argv, optstring, d,
 				      posixly_correct);
       d->__initialized = 1;
@@ -469,42 +485,8 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	      first.next = ambig_list;
 	      ambig_list = &first;
 
-#if defined _LIBC
-	      char *buf = NULL;
-	      size_t buflen = 0;
+	      flockfile (stderr);
 
-	      FILE *fp = __open_memstream (&buf, &buflen);
-	      if (fp != NULL)
-		{
-		  fprintf (fp,
-			   _("%s: option '%s' is ambiguous; possibilities:"),
-			   argv[0], argv[d->optind]);
-
-		  do
-		    {
-		      fprintf (fp, " '--%s'", ambig_list->p->name);
-		      ambig_list = ambig_list->next;
-		    }
-		  while (ambig_list != NULL);
-
-		  fputc_unlocked ('\n', fp);
-
-		  if (__glibc_likely (fclose (fp) != EOF))
-		    {
-		      _IO_flockfile (stderr);
-
-		      int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-		      ((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-		      __fxprintf (NULL, "%s", buf);
-
-		      ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-		      _IO_funlockfile (stderr);
-
-		      free (buf);
-		    }
-		}
-#else
 	      fprintf (stderr,
 		       _("%s: option '%s' is ambiguous; possibilities:"),
 		       argv[0], argv[d->optind]);
@@ -515,8 +497,11 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		}
 	      while (ambig_list != NULL);
 
-	      fputc ('\n', stderr);
-#endif
+	      /* This must use 'fprintf' even though it's only printing a
+		 single character, so that it goes through __fxprintf_nocancel
+		 when compiled as part of glibc.  */
+	      fprintf (stderr, "\n");
+	      funlockfile (stderr);
 	    }
 	  else if (print_errors && ambig)
 	    {
@@ -547,57 +532,17 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		{
 		  if (print_errors)
 		    {
-#if defined _LIBC
-		      char *buf;
-		      int n;
-#endif
-
 		      if (argv[d->optind - 1][1] == '-')
-			{
-			  /* --option */
-#if defined _LIBC
-			  n = __asprintf (&buf, _("\
+			/* --option */
+			fprintf (stderr, _("\
 %s: option '--%s' doesn't allow an argument\n"),
-					  argv[0], pfound->name);
-#else
-			  fprintf (stderr, _("\
-%s: option '--%s' doesn't allow an argument\n"),
-				   argv[0], pfound->name);
-#endif
-			}
+				 argv[0], pfound->name);
 		      else
-			{
-			  /* +option or -option */
-#if defined _LIBC
-			  n = __asprintf (&buf, _("\
+			/* +option or -option */
+			fprintf (stderr, _("\
 %s: option '%c%s' doesn't allow an argument\n"),
-					  argv[0], argv[d->optind - 1][0],
-					  pfound->name);
-#else
-			  fprintf (stderr, _("\
-%s: option '%c%s' doesn't allow an argument\n"),
-				   argv[0], argv[d->optind - 1][0],
-				   pfound->name);
-#endif
-			}
-
-#if defined _LIBC
-		      if (n >= 0)
-			{
-			  _IO_flockfile (stderr);
-
-			  int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-			  ((_IO_FILE *) stderr)->_flags2
-			    |= _IO_FLAGS2_NOTCANCEL;
-
-			  __fxprintf (NULL, "%s", buf);
-
-			  ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-			  _IO_funlockfile (stderr);
-
-			  free (buf);
-			}
-#endif
+				 argv[0], argv[d->optind - 1][0],
+				 pfound->name);
 		    }
 
 		  d->__nextchar += strlen (d->__nextchar);
@@ -613,33 +558,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	      else
 		{
 		  if (print_errors)
-		    {
-#if defined _LIBC
-		      char *buf;
+		    fprintf (stderr,
+			     _("%s: option '--%s' requires an argument\n"),
+			     argv[0], pfound->name);
 
-		      if (__asprintf (&buf, _("\
-%s: option '--%s' requires an argument\n"),
-				      argv[0], pfound->name) >= 0)
-			{
-			  _IO_flockfile (stderr);
-
-			  int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-			  ((_IO_FILE *) stderr)->_flags2
-			    |= _IO_FLAGS2_NOTCANCEL;
-
-			  __fxprintf (NULL, "%s", buf);
-
-			  ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-			  _IO_funlockfile (stderr);
-
-			  free (buf);
-			}
-#else
-		      fprintf (stderr,
-			       _("%s: option '--%s' requires an argument\n"),
-			       argv[0], pfound->name);
-#endif
-		    }
 		  d->__nextchar += strlen (d->__nextchar);
 		  d->optopt = pfound->val;
 		  return optstring[0] == ':' ? ':' : '?';
@@ -665,50 +587,14 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	{
 	  if (print_errors)
 	    {
-#if defined _LIBC
-	      char *buf;
-	      int n;
-#endif
-
 	      if (argv[d->optind][1] == '-')
-		{
-		  /* --option */
-#if defined _LIBC
-		  n = __asprintf (&buf, _("%s: unrecognized option '--%s'\n"),
-				  argv[0], d->__nextchar);
-#else
-		  fprintf (stderr, _("%s: unrecognized option '--%s'\n"),
-			   argv[0], d->__nextchar);
-#endif
-		}
+		/* --option */
+		fprintf (stderr, _("%s: unrecognized option '--%s'\n"),
+			 argv[0], d->__nextchar);
 	      else
-		{
-		  /* +option or -option */
-#if defined _LIBC
-		  n = __asprintf (&buf, _("%s: unrecognized option '%c%s'\n"),
-				  argv[0], argv[d->optind][0], d->__nextchar);
-#else
-		  fprintf (stderr, _("%s: unrecognized option '%c%s'\n"),
-			   argv[0], argv[d->optind][0], d->__nextchar);
-#endif
-		}
-
-#if defined _LIBC
-	      if (n >= 0)
-		{
-		  _IO_flockfile (stderr);
-
-		  int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-		  ((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-		  __fxprintf (NULL, "%s", buf);
-
-		  ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-		  _IO_funlockfile (stderr);
-
-		  free (buf);
-		}
-#endif
+		/* +option or -option */
+		fprintf (stderr, _("%s: unrecognized option '%c%s'\n"),
+			 argv[0], argv[d->optind][0], d->__nextchar);
 	    }
 	  d->__nextchar = (char *) "";
 	  d->optind++;
@@ -730,36 +616,7 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
     if (temp == NULL || c == ':' || c == ';')
       {
 	if (print_errors)
-	  {
-#if defined _LIBC
-	      char *buf;
-	      int n;
-#endif
-
-#if defined _LIBC
-	      n = __asprintf (&buf, _("%s: invalid option -- '%c'\n"),
-			      argv[0], c);
-#else
-	      fprintf (stderr, _("%s: invalid option -- '%c'\n"), argv[0], c);
-#endif
-
-#if defined _LIBC
-	    if (n >= 0)
-	      {
-		_IO_flockfile (stderr);
-
-		int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-		((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-		__fxprintf (NULL, "%s", buf);
-
-		((_IO_FILE *) stderr)->_flags2 = old_flags2;
-		_IO_funlockfile (stderr);
-
-		free (buf);
-	      }
-#endif
-	  }
+	  fprintf (stderr, _("%s: invalid option -- '%c'\n"), argv[0], c);
 	d->optopt = c;
 	return '?';
       }
@@ -788,32 +645,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	else if (d->optind == argc)
 	  {
 	    if (print_errors)
-	      {
-#if defined _LIBC
-		char *buf;
+	      fprintf (stderr,
+		       _("%s: option requires an argument -- '%c'\n"),
+		       argv[0], c);
 
-		if (__asprintf (&buf,
-				_("%s: option requires an argument -- '%c'\n"),
-				argv[0], c) >= 0)
-		  {
-		    _IO_flockfile (stderr);
-
-		    int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-		    ((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-		    __fxprintf (NULL, "%s", buf);
-
-		    ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-		    _IO_funlockfile (stderr);
-
-		    free (buf);
-		  }
-#else
-		fprintf (stderr,
-			 _("%s: option requires an argument -- '%c'\n"),
-			 argv[0], c);
-#endif
-	      }
 	    d->optopt = c;
 	    if (optstring[0] == ':')
 	      c = ':';
@@ -862,30 +697,9 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	if (ambig && !exact)
 	  {
 	    if (print_errors)
-	      {
-#if defined _LIBC
-		char *buf;
+	      fprintf (stderr, _("%s: option '-W %s' is ambiguous\n"),
+		       argv[0], d->optarg);
 
-		if (__asprintf (&buf, _("%s: option '-W %s' is ambiguous\n"),
-				argv[0], d->optarg) >= 0)
-		  {
-		    _IO_flockfile (stderr);
-
-		    int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-		    ((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-		    __fxprintf (NULL, "%s", buf);
-
-		    ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-		    _IO_funlockfile (stderr);
-
-		    free (buf);
-		  }
-#else
-		fprintf (stderr, _("%s: option '-W %s' is ambiguous\n"),
-			 argv[0], d->optarg);
-#endif
-	      }
 	    d->__nextchar += strlen (d->__nextchar);
 	    return '?';
 	  }
@@ -901,33 +715,9 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		else
 		  {
 		    if (print_errors)
-		      {
-#if defined _LIBC
-			char *buf;
-
-			if (__asprintf (&buf, _("\
+		      fprintf (stderr, _("\
 %s: option '-W %s' doesn't allow an argument\n"),
-					argv[0], pfound->name) >= 0)
-			  {
-			    _IO_flockfile (stderr);
-
-			    int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-			    ((_IO_FILE *) stderr)->_flags2
-			      |= _IO_FLAGS2_NOTCANCEL;
-
-			    __fxprintf (NULL, "%s", buf);
-
-			    ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-			    _IO_funlockfile (stderr);
-
-			    free (buf);
-			  }
-#else
-			fprintf (stderr, _("\
-%s: option '-W %s' doesn't allow an argument\n"),
-				 argv[0], pfound->name);
-#endif
-		      }
+			       argv[0], pfound->name);
 
 		    d->__nextchar += strlen (d->__nextchar);
 		    return '?';
@@ -940,33 +730,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 		else
 		  {
 		    if (print_errors)
-		      {
-#if defined _LIBC
-			char *buf;
-
-			if (__asprintf (&buf, _("\
+		      fprintf (stderr, _("\
 %s: option '-W %s' requires an argument\n"),
-					argv[0], pfound->name) >= 0)
-			  {
-			    _IO_flockfile (stderr);
+			       argv[0], pfound->name);
 
-			    int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-			    ((_IO_FILE *) stderr)->_flags2
-			      |= _IO_FLAGS2_NOTCANCEL;
-
-			    __fxprintf (NULL, "%s", buf);
-
-			    ((_IO_FILE *) stderr)->_flags2 = old_flags2;
-			    _IO_funlockfile (stderr);
-
-			    free (buf);
-			  }
-#else
-			fprintf (stderr, _("\
-%s: option '-W %s' requires an argument\n"),
-				 argv[0], pfound->name);
-#endif
-		      }
 		    d->__nextchar += strlen (d->__nextchar);
 		    return optstring[0] == ':' ? ':' : '?';
 		  }
@@ -1015,32 +782,10 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 	    else if (d->optind == argc)
 	      {
 		if (print_errors)
-		  {
-#if defined _LIBC
-		    char *buf;
+		  fprintf (stderr,
+			   _("%s: option requires an argument -- '%c'\n"),
+			   argv[0], c);
 
-		    if (__asprintf (&buf, _("\
-%s: option requires an argument -- '%c'\n"),
-				    argv[0], c) >= 0)
-		      {
-			_IO_flockfile (stderr);
-
-			int old_flags2 = ((_IO_FILE *) stderr)->_flags2;
-			((_IO_FILE *) stderr)->_flags2 |= _IO_FLAGS2_NOTCANCEL;
-
-			__fxprintf (NULL, "%s", buf);
-
-			((_IO_FILE *) stderr)->_flags2 = old_flags2;
-			_IO_funlockfile (stderr);
-
-			free (buf);
-		      }
-#else
-		    fprintf (stderr,
-			     _("%s: option requires an argument -- '%c'\n"),
-			     argv[0], c);
-#endif
-		  }
 		d->optopt = c;
 		if (optstring[0] == ':')
 		  c = ':';
