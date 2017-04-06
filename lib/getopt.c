@@ -887,7 +887,6 @@ _getopt_internal_r (int argc, char **argv, const char *optstring,
 #endif
 	      }
 	    d->__nextchar += strlen (d->__nextchar);
-	    d->optind++;
 	    return '?';
 	  }
 	if (pfound != NULL)

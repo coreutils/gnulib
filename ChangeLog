@@ -1,5 +1,23 @@
 2017-04-06  Zack Weinberg  <zackw@panix.com>
 
+	getopt: fix fencepost error in ambiguous-W-option handling
+
+	getopt_long contains an undocumented (AFAICT) feature in which, if you
+	put "W;" in the short-options list, then '-W foo' and '-Wfoo' are
+	treated as equivalent to '--foo'.  This is implemented with a partial
+	second copy of the code for handling long options, and that code
+	increments optind one too many times when recovering from an ambiguous
+	abbreviated option, which can cause the main loop to walk past the end
+	of argv and crash.
+
+	I discovered this while writing a test case that tries to exercise all
+	of getopt's error reporting paths; I wouldn't be surprised to learn
+	that this feature is never used by real applications.
+
+	* lib/getopt.c (_getopt_internal_r): Don't increment
+	d->optind a second time when reporting ambiguous -W options.
+
+
 	getopt: clean up getopt.c and getopt1.c file headers
 
 	In getopt.c, there is no need to include wchar.h at all, and it is
