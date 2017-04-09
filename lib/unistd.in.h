@@ -137,8 +137,8 @@
 /* Get getopt(), optarg, optind, opterr, optopt.
    But avoid namespace pollution on glibc systems.  */
 #if @GNULIB_UNISTD_H_GETOPT@ && !defined __GLIBC__ && !defined _GL_SYSTEM_GETOPT
-# include <getopt_cdefs.h>
-# include <getopt_pfx_core.h>
+# include <getopt-cdefs.h>
+# include <getopt-pfx-core.h>
 #endif
 
 #ifndef _GL_INLINE_HEADER_BEGIN

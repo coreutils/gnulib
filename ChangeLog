@@ -1,5 +1,13 @@
 2017-04-08  Paul Eggert  <eggert@cs.ucla.edu>
 
+	getopt: prefer - to _ in new file names
+	* lib/getopt-cdefs.in.h: Rename from lib/getopt_cdefs.in.h.
+	* lib/getopt-core.h: Rename from lib/getopt_core.h.
+	* lib/getopt-ext.h: Rename from lib/getopt_ext.h.
+	* lib/getopt-pfx-core.h: Rename from lib/getopt_pfx_core.h.
+	* lib/getopt-pfx-ext.h: Rename from lib/getopt_pfx_ext.h.
+	All uses changed.
+
 	getopt: port recent getopt changes to macOS
 	Problem reported by Harald Maier (Bug#26398).
 	The macOS C compiler uses __nonnull for its own purposes and that

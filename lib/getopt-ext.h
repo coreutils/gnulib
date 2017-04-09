@@ -74,4 +74,4 @@ extern int getopt_long_only (int ___argc, char *__getopt_argv_const *___argv,
 
 __END_DECLS
 
-#endif /* getopt_ext.h */
+#endif /* _GETOPT_EXT_H */

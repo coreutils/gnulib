@@ -27,7 +27,7 @@
 
 /* Standalone applications should #define __GETOPT_PREFIX to an
    identifier that prefixes the external functions and variables
-   defined in getopt_core.h and getopt_ext.h.  Systematically
+   defined in getopt-core.h and getopt-ext.h.  Systematically
    rename identifiers so that they do not collide with the system
    functions and variables.  Renaming avoids problems with some
    compilers and linkers.  */
@@ -59,6 +59,6 @@
 # endif
 #endif
 
-#include <getopt_ext.h>
+#include <getopt-ext.h>
 
-#endif /* getopt_pfx_ext.h */
+#endif /* _GETOPT_PFX_EXT_H */

@@ -1,4 +1,4 @@
-/* getopt-on-non-glibc compatibility macros.
+/* getopt (basic, portable features) gnulib wrapper header.
    Copyright (C) 1989-2017 Free Software Foundation, Inc.
    This file is part of gnulib.
    Unlike most of the getopt implementation, it is NOT shared
@@ -18,50 +18,37 @@
    License along with gnulib; if not, see
    <http://www.gnu.org/licenses/>.  */
 
-#ifndef _GETOPT_CDEFS_H
-#define _GETOPT_CDEFS_H 1
+#ifndef _GETOPT_PFX_CORE_H
+#define _GETOPT_PFX_CORE_H 1
 
 /* This header should not be used directly; include getopt.h or
    unistd.h instead.  It does not have a protective #error, because
    the guard macro for getopt.h in gnulib is not fixed.  */
 
-/* getopt_core.h and getopt_ext.h are shared with GNU libc, and expect
-   a number of the internal macros supplied to GNU libc's headers by
-   sys/cdefs.h.  Provide fallback definitions for all of them.  */
-#if @HAVE_SYS_CDEFS_H@
-# include <sys/cdefs.h>
+/* Standalone applications should #define __GETOPT_PREFIX to an
+   identifier that prefixes the external functions and variables
+   defined in getopt-core.h and getopt-ext.h.  Systematically
+   rename identifiers so that they do not collide with the system
+   functions and variables.  Renaming avoids problems with some
+   compilers and linkers.  */
+#ifdef __GETOPT_PREFIX
+# ifndef __GETOPT_ID
+#  define __GETOPT_CONCAT(x, y) x ## y
+#  define __GETOPT_XCONCAT(x, y) __GETOPT_CONCAT (x, y)
+#  define __GETOPT_ID(y) __GETOPT_XCONCAT (__GETOPT_PREFIX, y)
+# endif
+# undef getopt
+# undef optarg
+# undef opterr
+# undef optind
+# undef optopt
+# define getopt __GETOPT_ID (getopt)
+# define optarg __GETOPT_ID (optarg)
+# define opterr __GETOPT_ID (opterr)
+# define optind __GETOPT_ID (optind)
+# define optopt __GETOPT_ID (optopt)
 #endif
 
-#ifndef __BEGIN_DECLS
-# ifdef __cplusplus
-#  define __BEGIN_DECLS extern "C" {
-# else
-#  define __BEGIN_DECLS /* nothing */
-# endif
-#endif
-#ifndef __END_DECLS
-# ifdef __cplusplus
-#  define __END_DECLS }
-# else
-#  define __END_DECLS /* nothing */
-# endif
-#endif
+#include <getopt-core.h>
 
-#ifndef __GNUC_PREREQ
-# if defined __GNUC__ && defined __GNUC_VERSION__
-# define __GNUC_PREREQ(maj, min) \
-        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-# else
-#  define __GNUC_PREREQ(maj, min) 0
-# endif
-#endif
-
-#ifndef __THROW
-# if defined __cplusplus && __GNUC_PREREQ (2,8)
-#  define __THROW       throw ()
-# else
-#  define __THROW
-# endif
-#endif
-
-#endif /* getopt_cdefs.h */
+#endif /* _GETOPT_PFX_CORE_H */

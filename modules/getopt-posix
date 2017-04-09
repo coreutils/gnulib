@@ -5,12 +5,12 @@ Files:
 lib/getopt.c
 lib/getopt1.c
 lib/getopt.in.h
-lib/getopt_cdefs.in.h
-lib/getopt_core.h
-lib/getopt_ext.h
+lib/getopt-cdefs.in.h
+lib/getopt-core.h
+lib/getopt-ext.h
+lib/getopt-pfx-core.h
+lib/getopt-pfx-ext.h
 lib/getopt_int.h
-lib/getopt_pfx_core.h
-lib/getopt_pfx_ext.h
 m4/getopt.m4
 
 Depends-on:
@@ -49,15 +49,15 @@ getopt.h: getopt.in.h $(top_builddir)/config.status
 	} > $@-t && \
 	mv -f $@-t $@
 
-getopt_cdefs.h: getopt_cdefs.in.h $(top_builddir)/config.status
+getopt-cdefs.h: getopt-cdefs.in.h $(top_builddir)/config.status
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
           sed -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
-	      < $(srcdir)/getopt_cdefs.in.h; \
+	      < $(srcdir)/getopt-cdefs.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
 
-MOSTLYCLEANFILES += getopt.h getopt.h-t getopt_cdefs.h getopt_cdefs.h-t
+MOSTLYCLEANFILES += getopt.h getopt.h-t getopt-cdefs.h getopt-cdefs.h-t
 
 Include:
 <unistd.h>

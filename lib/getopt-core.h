@@ -93,4 +93,4 @@ extern int getopt (int ___argc, char *const *___argv, const char *__shortopts)
 
 __END_DECLS
 
-#endif /* getopt_core.h */
+#endif /* _GETOPT_CORE_H */
