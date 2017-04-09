@@ -64,12 +64,4 @@
 # endif
 #endif
 
-#ifndef __nonnull
-# if __GNUC_PREREQ (3,3)
-#  define __nonnull(params) __attribute__ ((__nonnull__ params))
-# else
-#  define __nonnull(params)
-# endif
-#endif
-
 #endif /* getopt_cdefs.h */

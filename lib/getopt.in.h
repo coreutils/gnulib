@@ -52,6 +52,8 @@
 # endif
 #endif
 
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
 #include <getopt_cdefs.h>
 #include <getopt_pfx_core.h>
 #include <getopt_pfx_ext.h>

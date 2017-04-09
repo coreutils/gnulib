@@ -89,7 +89,7 @@ extern int optopt;
    writable.  */
 
 extern int getopt (int ___argc, char *const *___argv, const char *__shortopts)
-       __THROW __nonnull ((2, 3));
+       __THROW _GL_ARG_NONNULL ((2, 3));
 
 __END_DECLS
 

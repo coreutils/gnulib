@@ -1,3 +1,19 @@
+2017-04-08  Paul Eggert  <eggert@cs.ucla.edu>
+
+	getopt: port recent getopt changes to macOS
+	Problem reported by Harald Maier (Bug#26398).
+	The macOS C compiler uses __nonnull for its own purposes and that
+	clashes with glibc's __nonnull.
+	* lib/getopt.in.h: Add comment for _GL_ARG_NONNULL snippet.
+	* lib/getopt_cdefs.in.h (__nonnull): Remove.
+	* lib/getopt_core.h (getopt):
+	* lib/getopt_ext.h (getopt_long, getopt_long_only):
+	Use _GL_ARG_NONNULL, not __nonnull.
+	* lib/unistd.in.h: Move snippet hooks to before where the getopt
+	.h files are included, so that _GL_ARG_NONNULL is defined in time.
+	* modules/getopt-posix (Depends-on): Add snippet/arg-nonnull.
+	(getopt.h): Interpolate _GL_ARG_NONNULL snippet.
+
 2017-04-06  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getopt-gnu: omit some duplicate code
