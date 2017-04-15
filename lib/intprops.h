@@ -461,8 +461,8 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
    E.g., GCC converts to signed integers in the usual way; see:
    https://gcc.gnu.org/onlinedocs/gcc/Integers-implementation.html
    All other known C compilers are similar to GCC in this respect.
-   Furthermore, Oracle Studio Studio 12.3 x86 has a bug when
-   implementing the standard way; see:
+   Furthermore, Oracle Studio 12.3 x86 has a bug when implementing the
+   standard way; see:
    http://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00049.html
 
    So, implement this operation in the usual way rather than in
