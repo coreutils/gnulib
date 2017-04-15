@@ -1,5 +1,11 @@
 2017-04-14  Paul Eggert  <eggert@Penguin.CS.UCLA.EDU>
 
+	intprops: try to avoid tickling similar bugs
+	* lib/intprops.h (_GL_INT_OP_CALC): Document that UT no longer
+	needs to be the same width as T; it can be wider.
+	Change callers so that UT is at least as wide as unsigned int,
+	as I suspect that this is less likely to run into compiler bugs.
+
 	intprops: port to Oracle Studio 12.3 x86
 	Problem reported by Gavin Smith in:
 	http://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00049.html

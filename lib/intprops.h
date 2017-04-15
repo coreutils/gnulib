@@ -389,10 +389,10 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
    (_Generic \
     (*(r), \
      signed char: \
-       _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned char, \
+       _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
                         signed char, SCHAR_MIN, SCHAR_MAX), \
      short int: \
-       _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned short int, \
+       _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
                         short int, SHRT_MIN, SHRT_MAX), \
      int: \
        _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
@@ -406,10 +406,10 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
 #else
 # define _GL_INT_OP_WRAPV(a, b, r, op, builtin, overflow) \
    (sizeof *(r) == sizeof (signed char) \
-    ? _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned char, \
+    ? _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
                        signed char, SCHAR_MIN, SCHAR_MAX) \
     : sizeof *(r) == sizeof (short int) \
-    ? _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned short int, \
+    ? _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
                        short int, SHRT_MIN, SHRT_MAX) \
     : sizeof *(r) == sizeof (int) \
     ? _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned int, \
@@ -431,9 +431,8 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
 
 /* Store the low-order bits of A <op> B into *R, where the operation
    is given by OP.  Use the unsigned type UT for calculation to avoid
-   overflow problems.  *R's type is T, with extremal values TMIN and
-   TMAX.  T must be a signed integer type.  Return 1 if the result
-   overflows.  */
+   overflow problems.  *R's type is T, with extrema TMIN and TMAX.
+   T must be a signed integer type.  Return 1 if the result overflows.  */
 #define _GL_INT_OP_CALC(a, b, r, op, overflow, ut, t, tmin, tmax) \
   (sizeof ((a) op (b)) < sizeof (t) \
    ? _GL_INT_OP_CALC1 ((t) (a), (t) (b), r, op, overflow, ut, t, tmin, tmax) \
@@ -449,9 +448,9 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
    low-order bits of the mathematically-correct answer.  Use the
    unsigned type UT for calculation to avoid undefined behavior on
    signed integer overflow.  Assume that conversion to the result type
-   T yields the low-order bits in the usual way.  UT and T are the
-   same width, T is two's complement, and there is no padding or trap
-   representations.
+   T yields the low-order bits in the usual way.  UT is at least as
+   wide as T and is no narrower than unsigned int, T is two's
+   complement, and there is no padding or trap representations.
 
    According to the C standard, converting UT to T yields an
    implementation-defined result or signal for values outside T's range.
