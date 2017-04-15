@@ -1,3 +1,12 @@
+2017-04-14  Paul Eggert  <eggert@Penguin.CS.UCLA.EDU>
+
+	intprops: port to Oracle Studio 12.3 x86
+	Problem reported by Gavin Smith in:
+	http://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00049.html
+	* lib/intprops.h (_GL_INT_OP_WRAPV_VIA_UNSIGNED):
+	Convert unsigned to signed via the usual rather than the standard way,
+	to avoid a compiler bug in Oracle Studio 12.3 x86.
+
 2017-04-08  Paul Eggert  <eggert@cs.ucla.edu>
 
 	getopt: prefer - to _ in new file names
