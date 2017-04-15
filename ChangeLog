@@ -1,3 +1,24 @@
+2017-04-15  Paul Eggert  <eggert@Penguin.CS.UCLA.EDU>
+
+	intprops: improve comments
+	* lib/intprops.h: Improve and shorten commentary.
+	For the record, if we ever run into a pedantic compiler that
+	behaves differently from GCC when converting an out-of-range value
+	to a signed integer, we can work around the problem with something
+	like the following code, where UCT is the signed counterpart of T
+	(UCT is sometimes narrower than UT) and all callers are changed
+	accordingly:
+	#if __SUNPRO_C <= 0x5120
+	# define _GL_INT_OP_WRAPV_VIA_UNSIGNED(a, b, op, uct, ut, t) \
+	   ((t) ((ut) (a) op (ut) (b)))
+	#else
+	# define _GL_INT_OP_WRAPV_VIA_UNSIGNED(a, b, op, uct, ut, t) \
+	   (TYPE_MINIMUM (t) <= (uct) ((ut) (a) op (ut) (b)) \
+	    ? ((t) (uct) (((ut) (a) op (ut) (b)) - TYPE_MINIMUM (t)) \
+	       + TYPE_MINIMUM (t)) \
+	    : (t) (uct) ((ut) (a) op (ut) (b)))
+	#endif
+
 2017-04-14  Paul Eggert  <eggert@Penguin.CS.UCLA.EDU>
 
 	intprops: try to avoid tickling similar bugs

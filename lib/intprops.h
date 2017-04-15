@@ -444,29 +444,22 @@ verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
    ? (*(r) = _GL_INT_OP_WRAPV_VIA_UNSIGNED (a, b, op, ut, t), 1) \
    : (*(r) = _GL_INT_OP_WRAPV_VIA_UNSIGNED (a, b, op, ut, t), 0))
 
-/* Return A <op> B, where the operation is given by OP.  Return the
-   low-order bits of the mathematically-correct answer.  Use the
-   unsigned type UT for calculation to avoid undefined behavior on
-   signed integer overflow.  Assume that conversion to the result type
-   T yields the low-order bits in the usual way.  UT is at least as
-   wide as T and is no narrower than unsigned int, T is two's
-   complement, and there is no padding or trap representations.
+/* Return the low-order bits of A <op> B, where the operation is given
+   by OP.  Use the unsigned type UT for calculation to avoid undefined
+   behavior on signed integer overflow, and convert the result to type T.
+   UT is at least as wide as T and is no narrower than unsigned int,
+   T is two's complement, and there is no padding or trap representations.
+   Assume that converting UT to T yields the low-order bits, as is
+   done in all known two's-complement C compilers.  E.g., see:
+   https://gcc.gnu.org/onlinedocs/gcc/Integers-implementation.html
 
    According to the C standard, converting UT to T yields an
-   implementation-defined result or signal for values outside T's range.
-   So, the standard way to convert UT to T is to subtract TMIN from
-   greater-than-TMAX values before converting them to T, and to add
-   TMIN afterwards, where TMIN and TMAX are T's extrema.
-   However, in practice there is no need to subtract and add TMIN.
-   E.g., GCC converts to signed integers in the usual way; see:
-   https://gcc.gnu.org/onlinedocs/gcc/Integers-implementation.html
-   All other known C compilers are similar to GCC in this respect.
-   Furthermore, Oracle Studio 12.3 x86 has a bug when implementing the
-   standard way; see:
+   implementation-defined result or signal for values outside T's
+   range.  However, code that works around this theoretical problem
+   runs afoul of a compiler bug in Oracle Studio 12.3 x86.  See:
    http://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00049.html
-
-   So, implement this operation in the usual way rather than in
-   the standard way.  */
+   As the compiler bug is real, don't try to work around the
+   theoretical problem.  */
 
 #define _GL_INT_OP_WRAPV_VIA_UNSIGNED(a, b, op, ut, t) \
   ((t) ((ut) (a) op (ut) (b)))
