@@ -1,5 +1,12 @@
 2017-04-18  Bruno Haible  <bruno@clisp.org>
 
+	vma-iter: Fix compilation error on Solaris 7.
+	* lib/vma-iter.c (vma_iterate): Treat missing MAP_ANONYMOUS on Solaris
+	like on IRIX, OSF/1.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2017-04-18  Bruno Haible  <bruno@clisp.org>
+
 	vma-iter: Fix conflict with module 'largefile' on 32-bit Solaris 9.
 	* modules/vma-iter (configure.ac): Test whether <sys/procfs.h> can be
 	included.
