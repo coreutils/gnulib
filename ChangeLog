@@ -1,5 +1,16 @@
 2017-04-18  Bruno Haible  <bruno@clisp.org>
 
+	vma-iter: Fix conflict with module 'largefile' on 32-bit Solaris 9.
+	* modules/vma-iter (configure.ac): Test whether <sys/procfs.h> can be
+	included.
+	* lib/vma-iter.c: On Solaris, test HAVE_SYS_PROCFS_H before including
+	<sys/procfs.h>.
+	* lib/vma-iter.h (VMA_ITERATE_SUPPORTED): Don't define on Solaris when
+	<sys/procfs.h> cannot be included.
+	Reported by Tom G. Christensen <tgc@jupiterrise.com>.
+
+2017-04-18  Bruno Haible  <bruno@clisp.org>
+
 	getopt-gnu: Add comments.
 	* m4/getopt.m4 (gl_FUNC_GETOPT_GNU): Add comments.
 	* modules/getopt-gnu (configure.ac): Likewise.

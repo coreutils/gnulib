@@ -52,7 +52,7 @@ extern int vma_iterate (vma_iterate_callback_fn callback, void *data);
    this platform.
    Note that even when this macro is defined, vma_iterate() may still fail to
    find any virtual memory area, for example if /proc is not mounted.  */
-#if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ || defined __sgi || defined __osf__ || defined __sun || HAVE_PSTAT_GETPROCVM || (defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__ || defined __BEOS__ || defined __HAIKU__ || HAVE_MQUERY
+#if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ || defined __sgi || defined __osf__ || (defined __sun && HAVE_SYS_PROCFS_H) || HAVE_PSTAT_GETPROCVM || (defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__ || defined __BEOS__ || defined __HAIKU__ || HAVE_MQUERY
 # define VMA_ITERATE_SUPPORTED 1
 #endif
 

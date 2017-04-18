@@ -32,7 +32,7 @@
 # include <sys/procfs.h> /* PIOC*, prmap_t */
 #endif
 
-#if defined __sun /* Solaris */
+#if defined __sun && HAVE_SYS_PROCFS_H /* Solaris */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
@@ -378,7 +378,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   close (fd);
   return -1;
 
-#elif defined __sun /* Solaris */
+#elif defined __sun && HAVE_SYS_PROCFS_H /* Solaris */
 
   /* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
      _STRUCTURED_PROC than without! Here's a table of sizeof(prmap_t):
