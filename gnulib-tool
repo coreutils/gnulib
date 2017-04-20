@@ -3883,6 +3883,7 @@ func_emit_tests_Makefile_am ()
   if ! $for_test; then
     echo "check_PROGRAMS ="
   fi
+  echo "EXTRA_PROGRAMS ="
   echo "noinst_HEADERS ="
   echo "noinst_LIBRARIES ="
   if $use_libtests; then
