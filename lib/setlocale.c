@@ -633,6 +633,13 @@ setlocale_unixlike (int category, const char *locale)
   char ll_buf[64];
   char CC_buf[64];
 
+  /* The native Windows implementation of setlocale understands the special
+     locale name "C", but not "POSIX".  Therefore map "POSIX" to "C".  */
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+  if (locale != NULL && strcmp (locale, "POSIX") == 0)
+    locale = "C";
+#endif
+
   /* First, try setlocale with the original argument unchanged.  */
   result = setlocale (category, locale);
   if (result != NULL)
