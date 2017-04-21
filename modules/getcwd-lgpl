@@ -1,5 +1,5 @@
 Description:
-Ensure getcwd(NULL, 0) returns a buffer allocated by malloc().
+Ensure getcwd(NULL, 0) returns a buffer allocated by the malloc() function.
 
 Files:
 lib/getcwd-lgpl.c

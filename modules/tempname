@@ -1,5 +1,6 @@
 Description:
-gen_tempname() and try_tempname(): create a private temporary file or directory.
+gen_tempname() function and try_tempname() function:
+create a private temporary file or directory.
 
 Files:
 lib/tempname.c

@@ -1,5 +1,5 @@
 Description:
-Support for fcntl() action F_DUPFD, F_DUPFD_CLOEXEC, F_GETFD.
+Support for the fcntl() function, actions F_DUPFD, F_DUPFD_CLOEXEC, F_GETFD.
 
 Files:
 m4/fcntl.m4

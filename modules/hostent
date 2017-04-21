@@ -1,6 +1,7 @@
 Description:
-Library containing gethostent(), sethostent(), endhostent(), gethostbyname(),
-gethostbyaddr().
+Library containing
+gethostent() function, sethostent() function, endhostent() function,
+gethostbyname() function, gethostbyaddr() function.
 
 Files:
 m4/hostent.m4
