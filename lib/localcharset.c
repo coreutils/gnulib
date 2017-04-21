@@ -32,7 +32,7 @@
 # define DARWIN7 /* Darwin 7 or newer, i.e. Mac OS X 10.3 or newer */
 #endif
 
-#if defined _WIN32 || defined __WIN32__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 # define WINDOWS_NATIVE
 # include <locale.h>
 #endif

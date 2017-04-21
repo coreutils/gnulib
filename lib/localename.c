@@ -61,7 +61,7 @@ extern char * getlocalename_l(int, locale_t);
 # endif
 #endif
 
-#if defined _WIN32 || defined __WIN32__
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
 # define WINDOWS_NATIVE
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
