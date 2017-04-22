@@ -25,6 +25,9 @@
 #include "exitfail.h"
 #include "verify.h"
 
+#include "gettext.h"
+#define _(msgid) gettext (msgid)
+
 #if O_BINARY
 
 _Noreturn void

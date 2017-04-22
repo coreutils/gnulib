@@ -10,6 +10,7 @@ binary-io
 error
 exitfail
 extern-inline
+gettext-h
 stdbool
 verify
 
