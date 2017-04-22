@@ -139,7 +139,7 @@ typedef struct
 {
   bool negative;
   intmax_t value;
-  size_t digits;
+  ptrdiff_t digits;
 } textint;
 
 /* An entry in the lexical lookup table.  */
@@ -212,12 +212,12 @@ typedef struct
   /* Presence or counts of nonterminals of various flavors parsed so far.  */
   bool timespec_seen;
   bool rels_seen;
-  size_t dates_seen;
-  size_t days_seen;
-  size_t local_zones_seen;
-  size_t dsts_seen;
-  size_t times_seen;
-  size_t zones_seen;
+  ptrdiff_t dates_seen;
+  ptrdiff_t days_seen;
+  ptrdiff_t local_zones_seen;
+  ptrdiff_t dsts_seen;
+  ptrdiff_t times_seen;
+  ptrdiff_t zones_seen;
   bool year_seen;
 
   /* Print debugging output to stderr.  */
@@ -802,9 +802,12 @@ date:
         if (4 <= $1.digits)
           {
             if (pc->parse_datetime_debug)
-              dbg_printf (_("warning: value %"PRIdMAX" has %zu digits. "
-                            "Assuming YYYY/MM/DD\n"),
-                          $1.value, $1.digits);
+              {
+                intmax_t digits = $1.digits;
+                dbg_printf (_("warning: value %"PRIdMAX" has %"PRIdMAX" digits. "
+                              "Assuming YYYY/MM/DD\n"),
+                            $1.value, digits);
+              }
 
             pc->year = $1;
             pc->month = $3.value;
@@ -1328,7 +1331,7 @@ lookup_word (parser_control const *pc, char *word)
 {
   char *p;
   char *q;
-  size_t wordlen;
+  ptrdiff_t wordlen;
   table const *tp;
   bool period_found;
   bool abbrev;
@@ -1395,7 +1398,6 @@ static int
 yylex (union YYSTYPE *lvalp, parser_control *pc)
 {
   unsigned char c;
-  size_t count;
 
   for (;;)
     {
@@ -1516,7 +1518,7 @@ yylex (union YYSTYPE *lvalp, parser_control *pc)
       if (c != '(')
         return to_uchar (*pc->input++);
 
-      count = 0;
+      ptrdiff_t count = 0;
       do
         {
           c = *pc->input++;
@@ -1570,7 +1572,7 @@ mktime_ok (timezone_t tz, struct tm const *tm0, struct tm const *tm1, time_t t)
    timezone information into account (if pc != NULL).  */
 static char const *
 debug_strfdatetime (struct tm const *tm, parser_control const *pc,
-                    char *buf, size_t n)
+                    char *buf, int n)
 {
   /* TODO:
      1. find an optimal way to print date string in a clear and unambiguous
@@ -1614,7 +1616,7 @@ debug_strfdatetime (struct tm const *tm, parser_control const *pc,
 }
 
 static char const *
-debug_strfdate (struct tm const *tm, char *buf, size_t n)
+debug_strfdate (struct tm const *tm, char *buf, int n)
 {
   char tm_year_buf[TM_YEAR_BUFSIZE];
   snprintf (buf, n, "(Y-M-D) %s-%02d-%02d",
@@ -1624,7 +1626,7 @@ debug_strfdate (struct tm const *tm, char *buf, size_t n)
 }
 
 static char const *
-debug_strftime (struct tm const *tm, char *buf, size_t n)
+debug_strftime (struct tm const *tm, char *buf, int n)
 {
   snprintf (buf, n, "%02d:%02d:%02d", tm->tm_hour, tm->tm_min, tm->tm_sec);
   return buf;
@@ -1644,7 +1646,7 @@ debug_strftime (struct tm const *tm, char *buf, size_t n)
  */
 static void
 debug_mktime_not_ok (struct tm const *tm0, struct tm const *tm1,
-                     parser_control const *pc,  bool time_zone_seen)
+                     parser_control const *pc, bool time_zone_seen)
 {
   /* TODO: handle t == -1 (as in 'mktime_ok').  */
   char tmp[DBGBUFSIZE];
@@ -1754,7 +1756,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   if (strncmp (p, "TZ=\"", 4) == 0)
     {
       char const *tzbase = p + 4;
-      size_t tzsize = 1;
+      ptrdiff_t tzsize = 1;
       char const *s;
 
       for (s = tzbase; *s; s++, tzsize++)
@@ -2025,12 +2027,9 @@ parse_datetime2 (struct timespec *result, char const *p,
 
       if (! mktime_ok (tz, &tm0, &tm, Start))
         {
-          if (! pc.zones_seen)
-            {
-              debug_mktime_not_ok (&tm0, &tm, &pc, pc.zones_seen);
-              goto fail;
-            }
-          else
+          bool repaired = false;
+          bool time_zone_seen = pc.zones_seen != 0;
+          if (time_zone_seen)
             {
               /* Guard against falsely reporting errors near the time_t
                  boundaries when parsing times in other time zones.  For
@@ -2054,13 +2053,14 @@ parse_datetime2 (struct timespec *result, char const *p,
                 }
               tm = tm0;
               Start = mktime_z (tz2, &tm);
-              bool mktime_failed = !mktime_ok (tz2, &tm0, &tm, Start);
+              repaired = mktime_ok (tz2, &tm0, &tm, Start);
               tzfree (tz2);
-              if (mktime_failed)
-                {
-                  debug_mktime_not_ok (&tm0, &tm, &pc, pc.zones_seen);
-                  goto fail;
-                }
+            }
+
+          if (! repaired)
+            {
+              debug_mktime_not_ok (&tm0, &tm, &pc, time_zone_seen);
+              goto fail;
             }
         }
 
