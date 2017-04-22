@@ -60,6 +60,7 @@
 #include <time.h>
 
 #include "assure.h"
+#include "intprops.h"
 
 #ifndef INFTIM
 # define INFTIM (-1)
@@ -335,7 +336,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   int maxfd, rc;
   nfds_t i;
 
-  if (nfd < 0)
+  if (nfd > TYPE_MAXIMUM (nfds_t) / 2)
     {
       errno = EINVAL;
       return -1;
