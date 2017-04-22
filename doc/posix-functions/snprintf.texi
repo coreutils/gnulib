@@ -61,6 +61,10 @@ Solaris 11 2011-11.
 This function doesn't support the @code{'} flag on some platforms:
 NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 9.
 @item
+This function does not round the argument of the @samp{a} directive correctly
+on some platforms:
+Mac OS X 10.12, FreeBSD 6.1.
+@item
 This function behaves incorrectly when a @samp{-} flag and a negative width
 are specified together, on some platforms:
 HP-UX 10.20.
