@@ -30,6 +30,8 @@ main (void)
     case LOCK_NB:
     case LOCK_UN:
       ;
+    default:
+      ;
     }
   return 0;
 }
