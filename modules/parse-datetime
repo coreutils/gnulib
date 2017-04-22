@@ -15,6 +15,7 @@ stdbool
 gettime
 gettext-h
 intprops
+inttypes
 mktime
 setenv
 strftime
