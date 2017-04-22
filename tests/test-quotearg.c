@@ -29,9 +29,9 @@
 #include "gettext.h"
 #include "macros.h"
 
-#include "test-quotearg.h"
-
 #if ENABLE_NLS
+
+# include "test-quotearg.h"
 
 static struct result_groups locale_results[] = {
   /* locale_quoting_style */
