@@ -60,7 +60,6 @@
 #include <time.h>
 
 #include "assure.h"
-#include "intprops.h"
 
 #ifndef INFTIM
 # define INFTIM (-1)
@@ -336,13 +335,13 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   int maxfd, rc;
   nfds_t i;
 
-  if (nfd > TYPE_MAXIMUM (nfds_t) / 2)
+  if (nfd > INT_MAX)
     {
       errno = EINVAL;
       return -1;
     }
-  /* Don't check directly for NFD too large.  Any practical use of a
-     too-large NFD is caught by one of the other checks below, and
+  /* Don't check directly for NFD greater than OPEN_MAX.  Any practical use
+     of a too-large NFD is caught by one of the other checks below, and
      checking directly for getdtablesize is too much of a portability
      and/or performance and/or correctness hassle.  */
 
@@ -434,7 +433,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   int rc = 0;
   nfds_t i;
 
-  if (nfd > TYPE_MAXIMUM (nfds_t) / 2 || timeout < -1)
+  if (nfd > INT_MAX || timeout < -1)
     {
       errno = EINVAL;
       return -1;
