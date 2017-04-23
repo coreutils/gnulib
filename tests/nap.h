@@ -22,6 +22,9 @@
 # include <limits.h>
 # include <stdbool.h>
 
+/* Name of the witness file.  */
+#define TEMPFILE BASE "nap.tmp"
+
 /* File descriptor used for the witness file.  */
 static int nap_fd = -1;
 
@@ -48,35 +51,45 @@ diff_timespec (struct timespec a, struct timespec b)
   return INT_MAX;
 }
 
+/* If DO_WRITE, bump the modification time of the file designated by NAP_FD.
+   Then fetch the new STAT information of NAP_FD.  */
 static void
-get_stat (int fd, struct stat *st, int do_write)
+nap_get_stat (struct stat *st, int do_write)
 {
   if (do_write)
-    ASSERT (write (fd, "\n", 1) == 1);
-  ASSERT (fstat (fd, st) == 0);
+    {
+      ASSERT (write (nap_fd, "\n", 1) == 1);
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+      /* On native Windows, the modification times are not changed until NAP_FD
+         is closed. See
+         https://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v=vs.85).aspx */
+      close (nap_fd);
+      nap_fd = open (TEMPFILE, O_RDWR, 0600);
+      ASSERT (nap_fd != -1);
+      lseek (nap_fd, 0, SEEK_END);
+    }
+#endif
+  ASSERT (fstat (nap_fd, st) == 0);
 }
 
 /* Given a file whose descriptor is FD, see whether delaying by DELAY
-   nanoseconds causes a change in a file's ctime and mtime.
+   nanoseconds causes a change in a file's mtime.
    OLD_ST is the file's status, recently gotten.  */
 static bool
-nap_works (int fd, int delay, struct stat old_st)
+nap_works (int delay, struct stat old_st)
 {
   struct stat st;
   struct timespec delay_spec;
   delay_spec.tv_sec = delay / 1000000000;
   delay_spec.tv_nsec = delay % 1000000000;
   ASSERT (nanosleep (&delay_spec, 0) == 0);
-  get_stat (fd, &st, 1);
+  nap_get_stat (&st, 1);
 
-  if (   diff_timespec (get_stat_ctime (&st), get_stat_ctime (&old_st))
-      && diff_timespec (get_stat_mtime (&st), get_stat_mtime (&old_st)))
+  if (diff_timespec (get_stat_mtime (&st), get_stat_mtime (&old_st)))
     return true;
 
   return false;
 }
-
-#define TEMPFILE BASE "nap.tmp"
 
 static void
 clear_temp_file (void)
@@ -105,12 +118,12 @@ nap (void)
     {
       atexit (clear_temp_file);
       ASSERT ((nap_fd = creat (TEMPFILE, 0600)) != -1);
-      get_stat (nap_fd, &old_st, 0);
+      nap_get_stat (&old_st, 0);
     }
   else
     {
       ASSERT (0 <= nap_fd);
-      get_stat (nap_fd, &old_st, 1);
+      nap_get_stat (&old_st, 1);
     }
 
   if (1 < delay)
