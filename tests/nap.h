@@ -117,9 +117,18 @@ nap (void)
     delay = delay / 2;  /* Try half of the previous delay.  */
   ASSERT (0 < delay);
 
-  for ( ; delay <= 2147483647; delay = delay * 2)
-    if (nap_works (nap_fd, delay, old_st))
-      return;
+  for (;;)
+    {
+      if (nap_works (delay, old_st))
+        return;
+      if (delay <= (2147483647 - 1) / 2)
+        {
+          delay = delay * 2 + 1;
+          continue;
+        }
+      else
+        break;
+    }
 
   /* Bummer: even the highest nap delay didn't work. */
   ASSERT (0);
