@@ -104,7 +104,7 @@ extern void __error_at_line (int status, int errnum, const char *file_name,
 /* The gnulib override of fcntl is not needed in this file.  */
 # undef fcntl
 
-# if !HAVE_DECL_STRERROR_R
+# if !(GNULIB_STRERROR_R_POSIX || HAVE_DECL_STRERROR_R)
 #  ifndef HAVE_DECL_STRERROR_R
 "this configure-time declaration test was not run"
 #  endif
@@ -117,9 +117,9 @@ int strerror_r (int errnum, char *buf, size_t buflen);
 
 #define program_name getprogname ()
 
-# if HAVE_STRERROR_R || defined strerror_r
+# if GNULIB_STRERROR_R_POSIX || HAVE_STRERROR_R || defined strerror_r
 #  define __strerror_r strerror_r
-# endif /* HAVE_STRERROR_R || defined strerror_r */
+# endif /* GNULIB_STRERROR_R_POSIX || HAVE_STRERROR_R || defined strerror_r */
 #endif  /* not _LIBC */
 
 #if !_LIBC
@@ -172,9 +172,9 @@ print_errno_message (int errnum)
 {
   char const *s;
 
-#if defined HAVE_STRERROR_R || _LIBC
+#if _LIBC || GNULIB_STRERROR_R_POSIX || defined HAVE_STRERROR_R
   char errbuf[1024];
-# if _LIBC || STRERROR_R_CHAR_P
+# if _LIBC || GNULIB_STRERROR_R_POSIX || STRERROR_R_CHAR_P
   s = __strerror_r (errnum, errbuf, sizeof errbuf);
 # else
   if (__strerror_r (errnum, errbuf, sizeof errbuf) == 0)
