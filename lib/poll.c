@@ -434,7 +434,7 @@ poll (struct pollfd *pfd, nfds_t nfd, int timeout)
   int rc = 0;
   nfds_t i;
 
-  if (nfd < 0 || timeout < -1)
+  if (nfd > TYPE_MAXIMUM (nfds_t) / 2 || timeout < -1)
     {
       errno = EINVAL;
       return -1;
