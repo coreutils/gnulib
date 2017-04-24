@@ -196,7 +196,7 @@ body of header file goes here
 @end example
 
 Whether to use @code{FOO_H} or @code{_FOO_H} is a matter of taste and
-style.  The C89 and C99 standards reserve all identifiers that begin with an
+style.  The C99 and C11 standards reserve all identifiers that begin with an
 underscore and either an uppercase letter or another underscore, for
 any use.  Thus, in theory, an application might not safely assume that
 @code{_FOO_H} has not already been defined by a library.  On the other

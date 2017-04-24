@@ -100,7 +100,7 @@ Gnulib is used.
 
 Our example will be a library that uses Autoconf, Automake and
 Libtool.  It calls @code{strdup}, and you wish to use gnulib to make
-the package portable to C89 and C99 (which don't have @code{strdup}).
+the package portable to C99 and C11 (which don't have @code{strdup}).
 
 @example
 ~/src/libfoo$ gnulib-tool --import strdup
@@ -295,7 +295,7 @@ use of @code{strdup}.
 In the usual case where Autoconf is creating a @file{config.h} file,
 you should include @file{config.h} first, before any other include
 file.  That way, for example, if @file{config.h} defines
-@samp{restrict} to be the empty string on a pre-C99 host, or a macro
+@samp{restrict} to be the empty string on a non-C99 host, or a macro
 like @samp{_FILE_OFFSET_BITS} that affects the layout of data
 structures, the definition is consistent for all include files.
 Also, on some platforms macros like @samp{_FILE_OFFSET_BITS} and

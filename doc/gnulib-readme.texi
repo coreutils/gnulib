@@ -14,6 +14,7 @@
 * Git Checkout::
 * Keeping Up-to-date::
 * Contributing to Gnulib::
+* Portability guidelines::
 * High Quality::
 @end menu
 
@@ -124,7 +125,6 @@ you should probably consider packaging it as a separate library.
 * Gnulib licensing::
 * Indent with spaces not TABs::
 * How to add a new module::
-* Portability guidelines::
 @end menu
 
 @node Gnulib licensing
@@ -278,33 +278,54 @@ is not empty after preprocessing.  One way to do this is to
 @end itemize
 
 @node Portability guidelines
-@subsection Portability guidelines
+@section Portability guidelines
 
 Gnulib code is intended to be portable to a wide variety of platforms,
-not just GNU platforms.  See the documentation section ``Target Platforms''
-for details.
+not just GNU platforms.  Gnulib typically attempts to support a
+platform as long as it is still supported by its provider, even if the
+platform is not the latest version.  @xref{Target Platforms}.
 
 Many Gnulib modules exist so that applications need not worry about
 undesirable variability in implementations.  For example, an
 application that uses the @code{malloc} module need not worry about
 @code{malloc@ (0)} returning @code{NULL} on some Standard C
-platforms; and @code{time_r} users need not worry about
-@code{localtime_r} returning @code{int} (not @code{char@ *}) on some
-platforms that predate POSIX 1003.1-2001.
+platforms; and @code{glob} users need not worry about @code{glob}
+silently omitting symbolic links to nonexistent files on some
+platforms that do not conform to POSIX.
 
-Gnulib attempts to be portable to platforms that are still supported
-by their providers, even if these systems are not the latest version.
-Currently Gnulib assumes at least a freestanding C89 compiler,
-possibly operating with a C library that predates C89; with time this
+Gnulib code is intended to port without problem to new hosts, e.g.,
+hosts conforming to recent C and POSIX standards.  Hence Gnulib code
+should avoid using constructs that these newer standards no longer
+require, without first testing for the presence of these constructs.
+For example, because C11 made variable length arrays optional, Gnulib
+code should avoid them unless it first uses the @code{vararrays}
+module to check whether they are supported.
+
+The following subsections discuss some exceptions and caveats to the
+general Gnulib portability guidelines.
+
+@menu
+* C language versions::
+* C99 features assumed::
+* C99 features avoided::
+* Other portability assumptions::
+@end menu
+
+@node C language versions
+@subsection C language versions
+
+Currently Gnulib assumes at least a freestanding C99 compiler,
+possibly operating with a C library that predates C99; with time this
 assumption will likely be strengthened to later versions of the C
 standard.  Old platforms currently supported include AIX 6.1, HP-UX
 11i v1 and Solaris 10, though these platforms are rarely tested.
 Gnulib itself is so old that it contains many fixes for obsolete
 platforms, fixes that may be removed in the future.
 
-Because of the freestanding C89 assumption, Gnulib code can include
-@code{<float.h>}, @code{<limits.h>}, @code{<stdarg.h>}, and
-@code{<stddef.h>} unconditionally.  It can also assume the existence
+Because of the freestanding C99 assumption, Gnulib code can include
+@code{<float.h>}, @code{<limits.h>}, @code{<stdarg.h>},
+@code{<stdbool.h>}, @code{<stddef.h>}, and @code{<stdint.h>}
+unconditionally.   Gnulib code can also assume the existence
 of @code{<ctype.h>}, @code{<errno.h>}, @code{<fcntl.h>},
 @code{<locale.h>}, @code{<signal.h>}, @code{<stdio.h>},
 @code{<stdlib.h>}, @code{<string.h>}, and @code{<time.h>}.  Similarly,
@@ -314,7 +335,7 @@ forever.
 
 Even if the include files exist, they may not conform to the C standard.
 However, GCC has a @command{fixincludes} script that attempts to fix most
-C89-conformance problems.  So Gnulib currently assumes include files
+C89-conformance problems.  Gnulib currently assumes include files
 largely conform to C89 or better.  People still using ancient hosts
 should use fixincludes or fix their include files manually.
 
@@ -323,6 +344,86 @@ For example, @code{strtod} and @code{mktime} have some bugs on some platforms.
 You can work around some of these problems by requiring the relevant
 modules, e.g., the Gnulib @code{mktime} module supplies a working and
 conforming @code{mktime}.
+
+@node C99 features assumed
+@subsection C99 features assumed by Gnulib
+
+Although the C99 standard specifies many features, Gnulib code
+is conservative about using them, partly because Gnulib predates
+the widespread adoption of C99, and partly because many C99
+features are not well-supported in practice.  C99 features that
+are reasonably portable nowadays include:
+
+@itemize
+@item
+A declarations after a statement, or as the first clause in a
+@code{for} statement.
+
+@item
+@code{long long int}.
+
+@item
+@code{<stdbool.h>}, assuming the @code{stdbool} module is used.
+@xref{stdbool.h}.
+
+@item
+@code{<stdint.h>}, assuming the @code{stdint} module is used.
+@xref{stdint.h}.
+
+@item
+Compound literals and designated initializers.
+
+@item
+Variadic macros.
+
+@item
+@code{static inline} functions.
+
+@item
+@code{__func__}, assuming the @code{func} module is used.  @xref{func}.
+
+@item
+The @code{restrict} qualifier, assuming
+@code{AC_REQUIRE([AC_C_RESTRICT])} is used.
+
+@item
+Flexible array members (however, see the @code{flexmember} module).
+@end itemize
+
+@node C99 features avoided
+@subsection C99 features avoided by Gnulib
+
+Gnulib avoids some features even though they are standardized by C99,
+as they have portability problems in practice.  Here is a partial list
+of avoided C99 features.  Many other C99 features are portable only if
+their corresponding modules are used; Gnulib code that uses such a
+feature should require the corresponding module.
+
+@itemize
+@item
+Variable length arrays, unless @code{__STDC_NO_VLA__} is defined.
+See the @code{vararrays} module.
+
+@item
+@code{extern inline} functions, without checking whether they are
+supported.  @xref{extern inline}.
+
+@item
+Type-generic math functions.
+
+@item
+Universal character names in source code.
+
+@item
+@code{<iso646.h>}, since GNU programs need not worry about deficient
+source-code encodings.
+
+@item
+Comments beginning with @samp{//}.  This is mostly for style reasons.
+@end itemize
+
+@node Other portability assumptions
+@subsection Other portability assumptions made by Gnulib
 
 The GNU coding standards allow one departure from strict C: Gnulib
 code can assume that standard internal types like @code{size_t} are no
@@ -398,14 +499,6 @@ you have a porting target where these assumptions are not true, we'd
 appreciate hearing of any fixes.  We need fixes that do not increase
 runtime overhead on standard hosts and that are relatively easy to
 maintain.
-
-With the above caveats, Gnulib code should port without problem to new
-hosts, e.g., hosts conforming to recent C and POSIX standards.  Hence
-Gnulib code should avoid using constructs that these newer standards
-no longer require, without first testing for the presence of these
-constructs.  For example, because C11 made variable length arrays
-optional, Gnulib code should avoid them unless it first uses the
-@code{vararrays} module to check whether they are supported.
 
 @node High Quality
 @section High Quality

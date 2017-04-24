@@ -18,8 +18,8 @@
 @cindex inline
 
 The @code{extern-inline} module supports the use of C99-style
-@code{extern inline} functions so that the code still runs on pre-C99
-compilers.
+@code{extern inline} functions so that the code still runs on
+compilers that do not support this feature correctly.
 
 C code ordinarily should not use @code{inline}.  Typically it is
 better to let the compiler figure out whether to inline, as compilers
@@ -31,7 +31,7 @@ Functions defined (not merely declared) in headers are an exception,
 as avoiding @code{inline} would commonly cause problems for these
 functions.  Suppose @file{aaa.h} defines the function @code{aaa_fun},
 and @file{aaa.c}, @file{bbb.c} and @file{ccc.c} all include
-@file{aaa.h}.  If code is intended to portable to pre-C99 compilers,
+@file{aaa.h}.  If code is intended to portable to non-C99 compilers,
 @code{aaa_fun} cannot be declared with the C99 @code{inline} keyword.
 This problem cannot be worked around by making @code{aaa_fun} an
 ordinary function, as it would be defined three times with external
@@ -77,8 +77,8 @@ whereas @file{bbb.c} and @file{ccc.c} can include @file{aaa.h} in the
 usual way.  C99 compilers expand @code{AAA_INLINE} to C99-style
 @code{inline} usage, where @code{aaa_fun} is declared @code{extern
 inline} in @file{aaa.c} and plain @code{inline} in other modules.
-Pre-C99 compilers that are compatible with GCC use GCC-specific syntax
-to accomplish the same ends.  Other pre-C99 compilers use @code{static
+Non-C99 compilers that are compatible with GCC use GCC-specific syntax
+to accomplish the same ends.  Other non-C99 compilers use @code{static
 inline} so they suffer from code bloat, but they are not mainline
 platforms and will die out eventually.
 
