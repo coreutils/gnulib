@@ -432,5 +432,21 @@ main (int argc _GL_UNUSED, char **argv)
   ASSERT (   parse_datetime (&result, "TZ=\"\\\\\"", &now));
   ASSERT (   parse_datetime (&result, "TZ=\"\\\"\"", &now));
 
+  /* Outlandishly-long time zone abbreviations should not cause problems.  */
+  {
+    static char const bufprefix[] = "TZ=\"";
+    enum { tzname_len = 2000 };
+    static char const bufsuffix[] = "0\" 1970-01-01 01:02:03.123456789";
+    enum { bufsize = sizeof bufprefix - 1 + tzname_len + sizeof bufsuffix };
+    char buf[bufsize];
+    memcpy (buf, bufprefix, sizeof bufprefix - 1);
+    memset (buf + sizeof bufprefix - 1, 'X', tzname_len);
+    strcpy (buf + bufsize - sizeof bufsuffix, bufsuffix);
+    ASSERT (parse_datetime (&result, buf, &now));
+    LOG (buf, now, result);
+    ASSERT (result.tv_sec == 1 * 60 * 60 + 2 * 60 + 3
+            && result.tv_nsec == 123456789);
+  }
+
   return 0;
 }
