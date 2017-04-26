@@ -194,6 +194,8 @@ x2nrealloc (void *p, size_t *pn, size_t s)
           n = DEFAULT_MXFAST / s;
           n += !n;
         }
+      if (xalloc_oversized (n, s))
+        xalloc_die ();
     }
   else
     {
