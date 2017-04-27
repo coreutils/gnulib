@@ -105,12 +105,16 @@ _GL_INLINE_HEADER_BEGIN
 #  define WEOF -1
 # endif
 #else
-/* mingw and MSVC define wint_t as 'unsigned short' in <crtdefs.h>.
-   This is too small: ISO C 99 section 7.24.1.(2) says that wint_t must be
-   "unchanged by default argument promotions".  Override it.  */
+/* mingw and MSVC define wint_t as 'unsigned short' in <crtdefs.h> or
+   <stddef.h>.  This is too small: ISO C 99 section 7.24.1.(2) says that
+   wint_t must be "unchanged by default argument promotions".  Override it.  */
 # if @GNULIB_OVERRIDES_WINT_T@
 #  if !GNULIB_defined_wint_t
-#   include <crtdefs.h>
+#   if @HAVE_CRTDEFS_H@
+#    include <crtdefs.h>
+#   else
+#    include <stddef.h>
+#   endif
 typedef unsigned int rpl_wint_t;
 #   undef wint_t
 #   define wint_t rpl_wint_t

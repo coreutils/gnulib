@@ -1,4 +1,4 @@
-# wctype_h.m4 serial 18
+# wctype_h.m4 serial 19
 
 dnl A placeholder for ISO C99 <wctype.h>, for platforms that lack it.
 
@@ -65,6 +65,14 @@ AC_DEFUN([gl_WCTYPE_H],
     HAVE_WCTYPE_H=0
   fi
   AC_SUBST([HAVE_WCTYPE_H])
+
+  AC_CHECK_HEADERS_ONCE([crtdefs.h])
+  if test $ac_cv_header_crtdefs_h = yes; then
+    HAVE_CRTDEFS_H=1
+  else
+    HAVE_CRTDEFS_H=0
+  fi
+  AC_SUBST([HAVE_CRTDEFS_H])
 
   case "$gl_cv_func_iswcntrl_works" in
     *yes) REPLACE_ISWCNTRL=0 ;;
