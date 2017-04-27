@@ -67,8 +67,8 @@ nap_get_stat (struct stat *st, int do_write)
       nap_fd = open (TEMPFILE, O_RDWR, 0600);
       ASSERT (nap_fd != -1);
       lseek (nap_fd, 0, SEEK_END);
-    }
 #endif
+    }
   ASSERT (fstat (nap_fd, st) == 0);
 }
 
