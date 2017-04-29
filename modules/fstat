@@ -3,18 +3,22 @@ fstat() function: return information about an open file.
 
 Files:
 lib/fstat.c
+lib/stat-w32.h
+lib/stat-w32.c
 m4/fstat.m4
 
 Depends-on:
 sys_stat
 largefile
+pathmax         [test $REPLACE_STAT = 1]
 unistd          [test $REPLACE_STAT = 1]
-msvc-inval      [test $REPLACE_STAT = 1]
+msvc-nothrow    [test $REPLACE_STAT = 1]
 
 configure.ac:
 gl_FUNC_FSTAT
 if test $REPLACE_FSTAT = 1; then
   AC_LIBOBJ([fstat])
+  AC_LIBOBJ([stat-w32])
   gl_PREREQ_FSTAT
 fi
 gl_SYS_STAT_MODULE_INDICATOR([fstat])
