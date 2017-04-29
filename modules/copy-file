@@ -19,6 +19,7 @@ quote
 safe-read
 stdlib
 unistd
+utime-h
 xalloc
 
 configure.ac:

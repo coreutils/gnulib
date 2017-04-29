@@ -20,6 +20,7 @@ stdbool
 sys_stat
 sys_time
 time
+utime-h
 
 configure.ac:
 gl_UTIMENS

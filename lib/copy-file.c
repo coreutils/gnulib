@@ -29,11 +29,7 @@
 #include <unistd.h>
 
 #if HAVE_UTIME || HAVE_UTIMES
-# if HAVE_UTIME_H
-#  include <utime.h>
-# else
-#  include <sys/utime.h>
-# endif
+# include <utime.h>
 #endif
 
 #include "error.h"
