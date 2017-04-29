@@ -4,7 +4,6 @@ Set file access and modification times.
 Files:
 lib/utimens.c
 lib/utimens.h
-m4/utimbuf.m4
 m4/utimens.m4
 m4/utimes.m4
 
