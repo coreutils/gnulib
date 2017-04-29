@@ -174,7 +174,7 @@ print_errno_message (int errnum)
 
 #if _LIBC || GNULIB_STRERROR_R_POSIX || defined HAVE_STRERROR_R
   char errbuf[1024];
-# if _LIBC || GNULIB_STRERROR_R_POSIX || STRERROR_R_CHAR_P
+# if _LIBC || (!GNULIB_STRERROR_R_POSIX && STRERROR_R_CHAR_P)
   s = __strerror_r (errnum, errbuf, sizeof errbuf);
 # else
   if (__strerror_r (errnum, errbuf, sizeof errbuf) == 0)
