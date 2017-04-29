@@ -13,6 +13,15 @@ On platforms where @code{off_t} is a 32-bit type, @code{stat} may not correctly
 report the size of files or block devices larger than 2 GB.
 (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
+The @code{st_atime}, @code{st_ctime}, @code{st_mtime} field are affected by
+the current time zone and by the DST flag of the current time zone on some
+platforms:
+mingw, MSVC 14 (when the environment variable @code{TZ} is set).
+@item
+On MSVC 14, this function fails with error @code{ENOENT}
+on files such as @samp{C:\pagefile.sys} and
+on directories such as @samp{C:\System Volume Information}.
+@item
 On some platforms, @code{stat("link-to-file/",buf)} succeeds instead
 of failing with @code{ENOTDIR}.
 FreeBSD 7.2, AIX 7.1, Solaris 9, mingw64.

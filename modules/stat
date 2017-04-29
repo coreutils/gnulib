@@ -3,12 +3,15 @@ stat() function: query file information
 
 Files:
 lib/stat.c
+lib/stat-w32.h
+lib/stat-w32.c
 m4/stat.m4
 
 Depends-on:
 sys_stat
 largefile
-dosname         [test $REPLACE_STAT = 1]
+filename        [test $REPLACE_STAT = 1]
+malloca         [test $REPLACE_STAT = 1]
 pathmax         [test $REPLACE_STAT = 1]
 stdbool         [test $REPLACE_STAT = 1]
 verify          [test $REPLACE_STAT = 1]
@@ -17,6 +20,7 @@ configure.ac:
 gl_FUNC_STAT
 if test $REPLACE_STAT = 1; then
   AC_LIBOBJ([stat])
+  AC_LIBOBJ([stat-w32])
   gl_PREREQ_STAT
 fi
 gl_SYS_STAT_MODULE_INDICATOR([stat])
