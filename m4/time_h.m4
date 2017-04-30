@@ -2,7 +2,7 @@
 
 # Copyright (C) 2000-2001, 2003-2007, 2009-2017 Free Software Foundation, Inc.
 
-# serial 9
+# serial 10
 
 # This file is free software; the Free Software Foundation
 # gives unlimited permission to copy and/or distribute it,
@@ -104,6 +104,7 @@ AC_DEFUN([gl_TIME_MODULE_INDICATOR],
 
 AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
 [
+  GNULIB_CTIME=0;                        AC_SUBST([GNULIB_CTIME])
   GNULIB_MKTIME=0;                       AC_SUBST([GNULIB_MKTIME])
   GNULIB_NANOSLEEP=0;                    AC_SUBST([GNULIB_NANOSLEEP])
   GNULIB_STRPTIME=0;                     AC_SUBST([GNULIB_STRPTIME])
@@ -118,6 +119,7 @@ AC_DEFUN([gl_HEADER_TIME_H_DEFAULTS],
   dnl If another module says to replace or to not replace, do that.
   dnl Otherwise, replace only if someone compiles with -DGNULIB_PORTCHECK;
   dnl this lets maintainers check for portability.
+  REPLACE_CTIME=GNULIB_PORTCHECK;        AC_SUBST([REPLACE_CTIME])
   REPLACE_LOCALTIME_R=GNULIB_PORTCHECK;  AC_SUBST([REPLACE_LOCALTIME_R])
   REPLACE_MKTIME=GNULIB_PORTCHECK;       AC_SUBST([REPLACE_MKTIME])
   REPLACE_NANOSLEEP=GNULIB_PORTCHECK;    AC_SUBST([REPLACE_NANOSLEEP])
