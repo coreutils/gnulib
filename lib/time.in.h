@@ -249,6 +249,25 @@ _GL_CXXALIAS_SYS (ctime, char *, (time_t const *__tp));
 _GL_CXXALIASWARN (ctime);
 # endif
 
+/* Convert *TP to a date and time string.  See
+   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/strftime.html>.  */
+# if @GNULIB_STRFTIME@
+#  if @REPLACE_STRFTIME@
+#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    define strftime rpl_strftime
+#   endif
+_GL_FUNCDECL_RPL (strftime, size_t, (char *__buf, size_t __bufsize,
+                                     const char *__fmt, const struct tm *__tp)
+                                    _GL_ARG_NONNULL ((1, 3, 4)));
+_GL_CXXALIAS_RPL (strftime, size_t, (char *__buf, size_t __bufsize,
+                                     const char *__fmt, const struct tm *__tp));
+#  else
+_GL_CXXALIAS_SYS (strftime, size_t, (char *__buf, size_t __bufsize,
+                                     const char *__fmt, const struct tm *__tp));
+#  endif
+_GL_CXXALIASWARN (strftime);
+# endif
+
 # if defined _GNU_SOURCE && @GNULIB_TIME_RZ@ && ! @HAVE_TIMEZONE_T@
 typedef struct tm_zone *timezone_t;
 _GL_FUNCDECL_SYS (tzalloc, timezone_t, (char const *__name));
