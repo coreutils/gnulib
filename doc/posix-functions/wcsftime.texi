@@ -4,10 +4,13 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/wcsftime.html}
 
-Gnulib module: ---
+Gnulib module: wcsftime
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+On native Windows platforms (mingw, MSVC), this function works incorrectly
+when the environment variable @code{TZ} has been set by Cygwin.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -15,9 +18,6 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, Cygwin 1.5.x, BeOS.
-@item
-On native Windows platforms (mingw, MSVC), this function works incorrectly
-when the environment variable @code{TZ} has been set by Cygwin.
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.

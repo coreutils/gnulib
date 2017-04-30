@@ -1036,6 +1036,38 @@ _GL_WARN_ON_USE (wcswidth, "wcswidth is unportable - "
 #endif
 
 
+/* Convert *TP to a date and time wide string.  See
+   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsftime.html>.  */
+#if @GNULIB_WCSFTIME@
+# if @REPLACE_WCSFTIME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcsftime
+#   define wcsftime rpl_wcsftime
+#  endif
+_GL_FUNCDECL_RPL (wcsftime, size_t, (wchar_t *__buf, size_t __bufsize,
+                                     const wchar_t *__fmt, const struct tm *__tp)
+                                    _GL_ARG_NONNULL ((1, 3, 4)));
+_GL_CXXALIAS_RPL (wcsftime, size_t, (wchar_t *__buf, size_t __bufsize,
+                                     const wchar_t *__fmt, const struct tm *__tp));
+# else
+#  if !@HAVE_WCSFTIME@
+_GL_FUNCDECL_SYS (wcsftime, size_t, (wchar_t *__buf, size_t __bufsize,
+                                     const wchar_t *__fmt, const struct tm *__tp)
+                                    _GL_ARG_NONNULL ((1, 3, 4)));
+#  endif
+_GL_CXXALIAS_SYS (wcsftime, size_t, (wchar_t *__buf, size_t __bufsize,
+                                     const wchar_t *__fmt, const struct tm *__tp));
+# endif
+_GL_CXXALIASWARN (wcsftime);
+#elif defined GNULIB_POSIXCHECK
+# undef wcsftime
+# if HAVE_RAW_DECL_WCSFTIME
+_GL_WARN_ON_USE (wcsftime, "wcsftime is unportable - "
+                 "use gnulib module wcsftime for portability");
+# endif
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_WCHAR_H */
 #endif /* _@GUARD_PREFIX@_WCHAR_H */
 #endif
