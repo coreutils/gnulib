@@ -10,7 +10,7 @@ mktime
 
 configure.ac:
 gl_FUNC_MKTIME_INTERNAL
-if test $REPLACE_MKTIME = 1; then
+if test $WANT_MKTIME_INTERNAL = 1; then
   AC_LIBOBJ([mktime])
   gl_PREREQ_MKTIME
 fi
