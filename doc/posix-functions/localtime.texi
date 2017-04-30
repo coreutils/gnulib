@@ -4,17 +4,17 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/localtime.html}
 
-Gnulib module: ---
+Gnulib module: localtime
 
 Portability problems fixed by Gnulib:
-@itemize
-@end itemize
-
-Portability problems not fixed by Gnulib:
 @itemize
 @item
 On native Windows platforms (mingw, MSVC), this function works incorrectly
 when the environment variable @code{TZ} has been set by Cygwin.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
 @item
 On some platforms, this function returns nonsense values for
 unsupported arguments (like @math{2^56}), rather than failing:

@@ -187,7 +187,7 @@ _GL_CXXALIASWARN (gmtime_r);
 /* Convert TIMER to RESULT, assuming local time and UTC respectively.  See
    <http://www.opengroup.org/susv3xsh/localtime.html> and
    <http://www.opengroup.org/susv3xsh/gmtime.html>.  */
-# if @GNULIB_GETTIMEOFDAY@
+# if @GNULIB_LOCALTIME@ || @GNULIB_GETTIMEOFDAY@
 #  if @REPLACE_LOCALTIME@
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    undef localtime
