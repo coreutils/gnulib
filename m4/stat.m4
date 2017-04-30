@@ -8,7 +8,7 @@
 
 AC_DEFUN([gl_FUNC_STAT],
 [
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([lstat])
   case "$host_os" in
