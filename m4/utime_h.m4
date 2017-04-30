@@ -33,6 +33,12 @@ AC_DEFUN([gl_UTIME_H],
   fi
   AC_SUBST([UTIME_H])
   AM_CONDITIONAL([GL_GENERATE_UTIME_H], [test -n "$UTIME_H"])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use.
+  gl_WARN_ON_USE_PREPARE([[#include <utime.h>
+    ]],
+    [utime])
 ])
 
 AC_DEFUN([gl_UTIME_MODULE_INDICATOR],
@@ -46,5 +52,8 @@ AC_DEFUN([gl_UTIME_MODULE_INDICATOR],
 
 AC_DEFUN([gl_UTIME_H_DEFAULTS],
 [
+  GNULIB_UTIME=0;            AC_SUBST([GNULIB_UTIME])
   dnl Assume POSIX behavior unless another module says otherwise.
+  HAVE_UTIME=1;              AC_SUBST([HAVE_UTIME])
+  REPLACE_UTIME=0;           AC_SUBST([REPLACE_UTIME])
 ])

@@ -4,10 +4,18 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/utime.html}
 
-Gnulib module: ---
+Gnulib module: utime
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+The times that are set on the file are affected by the current time zone and
+by the DST flag of the current time zone on some platforms:
+mingw, MSVC 14 (when the environment variable @code{TZ} is set).
+@item
+On some platforms, the prototype for @code{utime} omits @code{const}
+for the second argument:
+mingw, MSVC 9.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -22,9 +30,4 @@ Solaris 9.
 This function cannot set full timestamp resolution.  Use
 @code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module utimens,
 instead.
-@item
-On some platforms, the prototype for @code{utime} omits @code{const}
-for the second argument.  Fortunately, the argument is not modified,
-so it is safe to cast away const:
-mingw, MSVC 9.
 @end itemize

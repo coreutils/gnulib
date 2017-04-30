@@ -33,6 +33,13 @@
 # include <sys/utime.h>
 #endif
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+/* The definition of _GL_ARG_NONNULL is copied here.  */
+
+/* The definition of _GL_WARN_ON_USE is copied here.  */
+
+
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
 /* Define 'struct utimbuf' as an alias of 'struct _utimbuf'
@@ -40,6 +47,33 @@
 # define utimbuf _utimbuf
 
 #endif
+
+
+#if @GNULIB_UTIME@
+# if @REPLACE_UTIME@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define utime rpl_utime
+#  endif
+_GL_FUNCDECL_RPL (utime, int, (const char *filename, const struct utimbuf *ts)
+                              _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (utime, int, (const char *filename, const struct utimbuf *ts));
+# else
+#  if !@HAVE_UTIME@
+_GL_FUNCDECL_SYS (utime, int, (const char *filename, const struct utimbuf *ts)
+                              _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (utime, int, (const char *filename, const struct utimbuf *ts));
+# endif
+_GL_CXXALIASWARN (utime);
+#elif defined GNULIB_POSIXCHECK
+# undef utime
+# if HAVE_RAW_DECL_UTIME
+_GL_WARN_ON_USE (utime,
+                 "utime is unportable - "
+                 "use gnulib module canonicalize-lgpl for portability");
+# endif
+#endif
+
 
 #endif /* _@GUARD_PREFIX@_UTIME_H */
 #endif /* _@GUARD_PREFIX@_UTIME_H */
