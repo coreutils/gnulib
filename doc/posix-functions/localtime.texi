@@ -12,7 +12,11 @@ Portability problems fixed by Gnulib:
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item On some platforms, this function returns nonsense values for
+@item
+On native Windows platforms (mingw, MSVC), this function works incorrectly
+when the environment variable @code{TZ} has been set by Cygwin.
+@item
+On some platforms, this function returns nonsense values for
 unsupported arguments (like @math{2^56}), rather than failing:
 FreeBSD 10.
 @end itemize

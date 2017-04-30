@@ -13,6 +13,9 @@ Portability problems fixed by Gnulib:
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On native Windows platforms (mingw, MSVC), this function works incorrectly
+when the environment variable @code{TZ} has been set by Cygwin.
+@item
 This function may overflow its internal buffer if an invalid year is passed.
 @item
 The @code{ctime} function need not be reentrant, and consequently is
