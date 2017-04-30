@@ -1,0 +1,10 @@
+Files:
+tests/test-utime-h.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-utime-h
+check_PROGRAMS += test-utime-h

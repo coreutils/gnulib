@@ -1,0 +1,39 @@
+Description:
+A <utime.h> that conforms to POSIX.
+
+Files:
+lib/utime.in.h
+m4/utime_h.m4
+
+Depends-on:
+
+configure.ac:
+gl_UTIME_H
+
+Makefile.am:
+BUILT_SOURCES += $(UTIME_H)
+
+# We need the following in order to create <utime.h> when the system
+# doesn't have one that works with the given compiler.
+if GL_GENERATE_UTIME_H
+utime.h: utime.in.h $(top_builddir)/config.status
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */' && \
+	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      < $(srcdir)/utime.in.h; \
+	} > $@-t && \
+	mv $@-t $@
+else
+utime.h: $(top_builddir)/config.status
+	rm -f $@
+endif
+MOSTLYCLEANFILES += utime.h utime.h-t
+
+Include:
+<utime.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
