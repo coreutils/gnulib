@@ -56,11 +56,13 @@
 # include <wchar.h>
 #endif
 
-/* mingw has declarations of towupper and towlower in <ctype.h> as
-   well <wctype.h>.  Include <ctype.h> in advance to avoid rpl_ prefix
-   being added to the declarations.  */
-#ifdef __MINGW32__
+/* Native Windows (mingw, MSVC) have declarations of towupper, towlower, and
+   isw* functions in <ctype.h>, <wchar.h> as well as in <wctype.h>.  Include
+   <ctype.h>, <wchar.h> in advance to avoid rpl_ prefix being added to the
+   declarations.  */
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # include <ctype.h>
+# include <wchar.h>
 #endif
 
 /* Include the original <wctype.h> if it exists.
