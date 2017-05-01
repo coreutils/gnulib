@@ -1,14 +1,20 @@
 Description:
-tzset - initialize time conversion information
+tzset() function: initialize time conversion information.
 
 Files:
+lib/tzset.c
 m4/tzset.m4
 
 Depends-on:
-gettimeofday
+time
+localtime-buffer [test $NEED_LOCALTIME_BUFFER = 1]
 
 configure.ac:
 gl_FUNC_TZSET
+if test $HAVE_TZSET = 0 || test $REPLACE_TZSET = 1; then
+  AC_LIBOBJ([tzset])
+fi
+gl_TIME_MODULE_INDICATOR([tzset])
 
 Makefile.am:
 

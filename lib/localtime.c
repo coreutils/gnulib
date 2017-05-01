@@ -19,7 +19,7 @@
 /* Specification.  */
 #include <time.h>
 
-/* Keep consistent with gettimeofday.c!  */
+/* Keep consistent with localtime-buffer.c!  */
 #if !(GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME)
 
 # include <stdlib.h>

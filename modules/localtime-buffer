@@ -1,0 +1,25 @@
+Description:
+Access to the internal buffer of the localtime() function and the gmtime() function.
+
+Files:
+lib/localtime-buffer.h
+lib/localtime-buffer.c
+m4/localtime-buffer.m4
+
+Depends-on:
+time            [false]
+
+configure.ac:
+AC_REQUIRE([gl_LOCALTIME_BUFFER_DEFAULTS])
+AC_LIBOBJ([localtime-buffer])
+
+Makefile.am:
+
+Include:
+"localtime-buffer.h"
+
+License:
+LGPLv2+
+
+Maintainer:
+all
