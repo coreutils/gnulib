@@ -28,14 +28,12 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#if HAVE_UTIME || HAVE_UTIMES
-# include <utime.h>
-#endif
-
 #include "error.h"
 #include "ignore-value.h"
 #include "safe-read.h"
 #include "full-write.h"
+#include "stat-time.h"
+#include "utimens.h"
 #include "acl.h"
 #include "binary-io.h"
 #include "quote.h"
@@ -113,23 +111,13 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
 #endif
 
   /* Preserve the access and modification times.  */
-#if HAVE_UTIME
   {
-    struct utimbuf ut;
+    struct timespec ts[2];
 
-    ut.actime = statbuf.st_atime;
-    ut.modtime = statbuf.st_mtime;
-    utime (dest_filename, &ut);
+    ts[0] = get_stat_atime (&statbuf);
+    ts[1] = get_stat_mtime (&statbuf);
+    utimens (dest_filename, ts);
   }
-#elif HAVE_UTIMES
-  {
-    struct timeval ut[2];
-
-    ut[0].tv_sec = statbuf.st_atime; ut[0].tv_usec = 0;
-    ut[1].tv_sec = statbuf.st_mtime; ut[1].tv_usec = 0;
-    utimes (dest_filename, &ut);
-  }
-#endif
 
 #if HAVE_CHOWN
   /* Preserve the owner and group.  */

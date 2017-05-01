@@ -17,9 +17,10 @@ ignore-value
 open
 quote
 safe-read
+stat-time
 stdlib
 unistd
-utime-h
+utimens
 xalloc
 
 configure.ac:
