@@ -7,6 +7,7 @@ lib/mktime.c
 m4/mktime.m4
 
 Depends-on:
+time
 multiarch
 intprops        [test $REPLACE_MKTIME = 1]
 stdbool         [test $REPLACE_MKTIME = 1]
