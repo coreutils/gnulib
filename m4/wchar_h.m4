@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 41
+# wchar_h.m4 serial 42
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -34,6 +34,8 @@ AC_DEFUN([gl_WCHAR_H],
     HAVE_WINT_T=0
   fi
   AC_SUBST([HAVE_WINT_T])
+
+  AC_REQUIRE([gl_TYPE_WINT_T_PREREQ])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
