@@ -9,6 +9,7 @@ m4/copy-file.m4
 Depends-on:
 acl
 binary-io
+close
 error
 fstat
 full-write
