@@ -14,11 +14,13 @@ fcntl-h
 fstat
 lstat
 gettime
+msvc-nothrow
 stat-time
 stdbool
 sys_stat
 sys_time
 time
+utime
 utime-h
 
 configure.ac:
