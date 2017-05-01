@@ -17,11 +17,13 @@ AC_DEFUN([gl_FUNC_TZSET],
 [
   AC_REQUIRE([gl_HEADER_TIME_H_DEFAULTS])
   AC_REQUIRE([gl_LOCALTIME_BUFFER_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_FUNCS_ONCE([tzset])
   if test $ac_cv_func_tzset = no; then
     HAVE_TZSET=0
   fi
   gl_FUNC_TZSET_CLOBBER
+  REPLACE_TZSET=0
   case "$gl_cv_func_tzset_clobber" in
     *yes)
       REPLACE_TZSET=1
@@ -29,9 +31,9 @@ AC_DEFUN([gl_FUNC_TZSET],
         [Define if tzset clobbers localtime's static buffer.])
       gl_LOCALTIME_BUFFER_NEEDED
       ;;
-    *)
-      REPLACE_TZSET=0
-      ;;
+  esac
+  case "$host_os" in
+    mingw*) REPLACE_TZSET=1 ;;
   esac
 ])
 

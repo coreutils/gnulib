@@ -24,6 +24,7 @@ setenv         [test "$HAVE_TIMEZONE_T" = 0]
 stdbool        [test "$HAVE_TIMEZONE_T" = 0]
 time_r         [test "$HAVE_TIMEZONE_T" = 0]
 timegm         [test "$HAVE_TIMEZONE_T" = 0]
+tzset          [test "$HAVE_TIMEZONE_T" = 0]
 unsetenv       [test "$HAVE_TIMEZONE_T" = 0]
 
 configure.ac:

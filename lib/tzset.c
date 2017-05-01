@@ -40,7 +40,23 @@ tzset (void)
   struct tm save = *localtime_buffer_addr;
 #endif
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+  /* If the environment variable TZ has been set by Cygwin, neutralize it.
+     The Microsoft CRT interprets TZ differently than Cygwin and produces
+     incorrect results if TZ has the syntax used by Cygwin.  */
+  const char *tz = getenv ("TZ");
+  if (tz != NULL && strchr (tz, '/') != NULL)
+    _putenv ("TZ=");
+
+  /* On native Windows, tzset() is deprecated.  Use _tzset() instead.  See
+     https://msdn.microsoft.com/en-us/library/ms235451.aspx
+     https://msdn.microsoft.com/en-us/library/90s5c885.aspx  */
+  _tzset ();
+#elif HAVE_TZSET
   tzset ();
+#else
+  /* Do nothing.  Avoid infinite recursion.  */
+#endif
 
 #if TZSET_CLOBBERS_LOCALTIME
   *localtime_buffer_addr = save;
