@@ -19,4 +19,7 @@ when the environment variable @code{TZ} has been set by Cygwin.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Native Windows platforms (mingw, MSVC) support only a subset of time
+zones supported by GNU or specified by POSIX.  @xref{tzset}.
 @end itemize

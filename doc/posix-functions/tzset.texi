@@ -19,4 +19,13 @@ Solaris 2.6.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Native Windows platforms (mingw, MSVC) support only a subset of
+POSIX-specified values for the @env{TZ} environment variable,
+consisting of a time zone abbreviation containing exactly three ASCII
+letters with no daylight saving time or angle brackets, and with no
+support for @code{tz} database settings like
+@code{TZ='America/New_York'}.  Even this subset does not work on
+applications built via the Universal Windows Platform, as it does not
+make environment variables like @env{TZ} available to applications.
 @end itemize

@@ -21,4 +21,7 @@ OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Solaris 2.5.1, Cygwin 1.5.x, BeOS.
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+Native Windows platforms (mingw, MSVC) support only a subset of time
+zones specified by POSIX.  @xref{tzset}.
 @end itemize
