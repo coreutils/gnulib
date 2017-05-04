@@ -1874,7 +1874,7 @@ __argp_failure (const struct argp_state *state, int status, int errnum,
               putc_unlocked (':', stream);
               putc_unlocked (' ', stream);
 # if GNULIB_STRERROR_R_POSIX || HAVE_DECL_STRERROR_R
-#  if GNULIB_STRERROR_R_POSIX || STRERROR_R_CHAR_P
+#  if !GNULIB_STRERROR_R_POSIX && STRERROR_R_CHAR_P
               s = __strerror_r (errnum, buf, sizeof buf);
 #  else
               if (__strerror_r (errnum, buf, sizeof buf) == 0)
