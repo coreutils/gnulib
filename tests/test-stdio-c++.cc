@@ -131,6 +131,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::obstack_vprintf, int,
                  (struct obstack *, const char *, va_list));
 #endif
 
+#if GNULIB_TEST_PCLOSE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pclose, int, (FILE *));
+#endif
+
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::pclose, int, (FILE *));
 
 #if GNULIB_TEST_PERROR
