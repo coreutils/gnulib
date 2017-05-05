@@ -163,6 +163,17 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::floor, double, (double));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::floorl, long double, (long double));
 #endif
 
+#if GNULIB_TEST_FMAF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fmaf, float, (float, float, float));
+#endif
+#if GNULIB_TEST_FMA
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fma, double, (double, double, double));
+#endif
+#if GNULIB_TEST_FMAL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::fmal, long double,
+                 (long double, long double, long double));
+#endif
+
 #if GNULIB_TEST_FMODF
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fmodf, float, (float, float));
 #endif
@@ -221,6 +232,19 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::ldexpl, long double, (long double, int));
 
 //SIGNATURE_CHECK (GNULIB_NAMESPACE::lgamma, double, (double));
 
+#if GNULIB_TEST_LOGF
+SIGNATURE_CHECK (GNULIB_NAMESPACE::logf, float, (float));
+#endif
+#if GNULIB_TEST_LOG
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log, double, (double));
+#endif
+#if GNULIB_TEST_LOGL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
+#endif
+
+#if GNULIB_TEST_LOG10F
+SIGNATURE_CHECK (GNULIB_NAMESPACE::log10f, float, (float));
+#endif
 #if GNULIB_TEST_LOG10
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log10, double, (double));
 #endif
@@ -236,20 +260,6 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::log1p, double, (double));
 #endif
 #if GNULIB_TEST_LOG1PL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::log1pl, long double, (long double));
-#endif
-
-#if GNULIB_TEST_LOGF
-SIGNATURE_CHECK (GNULIB_NAMESPACE::logf, float, (float));
-#endif
-#if GNULIB_TEST_LOG
-SIGNATURE_CHECK (GNULIB_NAMESPACE::log, double, (double));
-#endif
-#if GNULIB_TEST_LOGL
-SIGNATURE_CHECK (GNULIB_NAMESPACE::logl, long double, (long double));
-#endif
-
-#if GNULIB_TEST_LOG10F
-SIGNATURE_CHECK (GNULIB_NAMESPACE::log10f, float, (float));
 #endif
 
 #if GNULIB_TEST_LOG2F
