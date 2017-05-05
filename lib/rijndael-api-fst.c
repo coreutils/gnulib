@@ -203,7 +203,8 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
                       size_t inputLen, char *outBuffer)
 {
   size_t i, k, t, numBlocks;
-  char block[16], *iv;
+  union { char bytes[16]; uint32_t words[4]; } block;
+  char *iv;
 
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_DECRYPT)
     {
@@ -231,15 +232,11 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
       iv = cipher->IV;
       for (i = numBlocks; i > 0; i--)
         {
-          ((uint32_t *) block)[0] = ((uint32_t *) input)[0] ^
-            ((uint32_t *) iv)[0];
-          ((uint32_t *) block)[1] = ((uint32_t *) input)[1] ^
-            ((uint32_t *) iv)[1];
-          ((uint32_t *) block)[2] = ((uint32_t *) input)[2] ^
-            ((uint32_t *) iv)[2];
-          ((uint32_t *) block)[3] = ((uint32_t *) input)[3] ^
-            ((uint32_t *) iv)[3];
-          rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
+          block.words[0] = ((uint32_t *) input)[0] ^ ((uint32_t *) iv)[0];
+          block.words[1] = ((uint32_t *) input)[1] ^ ((uint32_t *) iv)[1];
+          block.words[2] = ((uint32_t *) input)[2] ^ ((uint32_t *) iv)[2];
+          block.words[3] = ((uint32_t *) input)[3] ^ ((uint32_t *) iv)[3];
+          rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
           memcpy (cipher->IV, outBuffer, 16);
           input += 16;
           outBuffer += 16;
@@ -253,8 +250,8 @@ rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
           memcpy (outBuffer, input, 16);
           for (k = 0; k < 128; k++)
             {
-              rijndaelEncrypt (key->ek, key->Nr, iv, block);
-              outBuffer[k >> 3] ^= (block[0] & 0x80U) >> (k & 7);
+              rijndaelEncrypt (key->ek, key->Nr, iv, block.bytes);
+              outBuffer[k >> 3] ^= (block.bytes[0] & 0x80U) >> (k & 7);
               for (t = 0; t < 15; t++)
                 {
                   iv[t] = (iv[t] << 1) | (iv[t + 1] >> 7);
@@ -281,7 +278,8 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
                     size_t inputOctets, char *outBuffer)
 {
   size_t i, numBlocks, padLen;
-  char block[16], *iv;
+  union { char bytes[16]; uint32_t words[4]; } block;
+  char *iv;
 
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_DECRYPT)
     {
@@ -305,24 +303,20 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
         }
       padLen = 16 - (inputOctets - 16 * numBlocks);
       assert (padLen > 0 && padLen <= 16);
-      memcpy (block, input, 16 - padLen);
-      memset (block + 16 - padLen, padLen, padLen);
-      rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
+      memcpy (block.bytes, input, 16 - padLen);
+      memset (block.bytes + 16 - padLen, padLen, padLen);
+      rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
       break;
 
     case RIJNDAEL_MODE_CBC:
       iv = cipher->IV;
       for (i = numBlocks; i > 0; i--)
         {
-          ((uint32_t *) block)[0] = ((uint32_t *) input)[0] ^
-            ((uint32_t *) iv)[0];
-          ((uint32_t *) block)[1] = ((uint32_t *) input)[1] ^
-            ((uint32_t *) iv)[1];
-          ((uint32_t *) block)[2] = ((uint32_t *) input)[2] ^
-            ((uint32_t *) iv)[2];
-          ((uint32_t *) block)[3] = ((uint32_t *) input)[3] ^
-            ((uint32_t *) iv)[3];
-          rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
+          block.words[0] = ((uint32_t *) input)[0] ^ ((uint32_t *) iv)[0];
+          block.words[1] = ((uint32_t *) input)[1] ^ ((uint32_t *) iv)[1];
+          block.words[2] = ((uint32_t *) input)[2] ^ ((uint32_t *) iv)[2];
+          block.words[3] = ((uint32_t *) input)[3] ^ ((uint32_t *) iv)[3];
+          rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
           memcpy (cipher->IV, outBuffer, 16);
           input += 16;
           outBuffer += 16;
@@ -331,13 +325,13 @@ rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
       assert (padLen > 0 && padLen <= 16);
       for (i = 0; i < 16 - padLen; i++)
         {
-          block[i] = input[i] ^ iv[i];
+          block.bytes[i] = input[i] ^ iv[i];
         }
       for (i = 16 - padLen; i < 16; i++)
         {
-          block[i] = (char) padLen ^ iv[i];
+          block.bytes[i] = (char) padLen ^ iv[i];
         }
-      rijndaelEncrypt (key->rk, key->Nr, block, outBuffer);
+      rijndaelEncrypt (key->rk, key->Nr, block.bytes, outBuffer);
       memcpy (cipher->IV, outBuffer, 16);
       break;
 
@@ -355,7 +349,8 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
                       size_t inputLen, char *outBuffer)
 {
   size_t i, k, t, numBlocks;
-  char block[16], *iv;
+  union { char bytes[16]; uint32_t words[4]; } block;
+  char *iv;
 
   if (cipher == NULL
       || key == NULL
@@ -386,13 +381,13 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
       iv = cipher->IV;
       for (i = numBlocks; i > 0; i--)
         {
-          rijndaelDecrypt (key->rk, key->Nr, input, block);
-          ((uint32_t *) block)[0] ^= ((uint32_t *) iv)[0];
-          ((uint32_t *) block)[1] ^= ((uint32_t *) iv)[1];
-          ((uint32_t *) block)[2] ^= ((uint32_t *) iv)[2];
-          ((uint32_t *) block)[3] ^= ((uint32_t *) iv)[3];
+          rijndaelDecrypt (key->rk, key->Nr, input, block.bytes);
+          block.words[0] ^= ((uint32_t *) iv)[0];
+          block.words[1] ^= ((uint32_t *) iv)[1];
+          block.words[2] ^= ((uint32_t *) iv)[2];
+          block.words[3] ^= ((uint32_t *) iv)[3];
           memcpy (cipher->IV, input, 16);
-          memcpy (outBuffer, block, 16);
+          memcpy (outBuffer, block.bytes, 16);
           input += 16;
           outBuffer += 16;
         }
@@ -405,13 +400,13 @@ rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
           memcpy (outBuffer, input, 16);
           for (k = 0; k < 128; k++)
             {
-              rijndaelEncrypt (key->ek, key->Nr, iv, block);
+              rijndaelEncrypt (key->ek, key->Nr, iv, block.bytes);
               for (t = 0; t < 15; t++)
                 {
                   iv[t] = (iv[t] << 1) | (iv[t + 1] >> 7);
                 }
               iv[15] = (iv[15] << 1) | ((input[k >> 3] >> (7 - (k & 7))) & 1);
-              outBuffer[k >> 3] ^= (block[0] & 0x80U) >> (k & 7);
+              outBuffer[k >> 3] ^= (block.bytes[0] & 0x80U) >> (k & 7);
             }
           outBuffer += 16;
           input += 16;
@@ -432,7 +427,8 @@ rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
                     size_t inputOctets, char *outBuffer)
 {
   size_t i, numBlocks, padLen;
-  char block[16];
+  union { char bytes[16]; uint32_t words[4]; } block;
+  char *iv;
 
   if (cipher == NULL || key == NULL || key->direction == RIJNDAEL_DIR_ENCRYPT)
     {
@@ -460,55 +456,56 @@ rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
           outBuffer += 16;
         }
       /* last block */
-      rijndaelDecrypt (key->rk, key->Nr, input, block);
-      padLen = block[15];
+      rijndaelDecrypt (key->rk, key->Nr, input, block.bytes);
+      padLen = block.bytes[15];
       if (padLen >= 16)
         {
           return RIJNDAEL_BAD_DATA;
         }
       for (i = 16 - padLen; i < 16; i++)
         {
-          if (block[i] != padLen)
+          if (block.bytes[i] != padLen)
             {
               return RIJNDAEL_BAD_DATA;
             }
         }
-      memcpy (outBuffer, block, 16 - padLen);
+      memcpy (outBuffer, block.bytes, 16 - padLen);
       break;
 
     case RIJNDAEL_MODE_CBC:
+      iv = cipher->IV;
       /* all blocks but last */
       for (i = numBlocks - 1; i > 0; i--)
         {
-          rijndaelDecrypt (key->rk, key->Nr, input, block);
-          ((uint32_t *) block)[0] ^= ((uint32_t *) cipher->IV)[0];
-          ((uint32_t *) block)[1] ^= ((uint32_t *) cipher->IV)[1];
-          ((uint32_t *) block)[2] ^= ((uint32_t *) cipher->IV)[2];
-          ((uint32_t *) block)[3] ^= ((uint32_t *) cipher->IV)[3];
-          memcpy (cipher->IV, input, 16);
-          memcpy (outBuffer, block, 16);
+          rijndaelDecrypt (key->rk, key->Nr, input, block.bytes);
+          block.words[0] ^= ((uint32_t *) iv)[0];
+          block.words[1] ^= ((uint32_t *) iv)[1];
+          block.words[2] ^= ((uint32_t *) iv)[2];
+          block.words[3] ^= ((uint32_t *) iv)[3];
+          memcpy (iv, input, 16);
+          memcpy (outBuffer, block.bytes, 16);
           input += 16;
           outBuffer += 16;
         }
       /* last block */
-      rijndaelDecrypt (key->rk, key->Nr, input, block);
-      ((uint32_t *) block)[0] ^= ((uint32_t *) cipher->IV)[0];
-      ((uint32_t *) block)[1] ^= ((uint32_t *) cipher->IV)[1];
-      ((uint32_t *) block)[2] ^= ((uint32_t *) cipher->IV)[2];
-      ((uint32_t *) block)[3] ^= ((uint32_t *) cipher->IV)[3];
-      padLen = block[15];
+      rijndaelDecrypt (key->rk, key->Nr, input, block.bytes);
+      block.words[0] ^= ((uint32_t *) iv)[0];
+      block.words[1] ^= ((uint32_t *) iv)[1];
+      block.words[2] ^= ((uint32_t *) iv)[2];
+      block.words[3] ^= ((uint32_t *) iv)[3];
+      padLen = block.bytes[15];
       if (padLen <= 0 || padLen > 16)
         {
           return RIJNDAEL_BAD_DATA;
         }
       for (i = 16 - padLen; i < 16; i++)
         {
-          if (block[i] != padLen)
+          if (block.bytes[i] != padLen)
             {
               return RIJNDAEL_BAD_DATA;
             }
         }
-      memcpy (outBuffer, block, 16 - padLen);
+      memcpy (outBuffer, block.bytes, 16 - padLen);
       break;
 
     default:
