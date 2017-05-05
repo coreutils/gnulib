@@ -126,6 +126,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::endusershell, void, (void));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::group_member, int, (gid_t));
 #endif
 
+#if GNULIB_TEST_ISATTY
+SIGNATURE_CHECK (GNULIB_NAMESPACE::isatty, int, (int));
+#endif
+
 #if GNULIB_TEST_LCHOWN
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lchown, int, (char const *, uid_t, gid_t));
 #endif
@@ -161,6 +165,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::pwrite, ssize_t,
                  (int, const void *, size_t, off_t));
 #endif
 
+#if GNULIB_TEST_READ
+SIGNATURE_CHECK (GNULIB_NAMESPACE::read, ssize_t, (int, void *, size_t));
+#endif
+
 #if GNULIB_TEST_READLINK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::readlink, ssize_t,
                  (const char *, char *, size_t));
@@ -173,6 +181,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::readlinkat, ssize_t,
 
 #if GNULIB_TEST_RMDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::rmdir, int, (char const *));
+#endif
+
+#if GNULIB_TEST_SETHOSTNAME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::sethostname, int, (const char *, size_t));
 #endif
 
 #if GNULIB_TEST_SLEEP
