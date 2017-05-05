@@ -24,13 +24,29 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_OPENDIR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::opendir, DIR *, (const char *));
+#endif
+
+#if GNULIB_TEST_READDIR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::readdir, struct dirent *, (DIR *));
+#endif
+
+#if GNULIB_TEST_REWINDDIR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::rewinddir, void, (DIR *));
+#endif
+
+#if GNULIB_TEST_CLOSEDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::closedir, int, (DIR *));
+#endif
+
+#if GNULIB_TEST_DIRFD
+SIGNATURE_CHECK (GNULIB_NAMESPACE::dirfd, int, (DIR *));
+#endif
 
 #if GNULIB_TEST_FDOPENDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fdopendir, DIR *, (int));
 #endif
-
-SIGNATURE_CHECK (GNULIB_NAMESPACE::opendir, DIR *, (const char *));
 
 #if GNULIB_TEST_SCANDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::scandir, int,
