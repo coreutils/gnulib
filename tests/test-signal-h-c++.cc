@@ -45,7 +45,6 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::sigprocmask, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::signal,
                  _gl_function_taking_int_returning_void_t,
                  (int, _gl_function_taking_int_returning_void_t));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::raise, int, (int));
 #endif
 
 #if GNULIB_TEST_SIGACTION
