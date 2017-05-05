@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_LOCALECONV
+SIGNATURE_CHECK (GNULIB_NAMESPACE::localeconv, struct lconv *, (void));
+#endif
+
 #if GNULIB_TEST_SETLOCALE
 SIGNATURE_CHECK (GNULIB_NAMESPACE::setlocale, char *, (int, const char *));
 #endif
