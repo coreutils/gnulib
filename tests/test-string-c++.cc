@@ -24,6 +24,14 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_FFSL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ffsl, int, (long int));
+#endif
+
+#if GNULIB_TEST_FFSLL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ffsll, int, (long long int));
+#endif
+
 #if GNULIB_TEST_MEMCHR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::memchr, void *,
                  (void const *, int, size_t));
