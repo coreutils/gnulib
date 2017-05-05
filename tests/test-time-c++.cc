@@ -29,6 +29,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::nanosleep, int,
                  (struct timespec const *, struct timespec *));
 #endif
 
+#if GNULIB_TEST_TZSET
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tzset, void, (void));
+#endif
+
 #if GNULIB_TEST_MKTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mktime, time_t, (struct tm *));
 #endif
@@ -41,9 +45,34 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::gmtime_r, struct tm *,
                  (time_t const *, struct tm *));
 #endif
 
+#if GNULIB_TEST_LOCALTIME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::localtime, struct tm *, (time_t const *));
+#endif
+
+#if 0
+SIGNATURE_CHECK (GNULIB_NAMESPACE::gmtime, struct tm *, (time_t const *));
+#endif
+
 #if GNULIB_TEST_STRPTIME
 SIGNATURE_CHECK (GNULIB_NAMESPACE::strptime, char *,
                  (char const *, char const *, struct tm *));
+#endif
+
+#if GNULIB_TEST_CTIME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::ctime, char *, (time_t const *));
+#endif
+
+#if GNULIB_TEST_STRFTIME
+SIGNATURE_CHECK (GNULIB_NAMESPACE::strftime, size_t,
+                 (char *, size_t, const char *, const struct tm *));
+#endif
+
+#if GNULIB_TEST_TIMERZ
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tzalloc, timezone_t, (char const *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::tzfree, void, (timezone_t));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::localtime_rz, struct tm *,
+                 (timezone_t, time_t const *, struct tm *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mktime_z, time_t, (timezone_t, struct tm *));
 #endif
 
 #if GNULIB_TEST_TIMEGM
