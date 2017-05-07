@@ -193,6 +193,7 @@ utime (const char *name, const struct utimbuf *ts)
       case ERROR_FILE_NOT_FOUND: /* The last component of rname does not exist.  */
       case ERROR_PATH_NOT_FOUND: /* Some directory component in rname does not exist.  */
       case ERROR_BAD_PATHNAME:   /* rname is such as '\\server'.  */
+      case ERROR_BAD_NETPATH:    /* rname is such as '\\nonexistentserver\share'.  */
       case ERROR_BAD_NET_NAME:   /* rname is such as '\\server\nonexistentshare'.  */
       case ERROR_INVALID_NAME:   /* rname contains wildcards, misplaced colon, etc.  */
       case ERROR_DIRECTORY:
@@ -201,7 +202,6 @@ utime (const char *name, const struct utimbuf *ts)
 
       case ERROR_ACCESS_DENIED:  /* rname is such as 'C:\System Volume Information\foo'.  */
       case ERROR_SHARING_VIOLATION: /* rname is such as 'C:\pagefile.sys'.  */
-                                    /* XXX map to EACCESS or EPERM? */
         errno = (ts != NULL ? EPERM : EACCES);
         break;
 
