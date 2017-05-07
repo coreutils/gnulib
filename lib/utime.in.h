@@ -33,6 +33,11 @@
 # include <sys/utime.h>
 #endif
 
+#if @GNULIB_UTIME@
+/* Get struct timespec.  */
+# include <time.h>
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */
@@ -72,6 +77,10 @@ _GL_WARN_ON_USE (utime,
                  "utime is unportable - "
                  "use gnulib module canonicalize-lgpl for portability");
 # endif
+#endif
+
+#if @GNULIB_UTIME@
+extern int _gl_utimens_windows (const char *filename, struct timespec ts[2]);
 #endif
 
 

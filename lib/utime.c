@@ -30,7 +30,7 @@
 # include "malloca.h"
 
 int
-utime (const char *name, const struct utimbuf *ts)
+_gl_utimens_windows (const char *name, struct timespec ts[2])
 {
   /* POSIX <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>
      specifies: "More than two leading <slash> characters shall be treated as
@@ -146,13 +146,13 @@ utime (const char *name, const struct utimbuf *ts)
       {
         {
           ULONGLONG time_since_16010101 =
-            (ULONGLONG) ts->actime * 10000000 + 116444736000000000LL;
+            (ULONGLONG) ts[0].tv_sec * 10000000 + ts[0].tv_nsec / 100 + 116444736000000000LL;
           last_access_time.dwLowDateTime = (DWORD) time_since_16010101;
           last_access_time.dwHighDateTime = time_since_16010101 >> 32;
         }
         {
           ULONGLONG time_since_16010101 =
-            (ULONGLONG) ts->modtime * 10000000 + 116444736000000000LL;
+            (ULONGLONG) ts[1].tv_sec * 10000000 + ts[1].tv_nsec / 100 + 116444736000000000LL;
           last_write_time.dwLowDateTime = (DWORD) time_since_16010101;
           last_write_time.dwHighDateTime = time_since_16010101 >> 32;
         }
@@ -168,7 +168,7 @@ utime (const char *name, const struct utimbuf *ts)
       {
         #if 0
         DWORD sft_error = GetLastError ();
-        fprintf (stderr, "utime SetFileTime error 0x%x\n", (unsigned int) sft_error);
+        fprintf (stderr, "utimens SetFileTime error 0x%x\n", (unsigned int) sft_error);
         #endif
         CloseHandle (handle);
         if (malloca_rname != NULL)
@@ -181,7 +181,7 @@ utime (const char *name, const struct utimbuf *ts)
  failed:
   {
     #if 0
-    fprintf (stderr, "utime CreateFile/GetFileAttributes error 0x%x\n", (unsigned int) error);
+    fprintf (stderr, "utimens CreateFile/GetFileAttributes error 0x%x\n", (unsigned int) error);
     #endif
     if (malloca_rname != NULL)
       freea (malloca_rname);
@@ -235,6 +235,22 @@ utime (const char *name, const struct utimbuf *ts)
 
     return -1;
   }
+}
+
+int
+utime (const char *name, const struct utimbuf *ts)
+{
+  if (ts == NULL)
+    return _gl_utimens_windows (name, NULL);
+  else
+    {
+      struct timespec ts_with_nanoseconds[2];
+      ts_with_nanoseconds[0].tv_sec = ts->actime;
+      ts_with_nanoseconds[0].tv_nsec = 0;
+      ts_with_nanoseconds[1].tv_sec = ts->modtime;
+      ts_with_nanoseconds[1].tv_nsec = 0;
+      return _gl_utimens_windows (name, ts_with_nanoseconds);
+    }
 }
 
 #endif

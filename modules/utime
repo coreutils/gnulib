@@ -7,6 +7,7 @@ m4/utime.m4
 
 Depends-on:
 utime-h
+time
 filename        [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
 malloca         [test $HAVE_UTIME = 0 || test $REPLACE_UTIME = 1]
 
