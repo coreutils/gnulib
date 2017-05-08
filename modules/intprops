@@ -5,7 +5,6 @@ Files:
 lib/intprops.h
 
 Depends-on:
-verify
 
 configure.ac:
 

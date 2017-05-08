@@ -113,10 +113,31 @@ main (void)
   VERIFY (TYPE_MAXIMUM (long int) == LONG_MAX);
   VERIFY (TYPE_MINIMUM (unsigned long int) == 0);
   VERIFY (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
+  #ifdef LLONG_MAX
+   verify (TYPE_MINIMUM (long long int) == LLONG_MIN);
+   verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
+  #endif
   VERIFY (TYPE_MINIMUM (intmax_t) == INTMAX_MIN);
   VERIFY (TYPE_MAXIMUM (intmax_t) == INTMAX_MAX);
   VERIFY (TYPE_MINIMUM (uintmax_t) == 0);
   VERIFY (TYPE_MAXIMUM (uintmax_t) == UINTMAX_MAX);
+
+  /* TYPE_WIDTH.  */
+  #ifdef CHAR_WIDTH
+   verify (TYPE_WIDTH (char) == CHAR_WIDTH);
+   verify (TYPE_WIDTH (signed char) == SCHAR_WIDTH);
+   verify (TYPE_WIDTH (unsigned char) == UCHAR_WIDTH);
+   verify (TYPE_WIDTH (short int) == SHRT_WIDTH);
+   verify (TYPE_WIDTH (unsigned short int) == USHRT_WIDTH);
+   verify (TYPE_WIDTH (int) == INT_WIDTH);
+   verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
+   verify (TYPE_WIDTH (long int) == LONG_WIDTH);
+   verify (TYPE_WIDTH (unsigned long int) == ULONG_WIDTH);
+   #ifdef LLONG_WIDTH
+    verify (TYPE_WIDTH (long long int) == LLONG_WIDTH);
+    verify (TYPE_WIDTH (unsigned long long int) == ULLONG_WIDTH);
+   #endif
+  #endif
 
   /* INT_BITS_STRLEN_BOUND.  */
   VERIFY (INT_BITS_STRLEN_BOUND (1) == 1);
