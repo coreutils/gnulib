@@ -76,6 +76,10 @@
 
 #ifdef WINDOWS_NATIVE
 
+/* Here we need the recv() function from Windows, that takes a SOCKET as
+   first argument, not any possible gnulib override.  */
+# undef recv
+
 static BOOL IsConsoleHandle (HANDLE h)
 {
   DWORD mode;
