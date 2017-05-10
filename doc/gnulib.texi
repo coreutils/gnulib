@@ -71,6 +71,7 @@ Documentation License''.
 * Glibc Function Substitutes::      Replacing system functions.
 * Particular Modules::              Documentation of individual modules.
 * Regular expressions::             The regex module.
+* Build Infrastructure Modules::    Modules that extend the GNU Build System.
 * GNU Free Documentation License::  Copying and sharing this manual.
 * Index::
 @end menu
@@ -6321,15 +6322,8 @@ This list of functions is sorted according to the header that declares them.
 * Quoting::
 * error and progname::
 * gcd::
-* Searching for Libraries::
-* Exported Symbols of Shared Libraries::
-* LD Version Scripts::
-* Visual Studio Compatibility::
 * Supporting Relocation::
 * func::
-* configmake::
-* warnings::
-* manywarnings::
 * Running self-tests under valgrind::
 * stat-size::
 @end menu
@@ -6360,23 +6354,9 @@ This list of functions is sorted according to the header that declares them.
 
 @include gcd.texi
 
-@include havelib.texi
-
-@include lib-symbol-visibility.texi
-
-@include ld-version-script.texi
-
-@include ld-output-def.texi
-
 @include relocatable-maint.texi
 
 @include func.texi
-
-@include configmake.texi
-
-@include warnings.texi
-
-@include manywarnings.texi
 
 @include valgrind-tests.texi
 
@@ -6410,6 +6390,39 @@ varies.  The descriptions given here for the different types are
 generated automatically.
 
 @include regexprops-generic.texi
+
+
+@node Build Infrastructure Modules
+@chapter Build Infrastructure Modules
+
+Gnulib has a couple of modules that don't provide code, but rather
+extend the GNU Build System.  That is, they are convenience facilities
+for use with GNU Automake (in particular).
+
+@menu
+* Searching for Libraries::
+* Exported Symbols of Shared Libraries::
+* LD Version Scripts::
+* Visual Studio Compatibility::
+* configmake::
+* warnings::
+* manywarnings::
+@end menu
+
+@include havelib.texi
+
+@include lib-symbol-visibility.texi
+
+@include ld-version-script.texi
+
+@include ld-output-def.texi
+
+@include configmake.texi
+
+@include warnings.texi
+
+@include manywarnings.texi
+
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
