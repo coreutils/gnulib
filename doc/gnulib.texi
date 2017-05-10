@@ -725,7 +725,6 @@ better to share them.
 * Extra tests modules::
 * Modules that modify the way other modules work::
 * A C++ namespace for gnulib::      A different way of using Gnulib in C++
-* Library version handling::
 * Windows sockets::
 * Libtool and Windows::
 * Running self-tests under valgrind::
@@ -742,8 +741,6 @@ better to share them.
 @include transversal.texi
 
 @include namespace.texi
-
-@include check-version.texi
 
 @include windows-sockets.texi
 
@@ -6325,6 +6322,7 @@ This list of functions is sorted according to the header that declares them.
 * Quoting::
 * error and progname::
 * gcd::
+* Library version handling::
 * Supporting Relocation::
 * func::
 * stat-size::
@@ -6355,6 +6353,8 @@ This list of functions is sorted according to the header that declares them.
 @include error.texi
 
 @include gcd.texi
+
+@include check-version.texi
 
 @include relocatable-maint.texi
 
