@@ -1,8 +1,8 @@
 @node Libtool and Windows
 @section Libtool and Windows
 
-If you want it to be possible to cross-compile your program to MinGW
-and you use Libtool, you need to use the @code{win32-dll} option of
+If you want it to be possible to compile your program for a native Windows
+platform and you use Libtool, you need to use the @code{win32-dll} option of
 @code{LT_INIT}. In other words, put:
 
 @example

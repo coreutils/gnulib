@@ -69,6 +69,7 @@ Documentation License''.
 * Legacy Function Substitutes::     Replacing system functions.
 * Glibc Header File Substitutes::   Overriding system headers.
 * Glibc Function Substitutes::      Replacing system functions.
+* Native Windows Support::          Support for the native Windows platforms.
 * Particular Modules::              Documentation of individual modules.
 * Regular expressions::             The regex module.
 * Build Infrastructure Modules::    Modules that extend the GNU Build System.
@@ -725,8 +726,6 @@ better to share them.
 * Extra tests modules::
 * Modules that modify the way other modules work::
 * A C++ namespace for gnulib::      A different way of using Gnulib in C++
-* Windows sockets::
-* Libtool and Windows::
 * Running self-tests under valgrind::
 * License Texinfo sources::
 * Build robot for gnulib::
@@ -741,10 +740,6 @@ better to share them.
 @include transversal.texi
 
 @include namespace.texi
-
-@include windows-sockets.texi
-
-@include windows-libtool.texi
 
 @include valgrind-tests.texi
 
@@ -6307,6 +6302,34 @@ This list of functions is sorted according to the header that declares them.
 
 @c @node Glibc wordexp.h
 @c @section Glibc Extensions to @code{<wordexp.h>}
+
+
+@node Native Windows Support
+@chapter Native Windows Support
+
+There are three ways to create binaries that run on Microsoft Windows:
+@itemize
+@item
+Native binaries, built using the MinGW tool chain.
+@item
+Native binaries, built using the MSVC (MS Visual C/C++) tool chain.
+@item
+Binaries for the Cygwin environment.
+@end itemize
+
+This chapter deals with the MinGW and MSVC platforms, commonly called
+``native Windows'' platforms.  Cygwin, on the other hand, is close enough
+to POSIX that it can be treated like any other Unix-like platform.
+
+@menu
+* Libtool and Windows::
+* Windows sockets::
+@end menu
+
+@include windows-libtool.texi
+
+@include windows-sockets.texi
+
 
 @node Particular Modules
 @chapter Particular Modules
