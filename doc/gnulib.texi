@@ -728,6 +728,7 @@ better to share them.
 * Library version handling::
 * Windows sockets::
 * Libtool and Windows::
+* Running self-tests under valgrind::
 * License Texinfo sources::
 * Build robot for gnulib::
 @end menu
@@ -747,6 +748,8 @@ better to share them.
 @include windows-sockets.texi
 
 @include windows-libtool.texi
+
+@include valgrind-tests.texi
 
 @include licenses-texi.texi
 
@@ -6324,7 +6327,6 @@ This list of functions is sorted according to the header that declares them.
 * gcd::
 * Supporting Relocation::
 * func::
-* Running self-tests under valgrind::
 * stat-size::
 @end menu
 
@@ -6357,8 +6359,6 @@ This list of functions is sorted according to the header that declares them.
 @include relocatable-maint.texi
 
 @include func.texi
-
-@include valgrind-tests.texi
 
 @include stat-size.texi
 
