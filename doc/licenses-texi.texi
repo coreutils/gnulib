@@ -1,0 +1,14 @@
+@node License Texinfo sources
+@section License Texinfo sources
+
+Gnulib provides copies of the GNU GPL, GNU LGPL, and GNU FDL licenses
+in Texinfo form.  (The master location is
+@url{http://www.gnu.org/licenses/}).  These Texinfo documents do not
+have any node names and structures built into them; for your manual,
+you should @code{@@include} them in an appropriate @code{@@node}.
+
+The conventional name for the GPL node is @samp{Copying} and for the FDL
+@samp{GNU Free Documentation License}.  The LGPL doesn't seem to have
+a conventional node name.
+
+Of course the license texts themselves should not be changed at all.

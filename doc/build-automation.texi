@@ -1,0 +1,57 @@
+@node Build robot for gnulib
+@section Build robot for gnulib
+
+To simplify testing on a wide set of platforms, gnulib is built on
+many platforms every day and the results are uploaded to:
+
+@url{http://autobuild.josefsson.org/gnulib/}
+
+If you wish to help the gnulib development effort with build logs for
+your favorite platform, you may perform these steps:
+
+@enumerate
+
+@item Create gnulib directory
+
+On a machine with GNU development tools installed and with a gnulib
+git checkout, use
+
+@example
+gnulib-tool --create-megatestdir --with-tests --dir=...
+@end example
+
+Note: The created directory uses ca. 512 MB on disk.
+
+@item Transfer gnulib directory
+
+Transfer this directory to a build machine (HP-UX, Cygwin, or
+whatever).  Often it is easier to transfer one file, and this can be
+achieved by running, inside the directory the following commands:
+
+@example
+./configure
+make dist
+@end example
+
+And then transferring the @file{dummy-0.tar.gz} file.
+
+@item Build modules
+
+On the build machine, run ./do-autobuild (or "nohup ./do-autobuild").
+It creates a directory @file{logs/} with a log file for each module.
+
+@item Submit build logs
+
+Submit each log file to Simon's site, either through a
+
+@example
+mail `echo gnulib__at__autobuild.josefsson.org | sed -e s/__at__/@@/`
+@end example
+
+or through netcat
+
+@example
+autobuild-submit logs/*
+@end example
+
+@end enumerate
