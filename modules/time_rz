@@ -19,17 +19,18 @@ m4/time_rz.m4
 
 Depends-on:
 extensions
-flexmember     [test "$HAVE_TIMEZONE_T" = 0]
-setenv         [test "$HAVE_TIMEZONE_T" = 0]
-stdbool        [test "$HAVE_TIMEZONE_T" = 0]
-time_r         [test "$HAVE_TIMEZONE_T" = 0]
-timegm         [test "$HAVE_TIMEZONE_T" = 0]
-tzset          [test "$HAVE_TIMEZONE_T" = 0]
-unsetenv       [test "$HAVE_TIMEZONE_T" = 0]
+time
+flexmember     [test $HAVE_TIMEZONE_T = 0]
+setenv         [test $HAVE_TIMEZONE_T = 0]
+stdbool        [test $HAVE_TIMEZONE_T = 0]
+time_r         [test $HAVE_TIMEZONE_T = 0]
+timegm         [test $HAVE_TIMEZONE_T = 0]
+tzset          [test $HAVE_TIMEZONE_T = 0]
+unsetenv       [test $HAVE_TIMEZONE_T = 0]
 
 configure.ac:
 gl_TIME_RZ
-if test "$HAVE_TIMEZONE_T" = 0; then
+if test $HAVE_TIMEZONE_T = 0; then
   AC_LIBOBJ([time_rz])
 fi
 gl_TIME_MODULE_INDICATOR([time_rz])
