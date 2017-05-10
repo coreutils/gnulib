@@ -39,7 +39,11 @@
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
 
-#  include "msvc-nothrow.h"
+#  if GNULIB_MSVC_NOTHROW
+#   include "msvc-nothrow.h"
+#  else
+#   include <io.h>
+#  endif
 
 #  if GNULIB_NONBLOCKING
 #   define CLEAR_ERRNO \

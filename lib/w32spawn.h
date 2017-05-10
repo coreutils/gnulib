@@ -30,7 +30,11 @@
 #include <errno.h>
 
 /* Get _get_osfhandle().  */
-#include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 #include "cloexec.h"
 #include "xalloc.h"

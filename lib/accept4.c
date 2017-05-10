@@ -22,7 +22,11 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "binary-io.h"
-#include "msvc-nothrow.h"
+#if GNULIB_MSVC_NOTHROW
+# include "msvc-nothrow.h"
+#else
+# include <io.h>
+#endif
 
 #ifndef SOCK_CLOEXEC
 # define SOCK_CLOEXEC 0

@@ -34,8 +34,14 @@
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
-# include "msvc-inval.h"
-# include "msvc-nothrow.h"
+# if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+#  include "msvc-inval.h"
+# endif
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 # undef write
 

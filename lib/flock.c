@@ -33,7 +33,11 @@
 # include <errno.h>
 
 /* _get_osfhandle */
-# include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 /* Determine the current size of a file.  Because the other braindead
  * APIs we'll call need lower/upper 32 bit pairs, keep the file size

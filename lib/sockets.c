@@ -28,7 +28,11 @@
 # include <sys/socket.h>
 
 # include "fd-hook.h"
-# include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 /* Get set_winsock_errno, FD_TO_SOCKET etc. */
 # include "w32sock.h"

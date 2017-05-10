@@ -18,7 +18,7 @@
 /* Written by Simon Josefsson */
 
 #ifndef SOCKETS_H
-# define SOCKETS_H 1
+#define SOCKETS_H 1
 
 #define SOCKETS_1_0 0x0001
 #define SOCKETS_1_1 0x0101
@@ -43,9 +43,13 @@ int gl_sockets_cleanup (void)
    other library that only accepts sockets. */
 #ifdef WINDOWS_SOCKETS
 
-#include <sys/socket.h>
+# include <sys/socket.h>
 
-#include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 static inline SOCKET
 gl_fd_to_handle (int fd)
@@ -55,7 +59,7 @@ gl_fd_to_handle (int fd)
 
 #else
 
-#define gl_fd_to_handle(x) (x)
+# define gl_fd_to_handle(x) (x)
 
 #endif /* WINDOWS_SOCKETS */
 

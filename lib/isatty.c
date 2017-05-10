@@ -27,10 +27,16 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "msvc-inval.h"
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
 
 /* Get _get_osfhandle().  */
-#include "msvc-nothrow.h"
+#if GNULIB_MSVC_NOTHROW
+# include "msvc-nothrow.h"
+#else
+# include <io.h>
+#endif
 
 static BOOL IsConsoleHandle (HANDLE h)
 {

@@ -25,7 +25,9 @@ SIGNATURE_CHECK (fgetc, int, (FILE *));
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "msvc-inval.h"
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
 
 #include "macros.h"
 

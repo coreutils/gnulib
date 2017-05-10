@@ -41,7 +41,11 @@
 # include <io.h>
 # include <stdio.h>
 # include <conio.h>
-# include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 #else
 # include <sys/time.h>
 # include <unistd.h>

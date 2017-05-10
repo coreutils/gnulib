@@ -39,7 +39,11 @@
 /* Get the overridden 'struct timeval'.  */
 #include <sys/time.h>
 
-#include "msvc-nothrow.h"
+#if GNULIB_MSVC_NOTHROW
+# include "msvc-nothrow.h"
+#else
+# include <io.h>
+#endif
 
 #undef select
 

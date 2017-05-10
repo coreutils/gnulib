@@ -26,7 +26,11 @@
 #include <io.h>
 
 /* Get _get_osfhandle().  */
-#include "msvc-nothrow.h"
+#if GNULIB_MSVC_NOTHROW
+# include "msvc-nothrow.h"
+#else
+# include <io.h>
+#endif
 
 #define FD_TO_SOCKET(fd)   ((SOCKET) _get_osfhandle ((fd)))
 #define SOCKET_TO_FD(fh)   (_open_osfhandle ((intptr_t) (fh), O_RDWR | O_BINARY))

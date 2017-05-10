@@ -25,7 +25,9 @@ SIGNATURE_CHECK (fwrite, size_t, (const void *, size_t, size_t, FILE *));
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "msvc-inval.h"
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
 
 #include "macros.h"
 

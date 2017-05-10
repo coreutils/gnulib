@@ -41,7 +41,11 @@ SIGNATURE_CHECK (dup2, int, (int, int));
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 /* Get _get_osfhandle.  */
-# include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 #endif
 
 #include "macros.h"

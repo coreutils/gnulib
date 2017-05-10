@@ -15,6 +15,7 @@ AC_REQUIRE([gl_MSVC_NOTHROW])
 if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
   AC_LIBOBJ([msvc-nothrow])
 fi
+gl_MODULE_INDICATOR([msvc-nothrow])
 
 Makefile.am:
 

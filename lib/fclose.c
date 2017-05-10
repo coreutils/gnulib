@@ -23,7 +23,9 @@
 #include <unistd.h>
 
 #include "freading.h"
-#include "msvc-inval.h"
+#if HAVE_MSVC_INVALID_PARAMETER_HANDLER
+# include "msvc-inval.h"
+#endif
 
 #undef fclose
 

@@ -32,7 +32,11 @@
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 
-# include "msvc-nothrow.h"
+# if GNULIB_MSVC_NOTHROW
+#  include "msvc-nothrow.h"
+# else
+#  include <io.h>
+# endif
 
 int
 get_nonblocking_flag (int desc)

@@ -6324,11 +6324,14 @@ to POSIX that it can be treated like any other Unix-like platform.
 @menu
 * Libtool and Windows::
 * Windows sockets::
+* Native Windows Support without MSVC Support::
 @end menu
 
 @include windows-libtool.texi
 
 @include windows-sockets.texi
+
+@include windows-without-msvc.texi
 
 
 @node Particular Modules
