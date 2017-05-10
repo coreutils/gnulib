@@ -26,6 +26,7 @@ How to update gnulib manual on www.gnu.org
    cd $GNULIB_CHECKOUT/doc
    make updated-stamp
    ../build-aux/gendocs.sh \
+     -I ../build-aux \
      --email bug-gnulib@gnu.org \
      -o "$GNULIB_WWW_CHECKOUT/manual" \
      gnulib "The GNU Portability Library"
