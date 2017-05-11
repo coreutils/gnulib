@@ -13,8 +13,9 @@ On Windows platforms (excluding Cygwin), @code{select} can only be
 called on descriptors created by the @code{socket} function, not on regular
 file descriptors.
 @item
-On Windows platforms (excluding Cygwin), error codes for @code{accept} are not
-placed in @code{errno}, and @code{WSAGetLastError} must be used instead.
+On Windows platforms (excluding Cygwin), error codes from this function
+are not placed in @code{errno}, and @code{WSAGetLastError} must be used
+instead.
 @item
 This function fails when the @code{nfds} argument is 0 on some platforms:
 Interix 3.5.

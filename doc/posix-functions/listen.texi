@@ -9,9 +9,9 @@ Gnulib module: listen
 Portability problems fixed by Gnulib:
 @itemize
 @item
-On Windows platforms (excluding Cygwin), error codes for @code{listen}
-are not placed in @code{errno}, and @code{WSAGetLastError} must be
-used instead.
+On Windows platforms (excluding Cygwin), error codes from this function
+are not placed in @code{errno}, and @code{WSAGetLastError} must be used
+instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

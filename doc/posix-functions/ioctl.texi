@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 On Windows platforms (excluding Cygwin), @code{ioctl} is called
-@code{ioctlsocket}, and error codes for this function are not placed in
+@code{ioctlsocket}, and error codes from this function are not placed in
 @code{errno}, and @code{WSAGetLastError} must be used instead.
 @item
 On glibc platforms, the second parameter is of type @code{unsigned long}

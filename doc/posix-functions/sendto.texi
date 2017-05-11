@@ -13,9 +13,9 @@ This function has the return type @code{int} instead of @code{ssize_t}
 on some platforms:
 OSF/1 5.1.
 @item
-On Windows platforms (excluding Cygwin), error codes for @code{sendto}
-are not placed in @code{errno}, and @code{WSAGetLastError} must be
-used instead.
+On Windows platforms (excluding Cygwin), error codes from this function
+are not placed in @code{errno}, and @code{WSAGetLastError} must be used
+instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -14,9 +14,9 @@ the @code{socket} function cannot be used in calls to @code{read},
 @code{write}, and @code{close}; you have to use @code{recv}, @code{send},
 @code{closesocket} in these cases instead.
 @item
-On Windows platforms (excluding Cygwin), error codes for @code{socket}
-are not placed in @code{errno}, and @code{WSAGetLastError} must be
-used instead.
+On Windows platforms (excluding Cygwin), error codes from this function
+are not placed in @code{errno}, and @code{WSAGetLastError} must be used
+instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:
