@@ -80,6 +80,10 @@
    first argument, not any possible gnulib override.  */
 # undef recv
 
+/* Here we need the select() function from Windows, because we pass bit masks
+   of SOCKETs, not bit masks of FDs.  */
+# undef select
+
 static BOOL IsConsoleHandle (HANDLE h)
 {
   DWORD mode;
