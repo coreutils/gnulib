@@ -53,6 +53,32 @@ initialize (void)
 }
 
 /* Converts a FILETIME to GMT time since 1970-01-01 00:00:00.  */
+#if _GL_WINDOWS_STAT_TIMESPEC
+struct timespec
+_gl_convert_FILETIME_to_timespec (const FILETIME *ft)
+{
+  struct timespec result;
+  /* FILETIME: <https://msdn.microsoft.com/en-us/library/ms724284.aspx> */
+  unsigned long long since_1601 =
+    ((unsigned long long) ft->dwHighDateTime << 32)
+    | (unsigned long long) ft->dwLowDateTime;
+  if (since_1601 == 0)
+    {
+      result.tv_sec = 0;
+      result.tv_nsec = 0;
+    }
+  else
+    {
+      /* Between 1601-01-01 and 1970-01-01 there were 280 normal years and 89
+         leap years, in total 134774 days.  */
+      unsigned long long since_1970 =
+        since_1601 - (unsigned long long) 134774 * (unsigned long long) 86400 * (unsigned long long) 10000000;
+      result.tv_sec = since_1970 / (unsigned long long) 10000000;
+      result.tv_nsec = (unsigned long) (since_1970 % (unsigned long long) 10000000) * 100;
+    }
+  return result;
+}
+#else
 time_t
 _gl_convert_FILETIME_to_POSIX (const FILETIME *ft)
 {
@@ -62,12 +88,16 @@ _gl_convert_FILETIME_to_POSIX (const FILETIME *ft)
     | (unsigned long long) ft->dwLowDateTime;
   if (since_1601 == 0)
     return 0;
-  /* Between 1601-01-01 and 1970-01-01 there were 280 normal years and 89 leap
-     years, in total 134774 days.  */
-  unsigned long long since_1970 =
-    since_1601 - (unsigned long long) 134774 * (unsigned long long) 86400 * (unsigned long long) 10000000;
-  return since_1970 / (unsigned long long) 10000000;
+  else
+    {
+      /* Between 1601-01-01 and 1970-01-01 there were 280 normal years and 89
+         leap years, in total 134774 days.  */
+      unsigned long long since_1970 =
+        since_1601 - (unsigned long long) 134774 * (unsigned long long) 86400 * (unsigned long long) 10000000;
+      return since_1970 / (unsigned long long) 10000000;
+    }
 }
+#endif
 
 /* Fill *BUF with information about the file designated by H.
    PATH is the file name, if known, otherwise NULL.
@@ -218,9 +248,15 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
          <https://msdn.microsoft.com/en-us/library/aa364953.aspx>
          <https://msdn.microsoft.com/en-us/library/aa364217.aspx>
          The latter requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA or higher.  */
+#if _GL_WINDOWS_STAT_TIMESPEC
+      buf->st_atim = _gl_convert_FILETIME_to_timespec (&info.ftLastAccessTime);
+      buf->st_mtim = _gl_convert_FILETIME_to_timespec (&info.ftLastWriteTime);
+      buf->st_ctim = _gl_convert_FILETIME_to_timespec (&info.ftCreationTime);
+#else
       buf->st_atime = _gl_convert_FILETIME_to_POSIX (&info.ftLastAccessTime);
       buf->st_mtime = _gl_convert_FILETIME_to_POSIX (&info.ftLastWriteTime);
       buf->st_ctime = _gl_convert_FILETIME_to_POSIX (&info.ftCreationTime);
+#endif
 
       return 0;
     }
@@ -245,9 +281,15 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
         }
       else
         buf->st_size = 0;
+#if _GL_WINDOWS_STAT_TIMESPEC
+      buf->st_atim.tv_sec = 0; buf->st_atim.tv_nsec = 0;
+      buf->st_mtim.tv_sec = 0; buf->st_mtim.tv_nsec = 0;
+      buf->st_ctim.tv_sec = 0; buf->st_ctim.tv_nsec = 0;
+#else
       buf->st_atime = 0;
       buf->st_mtime = 0;
       buf->st_ctime = 0;
+#endif
       return 0;
     }
   else

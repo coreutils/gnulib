@@ -108,7 +108,7 @@ struct stat
   blkcnt_t st_blocks;
 #  endif
 
-#  if 0
+#  if @WINDOWS_STAT_TIMESPEC@
   struct timespec st_atim;
   struct timespec st_mtim;
   struct timespec st_ctim;
@@ -118,10 +118,12 @@ struct stat
   time_t st_ctime;
 #  endif
 };
-#  if 0
+#  if @WINDOWS_STAT_TIMESPEC@
 #   define st_atime st_atim.tv_sec
 #   define st_mtime st_mtim.tv_sec
 #   define st_ctime st_ctim.tv_sec
+    /* Indicator, for gnulib internal purposes.  */
+#   define _GL_WINDOWS_STAT_TIMESPEC 1
 #  endif
 #  define GNULIB_defined_struct_stat 1
 # endif

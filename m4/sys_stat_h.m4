@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 29   -*- Autoconf -*-
+# sys_stat_h.m4 serial 30   -*- Autoconf -*-
 dnl Copyright (C) 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,14 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
 
   dnl Ensure the type mode_t gets defined.
   AC_REQUIRE([AC_TYPE_MODE_T])
+
+  dnl Whether to enable precise timestamps in 'struct stat'.
+  m4_ifdef([gl_WINDOWS_STAT_TIMESPEC], [
+    AC_REQUIRE([gl_WINDOWS_STAT_TIMESPEC])
+  ], [
+    WINDOWS_STAT_TIMESPEC=0
+  ])
+  AC_SUBST([WINDOWS_STAT_TIMESPEC])
 
   dnl Whether to override 'struct stat'.
   m4_ifdef([gl_LARGEFILE], [

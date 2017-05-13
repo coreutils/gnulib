@@ -264,9 +264,15 @@ rpl_stat (char const *name, struct stat *buf)
           buf->st_size = ((long long) info.nFileSizeHigh << 32) | (long long) info.nFileSizeLow;
 
         /* st_atime, st_mtime, st_ctime.  */
+# if _GL_WINDOWS_STAT_TIMESPEC
+        buf->st_atim = _gl_convert_FILETIME_to_timespec (&info.ftLastAccessTime);
+        buf->st_mtim = _gl_convert_FILETIME_to_timespec (&info.ftLastWriteTime);
+        buf->st_ctim = _gl_convert_FILETIME_to_timespec (&info.ftCreationTime);
+# else
         buf->st_atime = _gl_convert_FILETIME_to_POSIX (&info.ftLastAccessTime);
         buf->st_mtime = _gl_convert_FILETIME_to_POSIX (&info.ftLastWriteTime);
         buf->st_ctime = _gl_convert_FILETIME_to_POSIX (&info.ftCreationTime);
+# endif
 
         FindClose (h);
 

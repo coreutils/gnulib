@@ -18,7 +18,11 @@
 #define _STAT_W32_H 1
 
 /* Converts a FILETIME to GMT time since 1970-01-01 00:00:00.  */
+#if _GL_WINDOWS_STAT_TIMESPEC
+extern struct timespec _gl_convert_FILETIME_to_timespec (const FILETIME *ft);
+#else
 extern time_t _gl_convert_FILETIME_to_POSIX (const FILETIME *ft);
+#endif
 
 /* Fill *BUF with information about the file designated by H.
    PATH is the file name, if known, otherwise NULL.
