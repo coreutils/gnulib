@@ -37,4 +37,4 @@ glibc x32
 
 This module, together with the module @code{largefile}, also defines the type
 @code{off_t} to a 64-bit integer type on some platforms:
-mingw (except mingw64), MSVC 9.
+mingw, MSVC 9.

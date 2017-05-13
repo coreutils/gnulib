@@ -1,5 +1,5 @@
 Description:
-Use large files.
+Support for files larger than 2 GB.
 
 Files:
 m4/largefile.m4

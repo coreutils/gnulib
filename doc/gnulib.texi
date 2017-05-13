@@ -6323,12 +6323,15 @@ to POSIX that it can be treated like any other Unix-like platform.
 
 @menu
 * Libtool and Windows::
+* Large File Support::
 * Precise file timestamps on Windows::
 * Windows sockets::
 * Native Windows Support without MSVC Support::
 @end menu
 
 @include windows-libtool.texi
+
+@include largefile.texi
 
 @include windows-stat-timespec.texi
 
