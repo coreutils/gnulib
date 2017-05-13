@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 28   -*- Autoconf -*-
+# sys_stat_h.m4 serial 29   -*- Autoconf -*-
 dnl Copyright (C) 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -72,6 +72,7 @@ AC_DEFUN([gl_SYS_STAT_H_DEFAULTS],
   GNULIB_MKNODAT=0;     AC_SUBST([GNULIB_MKNODAT])
   GNULIB_STAT=0;        AC_SUBST([GNULIB_STAT])
   GNULIB_UTIMENSAT=0;   AC_SUBST([GNULIB_UTIMENSAT])
+  GNULIB_OVERRIDES_STRUCT_STAT=0; AC_SUBST([GNULIB_OVERRIDES_STRUCT_STAT])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_FCHMODAT=1;      AC_SUBST([HAVE_FCHMODAT])
   HAVE_FSTATAT=1;       AC_SUBST([HAVE_FSTATAT])
