@@ -6325,6 +6325,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Libtool and Windows::
 * Large File Support::
 * Precise file timestamps on Windows::
+* Avoiding the year 2038 problem::
 * Windows sockets::
 * Native Windows Support without MSVC Support::
 @end menu
@@ -6334,6 +6335,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include largefile.texi
 
 @include windows-stat-timespec.texi
+
+@include year2038.texi
 
 @include windows-sockets.texi
 
