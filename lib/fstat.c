@@ -27,12 +27,6 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WINDOWS_NATIVE
-# if _GL_WINDOWS_64_BIT_ST_SIZE
-#  undef stat /* avoid warning on mingw64 with _FILE_OFFSET_BITS=64 */
-#  define stat _stati64
-#  undef fstat /* avoid warning on mingw64 with _FILE_OFFSET_BITS=64 */
-#  define fstat _fstati64
-# endif
 #endif
 
 #if !defined WINDOWS_NATIVE

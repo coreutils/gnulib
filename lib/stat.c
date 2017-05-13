@@ -29,16 +29,6 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 # define WINDOWS_NATIVE
-# if _GL_WINDOWS_64_BIT_ST_SIZE
-#  undef stat /* avoid warning on mingw64 with _FILE_OFFSET_BITS=64 */
-#  define stat _stati64
-#  undef REPLACE_FUNC_STAT_FILE
-# elif REPLACE_FUNC_STAT_FILE
-/* mingw64 has a broken stat() function, based on _stat(), in libmingwex.a.
-   Bypass it.  */
-#  define stat _stat
-#  undef REPLACE_FUNC_STAT_FILE
-# endif
 #endif
 
 #if !defined WINDOWS_NATIVE

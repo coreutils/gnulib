@@ -18,22 +18,19 @@
 
 #include <config.h>
 
+#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+
 #include <sys/types.h>
 #include <sys/stat.h>
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
-# if _GL_WINDOWS_64_BIT_ST_SIZE
-#  undef stat /* avoid warning on mingw64 with _FILE_OFFSET_BITS=64 */
-#  define stat _stati64
-# endif
-# include <errno.h>
-# include <limits.h>
-# include <unistd.h>
-# include <windows.h>
+#include <errno.h>
+#include <limits.h>
+#include <unistd.h>
+#include <windows.h>
 
 /* Specification.  */
-# include "stat-w32.h"
+#include "stat-w32.h"
 
-# include "pathmax.h"
+#include "pathmax.h"
 
 /* GetFinalPathNameByHandle was introduced only in Windows Vista.  */
 typedef DWORD (WINAPI * GetFinalPathNameByHandleFuncType) (HANDLE hFile,
