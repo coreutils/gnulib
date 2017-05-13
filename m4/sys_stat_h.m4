@@ -1,4 +1,4 @@
-# sys_stat_h.m4 serial 30   -*- Autoconf -*-
+# sys_stat_h.m4 serial 31   -*- Autoconf -*-
 dnl Copyright (C) 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,18 +27,13 @@ AC_DEFUN([gl_HEADER_SYS_STAT_H],
   ])
   AC_SUBST([WINDOWS_STAT_TIMESPEC])
 
-  dnl Whether to override 'struct stat'.
+  dnl Whether to ensure that struct stat.st_size is 64-bit wide.
   m4_ifdef([gl_LARGEFILE], [
     AC_REQUIRE([gl_LARGEFILE])
   ], [
     WINDOWS_64_BIT_ST_SIZE=0
   ])
   AC_SUBST([WINDOWS_64_BIT_ST_SIZE])
-  if test $WINDOWS_64_BIT_ST_SIZE = 1; then
-    AC_DEFINE([_GL_WINDOWS_64_BIT_ST_SIZE], [1],
-      [Define to 1 if Gnulib overrides 'struct stat' on Windows so that
-       struct stat.st_size becomes 64-bit.])
-  fi
 
   dnl Define types that are supposed to be defined in <sys/types.h> or
   dnl <sys/stat.h>.
