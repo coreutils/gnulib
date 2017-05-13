@@ -32,13 +32,11 @@
 # if _GL_WINDOWS_64_BIT_ST_SIZE
 #  undef stat /* avoid warning on mingw64 with _FILE_OFFSET_BITS=64 */
 #  define stat _stati64
-#  define REPLACE_FUNC_STAT_DIR 1
 #  undef REPLACE_FUNC_STAT_FILE
 # elif REPLACE_FUNC_STAT_FILE
 /* mingw64 has a broken stat() function, based on _stat(), in libmingwex.a.
    Bypass it.  */
 #  define stat _stat
-#  define REPLACE_FUNC_STAT_DIR 1
 #  undef REPLACE_FUNC_STAT_FILE
 # endif
 #endif
@@ -71,15 +69,6 @@ orig_stat (const char *filename, struct stat *buf)
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 # include "stat-w32.h"
-#endif
-
-#if REPLACE_FUNC_STAT_DIR
-# include "pathmax.h"
-  /* The only known systems where REPLACE_FUNC_STAT_DIR is needed also
-     have a constant PATH_MAX.  */
-# ifndef PATH_MAX
-#  error "Please port this replacement to your platform"
-# endif
 #endif
 
 #ifdef WINDOWS_NATIVE
