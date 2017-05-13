@@ -200,6 +200,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::symlinkat, int,
                  (char const *, int, char const *));
 #endif
 
+#if GNULIB_TEST_TRUNCATE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::truncate, int, (const char *, off_t));
+#endif
+
 #if GNULIB_TEST_TTYNAME_R
 SIGNATURE_CHECK (GNULIB_NAMESPACE::ttyname_r, int,
                  (int fd, char *buf, size_t buflen));
