@@ -10,9 +10,9 @@ m4/fstat.m4
 Depends-on:
 sys_stat
 largefile
-pathmax         [test $REPLACE_STAT = 1]
-unistd          [test $REPLACE_STAT = 1]
-msvc-nothrow    [test $REPLACE_STAT = 1]
+pathmax         [test $REPLACE_FSTAT = 1]
+unistd          [test $REPLACE_FSTAT = 1]
+msvc-nothrow    [test $REPLACE_FSTAT = 1]
 
 configure.ac:
 gl_FUNC_FSTAT
