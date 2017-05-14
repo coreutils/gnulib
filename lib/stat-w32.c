@@ -20,10 +20,15 @@
 
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
 
+/* Ensure that <windows.h> defines FILE_ID_INFO.  */
+#undef _WIN32_WINNT
+#define _WIN32_WINNT _WIN32_WINNT_WIN8
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 #include <limits.h>
+#include <string.h>
 #include <unistd.h>
 #include <windows.h>
 
@@ -31,7 +36,16 @@
 #include "stat-w32.h"
 
 #include "pathmax.h"
+#include "verify.h"
 
+#if _GL_WINDOWS_STAT_INODES == 2
+/* GetFileInformationByHandleEx was introduced only in Windows Vista.  */
+typedef DWORD (WINAPI * GetFileInformationByHandleExFuncType) (HANDLE hFile,
+                                                               FILE_INFO_BY_HANDLE_CLASS fiClass,
+                                                               LPVOID lpBuffer,
+                                                               DWORD dwBufferSize);
+static GetFileInformationByHandleExFuncType GetFileInformationByHandleExFunc = NULL;
+#endif
 /* GetFinalPathNameByHandle was introduced only in Windows Vista.  */
 typedef DWORD (WINAPI * GetFinalPathNameByHandleFuncType) (HANDLE hFile,
                                                            LPTSTR lpFilePath,
@@ -46,8 +60,12 @@ initialize (void)
   HMODULE kernel32 = LoadLibrary ("kernel32.dll");
   if (kernel32 != NULL)
     {
+#if _GL_WINDOWS_STAT_INODES == 2
+      GetFileInformationByHandleExFunc =
+        (GetFileInformationByHandleExFuncType) GetProcAddress (kernel32, "GetFileInformationByHandleEx");
+#endif
       GetFinalPathNameByHandleFunc =
-	(GetFinalPathNameByHandleFuncType) GetProcAddress (kernel32, "GetFinalPathNameByHandleA");
+        (GetFinalPathNameByHandleFuncType) GetProcAddress (kernel32, "GetFinalPathNameByHandleA");
     }
   initialized = TRUE;
 }
@@ -137,10 +155,71 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
           return -1;
         }
 
+#if _GL_WINDOWS_STAT_INODES
+      /* st_ino can be determined through
+         GetFileInformationByHandle
+         <https://msdn.microsoft.com/en-us/library/aa364952.aspx>
+         <https://msdn.microsoft.com/en-us/library/aa363788.aspx>
+         as 64 bits, or through
+         GetFileInformationByHandleEx with argument FileIdInfo
+         <https://msdn.microsoft.com/en-us/library/aa364953.aspx>
+         <https://msdn.microsoft.com/en-us/library/hh802691.aspx>
+         as 128 bits.
+         The latter requires -D_WIN32_WINNT=_WIN32_WINNT_WIN8 or higher.  */
+      /* Experiments show that GetFileInformationByHandleEx does not provide
+         much more information than GetFileInformationByHandle:
+           * The dwVolumeSerialNumber from GetFileInformationByHandle is equal
+             to the low 32 bits of the 64-bit VolumeSerialNumber from
+             GetFileInformationByHandleEx, and is apparently sufficient for
+             identifying the device.
+           * The nFileIndex from GetFileInformationByHandle is equal to the low
+             64 bits of the 128-bit FileId from GetFileInformationByHandleEx,
+             and the high 64 bits of this 128-bit FileId are zero.
+           * On a FAT file system, GetFileInformationByHandleEx fails with error
+             ERROR_INVALID_PARAMETER, whereas GetFileInformationByHandle
+             succeeds.
+           * On a CIFS/SMB file system, GetFileInformationByHandleEx fails with
+             error ERROR_INVALID_LEVEL, whereas GetFileInformationByHandle
+             succeeds.  */
+# if _GL_WINDOWS_STAT_INODES == 2
+      if (GetFileInformationByHandleExFunc != NULL)
+        {
+          FILE_ID_INFO id;
+          if (GetFileInformationByHandleExFunc (h, FileIdInfo, &id, sizeof (id)))
+            {
+              buf->st_dev = id.VolumeSerialNumber;
+              verify (sizeof (ino_t) == sizeof (id.FileId));
+              memcpy (&buf->st_ino, &id.FileId, sizeof (ino_t));
+              goto ino_done;
+            }
+          else
+            {
+              switch (GetLastError ())
+                {
+                case ERROR_INVALID_PARAMETER: /* older Windows version, or FAT */
+                case ERROR_INVALID_LEVEL: /* CIFS/SMB file system */
+                  goto fallback;
+                default:
+                  goto failed;
+                }
+            }
+        }
+     fallback: ;
+      /* Fallback for older Windows versions.  */
+      buf->st_dev = info.dwVolumeSerialNumber;
+      buf->st_ino._gl_ino[0] = ((ULONGLONG) info.nFileIndexHigh << 32) | (ULONGLONG) info.nFileIndexLow;
+      buf->st_ino._gl_ino[1] = 0;
+     ino_done: ;
+# else /* _GL_WINDOWS_STAT_INODES == 1 */
+      buf->st_dev = info.dwVolumeSerialNumber;
+      buf->st_ino = ((ULONGLONG) info.nFileIndexHigh << 32) | (ULONGLONG) info.nFileIndexLow;
+# endif
+#else
       /* st_ino is not wide enough for identifying a file on a device.
          Without st_ino, st_dev is pointless.  */
       buf->st_dev = 0;
       buf->st_ino = 0;
+#endif
 
       /* st_mode.  */
       unsigned int mode =
@@ -263,7 +342,11 @@ _gl_fstat_by_handle (HANDLE h, const char *path, struct stat *buf)
   else if (type == FILE_TYPE_CHAR || type == FILE_TYPE_PIPE)
     {
       buf->st_dev = 0;
+#if _GL_WINDOWS_STAT_INODES == 2
+      buf->st_ino._gl_ino[0] = buf->st_ino._gl_ino[1] = 0;
+#else
       buf->st_ino = 0;
+#endif
       buf->st_mode = (type == FILE_TYPE_PIPE ? _S_IFIFO : _S_IFCHR);
       buf->st_nlink = 1;
       buf->st_uid = 0;

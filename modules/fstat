@@ -12,6 +12,7 @@ sys_stat
 largefile
 pathmax         [test $REPLACE_FSTAT = 1]
 unistd          [test $REPLACE_FSTAT = 1]
+verify          [test $REPLACE_FSTAT = 1]
 msvc-nothrow    [test $REPLACE_FSTAT = 1]
 
 configure.ac:

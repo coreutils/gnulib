@@ -6324,6 +6324,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 @menu
 * Libtool and Windows::
 * Large File Support::
+* Inode numbers on Windows::
 * Precise file timestamps on Windows::
 * Avoiding the year 2038 problem::
 * Windows sockets::
@@ -6333,6 +6334,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include windows-libtool.texi
 
 @include largefile.texi
+
+@include windows-stat-inodes.texi
 
 @include windows-stat-timespec.texi
 

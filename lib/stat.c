@@ -176,134 +176,160 @@ rpl_stat (char const *name, struct stat *buf)
      UNC root directories (e.g. '\\server\share').
      The second approach fails for some system files (e.g. 'C:\pagefile.sys'
      and 'C:\hiberfil.sys'): ERROR_SHARING_VIOLATION.
-     So we use the first approach for nearly all files, and the second one
-     only for root and UNC root directories.  */
+     The second approach gives more information (in particular, correct
+     st_dev, st_ino, st_nlink fields).
+     So we use the second approach and, as a fallback except for root and
+     UNC root directories, also the first approach.  */
   {
     int ret;
-    if (!((rlen == drive_prefix_len + 1 && ISSLASH (rname[drive_prefix_len]))
-          || is_unc_root (rname)))
-      {
-        /* Approach based on the directory entry.  */
 
-        if (strchr (rname, '?') != NULL || strchr (rname, '*') != NULL)
-          {
-            /* Other Windows API functions would fail with error
-               ERROR_INVALID_NAME.  */
-            if (malloca_rname != NULL)
-              freea (malloca_rname);
-            errno = ENOENT;
-            return -1;
-          }
+    {
+      /* Approach based on the file.  */
 
-        /* Get the details about the directory entry.  */
-        WIN32_FIND_DATA info;
-        HANDLE h = FindFirstFile (rname, &info);
-        if (h == INVALID_HANDLE_VALUE)
-          goto failed;
+      /* Open a handle to the file.
+         CreateFile
+         <https://msdn.microsoft.com/en-us/library/aa363858.aspx>
+         <https://msdn.microsoft.com/en-us/library/aa363874.aspx>  */
+      HANDLE h =
+        CreateFile (rname,
+                    FILE_READ_ATTRIBUTES,
+                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                    NULL,
+                    OPEN_EXISTING,
+                    /* FILE_FLAG_POSIX_SEMANTICS (treat file names that differ only
+                       in case as different) makes sense only when applied to *all*
+                       filesystem operations.  */
+                    FILE_FLAG_BACKUP_SEMANTICS /* | FILE_FLAG_POSIX_SEMANTICS */,
+                    NULL);
+      if (h != INVALID_HANDLE_VALUE)
+        {
+          ret = _gl_fstat_by_handle (h, rname, buf);
+          CloseHandle (h);
+          goto done;
+        }
+    }
 
-        /* Test for error conditions before starting to fill *buf.  */
-        if (sizeof (buf->st_size) <= 4 && info.nFileSizeHigh > 0)
-          {
-            FindClose (h);
-            if (malloca_rname != NULL)
-              freea (malloca_rname);
-            errno = EOVERFLOW;
-            return -1;
-          }
+    /* Test for root and UNC root directories.  */
+    if ((rlen == drive_prefix_len + 1 && ISSLASH (rname[drive_prefix_len]))
+        || is_unc_root (rname))
+      goto failed;
 
-        /* st_ino is not wide enough for identifying a file on a device.
-           Without st_ino, st_dev is pointless.  */
-        buf->st_dev = 0;
-        buf->st_ino = 0;
+    /* Fallback.  */
+    {
+      /* Approach based on the directory entry.  */
 
-        /* st_mode.  */
-        unsigned int mode =
-          /* XXX How to handle FILE_ATTRIBUTE_REPARSE_POINT ?  */
-          ((info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? _S_IFDIR | S_IEXEC_UGO : _S_IFREG)
-          | S_IREAD_UGO
-          | ((info.dwFileAttributes & FILE_ATTRIBUTE_READONLY) ? 0 : S_IWRITE_UGO);
-        if (!(info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
-          {
-            /* Determine whether the file is executable by looking at the file
-               name suffix.  */
-            if (info.nFileSizeHigh > 0 || info.nFileSizeLow > 0)
-              {
-                const char *last_dot = NULL;
-                const char *p;
-                for (p = info.cFileName; *p != '\0'; p++)
-                  if (*p == '.')
-                    last_dot = p;
-                if (last_dot != NULL)
-                  {
-                    const char *suffix = last_dot + 1;
-                    if (_stricmp (suffix, "exe") == 0
-                        || _stricmp (suffix, "bat") == 0
-                        || _stricmp (suffix, "cmd") == 0
-                        || _stricmp (suffix, "com") == 0)
-                      mode |= S_IEXEC_UGO;
-                  }
-              }
-          }
-        buf->st_mode = mode;
+      if (strchr (rname, '?') != NULL || strchr (rname, '*') != NULL)
+        {
+          /* Other Windows API functions would fail with error
+             ERROR_INVALID_NAME.  */
+          if (malloca_rname != NULL)
+            freea (malloca_rname);
+          errno = ENOENT;
+          return -1;
+        }
 
-        /* st_nlink.  Ignore hard links here.  */
-        buf->st_nlink = 1;
+      /* Get the details about the directory entry.  This can be done through
+         FindFirstFile
+         <https://msdn.microsoft.com/en-us/library/aa364418.aspx>
+         <https://msdn.microsoft.com/en-us/library/aa365740.aspx>
+         or through
+         FindFirstFileEx with argument FindExInfoBasic
+         <https://msdn.microsoft.com/en-us/library/aa364419.aspx>
+         <https://msdn.microsoft.com/en-us/library/aa364415.aspx>
+         <https://msdn.microsoft.com/en-us/library/aa365740.aspx>  */
+      WIN32_FIND_DATA info;
+      HANDLE h = FindFirstFile (rname, &info);
+      if (h == INVALID_HANDLE_VALUE)
+        goto failed;
 
-        /* There's no easy way to map the Windows SID concept to an integer.  */
-        buf->st_uid = 0;
-        buf->st_gid = 0;
+      /* Test for error conditions before starting to fill *buf.  */
+      if (sizeof (buf->st_size) <= 4 && info.nFileSizeHigh > 0)
+        {
+          FindClose (h);
+          if (malloca_rname != NULL)
+            freea (malloca_rname);
+          errno = EOVERFLOW;
+          return -1;
+        }
 
-        /* st_rdev is irrelevant for normal files and directories.  */
-        buf->st_rdev = 0;
-
-        /* st_size.  */
-        if (sizeof (buf->st_size) <= 4)
-          /* Range check already done above.  */
-          buf->st_size = info.nFileSizeLow;
-        else
-          buf->st_size = ((long long) info.nFileSizeHigh << 32) | (long long) info.nFileSizeLow;
-
-        /* st_atime, st_mtime, st_ctime.  */
-# if _GL_WINDOWS_STAT_TIMESPEC
-        buf->st_atim = _gl_convert_FILETIME_to_timespec (&info.ftLastAccessTime);
-        buf->st_mtim = _gl_convert_FILETIME_to_timespec (&info.ftLastWriteTime);
-        buf->st_ctim = _gl_convert_FILETIME_to_timespec (&info.ftCreationTime);
+# if _GL_WINDOWS_STAT_INODES
+      buf->st_dev = 0;
+#  if _GL_WINDOWS_STAT_INODES == 2
+      buf->st_ino._gl_ino[0] = buf->st_ino._gl_ino[1] = 0;
+#  else /* _GL_WINDOWS_STAT_INODES == 1 */
+      buf->st_ino = 0;
+#  endif
 # else
-        buf->st_atime = _gl_convert_FILETIME_to_POSIX (&info.ftLastAccessTime);
-        buf->st_mtime = _gl_convert_FILETIME_to_POSIX (&info.ftLastWriteTime);
-        buf->st_ctime = _gl_convert_FILETIME_to_POSIX (&info.ftCreationTime);
+      /* st_ino is not wide enough for identifying a file on a device.
+         Without st_ino, st_dev is pointless.  */
+      buf->st_dev = 0;
+      buf->st_ino = 0;
 # endif
 
-        FindClose (h);
+      /* st_mode.  */
+      unsigned int mode =
+        /* XXX How to handle FILE_ATTRIBUTE_REPARSE_POINT ?  */
+        ((info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? _S_IFDIR | S_IEXEC_UGO : _S_IFREG)
+        | S_IREAD_UGO
+        | ((info.dwFileAttributes & FILE_ATTRIBUTE_READONLY) ? 0 : S_IWRITE_UGO);
+      if (!(info.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+        {
+          /* Determine whether the file is executable by looking at the file
+             name suffix.  */
+          if (info.nFileSizeHigh > 0 || info.nFileSizeLow > 0)
+            {
+              const char *last_dot = NULL;
+              const char *p;
+              for (p = info.cFileName; *p != '\0'; p++)
+                if (*p == '.')
+                  last_dot = p;
+              if (last_dot != NULL)
+                {
+                  const char *suffix = last_dot + 1;
+                  if (_stricmp (suffix, "exe") == 0
+                      || _stricmp (suffix, "bat") == 0
+                      || _stricmp (suffix, "cmd") == 0
+                      || _stricmp (suffix, "com") == 0)
+                    mode |= S_IEXEC_UGO;
+                }
+            }
+        }
+      buf->st_mode = mode;
 
-        ret = 0;
-      }
-    else
-      {
-        /* Approach based on the file.  */
+      /* st_nlink.  Ignore hard links here.  */
+      buf->st_nlink = 1;
 
-        /* Open a handle to the file.
-           CreateFile
-           <https://msdn.microsoft.com/en-us/library/aa363858.aspx>
-           <https://msdn.microsoft.com/en-us/library/aa363874.aspx>  */
-        HANDLE h =
-          CreateFile (rname,
-                      FILE_READ_ATTRIBUTES,
-                      FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-                      NULL,
-                      OPEN_EXISTING,
-                      /* FILE_FLAG_POSIX_SEMANTICS (treat file names that differ only
-                         in case as different) makes sense only when applied to *all*
-                         filesystem operations.  */
-                      FILE_FLAG_BACKUP_SEMANTICS /* | FILE_FLAG_POSIX_SEMANTICS */,
-                      NULL);
-        if (h == INVALID_HANDLE_VALUE)
-          goto failed;
+      /* There's no easy way to map the Windows SID concept to an integer.  */
+      buf->st_uid = 0;
+      buf->st_gid = 0;
 
-        ret = _gl_fstat_by_handle (h, rname, buf);
-        CloseHandle (h);
-      }
+      /* st_rdev is irrelevant for normal files and directories.  */
+      buf->st_rdev = 0;
 
+      /* st_size.  */
+      if (sizeof (buf->st_size) <= 4)
+        /* Range check already done above.  */
+        buf->st_size = info.nFileSizeLow;
+      else
+        buf->st_size = ((long long) info.nFileSizeHigh << 32) | (long long) info.nFileSizeLow;
+
+      /* st_atime, st_mtime, st_ctime.  */
+# if _GL_WINDOWS_STAT_TIMESPEC
+      buf->st_atim = _gl_convert_FILETIME_to_timespec (&info.ftLastAccessTime);
+      buf->st_mtim = _gl_convert_FILETIME_to_timespec (&info.ftLastWriteTime);
+      buf->st_ctim = _gl_convert_FILETIME_to_timespec (&info.ftCreationTime);
+# else
+      buf->st_atime = _gl_convert_FILETIME_to_POSIX (&info.ftLastAccessTime);
+      buf->st_mtime = _gl_convert_FILETIME_to_POSIX (&info.ftLastWriteTime);
+      buf->st_ctime = _gl_convert_FILETIME_to_POSIX (&info.ftCreationTime);
+# endif
+
+      FindClose (h);
+
+      ret = 0;
+    }
+
+   done:
     if (ret >= 0 && check_dir && !S_ISDIR (buf->st_mode))
       {
         errno = ENOTDIR;

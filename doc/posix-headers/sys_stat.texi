@@ -5,7 +5,7 @@ POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/based
 
 Gnulib module: sys_stat
 
-Portability problems fixed by Gnulib:
+Portability problems fixed by Gnulib module @code{sys_stat}:
 @itemize
 @item
 The type @code{mode_t} is not defined on some platforms:
@@ -31,13 +31,17 @@ On some platforms, @code{struct stat} does not include @code{st_atim},
 @samp{stat-time} for accessors to portably get at subsecond resolution.
 @end itemize
 
+Portability problems fixed by Gnulib module @code{sys_stat}, together with module @code{windows-stat-inodes}:
+@itemize
+@item
+On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
+@end itemize
+
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 The macro @code{S_IFBLK} is missing on some platforms:
 MSVC 9.
-@item
-On Windows platforms (excluding Cygwin), @code{st_ino} is always 0.
 @item
 On OpenVMS, @code{st_ino} is an array of three @code{ino_t} values,
 not a single value.
