@@ -5,6 +5,7 @@ Files:
 lib/same-inode.h
 
 Depends-on:
+sys_types
 
 configure.ac:
 
