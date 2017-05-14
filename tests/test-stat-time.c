@@ -22,8 +22,10 @@
 
 #include <fcntl.h>
 #include <signal.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "macros.h"
 
@@ -31,6 +33,25 @@
 #include "nap.h"
 
 enum { NFILES = 4 };
+
+static char filename_stamp1[50];
+static char filename_testfile[50];
+static char filename_stamp2[50];
+static char filename_stamp3[50];
+
+/* Use file names that are different at each run.
+   This is necessary for test_birthtime() to pass on native Windows:
+   On this platform, the file system apparently remembers the creation time
+   of a file even after it is removed and created anew.  */
+static void
+initialize_filenames (void)
+{
+  long t = (long) time (NULL);
+  sprintf (filename_stamp1,   "t-stt-%ld-stamp1", t);
+  sprintf (filename_testfile, "t-stt-%ld-testfile", t);
+  sprintf (filename_stamp2,   "t-stt-%ld-stamp2", t);
+  sprintf (filename_stamp3,   "t-stt-%ld-stamp3", t);
+}
 
 static int
 force_unlink (const char *filename)
@@ -45,11 +66,10 @@ static void
 cleanup (int sig)
 {
   /* Remove temporary files.  */
-  force_unlink ("t-stt-stamp1");
-  force_unlink ("t-stt-testfile");
-  force_unlink ("t-stt-stamp2");
-  force_unlink ("t-stt-renamed");
-  force_unlink ("t-stt-stamp3");
+  force_unlink (filename_stamp1);
+  force_unlink (filename_testfile);
+  force_unlink (filename_stamp2);
+  force_unlink (filename_stamp3);
 
   if (sig != 0)
     _exit (1);
@@ -87,20 +107,20 @@ prepare_test (struct stat *statinfo, struct timespec *modtimes)
 {
   int i;
 
-  create_file ("t-stt-stamp1");
+  create_file (filename_stamp1);
   nap ();
-  create_file ("t-stt-testfile");
+  create_file (filename_testfile);
   nap ();
-  create_file ("t-stt-stamp2");
+  create_file (filename_stamp2);
   nap ();
-  ASSERT (chmod ("t-stt-testfile", 0400) == 0);
+  ASSERT (chmod (filename_testfile, 0400) == 0);
   nap ();
-  create_file ("t-stt-stamp3");
+  create_file (filename_stamp3);
 
-  do_stat ("t-stt-stamp1",  &statinfo[0]);
-  do_stat ("t-stt-testfile", &statinfo[1]);
-  do_stat ("t-stt-stamp2",  &statinfo[2]);
-  do_stat ("t-stt-stamp3",  &statinfo[3]);
+  do_stat (filename_stamp1,   &statinfo[0]);
+  do_stat (filename_testfile, &statinfo[1]);
+  do_stat (filename_stamp2,   &statinfo[2]);
+  do_stat (filename_stamp3,   &statinfo[3]);
 
   /* Now use our access functions. */
   for (i = 0; i < NFILES; ++i)
@@ -160,7 +180,7 @@ test_ctime (const struct stat *statinfo)
   if (statinfo[0].st_mtime != statinfo[0].st_ctime)
     return;
 
-  /* mtime(stamp2) < ctime(renamed) */
+  /* mtime(stamp2) < ctime(testfile) */
   ASSERT (statinfo[2].st_mtime < statinfo[1].st_ctime
           || (statinfo[2].st_mtime == statinfo[1].st_ctime
               && (get_stat_mtime_ns (&statinfo[2])
@@ -183,11 +203,11 @@ test_birthtime (const struct stat *statinfo,
         return;
     }
 
-  /* mtime(stamp1) < birthtime(renamed) */
+  /* mtime(stamp1) < birthtime(testfile) */
   ASSERT (modtimes[0].tv_sec < birthtimes[1].tv_sec
           || (modtimes[0].tv_sec == birthtimes[1].tv_sec
               && modtimes[0].tv_nsec < birthtimes[1].tv_nsec));
-  /* birthtime(renamed) < mtime(stamp2) */
+  /* birthtime(testfile) < mtime(stamp2) */
   ASSERT (birthtimes[1].tv_sec < modtimes[2].tv_sec
           || (birthtimes[1].tv_sec == modtimes[2].tv_sec
               && birthtimes[1].tv_nsec < modtimes[2].tv_nsec));
@@ -199,6 +219,8 @@ main (void)
   struct stat statinfo[NFILES];
   struct timespec modtimes[NFILES];
   struct timespec birthtimes[NFILES];
+
+  initialize_filenames ();
 
 #ifdef SIGHUP
   signal (SIGHUP, cleanup);
