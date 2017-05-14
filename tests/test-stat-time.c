@@ -42,7 +42,9 @@ static char filename_stamp3[50];
 /* Use file names that are different at each run.
    This is necessary for test_birthtime() to pass on native Windows:
    On this platform, the file system apparently remembers the creation time
-   of a file even after it is removed and created anew.  */
+   of a file even after it is removed and created anew.  See
+   "Windows NT Contains File System Tunneling Capabilities"
+   <https://support.microsoft.com/en-us/help/172190/>  */
 static void
 initialize_filenames (void)
 {
