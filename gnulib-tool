@@ -3571,9 +3571,18 @@ func_emit_lib_Makefile_am ()
   fi
   if $gnu_make; then
     echo "# Start of GNU Make output."
-    echo 'gl_EARLY;gl_INIT' \
-      | ${AUTOCONF} -t 'AC_SUBST:$1 = @$1@' "$configure_ac" \
-      | LC_ALL=C sort -u
+
+    # Put autoconf output into a temporary file, so that its exit status
+    # can be checked from the shell.  Signal any error by putting a
+    # syntax error into the output makefile.
+    ${AUTOCONF} -t 'AC_SUBST:$1 = @$1@' "$configure_ac" \
+                >"$tmp"/makeout 2>"$tmp"/makeout2 &&
+      LC_ALL=C sort -u "$tmp"/makeout || {
+        echo "== gnulib-tool GNU Make output failed as follows =="
+        sed 's/^/# stderr: /' "$tmp"/makeout2
+      }
+    rm -f "$tmp"/makeout "$tmp"/makeout2
+
     echo "# End of GNU Make output."
   else
     echo "# No GNU Make output."
