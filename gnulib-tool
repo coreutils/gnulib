@@ -3828,8 +3828,8 @@ func_emit_tests_Makefile_am ()
                 -e "$sed_transform_check_PROGRAMS" \
                 -e "$sed_replace_include_guard_prefix"
           if $use_libtests && test "$module" = 'alloca'; then
-            echo "libtests_a_LIBADD += @${perhapsLT}ALLOCA@"
-            echo "libtests_a_DEPENDENCIES += @${perhapsLT}ALLOCA@"
+            echo "libtests_a_LIBADD += @ALLOCA@"
+            echo "libtests_a_DEPENDENCIES += @ALLOCA@"
           fi
         } > "$tmp"/amsnippet
         # Skip the contents if it's entirely empty.
