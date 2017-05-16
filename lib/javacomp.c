@@ -525,7 +525,10 @@ get_classfile_version (const char *compiled_file_name)
           /* Verify the class file signature.  */
           if (header[0] == 0xCA && header[1] == 0xFE
               && header[2] == 0xBA && header[3] == 0xBE)
-            return header[7];
+            {
+              close (fd);
+              return header[7];
+            }
         }
       close (fd);
     }
