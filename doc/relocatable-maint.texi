@@ -88,6 +88,9 @@ bindtextdomain (PACKAGE, relocate (LOCALEDIR));
 
 The prototype for this function is in @file{relocatable.h}.
 
+There is also a variant of this function, named @code{relocate2}, that
+makes it easy to reclaim the memory allocated by the call.
+
 @item
 The @code{set_program_name} function can also configure some
 additional libraries to relocate files that they access, by defining

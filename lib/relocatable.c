@@ -573,4 +573,17 @@ relocate (const char *pathname)
   return pathname;
 }
 
+/* Returns the pathname, relocated according to the current installation
+   directory.
+   This function sets *ALLOCATEDP to the allocated memory, or to NULL if
+   no memory allocation occurs.  So that, after you're done with the return
+   value, to reclaim allocated memory, you can do: free (*ALLOCATEDP).  */
+const char *
+relocate2 (const char *pathname, char **allocatedp)
+{
+  const char *result = relocate (pathname);
+  *allocatedp = (result != pathname ? (char *) result : NULL);
+  return result;
+}
+
 #endif

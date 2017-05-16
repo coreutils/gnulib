@@ -23,11 +23,13 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #if ENABLE_RELOCATABLE
 # include "relocatable.h"
 #else
 # define relocate(pathname) (pathname)
+# define relocate2(pathname,allocatedp) (*(allocatedp) = NULL, (pathname))
 #endif
 
 #include "javaexec.h"
@@ -106,7 +108,8 @@ char *
 javaexec_version (void)
 {
   const char *class_name = "javaversion";
-  const char *pkgdatadir = relocate (PKGDATADIR);
+  char *malloc_pkgdatadir;
+  const char *pkgdatadir = relocate2 (PKGDATADIR, &malloc_pkgdatadir);
   const char *args[1];
   struct locals locals;
 
@@ -115,5 +118,6 @@ javaexec_version (void)
   execute_java_class (class_name, &pkgdatadir, 1, true, NULL, args,
                       false, false, execute_and_read_line, &locals);
 
+  free (malloc_pkgdatadir);
   return locals.line;
 }
