@@ -1,6 +1,7 @@
 Files:
 tests/test-sigpipe.c
 tests/test-sigpipe.sh
+tests/macros.h
 
 Depends-on:
 write
