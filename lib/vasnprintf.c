@@ -118,6 +118,14 @@
 # include "fpucw.h"
 #endif
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 /* Default parameters.  */
 #ifndef VASNPRINTF
 # if WIDE_CHAR_VERSION
@@ -4837,7 +4845,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                     *fbp++ = 'l';
 # endif
 #endif
-                    /*FALLTHROUGH*/
+                    FALLTHROUGH;
                   case TYPE_LONGINT:
                   case TYPE_ULONGINT:
 #if HAVE_WINT_T

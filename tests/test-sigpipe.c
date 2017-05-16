@@ -26,6 +26,8 @@ int s = SIGPIPE;
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 static void
 handler (int sig)
 {
@@ -57,7 +59,7 @@ main (int argc, char **argv)
             case 'B': /* The write() call should have failed with EPIPE.  */
               if (ret < 0 && errno == EPIPE)
                 exit (0);
-              /*FALLTHROUGH*/
+              FALLTHROUGH;
             case 'A': /* The process should silently die.  */
             case 'C': /* The handler should have been called.  */
               fprintf (stderr, "write() returned %d with error %d.\n", ret, errno);

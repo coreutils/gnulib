@@ -6,7 +6,14 @@
 -Waggregate-return			obsolescent
 -Waliasing				fortran
 -Walign-commons				fortran
+-Waligned-new				c++
+-Waligned-new=[none|global|all]		c++
+-Walloca				we like alloca in small doses
+-Walloca-larger-than=<number>		FIXME: choose something sane?
+-Walloc-size-larger-than=		handled specially by gl_MANYWARN_ALL_GCC
+-Walloc-zero				Gnulib fixes this problem
 -Wampersand				fortran
+-Wargument-mismatch			fortran
 -Warray-bounds				covered by -Warray-bounds=
 -Warray-bounds=				handled specially by gl_MANYWARN_ALL_GCC
 -Warray-temporaries			fortran
@@ -15,6 +22,8 @@
 -Wc++0x-compat				c++
 -Wc++11-compat				c++
 -Wc++14-compat				c++
+-Wc++17-compat				c++
+-Wc++1z-compat				c++
 -Wc-binding-type			fortran
 -Wc90-c99-compat			c compatibility
 -Wc99-c11-compat			c compatibility
@@ -35,8 +44,14 @@
 -Wfloat-equal				FIXME maybe? borderline.  some will want this
 -Wformat				covered by -Wformat=2
 -Wformat=				gcc --help=warnings artifact
+-Wformat-overflow			covered by -Wformat-overflow=2
+-Wformat-overflow=			handled specially by gl_MANYWARN_ALL_GCC
+-Wformat-truncation			covered by -Wformat-truncation=2
+-Wformat-truncation=			handled specially by gl_MANYWARN_ALL_GCC
 -Wframe-larger-than=<number>		FIXME: choose something sane?
 -Wfunction-elimination			fortran
+-Wimplicit-fallthrough			covered by -Wimplicit-fallthrough=2
+-Wimplicit-fallthrough=			handled specially by gl_MANYWARN_ALL_GCC
 -Wimplicit-interface			fortran
 -Wimplicit-procedure			fortran
 -Winherited-variadic-ctor		c++
@@ -55,10 +70,11 @@
 -Wmultiple-inheritance			c++ and objc++
 -Wnamespaces				c++
 -Wnoexcept				c++
+-Wnoexcept-type				c++
 -Wnon-template-friend			c++
 -Wnon-virtual-dtor			c++
 -Wnormalized				covered by -Wnormalized=
--Wnormalized=<none|id|nfc|nfkc>		handled specially by gl_MANYWARN_ALL_GCC
+-Wnormalized=[none|id|nfc|nfkc]		handled specially by gl_MANYWARN_ALL_GCC
 -Wold-style-cast			c++ and objc++
 -Woverloaded-virtual			c++
 -Woverride-init-side-effects		c++ and objc++
@@ -73,20 +89,28 @@
 -Wrealloc-lhs				fortran
 -Wrealloc-lhs-all			fortran
 -Wredundant-decls			FIXME maybe? many _gl_cxxalias_dummy FPs
+-Wregister				c++ and objc++
 -Wreorder				c++ and objc++
 -Wselector				objc and objc++
 -Wshadow-ivar				objc
+-Wshadow=compatible-local		covered by -Wshadow
+-Wshadow-compatible-local		covered by -Wshadow
+-Wshadow=global				covered by -Wshadow
+-Wshadow=local				covered by -Wshadow
+-Wshadow-local				covered by -Wshadow
 -Wshift-overflow			covered by -Wshift-overflow=2
 -Wshift-overflow=			gcc --help=warnings artifact
 -Wsign-compare				FIXME maybe? borderline.  some will want this
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wsign-promo				c++ and objc++
 -Wsized-deallocation			c++ and objc++
--Wstack-usage=				FIXME: choose something sane?
+-Wstack-usage=<number>			FIXME: choose something sane?
 -Wstrict-aliasing=			FIXME: choose something sane?
 -Wstrict-null-sentinel			c++ and objc++
 -Wstrict-overflow=			FIXME: choose something sane?
 -Wstrict-selector-match			objc and objc++
+-Wstringop-overflow			covered by -Wstringop-overflow=
+-Wstringop-overflow=			handled specially by gl_MANYWARN_ALL_GCC
 -Wsubobject-linkage			c++ and objc++
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
@@ -100,6 +124,7 @@
 -Wtraditional-conversion		obsolescent
 -Wundeclared-selector			objc and objc++
 -Wundef					FIXME maybe? too many false positives
+-Wundefined-do-loop			fortran
 -Wunderflow				fortran
 -Wunreachable-code			obsolescent no-op
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
@@ -110,6 +135,7 @@
 -Wuseless-cast				c++ and objc++
 -Wvirtual-inheritance			c++
 -Wvirtual-move-assign			c++
+-Wvla-larger-than=<number>		handled specially by gl_MANYWARN_ALL_GCC
 -Wzero-as-null-pointer-constant		c++ and objc++
 -Wzerotrip				fortran
 -frequire-return-statement		go

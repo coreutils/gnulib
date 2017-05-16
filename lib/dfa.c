@@ -54,6 +54,14 @@ isasciidigit (char c)
 #include "xalloc.h"
 #include "localeinfo.h"
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 #ifndef MIN
 # define MIN(a,b) ((a) < (b) ? (a) : (b))
 #endif
@@ -1614,10 +1622,10 @@ addtok_mb (struct dfa *dfa, token t, char mbprop)
 
     case BACKREF:
       dfa->fast = false;
-      /* fallthrough */
+      FALLTHROUGH;
     default:
       dfa->nleaves++;
-      /* fallthrough */
+      FALLTHROUGH;
     case EMPTY:
       dfa->parse.depth++;
       break;
@@ -2414,8 +2422,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
                 copy (&merged, &d->follows[pos[j].index]);
               }
           }
-          /* fallthrough */
-
+          FALLTHROUGH;
         case QMARK:
           /* A QMARK or STAR node is automatically nullable.  */
           if (d->tokens[i] != PLUS)
@@ -3331,8 +3338,7 @@ dfa_supported (struct dfa const *d)
         case NOTLIMWORD:
           if (!d->localeinfo.multibyte)
             continue;
-          /* fallthrough */
-
+          FALLTHROUGH;
         case BACKREF:
         case MBCSET:
           return false;
@@ -3441,7 +3447,7 @@ dfassbuild (struct dfa *d)
               sup->tokens[j++] = EMPTY;
               break;
             }
-          /* fallthrough */
+          FALLTHROUGH;
         default:
           sup->tokens[j++] = d->tokens[i];
           if ((0 <= d->tokens[i] && d->tokens[i] < NOTCHAR)

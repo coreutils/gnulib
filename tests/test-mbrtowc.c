@@ -75,7 +75,7 @@ main (int argc, char *argv[])
         default:
           if (! (c && 1 < argc && argv[1][0] == '5'))
             break;
-          /* Fall through.  */
+          FALLTHROUGH;
         case '\t': case '\v': case '\f':
         case ' ': case '!': case '"': case '#': case '%':
         case '&': case '\'': case '(': case ')': case '*':
