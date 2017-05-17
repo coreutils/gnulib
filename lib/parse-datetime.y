@@ -1811,7 +1811,7 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   struct tm tmp;
   if (! localtime_rz (tz, &now->tv_sec, &tmp))
-    return false;
+    goto fail;
 
   /* As documented, be careful to treat the empty string just like
      a date string of "0".  Without this, an empty string would be
