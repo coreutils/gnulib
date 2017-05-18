@@ -40,7 +40,7 @@
 # if defined __APPLE__ && defined __MACH__
 #  include <xlocale.h>
 # endif
-# if __GLIBC__ >= 2 && !defined __UCLIBC__
+# if (__GLIBC__ >= 2 && !defined __UCLIBC__) || defined __CYGWIN__
 #  include <langinfo.h>
 # endif
 # if !defined IN_LIBINTL
