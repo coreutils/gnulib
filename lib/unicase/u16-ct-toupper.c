@@ -23,7 +23,7 @@
 #include <stddef.h>
 
 #include "unicasemap.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 uint16_t *
 u16_ct_toupper (const uint16_t *s, size_t n,

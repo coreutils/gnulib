@@ -29,7 +29,7 @@
 #include "uninorm.h"
 #include "caseprop.h"
 #include "context.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 #define FUNC u16_casemap
 #define UNIT uint16_t

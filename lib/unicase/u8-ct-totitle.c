@@ -31,7 +31,7 @@
 #include "uninorm.h"
 #include "caseprop.h"
 #include "context.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 #define FUNC u8_ct_totitle
 #define UNIT uint8_t

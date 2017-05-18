@@ -18,7 +18,7 @@
 #include <config.h>
 
 /* Specification.  */
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 #include <string.h>
 

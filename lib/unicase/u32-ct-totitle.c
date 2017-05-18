@@ -31,7 +31,7 @@
 #include "uninorm.h"
 #include "caseprop.h"
 #include "context.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 #define FUNC u32_ct_totitle
 #define UNIT uint32_t

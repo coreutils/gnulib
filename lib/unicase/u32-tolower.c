@@ -23,7 +23,7 @@
 #include <stddef.h>
 
 #include "unicasemap.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 uint32_t *
 u32_tolower (const uint32_t *s, size_t n, const char *iso639_language,

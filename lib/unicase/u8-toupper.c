@@ -23,7 +23,7 @@
 #include <stddef.h>
 
 #include "unicasemap.h"
-#include "special-casing.h"
+#include "unicase/special-casing.h"
 
 uint8_t *
 u8_toupper (const uint8_t *s, size_t n, const char *iso639_language,
