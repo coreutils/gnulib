@@ -26,6 +26,8 @@
 # include <strings.h>
 #endif
 
+#include "macros.h"
+
 struct test_args
 {
   int test;
@@ -63,7 +65,7 @@ group1_parser (int key, char *arg, struct argp_state *state)
 
     case 'r':
       args->read = 1;
-      /* fall through */
+      FALLTHROUGH;
     case 'f':
       args->file = arg;
       break;

@@ -34,6 +34,8 @@ SIGNATURE_CHECK (twalk, void, (void const *,
 #include <stdlib.h>
 #include <string.h>
 
+#include "macros.h"
+
 #define SEED 0
 #if HAVE_TSEARCH
 /* The system's tsearch() is not expected to keep the tree balanced.  */
@@ -234,7 +236,7 @@ mangle_tree (enum order how, enum action what, void **root, int lag)
             break;
 
           j = k;
-          /* fall through */
+          FALLTHROUGH;
 
         case delete:
           elem = tfind (x + j, (void *const *) root, cmp_fn);

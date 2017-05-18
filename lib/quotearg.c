@@ -54,6 +54,14 @@
 
 #define INT_BITS (sizeof (int) * CHAR_BIT)
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 struct quoting_options
 {
   /* Basic quoting style.  */
@@ -310,7 +318,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
     case c_maybe_quoting_style:
       quoting_style = c_quoting_style;
       elide_outer_quotes = true;
-      /* Fall through.  */
+      FALLTHROUGH;
     case c_quoting_style:
       if (!elide_outer_quotes)
         STORE ('"');
@@ -365,14 +373,14 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
 
     case shell_escape_quoting_style:
       backslash_escapes = true;
-      /* Fall through.  */
+      FALLTHROUGH;
     case shell_quoting_style:
       elide_outer_quotes = true;
-      /* Fall through.  */
+      FALLTHROUGH;
     case shell_escape_always_quoting_style:
       if (!elide_outer_quotes)
         backslash_escapes = true;
-      /* Fall through.  */
+      FALLTHROUGH;
     case shell_always_quoting_style:
       quoting_style = shell_always_quoting_style;
       if (!elide_outer_quotes)
@@ -505,7 +513,6 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           if (quoting_style == shell_always_quoting_style
               && elide_outer_quotes)
             goto force_outer_quoting_style;
-          /* Fall through.  */
         c_escape:
           if (backslash_escapes)
             {
@@ -517,14 +524,14 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
         case '{': case '}': /* sometimes special if isolated */
           if (! (argsize == SIZE_MAX ? arg[1] == '\0' : argsize == 1))
             break;
-          /* Fall through.  */
+          FALLTHROUGH;
         case '#': case '~':
           if (i != 0)
             break;
-          /* Fall through.  */
+          FALLTHROUGH;
         case ' ':
           c_and_shell_quote_compat = true;
-          /* Fall through.  */
+          FALLTHROUGH;
         case '!': /* special in bash */
         case '"': case '$': case '&':
         case '(': case ')': case '*': case ';':

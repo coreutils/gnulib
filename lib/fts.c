@@ -203,6 +203,14 @@ enum Fts_stat
     while (false)
 #endif
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 static FTSENT   *fts_alloc (FTS *, const char *, size_t) internal_function;
 static FTSENT   *fts_build (FTS *, int) internal_function;
 static void      fts_lfree (FTSENT *) internal_function;
@@ -732,11 +740,11 @@ leaf_optimization_applies (int dir_fd)
          of large directories, so as per <https://bugzilla.redhat.com/1252549>
          NFS should return true.  However st_nlink values are not accurate on
          all implementations as per <https://bugzilla.redhat.com/1299169>.  */
-      /* fall through */
+      FALLTHROUGH;
     case S_MAGIC_PROC:
       /* Per <http://bugs.debian.org/143111> /proc may have
          bogus stat.st_nlink values.  */
-      /* fall through */
+      FALLTHROUGH;
     default:
       return false;
     }

@@ -17,6 +17,7 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2009.  */
 
 #include <stdbool.h>
+#include "macros.h"
 
 /* The glibc/gnulib implementation of getopt supports setting optind =
    0, but not all other implementations do.  This matters for getopt.
@@ -66,7 +67,7 @@ getopt_loop (int argc, const char **argv,
           ASSERT (options[0] == ':'
                   || ((options[0] == '-' || options[0] == '+')
                       && options[1] == ':'));
-          /* fall through */
+          FALLTHROUGH;
         case '?':
           *unrecognized = optopt;
           break;
