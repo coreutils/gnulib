@@ -41,8 +41,8 @@ main (int argc, char *argv[])
 #ifdef RLIMIT_DATA
   if (getrlimit (RLIMIT_DATA, &limit) < 0)
     return 77;
-  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
-    limit.rlim_max = 5000000;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 10000000)
+    limit.rlim_max = 10000000;
   limit.rlim_cur = limit.rlim_max;
   if (setrlimit (RLIMIT_DATA, &limit) < 0)
     return 77;
@@ -51,8 +51,8 @@ main (int argc, char *argv[])
 #ifdef RLIMIT_AS
   if (getrlimit (RLIMIT_AS, &limit) < 0)
     return 77;
-  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
-    limit.rlim_max = 5000000;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 10000000)
+    limit.rlim_max = 10000000;
   limit.rlim_cur = limit.rlim_max;
   if (setrlimit (RLIMIT_AS, &limit) < 0)
     return 77;
@@ -61,8 +61,8 @@ main (int argc, char *argv[])
 #ifdef RLIMIT_STACK
   if (getrlimit (RLIMIT_STACK, &limit) < 0)
     return 77;
-  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 5000000)
-    limit.rlim_max = 5000000;
+  if (limit.rlim_max == RLIM_INFINITY || limit.rlim_max > 10000000)
+    limit.rlim_max = 10000000;
   limit.rlim_cur = limit.rlim_max;
   if (setrlimit (RLIMIT_STACK, &limit) < 0)
     return 77;
@@ -73,30 +73,30 @@ main (int argc, char *argv[])
     {
     case 0:
       {
-        void *memory = malloc (5000000);
+        void *memory = malloc (10000000);
         if (memory == NULL)
           return 1;
-        memset (memory, 17, 5000000);
+        memset (memory, 17, 10000000);
         return 78;
       }
     case 1:
-      ret = printf ("%.5000000f", 1.0);
-      return !(ret == 5000002 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000f", 1.0);
+      return !(ret == 10000002 || (ret < 0 && errno == ENOMEM));
     case 2:
-      ret = printf ("%.5000000f", -1.0);
-      return !(ret == 5000003 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000f", -1.0);
+      return !(ret == 10000003 || (ret < 0 && errno == ENOMEM));
     case 3:
-      ret = printf ("%.5000000e", 1.0);
-      return !(ret >= 5000006 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000e", 1.0);
+      return !(ret >= 10000006 || (ret < 0 && errno == ENOMEM));
     case 4:
-      ret = printf ("%.5000000d", 1);
-      return !(ret == 5000000 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000d", 1);
+      return !(ret == 10000000 || (ret < 0 && errno == ENOMEM));
     case 5:
-      ret = printf ("%.5000000d", -1);
-      return !(ret == 5000001 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000d", -1);
+      return !(ret == 10000001 || (ret < 0 && errno == ENOMEM));
     case 6:
-      ret = printf ("%.5000000u", 1);
-      return !(ret == 5000000 || (ret < 0 && errno == ENOMEM));
+      ret = printf ("%.10000000u", 1);
+      return !(ret == 10000000 || (ret < 0 && errno == ENOMEM));
     }
   return 0;
 }
