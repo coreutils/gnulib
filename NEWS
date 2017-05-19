@@ -42,6 +42,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-05-19  closeout        close_stdout longer closes stderr when addresses
+                            are being sanitized, as the sanitizer outputs to
+                            stderr afterwards.
+
 2017-02-16  binary-io       On MS-DOS and OS/2, set_binary_mode now fails
                             on ttys, and sets errno == EINVAL.
 

@@ -33,6 +33,16 @@
 #include "exitfail.h"
 #include "quotearg.h"
 
+#ifndef __has_feature
+# define __has_feature(a) false
+#endif
+
+#if defined __SANITIZE_ADDRESS__ || __has_feature (address_sanitizer)
+enum { SANITIZE_ADDRESS = true };
+#else
+enum { SANITIZE_ADDRESS = false };
+#endif
+
 static const char *file_name;
 
 /* Set the file name to be reported in the event an error is detected
@@ -119,6 +129,8 @@ close_stdout (void)
       _exit (exit_failure);
     }
 
-   if (close_stream (stderr) != 0)
-     _exit (exit_failure);
+  /* Close stderr only if not sanitizing, as sanitizers may report to
+     stderr after this function returns.  */
+  if (!SANITIZE_ADDRESS && close_stream (stderr) != 0)
+    _exit (exit_failure);
 }
