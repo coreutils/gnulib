@@ -6084,7 +6084,6 @@ func_create_testdir ()
       if test -n "$lookedup_tmp"; then
         cp -p "$lookedup_file" "$testdir/$g"
       else
-        ln "$lookedup_file" "$testdir/$g" 2>/dev/null ||
         if func_should_symlink; then
           func_ln "$lookedup_file" "$testdir/$g"
         else
