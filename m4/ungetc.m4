@@ -1,4 +1,4 @@
-# ungetc.m4 serial 3
+# ungetc.m4 serial 4
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,19 +14,31 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
     [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdio.h>
       ]], [FILE *f;
-           if (!(f = fopen ("conftest.tmp", "w+"))) return 1;
-           if (fputs ("abc", f) < 0) return 2;
+           if (!(f = fopen ("conftest.tmp", "w+")))
+             return 1;
+           if (fputs ("abc", f) < 0)
+             { fclose (f); return 2; }
            rewind (f);
-           if (fgetc (f) != 'a') return 3;
-           if (fgetc (f) != 'b') return 4;
-           if (ungetc ('d', f) != 'd') return 5;
-           if (ftell (f) != 1) return 6;
-           if (fgetc (f) != 'd') return 7;
-           if (ftell (f) != 2) return 8;
-           if (fseek (f, 0, SEEK_CUR) != 0) return 9;
-           if (ftell (f) != 2) return 10;
-           if (fgetc (f) != 'c') return 11;
-           fclose (f); remove ("conftest.tmp");])],
+           if (fgetc (f) != 'a')
+             { fclose (f); return 3; }
+           if (fgetc (f) != 'b')
+             { fclose (f); return 4; }
+           if (ungetc ('d', f) != 'd')
+             { fclose (f); return 5; }
+           if (ftell (f) != 1)
+             { fclose (f); return 6; }
+           if (fgetc (f) != 'd')
+             { fclose (f); return 7; }
+           if (ftell (f) != 2)
+             { fclose (f); return 8; }
+           if (fseek (f, 0, SEEK_CUR) != 0)
+             { fclose (f); return 9; }
+           if (ftell (f) != 2)
+             { fclose (f); return 10; }
+           if (fgetc (f) != 'c')
+             { fclose (f); return 11; }
+           fclose (f);
+           remove ("conftest.tmp");])],
         [gl_cv_func_ungetc_works=yes], [gl_cv_func_ungetc_works=no],
         [case "$host_os" in
                    # Guess yes on glibc and bionic systems.

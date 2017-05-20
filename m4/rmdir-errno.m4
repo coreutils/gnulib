@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 
 # Copyright (C) 2000-2001, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -33,6 +33,7 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
           val = errno;
           s = fopen ("confdir2/errno", "w");
           fprintf (s, "%d\n", val);
+          fclose (s);
           return 0;
         }
         ]])],

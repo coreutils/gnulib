@@ -1,4 +1,4 @@
-# fflush.m4 serial 15
+# fflush.m4 serial 16
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -44,16 +44,16 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
            return 1;
          fd = fileno (f);
          if (fd < 0 || fread (buffer, 1, 5, f) != 5)
-           return 2;
+           { fclose (f); return 2; }
          /* For deterministic results, ensure f read a bigger buffer.  */
          if (lseek (fd, 0, SEEK_CUR) == 5)
-           return 3;
+           { fclose (f); return 3; }
          /* POSIX requires fflush-fseek to set file offset of fd.  This fails
             on BSD systems and on mingw.  */
          if (fflush (f) != 0 || fseek (f, 0, SEEK_CUR) != 0)
-           return 4;
+           { fclose (f); return 4; }
          if (lseek (fd, 0, SEEK_CUR) != 5)
-           return 5;
+           { fclose (f); return 5; }
          /* Verify behaviour of fflush after ungetc. See
             <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
          /* Verify behaviour of fflush after a backup ungetc.  This fails on
@@ -62,14 +62,15 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
          ungetc (c, f);
          fflush (f);
          if (fgetc (f) != c)
-           return 6;
+           { fclose (f); return 6; }
          /* Verify behaviour of fflush after a non-backup ungetc.  This fails
             on glibc 2.8 and on BSD systems.  */
          c = fgetc (f);
          ungetc ('@', f);
          fflush (f);
          if (fgetc (f) != c)
-           return 7;
+           { fclose (f); return 7; }
+         fclose (f);
          return 0;
        ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
      [gl_cv_func_fflush_stdin=cross])

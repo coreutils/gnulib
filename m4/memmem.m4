@@ -1,4 +1,4 @@
-# memmem.m4 serial 24
+# memmem.m4 serial 25
 dnl Copyright (C) 2002-2004, 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -113,6 +113,9 @@ static void quit (int sig) { _exit (sig + 128); }
         if (!memmem (haystack, 2 * m + 1, needle, m + 1))
           result |= 1;
       }
+    /* Free allocated memory, in case some sanitizer is watching.  */
+    free (haystack);
+    free (needle);
     return result;
     ]])],
         [gl_cv_func_memmem_works_fast=yes], [gl_cv_func_memmem_works_fast=no],

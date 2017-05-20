@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 13
+# serial 14
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -37,9 +37,9 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
                if (! f)
                  return 2;
                if (f[0] != '/')
-                 return 3;
+                 { free (f); return 3; }
                if (f[1] != '\0')
-                 return 4;
+                 { free (f); return 4; }
                free (f);
                return 0;
              }

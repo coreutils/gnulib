@@ -1,4 +1,4 @@
-# strstr.m4 serial 17
+# strstr.m4 serial 18
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -99,6 +99,9 @@ static void quit (int sig) { _exit (sig + 128); }
         if (!strstr (haystack, needle))
           result |= 1;
       }
+    /* Free allocated memory, in case some sanitizer is watching.  */
+    free (haystack);
+    free (needle);
     return result;
     ]])],
         [gl_cv_func_strstr_linear=yes], [gl_cv_func_strstr_linear=no],

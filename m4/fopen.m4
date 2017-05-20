@@ -1,4 +1,4 @@
-# fopen.m4 serial 9
+# fopen.m4 serial 10
 dnl Copyright (C) 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,11 @@ AC_DEFUN([gl_FUNC_FOPEN],
 #include <stdio.h>
 int main ()
 {
-  return fopen ("conftest.sl/", "w") != NULL;
+  FILE *fp = fopen ("conftest.sl/", "w");
+  int result = (fp != NULL);
+  if (fp != NULL)
+    fclose (fp);
+  return result;
 }]])],
             [gl_cv_func_fopen_slash=yes],
             [gl_cv_func_fopen_slash=no],
