@@ -2712,13 +2712,13 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
       else if (d->tokens[pos.index] >= CSET)
         {
           matches = d->charclasses[d->tokens[pos.index] - CSET];
-          if (tstbit (uc, &d->charclasses[d->tokens[pos.index] - CSET]))
+          if (tstbit (uc, &matches))
             matched = true;
         }
       else if (d->tokens[pos.index] == ANYCHAR)
         {
           matches = d->charclasses[d->canychar];
-          if (tstbit (uc, &d->charclasses[d->canychar]))
+          if (tstbit (uc, &matches))
             matched = true;
 
           /* ANYCHAR must match with a single character, so we must put
