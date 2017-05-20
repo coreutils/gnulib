@@ -2,6 +2,7 @@ Files:
 tests/test-tsearch.sh
 tests/test-tsearch.c
 tests/signature.h
+tests/macros.h
 
 Depends-on:
 stdint

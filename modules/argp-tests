@@ -1,6 +1,7 @@
 Files:
 tests/test-argp.c
 tests/test-argp-2.sh
+tests/macros.h
 
 Depends-on:
 
