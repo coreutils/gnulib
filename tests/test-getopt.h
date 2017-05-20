@@ -17,7 +17,6 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2009.  */
 
 #include <stdbool.h>
-#include "macros.h"
 
 /* The glibc/gnulib implementation of getopt supports setting optind =
    0, but not all other implementations do.  This matters for getopt.
