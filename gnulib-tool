@@ -295,10 +295,15 @@ Options for --import, --add/remove-import, --update,
   -s, --symbolic, --symlink Make symbolic links instead of copying files.
       --local-symlink       Make symbolic links instead of copying files, only
                             for files from the local override directory.
+  -h, --hardlink            Make hard links instead of copying files.
+      --local-hardlink      Make hard links instead of copying files, only
+                            for files from the local override directory.
 
 Options for --import, --add/remove-import, --update:
 
   -S, --more-symlinks       Make symbolic links instead of copying files, and
+                            don't replace copyright notices.
+  -H, --more-hardlinks      Make hard links instead of copying files, and
                             don't replace copyright notices.
 
 Report bugs to <bug-gnulib@gnu.org>."
@@ -788,10 +793,10 @@ func_ln_s ()
   }
 }
 
-# func_ln SRC DEST
+# func_symlink SRC DEST
 # Like func_ln_s, except that SRC is given relative to the current directory (or
 # absolute), not given relative to the directory of DEST.
-func_ln ()
+func_symlink ()
 {
   case "$1" in
     /* | ?:*)
@@ -811,20 +816,32 @@ func_ln ()
   esac
 }
 
-# func_ln_if_changed SRC DEST
-# Like func_ln, but avoids munging timestamps if the link is correct.
-func_ln_if_changed ()
+# func_symlink_if_changed SRC DEST
+# Like func_symlink, but avoids munging timestamps if the link is correct.
+# SRC is given relative to the current directory (or absolute).
+func_symlink_if_changed ()
 {
   if test $# -ne 2; then
-    echo "usage: func_ln_if_changed SRC DEST" >&2
+    echo "usage: func_symlink_if_changed SRC DEST" >&2
   fi
   ln_target=`func_readlink "$2"`
   if test -h "$2" && test "$1" = "$ln_target"; then
     :
   else
     rm -f "$2"
-    func_ln "$1" "$2"
+    func_symlink "$1" "$2"
   fi
+}
+
+# func_hardlink SRC DEST
+# Like ln, except use cp -p if ln fails.
+# SRC is given relative to the current directory (or absolute).
+func_hardlink ()
+{
+  ln "$1" "$2" || {
+    echo "$progname: ln failed; falling back on cp -p" >&2
+    cp -p "$1" "$2"
+  }
 }
 
 # Ensure an 'echo' command that
@@ -1052,10 +1069,14 @@ func_determine_path_separator
 #                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
-# - symbolic        true if --symlink or --more-symlinks was given, blank
-#                   otherwise
-# - lsymbolic       true if --local-symlink was given, blank otherwise
-# - do_copyrights   blank if --more-symlinks was given, true otherwise
+# - copymode        symlink if --symlink or --more-symlinks was given,
+#                   hardlink if --hardlink or --more-hardlinks was given,
+#                   blank otherwise
+# - lcopymode       symlink if --local-symlink was given,
+#                   hardlink if --local-hardlink was given,
+#                   blank otherwise
+# - do_copyrights   blank if --more-symlinks or --more-hardlinks was given,
+#                   true otherwise
 {
   mode=
   destdir=
@@ -1093,8 +1114,8 @@ func_determine_path_separator
   witness_c_macro=
   vc_files=
   doit=:
-  symbolic=
-  lsymbolic=
+  copymode=
+  lcopymode=
   do_copyrights=true
 
   supplied_opts="$@"
@@ -1371,16 +1392,26 @@ func_determine_path_separator
         doit=false
         shift ;;
       -s | --symbolic | --symboli | --symbol | --symbo | --symb | --symlink | --symlin | --symli | --syml | --sym | --sy )
-        symbolic=true
+        copymode=symlink
         shift ;;
       --local-symlink | --local-symlin | --local-symli | --local-syml | --local-sym | --local-sy | --local-s )
-        lsymbolic=true
+        lcopymode=symlink
         shift ;;
-      -S | --more-symlinks | --more-symlink | --more-symlin | --more-symli | --more-syml | --more-sym | --more-sy | --more-s | --more- | --more | --mor | --mo )
-        symbolic=true
+      -h | --hardlink | --hardlin | --hardli | --hardl | --hard | --har | --ha )
+        copymode=hardlink
+        shift ;;
+      --local-hardlink | --local-hardlin | --local-hardli | --local-hardl | --local-hard | --local-har | --local-ha | --local-h )
+        lcopymode=hardlink
+        shift ;;
+      -S | --more-symlinks | --more-symlink | --more-symlin | --more-symli | --more-syml | --more-sym | --more-sy | --more-s )
+        copymode=symlink
         do_copyrights=
         shift ;;
-      --help | --hel | --he | --h )
+      -H | --more-hardlinks | --more-hardlink | --more-hardlin | --more-hardli | --more-hardl | --more-hard | --more-har | --more-ha | --more-h )
+        copymode=hardlink
+        do_copyrights=
+        shift ;;
+      --help | --hel | --he )
         func_usage
         func_exit $? ;;
       --version | --versio | --versi | --vers )
@@ -3302,19 +3333,26 @@ func_is_local_file ()
   func_path_foreach "$local_gnulib_path" test %dir% = "$dname"
 }
 
-# func_should_symlink
-# returns 0 when the file $f should be symlinked
+# func_should_link
+# determines whether the file $f should be copied, symlinked, or hardlinked.
 # Input:
-# - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_path should be symlinked,
-#                   copied otherwise
+# - copymode        copy mode for files in general
+# - lcopymode       copy mode for files from local_gnulib_path
 # - f               the original file name
 # - lookedup_file   name of the merged (combined) file
-func_should_symlink ()
+# Sets variable:
+# - copyaction      copy or symlink or hardlink
+func_should_link ()
 {
-  test -n "$symbolic" \
-    || { test -n "$lsymbolic" \
-         && func_is_local_file "$lookedup_file" "$f"; }
+  if test -n "$lcopymode" && func_is_local_file "$lookedup_file" "$f"; then
+    copyaction="$lcopymode"
+  else
+    if test -n "$copymode"; then
+      copyaction="$copymode"
+    else
+      copyaction=copy
+    fi
+  fi
 }
 
 # func_add_file
@@ -3330,19 +3368,25 @@ func_should_symlink ()
 # - g               the rewritten file name
 # - tmpfile         absolute filename of the temporary file
 # - doit            : if actions shall be executed, false if only to be printed
-# - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_path should be symlinked,
-#                   copied otherwise
+# - copymode        copy mode for files in general
+# - lcopymode       copy mode for files from local_gnulib_path
 func_add_file ()
 {
   if $doit; then
     echo "Copying file $g"
-    if func_should_symlink \
+    func_should_link
+    if test "$copyaction" = symlink \
        && test -z "$lookedup_tmp" \
        && cmp -s "$lookedup_file" "$tmpfile"; then
-      func_ln_if_changed "$lookedup_file" "$destdir/$g"
+      func_symlink_if_changed "$lookedup_file" "$destdir/$g"
     else
-      mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+      if test "$copyaction" = hardlink \
+         && test -z "$lookedup_tmp" \
+         && cmp -s "$lookedup_file" "$tmpfile"; then
+        func_hardlink "$lookedup_file" "$destdir/$g"
+      else
+        mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+      fi
     fi
   else
     echo "Copy file $g"
@@ -3362,9 +3406,8 @@ func_add_file ()
 # - g               the rewritten file name
 # - tmpfile         absolute filename of the temporary file
 # - doit            : if actions shall be executed, false if only to be printed
-# - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_path should be symlinked,
-#                   copied otherwise
+# - copymode        copy mode for files in general
+# - lcopymode       copy mode for files from local_gnulib_path
 # - already_present  nonempty if the file should already exist, empty otherwise
 func_update_file ()
 {
@@ -3379,12 +3422,19 @@ func_update_file ()
         echo "Replacing file $g (non-gnulib code backed up in ${g}~) !!"
       fi
       mv -f "$destdir/$g" "$destdir/${g}~" || func_fatal_error "failed"
-      if func_should_symlink \
+      func_should_link
+      if test "$copyaction" = symlink \
          && test -z "$lookedup_tmp" \
          && cmp -s "$lookedup_file" "$tmpfile"; then
-        func_ln_if_changed "$lookedup_file" "$destdir/$g"
+        func_symlink_if_changed "$lookedup_file" "$destdir/$g"
       else
-        mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+        if test "$copyaction" = hardlink \
+           && test -z "$lookedup_tmp" \
+           && cmp -s "$lookedup_file" "$tmpfile"; then
+          func_hardlink "$lookedup_file" "$destdir/$g"
+        else
+          mv -f "$tmpfile" "$destdir/${g}" || func_fatal_error "failed"
+        fi
       fi
     else
       if test -n "$already_present"; then
@@ -4408,9 +4458,8 @@ func_reconstruct_cached_local_gnulib_path ()
 #                   given, blank otherwise
 # - autoconf_minversion  minimum supported autoconf version
 # - doit            : if actions shall be executed, false if only to be printed
-# - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_path should be symlinked,
-#                   copied otherwise
+# - copymode        copy mode for files in general
+# - lcopymode       copy mode for files from local_gnulib_path
 # - do_copyrights   true if copyright notices in files should be replaced,
 #                   blank otherwise
 func_import ()
@@ -4964,7 +5013,7 @@ s,^\(.................................................[^ ]*\) *,                
     exec 0<&5 5<&-
   }
 
-  # Copy files or make symbolic links. Remove obsolete files.
+  # Copy files or make symbolic links or hard links. Remove obsolete files.
   added_files=''
   removed_files=''
   delimiter='	'
@@ -5887,9 +5936,8 @@ s,//*$,/,'
 #                      --no-conditional-dependencies was given, blank otherwise
 # - libtool         true if --libtool was given, false if --no-libtool was
 #                   given, blank otherwise
-# - symbolic        true if files should be symlinked, copied otherwise
-# - lsymbolic       true if files from local_gnulib_path should be symlinked,
-#                   copied otherwise
+# - copymode        copy mode for files in general
+# - lcopymode       copy mode for files from local_gnulib_path
 func_create_testdir ()
 {
   testdir="$1"
@@ -6067,7 +6115,7 @@ func_create_testdir ()
     exec 0<&5 5<&-
   }
 
-  # Copy files or make symbolic links.
+  # Copy files or make symbolic links or hard links.
   delimiter='	'
   for f in $files; do echo $f; done \
     | sed -e "s,^.*\$,&$delimiter&," -e "$sed_rewrite_files" \
@@ -6084,10 +6132,15 @@ func_create_testdir ()
       if test -n "$lookedup_tmp"; then
         cp -p "$lookedup_file" "$testdir/$g"
       else
-        if func_should_symlink; then
-          func_ln "$lookedup_file" "$testdir/$g"
+        func_should_link
+        if test "$copyaction" = symlink; then
+          func_symlink "$lookedup_file" "$testdir/$g"
         else
-          cp -p "$lookedup_file" "$testdir/$g"
+          if test "$copyaction" = hardlink; then
+            func_hardlink "$lookedup_file" "$testdir/$g"
+          else
+            cp -p "$lookedup_file" "$testdir/$g"
+          fi
         fi
       fi
     done
@@ -7056,6 +7109,17 @@ s/\([.*$]\)/[\1]/g'
   * )
     func_fatal_error "unknown operation mode --$mode" ;;
 esac
+
+if test "$copymode" = hardlink -o "$lcopymode" = hardlink; then
+  # Setting hard links modifies the ctime of files in the gnulib checkout.
+  # This disturbs the result of the next "gitk" invocation.
+  # Workaround: Let git scan the files. This can be done through
+  # "git update-index --refresh" or "git status" or "git diff".
+  if test -d "$gnulib_dir"/.git \
+     && (git --version) >/dev/null 2>/dev/null; then
+    (cd "$gnulib_dir" && git update-index --refresh >/dev/null)
+  fi
+fi
 
 rm -rf "$tmp"
 # Undo the effect of the previous 'trap' command. Some shellology:
