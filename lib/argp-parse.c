@@ -743,15 +743,8 @@ parser_parse_opt (struct parser *parser, int opt, char *val)
     /* A long option.  Preserve the sign in the user key, without
        invoking undefined behavior.  Assume two's complement.  */
     {
-      unsigned uopt = opt;
-      unsigned ushifted_user_key = uopt << GROUP_BITS;
-      int shifted_user_key = ushifted_user_key;
-      int user_key;
-      if (-1 >> 1 == -1)
-        user_key = shifted_user_key >> GROUP_BITS;
-      else
-        user_key = ((ushifted_user_key >> GROUP_BITS)
-                    - (shifted_user_key < 0 ? 1 << USER_BITS : 0));
+      int user_key =
+        ((opt & (1 << (USER_BITS - 1))) ? ~USER_MASK : 0) | (opt & USER_MASK);
       err =
         group_parse (&parser->groups[group_key - 1], &parser->state,
                      user_key, parser->opt_data.optarg);
