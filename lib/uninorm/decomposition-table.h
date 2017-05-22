@@ -21,7 +21,7 @@
 /* The decomposition table is made of two parts:
      - A table containing the actual arrays of decomposed equivalents.
        (This table is separate because the maximum length of a decomposition
-       is 18, much larger than than the average length 1.497 of a decomposition).
+       is 18, much larger than the average length 1.497 of a decomposition).
      - A 3-level table of indices into this array.  */
 
 #include "decomposition-table1.h"

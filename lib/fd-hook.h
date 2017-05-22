@@ -1,4 +1,4 @@
-/* Hook for making making file descriptor functions close(), ioctl() extensible.
+/* Hook for making file descriptor functions close(), ioctl() extensible.
    Copyright (C) 2009-2017 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify it

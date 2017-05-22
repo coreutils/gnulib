@@ -1,5 +1,5 @@
 Description:
-atoll() function: convert decimal string string to 'long long'.
+atoll() function: convert decimal string to 'long long'.
 
 Files:
 lib/atoll.c

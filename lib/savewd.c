@@ -69,7 +69,7 @@ savewd_save (struct savewd *wd)
         {
           /* "Save" the initial working directory by forking a new
              subprocess that will attempt all the work from the chdir
-             until until the next savewd_restore.  */
+             until the next savewd_restore.  */
           wd->val.child = fork ();
           if (wd->val.child != 0)
             {
