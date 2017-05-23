@@ -49,7 +49,8 @@ $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 # in gnulib.
 $GETTEXT gettext-runtime/m4/codeset.m4		m4 release
 $GETTEXT gettext-runtime/m4/gettext.m4		m4 release
-$GETTEXT gettext-runtime/m4/iconv.m4		m4 release
+#broke sync ca.20may2017, hopefully restore in next gettext release.
+#$GETTEXT gettext-runtime/m4/iconv.m4		m4 release
 $GETTEXT gettext-runtime/m4/intl.m4		m4 release
 $GETTEXT gettext-runtime/m4/intldir.m4		m4 release
 $GETTEXT gettext-runtime/m4/intlmacosx.m4	m4 release
