@@ -513,7 +513,7 @@ quotearg_buffer_restyled (char *buffer, size_t buffersize,
           if (quoting_style == shell_always_quoting_style
               && elide_outer_quotes)
             goto force_outer_quoting_style;
-          FALLTHROUGH;
+          /* fall through */
         c_escape:
           if (backslash_escapes)
             {
