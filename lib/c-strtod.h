@@ -15,6 +15,10 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* Parse the initial portion of the string pointed to by NPTR as a floating-
    point number (in decimal or hexadecimal notation), like in the C locale:
    accepting only the ASCII digits '0'..'9', and only '.' as decimal point
@@ -35,3 +39,7 @@
    - In case of other error, return 0 and set errno, for example to ENOMEM.  */
 extern double      c_strtod  (char const *nptr, char **endptr);
 extern long double c_strtold (char const *nptr, char **endptr);
+
+#ifdef __cplusplus
+}
+#endif
