@@ -272,7 +272,6 @@ error_tail (int status, int errnum, const char *message, va_list args)
   else
 #endif
     vfprintf (stderr, message, args);
-  va_end (args);
 
   ++error_message_count;
   if (errnum)
@@ -322,6 +321,7 @@ error (int status, int errnum, const char *message, ...)
 
   va_start (args, message);
   error_tail (status, errnum, message, args);
+  va_end (args);
 
 #ifdef _LIBC
   _IO_funlockfile (stderr);
@@ -392,6 +392,7 @@ error_at_line (int status, int errnum, const char *file_name,
 
   va_start (args, message);
   error_tail (status, errnum, message, args);
+  va_end (args);
 
 #ifdef _LIBC
   _IO_funlockfile (stderr);
