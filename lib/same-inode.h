@@ -20,7 +20,7 @@
 
 # include <sys/types.h>
 
-# ifdef __VMS
+# if defined __VMS && __CRTL_VER < 80200000
 #  define SAME_INODE(a, b)             \
     ((a).st_ino[0] == (b).st_ino[0]    \
      && (a).st_ino[1] == (b).st_ino[1] \
