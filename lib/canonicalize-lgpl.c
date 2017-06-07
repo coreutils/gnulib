@@ -59,8 +59,10 @@
      */
 #   undef getcwd
 #  endif
-#  ifdef VMS
-    /* We want the directory in Unix syntax, not in VMS syntax.  */
+#  if defined VMS && !defined getcwd
+    /* We want the directory in Unix syntax, not in VMS syntax.
+       The gnulib override of 'getcwd' takes 2 arguments; the original VMS
+       'getcwd' takes 3 arguments.  */
 #   define __getcwd(buf, max) getcwd (buf, max, 0)
 #  else
 #   define __getcwd getcwd
