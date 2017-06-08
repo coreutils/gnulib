@@ -1,15 +1,24 @@
-@node Build robot for gnulib
-@section Build robot for gnulib
-
-To simplify testing on a wide set of platforms, gnulib is built on
-many platforms every day and the results are uploaded to:
-
-@url{http://autobuild.josefsson.org/gnulib/}
+@node Building gnulib
+@section Building gnulib
 
 If you wish to help the gnulib development effort with build logs for
 your favorite platform, you may perform these steps:
 
 @enumerate
+
+@item Prerequisites tools
+
+Install the proper development tools.  To build all of Gnulib well,
+you will need standard POSIX utilities such as a C compiler,
+@command{awk}, @command{make} and @command{sh}.  You will also need
+other development tools such as Autoconf, Automake, Bison, Gettext,
+Git, Gperf, Libtool, and Perl, although some of these tools are needed
+only by some modules.
+
+@item Obtain Gnulib
+
+See @url{https://www.gnu.org/software/gnulib/} for how to get the
+current Gnulib sources via Git.
 
 @item Create gnulib directory
 
@@ -39,19 +48,5 @@ And then transferring the @file{dummy-0.tar.gz} file.
 
 On the build machine, run ./do-autobuild (or "nohup ./do-autobuild").
 It creates a directory @file{logs/} with a log file for each module.
-
-@item Submit build logs
-
-Submit each log file to Simon's site, either through a
-
-@example
-mail `echo gnulib__at__autobuild.josefsson.org | sed -e s/__at__/@@/`
-@end example
-
-or through netcat
-
-@example
-autobuild-submit logs/*
-@end example
 
 @end enumerate

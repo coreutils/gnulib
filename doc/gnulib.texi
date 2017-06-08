@@ -728,7 +728,7 @@ better to share them.
 * A C++ namespace for gnulib::      A different way of using Gnulib in C++
 * Running self-tests under valgrind::
 * License Texinfo sources::
-* Build robot for gnulib::
+* Building gnulib::
 @end menu
 
 @include out-of-memory.texi
