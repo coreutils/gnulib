@@ -784,9 +784,13 @@ func_ln_s ()
 
     case "$1" in
       /* | ?:*) # SRC is absolute.
-        cp_src=$1 ;;
+        cp_src="$1" ;;
       *) # SRC is relative to the directory of DEST.
-        cp_src=${2%/*}/$1 ;;
+        case "$2" in
+          */*) cp_src="${2%/*}/$1" ;;
+          *)   cp_src="$1" ;;
+        esac
+        ;;
     esac
 
     cp -p "$cp_src" "$2"
