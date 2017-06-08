@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 3
+# host-cpu-c-abi.m4 serial 4
 dnl Copyright (C) 2002-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -89,13 +89,21 @@ changequote([,])dnl
 
        arm* | aarch64 )
          # Assume arm with EABI.
-         # On arm64, the C compiler may be generating 64-bit (= aarch64) code
-         # or 32-bit (= arm) code.
+         # On arm64 systems, the C compiler may be generating code in one of
+         # these ABIs:
+         # - aarch64 instruction set, 64-bit pointers, 64-bit 'long': arm64.
+         # - aarch64 instruction set, 32-bit pointers, 32-bit 'long': arm64-ilp32.
+         # - 32-bit instruction set, 32-bit pointers, 32-bit 'long': arm or armhf.
          AC_EGREP_CPP([yes],
            [#if defined(__aarch64__) || defined(__ARM_64BIT_STATE) || defined(__ARM_PCS_AAPCS64)
             yes
             #endif],
-           [gl_cv_host_cpu_c_abi=arm64],
+           [AC_EGREP_CPP([yes],
+              [#if defined __ILP32__ || defined _ILP32
+               yes
+               #endif],
+              [gl_cv_host_cpu_c_abi=arm64-ilp32],
+              [gl_cv_host_cpu_c_abi=arm64])],
            [# Don't distinguish little-endian and big-endian arm, since they
             # don't require different machine code for simple operations and
             # since the user can distinguish them through the preprocessot
@@ -241,6 +249,9 @@ EOF
 #endif
 #ifndef __armhf__
 #undef __armhf__
+#endif
+#ifndef __arm64_ilp32__
+#undef __arm64_ilp32__
 #endif
 #ifndef __arm64__
 #undef __arm64__
