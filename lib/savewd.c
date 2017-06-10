@@ -36,6 +36,14 @@
 #include "dosname.h"
 #include "fcntl-safer.h"
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 /* Save the working directory into *WD, if it hasn't been saved
    already.  Return true if a child has been forked to do the real
    work.  */
@@ -63,7 +71,7 @@ savewd_save (struct savewd *wd)
       }
       wd->state = FORKING_STATE;
       wd->val.child = -1;
-      /* Fall through.  */
+      FALLTHROUGH;
     case FORKING_STATE:
       if (wd->val.child < 0)
         {
@@ -188,7 +196,7 @@ savewd_restore (struct savewd *wd, int status)
           wd->state = ERROR_STATE;
           wd->val.errnum = chdir_errno;
         }
-      /* Fall through.  */
+      FALLTHROUGH;
     case ERROR_STATE:
       /* Report an error if asked to restore the working directory.  */
       errno = wd->val.errnum;
