@@ -1,4 +1,4 @@
-# logbl.m4 serial 1
+# logbl.m4 serial 2
 dnl Copyright (C) 2012-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,7 +71,7 @@ AC_DEFUN([gl_FUNC_LOGBL_WORKS],
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP    (-16381)
 #endif
-#if defined __i386__ && defined __FreeBSD__
+#if defined __i386__ && (defined __FreeBSD__ || defined __DragonFly__)
 # undef LDBL_MIN_EXP
 # define LDBL_MIN_EXP    (-16381)
 #endif
