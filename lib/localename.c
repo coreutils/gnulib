@@ -2703,7 +2703,7 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
              nl_langinfo (_NL_LOCALE_NAME (category)).  */
           name = thread_locale->__names[category];
         return name;
-#  elif defined __FreeBSD__ || (defined __APPLE__ && defined __MACH__)
+#  elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __APPLE__ && defined __MACH__)
         /* FreeBSD, Mac OS X */
         int mask;
 
