@@ -15,7 +15,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#include <config.h>
+/* If CLASSPATHVAR is defined, this file is being #included, and config.h is
+   therefore already included.  */
+#if !defined CLASSPATHVAR
+# include <config.h>
+#endif
 
 /* Specification.  */
 #include "classpath.h"
