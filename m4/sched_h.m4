@@ -1,4 +1,4 @@
-# sched_h.m4 serial 9
+# sched_h.m4 serial 10
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ dnl Written by Bruno Haible.
 
 AC_DEFUN([gl_SCHED_H],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST])
   AC_CHECK_HEADERS_ONCE([sys/cdefs.h])
   AC_COMPILE_IFELSE(
     [AC_LANG_PROGRAM([[
@@ -41,10 +42,20 @@ AC_DEFUN([gl_SCHED_H],
            #include <sched.h>
          ]])
      else
-       dnl On OS/2 kLIBC, struct sched_param is in spawn.h.
-       AC_CHECK_TYPE([struct sched_param],
-         [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
-         [#include <spawn.h>])
+       case "$host_os" in
+         os2*)
+           dnl On OS/2 kLIBC, struct sched_param is in spawn.h.
+           AC_CHECK_TYPE([struct sched_param],
+             [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
+             [#include <spawn.h>])
+           ;;
+         vms)
+           dnl On OpenVMS 7.2 or newer, struct sched_param is in pthread.h.
+           AC_CHECK_TYPE([struct sched_param],
+             [HAVE_STRUCT_SCHED_PARAM=1], [HAVE_STRUCT_SCHED_PARAM=0],
+             [#include <pthread.h>])
+           ;;
+       esac
      fi
      AC_SUBST([HAVE_STRUCT_SCHED_PARAM])
 

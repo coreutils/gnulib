@@ -39,10 +39,13 @@
 #include <sys/types.h>
 
 #ifdef __KLIBC__
-
-/* On OS/2 kLIBC, struct sched_param is in spawn.h */
+/* On OS/2 kLIBC, struct sched_param is in spawn.h.  */
 # include <spawn.h>
+#endif
 
+#ifdef __VMS
+/* On OpenVMS, struct sched_param is in <pthread.h>.  */
+# include <pthread.h>
 #endif
 
 #if !@HAVE_STRUCT_SCHED_PARAM@
