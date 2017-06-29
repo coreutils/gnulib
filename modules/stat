@@ -20,7 +20,11 @@ configure.ac:
 gl_FUNC_STAT
 if test $REPLACE_STAT = 1; then
   AC_LIBOBJ([stat])
-  AC_LIBOBJ([stat-w32])
+  case "$host_os" in
+    mingw*)
+      AC_LIBOBJ([stat-w32])
+      ;;
+  esac
   gl_PREREQ_STAT
 fi
 gl_SYS_STAT_MODULE_INDICATOR([stat])
