@@ -189,8 +189,11 @@ convert_dirent (const struct dirent *source)
       struct readdir_result result = { NULL, };
       return result;
     }
-  struct readdir_result result = READDIR_RESULT_INITIALIZER (source);
-  return result;
+  else
+    {
+      struct readdir_result result = READDIR_RESULT_INITIALIZER (source);
+      return result;
+    }
 }
 
 #ifndef COMPILE_GLOB64
@@ -204,8 +207,11 @@ convert_dirent64 (const struct dirent64 *source)
       struct readdir_result result = { NULL, };
       return result;
     }
-  struct readdir_result result = READDIR_RESULT_INITIALIZER (source);
-  return result;
+  else
+    {
+      struct readdir_result result = READDIR_RESULT_INITIALIZER (source);
+      return result;
+    }
 }
 #endif
 
