@@ -42,7 +42,7 @@ freading (FILE *fp)
   return (fp->_flags & _IOREAD) != 0;
 # elif defined __minix               /* Minix */
   return (fp->_flags & _IOREADING) != 0;
-# elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel */
+# elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
 #  if defined __sun                  /* Solaris */
   return (fp_->_flag & _IOREAD) != 0 && (fp_->_flag & _IOWRT) == 0;
 #  else

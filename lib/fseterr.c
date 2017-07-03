@@ -38,7 +38,7 @@ fseterr (FILE *fp)
   fp->_flags |= _IOERR;
 #elif defined __minix               /* Minix */
   fp->_flags |= _IOERR;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
   fp_->_flag |= _IOERR;
 #elif defined __UCLIBC__            /* uClibc */
   fp->__modeflags |= __FLAG_ERROR;

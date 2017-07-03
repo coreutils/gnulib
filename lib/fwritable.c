@@ -40,7 +40,7 @@ fwritable (FILE *fp)
   return (fp->_flags & (_IORW | _IOWRT)) != 0;
 #elif defined __minix               /* Minix */
   return (fp->_flags & _IOWRITE) != 0;
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
   return (fp_->_flag & (_IORW | _IOWRT)) != 0;
 #elif defined __QNX__               /* QNX */
   return (fp->_Mode & 0x2 /* _MOPENW */) != 0;

@@ -53,7 +53,7 @@ fbufmode (FILE *fp)
   return fp->_flags & (_IOLBF | _IONBF | _IOFBF);
 #elif defined __minix               /* Minix */
   return fp->_flags & (_IOLBF | _IONBF | _IOFBF);
-#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel */
+#elif defined _IOERR                /* AIX, HP-UX, IRIX, OSF/1, Solaris, OpenServer, mingw, MSVC, NonStop Kernel, OpenVMS */
 # if defined WINDOWS_OPAQUE_FILE
   if (fp_->_flag & 0x100)
     return _IOFBF; /* Impossible to distinguish _IOFBF and _IOLBF.  */
@@ -64,7 +64,7 @@ fbufmode (FILE *fp)
   if (__flbf (fp))
     return _IOLBF;
 #  else
-  if (fp->_flag & _IOLBF)
+  if (fp_->_flag & _IOLBF)
     return _IOLBF;
 #  endif
   if (fp_->_flag & _IONBF)
