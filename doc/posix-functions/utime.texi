@@ -15,7 +15,7 @@ mingw, MSVC 14 (when the environment variable @code{TZ} is set).
 @item
 On some platforms, the prototype for @code{utime} omits @code{const}
 for the second argument:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

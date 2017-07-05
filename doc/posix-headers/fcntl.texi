@@ -9,11 +9,11 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 The type @code{pid_t} is not defined on some platforms:
-MSVC 9.
+MSVC 14.
 
 @item
 The type @code{mode_t} is not defined on some platforms:
-MSVC 9.
+MSVC 14.
 
 @item
 @samp{O_CLOEXEC}, @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
@@ -35,7 +35,7 @@ descriptor that was opened with @samp{O_PATH}.
 
 @item
 @samp{O_ACCMODE} is not defined on some platforms:
-MSVC 9.
+MSVC 14.
 
 @item
 The @samp{O_ACCMODE} mask mistakenly omits @samp{O_SEARCH} and
@@ -61,12 +61,12 @@ on some platforms but not on others.
 @item
 @samp{FD_CLOEXEC}, @samp{F_DUPFD}, and @samp{F_GETFD} are not defined
 on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 
 @item
 @samp{F_DUPFD_CLOEXEC} is not defined on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 9, Interix 3.5,
+IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, mingw, MSVC 14, Interix 3.5,
 BeOS.
 
 @item
@@ -74,7 +74,7 @@ BeOS.
 @samp{AT_SYMLINK_FOLLOW}, and @samp{AT_REMOVEDIR}
 are not defined on many platforms:
 glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
-5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, MSVC 9, Interix 3.5, BeOS.
+5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, MSVC 14, Interix 3.5, BeOS.
 
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some
@@ -88,7 +88,7 @@ Portability problems not fixed by Gnulib:
 @samp{F_SETFD}, @samp{F_GETFL}, @samp{F_SETFL}, @samp{F_GETLK},
 @samp{F_SETLK}, @samp{F_SETLKW}, @samp{F_GETOWN}, and @samp{F_SETOWN}
 are not defined on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 
 @item
 @samp{POSIX_FADV_DONTNEED}, @samp{POSIX_FADV_NOREUSE},

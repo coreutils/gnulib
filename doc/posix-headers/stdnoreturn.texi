@@ -27,7 +27,7 @@ When the macro @code{lint} is defined, standard headers define
 expands to the empty token sequence on some platforms:
 Cygwin 2.5.1, FreeBSD 10.3.
 @item
-On MSVC 9, @code{noreturn} expands to the empty token sequence, to avoid
+On MSVC 14, @code{noreturn} expands to the empty token sequence, to avoid
 problems with standard headers that use @code{__declspec (noreturn)}
 directly.  Although the resulting code operates correctly, the
 compiler is not informed whether @code{noreturn} functions do not

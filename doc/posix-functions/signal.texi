@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function crashes when invoked with invalid arguments on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 On System V platforms, when the signal is triggered, the kernel uninstalls the
 handler (i.e.@: resets the signal's action to SIG_DFL) before invoking the

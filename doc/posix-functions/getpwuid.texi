@@ -18,5 +18,5 @@ the parent process is multi-threaded.  Instead, use @code{getpwuid_r}
 prior to forking.
 @item
 This function is missing on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @end itemize

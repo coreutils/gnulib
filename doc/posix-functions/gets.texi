@@ -18,7 +18,7 @@ This function should never be used, because it can overflow any given buffer.
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
 some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @item
 On Windows platforms (excluding Cygwin), this function does not set @code{errno}
 upon failure.

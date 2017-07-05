@@ -10,15 +10,15 @@ Portability problems fixed by either Gnulib module @code{dup2} or @code{dup2-obs
 @itemize
 @item
 This function always returns 0 for success on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 
 @item
 This function can hang when duplicating an fd to itself on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 
 @item
 This function crashes when invoked with invalid arguments on some platforms:
-Cygwin 1.7.17, MSVC 9.
+Cygwin 1.7.17, MSVC 14.
 
 @item
 This function crashes when invoked with valid arguments on some platforms:

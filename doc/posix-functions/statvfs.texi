@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Mac OS X 10.3, OpenBSD 3.8, mingw, MSVC 9.
+Mac OS X 10.3, OpenBSD 3.8, mingw, MSVC 14.
 @item
 This function can hang if it stats all preceding
 entries in /proc/mounts, and any of those file systems

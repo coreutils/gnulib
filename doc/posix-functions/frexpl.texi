@@ -13,19 +13,19 @@ This function is missing on some platforms:
 FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, Interix 3.5.
 @item
 This function is only defined as a macro with arguments on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 This function is not declared on some platforms:
 Mac OS X 10.3.
 @item
 This function does not work on finite numbers on some platforms:
-Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 9, BeOS.
+Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 14, BeOS.
 @item
 This function does not work on denormalized numbers on some platforms:
 Mac OS X 10.5/i386.
 @item
 This function does not work on infinite numbers on some platforms:
-IRIX 6.5, mingw, MSVC 9.
+IRIX 6.5, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

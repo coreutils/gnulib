@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 The SEEK_* macros are not defined in this file on some platforms:
 mingw.

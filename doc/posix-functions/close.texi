@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function crashes when invoked with invalid arguments on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
 do not return file descriptors that can be closed by @code{close}.

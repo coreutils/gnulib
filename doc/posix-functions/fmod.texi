@@ -18,7 +18,7 @@ OSF/1 5.1.
 @item
 This function has problems when the first argument is minus zero on some
 platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

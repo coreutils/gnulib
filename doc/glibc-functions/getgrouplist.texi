@@ -16,7 +16,7 @@ on some platforms: OS X 10.11.
 
 @item
 This function is missing on some platforms:
-Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.7.9, mingw, MSVC 9, BeOS.
+Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin 1.7.9, mingw, MSVC 14, BeOS.
 @end itemize
 
 The Gnulib module @code{getugroups} provides a similar API.

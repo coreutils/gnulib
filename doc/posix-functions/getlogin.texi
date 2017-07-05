@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-older mingw, MSVC 9.
+older mingw, MSVC 14.
 @item
 This function is not declared unless @code{_POSIX} is defined on some platforms:
 mingw.

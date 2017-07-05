@@ -14,7 +14,7 @@ Portability problems fixed by either Gnulib module @code{getopt-posix} or @code{
 @itemize
 @item
 This function is missing on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 The value of @code{optind} after a missing required argument is wrong
 on some platforms:
@@ -42,7 +42,7 @@ Mac OS X 10.5, OpenBSD 4.0, AIX 5.2, HP-UX 11, IRIX 6.5, OSF/1 5.1,
 Solaris 11 2010-11, Cygwin 1.5.x.
 @item
 The function @code{getopt_long} is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, MSVC 9, Interix 3.5.
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 9, MSVC 14, Interix 3.5.
 @item
 The function @code{getopt_long} does not support abbreviated long options
 where all disambiguations are equivalent on some platforms:
@@ -50,7 +50,7 @@ OpenBSD 5.0.
 @item
 The function @code{getopt_long_only} is missing on some platforms:
 Mac OS X 10.3, FreeBSD 5.2.1, NetBSD 5.0, AIX 5.1, HP-UX 11, IRIX 6.5,
-OSF/1 5.1, Solaris 9, mingw, MSVC 9, Interix 3.5.
+OSF/1 5.1, Solaris 9, mingw, MSVC 14, Interix 3.5.
 @item
 This function crashes if the option string includes @code{W;} on some
 platforms:

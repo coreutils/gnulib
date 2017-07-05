@@ -20,7 +20,7 @@ it is important to ensure the alarm will fire.
 Use of this function in multi-threaded applications is not advised.
 @item
 This function is missing on some platforms:
-mingw (2011), MSVC 9.
+mingw (2011), MSVC 14.
 @item
 This function is conditionally declared in the non-standard
 @code{<io.h>} header on some platforms:

@@ -16,7 +16,7 @@ This function returns NaN for small operands:
 OpenBSD 5.4.
 @item
 This function is only defined as a macro with arguments on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 This function is not declared on some platforms:
 Mac OS X 10.3.

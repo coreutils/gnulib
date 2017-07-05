@@ -15,7 +15,7 @@ glibc 2.13, FreeBSD.
 @item
 This function crashes if the stream's file descriptor has already been
 closed on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 On Windows platforms (excluding Cygwin), @code{socket} and @code{accept}
 followed by @code{fdopen} do not return streams that can be closed by

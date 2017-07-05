@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 glibc 2.16, OS X 10.8, FreeBSD 9.1, NetBSD 6.0.1, OpenBSD 5.2, Minix 3.2.0,
-AIX 7.1, HP-UX 11, IRIX 6.5, Solaris 11, Cygwin, mingw, MSVC 9,
+AIX 7.1, HP-UX 11, IRIX 6.5, Solaris 11, Cygwin, mingw, MSVC 14,
 Interix 6.1, BeOS.
 @end itemize
 

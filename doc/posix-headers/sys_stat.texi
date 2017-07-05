@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib module @code{sys_stat}:
 @itemize
 @item
 The type @code{mode_t} is not defined on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 Some macros, such as @code{S_IFMT} or @code{S_IFIFO}, are missing on some
 platforms.
@@ -21,7 +21,7 @@ Some platforms define macros, such as @code{S_ISDOOR}, that are not defined
 on other platforms.
 @item
 The functions @code{lstat} and @code{mkdir} are not declared on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @item
 The macros @code{UTIME_NOW} and @code{UTIME_OMIT} are missing on some
 platforms.
@@ -41,7 +41,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 The macro @code{S_IFBLK} is missing on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 On OpenVMS, @code{st_ino} is an array of three @code{ino_t} values,
 not a single value.

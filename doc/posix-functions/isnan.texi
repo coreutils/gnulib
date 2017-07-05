@@ -18,6 +18,9 @@ on pre-C99 systems.
 @code{isnan} is not a macro on some platforms:
 IRIX 6.5, OSF/1 5.1 with gcc, Solaris 11 2011-11.
 @item
+This macro does not work on some platforms:
+MSVC 14.
+@item
 On IRIX 6.5 with @code{cc}, @code{isnan} does not recognize some NaNs.
 @end itemize
 

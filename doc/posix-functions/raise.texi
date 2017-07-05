@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 This function is missing on some old platforms.
 @item
 This function crashes when invoked with invalid arguments on some platforms:
-MSVC 9.
+MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

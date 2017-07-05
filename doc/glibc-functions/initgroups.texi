@@ -17,5 +17,5 @@ the parent process is multi-threaded.  Instead, use @code{getgroups} or
 before forking, and @code{setgroups} in the child.
 @item
 This function is missing on some platforms:
-mingw, MSVC 9, Interix 3.5, BeOS.
+mingw, MSVC 14, Interix 3.5, BeOS.
 @end itemize

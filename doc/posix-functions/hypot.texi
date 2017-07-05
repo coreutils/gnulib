@@ -15,7 +15,7 @@ Portability problems fixed by Gnulib module @code{hypot-ieee}:
 @item
 When the arguments are mixed NaN and Infinity, this function returns a wrong
 value on some platforms:
-OSF/1 5.1, mingw, MSVC 9.
+OSF/1 5.1, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

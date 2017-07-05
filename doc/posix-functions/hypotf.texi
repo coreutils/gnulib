@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{hypotf} or @code{hypotf
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 9.
+Minix 3.1.8, AIX 5.1, HP-UX 11, Solaris 9, MSVC 14.
 @item
 This function produces wrong values on some platforms:
 NetBSD 5.1, OpenBSD 4.9.
@@ -21,7 +21,7 @@ Portability problems fixed by Gnulib module @code{hypot-ieee}:
 @item
 When the arguments are mixed NaN and Infinity, this function returns a wrong
 value on some platforms:
-OSF/1 5.1, mingw, MSVC 9.
+OSF/1 5.1, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

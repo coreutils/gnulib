@@ -8,9 +8,13 @@ Gnulib module: errno
 Portability problems fixed by Gnulib:
 @itemize
 @item
-The macros @code{EOVERFLOW}, @code{ENOLINK}, @code{EMULTIHOP} are not defined
+The macros @code{EOVERFLOW}, @code{ENOLINK} are not defined
 on some platforms:
 OpenBSD 4.0, OSF/1 5.1, mingw, MSVC 9.
+@item
+The macro @code{EMULTIHOP} is not defined
+on some platforms:
+OpenBSD 4.0, OSF/1 5.1, mingw, MSVC 14.
 @item
 The macro @code{ECANCELED} is not defined on some platforms:
 OpenBSD 4.0, Cygwin, mingw, MSVC 9.
@@ -20,10 +24,10 @@ The macros @code{ENOMSG}, @code{EIDRM}, @code{EPROTO}, @code{EBADMSG},
 OpenBSD 4.0, mingw, MSVC 9.
 @item
 The macro @code{ESTALE} is not defined on some platforms:
-mingw, MSVC 9, Interix 3.5.
+mingw, MSVC 14, Interix 3.5.
 @item
 The macro @code{EDQUOT} is not defined on some platforms:
-NonStop Kernel, mingw, MSVC 9.
+NonStop Kernel, mingw, MSVC 14.
 @item
 The macros @code{ENETRESET}, @code{ECONNABORTED} are not defined on some
 platforms:

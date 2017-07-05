@@ -18,7 +18,7 @@ The type @code{wint_t} and macro @code{WEOF} are missing on some platforms:
 IRIX 5.3.
 @item
 The type @code{wint_t} is incorrect on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 The functions @code{isw*} are missing on some platforms:
 FreeBSD 4.11.

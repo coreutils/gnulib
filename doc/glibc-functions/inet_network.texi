@@ -12,5 +12,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw, MSVC 9, BeOS.
+mingw, MSVC 14, BeOS.
 @end itemize

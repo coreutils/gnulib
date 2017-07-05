@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib module @code{stdio}, together with module @
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
 some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -32,5 +32,5 @@ This function crashes if the stream's file descriptor has already been
 closed, if @code{MSVC_INVALID_PARAMETER_HANDLING} is
 @code{HAIRY_LIBRARY_HANDLING} or @code{SANE_LIBRARY_HANDLING},
 on some platforms:
-MSVC 9.
+MSVC 14.
 @end itemize

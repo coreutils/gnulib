@@ -13,24 +13,24 @@ platforms:
 AIX.
 @item
 @code{sigset_t} is missing on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 @code{sigset_t} is only declared in <sys/types.h> on some platforms:
 mingw.
 @item
 @code{struct sigaction} and @code{siginfo_t} are missing on some
 platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @item
 @code{struct sigaction} lacks the @code{sa_sigaction} member on some
 platforms:
 Irix 5.3, Interix 3.5.
 @item
 The type @code{pid_t} is not defined on some platforms:
-MSVC 9.
+MSVC 14.
 @item
 The signal @code{SIGPIPE} is not defined on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @item
 The macro @code{SA_NODEFER} is not defined on some platforms:
 Interix 3.5.
@@ -42,14 +42,14 @@ NonStop.
 The type @code{sighandler_t} (a GNU extension) is not defined on most non-glibc
 platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 9, Interix 3.5, BeOS.
+IRIX 6.5, OSF/1 5.1, Solaris 11 2011-11, Cygwin, mingw, MSVC 14, Interix 3.5, BeOS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 Many signals are not defined on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @item
 The macros @code{SIGRTMIN} and @code{SIGRTMAX} expand to an expression of type
 @code{long} instead of @code{int} on some platforms:

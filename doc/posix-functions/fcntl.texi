@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 
 @item
 This function does not support @code{F_DUPFD_CLOEXEC} on some
@@ -38,5 +38,5 @@ Portability problems not fixed by Gnulib:
 The replacement function does not support @code{F_SETFD},
 @code{F_GETFL}, @code{F_SETFL}, @code{F_GETOWN}, @code{F_SETOWN},
 @code{F_GETLK}, @code{F_SETLK}, and @code{F_SETLKW} on some platforms:
-mingw, MSVC 9.
+mingw, MSVC 14.
 @end itemize
