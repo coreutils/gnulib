@@ -28,23 +28,23 @@ main (void)
 {
   {
     imaxdiv_t result = imaxdiv (101, 7);
-    ASSERT (result.quot = 14);
-    ASSERT (result.rem = 3);
+    ASSERT (result.quot == 14);
+    ASSERT (result.rem == 3);
   }
   {
     imaxdiv_t result = imaxdiv (-101, 7);
-    ASSERT (result.quot = -14);
-    ASSERT (result.rem = -3);
+    ASSERT (result.quot == -14);
+    ASSERT (result.rem == -3);
   }
   {
     imaxdiv_t result = imaxdiv (101, -7);
-    ASSERT (result.quot = -14);
-    ASSERT (result.rem = 3);
+    ASSERT (result.quot == -14);
+    ASSERT (result.rem == 3);
   }
   {
     imaxdiv_t result = imaxdiv (-101, -7);
-    ASSERT (result.quot = 14);
-    ASSERT (result.rem = -3);
+    ASSERT (result.quot == 14);
+    ASSERT (result.rem == -3);
   }
 
   return 0;
