@@ -1091,6 +1091,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               p = mempcpy (pglob->gl_pathv[newcount], dirname, dirlen);
               p[0] = '/';
               p[1] = '\0';
+              if (__glibc_unlikely (malloc_dirname))
+                free (dirname);
             }
           else
             {
