@@ -131,7 +131,7 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
 
   {
     /* Cache sortbuf and sortbuf_count in local register variables.  */
-    struct ucs4_with_ccc * const sortbuf = filter->sortbuf;
+    struct ucs4_with_ccc *sortbuf = filter->sortbuf;
     size_t sortbuf_count = filter->sortbuf_count;
     int i;
 
@@ -252,9 +252,11 @@ uninorm_filter_write (struct uninorm_filter *filter, ucs4_t uc_arg)
             if (filter->sortbuf != filter->sortbuf_preallocated)
               free (filter->sortbuf);
             filter->sortbuf = new_sortbuf;
+            /* Update cache of filter->sortbuf.  */
+            sortbuf = filter->sortbuf;
           }
-        filter->sortbuf[sortbuf_count].code = uc;
-        filter->sortbuf[sortbuf_count].ccc = ccc;
+        sortbuf[sortbuf_count].code = uc;
+        sortbuf[sortbuf_count].ccc = ccc;
         sortbuf_count++;
       }
 
