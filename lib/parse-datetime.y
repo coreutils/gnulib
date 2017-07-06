@@ -1821,6 +1821,7 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   parser_control pc;
   pc.input = p;
+  pc.parse_datetime_debug = (flags & PARSE_DATETIME_DEBUG) != 0;
   if (INT_ADD_WRAPV (tmp.tm_year, TM_YEAR_BASE, &pc.year.value))
     {
       if (pc.parse_datetime_debug)
@@ -1847,7 +1848,6 @@ parse_datetime2 (struct timespec *result, char const *p,
   pc.dsts_seen = 0;
   pc.zones_seen = 0;
   pc.year_seen = false;
-  pc.parse_datetime_debug = (flags & PARSE_DATETIME_DEBUG) != 0;
   pc.debug_dates_seen = false;
   pc.debug_days_seen = false;
   pc.debug_times_seen = false;
