@@ -1,4 +1,4 @@
-# relocatable.m4 serial 18
+# relocatable.m4 serial 19
 dnl Copyright (C) 2003, 2005-2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,6 +31,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
   AC_BEFORE([AC_PROG_INSTALL],[gl_RELOCATABLE_BODY])
   AC_REQUIRE([AC_LIB_LIBPATH])
   AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   is_noop=no
   use_elf_origin_trick=no
   use_wrapper=no

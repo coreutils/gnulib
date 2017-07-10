@@ -7,12 +7,13 @@
 # unlimited permission to copy and/or distribute it, with or without
 # modifications, as long as this notice is preserved.
 
-# serial 11 argz.m4
+# serial 12 argz.m4
 
 AC_DEFUN([gl_FUNC_ARGZ],
 [gl_PREREQ_ARGZ
 
 AC_REQUIRE([AC_C_RESTRICT])
+AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
 AC_CHECK_HEADERS([argz.h], [], [], [AC_INCLUDES_DEFAULT])
 

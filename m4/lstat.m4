@@ -1,4 +1,4 @@
-# serial 27
+# serial 28
 
 # Copyright (C) 1997-2001, 2003-2017 Free Software Foundation, Inc.
 #
@@ -33,6 +33,7 @@ AC_DEFUN([gl_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK],
 [
   dnl We don't use AC_FUNC_LSTAT_FOLLOWS_SLASHED_SYMLINK any more, because it
   dnl is no longer maintained in Autoconf and because it invokes AC_LIBOBJ.
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether lstat correctly handles trailing slash],
     [gl_cv_func_lstat_dereferences_slashed_symlink],
     [rm -f conftest.sym conftest.file

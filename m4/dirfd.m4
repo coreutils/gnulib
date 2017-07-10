@@ -1,4 +1,4 @@
-# serial 24   -*- Autoconf -*-
+# serial 25   -*- Autoconf -*-
 
 dnl Find out how to get the file descriptor associated with an open DIR*.
 
@@ -12,6 +12,7 @@ dnl From Jim Meyering
 AC_DEFUN([gl_FUNC_DIRFD],
 [
   AC_REQUIRE([gl_DIRENT_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Persuade glibc <dirent.h> to declare dirfd().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])

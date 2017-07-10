@@ -1,4 +1,4 @@
-# ceill.m4 serial 14
+# ceill.m4 serial 15
 dnl Copyright (C) 2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ AC_DEFUN([gl_FUNC_CEILL],
   m4_divert_text([DEFAULTS], [gl_ceill_required=plain])
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
   AC_REQUIRE([gl_LONG_DOUBLE_VS_DOUBLE])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   dnl Persuade glibc <math.h> to declare ceill().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -25,7 +26,6 @@ AC_DEFUN([gl_FUNC_CEILL],
     fi
     m4_ifdef([gl_FUNC_CEILL_IEEE], [
       if test $gl_ceill_required = ieee && test $REPLACE_CEILL = 0; then
-        AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
         AC_CACHE_CHECK([whether ceill works according to ISO C 99 with IEC 60559],
           [gl_cv_func_ceill_ieee],
           [

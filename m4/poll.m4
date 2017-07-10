@@ -1,4 +1,4 @@
-# poll.m4 serial 17
+# poll.m4 serial 18
 dnl Copyright (c) 2003, 2005-2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_POLL],
 [
   AC_REQUIRE([gl_POLL_H])
   AC_REQUIRE([gl_SOCKETS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   if test $ac_cv_header_poll_h = no; then
     ac_cv_func_poll=no
     gl_cv_func_poll=no

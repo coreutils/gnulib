@@ -1,4 +1,4 @@
-# serial 32
+# serial 33
 # How to list mounted file systems.
 
 # Copyright (C) 1998-2004, 2006, 2009-2017 Free Software Foundation, Inc.
@@ -26,6 +26,7 @@ AC_CHECK_FUNCS([getmntent])
 # gl_LIST_MOUNTED_FILE_SYSTEMS([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
 AC_DEFUN([gl_LIST_MOUNTED_FILE_SYSTEMS],
   [
+AC_REQUIRE([AC_CANONICAL_HOST])
 AC_CHECK_FUNCS([listmntent getmntinfo])
 AC_CHECK_HEADERS_ONCE([sys/param.h sys/statvfs.h])
 
