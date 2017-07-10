@@ -21,7 +21,11 @@
 #include <unistd.h>
 
 #include "signature.h"
+#ifdef TEST_GETLOGIN
+SIGNATURE_CHECK (getlogin, char *, (void));
+#else
 SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
+#endif
 
 #include <errno.h>
 #include <stdio.h>
@@ -40,11 +44,17 @@ SIGNATURE_CHECK (getlogin_r, int, (char *, size_t));
 int
 main (void)
 {
+  /* Test value.  */
+#ifdef TEST_GETLOGIN
+  char *buf = getlogin ();
+  int err = buf ? 0 : errno;
+  ASSERT (buf || err);
+#else
   /* Test with a large enough buffer.  */
   char buf[1024];
-  int err;
+  int err = getlogin_r (buf, sizeof buf);
+#endif
 
-  err = getlogin_r (buf, sizeof (buf));
   if (err != 0)
     {
       if (err == ENOENT)
@@ -54,7 +64,7 @@ main (void)
           return 77;
         }
 
-      /* getlogin_r() fails when stdin is not connected to a tty.  */
+      /* It fails when stdin is not connected to a tty.  */
       ASSERT (err == ENOTTY
               || err == EINVAL /* seen on Linux/SPARC */
               || err == ENXIO
@@ -70,30 +80,25 @@ main (void)
 #if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
   /* Unix platform */
   {
-# if HAVE_TTYNAME
-    const char *tty;
     struct stat stat_buf;
     struct passwd *pwd;
 
-    tty = ttyname (STDIN_FILENO);
-    if (tty == NULL)
+    if (!isatty (STDIN_FILENO))
       {
          fprintf (stderr, "Skipping test: stdin is not a tty.\n");
          return 77;
       }
 
-    ASSERT (stat (tty, &stat_buf) == 0);
+    ASSERT (fstat (STDIN_FILENO, &stat_buf) == 0);
 
-    pwd = getpwuid (stat_buf.st_uid);
+    pwd = getpwnam (buf);
     if (! pwd)
       {
-         fprintf (stderr, "Skipping test: no name found for uid %d\n",
-                  stat_buf.st_uid);
-         return 77;
+        fprintf (stderr, "Skipping test: %s: no such user\n", buf);
+        return 77;
       }
 
-    ASSERT (strcmp (pwd->pw_name, buf) == 0);
-# endif
+    ASSERT (pwd->pw_uid == stat_buf.st_uid);
   }
 #endif
 #if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
@@ -107,6 +112,7 @@ main (void)
   }
 #endif
 
+#ifndef TEST_GETLOGIN
   /* Test with a small buffer.  */
   {
     char smallbuf[1024];
@@ -130,6 +136,7 @@ main (void)
     ASSERT (getlogin_r (hugebuf, sizeof (hugebuf)) == 0);
     ASSERT (strcmp (hugebuf, buf) == 0);
   }
+#endif
 
   return 0;
 }

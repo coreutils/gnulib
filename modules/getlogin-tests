@@ -1,12 +1,12 @@
 Files:
 tests/test-getlogin.c
+tests/test-getlogin_r.c
 tests/signature.h
 tests/macros.h
 
 Depends-on:
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([ttyname])
 
 Makefile.am:
 TESTS += test-getlogin

@@ -6,7 +6,6 @@ tests/macros.h
 Depends-on:
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([ttyname])
 
 Makefile.am:
 TESTS += test-getlogin_r
