@@ -1039,9 +1039,12 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                 free (malloc_pwtmpbuf);
 
                 if (flags & GLOB_TILDE_CHECK)
-                  /* We have to regard it as an error if we cannot find the
-                     home directory.  */
-                  return GLOB_NOMATCH;
+                  {
+                    /* We have to regard it as an error if we cannot find the
+                       home directory.  */
+                    retval = GLOB_NOMATCH;
+                    goto out;
+                  }
               }
           }
         }
@@ -1068,12 +1071,11 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           if (newcount > SIZE_MAX / sizeof (char *) - 2)
             {
             nospace:
-              if (__glibc_unlikely (malloc_dirname))
-                free (dirname);
               free (pglob->gl_pathv);
               pglob->gl_pathv = NULL;
               pglob->gl_pathc = 0;
-              return GLOB_NOSPACE;
+              retval = GLOB_NOSPACE;
+              goto out;
             }
 
           new_gl_pathv = realloc (pglob->gl_pathv,
@@ -1113,7 +1115,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
         }
 
       /* Not found.  */
-      return GLOB_NOMATCH;
+      retval = GLOB_NOMATCH;
+      goto out;
     }
 
   meta = __glob_pattern_type (dirname, !(flags & GLOB_NOESCAPE));
@@ -1159,7 +1162,10 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
       if (status != 0)
         {
           if ((flags & GLOB_NOCHECK) == 0 || status != GLOB_NOMATCH)
-            return status;
+            {
+              retval = status;
+              goto out;
+            }
           goto no_matches;
         }
 
@@ -1178,7 +1184,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             if (interrupt_state)
               {
                 globfree (&dirs);
-                return GLOB_ABORTED;
+                retval = GLOB_ABORTED;
+                goto out;
               }
           }
 #endif /* SHELL.  */
@@ -1197,7 +1204,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               globfree (&dirs);
               globfree (pglob);
               pglob->gl_pathc = 0;
-              return status;
+              retval = status;
+              goto out;
             }
 
           /* Stick the directory on the front of each name.  */
@@ -1208,7 +1216,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               globfree (&dirs);
               globfree (pglob);
               pglob->gl_pathc = 0;
-              return GLOB_NOSPACE;
+              retval = GLOB_NOSPACE;
+              goto out;
             }
         }
 
@@ -1230,7 +1239,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                 {
                 nospace2:
                   globfree (&dirs);
-                  return GLOB_NOSPACE;
+                  retval = GLOB_NOSPACE;
+                  goto out;
                 }
 
               new_gl_pathv = realloc (pglob->gl_pathv,
@@ -1245,7 +1255,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                   globfree (&dirs);
                   globfree (pglob);
                   pglob->gl_pathc = 0;
-                  return GLOB_NOSPACE;
+                  retval = GLOB_NOSPACE;
+                  goto out;
                 }
 
               ++pglob->gl_pathc;
@@ -1257,7 +1268,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
           else
             {
               globfree (&dirs);
-              return GLOB_NOMATCH;
+              retval = GLOB_NOMATCH;
+              goto out;
             }
         }
 
@@ -1303,7 +1315,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               flags = orig_flags;
               goto no_matches;
             }
-          return status;
+          retval = status;
+          goto out;
         }
 
       if (dirlen > 0)
@@ -1315,7 +1328,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             {
               globfree (pglob);
               pglob->gl_pathc = 0;
-              return GLOB_NOSPACE;
+              retval = GLOB_NOSPACE;
+              goto out;
             }
         }
     }
@@ -1340,7 +1354,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               {
                 globfree (pglob);
                 pglob->gl_pathc = 0;
-                return GLOB_NOSPACE;
+                retval = GLOB_NOSPACE;
+                goto out;
               }
             strcpy (&new[len - 2], "/");
             pglob->gl_pathv[i] = new;
