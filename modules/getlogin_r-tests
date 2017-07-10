@@ -1,5 +1,6 @@
 Files:
 tests/test-getlogin_r.c
+tests/test-getlogin.h
 tests/signature.h
 tests/macros.h
 
