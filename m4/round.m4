@@ -1,4 +1,4 @@
-# round.m4 serial 16
+# round.m4 serial 17
 dnl Copyright (C) 2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,7 +57,7 @@ int main()
     * (double) (1U << ((DBL_MANT_DIG + 3) / 5))
     * (double) (1U << ((DBL_MANT_DIG + 4) / 5));
   volatile double x = 0.5 - 0.5 / TWO_MANT_DIG;
-  exit (x < 0.5 && round (x) != 0.0);
+  return (x < 0.5 && round (x) != 0.0);
 }]])], [gl_cv_func_round_works=yes], [gl_cv_func_round_works=no],
         [case "$host_os" in
            netbsd* | aix*) gl_cv_func_round_works="guessing no";;

@@ -1,4 +1,4 @@
-# roundf.m4 serial 17
+# roundf.m4 serial 18
 dnl Copyright (C) 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,7 +54,7 @@ int main()
     * (float) (1U << ((FLT_MANT_DIG + 1) / 3))
     * (float) (1U << ((FLT_MANT_DIG + 2) / 3));
   volatile float x = 0.5f - 0.5f / TWO_MANT_DIG;
-  exit (x < 0.5f && roundf (x) != 0.0f);
+  return (x < 0.5f && roundf (x) != 0.0f);
 }]])], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
         [case "$host_os" in
            mingw*) gl_cv_func_roundf_works="guessing no";;
