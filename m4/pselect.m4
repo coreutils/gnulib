@@ -1,4 +1,4 @@
-# pselect.m4 serial 3
+# pselect.m4 serial 4
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_PSELECT],
 
   if test $ac_cv_func_pselect = yes; then
     AC_CACHE_CHECK([whether signature of pselect conforms to POSIX],
-      gl_cv_sig_pselect,
+      [gl_cv_sig_pselect],
       [AC_LINK_IFELSE(
          [AC_LANG_PROGRAM(
               [[#include <sys/select.h>

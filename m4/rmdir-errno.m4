@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 
 # Copyright (C) 2000-2001, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -14,7 +14,7 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
 [dnl
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([for rmdir-not-empty errno value],
-    gl_cv_func_rmdir_errno_not_empty,
+    [gl_cv_func_rmdir_errno_not_empty],
     [
       # Arrange for deletion of the temporary directory this test creates.
       ac_clean_files="$ac_clean_files confdir2"
@@ -37,10 +37,9 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
           return 0;
         }
         ]])],
-      [gl_cv_func_rmdir_errno_not_empty=`cat confdir2/errno`],
-      [gl_cv_func_rmdir_errno_not_empty='configure error in rmdir-errno.m4'],
-      [gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY]
-      )
+        [gl_cv_func_rmdir_errno_not_empty=`cat confdir2/errno`],
+        [gl_cv_func_rmdir_errno_not_empty='configure error in rmdir-errno.m4'],
+        [gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY])
     ]
   )
 

@@ -1,4 +1,4 @@
-# serial 16
+# serial 17
 
 dnl From Jim Meyering.
 dnl
@@ -15,7 +15,7 @@ dnl
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
   [AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
    AC_CACHE_CHECK([for d_ino member in directory struct],
-                  gl_cv_struct_dirent_d_ino,
+                  [gl_cv_struct_dirent_d_ino],
      [AC_RUN_IFELSE(
         [AC_LANG_PROGRAM(
            [[#include <sys/types.h>

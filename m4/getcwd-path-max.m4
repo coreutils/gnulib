@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 # Check for several getcwd bugs with long file names.
 # If so, arrange to compile the wrapper function.
 
@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_GETCWD_PATH_MAX],
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_REQUIRE([gl_PATHMAX_SNIPPET_PREREQ])
   AC_CACHE_CHECK([whether getcwd handles long file names properly],
-    gl_cv_func_getcwd_path_max,
+    [gl_cv_func_getcwd_path_max],
     [# Arrange for deletion of the temporary directory this test creates.
      ac_clean_files="$ac_clean_files confdir3"
      dnl Please keep this in sync with tests/test-getcwd.c.
@@ -202,16 +202,16 @@ main ()
 #endif
 }
           ]])],
-    [gl_cv_func_getcwd_path_max=yes],
-    [case $? in
-     10|11|12) gl_cv_func_getcwd_path_max='no, but it is partly working';;
-     31) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
-     32) gl_cv_func_getcwd_path_max='yes, but with shorter paths';;
-     *) gl_cv_func_getcwd_path_max=no;;
-     esac],
-    [case "$host_os" in
-       aix*) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
-       *) gl_cv_func_getcwd_path_max=no;;
-     esac])
-  ])
+       [gl_cv_func_getcwd_path_max=yes],
+       [case $? in
+        10|11|12) gl_cv_func_getcwd_path_max='no, but it is partly working';;
+        31) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
+        32) gl_cv_func_getcwd_path_max='yes, but with shorter paths';;
+        *) gl_cv_func_getcwd_path_max=no;;
+        esac],
+       [case "$host_os" in
+          aix*) gl_cv_func_getcwd_path_max='no, it has the AIX bug';;
+          *) gl_cv_func_getcwd_path_max=no;;
+        esac])
+    ])
 ])

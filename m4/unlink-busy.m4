@@ -1,4 +1,4 @@
-#serial 12
+#serial 13
 
 dnl From J. David Anglin.
 
@@ -12,7 +12,7 @@ dnl HPUX and other systems can't unlink shared text that is being executed.
 AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
 [dnl
   AC_CACHE_CHECK([whether a running program can be unlinked],
-    gl_cv_func_unlink_busy_text,
+    [gl_cv_func_unlink_busy_text],
     [
       AC_RUN_IFELSE(
         [AC_LANG_SOURCE(
@@ -27,9 +27,9 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
                 result |= 2;
               return result;
             }]])],
-      gl_cv_func_unlink_busy_text=yes,
-      gl_cv_func_unlink_busy_text=no,
-      gl_cv_func_unlink_busy_text=no
+        [gl_cv_func_unlink_busy_text=yes],
+        [gl_cv_func_unlink_busy_text=no],
+        [gl_cv_func_unlink_busy_text=no]
       )
     ]
   )

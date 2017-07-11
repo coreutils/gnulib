@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -18,7 +18,7 @@ AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
   AC_REQUIRE([gl_PATHMAX_SNIPPET_PREREQ])
   AC_CHECK_FUNCS([getpagesize])
   AC_CACHE_CHECK([whether getcwd aborts when 4k < cwd_length < 16k],
-    gl_cv_func_getcwd_abort_bug,
+    [gl_cv_func_getcwd_abort_bug],
     [# Remove any remnants of a previous test.
      rm -rf confdir-14B---
      # Arrange for deletion of the temporary directory this test creates.
@@ -121,20 +121,20 @@ main ()
   return fail;
 }
           ]])],
-    [gl_cv_func_getcwd_abort_bug=no],
-    [dnl An abort will provoke an exit code of something like 134 (128 + 6).
-     dnl An exit code of 4 can also occur (in OpenBSD 4.9, NetBSD 5.1 for
-     dnl example): getcwd (NULL, 0) fails rather than returning a string
-     dnl longer than PATH_MAX.  This may be POSIX compliant (in some
-     dnl interpretations of POSIX).  But gnulib's getcwd module wants to
-     dnl provide a non-NULL value in this case.
-     ret=$?
-     if test $ret -ge 128 || test $ret = 4; then
-       gl_cv_func_getcwd_abort_bug=yes
-     else
-       gl_cv_func_getcwd_abort_bug=no
-     fi],
-    [gl_cv_func_getcwd_abort_bug=yes])
-  ])
+       [gl_cv_func_getcwd_abort_bug=no],
+       [dnl An abort will provoke an exit code of something like 134 (128 + 6).
+        dnl An exit code of 4 can also occur (in OpenBSD 4.9, NetBSD 5.1 for
+        dnl example): getcwd (NULL, 0) fails rather than returning a string
+        dnl longer than PATH_MAX.  This may be POSIX compliant (in some
+        dnl interpretations of POSIX).  But gnulib's getcwd module wants to
+        dnl provide a non-NULL value in this case.
+        ret=$?
+        if test $ret -ge 128 || test $ret = 4; then
+          gl_cv_func_getcwd_abort_bug=yes
+        else
+          gl_cv_func_getcwd_abort_bug=no
+        fi],
+       [gl_cv_func_getcwd_abort_bug=yes])
+    ])
   AS_IF([test $gl_cv_func_getcwd_abort_bug = yes], [$1], [$2])
 ])

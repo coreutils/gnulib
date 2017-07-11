@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 27  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 28  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2017 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -639,7 +639,7 @@ AC_DEFUN([AC_FUNC_MBRTOWC],
 [
   dnl Same as AC_FUNC_MBRTOWC in autoconf-2.60.
   AC_CACHE_CHECK([whether mbrtowc and mbstate_t are properly declared],
-    gl_cv_func_mbrtowc,
+    [gl_cv_func_mbrtowc],
     [AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
             [[/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be
@@ -655,8 +655,8 @@ AC_DEFUN([AC_FUNC_MBRTOWC],
               size_t n = 1;
               mbstate_t state;
               return ! (sizeof state && (mbrtowc) (&wc, s, n, &state));]])],
-       gl_cv_func_mbrtowc=yes,
-       gl_cv_func_mbrtowc=no)])
+       [gl_cv_func_mbrtowc=yes],
+       [gl_cv_func_mbrtowc=no])])
   if test $gl_cv_func_mbrtowc = yes; then
     AC_DEFINE([HAVE_MBRTOWC], [1],
       [Define to 1 if mbrtowc and mbstate_t are properly declared.])

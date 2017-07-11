@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 
 dnl From Jim Meyering.
 dnl
@@ -13,7 +13,7 @@ dnl
 
 AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_TYPE],
   [AC_CACHE_CHECK([for d_type member in directory struct],
-                  gl_cv_struct_dirent_d_type,
+                  [gl_cv_struct_dirent_d_type],
      [AC_LINK_IFELSE([AC_LANG_PROGRAM([[
 #include <sys/types.h>
 #include <dirent.h>

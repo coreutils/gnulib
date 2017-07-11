@@ -1,4 +1,4 @@
-# fchownat.m4 serial 1
+# fchownat.m4 serial 2
 dnl Copyright (C) 2004-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
   AC_CACHE_CHECK([whether fchownat works with AT_SYMLINK_NOFOLLOW],
-    gl_cv_func_fchownat_nofollow_works,
+    [gl_cv_func_fchownat_nofollow_works],
     [
      gl_dangle=conftest.dangle
      # Remove any remnants of a previous test.
@@ -67,10 +67,9 @@ main ()
           && errno == ENOENT);
 }
           ]])],
-    [gl_cv_func_fchownat_nofollow_works=yes],
-    [gl_cv_func_fchownat_nofollow_works=no],
-    [gl_cv_func_fchownat_nofollow_works=no],
-    )
+       [gl_cv_func_fchownat_nofollow_works=yes],
+       [gl_cv_func_fchownat_nofollow_works=no],
+       [gl_cv_func_fchownat_nofollow_works=no])
   ])
   AS_IF([test $gl_cv_func_fchownat_nofollow_works = no], [$1], [$2])
 ])
