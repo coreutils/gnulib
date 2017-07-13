@@ -1,4 +1,4 @@
-# logbf.m4 serial 1
+# logbf.m4 serial 2
 dnl Copyright (C) 2012-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,8 +73,17 @@ int main ()
         [gl_cv_func_logbf_works=yes],
         [gl_cv_func_logbf_works=no],
         [case "$host_os" in
-           *gnu* | solaris*) gl_cv_func_logbf_works="guessing no";;
-           *)                gl_cv_func_logbf_works="guessing yes";;
+           *gnu* | solaris*) gl_cv_func_logbf_works="guessing no" ;;
+           mingw*) # Guess yes on MSVC, no on mingw.
+             AC_EGREP_CPP([Known], [
+#ifdef _MSC_VER
+ Known
+#endif
+               ],
+               [gl_cv_func_logbf_works="guessing yes"],
+               [gl_cv_func_logbf_works="guessing no"])
+             ;;
+           *) gl_cv_func_logbf_works="guessing yes" ;;
          esac
         ])
     ])

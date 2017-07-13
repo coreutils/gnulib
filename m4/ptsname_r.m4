@@ -1,4 +1,4 @@
-# ptsname_r.m4 serial 3
+# ptsname_r.m4 serial 4
 dnl Copyright (C) 2010-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -68,10 +68,19 @@ AC_DEFUN([gl_PREREQ_PTSNAME_R], [
        [gl_cv_func_isatty_sets_errno=yes],
        [gl_cv_func_isatty_sets_errno=no],
        [case "$host_os" in
-          irix* | solaris* | mingw*)
-            gl_cv_func_isatty_sets_errno="guessing no";;
+          irix* | solaris*)
+            gl_cv_func_isatty_sets_errno="guessing no" ;;
+          mingw*) # Guess yes on mingw, no on MSVC.
+            AC_EGREP_CPP([Known], [
+#ifdef __MINGW32__
+ Known
+#endif
+              ],
+              [gl_cv_func_isatty_sets_errno="guessing yes"],
+              [gl_cv_func_isatty_sets_errno="guessing no"])
+            ;;
           *)
-            gl_cv_func_isatty_sets_errno="guessing yes";;
+            gl_cv_func_isatty_sets_errno="guessing yes" ;;
         esac
        ])
     ])

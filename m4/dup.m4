@@ -1,4 +1,4 @@
-# dup.m4 serial 5
+# dup.m4 serial 6
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_DUP],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   m4_ifdef([gl_MSVC_INVAL], [
     AC_REQUIRE([gl_MSVC_INVAL])
     if test $HAVE_MSVC_INVALID_PARAMETER_HANDLER = 1; then
@@ -33,7 +34,12 @@ AC_DEFUN([gl_FUNC_DUP],
       ],
       [gl_cv_func_dup_works=yes],
       [gl_cv_func_dup_works=no],
-      [gl_cv_func_dup_works='guessing yes'])
+      [case "$host_os" in
+                 # Guess no on native Windows.
+         mingw*) gl_cv_func_dup_works="guessing no" ;;
+         *)      gl_cv_func_dup_works="guessing yes" ;;
+       esac
+      ])
     ])
   case "$gl_cv_func_dup_works" in
     *yes) ;;

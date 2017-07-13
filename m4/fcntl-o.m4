@@ -1,4 +1,4 @@
-# fcntl-o.m4 serial 4
+# fcntl-o.m4 serial 5
 dnl Copyright (C) 2006, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,7 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
     [AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])],
     [AC_REQUIRE([AC_GNU_SOURCE])])
 
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CHECK_FUNCS_ONCE([symlink])
   AC_CACHE_CHECK([for working fcntl.h], [gl_cv_header_working_fcntl_h],
@@ -116,7 +117,13 @@ AC_DEFUN([gl_FCNTL_O_FLAGS],
         68) gl_cv_header_working_fcntl_h='no (bad O_NOATIME, O_NOFOLLOW)';; #(
          *) gl_cv_header_working_fcntl_h='no';;
         esac],
-       [gl_cv_header_working_fcntl_h=cross-compiling])])
+       [case "$host_os" in
+                  # Guess 'no' on native Windows.
+          mingw*) gl_cv_header_working_fcntl_h='no' ;;
+          *)      gl_cv_header_working_fcntl_h=cross-compiling ;;
+        esac
+       ])
+    ])
 
   case $gl_cv_header_working_fcntl_h in #(
   *O_NOATIME* | no | cross-compiling) ac_val=0;; #(

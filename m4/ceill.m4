@@ -1,4 +1,4 @@
-# ceill.m4 serial 15
+# ceill.m4 serial 16
 dnl Copyright (C) 2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,6 +54,8 @@ int main (int argc, char *argv[])
               [case "$host_os" in
                          # Guess yes on glibc systems.
                  *-gnu*) gl_cv_func_ceill_ieee="guessing yes" ;;
+                         # Guess yes on native Windows.
+                 mingw*) gl_cv_func_ceill_ieee="guessing yes" ;;
                          # If we don't know, assume the worst.
                  *)      gl_cv_func_ceill_ieee="guessing no" ;;
                esac
@@ -83,10 +85,13 @@ int main (int argc, char *argv[])
 long double d = 0.3L;]],
              [[return (!(ceill (d) == 1)); ]])],
              [gl_cv_func_ceill_buggy=no], [gl_cv_func_ceill_buggy=yes],
-             [case $host_os in
-                openbsd*) gl_cv_func_ceill_buggy="guessing yes";;
-                *) gl_cv_func_ceill_buggy="guessing no";;
-              esac])
+             [case "$host_os" in
+                openbsd*) gl_cv_func_ceill_buggy="guessing yes" ;;
+                          # Guess no on native Windows.
+                mingw*)   gl_cv_func_ceill_buggy="guessing no" ;;
+                *)        gl_cv_func_ceill_buggy="guessing no" ;;
+              esac
+             ])
           LIBS="$save_LIBS"
         ])
     case "$gl_cv_func_ceill_buggy" in

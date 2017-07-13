@@ -1,4 +1,4 @@
-# hypotf.m4 serial 5
+# hypotf.m4 serial 6
 dnl Copyright (C) 2012-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -73,6 +73,8 @@ int main (int argc, char *argv[])
               [case "$host_os" in
                          # Guess yes on glibc systems.
                  *-gnu*) gl_cv_func_hypotf_ieee="guessing yes" ;;
+                         # Guess yes on native Windows.
+                 mingw*) gl_cv_func_hypotf_ieee="guessing yes" ;;
                          # If we don't know, assume the worst.
                  *)      gl_cv_func_hypotf_ieee="guessing no" ;;
                esac
@@ -139,8 +141,10 @@ int main ()
         [gl_cv_func_hypotf_works=yes],
         [gl_cv_func_hypotf_works=no],
         [case "$host_os" in
-           netbsd* | openbsd*) gl_cv_func_hypotf_works="guessing no";;
-           *)                  gl_cv_func_hypotf_works="guessing yes";;
+           netbsd* | openbsd*) gl_cv_func_hypotf_works="guessing no" ;;
+                               # Guess yes on native Windows.
+           mingw*)             gl_cv_func_hypotf_works="guessing yes" ;;
+           *)                  gl_cv_func_hypotf_works="guessing yes" ;;
          esac
         ])
     ])

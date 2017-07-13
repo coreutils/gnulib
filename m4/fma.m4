@@ -1,4 +1,4 @@
-# fma.m4 serial 2
+# fma.m4 serial 3
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -167,8 +167,18 @@ int main()
 }]])],
         [gl_cv_func_fma_works=yes],
         [gl_cv_func_fma_works=no],
-        [dnl Guess no, even on glibc systems.
+        [dnl Guess yes on native Windows with MSVC.
+         dnl Otherwise guess no, even on glibc systems.
          gl_cv_func_fma_works="guessing no"
+         case "$host_os" in
+           mingw*)
+             AC_EGREP_CPP([Known], [
+#ifdef _MSC_VER
+ Known
+#endif
+               ], [gl_cv_func_fma_works="guessing yes"])
+             ;;
+         esac
         ])
     ])
   LIBS="$save_LIBS"

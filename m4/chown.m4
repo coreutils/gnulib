@@ -1,4 +1,4 @@
-# serial 27
+# serial 28
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2017 Free Software
@@ -13,8 +13,6 @@ dnl with or without modifications, as long as this notice is preserved.
 # function.
 
 # From Jim Meyering.
-
-m4_version_prereq([2.70], [] ,[
 
 # This is taken from the following Autoconf patch:
 # http://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=commitdiff;h=7fbb553727ed7e0e689a17594b58559ecf3ea6e9
@@ -49,20 +47,22 @@ AC_DEFUN([AC_FUNC_CHOWN],
        [ac_cv_func_chown_works=no],
        [case "$host_os" in # ((
                   # Guess yes on glibc systems.
-          *-gnu*) ac_cv_func_chown_works=yes ;;
+          *-gnu*) ac_cv_func_chown_works="guessing yes" ;;
+                  # Guess no on native Windows.
+          mingw*) ac_cv_func_chown_works="guessing no" ;;
                   # If we don't know, assume the worst.
-          *)      ac_cv_func_chown_works=no ;;
+          *)      ac_cv_func_chown_works="guessing no" ;;
         esac
        ])
      rm -f conftest.chown
     ])
-  if test $ac_cv_func_chown_works = yes; then
-    AC_DEFINE([HAVE_CHOWN], [1],
-      [Define to 1 if your system has a working `chown' function.])
-  fi
+  case "$ac_cv_func_chown_works" in
+    *yes)
+      AC_DEFINE([HAVE_CHOWN], [1],
+        [Define to 1 if your system has a working `chown' function.])
+      ;;
+  esac
 ])# AC_FUNC_CHOWN
-
-])
 
 AC_DEFUN_ONCE([gl_FUNC_CHOWN],
 [
@@ -83,11 +83,13 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
     fi
 
     dnl Some old systems tried to use uid/gid -1 literally.
-    if test $ac_cv_func_chown_works = no; then
-      AC_DEFINE([CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE], [1],
-        [Define if chown is not POSIX compliant regarding IDs of -1.])
-      REPLACE_CHOWN=1
-    fi
+    case "$ac_cv_func_chown_works" in
+      *no)
+        AC_DEFINE([CHOWN_FAILS_TO_HONOR_ID_OF_NEGATIVE_ONE], [1],
+          [Define if chown is not POSIX compliant regarding IDs of -1.])
+        REPLACE_CHOWN=1
+        ;;
+    esac
 
     dnl Solaris 9 ignores trailing slash.
     dnl FreeBSD 7.2 mishandles trailing slash on symlinks.

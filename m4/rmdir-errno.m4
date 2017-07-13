@@ -1,4 +1,4 @@
-# serial 12
+# serial 13
 
 # Copyright (C) 2000-2001, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -12,6 +12,7 @@
 # test runs a test to determine the actual numeric value.
 AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
 [dnl
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([for rmdir-not-empty errno value],
     [gl_cv_func_rmdir_errno_not_empty],
@@ -39,11 +40,16 @@ AC_DEFUN([gl_FUNC_RMDIR_NOTEMPTY],
         ]])],
         [gl_cv_func_rmdir_errno_not_empty=`cat confdir2/errno`],
         [gl_cv_func_rmdir_errno_not_empty='configure error in rmdir-errno.m4'],
-        [gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY])
+        [case "$host_os" in
+                   # Guess ENOTEMPTY = 41 on native Windows.
+           mingw*) gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
+           *)      gl_cv_func_rmdir_errno_not_empty=ENOTEMPTY ;;
+         esac
+        ])
     ]
   )
 
   AC_DEFINE_UNQUOTED([RMDIR_ERRNO_NOT_EMPTY],
-    $gl_cv_func_rmdir_errno_not_empty,
+    [$gl_cv_func_rmdir_errno_not_empty],
     [the value to which errno is set when rmdir fails on a nonempty directory])
 ])

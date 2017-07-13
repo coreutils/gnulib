@@ -1,4 +1,4 @@
-# fabsl.m4 serial 2
+# fabsl.m4 serial 3
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -66,8 +66,10 @@ int main ()
         [gl_cv_func_fabsl_works=yes],
         [gl_cv_func_fabsl_works=no],
         [case "$host_os" in
-           irix*) gl_cv_func_fabsl_works="guessing no";;
-           *)     gl_cv_func_fabsl_works="guessing yes";;
+           irix*)  gl_cv_func_fabsl_works="guessing no" ;;
+                   # Guess yes on native Windows.
+           mingw*) gl_cv_func_fabsl_works="guessing yes" ;;
+           *)      gl_cv_func_fabsl_works="guessing yes" ;;
          esac
         ])
     ])

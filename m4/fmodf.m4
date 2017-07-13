@@ -1,4 +1,4 @@
-# fmodf.m4 serial 6
+# fmodf.m4 serial 7
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -61,6 +61,8 @@ int main (int argc, char *argv[])
               [case "$host_os" in
                          # Guess yes on glibc systems.
                  *-gnu*) gl_cv_func_fmodf_ieee="guessing yes" ;;
+                         # Guess yes on native Windows.
+                 mingw*) gl_cv_func_fmodf_ieee="guessing yes" ;;
                          # If we don't know, assume the worst.
                  *)      gl_cv_func_fmodf_ieee="guessing no" ;;
                esac

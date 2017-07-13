@@ -1,4 +1,4 @@
-# log1pf.m4 serial 3
+# log1pf.m4 serial 4
 dnl Copyright (C) 2012-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -63,6 +63,8 @@ int main (int argc, char *argv[])
               [case "$host_os" in
                          # Guess yes on glibc systems.
                  *-gnu*) gl_cv_func_log1pf_ieee="guessing yes" ;;
+                         # Guess yes on native Windows.
+                 mingw*) gl_cv_func_log1pf_ieee="guessing yes" ;;
                          # If we don't know, assume the worst.
                  *)      gl_cv_func_log1pf_ieee="guessing no" ;;
                esac
@@ -110,8 +112,10 @@ int main ()
         [gl_cv_func_log1pf_works=yes],
         [gl_cv_func_log1pf_works=no],
         [case "$host_os" in
-           irix*) gl_cv_func_log1pf_works="guessing no";;
-           *)     gl_cv_func_log1pf_works="guessing yes";;
+           irix*)  gl_cv_func_log1pf_works="guessing no" ;;
+                   # Guess yes on native Windows.
+           mingw*) gl_cv_func_log1pf_works="guessing yes" ;;
+           *)      gl_cv_func_log1pf_works="guessing yes" ;;
          esac
         ])
     ])

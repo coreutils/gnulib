@@ -1,4 +1,4 @@
-# fchdir.m4 serial 21
+# fchdir.m4 serial 22
 dnl Copyright (C) 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,6 +33,8 @@ AC_DEFUN([gl_FUNC_FCHDIR],
         [case "$host_os" in
                    # Guess yes on glibc systems.
            *-gnu*) gl_cv_func_open_directory_works="guessing yes" ;;
+                   # Guess no on native Windows.
+           mingw*) gl_cv_func_open_directory_works="guessing no" ;;
                    # If we don't know, assume the worst.
            *)      gl_cv_func_open_directory_works="guessing no" ;;
          esac

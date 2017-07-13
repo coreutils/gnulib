@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 
 # Copyright (C) 2001, 2003-2004, 2006, 2008-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -25,6 +25,15 @@ AC_DEFUN([gl_FUNC_MKDIR],
       [case "$host_os" in
                  # Guess yes on glibc systems.
          *-gnu*) gl_cv_func_mkdir_trailing_slash_works="guessing yes" ;;
+                 # Guess yes on MSVC, no on mingw.
+         mingw*) AC_EGREP_CPP([Known], [
+#ifdef _MSC_VER
+ Known
+#endif
+                   ],
+                   [gl_cv_func_mkdir_trailing_slash_works="guessing yes"],
+                   [gl_cv_func_mkdir_trailing_slash_works="guessing no"])
+                 ;;
                  # If we don't know, assume the worst.
          *)      gl_cv_func_mkdir_trailing_slash_works="guessing no" ;;
        esac
@@ -51,6 +60,8 @@ AC_DEFUN([gl_FUNC_MKDIR],
       [case "$host_os" in
                  # Guess yes on glibc systems.
          *-gnu*) gl_cv_func_mkdir_trailing_dot_works="guessing yes" ;;
+                 # Guess no on native Windows.
+         mingw*) gl_cv_func_mkdir_trailing_dot_works="guessing no" ;;
                  # If we don't know, assume the worst.
          *)      gl_cv_func_mkdir_trailing_dot_works="guessing no" ;;
        esac

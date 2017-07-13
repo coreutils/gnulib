@@ -1,4 +1,4 @@
-# posix_spawn.m4 serial 11
+# posix_spawn.m4 serial 12
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -430,8 +430,10 @@ int main ()
          [gl_cv_func_posix_spawn_file_actions_addclose_works=no],
          [# Guess no on Solaris, yes otherwise.
           case "$host_os" in
-            solaris*) gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no";;
-            *)        gl_cv_func_posix_spawn_file_actions_addclose_works="guessing yes";;
+            solaris*) gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+                      # Guess no on native Windows.
+            mingw*)   gl_cv_func_posix_spawn_file_actions_addclose_works="guessing no" ;;
+            *)        gl_cv_func_posix_spawn_file_actions_addclose_works="guessing yes" ;;
           esac
          ])
       ])
@@ -472,6 +474,8 @@ int main ()
          [# Guess no on Solaris, yes otherwise.
           case "$host_os" in
             solaris*) gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no";;
+                      # Guess no on native Windows.
+            mingw*)   gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing no" ;;
             *)        gl_cv_func_posix_spawn_file_actions_adddup2_works="guessing yes";;
           esac
          ])
@@ -515,6 +519,8 @@ int main ()
          [# Guess no on Solaris, yes otherwise.
           case "$host_os" in
             solaris*) gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no";;
+                      # Guess no on native Windows.
+            mingw*)   gl_cv_func_posix_spawn_file_actions_addopen_works="guessing no" ;;
             *)        gl_cv_func_posix_spawn_file_actions_addopen_works="guessing yes";;
           esac
          ])

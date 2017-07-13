@@ -1,4 +1,4 @@
-# strncat.m4 serial 2
+# strncat.m4 serial 3
 dnl Copyright (C) 2002-2004, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -84,9 +84,11 @@ AC_DEFUN_ONCE([gl_FUNC_STRNCAT],
        [
         case "$host_os" in
                     # Guess no on Solaris.
-          solaris*) gl_cv_func_strncat_works="guessing no";;
+          solaris*) gl_cv_func_strncat_works="guessing no" ;;
+                    # Guess yes on native Windows.
+          mingw*)   gl_cv_func_strncat_works="guessing yes" ;;
                     # Guess yes otherwise.
-          *)        gl_cv_func_strncat_works="guessing yes";;
+          *)        gl_cv_func_strncat_works="guessing yes" ;;
         esac
        ])
     ])

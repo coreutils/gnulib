@@ -1,4 +1,4 @@
-# ftello.m4 serial 12
+# ftello.m4 serial 13
 dnl Copyright (C) 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,6 +53,8 @@ changequote(,)dnl
           case "$host_os" in
                       # Guess no on Solaris.
             solaris*) gl_cv_func_ftello_works="guessing no" ;;
+                      # Guess yes on native Windows.
+            mingw*)   gl_cv_func_ftello_works="guessing yes" ;;
                       # Guess yes otherwise.
             *)        gl_cv_func_ftello_works="guessing yes" ;;
           esac

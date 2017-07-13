@@ -1,4 +1,4 @@
-# log2l.m4 serial 1
+# log2l.m4 serial 2
 dnl Copyright (C) 2010-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -100,8 +100,10 @@ int main ()
         [gl_cv_func_log2l_works=yes],
         [gl_cv_func_log2l_works=no],
         [case "$host_os" in
-           osf*) gl_cv_func_log2l_works="guessing no";;
-           *)    gl_cv_func_log2l_works="guessing yes";;
+           osf*)   gl_cv_func_log2l_works="guessing no" ;;
+                   # Guess yes on native Windows.
+           mingw*) gl_cv_func_log2l_works="guessing yes" ;;
+           *)      gl_cv_func_log2l_works="guessing yes" ;;
          esac
         ])
     ])

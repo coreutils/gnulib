@@ -1,4 +1,4 @@
-# serial 26
+# serial 27
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -57,6 +57,8 @@ AC_DEFUN([gl_FUNC_RENAME],
       [case "$host_os" in
                  # Guess yes on glibc systems.
          *-gnu*) gl_cv_func_rename_slash_dst_works="guessing yes" ;;
+                 # Guess no on native Windows.
+         mingw*) gl_cv_func_rename_slash_dst_works="guessing no" ;;
                  # If we don't know, assume the worst.
          *)      gl_cv_func_rename_slash_dst_works="guessing no" ;;
        esac
@@ -109,6 +111,8 @@ AC_DEFUN([gl_FUNC_RENAME],
       [case "$host_os" in
                  # Guess yes on glibc systems.
          *-gnu*) gl_cv_func_rename_slash_src_works="guessing yes" ;;
+                 # Guess yes on native Windows.
+         mingw*) gl_cv_func_rename_slash_src_works="guessing yes" ;;
                  # If we don't know, assume the worst.
          *)      gl_cv_func_rename_slash_src_works="guessing no" ;;
        esac
@@ -158,6 +162,8 @@ AC_DEFUN([gl_FUNC_RENAME],
            [case "$host_os" in
                       # Guess yes on glibc systems.
               *-gnu*) gl_cv_func_rename_link_works="guessing yes" ;;
+                      # Guess yes on native Windows.
+              mingw*) gl_cv_func_rename_link_works="guessing yes" ;;
                       # If we don't know, assume the worst.
               *)      gl_cv_func_rename_link_works="guessing no" ;;
             esac
@@ -207,6 +213,8 @@ AC_DEFUN([gl_FUNC_RENAME],
       [case "$host_os" in
                  # Guess yes on glibc systems.
          *-gnu*) gl_cv_func_rename_dest_works="guessing yes" ;;
+                 # Guess no on native Windows.
+         mingw*) gl_cv_func_rename_dest_works="guessing no" ;;
                  # If we don't know, assume the worst.
          *)      gl_cv_func_rename_dest_works="guessing no" ;;
        esac

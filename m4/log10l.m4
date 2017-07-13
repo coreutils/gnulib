@@ -1,4 +1,4 @@
-# log10l.m4 serial 4
+# log10l.m4 serial 5
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -94,8 +94,10 @@ int main ()
         [gl_cv_func_log10l_works=yes],
         [gl_cv_func_log10l_works=no],
         [case "$host_os" in
-           aix* | irix* | osf*) gl_cv_func_log10l_works="guessing no";;
-           *)                   gl_cv_func_log10l_works="guessing yes";;
+           aix* | irix* | osf*) gl_cv_func_log10l_works="guessing no" ;;
+                                # Guess yes on native Windows.
+           mingw*)              gl_cv_func_log10l_works="guessing yes" ;;
+           *)                   gl_cv_func_log10l_works="guessing yes" ;;
          esac
         ])
     ])

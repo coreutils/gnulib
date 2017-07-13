@@ -1,4 +1,4 @@
-#serial 13
+#serial 14
 
 dnl From J. David Anglin.
 
@@ -29,12 +29,17 @@ AC_DEFUN([gl_FUNC_UNLINK_BUSY_TEXT],
             }]])],
         [gl_cv_func_unlink_busy_text=yes],
         [gl_cv_func_unlink_busy_text=no],
-        [gl_cv_func_unlink_busy_text=no]
+        [case "$host_os" in
+                   # Guess no on native Windows.
+           mingw*) gl_cv_func_unlink_busy_text="guessing no" ;;
+           *)      gl_cv_func_unlink_busy_text="guessing no" ;;
+         esac
+        ]
       )
     ]
   )
 
-  if test $gl_cv_func_unlink_busy_text = no; then
-    INSTALL=$ac_install_sh
-  fi
+  case "$gl_cv_func_unlink_busy_text" in
+    *no) INSTALL=$ac_install_sh ;;
+  esac
 ])

@@ -1,4 +1,4 @@
-# roundf.m4 serial 18
+# roundf.m4 serial 19
 dnl Copyright (C) 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,8 +57,16 @@ int main()
   return (x < 0.5f && roundf (x) != 0.0f);
 }]])], [gl_cv_func_roundf_works=yes], [gl_cv_func_roundf_works=no],
         [case "$host_os" in
-           mingw*) gl_cv_func_roundf_works="guessing no";;
-           *)      gl_cv_func_roundf_works="guessing yes";;
+                   # Guess yes on MSVC, no on mingw.
+           mingw*) AC_EGREP_CPP([Known], [
+#ifdef _MSC_VER
+ Known
+#endif
+                     ],
+                     [gl_cv_func_roundf_works="guessing yes"],
+                     [gl_cv_func_roundf_works="guessing no"])
+                   ;;
+           *)      gl_cv_func_roundf_works="guessing yes" ;;
          esac
         ])
         LIBS="$save_LIBS"
@@ -107,6 +115,15 @@ int main (int argc, char *argv[])
               [case "$host_os" in
                          # Guess yes on glibc systems.
                  *-gnu*) gl_cv_func_roundf_ieee="guessing yes" ;;
+                         # Guess yes on MSVC, no on mingw.
+                 mingw*) AC_EGREP_CPP([Known], [
+#ifdef _MSC_VER
+ Known
+#endif
+                           ],
+                           [gl_cv_func_roundf_ieee="guessing yes"],
+                           [gl_cv_func_roundf_ieee="guessing no"])
+                         ;;
                          # If we don't know, assume the worst.
                  *)      gl_cv_func_roundf_ieee="guessing no" ;;
                esac

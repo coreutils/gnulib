@@ -1,4 +1,4 @@
-# btowc.m4 serial 10
+# btowc.m4 serial 11
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,8 @@ changequote(,)dnl
            case "$host_os" in
                       # Guess no on Cygwin.
              cygwin*) gl_cv_func_btowc_nul="guessing no" ;;
+                      # Guess yes on native Windows.
+             mingw*)  gl_cv_func_btowc_nul="guessing yes" ;;
                       # Guess yes otherwise.
              *)       gl_cv_func_btowc_nul="guessing yes" ;;
            esac
@@ -65,10 +67,12 @@ changequote([,])dnl
         dnl is present.
 changequote(,)dnl
         case "$host_os" in
-                 # Guess no on IRIX.
-          irix*) gl_cv_func_btowc_eof="guessing no" ;;
-                 # Guess yes otherwise.
-          *)     gl_cv_func_btowc_eof="guessing yes" ;;
+                  # Guess no on IRIX.
+          irix*)  gl_cv_func_btowc_eof="guessing no" ;;
+                  # Guess yes on native Windows.
+          mingw*) gl_cv_func_btowc_eof="guessing yes" ;;
+                  # Guess yes otherwise.
+          *)      gl_cv_func_btowc_eof="guessing yes" ;;
         esac
 changequote([,])dnl
         if test $LOCALE_FR != none; then

@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 15
+# serial 16
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -123,9 +123,15 @@ AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
            ]])],
         [ac_cv_sys_stack_overflow_works=yes],
         [ac_cv_sys_stack_overflow_works=no],
-        [ac_cv_sys_stack_overflow_works=cross-compiling])])
+        [case "$host_os" in
+                   # Guess no on native Windows.
+           mingw*) ac_cv_sys_stack_overflow_works="guessing no" ;;
+           *)      ac_cv_sys_stack_overflow_works=cross-compiling ;;
+         esac
+        ])
+     ])
 
-  if test $ac_cv_sys_stack_overflow_works = yes; then
+  if test "$ac_cv_sys_stack_overflow_works" = yes; then
    AC_DEFINE([HAVE_STACK_OVERFLOW_HANDLING], [1],
      [Define to 1 if extending the stack slightly past the limit causes
       a SIGSEGV which can be handled on an alternate stack established
@@ -194,7 +200,7 @@ int main ()
     fi
 
    AC_CACHE_CHECK([for precise C stack overflow detection],
-     ac_cv_sys_xsi_stack_overflow_heuristic,
+     [ac_cv_sys_xsi_stack_overflow_heuristic],
      [AC_RUN_IFELSE([AC_LANG_SOURCE(
            [[
             #include <unistd.h>

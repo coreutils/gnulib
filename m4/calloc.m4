@@ -1,4 +1,4 @@
-# calloc.m4 serial 16
+# calloc.m4 serial 17
 
 # Copyright (C) 2004-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -40,6 +40,8 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
        [case "$host_os" in
                   # Guess yes on glibc systems.
           *-gnu*) ac_cv_func_calloc_0_nonnull="guessing yes" ;;
+                  # Guess yes on native Windows.
+          mingw*) ac_cv_func_calloc_0_nonnull="guessing yes" ;;
                   # If we don't know, assume the worst.
           *)      ac_cv_func_calloc_0_nonnull="guessing no" ;;
         esac

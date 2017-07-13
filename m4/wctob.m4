@@ -1,4 +1,4 @@
-# wctob.m4 serial 10
+# wctob.m4 serial 11
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -30,6 +30,9 @@ changequote(,)dnl
         case "$host_os" in
             # Guess no on Solaris <= 9 and Cygwin.
           solaris2.[1-9] | solaris2.[1-9].* | cygwin*)
+            gl_cv_func_wctob_works="guessing no" ;;
+            # Guess no on native Windows.
+          mingw*)
             gl_cv_func_wctob_works="guessing no" ;;
             # Guess yes otherwise.
           *) gl_cv_func_wctob_works="guessing yes" ;;

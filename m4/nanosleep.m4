@@ -1,4 +1,4 @@
-# serial 36
+# serial 37
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -106,6 +106,8 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
        [case "$host_os" in dnl ((
           linux*) # Guess it halfway works when the kernel is Linux.
             gl_cv_func_nanosleep='guessing no (mishandles large arguments)' ;;
+          mingw*) # Guess no on native Windows.
+            gl_cv_func_nanosleep='guessing no' ;;
           *)      # If we don't know, assume the worst.
             gl_cv_func_nanosleep='guessing no' ;;
         esac
