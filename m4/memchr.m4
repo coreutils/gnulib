@@ -1,4 +1,4 @@
-# memchr.m4 serial 12
+# memchr.m4 serial 13
 dnl Copyright (C) 2002-2004, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,6 +6,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN_ONCE([gl_FUNC_MEMCHR],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
   dnl Check for prerequisites for memory fence checks.
   gl_FUNC_MMAP_ANON
   AC_CHECK_HEADERS_ONCE([sys/mman.h])
@@ -73,12 +75,21 @@ AC_DEFUN_ONCE([gl_FUNC_MEMCHR],
         result |= 4;
     }
   return result;
-]])], [gl_cv_func_memchr_works=yes], [gl_cv_func_memchr_works=no],
-      [dnl Be pessimistic for now.
-       gl_cv_func_memchr_works="guessing no"])])
-    if test "$gl_cv_func_memchr_works" != yes; then
-      REPLACE_MEMCHR=1
-    fi
+]])],
+         [gl_cv_func_memchr_works=yes],
+         [gl_cv_func_memchr_works=no],
+         [case "$host_os" in
+                    # Guess yes on native Windows.
+            mingw*) gl_cv_func_memchr_works="guessing yes" ;;
+                    # Be pessimistic for now.
+            *)      gl_cv_func_memchr_works="guessing no" ;;
+          esac
+         ])
+      ])
+    case "$gl_cv_func_memchr_works" in
+      *yes) ;;
+      *) REPLACE_MEMCHR=1 ;;
+    esac
   fi
 ])
 

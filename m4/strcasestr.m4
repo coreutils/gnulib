@@ -1,4 +1,4 @@
-# strcasestr.m4 serial 22
+# strcasestr.m4 serial 23
 dnl Copyright (C) 2005, 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_STRCASESTR_SIMPLE],
   if test $ac_cv_func_strcasestr = no; then
     HAVE_STRCASESTR=0
   else
-    if test "$gl_cv_func_memchr_works" != yes; then
+    if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
       REPLACE_STRCASESTR=1
     else
       dnl Detect http://sourceware.org/bugzilla/show_bug.cgi?id=12092.
