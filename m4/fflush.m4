@@ -1,4 +1,4 @@
-# fflush.m4 serial 16
+# fflush.m4 serial 17
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -14,9 +14,10 @@ AC_DEFUN([gl_FUNC_FFLUSH],
 [
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   gl_FUNC_FFLUSH_STDIN
-  if test $gl_cv_func_fflush_stdin != yes; then
-    REPLACE_FFLUSH=1
-  fi
+  case "$gl_cv_func_fflush_stdin" in
+    *yes) ;;
+    *) REPLACE_FFLUSH=1 ;;
+  esac
 ])
 
 dnl Determine whether fflush works on input streams.
@@ -24,6 +25,7 @@ dnl Sets gl_cv_func_fflush_stdin.
 
 AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_CACHE_CHECK([whether fflush works on input streams],
     [gl_cv_func_fflush_stdin],
@@ -72,14 +74,21 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
            { fclose (f); return 7; }
          fclose (f);
          return 0;
-       ]])], [gl_cv_func_fflush_stdin=yes], [gl_cv_func_fflush_stdin=no],
-     [gl_cv_func_fflush_stdin=cross])
+       ]])],
+       [gl_cv_func_fflush_stdin=yes],
+       [gl_cv_func_fflush_stdin=no],
+       [case "$host_os" in
+                  # Guess no on native Windows.
+          mingw*) gl_cv_func_fflush_stdin="guessing no" ;;
+          *)      gl_cv_func_fflush_stdin=cross ;;
+        esac
+       ])
      rm conftest.txt
     ])
-  case $gl_cv_func_fflush_stdin in
-    yes) gl_func_fflush_stdin=1 ;;
-    no)  gl_func_fflush_stdin=0 ;;
-    *)   gl_func_fflush_stdin='(-1)' ;;
+  case "$gl_cv_func_fflush_stdin" in
+    *yes) gl_func_fflush_stdin=1 ;;
+    *no)  gl_func_fflush_stdin=0 ;;
+    *)    gl_func_fflush_stdin='(-1)' ;;
   esac
   AC_DEFINE_UNQUOTED([FUNC_FFLUSH_STDIN], [$gl_func_fflush_stdin],
     [Define to 1 if fflush is known to work on stdin as per POSIX.1-2008,
