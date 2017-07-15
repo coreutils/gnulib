@@ -2,6 +2,8 @@
 @subsection @code{getdtablesize}
 @findex getdtablesize
 
+SUSv2 specification: @url{http://pubs.opengroup.org/onlinepubs/7908799/xsh/getdtablesize.html}
+
 Gnulib module: getdtablesize
 
 Portability problems fixed by Gnulib:
@@ -22,4 +24,8 @@ Android LP32, Cygwin 1.7.25.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On OpenVMS, this function returns the maximum number of open file descriptors
+in a process.  The possible values of file descriptors are not constrained by
+this function.
 @end itemize

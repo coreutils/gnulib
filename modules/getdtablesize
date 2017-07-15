@@ -1,5 +1,5 @@
 Description:
-getdtablesize() function: return maximum number of file descriptors.
+getdtablesize() function: return tight upper bound for file descriptor values.
 
 Files:
 lib/getdtablesize.c
