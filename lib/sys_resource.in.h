@@ -79,6 +79,18 @@ struct rusage
 }
 # endif
 
+#else
+
+# ifdef __VMS                      /* OpenVMS */
+/* Define the RUSAGE_* constants.  */
+#  ifndef RUSAGE_SELF
+#   define RUSAGE_SELF 0
+#  endif
+#  ifndef RUSAGE_CHILDREN
+#   define RUSAGE_CHILDREN -1
+#  endif
+# endif
+
 #endif
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
