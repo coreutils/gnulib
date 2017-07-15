@@ -28,6 +28,10 @@ emx+gcc.
 The @code{struct sockaddr_storage} type does not have a member @code{ss_family}
 on some platforms:
 AIX 7.1.
+@item
+The @code{CMSG_SPACE} and @code{CMSG_LEN} macros are not provided on some
+platforms:
+OpenVMS.
 @end itemize
 
 Portability problems not fixed by Gnulib:

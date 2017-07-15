@@ -141,6 +141,15 @@ struct sockaddr_storage
 #  define SHUT_RDWR 2
 # endif
 
+# ifdef __VMS                        /* OpenVMS */
+#  ifndef CMSG_SPACE
+#   define CMSG_SPACE(length) _CMSG_SPACE(length)
+#  endif
+#  ifndef CMSG_LEN
+#   define CMSG_LEN(length) _CMSG_LEN(length)
+#  endif
+# endif
+
 #else
 
 # ifdef __CYGWIN__
