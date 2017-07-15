@@ -28,6 +28,11 @@
 #ifndef _@GUARD_PREFIX@_MATH_H
 #define _@GUARD_PREFIX@_MATH_H
 
+/* On OpenVMS, NAN, INFINITY, and HUGEVAL macros are defined in <fp.h>.  */
+#if defined __VMS && ! defined NAN
+# include <fp.h>
+#endif
+
 #ifndef _GL_INLINE_HEADER_BEGIN
  #error "Please include config.h first."
 #endif

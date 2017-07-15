@@ -35,13 +35,18 @@ glibc/HPPA, glibc/SPARC, AIX 5.1, IRIX 6.5, Solaris 9, MSVC 9.
 The macros @code{FP_ILOGB0} and @code{FP_ILOGBNAN} are not defined on some
 platforms:
 NetBSD 5.1, AIX 5.1, IRIX 6.5, Solaris 9, MSVC 9.
+
+@item
+The macros @code{NAN}, @code{HUGE_VALL}, and @code{INFINITY} are not
+defined on some platforms:
+OpenVMS.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
 @code{NAN} is not a compile time constant with some compilers:
-OSF/1 with Compaq (ex-DEC) C 6.4.
+OSF/1 with Compaq (ex-DEC) C 6.4, OpenVMS.
 @item
 The macro or variable @code{math_errhandling} is not defined on some platforms:
 glibc 2.11, OpenBSD 4.9, NetBSD 5.1, UP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin 1.7.9, mingw, MSVC 9.
