@@ -29,6 +29,10 @@ EXTRA_DIST           += unicase/locale-languages.h
 Include:
 "unicase.h"
 
+Link:
+@INTL_MACOSX_LIBS@
+$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
+
 License:
 LGPLv3+ or GPLv2
 
