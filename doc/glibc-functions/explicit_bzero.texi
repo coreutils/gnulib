@@ -1,0 +1,29 @@
+@node explicit_bzero
+@subsection @code{explicit_bzero}
+@findex explicit_bzero
+
+Gnulib module: explicit_bzero
+
+The @code{explicit_bzero} function is an approximation to what is
+needed, and does not suffice in general to erase information.
+Although calling @code{explicit_bzero} should clear the memory in
+question, the information that was in memory may still be available
+elsewhere on the machine.  Proper implementation of information
+erasure requires support from levels below C code.
+
+Portability problems fixed by Gnulib:
+@itemize
+@item
+This function is missing on some platforms:
+glibc 2.24, FreeBSD 10, NetBSD 7.1, OpenBSD 5.4, macOS 10.12, Solaris 11.3,
+and many other systems.
+@end itemize
+
+Portability problems not fixed by Gnulib:
+@itemize
+@item
+Although the module's implementation should clear the memory on
+platforms compatible with GCC and on platforms using traditional
+linkers, it may not clear the memory on non-GCC platforms that use
+whole-program optimization.
+@end itemize

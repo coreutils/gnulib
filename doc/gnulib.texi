@@ -5568,6 +5568,7 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<string.h>}
 
 @menu
+* explicit_bzero::
 * ffsl::
 * ffsll::
 * memfrob::
@@ -5582,6 +5583,7 @@ This list of functions is sorted according to the header that declares them.
 * strverscmp::
 @end menu
 
+@include glibc-functions/explicit_bzero.texi
 @include glibc-functions/ffsl.texi
 @include glibc-functions/ffsll.texi
 @include glibc-functions/memfrob.texi
