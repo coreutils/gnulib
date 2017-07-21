@@ -25,6 +25,16 @@
 
 #include "verify.h"
 
+/* Silence a warning from clang's MemorySanitizer.  */
+#if defined __has_feature
+# if __has_feature(memory_sanitizer)
+#  define NO_SANITIZE_MEMORY __attribute__((no_sanitize("memory")))
+# endif
+#endif
+#ifndef NO_SANITIZE_MEMORY
+# define NO_SANITIZE_MEMORY
+#endif
+
 /* The speed critical point in this file is freea() applied to an alloca()
    result: it must be fast, to match the speed of alloca().  The speed of
    mmalloca() and freea() in the other case are not critical, because they
@@ -112,7 +122,7 @@ mmalloca (size_t n)
 }
 
 #if HAVE_ALLOCA
-void
+void NO_SANITIZE_MEMORY
 freea (void *p)
 {
   /* mmalloca() may have returned NULL.  */
