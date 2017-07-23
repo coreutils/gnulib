@@ -233,7 +233,7 @@ $GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 #$LIBCSRC sysdeps/unix/bsd/unlockpt.c	lib gpl
 #$LIBCSRC sysdeps/unix/dirfd.c		lib gpl
 #$LIBCSRC sysdeps/unix/grantpt.c	lib gpl
-#$LIBCSRC sysdeps/unix/rmdir.c		lib gpl
+#$LIBCSRC sysdeps/unix/rmdir.c		lib gpl (nstrftime.c in gnulib)
 #$LIBCSRC time/strftime.c		lib gpl
 # These are close, but we are using the gettext versions.
 #$LIBCSRC misc/mkdtemp.c		lib gpl

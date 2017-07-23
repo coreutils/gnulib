@@ -24,5 +24,5 @@ Native Windows platforms (mingw, MSVC) support only a subset of time
 zones supported by GNU or specified by POSIX.  @xref{tzset}.
 @end itemize
 
-Extension: Gnulib offers a module @samp{strftime} that provides an
+Extension: Gnulib offers a module @samp{nstrftime} that provides an
 @code{nstrftime} function with various GNU extensions.

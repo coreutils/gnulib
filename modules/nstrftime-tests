@@ -1,0 +1,12 @@
+Files:
+tests/test-nstrftime.c
+tests/macros.h
+
+Depends-on:
+strerror
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-nstrftime
+check_PROGRAMS += test-nstrftime

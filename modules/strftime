@@ -1,22 +1,20 @@
 Description:
 nstrftime() function: convert date and time to string, with GNU extensions.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete. Use module 'nstrftime' instead.
+
 Files:
-lib/strftime.h
-lib/strftime.c
-m4/tm_gmtoff.m4
-m4/strftime.m4
 
 Depends-on:
-extensions
-stdbool
-time_rz
+nstrftime
 
 configure.ac:
-gl_FUNC_GNU_STRFTIME
 
 Makefile.am:
-lib_SOURCES += strftime.c
 
 Include:
 "strftime.h"
@@ -25,4 +23,4 @@ License:
 LGPL
 
 Maintainer:
-Jim Meyering, glibc
+all
