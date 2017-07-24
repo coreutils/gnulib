@@ -42,6 +42,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-07-23  strftime        This module is renamed to 'nstrftime'.
+
 2017-05-19  closeout        close_stdout longer closes stderr when addresses
                             are being sanitized, as the sanitizer outputs to
                             stderr afterwards.
