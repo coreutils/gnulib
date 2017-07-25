@@ -684,27 +684,100 @@ enum { MIN_DIR_NLINK = 2 };
 # define S_MAGIC_XFS 0x58465342
 # define S_MAGIC_PROC 0x9FA0
 
-/* Return false if it is easy to determine the file system type of
-   the directory on which DIR_FD is open, and sorting dirents on
-   inode numbers is known not to improve traversal performance with
-   that type of file system.  Otherwise, return true.  */
+/* Map a stat.st_dev number to a file system type number f_ftype.  */
+struct dev_type
+{
+  dev_t st_dev;
+  __fsword_t f_type;
+};
+
+/* Use a tiny initial size.  If a traversal encounters more than
+   a few devices, the cost of growing/rehashing this table will be
+   rendered negligible by the number of inodes processed.  */
+enum { DEV_TYPE_HT_INITIAL_SIZE = 13 };
+
+static size_t
+dev_type_hash (void const *x, size_t table_size)
+{
+  struct dev_type const *ax = x;
+  uintmax_t dev = ax->st_dev;
+  return dev % table_size;
+}
+
 static bool
-dirent_inode_sort_may_be_useful (int dir_fd)
+dev_type_compare (void const *x, void const *y)
+{
+  struct dev_type const *ax = x;
+  struct dev_type const *ay = y;
+  return ax->st_dev == ay->st_dev;
+}
+
+/* Return the file system type of P, or 0 if not known.
+   Try to cache known values.  */
+
+static __fsword_t
+filesystem_type (FTSENT const *p)
+{
+  FTS *sp = p->fts_fts;
+  Hash_table *h = sp->fts_leaf_optimization_works_ht;
+  struct dev_type *ent;
+  struct statfs fs_buf;
+
+  /* If we're not in CWDFD mode, don't bother with this optimization,
+     since the caller is not serious about performance.  */
+  if (!ISSET (FTS_CWDFD))
+    return 0;
+
+  if (! h)
+    h = sp->fts_leaf_optimization_works_ht
+      = hash_initialize (DEV_TYPE_HT_INITIAL_SIZE, NULL, dev_type_hash,
+                         dev_type_compare, free);
+  if (h)
+    {
+      struct dev_type tmp;
+      tmp.st_dev = p->fts_statp->st_dev;
+      ent = hash_lookup (h, &tmp);
+      if (ent)
+        return ent->f_type;
+    }
+
+  /* Look-up failed.  Query directly and cache the result.  */
+  if (fstatfs (p->fts_fts->fts_cwd_fd, &fs_buf) != 0)
+    return 0;
+
+  if (h)
+    {
+      struct dev_type *t2 = malloc (sizeof *t2);
+      if (t2)
+        {
+          t2->st_dev = p->fts_statp->st_dev;
+          t2->f_type = fs_buf.f_type;
+
+          ent = hash_insert (h, t2);
+          if (ent)
+            fts_assert (ent == t2);
+          else
+            free (t2);
+        }
+    }
+
+  return fs_buf.f_type;
+}
+
+/* Return false if it is easy to determine the file system type of the
+   directory P, and sorting dirents on inode numbers is known not to
+   improve traversal performance with that type of file system.
+   Otherwise, return true.  */
+static bool
+dirent_inode_sort_may_be_useful (FTSENT const *p)
 {
   /* Skip the sort only if we can determine efficiently
      that skipping it is the right thing to do.
      The cost of performing an unnecessary sort is negligible,
      while the cost of *not* performing it can be O(N^2) with
      a very large constant.  */
-  struct statfs fs_buf;
 
-  /* If fstatfs fails, assume sorting would be useful.  */
-  if (fstatfs (dir_fd, &fs_buf) != 0)
-    return true;
-
-  /* FIXME: what about when f_type is not an integral type?
-     deal with that if/when it's encountered.  */
-  switch (fs_buf.f_type)
+  switch (filesystem_type (p))
     {
     case S_MAGIC_TMPFS:
     case S_MAGIC_NFS:
@@ -717,25 +790,19 @@ dirent_inode_sort_may_be_useful (int dir_fd)
     }
 }
 
-/* Given a file descriptor DIR_FD open on a directory D,
+/* Given an FTS entry P for a directory D,
    return true if it is both useful and valid to apply leaf optimization.
    The optimization is useful only for file systems that lack usable
    dirent.d_type info.  The optimization is valid if an st_nlink value
    of at least MIN_DIR_NLINK is an upper bound on the number of
    subdirectories of D, counting "." and ".."  as subdirectories.  */
 static bool
-leaf_optimization_applies (int dir_fd)
+leaf_optimization_applies (FTSENT const *p)
 {
-  struct statfs fs_buf;
-
-  /* If fstatfs fails, assume we can't use the optimization.  */
-  if (fstatfs (dir_fd, &fs_buf) != 0)
-    return false;
-
   /* FIXME: do we need to detect AFS mount points?  I doubt it,
      unless fstatfs can report S_MAGIC_REISERFS for such a directory.  */
 
-  switch (fs_buf.f_type)
+  switch (filesystem_type (p))
     {
       /* List here the file system types that lack usable dirent.d_type
          info, yet for which the optimization does apply.  */
@@ -762,92 +829,16 @@ leaf_optimization_applies (int dir_fd)
 
 #else
 static bool
-dirent_inode_sort_may_be_useful (int dir_fd _GL_UNUSED) { return true; }
+dirent_inode_sort_may_be_useful (FTSENT const *p _GL_UNUSED)
+{
+  return true;
+}
 static bool
-leaf_optimization_applies (int dir_fd _GL_UNUSED) { return false; }
+leaf_optimization_applies (FTSENT const *p _GL_UNUSED)
+{
+  return false;
+}
 #endif
-
-/* link-count-optimization entry:
-   map a stat.st_dev number to a boolean: leaf_optimization_works */
-struct LCO_ent
-{
-  dev_t st_dev;
-  bool opt_ok;
-};
-
-/* Use a tiny initial size.  If a traversal encounters more than
-   a few devices, the cost of growing/rehashing this table will be
-   rendered negligible by the number of inodes processed.  */
-enum { LCO_HT_INITIAL_SIZE = 13 };
-
-static size_t
-LCO_hash (void const *x, size_t table_size)
-{
-  struct LCO_ent const *ax = x;
-  return (uintmax_t) ax->st_dev % table_size;
-}
-
-static bool
-LCO_compare (void const *x, void const *y)
-{
-  struct LCO_ent const *ax = x;
-  struct LCO_ent const *ay = y;
-  return ax->st_dev == ay->st_dev;
-}
-
-/* Ask the same question as leaf_optimization_applies, but query
-   the cache first (FTS.fts_leaf_optimization_works_ht), and if necessary,
-   update that cache.  */
-static bool
-link_count_optimize_ok (FTSENT const *p)
-{
-  FTS *sp = p->fts_fts;
-  Hash_table *h = sp->fts_leaf_optimization_works_ht;
-  struct LCO_ent tmp;
-  struct LCO_ent *ent;
-  bool opt_ok;
-  struct LCO_ent *t2;
-
-  /* If we're not in CWDFD mode, don't bother with this optimization,
-     since the caller is not serious about performance. */
-  if (!ISSET(FTS_CWDFD))
-    return false;
-
-  /* map st_dev to the boolean, leaf_optimization_works */
-  if (h == NULL)
-    {
-      h = sp->fts_leaf_optimization_works_ht
-        = hash_initialize (LCO_HT_INITIAL_SIZE, NULL, LCO_hash,
-                           LCO_compare, free);
-      if (h == NULL)
-        return false;
-    }
-  tmp.st_dev = p->fts_statp->st_dev;
-  ent = hash_lookup (h, &tmp);
-  if (ent)
-    return ent->opt_ok;
-
-  /* Look-up failed.  Query directly and cache the result.  */
-  t2 = malloc (sizeof *t2);
-  if (t2 == NULL)
-    return false;
-
-  /* Is it ok to perform the optimization in the dir, FTS_CWD_FD?  */
-  opt_ok = leaf_optimization_applies (sp->fts_cwd_fd);
-  t2->opt_ok = opt_ok;
-  t2->st_dev = p->fts_statp->st_dev;
-
-  ent = hash_insert (h, t2);
-  if (ent == NULL)
-    {
-      /* insertion failed */
-      free (t2);
-      return false;
-    }
-  fts_assert (ent == t2);
-
-  return opt_ok;
-}
 
 /*
  * Special case of "/" at the end of the file name so that slashes aren't
@@ -1037,7 +1028,7 @@ check_for_dir:
                         if (parent->fts_n_dirs_remaining == 0
                             && ISSET(FTS_NOSTAT)
                             && ISSET(FTS_PHYSICAL)
-                            && link_count_optimize_ok (parent))
+                            && leaf_optimization_applies (parent))
                           {
                             /* nothing more needed */
                           }
@@ -1651,8 +1642,7 @@ mem1:                           saved_errno = errno;
            inode numbers.  */
         if (nitems > _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
             && !sp->fts_compar
-            && ISSET (FTS_CWDFD)
-            && dirent_inode_sort_may_be_useful (sp->fts_cwd_fd)) {
+            && dirent_inode_sort_may_be_useful (cur)) {
                 sp->fts_compar = fts_compare_ino;
                 head = fts_sort (sp, head, nitems);
                 sp->fts_compar = NULL;
