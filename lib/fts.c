@@ -1326,8 +1326,6 @@ fts_build (register FTS *sp, int type)
         bool descend;
         bool doadjust;
         ptrdiff_t level;
-        nlink_t nlinks;
-        bool nostat;
         size_t len, maxlen, new_len;
         char *cp;
         int dir_fd;
@@ -1398,25 +1396,6 @@ fts_build (register FTS *sp, int type)
         max_entries = sp->fts_compar ? SIZE_MAX : FTS_MAX_READDIR_ENTRIES;
 
         /*
-         * Nlinks is the number of possible entries of type directory in the
-         * directory if we're cheating on stat calls, 0 if we're not doing
-         * any stat calls at all, (nlink_t) -1 if we're statting everything.
-         */
-        if (type == BNAMES) {
-                nlinks = 0;
-                /* Be quiet about nostat, GCC. */
-                nostat = false;
-        } else if (ISSET(FTS_NOSTAT) && ISSET(FTS_PHYSICAL)
-                   && leaf_optimization (cur) != NO_LEAF_OPTIMIZATION) {
-                nlinks = (cur->fts_statp->st_nlink
-                          - (ISSET (FTS_SEEDOT) ? 0 : MIN_DIR_NLINK));
-                nostat = true;
-        } else {
-                nlinks = -1;
-                nostat = false;
-        }
-
-        /*
          * If we're going to need to stat anything or we want to descend
          * and stay in the directory, chdir.  If this fails we keep going,
          * but set a flag so we don't chdir after the post-order visit.
@@ -1437,7 +1416,18 @@ fts_build (register FTS *sp, int type)
                the required dirp and dir_fd.  */
             descend = true;
           }
-        else if (nlinks || type == BREAD) {
+        else
+          {
+            /* Try to descend unless it is a names-only fts_children,
+               or the directory is a known to lack subdirectories.  */
+            descend = (type != BNAMES
+                       && ! (ISSET (FTS_NOSTAT) && ISSET (FTS_PHYSICAL)
+                             && ! ISSET (FTS_SEEDOT)
+                             && cur->fts_statp->st_nlink == MIN_DIR_NLINK
+                             && (leaf_optimization (cur)
+                                 != NO_LEAF_OPTIMIZATION)));
+            if (descend || type == BREAD)
+              {
                 if (ISSET(FTS_CWDFD))
                   {
                     dir_fd = dup (dir_fd);
@@ -1445,7 +1435,7 @@ fts_build (register FTS *sp, int type)
                       set_cloexec_flag (dir_fd, true);
                   }
                 if (dir_fd < 0 || fts_safe_changedir(sp, cur, dir_fd, NULL)) {
-                        if (nlinks && type == BREAD)
+                        if (descend && type == BREAD)
                                 cur->fts_errno = errno;
                         cur->fts_flags |= FTS_DONTCHDIR;
                         descend = false;
@@ -1455,8 +1445,8 @@ fts_build (register FTS *sp, int type)
                         cur->fts_dirp = NULL;
                 } else
                         descend = true;
-        } else
-                descend = false;
+              }
+          }
 
         /*
          * Figure out the max file name length that can be stored in the
