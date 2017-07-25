@@ -220,7 +220,11 @@ typedef struct _ftsent {
         ptrdiff_t fts_level;            /* depth (-1 to N) */
 
         size_t fts_namelen;             /* strlen(fts_name) */
-        nlink_t fts_n_dirs_remaining;   /* count down from st_nlink */
+
+        /* If not (nlink_t) -1, an upper bound on the number of
+           remaining subdirectories of interest.  If this becomes
+           zero, some work can be avoided.  */
+        nlink_t fts_n_dirs_remaining;
 
 # define FTS_D           1              /* preorder directory */
 # define FTS_DC          2              /* directory that causes cycles */

@@ -479,6 +479,7 @@ fts_open (char * const *argv,
                 if ((parent = fts_alloc(sp, "", 0)) == NULL)
                         goto mem2;
                 parent->fts_level = FTS_ROOTPARENTLEVEL;
+                parent->fts_n_dirs_remaining = -1;
           }
 
         /* The classic fts implementation would call fts_stat with
@@ -1024,10 +1025,7 @@ check_for_dir:
                     if (p->fts_statp->st_size == FTS_STAT_REQUIRED)
                       {
                         FTSENT *parent = p->fts_parent;
-                        if (FTS_ROOTLEVEL < p->fts_level
-                            /* ->fts_n_dirs_remaining is not valid
-                               for command-line-specified names.  */
-                            && parent->fts_n_dirs_remaining == 0
+                        if (parent->fts_n_dirs_remaining == 0
                             && ISSET(FTS_NOSTAT)
                             && ISSET(FTS_PHYSICAL)
                             && link_count_optimize_ok (parent))
@@ -1039,7 +1037,8 @@ check_for_dir:
                             p->fts_info = fts_stat(sp, p, false);
                             if (S_ISDIR(p->fts_statp->st_mode)
                                 && p->fts_level != FTS_ROOTLEVEL
-                                && parent->fts_n_dirs_remaining)
+                                && 0 < parent->fts_n_dirs_remaining
+                                && parent->fts_n_dirs_remaining != (nlink_t) -1)
                                   parent->fts_n_dirs_remaining--;
                           }
                       }
@@ -1468,7 +1467,6 @@ fts_build (register FTS *sp, int type)
         tail = NULL;
         nitems = 0;
         while (cur->fts_dirp) {
-                bool is_dir;
                 size_t d_namelen;
                 __set_errno (0);
                 struct dirent *dp = readdir(cur->fts_dirp);
@@ -1569,18 +1567,9 @@ mem1:                           saved_errno = errno;
                            to caller, when possible.  */
                         set_stat_type (p->fts_statp, D_TYPE (dp));
                         fts_set_stat_required(p, !skip_stat);
-                        is_dir = (ISSET(FTS_PHYSICAL)
-                                  && DT_MUST_BE(dp, DT_DIR));
                 } else {
                         p->fts_info = fts_stat(sp, p, false);
-                        is_dir = (p->fts_info == FTS_D
-                                  || p->fts_info == FTS_DC
-                                  || p->fts_info == FTS_DOT);
                 }
-
-                /* Decrement link count if applicable. */
-                if (nlinks > 0 && is_dir)
-                        nlinks -= nostat;
 
                 /* We walk in directory order so "ls -f" doesn't get upset. */
                 p->fts_link = NULL;
@@ -1844,8 +1833,11 @@ err:            memset(sbp, 0, sizeof(struct stat));
         }
 
         if (S_ISDIR(sbp->st_mode)) {
-                p->fts_n_dirs_remaining = (sbp->st_nlink
-                                           - (ISSET(FTS_SEEDOT) ? 0 : 2));
+                p->fts_n_dirs_remaining
+                  = ((sbp->st_nlink < 2
+                      || p->fts_level <= FTS_ROOTLEVEL)
+                     ? -1
+                     : sbp->st_nlink - (ISSET (FTS_SEEDOT) ? 0 : 2));
                 if (ISDOT(p->fts_name)) {
                         /* Command-line "." and ".." are real directories. */
                         return (p->fts_level == FTS_ROOTLEVEL ? FTS_D : FTS_DOT);
