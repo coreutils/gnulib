@@ -672,17 +672,32 @@ fts_close (FTS *sp)
    "..").  */
 enum { MIN_DIR_NLINK = 2 };
 
+/* Whether leaf optimization is OK for a directory.  */
+enum leaf_optimization
+  {
+    /* st_nlink is not reliable for this directory's subdirectories.  */
+    NO_LEAF_OPTIMIZATION,
+
+    /* Leaf optimization is OK, but is not useful for avoiding stat calls.  */
+    OK_LEAF_OPTIMIZATION,
+
+    /* Leaf optimization is not only OK: it is useful for avoiding
+       stat calls, because dirent.d_type does not work.  */
+    NOSTAT_LEAF_OPTIMIZATION
+  };
+
 #if defined __linux__ \
   && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 
 # include <sys/vfs.h>
 
 /* Linux-specific constants from coreutils' src/fs.h */
-# define S_MAGIC_TMPFS 0x1021994
+# define S_MAGIC_AFS 0x5346414F
 # define S_MAGIC_NFS 0x6969
-# define S_MAGIC_REISERFS 0x52654973
-# define S_MAGIC_XFS 0x58465342
 # define S_MAGIC_PROC 0x9FA0
+# define S_MAGIC_REISERFS 0x52654973
+# define S_MAGIC_TMPFS 0x1021994
+# define S_MAGIC_XFS 0x58465342
 
 /* Map a stat.st_dev number to a file system type number f_ftype.  */
 struct dev_type
@@ -796,22 +811,24 @@ dirent_inode_sort_may_be_useful (FTSENT const *p)
    dirent.d_type info.  The optimization is valid if an st_nlink value
    of at least MIN_DIR_NLINK is an upper bound on the number of
    subdirectories of D, counting "." and ".."  as subdirectories.  */
-static bool
-leaf_optimization_applies (FTSENT const *p)
+static enum leaf_optimization
+leaf_optimization (FTSENT const *p)
 {
-  /* FIXME: do we need to detect AFS mount points?  I doubt it,
-     unless fstatfs can report S_MAGIC_REISERFS for such a directory.  */
-
   switch (filesystem_type (p))
     {
       /* List here the file system types that lack usable dirent.d_type
          info, yet for which the optimization does apply.  */
     case S_MAGIC_REISERFS:
     case S_MAGIC_XFS:
-      return true;
+      return NOSTAT_LEAF_OPTIMIZATION;
 
-      /* Explicitly list here any other file system type for which the
-         optimization is not applicable, but need documentation.  */
+    case 0:
+      /* Leaf optimization is unsafe if the file system type is unknown.  */
+      FALLTHROUGH;
+    case S_MAGIC_AFS:
+      /* Although AFS mount points are not counted in st_nlink, they
+         act like directories.  See <https://bugs.debian.org/143111>.  */
+      FALLTHROUGH;
     case S_MAGIC_NFS:
       /* NFS provides usable dirent.d_type but not necessarily for all entries
          of large directories, so as per <https://bugzilla.redhat.com/1252549>
@@ -821,9 +838,10 @@ leaf_optimization_applies (FTSENT const *p)
     case S_MAGIC_PROC:
       /* Per <http://bugs.debian.org/143111> /proc may have
          bogus stat.st_nlink values.  */
-      FALLTHROUGH;
+      return NO_LEAF_OPTIMIZATION;
+
     default:
-      return false;
+      return OK_LEAF_OPTIMIZATION;
     }
 }
 
@@ -833,10 +851,10 @@ dirent_inode_sort_may_be_useful (FTSENT const *p _GL_UNUSED)
 {
   return true;
 }
-static bool
-leaf_optimization_applies (FTSENT const *p _GL_UNUSED)
+static enum leaf_optimization
+leaf_optimization (FTSENT const *p _GL_UNUSED)
 {
-  return false;
+  return NO_LEAF_OPTIMIZATION;
 }
 #endif
 
@@ -1028,7 +1046,8 @@ check_for_dir:
                         if (parent->fts_n_dirs_remaining == 0
                             && ISSET(FTS_NOSTAT)
                             && ISSET(FTS_PHYSICAL)
-                            && leaf_optimization_applies (parent))
+                            && (leaf_optimization (parent)
+                                == NOSTAT_LEAF_OPTIMIZATION))
                           {
                             /* nothing more needed */
                           }
@@ -1387,7 +1406,8 @@ fts_build (register FTS *sp, int type)
                 nlinks = 0;
                 /* Be quiet about nostat, GCC. */
                 nostat = false;
-        } else if (ISSET(FTS_NOSTAT) && ISSET(FTS_PHYSICAL)) {
+        } else if (ISSET(FTS_NOSTAT) && ISSET(FTS_PHYSICAL)
+                   && leaf_optimization (cur) != NO_LEAF_OPTIMIZATION) {
                 nlinks = (cur->fts_statp->st_nlink
                           - (ISSET (FTS_SEEDOT) ? 0 : MIN_DIR_NLINK));
                 nostat = true;
