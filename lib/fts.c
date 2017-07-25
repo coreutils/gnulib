@@ -666,6 +666,12 @@ fts_close (FTS *sp)
         return (0);
 }
 
+/* Minimum link count of a traditional Unix directory.  When leaf
+   optimization is OK and MIN_DIR_NLINK <= st_nlink, then st_nlink is
+   an upper bound on the number of subdirectories (counting "." and
+   "..").  */
+enum { MIN_DIR_NLINK = 2 };
+
 #if defined __linux__ \
   && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 
@@ -712,8 +718,11 @@ dirent_inode_sort_may_be_useful (int dir_fd)
 }
 
 /* Given a file descriptor DIR_FD open on a directory D,
-   return true if it is valid to apply the leaf-optimization
-   technique of counting directories in D via stat.st_nlink.  */
+   return true if it is both useful and valid to apply leaf optimization.
+   The optimization is useful only for file systems that lack usable
+   dirent.d_type info.  The optimization is valid if an st_nlink value
+   of at least MIN_DIR_NLINK is an upper bound on the number of
+   subdirectories of D, counting "." and ".."  as subdirectories.  */
 static bool
 leaf_optimization_applies (int dir_fd)
 {
@@ -1389,7 +1398,7 @@ fts_build (register FTS *sp, int type)
                 nostat = false;
         } else if (ISSET(FTS_NOSTAT) && ISSET(FTS_PHYSICAL)) {
                 nlinks = (cur->fts_statp->st_nlink
-                          - (ISSET(FTS_SEEDOT) ? 0 : 2));
+                          - (ISSET (FTS_SEEDOT) ? 0 : MIN_DIR_NLINK));
                 nostat = true;
         } else {
                 nlinks = -1;
@@ -1834,10 +1843,10 @@ err:            memset(sbp, 0, sizeof(struct stat));
 
         if (S_ISDIR(sbp->st_mode)) {
                 p->fts_n_dirs_remaining
-                  = ((sbp->st_nlink < 2
+                  = ((sbp->st_nlink < MIN_DIR_NLINK
                       || p->fts_level <= FTS_ROOTLEVEL)
                      ? -1
-                     : sbp->st_nlink - (ISSET (FTS_SEEDOT) ? 0 : 2));
+                     : sbp->st_nlink - (ISSET (FTS_SEEDOT) ? 0 : MIN_DIR_NLINK));
                 if (ISDOT(p->fts_name)) {
                         /* Command-line "." and ".." are real directories. */
                         return (p->fts_level == FTS_ROOTLEVEL ? FTS_D : FTS_DOT);
