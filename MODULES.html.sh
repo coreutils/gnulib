@@ -1644,6 +1644,8 @@ func_all_modules ()
 
   func_begin_table
   func_module atexit
+  func_module ctime
+  func_module localtime
   func_module strtod
   func_module strerror
   func_module strerror-override
@@ -1724,8 +1726,11 @@ func_all_modules ()
 
   func_begin_table
   func_module fprintftime
-  func_module strftime
+  func_module localtime-buffer
+  func_module nstrftime
+  func_module strftime-fixes
   func_module time_rz
+  func_module year2038
   func_end_table
 
   element="Extra functions based on ANSI C 89"
@@ -1800,6 +1805,7 @@ func_all_modules ()
 
   func_begin_table
   func_module bcopy
+  func_module explicit_bzero
   func_module memchr
   func_module memchr2
   func_module memcmp2
@@ -2038,6 +2044,7 @@ func_all_modules ()
 
   func_begin_table
   func_module alignof
+  func_module c99
   func_module flexmember
   func_module fpucw
   func_module func
@@ -2341,6 +2348,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module noreturn
   func_module std-gnu11
   func_module stdalign
   func_end_table
@@ -2351,6 +2359,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module builtin-expect
   func_module limits-h
   func_end_table
 
@@ -2524,12 +2533,15 @@ func_all_modules ()
   func_module sys_uio
   func_module sys_utsname
   func_module sys_wait
+  func_module truncate
   func_module tsearch
   func_module ttyname_r
   func_module uname
   func_module unistd
   func_module unlink
   func_module unlockpt
+  func_module utime
+  func_module utime-h
   func_module utimensat
   func_module vasnprintf-posix
   func_module vasprintf-posix
@@ -2541,6 +2553,9 @@ func_all_modules ()
   func_module vsprintf-posix
   func_module wcsnrtombs
   func_module wcwidth
+  func_module windows-stat-inodes
+  func_module windows-stat-override
+  func_module windows-stat-timespec
   func_module write
   func_end_table
 
@@ -2705,20 +2720,20 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module binary-io
   func_module dup3
-  func_module fd-safer-flag
-  func_module getdtablesize
   func_module fcntl-safer
-  func_module openat-safer
-  func_module safe-read
-  func_module safe-write
+  func_module fd-safer-flag
   func_module full-read
   func_module full-write
-  func_module binary-io
+  func_module getdtablesize
   func_module isapipe
+  func_module openat-safer
   func_module pipe-posix
   func_module pipe2
   func_module pipe2-safer
+  func_module safe-read
+  func_module safe-write
   func_end_table
 
   element="File stream based Input/Output"
