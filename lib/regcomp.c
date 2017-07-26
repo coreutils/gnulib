@@ -2078,16 +2078,18 @@ peek_token_bracket (re_token_t *token, re_string_t *input, reg_syntax_t syntax)
 	case '.':
 	  token->type = OP_OPEN_COLL_ELEM;
 	  break;
+
 	case '=':
 	  token->type = OP_OPEN_EQUIV_CLASS;
 	  break;
+
 	case ':':
 	  if (syntax & RE_CHAR_CLASSES)
 	    {
 	      token->type = OP_OPEN_CHAR_CLASS;
 	      break;
 	    }
-	  /* else fall through.  */
+	  FALLTHROUGH;
 	default:
 	  token->type = CHARACTER;
 	  token->opr.c = c;
@@ -2289,16 +2291,19 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	}
 #endif
       break;
+
     case OP_OPEN_SUBEXP:
       tree = parse_sub_exp (regexp, preg, token, syntax, nest + 1, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
+
     case OP_OPEN_BRACKET:
       tree = parse_bracket_exp (regexp, dfa, token, syntax, err);
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
+
     case OP_BACK_REF:
       if (!BE (dfa->completed_bkref_map & (1 << token->opr.idx), 1))
 	{
@@ -2315,13 +2320,14 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
       ++dfa->nbackref;
       dfa->has_mb_node = 1;
       break;
+
     case OP_OPEN_DUP_NUM:
       if (syntax & RE_CONTEXT_INVALID_DUP)
 	{
 	  *err = REG_BADRPT;
 	  return NULL;
 	}
-      /* FALLTHROUGH */
+      FALLTHROUGH;
     case OP_DUP_ASTERISK:
     case OP_DUP_PLUS:
     case OP_DUP_QUESTION:
@@ -2335,7 +2341,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	  fetch_token (token, regexp, syntax);
 	  return parse_expression (regexp, preg, token, syntax, nest, err);
 	}
-      /* else fall through  */
+      FALLTHROUGH;
     case OP_CLOSE_SUBEXP:
       if ((token->type == OP_CLOSE_SUBEXP) &&
 	  !(syntax & RE_UNMATCHED_RIGHT_PAREN_ORD))
@@ -2343,7 +2349,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	  *err = REG_ERPAREN;
 	  return NULL;
 	}
-      /* else fall through  */
+      FALLTHROUGH;
     case OP_CLOSE_DUP_NUM:
       /* We treat it as a normal character.  */
 
@@ -2358,6 +2364,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	  return NULL;
 	}
       break;
+
     case ANCHOR:
       if ((token->opr.ctx_type
 	   & (WORD_DELIM | NOT_WORD_DELIM | WORD_FIRST | WORD_LAST))
@@ -2402,6 +2409,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 	     it must not be "<ANCHOR(^)><REPEAT(*)>".  */
       fetch_token (token, regexp, syntax);
       return tree;
+
     case OP_PERIOD:
       tree = create_token_tree (dfa, NULL, NULL, token);
       if (BE (tree == NULL, 0))
@@ -2412,6 +2420,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
       if (dfa->mb_cur_max > 1)
 	dfa->has_mb_node = 1;
       break;
+
     case OP_WORD:
     case OP_NOTWORD:
       tree = build_charclass_op (dfa, regexp->trans,
@@ -2421,6 +2430,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
+
     case OP_SPACE:
     case OP_NOTSPACE:
       tree = build_charclass_op (dfa, regexp->trans,
@@ -2430,12 +2440,15 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
       if (BE (*err != REG_NOERROR && tree == NULL, 0))
 	return NULL;
       break;
+
     case OP_ALT:
     case END_OF_RE:
       return NULL;
+
     case BACK_SLASH:
       *err = REG_EESCAPE;
       return NULL;
+
     default:
       /* Must not happen?  */
 #ifdef DEBUG
