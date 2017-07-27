@@ -65,7 +65,7 @@ test $# = 0 && set .
 
 for dir
 do
-  if test -d .git; then
+  if test -e .git; then
     test "x$dir" = x. \
       && dir= sed_esc= \
       || { dir="$dir/"; sed_esc=`echo "$dir"|env sed 's,\([\\/]\),\\\\\1,g'`; }
