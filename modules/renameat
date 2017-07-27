@@ -2,25 +2,11 @@ Description:
 renameat() function: rename a file, relative to two directories
 
 Files:
-lib/at-func2.c
 lib/renameat.c
 m4/renameat.m4
 
 Depends-on:
-stdio
-extensions
-fcntl-h
-filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
-openat-h         [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
-statat           [test $REPLACE_RENAMEAT = 1]
-stdbool          [test $REPLACE_RENAMEAT = 1]
-at-internal      [test $HAVE_RENAMEAT = 0]
-dosname          [test $HAVE_RENAMEAT = 0]
-getcwd-lgpl      [test $HAVE_RENAMEAT = 0]
-openat-die       [test $HAVE_RENAMEAT = 0]
-rename           [test $HAVE_RENAMEAT = 0]
-same-inode       [test $HAVE_RENAMEAT = 0]
-save-cwd         [test $HAVE_RENAMEAT = 0]
+renameat2        [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 
 configure.ac:
 gl_FUNC_RENAMEAT
@@ -35,7 +21,6 @@ gl_STDIO_MODULE_INDICATOR([renameat])
 Makefile.am:
 
 Include:
-<fcntl.h>
 <stdio.h>
 
 License:
