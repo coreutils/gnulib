@@ -51,14 +51,15 @@ errno_fail (int e)
 static int
 rename_noreplace (char const *src, char const *dst)
 {
-  /* This has a race between the call to faccessat and the call to rename.  */
-  int r = faccessat (AT_FDCWD, dst, F_OK, AT_EACCESS | AT_SYMLINK_NOFOLLOW);
-  reurn (r == 0 ? errno_fail (EEXIST)
-         : errno == ENOENT ? rename (src, dst)
-         : r);
+  /* This has a race between the call to lstat and the call to rename.  */
+  struct stat st;
+  return (lstat (dst, &st) == 0 ? errno_fail (EEXIST)
+          : errno == ENOENT ? rename (src, dst)
+          : -1);
 }
 #endif
 
+#undef renameat
 
 /* Rename FILE1, in the directory open on descriptor FD1, to FILE2, in
    the directory open on descriptor FD2.  If possible, do it without
@@ -91,20 +92,23 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
   int rename_errno = ENOTDIR;
   struct stat src_st;
   struct stat dst_st;
+  bool dst_found_nonexistent = false;
 
   if (flags != 0)
     {
-      int r;
       /* RENAME_NOREPLACE is the only flag currently supported.  */
       if (flags & ~RENAME_NOREPLACE)
         return errno_fail (ENOTSUP);
-      /* This has a race between the call to faccessat and the
-         call to renameat.  */
-      r = faccessat (fd2, dst, F_OK, AT_EACCESS | AT_SYMLINK_NOFOLLOW);
-      if (r == 0)
-        return errno_fail (EEXIST);
-      if (errno != ENOENT)
-        return r;
+      else
+        {
+          /* This has a race between the call to lstatat and the calls to
+             renameat below.  */
+          if (lstatat (fd2, dst, &dst_st) == 0)
+            return errno_fail (EEXIST);
+          if (errno != ENOENT)
+            return -1;
+          dst_found_nonexistent = true;
+        }
     }
 
   /* Let strace see any ENOENT failure.  */
@@ -124,7 +128,12 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
      before calling rename.  */
   if (lstatat (fd1, src, &src_st))
     return -1;
-  if (lstatat (fd2, dst, &dst_st))
+  if (dst_found_nonexistent)
+    {
+      if (!S_ISDIR (src_st.st_mode))
+        return errno_fail (ENOENT);
+    }
+  else if (lstatat (fd2, dst, &dst_st))
     {
       if (errno != ENOENT || !S_ISDIR (src_st.st_mode))
         return -1;

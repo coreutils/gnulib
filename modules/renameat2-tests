@@ -17,4 +17,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-renameat2
 check_PROGRAMS += test-renameat2
-test_renameat2_LDADD = $(LDADD) $(LIB_EACCESS) @LIBINTL@
+test_renameat2_LDADD = $(LDADD) @LIBINTL@

@@ -10,7 +10,6 @@ m4/renameat.m4
 Depends-on:
 stdio
 extensions
-faccessat
 fcntl-h
 filenamecat-lgpl [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 openat-h         [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
