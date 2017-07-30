@@ -1813,7 +1813,6 @@ internal_function
 fts_stat(FTS *sp, register FTSENT *p, bool follow)
 {
         struct stat *sbp = p->fts_statp;
-        int saved_errno;
 
         if (p->fts_level == FTS_ROOTLEVEL && ISSET(FTS_COMFOLLOW))
                 follow = true;
@@ -1825,13 +1824,12 @@ fts_stat(FTS *sp, register FTSENT *p, bool follow)
          */
         if (ISSET(FTS_LOGICAL) || follow) {
                 if (stat(p->fts_accpath, sbp)) {
-                        saved_errno = errno;
                         if (errno == ENOENT
                             && lstat(p->fts_accpath, sbp) == 0) {
                                 __set_errno (0);
                                 return (FTS_SLNONE);
                         }
-                        p->fts_errno = saved_errno;
+                        p->fts_errno = errno;
                         goto err;
                 }
         } else if (fstatat(sp->fts_cwd_fd, p->fts_accpath, sbp,

@@ -53,7 +53,7 @@ rename_noreplace (char const *src, char const *dst)
 {
   /* This has a race between the call to lstat and the call to rename.  */
   struct stat st;
-  return (lstat (dst, &st) == 0 ? errno_fail (EEXIST)
+  return (lstat (dst, &st) == 0 || errno == EOVERFLOW ? errno_fail (EEXIST)
           : errno == ENOENT ? rename (src, dst)
           : -1);
 }
@@ -103,7 +103,7 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
         {
           /* This has a race between the call to lstatat and the calls to
              renameat below.  */
-          if (lstatat (fd2, dst, &dst_st) == 0)
+          if (lstatat (fd2, dst, &dst_st) == 0 || errno == EOVERFLOW)
             return errno_fail (EEXIST);
           if (errno != ENOENT)
             return -1;

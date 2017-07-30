@@ -1531,12 +1531,12 @@ weak_alias (__glob_pattern_p, glob_pattern_p)
    allocated with alloca to be recycled.  */
 static int
 __attribute_noinline__
-link_exists2_p (const char *dir, size_t dirlen, const char *fname,
-               glob_t *pglob
+link_stat (const char *dir, size_t dirlen, const char *fname,
+           glob_t *pglob
 # if !defined _LIBC && !HAVE_FSTATAT
-                , int flags
+           , int flags
 # endif
-                )
+           )
 {
   size_t fnamelen = strlen (fname);
   char *fullname = __alloca (dirlen + 1 + fnamelen + 1);
@@ -1549,10 +1549,10 @@ link_exists2_p (const char *dir, size_t dirlen, const char *fname,
   if (__builtin_expect ((flags & GLOB_ALTDIRFUNC) == 0, 1))
     {
       struct_stat64 st64;
-      return __stat64 (fullname, &st64) == 0;
+      return __stat64 (fullname, &st64);
     }
 # endif
-  return (*pglob->gl_stat) (fullname, &st) == 0;
+  return (*pglob->gl_stat) (fullname, &st);
 }
 
 /* Return true if DIR/FNAME exists.  */
@@ -1560,19 +1560,21 @@ static int
 link_exists_p (int dfd, const char *dir, size_t dirlen, const char *fname,
                glob_t *pglob, int flags)
 {
+  int status;
 # if defined _LIBC || HAVE_FSTATAT
   if (__builtin_expect (flags & GLOB_ALTDIRFUNC, 0))
-    return link_exists2_p (dir, dirlen, fname, pglob);
+    status = link_stat (dir, dirlen, fname, pglob);
   else
     {
       /* dfd cannot be -1 here, because dirfd never returns -1 on
          glibc, or on hosts that have fstatat.  */
       struct_stat64 st64;
-      return __fxstatat64 (_STAT_VER, dfd, fname, &st64, 0) == 0;
+      status = __fxstatat64 (_STAT_VER, dfd, fname, &st64, 0);
     }
 # else
-  return link_exists2_p (dir, dirlen, fname, pglob, flags);
+  status = link_stat (dir, dirlen, fname, pglob, flags);
 # endif
+  return status == 0 || errno == EOVERFLOW;
 }
 #endif /* !defined GLOB_ONLY_P */
 
@@ -1643,9 +1645,11 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
       mempcpy (mempcpy (mempcpy (fullname, directory, dirlen),
                         "/", 1),
                pattern, patlen + 1);
-      if ((__builtin_expect (flags & GLOB_ALTDIRFUNC, 0)
-           ? (*pglob->gl_stat) (fullname, &ust.st)
-           : __stat64 (fullname, &ust.st64)) == 0)
+      if (((__builtin_expect (flags & GLOB_ALTDIRFUNC, 0)
+            ? (*pglob->gl_stat) (fullname, &ust.st)
+            : __stat64 (fullname, &ust.st64))
+           == 0)
+          || errno == EOVERFLOW)
         /* We found this file to be existing.  Now tell the rest
            of the function to copy this name into the result.  */
         flags |= GLOB_NOCHECK;
