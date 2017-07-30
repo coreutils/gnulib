@@ -44,10 +44,6 @@ On other Unix systems, it installs a wrapper executable.  The wrapper
 sets the environment variable that controls shared library searching
 (usually @env{LD_LIBRARY_PATH}) and then invokes the real executable.
 
-This approach does not always work.  On OpenBSD and OpenServer,
-prereleases of Libtool 1.5 put absolute file names of libraries in
-executables, which prevents searching any other locations.
-
 @item
 On Windows, the executable's own directory is searched for libraries,
 so installing shared libraries into the executable's directory is
@@ -58,7 +54,8 @@ You can make your program relocatable by following these steps:
 
 @enumerate
 @item
-Import the @code{relocatable-prog} module.
+Import the @code{relocatable-prog} module.  For libraries, use the
+@code{relocatable-lib} or @code{relocatable-lib-lgpl} module.
 
 @item
 In every program, add to @code{main} as the first statement (even
@@ -69,6 +66,10 @@ set_program_name (argv[0]);
 @end example
 
 The prototype for this function is in @file{progname.h}.
+
+@item
+If you want your code to be portable to platforms that do not support
+automatic initialization, call @code{set_relocation_prefix}.
 
 @item
 Everywhere where you use a constant pathname from installation-time,
@@ -168,6 +169,7 @@ if ("@@RELOCATABLE@@" eq "yes") @{
 @}
 
 # Get some relocated directory names.
+# (The gnulib module 'configmake' can help with this.)
 $sysconfdir = relocate("@@sysconfdir@@");
 $some_datadir = relocate(@@datadir@@/something");
 @end example
@@ -187,6 +189,14 @@ if RELOCATABLE_VIA_LD
 foo_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 endif
 @end example
+
+Also in @file{Makefile.am}, for each library @code{libfoo}, you add:
+
+@example
+libfoo_la_CPPFLAGS = -DIN_LIBRARY
+@end example
+
+(Adjust the suffix @code{la} as necessary if you are not using libtool.)
 
 @item
 You may also need to add a couple of variable assignments to your
