@@ -1,0 +1,38 @@
+Description:
+Rename a file to a backup name.
+
+Files:
+lib/backup-internal.h
+lib/backup-rename.c
+lib/backupfile.c
+lib/backupfile.h
+m4/backupfile.m4
+
+Depends-on:
+argmatch
+closedir
+d-ino
+dirent-safer
+dirfd
+dirname-lgpl
+fcntl
+memcmp
+opendir
+renameat2
+readdir
+stdbool
+
+configure.ac:
+gl_BACKUPFILE
+
+Makefile.am:
+lib_SOURCES += backupfile.c backup-rename.c
+
+Include:
+"backupfile.h"
+
+License:
+GPL
+
+Maintainer:
+Paul Eggert, Jim Meyering

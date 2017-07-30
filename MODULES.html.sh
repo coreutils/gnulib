@@ -2637,6 +2637,7 @@ func_all_modules ()
   func_module areadlinkat
   func_module areadlinkat-with-size
   func_module backupfile
+  func_module backup-rename
   func_module canonicalize
   func_module canonicalize-lgpl
   func_module chdir-safer

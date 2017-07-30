@@ -20,12 +20,13 @@
 
 #include <config.h>
 
-#include "backupfile.h"
+#include "backup-internal.h"
 
-#include "argmatch.h"
 #include "dirname.h"
-#include "xalloc.h"
+#include "renameat2.h"
+#include "xalloc-oversized.h"
 
+#include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -155,7 +156,10 @@ enum numbered_backup_result
 
     /* There are no existing backup names.  The new name's length
        should be checked.  */
-    BACKUP_IS_NEW
+    BACKUP_IS_NEW,
+
+    /* Memory allocation failure.  */
+    BACKUP_NOMEM
   };
 
 /* *BUFFER contains a file name.  Store into *BUFFER the next backup
@@ -164,33 +168,45 @@ enum numbered_backup_result
    initial allocated size is BUFFER_SIZE, which must be at least 4
    bytes longer than the file name to make room for the initially
    appended ".~1".  FILELEN is the length of the original file name.
+   BASE_OFFSET is the offset of the basename in *BUFFER.
    The returned value indicates what kind of backup was found.  If an
    I/O or other read error occurs, use the highest backup number that
-   was found.  */
+   was found.
+
+   *DIRPP is the destination directory.  If *DIRPP is null, open the
+   destination directory and store the resulting stream into *DIRPP
+   without closing the stream.  */
 
 static enum numbered_backup_result
-numbered_backup (char **buffer, size_t buffer_size, size_t filelen)
+numbered_backup (char **buffer, size_t buffer_size, size_t filelen,
+                 ptrdiff_t base_offset, DIR **dirpp)
 {
   enum numbered_backup_result result = BACKUP_IS_NEW;
-  DIR *dirp;
+  DIR *dirp = *dirpp;
   struct dirent *dp;
   char *buf = *buffer;
   size_t versionlenmax = 1;
-  char *base = last_component (buf);
-  size_t base_offset = base - buf;
+  char *base = buf + base_offset;
   size_t baselen = base_len (base);
 
-  /* Temporarily modify the buffer into its parent directory name,
-     open the directory, and then restore the buffer.  */
-  char tmp[sizeof "."];
-  memcpy (tmp, base, sizeof ".");
-  strcpy (base, ".");
-  dirp = opendir (buf);
-  memcpy (base, tmp, sizeof ".");
-  strcpy (base + baselen, ".~1~");
-
-  if (!dirp)
-    return result;
+  if (dirp)
+    rewinddir (dirp);
+  else
+    {
+      /* Temporarily modify the buffer into its parent directory name,
+         open the directory, and then restore the buffer.  */
+      char tmp[sizeof "."];
+      memcpy (tmp, base, sizeof ".");
+      strcpy (base, ".");
+      dirp = opendir (buf);
+      if (!dirp && errno == ENOMEM)
+        result = BACKUP_NOMEM;
+      memcpy (base, tmp, sizeof ".");
+      strcpy (base + baselen, ".~1~");
+      if (!dirp)
+        return result;
+      *dirpp = dirp;
+    }
 
   while ((dp = readdir (dirp)) != NULL)
     {
@@ -198,7 +214,6 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen)
       char *q;
       bool all_9s;
       size_t versionlen;
-      size_t new_buflen;
 
       if (! REAL_DIR_ENTRY (dp) || _D_EXACT_NAMLEN (dp) < baselen + 4)
         continue;
@@ -224,17 +239,25 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen)
                      && memcmp (buf + filelen + 2, p, versionlen) <= 0))))
         continue;
 
-      /* This directory has the largest version number seen so far.
+      /* This entry has the largest version number seen so far.
          Append this highest numbered extension to the file name,
          prepending '0' to the number if it is all 9s.  */
 
       versionlenmax = all_9s + versionlen;
       result = (all_9s ? BACKUP_IS_LONGER : BACKUP_IS_SAME_LENGTH);
-      new_buflen = filelen + 2 + versionlenmax + 1;
-      if (buffer_size <= new_buflen)
+      size_t new_buffer_size = filelen + 2 + versionlenmax + 2;
+      if (buffer_size < new_buffer_size)
         {
-          buf = xnrealloc (buf, 2, new_buflen);
-          buffer_size = new_buflen * 2;
+          if (! xalloc_oversized (new_buffer_size, 2))
+            new_buffer_size *= 2;
+          char *new_buf = realloc (buf, new_buffer_size);
+          if (!new_buf)
+            {
+              *buffer = buf;
+              return BACKUP_NOMEM;
+            }
+          buf = new_buf;
+          buffer_size = new_buffer_size;
         }
       q = buf + filelen;
       *q++ = '.';
@@ -251,22 +274,20 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen)
       ++*q;
     }
 
-  closedir (dirp);
   *buffer = buf;
   return result;
 }
 
 /* Return the name of the new backup file for the existing file FILE,
-   allocated with malloc.  Report an error and fail if out of memory.
+   allocated with malloc.  If RENAME, also rename FILE to the new name.
+   On failure, return NULL and set errno.
    Do not call this function if backup_type == no_backups.  */
 
 char *
-find_backup_file_name (char const *file, enum backup_type backup_type)
+backupfile_internal (char const *file, enum backup_type backup_type, bool rename)
 {
-  size_t filelen = strlen (file);
-  char *s;
-  size_t ssize;
-  bool simple = true;
+  ptrdiff_t base_offset = last_component (file) - file;
+  size_t filelen = base_offset + strlen (file + base_offset);
 
   /* Initialize the default simple backup suffix.  */
   if (! simple_backup_suffix)
@@ -286,80 +307,68 @@ find_backup_file_name (char const *file, enum backup_type backup_type)
   if (backup_suffix_size_guess < GUESS)
     backup_suffix_size_guess = GUESS;
 
-  ssize = filelen + backup_suffix_size_guess + 1;
-  s = xmalloc (ssize);
-  memcpy (s, file, filelen + 1);
+  ssize_t ssize = filelen + backup_suffix_size_guess + 1;
+  char *s = malloc (ssize);
+  if (!s)
+    return s;
 
-  if (backup_type != simple_backups)
-    switch (numbered_backup (&s, ssize, filelen))
-      {
-      case BACKUP_IS_SAME_LENGTH:
-        return s;
+  DIR *dirp = NULL;
+  while (true)
+    {
+      memcpy (s, file, filelen + 1);
 
-      case BACKUP_IS_LONGER:
-        simple = false;
+      if (backup_type == simple_backups)
+        memcpy (s + filelen, simple_backup_suffix, simple_backup_suffix_size);
+      else
+        switch (numbered_backup (&s, ssize, filelen, base_offset, &dirp))
+          {
+          case BACKUP_IS_SAME_LENGTH:
+            break;
+
+          case BACKUP_IS_NEW:
+            if (backup_type == numbered_existing_backups)
+              {
+                backup_type = simple_backups;
+                memcpy (s + filelen, simple_backup_suffix,
+                        simple_backup_suffix_size);
+              }
+            check_extension (s, filelen, '~');
+            break;
+
+          case BACKUP_IS_LONGER:
+            check_extension (s, filelen, '~');
+            break;
+
+          case BACKUP_NOMEM:
+            free (s);
+            errno = ENOMEM;
+            return NULL;
+          }
+
+      if (! rename)
         break;
 
-      case BACKUP_IS_NEW:
-        simple = (backup_type == numbered_existing_backups);
+      int sdir = dirp ? dirfd (dirp) : -1;
+      if (sdir < 0)
+        {
+          sdir = AT_FDCWD;
+          base_offset = 0;
+        }
+      unsigned flags = backup_type == simple_backups ? 0 : RENAME_NOREPLACE;
+      if (renameat2 (AT_FDCWD, file, sdir, s + base_offset, flags) == 0)
         break;
-      }
+      int e = errno;
+      if (e != EEXIST)
+        {
+          if (dirp)
+            closedir (dirp);
+          free (s);
+          errno = e;
+          return NULL;
+        }
+    }
 
-  if (simple)
-    memcpy (s + filelen, simple_backup_suffix, simple_backup_suffix_size);
-  check_extension (s, filelen, '~');
+  if (dirp)
+    closedir (dirp);
   return s;
-}
-
-static char const * const backup_args[] =
-{
-  /* In a series of synonyms, present the most meaningful first, so
-     that argmatch_valid be more readable. */
-  "none", "off",
-  "simple", "never",
-  "existing", "nil",
-  "numbered", "t",
-  NULL
-};
-
-static const enum backup_type backup_types[] =
-{
-  no_backups, no_backups,
-  simple_backups, simple_backups,
-  numbered_existing_backups, numbered_existing_backups,
-  numbered_backups, numbered_backups
-};
-
-/* Ensure that these two vectors have the same number of elements,
-   not counting the final NULL in the first one.  */
-ARGMATCH_VERIFY (backup_args, backup_types);
-
-/* Return the type of backup specified by VERSION.
-   If VERSION is NULL or the empty string, return numbered_existing_backups.
-   If VERSION is invalid or ambiguous, fail with a diagnostic appropriate
-   for the specified CONTEXT.  Unambiguous abbreviations are accepted.  */
-
-enum backup_type
-get_version (char const *context, char const *version)
-{
-  if (version == 0 || *version == 0)
-    return numbered_existing_backups;
-  else
-    return XARGMATCH (context, version, backup_args, backup_types);
-}
-
-
-/* Return the type of backup specified by VERSION.
-   If VERSION is NULL, use the value of the envvar VERSION_CONTROL.
-   If the specified string is invalid or ambiguous, fail with a diagnostic
-   appropriate for the specified CONTEXT.
-   Unambiguous abbreviations are accepted.  */
-
-enum backup_type
-xget_version (char const *context, char const *version)
-{
-  if (version && *version)
-    return get_version (context, version);
-  else
-    return get_version ("$VERSION_CONTROL", getenv ("VERSION_CONTROL"));
 }
