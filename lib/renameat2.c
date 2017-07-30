@@ -147,6 +147,7 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
   /* See the lengthy comment in rename.c why Solaris 9 is forced to
      GNU behavior, while Solaris 10 is left with POSIX behavior,
      regarding symlinks with trailing slash.  */
+  ret_val = -1;
   if (src_slash)
     {
       src_temp = strdup (src);
@@ -194,6 +195,7 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
 
   ret_val = renameat (fd1, src_temp, fd2, dst_temp);
   rename_errno = errno;
+  goto out;
  out:
   if (src_temp != src)
     free (src_temp);
