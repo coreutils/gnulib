@@ -27,7 +27,9 @@
 #include <unistd.h>
 
 #define BASE "t-fts.tmp"
-static char *const argv[2] = { BASE, 0 };
+static char base[] = BASE; /* Not const, since argv needs non-const.  */
+static char const base_d[] = BASE "/d";
+static char *const argv[2] = { base, 0 };
 
 static void
 perror_exit (char const *message, int status)
@@ -65,7 +67,7 @@ remove_tree (void)
         perror_exit ("fts_close", 2);
     }
   else if (errno != ENOENT)
-    perror_exit (BASE, 3);
+    perror_exit (base, 3);
 }
 
 int
@@ -88,19 +90,19 @@ main (void)
      https://bugzilla.kernel.org/show_bug.cgi?id=196405
      for more info.  */
   if (mkdir (BASE, 0777) != 0)
-    perror_exit (BASE, 4);
-  if (mkdir (BASE "/d", 0777) != 0)
-    perror_exit (BASE "/d", 5);
+    perror_exit (base, 4);
+  if (mkdir (base_d, 0777) != 0)
+    perror_exit (base_d, 5);
   for (i = 1; i <= 65536; i++)
     {
-      sprintf (buf, "%s/d/%i", BASE, i);
+      sprintf (buf, "%s/d/%i", base, i);
       if (mkdir (buf, 0777) != 0)
         {
           if (errno != EMFILE || i <= needles)
             perror_exit (buf, 77);
           break;
         }
-      if (needles < i && stat (BASE "/d", &st) == 0 && st.st_nlink != i + 2)
+      if (needles < i && stat (base_d, &st) == 0 && st.st_nlink != i + 2)
         break;
     }
 
@@ -108,7 +110,7 @@ main (void)
   for (i = 1; i <= needles; i++)
     {
       int fd;
-      sprintf (buf, "%s/d/%d/needle", BASE, i);
+      sprintf (buf, "%s/d/%d/needle", base, i);
       fd = open (buf, O_WRONLY | O_CREAT, 0666);
       if (fd < 0 || close (fd) != 0)
         perror_exit (buf, 77);
@@ -117,7 +119,7 @@ main (void)
   /* Use fts to look for the needles.  */
   ftsp = fts_open (argv, FTS_SEEDOT | FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, 0);
   if (!ftsp)
-    perror_exit (BASE, 6);
+    perror_exit (base, 6);
   while ((e = fts_read (ftsp)))
     needles_seen += strcmp (e->fts_name, "needle") == 0;
   fflush (stdout);
@@ -133,7 +135,7 @@ main (void)
     }
 
   remove_tree ();
-  if (stat (BASE, &st) == 0)
+  if (stat (base, &st) == 0)
     {
       fprintf (stderr, "fts could not remove directory\n");
       return 1;
