@@ -232,6 +232,7 @@ canonicalize_filename_mode (const char *name, canonicalize_mode_t can_mode)
             }
           else if ((logical ? stat (rname, &st) : lstat (rname, &st)) != 0)
             {
+              /* FIXME: If errno == EOVERFLOW here, the entry exists.  */
               saved_errno = errno;
               if (can_mode == CAN_EXISTING)
                 goto error;

@@ -270,7 +270,7 @@ __realpath (const char *name, char *resolved)
 #endif
           *dest = '\0';
 
-          /* FIXME: if lstat fails with errno == EOVERFILE,
+          /* FIXME: if lstat fails with errno == EOVERFLOW,
              the entry exists.  */
 #ifdef _LIBC
           if (__lxstat64 (_STAT_VER, rpath, &st) < 0)
