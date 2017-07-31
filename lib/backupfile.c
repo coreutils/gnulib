@@ -83,6 +83,16 @@
    to numbered) backup file name. */
 char const *simple_backup_suffix = NULL;
 
+/* Set SIMPLE_BACKUP_SUFFIX to S, or to a default specified by the
+   environment if S is null.  If S or the environment does not specify
+   a valid backup suffix, use "~".  */
+void
+set_simple_backup_suffix (char const *s)
+{
+  if (!s)
+    s = getenv ("SIMPLE_BACKUP_SUFFIX");
+  simple_backup_suffix = s && *s && s == last_component (s) ? s : "~";
+}
 
 /* If FILE (which was of length FILELEN before an extension was
    appended to it) is too long, replace the extension with the single
@@ -289,15 +299,8 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
   ptrdiff_t base_offset = last_component (file) - file;
   size_t filelen = base_offset + strlen (file + base_offset);
 
-  /* Initialize the default simple backup suffix.  */
   if (! simple_backup_suffix)
-    {
-      char const *env_suffix = getenv ("SIMPLE_BACKUP_SUFFIX");
-      if (env_suffix && *env_suffix)
-        simple_backup_suffix = env_suffix;
-      else
-        simple_backup_suffix = "~";
-    }
+    set_simple_backup_suffix (NULL);
 
   /* Allow room for simple or ".~N~" backups.  The guess must be at
      least sizeof ".~1~", but otherwise will be adjusted as needed.  */
