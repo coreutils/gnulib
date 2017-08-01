@@ -1,4 +1,4 @@
-# manywarnings.m4 serial 8
+# manywarnings.m4 serial 9
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -259,8 +259,8 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC],
   # gcc --help=warnings outputs an unusual form for these options; list
   # them here so that the above 'comm' command doesn't report a false match.
   # Would prefer "min (PTRDIFF_MAX, SIZE_MAX)", but it must be a literal:
-  ptrdiff_max_max=9223372036854775807
-  gl_manywarn_set="$gl_manywarn_set -Walloc-size-larger-than=$ptrdiff_max_max"
+  ptrdiff_max_min=2147483647
+  gl_manywarn_set="$gl_manywarn_set -Walloc-size-larger-than=$ptrdiff_max_min"
   gl_manywarn_set="$gl_manywarn_set -Warray-bounds=2"
   gl_manywarn_set="$gl_manywarn_set -Wformat-overflow=2"
   gl_manywarn_set="$gl_manywarn_set -Wformat-truncation=2"
