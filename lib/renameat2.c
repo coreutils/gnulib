@@ -22,6 +22,7 @@
 
 #include <errno.h>
 #include <stdio.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #ifdef __linux__
@@ -40,7 +41,6 @@ errno_fail (int e)
 # include <stdbool.h>
 # include <stdlib.h>
 # include <string.h>
-# include <sys/stat.h>
 
 # include "dirname.h"
 # include "openat.h"
@@ -209,8 +209,7 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
   /* RENAME_NOREPLACE is the only flag currently supported.  */
   if (flags & ~RENAME_NOREPLACE)
     return errno_fail (ENOTSUP);
-  return at_func2 (fd1, file1, fd2, file2,
-                   flags ? rename_noreplace : rename);
+  return at_func2 (fd1, src, fd2, dst, flags ? rename_noreplace : rename);
 
 #endif /* !HAVE_RENAMEAT */
 }
