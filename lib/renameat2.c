@@ -76,7 +76,7 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
 {
 #ifdef SYS_renameat2
   int r = syscall (SYS_renameat2, fd1, src, fd2, dst, flags);
-  if (! (r < 0 && errno == ENOSYS))
+  if (! (r < 0 && (errno == ENOSYS || errno == EINVAL)))
     return r;
 #endif
 
