@@ -13,7 +13,7 @@ Makefile.am:
 Include:
 
 License:
-GPL
+unlimited
 
 Maintainer:
 all
