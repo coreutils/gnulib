@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2017-08-06.05; # UTC
+scriptversion=2017-08-06.16; # UTC
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 #
@@ -167,9 +167,9 @@ then
     # tag or the previous older version that did not?
     #   Newer: v6.10-77-g0f8faeb
     #   Older: v6.10-g0f8faeb
-    case $v in
-        *-*-g????) : git describe is okay three part flavor ;;
-        *-g????)
+    case ${v#-g*} in
+        *-*) : git describe is probably okay three part flavor ;;
+        *)
             : git describe is older two part flavor
             # Recreate the number of commits and rewrite such that the
             # result is the same as if we were using the newer version
