@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2017-01-09.19; # UTC
+scriptversion=2017-08-06.05; # UTC
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 #
@@ -168,8 +168,8 @@ then
     #   Newer: v6.10-77-g0f8faeb
     #   Older: v6.10-g0f8faeb
     case $v in
-        *-*-*) : git describe is okay three part flavor ;;
-        *-*)
+        *-*-g????) : git describe is okay three part flavor ;;
+        *-g????)
             : git describe is older two part flavor
             # Recreate the number of commits and rewrite such that the
             # result is the same as if we were using the newer version
