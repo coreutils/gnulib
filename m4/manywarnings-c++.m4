@@ -4,9 +4,9 @@ dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
-# Specialization of gl_MANYWARN_ALL_GCC for _AC_LANG = C++.
-# This macro can be AC_REQUIREd.
-AC_DEFUN([gl_MANYWARN_ALL_GCC(C++)],
+# Implementation of the specialization of gl_MANYWARN_ALL_GCC
+# for _AC_LANG = C++.
+AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
 [
   AC_LANG_PUSH([C++])
 

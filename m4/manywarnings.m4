@@ -38,7 +38,7 @@ AC_DEFUN([gl_MANYWARN_COMPLEMENT],
 AC_DEFUN([gl_MANYWARN_ALL_GCC],
 [_AC_LANG_DISPATCH([$0], _AC_LANG, $@)])
 
-# Specialization for _AC_LANG = C. This macro can be AC_REQUIREd.
+# Specialization for _AC_LANG = C.
 AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
 [
   AC_LANG_PUSH([C])
@@ -313,4 +313,10 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC(C)],
   $1=$gl_manywarn_set
 
   AC_LANG_POP([C])
+])
+
+# Specialization for _AC_LANG = C++.
+AC_DEFUN([gl_MANYWARN_ALL_GCC(C++)],
+[
+  gl_MANYWARN_ALL_GCC_CXX_IMPL([$1])
 ])
