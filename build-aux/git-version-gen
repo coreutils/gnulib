@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2017-08-06.16; # UTC
+scriptversion=2017-08-07.06; # UTC
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 #
@@ -184,9 +184,9 @@ then
             ;;
     esac
 
-    # Change the first '-' to a '.', so version-comparing tools work properly.
-    # Remove the "g" in git describe's output string, to save a byte.
-    v=`echo "$v" | sed 's/-/./;s/\(.*\)-g/\1-/'`;
+    # Change the penultimate "-" to ".", for version-comparing tools.
+    # Remove the "g" to save a byte.
+    v=`echo "$v" | sed 's/-\([^-]*\)-g\([^-]*\)$/.\1-\2/'`;
     v_from_git=1
 elif test "x$fallback" = x || git --version >/dev/null 2>&1; then
     v=UNKNOWN
