@@ -699,11 +699,17 @@ enum leaf_optimization
 # define S_MAGIC_TMPFS 0x1021994
 # define S_MAGIC_XFS 0x58465342
 
+# ifdef HAVE___FSWORD_T
+typedef __fsword_t fsword;
+# else
+typedef long int fsword;
+# endif
+
 /* Map a stat.st_dev number to a file system type number f_ftype.  */
 struct dev_type
 {
   dev_t st_dev;
-  __fsword_t f_type;
+  fsword f_type;
 };
 
 /* Use a tiny initial size.  If a traversal encounters more than
@@ -730,7 +736,7 @@ dev_type_compare (void const *x, void const *y)
 /* Return the file system type of P, or 0 if not known.
    Try to cache known values.  */
 
-static __fsword_t
+static fsword
 filesystem_type (FTSENT const *p)
 {
   FTS *sp = p->fts_fts;
