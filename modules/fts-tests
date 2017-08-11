@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-fts
 check_PROGRAMS += test-fts
+test_fts_LDADD = $(LDADD) @LIBINTL@
