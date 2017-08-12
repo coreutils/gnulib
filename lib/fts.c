@@ -71,11 +71,6 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 
 #if ! _LIBC
 # include "fcntl--.h"
-# include "dirent--.h"
-# include "unistd--.h"
-/* FIXME - use fcntl(F_DUPFD_CLOEXEC)/openat(O_CLOEXEC) once they are
-   supported.  */
-# include "cloexec.h"
 # include "flexmember.h"
 # include "openat.h"
 # include "same-inode.h"
@@ -305,14 +300,13 @@ static DIR *
 internal_function
 opendirat (int fd, char const *dir, int extra_flags, int *pdir_fd)
 {
-  int new_fd = openat (fd, dir,
-                       (O_RDONLY | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
-                        | extra_flags));
+  int open_flags = (O_RDONLY | O_CLOEXEC | O_DIRECTORY | O_NOCTTY
+                    | O_NONBLOCK | extra_flags);
+  int new_fd = openat (fd, dir, open_flags);
   DIR *dirp;
 
   if (new_fd < 0)
     return NULL;
-  set_cloexec_flag (new_fd, true);
   dirp = fdopendir (new_fd);
   if (dirp)
     *pdir_fd = new_fd;
@@ -375,15 +369,13 @@ static int
 internal_function
 diropen (FTS const *sp, char const *dir)
 {
-  int open_flags = (O_SEARCH | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
+  int open_flags = (O_SEARCH | O_CLOEXEC | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
                     | (ISSET (FTS_PHYSICAL) ? O_NOFOLLOW : 0)
                     | (ISSET (FTS_NOATIME) ? O_NOATIME : 0));
 
   int fd = (ISSET (FTS_CWDFD)
             ? openat (sp->fts_cwd_fd, dir, open_flags)
             : open (dir, open_flags));
-  if (0 <= fd)
-    set_cloexec_flag (fd, true);
   return fd;
 }
 
@@ -1435,11 +1427,7 @@ fts_build (register FTS *sp, int type)
             if (descend || type == BREAD)
               {
                 if (ISSET(FTS_CWDFD))
-                  {
-                    dir_fd = dup (dir_fd);
-                    if (0 <= dir_fd)
-                      set_cloexec_flag (dir_fd, true);
-                  }
+                  dir_fd = fcntl (dir_fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
                 if (dir_fd < 0 || fts_safe_changedir(sp, cur, dir_fd, NULL)) {
                         if (descend && type == BREAD)
                                 cur->fts_errno = errno;
@@ -1781,7 +1769,7 @@ fd_ring_check (FTS const *sp)
   I_ring fd_w = sp->fts_fd_ring;
 
   int cwd_fd = sp->fts_cwd_fd;
-  cwd_fd = dup (cwd_fd);
+  cwd_fd = fcntl (cwd_fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
   char *dot = getcwdat (cwd_fd, NULL, 0);
   error (0, 0, "===== check ===== cwd: %s", dot);
   free (dot);
@@ -1790,7 +1778,8 @@ fd_ring_check (FTS const *sp)
       int fd = i_ring_pop (&fd_w);
       if (0 <= fd)
         {
-          int parent_fd = openat (cwd_fd, "..", O_SEARCH | O_NOATIME);
+          int open_flags = O_SEARCH | O_CLOEXEC | O_NOATIME;
+          int parent_fd = openat (cwd_fd, "..", open_flags);
           if (parent_fd < 0)
             {
               // Warn?

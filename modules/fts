@@ -8,16 +8,13 @@ lib/fts-cycle.c
 m4/fts.m4
 
 Depends-on:
-cloexec
 closedir
 cycle-check
 d-ino
 d-type
-dirent-safer
-dup
 fchdir
+fcntl
 fcntl-h
-fcntl-safer
 fdopendir
 flexmember
 fstat
@@ -32,7 +29,6 @@ readdir
 stdalign
 stdbool
 stddef
-unistd-safer
 
 configure.ac:
 gl_FUNC_FTS
