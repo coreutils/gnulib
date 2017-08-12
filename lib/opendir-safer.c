@@ -22,8 +22,8 @@
 #include "dirent-safer.h"
 
 #include <errno.h>
+#include <fcntl.h>
 #include <unistd.h>
-#include "unistd-safer.h"
 
 /* Like opendir, but do not clobber stdin, stdout, or stderr.  */
 
@@ -49,7 +49,7 @@ opendir_safer (char const *name)
           DIR *newdp;
           int e;
 #if HAVE_FDOPENDIR || GNULIB_FDOPENDIR
-          int f = dup_safer (fd);
+          int f = fcntl (fd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
           if (f < 0)
             {
               e = errno;

@@ -11,8 +11,8 @@ Depends-on:
 dirent
 closedir
 dirfd
+fcntl
 opendir
-unistd-safer
 
 configure.ac:
 gl_DIRENT_SAFER

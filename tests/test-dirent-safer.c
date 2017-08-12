@@ -25,8 +25,6 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "unistd-safer.h"
-
 /* This test intentionally closes stderr.  So, we arrange to have fd 10
    (outside the range of interesting fd's during the test) set up to
    duplicate the original stderr.  */
@@ -75,7 +73,7 @@ main (void)
 
 #if HAVE_FDOPENDIR || GNULIB_TEST_FDOPENDIR
       {
-        int fd = dup_safer (dfd);
+        int fd = fcntl (dfd, F_DUPFD_CLOEXEC, STDERR_FILENO + 1);
         ASSERT (STDERR_FILENO < fd);
         dp = fdopendir (fd);
         ASSERT (dp);
