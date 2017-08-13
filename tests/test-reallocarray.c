@@ -26,16 +26,18 @@ int
 main ()
 {
    size_t n;
-  /* Check that reallocarray fails when requested to allocate a block of memory
-     larger than SIZE_MAX bytes. */
-   for (n = 2; n != 0; n <<= 1)
-	{
-	  if (reallocarray (NULL, (size_t) -1 / n + 1, n))
-        return 1;
 
-	  /* Ensure that errno is correctly set */
-	  if (!errno == ENOMEM)
-		return 1;
-	}
+   /* Check that reallocarray fails when requested to allocate a block
+      of memory larger than SIZE_MAX bytes.  */
+   for (n = 2; n != 0; n <<= 1)
+     {
+       if (reallocarray (NULL, (size_t) -1 / n + 1, n))
+         return 1;
+
+       /* Ensure that errno is correctly set.  */
+       if (errno != ENOMEM)
+         return 1;
+     }
+
    return 0;
 }
