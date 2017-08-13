@@ -1,4 +1,4 @@
-/* reallocarray() function that is glibc compatible.
+/* reallocarray function that is glibc compatible.
 
    Copyright (C) 2017 Free Software Foundation, Inc.
 
@@ -25,13 +25,14 @@
 #include "xalloc-oversized.h"
 
 void *
-reallocarray(void *ptr, size_t nmemb, size_t size)
+reallocarray (void *ptr, size_t nmemb, size_t size)
 {
     if (xalloc_oversized (nmemb, size))
       {
         errno = ENOMEM;
         return NULL;
       }
-    /* We rely on using the semantics of the GNU realloc() function here. */
-    return realloc(ptr, nmemb * size);
+
+    /* Rely on the semantics of GNU realloc.  */
+    return realloc (ptr, nmemb * size);
 }
