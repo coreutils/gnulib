@@ -1703,6 +1703,7 @@ func_all_modules ()
   func_module free
   func_module malloc-gnu
   func_module realloc-gnu
+  func_module reallocarray
   func_module pagealign_alloc
   func_end_table
 
