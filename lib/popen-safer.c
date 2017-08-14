@@ -25,39 +25,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "cloexec.h"
-
-/* Like open (name, flags | O_CLOEXEC), although not necessarily
-   atomic.  FLAGS must not include O_CREAT.  */
-
-static int
-open_noinherit (char const *name, int flags)
-{
-  int fd;
-#if O_CLOEXEC
-  /* 0 = unknown, 1 = yes, -1 = no.  */
-  static int have_cloexec;
-  if (have_cloexec >= 0)
-    {
-      fd = open (name, flags | O_CLOEXEC);
-      if (have_cloexec == 0 && (0 <= fd || errno == EINVAL))
-        have_cloexec = (0 <= fd ? 1 : -1);
-      if (have_cloexec == 1)
-        return fd;
-    }
-#endif
-
-  fd = open (name, flags);
-  if (0 <= fd && set_cloexec_flag (fd, true) != 0)
-    {
-      int saved_errno = errno;
-      close (fd);
-      fd = -1;
-      errno = saved_errno;
-    }
-  return fd;
-}
-
 /* Like popen, but do not return stdin, stdout, or stderr.  */
 
 FILE *
@@ -72,7 +39,7 @@ popen_safer (char const *cmd, char const *mode)
      call (even though this puts more pressure on open fds), so that
      the original fd created by popen is safe.  */
   FILE *fp;
-  int fd = open_noinherit ("/dev/null", O_RDONLY);
+  int fd = open ("/dev/null", O_RDONLY | O_CLOEXEC);
   if (0 <= fd && fd <= STDERR_FILENO)
     {
       /* Maximum recursion depth is 3.  */

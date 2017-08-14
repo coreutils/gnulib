@@ -4,6 +4,7 @@ openat() function: Open a file at a directory.
 Files:
 lib/openat.c
 m4/openat.m4
+m4/open-cloexec.m4
 m4/lstat.m4
 m4/mode_t.m4
 
@@ -14,6 +15,7 @@ largefile
 openat-h        [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
 stdbool         [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
 sys_stat        [test $HAVE_OPENAT = 0 || test $REPLACE_OPENAT = 1]
+cloexec         [test $REPLACE_OPENAT = 1]
 fstat           [test $REPLACE_OPENAT = 1]
 at-internal     [test $HAVE_OPENAT = 0]
 dosname         [test $HAVE_OPENAT = 0]

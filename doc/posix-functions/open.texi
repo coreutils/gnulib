@@ -9,6 +9,9 @@ Gnulib module: open, fchdir
 Portability problems fixed by the Gnulib module open:
 @itemize
 @item
+Some platforms do not support @code{O_CLOEXEC}:
+Solaris 10, probably many others.
+@item
 On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
 correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
@@ -34,6 +37,9 @@ read-only descriptor for directories.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+The Gnulib replacement for @code{O_CLOEXEC} is not atomic, and so is
+not safe in the presence of multiple threads or signal handlers.
 @item
 @code{open ("symlink", O_NOFOLLOW ...)} fails with @code{errno} set to
 @code{EMLINK} instead of the POSIX-required @code{ELOOP} on some

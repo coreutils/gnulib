@@ -41,6 +41,8 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 
 #include "openat.h"
 
+#include "cloexec.h"
+
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -50,10 +52,18 @@ orig_openat (int fd, char const *filename, int flags, mode_t mode)
 
 #if HAVE_OPENAT
 
-/* Like openat, but work around Solaris 9 bugs with trailing slash.  */
+/* Like openat, but support O_CLOEXEC and work around Solaris 9 bugs
+   with trailing slash.  */
 int
 rpl_openat (int dfd, char const *filename, int flags, ...)
 {
+  /* 0 = unknown, 1 = yes, -1 = no.  */
+#if GNULIB_defined_O_CLOEXEC
+  int have_cloexec = -1;
+#else
+  static int have_cloexec;
+#endif
+
   mode_t mode;
   int fd;
 
@@ -103,7 +113,25 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
     }
 # endif
 
-  fd = orig_openat (dfd, filename, flags, mode);
+  fd = orig_openat (dfd, filename,
+                    flags & ~(have_cloexec <= 0 ? O_CLOEXEC : 0), mode);
+
+  if (flags & O_CLOEXEC)
+    {
+      if (! have_cloexec)
+        {
+          if (0 <= fd)
+            have_cloexec = 1;
+          else if (errno == EINVAL)
+            {
+              fd = orig_openat (dfd, filename, flags & ~O_CLOEXEC, mode);
+              have_cloexec = -1;
+            }
+        }
+      if (have_cloexec < 0 && 0 <= fd)
+        set_cloexec_flag (fd, true);
+    }
+
 
 # if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and fd does not refer to a directory,

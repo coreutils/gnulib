@@ -38,6 +38,8 @@ orig_open (const char *filename, int flags, mode_t mode)
    this include because of the preliminary #include <fcntl.h> above.  */
 #include "fcntl.h"
 
+#include "cloexec.h"
+
 #include <errno.h>
 #include <stdarg.h>
 #include <string.h>
@@ -52,6 +54,13 @@ orig_open (const char *filename, int flags, mode_t mode)
 int
 open (const char *filename, int flags, ...)
 {
+  /* 0 = unknown, 1 = yes, -1 = no.  */
+#if GNULIB_defined_O_CLOEXEC
+  int have_cloexec = -1;
+#else
+  static int have_cloexec;
+#endif
+
   mode_t mode;
   int fd;
 
@@ -115,7 +124,25 @@ open (const char *filename, int flags, ...)
     }
 #endif
 
-  fd = orig_open (filename, flags, mode);
+  fd = orig_open (filename,
+                  flags & ~(have_cloexec <= 0 ? O_CLOEXEC : 0), mode);
+
+  if (flags & O_CLOEXEC)
+    {
+      if (! have_cloexec)
+        {
+          if (0 <= fd)
+            have_cloexec = 1;
+          else if (errno == EINVAL)
+            {
+              fd = orig_open (filename, flags & ~O_CLOEXEC, mode);
+              have_cloexec = -1;
+            }
+        }
+      if (have_cloexec < 0 && 0 <= fd)
+        set_cloexec_flag (fd, true);
+    }
+
 
 #if REPLACE_FCHDIR
   /* Implementing fchdir and fdopendir requires the ability to open a

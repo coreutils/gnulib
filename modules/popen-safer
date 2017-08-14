@@ -7,7 +7,6 @@ lib/stdio-safer.h
 lib/popen-safer.c
 
 Depends-on:
-cloexec
 open
 popen
 unistd-safer
