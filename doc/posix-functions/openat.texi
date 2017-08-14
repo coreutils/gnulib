@@ -15,7 +15,7 @@ AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Cygwin 1.5.x, mingw, MSVC 14, Interix 3.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @item
 Some platforms do not support @code{O_CLOEXEC}:
-Solaris 10.
+AIX 7.1, Solaris 10.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
 correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
