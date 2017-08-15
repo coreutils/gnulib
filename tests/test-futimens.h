@@ -97,13 +97,21 @@ test_futimens (int (*func) (int, struct timespec const *),
     ASSERT (errno == EBADF);
   }
   {
-    struct timespec ts[2] = { { Y2K, UTIME_BOGUS_POS }, { Y2K, 0 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = UTIME_BOGUS_POS;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = 0;
     errno = 0;
     ASSERT (func (fd, ts) == -1);
     ASSERT (errno == EINVAL);
   }
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, UTIME_BOGUS_NEG } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = UTIME_BOGUS_NEG;
     errno = 0;
     ASSERT (func (fd, ts) == -1);
     ASSERT (errno == EINVAL);
@@ -115,7 +123,11 @@ test_futimens (int (*func) (int, struct timespec const *),
 
   /* Set both times.  */
   {
-    struct timespec ts[2] = { { Y2K, BILLION / 2 - 1 }, { Y2K, BILLION - 1 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = BILLION / 2 - 1;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = BILLION - 1;
     ASSERT (func (fd, ts) == 0);
     ASSERT (fstat (fd, &st2) == 0);
     ASSERT (st2.st_atime == Y2K);
@@ -131,7 +143,11 @@ test_futimens (int (*func) (int, struct timespec const *),
   /* Play with UTIME_OMIT, UTIME_NOW.  */
   {
     struct stat st3;
-    struct timespec ts[2] = { { BILLION, UTIME_OMIT }, { 0, UTIME_NOW } };
+    struct timespec ts[2];
+    ts[0].tv_sec = BILLION;
+    ts[0].tv_nsec = UTIME_OMIT;
+    ts[1].tv_sec = 0;
+    ts[1].tv_nsec = UTIME_NOW;
     nap ();
     ASSERT (func (fd, ts) == 0);
     ASSERT (fstat (fd, &st3) == 0);

@@ -44,7 +44,10 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (st1.st_atime != Y2K);
   ASSERT (st1.st_mtime != Y2K);
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1] = ts[0];
     errno = 0;
     ASSERT (func (BASE "file/", ts) == -1);
     ASSERT (errno == ENOTDIR);
@@ -53,7 +56,10 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
     ASSERT (st1.st_mtime == st2.st_mtime);
   }
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1] = ts[0];
     nap ();
     ASSERT (func (BASE "file", ts) == 0);
   }
@@ -106,13 +112,21 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
 
   /* Invalid arguments.  */
   {
-    struct timespec ts[2] = { { Y2K, UTIME_BOGUS_POS }, { Y2K, 0 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = UTIME_BOGUS_POS;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = 0;
     errno = 0;
     ASSERT (func (BASE "link", ts) == -1);
     ASSERT (errno == EINVAL);
   }
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, UTIME_BOGUS_NEG } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = UTIME_BOGUS_NEG;
     errno = 0;
     ASSERT (func (BASE "link", ts) == -1);
     ASSERT (errno == EINVAL);
@@ -127,7 +141,11 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
 
   /* Set both times.  */
   {
-    struct timespec ts[2] = { { Y2K, BILLION / 2 - 1 }, { Y2K, BILLION - 1 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = BILLION / 2 - 1;
+    ts[1].tv_sec = Y2K;
+    ts[1].tv_nsec = BILLION - 1;
     nap ();
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st2) == 0);
@@ -147,7 +165,11 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   /* Play with UTIME_OMIT, UTIME_NOW.  */
   {
     struct stat st3;
-    struct timespec ts[2] = { { BILLION, UTIME_OMIT }, { 0, UTIME_NOW } };
+    struct timespec ts[2];
+    ts[0].tv_sec = BILLION;
+    ts[0].tv_nsec = UTIME_OMIT;
+    ts[1].tv_sec = 0;
+    ts[1].tv_nsec = UTIME_NOW;
     nap ();
     ASSERT (func (BASE "link", ts) == 0);
     ASSERT (lstat (BASE "link", &st3) == 0);
@@ -181,7 +203,10 @@ test_lutimens (int (*func) (char const *, struct timespec const *), bool print)
   ASSERT (symlink (BASE "dir", BASE "link") == 0);
   ASSERT (mkdir (BASE "dir", 0700) == 0);
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    struct timespec ts[2];
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1] = ts[0];
     ASSERT (func (BASE "link/", ts) == 0);
   }
   /* On cygwin 1.5, stat() changes atime of directories, so only check

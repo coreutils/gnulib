@@ -125,8 +125,11 @@ main (void)
   ASSERT (fdutimensat (AT_FDCWD, fd, ".", NULL, 0) == -1);
   ASSERT (errno == ENOTDIR);
   {
-    struct timespec ts[2] = { { Y2K, 0 }, { Y2K, 0 } };
+    struct timespec ts[2];
     struct stat st;
+    ts[0].tv_sec = Y2K;
+    ts[0].tv_nsec = 0;
+    ts[1] = ts[0];
     ASSERT (fdutimensat (fd, dfd, BASE "dir/file", ts, 0) == 0);
     ASSERT (stat ("file", &st) == 0);
     ASSERT (st.st_atime == Y2K);

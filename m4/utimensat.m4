@@ -34,14 +34,22 @@ AC_DEFUN([gl_FUNC_UTIMENSAT],
               }
               /* Test whether UTIME_NOW and UTIME_OMIT work.  */
               {
-                struct timespec ts[2] = { { 1, UTIME_OMIT }, { 1, UTIME_NOW } };
+                struct timespec ts[2];
+                ts[0].tv_sec = 1;
+                ts[0].tv_nsec = UTIME_OMIT;
+                ts[1].tv_sec = 1;
+                ts[1].tv_nsec = UTIME_NOW;
                 if (utimensat (AT_FDCWD, f, ts, 0))
                   result |= 4;
               }
               sleep (1);
               {
-                struct timespec ts[2] = { { 1, UTIME_NOW }, { 1, UTIME_OMIT } };
                 struct stat st;
+                struct timespec ts[2];
+                ts[0].tv_sec = 1;
+                ts[0].tv_nsec = UTIME_NOW;
+                ts[1].tv_sec = 1;
+                ts[1].tv_nsec = UTIME_OMIT;
                 if (utimensat (AT_FDCWD, f, ts, 0))
                   result |= 8;
                 if (stat (f, &st))
