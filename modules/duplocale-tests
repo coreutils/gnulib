@@ -7,7 +7,7 @@ Depends-on:
 langinfo
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([duplocale])
+AC_CHECK_FUNCS_ONCE([duplocale uselocale strfmon_l snprintf_l nl_langinfo_l])
 AC_CHECK_HEADERS([monetary.h])
 
 Makefile.am:
