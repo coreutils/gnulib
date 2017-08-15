@@ -1,4 +1,4 @@
-# duplocale.m4 serial 8
+# duplocale.m4 serial 9
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,10 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
     dnl See <http://sourceware.org/bugzilla/show_bug.cgi?id=10969>.
     dnl Also, on AIX 7.1, duplocale(LC_GLOBAL_LOCALE) returns (locale_t)0 with
     dnl errno set to EINVAL.
+    dnl Also, on NetBSD 7.0, duplocale(LC_GLOBAL_LOCALE) returns a locale that
+    dnl corresponds to the C locale.
     AC_REQUIRE([gl_LOCALE_H])
+    AC_CHECK_FUNCS_ONCE([snprintf_l nl_langinfo_l])
     AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
       [gl_cv_func_duplocale_works],
       [AC_RUN_IFELSE(
@@ -23,19 +26,57 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
 #if HAVE_XLOCALE_H
 # include <xlocale.h>
 #endif
+#if HAVE_SNPRINTF_L
+# include <stdio.h>
+#endif
+#if HAVE_NL_LANGINFO_L
+# include <langinfo.h>
+#endif
+#include <string.h>
+struct locale_dependent_values
+{
+  char numeric[100];
+  char time[100];
+};
 int main ()
 {
-  locale_t loc = duplocale (LC_GLOBAL_LOCALE);
+  struct locale_dependent_values expected_result;
+  struct locale_dependent_values result;
+  locale_t loc;
+  setlocale (LC_ALL, "en_US.UTF-8");
+  setlocale (LC_NUMERIC, "de_DE.UTF-8");
+  setlocale (LC_TIME, "fr_FR.UTF-8");
+#if HAVE_SNPRINTF_L
+  snprintf (expected_result.numeric, sizeof (expected_result.numeric), "%g", 3.5);
+#endif
+#if HAVE_NL_LANGINFO_L
+  strcpy (expected_result.time, nl_langinfo (MON_1));
+#endif
+  loc = duplocale (LC_GLOBAL_LOCALE);
   if (!loc)
     return 1;
+#if HAVE_SNPRINTF_L
+  snprintf_l (result.numeric, sizeof (result.numeric), loc, "%g", 3.5);
+#endif
+#if HAVE_NL_LANGINFO_L
+  strcpy (result.time, nl_langinfo_l (MON_1, loc));
+#endif
+#if HAVE_SNPRINTF_L
+  if (strcmp (result.numeric, expected_result.numeric) != 0)
+    return 2;
+#endif
+#if HAVE_NL_LANGINFO_L
+  if (strcmp (result.time, expected_result.time) != 0)
+    return 3;
+#endif
   freelocale (loc);
   return 0;
 }]])],
          [gl_cv_func_duplocale_works=yes],
          [gl_cv_func_duplocale_works=no],
-         [dnl Guess it works except on glibc < 2.12, uClibc, and AIX.
+         [dnl Guess it works except on glibc < 2.12, uClibc, AIX, and NetBSD.
           case "$host_os" in
-            aix*) gl_cv_func_duplocale_works="guessing no";;
+            aix* | netbsd*) gl_cv_func_duplocale_works="guessing no";;
             *-gnu*)
               AC_EGREP_CPP([Unlucky], [
 #include <features.h>
