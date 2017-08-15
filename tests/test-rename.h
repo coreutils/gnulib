@@ -522,7 +522,13 @@ test_rename (int (*func) (char const *, char const *), bool print)
   { /* File onto hard link.  */
     ASSERT (func (BASE "file", BASE "file2") == 0);
     memset (&st, 0, sizeof st);
-    ASSERT (stat (BASE "file", &st) == 0);
+    if (stat (BASE "file", &st) != 0)
+      {
+        /* This can happen on NetBSD.  */
+        ASSERT (errno == ENOENT);
+        ASSERT (link (BASE "file2", BASE "file") == 0);
+        ASSERT (stat (BASE "file", &st) == 0);
+      }
     ASSERT (st.st_size == 2);
     memset (&st, 0, sizeof st);
     ASSERT (stat (BASE "file2", &st) == 0);

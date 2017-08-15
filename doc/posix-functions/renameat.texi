@@ -39,6 +39,16 @@ is counter-intuitive, so on some systems, @code{renameat} fails with
 @code{ENOTDIR} if either argument is a symlink with a trailing slash:
 glibc, OpenBSD, Cygwin 1.7.
 @item
+POSIX requires that @code{renameat} do nothing and return 0 if the
+source and destination are hard links to the same file.  This behavior
+is counterintuitive, and on some systems @code{renameat} is a no-op in
+this way only if the source and destination identify the same
+directory entry.  On these systems, for example, although renaming
+@file{./f} to @file{f} is a no-op, renaming @file{f} to @file{g}
+deletes @file{f} when @file{f} and @file{g} are hard links to the same
+file:
+NetBSD.
+@item
 After renaming a non-empty directory over an existing empty directory,
 the old directory name is still visible through the @code{stat} function
 for 30 seconds after the rename, on NFS file systems, on some platforms:
