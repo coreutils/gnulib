@@ -19,7 +19,7 @@ Solaris 9.
 @item
 This function is declared in @code{<unistd.h>} instead of @code{<stdio.h>}
 on some platforms:
-Solaris 11 2011-11.
+NetBSD 7.0, Solaris 11 2011-11.
 @item
 This function is missing on some platforms:
 glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
