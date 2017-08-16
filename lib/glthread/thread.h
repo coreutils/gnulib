@@ -128,7 +128,9 @@ extern int glthread_in_use (void);
   /* Without this, clang complains that pthread_sigmask is never declared.  */
 #   include <signal.h>
 #  endif
-#  pragma weak pthread_sigmask
+#  ifndef pthread_sigmask /* Do not declare rpl_pthread_sigmask weak.  */
+#   pragma weak pthread_sigmask
+#  endif
 
 #  pragma weak pthread_join
 #  ifndef pthread_self

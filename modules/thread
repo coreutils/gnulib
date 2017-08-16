@@ -10,6 +10,7 @@ Depends-on:
 threadlib
 extern-inline
 lock
+pthread_sigmask [test $gl_threads_api = posix]
 
 configure.ac:
 gl_THREAD
