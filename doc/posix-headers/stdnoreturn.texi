@@ -27,13 +27,13 @@ When the macro @code{lint} is defined, standard headers define
 expands to the empty token sequence on some platforms:
 Cygwin 2.5.1, FreeBSD 10.3.
 @item
-On MSVC 14, @code{noreturn} expands to the empty token sequence, to avoid
-problems with standard headers that use @code{__declspec (noreturn)}
-directly.  Although the resulting code operates correctly, the
-compiler is not informed whether @code{noreturn} functions do not
-return, so it may generate incorrect warnings at compile-time, or code
-that is slightly less optimized.  This problem does not occur with
-@code{_Noreturn}.
+On Cygwin 1.7.30 and MSVC 14, @code{noreturn} expands to the empty token
+sequence, to avoid problems with standard headers that use @code{noreturn}
+in combination with @code{__attribute__} or @code{__declspec}.  Although
+the resulting code operates correctly, the compiler is not informed whether
+@code{noreturn} functions do not return, so it may generate incorrect
+warnings at compile-time, or code that is slightly less optimized.  This
+problem does not occur with @code{_Noreturn}.
 @item
 Circa 2012 bleeding-edge GCC with @code{-Werror=old-style-declaration}
 requires @code{_Noreturn} or @code{noreturn} before the returned type
