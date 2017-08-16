@@ -1,4 +1,4 @@
-/* closexec.c - set or clear the close-on-exec descriptor flag
+/* cloexec.c - set or clear the close-on-exec descriptor flag
 
    Copyright (C) 2004, 2009-2017 Free Software Foundation, Inc.
 
