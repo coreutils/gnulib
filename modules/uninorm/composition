@@ -17,7 +17,7 @@ if LIBUNISTRING_COMPILE_UNINORM_COMPOSITION
 lib_SOURCES += uninorm/composition.c
 endif
 
-uninorm/composition-table.h: $(srcdir)/uninorm/composition-table.gperf
+$(srcdir)/uninorm/composition-table.h: $(srcdir)/uninorm/composition-table.gperf
 	$(V_GPERF)$(GPERF) -m 1 $(srcdir)/uninorm/composition-table.gperf > $(srcdir)/uninorm/composition-table.h-t && \
 	mv $(srcdir)/uninorm/composition-table.h-t $(srcdir)/uninorm/composition-table.h
 BUILT_SOURCES        += uninorm/composition-table.h

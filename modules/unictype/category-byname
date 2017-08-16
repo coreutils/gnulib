@@ -56,7 +56,7 @@ if LIBUNISTRING_COMPILE_UNICTYPE_CATEGORY_BYNAME
 lib_SOURCES += unictype/categ_byname.c
 endif
 
-unictype/categ_byname.h: unictype/categ_byname.gperf
+$(srcdir)/unictype/categ_byname.h: $(srcdir)/unictype/categ_byname.gperf
 	$(V_GPERF)$(GPERF) -m 10 $(srcdir)/unictype/categ_byname.gperf > $(srcdir)/unictype/categ_byname.h-t && \
 	mv $(srcdir)/unictype/categ_byname.h-t $(srcdir)/unictype/categ_byname.h
 BUILT_SOURCES        += unictype/categ_byname.h
