@@ -28,7 +28,7 @@ Solaris 9.
 @item
 This function incorrectly reduces the link count when comparing two
 spellings of a hard link on some platforms:
-NetBSD 1.6, NetBSD 7.0 without @code{-D_XOPEN_SOURCE=500}, Cygwin 1.5.x.
+NetBSD 1.6, Cygwin 1.5.x.
 @item
 This function will not always replace an existing destination on some
 platforms:

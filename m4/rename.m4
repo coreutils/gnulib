@@ -1,4 +1,4 @@
-# serial 27
+# serial 28
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -136,11 +136,12 @@ AC_DEFUN([gl_FUNC_RENAME],
   AC_CACHE_CHECK([whether rename manages hard links correctly],
     [gl_cv_func_rename_link_works],
     [if test $ac_cv_func_link = yes; then
-       rm -rf conftest.f conftest.f1
-       if touch conftest.f && ln conftest.f conftest.f1 &&
+       rm -rf conftest.f conftest.f1 conftest.f2
+       if touch conftest.f conftest.f2 && ln conftest.f conftest.f1 &&
            set x `ls -i conftest.f conftest.f1` && test "$2" = "$4"; then
          AC_RUN_IFELSE(
            [AC_LANG_PROGRAM([[
+#             include <errno.h>
 #             include <stdio.h>
 #             include <stdlib.h>
 #             include <unistd.h>
@@ -150,10 +151,18 @@ AC_DEFUN([gl_FUNC_RENAME],
                   result |= 1;
                 if (unlink ("conftest.f1"))
                   result |= 2;
-                if (rename ("conftest.f", "conftest.f"))
+
+                /* Allow either the POSIX-required behavior, where the
+                   previous rename kept conftest.f, or the (better) NetBSD
+                   behavior, where it removed conftest.f.  */
+                if (rename ("conftest.f", "conftest.f") != 0
+                    && errno != ENOENT)
                   result |= 4;
+
                 if (rename ("conftest.f1", "conftest.f1") == 0)
                   result |= 8;
+                if (rename ("conftest.f2", "conftest.f2") != 0)
+                  result |= 16;
                 return result;
               ]])],
            [gl_cv_func_rename_link_works=yes],
@@ -171,7 +180,7 @@ AC_DEFUN([gl_FUNC_RENAME],
        else
          gl_cv_func_rename_link_works="guessing no"
        fi
-       rm -rf conftest.f conftest.f1
+       rm -rf conftest.f conftest.f1 conftest.f2
      else
        gl_cv_func_rename_link_works=yes
      fi
