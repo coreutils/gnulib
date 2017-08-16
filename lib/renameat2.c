@@ -74,11 +74,24 @@ int
 renameat2 (int fd1, char const *src, int fd2, char const *dst,
            unsigned int flags)
 {
+  int ret_val = -1;
+  int err = EINVAL;
+
 #ifdef SYS_renameat2
-  int r = syscall (SYS_renameat2, fd1, src, fd2, dst, flags);
-  if (! (r < 0 && (errno == ENOSYS || errno == EINVAL)))
-    return r;
+  ret_val = syscall (SYS_renameat2, fd1, src, fd2, dst, flags);
+  err = errno;
+#elif defined RENAME_EXCL
+  if (! (flags & ~(RENAME_EXCHANGE | RENAME_NOREPLACE)))
+    {
+      ret_val = renameatx_np (fd1, src, fd2, dst,
+                             ((flags & RENAME_EXCHANGE ? RENAME_SWAP : 0)
+                              | (flags & RENAME_NOREPLACE ? RENAME_EXCL : 0)));
+      err = errno;
+    }
 #endif
+
+  if (! (ret_val < 0 && (err == EINVAL || err == ENOSYS || err == ENOTSUP)))
+    return ret_val;
 
 #if HAVE_RENAMEAT
   {
@@ -88,7 +101,6 @@ renameat2 (int fd1, char const *src, int fd2, char const *dst,
   char *dst_temp = (char *) dst;
   bool src_slash;
   bool dst_slash;
-  int ret_val;
   int rename_errno = ENOTDIR;
   struct stat src_st;
   struct stat dst_st;
