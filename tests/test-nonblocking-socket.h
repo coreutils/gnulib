@@ -22,7 +22,7 @@
 
      Linux                           >= 7350000 (depends on circumstances)
      FreeBSD                         >= 107521
-     OpenBSD                         >= 28673
+     OpenBSD                         >= 106430 (depends on circumstances)
      Mac OS X                        >= 680000 (depends on circumstances)
      AIX 5.1                         >= 125713
      AIX 7.1                         >= 200000 (depends on circumstances)
@@ -38,11 +38,7 @@
      Cygwin 1.7.x                    >= 163838 (depends on circumstances)
      native Windows                  >= 66294401
  */
-#if defined __OpenBSD__
-# define SOCKET_DATA_BLOCK_SIZE  100000
-#else
-# define SOCKET_DATA_BLOCK_SIZE 1000000
-#endif
+#define SOCKET_DATA_BLOCK_SIZE 1000000
 
 /* On Linux, Mac OS X, Cygwin 1.5.x, native Windows,
    sockets have very large buffers in the kernel, so that write() calls
