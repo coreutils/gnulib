@@ -81,7 +81,7 @@
 # define LDBL_MAX_EXP    16384
 /* Minimum positive normalized number.  */
 # undef LDBL_MIN
-# define LDBL_MIN        3.3621031431120935E-4932L /* = 0x1p-16382L */
+# define LDBL_MIN        3.362103143112093506262677817321752E-4932L /* = 0x1p-16382L */
 /* Maximum representable finite number.  */
 # undef LDBL_MAX
 /* LDBL_MAX is represented as { 0xFFFFFFFF, 0xFFFFFFFF, 32766 }.
