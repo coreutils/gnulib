@@ -32,7 +32,7 @@ test_function (void)
   {
     volatile DOUBLE x;
     volatile DOUBLE y;
-    DOUBLE z;
+    volatile DOUBLE z;
 
     /* Overflow.  */
     x = MAX;
