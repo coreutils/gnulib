@@ -1,4 +1,4 @@
-# random.m4 serial 1
+# random.m4 serial 2
 dnl Copyright (C) 2012-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,16 @@ AC_DEFUN([gl_FUNC_RANDOM],
   AC_CHECK_FUNCS([random])
   if test $ac_cv_func_random = no; then
     HAVE_RANDOM=0
+  fi
+
+  AC_CHECK_DECLS_ONCE([initstate])
+  if test $ac_cv_have_decl_initstate = no; then
+    HAVE_DECL_INITSTATE=0
+  fi
+
+  AC_CHECK_DECLS_ONCE([setstate])
+  if test $ac_cv_have_decl_setstate = no; then
+    HAVE_DECL_SETSTATE=0
   fi
 ])
 

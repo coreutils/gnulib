@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Solaris 2.4, mingw, MSVC 14.
+@item
+This function is not declared on some platforms:
+Cygwin 1.5.25.
 @end itemize
 
 Portability problems not fixed by Gnulib:

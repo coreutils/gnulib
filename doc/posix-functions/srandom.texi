@@ -15,4 +15,8 @@ Solaris 2.4, mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function has a slightly incompatible declaration (the return type being
+@samp{long} instead of @samp{void) on some platforms:
+Cygwin 1.5.25.
 @end itemize
