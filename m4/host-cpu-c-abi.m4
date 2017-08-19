@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 6
+# host-cpu-c-abi.m4 serial 7
 dnl Copyright (C) 2002-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -157,12 +157,12 @@ changequote([,])dnl
             yes
             #endif],
            [gl_cv_host_cpu_c_abi=mips64],
-           [# In the n32 ABI, _ABIN32 is defined, _ABIO32 is not defined, and
-            # _MIPS_SIM == _ABIN32.
-            # In the 32 ABI, _ABIO32 is defined, _ABIN32 is not defined, and
-            # _MIPS_SIM == _ABIO32.
+           [# In the n32 ABI, _ABIN32 is defined, _ABIO32 is not defined (but
+            # may later get defined by <sgidefs.h>), and _MIPS_SIM == _ABIN32.
+            # In the 32 ABI, _ABIO32 is defined, _ABIN32 is not defined (but
+            # may later get defined by <sgidefs.h>), and _MIPS_SIM == _ABIO32.
             AC_EGREP_CPP([yes],
-              [#if defined _ABIN32
+              [#if (_MIPS_SIM == _ABIN32)
                yes
                #endif],
               [gl_cv_host_cpu_c_abi=mipsn32],
