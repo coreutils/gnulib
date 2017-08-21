@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2016-01-11.22; # UTC
+scriptversion=2017-08-21.19; # UTC
 
 # Copyright (C) 2006-2017 Free Software Foundation, Inc.
 
@@ -65,7 +65,7 @@ test $# = 0 && set .
 
 for dir
 do
-  if test -e .git; then
+  if test -d .git || test -f .git; then
     test "x$dir" = x. \
       && dir= sed_esc= \
       || { dir="$dir/"; sed_esc=`echo "$dir"|env sed 's,\([\\/]\),\\\\\1,g'`; }
