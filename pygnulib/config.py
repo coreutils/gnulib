@@ -7,73 +7,73 @@ import os
 import re
 
 
-class GenericConfig:
+class Config:
     """The most basic gnulib configuration holder"""
     _TABLE_ = {
         "gnulib"            : "",
         "root"              : "",
-        "local-dir"         : "",
-        "source-base"       : "lib",
-        "m4-base"           : "m4",
-        "po-base"           : "po",
-        "doc-base"          : "doc",
-        "tests-base"        : "tests",
-        "aux-dir"           : "",
+        "local_dir"         : "",
+        "source_base"       : "lib",
+        "m4_base"           : "m4",
+        "po_base"           : "po",
+        "doc_base"          : "doc",
+        "tests_base"        : "tests",
+        "aux_dir"           : "",
         "lib"               : "libgnu",
-        "makefile-name"     : "Makefile.am",
-        "macro-prefix"      : "gl",
-        "po-domain"         : "",
-        "witness-c-macro"   : "",
+        "makefile_name"     : "Makefile.am",
+        "macro_prefix"      : "gl",
+        "po_domain"         : "",
+        "witness_c_macro"   : "",
         "lgpl"              : 0,
         "tests"             : False,
-        "cxx-tests"         : False,
-        "longrunning-tests" : False,
-        "privileged-tests"  : False,
-        "unportable-tests"  : False,
-        "all-tests"         : False,
+        "cxx_tests"         : False,
+        "longrunning_tests" : False,
+        "privileged_tests"  : False,
+        "unportable_tests"  : False,
+        "all_tests"         : False,
         "libtool"           : False,
         "conddeps"          : False,
-        "vc-files"          : False,
+        "vc_files"          : False,
         "autoconf"          : 2.59,
-        "modules"           : [],
-        "avoids"            : [],
-        "files"             : [],
     }
 
 
     def __repr__(self):
-        return "pygnulib.GenericConfig" + str(self._table_)
+        return repr(self.__dict__["_table_"])
 
 
-    def __init__(self, gnulib, root, **kwargs):
-        if not (os.path.isdir(gnulib) and os.path.isdir(os.path.join(gnulib, ".git"))):
-            raise NotADirectoryError(gnulib)
-        if not os.path.isdir(root):
-            raise NotADirectoryError(gnulib)
-        self._table_ = dict()
-        for arg in GenericConfig._TABLE_:
-            self._table_[arg] = GenericConfig._TABLE_[arg]
-        self._table_["gnulib"] = gnulib
-        self._table_["root"] = root
-        for arg in kwargs:
-            self[arg] = kwargs[arg]
+    def __init__(self, **kwargs):
+        self.__dict__["_table_"] = dict()
+        for key in Config._TABLE_:
+            self.__dict__["_table_"][key] = Config._TABLE_[key]
+        for key, value in kwargs.items():
+            self[key] = value
+
+
+    def __setattr__(self, key, value):
+        self[key] = value
+        self.__dict__[key] = value
+
+
+    def __getattr__(self, key):
+        return self[key]
 
 
     def __getitem__(self, key):
-        if key not in GenericConfig._TABLE_:
+        if key not in Config._TABLE_:
             key = key.replace("_", "-")
-            if key not in GenericConfig._TABLE_:
+            if key not in Config._TABLE_:
                 raise KeyError("unsupported option: '%s'" % key)
-        return self._table_[key]
+        return self.__dict__["_table_"][key]
 
 
     def __setitem__(self, key, value):
-        if key not in GenericConfig._TABLE_:
+        if key not in Config._TABLE_:
             key = key.replace("_", "-")
-            if key not in GenericConfig._TABLE_:
+            if key not in Config._TABLE_:
                 raise KeyError("unsupported option: '%s'" % key)
 
-        typeid = type(GenericConfig._TABLE_[key])
+        typeid = type(Config._TABLE_[key])
         if key == "lgpl":
             if value not in [None, 2, 3]:
                 raise TypeError("lgpl option must be either None or integral version (2 or 3)")
@@ -86,18 +86,14 @@ class GenericConfig:
         tests = ["tests", "cxx-tests", "longrunning-tests", "privileged-tests", "unportable-tests"]
         if key == "all-tests":
             for _ in tests:
-                self._table_[_] = value
+                self.__dict__["_table_"][_] = value
         else:
-            self._table_[key] = value
+            self.__dict__["_table_"][key] = value
 
 
-    def path(path):
-        path = os.path.normpath(path)
-        os.path.split(os.path.sep)
 
-
-class CachedConfig(GenericConfig):
-    """Unlike GenericConfig, CachedConfig tries to retrieve variables from the cached files."""
+class CachedConfig(Config):
+    """Cached configuration holder"""
     _AUTOCONF_ = {
         "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
         "aux-dir"  : re.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", re.S | re.M),
@@ -142,14 +138,15 @@ class CachedConfig(GenericConfig):
     _GNULIB_CACHE_PATTERN_ = re.compile("^(gl_.*?)\\(\\[(.*?)\\]\\)$", re.S | re.M)
 
 
-    def __init__(self, gnulib, root, autoconf=None, **kwargs):
-        super(CachedConfig, self).__init__(gnulib, root, **kwargs)
-        self._autoconf_(autoconf)
-        self._gnulib_cache_()
-        self._gnulib_comp_()
+    def __init__(self, root, autoconf=None, **kwargs):
+        if not isinstance(root, str):
+            raise TypeError("root must be of 'str' type")
+        super(CachedConfig, self).__init__(**kwargs)
+        self._autoconf_(root, autoconf)
+        self._gnulib_cache_(root)
+        self._gnulib_comp_(root)
 
-    def _autoconf_(self, autoconf):
-        root = self["root"]
+    def _autoconf_(self, root, autoconf):
         if not autoconf:
             autoconf = os.path.join(root, "configure.ac")
             if not os.path.exists(autoconf):
@@ -167,8 +164,7 @@ class CachedConfig(GenericConfig):
             else:
                 self[key] = match[-1]
 
-    def _gnulib_cache_(self):
-        root = self["root"]
+    def _gnulib_cache_(self, root):
         m4base = self["m4-base"]
         gnulib_cache = os.path.join(root, m4base, "gnulib-cache.m4")
         if os.path.exists(gnulib_cache):
@@ -188,8 +184,7 @@ class CachedConfig(GenericConfig):
                 if macro in match:
                     self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
-    def _gnulib_comp_(self):
-        root = self["root"]
+    def _gnulib_comp_(self, root):
         m4base = self["m4-base"]
         gnulib_comp = os.path.join(root, m4base, "gnulib-comp.m4")
         if os.path.exists(gnulib_comp):
@@ -200,7 +195,3 @@ class CachedConfig(GenericConfig):
             match = pattern.findall(data)
             if match:
                 self["files"] = [_.strip() for _ in match[-1].split("\n") if _.strip()]
-
-
-    def __repr__(self):
-        return "pygnulib.CachedConfig" + str(self._table_)
