@@ -75,6 +75,7 @@
 #  define __stat64(fname, buf) __xstat64 (_STAT_VER, fname, buf)
 # endif
 # define struct_stat64          struct stat64
+# define FLEXIBLE_ARRAY_MEMBER
 #else /* !_LIBC */
 # define __getlogin_r(buf, len) getlogin_r (buf, len)
 # define __stat64(fname, buf)   stat (fname, buf)
@@ -1590,25 +1591,25 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
 {
   size_t dirlen = strlen (directory);
   void *stream = NULL;
-  struct globnames
-    {
-      struct globnames *next;
-      size_t count;
-      char *name[64];
-    };
-  struct globnames init_names;
-  struct globnames *names = &init_names;
-  struct globnames *names_alloca = &init_names;
+# define GLOBNAMES_MEMBERS(nnames) \
+    struct globnames *next; size_t count; char *name[nnames];
+  struct globnames { GLOBNAMES_MEMBERS (FLEXIBLE_ARRAY_MEMBER) };
+  struct { GLOBNAMES_MEMBERS (64) } init_names_buf;
+  struct globnames *init_names = (struct globnames *) &init_names_buf;
+  struct globnames *names = init_names;
+  struct globnames *names_alloca = init_names;
   size_t nfound = 0;
   size_t cur = 0;
   int meta;
   int save;
   int result;
 
-  alloca_used += sizeof (init_names);
+  alloca_used += sizeof init_names_buf;
 
-  init_names.next = NULL;
-  init_names.count = sizeof init_names.name / sizeof init_names.name[0];
+  init_names->next = NULL;
+  init_names->count = ((sizeof init_names_buf
+                        - offsetof (struct globnames, name))
+                       / sizeof init_names->name[0]);
 
   meta = __glob_pattern_type (pattern, !(flags & GLOB_NOESCAPE));
   if (meta == 0 && (flags & (GLOB_NOCHECK|GLOB_NOMAGIC)))
@@ -1789,7 +1790,7 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
                  and this is the block assigned to OLD here.  */
               if (names == NULL)
                 {
-                  assert (old == &init_names);
+                  assert (old == init_names);
                   break;
                 }
               cur = names->count;
@@ -1816,7 +1817,7 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
                  and this is the block assigned to OLD here.  */
               if (names == NULL)
                 {
-                  assert (old == &init_names);
+                  assert (old == init_names);
                   break;
                 }
               cur = names->count;
