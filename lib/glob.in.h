@@ -47,17 +47,38 @@
 # define __THROWNL
 #endif
 
-/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+#define attribute_hidden
 
-/* The definition of _GL_ARG_NONNULL is copied here.  */
-
-/* The definition of _GL_WARN_ON_USE is copied here.  */
-
-#ifndef __size_t
-# define __size_t       size_t
+#ifndef __attribute_noinline__
+# if 3 < __GNUC__ + (1 <= __GNUC_MINOR__)
+#  define __attribute_noinline__ __attribute__ ((__noinline__))
+#else
+#  define __attribute_noinline__ /* Ignore */
+# endif
 #endif
+
+#if __GNUC__ < 3
+# define __glibc_unlikely(cond) (cond)
+#else
+# define __glibc_unlikely(cond) __builtin_expect ((cond), 0)
+#endif
+
+/* GCC 2.95 and later have "__restrict", and C99 compilers have
+   "restrict".  */
+#if ! (defined __restrict || 2 < __GNUC__ + (95 <= __GNUC_MINOR__))
+# if 199901L <= __STDC_VERSION__
+#  define __restrict restrict
+# else
+#  define __restrict
+# endif
+#endif
+
 #ifndef __USE_GNU
 # define __USE_GNU    1
+#endif
+
+#ifndef weak_alias
+# define weak_alias(name, alias)
 #endif
 
 
