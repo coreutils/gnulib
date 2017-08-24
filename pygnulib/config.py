@@ -8,7 +8,7 @@ import re
 
 
 class Config:
-    """The most basic gnulib configuration holder"""
+    """gnulib generic configuration"""
     _TABLE_ = {
         "gnulib"            : "",
         "root"              : "",
@@ -61,9 +61,9 @@ class Config:
 
     def __getitem__(self, key):
         if key not in Config._TABLE_:
-            key = key.replace("_", "-")
+            key = key.replace("-", "_")
             if key not in Config._TABLE_:
-                raise KeyError("unsupported option: '%s'" % key)
+                raise KeyError("unsupported option: %r" % key)
         return self.__dict__["_table_"][key]
 
 
@@ -71,7 +71,8 @@ class Config:
         if key not in Config._TABLE_:
             key = key.replace("_", "-")
             if key not in Config._TABLE_:
-                raise KeyError("unsupported option: '%s'" % key)
+                raise KeyError("unsupported option: %r" % key)
+        key = key.replace("-", "_")
 
         typeid = type(Config._TABLE_[key])
         if key == "lgpl":
@@ -81,7 +82,7 @@ class Config:
             if value < 2.59:
                 raise NotImplementedError("pygnulib ")
         elif not isinstance(value, typeid):
-            raise TypeError("'%s' option must be of '%s' type" % (key, typeid))
+            raise TypeError("%r option must be of %r type" % (key, typeid))
 
         tests = ["tests", "cxx-tests", "longrunning-tests", "privileged-tests", "unportable-tests"]
         if key == "all-tests":
@@ -93,7 +94,7 @@ class Config:
 
 
 class CachedConfig(Config):
-    """Cached configuration holder"""
+    """gnulib cached configuration"""
     _AUTOCONF_ = {
         "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
         "aux-dir"  : re.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", re.S | re.M),

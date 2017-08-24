@@ -2,13 +2,14 @@
 # encoding: UTF-8
 
 
+import codecs
 import os
 import re
-import codecs
 
 
 
 class Module:
+    """gnulib generic module"""
     _PATTERN_ = re.compile("")
     _TABLE_ = {
         "description"   : (0x00, str, None, "Description"),
@@ -50,6 +51,13 @@ class Module:
         return self.__dict__["_name_"]
 
 
+    @property
+    def dependencies(self):
+        pattern = re.compile("^([A-Za-z0-9_\\-\\+/]+)(?:\\s+(.+))*$", re.S)
+        for dep in self.__dict__["_table_"]["dependencies"]:
+            yield pattern.findall(dep)[0]
+
+
     def __hash__(self):
         return hash(str(self))
 
@@ -84,16 +92,17 @@ class Module:
 
     def __getitem__(self, key):
         if key not in Module._TABLE_:
-            raise ValueError("unsupported key: '%s'" % key)
+            raise ValueError("unsupported key: %r" % key)
         return self.__dict__["_table_"][key]
 
 
     def __setitem__(self, key, value):
         if key not in Module._TABLE_:
-            raise ValueError("unsupported key: '%s'" % key)
+            raise ValueError("unsupported key: %r" % key)
         typeid = Module._TABLE_[key][1]
         if not isinstance(value, typeid):
-            raise TypeError("'%s' key expects '%s' type" % (key, typeid))
+            typename = typeid.__name__
+            raise TypeError("%r key must be of %r type" % (key, typename))
         self.__dict__["_table_"][key] = value
 
 
@@ -108,7 +117,7 @@ class Module:
     def __eq__(self, value):
         if isinstance(value, Module):
             return (self.__dict__["_name_"] == value.__dict__["_name_"]) \
-                and (self.__dict__["_table_"] == value.__dict__["_name_"])
+                and (self.__dict__["_table_"] == value.__dict__["_table_"])
         return TypeError("cannot compare pygnulib.Module with %r type" % type(value))
 
     def __ne__(self, value):
@@ -127,7 +136,7 @@ class Module:
 
 
 class FileModule(Module):
-    """Read or modify existing gnulib module package"""
+    """gnulib module text file"""
 
     def __init__(self, path, mode="r", name=None, **kwargs):
         if name is None:
@@ -139,10 +148,12 @@ class FileModule(Module):
             with codecs.open(path, "rb", "UTF-8") as stream:
                 data = stream.read()
             for key, (_, typeid, pattern, _) in Module._TABLE_.items():
+                pattern = re.compile(pattern)
                 match = pattern.findall(data)
                 self[key] = [_ for _ in "".join(match).split("\n") if _.strip()] \
                             if typeid is list else \
                             ("\n".join([_.strip() for _ in match]) if match else "")
+            self["dependencies"] = [_ for _ in self["dependencies"] if not _.startswith("#")]
             self.__dict__["_stream_"] = None
         elif mode == "w":
             super(FileModule, self).__init__(name)
