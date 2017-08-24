@@ -141,12 +141,12 @@ readdir_result_might_be_dir (struct readdir_result d)
 
 #endif /* defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE */
 
-#if defined _LIBC || defined D_INO_IN_DIRENT
 /* Initializer for skip_entry.  POSIX does not require that the d_ino
    field be present, and some systems do not provide it. */
-# define D_INO_TO_RESULT(source) false,
-#else
+#if defined _LIBC || defined D_INO_IN_DIRENT
 # define D_INO_TO_RESULT(source) (source)->d_ino == 0,
+#else
+# define D_INO_TO_RESULT(source) false,
 #endif
 
 /* Construct an initializer for a struct readdir_result object from a
