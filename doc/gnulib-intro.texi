@@ -156,6 +156,7 @@ Minix 3.3.0 is rarely tested.
 @item
 HP-UX 11.31 is very rarely tested.
 @item
+@c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
 IRIX 6.5 is no longer tested.
 @item
 OSF/1 5.1 is no longer tested.
