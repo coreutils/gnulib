@@ -12,6 +12,7 @@ lib/globfree.c
 m4/glob.m4
 
 Depends-on:
+c99
 extensions
 largefile
 snippet/c++defs
