@@ -15,7 +15,7 @@ Makefile.am:
 Include:
 
 License:
-unlimited
+LGPLv2+
 
 Maintainer:
 Paul Eggert, Jim Meyering

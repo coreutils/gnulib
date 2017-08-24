@@ -6,17 +6,21 @@ Files:
 lib/glob.in.h
 lib/glob-libc.h
 lib/glob.c
+lib/glob_internal.h
+lib/glob_pattern_p.c
+lib/globfree.c
 m4/glob.m4
 
 Depends-on:
+c99
 extensions
 largefile
-snippet/arg-nonnull
 snippet/c++defs
 snippet/warn-on-use
 alloca          [test -n "$GLOB_H"]
 builtin-expect  [test -n "$GLOB_H"]
 closedir        [test -n "$GLOB_H"]
+d-ino           [test -n "$GLOB_H"]
 d-type          [test -n "$GLOB_H"]
 dirfd           [test -n "$GLOB_H"]
 flexmember      [test -n "$GLOB_H"]
@@ -37,6 +41,8 @@ configure.ac:
 gl_GLOB
 if test -n "$GLOB_H"; then
   AC_LIBOBJ([glob])
+  AC_LIBOBJ([glob_pattern_p])
+  AC_LIBOBJ([globfree])
   gl_PREREQ_GLOB
 fi
 
@@ -46,12 +52,11 @@ BUILT_SOURCES += $(GLOB_H)
 # We need the following in order to create <glob.h> when the system
 # doesn't have one that works with the given compiler.
 if GL_GENERATE_GLOB_H
-glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNULL_H) $(WARN_ON_USE_H)
+glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
 	  sed -e 's|@''HAVE_SYS_CDEFS_H''@|$(HAVE_SYS_CDEFS_H)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
 	      < $(srcdir)/glob.in.h; \
 	} > $@-t && \
