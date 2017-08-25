@@ -85,6 +85,7 @@
 #define glob rpl_glob
 #define globfree rpl_globfree
 #define glob_pattern_p rpl_glob_pattern_p
+#define __glob_pattern_p glob_pattern_p
 
 #define __GLOB_GNULIB 1
 
