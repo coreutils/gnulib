@@ -2,11 +2,13 @@
 # encoding: UTF-8
 
 
+
 import os
 
-
 from .config import Config
+from .module import Module
 from .module import FileModule
+
 
 
 class FileSystem:
@@ -81,18 +83,18 @@ class GitFileSystem(FileSystem):
             raise FileNotFoundError(root)
         if not os.path.isdir(os.path.join(root, ".git")):
             raise TypeError("%r is not a gnulib repository")
-        super(GitFileSystem, self).__init__(root, config)
+        super().__init__(root, config)
 
 
-    def module(self, name):
+    def module(self, name, full=True):
         """instantiate gnulib module by its name"""
         if name in GitFileSystem._EXCLUDE_:
-            raise KeyError("module does not exist")
+            raise ValueError("illegal module name")
         path = os.path.join(self["modules"], name)
-        return FileModule(path, name=name)
+        return FileModule(path, name=name) if full else Module(name)
 
 
-    def modules(self):
+    def modules(self, full=True):
         """iterate over all available modules"""
         prefix = self["modules"]
         for root, _, files in os.walk(prefix):
@@ -108,4 +110,4 @@ class GitFileSystem(FileSystem):
             for name in names:
                 path = os.path.join(root, name)
                 name = path[len(prefix) + 1:]
-                yield FileModule(path, name=name)
+                yield self.module(name, full)
