@@ -13,27 +13,24 @@ import re
 
 class Module:
     """gnulib generic module"""
-    _PATTERN_ = re.compile("")
     _TABLE_ = {
-        "description"     : (0x00, str, None, "Description"),
-        "comment"         : (0x01, str, None, "Comment"),
-        "status"          : (0x02, str, None, "Status"),
-        "notice"          : (0x03, str, None, "Notice"),
-        "applicability"   : (0x04, str, None, "Applicability"),
-        "files"           : (0x05, list, None, "Files"),
-        "dependencies"    : (0x06, list, None, "Depends-on"),
-        "configure_early" : (0x07, str, None, "configure.ac-early"),
-        "configure"       : (0x08, str, None, "configure.ac"),
-        "makefile"        : (0x09, str, None, "Makefile.am"),
-        "include"         : (0x0A, list, None, "Include"),
-        "link"            : (0x0B, list, None, "Link"),
-        "license"         : (0x0C, str, None, "License"),
-        "maintainers"     : (0x0D, list, None, "Maintainer"),
+        "description"     : (0x00, str, "Description"),
+        "comment"         : (0x01, str, "Comment"),
+        "status"          : (0x02, str, "Status"),
+        "notice"          : (0x03, str, "Notice"),
+        "applicability"   : (0x04, str, "Applicability"),
+        "files"           : (0x05, list, "Files"),
+        "dependencies"    : (0x06, list, "Depends-on"),
+        "configure_early" : (0x07, str, "configure.ac-early"),
+        "configure"       : (0x08, str, "configure.ac"),
+        "makefile"        : (0x09, str, "Makefile.am"),
+        "include"         : (0x0A, list, "Include"),
+        "link"            : (0x0B, list, "Link"),
+        "license"         : (0x0C, str, "License"),
+        "maintainers"     : (0x0D, list, "Maintainer"),
     }
-    for _key_, (_uid_, _typeid_, _, _field_) in _TABLE_.items():
-        _suffix_ = ("(?:" + ":|".join([_[3] for _ in _TABLE_.values()]) + ":)")
-        _pattern_ = re.compile(("^%s:\\s*(.*?)%s" % (_field_, _suffix_)), re.S | re.M)
-        _TABLE_[_key_] = (_uid_, _typeid_, _pattern_, _field_)
+    _PATTERN_DEPENDENCIES_ = re.compile("^(\\S+)(?:\\s+(.+))*$")
+    _PATTERN_INCLUDE_ = re.compile("^[\\<\"]([A-Za-z0-9/\\-_]+\\.h)[\\>\"](?:\\s+.*^)*$")
 
 
     def __init__(self, name, **kwargs):
@@ -143,9 +140,8 @@ class Module:
     @property
     def dependencies(self):
         """dependencies iterator (name, condition)"""
-        pattern = re.compile("^([A-Za-z0-9_\\-\\+/]+)(?:\\s+(.+))*$", re.S)
         for entry in self._table_["dependencies"]:
-            yield pattern.findall(entry)[0]
+            yield Module._PATTERN_DEPENDENCIES_.findall(entry)[0]
 
     @dependencies.setter
     def dependencies(self, iterable):
@@ -205,9 +201,9 @@ class Module:
     @property
     def include(self):
         """include files iterator (header, comment)"""
-        pattern = re.compile("^#include\\s\\<([A-Za-z0-9/\\-_]\\.h)\\>(?:\\s+.*^)*$")
         for entry in self._table_["include"]:
-            yield pattern.findall(entry)[0]
+            match = Module._PATTERN_INCLUDE_.findall(entry)
+            yield match[0] if match else entry
 
     @include.setter
     def include(self, iterable):
@@ -230,27 +226,20 @@ class Module:
 
     @property
     def link(self):
-        """linker directives iterator (directive, comment)"""
-        pattern = re.compile("^\\<([A-Za-z0-9/\\-_])\\>(?:\\s+.*^)*$")
+        """linkage iterator (string)"""
         for entry in self._table_["link"]:
-            yield pattern.findall(entry)[0]
+            yield entry
 
     @link.setter
     def link(self, iterable):
-        error = TypeError("iterable of pairs (directive, comment) is expected")
         if isinstance(iterable, (bytes, str)) \
         or not isinstance(iterable, collections.Iterable):
-            raise error
+            raise TypeError("iterable of strings is expected")
         result = set()
-        try:
-            for pair in iterable:
-                (directive, comment) = pair
-                if not isinstance(directive, str) \
-                or not isinstance(comment, str):
-                    raise error
-                result.update([(directive, comment)])
-        except ValueError:
-            raise error
+        for item in iterable:
+            if not isinstance(item, str):
+                raise TypeError("iterable of strings is expected")
+            result.update([item])
         self._table_["link"] = result
 
 
@@ -322,7 +311,7 @@ class Module:
 
     def __str__(self):
         result = ""
-        for key, (_, typeid, _, field) in sorted(Module._TABLE_.items(), key=lambda k: k[1][0]):
+        for key, (_, typeid, field) in sorted(Module._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
             if typeid is list:
                 value = "\n".join(self._table_[key])
@@ -357,6 +346,8 @@ class Module:
 
 class FileModule(Module):
     """gnulib module text file"""
+    _FIELDS_ = [field for (_, _, field) in Module._TABLE_.values()]
+    _PATTERN_ = re.compile("(%s):" % "|".join(_FIELDS_))
 
     def __init__(self, path, mode="r", name=None, **kwargs):
         if name is None:
@@ -368,15 +359,22 @@ class FileModule(Module):
             with codecs.open(path, "rb", "UTF-8") as stream:
                 data = ""
                 for line in stream:
-                    if line.startswith("#"):
+                    line = line.strip()
+                    if line.startswith("#") \
+                    or (line.startswith("/*") and line.endswith("*/")):
                         continue
-                    data += line
-            for key, (_, typeid, pattern, _) in Module._TABLE_.items():
-                pattern = re.compile(pattern)
-                match = pattern.findall(data)
-                self._table_[key] = [_ for _ in "".join(match).split("\n") if _.strip()] \
-                                    if typeid is list else \
-                                    ("\n".join([_.strip() for _ in match]) if match else "")
+                    data += (line + "\n")
+            match = FileModule._PATTERN_.split(data)[1:]
+            for (group, value) in zip(match[::2], match[1::2]):
+                key = None
+                typeid = type(None)
+                for key, (_, typeid, field) in Module._TABLE_.items():
+                    if group == field:
+                        break
+                if typeid is list:
+                    self._table_[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
+                else:
+                    self._table_[key] = value.strip()
             self._stream_ = None
         elif mode == "w":
             super().__init__(name)
