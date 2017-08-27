@@ -71,7 +71,6 @@
 #  define __alloca              alloca
 # endif
 # define __readdir              readdir
-# define __glob_pattern_p       glob_pattern_p
 # define COMPILE_GLOB64
 #endif /* _LIBC */
 
