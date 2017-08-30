@@ -18,7 +18,7 @@
 
 /* Get RENAME_* macros from linux/fs.h if present, otherwise supply
    the traditional Linux values.  */
-#ifdef __linux__
+#if HAVE_LINUX_FS_H
 # include <linux/fs.h>
 #endif
 #ifndef RENAME_NOREPLACE
