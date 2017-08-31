@@ -92,61 +92,59 @@
 
 static const char *next_brace_sub (const char *begin, int flags) __THROWNL;
 
+typedef uint_fast8_t dirent_type;
+
+#ifndef HAVE_STRUCT_DIRENT_D_TYPE
+/* Any distinct values will do here.
+   Undef any existing macros out of the way.  */
+# undef DT_UNKNOWN
+# undef DT_DIR
+# undef DT_LNK
+# define DT_UNKNOWN 0
+# define DT_DIR 1
+# define DT_LNK 2
+#endif
+
 /* A representation of a directory entry which does not depend on the
    layout of struct dirent, or the size of ino_t.  */
 struct readdir_result
 {
   const char *name;
 #if defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE
-  uint8_t type;
+  dirent_type type;
 #endif
+#if defined _LIBC || defined D_INO_IN_DIRENT
   bool skip_entry;
+#endif
 };
 
+/* Initialize and return type member of struct readdir_result.  */
+static dirent_type
+readdir_result_type (struct readdir_result d)
+{
 #if defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE
-/* Initializer based on the d_type member of struct dirent.  */
 # define D_TYPE_TO_RESULT(source) (source)->d_type,
-
-/* True if the directory entry D might be a symbolic link.  */
-static bool
-readdir_result_might_be_symlink (struct readdir_result d)
-{
-  return d.type == DT_UNKNOWN || d.type == DT_LNK;
-}
-
-/* True if the directory entry D might be a directory.  */
-static bool
-readdir_result_might_be_dir (struct readdir_result d)
-{
-  return d.type == DT_DIR || readdir_result_might_be_symlink (d);
-}
-#else /* defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE */
+  return d.type;
+#else
 # define D_TYPE_TO_RESULT(source)
-
-/* If we do not have type information, symbolic links and directories
-   are always a possibility.  */
-
-static bool
-readdir_result_might_be_symlink (struct readdir_result d)
-{
-  return true;
+  return DT_UNKNOWN;
+#endif
 }
 
+/* Initialize and return skip_entry member of struct readdir_result.  */
 static bool
-readdir_result_might_be_dir (struct readdir_result d)
+readdir_result_skip_entry (struct readdir_result d)
 {
-  return true;
-}
-
-#endif /* defined _DIRENT_HAVE_D_TYPE || defined HAVE_STRUCT_DIRENT_D_TYPE */
-
 /* Initializer for skip_entry.  POSIX does not require that the d_ino
    field be present, and some systems do not provide it. */
 #if defined _LIBC || defined D_INO_IN_DIRENT
 # define D_INO_TO_RESULT(source) (source)->d_ino == 0,
+  return d.skip_entry;
 #else
-# define D_INO_TO_RESULT(source) false,
+# define D_INO_TO_RESULT(source)
+  return false;
 #endif
+}
 
 /* Construct an initializer for a struct readdir_result object from a
    struct dirent *.  No copy of the name is made.  */
@@ -1545,19 +1543,24 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
               }
               if (d.name == NULL)
                 break;
-              if (d.skip_entry)
+              if (readdir_result_skip_entry (d))
                 continue;
 
               /* If we shall match only directories use the information
                  provided by the dirent call if possible.  */
-              if ((flags & GLOB_ONLYDIR) && !readdir_result_might_be_dir (d))
-                continue;
+              if (flags & GLOB_ONLYDIR)
+                switch (readdir_result_type (d))
+                  {
+                  case DT_DIR: case DT_LNK: case DT_UNKNOWN: break;
+                  default: continue;
+                  }
 
               if (fnmatch (pattern, d.name, fnm_flags) == 0)
                 {
                   /* If the file we found is a symlink we have to
                      make sure the target file exists.  */
-                  if (!readdir_result_might_be_symlink (d)
+                  dirent_type type = readdir_result_type (d);
+                  if (! (type == DT_LNK || type == DT_UNKNOWN)
                       || link_exists_p (dfd, directory, dirlen, d.name,
                                         pglob, flags))
                     {
