@@ -49,14 +49,6 @@
 
 #define attribute_hidden
 
-#ifndef __attribute_noinline__
-# if 3 < __GNUC__ + (1 <= __GNUC_MINOR__)
-#  define __attribute_noinline__ __attribute__ ((__noinline__))
-#else
-#  define __attribute_noinline__ /* Ignore */
-# endif
-#endif
-
 #if __GNUC__ < 3
 # define __glibc_unlikely(cond) (cond)
 #else

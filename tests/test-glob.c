@@ -20,6 +20,9 @@
 
 #include <glob.h>
 
+#include <errno.h>
+#include <unistd.h>
+
 #include "signature.h"
 SIGNATURE_CHECK (glob, int, (char const *, int, int (*) (char const *, int),
                              glob_t *));
@@ -29,6 +32,7 @@ SIGNATURE_CHECK (globfree, void, (glob_t *));
 
 #include "macros.h"
 
+#define BASE "test-glob.t"
 #define GL_NO_SUCH_FILE "/gnulib-magic-does-not-exist"
 
 int
@@ -72,6 +76,22 @@ main ()
   ASSERT (res == 0 && g.gl_pathc == 1);
   ASSERT (strcmp (g.gl_pathv[0], GL_NO_SUCH_FILE) == 0);
   globfree (&g);
+
+  if ((symlink (GL_NO_SUCH_FILE, BASE "globlink1") == 0 || errno == EEXIST)
+      && (symlink (".", BASE "globlink2") == 0 || errno == EEXIST))
+    {
+      res = glob (BASE "globlink[12]", 0, NULL, &g);
+      ASSERT (res == 0 && g.gl_pathc == 2);
+      ASSERT (strcmp (g.gl_pathv[0], BASE "globlink1") == 0);
+      ASSERT (strcmp (g.gl_pathv[1], BASE "globlink2") == 0);
+      globfree (&g);
+
+      res = glob (BASE "globlink[12]", GLOB_MARK, NULL, &g);
+      ASSERT (res == 0 && g.gl_pathc == 2);
+      ASSERT (strcmp (g.gl_pathv[0], BASE "globlink1") == 0);
+      ASSERT (strcmp (g.gl_pathv[1], BASE "globlink2/") == 0);
+      globfree (&g);
+    }
 
   return 0;
 }
