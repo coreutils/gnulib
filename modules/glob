@@ -20,7 +20,6 @@ snippet/warn-on-use
 alloca          [test -n "$GLOB_H"]
 builtin-expect  [test -n "$GLOB_H"]
 closedir        [test -n "$GLOB_H"]
-d-ino           [test -n "$GLOB_H"]
 d-type          [test -n "$GLOB_H"]
 dirfd           [test -n "$GLOB_H"]
 flexmember      [test -n "$GLOB_H"]

@@ -20,4 +20,12 @@ incorrectly.  (Cf. @code{AC_SYS_LARGEFILE}.)
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+Although POSIX places no restrictions on @code{d_ino} values, some
+older systems are rumored to return @code{d_ino} values equal to zero
+for directory entries that do not really exist.  Although Gnulib
+formerly attempted to cater to these older systems, this caused
+misbehavior on standard systems and so Gnulib does not attempt to
+cater to them any more.  If you know of any problems caused by this,
+please send a bug report.
 @end itemize

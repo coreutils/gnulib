@@ -17,4 +17,29 @@ Portability problems not fixed by Gnulib:
 @item
 This header file is missing on some platforms:
 MSVC 14.
+
+@item
+Although many systems define a @code{struct dirent} member named
+@code{d_type} and directory entry type macros like @code{DT_DIR} and
+@code{DT_LINK}, some do not:
+AIX 7.2, HP-UX 11, Solaris 11, probably others.
+
+@item
+On systems with @code{d_type}, not every filesystem supports
+@code{d_type}, and those lacking support will set it to @code{DT_UNKNOWN}.
+
+@item
+Some systems define a @code{struct dirent} member named @code{d_namlen}
+containing the string length of @code{d_name}, but others do not.
+
+@item
+Some systems define a @code{struct dirent} member named @code{d_off}
+containing a magic cookie suitable as an argument to @code{seekdir},
+but others do not.
+
+@item
+Some systems define a @code{struct dirent} member named
+@code{d_reclen} containing the number of bytes in the directory entry
+record, but others do not.  This member has limited utility, as it is
+an implementation detail.
 @end itemize

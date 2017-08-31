@@ -40,11 +40,6 @@
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp) strlen ((dp)->d_name)
 #endif
-#if D_INO_IN_DIRENT
-# define REAL_DIR_ENTRY(dp) ((dp)->d_ino != 0)
-#else
-# define REAL_DIR_ENTRY(dp) 1
-#endif
 
 #if ! (HAVE_PATHCONF && defined _PC_NAME_MAX)
 # define pathconf(file, option) (errno = -1)
@@ -225,7 +220,7 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen,
       bool all_9s;
       size_t versionlen;
 
-      if (! REAL_DIR_ENTRY (dp) || _D_EXACT_NAMLEN (dp) < baselen + 4)
+      if (_D_EXACT_NAMLEN (dp) < baselen + 4)
         continue;
 
       if (memcmp (buf + base_offset, dp->d_name, baselen + 2) != 0)
