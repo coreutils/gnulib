@@ -20,9 +20,7 @@
 #ifndef _GL_GLOB_H
 #define _GL_GLOB_H
 
-#if @HAVE_SYS_CDEFS_H@
-# include <sys/cdefs.h>
-#endif
+#include <libc-config.h>
 
 #include <stddef.h>
 
@@ -31,46 +29,8 @@
    rely on 'struct stat'.  */
 #include <sys/stat.h>
 
-#ifndef __BEGIN_DECLS
-# ifdef __cplusplus
-#  define __BEGIN_DECLS  extern "C" {
-#  define __END_DECLS    }
-# else
-#  define __BEGIN_DECLS
-#  define __END_DECLS
-# endif
-#endif
-#ifndef __THROW
-# define __THROW
-#endif
-#ifndef __THROWNL
-# define __THROWNL
-#endif
-
-#define attribute_hidden
-
-#if __GNUC__ < 3
-# define __glibc_unlikely(cond) (cond)
-#else
-# define __glibc_unlikely(cond) __builtin_expect ((cond), 0)
-#endif
-
-/* GCC 2.95 and later have "__restrict", and C99 compilers have
-   "restrict".  */
-#if ! (defined __restrict || 2 < __GNUC__ + (95 <= __GNUC_MINOR__))
-# if 199901L <= __STDC_VERSION__
-#  define __restrict restrict
-# else
-#  define __restrict
-# endif
-#endif
-
 #ifndef __USE_GNU
 # define __USE_GNU    1
-#endif
-
-#ifndef weak_alias
-# define weak_alias(name, alias)
 #endif
 
 
