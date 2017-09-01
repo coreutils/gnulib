@@ -2364,6 +2364,15 @@ func_all_modules ()
   func_module limits-h
   func_end_table
 
+  element="Support for sharing code with the GNU C Library"
+  func_section_wrap glibc
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module libc-config
+  func_end_table
+
   element="Support for obsolete systems lacking POSIX:2008"
   func_section_wrap posix_sup_obsolete
   func_wrap H2

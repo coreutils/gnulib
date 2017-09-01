@@ -1,0 +1,21 @@
+Description:
+System definitions for code taken from the GNU C Library
+
+Files:
+lib/cdefs.h
+lib/libc-config.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+
+Include:
+<libc-config.h>
+
+License:
+LGPLv2+
+
+Maintainer:
+all
