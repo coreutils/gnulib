@@ -658,7 +658,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                         }
                     }
 # else
-                  p = getpwnam (pwtmpbuf.data);
+                  p = getpwnam (name);
 # endif
                   if (p != NULL)
                     {
