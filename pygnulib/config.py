@@ -7,6 +7,8 @@ import os
 import re
 
 
+from .error import AutoconfVersionError
+
 
 class Config:
     """gnulib generic configuration"""
@@ -18,7 +20,7 @@ class Config:
         "po_base"           : "po",
         "doc_base"          : "doc",
         "tests_base"        : "tests",
-        "aux_dir"           : "",
+        "auxdir"            : "",
         "lib"               : "libgnu",
         "makefile_name"     : "Makefile.am",
         "macro_prefix"      : "gl",
@@ -39,24 +41,266 @@ class Config:
 
 
     def __init__(self, **kwargs):
-        self.__dict__["_table_"] = dict()
+        self._table_ = dict()
         for key in Config._TABLE_:
-            self.__dict__["_table_"][key] = Config._TABLE_[key]
+            self._table_[key] = Config._TABLE_[key]
         for key, value in kwargs.items():
             self[key] = value
 
 
     def __repr__(self):
-        return repr(self.__dict__["_table_"])
+        return repr(self._table_)
 
 
-    def __setattr__(self, key, value):
-        self[key] = value
-        self.__dict__[key] = value
+    def __iter__(self):
+        for key in Config._TABLE_:
+            value = self[key]
+            yield key, value
 
 
-    def __getattr__(self, key):
-        return self[key]
+    @property
+    def source_base(self):
+        """directory relative to ROOT where source code is placed; defaults to 'lib'"""
+        return self["source_base"]
+
+    @source_base.setter
+    def source_base(self, value):
+        self["source_base"] = value
+
+
+    @property
+    def m4_base(self):
+        """directory relative to ROOT where *.m4 macros are placed; defaults to 'm4'"""
+        return self["m4_base"]
+
+    @m4_base.setter
+    def m4_base(self, value):
+        self["m4_base"] = value
+
+
+    @property
+    def po_base(self):
+        """directory relative to ROOT where *.po files are placed; defaults to 'po'"""
+        return self["po_base"]
+
+    @po_base.setter
+    def po_base(self, value):
+        self["po_base"] = value
+
+
+    @property
+    def doc_base(self):
+        """directory relative to ROOT where doc files are placed; defaults to 'doc'"""
+        return self["doc_base"]
+
+    @doc_base.setter
+    def doc_base(self, value):
+        self["doc_base"] = value
+
+
+    @property
+    def tests_base(self):
+        """directory relative to ROOT where unit tests are placed; defaults to 'tests'"""
+        return self["tests_base"]
+
+    @tests_base.setter
+    def tests_base(self, value):
+        self["tests_base"] = value
+
+
+    @property
+    def auxdir(self):
+        """directory relative to ROOT where auxiliary build tools are placed"""
+        return self["auxdir"]
+
+    @auxdir.setter
+    def auxdir(self, value):
+        self["auxdir"] = value
+
+
+    @property
+    def lib(self):
+        """library name; defaults to 'libgnu'"""
+        return self["lib"]
+
+    @lib.setter
+    def lib(self, value):
+        self["lib"] = value
+
+
+    @property
+    def makefile_name(self):
+        """name of makefile in automake syntax in the source-base and tests-base directories"""
+        return self["makefile_name"]
+
+    @makefile_name.setter
+    def makefile_name(self, value):
+        self["makefile_name"] = value
+
+
+    @property
+    def macro_prefix(self):
+        """
+        the prefix of the macros 'gl_EARLY' and 'gl_INIT' (default is 'gl');
+        the change of this parameter also affects include_guard_prefix parameter
+        """
+        return self["macro_prefix"]
+
+    @macro_prefix.setter
+    def macro_prefix(self, value):
+        self["macro_prefix"] = value
+
+
+    @property
+    def po_domain(self):
+        """the prefix of the i18n domain"""
+        return self["po_domain"]
+
+    @po_domain.setter
+    def po_domain(self, value):
+        self["po_domain"] = value
+
+
+    @property
+    def witness_c_macro(self):
+        """the C macro that is defined when the sources are compiled or used"""
+        return self["witness_c_macro"]
+
+    @witness_c_macro.setter
+    def witness_c_macro(self, value):
+        self["witness_c_macro"] = value
+
+
+    @property
+    def lgpl(self):
+        """abort if modules aren't available under the LGPL; also modify license template"""
+        return self["lgpl"]
+
+    @lgpl.setter
+    def lgpl(self, value):
+        if value is None:
+            value = 0
+        if value not in [0, 2, 3]:
+            raise TypeError("lgpl option must be either None or integral version (2 or 3)")
+        self["lgpl"] = value
+
+
+    @property
+    def tests(self):
+        """include unit tests for the included modules"""
+        return self["tests"]
+
+    @tests.setter
+    def tests(self, value):
+        self["tests"] = value
+
+
+    @property
+    def cxx_tests(self):
+        """include even unit tests for C++ interoperability"""
+        return self["cxx_tests"]
+
+    @cxx_tests.setter
+    def cxx_tests(self, value):
+        self["cxx_tests"] = value
+
+
+    @property
+    def longrunning_tests(self):
+        """include even unit tests that are long-runners"""
+        return self["longrunning_tests"]
+
+    @longrunning_tests.setter
+    def longrunning_tests(self, value):
+        self["longrunning_tests"] = value
+
+
+    @property
+    def privileged_tests(self):
+        """include even unit tests that require root privileges"""
+        return self["privileged_tests"]
+
+    @privileged_tests.setter
+    def privileged_tests(self, value):
+        self["privileged_tests"] = value
+
+
+    @property
+    def unportable_tests(self):
+        """include even unit tests that fail on some platforms"""
+        return self["unportable_tests"]
+
+    @unportable_tests.setter
+    def unportable_tests(self, value):
+        self["unportable_tests"] = value
+
+
+    @property
+    def all_tests(self):
+        """include all kinds of problematic unit tests"""
+        result = True
+        result &= self.tests
+        result &= self.cxx_tests
+        result &= self.privileged_tests
+        result &= self.unportable_tests
+        result &= self.longrunning_tests
+        return result
+
+    @all_tests.setter
+    def all_tests(self, value):
+        self.tests = value
+        self.cxx_tests = value
+        self.privileged_tests = value
+        self.unportable_tests = value
+        self.longrunning_tests = value
+
+
+    @property
+    def libtool(self):
+        """use libtool rules"""
+        return self["libtool"]
+
+    @libtool.setter
+    def libtool(self, value):
+        self["libtool"] = value
+
+
+    @property
+    def conddeps(self):
+        """support conditional dependencies (may save configure time and object code)"""
+        return self["conddeps"]
+
+    @conddeps.setter
+    def conddeps(self, value):
+        self["conddeps"] = value
+
+
+    @property
+    def vc_files(self):
+        """update version control related files"""
+        return self["vc_files"]
+
+    @vc_files.setter
+    def vc_files(self, value):
+        self["vc_files"] = value
+
+
+    @property
+    def autoconf(self):
+        """autoconf version"""
+        return self["autoconf"]
+
+    @autoconf.setter
+    def autoconf(self, value):
+        self["autoconf"] = value
+
+
+    @property
+    def include_guard_prefix(self):
+        """include guard prefix"""
+        prefix = self["macro_prefix"].upper()
+        default = Config._TABLE_["macro_prefix"]
+        return "GL_%s" % prefix if prefix == default else "GL"
 
 
     def __getitem__(self, key):
@@ -64,7 +308,7 @@ class Config:
             key = key.replace("-", "_")
             if key not in Config._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
-        return self.__dict__["_table_"][key]
+        return self._table_[key]
 
 
     def __setitem__(self, key, value):
@@ -73,7 +317,6 @@ class Config:
             if key not in Config._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
         key = key.replace("-", "_")
-
         typeid = type(Config._TABLE_[key])
         if key == "lgpl":
             if value not in [None, 2, 3]:
@@ -83,17 +326,25 @@ class Config:
                 raise AutoconfVersionError(2.59)
         elif not isinstance(value, typeid):
             raise TypeError("%r option must be of %r type" % (key, typeid))
-
-        tests = ["tests", "cxx-tests", "longrunning-tests", "privileged-tests", "unportable-tests"]
-        if key == "all-tests":
-            for _ in tests:
-                self.__dict__["_table_"][_] = value
-        else:
-            self.__dict__["_table_"][key] = value
+        self._table_[key] = value
 
 
+    def items(self):
+        """a set-like object providing a view on configuration items"""
+        return self._table_.items()
 
-class CachedConfig(Config):
+
+    def keys(self):
+        """a set-like object providing a view on configuration keys"""
+        return self._table_.keys()
+
+
+    def values(self):
+        """a set-like object providing a view on configuration values"""
+        return self._table_.values()
+
+
+class Cache(Config):
     """gnulib cached configuration"""
     _AUTOCONF_ = {
         "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
@@ -156,7 +407,7 @@ class CachedConfig(Config):
             autoconf = os.path.join(root, autoconf)
         with codecs.open(autoconf, "rb", "UTF-8") as stream:
             data = stream.read()
-        for key, pattern in CachedConfig._AUTOCONF_.items():
+        for key, pattern in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
             if not match:
                 continue
@@ -171,17 +422,17 @@ class CachedConfig(Config):
         if os.path.exists(gnulib_cache):
             with codecs.open(gnulib_cache, "rb", "UTF-8") as stream:
                 data = stream.read()
-            for key in CachedConfig._GNULIB_CACHE_BOOL_:
-                (_, macro) = CachedConfig._GNULIB_CACHE_[key]
+            for key in Cache._GNULIB_CACHE_BOOL_:
+                (_, macro) = Cache._GNULIB_CACHE_[key]
                 if key in data:
                     self[key] = True
-            match = dict(CachedConfig._GNULIB_CACHE_PATTERN_.findall(data))
-            for key in CachedConfig._GNULIB_CACHE_STR_:
-                (_, macro) = CachedConfig._GNULIB_CACHE_[key]
+            match = dict(Cache._GNULIB_CACHE_PATTERN_.findall(data))
+            for key in Cache._GNULIB_CACHE_STR_:
+                (_, macro) = Cache._GNULIB_CACHE_[key]
                 if macro in match:
                     self[key] = match[macro].strip()
-            for key in CachedConfig._GNULIB_CACHE_LIST_:
-                (_, macro) = CachedConfig._GNULIB_CACHE_[key]
+            for key in Cache._GNULIB_CACHE_LIST_:
+                (_, macro) = Cache._GNULIB_CACHE_[key]
                 if macro in match:
                     self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
