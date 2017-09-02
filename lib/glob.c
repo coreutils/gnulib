@@ -637,7 +637,6 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               if (success)
                 {
                   struct passwd *p;
-                  int save = errno;
                   struct scratch_buffer pwtmpbuf;
                   scratch_buffer_init (&pwtmpbuf);
 # if defined HAVE_GETPWNAM_R || defined _LIBC
@@ -657,7 +656,6 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                           retval = GLOB_NOSPACE;
                           goto out;
                         }
-                      __set_errno (save);
                     }
 # else
                   p = getpwnam (pwtmpbuf.data);
@@ -815,7 +813,6 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
 
 #  if defined HAVE_GETPWNAM_R || defined _LIBC
             struct passwd pwbuf;
-            int save = errno;
 
             while (getpwnam_r (user_name, &pwbuf,
                                pwtmpbuf.data, pwtmpbuf.length, &p) != 0)
@@ -830,7 +827,6 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                     retval = GLOB_NOSPACE;
                     goto out;
                   }
-                __set_errno (save);
               }
 #  else
             p = getpwnam (user_name);
