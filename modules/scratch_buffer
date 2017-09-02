@@ -3,9 +3,10 @@ Variable-sized buffer with on-stack default allocation.
 
 Files:
 lib/scratch_buffer.h
-lib/scratch_buffer_grow.c
-lib/scratch_buffer_grow_preserve.c
-lib/scratch_buffer_set_array_size.c
+lib/malloc/scratch_buffer.h
+lib/malloc/scratch_buffer_grow.c
+lib/malloc/scratch_buffer_grow_preserve.c
+lib/malloc/scratch_buffer_set_array_size.c
 
 Depends-on:
 libc-config
@@ -13,14 +14,11 @@ stdbool
 stddef
 
 configure.ac:
-AC_CHECK_FUNCS_ONCE([__libc_scratch_buffer_grow])
-if test "$ac_cv_func___libc_scratch_buffer_grow" != yes; then
-  AC_LIBOBJ([scratch_buffer_grow])
-  AC_LIBOBJ([scratch_buffer_grow_preserve])
-  AC_LIBOBJ([scratch_buffer_set_array_size])
-fi
 
 Makefile.am:
+lib_SOURCES += malloc/scratch_buffer_grow.c \
+               malloc/scratch_buffer_grow_preserve.c \
+               malloc/scratch_buffer_set_array_size.c
 
 Include:
 <scratch_buffer.h>
