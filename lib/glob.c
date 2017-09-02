@@ -637,11 +637,11 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               if (success)
                 {
                   struct passwd *p;
-# if defined HAVE_GETPWNAM_R || defined _LIBC
-                  struct passwd pwbuf;
                   int save = errno;
                   struct scratch_buffer pwtmpbuf;
                   scratch_buffer_init (&pwtmpbuf);
+# if defined HAVE_GETPWNAM_R || defined _LIBC
+                  struct passwd pwbuf;
 
                   while (getpwnam_r (name, &pwbuf,
                                      pwtmpbuf.data, pwtmpbuf.length, &p)
