@@ -11,7 +11,7 @@ from .module import FileModule
 
 
 
-class FileSystem:
+class Directory:
     """gnulib generic virtual file system"""
     _SUBST_ = {
         "build-aux" : "aux-dir",
@@ -22,6 +22,7 @@ class FileSystem:
         "tests=lib" : "tests-base",
         "po"        : "po-base",
     }
+
 
     def __init__(self, root, config):
         if not isinstance(root, str):
@@ -50,7 +51,7 @@ class FileSystem:
                 parts += [part]
                 continue
             if not replaced:
-                for old, new in FileSystem._SUBST_.items():
+                for old, new in Directory._SUBST_.items():
                     if part == old:
                         part = self._config_[new]
                         replaced = True
@@ -62,7 +63,7 @@ class FileSystem:
 
 
 
-class GitFileSystem(FileSystem):
+class Git(Directory):
     """gnulib Git-based virtual file system"""
     _EXCLUDE_ = {
         "."                 : str.startswith,
@@ -88,7 +89,7 @@ class GitFileSystem(FileSystem):
 
     def module(self, name, full=True):
         """instantiate gnulib module by its name"""
-        if name in GitFileSystem._EXCLUDE_:
+        if name in Git._EXCLUDE_:
             raise ValueError("illegal module name")
         path = os.path.join(self["modules"], name)
         return FileModule(path, name=name) if full else Module(name)
@@ -101,7 +102,7 @@ class GitFileSystem(FileSystem):
             names = []
             for name in files:
                 exclude = False
-                for key, method in GitFileSystem._EXCLUDE_.items():
+                for key, method in Git._EXCLUDE_.items():
                     if method(name, key):
                         exclude = True
                         break
