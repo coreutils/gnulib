@@ -5,6 +5,7 @@ tests/macros.h
 
 Depends-on:
 glob-c++-tests
+symlink
 
 configure.ac:
 
