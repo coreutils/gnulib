@@ -7,10 +7,10 @@ import os
 import re
 
 
+
 class Config:
     """gnulib generic configuration"""
     _TABLE_ = {
-        "gnulib"            : "",
         "root"              : "",
         "local_dir"         : "",
         "source_base"       : "lib",
@@ -38,16 +38,16 @@ class Config:
     }
 
 
-    def __repr__(self):
-        return repr(self.__dict__["_table_"])
-
-
     def __init__(self, **kwargs):
         self.__dict__["_table_"] = dict()
         for key in Config._TABLE_:
             self.__dict__["_table_"][key] = Config._TABLE_[key]
         for key, value in kwargs.items():
             self[key] = value
+
+
+    def __repr__(self):
+        return repr(self.__dict__["_table_"])
 
 
     def __setattr__(self, key, value):
@@ -80,7 +80,7 @@ class Config:
                 raise TypeError("lgpl option must be either None or integral version (2 or 3)")
         elif key == "autoconf":
             if value < 2.59:
-                raise NotImplementedError("pygnulib ")
+                raise AutoconfVersionError(2.59)
         elif not isinstance(value, typeid):
             raise TypeError("%r option must be of %r type" % (key, typeid))
 
@@ -142,7 +142,7 @@ class CachedConfig(Config):
     def __init__(self, root, autoconf=None, **kwargs):
         if not isinstance(root, str):
             raise TypeError("root must be of 'str' type")
-        super(CachedConfig, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self._autoconf_(root, autoconf)
         self._gnulib_cache_(root)
         self._gnulib_comp_(root)

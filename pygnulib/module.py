@@ -346,6 +346,22 @@ class Module:
 
 class FileModule(Module):
     """gnulib module text file"""
+    _TABLE_ = {
+        "Description"        : (str, "description"),
+        "Comment"            : (str, "comment"),
+        "Status"             : (str, "status"),
+        "Notice"             : (str, "notice"),
+        "Applicability"      : (str, "applicability"),
+        "Files"              : (list, "files"),
+        "Depends-on"         : (list, "dependencies"),
+        "configure.ac-early" : (str, "configure_early"),
+        "configure.ac"       : (str, "configure"),
+        "Makefile.am"        : (str, "makefile"),
+        "Include"            : (list, "include"),
+        "Link"               : (list, "link"),
+        "License"            : (str, "license"),
+        "Maintainer"         : (list, "maintainers"),
+    }
     _FIELDS_ = [field for (_, _, field) in Module._TABLE_.values()]
     _PATTERN_ = re.compile("(%s):" % "|".join(_FIELDS_))
 
@@ -366,11 +382,7 @@ class FileModule(Module):
                     data += (line + "\n")
             match = FileModule._PATTERN_.split(data)[1:]
             for (group, value) in zip(match[::2], match[1::2]):
-                key = None
-                typeid = type(None)
-                for key, (_, typeid, field) in Module._TABLE_.items():
-                    if group == field:
-                        break
+                (typeid, key) = FileModule._TABLE_[group]
                 if typeid is list:
                     self._table_[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
                 else:
