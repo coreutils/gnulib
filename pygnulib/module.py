@@ -14,20 +14,20 @@ import re
 class Module:
     """gnulib generic module"""
     _TABLE_ = {
-        "description"     : (0x00, str, "Description"),
-        "comment"         : (0x01, str, "Comment"),
-        "status"          : (0x02, str, "Status"),
-        "notice"          : (0x03, str, "Notice"),
-        "applicability"   : (0x04, str, "Applicability"),
-        "files"           : (0x05, list, "Files"),
-        "dependencies"    : (0x06, list, "Depends-on"),
-        "configure_early" : (0x07, str, "configure.ac-early"),
-        "configure"       : (0x08, str, "configure.ac"),
-        "makefile"        : (0x09, str, "Makefile.am"),
-        "include"         : (0x0A, list, "Include"),
-        "link"            : (0x0B, list, "Link"),
-        "license"         : (0x0C, str, "License"),
-        "maintainers"     : (0x0D, list, "Maintainer"),
+        "description"                : (0x00, str, "Description"),
+        "comment"                    : (0x01, str, "Comment"),
+        "status"                     : (0x02, str, "Status"),
+        "notice"                     : (0x03, str, "Notice"),
+        "applicability"              : (0x04, str, "Applicability"),
+        "files"                      : (0x05, list, "Files"),
+        "dependencies"               : (0x06, list, "Depends-on"),
+        "early_configure_ac_snippet" : (0x07, str, "configure.ac-early"),
+        "configure_ac_snippet"       : (0x08, str, "configure.ac"),
+        "makefile_am_snippet"        : (0x09, str, "Makefile.am"),
+        "include"                    : (0x0A, list, "Include"),
+        "link"                       : (0x0B, list, "Link"),
+        "license"                    : (0x0C, str, "License"),
+        "maintainers"                : (0x0D, list, "Maintainer"),
     }
     _PATTERN_DEPENDENCIES_ = re.compile("^(\\S+)(?:\\s+(.+))*$")
     _PATTERN_INCLUDE_ = re.compile("^[\\<\"]([A-Za-z0-9/\\-_]+\\.h)[\\>\"](?:\\s+.*^)*$")
@@ -163,39 +163,39 @@ class Module:
 
 
     @property
-    def configure_early(self):
+    def early_configure_ac_snippet(self):
         """early configure.ac snippet"""
-        return self._table_["configure_early"]
+        return self._table_["early_configure_ac_snippet"]
 
-    @configure_early.setter
-    def configure_early(self, value):
+    @early_configure_ac_snippet.setter
+    def early_configure_ac_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["configure_early"] = value
+        self._table_["early_configure_ac_snippet"] = value
 
 
     @property
-    def configure(self):
+    def configure_ac_snippet(self):
         """configure.ac snippet"""
-        return self._table_["configure"]
+        return self._table_["configure_ac_snippet"]
 
-    @configure.setter
-    def configure(self, value):
+    @configure_ac_snippet.setter
+    def configure_ac_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["configure"] = value
+        self._table_["configure_ac_snippet"] = value
 
 
     @property
-    def makefile(self):
-        """makefile snippet"""
-        return self._table_["makefile"]
+    def makefile_am_snippet(self):
+        """Makefile.am snippet"""
+        return self._table_["makefile_am_snippet"]
 
-    @makefile.setter
-    def makefile(self, value):
+    @makefile_am_snippet.setter
+    def makefile_am_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["makefile"] = value
+        self._table_["makefile_am_snippet"] = value
 
 
     @property
@@ -354,9 +354,9 @@ class FileModule(Module):
         "Applicability"      : (str, "applicability"),
         "Files"              : (list, "files"),
         "Depends-on"         : (list, "dependencies"),
-        "configure.ac-early" : (str, "configure_early"),
-        "configure.ac"       : (str, "configure"),
-        "Makefile.am"        : (str, "makefile"),
+        "configure.ac-early" : (str, "early_configure_ac_snippet"),
+        "configure.ac"       : (str, "configure_ac_snippet"),
+        "Makefile.am"        : (str, "makefile_am_snippet"),
         "Include"            : (list, "include"),
         "Link"               : (list, "link"),
         "License"            : (str, "license"),
@@ -375,7 +375,7 @@ class FileModule(Module):
             with codecs.open(path, "rb", "UTF-8") as stream:
                 data = ""
                 for line in stream:
-                    line = line.strip()
+                    line = line.strip("\n")
                     if line.startswith("#") \
                     or (line.startswith("/*") and line.endswith("*/")):
                         continue
