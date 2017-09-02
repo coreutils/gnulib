@@ -644,13 +644,8 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
 
                   while (getpwnam_r (name, &pwbuf,
                                      pwtmpbuf.data, pwtmpbuf.length, &p)
-                         != 0)
+                         == ERANGE)
                     {
-                      if (errno != ERANGE)
-                        {
-                          p = NULL;
-                          break;
-                        }
                       if (!scratch_buffer_grow (&pwtmpbuf))
                         {
                           retval = GLOB_NOSPACE;
@@ -658,7 +653,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                         }
                     }
 # else
-                  p = getpwnam (pwtmpbuf.data);
+                  p = getpwnam (name);
 # endif
                   if (p != NULL)
                     {
@@ -815,13 +810,9 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
             struct passwd pwbuf;
 
             while (getpwnam_r (user_name, &pwbuf,
-                               pwtmpbuf.data, pwtmpbuf.length, &p) != 0)
+                               pwtmpbuf.data, pwtmpbuf.length, &p)
+                   == ERANGE)
               {
-                if (errno != ERANGE)
-                  {
-                    p = NULL;
-                    break;
-                  }
                 if (!scratch_buffer_grow (&pwtmpbuf))
                   {
                     retval = GLOB_NOSPACE;
