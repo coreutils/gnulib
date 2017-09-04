@@ -131,7 +131,7 @@ class POMakefile(Generator):
 
 
 class POTFILES(Generator):
-    """File list to be passed to xgettext"""
+    """file list to be passed to xgettext"""
     def __init__(self, config, files):
         if not isinstance(config, Config):
             raise TypeError("config must be of pygnulib.Config type")
@@ -141,20 +141,14 @@ class POTFILES(Generator):
 
 
     @property
-    def source_base(self):
-        """directory relative to ROOT where source code is placed; defaults to 'lib'"""
-        return self._config_.source_base
-
-
-    @property
     def files(self):
         """list of files"""
         return tuple(self.files)
 
 
     def __repr__(self):
-        fmt = "pygnulib.generator.POTFILES(source_base=%r, files=%r)"
-        return fmt % (self.source_base, self.files)
+        fmt = "pygnulib.generator.POTFILES(files=%r)"
+        return fmt % self.files
 
 
     def __iter__(self):
@@ -162,7 +156,7 @@ class POTFILES(Generator):
             yield line
         yield "# List of files which contain translatable strings."
         for file in [_ for _ in self.files if _.startswith("lib/")]:
-            yield os.path.join(self.source_base, file[4:])
+            yield os.path.join(self._config_.source_base, file[4:])
 
 
 
@@ -251,3 +245,198 @@ class AutoconfSnippet(Generator):
                 yield "LTALLOCA=`echo \"$ALLOCA\" | sed -e 's/\\.[^.]* /.lo /g;s/\\.[^.]*$/.lo/'`"
                 yield "changequote([, ])dnl"
                 yield "AC_SUBST([LTALLOCA])"
+
+
+
+class InitMacro(Generator):
+    """basic gl_INIT macro generator"""
+    def __init__(self, config, macro_prefix=None):
+        """
+        config: gnulib configuration
+        macro_prefix: macro prefix; if None, consider configuration
+        """
+        if not isinstance(config, Config):
+            raise TypeError("config must be of pygnulib.config.Config type")
+        if macro_prefix is None:
+            macro_prefix = config.macro_prefix
+        if not isinstance(macro_prefix, str):
+            raise TypeError("macro_prefix must be of str type")
+        self._macro_prefix_ = macro_prefix
+
+
+    @property
+    def macro_prefix(self):
+        """the prefix of the macros 'gl_EARLY' and 'gl_INIT'"""
+        return self._macro_prefix_
+
+
+    def __repr__(self):
+        fmt = "pygnulib.generator.InitMacro(macro_prefix=%r)"
+        return fmt % self.macro_prefix
+
+
+
+class InitMacroHeader(InitMacro):
+    """the first few statements of the gl_INIT macro"""
+    def __init__(self, config, macro_prefix=None):
+        """
+        config: gnulib configuration
+        macro_prefix: macro prefix; if None, consider configuration
+        """
+        super().__init__(config=config, macro_prefix=macro_prefix)
+
+
+    def __repr__(self):
+        fmt = "pygnulib.generator.InitMacroHeader(macro_prefix=%r)"
+        return fmt % self.macro_prefix
+
+
+    def __iter__(self):
+        # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
+        # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
+        # of LIBOBJS. The purpose is to allow several gnulib instantiations under
+        # a single configure.ac file. (AC_CONFIG_LIBOBJ_DIR does not allow this
+        # flexibility).
+        # Furthermore it avoids an automake error like this when a Makefile.am
+        # that uses pieces of gnulib also uses $(LIBOBJ):
+        #   automatically discovered file `error.c' should not be explicitly
+        #   mentioned.
+        yield "  m4_pushdef([AC_LIBOBJ], m4_defn([%s_LIBOBJ]))" % self.macro_prefix
+        yield "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([%s_REPLACE_FUNCS]))" % self.macro_prefix
+
+        # Overriding AC_LIBSOURCES has the same purpose of avoiding the automake
+        # error when a Makefile.am that uses pieces of gnulib also uses $(LIBOBJ):
+        #   automatically discovered file `error.c' should not be explicitly
+        #   mentioned
+        # We let automake know about the files to be distributed through the
+        # EXTRA_lib_SOURCES variable.
+        yield "  m4_pushdef([AC_LIBSOURCES], m4_defn([%s_LIBSOURCES]))" % self.macro_prefix
+
+        # Create data variables for checking the presence of files that are
+        # mentioned as AC_LIBSOURCES arguments. These are m4 variables, not shell
+        # variables, because we want the check to happen when the configure file is
+        # created, not when it is run. ${macro_prefix_arg}_LIBSOURCES_LIST is the
+        # list of files to check for. ${macro_prefix_arg}_LIBSOURCES_DIR is the
+        # subdirectory in which to expect them.
+        yield "  m4_pushdef([%s_LIBSOURCES_LIST], [])" % self.macro_prefix
+        yield "  m4_pushdef([%s_LIBSOURCES_DIR], [])" % self.macro_prefix
+        yield "  gl_COMMON"
+
+
+
+class InitMacroFooter(InitMacro):
+    """the last few statements of the gl_INIT macro"""
+    _TEMPLATE_ = (
+        "  m4_ifval({macro_prefix}_LIBSOURCES_LIST, [",
+        "    m4_syscmd([test ! -d ]m4_defn([{macro_prefix}_LIBSOURCES_DIR])[ ||",
+        "      for gl_file in ]{macro_prefix}_LIBSOURCES_LIST[ ; do",
+        "        if test ! -r ]m4_defn([{macro_prefix}_LIBSOURCES_DIR])[/$gl_file ; then",
+        "          echo \"missing file ]m4_defn([{macro_prefix}_LIBSOURCES_DIR])[/$gl_file\" >&2",
+        "          exit 1",
+        "        fi",
+        "      done])dnl",
+        "      m4_if(m4_sysval, [0], [],",
+        "        [AC_FATAL([expected source file, required through AC_LIBSOURCES, not found])])",
+        "  ])",
+        "  m4_popdef([{macro_prefix}_LIBSOURCES_DIR])",
+        "  m4_popdef([{macro_prefix}_LIBSOURCES_LIST])",
+        "  m4_popdef([AC_LIBSOURCES])",
+        "  m4_popdef([AC_REPLACE_FUNCS])",
+        "  m4_popdef([AC_LIBOBJ])",
+        "  AC_CONFIG_COMMANDS_PRE([",
+        "    {macro_prefix}_libobjs=",
+        "    {macro_prefix}_ltlibobjs=",
+        "    if test -n \"${macro_prefix}_LIBOBJS\"; then",
+        "      # Remove the extension.",
+        "      sed_drop_objext='s/\\.o$//;s/\\.obj$//'",
+        "      for i in `for i in ${macro_prefix}_LIBOBJS; " # comma omitted
+        "do echo \"$i\"; done | sed -e \"$sed_drop_objext\" | sort | uniq`; do",
+        "        {macro_prefix}_libobjs=\"${macro_prefix}_libobjs $i.$ac_objext\"",
+        "        {macro_prefix}_ltlibobjs=\"${macro_prefix}_ltlibobjs $i.lo\"",
+        "      done",
+        "    fi",
+        "    AC_SUBST([{macro_prefix}_LIBOBJS], [${macro_prefix}_libobjs])",
+        "    AC_SUBST([{macro_prefix}_LTLIBOBJS], [${macro_prefix}_ltlibobjs])",
+        "  ])",
+    )
+
+
+    def __init__(self, config, macro_prefix=None):
+        """
+        config: gnulib configuration
+        macro_prefix: macro prefix; if None, consider configuration
+        """
+        super().__init__(config=config, macro_prefix=macro_prefix)
+
+
+    def __repr__(self):
+        fmt = "pygnulib.generator.InitMacroFooter(macro_prefix=%r)"
+        return fmt % self.macro_prefix
+
+
+    def __iter__(self):
+        # Check the presence of files that are mentioned as AC_LIBSOURCES
+        # arguments. The check is performed only when autoconf is run from the
+        # directory where the configure.ac resides; if it is run from a different
+        # directory, the check is skipped.
+        for line in InitMacroFooter._TEMPLATE_:
+            yield line.format(macro_prefix=self.macro_prefix)
+
+
+
+class InitMacroDone(InitMacro):
+    """few statements AFTER the gl_INIT macro"""
+    _TEMPLATE_ = (
+        "",
+        "# Like AC_LIBOBJ, except that the module name goes",
+        "# into {macro_prefix}_LIBOBJS instead of into LIBOBJS.",
+        "AC_DEFUN([{macro_prefix}_LIBOBJ], [",
+        "  AS_LITERAL_IF([$1], [{macro_prefix}_LIBSOURCES([$1.c])])dnl",
+        "  {macro_prefix}_LIBOBJS=\"${macro_prefix}_LIBOBJS $1.$ac_objext\"",
+        "])",
+        "",
+        "# Like AC_REPLACE_FUNCS, except that the module name goes",
+        "# into {macro_prefix}_LIBOBJS instead of into LIBOBJS.",
+        "AC_DEFUN([{macro_prefix}_REPLACE_FUNCS], [",
+        "  m4_foreach_w([gl_NAME], [$1], [AC_LIBSOURCES(gl_NAME[.c])])dnl",
+        "  AC_CHECK_FUNCS([$1], , [{macro_prefix}_LIBOBJ($ac_func)])",
+        "])",
+        "",
+        "# Like AC_LIBSOURCES, except the directory where the source file is",
+        "# expected is derived from the gnulib-tool parameterization,",
+        "# and alloca is special cased (for the alloca-opt module).",
+        "# We could also entirely rely on EXTRA_lib..._SOURCES.",
+        "AC_DEFUN([{macro_prefix}_LIBSOURCES], [",
+        "  m4_foreach([_gl_NAME], [$1], [",
+        "    m4_if(_gl_NAME, [alloca.c], [], [",
+        "      m4_define([{macro_prefix}_LIBSOURCES_DIR], [{source_base}])",
+        "      m4_append([{macro_prefix}_LIBSOURCES_LIST], _gl_NAME, [ ])",
+        "    ])",
+        "  ])",
+        "])",
+    )
+
+
+    def __init__(self, config, source_base=None, macro_prefix=None):
+        if source_base is None:
+            source_base = config.source_base
+        if not isinstance(source_base, str):
+            raise TypeError("source_base must be of str type")
+        super().__init__(config=config, macro_prefix=macro_prefix)
+        self._source_base_ = source_base
+
+
+    @property
+    def source_base(self):
+        """directory relative to ROOT where source code is placed; defaults to 'lib'"""
+        return self._source_base_
+
+
+    def __repr__(self):
+        fmt = "pygnulib.generator.InitMacroDone(source_base=%r, macro_prefix=%r)"
+        return fmt % (self.source_base, self.macro_prefix)
+
+
+    def __iter__(self):
+        for line in InitMacroDone._TEMPLATE_:
+            yield line.format(source_base=self._source_base_, macro_prefix=self._macro_prefix_)
