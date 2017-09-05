@@ -302,7 +302,7 @@ class GLFileAssistant(object):
           try: # Try to move file
             if os.path.exists(basepath):
               os.remove(basepath)
-            shutil.move(tmpfile, rewritten)
+            shutil.copy(tmpfile, rewritten)
           except Exception as error:
             raise(GLError(17, original))
       else: # if self.config['dryrun']
@@ -352,7 +352,7 @@ class GLFileAssistant(object):
       stdin = codecs.open(lookedup, 'rb', 'UTF-8')
       try: # Try to transform file
         data = sp.check_output(args, stdin=stdin, shell=False)
-        data = data.decode(ENCS['shell'])
+        data = data.decode("UTF-8")
       except Exception as error:
         raise(GLError(16, lookedup))
       with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
