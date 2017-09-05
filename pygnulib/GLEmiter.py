@@ -172,7 +172,7 @@ class GLEmiter(object):
           file.write(snippet)
         stdin = codecs.open(path, 'rb', 'UTF-8')
         snippet = sp.check_output(args, stdin=stdin, shell=False)
-        snippet = snippet.decode(ENCS['shell'])
+        snippet = snippet.decode("UTF-8")
         os.remove(path)
       if disable_libtool:
         snippet = snippet.replace('$gl_cond_libtool', 'false')

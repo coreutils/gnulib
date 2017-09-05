@@ -97,7 +97,7 @@ class GLInfo(object):
       counter = int() # Create counter
       result = string() # Create string
       args = ['git', 'log']
-      result = sp.check_output(args).decode(ENCS['shell'])
+      result = sp.check_output(args).decode("UTF-8")
       # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
       pattern = re.compile('Date:[\t ]*(.*?)$', re.S | re.M)
       result = pattern.findall(result)[0]
@@ -107,7 +107,7 @@ class GLInfo(object):
       # Use GNU date to compute the time in GMT
       args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
       proc = sp.check_output(args)
-      result = string(proc, ENCS['shell'])
+      result = string(proc, "UTF-8")
       result = result.rstrip(os.linesep)
       return(result)
     
@@ -294,7 +294,7 @@ Report bugs to <bug-gnulib@gnu.org>.'''
     if isdir(DIRS['git']):
       version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
       args = [version_gen, DIRS['root']]
-      result = sp.check_output(args).decode(ENCS['shell'])
+      result = sp.check_output(args).decode("UTF-8")
       result = result.strip()
       if result == 'UNKNOWN':
         result = string()

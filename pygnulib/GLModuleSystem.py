@@ -151,13 +151,13 @@ class GLModuleSystem(object):
     # Read modules from gnulib root directory.
     os.chdir(constants.DIRS['root'])
     find = sp.Popen(find_args, stdout=sp.PIPE)
-    result += find.stdout.read().decode(ENCS['shell'])
+    result += find.stdout.read().decode("UTF-8")
     
     # Read modules from local directory.
     if localdir and isdir(joinpath(localdir, 'modules')):
       os.chdir(localdir)
       find = sp.Popen(find_args, stdout=sp.PIPE)
-      result += find.stdout.read().decode(ENCS['shell'])
+      result += find.stdout.read().decode("UTF-8")
       sed_args += ['-e', r's,\.diff$,,']
     
     # Save the list of the modules to file.
@@ -169,7 +169,7 @@ class GLModuleSystem(object):
     # Filter the list of the modules.
     stdin = codecs.open(path, 'rb', 'UTF-8')
     sed = sp.Popen(sed_args, stdin=stdin, stdout=sp.PIPE)
-    result = sed.stdout.read().decode(ENCS['shell'])
+    result = sed.stdout.read().decode("UTF-8")
     stdin.close(); os.remove(path)
     listing = [line for line in result.split('\n') if line.strip()]
     listing = sorted(set(listing))

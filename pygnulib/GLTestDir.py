@@ -903,7 +903,7 @@ class GLMegaTestDir(object):
       vc_witness = joinpath(DIRS['root'], '.git', 'refs', 'heads', 'master')
     mdate_sh = joinpath(DIRS['root'], 'build-aux', 'mdate-sh')
     args = ['sh', mdate_sh, vc_witness]
-    cvsdate = sp.check_output(args).decode(ENCS['shell']).strip()
+    cvsdate = sp.check_output(args).decode("UTF-8").strip()
     for key in repdict:
       if len(key) > 3:
         cvsdate = cvsdate.replace(key, repdict[key])

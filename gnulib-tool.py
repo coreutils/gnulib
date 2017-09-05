@@ -118,7 +118,7 @@ def main():
   parser.add_argument('-i', '--import',
     dest='mode_import',
     default=None,
-    nargs='+')
+    nargs='*')
   # add-import
   parser.add_argument('-a', '--add-import',
     dest='mode_add_import',
@@ -213,6 +213,11 @@ def main():
     dest='mode_xmaintainer',
     default=None,
     nargs='*')
+  # no-changelog
+  parser.add_argument('--no-changelog',
+    dest='changelog',
+    default=None,
+    action='store_false')
   # destdir
   parser.add_argument('-d', '--destdir',
     dest='destdir',
@@ -241,6 +246,11 @@ def main():
     dest='inctests',
     default=None,
     action='store_true')
+  # makefile
+  parser.add_argument("--makefile-name",
+    dest="makefile",
+    default=None,
+    type=str)
   # obsolete
   parser.add_argument('--with-obsolete',
     dest='obsolete',
@@ -281,6 +291,11 @@ def main():
     dest='libname',
     default=None,
     nargs=1)
+  # libtool
+  parser.add_argument("--libtool",
+    dest=libtool,
+    default=False,
+    action="store_true")
   # sourcebase
   parser.add_argument('-sb', '--source-base',
     dest='sourcebase',
@@ -489,6 +504,8 @@ def main():
         elif index == 6:
           testflags += [constants.TESTS['all-tests']]
   lgpl = cmdargs.lgpl
+  libtool = cmdargs.libtool
+  makefile = cmdargs.makefile
   if lgpl == None:
     lgpl = True
   avoids = cmdargs.avoids
@@ -922,6 +939,8 @@ def main():
 if __name__ == '__main__':
   try: # Try to execute
     main()
+  except:
+    raise
   except BaseException as error:
     errmode = 0 # gnulib-style errors
     errno = error.errno
