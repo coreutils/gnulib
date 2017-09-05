@@ -939,9 +939,7 @@ def main():
 if __name__ == '__main__':
   try: # Try to execute
     main()
-  except:
-    raise
-  except BaseException as error:
+  except classes.GLError as error:
     errmode = 0 # gnulib-style errors
     errno = error.errno
     errinfo = error.errinfo
@@ -1003,4 +1001,3 @@ if __name__ == '__main__':
         message += '\n%s: *** Exit.\n' % constants.APP['name']
       sys.stderr.write(message)
       sys.exit(1)
-
