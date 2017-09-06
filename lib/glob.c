@@ -80,7 +80,7 @@ static const char *next_brace_sub (const char *begin, int flags) __THROWNL;
 
 typedef uint_fast8_t dirent_type;
 
-#ifndef HAVE_STRUCT_DIRENT_D_TYPE
+#if !defined _LIBC && !defined HAVE_STRUCT_DIRENT_D_TYPE
 /* Any distinct values will do here.
    Undef any existing macros out of the way.  */
 # undef DT_UNKNOWN
