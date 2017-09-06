@@ -150,8 +150,8 @@
 
 /* <cdefs.h> __inline is too pessimistic for non-GCC.  */
 #undef __inline
-#ifndef __GNUC__
-# if 199901 <= __STDC_VERSION__
+#ifndef HAVE___INLINE
+# if 199901 <= __STDC_VERSION__ || defined inline
 #  define __inline inline
 # else
 #  define __inline
@@ -172,7 +172,7 @@
 
 /* A substitute for glibc <libc-symbols.h>, good enough for Gnulib.  */
 #define attribute_hidden
-#define libc_hidden_proto(name, attrs...)
+#define libc_hidden_proto(name, ...)
 #define libc_hidden_def(name)
 #define libc_hidden_weak(name)
 #define libc_hidden_ver(local, name)
