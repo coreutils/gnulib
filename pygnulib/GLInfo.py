@@ -154,15 +154,11 @@ Operation modes:
       --update              update the current package, restore files omitted
                             from version control
       --create-testdir      create a scratch package with the given modules
-                            (pass --with-tests to include the unit tests)
       --create-megatestdir  create a mega scratch package with the given modules
                             one by one and all together
-                            (pass --with-tests to include the unit tests)
       --test                test the combination of the given modules
-                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --megatest            test the given modules one by one and all together
-                            (pass --with-tests to include the unit tests)
                             (recommended to use CC=\"gcc -Wall\" here)
       --extract-description        extract the description
       --extract-comment            extract the comment
@@ -200,21 +196,35 @@ Options for --import, --add/remove-import, --update:
 
       --dry-run             Only print what would have been done.
 
+Options for --import, --add/remove-import:
+
+      --with-tests          Include unit tests for the included modules.
+
+Options for --create-[mega]testdir, --[mega]test:
+
+      --without-tests       Don't include unit tests for the included modules.
+
 Options for --import, --add/remove-import,
             --create-[mega]testdir, --[mega]test:
 
-      --with-tests          Include unit tests for the included modules.
       --with-obsolete       Include obsolete modules when they occur among the
                             dependencies. By default, dependencies to obsolete
                             modules are ignored.
       --with-c++-tests      Include even unit tests for C++ interoperability.
+      --without-c++-tests   Exclude unit tests for C++ interoperability.
       --with-longrunning-tests
                             Include even unit tests that are long-runners.
+      --without-longrunning-tests
+                            Exclude unit tests that are long-runners.
       --with-privileged-tests
                             Include even unit tests that require root
                             privileges.
+      --without-privileged-tests
+                            Exclude unit tests that require root privileges.
       --with-unportable-tests
                             Include even unit tests that fail on some platforms.
+      --without-unportable-tests
+                            Exclude unit tests that fail on some platforms.
       --with-all-tests      Include all kinds of problematic unit tests.
       --avoid=MODULE        Avoid including the given MODULE. Useful if you
                             have code that provides equivalent functionality.
@@ -264,13 +274,6 @@ Options for --import, --add/remove-import:
 
 Options for --create-[mega]testdir, --[mega]test:
 
-      --without-c++-tests   Exclude unit tests for C++ interoperability.
-      --without-longrunning-tests
-                            Exclude unit tests that are long-runners.
-      --without-privileged-tests
-                            Exclude unit tests that require root privileges.
-      --without-unportable-tests
-                            Exclude unit tests that fail on some platforms.
       --single-configure    Generate a single configure file, not a separate
                             configure file for the tests directory.
 
