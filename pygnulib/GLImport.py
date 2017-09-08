@@ -1212,7 +1212,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     args = ['rsync', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
                 else:  # use wget
                     args = ['wget', '--quiet', '-r', '-l1', '-nd', '-np', '-A.po',
-                            '%sgnulib' % TP_URL]
+                            '%sgnulib/' % TP_URL]
                 sp.call(args, shell=True)
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
