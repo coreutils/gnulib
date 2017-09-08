@@ -75,18 +75,12 @@
 #include <flexmember.h>
 #include <glob_internal.h>
 #include <scratch_buffer.h>
-
-#ifdef _SC_LOGIN_NAME_MAX
-# define GET_LOGIN_NAME_MAX()   sysconf (_SC_LOGIN_NAME_MAX)
-#else
-# define GET_LOGIN_NAME_MAX()   (-1)
-#endif
 
 static const char *next_brace_sub (const char *begin, int flags) __THROWNL;
 
 typedef uint_fast8_t dirent_type;
 
-#ifndef HAVE_STRUCT_DIRENT_D_TYPE
+#if !defined _LIBC && !defined HAVE_STRUCT_DIRENT_D_TYPE
 /* Any distinct values will do here.
    Undef any existing macros out of the way.  */
 # undef DT_UNKNOWN
@@ -611,67 +605,45 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               else
                 home_dir = "c:/users/default"; /* poor default */
 #else
-              int success;
-              char *name;
-              int malloc_name = 0;
-              size_t buflen = GET_LOGIN_NAME_MAX () + 1;
-
-              if (buflen == 0)
-                /* 'sysconf' does not support _SC_LOGIN_NAME_MAX.  Try
-                   a moderate value.  */
-                buflen = 20;
-              if (glob_use_alloca (alloca_used, buflen))
-                name = alloca_account (buflen, alloca_used);
-              else
+              int err;
+              struct passwd *p;
+              struct passwd pwbuf;
+              struct scratch_buffer s;
+              scratch_buffer_init (&s);
+              while (true)
                 {
-                  name = malloc (buflen);
-                  if (name == NULL)
+                  p = NULL;
+                  err = __getlogin_r (s.data, s.length);
+                  if (err == 0)
+                    {
+# if defined HAVE_GETPWNAM_R || defined _LIBC
+                      size_t ssize = strlen (s.data) + 1;
+                      err = getpwnam_r (s.data, &pwbuf, s.data + ssize,
+                                        s.length - ssize, &p);
+# else
+                      p = getpwnam (s.data);
+                      if (p == NULL)
+                        err = errno;
+# endif
+                    }
+                  if (err != ERANGE)
+                    break;
+                  if (!scratch_buffer_grow (&s))
                     {
                       retval = GLOB_NOSPACE;
                       goto out;
                     }
-                  malloc_name = 1;
                 }
-
-              success = __getlogin_r (name, buflen) == 0;
-              if (success)
+              if (err == 0)
                 {
-                  struct passwd *p;
-                  struct scratch_buffer pwtmpbuf;
-                  scratch_buffer_init (&pwtmpbuf);
-# if defined HAVE_GETPWNAM_R || defined _LIBC
-                  struct passwd pwbuf;
-
-                  while (getpwnam_r (name, &pwbuf,
-                                     pwtmpbuf.data, pwtmpbuf.length, &p)
-                         == ERANGE)
-                    {
-                      if (!scratch_buffer_grow (&pwtmpbuf))
-                        {
-                          retval = GLOB_NOSPACE;
-                          goto out;
-                        }
-                    }
-# else
-                  p = getpwnam (name);
-# endif
-                  if (p != NULL)
-                    {
-                      home_dir = strdup (p->pw_dir);
-                      malloc_home_dir = 1;
-                      if (home_dir == NULL)
-                        {
-                          scratch_buffer_free (&pwtmpbuf);
-                          retval = GLOB_NOSPACE;
-                          goto out;
-                        }
-                    }
-                  scratch_buffer_free (&pwtmpbuf);
+                  home_dir = strdup (p->pw_dir);
+                  malloc_home_dir = 1;
                 }
-              else
+              scratch_buffer_free (&s);
+              if (err == 0 && home_dir == NULL)
                 {
-                  if (__glibc_unlikely (malloc_name))
-                    free (name);
+                  retval = GLOB_NOSPACE;
+                  goto out;
                 }
 #endif /* WINDOWS32 */
             }
@@ -931,7 +903,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
      [ which we handle the same, using fnmatch.  Broken unterminated
      pattern bracket expressions ought to be rare enough that it is
      not worth special casing them, fnmatch will do the right thing.  */
-  if (meta & 5)
+  if (meta & (GLOBPAT_SPECIAL | GLOBPAT_BRACKET))
     {
       /* The directory name contains metacharacters, so we
          have to glob for the directory, and then glob for
@@ -1072,7 +1044,7 @@ glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
       size_t old_pathc = pglob->gl_pathc;
       int orig_flags = flags;
 
-      if (meta & 2)
+      if (meta & GLOBPAT_BACKSLASH)
         {
           char *p = strchr (dirname, '\\'), *q;
           /* We need to unescape the dirname string.  It is certainly
@@ -1270,14 +1242,14 @@ glob_in_dir (const char *pattern, const char *directory, int flags,
                        / sizeof init_names->name[0]);
 
   meta = __glob_pattern_type (pattern, !(flags & GLOB_NOESCAPE));
-  if (meta == 0 && (flags & (GLOB_NOCHECK|GLOB_NOMAGIC)))
+  if (meta == GLOBPAT_NONE && (flags & (GLOB_NOCHECK|GLOB_NOMAGIC)))
     {
       /* We need not do any tests.  The PATTERN contains no meta
          characters and we must not return an error therefore the
          result will always contain exactly one name.  */
       flags |= GLOB_NOCHECK;
     }
-  else if (meta == 0)
+  else if (meta == GLOBPAT_NONE)
     {
       union
       {
