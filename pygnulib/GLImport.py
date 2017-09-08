@@ -1210,7 +1210,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 result = sp.check_output(cmd, shell=True)
                 result = bool(int(result))
                 if result:  # use rsync
-                    args = ['rsync', '-Lrtz', '%sgulib/' % TP_RSYNC_URI, '.']
+                    args = ['rsync', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
                 else:  # use wget
                     args = ['wget', '--quiet', '-r', '-l1', '-nd', '-np', '-A.po',
                             '%sgnulib' % TP_URL]
