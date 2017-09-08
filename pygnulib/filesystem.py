@@ -82,9 +82,9 @@ class Git(Directory):
     def __init__(self, root, config):
         if not os.path.isdir(root):
             raise FileNotFoundError(root)
-        if not os.path.isdir(os.path.join(root, ".git")):
-            raise TypeError("%r is not a gnulib repository")
         super().__init__(root, config)
+        if not os.path.isdir(os.path.join(self._root_, ".git")):
+            raise TypeError("%r is not a gnulib repository")
 
 
     def module(self, name, full=True):
