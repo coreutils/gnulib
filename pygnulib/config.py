@@ -2,10 +2,10 @@
 # encoding: UTF-8
 
 
+import argparse
 import codecs
 import os
 import re
-
 
 from .error import AutoconfVersionError
 
@@ -28,6 +28,7 @@ class Config:
         "witness_c_macro"   : "",
         "lgpl"              : 0,
         "tests"             : False,
+        "obsolete"          : False,
         "cxx_tests"         : False,
         "longrunning_tests" : False,
         "privileged_tests"  : False,
@@ -37,6 +38,9 @@ class Config:
         "conddeps"          : False,
         "vc_files"          : False,
         "autoconf"          : 2.59,
+        "modules"           : [],
+        "avoid"             : [],
+        "files"             : [],
     }
 
 
@@ -196,6 +200,16 @@ class Config:
 
 
     @property
+    def obsolete(self):
+        """include obsolete modules when they occur among the modules"""
+        return self["obsolete"]
+
+    @obsolete.setter
+    def obsolete(self, value):
+        self["obsolete"] = value
+
+
+    @property
     def cxx_tests(self):
         """include even unit tests for C++ interoperability"""
         return self["cxx_tests"]
@@ -296,6 +310,36 @@ class Config:
 
 
     @property
+    def modules(self):
+        """list of modules"""
+        return self["modules"]
+
+    @modules.setter
+    def modules(self, value):
+        self["modules"] = tuple(value)
+
+
+    @property
+    def avoid(self):
+        """list of modules to avoid"""
+        return self["avoid"]
+
+    @avoid.setter
+    def avoid(self, value):
+        self["avoid"] = tuple(value)
+
+
+    @property
+    def files(self):
+        """list of files to be processed"""
+        return self["files"]
+
+    @files.setter
+    def files(self, value):
+        self["files"] = list(value)
+
+
+    @property
     def include_guard_prefix(self):
         """include guard prefix"""
         prefix = self["macro_prefix"].upper()
@@ -348,33 +392,33 @@ class Cache(Config):
     """gnulib cached configuration"""
     _AUTOCONF_ = {
         "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
-        "aux-dir"  : re.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", re.S | re.M),
+        "auxdir"   : re.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", re.S | re.M),
         "libtool"  : re.compile("A[CM]_PROG_LIBTOOL", re.S | re.M)
     }
     _GNULIB_CACHE_ = {
         "libtool"           : (bool, "gl_LIBTOOL"),
         "conddeps"          : (bool, "gl_CONDITIONAL_DEPENDENCIES"),
-        "vc-files"          : (bool, "gl_VC_FILES"),
+        "vc_files"          : (bool, "gl_VC_FILES"),
         "tests"             : (bool, "gl_WITH_TESTS"),
         "obsolete"          : (bool, "gl_WITH_OBSOLETE"),
-        "cxx-tests"         : (bool, "gl_WITH_CXX_TESTS"),
-        "longrunning-tests" : (bool, "gl_WITH_LONGRUNNING_TESTS"),
-        "privileged-tests"  : (bool, "gl_WITH_PRIVILEGED_TESTS"),
-        "unportable-tests"  : (bool, "gl_WITH_UNPORTABLE_TESTS"),
-        "all-tests"         : (bool, "gl_WITH_ALL_TESTS"),
-        "local-dir"         : (str, "gl_LOCAL_DIR"),
-        "source-base"       : (str, "gl_SOURCE_BASE"),
-        "m4-base"           : (str, "gl_M4_BASE"),
-        "po-base"           : (str, "gl_PO_BASE"),
-        "doc-base"          : (str, "gl_DOC_BASE"),
-        "tests-base"        : (str, "gl_TESTS_BASE"),
-        "makefile-name"     : (str, "gl_MAKEFILE_NAME"),
-        "macro-prefix"      : (str, "gl_MACRO_PREFIX"),
-        "po-domain"         : (str, "gl_PO_DOMAIN"),
-        "witness-c-macro"   : (str, "gl_WITNESS_C_MACRO"),
+        "cxx_tests"         : (bool, "gl_WITH_CXX_TESTS"),
+        "longrunning_tests" : (bool, "gl_WITH_LONGRUNNING_TESTS"),
+        "privileged_tests"  : (bool, "gl_WITH_PRIVILEGED_TESTS"),
+        "unportable_tests"  : (bool, "gl_WITH_UNPORTABLE_TESTS"),
+        "all_tests"         : (bool, "gl_WITH_ALL_TESTS"),
+        "local_dir"         : (str, "gl_LOCAL_DIR"),
+        "source_base"       : (str, "gl_SOURCE_BASE"),
+        "m4_base"           : (str, "gl_M4_BASE"),
+        "po_base"           : (str, "gl_PO_BASE"),
+        "doc_base"          : (str, "gl_DOC_BASE"),
+        "tests_base"        : (str, "gl_TESTS_BASE"),
+        "makefile_name"     : (str, "gl_MAKEFILE_NAME"),
+        "macro_prefix"      : (str, "gl_MACRO_PREFIX"),
+        "po_domain"         : (str, "gl_PO_DOMAIN"),
+        "witness_c_macro"   : (str, "gl_WITNESS_C_MACRO"),
         "lib"               : (str, "gl_LIB"),
         "modules"           : (list, "gl_MODULES"),
-        "avoids"            : (list, "gl_AVOID"),
+        "avoid"             : (list, "gl_AVOID"),
         "lgpl"              : (str, "gl_LGPL"),
     }
     _GNULIB_CACHE_BOOL_ = []
@@ -405,6 +449,7 @@ class Cache(Config):
                 autoconf = os.path.join(root, "configure.in")
         if not os.path.isabs(autoconf):
             autoconf = os.path.join(root, autoconf)
+        autoconf = os.path.normpath(autoconf)
         with codecs.open(autoconf, "rb", "UTF-8") as stream:
             data = stream.read()
         for key, pattern in Cache._AUTOCONF_.items():
@@ -446,4 +491,680 @@ class Cache(Config):
             pattern = re.compile(regex, re.S | re.M)
             match = pattern.findall(data)
             if match:
-                self["files"] = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+                self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+
+
+
+class CommandLine(Config):
+    """gnulib-tool command line configuration"""
+    _LIST_ = (1 << 0)
+    _FIND_ = (1 << 1)
+    _IMPORT_ = (1 << 2)
+    _ADD_IMPORT_ = (1 << 3)
+    _REMOVE_IMPORT_ = (1 << 4)
+    _UPDATE_ = (1 << 5)
+    _TEST_DIRECTORY_ = (1 << 6)
+    _MEGA_TEST_DIRECTORY_ = (1 << 7)
+    _TEST_ = (1 << 8)
+    _MEGA_TEST_ = (1 << 9)
+    _COPY_FILE_ = (1 << 10)
+    _EXTRACT_DESCRIPTION_ = (1 << 11)
+    _EXTRACT_COMMENT_ = (1 << 12)
+    _EXTRACT_STATUS_ = (1 << 13)
+    _EXTRACT_NOTICE_ = (1 << 14)
+    _EXTRACT_APPLICABILITY_ = (1 << 15)
+    _EXTRACT_FILELIST_ = (1 << 16)
+    _EXTRACT_DEPENDENCIES_ = (1 << 17)
+    _EXTRACT_AUTOCONF_SNIPPET_ = (1 << 18)
+    _EXTRACT_AUTOMAKE_SNIPPET_ = (1 << 19)
+    _EXTRACT_INCLUDE_DIRECTIVE_ = (1 << 20)
+    _EXTRACT_LINK_DIRECTIVE_ = (1 << 21)
+    _EXTRACT_LICENSE_ = (1 << 22)
+    _EXTRACT_MAINTAINER_ = (1 << 23)
+    _EXTRACT_TESTS_MODULE_ = (1 << 24)
+    _ANY_IMPORT_ = _IMPORT_ | _ADD_IMPORT_ | _REMOVE_IMPORT_ | _UPDATE_
+    _ANY_TEST_ = _TEST_ | _MEGA_TEST_ | _TEST_DIRECTORY_ | _MEGA_TEST_DIRECTORY_
+    _ALL_ = _LIST_ | _FIND_ | _ANY_IMPORT_ | _ANY_TEST_
+    _MODES_ = (
+        (_LIST_, "list", ""),
+        (_FIND_, "find", "filename"),
+        (_IMPORT_, "import", "[module1 ... moduleN]"),
+        (_ADD_IMPORT_, "add-import", "[module1 ... moduleN]"),
+        (_REMOVE_IMPORT_, "remove-import", "[module1 ... moduleN]"),
+        (_UPDATE_, "update", ""),
+        (_TEST_DIRECTORY_, "testdir", "--dir=directory [module1 ... moduleN]"),
+        (_MEGA_TEST_DIRECTORY_, "megatestdir", "--dir=directory [module1 ... moduleN]"),
+        (_TEST_, "test", "--dir=directory [module1 ... moduleN]"),
+        (_MEGA_TEST_, "megatest", "--dir=directory [module1 ... moduleN]"),
+        (_EXTRACT_DESCRIPTION_, "extract-description", "module"),
+        (_EXTRACT_COMMENT_, "extract-comment", "module"),
+        (_EXTRACT_STATUS_, "extract-status", "module"),
+        (_EXTRACT_NOTICE_, "extract-notice", "module"),
+        (_EXTRACT_APPLICABILITY_, "extract-applicability", "module"),
+        (_EXTRACT_FILELIST_, "extract-filelist", "module"),
+        (_EXTRACT_DEPENDENCIES_, "extract-dependencies", "module"),
+        (_EXTRACT_AUTOCONF_SNIPPET_, "extract-autoconf-snippet", "module"),
+        (_EXTRACT_AUTOMAKE_SNIPPET_, "extract-automake-snippet", "module"),
+        (_EXTRACT_INCLUDE_DIRECTIVE_, "extract-include-directive", "module"),
+        (_EXTRACT_LINK_DIRECTIVE_, "extract-link-directive", "module"),
+        (_EXTRACT_LICENSE_, "extract-license", "module"),
+        (_EXTRACT_MAINTAINER_, "extract-maintainer", "module"),
+        (_EXTRACT_TESTS_MODULE_, "extract-tests-module", "module"),
+        (_COPY_FILE_, "copy", "file [destination]"),
+    )
+
+
+    class _AvoidAction_(argparse.Action):
+        def __call__(self, parser, namespace, value, option=None):
+            values = getattr(namespace, self.dest)
+            values += value
+
+
+    class _VerboseAction_(argparse.Action):
+        def __call__(self, parser, namespace, value, option=None):
+            value = getattr(namespace, self.dest)
+            verbose = option in ("-v", "--verbose")
+            value += +1 if verbose else -1
+            setattr(namespace, self.dest, value)
+
+
+    # section0: (section0_modes, (([section0_option0, section0_optionN], **section0_kwargs)))
+    # sectionN: (sectionN_modes, (([sectionN_option0, sectionN_optionN], **sectionN_kwargs)))
+    #
+    # for (name, flags, arguments) in sections:
+    #     for argument in arguments:
+    #         (options, kwargs) = argument
+    _SECTIONS_ = (
+        (
+            "Operation modes",
+            None,
+            (
+                (["-l", "--list"], {
+                    "help": (
+                        "print the available module names",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _LIST_,
+                }),
+                (["-f", "--find"], {
+                    "help": (
+                        "find the modules which contain the specified file",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _FIND_,
+                }),
+                (["-i", "--import"], {
+                    "help": (
+                        "import the given modules into the current package",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _IMPORT_,
+                }),
+                (["-a", "--add-import"], {
+                    "help": (
+                        "augment the list of imports from gnulib into the",
+                        "current package, by adding the given modules;",
+                        "if no modules are specified, update the current",
+                        "package from the current gnulib",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _ADD_IMPORT_,
+                }),
+                (["-r", "--remove-import"], {
+                    "help": (
+                        "reduce the list of imports from gnulib into the",
+                        "current package, by removing the given modules",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _REMOVE_IMPORT_,
+                }),
+                (["-u", "--update"], {
+                    "help": (
+                        "update the current package, restore files omitted",
+                        "from version control",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _UPDATE_,
+                }),
+
+                (["--extract-description"], {
+                    "help": (
+                        "extract the description",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_DESCRIPTION_,
+                }),
+                (["--extract-comment"], {
+                    "help": (
+                        "extract the comment",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_COMMENT_,
+                }),
+                (["--extract-status"], {
+                    "help": (
+                        "extract the status (obsolete etc.)",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_STATUS_,
+                }),
+                (["--extract-notice"], {
+                    "help": (
+                        "extract the notice or banner",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_NOTICE_,
+                }),
+                (["--extract-applicability"], {
+                    "help": (
+                        "extract the applicability",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_APPLICABILITY_,
+                }),
+                (["--extract-filelist"], {
+                    "help": (
+                        "extract the list of files",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_FILELIST_,
+                }),
+                (["--extract-dependencies"], {
+                    "help": (
+                        "extract the dependencies",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_DEPENDENCIES_,
+                }),
+                (["--extract-autoconf-snippet"], {
+                    "help": (
+                        "extract the snippet for configure.ac",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_AUTOCONF_SNIPPET_,
+                }),
+                (["--extract-automake-snippet"], {
+                    "help": (
+                        "extract the snippet for library makefile",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_AUTOMAKE_SNIPPET_,
+                }),
+                (["--extract-include-directive"], {
+                    "help": (
+                        "extract the #include directive",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_INCLUDE_DIRECTIVE_,
+                }),
+                (["--extract-link-directive"], {
+                    "help": (
+                        "extract the linker directive",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_LINK_DIRECTIVE_,
+                }),
+                (["--extract-license"], {
+                    "help": (
+                        "report the license terms of the source files",
+                        "under lib/",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_LICENSE_,
+                }),
+                (["--extract-maintainer"], {
+                    "help": (
+                        "report the maintainer(s) inside gnulib",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_MAINTAINER_,
+                }),
+                (["--extract-tests-module"], {
+                    "help": (
+                        "report the unit test module, if it exists",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _EXTRACT_TESTS_MODULE_,
+                }),
+
+                (["--copy-file"], {
+                    "help": (
+                        "copy a file that is not part of any module",
+                    ),
+                    "dest": "mode",
+                    "default": None,
+                    "action": "store_const",
+                    "const": _COPY_FILE_,
+                }),
+            ),
+        ),
+
+
+        (
+            "General options",
+            _ALL_,
+            (
+                (["--dir"], {
+                    "help": (
+                        "specify the target directory; on --import,",
+                        "this specifies where your configure.ac",
+                        "can be found",
+                    ),
+                    "dest": "root",
+                    "default": ".",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--local-dir"], {
+                    "help": (
+                        "pecify a local override directory where to look",
+                        "up files before looking in gnulib's directory",
+                    ),
+                    "dest": "local_dir",
+                    "default": ".",
+                    "nargs": 1,
+                    "metavar": "DIRECTORY",
+                }),
+                (["-v", "--verbose"], {
+                    "help": (
+                        "increase verbosity; may be repeated",
+                    ),
+                    "dest": "verbosity",
+                    "action": _VerboseAction_,
+                    "default": 0,
+                    "nargs": 0,
+                }),
+                (["-q", "--quiet"], {
+                    "help": (
+                        "decrease verbosity; may be repeated",
+                    ),
+                    "dest": "verbosity",
+                    "action": _VerboseAction_,
+                    "default": 0,
+                    "nargs": 0,
+                }),
+            ),
+        ),
+
+
+        (
+            "Options for --import, --add/remove-import,\n"
+            "            --create-[mega]testdir, --[mega]test",
+            (_ANY_IMPORT_ & ~_UPDATE_) | _ANY_TEST_,
+            (
+                (["--with-tests"], {
+                    "help": (
+                        "include unit tests for the included modules",
+                    ),
+                    "dest": "tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-obsolete"], {
+                    "help": (
+                        "include obsolete modules when they occur among the",
+                        "dependencies; by default, dependencies to obsolete",
+                        "modules are ignored",
+                    ),
+                    "dest": "obsolete",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-c++-tests"], {
+                    "help": (
+                        "include even unit tests for C++ interoperability",
+                    ),
+                    "dest": "cxx_tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-longrunning-tests"], {
+                    "help": (
+                        "include even unit tests that are long-runners",
+                    ),
+                    "dest": "longrunning_tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-privileged-tests"], {
+                    "help": (
+                        "include even unit tests that require root",
+                        "privileges",
+                    ),
+                    "dest": "privileged_tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-unportable-tests"], {
+                    "help": (
+                        "include even unit tests that fail on some platforms",
+                    ),
+                    "dest": "unportable_tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--with-all-tests"], {
+                    "help": (
+                        "include all kinds of problematic unit tests",
+                    ),
+                    "dest": "all_tests",
+                    "action": "store_true",
+                    "default": False,
+                }),
+                (["--avoid"], {
+                    "help": (
+                        "avoid including the given MODULE; useful if you",
+                        "have code that provides equivalent functionality",
+                        "this option can be repeated",
+                    ),
+                    "action": _AvoidAction_,
+                    "nargs": 1,
+                    "default": [],
+                    "metavar": "MODULE",
+                }),
+                (["--conditional-dependencies"], {
+                    "help": (
+                        "support conditional dependencies (may save configure",
+                        "time and object code)",
+                    ),
+                    "action": "store_true",
+                    "default": False,
+                    "dest": "conddeps",
+                }),
+                (["--no-conditional-dependencies"], {
+                    "help": (
+                        "don't use conditional dependencies",
+                    ),
+                    "action": "store_false",
+                    "default": False,
+                    "dest": "conddeps",
+                }),
+                (["--libtool"], {
+                    "help": (
+                        "use libtool rules",
+                    ),
+                    "action": "store_true",
+                    "default": False,
+                    "dest": "libtool",
+                }),
+                (["--no-libtool"], {
+                    "help": (
+                        "don't use libtool rules",
+                    ),
+                    "action": "store_false",
+                    "default": False,
+                    "dest": "libtool",
+                }),
+            ),
+        ),
+
+
+        (
+            "Options for --import, --add/remove-import",
+            (_ANY_IMPORT_ & ~_UPDATE_),
+            (
+                (["--lib"], {
+                    "help": (
+                        "specify the library name; defaults to 'libgnu'",
+                    ),
+                    "default": "libgnu",
+                    "metavar": "LIBRARY",
+                }),
+                (["--source-base"], {
+                    "help": (
+                        "directory relative to --dir where source code is",
+                        "placed (default \"lib\")",
+                    ),
+                    "default": "lib",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--m4-base"], {
+                    "help": (
+                        "directory relative to --dir where *.m4 macros are",
+                        "placed (default \"m4\")",
+                    ),
+                    "default": "m4",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--po-base"], {
+                    "help": (
+                        "directory relative to --dir where *.po files are",
+                        "placed (default \"po\")",
+                    ),
+                    "default": "po",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--doc-base"], {
+                    "help": (
+                        "directory relative to --dir where doc files are",
+                        "placed (default \"doc\")",
+                    ),
+                    "default": "doc",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--tests-base"], {
+                    "help": (
+                        "directory relative to --dir where unit tests are",
+                        "placed (default \"tests\")",
+                    ),
+                    "default": "tests",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--aux-dir"], {
+                    "help": (
+                        "directory relative to --dir where auxiliary build",
+                        "tools are placed (default comes from configure.ac);",
+                    ),
+                    "dest": "auxdir",
+                    "default": "",
+                    "metavar": "DIRECTORY",
+                }),
+                (["--lgpl"], {
+                    "help": (
+                        "abort if modules aren't available under the LGPL;",
+                        "also modify license template from GPL to LGPL;",
+                        "the version number of the LGPL can be specified;",
+                        "the default is currently LGPLv3.",
+                    ),
+                    "choices": (2, 3),
+                    "type": int,
+                    "metavar": "[=2|=3]",
+                }),
+                (["--makefile-name"], {
+                    "help": (
+                        "name of makefile in automake syntax in the",
+                        "source-base and tests-base directories",
+                        "(default \"Makefile.am\")",
+                    ),
+                    "default": "Makefile.am",
+                    "metavar": "NAME",
+                }),
+                (["--macro-prefix"], {
+                    "help": (
+                        "specify the prefix of the macros 'gl_EARLY' and",
+                        "'gl_INIT'; default is 'gl'",
+                    ),
+                    "default": "gl",
+                    "metavar": "PREFIX",
+                }),
+                (["--po-domain"], {
+                    "help": (
+                        "specify the prefix of the i18n domain; usually use",
+                        "the package name; a suffix '-gnulib' is appended",
+                    ),
+                    "default": "",
+                    "metavar": "NAME",
+                }),
+                (["--witness-c-macro"], {
+                    "help": (
+                        "specify the C macro that is defined when the",
+                        "sources in this directory are compiled or used",
+                    ),
+                    "default": "",
+                    "metavar": "NAME",
+                }),
+                (["--vc-files"], {
+                    "help": (
+                        "update version control related files",
+                        "(.gitignore and/or .cvsignore)",
+                    ),
+                    "action": "store_true",
+                    "default": False,
+                    "dest": "vc_files",
+                }),
+                (["--no-vc-files"], {
+                    "help": (
+                        "don't update version control related files",
+                        "(.gitignore and/or .cvsignore)",
+                    ),
+                    "action": "store_false",
+                    "default": False,
+                    "dest": "libtool",
+                }),
+                (["--no-changelog"], {
+                    "help": (
+                        "don't update or create ChangeLog files;",
+                        "this option is currently deprecated",
+                    ),
+                    "default": None,
+                    "action": "store_const",
+                    "const": None,
+                }),
+            ),
+        ),
+    )
+
+
+    def _usage_(self):
+        iterable = iter(CommandLine._MODES_)
+        (_, cmd, args) = next(iterable)
+        fmt = (" --{cmd}" + (" {args}" if args else ""))
+        lines = ["usage: {program}" + fmt.format(cmd=cmd, args=args)]
+        for (_, cmd, args) in iterable:
+            fmt = (" --{cmd}" + (" {args}" if args else ""))
+            lines += ["       {program}" + fmt.format(cmd=cmd, args=args)]
+        lines += ["", ""]
+        return "\n".join(lines).format(program=self._program_)
+
+
+    def _help_(self):
+        lines = [""]
+        for (name, _, args) in CommandLine._SECTIONS_:
+            offset = -1
+            lines += ["", "%s:" % name, ""]
+            for arg in args:
+                (options, kwargs) = arg
+                options = ", ".join(options)
+                if "metavar" in kwargs:
+                    options += (" " + kwargs["metavar"])
+                length = len(options)
+                if length > offset:
+                    offset = length
+            fmt1 = "      %-{0}s    %s".format(offset)
+            fmt2 = "      " + " " * offset + "    %s"
+            for arg in args:
+                (options, kwargs) = arg
+                options = ", ".join(options)
+                if "metavar" in kwargs:
+                    sep = "" if "choices" in kwargs else "="
+                    options += ("%s%s" % (sep, kwargs["metavar"]))
+                description = iter(kwargs["help"])
+                line = next(description)
+                lines += [fmt1 % (options, line)]
+                for line in description:
+                    lines += [fmt2 % line]
+            lines += [""]
+        return self._usage_()[:-1] + "\n".join(lines)
+
+
+    def __init__(self, program, argv, **kwargs):
+        super().__init__(**kwargs)
+
+        exclude = {}
+        parser = argparse.ArgumentParser(prog=program, allow_abbrev=False)
+        modes = parser.add_mutually_exclusive_group()
+        for (options, kwargs) in CommandLine._SECTIONS_[0][2]:
+            for (flag, cmd, _) in CommandLine._MODES_:
+                if "--%s" % cmd not in options:
+                    continue
+                exclude[flag] = [options, []]
+                modes.add_argument(*options, **kwargs)
+                for (_, flags, xargs) in CommandLine._SECTIONS_[1:]:
+                    if not flags & flag:
+                        for xarg in xargs:
+                            (options, kwargs) = xarg
+                            exclude[flag][1] += options
+                break
+
+        for (_, _, args) in CommandLine._SECTIONS_[1:]:
+            for arg in args:
+                (options, kwargs) = arg
+                parser.add_argument(*options, **kwargs)
+        parser.add_argument("modules", nargs="+", metavar="module1 ... moduleN")
+
+        self._program_ = os.path.basename(program)
+        parser.format_usage = self._usage_
+        parser.format_help = self._help_
+
+        namespace = vars(parser.parse_args(argv))
+        self._mode_ = namespace.pop("mode")
+        if self._mode_ is None:
+            parser.error("no operating mode selected")
+        self._verbosity_ = namespace.pop("verbosity")
+
+        (mode, conflict) = exclude[self._mode_]
+        conflict = set(conflict).intersection(argv)
+        if conflict:
+            conflict = list(conflict)[0]
+            fmt = "argument {0}: not allowed with argument {1}"
+            parser.error(fmt.format(conflict, "/".join(mode)))
+        _ = namespace.pop("no_changelog", None)
+        for (key, value) in namespace.items():
+            self[key] = value
+
+
+    @property
+    def mode(self):
+        for (flag, cmd, _) in CommandLine._MODES_:
+            if flag == self._mode_:
+                return cmd
+        return ""
