@@ -531,7 +531,7 @@ gnulib-tool.m4 macro invocations:\n''' % actioncmd
             emit += 'gl_LIBTOOL\n'
         emit += 'gl_MACRO_PREFIX([%s])\n' % macro_prefix
         emit += 'gl_PO_DOMAIN([%s])\n' % podomain
-        emit += 'gl_WITNESS_C_DOMAIN([%s])\n' % witness_c_macro
+        emit += 'gl_WITNESS_C_MACRO([%s])\n' % witness_c_macro
         if vc_files:
             emit += 'gl_VC_FILES([%s])\n' % vc_files
         if type(emit) is bytes:
