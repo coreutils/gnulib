@@ -18,4 +18,3 @@ the common infrastructure needed by GNU packages.'''
 __copyright__ = '2012 Free Software Foundation, Inc.'
 __author__ = 'Dmitriy Selyutin'
 __license__ = 'GNU GPLv3+'
-
