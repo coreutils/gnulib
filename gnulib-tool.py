@@ -219,7 +219,7 @@ def main():
                         default=None,
                         action='store_false')
     # destdir
-    parser.add_argument('-d', '--destdir',
+    parser.add_argument('-d', '--dir',
                         dest='destdir',
                         default=None,
                         nargs=1)
