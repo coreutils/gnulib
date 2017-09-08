@@ -1207,10 +1207,10 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 cmd = 'type rsync 2>/dev/null | grep / > /dev/null'
                 result = sp.call(cmd, shell=True)
                 if result == 0:  # use rsync
-                    args = ['rsync', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
+                    args = ['rsync', '--delete', '--exclude', '*.s1', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
                     result = sp.call(args, shell=True)
                 if result != 0:  # use wget
-                    args = ['wget', '--no-verbose', '-r', '-l1', '-nd', '-np', '-A.po',
+                    args = ['wget', '--no-verbose', '--mirror', '-nd', '-np', '-A.po', '-P', '.',
                             '%sgnulib/' % TP_URL]
                     sp.call(args, shell=True)
             else:  # if self.config['dryrun']
