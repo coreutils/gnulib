@@ -48,72 +48,72 @@ relpath = os.path.relpath
 # Define GLInfo class
 #===============================================================================
 class GLInfo(object):
-  '''This class is used to get fromatted information about gnulib-tool.
-  This information is mainly used in stdout messages, but can be used
-  anywhere else. The return values are not the same as for the module,
-  but still depends on them.'''
-  
-  def __repr__(self):
-    '''x.__repr__ <==> repr(x)'''
-    result = '<pygnulib.GLInfo %s>' % hex(id(self))
-    return(result)
-  
-  def package(self):
-    '''Return formatted string which contains name of the package.'''
-    result = 'GNU gnulib'
-    return(result)
-    
-  def authors(self):
-    '''Return formatted string which contains authors.
-    The special __author__ variable is used (type is list).'''
-    result = string()
-    for item in __author__:
-      if item == __author__[-2]:
-        result += '%s ' % item
-      elif item == __author__[-1]:
-        result += 'and %s' % item
-      else:
-        result += '%s, ' % item
-    return(result)
-    
-  def license(self):
-    '''Return formatted string which contains license and its description.'''
-    result = 'License GPLv3+: GNU GPL version 3 or later'
-    result += ' <http://gnu.org/licenses/gpl.html>\n'
-    result += 'This is free software: you are free'
-    result += ' to change and redistribute it.\n'
-    result += 'There is NO WARRANTY, to the extent permitted by law.'
-    return(result)
-    
-  def copyright(self):
-    '''Return formatted string which contains copyright.
-    The special __copyright__ variable is used (type is str).'''
-    result = 'Copyright (C) %s' % __copyright__
-    return(result)
-    
-  def date(self):
-    '''Return formatted string which contains date and time in GMT format.'''
-    if isdir(DIRS['git']):
-      counter = int() # Create counter
-      result = string() # Create string
-      args = ['git', 'log']
-      result = sp.check_output(args).decode("UTF-8")
-      # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
-      pattern = re.compile('Date:[\t ]*(.*?)$', re.S | re.M)
-      result = pattern.findall(result)[0]
-      # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
-      pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
-      result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
-      # Use GNU date to compute the time in GMT
-      args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
-      proc = sp.check_output(args)
-      result = string(proc, "UTF-8")
-      result = result.rstrip(os.linesep)
-      return(result)
-    
-  def usage(self):
-    '''Show help message.'''
-    result = '''\
+    '''This class is used to get fromatted information about gnulib-tool.
+    This information is mainly used in stdout messages, but can be used
+    anywhere else. The return values are not the same as for the module,
+    but still depends on them.'''
+
+    def __repr__(self):
+        '''x.__repr__ <==> repr(x)'''
+        result = '<pygnulib.GLInfo %s>' % hex(id(self))
+        return(result)
+
+    def package(self):
+        '''Return formatted string which contains name of the package.'''
+        result = 'GNU gnulib'
+        return(result)
+
+    def authors(self):
+        '''Return formatted string which contains authors.
+        The special __author__ variable is used (type is list).'''
+        result = string()
+        for item in __author__:
+            if item == __author__[-2]:
+                result += '%s ' % item
+            elif item == __author__[-1]:
+                result += 'and %s' % item
+            else:
+                result += '%s, ' % item
+        return(result)
+
+    def license(self):
+        '''Return formatted string which contains license and its description.'''
+        result = 'License GPLv3+: GNU GPL version 3 or later'
+        result += ' <http://gnu.org/licenses/gpl.html>\n'
+        result += 'This is free software: you are free'
+        result += ' to change and redistribute it.\n'
+        result += 'There is NO WARRANTY, to the extent permitted by law.'
+        return(result)
+
+    def copyright(self):
+        '''Return formatted string which contains copyright.
+        The special __copyright__ variable is used (type is str).'''
+        result = 'Copyright (C) %s' % __copyright__
+        return(result)
+
+    def date(self):
+        '''Return formatted string which contains date and time in GMT format.'''
+        if isdir(DIRS['git']):
+            counter = int()  # Create counter
+            result = string()  # Create string
+            args = ['git', 'log']
+            result = sp.check_output(args).decode("UTF-8")
+            # Get date as "Fri Mar 21 07:16:51 2008 -0600" from string
+            pattern = re.compile('Date:[\t ]*(.*?)$', re.S | re.M)
+            result = pattern.findall(result)[0]
+            # Turn "Fri Mar 21 07:16:51 2008 -0600" into "Mar 21 2008 07:16:51 -0600"
+            pattern = re.compile('^[^ ]* ([^ ]*) ([0-9]*) ([0-9:]*) ([0-9]*) ')
+            result = pattern.sub('\\1 \\2 \\4 \\3 ', result)
+            # Use GNU date to compute the time in GMT
+            args = ['date', '-d', result, '-u', '+%Y-%m-%d %H:%M:%S']
+            proc = sp.check_output(args)
+            result = string(proc, "UTF-8")
+            result = result.rstrip(os.linesep)
+            return(result)
+
+    def usage(self):
+        '''Show help message.'''
+        result = '''\
 Usage: gnulib-tool --list
        gnulib-tool --find filename
        gnulib-tool --import [module1 ... moduleN]
@@ -287,16 +287,15 @@ Options for --import, --add/remove-import, --update:
                             don't replace copyright notices.
 
 Report bugs to <bug-gnulib@gnu.org>.'''
-    return(result)
-    
-  def version(self):
-    '''Return formatted string which contains git or CVS version.'''
-    if isdir(DIRS['git']):
-      version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
-      args = [version_gen, DIRS['root']]
-      result = sp.check_output(args).decode("UTF-8")
-      result = result.strip()
-      if result == 'UNKNOWN':
-        result = string()
-      return(result)
+        return(result)
 
+    def version(self):
+        '''Return formatted string which contains git or CVS version.'''
+        if isdir(DIRS['git']):
+            version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
+            args = [version_gen, DIRS['root']]
+            result = sp.check_output(args).decode("UTF-8")
+            result = result.strip()
+            if result == 'UNKNOWN':
+                result = string()
+            return(result)
