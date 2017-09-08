@@ -180,6 +180,10 @@ class GLEmiter(object):
             if disable_gettext:
                 snippet = snippet.replace('AM_GNU_GETTEXT([external])', 'dnl you must \
 add AM_GNU_GETTEXT([external]) or similar to configure.ac.')
+            else:
+                # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
+                # autopoint through at least GNU gettext version 0.18.2.
+                snippet = compiler('^ *AM_GNU_GETTEXT_VERSION').sub('AM_GNU_GETTEXT_VERSION', snippet)
             emit += snippet
             if str(module) == 'alloca' and libtool and not disable_libtool:
                 emit += 'changequote(,)dnl\n'
