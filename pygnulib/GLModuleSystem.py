@@ -84,7 +84,7 @@ class GLModuleSystem(object):
             raise(TypeError(
                 'module must be a string, not %s' % type(module).__name__))
         result = bool()
-        badnames = ['CVS', 'ChangeLog', 'COPYING', 'README', 'TEMPLATE',
+        badnames = ['ChangeLog', 'COPYING', 'README', 'TEMPLATE',
                     'TEMPLATE-EXTENDED', 'TEMPLATE-TESTS']
         if isfile(joinpath(DIRS['modules'], module)) or \
                 all([  # Begin all(iterable) function
@@ -132,8 +132,6 @@ class GLModuleSystem(object):
             [
                 'sed',
                 '-e', r's,^modules/,,',
-                '-e', r'/^CVS\//d',
-                '-e', r'/\/CVS\//d',
                 '-e', r'/^ChangeLog$/d',
                 '-e', r'/\/ChangeLog$/d',
                 '-e', r'/^COPYING$/d',

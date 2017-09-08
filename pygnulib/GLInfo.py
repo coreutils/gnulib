@@ -291,7 +291,7 @@ Report bugs to <bug-gnulib@gnu.org>.'''
         return(result)
 
     def version(self):
-        '''Return formatted string which contains git or CVS version.'''
+        '''Return formatted string which contains git version.'''
         if isdir(DIRS['git']):
             version_gen = joinpath(DIRS['build-aux'], 'git-version-gen')
             args = [version_gen, DIRS['root']]
