@@ -33,7 +33,6 @@ APP = constants.APP
 DIRS = constants.DIRS
 ENCS = constants.ENCS
 UTILS = constants.UTILS
-FILES = constants.FILES
 MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler

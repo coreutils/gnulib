@@ -44,7 +44,6 @@ APP = constants.APP
 DIRS = constants.DIRS
 ENCS = constants.ENCS
 UTILS = constants.UTILS
-FILES = constants.FILES
 MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler
@@ -213,7 +212,7 @@ def main():
                         dest='mode_xmaintainer',
                         default=None,
                         nargs='*')
-    # no-changelog
+    # no-changelog: a no-op for backward compatibility
     parser.add_argument('--no-changelog',
                         dest='changelog',
                         default=None,

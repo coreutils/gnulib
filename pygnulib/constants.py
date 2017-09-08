@@ -59,7 +59,6 @@ APP = dict()  # Application
 DIRS = dict()  # Directories
 UTILS = dict()  # Utilities
 ENCS = dict()  # Encodings
-FILES = dict()  # Files
 MODES = dict()  # Modes
 TESTS = dict()  # Tests
 NL = '''
@@ -104,9 +103,6 @@ DIRS['modules'] = os.path.join(DIRS['root'], 'modules')
 DIRS['tests'] = os.path.join(DIRS['root'], 'tests')
 DIRS['git'] = os.path.join(DIRS['root'], '.git')
 DIRS['cvs'] = os.path.join(DIRS['root'], 'CVS')
-
-# Set FILES dictionary
-FILES['changelog'] = os.path.join(DIRS['root'], 'ChangeLog')
 
 # Set MODES dictionary
 MODES = \
@@ -449,4 +445,4 @@ def nlcount(text):
     print(before, after)
 
 
-__all__ += ['APP', 'DIRS', 'FILES', 'MODES', 'UTILS']
+__all__ += ['APP', 'DIRS', 'MODES', 'UTILS']

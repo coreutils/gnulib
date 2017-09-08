@@ -30,7 +30,6 @@ APP = constants.APP
 DIRS = constants.DIRS
 ENCS = constants.ENCS
 UTILS = constants.UTILS
-FILES = constants.FILES
 MODES = constants.MODES
 TESTS = constants.TESTS
 compiler = constants.compiler
@@ -270,7 +269,6 @@ Options for --import, --add/remove-import:
       --vc-files            Update version control related files.
       --no-vc-files         Don't update version control related files
                             (.gitignore and/or .cvsignore).
-      --no-changelog        Don't update or create ChangeLog files.
 
 Options for --create-[mega]testdir, --[mega]test:
 
