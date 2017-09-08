@@ -814,10 +814,10 @@ leaf_optimization (FTSENT const *p)
 {
   switch (filesystem_type (p))
     {
-      /* List here the file system types that lack usable dirent.d_type
+      /* List here the file system types that may lack usable dirent.d_type
          info, yet for which the optimization does apply.  */
     case S_MAGIC_REISERFS:
-    case S_MAGIC_XFS:
+    case S_MAGIC_XFS: /* XFS lacked it until 2013-08-22 commit.  */
       return NOSTAT_LEAF_OPTIMIZATION;
 
     case 0:
@@ -1417,7 +1417,7 @@ fts_build (register FTS *sp, int type)
         else
           {
             /* Try to descend unless it is a names-only fts_children,
-               or the directory is a known to lack subdirectories.  */
+               or the directory is known to lack subdirectories.  */
             descend = (type != BNAMES
                        && ! (ISSET (FTS_NOSTAT) && ISSET (FTS_PHYSICAL)
                              && ! ISSET (FTS_SEEDOT)
