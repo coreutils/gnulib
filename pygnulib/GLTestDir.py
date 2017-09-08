@@ -521,7 +521,7 @@ class GLTestDir(object):
         # Create Makefile.am.
         emit = string()
         emit += '## Process this file with automake to produce Makefile.in.\n\n'
-        emit += 'AUTOMAKE_OPTIONS = 1.5 foreign\n\n'
+        emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(subdirs)
         emit += 'ACLOCAL_AMFLAGS = -I %s\n' % m4base
         emit = constants.nlconvert(emit)
@@ -949,7 +949,7 @@ class GLMegaTestDir(object):
         # Create Makefile.am.
         emit = string()
         emit += '## Process this file with automake to produce Makefile.in.\n\n'
-        emit += 'AUTOMAKE_OPTIONS = 1.5 foreign\n\n'
+        emit += 'AUTOMAKE_OPTIONS = 1.9.6 foreign\n\n'
         emit += 'SUBDIRS = %s\n\n' % ' '.join(megasubdirs)
         emit += 'EXTRA_DIST = do-autobuild\n'
         emit = constants.nlconvert(emit)
