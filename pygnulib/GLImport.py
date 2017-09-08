@@ -1212,7 +1212,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 if result:  # use rsync
                     args = ['rsync', '-Lrtz', '%sgulib/' % TP_RSYNC_URI, '.']
                 else:  # use wget
-                    args = ['wget', '--quiet', '-r', '-l1', '-nd', '-np', 'A.po',
+                    args = ['wget', '--quiet', '-r', '-l1', '-nd', '-np', '-A.po',
                             '%sgnulib' % TP_URL]
                 sp.call(args, shell=True)
             else:  # if self.config['dryrun']
