@@ -1204,16 +1204,15 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
             if not self.config['dryrun']:
                 print('Fetching gnulib PO files from %s' % TP_URL)
                 os.chdir(joinpath(destdir, pobase))
-                cmd = 'if type rsync 2>/dev/null | grep / > /dev/null; '
-                cmd += 'then echo 1; else echo 0; fi'
-                result = sp.check_output(cmd, shell=True)
-                result = bool(int(result))
-                if result:  # use rsync
+                cmd = 'type rsync 2>/dev/null | grep / > /dev/null'
+                result = sp.call(cmd, shell=True)
+                if result == 0:  # use rsync
                     args = ['rsync', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
-                else:  # use wget
+                    result = sp.call(args, shell=True)
+                if result != 0:  # use wget
                     args = ['wget', '--no-verbose', '-r', '-l1', '-nd', '-np', '-A.po',
                             '%sgnulib/' % TP_URL]
-                sp.call(args, shell=True)
+                    sp.call(args, shell=True)
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
 
