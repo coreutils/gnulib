@@ -15,6 +15,6 @@ coding standards, the GNU maintainer information, the GPL and other licenses (in
 Texinfo), assorted configuration scripts, and more. The goal is to provide all
 the common infrastructure needed by GNU packages.'''
 
-__copyright__ = '2012 Free Software Foundation, Inc.'
+__copyright__ = '2012-2017 Free Software Foundation, Inc.'
 __author__ = 'Dmitriy Selyutin'
 __license__ = 'GNU GPLv3+'
