@@ -29,6 +29,12 @@ class AutoconfVersionError(Exception):
 
 
 
+class CommandLineParsingError(Exception):
+    def __init__(self, program, message):
+        super().__init__("{0}: {1}".format(program, message))
+
+
+
 class M4BaseMismatchError(Exception):
     """<gnulib-comp.m4> is expected to contain gl_M4_BASE([m4base])"""
     def __init__(self, m4_base):

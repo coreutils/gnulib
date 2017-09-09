@@ -5,14 +5,13 @@
 
 import argparse as _argparse_
 import codecs as _codecs_
-import collections as _collections_
 import os as _os_
 import re as _re_
-import sys as _sys_
 
 
 from .error import type_assert as _type_assert_
 from .error import AutoconfVersionError as _AutoconfVersionError_
+from .error import CommandLineParsingError as _CommandLineParsingError_
 
 
 
@@ -1263,19 +1262,11 @@ class CommandLine(Base):
     )
 
 
-    def __usage(self):
-        iterable = iter(CommandLine._MODES_)
-        (_, cmd, args) = next(iterable)
-        fmt = (" --{cmd}" + (" {args}" if args else ""))
-        lines = ["usage: {program}" + fmt.format(cmd=cmd, args=args)]
-        for (_, cmd, args) in iterable:
-            fmt = (" --{cmd}" + (" {args}" if args else ""))
-            lines += ["       {program}" + fmt.format(cmd=cmd, args=args)]
-        lines += ["", ""]
-        return "\n".join(lines).format(program=self.__program)
+    def __error(self, message):
+        raise _CommandLineParsingError_(self.__program, message)
 
 
-    def __help(self):
+    def __format_help(self):
         lines = [""]
         for (name, _, args) in CommandLine._SECTIONS_:
             offset = -1
@@ -1302,31 +1293,47 @@ class CommandLine(Base):
                 for line in description:
                     lines += [fmt2 % line]
             lines += [""]
-        return self.__usage()[:-1] + "\n".join(lines)
+        return self.__format_usage()[:-1] + "\n".join(lines)
 
 
-    def __init__(self, program, argv, **kwargs):
+    def __format_usage(self):
+        iterable = iter(CommandLine._MODES_)
+        (_, cmd, args) = next(iterable)
+        fmt = (" --{cmd}" + (" {args}" if args else ""))
+        lines = ["usage: {program}" + fmt.format(cmd=cmd, args=args)]
+        for (_, cmd, args) in iterable:
+            fmt = (" --{cmd}" + (" {args}" if args else ""))
+            lines += ["       {program}" + fmt.format(cmd=cmd, args=args)]
+        lines += ["", ""]
+        return "\n".join(lines).format(program=self.__program)
+
+
+    def __init__(self, program, **kwargs):
         _type_assert_("program", program, str)
-        _type_assert_("argv", argv, _collections_.Iterable)
         super().__init__(**kwargs)
 
-        parser = _argparse_.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
+        self.__parser = _argparse_.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
         for (_, _, args) in CommandLine._SECTIONS_:
             for arg in args:
                 (options, kwargs) = arg
-                parser.add_argument(*options, **kwargs)
+                self.__parser.add_argument(*options, **kwargs)
         self.__program = _os_.path.basename(program)
-        parser.format_usage = self.__usage
-        parser.format_help = self.__help
-        if "--help" in argv:
-            parser.print_help()
-            _sys_.exit(0)
+        self.__parser.error = self.__error
+        self.__parser.format_help = self.__format_help
+        self.__parser.format_usage = self.__format_usage
+        self.__mode = None
+        self.__dry_run = None
+        self.__link = None
+        self.__single_configure = None
+        self.__verbosity = None
 
-        namespace = parser.parse_args(argv)
+
+    def parse(self, *arguments):
+        namespace = self.__parser.parse_args(arguments)
         namespace = vars(namespace)
         self.__mode = namespace.pop("mode")
         if self.__mode is None:
-            parser.error("no operating mode selected")
+            self.__parser.error("no operating mode selected")
         self.__dry_run = namespace.pop("dry_run")
         self.__link = namespace.pop("link", None)
         self.__single_configure = namespace.pop("single_configure")
@@ -1336,9 +1343,12 @@ class CommandLine(Base):
             self[key] = value
 
 
+
     @property
     def mode(self):
         """operating mode"""
+        if self.__mode is None:
+            raise ValueError("command-line parser not ready")
         for (flag, cmd, _) in CommandLine._MODES_:
             if flag == self.__mode:
                 return cmd
@@ -1348,39 +1358,63 @@ class CommandLine(Base):
     @property
     def dry_run(self):
         """running in dry-run mode?"""
+        if self.__dry_run is None:
+            raise ValueError("command-line parser not ready")
         return self.__dry_run
 
 
     @property
     def verbosity(self):
         """verbosity level"""
+        if self.__verbosity is None:
+            raise ValueError("command-line parser not ready")
         return self.__verbosity
 
 
     @property
     def single_configure(self):
         """generate a single configure file?"""
+        if self.__mode is None:
+            raise ValueError("command-line parser not ready")
         return self.__single_configure
 
 
     @property
     def symlink(self):
         """make symbolic links instead of copying files?"""
+        if self.__link is None:
+            raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_SYMBOLIC_)
 
 
     def hardlink(self):
         """make hard links instead of copying files?"""
+        if self.__link is None:
+            raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_HARD_)
 
 
     @property
     def only_local_links(self):
         """make links only for files from the local override directory?"""
+        if self.__link is None:
+            raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_LOCAL_)
 
 
     @property
     def allow_license_update(self):
         """allow to update license notice?"""
+        if self.__link is None:
+            raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_NOTICE_)
+
+
+    def usage(self):
+        """usage message"""
+        return self.__format_usage()[:-1]
+
+
+    def help(self):
+        """help message"""
+        return self.__format_help()
