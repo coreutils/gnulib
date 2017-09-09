@@ -437,20 +437,4 @@ def nlremove(text):
     return(text)
 
 
-def nlcount(text):
-    '''Return count of newlines before and after text.'''
-    counter = int()
-    before = int()
-    after = int()
-    text = text.replace('\r\n', '\n')
-    while text[counter] == '\n':
-        before += 1
-        counter += 1
-    counter = len(text) - 1
-    while text[counter] == '\n':
-        after += 1
-        counter -= 1
-    print(before, after)
-
-
 __all__ += ['APP', 'DIRS', 'MODES', 'UTILS']
