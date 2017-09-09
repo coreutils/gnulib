@@ -222,7 +222,7 @@ class AutoconfSnippet(Generator):
     def __iter__(self):
         module = self.__module
         if module.name not in ("gnumakefile", "maintainer-makefile") or self.toplevel:
-            snippet = module.configure_ac_snippet
+            snippet = module.autoconf_snippet
             include_guard_prefix = self.__config.include_guard_prefix
             snippet.replace(r"${gl_include_guard_prefix}", include_guard_prefix)
             if not self.libtool:
