@@ -397,6 +397,10 @@ def filter_filelist(separator, filelist,
 
 
 def substart(orig, repl, data):
+    '''Replaces the start portion of a string.
+
+    Returns data with orig replaced by repl, but only at the beginning of data.
+    Like data.replace(orig,repl), except only at the beginning of data.'''
     result = data
     if data.startswith(orig):
         result = repl + data[len(orig):]
@@ -404,9 +408,13 @@ def substart(orig, repl, data):
 
 
 def subend(orig, repl, data):
+    '''Replaces the end portion of a string.
+
+    Returns data with orig replaced by repl, but only at the end of data.
+    Like data.replace(orig,repl), except only at the end of data.'''
     result = data
     if data.endswith(orig):
-        result = repl + data[:len(repl)]
+        result = data[:-len(orig)] + repl
     return(result)
 
 
