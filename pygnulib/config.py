@@ -3,12 +3,13 @@
 
 
 
-import argparse
-import codecs
-import collections
-import os
-import re
-import sys
+import argparse as _argparse_
+import codecs as _codecs_
+import collections as _collections_
+import os as _os_
+import re as _re_
+import sys as _sys_
+
 
 from .error import type_assert as _type_assert_
 from .error import AutoconfVersionError as _AutoconfVersionError_
@@ -397,9 +398,9 @@ class Base:
 class Cache(Base):
     """gnulib cached configuration"""
     _AUTOCONF_ = {
-        "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
-        "auxdir"   : re.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", re.S | re.M),
-        "libtool"  : re.compile("A[CM]_PROG_LIBTOOL", re.S | re.M)
+        "autoconf" : _re_.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", _re_.S | _re_.M),
+        "auxdir"   : _re_.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", _re_.S | _re_.M),
+        "libtool"  : _re_.compile("A[CM]_PROG_LIBTOOL", _re_.S | _re_.M)
     }
     _GNULIB_CACHE_ = {
         "local"             : (str, "gl_LOCAL_DIR"),
@@ -437,7 +438,7 @@ class Cache(Base):
             _GNULIB_CACHE_STR_ += [_key_]
         else:
             _GNULIB_CACHE_LIST_ += [_key_]
-    _GNULIB_CACHE_PATTERN_ = re.compile("^(gl_.*?)\\(\\[(.*?)\\]\\)$", re.S | re.M)
+    _GNULIB_CACHE_PATTERN_ = _re_.compile("^(gl_.*?)\\(\\[(.*?)\\]\\)$", _re_.S | _re_.M)
 
 
     def __init__(self, root, m4_base, autoconf=None, **kwargs):
@@ -448,13 +449,13 @@ class Cache(Base):
 
     def __autoconf(self, root, autoconf):
         if not autoconf:
-            autoconf = os.path.join(root, "configure.ac")
-            if not os.path.exists(autoconf):
-                autoconf = os.path.join(root, "configure.in")
-        if not os.path.isabs(autoconf):
-            autoconf = os.path.join(root, autoconf)
-        autoconf = os.path.normpath(autoconf)
-        with codecs.open(autoconf, "rb", "UTF-8") as stream:
+            autoconf = _os_.path.join(root, "configure.ac")
+            if not _os_.path.exists(autoconf):
+                autoconf = _os_.path.join(root, "configure.in")
+        if not _os_.path.isabs(autoconf):
+            autoconf = _os_.path.join(root, autoconf)
+        autoconf = _os_.path.normpath(autoconf)
+        with _codecs_.open(autoconf, "rb", "UTF-8") as stream:
             data = stream.read()
         for key, pattern in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
@@ -467,9 +468,9 @@ class Cache(Base):
 
     def __gnulib_cache(self, root):
         m4base = self.m4_base
-        gnulib_cache = os.path.join(root, m4base, "gnulib-cache.m4")
-        if os.path.exists(gnulib_cache):
-            with codecs.open(gnulib_cache, "rb", "UTF-8") as stream:
+        gnulib_cache = _os_.path.join(root, m4base, "gnulib-cache.m4")
+        if _os_.path.exists(gnulib_cache):
+            with _codecs_.open(gnulib_cache, "rb", "UTF-8") as stream:
                 data = stream.read()
             for key in Cache._GNULIB_CACHE_BOOL_:
                 (_, macro) = Cache._GNULIB_CACHE_[key]
@@ -487,12 +488,12 @@ class Cache(Base):
 
     def __gnulib_comp(self, root):
         m4base = self.m4_base
-        gnulib_comp = os.path.join(root, m4base, "gnulib-comp.m4")
-        if os.path.exists(gnulib_comp):
-            with codecs.open(gnulib_comp, "rb", "UTF-8") as stream:
+        gnulib_comp = _os_.path.join(root, m4base, "gnulib-comp.m4")
+        if _os_.path.exists(gnulib_comp):
+            with _codecs_.open(gnulib_comp, "rb", "UTF-8") as stream:
                 data = stream.read()
             regex = "AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)" % self["macro-prefix"]
-            pattern = re.compile(regex, re.S | re.M)
+            pattern = _re_.compile(regex, _re_.S | _re_.M)
             match = pattern.findall(data)
             if match:
                 self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
@@ -562,7 +563,7 @@ class CommandLine(Base):
     _LINK_NOTICE_ = (1 << 3)
 
 
-    class _ModeAction_(argparse.Action):
+    class _ModeAction_(_argparse_.Action):
         def __init__(self, *args, **kwargs):
             mode = kwargs["const"]
             kwargs["dest"] = "mode"
@@ -600,13 +601,13 @@ class CommandLine(Base):
                 setattr(namespace, self.dest, new_mode)
 
 
-    class _AvoidAction_(argparse.Action):
+    class _AvoidAction_(_argparse_.Action):
         def __call__(self, parser, namespace, value, option=None):
             values = getattr(namespace, self.dest)
             values += value
 
 
-    class _VerboseAction_(argparse.Action):
+    class _VerboseAction_(_argparse_.Action):
         def __call__(self, parser, namespace, value, option=None):
             value = getattr(namespace, self.dest)
             verbose = option in ("-v", "--verbose")
@@ -614,7 +615,7 @@ class CommandLine(Base):
             setattr(namespace, self.dest, value)
 
 
-    class _LinkAction_(argparse.Action):
+    class _LinkAction_(_argparse_.Action):
         def __call__(self, parser, namespace, value, option=None):
             flags = getattr(namespace, self.dest)
             symlink = ("-s", "--symlink", "--local-symlink", "-S", "--more-symlink")
@@ -1306,20 +1307,20 @@ class CommandLine(Base):
 
     def __init__(self, program, argv, **kwargs):
         _type_assert_("program", program, str)
-        _type_assert_("argv", argv, collections.Iterable)
+        _type_assert_("argv", argv, _collections_.Iterable)
         super().__init__(**kwargs)
 
-        parser = argparse.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
+        parser = _argparse_.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
         for (_, _, args) in CommandLine._SECTIONS_:
             for arg in args:
                 (options, kwargs) = arg
                 parser.add_argument(*options, **kwargs)
-        self.__program = os.path.basename(program)
+        self.__program = _os_.path.basename(program)
         parser.format_usage = self.__usage
         parser.format_help = self.__help
         if "--help" in argv:
             parser.print_help()
-            sys.exit(0)
+            _sys_.exit(0)
 
         namespace = parser.parse_args(argv)
         namespace = vars(namespace)

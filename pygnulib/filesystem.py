@@ -3,7 +3,8 @@
 
 
 
-import os
+import os as _os_
+
 
 from .error import type_assert as _type_assert_
 from .config import Base as _BaseConfig_
@@ -28,12 +29,12 @@ class Directory:
     def __init__(self, root, config):
         _type_assert_("root", root, str)
         _type_assert_("config", config, _BaseConfig_)
-        if not os.path.exists(root):
+        if not _os_.path.exists(root):
             raise FileNotFoundError(root)
-        if not os.path.isdir(root):
+        if not _os_.path.isdir(root):
             raise NotADirectoryError(root)
         self.__config = config
-        self.__root = os.path.realpath(root)
+        self.__root = _os_.path.realpath(root)
 
 
     def __getitem__(self, name):
@@ -41,10 +42,10 @@ class Directory:
         _type_assert_("name", name, str)
         parts = []
         replaced = False
-        path = os.path.normpath(name)
-        if os.path.isabs(path):
+        path = _os_.path.normpath(name)
+        if _os_.path.isabs(path):
             raise ValueError("name must be a relative path")
-        for part in path.split(os.path.sep):
+        for part in path.split(_os_.path.sep):
             if part == "..":
                 parts += [part]
                 continue
@@ -54,8 +55,8 @@ class Directory:
                         part = self.__config[new]
                         replaced = True
             parts += [part]
-        path = os.path.sep.join([self.__root] + parts)
-        if not os.path.exists(path):
+        path = _os_.path.sep.join([self.__root] + parts)
+        if not _os_.path.exists(path):
             raise FileNotFoundError(name)
         return path
 
@@ -84,7 +85,7 @@ class Git(Directory):
 
     def __init__(self, root, config):
         super().__init__(root, config)
-        if not os.path.isdir(os.path.join(self.root, ".git")):
+        if not _os_.path.isdir(_os_.path.join(self.root, ".git")):
             raise TypeError("%r is not a gnulib repository")
 
 
@@ -94,14 +95,14 @@ class Git(Directory):
         _type_assert_("full", full, bool)
         if name in Git._EXCLUDE_:
             raise ValueError("illegal module name")
-        path = os.path.join(self["modules"], name)
+        path = _os_.path.join(self["modules"], name)
         return _FileModule_(path, name=name) if full else _BaseModule_(name)
 
 
     def modules(self, full=True):
         """iterate over all available modules"""
         prefix = self["modules"]
-        for root, _, files in os.walk(prefix):
+        for root, _, files in _os_.walk(prefix):
             names = []
             for name in files:
                 exclude = False
@@ -112,6 +113,6 @@ class Git(Directory):
                 if not exclude:
                     names += [name]
             for name in names:
-                path = os.path.join(root, name)
+                path = _os_.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)

@@ -3,7 +3,8 @@
 
 
 
-import os
+import os as _os_
+
 
 from .error import type_assert as _type_assert_
 from .config import Base as _BaseConfig_
@@ -124,7 +125,7 @@ class POMakefile(Generator):
         yield ""
         yield "# These two variables depend on the location of this directory."
         yield "subdir = %s" % self.po_domain
-        yield "top_subdir = %s" % "/".join([".." for _ in self.po_base.split(os.path.sep)])
+        yield "top_subdir = %s" % "/".join([".." for _ in self.po_base.split(_os_.path.sep)])
         for line in POMakefile._TEMPLATE_:
             yield line
 
@@ -155,7 +156,7 @@ class POTFILES(Generator):
             yield line
         yield "# List of files which contain translatable strings."
         for file in [_ for _ in self.files if _.startswith("lib/")]:
-            yield os.path.join(self.__config.source_base, file[4:])
+            yield _os_.path.join(self.__config.source_base, file[4:])
 
 
 

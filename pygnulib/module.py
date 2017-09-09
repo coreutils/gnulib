@@ -3,11 +3,12 @@
 
 
 
-import codecs
-import collections
-import hashlib
-import os
-import re
+import codecs as _codecs_
+import collections as _collections_
+import hashlib as _hashlib_
+import os as _os_
+import re as _re_
+
 
 from .error import type_assert as _type_assert_
 
@@ -31,8 +32,8 @@ class Base:
         "license"                : (0x0C, str, "License"),
         "maintainers"            : (0x0D, list, "Maintainer"),
     }
-    _PATTERN_DEPENDENCIES_ = re.compile("^(\\S+)(?:\\s+(.+))*$")
-    _PATTERN_INCLUDE_ = re.compile("^[\\<\"]([A-Za-z0-9/\\-_]+\\.h)[\\>\"](?:\\s+.*^)*$")
+    _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
+    _PATTERN_INCLUDE_ = _re_.compile("^[\\<\"]([A-Za-z0-9/\\-_]+\\.h)[\\>\"](?:\\s+.*^)*$")
 
 
     def __init__(self, name, **kwargs):
@@ -120,7 +121,7 @@ class Base:
 
     @files.setter
     def files(self, value):
-        _type_assert_("files", value, collections.Iterable)
+        _type_assert_("files", value, _collections_.Iterable)
         result = []
         for item in value:
             _type_assert_("file", item, str)
@@ -136,7 +137,7 @@ class Base:
 
     @dependencies.setter
     def dependencies(self, value):
-        _type_assert_("files", value, collections.Iterable)
+        _type_assert_("files", value, _collections_.Iterable)
         result = []
         for (name, condition) in value:
             _type_assert_("name", name, str)
@@ -187,7 +188,7 @@ class Base:
 
     @include.setter
     def include(self, value):
-        _type_assert_("include", value, collections.Iterable)
+        _type_assert_("include", value, _collections_.Iterable)
         result = []
         for (header, comment) in value:
             _type_assert_("header", header, str)
@@ -204,7 +205,7 @@ class Base:
 
     @link.setter
     def link(self, value):
-        _type_assert_("link", value, collections.Iterable)
+        _type_assert_("link", value, _collections_.Iterable)
         result = []
         for item in value:
             _type_assert_("directive", item, str)
@@ -231,7 +232,7 @@ class Base:
 
     @maintainers.setter
     def maintainers(self, value):
-        _type_assert_("maintainers", value, collections.Iterable)
+        _type_assert_("maintainers", value, _collections_.Iterable)
         result = []
         for item in value:
             _type_assert_("maintainer", item, str)
@@ -244,7 +245,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = hashlib.md5(module).hexdigest()
+            module = _hashlib_.md5(module).hexdigest()
         return "%s_gnulib_enabled_%s" % (macro_prefix, module)
 
 
@@ -253,7 +254,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = hashlib.md5(module).hexdigest()
+            module = _hashlib_.md5(module).hexdigest()
         return "func_%s_gnulib_m4code_%s" % (macro_prefix, module)
 
 
@@ -262,7 +263,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = hashlib.md5(module).hexdigest()
+            module = _hashlib_.md5(module).hexdigest()
         return "%s_GNULIB_ENABLED_%s" % (macro_prefix, module)
 
 
@@ -328,17 +329,17 @@ class File(Base):
         "Maintainer"         : (list, "maintainers"),
     }
     _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
-    _PATTERN_ = re.compile("(%s):" % "|".join(_FIELDS_))
+    _PATTERN_ = _re_.compile("(%s):" % "|".join(_FIELDS_))
 
 
     def __init__(self, path, mode="r", name=None, **kwargs):
         if name is None:
-            name = os.path.basename(path)
+            name = _os_.path.basename(path)
         if mode not in ("r", "w", "rw"):
             raise ValueError("illegal mode: %r" % mode)
         if mode == "r":
             table = {}
-            with codecs.open(path, "rb", "UTF-8") as stream:
+            with _codecs_.open(path, "rb", "UTF-8") as stream:
                 data = ""
                 for line in stream:
                     line = line.strip("\n")
@@ -356,10 +357,10 @@ class File(Base):
             self.__stream = None
         elif mode == "w":
             super().__init__(name)
-            self.__stream = codecs.open(path, "w+", "UTF-8")
+            self.__stream = _codecs_.open(path, "w+", "UTF-8")
         elif mode == "rw":
             self.__init__(path, "r")
-            self.__stream = codecs.open(path, "w+", "UTF-8")
+            self.__stream = _codecs_.open(path, "w+", "UTF-8")
         else:
             raise ValueError("invalid mode: %r" % mode)
 
