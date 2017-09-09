@@ -36,92 +36,92 @@ class Module:
     def __init__(self, name, **kwargs):
         if not isinstance(name, str):
             raise TypeError("name must be of 'str' type")
-        self._name_ = name
-        self._table_ = {"maintainers": ["all"]}
+        self.__name = name
+        self.__table = {"maintainers": ["all"]}
         for key in Module._TABLE_:
-            self._table_[key] = ""
+            self.__table[key] = ""
         for key, value in kwargs.items():
-            self._table_[key] = value
+            self.__table[key] = value
 
 
     @property
     def name(self):
         """name"""
-        return self._name_
+        return self.__name
 
     @name.setter
     def name(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._name_ = value
+        self.__name = value
 
 
     @property
     def description(self):
         """description"""
-        return self._table_["description"]
+        return self.__table["description"]
 
     @description.setter
     def description(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["description"] = value
+        self.__table["description"] = value
 
 
     @property
     def comment(self):
         """comment"""
-        return self._table_["comment"]
+        return self.__table["comment"]
 
     @comment.setter
     def comment(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["comment"] = value
+        self.__table["comment"] = value
 
 
     @property
     def status(self):
         """status"""
-        return self._table_["status"]
+        return self.__table["status"]
 
     @status.setter
     def status(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["status"] = value
+        self.__table["status"] = value
 
 
     @property
     def notice(self):
         """notice"""
-        return self._table_["notice"]
+        return self.__table["notice"]
 
     @notice.setter
     def notice(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["notice"] = value
+        self.__table["notice"] = value
 
 
     @property
     def applicability(self):
         """applicability (usually "main" or "tests")"""
         default = "main" if self.name.endswith("-tests") else "tests"
-        current = self._table_["applicability"]
+        current = self.__table["applicability"]
         return current if current.strip() else default
 
     @applicability.setter
     def applicability(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["applicability"] = value
+        self.__table["applicability"] = value
 
 
     @property
     def files(self):
         """file dependencies iterator (set of strings)"""
-        for file in self._table_["files"]:
+        for file in self.__table["files"]:
             yield file
 
     @files.setter
@@ -134,13 +134,13 @@ class Module:
             if not isinstance(item, str):
                 raise TypeError("iterable of strings is expected")
             result.update([item])
-        self._table_["files"] = result
+        self.__table["files"] = result
 
 
     @property
     def dependencies(self):
         """dependencies iterator (name, condition)"""
-        for entry in self._table_["dependencies"]:
+        for entry in self.__table["dependencies"]:
             yield Module._PATTERN_DEPENDENCIES_.findall(entry)[0]
 
     @dependencies.setter
@@ -159,49 +159,49 @@ class Module:
                 result.update([(name, condition)])
         except ValueError:
             raise error
-        self._table_["dependencies"] = result
+        self.__table["dependencies"] = result
 
 
     @property
     def early_autoconf_snippet(self):
         """early configure.ac snippet"""
-        return self._table_["early_autoconf_snippet"]
+        return self.__table["early_autoconf_snippet"]
 
     @early_autoconf_snippet.setter
     def early_autoconf_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["early_autoconf_snippet"] = value
+        self.__table["early_autoconf_snippet"] = value
 
 
     @property
     def autoconf_snippet(self):
         """configure.ac snippet"""
-        return self._table_["autoconf_snippet"]
+        return self.__table["autoconf_snippet"]
 
     @autoconf_snippet.setter
     def autoconf_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["autoconf_snippet"] = value
+        self.__table["autoconf_snippet"] = value
 
 
     @property
     def automake_snippet(self):
         """Makefile.am snippet"""
-        return self._table_["automake_snippet"]
+        return self.__table["automake_snippet"]
 
     @automake_snippet.setter
     def automake_snippet(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["automake_snippet"] = value
+        self.__table["automake_snippet"] = value
 
 
     @property
     def include(self):
         """include files iterator (header, comment)"""
-        for entry in self._table_["include"]:
+        for entry in self.__table["include"]:
             match = Module._PATTERN_INCLUDE_.findall(entry)
             yield match[0] if match else entry
 
@@ -221,13 +221,13 @@ class Module:
                 result.update([(header, comment)])
         except ValueError:
             raise error
-        self._table_["include"] = result
+        self.__table["include"] = result
 
 
     @property
     def link(self):
         """linkage iterator (string)"""
-        for entry in self._table_["link"]:
+        for entry in self.__table["link"]:
             yield entry
 
     @link.setter
@@ -240,25 +240,25 @@ class Module:
             if not isinstance(item, str):
                 raise TypeError("iterable of strings is expected")
             result.update([item])
-        self._table_["link"] = result
+        self.__table["link"] = result
 
 
     @property
     def license(self):
         """license"""
-        return self._table_["license"]
+        return self.__table["license"]
 
     @license.setter
     def license(self, value):
         if not isinstance(value, str):
             raise TypeError("'str' type is expected")
-        self._table_["license"] = value
+        self.__table["license"] = value
 
 
     @property
     def maintainers(self):
         """maintainers iterator (maintainer)"""
-        for entry in self._table_["maintainers"]:
+        for entry in self.__table["maintainers"]:
             yield entry
 
     @maintainers.setter
@@ -271,7 +271,7 @@ class Module:
             if not isinstance(item, str):
                 raise TypeError("iterable of strings is expected")
             result.update([item])
-        self._table_["maintainers"] = result
+        self.__table["maintainers"] = result
 
 
     def shell_variable(self, macro_prefix="gl"):
@@ -306,7 +306,7 @@ class Module:
 
 
     def __repr__(self):
-        return self._name_
+        return self.__name
 
 
     def __str__(self):
@@ -314,9 +314,9 @@ class Module:
         for key, (_, typeid, field) in sorted(Module._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
             if typeid is list:
-                value = "\n".join(self._table_[key])
+                value = "\n".join(self.__table[key])
             else:
-                value = self._table_[key]
+                value = self.__table[key]
             if value:
                 result += field
                 result += value
@@ -365,13 +365,14 @@ class FileModule(Module):
     _FIELDS_ = [field for (_, _, field) in Module._TABLE_.values()]
     _PATTERN_ = re.compile("(%s):" % "|".join(_FIELDS_))
 
+
     def __init__(self, path, mode="r", name=None, **kwargs):
         if name is None:
             name = os.path.basename(path)
         if mode not in ("r", "w", "rw"):
             raise ValueError("illegal mode: %r" % mode)
         if mode == "r":
-            super().__init__(name)
+            table = {}
             with codecs.open(path, "rb", "UTF-8") as stream:
                 data = ""
                 for line in stream:
@@ -384,28 +385,30 @@ class FileModule(Module):
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = FileModule._TABLE_[group]
                 if typeid is list:
-                    self._table_[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
+                    table[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
                 else:
-                    self._table_[key] = value.strip()
-            self._stream_ = None
+                    table[key] = value.strip()
+            self.__stream = None
         elif mode == "w":
             super().__init__(name)
-            self._stream_ = codecs.open(path, "w+", "UTF-8")
+            self.__stream = codecs.open(path, "w+", "UTF-8")
         elif mode == "rw":
             self.__init__(path, "r")
-            self._stream_ = codecs.open(path, "w+", "UTF-8")
+            self.__stream = codecs.open(path, "w+", "UTF-8")
         else:
             raise ValueError("invalid mode: %r" % mode)
-        for key, value in kwargs.items():
-            self._table_[key] = value
+
+        for (key, value) in kwargs.items():
+            table[key] = value
+        super().__init__(name, **table)
 
 
     def close(self):
         """Close the underlying stream and write data into the file."""
-        if self._stream_:
-            self._stream_.truncate(0)
-            self._stream_.write(str(self))
-            self._stream_.close()
+        if self.__stream:
+            self.__stream.truncate(0)
+            self.__stream.write(str(self))
+            self.__stream.close()
 
 
     def __enter__(self):
