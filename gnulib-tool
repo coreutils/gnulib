@@ -5071,40 +5071,40 @@ s,^\(.................................................[^ ]*\) *,                
     case "$f" in
       tests=lib/*) f=`echo "$f" | sed -e 's,^tests=lib/,lib/,'` ;;
     esac
-    is_binary_file=
-    case "$f" in
-      *.class | *.mo ) is_binary_file=true ;;
-    esac
     func_dest_tmpfilename "$g"
     func_lookup_file "$f"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
-    if test -n "$sed_transform_main_lib_file" \
-       && test -z "$is_binary_file"; then
-      case "$of" in
-        lib/*)
-          sed -e "$sed_transform_main_lib_file" \
-            < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
-          ;;
-      esac
-    fi
-    if test -n "$sed_transform_build_aux_file" \
-       && test -z "$is_binary_file"; then
-      case "$of" in
-        build-aux/*)
-          sed -e "$sed_transform_build_aux_file" \
-            < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
-          ;;
-      esac
-    fi
-    if test -n "$sed_transform_testsrelated_lib_file" \
-       && test -z "$is_binary_file"; then
-      case "$of" in
-        tests=lib/*)
-          sed -e "$sed_transform_testsrelated_lib_file" \
-            < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
-          ;;
-      esac
-    fi
+    case "$f" in
+      *.class | *.mo )
+        # Don't process binary files with sed.
+        ;;
+      *)
+        if test -n "$sed_transform_main_lib_file"; then
+          case "$of" in
+            lib/*)
+              sed -e "$sed_transform_main_lib_file" \
+                < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
+              ;;
+          esac
+        fi
+        if test -n "$sed_transform_build_aux_file"; then
+          case "$of" in
+            build-aux/*)
+              sed -e "$sed_transform_build_aux_file" \
+                < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
+              ;;
+          esac
+        fi
+        if test -n "$sed_transform_testsrelated_lib_file"; then
+          case "$of" in
+            tests=lib/*)
+              sed -e "$sed_transform_testsrelated_lib_file" \
+                < "$lookedup_file" > "$tmpfile" || func_fatal_error "failed"
+              ;;
+          esac
+        fi
+        ;;
+    esac
     if test -f "$destdir/$g"; then
       # The file already exists.
       func_update_file
