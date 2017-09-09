@@ -11,7 +11,7 @@ import re
 
 
 
-class Module:
+class Base:
     """gnulib generic module"""
     _TABLE_ = {
         "description"            : (0x00, str, "Description"),
@@ -38,7 +38,7 @@ class Module:
             raise TypeError("name must be of 'str' type")
         self.__name = name
         self.__table = {"maintainers": ["all"]}
-        for key in Module._TABLE_:
+        for key in Base._TABLE_:
             self.__table[key] = ""
         for key, value in kwargs.items():
             self.__table[key] = value
@@ -141,7 +141,7 @@ class Module:
     def dependencies(self):
         """dependencies iterator (name, condition)"""
         for entry in self.__table["dependencies"]:
-            yield Module._PATTERN_DEPENDENCIES_.findall(entry)[0]
+            yield Base._PATTERN_DEPENDENCIES_.findall(entry)[0]
 
     @dependencies.setter
     def dependencies(self, iterable):
@@ -202,7 +202,7 @@ class Module:
     def include(self):
         """include files iterator (header, comment)"""
         for entry in self.__table["include"]:
-            match = Module._PATTERN_INCLUDE_.findall(entry)
+            match = Base._PATTERN_INCLUDE_.findall(entry)
             yield match[0] if match else entry
 
     @include.setter
@@ -311,7 +311,7 @@ class Module:
 
     def __str__(self):
         result = ""
-        for key, (_, typeid, field) in sorted(Module._TABLE_.items(), key=lambda k: k[1][0]):
+        for key, (_, typeid, field) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
             if typeid is list:
                 value = "\n".join(self.__table[key])
@@ -344,7 +344,7 @@ class Module:
 
 
 
-class FileModule(Module):
+class File(Base):
     """gnulib module text file"""
     _TABLE_ = {
         "Description"        : (str, "description"),
@@ -362,7 +362,7 @@ class FileModule(Module):
         "License"            : (str, "license"),
         "Maintainer"         : (list, "maintainers"),
     }
-    _FIELDS_ = [field for (_, _, field) in Module._TABLE_.values()]
+    _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
     _PATTERN_ = re.compile("(%s):" % "|".join(_FIELDS_))
 
 
@@ -381,9 +381,9 @@ class FileModule(Module):
                     or (line.startswith("/*") and line.endswith("*/")):
                         continue
                     data += (line + "\n")
-            match = FileModule._PATTERN_.split(data)[1:]
+            match = File._PATTERN_.split(data)[1:]
             for (group, value) in zip(match[::2], match[1::2]):
-                (typeid, key) = FileModule._TABLE_[group]
+                (typeid, key) = File._TABLE_[group]
                 if typeid is list:
                     table[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
                 else:

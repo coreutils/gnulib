@@ -2,16 +2,18 @@
 # encoding: UTF-8
 
 
+
 import argparse
 import codecs
 import os
 import re
 import sys
 
-from .error import AutoconfVersionError
+from .error import AutoconfVersionError as _AutoconfVersionError_
 
 
-class Config:
+
+class Base:
     """gnulib generic configuration"""
     _TABLE_ = {
         "root"              : "",
@@ -47,8 +49,8 @@ class Config:
 
     def __init__(self, **kwargs):
         self.__table = dict()
-        for key in Config._TABLE_:
-            self.__table[key] = Config._TABLE_[key]
+        for key in Base._TABLE_:
+            self.__table[key] = Base._TABLE_[key]
         for key, value in kwargs.items():
             self[key] = value
 
@@ -58,7 +60,7 @@ class Config:
 
 
     def __iter__(self):
-        for key in Config._TABLE_:
+        for key in Base._TABLE_:
             value = self[key]
             yield key, value
 
@@ -344,31 +346,31 @@ class Config:
     def include_guard_prefix(self):
         """include guard prefix"""
         prefix = self["macro_prefix"].upper()
-        default = Config._TABLE_["macro_prefix"]
+        default = Base._TABLE_["macro_prefix"]
         return "GL_%s" % prefix if prefix == default else "GL"
 
 
     def __getitem__(self, key):
-        if key not in Config._TABLE_:
+        if key not in Base._TABLE_:
             key = key.replace("-", "_")
-            if key not in Config._TABLE_:
+            if key not in Base._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
         return self.__table[key]
 
 
     def __setitem__(self, key, value):
-        if key not in Config._TABLE_:
+        if key not in Base._TABLE_:
             key = key.replace("_", "-")
-            if key not in Config._TABLE_:
+            if key not in Base._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
         key = key.replace("-", "_")
-        typeid = type(Config._TABLE_[key])
+        typeid = type(Base._TABLE_[key])
         if key == "lgpl":
             if value not in [None, 2, 3]:
                 raise TypeError("lgpl option must be either None or integral version (2 or 3)")
         elif key == "autoconf":
             if value < 2.59:
-                raise AutoconfVersionError(2.59)
+                raise _AutoconfVersionError_(2.59)
         elif not isinstance(value, typeid):
             raise TypeError("%r option must be of %r type" % (key, typeid))
         self.__table[key] = value
@@ -389,7 +391,7 @@ class Config:
         return self.__table.values()
 
 
-class Cache(Config):
+class Cache(Base):
     """gnulib cached configuration"""
     _AUTOCONF_ = {
         "autoconf" : re.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", re.S | re.M),
@@ -496,7 +498,7 @@ class Cache(Config):
 
 
 
-class CommandLine(Config):
+class CommandLine(Base):
     """gnulib-tool command line configuration"""
     _LIST_ = (1 << 0)
     _FIND_ = (1 << 1)

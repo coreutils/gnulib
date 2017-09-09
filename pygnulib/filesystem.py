@@ -5,9 +5,9 @@
 
 import os
 
-from .config import Config
-from .module import Module
-from .module import FileModule
+from .config import Base as _BaseConfig_
+from .module import Base as _BaseModule_
+from .module import File as _FileModule_
 
 
 
@@ -27,7 +27,7 @@ class Directory:
     def __init__(self, root, config):
         if not isinstance(root, str):
             raise TypeError("root must be of 'str' type")
-        if not isinstance(config, Config):
+        if not isinstance(config, _BaseConfig_):
             raise TypeError("config must be of 'Config' type")
         if not os.path.exists(root):
             raise FileNotFoundError(root)
@@ -95,7 +95,7 @@ class Git(Directory):
         if name in Git._EXCLUDE_:
             raise ValueError("illegal module name")
         path = os.path.join(self["modules"], name)
-        return FileModule(path, name=name) if full else Module(name)
+        return _FileModule_(path, name=name) if full else _BaseModule_(name)
 
 
     def modules(self, full=True):
