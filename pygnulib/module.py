@@ -9,6 +9,8 @@ import hashlib
 import os
 import re
 
+from .error import type_assert as _type_assert_
+
 
 
 class Base:
@@ -34,8 +36,7 @@ class Base:
 
 
     def __init__(self, name, **kwargs):
-        if not isinstance(name, str):
-            raise TypeError("name must be of 'str' type")
+        _type_assert_("name", name, str)
         self.__name = name
         self.__table = {"maintainers": ["all"]}
         for key in Base._TABLE_:
@@ -51,8 +52,7 @@ class Base:
 
     @name.setter
     def name(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("name", value, str)
         self.__name = value
 
 
@@ -63,8 +63,7 @@ class Base:
 
     @description.setter
     def description(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("description", value, str)
         self.__table["description"] = value
 
 
@@ -75,8 +74,7 @@ class Base:
 
     @comment.setter
     def comment(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("comment", value, str)
         self.__table["comment"] = value
 
 
@@ -87,8 +85,7 @@ class Base:
 
     @status.setter
     def status(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("status", value, str)
         self.__table["status"] = value
 
 
@@ -99,8 +96,7 @@ class Base:
 
     @notice.setter
     def notice(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("notice", value, str)
         self.__table["notice"] = value
 
 
@@ -108,13 +104,11 @@ class Base:
     def applicability(self):
         """applicability (usually "main" or "tests")"""
         default = "main" if self.name.endswith("-tests") else "tests"
-        current = self.__table["applicability"]
-        return current if current.strip() else default
+        return self.__table.get("applicability", default)
 
     @applicability.setter
     def applicability(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("applicability", value, str)
         self.__table["applicability"] = value
 
 
@@ -125,16 +119,13 @@ class Base:
             yield file
 
     @files.setter
-    def files(self, iterable):
-        if isinstance(iterable, (bytes, str)) \
-        or not isinstance(iterable, collections.Iterable):
-            raise TypeError("iterable of strings is expected")
-        result = set()
-        for item in iterable:
-            if not isinstance(item, str):
-                raise TypeError("iterable of strings is expected")
-            result.update([item])
-        self.__table["files"] = result
+    def files(self, value):
+        _type_assert_("files", value, collections.Iterable)
+        result = []
+        for item in value:
+            _type_assert_("file", item, str)
+            result += [item]
+        self.__table["files"] = set(result)
 
 
     @property
@@ -144,22 +135,14 @@ class Base:
             yield Base._PATTERN_DEPENDENCIES_.findall(entry)[0]
 
     @dependencies.setter
-    def dependencies(self, iterable):
-        error = TypeError("iterable of pairs (name, condition) is expected")
-        if isinstance(iterable, (bytes, str)) \
-        or not isinstance(iterable, collections.Iterable):
-            raise error
-        result = set()
-        try:
-            for pair in iterable:
-                (name, condition) = pair
-                if not isinstance(name, str) \
-                or not isinstance(condition, str):
-                    raise error
-                result.update([(name, condition)])
-        except ValueError:
-            raise error
-        self.__table["dependencies"] = result
+    def dependencies(self, value):
+        _type_assert_("files", value, collections.Iterable)
+        result = []
+        for (name, condition) in value:
+            _type_assert_("name", name, str)
+            _type_assert_("condition", condition, str)
+            result += [(name, condition)]
+        self.__table["dependencies"] = set(result)
 
 
     @property
@@ -169,8 +152,7 @@ class Base:
 
     @early_autoconf_snippet.setter
     def early_autoconf_snippet(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("early_autoconf_snippet", value, str)
         self.__table["early_autoconf_snippet"] = value
 
 
@@ -181,8 +163,7 @@ class Base:
 
     @autoconf_snippet.setter
     def autoconf_snippet(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("autoconf_snippet", value, str)
         self.__table["autoconf_snippet"] = value
 
 
@@ -193,8 +174,7 @@ class Base:
 
     @automake_snippet.setter
     def automake_snippet(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("automake_snippet", value, str)
         self.__table["automake_snippet"] = value
 
 
@@ -206,22 +186,14 @@ class Base:
             yield match[0] if match else entry
 
     @include.setter
-    def include(self, iterable):
-        error = TypeError("iterable of pairs (header, comment) is expected")
-        if isinstance(iterable, (bytes, str)) \
-        or not isinstance(iterable, collections.Iterable):
-            raise error
-        result = set()
-        try:
-            for pair in iterable:
-                (header, comment) = pair
-                if not isinstance(header, str) \
-                or not isinstance(comment, str):
-                    raise error
-                result.update([(header, comment)])
-        except ValueError:
-            raise error
-        self.__table["include"] = result
+    def include(self, value):
+        _type_assert_("include", value, collections.Iterable)
+        result = []
+        for (header, comment) in value:
+            _type_assert_("header", header, str)
+            _type_assert_("comment", comment, str)
+            result += [(header, comment)]
+        self.__table["include"] = set(result)
 
 
     @property
@@ -231,16 +203,13 @@ class Base:
             yield entry
 
     @link.setter
-    def link(self, iterable):
-        if isinstance(iterable, (bytes, str)) \
-        or not isinstance(iterable, collections.Iterable):
-            raise TypeError("iterable of strings is expected")
-        result = set()
-        for item in iterable:
-            if not isinstance(item, str):
-                raise TypeError("iterable of strings is expected")
-            result.update([item])
-        self.__table["link"] = result
+    def link(self, value):
+        _type_assert_("link", value, collections.Iterable)
+        result = []
+        for item in value:
+            _type_assert_("directive", item, str)
+            result += [item]
+        self.__table["link"] = set(result)
 
 
     @property
@@ -250,8 +219,7 @@ class Base:
 
     @license.setter
     def license(self, value):
-        if not isinstance(value, str):
-            raise TypeError("'str' type is expected")
+        _type_assert_("license", value, str)
         self.__table["license"] = value
 
 
@@ -262,16 +230,13 @@ class Base:
             yield entry
 
     @maintainers.setter
-    def maintainers(self, iterable):
-        if isinstance(iterable, (bytes, str)) \
-        or not isinstance(iterable, collections.Iterable):
-            raise TypeError("iterable of strings is expected")
-        result = set()
-        for item in iterable:
-            if not isinstance(item, str):
-                raise TypeError("iterable of strings is expected")
-            result.update([item])
-        self.__table["maintainers"] = result
+    def maintainers(self, value):
+        _type_assert_("maintainers", value, collections.Iterable)
+        result = []
+        for item in value:
+            _type_assert_("maintainer", item, str)
+            result += [item]
+        self.__table["maintainers"] = set(result)
 
 
     def shell_variable(self, macro_prefix="gl"):

@@ -5,10 +5,12 @@
 
 import argparse
 import codecs
+import collections
 import os
 import re
 import sys
 
+from .error import type_assert as _type_assert_
 from .error import AutoconfVersionError as _AutoconfVersionError_
 
 
@@ -185,10 +187,6 @@ class Base:
 
     @lgpl.setter
     def lgpl(self, value):
-        if value is None:
-            value = 0
-        if value not in [0, 2, 3]:
-            raise TypeError("lgpl option must be either None or integral version (2 or 3)")
         self["lgpl"] = value
 
 
@@ -355,6 +353,8 @@ class Base:
             key = key.replace("-", "_")
             if key not in Base._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
+        if key == "all_tests":
+            return self.all_tests
         return self.__table[key]
 
 
@@ -364,15 +364,17 @@ class Base:
             if key not in Base._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
         key = key.replace("-", "_")
+        if key == "all_tests":
+            self.all_tests = value
+            return
         typeid = type(Base._TABLE_[key])
-        if key == "lgpl":
-            if value not in [None, 2, 3]:
-                raise TypeError("lgpl option must be either None or integral version (2 or 3)")
-        elif key == "autoconf":
-            if value < 2.59:
-                raise _AutoconfVersionError_(2.59)
-        elif not isinstance(value, typeid):
-            raise TypeError("%r option must be of %r type" % (key, typeid))
+        if key == "lgpl" and value is None:
+            value = 0
+        _type_assert_(key, value, typeid)
+        if key == "lgpl" and value not in (0, 2, 3):
+            raise ValueError("lgpl: None, 2 or 3 expected")
+        if key == "autoconf" and value < 2.59:
+            raise _AutoconfVersionError_(2.59)
         self.__table[key] = value
 
 
@@ -389,6 +391,7 @@ class Base:
     def values(self):
         """a set-like object providing a view on configuration values"""
         return self.__table.values()
+
 
 
 class Cache(Base):
@@ -438,9 +441,7 @@ class Cache(Base):
 
 
     def __init__(self, root, m4_base, autoconf=None, **kwargs):
-        if not isinstance(root, str):
-            raise TypeError("root must be of 'str' type")
-        super().__init__(m4_base=m4_base, **kwargs)
+        super().__init__(root=root, m4_base=m4_base, **kwargs)
         self.__autoconf(root, autoconf)
         self.__gnulib_cache(root)
         self.__gnulib_comp(root)
@@ -460,7 +461,7 @@ class Cache(Base):
             if not match:
                 continue
             if key == "autoconf":
-                self["autoconf"] = sorted(set([float(_.strip()) for _ in match if _.strip()]))[-1]
+                self[key] = float([_ for _ in match if match][-1])
             else:
                 self[key] = match[-1]
 
@@ -1304,7 +1305,10 @@ class CommandLine(Base):
 
 
     def __init__(self, program, argv, **kwargs):
+        _type_assert_("program", program, str)
+        _type_assert_("argv", argv, collections.Iterable)
         super().__init__(**kwargs)
+
         parser = argparse.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
         for (_, _, args) in CommandLine._SECTIONS_:
             for arg in args:

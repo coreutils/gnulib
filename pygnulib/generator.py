@@ -5,6 +5,7 @@
 
 import os
 
+from .error import type_assert as _type_assert_
 from .config import Base as _BaseConfig_
 from .module import Base as _BaseModule_
 
@@ -92,8 +93,7 @@ class POMakefile(Generator):
         "USE_MSGCTXT = no"
     )
     def __init__(self, config):
-        if not isinstance(config, _BaseConfig_):
-            raise TypeError("config must be of pygnulib.Config type")
+        _type_assert_("config", config, _BaseConfig_)
         super().__init__()
         self.__config = config
 
@@ -133,8 +133,7 @@ class POMakefile(Generator):
 class POTFILES(Generator):
     """file list to be passed to xgettext"""
     def __init__(self, config, files):
-        if not isinstance(config, _BaseConfig_):
-            raise TypeError("config must be of pygnulib.Config type")
+        _type_assert_("config", config, _BaseConfig_)
         super().__init__()
         self.__config = config
         self.__files = tuple(files)
@@ -170,16 +169,11 @@ class AutoconfSnippet(Generator):
         no_libtool: disable libtool (regardless of configuration)
         no_gettext: disable AM_GNU_GETTEXT invocations if True
         """
-        if not isinstance(config, _BaseConfig_):
-            raise TypeError("config must be of pygnulib.config.Config type")
-        if not isinstance(module, _BaseModule_):
-            raise TypeError("module must be of pygnulib.module.Module type")
-        if not isinstance(toplevel, bool):
-            raise TypeError("toplevel must be of bool type")
-        if not isinstance(no_libtool, bool):
-            raise TypeError("no_libtool must be of bool type")
-        if not isinstance(no_gettext, bool):
-            raise TypeError("no_gettext must be of bool type")
+        _type_assert_("config", config, _BaseConfig_)
+        _type_assert_("module", module, _BaseModule_)
+        _type_assert_("toplevel", toplevel, bool)
+        _type_assert_("no_libtool", no_libtool, bool)
+        _type_assert_("no_gettext", no_gettext, bool)
         super().__init__()
         self.__config = config
         self.__module = module
@@ -259,12 +253,10 @@ class InitMacro(Generator):
         config: gnulib configuration
         macro_prefix: macro prefix; if None, consider configuration
         """
-        if not isinstance(config, _BaseConfig_):
-            raise TypeError("config must be of pygnulib.config.Config type")
+        _type_assert_("config", config, _BaseConfig_)
         if macro_prefix is None:
             macro_prefix = config.macro_prefix
-        if not isinstance(macro_prefix, str):
-            raise TypeError("macro_prefix must be of str type")
+        _type_assert_("macro_prefix", macro_prefix, str)
         self.__macro_prefix = macro_prefix
 
 
@@ -422,11 +414,10 @@ class InitMacroDone(InitMacro):
 
 
     def __init__(self, config, source_base=None, macro_prefix=None):
+        super().__init__(config=config, macro_prefix=macro_prefix)
         if source_base is None:
             source_base = config.source_base
-        if not isinstance(source_base, str):
-            raise TypeError("source_base must be of str type")
-        super().__init__(config=config, macro_prefix=macro_prefix)
+        _type_assert_("source_base", source_base, str)
         self.__source_base = source_base
 
 

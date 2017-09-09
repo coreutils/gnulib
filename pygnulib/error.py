@@ -3,6 +3,24 @@
 
 
 
+def type_assert(key, value, types):
+    typeset = []
+    if isinstance(types, type):
+        types = [types]
+    types = tuple(types)
+    if not isinstance(value, types):
+        for typeid in types:
+            module = typeid.__module__
+            name = typeid.__name__
+            if module == "builtins":
+                typeset += [name]
+            else:
+                typeset += [module + "." + name]
+        typeset = "{%s}" % ", ".join(set(typeset))
+        raise TypeError("{0}: {1} expected".format(key, typeset))
+
+
+
 class AutoconfVersionError(Exception):
     """minimum supported autoconf version mismatch"""
     def __init__(self, version):

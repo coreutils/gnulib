@@ -5,6 +5,7 @@
 
 import os
 
+from .error import type_assert as _type_assert_
 from .config import Base as _BaseConfig_
 from .module import Base as _BaseModule_
 from .module import File as _FileModule_
@@ -25,10 +26,8 @@ class Directory:
 
 
     def __init__(self, root, config):
-        if not isinstance(root, str):
-            raise TypeError("root must be of 'str' type")
-        if not isinstance(config, _BaseConfig_):
-            raise TypeError("config must be of 'Config' type")
+        _type_assert_("root", root, str)
+        _type_assert_("config", config, _BaseConfig_)
         if not os.path.exists(root):
             raise FileNotFoundError(root)
         if not os.path.isdir(root):
@@ -39,10 +38,9 @@ class Directory:
 
     def __getitem__(self, name):
         """retrieve the canonical path of the specified file name"""
+        _type_assert_("name", name, str)
         parts = []
         replaced = False
-        if not isinstance(name, str):
-            raise TypeError("name must be of 'str' type")
         path = os.path.normpath(name)
         if os.path.isabs(path):
             raise ValueError("name must be a relative path")
@@ -92,6 +90,8 @@ class Git(Directory):
 
     def module(self, name, full=True):
         """instantiate gnulib module by its name"""
+        _type_assert_("name", name, str)
+        _type_assert_("full", full, bool)
         if name in Git._EXCLUDE_:
             raise ValueError("illegal module name")
         path = os.path.join(self["modules"], name)
