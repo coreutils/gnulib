@@ -344,16 +344,16 @@ def link_relative(src, dest):
     else:  # if dest has not bytes or string type
         raise(TypeError(
             'dest must be a string, not %s' % (type(dest).__name__)))
-    if src.startswith('/'):
+    if src.startswith('/') or (len(src) >= 2 and src[1] == ':'):
         os.symlink(src, dest)
-    else:  # if not src.startswith('/')
-        if dest.startswith('/'):
+    else:  # if src is not absolute
+        if dest.startswith('/') or (len(dest) >= 2 and dest[1] == ':'):
             if not constants.PYTHON3:
                 cwd = os.getcwdu()
             else:  # if constants.PYTHON3
                 cwd = os.getcwd()
             os.symlink(joinpath(cwd, src), dest)
-        else:  # if not dest.startswith('/')
+        else:  # if dest is not absolute
             destdir = os.path.dirname(dest)
             if not destdir:
                 destdir = '.'
