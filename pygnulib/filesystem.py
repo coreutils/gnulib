@@ -33,8 +33,8 @@ class Directory:
             raise FileNotFoundError(root)
         if not os.path.isdir(root):
             raise NotADirectoryError(root)
-        self._config_ = config
-        self._root_ = os.path.realpath(root)
+        self.__config = config
+        self.__root = os.path.realpath(root)
 
 
     def __getitem__(self, name):
@@ -53,13 +53,19 @@ class Directory:
             if not replaced:
                 for old, new in Directory._SUBST_.items():
                     if part == old:
-                        part = self._config_[new]
+                        part = self.__config[new]
                         replaced = True
             parts += [part]
-        path = os.path.sep.join([self._root_] + parts)
+        path = os.path.sep.join([self.__root] + parts)
         if not os.path.exists(path):
             raise FileNotFoundError(name)
         return path
+
+
+    @property
+    def root(self):
+        """root directory path"""
+        return self.__root
 
 
 
@@ -80,10 +86,8 @@ class Git(Directory):
 
 
     def __init__(self, root, config):
-        if not os.path.isdir(root):
-            raise FileNotFoundError(root)
         super().__init__(root, config)
-        if not os.path.isdir(os.path.join(self._root_, ".git")):
+        if not os.path.isdir(os.path.join(self.root, ".git")):
             raise TypeError("%r is not a gnulib repository")
 
 
