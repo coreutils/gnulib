@@ -707,7 +707,7 @@ Include:|Link:|License:|Maintainer:)'
             else:  # if not tests module
                 # TODO: unconditional automake snippet for nontests modules
                 snippet = self.getAutomakeSnippet_Conditional()
-                snippet = snippet.replace('\\\n', ' ')
+                snippet = constants.combine_lines(snippet)
                 pattern = compiler(
                     '^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
                 mentioned_files = pattern.findall(snippet)
@@ -1149,7 +1149,7 @@ class GLModuleTable(object):
             if type(module) is not GLModule:
                 raise(TypeError('each module must be a GLModule instance'))
             snippet = module.getAutomakeSnippet()
-            snippet = snippet.replace('\\\n', '')
+            snippet = constants.remove_backslash_newline(snippet)
             pattern = compiler(
                 '^lib_SOURCES[\t ]*\\+=[\t ]*(.*?)$', re.S | re.M)
             files = pattern.findall(snippet)

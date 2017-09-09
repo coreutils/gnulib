@@ -727,6 +727,7 @@ class GLTestDir(object):
         path = joinpath(self.testdir, sourcebase, 'Makefile.am')
         with codecs.open(path, 'rb', 'UTF-8') as file:
             snippet = file.read()
+        snippet = constants.remove_backslash_newline(snippet)
         cleaned_files = list()
         tests_cleaned_files = list()
         built_sources = list()
@@ -736,7 +737,6 @@ class GLTestDir(object):
 
         # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
         regex_find = list()
-        snippet = snippet.replace('\\\n', '')
         pattern = compiler('^CLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
         regex_find += pattern.findall(snippet)
         pattern = compiler('^MOSTLYCLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
@@ -765,10 +765,10 @@ class GLTestDir(object):
             path = joinpath(self.testdir, testsbase, 'Makefile.am')
             with codecs.open(path, 'rb', 'UTF-8') as file:
                 snippet = file.read()
+            snippet = constants.remove_backslash_newline(snippet)
 
             # Extract the value of "CLEANFILES += ..." and "MOSTLYCLEANFILES += ...".
             regex_find = list()
-            snippet = snippet.replace('\\\n', '')
             pattern = compiler('^CLEANFILES[\t ]*\\+=(.*?)$', re.S | re.M)
             regex_find += pattern.findall(snippet)
             pattern = compiler(

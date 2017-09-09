@@ -437,4 +437,17 @@ def nlremove(text):
     return(text)
 
 
+def remove_backslash_newline(text):
+    '''Given a multiline string text, join lines:
+    When a line ends in a backslash, remove the backslash and join the next
+    line to it.'''
+    return text.replace('\\\n', '')
+
+def combine_lines(text):
+    '''Given a multiline string text, join lines by spaces:
+    When a line ends in a backslash, remove the backslash and join the next
+    line to it, inserting a space between them.'''
+    return text.replace('\\\n', ' ')
+
+
 __all__ += ['APP', 'DIRS', 'MODES', 'UTILS']
