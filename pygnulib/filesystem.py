@@ -75,7 +75,6 @@ class Git(Directory):
         "."                 : str.startswith,
         "~"                 : str.endswith,
         "-tests"            : str.endswith,
-        "CVS"               : str.startswith,
         "ChangeLog"         : str.__eq__,
         "COPYING"           : str.__eq__,
         "README"            : str.__eq__,
