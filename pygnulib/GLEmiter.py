@@ -711,6 +711,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                     'lib%_LIBRARIES', 'lib_LIBRARIES')
                 amsnippet1 = amsnippet1.replace(
                     'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
+                if check_PROGRAMS:
+                    amsnippet1 = amsnippet1.replace(
+                        'check_PROGRAMS', 'noinst_PROGRAMS')
                 amsnippet1 = amsnippet1.replace('${gl_include_guard_prefix}',
                                                 include_guard_prefix)
                 if str(module) == 'alloca':
@@ -718,11 +721,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % \
                         (libname, libext, perhapsLT)
-                if check_PROGRAMS:
-                    amsnippet1 = amsnippet1.replace(
-                        'check_PROGRAMS', 'noinst_PROGRAMS')
 
-                # Get unconditional snippet, edit it and save to amsnippet1.
+                # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
                 pattern = compiler('lib_([A-Z][A-Z](?:.*?))', re.S | re.M)
                 amsnippet2 = pattern.sub('%s_%s_\\1' %
@@ -996,11 +996,11 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                 snippet = snippet.replace('lib%_LIBRARIES', 'lib_LIBRARIES')
                 snippet = snippet.replace(
                     'lib%_LTLIBRARIES', 'lib_LTLIBRARIES')
-                snippet = snippet.replace('${gl_include_guard_prefix}',
-                                          include_guard_prefix)
                 if check_PROGRAMS:
                     snippet = snippet.replace(
                         'check_PROGRAMS', 'noinst_PROGRAMS')
+                snippet = snippet.replace('${gl_include_guard_prefix}',
+                                          include_guard_prefix)
                 # Check if module is 'alloca'.
                 if libtests and str(module) == 'alloca':
                     snippet += 'libtests_a_LIBADD += @%sALLOCA@\n' % perhapsLT
