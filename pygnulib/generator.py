@@ -237,6 +237,10 @@ class AutoconfSnippet(Generator):
                 src = "AM_GNU_GETTEXT([external])"
                 dst = "dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.'"
                 snippet = snippet.replace(src, dst)
+            else:
+                # Don't indent AM_GNU_GETTEXT_VERSION line, as that confuses
+                # autopoint through at least GNU gettext version 0.18.2.
+                snippet = snippet.lstrip()
             lines = (_ for _ in snippet.split("\n") if _)
             for line in lines:
                 yield line
