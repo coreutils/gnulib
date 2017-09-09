@@ -341,26 +341,28 @@ class GLFileAssistant(object):
             shutil.copy(lookedup, tmpfile)
         except Exception as error:
             raise(GLError(15, lookedup))
-        transformer = string()
-        if original.startswith('lib/'):
-            if sed_transform_main_lib_file:
-                transformer = sed_transform_main_lib_file
-        elif original.startswith('build-aux/'):
-            if sed_transform_build_aux_file:
-                transformer = sed_transform_build_aux_file
-        elif original.startswith('tests=lib/'):
-            if sed_transform_testsrelated_lib_file:
-                transformer = sed_transform_testsrelated_lib_file
-        if transformer:
-            args = ['sed', '-e', transformer]
-            stdin = codecs.open(lookedup, 'rb', 'UTF-8')
-            try:  # Try to transform file
-                data = sp.check_output(args, stdin=stdin, shell=False)
-                data = data.decode("UTF-8")
-            except Exception as error:
-                raise(GLError(16, lookedup))
-            with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
-                file.write(data)
+        # Don't process binary files with sed.
+        if not (original.endswith(".class") or original.endswith(".mo")):
+            transformer = string()
+            if original.startswith('lib/'):
+                if sed_transform_main_lib_file:
+                    transformer = sed_transform_main_lib_file
+            elif original.startswith('build-aux/'):
+                if sed_transform_build_aux_file:
+                    transformer = sed_transform_build_aux_file
+            elif original.startswith('tests=lib/'):
+                if sed_transform_testsrelated_lib_file:
+                    transformer = sed_transform_testsrelated_lib_file
+            if transformer:
+                args = ['sed', '-e', transformer]
+                stdin = codecs.open(lookedup, 'rb', 'UTF-8')
+                try:  # Try to transform file
+                    data = sp.check_output(args, stdin=stdin, shell=False)
+                    data = data.decode("UTF-8")
+                except Exception as error:
+                    raise(GLError(16, lookedup))
+                with codecs.open(tmpfile, 'wb', 'UTF-8') as file:
+                    file.write(data)
         path = joinpath(self.config['destdir'], rewritten)
         if isfile(path):
             self.update(lookedup, tmpflag, tmpfile, already_present)
