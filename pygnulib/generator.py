@@ -94,20 +94,20 @@ class POMakefile(Generator):
     def __init__(self, config):
         if not isinstance(config, Config):
             raise TypeError("config must be of pygnulib.Config type")
-        self._config_ = config
         super().__init__()
+        self.__config = config
 
 
     @property
     def po_base(self):
         """directory relative to ROOT where *.po files are placed; defaults to 'po'"""
-        return self._config_.po_base
+        return self.__config.po_base
 
 
     @property
     def po_domain(self):
         """the prefix of the i18n domain"""
-        return self._config_.po_domain
+        return self.__config.po_domain
 
 
     def __repr__(self):
@@ -136,8 +136,8 @@ class POTFILES(Generator):
         if not isinstance(config, Config):
             raise TypeError("config must be of pygnulib.Config type")
         super().__init__()
-        self._config_ = config
-        self._files_ = tuple(files)
+        self.__config = config
+        self.__files = tuple(files)
 
 
     @property
@@ -156,7 +156,7 @@ class POTFILES(Generator):
             yield line
         yield "# List of files which contain translatable strings."
         for file in [_ for _ in self.files if _.startswith("lib/")]:
-            yield os.path.join(self._config_.source_base, file[4:])
+            yield os.path.join(self.__config.source_base, file[4:])
 
 
 
@@ -181,29 +181,29 @@ class AutoconfSnippet(Generator):
         if not isinstance(no_gettext, bool):
             raise TypeError("no_gettext must be of bool type")
         super().__init__()
-        self._config_ = config
-        self._module_ = module
-        self._toplevel_ = toplevel
-        self._no_libtool_ = no_libtool
-        self._no_gettext_ = no_gettext
+        self.__config = config
+        self.__module = module
+        self.__toplevel = toplevel
+        self.__no_libtool = no_libtool
+        self.__no_gettext = no_gettext
 
 
     @property
     def toplevel(self):
         """top level indicator; subordinate use of pygnulib"""
-        return self._toplevel_
+        return self.__toplevel
 
 
     @property
     def libtool(self):
         """libtool switch, disabling libtool configuration parameter"""
-        return self._config_.libtool and not self._no_libtool_
+        return self.__config.libtool and not self.__no_libtool
 
 
     @property
     def gettext(self):
         """gettext switch, disabling AM_GNU_GETTEXT invocations"""
-        return not self._no_gettext_
+        return not self.__no_gettext
 
 
     def __repr__(self):
@@ -215,15 +215,15 @@ class AutoconfSnippet(Generator):
         if self.gettext:
             flags += ["gettext"]
         fmt = "pygnulib.generator.AutoconfSnippet(include_guard_prefix=%r, flags=%s)"
-        include_guard_prefix = self._config_.include_guard_prefix
+        include_guard_prefix = self.__config.include_guard_prefix
         return fmt % (include_guard_prefix, "|".join(flags))
 
 
     def __iter__(self):
-        module = self._module_
+        module = self.__module
         if module.name not in ("gnumakefile", "maintainer-makefile") or self.toplevel:
             snippet = module.configure_ac_snippet
-            include_guard_prefix = self._config_.include_guard_prefix
+            include_guard_prefix = self.__config.include_guard_prefix
             snippet.replace(r"${gl_include_guard_prefix}", include_guard_prefix)
             if not self.libtool:
                 table = (
@@ -261,13 +261,13 @@ class InitMacro(Generator):
             macro_prefix = config.macro_prefix
         if not isinstance(macro_prefix, str):
             raise TypeError("macro_prefix must be of str type")
-        self._macro_prefix_ = macro_prefix
+        self.__macro_prefix = macro_prefix
 
 
     @property
     def macro_prefix(self):
         """the prefix of the macros 'gl_EARLY' and 'gl_INIT'"""
-        return self._macro_prefix_
+        return self.__macro_prefix
 
 
     def __repr__(self):
@@ -423,13 +423,13 @@ class InitMacroDone(InitMacro):
         if not isinstance(source_base, str):
             raise TypeError("source_base must be of str type")
         super().__init__(config=config, macro_prefix=macro_prefix)
-        self._source_base_ = source_base
+        self.__source_base = source_base
 
 
     @property
     def source_base(self):
         """directory relative to ROOT where source code is placed; defaults to 'lib'"""
-        return self._source_base_
+        return self.__source_base
 
 
     def __repr__(self):
@@ -439,4 +439,4 @@ class InitMacroDone(InitMacro):
 
     def __iter__(self):
         for line in InitMacroDone._TEMPLATE_:
-            yield line.format(source_base=self._source_base_, macro_prefix=self._macro_prefix_)
+            yield line.format(source_base=self.__source_base, macro_prefix=self.macro_prefix)
