@@ -99,7 +99,7 @@ class GLFileSystem(object):
             if isfile(path_gnulib):
                 if self.config['localdir'] and isfile(path_diff):
                     shutil.copy(path_gnulib, path_temp)
-                    command = 'patch -s "%s" < "%s"' % (path_temp, path_diff)
+                    command = 'patch -s "%s" < "%s" >&2' % (path_temp, path_diff)
                     try:  # Try to apply patch
                         sp.check_call(command, shell=True)
                     except sp.CalledProcessError as error:
