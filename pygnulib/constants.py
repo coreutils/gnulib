@@ -449,5 +449,30 @@ def combine_lines(text):
     line to it, inserting a space between them.'''
     return text.replace('\\\n', ' ')
 
+def combine_lines_matching(pattern, text):
+    '''Given a multiline string text, join lines by spaces, when the first
+    such line matches a given RegexObject pattern.
+    When a line that matches the pattern ends in a backslash, remove the
+    backslash and join the next line to it, inserting a space between them.
+    When a line that is the result of such a join ends in a backslash,
+    proceed likewise.'''
+    outerpos = 0
+    match = pattern.search(text, outerpos)
+    while match:
+        (startpos, pos) = match.span()
+        # Look how far the continuation lines extend.
+        pos = text.find('\n',pos)
+        while pos > 0 and text[pos-1] == '\\':
+            pos = text.find('\n',pos+1)
+        if pos < 0:
+            pos = len(text)
+        # Perform a combine_lines throughout the continuation lines.
+        partdone = text[:startpos] + combine_lines(text[startpos:pos])
+        outerpos = len(partdone)
+        text = partdone + text[pos:]
+        # Next round.
+        match = pattern.search(text, outerpos)
+    return text
+
 
 __all__ += ['APP', 'DIRS', 'MODES', 'UTILS']

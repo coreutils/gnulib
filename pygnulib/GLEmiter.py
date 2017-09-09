@@ -721,6 +721,9 @@ AC_DEFUN([%V1%_LIBSOURCES], [
                         (libname, libext, perhapsLT)
                     amsnippet1 += '%s_%s_DEPENDENCIES += @%sALLOCA@\n' % \
                         (libname, libext, perhapsLT)
+                amsnippet1 = constants.combine_lines_matching(
+                                 compiler('%s_%s_SOURCES' % (libname, libext)),
+                                 amsnippet1)
 
                 # Get unconditional snippet, edit it and save to amsnippet2.
                 amsnippet2 = module.getAutomakeSnippet_Unconditional()
