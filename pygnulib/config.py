@@ -15,7 +15,7 @@ class Config:
     """gnulib generic configuration"""
     _TABLE_ = {
         "root"              : "",
-        "local_dir"         : "",
+        "local"             : "",
         "source_base"       : "lib",
         "m4_base"           : "m4",
         "po_base"           : "po",
@@ -46,15 +46,15 @@ class Config:
 
 
     def __init__(self, **kwargs):
-        self._table_ = dict()
+        self.__table = dict()
         for key in Config._TABLE_:
-            self._table_[key] = Config._TABLE_[key]
+            self.__table[key] = Config._TABLE_[key]
         for key, value in kwargs.items():
             self[key] = value
 
 
     def __repr__(self):
-        return repr(self._table_)
+        return repr(self.__table)
 
 
     def __iter__(self):
@@ -353,7 +353,7 @@ class Config:
             key = key.replace("-", "_")
             if key not in Config._TABLE_:
                 raise KeyError("unsupported option: %r" % key)
-        return self._table_[key]
+        return self.__table[key]
 
 
     def __setitem__(self, key, value):
@@ -371,22 +371,22 @@ class Config:
                 raise AutoconfVersionError(2.59)
         elif not isinstance(value, typeid):
             raise TypeError("%r option must be of %r type" % (key, typeid))
-        self._table_[key] = value
+        self.__table[key] = value
 
 
     def items(self):
         """a set-like object providing a view on configuration items"""
-        return self._table_.items()
+        return self.__table.items()
 
 
     def keys(self):
         """a set-like object providing a view on configuration keys"""
-        return self._table_.keys()
+        return self.__table.keys()
 
 
     def values(self):
         """a set-like object providing a view on configuration values"""
-        return self._table_.values()
+        return self.__table.values()
 
 
 class Cache(Config):
@@ -397,6 +397,7 @@ class Cache(Config):
         "libtool"  : re.compile("A[CM]_PROG_LIBTOOL", re.S | re.M)
     }
     _GNULIB_CACHE_ = {
+        "local"             : (str, "gl_LOCAL_DIR"),
         "libtool"           : (bool, "gl_LIBTOOL"),
         "conddeps"          : (bool, "gl_CONDITIONAL_DEPENDENCIES"),
         "vc_files"          : (bool, "gl_VC_FILES"),
@@ -407,7 +408,6 @@ class Cache(Config):
         "privileged_tests"  : (bool, "gl_WITH_PRIVILEGED_TESTS"),
         "unportable_tests"  : (bool, "gl_WITH_UNPORTABLE_TESTS"),
         "all_tests"         : (bool, "gl_WITH_ALL_TESTS"),
-        "local_dir"         : (str, "gl_LOCAL_DIR"),
         "source_base"       : (str, "gl_SOURCE_BASE"),
         "m4_base"           : (str, "gl_M4_BASE"),
         "po_base"           : (str, "gl_PO_BASE"),
@@ -435,15 +435,15 @@ class Cache(Config):
     _GNULIB_CACHE_PATTERN_ = re.compile("^(gl_.*?)\\(\\[(.*?)\\]\\)$", re.S | re.M)
 
 
-    def __init__(self, root, autoconf=None, **kwargs):
+    def __init__(self, root, m4_base, autoconf=None, **kwargs):
         if not isinstance(root, str):
             raise TypeError("root must be of 'str' type")
-        super().__init__(**kwargs)
-        self._autoconf_(root, autoconf)
-        self._gnulib_cache_(root)
-        self._gnulib_comp_(root)
+        super().__init__(m4_base=m4_base, **kwargs)
+        self.__autoconf(root, autoconf)
+        self.__gnulib_cache(root)
+        self.__gnulib_comp(root)
 
-    def _autoconf_(self, root, autoconf):
+    def __autoconf(self, root, autoconf):
         if not autoconf:
             autoconf = os.path.join(root, "configure.ac")
             if not os.path.exists(autoconf):
@@ -462,8 +462,8 @@ class Cache(Config):
             else:
                 self[key] = match[-1]
 
-    def _gnulib_cache_(self, root):
-        m4base = self["m4-base"]
+    def __gnulib_cache(self, root):
+        m4base = self.m4_base
         gnulib_cache = os.path.join(root, m4base, "gnulib-cache.m4")
         if os.path.exists(gnulib_cache):
             with codecs.open(gnulib_cache, "rb", "UTF-8") as stream:
@@ -482,8 +482,8 @@ class Cache(Config):
                 if macro in match:
                     self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
-    def _gnulib_comp_(self, root):
-        m4base = self["m4-base"]
+    def __gnulib_comp(self, root):
+        m4base = self.m4_base
         gnulib_comp = os.path.join(root, m4base, "gnulib-comp.m4")
         if os.path.exists(gnulib_comp):
             with codecs.open(gnulib_comp, "rb", "UTF-8") as stream:
@@ -822,7 +822,7 @@ class CommandLine(Config):
                         "pecify a local override directory where to look",
                         "up files before looking in gnulib's directory",
                     ),
-                    "dest": "local_dir",
+                    "dest": "local",
                     "default": "",
                     "nargs": 1,
                     "metavar": "DIRECTORY",
@@ -1259,7 +1259,7 @@ class CommandLine(Config):
     )
 
 
-    def _usage_(self):
+    def __usage(self):
         iterable = iter(CommandLine._MODES_)
         (_, cmd, args) = next(iterable)
         fmt = (" --{cmd}" + (" {args}" if args else ""))
@@ -1268,10 +1268,10 @@ class CommandLine(Config):
             fmt = (" --{cmd}" + (" {args}" if args else ""))
             lines += ["       {program}" + fmt.format(cmd=cmd, args=args)]
         lines += ["", ""]
-        return "\n".join(lines).format(program=self._program_)
+        return "\n".join(lines).format(program=self.__program)
 
 
-    def _help_(self):
+    def __help(self):
         lines = [""]
         for (name, _, args) in CommandLine._SECTIONS_:
             offset = -1
@@ -1298,7 +1298,7 @@ class CommandLine(Config):
                 for line in description:
                     lines += [fmt2 % line]
             lines += [""]
-        return self._usage_()[:-1] + "\n".join(lines)
+        return self.__usage()[:-1] + "\n".join(lines)
 
 
     def __init__(self, program, argv, **kwargs):
@@ -1308,22 +1308,22 @@ class CommandLine(Config):
             for arg in args:
                 (options, kwargs) = arg
                 parser.add_argument(*options, **kwargs)
-        self._program_ = os.path.basename(program)
-        parser.format_usage = self._usage_
-        parser.format_help = self._help_
+        self.__program = os.path.basename(program)
+        parser.format_usage = self.__usage
+        parser.format_help = self.__help
         if "--help" in argv:
             parser.print_help()
             sys.exit(0)
 
         namespace = parser.parse_args(argv)
         namespace = vars(namespace)
-        self._mode_ = namespace.pop("mode")
-        if self._mode_ is None:
+        self.__mode = namespace.pop("mode")
+        if self.__mode is None:
             parser.error("no operating mode selected")
-        self._dry_run_ = namespace.pop("dry_run")
-        self._link_ = namespace.pop("link", None)
-        self._single_configure_ = namespace.pop("single_configure")
-        self._verbosity_ = namespace.pop("verbosity")
+        self.__dry_run = namespace.pop("dry_run")
+        self.__link = namespace.pop("link", None)
+        self.__single_configure = namespace.pop("single_configure")
+        self.__verbosity = namespace.pop("verbosity")
         namespace.pop("no_changelog", None)
         for (key, value) in namespace.items():
             self[key] = value
@@ -1333,7 +1333,7 @@ class CommandLine(Config):
     def mode(self):
         """operating mode"""
         for (flag, cmd, _) in CommandLine._MODES_:
-            if flag == self._mode_:
+            if flag == self.__mode:
                 return cmd
         return ""
 
@@ -1341,39 +1341,39 @@ class CommandLine(Config):
     @property
     def dry_run(self):
         """running in dry-run mode?"""
-        return self._dry_run_
+        return self.__dry_run
 
 
     @property
     def verbosity(self):
         """verbosity level"""
-        return self._verbosity_
+        return self.__verbosity
 
 
     @property
     def single_configure(self):
         """generate a single configure file?"""
-        return self._single_configure_
+        return self.__single_configure
 
 
     @property
     def symlink(self):
         """make symbolic links instead of copying files?"""
-        return bool(self._link_ & CommandLine._LINK_SYMBOLIC_)
+        return bool(self.__link & CommandLine._LINK_SYMBOLIC_)
 
 
     def hardlink(self):
         """make hard links instead of copying files?"""
-        return bool(self._link_ & CommandLine._LINK_HARD_)
+        return bool(self.__link & CommandLine._LINK_HARD_)
 
 
     @property
     def only_local_links(self):
         """make links only for files from the local override directory?"""
-        return bool(self._link_ & CommandLine._LINK_LOCAL_)
+        return bool(self.__link & CommandLine._LINK_LOCAL_)
 
 
     @property
     def allow_license_update(self):
         """allow to update license notice?"""
-        return (self._link_ & CommandLine._LINK_NOTICE_)
+        return bool(self.__link & CommandLine._LINK_NOTICE_)
