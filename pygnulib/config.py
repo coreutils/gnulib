@@ -1410,11 +1410,13 @@ class CommandLine(Base):
         return bool(self.__link & CommandLine._LINK_NOTICE_)
 
 
+    @property
     def usage(self):
         """usage message"""
         return self.__format_usage()[:-1]
 
 
+    @property
     def help(self):
         """help message"""
         return self.__format_help()
