@@ -5,6 +5,7 @@
 
 import argparse as _argparse_
 import codecs as _codecs_
+import collections as _collections_
 import os as _os_
 import re as _re_
 
@@ -43,9 +44,9 @@ class Base:
         "conddeps"          : False,
         "vc_files"          : False,
         "autoconf"          : 2.59,
-        "modules"           : [],
-        "avoid"             : [],
-        "files"             : [],
+        "modules"           : set(),
+        "avoid"             : set(),
+        "files"             : set(),
     }
 
 
@@ -58,13 +59,35 @@ class Base:
 
 
     def __repr__(self):
-        return repr(self.__table)
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "{0}.{1}{2}".format(module, name, repr(self.__table))
 
 
     def __iter__(self):
         for key in Base._TABLE_:
             value = self[key]
             yield key, value
+
+
+    @property
+    def root(self):
+        """target directory"""
+        return self["root"]
+
+    @root.setter
+    def root(self, value):
+        self["root"] = value
+
+
+    @property
+    def local(self):
+        """local override directory"""
+        return self["local"]
+
+    @local.setter
+    def local(self, value):
+        self["local"] = value
 
 
     @property
@@ -317,7 +340,7 @@ class Base:
 
     @modules.setter
     def modules(self, value):
-        self["modules"] = tuple(value)
+        self["modules"] = set(value)
 
 
     @property
@@ -327,7 +350,7 @@ class Base:
 
     @avoid.setter
     def avoid(self, value):
-        self["avoid"] = tuple(value)
+        self["avoid"] = set(value)
 
 
     @property
@@ -337,7 +360,7 @@ class Base:
 
     @files.setter
     def files(self, value):
-        self["files"] = list(value)
+        self["files"] = set(value)
 
 
     @property
@@ -367,14 +390,26 @@ class Base:
         if key == "all_tests":
             self.all_tests = value
             return
+
         typeid = type(Base._TABLE_[key])
         if key == "lgpl" and value is None:
             value = 0
+        elif key in ("modules", "avoid", "files"):
+            typeid = _collections_.Iterable
         _type_assert_(key, value, typeid)
-        if key == "lgpl" and value not in (0, 2, 3):
-            raise ValueError("lgpl: None, 2 or 3 expected")
+
         if key == "autoconf" and value < 2.59:
             raise _AutoconfVersionError_(2.59)
+        elif key in ("modules", "avoid", "files"):
+            seq = list()
+            item_key = "file" if key == "files" else "module"
+            for item_value in value:
+                _type_assert_(item_key, item_value, str)
+                seq += [item_value]
+            value = set(seq)
+        elif key == "lgpl" and value not in (0, 2, 3):
+            raise ValueError("lgpl: None, 2 or 3 expected")
+
         self.__table[key] = value
 
 
@@ -442,18 +477,18 @@ class Cache(Base):
 
     def __init__(self, root, m4_base, autoconf=None, **kwargs):
         super().__init__(root=root, m4_base=m4_base, **kwargs)
-        self.__autoconf(root, autoconf)
-        self.__gnulib_cache(root)
-        self.__gnulib_comp(root)
-
-    def __autoconf(self, root, autoconf):
-        if not autoconf:
-            autoconf = _os_.path.join(root, "configure.ac")
+        if autoconf is None:
+            autoconf = _os_.path.join(self.root, "configure.ac")
             if not _os_.path.exists(autoconf):
-                autoconf = _os_.path.join(root, "configure.in")
+                autoconf = _os_.path.join(self.root, "configure.in")
         if not _os_.path.isabs(autoconf):
-            autoconf = _os_.path.join(root, autoconf)
+            autoconf = _os_.path.join(self.root, autoconf)
         autoconf = _os_.path.normpath(autoconf)
+        self.__autoconf(autoconf)
+        self.__gnulib_cache()
+        self.__gnulib_comp()
+
+    def __autoconf(self, autoconf):
         with _codecs_.open(autoconf, "rb", "UTF-8") as stream:
             data = stream.read()
         for key, pattern in Cache._AUTOCONF_.items():
@@ -465,9 +500,8 @@ class Cache(Base):
             else:
                 self[key] = match[-1]
 
-    def __gnulib_cache(self, root):
-        m4base = self.m4_base
-        gnulib_cache = _os_.path.join(root, m4base, "gnulib-cache.m4")
+    def __gnulib_cache(self):
+        gnulib_cache = _os_.path.join(self.root, self.m4_base, "gnulib-cache.m4")
         if _os_.path.exists(gnulib_cache):
             with _codecs_.open(gnulib_cache, "rb", "UTF-8") as stream:
                 data = stream.read()
@@ -485,9 +519,8 @@ class Cache(Base):
                 if macro in match:
                     self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
-    def __gnulib_comp(self, root):
-        m4base = self.m4_base
-        gnulib_comp = _os_.path.join(root, m4base, "gnulib-comp.m4")
+    def __gnulib_comp(self):
+        gnulib_comp = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
         if _os_.path.exists(gnulib_comp):
             with _codecs_.open(gnulib_comp, "rb", "UTF-8") as stream:
                 data = stream.read()
