@@ -29,7 +29,7 @@ class AutoconfVersionError(Exception):
 
 
 
-class CommandLineParsingError(Exception):
+class CommandLineError(Exception):
     def __init__(self, program, message):
         super().__init__("{0}: {1}".format(program, message))
 
