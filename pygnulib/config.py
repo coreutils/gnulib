@@ -19,7 +19,7 @@ from .error import CommandLineParsingError as _CommandLineParsingError_
 class Base:
     """gnulib generic configuration"""
     _TABLE_ = {
-        "root"              : "",
+        "root"              : ".",
         "local"             : "",
         "source_base"       : "lib",
         "m4_base"           : "m4",
@@ -465,7 +465,7 @@ class Cache(Base):
     _GNULIB_CACHE_BOOL_ = []
     _GNULIB_CACHE_STR_ = []
     _GNULIB_CACHE_LIST_ = []
-    for _key_, (_typeid_, _) in _GNULIB_CACHE_.items():
+    for (_key_, (_typeid_, _)) in _GNULIB_CACHE_.items():
         if _typeid_ is bool:
             _GNULIB_CACHE_BOOL_ += [_key_]
         elif _typeid_ is str:
@@ -502,33 +502,43 @@ class Cache(Base):
 
     def __gnulib_cache(self):
         gnulib_cache = _os_.path.join(self.root, self.m4_base, "gnulib-cache.m4")
-        if _os_.path.exists(gnulib_cache):
-            with _codecs_.open(gnulib_cache, "rb", "UTF-8") as stream:
-                data = stream.read()
-            for key in Cache._GNULIB_CACHE_BOOL_:
-                (_, macro) = Cache._GNULIB_CACHE_[key]
-                if key in data:
-                    self[key] = True
-            match = dict(Cache._GNULIB_CACHE_PATTERN_.findall(data))
-            for key in Cache._GNULIB_CACHE_STR_:
-                (_, macro) = Cache._GNULIB_CACHE_[key]
-                if macro in match:
-                    self[key] = match[macro].strip()
-            for key in Cache._GNULIB_CACHE_LIST_:
-                (_, macro) = Cache._GNULIB_CACHE_[key]
-                if macro in match:
-                    self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
+        if not _os_.path.exists(gnulib_cache):
+            raise FileNotFoundError(gnulib_cache)
+        with _codecs_.open(gnulib_cache, "rb", "UTF-8") as stream:
+            data = stream.read()
+        for key in Cache._GNULIB_CACHE_BOOL_:
+            (_, macro) = Cache._GNULIB_CACHE_[key]
+            if key in data:
+                self[key] = True
+        match = dict(Cache._GNULIB_CACHE_PATTERN_.findall(data))
+        for key in Cache._GNULIB_CACHE_STR_:
+            (_, macro) = Cache._GNULIB_CACHE_[key]
+            if macro in match:
+                self[key] = match[macro].strip()
+        for key in Cache._GNULIB_CACHE_LIST_:
+            (_, macro) = Cache._GNULIB_CACHE_[key]
+            if macro in match:
+                self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
     def __gnulib_comp(self):
         gnulib_comp = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
         if _os_.path.exists(gnulib_comp):
-            with _codecs_.open(gnulib_comp, "rb", "UTF-8") as stream:
-                data = stream.read()
-            regex = "AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)" % self["macro-prefix"]
-            pattern = _re_.compile(regex, _re_.S | _re_.M)
-            match = pattern.findall(data)
-            if match:
-                self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+            raise FileNotFoundError(gnulib_comp)
+        with _codecs_.open(gnulib_comp, "rb", "UTF-8") as stream:
+            data = stream.read()
+        regex = "AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)" % self["macro-prefix"]
+        pattern = _re_.compile(regex, _re_.S | _re_.M)
+        match = pattern.findall(data)
+        if match:
+            self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+
+
+    def keys(self):
+        keys = set()
+        keys.update(Cache._AUTOCONF_.keys())
+        keys.update(Cache._GNULIB_CACHE_.keys())
+        keys.update(["files"])
+        return (_ for _ in keys)
 
 
 
@@ -600,7 +610,9 @@ class CommandLine(Base):
             mode = kwargs["const"]
             kwargs["dest"] = "mode"
             kwargs["nargs"] = 0
-            if mode & CommandLine._ANY_IMPORT_ or mode & CommandLine._ANY_TEST_:
+            if mode & CommandLine._UPDATE_:
+                kwargs["nargs"] = 0
+            elif mode & CommandLine._ANY_IMPORT_ or mode & CommandLine._ANY_TEST_:
                 kwargs["nargs"] = "+"
                 kwargs["metavar"] = "module0 ... moduleN"
             elif mode & CommandLine._FIND_:
@@ -850,7 +862,7 @@ class CommandLine(Base):
                         "can be found; defaults to current directory",
                     ),
                     "dest": "root",
-                    "default": ".",
+                    "default": _argparse_.SUPPRESS,
                     "metavar": "DIRECTORY",
                 }),
                 (["--local-dir"], {
@@ -859,7 +871,7 @@ class CommandLine(Base):
                         "up files before looking in gnulib's directory",
                     ),
                     "dest": "local",
-                    "default": "",
+                    "default": _argparse_.SUPPRESS,
                     "nargs": 1,
                     "metavar": "DIRECTORY",
                 }),
@@ -867,8 +879,8 @@ class CommandLine(Base):
                     "help": (
                         "increase verbosity; may be repeated",
                     ),
-                    "dest": "verbosity",
                     "action": _VerboseAction_,
+                    "dest": "verbosity",
                     "default": 0,
                     "nargs": 0,
                 }),
@@ -876,8 +888,8 @@ class CommandLine(Base):
                     "help": (
                         "decrease verbosity; may be repeated",
                     ),
-                    "dest": "verbosity",
                     "action": _VerboseAction_,
+                    "dest": "verbosity",
                     "default": 0,
                     "nargs": 0,
                 }),
@@ -911,7 +923,7 @@ class CommandLine(Base):
                     ),
                     "dest": "tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--single-configure"], {
                     "help": (
@@ -936,7 +948,7 @@ class CommandLine(Base):
                     ),
                     "dest": "tests",
                     "action": "store_false",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
             ),
         ),
@@ -956,7 +968,7 @@ class CommandLine(Base):
                     ),
                     "dest": "obsolete",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
 
                 (["--with-c++-tests"], {
@@ -965,7 +977,7 @@ class CommandLine(Base):
                     ),
                     "dest": "cxx_tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--without-c++-tests"], {
                     "help": (
@@ -973,7 +985,7 @@ class CommandLine(Base):
                     ),
                     "dest": "cxx_tests",
                     "action": "store_false",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
 
                 (["--with-longrunning-tests"], {
@@ -982,7 +994,7 @@ class CommandLine(Base):
                     ),
                     "dest": "longrunning_tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--without-longrunning-tests"], {
                     "help": (
@@ -990,7 +1002,7 @@ class CommandLine(Base):
                     ),
                     "dest": "longrunning_tests",
                     "action": "store_false",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
 
                 (["--with-privileged-tests"], {
@@ -999,7 +1011,7 @@ class CommandLine(Base):
                     ),
                     "dest": "privileged_tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--without-privileged-tests"], {
                     "help": (
@@ -1007,7 +1019,7 @@ class CommandLine(Base):
                     ),
                     "dest": "privileged_tests",
                     "action": "store_false",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
 
                 (["--with-unportable-tests"], {
@@ -1016,7 +1028,7 @@ class CommandLine(Base):
                     ),
                     "dest": "unportable_tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--without-unportable-tests"], {
                     "help": (
@@ -1024,7 +1036,7 @@ class CommandLine(Base):
                     ),
                     "dest": "unportable_tests",
                     "action": "store_false",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
 
                 (["--with-all-tests"], {
@@ -1033,7 +1045,7 @@ class CommandLine(Base):
                     ),
                     "dest": "all_tests",
                     "action": "store_true",
-                    "default": False,
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--avoid"], {
                     "help": (
@@ -1051,33 +1063,33 @@ class CommandLine(Base):
                         "support conditional dependencies (may save configure",
                         "time and object code)",
                     ),
-                    "action": "store_true",
-                    "default": False,
                     "dest": "conddeps",
+                    "action": "store_true",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--no-conditional-dependencies"], {
                     "help": (
                         "don't use conditional dependencies",
                     ),
-                    "action": "store_false",
-                    "default": False,
                     "dest": "conddeps",
+                    "action": "store_false",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--libtool"], {
                     "help": (
                         "use libtool rules",
                     ),
-                    "action": "store_true",
-                    "default": False,
                     "dest": "libtool",
+                    "action": "store_true",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--no-libtool"], {
                     "help": (
                         "don't use libtool rules",
                     ),
-                    "action": "store_false",
-                    "default": False,
                     "dest": "libtool",
+                    "action": "store_false",
+                    "default": _argparse_.SUPPRESS,
                 }),
             ),
         ),
@@ -1091,48 +1103,48 @@ class CommandLine(Base):
                     "help": (
                         "specify the library name; defaults to 'libgnu'",
                     ),
-                    "default": "libgnu",
                     "metavar": "LIBRARY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--source-base"], {
                     "help": (
                         "directory relative to --dir where source code is",
                         "placed (default \"lib\")",
                     ),
-                    "default": "lib",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--m4-base"], {
                     "help": (
                         "directory relative to --dir where *.m4 macros are",
                         "placed (default \"m4\")",
                     ),
-                    "default": "m4",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--po-base"], {
                     "help": (
                         "directory relative to --dir where *.po files are",
                         "placed (default \"po\")",
                     ),
-                    "default": "po",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--doc-base"], {
                     "help": (
                         "directory relative to --dir where doc files are",
                         "placed (default \"doc\")",
                     ),
-                    "default": "doc",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--tests-base"], {
                     "help": (
                         "directory relative to --dir where unit tests are",
                         "placed (default \"tests\")",
                     ),
-                    "default": "tests",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--aux-dir"], {
                     "help": (
@@ -1140,8 +1152,8 @@ class CommandLine(Base):
                         "tools are placed (default comes from configure.ac);",
                     ),
                     "dest": "auxdir",
-                    "default": "",
                     "metavar": "DIRECTORY",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--lgpl"], {
                     "help": (
@@ -1160,59 +1172,59 @@ class CommandLine(Base):
                         "source-base and tests-base directories",
                         "(default \"Makefile.am\")",
                     ),
-                    "default": "Makefile.am",
                     "metavar": "NAME",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--macro-prefix"], {
                     "help": (
                         "specify the prefix of the macros 'gl_EARLY' and",
                         "'gl_INIT'; default is 'gl'",
                     ),
-                    "default": "gl",
                     "metavar": "PREFIX",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--po-domain"], {
                     "help": (
                         "specify the prefix of the i18n domain; usually use",
                         "the package name; a suffix '-gnulib' is appended",
                     ),
-                    "default": "",
                     "metavar": "NAME",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--witness-c-macro"], {
                     "help": (
                         "specify the C macro that is defined when the",
                         "sources in this directory are compiled or used",
                     ),
-                    "default": "",
                     "metavar": "NAME",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--vc-files"], {
                     "help": (
                         "update version control related files",
                         "(.gitignore and/or .cvsignore)",
                     ),
-                    "action": "store_true",
-                    "default": False,
                     "dest": "vc_files",
+                    "action": "store_true",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--no-vc-files"], {
                     "help": (
                         "don't update version control related files",
                         "(.gitignore and/or .cvsignore)",
                     ),
-                    "action": "store_false",
-                    "default": False,
                     "dest": "libtool",
+                    "action": "store_false",
+                    "default": _argparse_.SUPPRESS,
                 }),
                 (["--no-changelog"], {
                     "help": (
                         "don't update or create ChangeLog files;",
                         "this option is currently deprecated",
                     ),
-                    "default": None,
                     "action": "store_const",
                     "const": None,
+                    "default": _argparse_.SUPPRESS,
                 }),
             ),
         ),
@@ -1344,7 +1356,6 @@ class CommandLine(Base):
     def __init__(self, program, **kwargs):
         _type_assert_("program", program, str)
         super().__init__(**kwargs)
-
         self.__parser = _argparse_.ArgumentParser(prog=program, add_help=False, allow_abbrev=False)
         for (_, _, args) in CommandLine._SECTIONS_:
             for arg in args:
@@ -1359,28 +1370,28 @@ class CommandLine(Base):
         self.__link = None
         self.__single_configure = None
         self.__verbosity = None
+        self.__namespace = None
 
 
     def parse(self, *arguments):
-        namespace = self.__parser.parse_args(arguments)
-        namespace = vars(namespace)
-        self.__mode = namespace.pop("mode")
+        self.__namespace = self.__parser.parse_args(arguments)
+        self.__namespace = vars(self.__namespace)
+        self.__mode = self.__namespace.pop("mode")
         if self.__mode is None:
             self.__parser.error("no operating mode selected")
-        self.__dry_run = namespace.pop("dry_run")
-        self.__link = namespace.pop("link", None)
-        self.__single_configure = namespace.pop("single_configure")
-        self.__verbosity = namespace.pop("verbosity")
-        namespace.pop("no_changelog", None)
-        for (key, value) in namespace.items():
+        self.__dry_run = self.__namespace.pop("dry_run")
+        self.__link = self.__namespace.pop("link", None)
+        self.__single_configure = self.__namespace.pop("single_configure")
+        self.__verbosity = self.__namespace.pop("verbosity")
+        self.__namespace.pop("no_changelog", None)
+        for (key, value) in self.__namespace.items():
             self[key] = value
-
 
 
     @property
     def mode(self):
         """operating mode"""
-        if self.__mode is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         for (flag, cmd, _) in CommandLine._MODES_:
             if flag == self.__mode:
@@ -1391,7 +1402,7 @@ class CommandLine(Base):
     @property
     def dry_run(self):
         """running in dry-run mode?"""
-        if self.__dry_run is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return self.__dry_run
 
@@ -1399,7 +1410,7 @@ class CommandLine(Base):
     @property
     def verbosity(self):
         """verbosity level"""
-        if self.__verbosity is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return self.__verbosity
 
@@ -1407,7 +1418,7 @@ class CommandLine(Base):
     @property
     def single_configure(self):
         """generate a single configure file?"""
-        if self.__mode is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return self.__single_configure
 
@@ -1415,14 +1426,14 @@ class CommandLine(Base):
     @property
     def symlink(self):
         """make symbolic links instead of copying files?"""
-        if self.__link is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_SYMBOLIC_)
 
 
     def hardlink(self):
         """make hard links instead of copying files?"""
-        if self.__link is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_HARD_)
 
@@ -1430,7 +1441,7 @@ class CommandLine(Base):
     @property
     def only_local_links(self):
         """make links only for files from the local override directory?"""
-        if self.__link is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_LOCAL_)
 
@@ -1438,7 +1449,7 @@ class CommandLine(Base):
     @property
     def allow_license_update(self):
         """allow to update license notice?"""
-        if self.__link is None:
+        if self.__namespace is None:
             raise ValueError("command-line parser not ready")
         return bool(self.__link & CommandLine._LINK_NOTICE_)
 
@@ -1453,3 +1464,14 @@ class CommandLine(Base):
     def help(self):
         """help message"""
         return self.__format_help()
+
+
+    def update(self, config):
+        """update each key if and only if it was not set explicitly"""
+        if self.__namespace is None:
+            raise ValueError("command-line parser not ready")
+        _type_assert_("config", config, Base)
+        explicit = self.__namespace.keys()
+        for key in Base().keys():
+            if key not in explicit:
+                self[key] = config[key]
