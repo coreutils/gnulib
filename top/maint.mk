@@ -131,7 +131,7 @@ gnu_rel_host ?= $(gnu_ftp_host-$(release-type))
 
 url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
                      http://ftpmirror.gnu.org/$(PACKAGE),		\
-                     ftp://$(gnu_rel_host)/gnu/$(PACKAGE))
+                     https://$(gnu_rel_host)/gnu/$(PACKAGE))
 
 # Override this in cfg.mk if you are using a different format in your
 # NEWS file.
@@ -1353,7 +1353,7 @@ release-commit:
 ## Updating files.  ##
 ## ---------------- ##
 
-ftp-gnu = ftp://ftp.gnu.org/gnu
+ftp-gnu = https://ftp.gnu.org/gnu
 www-gnu = http://www.gnu.org
 
 upload_dest_dir_ ?= $(PACKAGE)
