@@ -430,9 +430,9 @@ class Base:
 class Cache(Base):
     """gnulib cached configuration"""
     _AUTOCONF_ = {
-        "autoconf" : _re_.compile(".*AC_PREREQ\\(\\[(.*?)\\]\\)", _re_.S | _re_.M),
-        "auxdir"   : _re_.compile("^AC_CONFIG_AUX_DIR\\(\\[(.*?)\\]\\)$", _re_.S | _re_.M),
-        "libtool"  : _re_.compile("A[CM]_PROG_LIBTOOL", _re_.S | _re_.M)
+        "autoconf" : _re_.compile(r"AC_PREREQ\(\[(.*?)\]\)", _re_.S | _re_.M),
+        "auxdir"   : _re_.compile(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$", _re_.S | _re_.M),
+        "libtool"  : _re_.compile(r"A[CM]_PROG_LIBTOOL", _re_.S | _re_.M)
     }
     _GNULIB_CACHE_ = {
         "local"             : (str, "gl_LOCAL_DIR"),
@@ -470,7 +470,7 @@ class Cache(Base):
             _GNULIB_CACHE_STR_ += [_key_]
         else:
             _GNULIB_CACHE_LIST_ += [_key_]
-    _GNULIB_CACHE_PATTERN_ = _re_.compile("^(gl_.*?)\\(\\[(.*?)\\]\\)$", _re_.S | _re_.M)
+    _GNULIB_CACHE_PATTERN_ = _re_.compile(r"^(gl_.*?)\(\[(.*?)\]\)$", _re_.S | _re_.M)
 
 
     def __init__(self, root, m4_base, autoconf=None, **kwargs):
@@ -526,7 +526,7 @@ class Cache(Base):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
             data = stream.read()
-        regex = "AC_DEFUN\\(\\[%s_FILE_LIST\\], \\[(.*?)\\]\\)" % self["macro-prefix"]
+        regex = r"AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
         pattern = _re_.compile(regex, _re_.S | _re_.M)
         match = pattern.findall(data)
         if match:
