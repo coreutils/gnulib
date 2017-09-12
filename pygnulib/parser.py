@@ -88,7 +88,7 @@ class CommandLine:
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
                 if not self.__flags & mode and mode != CommandLine._HELP_:
-                    mode = ("--" + dict((_[0], _[1]) for _ in CommandLine._MODES_)[mode])
+                    mode = "--" + {k:v for (k, v, _) in CommandLine._MODES_}[mode]
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(mode, option))
 
@@ -933,7 +933,7 @@ class CommandLine:
             fmt = "unrecognized arguments: {0}"
             arguments = " ".join(arguments)
             self.__parser.error(fmt.format(arguments))
-        mode = dict((_[0], _[1]) for _ in CommandLine._MODES_)[mode]
+        mode = {k:v for (k, v, _) in CommandLine._MODES_}[mode]
         verbosity = namespace.pop("verbosity", 0)
         if namespace.pop("dry_run", False):
             options |= CommandLine.Option.DryRun

@@ -39,10 +39,9 @@ class Base:
     def __init__(self, name, **kwargs):
         _type_assert_("name", name, str)
         self.__name = name
-        self.__table = {"maintainers": ["all"]}
-        for key in Base._TABLE_:
-            self.__table[key] = ""
-        for key, value in kwargs.items():
+        self.__table = {k:"" for k in Base._TABLE_}
+        self.__table["maintainers"] = ["all"]
+        for (key, value) in kwargs.items():
             self.__table[key] = value
 
 
@@ -279,7 +278,7 @@ class Base:
 
     def __str__(self):
         result = ""
-        for key, (_, typeid, field) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
+        for (key, (_, typeid, field)) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
             if typeid is list:
                 value = "\n".join(self.__table[key])
@@ -335,12 +334,12 @@ class File(Base):
 
 
     def __init__(self, path, mode="r", name=None, **kwargs):
+        table = {}
         if name is None:
             name = _os_.path.basename(path)
         if mode not in ("r", "w", "rw"):
             raise ValueError("illegal mode: %r" % mode)
         if mode == "r":
-            table = {}
             with _codecs_.open(path, "rb", "UTF-8") as stream:
                 data = ""
                 for line in stream:

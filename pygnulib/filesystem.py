@@ -125,7 +125,7 @@ class Git(Directory):
             names = []
             for name in files:
                 exclude = False
-                for key, method in Git._EXCLUDE_.items():
+                for (key, method) in Git._EXCLUDE_.items():
                     if method(name, key):
                         exclude = True
                         break

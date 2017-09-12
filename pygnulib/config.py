@@ -49,10 +49,8 @@ class Base:
 
 
     def __init__(self, **kwargs):
-        self.__table = dict()
-        for key in Base._TABLE_:
-            self.__table[key] = Base._TABLE_[key]
-        for key, value in kwargs.items():
+        self.__table = dict(Base._TABLE_)
+        for (key, value) in kwargs.items():
             self[key] = value
 
 
@@ -489,7 +487,7 @@ class Cache(Base):
     def __autoconf(self, autoconf):
         with _codecs_.open(autoconf, "rb", "UTF-8") as stream:
             data = stream.read()
-        for key, pattern in Cache._AUTOCONF_.items():
+        for (key, pattern) in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
             if not match:
                 continue
