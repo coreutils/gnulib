@@ -531,11 +531,3 @@ class Cache(Base):
         match = pattern.findall(data)
         if match:
             self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
-
-
-    def keys(self):
-        keys = set()
-        keys.update(Cache._AUTOCONF_.keys())
-        keys.update(Cache._GNULIB_CACHE_.keys())
-        keys.update(["files"])
-        return (_ for _ in keys)
