@@ -39,7 +39,9 @@ class Generator:
     )
 
     def __repr__(self):
-        return "pygnulib.generator.Generator"
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "%s.%s" % (module, name)
 
     def __str__(self):
         return "\n".join([_ for _ in self])
@@ -112,8 +114,10 @@ class POMakefile(Generator):
 
 
     def __repr__(self):
-        fmt = "pygnulib.generator.POMakefile(po_base=%r, po_domain=%r)"
-        return fmt % (self.po_base, self.po_domain)
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        fmt = "%s.%s{po_base=%r, po_domain=%r}"
+        return fmt % (module, name, self.po_base, self.po_domain)
 
 
     def __iter__(self):
@@ -147,8 +151,10 @@ class POTFILES(Generator):
 
 
     def __repr__(self):
-        fmt = "pygnulib.generator.POTFILES(files=%r)"
-        return fmt % self.files
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        fmt = "%s.%s{files=%r}"
+        return fmt % (module, name, self.files)
 
 
     def __iter__(self):
@@ -203,15 +209,18 @@ class AutoconfSnippet(Generator):
 
     def __repr__(self):
         flags = []
+        module = self.__class__.__module__
+        name = self.__class__.__name__
         if self.toplevel:
             flags += ["toplevel"]
         if self.libtool:
             flags += ["libtool"]
         if self.gettext:
             flags += ["gettext"]
-        fmt = "pygnulib.generator.AutoconfSnippet(include_guard_prefix=%r, flags=%s)"
         include_guard_prefix = self.__config.include_guard_prefix
-        return fmt % (include_guard_prefix, "|".join(flags))
+        flags = "|".join(flags)
+        fmt = "%s.%s{include_guard_prefix=%r, flags=%s}"
+        return fmt % (module, name, include_guard_prefix, flags)
 
 
     def __iter__(self):
@@ -268,8 +277,10 @@ class InitMacro(Generator):
 
 
     def __repr__(self):
-        fmt = "pygnulib.generator.InitMacro(macro_prefix=%r)"
-        return fmt % self.macro_prefix
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        fmt = "%s.%s{macro_prefix=%r}"
+        return fmt % (module, name, self.macro_prefix)
 
 
 
@@ -281,11 +292,6 @@ class InitMacroHeader(InitMacro):
         macro_prefix: macro prefix; if None, consider configuration
         """
         super().__init__(config=config, macro_prefix=macro_prefix)
-
-
-    def __repr__(self):
-        fmt = "pygnulib.generator.InitMacroHeader(macro_prefix=%r)"
-        return fmt % self.macro_prefix
 
 
     def __iter__(self):
@@ -366,11 +372,6 @@ class InitMacroFooter(InitMacro):
         super().__init__(config=config, macro_prefix=macro_prefix)
 
 
-    def __repr__(self):
-        fmt = "pygnulib.generator.InitMacroFooter(macro_prefix=%r)"
-        return fmt % self.macro_prefix
-
-
     def __iter__(self):
         # Check the presence of files that are mentioned as AC_LIBSOURCES
         # arguments. The check is performed only when autoconf is run from the
@@ -426,11 +427,6 @@ class InitMacroDone(InitMacro):
     def source_base(self):
         """directory relative to ROOT where source code is placed; defaults to 'lib'"""
         return self.__source_base
-
-
-    def __repr__(self):
-        fmt = "pygnulib.generator.InitMacroDone(source_base=%r, macro_prefix=%r)"
-        return fmt % (self.source_base, self.macro_prefix)
 
 
     def __iter__(self):

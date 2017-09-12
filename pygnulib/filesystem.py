@@ -15,26 +15,34 @@ from .module import File as _FileModule_
 
 class Directory:
     """gnulib generic virtual file system"""
-    _SUBST_ = {
-        "build-aux" : "aux-dir",
-        "doc"       : "doc-base",
-        "lib"       : "source-base",
-        "m4"        : "m4-base",
-        "tests"     : "tests-base",
-        "tests=lib" : "tests-base",
-        "po"        : "po-base",
+    _TABLE_ = {
+        "lib"       : "source_base",
+        "doc"       : "doc_base",
+        "m4"        : "m4_base",
+        "tests"     : "tests_base",
+        "tests=lib" : "tests_base",
+        "po"        : "po_base",
+        "build-aux" : "aux_dir",
     }
 
 
-    def __init__(self, root, config):
-        _type_assert_("root", root, str)
+    def __init__(self, name, config):
+        _type_assert_("name", name, str)
         _type_assert_("config", config, _BaseConfig_)
-        if not _os_.path.exists(root):
-            raise FileNotFoundError(root)
-        if not _os_.path.isdir(root):
-            raise NotADirectoryError(root)
+        path = _os_.path.realpath(name)
+        if not _os_.path.exists(path):
+            raise FileNotFoundError(path)
+        if not _os_.path.isdir(path):
+            raise NotADirectoryError(path)
         self.__config = config
-        self.__root = _os_.path.realpath(root)
+        self.__name = name
+        self.__path = path
+
+
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "%s.%s{%r}" % (module, name, self.name)
 
 
     def __getitem__(self, name):
@@ -50,26 +58,31 @@ class Directory:
                 parts += [part]
                 continue
             if not replaced:
-                for old, new in Directory._SUBST_.items():
+                for old, new in Directory._TABLE_.items():
                     if part == old:
                         part = self.__config[new]
                         replaced = True
             parts += [part]
-        path = _os_.path.sep.join([self.__root] + parts)
+        path = _os_.path.sep.join([self.__path] + parts)
         if not _os_.path.exists(path):
             raise FileNotFoundError(name)
         return path
 
 
     @property
-    def root(self):
+    def name(self):
+        return self.__name
+
+
+    @property
+    def path(self):
         """root directory path"""
-        return self.__root
+        return self.__path
 
 
 
 class Git(Directory):
-    """gnulib Git-based virtual file system"""
+    """gnulib git repository"""
     _EXCLUDE_ = {
         "."                 : str.startswith,
         "~"                 : str.endswith,
@@ -83,9 +96,15 @@ class Git(Directory):
     }
 
 
-    def __init__(self, root, config):
-        super().__init__(root, config)
-        if not _os_.path.isdir(_os_.path.join(self.root, ".git")):
+    def __init__(self, name):
+        path = _os_.path.realpath(name)
+        if not _os_.path.exists(path):
+            raise FileNotFoundError(path)
+        if not _os_.path.isdir(path):
+            raise NotADirectoryError(path)
+        config = _BaseConfig_(root=path)
+        super().__init__(name, config)
+        if not _os_.path.isdir(_os_.path.join(self.path, ".git")):
             raise TypeError("%r is not a gnulib repository")
 
 

@@ -84,7 +84,7 @@ class CommandLine:
             super().__init__(default=_argparse_.SUPPRESS, *args, **kwargs)
 
 
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
                 if not self.__flags & mode and mode != CommandLine._HELP_:
@@ -99,9 +99,10 @@ class CommandLine:
             super().__init__(*args, **kwargs)
 
 
-        def __call__(self, parser, namespace, value, option):
-            super().__call__(parser, namespace, value, option)
+        def __call__(self, parser, namespace, value, option=None):
+            args = (parser, namespace, value, option)
             setattr(parser, self.dest, self.__const)
+            super().__call__(*args)
 
 
     class _TrueOption_(_ConstOption_):
@@ -133,7 +134,7 @@ class CommandLine:
             super().__init__(*args, **kwargs)
 
 
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, 0)
@@ -154,7 +155,7 @@ class CommandLine:
                 setattr(namespace, self.dest, CommandLine._HELP_)
             if old_mode != CommandLine._HELP_:
                 if old_mode != new_mode:
-                    if not old_mode == 0:
+                    if old_mode != 0:
                         fmt = "argument {0}: not allowed with {1}"
                         parser.error(fmt.format(new_option, old_option))
                     setattr(namespace, "modules", list(value))
@@ -163,7 +164,7 @@ class CommandLine:
 
 
     class _AvoidOption_(_Option_):
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, list())
@@ -173,7 +174,7 @@ class CommandLine:
 
 
     class _VerbosityAction_(_Option_):
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, 0)
@@ -185,7 +186,7 @@ class CommandLine:
 
 
     class _LicenseOption_(_Option_):
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, value, option)
             if value not in ("2", "3"):
                 parser.__error("illegal --license argument value")
@@ -193,7 +194,7 @@ class CommandLine:
 
 
     class _LinkOption_(_Option_):
-        def __call__(self, parser, namespace, value, option):
+        def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(parser, self.dest, CommandLine._LINK_NOTICE_)
@@ -868,6 +869,7 @@ class CommandLine:
 
 
     class Option(_enum_.Flag):
+        """option bitwise flags"""
         DryRun = (1 << 0)
         Symlink = (1 << 1)
         Hardlink = (1 << 2)
@@ -927,7 +929,7 @@ class CommandLine:
         mode = namespace.pop("mode", None)
         if mode is None:
             self.__parser.error("no operating mode selected")
-        if len(arguments) > 0 and mode != CommandLine._HELP_:
+        if arguments and mode != CommandLine._HELP_:
             fmt = "unrecognized arguments: {0}"
             arguments = " ".join(arguments)
             self.__parser.error(fmt.format(arguments))

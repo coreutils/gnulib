@@ -272,7 +272,9 @@ class Base:
 
 
     def __repr__(self):
-        return self.__name
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "%s.%s{%r}" % (module, name, self.name)
 
 
     def __str__(self):

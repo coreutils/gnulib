@@ -526,7 +526,7 @@ class Cache(Base):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
             data = stream.read()
-        regex = r"AC_DEFUN\(\[%s_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
+        regex = r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
         pattern = _re_.compile(regex, _re_.S | _re_.M)
         match = pattern.findall(data)
         if match:
