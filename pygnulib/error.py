@@ -24,7 +24,7 @@ def type_assert(key, value, types):
 class AutoconfVersionError(Exception):
     """minimum supported autoconf version mismatch"""
     def __init__(self, version):
-        fmt = "minimum supported autoconf version is %f"
+        fmt = "minimum supported autoconf version is {0}"
         super().__init__(fmt.format(version))
 
 
