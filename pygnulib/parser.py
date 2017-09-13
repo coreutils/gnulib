@@ -91,6 +91,8 @@ class CommandLine:
                     mode = "--" + {k:v for (k, v, _) in CommandLine._MODES_}[mode]
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(mode, option))
+            if self.dest != "mode":
+                setattr(namespace, self.dest, value)
 
 
     class _ConstOption_(_Option_):
