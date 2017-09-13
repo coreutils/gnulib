@@ -10,7 +10,7 @@ Documentation:
 @ref{Variable Size Automatic,,Automatic Storage with Variable Size,libc},
 @end ifinfo
 @ifnotinfo
-@url{http://www.gnu.org/software/libc/manual/html_node/Variable-Size-Automatic.html},
+@url{https://www.gnu.org/software/libc/manual/html_node/Variable-Size-Automatic.html},
 @end ifnotinfo
 @item
 @uref{http://www.kernel.org/doc/man-pages/online/pages/man3/alloca.3.html,,man alloca}.

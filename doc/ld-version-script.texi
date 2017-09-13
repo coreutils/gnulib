@@ -12,7 +12,7 @@ of each dependency (by looking at the symbol list) and stuff the
 information into the Debian specific packaging files.
 
 For more information and other uses of version scripts, see Ulrich
-Drepper's paper @url{http://people.redhat.com/drepper/dsohowto.pdf}
+Drepper's paper @url{https://www.akkadia.org/drepper/dsohowto.pdf}
 
 You use the module by importing it to your library, and then add the
 following lines to the @code{Makefile.am} that builds the library:

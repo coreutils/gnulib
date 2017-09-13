@@ -14,8 +14,8 @@ Documentation:
 @ref{DES Encryption,,,libc},
 @end ifinfo
 @ifnotinfo
-@url{http://www.gnu.org/software/libc/manual/html_node/crypt.html},
-@url{http://www.gnu.org/software/libc/manual/html_node/DES-Encryption.html},
+@url{https://www.gnu.org/software/libc/manual/html_node/crypt.html},
+@url{https://www.gnu.org/software/libc/manual/html_node/DES-Encryption.html},
 @end ifnotinfo
 @item
 @uref{http://www.kernel.org/doc/man-pages/online/pages/man3/crypt.3.html,,man crypt},

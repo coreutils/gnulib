@@ -59,7 +59,7 @@ $ git clone git://git.sv.gnu.org/gnulib.git
 
 For a read-write checkout you need to have a login on
 @samp{savannah.gnu.org} and be a member of the Gnulib project at
-@url{http://savannah.gnu.org/projects/gnulib}.  Then, instead of the
+@url{https://savannah.gnu.org/projects/gnulib}.  Then, instead of the
 URL @url{git://git.sv.gnu.org/gnulib}, use the URL
 @samp{ssh://@var{user}@@git.sv.gnu.org/srv/git/gnulib} where
 @var{user} is your login name on savannah.gnu.org.
@@ -68,9 +68,9 @@ git resources:
 
 @table @asis
 @item Overview:
-@url{http://en.wikipedia.org/wiki/Git_(software)}
+@url{https://en.wikipedia.org/wiki/Git_(software)}
 @item Homepage:
-@url{http://git-scm.com/}
+@url{https://git-scm.com/}
 @end table
 
 When you use @code{git annotate} or @code{git blame} with Gnulib, it's
@@ -249,7 +249,7 @@ Check the license and copyright year of headers.
 
 @item
 Check that the source code follows the GNU coding standards;
-see @url{http://www.gnu.org/prep/standards}.
+see @url{https://www.gnu.org/prep/standards}.
 
 @item
 Add source files to @file{config/srclist*} if they are identical to upstream

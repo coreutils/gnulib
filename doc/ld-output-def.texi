@@ -15,7 +15,7 @@ The variants we have considered include:
 
 @itemize @bullet
 @item Use DUMPBIN /EXPORTS.
-This is explained in @url{http://support.microsoft.com/kb/131313/en-us}.
+This is explained in @url{https://support.microsoft.com/kb/131313/en-us}.
 The tool does not generate DEF files directly, so its output needs to
 be post processed manually:
 @smallexample
@@ -27,7 +27,6 @@ $ lib /def:libfoo-0.def
 
 @item Use IMPDEF.
 There is a tool called IMPDEF
-(@url{http://sei.pku.edu.cn/~caodg/course/c/reference/win32/tools/dlltool.html})
 that can generate DEF files.  However, it is not part of a standard
 Visual Studio installation.  Further, it is documented as being an
 unreliable process.

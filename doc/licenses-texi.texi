@@ -3,7 +3,7 @@
 
 Gnulib provides copies of the GNU GPL, GNU LGPL, and GNU FDL licenses
 in Texinfo form.  (The master location is
-@url{http://www.gnu.org/licenses/}).  These Texinfo documents do not
+@url{https://www.gnu.org/licenses/}).  These Texinfo documents do not
 have any node names and structures built into them; for your manual,
 you should @code{@@include} them in an appropriate @code{@@node}.
 

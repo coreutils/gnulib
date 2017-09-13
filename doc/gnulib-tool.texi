@@ -63,7 +63,7 @@ in your package:
 @itemize
 @item
 You have the complete module list, sorted according to categories, in
-@url{http://www.gnu.org/software/gnulib/MODULES.html}.
+@url{https://www.gnu.org/software/gnulib/MODULES.html}.
 
 @item
 If you are looking for a particular POSIX header or function replacement,
@@ -590,7 +590,7 @@ Standards, the steps are:
 @item
 When you run @code{gettextize}, always use the @code{gettextize} from the
 matching GNU gettext release.  For the most recent Gnulib checkout, this is
-the newest release found on @url{http://ftp.gnu.org/gnu/gettext/}.  For an
+the newest release found on @url{https://ftp.gnu.org/gnu/gettext/}.  For an
 older Gnulib snapshot, it is the release that was the most recent release
 at the time the Gnulib snapshot was taken.
 
@@ -651,7 +651,7 @@ $ env AUTOPOINT=true autoreconf --install
 
 Gnulib provides some functions that emit translatable messages using GNU
 @code{gettext}.  The @samp{gnulib} domain at the
-@url{http://translationproject.org/, Translation Project} collects
+@url{https://translationproject.org/, Translation Project} collects
 translations of these messages, which you should incorporate into your
 own programs.
 

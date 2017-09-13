@@ -101,10 +101,10 @@ Resources:
 
 @itemize
 @item Gnulib is hosted at Savannah:
-      @url{http://savannah.gnu.org/projects/gnulib}.  Get the sources
+      @url{https://savannah.gnu.org/projects/gnulib}.  Get the sources
       through Git from there.
 @item The Gnulib home page:
-      @url{http://www.gnu.org/software/gnulib/}.
+      @url{https://www.gnu.org/software/gnulib/}.
 @end itemize
 
 @include gnulib-readme.texi

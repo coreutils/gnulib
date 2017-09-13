@@ -14,7 +14,7 @@ Documentation:
 @ref{Parsing a Template String,,,libc},
 @end ifinfo
 @ifnotinfo
-@url{http://www.gnu.org/software/libc/manual/html_node/Parsing-a-Template-String.html}.
+@url{https://www.gnu.org/software/libc/manual/html_node/Parsing-a-Template-String.html}.
 @end ifnotinfo
 @end itemize
 

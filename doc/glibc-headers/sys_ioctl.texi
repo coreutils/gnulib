@@ -10,7 +10,7 @@ Documentation:
 @ref{IOCTLs,,,libc},
 @end ifinfo
 @ifnotinfo
-@url{http://www.gnu.org/software/libc/manual/html_node/IOCTLs.html},
+@url{https://www.gnu.org/software/libc/manual/html_node/IOCTLs.html},
 @end ifnotinfo
 @item
 @uref{http://www.kernel.org/doc/man-pages/online/pages/man2/ioctl.2.html,,man ioctl}.

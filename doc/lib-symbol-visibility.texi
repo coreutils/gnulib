@@ -93,9 +93,9 @@ was already supported in GCC 3.4, but without the command line option,
 introduced in GCC 4.0, the third approach could not be used.)
 
 More explanations on this subject can be found in
-@url{http://gcc.gnu.org/wiki/Visibility}, which contains more details
+@url{https://gcc.gnu.org/wiki/Visibility}, which contains more details
 on the GCC features and additional advice for C++ libraries, and in
-Ulrich Drepper's paper @url{http://people.redhat.com/drepper/dsohowto.pdf},
+Ulrich Drepper's paper @url{https://www.akkadia.org/drepper/dsohowto.pdf},
 which also explains other tricks for reducing the startup time impact
 of shared libraries.
 

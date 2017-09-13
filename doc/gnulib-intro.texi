@@ -162,7 +162,7 @@ IRIX 6.5 is no longer tested.
 OSF/1 5.1 is no longer tested.
 @item
 Interix 6.1 is no longer tested, and requires the @code{suacomp} library
-(@url{http://sourceforge.net/projects/suacomp/}) in version 0.6.8 or newer.
+(@url{https://sourceforge.net/projects/suacomp/}) in version 0.6.8 or newer.
 @item
 Haiku and BeOS are no longer tested.
 @item
@@ -446,7 +446,7 @@ There is the newest version of Gnulib from the Git repository.
 
 @item
 We also make stable releases every two months, at
-@url{http://erislabs.net/ianb/projects/gnulib/}.
+@url{https://erislabs.net/ianb/projects/gnulib/}.
 @end itemize
 
 If you are willing to report an occasional regression, we recommend to
