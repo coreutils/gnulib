@@ -12,7 +12,7 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
   if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
     REPLACE_STRSTR=1
   else
-    dnl Detect http://sourceware.org/bugzilla/show_bug.cgi?id=12092.
+    dnl Detect https://sourceware.org/bugzilla/show_bug.cgi?id=12092.
     AC_CACHE_CHECK([whether strstr works],
       [gl_cv_func_strstr_works_always],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[

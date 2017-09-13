@@ -62,8 +62,8 @@ main ()
      "a character that is outside the adopted subset".
      Reference:
        Markus Kuhn: UTF-8 decoder capability and stress test
-       <http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>
-       <http://www.w3.org/2001/06/utf-8-wrong/UTF-8-test.html>
+       <https://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-test.txt>
+       <https://www.w3.org/2001/06/utf-8-wrong/UTF-8-test.html>
    */
   /* 3.1. Test that each unexpected continuation byte is signalled as a
      malformed sequence of its own.  */

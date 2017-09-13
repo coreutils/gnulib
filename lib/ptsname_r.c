@@ -98,9 +98,9 @@ __ptsname_r (int fd, char *buf, size_t buflen)
   {
     /* Master ptys can be recognized through a STREAMS ioctl.  See
        "STREAMS-based Pseudo-Terminal Subsystem"
-       <http://docs.oracle.com/cd/E18752_01/html/816-4855/termsub15-44781.html>
+       <https://docs.oracle.com/cd/E18752_01/html/816-4855/termsub15-44781.html>
        and "STREAMS ioctl commands"
-       <http://docs.oracle.com/cd/E18752_01/html/816-5177/streamio-7i.html>
+       <https://docs.oracle.com/cd/E18752_01/html/816-5177/streamio-7i.html>
      */
     struct strioctl ioctl_arg;
     ioctl_arg.ic_cmd = ISPTM;

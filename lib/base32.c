@@ -16,7 +16,7 @@
 
 /* Adapted from Simon Josefsson's base64 code by Gijs van Tulder.
  *
- * See also RFC 4648 <http://www.ietf.org/rfc/rfc4648.txt>.
+ * See also RFC 4648 <https://www.ietf.org/rfc/rfc4648.txt>.
  *
  * Be careful with error checking.  Here is how you would typically
  * use these functions:

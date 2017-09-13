@@ -871,7 +871,7 @@ sc_GFDL_version:
 	  $(_sc_search_regexp)
 
 # Don't use Texinfo's @acronym{}.
-# http://lists.gnu.org/archive/html/bug-gnulib/2010-03/msg00321.html
+# https://lists.gnu.org/archive/html/bug-gnulib/2010-03/msg00321.html
 texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
 sc_texinfo_acronym:
 	@prohibit='@acronym\{'						\
@@ -1269,7 +1269,7 @@ sc_vulnerable_makefile_CVE-2009-4029:
 	halt=$$(printf '%s\n'						\
 	  'the above files are vulnerable; beware of running'		\
 	  '  "make dist*" rules, and upgrade to fixed automake'		\
-	  '  see http://bugzilla.redhat.com/542609 for details')	\
+	  '  see https://bugzilla.redhat.com/show_bug.cgi?id=542609 for details') \
 	  $(_sc_search_regexp)
 
 sc_vulnerable_makefile_CVE-2012-3386:
@@ -1278,7 +1278,7 @@ sc_vulnerable_makefile_CVE-2012-3386:
 	halt=$$(printf '%s\n'						\
 	  'the above files are vulnerable; beware of running'		\
 	  '  "make distcheck", and upgrade to fixed automake'		\
-	  '  see http://bugzilla.redhat.com/CVE-2012-3386 for details')	\
+	  '  see https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2012-3386 for details') \
 	  $(_sc_search_regexp)
 
 vc-diff-check:
@@ -1535,7 +1535,7 @@ refresh-gnulib-patches:
 # Update gettext files.
 PACKAGE ?= $(shell basename $(PWD))
 PO_DOMAIN ?= $(PACKAGE)
-POURL = http://translationproject.org/latest/$(PO_DOMAIN)/
+POURL = https://translationproject.org/latest/$(PO_DOMAIN)/
 PODIR ?= po
 refresh-po:
 	rm -f $(PODIR)/*.po && \

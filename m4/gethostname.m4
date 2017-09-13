@@ -48,7 +48,7 @@ AC_DEFUN([gl_PREREQ_HOST_NAME_MAX], [
   dnl - On most Unix systems, use MAXHOSTNAMELEN from <sys/param.h> instead.
   dnl - On Solaris, Cygwin, BeOS, use MAXHOSTNAMELEN from <netdb.h> instead.
   dnl - On mingw, use 256, because
-  dnl   <http://msdn.microsoft.com/en-us/library/ms738527.aspx> says:
+  dnl   <https://msdn.microsoft.com/en-us/library/ms738527.aspx> says:
   dnl   "if a buffer of 256 bytes is passed in the name parameter and
   dnl    the namelen parameter is set to 256, the buffer size will always
   dnl    be adequate."

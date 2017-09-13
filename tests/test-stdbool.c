@@ -82,7 +82,7 @@ char o[sizeof n == m * sizeof n[0] ? 1 : -1];
 char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
 /* Catch a bug in an HP-UX C compiler.  See
    https://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
-   http://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
+   https://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
  */
 _Bool q = true;
 _Bool *pq = &q;
@@ -105,7 +105,7 @@ main ()
 
   /* Catch a bug in IBM AIX xlc compiler version 6.0.0.0
      reported by James Lemley on 2005-10-05; see
-     http://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
+     https://lists.gnu.org/archive/html/bug-coreutils/2005-10/msg00086.html
      This is a runtime test, since a corresponding compile-time
      test would rely on initializer extensions.  */
   {

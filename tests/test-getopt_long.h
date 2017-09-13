@@ -315,7 +315,7 @@ test_getopt_long (void)
   }
 
   /* Test that 'W' does not dump core:
-     http://sourceware.org/bugzilla/show_bug.cgi?id=12922  */
+     https://sourceware.org/bugzilla/show_bug.cgi?id=12922  */
   {
     int argc = 0;
     const char *argv[10];
@@ -1815,7 +1815,7 @@ test_getopt_long (void)
 /* Test behavior of getopt_long when POSIXLY_CORRECT is set in the
    environment.  Options with optional arguments should not change
    behavior just because of an environment variable.
-   http://lists.gnu.org/archive/html/bug-m4/2006-09/msg00028.html  */
+   https://lists.gnu.org/archive/html/bug-m4/2006-09/msg00028.html  */
 static void
 test_getopt_long_posix (void)
 {

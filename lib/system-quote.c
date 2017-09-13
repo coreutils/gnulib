@@ -112,7 +112,7 @@ windows_createprocess_quote (char *p, const char *string)
      even inside quoted strings,
    - '&' '[' ']' '{' '}' '^' '=' ';' '!' '\'' '+' ',' '`' '~' for other
      purposes, according to
-     <http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/cmd.mspx?mfr=true>
+     <https://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/cmd.mspx?mfr=true>
    We quote a string like '%var%' by putting the '%' characters outside of
    double-quotes and the rest of the string inside double-quotes: %"var"%.
    This is guaranteed to not be a reference to an environment variable.

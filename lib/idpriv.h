@@ -74,10 +74,10 @@ extern "C" {
 
 /* For more in-depth discussion of these topics, see the papers/articles
    * Hao Chen, David Wagner, Drew Dean: Setuid Demystified
-     <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+     <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
    * Dan Tsafrir, Dilma da Silva, David Wagner: The Murky Issue of Changing
      Process Identity: Revising "Setuid Demystified"
-     <http://www.eecs.berkeley.edu/~daw/papers/setuid-login08b.pdf>
+     <https://people.eecs.berkeley.edu/~daw/papers/setuid-login08b.pdf>
      <http://code.google.com/p/change-process-identity/>
    * Dhruv Mohindra: Observe correct revocation order while relinquishing
      privileges

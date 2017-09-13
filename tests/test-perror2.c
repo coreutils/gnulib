@@ -121,10 +121,10 @@ main (void)
     perror (NULL);
 #if 0
     /* Commented out until cygwin behaves:
-       http://sourceware.org/ml/newlib/2011/msg00228.html */
+       https://sourceware.org/ml/newlib/2011/msg00228.html */
     ASSERT (errno > 0);
     /* Commented out until glibc behaves:
-       http://sourceware.org/bugzilla/show_bug.cgi?id=12792 */
+       https://sourceware.org/bugzilla/show_bug.cgi?id=12792 */
     ASSERT (ferror (stderr));
 #endif
   }

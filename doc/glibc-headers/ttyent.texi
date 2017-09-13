@@ -7,7 +7,7 @@ Defines the type @code{struct ttyent} and declares the functions
 Documentation:
 @itemize
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setttyent.3.html,,man setttyent}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setttyent.3.html,,man setttyent}.
 @end itemize
 
 Gnulib module: ---

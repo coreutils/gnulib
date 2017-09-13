@@ -98,7 +98,7 @@ rpl_unlinkat (int fd, char const *name, int flag)
 #else /* !HAVE_UNLINKAT */
 
 /* Replacement for Solaris' function by the same name.
-   <http://www.google.com/search?q=unlinkat+site:docs.sun.com>
+   <https://www.google.com/search?q=unlinkat+site:docs.oracle.com>
    First, try to simulate it via (unlink|rmdir) ("/proc/self/fd/FD/FILE").
    Failing that, simulate it via save_cwd/fchdir/(unlink|rmdir)/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),

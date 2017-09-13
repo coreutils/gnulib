@@ -14,7 +14,7 @@ macros @code{_PATH_RESCONF}, @code{RES_*}, and declares the functions
 Documentation:
 @itemize
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/res_init.3.html,,man res_init}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/res_init.3.html,,man res_init}.
 @end itemize
 
 Gnulib module: ---

@@ -20,7 +20,7 @@ dnl with or without modifications, as long as this notice is preserved.
 #           1.8             lambdas
 # Instead of source-version 1.6, use 1.5, since Java 6 did not introduce any
 # language changes. See
-# http://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html
+# https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html
 #
 # target-version can be:  classfile version:
 #           1.1                 45.3

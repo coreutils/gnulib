@@ -84,7 +84,7 @@
         git-merge-changelog.executable = /usr/local/bin/git-merge-changelog
         git-merge-changelog.args = $base $local $other
 
-       See <http://www.selenic.com/mercurial/hgrc.5.html> section merge-tools
+       See <https://www.selenic.com/mercurial/hgrc.5.html> section merge-tools
        for reference.
  */
 
@@ -232,7 +232,7 @@ entry_hashcode (const void *elt)
   struct entry *entry = (struct entry *) elt;
   if (!entry->hashcode_cached)
     {
-      /* See http://www.haible.de/bruno/hashfunc.html.  */
+      /* See https://www.haible.de/bruno/hashfunc.html.  */
       const char *s;
       size_t n;
       size_t h = 0;

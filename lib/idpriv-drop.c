@@ -54,7 +54,8 @@ idpriv_drop (void)
 #if HAVE_SETRESUID /* glibc, FreeBSD, OpenBSD, HP-UX */
   /* On systems which have setresuid(), we use it instead of setreuid(),
      because
-       <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+       Hao Chen, David Wagner, Drew Dean: Setuid Demystified
+       <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
      says about setreuid(): "The rule by which the saved uid id is modified
      is complicated." Similarly, <http://unixpapa.com/incnote/setuid.html>
      says about setreuid(): "What exactly happens to the saved UID when this
@@ -76,7 +77,8 @@ idpriv_drop (void)
      functions), we could read /proc/<pid>/cred and verify the saved uid and
      gid found there. But it's not clear to me when to interpret the file as a
      'prcred_t' and when as a 'prcred32_t'.
-     <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+     Hao Chen, David Wagner, Drew Dean: Setuid Demystified
+     <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
      section 8.1.3 also recommends to use a setreuid call as a probe, but
      this call would unexpectedly succeed (and the verification thus fail)
      on Linux if the process has the CAP_SETUID capability.

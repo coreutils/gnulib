@@ -13,7 +13,7 @@ Defines the type @code{struct spwd} and declares the functions
 Documentation:
 @itemize
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setspent.3.html,,man setspent}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setspent.3.html,,man setspent}.
 @end itemize
 
 Gnulib module: ---

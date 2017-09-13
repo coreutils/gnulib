@@ -83,89 +83,89 @@ $GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 #$LIBCSRC posix/getopt1.c		lib gpl
 #$LIBCSRC posix/getopt_int.h		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1293
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1293
 #$LIBCSRC libidn/iconvme.h		lib gpl
 #$LIBCSRC libidn/iconvme.c		lib gpl
 
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1057
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1217
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1220
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1223
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1224
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1240
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1273
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1278
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1280
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1281
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1282
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1285
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1291
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1302
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1057
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1217
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1223
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1224
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1240
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1273
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1280
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
 #$LIBCSRC posix/regcomp.c		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1238
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1238
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
 #$LIBCSRC posix/regex.c			lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1201
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1207
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1222
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1232
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1236
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1240
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1281
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1201
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1207
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1222
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1232
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1236
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1240
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
 #$LIBCSRC posix/regex.h			lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1215
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1218
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1220
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1226
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1231
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1248
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1281
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1282
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1284
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1285
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1286
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1287
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1291
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1302
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1215
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1218
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1226
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1231
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1248
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1284
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1286
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1287
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
 #$LIBCSRC posix/regex_internal.c		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1054
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1221
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1248
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1273
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1278
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1281
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1285
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1291
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1302
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1054
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1221
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1248
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1273
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
 #$LIBCSRC posix/regex_internal.h		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1216
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1220
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1225
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1227
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1231
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1237
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1241
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1245
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1278
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1279
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1280
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1281
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1282
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1284
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1285
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1302
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1216
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1225
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1227
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1231
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1279
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1280
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1284
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
 #$LIBCSRC posix/regexec.c		lib gpl
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
@@ -178,7 +178,7 @@ $GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 #$LIBCSRC time/mktime.c			lib gpl
 
 #
-# http://sourceware.org/bugzilla/show_bug.cgi?id=1439
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1439
 #$LIBCSRC crypt/md5.c			lib gpl
 #$LIBCSRC crypt/md5.h			lib gpl
 # These are close, but ...
@@ -188,10 +188,10 @@ $GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 #$LIBCSRC login/forkpty.c		lib gpl
 #$LIBCSRC login/programs/pt_chown.c	lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=321
+# https://sourceware.org/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC malloc/obstack.c		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=321
+# https://sourceware.org/bugzilla/show_bug.cgi?id=321
 #$LIBCSRC malloc/obstack.h		lib gpl
 #$LIBCSRC misc/error.c			lib gpl
 #$LIBCSRC misc/error.h			lib gpl
@@ -201,11 +201,11 @@ $GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 #$LIBCSRC posix/fnmatch.h		lib gpl (fnmatch.in.h in gnulib)
 #$LIBCSRC posix/fnmatch_loop.c		lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1060
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1062
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1060
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1062
 #$LIBCSRC posix/glob.c			lib gpl
 #
-# http://sources.redhat.com/bugzilla/show_bug.cgi?id=1060
+# https://sourceware.org/bugzilla/show_bug.cgi?id=1060
 #$LIBCSRC posix/glob.h			lib gpl (glob-libc.h in gnulib)
 #
 #$LIBCSRC stdlib/putenv.c		lib gpl

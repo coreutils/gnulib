@@ -13,7 +13,7 @@ Documentation:
 @url{https://www.gnu.org/software/libc/manual/html_node/IOCTLs.html},
 @end ifnotinfo
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man2/ioctl.2.html,,man ioctl}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/ioctl.2.html,,man ioctl}.
 @end itemize
 
 Gnulib module: sys_ioctl

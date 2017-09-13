@@ -48,7 +48,7 @@ main (void)
   if (setlocale (LC_ALL, "en_US.UTF-8"))
     {
       {
-        /* http://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
+        /* https://sourceware.org/ml/libc-hacker/2006-09/msg00008.html
            This test needs valgrind to catch the bug on Debian
            GNU/Linux 3.1 x86, but it might catch the bug better
            on other platforms and it shouldn't hurt to try the
@@ -83,7 +83,7 @@ main (void)
         {
           /* This test is from glibc bug 15078.
              The test case is from Andreas Schwab in
-             <http://www.sourceware.org/ml/libc-alpha/2013-01/msg00967.html>.
+             <https://sourceware.org/ml/libc-alpha/2013-01/msg00967.html>.
           */
           static char const pat[] = "[^x]x";
           static char const data[] =
@@ -220,7 +220,7 @@ main (void)
     }
 
   /* Catch a bug reported by Vin Shelton in
-     http://lists.gnu.org/archive/html/bug-coreutils/2007-06/msg00089.html
+     https://lists.gnu.org/archive/html/bug-coreutils/2007-06/msg00089.html
      */
   re_set_syntax (RE_SYNTAX_POSIX_BASIC
                  & ~RE_CONTEXT_INVALID_DUP

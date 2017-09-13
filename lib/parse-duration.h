@@ -22,7 +22,7 @@
 
   At the time of writing, this worked:
 
-  http://en.wikipedia.org/wiki/ISO_8601#Durations
+  https://en.wikipedia.org/wiki/ISO_8601#Durations
 
   The string must start with a 'P', 'T' or a digit.
 

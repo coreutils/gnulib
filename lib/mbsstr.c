@@ -32,7 +32,7 @@
 #include "str-kmp.h"
 
 /* Knuth-Morris-Pratt algorithm.
-   See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
+   See https://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
    Return a boolean indicating success:
    Return true and set *RESULTP if the search was completed.
    Return false if it was aborted because not enough memory was available.  */

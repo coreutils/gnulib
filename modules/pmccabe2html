@@ -1,6 +1,6 @@
 Description:
 Produce fancy cyclomatic code complexity charts, using pmccabe.
-See <http://www.parisc-linux.org/~bame/pmccabe/>.
+See <https://people.debian.org/~bame/pmccabe/>.
 
 Files:
 build-aux/pmccabe2html

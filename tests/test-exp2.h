@@ -35,7 +35,7 @@ test_function (void)
     DOUBLE y = EXP2 (x);
     ASSERT (y == L_(1.0));
   }
-  /* <http://sourceware.org/bugzilla/show_bug.cgi?id=13824> */
+  /* <https://sourceware.org/bugzilla/show_bug.cgi?id=13824> */
 #if !(defined __linux__ && (defined __sparc__ || defined __powerpc__))
   {
     int e;
@@ -73,7 +73,7 @@ test_function (void)
 #if defined __i386__ && defined __FreeBSD__
        /* On FreeBSD/x86 6.4, the 'long double' type really has only 53 bits of
           precision in the compiler but 64 bits of precision at runtime.  See
-          <http://lists.gnu.org/archive/html/bug-gnulib/2008-07/msg00063.html>.
+          <https://lists.gnu.org/archive/html/bug-gnulib/2008-07/msg00063.html>.
           The compiler has truncated all 'long double' literals in exp2l.c to
           53 bits of precision.  */
        L_(1350.0)

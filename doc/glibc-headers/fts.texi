@@ -8,7 +8,7 @@ and declares the functions @code{fts_open}, @code{fts_read},
 Documentation:
 @itemize
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/fts.3.html,,man fts}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fts.3.html,,man fts}.
 @end itemize
 
 Gnulib module: ---

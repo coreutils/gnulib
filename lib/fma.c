@@ -84,7 +84,7 @@
      Sylvie Boldo, Guillaume Melquiond:
      Emulation of FMA and correctly-rounded sums: proved algorithms using
      rounding to odd.
-     <http://www.lri.fr/~melquion/doc/08-tc.pdf>
+     <https://www.lri.fr/~melquion/doc/08-tc.pdf>
    But is it complicated.
    Here we take the simpler (and probably slower) approach of doing
    multi-precision arithmetic.  */

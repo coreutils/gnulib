@@ -21,7 +21,7 @@ Here are most of the steps we (maintainers) follow when making a release.
 
 * Check that the NixOS/Hydra autobuilder is reporting all is well:
 
-    http://hydra.nixos.org/jobset/gnu/@PACKAGE@-master
+    https://hydra.nixos.org/project/gnu/@PACKAGE@-master
 
 * Run the following command to download any new translations:
 

@@ -4906,7 +4906,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                    Windows Vista, the use of %n in format strings by default
                    crashes the program. See
                      <https://gcc.gnu.org/ml/gcc/2007-06/msg00122.html> and
-                     <http://msdn2.microsoft.com/en-us/library/ms175782(VS.80).aspx>
+                     <https://msdn.microsoft.com/en-us/library/ms175782.aspx>
                    So we should avoid %n in this situation.  */
                 fbp[1] = '\0';
 # endif

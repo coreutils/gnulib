@@ -58,7 +58,7 @@ verror_at_line (int status, int errnum, const char *file,
   char *message = xvasprintf (format, args);
   if (message)
     {
-      /* Until http://sourceware.org/bugzilla/show_bug.cgi?id=2997 is fixed,
+      /* Until https://sourceware.org/bugzilla/show_bug.cgi?id=2997 is fixed,
          glibc violates GNU Coding Standards when the file argument to
          error_at_line is NULL.  */
       if (file)

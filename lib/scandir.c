@@ -36,7 +36,7 @@
 #  define _D_ALLOC_NAMLEN(d) (_D_EXACT_NAMLEN (d) + 1)
 # else
 /* On OS/2 kLIBC, d_name is not the last field of struct dirent. See
-   <http://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/sys/dirent.h#L68>.  */
+   <https://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/sys/dirent.h#L68>.  */
 #  include <stddef.h>
 #  define _D_ALLOC_NAMLEN(d) (sizeof (struct dirent) - \
                               offsetof (struct dirent, d_name))
@@ -100,7 +100,7 @@ SCANDIR (const char *dir,
          int (*cmp) (const DIRENT_TYPE **, const DIRENT_TYPE **))
 #else
 /* On OS/2 kLIBC, scandir() declaration is different from POSIX. See
-   <http://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/dirent.h#L141>.  */
+   <https://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/include/dirent.h#L141>.  */
 SCANDIR (const char *dir,
          DIRENT_TYPE ***namelist,
          int (*select) (DIRENT_TYPE *),

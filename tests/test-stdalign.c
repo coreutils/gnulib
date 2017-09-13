@@ -86,7 +86,7 @@ main ()
   return 77;
 #elif defined __HP_cc && __ia64
   /* Avoid a test failure due to HP-UX Itanium cc bug; see:
-     http://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00078.html  */
+     https://lists.gnu.org/archive/html/bug-gnulib/2017-03/msg00078.html  */
   fputs ("Skipping test: known HP-UX Itanium cc compiler bug\n", stderr);
   return 77;
 #else

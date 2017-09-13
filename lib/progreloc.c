@@ -153,7 +153,7 @@ find_executable (const char *argv0)
      On Cygwin, it is better to use the Cygwin provided /proc interface, than
      to use native Windows API and cygwin_conv_to_posix_path, because it
      supports longer file names
-     (see <http://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
+     (see <https://cygwin.com/ml/cygwin/2011-01/msg00410.html>).  */
   char location[MAX_PATH];
   int length = GetModuleFileName (NULL, location, sizeof (location));
   if (length < 0)

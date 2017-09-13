@@ -5,7 +5,7 @@ General introduction:
 POSIX ACLs
 
 Documents from POSIX.1e (headers & functions) and POSIX.2c (utilities):
-  http://wt.xpilot.org/publications/posix.1e/download.html
+  http://wt.tuxomania.net/publications/posix.1e/download.html
 
 
 Linux ACLs
@@ -16,7 +16,7 @@ Hands-on tutorial:
   http://www.vanemery.com/Linux/ACL/linux-acl.html
 
 Manual pages:
-  http://www.linuxmanpages.com/
+  https://www.kernel.org/doc/man-pages/
 Includes:
   <sys/acl.h>
   <acl/libacl.h>
@@ -70,12 +70,12 @@ Solaris ACLs
 
 Introductions:
   http://www.softpanorama.org/Solaris/ACL/index.shtml
-  http://www.cs.duke.edu/csl/faqs/solaris-acls.php
+  https://www.cs.duke.edu/csl/faqs/solaris-acls.php
 Manual pages:
-  http://docs.oracle.com/cd/E23823_01/html/816-5167/acl-2.html
-  http://docs.oracle.com/cd/E23823_01/html/816-5165/getfacl-1.html
-  http://docs.oracle.com/cd/E23823_01/html/816-5165/setfacl-1.html
-  http://docs.oracle.com/cd/E23823_01/html/816-5167/pathconf-2.html
+  https://docs.oracle.com/cd/E23823_01/html/816-5167/acl-2.html
+  https://docs.oracle.com/cd/E23823_01/html/816-5165/getfacl-1.html
+  https://docs.oracle.com/cd/E23823_01/html/816-5165/setfacl-1.html
+  https://docs.oracle.com/cd/E23823_01/html/816-5167/pathconf-2.html
 Includes:
   <sys/acl.h>
 Library:
@@ -115,11 +115,11 @@ Utilities:
 FreeBSD ACLs
 
 Introduction:
-  http://www.freebsd.org/doc/en/books/handbook/fs-acl.html
+  https://www.freebsd.org/doc/en/books/handbook/fs-acl.html
   http://www.onlamp.com/pub/a/bsd/2005/09/22/FreeBSD_Basics.html
 Manual pages:
-  http://www.freebsd.org/cgi/man.cgi
-  http://www.freebsd.org/cgi/man.cgi?query=acl&apropos=0&sektion=0&manpath=FreeBSD+7.0-RELEASE&format=html
+  https://www.freebsd.org/cgi/man.cgi
+  https://www.freebsd.org/cgi/man.cgi?query=acl&apropos=0&sektion=0&manpath=FreeBSD+7.0-RELEASE&format=html
 Includes:
   <sys/acl.h>
 Library:
@@ -185,7 +185,7 @@ Not available.
 Mac OS X ACLs
 
 Manual pages:
-  http://developer.apple.com/documentation/Darwin/Reference/ManPages/man3/acl.3.html
+  https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man3/acl.3.html
 Includes:
   <sys/acl.h>
 Library:
@@ -247,10 +247,10 @@ HP-UX 11.00 ACLs
 
 Present in HP-UX >= 11.00. On some machines, yields ENOSYS always.
 Manual pages:
-  getacl, fgetacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261503/c02261503.pdf
-  setacl, fsetacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02267386/c02267386.pdf
-  lsacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261049/c02261049.pdf
-  chacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c01921575/c01921575.pdf p. 125
+  getacl, fgetacl: https://nixdoc.net/man-pages/hp-ux/man2/getacl.2.html
+  setacl, fsetacl: https://nixdoc.net/man-pages/hp-ux/man2/setacl.2.html
+  lsacl: https://nixdoc.net/man-pages/hp-ux/man1/lsacl.1.html
+  chacl: https://nixdoc.net/man-pages/hp-ux/man1/chacl.1.html
 Includes:
   <acl.h> or <sys/acl.h>
 Library:
@@ -270,11 +270,10 @@ HP-UX 11.11 ACLs
 
 Present in HP-UX >= 11.11.
 Manual pages:
-  acl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02254861/c02254861.pdf
-  acl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c01921366/c01921366.pdf p. 27
-  aclsort: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02254876/c02254876.pdf
-  getacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02261501/c02261501.pdf
-  setacl: http://h20000.www2.hp.com/bc/docs/support/SupportManual/c02267385/c02267385.pdf
+  acl: https://nixdoc.net/man-pages/hp-ux/man2/acl.2.html
+  aclsort: https://docstore.mik.ua/manuals/hp-ux/en/B2355-60130/aclsort.3C.html?
+  getacl: https://nixdoc.net/man-pages/hp-ux/man1/getacl.1.html
+  setacl: https://nixdoc.net/man-pages/hp-ux/man1/setacl.1.html
 Includes:
   <aclv.h>
 Library:
@@ -333,7 +332,38 @@ Utilities:
 Tru64 ACLs
 
 Manual pages:
-  http://h30097.www3.hp.com/docs/base_doc/DOCUMENTATION/V51_HTML/MAN/MAN4/0083____.HTM
+  https://backdrift.org/man/tru64/man4/acl.4.html
+  https://backdrift.org/man/tru64/man3/acl_add_perm.3.html
+  https://backdrift.org/man/tru64/man3/acl_clear_perm.3.html
+  https://backdrift.org/man/tru64/man3/acl_copy_entry.3.html
+  https://backdrift.org/man/tru64/man3/acl_copy_ext.3.html
+  https://backdrift.org/man/tru64/man3/acl_copy_int.3.html
+  https://backdrift.org/man/tru64/man3/acl_create_entry.3.html
+  https://backdrift.org/man/tru64/man3/acl_delete_def_fd.3.html
+  https://backdrift.org/man/tru64/man3/acl_delete_def_file.3.html
+  https://backdrift.org/man/tru64/man3/acl_delete_entry.3.html
+  https://backdrift.org/man/tru64/man3/acl_delete_perm.3.html
+  https://backdrift.org/man/tru64/man3/acl_dup.3.html
+  https://backdrift.org/man/tru64/man3/acl_first_entry.3.html
+  https://backdrift.org/man/tru64/man3/acl_free.3.html
+  https://backdrift.org/man/tru64/man3/acl_free_qualifier.3.html
+  https://backdrift.org/man/tru64/man3/acl_free_text.3.html
+  https://backdrift.org/man/tru64/man3/acl_from_text.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_entry.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_fd.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_file.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_permset.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_qualifier.3.html
+  https://backdrift.org/man/tru64/man3/acl_get_tag_type.3.html
+  https://backdrift.org/man/tru64/man3/acl_init.3.html
+  https://backdrift.org/man/tru64/man3/acl_set_fd.3.html
+  https://backdrift.org/man/tru64/man3/acl_set_file.3.html
+  https://backdrift.org/man/tru64/man3/acl_set_permset.3.html
+  https://backdrift.org/man/tru64/man3/acl_set_qualifier.3.html
+  https://backdrift.org/man/tru64/man3/acl_set_tag_type.3.html
+  https://backdrift.org/man/tru64/man3/acl_size.3.html
+  https://backdrift.org/man/tru64/man3/acl_to_text.3.html
+  https://backdrift.org/man/tru64/man3/acl_valid.3.html
 Includes:
   <sys/acl.h>
 Library:
@@ -393,7 +423,7 @@ Utilities:
 AIX ACLs
 
 Documentation:
-  http://publib.boulder.ibm.com/infocenter/systems/index.jsp?topic=/com.ibm.aix.security/doc/security/access_control_list.htm
+  https://www.ibm.com/support/knowledgecenter/en/ssw_aix_72/com.ibm.aix.security/access_control_list.htm
 Introduction:
   http://www1.uni-hamburg.de/RRZ/Software/AIX/ACL.htm
 Includes:
@@ -453,7 +483,7 @@ Utilities:
 Cygwin ACLs
 
 Documentation:
-  http://www.cygwin.com/cygwin-ug-net/ntsec.html#ntsec-aclfuncs
+  https://cygwin.com/cygwin-ug-net/ntsec.html#ntsec-aclfuncs
   acl-cygwin.txt
 Includes:
   <sys/acl.h>
@@ -479,12 +509,12 @@ Utilities:
 Native Windows ACLs
 
 Introduction:
-  http://setacl.sourceforge.net/html/doc-basics.html
+  https://helgeklein.com/blog/2009/03/permissions-a-primer-or-dacl-sacl-owner-sid-and-ace-explained/
 Manual pages:
-  http://msdn.microsoft.com/en-us/library/aa374872(VS.85).aspx
-  http://msdn.microsoft.com/en-us/library/aa446659(VS.85).aspx
-  http://msdn.microsoft.com/en-us/library/aa374931(VS.85).aspx
-  http://en.wikipedia.org/wiki/Cacls
+  https://msdn.microsoft.com/en-us/library/aa374872.aspx
+  https://msdn.microsoft.com/en-us/library/aa446659.aspx
+  https://msdn.microsoft.com/en-us/library/aa374931.aspx
+  https://en.wikipedia.org/wiki/Cacls
 Library:
   ?
 Functions:

@@ -24,7 +24,7 @@
                              of type UNIT as well.  */
 
 /* Knuth-Morris-Pratt algorithm.
-   See http://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
+   See https://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm
    HAYSTACK is the NUL terminated string in which to search for.
    NEEDLE is the string to search for in HAYSTACK, consisting of NEEDLE_LEN
    units.

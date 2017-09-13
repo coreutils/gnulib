@@ -46,7 +46,7 @@ dnl   - Speed of execution of the common instruction set is reasonable across
 dnl     the entire family of CPUs. If you have assembly language source files
 dnl     that are optimized for particular CPU types (like GNU gmp has), you
 dnl     will need to make the distinction.
-dnl   See <http://en.wikipedia.org/wiki/X86_instruction_listings>.
+dnl   See <https://en.wikipedia.org/wiki/X86_instruction_listings>.
 AC_DEFUN([gl_HOST_CPU_C_ABI],
 [
   AC_REQUIRE([AC_CANONICAL_HOST])

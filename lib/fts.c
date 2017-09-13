@@ -834,8 +834,8 @@ leaf_optimization (FTSENT const *p)
          all implementations as per <https://bugzilla.redhat.com/1299169>.  */
       FALLTHROUGH;
     case S_MAGIC_PROC:
-      /* Per <http://bugs.debian.org/143111> /proc may have
-         bogus stat.st_nlink values.  */
+      /* Per <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=143111> /proc
+         may have bogus stat.st_nlink values.  */
       return NO_LEAF_OPTIMIZATION;
 
     default:

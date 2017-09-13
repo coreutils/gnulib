@@ -55,7 +55,7 @@ supports_delete_on_close ()
       OSVERSIONINFO v;
 
       /* According to
-         <http://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx>
+         <https://msdn.microsoft.com/en-us/library/ms724451.aspx>
          this structure must be initialized as follows:  */
       v.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 

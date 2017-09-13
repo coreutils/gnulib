@@ -174,7 +174,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
 # include "save-cwd.h"
 
 /* Replacement for Solaris' openat function.
-   <http://www.google.com/search?q=openat+site:docs.sun.com>
+   <https://www.google.com/search?q=openat+site:docs.oracle.com>
    First, try to simulate it via open ("/proc/self/fd/FD/FILE").
    Failing that, simulate it by doing save_cwd/fchdir/open/restore_cwd.
    If either the save_cwd or the restore_cwd fails (relatively unlikely),

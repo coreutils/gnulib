@@ -16,7 +16,7 @@ Documentation:
 @url{https://www.gnu.org/software/libc/manual/html_node/mtab.html},
 @end ifnotinfo
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}.
 @end itemize
 
 Gnulib module: ---

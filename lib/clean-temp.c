@@ -165,7 +165,7 @@ string_equals (const void *x1, const void *x2)
 
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
-   See http://www.haible.de/bruno/hashfunc.html.  */
+   See https://www.haible.de/bruno/hashfunc.html.  */
 static size_t
 string_hash (const void *x)
 {
@@ -580,7 +580,7 @@ supports_delete_on_close ()
       OSVERSIONINFO v;
 
       /* According to
-         <http://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx>
+         <https://msdn.microsoft.com/en-us/library/ms724451.aspx>
          this structure must be initialized as follows:  */
       v.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 

@@ -29,7 +29,7 @@ ffs (int i)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   return __builtin_ffs (i);
 #else
-  /* http://graphics.stanford.edu/~seander/bithacks.html#ZerosOnRightMultLookup
+  /* <https://github.com/gibsjose/BitHacks>
      gives this deBruijn constant for a branch-less computation, although
      that table counted trailing zeros rather than bit position.  This
      requires 32-bit int, we fall back to a naive algorithm on the rare

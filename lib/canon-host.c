@@ -53,8 +53,8 @@ canon_host (const char *host)
      referenced by this value and the device using that IP address may each
      actually have any number of such "canonical" hostnames.  See the POSIX
      getaddrinfo spec <http://www.opengroup.org/susv3xsh/getaddrinfo.html">,
-     RFC 1034 <http://www.faqs.org/rfcs/rfc1034.html>, & RFC 2181
-     <http://www.faqs.org/rfcs/rfc2181.html> for more on what this confusing
+     RFC 1034 <https://www.ietf.org/rfc/rfc1034.txt>, & RFC 2181
+     <https://www.ietf.org/rfc/rfc2181.txt> for more on what this confusing
      term really refers to. */
 char *
 canon_host_r (char const *host, int *cherror)
@@ -68,7 +68,7 @@ canon_host_r (char const *host, int *cherror)
   status = getaddrinfo (host, NULL, &hints, &res);
   if (!status)
     {
-      /* http://lists.gnu.org/archive/html/bug-coreutils/2006-09/msg00300.html
+      /* https://lists.gnu.org/archive/html/bug-coreutils/2006-09/msg00300.html
          says Darwin 7.9.0 getaddrinfo returns 0 but sets
          res->ai_canonname to NULL.  */
       retval = strdup (res->ai_canonname ? res->ai_canonname : host);

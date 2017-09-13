@@ -642,7 +642,7 @@ AC_DEFUN([%s_INIT],
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
         # AC_INIT.
-        # See <http://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
+        # See <https://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
         emit += 'changequote(,)dnl\n'
         emit += '  %stests_WITNESS=' % macro_prefix
         emit += 'IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr \
@@ -1199,7 +1199,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                 os.remove(tmpfile)
 
             # Fetch PO files.
-            TP_URL = 'http://translationproject.org/latest/'
+            TP_URL = 'https://translationproject.org/latest/'
             TP_RSYNC_URI = 'translationproject.org::tp/latest/'
             if not self.config['dryrun']:
                 print('Fetching gnulib PO files from %s' % TP_URL)

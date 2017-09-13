@@ -24,7 +24,7 @@
 #define SIZE_BITS (sizeof (size_t) * CHAR_BIT)
 
 /* Return a hash of the N bytes of X using the method described by
-   Bruno Haible in http://www.haible.de/bruno/hashfunc.html.
+   Bruno Haible in https://www.haible.de/bruno/hashfunc.html.
    Note that while many hash functions reduce their result via modulo
    to a 0..table_size-1 range, this function does not do that.  */
 

@@ -43,7 +43,7 @@
    and falls back on a dynamic assertion for other compilers.
    These tests should be checkable via 'verify' rather than 'ASSERT', but
    using 'verify' would run into a bug with HP-UX 11.23 cc; see
-   <http://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.  */
+   <https://lists.gnu.org/archive/html/bug-gnulib/2011-05/msg00401.html>.  */
 #if __GNUC__ || __SUNPRO_C
 # define VERIFY(x) do { verify (x); } while (0)
 #else

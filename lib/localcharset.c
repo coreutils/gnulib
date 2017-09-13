@@ -355,7 +355,7 @@ get_charset_aliases (void)
          by Alex Taylor:
          <http://altsan.org/os2/toolkits/uls/index.html#codepages>.
          See also "IBM Globalization - Code page identifiers":
-         <http://www-01.ibm.com/software/globalization/cp/cp_cpgid.html>.  */
+         <https://www-01.ibm.com/software/globalization/cp/cp_cpgid.html>.  */
       cp = "CP813" "\0" "ISO-8859-7" "\0"
            "CP878" "\0" "KOI8-R" "\0"
            "CP819" "\0" "ISO-8859-1" "\0"

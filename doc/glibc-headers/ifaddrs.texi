@@ -7,7 +7,7 @@ Defines the type @code{struct ifaddrs} and declares the functions
 Documentation:
 @itemize
 @item
-@url{http://ecos.sourceware.org/docs-latest/ref/net-common-tcpip-manpages-getifaddrs.html}.
+@url{https://www.kernel.org/doc/man-pages/online/pages/man3/getifaddrs.3.html}.
 @end itemize
 
 Gnulib module: ---

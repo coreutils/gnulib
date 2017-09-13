@@ -26,7 +26,7 @@ extern "C" {
    - an execution core in a (possibly multi-core) chip, in a (possibly multi-
      chip) module, in a single computer, or
    - a thread execution unit inside a core
-     (hyper-threading, see <http://en.wikipedia.org/wiki/Hyper-threading>).
+     (hyper-threading, see <https://en.wikipedia.org/wiki/Hyper-threading>).
    Which of the two definitions is used, is unspecified.  */
 
 enum nproc_query

@@ -17,7 +17,7 @@ scriptversion=2017-09-13.06; # UTC
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
+# This script is derived from GIT-VERSION-GEN from GIT: https://git-scm.com/.
 # It may be run two ways:
 # - from a git repository in which the "git describe" command below
 #   produces useful output (thus requiring at least one signed tag)

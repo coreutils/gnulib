@@ -5241,7 +5241,7 @@ c_ident_category (unsigned int ch)
 }
 
 /* The Java Language Specification, 3rd edition, §3.6.
-   http://java.sun.com/docs/books/jls/third_edition/html/lexical.html#95710  */
+   https://docs.oracle.com/javase/specs/jls/se6/html/lexical.html#3.6  */
 static bool
 is_java_whitespace (unsigned int ch)
 {
@@ -5250,7 +5250,7 @@ is_java_whitespace (unsigned int ch)
 }
 
 /* The Java Language Specification, 3rd edition, §3.8.
-   http://java.sun.com/docs/books/jls/third_edition/html/lexical.html#40625
+   https://docs.oracle.com/javase/specs/jls/se6/html/lexical.html#3.8
    and Character.isJavaIdentifierStart and Character.isJavaIdentifierPart  */
 static int
 java_ident_category (unsigned int ch)

@@ -14,7 +14,7 @@ Documentation:
 @url{https://www.gnu.org/software/libc/manual/html_node/Backtraces.html},
 @end ifnotinfo
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/backtrace.3.html,,man backtrace}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace.3.html,,man backtrace}.
 @end itemize
 
 Gnulib module: ---

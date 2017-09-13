@@ -9,7 +9,7 @@ Defines the type @code{struct aliasent} and declares the functions
 Documentation:
 @itemize
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/setaliasent.3.html,,man setaliasent}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setaliasent.3.html,,man setaliasent}.
 @end itemize
 
 Gnulib module: ---

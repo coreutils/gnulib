@@ -528,7 +528,7 @@ int main ()
           && strcmp (buf, "0xcp-3 33") != 0))
     result |= 4;
   /* This catches a FreeBSD 6.1 bug.  See
-     <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+     <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
   if (sprintf (buf, "%010a %d", 1.0 / zero, 33, 44, 55) < 0
       || buf[0] == '0')
     result |= 8;
@@ -540,7 +540,7 @@ int main ()
           && strcmp (buf, "0x8.0p-2") != 0))
     result |= 16;
   /* This catches the same Mac OS X 10.3.9 (Darwin 7.9) bug and also a
-     glibc 2.4 bug <http://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
+     glibc 2.4 bug <https://sourceware.org/bugzilla/show_bug.cgi?id=2908>.  */
   if (sprintf (buf, "%.1La", 1.999L) < 0
       || (strcmp (buf, "0x1.0p+1") != 0
           && strcmp (buf, "0x2.0p+0") != 0
@@ -862,7 +862,7 @@ changequote([,])dnl
 
 dnl Test whether the *printf family of functions supports the - flag correctly.
 dnl (ISO C99.) See
-dnl <http://lists.gnu.org/archive/html/bug-coreutils/2008-02/msg00035.html>
+dnl <https://lists.gnu.org/archive/html/bug-coreutils/2008-02/msg00035.html>
 dnl Result is gl_cv_func_printf_flag_leftadjust.
 
 AC_DEFUN([gl_PRINTF_FLAG_LEFTADJUST],
@@ -906,7 +906,7 @@ changequote([,])dnl
 
 dnl Test whether the *printf family of functions supports padding of non-finite
 dnl values with the 0 flag correctly. (ISO C99 + TC1 + TC2.) See
-dnl <http://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html>
+dnl <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html>
 dnl Result is gl_cv_func_printf_flag_zero.
 
 AC_DEFUN([gl_PRINTF_FLAG_ZERO],

@@ -17,7 +17,7 @@ AC_DEFUN([gl_FUNC_WCTOB],
 
     dnl Solaris 9 has the wctob() function but it does not work.
     dnl Cygwin 1.7.2 has the wctob() function but it clobbers caller-owned
-    dnl registers, see <http://cygwin.com/ml/cygwin/2010-05/msg00015.html>.
+    dnl registers, see <https://cygwin.com/ml/cygwin/2010-05/msg00015.html>.
     AC_REQUIRE([AC_PROG_CC])
     AC_REQUIRE([gt_LOCALE_FR])
     AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles

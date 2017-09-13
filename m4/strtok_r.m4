@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_STRTOK_R],
     dnl when the second argument to strtok_r is a constant string that has
     dnl exactly one byte and compiling with optimization.  This bug is, for
     dnl example, present in the glibc 2.7-18 package in Debian "lenny".
-    dnl See <http://sources.redhat.com/bugzilla/show_bug.cgi?id=5614>.
+    dnl See <https://sourceware.org/bugzilla/show_bug.cgi?id=5614>.
     AC_CACHE_CHECK([whether strtok_r works], [gl_cv_func_strtok_r_works],
       [AC_RUN_IFELSE(
          [AC_LANG_PROGRAM([[

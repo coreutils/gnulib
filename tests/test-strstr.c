@@ -58,7 +58,7 @@ main (int argc, char *argv[])
     /* On some platforms, the memchr() functions reads past the first
        occurrence of the byte to be searched, leading to an out-of-bounds
        read access for strstr().
-       See <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737>.
+       See <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737>.
        This is a bug in memchr(), see the Austin Group's clarification
        <http://www.opengroup.org/austin/docs/austin_454.txt>.  */
     const char *fix = "aBaaaaaaaaaaax";

@@ -25,7 +25,7 @@
 
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
-   See http://www.haible.de/bruno/hashfunc.html.  */
+   See https://www.haible.de/bruno/hashfunc.html.  */
 
 size_t
 hash_pjw (const void *x, size_t tablesize)

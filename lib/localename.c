@@ -1157,7 +1157,7 @@ gl_locale_name_canonicalize (char *name)
 {
   /* This conversion is based on a posting by
      Deborah GoldSmith <goldsmit@apple.com> on 2005-03-08,
-     http://lists.apple.com/archives/carbon-dev/2005/Mar/msg00293.html */
+     https://lists.apple.com/archives/carbon-dev/2005/Mar/msg00293.html */
 
   /* Convert legacy (NeXTstep inherited) English names to Unix (ISO 639 and
      ISO 3166) names.  Prior to Mac OS X 10.3, there is no API for doing this.
@@ -1493,7 +1493,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
 
     /* Dispatch on language.
        See also http://www.unicode.org/unicode/onlinedat/languages.html .
-       For details about languages, see http://www.ethnologue.com/ .  */
+       For details about languages, see https://www.ethnologue.com/ .  */
     switch (primary)
       {
       case LANG_AFRIKAANS:
@@ -2259,10 +2259,10 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "wen";
       case LANG_SOTHO:
-        /* <http://www.microsoft.com/globaldev/reference/lcid-all.mspx> calls
-           it "Sepedi"; according to
-           <http://www.ethnologue.com/show_language.asp?code=nso>
-           <http://www.ethnologue.com/show_language.asp?code=sot>
+        /* <https://msdn.microsoft.com/en-us/library/dd318693.aspx> calls
+           it "Sesotho sa Leboa"; according to
+           <https://www.ethnologue.com/show_language.asp?code=nso>
+           <https://www.ethnologue.com/show_language.asp?code=sot>
            it's the same as Northern Sotho.  */
         switch (sub)
           {
@@ -2601,7 +2601,7 @@ get_lcid (const char *locale_name)
 
 /* A hash function for NUL-terminated char* strings using
    the method described by Bruno Haible.
-   See http://www.haible.de/bruno/hashfunc.html.  */
+   See https://www.haible.de/bruno/hashfunc.html.  */
 static size_t _GL_ATTRIBUTE_PURE
 string_hash (const void *x)
 {
@@ -2695,7 +2695,7 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
 #  if __GLIBC__ >= 2 && !defined __UCLIBC__
         /* Work around an incorrect definition of the _NL_LOCALE_NAME macro in
            glibc < 2.12.
-           See <http://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
+           See <https://sourceware.org/bugzilla/show_bug.cgi?id=10968>.  */
         const char *name =
           nl_langinfo (_NL_ITEM ((category), _NL_ITEM_INDEX (-1)));
         if (name[0] == '\0')

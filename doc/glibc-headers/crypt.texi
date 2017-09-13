@@ -18,8 +18,8 @@ Documentation:
 @url{https://www.gnu.org/software/libc/manual/html_node/DES-Encryption.html},
 @end ifnotinfo
 @item
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/crypt.3.html,,man crypt},
-@uref{http://www.kernel.org/doc/man-pages/online/pages/man3/encrypt.3.html,,man encrypt}.
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/crypt.3.html,,man crypt},
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/encrypt.3.html,,man encrypt}.
 @end itemize
 
 Gnulib module: ---

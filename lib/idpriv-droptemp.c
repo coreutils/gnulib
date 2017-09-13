@@ -58,7 +58,9 @@ idpriv_temp_drop (void)
 
   /* This is for executables that have the setuid bit set.  */
 # if HAVE_SETRESUID /* glibc, FreeBSD, OpenBSD, HP-UX */
-  /* See <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+  /* See
+       Hao Chen, David Wagner, Drew Dean: Setuid Demystified
+       <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
      figure 14.  */
   if (setresuid (-1, uid, saved_uid) < 0)
     return -1;
@@ -134,7 +136,9 @@ idpriv_temp_restore (void)
 
   /* This is for executables that have the setuid bit set.  */
 # if HAVE_SETRESUID /* glibc, FreeBSD, OpenBSD, HP-UX */
-  /* See <http://www.usenix.org/events/sec02/full_papers/chen/chen.pdf>
+  /* See
+       Hao Chen, David Wagner, Drew Dean: Setuid Demystified
+       <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
      figure 14.  */
   if (setresuid (-1, saved_uid, -1) < 0)
     return -1;

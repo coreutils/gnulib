@@ -64,7 +64,7 @@ getprogname (void)
   /* https://www.gnu.org/software/libc/manual/html_node/Error-Messages.html */
   return last_component (program_invocation_name);
 # elif HAVE_GETEXECNAME                                     /* Solaris */
-  /* http://docs.oracle.com/cd/E19253-01/816-5168/6mbb3hrb1/index.html */
+  /* https://docs.oracle.com/cd/E19253-01/816-5168/6mbb3hrb1/index.html */
   const char *p = getexecname ();
   if (!p)
     p = "?";
@@ -74,7 +74,7 @@ getprogname (void)
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
 # elif HAVE_VAR___PROGNAME                                  /* OpenBSD, QNX */
-  /* http://man.openbsd.org/style.9 */
+  /* https://man.openbsd.org/style.9 */
   /* http://www.qnx.de/developers/docs/6.5.0/index.jsp?topic=%2Fcom.qnx.doc.neutrino_lib_ref%2Fp%2F__progname.html */
   /* Be careful to declare this only when we absolutely need it
      (OpenBSD 5.1), rather than when it's available.  Otherwise,
@@ -85,9 +85,8 @@ getprogname (void)
   return p && p[0] ? p : "?";
 # elif _AIX                                                 /* AIX */
   /* Idea by Bastien ROUCARIÈS,
-     http://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
-     Reference: http://
-   ibm.biz/knowctr#ssw_aix_53/com.ibm.aix.basetechref/doc/basetrf1/getprocs.htm
+     https://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
+     Reference: https://www.ibm.com/support/knowledgecenter/en/ssw_aix_61/com.ibm.aix.basetrf1/getprocs.htm
   */
   static char *p;
   static int first = 1;

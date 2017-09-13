@@ -2,7 +2,7 @@ The following packages appear to be using gnulib and gnulib-tool:
 
   acct            https://svn.sv.gnu.org/viewvc/trunk/?root=acct
   anubis          https://git.sv.gnu.org/gitweb/?p=anubis.git
-  augeas          http://augeas.net/
+  augeas          https://github.com/hercules-team/augeas
   autobuild       https://josefsson.org/autobuild/
   barcode         https://git.sv.gnu.org/cgit/barcode.git/
   bison           https://git.sv.gnu.org/gitweb/?p=bison.git
@@ -33,12 +33,12 @@ The following packages appear to be using gnulib and gnulib-tool:
   gsasl           https://git.sv.gnu.org/gitweb/?p=gsasl.git
   gss             https://git.sv.gnu.org/gitweb/?p=gss.git
   gtkreindeer     https://git.sv.gnu.org/gitweb/?p=gtkreindeer.git
-  gtk-vnc         http://gtk-vnc.codemonkey.ws/hg/outgoing.hg
+  gtk-vnc         https://git.gnome.org/browse/gtk-vnc/tree/
   grep            https://git.sv.gnu.org/cgit/grep.git/
   guile           https://git.sv.gnu.org/gitweb/?p=guile.git
   gzip            https://git.sv.gnu.org/cgit/gzip.git/
   hello           https://git.sv.gnu.org/gitweb/?p=hello.git
-  hivex           http://git.annexia.org/?p=hivex.git
+  hivex           https://github.com/libguestfs/hivex
   icoutils        https://git.savannah.nongnu.org/cgit/icoutils.git/tree/
   inetutils       https://git.sv.gnu.org/gitweb/?p=inetutils.git
   iwhd            https://git.fedorahosted.org/git/?p=iwhd.git
@@ -47,12 +47,12 @@ The following packages appear to be using gnulib and gnulib-tool:
   libdap          https://scm.opendap.org/svn/trunk/libdap/
   libffcall       https://savannah.gnu.org/projects/libffcall/
   libgnupdf       https://bzr.sv.gnu.org/lh/pdf/libgnupdf/trunk/files
-  libguestfs      http://libguestfs.org/
+  libguestfs      https://github.com/libguestfs/libguestfs
   libiconv        https://git.sv.gnu.org/gitweb/?p=libiconv.git
   libidn          https://git.sv.gnu.org/gitweb/?p=libidn.git
   libidn2         https://josefsson.org/libidn2/
   libksba         https://www.gnupg.org/related_software/libksba/index.html
-  libntlm         http://www.nongnu.org/libntlm/
+  libntlm         https://git.savannah.nongnu.org/gitweb/?p=libntlm.git;a=tree
   libprelude      https://trac.prelude-ids.org/browser/trunk/libprelude/
   libpreludedb    https://trac.prelude-ids.org/browser/trunk/libpreludedb/
   libtasn1        https://git.savannah.gnu.org/gitweb/?p=libtasn1.git
@@ -60,19 +60,18 @@ The following packages appear to be using gnulib and gnulib-tool:
   libvirt         https://libvirt.org/
                   https://libvirt.org/git/?p=libvirt.git;a=summary
   m4              https://git.sv.gnu.org/gitweb/?p=m4.git;a=summary
-  mailfromd       http://svn.gnu.org.ua/viewvc/mailfromd/trunk/
+  mailfromd       http://git.gnu.org.ua/cgit/mailfromd.git/tree/
   mailutils       https://git.sv.gnu.org/gitweb/?p=mailutils.git
-  man-db          http://www.chiark.greenend.org.uk/~cjwatson/bzr/man-db/trunk/
+  man-db          https://bazaar.launchpad.net/~cjwatson/man-db/master/changes
   miktex          https://miktex.org/
                   https://github.com/MiKTeX/miktex
   mini-httpd      https://git.sv.gnu.org/gitweb/?p=mini-httpd.git
-  msmtp           http://msmtp.cvs.sourceforge.net/msmtp/msmtp/
+  msmtp           https://sourceforge.net/p/msmtp/code/ci/master/tree/
   myserver        https://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
-  nagios-plugins  http://nagiosplug.git.sourceforge.net/
-  Net::CDP        http://search.cpan.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
+  nagios-plugins  https://github.com/nagios-plugins/nagios-plugins
+  Net::CDP        http://cpansearch.perl.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   netcf           https://fedorahosted.org/netcf/
-? newts           http://svn.arete.cc/newts/trunk/
-  OATH Toolkit    http://www.nongnu.org/oath-toolkit/
+  OATH Toolkit    https://gitlab.com/oath-toolkit/oath-toolkit/
   octave          https://hg.savannah.gnu.org/hgweb/octave/
   OPeNDAP         https://scm.opendap.org/svn/trunk/
   parted          https://git.debian.org/?p=parted/parted.git;a=summary
@@ -94,7 +93,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   wdiff           https://bzr.savannah.gnu.org/lh/wdiff/trunk/files
   wget            https://git.savannah.gnu.org/gitweb/?p=wget.git
   wget2           https://git.savannah.gnu.org/gitweb/?p=wget/wget2.git
-  wydawca         http://svn.gnu.org.ua/viewvc/wydawca/trunk/
+  wydawca         http://git.gnu.org.ua/cgit/wydawca.git/
   wyslij-po       http://svn.gnu.org.ua/viewvc/wyslij-po/trunk/
   zile            https://www.gnu.org/software/zile/
 
