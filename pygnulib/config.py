@@ -474,29 +474,29 @@ class Cache(Base):
 
     def __init__(self, configure=None, **kwargs):
         super().__init__(**kwargs)
+        explicit = kwargs.keys()
         if configure is None:
             configure = _os_.path.join(self.root, "configure.ac")
             if not _os_.path.exists(configure):
                 configure = _os_.path.join(self.root, "configure.in")
         if not _os_.path.isabs(configure):
             configure = _os_.path.join(self.root, configure)
-        self.__autoconf(_os_.path.normpath(configure))
-        self.__gnulib_cache()
-        self.__gnulib_comp()
+        self.__autoconf(_os_.path.normpath(configure), explicit)
+        self.__gnulib_cache(explicit)
+        self.__gnulib_comp(explicit)
 
-    def __autoconf(self, configure):
+    def __autoconf(self, configure, explicit):
         with _codecs_.open(configure, "rb", "UTF-8") as stream:
             data = Cache._COMMENTS_.sub("", stream.read())
         for (key, pattern) in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
-            if not match:
-                continue
-            if key == "autoconf":
-                self[key] = float([_ for _ in match if match][-1])
-            else:
-                self[key] = match[-1]
+            if match and key not in explicit:
+                if key == "autoconf":
+                    self[key] = float([_ for _ in match if match][-1])
+                else:
+                    self[key] = match[-1]
 
-    def __gnulib_cache(self):
+    def __gnulib_cache(self, explicit):
         path = _os_.path.join(self.root, self.m4_base, "gnulib-cache.m4")
         path = _os_.path.normpath(path)
         if not _os_.path.exists(path):
@@ -505,19 +505,19 @@ class Cache(Base):
             data = Cache._COMMENTS_.sub("", stream.read())
         for key in Cache._GNULIB_CACHE_BOOL_:
             (_, macro) = Cache._GNULIB_CACHE_[key]
-            if key in data:
+            if key in data and key not in explicit:
                 self[key] = True
         match = dict(Cache._GNULIB_CACHE_PATTERN_.findall(data))
         for key in Cache._GNULIB_CACHE_STR_:
             (_, macro) = Cache._GNULIB_CACHE_[key]
-            if macro in match:
+            if macro in match and key not in explicit:
                 self[key] = match[macro].strip()
         for key in Cache._GNULIB_CACHE_LIST_:
             (_, macro) = Cache._GNULIB_CACHE_[key]
-            if macro in match:
+            if macro in match and key not in explicit:
                 self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
 
-    def __gnulib_comp(self):
+    def __gnulib_comp(self, explicit):
         path = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
         path = _os_.path.normpath(path)
         if not _os_.path.exists(path):
@@ -527,5 +527,5 @@ class Cache(Base):
         regex = r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
         pattern = _re_.compile(regex, _re_.S | _re_.M)
         match = pattern.findall(data)
-        if match:
+        if match and "files" not in explicit:
             self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
