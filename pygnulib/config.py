@@ -471,21 +471,20 @@ class Cache(Base):
     _GNULIB_CACHE_PATTERN_ = _re_.compile(r"^(gl_.*?)\(\[(.*?)\]\)$", _re_.S | _re_.M)
 
 
-    def __init__(self, root, m4_base, autoconf=None, **kwargs):
-        super().__init__(root=root, m4_base=m4_base, **kwargs)
-        if autoconf is None:
-            autoconf = _os_.path.join(self.root, "configure.ac")
-            if not _os_.path.exists(autoconf):
-                autoconf = _os_.path.join(self.root, "configure.in")
-        if not _os_.path.isabs(autoconf):
-            autoconf = _os_.path.join(self.root, autoconf)
-        autoconf = _os_.path.normpath(autoconf)
-        self.__autoconf(autoconf)
+    def __init__(self, configure=None, **kwargs):
+        super().__init__(**kwargs)
+        if configure is None:
+            configure = _os_.path.join(self.root, "configure.ac")
+            if not _os_.path.exists(configure):
+                configure = _os_.path.join(self.root, "configure.in")
+        if not _os_.path.isabs(configure):
+            configure = _os_.path.join(self.root, configure)
+        self.__autoconf(_os_.path.normpath(configure))
         self.__gnulib_cache()
         self.__gnulib_comp()
 
-    def __autoconf(self, autoconf):
-        with _codecs_.open(autoconf, "rb", "UTF-8") as stream:
+    def __autoconf(self, configure):
+        with _codecs_.open(configure, "rb", "UTF-8") as stream:
             data = stream.read()
         for (key, pattern) in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
