@@ -406,6 +406,8 @@ class Base:
             value = set(seq)
         elif key == "lgpl" and value not in (0, 2, 3):
             raise ValueError("lgpl: None, 2 or 3 expected")
+        elif key.endswith("_base"):
+            value = _os_.path.normpath(value)
 
         self.__table[key] = value
 
