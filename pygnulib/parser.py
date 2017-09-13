@@ -906,9 +906,9 @@ class CommandLine:
         return self.__format_help()
 
 
-    def parse(self, *arguments):
+    def parse(self, arguments):
         """
-        self.parse(*arguments) -> (namespace, mode, verbosity, options)
+        self.parse(arguments) -> (namespace, mode, verbosity, options)
 
         Parse the command-line arguments and return a new configuration.
         The default configuration holds default parameter values.
