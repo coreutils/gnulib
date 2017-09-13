@@ -12,7 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
@@ -81,7 +81,7 @@ _Bool n[m];
 char o[sizeof n == m * sizeof n[0] ? 1 : -1];
 char p[-1 - (_Bool) 0 < 0 && -1 - (bool) 0 < 0 ? 1 : -1];
 /* Catch a bug in an HP-UX C compiler.  See
-   http://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
+   https://gcc.gnu.org/ml/gcc-patches/2003-12/msg02303.html
    http://lists.gnu.org/archive/html/bug-coreutils/2005-11/msg00161.html
  */
 _Bool q = true;

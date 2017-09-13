@@ -1,8 +1,8 @@
 #!/bin/sh
 # Run this after each non-alpha release, to update the web documentation at
-# http://www.gnu.org/software/$pkg/manual/
+# https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2016-01-12.23; # UTC
+VERSION=2017-09-13.06; # UTC
 
 # Copyright (C) 2009-2017 Free Software Foundation, Inc.
 
@@ -17,7 +17,7 @@ VERSION=2016-01-12.23; # UTC
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ME=$(basename "$0")
 warn() { printf '%s: %s\n' "$ME" "$*" >&2; }
@@ -30,7 +30,7 @@ Usage: $ME
 
 Run this script from top_srcdir (no arguments) after each non-alpha
 release, to update the web documentation at
-http://www.gnu.org/software/\$pkg/manual/
+https://www.gnu.org/software/\$pkg/manual/
 
 This script assumes you're using git for revision control, and
 requires a .prev-version file as well as a Makefile, from which it
@@ -55,7 +55,7 @@ version()
   cat <<EOF
 $ME $VERSION
 Copyright (C) $year Free Software Foundation, Inc,
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 EOF

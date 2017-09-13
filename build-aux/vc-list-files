@@ -2,7 +2,7 @@
 # List version-controlled file names.
 
 # Print a version string.
-scriptversion=2017-08-21.19; # UTC
+scriptversion=2017-09-13.06; # UTC
 
 # Copyright (C) 2006-2017 Free Software Foundation, Inc.
 
@@ -17,7 +17,7 @@ scriptversion=2017-08-21.19; # UTC
 # GNU General Public License for more details.
 
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 # List the specified version-controlled files.
@@ -49,7 +49,7 @@ EOF
     cat <<EOF
 vc-list-files $scriptversion
 Copyright (C) $year Free Software Foundation, Inc,
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 EOF

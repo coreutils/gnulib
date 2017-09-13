@@ -13,7 +13,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
 # This program is meant for authors or maintainers which want to import
@@ -338,7 +338,7 @@ q
   echo "\
 gnulib-tool (GNU $package $date)$version
 Copyright (C) $year Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 "
@@ -365,7 +365,7 @@ func_emit_copyright_notice ()
   echo "# GNU General Public License for more details."
   echo "#"
   echo "# You should have received a copy of the GNU General Public License"
-  echo "# along with this file.  If not, see <http://www.gnu.org/licenses/>."
+  echo "# along with this file.  If not, see <https://www.gnu.org/licenses/>."
   echo "#"
   echo "# As a special exception to the GNU General Public License,"
   echo "# this file may be distributed as part of a program that"
@@ -3618,8 +3618,8 @@ func_emit_lib_Makefile_am ()
     # Automake versions < 1.11.4 create an empty pkgdatadir at
     # installation time if you specify pkgdata_DATA to empty.
     # See automake bugs #10997 and #11030:
-    #  * http://debbugs.gnu.org/10997
-    #  * http://debbugs.gnu.org/11030
+    #  * https://debbugs.gnu.org/10997
+    #  * https://debbugs.gnu.org/11030
     # So we need this workaround.
     if grep '^pkgdata_DATA *+=' "$tmp"/allsnippets > /dev/null; then
       echo "pkgdata_DATA ="
@@ -3971,8 +3971,8 @@ func_emit_tests_Makefile_am ()
   # Automake versions < 1.11.4 create an empty pkgdatadir at
   # installation time if you specify pkgdata_DATA to empty.
   # See automake bugs #10997 and #11030:
-  #  * http://debbugs.gnu.org/10997
-  #  * http://debbugs.gnu.org/11030
+  #  * https://debbugs.gnu.org/10997
+  #  * https://debbugs.gnu.org/11030
   # So we need this workaround.
   if grep '^pkgdata_DATA *+=' "$tmp"/main_snippets "$tmp"/longrunning_snippets > /dev/null; then
     echo "pkgdata_DATA ="

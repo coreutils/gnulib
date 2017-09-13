@@ -12,7 +12,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* This file is designed to test both mkdir(a,b) and
    mkdirat(AT_FDCWD,a,b).  FUNC is the function to test.  Assumes that

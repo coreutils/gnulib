@@ -13,7 +13,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
 # Usage: MODULES.html.sh [--git-urls] > MODULES.html
@@ -30,7 +30,7 @@ if test $# != 0; then
   case "$1" in
     --git-urls)
       # Generate URLs to the official gnulib git repository.
-      repo_url_prefix='http://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
+      repo_url_prefix='https://git.sv.gnu.org/gitweb/?p=gnulib.git;a=blob_plain;f='
       repo_url_suffix=''
       ;;
   esac

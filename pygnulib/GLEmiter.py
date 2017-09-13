@@ -91,7 +91,7 @@ class GLEmiter(object):
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this file.  If not, see <http://www.gnu.org/licenses/>.
+# along with this file.  If not, see <https://www.gnu.org/licenses/>.
 #
 # As a special exception to the GNU General Public License,
 # this file may be distributed as part of a program that
@@ -769,8 +769,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # Automake versions < 1.11.4 create an empty pkgdatadir at
             # installation time if you specify pkgdata_DATA to empty.
             # See automake bugs #10997 and #11030:
-            #  * http://debbugs.gnu.org/10997
-            #  * http://debbugs.gnu.org/11030
+            #  * https://debbugs.gnu.org/10997
+            #  * https://debbugs.gnu.org/11030
             # So we need this workaround.
             pattern = compiler('^pkgdata_DATA *\\+=', re.S | re.M)
             if pattern.findall(allsnippets):
@@ -1074,8 +1074,8 @@ AC_DEFUN([%V1%_LIBSOURCES], [
         # Automake versions < 1.11.4 create an empty pkgdatadir at
         # installation time if you specify pkgdata_DATA to empty.
         # See automake bugs #10997 and #11030:
-        #  * http://debbugs.gnu.org/10997
-        #  * http://debbugs.gnu.org/11030
+        #  * https://debbugs.gnu.org/10997
+        #  * https://debbugs.gnu.org/11030
         # So we need this workaround.
         pattern = compiler('^pkgdata_DATA *\\+=', re.S | re.M)
         if bool(pattern.findall(main_snippets)) or \

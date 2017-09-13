@@ -1,6 +1,6 @@
 #!/bin/sh
 # Print a version string.
-scriptversion=2017-08-20.18; # UTC
+scriptversion=2017-09-13.06; # UTC
 
 # Copyright (C) 2007-2017 Free Software Foundation, Inc.
 #
@@ -15,7 +15,7 @@ scriptversion=2017-08-20.18; # UTC
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # This script is derived from GIT-VERSION-GEN from GIT: http://git.or.cz/.
 # It may be run two ways:

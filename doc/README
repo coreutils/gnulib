@@ -12,8 +12,8 @@ How to update gnulib manual on www.gnu.org
          checkout gnulib
 
 2) Get familiar with the instructions for web page maintainers.
-   http://www.gnu.org/server/standards/readme_index.html
-   http://www.gnu.org/server/standards/README.software.html
+   https://www.gnu.org/server/standards/readme_index.html
+   https://www.gnu.org/server/standards/README.software.html
    especially the note about symlinks.
 
 3) Assuming GNULIB_CHECKOUT refers to a checkout of the gnulib dir,

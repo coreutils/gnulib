@@ -78,7 +78,7 @@ class GLInfo(object):
     def license(self):
         '''Return formatted string which contains license and its description.'''
         result = 'License GPLv3+: GNU GPL version 3 or later'
-        result += ' <http://gnu.org/licenses/gpl.html>\n'
+        result += ' <https://gnu.org/licenses/gpl.html>\n'
         result += 'This is free software: you are free'
         result += ' to change and redistribute it.\n'
         result += 'There is NO WARRANTY, to the extent permitted by law.'

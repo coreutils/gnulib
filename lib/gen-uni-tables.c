@@ -15,7 +15,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Usage example:
      $ gen-uni-tables /usr/local/share/Unidata/UnicodeData.txt \
@@ -648,7 +648,7 @@ output_predicate_test (const char *filename, bool (*predicate) (unsigned int), c
   fprintf (stream, "   GNU General Public License for more details.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
   fprintf (stream, "#include \"test-predicate-part1.h\"\n");
   fprintf (stream, "\n");
@@ -7705,7 +7705,7 @@ output_lbrk_tables (const char *filename1, const char *filename2, const char *ve
       fprintf (stream, "   GNU General Public License for more details.\n");
       fprintf (stream, "\n");
       fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-      fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+      fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
       fprintf (stream, "\n");
     }
 
@@ -8223,7 +8223,7 @@ output_wbrk_tables (const char *filename, const char *version)
   fprintf (stream, "   GNU General Public License for more details.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
 
   output_wbp (stream);
@@ -8299,7 +8299,7 @@ output_gbp_test (const char *filename)
   fprintf (stream, "   GNU General Public License for more details.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
 
   need_comma = false;
@@ -8969,7 +8969,7 @@ output_composition_tables (const char *filename, const char *version)
   fprintf (stream, "   GNU General Public License for more details.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
 
   /* The composition table is a set of mappings (code1, code2) -> combined,
@@ -9079,7 +9079,7 @@ output_simple_mapping_test (const char *filename,
   fprintf (stream, "   GNU General Public License for more details.\n");
   fprintf (stream, "\n");
   fprintf (stream, "   You should have received a copy of the GNU General Public License\n");
-  fprintf (stream, "   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */\n");
+  fprintf (stream, "   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */\n");
   fprintf (stream, "\n");
   fprintf (stream, "/* Generated automatically by gen-uni-tables.c for Unicode %s.  */\n",
            version);

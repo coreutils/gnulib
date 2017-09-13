@@ -146,7 +146,7 @@ regen: MODULES.html
 
 # MODULES.html is periodically being generated and copied to the web pages at
 # :ext:USER@cvs.savannah.gnu.org:/web/gnulib/gnulib/
-# where it then appears at <http://www.gnu.org/software/gnulib/MODULES.html>.
+# where it then appears at <https://www.gnu.org/software/gnulib/MODULES.html>.
 MODULES.html: MODULES.html.sh
 	./MODULES.html.sh > MODULES.html
 

@@ -15,7 +15,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # From Jim Meyering.
 
 # This is taken from the following Autoconf patch:
-# http://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=commitdiff;h=7fbb553727ed7e0e689a17594b58559ecf3ea6e9
+# https://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=commitdiff;h=7fbb553727ed7e0e689a17594b58559ecf3ea6e9
 AC_DEFUN([AC_FUNC_CHOWN],
 [
   AC_REQUIRE([AC_TYPE_UID_T])dnl

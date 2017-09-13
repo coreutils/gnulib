@@ -15,7 +15,7 @@
 ## GNU General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # This is reported not to work with make-3.79.1
 # ME := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -130,7 +130,7 @@ gnu_ftp_host-stable = ftp.gnu.org
 gnu_rel_host ?= $(gnu_ftp_host-$(release-type))
 
 url_dir_list ?= $(if $(call _equal,$(gnu_rel_host),ftp.gnu.org),	\
-                     http://ftpmirror.gnu.org/$(PACKAGE),		\
+                     https://ftpmirror.gnu.org/$(PACKAGE),		\
                      https://$(gnu_rel_host)/gnu/$(PACKAGE))
 
 # Override this in cfg.mk if you are using a different format in your
@@ -1354,7 +1354,7 @@ release-commit:
 ## ---------------- ##
 
 ftp-gnu = https://ftp.gnu.org/gnu
-www-gnu = http://www.gnu.org
+www-gnu = https://www.gnu.org
 
 upload_dest_dir_ ?= $(PACKAGE)
 upload_command =						\

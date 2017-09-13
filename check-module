@@ -14,7 +14,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
 # Read a module description file and derive the set of files
@@ -42,7 +42,7 @@ use File::Basename;
 
 my $COPYRIGHT_NOTICE = "Copyright (C) 2006 Free Software Foundation, Inc.\n".
 "This is free software.  You may redistribute copies of it under the terms of\n".
-"the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n".
+"the GNU General Public License <https://www.gnu.org/licenses/gpl.html>.\n".
 "There is NO WARRANTY, to the extent permitted by law.\n";
 
 (my $VERSION = '$Revision: 1.8 $ ') =~ tr/[0-9].//cd;

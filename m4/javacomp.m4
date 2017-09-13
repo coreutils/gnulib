@@ -168,7 +168,7 @@ changequote([,])dnl
   dnl   One consequence of this is that gcj compiles GetURL.java to invalid
   dnl   bytecode, which crashes with a VerifyError when executed by Sun Java
   dnl   1.3.1. The bug is registered as java/7066, see
-  dnl   http://gcc.gnu.org/bugzilla/show_bug.cgi?id=7066
+  dnl   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=7066
   dnl   gcj 4.3 and newer has an option -ftarget=1.X.
   dnl
   dnl   For gcj < 3.3, the source-version always is 1.3.
