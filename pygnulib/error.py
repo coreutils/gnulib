@@ -36,10 +36,10 @@ class CommandLineError(Exception):
 
 
 class M4BaseMismatchError(Exception):
-    """<gnulib-comp.m4> is expected to contain gl_M4_BASE([m4base])"""
-    def __init__(self, m4_base):
-        fmt = "<gnulib-comp.m4> is expected to contain gl_M4_BASE([{0}])"
-        super().__init__(fmt.format(m4_base))
+    """unexpected gl_M4_BASE macro value"""
+    def __init__(self, path, expected, actual):
+        fmt = "{0} is expected to contain gl_M4_BASE([{1}]), not gl_M4_BASE([{2}])"
+        super().__init__(fmt.format(path, expected, actual))
 
 
 

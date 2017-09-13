@@ -10,6 +10,7 @@ import re as _re_
 
 
 from .error import type_assert as _type_assert_
+from .error import M4BaseMismatchError as _M4BaseMismatchError_
 from .error import AutoconfVersionError as _AutoconfVersionError_
 
 
@@ -459,17 +460,9 @@ class Cache(Base):
         "avoid"             : (list, "gl_AVOID"),
         "lgpl"              : (str, "gl_LGPL"),
     }
-    _GNULIB_CACHE_BOOL_ = []
-    _GNULIB_CACHE_STR_ = []
-    _GNULIB_CACHE_LIST_ = []
-    for (_key_, (_typeid_, _)) in _GNULIB_CACHE_.items():
-        if _typeid_ is bool:
-            _GNULIB_CACHE_BOOL_ += [_key_]
-        elif _typeid_ is str:
-            _GNULIB_CACHE_STR_ += [_key_]
-        else:
-            _GNULIB_CACHE_LIST_ += [_key_]
-    _GNULIB_CACHE_PATTERN_ = _re_.compile(r"^(gl_.*?)\(\[(.*?)\]\)$", _re_.S | _re_.M)
+    for (_key_, (_typeid_, _macro_)) in _GNULIB_CACHE_.items():
+        _pattern_ = _re_.compile(r"{0}\(\[(.*?)\]\)".format(_macro_), _re_.S | _re_.M)
+        _GNULIB_CACHE_[_key_] = (_typeid_, _pattern_)
 
 
     def __init__(self, configure=None, **kwargs):
@@ -497,25 +490,24 @@ class Cache(Base):
                     self[key] = match[-1]
 
     def __gnulib_cache(self, explicit):
+        m4_base = self.m4_base
         path = _os_.path.join(self.root, self.m4_base, "gnulib-cache.m4")
         path = _os_.path.normpath(path)
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
             data = Cache._COMMENTS_.sub("", stream.read())
-        for key in Cache._GNULIB_CACHE_BOOL_:
-            (_, macro) = Cache._GNULIB_CACHE_[key]
-            if key in data and key not in explicit:
-                self[key] = True
-        match = dict(Cache._GNULIB_CACHE_PATTERN_.findall(data))
-        for key in Cache._GNULIB_CACHE_STR_:
-            (_, macro) = Cache._GNULIB_CACHE_[key]
-            if macro in match and key not in explicit:
-                self[key] = match[macro].strip()
-        for key in Cache._GNULIB_CACHE_LIST_:
-            (_, macro) = Cache._GNULIB_CACHE_[key]
-            if macro in match and key not in explicit:
-                self[key] = [_.strip() for _ in match[macro].split("\n") if _.strip()]
+        for (key, (typeid, pattern)) in Cache._GNULIB_CACHE_.items():
+            match = pattern.findall(data)
+            if match and key not in explicit:
+                if typeid is bool:
+                    self[key] = True
+                elif typeid is str:
+                    self[key] = match[-1].strip()
+                else:
+                    self[key] = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+        if m4_base != self.m4_base:
+            raise _M4BaseMismatchError_(path, m4_base, self.m4_base)
 
     def __gnulib_comp(self, explicit):
         path = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
