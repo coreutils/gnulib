@@ -81,7 +81,7 @@ class Directory:
 
 
 
-class Git(Directory):
+class GnulibGit(Directory):
     """gnulib git repository"""
     _EXCLUDE_ = {
         "."                 : str.startswith,
@@ -108,11 +108,19 @@ class Git(Directory):
             raise TypeError("%r is not a gnulib repository")
 
 
+    def __enter__(self):
+        return self
+
+
+    def __exit__(self, exctype, excval, exctrace):
+        pass
+
+
     def module(self, name, full=True):
         """instantiate gnulib module by its name"""
         _type_assert_("name", name, str)
         _type_assert_("full", full, bool)
-        if name in Git._EXCLUDE_:
+        if name in GnulibGit._EXCLUDE_:
             raise ValueError("illegal module name")
         path = _os_.path.join(self["modules"], name)
         return _FileModule_(path, name=name) if full else _BaseModule_(name)
@@ -125,7 +133,7 @@ class Git(Directory):
             names = []
             for name in files:
                 exclude = False
-                for (key, method) in Git._EXCLUDE_.items():
+                for (key, method) in GnulibGit._EXCLUDE_.items():
                     if method(name, key):
                         exclude = True
                         break
