@@ -906,14 +906,13 @@ class CommandLine:
 
     def parse(self, *arguments):
         """
-        self.parse(*arguments) -> (config, explicit, mode, verbosity, options)
+        self.parse(*arguments) -> (namespace, mode, verbosity, options)
 
         Parse the command-line arguments and return a new configuration.
         The default configuration holds default parameter values.
         The parameter is overriden if and only if it was set explicitly.
 
-        config: a new configuration instance (pygnulib.Config.Base)
-        explicit: an iterable representing explicit configuration keys
+        namespace: a dictionary to use upon pygnulib.config.Base construction
         mode: a string representing the mode ("import", "add-import", etc.)
         verbosity: an integer representing the desired verbosity level
         options: a combination of CommandLine.Option flags
@@ -950,7 +949,4 @@ class CommandLine:
         if namespace.pop("single_configure", False):
             options |= CommandLine.Option.SingleConfigure
         namespace.pop("no_changelog", None)
-
-        config = _BaseConfig_(**namespace)
-        explicit = namespace.keys()
-        return (config, explicit, mode, verbosity, options)
+        return (namespace, mode, verbosity, options)
