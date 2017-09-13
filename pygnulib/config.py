@@ -427,6 +427,7 @@ class Base:
 
 class Cache(Base):
     """gnulib cached configuration"""
+    _COMMENTS_ = _re_.compile(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*)$", _re_.M)
     _AUTOCONF_ = {
         "autoconf" : _re_.compile(r"AC_PREREQ\(\[(.*?)\]\)", _re_.S | _re_.M),
         "auxdir"   : _re_.compile(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$", _re_.S | _re_.M),
@@ -485,7 +486,7 @@ class Cache(Base):
 
     def __autoconf(self, configure):
         with _codecs_.open(configure, "rb", "UTF-8") as stream:
-            data = stream.read()
+            data = Cache._COMMENTS_.sub("", stream.read())
         for (key, pattern) in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
             if not match:
@@ -501,7 +502,7 @@ class Cache(Base):
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
-            data = stream.read()
+            data = Cache._COMMENTS_.sub("", stream.read())
         for key in Cache._GNULIB_CACHE_BOOL_:
             (_, macro) = Cache._GNULIB_CACHE_[key]
             if key in data:
@@ -522,7 +523,7 @@ class Cache(Base):
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
-            data = stream.read()
+            data = Cache._COMMENTS_.sub("", stream.read())
         regex = r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
         pattern = _re_.compile(regex, _re_.S | _re_.M)
         match = pattern.findall(data)
