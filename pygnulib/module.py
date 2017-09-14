@@ -27,13 +27,12 @@ class Base:
         "early_autoconf_snippet" : (0x07, str, "configure.ac-early"),
         "autoconf_snippet"       : (0x08, str, "configure.ac"),
         "automake_snippet"       : (0x09, str, "Makefile.am"),
-        "include"                : (0x0A, list, "Include"),
-        "link"                   : (0x0B, list, "Link"),
+        "include_directive"      : (0x0A, list, "Include"),
+        "link_directive"         : (0x0B, list, "Link"),
         "license"                : (0x0C, str, "License"),
         "maintainers"            : (0x0D, list, "Maintainer"),
     }
     _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
-    _PATTERN_INCLUDE_ = _re_.compile("^[\\<\"]([A-Za-z0-9/\\-_]+\\.h)[\\>\"](?:\\s+.*^)*$")
 
 
     def __init__(self, name, **kwargs):
@@ -179,37 +178,28 @@ class Base:
 
 
     @property
-    def include(self):
-        """include files iterator (header, comment)"""
-        for entry in self.__table["include"]:
-            match = Base._PATTERN_INCLUDE_.findall(entry)
-            yield match[0] if match else entry
+    def include_directive(self):
+        """include directive"""
+        value = self.__table["include_directive"]
+        if value.startswith("<") or value.startswith("\""):
+            return "#include {0}".format(value)
+        return self.__table["include_directive"]
 
-    @include.setter
-    def include(self, value):
-        _type_assert_("include", value, _collections_.Iterable)
-        result = []
-        for (header, comment) in value:
-            _type_assert_("header", header, str)
-            _type_assert_("comment", comment, str)
-            result += [(header, comment)]
-        self.__table["include"] = set(result)
+    @include_directive.setter
+    def include_directive(self, value):
+        _type_assert_("include_directive", value, str)
+        self.__table["include_directive"] = value
 
 
     @property
-    def link(self):
-        """linkage iterator (string)"""
-        for entry in self.__table["link"]:
-            yield entry
+    def link_directive(self):
+        """link directive"""
+        return self.__table["link_directive"]
 
-    @link.setter
-    def link(self, value):
-        _type_assert_("link", value, _collections_.Iterable)
-        result = []
-        for item in value:
-            _type_assert_("directive", item, str)
-            result += [item]
-        self.__table["link"] = set(result)
+    @link_directive.setter
+    def link_directive(self, value):
+        _type_assert_("link_directive", value, str)
+        self.__table["link_directive"] = value
 
 
     @property
@@ -225,9 +215,8 @@ class Base:
 
     @property
     def maintainers(self):
-        """maintainers iterator (maintainer)"""
-        for entry in self.__table["maintainers"]:
-            yield entry
+        """maintainers"""
+        return "\n".join(self.__table["maintainers"])
 
     @maintainers.setter
     def maintainers(self, value):
@@ -291,6 +280,37 @@ class Base:
         return result.strip() + "\n"
 
 
+    def __getitem__(self, key):
+        if key not in Base._TABLE_:
+            key = key.replace("-", "_")
+            if key not in Base._TABLE_:
+                raise KeyError(repr(key))
+        return getattr(self, key)
+
+
+    def __setitem__(self, key, value):
+        if key not in Base._TABLE_:
+            key = key.replace("-", "_")
+            if key not in Base._TABLE_:
+                raise KeyError(repr(key))
+        return setattr(self, key, value)
+
+
+    def items(self):
+        """a set-like object providing a view on configuration items"""
+        return self.__table.items()
+
+
+    def keys(self):
+        """a set-like object providing a view on configuration keys"""
+        return self.__table.keys()
+
+
+    def values(self):
+        """a set-like object providing a view on configuration values"""
+        return self.__table.values()
+
+
     def __lt__(self, value):
         return self.name < value.name
 
@@ -324,8 +344,8 @@ class File(Base):
         "configure.ac-early" : (str, "early_autoconf_snippet"),
         "configure.ac"       : (str, "autoconf_snippet"),
         "Makefile.am"        : (str, "automake_snippet"),
-        "Include"            : (list, "include"),
-        "Link"               : (list, "link"),
+        "Include"            : (str, "include_directive"),
+        "Link"               : (str, "link_directive"),
         "License"            : (str, "license"),
         "Maintainer"         : (list, "maintainers"),
     }
@@ -341,14 +361,7 @@ class File(Base):
             raise ValueError("illegal mode: %r" % mode)
         if mode == "r":
             with _codecs_.open(path, "rb", "UTF-8") as stream:
-                data = ""
-                for line in stream:
-                    line = line.strip("\n")
-                    if line.startswith("#") \
-                    or (line.startswith("/*") and line.endswith("*/")):
-                        continue
-                    data += (line + "\n")
-            match = File._PATTERN_.split(data)[1:]
+                match = File._PATTERN_.split(stream.read())[1:]
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = File._TABLE_[group]
                 if typeid is list:
@@ -357,9 +370,9 @@ class File(Base):
                     table[key] = value.strip()
             self.__stream = None
         elif mode == "w":
-            super().__init__(name)
             self.__stream = _codecs_.open(path, "w+", "UTF-8")
         elif mode == "rw":
+            super().__init__(name)
             self.__init__(path, "r")
             self.__stream = _codecs_.open(path, "w+", "UTF-8")
         else:
