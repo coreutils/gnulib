@@ -7,6 +7,7 @@ import os as _os_
 
 
 from .error import type_assert as _type_assert_
+from .error import GnulibModuleNotFoundError as _GnulibModuleNotFoundError_
 from .config import Base as _BaseConfig_
 from .module import Base as _BaseModule_
 from .module import File as _FileModule_
@@ -123,7 +124,10 @@ class GnulibGit(Directory):
         if name in GnulibGit._EXCLUDE_:
             raise ValueError("illegal module name")
         path = _os_.path.join(self["modules"], name)
-        return _FileModule_(path, name=name) if full else _BaseModule_(name)
+        try:
+            return _FileModule_(path, name=name) if full else _BaseModule_(name)
+        except FileNotFoundError:
+            raise _GnulibModuleNotFoundError_(name)
 
 
     def modules(self, full=True):
