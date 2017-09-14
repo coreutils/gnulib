@@ -7,7 +7,6 @@ import argparse as _argparse_
 import enum as _enum_
 import os as _os_
 
-from .config import Base as _BaseConfig_
 from .error import CommandLineError as _CommandLineError_
 
 
@@ -42,6 +41,12 @@ class CommandLine:
     _HELP_ = (1 << 25)
     _ANY_IMPORT_ = _IMPORT_ | _ADD_IMPORT_ | _REMOVE_IMPORT_ | _UPDATE_
     _ANY_TEST_ = _TEST_ | _MEGA_TEST_ | _TEST_DIRECTORY_ | _MEGA_TEST_DIRECTORY_
+    _ANY_EXTRACT = _EXTRACT_DESCRIPTION_ | _EXTRACT_COMMENT_ | _EXTRACT_STATUS_ | \
+                   _EXTRACT_NOTICE_ | _EXTRACT_APPLICABILITY_ | _EXTRACT_FILELIST_ | \
+                   _EXTRACT_DEPENDENCIES_ | _EXTRACT_AUTOCONF_SNIPPET_ | \
+                   _EXTRACT_AUTOMAKE_SNIPPET_ | _EXTRACT_INCLUDE_DIRECTIVE_ | \
+                   _EXTRACT_LINK_DIRECTIVE_ | _EXTRACT_LICENSE_ | _EXTRACT_MAINTAINER_ | \
+                   _EXTRACT_TESTS_MODULE_
     _ALL_ = _LIST_ | _FIND_ | _ANY_IMPORT_ | _ANY_TEST_
     _MODES_ = (
         (_LIST_, "list", ""),
@@ -124,7 +129,9 @@ class CommandLine:
             kwargs["nargs"] = 0
             if mode & CommandLine._UPDATE_:
                 kwargs["nargs"] = 0
-            elif mode & CommandLine._ANY_IMPORT_ or mode & CommandLine._ANY_TEST_:
+            elif mode & CommandLine._ANY_IMPORT_ \
+            or mode & CommandLine._ANY_TEST_ \
+            or mode & CommandLine._ANY_EXTRACT:
                 kwargs["nargs"] = "+"
                 kwargs["metavar"] = "module0 ... moduleN"
             elif mode & CommandLine._FIND_:
@@ -365,7 +372,7 @@ class CommandLine:
                     "action": _ModeOption_,
                     "const": _EXTRACT_LICENSE_,
                 }),
-                (["--extract-maintainer"], {
+                (["--extract-maintainer", "--extract-maintainers"], {
                     "help": (
                         "report the maintainer(s) inside gnulib",
                     ),
