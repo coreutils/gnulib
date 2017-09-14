@@ -35,11 +35,10 @@ class CommandLineError(Exception):
 
 
 
-class M4BaseMismatchError(Exception):
-    """unexpected gl_M4_BASE macro value"""
-    def __init__(self, path, expected, actual):
-        fmt = "{0} is expected to contain gl_M4_BASE([{1}]), not gl_M4_BASE([{2}])"
-        super().__init__(fmt.format(path, expected, actual))
+class EmptyFileListError(Exception):
+    """cannot process empty file list"""
+    def __init__(self):
+        super().__init__("cannot process empty file list")
 
 
 
@@ -58,10 +57,11 @@ class IncompatibleLicenseError(Exception):
 
 
 
-class EmptyFileListError(Exception):
-    """cannot process empty file list"""
-    def __init__(self):
-        super().__init__("cannot process empty file list")
+class M4BaseMismatchError(Exception):
+    """unexpected gl_M4_BASE macro value"""
+    def __init__(self, path, expected, actual):
+        fmt = "{0} is expected to contain gl_M4_BASE([{1}]), not gl_M4_BASE([{2}])"
+        super().__init__(fmt.format(path, expected, actual))
 
 
 
