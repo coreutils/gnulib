@@ -15,6 +15,11 @@ from .error import AutoconfVersionError as _AutoconfVersionError_
 
 
 
+def _regex_(regex):
+    return _re_.compile(regex, _re_.S | _re_.M)
+
+
+
 class Base:
     """gnulib generic configuration"""
     _TABLE_ = {
@@ -407,7 +412,7 @@ class Base:
         elif key == "lgpl" and value not in (0, 2, 3):
             raise ValueError("lgpl: None, 2 or 3 expected")
         elif key.endswith("_base"):
-            value = _os_.path.normpath(value)
+            value = _os_.path.normpath(value) if value.strip() else ""
 
         self.__table[key] = value
 
@@ -430,41 +435,38 @@ class Base:
 
 class Cache(Base):
     """gnulib cached configuration"""
-    _COMMENTS_ = _re_.compile(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*)$", _re_.M)
+    _COMMENTS_ = _regex_(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*?)$")
     _AUTOCONF_ = {
-        "autoconf" : _re_.compile(r"AC_PREREQ\(\[(.*?)\]\)", _re_.S | _re_.M),
-        "auxdir"   : _re_.compile(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$", _re_.S | _re_.M),
-        "libtool"  : _re_.compile(r"A[CM]_PROG_LIBTOOL", _re_.S | _re_.M)
+        "autoconf" : _regex_(r"AC_PREREQ\(\[(.*?)\]\)"),
+        "auxdir"   : _regex_(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$"),
+        "libtool"  : _regex_(r"A[CM]_PROG_LIBTOOL")
     }
     _GNULIB_CACHE_ = {
-        "local"             : (str, "gl_LOCAL_DIR"),
-        "libtool"           : (bool, "gl_LIBTOOL"),
-        "conddeps"          : (bool, "gl_CONDITIONAL_DEPENDENCIES"),
-        "vc_files"          : (bool, "gl_VC_FILES"),
-        "tests"             : (bool, "gl_WITH_TESTS"),
-        "obsolete"          : (bool, "gl_WITH_OBSOLETE"),
-        "cxx_tests"         : (bool, "gl_WITH_CXX_TESTS"),
-        "longrunning_tests" : (bool, "gl_WITH_LONGRUNNING_TESTS"),
-        "privileged_tests"  : (bool, "gl_WITH_PRIVILEGED_TESTS"),
-        "unportable_tests"  : (bool, "gl_WITH_UNPORTABLE_TESTS"),
-        "all_tests"         : (bool, "gl_WITH_ALL_TESTS"),
-        "source_base"       : (str, "gl_SOURCE_BASE"),
-        "m4_base"           : (str, "gl_M4_BASE"),
-        "po_base"           : (str, "gl_PO_BASE"),
-        "doc_base"          : (str, "gl_DOC_BASE"),
-        "tests_base"        : (str, "gl_TESTS_BASE"),
-        "makefile_name"     : (str, "gl_MAKEFILE_NAME"),
-        "macro_prefix"      : (str, "gl_MACRO_PREFIX"),
-        "po_domain"         : (str, "gl_PO_DOMAIN"),
-        "witness_c_macro"   : (str, "gl_WITNESS_C_MACRO"),
-        "lib"               : (str, "gl_LIB"),
-        "modules"           : (list, "gl_MODULES"),
-        "avoid"             : (list, "gl_AVOID"),
-        "lgpl"              : (str, "gl_LGPL"),
+        "local"             : (str, _regex_(r"gl_LOCAL_DIR\(\[(.*?)\]\)")),
+        "libtool"           : (bool, _regex_(r"gl_LIBTOOL\(\[(.*?)\]\)")),
+        "conddeps"          : (bool, _regex_(r"gl_CONDITIONAL_DEPENDENCIES\(\[(.*?)\]\)")),
+        "vc_files"          : (bool, _regex_(r"gl_VC_FILES\(\[(.*?)\]\)")),
+        "tests"             : (bool, _regex_(r"gl_WITH_TESTS\(\[(.*?)\]\)")),
+        "obsolete"          : (bool, _regex_(r"gl_WITH_OBSOLETE\(\[(.*?)\]\)")),
+        "cxx_tests"         : (bool, _regex_(r"gl_WITH_CXX_TESTS\(\[(.*?)\]\)")),
+        "longrunning_tests" : (bool, _regex_(r"gl_WITH_LONGRUNNING_TESTS\(\[(.*?)\]\)")),
+        "privileged_tests"  : (bool, _regex_(r"gl_WITH_PRIVILEGED_TESTS\(\[(.*?)\]\)")),
+        "unportable_tests"  : (bool, _regex_(r"gl_WITH_UNPORTABLE_TESTS\(\[(.*?)\]\)")),
+        "all_tests"         : (bool, _regex_(r"gl_WITH_ALL_TESTS\(\[(.*?)\]\)")),
+        "source_base"       : (str, _regex_(r"gl_SOURCE_BASE\(\[(.*?)\]\)")),
+        "m4_base"           : (str, _regex_(r"gl_M4_BASE\(\[(.*?)\]\)")),
+        "po_base"           : (str, _regex_(r"gl_PO_BASE\(\[(.*?)\]\)")),
+        "doc_base"          : (str, _regex_(r"gl_DOC_BASE\(\[(.*?)\]\)")),
+        "tests_base"        : (str, _regex_(r"gl_TESTS_BASE\(\[(.*?)\]\)")),
+        "makefile_name"     : (str, _regex_(r"gl_MAKEFILE_NAME\(\[(.*?)\]\)")),
+        "macro_prefix"      : (str, _regex_(r"gl_MACRO_PREFIX\(\[(.*?)\]\)")),
+        "po_domain"         : (str, _regex_(r"gl_PO_DOMAIN\(\[(.*?)\]\)")),
+        "witness_c_macro"   : (str, _regex_(r"gl_WITNESS_C_MACRO\(\[(.*?)\]\)")),
+        "lib"               : (str, _regex_(r"gl_LIB\(\[(.*?)\]\)")),
+        "modules"           : (list, _regex_(r"gl_MODULES\(\[(.*?)\]\)")),
+        "avoid"             : (list, _regex_(r"gl_AVOID\(\[(.*?)\]\)")),
+        "lgpl"              : (str, _regex_(r"gl_LGPL\(\[(.*?)\]\)")),
     }
-    for (_key_, (_typeid_, _macro_)) in _GNULIB_CACHE_.items():
-        _pattern_ = _re_.compile(r"{0}\(\[(.*?)\]\)".format(_macro_), _re_.S | _re_.M)
-        _GNULIB_CACHE_[_key_] = (_typeid_, _pattern_)
 
 
     def __init__(self, configure=None, **kwargs):
@@ -512,14 +514,14 @@ class Cache(Base):
             raise _M4BaseMismatchError_(path, m4_base, self.m4_base)
 
     def __gnulib_comp(self, explicit):
+        macro_prefix = self.macro_prefix
         path = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
         path = _os_.path.normpath(path)
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs_.open(path, "rb", "UTF-8") as stream:
             data = Cache._COMMENTS_.sub("", stream.read())
-        regex = r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(self["macro-prefix"])
-        pattern = _re_.compile(regex, _re_.S | _re_.M)
+        pattern = _regex_(r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(macro_prefix))
         match = pattern.findall(data)
         if match and "files" not in explicit:
             self.files = [_.strip() for _ in match[-1].split("\n") if _.strip()]
