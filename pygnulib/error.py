@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # encoding: UTF-8
+"""gnulib miscellaneous error classes"""
 
 
 
@@ -30,6 +31,7 @@ class AutoconfVersionError(Exception):
 
 
 class CommandLineError(Exception):
+    """command-line parsing error"""
     def __init__(self, program, message):
         super().__init__("{0}: {1}".format(program, message))
 

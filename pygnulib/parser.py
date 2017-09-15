@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # encoding: UTF-8
+"""gnulib command-line parsing API"""
 
 
 

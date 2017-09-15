@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # encoding: UTF-8
+"""gnulib module API"""
 
 
 
@@ -297,17 +298,17 @@ class Base:
 
 
     def items(self):
-        """a set-like object providing a view on configuration items"""
+        """a set-like object providing a view on module items"""
         return self.__table.items()
 
 
     def keys(self):
-        """a set-like object providing a view on configuration keys"""
+        """a set-like object providing a view on module keys"""
         return self.__table.keys()
 
 
     def values(self):
-        """a set-like object providing a view on configuration values"""
+        """a set-like object providing a view on module values"""
         return self.__table.values()
 
 

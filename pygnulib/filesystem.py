@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # encoding: UTF-8
+"""gnulib virtual filesystem API"""
 
 
 
@@ -72,6 +73,7 @@ class Directory:
 
     @property
     def name(self):
+        """directory name"""
         return self.__name
 
 
