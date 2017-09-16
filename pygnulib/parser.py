@@ -168,7 +168,8 @@ class CommandLine:
                     if old_mode != 0:
                         fmt = "argument {0}: not allowed with {1}"
                         parser.error(fmt.format(new_option, old_option))
-                    setattr(namespace, "modules", list(value))
+                    if new_mode != CommandLine._UPDATE_:
+                        setattr(namespace, "modules", list(value))
                     setattr(namespace, self.dest, new_mode)
             super().__call__(*args)
 
