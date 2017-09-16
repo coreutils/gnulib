@@ -120,7 +120,7 @@ class GnulibGit(Directory):
 
 
     def module(self, name, full=True):
-        """instantiate gnulib module by its name"""
+        """obtain gnulib module by name"""
         _type_assert_("name", name, str)
         _type_assert_("full", full, bool)
         if name in GnulibGit._EXCLUDE_:
@@ -149,3 +149,49 @@ class GnulibGit(Directory):
                 path = _os_.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)
+
+
+    def transitive_closure(self, config):
+        """
+        GnulibGit.transitive_closure(config) -> iterable (module, demander, condition)
+
+        The returned value is an iterable, yielding a module, its demander and condition.
+        If condition is None, but demander is not, there is no special condition for this module.
+        If demander is None, the module is provided unconditionally (condition is always None).
+        The correct iteration over modules is shown below:
+
+        for (module, demander, condition) in gnulib.transitive_closure(modules):
+            if demander is not None:
+                if condition is not None:
+                    fmt = "{0} is added as dependency from {1} under '{2}' condition"
+                    args = (module.name, demander.name, condition)
+                else:
+                    fmt = "{0} is added as dependency from {1} without specific condition"
+                    args = (module.name, demander.name)
+            else:
+                fmt = "{0} is added unconditionally"
+                args = (module.name,)
+            print(fmt.format(args))
+        """
+        demanders = set()
+        (old, new) = (set(), set())
+        for module in config.modules:
+            module = self.module(module)
+            new.add((module, None, None))
+        while old != new:
+            old.update(new)
+            for (demander, _, condition) in old:
+                if demander in demanders:
+                    continue
+                for (dependency, condition) in demander.dependencies:
+                    module = self.module(dependency)
+                    if (not config.obsolete and module.obsolete) \
+                    or (not config.cxx_tests and module.cxx_test) \
+                    or (not config.longrunning_tests and module.longrunning_test) \
+                    or (not config.privileged_tests and module.privileged_test) \
+                    or (not config.unportable_tests and module.unportable_test):
+                        continue
+                    condition = condition if condition.strip() else None
+                    new.add((module, demander, condition))
+                demanders.add(demander)
+        return iter(new)
