@@ -90,6 +90,32 @@ class Base:
 
 
     @property
+    def obsolete(self):
+        """module is obsolete?"""
+        return self.status == "obsolete"
+
+    @property
+    def cxx_test(self):
+        """module is C++ test?"""
+        return self.status == "c++-test"
+
+    @property
+    def longrunning_test(self):
+        """module is C++ test?"""
+        return self.status == "longrunning-test"
+
+    @property
+    def privileged_test(self):
+        """module is privileged test?"""
+        return self.status == "privileged-test"
+
+    @property
+    def unportable_test(self):
+        """module is unportable test?"""
+        return self.status == "unportable-test"
+
+
+    @property
     def notice(self):
         """notice"""
         return self.__table["notice"]
