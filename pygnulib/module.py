@@ -392,7 +392,12 @@ class File(Base):
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = File._TABLE_[group]
                 if typeid is list:
-                    table[key] = [_ for _ in "".join(value).split("\n") if _.strip()]
+                    lines = []
+                    for line in value.splitlines():
+                        if not line.strip() or line.startswith("#"):
+                            continue
+                        lines += [line]
+                    table[key] = lines
                 else:
                     table[key] = value.strip()
             self.__stream = None
