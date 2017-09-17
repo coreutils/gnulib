@@ -268,7 +268,7 @@ m4_defun([gl_MANYWARN_ALL_GCC(C)],
   # gcc --help=warnings outputs an unusual form for these options; list
   # them here so that the above 'comm' command doesn't report a false match.
   # Would prefer "min (PTRDIFF_MAX, SIZE_MAX)", but it must be a literal.
-  # Also, AC_COMPUTE_INT requirs it to fit in a long; it is 2**63 on
+  # Also, AC_COMPUTE_INT requires it to fit in a long; it is 2**63 on
   # the only platforms where it does not fit in a long, so make that
   # a special case.
   AC_MSG_CHECKING([max safe object size])
