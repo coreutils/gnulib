@@ -180,7 +180,7 @@ class GnulibGit(Directory):
             new.add((module, None, None))
         while old != new:
             old.update(new)
-            for (demander, _, condition) in old:
+            for (demander, _, _) in old:
                 if demander in demanders:
                     continue
                 for (dependency, condition) in demander.dependencies:
