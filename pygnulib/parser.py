@@ -87,6 +87,8 @@ class CommandLine:
         def __init__(self, *args, **kwargs):
             self.__flags = kwargs.pop("flags")
             self.__options = kwargs["option_strings"]
+            if kwargs.get("nargs", None) is None:
+                kwargs["nargs"] = 0
             super().__init__(default=_argparse_.SUPPRESS, *args, **kwargs)
 
 
@@ -108,7 +110,7 @@ class CommandLine:
 
 
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
+            args = (parser, namespace, self.__const, option)
             setattr(parser, self.dest, self.__const)
             super().__call__(*args)
 
