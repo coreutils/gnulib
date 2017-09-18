@@ -477,7 +477,7 @@ class CommandLine:
                     "help": (
                         "include unit tests for the included modules",
                     ),
-                    "action": _Option_,
+                    "action": _TrueOption_,
                     "dest": "tests",
                 }),
                 (["--single-configure"], {
