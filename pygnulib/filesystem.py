@@ -151,14 +151,22 @@ class GnulibGit(Directory):
                 yield self.module(name, full)
 
 
-    def transitive_closure(self, config):
+    def transitive_closure(self, config, modules, tests):
         """
-        GnulibGit.transitive_closure(config) -> iterable (module, demander, condition)
+        GnulibGit.transitive_closure(config, modules, tests) ->
+            set((
+                (module0, demander0, condition0),
+                (moduleN, demanderN, conditionN),
+            ))
 
-        The returned value is an iterable, yielding a module, its demander and condition.
+        config is a gnulib configuration (e.g. pygnulib.Config.Base instance).
+        modules is an iterable, yielding a module (either name or instance).
+        tests designates whether to consider the corresponding test module and its dependencies.
+
+        The returned value is a set, containing a sequence of tuples (module, demander, condition).
         If condition is None, but demander is not, there is no special condition for this module.
         If demander is None, the module is provided unconditionally (condition is always None).
-        The correct iteration over modules is shown below:
+        The correct iteration over the resulting table is shown below:
 
         for (module, demander, condition) in gnulib.transitive_closure(modules):
             if demander is not None:
@@ -175,23 +183,33 @@ class GnulibGit(Directory):
         """
         demanders = set()
         (old, new) = (set(), set())
-        for module in config.modules:
-            module = self.module(module)
+        for module in modules:
+            if isinstance(module, str):
+                module = self.module(module)
             new.add((module, None, None))
         while old != new:
             old.update(new)
             for (demander, _, _) in old:
                 if demander in demanders:
                     continue
+                if tests:
+                    try:
+                        name = "{0}-tests".format(demander.name)
+                        new.add((self.module(name), None, None))
+                    except _GnulibModuleNotFoundError_:
+                        pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = self.module(dependency)
-                    if (not config.obsolete and module.obsolete) \
-                    or (not config.cxx_tests and module.cxx_test) \
-                    or (not config.longrunning_tests and module.longrunning_test) \
-                    or (not config.privileged_tests and module.privileged_test) \
-                    or (not config.unportable_tests and module.unportable_test):
+                    exclude = (
+                        (not config.obsolete and module.obsolete),
+                        (not config.cxx_tests and module.cxx_test),
+                        (not config.longrunning_tests and module.longrunning_test),
+                        (not config.privileged_tests and module.privileged_test),
+                        (not config.unportable_tests and module.unportable_test),
+                    )
+                    if any(exclude):
                         continue
                     condition = condition if condition.strip() else None
                     new.add((module, demander, condition))
                 demanders.add(demander)
-        return iter(new)
+        return new
