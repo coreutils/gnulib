@@ -87,8 +87,6 @@ class CommandLine:
         def __init__(self, *args, **kwargs):
             self.__flags = kwargs.pop("flags")
             self.__options = kwargs["option_strings"]
-            if kwargs.get("nargs", None) is None:
-                kwargs["nargs"] = 0
             super().__init__(default=_argparse_.SUPPRESS, *args, **kwargs)
 
 
@@ -106,7 +104,7 @@ class CommandLine:
     class _ConstOption_(_Option_):
         def __init__(self, *args, **kwargs):
             self.__const = kwargs.pop("const")
-            super().__init__(*args, **kwargs)
+            super().__init__(nargs=0, *args, **kwargs)
 
 
         def __call__(self, parser, namespace, value, option=None):
@@ -165,14 +163,13 @@ class CommandLine:
             if new_mode == CommandLine._HELP_:
                 old_mode = CommandLine._HELP_
                 setattr(namespace, self.dest, CommandLine._HELP_)
-            if old_mode != CommandLine._HELP_:
-                if old_mode != new_mode:
-                    if old_mode != 0:
-                        fmt = "argument {0}: not allowed with {1}"
-                        parser.error(fmt.format(new_option, old_option))
-                    if new_mode != CommandLine._UPDATE_:
-                        setattr(namespace, "modules", list(value))
-                    setattr(namespace, self.dest, new_mode)
+            if old_mode != CommandLine._HELP_ and old_mode != new_mode:
+                if old_mode != 0:
+                    fmt = "argument {0}: not allowed with {1}"
+                    parser.error(fmt.format(new_option, old_option))
+                if new_mode != CommandLine._UPDATE_:
+                    setattr(namespace, "modules", list(value))
+                setattr(namespace, self.dest, new_mode)
             super().__call__(*args)
 
 
@@ -207,10 +204,12 @@ class CommandLine:
 
 
     class _LinkOption_(_Option_):
+        def __init__(self, *args, **kwargs):
+            super().__init__(nargs=0, *args, **kwargs)
+
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
-                setattr(parser, self.dest, CommandLine._LINK_NOTICE_)
+                setattr(namespace, self.dest, CommandLine._LINK_NOTICE_)
             flags = getattr(namespace, self.dest)
             symlink = ("-s", "--symlink", "--local-symlink", "-S", "--more-symlink")
             hardlink = ("-h", "--hardlink", "--local-hardlink", "-H", "--more-hardlink")
@@ -228,7 +227,7 @@ class CommandLine:
                 flags |= CommandLine._LINK_LOCAL_
             if option in disable_notice:
                 flags &= ~CommandLine._LINK_NOTICE_
-            setattr(namespace, self.dest, flags)
+            args = (parser, namespace, flags, option)
             super().__call__(*args)
 
 
@@ -431,7 +430,6 @@ class CommandLine:
                     ),
                     "action": _Option_,
                     "dest": "local",
-                    "nargs": 1,
                     "metavar": "DIRECTORY",
                 }),
                 (["-v", "--verbose"], {
@@ -440,7 +438,6 @@ class CommandLine:
                     ),
                     "action": _VerbosityAction_,
                     "dest": "verbosity",
-                    "nargs": 0,
                 }),
                 (["-q", "--quiet"], {
                     "help": (
@@ -448,7 +445,6 @@ class CommandLine:
                     ),
                     "action": _VerbosityAction_,
                     "dest": "verbosity",
-                    "nargs": 0,
                 }),
             ),
         ),
@@ -776,7 +772,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
                 (["--local-symlink"], {
                     "help": (
@@ -785,7 +780,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
                 (["-h", "--hardlink"], {
                     "help": (
@@ -793,7 +787,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
                 (["--local-hardlink"], {
                     "help": (
@@ -802,7 +795,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
             ),
         ),
@@ -819,7 +811,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
                 (["-H", "--more-hardlink"], {
                     "help": (
@@ -828,7 +819,6 @@ class CommandLine:
                     ),
                     "action": _LinkOption_,
                     "dest": "link",
-                    "nargs": 0,
                 }),
             ),
         ),
