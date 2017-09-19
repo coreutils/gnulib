@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2017-09-13.06; # UTC
+scriptversion=2017-09-19.08; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -699,7 +699,7 @@ download_po_files() {
   echo "$me: getting translations into $subdir for $domain..."
   cmd=$(printf "$po_download_command_format" "$domain" "$subdir")
   eval "$cmd" && return
-  # Fallback to HTTP.
+  # Fallback to HTTPS.
   cmd=$(printf "$po_download_command_format2" "$subdir" "$domain")
   eval "$cmd"
 }
