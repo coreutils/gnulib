@@ -12,6 +12,8 @@ import re as _re_
 
 
 from .error import type_assert as _type_assert_
+from .error import UnknownModuleError as _UnknownModuleError_
+from .config import Option as _ConfigOption_
 
 
 
@@ -342,12 +344,16 @@ class Base:
 
 
     def __lt__(self, value):
+        if not isinstance(value, Base):
+            return True
         return self.name < value.name
 
     def __le__(self, value):
         return self.__lt__(value) or self.__eq__(value)
 
     def __eq__(self, value):
+        if not isinstance(value, Base):
+            return False
         return self.name == value.name
 
     def __ne__(self, value):
@@ -432,3 +438,99 @@ class File(Base):
 
     def __exit__(self, exctype, excval, exctrace):
         self.close()
+
+
+
+class Table:
+    """module transitive closure result"""
+    def __init__(self, lookup, modules, options):
+        """
+        Perform a transitive closure, generating a set of module dependencies.
+        Each iteration over the table yields a tuple of (module, demander, condition).
+
+        If condition is None, but demander is not, there is no special condition for this module.
+        If demander is None, the module is provided unconditionally (condition is always None).
+
+        lookup must be a callable which obtains a pygnulib module by its name.
+        modules is an iterable, yielding a module (either name or instance).
+        options may be any combination of gnulib configuration options.
+        """
+        if not callable(lookup):
+            raise TypeError("lookup must be a callable")
+        _type_assert_("options", options, _ConfigOption_)
+
+        obsolete = bool(options & _ConfigOption_.Obsolete)
+        tests = bool(options & _ConfigOption_.Tests)
+        cxx_tests = bool(options & _ConfigOption_.CXX)
+        longrunning_tests = bool(options & _ConfigOption_.Longrunning)
+        privileged_tests = bool(options & _ConfigOption_.Privileged)
+        unportable_tests = bool(options & _ConfigOption_.Unportable)
+        modules = set(lookup(module) for module in modules)
+
+        def _transitive_closure_(tests):
+            queue = set()
+            previous = set()
+            current = set()
+            for module in modules:
+                current.add((module, None, None))
+            while previous != current:
+                previous.update(current)
+                for (demander, _, _) in previous:
+                    if demander in queue:
+                        continue
+                    if tests and not demander.name.endswith("-tests"):
+                        try:
+                            name = "{0}-tests".format(demander.name)
+                            current.add((lookup(name), None, None))
+                        except _UnknownModuleError_:
+                            pass # ignore non-existent tests
+                    for (dependency, condition) in demander.dependencies:
+                        module = lookup(dependency)
+                        exclude = (
+                            (not obsolete and module.obsolete),
+                            (not cxx_tests and module.cxx_test),
+                            (not longrunning_tests and module.longrunning_test),
+                            (not privileged_tests and module.privileged_test),
+                            (not unportable_tests and module.unportable_test),
+                        )
+                        if not any(exclude):
+                            condition = condition if condition.strip() else None
+                            current.add((module, demander, condition))
+                    queue.add(demander)
+            return current
+
+        self.__with_tests = tests
+        self.__base = _transitive_closure_(False)
+        self.__full = _transitive_closure_(True)
+
+
+    def __iter__(self):
+        return iter(self.__full)
+
+
+    @property
+    def main(self):
+        """an iterator over main module set"""
+        return iter(set(module for (module, _, _) in self.__base))
+
+
+    @property
+    def tests(self):
+        """an iterator over tests-related module set"""
+        final = self.final
+        if not self.__with_tests:
+            final = (module for module in final if module.applicability != "all")
+        main = (module for module in self.main if module.applicability != "all")
+        return iter(set(final) ^ set(main))
+
+
+    @property
+    def final(self):
+        """an iterator over final module set"""
+        return self.all if self.__with_tests else self.main
+
+
+    @property
+    def all(self):
+        """an iterator over all modules"""
+        return iter(set(module for (module, _, _) in self.__full))

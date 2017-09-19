@@ -8,7 +8,7 @@ import os as _os_
 
 
 from .error import type_assert as _type_assert_
-from .error import GnulibModuleNotFoundError as _GnulibModuleNotFoundError_
+from .error import UnknownModuleError as _UnknownModuleError_
 from .config import Base as _BaseConfig_
 from .module import Base as _BaseModule_
 from .module import File as _FileModule_
@@ -129,7 +129,7 @@ class GnulibGit(Directory):
         try:
             return _FileModule_(path, name=name) if full else _BaseModule_(name)
         except FileNotFoundError:
-            raise _GnulibModuleNotFoundError_(name)
+            raise _UnknownModuleError_(name)
 
 
     def modules(self, full=True):
@@ -149,67 +149,3 @@ class GnulibGit(Directory):
                 path = _os_.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)
-
-
-    def transitive_closure(self, config, modules, tests):
-        """
-        GnulibGit.transitive_closure(config, modules, tests) ->
-            set((
-                (module0, demander0, condition0),
-                (moduleN, demanderN, conditionN),
-            ))
-
-        config is a gnulib configuration (e.g. pygnulib.Config.Base instance).
-        modules is an iterable, yielding a module (either name or instance).
-        tests designates whether to consider the corresponding test module and its dependencies.
-
-        The returned value is a set, containing a sequence of tuples (module, demander, condition).
-        If condition is None, but demander is not, there is no special condition for this module.
-        If demander is None, the module is provided unconditionally (condition is always None).
-        The correct iteration over the resulting table is shown below:
-
-        for (module, demander, condition) in gnulib.transitive_closure(modules):
-            if demander is not None:
-                if condition is not None:
-                    fmt = "{0} is added as dependency from {1} under '{2}' condition"
-                    args = (module.name, demander.name, condition)
-                else:
-                    fmt = "{0} is added as dependency from {1} without specific condition"
-                    args = (module.name, demander.name)
-            else:
-                fmt = "{0} is added unconditionally"
-                args = (module.name,)
-            print(fmt.format(args))
-        """
-        demanders = set()
-        (old, new) = (set(), set())
-        for module in modules:
-            if isinstance(module, str):
-                module = self.module(module)
-            new.add((module, None, None))
-        while old != new:
-            old.update(new)
-            for (demander, _, _) in old:
-                if demander in demanders:
-                    continue
-                if tests:
-                    try:
-                        name = "{0}-tests".format(demander.name)
-                        new.add((self.module(name), None, None))
-                    except _GnulibModuleNotFoundError_:
-                        pass # ignore non-existent tests
-                for (dependency, condition) in demander.dependencies:
-                    module = self.module(dependency)
-                    exclude = (
-                        (not config.obsolete and module.obsolete),
-                        (not config.cxx_tests and module.cxx_test),
-                        (not config.longrunning_tests and module.longrunning_test),
-                        (not config.privileged_tests and module.privileged_test),
-                        (not config.unportable_tests and module.unportable_test),
-                    )
-                    if any(exclude):
-                        continue
-                    condition = condition if condition.strip() else None
-                    new.add((module, demander, condition))
-                demanders.add(demander)
-        return new
