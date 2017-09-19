@@ -6,6 +6,7 @@
 
 import codecs as _codecs_
 import collections as _collections_
+import enum as _enum_
 import os as _os_
 import re as _re_
 
@@ -18,6 +19,18 @@ from .error import AutoconfVersionError as _AutoconfVersionError_
 
 def _regex_(regex):
     return _re_.compile(regex, _re_.S | _re_.M)
+
+
+
+class Option(_enum_.Flag):
+    Obsolete = (1 << 0)
+    Tests = (1 << 1)
+    CXX = (1 << 2)
+    Longrunning = (1 << 3)
+    Privileged = (1 << 4)
+    Unportable = (1 << 5)
+    All = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
+
 
 
 
@@ -294,6 +307,24 @@ class Base:
         self.privileged_tests = value
         self.unportable_tests = value
         self.longrunning_tests = value
+
+    @property
+    def options(self):
+        """bitmask of active options"""
+        result = ~Option.All
+        if self.obsolete:
+            result |= Option.Obsolete
+        if self.tests:
+            result |= Option.Tests
+        if self.cxx_tests:
+            result |= Option.CXX
+        if self.longrunning_tests:
+            result |= Option.Longrunning
+        if self.privileged_tests:
+            result |= Option.Privileged
+        if self.unportable_tests:
+            result |= Option.Unportable
+        return result
 
 
     @property
