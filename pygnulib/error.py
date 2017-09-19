@@ -67,16 +67,16 @@ class M4BaseMismatchError(Exception):
 
 
 
-class GnulibModuleNotFoundError(Exception):
-    """module not found"""
-    def __init__(self, name):
-        fmt = "module not found: {0}"
-        super().__init__(fmt.format(name))
-
-
-
 class UnknownLicenseError(Exception):
     """module lacks a license"""
     def __init__(self, module):
         fmt = "module lacks a license: {0}"
         super().__init__(fmt.format(module))
+
+
+
+class UnknownModuleError(Exception):
+    """unknown gnulib module"""
+    def __init__(self, name):
+        fmt = "unknown gnulib module: {0}"
+        super().__init__(fmt.format(name))
