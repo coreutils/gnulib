@@ -130,11 +130,14 @@ class Base:
     def applicability(self):
         """applicability (usually "main" or "tests")"""
         default = "main" if self.name.endswith("-tests") else "tests"
-        return self.__table.get("applicability", default)
+        result = self.__table.get("applicability")
+        return result if result else default
 
     @applicability.setter
     def applicability(self, value):
         _type_assert_("applicability", value, str)
+        if value not in ("all", "main", "tests"):
+            raise ValueError("applicability: \"main\", \"tests\" or \"all\"")
         self.__table["applicability"] = value
 
 
