@@ -183,15 +183,19 @@ class CommandLine:
             super().__call__(*args)
 
 
-    class _VerbosityAction_(_Option_):
+    class _VerbosityOption_(_Option_):
+        def __init__(self, *args, **kwargs):
+            super().__init__(nargs=0, *args, **kwargs)
+
+
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, 0)
             value = getattr(namespace, self.dest)
             verbose = option in ("-v", "--verbose")
             value += +1 if verbose else -1
             setattr(namespace, self.dest, value)
+            args = (parser, namespace, value, option)
             super().__call__(*args)
 
 
@@ -436,14 +440,14 @@ class CommandLine:
                     "help": (
                         "increase verbosity; may be repeated",
                     ),
-                    "action": _VerbosityAction_,
+                    "action": _VerbosityOption_,
                     "dest": "verbosity",
                 }),
                 (["-q", "--quiet"], {
                     "help": (
                         "decrease verbosity; may be repeated",
                     ),
-                    "action": _VerbosityAction_,
+                    "action": _VerbosityOption_,
                     "dest": "verbosity",
                 }),
             ),
