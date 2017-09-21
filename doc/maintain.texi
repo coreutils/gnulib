@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate July 21, 2016
+@set lastupdate September 19, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -145,11 +145,11 @@ committee members.  Additional information is in
 
 @cindex down, when GNU machines are
 @cindex outage, of GNU machines
-@cindex @url{https://pumprock.net/fsfstatus}
+@cindex @url{https://quitter.se/fsfstatus}
 If you find that any GNU computer systems (@code{fencepost.gnu.org},
 @code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
 @dots{}) seem to be down, you can check the current status at
-@url{http://pumprock.net/fsfstatus}.  Most likely the problem, if
+@url{http://quitter.se/fsfstatus}.  Most likely the problem, if
 it can be alleviated at the FSF end, is already being worked on.
 
 @cindex sysadmin, FSF
@@ -991,61 +991,66 @@ license for these macros.
 @node External Libraries
 @section External Libraries
 
-When maintaining an FSF-copyrighted GNU package, you may occasionally
-want to use a general-purpose free software module which offers a
-useful functionality, as a ``library'' facility (though the module is
-not always packaged technically as a library).
+As maintainer of an FSF-copyrighted GNU package, how do you use
+separately-published general-purpose free modules?  (We also call them
+``libraries'' because we are using them as libraries; it doesn't
+matter whether they are packaged as libraries or not.)
 
-Make sure the license of the module is compatible with current @emph{and
-future} GPL versions.  ``GNU GPL version 3 or later'' is good, and
-so is anything which includes permission for use under those GPL
-versions (including ``GNU GPL version 2 or later'', ``LGPL version
-@var{n} or later'', ``LGPL version 2.1'', ``GNU Affero GPL version 3
-or later'').  Lax permissive licenses are ok too, since they are
-compatible with all GPL versions.
+It would be unreasonable to ask their authors to assign copyright to
+the FSF.  They didn't write those modules as contributions to GNU.  We
+just happen to want to use them, as any developer might.  It would be
+rude to ask developers, out of the blue, to give the FSF their
+copyright.  Please don't ask for that in cases like these.
+
+The proper way to use those modules is to link your package with them
+and say they are @emph{not} part of your package.  See below for the
+mechanics of this.
+
+To avoid present or future legal trouble, you must make sure the
+license of the module is compatible with current @emph{and future} GPL
+versions.  ``GNU GPL version 3 or later'' is good, and so is anything
+which includes permission for use under those GPL versions (including
+``GNU GPL version 2 or later'', ``LGPL version @var{n} or later'',
+``LGPL version 2.1'', ``GNU Affero GPL version 3 or later'').  Lax
+permissive licenses are ok too, since they are compatible with all GPL
+versions.
 
 ``GPL version 2 only'' is obviously unacceptable because it is
 incompatible with GPL version 3.  ``GPL version 3 only'' and ``GPL
 version 2 or 3 only'' have a subtler problem: they would be incompatible
 with GPL version 4, if we ever make one, so the module would become an
 obstacle to upgrading your package's license to ``GPL version 4 or
-later''.
+later''.  Don't use such modules.
 
-One package you need to avoid is @code{goffice}, since it allows only
+One library you need to avoid is @code{goffice}, since it allows only
 GPL versions 2 and 3.
 
-It would be unreasonable to ask the author of the external module to
-assign its copyright to the FSF.  After all, person did not write
-it specifically as a contribution to your package, so it would be
-impertinent to ask, out of the blue, ``Please give the FSF your
-copyright.''
-
-So make your program use the module but without treating the module as
-a part of your program.  There are two reasonable methods of doing
-this:
+So, here are the mechanics of how to arrange your package to use the
+unrelated free module.
 
 @enumerate
 @item
-Assume the module is already installed on the system, and use it when
-linking your program.  This is only reasonable if the module really has
-the form of a library.
+Assume the module is already installed on the system, and link with it
+when linking your program.  This is only reasonable if the module
+really has the form of a library.
 
 @item
-Include the module in your package, putting the source in a separate
-subdirectory whose @file{README} file says, ``This is not part of the
-GNU FOO program, but is used with GNU FOO.''  Then set up your makefiles
-to build this module and link it into the executable.
+Include the module in your package's distribution, putting the source
+in a separate subdirectory whose @file{README} file says, ``This is
+not part of the GNU FOO program, but is used with GNU FOO.''  Then set
+up your makefiles to build this module and link it into the
+executable.
 
-For this method, it is not necessary to treat the module as a library
-and make a @samp{.a} file from it.  You can link with the @samp{.o}
-files directly in the usual manner.
+With this method, it is not necessary to treat the module as a library
+and make a @samp{.a} file from it.  You can link directly with the
+@samp{.o} files in the usual manner.
 @end enumerate
 
-Both of these methods create an irregularity, and our lawyers have told
-us to minimize the amount of such irregularity.  So consider using these
-methods only for general-purpose modules that were written for other
-programs and released separately for general use.  For anything that was
-written as a contribution to your package, please get papers signed.
+Both of these methods create an irregularity, and our lawyers have
+told us to minimize the amount of such irregularity.  So use these
+methods only for general-purpose modules that were @emph{not} written
+for your package.  For anything that was written as a contribution to
+your package, please get papers signed.
 
 @node Crediting Authors
 @section Crediting Authors
@@ -1491,7 +1496,7 @@ Once a program gets to be widely used and people expect it to work
 solidly, it is a good idea to do pretest releases before each ``real''
 release.
 
-There are two ways of handling version numbers for pretest versions.
+There are three ways of handling version numbers for pretest versions.
 One method is to treat them as versions preceding the release you are going
 to make.
 
@@ -1502,13 +1507,21 @@ are not enough, after 4.5.99 you could advance to 4.5.990 and so on.
 (You could also use 4.5.100, but 990 has the advantage of sorting in
 the right order.)
 
-The other method is to attach a date to the release number that is
+Another method is to attach a date to the release number that is
 coming.  For a pretest for version 4.6, made on Dec 10, 2002, this
 would be 4.6.20021210.  A second pretest made the same day could be
 4.6.20021210.1.
 
 For development snapshots that are not formal pretests, using just
 the date without the version numbers is ok too.
+
+A third method, if the package uses Git, is to run the script
+@code{build-aux/git-version-gen} from Gnulib to generate test release
+version numbers.  It generates version numbers in the form
+@samp{@var{version}.@var{commits}-@var{commithash}}, where
+@var{version} is the latest version tag, @var{commits} is the number
+of commits since that tag, and @var{commithash} is a hash code for the
+latest commit.
 
 One thing that you should never do is to release a pretest with the same
 version number as the planned real release.  Many people will look only
@@ -2115,6 +2128,11 @@ Please don't link to a site that is about your package, which the
 public might perceive as connected with it and reflecting the position
 of its developers, unless it follows that criterion.
 
+Please make sure it is possible to use the web site fully using the
+Lynx browser, and with the IceCat browser with LibreJS enabled.  It
+should work both with Tor and without Tor.  Of course, it is desirable
+for the site to support as many other browsers as possible.
+
 Historically, web pages for GNU packages did not include GIF images,
 because of patent problems (@pxref{Ethical and Philosophical
 Consideration}).  Although the GIF patents expired in 2006, using GIF
@@ -2320,14 +2338,22 @@ write to @email{licensing@@gnu.org}, and we will try to help you get
 advice from a lawyer.
 
 Sometimes the GNU project takes a strong stand against a particular
-patented technology in order to encourage society to reject it.
+patented technology in order to encourage society to reject it.  That
+is why we rejected MP3 audio format in favor of the unpatented Ogg
+Vorbis format.  These patents have reportedly expired, but we still
+prefer Ogg formats to MP3 formats.  Please support this campaign by
+making Ogg Vorbis the preferred format for audio distribution
+in GNU packages and their web sites.
 
-For example, the MP3 audio format is covered by a software patent in
-the USA and some other countries.  A patent holder has threatened
-lawsuits against the developers of free programs (these are not GNU
-programs) to produce and play MP3, and some GNU/Linux distributors are
-afraid to include them.  Development of the programs continues, but we
-campaign for the rejection of MP3 format in favor of Ogg Vorbis format.
+We will consider using Ogg Opus at some point in the future.
+It is fine to distribute Ogg Opus files <em>also</em>, but please
+continue distributing Ogg Vorbis, so as not to hurry users to change
+the software with which they listen to audio.
+
+We are unable to find a modern compressed video format that is truly
+safe from patents, so we use the Ogg Theora and WebM formats for which
+no licensing consortium has been set up.  GNU programs and their web
+sites should not distribute video in MPEG-2 or MPEG 4 formats.
 
 A GNU package should not recommend use of any non-free program, nor
 should it require a non-free program (such as a non-free compiler or
