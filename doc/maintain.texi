@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 19, 2017
+@set lastupdate September 21, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -1894,6 +1894,10 @@ As for the directives described above, the @code{directory} and
 @code{version} directives are still required, the @code{comment}
 directive remains optional, and the @code{filename} directive is not
 allowed.
+
+The @file{.sig} file should not be explicitly mentioned in a directive.
+When you specify a directive to operate on a file, its corresponding
+@file{.sig} file will be handled automatically.
 
 When uploaded by itself, the name of the directive file is not
 important.  But it must be still be signed, using @samp{gpg
