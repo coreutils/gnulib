@@ -115,6 +115,7 @@ test_with_uselocale (void)
   }
 
   setlocale (LC_ALL, "C");
+  uselocale (LC_GLOBAL_LOCALE);
   freelocale (mixed1);
   freelocale (mixed2);
   freelocale (perthread);
