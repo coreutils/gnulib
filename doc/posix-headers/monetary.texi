@@ -3,7 +3,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/monetary.h.html}
 
-Gnulib module: ---
+Gnulib module: monetary
 
 Portability problems fixed by Gnulib:
 @itemize
