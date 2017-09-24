@@ -67,11 +67,19 @@ class M4BaseMismatchError(Exception):
 
 
 
-class UnknownLicenseError(Exception):
+class ModuleLicenseError(Exception):
     """module lacks a license"""
     def __init__(self, module):
         fmt = "module lacks a license: {0}"
         super().__init__(fmt.format(module))
+
+
+
+class UnknownLicenseError(Exception):
+    """unknown license"""
+    def __init__(self, variant):
+        fmt = "unknown license: {0}"
+        super().__init__(fmt.format(variant))
 
 
 
