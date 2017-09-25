@@ -1,6 +1,6 @@
 /* Iteration over virtual memory areas.
    Copyright (C) 2011-2017 Free Software Foundation, Inc.
-   Written by Bruno Haible <bruno@clisp.org>, 2011.
+   Written by Bruno Haible <bruno@clisp.org>, 2011-2017.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -24,6 +24,18 @@
 #include <stdlib.h> /* size_t */
 #include <fcntl.h> /* open, O_RDONLY */
 #include <unistd.h> /* getpagesize, read, close, getpid */
+
+#if defined __FreeBSD__ || defined __FreeBSD_kernel__ /* FreeBSD, GNU/kFreeBSD */
+# include <sys/types.h>
+# include <sys/mman.h> /* mmap, munmap */
+# include <sys/user.h> /* struct kinfo_vmentry */
+# include <sys/sysctl.h> /* sysctl */
+#endif
+#if defined __NetBSD__ || defined __OpenBSD__ /* NetBSD, OpenBSD */
+# include <sys/types.h>
+# include <sys/mman.h> /* mmap, munmap */
+# include <sys/sysctl.h> /* sysctl, struct kinfo_vmentry */
+#endif
 
 #if defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 # include <string.h> /* memcpy */
@@ -69,7 +81,7 @@
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -174,97 +186,377 @@ rof_close (struct rofile *rof)
 #endif
 
 
+/* Support for reading the info from the BSD sysctl() system call.  */
+
+#if (defined __FreeBSD__ || defined __FreeBSD_kernel__) && defined KERN_PROC_VMMAP /* FreeBSD >= 7.1 */
+
+static int
+vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
+{
+  /* Documentation: https://www.freebsd.org/cgi/man.cgi?sysctl(3)  */
+  int info_path[] = { CTL_KERN, KERN_PROC, KERN_PROC_VMMAP, getpid () };
+  size_t len;
+  size_t pagesize;
+  size_t memneed;
+  void *auxmap;
+  unsigned long auxmap_start;
+  unsigned long auxmap_end;
+  char *mem;
+  char *p;
+  char *p_end;
+
+  len = 0;
+  if (sysctl (info_path, 4, NULL, &len, NULL, 0) < 0)
+    return -1;
+  /* Allow for small variations over time.  In a multithreaded program
+     new VMAs can be allocated at any moment.  */
+  len = 2 * len + 200;
+  /* Allocate memneed bytes of memory.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
+     So use mmap(), and ignore the resulting VMA.  */
+  pagesize = getpagesize ();
+  memneed = len;
+  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (auxmap == (void *) -1)
+    return -1;
+  auxmap_start = (unsigned long) auxmap;
+  auxmap_end = auxmap_start + memneed;
+  mem = (char *) auxmap;
+  if (sysctl (info_path, 4, mem, &len, NULL, 0) < 0)
+    {
+      munmap (auxmap, memneed);
+      return -1;
+    }
+  p = mem;
+  p_end = mem + len;
+  while (p < p_end)
+    {
+      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+      unsigned long start = kve->kve_start;
+      unsigned long end = kve->kve_end;
+      unsigned int flags = 0;
+      if (kve->kve_protection & KVME_PROT_READ)
+        flags |= VMA_PROT_READ;
+      if (kve->kve_protection & KVME_PROT_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (kve->kve_protection & KVME_PROT_EXEC)
+        flags |= VMA_PROT_EXECUTE;
+      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+        {
+          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
+        }
+      else
+        {
+          if (callback (data, start, end, flags))
+            break;
+        }
+      p += kve->kve_structsize;
+    }
+  munmap (auxmap, memneed);
+  return 0;
+}
+
+#elif defined __NetBSD__ && defined VM_PROC_MAP /* NetBSD >= 8.0 */
+
+static int
+vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
+{
+  /* Documentation: http://man.netbsd.org/man/sysctl+7  */
+  unsigned int entry_size =
+    /* If we wanted to have the path of each entry, we would need
+       sizeof (struct kinfo_vmentry).  But we need only the non-string
+       parts of each entry.  */
+    offsetof (struct kinfo_vmentry, kve_path);
+  int info_path[] = { CTL_VM, VM_PROC, VM_PROC_MAP, getpid (), entry_size };
+  size_t len;
+  size_t pagesize;
+  size_t memneed;
+  void *auxmap;
+  unsigned long auxmap_start;
+  unsigned long auxmap_end;
+  char *mem;
+  char *p;
+  char *p_end;
+
+  len = 0;
+  if (sysctl (info_path, 5, NULL, &len, NULL, 0) < 0)
+    return -1;
+  /* Allow for small variations over time.  In a multithreaded program
+     new VMAs can be allocated at any moment.  */
+  len = 2 * len + 10 * entry_size;
+  /* But the system call rejects lengths > 1 MB.  */
+  if (len > 0x100000)
+    len = 0x100000;
+  /* And the system call causes a kernel panic if the length is not a multiple
+     of entry_size.  */
+  len = (len / entry_size) * entry_size;
+  /* Allocate memneed bytes of memory.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
+     So use mmap(), and ignore the resulting VMA.  */
+  pagesize = getpagesize ();
+  memneed = len;
+  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (auxmap == (void *) -1)
+    return -1;
+  auxmap_start = (unsigned long) auxmap;
+  auxmap_end = auxmap_start + memneed;
+  mem = (char *) auxmap;
+  if (sysctl (info_path, 5, mem, &len, NULL, 0) < 0
+      || len > 0x100000 - entry_size)
+    {
+      /* sysctl failed, or the list of VMAs is possibly truncated.  */
+      munmap (auxmap, memneed);
+      return -1;
+    }
+  p = mem;
+  p_end = mem + len;
+  while (p < p_end)
+    {
+      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+      unsigned long start = kve->kve_start;
+      unsigned long end = kve->kve_end;
+      unsigned int flags = 0;
+      if (kve->kve_protection & KVME_PROT_READ)
+        flags |= VMA_PROT_READ;
+      if (kve->kve_protection & KVME_PROT_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (kve->kve_protection & KVME_PROT_EXEC)
+        flags |= VMA_PROT_EXECUTE;
+      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+        {
+          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
+        }
+      else
+        {
+          if (callback (data, start, end, flags))
+            break;
+        }
+      p += entry_size;
+    }
+  munmap (auxmap, memneed);
+  return 0;
+}
+
+#elif defined __OpenBSD__ && defined KERN_PROC_VMMAP /* OpenBSD >= 5.7 */
+
+static int
+vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
+{
+  /* Documentation: https://man.openbsd.org/sysctl.3  */
+  int info_path[] = { CTL_KERN, KERN_PROC_VMMAP, getpid () };
+  size_t len;
+  size_t pagesize;
+  size_t memneed;
+  void *auxmap;
+  unsigned long auxmap_start;
+  unsigned long auxmap_end;
+  char *mem;
+  char *p;
+  char *p_end;
+
+  len = 0;
+  if (sysctl (info_path, 3, NULL, &len, NULL, 0) < 0)
+    return -1;
+  /* Allow for small variations over time.  In a multithreaded program
+     new VMAs can be allocated at any moment.  */
+  len = 2 * len + 10 * sizeof (struct kinfo_vmentry);
+  /* But the system call rejects lengths > 64 KB.  */
+  if (len > 0x10000)
+    len = 0x10000;
+  /* And the system call rejects lengths that are not a multiple of
+     sizeof (struct kinfo_vmentry).  */
+  len = (len / sizeof (struct kinfo_vmentry)) * sizeof (struct kinfo_vmentry);
+  /* Allocate memneed bytes of memory.
+     We cannot use alloca here, because not much stack space is guaranteed.
+     We also cannot use malloc here, because a malloc() call may call mmap()
+     and thus pre-allocate available memory.
+     So use mmap(), and ignore the resulting VMA.  */
+  pagesize = getpagesize ();
+  memneed = len;
+  memneed = ((memneed - 1) / pagesize + 1) * pagesize;
+  auxmap = (void *) mmap ((void *) 0, memneed, PROT_READ | PROT_WRITE,
+                          MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+  if (auxmap == (void *) -1)
+    return -1;
+  auxmap_start = (unsigned long) auxmap;
+  auxmap_end = auxmap_start + memneed;
+  mem = (char *) auxmap;
+  if (sysctl (info_path, 3, mem, &len, NULL, 0) < 0
+      || len > 0x10000 - sizeof (struct kinfo_vmentry))
+    {
+      /* sysctl failed, or the list of VMAs is possibly truncated.  */
+      munmap (auxmap, memneed);
+      return -1;
+    }
+  p = mem;
+  p_end = mem + len;
+  while (p < p_end)
+    {
+      struct kinfo_vmentry *kve = (struct kinfo_vmentry *) p;
+      unsigned long start = kve->kve_start;
+      unsigned long end = kve->kve_end;
+      unsigned int flags = 0;
+      if (kve->kve_protection & KVE_PROT_READ)
+        flags |= VMA_PROT_READ;
+      if (kve->kve_protection & KVE_PROT_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (kve->kve_protection & KVE_PROT_EXEC)
+        flags |= VMA_PROT_EXECUTE;
+      if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+        {
+          /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+             = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+          if (start < auxmap_start)
+            if (callback (data, start, auxmap_start, flags))
+              break;
+          if (auxmap_end - 1 < end - 1)
+            if (callback (data, auxmap_end, end, flags))
+              break;
+        }
+      else
+        {
+          if (start != end)
+            if (callback (data, start, end, flags))
+              break;
+        }
+      p += sizeof (struct kinfo_vmentry);
+    }
+  munmap (auxmap, memneed);
+  return 0;
+}
+
+#else
+
+static inline int
+vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
+{
+  return -1;
+}
+
+#endif
+
+
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ /* || defined __CYGWIN__ */
+#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+  /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
+     file system.  */
 
   struct rofile rof;
-  int c;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/self/maps") < 0)
-    return -1;
-
-  for (;;)
+  if (rof_open (&rof, "/proc/self/maps") >= 0)
     {
-      unsigned long start, end;
-      unsigned int flags;
+      for (;;)
+        {
+          unsigned long start, end;
+          unsigned int flags;
+          int c;
 
-      /* Parse one line.  First start and end.  */
-      if (!(rof_scanf_lx (&rof, &start) >= 0
-            && rof_getchar (&rof) == '-'
-            && rof_scanf_lx (&rof, &end) >= 0))
-        break;
-      /* Then the flags.  */
-      do
-        c = rof_getchar (&rof);
-      while (c == ' ');
-      flags = 0;
-      if (c == 'r')
-        flags |= VMA_PROT_READ;
-      c = rof_getchar (&rof);
-      if (c == 'w')
-        flags |= VMA_PROT_WRITE;
-      c = rof_getchar (&rof);
-      if (c == 'x')
-        flags |= VMA_PROT_EXECUTE;
-      while (c = rof_getchar (&rof), c != -1 && c != '\n')
-        ;
+          /* Parse one line.  First start and end.  */
+          if (!(rof_scanf_lx (&rof, &start) >= 0
+                && rof_getchar (&rof) == '-'
+                && rof_scanf_lx (&rof, &end) >= 0))
+            break;
+          /* Then the flags.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          flags = 0;
+          if (c == 'r')
+            flags |= VMA_PROT_READ;
+          c = rof_getchar (&rof);
+          if (c == 'w')
+            flags |= VMA_PROT_WRITE;
+          c = rof_getchar (&rof);
+          if (c == 'x')
+            flags |= VMA_PROT_EXECUTE;
+          while (c = rof_getchar (&rof), c != -1 && c != '\n')
+            ;
 
-      if (callback (data, start, end, flags))
-        break;
+          if (callback (data, start, end, flags))
+            break;
+        }
+      rof_close (&rof);
+      return 0;
     }
-  rof_close (&rof);
-  return 0;
+
+  /* Fallback if /proc is not accessible: Use sysctl().  */
+  return vma_iterate_bsd (callback, data);
 
 #elif defined __FreeBSD__ || defined __NetBSD__
 
   struct rofile rof;
-  int c;
 
   /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/curproc/map") < 0)
-    return -1;
-
-  for (;;)
+  if (rof_open (&rof, "/proc/curproc/map") >= 0)
     {
-      unsigned long start, end;
-      unsigned int flags;
+      for (;;)
+        {
+          unsigned long start, end;
+          unsigned int flags;
+          int c;
 
-      /* Parse one line.  First start.  */
-      if (!(rof_getchar (&rof) == '0'
-            && rof_getchar (&rof) == 'x'
-            && rof_scanf_lx (&rof, &start) >= 0))
-        break;
-      while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-        rof_getchar (&rof);
-      /* Then end.  */
-      if (!(rof_getchar (&rof) == '0'
-            && rof_getchar (&rof) == 'x'
-            && rof_scanf_lx (&rof, &end) >= 0))
-        break;
-      /* Then the flags.  */
-      do
-        c = rof_getchar (&rof);
-      while (c == ' ');
-      flags = 0;
-      if (c == 'r')
-        flags |= VMA_PROT_READ;
-      c = rof_getchar (&rof);
-      if (c == 'w')
-        flags |= VMA_PROT_WRITE;
-      c = rof_getchar (&rof);
-      if (c == 'x')
-        flags |= VMA_PROT_EXECUTE;
-      while (c = rof_getchar (&rof), c != -1 && c != '\n')
-        ;
+          /* Parse one line.  First start.  */
+          if (!(rof_getchar (&rof) == '0'
+                && rof_getchar (&rof) == 'x'
+                && rof_scanf_lx (&rof, &start) >= 0))
+            break;
+          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+            rof_getchar (&rof);
+          /* Then end.  */
+          if (!(rof_getchar (&rof) == '0'
+                && rof_getchar (&rof) == 'x'
+                && rof_scanf_lx (&rof, &end) >= 0))
+            break;
+          /* Then the flags.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          flags = 0;
+          if (c == 'r')
+            flags |= VMA_PROT_READ;
+          c = rof_getchar (&rof);
+          if (c == 'w')
+            flags |= VMA_PROT_WRITE;
+          c = rof_getchar (&rof);
+          if (c == 'x')
+            flags |= VMA_PROT_EXECUTE;
+          while (c = rof_getchar (&rof), c != -1 && c != '\n')
+            ;
 
-      if (callback (data, start, end, flags))
-        break;
+          if (callback (data, start, end, flags))
+            break;
+        }
+      rof_close (&rof);
+      return 0;
     }
-  rof_close (&rof);
-  return 0;
+
+  /* Fallback if /proc is not accessible: Use sysctl().  */
+  return vma_iterate_bsd (callback, data);
 
 #elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 
@@ -820,97 +1112,110 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 
 #elif HAVE_MQUERY /* OpenBSD */
 
-  uintptr_t pagesize;
-  uintptr_t address;
-  int /*bool*/ address_known_mapped;
+# if defined __OpenBSD__
+  /* Try sysctl() first.  It is more efficient than the mquery() loop below
+     and also provides the flags.  */
+  {
+    int retval = vma_iterate_bsd (callback, data);
+    if (retval == 0)
+      return 0;
+  }
+# endif
 
-  pagesize = getpagesize ();
-  /* Avoid calling mquery with a NULL first argument, because this argument
-     value has a specific meaning.  We know the NULL page is unmapped.  */
-  address = pagesize;
-  address_known_mapped = 0;
-  for (;;)
-    {
-      /* Test whether the page at address is mapped.  */
-      if (address_known_mapped
-          || mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0)
-             == (void *) -1)
-        {
-          /* The page at address is mapped.
-             This is the start of an interval.  */
-          uintptr_t start = address;
-          uintptr_t end;
+  {
+    uintptr_t pagesize;
+    uintptr_t address;
+    int /*bool*/ address_known_mapped;
 
-          /* Find the end of the interval.  */
-          end = (uintptr_t) mquery ((void *) address, pagesize, 0, 0, -1, 0);
-          if (end == (uintptr_t) (void *) -1)
-            end = 0; /* wrap around */
-          address = end;
-
-          /* It's too complicated to find out about the flags.  Just pass 0.  */
-          if (callback (data, start, end, 0))
-            break;
-
-          if (address < pagesize) /* wrap around? */
-            break;
-        }
-      /* Here we know that the page at address is unmapped.  */
+    pagesize = getpagesize ();
+    /* Avoid calling mquery with a NULL first argument, because this argument
+       value has a specific meaning.  We know the NULL page is unmapped.  */
+    address = pagesize;
+    address_known_mapped = 0;
+    for (;;)
       {
-        uintptr_t query_size = pagesize;
-
-        address += pagesize;
-
-        /* Query larger and larger blocks, to get through the unmapped address
-           range with few mquery() calls.  */
-        for (;;)
+        /* Test whether the page at address is mapped.  */
+        if (address_known_mapped
+            || mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0)
+               == (void *) -1)
           {
-            if (2 * query_size > query_size)
-              query_size = 2 * query_size;
-            if (address + query_size - 1 < query_size) /* wrap around? */
-              {
-                address_known_mapped = 0;
-                break;
-              }
-            if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
-                == (void *) -1)
-              {
-                /* Not all the interval [address .. address + query_size - 1]
-                   is unmapped.  */
-                address_known_mapped = (query_size == pagesize);
-                break;
-              }
-            /* The interval [address .. address + query_size - 1] is
-               unmapped.  */
-            address += query_size;
+            /* The page at address is mapped.
+               This is the start of an interval.  */
+            uintptr_t start = address;
+            uintptr_t end;
+
+            /* Find the end of the interval.  */
+            end = (uintptr_t) mquery ((void *) address, pagesize, 0, 0, -1, 0);
+            if (end == (uintptr_t) (void *) -1)
+              end = 0; /* wrap around */
+            address = end;
+
+            /* It's too complicated to find out about the flags.
+               Just pass 0.  */
+            if (callback (data, start, end, 0))
+              break;
+
+            if (address < pagesize) /* wrap around? */
+              break;
           }
-        /* Reduce the query size again, to determine the precise size of the
-           unmapped interval that starts at address.  */
-        while (query_size > pagesize)
-          {
-            query_size = query_size / 2;
-            if (address + query_size - 1 >= query_size)
-              {
-                if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
-                    != (void *) -1)
-                  {
-                    /* The interval [address .. address + query_size - 1] is
-                       unmapped.  */
-                    address += query_size;
-                    address_known_mapped = 0;
-                  }
-                else
+        /* Here we know that the page at address is unmapped.  */
+        {
+          uintptr_t query_size = pagesize;
+
+          address += pagesize;
+
+          /* Query larger and larger blocks, to get through the unmapped address
+             range with few mquery() calls.  */
+          for (;;)
+            {
+              if (2 * query_size > query_size)
+                query_size = 2 * query_size;
+              if (address + query_size - 1 < query_size) /* wrap around? */
+                {
+                  address_known_mapped = 0;
+                  break;
+                }
+              if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
+                  == (void *) -1)
+                {
+                  /* Not all the interval [address .. address + query_size - 1]
+                     is unmapped.  */
                   address_known_mapped = (query_size == pagesize);
-              }
-          }
-        /* Here again query_size = pagesize, and
-           either address + pagesize - 1 < pagesize, or
-           mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0) fails.
-           So, the unmapped area ends at address.  */
+                  break;
+                }
+              /* The interval [address .. address + query_size - 1] is
+                 unmapped.  */
+              address += query_size;
+            }
+          /* Reduce the query size again, to determine the precise size of the
+             unmapped interval that starts at address.  */
+          while (query_size > pagesize)
+            {
+              query_size = query_size / 2;
+              if (address + query_size - 1 >= query_size)
+                {
+                  if (mquery ((void *) address, query_size, 0, MAP_FIXED, -1, 0)
+                      != (void *) -1)
+                    {
+                      /* The interval [address .. address + query_size - 1] is
+                         unmapped.  */
+                      address += query_size;
+                      address_known_mapped = 0;
+                    }
+                  else
+                    address_known_mapped = (query_size == pagesize);
+                }
+            }
+          /* Here again query_size = pagesize, and
+             either address + pagesize - 1 < pagesize, or
+             mquery ((void *) address, pagesize, 0, MAP_FIXED, -1, 0) fails.
+             So, the unmapped area ends at address.  */
+        }
+        if (address + pagesize - 1 < pagesize) /* wrap around? */
+          break;
       }
-      if (address + pagesize - 1 < pagesize) /* wrap around? */
-        break;
-    }
-  return 0;
+    return 0;
+  }
 
 #else
 
