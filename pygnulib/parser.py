@@ -8,6 +8,7 @@ import argparse as _argparse_
 import enum as _enum_
 import os as _os_
 
+from .config import LicenseSet as _LicenseSet_
 from .error import CommandLineError as _CommandLineError_
 
 
@@ -200,10 +201,19 @@ class CommandLine:
 
 
     class _LicenseOption_(_Option_):
+        _TABLE_ = {
+            "2": ("LGPLv2", "LGPLv2+"),
+            "3": ("LGPLv2+", "LGPLv3", "LGPLv3+"),
+            "3orGPLv2": ("LGPLv2+", "LGPLv3+", "GPLv2"),
+        }
+
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
-            if value not in ("2", "3"):
+            if value == "yes":
+                value = "3"
+            if value not in CommandLine._LicenseOption_._TABLE_.keys():
                 parser.__error("illegal --license argument value")
+            value = _LicenseSet_(CommandLine._LicenseOption_._TABLE_[value])
+            args = (parser, namespace, value, option)
             super().__call__(*args)
 
 
@@ -701,7 +711,8 @@ class CommandLine:
                         "the default is currently LGPLv3.",
                     ),
                     "action": _LicenseOption_,
-                    "metavar": "[=2|=3]",
+                    "dest": "license",
+                    "metavar": "[=2|=3orGPLv2|=3]",
                 }),
                 (["--makefile-name"], {
                     "help": (
