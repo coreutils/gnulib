@@ -12,8 +12,9 @@ import re as _re_
 
 
 from .error import type_assert as _type_assert_
-from .error import M4BaseMismatchError as _M4BaseMismatchError_
 from .error import AutoconfVersionError as _AutoconfVersionError_
+from .error import M4BaseMismatchError as _M4BaseMismatchError_
+from .error import UnknownLicenseError as _UnknownLicenseError_
 
 
 
@@ -23,6 +24,7 @@ def _regex_(regex):
 
 
 class Option(_enum_.Flag):
+    """gnulib configuration options"""
     Obsolete = (1 << 0)
     Tests = (1 << 1)
     CXX = (1 << 2)
@@ -31,6 +33,55 @@ class Option(_enum_.Flag):
     Unportable = (1 << 5)
     All = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
 
+
+
+class LicenseSet:
+    """gnulib supported choice"""
+    _TABLE_ = (
+        "GPLv2",
+        "GPLv2+",
+        "GPLv3",
+        "GPLv3+",
+        "LGPLv2",
+        "LGPLv2+",
+        "LGPLv3",
+        "LGPLv3+",
+    )
+
+    def __init__(self, choice=None):
+        if choice is None:
+            choice = set(LicenseSet._TABLE_)
+        self.__variants = set()
+        if isinstance(choice, str):
+            choice = [choice]
+        variants = tuple(map(str.casefold, LicenseSet._TABLE_))
+        for variant in choice:
+            _type_assert_("variant", variant, str)
+            variant = variant.casefold()
+            if variant not in variants:
+                raise _UnknownLicenseError_(variant)
+            self.__variants.add(LicenseSet._TABLE_[variants.index(variant)])
+        self.__variants = set(sorted(self.__variants))
+
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "{0}.{1}({2})".format(module, name, "|".join(self.__variants))
+
+    def __iter__(self):
+        return iter(self.__variants)
+
+    def __contains__(self, variant):
+        if not isinstance(variant, LicenseSet):
+            variant = LicenseSet(variant)
+        _type_assert_("variant", variant, LicenseSet)
+        variants = set(map(str.casefold, self.__variants))
+        return variants.__contains__(list(variant)[0].casefold())
+
+    def __eq__(self, variant):
+        if not isinstance(variant, LicenseSet):
+            return False
+        return set(self) == set(variant)
 
 
 
@@ -50,7 +101,7 @@ class Base:
         "macro_prefix"      : "gl",
         "po_domain"         : "",
         "witness_c_macro"   : "",
-        "lgpl"              : 0,
+        "license"           : LicenseSet([]),
         "tests"             : False,
         "obsolete"          : False,
         "cxx_tests"         : False,
@@ -220,13 +271,13 @@ class Base:
 
 
     @property
-    def lgpl(self):
+    def license(self):
         """abort if modules aren't available under the LGPL; also modify license template"""
-        return self["lgpl"]
+        return self["license"]
 
-    @lgpl.setter
-    def lgpl(self, value):
-        self["lgpl"] = value
+    @license.setter
+    def license(self, value):
+        self["license"] = value
 
 
     @property
@@ -426,10 +477,11 @@ class Base:
             return
 
         typeid = type(Base._TABLE_[key])
-        if key == "lgpl" and value is None:
-            value = 0
-        elif key in ("modules", "avoid", "files"):
+        if key in ("modules", "avoid", "files"):
             typeid = _collections_.Iterable
+        elif key == "license":
+            typeid = LicenseSet
+            value = LicenseSet(value)
         _type_assert_(key, value, typeid)
 
         if key == "autoconf" and value < 2.59:
@@ -441,8 +493,6 @@ class Base:
                 _type_assert_(item_key, item_value, str)
                 seq += [item_value]
             value = set(seq)
-        elif key == "lgpl" and value not in (0, 2, 3):
-            raise ValueError("lgpl: None, 2 or 3 expected")
         elif key.endswith("_base"):
             value = _os_.path.normpath(value) if value.strip() else ""
 
