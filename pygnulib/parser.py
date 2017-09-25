@@ -5,7 +5,6 @@
 
 
 import argparse as _argparse_
-import enum as _enum_
 import os as _os_
 
 from .config import LicenseSet as _LicenseSet_
@@ -886,7 +885,7 @@ class CommandLine:
         return "\n".join(lines).format(program=self.__program)
 
 
-    class Option(_enum_.Flag):
+    class Option:
         """option bitwise flags"""
         DryRun = (1 << 0)
         Symlink = (1 << 1)

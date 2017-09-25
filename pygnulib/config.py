@@ -6,7 +6,6 @@
 
 import codecs as _codecs_
 import collections as _collections_
-import enum as _enum_
 import os as _os_
 import re as _re_
 
@@ -23,7 +22,7 @@ def _regex_(regex):
 
 
 
-class Option(_enum_.Flag):
+class Option:
     """gnulib configuration options"""
     Obsolete = (1 << 0)
     Tests = (1 << 1)
