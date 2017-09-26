@@ -532,6 +532,29 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
                 && rof_getchar (&rof) == 'x'
                 && rof_scanf_lx (&rof, &end) >= 0))
             break;
+# if defined __FreeBSD__
+          /* Then the resident pages count.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+          /* Then the private resident pages count.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+          /* Then some kernel address.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+# endif
           /* Then the flags.  */
           do
             c = rof_getchar (&rof);
