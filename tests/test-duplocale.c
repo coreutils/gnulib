@@ -48,7 +48,8 @@ get_locale_dependent_values (struct locale_dependent_values *result)
   snprintf (result->numeric, sizeof (result->numeric),
             "%g", 3.5);
   /* result->numeric is usually "3,5" */
-  strcpy (result->time, nl_langinfo (MON_1));
+  strncpy (result->time, nl_langinfo (MON_1), sizeof result->time - 1);
+  result->time[sizeof result->time - 1] = '\0';
   /* result->time is usually "janvier" */
 }
 
