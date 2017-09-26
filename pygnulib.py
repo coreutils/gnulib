@@ -13,6 +13,8 @@ from pygnulib.error import CommandLineError
 from pygnulib.error import UnknownModuleError
 from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
+from pygnulib.module import dummy_required
+from pygnulib.module import libtests_required
 from pygnulib.module import transitive_closure
 from pygnulib.parser import CommandLine as CommandLineParser
 from pygnulib.filesystem import GnulibGit as GnulibGitFS
@@ -68,6 +70,12 @@ def import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
         for module in sorted(tests):
             print("  {0}".format(module.name), file=sys.stdout)
 
+    # Determine if dummy module needs to be added to any set of gnulib modules.
+    if "dummy" not in config.avoid:
+        if dummy_required(main):
+            main.add(gnulib.module("dummy"))
+        if libtests_required(tests) and dummy_required(tests):
+            tests.add(gnulib.module("dummy"))
     return os.EX_OK
 
 
