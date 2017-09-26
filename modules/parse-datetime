@@ -17,8 +17,8 @@ gettext-h
 intprops
 inttypes
 mktime
+nstrftime
 setenv
-strftime
 unsetenv
 time
 time_r
