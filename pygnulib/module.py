@@ -507,3 +507,28 @@ def transitive_closure(lookup, modules, options):
     tests_main = set(module for module in main if module.applicability != "all")
     tests = (tests_final ^ tests_main)
     return (base, full, main, final, tests)
+
+
+
+def libtests_required(modules):
+    """Determine whether libtests.a is required."""
+    for module in modules:
+        for file in module.files:
+            if file.startswith("lib/"):
+                return True
+    return False
+
+
+
+_DUMMY_REQUIRED_PATTERN_ = _re_.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re_.S | _re_.M)
+def dummy_required(modules):
+    """Determine whether dummy module is required."""
+    for module in modules:
+        snippet = module.automake_snippet
+        match = _DUMMY_REQUIRED_PATTERN_.findall(snippet)
+        for files in match:
+            files = (files.split("#", 1)[0].split(" "))
+            files = (file.strip() for file in files if file.strip())
+            if {file for file in files if not file.endswith(".h")}:
+                return True
+    return False
