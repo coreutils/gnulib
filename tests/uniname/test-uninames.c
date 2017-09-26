@@ -63,8 +63,7 @@ fill_names (const char *unicodedata_filename)
     {
       char *p;
       char *comment;
-      unsigned int i;
-      unsigned long ul;
+      unsigned long i;
 
       lineno++;
 
@@ -95,13 +94,12 @@ fill_names (const char *unicodedata_filename)
           exit (EXIT_FAILURE);
         }
       *p = '\0';
-      ul = strtoul (field0, NULL, 16);
-      if (ul >= 0x110000)
+      i = strtoul (field0, NULL, 16);
+      if (i >= 0x110000)
         {
           fprintf (stderr, "index too large\n");
           exit (EXIT_FAILURE);
         }
-      i = ul;
       unicode_names[i] = xstrdup (field1);
     }
   if (ferror (stream) || fclose (stream))
@@ -133,8 +131,7 @@ fill_aliases (const char *namealiases_filename)
     {
       char *p;
       char *comment;
-      unsigned int uc;
-      unsigned long ul;
+      unsigned long uc;
 
       comment = strchr (line, '#');
       if (comment != NULL)
@@ -164,13 +161,12 @@ fill_aliases (const char *namealiases_filename)
         }
       *p = '\0';
 
-      ul = strtoul (field0, NULL, 16);
-      if (ul >= 0x110000)
+      uc = strtoul (field0, NULL, 16);
+      if (uc >= 0x110000)
         {
           fprintf (stderr, "index too large\n");
           exit (EXIT_FAILURE);
         }
-      uc = ul;
 
       if (aliases_count == ALIASLEN)
         {
