@@ -46,6 +46,11 @@ class LicenseSet:
         "LGPLv3",
         "LGPLv3+",
     )
+    _LGPL_ = {
+        "2": ("LGPLv2", "LGPLv2+"),
+        "3": ("LGPLv2+", "LGPLv3", "LGPLv3+"),
+        "3orGPLv2": ("LGPLv2+", "LGPLv3+", "GPLv2"),
+    }
 
     def __init__(self, choice=None):
         if choice is None:
@@ -56,10 +61,10 @@ class LicenseSet:
         variants = tuple(map(str.casefold, LicenseSet._TABLE_))
         for variant in choice:
             _type_assert_("variant", variant, str)
-            variant = variant.casefold()
-            if variant not in variants:
+            if variant.casefold() not in variants:
                 raise _UnknownLicenseError_(variant)
-            self.__variants.add(LicenseSet._TABLE_[variants.index(variant)])
+            index = variants.index(variant.casefold())
+            self.__variants.add(LicenseSet._TABLE_[index])
         self.__variants = set(sorted(self.__variants))
 
     def __repr__(self):
@@ -81,6 +86,10 @@ class LicenseSet:
         if not isinstance(variant, LicenseSet):
             return False
         return set(self) == set(variant)
+
+    @staticmethod
+    def LGPL():
+        return dict(LicenseSet._LGPL_)
 
 
 
@@ -546,7 +555,7 @@ class Cache(Base):
         "lib"               : (str, _regex_(r"gl_LIB\(\[(.*?)\]\)")),
         "modules"           : (list, _regex_(r"gl_MODULES\(\[(.*?)\]\)")),
         "avoid"             : (list, _regex_(r"gl_AVOID\(\[(.*?)\]\)")),
-        "lgpl"              : (str, _regex_(r"gl_LGPL\(\[(.*?)\]\)")),
+        "license"           : (str, _regex_(r"gl_LGPL\(\[(.*?)\]\)")),
     }
 
 
@@ -585,7 +594,10 @@ class Cache(Base):
         for (key, (typeid, pattern)) in Cache._GNULIB_CACHE_.items():
             match = pattern.findall(data)
             if match and key not in explicit:
-                if typeid is bool:
+                if key == "license":
+                    lgpl = LicenseSet.LGPL()
+                    self[key] = lgpl[match[-1]]
+                elif typeid is bool:
                     self[key] = True
                 elif typeid is str:
                     self[key] = match[-1].strip()
