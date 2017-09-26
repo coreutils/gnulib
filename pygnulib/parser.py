@@ -935,13 +935,7 @@ class CommandLine:
         options: a combination of CommandLine.Option flags
         """
         (namespace, arguments) = self.__parser.parse_known_args(arguments)
-        namespace = vars(namespace)
-        options = ~(CommandLine.Option.DryRun |
-                    CommandLine.Option.Symlink |
-                    CommandLine.Option.Hardlink |
-                    CommandLine.Option.OnlyLocalLinks |
-                    CommandLine.Option.UpdateCopyrights |
-                    CommandLine.Option.SingleConfigure)
+        (namespace, options) = (vars(namespace), 0)
         mode = namespace.pop("mode", None)
         if mode is None:
             self.__parser.error("no operating mode selected")

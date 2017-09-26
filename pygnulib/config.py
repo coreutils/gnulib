@@ -361,7 +361,7 @@ class Base:
     @property
     def options(self):
         """bitmask of active options"""
-        result = ~Option.All
+        result = 0
         if self.obsolete:
             result |= Option.Obsolete
         if self.tests:
