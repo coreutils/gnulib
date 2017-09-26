@@ -457,7 +457,9 @@ class Table:
         """
         if not callable(lookup):
             raise TypeError("lookup must be a callable")
-        _type_assert_("options", options, _ConfigOption_)
+        _type_assert_("options", options, int)
+        if options & ~_ConfigOption_.All:
+            raise ValueError("unknown configuration options")
 
         obsolete = bool(options & _ConfigOption_.Obsolete)
         tests = bool(options & _ConfigOption_.Tests)
