@@ -13,7 +13,7 @@ from pygnulib.error import CommandLineError
 from pygnulib.error import UnknownModuleError
 from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
-from pygnulib.module import Table as ModuleTable
+from pygnulib.module import transitive_closure
 from pygnulib.parser import CommandLine as CommandLineParser
 from pygnulib.filesystem import GnulibGit as GnulibGitFS
 
@@ -44,28 +44,28 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    table = ModuleTable(gnulib.module, config.modules, config.options)
+    values = transitive_closure(gnulib.module, config.modules, config.options)
+    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, config.options)
 
+    # Print some information about modules.
     print("Module list with included dependencies (indented):", file=sys.stdout)
     BOLD_ON = BOLD_OFF = ""
     mode = os.fstat(sys.stdout.fileno()).st_mode
     if not (stat.S_ISFIFO(mode) or stat.S_ISREG(mode)):
         BOLD_ON = "\033[1m"
         BOLD_OFF = "\033[0m"
-    for module in sorted(table.final):
+    for module in sorted(final):
         manual = module.name in config.modules
         prefix = "  " if manual else "    "
         bold_on = BOLD_ON if manual else ""
         bold_off = BOLD_OFF if manual else ""
         print("{0}{1}{2}{3}".format(prefix, bold_on, module.name, bold_off), file=sys.stdout)
-
     if verbosity >= 1:
         print("Main module list:", file=sys.stdout)
-        for module in sorted(table.main):
+        for module in sorted(main):
             print("  {0}".format(module.name), file=sys.stdout)
-
         print("Tests-related module list:", file=sys.stdout)
-        for module in sorted(table.tests):
+        for module in sorted(tests):
             print("  {0}".format(module.name), file=sys.stdout)
 
     return os.EX_OK
