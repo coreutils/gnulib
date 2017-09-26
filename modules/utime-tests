@@ -8,6 +8,7 @@ Depends-on:
 dup
 gettext-h
 ignore-value
+intprops
 nanosleep
 symlink
 timespec

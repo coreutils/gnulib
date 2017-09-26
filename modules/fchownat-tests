@@ -8,6 +8,7 @@ tests/macros.h
 
 Depends-on:
 ignore-value
+intprops
 mgetgroups
 nanosleep
 openat-h

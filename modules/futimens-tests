@@ -10,6 +10,7 @@ Depends-on:
 gettext-h
 fcntl-h
 ignore-value
+intprops
 nanosleep
 timespec
 dup

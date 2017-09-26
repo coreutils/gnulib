@@ -22,6 +22,8 @@
 # include <limits.h>
 # include <stdbool.h>
 
+# include <intprops.h>
+
 /* Name of the witness file.  */
 #define TEMPFILE BASE "nap.tmp"
 
@@ -38,17 +40,20 @@ diff_timespec (struct timespec a, struct timespec b)
   time_t bs = b.tv_sec;
   int ans = a.tv_nsec;
   int bns = b.tv_nsec;
+  int sdiff;
+
+  ASSERT (0 <= ans && ans < 2000000000);
+  ASSERT (0 <= bns && bns < 2000000000);
 
   if (! (bs < as || (bs == as && bns < ans)))
     return 0;
-  if (as - bs <= INT_MAX / 1000000000)
-    {
-      int sdiff = (as - bs) * 1000000000;
-      int usdiff = ans - bns;
-      if (usdiff < INT_MAX - sdiff)
-        return sdiff + usdiff;
-    }
-  return INT_MAX;
+
+  if (INT_SUBTRACT_WRAPV (as, bs, &sdiff)
+      || INT_MULTIPLY_WRAPV (sdiff, 1000000000, &sdiff)
+      || INT_ADD_WRAPV (sdiff, ans - bns, &sdiff))
+    return INT_MAX;
+
+  return sdiff;
 }
 
 /* If DO_WRITE, bump the modification time of the file designated by NAP_FD.

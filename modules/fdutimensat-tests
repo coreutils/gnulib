@@ -10,6 +10,7 @@ tests/macros.h
 Depends-on:
 fcntl-h
 ignore-value
+intprops
 nanosleep
 openat
 timespec
