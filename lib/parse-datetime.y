@@ -2034,7 +2034,13 @@ parse_datetime2 (struct timespec *result, char const *p,
       if (pc.local_zones_seen)
         tm.tm_isdst = pc.local_isdst;
 
-      tm0 = tm;
+      tm0.tm_sec = tm.tm_sec;
+      tm0.tm_min = tm.tm_min;
+      tm0.tm_hour = tm.tm_hour;
+      tm0.tm_mday = tm.tm_mday;
+      tm0.tm_mon = tm.tm_mon;
+      tm0.tm_year = tm.tm_year;
+      tm0.tm_isdst = tm.tm_isdst;
 
       Start = mktime_z (tz, &tm);
 
@@ -2064,7 +2070,13 @@ parse_datetime2 (struct timespec *result, char const *p,
                     dbg_printf (_("error: tzalloc (\"%s\") failed\n"), tz2buf);
                   goto fail;
                 }
-              tm = tm0;
+              tm.tm_sec = tm0.tm_sec;
+              tm.tm_min = tm0.tm_min;
+              tm.tm_hour = tm0.tm_hour;
+              tm.tm_mday = tm0.tm_mday;
+              tm.tm_mon = tm0.tm_mon;
+              tm.tm_year = tm0.tm_year;
+              tm.tm_isdst = tm0.tm_isdst;
               Start = mktime_z (tz2, &tm);
               repaired = mktime_ok (tz2, &tm0, &tm, Start);
               tzfree (tz2);

@@ -182,7 +182,12 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
   if (! posix_time_parse (&tm0, s, syntax_bits))
     return false;
 
-  tm1 = tm0;
+  tm1.tm_sec = tm0.tm_sec;
+  tm1.tm_min = tm0.tm_min;
+  tm1.tm_hour = tm0.tm_hour;
+  tm1.tm_mday = tm0.tm_mday;
+  tm1.tm_mon = tm0.tm_mon;
+  tm1.tm_year = tm0.tm_year;
   tm1.tm_isdst = -1;
   t = mktime (&tm1);
 
