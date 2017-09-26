@@ -200,18 +200,13 @@ class CommandLine:
 
 
     class _LicenseOption_(_Option_):
-        _TABLE_ = {
-            "2": ("LGPLv2", "LGPLv2+"),
-            "3": ("LGPLv2+", "LGPLv3", "LGPLv3+"),
-            "3orGPLv2": ("LGPLv2+", "LGPLv3+", "GPLv2"),
-        }
-
         def __call__(self, parser, namespace, value, option=None):
             if value == "yes":
                 value = "3"
-            if value not in CommandLine._LicenseOption_._TABLE_.keys():
+            lgpl = _LicenseSet_.LGPL()
+            if value not in lgpl:
                 parser.__error("illegal --license argument value")
-            value = _LicenseSet_(CommandLine._LicenseOption_._TABLE_[value])
+            value = _LicenseSet_(lgpl[value])
             args = (parser, namespace, value, option)
             super().__call__(*args)
 
