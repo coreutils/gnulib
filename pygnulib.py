@@ -96,6 +96,12 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
         for (name, licenses) in ((module.name, module.licenses) for module in main):
             if not ((IGNORED_LICENSES & licenses) or (config.licenses & licenses)):
                 incompatibilities.add((name, licenses))
+    if incompatibilities:
+        print("{0}: *** incompatible license on modules:".format(script), file=sys.stderr)
+        for (name, licenses) in sorted(incompatibilities):
+            print(" " * 16, "{0:50}{1}".format(name, " ".join(sorted(licenses))), file=sys.stderr)
+        print("{0}: *** Stop.".format(script), file=sys.stderr)
+        return os.EX_DATAERR
     return os.EX_OK
 
 
