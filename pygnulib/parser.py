@@ -99,12 +99,11 @@ class CommandLine:
         def __call__(self, parser, namespace, value, option=None):
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
-                if not self.__flags & mode and mode != CommandLine._HELP_:
+                if mode and not (self.__flags & mode) and (mode != CommandLine._HELP_):
                     mode = "--" + {k:v for (k, v, _) in CommandLine._MODES_}[mode]
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(mode, option))
-            if self.dest != "mode":
-                setattr(namespace, self.dest, value)
+            setattr(namespace, self.dest, value)
 
 
     class _ConstOption_(_Option_):
@@ -139,7 +138,7 @@ class CommandLine:
             elif mode & CommandLine._ANY_IMPORT_ \
             or mode & CommandLine._ANY_TEST_ \
             or mode & CommandLine._ANY_EXTRACT:
-                kwargs["nargs"] = "+"
+                kwargs["nargs"] = "*"
                 kwargs["metavar"] = "module0 ... moduleN"
             elif mode & CommandLine._FIND_:
                 kwargs.pop("nargs")
@@ -151,12 +150,11 @@ class CommandLine:
 
 
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, 0)
-            old_option = ""
+            old_option = None
             new_option = option
-            new_mode = 0
+            new_mode = None
             old_mode = getattr(namespace, self.dest)
             for (mode, name, _) in CommandLine._MODES_:
                 option = ("--" + name)
@@ -167,26 +165,23 @@ class CommandLine:
                 if old_option and new_mode:
                     break
             if new_mode == CommandLine._HELP_:
-                old_mode = CommandLine._HELP_
-                setattr(namespace, self.dest, CommandLine._HELP_)
+                old_mode = new_mode
             if old_mode != CommandLine._HELP_ and old_mode != new_mode:
                 if old_mode != 0:
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(new_option, old_option))
-                if new_mode != CommandLine._UPDATE_:
-                    setattr(namespace, "modules", list(value))
-                setattr(namespace, self.dest, new_mode)
-            super().__call__(*args)
+            if new_mode != CommandLine._UPDATE_:
+                setattr(namespace, "modules", set(value))
+            value = new_mode
+            super().__call__(parser, namespace, value, option)
 
 
     class _AvoidOption_(_Option_):
         def __call__(self, parser, namespace, value, option=None):
-            args = (parser, namespace, value, option)
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, list())
-            values = getattr(namespace, self.dest)
-            values += value
-            super().__call__(*args)
+            value = set(getattr(namespace, self.dest) | {value})
+            super().__call__(parser, namespace, value, option)
 
 
     class _VerbosityOption_(_Option_):
@@ -200,9 +195,7 @@ class CommandLine:
             value = getattr(namespace, self.dest)
             verbose = option in ("-v", "--verbose")
             value += +1 if verbose else -1
-            setattr(namespace, self.dest, value)
-            args = (parser, namespace, value, option)
-            super().__call__(*args)
+            super().__call__(parser, namespace, value, option)
 
 
     class _LGPLOption_(_Option_):
@@ -215,8 +208,7 @@ class CommandLine:
                 "yes": _LGPL_LICENSE_,
                 "3orGPLv2": (_GPLv2_LICENSE_ | _LGPLv3_LICENSE_),
             }[value]
-            args = (parser, namespace, value, option)
-            super().__call__(*args)
+            super().__call__(parser, namespace, value, option)
 
 
     class _LinkOption_(_Option_):
@@ -226,25 +218,24 @@ class CommandLine:
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, CommandLine._LINK_NOTICE_)
-            flags = getattr(namespace, self.dest)
+            value = getattr(namespace, self.dest)
             symlink = ("-s", "--symlink", "--local-symlink", "-S", "--more-symlink")
             hardlink = ("-h", "--hardlink", "--local-hardlink", "-H", "--more-hardlink")
             local = ("--local-symlink", "--local-hardlink")
             disable_notice = ("-S", "--more-symlink", "-H", "--more-hardlink")
             if option in symlink:
-                if flags & CommandLine._LINK_HARD_:
+                if value & CommandLine._LINK_HARD_:
                     parser.error("conflicting --symlink and --hardlink options")
-                flags |= CommandLine._LINK_SYMBOLIC_
+                value |= CommandLine._LINK_SYMBOLIC_
             if option in hardlink:
-                if flags & CommandLine._LINK_SYMBOLIC_:
+                if value & CommandLine._LINK_SYMBOLIC_:
                     parser.error("conflicting --symlink and --hardlink options")
-                flags |= CommandLine._LINK_HARD_
+                value |= CommandLine._LINK_HARD_
             if option in local:
-                flags |= CommandLine._LINK_LOCAL_
+                value |= CommandLine._LINK_LOCAL_
             if option in disable_notice:
-                flags &= ~CommandLine._LINK_NOTICE_
-            args = (parser, namespace, flags, option)
-            super().__call__(*args)
+                value &= ~CommandLine._LINK_NOTICE_
+            super().__call__(parser, namespace, value, option)
 
 
     # section0: (section0_modes, (([section0_option0, section0_optionN], **section0_kwargs)))
@@ -947,6 +938,9 @@ class CommandLine:
             arguments = " ".join(arguments)
             self.__parser.error(fmt.format(arguments))
         mode = {k:v for (k, v, _) in CommandLine._MODES_}[mode]
+        if mode in {"import", "add-import", "remove-import"} and not namespace["modules"]:
+            fmt = "--{0}: expected at least one argument"
+            self.__parser.error(fmt.format(mode))
         verbosity = namespace.pop("verbosity", 0)
         if namespace.pop("dry_run", False):
             options |= CommandLine.Option.DryRun
