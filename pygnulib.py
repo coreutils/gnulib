@@ -93,8 +93,9 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     # Determine license incompatibilities, if any.
     incompatibilities = set()
     if config.licenses & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
+        acceptable = IGNORED_LICENSES | config.licenses
         for (name, licenses) in ((module.name, module.licenses) for module in main):
-            if not ((IGNORED_LICENSES & licenses) or (config.licenses & licenses)):
+            if not (acceptable & licenses):
                 incompatibilities.add((name, licenses))
     if incompatibilities:
         print("{0}: *** incompatible license on modules:".format(script), file=sys.stderr)
