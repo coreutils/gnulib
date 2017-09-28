@@ -5,7 +5,6 @@
 
 
 import codecs as _codecs_
-import collections as _collections_
 import hashlib as _hashlib_
 import os as _os_
 import re as _re_
@@ -25,15 +24,15 @@ class Base:
         "status"                 : (0x02, str, "Status"),
         "notice"                 : (0x03, str, "Notice"),
         "applicability"          : (0x04, str, "Applicability"),
-        "files"                  : (0x05, list, "Files"),
-        "dependencies"           : (0x06, list, "Depends-on"),
+        "files"                  : (0x05, set, "Files"),
+        "dependencies"           : (0x06, set, "Depends-on"),
         "early_autoconf_snippet" : (0x07, str, "configure.ac-early"),
         "autoconf_snippet"       : (0x08, str, "configure.ac"),
         "automake_snippet"       : (0x09, str, "Makefile.am"),
         "include_directive"      : (0x0A, str, "Include"),
         "link_directive"         : (0x0B, str, "Link"),
         "licenses"               : (0x0C, set, "License"),
-        "maintainers"            : (0x0D, list, "Maintainer"),
+        "maintainers"            : (0x0D, set, "Maintainer"),
     }
     _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
 
@@ -158,7 +157,7 @@ class Base:
 
     @files.setter
     def files(self, value):
-        _type_assert_("files", value, _collections_.Iterable)
+        _type_assert_("files", value, (list, set, tuple))
         result = []
         for item in value:
             _type_assert_("file", item, str)
@@ -174,7 +173,7 @@ class Base:
 
     @dependencies.setter
     def dependencies(self, value):
-        _type_assert_("files", value, _collections_.Iterable)
+        _type_assert_("files", value, (list, set, tuple))
         result = []
         for (name, condition) in value:
             _type_assert_("name", name, str)
@@ -248,7 +247,7 @@ class Base:
 
     @licenses.setter
     def licenses(self, value):
-        _type_assert_("licenses", value, _collections_.Iterable)
+        _type_assert_("licenses", value, (list, set, tuple))
         result = set()
         for item in value:
             _type_assert_("license", str)
@@ -263,7 +262,7 @@ class Base:
 
     @maintainers.setter
     def maintainers(self, value):
-        _type_assert_("maintainers", value, _collections_.Iterable)
+        _type_assert_("maintainers", value, (list, set, tuple))
         result = []
         for item in value:
             _type_assert_("maintainer", item, str)
@@ -386,15 +385,15 @@ class File(Base):
         "Status"             : (str, "status"),
         "Notice"             : (str, "notice"),
         "Applicability"      : (str, "applicability"),
-        "Files"              : (list, "files"),
-        "Depends-on"         : (list, "dependencies"),
+        "Files"              : (set, "files"),
+        "Depends-on"         : (set, "dependencies"),
         "configure.ac-early" : (str, "early_autoconf_snippet"),
         "configure.ac"       : (str, "autoconf_snippet"),
         "Makefile.am"        : (str, "automake_snippet"),
         "Include"            : (str, "include_directive"),
         "Link"               : (str, "link_directive"),
         "License"            : (set, "licenses"),
-        "Maintainer"         : (list, "maintainers"),
+        "Maintainer"         : (set, "maintainers"),
     }
     _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
     _PATTERN_ = _re_.compile("(%s):" % "|".join(_FIELDS_))
