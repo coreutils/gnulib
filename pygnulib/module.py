@@ -250,7 +250,7 @@ class Base:
         _type_assert_("licenses", value, (list, set, tuple))
         result = set()
         for item in value:
-            _type_assert_("license", str)
+            _type_assert_("license", item, str)
             result.add(value)
         self.__table["licenses"] = frozenset(result)
 
