@@ -11,13 +11,26 @@ import traceback
 
 from pygnulib.error import CommandLineError
 from pygnulib.error import UnknownModuleError
+
 from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
+
 from pygnulib.module import dummy_required
 from pygnulib.module import libtests_required
 from pygnulib.module import transitive_closure
+
 from pygnulib.parser import CommandLine as CommandLineParser
+
 from pygnulib.filesystem import GnulibGit as GnulibGitFS
+
+
+
+IGNORED_LICENSES = {
+    "GPLed build tool",
+    "public domain",
+    "unlimited",
+    "unmodifiable license text",
+}
 
 
 
@@ -70,12 +83,19 @@ def import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
         for module in sorted(tests):
             print("  {0}".format(module.name), file=sys.stdout)
 
-    # Determine if dummy module needs to be added to any set of gnulib modules.
+    # Determine if dummy needs to be added to main or test sets.
     if "dummy" not in config.avoid:
         if dummy_required(main):
             main.add(gnulib.module("dummy"))
         if libtests_required(tests) and dummy_required(tests):
             tests.add(gnulib.module("dummy"))
+
+    # Determine license incompatibilities, if any.
+    incompatible = set()
+    if config.licenses & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
+        for (name, licenses) in ((module.name, module.licenses) for module in main):
+            if not ((IGNORED_LICENSES & licenses) or (config.licenses & licenses)):
+                incompatible.add((name, licenses))
     return os.EX_OK
 
 
