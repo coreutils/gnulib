@@ -21,7 +21,7 @@ class Base:
     _TABLE_ = {
         "description"            : (0x00, str, "Description"),
         "comment"                : (0x01, str, "Comment"),
-        "status"                 : (0x02, str, "Status"),
+        "status"                 : (0x02, set, "Status"),
         "notice"                 : (0x03, str, "Notice"),
         "applicability"          : (0x04, str, "Applicability"),
         "files"                  : (0x05, set, "Files"),
@@ -102,34 +102,38 @@ class Base:
 
     @status.setter
     def status(self, value):
-        _type_assert_("status", value, str)
-        self.__table["status"] = value
+        _type_assert_("status", value, (list, set, tuple))
+        result = []
+        for item in value:
+            _type_assert_("status", item, str)
+            result += [item]
+        self.__table["status"] = set(result)
 
 
     @property
     def obsolete(self):
         """module is obsolete?"""
-        return self.status == "obsolete"
+        return "obsolete" in self.status
 
     @property
     def cxx_test(self):
         """module is C++ test?"""
-        return self.status == "c++-test"
+        return "c++-test" in self.status
 
     @property
     def longrunning_test(self):
         """module is C++ test?"""
-        return self.status == "longrunning-test"
+        return "longrunning-test" in self.status
 
     @property
     def privileged_test(self):
         """module is privileged test?"""
-        return self.status == "privileged-test"
+        return "privileged-test" in self.status
 
     @property
     def unportable_test(self):
         """module is unportable test?"""
-        return self.status == "unportable-test"
+        return "unportable-test" in self.status
 
 
     @property
@@ -146,7 +150,7 @@ class Base:
     @property
     def applicability(self):
         """applicability (usually "main" or "tests")"""
-        default = "main" if self.name.endswith("-tests") else "tests"
+        default = "main" if not self.name.endswith("-tests") else "tests"
         result = self.__table.get("applicability")
         return result if result else default
 
@@ -396,7 +400,7 @@ class File(Base):
     _TABLE_ = {
         "Description"        : (str, "description"),
         "Comment"            : (str, "comment"),
-        "Status"             : (str, "status"),
+        "Status"             : (set, "status"),
         "Notice"             : (str, "notice"),
         "Applicability"      : (str, "applicability"),
         "Files"              : (set, "files"),
@@ -430,7 +434,7 @@ class File(Base):
                         if not line.strip() or line.startswith("#"):
                             continue
                         lines += [line]
-                    table[key] = lines
+                    table[key] = typeid(lines)
                 else:
                     table[key] = value.strip()
             if "licenses" not in table:
@@ -495,6 +499,15 @@ def transitive_closure(lookup, modules, options):
     unportable_tests = bool(options & _ConfigOption_.Unportable)
     modules = set(lookup(module) for module in modules)
 
+    def _exclude_(module):
+        return any((
+            (not obsolete and module.obsolete),
+            (not cxx_tests and module.cxx_test),
+            (not longrunning_tests and module.longrunning_test),
+            (not privileged_tests and module.privileged_test),
+            (not unportable_tests and module.unportable_test),
+        ))
+
     def _transitive_closure_(tests):
         queue = set()
         previous = set()
@@ -508,20 +521,14 @@ def transitive_closure(lookup, modules, options):
                     continue
                 if tests and not demander.name.endswith("-tests"):
                     try:
-                        name = "{0}-tests".format(demander.name)
-                        current.add((lookup(name), None, None))
+                        module = lookup("{0}-tests".format(demander.name))
+                        if not _exclude_(module):
+                            current.add((module, None, None))
                     except _UnknownModuleError_:
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = lookup(dependency)
-                    exclude = (
-                        (not obsolete and module.obsolete),
-                        (not cxx_tests and module.cxx_test),
-                        (not longrunning_tests and module.longrunning_test),
-                        (not privileged_tests and module.privileged_test),
-                        (not unportable_tests and module.unportable_test),
-                    )
-                    if not any(exclude):
+                    if not _exclude_(module):
                         condition = condition if condition.strip() else None
                         current.add((module, demander, condition))
                 queue.add(demander)
@@ -530,10 +537,8 @@ def transitive_closure(lookup, modules, options):
     base = _transitive_closure_(False)
     full = _transitive_closure_(True)
     main = set(module for (module, _, _) in base)
-    final = set(module for (module, _, _) in full) if tests else set(main)
-    tests_final = set(module for module in final if not tests or module.applicability != "all")
-    tests_main = set(module for module in main if module.applicability != "all")
-    tests = (tests_final ^ tests_main)
+    final = set(module for (module, _, _) in full)
+    tests = (final - {module for module in main if module.applicability != "all"})
     return (base, full, main, final, tests)
 
 
