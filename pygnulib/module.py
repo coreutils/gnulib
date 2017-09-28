@@ -34,6 +34,15 @@ class Base:
         "licenses"               : (0x0C, set, "License"),
         "maintainers"            : (0x0D, set, "Maintainer"),
     }
+    _TABLE_STR_ = []
+    _TABLE_SET_ = []
+    for (_key_, (_, _typeid_, _)) in _TABLE_.items():
+        if _typeid_ is str:
+            _TABLE_STR_.append(_key_)
+        elif _typeid_ is set:
+            _TABLE_SET_.append(_key_)
+    _TABLE_STR_ = sorted(_TABLE_STR_)
+    _TABLE_SET_ = sorted(_TABLE_SET_)
     _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
 
 
@@ -298,7 +307,12 @@ class Base:
 
 
     def __hash__(self):
-        return hash(str(self))
+        result = ""
+        for key in Base._TABLE_SET_:
+            result += "".join(self.__table[key])
+        for key in Base._TABLE_STR_:
+            result += self.__table[key]
+        return hash((self.__name, result))
 
 
     def __repr__(self):
