@@ -59,7 +59,6 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    values = transitive_closure(gnulib.module, config.modules, config.options)
     (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, config.options)
 
     # Print some information about modules.
