@@ -536,9 +536,10 @@ def transitive_closure(lookup, modules, options):
 
     base = _transitive_closure_(False)
     full = _transitive_closure_(True)
-    main = set(module for (module, _, _) in base)
-    final = set(module for (module, _, _) in full)
-    tests = (final - {module for module in main if module.applicability != "all"})
+    ignore = {"main"} if tests else {"main", "all"}
+    main = {module for (module, _, _) in base}
+    final = {module for (module, _, _) in full} if tests else set(main)
+    tests = (final - {module for module in main if module.applicability in ignore})
     return (base, full, main, final, tests)
 
 
