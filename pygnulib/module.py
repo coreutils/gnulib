@@ -410,12 +410,12 @@ class File(Base):
                 match = File._PATTERN_.split(stream.read())[1:]
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = File._TABLE_[group]
-                if typeid is set:
-                    lines = set()
+                if typeid is (list, set, tuple):
+                    lines = []
                     for line in value.splitlines():
                         if not line.strip() or line.startswith("#"):
                             continue
-                        lines.add(line)
+                        lines += [line]
                     table[key] = lines
                 else:
                     table[key] = value.strip()
