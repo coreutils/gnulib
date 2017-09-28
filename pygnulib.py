@@ -56,7 +56,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 
 
 
-def import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
+def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
     values = transitive_closure(gnulib.module, config.modules, config.options)
@@ -91,40 +91,40 @@ def import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
             tests.add(gnulib.module("dummy"))
 
     # Determine license incompatibilities, if any.
-    incompatible = set()
+    incompatibilities = set()
     if config.licenses & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
         for (name, licenses) in ((module.name, module.licenses) for module in main):
             if not ((IGNORED_LICENSES & licenses) or (config.licenses & licenses)):
-                incompatible.add((name, licenses))
+                incompatibilities.add((name, licenses))
     return os.EX_OK
 
 
 
-def add_import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
+def add_import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
     config = CacheConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
     namespace["modules"] = (config.modules | modules)
-    return import_hook(gnulib, namespace, verbosity, options)
+    return import_hook(script, gnulib, namespace, verbosity, options)
 
 
 
-def remove_import_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
+def remove_import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
     config = CacheConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
     namespace["modules"] = (config.modules - modules)
-    return import_hook(gnulib, namespace, verbosity, options)
+    return import_hook(script, gnulib, namespace, verbosity, options)
 
 
 
-def update_hook(gnulib, namespace, verbosity, options, *args, **kwargs):
+def update_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = CacheConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
-    return import_hook(gnulib, namespace, verbosity, options)
+    return import_hook(script, gnulib, namespace, verbosity, options)
 
 
 
@@ -139,7 +139,7 @@ HOOKS = {
 
 
 
-def main(gnulib, program, arguments, environ):
+def main(script, gnulib, program, arguments, environ):
     gnulib = GnulibGitFS(gnulib)
     parser = CommandLineParser(program)
     try:
@@ -152,6 +152,7 @@ def main(gnulib, program, arguments, environ):
         print(parser.help, file=sys.stdout)
         return os.EX_OK
     kwargs = {
+        "script": script,
         "program": program,
         "gnulib": gnulib,
         "mode": mode,
@@ -167,13 +168,14 @@ def main(gnulib, program, arguments, environ):
 
 
 if __name__ == "__main__":
+    script = sys.argv[0]
     gnulib = os.path.dirname(os.path.realpath(__file__))
-    program = os.path.basename(sys.argv[0])
+    program = os.path.basename(script)
     log = os.path.join(os.getcwd(), "{0}.log".format(program))
     arguments = list(sys.argv[1:])
     environ = dict(os.environ)
     try:
-        result = main(gnulib, program, arguments, environ)
+        result = main(script, gnulib, program, arguments, environ)
     except BaseException as error:
         with codecs.open(log, "wb", "UTF-8") as stream:
             program = repr(program) if " " in program else program
