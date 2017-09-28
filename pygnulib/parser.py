@@ -7,8 +7,14 @@
 import argparse as _argparse_
 import os as _os_
 
-from .config import LicenseSet as _LicenseSet_
 from .error import CommandLineError as _CommandLineError_
+
+from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE_
+from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE_
+from .config import GPLv2_LICENSE as _GPLv2_LICENSE_
+from .config import GPLv3_LICENSE as _GPLv3_LICENSE_
+from .config import LGPL_LICENSE as _LGPL_LICENSE_
+from .config import GPL_LICENSE as _GPL_LICENSE_
 
 
 
@@ -199,14 +205,16 @@ class CommandLine:
             super().__call__(*args)
 
 
-    class _LicenseOption_(_Option_):
+    class _LGPLOption_(_Option_):
         def __call__(self, parser, namespace, value, option=None):
-            if value == "yes":
-                value = "3"
-            lgpl = _LicenseSet_.LGPL()
-            if value not in lgpl:
-                parser.__error("illegal --license argument value")
-            value = _LicenseSet_(lgpl[value])
+            if value not in {"2", "3", "yes", "3orGPLv2"}:
+                parser.error("argument --lgpl: 2, 3, yes or 3orGPLv2")
+            value = {
+                "2": _LGPLv2_LICENSE_,
+                "3": _LGPLv3_LICENSE_,
+                "yes": _LGPL_LICENSE_,
+                "3orGPLv2": (_GPLv2_LICENSE_ | _LGPLv3_LICENSE_),
+            }[value]
             args = (parser, namespace, value, option)
             super().__call__(*args)
 
@@ -704,8 +712,8 @@ class CommandLine:
                         "the version number of the LGPL can be specified;",
                         "the default is currently LGPLv3.",
                     ),
-                    "action": _LicenseOption_,
-                    "dest": "license",
+                    "action": _LGPLOption_,
+                    "dest": "licenses",
                     "metavar": "[=2|=3orGPLv2|=3]",
                 }),
                 (["--makefile-name"], {

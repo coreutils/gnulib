@@ -30,9 +30,9 @@ class Base:
         "early_autoconf_snippet" : (0x07, str, "configure.ac-early"),
         "autoconf_snippet"       : (0x08, str, "configure.ac"),
         "automake_snippet"       : (0x09, str, "Makefile.am"),
-        "include_directive"      : (0x0A, list, "Include"),
-        "link_directive"         : (0x0B, list, "Link"),
-        "license"                : (0x0C, str, "License"),
+        "include_directive"      : (0x0A, str, "Include"),
+        "link_directive"         : (0x0B, str, "Link"),
+        "licenses"               : (0x0C, set, "License"),
         "maintainers"            : (0x0D, list, "Maintainer"),
     }
     _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
@@ -40,8 +40,15 @@ class Base:
 
     def __init__(self, name, **kwargs):
         _type_assert_("name", name, str)
+        licenses = set()
+        for license in kwargs.get("licenses", tuple()):
+            _type_assert_("license", license, str)
+            licenses.add(license)
         self.__name = name
-        self.__table = {k:"" for k in Base._TABLE_}
+        self.__table = {}
+        for (key, (_, typeid, _)) in Base._TABLE_.items():
+            self.__table[key] = typeid()
+        self.__table["licenses"] = licenses
         self.__table["maintainers"] = ["all"]
         for (key, value) in kwargs.items():
             self.__table[key] = value
@@ -235,14 +242,18 @@ class Base:
 
 
     @property
-    def license(self):
-        """license"""
-        return self.__table["license"]
+    def licenses(self):
+        """licenses set"""
+        return frozenset(self.__table["licenses"])
 
-    @license.setter
-    def license(self, value):
-        _type_assert_("license", value, str)
-        self.__table["license"] = value
+    @licenses.setter
+    def licenses(self, value):
+        _type_assert_("licenses", value, _collections_.Iterable)
+        result = set()
+        for item in value:
+            _type_assert_("license", str)
+            result.add(value)
+        self.__table["licenses"] = frozenset(result)
 
 
     @property
@@ -301,7 +312,7 @@ class Base:
         result = ""
         for (key, (_, typeid, field)) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
-            if typeid is list:
+            if typeid in (list, set, tuple):
                 value = "\n".join(self.__table[key])
             else:
                 value = self.__table[key]
@@ -382,7 +393,7 @@ class File(Base):
         "Makefile.am"        : (str, "automake_snippet"),
         "Include"            : (str, "include_directive"),
         "Link"               : (str, "link_directive"),
-        "License"            : (str, "license"),
+        "License"            : (set, "licenses"),
         "Maintainer"         : (list, "maintainers"),
     }
     _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
@@ -400,15 +411,19 @@ class File(Base):
                 match = File._PATTERN_.split(stream.read())[1:]
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = File._TABLE_[group]
-                if typeid is list:
-                    lines = []
+                if typeid is set:
+                    lines = set()
                     for line in value.splitlines():
                         if not line.strip() or line.startswith("#"):
                             continue
-                        lines += [line]
+                        lines.add(line)
                     table[key] = lines
                 else:
                     table[key] = value.strip()
+            if "licenses" not in table:
+                table["licenses"] = ["GPL"]
+            if table["licenses"] == "LGPLv3+ or GPLv2":
+                table["licenses"] = ["GPLv2, LGPLv3+"]
             self.__stream = None
         elif mode == "w":
             self.__stream = _codecs_.open(path, "w+", "UTF-8")

@@ -22,6 +22,20 @@ def _regex_(regex):
 
 
 
+LGPLv2_LICENSE = frozenset({"LGPLv2", "LGPLv2+"})
+LGPLv3_LICENSE = frozenset({"LGPLv2+", "LGPLv3", "LGPLv3+"})
+GPLv2_LICENSE = frozenset({"GPLv2", "GPLv2+"})
+GPLv3_LICENSE = frozenset({"GPLv2+", "GPLv3", "GPLv3+"})
+LGPL_LICENSE = frozenset(LGPLv3_LICENSE)
+GPL_LICENSE = frozenset(GPLv3_LICENSE)
+OTHER_LICENSES = frozenset({
+    "GPLed build tool",
+    "public domain",
+    "unlimited",
+    "unmodifiable license text",
+})
+
+
 class Option:
     """gnulib configuration options"""
     Obsolete = (1 << 0)
@@ -31,65 +45,6 @@ class Option:
     Privileged = (1 << 4)
     Unportable = (1 << 5)
     All = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
-
-
-
-class LicenseSet:
-    """gnulib supported choice"""
-    _TABLE_ = (
-        "GPLv2",
-        "GPLv2+",
-        "GPLv3",
-        "GPLv3+",
-        "LGPLv2",
-        "LGPLv2+",
-        "LGPLv3",
-        "LGPLv3+",
-    )
-    _LGPL_ = {
-        "2": ("LGPLv2", "LGPLv2+"),
-        "3": ("LGPLv2+", "LGPLv3", "LGPLv3+"),
-        "3orGPLv2": ("LGPLv2+", "LGPLv3+", "GPLv2"),
-    }
-
-    def __init__(self, choice=None):
-        if choice is None:
-            choice = set(LicenseSet._TABLE_)
-        self.__variants = set()
-        if isinstance(choice, str):
-            choice = [choice]
-        variants = tuple(map(str.casefold, LicenseSet._TABLE_))
-        for variant in choice:
-            _type_assert_("variant", variant, str)
-            if variant.casefold() not in variants:
-                raise _UnknownLicenseError_(variant)
-            index = variants.index(variant.casefold())
-            self.__variants.add(LicenseSet._TABLE_[index])
-        self.__variants = set(sorted(self.__variants))
-
-    def __repr__(self):
-        module = self.__class__.__module__
-        name = self.__class__.__name__
-        return "{0}.{1}({2})".format(module, name, "|".join(self.__variants))
-
-    def __iter__(self):
-        return iter(self.__variants)
-
-    def __contains__(self, variant):
-        if not isinstance(variant, LicenseSet):
-            variant = LicenseSet(variant)
-        _type_assert_("variant", variant, LicenseSet)
-        variants = set(map(str.casefold, self.__variants))
-        return variants.__contains__(list(variant)[0].casefold())
-
-    def __eq__(self, variant):
-        if not isinstance(variant, LicenseSet):
-            return False
-        return set(self) == set(variant)
-
-    @staticmethod
-    def LGPL():
-        return dict(LicenseSet._LGPL_)
 
 
 
@@ -109,7 +64,7 @@ class Base:
         "macro_prefix"      : "gl",
         "po_domain"         : "",
         "witness_c_macro"   : "",
-        "license"           : LicenseSet([]),
+        "licenses"          : set(),
         "tests"             : False,
         "obsolete"          : False,
         "cxx_tests"         : False,
@@ -279,13 +234,13 @@ class Base:
 
 
     @property
-    def license(self):
+    def licenses(self):
         """abort if modules aren't available under the LGPL; also modify license template"""
-        return self["license"]
+        return frozenset(self["licenses"])
 
-    @license.setter
-    def license(self, value):
-        self["license"] = value
+    @licenses.setter
+    def licenses(self, value):
+        self["licenses"] = frozenset(value)
 
 
     @property
@@ -485,11 +440,8 @@ class Base:
             return
 
         typeid = type(Base._TABLE_[key])
-        if key in ("modules", "avoid", "files"):
+        if key in ("modules", "avoid", "files", "licenses"):
             typeid = _collections_.Iterable
-        elif key == "license":
-            typeid = LicenseSet
-            value = LicenseSet(value)
         _type_assert_(key, value, typeid)
 
         if key == "autoconf" and value < 2.59:
@@ -555,7 +507,7 @@ class Cache(Base):
         "lib"               : (str, _regex_(r"gl_LIB\(\[(.*?)\]\)")),
         "modules"           : (list, _regex_(r"gl_MODULES\(\[(.*?)\]\)")),
         "avoid"             : (list, _regex_(r"gl_AVOID\(\[(.*?)\]\)")),
-        "license"           : (str, _regex_(r"gl_LGPL\(\[(.*?)\]\)")),
+        "licenses"          : (str, _regex_(r"gl_LGPL\(\[(.*?)\]\)")),
     }
 
 
@@ -594,9 +546,13 @@ class Cache(Base):
         for (key, (typeid, pattern)) in Cache._GNULIB_CACHE_.items():
             match = pattern.findall(data)
             if match and key not in explicit:
-                if key == "license":
-                    lgpl = LicenseSet.LGPL()
-                    self[key] = lgpl[match[-1]]
+                if key == "licenses":
+                    self[key] = {
+                        "2": LGPLv2_LICENSE,
+                        "3": LGPLv3_LICENSE,
+                        "yes": LGPL_LICENSE,
+                        "3orGPLv2": (GPLv2_LICENSE | LGPLv3_LICENSE),
+                    }[match[-1]]
                 elif typeid is bool:
                     self[key] = True
                 elif typeid is str:
