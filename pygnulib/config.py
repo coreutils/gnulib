@@ -23,9 +23,9 @@ def _regex_(regex):
 
 
 LGPLv2_LICENSE = frozenset({"LGPLv2", "LGPLv2+"})
-LGPLv3_LICENSE = frozenset({"LGPLv2+", "LGPLv3", "LGPLv3+"})
+LGPLv3_LICENSE = frozenset({"LGPLv2+", "LGPLv3", "LGPLv3+", "LGPL"})
 GPLv2_LICENSE = frozenset({"GPLv2", "GPLv2+"})
-GPLv3_LICENSE = frozenset({"GPLv2+", "GPLv3", "GPLv3+"})
+GPLv3_LICENSE = frozenset({"GPLv2+", "GPLv3", "GPLv3+", "GPL"})
 LGPL_LICENSE = frozenset(LGPLv3_LICENSE)
 GPL_LICENSE = frozenset(GPLv3_LICENSE)
 OTHER_LICENSES = frozenset({
