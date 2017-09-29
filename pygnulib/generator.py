@@ -42,7 +42,7 @@ class Generator:
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "%s.%s" % (module, name)
+        return "{0}.{1}".format(module, name)
 
     def __str__(self):
         return "\n".join([_ for _ in self])
@@ -117,8 +117,8 @@ class POMakefile(Generator):
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        fmt = "%s.%s{po_base=%r, po_domain=%r}"
-        return fmt % (module, name, self.po_base, self.po_domain)
+        fmt = "{}.{}{po_base={}, po_domain={}}"
+        return fmt.format(module, name, repr(self.__config.po_base), repr(self.__config.po_domain))
 
 
     def __iter__(self):
@@ -126,11 +126,11 @@ class POMakefile(Generator):
             yield line
         yield "# Usually the message domain is the same as the package name."
         yield "# But here it has a '-gnulib' suffix."
-        yield "DOMAIN = %s-gnulib" % self.po_domain
+        yield "DOMAIN = {}-gnulib".format(self.po_domain)
         yield ""
         yield "# These two variables depend on the location of this directory."
-        yield "subdir = %s" % self.po_domain
-        yield "top_subdir = %s" % "/".join([".." for _ in self.po_base.split(_os_.path.sep)])
+        yield "subdir = {}".format(self.po_domain)
+        yield "top_subdir = {}".format("/".join(".." for _ in self.po_base.split(_os_.path.sep)))
         for line in POMakefile._TEMPLATE_:
             yield line
 
@@ -154,8 +154,8 @@ class POTFILES(Generator):
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        fmt = "%s.%s{files=%r}"
-        return fmt % (module, name, self.files)
+        fmt = "{}.{}{files={}}"
+        return fmt.format(module, name, repr(self.__files))
 
 
     def __iter__(self):
@@ -220,8 +220,8 @@ class AutoconfSnippet(Generator):
             flags += ["gettext"]
         include_guard_prefix = self.__config.include_guard_prefix
         flags = "|".join(flags)
-        fmt = "%s.%s{include_guard_prefix=%r, flags=%s}"
-        return fmt % (module, name, include_guard_prefix, flags)
+        fmt = "{}.{}{include_guard_prefix={}, flags={}}"
+        return fmt.format(module, name, repr(include_guard_prefix), flags)
 
 
     def __iter__(self):
@@ -280,8 +280,8 @@ class InitMacro(Generator):
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        fmt = "%s.%s{macro_prefix=%r}"
-        return fmt % (module, name, self.macro_prefix)
+        fmt = "{}.{}{macro_prefix={}}"
+        return fmt.format(module, name, repr(self.__macro_prefix))
 
 
 
@@ -296,6 +296,7 @@ class InitMacroHeader(InitMacro):
 
 
     def __iter__(self):
+        macro_prefix = self.__macro_prefix
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
         # of LIBOBJS. The purpose is to allow several gnulib instantiations under
@@ -305,8 +306,8 @@ class InitMacroHeader(InitMacro):
         # that uses pieces of gnulib also uses $(LIBOBJ):
         #   automatically discovered file `error.c' should not be explicitly
         #   mentioned.
-        yield "  m4_pushdef([AC_LIBOBJ], m4_defn([%s_LIBOBJ]))" % self.macro_prefix
-        yield "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([%s_REPLACE_FUNCS]))" % self.macro_prefix
+        yield "  m4_pushdef([AC_LIBOBJ], m4_defn([{}_LIBOBJ]))".format(macro_prefix)
+        yield "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([{}_REPLACE_FUNCS]))".format(self.macro_prefix)
 
         # Overriding AC_LIBSOURCES has the same purpose of avoiding the automake
         # error when a Makefile.am that uses pieces of gnulib also uses $(LIBOBJ):
@@ -314,7 +315,7 @@ class InitMacroHeader(InitMacro):
         #   mentioned
         # We let automake know about the files to be distributed through the
         # EXTRA_lib_SOURCES variable.
-        yield "  m4_pushdef([AC_LIBSOURCES], m4_defn([%s_LIBSOURCES]))" % self.macro_prefix
+        yield "  m4_pushdef([AC_LIBSOURCES], m4_defn([{}_LIBSOURCES]))".format(macro_prefix)
 
         # Create data variables for checking the presence of files that are
         # mentioned as AC_LIBSOURCES arguments. These are m4 variables, not shell
@@ -322,8 +323,8 @@ class InitMacroHeader(InitMacro):
         # created, not when it is run. ${macro_prefix_arg}_LIBSOURCES_LIST is the
         # list of files to check for. ${macro_prefix_arg}_LIBSOURCES_DIR is the
         # subdirectory in which to expect them.
-        yield "  m4_pushdef([%s_LIBSOURCES_LIST], [])" % self.macro_prefix
-        yield "  m4_pushdef([%s_LIBSOURCES_DIR], [])" % self.macro_prefix
+        yield "  m4_pushdef([{}_LIBSOURCES_LIST], [])".format(macro_prefix)
+        yield "  m4_pushdef([{}_LIBSOURCES_DIR], [])".format(macro_prefix)
         yield "  gl_COMMON"
 
 

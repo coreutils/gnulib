@@ -91,7 +91,7 @@ class Base:
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{0}.{1}{2}".format(module, name, repr(self.__table))
+        return "{}.{}{}".format(module, name, repr(self.__table))
 
 
     def __iter__(self):
@@ -416,14 +416,14 @@ class Base:
         """include guard prefix"""
         prefix = self["macro_prefix"].upper()
         default = Base._TABLE_["macro_prefix"]
-        return "GL_%s" % prefix if prefix == default else "GL"
+        return "GL_{0}".format(prefix) if prefix == default else "GL"
 
 
     def __getitem__(self, key):
         if key not in Base._TABLE_:
             key = key.replace("-", "_")
             if key not in Base._TABLE_:
-                raise KeyError("unsupported option: %r" % key)
+                raise KeyError("unsupported option: {0}".format(key))
         if key == "all_tests":
             return self.all_tests
         return self.__table[key]
@@ -433,7 +433,7 @@ class Base:
         if key not in Base._TABLE_:
             key = key.replace("_", "-")
             if key not in Base._TABLE_:
-                raise KeyError("unsupported option: %r" % key)
+                raise KeyError("unsupported option: {0}".format(key))
         key = key.replace("-", "_")
         if key == "all_tests":
             self.all_tests = value

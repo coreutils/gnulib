@@ -284,7 +284,7 @@ class Base:
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
             module = _hashlib_.md5(module).hexdigest()
-        return "%s_gnulib_enabled_%s" % (macro_prefix, module)
+        return "{}_gnulib_enabled_{}".format(macro_prefix, module)
 
 
     def shell_function(self, macro_prefix="gl"):
@@ -293,7 +293,7 @@ class Base:
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
             module = _hashlib_.md5(module).hexdigest()
-        return "func_%s_gnulib_m4code_%s" % (macro_prefix, module)
+        return "func_{}_gnulib_m4code_{}".format(macro_prefix, module)
 
 
     def conditional_name(self, macro_prefix="gl"):
@@ -302,7 +302,7 @@ class Base:
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
             module = _hashlib_.md5(module).hexdigest()
-        return "%s_GNULIB_ENABLED_%s" % (macro_prefix, module)
+        return "{}_GNULIB_ENABLED_{}".format(macro_prefix, module)
 
 
     def __hash__(self):
@@ -312,7 +312,7 @@ class Base:
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "%s.%s{%r}" % (module, name, self.name)
+        return "{}.{}{}".format(module, name, repr(self.__table["name"]))
 
 
     def __str__(self):
@@ -391,7 +391,7 @@ class File(Base):
     for (_key_, (_, _typeid_, _value_)) in Base._TABLE_.items():
         _TABLE_[_value_] = (_typeid_, _key_)
     _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
-    _PATTERN_ = _re_.compile("(%s):" % "|".join(_FIELDS_))
+    _PATTERN_ = _re_.compile("({}):".format("|".join(_FIELDS_)))
 
 
     def __init__(self, path, mode="r", name=None, **kwargs):
@@ -399,7 +399,7 @@ class File(Base):
         if name is None:
             name = _os_.path.basename(path)
         if mode not in ("r", "w", "rw"):
-            raise ValueError("illegal mode: %r" % mode)
+            raise ValueError("illegal mode: {}".format(mode))
         if mode == "r":
             with _codecs_.open(path, "rb", "UTF-8") as stream:
                 match = File._PATTERN_.split(stream.read())[1:]
@@ -426,7 +426,7 @@ class File(Base):
             self.__init__(path, "r")
             self.__stream = _codecs_.open(path, "w+", "UTF-8")
         else:
-            raise ValueError("invalid mode: %r" % mode)
+            raise ValueError("illegal mode: {}".format(mode))
 
         for (key, value) in kwargs.items():
             table[key] = value

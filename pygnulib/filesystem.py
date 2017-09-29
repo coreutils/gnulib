@@ -44,7 +44,7 @@ class Directory:
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "%s.%s{%r}" % (module, name, self.name)
+        return "{}.{}{}".format(module, name, repr(self.__name))
 
 
     def __getitem__(self, name):
@@ -108,7 +108,7 @@ class GnulibGit(Directory):
         config = _BaseConfig_(root=path)
         super().__init__(name, config)
         if not _os_.path.isdir(_os_.path.join(self.path, ".git")):
-            raise TypeError("%r is not a gnulib repository")
+            raise TypeError("{} is not a gnulib repository".format(self.path))
 
 
     def __enter__(self):
