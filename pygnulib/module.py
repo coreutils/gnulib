@@ -543,3 +543,16 @@ def dummy_required(modules):
             if {file for file in files if not file.endswith(".h")}:
                 return True
     return False
+
+
+
+def filelist(modules, ac_version):
+    """Determine the final file list."""
+    files = set()
+    for module in modules:
+        files.update(module.files)
+    files.add("m4/00gnulib.m4")
+    files.add("m4/gnulib-common.m4")
+    if ac_version == 2.59:
+        files.add("m4/onceonly.m4")
+    return frozenset(files)
