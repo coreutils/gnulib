@@ -6,6 +6,7 @@
 
 import codecs as _codecs_
 import hashlib as _hashlib_
+import collections as _collections_
 import os as _os_
 import re as _re_
 
@@ -16,61 +17,55 @@ from .config import Option as _ConfigOption_
 
 
 
+_ITERABLES_ = (list, tuple, set, frozenset)
+
+
 class Base:
     """gnulib generic module"""
     _TABLE_ = {
         "description"            : (0x00, str, "Description"),
         "comment"                : (0x01, str, "Comment"),
-        "status"                 : (0x02, set, "Status"),
+        "status"                 : (0x02, frozenset, "Status"),
         "notice"                 : (0x03, str, "Notice"),
         "applicability"          : (0x04, str, "Applicability"),
-        "files"                  : (0x05, set, "Files"),
-        "dependencies"           : (0x06, set, "Depends-on"),
+        "files"                  : (0x05, frozenset, "Files"),
+        "dependencies"           : (0x06, frozenset, "Depends-on"),
         "early_autoconf_snippet" : (0x07, str, "configure.ac-early"),
         "autoconf_snippet"       : (0x08, str, "configure.ac"),
         "automake_snippet"       : (0x09, str, "Makefile.am"),
         "include_directive"      : (0x0A, str, "Include"),
         "link_directive"         : (0x0B, str, "Link"),
-        "licenses"               : (0x0C, set, "License"),
-        "maintainers"            : (0x0D, set, "Maintainer"),
+        "licenses"               : (0x0C, frozenset, "License"),
+        "maintainers"            : (0x0D, frozenset, "Maintainer"),
     }
-    _TABLE_STR_ = []
-    _TABLE_SET_ = []
-    for (_key_, (_, _typeid_, _)) in _TABLE_.items():
-        if _typeid_ is str:
-            _TABLE_STR_.append(_key_)
-        elif _typeid_ is set:
-            _TABLE_SET_.append(_key_)
-    _TABLE_STR_ = sorted(_TABLE_STR_)
-    _TABLE_SET_ = sorted(_TABLE_SET_)
     _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
 
 
     def __init__(self, name, **kwargs):
         _type_assert_("name", name, str)
-        licenses = set()
-        for license in kwargs.get("licenses", tuple()):
-            _type_assert_("license", license, str)
-            licenses.add(license)
-        self.__name = name
-        self.__table = {}
+        if "licenses" in kwargs:
+            licenses = set()
+            for license in kwargs.get("licenses", frozenset()):
+                _type_assert_("license", license, str)
+                licenses.add(license)
+            kwargs["licenses"] = licenses
+        if "maintainers" not in kwargs:
+            kwargs["maintainers"] = ("all",)
+        self.__table = _collections_.OrderedDict()
+        self.__table["name"] = name
         for (key, (_, typeid, _)) in Base._TABLE_.items():
-            self.__table[key] = typeid()
-        self.__table["licenses"] = licenses
-        self.__table["maintainers"] = ["all"]
-        for (key, value) in kwargs.items():
-            self.__table[key] = value
+            self.__table[key] = typeid(kwargs.get(key, typeid()))
 
 
     @property
     def name(self):
         """name"""
-        return self.__name
+        return self.__table["name"]
 
     @name.setter
     def name(self, value):
         _type_assert_("name", value, str)
-        self.__name = value
+        self.__table["name"] = value
 
 
     @property
@@ -102,12 +97,12 @@ class Base:
 
     @status.setter
     def status(self, value):
-        _type_assert_("status", value, (list, set, tuple))
-        result = []
+        _type_assert_("status", value, _ITERABLES_)
+        result = set()
         for item in value:
             _type_assert_("status", item, str)
-            result += [item]
-        self.__table["status"] = set(result)
+            result.add(item)
+        self.__table["status"] = frozenset(result)
 
 
     @property
@@ -170,12 +165,12 @@ class Base:
 
     @files.setter
     def files(self, value):
-        _type_assert_("files", value, (list, set, tuple))
-        result = []
+        _type_assert_("files", value, _ITERABLES_)
+        result = set()
         for item in value:
             _type_assert_("file", item, str)
-            result += [item]
-        self.__table["files"] = set(result)
+            result.add(item)
+        self.__table["files"] = frozenset(result)
 
 
     @property
@@ -186,13 +181,13 @@ class Base:
 
     @dependencies.setter
     def dependencies(self, value):
-        _type_assert_("files", value, (list, set, tuple))
-        result = []
+        _type_assert_("files", value, _ITERABLES_)
+        result = set()
         for (name, condition) in value:
             _type_assert_("name", name, str)
             _type_assert_("condition", condition, str)
-            result += [(name, condition)]
-        self.__table["dependencies"] = set(result)
+            result.add((name, condition))
+        self.__table["dependencies"] = frozenset(result)
 
 
     @property
@@ -256,11 +251,11 @@ class Base:
     @property
     def licenses(self):
         """licenses set"""
-        return frozenset(self.__table["licenses"])
+        return set(self.__table["licenses"])
 
     @licenses.setter
     def licenses(self, value):
-        _type_assert_("licenses", value, (list, set, tuple))
+        _type_assert_("licenses", value, _ITERABLES_)
         result = set()
         for item in value:
             _type_assert_("license", item, str)
@@ -275,12 +270,12 @@ class Base:
 
     @maintainers.setter
     def maintainers(self, value):
-        _type_assert_("maintainers", value, (list, set, tuple))
-        result = []
+        _type_assert_("maintainers", value, _ITERABLES_)
+        result = set()
         for item in value:
             _type_assert_("maintainer", item, str)
-            result += [item]
-        self.__table["maintainers"] = set(result)
+            result.add(item)
+        self.__table["maintainers"] = frozenset(result)
 
 
     def shell_variable(self, macro_prefix="gl"):
@@ -311,12 +306,7 @@ class Base:
 
 
     def __hash__(self):
-        result = ""
-        for key in Base._TABLE_SET_:
-            result += "".join(self.__table[key])
-        for key in Base._TABLE_STR_:
-            result += self.__table[key]
-        return hash((self.__name, result))
+        return hash(tuple(self.__table.items()))
 
 
     def __repr__(self):
@@ -329,7 +319,7 @@ class Base:
         result = ""
         for (key, (_, typeid, field)) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
             field += ":\n"
-            if typeid in (list, set, tuple):
+            if typeid in _ITERABLES_:
                 value = "\n".join(self.__table[key])
             else:
                 value = self.__table[key]
@@ -397,22 +387,9 @@ class Base:
 
 class File(Base):
     """gnulib module text file"""
-    _TABLE_ = {
-        "Description"        : (str, "description"),
-        "Comment"            : (str, "comment"),
-        "Status"             : (set, "status"),
-        "Notice"             : (str, "notice"),
-        "Applicability"      : (str, "applicability"),
-        "Files"              : (set, "files"),
-        "Depends-on"         : (set, "dependencies"),
-        "configure.ac-early" : (str, "early_autoconf_snippet"),
-        "configure.ac"       : (str, "autoconf_snippet"),
-        "Makefile.am"        : (str, "automake_snippet"),
-        "Include"            : (str, "include_directive"),
-        "Link"               : (str, "link_directive"),
-        "License"            : (set, "licenses"),
-        "Maintainer"         : (set, "maintainers"),
-    }
+    _TABLE_ = {}
+    for (_key_, (_, _typeid_, _value_)) in Base._TABLE_.items():
+        _TABLE_[_value_] = (_typeid_, _key_)
     _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
     _PATTERN_ = _re_.compile("(%s):" % "|".join(_FIELDS_))
 
@@ -428,7 +405,7 @@ class File(Base):
                 match = File._PATTERN_.split(stream.read())[1:]
             for (group, value) in zip(match[::2], match[1::2]):
                 (typeid, key) = File._TABLE_[group]
-                if typeid in (list, set, tuple):
+                if typeid in _ITERABLES_:
                     lines = []
                     for line in value.splitlines():
                         if not line.strip() or line.startswith("#"):
