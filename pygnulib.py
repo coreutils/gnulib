@@ -102,6 +102,15 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             print(" " * 16, "{0:50}{1}".format(name, " ".join(sorted(licenses))), file=sys.stderr)
         print("{0}: *** Stop.".format(script), file=sys.stderr)
         return os.EX_DATAERR
+
+    # Show banner notice of every module.
+    if verbosity >= 1:
+        for module in sorted(main):
+            name = module.name
+            notice = module.notice
+            if notice.strip():
+                print("Notice from module {0}:".format(name), file=sys.stdout)
+                print("\n".join("  " + line for line in notice.splitlines()), file=sys.stdout)
     return os.EX_OK
 
 
