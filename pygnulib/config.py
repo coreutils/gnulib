@@ -76,7 +76,7 @@ class Base:
         "libtool"           : False,
         "conddeps"          : False,
         "vc_files"          : False,
-        "autoconf"          : 2.59,
+        "ac_version"        : 2.59,
         "modules"           : set(),
         "avoid"             : set(),
         "files"             : set(),
@@ -398,18 +398,18 @@ class Base:
 
 
     @property
-    def autoconf(self):
-        """autoconf version"""
-        return self.__table["autoconf"]
+    def ac_version(self):
+        """minimal supported autoconf version"""
+        return self.__table["ac_version"]
 
-    @autoconf.setter
-    def autoconf(self, value):
+    @ac_version.setter
+    def ac_version(self, value):
         if isinstance(value, str):
             value = float(value)
-        _type_assert_("autoconf", value, float)
+        _type_assert_("ac_version", value, float)
         if value < 2.59:
             raise _AutoconfVersionError_(2.59)
-        self.__table["autoconf"] = value
+        self.__table["ac_version"] = value
 
 
     @property
@@ -501,7 +501,7 @@ class Cache(Base):
     """gnulib cached configuration"""
     _COMMENTS_ = _regex_(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*?)$")
     _AUTOCONF_ = {
-        "autoconf" : _regex_(r"AC_PREREQ\(\[(.*?)\]\)"),
+        "ac_version" : _regex_(r"AC_PREREQ\(\[(.*?)\]\)"),
         "auxdir"   : _regex_(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$"),
         "libtool"  : _regex_(r"A[CM]_PROG_LIBTOOL")
     }
@@ -552,10 +552,7 @@ class Cache(Base):
         for (key, pattern) in Cache._AUTOCONF_.items():
             match = pattern.findall(data)
             if match and key not in explicit:
-                if key == "autoconf":
-                    self[key] = float([_ for _ in match if match][-1])
-                else:
-                    self[key] = match[-1]
+                self[key] = match[-1]
 
     def __gnulib_cache(self, explicit):
         m4_base = self.m4_base
