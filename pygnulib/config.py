@@ -13,13 +13,14 @@ import re as _re_
 from .error import type_assert as _type_assert_
 from .error import AutoconfVersionError as _AutoconfVersionError_
 from .error import M4BaseMismatchError as _M4BaseMismatchError_
-from .error import UnknownLicenseError as _UnknownLicenseError_
 
 
 
 def _regex_(regex):
     return _re_.compile(regex, _re_.S | _re_.M)
 
+
+_ITERABLES_ = (list, tuple, set, frozenset)
 
 
 LGPLv2_LICENSE = frozenset({"LGPLv2", "LGPLv2+"})
@@ -83,9 +84,9 @@ class Base:
 
 
     def __init__(self, **kwargs):
-        self.__table = dict(Base._TABLE_)
-        for (key, value) in kwargs.items():
-            self[key] = value
+        self.__table = {}
+        for (key, value) in Base._TABLE_.items():
+            self[key] = kwargs.get(key, value)
 
 
     def __repr__(self):
@@ -95,109 +96,117 @@ class Base:
 
 
     def __iter__(self):
-        for key in Base._TABLE_:
-            value = self[key]
-            yield key, value
+        return iter(self.__table)
 
 
     @property
     def root(self):
         """target directory"""
-        return self["root"]
+        return self.__table["root"]
 
     @root.setter
     def root(self, value):
-        self["root"] = value
+        _type_assert_("root", value, str)
+        self.__table["root"] = _os_.path.normpath(value)
 
 
     @property
     def local(self):
         """local override directory"""
-        return self["local"]
+        return self.__table["local"]
 
     @local.setter
     def local(self, value):
-        self["local"] = value
+        _type_assert_("root", value, str)
+        self.__table["root"] = _os_.path.normpath(value)
 
 
     @property
     def source_base(self):
         """directory relative to ROOT where source code is placed; defaults to 'lib'"""
-        return self["source_base"]
+        return self.__table["source_base"]
 
     @source_base.setter
     def source_base(self, value):
-        self["source_base"] = value
+        _type_assert_("source_base", value, str)
+        self.__table["source_base"] = _os_.path.normpath(value)
 
 
     @property
     def m4_base(self):
         """directory relative to ROOT where *.m4 macros are placed; defaults to 'm4'"""
-        return self["m4_base"]
+        return self.__table["m4_base"]
 
     @m4_base.setter
     def m4_base(self, value):
-        self["m4_base"] = value
+        _type_assert_("m4_base", value, str)
+        self.__table["m4_base"] = _os_.path.normpath(value)
 
 
     @property
     def po_base(self):
         """directory relative to ROOT where *.po files are placed; defaults to 'po'"""
-        return self["po_base"]
+        return self.__table["po_base"]
 
     @po_base.setter
     def po_base(self, value):
-        self["po_base"] = value
+        _type_assert_("po_base", value, str)
+        self.__table["po_base"] = _os_.path.normpath(value)
 
 
     @property
     def doc_base(self):
         """directory relative to ROOT where doc files are placed; defaults to 'doc'"""
-        return self["doc_base"]
+        return self.__table["doc_base"]
 
     @doc_base.setter
     def doc_base(self, value):
-        self["doc_base"] = value
+        _type_assert_("doc_base", value, str)
+        self.__table["doc_base"] = _os_.path.normpath(value)
 
 
     @property
     def tests_base(self):
         """directory relative to ROOT where unit tests are placed; defaults to 'tests'"""
-        return self["tests_base"]
+        return self.__table["tests_base"]
 
     @tests_base.setter
     def tests_base(self, value):
-        self["tests_base"] = value
+        _type_assert_("tests_base", value, str)
+        self.__table["tests_base"] = _os_.path.normpath(value)
 
 
     @property
     def auxdir(self):
         """directory relative to ROOT where auxiliary build tools are placed"""
-        return self["auxdir"]
+        return self.__table["auxdir"]
 
     @auxdir.setter
     def auxdir(self, value):
-        self["auxdir"] = value
+        _type_assert_("auxdir", value, str)
+        self.__table["auxdir"] = _os_.path.normpath(value)
 
 
     @property
     def lib(self):
         """library name; defaults to 'libgnu'"""
-        return self["lib"]
+        return self.__table["lib"]
 
     @lib.setter
     def lib(self, value):
-        self["lib"] = value
+        _type_assert_("lib", value, str)
+        self.__table["lib"] = _os_.path.normpath(value)
 
 
     @property
     def makefile_name(self):
         """name of makefile in automake syntax in the source-base and tests-base directories"""
-        return self["makefile_name"]
+        return self.__table["makefile_name"]
 
     @makefile_name.setter
     def makefile_name(self, value):
-        self["makefile_name"] = value
+        _type_assert_("makefile_name", value, str)
+        self.__table["makefile_name"] = _os_.path.normpath(value)
 
 
     @property
@@ -206,101 +215,115 @@ class Base:
         the prefix of the macros 'gl_EARLY' and 'gl_INIT' (default is 'gl');
         the change of this parameter also affects include_guard_prefix parameter
         """
-        return self["macro_prefix"]
+        return self.__table["macro_prefix"]
 
     @macro_prefix.setter
     def macro_prefix(self, value):
-        self["macro_prefix"] = value
+        _type_assert_("macro_prefix", value, str)
+        self.__table["macro_prefix"] = _os_.path.normpath(value)
 
 
     @property
     def po_domain(self):
         """the prefix of the i18n domain"""
-        return self["po_domain"]
+        return self.__table["po_domain"]
 
     @po_domain.setter
     def po_domain(self, value):
-        self["po_domain"] = value
+        _type_assert_("po_base", value, str)
+        self.__table["po_base"] = _os_.path.normpath(value)
 
 
     @property
     def witness_c_macro(self):
         """the C macro that is defined when the sources are compiled or used"""
-        return self["witness_c_macro"]
+        return self.__table["witness_c_macro"]
 
     @witness_c_macro.setter
     def witness_c_macro(self, value):
-        self["witness_c_macro"] = value
+        _type_assert_("witness_c_macro", value, str)
+        self.__table["witness_c_macro"] = _os_.path.normpath(value)
 
 
     @property
     def licenses(self):
         """abort if modules aren't available under the LGPL; also modify license template"""
-        return frozenset(self["licenses"])
+        return self.__table["licenses"]
 
     @licenses.setter
     def licenses(self, value):
-        self["licenses"] = frozenset(value)
+        _type_assert_("licenses", value, _ITERABLES_)
+        result = set()
+        for item in value:
+            _type_assert_("license", item, str)
+            result.add(item)
+        self.__table["licenses"] = frozenset(result)
 
 
     @property
     def tests(self):
         """include unit tests for the included modules"""
-        return self["tests"]
+        return self.__table["tests"]
 
     @tests.setter
     def tests(self, value):
-        self["tests"] = value
+        _type_assert_("tests", value, bool)
+        self.__table["tests"] = value
 
 
     @property
     def obsolete(self):
         """include obsolete modules when they occur among the modules"""
-        return self["obsolete"]
+        return self.__table["obsolete"]
 
     @obsolete.setter
     def obsolete(self, value):
-        self["obsolete"] = value
+        _type_assert_("obsolete", value, bool)
+        self.__table["obsolete"] = value
 
 
     @property
     def cxx_tests(self):
         """include even unit tests for C++ interoperability"""
-        return self["cxx_tests"]
+        return self.__table["cxx_tests"]
 
     @cxx_tests.setter
     def cxx_tests(self, value):
-        self["cxx_tests"] = value
+        _type_assert_("cxx_tests", value, bool)
+        self.__table["cxx_tests"] = value
 
 
     @property
     def longrunning_tests(self):
         """include even unit tests that are long-runners"""
-        return self["longrunning_tests"]
+        return self.__table["longrunning_tests"]
 
     @longrunning_tests.setter
     def longrunning_tests(self, value):
-        self["longrunning_tests"] = value
+        _type_assert_("longrunning_tests", value, bool)
+        self.__table["longrunning_tests"] = value
 
 
     @property
     def privileged_tests(self):
         """include even unit tests that require root privileges"""
-        return self["privileged_tests"]
+        return self.__table["privileged_tests"]
 
     @privileged_tests.setter
     def privileged_tests(self, value):
-        self["privileged_tests"] = value
+        _type_assert_("privileged_tests", value, bool)
+        self.__table["privileged_tests"] = value
 
 
     @property
     def unportable_tests(self):
         """include even unit tests that fail on some platforms"""
-        return self["unportable_tests"]
+        return self.__table["unportable_tests"]
 
     @unportable_tests.setter
     def unportable_tests(self, value):
-        self["unportable_tests"] = value
+        _type_assert_("unportable_tests", value, bool)
+        self.__table["unportable_tests"] = value
 
 
     @property
@@ -316,11 +339,11 @@ class Base:
 
     @all_tests.setter
     def all_tests(self, value):
-        self.tests = value
-        self.cxx_tests = value
-        self.privileged_tests = value
-        self.unportable_tests = value
-        self.longrunning_tests = value
+        self.__table["tests"] = value
+        self.__table["cxx_tests"] = value
+        self.__table["privileged_tests"] = value
+        self.__table["unportable_tests"] = value
+        self.__table["longrunning_tests"] = value
 
     @property
     def options(self):
@@ -344,78 +367,101 @@ class Base:
     @property
     def libtool(self):
         """use libtool rules"""
-        return self["libtool"]
+        return self.__table["libtool"]
 
     @libtool.setter
     def libtool(self, value):
-        self["libtool"] = value
+        _type_assert_("libtool", value, bool)
+        self.__table["libtool"] = value
 
 
     @property
     def conddeps(self):
         """support conditional dependencies (may save configure time and object code)"""
-        return self["conddeps"]
+        return self.__table["conddeps"]
 
     @conddeps.setter
     def conddeps(self, value):
-        self["conddeps"] = value
+        _type_assert_("conddeps", value, bool)
+        self.__table["conddeps"] = value
 
 
     @property
     def vc_files(self):
         """update version control related files"""
-        return self["vc_files"]
+        return self.__table["vc_files"]
 
     @vc_files.setter
     def vc_files(self, value):
-        self["vc_files"] = value
+        _type_assert_("vc_files", value, bool)
+        self.__table["vc_files"] = value
 
 
     @property
     def autoconf(self):
         """autoconf version"""
-        return self["autoconf"]
+        return self.__table["autoconf"]
 
     @autoconf.setter
     def autoconf(self, value):
-        self["autoconf"] = value
+        if isinstance(value, str):
+            value = float(value)
+        _type_assert_("autoconf", value, float)
+        if value < 2.59:
+            raise _AutoconfVersionError_(2.59)
+        self.__table["autoconf"] = value
 
 
     @property
     def modules(self):
         """list of modules"""
-        return self["modules"]
+        return self.__table["modules"]
 
     @modules.setter
     def modules(self, value):
-        self["modules"] = set(value)
+        _type_assert_("modules", value, _ITERABLES_)
+        result = set()
+        for item in value:
+            _type_assert_("module", item, str)
+            result.add(item)
+        self.__table["modules"] = frozenset(result)
 
 
     @property
     def avoid(self):
         """list of modules to avoid"""
-        return self["avoid"]
+        return self.__table["avoid"]
 
     @avoid.setter
     def avoid(self, value):
-        self["avoid"] = set(value)
+        _type_assert_("avoid", value, _ITERABLES_)
+        result = set()
+        for item in value:
+            _type_assert_("avoid", item, str)
+            result.add(item)
+        self.__table["avoid"] = frozenset(result)
 
 
     @property
     def files(self):
         """list of files to be processed"""
-        return self["files"]
+        return self.__table["files"]
 
     @files.setter
     def files(self, value):
-        self["files"] = set(value)
+        _type_assert_("files", value, _ITERABLES_)
+        result = set()
+        for item in value:
+            _type_assert_("file", item, str)
+            result.add(item)
+        self.__table["files"] = frozenset(result)
 
 
     @property
     def include_guard_prefix(self):
         """include guard prefix"""
-        prefix = self["macro_prefix"].upper()
-        default = Base._TABLE_["macro_prefix"]
+        prefix = self.__table["macro_prefix"].upper()
+        default = Base._TABLE_["macro_prefix"].upper()
         return "GL_{0}".format(prefix) if prefix == default else "GL"
 
 
@@ -424,9 +470,7 @@ class Base:
             key = key.replace("-", "_")
             if key not in Base._TABLE_:
                 raise KeyError("unsupported option: {0}".format(key))
-        if key == "all_tests":
-            return self.all_tests
-        return self.__table[key]
+        return getattr(self, key)
 
 
     def __setitem__(self, key, value):
@@ -434,29 +478,7 @@ class Base:
             key = key.replace("_", "-")
             if key not in Base._TABLE_:
                 raise KeyError("unsupported option: {0}".format(key))
-        key = key.replace("-", "_")
-        if key == "all_tests":
-            self.all_tests = value
-            return
-
-        typeid = type(Base._TABLE_[key])
-        if key in ("modules", "avoid", "files", "licenses"):
-            typeid = _collections_.Iterable
-        _type_assert_(key, value, typeid)
-
-        if key == "autoconf" and value < 2.59:
-            raise _AutoconfVersionError_(2.59)
-        elif key in ("modules", "avoid", "files"):
-            seq = list()
-            item_key = "file" if key == "files" else "module"
-            for item_value in value:
-                _type_assert_(item_key, item_value, str)
-                seq += [item_value]
-            value = set(seq)
-        elif key.endswith("_base"):
-            value = _os_.path.normpath(value) if value.strip() else ""
-
-        self.__table[key] = value
+        return setattr(self, key, value)
 
 
     def items(self):
