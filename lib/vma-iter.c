@@ -17,6 +17,15 @@
 
 #include <config.h>
 
+/* On Solaris in 32-bit mode, when gnulib module 'largefile' is in use,
+   prevent a compilation error
+     "Cannot use procfs in the large file compilation environment"
+   The files that we access in this compilation unit are less than 2 GB
+   large.  */
+#if defined __sun
+# undef _FILE_OFFSET_BITS
+#endif
+
 /* Specification.  */
 #include "vma-iter.h"
 
@@ -49,7 +58,7 @@
 # include <sys/procfs.h> /* PIOC*, prmap_t */
 #endif
 
-#if defined __sun && HAVE_SYS_PROCFS_H /* Solaris */
+#if defined __sun /* Solaris */
 # include <string.h> /* memcpy */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
@@ -814,7 +823,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   close (fd);
   return -1;
 
-#elif defined __sun && HAVE_SYS_PROCFS_H /* Solaris */
+#elif defined __sun /* Solaris */
 
   /* Note: Solaris <sys/procfs.h> defines a different type prmap_t with
      _STRUCTURED_PROC than without! Here's a table of sizeof(prmap_t):

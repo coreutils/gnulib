@@ -16,8 +16,6 @@ configure.ac:
 gl_FUNC_MMAP_ANON
 AC_REQUIRE([AC_C_INLINE])
 AC_CHECK_FUNCS_ONCE([mquery pstat_getprocvm])
-dnl On Solaris <= 9, <sys/procfs.h> is unusable when AC_SYS_LARGEFILE is in use.
-AC_CHECK_HEADERS([sys/procfs.h])
 
 Makefile.am:
 lib_SOURCES += vma-iter.c
