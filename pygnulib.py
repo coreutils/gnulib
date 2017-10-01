@@ -16,6 +16,7 @@ from pygnulib.error import UnknownModuleError
 from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
 
+from pygnulib.module import filelist
 from pygnulib.module import dummy_required
 from pygnulib.module import libtests_required
 from pygnulib.module import transitive_closure
@@ -123,6 +124,26 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             if notice.strip():
                 print("Notice from module {0}:".format(name), file=sys.stdout)
                 print("\n".join("  " + line for line in notice.splitlines()), file=sys.stdout)
+
+    # Determine the final file lists.
+    main_files = filelist(main, config.ac_version)
+    tests_files = filelist(tests, config.ac_version)
+    for file in tests_files:
+        if file.startswith("lib/"):
+            tests_files.remove(file)
+            file = "tests=lib/" + file[len("lib/"):]
+            tests_files.add(file)
+    files = main_files | tests_files
+    if verbosity >= 0:
+        print("File list:", file=sys.stdout)
+        for file in sorted(files):
+            if file.startswith("tests=lib/"):
+                name = file[len("tests=lib/"):]
+                src = "lib/" + name
+                dst = "tests/" + name
+                print("  ", src, " -> ", dst, file=sys.stdout, sep="")
+            else:
+                print("  ", file, file=sys.stdout, sep="")
     return os.EX_OK
 
 
