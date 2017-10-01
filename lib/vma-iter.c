@@ -34,7 +34,7 @@
 #include <fcntl.h> /* open, O_RDONLY */
 #include <unistd.h> /* getpagesize, lseek, read, close, getpid */
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __GNU__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
 #endif
@@ -95,7 +95,7 @@
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __GNU__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -557,7 +557,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __GNU__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
   /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
      file system.  */
 
