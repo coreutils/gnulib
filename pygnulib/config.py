@@ -117,8 +117,8 @@ class Base:
 
     @local.setter
     def local(self, value):
-        _type_assert_("root", value, str)
-        self.__table["root"] = _os_.path.normpath(value)
+        _type_assert_("local", value, str)
+        self.__table["local"] = _os_.path.normpath(value)
 
 
     @property
