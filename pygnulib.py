@@ -78,9 +78,11 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
         print("Main module list:", file=sys.stdout)
         for module in sorted(main):
             print("  {0}".format(module.name), file=sys.stdout)
+        print("" if main else "\n", end="")
         print("Tests-related module list:", file=sys.stdout)
         for module in sorted(tests):
             print("  {0}".format(module.name), file=sys.stdout)
+        print("" if tests else "\n", end="")
 
     # Determine if dummy needs to be added to main or test sets.
     if "dummy" not in config.avoid:
