@@ -541,8 +541,8 @@ def dummy_required(modules):
             files = (files.split("#", 1)[0].split(" "))
             files = (file.strip() for file in files if file.strip())
             if {file for file in files if not file.endswith(".h")}:
-                return True
-    return False
+                return False
+    return True
 
 
 
