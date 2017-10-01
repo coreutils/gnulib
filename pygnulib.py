@@ -5,6 +5,7 @@
 
 import codecs
 import os
+import re
 import stat
 import sys
 import traceback
@@ -25,6 +26,7 @@ from pygnulib.filesystem import GnulibGit as GnulibGitFS
 
 
 
+AC_VERSION_PATTERN = re.compile(r"AC_PREREQ\(\[(.*?)\]\)", re.S | re.M)
 IGNORED_LICENSES = {
     "GPLed build tool",
     "public domain",
@@ -59,6 +61,14 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
+    if "ac_version" not in namespace:
+        configure = os.path.join(config.root, "configure.ac")
+        if not os.path.exists(configure):
+            configure = os.path.join(config.root, "configure.in")
+        if os.path.exists(configure):
+            with codecs.open(configure, "rb", "UTF-8") as stream:
+                match = AC_VERSION_PATTERN.findall(stream.read())
+                config.ac_version = float(match[-1]) if match else 2.59
     (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, config.options)
 
     # Print some information about modules.
