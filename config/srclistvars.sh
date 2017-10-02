@@ -36,7 +36,7 @@ esac
 : ${GNULIBSRC=../gnulib}
 : ${GNUORG=../gnuorg}
 : ${GNUSTANDARDS=../gnustandards}
-: ${GNUWWWLICENSES=$GNUORG}
+: ${GNUWWWLICENSES=../www/www/licenses}
 : ${LIBCSRC=../libc}
 : ${LIBTOOL=../libtool}
 : ${TEXINFOSRC=../texinfo}
