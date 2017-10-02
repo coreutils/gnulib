@@ -43,9 +43,6 @@
 # if HAVE_SYS_FS_S5PARAM_H      /* Fujitsu UXP/V */
 #  include <sys/fs/s5param.h>
 # endif
-# if defined HAVE_SYS_FILSYS_H && !defined _CRAY
-#  include <sys/filsys.h>       /* SVR2 */
-# endif
 # if HAVE_SYS_STATFS_H
 #  include <sys/statfs.h>
 # endif
@@ -169,41 +166,6 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
   fsp->fsu_bavail_top_bit_set = EXTRACT_TOP_BIT (fsd.fd_req.bfreen) != 0;
   fsp->fsu_files = PROPAGATE_ALL_ONES (fsd.fd_req.gtot);
   fsp->fsu_ffree = PROPAGATE_ALL_ONES (fsd.fd_req.gfree);
-
-#elif defined STAT_READ_FILSYS          /* SVR2 */
-# ifndef SUPERBOFF
-#  define SUPERBOFF (SUPERB * 512)
-# endif
-
-  struct filsys fsd;
-  int fd;
-
-  if (! disk)
-    {
-      errno = 0;
-      return -1;
-    }
-
-  fd = open (disk, O_RDONLY);
-  if (fd < 0)
-    return -1;
-  lseek (fd, (off_t) SUPERBOFF, 0);
-  if (full_read (fd, (char *) &fsd, sizeof fsd) != sizeof fsd)
-    {
-      close (fd);
-      return -1;
-    }
-  close (fd);
-
-  fsp->fsu_blocksize = (fsd.s_type == Fs2b ? 1024 : 512);
-  fsp->fsu_blocks = PROPAGATE_ALL_ONES (fsd.s_fsize);
-  fsp->fsu_bfree = PROPAGATE_ALL_ONES (fsd.s_tfree);
-  fsp->fsu_bavail = PROPAGATE_TOP_BIT (fsd.s_tfree);
-  fsp->fsu_bavail_top_bit_set = EXTRACT_TOP_BIT (fsd.s_tfree) != 0;
-  fsp->fsu_files = (fsd.s_isize == -1
-                    ? UINTMAX_MAX
-                    : (fsd.s_isize - 2) * INOPB * (fsd.s_type == Fs2b ? 2 : 1));
-  fsp->fsu_ffree = PROPAGATE_ALL_ONES (fsd.s_tinode);
 
 #elif defined STAT_STATFS3_OSF1         /* OSF/1 */
 
