@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate July 25, 2016
+@set lastupdate September 25, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -254,12 +254,10 @@ C'' as a label for the compiler rather than for the language.
 
 Please don't use ``win'' as an abbreviation for Microsoft Windows in
 GNU software or documentation.  In hacker terminology, calling
-something a ``win'' is a form of praise.  If you wish to praise
-Microsoft Windows when speaking on your own, by all means do so, but
-not in GNU software.  Usually we write the name ``Windows'' in full,
-but when brevity is very important (as in file names and sometimes
-symbol names), we abbreviate it to ``w''.  For instance, the files and
-functions in Emacs that deal with Windows start with @samp{w32}.
+something a ``win'' is a form of praise.  You're free to praise
+Microsoft Windows on your own if you want, but please don't do so in
+GNU packages.  Please write ``Windows'' in full, or abbreviate it to
+``w.''  @xref{System Portability}.
 
 @node Design Advice
 @chapter General Program Design
@@ -2894,14 +2892,15 @@ When that is the case, it is better to spend your time adding features
 that will be useful on GNU and GNU/Linux, rather than on supporting
 other incompatible systems.
 
-If you do support Windows, please do not abbreviate it as ``win''.  In
-hacker terminology, calling something a ``win'' is a form of praise.
-You're free to praise Microsoft Windows on your own if you want, but
-please don't do this in GNU packages.  Instead of abbreviating
-``Windows'' to ``win'', you can write it in full or abbreviate it to
-``woe'' or ``w''.  In GNU Emacs, for instance, we use @samp{w32} in
-file names of Windows-specific files, but the macro for Windows
-conditionals is called @code{WINDOWSNT}.
+If you do support Windows, please do not abbreviate it as ``win''.
+@xref{Trademarks}.
+
+Usually we write the name ``Windows'' in full, but when brevity is
+very important (as in file names and some symbol names), we abbreviate
+it to ``w''.  In GNU Emacs, for instance, we use @samp{w32} in file
+names of Windows-specific files, but the macro for Windows
+conditionals is called @code{WINDOWSNT}.  In principle there could
+also be @samp{w64}.
 
 It is a good idea to define the ``feature test macro''
 @code{_GNU_SOURCE} when compiling your C files.  When you compile on GNU
@@ -2927,19 +2926,23 @@ However, don't make any effort to cater to the possibility that an
 @code{int} will be less than 32 bits.  We don't support 16-bit machines
 in GNU.
 
-Similarly, don't make any effort to cater to the possibility that
-@code{long} will be smaller than predefined types like @code{size_t}.
-For example, the following code is ok:
+You need not cater to the possibility that @code{long} will be smaller
+than pointers and @code{size_t}.  We know of one such platform: 64-bit
+programs on Microsoft Windows.  If you care about making your package
+run on Windows using Mingw64, you would need to deal with 8-byte
+pointers and 4-byte @code{long}, which would break this code:
 
 @example
 printf ("size = %lu\n", (unsigned long) sizeof array);
 printf ("diff = %ld\n", (long) (pointer2 - pointer1));
 @end example
 
-1989 Standard C requires this to work, and we know of only one
-counterexample: 64-bit programs on Microsoft Windows.  We will leave
-it to those who want to port GNU programs to that environment to
-figure out how to do it.
+Whether to support Mingw64, and Windows in general, in your package is
+your choice.  The GNU Project doesn't say you have any responsibility to
+do so.  Our goal is to replace proprietary systems, including Windows,
+not to enhance them.  If people pressure you to make your program run
+on Windows, and you are not interested, you can respond with, ``Switch
+to GNU/Linux --- your freedom depends on it.''
 
 Predefined file-size types like @code{off_t} are an exception: they are
 longer than @code{long} on many platforms, so code like the above won't
@@ -3399,7 +3402,7 @@ it is a function.  @code{foo ()} is not a function, it is a function
 call with no arguments.
 
 Whenever possible, please stick to the active voice, avoiding the
-passive, and use the present tense, not the future teste.  For
+passive, and use the present tense, not the future tense.  For
 instance, write ``The function @code{foo} returns a list containing
 @var{a} and @var{b}'' rather than ``A list containing @var{a} and
 @var{b} will be returned.''  One advantage of the active voice is it
@@ -4312,7 +4315,7 @@ or find another place to refer to that information.
 @bye
 
 Local variables:
-eval: (add-hook 'write-file-hooks 'time-stamp)
+eval: (add-hook 'write-file-functions 'time-stamp)
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"

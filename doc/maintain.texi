@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 21, 2017
+@set lastupdate September 24, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -100,13 +100,13 @@ include suggested new wording if you can.  We prefer a context diff to
 the Texinfo source, but if that's difficult for you, you can make a
 diff for some other version of this document, or propose it in any way
 that makes it clear.  The source repository for this document can be
-found at @url{http://savannah.gnu.org/projects/gnustandards}.
+found at @url{https://savannah.gnu.org/projects/gnustandards}.
 
 @cindex @code{gnustandards-commit@@gnu.org} mailing list
 If you want to receive diffs for every change to these GNU documents,
 join the mailing list @code{gnustandards-commit@@gnu.org}, for
 instance via the web interface at
-@url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
+@url{https://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
 Archives are also available there.
 
 @cindex Piercy, Marge
@@ -139,7 +139,7 @@ The GNU Advisory Committee helps to coordinate activities in the GNU
 project on behalf of RMS (Richard Stallman, the Chief GNUisance).  If
 you have any organizational questions or concerns you can contact the
 committee at @email{gnu-advisory@@gnu.org}.  See
-@url{http://www.gnu.org/contact/gnu-advisory.html} for the current
+@url{https://www.gnu.org/contact/gnu-advisory.html} for the current
 committee members.  Additional information is in
 @file{/gd/gnuorg/advisory}.
 
@@ -149,7 +149,7 @@ committee members.  Additional information is in
 If you find that any GNU computer systems (@code{fencepost.gnu.org},
 @code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
 @dots{}) seem to be down, you can check the current status at
-@url{http://quitter.se/fsfstatus}.  Most likely the problem, if
+@url{https://quitter.se/fsfstatus}.  Most likely the problem, if
 it can be alleviated at the FSF end, is already being worked on.
 
 @cindex sysadmin, FSF
@@ -173,16 +173,16 @@ The directory @file{/gd/gnuorg} mentioned throughout this document is
 available on the general GNU server, currently
 @code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
 you should have an account there.  If you don't have one already, see
-@url{http://www.gnu.org/software/README.accounts.html}.  You can also
+@url{https://www.gnu.org/software/README.accounts.html}.  You can also
 ask for accounts for people who significantly help you in working on
 the package.  Such GNU login accounts include email
-(see @url{http://www.fsf.org/about/systems/sending-mail-via-fencepost}).
+(see @url{https://www.fsf.org/about/systems/sending-mail-via-fencepost}).
 @end macro
 
 @gdgnuorgtext{}
 
 Other resources available to GNU maintainers are described at
-@url{http://www.gnu.org/software/devel.html}, as well as throughout
+@url{https://www.gnu.org/software/devel.html}, as well as throughout
 this document.  In brief:
 
 @itemize @bullet
@@ -262,7 +262,7 @@ some of your developers as co-maintainers, please contact
 @email{maintainers@@gnu.org}.
 
 We're happy to acknowledge all major contributors to GNU packages on
-the @url{http://www.gnu.org/people/people.html} web page.  Please send
+the @url{https://www.gnu.org/people/people.html} web page.  Please send
 an entry for yourself to @email{webmasters@@gnu.org}, and feel free to
 suggest it to other significant developers on your package.
 
@@ -357,7 +357,7 @@ Once the conversation is under way and the contributor is ready for
 more details, you should send one of the templates that are found in
 the directory @file{/gd/gnuorg/Copyright/}; they are also available
 from the @file{doc/Copyright/} directory of the @code{gnulib} project
-at @url{http://savannah.gnu.org/projects/gnulib}.  This section
+at @url{https://savannah.gnu.org/projects/gnulib}.  This section
 explains which templates you should use in which circumstances.
 @strong{Please don't use any of the templates except for those listed
 here, and please don't change the wording.}
@@ -427,7 +427,7 @@ For a translation of a manual, use @file{assign.translation.manual}.
 For translations of program strings (as used by GNU Gettext, for
 example; @pxref{Internationalization,,, standards, GNU Coding
 Standards}), use @file{disclaim.translation}.  If you make use of the
-Translation Project (@url{http://translationproject.org}) facilities,
+Translation Project (@url{https://translationproject.org}) facilities,
 please check with the TP coordinators that they have sent the
 contributor the papers; if they haven't, then you should send the
 papers.  In any case, you should wait for the confirmation from the
@@ -794,7 +794,7 @@ implementations; for example, the GNU C Library.  In such cases, the
 Lesser GPL should be used (again, for the notice wording,
 @pxref{License Notices for Code}).  If a GNU library provides unique
 functionality, however, the GNU GPL should be used.
-@url{http://www.gnu.org/licenses/why-not-lgpl.html} discusses this
+@url{https://www.gnu.org/licenses/why-not-lgpl.html} discusses this
 strategic choice.
 
 Some of these libraries need to work with programs released under
@@ -829,7 +829,7 @@ General Public License for more details.
 
 You should have received copies of the GNU General Public License and
 the GNU Lesser General Public License along with this program.  If
-not, see @url{http://www.gnu.org/licenses/}.
+not, see @url{https://www.gnu.org/licenses/}.
 @end smallexample
 
 For small packages, you can use ``This program'' instead of ``GNU
@@ -844,12 +844,12 @@ You can use whichever is the most convenient for you.
 
 @itemize @bullet
 @item
-@uref{http://www.gnu.org/licenses/}.
+@uref{https://www.gnu.org/licenses/}.
 
 @item
 The @code{gnulib} project on @code{savannah.gnu.org}, which you
 can access via anonymous Git or CVS.  See
-@uref{http://savannah.gnu.org/projects/gnulib}.
+@uref{https://savannah.gnu.org/projects/gnulib}.
 
 @end itemize
 
@@ -880,7 +880,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see @url{http://www.gnu.org/licenses/}.
+along with this program.  If not, see @url{https://www.gnu.org/licenses/}.
 @end quotation
 
 But in a small program which is just a few files, you can use
@@ -898,13 +898,13 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see @url{http://www.gnu.org/licenses/}.
+along with this program.  If not, see @url{https://www.gnu.org/licenses/}.
 @end quotation
 
 In either case, for those few packages which use the Lesser GPL
 (@pxref{Licensing of GNU Packages}), insert the word ``Lesser'' before
 ``General'' in @emph{all three} places.
-@url{http://@/www.gnu.org/@/licenses/@/gpl-howto.html} discusses application
+@url{https://@/www.gnu.org/@/licenses/@/gpl-howto.html} discusses application
 the GPL in more detail.
 
 
@@ -943,7 +943,7 @@ ask the FSF what to do.
 
 @xref{GNU Sample Texts,,, texinfo, Texinfo}, for a full example in a
 Texinfo manual, and see
-@url{http://www.gnu.org/licenses/fdl-howto.html} for more advice about
+@url{https://www.gnu.org/licenses/fdl-howto.html} for more advice about
 how to use the GNU FDL.
 
 If you write a manual that people might want to buy on paper, please
@@ -1133,7 +1133,7 @@ It is important to test the program personally on GNU or GNU/Linux,
 because these are the most important platforms for a GNU package.  If
 you don't have access to one of these platforms, as a GNU maintainer
 you can get access to the general GNU login machine; see
-@url{http://www.gnu.org/software/README.accounts.html}.
+@url{https://www.gnu.org/software/README.accounts.html}.
 
 Supporting other platforms is optional---we do it when that seems like
 a good idea, but we don't consider it obligatory.  If the users don't
@@ -1224,7 +1224,7 @@ default configuration for antispam purposes (see below).
 To create and maintain simple aliases and unmanaged lists, you can
 edit @file{/com/mailer/aliases} on the main GNU server.  If you don't
 have an account there, please read
-@url{http://www.gnu.org/software/README.accounts.html} (@pxref{GNU
+@url{https://www.gnu.org/software/README.accounts.html} (@pxref{GNU
 Accounts and Resources}).
 
 But if you don't want to learn how to do those things, you can ask
@@ -1288,11 +1288,11 @@ Some GNU packages, such as Emacs and GCC, come with advice about how
 to make bug reports useful.  Copying and adapting that could be very
 useful for your package.
 
-@cindex @url{http://bugs.gnu.org}
+@cindex @url{https://bugs.gnu.org}
 @cindex bug reports, email tracker for
 @cindex bug reports, web tracker for
 If you would like to use an email-based bug tracking system, see
-@url{http://bugs.gnu.org}; this can be connected with the regular
+@url{https://bugs.gnu.org}; this can be connected with the regular
 bug-reporting address.  Alternatively, if you would like to use a
 web-based bug tracking system, Savannah supports this (@pxref{Old
 Versions}), but please don't fail to accept bugs by regular email as
@@ -1322,7 +1322,7 @@ The GNU Project provides a server that GNU packages can use
 for source control and other package needs: @code{savannah.gnu.org}.
 Savannah is managed by @email{savannah-hackers@@gnu.org}.  For more
 details on using and contributing to Savannah, see
-@url{http://savannah.gnu.org/maintenance}.
+@url{https://savannah.gnu.org/maintenance}.
 
 It's not an absolute requirement, but all GNU maintainers are strongly
 encouraged to take advantage of Savannah, as sharing such a central
@@ -1334,7 +1334,7 @@ part of the purpose of using Savannah in the first place.
 @cindex @code{savannah-announce@@gnu.org} mailing list
 If you do use Savannah, please subscribe to the
 @email{savannah-announce@@gnu.org} mailing list
-(@url{http://lists.gnu.org/mailman/listinfo/savannah-announce}).  This
+(@url{https://lists.gnu.org/mailman/listinfo/savannah-announce}).  This
 is a very low-volume list to keep Savannah users informed of system
 upgrades, problems, and the like.
 
@@ -1456,7 +1456,7 @@ this.
 If you distribute them, please inform their users prominently that
 those non-free platforms trample their freedom.  It is useful to refer
 them to
-@url{http://www.gnu.org/philosophy/free-software-even-more-important.html}.
+@url{https://www.gnu.org/philosophy/free-software-even-more-important.html}.
 You can say, ``This program respects your freedom, but Windows does
 not.  To have freedom, you need to stop using Windows and other
 software that denies your freedom.''
@@ -1568,9 +1568,9 @@ for your GNU package:
 
 @enumerate
 @item
-Create an account for yourself at @url{http://savannah.gnu.org}, if
+Create an account for yourself at @url{https://savannah.gnu.org}, if
 you don't already have one.  By the way, this is also needed to
-maintain the web pages at @url{http://www.gnu.org} for your project
+maintain the web pages at @url{https://www.gnu.org} for your project
 (@pxref{Web Pages}).
 
 @item
@@ -1585,7 +1585,7 @@ Optional but recommended: Send your key to a GPG public key server:
 @code{gpg --keyserver keys.gnupg.net --send-keys @var{keyid}}, where
 @var{keyid} is the eight hex digits reported by @code{gpg
 --list-public-keys} on the @code{pub} line before the date.  For full
-information about GPG, see @url{http://www.gnu.org/software/gpg}.
+information about GPG, see @url{https://www.gnu.org/software/gpg}.
 
 @item
 Compose a message with the following items in some @var{msgfile}.
@@ -1663,7 +1663,7 @@ has been successfully processed.
 One programmatic way to create and transfer the necessary files is to
 use the @code{gnupload} script, which is available from the
 @file{build-aux/} directory of the @code{gnulib} project at
-@url{http://savannah.gnu.org/projects/gnulib}.  Run
+@url{https://savannah.gnu.org/projects/gnulib}.  Run
 @code{gnupload@tie{}--help} for a description and examples.  (With
 @code{gnupload}, you specify a destination such as
 @samp{ftp.gnu.org:}@var{pkgname} rather than using the
@@ -2037,13 +2037,13 @@ purpose of your package.
 
 @item
 Your package's web page (normally
-@indicateurl{http://www.gnu.org/software/@var{package}/}).
+@indicateurl{https://www.gnu.org/software/@var{package}/}).
 
 @item
 Your package's download location (normally
 @indicateurl{http://ftp.gnu.org/gnu/@var{package}/}).  It is also
 useful to mention the mirror list at
-@url{http://www.gnu.org/order/ftp.html}, and that
+@url{https://www.gnu.org/order/ftp.html}, and that
 @indicateurl{http://ftpmirror.gnu.org/@var{package/}} will automatically
 redirect to a nearby mirror.
 
@@ -2055,7 +2055,7 @@ the present release.
 You may find the @file{announce-gen} script useful for creating
 announcements, which is available from the @file{build-aux/} directory
 of the @code{gnulib} project at
-@url{http://savannah.gnu.org/projects/gnulib}.
+@url{https://savannah.gnu.org/projects/gnulib}.
 
 
 @node Web Pages
@@ -2064,14 +2064,14 @@ of the @code{gnulib} project at
 
 Please write web pages about your package, and install them on
 @code{www.gnu.org}.  They should follow our usual standards for web
-pages (see @url{http://www.gnu.org/server/@/fsf-html-style-sheet.html}).
+pages (see @url{https://www.gnu.org/server/@/fsf-html-style-sheet.html}).
 The overall goals are to support a wide variety of browsers, to focus
 on information rather than flashy eye candy, and to keep the site
 simple and uniform.
 
 We encourage you to use the standard @code{www.gnu.org} template as
 the basis for your pages:
-@url{http://www.gnu.org/server/@/standards/@/boilerplate-source.html}.
+@url{https://www.gnu.org/server/@/standards/@/boilerplate-source.html}.
 
 Some GNU packages have just simple web pages, but the more information
 you provide, the better.  So please write as much as you usefully can,
@@ -2081,7 +2081,7 @@ set them up on whatever site is convenient for you, and make the pages
 on @code{www.gnu.org} link to that site.
 
 Please follow the best practices of accessibility in your web pages
-(see @url{http://www.gnu.org/accessibility/accessibility.html}).
+(see @url{https://www.gnu.org/accessibility/accessibility.html}).
 
 @menu
 * Hosting for Web Pages::
@@ -2098,7 +2098,7 @@ The best way to maintain the web pages for your project is to register
 the project on @code{savannah.gnu.org}.  Then you can edit the pages
 using CVS, using the separate ``web pages repository'' available on
 Savannah, which corresponds to
-@indicateurl{http://www.gnu.org/software/@var{package}/}.  You can
+@indicateurl{https://www.gnu.org/software/@var{package}/}.  You can
 keep your source files there too (using any of a variety of version
 control systems), but you can use @code{savannah.gnu.org} only for
 your gnu.org web pages if you wish; simply register a ``web-only''
@@ -2112,7 +2112,7 @@ is more work for them, so please use Savannah if you can.
 If you use Savannah, you can use a special file named @file{.symlinks}
 in order to create symbolic links, which are not supported in CVS.
 For details, see
-@url{http://www.gnu.org/server/standards/README.webmastering.html#symlinks}.
+@url{https://www.gnu.org/server/standards/README.webmastering.html#symlinks}.
 
 
 @node Freedom for Web Pages
@@ -2141,11 +2141,11 @@ Historically, web pages for GNU packages did not include GIF images,
 because of patent problems (@pxref{Ethical and Philosophical
 Consideration}).  Although the GIF patents expired in 2006, using GIF
 images is still not recommended, as the PNG and JPEG formats are
-generally superior.  See @url{http://www.gnu.org/philosophy/gif.html}.
+generally superior.  See @url{https://www.gnu.org/philosophy/gif.html}.
 
 Please make sure that any Javascript code in your web pages is covered
 by a free license, and has its license indicated in a way LibreJS can
-recognize.  See @url{http://gnu.org/philosophy/javascript-trap.html}.
+recognize.  See @url{https://gnu.org/philosophy/javascript-trap.html}.
 If the Javascript in the page is minified, or for any other reason is
 not the source code, it must point to its source code as described
 there.
@@ -2174,7 +2174,7 @@ See the section below for details on a script to make the job of
 creating all these different formats and index pages easier.
 
 We would like to list all GNU manuals on the page
-@url{http://www.gnu.org/manual}, so if yours isn't there, please send
+@url{https://www.gnu.org/manual}, so if yours isn't there, please send
 mail to @code{webmasters@@gnu.org}, asking them to add yours, and they
 will do so based on the contents of your @file{manual} directory.
 
@@ -2196,14 +2196,14 @@ for the HTML index pages.  Both are available from the Gnulib
 development:
 
 @smallformat
-@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/build-aux/gendocs.sh}
-@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template}
+@uref{https://git.savannah.gnu.org/cgit/gnulib.git/tree/build-aux/gendocs.sh}
+@uref{https://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template}
 @end smallformat
 
 There is also a minimalistic template, available from:
 
 @smallformat
-@uref{http://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template_min}
+@uref{https://git.savannah.gnu.org/cgit/gnulib.git/tree/doc/gendocs_template_min}
 @end smallformat
 
 Invoke the script like this, in the directory containing the Texinfo
@@ -2308,7 +2308,7 @@ cvs add -ko @var{file1} @var{file2} ...
 @c The CVS manual is now built with numeric references and no nonsplit
 @c form, so it's not worth trying to give a direct link.
 See the ``Keyword Substitution'' section in the CVS manual, available
-from @url{http://cvs.nongnu.org}.
+from @url{https://cvs.nongnu.org}.
 
 In Texinfo source, the recommended way to literally specify a
 ``dollar'' keyword is:
@@ -2429,7 +2429,7 @@ idealistic, and raises issues of freedom, ethics, principle and what
 makes for a good society.  The term open source, initiated in 1998, is
 associated with a philosophy which studiously avoids such questions.
 For a detailed explanation, see
-@url{http://www.gnu.org/philosophy/open-source-misses-the-point.html}.
+@url{https://www.gnu.org/philosophy/open-source-misses-the-point.html}.
 
 The GNU Project is aligned with the free software movement.  This
 doesn't mean that all GNU contributors and maintainers have to agree;
@@ -2473,7 +2473,7 @@ Please make this distinction consistently in GNU software releases, GNU
 documentation, and announcements and articles that you publish in your
 role as the maintainer of a GNU package.  If you want to explain the
 terminology and its reasons, you can refer to the URL
-@url{http://www.gnu.org/gnu/linux-and-gnu.html}.
+@url{https://www.gnu.org/gnu/linux-and-gnu.html}.
 
 To make it clear that Linux is a kernel, not an operating system,
 please take care to avoid using the term ``Linux system'' in those
@@ -2496,7 +2496,7 @@ of the GNU kernel, please call it ``the Hurd'' or ``the GNU Hurd''.
 Note that this uses a space, not a slash.
 
 For more about this point, see
-@url{http://www.gnu.org/gnu/gnu-linux-faq.html}.
+@url{https://www.gnu.org/gnu/gnu-linux-faq.html}.
 
 @node Interviews and Speeches
 @chapter Interviews and Speeches
@@ -2517,16 +2517,16 @@ these basic questions:
 @itemize @bullet
 @item
 What GNU is (an operating system developed to be Unix-like and totally
-free software).  It is good to mention @url{http://www.gnu.org}.
+free software).  It is good to mention @url{https://www.gnu.org}.
 
 @item
 What free software is (the users control it, so it doesn't control
 them).  It is good to state the four freedoms and/or refer to
-@url{http://www.gnu.org/philosophy/free-sw.html}.
+@url{https://www.gnu.org/philosophy/free-sw.html}.
 
 @item
 What GNU/Linux is (Linux filled the last gap in GNU).  It is useful to
-refer to @url{http://www.gnu.org/gnu/linux-and-gnu.html}.
+refer to @url{https://www.gnu.org/gnu/linux-and-gnu.html}.
 
 @item
 What the GNU Project is (the project to develop GNU).
@@ -2598,10 +2598,10 @@ The programs <list of them> hosted here are free software packages
 of the GNU Project, not products of <company name>.  We call them
 "free software" because you are free to copy and redistribute them,
 following the rules stated in the license of each package.  For more
-information, see http://www.gnu.org/philosophy/free-sw.html.
+information, see https://www.gnu.org/philosophy/free-sw.html.
 
 If you are looking for service or support for GNU software, see
-http://www.gnu.org/gethelp/ for suggestions of where to ask.
+https://www.gnu.org/gethelp/ for suggestions of where to ask.
 
 If you would like to contribute to the development of one of these
 packages, contact the package maintainer or the bug-reporting address
@@ -2663,7 +2663,7 @@ want to propose that for your project, write to
 spending of these funds.
 
 Of course, it is also good to encourage people to join the FSF
-(@url{http://www.fsf.org}) or make a general donation, either instead
+(@url{https://www.fsf.org}) or make a general donation, either instead
 of or as well as package-specific donations.
 
 
@@ -2675,7 +2675,7 @@ of or as well as package-specific donations.
 The Free Software Directory aims to be a complete list of free
 software packages, within certain criteria.  Every GNU package should
 be listed there, so please see
-@url{http://www.gnu.org/help/directory.html#adding-entries} for
+@url{https://www.gnu.org/help/directory.html#adding-entries} for
 information on how to write an entry for your package.  Contact
 @email{bug-directory@@gnu.org} with any questions or suggestions for
 the Free Software Directory.
