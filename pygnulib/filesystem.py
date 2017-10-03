@@ -47,6 +47,15 @@ class Directory:
         return "{}.{}{}".format(module, name, repr(self.__name))
 
 
+    def __contains__(self, name):
+        path = _os_.path.normpath(name)
+        if _os_.path.isabs(name):
+            raise ValueError("name must be a relative path")
+        path = _os_.path.join(self.__path, name)
+        return _os_.path.exists(path)
+
+
+
     def __getitem__(self, name):
         """retrieve the canonical path of the specified file name"""
         _type_assert_("name", name, str)
