@@ -140,6 +140,9 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
                 print("  ", src, " -> ", dst, file=sys.stdout, sep="")
             else:
                 print("  ", file, file=sys.stdout, sep="")
+
+    old_files = frozenset(config.files)
+    new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
     return os.EX_OK
 
 
