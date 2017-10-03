@@ -8,7 +8,7 @@ m4/asm-underscore.m4
 Depends-on:
 
 configure.ac:
-gl_HOST_CPU_C_ABI
+AC_REQUIRE([gl_HOST_CPU_C_ABI])
 
 Makefile.am:
 
