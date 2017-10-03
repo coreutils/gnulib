@@ -19,3 +19,7 @@ Portability problems not fixed by Gnulib:
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @end itemize
+
+Note: @code{wcscpy (dst, src)} is only safe to use when you can guarantee that
+there are at least @code{wcslen (src) + 1} wide characters allocated at
+@code{dst}.

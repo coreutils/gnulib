@@ -17,3 +17,6 @@ OS X 10.8.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: @code{strcpy (dst, src)} is only safe to use when you can guarantee that
+there are at least @code{strlen (src) + 1} bytes allocated at @code{dst}.

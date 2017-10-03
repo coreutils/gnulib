@@ -16,6 +16,15 @@ IRIX 5.3, Solaris 2.5.1.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
-accommodate all Unicode characters.
+On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore
+cannot accommodate all Unicode characters.
 @end itemize
+
+Note: This function has no real use: It cannot be used for filling a fixed-size
+record with a wide string, before writing it to a file, because the wide string
+encoding is platform dependent and, on some platforms, also locale dependent.
+And this function is @strong{not} appropriate for copying a wide string into a
+bounded memory area, because you have no guarantee that the result will be
+null-terminated. Even if you add the null character at the end yourself, this
+function is inefficient (as it spends time clearing unused memory) and will
+allow silent truncation to occur, which is not a good behavior for GNU programs.
