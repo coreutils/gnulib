@@ -113,7 +113,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
         return os.EX_DATAERR
 
     # Show banner notice of every module.
-    if verbosity >= 1:
+    if verbosity >= -1:
         for module in sorted(main):
             name = module.name
             notice = module.notice
