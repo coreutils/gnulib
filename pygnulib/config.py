@@ -535,18 +535,22 @@ class Cache(Base):
 
     def __init__(self, configure=None, **kwargs):
         super().__init__(**kwargs)
-        explicit = kwargs.keys()
         if configure is None:
             configure = _os_.path.join(self.root, "configure.ac")
             if not _os_.path.exists(configure):
                 configure = _os_.path.join(self.root, "configure.in")
         if not _os_.path.isabs(configure):
             configure = _os_.path.join(self.root, configure)
-        self.__autoconf(_os_.path.normpath(configure), explicit)
-        self.__gnulib_cache(explicit)
-        self.__gnulib_comp(explicit)
+        kwargs = {"configure": _os_.path.normpath(configure), "explicit": tuple(kwargs.keys())}
+        calls = (self.__configure_ac, self.__gnulib_cache, self.__gnulib_comp)
+        for call in calls:
+            try:
+                call(**kwargs)
+            except FileNotFoundError:
+                pass # ignore non-existent files
 
-    def __autoconf(self, configure, explicit):
+
+    def __configure_ac(self, configure, explicit, **kwargs):
         with _codecs_.open(configure, "rb", "UTF-8") as stream:
             data = Cache._COMMENTS_.sub("", stream.read())
         for (key, pattern) in Cache._AUTOCONF_.items():
@@ -554,7 +558,7 @@ class Cache(Base):
             if match and key not in explicit:
                 self[key] = match[-1]
 
-    def __gnulib_cache(self, explicit):
+    def __gnulib_cache(self, explicit, **kwargs):
         m4_base = self.m4_base
         path = _os_.path.join(self.root, self.m4_base, "gnulib-cache.m4")
         path = _os_.path.normpath(path)
@@ -581,7 +585,7 @@ class Cache(Base):
         if m4_base != self.m4_base:
             raise _M4BaseMismatchError_(path, m4_base, self.m4_base)
 
-    def __gnulib_comp(self, explicit):
+    def __gnulib_comp(self, explicit, **kwargs):
         macro_prefix = self.macro_prefix
         path = _os_.path.join(self.root, self.m4_base, "gnulib-comp.m4")
         path = _os_.path.normpath(path)
