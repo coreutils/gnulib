@@ -162,24 +162,22 @@ class GnulibGit(Base):
 
 
 
-def lookup(name, root, gnulib, local, patch="patch"):
+def lookup(name, root, local, patch="patch"):
     """
     Look up a file inside base VFS or local VFS, or combine it using patch.
     If file is available or can be generated via patching, return a readable stream.
     Note that this file may not be the original
     """
-    _type_assert_("root", root, str)
-    _type_assert_("gnulib", gnulib, Base)
+    _type_assert_("root", root, Base)
     _type_assert_("local", local, Base)
     _type_assert_("patch", patch, str)
     if name in local:
         return _codecs_.open(local[name], "rb")
     diff = "{}.diff".format(name)
     if diff not in local:
-        return _codecs_.open(gnulib[name], "rb")
-
+        return _codecs_.open(root[name], "rb")
     tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
-    with _codecs_.open(gnulib[name], "rb") as stream:
+    with _codecs_.open(root[name], "rb") as stream:
         _shutil_.copyfileobj(stream, tmp)
         tmp.close()
     stdin = _codecs_.open(local[diff], "rb")
