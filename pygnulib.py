@@ -23,7 +23,8 @@ from pygnulib.module import transitive_closure
 
 from pygnulib.parser import CommandLine as CommandLineParser
 
-from pygnulib.filesystem import GnulibGit as GnulibGitFS
+from pygnulib.vfs import Base as BaseVFS
+from pygnulib.vfs import GnulibGit as GnulibGitVFS
 
 
 
@@ -187,7 +188,7 @@ HOOKS = {
 
 
 def main(script, gnulib, program, arguments, environ):
-    gnulib = GnulibGitFS(gnulib)
+    gnulib = GnulibGitVFS(gnulib)
     parser = CommandLineParser(program)
     try:
         (namespace, mode, verbosity, options) = parser.parse(arguments)

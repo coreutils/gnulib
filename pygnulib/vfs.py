@@ -15,7 +15,7 @@ from .module import File as _FileModule_
 
 
 
-class Directory:
+class Base:
     """gnulib generic virtual file system"""
     _TABLE_ = {
         "lib"       : "source_base",
@@ -69,7 +69,7 @@ class Directory:
                 parts += [part]
                 continue
             if not replaced:
-                for old, new in Directory._TABLE_.items():
+                for old, new in Base._TABLE_.items():
                     if part == old:
                         part = self.__config[new]
                         replaced = True
@@ -93,7 +93,7 @@ class Directory:
 
 
 
-class GnulibGit(Directory):
+class GnulibGit(Base):
     """gnulib git repository"""
     _EXCLUDE_ = {
         "."                 : str.startswith,
