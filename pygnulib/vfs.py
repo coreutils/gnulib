@@ -74,10 +74,7 @@ class Base:
                         part = self.__config[new]
                         replaced = True
             parts += [part]
-        path = _os_.path.sep.join([self.__path] + parts)
-        if not _os_.path.exists(path):
-            raise FileNotFoundError(name)
-        return path
+        return _os_.path.sep.join([self.__path] + parts)
 
 
     @property
