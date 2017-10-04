@@ -4,7 +4,11 @@
 
 
 
+import codecs as _codecs_
 import os as _os_
+import shutil as _shutil_
+import tempfile as _tempfile_
+import subprocess as _sp_
 
 
 from .error import type_assert as _type_assert_
@@ -155,3 +159,39 @@ class GnulibGit(Base):
                 path = _os_.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)
+
+
+
+def lookup(name, root, gnulib, local, patch="patch"):
+    """
+    Look up a file inside base VFS or local VFS, or combine it using patch.
+    If file is available or can be generated via patching, return a readable stream.
+    Note that this file may not be the original
+    """
+    _type_assert_("root", root, str)
+    _type_assert_("gnulib", gnulib, Base)
+    _type_assert_("local", local, Base)
+    _type_assert_("patch", patch, str)
+    if name in local:
+        return _codecs_.open(local[name], "rb")
+    diff = "{}.diff".format(name)
+    if diff not in local:
+        return _codecs_.open(gnulib[name], "rb")
+
+    tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
+    with _codecs_.open(gnulib[name], "rb") as stream:
+        _shutil_.copyfileobj(stream, tmp)
+        tmp.close()
+    stdin = _codecs_.open(local[diff], "rb")
+    cmd = (patch, "-s", tmp.name)
+    pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
+    (stdout, stderr) = pipes.communicate()
+    stdout = stdout.decode("UTF-8")
+    stderr = stderr.decode("UTF-8")
+    returncode = pipes.returncode
+    if returncode != 0:
+        cmd = "patch -s {} < {}".format(tmp.name, local[diff])
+        raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
+    stream = _codecs_.open(tmp.name, "rb")
+    _os_.unlink(tmp.name)
+    return stream
