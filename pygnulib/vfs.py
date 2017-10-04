@@ -13,7 +13,6 @@ import subprocess as _sp_
 
 from .error import type_assert as _type_assert_
 from .error import UnknownModuleError as _UnknownModuleError_
-from .config import Base as _BaseConfig_
 from .module import Base as _BaseModule_
 from .module import File as _FileModule_
 
@@ -32,15 +31,17 @@ class Base:
     }
 
 
-    def __init__(self, name, config):
+    def __init__(self, name, **kwargs):
         _type_assert_("name", name, str)
-        _type_assert_("config", config, _BaseConfig_)
         path = _os_.path.realpath(name)
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         if not _os_.path.isdir(path):
             raise NotADirectoryError(path)
-        self.__config = config
+        self.__table = {}
+        for (key, value) in kwargs.items():
+            _type_assert_(key, value, str)
+            self.__table[key] = value
         self.__name = name
         self.__path = path
 
@@ -73,9 +74,9 @@ class Base:
                 parts += [part]
                 continue
             if not replaced:
-                for old, new in Base._TABLE_.items():
+                for (old, new) in self.__table.items():
                     if part == old:
-                        part = self.__config[new]
+                        part = self.__table[new]
                         replaced = True
             parts += [part]
         return _os_.path.sep.join([self.__path] + parts)
@@ -109,14 +110,13 @@ class GnulibGit(Base):
     }
 
 
-    def __init__(self, name):
+    def __init__(self, name, **kwargs):
         path = _os_.path.realpath(name)
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         if not _os_.path.isdir(path):
             raise NotADirectoryError(path)
-        config = _BaseConfig_(root=path)
-        super().__init__(name, config)
+        super().__init__(name, **kwargs)
         if not _os_.path.isdir(_os_.path.join(self.path, ".git")):
             raise TypeError("{} is not a gnulib repository".format(self.path))
 
