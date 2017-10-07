@@ -34,6 +34,10 @@
 #include <fcntl.h> /* open, O_RDONLY */
 #include <unistd.h> /* getpagesize, lseek, read, close, getpid */
 
+#if defined __linux__
+# include <limits.h> /* PATH_MAX */
+#endif
+
 #if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
@@ -116,11 +120,27 @@
        VMAs with nonsensical addresses.
    So use mmap(), and ignore the resulting VMA.  */
 
+# ifdef __linux__
+  /* On Linux, if the file does not entirely fit into the buffer, the read()
+     function stops before the line that would come out truncated.  The
+     maximum size of such a line is 73 + PATH_MAX bytes.  To be sure that we
+     have read everything, we must verify that at least that many bytes are
+     left when read() returned.  */
+#  define MIN_LEFTOVER (73 + PATH_MAX)
+# else
+#  define MIN_LEFTOVER 0
+# endif
+
 # ifdef TEST
 /* During testing, we want to run into the hairy cases.  */
 #  define STACK_ALLOCATED_BUFFER_SIZE 32
 # else
-#  define STACK_ALLOCATED_BUFFER_SIZE 1024
+#  if MIN_LEFTOVER < 1024
+#   define STACK_ALLOCATED_BUFFER_SIZE 1024
+#  else
+    /* There is no point in using a stack-allocated buffer if it is too small anyway.  */
+#   define STACK_ALLOCATED_BUFFER_SIZE 1
+#  endif
 # endif
 
 struct rofile
@@ -160,33 +180,58 @@ rof_open (struct rofile *rof, const char *filename)
   for (;;)
     {
       /* Attempt to read the contents in a single system call.  */
-      {
-        int n = read (fd, rof->buffer, size);
-# ifdef EINTR
-        if (n < 0 && errno == EINTR)
-          goto retry;
-# endif
+      if (size > MIN_LEFTOVER)
+        {
+          int n = read (fd, rof->buffer, size);
+          if (n < 0 && errno == EINTR)
+            goto retry;
 # if defined __DragonFly__
-        if (!(n < 0 && errno == EFBIG))
+          if (!(n < 0 && errno == EFBIG))
 # endif
-          {
-            if (n <= 0)
-              /* Empty file.  */
-              goto fail1;
-            if (n < size)
-              {
-                /* The buffer was sufficiently large.  */
-                rof->filled = n;
-                close (fd);
-                return 0;
-              }
-          }
-      }
+            {
+              if (n <= 0)
+                /* Empty file.  */
+                goto fail1;
+              if (n + MIN_LEFTOVER <= size)
+                {
+                  /* The buffer was sufficiently large.  */
+                  rof->filled = n;
+# ifdef __linux__
+                  /* On Linux, the read() call may stop even if the buffer was
+                     large enough.  We need the equivalent of full_read().  */
+                  for (;;)
+                    {
+                      n = read (fd, rof->buffer + rof->filled, size - rof->filled);
+                      if (n < 0 && errno == EINTR)
+                        goto retry;
+                      if (n < 0)
+                        /* Some error.  */
+                        goto fail1;
+                      if (n + MIN_LEFTOVER > size - rof->filled)
+                        /* Allocate a larger buffer.  */
+                        break;
+                      if (n == 0)
+                        {
+                          /* Reached the end of file.  */
+                          close (fd);
+                          return 0;
+                        }
+                      rof->filled += n;
+                    }
+# else
+                  close (fd);
+                  return 0;
+# endif
+                }
+            }
+        }
       /* Allocate a larger buffer.  */
       if (pagesize == 0)
         {
           pagesize = getpagesize ();
           size = pagesize;
+          while (size <= MIN_LEFTOVER)
+            size = 2 * size;
         }
       else
         {
