@@ -34,7 +34,7 @@
 #include <fcntl.h> /* open, O_RDONLY */
 #include <unistd.h> /* getpagesize, lseek, read, close, getpid */
 
-#if defined __linux__ || defined __GNU__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
 #endif
@@ -75,6 +75,10 @@
 # include <mach/mach.h>
 #endif
 
+#if defined __GNU__ /* GNU/Hurd */
+# include <mach/mach.h>
+#endif
+
 #if (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__ /* Windows */
 # include <windows.h>
 #endif
@@ -95,7 +99,7 @@
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __GNU__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -557,7 +561,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || defined __GNU__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
   /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
      file system.  */
 
@@ -1180,6 +1184,45 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
       if (info.protection & VM_PROT_WRITE)
         flags |= VMA_PROT_WRITE;
       if (info.protection & VM_PROT_EXECUTE)
+        flags |= VMA_PROT_EXECUTE;
+      if (callback (data, address, address + size, flags))
+        break;
+    }
+  return 0;
+
+#elif defined __GNU__ /* GNU/Hurd */
+
+  /* The Hurd has a /proc/self/maps that looks like the Linux one, but it
+     lacks the VMAs created through anonymous mmap.  Therefore use the Mach
+     API.
+     Documentation:
+     https://www.gnu.org/software/hurd/gnumach-doc/Memory-Attributes.html */
+
+  task_t task = mach_task_self ();
+  vm_address_t address;
+  vm_size_t size;
+
+  for (address = 0;; address += size)
+    {
+      vm_prot_t protection;
+      vm_prot_t max_protection;
+      vm_inherit_t inheritance;
+      boolean_t shared;
+      memory_object_name_t object_name;
+      vm_offset_t offset;
+      unsigned int flags;
+
+      if (!(vm_region (task, &address, &size, &protection, &max_protection,
+                         &inheritance, &shared, &object_name, &offset)
+            == KERN_SUCCESS))
+        break;
+      mach_port_deallocate (task, object_name);
+      flags = 0;
+      if (protection & VM_PROT_READ)
+        flags |= VMA_PROT_READ;
+      if (protection & VM_PROT_WRITE)
+        flags |= VMA_PROT_WRITE;
+      if (protection & VM_PROT_EXECUTE)
         flags |= VMA_PROT_EXECUTE;
       if (callback (data, address, address + size, flags))
         break;
