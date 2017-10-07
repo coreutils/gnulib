@@ -1964,6 +1964,7 @@ func_all_modules ()
   func_module crypto/sha1
   func_module crypto/sha256
   func_module crypto/sha512
+  func_module crypto/sm3
   func_end_table
 
   element="Cryptographic computations (high-level)"
@@ -1987,6 +1988,7 @@ func_all_modules ()
   func_module crypto/gc-random
   func_module crypto/gc-rijndael
   func_module crypto/gc-sha1
+  func_module crypto/gc-sm3
   func_end_table
 
   element="Compiler warning management"

@@ -48,6 +48,9 @@
 #ifdef GNULIB_GC_SHA1
 # include "sha1.h"
 #endif
+#ifdef GNULIB_GC_SM3
+# include "sm3.h"
+#endif
 #if defined(GNULIB_GC_HMAC_MD5) || defined(GNULIB_GC_HMAC_SHA1) || defined(GNULIB_GC_HMAC_SHA256) || defined(GNULIB_GC_HMAC_SHA512)
 # include "hmac.h"
 #endif
@@ -618,6 +621,9 @@ typedef struct _gc_hash_ctx
 #ifdef GNULIB_GC_SHA1
   struct sha1_ctx sha1Context;
 #endif
+#ifdef GNULIB_GC_SM3
+  struct sm3_ctx sm3Context;
+#endif
 } _gc_hash_ctx;
 
 Gc_rc
@@ -659,6 +665,12 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 #ifdef GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_init_ctx (&ctx->sha1Context);
+      break;
+#endif
+
+#ifdef GNULIB_GC_SM3
+    case GC_SM3:
+      sm3_init_ctx (&ctx->sm3Context);
       break;
 #endif
 
@@ -717,6 +729,10 @@ gc_hash_digest_length (Gc_hash hash)
       len = GC_SHA1_DIGEST_SIZE;
       break;
 
+    case GC_SM3:
+      len = GC_SM3_DIGEST_SIZE;
+      break;
+
     default:
       return 0;
     }
@@ -752,6 +768,12 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 #ifdef GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_process_bytes (data, len, &ctx->sha1Context);
+      break;
+#endif
+
+#ifdef GNULIB_GC_SM3
+    case GC_SM3:
+      sm3_process_bytes (data, len, &ctx->sm3Context);
       break;
 #endif
 
@@ -792,6 +814,13 @@ gc_hash_read (gc_hash_handle handle)
 #ifdef GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_finish_ctx (&ctx->sha1Context, ctx->hash);
+      ret = ctx->hash;
+      break;
+#endif
+
+#ifdef GNULIB_GC_SM3
+    case GC_SM3:
+      sm3_finish_ctx (&ctx->sm3Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
@@ -840,6 +869,12 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
       break;
 #endif
 
+#ifdef GNULIB_GC_SM3
+    case GC_SM3:
+      sm3_buffer (in, inlen, resbuf);
+      break;
+#endif
+
     default:
       return GC_INVALID_HASH;
     }
@@ -879,6 +914,15 @@ Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
   sha1_buffer (in, inlen, resbuf);
+  return GC_OK;
+}
+#endif
+
+#ifdef GNULIB_GC_SM3
+Gc_rc
+gc_sm3 (const void *in, size_t inlen, void *resbuf)
+{
+  sm3_buffer (in, inlen, resbuf);
   return GC_OK;
 }
 #endif
