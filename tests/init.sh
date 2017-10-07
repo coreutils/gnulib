@@ -250,7 +250,7 @@ test -n "$BASH_VERSION" && unalias -a
 # That is part of the shell-selection test above.  Why use aliases rather
 # than functions?  Because support for hyphen-containing aliases is more
 # widespread than that for hyphen-containing function names.
-test -n "$EXEEXT" && shopt -s expand_aliases
+test -n "$EXEEXT" && test -n "$BASH_VERSION" && shopt -s expand_aliases
 
 # Enable glibc's malloc-perturbing option.
 # This is useful for exposing code that depends on the fact that
