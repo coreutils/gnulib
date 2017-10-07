@@ -62,6 +62,19 @@
 
 ME_=`expr "./$0" : '.*/\(.*\)$'`
 
+# Prepare PATH_SEPARATOR.
+# The user is always right.
+if test "${PATH_SEPARATOR+set}" != set; then
+  # Determine PATH_SEPARATOR by trying to find /bin/sh in a PATH which
+  # contains only /bin. Note that ksh looks also at the FPATH variable,
+  # so we have to set that as well for the test.
+  PATH_SEPARATOR=:
+  (PATH='/bin;/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+    && { (PATH='/bin:/bin'; FPATH=$PATH; sh -c :) >/dev/null 2>&1 \
+           || PATH_SEPARATOR=';'
+       }
+fi
+
 # We use a trap below for cleanup.  This requires us to go through
 # hoops to get the right exit status transported through the handler.
 # So use 'Exit STATUS' instead of 'exit STATUS' inside of the tests.
@@ -429,13 +442,13 @@ path_prepend_ ()
     path_dir_=$1
     case $path_dir_ in
       '') fail_ "invalid path dir: '$1'";;
-      /*) abs_path_dir_=$path_dir_;;
+      /* | ?:*) abs_path_dir_=$path_dir_;;
       *) abs_path_dir_=$initial_cwd_/$path_dir_;;
     esac
     case $abs_path_dir_ in
-      *:*) fail_ "invalid path dir: '$abs_path_dir_'";;
+      *$PATH_SEPARATOR*) fail_ "invalid path dir: '$abs_path_dir_'";;
     esac
-    PATH="$abs_path_dir_:$PATH"
+    PATH="$abs_path_dir_$PATH_SEPARATOR$PATH"
 
     # Create an alias, FOO, for each FOO.exe in this directory.
     create_exe_shims_ "$abs_path_dir_" \
