@@ -73,11 +73,9 @@ class Base:
             if part == "..":
                 parts += [part]
                 continue
-            if not replaced:
-                for (old, new) in self.__table.items():
-                    if part == old:
-                        part = self.__table[new]
-                        replaced = True
+            if not replaced and part in self.__table:
+                part = self.__table[part]
+                replaced = True
             parts += [part]
         return _os_.path.sep.join([self.__path] + parts)
 
