@@ -331,6 +331,179 @@ rof_close (struct rofile *rof)
 #endif
 
 
+/* Support for reading the info from a text file in the /proc file system.  */
+
+# if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+/* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
+   file system.  */
+
+static int
+vma_iterate_proc (vma_iterate_callback_fn callback, void *data)
+{
+  struct rofile rof;
+
+  /* Open the current process' maps file.  It describes one VMA per line.  */
+  if (rof_open (&rof, "/proc/self/maps") >= 0)
+    {
+      unsigned long auxmap_start = rof.auxmap_start;
+      unsigned long auxmap_end = rof.auxmap_end;
+
+      for (;;)
+        {
+          unsigned long start, end;
+          unsigned int flags;
+          int c;
+
+          /* Parse one line.  First start and end.  */
+          if (!(rof_scanf_lx (&rof, &start) >= 0
+                && rof_getchar (&rof) == '-'
+                && rof_scanf_lx (&rof, &end) >= 0))
+            break;
+          /* Then the flags.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          flags = 0;
+          if (c == 'r')
+            flags |= VMA_PROT_READ;
+          c = rof_getchar (&rof);
+          if (c == 'w')
+            flags |= VMA_PROT_WRITE;
+          c = rof_getchar (&rof);
+          if (c == 'x')
+            flags |= VMA_PROT_EXECUTE;
+          while (c = rof_getchar (&rof), c != -1 && c != '\n')
+            ;
+
+          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+            {
+              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+              if (start < auxmap_start)
+                if (callback (data, start, auxmap_start, flags))
+                  break;
+              if (auxmap_end - 1 < end - 1)
+                if (callback (data, auxmap_end, end, flags))
+                  break;
+            }
+          else
+            {
+              if (callback (data, start, end, flags))
+                break;
+            }
+        }
+      rof_close (&rof);
+      return 0;
+    }
+
+  return -1;
+}
+
+#elif defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__
+
+static int
+vma_iterate_proc (vma_iterate_callback_fn callback, void *data)
+{
+  struct rofile rof;
+
+  /* Open the current process' maps file.  It describes one VMA per line.  */
+  if (rof_open (&rof, "/proc/curproc/map") >= 0)
+    {
+      unsigned long auxmap_start = rof.auxmap_start;
+      unsigned long auxmap_end = rof.auxmap_end;
+
+      for (;;)
+        {
+          unsigned long start, end;
+          unsigned int flags;
+          int c;
+
+          /* Parse one line.  First start.  */
+          if (!(rof_getchar (&rof) == '0'
+                && rof_getchar (&rof) == 'x'
+                && rof_scanf_lx (&rof, &start) >= 0))
+            break;
+          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
+            rof_getchar (&rof);
+          /* Then end.  */
+          if (!(rof_getchar (&rof) == '0'
+                && rof_getchar (&rof) == 'x'
+                && rof_scanf_lx (&rof, &end) >= 0))
+            break;
+# if defined __FreeBSD__ || defined __DragonFly__
+          /* Then the resident pages count.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+          /* Then the private resident pages count.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+          /* Then some kernel address.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          do
+            c = rof_getchar (&rof);
+          while (c != -1 && c != '\n' && c != ' ');
+# endif
+          /* Then the flags.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          flags = 0;
+          if (c == 'r')
+            flags |= VMA_PROT_READ;
+          c = rof_getchar (&rof);
+          if (c == 'w')
+            flags |= VMA_PROT_WRITE;
+          c = rof_getchar (&rof);
+          if (c == 'x')
+            flags |= VMA_PROT_EXECUTE;
+          while (c = rof_getchar (&rof), c != -1 && c != '\n')
+            ;
+
+          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+            {
+              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+              if (start < auxmap_start)
+                if (callback (data, start, auxmap_start, flags))
+                  break;
+              if (auxmap_end - 1 < end - 1)
+                if (callback (data, auxmap_end, end, flags))
+                  break;
+            }
+          else
+            {
+              if (callback (data, start, end, flags))
+                break;
+            }
+        }
+      rof_close (&rof);
+      return 0;
+    }
+
+  return -1;
+}
+
+#else
+
+static inline int
+vma_iterate_proc (vma_iterate_callback_fn callback, void *data)
+{
+  return -1;
+}
+
+#endif
+
+
 /* Support for reading the info from the BSD sysctl() system call.  */
 
 #if (defined __FreeBSD__ || defined __FreeBSD_kernel__) && defined KERN_PROC_VMMAP /* FreeBSD >= 7.1 */
@@ -606,159 +779,28 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
-  /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
-     file system.  */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
-  struct rofile rof;
-
-  /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/self/maps") >= 0)
-    {
-      unsigned long auxmap_start = rof.auxmap_start;
-      unsigned long auxmap_end = rof.auxmap_end;
-
-      for (;;)
-        {
-          unsigned long start, end;
-          unsigned int flags;
-          int c;
-
-          /* Parse one line.  First start and end.  */
-          if (!(rof_scanf_lx (&rof, &start) >= 0
-                && rof_getchar (&rof) == '-'
-                && rof_scanf_lx (&rof, &end) >= 0))
-            break;
-          /* Then the flags.  */
-          do
-            c = rof_getchar (&rof);
-          while (c == ' ');
-          flags = 0;
-          if (c == 'r')
-            flags |= VMA_PROT_READ;
-          c = rof_getchar (&rof);
-          if (c == 'w')
-            flags |= VMA_PROT_WRITE;
-          c = rof_getchar (&rof);
-          if (c == 'x')
-            flags |= VMA_PROT_EXECUTE;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
-
-          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-            {
-              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-              if (start < auxmap_start)
-                if (callback (data, start, auxmap_start, flags))
-                  break;
-              if (auxmap_end - 1 < end - 1)
-                if (callback (data, auxmap_end, end, flags))
-                  break;
-            }
-          else
-            {
-              if (callback (data, start, end, flags))
-                break;
-            }
-        }
-      rof_close (&rof);
+# if defined __FreeBSD__
+  /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses libprocfs), the
+     function vma_iterate_proc does not return the virtual memory areas that
+     were created by anonymous mmap.  See
+     <https://svnweb.freebsd.org/base/head/sys/fs/procfs/procfs_map.c?view=markup>
+     So use vma_iterate_proc only as a fallback.  */
+  int retval = vma_iterate_bsd (callback, data);
+  if (retval == 0)
       return 0;
-    }
 
-  /* Fallback if /proc is not accessible: Use sysctl().  */
+  return vma_iterate_proc (callback, data);
+# else
+  /* On the other platforms, try the /proc approach first, and the sysctl()
+     as a fallback.  */
+  int retval = vma_iterate_proc (callback, data);
+  if (retval == 0)
+      return 0;
+
   return vma_iterate_bsd (callback, data);
-
-#elif defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__
-
-  struct rofile rof;
-
-  /* Open the current process' maps file.  It describes one VMA per line.  */
-  if (rof_open (&rof, "/proc/curproc/map") >= 0)
-    {
-      unsigned long auxmap_start = rof.auxmap_start;
-      unsigned long auxmap_end = rof.auxmap_end;
-
-      for (;;)
-        {
-          unsigned long start, end;
-          unsigned int flags;
-          int c;
-
-          /* Parse one line.  First start.  */
-          if (!(rof_getchar (&rof) == '0'
-                && rof_getchar (&rof) == 'x'
-                && rof_scanf_lx (&rof, &start) >= 0))
-            break;
-          while (c = rof_peekchar (&rof), c == ' ' || c == '\t')
-            rof_getchar (&rof);
-          /* Then end.  */
-          if (!(rof_getchar (&rof) == '0'
-                && rof_getchar (&rof) == 'x'
-                && rof_scanf_lx (&rof, &end) >= 0))
-            break;
-# if defined __FreeBSD__ || defined __DragonFly__
-          /* Then the resident pages count.  */
-          do
-            c = rof_getchar (&rof);
-          while (c == ' ');
-          do
-            c = rof_getchar (&rof);
-          while (c != -1 && c != '\n' && c != ' ');
-          /* Then the private resident pages count.  */
-          do
-            c = rof_getchar (&rof);
-          while (c == ' ');
-          do
-            c = rof_getchar (&rof);
-          while (c != -1 && c != '\n' && c != ' ');
-          /* Then some kernel address.  */
-          do
-            c = rof_getchar (&rof);
-          while (c == ' ');
-          do
-            c = rof_getchar (&rof);
-          while (c != -1 && c != '\n' && c != ' ');
 # endif
-          /* Then the flags.  */
-          do
-            c = rof_getchar (&rof);
-          while (c == ' ');
-          flags = 0;
-          if (c == 'r')
-            flags |= VMA_PROT_READ;
-          c = rof_getchar (&rof);
-          if (c == 'w')
-            flags |= VMA_PROT_WRITE;
-          c = rof_getchar (&rof);
-          if (c == 'x')
-            flags |= VMA_PROT_EXECUTE;
-          while (c = rof_getchar (&rof), c != -1 && c != '\n')
-            ;
-
-          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
-            {
-              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
-                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
-              if (start < auxmap_start)
-                if (callback (data, start, auxmap_start, flags))
-                  break;
-              if (auxmap_end - 1 < end - 1)
-                if (callback (data, auxmap_end, end, flags))
-                  break;
-            }
-          else
-            {
-              if (callback (data, start, end, flags))
-                break;
-            }
-        }
-      rof_close (&rof);
-      return 0;
-    }
-
-  /* Fallback if /proc is not accessible: Use sysctl().  */
-  return vma_iterate_bsd (callback, data);
 
 #elif defined __sgi || defined __osf__ /* IRIX, OSF/1 */
 
