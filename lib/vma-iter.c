@@ -128,7 +128,7 @@
      left when read() returned.  */
 #  define MIN_LEFTOVER (73 + PATH_MAX)
 # else
-#  define MIN_LEFTOVER 0
+#  define MIN_LEFTOVER 1
 # endif
 
 # ifdef TEST
