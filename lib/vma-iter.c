@@ -782,7 +782,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
 #if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
 
 # if defined __FreeBSD__
-  /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses libprocfs), the
+  /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses linprocfs), the
      function vma_iterate_proc does not return the virtual memory areas that
      were created by anonymous mmap.  See
      <https://svnweb.freebsd.org/base/head/sys/fs/procfs/procfs_map.c?view=markup>
