@@ -333,7 +333,7 @@ rof_close (struct rofile *rof)
 
 /* Support for reading the info from a text file in the /proc file system.  */
 
-# if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
 /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
    file system.  */
 
