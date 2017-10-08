@@ -20,17 +20,6 @@ from .module import File as _FileModule_
 
 class Base:
     """gnulib generic virtual file system"""
-    _TABLE_ = {
-        "lib"       : "source_base",
-        "doc"       : "doc_base",
-        "m4"        : "m4_base",
-        "tests"     : "tests_base",
-        "tests=lib" : "tests_base",
-        "po"        : "po_base",
-        "build-aux" : "aux_dir",
-    }
-
-
     def __init__(self, name, **kwargs):
         _type_assert_("name", name, str)
         path = _os_.path.realpath(name)
