@@ -30,7 +30,7 @@ Portability problems fixed by Gnulib module @code{log2-ieee}:
 @itemize
 @item
 This function returns a wrong value for a negative argument on some platforms:
-NetBSD 5.1, Solaris 11.0.
+NetBSD 5.1, Solaris 10/x86_64.
 @end itemize
 
 Portability problems not fixed by Gnulib:

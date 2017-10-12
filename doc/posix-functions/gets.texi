@@ -15,6 +15,9 @@ Portability problems not fixed by Gnulib:
 @item
 This function should never be used, because it can overflow any given buffer.
 @item
+This function is missing on some platforms:
+Solaris 11.3.
+@item
 When reading from a non-blocking pipe whose buffer is empty, this function
 fails with @code{errno} being set to @code{EINVAL} instead of @code{EAGAIN} on
 some platforms:

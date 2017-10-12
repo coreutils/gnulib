@@ -79,7 +79,7 @@ glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX
 @item
 @samp{AT_FDCWD} is defined with a value too large for an @code{int} on some
 platforms:
-Solaris 11.0.
+Solaris 11.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

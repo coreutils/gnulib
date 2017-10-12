@@ -1,4 +1,4 @@
-# serial 28
+# serial 29
 
 # Copyright (C) 2001, 2003, 2005-2006, 2009-2017 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -19,7 +19,7 @@ AC_DEFUN([gl_FUNC_RENAME],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([lstat])
 
-  dnl Solaris 10, AIX 7.1 mistakenly allow rename("file","name/").
+  dnl Solaris 11, AIX 7.1 mistakenly allow rename("file","name/").
   dnl NetBSD 1.6 mistakenly forbids rename("dir","name/").
   dnl FreeBSD 7.2 mistakenly allows rename("file","link-to-file/").
   dnl The Solaris bug can be worked around without stripping
@@ -71,7 +71,7 @@ AC_DEFUN([gl_FUNC_RENAME],
       REPLACE_RENAME=1
       AC_DEFINE([RENAME_TRAILING_SLASH_DEST_BUG], [1],
         [Define if rename does not correctly handle slashes on the destination
-         argument, such as on Solaris 10 or NetBSD 1.6.])
+         argument, such as on Solaris 11 or NetBSD 1.6.])
       ;;
   esac
 
