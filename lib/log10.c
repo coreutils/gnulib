@@ -29,7 +29,7 @@ log10 (double x)
       if (x == 0.0)
         /* Return -Infinity.  */
         return -1.0 / 0.0;
-      /* Work around the NetBSD 5.1, Solaris 11 2011-11 bug.  */
+      /* Work around the NetBSD 5.1, Solaris 11.0 bug.  */
       else /* x < 0.0 */
         /* Return NaN.  */
         return 0.0 / 0.0;

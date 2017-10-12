@@ -1,4 +1,4 @@
-# log2f.m4 serial 4
+# log2f.m4 serial 5
 dnl Copyright (C) 2010-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
 {
   float (*my_log2f) (float) = argc ? log2f : dummy;
   /* Test log2f(negative).
-     This test fails on NetBSD 5.1 and Solaris 11 2011-11.  */
+     This test fails on NetBSD 5.1 and Solaris 11.0.  */
   float y = my_log2f (-1.0f);
   if (numeric_equal (y, y))
     return 1;
