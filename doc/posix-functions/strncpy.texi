@@ -25,4 +25,4 @@ because you have no guarantee that the result will be NUL-terminated.
 Even if you add the NUL byte at the end yourself, this function is
 inefficient (as it spends time clearing unused memory) and will allow
 silent truncation to occur, which is not a good behavior for GNU programs.
-For more details, see @see{https://meyering.net/crusade-to-eliminate-strncpy/}.
+For more details, see @url{https://meyering.net/crusade-to-eliminate-strncpy/}.
