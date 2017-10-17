@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate September 24, 2017
+@set lastupdate October 16, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -987,6 +987,10 @@ used (hence distributed) by third-party packages under possibly
 incompatible licenses, you may also use the above all-permissive
 license for these macros.
 
+These kinds of files can also be put in the public domain.  If
+publishing in the US, it is enough to insert a notice saying so.
+Otherwise, use Creative Commons's CC0---See
+@url{https://creativecommons.org/choose/zero/}.
 
 @node External Libraries
 @section External Libraries
@@ -1786,9 +1790,9 @@ After the system authenticates the signatures, the files
 @file{foo-1.0.tar.gz} and @file{foo-1.0.tar.gz.sig} are placed in
 the directory @file{gnu/foo/} on @code{ftp.gnu.org}.  That is, we'll
 have made our release available at
-@indicateurl{http://ftp.gnu.org/gnu/foo/foo-1.0.tar.gz} (and then from
+@indicateurl{https://ftp.gnu.org/gnu/foo/foo-1.0.tar.gz} (and then from
 our many mirrors via
-@indicateurl{http://ftpmirror.gnu.org/foo/foo-1.0.tar.gz}).  Whew.
+@indicateurl{https://ftpmirror.gnu.org/foo/foo-1.0.tar.gz}).  Whew.
 
 A common reason for the upload not succeeding is your GPG signature
 not being registered with the upload system.  There is nothing that
@@ -1953,7 +1957,7 @@ them to be available, e.g., you uploaded something by mistake.
 
 If all you want to do is reduce how much stuff is in your release
 directory, an alternative is to email @email{sysadmin@@fsf.org} and
-ask them to move old items to the @file{http://ftp.gnu.org/old-gnu/}
+ask them to move old items to the @file{https://ftp.gnu.org/old-gnu/}
 directory; then they will still be available.  In general, however, we
 recommend leaving all official releases in the main release directory.
 
@@ -2009,13 +2013,13 @@ and developers to find the latest GNU releases.  On the other hand,
 please do not announce test releases on @code{info-gnu} unless it's a
 highly unusual situation.
 
-@cindex @url{http://planet.gnu.org}
+@cindex @url{https://planet.gnu.org}
 @cindex Savannah, news area
 Please also post release announcements in the news section of your
 Savannah project site.  Here, it is fine to also write news entries
 for test releases and any other newsworthy events.  The news feeds
 from all GNU projects at savannah are aggregated at
-@url{http://planet.gnu.org} (GNU Planet), unless the text of the entry
+@url{https://planet.gnu.org} (GNU Planet), unless the text of the entry
 contains the string @samp{::noplanet::}.  You can also post items
 directly, or arrange for feeds from other locations; see information
 on the GNU Planet web page.
@@ -2041,10 +2045,10 @@ Your package's web page (normally
 
 @item
 Your package's download location (normally
-@indicateurl{http://ftp.gnu.org/gnu/@var{package}/}).  It is also
+@indicateurl{https://ftp.gnu.org/gnu/@var{package}/}).  It is also
 useful to mention the mirror list at
 @url{https://www.gnu.org/order/ftp.html}, and that
-@indicateurl{http://ftpmirror.gnu.org/@var{package/}} will automatically
+@indicateurl{https://ftpmirror.gnu.org/@var{package/}} will automatically
 redirect to a nearby mirror.
 
 @item
@@ -2375,7 +2379,7 @@ of your software because it requires your translators to use non-free,
 JavaScript-based editing tools.  Instead, a service without any
 ethical concerns should be used, such as GNU's Pootle instance
 (@url{https://chapters.gnu.org/pootle}) or The Translation Project
-(@url{http://translationproject.org}).
+(@url{https://translationproject.org}).
 
 A GNU package should not refer the user to any non-free documentation
 for free software.  The need for free documentation to come with free
