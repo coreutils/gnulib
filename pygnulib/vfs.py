@@ -20,25 +20,19 @@ from .module import File as _FileModule_
 
 class Base:
     """gnulib generic virtual file system"""
-    def __init__(self, name, **kwargs):
-        _type_assert_("name", name, str)
-        path = _os_.path.realpath(name)
-        if not _os_.path.exists(path):
-            raise FileNotFoundError(path)
-        if not _os_.path.isdir(path):
-            raise NotADirectoryError(path)
+    def __init__(self, path, **kwargs):
+        _type_assert_("path", path, str)
         self.__table = {}
         for (key, value) in kwargs.items():
             _type_assert_(key, value, str)
-            self.__table[key] = value
-        self.__name = name
+            self.__table[key] = _os_.path.normpath(value)
         self.__path = path
 
 
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{}".format(module, name, repr(self.__name))
+        return "{}.{}{{{}}}".format(module, name, repr(self.__path))
 
 
     def __contains__(self, name):
@@ -51,7 +45,6 @@ class Base:
 
 
     def __getitem__(self, name):
-        """retrieve the canonical path of the specified file name"""
         _type_assert_("name", name, str)
         parts = []
         replaced = False
@@ -70,14 +63,8 @@ class Base:
 
 
     @property
-    def name(self):
-        """directory name"""
-        return self.__name
-
-
-    @property
     def path(self):
-        """root directory path"""
+        """directory path"""
         return self.__path
 
 
