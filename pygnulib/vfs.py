@@ -59,7 +59,8 @@ class Base:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        return _os_.path.sep.join([self.__path] + parts)
+        path = _os_.path.sep.join([self.__path] + parts)
+        return _os_.path.normpath(path)
 
 
     @property
