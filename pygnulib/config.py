@@ -107,6 +107,8 @@ class Base:
     @root.setter
     def root(self, value):
         _type_assert_("root", value, str)
+        if not value:
+            raise ValueError("non-empty path not allowed")
         self.__table["root"] = _os_.path.normpath(value)
 
 
@@ -118,7 +120,7 @@ class Base:
     @local.setter
     def local(self, value):
         _type_assert_("local", value, str)
-        self.__table["local"] = _os_.path.normpath(value)
+        self.__table["local"] = _os_.path.normpath(value) if value else ""
 
 
     @property
@@ -129,7 +131,10 @@ class Base:
     @source_base.setter
     def source_base(self, value):
         _type_assert_("source_base", value, str)
-        self.__table["source_base"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("source_base cannot be an absolute path")
+        self.__table["source_base"] = _os_.path.normpath(value) if value else "lib"
 
 
     @property
@@ -140,7 +145,10 @@ class Base:
     @m4_base.setter
     def m4_base(self, value):
         _type_assert_("m4_base", value, str)
-        self.__table["m4_base"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("m4_base cannot be an absolute path")
+        self.__table["m4_base"] = _os_.path.normpath(value) if value else "m4"
 
 
     @property
@@ -151,7 +159,10 @@ class Base:
     @po_base.setter
     def po_base(self, value):
         _type_assert_("po_base", value, str)
-        self.__table["po_base"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("po_base cannot be an absolute path")
+        self.__table["po_base"] = _os_.path.normpath(value) if value else "po"
 
 
     @property
@@ -162,7 +173,10 @@ class Base:
     @doc_base.setter
     def doc_base(self, value):
         _type_assert_("doc_base", value, str)
-        self.__table["doc_base"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("doc_base cannot be an absolute path")
+        self.__table["doc_base"] = _os_.path.normpath(value) if value else "doc"
 
 
     @property
@@ -173,7 +187,10 @@ class Base:
     @tests_base.setter
     def tests_base(self, value):
         _type_assert_("tests_base", value, str)
-        self.__table["tests_base"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("tests_base cannot be an absolute path")
+        self.__table["tests_base"] = _os_.path.normpath(value) if value else "tests"
 
 
     @property
@@ -184,7 +201,10 @@ class Base:
     @auxdir.setter
     def auxdir(self, value):
         _type_assert_("auxdir", value, str)
-        self.__table["auxdir"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("auxdir cannot be an absolute path")
+        self.__table["auxdir"] = _os_.path.normpath(value) if value else "build-aux"
 
 
     @property
@@ -195,7 +215,7 @@ class Base:
     @lib.setter
     def lib(self, value):
         _type_assert_("lib", value, str)
-        self.__table["lib"] = _os_.path.normpath(value)
+        self.__table["lib"] = value if value else "libgnu"
 
 
     @property
@@ -206,7 +226,10 @@ class Base:
     @makefile_name.setter
     def makefile_name(self, value):
         _type_assert_("makefile_name", value, str)
-        self.__table["makefile_name"] = _os_.path.normpath(value)
+        value = _os_.path.normpath(value)
+        if _os_.path.isabs(value):
+            return ValueError("makefile_name cannot be an absolute path")
+        self.__table["makefile_name"] = value
 
 
     @property
@@ -220,7 +243,7 @@ class Base:
     @macro_prefix.setter
     def macro_prefix(self, value):
         _type_assert_("macro_prefix", value, str)
-        self.__table["macro_prefix"] = _os_.path.normpath(value)
+        self.__table["macro_prefix"] = value
 
 
     @property
@@ -231,7 +254,7 @@ class Base:
     @po_domain.setter
     def po_domain(self, value):
         _type_assert_("po_base", value, str)
-        self.__table["po_base"] = _os_.path.normpath(value)
+        self.__table["po_base"] = value
 
 
     @property
@@ -242,7 +265,7 @@ class Base:
     @witness_c_macro.setter
     def witness_c_macro(self, value):
         _type_assert_("witness_c_macro", value, str)
-        self.__table["witness_c_macro"] = _os_.path.normpath(value)
+        self.__table["witness_c_macro"] = value
 
 
     @property
