@@ -20,10 +20,10 @@ from .module import File as _FileModule_
 
 class Base:
     """gnulib generic virtual file system"""
-    def __init__(self, path, **kwargs):
+    def __init__(self, path, **table):
         _type_assert_("path", path, str)
         self.__table = {}
-        for (key, value) in kwargs.items():
+        for (key, value) in table.items():
             _type_assert_(key, value, str)
             self.__table[key] = _os_.path.normpath(value)
         self.__path = path
@@ -50,7 +50,7 @@ class Base:
         replaced = False
         path = _os_.path.normpath(name)
         if _os_.path.isabs(path):
-            raise ValueError("name must be a relative path")
+            raise ValueError("name cannot be an absolute path")
         for part in path.split(_os_.path.sep):
             if part == "..":
                 parts += [part]
@@ -84,13 +84,13 @@ class GnulibGit(Base):
     }
 
 
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, **table):
         path = _os_.path.realpath(name)
         if not _os_.path.exists(path):
             raise FileNotFoundError(path)
         if not _os_.path.isdir(path):
             raise NotADirectoryError(path)
-        super().__init__(name, **kwargs)
+        super().__init__(name, **table)
         if not _os_.path.isdir(_os_.path.join(self.path, ".git")):
             raise TypeError("{} is not a gnulib repository".format(self.path))
 
