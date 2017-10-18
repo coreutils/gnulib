@@ -141,7 +141,6 @@ def lookup(name, root, local, patch="patch"):
     """
     Look up a file inside base VFS or local VFS, or combine it using patch.
     If file is available or can be generated via patching, return a readable stream.
-    Note that this file may not be the original
     """
     _type_assert_("root", root, Base)
     _type_assert_("local", local, Base)
