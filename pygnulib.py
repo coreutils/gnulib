@@ -142,8 +142,11 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             else:
                 print("  ", file, file=sys.stdout, sep="")
 
-    old_files = frozenset(config.files)
+    old_files = frozenset(cache.files)
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
+    removed_files = {file for file in old_files if file not in new_files}
+    added_files = {file for file in new_files if file not in old_files}
+    kept_files = (old_files & new_files)
     return os.EX_OK
 
 
