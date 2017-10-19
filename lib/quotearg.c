@@ -887,8 +887,9 @@ quotearg_n_options (int n, char const *arg, size_t argsize,
   if (nslots <= n)
     {
       bool preallocated = (sv == &slotvec0);
+      int nmax = MIN (INT_MAX, MIN (PTRDIFF_MAX, SIZE_MAX) / sizeof *sv) - 1;
 
-      if (MIN (INT_MAX, MIN (PTRDIFF_MAX, SIZE_MAX) / sizeof *sv) <= n)
+      if (nmax < n)
         xalloc_die ();
 
       slotvec = sv = xrealloc (preallocated ? NULL : sv, (n + 1) * sizeof *sv);
