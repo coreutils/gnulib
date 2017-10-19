@@ -18,6 +18,14 @@ from .module import File as _FileModule_
 
 
 
+class Type:
+    """VFS file types"""
+    Root = 1
+    Local = 2
+    Dynamic = 3
+
+
+
 class Base:
     """gnulib generic virtual file system"""
     def __init__(self, path, **table):
@@ -67,6 +75,62 @@ class Base:
     def path(self):
         """directory path"""
         return self.__path
+
+
+    def backup(self, name):
+        """Backup the given file."""
+        backup = "{}~".format(name)
+        try:
+            _os_.unlink(self[backup])
+        except FileNotFoundError:
+            pass # ignore non-existent files
+        _shutil_.copy(self[name], self[backup])
+
+
+    def lookup(self, name, root, local, patch="patch"):
+        """
+        Try to look up a regular file inside virtual file systems or combine it via patch utility.
+
+        - file is present only inside the root VFS: open the file.
+        - file is present inside the local VFS: open the local file.
+        - both file and patch are present: combine in memory.
+        - file is not present: raise an FileNotFoundError exception.
+
+        The function returns a pair of values, representing the file path and type.
+        The first element, path, is just a regular file system path.
+        The second element, type, is an integer indicating the file type.
+        Note that it is the caller's responsibility to remove all temporary files.
+        """
+        _type_assert_("root", root, Base)
+        _type_assert_("local", local, Base)
+        _type_assert_("patch", patch, str)
+        if name in local:
+            return (local[name], Type.Local)
+        diff = "{}.diff".format(name)
+        if diff not in local:
+            return (root[name], Type.Root)
+        tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
+        with _codecs_.open(root[name], "rb") as stream:
+            _shutil_.copyfileobj(stream, tmp)
+            tmp.close()
+        stdin = _codecs_.open(local[diff], "rb")
+        cmd = (patch, "-s", tmp.name)
+        pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
+        (stdout, stderr) = pipes.communicate()
+        stdout = stdout.decode("UTF-8")
+        stderr = stderr.decode("UTF-8")
+        returncode = pipes.returncode
+        if returncode != 0:
+            cmd = "patch -s {} < {}".format(tmp.name, local[diff])
+            raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
+        return (tmp.name, Type.Dynamic)
+
+
+    def unlink(self, name, backup=True):
+        """Unlink a file, backing it up if necessary."""
+        if backup:
+            self.backup(name)
+        _os_.unlink(self[name])
 
 
 
@@ -134,36 +198,3 @@ class GnulibGit(Base):
                 path = _os_.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)
-
-
-
-def lookup(name, root, local, patch="patch"):
-    """
-    Look up a file inside base VFS or local VFS, or combine it using patch.
-    If file is available or can be generated via patching, return a readable stream.
-    """
-    _type_assert_("root", root, Base)
-    _type_assert_("local", local, Base)
-    _type_assert_("patch", patch, str)
-    if name in local:
-        return _codecs_.open(local[name], "rb")
-    diff = "{}.diff".format(name)
-    if diff not in local:
-        return _codecs_.open(root[name], "rb")
-    tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
-    with _codecs_.open(root[name], "rb") as stream:
-        _shutil_.copyfileobj(stream, tmp)
-        tmp.close()
-    stdin = _codecs_.open(local[diff], "rb")
-    cmd = (patch, "-s", tmp.name)
-    pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
-    (stdout, stderr) = pipes.communicate()
-    stdout = stdout.decode("UTF-8")
-    stderr = stderr.decode("UTF-8")
-    returncode = pipes.returncode
-    if returncode != 0:
-        cmd = "patch -s {} < {}".format(tmp.name, local[diff])
-        raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
-    stream = _codecs_.open(tmp.name, "rb")
-    _os_.unlink(tmp.name)
-    return stream
