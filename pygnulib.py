@@ -144,8 +144,30 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
 
     old_files = frozenset(cache.files)
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
+    table = {
+        "build-aux": config.auxdir,
+        "doc": config.doc_base,
+        "lib": config.source_base,
+        "m4": config.m4_base,
+        "tests": config.tests_base,
+        "tests=lib": config.tests_base,
+        "po": config.po_base,
+    }
+    table = {k:v for k,v in table.items() if v}
+    table["top"] = ""
+    root = BaseVFS(config.root, **table)
+    local = BaseVFS(config.local, **table)
+    for prefix in table:
+        os.makedirs(root[prefix], exist_ok=True)
+
+
+    # First the files that are in old-files, but not in new-files:
     removed_files = {file for file in old_files if file not in new_files}
+
+    # Then the files that are in new-files, but not in old-files:
     added_files = {file for file in new_files if file not in old_files}
+
+    # Then the files that are in new-files and in old-files:
     kept_files = (old_files & new_files)
     return os.EX_OK
 
