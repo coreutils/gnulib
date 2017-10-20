@@ -116,22 +116,18 @@ class Project(Base):
         - both file and patch are present: combine in memory.
         - file is not present: raise an FileNotFoundError exception.
 
-        The function returns a pair of values, representing the file stream and path (if any).
-        The first element, stream, is a file-like object, which supports read operations.
-        The second element, path, may be either a regular file system path or None.
-        If path is None, then the file was created in-memory via dynamic patching.
+        The function returns a pair of values, representing the file path and state.
+        The first element, path, represents a regular file system path.
+        The second element, dynamic, designates whether the file is temporary.
+        It is up to the caller to unlink dynamic files.
         """
         _type_assert_("primary", primary, Base)
         _type_assert_("secondary", secondary, Base)
         if name in secondary:
-            path = secondary[name]
-            stream = _codecs_.open(path, "rb")
-            return (stream, path)
+            return (secondary[name], False)
         diff = "{}.diff".format(name)
         if diff not in secondary:
-            path = primary[name]
-            stream = _codecs_.open(path, "rb")
-            return (stream, path)
+            return (primary[name], False)
         tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
         with _codecs_.open(primary[name], "rb") as stream:
             _shutil_.copyfileobj(stream, tmp)
@@ -146,9 +142,7 @@ class Project(Base):
         if returncode != 0:
             cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
             raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
-        stream = _codecs_.open(tmp.name, "rb")
-        _os_.unlink(tmp.name)
-        return (stream, None)
+        return (tmp.name, True)
 
 
     def unlink(self, name, backup=True):
