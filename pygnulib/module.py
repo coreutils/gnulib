@@ -13,7 +13,6 @@ import re as _re_
 
 from .error import type_assert as _type_assert_
 from .error import UnknownModuleError as _UnknownModuleError_
-from .config import Option as _ConfigOption_
 
 
 
@@ -450,7 +449,7 @@ class File(Base):
 
 
 
-def transitive_closure(lookup, modules, options):
+def transitive_closure(lookup, modules, **options):
     """
     Perform a transitive closure, generating a set of module dependencies.
     Each iteration over the table yields a tuple of (module, demander, condition).
@@ -462,27 +461,29 @@ def transitive_closure(lookup, modules, options):
     modules is an iterable, yielding a module (either name or instance).
     options may be any combination of gnulib configuration options.
     """
+    keywords = frozenset({
+        "tests",
+        "obsolete",
+        "cxx_tests",
+        "longrunning_tests",
+        "privileged_tests",
+        "unportable_tests",
+    })
     if not callable(lookup):
         raise TypeError("lookup must be a callable")
-    _type_assert_("options", options, int)
-    if options & ~_ConfigOption_.All:
-        raise ValueError("unknown configuration options")
-
-    obsolete = bool(options & _ConfigOption_.Obsolete)
-    tests = bool(options & _ConfigOption_.Tests)
-    cxx_tests = bool(options & _ConfigOption_.CXX)
-    longrunning_tests = bool(options & _ConfigOption_.Longrunning)
-    privileged_tests = bool(options & _ConfigOption_.Privileged)
-    unportable_tests = bool(options & _ConfigOption_.Unportable)
+    for (key, value) in options.items():
+        if key not in keywords:
+            return KeyError(key)
+        _type_assert_("option", value, bool)
     modules = set(lookup(module) for module in modules)
 
     def _exclude_(module):
         return any((
-            (not obsolete and module.obsolete),
-            (not cxx_tests and module.cxx_test),
-            (not longrunning_tests and module.longrunning_test),
-            (not privileged_tests and module.privileged_test),
-            (not unportable_tests and module.unportable_test),
+            (not options.get("obsolete", False) and module.obsolete),
+            (not options.get("cxx_tests", False) and module.cxx_test),
+            (not options.get("longrunning_tests", False) and module.longrunning_test),
+            (not options.get("privileged_tests", False) and module.privileged_test),
+            (not options.get("unportable_tests", False) and module.unportable_test),
         ))
 
     def _transitive_closure_(tests):
@@ -513,9 +514,9 @@ def transitive_closure(lookup, modules, options):
 
     base = _transitive_closure_(False)
     full = _transitive_closure_(True)
-    ignore = {"main"} if tests else {"main", "all"}
     main = {module for (module, _, _) in base}
-    final = {module for (module, _, _) in full} if tests else set(main)
+    final = {module for (module, _, _) in full} if options.get("tests", False) else set(main)
+    ignore = frozenset({"main"} if options.get("tests", False) else {"main", "all"})
     tests = (final - {module for module in main if module.applicability in ignore})
     return (base, full, main, final, tests)
 

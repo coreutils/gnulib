@@ -62,13 +62,22 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 
 
 def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
+    keywords = frozenset({
+        "tests",
+        "obsolete",
+        "cxx_tests",
+        "longrunning_tests",
+        "privileged_tests",
+        "unportable_tests",
+    })
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
     cache = CacheConfig(configure=None)
     for key in {"ac_version", "files"}:
         if key not in namespace:
             config[key] = cache[key]
-    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, config.options)
+    options = {key:config[key] for key in keywords}
+    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, **options)
 
     # Print some information about modules.
     print("Module list with included dependencies (indented):", file=sys.stdout)

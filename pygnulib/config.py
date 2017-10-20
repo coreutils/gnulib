@@ -37,17 +37,6 @@ OTHER_LICENSES = frozenset({
 })
 
 
-class Option:
-    """gnulib configuration options"""
-    Obsolete = (1 << 0)
-    Tests = (1 << 1)
-    CXX = (1 << 2)
-    Longrunning = (1 << 3)
-    Privileged = (1 << 4)
-    Unportable = (1 << 5)
-    All = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
-
-
 
 class Base:
     """gnulib generic configuration"""
@@ -66,13 +55,6 @@ class Base:
         "po_domain"         : "",
         "witness_c_macro"   : "",
         "licenses"          : set(),
-        "tests"             : False,
-        "obsolete"          : False,
-        "cxx_tests"         : False,
-        "longrunning_tests" : False,
-        "privileged_tests"  : False,
-        "unportable_tests"  : False,
-        "all_tests"         : False,
         "libtool"           : False,
         "conddeps"          : False,
         "vc_files"          : False,
@@ -81,10 +63,29 @@ class Base:
         "avoid"             : set(),
         "files"             : set(),
     }
+    _OPTIONS_ = frozenset({
+        "tests",
+        "obsolete",
+        "cxx_tests",
+        "longrunning_tests",
+        "privileged_tests",
+        "unportable_tests",
+    })
+
+
+    class _Option_:
+        """gnulib configuration options"""
+        Obsolete = (1 << 0)
+        Tests = (1 << 1)
+        CXX = (1 << 2)
+        Longrunning = (1 << 3)
+        Privileged = (1 << 4)
+        Unportable = (1 << 5)
+        AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
 
 
     def __init__(self, **kwargs):
-        self.__table = {}
+        self.__table = {"options": 0}
         for (key, value) in Base._TABLE_.items():
             self[key] = kwargs.get(key, value)
 
@@ -286,105 +287,98 @@ class Base:
     @property
     def tests(self):
         """include unit tests for the included modules"""
-        return self.__table["tests"]
+        return bool(self.__table["options"] & Base._Option_.Tests)
 
     @tests.setter
     def tests(self, value):
         _type_assert_("tests", value, bool)
-        self.__table["tests"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.Tests
+        else:
+            self.__table["options"] &= ~Base._Option_.Tests
 
 
     @property
     def obsolete(self):
         """include obsolete modules when they occur among the modules"""
-        return self.__table["obsolete"]
+        return bool(self.__table["options"] & Base._Option_.Tests)
 
     @obsolete.setter
     def obsolete(self, value):
         _type_assert_("obsolete", value, bool)
-        self.__table["obsolete"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.Obsolete
+        else:
+            self.__table["options"] &= ~Base._Option_.Obsolete
 
 
     @property
     def cxx_tests(self):
         """include even unit tests for C++ interoperability"""
-        return self.__table["cxx_tests"]
+        return bool(self.__table["options"] & Base._Option_.CXX)
 
     @cxx_tests.setter
     def cxx_tests(self, value):
         _type_assert_("cxx_tests", value, bool)
-        self.__table["cxx_tests"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.CXX
+        else:
+            self.__table["options"] &= ~Base._Option_.CXX
 
 
     @property
     def longrunning_tests(self):
         """include even unit tests that are long-runners"""
-        return self.__table["longrunning_tests"]
+        return bool(self.__table["options"] & Base._Option_.Longrunning)
 
     @longrunning_tests.setter
     def longrunning_tests(self, value):
         _type_assert_("longrunning_tests", value, bool)
-        self.__table["longrunning_tests"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.Longrunning
+        else:
+            self.__table["options"] &= ~Base._Option_.Longrunning
 
 
     @property
     def privileged_tests(self):
         """include even unit tests that require root privileges"""
-        return self.__table["privileged_tests"]
+        return bool(self.__table["options"] & Base._Option_.Privileged)
 
     @privileged_tests.setter
     def privileged_tests(self, value):
         _type_assert_("privileged_tests", value, bool)
-        self.__table["privileged_tests"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.Privileged
+        else:
+            self.__table["options"] &= ~Base._Option_.Privileged
 
 
     @property
     def unportable_tests(self):
         """include even unit tests that fail on some platforms"""
-        return self.__table["unportable_tests"]
+        return bool(self.__table["options"] & Base._Option_.Unportable)
 
     @unportable_tests.setter
     def unportable_tests(self, value):
         _type_assert_("unportable_tests", value, bool)
-        self.__table["unportable_tests"] = value
+        if value:
+            self.__table["options"] |= Base._Option_.Unportable
+        else:
+            self.__table["options"] &= ~Base._Option_.Unportable
 
 
     @property
     def all_tests(self):
         """include all kinds of problematic unit tests"""
-        result = True
-        result &= self.tests
-        result &= self.cxx_tests
-        result &= self.privileged_tests
-        result &= self.unportable_tests
-        result &= self.longrunning_tests
-        return result
+        return (self.__table["options"] & Base._Option_.AllTests) == Base._Option_.AllTests
 
     @all_tests.setter
     def all_tests(self, value):
-        self.__table["tests"] = value
-        self.__table["cxx_tests"] = value
-        self.__table["privileged_tests"] = value
-        self.__table["unportable_tests"] = value
-        self.__table["longrunning_tests"] = value
-
-    @property
-    def options(self):
-        """bitmask of active options"""
-        result = 0
-        if self.obsolete:
-            result |= Option.Obsolete
-        if self.tests:
-            result |= Option.Tests
-        if self.cxx_tests:
-            result |= Option.CXX
-        if self.longrunning_tests:
-            result |= Option.Longrunning
-        if self.privileged_tests:
-            result |= Option.Privileged
-        if self.unportable_tests:
-            result |= Option.Unportable
-        return result
+        if value:
+            self.__table["options"] |= Base._Option_.AllTests
+        else:
+            self.__table["options"] &= Base._Option_.AllTests
 
 
     @property
@@ -489,17 +483,19 @@ class Base:
 
 
     def __getitem__(self, key):
-        if key not in Base._TABLE_:
+        table = (set(Base._TABLE_.keys()) | Base._OPTIONS_)
+        if key not in table:
             key = key.replace("-", "_")
-            if key not in Base._TABLE_:
+            if key not in table:
                 raise KeyError("unsupported option: {0}".format(key))
         return getattr(self, key)
 
 
     def __setitem__(self, key, value):
-        if key not in Base._TABLE_:
+        table = (set(Base._TABLE_.keys()) | Base._OPTIONS_)
+        if key not in table:
             key = key.replace("_", "-")
-            if key not in Base._TABLE_:
+            if key not in table:
                 raise KeyError("unsupported option: {0}".format(key))
         return setattr(self, key, value)
 
