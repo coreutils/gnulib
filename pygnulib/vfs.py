@@ -97,18 +97,14 @@ class Project(Base):
         self.__patch = path
 
 
-    def __backup(self, name):
+    def backup(self, name):
+        """Backup the given file."""
         backup = "{}~".format(name)
         try:
             _os_.unlink(self[backup])
         except FileNotFoundError:
             pass # ignore non-existent files
         _shutil_.copy(self[name], self[backup])
-
-
-    def backup(self, name):
-        """Backup the given file."""
-        return self.__backup(name)
 
 
     def lookup(self, name, primary, secondary):
@@ -158,7 +154,7 @@ class Project(Base):
     def unlink(self, name, backup=True):
         """Unlink a file, backing it up if necessary."""
         if backup:
-            self.__backup(name)
+            self.backup(name)
         _os_.unlink(self[name])
 
 
