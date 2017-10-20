@@ -24,6 +24,7 @@ from pygnulib.module import transitive_closure
 from pygnulib.parser import CommandLine as CommandLineParser
 
 from pygnulib.vfs import Base as BaseVFS
+from pygnulib.vfs import Project as ProjectVFS
 from pygnulib.vfs import GnulibGit as GnulibGitVFS
 
 
@@ -155,7 +156,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     }
     table = {k:v for k,v in table.items() if v}
     table["top"] = ""
-    root = BaseVFS(config.root, **table)
+    root = ProjectVFS(config.root, **table)
     local = BaseVFS(config.local, **table)
     for prefix in table:
         os.makedirs(root[prefix], exist_ok=True)
@@ -169,6 +170,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
 
     # Then the files that are in new-files and in old-files:
     kept_files = (old_files & new_files)
+
     return os.EX_OK
 
 
