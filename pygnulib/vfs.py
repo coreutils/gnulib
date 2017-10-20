@@ -20,15 +20,13 @@ from .module import File as _FileModule_
 
 class Base:
     """gnulib generic virtual file system"""
-    def __init__(self, root, patch="patch", **table):
+    def __init__(self, root, **table):
         _type_assert_("root", root, str)
-        _type_assert_("patch", patch, str)
         self.__table = {}
         for (key, value) in table.items():
             _type_assert_(key, value, str)
             self.__table[key] = _os_.path.normpath(value)
         self.__root = root
-        self.__patch = patch
 
 
     def __repr__(self):
@@ -72,6 +70,7 @@ class Project(Base):
         if not _os_.path.isdir(path):
             raise NotADirectoryError(path)
         super().__init__(name, **table)
+        self.__patch = None
 
 
     def __contains__(self, name):
@@ -80,6 +79,22 @@ class Project(Base):
             raise ValueError("name must be a relative path")
         path = _os_.path.join(self.__root, name)
         return _os_.path.exists(path)
+
+
+    @property
+    def patch(self):
+        """path to patch binary"""
+        if self.__patch is None:
+            raise AttributeError("patch")
+        return self.__patch
+
+    @patch.setter
+    def patch(self, path):
+        _type_assert_("path", path, str)
+        if not _os_.path.isabs(path):
+            if _shutil_.which(path) is None:
+                raise FileNotFoundError("patch")
+        self.__patch = path
 
 
     def __backup(self, name):
