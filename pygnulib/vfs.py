@@ -18,14 +18,6 @@ from .module import File as _FileModule_
 
 
 
-class Type:
-    """VFS file types"""
-    Root = 1
-    Local = 2
-    Dynamic = 3
-
-
-
 class Base:
     """gnulib generic virtual file system"""
     def __init__(self, root, patch="patch", **table):
@@ -102,18 +94,22 @@ class Base:
         - both file and patch are present: combine in memory.
         - file is not present: raise an FileNotFoundError exception.
 
-        The function returns a pair of values, representing the file path and type.
-        The first element, path, is just a regular file system path.
-        The second element, type, is an integer indicating the file type.
-        Note that it is the caller's responsibility to remove all temporary files.
+        The function returns a pair of values, representing the file stream and path (if any).
+        The first element, stream, is a file-like object, which supports read operations.
+        The second element, path, may be either a regular file system path or None.
+        If path is None, then the file was created in-memory via dynamic patching.
         """
         _type_assert_("root", root, Base)
         _type_assert_("local", local, Base)
         if name in local:
-            return (local[name], Type.Local)
+            path = local[name]
+            stream = _codecs_.open(path, "rb")
+            return (stream, path)
         diff = "{}.diff".format(name)
         if diff not in local:
-            return (root[name], Type.Root)
+            path = root[name]
+            stream = _codecs_.open(path, "rb")
+            return (stream, path)
         tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
         with _codecs_.open(root[name], "rb") as stream:
             _shutil_.copyfileobj(stream, tmp)
@@ -128,7 +124,9 @@ class Base:
         if returncode != 0:
             cmd = "patch -s {} < {}".format(tmp.name, local[diff])
             raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
-        return (tmp.name, Type.Dynamic)
+        stream = _codecs_.open(tmp.name, "rb")
+        _os_.unlink(tmp.name)
+        return (stream, None)
 
 
     def unlink(self, name, backup=True):
