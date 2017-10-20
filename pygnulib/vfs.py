@@ -37,15 +37,6 @@ class Base:
         return "{}.{}{{{}}}".format(module, name, repr(self.__root))
 
 
-    def __contains__(self, name):
-        path = _os_.path.normpath(name)
-        if _os_.path.isabs(name):
-            raise ValueError("name must be a relative path")
-        path = _os_.path.join(self.__root, name)
-        return _os_.path.exists(path)
-
-
-
     def __getitem__(self, name):
         _type_assert_("name", name, str)
         parts = []
@@ -71,7 +62,27 @@ class Base:
         return self.__root
 
 
-    def _backup_(self, name):
+
+class Project(Base):
+    """project virtual file system"""
+    def __init__(self, name, **table):
+        path = _os_.path.realpath(name)
+        if not _os_.path.exists(path):
+            raise FileNotFoundError(path)
+        if not _os_.path.isdir(path):
+            raise NotADirectoryError(path)
+        super().__init__(name, **table)
+
+
+    def __contains__(self, name):
+        path = _os_.path.normpath(name)
+        if _os_.path.isabs(name):
+            raise ValueError("name must be a relative path")
+        path = _os_.path.join(self.__root, name)
+        return _os_.path.exists(path)
+
+
+    def __backup(self, name):
         backup = "{}~".format(name)
         try:
             _os_.unlink(self[backup])
@@ -82,15 +93,15 @@ class Base:
 
     def backup(self, name):
         """Backup the given file."""
-        return self._backup_(name)
+        return self.__backup(name)
 
 
-    def lookup(self, name, root, local):
+    def lookup(self, name, primary, secondary):
         """
         Try to look up a regular file inside virtual file systems or combine it via patch utility.
 
-        - file is present only inside the root VFS: open the file.
-        - file is present inside the local VFS: open the local file.
+        - file is present only inside the primary VFS: open the file inside the primary VFS.
+        - file is present inside the secondary VFS: open the file inside the secondary VFS.
         - both file and patch are present: combine in memory.
         - file is not present: raise an FileNotFoundError exception.
 
@@ -99,22 +110,22 @@ class Base:
         The second element, path, may be either a regular file system path or None.
         If path is None, then the file was created in-memory via dynamic patching.
         """
-        _type_assert_("root", root, Base)
-        _type_assert_("local", local, Base)
-        if name in local:
-            path = local[name]
+        _type_assert_("primary", primary, Base)
+        _type_assert_("secondary", secondary, Base)
+        if name in secondary:
+            path = secondary[name]
             stream = _codecs_.open(path, "rb")
             return (stream, path)
         diff = "{}.diff".format(name)
-        if diff not in local:
-            path = root[name]
+        if diff not in secondary:
+            path = primary[name]
             stream = _codecs_.open(path, "rb")
             return (stream, path)
         tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
-        with _codecs_.open(root[name], "rb") as stream:
+        with _codecs_.open(primary[name], "rb") as stream:
             _shutil_.copyfileobj(stream, tmp)
             tmp.close()
-        stdin = _codecs_.open(local[diff], "rb")
+        stdin = _codecs_.open(secondary[diff], "rb")
         cmd = (self.__patch, "-s", tmp.name)
         pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
         (stdout, stderr) = pipes.communicate()
@@ -122,7 +133,7 @@ class Base:
         stderr = stderr.decode("UTF-8")
         returncode = pipes.returncode
         if returncode != 0:
-            cmd = "patch -s {} < {}".format(tmp.name, local[diff])
+            cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
             raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
         stream = _codecs_.open(tmp.name, "rb")
         _os_.unlink(tmp.name)
@@ -132,7 +143,7 @@ class Base:
     def unlink(self, name, backup=True):
         """Unlink a file, backing it up if necessary."""
         if backup:
-            self._backup_(name)
+            self.__backup(name)
         _os_.unlink(self[name])
 
 
