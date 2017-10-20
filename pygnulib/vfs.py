@@ -28,26 +28,28 @@ class Type:
 
 class Base:
     """gnulib generic virtual file system"""
-    def __init__(self, path, **table):
-        _type_assert_("path", path, str)
+    def __init__(self, root, patch="patch", **table):
+        _type_assert_("root", root, str)
+        _type_assert_("patch", patch, str)
         self.__table = {}
         for (key, value) in table.items():
             _type_assert_(key, value, str)
-            self.__table[key] = _os_.path.normpath(value)
-        self.__path = path
+            self.__table[key] = _os_.root.normpath(value)
+        self.__root = root
+        self.__patch = patch
 
 
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{{{}}}".format(module, name, repr(self.__path))
+        return "{}.{}{{{}}}".format(module, name, repr(self.__root))
 
 
     def __contains__(self, name):
         path = _os_.path.normpath(name)
         if _os_.path.isabs(name):
             raise ValueError("name must be a relative path")
-        path = _os_.path.join(self.__path, name)
+        path = _os_.path.join(self.__root, name)
         return _os_.path.exists(path)
 
 
@@ -67,18 +69,17 @@ class Base:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        path = _os_.path.sep.join([self.__path] + parts)
+        path = _os_.path.sep.join([self.__root] + parts)
         return _os_.path.normpath(path)
 
 
     @property
     def path(self):
         """directory path"""
-        return self.__path
+        return self.__root
 
 
-    def backup(self, name):
-        """Backup the given file."""
+    def _backup_(self, name):
         backup = "{}~".format(name)
         try:
             _os_.unlink(self[backup])
@@ -87,7 +88,12 @@ class Base:
         _shutil_.copy(self[name], self[backup])
 
 
-    def lookup(self, name, root, local, patch="patch"):
+    def backup(self, name):
+        """Backup the given file."""
+        return self._backup_(name)
+
+
+    def lookup(self, name, root, local):
         """
         Try to look up a regular file inside virtual file systems or combine it via patch utility.
 
@@ -103,7 +109,6 @@ class Base:
         """
         _type_assert_("root", root, Base)
         _type_assert_("local", local, Base)
-        _type_assert_("patch", patch, str)
         if name in local:
             return (local[name], Type.Local)
         diff = "{}.diff".format(name)
@@ -114,7 +119,7 @@ class Base:
             _shutil_.copyfileobj(stream, tmp)
             tmp.close()
         stdin = _codecs_.open(local[diff], "rb")
-        cmd = (patch, "-s", tmp.name)
+        cmd = (self.__patch, "-s", tmp.name)
         pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
         (stdout, stderr) = pipes.communicate()
         stdout = stdout.decode("UTF-8")
@@ -129,7 +134,7 @@ class Base:
     def unlink(self, name, backup=True):
         """Unlink a file, backing it up if necessary."""
         if backup:
-            self.backup(name)
+            self._backup_(name)
         _os_.unlink(self[name])
 
 
