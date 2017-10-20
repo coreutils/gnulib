@@ -34,7 +34,7 @@ class Base:
         self.__table = {}
         for (key, value) in table.items():
             _type_assert_(key, value, str)
-            self.__table[key] = _os_.root.normpath(value)
+            self.__table[key] = _os_.path.normpath(value)
         self.__root = root
         self.__patch = patch
 
