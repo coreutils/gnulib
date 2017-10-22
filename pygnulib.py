@@ -162,9 +162,8 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
         "tests": config.tests_base,
         "tests=lib": config.tests_base,
         "po": config.po_base,
+        "top": "",
     }
-    table = {k:v for k,v in table.items() if v}
-    table["top"] = ""
     project = ProjectVFS(config.root, **table)
     local = BaseVFS(config.local, **table)
     for prefix in table:
