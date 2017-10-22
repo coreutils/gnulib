@@ -211,30 +211,38 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
-    class _LinkOption_(_Option_):
+    class _CopyModeOption_(_Option_):
         def __init__(self, *args, **kwargs):
             super().__init__(nargs=0, *args, **kwargs)
 
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
-                setattr(namespace, self.dest, CommandLine._LINK_NOTICE_)
-            value = getattr(namespace, self.dest)
-            symlink = ("-s", "--symlink", "--local-symlink", "-S", "--more-symlink")
-            hardlink = ("-h", "--hardlink", "--local-hardlink", "-H", "--more-hardlink")
-            local = ("--local-symlink", "--local-hardlink")
-            disable_notice = ("-S", "--more-symlink", "-H", "--more-hardlink")
-            if option in symlink:
-                if value & CommandLine._LINK_HARD_:
-                    parser.error("conflicting --symlink and --hardlink options")
-                value |= CommandLine._LINK_SYMBOLIC_
-            if option in hardlink:
-                if value & CommandLine._LINK_SYMBOLIC_:
-                    parser.error("conflicting --symlink and --hardlink options")
-                value |= CommandLine._LINK_HARD_
-            if option in local:
-                value |= CommandLine._LINK_LOCAL_
-            if option in disable_notice:
-                value &= ~CommandLine._LINK_NOTICE_
+                setattr(namespace, self.dest, None)
+            if option.endswith("symlink"):
+                value = "symlink"
+            elif option.endswith("hardlink"):
+                value = "hardlink"
+            else:
+                fmt = "{}: None, 'symlink' or 'hardlink'"
+                raise ValueError(fmt.format(self.dest))
+            super().__call__(parser, namespace, value, option)
+
+
+    class _CopyrightsCopyModeOption_(_CopyModeOption_):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+        def __call__(self, parser, namespace, value, option=None):
+            if not hasattr(namespace, self.dest):
+                setattr(namespace, "copyrights", False)
+            if option.endswith("symlink"):
+                value = "symlink"
+            elif option.endswith("hardlink"):
+                value = "hardlink"
+            else:
+                fmt = "{}: None, 'symlink' or 'hardlink'"
+                raise ValueError(fmt.format(self.dest))
+            setattr(namespace, "copyrights", True)
             super().__call__(parser, namespace, value, option)
 
 
@@ -778,31 +786,31 @@ class CommandLine:
                     "help": (
                         "make symbolic links instead of copying files",
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyModeOption_,
+                    "dest": "copymode",
                 }),
                 (["--local-symlink"], {
                     "help": (
                         "make symbolic links instead of copying files, only",
                         "for files from the local override directory"
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyModeOption_,
+                    "dest": "local_copymode",
                 }),
                 (["-h", "--hardlink"], {
                     "help": (
                         "make hard links instead of copying files",
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyModeOption_,
+                    "dest": "copymode",
                 }),
                 (["--local-hardlink"], {
                     "help": (
                         "make hard links instead of copying files, only",
                         "for files from the local override directory"
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyModeOption_,
+                    "dest": "local_copymode",
                 }),
             ),
         ),
@@ -817,16 +825,16 @@ class CommandLine:
                         "make symbolic links instead of copying files and",
                         "don't replace copyright notices",
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyrightsCopyModeOption_,
+                    "dest": "copymode",
                 }),
                 (["-H", "--more-hardlink"], {
                     "help": (
                         "make symbolic links instead of copying files and",
                         "don't replace copyright notices",
                     ),
-                    "action": _LinkOption_,
-                    "dest": "link",
+                    "action": _CopyrightsCopyModeOption_,
+                    "dest": "copymode",
                 }),
             ),
         ),
@@ -882,11 +890,7 @@ class CommandLine:
     class Option:
         """option bitwise flags"""
         DryRun = (1 << 0)
-        Symlink = (1 << 1)
-        Hardlink = (1 << 2)
-        OnlyLocalLinks = (1 << 3)
-        UpdateCopyrights = (1 << 4)
-        SingleConfigure = (1 << 5)
+        SingleConfigure = (1 << 1)
 
 
     def __init__(self, program):
@@ -944,16 +948,6 @@ class CommandLine:
         verbosity = namespace.pop("verbosity", 0)
         if namespace.pop("dry_run", False):
             options |= CommandLine.Option.DryRun
-        link = namespace.pop("link", None)
-        if link is not None:
-            if link & CommandLine._LINK_SYMBOLIC_:
-                options |= CommandLine.Option.Symlink
-            if link & CommandLine._LINK_HARD_:
-                options |= CommandLine.Option.Hardlink
-            if link & CommandLine._LINK_LOCAL_:
-                options |= CommandLine.Option.OnlyLocalLinks
-            if link & CommandLine._LINK_NOTICE_:
-                options |= CommandLine.Option.UpdateCopyrights
         if namespace.pop("single_configure", False):
             options |= CommandLine.Option.SingleConfigure
         namespace.pop("no_changelog", None)

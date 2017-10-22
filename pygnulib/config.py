@@ -62,6 +62,8 @@ class Base:
         "modules"           : set(),
         "avoid"             : set(),
         "files"             : set(),
+        "copymode"          : None,
+        "local_copymode"    : None,
     }
     _OPTIONS_ = frozenset({
         "tests",
@@ -81,6 +83,7 @@ class Base:
         Longrunning = (1 << 3)
         Privileged = (1 << 4)
         Unportable = (1 << 5)
+        Copyrights = (1 << 6)
         AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
 
 
@@ -480,6 +483,41 @@ class Base:
         prefix = self.__table["macro_prefix"].upper()
         default = Base._TABLE_["macro_prefix"].upper()
         return "GL_{0}".format(prefix) if prefix == default else "GL"
+
+
+    @property
+    def copymode(self):
+        return self.__table["copymode"]
+
+    @copymode.setter
+    def copymode(self, value):
+        if value not in frozenset({None, "symlink", "hardlink"}):
+            raise ValueError("copymode: None, 'symlink' or 'hardlink'")
+        self.__table["copymode"] = value
+
+
+    @property
+    def local_copymode(self):
+        return self.__table["local_copymode"]
+
+    @local_copymode.setter
+    def local_copymode(self, value):
+        if value not in frozenset({None, "symlink", "hardlink"}):
+            raise ValueError("local_copymode: None, 'symlink' or 'hardlink'")
+        self.__table["local_copymode"] = value
+
+
+    @property
+    def copyrights(self):
+        return bool(self.__table["options"] & Base._Option_.Copyrights)
+
+    @copyrights.setter
+    def copyrights(self, value):
+        _type_assert_("copyrights", value, bool)
+        if value:
+            self.__table["options"] |= Base._Option_.Copyrights
+        else:
+            self.__table["options"] &= ~Base._Option_.Copyrights
 
 
     def __getitem__(self, key):
