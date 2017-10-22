@@ -75,6 +75,51 @@ class Base:
 
 
 
+def lookup(name, primary, secondary, patch="patch"):
+    """
+    Try to look up a regular file inside virtual file systems or combine it via patch utility.
+    The name argument is a relative file name which is going to be looked up.
+    The primary argument is the primary virtual file system to search for the file.
+    The secondary argument is the secondary virtual file system to search for the file.
+    The patch argument must be a path to the 'patch' utility binary.
+
+    - file is present only inside the primary VFS: open the file inside the primary VFS.
+    - file is present inside the secondary VFS: open the file inside the secondary VFS.
+    - both file and patch are present: combine in memory.
+    - file is not present: raise an FileNotFoundError exception.
+
+    The function returns a pair of values, representing the file path and state.
+    The first element, path, represents a regular file system path.
+    The second element, vfs, is either the primary or the secondary VFS.
+    If the file was obtained via dynamic patching, the vfs element is None.
+
+    NOTE: It is up to the caller to unlink files obtained after dynamic patching.
+    """
+    _type_assert("primary", primary, Base)
+    _type_assert("secondary", secondary, Base)
+    if name in secondary:
+        return (secondary[name], secondary)
+    diff = "{}.diff".format(name)
+    if diff not in secondary:
+        return (primary[name], primary)
+    tmp = _tempfile.NamedTemporaryFile(mode="w+b", delete=False)
+    with _codecs.open(primary[name], "rb") as stream:
+        _shutil.copyfileobj(stream, tmp)
+        tmp.close()
+    stdin = _codecs.open(secondary[diff], "rb")
+    cmd = (patch, "-s", tmp.name)
+    pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
+    (stdout, stderr) = pipes.communicate()
+    stdout = stdout.decode("UTF-8")
+    stderr = stderr.decode("UTF-8")
+    returncode = pipes.returncode
+    if returncode != 0:
+        cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
+        raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
+    return (tmp.name, None)
+
+
+
 class Project(Base):
     """project virtual file system"""
     def __init__(self, name, **table):
@@ -140,44 +185,6 @@ class Project(Base):
         src = src if srcabs else _os.path.join(self.full_prefix, src)
         dst = dst if dstabs else _os.path.join(self.full_prefix, dst)
         _os.link(src, dst)
-
-
-    def lookup(self, name, primary, secondary):
-        """
-        Try to look up a regular file inside virtual file systems or combine it via patch utility.
-
-        - file is present only inside the primary VFS: open the file inside the primary VFS.
-        - file is present inside the secondary VFS: open the file inside the secondary VFS.
-        - both file and patch are present: combine in memory.
-        - file is not present: raise an FileNotFoundError exception.
-
-        The function returns a pair of values, representing the file path and state.
-        The first element, path, represents a regular file system path.
-        The second element, dynamic, designates whether the file is temporary.
-        It is up to the caller to unlink dynamic files.
-        """
-        _type_assert("primary", primary, Base)
-        _type_assert("secondary", secondary, Base)
-        if name in secondary:
-            return (secondary[name], False)
-        diff = "{}.diff".format(name)
-        if diff not in secondary:
-            return (primary[name], False)
-        tmp = _tempfile.NamedTemporaryFile(mode="w+b", delete=False)
-        with _codecs.open(primary[name], "rb") as stream:
-            _shutil.copyfileobj(stream, tmp)
-            tmp.close()
-        stdin = _codecs.open(secondary[diff], "rb")
-        cmd = (self.__patch, "-s", tmp.name)
-        pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
-        (stdout, stderr) = pipes.communicate()
-        stdout = stdout.decode("UTF-8")
-        stderr = stderr.decode("UTF-8")
-        returncode = pipes.returncode
-        if returncode != 0:
-            cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
-            raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
-        return (tmp.name, True)
 
 
     def mkdir(self, name):
