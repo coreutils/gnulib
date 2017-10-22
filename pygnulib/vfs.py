@@ -35,6 +35,14 @@ class Base:
         return "{}.{}{{{}}}".format(module, name, repr(self.__prefix))
 
 
+    def __contains__(self, name):
+        path = _os_.path.normpath(name)
+        if _os_.path.isabs(name):
+            raise ValueError("name must be a relative path")
+        path = _os_.path.join(self.__prefix, name)
+        return _os_.path.exists(path)
+
+
     def __getitem__(self, name):
         _type_assert_("name", name, str)
         parts = []
@@ -77,14 +85,6 @@ class Project(Base):
             raise NotADirectoryError(path)
         super().__init__(name, **table)
         self.__patch = None
-
-
-    def __contains__(self, name):
-        path = _os_.path.normpath(name)
-        if _os_.path.isabs(name):
-            raise ValueError("name must be a relative path")
-        path = _os_.path.join(self.__prefix, name)
-        return _os_.path.exists(path)
 
 
     @property
