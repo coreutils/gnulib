@@ -145,6 +145,11 @@ class Project(Base):
         return (tmp.name, True)
 
 
+    def mkdir(self, name):
+        """Create a leaf directory and all intermediate ones recursively."""
+        _os_.makedirs(self[name], exist_ok=True)
+
+
     def unlink(self, name, backup=True):
         """Unlink a file, backing it up if necessary."""
         if backup:

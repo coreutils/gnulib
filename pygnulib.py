@@ -165,10 +165,10 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     }
     table = {k:v for k,v in table.items() if v}
     table["top"] = ""
-    root = ProjectVFS(config.root, **table)
+    project = ProjectVFS(config.root, **table)
     local = BaseVFS(config.local, **table)
     for prefix in table:
-        os.makedirs(root[prefix], exist_ok=True)
+        project.mkdir(prefix)
 
 
     # First the files that are in old-files, but not in new-files:
