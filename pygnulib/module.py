@@ -387,10 +387,8 @@ class Base:
 
 class File(Base):
     """gnulib module text file"""
-    _TABLE = {}
-    for (_key, (_, _typeid, _value)) in Base._TABLE.items():
-        _TABLE[_value] = (_typeid, _key)
-    _FIELDS = [field for (_, _, field) in Base._TABLE.values()]
+    _TABLE = {_value[2]:(_value[1], _key) for (_key, _value) in Base._TABLE.items()}
+    _FIELDS = [_field for (_, _, _field) in Base._TABLE.values()]
     _PATTERN = _re.compile("({}):".format("|".join(_FIELDS)))
 
 
