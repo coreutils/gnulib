@@ -35,6 +35,14 @@ class Base:
         return "{}.{}{{{}}}".format(module, name, repr(self.__prefix))
 
 
+    def __enter__(self):
+        return self
+
+
+    def __exit__(self, exctype, excval, exctrace):
+        pass
+
+
     def __contains__(self, name):
         path = _os.path.normpath(name)
         if _os.path.isabs(name):
@@ -245,14 +253,6 @@ class GnulibGit(Base):
             raise NotADirectoryError(self.full_prefix)
         if not _os.path.isdir(_os.path.join(self.full_prefix, ".git")):
             raise TypeError("{} is not a gnulib repository".format(prefix))
-
-
-    def __enter__(self):
-        return self
-
-
-    def __exit__(self, exctype, excval, exctrace):
-        pass
 
 
     def module(self, name, full=True):
