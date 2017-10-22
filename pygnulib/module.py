@@ -78,6 +78,14 @@ class Base:
         return result.strip() + "\n"
 
 
+    def __enter__(self):
+        return self
+
+
+    def __exit__(self, exctype, excval, exctrace):
+        pass
+
+
     def __hash__(self):
         return hash(tuple(self.__table.items()))
 
