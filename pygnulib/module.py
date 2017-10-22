@@ -57,6 +57,47 @@ class Base:
             self.__table[key] = typeid(kwargs.get(key, typeid()))
 
 
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "{}.{}{}".format(module, name, repr(self.__table["name"]))
+
+
+    def __str__(self):
+        result = ""
+        for (key, (_, typeid, field)) in sorted(Base._TABLE.items(), key=lambda k: k[1][0]):
+            field += ":\n"
+            if typeid in _ITERABLES:
+                value = "\n".join(self.__table[key])
+            else:
+                value = self.__table[key]
+            if value:
+                result += field
+                result += value
+                result += "\n\n" if value else "\n"
+        return result.strip() + "\n"
+
+
+    def __hash__(self):
+        return hash(tuple(self.__table.items()))
+
+
+    def __getitem__(self, key):
+        if key not in Base._TABLE:
+            key = key.replace("-", "_")
+            if key not in Base._TABLE:
+                raise KeyError(repr(key))
+        return getattr(self, key)
+
+
+    def __setitem__(self, key, value):
+        if key not in Base._TABLE:
+            key = key.replace("-", "_")
+            if key not in Base._TABLE:
+                raise KeyError(repr(key))
+        return setattr(self, key, value)
+
+
     @property
     def name(self):
         """name"""
@@ -303,47 +344,6 @@ class Base:
             module = (module + "\n").encode("UTF-8")
             module = _hashlib.md5(module).hexdigest()
         return "{}_GNULIB_ENABLED_{}".format(macro_prefix, module)
-
-
-    def __hash__(self):
-        return hash(tuple(self.__table.items()))
-
-
-    def __repr__(self):
-        module = self.__class__.__module__
-        name = self.__class__.__name__
-        return "{}.{}{}".format(module, name, repr(self.__table["name"]))
-
-
-    def __str__(self):
-        result = ""
-        for (key, (_, typeid, field)) in sorted(Base._TABLE.items(), key=lambda k: k[1][0]):
-            field += ":\n"
-            if typeid in _ITERABLES:
-                value = "\n".join(self.__table[key])
-            else:
-                value = self.__table[key]
-            if value:
-                result += field
-                result += value
-                result += "\n\n" if value else "\n"
-        return result.strip() + "\n"
-
-
-    def __getitem__(self, key):
-        if key not in Base._TABLE:
-            key = key.replace("-", "_")
-            if key not in Base._TABLE:
-                raise KeyError(repr(key))
-        return getattr(self, key)
-
-
-    def __setitem__(self, key, value):
-        if key not in Base._TABLE:
-            key = key.replace("-", "_")
-            if key not in Base._TABLE:
-                raise KeyError(repr(key))
-        return setattr(self, key, value)
 
 
     def items(self):
