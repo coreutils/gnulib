@@ -113,6 +113,35 @@ class Project(Base):
         _shutil_.copy(self[name], self[backup])
 
 
+    def copy(self, src, dst):
+        """Copy file data."""
+        srcabs = _os_.path.isabs(self, src)
+        dstabs = _os_.path.isabs(self, dst)
+        if srcabs and dstabs:
+            raise ValueError("absolute src and dst")
+        limit = (16 * 1024)
+        src = src if srcabs else _os_.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
+        with _codecs_.open(src, "rb") as istream:
+            with _codecs_.open(dst, "wb") as ostream:
+                while 1:
+                    data = istream.read(limit)
+                    if not data:
+                        break
+                    ostream.write(data)
+
+
+    def hardlink(self, src, dst):
+        """Create a hard link to the file."""
+        srcabs = _os_.path.isabs(self, src)
+        dstabs = _os_.path.isabs(self, dst)
+        if srcabs and dstabs:
+            raise ValueError("absolute src and dst")
+        src = src if srcabs else _os_.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
+        _os_.link(src, dst)
+
+
     def lookup(self, name, primary, secondary):
         """
         Try to look up a regular file inside virtual file systems or combine it via patch utility.
@@ -154,6 +183,28 @@ class Project(Base):
     def mkdir(self, name):
         """Create a leaf directory and all intermediate ones recursively."""
         _os_.makedirs(self[name], exist_ok=True)
+
+
+    def move(self, src, dst):
+        """Move file data."""
+        srcabs = _os_.path.isabs(self, src)
+        dstabs = _os_.path.isabs(self, dst)
+        if srcabs and dstabs:
+            raise ValueError("absolute src and dst")
+        src = src if srcabs else _os_.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
+        _os_.rename(src, dst)
+
+
+    def symlink(self, src, dst):
+        """Create a symbolic link to the file."""
+        srcabs = _os_.path.isabs(self, src)
+        dstabs = _os_.path.isabs(self, dst)
+        if srcabs and dstabs:
+            raise ValueError("absolute src and dst")
+        src = src if srcabs else _os_.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
+        _os_.symlink(src, dst)
 
 
     def unlink(self, name, backup=True):
