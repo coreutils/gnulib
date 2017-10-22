@@ -4,12 +4,12 @@
 
 
 
-import argparse as _argparse_
-import os as _os_
+import argparse as _argparse
+import os as _os
 
-from .error import CommandLineError as _CommandLineError_
+from .error import CommandLineError as _CommandLineError
 
-from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE_
+from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE
 from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE_
 from .config import GPLv2_LICENSE as _GPLv2_LICENSE_
 from .config import LGPL_LICENSE as _LGPL_LICENSE_
@@ -18,93 +18,93 @@ from .config import LGPL_LICENSE as _LGPL_LICENSE_
 
 class CommandLine:
     """gnulib-tool command line configuration"""
-    _LIST_ = (1 << 0)
-    _FIND_ = (1 << 1)
-    _IMPORT_ = (1 << 2)
-    _ADD_IMPORT_ = (1 << 3)
-    _REMOVE_IMPORT_ = (1 << 4)
-    _UPDATE_ = (1 << 5)
-    _TEST_DIRECTORY_ = (1 << 6)
-    _MEGA_TEST_DIRECTORY_ = (1 << 7)
-    _TEST_ = (1 << 8)
-    _MEGA_TEST_ = (1 << 9)
-    _COPY_FILE_ = (1 << 10)
-    _EXTRACT_DESCRIPTION_ = (1 << 11)
-    _EXTRACT_COMMENT_ = (1 << 12)
-    _EXTRACT_STATUS_ = (1 << 13)
-    _EXTRACT_NOTICE_ = (1 << 14)
-    _EXTRACT_APPLICABILITY_ = (1 << 15)
-    _EXTRACT_FILELIST_ = (1 << 16)
-    _EXTRACT_DEPENDENCIES_ = (1 << 17)
-    _EXTRACT_AUTOCONF_SNIPPET_ = (1 << 18)
-    _EXTRACT_AUTOMAKE_SNIPPET_ = (1 << 19)
-    _EXTRACT_INCLUDE_DIRECTIVE_ = (1 << 20)
-    _EXTRACT_LINK_DIRECTIVE_ = (1 << 21)
-    _EXTRACT_LICENSE_ = (1 << 22)
-    _EXTRACT_MAINTAINER_ = (1 << 23)
-    _EXTRACT_TESTS_MODULE_ = (1 << 24)
+    _LIST = (1 << 0)
+    _FIND = (1 << 1)
+    _IMPORT = (1 << 2)
+    _ADD_IMPORT = (1 << 3)
+    _REMOVE_IMPORT = (1 << 4)
+    _UPDATE = (1 << 5)
+    _TEST_DIRECTORY = (1 << 6)
+    _MEGA_TEST_DIRECTORY = (1 << 7)
+    _TEST = (1 << 8)
+    _MEGA_TEST = (1 << 9)
+    _COPY_FILE = (1 << 10)
+    _EXTRACT_DESCRIPTION = (1 << 11)
+    _EXTRACT_COMMENT = (1 << 12)
+    _EXTRACT_STATUS = (1 << 13)
+    _EXTRACT_NOTICE = (1 << 14)
+    _EXTRACT_APPLICABILITY = (1 << 15)
+    _EXTRACT_FILELIST = (1 << 16)
+    _EXTRACT_DEPENDENCIES = (1 << 17)
+    _EXTRACT_AUTOCONF_SNIPPET = (1 << 18)
+    _EXTRACT_AUTOMAKE_SNIPPET = (1 << 19)
+    _EXTRACT_INCLUDE_DIRECTIVE = (1 << 20)
+    _EXTRACT_LINK_DIRECTIVE = (1 << 21)
+    _EXTRACT_LICENSE = (1 << 22)
+    _EXTRACT_MAINTAINER = (1 << 23)
+    _EXTRACT_TESTS_MODULE = (1 << 24)
     _HELP_ = (1 << 25)
-    _ANY_IMPORT_ = _IMPORT_ | _ADD_IMPORT_ | _REMOVE_IMPORT_ | _UPDATE_
-    _ANY_TEST_ = _TEST_ | _MEGA_TEST_ | _TEST_DIRECTORY_ | _MEGA_TEST_DIRECTORY_
-    _ANY_EXTRACT = _EXTRACT_DESCRIPTION_ | _EXTRACT_COMMENT_ | _EXTRACT_STATUS_ | \
-                   _EXTRACT_NOTICE_ | _EXTRACT_APPLICABILITY_ | _EXTRACT_FILELIST_ | \
-                   _EXTRACT_DEPENDENCIES_ | _EXTRACT_AUTOCONF_SNIPPET_ | \
-                   _EXTRACT_AUTOMAKE_SNIPPET_ | _EXTRACT_INCLUDE_DIRECTIVE_ | \
-                   _EXTRACT_LINK_DIRECTIVE_ | _EXTRACT_LICENSE_ | _EXTRACT_MAINTAINER_ | \
-                   _EXTRACT_TESTS_MODULE_
-    _ALL_ = _LIST_ | _FIND_ | _ANY_IMPORT_ | _ANY_TEST_
-    _MODES_ = (
-        (_LIST_, "list", ""),
-        (_FIND_, "find", "filename"),
-        (_IMPORT_, "import", "[module1 ... moduleN]"),
-        (_ADD_IMPORT_, "add-import", "[module1 ... moduleN]"),
-        (_REMOVE_IMPORT_, "remove-import", "[module1 ... moduleN]"),
-        (_UPDATE_, "update", ""),
-        (_TEST_DIRECTORY_, "testdir", "--dir=directory [module1 ... moduleN]"),
-        (_MEGA_TEST_DIRECTORY_, "megatestdir", "--dir=directory [module1 ... moduleN]"),
-        (_TEST_, "test", "--dir=directory [module1 ... moduleN]"),
-        (_MEGA_TEST_, "megatest", "--dir=directory [module1 ... moduleN]"),
-        (_EXTRACT_DESCRIPTION_, "extract-description", "module"),
-        (_EXTRACT_COMMENT_, "extract-comment", "module"),
-        (_EXTRACT_STATUS_, "extract-status", "module"),
-        (_EXTRACT_NOTICE_, "extract-notice", "module"),
-        (_EXTRACT_APPLICABILITY_, "extract-applicability", "module"),
-        (_EXTRACT_FILELIST_, "extract-filelist", "module"),
-        (_EXTRACT_DEPENDENCIES_, "extract-dependencies", "module"),
-        (_EXTRACT_AUTOCONF_SNIPPET_, "extract-autoconf-snippet", "module"),
-        (_EXTRACT_AUTOMAKE_SNIPPET_, "extract-automake-snippet", "module"),
-        (_EXTRACT_INCLUDE_DIRECTIVE_, "extract-include-directive", "module"),
-        (_EXTRACT_LINK_DIRECTIVE_, "extract-link-directive", "module"),
-        (_EXTRACT_LICENSE_, "extract-license", "module"),
-        (_EXTRACT_MAINTAINER_, "extract-maintainer", "module"),
-        (_EXTRACT_TESTS_MODULE_, "extract-tests-module", "module"),
-        (_COPY_FILE_, "copy", "file [destination]"),
+    _ANY_IMPORT = _IMPORT | _ADD_IMPORT | _REMOVE_IMPORT | _UPDATE
+    _ANY_TEST = _TEST | _MEGA_TEST | _TEST_DIRECTORY | _MEGA_TEST_DIRECTORY
+    _ANY_EXTRACT = _EXTRACT_DESCRIPTION | _EXTRACT_COMMENT | _EXTRACT_STATUS | \
+                   _EXTRACT_NOTICE | _EXTRACT_APPLICABILITY | _EXTRACT_FILELIST | \
+                   _EXTRACT_DEPENDENCIES | _EXTRACT_AUTOCONF_SNIPPET | \
+                   _EXTRACT_AUTOMAKE_SNIPPET | _EXTRACT_INCLUDE_DIRECTIVE | \
+                   _EXTRACT_LINK_DIRECTIVE | _EXTRACT_LICENSE | _EXTRACT_MAINTAINER | \
+                   _EXTRACT_TESTS_MODULE
+    _ALL = _LIST | _FIND | _ANY_IMPORT | _ANY_TEST
+    _MODES = (
+        (_LIST, "list", ""),
+        (_FIND, "find", "filename"),
+        (_IMPORT, "import", "[module1 ... moduleN]"),
+        (_ADD_IMPORT, "add-import", "[module1 ... moduleN]"),
+        (_REMOVE_IMPORT, "remove-import", "[module1 ... moduleN]"),
+        (_UPDATE, "update", ""),
+        (_TEST_DIRECTORY, "testdir", "--dir=directory [module1 ... moduleN]"),
+        (_MEGA_TEST_DIRECTORY, "megatestdir", "--dir=directory [module1 ... moduleN]"),
+        (_TEST, "test", "--dir=directory [module1 ... moduleN]"),
+        (_MEGA_TEST, "megatest", "--dir=directory [module1 ... moduleN]"),
+        (_EXTRACT_DESCRIPTION, "extract-description", "module"),
+        (_EXTRACT_COMMENT, "extract-comment", "module"),
+        (_EXTRACT_STATUS, "extract-status", "module"),
+        (_EXTRACT_NOTICE, "extract-notice", "module"),
+        (_EXTRACT_APPLICABILITY, "extract-applicability", "module"),
+        (_EXTRACT_FILELIST, "extract-filelist", "module"),
+        (_EXTRACT_DEPENDENCIES, "extract-dependencies", "module"),
+        (_EXTRACT_AUTOCONF_SNIPPET, "extract-autoconf-snippet", "module"),
+        (_EXTRACT_AUTOMAKE_SNIPPET, "extract-automake-snippet", "module"),
+        (_EXTRACT_INCLUDE_DIRECTIVE, "extract-include-directive", "module"),
+        (_EXTRACT_LINK_DIRECTIVE, "extract-link-directive", "module"),
+        (_EXTRACT_LICENSE, "extract-license", "module"),
+        (_EXTRACT_MAINTAINER, "extract-maintainer", "module"),
+        (_EXTRACT_TESTS_MODULE, "extract-tests-module", "module"),
+        (_COPY_FILE, "copy", "file [destination]"),
         (_HELP_, "help", ""),
     )
-    _LINK_SYMBOLIC_ = (1 << 0)
-    _LINK_HARD_ = (1 << 1)
-    _LINK_LOCAL_ = (1 << 2)
-    _LINK_NOTICE_ = (1 << 3)
+    _LINK_SYMBOLIC = (1 << 0)
+    _LINK_HARD = (1 << 1)
+    _LINK_LOCAL = (1 << 2)
+    _LINK_NOTICE = (1 << 3)
 
 
-    class _Option_(_argparse_.Action):
+    class _Option(_argparse.Action):
         def __init__(self, *args, **kwargs):
             self.__flags = kwargs.pop("flags")
             self.__options = kwargs["option_strings"]
-            super().__init__(default=_argparse_.SUPPRESS, *args, **kwargs)
+            super().__init__(default=_argparse.SUPPRESS, *args, **kwargs)
 
 
         def __call__(self, parser, namespace, value, option=None):
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
                 if mode and not (self.__flags & mode) and (mode != CommandLine._HELP_):
-                    mode = "--" + {k:v for (k, v, _) in CommandLine._MODES_}[mode]
+                    mode = "--" + {k:v for (k, v, _) in CommandLine._MODES}[mode]
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(mode, option))
             setattr(namespace, self.dest, value)
 
 
-    class _ConstOption_(_Option_):
+    class _ConstOption(_Option):
         def __init__(self, *args, **kwargs):
             self.__const = kwargs.pop("const")
             super().__init__(nargs=0, *args, **kwargs)
@@ -116,32 +116,32 @@ class CommandLine:
             super().__call__(*args)
 
 
-    class _TrueOption_(_ConstOption_):
+    class _TrueOption(_ConstOption):
         def __init__(self, *args, **kwargs):
             super().__init__(const=True, *args, **kwargs)
 
 
-    class _FalseOption_(_ConstOption_):
+    class _FalseOption(_ConstOption):
         def __init__(self, *args, **kwargs):
             super().__init__(const=False, *args, **kwargs)
 
 
-    class _ModeOption_(_Option_):
+    class _ModeOption(_Option):
         def __init__(self, *args, **kwargs):
             mode = kwargs["const"]
             kwargs["dest"] = "mode"
             kwargs["nargs"] = 0
-            if mode & CommandLine._UPDATE_:
+            if mode & CommandLine._UPDATE:
                 kwargs["nargs"] = 0
-            elif mode & CommandLine._ANY_IMPORT_ \
-            or mode & CommandLine._ANY_TEST_ \
+            elif mode & CommandLine._ANY_IMPORT \
+            or mode & CommandLine._ANY_TEST \
             or mode & CommandLine._ANY_EXTRACT:
                 kwargs["nargs"] = "*"
                 kwargs["metavar"] = "module0 ... moduleN"
-            elif mode & CommandLine._FIND_:
+            elif mode & CommandLine._FIND:
                 kwargs.pop("nargs")
                 kwargs["metavar"] = "FILE"
-            elif mode & CommandLine._COPY_FILE_:
+            elif mode & CommandLine._COPY_FILE:
                 kwargs["nargs"] = "+"
                 kwargs["metavar"] = "SRC [DST]"
             super().__init__(*args, **kwargs)
@@ -154,7 +154,7 @@ class CommandLine:
             new_option = option
             new_mode = None
             old_mode = getattr(namespace, self.dest)
-            for (mode, name, _) in CommandLine._MODES_:
+            for (mode, name, _) in CommandLine._MODES:
                 option = ("--" + name)
                 if mode == old_mode:
                     old_option = option
@@ -168,13 +168,13 @@ class CommandLine:
                 if old_mode != 0:
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(new_option, old_option))
-            if new_mode != CommandLine._UPDATE_:
+            if new_mode != CommandLine._UPDATE:
                 setattr(namespace, "modules", set(value))
             value = new_mode
             super().__call__(parser, namespace, value, option)
 
 
-    class _AvoidOption_(_Option_):
+    class _AvoidOption(_Option):
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, list())
@@ -182,7 +182,7 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
-    class _VerbosityOption_(_Option_):
+    class _VerbosityOption(_Option):
         def __init__(self, *args, **kwargs):
             super().__init__(nargs=0, *args, **kwargs)
 
@@ -196,12 +196,12 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
-    class _LGPLOption_(_Option_):
+    class _LGPLOption(_Option):
         def __call__(self, parser, namespace, value, option=None):
             if value not in {"2", "3", "yes", "3orGPLv2"}:
                 parser.error("argument --lgpl: 2, 3, yes or 3orGPLv2")
             value = {
-                "2": _LGPLv2_LICENSE_,
+                "2": _LGPLv2_LICENSE,
                 "3": _LGPLv3_LICENSE_,
                 "yes": _LGPL_LICENSE_,
                 "3orGPLv2": (_GPLv2_LICENSE_ | _LGPLv3_LICENSE_),
@@ -209,7 +209,7 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
-    class _CopyModeOption_(_Option_):
+    class _CopyModeOption(_Option):
         def __init__(self, *args, **kwargs):
             super().__init__(nargs=0, *args, **kwargs)
 
@@ -226,7 +226,7 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
-    class _CopyrightsCopyModeOption_(_CopyModeOption_):
+    class _CopyrightsCopyModeOption(_CopyModeOption):
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
                 setattr(namespace, "copyrights", False)
@@ -256,22 +256,22 @@ class CommandLine:
                     "help": (
                         "print the available module names",
                     ),
-                    "action": _ModeOption_,
-                    "const": _LIST_,
+                    "action": _ModeOption,
+                    "const": _LIST,
                 }),
                 (["-f", "--find"], {
                     "help": (
                         "find the modules which contain the specified file",
                     ),
-                    "action": _ModeOption_,
-                    "const": _FIND_,
+                    "action": _ModeOption,
+                    "const": _FIND,
                 }),
                 (["-i", "--import"], {
                     "help": (
                         "import the given modules into the current package",
                     ),
-                    "action": _ModeOption_,
-                    "const": _IMPORT_,
+                    "action": _ModeOption,
+                    "const": _IMPORT,
                 }),
                 (["-a", "--add-import"], {
                     "help": (
@@ -280,139 +280,139 @@ class CommandLine:
                         "if no modules are specified, update the current",
                         "package from the current gnulib",
                     ),
-                    "action": _ModeOption_,
-                    "const": _ADD_IMPORT_,
+                    "action": _ModeOption,
+                    "const": _ADD_IMPORT,
                 }),
                 (["-r", "--remove-import"], {
                     "help": (
                         "reduce the list of imports from gnulib into the",
                         "current package, by removing the given modules",
                     ),
-                    "action": _ModeOption_,
-                    "const": _REMOVE_IMPORT_,
+                    "action": _ModeOption,
+                    "const": _REMOVE_IMPORT,
                 }),
                 (["-u", "--update"], {
                     "help": (
                         "update the current package, restore files omitted",
                         "from version control",
                     ),
-                    "action": _ModeOption_,
-                    "const": _UPDATE_,
+                    "action": _ModeOption,
+                    "const": _UPDATE,
                 }),
 
                 (["--extract-description"], {
                     "help": (
                         "extract the description",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_DESCRIPTION_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_DESCRIPTION,
                 }),
                 (["--extract-comment"], {
                     "help": (
                         "extract the comment",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_COMMENT_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_COMMENT,
                 }),
                 (["--extract-status"], {
                     "help": (
                         "extract the status (obsolete etc.)",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_STATUS_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_STATUS,
                 }),
                 (["--extract-notice"], {
                     "help": (
                         "extract the notice or banner",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_NOTICE_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_NOTICE,
                 }),
                 (["--extract-applicability"], {
                     "help": (
                         "extract the applicability",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_APPLICABILITY_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_APPLICABILITY,
                 }),
                 (["--extract-filelist"], {
                     "help": (
                         "extract the list of files",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_FILELIST_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_FILELIST,
                 }),
                 (["--extract-dependencies"], {
                     "help": (
                         "extract the dependencies",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_DEPENDENCIES_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_DEPENDENCIES,
                 }),
                 (["--extract-autoconf-snippet"], {
                     "help": (
                         "extract the snippet for configure.ac",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_AUTOCONF_SNIPPET_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_AUTOCONF_SNIPPET,
                 }),
                 (["--extract-automake-snippet"], {
                     "help": (
                         "extract the snippet for library makefile",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_AUTOMAKE_SNIPPET_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_AUTOMAKE_SNIPPET,
                 }),
                 (["--extract-include-directive"], {
                     "help": (
                         "extract the #include directive",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_INCLUDE_DIRECTIVE_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_INCLUDE_DIRECTIVE,
                 }),
                 (["--extract-link-directive"], {
                     "help": (
                         "extract the linker directive",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_LINK_DIRECTIVE_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_LINK_DIRECTIVE,
                 }),
                 (["--extract-license"], {
                     "help": (
                         "report the license terms of the source files",
                         "under lib/",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_LICENSE_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_LICENSE,
                 }),
                 (["--extract-maintainer", "--extract-maintainers"], {
                     "help": (
                         "report the maintainer(s) inside gnulib",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_MAINTAINER_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_MAINTAINER,
                 }),
                 (["--extract-tests-module"], {
                     "help": (
                         "report the unit test module, if it exists",
                     ),
-                    "action": _ModeOption_,
-                    "const": _EXTRACT_TESTS_MODULE_,
+                    "action": _ModeOption,
+                    "const": _EXTRACT_TESTS_MODULE,
                 }),
 
                 (["--copy-file"], {
                     "help": (
                         "copy a file that is not part of any module",
                     ),
-                    "action": _ModeOption_,
-                    "const": _COPY_FILE_,
+                    "action": _ModeOption,
+                    "const": _COPY_FILE,
                 }),
 
                 (["--help"], {
                     "help": (
                         "show this help text",
                     ),
-                    "action": _ModeOption_,
+                    "action": _ModeOption,
                     "const": _HELP_,
                 }),
             ),
@@ -421,7 +421,7 @@ class CommandLine:
 
         (
             "General options",
-            _ALL_,
+            _ALL,
             (
                 (["--dir"], {
                     "help": (
@@ -429,7 +429,7 @@ class CommandLine:
                         "this specifies where your configure.ac",
                         "can be found; defaults to current directory",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "dest": "root",
                     "metavar": "DIRECTORY",
                 }),
@@ -438,7 +438,7 @@ class CommandLine:
                         "pecify a local override directory where to look",
                         "up files before looking in gnulib's directory",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "dest": "local",
                     "metavar": "DIRECTORY",
                 }),
@@ -446,14 +446,14 @@ class CommandLine:
                     "help": (
                         "increase verbosity; may be repeated",
                     ),
-                    "action": _VerbosityOption_,
+                    "action": _VerbosityOption,
                     "dest": "verbosity",
                 }),
                 (["-q", "--quiet"], {
                     "help": (
                         "decrease verbosity; may be repeated",
                     ),
-                    "action": _VerbosityOption_,
+                    "action": _VerbosityOption,
                     "dest": "verbosity",
                 }),
             ),
@@ -462,13 +462,13 @@ class CommandLine:
 
         (
             "Options for --import, --add/remove-import, --update",
-            _ANY_IMPORT_,
+            _ANY_IMPORT,
             (
                 (["--dry-run"], {
                     "help": (
                         "only print what would have been done",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "dry_run",
                 }),
             ),
@@ -477,13 +477,13 @@ class CommandLine:
 
         (
             "Options for --import, --add/remove-import",
-            (_IMPORT_ | _ADD_IMPORT_ | _REMOVE_IMPORT_),
+            (_IMPORT | _ADD_IMPORT | _REMOVE_IMPORT),
             (
                 (["--with-tests"], {
                     "help": (
                         "include unit tests for the included modules",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "tests",
                 }),
                 (["--single-configure"], {
@@ -491,7 +491,7 @@ class CommandLine:
                         "generate a single configure file, not a separate",
                         "configure file for the tests directory",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "single_configure",
                 }),
             ),
@@ -500,13 +500,13 @@ class CommandLine:
 
         (
             "Options for --create-[mega]testdir, --[mega]test",
-            _ANY_TEST_,
+            _ANY_TEST,
             (
                 (["--without-tests"], {
                     "help": (
                         "don't include unit tests for the included modules",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "tests",
                 }),
             ),
@@ -517,7 +517,7 @@ class CommandLine:
             "Options for --import, --add/remove-import,"
             "\n"
             "            --create-[mega]testdir, --[mega]test",
-            (_ANY_IMPORT_ & ~_UPDATE_) | _ANY_TEST_,
+            (_ANY_IMPORT & ~_UPDATE) | _ANY_TEST,
             (
                 (["--with-obsolete"], {
                     "help": (
@@ -525,7 +525,7 @@ class CommandLine:
                         "dependencies; by default, dependencies to obsolete",
                         "modules are ignored",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "obsolete",
                 }),
 
@@ -533,14 +533,14 @@ class CommandLine:
                     "help": (
                         "include even unit tests for C++ interoperability",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "cxx_tests",
                 }),
                 (["--without-c++-tests"], {
                     "help": (
                         "exclude unit tests for C++ interoperability",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "cxx_tests",
                 }),
 
@@ -548,14 +548,14 @@ class CommandLine:
                     "help": (
                         "include even unit tests that are long-runners",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "longrunning_tests",
                 }),
                 (["--without-longrunning-tests"], {
                     "help": (
                         "exclude unit tests that are long-runners",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "longrunning_tests",
                 }),
 
@@ -563,14 +563,14 @@ class CommandLine:
                     "help": (
                         "include even unit tests that require root privileges",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "privileged_tests",
                 }),
                 (["--without-privileged-tests"], {
                     "help": (
                         "exclude unit tests that require root privileges",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "privileged_tests",
                 }),
 
@@ -578,14 +578,14 @@ class CommandLine:
                     "help": (
                         "include even unit tests that fail on some platforms",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "unportable_tests",
                 }),
                 (["--without-unportable-tests"], {
                     "help": (
                         "exclude unit tests that fail on some platforms",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "unportable_tests",
                 }),
 
@@ -593,7 +593,7 @@ class CommandLine:
                     "help": (
                         "include all kinds of problematic unit tests",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "all_tests",
                 }),
                 (["--avoid"], {
@@ -602,7 +602,7 @@ class CommandLine:
                         "have code that provides equivalent functionality;",
                         "this option can be repeated",
                     ),
-                    "action": _AvoidOption_,
+                    "action": _AvoidOption,
                     "nargs": 1,
                     "metavar": "MODULE",
                 }),
@@ -611,28 +611,28 @@ class CommandLine:
                         "support conditional dependencies (may save configure",
                         "time and object code)",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "conddeps",
                 }),
                 (["--no-conditional-dependencies"], {
                     "help": (
                         "don't use conditional dependencies",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "conddeps",
                 }),
                 (["--libtool"], {
                     "help": (
                         "use libtool rules",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "libtool",
                 }),
                 (["--no-libtool"], {
                     "help": (
                         "don't use libtool rules",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "libtool",
                 }),
             ),
@@ -641,13 +641,13 @@ class CommandLine:
 
         (
             "Options for --import, --add/remove-import",
-            (_ANY_IMPORT_ & ~_UPDATE_),
+            (_ANY_IMPORT & ~_UPDATE),
             (
                 (["--lib"], {
                     "help": (
                         "specify the library name; defaults to 'libgnu'",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "LIBRARY",
                 }),
                 (["--source-base"], {
@@ -655,7 +655,7 @@ class CommandLine:
                         "directory relative to --dir where source code is",
                         "placed (default \"lib\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "DIRECTORY",
                 }),
                 (["--m4-base"], {
@@ -663,7 +663,7 @@ class CommandLine:
                         "directory relative to --dir where *.m4 macros are",
                         "placed (default \"m4\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "DIRECTORY",
                 }),
                 (["--po-base"], {
@@ -671,7 +671,7 @@ class CommandLine:
                         "directory relative to --dir where *.po files are",
                         "placed (default \"po\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "DIRECTORY",
                 }),
                 (["--doc-base"], {
@@ -679,7 +679,7 @@ class CommandLine:
                         "directory relative to --dir where doc files are",
                         "placed (default \"doc\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "DIRECTORY",
                 }),
                 (["--tests-base"], {
@@ -687,7 +687,7 @@ class CommandLine:
                         "directory relative to --dir where unit tests are",
                         "placed (default \"tests\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "DIRECTORY",
                 }),
                 (["--aux-dir"], {
@@ -695,7 +695,7 @@ class CommandLine:
                         "directory relative to --dir where auxiliary build",
                         "tools are placed (default comes from configure.ac);",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "dest": "auxdir",
                     "metavar": "DIRECTORY",
                 }),
@@ -706,7 +706,7 @@ class CommandLine:
                         "the version number of the LGPL can be specified;",
                         "the default is currently LGPLv3.",
                     ),
-                    "action": _LGPLOption_,
+                    "action": _LGPLOption,
                     "dest": "licenses",
                     "metavar": "[=2|=3orGPLv2|=3]",
                 }),
@@ -716,7 +716,7 @@ class CommandLine:
                         "source-base and tests-base directories",
                         "(default \"Makefile.am\")",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "NAME",
                 }),
                 (["--macro-prefix"], {
@@ -724,7 +724,7 @@ class CommandLine:
                         "specify the prefix of the macros 'gl_EARLY' and",
                         "'gl_INIT'; default is 'gl'",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "PREFIX",
                 }),
                 (["--po-domain"], {
@@ -732,7 +732,7 @@ class CommandLine:
                         "specify the prefix of the i18n domain; usually use",
                         "the package name; a suffix '-gnulib' is appended",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "NAME",
                 }),
                 (["--witness-c-macro"], {
@@ -740,7 +740,7 @@ class CommandLine:
                         "specify the C macro that is defined when the",
                         "sources in this directory are compiled or used",
                     ),
-                    "action": _Option_,
+                    "action": _Option,
                     "metavar": "NAME",
                 }),
                 (["--vc-files"], {
@@ -748,7 +748,7 @@ class CommandLine:
                         "update version control related files",
                         "(.gitignore and/or .cvsignore)",
                     ),
-                    "action": _TrueOption_,
+                    "action": _TrueOption,
                     "dest": "vc_files",
                 }),
                 (["--no-vc-files"], {
@@ -756,7 +756,7 @@ class CommandLine:
                         "don't update version control related files",
                         "(.gitignore and/or .cvsignore)",
                     ),
-                    "action": _FalseOption_,
+                    "action": _FalseOption,
                     "dest": "libtool",
                 }),
                 (["--no-changelog"], {
@@ -764,7 +764,7 @@ class CommandLine:
                         "don't update or create ChangeLog files;",
                         "this option is currently deprecated",
                     ),
-                    "action": _ConstOption_,
+                    "action": _ConstOption,
                     "const": None,
                 }),
             ),
@@ -775,13 +775,13 @@ class CommandLine:
             "Options for --import, --add/remove-import, --update"
             "\n"
             "            --create-[mega]testdir, --[mega]test",
-            _ANY_IMPORT_ | _ANY_TEST_,
+            _ANY_IMPORT | _ANY_TEST,
             (
                 (["-s", "--symlink"], {
                     "help": (
                         "make symbolic links instead of copying files",
                     ),
-                    "action": _CopyModeOption_,
+                    "action": _CopyModeOption,
                     "dest": "copymode",
                 }),
                 (["--local-symlink"], {
@@ -789,14 +789,14 @@ class CommandLine:
                         "make symbolic links instead of copying files, only",
                         "for files from the local override directory"
                     ),
-                    "action": _CopyModeOption_,
+                    "action": _CopyModeOption,
                     "dest": "local_copymode",
                 }),
                 (["-h", "--hardlink"], {
                     "help": (
                         "make hard links instead of copying files",
                     ),
-                    "action": _CopyModeOption_,
+                    "action": _CopyModeOption,
                     "dest": "copymode",
                 }),
                 (["--local-hardlink"], {
@@ -804,7 +804,7 @@ class CommandLine:
                         "make hard links instead of copying files, only",
                         "for files from the local override directory"
                     ),
-                    "action": _CopyModeOption_,
+                    "action": _CopyModeOption,
                     "dest": "local_copymode",
                 }),
             ),
@@ -813,14 +813,14 @@ class CommandLine:
 
         (
             "Options for --import, --add/remove-import, --update",
-            _ANY_IMPORT_,
+            _ANY_IMPORT,
             (
                 (["-S", "--more-symlink"], {
                     "help": (
                         "make symbolic links instead of copying files and",
                         "don't replace copyright notices",
                     ),
-                    "action": _CopyrightsCopyModeOption_,
+                    "action": _CopyrightsCopyModeOption,
                     "dest": "copymode",
                 }),
                 (["-H", "--more-hardlink"], {
@@ -828,7 +828,7 @@ class CommandLine:
                         "make symbolic links instead of copying files and",
                         "don't replace copyright notices",
                     ),
-                    "action": _CopyrightsCopyModeOption_,
+                    "action": _CopyrightsCopyModeOption,
                     "dest": "copymode",
                 }),
             ),
@@ -837,7 +837,7 @@ class CommandLine:
 
 
     def __error(self, message):
-        raise _CommandLineError_(self.__program, message)
+        raise _CommandLineError(self.__program, message)
 
 
     def __format_help(self):
@@ -871,7 +871,7 @@ class CommandLine:
 
 
     def __format_usage(self):
-        iterable = iter(CommandLine._MODES_)
+        iterable = iter(CommandLine._MODES)
         (_, cmd, args) = next(iterable)
         fmt = (" --{cmd}" + (" {args}" if args else ""))
         lines = ["usage: {program}" + fmt.format(cmd=cmd, args=args)]
@@ -889,14 +889,14 @@ class CommandLine:
 
 
     def __init__(self, program):
-        self.__parser = _argparse_.ArgumentParser(prog=program, add_help=False)
+        self.__parser = _argparse.ArgumentParser(prog=program, add_help=False)
         for (options, kwargs) in CommandLine._SECTIONS_[0][2]:
             flags = kwargs.get("const")
             self.__parser.add_argument(*options, **kwargs, flags=flags)
         for (_, flags, args) in CommandLine._SECTIONS_[1:]:
             for (options, kwargs) in args:
                 self.__parser.add_argument(*options, **kwargs, flags=flags)
-        self.__program = _os_.path.basename(program)
+        self.__program = _os.path.basename(program)
         self.__parser.error = self.__error
         self.__parser.format_help = self.__format_help
         self.__parser.format_usage = self.__format_usage
@@ -936,7 +936,7 @@ class CommandLine:
             fmt = "unrecognized arguments: {0}"
             arguments = " ".join(arguments)
             self.__parser.error(fmt.format(arguments))
-        mode = {k:v for (k, v, _) in CommandLine._MODES_}[mode]
+        mode = {k:v for (k, v, _) in CommandLine._MODES}[mode]
         if mode in {"import", "add-import", "remove-import"} and not namespace["modules"]:
             fmt = "--{0}: expected at least one argument"
             self.__parser.error(fmt.format(mode))

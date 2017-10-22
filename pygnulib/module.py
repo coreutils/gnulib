@@ -4,24 +4,25 @@
 
 
 
-import codecs as _codecs_
-import hashlib as _hashlib_
-import collections as _collections_
-import os as _os_
-import re as _re_
+import codecs as _codecs
+import hashlib as _hashlib
+import collections as _collections
+import os as _os
+import re as _re
 
 
-from .error import type_assert as _type_assert_
-from .error import UnknownModuleError as _UnknownModuleError_
+from .error import type_assert as _type_assert
+from .error import UnknownModuleError as _UnknownModuleError
 
 
 
-_ITERABLES_ = (list, tuple, set, frozenset)
+_ITERABLES = (list, tuple, set, frozenset)
+
 
 
 class Base:
     """gnulib generic module"""
-    _TABLE_ = {
+    _TABLE = {
         "description"            : (0x00, str, "Description"),
         "comment"                : (0x01, str, "Comment"),
         "status"                 : (0x02, frozenset, "Status"),
@@ -37,22 +38,22 @@ class Base:
         "licenses"               : (0x0C, frozenset, "License"),
         "maintainers"            : (0x0D, frozenset, "Maintainer"),
     }
-    _PATTERN_DEPENDENCIES_ = _re_.compile("^(\\S+)(?:\\s+(.+))*$")
+    _DEPENDENCIES = _re.compile("^(\\S+)(?:\\s+(.+))*$")
 
 
     def __init__(self, name, **kwargs):
-        _type_assert_("name", name, str)
+        _type_assert("name", name, str)
         if "licenses" in kwargs:
             licenses = set()
             for license in kwargs.get("licenses", frozenset()):
-                _type_assert_("license", license, str)
+                _type_assert("license", license, str)
                 licenses.add(license)
             kwargs["licenses"] = licenses
         if "maintainers" not in kwargs:
             kwargs["maintainers"] = ("all",)
-        self.__table = _collections_.OrderedDict()
+        self.__table = _collections.OrderedDict()
         self.__table["name"] = name
-        for (key, (_, typeid, _)) in Base._TABLE_.items():
+        for (key, (_, typeid, _)) in Base._TABLE.items():
             self.__table[key] = typeid(kwargs.get(key, typeid()))
 
 
@@ -63,7 +64,7 @@ class Base:
 
     @name.setter
     def name(self, value):
-        _type_assert_("name", value, str)
+        _type_assert("name", value, str)
         self.__table["name"] = value
 
 
@@ -74,7 +75,7 @@ class Base:
 
     @description.setter
     def description(self, value):
-        _type_assert_("description", value, str)
+        _type_assert("description", value, str)
         self.__table["description"] = value
 
 
@@ -85,7 +86,7 @@ class Base:
 
     @comment.setter
     def comment(self, value):
-        _type_assert_("comment", value, str)
+        _type_assert("comment", value, str)
         self.__table["comment"] = value
 
 
@@ -96,10 +97,10 @@ class Base:
 
     @status.setter
     def status(self, value):
-        _type_assert_("status", value, _ITERABLES_)
+        _type_assert("status", value, _ITERABLES)
         result = set()
         for item in value:
-            _type_assert_("status", item, str)
+            _type_assert("status", item, str)
             result.add(item)
         self.__table["status"] = frozenset(result)
 
@@ -137,7 +138,7 @@ class Base:
 
     @notice.setter
     def notice(self, value):
-        _type_assert_("notice", value, str)
+        _type_assert("notice", value, str)
         self.__table["notice"] = value
 
 
@@ -150,7 +151,7 @@ class Base:
 
     @applicability.setter
     def applicability(self, value):
-        _type_assert_("applicability", value, str)
+        _type_assert("applicability", value, str)
         if value not in ("all", "main", "tests"):
             raise ValueError("applicability: \"main\", \"tests\" or \"all\"")
         self.__table["applicability"] = value
@@ -164,10 +165,10 @@ class Base:
 
     @files.setter
     def files(self, value):
-        _type_assert_("files", value, _ITERABLES_)
+        _type_assert("files", value, _ITERABLES)
         result = set()
         for item in value:
-            _type_assert_("file", item, str)
+            _type_assert("file", item, str)
             result.add(item)
         self.__table["files"] = frozenset(result)
 
@@ -176,15 +177,15 @@ class Base:
     def dependencies(self):
         """dependencies iterator (name, condition)"""
         for entry in self.__table["dependencies"]:
-            yield Base._PATTERN_DEPENDENCIES_.findall(entry)[0]
+            yield Base._DEPENDENCIES.findall(entry)[0]
 
     @dependencies.setter
     def dependencies(self, value):
-        _type_assert_("files", value, _ITERABLES_)
+        _type_assert("files", value, _ITERABLES)
         result = set()
         for (name, condition) in value:
-            _type_assert_("name", name, str)
-            _type_assert_("condition", condition, str)
+            _type_assert("name", name, str)
+            _type_assert("condition", condition, str)
             result.add((name, condition))
         self.__table["dependencies"] = frozenset(result)
 
@@ -196,7 +197,7 @@ class Base:
 
     @early_autoconf_snippet.setter
     def early_autoconf_snippet(self, value):
-        _type_assert_("early_autoconf_snippet", value, str)
+        _type_assert("early_autoconf_snippet", value, str)
         self.__table["early_autoconf_snippet"] = value
 
 
@@ -207,7 +208,7 @@ class Base:
 
     @autoconf_snippet.setter
     def autoconf_snippet(self, value):
-        _type_assert_("autoconf_snippet", value, str)
+        _type_assert("autoconf_snippet", value, str)
         self.__table["autoconf_snippet"] = value
 
 
@@ -218,7 +219,7 @@ class Base:
 
     @automake_snippet.setter
     def automake_snippet(self, value):
-        _type_assert_("automake_snippet", value, str)
+        _type_assert("automake_snippet", value, str)
         self.__table["automake_snippet"] = value
 
 
@@ -232,7 +233,7 @@ class Base:
 
     @include_directive.setter
     def include_directive(self, value):
-        _type_assert_("include_directive", value, str)
+        _type_assert("include_directive", value, str)
         self.__table["include_directive"] = value
 
 
@@ -243,7 +244,7 @@ class Base:
 
     @link_directive.setter
     def link_directive(self, value):
-        _type_assert_("link_directive", value, str)
+        _type_assert("link_directive", value, str)
         self.__table["link_directive"] = value
 
 
@@ -254,10 +255,10 @@ class Base:
 
     @licenses.setter
     def licenses(self, value):
-        _type_assert_("licenses", value, _ITERABLES_)
+        _type_assert("licenses", value, _ITERABLES)
         result = set()
         for item in value:
-            _type_assert_("license", item, str)
+            _type_assert("license", item, str)
             result.add(value)
         self.__table["licenses"] = frozenset(result)
 
@@ -269,10 +270,10 @@ class Base:
 
     @maintainers.setter
     def maintainers(self, value):
-        _type_assert_("maintainers", value, _ITERABLES_)
+        _type_assert("maintainers", value, _ITERABLES)
         result = set()
         for item in value:
-            _type_assert_("maintainer", item, str)
+            _type_assert("maintainer", item, str)
             result.add(item)
         self.__table["maintainers"] = frozenset(result)
 
@@ -282,7 +283,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = _hashlib_.md5(module).hexdigest()
+            module = _hashlib.md5(module).hexdigest()
         return "{}_gnulib_enabled_{}".format(macro_prefix, module)
 
 
@@ -291,7 +292,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = _hashlib_.md5(module).hexdigest()
+            module = _hashlib.md5(module).hexdigest()
         return "func_{}_gnulib_m4code_{}".format(macro_prefix, module)
 
 
@@ -300,7 +301,7 @@ class Base:
         module = self.name
         if len(module) != len(module.encode()):
             module = (module + "\n").encode("UTF-8")
-            module = _hashlib_.md5(module).hexdigest()
+            module = _hashlib.md5(module).hexdigest()
         return "{}_GNULIB_ENABLED_{}".format(macro_prefix, module)
 
 
@@ -316,9 +317,9 @@ class Base:
 
     def __str__(self):
         result = ""
-        for (key, (_, typeid, field)) in sorted(Base._TABLE_.items(), key=lambda k: k[1][0]):
+        for (key, (_, typeid, field)) in sorted(Base._TABLE.items(), key=lambda k: k[1][0]):
             field += ":\n"
-            if typeid in _ITERABLES_:
+            if typeid in _ITERABLES:
                 value = "\n".join(self.__table[key])
             else:
                 value = self.__table[key]
@@ -330,17 +331,17 @@ class Base:
 
 
     def __getitem__(self, key):
-        if key not in Base._TABLE_:
+        if key not in Base._TABLE:
             key = key.replace("-", "_")
-            if key not in Base._TABLE_:
+            if key not in Base._TABLE:
                 raise KeyError(repr(key))
         return getattr(self, key)
 
 
     def __setitem__(self, key, value):
-        if key not in Base._TABLE_:
+        if key not in Base._TABLE:
             key = key.replace("-", "_")
-            if key not in Base._TABLE_:
+            if key not in Base._TABLE:
                 raise KeyError(repr(key))
         return setattr(self, key, value)
 
@@ -386,25 +387,25 @@ class Base:
 
 class File(Base):
     """gnulib module text file"""
-    _TABLE_ = {}
-    for (_key_, (_, _typeid_, _value_)) in Base._TABLE_.items():
-        _TABLE_[_value_] = (_typeid_, _key_)
-    _FIELDS_ = [field for (_, _, field) in Base._TABLE_.values()]
-    _PATTERN_ = _re_.compile("({}):".format("|".join(_FIELDS_)))
+    _TABLE = {}
+    for (_key, (_, _typeid, _value)) in Base._TABLE.items():
+        _TABLE[_value] = (_typeid, _key)
+    _FIELDS = [field for (_, _, field) in Base._TABLE.values()]
+    _PATTERN = _re.compile("({}):".format("|".join(_FIELDS)))
 
 
     def __init__(self, path, mode="r", name=None, **kwargs):
         table = {}
         if name is None:
-            name = _os_.path.basename(path)
+            name = _os.path.basename(path)
         if mode not in ("r", "w", "rw"):
             raise ValueError("illegal mode: {}".format(mode))
         if mode == "r":
-            with _codecs_.open(path, "rb", "UTF-8") as stream:
-                match = File._PATTERN_.split(stream.read())[1:]
+            with _codecs.open(path, "rb", "UTF-8") as stream:
+                match = File._PATTERN.split(stream.read())[1:]
             for (group, value) in zip(match[::2], match[1::2]):
-                (typeid, key) = File._TABLE_[group]
-                if typeid in _ITERABLES_:
+                (typeid, key) = File._TABLE[group]
+                if typeid in _ITERABLES:
                     lines = []
                     for line in value.splitlines():
                         if not line.strip() or line.startswith("#"):
@@ -419,11 +420,11 @@ class File(Base):
                 table["licenses"] = ["GPLv2, LGPLv3+"]
             self.__stream = None
         elif mode == "w":
-            self.__stream = _codecs_.open(path, "w+", "UTF-8")
+            self.__stream = _codecs.open(path, "w+", "UTF-8")
         elif mode == "rw":
             super().__init__(name)
             self.__init__(path, "r")
-            self.__stream = _codecs_.open(path, "w+", "UTF-8")
+            self.__stream = _codecs.open(path, "w+", "UTF-8")
         else:
             raise ValueError("illegal mode: {}".format(mode))
 
@@ -474,7 +475,7 @@ def transitive_closure(lookup, modules, **options):
     for (key, value) in options.items():
         if key not in keywords:
             return KeyError(key)
-        _type_assert_("option", value, bool)
+        _type_assert("option", value, bool)
     modules = set(lookup(module) for module in modules)
 
     def _exclude_(module):
@@ -502,7 +503,7 @@ def transitive_closure(lookup, modules, **options):
                         module = lookup("{0}-tests".format(demander.name))
                         if not _exclude_(module):
                             current.add((module, None, None))
-                    except _UnknownModuleError_:
+                    except _UnknownModuleError:
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = lookup(dependency)
@@ -532,12 +533,12 @@ def libtests_required(modules):
 
 
 
-_DUMMY_REQUIRED_PATTERN_ = _re_.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re_.S | _re_.M)
+_DUMMY_REQUIRED_PATTERN = _re.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re.S | _re.M)
 def dummy_required(modules):
     """Determine whether dummy module is required."""
     for module in modules:
         snippet = module.automake_snippet
-        match = _DUMMY_REQUIRED_PATTERN_.findall(snippet)
+        match = _DUMMY_REQUIRED_PATTERN.findall(snippet)
         for files in match:
             files = (files.split("#", 1)[0].split(" "))
             files = (file.strip() for file in files if file.strip())

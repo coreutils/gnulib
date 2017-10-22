@@ -7,15 +7,15 @@
 import os as _os_
 
 
-from .error import type_assert as _type_assert_
-from .config import Base as _BaseConfig_
-from .module import Base as _BaseModule_
+from .error import type_assert as _type_assert
+from .config import Base as _BaseConfig
+from .module import Base as _BaseModule
 
 
 
 class Generator:
     """gnulib file content generator"""
-    _TEMPLATE_ = (
+    _TEMPLATE = (
         "## DO NOT EDIT! GENERATED AUTOMATICALLY!",
         "#",
         "# This file is free software; you can redistribute it and/or modify",
@@ -48,14 +48,14 @@ class Generator:
         return "\n".join([_ for _ in self])
 
     def __iter__(self):
-        for line in Generator._TEMPLATE_:
+        for line in Generator._TEMPLATE:
             yield line
 
 
 
 class POMakefile(Generator):
     """PO Makefile parameterization"""
-    _TEMPLATE_ = (
+    _TEMPLATE = (
         "# These options get passed to xgettext.",
         "XGETTEXT_OPTIONS = \\",
         "  --keyword=_ --flag=_:1:pass-c-format \\",
@@ -97,7 +97,7 @@ class POMakefile(Generator):
         "USE_MSGCTXT = no"
     )
     def __init__(self, config):
-        _type_assert_("config", config, _BaseConfig_)
+        _type_assert("config", config, _BaseConfig)
         super().__init__()
         self.__config = config
 
@@ -131,7 +131,7 @@ class POMakefile(Generator):
         yield "# These two variables depend on the location of this directory."
         yield "subdir = {}".format(self.po_domain)
         yield "top_subdir = {}".format("/".join(".." for _ in self.po_base.split(_os_.path.sep)))
-        for line in POMakefile._TEMPLATE_:
+        for line in POMakefile._TEMPLATE:
             yield line
 
 
@@ -139,7 +139,7 @@ class POMakefile(Generator):
 class POTFILES(Generator):
     """file list to be passed to xgettext"""
     def __init__(self, config, files):
-        _type_assert_("config", config, _BaseConfig_)
+        _type_assert("config", config, _BaseConfig)
         super().__init__()
         self.__config = config
         self.__files = tuple(files)
@@ -177,11 +177,11 @@ class AutoconfSnippet(Generator):
         no_libtool: disable libtool (regardless of configuration)
         no_gettext: disable AM_GNU_GETTEXT invocations if True
         """
-        _type_assert_("config", config, _BaseConfig_)
-        _type_assert_("module", module, _BaseModule_)
-        _type_assert_("toplevel", toplevel, bool)
-        _type_assert_("no_libtool", no_libtool, bool)
-        _type_assert_("no_gettext", no_gettext, bool)
+        _type_assert("config", config, _BaseConfig)
+        _type_assert("module", module, _BaseModule)
+        _type_assert("toplevel", toplevel, bool)
+        _type_assert("no_libtool", no_libtool, bool)
+        _type_assert("no_gettext", no_gettext, bool)
         super().__init__()
         self.__config = config
         self.__module = module
@@ -264,10 +264,10 @@ class InitMacro(Generator):
         config: gnulib configuration
         macro_prefix: macro prefix; if None, consider configuration
         """
-        _type_assert_("config", config, _BaseConfig_)
+        _type_assert("config", config, _BaseConfig)
         if macro_prefix is None:
             macro_prefix = config.macro_prefix
-        _type_assert_("macro_prefix", macro_prefix, str)
+        _type_assert("macro_prefix", macro_prefix, str)
         self.__macro_prefix = macro_prefix
 
 
@@ -287,7 +287,7 @@ class InitMacro(Generator):
 
 class InitMacroHeader(InitMacro):
     """the first few statements of the gl_INIT macro"""
-    _TEMPLATE_ = (
+    _TEMPLATE = (
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
         # of LIBOBJS. The purpose is to allow several gnulib instantiations under
@@ -329,14 +329,14 @@ class InitMacroHeader(InitMacro):
 
     def __iter__(self):
         macro_prefix = self.macro_prefix
-        for line in InitMacroHeader._TEMPLATE_:
+        for line in InitMacroHeader._TEMPLATE:
             yield line.format(macro_prefix=macro_prefix)
 
 
 
 class InitMacroFooter(InitMacro):
     """the last few statements of the gl_INIT macro"""
-    _TEMPLATE_ = (
+    _TEMPLATE = (
         "  m4_ifval({macro_prefix}_LIBSOURCES_LIST, [",
         "    m4_syscmd([test ! -d ]m4_defn([{macro_prefix}_LIBSOURCES_DIR])[ ||",
         "      for gl_file in ]{macro_prefix}_LIBSOURCES_LIST[ ; do",
@@ -384,14 +384,14 @@ class InitMacroFooter(InitMacro):
         # arguments. The check is performed only when autoconf is run from the
         # directory where the configure.ac resides; if it is run from a different
         # directory, the check is skipped.
-        for line in InitMacroFooter._TEMPLATE_:
+        for line in InitMacroFooter._TEMPLATE:
             yield line.format(macro_prefix=self.macro_prefix)
 
 
 
 class InitMacroDone(InitMacro):
     """few statements AFTER the gl_INIT macro"""
-    _TEMPLATE_ = (
+    _TEMPLATE = (
         "",
         "# Like AC_LIBOBJ, except that the module name goes",
         "# into {macro_prefix}_LIBOBJS instead of into LIBOBJS.",
@@ -426,7 +426,7 @@ class InitMacroDone(InitMacro):
         super().__init__(config=config, macro_prefix=macro_prefix)
         if source_base is None:
             source_base = config.source_base
-        _type_assert_("source_base", source_base, str)
+        _type_assert("source_base", source_base, str)
         self.__source_base = source_base
 
 
@@ -437,5 +437,5 @@ class InitMacroDone(InitMacro):
 
 
     def __iter__(self):
-        for line in InitMacroDone._TEMPLATE_:
+        for line in InitMacroDone._TEMPLATE:
             yield line.format(source_base=self.__source_base, macro_prefix=self.macro_prefix)

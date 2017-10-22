@@ -4,29 +4,29 @@
 
 
 
-import codecs as _codecs_
-import os as _os_
-import shutil as _shutil_
-import tempfile as _tempfile_
-import subprocess as _sp_
+import codecs as _codecs
+import os as _os
+import shutil as _shutil
+import tempfile as _tempfile
+import subprocess as _sp
 
 
-from .error import type_assert as _type_assert_
-from .error import UnknownModuleError as _UnknownModuleError_
-from .module import Base as _BaseModule_
-from .module import File as _FileModule_
+from .error import type_assert as _type_assert
+from .error import UnknownModuleError as _UnknownModuleError
+from .module import Base as _BaseModule
+from .module import File as _FileModule
 
 
 
 class Base:
     """gnulib generic virtual file system"""
     def __init__(self, prefix, **table):
-        _type_assert_("prefix", prefix, str)
+        _type_assert("prefix", prefix, str)
         self.__table = {}
         for (key, value) in table.items():
-            _type_assert_(key, value, str)
-            self.__table[key] = _os_.path.normpath(value)
-        self.__prefix = _os_.path.abspath(prefix)
+            _type_assert(key, value, str)
+            self.__table[key] = _os.path.normpath(value)
+        self.__prefix = _os.path.abspath(prefix)
 
 
     def __repr__(self):
@@ -36,21 +36,21 @@ class Base:
 
 
     def __contains__(self, name):
-        path = _os_.path.normpath(name)
-        if _os_.path.isabs(name):
+        path = _os.path.normpath(name)
+        if _os.path.isabs(name):
             raise ValueError("name must be a relative path")
-        path = _os_.path.join(self.__prefix, name)
-        return _os_.path.exists(path)
+        path = _os.path.join(self.__prefix, name)
+        return _os.path.exists(path)
 
 
     def __getitem__(self, name):
-        _type_assert_("name", name, str)
+        _type_assert("name", name, str)
         parts = []
         replaced = False
-        path = _os_.path.normpath(name)
-        if _os_.path.isabs(path):
+        path = _os.path.normpath(name)
+        if _os.path.isabs(path):
             raise ValueError("name cannot be an absolute path")
-        for part in path.split(_os_.path.sep):
+        for part in path.split(_os.path.sep):
             if part == "..":
                 parts += [part]
                 continue
@@ -58,8 +58,8 @@ class Base:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        path = _os_.path.sep.join([self.__prefix] + parts)
-        return _os_.path.normpath(path)
+        path = _os.path.sep.join([self.__prefix] + parts)
+        return _os.path.normpath(path)
 
 
     @property
@@ -71,17 +71,17 @@ class Base:
     @property
     def full_prefix(self):
         """absolute path prefix"""
-        return _os_.path.abspath(self.__prefix)
+        return _os.path.abspath(self.__prefix)
 
 
 
 class Project(Base):
     """project virtual file system"""
     def __init__(self, name, **table):
-        path = _os_.path.realpath(name)
-        if not _os_.path.exists(path):
+        path = _os.path.realpath(name)
+        if not _os.path.exists(path):
             raise FileNotFoundError(path)
-        if not _os_.path.isdir(path):
+        if not _os.path.isdir(path):
             raise NotADirectoryError(path)
         super().__init__(name, **table)
         self.__patch = None
@@ -96,9 +96,9 @@ class Project(Base):
 
     @patch.setter
     def patch(self, path):
-        _type_assert_("path", path, str)
-        if not _os_.path.isabs(path):
-            if _shutil_.which(path) is None:
+        _type_assert("path", path, str)
+        if not _os.path.isabs(path):
+            if _shutil.which(path) is None:
                 raise FileNotFoundError("patch")
         self.__patch = path
 
@@ -107,23 +107,23 @@ class Project(Base):
         """Backup the given file."""
         backup = "{}~".format(name)
         try:
-            _os_.unlink(self[backup])
+            _os.unlink(self[backup])
         except FileNotFoundError:
             pass # ignore non-existent files
-        _shutil_.copy(self[name], self[backup])
+        _shutil.copy(self[name], self[backup])
 
 
     def copy(self, src, dst):
         """Copy file data."""
-        srcabs = _os_.path.isabs(self, src)
-        dstabs = _os_.path.isabs(self, dst)
+        srcabs = _os.path.isabs(self, src)
+        dstabs = _os.path.isabs(self, dst)
         if srcabs and dstabs:
             raise ValueError("absolute src and dst")
         limit = (16 * 1024)
-        src = src if srcabs else _os_.path.join(self.full_prefix, src)
-        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
-        with _codecs_.open(src, "rb") as istream:
-            with _codecs_.open(dst, "wb") as ostream:
+        src = src if srcabs else _os.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os.path.join(self.full_prefix, dst)
+        with _codecs.open(src, "rb") as istream:
+            with _codecs.open(dst, "wb") as ostream:
                 while 1:
                     data = istream.read(limit)
                     if not data:
@@ -133,13 +133,13 @@ class Project(Base):
 
     def hardlink(self, src, dst):
         """Create a hard link to the file."""
-        srcabs = _os_.path.isabs(self, src)
-        dstabs = _os_.path.isabs(self, dst)
+        srcabs = _os.path.isabs(self, src)
+        dstabs = _os.path.isabs(self, dst)
         if srcabs and dstabs:
             raise ValueError("absolute src and dst")
-        src = src if srcabs else _os_.path.join(self.full_prefix, src)
-        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
-        _os_.link(src, dst)
+        src = src if srcabs else _os.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os.path.join(self.full_prefix, dst)
+        _os.link(src, dst)
 
 
     def lookup(self, name, primary, secondary):
@@ -156,68 +156,68 @@ class Project(Base):
         The second element, dynamic, designates whether the file is temporary.
         It is up to the caller to unlink dynamic files.
         """
-        _type_assert_("primary", primary, Base)
-        _type_assert_("secondary", secondary, Base)
+        _type_assert("primary", primary, Base)
+        _type_assert("secondary", secondary, Base)
         if name in secondary:
             return (secondary[name], False)
         diff = "{}.diff".format(name)
         if diff not in secondary:
             return (primary[name], False)
-        tmp = _tempfile_.NamedTemporaryFile(mode="w+b", delete=False)
-        with _codecs_.open(primary[name], "rb") as stream:
-            _shutil_.copyfileobj(stream, tmp)
+        tmp = _tempfile.NamedTemporaryFile(mode="w+b", delete=False)
+        with _codecs.open(primary[name], "rb") as stream:
+            _shutil.copyfileobj(stream, tmp)
             tmp.close()
-        stdin = _codecs_.open(secondary[diff], "rb")
+        stdin = _codecs.open(secondary[diff], "rb")
         cmd = (self.__patch, "-s", tmp.name)
-        pipes = _sp_.Popen(cmd, stdin=stdin, stdout=_sp_.PIPE, stderr=_sp_.PIPE)
+        pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
         (stdout, stderr) = pipes.communicate()
         stdout = stdout.decode("UTF-8")
         stderr = stderr.decode("UTF-8")
         returncode = pipes.returncode
         if returncode != 0:
             cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
-            raise _sp_.CalledProcessError(returncode, cmd, stdout, stderr)
+            raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
         return (tmp.name, True)
 
 
     def mkdir(self, name):
         """Create a leaf directory and all intermediate ones recursively."""
-        _os_.makedirs(self[name], exist_ok=True)
+        _os.makedirs(self[name], exist_ok=True)
 
 
     def move(self, src, dst):
         """Move file data."""
-        srcabs = _os_.path.isabs(self, src)
-        dstabs = _os_.path.isabs(self, dst)
+        srcabs = _os.path.isabs(self, src)
+        dstabs = _os.path.isabs(self, dst)
         if srcabs and dstabs:
             raise ValueError("absolute src and dst")
-        src = src if srcabs else _os_.path.join(self.full_prefix, src)
-        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
-        _os_.rename(src, dst)
+        src = src if srcabs else _os.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os.path.join(self.full_prefix, dst)
+        _os.rename(src, dst)
 
 
     def symlink(self, src, dst):
         """Create a symbolic link to the file."""
-        srcabs = _os_.path.isabs(self, src)
-        dstabs = _os_.path.isabs(self, dst)
+        srcabs = _os.path.isabs(self, src)
+        dstabs = _os.path.isabs(self, dst)
         if srcabs and dstabs:
             raise ValueError("absolute src and dst")
-        src = src if srcabs else _os_.path.join(self.full_prefix, src)
-        dst = dst if dstabs else _os_.path.join(self.full_prefix, dst)
-        _os_.symlink(src, dst)
+        src = src if srcabs else _os.path.join(self.full_prefix, src)
+        dst = dst if dstabs else _os.path.join(self.full_prefix, dst)
+        _os.symlink(src, dst)
 
 
     def unlink(self, name, backup=True):
         """Unlink a file, backing it up if necessary."""
         if backup:
             self.backup(name)
-        _os_.unlink(self[name])
+        _os.unlink(self[name])
 
 
 
 class GnulibGit(Base):
     """gnulib git repository"""
-    _EXCLUDE_ = {
+    _EXCLUDE = {
         "."                 : str.startswith,
         "~"                 : str.endswith,
         "-tests"            : str.endswith,
@@ -232,11 +232,11 @@ class GnulibGit(Base):
 
     def __init__(self, prefix, **table):
         super().__init__(prefix, **table)
-        if not _os_.path.exists(self.full_prefix):
+        if not _os.path.exists(self.full_prefix):
             raise FileNotFoundError(self.full_prefix)
-        if not _os_.path.isdir(self.full_prefix):
+        if not _os.path.isdir(self.full_prefix):
             raise NotADirectoryError(self.full_prefix)
-        if not _os_.path.isdir(_os_.path.join(self.full_prefix, ".git")):
+        if not _os.path.isdir(_os.path.join(self.full_prefix, ".git")):
             raise TypeError("{} is not a gnulib repository".format(prefix))
 
 
@@ -250,31 +250,31 @@ class GnulibGit(Base):
 
     def module(self, name, full=True):
         """obtain gnulib module by name"""
-        _type_assert_("name", name, str)
-        _type_assert_("full", full, bool)
-        if name in GnulibGit._EXCLUDE_:
+        _type_assert("name", name, str)
+        _type_assert("full", full, bool)
+        if name in GnulibGit._EXCLUDE:
             raise ValueError("illegal module name")
-        path = _os_.path.join(self["modules"], name)
+        path = _os.path.join(self["modules"], name)
         try:
-            return _FileModule_(path, name=name) if full else _BaseModule_(name)
+            return _FileModule(path, name=name) if full else _BaseModule(name)
         except FileNotFoundError:
-            raise _UnknownModuleError_(name)
+            raise _UnknownModuleError(name)
 
 
     def modules(self, full=True):
         """iterate over all available modules"""
         prefix = self["modules"]
-        for root, _, files in _os_.walk(prefix):
+        for root, _, files in _os.walk(prefix):
             names = []
             for name in files:
                 exclude = False
-                for (key, method) in GnulibGit._EXCLUDE_.items():
+                for (key, method) in GnulibGit._EXCLUDE.items():
                     if method(name, key):
                         exclude = True
                         break
                 if not exclude:
                     names += [name]
             for name in names:
-                path = _os_.path.join(root, name)
+                path = _os.path.join(root, name)
                 name = path[len(prefix) + 1:]
                 yield self.module(name, full)
