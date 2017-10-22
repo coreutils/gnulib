@@ -287,16 +287,7 @@ class InitMacro(Generator):
 
 class InitMacroHeader(InitMacro):
     """the first few statements of the gl_INIT macro"""
-    def __init__(self, config, macro_prefix=None):
-        """
-        config: gnulib configuration
-        macro_prefix: macro prefix; if None, consider configuration
-        """
-        super().__init__(config=config, macro_prefix=macro_prefix)
-
-
-    def __iter__(self):
-        macro_prefix = self.__macro_prefix
+    _TEMPLATE_ = (
         # Overriding AC_LIBOBJ and AC_REPLACE_FUNCS has the effect of storing
         # platform-dependent object files in ${macro_prefix_arg}_LIBOBJS instead
         # of LIBOBJS. The purpose is to allow several gnulib instantiations under
@@ -306,8 +297,8 @@ class InitMacroHeader(InitMacro):
         # that uses pieces of gnulib also uses $(LIBOBJ):
         #   automatically discovered file `error.c' should not be explicitly
         #   mentioned.
-        yield "  m4_pushdef([AC_LIBOBJ], m4_defn([{}_LIBOBJ]))".format(macro_prefix)
-        yield "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([{}_REPLACE_FUNCS]))".format(self.macro_prefix)
+        "  m4_pushdef([AC_LIBOBJ], m4_defn([{macro_prefix}_LIBOBJ]))",
+        "  m4_pushdef([AC_REPLACE_FUNCS], m4_defn([{macro_prefix}_REPLACE_FUNCS]))",
 
         # Overriding AC_LIBSOURCES has the same purpose of avoiding the automake
         # error when a Makefile.am that uses pieces of gnulib also uses $(LIBOBJ):
@@ -315,7 +306,7 @@ class InitMacroHeader(InitMacro):
         #   mentioned
         # We let automake know about the files to be distributed through the
         # EXTRA_lib_SOURCES variable.
-        yield "  m4_pushdef([AC_LIBSOURCES], m4_defn([{}_LIBSOURCES]))".format(macro_prefix)
+        "  m4_pushdef([AC_LIBSOURCES], m4_defn([{macro_prefix}_LIBSOURCES]))",
 
         # Create data variables for checking the presence of files that are
         # mentioned as AC_LIBSOURCES arguments. These are m4 variables, not shell
@@ -323,9 +314,23 @@ class InitMacroHeader(InitMacro):
         # created, not when it is run. ${macro_prefix_arg}_LIBSOURCES_LIST is the
         # list of files to check for. ${macro_prefix_arg}_LIBSOURCES_DIR is the
         # subdirectory in which to expect them.
-        yield "  m4_pushdef([{}_LIBSOURCES_LIST], [])".format(macro_prefix)
-        yield "  m4_pushdef([{}_LIBSOURCES_DIR], [])".format(macro_prefix)
-        yield "  gl_COMMON"
+        "  m4_pushdef([{macro_prefix}_LIBSOURCES_LIST], [])",
+        "  m4_pushdef([{macro_prefix}_LIBSOURCES_DIR], [])",
+        "  gl_COMMON",
+    )
+
+    def __init__(self, config, macro_prefix=None):
+        """
+        config: gnulib configuration
+        macro_prefix: macro prefix; if None, consider configuration
+        """
+        super().__init__(config=config, macro_prefix=macro_prefix)
+
+
+    def __iter__(self):
+        macro_prefix = self.macro_prefix
+        for line in InitMacroHeader._TEMPLATE_:
+            yield line.format(macro_prefix=macro_prefix)
 
 
 
