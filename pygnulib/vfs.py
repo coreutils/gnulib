@@ -20,19 +20,19 @@ from .module import File as _FileModule_
 
 class Base:
     """gnulib generic virtual file system"""
-    def __init__(self, root, **table):
-        _type_assert_("root", root, str)
+    def __init__(self, prefix, **table):
+        _type_assert_("prefix", prefix, str)
         self.__table = {}
         for (key, value) in table.items():
             _type_assert_(key, value, str)
             self.__table[key] = _os_.path.normpath(value)
-        self.__root = root
+        self.__prefix = _os_.path.abspath(prefix)
 
 
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{{{}}}".format(module, name, repr(self.__root))
+        return "{}.{}{{{}}}".format(module, name, repr(self.__prefix))
 
 
     def __getitem__(self, name):
@@ -50,14 +50,20 @@ class Base:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        path = _os_.path.sep.join([self.__root] + parts)
+        path = _os_.path.sep.join([self.__prefix] + parts)
         return _os_.path.normpath(path)
 
 
     @property
-    def path(self):
-        """directory path"""
-        return self.__root
+    def base_prefix(self):
+        """base path prefix"""
+        return self.__prefix
+
+
+    @property
+    def full_prefix(self):
+        """absolute path prefix"""
+        return _os_.path.abspath(self.__prefix)
 
 
 
@@ -77,7 +83,7 @@ class Project(Base):
         path = _os_.path.normpath(name)
         if _os_.path.isabs(name):
             raise ValueError("name must be a relative path")
-        path = _os_.path.join(self.__root, name)
+        path = _os_.path.join(self.__prefix, name)
         return _os_.path.exists(path)
 
 
@@ -173,15 +179,14 @@ class GnulibGit(Base):
     }
 
 
-    def __init__(self, name, **table):
-        path = _os_.path.realpath(name)
-        if not _os_.path.exists(path):
-            raise FileNotFoundError(path)
-        if not _os_.path.isdir(path):
-            raise NotADirectoryError(path)
-        super().__init__(name, **table)
-        if not _os_.path.isdir(_os_.path.join(self.path, ".git")):
-            raise TypeError("{} is not a gnulib repository".format(self.path))
+    def __init__(self, prefix, **table):
+        super().__init__(prefix, **table)
+        if not _os_.path.exists(self.full_prefix):
+            raise FileNotFoundError(self.full_prefix)
+        if not _os_.path.isdir(self.full_prefix):
+            raise NotADirectoryError(self.full_prefix)
+        if not _os_.path.isdir(_os_.path.join(self.full_prefix, ".git")):
+            raise TypeError("{} is not a gnulib repository".format(prefix))
 
 
     def __enter__(self):
