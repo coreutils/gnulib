@@ -5,6 +5,7 @@
 
 
 def type_assert(key, value, types):
+    """panic if value has a type different than mentioned in types"""
     typeset = []
     if isinstance(types, type):
         types = [types]

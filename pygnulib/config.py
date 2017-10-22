@@ -5,7 +5,6 @@
 
 
 import codecs as _codecs_
-import collections as _collections_
 import os as _os_
 import re as _re_
 
@@ -487,6 +486,7 @@ class Base:
 
     @property
     def copymode(self):
+        """file copy mode ('symlink', 'hardlink' or None)"""
         return self.__table["copymode"]
 
     @copymode.setter
@@ -498,6 +498,7 @@ class Base:
 
     @property
     def local_copymode(self):
+        """file copy mode for local directory ('symlink', 'hardlink' or None)"""
         return self.__table["local_copymode"]
 
     @local_copymode.setter
@@ -509,6 +510,7 @@ class Base:
 
     @property
     def copyrights(self):
+        """update the license copyright text"""
         return bool(self.__table["options"] & Base._Option_.Copyrights)
 
     @copyrights.setter

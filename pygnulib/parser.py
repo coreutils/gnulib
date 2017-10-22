@@ -12,9 +12,7 @@ from .error import CommandLineError as _CommandLineError_
 from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE_
 from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE_
 from .config import GPLv2_LICENSE as _GPLv2_LICENSE_
-from .config import GPLv3_LICENSE as _GPLv3_LICENSE_
 from .config import LGPL_LICENSE as _LGPL_LICENSE_
-from .config import GPL_LICENSE as _GPL_LICENSE_
 
 
 
@@ -229,9 +227,6 @@ class CommandLine:
 
 
     class _CopyrightsCopyModeOption_(_CopyModeOption_):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
                 setattr(namespace, "copyrights", False)
