@@ -103,6 +103,14 @@ class Base:
         return iter(self.__table)
 
 
+    def __enter__(self):
+        return self
+
+
+    def __exit__(self, exctype, excval, exctrace):
+        pass
+
+
     @property
     def root(self):
         """target directory"""
