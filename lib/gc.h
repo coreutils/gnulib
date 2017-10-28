@@ -47,7 +47,8 @@ enum Gc_hash
   GC_SHA256,
   GC_SHA384,
   GC_SHA512,
-  GC_SHA224
+  GC_SHA224,
+  GC_SM3
 };
 typedef enum Gc_hash Gc_hash;
 
@@ -69,6 +70,7 @@ typedef void *gc_hash_handle;
 #define GC_SHA384_DIGEST_SIZE 48
 #define GC_SHA512_DIGEST_SIZE 64
 #define GC_SHA224_DIGEST_SIZE 24
+#define GC_SM3_DIGEST_SIZE 32
 
 /* Cipher types. */
 enum Gc_cipher
@@ -156,6 +158,7 @@ extern Gc_rc gc_md2 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md4 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_sm3 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
                           const void *in, size_t inlen, char *resbuf);
 extern Gc_rc gc_hmac_sha1 (const void *key, size_t keylen,
