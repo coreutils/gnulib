@@ -136,7 +136,8 @@ extern Gc_rc gc_cipher_close (gc_cipher_handle handle);
 extern Gc_rc gc_hash_open (Gc_hash hash, Gc_hash_mode mode,
                            gc_hash_handle *outhandle);
 extern Gc_rc gc_hash_clone (gc_hash_handle handle, gc_hash_handle *outhandle);
-extern size_t gc_hash_digest_length (Gc_hash hash);
+extern size_t gc_hash_digest_length (Gc_hash hash)
+                                     _GL_ATTRIBUTE_CONST;
 extern void gc_hash_hmac_setkey (gc_hash_handle handle,
                                  size_t len, const char *key);
 extern void gc_hash_write (gc_hash_handle handle,
