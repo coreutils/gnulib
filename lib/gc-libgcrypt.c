@@ -457,7 +457,7 @@ gc_hash_read (gc_hash_handle handle)
 #endif
     {
       gcry_md_final (ctx->gch);
-      digest = gcry_md_read (ctx->gch, 0);
+      digest = (const char *) gcry_md_read (ctx->gch, 0);
     }
 
   return digest;
