@@ -310,7 +310,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 
   switch (mode)
     {
-    case 0:
+    case GC_NULL:
       gcrymode = 0;
       break;
 

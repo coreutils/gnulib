@@ -53,7 +53,8 @@ typedef enum Gc_hash Gc_hash;
 
 enum Gc_hash_mode
 {
-  GC_HMAC = 1
+  GC_NULL,
+  GC_HMAC
 };
 typedef enum Gc_hash_mode Gc_hash_mode;
 
