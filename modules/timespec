@@ -7,6 +7,7 @@ lib/timespec.c
 m4/timespec.m4
 
 Depends-on:
+assure
 extern-inline
 time
 

@@ -33,6 +33,8 @@ _GL_INLINE_HEADER_BEGIN
 extern "C" {
 #endif
 
+#include "assure.h"
+
 /* Resolution of timespec timestamps (in units per second), and log
    base 10 of the resolution.  */
 
@@ -81,6 +83,10 @@ make_timespec (time_t s, long int ns)
 _GL_TIMESPEC_INLINE int _GL_ATTRIBUTE_PURE
 timespec_cmp (struct timespec a, struct timespec b)
 {
+  /* These assure calls teach gcc7 enough so that its
+     -Wstrict-overflow does not complain about the following code.  */
+  assure (-1 <= a.tv_nsec && a.tv_nsec <= 2 * TIMESPEC_RESOLUTION);
+  assure (-1 <= b.tv_nsec && b.tv_nsec <= 2 * TIMESPEC_RESOLUTION);
   return (a.tv_sec < b.tv_sec ? -1
           : a.tv_sec > b.tv_sec ? 1
           : (int) (a.tv_nsec - b.tv_nsec));
