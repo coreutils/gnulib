@@ -15,6 +15,15 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
+/* This module can be used to compute SM3 message digest of files or
+   memory blocks according to the specification GM/T 004-2012
+   Cryptographic Hash Algorithm SM3, published by State Cryptography
+   Administration, China.
+
+   The official SM3 cryptographic hash algorithm specification is
+   available at
+   <http://www.sca.gov.cn/sca/xwdt/2010-12/17/content_1002389.shtml>. */
+
 #ifndef SM3_H
 # define SM3_H 1
 
