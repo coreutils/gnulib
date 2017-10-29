@@ -194,8 +194,17 @@ _NaN ()
 #endif
 
 
-/* Ensure FP_ILOGB0 and FP_ILOGBNAN are defined.  */
-#if !(defined FP_ILOGB0 && defined FP_ILOGBNAN)
+#if defined FP_ILOGB0 && defined FP_ILOGBNAN
+ /* Ensure FP_ILOGB0 and FP_ILOGBNAN are correct.  */
+# if defined __HAIKU__
+  /* Haiku: match what ilogb() does */
+#  undef FP_ILOGB0
+#  undef FP_ILOGBNAN
+#  define FP_ILOGB0   (- 2147483647 - 1) /* INT_MIN */
+#  define FP_ILOGBNAN (- 2147483647 - 1) /* INT_MIN */
+# endif
+#else
+ /* Ensure FP_ILOGB0 and FP_ILOGBNAN are defined.  */
 # if defined __NetBSD__ || defined __sgi
   /* NetBSD, IRIX 6.5: match what ilogb() does */
 #  define FP_ILOGB0   (- 2147483647 - 1) /* INT_MIN */

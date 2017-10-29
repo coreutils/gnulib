@@ -37,6 +37,11 @@ platforms:
 NetBSD 5.1, AIX 5.1, IRIX 6.5, Solaris 9, MSVC 9.
 
 @item
+The macros @code{FP_ILOGB0} and @code{FP_ILOGBNAN} have wrong values on some
+platforms:
+Haiku 2017.
+
+@item
 The macros @code{NAN}, @code{HUGE_VALL}, and @code{INFINITY} are not
 defined on some platforms:
 OpenVMS.
