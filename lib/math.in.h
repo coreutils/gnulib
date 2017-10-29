@@ -1223,10 +1223,19 @@ _GL_WARN_ON_USE (ilogb, "ilogb is unportable - "
 #endif
 
 #if @GNULIB_ILOGBL@
-# if !@HAVE_ILOGBL@
+# if @REPLACE_ILOGBL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef ilogbl
+#   define ilogbl rpl_ilogbl
+#  endif
+_GL_FUNCDECL_RPL (ilogbl, int, (long double x));
+_GL_CXXALIAS_RPL (ilogbl, int, (long double x));
+# else
+#  if !@HAVE_ILOGBL@
 _GL_FUNCDECL_SYS (ilogbl, int, (long double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (ilogbl, int, (long double x));
+# endif
 _GL_CXXALIASWARN (ilogbl);
 #elif defined GNULIB_POSIXCHECK
 # undef ilogbl
