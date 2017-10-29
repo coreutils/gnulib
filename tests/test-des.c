@@ -19,10 +19,10 @@
 
 #include <config.h>
 
+#include "des.h"
+
 #include <stdio.h>
 #include <string.h>
-
-#include "des.h"
 
 int
 main (int argc, char *argv[])

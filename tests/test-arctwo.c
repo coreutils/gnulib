@@ -17,9 +17,10 @@
 
 #include <config.h>
 
+#include "arctwo.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "arctwo.h"
 
 int
 main (int argc, char *argv[])

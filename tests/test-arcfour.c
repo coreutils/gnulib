@@ -17,9 +17,10 @@
 
 #include <config.h>
 
+#include "arcfour.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "arcfour.h"
 
 int
 main (int argc, char *argv[])

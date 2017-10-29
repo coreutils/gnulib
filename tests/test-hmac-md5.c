@@ -18,9 +18,10 @@
 
 #include <config.h>
 
+#include "hmac.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "hmac.h"
 
 /* Test vectors from RFC 2104. */
 

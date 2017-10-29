@@ -17,10 +17,10 @@
 
 #include <config.h>
 
+#include "sm3.h"
+
 #include <stdio.h>
 #include <string.h>
-
-#include "sm3.h"
 
 static int
 test (const char *in, const char *out)

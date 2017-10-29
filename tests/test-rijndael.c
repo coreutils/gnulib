@@ -17,9 +17,10 @@
 
 #include <config.h>
 
+#include "rijndael-api-fst.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "rijndael-api-fst.h"
 
 int
 main (int argc, char *argv[])

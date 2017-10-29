@@ -18,9 +18,10 @@
 
 #include <config.h>
 
+#include "hmac.h"
+
 #include <stdio.h>
 #include <string.h>
-#include "hmac.h"
 
 int
 main (int argc, char *argv[])
