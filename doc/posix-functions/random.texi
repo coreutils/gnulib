@@ -18,5 +18,5 @@ Portability problems not fixed by Gnulib:
 @item
 This function has a slightly incompatible declaration (the return type being
 @samp{int} instead of @samp{long}) on some platforms:
-Cygwin 1.5.25.
+Cygwin 1.5.25, Haiku.
 @end itemize
