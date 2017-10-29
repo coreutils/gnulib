@@ -112,7 +112,7 @@
 
    BeOS, Haiku:
      a) On BeOS, there is no setrlimit function.
-        On Haiku, setrlimit exists. RLIMIT_AS is defined but unsupported.
+        On Haiku, setrlimit exists. RLIMIT_AS is defined but setrlimit fails.
      b) There is a specific BeOS API: get_next_area_info().
  */
 
@@ -150,7 +150,7 @@
 #include "vma-iter.h"
 
 
-#if HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT
+#if HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT && !defined __HAIKU__
 
 static uintptr_t
 get_rusage_as_via_setrlimit (void)
@@ -365,7 +365,7 @@ get_rusage_as (void)
   /* get_rusage_as_via_setrlimit() does not work.
      Prefer get_rusage_as_via_iterator().  */
   return get_rusage_as_via_iterator ();
-#elif HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT
+#elif HAVE_SETRLIMIT && defined RLIMIT_AS && HAVE_SYS_MMAN_H && HAVE_MPROTECT && !defined __HAIKU__
   /* Prefer get_rusage_as_via_setrlimit() if it succeeds,
      because the caller may want to use the result with setrlimit().  */
   uintptr_t result;
