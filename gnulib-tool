@@ -6478,7 +6478,9 @@ func_create_testdir ()
    fi
    func_execute_command ${AUTOCONF} || func_exit 1
    # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
-   func_execute_command "${AUTOHEADER} && touch config.h.in" || func_exit 1
+   func_execute_command ${AUTOHEADER} &&
+       func_execute_command touch config.h.in ||
+           func_exit 1
    func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
    rm -rf autom4te.cache
   ) || func_exit 1
@@ -6501,7 +6503,9 @@ func_create_testdir ()
      fi
      func_execute_command ${AUTOCONF} || func_exit 1
      # Explicit 'touch config.h.in': see <https://savannah.gnu.org/support/index.php?109406>.
-     func_execute_command "${AUTOHEADER} && touch config.h.in" || func_exit 1
+     func_execute_command ${AUTOHEADER} &&
+         func_execute_command touch config.h.in ||
+             func_exit 1
      func_execute_command ${AUTOMAKE} --add-missing --copy || func_exit 1
      rm -rf autom4te.cache
     ) || func_exit 1
