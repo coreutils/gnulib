@@ -1,4 +1,4 @@
-# ioctl.m4 serial 4
+# ioctl.m4 serial 5
 dnl Copyright (C) 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,10 @@ AC_DEFUN([gl_FUNC_IOCTL],
       [gl_cv_func_ioctl_posix_signature],
       [AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
-            [[#include <sys/ioctl.h>]],
+            [[#include <sys/ioctl.h>
+              /* On some platforms, ioctl() is declared in <unistd.h>.  */
+              #include <unistd.h>
+            ]],
             [[extern
               #ifdef __cplusplus
               "C"
