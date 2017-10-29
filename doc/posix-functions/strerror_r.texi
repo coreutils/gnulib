@@ -62,7 +62,7 @@ HP-UX 11.31.
 When the buffer is too small and the value is in range, this function
 does not fail, but instead truncates the result and returns 0 on some
 platforms:
-AIX 6.1, OSF/1 5.1.
+AIX 6.1, OSF/1 5.1, Haiku 2017.
 @item
 When the value is not in range or the buffer is too small, this
 function fails to leave a NUL-terminated string in the buffer on some

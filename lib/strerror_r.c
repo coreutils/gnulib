@@ -212,13 +212,16 @@ strerror_r (int errnum, char *buf, size_t buflen)
 # else
     ret = strerror_r (errnum, buf, buflen);
 
-    /* Some old implementations may return (-1, EINVAL) instead of EINVAL.  */
+    /* Some old implementations may return (-1, EINVAL) instead of EINVAL.
+       But on Haiku, valid error numbers are negative.  */
+#  if !defined __HAIKU__
     if (ret < 0)
       ret = errno;
+#  endif
 # endif
 
-# ifdef _AIX
-    /* AIX returns 0 rather than ERANGE when truncating strings; try
+# if defined _AIX || defined __HAIKU__
+    /* AIX and Haiku return 0 rather than ERANGE when truncating strings; try
        again until we are sure we got the entire string.  */
     if (!ret && strlen (buf) == buflen - 1)
       {
@@ -442,7 +445,14 @@ strerror_r (int errnum, char *buf, size_t buflen)
 #endif
 
     if (ret == EINVAL && !*buf)
-      snprintf (buf, buflen, "Unknown error %d", errnum);
+      {
+#if defined __HAIKU__
+        /* For consistency with perror().  */
+        snprintf (buf, buflen, "Unknown Application Error (%d)", errnum);
+#else
+        snprintf (buf, buflen, "Unknown error %d", errnum);
+#endif
+      }
 
     errno = saved_errno;
     return ret;

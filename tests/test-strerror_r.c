@@ -108,7 +108,7 @@ main (void)
             errno = 0;
             ret = strerror_r (err, buf, i);
             ASSERT (errno == 0);
-            if (err < 0)
+            if (j == 2)
               ASSERT (ret == ERANGE || ret == EINVAL);
             else
               ASSERT (ret == ERANGE);
