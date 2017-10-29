@@ -121,8 +121,7 @@
 
    BeOS, Haiku:
      a) On BeOS, there is no setrlimit function.
-        On Haiku, setrlimit exists. RLIMIT_DATA is defined but unsupported:
-        getrlimit of RLIMIT_DATA always fails with errno = EINVAL.
+        On Haiku, setrlimit exists. RLIMIT_DATA is defined but setrlimit fails.
      b) There is a specific BeOS API: get_next_area_info().
  */
 
@@ -151,7 +150,7 @@
 #if !(defined __APPLE__ && defined __MACH__) || defined TEST
 /* Implement get_rusage_data_via_setrlimit().  */
 
-# if HAVE_SETRLIMIT && defined RLIMIT_DATA
+# if HAVE_SETRLIMIT && defined RLIMIT_DATA && !defined __HAIKU__
 
 #  ifdef _AIX
 #   define errno_expected() (errno == EINVAL || errno == EFAULT)
@@ -409,7 +408,7 @@ get_rusage_data (void)
   /* get_rusage_data_via_setrlimit() does not work.
      Prefer get_rusage_data_via_iterator().  */
   return get_rusage_data_via_iterator ();
-#elif HAVE_SETRLIMIT && defined RLIMIT_DATA
+#elif HAVE_SETRLIMIT && defined RLIMIT_DATA && !defined __HAIKU__
 # if defined __linux__ || defined __FreeBSD__ || defined __NetBSD__ || defined __OpenBSD__ || defined _AIX || defined __hpux || defined __sgi || defined __osf__ || defined __sun /* Linux, FreeBSD, NetBSD, OpenBSD, AIX, HP-UX, IRIX, OSF/1, Solaris */
   /* get_rusage_data_via_setrlimit() works.  */
   return get_rusage_data_via_setrlimit ();
