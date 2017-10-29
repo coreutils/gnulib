@@ -1,4 +1,4 @@
-# locale-ar.m4 serial 6
+# locale-ar.m4 serial 7
 dnl Copyright (C) 2003, 2005-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,8 +24,14 @@ changequote(,)dnl
 struct tm t;
 char buf[16];
 int main () {
+  /* On BeOS and Haiku, locales are not implemented in libc.  Rather, libintl
+     imitates locale dependent behaviour by looking at the environment
+     variables, and all locales use the UTF-8 encoding.  */
+#if defined __BEOS__ || defined __HAIKU__
+  return 1;
+#else
   /* Check whether the given locale name is recognized by the system.  */
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
   /* On native Windows, setlocale(category, "") looks at the system settings,
      not at the environment variables.  Also, when an encoding suffix such
      as ".65001" or ".54936" is specified, it succeeds but sets the LC_CTYPE
@@ -33,26 +39,27 @@ int main () {
   if (setlocale (LC_ALL, getenv ("LC_ALL")) == NULL
       || strcmp (setlocale (LC_CTYPE, NULL), "C") == 0)
     return 1;
-#else
+# else
   if (setlocale (LC_ALL, "") == NULL) return 1;
-#endif
+# endif
   /* Check that nl_langinfo(CODESET) is nonempty and not "ASCII" or "646"
      and ends in "6". */
-#if HAVE_LANGINFO_CODESET
+# if HAVE_LANGINFO_CODESET
   {
     const char *cs = nl_langinfo (CODESET);
     if (cs[0] == '\0' || strcmp (cs, "ASCII") == 0 || strcmp (cs, "646") == 0
         || cs[strlen (cs) - 1] != '6')
       return 1;
   }
-#endif
-#ifdef __CYGWIN__
+# endif
+# ifdef __CYGWIN__
   /* On Cygwin, avoid locale names without encoding suffix, because the
      locale_charset() function relies on the encoding suffix.  Note that
      LC_ALL is set on the command line.  */
   if (strchr (getenv ("LC_ALL"), '.') == NULL) return 1;
-#endif
+# endif
   return 0;
+#endif
 }
 changequote([,])dnl
       ])])
