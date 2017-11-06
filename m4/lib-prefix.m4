@@ -1,4 +1,4 @@
-# lib-prefix.m4 serial 10
+# lib-prefix.m4 serial 11
 dnl Copyright (C) 2001-2005, 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -188,7 +188,7 @@ AC_DEFUN([AC_LIB_PREPARE_MULTILIB],
          dnl But we want to recognize the sparcv9 or amd64 subdirectory also if the
          dnl symlink is missing, so we set acl_libdirstem2 too.
          AC_CACHE_CHECK([for 64-bit host], [gl_cv_solaris_64bit],
-           [AC_COMPILE_IFELSE([sixtyfour bits],
+           [AC_COMPILE_IFELSE(
               [AC_LANG_SOURCE(
                  [[#ifdef _LP64
                     int ok;
