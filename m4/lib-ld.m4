@@ -1,4 +1,4 @@
-# lib-ld.m4 serial 8
+# lib-ld.m4 serial 9
 dnl Copyright (C) 1996-2003, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -120,11 +120,14 @@ else
     fi
     case $host in
       *-*-aix*)
-        AC_EGREP_CPP([yes],
-          [#if defined __powerpc64__ || defined _ARCH_PPC64
-           yes
-           #endif
-          ],
+        AC_COMPILE_IFELSE(
+          [AC_LANG_SOURCE(
+             [[#if defined __powerpc64__ || defined _ARCH_PPC64
+                int ok;
+               #else
+                error fail
+               #endif
+             ]])],
           [# The compiler produces 64-bit code. Add option '-b64' so that the
            # linker groks 64-bit object files.
            case "$acl_cv_path_LD " in
@@ -134,10 +137,14 @@ else
           ], [])
         ;;
       sparc64-*-netbsd*)
-        AC_EGREP_CPP([yes],
-          [#if defined __sparcv9 || defined __arch64__
-           yes
-           #endif],
+        AC_COMPILE_IFELSE(
+          [AC_LANG_SOURCE(
+             [[#if defined __sparcv9 || defined __arch64__
+                int ok;
+               #else
+                error fail
+               #endif
+             ]])],
           [],
           [# The compiler produces 32-bit code. Add option '-m elf32_sparc'
            # so that the linker groks 32-bit object files.

@@ -1,4 +1,4 @@
-# year2038.m4 serial 1
+# year2038.m4 serial 2
 dnl Copyright (C) 2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,11 +43,14 @@ AC_DEFUN([gl_YEAR2038],
       if test $gl_cv_type_time_t_64 = no; then
         dnl Just bail out if 'time_t' is not 64-bit, and let the user fix the
         dnl problem.
-        AC_EGREP_CPP([booboo], [
-          #ifdef _USE_32BIT_TIME_T
-          booboo
-          #endif
-          ],
+        AC_COMPILE_IFELSE(
+          [AC_LANG_SOURCE(
+             [[#ifdef _USE_32BIT_TIME_T
+                 int ok;
+               #else
+                 error fail
+               #endif
+             ]])],
           [AC_MSG_FAILURE([This package requires a 64-bit 'time_t' type. Remove _USE_32BIT_TIME_T from the compiler flags.])],
           [AC_MSG_FAILURE([This package requires a 64-bit 'time_t' type. Your system include files surely provide a way to make 'time_t' an alias of '__time64_t'.])])
       fi

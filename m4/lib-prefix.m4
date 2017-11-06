@@ -1,4 +1,4 @@
-# lib-prefix.m4 serial 9
+# lib-prefix.m4 serial 10
 dnl Copyright (C) 2001-2005, 2008-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -188,11 +188,16 @@ AC_DEFUN([AC_LIB_PREPARE_MULTILIB],
          dnl But we want to recognize the sparcv9 or amd64 subdirectory also if the
          dnl symlink is missing, so we set acl_libdirstem2 too.
          AC_CACHE_CHECK([for 64-bit host], [gl_cv_solaris_64bit],
-           [AC_EGREP_CPP([sixtyfour bits], [
-#ifdef _LP64
-sixtyfour bits
-#endif
-              ], [gl_cv_solaris_64bit=yes], [gl_cv_solaris_64bit=no])
+           [AC_COMPILE_IFELSE([sixtyfour bits],
+              [AC_LANG_SOURCE(
+                 [[#ifdef _LP64
+                    int ok;
+                   #else
+                    error fail
+                   #endif
+                 ]])],
+              [gl_cv_solaris_64bit=yes],
+              [gl_cv_solaris_64bit=no])
            ])
          if test $gl_cv_solaris_64bit = yes; then
            acl_libdirstem=lib/64
