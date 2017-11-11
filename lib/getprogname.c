@@ -164,7 +164,7 @@ getprogname (void)
       if (ioctl_ok)
         {
           char *name = buf.pr_fname;
-          char *namesize = sizeof buf.pr_fname;
+          size_t namesize = sizeof buf.pr_fname;
           char *namenul = memchr (name, '\0', namesize);
           size_t namelen = namenul ? namenul - name : namesize;
           char *namecopy = malloc (namelen + 1);
