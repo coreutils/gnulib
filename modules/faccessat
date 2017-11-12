@@ -9,19 +9,20 @@ m4/faccessat.m4
 Depends-on:
 unistd
 extensions
-at-internal     [test $HAVE_FACCESSAT = 0]
-dosname         [test $HAVE_FACCESSAT = 0]
-errno           [test $HAVE_FACCESSAT = 0]
-fchdir          [test $HAVE_FACCESSAT = 0]
-fcntl-h         [test $HAVE_FACCESSAT = 0]
-openat-die      [test $HAVE_FACCESSAT = 0]
-openat-h        [test $HAVE_FACCESSAT = 0]
-save-cwd        [test $HAVE_FACCESSAT = 0]
-euidaccess      [test $HAVE_FACCESSAT = 0]
+at-internal     [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+dosname         [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+errno           [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+fchdir          [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+fcntl-h         [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+fstatat         [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+openat-die      [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+openat-h        [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+save-cwd        [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
+euidaccess      [test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1]
 
 configure.ac:
 gl_FUNC_FACCESSAT
-if test $HAVE_FACCESSAT = 0; then
+if test $HAVE_FACCESSAT = 0 || test $REPLACE_FACCESSAT = 1; then
   AC_LIBOBJ([faccessat])
   gl_PREREQ_FACCESSAT
 fi
