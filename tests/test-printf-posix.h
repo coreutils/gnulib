@@ -46,7 +46,7 @@ test_function (int (*my_printf) (const char *, ...))
 
   /* FLAG_ZERO with infinite number.  */
   /* "0000000inf 33" is not a valid result; see
-     <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+     <https://lists.gnu.org/r/bug-gnulib/2007-04/msg00107.html> */
   my_printf ("%010a %d\n", Infinityd (), 33, 44, 55);
 
   /* Test the support of the %f format directive.  */

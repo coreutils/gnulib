@@ -102,7 +102,7 @@ rpl_stat (char const *name, struct stat *buf)
   /* Fill the fields ourselves, because the original stat function returns
      values for st_atime, st_mtime, st_ctime that depend on the current time
      zone.  See
-     <https://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00134.html>  */
+     <https://lists.gnu.org/r/bug-gnulib/2017-04/msg00134.html>  */
   /* XXX Should we convert to wchar_t* and prepend '\\?\', in order to work
      around length limitations
      <https://msdn.microsoft.com/en-us/library/aa365247.aspx> ?  */

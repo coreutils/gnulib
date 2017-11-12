@@ -57,7 +57,7 @@ safe_rw (int fd, void const *buf, size_t count)
 {
   /* Work around a bug in Tru64 5.1.  Attempting to read more than
      INT_MAX bytes fails with errno == EINVAL.  See
-     <https://lists.gnu.org/archive/html/bug-gnu-utils/2002-04/msg00010.html>.
+     <https://lists.gnu.org/r/bug-gnu-utils/2002-04/msg00010.html>.
      When decreasing COUNT, keep it block-aligned.  */
   enum { BUGGY_READ_MAXIMUM = INT_MAX & ~8191 };
 

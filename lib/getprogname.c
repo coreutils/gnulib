@@ -85,7 +85,7 @@ getprogname (void)
   return p && p[0] ? p : "?";
 # elif _AIX                                                 /* AIX */
   /* Idea by Bastien ROUCARIÈS,
-     https://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00095.html
+     https://lists.gnu.org/r/bug-gnulib/2010-12/msg00095.html
      Reference: https://www.ibm.com/support/knowledgecenter/en/ssw_aix_61/com.ibm.aix.basetrf1/getprocs.htm
   */
   static char *p;

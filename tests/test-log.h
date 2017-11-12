@@ -47,7 +47,7 @@ test_function (void)
 #if defined __i386__ && defined __FreeBSD__
        /* On FreeBSD/x86 6.4, the 'long double' type really has only 53 bits of
           precision in the compiler but 64 bits of precision at runtime.  See
-          <https://lists.gnu.org/archive/html/bug-gnulib/2008-07/msg00063.html>.
+          <https://lists.gnu.org/r/bug-gnulib/2008-07/msg00063.html>.
           The compiler has truncated all 'long double' literals in logl.c to
           53 bits of precision.  */
        L_(40.0)
@@ -76,7 +76,7 @@ test_function (void)
 #if defined __i386__ && defined __FreeBSD__
        /* On FreeBSD/x86 6.4, the 'long double' type really has only 53 bits of
           precision in the compiler but 64 bits of precision at runtime.  See
-          <https://lists.gnu.org/archive/html/bug-gnulib/2008-07/msg00063.html>.
+          <https://lists.gnu.org/r/bug-gnulib/2008-07/msg00063.html>.
           The compiler has truncated all 'long double' literals in logl.c to
           53 bits of precision.  */
        L_(85.0)

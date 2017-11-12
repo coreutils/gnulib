@@ -43,7 +43,7 @@ sc_prohibit_leading_TABs:
 
 sc_prohibit_augmenting_PATH_via_TESTS_ENVIRONMENT:
 	@if test -d .git; then						\
-	  url=https://lists.gnu.org/archive/html/bug-gnulib/2010-09/msg00064.html; \
+	  url=https://lists.gnu.org/r/bug-gnulib/2010-09/msg00064.html; \
 	  git grep '^[	 ]*TESTS_ENVIRONMENT += PATH=' modules		\
 	    && { printf '%s\n' 'Do not augment PATH via TESTS_ENVIRONMENT;' \
 		 "  see <$$url>" 1>&2; exit 1; } || :			\
@@ -95,7 +95,7 @@ allow_AC_LIBOBJ =	\
 allow_AC_LIBOBJ_or := $(shell echo $(allow_AC_LIBOBJ) | tr -s ' ' '|')
 
 sc_prohibit_AC_LIBOBJ_in_m4:
-	@url=https://lists.gnu.org/archive/html/bug-gnulib/2011-06/msg00051.html; \
+	@url=https://lists.gnu.org/r/bug-gnulib/2011-06/msg00051.html; \
 	if test -d .git; then						\
 	  git ls-files m4						\
 	     | grep -Ev '^m4/($(allow_AC_LIBOBJ_or))\.m4$$'		\

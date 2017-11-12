@@ -871,7 +871,7 @@ sc_GFDL_version:
 	  $(_sc_search_regexp)
 
 # Don't use Texinfo's @acronym{}.
-# https://lists.gnu.org/archive/html/bug-gnulib/2010-03/msg00321.html
+# https://lists.gnu.org/r/bug-gnulib/2010-03/msg00321.html
 texinfo_suffix_re_ ?= \.(txi|texi(nfo)?)$$
 sc_texinfo_acronym:
 	@prohibit='@acronym\{'						\

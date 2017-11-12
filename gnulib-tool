@@ -82,7 +82,7 @@ fi
 # gnulib-tool generates, since we don't want "sed --posix" to leak
 # into makefiles. And do it only for sed versions 4.2 or newer,
 # because "sed --posix" is buggy in GNU sed 4.1.5, see
-# <https://lists.gnu.org/archive/html/bug-gnulib/2009-02/msg00225.html>.
+# <https://lists.gnu.org/r/bug-gnulib/2009-02/msg00225.html>.
 if (alias) > /dev/null 2>&1 \
    && echo | sed --posix -e d >/dev/null 2>&1 \
    && case `sed --version | sed -e 's/^[^0-9]*//' -e 1q` in \
@@ -899,8 +899,8 @@ func_hardlink ()
 #
 # Problem 2 is specific to bash 3.2 and affects the 'echo' built-in, but not
 # the 'printf' built-in. See
-#   <https://lists.gnu.org/archive/html/bug-bash/2008-12/msg00050.html>
-#   <https://lists.gnu.org/archive/html/bug-gnulib/2010-02/msg00154.html>
+#   <https://lists.gnu.org/r/bug-bash/2008-12/msg00050.html>
+#   <https://lists.gnu.org/r/bug-gnulib/2010-02/msg00154.html>
 # The workaround is: define echo to a function that uses the printf built-in.
 have_echo=
 if echo '\t' | grep t > /dev/null; then
@@ -5649,7 +5649,7 @@ s,//*$,/,'
     echo "  gl_source_base='$testsbase'"
     # Define a tests witness macro that depends on the package.
     # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by AC_INIT.
-    # See <https://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
+    # See <https://lists.gnu.org/r/automake/2009-05/msg00145.html>.
     echo "changequote(,)dnl"
     echo "  ${macro_prefix}tests_WITNESS=IN_\`echo \"\${PACKAGE-\$PACKAGE_TARNAME}\" | LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ | LC_ALL=C sed -e 's/[^A-Z0-9_]/_/g'\`_GNULIB_TESTS"
     echo "changequote([, ])dnl"

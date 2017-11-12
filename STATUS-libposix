@@ -44,68 +44,68 @@ Bruno Haible says:
 1) ... 7)
   proposed by Gary in the thread starting at
   [PATCH 0/7] contents of topic/libposix for merge to master
-  in <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/threads.html>
+  in <https://lists.gnu.org/r/bug-gnulib/2010-10/threads.html>
 
 1) Allow generate header files to coexist without shadowing each other.
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00283.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00283.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00289.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00289.html>
 
   Still missing: dealing with include_next and old compilers, cf.
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00269.html>
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00285.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00269.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00285.html>
 
 2) Allow using libgnu's file name in module descriptions.
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00284.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00284.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00291.html>
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00308.html
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00291.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00308.html
 
 3) iconv_open's file file list
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00282.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00282.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00290.html>
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00307.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00290.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00307.html>
   libposix needs to install only selected headers, not all of them. Let the
   script look at the 'Include:' section of each module description.
 
 4) Module libposix
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00280.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00280.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00292.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00292.html>
   More discussion needed
 
 5) Installable headers
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00281.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00281.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00293.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00293.html>
   Patch to be rewritten to use nobase_nodist_include_HEADERS,
   also need to add an Automake conditional to distinguish libposix from
   other projects.
   Also see whether the Automake bug can be fixed.
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00325.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00325.html>
 
 6) libposix subdirectory
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00277.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00277.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00294.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00294.html>
 
 7) use git-version-gen for version numbering
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00279.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00279.html>
 
   Discussion:
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00297.html>
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-10/msg00303.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00297.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-10/msg00303.html>
   Patch to be revised.
 
 8) Licensing
-  <https://lists.gnu.org/archive/html/bug-gnulib/2010-12/msg00184.html>
+  <https://lists.gnu.org/r/bug-gnulib/2010-12/msg00184.html>
 
   Status: A majority of the issues have been handled.
   Obsolete modules (free, memcpy) can be ignored.
@@ -122,6 +122,6 @@ Bruno Haible says:
     utimensat
 
 9) Versioning
-  <https://lists.gnu.org/archive/html/bug-gnulib/2011-01/msg00163.html>
+  <https://lists.gnu.org/r/bug-gnulib/2011-01/msg00163.html>
 
   Status: No real plan exists.

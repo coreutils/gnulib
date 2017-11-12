@@ -73,7 +73,7 @@ rpl_fstat (int fd, struct stat *buf)
   /* Fill the fields ourselves, because the original fstat function returns
      values for st_atime, st_mtime, st_ctime that depend on the current time
      zone.  See
-     <https://lists.gnu.org/archive/html/bug-gnulib/2017-04/msg00134.html>  */
+     <https://lists.gnu.org/r/bug-gnulib/2017-04/msg00134.html>  */
   HANDLE h = (HANDLE) _get_osfhandle (fd);
 
   if (h == INVALID_HANDLE_VALUE)

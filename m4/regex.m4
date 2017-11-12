@@ -198,7 +198,7 @@ AC_DEFUN([gl_REGEX],
               result |= 16;
 
             /* Catch a bug reported by Vin Shelton in
-               https://lists.gnu.org/archive/html/bug-coreutils/2007-06/msg00089.html
+               https://lists.gnu.org/r/bug-coreutils/2007-06/msg00089.html
                */
             re_set_syntax (RE_SYNTAX_POSIX_BASIC
                            & ~RE_CONTEXT_INVALID_DUP

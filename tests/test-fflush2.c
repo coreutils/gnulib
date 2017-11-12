@@ -36,7 +36,7 @@ main (int argc, char **argv)
       case '1':
         /* Check fflush after a backup ungetc() call.  This is case 1a in
            terms of
-           <https://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+           <https://lists.gnu.org/r/bug-gnulib/2008-03/msg00131.html>,
            according to the Austin Group's resolution on 2009-01-08.  */
 
         c = fgetc (stdin);
@@ -65,7 +65,7 @@ main (int argc, char **argv)
       case '2':
         /* Check fflush after a non-backup ungetc() call.  This is case 2a in
            terms of
-           <https://lists.gnu.org/archive/html/bug-gnulib/2008-03/msg00131.html>,
+           <https://lists.gnu.org/r/bug-gnulib/2008-03/msg00131.html>,
            according to the Austin Group's resolution on 2009-01-08.  */
         /* Check that fflush after a non-backup ungetc() call discards the
            ungetc buffer.  This is mandated by POSIX

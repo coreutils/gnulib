@@ -53,7 +53,7 @@ AC_DEFUN([gl_IGNORE_UNUSED_LIBRARIES],
      gl_saved_ldflags=$LDFLAGS
      gl_saved_libs=$LIBS
      # Link with -lm to detect binutils 2.16 bug with --as-needed; see
-     # <https://lists.gnu.org/archive/html/bug-gnulib/2006-06/msg00131.html>.
+     # <https://lists.gnu.org/r/bug-gnulib/2006-06/msg00131.html>.
      LIBS="$LIBS -lm"
      # Use long option sequences like '-z ignore' to test for the feature,
      # to forestall problems with linkers that have -z, -i, -g, -n, etc. flags.

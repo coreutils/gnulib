@@ -642,7 +642,7 @@ AC_DEFUN([%s_INIT],
         # Define a tests witness macro that depends on the package.
         # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by
         # AC_INIT.
-        # See <https://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
+        # See <https://lists.gnu.org/r/automake/2009-05/msg00145.html>.
         emit += 'changequote(,)dnl\n'
         emit += '  %stests_WITNESS=' % macro_prefix
         emit += 'IN_`echo "${PACKAGE-$PACKAGE_TARNAME}" | LC_ALL=C tr \

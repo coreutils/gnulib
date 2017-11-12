@@ -27,7 +27,7 @@
 
 /* IRIX 6.5 has an <unistd.h> that defines a macro EX_OK with a nonzero
    value.  Override it.  See
-   <https://lists.gnu.org/archive/html/bug-gnulib/2007-03/msg00361.html>  */
+   <https://lists.gnu.org/r/bug-gnulib/2007-03/msg00361.html>  */
 # ifdef __sgi
 #  include <unistd.h>
 #  undef EX_OK

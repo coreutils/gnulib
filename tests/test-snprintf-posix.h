@@ -361,7 +361,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     int retval =
       my_snprintf (result, sizeof (result), "%010a %d", Infinityd (), 33, 44, 55);
     /* "0000000inf 33" is not a valid result; see
-       <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+       <https://lists.gnu.org/r/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strcmp (result, "       inf 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -370,7 +370,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     int retval =
       my_snprintf (result, sizeof (result), "%050a %d", NaNd (), 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
-       <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+       <https://lists.gnu.org/r/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 50 + 3
             && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
             && strcmp (result + strlen (result) - 3, " 33") == 0);
@@ -665,7 +665,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     int retval =
       my_snprintf (result, sizeof (result), "%010La %d", Infinityl (), 33, 44, 55);
     /* "0000000inf 33" is not a valid result; see
-       <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+       <https://lists.gnu.org/r/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strcmp (result, "       inf 33") == 0);
     ASSERT (retval == strlen (result));
   }
@@ -674,7 +674,7 @@ test_function (int (*my_snprintf) (char *, size_t, const char *, ...))
     int retval =
       my_snprintf (result, sizeof (result), "%050La %d", NaNl (), 33, 44, 55);
     /* "0000000nan 33" is not a valid result; see
-       <https://lists.gnu.org/archive/html/bug-gnulib/2007-04/msg00107.html> */
+       <https://lists.gnu.org/r/bug-gnulib/2007-04/msg00107.html> */
     ASSERT (strlen (result) == 50 + 3
             && strisnan (result, strspn (result, " "), strlen (result) - 3, 0)
             && strcmp (result + strlen (result) - 3, " 33") == 0);

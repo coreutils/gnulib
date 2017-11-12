@@ -97,7 +97,7 @@ alloc_failed (void)
 {
 #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   /* Avoid errno problem without using the malloc or realloc modules; see:
-     https://lists.gnu.org/archive/html/bug-gnulib/2016-08/msg00025.html  */
+     https://lists.gnu.org/r/bug-gnulib/2016-08/msg00025.html  */
   errno = ENOMEM;
 #endif
 }

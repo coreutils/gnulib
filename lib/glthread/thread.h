@@ -64,7 +64,7 @@
                                    void (*child_func) (void));
    Note that even on platforms where this is supported, use of fork() and
    threads together is problematic, see
-     <https://lists.gnu.org/archive/html/bug-gnulib/2008-08/msg00062.html>
+     <https://lists.gnu.org/r/bug-gnulib/2008-08/msg00062.html>
  */
 
 
