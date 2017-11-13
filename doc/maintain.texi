@@ -1682,7 +1682,7 @@ plain command line @code{ftp} program.
 If you have difficulties with an upload, email
 @email{ftp-upload@@gnu.org}.  You can check the archive of uploads
 processed at
-@url{https://lists.gnu.org/r/ftp-upload-report}.
+@url{https://lists.gnu.org/archive/html/ftp-upload-report}.
 
 
 @node FTP Upload Release File Triplet
