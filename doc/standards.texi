@@ -87,7 +87,7 @@ If you did not obtain this file directly from the GNU project and
 recently, please check for a newer version.  You can get the GNU
 Coding Standards from the GNU web server in many
 different formats, including the Texinfo source, PDF, HTML, DVI, plain
-text, and more, at: @uref{http://www.gnu.org/prep/standards/}.
+text, and more, at: @uref{https://www.gnu.org/prep/standards/}.
 
 If you are maintaining an official GNU package, in addition to this
 document, please read and follow the GNU maintainer information
@@ -98,7 +98,7 @@ Software}).
 If you want to receive diffs for every change to these GNU documents,
 join the mailing list @code{gnustandards-commit@@gnu.org}, via the web
 interface at
-@url{http://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
+@url{https://lists.gnu.org/mailman/listinfo/gnustandards-commit}.
 Archives are also available there.
 
 @cindex @code{bug-standards@@gnu.org} email address
@@ -111,7 +111,7 @@ suggestion efficiently.  We prefer a context diff to the Texinfo
 source, but if that's difficult for you, you can make a context diff
 for some other version of this document, or propose it in any way that
 makes it clear.  The source repository for this document can be found
-at @url{http://savannah.gnu.org/projects/gnustandards}.
+at @url{https://savannah.gnu.org/projects/gnustandards}.
 
 These standards cover the minimum of what is important when writing a
 GNU package.  Likely, the need for additional standards will come up.
@@ -127,7 +127,7 @@ more maintainable by others.
 
 The GNU Hello program serves as an example of how to follow the GNU
 coding standards for a trivial program.
-@uref{http://www.gnu.org/software/hello/hello.html}.
+@uref{https://www.gnu.org/software/hello/hello.html}.
 
 This release of the GNU Coding Standards was last updated
 @value{lastupdate}.
@@ -309,7 +309,7 @@ technique.
 @cindex Guile
 @cindex GNOME and Guile
 The standard extensibility interpreter for GNU software is Guile
-(@uref{http://www.gnu.org/@/software/@/guile/}), which implements the
+(@uref{https://www.gnu.org/@/software/@/guile/}), which implements the
 language Scheme (an especially clean and simple dialect of Lisp).
 Guile also includes bindings for GTK+/GNOME, making it practical to
 write modern GUI functionality within Guile.  We don't reject programs
@@ -888,7 +888,7 @@ the graphical interface, these won't be much extra work.
 
 Please make your program interoperate with access technology such as
 screen readers (see
-@url{http://www.gnu.org/accessibility/accessibility.html}).  This should
+@url{https://www.gnu.org/accessibility/accessibility.html}).  This should
 be automatic if you use GTK+.
 
 @node Command-Line Interfaces
@@ -1007,7 +1007,7 @@ Here's an example of output that follows these rules:
 @smallexample
 GNU hello 2.3
 Copyright (C) 2007 Free Software Foundation, Inc.
-License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 @end smallexample
@@ -1052,49 +1052,49 @@ abbreviation as usual, as in the examples below.
 
 @table @asis
 @item GPL
-GNU General Public License, @url{http://www.gnu.org/@/licenses/@/gpl.html}.
+GNU General Public License, @url{https://www.gnu.org/@/licenses/@/gpl.html}.
 
 @item LGPL
-GNU Lesser General Public License, @url{http://www.gnu.org/@/licenses/@/lgpl.html}.
+GNU Lesser General Public License, @url{https://www.gnu.org/@/licenses/@/lgpl.html}.
 
 @item GPL/Ada
 GNU GPL with the exception for Ada.
 
 @item Apache
 The Apache Software Foundation license,
-@url{http://www.apache.org/@/licenses}.
+@url{https://www.apache.org/@/licenses}.
 
 @item Artistic
-The Artistic license used for Perl, @url{http://dev.perl.org/licenses/artistic.html}.
+The Artistic license used for Perl, @url{https://dev.perl.org/licenses/artistic.html}.
 
 @item Expat
 The Expat license, @url{http://www.jclark.com/@/xml/@/copying.txt}.
 
 @item MPL
-The Mozilla Public License, @url{http://www.mozilla.org/@/MPL/}.
+The Mozilla Public License, @url{https://www.mozilla.org/@/MPL/}.
 
 @item OBSD
 The original (4-clause) BSD license, incompatible with the GNU GPL
-@url{http://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#6}.
+@url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#6}.
 
 @item PHP
 The license used for PHP, @url{http://www.php.net/@/license/}.
 
 @item public domain
 The non-license that is being in the public domain,
-@url{http://www.gnu.org/@/licenses/@/license-list.html#PublicDomain}.
+@url{https://www.gnu.org/@/licenses/@/license-list.html#PublicDomain}.
 
 @item Python
 The license for Python,
-@url{http://directory.fsf.org/wiki?title=License:Python2.0.1}.
+@url{https://directory.fsf.org/wiki?title=License:Python2.0.1}.
 
 @item RBSD
 The revised (3-clause) BSD, compatible with the GNU GPL,@*
-@url{http://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#5}.
+@url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#5}.
 
 @item X11
 The simple non-copyleft license used for most versions of the X Window
-System, @url{http://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#3}.
+System, @url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#3}.
 
 @item Zlib
 The license for Zlib, @url{http://www.gzip.org/@/zlib/@/zlib_license.html}.
@@ -1103,7 +1103,7 @@ The license for Zlib, @url{http://www.gzip.org/@/zlib/@/zlib_license.html}.
 
 More information about these licenses and many more are on the GNU
 licensing web pages,
-@url{http://www.gnu.org/@/licenses/@/license-list.html}.
+@url{https://www.gnu.org/@/licenses/@/license-list.html}.
 
 
 @node --help
@@ -1120,13 +1120,13 @@ is seen, and the program should not perform its normal function.
 @cindex bug reports
 Near the end of the @samp{--help} option's output, please place lines
 giving the email address for bug reports, the package's home page
-(normally @indicateurl{http://www.gnu.org/software/@var{pkg}}, and the
+(normally @indicateurl{https://www.gnu.org/software/@var{pkg}}, and the
 general page for help using GNU programs.  The format should be like this:
 
 @example
 Report bugs to: @var{mailing-address}
-@var{pkg} home page: <http://www.gnu.org/software/@var{pkg}/>
-General help using GNU software: <http://www.gnu.org/gethelp/>
+@var{pkg} home page: <https://www.gnu.org/software/@var{pkg}/>
+General help using GNU software: <https://www.gnu.org/gethelp/>
 @end example
 
 It is ok to mention other appropriate mailing lists and web pages.
@@ -2299,7 +2299,7 @@ Print the version number.
 The OID (object identifier) 1.3.6.1.4.1.11591 has been assigned to the
 GNU Project (thanks to Sergey Poznyakoff).  These are used for SNMP,
 LDAP, X.509 certificates, and so on.  The web site
-@url{http://www.alvestrand.no/objectid} has a (voluntary) listing of
+@url{https://www.alvestrand.no/objectid} has a (voluntary) listing of
 many OID assignments.
 
 If you need a new slot for your GNU package, write
@@ -3026,7 +3026,7 @@ On Windows, @code{errno} is not set on failure.
 @end table
 
 @cindex Gnulib
-@uref{http://www.gnu.org/software/gnulib/, Gnulib} is a big help in
+@uref{https://www.gnu.org/software/gnulib/, Gnulib} is a big help in
 this regard.  Gnulib provides implementations of standard interfaces
 on many of the systems that lack them, including portable
 implementations of enhanced GNU interfaces, thereby making their use
@@ -3479,7 +3479,7 @@ documents---you only need one copy of the GNU FDL for the whole
 collection.  For a single short document, you can use a very permissive
 non-copyleft license, to avoid taking up space with a long license.
 
-See @uref{http://www.gnu.org/copyleft/fdl-howto.html} for more explanation
+See @uref{https://www.gnu.org/copyleft/fdl-howto.html} for more explanation
 of how to employ the GFDL.
 
 Note that it is not obligatory to include a copy of the GNU GPL or GNU
@@ -3504,7 +3504,7 @@ The FSF publishes some GNU manuals in printed form.  To encourage sales
 of these manuals, the on-line versions of the manual should mention at
 the very start that the printed manual is available and should point at
 information for getting it---for instance, with a link to the page
-@url{http://www.gnu.org/order/order.html}.  This should not be included
+@url{https://www.gnu.org/order/order.html}.  This should not be included
 in the printed manual, though, because there it is redundant.
 
 It is also useful to explain in the on-line forms of the manual how the
@@ -3825,7 +3825,7 @@ they can be considered true manuals, use the GFDL (@pxref{License for
 Manuals}).
 
 Finally, the GNU help2man program
-(@uref{http://www.gnu.org/software/help2man/}) is one way to automate
+(@uref{https://www.gnu.org/software/help2man/}) is one way to automate
 generation of a man page, in this case from @option{--help} output.
 This is sufficient in many cases.
 
@@ -3955,7 +3955,7 @@ The @code{configure} script needs to be able to decode all plausible
 alternatives for how to describe a machine.  Thus,
 @samp{athlon-pc-gnu/linux} would be a valid alias.  There is a shell
 script called
-@uref{http://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD,
+@uref{https://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.sub;hb=HEAD,
 @file{config.sub}} that you can use as a subroutine to validate system
 types and canonicalize aliases.
 
@@ -3966,7 +3966,7 @@ plain @var{buildtype} argument.  For example, @samp{configure
 i686-pc-linux-gnu}.  When the build type is not specified by an option
 or argument, the @code{configure} script should normally guess it using
 the shell script
-@uref{http://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD,
+@uref{https://git.savannah.gnu.org/@/gitweb/@/?p=config.git;a=blob_plain;f=config.guess;hb=HEAD,
 @file{config.guess}}.
 
 @cindex optional features, configure-time
@@ -4183,13 +4183,13 @@ advertise them to new potential customers, or to give the public the
 idea that their existence is ethical.
 
 The GNU definition of free software is found on the GNU web site at
-@url{http://www.gnu.org/@/philosophy/@/free-sw.html}, and the definition
+@url{https://www.gnu.org/@/philosophy/@/free-sw.html}, and the definition
 of free documentation is found at
-@url{http://www.gnu.org/@/philosophy/@/free-doc.html}.  The terms ``free''
+@url{https://www.gnu.org/@/philosophy/@/free-doc.html}.  The terms ``free''
 and ``non-free'', used in this document, refer to those definitions.
 
 A list of important licenses and whether they qualify as free is in
-@url{http://www.gnu.org/@/licenses/@/license-list.html}.  If it is not
+@url{https://www.gnu.org/@/licenses/@/license-list.html}.  If it is not
 clear whether a license qualifies as free, please ask the GNU Project
 by writing to @email{licensing@@gnu.org}.  We will answer, and if the
 license is an important one, we will add it to the list.
