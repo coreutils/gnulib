@@ -726,9 +726,9 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     if not self.config['dryrun']:
                         print('Updating %s (backup in %s)' %
                               (srcpath, backupname))
-                        shutil.move(srcpath, backupname)
+                        shutil.copy2(srcpath, backupname)
                         result = string()
-                        with codecs.open(srcpath, 'wb', 'UTF-8') as file:
+                        with codecs.open(srcpath, 'ab', 'UTF-8') as file:
                             file.write(destdata)
                     else:  # if self.config['dryrun']
                         print('Updating %s (backup in %s)' %
