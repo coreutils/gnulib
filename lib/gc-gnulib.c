@@ -602,7 +602,7 @@ gc_cipher_close (gc_cipher_handle handle)
 
 /* Hashes. */
 
-#define MAX_DIGEST_SIZE 20
+#define MAX_DIGEST_SIZE 32
 
 typedef struct _gc_hash_ctx
 {
