@@ -25,6 +25,11 @@ Solaris 9.
 For symlinks, when the argument ends in a slash, some platforms don't
 dereference the argument:
 Solaris 9.
+@item
+On Solaris 11.3, when this function yields a timestamp with a
+nonpositive @code{tv_sec} value, @code{tv_nsec} might in the range
+@minus{}1000000000..@minus{}1, representing a negative nanoseconds
+offset from @code{tv_sec}.
 @end itemize
 
 Portability problems not fixed by Gnulib:

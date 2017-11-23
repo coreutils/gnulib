@@ -45,6 +45,8 @@ orig_fstat (int fd, struct stat *buf)
    above.  */
 #include "sys/stat.h"
 
+#include "stat-time.h"
+
 #include <errno.h>
 #include <unistd.h>
 #ifdef WINDOWS_NATIVE
@@ -83,6 +85,6 @@ rpl_fstat (int fd, struct stat *buf)
     }
   return _gl_fstat_by_handle (h, NULL, buf);
 #else
-  return orig_fstat (fd, buf);
+  return stat_time_normalize (orig_fstat (fd, buf), buf);
 #endif
 }
