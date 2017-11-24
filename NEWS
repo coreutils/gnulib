@@ -42,6 +42,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-11-24  posixtm         Previously, callers had to specify either
+                            PDS_LEADING_YEAR or PDS_TRAILING_YEAR (but
+                            not both).  Now, callers should specify
+                            only PDS_TRAILING_YEAR; leading years are
+                            requested by not specifying PDS_TRAILING_YEAR.
+
 2017-08-14  fcntl-h         This module now defaults O_CLOEXEC to a nonzero
                             value instead of to 0, as the 'open' and
                             'openat' modules now emulate O_CLOEXEC.

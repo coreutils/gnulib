@@ -45,7 +45,7 @@
 
   touch -t [[CC]YY]mmddhhmm[.ss] FILE...
     8, 10, or 12 digits, followed by optional .ss
-    (PDS_LEADING_YEAR | PDS_CENTURY | PDS_SECONDS)
+    (PDS_CENTURY | PDS_SECONDS)
 
   touch mmddhhmm[YY] FILE... (obsoleted by POSIX 1003.1-2001)
     8 or 10 digits, YY (if present) must be in the range 69-99
@@ -136,7 +136,7 @@ posix_time_parse (struct tm *tm, const char *s, unsigned int syntax_bits)
     pair[i] = 10 * (s[2*i] - '0') + s[2*i + 1] - '0';
 
   p = pair;
-  if (syntax_bits & PDS_LEADING_YEAR)
+  if (! (syntax_bits & PDS_TRAILING_YEAR))
     {
       if (! year (tm, p, len - 4, syntax_bits))
         return false;
