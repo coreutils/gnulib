@@ -29,9 +29,13 @@
 #ifndef _@GUARD_PREFIX@_MONETARY_H
 #define _@GUARD_PREFIX@_MONETARY_H
 
-#if @GNULIB_STRFMON_L@ && @HAVE_XLOCALE_H@
+#if @GNULIB_STRFMON_L@
+# if @HAVE_XLOCALE_H@
 /* Get locale_t on Mac OS X 10.12.  */
-# include <xlocale.h>
+#  include <xlocale.h>
+# endif
+/* Get locale_t on glibc 2.25.  */
+# include <locale.h>
 #endif
 
 /* Like in <stdio.h>.  */
