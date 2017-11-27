@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -288,7 +288,7 @@ u_property_bidi_hebrew_right_to_left =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0xFFFFFFFF, 0xFC3007FF,
     0x043FFFFF, 0xFFFFC110, 0xF1FFFFFF, 0xFFFFFFFF,
-    0xFFFFFFFF, 0xFFE00000, 0xFFFFFFFF, 0x00000007,
+    0xFFFFFFFF, 0xC0200000, 0x000FFFFF, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00008000, 0x00000000, 0x00000000, 0x00000000,
@@ -317,7 +317,7 @@ u_property_bidi_hebrew_right_to_left =
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x0000FF9F, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0xFFFFFFFF, 0xFFFFFFFF, 0xC3FF000F, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

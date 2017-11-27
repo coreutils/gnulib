@@ -20,25 +20,11 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include <string.h>
+
 #include "unistr.h"
 
-void
-u16_grapheme_breaks (const uint16_t *s, size_t n, char *p)
-{
-  ucs4_t prev;
-  int mblen;
-
-  prev = 0;
-  for (; n > 0; s += mblen, p += mblen, n -= mblen)
-    {
-      ucs4_t next;
-
-      mblen = u16_mbtouc (&next, s, n);
-
-      p[0] = uc_is_grapheme_break (prev, next);
-      if (mblen > 1)
-        p[1] = 0;
-
-      prev = next;
-    }
-}
+#define FUNC u16_grapheme_breaks
+#define UNIT uint16_t
+#define U_MBTOUC u16_mbtouc
+#include "u-grapheme-breaks.h"

@@ -36,8 +36,7 @@ uc_graphemeclusterbreak_property (ucs4_t uc)
           if (lookup2 >= 0)
             {
               unsigned int index3 = uc & gbrkprop_header_4;
-              unsigned char lookup3 = unigbrkprop.level3[lookup2 + index3 / 2];
-              return (lookup3 >> ((uc & 1) << 2)) & 0x0f;
+              return unigbrkprop.level3[lookup2 + index3];
             }
         }
     }

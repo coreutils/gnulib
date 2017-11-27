@@ -53,7 +53,12 @@ enum
   WBP_RI           = 13,
   WBP_DQ           = 14,
   WBP_SQ           = 15,
-  WBP_HL           = 16
+  WBP_HL           = 16,
+  WBP_ZWJ          = 17,
+  WBP_EB           = 18,
+  WBP_EM           = 19,
+  WBP_GAZ          = 20,
+  WBP_EBG          = 21
 };
 
 /* Return the Word_Break property of a Unicode character.  */

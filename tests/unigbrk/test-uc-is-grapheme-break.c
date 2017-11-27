@@ -45,6 +45,11 @@ graphemebreakproperty_to_string (int gbp)
       CASE(LV)
       CASE(LVT)
       CASE(RI)
+      CASE(ZWJ)
+      CASE(EB)
+      CASE(EM)
+      CASE(GAZ)
+      CASE(EBG)
     }
   abort ();
 }
@@ -81,6 +86,8 @@ main (int argc, char *argv[])
       char *comment;
       const char *p;
       ucs4_t prev;
+      int last_compchar_prop;
+      size_t ri_count;
 
       lineno++;
 
@@ -90,6 +97,8 @@ main (int argc, char *argv[])
       if (line[strspn (line, " \t\r\n")] == '\0')
         continue;
 
+      last_compchar_prop = -1;
+      ri_count = 0;
       prev = 0;
       p = line;
       do
@@ -135,7 +144,30 @@ main (int argc, char *argv[])
               next = next_int;
             }
 
-          if (uc_is_grapheme_break (prev, next) != should_break)
+          if ((last_compchar_prop == GBP_EB
+               || last_compchar_prop == GBP_EBG)
+              && uc_graphemeclusterbreak_property (next) == GBP_EM)
+            {
+              int prev_gbp = uc_graphemeclusterbreak_property (prev);
+              int next_gbp = uc_graphemeclusterbreak_property (next);
+              fprintf (stderr, "%s:%d: skipping GB10: should join U+%04X (%s) "
+                       "and U+%04X (%s)\n",
+                       filename, lineno,
+                       prev, graphemebreakproperty_to_string (prev_gbp),
+                       next, graphemebreakproperty_to_string (next_gbp));
+            }
+          else if (uc_graphemeclusterbreak_property (next) == GBP_RI
+                   && ri_count % 2 != 0)
+            {
+              int prev_gbp = uc_graphemeclusterbreak_property (prev);
+              int next_gbp = uc_graphemeclusterbreak_property (next);
+              fprintf (stderr, "%s:%d: skipping GB12: should join U+%04X (%s) "
+                       "and U+%04X (%s)\n",
+                       filename, lineno,
+                       prev, graphemebreakproperty_to_string (prev_gbp),
+                       next, graphemebreakproperty_to_string (next_gbp));
+            }
+          else if (uc_is_grapheme_break (prev, next) != should_break)
             {
               int prev_gbp = uc_graphemeclusterbreak_property (prev);
               int next_gbp = uc_graphemeclusterbreak_property (next);
@@ -150,6 +182,16 @@ main (int argc, char *argv[])
 
           p += strspn (p, " \t\r\n");
           prev = next;
+
+          if (!(uc_graphemeclusterbreak_property (next) == GBP_EXTEND
+                && (last_compchar_prop == GBP_EB
+                    || last_compchar_prop == GBP_EBG)))
+            last_compchar_prop = uc_graphemeclusterbreak_property (next);
+
+          if (uc_graphemeclusterbreak_property (next) == GBP_RI)
+            ri_count++;
+          else
+            ri_count = 0;
         }
       while (*p != '\0');
     }

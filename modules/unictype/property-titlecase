@@ -13,7 +13,7 @@ unictype/category-Lt
 
 configure.ac:
 AC_REQUIRE([AC_C_INLINE])
-gl_LIBUNISTRING_MODULE([0.9.6], [unictype/property-titlecase])
+gl_LIBUNISTRING_MODULE([0.9.8], [unictype/property-titlecase])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNICTYPE_PROPERTY_TITLECASE

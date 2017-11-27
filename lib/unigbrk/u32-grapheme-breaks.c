@@ -20,23 +20,11 @@
 /* Specification.  */
 #include "unigbrk.h"
 
+#include <string.h>
+
 #include "unistr.h"
 
-void
-u32_grapheme_breaks (const uint32_t *s, size_t n, char *p)
-{
-  ucs4_t prev;
-  size_t i;
-
-  prev = 0;
-  for (i = 0; i < n; i++)
-    {
-      ucs4_t next;
-
-      u32_mbtouc (&next, &s[i], 1);
-
-      p[i] = uc_is_grapheme_break (prev, next);
-
-      prev = next;
-    }
-}
+#define FUNC u32_grapheme_breaks
+#define UNIT uint32_t
+#define U_MBTOUC u32_mbtouc
+#include "u-grapheme-breaks.h"

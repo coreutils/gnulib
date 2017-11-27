@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Mirrored Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define mirror_header_0 16
 #define mirror_header_1 2
 #define mirror_header_2 7

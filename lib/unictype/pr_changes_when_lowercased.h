@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[14 << 4];
+    /*unsigned*/ int level3[15 << 4];
   }
 u_property_changes_when_lowercased =
 {
@@ -265,7 +265,7 @@ u_property_changes_when_lowercased =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   224,
        -1,
        -1,
        -1,
@@ -318,13 +318,13 @@ u_property_changes_when_lowercased =
     0x00000000, 0x00000000, 0x55555555, 0x00001555,
     0x05555555, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x55545554, 0x55555555, 0x6A005555,
-    0x55452855, 0x005F3D55, 0x00000000, 0x00000000,
+    0x55452855, 0x005F7D55, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x07FFFFFE, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0x000000FF, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0xFFFF0000, 0x000FFFFF, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -334,6 +334,10 @@ u_property_changes_when_lowercased =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0xFFFFFFFF, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0xFFFFFFFF, 0x00000003, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

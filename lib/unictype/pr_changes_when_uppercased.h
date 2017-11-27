@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[16 << 4];
+    /*unsigned*/ int level3[17 << 4];
   }
 u_property_changes_when_uppercased =
 {
@@ -265,7 +265,7 @@ u_property_changes_when_uppercased =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   256,
        -1,
        -1,
        -1,
@@ -283,7 +283,7 @@ u_property_changes_when_uppercased =
     0x00000000, 0x00200000, 0x80000000, 0xFF7FFFFF,
     0xAAAAAAAA, 0x54AAAAAA, 0xAAAAAB55, 0xD4AAAAAA,
     0x46241129, 0xA251212A, 0xB5555B60, 0xAA2DAAAA,
-    0xAAAAAAAA, 0x900AAAA8, 0x1ADFAA85, 0x20269B6B,
+    0xAAAAAAAA, 0x900AAAA8, 0x1ADFAA85, 0x20269F6B,
     0x60041F89, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000020, 0x388A0000,
     0x00010000, 0xFFFFF000, 0xAAE37FFF, 0x092FAAAA,
@@ -296,7 +296,7 @@ u_property_changes_when_uppercased =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x3F000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000001FF, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x22000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA,
@@ -332,7 +332,7 @@ u_property_changes_when_uppercased =
     0x00000000, 0x00000000, 0x07FFFFFE, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0xFFFFFF00, 0x0000FFFF, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0xFF000000, 0x0FFFFFFF,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -342,6 +342,10 @@ u_property_changes_when_uppercased =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0xFFFFFFFF, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0xFFFFFFFC, 0x0000000F, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

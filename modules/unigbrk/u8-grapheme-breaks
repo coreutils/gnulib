@@ -3,15 +3,16 @@ Find grapheme cluster breaks in UTF-8 string.
 
 Files:
 lib/unigbrk/u8-grapheme-breaks.c
-tests/macros.h
+lib/unigbrk/u-grapheme-breaks.h
 
 Depends-on:
-unigbrk/uc-is-grapheme-break
+unigbrk/base
+unigbrk/uc-gbrk-prop
 unistr/u8-mbtouc
 
 configure.ac:
 gl_MODULE_INDICATOR([unigbrk/u8-grapheme-breaks])
-gl_LIBUNISTRING_MODULE([0.9.6], [unigbrk/u8-grapheme-breaks])
+gl_LIBUNISTRING_MODULE([0.9.8], [unigbrk/u8-grapheme-breaks])
 
 Makefile.am:
 if LIBUNISTRING_COMPILE_UNIGBRK_U8_GRAPHEME_BREAKS

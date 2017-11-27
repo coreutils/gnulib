@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[16 << 4];
+    /*unsigned*/ int level3[18 << 4];
   }
 u_property_extender =
 {
@@ -204,6 +204,7 @@ u_property_extender =
        -1,
         3 +   256 * sizeof (short) / sizeof (int) +   240,
        -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   256,
        -1,
        -1,
        -1,
@@ -264,8 +265,7 @@ u_property_extender =
        -1,
        -1,
        -1,
-       -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   272,
        -1,
        -1,
        -1,
@@ -342,6 +342,14 @@ u_property_extender =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x0000000C, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000001,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000070, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

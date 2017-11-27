@@ -1,6 +1,6 @@
 /* DO NOT EDIT! GENERATED AUTOMATICALLY! */
 /* Properties of Unicode characters.  */
-/* Generated automatically by gen-uni-tables.c for Unicode 8.0.0.  */
+/* Generated automatically by gen-uni-tables.c for Unicode 9.0.0.  */
 #define header_0 16
 #define header_2 9
 #define header_3 127
@@ -11,7 +11,7 @@ struct
     int header[1];
     int level1[2];
     short level2[2 << 7];
-    /*unsigned*/ int level3[18 << 4];
+    /*unsigned*/ int level3[19 << 4];
   }
 u_property_lowercase =
 {
@@ -265,7 +265,7 @@ u_property_lowercase =
        -1,
        -1,
        -1,
-       -1,
+        3 +   256 * sizeof (short) / sizeof (int) +   288,
        -1,
        -1,
        -1,
@@ -296,7 +296,7 @@ u_property_lowercase =
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x3F000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x000001FF, 0x00000000, 0x00000000, 0x00000000,
     0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
     0xFFFFFFFF, 0xFFFFFFFF, 0x00000000, 0x00000000,
     0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA, 0xAAAAAAAA,
@@ -332,7 +332,7 @@ u_property_lowercase =
     0x00000000, 0x00000000, 0x07FFFFFE, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0xFFFFFF00, 0x0000FFFF, 0x00000000,
-    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0xFF000000, 0x0FFFFFFF,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
@@ -350,6 +350,10 @@ u_property_lowercase =
     0x000000FF, 0x0FFFFFFC, 0xFFC00000, 0x0000FFFF,
     0xFFFFFC00, 0x0000003F, 0xF7FFFFFC, 0xF0000003,
     0x0FDFFFFF, 0xFFC00000, 0x003F7FFF, 0xFFFF0000,
-    0x0000FDFF, 0xFFFFFC00, 0x00000BF7, 0x00000000
+    0x0000FDFF, 0xFFFFFC00, 0x00000BF7, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0xFFFFFFFC, 0x0000000F, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000
   }
 };

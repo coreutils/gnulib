@@ -551,7 +551,10 @@ enum
   UC_JOINING_GROUP_MANICHAEAN_FIVE,       /* Manichaean_Five */
   UC_JOINING_GROUP_MANICHAEAN_TEN,        /* Manichaean_Ten */
   UC_JOINING_GROUP_MANICHAEAN_TWENTY,     /* Manichaean_Twenty */
-  UC_JOINING_GROUP_MANICHAEAN_HUNDRED     /* Manichaean_Hundred */
+  UC_JOINING_GROUP_MANICHAEAN_HUNDRED,    /* Manichaean_Hundred */
+  UC_JOINING_GROUP_AFRICAN_FEH,           /* African_Feh */
+  UC_JOINING_GROUP_AFRICAN_QAF,           /* African_Qaf */
+  UC_JOINING_GROUP_AFRICAN_NOON           /* African_Noon */
 };
 
 /* Return the name of a joining group.  */
