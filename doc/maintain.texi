@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 16, 2017
+@set lastupdate November 7, 2017
 @c %**end of header
 
 @dircategory GNU organization
@@ -24,7 +24,8 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 Free Software Foundation,
+Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -90,6 +91,9 @@ is essential to follow these guidelines.
 
 In addition to this document, please read and follow the GNU Coding
 Standards (@pxref{Top, , Contents, standards, GNU Coding Standards}).
+You may also usefully check the ``Tips for new GNU maintainers''
+(@url{https://www.gnu.org/software/maintainer-tips}), a list of the
+most important things you will need to do as a new maintainer.
 
 @cindex @code{bug-standards@@gnu.org} email address
 @cindex Savannah repository for @code{gnustandards}
@@ -2066,16 +2070,27 @@ of the @code{gnulib} project at
 @chapter Web Pages
 @cindex web pages
 
-Please write web pages about your package, and install them on
-@code{www.gnu.org}.  They should follow our usual standards for web
-pages (see @url{https://www.gnu.org/server/@/fsf-html-style-sheet.html}).
-The overall goals are to support a wide variety of browsers, to focus
-on information rather than flashy eye candy, and to keep the site
-simple and uniform.
+As soon as a new package is dubbed GNU, its home page
+(@indicateurl{https://www.gnu.org/software/@var{package}/})
+is listed on
+@url{https://www.gnu.org/software/software.html} and
+@url{https://www.gnu.org/manual/manual.html}.  To avoid broken links,
+the webmasters create a temporary home page as follows:
 
-We encourage you to use the standard @code{www.gnu.org} template as
-the basis for your pages:
-@url{https://www.gnu.org/server/@/standards/@/boilerplate-source.html}.
+@itemize @bullet
+@item
+If there is a Savannah project for this package (@pxref{Hosting for
+Web Pages}), the temporary home page redirects to the project's main
+page, @indicateurl{https://savannah.gnu.org/projects/@var{package}},
+where a short description should be available.
+
+@item
+Otherwise, the webmasters make a simple home page containing the short
+description provided with the original submission of the package to GNU.
+@end itemize
+
+This temporary home page ought to be replaced with the real one as soon
+as possible.
 
 Some GNU packages have just simple web pages, but the more information
 you provide, the better.  So please write as much as you usefully can,
@@ -2083,6 +2098,19 @@ and put all of it on @code{www.gnu.org}.  However, pages that access
 databases (including mail archives and bug tracking) are an exception;
 set them up on whatever site is convenient for you, and make the pages
 on @code{www.gnu.org} link to that site.
+
+Your web pages should follow our usual standards (see
+@url{https://www.gnu.org/server/@/fsf-html-style-sheet.html}). The
+overall goals are to support a wide variety of browsers, to focus on
+information rather than visual adornments, and to keep gnu.org/software/
+consistent on certain important points.
+
+We encourage you to use the standard @code{www.gnu.org} template as
+the basis for your pages:
+@url{https://www.gnu.org/server/@/standards/@/boilerplate-source.html}.
+This template changes slightly from time to time for various reasons. If
+a change affects existing web pages, the webmasters will inform you;
+then you can make the change or they can.
 
 Please follow the best practices of accessibility in your web pages
 (see @url{https://www.gnu.org/accessibility/accessibility.html}).
@@ -2112,6 +2140,10 @@ If you don't want to use that method, please talk with
 @email{webmasters@@gnu.org} about other possible methods.  For
 instance, you can mail them pages to install, if necessary.  But that
 is more work for them, so please use Savannah if you can.
+
+Please note that the GNU webmasters may fix technical details in your
+web pages (HTML, CSS, obvious typos, broken links in the footer, etc.)
+and inform you of the change afterwards.
 
 If you use Savannah, you can use a special file named @file{.symlinks}
 in order to create symbolic links, which are not supported in CVS.
