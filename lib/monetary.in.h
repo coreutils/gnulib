@@ -34,7 +34,7 @@
 /* Get locale_t on Mac OS X 10.12.  */
 #  include <xlocale.h>
 # endif
-/* Get locale_t on glibc 2.25.  */
+/* Get locale_t on glibc 2.5.  */
 # include <locale.h>
 #endif
 
