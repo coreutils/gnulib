@@ -28,4 +28,7 @@ support for @code{tz} database settings like
 @code{TZ='America/New_York'}.  Even this subset does not work on
 applications built via the Universal Windows Platform, as it does not
 make environment variables like @env{TZ} available to applications.
+@item
+Older POSIX platforms do not support angle brackets in @env{TZ} values,
+as this feature was added in IEEE Std 1003.1-2001.
 @end itemize

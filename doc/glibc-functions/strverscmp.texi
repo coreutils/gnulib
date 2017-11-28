@@ -13,4 +13,11 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+On older glibc platforms, this function does not always properly treat
+digit strings with leading zeros as fractions (for example,
+@code{strverscmp ("B0075022800016.gbp.corp.com",
+"B007502357019.GBP.CORP.COM")} does not yield a negative number as it
+should):
+glibc 2.9
 @end itemize
