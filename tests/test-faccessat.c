@@ -26,7 +26,7 @@ SIGNATURE_CHECK (faccessat, int, (int, const char *, int, int));
 
 #include "macros.h"
 
-#define BASE "test-lstat.t"
+#define BASE "test-faccessat.t"
 
 int
 main (void)
