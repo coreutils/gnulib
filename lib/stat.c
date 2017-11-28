@@ -47,6 +47,8 @@ orig_stat (const char *filename, struct stat *buf)
    above.  */
 #include "sys/stat.h"
 
+#include "stat-time.h"
+
 #include <errno.h>
 #include <limits.h>
 #include <stdbool.h>
