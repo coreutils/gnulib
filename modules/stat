@@ -13,6 +13,7 @@ largefile
 filename        [test $REPLACE_STAT = 1]
 malloca         [test $REPLACE_STAT = 1]
 pathmax         [test $REPLACE_STAT = 1]
+stat-time       [test $REPLACE_STAT = 1]
 stdbool         [test $REPLACE_STAT = 1]
 verify          [test $REPLACE_STAT = 1]
 

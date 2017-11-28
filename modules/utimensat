@@ -17,6 +17,7 @@ fcntl-h         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 openat-die      [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 openat-h        [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 save-cwd        [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
+stat-time       [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 utimens         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 fstatat         [test $REPLACE_UTIMENSAT = 1]
 
