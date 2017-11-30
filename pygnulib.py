@@ -23,8 +23,16 @@ from pygnulib.module import transitive_closure
 
 from pygnulib.parser import CommandLine as CommandLineParser
 
+from pygnulib.vfs import backup
+from pygnulib.vfs import compare
+from pygnulib.vfs import copy
+from pygnulib.vfs import exists
+from pygnulib.vfs import hardlink
+from pygnulib.vfs import lookup
+from pygnulib.vfs import move
+from pygnulib.vfs import symlink
+from pygnulib.vfs import unlink
 from pygnulib.vfs import Base as BaseVFS
-from pygnulib.vfs import Project as ProjectVFS
 from pygnulib.vfs import GnulibGit as GnulibGitVFS
 
 
@@ -76,8 +84,8 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     for key in {"ac_version", "files"}:
         if key not in namespace:
             config[key] = cache[key]
-    options = {key:config[key] for key in keywords}
-    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, **options)
+    test_options = {key:config[key] for key in keywords}
+    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, **test_options)
 
     # Print some information about modules.
     print("Module list with included dependencies (indented):", file=sys.stdout)
@@ -140,7 +148,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             tests_files.remove(file)
             file = "tests=lib/" + file[len("lib/"):]
             tests_files.add(file)
-    files = main_files | tests_files
+    files = (main_files | tests_files)
     if verbosity >= 0:
         print("File list:", file=sys.stdout)
         for file in sorted(files):
@@ -152,32 +160,70 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             else:
                 print("  ", file, file=sys.stdout, sep="")
 
-    old_files = frozenset(cache.files)
-    new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
+
     table = {
-        "build-aux": config.auxdir,
-        "doc": config.doc_base,
-        "lib": config.source_base,
-        "m4": config.m4_base,
-        "tests": config.tests_base,
-        "tests=lib": config.tests_base,
-        "po": config.po_base,
+        "build-aux": "auxdir",
+        "doc": "doc_base",
+        "lib": "source_base",
+        "m4": "m4_base",
+        "tests": "tests_base",
+        "tests=lib": "tests_base",
+        "po": "po_base",
         "top": "",
     }
-    project = ProjectVFS(config.root, **table)
-    local = BaseVFS(config.local, **table)
-    for prefix in table:
-        project.mkdir(prefix)
+    old_files = set(cache.files)
+    project = BaseVFS(config.root, **{k:config[v] for (k, v) in table.items() if v})
+    override = BaseVFS(config.local, **{k:config[v] for (k, v) in table.items() if v})
+    if "m4/gnulib-tool.m4" in project:
+        old_files |= set(["m4/gnulib-tool.m4"])
+    with BaseVFS(config.root, **{k:cache[v] for (k, v) in table.items() if v}) as vfs:
+        old_files = frozenset({vfs[file] for file in old_files})
+    new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
+    dry_run = options["dry_run"]
 
 
-    # First the files that are in old-files, but not in new-files:
+    def remove_file(file):
+        action = ("Removing", "Remove")[dry_run]
+        fmt = (action + " file {file} (backup in {file}~)")
+        if not dry_run:
+            backup(project, file)
+            unlink(project, file)
+        print(fmt.format(file=file))
+
+    def update_file(src_vfs, src_name, dst_vfs, dst_name, present):
+        if not compare(src_vfs, src_name, dst_vfs, dst_name):
+            action = (("Replacing", "Replace"), ("Updating", "Update"))[present][dry_run]
+            message = ("(non-gnulib code backed up in {file}~) !!", "(backup in {file}~)")[present]
+            fmt = (action + " file {file} " + message)
+            if not dry_run:
+                backup(dst_vfs, dst_name)
+                copy(src_vfs, src_name, dst_vfs, dst_name)
+            print(fmt.format(file=dst_name))
+
+    def add_file(src_vfs, src_name, dst_vfs, dst_name, present):
+        action = ("Copying", "Copy")[dry_run]
+        fmt = (action + " file {file}")
+        if not dry_run:
+            copy(src_vfs, src_name, dst_vfs, dst_name)
+        print(fmt.format(file=dst_name))
+
+
+    # First the files that are in old-files, but not in new-files.
     removed_files = {file for file in old_files if file not in new_files}
 
-    # Then the files that are in new-files, but not in old-files:
+    # Then the files that are in new-files, but not in old-files.
     added_files = {file for file in new_files if file not in old_files}
+    for dst in sorted(added_files):
+        (vfs, src) = lookup(dst, gnulib, override, patch="patch")
+        action = update_file if exists(project, dst) else add_file
+        action(project, override, vfs, src, project, dst, present=False)
 
-    # Then the files that are in new-files and in old-files:
+    # Then the files that are in new-files and in old-files.
     kept_files = (old_files & new_files)
+    for dst in sorted(kept_files):
+        (vfs, src) = lookup(dst, gnulib, override, patch="patch")
+        action = update_file if exists(project, dst) else add_file
+        action(project, override, vfs, src, project, dst, present=True)
 
     return os.EX_OK
 
