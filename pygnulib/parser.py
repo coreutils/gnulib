@@ -941,9 +941,7 @@ class CommandLine:
             fmt = "--{0}: expected at least one argument"
             self.__parser.error(fmt.format(mode))
         verbosity = namespace.pop("verbosity", 0)
-        if namespace.pop("dry_run", False):
-            options |= CommandLine.Option.DryRun
-        if namespace.pop("single_configure", False):
-            options |= CommandLine.Option.SingleConfigure
-        namespace.pop("no_changelog", None)
+        options = dict(namespace)
+        options.setdefault("dry_run", False)
+        options.setdefault("single_configure", False)
         return (namespace, mode, verbosity, options)
