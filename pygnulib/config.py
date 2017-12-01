@@ -7,6 +7,7 @@
 import codecs as _codecs
 import os as _os
 import re as _re
+from collections import OrderedDict as _OrderedDict
 
 
 from .error import type_assert as _type_assert
@@ -42,7 +43,7 @@ class Base:
     """gnulib generic configuration"""
     _TABLE = {
         "root"              : ".",
-        "local"             : "",
+        "overrides"         : set(),
         "source_base"       : "lib",
         "m4_base"           : "m4",
         "po_base"           : "po",
@@ -125,14 +126,19 @@ class Base:
 
 
     @property
-    def local(self):
-        """local override directory"""
-        return self.__table["local"]
+    def overrides(self):
+        """local override directories"""
+        return self.__table["overrides"]
 
-    @local.setter
-    def local(self, value):
-        _type_assert("local", value, str)
-        self.__table["local"] = _os.path.normpath(value) if value else ""
+    @overrides.setter
+    def overrides(self, value):
+        _type_assert("overrides", value, _ITERABLES)
+        result = list()
+        for item in value:
+            _type_assert("override", item, str)
+            result.append(_os.path.normpath(item))
+        result = _OrderedDict.fromkeys(result)
+        self.__table["overrides"] = tuple(result)
 
 
     @property
@@ -574,7 +580,7 @@ class Cache(Base):
         "libtool"  : _compile(r"A[CM]_PROG_LIBTOOL")
     }
     _GNULIB_CACHE = {
-        "local"             : (str, _compile(r"gl_LOCAL_DIR\(\[(.*?)\]\)")),
+        "overrides"         : (list, _compile(r"gl_LOCAL_DIR\(\[(.*?)\]\)")),
         "libtool"           : (bool, _compile(r"gl_LIBTOOL\(\[(.*?)\]\)")),
         "conddeps"          : (bool, _compile(r"gl_CONDITIONAL_DEPENDENCIES\(\[(.*?)\]\)")),
         "vc_files"          : (bool, _compile(r"gl_VC_FILES\(\[(.*?)\]\)")),
@@ -649,7 +655,8 @@ class Cache(Base):
                 elif typeid is str:
                     self[key] = match[-1].strip()
                 else:
-                    self[key] = [_.strip() for _ in match[-1].split("\n") if _.strip()]
+                    sep = None if key == "overrides" else "\n"
+                    self[key] = [_.strip() for _ in match[-1].split(sep) if _.strip()]
         if m4_base != self.m4_base:
             raise _M4BaseMismatchError(path, m4_base, self.m4_base)
 

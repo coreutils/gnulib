@@ -67,7 +67,7 @@ class Base:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        path = _os.path.sep.join([self.path] + parts)
+        path = _os.path.sep.join(parts)
         return _os.path.normpath(path)
 
 
@@ -269,7 +269,7 @@ class GnulibGit(Base):
         _type_assert("full", full, bool)
         if name in GnulibGit._EXCLUDE:
             raise ValueError("illegal module name")
-        path = _os.path.join(self["modules"], name)
+        path = _os.path.join(self.path, self["modules"], name)
         try:
             return _FileModule(path, name=name) if full else _BaseModule(name)
         except FileNotFoundError:
@@ -278,7 +278,7 @@ class GnulibGit(Base):
 
     def modules(self, full=True):
         """iterate over all available modules"""
-        prefix = self["modules"]
+        prefix = _os.path.join(self.path, self["modules"])
         for root, _, files in _os.walk(prefix):
             names = []
             for name in files:

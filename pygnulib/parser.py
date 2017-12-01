@@ -93,7 +93,6 @@ class CommandLine:
             self.__options = kwargs["option_strings"]
             super().__init__(default=_argparse.SUPPRESS, *args, **kwargs)
 
-
         def __call__(self, parser, namespace, value, option=None):
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
@@ -108,7 +107,6 @@ class CommandLine:
         def __init__(self, *args, **kwargs):
             self.__const = kwargs.pop("const")
             super().__init__(nargs=0, *args, **kwargs)
-
 
         def __call__(self, parser, namespace, value, option=None):
             args = (parser, namespace, self.__const, option)
@@ -146,7 +144,6 @@ class CommandLine:
                 kwargs["metavar"] = "SRC [DST]"
             super().__init__(*args, **kwargs)
 
-
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
                 setattr(namespace, self.dest, 0)
@@ -182,10 +179,20 @@ class CommandLine:
             super().__call__(parser, namespace, value, option)
 
 
+    class _OverrideOption(_Option):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+
+        def __call__(self, parser, namespace, value, option=None):
+            if not hasattr(namespace, self.dest):
+                setattr(namespace, self.dest, list())
+            overrides = getattr(namespace, self.dest)
+            overrides.append(value)
+
+
     class _VerbosityOption(_Option):
         def __init__(self, *args, **kwargs):
             super().__init__(nargs=0, *args, **kwargs)
-
 
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
@@ -438,8 +445,8 @@ class CommandLine:
                         "pecify a local override directory where to look",
                         "up files before looking in gnulib's directory",
                     ),
-                    "action": _Option,
-                    "dest": "local",
+                    "action": _OverrideOption,
+                    "dest": "overrides",
                     "metavar": "DIRECTORY",
                 }),
                 (["-v", "--verbose"], {
@@ -944,4 +951,5 @@ class CommandLine:
         options = dict(namespace)
         options.setdefault("dry_run", False)
         options.setdefault("single_configure", False)
+        namespace["overrides"] = list(reversed(namespace["overrides"]))
         return (namespace, mode, verbosity, options)

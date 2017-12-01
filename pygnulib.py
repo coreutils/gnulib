@@ -44,6 +44,16 @@ IGNORED_LICENSES = {
     "unlimited",
     "unmodifiable license text",
 }
+SUBSTITUTION_RULES = {
+    "build-aux": "auxdir",
+    "doc": "doc_base",
+    "lib": "source_base",
+    "m4": "m4_base",
+    "tests": "tests_base",
+    "tests=lib": "tests_base",
+    "po": "po_base",
+    "top": "",
+}
 
 
 
@@ -161,28 +171,25 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
                 print("  ", file, file=sys.stdout, sep="")
 
 
-    table = {
-        "build-aux": "auxdir",
-        "doc": "doc_base",
-        "lib": "source_base",
-        "m4": "m4_base",
-        "tests": "tests_base",
-        "tests=lib": "tests_base",
-        "po": "po_base",
-        "top": "",
-    }
+    overrides = []
+    root = config.root
+    table = {k:config[v] for (k, v) in SUBSTITUTION_RULES.items() if v}
+    for override in config.overrides:
+        vfs = BaseVFS(override, **table)
+        overrides.append(vfs)
+    project = BaseVFS(root, **table)
+
     old_files = set(cache.files)
-    project = BaseVFS(config.root, **{k:config[v] for (k, v) in table.items() if v})
-    override = BaseVFS(config.local, **{k:config[v] for (k, v) in table.items() if v})
     if "m4/gnulib-tool.m4" in project:
         old_files |= set(["m4/gnulib-tool.m4"])
-    with BaseVFS(config.root, **{k:cache[v] for (k, v) in table.items() if v}) as vfs:
+    table = {k:cache[v] for (k, v) in SUBSTITUTION_RULES.items() if v}
+    with BaseVFS(config.root, **table) as vfs:
         old_files = frozenset({vfs[file] for file in old_files})
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
+
+
     dry_run = options["dry_run"]
-
-
-    def remove_file(file):
+    def remove_file(project, file):
         action = ("Removing", "Remove")[dry_run]
         fmt = (action + " file {file} (backup in {file}~)")
         if not dry_run:
@@ -210,20 +217,26 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
 
     # First the files that are in old-files, but not in new-files.
     removed_files = {file for file in old_files if file not in new_files}
+    for file in sorted(removed_files):
+        remove_file(project, file)
 
     # Then the files that are in new-files, but not in old-files.
     added_files = {file for file in new_files if file not in old_files}
     for dst in sorted(added_files):
+        match = [override for override in overrides if dst in override]
+        override = match[0] if len(match) else gnulib
         (vfs, src) = lookup(dst, gnulib, override, patch="patch")
         action = update_file if exists(project, dst) else add_file
-        action(project, override, vfs, src, project, dst, present=False)
+        action(vfs, src, project, dst, present=False)
 
     # Then the files that are in new-files and in old-files.
     kept_files = (old_files & new_files)
     for dst in sorted(kept_files):
+        match = [override for override in overrides if dst in override]
+        override = match[0] if len(match) else gnulib
         (vfs, src) = lookup(dst, gnulib, override, patch="patch")
         action = update_file if exists(project, dst) else add_file
-        action(project, override, vfs, src, project, dst, present=True)
+        action(vfs, src, project, dst, present=True)
 
     return os.EX_OK
 
