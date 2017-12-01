@@ -174,10 +174,8 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     overrides = []
     root = config.root
     table = {k:config[v] for (k, v) in SUBSTITUTION_RULES.items() if v}
-    for override in config.overrides:
-        vfs = BaseVFS(override, **table)
-        overrides.append(vfs)
     project = BaseVFS(root, **table)
+    overrides = {BaseVFS(override, **table) for override in config.overrides}
 
     old_files = set(cache.files)
     if "m4/gnulib-tool.m4" in project:
@@ -189,6 +187,16 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
 
 
     dry_run = options["dry_run"]
+    gnulib_copymode = config.copymode
+    local_copymode = config.local_copymode
+
+    def transfer_file(local, src_vfs, src_name, dst_vfs, dst_name):
+        if src_vfs is None:
+            return copy(src_vfs, src_name, dst_vfs, dst_name)
+        table = {None: copy, "hardlink": hardlink, "symlink": symlink}
+        action = table[local_copymode if local else gnulib_copymode]
+        return action(src_vfs, src_name, dst_vfs, dst_name)
+
     def remove_file(project, file):
         action = ("Removing", "Remove")[dry_run]
         fmt = (action + " file {file} (backup in {file}~)")
@@ -197,47 +205,39 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
             unlink(project, file)
         print(fmt.format(file=file))
 
-    def update_file(src_vfs, src_name, dst_vfs, dst_name, present):
+    def update_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
         if not compare(src_vfs, src_name, dst_vfs, dst_name):
             action = (("Replacing", "Replace"), ("Updating", "Update"))[present][dry_run]
             message = ("(non-gnulib code backed up in {file}~) !!", "(backup in {file}~)")[present]
             fmt = (action + " file {file} " + message)
             if not dry_run:
                 backup(dst_vfs, dst_name)
-                copy(src_vfs, src_name, dst_vfs, dst_name)
+                transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
             print(fmt.format(file=dst_name))
 
-    def add_file(src_vfs, src_name, dst_vfs, dst_name, present):
+    def add_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
         action = ("Copying", "Copy")[dry_run]
         fmt = (action + " file {file}")
         if not dry_run:
-            copy(src_vfs, src_name, dst_vfs, dst_name)
+            transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
         print(fmt.format(file=dst_name))
 
 
-    # First the files that are in old-files, but not in new-files.
+    # First the files that are in old_files, but not in new_files.
+    # Then the files that are in new_files, but not in old_files.
+    # Then the files that are in new_files and in old_files.
     removed_files = {file for file in old_files if file not in new_files}
+    added_files = {file for file in new_files if file not in old_files}
+    kept_files = (old_files & new_files)
     for file in sorted(removed_files):
         remove_file(project, file)
-
-    # Then the files that are in new-files, but not in old-files.
-    added_files = {file for file in new_files if file not in old_files}
-    for dst in sorted(added_files):
-        match = [override for override in overrides if dst in override]
-        override = match[0] if len(match) else gnulib
-        (vfs, src) = lookup(dst, gnulib, override, patch="patch")
-        action = update_file if exists(project, dst) else add_file
-        action(vfs, src, project, dst, present=False)
-
-    # Then the files that are in new-files and in old-files.
-    kept_files = (old_files & new_files)
-    for dst in sorted(kept_files):
-        match = [override for override in overrides if dst in override]
-        override = match[0] if len(match) else gnulib
-        (vfs, src) = lookup(dst, gnulib, override, patch="patch")
-        action = update_file if exists(project, dst) else add_file
-        action(vfs, src, project, dst, present=True)
-
+    for (present, files) in ((False, added_files), (True, kept_files)):
+        for dst in sorted(files):
+            match = [override for override in overrides if dst in override]
+            override = match[0] if len(match) else gnulib
+            (vfs, src) = lookup(dst, gnulib, override, patch="patch")
+            action = update_file if exists(project, dst) else add_file
+            action(bool(match), vfs, src, project, dst, present)
     return os.EX_OK
 
 
@@ -311,7 +311,7 @@ def main(script, gnulib, program, arguments, environ):
 
 if __name__ == "__main__":
     script = sys.argv[0]
-    gnulib = os.path.dirname(os.path.realpath(__file__))
+    gnulib = os.path.dirname(__file__)
     program = os.path.basename(script)
     log = os.path.join(os.getcwd(), "{0}.log".format(program))
     arguments = list(sys.argv[1:])
