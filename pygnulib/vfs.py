@@ -137,7 +137,7 @@ def mkdir(root, name):
 def backup(root, name):
     """Backup the given file."""
     root = Base(".") if root is None else root
-    path = _os.path.join(root.relative, root[name])
+    path = _os.path.join(root.absolute, root[name])
     backup = "{}~".format(path)
     try:
         _os.unlink(backup)
@@ -240,6 +240,7 @@ def symlink(src_root, src_name, dst_root, dst_name, relative=True):
         src_path = _os.path.join(prefix, suffix)
         dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.symlink(src_path, dst_path)
+
 
 def unlink(root, name, backup=True):
     """Unlink a file, backing it up if necessary."""
