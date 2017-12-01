@@ -48,7 +48,7 @@ class Base:
         path = _os.path.normpath(name)
         if _os.path.isabs(name):
             raise ValueError("name must be a relative path")
-        path = _os.path.join(self.path, name)
+        path = _os.path.join(self.absolute, self[name])
         return _os.path.exists(path)
 
 
@@ -72,13 +72,13 @@ class Base:
 
 
     @property
-    def name(self):
+    def relative(self):
         """base VFS name"""
         return self.__prefix
 
 
     @property
-    def path(self):
+    def absolute(self):
         """absolute VFS path"""
         return _os.path.abspath(self.__prefix)
 
@@ -137,7 +137,7 @@ def mkdir(root, name):
 def backup(root, name):
     """Backup the given file."""
     root = Base(".") if root is None else root
-    path = _os.path.join(root.path, root[name])
+    path = _os.path.join(root.relative, root[name])
     backup = "{}~".format(path)
     try:
         _os.unlink(backup)
@@ -150,8 +150,8 @@ def compare(lhs_root, lhs_name, rhs_root, rhs_name):
     """Compare the given files; return True if files contain the same data."""
     lhs_root = Base(".") if lhs_root is None else lhs_root
     rhs_root = Base(".") if rhs_root is None else rhs_root
-    lhs_path = _os.path.join(lhs_root.path, lhs_root[lhs_name])
-    rhs_path = _os.path.join(rhs_root.path, rhs_root[rhs_name])
+    lhs_path = _os.path.join(lhs_root.absolute, lhs_root[lhs_name])
+    rhs_path = _os.path.join(rhs_root.absolute, rhs_root[rhs_name])
     return _filecmp.cmp(lhs_path, rhs_path, shallow=False)
 
 
@@ -164,10 +164,9 @@ def copy(src_root, src_name, dst_root, dst_name):
     limit = (16 * 1024)
     src_root = Base(".") if src_root is None else src_root
     dst_root = Base(".") if dst_root is None else dst_root
-    mkdir(src_root, _os.path.dirname(src_name))
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.path, src_root[src_name])
-    dst_path = _os.path.join(dst_root.path, dst_root[dst_name])
+    src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     with _codecs.open(src_path, "rb") as istream:
         with _codecs.open(dst_path, "wb") as ostream:
             while 1:
@@ -180,7 +179,7 @@ def copy(src_root, src_name, dst_root, dst_name):
 def exists(root, name):
     """Check whether the given file exists."""
     root = Base(".") if root is None else root
-    path = _os.path.join(root.path, root[name])
+    path = _os.path.join(root.absolute, root[name])
     return _os.path.exists(path)
 
 
@@ -194,8 +193,8 @@ def hardlink(src_root, src_name, dst_root, dst_name):
     dst_root = Base(".") if dst_root is None else dst_root
     mkdir(src_root, _os.path.dirname(src_name))
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.path, src_root[src_name])
-    dst_path = _os.path.join(dst_root.path, dst_root[dst_name])
+    src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.link(src_path, dst_path)
 
 
@@ -207,14 +206,21 @@ def move(src_root, src_name, dst_root, dst_name):
         raise ValueError("absolute src and dst")
     src_root = Base(".") if src_root is None else src_root
     dst_root = Base(".") if dst_root is None else dst_root
-    mkdir(src_root, _os.path.dirname(src_name))
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.path, src_root[src_name])
-    dst_path = _os.path.join(dst_root.path, dst_root[dst_name])
+    src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.rename(src_path, dst_path)
 
 
-def symlink(src_root, src_name, dst_root, dst_name):
+def readlink(root, name):
+    """Obtain the path to which the symbolic link points."""
+    root = Base(".") if root is None else root
+    mkdir(root, _os.path.dirname(name))
+    path = _os.path.join(root.absolute, root[name])
+    return _os.readlink(path)
+
+
+def symlink(src_root, src_name, dst_root, dst_name, relative=True):
     """Create a symbolic link to the file."""
     src_abs = _os.path.isabs(src_name)
     dst_abs = _os.path.isabs(dst_name)
@@ -222,18 +228,24 @@ def symlink(src_root, src_name, dst_root, dst_name):
         raise ValueError("absolute src and dst")
     src_root = Base(".") if src_root is None else src_root
     dst_root = Base(".") if dst_root is None else dst_root
-    mkdir(src_root, _os.path.dirname(src_name))
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.path, src_root[src_name])
-    dst_path = _os.path.join(dst_root.path, dst_root[dst_name])
+    if not relative:
+        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+    else:
+        src_path = _os.path.join(src_root.relative, src_root[src_name])
+        dst_path = _os.path.join(dst_root.relative, dst_root[dst_name])
+        prefix = _os.path.relpath(_os.path.dirname(src_path), _os.path.dirname(dst_path))
+        suffix = _os.path.basename(src_root[src_name])
+        src_path = _os.path.join(prefix, suffix)
+        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.symlink(src_path, dst_path)
-
 
 def unlink(root, name, backup=True):
     """Unlink a file, backing it up if necessary."""
     root = Base(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
-    path = _os.path.join(root.path, root[name])
+    path = _os.path.join(root.absolute, root[name])
     _os.unlink(path)
 
 
@@ -255,11 +267,11 @@ class GnulibGit(Base):
 
     def __init__(self, prefix, **table):
         super().__init__(prefix, **table)
-        if not _os.path.exists(self.path):
-            raise FileNotFoundError(self.path)
-        if not _os.path.isdir(self.path):
-            raise NotADirectoryError(self.path)
-        if not _os.path.isdir(_os.path.join(self.path, ".git")):
+        if not _os.path.exists(self.absolute):
+            raise FileNotFoundError(self.absolute)
+        if not _os.path.isdir(self.absolute):
+            raise NotADirectoryError(self.absolute)
+        if not _os.path.isdir(_os.path.join(self.absolute, ".git")):
             raise TypeError("{} is not a gnulib repository".format(prefix))
 
 
@@ -269,7 +281,7 @@ class GnulibGit(Base):
         _type_assert("full", full, bool)
         if name in GnulibGit._EXCLUDE:
             raise ValueError("illegal module name")
-        path = _os.path.join(self.path, self["modules"], name)
+        path = _os.path.join(self.absolute, self["modules"], name)
         try:
             return _FileModule(path, name=name) if full else _BaseModule(name)
         except FileNotFoundError:
@@ -278,7 +290,7 @@ class GnulibGit(Base):
 
     def modules(self, full=True):
         """iterate over all available modules"""
-        prefix = _os.path.join(self.path, self["modules"])
+        prefix = _os.path.join(self.absolute, self["modules"])
         for root, _, files in _os.walk(prefix):
             names = []
             for name in files:
