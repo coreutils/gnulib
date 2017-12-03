@@ -61,7 +61,7 @@ class Base:
         "vc_files"          : False,
         "ac_version"        : 2.59,
         "modules"           : set(),
-        "avoid"             : set(),
+        "avoids"            : set(),
         "files"             : set(),
         "copymode"          : None,
         "local_copymode"    : None,
@@ -463,18 +463,18 @@ class Base:
 
 
     @property
-    def avoid(self):
+    def avoids(self):
         """list of modules to avoid"""
-        return self.__table["avoid"]
+        return self.__table["avoids"]
 
-    @avoid.setter
-    def avoid(self, value):
-        _type_assert("avoid", value, _ITERABLES)
+    @avoids.setter
+    def avoids(self, value):
+        _type_assert("avoids", value, _ITERABLES)
         result = set()
         for item in value:
             _type_assert("avoid", item, str)
             result.add(item)
-        self.__table["avoid"] = frozenset(result)
+        self.__table["avoids"] = frozenset(result)
 
 
     @property
@@ -617,7 +617,7 @@ class Cache(Base):
         "witness_c_macro"   : (str, _compile(r"gl_WITNESS_C_MACRO\(\[(.*?)\]\)")),
         "lib"               : (str, _compile(r"gl_LIB\(\[(.*?)\]\)")),
         "modules"           : (list, _compile(r"gl_MODULES\(\[(.*?)\]\)")),
-        "avoid"             : (list, _compile(r"gl_AVOID\(\[(.*?)\]\)")),
+        "avoids"            : (list, _compile(r"gl_AVOID\(\[(.*?)\]\)")),
         "licenses"          : (str, _compile(r"gl_LGPL\(\[(.*?)\]\)")),
     }
 
