@@ -16,6 +16,8 @@ from pygnulib.error import UnknownModuleError
 from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
 
+from pygnulib.generator import CommandLine as CommandLineGenerator
+
 from pygnulib.module import filelist
 from pygnulib.module import dummy_required
 from pygnulib.module import libtests_required
@@ -79,7 +81,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 
 
 
-def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
+def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     keywords = frozenset({
         "tests",
         "obsolete",
@@ -121,7 +123,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
         print("" if tests else "\n", end="")
 
     # Determine if dummy needs to be added to main or test sets.
-    if "dummy" not in config.avoid:
+    if "dummy" not in config.avoids:
         if dummy_required(main):
             main.add(gnulib.module("dummy"))
         if libtests_required(tests) and dummy_required(tests):
@@ -171,16 +173,19 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
                 print("  ", file, file=sys.stdout, sep="")
 
 
+    table = {}
     overrides = []
-    root = config.root
-    table = {k:config[v] for (k, v) in SUBSTITUTION_RULES.items() if v}
-    project = BaseVFS(root, **table)
+    for (tbl_key, cfg_key) in SUBSTITUTION_RULES.items():
+        table[tbl_key] = config[cfg_key] if cfg_key else ""
+    project = BaseVFS(config.root, **table)
     overrides = {BaseVFS(override, **table) for override in config.overrides}
 
+    table = {}
     old_files = set(cache.files)
     if "m4/gnulib-tool.m4" in project:
         old_files |= set(["m4/gnulib-tool.m4"])
-    table = {k:cache[v] for (k, v) in SUBSTITUTION_RULES.items() if v}
+    for (tbl_key, cfg_key) in SUBSTITUTION_RULES.items():
+        table[tbl_key] = cache[cfg_key] if cfg_key else ""
     with BaseVFS(config.root, **table) as vfs:
         old_files = frozenset({vfs[file] for file in old_files})
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
@@ -191,18 +196,23 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
     local_copymode = config.local_copymode
 
     def transfer_file(local, src_vfs, src_name, dst_vfs, dst_name):
+        args = (src_vfs, src_name, dst_vfs, dst_name)
         if src_vfs is None:
-            return copy(src_vfs, src_name, dst_vfs, dst_name)
+            return copy(*args)
         table = {None: copy, "hardlink": hardlink, "symlink": symlink}
         action = table[local_copymode if local else gnulib_copymode]
-        return action(src_vfs, src_name, dst_vfs, dst_name)
+        try:
+            return action(*args)
+        except OSError as error:
+            if error.errno == errno.EXDEV:
+                return copy(*args)
+            raise error
 
     def remove_file(project, file):
         action = ("Removing", "Remove")[dry_run]
         fmt = (action + " file {file} (backup in {file}~)")
         if not dry_run:
-            backup(project, file)
-            unlink(project, file)
+            unlink(project, file, backup=True)
         print(fmt.format(file=file))
 
     def update_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
@@ -242,7 +252,7 @@ def import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
 
 
 
-def add_import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
+def add_import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
     config = CacheConfig(**namespace)
@@ -252,7 +262,7 @@ def add_import_hook(script, gnulib, namespace, verbosity, options, *args, **kwar
 
 
 
-def remove_import_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
+def remove_import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
     config = CacheConfig(**namespace)
@@ -262,7 +272,7 @@ def remove_import_hook(script, gnulib, namespace, verbosity, options, *args, **k
 
 
 
-def update_hook(script, gnulib, namespace, verbosity, options, *args, **kwargs):
+def update_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = CacheConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
@@ -298,6 +308,7 @@ def main(script, gnulib, program, arguments, environ):
         "program": program,
         "gnulib": gnulib,
         "mode": mode,
+        "explicit": namespace,
         "namespace": namespace,
         "verbosity": verbosity,
         "options": options,
