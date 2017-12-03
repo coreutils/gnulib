@@ -272,8 +272,8 @@ class Base:
 
     @po_domain.setter
     def po_domain(self, value):
-        _type_assert("po_base", value, str)
-        self.__table["po_base"] = value
+        _type_assert("po_domain", value, str)
+        self.__table["po_domain"] = value
 
 
     @property
