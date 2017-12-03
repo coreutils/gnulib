@@ -10,6 +10,10 @@ import os as _os_
 from .error import type_assert as _type_assert
 from .config import Base as _BaseConfig
 from .module import Base as _BaseModule
+from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE
+from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE
+from .config import GPLv2_LICENSE as _GPLv2_LICENSE
+from .config import LGPL_LICENSE as _LGPL_LICENSE
 
 
 
@@ -453,3 +457,65 @@ class InitMacroDone(InitMacro):
     def __iter__(self):
         for line in InitMacroDone._TEMPLATE:
             yield line.format(source_base=self.__source_base, macro_prefix=self.macro_prefix)
+
+
+
+class CommandLine(Generator):
+    _TESTS = {
+        "tests": "tests",
+        "obsolete": "obsolete",
+        "cxx_tests": "c++-tests",
+        "longrunning_tests": "longrunning-tests",
+        "privileged_tests": "privileged-tests",
+        "unportable_tests": "unportable-tests",
+    }
+    _LGPL = {
+        _LGPLv2_LICENSE: "2",
+        _LGPLv3_LICENSE: "3",
+        _LGPL_LICENSE: "yes",
+        (_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
+    }
+
+    def __init__(self, config, explicit):
+        self.__config = config
+        self.__explicit = explicit
+
+
+    def __iter__(self):
+        config = self.__config
+        explicit = self.__explicit
+        yield "gnulib-tool --import"
+        for path in config.overrides:
+            yield "--local-dir={}".format(path)
+        yield "--lib={}".format(config.lib)
+        yield "--source-base={}".format(config.source_base)
+        yield "--m4-base={}".format(config.m4_base)
+        if "po_base" in explicit:
+            yield "--po-base={}".format(config.po_base)
+        yield "--doc-base={}".format(config.doc_base)
+        yield "--tests-base={}".format(config.tests_base)
+        yield "--aux-dir={}".format(config.auxdir)
+        for (key, value) in CommandLine._TESTS.items():
+            yield "--with-{}".format(value)
+        if config.all_tests:
+            yield "--with-all-tests"
+        for module in config.avoids:
+            yield "--avoid={}".format(module)
+        if config.licenses in CommandLine._LGPL:
+            lgpl = CommandLine._LGPL[config.licenses]
+            yield "--lgpl={}".format(lgpl) if lgpl == "yes" else " --lgpl"
+        if config.gnumake:
+            yield "--gnu-make"
+        if "makefile_name" in explicit:
+            yield "--makefile-name={}".format(config.makefile_name)
+        yield "--{}conditional-dependencies".format("" if config.conddeps else "no-")
+        yield "--{}libtool".format("" if config.libtool else "no-")
+        yield "--macro-prefix={}".format(config.macro_prefix)
+        if "po_domain" in explicit:
+            yield "--po-domain={}".format(config.po_domain)
+        if "witness_c_macro" in explicit:
+            yield "--witness-c-macro={}".format(config.witness_c_macro)
+        if "vc_files" in explicit:
+            yield "--{}vc-files".format("" if config.vc_files else "no-")
+        for module in sorted(config.modules):
+            yield "{}".format(module)
