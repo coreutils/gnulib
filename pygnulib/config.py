@@ -85,7 +85,8 @@ class Base:
         Privileged = (1 << 4)
         Unportable = (1 << 5)
         Copyrights = (1 << 6)
-        AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
+        GNUMake = (1 << 7)
+        AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable | GNUMake)
 
 
     def __init__(self, **kwargs):
@@ -521,6 +522,20 @@ class Base:
         if value not in frozenset({None, "symlink", "hardlink"}):
             raise ValueError("local_copymode: None, 'symlink' or 'hardlink'")
         self.__table["local_copymode"] = value
+
+
+    @property
+    def gnumake(self):
+        """update the license copyright text"""
+        return bool(self.__table["options"] & Base._Option.GNUMake)
+
+    @gnumake.setter
+    def gnumake(self, value):
+        _type_assert("gnumake", value, bool)
+        if value:
+            self.__table["options"] |= Base._Option.GNUMake
+        else:
+            self.__table["options"] &= ~Base._Option.GNUMake
 
 
     @property
