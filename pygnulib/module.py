@@ -23,22 +23,25 @@ _ITERABLES = (list, tuple, set, frozenset)
 class Base:
     """gnulib generic module"""
     _TABLE = {
-        "description"            : (0x00, str, "Description"),
-        "comment"                : (0x01, str, "Comment"),
-        "status"                 : (0x02, frozenset, "Status"),
-        "notice"                 : (0x03, str, "Notice"),
-        "applicability"          : (0x04, str, "Applicability"),
-        "files"                  : (0x05, frozenset, "Files"),
-        "dependencies"           : (0x06, frozenset, "Depends-on"),
-        "early_autoconf_snippet" : (0x07, str, "configure.ac-early"),
-        "autoconf_snippet"       : (0x08, str, "configure.ac"),
-        "automake_snippet"       : (0x09, str, "Makefile.am"),
-        "include_directive"      : (0x0A, str, "Include"),
-        "link_directive"         : (0x0B, str, "Link"),
-        "licenses"               : (0x0C, frozenset, "License"),
-        "maintainers"            : (0x0D, frozenset, "Maintainer"),
+        "description"                  : (0x00, str, "Description"),
+        "comment"                      : (0x01, str, "Comment"),
+        "status"                       : (0x02, frozenset, "Status"),
+        "notice"                       : (0x03, str, "Notice"),
+        "applicability"                : (0x04, str, "Applicability"),
+        "files"                        : (0x05, frozenset, "Files"),
+        "dependencies"                 : (0x06, frozenset, "Depends-on"),
+        "early_autoconf_snippet"       : (0x07, str, "configure.ac-early"),
+        "autoconf_snippet"             : (0x08, str, "configure.ac"),
+        "conditional_automake_snippet" : (0x09, str, "Makefile.am"),
+        "include_directive"            : (0x0A, str, "Include"),
+        "link_directive"               : (0x0B, str, "Link"),
+        "licenses"                     : (0x0C, frozenset, "License"),
+        "maintainers"                  : (0x0D, frozenset, "Maintainer"),
+        # unconditional_automake_snippet
+        # automake_snippet
     }
     _DEPENDENCIES = _re.compile("^(\\S+)(?:\\s+(.+))*$")
+    _LIB_SOURCES = _re.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re.S | _re.M)
 
 
     def __init__(self, name, **kwargs):
@@ -262,14 +265,65 @@ class Base:
 
 
     @property
-    def automake_snippet(self):
-        """Makefile.am snippet"""
-        return self.__table["automake_snippet"]
+    def conditional_automake_snippet(self):
+        """Makefile.am snippet that can be put inside Automake conditionals"""
+        return self.__table["conditional_automake_snippet"]
 
-    @automake_snippet.setter
-    def automake_snippet(self, value):
-        _type_assert("automake_snippet", value, str)
-        self.__table["automake_snippet"] = value
+    @conditional_automake_snippet.setter
+    def conditional_automake_snippet(self, value):
+        _type_assert("conditional_automake_snippet", value, str)
+        self.__table["conditional_automake_snippet"] = value
+
+
+    @property
+    def unconditional_automake_snippet(self):
+        """Makefile.am snippet that must stay outside of Automake conditionals"""
+        if "unconditional_automake_snippet" in self.__table:
+            return self.__table["unconditional_automake_snippet"]
+        result = ""
+        if self.name.endswith("-tests"):
+            # *-tests module live in tests/, not lib/.
+            # Synthesize an EXTRA_DIST augmentation.
+            test_files = {file for file in files if file.startswith("tests/")}
+            if test_files:
+                result += ("EXTRA_DIST +=".format("".join(sorted(test_files))) + "\n")
+            return result
+        snippet = self.conditional_automake_snippet
+        (all_files, mentioned_files) = (self.files(), set())
+        for match in Module._LIB_SOURCES.findall(snippet):
+            mentioned_files |= {file.strip() for file in match.split("#", 1)[0].split(" ") if file.strip()}
+        lib_files = {file for file in all_files if file.startswith("lib/")}
+        extra_files = {file for file in lib_files if file not in mentioned_files}
+        if extra_files:
+            result += ("EXTRA_DIST +=".format("".join(sorted(extra_files))) + "\n")
+
+        # Synthesize also an EXTRA_lib_SOURCES augmentation.
+        # This is necessary so that automake can generate the right list of
+        # dependency rules.
+        # A possible approach would be to use autom4te --trace of the redefined
+        # AC_LIBOBJ and AC_REPLACE_FUNCS macros when creating the Makefile.am
+        # (use autom4te --trace, not just grep, so that AC_LIBOBJ invocations
+        # inside autoconf's built-in macros are not missed).
+        # But it's simpler and more robust to do it here, based on the file list.
+        # If some .c file exists and is not used with AC_LIBOBJ - for example,
+        # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
+        # automake will generate a useless dependency; this is harmless.
+        if self.name not in {"relocatable-prog-wrapper", "pt_chown"}:
+            extra_files = {file for file in extra_files if file.endswith(".c")}
+            if extra_files:
+                result += ("EXTRA_lib_SOURCES +=".format("".join(sorted(extra_files))) + "\n")
+
+        # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
+        buildaux_files = {file for file in all_files if file.startswith("build-aux/")}
+        if buildaux_files:
+            result += ("EXTRA_DIST += $(top_srcdir)/{auxdir}" + "\n")
+        self.__table["unconditional_automake_snippet"] = result
+        return result
+
+
+    @property
+    def automake_snippet(self):
+        return (self.conditional_automake_snippet + self.unconditional_automake_snippet)
 
 
     @property
@@ -543,11 +597,9 @@ _DUMMY_REQUIRED_PATTERN = _re.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re.S | _
 def dummy_required(modules):
     """Determine whether dummy module is required."""
     for module in modules:
-        snippet = module.automake_snippet
-        match = _DUMMY_REQUIRED_PATTERN.findall(snippet)
-        for files in match:
-            files = (files.split("#", 1)[0].split(" "))
-            files = (file.strip() for file in files if file.strip())
+        snippet = module.conditional_automake_snippet
+        for match in _DUMMY_REQUIRED_PATTERN.findall(snippet):
+            files = {file.strip() for file in match.split("#", 1)[0].split(" ") if file.strip()}
             if {file for file in files if not file.endswith(".h")}:
                 return False
     return True
