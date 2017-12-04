@@ -567,9 +567,18 @@ def transitive_closure(lookup, modules, **options):
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = lookup(dependency)
-                    if not _exclude_(module):
+                    if gnumake and condition.startswith("if "):
+                        # A module whose Makefile.am snippet contains a reference to an
+                        # automake conditional. If we were to use it conditionally, we
+                        # would get an error
+                        #   configure: error: conditional "..." was never defined.
+                        # because automake 1.11.1 does not handle nested conditionals
+                        # correctly. As a workaround, make the module unconditional.
+                        current.add((module, None, None))
+                    else:
                         condition = condition if condition.strip() else None
-                        current.add((module, demander, condition))
+                        if not _exclude_(module):
+                            current.add((module, demander, condition))
                 queue.add(demander)
         return current
 
