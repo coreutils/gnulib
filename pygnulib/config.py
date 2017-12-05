@@ -65,6 +65,7 @@ class Base:
         "files"             : set(),
         "copymode"          : None,
         "local_copymode"    : None,
+        "gnumake"           : False,
     }
     _OPTIONS = frozenset({
         "tests",

@@ -706,6 +706,14 @@ class CommandLine:
                     "dest": "auxdir",
                     "metavar": "DIRECTORY",
                 }),
+                (["--gnu-make"], {
+                    "help": (
+                        "output for GNU Make instead of for the default",
+                        "Automake",
+                    ),
+                    "action": _TrueOption,
+                    "dest": "gnumake",
+                }),
                 (["--lgpl"], {
                     "help": (
                         "abort if modules aren't available under the LGPL;",

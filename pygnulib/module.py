@@ -281,21 +281,22 @@ class Base:
         if "unconditional_automake_snippet" in self.__table:
             return self.__table["unconditional_automake_snippet"]
         result = ""
+        files = self.files
         if self.name.endswith("-tests"):
             # *-tests module live in tests/, not lib/.
             # Synthesize an EXTRA_DIST augmentation.
             test_files = {file for file in files if file.startswith("tests/")}
             if test_files:
-                result += ("EXTRA_DIST +=".format("".join(sorted(test_files))) + "\n")
+                result += ("EXTRA_DIST +={}".format("".join(sorted(test_files))) + "\n")
             return result
         snippet = self.conditional_automake_snippet
-        (all_files, mentioned_files) = (self.files(), set())
-        for match in Module._LIB_SOURCES.findall(snippet):
+        (all_files, mentioned_files) = (files, set())
+        for match in Base._LIB_SOURCES.findall(snippet):
             mentioned_files |= {file.strip() for file in match.split("#", 1)[0].split(" ") if file.strip()}
         lib_files = {file for file in all_files if file.startswith("lib/")}
         extra_files = {file for file in lib_files if file not in mentioned_files}
         if extra_files:
-            result += ("EXTRA_DIST +=".format("".join(sorted(extra_files))) + "\n")
+            result += ("EXTRA_DIST +={}".format("".join(sorted(extra_files))) + "\n")
 
         # Synthesize also an EXTRA_lib_SOURCES augmentation.
         # This is necessary so that automake can generate the right list of
@@ -311,7 +312,7 @@ class Base:
         if self.name not in {"relocatable-prog-wrapper", "pt_chown"}:
             extra_files = {file for file in extra_files if file.endswith(".c")}
             if extra_files:
-                result += ("EXTRA_lib_SOURCES +=".format("".join(sorted(extra_files))) + "\n")
+                result += ("EXTRA_lib_SOURCES +={}".format("".join(sorted(extra_files))) + "\n")
 
         # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
         buildaux_files = {file for file in all_files if file.startswith("build-aux/")}
@@ -323,6 +324,7 @@ class Base:
 
     @property
     def automake_snippet(self):
+        """full automake snippet (conditional + unconditional parts)"""
         return (self.conditional_automake_snippet + self.unconditional_automake_snippet)
 
 
@@ -523,6 +525,7 @@ def transitive_closure(lookup, modules, **options):
     options may be any combination of gnulib configuration options.
     """
     keywords = frozenset({
+        "gnumake",
         "tests",
         "obsolete",
         "cxx_tests",
@@ -567,7 +570,7 @@ def transitive_closure(lookup, modules, **options):
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = lookup(dependency)
-                    if gnumake and condition.startswith("if "):
+                    if options["gnumake"] and condition.startswith("if "):
                         # A module whose Makefile.am snippet contains a reference to an
                         # automake conditional. If we were to use it conditionally, we
                         # would get an error
