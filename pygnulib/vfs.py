@@ -137,13 +137,13 @@ def mkdir(root, name):
 def backup(root, name):
     """Backup the given file."""
     root = Base(".") if root is None else root
-    path = _os.path.join(root.absolute, root[name])
-    backup = "{}~".format(path)
+    original_path = _os.path.join(root.absolute, root[name])
+    backup_path = "{}~".format(original_path)
     try:
-        _os.unlink(backup)
+        _os.unlink(backup_path)
     except FileNotFoundError:
         pass # ignore non-existent files
-    _os.rename(path, backup)
+    _os.rename(original_path, backup_path)
 
 
 def compare(lhs_root, lhs_name, rhs_root, rhs_name):
