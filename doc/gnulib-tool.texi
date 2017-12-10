@@ -44,7 +44,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
-* Multiple instances::          Using Gnulib for both a library and a binary
+* Multiple instances::          Using Gnulib for both a library and a program
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
 * VCS Issues::                  Integration with Version Control Systems.
@@ -452,18 +452,18 @@ and these flags have no effect after any system header file has been included.
 
 
 @node Multiple instances
-@section Using Gnulib for both a library and a binary
+@section Using Gnulib for both a library and a program
 
-Your project might build both a library and some accompanying binaries
+Your project might build both a library and some accompanying programs
 in the same source tree. In that case you might want to use different
-modules for the library than for the binaries. Typically the binaries
+modules for the library than for the programs. Typically the programs
 might want to make use of @code{getopt-posix} or @code{version-etc},
 while the library wants to stay clear of these modules for technical
 or licensing reasons.
 
 Let's assume that your project contains a @file{lib} directory where
 the source of the library resides and a @file{src} directory for the
-sources of the binaries as follows.
+sources of the programs as follows.
 
 @example
 .
@@ -544,8 +544,8 @@ libfoo_la_LIBADD = $(top_builddir)/gnulib/libgnu.la
 ...
 @end example
 
-Correspondingly for the binary you will have to add something along
-the lines of to the following:
+Correspondingly for the programs you will have to add something like
+this:
 
 @example
 ...
@@ -558,6 +558,7 @@ LIBADD = $(top_builddir)/src/gnulib/libgnutools.la
 The name of the library that you have pass in the linker option
 depends on the @option{--lib} option in @command{gnulib-tool}
 invocation.
+
 
 @node gettextize and autopoint
 @section Caveat: @code{gettextize} and @code{autopoint} users
