@@ -44,6 +44,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* Modified build rules::        Modifying the build rules of a Gnulib import
 * Multiple instances::          Using Gnulib for both a library and a program
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
 * Localization::                Handling Gnulib's own message translations.
@@ -449,6 +450,74 @@ the Gnulib library directory.
 This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
+
+
+@node Modified build rules
+@section Modifying the build rules of a Gnulib import directory
+
+In some cases, you may want to set additional compiler options for
+use within the Gnulib import directory.  For example, the
+@samp{relocatable} module operates better if you define the C macros
+@code{ENABLE_COSTLY_RELOCATABLE} and @code{INSTALLDIR} during its
+compilation.
+
+There are two ways to do so: Use of the @code{gnulib-tool} option
+@code{--makefile-name}, and a kitchen-sink module.
+
+With the @code{gnulib-tool} option @code{--makefile-name}, you are
+telling @code{gnulib-tool} to generate an includable @code{Makefile.am}
+portion, rather than a self-contained @code{Makefile.am}.  For example,
+when you use @code{--makefile-name=Makefile.gnulib}, @code{gnulib-tool}
+will generate @code{Makefile.gnulib}, and you will provide a
+hand-written @code{Makefile.am} that includes @code{Makefile.gnulib}
+through a line such as
+@smallexample
+include Makefile.gnulib
+@end smallexample
+Before this include, you need to initialize this set of @code{Makefile.am}
+variables:
+@itemize @bullet
+@item
+@code{AUTOMAKE_OPTIONS}
+@item
+@code{SUBDIRS}
+@item
+@code{noinst_HEADERS}
+@item
+@code{noinst_LIBRARIES}
+@item
+@code{noinst_LTLIBRARIES}
+@item
+@code{pkgdata_DATA} (only with Automake @geq{} 1.11.4)
+@item
+@code{EXTRA_DIST}
+@item
+@code{BUILT_SOURCES}
+@item
+@code{SUFFIXES}
+@item
+@code{MOSTLYCLEANFILES}
+@item
+@code{MOSTLYCLEANDIRS}
+@item
+@code{CLEANFILES}
+@item
+@code{DISTCLEANFILES}
+@item
+@code{MAINTAINERCLEANFILES}
+@item
+@code{AM_CPPFLAGS}
+@item
+@code{AM_CFLAGS}
+@end itemize
+@code{AUTOMAKE_OPTIONS} should be initialized as described in
+@ref{Options,,Changing Automake's Behavior,automake,GNU Automake}.
+The other variables can be initialized to empty.  However, you will most
+likely want to initialize some of them with non-empty values, in order
+to achieve the desired customization.
+
+The other approach, the kitchen-sink module, is more advanced.  See
+chapter @ref{Extending Gnulib}.
 
 
 @node Multiple instances
