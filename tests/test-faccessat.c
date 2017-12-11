@@ -45,6 +45,7 @@ main (void)
   }
 
   /* Test behavior with trailing slash.  */
+  unlink (BASE "file");
   ASSERT (faccessat (AT_FDCWD, ".", X_OK, 0) == 0);
   ASSERT (faccessat (AT_FDCWD, "./", X_OK, 0) == 0);
   ASSERT (close (open (BASE "file", O_CREAT | O_WRONLY, 0)) == 0);
