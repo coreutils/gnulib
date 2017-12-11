@@ -686,21 +686,21 @@ You can add modules of your own, that are not (yet) in Gnulib.
 You can also add unstructured amounts of code to the library, by
 grouping the non-Gnulib files of the library in a single kitchen-sink
 ``module.''  (This kind of kitchen-sink module is not needed when you
-use the @command{gnulib-tool} option @samp{--makefile-name}.)
+use the @command{gnulib-tool} option @option{--makefile-name}.)
 @end itemize
 
 In a release tarball, you can distribute the contents of this
 @option{--local-dir} directory that will be combinable with newer
 versions of Gnulib, barring incompatible changes to Gnulib.
 
-If the @samp{--local-dir=@var{directory}} option is specified, then
+If the @option{--local-dir=@var{directory}} option is specified, then
 @command{gnulib-tool} looks in @file{@var{directory}} whenever it
 reads a file from the Gnulib directory.  Suppose @command{gnulib-tool}
 is looking for @var{file}.  Then:
 
 @itemize @bullet
 @item
-If @file{@var{directory}/@var{file}} exists, then @samp{gnulib-tool} uses
+If @file{@var{directory}/@var{file}} exists, then @command{gnulib-tool} uses
 it instead of the file included in Gnulib.
 
 @item
