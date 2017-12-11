@@ -69,6 +69,7 @@ main (void)
       unlink (BASE "link3");
     }
   unlink (BASE "link1");
+  unlink (BASE "file");
 
   return 0;
 }
