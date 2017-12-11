@@ -137,8 +137,8 @@ extern int
    The number of available units, N, must be > 0.  */
 /* Similar to mbtowc(), except that puc and s must not be NULL, n must be > 0,
    and the NUL character is not treated specially.  */
-/* The variants with _safe suffix are safe, even if the library is compiled
-   without --enable-safety.  */
+/* The variants with _unsafe suffix are for backward compatibility with
+   libunistring versions < 0.9.7.  */
 
 #if GNULIB_UNISTR_U8_MBTOUC_UNSAFE || HAVE_LIBUNISTRING
 # if !HAVE_INLINE
