@@ -212,8 +212,7 @@ class Base:
     @property
     def files(self):
         """file dependencies iterator (set of strings)"""
-        for file in self.__table["files"]:
-            yield file
+        return frozenset(self.__table["files"])
 
     @files.setter
     def files(self, value):
@@ -228,8 +227,10 @@ class Base:
     @property
     def dependencies(self):
         """dependencies iterator (name, condition)"""
+        entries = set()
         for entry in self.__table["dependencies"]:
-            yield Base._DEPENDENCIES.findall(entry)[0]
+            entries.add(Base._DEPENDENCIES.findall(entry)[0])
+        return frozenset(entries)
 
     @dependencies.setter
     def dependencies(self, value):
@@ -287,16 +288,37 @@ class Base:
             # Synthesize an EXTRA_DIST augmentation.
             test_files = {file for file in files if file.startswith("tests/")}
             if test_files:
-                result += ("EXTRA_DIST +={}".format("".join(sorted(test_files))) + "\n")
+                result += ("EXTRA_DIST += {}".format(" ".join(sorted(test_files))) + "\n")
             return result
         snippet = self.conditional_automake_snippet
-        (all_files, mentioned_files) = (files, set())
-        for match in Base._LIB_SOURCES.findall(snippet):
-            mentioned_files |= {file.strip() for file in match.split("#", 1)[0].split(" ") if file.strip()}
-        lib_files = {file for file in all_files if file.startswith("lib/")}
-        extra_files = {file for file in lib_files if file not in mentioned_files}
+        lib_SOURCES = False
+        lines = list(snippet.splitlines())
+        for (index, line) in enumerate(lines):
+            if Base._LIB_SOURCES.findall(line):
+                (first, last) = (index, index)
+                while line.endswith("\\"):
+                    line = lines[last]
+                    last += 1
+                lines = list(lines)[first:(last + 1)]
+                lines[0] = Base._LIB_SOURCES.sub("\\1", lines[0])
+                lib_SOURCES = True
+                break
+        lines = tuple(lines) if lib_SOURCES else ()
+        lines = filter(lambda line: line.strip(), lines)
+        lines = (line.replace("\\", "").strip() for line in lines)
+        (all_files, mentioned_files) = (files, [])
+        for line in lines:
+            for file in line.split():
+                if file.strip():
+                    mentioned_files += [file]
+        mentioned_files = tuple(_collections.OrderedDict.fromkeys(mentioned_files))
+        lib_files = tuple(file[len("lib/"):] for file in all_files if file.startswith("lib/"))
+        extra_files = tuple(file for file in lib_files if file not in mentioned_files)
+        import sys
+        if self.name == "getprogname":
+            print(mentioned_files, file=sys.stderr)
         if extra_files:
-            result += ("EXTRA_DIST +={}".format("".join(sorted(extra_files))) + "\n")
+            result += ("EXTRA_DIST += {}".format(" ".join(sorted(extra_files))) + "\n")
 
         # Synthesize also an EXTRA_lib_SOURCES augmentation.
         # This is necessary so that automake can generate the right list of
@@ -310,14 +332,15 @@ class Base:
         # a .c file is preprocessed into another .c file for BUILT_SOURCES -,
         # automake will generate a useless dependency; this is harmless.
         if self.name not in {"relocatable-prog-wrapper", "pt_chown"}:
-            extra_files = {file for file in extra_files if file.endswith(".c")}
+            extra_files = tuple(file for file in extra_files if file.endswith(".c"))
             if extra_files:
-                result += ("EXTRA_lib_SOURCES +={}".format("".join(sorted(extra_files))) + "\n")
+                result += ("EXTRA_lib_SOURCES += {}".format(" ".join(sorted(extra_files))) + "\n")
 
         # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
-        buildaux_files = {file for file in all_files if file.startswith("build-aux/")}
+        buildaux_files = (file for file in all_files if file.startswith("build-aux/"))
+        buildaux_files = tuple("$(top_srcdir)/{auxdir}/" + file[len("build-aux/"):] for file in buildaux_files)
         if buildaux_files:
-            result += ("EXTRA_DIST += $(top_srcdir)/{auxdir}" + "\n")
+            result += ("EXTRA_DIST += {}".format(" ".join(sorted(buildaux_files))) + "\n")
         self.__table["unconditional_automake_snippet"] = result
         return result
 
@@ -570,7 +593,7 @@ def transitive_closure(lookup, modules, **options):
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     module = lookup(dependency)
-                    if options["gnumake"] and condition.startswith("if "):
+                    if options.get("gnumake", False) and condition.startswith("if "):
                         # A module whose Makefile.am snippet contains a reference to an
                         # automake conditional. If we were to use it conditionally, we
                         # would get an error

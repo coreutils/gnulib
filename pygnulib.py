@@ -17,6 +17,7 @@ from pygnulib.config import Base as BaseConfig
 from pygnulib.config import Cache as CacheConfig
 
 from pygnulib.generator import CommandLine as CommandLineGenerator
+from pygnulib.generator import LibMakefile as LibMakefileGenerator
 
 from pygnulib.module import filelist
 from pygnulib.module import dummy_required
@@ -172,7 +173,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             else:
                 print("  ", file, file=sys.stdout, sep="")
 
-
     table = {}
     overrides = []
     for (tbl_key, cfg_key) in SUBSTITUTION_RULES.items():
@@ -189,7 +189,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     with BaseVFS(config.root, **table) as vfs:
         old_files = frozenset({vfs[file] for file in old_files})
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
-
 
     dry_run = options["dry_run"]
     gnulib_copymode = config.copymode
@@ -232,7 +231,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
         print(fmt.format(file=dst_name))
 
-
     # First the files that are in old_files, but not in new_files.
     # Then the files that are in new_files, but not in old_files.
     # Then the files that are in new_files and in old_files.
@@ -248,6 +246,9 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             (vfs, src) = lookup(dst, gnulib, override, patch="patch")
             action = update_file if exists(project, dst) else add_file
             action(bool(match), vfs, src, project, dst, present)
+
+    actioncmd = " ".join(CommandLineGenerator(config, explicit))
+    libMakefile = LibMakefileGenerator(config, explicit, main, False, actioncmd=actioncmd)
     return os.EX_OK
 
 
@@ -308,8 +309,8 @@ def main(script, gnulib, program, arguments, environ):
         "program": program,
         "gnulib": gnulib,
         "mode": mode,
-        "explicit": namespace,
         "namespace": namespace,
+        "explicit": namespace.keys(),
         "verbosity": verbosity,
         "options": options,
     }

@@ -4,7 +4,11 @@
 
 
 
-import os as _os_
+import os as _os
+import re as _re
+import codecs as _codecs
+import subprocess as _sp
+from datetime import datetime as _datetime
 
 
 from .error import type_assert as _type_assert
@@ -14,6 +18,10 @@ from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE
 from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE
 from .config import GPLv2_LICENSE as _GPLv2_LICENSE
 from .config import LGPL_LICENSE as _LGPL_LICENSE
+
+
+
+_ITERABLES = (list, tuple, set, frozenset, type({}.keys()), type({}.values()))
 
 
 
@@ -147,7 +155,7 @@ class POMakefile(Generator):
         yield ""
         yield "# These two variables depend on the location of this directory."
         yield "subdir = {}".format(self.po_domain)
-        yield "top_subdir = {}".format("/".join(".." for _ in self.po_base.split(_os_.path.sep)))
+        yield "top_subdir = {}".format("/".join(".." for _ in self.po_base.split(_os.path.sep)))
         for line in POMakefile._TEMPLATE:
             yield line
 
@@ -180,7 +188,7 @@ class POTFILES(Generator):
             yield line
         yield "# List of files which contain translatable strings."
         for file in [_ for _ in self.files if _.startswith("lib/")]:
-            yield _os_.path.join(self.__config.source_base, file[4:])
+            yield _os.path.join(self.__config.source_base, file[4:])
 
 
 
@@ -460,7 +468,246 @@ class InitMacroDone(InitMacro):
 
 
 
+class LibMakefile(Generator):
+    _LDFLAGS = _re.compile(r"^lib_LDFLAGS\s*\+\=.*?$", _re.S)
+    _LIBNAME = _re.compile(r"lib_([A-Z][A-Z]*)", _re.S)
+    _GNUMAKE = _re.compile(r"^if (.*?)$", _re.S)
+
+
+    def __init__(self, config, explicit, modules, for_test,
+        autoconf="autoconf", configure_ac="configure.ac", actioncmd=""):
+        _type_assert("config", config, _BaseConfig)
+        _type_assert("explicit", explicit, _ITERABLES)
+        _type_assert("modules", modules, _ITERABLES)
+        _type_assert("for_test", for_test, bool)
+        _type_assert("actioncmd", actioncmd, str)
+        _type_assert("autoconf", autoconf, str)
+        _type_assert("configure_ac", configure_ac, str)
+        self.__config = config
+        self.__explicit = explicit
+        self.__modules = modules
+        self.__for_test = for_test
+        self.__actioncmd = actioncmd
+        self.__autoconf = autoconf
+        self.__configure_ac = configure_ac
+
+
+    def __iter__(self):
+        date = _datetime.now()
+        config = self.__config
+        explicit = self.__explicit
+        for_test = self.__for_test
+        actioncmd = self.__actioncmd
+        modules = self.__modules
+
+        gnumake = config.gnumake
+        libtool = config.libtool
+        kwargs = {
+            "libname": config.lib,
+            "macro_prefix": config.macro_prefix,
+            "libext": "la" if libtool else "a",
+            "perhaps_LT": "LT" if libtool else "",
+        }
+        assign = "+=" if gnumake or "makefile_name" in explicit else "="
+        eliminate_LDFLAGS = True if libtool else False
+
+        # When creating a package for testing: Attempt to provoke failures,
+        # especially link errors, already during "make" rather than during
+        # "make check", because "make check" is not possible in a cross-compiling
+        # situation. Turn check_PROGRAMS into noinst_PROGRAMS.
+        transform_check_PROGRAMS = True if for_test else False
+
+        yield "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
+        yield "## Process this file with automake to produce Makefile.in."
+        yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+        for line in super().__iter__():
+            yield line
+
+        # The maximum line length (excluding the terminating newline) of any file
+        # that is to be preprocessed by config.status is 3070.  config.status uses
+        # awk, and the HP-UX 11.00 awk fails if a line has length >= 3071;
+        # similarly, the IRIX 6.5 awk fails if a line has length >= 3072.
+        if len(actioncmd) <= 3000:
+            yield "# Reproduce by: {}".format(actioncmd)
+        yield ""
+
+        def _snippet():
+            lines = []
+
+            def _common_conditional(module, conditional, unconditional):
+                yield ""
+                yield "if {}".format(module.conditional_name)
+                yield conditional
+                yield "endif"
+                yield unconditional
+
+            def _common_unconditional(module, conditional, unconditional):
+                yield ""
+                yield conditional
+                yield unconditional
+
+            def _gnumake_conditional(module, conditional, unconditional):
+                yield "ifeq (,$(OMIT_GNULIB_MODULE_{}))".format(module.name)
+                yield ""
+                yield "ifneq (,$({}))".format(module.conditional_name)
+                yield LibMakefile._GNUMAKE.sub("ifneq (,$(\\1))", conditional)
+                yield "endif"
+                yield "endif"
+                yield LibMakefile._GNUMAKE.sub("ifneq (,$(\\1))", unconditional)
+
+            def _gnumake_unconditional(module, conditional, unconditional):
+                yield ""
+                yield LibMakefile._GNUMAKE.sub("ifneq (,$(\\1))", conditional)
+                yield LibMakefile._GNUMAKE.sub("ifneq (,$(\\1))", unconditional)
+
+            uses_subdirs = False
+            process = (
+                (_common_unconditional, _gnumake_unconditional),
+                (_common_conditional, _gnumake_conditional),
+            )[config.conddeps][gnumake]
+            for module in sorted(modules):
+                if module.name.endswith("-tests"):
+                    continue
+                conditional = module.conditional_automake_snippet
+                conditional = conditional.replace("lib_LIBRARIES", "lib%_LIBRARIES")
+                conditional = conditional.replace("lib_LTLIBRARIES", "lib%_LTLIBRARIES")
+                if eliminate_LDFLAGS:
+                    conditional = LibMakefile._LDFLAGS.sub("", conditional)
+                conditional = LibMakefile._LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), conditional)
+                conditional = conditional.replace("lib%_LIBRARIES", "lib_LIBRARIES")
+                conditional = conditional.replace("lib%_LTLIBRARIES", "lib_LTLIBRARIES")
+                if transform_check_PROGRAMS:
+                    conditional = conditional.replace("check_PROGRAMS", "noinst_PROGRAMS")
+                conditional = conditional.replace(r"${gl_include_guard_prefix}", config.include_guard_prefix)
+                unconditional = module.unconditional_automake_snippet
+                unconditional = LibMakefile._LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), unconditional)
+                if (conditional + unconditional).strip():
+                    lines.append("## begin gnulib module {}".format(module.name))
+                    if module.name == "alloca":
+                        lines.append("{libname}_{libext}_LIBADD += @{perhaps_LT}ALLOCA@".format(**kwargs))
+                        lines.append("{libname}_{libext}_DEPENDENCIES += @{perhaps_LT}ALLOCA@".format(**kwargs))
+                    lines += list(process(module, conditional, unconditional))
+                    lines.append("## end   gnulib module {}".format(module.name))
+                    lines.append("")
+            return (uses_subdirs, lines)
+
+        (uses_subdirs, overall_snippet) = _snippet()
+        if "makefile_name" not in explicit:
+            # If there are source files in subdirectories, prevent collision of the
+            # object files (example: hash.c and libxml/hash.c).
+            yield "AUTOMAKE_OPTIONS = 1.9.6 gnits{}".format(" subdir-objects" if uses_subdirs else "")
+        yield ""
+        if "makefile_name" not in explicit:
+            yield "SUBDIRS ="
+            yield "noinst_HEADERS ="
+            yield "noinst_LIBRARIES ="
+            yield "noinst_LTLIBRARIES ="
+            # Automake versions < 1.11.4 create an empty pkgdatadir at
+            # installation time if you specify pkgdata_DATA to empty.
+            # See automake bugs #10997 and #11030:
+            #  * http://debbugs.gnu.org/10997
+            #  * http://debbugs.gnu.org/11030
+            # So we need this workaround.
+            if {line for line in overall_snippet if line.startswith()}:
+                yield "pkgdata_DATA ="
+            yield "EXTRA_DIST ="
+            yield "BUILT_SOURCES ="
+            yield "SUFFIXES ="
+        yield "MOSTLYCLEANFILES {} core *.stackdump".format(assign)
+        if "makefile_name" not in explicit:
+            yield "MOSTLYCLEANDIRS ="
+            yield "CLEANFILES ="
+            yield "DISTCLEANFILES ="
+            yield "MAINTAINERCLEANFILES ="
+
+        if gnumake:
+            yield "# Start of GNU Make output."
+            cmdargs = (self.__autoconf, "-t", "AC_SUBST:$1 = @$1@", self.__configure_ac)
+            process = _sp.Popen(cmdargs, stdout=_sp.PIPE, stderr=_sp.PIPE)
+            (stdout, stderr) = process.communicate()
+            stdout = stdout.decode("UTF-8")
+            stderr = stderr.decode("UTF-8")
+            if process.returncode == 0:
+                for line in sorted(stdout.splitlines()):
+                    yield line
+            else:
+                yield "== gnulib-tool GNU Make output failed as follows =="
+                for line in stderr.splitlines():
+                    yield "# stderr: {}".format(line)
+            yield "# End of GNU Make output."
+        else:
+            yield "# No GNU Make output."
+
+        cppflags = "".join((
+            " -D{}=1".format(config.witness_c_macro) if "witness_c_macro" in explicit else "",
+            " -DGNULIB_STRICT_CHECKING=1" if for_test else "",
+        ))
+        if "makefile_name" not in explicit:
+            yield ""
+            yield "AM_CPPFLAGS ={}".format(cppflags)
+            yield "AM_CFLAGS ="
+        elif "".join(cppflags):
+            yield ""
+            yield "AM_CPPFLAGS +={}".format(cppflags)
+        yield ""
+
+        snippet = "\n".join(overall_snippet)
+        if "makefile_name" in explicit:
+            makefile = _os.path.join(config.source_base, "Makefile.am")
+            if _os.path.exists(makefile):
+                with _codecs.open(makefile, "rb", "UTF-8") as stream:
+                    snippet += ("\n" + stream.read())
+        # One of the snippets or the user's Makefile.am already specifies an
+        # installation location for the library. Don't confuse automake by saying
+        # it should not be installed.
+        # By default, the generated library should not be installed.
+        regex = "^[a-zA-Z0-9_]*_{perhaps_LT}LIBRARIES\\s*\\+?\\=\\s*{libname}\\.{libext}$"
+        pattern = _re.compile(regex.format(**kwargs), _re.S)
+        if not pattern.findall(snippet):
+            yield "noinst_{perhaps_LT}LIBRARIES += {libname}.{libext}".format(**kwargs)
+
+        yield ""
+        yield "{libname}_{libext}_SOURCES =".format(**kwargs)
+        # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
+        # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
+        yield "{libname}_{libext}_LIBADD = $({macro_prefix}_{perhaps_LT}LIBOBJS)".format(**kwargs)
+        yield "{libname}_{libext}_DEPENDENCIES = $({macro_prefix}_{perhaps_LT}LIBOBJS)".format(**kwargs)
+        yield "EXTRA_{libname}_{libext}_SOURCES =".format(**kwargs)
+        if libtool:
+            yield "{libname}_{libext}_LDFLAGS = $(AM_LDFLAGS)".format(**kwargs)
+            yield "{libname}_{libext}_LDFLAGS += -no-undefined".format(**kwargs)
+            # Synthesize an ${libname}_${libext}_LDFLAGS augmentation by combining
+            # the link dependencies of all modules.
+            def _directives(modules):
+                directives = (module.link_directive for module in sorted(modules))
+                for directive in filter(lambda directive: directive.strip(), directives):
+                    index = directive.find("when linking with libtool")
+                    if index != -1:
+                        directive = directive[:index].strip(" ")
+                    yield directive
+            for directive in sorted(set(_directives(modules))):
+                yield ("{libname}_{libext}_LDFLAGS += {directive}".format(directive=directive, **kwargs))
+        yield ""
+
+        if "po_base" in explicit:
+            yield "AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\\"{}-gnulib\\\"".format(config.po_domain)
+            yield ""
+
+        for line in overall_snippet:
+            yield line.replace("$(top_srcdir)/build-aux/", _os.path.join("$(top_srcdir)", config.auxdir))
+        yield ""
+        yield "mostlyclean-local: mostlyclean-generic"
+        yield "\t@for dir in '' $(MOSTLYCLEANDIRS); do \\"
+        yield "\t  if test -n \"$$dir\" && test -d $$dir; then \\"
+        yield "\t    echo \"rmdir $$dir\"; rmdir $$dir; \\"
+        yield "\t  fi; \\"
+        yield "\tdone; \\"
+        yield "\t:"
+
+
+
 class CommandLine(Generator):
+    """gnulib command-line invocation generator"""
     _TESTS = {
         "tests": "tests",
         "obsolete": "obsolete",
@@ -477,6 +724,8 @@ class CommandLine(Generator):
     }
 
     def __init__(self, config, explicit):
+        _type_assert("config", config, _BaseConfig)
+        _type_assert("explicit", explicit, _ITERABLES)
         self.__config = config
         self.__explicit = explicit
 
@@ -496,7 +745,8 @@ class CommandLine(Generator):
         yield "--tests-base={}".format(config.tests_base)
         yield "--aux-dir={}".format(config.auxdir)
         for (key, value) in CommandLine._TESTS.items():
-            yield "--with-{}".format(value)
+            if config[key]:
+                yield "--with-{}".format(value)
         if config.all_tests:
             yield "--with-all-tests"
         for module in config.avoids:
