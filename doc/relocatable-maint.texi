@@ -56,6 +56,8 @@ You can make your program relocatable by following these steps:
 @item
 Import the @code{relocatable-prog} module.  For libraries, use the
 @code{relocatable-lib} or @code{relocatable-lib-lgpl} module.
+If you need more than one module, or you need to use them with different
+settings, you will need multiple copies of gnulib (@pxref{Multiple instances}).
 
 @item
 In every program, add to @code{main} as the first statement (even
@@ -190,13 +192,28 @@ foo_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(bindir)`
 endif
 @end example
 
-Also in @file{Makefile.am}, for each library @code{libfoo}, you add:
+When building gnulib to use with a relocatable library, you need to
+define the preprocessor symbol @code{IN_LIBRARY}.
+You may also want to build with @code{ENABLE_COSTLY_RELOCATABLE}, in which case
+you will also need to define @code{INSTALLDIR}.
+The following fragment can be added to an override @code{Makefile.am} used
+to build gnulib (@pxref{Modified build rules}).
 
 @example
-libfoo_la_CPPFLAGS = -DIN_LIBRARY
+AM_CPPFLAGS += -DIN_LIBRARY -DENABLE_COSTLY_RELOCATABLE
+
+if SHLIBS_IN_BINDIR
+AM_CPPFLAGS += -DINSTALLDIR=\"$(bindir)\"
+else
+AM_CPPFLAGS += -DINSTALLDIR=\"$(libdir)\"
+endif
 @end example
 
-(Adjust the suffix @code{la} as necessary if you are not using libtool.)
+@code{SHLIBS_IN_BINDIR} is defined in @file{configure.ac} as follows:
+
+@example
+AM_CONDITIONAL([SHLIBS_IN_BINDIR], [case "$host_os" in mingw* | cygwin*) true;; *) false;; esac])
+@end example
 
 @item
 You may also need to add a couple of variable assignments to your
