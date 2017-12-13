@@ -40,7 +40,7 @@ explicit_bzero (void *s, size_t len)
   explicit_memset (s, 0, len);
 #else
   memset (s, '\0', len);
-# ifdef __GNUC__
+# if defined __GNUC__ && !defined __clang__
   /* Compiler barrier.  */
   asm volatile ("" ::: "memory");
 # endif
