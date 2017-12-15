@@ -16,6 +16,11 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 
+/* Tell clang not to warn about the 'child' variable, below.  */
+#if defined __clang__
+# pragma clang diagnostic ignored "-Wconditional-uninitialized"
+#endif
+
 #include <config.h>
 
 /* Specification.  */
