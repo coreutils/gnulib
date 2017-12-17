@@ -21,7 +21,14 @@ from .config import LGPL_LICENSE as _LGPL_LICENSE
 
 
 
-_ITERABLES = (list, tuple, set, frozenset, type({}.keys()), type({}.values()))
+
+_LGPL = {
+    _LGPLv2_LICENSE: "2",
+    _LGPLv3_LICENSE: "3",
+    _LGPL_LICENSE: "yes",
+    (_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
+}
+_ITERABLES = frozenset((list, tuple, set, frozenset, type({}.keys()), type({}.values())))
 
 
 
@@ -76,7 +83,7 @@ class Generator:
 
 
 
-class POMakefile(Generator):
+class POMakevars(Generator):
     """PO Makefile parameterization"""
     _TEMPLATE = (
         "# These options get passed to xgettext.",
@@ -156,7 +163,7 @@ class POMakefile(Generator):
         yield "# These two variables depend on the location of this directory."
         yield "subdir = {}".format(self.po_domain)
         yield "top_subdir = {}".format("/".join(".." for _ in self.po_base.split(_os.path.sep)))
-        for line in POMakefile._TEMPLATE:
+        for line in POMakevars._TEMPLATE:
             yield line
 
 
@@ -468,28 +475,85 @@ class InitMacroDone(InitMacro):
 
 
 
+class CommandLine(Generator):
+    """gnulib command-line invocation generator"""
+    _TESTS = {
+        "tests": "tests",
+        "obsolete": "obsolete",
+        "cxx_tests": "c++-tests",
+        "longrunning_tests": "longrunning-tests",
+        "privileged_tests": "privileged-tests",
+        "unportable_tests": "unportable-tests",
+    }
+
+    def __init__(self, config, explicit):
+        _type_assert("config", config, _BaseConfig)
+        _type_assert("explicit", explicit, _ITERABLES)
+        self.__config = config
+        self.__explicit = explicit
+
+
+    def __iter__(self):
+        config = self.__config
+        explicit = self.__explicit
+        yield "gnulib-tool --import"
+        for path in config.overrides:
+            yield "--local-dir={}".format(path)
+        yield "--lib={}".format(config.libname)
+        yield "--source-base={}".format(config.source_base)
+        yield "--m4-base={}".format(config.m4_base)
+        if "po_base" in explicit:
+            yield "--po-base={}".format(config.po_base)
+        yield "--doc-base={}".format(config.doc_base)
+        yield "--tests-base={}".format(config.tests_base)
+        yield "--aux-dir={}".format(config.auxdir)
+        for (key, value) in CommandLine._TESTS.items():
+            if config[key]:
+                yield "--with-{}".format(value)
+        if config.all_tests:
+            yield "--with-all-tests"
+        for module in config.avoids:
+            yield "--avoid={}".format(module)
+        if config.licenses in _LGPL:
+            lgpl = _LGPL[config.licenses]
+            yield "--lgpl={}".format(lgpl) if lgpl != "yes" else "--lgpl"
+        if config.gnumake:
+            yield "--gnu-make"
+        if "makefile_name" in explicit:
+            yield "--makefile-name={}".format(config.makefile_name)
+        yield "--{}conditional-dependencies".format("" if config.conddeps else "no-")
+        yield "--{}libtool".format("" if config.libtool else "no-")
+        yield "--macro-prefix={}".format(config.macro_prefix)
+        if "po_domain" in explicit:
+            yield "--po-domain={}".format(config.po_domain)
+        if "witness_c_macro" in explicit:
+            yield "--witness-c-macro={}".format(config.witness_c_macro)
+        if "vc_files" in explicit:
+            yield "--{}vc-files".format("" if config.vc_files else "no-")
+        for module in sorted(config.modules):
+            yield "{}".format(module)
+
+
+
 class LibMakefile(Generator):
     _LDFLAGS = _re.compile(r"^lib_LDFLAGS\s*\+\=.*?$", _re.S)
     _LIBNAME = _re.compile(r"lib_([A-Z][A-Z]*)", _re.S)
     _GNUMAKE = _re.compile(r"^if (.*?)$", _re.S)
 
 
-    def __init__(self, config, explicit, modules, for_test,
-        autoconf="autoconf", configure_ac="configure.ac", actioncmd=""):
+    def __init__(self, config, explicit, path, modules, mkedits, for_test):
         _type_assert("config", config, _BaseConfig)
         _type_assert("explicit", explicit, _ITERABLES)
+        _type_assert("path", path, str)
         _type_assert("modules", modules, _ITERABLES)
+        _type_assert("mkedits", mkedits, _ITERABLES)
         _type_assert("for_test", for_test, bool)
-        _type_assert("actioncmd", actioncmd, str)
-        _type_assert("autoconf", autoconf, str)
-        _type_assert("configure_ac", configure_ac, str)
         self.__config = config
         self.__explicit = explicit
+        self.__path = path
         self.__modules = modules
+        self.__mkedits = mkedits
         self.__for_test = for_test
-        self.__actioncmd = actioncmd
-        self.__autoconf = autoconf
-        self.__configure_ac = configure_ac
 
 
     def __iter__(self):
@@ -497,13 +561,12 @@ class LibMakefile(Generator):
         config = self.__config
         explicit = self.__explicit
         for_test = self.__for_test
-        actioncmd = self.__actioncmd
         modules = self.__modules
 
         gnumake = config.gnumake
         libtool = config.libtool
         kwargs = {
-            "libname": config.lib,
+            "libname": config.libname,
             "macro_prefix": config.macro_prefix,
             "libext": "la" if libtool else "a",
             "perhaps_LT": "LT" if libtool else "",
@@ -527,6 +590,7 @@ class LibMakefile(Generator):
         # that is to be preprocessed by config.status is 3070.  config.status uses
         # awk, and the HP-UX 11.00 awk fails if a line has length >= 3071;
         # similarly, the IRIX 6.5 awk fails if a line has length >= 3072.
+        actioncmd = " ".join(CommandLine(config, explicit))
         if len(actioncmd) <= 3000:
             yield "# Reproduce by: {}".format(actioncmd)
         yield ""
@@ -579,7 +643,7 @@ class LibMakefile(Generator):
                 if transform_check_PROGRAMS:
                     conditional = conditional.replace("check_PROGRAMS", "noinst_PROGRAMS")
                 conditional = conditional.replace(r"${gl_include_guard_prefix}", config.include_guard_prefix)
-                unconditional = module.unconditional_automake_snippet
+                unconditional = module.unconditional_automake_snippet(config.auxdir)
                 unconditional = LibMakefile._LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), unconditional)
                 if (conditional + unconditional).strip():
                     lines.append("## begin gnulib module {}".format(module.name))
@@ -622,21 +686,27 @@ class LibMakefile(Generator):
 
         if gnumake:
             yield "# Start of GNU Make output."
+            self.__autoconf = "autoconf"
+            self.__configure_ac = "configure.ac"
             cmdargs = (self.__autoconf, "-t", "AC_SUBST:$1 = @$1@", self.__configure_ac)
-            process = _sp.Popen(cmdargs, stdout=_sp.PIPE, stderr=_sp.PIPE)
-            (stdout, stderr) = process.communicate()
-            stdout = stdout.decode("UTF-8")
-            stderr = stderr.decode("UTF-8")
-            if process.returncode == 0:
-                for line in sorted(stdout.splitlines()):
-                    yield line
-            else:
-                yield "== gnulib-tool GNU Make output failed as follows =="
-                for line in stderr.splitlines():
-                    yield "# stderr: {}".format(line)
+            with _sp.Popen(cmdargs, stdout=_sp.PIPE, stderr=_sp.PIPE) as process:
+                (stdout, stderr) = process.communicate()
+                stdout = stdout.decode("UTF-8")
+                stderr = stderr.decode("UTF-8")
+                if process.returncode == 0:
+                    for line in sorted(stdout.splitlines()):
+                        yield line
+                else:
+                    yield "== gnulib-tool GNU Make output failed as follows =="
+                    for line in stderr.splitlines():
+                        yield "# stderr: {}".format(line)
             yield "# End of GNU Make output."
         else:
             yield "# No GNU Make output."
+
+        for (directory, key, value) in self.__mkedits:
+            if key and _os.path.join(directory, "Makefile.am") == self.__path:
+                yield f"{key} += {value}"
 
         cppflags = "".join((
             " -D{}=1".format(config.witness_c_macro) if "witness_c_macro" in explicit else "",
@@ -706,66 +776,64 @@ class LibMakefile(Generator):
 
 
 
-class CommandLine(Generator):
-    """gnulib command-line invocation generator"""
-    _TESTS = {
-        "tests": "tests",
-        "obsolete": "obsolete",
-        "cxx_tests": "c++-tests",
-        "longrunning_tests": "longrunning-tests",
-        "privileged_tests": "privileged-tests",
-        "unportable_tests": "unportable-tests",
-    }
-    _LGPL = {
-        _LGPLv2_LICENSE: "2",
-        _LGPLv3_LICENSE: "3",
-        _LGPL_LICENSE: "yes",
-        (_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
-    }
-
-    def __init__(self, config, explicit):
+class GnulibCache(Generator):
+    def __init__(self, config):
         _type_assert("config", config, _BaseConfig)
-        _type_assert("explicit", explicit, _ITERABLES)
         self.__config = config
-        self.__explicit = explicit
 
 
     def __iter__(self):
+        date = _datetime.now()
         config = self.__config
-        explicit = self.__explicit
-        yield "gnulib-tool --import"
-        for path in config.overrides:
-            yield "--local-dir={}".format(path)
-        yield "--lib={}".format(config.lib)
-        yield "--source-base={}".format(config.source_base)
-        yield "--m4-base={}".format(config.m4_base)
-        if "po_base" in explicit:
-            yield "--po-base={}".format(config.po_base)
-        yield "--doc-base={}".format(config.doc_base)
-        yield "--tests-base={}".format(config.tests_base)
-        yield "--aux-dir={}".format(config.auxdir)
-        for (key, value) in CommandLine._TESTS.items():
-            if config[key]:
-                yield "--with-{}".format(value)
-        if config.all_tests:
-            yield "--with-all-tests"
-        for module in config.avoids:
-            yield "--avoid={}".format(module)
-        if config.licenses in CommandLine._LGPL:
-            lgpl = CommandLine._LGPL[config.licenses]
-            yield "--lgpl={}".format(lgpl) if lgpl == "yes" else " --lgpl"
-        if config.gnumake:
-            yield "--gnu-make"
-        if "makefile_name" in explicit:
-            yield "--makefile-name={}".format(config.makefile_name)
-        yield "--{}conditional-dependencies".format("" if config.conddeps else "no-")
-        yield "--{}libtool".format("" if config.libtool else "no-")
-        yield "--macro-prefix={}".format(config.macro_prefix)
-        if "po_domain" in explicit:
-            yield "--po-domain={}".format(config.po_domain)
-        if "witness_c_macro" in explicit:
-            yield "--witness-c-macro={}".format(config.witness_c_macro)
-        if "vc_files" in explicit:
-            yield "--{}vc-files".format("" if config.vc_files else "no-")
+        yield "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
+        yield "## Process this file with automake to produce Makefile.in."
+        yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+        for line in super().__iter__():
+            yield line
+        yield "#"
+        yield "# This file represents the specification of how gnulib-tool is used."
+        yield "# It acts as a cache: It is written and read by gnulib-tool."
+        yield "# In projects that use version control, this file is meant to be put under"
+        yield "# version control, like the configure.ac and various Makefile.am files."
+        yield ""
+        yield ""
+        yield "# Specification in the form of a command-line invocation:"
+        yield "gl_LOCAL_DIR([$relative_local_gnulib_path])"
+        yield "gl_MODULES(["
         for module in sorted(config.modules):
-            yield "{}".format(module)
+            yield "  {}".format(module)
+        yield "])"
+        if config.obsolete:
+            yield "gl_WITH_OBSOLETE"
+        if config.cxx_tests:
+            yield "gl_WITH_CXX_TESTS"
+        if config.longrunning_tests:
+            yield "gl_WITH_LONGRUNNING_TESTS"
+        if config.privileged_tests:
+            yield "gl_WITH_PRIVILEGED_TESTS"
+        if config.unportable_tests:
+            yield "gl_WITH_UNPORTABLE_TESTS"
+        if config.all_tests:
+            yield "gl_WITH_ALL_TESTS"
+        yield "gl_AVOID([{}])".format(" ".join(sorted(config.avoids)))
+        yield "gl_SOURCE_BASE([{}])".format(config.source_base)
+        yield "gl_M4_BASE([{}])".format(config.m4_base)
+        yield "gl_PO_BASE([{}])".format(config.po_base)
+        yield "gl_DOC_BASE([{}])".format(config.doc_base)
+        yield "gl_TESTS_BASE([{}])".format(config.tests_base)
+        if config.tests:
+            yield "gl_WITH_TESTS"
+        yield "gl_LIB([{}])".format(config.libname)
+        if config.licenses in _LGPL:
+            lgpl = _LGPL[config.licenses]
+            yield "gl_LGPL([{}])".format(lgpl) if lgpl != "yes" else "gl_LGPL"
+        yield "gl_MAKEFILE_NAME([{}])".format(config.makefile_name)
+        if config.conddeps:
+            yield "gl_CONDITIONAL_DEPENDENCIES"
+        if config.libtool:
+            yield "gl_LIBTOOL"
+        yield "gl_MACRO_PREFIX([{}])".format(config.macro_prefix)
+        yield "gl_PO_DOMAIN([{}])".format(config.po_domain)
+        yield "gl_WITNESS_C_MACRO([{}])".format(config.witness_c_macro)
+        if config.vc_files:
+            yield "gl_VC_FILES([{}])".format(" ".join(sorted(config.vc_files)))

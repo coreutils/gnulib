@@ -20,7 +20,7 @@ def _compile(regex):
     return _re.compile(regex, _re.S | _re.M)
 
 
-_ITERABLES = (list, tuple, set, frozenset)
+_ITERABLES = frozenset((list, tuple, set, frozenset, type({}.keys()), type({}.values())))
 
 
 
@@ -50,7 +50,7 @@ class Base:
         "doc_base"          : "doc",
         "tests_base"        : "tests",
         "auxdir"            : "",
-        "lib"               : "libgnu",
+        "libname"           : "libgnu",
         "makefile_name"     : "Makefile.am",
         "macro_prefix"      : "gl",
         "po_domain"         : "",
@@ -228,14 +228,14 @@ class Base:
 
 
     @property
-    def lib(self):
+    def libname(self):
         """library name; defaults to 'libgnu'"""
-        return self.__table["lib"]
+        return self.__table["libname"]
 
-    @lib.setter
-    def lib(self, value):
-        _type_assert("lib", value, str)
-        self.__table["lib"] = value if value else "libgnu"
+    @libname.setter
+    def libname(self, value):
+        _type_assert("libname", value, str)
+        self.__table["libname"] = value if value else "libgnu"
 
 
     @property
@@ -498,7 +498,7 @@ class Base:
         """include guard prefix"""
         prefix = self.__table["macro_prefix"].upper()
         default = Base._TABLE["macro_prefix"].upper()
-        return "GL_{0}".format(prefix) if prefix == default else "GL"
+        return "GL" if prefix == default else "GL_{0}".format(prefix)
 
 
     @property
@@ -616,7 +616,7 @@ class Cache(Base):
         "macro_prefix"      : (str, _compile(r"gl_MACRO_PREFIX\(\[(.*?)\]\)")),
         "po_domain"         : (str, _compile(r"gl_PO_DOMAIN\(\[(.*?)\]\)")),
         "witness_c_macro"   : (str, _compile(r"gl_WITNESS_C_MACRO\(\[(.*?)\]\)")),
-        "lib"               : (str, _compile(r"gl_LIB\(\[(.*?)\]\)")),
+        "libname"           : (str, _compile(r"gl_LIB\(\[(.*?)\]\)")),
         "modules"           : (list, _compile(r"gl_MODULES\(\[(.*?)\]\)")),
         "avoids"            : (list, _compile(r"gl_AVOID\(\[(.*?)\]\)")),
         "licenses"          : (str, _compile(r"gl_LGPL\(\[(.*?)\]\)")),

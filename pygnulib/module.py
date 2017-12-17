@@ -16,7 +16,7 @@ from .error import UnknownModuleError as _UnknownModuleError
 
 
 
-_ITERABLES = (list, tuple, set, frozenset)
+_ITERABLES = frozenset((list, tuple, set, frozenset, type({}.keys()), type({}.values())))
 
 
 
@@ -276,8 +276,7 @@ class Base:
         self.__table["conditional_automake_snippet"] = value
 
 
-    @property
-    def unconditional_automake_snippet(self):
+    def unconditional_automake_snippet(self, auxdir):
         """Makefile.am snippet that must stay outside of Automake conditionals"""
         if "unconditional_automake_snippet" in self.__table:
             return self.__table["unconditional_automake_snippet"]
@@ -314,9 +313,6 @@ class Base:
         mentioned_files = tuple(_collections.OrderedDict.fromkeys(mentioned_files))
         lib_files = tuple(file[len("lib/"):] for file in all_files if file.startswith("lib/"))
         extra_files = tuple(file for file in lib_files if file not in mentioned_files)
-        import sys
-        if self.name == "getprogname":
-            print(mentioned_files, file=sys.stderr)
         if extra_files:
             result += ("EXTRA_DIST += {}".format(" ".join(sorted(extra_files))) + "\n")
 
@@ -337,8 +333,9 @@ class Base:
                 result += ("EXTRA_lib_SOURCES += {}".format(" ".join(sorted(extra_files))) + "\n")
 
         # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
+        prefix = _os.path.join("$(top_srcdir)", auxdir)
         buildaux_files = (file for file in all_files if file.startswith("build-aux/"))
-        buildaux_files = tuple("$(top_srcdir)/{auxdir}/" + file[len("build-aux/"):] for file in buildaux_files)
+        buildaux_files = tuple(_os.path.join(prefix, file[len("build-aux/"):]) for file in buildaux_files)
         if buildaux_files:
             result += ("EXTRA_DIST += {}".format(" ".join(sorted(buildaux_files))) + "\n")
         self.__table["unconditional_automake_snippet"] = result
@@ -650,4 +647,4 @@ def filelist(modules, ac_version):
     files.add("m4/gnulib-common.m4")
     if ac_version == 2.59:
         files.add("m4/onceonly.m4")
-    return frozenset(files)
+    return files

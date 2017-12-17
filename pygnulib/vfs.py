@@ -131,6 +131,7 @@ def lookup(name, primary, secondary, patch="patch"):
 def mkdir(root, name):
     """Create a leaf directory and all intermediate ones recursively."""
     root = Base(".") if root is None else root
+    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
     _os.makedirs(root[name], exist_ok=True)
 
 
@@ -150,8 +151,11 @@ def compare(lhs_root, lhs_name, rhs_root, rhs_name):
     """Compare the given files; return True if files contain the same data."""
     lhs_root = Base(".") if lhs_root is None else lhs_root
     rhs_root = Base(".") if rhs_root is None else rhs_root
-    lhs_path = _os.path.join(lhs_root.absolute, lhs_root[lhs_name])
-    rhs_path = _os.path.join(rhs_root.absolute, rhs_root[rhs_name])
+    (lhs_path, rhs_path) = (lhs_name, rhs_name)
+    if not _os.path.isabs(lhs_name):
+        lhs_path = _os.path.join(lhs_root.absolute, lhs_root[lhs_name])
+    if not _os.path.isabs(rhs_name):
+        rhs_path = _os.path.join(rhs_root.absolute, rhs_root[rhs_name])
     return _filecmp.cmp(lhs_path, rhs_path, shallow=False)
 
 
@@ -165,8 +169,11 @@ def copy(src_root, src_name, dst_root, dst_name):
     src_root = Base(".") if src_root is None else src_root
     dst_root = Base(".") if dst_root is None else dst_root
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.absolute, src_root[src_name])
-    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+    (src_path, dst_path) = (src_name, dst_name)
+    if not _os.path.isabs(src_name):
+        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    if not _os.path.isabs(dst_name):
+        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     with _codecs.open(src_path, "rb") as istream:
         with _codecs.open(dst_path, "wb") as ostream:
             while 1:
@@ -179,7 +186,7 @@ def copy(src_root, src_name, dst_root, dst_name):
 def exists(root, name):
     """Check whether the given file exists."""
     root = Base(".") if root is None else root
-    path = _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
     return _os.path.exists(path)
 
 
@@ -193,8 +200,11 @@ def hardlink(src_root, src_name, dst_root, dst_name):
     dst_root = Base(".") if dst_root is None else dst_root
     mkdir(src_root, _os.path.dirname(src_name))
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.absolute, src_root[src_name])
-    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+    (src_path, dst_path) = (src_name, dst_name)
+    if not _os.path.isabs(src_name):
+        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    if not _os.path.isabs(dst_name):
+        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.link(src_path, dst_path)
 
 
@@ -207,16 +217,26 @@ def move(src_root, src_name, dst_root, dst_name):
     src_root = Base(".") if src_root is None else src_root
     dst_root = Base(".") if dst_root is None else dst_root
     mkdir(dst_root, _os.path.dirname(dst_name))
-    src_path = _os.path.join(src_root.absolute, src_root[src_name])
-    dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+    (src_path, dst_path) = (src_name, dst_name)
+    if not _os.path.isabs(src_name):
+        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+    if not _os.path.isabs(dst_name):
+        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     _os.rename(src_path, dst_path)
+
+
+def iostream(root, name, mode="r", encoding=None):
+    """Open file and return a stream. Raise IOError upon failure."""
+    root = Base(".") if root is None else root
+    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    return _codecs.open(path, mode, encoding)
 
 
 def readlink(root, name):
     """Obtain the path to which the symbolic link points."""
     root = Base(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
-    path = _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
     return _os.readlink(path)
 
 
@@ -230,8 +250,11 @@ def symlink(src_root, src_name, dst_root, dst_name, relative=True):
     dst_root = Base(".") if dst_root is None else dst_root
     mkdir(dst_root, _os.path.dirname(dst_name))
     if not relative:
-        src_path = _os.path.join(src_root.absolute, src_root[src_name])
-        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+        (src_path, dst_path) = (src_name, dst_name)
+        if not _os.path.isabs(src_name):
+            src_path = _os.path.join(src_root.absolute, src_root[src_name])
+        if not _os.path.isabs(dst_name):
+            dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
     else:
         src_path = _os.path.join(src_root.relative, src_root[src_name])
         dst_path = _os.path.join(dst_root.relative, dst_root[dst_name])
@@ -246,7 +269,7 @@ def unlink(root, name, backup=True):
     """Unlink a file, backing it up if necessary."""
     root = Base(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
-    path = _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
     _os.unlink(path)
 
 
