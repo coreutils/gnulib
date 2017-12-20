@@ -63,22 +63,11 @@ class Base:
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{}".format(module, name, repr(self.__table["name"]))
+        return "{}.{}<{}>".format(module, name, self.__table["name"])
 
 
     def __str__(self):
-        result = ""
-        for (key, (_, typeid, field)) in sorted(Base._TABLE.items(), key=lambda k: k[1][0]):
-            field += ":\n"
-            if typeid in _ITERABLES:
-                value = "\n".join(self.__table[key])
-            else:
-                value = self.__table[key]
-            if value:
-                result += field
-                result += value
-                result += "\n\n" if value else "\n"
-        return result.strip() + "\n"
+        return self.__table["name"]
 
 
     def __enter__(self):
@@ -107,6 +96,22 @@ class Base:
             if key not in Base._TABLE:
                 raise KeyError(repr(key))
         return setattr(self, key, value)
+
+
+    @property
+    def package(self):
+        result = ""
+        for (key, (_, typeid, field)) in sorted(Base._TABLE.items(), key=lambda k: k[1][0]):
+            field += ":\n"
+            if typeid in _ITERABLES:
+                value = "\n".join(self.__table[key])
+            else:
+                value = self.__table[key]
+            if value:
+                result += field
+                result += value
+                result += "\n\n" if value else "\n"
+        return result.strip() + "\n"
 
 
     @property
@@ -532,10 +537,69 @@ class File(Base):
 
 
 
+class Database:
+    """gnulib module database"""
+    _NONE_TYPE = type(None)
+
+
+    def __init__(self, table, lookup=None):
+        _type_assert("table", table, _ITERABLES)
+        if not (isinstance(lookup, Database._NONE_TYPE) or callable(lookup)):
+            raise TypeError("lookup must be a callable")
+        def _lookup(module):
+            if not isinstance(module, (Database._NONE_TYPE, Base)):
+                if isinstance(module, str):
+                    module = lookup(module)
+                if not isinstance(module, Base):
+                    raise TypeError("module: pygnulib.module.Base expected")
+            return module
+        def _raise(module):
+            raise TypeError("cannot instantiate the module")
+        self.__table = set()
+        self.__lookup = _lookup if lookup else _raise
+        for (dependency, demander, condition) in table:
+            dependency = self.__lookup(dependency)
+            demander = self.__lookup(demander)
+            if dependency is None:
+                raise TypeError("dependency: pygnulib.module.Base expected")
+            if not isinstance(condition, (str, Database._NONE_TYPE)):
+                raise TypeError("condition: str or None expected")
+            self.__table.add((dependency, demander, condition))
+        self.__table = frozenset(self.__table)
+
+
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return "{}.{}<id={}, entries={}>".format(module, name, hex(id(self)), len(self.__table))
+
+
+    def __iter__(self):
+        return iter(self.__table)
+
+
+    def demanders(self, module):
+        """For each demander which requires the module yield the demander and condition."""
+        module = self.__lookup(module)
+        for (dependency, demander, condition) in self.__table:
+            if module == dependency:
+                yield (demander, condition)
+
+
+    def dependencies(self, module):
+        """For each dependency of this module yield the dependency and the condition."""
+        module = self.__lookup(module)
+        for (dependency, demander, condition) in self.__table:
+            if module == demander:
+                yield (dependency, condition)
+
+
+
 def transitive_closure(lookup, modules, **options):
     """
-    Perform a transitive closure, generating a set of module dependencies.
-    Each iteration over the table yields a tuple of (module, demander, condition).
+    Perform a transitive closure, generating a set of module dependencies (database).
+    Each iteration over the database yields a tuple of (module, demander, condition).
+    At the same time return sets, which designate main, final and test modules respectively.
 
     If condition is None, but demander is not, there is no special condition for this module.
     If demander is None, the module is provided unconditionally (condition is always None).
@@ -607,11 +671,12 @@ def transitive_closure(lookup, modules, **options):
 
     base = _transitive_closure_(False)
     full = _transitive_closure_(True)
+    table = Database((base | full), lookup)
     main = {module for (module, _, _) in base}
     final = {module for (module, _, _) in full} if options.get("tests", False) else set(main)
     ignore = frozenset({"main"} if options.get("tests", False) else {"main", "all"})
     tests = (final - {module for module in main if module.applicability in ignore})
-    return (base, full, main, final, tests)
+    return (table, main, final, tests)
 
 
 

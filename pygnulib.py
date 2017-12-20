@@ -110,7 +110,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         if key not in namespace:
             config[key] = cache[key]
     test_options = {key:config[key] for key in keywords}
-    (base, full, main, final, tests) = transitive_closure(gnulib.module, config.modules, **test_options)
+    (db, main, final, tests) = transitive_closure(gnulib.module, config.modules, **test_options)
 
     # Print some information about modules.
     print("Module list with included dependencies (indented):", file=sys.stdout)
