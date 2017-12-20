@@ -32,7 +32,7 @@ _ITERABLES = frozenset((list, tuple, set, frozenset, type({}.keys()), type({}.va
 
 
 
-class Generator:
+class Base:
     """gnulib file content generator"""
     _TEMPLATE = (
         "## DO NOT EDIT! GENERATED AUTOMATICALLY!",
@@ -78,12 +78,12 @@ class Generator:
 
 
     def __iter__(self):
-        for line in Generator._TEMPLATE:
+        for line in Base._TEMPLATE:
             yield line
 
 
 
-class POMakevars(Generator):
+class POMakevars(Base):
     """PO Makefile parameterization"""
     _TEMPLATE = (
         "# These options get passed to xgettext.",
@@ -168,7 +168,7 @@ class POMakevars(Generator):
 
 
 
-class POTFILES(Generator):
+class POTFILES(Base):
     """file list to be passed to xgettext"""
     def __init__(self, config, files):
         _type_assert("config", config, _BaseConfig)
@@ -199,7 +199,7 @@ class POTFILES(Generator):
 
 
 
-class AutoconfSnippet(Generator):
+class AutoconfSnippet(Base):
     """autoconf snippet generator for standalone module"""
     def __init__(self, config, module, toplevel, no_libtool, no_gettext):
         """
@@ -289,7 +289,7 @@ class AutoconfSnippet(Generator):
 
 
 
-class InitMacro(Generator):
+class InitMacro(Base):
     """basic gl_INIT macro generator"""
     def __init__(self, config, macro_prefix=None):
         """
@@ -475,7 +475,7 @@ class InitMacroDone(InitMacro):
 
 
 
-class CommandLine(Generator):
+class CommandLine(Base):
     """gnulib command-line invocation generator"""
     _TESTS = {
         "tests": "tests",
@@ -535,7 +535,7 @@ class CommandLine(Generator):
 
 
 
-class LibMakefile(Generator):
+class LibMakefile(Base):
     _LDFLAGS = _re.compile(r"^lib_LDFLAGS\s*\+\=.*?$", _re.S)
     _LIBNAME = _re.compile(r"lib_([A-Z][A-Z]*)", _re.S)
     _GNUMAKE = _re.compile(r"^if (.*?)$", _re.S)
@@ -776,7 +776,7 @@ class LibMakefile(Generator):
 
 
 
-class GnulibCache(Generator):
+class GnulibCache(Base):
     def __init__(self, config):
         _type_assert("config", config, _BaseConfig)
         self.__config = config
