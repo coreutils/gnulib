@@ -4,6 +4,7 @@
 
 
 
+import ast as _ast
 import codecs as _codecs
 import hashlib as _hashlib
 import collections as _collections
@@ -67,7 +68,7 @@ class Base:
 
 
     def __str__(self):
-        return self.__table["name"]
+        return "<" + self.__table["name"] + ">"
 
 
     def __enter__(self):
@@ -79,7 +80,7 @@ class Base:
 
 
     def __hash__(self):
-        return hash(tuple(self.__table.items()))
+        return hash(self.__table["name"])
 
 
     def __getitem__(self, key):
@@ -539,59 +540,152 @@ class File(Base):
 
 class Database:
     """gnulib module database"""
-    _NONE_TYPE = type(None)
-
-
-    def __init__(self, table, lookup=None):
-        _type_assert("table", table, _ITERABLES)
-        if not (isinstance(lookup, Database._NONE_TYPE) or callable(lookup)):
-            raise TypeError("lookup must be a callable")
+    def __init__(self, lookup=None):
         def _lookup(module):
-            if not isinstance(module, (Database._NONE_TYPE, Base)):
+            if not (module is None or isinstance(module, Base)):
                 if isinstance(module, str):
+                    if lookup is None:
+                        raise TypeError("cannot instantiate {} module".format(module))
                     module = lookup(module)
                 if not isinstance(module, Base):
                     raise TypeError("module: pygnulib.module.Base expected")
             return module
-        def _raise(module):
-            raise TypeError("cannot instantiate the module")
-        self.__table = set()
-        self.__lookup = _lookup if lookup else _raise
-        for (dependency, demander, condition) in table:
-            dependency = self.__lookup(dependency)
-            demander = self.__lookup(demander)
-            if dependency is None:
-                raise TypeError("dependency: pygnulib.module.Base expected")
-            if not isinstance(condition, (str, Database._NONE_TYPE)):
-                raise TypeError("condition: str or None expected")
-            self.__table.add((dependency, demander, condition))
-        self.__table = frozenset(self.__table)
-
-
-    def __repr__(self):
-        module = self.__class__.__module__
-        name = self.__class__.__name__
-        return "{}.{}<id={}, entries={}>".format(module, name, hex(id(self)), len(self.__table))
+        self.__lookup = _lookup
+        self.__storage = _collections.defaultdict(dict)
 
 
     def __iter__(self):
-        return iter(self.__table)
+        for dependency in sorted(self.__storage):
+            entries = self.__storage[dependency]
+            for element in entries.items():
+                (demander, condition) = element
+                yield (dependency, condition, element)
 
 
-    def demanders(self, module):
+    def dump(self, indent="  "):
+        """Export gnulib module database into string."""
+        def _dump():
+            unconditional = set()
+            storage = _collections.defaultdict(dict)
+            yield "{{".format()
+            for (key, value) in self.__storage.items():
+                for (subkey, subvalue) in value.items():
+                    dependency = key.name
+                    demander = subkey.name if subkey else ""
+                    condition = subvalue if subvalue else ""
+                    if not demander and not condition:
+                        unconditional.add(dependency)
+                    condition = condition.replace("\"", "\\\"")
+                    storage[dependency][demander] = condition
+
+            for dependency in sorted(storage):
+                if dependency in unconditional:
+                    yield "{}\"{}\": {{}},".format(indent, dependency)
+                    continue
+                yield "{}\"{}\": {{".format(indent, dependency)
+                for demander in sorted(storage[dependency]):
+                    condition = storage[dependency][demander]
+                    yield "{}\"{}\": \"{}\",".format((indent * 2), demander, condition)
+                yield "{}}},".format(indent)
+            yield "}}".format()
+
+        if not self.__storage:
+            return "{{}}".format()
+        return _os.linesep.join(_dump())
+
+
+    def load(self, string):
+        """Import gnulib module database from string."""
+        storage = _collections.defaultdict(dict)
+        collection = _ast.literal_eval(string)
+        _type_assert("collection", collection, dict)
+        for key in collection:
+            _type_assert("key", key, str)
+            value = collection[key]
+            _type_assert("value", value, dict)
+            for (subkey, subvalue) in value.items():
+                _type_assert("key", key, str)
+                _type_assert("dict", value, dict)
+                (dependency, demander, condition) = (key, subkey, subvalue)
+                dependency = self.__lookup(dependency)
+                demander = self.__lookup(demander)
+                if not condition:
+                    condition = None
+                storage[dependency][demander] = condition
+            self.__storage = storage
+
+
+    def insert(self, dependency, demander, condition, lookup=None):
+        """Mark demander module as requiring a dependency module under specific condition."""
+        dependency = self.__lookup(dependency)
+        demander = self.__lookup(demander)
+        if dependency is None:
+            raise TypeError("dependency: pygnulib.module.Base expected")
+        if not (condition is None or isinstance(condition, str)):
+            raise TypeError("condition: None or str expected")
+        if demander in self.__storage[dependency]:
+            if condition is None:
+                fmt = "{} already unconditionally depends on {}"
+                args = (demander.name, dependency.name)
+            else:
+                fmt = "{} already depends on {} ({})"
+                args = (demander.name, dependency.name, repr(condition))
+            raise ValueError(fmt.format(*args))
+        self.__storage[dependency][demander] = condition
+
+
+    def modify(self, dependency, demander, condition):
+        """Modify condition under which the demander requires a dependency."""
+        dependency = self.__lookup(dependency)
+        demander = self.__lookup(demander)
+        if dependency is None:
+            raise TypeError("dependency: pygnulib.module.Base expected")
+        if demander is None and condition is not None:
+            raise ValueError("condition: None expected")
+        if not (condition is None and isinstance(condition, str)):
+            raise TypeError("condition: None or str expected")
+        if demander not in self.__storage[dependency]:
+            fmt = "{} does not depend on {}"
+            raise ValueError(fmt.format(demander.name, dependency.name))
+        self.__storage[dependency][demander] = condition
+
+
+    def remove(self, dependency, demander):
+        """Remove a dependency between two modules."""
+        dependency = self.__lookup(dependency)
+        demander = self.__lookup(demander)
+        if demander not in self.__storage[dependency]:
+            fmt = "{} does not depend on {}"
+            raise ValueError(fmt.format(demander.name, dependency.name))
+        del self.__storage[dependency][demander]
+
+
+    def reset(self):
+        self.__storage = _collections.defaultdict(dict)
+
+
+    def demanders(self, module, lookup=None):
         """For each demander which requires the module yield the demander and condition."""
         module = self.__lookup(module)
-        for (dependency, demander, condition) in self.__table:
-            if module == dependency:
-                yield (demander, condition)
+        entries = self.__storage[module]
+        if not entries:
+            fmt = "module {} is not found"
+            raise KeyError(fmt.format(module.name))
+        for (demander, condition) in entries.items():
+            yield (demander, condition)
 
 
-    def dependencies(self, module):
+    def dependencies(self, module, lookup=None):
         """For each dependency of this module yield the dependency and the condition."""
+        present = False
         module = self.__lookup(module)
-        for (dependency, demander, condition) in self.__table:
-            if module == demander:
-                yield (dependency, condition)
+        for dependency in self.__storage:
+            for (demander, condition) in self.__storage[dependency].items():
+                if module == demander:
+                    present = True
+                    yield (dependency, condition)
+        fmt = "module {} is not found"
+        raise KeyError(fmt.format(module.name))
 
 
 
@@ -669,14 +763,16 @@ def transitive_closure(lookup, modules, **options):
                 queue.add(demander)
         return current
 
+    db = Database(lookup=lookup)
     base = _transitive_closure_(False)
     full = _transitive_closure_(True)
-    table = Database((base | full), lookup)
+    for (dependency, demander, condition) in (base | full):
+        db.insert(dependency, demander, condition)
     main = {module for (module, _, _) in base}
     final = {module for (module, _, _) in full} if options.get("tests", False) else set(main)
     ignore = frozenset({"main"} if options.get("tests", False) else {"main", "all"})
     tests = (final - {module for module in main if module.applicability in ignore})
-    return (table, main, final, tests)
+    return (db, main, final, tests)
 
 
 
