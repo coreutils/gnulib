@@ -959,5 +959,5 @@ class CommandLine:
         options = dict(namespace)
         options.setdefault("dry_run", False)
         options.setdefault("single_configure", False)
-        namespace["overrides"] = list(reversed(namespace["overrides"]))
+        namespace["overrides"] = list(reversed(namespace.get("overrides", [])))
         return (namespace, mode, verbosity, options)
