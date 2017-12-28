@@ -1505,10 +1505,6 @@ func_determine_path_separator
   esac
   # Now the only possible values of "$inctests" are true and false
   # (or blank but then it is irrelevant).
-  if test "$cond_dependencies" = true && test "$inctests" = true; then
-    echo "gnulib-tool: option --conditional-dependencies is not supported with --with-tests" 1>&2
-    func_exit 1
-  fi
 
   # Determine the minimum supported autoconf version from the project's
   # configure.ac.
@@ -4231,7 +4227,7 @@ func_emit_autoconf_snippet ()
   fi
 }
 
-# func_emit_autoconf_snippets modules verifier toplevel disable_libtool disable_gettext
+# func_emit_autoconf_snippets modules referenceable_modules verifier toplevel disable_libtool disable_gettext
 # collects and emit the autoconf snippets of a set of modules.
 # Input:
 # - local_gnulib_path  from --local-dir
@@ -4240,6 +4236,7 @@ func_emit_autoconf_snippet ()
 # - sed_replace_include_guard_prefix
 #                     sed expression for resolving ${gl_include_guard_prefix}
 # - modules           the list of modules.
+# - referenceable_modules  the list of modules which may be referenced as dependencies.
 # - verifier          one of func_verify_module, func_verify_nontests_module,
 #                     func_verify_tests_module. It selects the subset of
 #                     $modules to consider.
@@ -4252,12 +4249,13 @@ func_emit_autoconf_snippet ()
 #                     invocations.
 func_emit_autoconf_snippets ()
 {
-  verifier="$2"
-  toplevel="$3"
-  disable_libtool="$4"
-  disable_gettext="$5"
+  referenceable_modules="$2"
+  verifier="$3"
+  toplevel="$4"
+  disable_libtool="$5"
+  disable_gettext="$6"
   if test "$cond_dependencies" = true; then
-    for m in $modules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/modules
+    for m in $referenceable_modules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/modules
     # Emit the autoconf code for the unconditional modules.
     for module in $1; do
       eval $verifier
@@ -5637,7 +5635,7 @@ s,//*$,/,'
     if test -n "$witness_c_macro"; then
       echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$witness_c_macro])"
     fi
-    func_emit_autoconf_snippets "$main_modules" func_verify_module true false true
+    func_emit_autoconf_snippets "$main_modules" "$main_modules" func_verify_module true false true
     if test -n "$witness_c_macro"; then
       echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     fi
@@ -5656,7 +5654,7 @@ s,//*$,/,'
     echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
     echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
     echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
-    func_emit_autoconf_snippets "$testsrelated_modules" func_verify_module true true true
+    func_emit_autoconf_snippets "$testsrelated_modules" "$main_modules $testsrelated_modules" func_verify_module true true true
     echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     func_emit_initmacro_end ${macro_prefix}tests
     # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
@@ -6081,6 +6079,11 @@ func_create_testdir ()
     func_modules_add_dummy
   fi
 
+  # Note:
+  # If $single_configure, we use the module lists $main_modules and
+  # $testsrelated_modules; $modules is merely a temporary variable.
+  # Whereas if ! $configure, the module list is $modules.
+
   # Show banner notice of every module.
   if $single_configure; then
     modules="$main_modules"
@@ -6285,9 +6288,9 @@ func_create_testdir ()
        # autoconf snippets. It's cleanest to put those of the library before
        # those of the tests.
        echo "gl_source_base='../$sourcebase'"
-       func_emit_autoconf_snippets "$modules" func_verify_nontests_module false false false
+       func_emit_autoconf_snippets "$modules" "$modules" func_verify_nontests_module false false false
        echo "gl_source_base='.'"
-       func_emit_autoconf_snippets "$modules" func_verify_tests_module false false false
+       func_emit_autoconf_snippets "$modules" "$modules" func_verify_tests_module false false false
        func_emit_initmacro_end $macro_prefix
        # _LIBDEPS and _LTLIBDEPS variables are not needed if this library is
        # created using libtool, because libtool already handles the dependencies.
@@ -6399,9 +6402,9 @@ func_create_testdir ()
    func_emit_initmacro_start $macro_prefix
    echo "gl_source_base='$sourcebase'"
    if $single_configure; then
-     func_emit_autoconf_snippets "$main_modules" func_verify_module true false false
+     func_emit_autoconf_snippets "$main_modules" "$main_modules" func_verify_module true false false
    else
-     func_emit_autoconf_snippets "$modules" func_verify_nontests_module true false false
+     func_emit_autoconf_snippets "$modules" "$modules" func_verify_nontests_module true false false
    fi
    func_emit_initmacro_end $macro_prefix
    if $single_configure; then
@@ -6414,7 +6417,7 @@ func_create_testdir ()
      echo "  AC_SUBST([${macro_prefix}tests_WITNESS])"
      echo "  gl_module_indicator_condition=\$${macro_prefix}tests_WITNESS"
      echo "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [\$gl_module_indicator_condition])"
-     func_emit_autoconf_snippets "$testsrelated_modules" func_verify_module true false false
+     func_emit_autoconf_snippets "$testsrelated_modules" "$main_modules $testsrelated_modules" func_verify_module true false false
      echo "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
      func_emit_initmacro_end ${macro_prefix}tests
    fi
