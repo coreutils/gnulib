@@ -1,4 +1,4 @@
-# serial 6
+# serial 7
 # See if we need to provide symlink replacement.
 
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
@@ -36,10 +36,10 @@ AC_DEFUN([gl_FUNC_SYMLINK],
            ]])],
          [gl_cv_func_symlink_works=yes], [gl_cv_func_symlink_works=no],
          [case "$host_os" in
-                    # Guess yes on glibc systems.
-            *-gnu*) gl_cv_func_symlink_works="guessing yes" ;;
-                    # If we don't know, assume the worst.
-            *)      gl_cv_func_symlink_works="guessing no" ;;
+                           # Guess yes on glibc systems.
+            *-gnu* | gnu*) gl_cv_func_symlink_works="guessing yes" ;;
+                           # If we don't know, assume the worst.
+            *)             gl_cv_func_symlink_works="guessing no" ;;
           esac
          ])
       rm -f conftest.f conftest.link conftest.lnk2])

@@ -1,4 +1,4 @@
-# ptsname.m4 serial 4
+# ptsname.m4 serial 5
 dnl Copyright (C) 2010-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -26,10 +26,10 @@ AC_DEFUN([gl_FUNC_PTSNAME],
          [gl_cv_func_ptsname_sets_errno=yes],
          [gl_cv_func_ptsname_sets_errno=no],
          [case "$host_os" in
-                    # Guess yes on glibc systems.
-            *-gnu*) gl_cv_func_ptsname_sets_errno="guessing yes" ;;
-                    # If we don't know, assume the worst.
-            *)      gl_cv_func_ptsname_sets_errno="guessing no" ;;
+                           # Guess yes on glibc systems.
+            *-gnu* | gnu*) gl_cv_func_ptsname_sets_errno="guessing yes" ;;
+                           # If we don't know, assume the worst.
+            *)             gl_cv_func_ptsname_sets_errno="guessing no" ;;
           esac
          ])])
     case $gl_cv_func_ptsname_sets_errno in

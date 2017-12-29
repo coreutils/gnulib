@@ -1,4 +1,4 @@
-# setenv.m4 serial 26
+# setenv.m4 serial 27
 dnl Copyright (C) 2001-2004, 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,10 +35,10 @@ AC_DEFUN([gl_FUNC_SETENV],
       ]])],
       [gl_cv_func_setenv_works=yes], [gl_cv_func_setenv_works=no],
       [case "$host_os" in
-                 # Guess yes on glibc systems.
-         *-gnu*) gl_cv_func_setenv_works="guessing yes" ;;
-                 # If we don't know, assume the worst.
-         *)      gl_cv_func_setenv_works="guessing no" ;;
+                        # Guess yes on glibc systems.
+         *-gnu* | gnu*) gl_cv_func_setenv_works="guessing yes" ;;
+                        # If we don't know, assume the worst.
+         *)             gl_cv_func_setenv_works="guessing no" ;;
        esac
       ])])
     case "$gl_cv_func_setenv_works" in

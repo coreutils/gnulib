@@ -1,4 +1,4 @@
-# wcwidth.m4 serial 25
+# wcwidth.m4 serial 26
 dnl Copyright (C) 2006-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -98,9 +98,9 @@ int main ()
           [
 changequote(,)dnl
            case "$host_os" in
-                     # Guess yes on glibc and AIX 7 systems.
-             *-gnu* | aix[7-9]*) gl_cv_func_wcwidth_works="guessing yes";;
-             *)                  gl_cv_func_wcwidth_works="guessing no";;
+                                        # Guess yes on glibc and AIX 7 systems.
+             *-gnu* | gnu* | aix[7-9]*) gl_cv_func_wcwidth_works="guessing yes";;
+             *)                         gl_cv_func_wcwidth_works="guessing no";;
            esac
 changequote([,])dnl
           ])

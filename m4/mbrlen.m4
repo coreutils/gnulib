@@ -1,4 +1,4 @@
-# mbrlen.m4 serial 9  -*- coding: utf-8 -*-
+# mbrlen.m4 serial 10  -*- coding: utf-8 -*-
 dnl Copyright (C) 2008, 2010-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -240,10 +240,9 @@ AC_DEFUN([gl_MBRLEN_EMPTY_INPUT],
       dnl is present.
 changequote(,)dnl
       case "$host_os" in
-                     # Guess no on AIX and glibc systems.
-        aix* | *-gnu*)
-                    gl_cv_func_mbrlen_empty_input="guessing no" ;;
-        *)          gl_cv_func_mbrlen_empty_input="guessing yes" ;;
+                              # Guess no on AIX and glibc systems.
+        aix* | *-gnu* | gnu*) gl_cv_func_mbrlen_empty_input="guessing no" ;;
+        *)                    gl_cv_func_mbrlen_empty_input="guessing yes" ;;
       esac
 changequote([,])dnl
       AC_RUN_IFELSE(

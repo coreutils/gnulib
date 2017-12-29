@@ -1,4 +1,4 @@
-# strerror.m4 serial 18
+# strerror.m4 serial 19
 dnl Copyright (C) 2002, 2007-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -24,10 +24,10 @@ AC_DEFUN([gl_FUNC_STRERROR],
         [gl_cv_func_working_strerror=yes],
         [gl_cv_func_working_strerror=no],
         [case "$host_os" in
-                   # Guess yes on glibc systems.
-           *-gnu*) gl_cv_func_working_strerror="guessing yes" ;;
-                   # If we don't know, assume the worst.
-           *)      gl_cv_func_working_strerror="guessing no" ;;
+                          # Guess yes on glibc systems.
+           *-gnu* | gnu*) gl_cv_func_working_strerror="guessing yes" ;;
+                          # If we don't know, assume the worst.
+           *)             gl_cv_func_working_strerror="guessing no" ;;
          esac
         ])
     ])
@@ -78,12 +78,12 @@ AC_DEFUN([gl_FUNC_STRERROR_0],
       [gl_cv_func_strerror_0_works=yes],
       [gl_cv_func_strerror_0_works=no],
       [case "$host_os" in
-                 # Guess yes on glibc systems.
-         *-gnu*) gl_cv_func_strerror_0_works="guessing yes" ;;
-                 # Guess yes on native Windows.
-         mingw*) gl_cv_func_strerror_0_works="guessing yes" ;;
-                 # If we don't know, assume the worst.
-         *)      gl_cv_func_strerror_0_works="guessing no" ;;
+                        # Guess yes on glibc systems.
+         *-gnu* | gnu*) gl_cv_func_strerror_0_works="guessing yes" ;;
+                        # Guess yes on native Windows.
+         mingw*)        gl_cv_func_strerror_0_works="guessing yes" ;;
+                        # If we don't know, assume the worst.
+         *)             gl_cv_func_strerror_0_works="guessing no" ;;
        esac
       ])
   ])

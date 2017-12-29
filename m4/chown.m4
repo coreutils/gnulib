@@ -1,4 +1,4 @@
-# serial 28
+# serial 29
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2017 Free Software
@@ -46,12 +46,12 @@ AC_DEFUN([AC_FUNC_CHOWN],
        [ac_cv_func_chown_works=yes],
        [ac_cv_func_chown_works=no],
        [case "$host_os" in # ((
-                  # Guess yes on glibc systems.
-          *-gnu*) ac_cv_func_chown_works="guessing yes" ;;
-                  # Guess no on native Windows.
-          mingw*) ac_cv_func_chown_works="guessing no" ;;
-                  # If we don't know, assume the worst.
-          *)      ac_cv_func_chown_works="guessing no" ;;
+                         # Guess yes on glibc systems.
+          *-gnu* | gnu*) ac_cv_func_chown_works="guessing yes" ;;
+                         # Guess no on native Windows.
+          mingw*)        ac_cv_func_chown_works="guessing no" ;;
+                         # If we don't know, assume the worst.
+          *)             ac_cv_func_chown_works="guessing no" ;;
         esac
        ])
      rm -f conftest.chown

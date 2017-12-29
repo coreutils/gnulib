@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -86,10 +86,10 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
             dnl The past results are "yes" on Mac OS X, FreeBSD, NetBSD,
             dnl OpenBSD, Minix, AIX, HP-UX, OSF/1, and "no" on Linux, Cygwin.
             case "$host_os" in
-                           # On glibc/Linux we know the result.
-              linux*-gnu*) gl_cv_func_link_follows_symlink="guessing no" ;;
-                           # Otherwise, we don't know.
-              *)           gl_cv_func_link_follows_symlink=unknown ;;
+                                  # On glibc/Linux we know the result.
+              linux*-gnu* | gnu*) gl_cv_func_link_follows_symlink="guessing no" ;;
+                                  # Otherwise, we don't know.
+              *)                  gl_cv_func_link_follows_symlink=unknown ;;
             esac
            ])
          rm -f conftest.file conftest.sym conftest.hard

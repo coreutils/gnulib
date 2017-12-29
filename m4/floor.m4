@@ -1,4 +1,4 @@
-# floor.m4 serial 9
+# floor.m4 serial 10
 dnl Copyright (C) 2007, 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,12 +42,12 @@ int main (int argc, char *argv[])
             [gl_cv_func_floor_ieee=yes],
             [gl_cv_func_floor_ieee=no],
             [case "$host_os" in
-                       # Guess yes on glibc systems.
-               *-gnu*) gl_cv_func_floor_ieee="guessing yes" ;;
-                       # Guess yes on native Windows.
-               mingw*) gl_cv_func_floor_ieee="guessing yes" ;;
-                       # If we don't know, assume the worst.
-               *)      gl_cv_func_floor_ieee="guessing no" ;;
+                              # Guess yes on glibc systems.
+               *-gnu* | gnu*) gl_cv_func_floor_ieee="guessing yes" ;;
+                              # Guess yes on native Windows.
+               mingw*)        gl_cv_func_floor_ieee="guessing yes" ;;
+                              # If we don't know, assume the worst.
+               *)             gl_cv_func_floor_ieee="guessing no" ;;
              esac
             ])
           LIBS="$save_LIBS"

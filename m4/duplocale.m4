@@ -1,4 +1,4 @@
-# duplocale.m4 serial 9
+# duplocale.m4 serial 10
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,7 +77,7 @@ int main ()
          [dnl Guess it works except on glibc < 2.12, uClibc, AIX, and NetBSD.
           case "$host_os" in
             aix* | netbsd*) gl_cv_func_duplocale_works="guessing no";;
-            *-gnu*)
+            *-gnu* | gnu*)
               AC_EGREP_CPP([Unlucky], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__

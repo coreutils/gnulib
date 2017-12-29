@@ -1,4 +1,4 @@
-# serial 7
+# serial 8
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
@@ -98,8 +98,8 @@ AC_DEFUN([gl_FUNC_LINKAT],
          [gl_cv_func_linkat_slash=no],
          [# Guess yes on glibc systems, no otherwise.
           case "$host_os" in
-            *-gnu*) gl_cv_func_linkat_slash="guessing yes";;
-            *)      gl_cv_func_linkat_slash="guessing no";;
+            *-gnu* | gnu*) gl_cv_func_linkat_slash="guessing yes";;
+            *)             gl_cv_func_linkat_slash="guessing no";;
           esac
          ])
        rm -rf conftest.a conftest.b conftest.c conftest.d conftest.e conftest.s])

@@ -1,4 +1,4 @@
-# usleep.m4 serial 4
+# usleep.m4 serial 5
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -29,12 +29,12 @@ AC_DEFUN([gl_FUNC_USLEEP],
 ]], [[return !!usleep (1000000);]])],
         [gl_cv_func_usleep_works=yes], [gl_cv_func_usleep_works=no],
         [case "$host_os" in
-                   # Guess yes on glibc systems.
-           *-gnu*) gl_cv_func_usleep_works="guessing yes" ;;
-                   # Guess no on native Windows.
-           mingw*) gl_cv_func_usleep_works="guessing no" ;;
-                   # If we don't know, assume the worst.
-           *)      gl_cv_func_usleep_works="guessing no" ;;
+                          # Guess yes on glibc systems.
+           *-gnu* | gnu*) gl_cv_func_usleep_works="guessing yes" ;;
+                          # Guess no on native Windows.
+           mingw*)        gl_cv_func_usleep_works="guessing no" ;;
+                          # If we don't know, assume the worst.
+           *)             gl_cv_func_usleep_works="guessing no" ;;
          esac
         ])])
     case "$gl_cv_func_usleep_works" in

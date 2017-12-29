@@ -1,4 +1,4 @@
-# log10.m4 serial 6
+# log10.m4 serial 7
 dnl Copyright (C) 2011-2017 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,12 +58,12 @@ int main (int argc, char *argv[])
             [gl_cv_func_log10_ieee=yes],
             [gl_cv_func_log10_ieee=no],
             [case "$host_os" in
-                       # Guess yes on glibc systems.
-               *-gnu*) gl_cv_func_log10_ieee="guessing yes" ;;
-                       # Guess yes on native Windows.
-               mingw*) gl_cv_func_log10_ieee="guessing yes" ;;
-                       # If we don't know, assume the worst.
-               *)      gl_cv_func_log10_ieee="guessing no" ;;
+                              # Guess yes on glibc systems.
+               *-gnu* | gnu*) gl_cv_func_log10_ieee="guessing yes" ;;
+                              # Guess yes on native Windows.
+               mingw*)        gl_cv_func_log10_ieee="guessing yes" ;;
+                              # If we don't know, assume the worst.
+               *)             gl_cv_func_log10_ieee="guessing no" ;;
              esac
             ])
           LIBS="$save_LIBS"

@@ -1,4 +1,4 @@
-# serial 4
+# serial 5
 # See if we need to provide mkfifo replacement.
 
 dnl Copyright (C) 2009-2017 Free Software Foundation, Inc.
@@ -39,10 +39,10 @@ AC_DEFUN([gl_FUNC_MKFIFO],
            ]])],
          [gl_cv_func_mkfifo_works=yes], [gl_cv_func_mkfifo_works=no],
          [case "$host_os" in
-                    # Guess yes on glibc systems.
-            *-gnu*) gl_cv_func_mkfifo_works="guessing yes" ;;
-                    # If we don't know, assume the worst.
-            *)      gl_cv_func_mkfifo_works="guessing no" ;;
+                           # Guess yes on glibc systems.
+            *-gnu* | gnu*) gl_cv_func_mkfifo_works="guessing yes" ;;
+                           # If we don't know, assume the worst.
+            *)             gl_cv_func_mkfifo_works="guessing no" ;;
           esac
          ])
        rm -f conftest.tmp conftest.lnk])
