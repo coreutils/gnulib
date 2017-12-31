@@ -42,6 +42,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2017-12-30  chdir-safer     This module is removed.  It was deprecated
+                            on 2006-07-17.
+
 2017-11-24  posixtm         Previously, callers had to specify either
                             PDS_LEADING_YEAR or PDS_TRAILING_YEAR (but
                             not both).  Now, callers should specify

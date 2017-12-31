@@ -2652,7 +2652,6 @@ func_all_modules ()
   func_module backup-rename
   func_module canonicalize
   func_module canonicalize-lgpl
-  func_module chdir-safer
   func_module clean-temp
   func_module concat-filename
   func_module copy-file
