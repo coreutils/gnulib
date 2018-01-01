@@ -160,7 +160,7 @@ MODULES.html: MODULES.html.sh
 update-copyright:
 	exempt=$$(mktemp);						\
 	grep -v '^#' config/srclist.txt|grep -v '^$$'			\
-	  | while read src dst; do					\
+	  | while read top src dst options; do				\
 	      test -f "$$dst" && { echo "$$dst"; continue; };		\
 	      test -d "$$dst" || continue;				\
 	      echo "$$dst"/$$(basename "$$src");			\
