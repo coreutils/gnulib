@@ -1,6 +1,6 @@
 /* Provide a stub lchown function for systems that lack it.
 
-   Copyright (C) 1998-1999, 2002, 2004, 2006-2007, 2009-2017 Free Software
+   Copyright (C) 1998-1999, 2002, 2004, 2006-2007, 2009-2018 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

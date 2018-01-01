@@ -1,5 +1,5 @@
 /* integer_length_ll - find most significant bit in an 'unsigned long long'.
-   Copyright (C) 2011-2017 Free Software Foundation, Inc.
+   Copyright (C) 2011-2018 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /* exclude.c -- exclude file names
 
-   Copyright (C) 1992-1994, 1997, 1999-2007, 2009-2017 Free Software
+   Copyright (C) 1992-1994, 1997, 1999-2007, 2009-2018 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify

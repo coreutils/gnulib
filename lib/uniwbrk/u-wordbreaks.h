@@ -1,5 +1,5 @@
 /* Word breaks in UTF-8/UTF-16/UTF-32 strings.  -*- coding: utf-8 -*-
-   Copyright (C) 2009-2017 Free Software Foundation, Inc.
+   Copyright (C) 2009-2018 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2009.
 
    This program is free software: you can redistribute it and/or modify it

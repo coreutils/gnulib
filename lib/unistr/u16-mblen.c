@@ -1,5 +1,5 @@
 /* Look at first character in UTF-16 string.
-   Copyright (C) 1999-2000, 2002, 2006-2007, 2009-2017 Free Software
+   Copyright (C) 1999-2000, 2002, 2006-2007, 2009-2018 Free Software
    Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2002.
 
