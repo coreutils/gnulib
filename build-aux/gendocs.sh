@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2017-09-12.23
+scriptversion=2018-01-01.00
 
 # Copyright 2003-2018 Free Software Foundation, Inc.
 #
@@ -72,7 +72,7 @@ texarg="-t @finalout"
 
 version="gendocs.sh $scriptversion
 
-Copyright 2017 Free Software Foundation, Inc.
+Copyright 2018 Free Software Foundation, Inc.
 There is NO warranty.  You may redistribute this software
 under the terms of the GNU General Public License.
 For more information about these matters, see the files named COPYING."
