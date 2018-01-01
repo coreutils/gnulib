@@ -3849,7 +3849,7 @@ with the FSF about the individual case.
 @cindex releasing
 
 Making a release is more than just bundling up your source files in a
-tar file and putting it up for FTP.  You should set up your software so
+tar file and publishing it.  You should set up your software so
 that it can be configured to run on a variety of systems.  Your Makefile
 should conform to the GNU standards described below, and your directory
 layout should also conform to the standards discussed below.  Doing so

@@ -1828,7 +1828,7 @@ comment: creates per-version subdirectory as needed
 @noindent
 would put the tar file in the @file{foo-1.0/} subdirectory of the
 package @code{foo}, thus ending up at
-@indicateurl{ftp.gnu.org:gnu/foo/foo-1.0/foo-1.0.tar.gz}.
+@indicateurl{https://ftp.gnu.org/pub/gnu/foo/foo-1.0/foo-1.0.tar.gz}.
 
 However, to keep things simpler for users, we recommend not using
 subdirectories, unless perhaps each release of your package consists
