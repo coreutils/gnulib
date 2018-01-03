@@ -49,7 +49,7 @@ rand_bytes()
     return
   fi
 
-  cmds='date; date +%N; free; who -a; w; ps auxww; ps ef; netstat -n'
+  cmds='date; date +%N; free; who -a; w; ps auxww; ps -ef'
   data=` (eval "$cmds") 2>&1 | gzip `
 
   n_plus_50=`expr $n + 50`
