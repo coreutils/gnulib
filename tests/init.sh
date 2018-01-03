@@ -527,7 +527,7 @@ rand_bytes_ ()
   fi
 
   n_plus_50_=`expr $n_ + 50`
-  cmds_='date; date +%N; free; who -a; w; ps auxww; ps ef; netstat -n'
+  cmds_='date; date +%N; free; who -a; w; ps auxww; ps ef'
   data_=` (eval "$cmds_") 2>&1 | gzip `
 
   # Ensure that $data_ has length at least 50+$n_
