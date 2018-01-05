@@ -182,3 +182,10 @@ getprogname (void)
 }
 
 #endif
+
+/*
+ * Hey Emacs!
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */

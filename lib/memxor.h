@@ -28,3 +28,10 @@
 void *memxor (void *restrict dest, const void *restrict src, size_t n);
 
 #endif /* MEMXOR_H */
+
+/*
+ * Hey Emacs!
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */

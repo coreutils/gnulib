@@ -264,7 +264,9 @@ else
     print STDERR "$ARGV: warning: copyright statement not found\n";
   }
 
+# Hey Emacs!
 # Local variables:
+# coding: utf-8
 # mode: perl
 # indent-tabs-mode: nil
 # eval: (add-hook 'write-file-hooks 'time-stamp)

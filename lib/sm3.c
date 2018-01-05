@@ -489,3 +489,10 @@ sm3_process_block (const void *buffer, size_t len, struct sm3_ctx *ctx)
     }
 }
 #endif
+
+/*
+ * Hey Emacs!
+ * Local Variables:
+ * coding: utf-8
+ * End:
+ */
