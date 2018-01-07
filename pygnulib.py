@@ -15,21 +15,22 @@ import subprocess as sp
 from pygnulib.error import CommandLineError
 from pygnulib.error import UnknownModuleError
 
-from pygnulib.config import Base as BaseConfig
-from pygnulib.config import Cache as CacheConfig
+from pygnulib.config import BaseConfig
+from pygnulib.config import CachedConfig
 
-from pygnulib.generator import CommandLine as CommandLineGenerator
-from pygnulib.generator import GnulibCache as GnulibCacheGenerator
-from pygnulib.generator import LibMakefile as LibMakefileGenerator
-from pygnulib.generator import POMakevars as POMakevarsGenerator
+from pygnulib.generator import CommandLineGenerator
+from pygnulib.generator import GnulibCacheGenerator
+from pygnulib.generator import LibMakefileGenerator
+from pygnulib.generator import POMakevarsGenerator
+from pygnulib.generator import GnulibCompGenerator
 
-from pygnulib.module import filelist
-from pygnulib.module import dummy_required
-from pygnulib.module import libtests_required
-from pygnulib.module import transitive_closure
+from pygnulib.module import DummyModule
+from pygnulib.module import Database
 
 from pygnulib.parser import CommandLine as CommandLineParser
 
+from pygnulib.vfs import BaseVFS
+from pygnulib.vfs import GnulibGitVFS
 from pygnulib.vfs import backup as vfs_backup
 from pygnulib.vfs import compare as vfs_compare
 from pygnulib.vfs import copy as vfs_copy
@@ -40,8 +41,6 @@ from pygnulib.vfs import move as vfs_move
 from pygnulib.vfs import iostream as vfs_iostream
 from pygnulib.vfs import symlink as vfs_symlink
 from pygnulib.vfs import unlink as vfs_unlink
-from pygnulib.vfs import Base as BaseVFS
-from pygnulib.vfs import GnulibGit as GnulibGitVFS
 
 
 
@@ -95,22 +94,13 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 
 
 def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
-    keywords = frozenset({
-        "tests",
-        "obsolete",
-        "cxx_tests",
-        "longrunning_tests",
-        "privileged_tests",
-        "unportable_tests",
-    })
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    cache = CacheConfig(configure=None)
+    cache = CachedConfig(configure=None)
     for key in {"ac_version", "files"}:
         if key not in namespace:
             config[key] = cache[key]
-    test_options = {key:config[key] for key in keywords}
-    (db, main, final, tests) = transitive_closure(gnulib.module, config.modules, **test_options)
+    database = Database(gnulib.module, config)
 
     # Print some information about modules.
     print("Module list with included dependencies (indented):", file=sys.stdout)
@@ -119,28 +109,24 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     if not (stat.S_ISFIFO(mode) or stat.S_ISREG(mode)):
         BOLD_ON = "\033[1m"
         BOLD_OFF = "\033[0m"
-    for module in sorted(final):
-        manual = module.name in config.modules
+    for module in database.final_modules:
+        manual = module in database.explicit_modules
         prefix = "  " if manual else "    "
         bold_on = BOLD_ON if manual else ""
         bold_off = BOLD_OFF if manual else ""
         print("{0}{1}{2}{3}".format(prefix, bold_on, module.name, bold_off), file=sys.stdout)
     if verbosity >= 1:
         print("Main module list:", file=sys.stdout)
-        for module in sorted(main):
-            print("  {0}".format(module.name), file=sys.stdout)
-        print("" if main else "\n", end="")
+        for module in database.main_modules:
+            if module is not DummyModule:
+                print("  {0}".format(module.name), file=sys.stdout)
+        if database.main_modules:
+            print("", file=sys.stdout)
         print("Tests-related module list:", file=sys.stdout)
-        for module in sorted(tests):
+        for module in database.test_modules:
             print("  {0}".format(module.name), file=sys.stdout)
-        print("" if tests else "\n", end="")
-
-    # Determine if dummy needs to be added to main or test sets.
-    if "dummy" not in config.avoids:
-        if dummy_required(main):
-            main.add(gnulib.module("dummy"))
-        if libtests_required(tests) and dummy_required(tests):
-            tests.add(gnulib.module("dummy"))
+        if database.test_modules:
+            print("", file=sys.stdout)
 
     # Determine license incompatibilities, if any.
     incompatibilities = set()
@@ -158,22 +144,14 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Show banner notice of every module.
     if verbosity >= -1:
-        for module in sorted(main):
-            name = module.name
+        for module in database.main_modules:
             notice = module.notice
             if notice.strip():
-                print("Notice from module {0}:".format(name), file=sys.stdout)
+                print("Notice from module {0}:".format(module.name), file=sys.stdout)
                 print("\n".join("  " + line for line in notice.splitlines()), file=sys.stdout)
 
-    # Determine the final file lists.
-    main_files = filelist(main, config.ac_version)
-    tests_files = filelist(tests, config.ac_version)
-    for file in tests_files:
-        if file.startswith("lib/"):
-            tests_files.remove(file)
-            file = "tests=lib/" + file[len("lib/"):]
-            tests_files.add(file)
-    files = (main_files | tests_files)
+    # Determine the final file list.
+    files = (set(database.main_files) | set(database.test_files))
     if verbosity >= 0:
         print("File list:", file=sys.stdout)
         for file in sorted(files):
@@ -220,7 +198,10 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action = ("Removing", "Remove")[dry_run]
         fmt = (action + " file {file} (backup in {file}~)")
         if not dry_run:
-            vfs_unlink(project, file, backup=True)
+            try:
+                vfs_unlink(project, file, backup=True)
+            except FileNotFoundError:
+                pass
         print(fmt.format(file=file), file=sys.stdout)
 
     def update_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
@@ -290,8 +271,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # Generate the contents of library makefile.
     path = os.path.join(config.source_base, config.makefile_name)
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in LibMakefileGenerator(config, explicit, path, main, mkedits, False):
-            tmp.write(line + "\n")
+        for line in LibMakefileGenerator(path, config, explicit, database, mkedits, False):
+            print(line, file=tmp)
     (src, dst) = (tmp.name, path)
     present = vfs_exists(project, dst)
     if present:
@@ -317,7 +298,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         # Create po makefile parameterization, part 1.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
             for line in POMakevarsGenerator(config):
-                tmp.write(line + "\n")
+                print(line, file=tmp)
         (src, dst) = (tmp.name, "po/Makevars")
         present = vfs_exists(project, dst)
         if present:
@@ -328,8 +309,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         # Create po makefile parameterization, part 2.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
             for line in POMakevarsGenerator(config):
-                tmp.write(line + "\n")
-        (src, dst) = (tmp.name, "po/POTFILES.in")
+                print(line, file=tmp)
+        (src, dst) = (tmp.name, "po/POTFILESGenerator.in")
         present = vfs_exists(project, dst)
         if present:
             added_files.add(dst)
@@ -361,7 +342,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
             tmp.write("# Set of available languages.\n")
             for line in sorted(languages):
-                tmp.write(line + "\n")
+                print(line, file=tmp)
         (src, dst) = (tmp.name, "po/LINGUAS")
         present = vfs_exists(project, dst)
         if present:
@@ -373,8 +354,20 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # Create m4/gnulib-cache.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
         for line in GnulibCacheGenerator(config):
-            tmp.write(line + "\n")
+            print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-cache.m4")
+    present = vfs_exists(project, dst)
+    if present:
+        added_files.add(dst)
+    action = update_file if present else add_file
+    action(False, None, src, project, dst, present)
+    os.unlink(tmp.name)
+
+    # Create m4/gnulib-comp.m4.
+    with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
+        for line in GnulibCompGenerator(config, explicit, database):
+            print(line, file=tmp)
+    (src, dst) = (tmp.name, "m4/gnulib-comp.m4")
     present = vfs_exists(project, dst)
     if present:
         added_files.add(dst)
@@ -389,7 +382,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 def add_import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
-    config = CacheConfig(**namespace)
+    config = CachedConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
     namespace["modules"] = (config.modules | modules)
     return import_hook(script, gnulib, namespace, verbosity, options)
@@ -399,7 +392,7 @@ def add_import_hook(script, gnulib, namespace, explicit, verbosity, options, *ar
 def remove_import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     modules = set(namespace.pop("modules"))
-    config = CacheConfig(**namespace)
+    config = CachedConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
     namespace["modules"] = (config.modules - modules)
     return import_hook(script, gnulib, namespace, verbosity, options)
@@ -408,7 +401,7 @@ def remove_import_hook(script, gnulib, namespace, explicit, verbosity, options, 
 
 def update_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
-    config = CacheConfig(**namespace)
+    config = CachedConfig(**namespace)
     namespace = {k:v for (k, v) in config.items()}
     return import_hook(script, gnulib, namespace, verbosity, options)
 

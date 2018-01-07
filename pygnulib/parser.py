@@ -619,14 +619,14 @@ class CommandLine:
                         "time and object code)",
                     ),
                     "action": _TrueOption,
-                    "dest": "conddeps",
+                    "dest": "conditionals",
                 }),
                 (["--no-conditional-dependencies"], {
                     "help": (
                         "don't use conditional dependencies",
                     ),
                     "action": _FalseOption,
-                    "dest": "conddeps",
+                    "dest": "conditionals",
                 }),
                 (["--libtool"], {
                     "help": (

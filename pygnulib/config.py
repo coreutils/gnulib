@@ -39,7 +39,7 @@ OTHER_LICENSES = frozenset({
 
 
 
-class Base:
+class BaseConfig:
     """gnulib generic configuration"""
     _TABLE = {
         "root"              : ".",
@@ -57,7 +57,7 @@ class Base:
         "witness_c_macro"   : "",
         "licenses"          : set(),
         "libtool"           : False,
-        "conddeps"          : False,
+        "conditionals"      : True,
         "vc_files"          : False,
         "ac_version"        : 2.59,
         "modules"           : set(),
@@ -92,7 +92,7 @@ class Base:
 
     def __init__(self, **kwargs):
         self.__table = {"options": 0}
-        for (key, value) in Base._TABLE.items():
+        for (key, value) in BaseConfig._TABLE.items():
             self[key] = kwargs.get(key, value)
 
 
@@ -153,7 +153,7 @@ class Base:
         _type_assert("source_base", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("source_base cannot be an absolute path")
+            raise ValueError("source_base cannot be an absolute path")
         self.__table["source_base"] = _os.path.normpath(value) if value else "lib"
 
 
@@ -167,7 +167,7 @@ class Base:
         _type_assert("m4_base", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("m4_base cannot be an absolute path")
+            raise ValueError("m4_base cannot be an absolute path")
         self.__table["m4_base"] = _os.path.normpath(value) if value else "m4"
 
 
@@ -181,7 +181,7 @@ class Base:
         _type_assert("po_base", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("po_base cannot be an absolute path")
+            raise ValueError("po_base cannot be an absolute path")
         self.__table["po_base"] = _os.path.normpath(value) if value else "po"
 
 
@@ -195,7 +195,7 @@ class Base:
         _type_assert("doc_base", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("doc_base cannot be an absolute path")
+            raise ValueError("doc_base cannot be an absolute path")
         self.__table["doc_base"] = _os.path.normpath(value) if value else "doc"
 
 
@@ -209,7 +209,7 @@ class Base:
         _type_assert("tests_base", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("tests_base cannot be an absolute path")
+            raise ValueError("tests_base cannot be an absolute path")
         self.__table["tests_base"] = _os.path.normpath(value) if value else "tests"
 
 
@@ -223,7 +223,7 @@ class Base:
         _type_assert("auxdir", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("auxdir cannot be an absolute path")
+            raise ValueError("auxdir cannot be an absolute path")
         self.__table["auxdir"] = _os.path.normpath(value) if value else "build-aux"
 
 
@@ -248,7 +248,7 @@ class Base:
         _type_assert("makefile_name", value, str)
         value = _os.path.normpath(value)
         if _os.path.isabs(value):
-            return ValueError("makefile_name cannot be an absolute path")
+            raise ValueError("makefile_name cannot be an absolute path")
         self.__table["makefile_name"] = value
 
 
@@ -306,98 +306,98 @@ class Base:
     @property
     def tests(self):
         """include unit tests for the included modules"""
-        return bool(self.__table["options"] & Base._Option.Tests)
+        return bool(self.__table["options"] & BaseConfig._Option.Tests)
 
     @tests.setter
     def tests(self, value):
         _type_assert("tests", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Tests
+            self.__table["options"] |= BaseConfig._Option.Tests
         else:
-            self.__table["options"] &= ~Base._Option.Tests
+            self.__table["options"] &= ~BaseConfig._Option.Tests
 
 
     @property
     def obsolete(self):
         """include obsolete modules when they occur among the modules"""
-        return bool(self.__table["options"] & Base._Option.Tests)
+        return bool(self.__table["options"] & BaseConfig._Option.Tests)
 
     @obsolete.setter
     def obsolete(self, value):
         _type_assert("obsolete", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Obsolete
+            self.__table["options"] |= BaseConfig._Option.Obsolete
         else:
-            self.__table["options"] &= ~Base._Option.Obsolete
+            self.__table["options"] &= ~BaseConfig._Option.Obsolete
 
 
     @property
     def cxx_tests(self):
         """include even unit tests for C++ interoperability"""
-        return bool(self.__table["options"] & Base._Option.CXX)
+        return bool(self.__table["options"] & BaseConfig._Option.CXX)
 
     @cxx_tests.setter
     def cxx_tests(self, value):
         _type_assert("cxx_tests", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.CXX
+            self.__table["options"] |= BaseConfig._Option.CXX
         else:
-            self.__table["options"] &= ~Base._Option.CXX
+            self.__table["options"] &= ~BaseConfig._Option.CXX
 
 
     @property
     def longrunning_tests(self):
         """include even unit tests that are long-runners"""
-        return bool(self.__table["options"] & Base._Option.Longrunning)
+        return bool(self.__table["options"] & BaseConfig._Option.Longrunning)
 
     @longrunning_tests.setter
     def longrunning_tests(self, value):
         _type_assert("longrunning_tests", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Longrunning
+            self.__table["options"] |= BaseConfig._Option.Longrunning
         else:
-            self.__table["options"] &= ~Base._Option.Longrunning
+            self.__table["options"] &= ~BaseConfig._Option.Longrunning
 
 
     @property
     def privileged_tests(self):
         """include even unit tests that require root privileges"""
-        return bool(self.__table["options"] & Base._Option.Privileged)
+        return bool(self.__table["options"] & BaseConfig._Option.Privileged)
 
     @privileged_tests.setter
     def privileged_tests(self, value):
         _type_assert("privileged_tests", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Privileged
+            self.__table["options"] |= BaseConfig._Option.Privileged
         else:
-            self.__table["options"] &= ~Base._Option.Privileged
+            self.__table["options"] &= ~BaseConfig._Option.Privileged
 
 
     @property
     def unportable_tests(self):
         """include even unit tests that fail on some platforms"""
-        return bool(self.__table["options"] & Base._Option.Unportable)
+        return bool(self.__table["options"] & BaseConfig._Option.Unportable)
 
     @unportable_tests.setter
     def unportable_tests(self, value):
         _type_assert("unportable_tests", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Unportable
+            self.__table["options"] |= BaseConfig._Option.Unportable
         else:
-            self.__table["options"] &= ~Base._Option.Unportable
+            self.__table["options"] &= ~BaseConfig._Option.Unportable
 
 
     @property
     def all_tests(self):
         """include all kinds of problematic unit tests"""
-        return (self.__table["options"] & Base._Option.AllTests) == Base._Option.AllTests
+        return (self.__table["options"] & BaseConfig._Option.AllTests) == BaseConfig._Option.AllTests
 
     @all_tests.setter
     def all_tests(self, value):
         if value:
-            self.__table["options"] |= Base._Option.AllTests
+            self.__table["options"] |= BaseConfig._Option.AllTests
         else:
-            self.__table["options"] &= Base._Option.AllTests
+            self.__table["options"] &= BaseConfig._Option.AllTests
 
 
     @property
@@ -412,14 +412,14 @@ class Base:
 
 
     @property
-    def conddeps(self):
+    def conditionals(self):
         """support conditional dependencies (may save configure time and object code)"""
-        return self.__table["conddeps"]
+        return self.__table["conditionals"]
 
-    @conddeps.setter
-    def conddeps(self, value):
-        _type_assert("conddeps", value, bool)
-        self.__table["conddeps"] = value
+    @conditionals.setter
+    def conditionals(self, value):
+        _type_assert("conditionals", value, bool)
+        self.__table["conditionals"] = value
 
 
     @property
@@ -497,7 +497,7 @@ class Base:
     def include_guard_prefix(self):
         """include guard prefix"""
         prefix = self.__table["macro_prefix"].upper()
-        default = Base._TABLE["macro_prefix"].upper()
+        default = BaseConfig._TABLE["macro_prefix"].upper()
         return "GL" if prefix == default else "GL_{0}".format(prefix)
 
 
@@ -528,33 +528,33 @@ class Base:
     @property
     def gnumake(self):
         """update the license copyright text"""
-        return bool(self.__table["options"] & Base._Option.GNUMake)
+        return bool(self.__table["options"] & BaseConfig._Option.GNUMake)
 
     @gnumake.setter
     def gnumake(self, value):
         _type_assert("gnumake", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.GNUMake
+            self.__table["options"] |= BaseConfig._Option.GNUMake
         else:
-            self.__table["options"] &= ~Base._Option.GNUMake
+            self.__table["options"] &= ~BaseConfig._Option.GNUMake
 
 
     @property
     def copyrights(self):
         """update the license copyright text"""
-        return bool(self.__table["options"] & Base._Option.Copyrights)
+        return bool(self.__table["options"] & BaseConfig._Option.Copyrights)
 
     @copyrights.setter
     def copyrights(self, value):
         _type_assert("copyrights", value, bool)
         if value:
-            self.__table["options"] |= Base._Option.Copyrights
+            self.__table["options"] |= BaseConfig._Option.Copyrights
         else:
-            self.__table["options"] &= ~Base._Option.Copyrights
+            self.__table["options"] &= ~BaseConfig._Option.Copyrights
 
 
     def __getitem__(self, key):
-        table = (set(Base._TABLE.keys()) | Base._OPTIONS)
+        table = (set(BaseConfig._TABLE.keys()) | BaseConfig._OPTIONS)
         if key not in table:
             key = key.replace("-", "_")
             if key not in table:
@@ -563,7 +563,7 @@ class Base:
 
 
     def __setitem__(self, key, value):
-        table = (set(Base._TABLE.keys()) | Base._OPTIONS)
+        table = (set(BaseConfig._TABLE.keys()) | BaseConfig._OPTIONS)
         if key not in table:
             key = key.replace("_", "-")
             if key not in table:
@@ -587,7 +587,7 @@ class Base:
 
 
 
-class Cache(Base):
+class CachedConfig(BaseConfig):
     """gnulib cached configuration"""
     _COMMENTS = _compile(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*?)$")
     _AUTOCONF = {
@@ -598,7 +598,7 @@ class Cache(Base):
     _GNULIB_CACHE = {
         "overrides"         : (list, _compile(r"gl_LOCAL_DIR\(\[(.*?)\]\)")),
         "libtool"           : (bool, _compile(r"gl_LIBTOOL\(\[(.*?)\]\)")),
-        "conddeps"          : (bool, _compile(r"gl_CONDITIONAL_DEPENDENCIES\(\[(.*?)\]\)")),
+        "conditionals"      : (bool, _compile(r"gl_CONDITIONAL_DEPENDENCIES\(\[(.*?)\]\)")),
         "vc_files"          : (bool, _compile(r"gl_VC_FILES\(\[(.*?)\]\)")),
         "tests"             : (bool, _compile(r"gl_WITH_TESTS\(\[(.*?)\]\)")),
         "obsolete"          : (bool, _compile(r"gl_WITH_OBSOLETE\(\[(.*?)\]\)")),
@@ -642,8 +642,8 @@ class Cache(Base):
 
     def __configure_ac(self, configure, explicit, **kwargs):
         with _codecs.open(configure, "rb", "UTF-8") as stream:
-            data = Cache._COMMENTS.sub("", stream.read())
-        for (key, pattern) in Cache._AUTOCONF.items():
+            data = CachedConfig._COMMENTS.sub("", stream.read())
+        for (key, pattern) in CachedConfig._AUTOCONF.items():
             match = pattern.findall(data)
             if match and key not in explicit:
                 self[key] = match[-1]
@@ -655,8 +655,8 @@ class Cache(Base):
         if not _os.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs.open(path, "rb", "UTF-8") as stream:
-            data = Cache._COMMENTS.sub("", stream.read())
-        for (key, (typeid, pattern)) in Cache._GNULIB_CACHE.items():
+            data = CachedConfig._COMMENTS.sub("", stream.read())
+        for (key, (typeid, pattern)) in CachedConfig._GNULIB_CACHE.items():
             match = pattern.findall(data)
             if match and key not in explicit:
                 if key == "licenses":
@@ -683,7 +683,7 @@ class Cache(Base):
         if not _os.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs.open(path, "rb", "UTF-8") as stream:
-            data = Cache._COMMENTS.sub("", stream.read())
+            data = CachedConfig._COMMENTS.sub("", stream.read())
         pattern = _compile(r"AC_DEFUN\(\[{0}_FILE_LIST\], \[(.*?)\]\)".format(macro_prefix))
         match = pattern.findall(data)
         if match and "files" not in explicit:
