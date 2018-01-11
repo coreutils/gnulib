@@ -531,15 +531,6 @@ class DummyModule(BaseModule, metaclass=_DummyModuleMeta):
     def __init__(self):
         super().__init__(name="dummy")
 
-    def __hash__(self):
-        result = hash(self.name)
-        for key in sorted(BaseModule._TABLE.keys()):
-            result ^= hash(tuple(self[key]))
-        return result
-
-    def __eq__(self, value):
-        return isinstance(value, DummyModule)
-
 
 
 class FileModule(BaseModule):
