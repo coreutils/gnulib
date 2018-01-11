@@ -769,7 +769,7 @@ class LibMakefileGenerator(BaseGenerator):
                 if transform_check_PROGRAMS:
                     conditional = conditional.replace("check_PROGRAMS", "noinst_PROGRAMS")
                 conditional = conditional.replace(r"${gl_include_guard_prefix}", config.include_guard_prefix)
-                unconditional = module.unconditional_automake_snippet(config.auxdir)
+                unconditional = module.unconditional_automake_snippet.format(auxdir=config.auxdir)
                 unconditional = LibMakefileGenerator._LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), unconditional)
                 if (conditional + unconditional).strip():
                     lines.append("## begin gnulib module {}".format(module.name))

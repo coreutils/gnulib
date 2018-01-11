@@ -54,7 +54,7 @@ class BaseModule:
                 licenses.add(license)
             kwargs["licenses"] = licenses
         if "maintainers" not in kwargs:
-            kwargs["maintainers"] = ("all",)
+            kwargs["maintainers"] = {"all"}
         self.__name = name
         self.__table = _collections.OrderedDict()
         for (key, (_, typeid, _)) in BaseModule._TABLE.items():
@@ -78,7 +78,10 @@ class BaseModule:
 
 
     def __hash__(self):
-        return hash(self.__name)
+        result = hash(self.__name)
+        for key in sorted(self.keys()):
+            result ^= hash(tuple(self[key]))
+        return result
 
 
     def __getitem__(self, key):
@@ -295,9 +298,11 @@ class BaseModule:
     def conditional_automake_snippet(self, value):
         _type_assert("conditional_automake_snippet", value, str)
         self.__table["conditional_automake_snippet"] = value
+        self.__table.pop("unconditional_automake_snippet", None)
 
 
-    def unconditional_automake_snippet(self, auxdir):
+    @property
+    def unconditional_automake_snippet(self):
         """Makefile.am snippet that must stay outside of Automake conditionals"""
         if "unconditional_automake_snippet" in self.__table:
             return self.__table["unconditional_automake_snippet"]
@@ -354,7 +359,7 @@ class BaseModule:
                 result += ("EXTRA_lib_SOURCES += {}".format(" ".join(sorted(extra_files))) + "\n")
 
         # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
-        prefix = _os.path.join("$(top_srcdir)", auxdir)
+        prefix = _os.path.join("$(top_srcdir)", "{auxdir}")
         buildaux_files = (file for file in all_files if file.startswith("build-aux/"))
         buildaux_files = tuple(_os.path.join(prefix, file[len("build-aux/"):]) for file in buildaux_files)
         if buildaux_files:
@@ -397,7 +402,7 @@ class BaseModule:
     @property
     def licenses(self):
         """licenses set"""
-        return set(self.__table["licenses"])
+        return frozenset(self.__table["licenses"])
 
     @licenses.setter
     def licenses(self, value):
@@ -412,7 +417,7 @@ class BaseModule:
     @property
     def maintainers(self):
         """maintainers"""
-        return "\n".join(self.__table["maintainers"])
+        return self.__table["maintainers"]
 
     @maintainers.setter
     def maintainers(self, value):
@@ -458,26 +463,25 @@ class BaseModule:
 
     def keys(self):
         """a set-like object providing a view on module keys"""
-        return self.__table.keys()
+        for key in BaseModule._TABLE.keys():
+            yield key
 
 
     def values(self):
         """a set-like object providing a view on module values"""
-        return self.__table.values()
+        for key in BaseModule._TABLE.keys():
+            yield self[value]
 
 
     def __lt__(self, value):
-        if not isinstance(value, BaseModule):
-            return True
+        _type_assert("value", value, BaseModule)
         return self.name < value.name
 
     def __le__(self, value):
         return self.__lt__(value) or self.__eq__(value)
 
     def __eq__(self, value):
-        if not isinstance(value, BaseModule):
-            return False
-        return self.name == value.name
+        return hash(self) == hash(value)
 
     def __ne__(self, value):
         return not self.__eq__(value)
@@ -490,40 +494,51 @@ class BaseModule:
 
 
 
-class DummyModule(BaseModule):
-    """dummy module placeholder"""
+class _DummyModuleMeta(type):
+    __INSTANCE = None
+    __TABLE = {
+        "description": "A dummy file, to make sure the library is non-empty.",
+        "comment": "",
+        "status": frozenset(),
+        "notice": "",
+        "applicability": "main",
+        "files": frozenset({"lib/dummy.c"}),
+        "dependencies": frozenset(),
+        "early_autoconf_snippet": "",
+        "autoconf_snippet": "",
+        "include_directive": "",
+        "link_directive": "",
+        "licenses": frozenset({"public domain"}),
+        "maintainers": frozenset({"all"}),
+        "automake_snippet": "lib_SOURCES += dummy.c",
+        "conditional_automake_snippet": "lib_SOURCES += dummy.c",
+        "unconditional_automake_snippet": "",
+    }
 
-    files = property(lambda *args, **kwargs: {"lib/dummy.c"})
-    description = property(lambda *args, **kwargs: "\n".join((
-        "A dummy file, to make sure the library is non-empty.",
-        "",
-    )))
-    conditional_automake_snippet = property(lambda *args, **kwargs: "\n".join((
-        "lib_SOURCES += dummy.c",
-        "",
-    )))
-    licenses = property(lambda *args, **kwargs: {"public domain"})
-    maintainers = property(lambda *args, **kwargs: {"all"})
+    def __new__(cls, name, parents, attributes):
+        self = super().__new__(cls, name, parents, attributes)
+        for (key, value) in _DummyModuleMeta.__TABLE.items():
+            setattr(self, key, property(lambda self, value=value: value))
+        return self
+
+    def __call__(cls, *args, **kwargs):
+        if _DummyModuleMeta.__INSTANCE is None:
+            _DummyModuleMeta.__INSTANCE = super(_DummyModuleMeta, cls).__call__(*args, **kwargs)
+        return _DummyModuleMeta.__INSTANCE
 
 
+class DummyModule(BaseModule, metaclass=_DummyModuleMeta):
     def __init__(self):
-        #super().__init__(name="dummy")
-        pass
-
+        super().__init__(name="dummy")
 
     def __hash__(self):
-        return hash(None)
+        result = hash(self.name)
+        for key in sorted(BaseModule._TABLE.keys()):
+            result ^= hash(tuple(self[key]))
+        return result
 
-
-    def __setitem__(self, key, value):
-        return self.__setattr__(key, value)
-
-
-    def __setattr__(self, key, value):
-        raise TypeError("read-only module")
-
-
-DummyModule = DummyModule()
+    def __eq__(self, value):
+        return isinstance(value, DummyModule)
 
 
 
@@ -819,9 +834,9 @@ class Database:
         test_modules = (final_modules - set(filter(_applicability, main_modules)))
         libtests = _libtests(test_modules)
         if _dummy(main_modules):
-            main_modules.add(DummyModule)
+            main_modules.add(DummyModule())
         if _dummy(test_modules) and libtests:
-            test_modules.add(DummyModule)
+            test_modules.add(DummyModule())
         main_files = _files(main_modules)
         test_files = set()
         for file in _files(test_modules):

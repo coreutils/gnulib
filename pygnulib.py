@@ -118,7 +118,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     if verbosity >= 1:
         print("Main module list:", file=sys.stdout)
         for module in database.main_modules:
-            if module is not DummyModule:
+            if module is not DummyModule():
                 print("  {0}".format(module.name), file=sys.stdout)
         if database.main_modules:
             print("", file=sys.stdout)

@@ -15,6 +15,7 @@ import subprocess as _sp
 from .error import type_assert as _type_assert
 from .error import UnknownModuleError as _UnknownModuleError
 from .module import BaseModule as _BaseModule
+from .module import DummyModule as _DummyModule
 from .module import FileModule as _FileModule
 
 
