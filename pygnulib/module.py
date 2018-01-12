@@ -622,6 +622,7 @@ class TransitiveClosure:
                     raise TypeError("module: pygnulib.module.BaseModule expected")
             return module
 
+        handled = set()
         conditional = set()
         unconditional = set()
         demanders = _collections.defaultdict(dict)
@@ -638,6 +639,8 @@ class TransitiveClosure:
                         if not _exclude(dependency):
                             demanders[None][dependency] = None
                             dependencies[dependency][None] = None
+                            modules.add(dependency)
+                            dependency = demander
                     except _UnknownModuleError:
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
@@ -662,8 +665,9 @@ class TransitiveClosure:
                             unconditional.add(dependency)
                         demanders[demander][dependency] = None
                         dependencies[dependency][demander] = condition
-                        modules.add(dependency)
-                modules.discard(demander)
+                    modules.add(dependency)
+                handled.add(demander)
+            modules.difference_update(handled)
 
         self.__lookup = _lookup
         self.__demanders = demanders
