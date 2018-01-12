@@ -6,8 +6,9 @@
 
 import ast as _ast
 import codecs as _codecs
-import hashlib as _hashlib
 import collections as _collections
+import hashlib as _hashlib
+import json as _json
 import os as _os
 import re as _re
 
@@ -78,10 +79,7 @@ class BaseModule:
 
 
     def __hash__(self):
-        result = hash(self.__name)
-        for key in sorted(self.keys()):
-            result ^= hash(tuple(self[key]))
-        return result
+        return hash(self.__name) ^ _json.dumps(self.__table, sort_keys=True)
 
 
     def __getitem__(self, key):
