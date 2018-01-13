@@ -73,7 +73,7 @@ TP_RSYNC_URI = "translationproject.org::tp/latest/"
 
 def list_hook(gnulib, *args, **kwargs):
     (_, _) = (args, kwargs)
-    for module in sorted(gnulib.modules(full=False)):
+    for module in sorted(gnulib.modules()):
         print(module.name, file=sys.stdout)
     return os.EX_OK
 
@@ -85,7 +85,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
     mode += "s" if mode == "maintainer" else ""
     for module in namespace["modules"]:
         try:
-            module = gnulib.module(module, full=True)
+            module = gnulib.module(module)
             print(module[mode], file=sys.stdout)
         except UnknownModuleError as error:
             print("{0}:".format(program), "warning:", error, file=sys.stderr)

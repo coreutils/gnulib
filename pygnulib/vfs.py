@@ -14,9 +14,8 @@ import subprocess as _sp
 
 from .error import type_assert as _type_assert
 from .error import UnknownModuleError as _UnknownModuleError
-from .module import BaseModule as _BaseModule
 from .module import DummyModule as _DummyModule
-from .module import FileModule as _FileModule
+from .module import GnulibModule as _GnulibModule
 
 
 
@@ -292,6 +291,7 @@ class GnulibGitVFS(BaseVFS):
 
     def __init__(self, prefix, **table):
         super().__init__(prefix, **table)
+        self.__cache = {}
         if not _os.path.exists(self.absolute):
             raise FileNotFoundError(self.absolute)
         if not _os.path.isdir(self.absolute):
@@ -300,20 +300,23 @@ class GnulibGitVFS(BaseVFS):
             raise TypeError("{} is not a gnulib repository".format(prefix))
 
 
-    def module(self, name, full=True):
-        """obtain gnulib module by name"""
+    def module(self, name):
+        """instantiate a module"""
         _type_assert("name", name, str)
-        _type_assert("full", full, bool)
-        if name in GnulibGitVFS._EXCLUDE:
-            raise ValueError("illegal module name")
+        if name in self.__cache:
+            return self.__cache[name]
         path = _os.path.join(self.absolute, self["modules"], name)
         try:
-            return _FileModule(path, name=name) if full else _BaseModule(name)
+            if name != "dummy":
+                self.__cache[name] = _GnulibModule(path=path, name=name)
+            else:
+                self.__cache[name] = _DummyModule()
+            return self.__cache[name]
         except FileNotFoundError:
             raise _UnknownModuleError(name)
 
 
-    def modules(self, full=True):
+    def modules(self):
         """iterate over all available modules"""
         prefix = _os.path.join(self.absolute, self["modules"])
         for root, _, files in _os.walk(prefix):
@@ -329,4 +332,4 @@ class GnulibGitVFS(BaseVFS):
             for name in names:
                 path = _os.path.join(root, name)
                 name = path[len(prefix) + 1:]
-                yield self.module(name, full)
+                yield self.module(name)

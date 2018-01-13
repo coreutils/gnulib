@@ -318,7 +318,6 @@ class AutoconfMultisnippetGenerator(BaseGenerator):
     def __iter__(self):
         config = self.__config
         database = self.__database
-        base_table = database.base_table
         modules = self.__modules
         macro_prefix = self.__macro_prefix
 
@@ -339,12 +338,12 @@ class AutoconfMultisnippetGenerator(BaseGenerator):
         conditional = set()
         unconditional = set()
         for dependency in modules:
-            if base_table.conditional(dependency):
+            if database.conditional(dependency):
                 conditional.add(dependency)
             else:
                 unconditional.add(dependency)
-        conditional = sorted(set(conditional))
-        unconditional = sorted(set(unconditional))
+        conditional = sorted(conditional)
+        unconditional = sorted(unconditional)
 
         # Emit the autoconf code for the unconditional modules.
         for module in unconditional:
@@ -370,36 +369,30 @@ class AutoconfMultisnippetGenerator(BaseGenerator):
             for line in AutoconfSnippetGenerator(**arguments):
                 yield "      {}".format(line)
             yield "      {}=true".format(shellvar)
-            try:
-                for (dependency, condition) in sorted(base_table.dependencies(demander)):
-                    if base_table.conditional(dependency):
-                        shellfunc = dependency.shell_function(macro_prefix)
-                        if condition is not None:
-                            yield "      if {}; then".format(condition)
-                            yield "        {}".format(shellfunc)
-                            yield "      fi"
-                        else:
-                            yield "      {}".format(shellfunc)
-            except KeyError:
-                pass
+            for (dependency, condition) in sorted(database.dependencies(demander)):
+                if database.conditional(dependency):
+                    shellfunc = dependency.shell_function(macro_prefix)
+                    if condition is not None:
+                        yield "      if {}; then".format(condition)
+                        yield "        {}".format(shellfunc)
+                        yield "      fi"
+                    else:
+                        yield "      {}".format(shellfunc)
             yield "    fi"
             yield "  }"
 
         # Emit the dependencies from the unconditional to the conditional modules.
         for demander in unconditional:
-            try:
-                for (dependency, condition) in sorted(base_table.dependencies(demander)):
-                    if dependency in modules and base_table.conditional(dependency):
-                        condname = dependency.conditional_name(macro_prefix)
-                        shellfunc = dependency.shell_function(macro_prefix)
-                        if condition is not None:
-                            yield "  if {}; then".format(condition)
-                            yield "    {}".format(shellfunc)
-                            yield "  fi"
-                        else:
-                            yield "  {}".format(shellfunc)
-            except KeyError:
-                pass
+            for (dependency, condition) in sorted(database.dependencies(demander)):
+                if dependency in modules and database.conditional(dependency):
+                    condname = dependency.conditional_name(macro_prefix)
+                    shellfunc = dependency.shell_function(macro_prefix)
+                    if condition is not None:
+                        yield "  if {}; then".format(condition)
+                        yield "    {}".format(shellfunc)
+                        yield "  fi"
+                    else:
+                        yield "  {}".format(shellfunc)
 
         # Define the Automake conditionals.
         yield "  m4_pattern_allow([^{}_GNULIB_ENABLED_])".format(macro_prefix)
@@ -1034,7 +1027,7 @@ class GnulibCompGenerator(BaseGenerator):
             yield "  # Code from module {}:".format(module.name)
             lines = module.early_autoconf_snippet.split("\n")
             for line in filter(lambda line: line.strip(), lines):
-                yield line
+                yield "  {}".format(line)
         yield "])"
         yield ""
         yield "# This macro should be invoked from $configure_ac, in the section"
