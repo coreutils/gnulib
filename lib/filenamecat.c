@@ -32,9 +32,9 @@
    "memory exhausted" condition and exit.  */
 
 char *
-file_name_concat (char const *dir, char const *abase, char **base_in_result)
+file_name_concat (char const *dir, char const *base, char **base_in_result)
 {
-  char *p = mfile_name_concat (dir, abase, base_in_result);
+  char *p = mfile_name_concat (dir, base, base_in_result);
   if (p == NULL)
     xalloc_die ();
   return p;

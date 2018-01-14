@@ -22,6 +22,7 @@
 #include "filenamecat.h"
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,11 +39,11 @@ main (int argc _GL_UNUSED, char *argv[])
       {"a", "/b",  "a/b"},
 
       {"/", "b",  "/b"},
-      {"/", "/b", "/b"},
-      {"/", "/",  "/"},
+      {"/", "/b", "/./b"}, /* This result could be shorter.  */
+      {"/", "/",  "/./"},  /* This result could be shorter.  */
       {"a", "/",  "a/"},   /* this might deserve a diagnostic */
       {"/a", "/", "/a/"},  /* this might deserve a diagnostic */
-      {"a", "//b",  "a/b"},
+      {"a", "//b",  "a//b"},
       {"", "a", "a"},  /* this might deserve a diagnostic */
     };
   unsigned int i;
@@ -53,9 +54,29 @@ main (int argc _GL_UNUSED, char *argv[])
       char *base_in_result;
       char const *const *t = tests[i];
       char *res = file_name_concat (t[0], t[1], &base_in_result);
+      ptrdiff_t prefixlen = base_in_result - res;
+      size_t t0len = strlen (t[0]);
+      size_t reslen = strlen (res);
       if (strcmp (res, t[2]) != 0)
         {
           fprintf (stderr, "test #%u: got %s, expected %s\n", i, res, t[2]);
+          fail = true;
+        }
+      if (strcmp (t[1], base_in_result) != 0)
+        {
+          fprintf (stderr, "test #%u: base %s != base_in_result %s\n",
+                   i, t[1], base_in_result);
+          fail = true;
+        }
+      if (! (0 <= prefixlen && prefixlen <= reslen))
+        {
+          fprintf (stderr, "test #%u: base_in_result is not in result\n", i);
+          fail = true;
+        }
+      if (reslen < t0len || memcmp (res, t[0], t0len) != 0)
+        {
+          fprintf (stderr, "test #%u: %s is not a prefix of %s\n",
+                   i, t[0], res);
           fail = true;
         }
     }
