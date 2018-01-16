@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate September 25, 2017
+@set lastupdate January 15, 2018
 @c %**end of header
 
 @dircategory GNU organization
@@ -3551,46 +3551,45 @@ history of how the conflicting concepts arose and who they came from.
 @cindex change set
 @cindex batch of changes
 You can think of the change log as a conceptual ``undo list'' which
-explains how earlier versions were different from the current version.
+states how earlier versions were different from the current version.
 People can see the current version; they don't need the change log to
 tell them what is in it.  What they want from a change log is a clear
 explanation of how the earlier version differed.  Each @dfn{entry} in
 a change log describes either an individual change or the smallest
 batch of changes that belong together, also known as a @dfn{change
 set}.
+
 @cindex title, change log entry
 @cindex description, change log entry
-For later reference or for summarizing, sometimes it is useful to
-start the entry with a one-line description (sometimes called a
-@dfn{title}) to describe its overall purpose.
+It is a good idea to start the change log entry with a description
+of the overall change.  This should be as long as needed to give
+a clear description.
 
-In the past, we recommended not mentioning changes in non-software
-files (manuals, help files, media files, etc.)@: in change logs.
-However, we've been advised that it is a good idea to include them,
-for the sake of copyright records.
+The give a list of names of the entities or definitions that you
+changed, according to the files they are in, and what was changed
+in each one.  @xref{Style of Change Logs}.
 
 The change log file is normally called @file{ChangeLog} and covers an
 entire directory.  Each directory can have its own change log, or a
 directory can use the change log of its parent directory---it's up to
 you.
 
-Another alternative is to record change log information with a version
-control system such as RCS or CVS.  This can be converted automatically
-to a @file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
+Instead of using a file named @file{ChangeLog}, you can record the
+change log information as log entries in a version control system such
+as RCS or CVS.  This can be converted automatically to a
+@file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
 @kbd{C-x v a} (@code{vc-update-change-log}) does the job.
 
-For changes to code, there's no need to describe the full purpose of
-the changes or how they work together.  If you think that a change
-calls for explanation, you're probably right.  Please do explain
-it---but please put the full explanation in comments in the code,
-where people will see it whenever they see the code.  For example,
-``New function'' is enough for the change log when you add a function,
-because there should be a comment before the function definition to
-explain what it does, how to call it, and so on.
+The best place to explain how parts of the new code work with other code
+is in comments in the code, not in the change log.
 
-For changes to files that do not support a comment syntax (e.g., media
-files), it is ok to include the full explanation in the change log file,
-after the title and before the list of individual changes.
+If you think that a change calls for explanation of @emph{why} the
+change was needed (what problem the old code had), you're probably
+right.  Please put the explanation in comments in the code, where
+people will see it whenever they see the code.  An example of such an
+explanation is, ``This function used to be iterative, but that failed
+when MUMBLE was a tree.''  (Though such a simple reason would not need
+this kind of explanation.)
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
 command @kbd{M-x add-change-log-entry}.  An individual change should
@@ -3598,7 +3597,6 @@ have an asterisk, the name of the changed file, and then in
 parentheses the name of the changed functions, variables or whatever,
 followed by a colon.  Then describe the changes you made to that
 function or variable.
-
 
 @node Style of Change Logs
 @subsection Style of Change Logs
@@ -3693,15 +3691,13 @@ When you change just comments or doc strings, it is enough to write an
 entry for the file, without mentioning the functions.  Just ``Doc
 fixes'' is enough for the change log.
 
-There's no technical need to make change log entries for documentation
-files.  This is because documentation is not susceptible to bugs that
-are hard to fix.  Documentation does not consist of parts that must
-interact in a precisely engineered fashion.  To correct an error, you
-need not know the history of the erroneous passage; it is enough to
-compare what the documentation says with the way the program actually
-works.
+There's no technical need to make change log entries for non-software
+files (manuals, help files, media files, etc.).  This is because they
+are not susceptible to bugs that are hard to understand.  To correct
+an error, you need not know the history of the erroneous passage; it
+is enough to compare what the file says with the the actual facts.
 
-However, you should keep change logs for documentation files when the
+However, you should keep change logs for non-software files when the
 project gets copyright assignments from its contributors, so as to
 make the records of authorship more accurate.
 
@@ -3811,7 +3807,7 @@ distribution until someone else agrees to update it.
 When a program changes only a little, you may feel that the
 discrepancies are small enough that the man page remains useful without
 updating.  If so, put a prominent note near the beginning of the man
-page explaining that you don't maintain it and that the Texinfo manual
+page stating that you don't maintain it and that the Texinfo manual
 is more authoritative.  The note should say how to access the Texinfo
 documentation.
 
@@ -3901,7 +3897,7 @@ time.  The files that @code{configure} reads should be listed as
 dependencies of @file{Makefile}.
 
 All the files which are output from the @code{configure} script should
-have comments at the beginning explaining that they were generated
+have comments at the beginning stating that they were generated
 automatically using @code{configure}.  This is so that users won't think
 of trying to edit them by hand.
 
