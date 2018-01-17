@@ -43,7 +43,7 @@ class CommandLine:
     _EXTRACT_LICENSE = (1 << 22)
     _EXTRACT_MAINTAINER = (1 << 23)
     _EXTRACT_TESTS_MODULE = (1 << 24)
-    _HELP_ = (1 << 25)
+    _HELP = (1 << 25)
     _ANY_IMPORT = _IMPORT | _ADD_IMPORT | _REMOVE_IMPORT | _UPDATE
     _ANY_TEST = _TEST | _MEGA_TEST | _TEST_DIRECTORY | _MEGA_TEST_DIRECTORY
     _ANY_EXTRACT = _EXTRACT_DESCRIPTION | _EXTRACT_COMMENT | _EXTRACT_STATUS | \
@@ -79,7 +79,7 @@ class CommandLine:
         (_EXTRACT_MAINTAINER, "extract-maintainer", "module"),
         (_EXTRACT_TESTS_MODULE, "extract-tests-module", "module"),
         (_COPY_FILE, "copy", "file [destination]"),
-        (_HELP_, "help", ""),
+        (_HELP, "help", ""),
     )
     _LINK_SYMBOLIC = (1 << 0)
     _LINK_HARD = (1 << 1)
@@ -94,9 +94,12 @@ class CommandLine:
             super().__init__(default=_argparse.SUPPRESS, *args, **kwargs)
 
         def __call__(self, parser, namespace, value, option=None):
+            if option == "--help":
+                setattr(namespace, self.dest, CommandLine._HELP)
+                return
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
-                if mode and not (self.__flags & mode) and (mode != CommandLine._HELP_):
+                if mode and not (self.__flags & mode) and (mode != CommandLine._HELP):
                     mode = "--" + {k:v for (k, v, _) in CommandLine._MODES}[mode]
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(mode, option))
@@ -159,9 +162,9 @@ class CommandLine:
                     new_mode = mode
                 if old_option and new_mode:
                     break
-            if new_mode == CommandLine._HELP_:
+            if new_mode == CommandLine._HELP:
                 old_mode = new_mode
-            if old_mode != CommandLine._HELP_ and old_mode != new_mode:
+            if old_mode != CommandLine._HELP and old_mode != new_mode:
                 if old_mode != 0:
                     fmt = "argument {0}: not allowed with {1}"
                     parser.error(fmt.format(new_option, old_option))
@@ -420,7 +423,7 @@ class CommandLine:
                         "show this help text",
                     ),
                     "action": _ModeOption,
-                    "const": _HELP_,
+                    "const": _HELP,
                 }),
             ),
         ),
@@ -941,7 +944,7 @@ class CommandLine:
         mode = namespace.pop("mode", None)
         if mode is None:
             self.__parser.error("no operating mode selected")
-        if arguments and mode != CommandLine._HELP_:
+        if arguments and mode != CommandLine._HELP:
             fmt = "unrecognized arguments: {0}"
             arguments = " ".join(arguments)
             self.__parser.error(fmt.format(arguments))
