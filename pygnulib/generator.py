@@ -749,7 +749,7 @@ class LibMakefileGenerator(BaseGenerator):
                 (_common_conditional, _gnumake_conditional),
             )[config.conditionals][gnumake]
             for module in database.main_modules:
-                if module.name.endswith("-tests"):
+                if module.test:
                     continue
                 conditional = module.conditional_automake_snippet
                 conditional = conditional.replace("lib_LIBRARIES", "lib%_LIBRARIES")

@@ -61,6 +61,7 @@ class BaseModule:
         "link_directive",
         "licenses",
         "maintainers",
+        "test",
     }
     __LIB_SOURCES = _re.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re.S | _re.M)
 
@@ -120,9 +121,9 @@ class BaseModule:
 
 
     @property
-    def package(self):
+    def gnulib(self):
         """gnulib-compatible module textual representation"""
-        def _package():
+        def _gnulib():
             yield "Description:"
             yield self.__table["description"]
             yield "Comment:"
@@ -156,7 +157,7 @@ class BaseModule:
             yield "Maintainer:"
             for maintainer in self.__table["maintainers"]:
                 yield maintainer
-        return "\n".join(_package())
+        return "\n".join(_gnulib())
 
 
     @property
@@ -214,22 +215,22 @@ class BaseModule:
 
     @property
     def cxx_test(self):
-        """module is C++ test?"""
+        """module is a C++ test?"""
         return "c++-test" in self.status
 
     @property
     def longrunning_test(self):
-        """module is C++ test?"""
+        """module is a C++ test?"""
         return "longrunning-test" in self.status
 
     @property
     def privileged_test(self):
-        """module is privileged test?"""
+        """module is a privileged test?"""
         return "privileged-test" in self.status
 
     @property
     def unportable_test(self):
-        """module is unportable test?"""
+        """module is a unportable test?"""
         return "unportable-test" in self.status
 
 
@@ -247,9 +248,7 @@ class BaseModule:
     @property
     def applicability(self):
         """applicability (usually "main" or "tests")"""
-        default = "main" if not self.name.endswith("-tests") else "tests"
-        result = self.__table.get("applicability")
-        return result if result else default
+        return self.__table["applicability"]
 
     @applicability.setter
     def applicability(self, value):
@@ -345,7 +344,7 @@ class BaseModule:
         """Makefile.am snippet that must stay outside of Automake conditionals"""
         result = ""
         files = self.files
-        if self.name.endswith("-tests"):
+        if self.test:
             # *-tests module live in tests/, not lib/.
             # Synthesize an EXTRA_DIST augmentation.
             test_files = {file for file in files if file.startswith("tests/")}
@@ -465,6 +464,17 @@ class BaseModule:
         self.__table["maintainers"] = tuple(result)
 
 
+    @property
+    def test(self):
+        """module is tests-related?"""
+        return self.__table["test"]
+
+    @test.setter
+    def test(self, value):
+        _type_assert("test", value, bool)
+        self.__table["test"] = value
+
+
     def shell_variable(self, macro_prefix="gl"):
         """Get the name of the shell variable set to true once m4 macros have been executed."""
         module = self.name
@@ -494,20 +504,20 @@ class BaseModule:
 
     def items(self):
         """a set-like object providing a view on module items"""
-        return self.__table.items()
-
-
-    @classmethod
-    def keys(cls):
-        """a set-like object providing a view on module keys"""
         for key in BaseModule._PROPERTIES:
+            yield (key, self[key])
+
+
+    def keys(self):
+        """a set-like object providing a view on module keys"""
+        for (key, _) in self.items():
             yield key
 
 
     def values(self):
         """a set-like object providing a view on module values"""
-        for key in BaseModule._PROPERTIES:
-            yield self[key]
+        for (_, value) in self.items():
+            yield value
 
 
     def __lt__(self, value):
@@ -559,10 +569,10 @@ class _DummyModuleMeta(type):
     }
 
     def __new__(mcs, name, parents, attributes):
-        self = super().__new__(mcs, name, parents, attributes)
+        cls = super().__new__(mcs, name, parents, attributes)
         for (key, value) in _DummyModuleMeta.__PROPERTIES.items():
-            setattr(self, key, property(lambda self, value=value: value))
-        return self
+            setattr(cls, key, property(lambda cls, value=value: value))
+        return cls
 
     def __call__(cls, *args, **kwargs):
         if _DummyModuleMeta.__INSTANCE is None:
@@ -630,6 +640,20 @@ class GnulibModule(FileModule):
         return super().__eq__(other)
 
 
+    @property
+    def applicability(self):
+        """applicability (usually "main" or "tests")"""
+        default = "tests" if self.test else "main"
+        result = super().applicability
+        return result if result else default
+
+
+    @property
+    def test(self):
+        """module is tests-related?"""
+        return self.name.endswith("-tests")
+
+
 
 class TransitiveClosure:
     """transitive closure table"""
@@ -673,7 +697,7 @@ class TransitiveClosure:
         while current != previous:
             previous.update(current)
             for demander in previous:
-                if tests and not demander.name.endswith("-tests"):
+                if tests and not demander.test:
                     try:
                         dependency = lookup("{}-tests".format(demander.name))
                         if not _exclude(dependency):
