@@ -96,7 +96,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    cache = CachedConfig(configure=None)
+    cache = CachedConfig(root=config.root)
     for key in {"ac_version", "files"}:
         if key not in namespace:
             config[key] = cache[key]

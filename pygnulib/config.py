@@ -7,7 +7,9 @@
 import codecs as _codecs
 import os as _os
 import re as _re
+
 from collections import OrderedDict as _OrderedDict
+from distutils import version as _version
 
 
 from .error import type_assert as _type_assert
@@ -56,42 +58,47 @@ class BaseConfig:
         "po_domain"         : "",
         "witness_c_macro"   : "",
         "licenses"          : set(),
-        "libtool"           : False,
-        "conditionals"      : True,
-        "vc_files"          : False,
-        "ac_version"        : 2.59,
+        "ac_version"        : "2.59",
+        "ac_file"           : "configure.ac",
         "modules"           : set(),
         "avoids"            : set(),
         "files"             : set(),
         "copymode"          : None,
         "local_copymode"    : None,
+        "tests"             : False,
+        "obsolete"          : False,
+        "cxx_tests"         : False,
+        "longrunning_tests" : False,
+        "privileged_tests"  : False,
+        "unportable_tests"  : False,
+        "libtool"           : False,
+        "conditionals"      : True,
+        "copyrights"        : False,
         "gnumake"           : False,
+        "single_configure"  : False,
+        "vc_files"          : False,
     }
-    _OPTIONS = frozenset({
-        "tests",
-        "obsolete",
-        "cxx_tests",
-        "longrunning_tests",
-        "privileged_tests",
-        "unportable_tests",
-    })
 
 
     class _Option:
         """gnulib configuration options"""
-        Obsolete = (1 << 0)
-        Tests = (1 << 1)
+        Tests = (1 << 0)
+        Obsolete = (1 << 1)
         CXX = (1 << 2)
         Longrunning = (1 << 3)
         Privileged = (1 << 4)
         Unportable = (1 << 5)
-        Copyrights = (1 << 6)
-        GNUMake = (1 << 7)
-        AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable | GNUMake)
+        Libtool = (1 << 6)
+        Conditionals = (1 << 7)
+        Copyrights = (1 << 8)
+        GNUMake = (1 << 9)
+        SingeConfigure = (1 << 10)
+        AllTests = (Obsolete | Tests | CXX | Longrunning | Privileged | Unportable)
 
 
     def __init__(self, **kwargs):
-        self.__table = {"options": 0}
+        self.__options = 0
+        self.__table = {}
         for (key, value) in BaseConfig._TABLE.items():
             self[key] = kwargs.get(key, value)
 
@@ -100,10 +107,6 @@ class BaseConfig:
         module = self.__class__.__module__
         name = self.__class__.__name__
         return "{}.{}{}".format(module, name, repr(self.__table))
-
-
-    def __iter__(self):
-        return iter(self.__table)
 
 
     def __enter__(self):
@@ -304,148 +307,27 @@ class BaseConfig:
 
 
     @property
-    def tests(self):
-        """include unit tests for the included modules"""
-        return bool(self.__table["options"] & BaseConfig._Option.Tests)
-
-    @tests.setter
-    def tests(self, value):
-        _type_assert("tests", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.Tests
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.Tests
-
-
-    @property
-    def obsolete(self):
-        """include obsolete modules when they occur among the modules"""
-        return bool(self.__table["options"] & BaseConfig._Option.Tests)
-
-    @obsolete.setter
-    def obsolete(self, value):
-        _type_assert("obsolete", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.Obsolete
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.Obsolete
-
-
-    @property
-    def cxx_tests(self):
-        """include even unit tests for C++ interoperability"""
-        return bool(self.__table["options"] & BaseConfig._Option.CXX)
-
-    @cxx_tests.setter
-    def cxx_tests(self, value):
-        _type_assert("cxx_tests", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.CXX
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.CXX
-
-
-    @property
-    def longrunning_tests(self):
-        """include even unit tests that are long-runners"""
-        return bool(self.__table["options"] & BaseConfig._Option.Longrunning)
-
-    @longrunning_tests.setter
-    def longrunning_tests(self, value):
-        _type_assert("longrunning_tests", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.Longrunning
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.Longrunning
-
-
-    @property
-    def privileged_tests(self):
-        """include even unit tests that require root privileges"""
-        return bool(self.__table["options"] & BaseConfig._Option.Privileged)
-
-    @privileged_tests.setter
-    def privileged_tests(self, value):
-        _type_assert("privileged_tests", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.Privileged
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.Privileged
-
-
-    @property
-    def unportable_tests(self):
-        """include even unit tests that fail on some platforms"""
-        return bool(self.__table["options"] & BaseConfig._Option.Unportable)
-
-    @unportable_tests.setter
-    def unportable_tests(self, value):
-        _type_assert("unportable_tests", value, bool)
-        if value:
-            self.__table["options"] |= BaseConfig._Option.Unportable
-        else:
-            self.__table["options"] &= ~BaseConfig._Option.Unportable
-
-
-    @property
-    def all_tests(self):
-        """include all kinds of problematic unit tests"""
-        return (self.__table["options"] & BaseConfig._Option.AllTests) == BaseConfig._Option.AllTests
-
-    @all_tests.setter
-    def all_tests(self, value):
-        if value:
-            self.__table["options"] |= BaseConfig._Option.AllTests
-        else:
-            self.__table["options"] &= BaseConfig._Option.AllTests
-
-
-    @property
-    def libtool(self):
-        """use libtool rules"""
-        return self.__table["libtool"]
-
-    @libtool.setter
-    def libtool(self, value):
-        _type_assert("libtool", value, bool)
-        self.__table["libtool"] = value
-
-
-    @property
-    def conditionals(self):
-        """support conditional dependencies (may save configure time and object code)"""
-        return self.__table["conditionals"]
-
-    @conditionals.setter
-    def conditionals(self, value):
-        _type_assert("conditionals", value, bool)
-        self.__table["conditionals"] = value
-
-
-    @property
-    def vc_files(self):
-        """update version control related files"""
-        return self.__table["vc_files"]
-
-    @vc_files.setter
-    def vc_files(self, value):
-        _type_assert("vc_files", value, bool)
-        self.__table["vc_files"] = value
-
-
-    @property
     def ac_version(self):
         """minimal supported autoconf version"""
         return self.__table["ac_version"]
 
     @ac_version.setter
     def ac_version(self, value):
-        if isinstance(value, str):
-            value = float(value)
-        _type_assert("ac_version", value, float)
-        if value < 2.59:
-            raise _AutoconfVersionError(2.59)
+        _type_assert("ac_version", value, str)
+        if _version.LooseVersion(value) < _version.LooseVersion("2.59"):
+            raise _AutoconfVersionError("2.59")
         self.__table["ac_version"] = value
+
+
+    @property
+    def ac_file(self):
+        """autoconf file (usually configure.ac or configure.in)"""
+        return self.__table["ac_file"]
+
+    @ac_file.setter
+    def ac_file(self, value):
+        _type_assert("ac_file", value, str)
+        self.__table["ac_file"] = value
 
 
     @property
@@ -526,47 +408,195 @@ class BaseConfig:
 
 
     @property
-    def gnumake(self):
-        """update the license copyright text"""
-        return bool(self.__table["options"] & BaseConfig._Option.GNUMake)
+    def tests(self):
+        """include unit tests for the included modules?"""
+        return bool(self.__options & BaseConfig._Option.Tests)
 
-    @gnumake.setter
-    def gnumake(self, value):
-        _type_assert("gnumake", value, bool)
+    @tests.setter
+    def tests(self, value):
+        _type_assert("tests", value, bool)
         if value:
-            self.__table["options"] |= BaseConfig._Option.GNUMake
+            self.__options |= BaseConfig._Option.Tests
         else:
-            self.__table["options"] &= ~BaseConfig._Option.GNUMake
+            self.__options &= ~BaseConfig._Option.Tests
+
+
+    @property
+    def obsolete(self):
+        """include obsolete modules when they occur among the modules?"""
+        return bool(self.__options & BaseConfig._Option.Tests)
+
+    @obsolete.setter
+    def obsolete(self, value):
+        _type_assert("obsolete", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Obsolete
+        else:
+            self.__options &= ~BaseConfig._Option.Obsolete
+
+
+    @property
+    def cxx_tests(self):
+        """include even unit tests for C++ interoperability?"""
+        return bool(self.__options & BaseConfig._Option.CXX)
+
+    @cxx_tests.setter
+    def cxx_tests(self, value):
+        _type_assert("cxx_tests", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.CXX
+        else:
+            self.__options &= ~BaseConfig._Option.CXX
+
+
+    @property
+    def longrunning_tests(self):
+        """include even unit tests that are long-runners?"""
+        return bool(self.__options & BaseConfig._Option.Longrunning)
+
+    @longrunning_tests.setter
+    def longrunning_tests(self, value):
+        _type_assert("longrunning_tests", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Longrunning
+        else:
+            self.__options &= ~BaseConfig._Option.Longrunning
+
+
+    @property
+    def privileged_tests(self):
+        """include even unit tests that require root privileges?"""
+        return bool(self.__options & BaseConfig._Option.Privileged)
+
+    @privileged_tests.setter
+    def privileged_tests(self, value):
+        _type_assert("privileged_tests", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Privileged
+        else:
+            self.__options &= ~BaseConfig._Option.Privileged
+
+
+    @property
+    def unportable_tests(self):
+        """include even unit tests that fail on some platforms?"""
+        return bool(self.__options & BaseConfig._Option.Unportable)
+
+    @unportable_tests.setter
+    def unportable_tests(self, value):
+        _type_assert("unportable_tests", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Unportable
+        else:
+            self.__options &= ~BaseConfig._Option.Unportable
+
+
+    @property
+    def all_tests(self):
+        """include all kinds of problematic unit tests?"""
+        return (self.__options & BaseConfig._Option.AllTests) == BaseConfig._Option.AllTests
+
+    @all_tests.setter
+    def all_tests(self, value):
+        if value:
+            self.__options |= BaseConfig._Option.AllTests
+        else:
+            self.__options &= BaseConfig._Option.AllTests
+
+
+    @property
+    def libtool(self):
+        """use libtool rules?"""
+        return bool(self.__options & BaseConfig._Option.Libtool)
+
+    @libtool.setter
+    def libtool(self, value):
+        _type_assert("libtool", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Libtool
+        else:
+            self.__options &= ~BaseConfig._Option.Libtool
+
+
+    @property
+    def conditionals(self):
+        """support conditional dependencies (may save configure time and object code)?"""
+        return bool(self.__options & BaseConfig._Option.Conditionals)
+
+    @conditionals.setter
+    def conditionals(self, value):
+        _type_assert("conditionals", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.Conditionals
+        else:
+            self.__options &= ~BaseConfig._Option.Conditionals
 
 
     @property
     def copyrights(self):
-        """update the license copyright text"""
-        return bool(self.__table["options"] & BaseConfig._Option.Copyrights)
+        """update the license copyright text?"""
+        return bool(self.__options & BaseConfig._Option.Copyrights)
 
     @copyrights.setter
     def copyrights(self, value):
         _type_assert("copyrights", value, bool)
         if value:
-            self.__table["options"] |= BaseConfig._Option.Copyrights
+            self.__options |= BaseConfig._Option.Copyrights
         else:
-            self.__table["options"] &= ~BaseConfig._Option.Copyrights
+            self.__options &= ~BaseConfig._Option.Copyrights
+
+
+    @property
+    def gnumake(self):
+        """update the license copyright text?"""
+        return bool(self.__options & BaseConfig._Option.GNUMake)
+
+    @gnumake.setter
+    def gnumake(self, value):
+        _type_assert("gnumake", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.GNUMake
+        else:
+            self.__options &= ~BaseConfig._Option.GNUMake
+
+
+    @property
+    def single_configure(self):
+        """generate a single configure file?"""
+        return bool(self.__options & BaseConfig._Option.SingeConfigure)
+
+    @single_configure.setter
+    def single_configure(self, value):
+        _type_assert("single_configure", value, bool)
+        if value:
+            self.__options |= BaseConfig._Option.SingeConfigure
+        else:
+            self.__options &= ~BaseConfig._Option.SingeConfigure
+
+
+    @property
+    def vc_files(self):
+        """update version control related files?"""
+        return self.__table["vc_files"]
+
+    @vc_files.setter
+    def vc_files(self, value):
+        _type_assert("vc_files", value, bool)
+        self.__table["vc_files"] = value
 
 
     def __getitem__(self, key):
-        table = (set(BaseConfig._TABLE.keys()) | BaseConfig._OPTIONS)
-        if key not in table:
+        if key not in BaseConfig._TABLE:
             key = key.replace("-", "_")
-            if key not in table:
+            if key not in BaseConfig._TABLE:
                 raise KeyError("unsupported option: {0}".format(key))
         return getattr(self, key)
 
 
     def __setitem__(self, key, value):
-        table = (set(BaseConfig._TABLE.keys()) | BaseConfig._OPTIONS)
-        if key not in table:
+        if key not in BaseConfig._TABLE:
             key = key.replace("_", "-")
-            if key not in table:
+            if key not in BaseConfig._TABLE:
                 raise KeyError("unsupported option: {0}".format(key))
         return setattr(self, key, value)
 
@@ -592,8 +622,8 @@ class CachedConfig(BaseConfig):
     _COMMENTS = _compile(r"((?:(?:#)|(?:^dnl\s+)|(?:\s+dnl\s+)).*?)$")
     _AUTOCONF = {
         "ac_version" : _compile(r"AC_PREREQ\(\[(.*?)\]\)"),
-        "auxdir"   : _compile(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$"),
-        "libtool"  : _compile(r"A[CM]_PROG_LIBTOOL")
+        "auxdir"     : _compile(r"AC_CONFIG_AUX_DIR\(\[(.*?)\]\)$"),
+        "libtool"    : _compile(r"A[CM]_PROG_LIBTOOL")
     }
     _GNULIB_CACHE = {
         "overrides"         : (list, _compile(r"gl_LOCAL_DIR\(\[(.*?)\]\)")),
@@ -623,35 +653,32 @@ class CachedConfig(BaseConfig):
     }
 
 
-    def __init__(self, configure=None, **kwargs):
-        super().__init__(**kwargs)
-        if configure is None:
-            configure = _os.path.join(self.root, "configure.ac")
-            if not _os.path.exists(configure):
-                configure = _os.path.join(self.root, "configure.in")
-        if not _os.path.isabs(configure):
-            configure = _os.path.join(self.root, configure)
-        kwargs = {"configure": _os.path.normpath(configure), "explicit": tuple(kwargs.keys())}
-        calls = (self.__configure_ac, self.__gnulib_cache, self.__gnulib_comp)
-        for call in calls:
-            try:
-                call(**kwargs)
-            except FileNotFoundError:
-                pass # ignore non-existent files
+    def __init__(self, root, ac_file=None, **kwargs):
+        if ac_file is None:
+            ac_file = "configure.ac"
+        _type_assert("ac_file", ac_file, str)
+        ac_path = _os.path.join(root, ac_file)
+        if not _os.path.exists(ac_path):
+            ac_file = "configure.in"
+            ac_path = _os.path.join(root, ac_file)
+        ac_path = _os.path.normpath(ac_path)
+        super().__init__(root=root, **kwargs)
+        self.__autoconf(ac_path, kwargs)
+        self.__gnulib_cache(kwargs)
+        self.__gnulib_comp(kwargs)
 
 
-    def __configure_ac(self, configure, explicit, **kwargs):
-        with _codecs.open(configure, "rb", "UTF-8") as stream:
+    def __autoconf(self, ac_path, explicit):
+        with _codecs.open(ac_path, "rb", "UTF-8") as stream:
             data = CachedConfig._COMMENTS.sub("", stream.read())
         for (key, pattern) in CachedConfig._AUTOCONF.items():
             match = pattern.findall(data)
             if match and key not in explicit:
                 self[key] = match[-1]
 
-    def __gnulib_cache(self, explicit, **kwargs):
-        m4_base = self.m4_base
+    def __gnulib_cache(self, explicit):
+        expected_m4_base = self.m4_base
         path = _os.path.join(self.root, self.m4_base, "gnulib-cache.m4")
-        path = _os.path.normpath(path)
         if not _os.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs.open(path, "rb", "UTF-8") as stream:
@@ -673,13 +700,12 @@ class CachedConfig(BaseConfig):
                 else:
                     sep = None if key == "overrides" else "\n"
                     self[key] = [_.strip() for _ in match[-1].split(sep) if _.strip()]
-        if m4_base != self.m4_base:
-            raise _M4BaseMismatchError(path, m4_base, self.m4_base)
+        if expected_m4_base != self.m4_base:
+            raise _M4BaseMismatchError(path, expected_m4_base, self.m4_base)
 
-    def __gnulib_comp(self, explicit, **kwargs):
+    def __gnulib_comp(self, explicit):
         macro_prefix = self.macro_prefix
         path = _os.path.join(self.root, self.m4_base, "gnulib-comp.m4")
-        path = _os.path.normpath(path)
         if not _os.path.exists(path):
             raise FileNotFoundError(path)
         with _codecs.open(path, "rb", "UTF-8") as stream:

@@ -897,12 +897,6 @@ class CommandLine:
         return "\n".join(lines).format(program=self.__program)
 
 
-    class Option:
-        """option bitwise flags"""
-        DryRun = (1 << 0)
-        SingleConfigure = (1 << 1)
-
-
     def __init__(self, program):
         self.__parser = _argparse.ArgumentParser(prog=program, add_help=False)
         for (options, kwargs) in CommandLine._SECTIONS_[0][2]:
@@ -958,6 +952,5 @@ class CommandLine:
         verbosity = namespace.pop("verbosity", 0)
         options = dict(namespace)
         options.setdefault("dry_run", False)
-        options.setdefault("single_configure", False)
         namespace["overrides"] = list(reversed(namespace.get("overrides", [])))
         return (namespace, mode, verbosity, options)
