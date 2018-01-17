@@ -1,5 +1,5 @@
 Description:
-realpath, canonical_file_name: Provide canonical absolute file name
+realpath, canonicalize_file_name: Provide canonical absolute file name
 
 Files:
 lib/canonicalize-lgpl.c
