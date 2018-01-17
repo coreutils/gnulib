@@ -672,14 +672,14 @@ class LibMakefileGenerator(BaseGenerator):
         self.__database = database
         self.__path = path
         self.__mkedits = mkedits
-        self.testing = testing
+        self.__testing = testing
 
 
     def __iter__(self):
         date = _datetime.now()
         config = self.__config
         explicit = self.__explicit
-        testing = self.testing
+        testing = self.__testing
         database = self.__database
 
         gnumake = config.gnumake
@@ -719,7 +719,7 @@ class LibMakefileGenerator(BaseGenerator):
 
             def _common_conditional(module, conditional, unconditional):
                 yield ""
-                yield "if {}".format(module.conditional_name)
+                yield "if {}".format(module.conditional_name(config.macro_prefix))
                 yield conditional
                 yield "endif"
                 yield unconditional
@@ -732,7 +732,7 @@ class LibMakefileGenerator(BaseGenerator):
             def _gnumake_conditional(module, conditional, unconditional):
                 yield "ifeq (,$(OMIT_GNULIB_MODULE_{}))".format(module.name)
                 yield ""
-                yield "ifneq (,$({}))".format(module.conditional_name)
+                yield "ifneq (,$({}))".format(module.conditional_name(config.macro_prefix))
                 yield LibMakefileGenerator._GNUMAKE.sub("ifneq (,$(\\1))", conditional)
                 yield "endif"
                 yield "endif"
@@ -1006,7 +1006,7 @@ class GnulibCompGenerator(BaseGenerator):
         yield "# other built files."
         yield ""
         yield ""
-        yield "# This macro should be invoked from $configure_ac, in the section"
+        yield "# This macro should be invoked from {}, in the section".format(config.ac_file)
         yield "# \"Checks for programs\", right after AC_PROG_CC, and certainly before"
         yield "# any checks for libraries, header files, types and library functions."
         yield "AC_DEFUN([{}_EARLY],".format(config.macro_prefix)
@@ -1030,7 +1030,7 @@ class GnulibCompGenerator(BaseGenerator):
                 yield "  {}".format(line)
         yield "])"
         yield ""
-        yield "# This macro should be invoked from $configure_ac, in the section"
+        yield "# This macro should be invoked from {}, in the section".format(config.ac_file)
         yield "# \"Check for header files, types and library functions\"."
         yield "AC_DEFUN([{}_INIT],".format(macro_prefix)
         yield "["
