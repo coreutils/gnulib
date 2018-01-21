@@ -94,11 +94,9 @@ class CommandLine:
             super().__init__(default=_argparse.SUPPRESS, *args, **kwargs)
 
         def __call__(self, parser, namespace, value, option=None):
-            if option == "--help":
-                setattr(namespace, self.dest, CommandLine._HELP)
-                return
             if hasattr(namespace, "mode"):
                 mode = getattr(namespace, "mode")
+                mode = mode if option != "--help" else CommandLine._HELP
                 if mode and not (self.__flags & mode) and (mode != CommandLine._HELP):
                     mode = "--" + {k:v for (k, v, _) in CommandLine._MODES}[mode]
                     fmt = "argument {0}: not allowed with {1}"
@@ -148,29 +146,20 @@ class CommandLine:
             super().__init__(*args, **kwargs)
 
         def __call__(self, parser, namespace, value, option=None):
-            if not hasattr(namespace, self.dest):
-                setattr(namespace, self.dest, 0)
-            old_option = None
-            new_option = option
-            new_mode = None
-            old_mode = getattr(namespace, self.dest)
+            mode_option = {}
+            option_mode = {}
             for (mode, name, _) in CommandLine._MODES:
-                option = ("--" + name)
-                if mode == old_mode:
-                    old_option = option
-                if option == new_option:
-                    new_mode = mode
-                if old_option and new_mode:
-                    break
-            if new_mode == CommandLine._HELP:
-                old_mode = new_mode
-            if old_mode != CommandLine._HELP and old_mode != new_mode:
-                if old_mode != 0:
-                    fmt = "argument {0}: not allowed with {1}"
-                    parser.error(fmt.format(new_option, old_option))
-            if new_mode != CommandLine._UPDATE:
-                setattr(namespace, "modules", set(value))
-            value = new_mode
+                name = "--{}".format(name)
+                mode_option[mode] = name
+                option_mode[name] = mode
+            modules = value
+            new_option = option
+            new_mode = value = option_mode[option]
+            old_mode = getattr(namespace, self.dest, 0)
+            old_option = mode_option[old_mode] if old_mode != 0 else ""
+            if (new_mode & (CommandLine._UPDATE | CommandLine._HELP)) == 0:
+                setattr(namespace, "modules", set(modules))
+            value = CommandLine._HELP if CommandLine._HELP in {old_mode, new_mode} else new_mode
             super().__call__(parser, namespace, value, option)
 
 
