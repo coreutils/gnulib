@@ -155,10 +155,12 @@ main (void)
   errno = 0;
   ASSERT (renameat (dfd, BASE "sub2", dfd, BASE "sub1/.") == -1);
   ASSERT (errno == EINVAL || errno == EISDIR || errno == EBUSY
-          || errno == ENOTEMPTY || errno == EEXIST);
+          || errno == ENOTEMPTY || errno == EEXIST
+          || errno == ENOENT /* WSL */);
   errno = 0;
   ASSERT (renameat (dfd, BASE "sub2/.", dfd, BASE "sub1") == -1);
-  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
+  ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST
+          || errno == ENOENT /* WSL */);
   errno = 0;
   ASSERT (renameat (dfd, BASE "17", dfd, BASE "sub1") == -1);
   ASSERT (errno == EISDIR);

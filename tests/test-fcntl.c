@@ -266,7 +266,8 @@ main (void)
   ASSERT (errno == EINVAL);
   errno = 0;
   ASSERT (fcntl (fd, F_DUPFD_CLOEXEC, bad_fd) == -1);
-  ASSERT (errno == EINVAL);
+  ASSERT (errno == EINVAL
+          || errno == EMFILE /* WSL */);
 
   /* For F_DUPFD*, check for correct inheritance, as well as
      preservation of text vs. binary.  */

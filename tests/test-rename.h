@@ -339,12 +339,14 @@ test_rename (int (*func) (char const *, char const *), bool print)
         errno = 0;
         ASSERT (func (BASE "dir2", BASE "dir/.") == -1);
         ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR
-                || errno == ENOTEMPTY || errno == EEXIST);
+                || errno == ENOTEMPTY || errno == EEXIST
+                || errno == ENOENT /* WSL */);
       }
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST
+                || errno == ENOENT /* WSL */);
       }
       ASSERT (rmdir (BASE "dir") == 0);
       /* Files present here:
@@ -366,12 +368,14 @@ test_rename (int (*func) (char const *, char const *), bool print)
         errno = 0;
         ASSERT (func (BASE "dir2", BASE "dir/.//") == -1);
         ASSERT (errno == EINVAL || errno == EBUSY || errno == EISDIR
-                || errno == ENOTEMPTY || errno == EEXIST);
+                || errno == ENOTEMPTY || errno == EEXIST
+                || errno == ENOENT /* WSL */);
       }
       {
         errno = 0;
         ASSERT (func (BASE "dir2/.//", BASE "dir") == -1);
-        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST);
+        ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST
+                || errno == ENOENT /* WSL */);
       }
       ASSERT (rmdir (BASE "dir2") == 0);
       /* Files present here:
