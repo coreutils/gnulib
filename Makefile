@@ -9,7 +9,7 @@
 # that you have tools like git, makeinfo and cppi installed.
 
 # Required for the use of <(...) below.
-SHELL=/bin/bash
+SHELL=bash
 
 # Produce some files that are not stored in the repository.
 all:
