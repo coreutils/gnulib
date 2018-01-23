@@ -87,6 +87,14 @@ module that contains this source file, you can use the command
 Gnulib assumes that your project uses Autoconf.  When using Gnulib, you
 will need to have Autoconf among your build tools.
 
+Gnulib also assumes that your project's @file{configure.ac} contains the
+line
+@smallexample
+AC_CONFIG_HEADERS([config.h])
+@end smallexample
+The @file{config.h} file gets generated with platform dependent C macro
+definitions, and the source files include it (see @ref{Source changes}).
+
 Unless you use @command{gnulib-tool}'s @option{--gnu-make} option,
 Gnulib also assumes that your project uses Automake at least in a
 subdirectory of your project.  While the use of Automake in your
