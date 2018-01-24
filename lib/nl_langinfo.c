@@ -100,6 +100,24 @@ rpl_nl_langinfo (nl_item item)
     case T_FMT_AMPM:
       return (char *) "%I:%M:%S %p";
 # endif
+# if GNULIB_defined_ALTMON
+    case ALTMON_1:
+    case ALTMON_2:
+    case ALTMON_3:
+    case ALTMON_4:
+    case ALTMON_5:
+    case ALTMON_6:
+    case ALTMON_7:
+    case ALTMON_8:
+    case ALTMON_9:
+    case ALTMON_10:
+    case ALTMON_11:
+    case ALTMON_12:
+      /* We don't ship the appropriate localizations with gnulib.  Therefore,
+         treat ALTMON_i like MON_i.  */
+      item = item - ALTMON_1 + MON_1;
+      break;
+# endif
 # if GNULIB_defined_ERA
     case ERA:
       /* The format is not standardized.  In glibc it is a sequence of strings
@@ -228,28 +246,49 @@ nl_langinfo (nl_item item)
           return (char *) abdays[item - ABDAY_1];
         return nlbuf;
       }
-    case MON_1:
-    case MON_2:
-    case MON_3:
-    case MON_4:
-    case MON_5:
-    case MON_6:
-    case MON_7:
-    case MON_8:
-    case MON_9:
-    case MON_10:
-    case MON_11:
-    case MON_12:
-      {
-        static char const months[][sizeof "September"] = {
-          "January", "February", "March", "April", "May", "June", "July",
-          "September", "October", "November", "December"
-        };
+    {
+      static char const months[][sizeof "September"] = {
+        "January", "February", "March", "April", "May", "June", "July",
+        "September", "October", "November", "December"
+      };
+      case MON_1:
+      case MON_2:
+      case MON_3:
+      case MON_4:
+      case MON_5:
+      case MON_6:
+      case MON_7:
+      case MON_8:
+      case MON_9:
+      case MON_10:
+      case MON_11:
+      case MON_12:
         tmm.tm_mon = item - MON_1;
         if (!strftime (nlbuf, sizeof nlbuf, "%B", &tmm))
           return (char *) months[item - MON_1];
         return nlbuf;
-      }
+      case ALTMON_1:
+      case ALTMON_2:
+      case ALTMON_3:
+      case ALTMON_4:
+      case ALTMON_5:
+      case ALTMON_6:
+      case ALTMON_7:
+      case ALTMON_8:
+      case ALTMON_9:
+      case ALTMON_10:
+      case ALTMON_11:
+      case ALTMON_12:
+        tmm.tm_mon = item - ALTMON_1;
+        /* The platforms without nl_langinfo() don't support strftime with %OB.
+           We don't even need to try.  */
+        #if 0
+        if (!strftime (nlbuf, sizeof nlbuf, "%OB", &tmm))
+        #endif
+          if (!strftime (nlbuf, sizeof nlbuf, "%B", &tmm))
+            return (char *) months[item - ALTMON_1];
+        return nlbuf;
+    }
     case ABMON_1:
     case ABMON_2:
     case ABMON_3:
