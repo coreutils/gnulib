@@ -6,6 +6,7 @@ lib/recvfrom.c
 lib/w32sock.h
 
 Depends-on:
+extensions
 sys_socket
 socketlib
 errno           [test "$ac_cv_header_winsock2_h" = yes]
