@@ -12,22 +12,25 @@ import tempfile
 import traceback
 import subprocess as sp
 
+
 from pygnulib.error import CommandLineError
 from pygnulib.error import UnknownModuleError
 
 from pygnulib.config import BaseConfig
 from pygnulib.config import CachedConfig
 
-from pygnulib.generator import CommandLineGenerator
-from pygnulib.generator import GnulibCacheGenerator
-from pygnulib.generator import LibMakefileGenerator
-from pygnulib.generator import POMakevarsGenerator
-from pygnulib.generator import GnulibCompGenerator
+from pygnulib.generator import gnulib_cache
+from pygnulib.generator import gnulib_comp
+from pygnulib.generator import lib_makefile
+from pygnulib.generator import po_make_vars
+from pygnulib.generator import tests_makefile
 
 from pygnulib.module import DummyModule
 from pygnulib.module import Database
 
 from pygnulib.parser import CommandLine as CommandLineParser
+
+from pygnulib.tools import Executable
 
 from pygnulib.vfs import BaseVFS
 from pygnulib.vfs import GnulibGitVFS
@@ -44,6 +47,23 @@ from pygnulib.vfs import unlink as vfs_unlink
 
 
 
+class GnulibExecutable(Executable):
+    def __init__(self, name, encoding=None, shell_name=None, shell_path=None):
+        path = None
+        if shell_name is None:
+            shell_name = shell_name.upper()
+        if shell_path is None:
+            shell_path = "{}PATH".format(shell_name)
+        environ = dict(ENVIRON)
+        environ.update(os.environ)
+        if shell_name in environ:
+            path = shell_name
+        elif shell_path in environ:
+            path = "{}{}".format(shell_path)
+        super().__init__(name, path)
+
+
+
 AC_VERSION_PATTERN = re.compile(r"AC_PREREQ\(\[(.*?)\]\)", re.S | re.M)
 IGNORED_LICENSES = {
     "GPLed build tool",
@@ -56,7 +76,7 @@ TRANSFER_MODES = {
     "hardlink": vfs_hardlink,
     "symlink": vfs_symlink,
 }
-SUBSTITUTION_RULES = {
+SUBSTITUTION = {
     "build-aux": "auxdir",
     "doc": "doc_base",
     "lib": "source_base",
@@ -96,7 +116,12 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    cache = CachedConfig(root=config.root)
+    try:
+        cache = CachedConfig(root=config.root)
+    except FileNotFoundError:
+        cache = BaseConfig(**config)
+        cache.files = set()
+        cache.ac_version = "2.59"
     for key in {"ac_version", "files"}:
         if key not in namespace:
             config[key] = cache[key]
@@ -165,16 +190,19 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     table = {}
     overrides = []
-    for (tbl_key, cfg_key) in SUBSTITUTION_RULES.items():
-        table[tbl_key] = config[cfg_key] if cfg_key else ""
     project = BaseVFS(config.root, **table)
     overrides = {BaseVFS(override, **table) for override in config.overrides}
+    for (name, key) in SUBSTITUTION.items():
+        project[name] = config[key] if key else ""
+    for override in overrides:
+        for (name, key) in SUBSTITUTION.items():
+            override[name] = config[key] if key else ""
 
     table = {}
     old_files = set(cache.files)
     if "m4/gnulib-tool.m4" in project:
         old_files |= set(["m4/gnulib-tool.m4"])
-    for (tbl_key, cfg_key) in SUBSTITUTION_RULES.items():
+    for (tbl_key, cfg_key) in SUBSTITUTION.items():
         table[tbl_key] = cache[cfg_key] if cfg_key else ""
     new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
 
@@ -271,7 +299,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # Generate the contents of library makefile.
     path = os.path.join(config.source_base, config.makefile_name)
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in LibMakefileGenerator(path, config, explicit, database, mkedits, False):
+        modules = database.main_modules
+        for line in lib_makefile(path, config, explicit, database, modules, mkedits, False):
             print(line, file=tmp)
     (src, dst) = (tmp.name, path)
     present = vfs_exists(project, dst)
@@ -297,7 +326,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             action(bool(match), vfs, src, project, dst, present)
         # Create po makefile parameterization, part 1.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-            for line in POMakevarsGenerator(config):
+            for line in po_make_vars(config):
                 print(line, file=tmp)
         (src, dst) = (tmp.name, "po/Makevars")
         present = vfs_exists(project, dst)
@@ -308,7 +337,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         os.unlink(tmp.name)
         # Create po makefile parameterization, part 2.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-            for line in POMakevarsGenerator(config):
+            for line in po_make_vars(config):
                 print(line, file=tmp)
         (src, dst) = (tmp.name, "po/POTFILESGenerator.in")
         present = vfs_exists(project, dst)
@@ -353,7 +382,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Create m4/gnulib-cache.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in GnulibCacheGenerator(config):
+        for line in gnulib_cache(config):
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-cache.m4")
     present = vfs_exists(project, dst)
@@ -365,7 +394,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Create m4/gnulib-comp.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in GnulibCompGenerator(config, explicit, database):
+        for line in gnulib_comp(config, explicit, database, True):
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-comp.m4")
     present = vfs_exists(project, dst)
@@ -374,6 +403,21 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     action = update_file if present else add_file
     action(False, None, src, project, dst, present)
     os.unlink(tmp.name)
+
+    # Generate the contents of tests makefile.
+    if config.tests:
+        path = os.path.join(config.tests_base, config.makefile_name)
+        with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
+            modules = database.test_modules
+            for line in tests_makefile(path, config, explicit, database, modules, mkedits, False):
+                print(line, file=tmp)
+        (src, dst) = (tmp.name, path)
+        present = vfs_exists(project, dst)
+        if present:
+            added_files.add(dst)
+        action = update_file if present else add_file
+        action(False, None, src, project, dst, present)
+        os.unlink(tmp.name)
 
     return os.EX_OK
 
@@ -420,6 +464,7 @@ HOOKS = {
 
 def main(script, gnulib, program, arguments, environ):
     gnulib = GnulibGitVFS(gnulib)
+    gnulib["tests=lib"] = "lib"
     parser = CommandLineParser(program)
     try:
         (namespace, mode, verbosity, options) = parser.parse(arguments)

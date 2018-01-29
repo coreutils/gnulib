@@ -56,10 +56,10 @@ class BaseVFS:
         _type_assert("name", name, str)
         parts = []
         replaced = False
-        path = _os.path.normpath(name)
-        if _os.path.isabs(path):
+        name = _os.path.normpath(name)
+        if _os.path.isabs(name):
             raise ValueError("name cannot be an absolute path")
-        for part in path.split(_os.path.sep):
+        for part in name.split(_os.path.sep):
             if part == "..":
                 parts += [part]
                 continue
@@ -67,8 +67,18 @@ class BaseVFS:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        path = _os.path.sep.join(parts)
-        return _os.path.normpath(path)
+        name = _os.path.sep.join(parts)
+        return _os.path.normpath(name)
+
+
+    def __setitem__(self, src, dst):
+        for name in (src, dst):
+            _type_assert("name", name, str)
+            if _os.path.isabs(name):
+                raise ValueError("name cannot be an absoule path")
+        src = _os.path.normpath(src)
+        dst = _os.path.normpath(dst)
+        self.__table[src] = dst
 
 
     @property
@@ -291,7 +301,7 @@ class GnulibGitVFS(BaseVFS):
 
     def __init__(self, prefix, **table):
         super().__init__(prefix, **table)
-        self.__cache = {}
+        self.__cache = {"dummy": _DummyModule()}
         if not _os.path.exists(self.absolute):
             raise FileNotFoundError(self.absolute)
         if not _os.path.isdir(self.absolute):
@@ -307,10 +317,7 @@ class GnulibGitVFS(BaseVFS):
             return self.__cache[name]
         path = _os.path.join(self.absolute, self["modules"], name)
         try:
-            if name != "dummy":
-                self.__cache[name] = _GnulibModule(path=path, name=name)
-            else:
-                self.__cache[name] = _DummyModule()
+            self.__cache[name] = _GnulibModule(path=path, name=name)
             return self.__cache[name]
         except FileNotFoundError:
             raise _UnknownModuleError(name)

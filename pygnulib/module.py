@@ -347,9 +347,9 @@ class BaseModule:
         if self.test:
             # *-tests module live in tests/, not lib/.
             # Synthesize an EXTRA_DIST augmentation.
-            test_files = {file for file in files if file.startswith("tests/")}
+            test_files = tuple(file[len("tests/"):] for file in files if file.startswith("tests/"))
             if test_files:
-                result += ("EXTRA_DIST += {}".format(" ".join(sorted(test_files))) + "\n")
+                result += ("EXTRA_DIST += {}".format(" ".join(test_files)) + "\n")
             return result
         snippet = self.conditional_automake_snippet
         lib_SOURCES = False
@@ -376,7 +376,7 @@ class BaseModule:
         lib_files = tuple(file[len("lib/"):] for file in all_files if file.startswith("lib/"))
         extra_files = tuple(file for file in lib_files if file not in mentioned_files)
         if extra_files:
-            result += ("EXTRA_DIST += {}".format(" ".join(sorted(extra_files))) + "\n")
+            result += ("EXTRA_DIST += {}".format(" ".join(extra_files)) + "\n")
 
         # Synthesize also an EXTRA_lib_SOURCES augmentation.
         # This is necessary so that automake can generate the right list of
@@ -406,7 +406,7 @@ class BaseModule:
     @property
     def automake_snippet(self):
         """full automake snippet (conditional + unconditional parts)"""
-        return self.conditional_automake_snippet + self.unconditional_automake_snippet
+        return "\n".join((self.conditional_automake_snippet, self.unconditional_automake_snippet))
 
 
     @property
@@ -706,7 +706,7 @@ class TransitiveClosure:
                         pass # ignore non-existent tests
                 for (dependency, condition) in demander.dependencies:
                     dependency = lookup(dependency)
-                    if config.gnumake and condition.startswith("if "):
+                    if config.gnumake and condition and condition.startswith("if "):
                         # A module whose Makefile.am snippet contains a reference to an
                         # automake conditional. If we were to use it conditionally, we
                         # would get an error
@@ -903,7 +903,7 @@ class Database:
         test_files = set()
         for file in _files(test_modules):
             if file.startswith("lib/"):
-                file = ("lib=tests/" + file[len("lib/"):])
+                file = ("tests=lib/" + file[len("lib/"):])
             test_files.add(file)
 
         self.__libtests = libtests

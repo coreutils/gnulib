@@ -41,6 +41,45 @@ OTHER_LICENSES = frozenset({
 
 
 
+KEYS = frozenset({
+    "root",
+    "overrides",
+    "source_base",
+    "m4_base",
+    "po_base",
+    "doc_base",
+    "tests_base",
+    "auxdir",
+    "libname",
+    "makefile_name",
+    "macro_prefix",
+    "po_domain",
+    "witness_c_macro",
+    "licenses",
+    "ac_version",
+    "ac_file",
+    "modules",
+    "avoids",
+    "files",
+    "copymode",
+    "local_copymode",
+    "tests",
+    "obsolete",
+    "cxx_tests",
+    "longrunning_tests",
+    "privileged_tests",
+    "unportable_tests",
+    "libtool",
+    "conditionals",
+    "copyrights",
+    "gnumake",
+    "single_configure",
+    "vc_files",
+    "all_tests",
+})
+
+
+
 class BaseConfig:
     """gnulib generic configuration"""
     _TABLE = {
@@ -424,7 +463,7 @@ class BaseConfig:
     @property
     def obsolete(self):
         """include obsolete modules when they occur among the modules?"""
-        return bool(self.__options & BaseConfig._Option.Tests)
+        return bool(self.__options & BaseConfig._Option.Obsolete)
 
     @obsolete.setter
     def obsolete(self, value):
@@ -586,17 +625,17 @@ class BaseConfig:
 
 
     def __getitem__(self, key):
-        if key not in BaseConfig._TABLE:
+        if key not in KEYS:
             key = key.replace("-", "_")
-            if key not in BaseConfig._TABLE:
+            if key not in KEYS:
                 raise KeyError("unsupported option: {0}".format(key))
         return getattr(self, key)
 
 
     def __setitem__(self, key, value):
-        if key not in BaseConfig._TABLE:
+        if key not in KEYS:
             key = key.replace("_", "-")
-            if key not in BaseConfig._TABLE:
+            if key not in KEYS:
                 raise KeyError("unsupported option: {0}".format(key))
         return setattr(self, key, value)
 
@@ -657,6 +696,7 @@ class CachedConfig(BaseConfig):
         if ac_file is None:
             ac_file = "configure.ac"
         _type_assert("ac_file", ac_file, str)
+
         ac_path = _os.path.join(root, ac_file)
         if not _os.path.exists(ac_path):
             ac_file = "configure.in"
