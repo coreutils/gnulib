@@ -38,9 +38,12 @@
 # include <limits.h> /* PATH_MAX */
 #endif
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
+#endif
+#if defined __minix
+# include <string.h> /* memcpy */
 #endif
 
 #if defined __FreeBSD__ || defined __FreeBSD_kernel__ /* FreeBSD, GNU/kFreeBSD */
@@ -103,7 +106,7 @@
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -493,6 +496,84 @@ vma_iterate_proc (vma_iterate_callback_fn callback, void *data)
   return -1;
 }
 
+#elif defined __minix
+
+static int
+vma_iterate_proc (vma_iterate_callback_fn callback, void *data)
+{
+  char fnamebuf[6+10+4+1];
+  char *fname;
+  struct rofile rof;
+
+  /* Construct fname = sprintf (fnamebuf+i, "/proc/%u/map", getpid ()).  */
+  fname = fnamebuf + sizeof (fnamebuf) - (4 + 1);
+  memcpy (fname, "/map", 4 + 1);
+  {
+    unsigned int value = getpid ();
+    do
+      *--fname = (value % 10) + '0';
+    while ((value = value / 10) > 0);
+  }
+  fname -= 6;
+  memcpy (fname, "/proc/", 6);
+
+  /* Open the current process' maps file.  It describes one VMA per line.  */
+  if (rof_open (&rof, fname) >= 0)
+    {
+      unsigned long auxmap_start = rof.auxmap_start;
+      unsigned long auxmap_end = rof.auxmap_end;
+
+      for (;;)
+        {
+          unsigned long start, end;
+          unsigned int flags;
+          int c;
+
+          /* Parse one line.  First start and end.  */
+          if (!(rof_scanf_lx (&rof, &start) >= 0
+                && rof_getchar (&rof) == '-'
+                && rof_scanf_lx (&rof, &end) >= 0))
+            break;
+          /* Then the flags.  */
+          do
+            c = rof_getchar (&rof);
+          while (c == ' ');
+          flags = 0;
+          if (c == 'r')
+            flags |= VMA_PROT_READ;
+          c = rof_getchar (&rof);
+          if (c == 'w')
+            flags |= VMA_PROT_WRITE;
+          c = rof_getchar (&rof);
+          if (c == 'x')
+            flags |= VMA_PROT_EXECUTE;
+          while (c = rof_getchar (&rof), c != -1 && c != '\n')
+            ;
+
+          if (start <= auxmap_start && auxmap_end - 1 <= end - 1)
+            {
+              /* Consider [start,end-1] \ [auxmap_start,auxmap_end-1]
+                 = [start,auxmap_start-1] u [auxmap_end,end-1].  */
+              if (start < auxmap_start)
+                if (callback (data, start, auxmap_start, flags))
+                  break;
+              if (auxmap_end - 1 < end - 1)
+                if (callback (data, auxmap_end, end, flags))
+                  break;
+            }
+          else
+            {
+              if (callback (data, start, end, flags))
+                break;
+            }
+        }
+      rof_close (&rof);
+      return 0;
+    }
+
+  return -1;
+}
+
 #else
 
 static inline int
@@ -779,7 +860,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 
 # if defined __FreeBSD__
   /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses linprocfs), the
