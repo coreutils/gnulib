@@ -404,6 +404,10 @@ get_rusage_data (void)
      get_rusage_data_via_iterator() does not work: it always returns 0x400000.
      And sbrk() is deprecated.  */
   return 0;
+#elif defined __minix /* Minix */
+  /* get_rusage_data_via_setrlimit() does not work: it always returns 0.
+     get_rusage_data_via_iterator() does not work: it shrinks upon malloc. */
+  return 0;
 #elif defined __CYGWIN__ /* Cygwin */
   /* get_rusage_data_via_setrlimit() does not work.
      Prefer get_rusage_data_via_iterator().  */
