@@ -24,6 +24,9 @@ shared libraries on Mac OS X 10.5.  Here is a workaround: Instead, one can use
 #define environ (*_NSGetEnviron())
 @end smallexample
 This works at all versions of Mac OS X.
+@item
+On Cygwin in 64-bit mode, references to this variable cause a link error when
+the option @code{-Wl,--disable-auto-import} is in use.
 @end itemize
 
 Portability problems not fixed by Gnulib:
