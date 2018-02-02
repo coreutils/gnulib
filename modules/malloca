@@ -4,7 +4,6 @@ Safe automatic memory allocation.
 Files:
 lib/malloca.h
 lib/malloca.c
-lib/malloca.valgrind
 m4/malloca.m4
 m4/eealloc.m4
 m4/longlong.m4
@@ -13,7 +12,6 @@ Depends-on:
 alloca-opt
 stdint
 xalloc-oversized
-verify
 
 configure.ac:
 gl_MALLOCA
