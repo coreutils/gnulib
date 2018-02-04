@@ -30,7 +30,7 @@ monetary.h: monetary.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
 	      -e 's|@''NEXT_MONETARY_H''@|$(NEXT_MONETARY_H)|g' \
 	      -e 's|@''HAVE_XLOCALE_H''@|$(HAVE_XLOCALE_H)|g' \
-	      -e 's|@''GNULIB_STRFMON_L''@|$(GNULIB_STRFMON_L)|g' \
+	      -e 's/@''GNULIB_STRFMON_L''@/$(GNULIB_STRFMON_L)/g' \
 	      -e 's|@''HAVE_STRFMON_L''@|$(HAVE_STRFMON_L)|g' \
 	      -e 's|@''REPLACE_STRFMON_L''@|$(REPLACE_STRFMON_L)|g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
