@@ -437,6 +437,76 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
+
+    print("Finished.", file=sys.stdout)
+    print("", file=sys.stdout)
+
+    # Mention the required include directives.
+    # First the #include <...> directives without #ifs, sorted for convenience,
+    # then the #include "..." directives without #ifs, sorted for convenience,
+    # then the #include directives that are surrounded by #ifs. Not sorted.
+    print("You may need to add #include directives for the following .h files.", file=sys.stdout)
+    table = {"quotes": set(), "angles": set(), "other": list()}
+    for module in sorted(set(database.explicit_modules) & set(database.main_modules)):
+        directives = "\n".join(module.include_directives)
+        if directives.startswith("\""):
+            table["quotes"].add(directives)
+        elif directives.startswith("<"):
+            table["angles"].add(directives)
+        else:
+            table["other"].append(directives)
+    for key in ("angles", "quotes"):
+        value = sorted(table[key])
+        for item in value:
+            print(f"  #include {item}", file=sys.stdout)
+    for item in table["other"]:
+        for line in item.splitlines():
+            print(f"  {line}", file=sys.stdout)
+
+    # Mention the required linker directives.
+    lines = []
+    for module in database.main_modules:
+        lines += module.link_directives
+    if lines:
+        print("", file=sys.stdout)
+        print("You may need to use the following Makefile variables when linking.", file=sys.stdout)
+        print("Use them in <program>_LDADD when linking a program, or", file=sys.stdout)
+        print("in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.", file=sys.stdout)
+        for line in sorted(set(lines)):
+            print(f"  {line}", file=sys.stdout)
+
+    # Mention other necessary actions.
+    print("", file=sys.stdout)
+    print("Don't forget to", file=sys.stdout)
+    if config.makefile_name == "Makefile.am":
+        fmt = "  - add \"{source_base}/Makefile\" to AC_CONFIG_FILES in {ac_file},"
+    else:
+        fmt = "  - \"include {makefile_name}\" from within \"{source_base}/Makefile.am\","
+    print(fmt.format(**config), file=sys.stdout)
+    if config.po_base:
+        fmt = "  - add \"{po_base}/Makefile.in\" to AC_CONFIG_FILES in {ac_file},"
+        print(fmt.format(**config), file=sys.stdout)
+    if config.tests:
+        if config.makefile_name == "Makefile.am":
+            fmt = "  - add \"{tests_base}/Makefile\" to AC_CONFIG_FILES in {ac_file},"
+        else:
+            fmt = "  - \"include {makefile_name}\" from within \"{tests_base}/Makefile.am\","
+        print(fmt.format(**config), file=sys.stdout)
+    for (directory, key, value) in mkedits:
+        print(f"  - mention \"{value}\" in {key} in {directory}Makefile.am,", file=sys.stdout)
+    position_early_after = "AC_PROG_CC"
+    with codecs.open(project[config.ac_file], "rb", "UTF-8") as stream:
+        contents = stream.read()
+        AC_PROG_CC_STDC = re.compile(r"^\s*AC_PROG_CC_STDC", re.S | re.M)
+        AC_PROG_CC_C99 = re.compile(r"^\s*AC_PROG_CC_C99", re.S | re.M)
+        if AC_PROG_CC_STDC.findall(contents):
+            position_early_after = "AC_PROG_CC_STDC"
+        elif AC_PROG_CC_C99.findall(contents):
+            position_early_after = "AC_PROG_CC_C99"
+    fmt = "  - invoke {macro_prefix}_EARLY in {ac_file}, right after {position_early_after},"
+    print(fmt.format(**config, position_early_after=position_early_after), file=sys.stdout)
+    fmt = "  - invoke ${macro_prefix}_INIT in {ac_file}."
+    print(fmt.format(**config), file=sys.stdout)
     return os.EX_OK
 
 
