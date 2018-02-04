@@ -421,6 +421,7 @@ sc_error_message_period:
 
 sc_file_system:
 	@prohibit=file''system						\
+	exclude='/proc/filesystems'					\
 	ignore_case=1							\
 	halt='found use of "file''system"; spell it "file system"'	\
 	  $(_sc_search_regexp)
