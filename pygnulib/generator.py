@@ -11,7 +11,6 @@ import subprocess as _sp
 from datetime import datetime as _datetime
 
 
-from .error import type_assert as _type_assert
 from .config import BaseConfig as _BaseConfig
 from .module import BaseModule as _BaseModule
 from .module import Database as _Database
@@ -98,7 +97,6 @@ __PO_MAKE_VARS = (
 
 def po_make_vars(config, **override):
     """Generate PO Makefile parameterization."""
-    _type_assert("config", config, _BaseConfig)
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -122,7 +120,6 @@ def po_make_vars(config, **override):
 
 def POTFILES(config, files, **override):
     """Generate file list to be passed to xgettext."""
-    _type_assert("config", config, _BaseConfig)
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -138,30 +135,17 @@ def POTFILES(config, files, **override):
 
 def autoconf_snippet(config, module, toplevel, no_libtool, no_gettext, **override):
     """
-    Generate autoconf snippet for a standalone module.
-
-    <config> gnulib configuration
-    <module> gnulib module instance
-    <toplevel> make a subordinate use of gnulib if False
-    <no_libtool> disable libtool (regardless of configuration)
-    <no_gettext> disable AM_GNU_GETTEXT invocations if True
-    """
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("module", module, _BaseModule)
-    _type_assert("toplevel", toplevel, bool)
-    _type_assert("no_libtool", no_libtool, bool)
-    _type_assert("no_gettext", no_gettext, bool)
+    Generate autoconf snippet for a standalone module."""
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
 
-    libtool = config.libtool and not no_libtool
     gettext = not no_gettext
     if module.name not in ("gnumakefile", "maintainer-makefile") or toplevel:
         snippet = module.autoconf_snippet
         include_guard_prefix = config.include_guard_prefix
         snippet.replace(r"${gl_include_guard_prefix}", include_guard_prefix)
-        if not config.libtool:
+        if no_libtool:
             table = (
                 (r"$gl_cond_libtool", "false"),
                 (r"gl_libdeps", "gltests_libdeps"),
@@ -169,7 +153,7 @@ def autoconf_snippet(config, module, toplevel, no_libtool, no_gettext, **overrid
             )
             for (src, dst) in table:
                 snippet = snippet.replace(src, dst)
-        if not gettext:
+        if no_gettext:
             src = "AM_GNU_GETTEXT([external])"
             dst = "dnl you must add AM_GNU_GETTEXT([external]) or similar to configure.ac.'"
             snippet = snippet.replace(src, dst)
@@ -180,7 +164,7 @@ def autoconf_snippet(config, module, toplevel, no_libtool, no_gettext, **overrid
         lines = filter(lambda line: line.strip(), snippet.split("\n"))
         for line in lines:
             yield line
-        if module.name == "alloca" and libtool:
+        if module.name == "alloca" and config.libtool and not no_libtool:
             yield "changequote(,)dnl"
             yield "LTALLOCA=`echo \"$ALLOCA\" | sed -e 's/\\.[^.]* /.lo /g;s/\\.[^.]*$/.lo/'`"
             yield "changequote([, ])dnl"
@@ -188,23 +172,8 @@ def autoconf_snippet(config, module, toplevel, no_libtool, no_gettext, **overrid
 
 
 
-def autoconf_snippet_sequence(config, database, modules, toplevel, no_libtool, no_gettext, **override):
-    """
-    Generate an autoconf snippet for multiple modules.
-
-    <config> gnulib configuration
-    <module> gnulib module instance
-    <toplevel> make a subordinate use of gnulib if False
-    <no_libtool> disable libtool (regardless of configuration)
-    <no_gettext> disable AM_GNU_GETTEXT invocations if True
-    [macro_prefix] the prefix of the macros 'gl_EARLY' and 'gl_INIT'
-    """
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("database", database, _Database)
-    _type_assert("modules", modules, _ITERABLES)
-    _type_assert("toplevel", toplevel, bool)
-    _type_assert("no_libtool", no_libtool, bool)
-    _type_assert("no_gettext", no_gettext, bool)
+def autoconf_snippets(config, database, modules, toplevel, no_libtool, no_gettext, **override):
+    """Generate an autoconf snippet for multiple modules."""
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -326,12 +295,7 @@ __INIT_MACRO_HEADER = (
 )
 
 def init_macro_header(config, **override):
-    """
-    Generate the first few statements of the gl_INIT macro.
-
-    [macro_prefix] the prefix of the macros 'gl_EARLY' and 'gl_INIT'
-    """
-    _type_assert("config", config, _BaseConfig)
+    """Generate the first few statements of the gl_INIT macro."""
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -382,7 +346,6 @@ __INIT_MACRO_FOOTER = (
 
 def init_macro_footer(config, **override):
     """Generate the last few statements of the gl_INIT macro."""
-    _type_assert("config", config, _BaseConfig)
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -429,7 +392,6 @@ def init_macro_done(config, **override):
 
     [macro_prefix] the prefix of the macros 'gl_EARLY' and 'gl_INIT'
     """
-    _type_assert("config", config, _BaseConfig)
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -441,7 +403,7 @@ def init_macro_done(config, **override):
 
 __COMMAND_LINE_PATHS = (
     ("libname", lambda k, v, d: f"--lib={v}"),
-    ("source_base", lambda k, v, d: f"--source_base={v}"),
+    ("source_base", lambda k, v, d: f"--source-base={v}"),
     ("m4_base", lambda k, v, d: f"--m4-base={v}"),
     ("po_base", lambda k, v, d: f"--po-base={v}" if k in d else None),
     ("doc_base", lambda k, v, d: f"--doc-base={v}"),
@@ -457,21 +419,18 @@ __COMMAND_LINE_TESTS = (
     ("all_tests", lambda v: "--with-all-tests" if v else None),
 )
 __COMMAND_LINE_MISC = (
-    ("conditionals", lambda k, v, d: ("--no", "--")[v] + "conditional-dependencies"),
-    ("libtool", lambda k, v, d: ("--no", "--")[v] + "libtool"),
+    ("makefile_name", lambda k, v, d: f"--makefile-name={v}"),
+    ("conditionals", lambda k, v, d: ("--no-", "--")[v] + "conditional-dependencies"),
+    ("libtool", lambda k, v, d: ("--no-", "--")[v] + "libtool"),
     ("macro_prefix", lambda k, v, d: f"--macro-prefix={v}"),
     ("gnumake", lambda k, v, d: "--gnu-make" if v else None),
-    ("makefile_name", lambda k, v, d: f"--makefile-name={v}"),
     ("po_domain", lambda k, v, d: f"--po-domain={v}" if k in d else None),
     ("witness_c_macro", lambda k, v, d: f"--witness-c-macro={v}" if k in d else None),
-    ("vc_files", lambda k, v, d: ("--no", "--")[v] + "vc-files" if k in d else None),
+    ("vc_files", lambda k, v, d: ("--no-", "--")[v] + "vc-files" if k in d else None),
 )
 
 def command_line(config, explicit, **override):
     """Generate gnulib command-line invocation."""
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("explicit", explicit, _ITERABLES)
-
     yield "gnulib-tool --import"
     for path in config.overrides:
         yield f"--local-dir={path}"
@@ -487,7 +446,7 @@ def command_line(config, explicit, **override):
             yield option
     for module in config.avoids:
         yield "--avoid={module.name}"
-    if config.licenses in _LGPL:
+    if frozenset(config.licenses) in _LGPL:
         lgpl = _LGPL[config.licenses]
         if lgpl != "yes":
             yield f"--lgpl={lgpl}"
@@ -498,8 +457,8 @@ def command_line(config, explicit, **override):
         option = hook(key, value, explicit)
         if option is not None:
             yield option
-    for module in sorted(config.modules):
-        yield "{}".format(module)
+    for module in config.modules:
+        yield f"{module}"
 
 
 
@@ -545,23 +504,14 @@ def _lib_makefile_callback(conditionals, gnumake):
     return callbacks[conditionals][gnumake]
 
 
-def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **override):
+def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
     """Generate library Makefile.am file."""
-    _type_assert("path", path, str)
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("explicit", explicit, _ITERABLES)
-    _type_assert("database", database, _Database)
-    _type_assert("modules", modules, _ITERABLES)
-    _type_assert("mkedits", mkedits, _ITERABLES)
-    _type_assert("testing", testing, bool)
-
     date = _datetime.now()
-    kwargs = {
-        "libname": config.libname,
-        "macro_prefix": config.macro_prefix,
-        "libext": "la" if config.libtool else "a",
-        "perhaps_LT": "LT" if config.libtool else "",
-    }
+    libname = config.libname
+    po_domain = config.po_domain
+    macro_prefix = config.macro_prefix
+    libext = "la" if config.libtool else "a"
+    perhaps_LT = "LT" if config.libtool else ""
     assign = "+=" if config.gnumake or "makefile_name" in explicit else "="
     eliminate_LDFLAGS = True if config.libtool else False
 
@@ -573,7 +523,7 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
 
     yield "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
     yield "## Process this file with automake to produce Makefile.in."
-    yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+    yield f"# Copyright (C) 2002-{date.year} Free Software Foundation, Inc."
     for line in __DISCLAIMER[1:]:
         yield line
     yield ""
@@ -584,14 +534,14 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
     # similarly, the IRIX 6.5 awk fails if a line has length >= 3072.
     actioncmd = " ".join(command_line(config, explicit))
     if len(actioncmd) <= 3000:
-        yield "# Reproduce by: {}".format(actioncmd)
+        yield f"# Reproduce by: {actioncmd}"
     yield ""
 
     callback = _lib_makefile_callback(config.conditionals, config.gnumake)
     def _snippet():
         lines = []
         subdirs = False
-        for module in database.main_modules:
+        for module in modules:
             if module.test:
                 continue
             conditional = module.conditional_automake_snippet
@@ -599,21 +549,21 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
             conditional = conditional.replace("lib_LTLIBRARIES", "lib%_LTLIBRARIES")
             if eliminate_LDFLAGS:
                 conditional = __MAKEFILE_LDFLAGS.sub("", conditional)
-            conditional = __MAKEFILE_LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), conditional)
+            conditional = __MAKEFILE_LIBNAME.sub(f"{libname}_{libext}_\\1", conditional)
             conditional = conditional.replace("lib%_LIBRARIES", "lib_LIBRARIES")
             conditional = conditional.replace("lib%_LTLIBRARIES", "lib_LTLIBRARIES")
             if transform_check_PROGRAMS:
                 conditional = conditional.replace("check_PROGRAMS", "noinst_PROGRAMS")
             conditional = conditional.replace(r"${gl_include_guard_prefix}", config.include_guard_prefix)
             unconditional = module.unconditional_automake_snippet.format(auxdir=config.auxdir)
-            unconditional = __MAKEFILE_LIBNAME.sub("{libname}_{libext}_\\1".format(**kwargs), unconditional)
+            unconditional = __MAKEFILE_LIBNAME.sub(f"{libname}_{libext}_\\1", unconditional)
             if (conditional + unconditional).strip():
-                lines.append("## begin gnulib module {}".format(module.name))
+                lines.append(f"## begin gnulib module {module.name}")
                 if module.name == "alloca":
-                    lines.append("{libname}_{libext}_LIBADD += @{perhaps_LT}ALLOCA@".format(**kwargs))
-                    lines.append("{libname}_{libext}_DEPENDENCIES += @{perhaps_LT}ALLOCA@".format(**kwargs))
+                    lines.append(f"{libname}_{libext}_LIBADD += @{perhaps_LT}ALLOCA@")
+                    lines.append(f"{libname}_{libext}_DEPENDENCIES += @{perhaps_LT}ALLOCA@")
                 lines += list(callback(module, conditional, unconditional, config.macro_prefix))
-                lines.append("## end   gnulib module {}".format(module.name))
+                lines.append(f"## end   gnulib module {module.name}")
                 lines.append("")
             subdirs |= any(__MAKEFILE_SUBDIRS.match(file) for file in module.files)
         return (subdirs, lines)
@@ -640,7 +590,7 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
         yield "EXTRA_DIST ="
         yield "BUILT_SOURCES ="
         yield "SUFFIXES ="
-    yield "MOSTLYCLEANFILES {} core *.stackdump".format(assign)
+    yield f"MOSTLYCLEANFILES {assign} core *.stackdump"
     if "makefile_name" not in explicit:
         yield "MOSTLYCLEANDIRS ="
         yield "CLEANFILES ="
@@ -661,7 +611,7 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
             else:
                 yield "== gnulib-tool GNU Make output failed as follows =="
                 for line in stderr.splitlines():
-                    yield "# stderr: {}".format(line)
+                    yield f"# stderr: {line}"
         yield "# End of GNU Make output."
     else:
         yield "# No GNU Make output."
@@ -677,11 +627,11 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
     ))
     if "makefile_name" not in explicit:
         yield ""
-        yield "AM_CPPFLAGS ={}".format(cppflags)
+        yield f"AM_CPPFLAGS ={cppflags}"
         yield "AM_CFLAGS ="
     elif "".join(cppflags):
         yield ""
-        yield "AM_CPPFLAGS +={}".format(cppflags)
+        yield f"AM_CPPFLAGS +={cppflags}"
     yield ""
 
     snippet = "\n".join(lines)
@@ -694,36 +644,35 @@ def lib_makefile(path, config, explicit, database, modules, mkedits, testing, **
     # installation location for the library. Don't confuse automake by saying
     # it should not be installed.
     # By default, the generated library should not be installed.
-    regex = "^[a-zA-Z0-9_]*_{perhaps_LT}LIBRARIES\\s*\\+?\\=\\s*{libname}\\.{libext}$"
-    pattern = _re.compile(regex.format(**kwargs), _re.S)
+    pattern = _re.compile(f"^[a-zA-Z0-9_]*_{perhaps_LT}LIBRARIES\\s*\\+?\\=\\s*{libname}\\.{libext}$", _re.S)
     if not pattern.findall(snippet):
-        yield "noinst_{perhaps_LT}LIBRARIES += {libname}.{libext}".format(**kwargs)
+        yield f"noinst_{perhaps_LT}LIBRARIES += {libname}.{libext}"
 
     yield ""
-    yield "{libname}_{libext}_SOURCES =".format(**kwargs)
+    yield f"{libname}_{libext}_SOURCES ="
     # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
     # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
-    yield "{libname}_{libext}_LIBADD = $({macro_prefix}_{perhaps_LT}LIBOBJS)".format(**kwargs)
-    yield "{libname}_{libext}_DEPENDENCIES = $({macro_prefix}_{perhaps_LT}LIBOBJS)".format(**kwargs)
-    yield "EXTRA_{libname}_{libext}_SOURCES =".format(**kwargs)
+    yield f"{libname}_{libext}_LIBADD = $({macro_prefix}_{perhaps_LT}LIBOBJS)"
+    yield f"{libname}_{libext}_DEPENDENCIES = $({macro_prefix}_{perhaps_LT}LIBOBJS)"
+    yield f"EXTRA_{libname}_{libext}_SOURCES ="
     if config.libtool:
-        yield "{libname}_{libext}_LDFLAGS = $(AM_LDFLAGS)".format(**kwargs)
-        yield "{libname}_{libext}_LDFLAGS += -no-undefined".format(**kwargs)
+        yield f"{libname}_{libext}_LDFLAGS = $(AM_LDFLAGS)"
+        yield f"{libname}_{libext}_LDFLAGS += -no-undefined"
         # Synthesize an ${libname}_${libext}_LDFLAGS augmentation by combining
         # the link dependencies of all modules.
         def _directives(modules):
-            directives = (module.link_directive for module in sorted(modules))
-            for directive in filter(lambda directive: directive.strip(), directives):
-                index = directive.find("when linking with libtool")
-                if index != -1:
-                    directive = directive[:index].strip(" ")
-                yield directive
-        for directive in _directives(database.main_modules):
-            yield "{libname}_{libext}_LDFLAGS += {directive}".format(directive=directive, **kwargs)
+            for module in modules:
+                for directive in module.link_directives:
+                    index = directive.find("when linking with libtool")
+                    if index != -1:
+                        directive = directive[:index].strip(" ")
+                    yield directive
+        for directive in sorted(set(_directives(modules))):
+            yield f"{libname}_{libext}_LDFLAGS += {directive}"
     yield ""
 
     if "po_base" in explicit:
-        yield "AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\\"{}-gnulib\\\"".format(config.po_domain)
+        yield f"AM_CPPFLAGS += -DDEFAULT_TEXT_DOMAIN=\\\"{po_domain}-gnulib\\\""
         yield ""
 
     for line in lines:
@@ -747,24 +696,17 @@ def _tests_makefile_callback(gnumake):
         yield snippet
 
     def _gnumake(module, snippet):
-        yield "ifeq (,$(OMIT_GNULIB_MODULE_{}))".format(module.name)
+        yield f"ifeq (,$(OMIT_GNULIB_MODULE_{module.name}))"
         yield ""
         yield snippet
         yield "endif"
 
     return _gnumake if gnumake else _automake
 
-def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
+def tests_makefile(path, config, explicit, modules, mkedits, testing, libtests):
     """Generate tests Makefile.am file."""
-    _type_assert("path", path, str)
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("explicit", explicit, _ITERABLES)
-    _type_assert("database", database, _Database)
-    _type_assert("modules", modules, _ITERABLES)
-    _type_assert("mkedits", mkedits, _ITERABLES)
-    _type_assert("testing", testing, bool)
-
-    if testing and not config.single_configure:
+    single_configure = config.single_configure
+    if testing and not single_configure:
         modules = sorted(filter(lambda module: module.test, modules))
 
     date = _datetime.now()
@@ -775,12 +717,6 @@ def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
     witness_c_macro = config.witness_c_macro
     tests_base_inverse = "/".join(".." for _ in config.tests_base.split(_os.path.sep))
     (libname, libext) = (config.libname, "la" if config.libtool else "a")
-    kwargs = {
-        "libname": config.libname,
-        "macro_prefix": config.macro_prefix,
-        "libext": "la" if config.libtool else "a",
-        "perhaps_LT": "LT" if config.libtool else "",
-    }
     assign = "+=" if config.gnumake or "makefile_name" in explicit else "="
     eliminate_LDFLAGS = True if config.libtool else False
 
@@ -792,7 +728,7 @@ def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
 
     yield "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
     yield "## Process this file with automake to produce Makefile.in."
-    yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+    yield f"# Copyright (C) 2002-{date.year} Free Software Foundation, Inc."
     for line in __DISCLAIMER[1:]:
         yield line
     yield ""
@@ -815,14 +751,14 @@ def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
             if transform_check_PROGRAMS:
                 snippet = snippet.replace("check_PROGRAMS", "noinst_PROGRAMS")
             snippet = snippet.replace(r"${gl_include_guard_prefix}", config.include_guard_prefix)
-            if database.libtests and module.name == "alloca":
+            if libtests and module.name == "alloca":
                 lines += ["libtests_a_LIBADD += @ALLOCA@"]
                 lines += ["libtests_a_DEPENDENCIES += @ALLOCA@"]
             subdirs |= any(__MAKEFILE_SUBDIRS.match(file) for file in module.files)
             if snippet.strip():
-                lines.append("## begin gnulib module {}".format(module.name))
+                lines.append(f"## begin gnulib module {module.name}")
                 lines += list(callback(module, snippet))
-                lines.append("## end   gnulib module {}".format(module.name))
+                lines.append(f"## end   gnulib module {module.name}")
                 lines.append("")
             if module.longrunning_test:
                 longrunning += lines
@@ -856,7 +792,7 @@ def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
     yield "EXTRA_PROGRAMS ="
     yield "noinst_HEADERS ="
     yield "noinst_LIBRARIES ="
-    if database.libtests:
+    if libtests:
         if testing:
             yield "noinst_LIBRARIES += libtests.a"
         else:
@@ -906,12 +842,12 @@ def tests_makefile(path, config, explicit, database, modules, mkedits, testing):
     # module whose dependency to 'progname' is voluntarily omitted).
     # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it does
     # not matter.
-    local_ldadd_before = " libtests.a" if database.libtests else ""
-    local_ldadd_after = "  libtests.a $(LIBTESTS_LIBDEPS)" if database.libtests else ""
+    local_ldadd_before = " libtests.a" if libtests else ""
+    local_ldadd_after = "  libtests.a $(LIBTESTS_LIBDEPS)" if libtests else ""
     yield f"LDADD ={local_ldadd_before} {tests_base_inverse}/{source_base}/{libname}.{libext}{local_ldadd_after}"
     yield ""
 
-    if database.libtests:
+    if libtests:
         yield "libtests_a_SOURCES ="
         # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
         # automake during its analysis looks for $(LIBOBJS), not for @LIBOBJS@.
@@ -954,16 +890,14 @@ __GNULIB_CACHE_OPTIONS = (
     ("privileged", "gl_WITH_PRIVILEGED_TESTS"),
 )
 
-def gnulib_cache(config):
+def gnulib_cache(config, explicit):
     """
     Generate gnulib-cache.m4 file.
     """
-    _type_assert("config", config, _BaseConfig)
-
     date = _datetime.now()
     yield "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
     yield "## Process this file with automake to produce Makefile.in."
-    yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+    yield f"# Copyright (C) 2002-{date.year} Free Software Foundation, Inc."
     for line in __DISCLAIMER:
         yield line
     yield "#"
@@ -974,10 +908,13 @@ def gnulib_cache(config):
     yield ""
     yield ""
     yield "# Specification in the form of a command-line invocation:"
-    yield "gl_LOCAL_DIR([$relative_local_gnulib_path])"
+    yield "#   " + " ".join(command_line(config, explicit))
+    yield ""
+    yield "# Specification in the form of a few gnulib-tool.m4 macro invocations:"
+    yield "gl_LOCAL_DIR([{}])".format(" ".join(config.overrides))
     yield "gl_MODULES(["
     for module in sorted(config.modules):
-        yield "  {}".format(module)
+        yield f"  {module}"
     yield "])"
     for key in ("obsolete", "cxx_tests", "longrunning_tests", "privileged_tests", "unportable_tests"):
         if config[key]:
@@ -985,35 +922,32 @@ def gnulib_cache(config):
     if config.all_tests:
         yield "gl_WITH_ALL_TESTS"
     yield "gl_AVOID([{}])".format(" ".join(sorted(config.avoids)))
-    yield "gl_SOURCE_BASE([{}])".format(config.source_base)
-    yield "gl_M4_BASE([{}])".format(config.m4_base)
-    yield "gl_PO_BASE([{}])".format(config.po_base)
-    yield "gl_DOC_BASE([{}])".format(config.doc_base)
-    yield "gl_TESTS_BASE([{}])".format(config.tests_base)
+    yield f"gl_SOURCE_BASE([{config.source_base}])"
+    yield f"gl_M4_BASE([{config.m4_base}])"
+    yield f"gl_PO_BASE([{config.po_base}])"
+    yield f"gl_DOC_BASE([{config.doc_base}])"
+    yield f"gl_TESTS_BASE([{config.tests_base}])"
     if config.tests:
         yield "gl_WITH_TESTS"
     yield "gl_LIB([{}])".format(config.libname)
-    if config.licenses in _LGPL:
+    if frozenset(config.licenses) in _LGPL:
         lgpl = _LGPL[config.licenses]
         yield "gl_LGPL([{}])".format(lgpl) if lgpl != "yes" else "gl_LGPL"
-    yield "gl_MAKEFILE_NAME([{}])".format(config.makefile_name)
+    yield f"gl_MAKEFILE_NAME([{config.makefile_name}])"
     if config.conditionals:
         yield "gl_CONDITIONAL_DEPENDENCIES"
     if config.libtool:
         yield "gl_LIBTOOL"
-    yield "gl_MACRO_PREFIX([{}])".format(config.macro_prefix)
-    yield "gl_PO_DOMAIN([{}])".format(config.po_domain)
-    yield "gl_WITNESS_C_MACRO([{}])".format(config.witness_c_macro)
+    yield f"gl_MACRO_PREFIX([{config.macro_prefix}])"
+    yield f"gl_PO_DOMAIN([{config.po_domain}])"
+    yield f"gl_WITNESS_C_MACRO([{config.witness_c_macro}])"
     if config.vc_files:
-        yield "gl_VC_FILES([{}])".format(" ".join(sorted(config.vc_files)))
+        yield "gl_VC_FILES([{}])".format(" ".join(config.vc_files))
 
 
 
 def gnulib_comp(config, explicit, database, subdirs, **override):
     """gnulib-comp.m4 generator"""
-    _type_assert("config", config, _BaseConfig)
-    _type_assert("explicit", explicit, _ITERABLES)
-    _type_assert("database", database, _Database)
     config = _BaseConfig(**config)
     for (key, value) in override.items():
         config[key] = value
@@ -1022,8 +956,9 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     test_modules = database.test_modules
 
     date = _datetime.now()
+    ac_file = config.ac_file
     yield "# DO NOT EDIT! GENERATED AUTOMATICALLY!"
-    yield "# Copyright (C) 2002-{} Free Software Foundation, Inc.".format(date.year)
+    yield f"# Copyright (C) 2002-{date.year} Free Software Foundation, Inc."
     for line in __DISCLAIMER[1:]:
         yield line
 
@@ -1035,10 +970,10 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     yield "# other built files."
     yield ""
     yield ""
-    yield "# This macro should be invoked from {}, in the section".format(config.ac_file)
+    yield f"# This macro should be invoked from {ac_file}, in the section"
     yield "# \"Checks for programs\", right after AC_PROG_CC, and certainly before"
     yield "# any checks for libraries, header files, types and library functions."
-    yield "AC_DEFUN([{}_EARLY],".format(config.macro_prefix)
+    yield f"AC_DEFUN([{macro_prefix}_EARLY],"
     yield "["
     yield "  m4_pattern_forbid([^gl_[A-Z]])dnl the gnulib macro namespace"
     yield "  m4_pattern_allow([^gl_ES$])dnl a valid locale name"
@@ -1053,15 +988,15 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     if not config.gnumake and subdirs:
         yield "  AC_REQUIRE([AM_PROG_CC_C_O])"
     for module in database.final_modules:
-        yield "  # Code from module {}:".format(module.name)
+        yield f"  # Code from module {module.name}:"
         lines = module.early_autoconf_snippet.split("\n")
         for line in filter(lambda line: line.strip(), lines):
-            yield "  {}".format(line)
+            yield f"  {line}"
     yield "])"
     yield ""
-    yield "# This macro should be invoked from {}, in the section".format(config.ac_file)
+    yield f"# This macro should be invoked from {ac_file}, in the section"
     yield "# \"Check for header files, types and library functions\"."
-    yield "AC_DEFUN([{}_INIT],".format(macro_prefix)
+    yield f"AC_DEFUN([{macro_prefix}_INIT],"
     yield "["
     if config.libtool:
         yield "  AM_CONDITIONAL([GL_COND_LIBTOOL], [true])"
@@ -1071,13 +1006,13 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
         yield "  gl_cond_libtool=false"
         yield "  gl_libdeps="
         yield "  gl_ltlibdeps="
-    yield "  gl_m4_base='{}'".format(config.m4_base)
+    yield f"  gl_m4_base='{config.m4_base}'"
     for line in init_macro_header(config, macro_prefix=macro_prefix):
         yield line
-    yield "  gl_source_base='{}'".format(config.source_base)
+    yield f"  gl_source_base='{config.source_base}'"
     if "witness_c_macro" in explicit:
-        yield "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [{}])".format(config.witness_c_macro)
-    for line in autoconf_snippet_sequence(config, database, main_modules, True, False, True, macro_prefix=macro_prefix):
+        yield f"  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [{config.witness_c_macro}])"
+    for line in autoconf_snippets(config, database, main_modules, True, False, True, macro_prefix=macro_prefix):
         yield line
     if "witness_c_macro" in explicit:
         yield "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
@@ -1088,13 +1023,13 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     yield "  gltests_ltlibdeps="
     for line in init_macro_header(config, macro_prefix=(macro_prefix + "tests")):
         yield line
-    yield "  gl_source_base='{}'".format(config.tests_base)
+    yield f"  gl_source_base='{config.tests_base}'"
     # Define a tests witness macro that depends on the package.
     # PACKAGE is defined by AM_INIT_AUTOMAKE, PACKAGE_TARNAME is defined by AC_INIT.
     # See <http://lists.gnu.org/archive/html/automake/2009-05/msg00145.html>.
     yield "changequote(,)dnl"
     yield "".join((
-        "  {}tests_WITNESS=IN_`".format(macro_prefix),
+        f"  {macro_prefix}tests_WITNESS=IN_`",
         "echo \"${PACKAGE-$PACKAGE_TARNAME}\"",
         " | ",
         "LC_ALL=C tr abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ",
@@ -1103,10 +1038,10 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
         "`_GNULIB_TESTS",
     ))
     yield "changequote([, ])dnl"
-    yield "  AC_SUBST([{}tests_WITNESS])".format(macro_prefix)
-    yield "  gl_module_indicator_condition=${}tests_WITNESS".format(macro_prefix)
+    yield f"  AC_SUBST([{macro_prefix}tests_WITNESS])"
+    yield f"  gl_module_indicator_condition=${macro_prefix}tests_WITNESS"
     yield "  m4_pushdef([gl_MODULE_INDICATOR_CONDITION], [$gl_module_indicator_condition])"
-    for line in autoconf_snippet_sequence(config, database, test_modules, True, True, True, macro_prefix=macro_prefix):
+    for line in autoconf_snippets(config, database, test_modules, True, True, True, macro_prefix=macro_prefix):
         yield line
     yield "  m4_popdef([gl_MODULE_INDICATOR_CONDITION])"
     for line in init_macro_footer(config, macro_prefix=(macro_prefix + "tests")):
@@ -1116,10 +1051,10 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     # created using libtool, because libtool already handles the dependencies.
     if not config.libtool:
         libname = config.libname.upper()
-        yield "  {}_LIBDEPS=\"$gl_libdeps\"".format(libname)
-        yield "  AC_SUBST([{}_LIBDEPS])".format(libname)
-        yield "  {}_LTLIBDEPS=\"$gl_ltlibdeps\"".format(libname)
-        yield "  AC_SUBST([{}_LTLIBDEPS])".format(libname)
+        yield f"  {libname}_LIBDEPS=\"$gl_libdeps\""
+        yield f"  AC_SUBST([{libname}_LIBDEPS])"
+        yield f"  {libname}_LTLIBDEPS=\"$gl_ltlibdeps\""
+        yield f"  AC_SUBST([{libname}_LTLIBDEPS])"
     if database.libtests:
         yield "  LIBTESTS_LIBDEPS=\"$gltests_libdeps\""
         yield "  AC_SUBST([LIBTESTS_LIBDEPS])"
@@ -1131,7 +1066,13 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     yield ""
     yield "# This macro records the list of files which have been installed by"
     yield "# gnulib-tool and may be removed by future gnulib-tool invocations."
-    yield "AC_DEFUN([{}_FILE_LIST], [".format(macro_prefix)
-    for file in sorted(set(database.main_files + database.test_files)):
-        yield "  {}".format(file)
+    yield f"AC_DEFUN([{macro_prefix}_FILE_LIST], ["
+    test_files = set()
+    main_files = set(database.main_files)
+    for file in database.test_files:
+        if file.startswith("lib/"):
+            file = ("tests=lib/" + file[len("lib/"):])
+        test_files.add(file)
+    for file in sorted(main_files | test_files):
+        yield f"  {file}"
     yield "])"

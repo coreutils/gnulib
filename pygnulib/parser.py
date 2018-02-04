@@ -647,6 +647,7 @@ class CommandLine:
                         "specify the library name; defaults to 'libgnu'",
                     ),
                     "action": _Option,
+                    "dest": "libname",
                     "metavar": "LIBRARY",
                 }),
                 (["--source-base"], {
@@ -942,7 +943,10 @@ class CommandLine:
             fmt = "--{0}: expected at least one argument"
             self.__parser.error(fmt.format(mode))
         verbosity = namespace.pop("verbosity", 0)
+        namespace.pop("no_changelog", None)
+
         options = dict(namespace)
+        namespace.setdefault("root", ".")
         options.setdefault("dry_run", False)
         namespace["overrides"] = list(reversed(namespace.get("overrides", [])))
         return (namespace, mode, verbosity, options)

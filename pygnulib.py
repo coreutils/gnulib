@@ -116,15 +116,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    try:
-        cache = CachedConfig(root=config.root)
-    except FileNotFoundError:
-        cache = BaseConfig(**config)
-        cache.files = set()
-        cache.ac_version = "2.59"
-    for key in {"ac_version", "files"}:
-        if key not in namespace:
-            config[key] = cache[key]
+    cache = CachedConfig(root=config.root, gnulib_comp=False, gnulib_cache=False)
     database = Database(gnulib.module, config)
 
     # Print some information about modules.
@@ -155,7 +147,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Determine license incompatibilities, if any.
     incompatibilities = set()
-    if config.licenses & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
+    if set(config.licenses) & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
         acceptable = IGNORED_LICENSES | config.licenses
         for (name, licenses) in ((module.name, module.licenses) for module in main):
             if not (acceptable & licenses):
@@ -176,7 +168,13 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 print("\n".join("  " + line for line in notice.splitlines()), file=sys.stdout)
 
     # Determine the final file list.
-    files = (set(database.main_files) | set(database.test_files))
+    test_files = set()
+    main_files = set(database.main_files)
+    for file in database.test_files:
+        if file.startswith("lib/"):
+            file = "tests=lib/{}".format(file[len("lib/"):])
+        test_files.add(file)
+    files = (main_files | test_files)
     if verbosity >= 0:
         print("File list:", file=sys.stdout)
         for file in sorted(files):
@@ -187,24 +185,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 print("  ", src, " -> ", dst, file=sys.stdout, sep="")
             else:
                 print("  ", file, file=sys.stdout, sep="")
-
-    table = {}
-    overrides = []
-    project = BaseVFS(config.root, **table)
-    overrides = {BaseVFS(override, **table) for override in config.overrides}
-    for (name, key) in SUBSTITUTION.items():
-        project[name] = config[key] if key else ""
-    for override in overrides:
-        for (name, key) in SUBSTITUTION.items():
-            override[name] = config[key] if key else ""
-
-    table = {}
-    old_files = set(cache.files)
-    if "m4/gnulib-tool.m4" in project:
-        old_files |= set(["m4/gnulib-tool.m4"])
-    for (tbl_key, cfg_key) in SUBSTITUTION.items():
-        table[tbl_key] = cache[cfg_key] if cfg_key else ""
-    new_files = frozenset(files | set(["m4/gnulib-tool.m4"]))
 
     dry_run = options["dry_run"]
     gnulib_copymode = config.copymode
@@ -249,11 +229,29 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
         print(fmt.format(file=dst_name), file=sys.stdout)
 
+    # Adjust the VFS mappings.
+    overrides = []
+    project = BaseVFS(config.root)
+    overrides = {BaseVFS(override) for override in config.overrides}
+    for (alias, key) in SUBSTITUTION.items():
+        path = config[key] if key else ""
+        project[alias] = path
+        for override in overrides:
+            override[alias] = path
+    gnulib["tests=lib"] = "lib"
+
+    # Determine all relevant file lists.
+    old_files = set(cache.files)
+    if "m4/gnulib-tool.m4" in project:
+        old_files |= set(["m4/gnulib-tool.m4"])
+    new_files = (files | set(["m4/gnulib-tool.m4"]))
+
     # First the files that are in old_files, but not in new_files.
     # Then the files that are in new_files, but not in old_files.
     # Then the files that are in new_files and in old_files.
-    removed_files = {file for file in old_files if file not in new_files}
-    added_files = {file for file in new_files if file not in old_files}
+    origin = lambda file: ("lib/" + file[len("tests=lib/"):]) if file.startswith("tests=lib/") else file
+    removed_files = set(map(origin, old_files)).difference(map(origin, new_files))
+    added_files = new_files.difference(old_files)
     kept_files = (old_files & new_files)
     for file in sorted(removed_files):
         remove_file(project, file)
@@ -299,8 +297,15 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # Generate the contents of library makefile.
     path = os.path.join(config.source_base, config.makefile_name)
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        modules = database.main_modules
-        for line in lib_makefile(path, config, explicit, database, modules, mkedits, False):
+        arguments = {
+            "path": path,
+            "config": config,
+            "explicit": explicit,
+            "modules": database.main_modules,
+            "mkedits": mkedits,
+            "testing": False,
+        }
+        for line in lib_makefile(**arguments):
             print(line, file=tmp)
     (src, dst) = (tmp.name, path)
     present = vfs_exists(project, dst)
@@ -346,7 +351,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
-        # Fetch PO files.
+
         po_root = os.path.join(project.absolute, project["po"])
         fmt = ("{} gnulib PO files from " + TP_URL)
         print(fmt.format("Fetching", "Fetch")[dry_run], file=sys.stdout)
@@ -382,7 +387,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Create m4/gnulib-cache.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in gnulib_cache(config):
+        for line in gnulib_cache(config, explicit):
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-cache.m4")
     present = vfs_exists(project, dst)
@@ -394,7 +399,13 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Create m4/gnulib-comp.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-        for line in gnulib_comp(config, explicit, database, True):
+        arguments = {
+            "config": config,
+            "explicit": explicit,
+            "database": database,
+            "subdirs": True,
+        }
+        for line in gnulib_comp(**arguments):
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-comp.m4")
     present = vfs_exists(project, dst)
@@ -408,8 +419,16 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     if config.tests:
         path = os.path.join(config.tests_base, config.makefile_name)
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
-            modules = database.test_modules
-            for line in tests_makefile(path, config, explicit, database, modules, mkedits, False):
+            arguments = {
+                "path": path,
+                "config": config,
+                "explicit": explicit,
+                "modules": database.test_modules,
+                "mkedits": mkedits,
+                "testing": False,
+                "libtests": database.libtests,
+            }
+            for line in tests_makefile(**arguments):
                 print(line, file=tmp)
         (src, dst) = (tmp.name, path)
         present = vfs_exists(project, dst)
@@ -418,7 +437,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
-
     return os.EX_OK
 
 
@@ -464,7 +482,6 @@ HOOKS = {
 
 def main(script, gnulib, program, arguments, environ):
     gnulib = GnulibGitVFS(gnulib)
-    gnulib["tests=lib"] = "lib"
     parser = CommandLineParser(program)
     try:
         (namespace, mode, verbosity, options) = parser.parse(arguments)
@@ -485,9 +502,9 @@ def main(script, gnulib, program, arguments, environ):
         "verbosity": verbosity,
         "options": options,
     }
-    for (action, callback) in HOOKS.items():
+    for (action, hook) in HOOKS.items():
         if mode.startswith(action):
-            return callback(**kwargs)
+            return hook(**kwargs)
     return os.EX_SOFTWARE
 
 
@@ -501,13 +518,12 @@ if __name__ == "__main__":
     environ = dict(os.environ)
     try:
         result = main(script, gnulib, program, arguments, environ)
-    except BaseException as error:
+    except StopIteration as error:
         with codecs.open(log, "wb", "UTF-8") as stream:
             program = repr(program) if " " in program else program
             arguments = " ".join(repr(arg) if " " in arg else arg for arg in arguments)
             print(traceback.format_exc(), file=stream)
             print("COMMAND:", program, arguments, file=stream)
-            print("VERSION:", gnulib, file=stream)
         typeid = type(error)
         module = typeid.__module__
         name = typeid.__name__

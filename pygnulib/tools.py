@@ -4,11 +4,7 @@
 
 
 
-import os as _os
 import subprocess as _sp
-
-
-from .error import type_assert as _type_assert
 
 
 
@@ -29,11 +25,6 @@ class Pipe(metaclass=_PipeMeta):
 class Executable:
     """command-line program or script"""
     def __init__(self, name, path=None, encoding=None):
-        _type_assert("name", name, str)
-        if path is not None:
-            _type_assert("path", path, str)
-        if encoding is not None:
-            _type_assert("encoding", encoding, str)
         self.__name = name
         self.__path = path
         self.__encoding = encoding

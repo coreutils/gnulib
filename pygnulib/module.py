@@ -11,39 +11,44 @@ import hashlib as _hashlib
 import json as _json
 import os as _os
 import re as _re
+import sys as _sys
 
 
-from .error import type_assert as _type_assert
 from .error import UnknownModuleError as _UnknownModuleError
 from .config import BaseConfig as _BaseConfig
-
-
-
-_ITERABLES = frozenset((list, tuple, set, frozenset, type({}.keys()), type({}.values())))
+from .misc import Property as _Property
+from .misc import PathProperty as _PathProperty
+from .misc import StringListProperty as _StringListProperty
+from .misc import PathListProperty as _PathListProperty
 
 
 
 class BaseModule:
     """base module"""
-    _TABLE = {
-        "description"                  : (0x00, str, "Description"),
-        "comment"                      : (0x01, str, "Comment"),
-        "status"                       : (0x02, tuple, "Status"),
-        "notice"                       : (0x03, str, "Notice"),
-        "applicability"                : (0x04, str, "Applicability"),
-        "files"                        : (0x05, tuple, "Files"),
-        "dependencies"                 : (0x06, tuple, "Depends-on"),
-        "early_autoconf_snippet"       : (0x07, str, "configure.ac-early"),
-        "autoconf_snippet"             : (0x08, str, "configure.ac"),
-        "conditional_automake_snippet" : (0x09, str, "Makefile.am"),
-        "include_directive"            : (0x0A, str, "Include"),
-        "link_directive"               : (0x0B, str, "Link"),
-        "licenses"                     : (0x0C, tuple, "License"),
-        "maintainers"                  : (0x0D, tuple, "Maintainer"),
-        # unconditional_automake_snippet
-        # automake_snippet
+    __slots__ = ("__options", "__flags")
+
+
+    __PROPERTIES = {
+        "name"                           : None,
+        "description"                    : "",
+        "comment"                        : "",
+        "status"                         : "",
+        "notice"                         : "",
+        "applicability"                  : "",
+        "files"                          : "",
+        "dependencies"                   : "",
+        "early_autoconf_snippet"         : "",
+        "autoconf_snippet"               : "",
+        "conditional_automake_snippet"   : "",
+        "unconditional_automake_snippet" : None,
+        "automake_snippet"               : None,
+        "include_directives"             : "",
+        "link_directives"                : "",
+        "licenses"                       : "",
+        "maintainers"                    : "",
+        "test"                           : "",
     }
-    _PROPERTIES = {
+    __OPTIONS = {
         "name",
         "description",
         "comment",
@@ -57,289 +62,267 @@ class BaseModule:
         "conditional_automake_snippet",
         "unconditional_automake_snippet",
         "automake_snippet",
-        "include_directive",
-        "link_directive",
+        "include_directives",
+        "link_directives",
         "licenses",
         "maintainers",
         "test",
     }
+    __FLAGS = {}
     __LIB_SOURCES = _re.compile(r"^lib_SOURCES\s*\+\=\s*(.*?)$", _re.S | _re.M)
 
 
     def __init__(self, name, **kwargs):
-        _type_assert("name", name, str)
-        if "licenses" in kwargs:
-            licenses = set()
-            for license in kwargs.get("licenses", tuple()):
-                _type_assert("license", license, str)
-                licenses.add(license)
-            kwargs["licenses"] = licenses
-        if "maintainers" not in kwargs:
-            kwargs["maintainers"] = {"all"}
-        self.__name = name
-        self.__table = _collections.OrderedDict()
-        for (key, (_, typeid, _)) in BaseModule._TABLE.items():
-            self.__table[key] = typeid(kwargs.get(key, typeid()))
+        if not isinstance(name, str):
+            raise TypeError("name: str expected")
+        if not name.strip():
+            raise ValueError("name: invalid name")
 
+        self.__flags = 0
+        self.__options = {}
+        for key in BaseModule.__OPTIONS:
+            value = BaseModule.__PROPERTIES[key]
+            if value is not None:
+                self.__set_option(key, value)
+        for key in BaseModule.__FLAGS:
+            state = BaseModule.__PROPERTIES[key]
+            mask = getattr(self.__class__, key).mask
+            self.__set_flags(mask, state)
+        self.__set_option("name", name)
 
-    def __repr__(self):
-        return "<" + self.__name + ">"
-
-
-    def __str__(self):
-        return "<" + self.__name + ">"
+        for (key, value) in kwargs.items():
+            setattr(self, key, value)
 
 
     def __enter__(self):
         return self
 
 
-    def __exit__(self, exctype, excval, exctrace):
-        pass
-
-
     def __hash__(self):
-        return hash(self.__name) ^ hash(_json.dumps(dict(self.__table), sort_keys=True))
+        return hash(_json.dumps(dict(self.__options), sort_keys=True))
+
+
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return f"{module}.{name}[{self.name}]"
 
 
     def __getitem__(self, key):
-        _type_assert("key", key, str)
-        if key not in BaseModule._PROPERTIES:
+        if key not in BaseModule.__PROPERTIES:
             key = key.replace("-", "_")
-            if key not in BaseModule._PROPERTIES:
+            if key not in BaseModule.__PROPERTIES:
                 raise KeyError(repr(key))
         return getattr(self, key)
 
 
     def __setitem__(self, key, value):
-        _type_assert("key", key, str)
-        if key not in BaseModule._PROPERTIES:
+        if key not in BaseModule.__PROPERTIES:
             key = key.replace("-", "_")
-            if key not in BaseModule._PROPERTIES:
+            if key not in BaseModule.__PROPERTIES:
                 raise KeyError(repr(key))
         return setattr(self, key, value)
 
 
+    def __get_option(self, key):
+        return self.__options[key]
+
+    def __set_option(self, key, value):
+        self.__options[key] = value
+
+
     @property
-    def gnulib(self):
+    def gnulib_package(self):
         """gnulib-compatible module textual representation"""
         def _gnulib():
             yield "Description:"
-            yield self.__table["description"]
+            yield self.description
             yield "Comment:"
-            yield self.__table["comment"]
+            yield self.comment
             yield "Status:"
-            for status in sorted(self.__table["status"]):
+            for status in sorted(self.status):
                 yield status
             yield "Notice:"
-            yield self.__table["notice"]
+            yield self.notice
             yield "Applicability:"
-            yield self.__table["applicability"]
+            yield self.applicability
             yield "Files:"
-            for file in sorted(self.__table["files"]):
+            for file in self.files:
                 yield file
             yield "Depends-on:"
-            for (module, condition) in self.__table["dependencies"]:
+            for (module, condition) in self.dependencies:
                 yield "{}    {}".format(module, condition)
             yield "configure.ac-early:"
-            yield self.__table["early_autoconf_snippet"]
+            yield self.early_autoconf_snippet
             yield "configure.ac:"
-            yield self.__table["autoconf_snippet"]
+            yield self.autoconf_snippet
             yield "Makefile.am:"
-            yield self.__table["conditional_automake_snippet"]
+            yield self.conditional_automake_snippet
             yield "Include:"
-            yield self.__table["include_directive"]
+            for include in self.include_directives:
+                yield include
             yield "Link:"
-            yield self.__table["link_directive"]
+            for link in self.link_directives:
+                yield link
             yield "License:"
-            for license in sorted(self.__table["licenses"]):
+            for license in self.licenses:
                 yield license
             yield "Maintainer:"
-            for maintainer in self.__table["maintainers"]:
+            for maintainer in maintainers:
                 yield maintainer
         return "\n".join(_gnulib())
 
 
-    @property
-    def name(self):
-        """name"""
-        return self.__name
+    name = _Property(
+        fget=lambda self: self.__get_option("name"),
+        fset=lambda self, string: self.__set_option("name", string),
+        check=lambda value: isinstance(value, str) and value,
+        doc="name",
+    )
+    description = _Property(
+        fget=lambda self: self.__get_option("description"),
+        fset=lambda self, string: self.__set_option("description", string),
+        check=lambda value: isinstance(value, str),
+        doc="description",
+    )
+    comment = _Property(
+        fget=lambda self: self.__get_option("comment"),
+        fset=lambda self, string: self.__set_option("comment", string),
+        check=lambda value: isinstance(value, str),
+        doc="comment",
+    )
+    status = _StringListProperty(
+        sorted=True,
+        unique=True,
+        fget=lambda self: self.__get_option("comment"),
+        fset=lambda self, string: self.__set_option("comment", string),
+        doc="status list",
+    )
+    obsolete = _Property(
+        fget=lambda self: "obsolete" in self.status,
+        doc="module is obsolete?",
+    )
+    cxx_test = _Property(
+        fget=lambda self: "c++-test" in self.status,
+        doc="module is a C++ test?",
+    )
+    longrunning_test = _Property(
+        fget=lambda self: "longrunning-test" in self.status,
+        doc="module is a longrunning test?",
+    )
+    privileged_test = _Property(
+        fget=lambda self: "privileged-test" in self.status,
+        doc="module is a privileged test?",
+    )
+    unportable_test = _Property(
+        fget=lambda self: "unportable-test" in self.status,
+        doc="module is an unportable test?",
+    )
+    mask = _Property(
+        fget=lambda self: ((0, (1 << 0))[self.obsolete]
+                          |(0, (1 << 1))[self.cxx_test]
+                          |(0, (1 << 2))[self.longrunning_test]
+                          |(0, (1 << 3))[self.privileged_test]
+                          |(0, (1 << 4))[self.unportable_test]),
+        doc="module acceptibility mask",
+    )
+    notice = _Property(
+        fget=lambda self: self.__get_option("notice"),
+        fset=lambda self, string: self.__set_option("notice", string),
+        check=lambda value: isinstance(value, str),
+        doc="module notice or disclaimer",
+    )
+    applicability = _Property(
+        fget=lambda self: self.__get_option("applicability"),
+        fset=lambda self, string: self.__set_option("applicability", string),
+        check=lambda value: isinstance(value, str) and value in {"main", "tests", "all"},
+        doc="applicability ('main', 'tests' or 'all')",
+    )
+    files = _PathListProperty(
+        sorted=True,
+        unique=True,
+        fget=lambda self: self.__get_option("files"),
+        fset=lambda self, string: self.__set_option("files", string),
+        doc="file dependencies",
+    )
+    early_autoconf_snippet = _Property(
+        fget=lambda self: self.__get_option("early_autoconf_snippet"),
+        fset=lambda self, string: self.__set_option("early_autoconf_snippet", string),
+        check=lambda value: isinstance(value, str),
+        doc="early configure.ac snippet",
+    )
+    autoconf_snippet = _Property(
+        fget=lambda self: self.__get_option("autoconf_snippet"),
+        fset=lambda self, string: self.__set_option("autoconf_snippet", string),
+        check=lambda value: isinstance(value, str),
+        doc="configure.ac snippet",
+    )
+    conditional_automake_snippet = _Property(
+        fget=lambda self: self.__get_option("conditional_automake_snippet"),
+        fset=lambda self, string: self.__set_option("conditional_automake_snippet", string),
+        check=lambda value: isinstance(value, str),
+        doc="configure.ac snippet",
+    )
+    automake_snippet = _Property(
+        fget=lambda self: "\n".join((self.conditional_automake_snippet, self.unconditional_automake_snippet)),
+        doc="full automake snippet (conditional + unconditional parts)",
+    )
+    include_directives = _StringListProperty(
+        fget=lambda self: self.__get_option("include_directives"),
+        fset=lambda self, string: self.__set_option("include_directives", string),
+        doc="include directive",
+    )
+    link_directives = _StringListProperty(
+        fget=lambda self: self.__get_option("link_directives"),
+        fset=lambda self, string: self.__set_option("link_directives", string),
+        doc="link directive",
+    )
+    licenses = _StringListProperty(
+        sorted=True,
+        unique=True,
+        fget=lambda self: self.__get_option("licenses"),
+        fset=lambda self, name: self.__set_option("licenses", name),
+        doc="acceptable licenses for modules",
+    )
+    maintainers = _StringListProperty(
+        sorted=False,
+        unique=True,
+        fget=lambda self: self.__get_option("maintainers"),
+        fset=lambda self, name: self.__set_option("maintainers", name),
+        doc="module maintainers list",
+    )
+    test = _Property(
+        fget=lambda self: self.__get_option("test"),
+        fset=lambda self, name: self.__set_option("test", name),
+        check=lambda value: isinstance(value, bool),
+        doc="module is a test?",
+    )
 
-    @name.setter
-    def name(self, value):
-        _type_assert("name", value, str)
-        self.__name = value
 
-
-    @property
-    def description(self):
-        """description"""
-        return self.__table["description"]
-
-    @description.setter
-    def description(self, value):
-        _type_assert("description", value, str)
-        self.__table["description"] = value
-
-
-    @property
-    def comment(self):
-        """comment"""
-        return self.__table["comment"]
-
-    @comment.setter
-    def comment(self, value):
-        _type_assert("comment", value, str)
-        self.__table["comment"] = value
-
-
-    @property
-    def status(self):
-        """status"""
-        return self.__table["status"]
-
-    @status.setter
-    def status(self, value):
-        _type_assert("status", value, _ITERABLES)
-        result = set()
-        for item in value:
-            _type_assert("status", item, str)
-            result.add(item)
-        self.__table["status"] = tuple(result)
-
-
-    @property
-    def obsolete(self):
-        """module is obsolete?"""
-        return "obsolete" in self.status
-
-    @property
-    def cxx_test(self):
-        """module is a C++ test?"""
-        return "c++-test" in self.status
-
-    @property
-    def longrunning_test(self):
-        """module is a C++ test?"""
-        return "longrunning-test" in self.status
-
-    @property
-    def privileged_test(self):
-        """module is a privileged test?"""
-        return "privileged-test" in self.status
-
-    @property
-    def unportable_test(self):
-        """module is a unportable test?"""
-        return "unportable-test" in self.status
-
-
-    @property
-    def notice(self):
-        """notice"""
-        return self.__table["notice"]
-
-    @notice.setter
-    def notice(self, value):
-        _type_assert("notice", value, str)
-        self.__table["notice"] = value
-
-
-    @property
-    def applicability(self):
-        """applicability (usually "main" or "tests")"""
-        return self.__table["applicability"]
-
-    @applicability.setter
-    def applicability(self, value):
-        _type_assert("applicability", value, str)
-        if value not in ("all", "main", "tests"):
-            raise ValueError("applicability: \"main\", \"tests\" or \"all\"")
-        self.__table["applicability"] = value
-
-
-    @property
-    def files(self):
-        """file dependencies iterator (set of strings)"""
-        return self.__table["files"]
-
-    @files.setter
-    def files(self, value):
-        _type_assert("files", value, _ITERABLES)
-        result = set()
-        for item in value:
-            _type_assert("file", item, str)
-            result.add(item)
-        self.__table["files"] = tuple(result)
-
-
-    @property
+    @_Property
     def dependencies(self):
         """dependencies iterator (name, condition)"""
-        entries = set()
-        for line in self.__table["dependencies"]:
-            line = line.replace("\t", " ").strip()
-            index = line.find(" ")
-            if index == -1:
-                module = line
-                condition = ""
-            else:
-                module = line[:index].strip()
-                condition = line[index:].strip()
-            if condition.startswith("["):
-                condition = condition[1:]
-            if condition.endswith("]"):
-                condition = condition[:-1]
-            if not condition:
-                condition = None
-            entries.add((module, condition))
-        return tuple(entries)
+        return self.__options["dependencies"]
 
     @dependencies.setter
     def dependencies(self, value):
-        _type_assert("files", value, _ITERABLES)
-        result = set()
-        for (name, condition) in value:
-            _type_assert("name", name, str)
-            _type_assert("condition", condition, str)
-            result.add((name, condition))
-        self.__table["dependencies"] = tuple(result)
+        result = []
+        types = (list, tuple, set, frozenset, type({}.keys()), type({}.values()))
+        if not isinstance(value, types):
+            raise TypeError("value: iterable expected")
+        for item in value:
+            if not isinstance(value, (list, tuple)):
+                raise TypeError("item: pair expected")
+            (module, condition) = item
+            if not isinstance(module, str):
+                raise TypeError("module: str expected")
+            if condition is not None and not isinstance(condition, str):
+                raise TypeError("condition: str or None expected")
+            result.append((module, condition))
+        self.__options["dependencies"] = tuple(result)
 
 
-    @property
-    def early_autoconf_snippet(self):
-        """early configure.ac snippet"""
-        return self.__table["early_autoconf_snippet"]
-
-    @early_autoconf_snippet.setter
-    def early_autoconf_snippet(self, value):
-        _type_assert("early_autoconf_snippet", value, str)
-        self.__table["early_autoconf_snippet"] = value
-
-
-    @property
-    def autoconf_snippet(self):
-        """configure.ac snippet"""
-        return self.__table["autoconf_snippet"]
-
-    @autoconf_snippet.setter
-    def autoconf_snippet(self, value):
-        _type_assert("autoconf_snippet", value, str)
-        self.__table["autoconf_snippet"] = value
-
-
-    @property
-    def conditional_automake_snippet(self):
-        """Makefile.am snippet that can be put inside Automake conditionals"""
-        return self.__table["conditional_automake_snippet"]
-
-    @conditional_automake_snippet.setter
-    def conditional_automake_snippet(self, value):
-        _type_assert("conditional_automake_snippet", value, str)
-        self.__table["conditional_automake_snippet"] = value
-
-
-    @property
+    @_Property
     def unconditional_automake_snippet(self):
         """Makefile.am snippet that must stay outside of Automake conditionals"""
         result = ""
@@ -403,78 +386,6 @@ class BaseModule:
         return result
 
 
-    @property
-    def automake_snippet(self):
-        """full automake snippet (conditional + unconditional parts)"""
-        return "\n".join((self.conditional_automake_snippet, self.unconditional_automake_snippet))
-
-
-    @property
-    def include_directive(self):
-        """include directive"""
-        value = self.__table["include_directive"]
-        if value.startswith("<") or value.startswith("\""):
-            return "#include {0}".format(value)
-        return self.__table["include_directive"]
-
-    @include_directive.setter
-    def include_directive(self, value):
-        _type_assert("include_directive", value, str)
-        self.__table["include_directive"] = value
-
-
-    @property
-    def link_directive(self):
-        """link directive"""
-        return self.__table["link_directive"]
-
-    @link_directive.setter
-    def link_directive(self, value):
-        _type_assert("link_directive", value, str)
-        self.__table["link_directive"] = value
-
-
-    @property
-    def licenses(self):
-        """licenses set"""
-        return self.__table["licenses"]
-
-    @licenses.setter
-    def licenses(self, value):
-        _type_assert("licenses", value, _ITERABLES)
-        result = set()
-        for item in value:
-            _type_assert("license", item, str)
-            result.add(value)
-        self.__table["licenses"] = tuple(result)
-
-
-    @property
-    def maintainers(self):
-        """maintainers"""
-        return self.__table["maintainers"]
-
-    @maintainers.setter
-    def maintainers(self, value):
-        _type_assert("maintainers", value, _ITERABLES)
-        result = set()
-        for item in value:
-            _type_assert("maintainer", item, str)
-            result.add(item)
-        self.__table["maintainers"] = tuple(result)
-
-
-    @property
-    def test(self):
-        """module is tests-related?"""
-        return self.__table["test"]
-
-    @test.setter
-    def test(self, value):
-        _type_assert("test", value, bool)
-        self.__table["test"] = value
-
-
     def shell_variable(self, macro_prefix="gl"):
         """Get the name of the shell variable set to true once m4 macros have been executed."""
         module = self.name
@@ -504,37 +415,40 @@ class BaseModule:
 
     def items(self):
         """a set-like object providing a view on module items"""
-        for key in BaseModule._PROPERTIES:
+        for key in BaseModule.__PROPERTIES:
             yield (key, self[key])
 
 
+    @classmethod
     def keys(self):
         """a set-like object providing a view on module keys"""
-        for (key, _) in self.items():
+        for key in BaseModule.__PROPERTIES:
             yield key
 
 
     def values(self):
         """a set-like object providing a view on module values"""
-        for (_, value) in self.items():
-            yield value
+        for key in BaseModule.__PROPERTIES:
+            yield self[key]
 
 
     def __lt__(self, value):
-        _type_assert("value", value, BaseModule)
-        return self.name < value.name
+        if value is not None:
+            return self.name < value.name
+        return False
 
     def __le__(self, value):
         return self.__lt__(value) or self.__eq__(value)
 
     def __eq__(self, value):
-        _type_assert("value", value, BaseModule)
-        if self.name != value.name:
-            return False
-        for key in BaseModule._PROPERTIES:
-            if self[key] != value[key]:
+        if value is not None:
+            if self.name != value.name:
                 return False
-        return True
+            for key in BaseModule.__PROPERTIES:
+                if self[key] != value[key]:
+                    return False
+            return True
+        return False
 
     def __ne__(self, value):
         return not self.__eq__(value)
@@ -544,6 +458,108 @@ class BaseModule:
 
     def __gt__(self, value):
         return not value.__lt__(self)
+
+
+
+class FileModule(BaseModule):
+    """text-based module"""
+    __slots__ = ("__path")
+
+
+    __DEPENDENCY = _re.compile(r"(\S+)(?:\s+(\[.*?\]))?$", _re.M)
+    __STRING = lambda text: text.strip()
+    __MULTILINE = lambda text: tuple(filter(
+        lambda line: line.strip() and not line.strip().startswith("#"),
+        [line.strip() for line in text.strip().splitlines()],
+    ))
+    __INCLUDE_DIRECTIVES = lambda text: tuple(filter(
+        lambda line: line.strip(),
+        [line.strip() for line in text.strip().splitlines()],
+    ))
+    __DEPENDENCIES = lambda text: FileModule.__DEPENDENCY.findall("\n".join(FileModule.__MULTILINE(text)))
+    __MAINTAINERS = lambda text: tuple(filter(
+        lambda line: line.strip() and not line.strip().startswith("#"),
+        {line.strip() for line in text.split((",", "\n")["\n" in text.strip()])},
+    ))
+    __TABLE = {
+        "Description": (
+            "description",
+            __STRING,
+        ),
+        "Comment": (
+            "comment",
+            __STRING,
+        ),
+        "Status": (
+            "status",
+            __MULTILINE,
+        ),
+        "Notice": (
+            "notice",
+            __STRING,
+        ),
+        "Applicability": (
+            "applicability",
+            __STRING,
+        ),
+        "Files": (
+            "files",
+            __MULTILINE,
+        ),
+        "Depends-on": (
+            "dependencies",
+            __DEPENDENCIES,
+        ),
+        "configure.ac-early": (
+            "early_autoconf_snippet",
+            __STRING,
+        ),
+        "configure.ac": (
+            "autoconf_snippet",
+            __STRING,
+        ),
+        "Makefile.am": (
+            "conditional_automake_snippet",
+            __STRING,
+        ),
+        "Include": (
+            "include_directives",
+            __INCLUDE_DIRECTIVES,
+        ),
+        "Link": (
+            "link_directives",
+            __MULTILINE,
+        ),
+        "License": (
+            "licenses",
+            __MULTILINE,
+        ),
+        "Maintainer": (
+            "maintainers",
+            __MAINTAINERS,
+        ),
+    }
+    __PATTERN = _re.compile("({}):".format("|".join(__TABLE)))
+
+
+    path = _Property(
+        fget=lambda self: self.__path,
+        doc="module file path",
+    )
+
+
+    def __init__(self, path, name, **kwargs):
+        if not isinstance(path, str):
+            raise TypeError("path: str expected")
+        if not isinstance(name, str):
+            raise TypeError("name: str expected")
+        with _codecs.open(path, "rb", "UTF-8") as stream:
+            match = FileModule.__PATTERN.split(stream.read())[1:]
+        for (group, text) in zip(match[::2], match[1::2]):
+            (key, hook) = FileModule.__TABLE[group]
+            kwargs.setdefault(key, hook(text))
+        super().__init__(name=name, **kwargs)
+        self.__path = path
 
 
 
@@ -559,8 +575,8 @@ class _DummyModuleMeta(type):
         "dependencies": tuple(),
         "early_autoconf_snippet": "",
         "autoconf_snippet": "",
-        "include_directive": "",
-        "link_directive": "",
+        "include_directives": "",
+        "link_directives": "",
         "licenses": tuple({"public domain"}),
         "maintainers": tuple({"all"}),
         "automake_snippet": "lib_SOURCES += dummy.c",
@@ -568,15 +584,18 @@ class _DummyModuleMeta(type):
         "unconditional_automake_snippet": "",
     }
 
+
     def __new__(mcs, name, parents, attributes):
-        cls = super().__new__(mcs, name, parents, attributes)
         for (key, value) in _DummyModuleMeta.__PROPERTIES.items():
-            setattr(cls, key, property(lambda cls, value=value: value))
-        return cls
+            fget=lambda self, value=value: value
+            doc = getattr(BaseModule, key).__doc__
+            attributes[key] = _Property(fget=fget, doc=doc)
+        return super().__new__(mcs, name, parents, attributes)
+
 
     def __call__(cls, *args, **kwargs):
         if _DummyModuleMeta.__INSTANCE is None:
-            _DummyModuleMeta.__INSTANCE = super(_DummyModuleMeta, cls).__call__(*args, **kwargs)
+            _DummyModuleMeta.__INSTANCE = super().__call__(*args, **kwargs)
         return _DummyModuleMeta.__INSTANCE
 
 
@@ -587,47 +606,50 @@ class DummyModule(BaseModule, metaclass=_DummyModuleMeta):
 
 
 
-class FileModule(BaseModule):
-    """text-based module"""
-    _TABLE = {_value[2]:(_value[1], _key) for (_key, _value) in BaseModule._TABLE.items()}
-    _FIELDS = [_field for (_, _, _field) in BaseModule._TABLE.values()]
-    _PATTERN = _re.compile("({}):".format("|".join(_FIELDS)))
+class _GnulibModuleMeta(type):
+    def __new__(mcs, name, parents, attributes):
+        for key in BaseModule.keys():
+            if key in attributes:
+                continue
+            fget = lambda self, key=key: self.__getitem__(key)
+            doc = getattr(BaseModule, key).__doc__
+            attributes[key] = _Property(fget=fget, doc=doc)
+        return super().__new__(mcs, name, parents, attributes)
 
 
-    def __init__(self, path, name=None, **kwargs):
-        _type_assert("path", path, str)
-        _type_assert("name", name, str)
-        self.__path = path
-        with _codecs.open(path, "rb", "UTF-8") as stream:
-            match = FileModule._PATTERN.split(stream.read())[1:]
-        table = {}
-        for (group, value) in zip(match[::2], match[1::2]):
-            (typeid, key) = FileModule._TABLE[group]
-            if typeid in _ITERABLES:
-                lines = []
-                for line in value.splitlines():
-                    if line.strip() and not line.startswith("#"):
-                        lines.append(line)
-                table[key] = typeid(lines)
-            else:
-                table[key] = value.strip()
-        for (key, value) in kwargs.items():
-            table[key] = value
-        super().__init__(name, **table)
-
-
-
-class GnulibModule(FileModule):
+class GnulibModule(FileModule, metaclass=_GnulibModuleMeta):
     """read-only gnulib standard module"""
+    __slots__ = ("__cache", "__hash", "__mask", "__path", "__test")
+
+
+    __OBSOLETE = (1 << 0)
+    __CXX_TEST = (1 << 1)
+    __LONGRUNNING_TEST = (1 << 2)
+    __PRIVILEGED_TEST = (1 << 3)
+    __UNPORTABLE_TEST = (1 << 4)
+
+
     def __init__(self, path, name):
-        super().__init__(path=path, name=name)
+        super(FileModule, self).__init__(name=name)
+        try:
+            module = FileModule(path=path, name=name, test=name.endswith("-tests"))
+        except FileNotFoundError:
+            raise _UnknownModuleError(name)
+        self.__cache = {_sys.intern(k):v for (k,v) in module.items()}
         self.__hash = super().__hash__()
+        self.__mask = module.mask
+        self.__path = module.path
+        self.__test = module.test
 
 
-    def __setattr__(self, key, value):
-        if key in BaseModule._PROPERTIES:
-            raise AttributeError("can't set property")
-        super().__setattr__(key, value)
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return f"{module}.{name}{{{self.name}}}"
+
+
+    def __getitem__(self, key):
+        return self.__cache[key]
 
 
     def __hash__(self):
@@ -636,41 +658,63 @@ class GnulibModule(FileModule):
 
     def __eq__(self, other):
         if isinstance(other, GnulibModule):
-            return hash(self) == hash(other)
+            return self.__hash == hash(other)
         return super().__eq__(other)
 
 
-    @property
+    obsolete = _Property(
+        fget=lambda self: bool(self.__mask & GnulibModule.__OBSOLETE),
+        doc="module is obsolete?",
+    )
+    cxx_test = _Property(
+        fget=lambda self: bool(self.__mask & GnulibModule.__CXX_TEST),
+        doc="module is a C++ test?",
+    )
+    longrunning_test = _Property(
+        fget=lambda self: bool(self.__mask & GnulibModule.__LONGRUNNING_TEST),
+        doc="module is a longrunning test?",
+    )
+    privileged_test = _Property(
+        fget=lambda self: bool(self.__mask & GnulibModule.__PRIVILEGED_TEST),
+        doc="module is a privileged test?",
+    )
+    unportable_test = _Property(
+        fget=lambda self: bool(self.__mask & GnulibModule.__UNPORTABLE_TEST),
+        doc="module is an unportable test?",
+    )
+    mask = _Property(
+        fget=lambda self: self.__mask,
+        doc="module acceptibility mask",
+    )
+    test = _Property(
+        fget=lambda self: self.name.endswith("-tests"),
+        doc="module is tests-related?",
+    )
+    path = _Property(
+        fget=lambda self: self.__path,
+        doc="module file path",
+    )
+
+
+    @_Property
     def applicability(self):
-        """applicability (usually "main" or "tests")"""
+        """WAGH applicability (usually "main" or "tests")"""
         default = "tests" if self.test else "main"
-        result = super().applicability
-        return result if result else default
-
-
-    @property
-    def test(self):
-        """module is tests-related?"""
-        return self.name.endswith("-tests")
+        current = self.__cache["applicability"]
+        return current if current else default
 
 
 
 class TransitiveClosure:
     """transitive closure table"""
-    def __init__(self, lookup, config, tests):
+    def __init__(self, lookup, modules, mask, gnumake, tests=False):
         if not callable(lookup):
             raise TypeError("lookup: callable expected")
-        _type_assert("config", config, _BaseConfig)
-        _type_assert("tests", tests, bool)
+        demanders = _collections.defaultdict(dict)
+        dependencies = _collections.defaultdict(dict)
 
         def _exclude(module):
-            return any((
-                (not config.obsolete and module.obsolete),
-                (not config.cxx_tests and module.cxx_test),
-                (not config.longrunning_tests and module.longrunning_test),
-                (not config.privileged_tests and module.privileged_test),
-                (not config.unportable_tests and module.unportable_test),
-            ))
+            return mask != module.mask
 
         def _lookup(module):
             if not (module is None or isinstance(module, BaseModule)):
@@ -687,26 +731,31 @@ class TransitiveClosure:
             dependencies[dependency][demander] = condition
             current.add(dependency)
 
+        testdb = {}
+        mapping = {}
         current = set()
         previous = set()
-        demanders = _collections.defaultdict(dict)
-        dependencies = _collections.defaultdict(dict)
-        for module in config.modules:
+        for module in modules:
             dependency = lookup(module)
             _update(None, dependency, None)
         while current != previous:
             previous.update(current)
             for demander in previous:
-                if tests and not demander.test:
+                if tests and not demander.test and testdb.get(demander.name, None) is None:
                     try:
-                        dependency = lookup("{}-tests".format(demander.name))
+                        name = (demander.name + "-tests")
+                        path = (demander.path + "-tests")
+                        dependency = GnulibModule(name=name, path=path)
                         if not _exclude(dependency):
-                            _update(None, dependency, None)
+                            _update(demander, dependency, None)
+                            testdb[demander.name] = True
+                        else:
+                            testdb[demander.name] = False
                     except _UnknownModuleError:
-                        pass # ignore non-existent tests
+                        testdb[demander.name] = False
                 for (dependency, condition) in demander.dependencies:
                     dependency = lookup(dependency)
-                    if config.gnumake and condition and condition.startswith("if "):
+                    if gnumake and condition and condition.startswith("if "):
                         # A module whose Makefile.am snippet contains a reference to an
                         # automake conditional. If we were to use it conditionally, we
                         # would get an error
@@ -724,10 +773,11 @@ class TransitiveClosure:
         conditional = set()
         unconditional = set()
         for (dependency, demanders) in self.__dependencies.items():
-            for (demander, _) in demanders.items():
+            for demander in demanders:
                 if demander is None:
-                    unconditional.add(demander)
+                    unconditional.add(dependency)
                     break
+
         previous = set()
         current = set(unconditional)
         while previous != current:
@@ -786,14 +836,9 @@ class TransitiveClosure:
         demanders = _collections.defaultdict(dict)
         dependencies = _collections.defaultdict(dict)
         collection = _ast.literal_eval(string)
-        _type_assert("collection", collection, dict)
         for key in collection:
-            _type_assert("key", key, str)
             value = collection[key]
-            _type_assert("value", value, dict)
             for (subkey, subvalue) in value.items():
-                _type_assert("key", key, str)
-                _type_assert("dict", value, dict)
                 (dependency, demander, condition) = (key, subkey, subvalue)
                 dependency = self.__lookup(dependency)
                 demander = self.__lookup(demander)
@@ -852,7 +897,10 @@ class Database:
     def __init__(self, lookup, config):
         if not callable(lookup):
             raise TypeError("lookup: callable expected")
-        _type_assert("config", config, _BaseConfig)
+
+        mask = config.mask
+        gnumake = config.gnumake
+        lookup = lambda module, lookup=lookup: module if isinstance(module, BaseModule) else lookup(module)
 
         def _applicability(module):
             return module.applicability in ({"main", "all"}, {"main"})[config.tests]
@@ -885,26 +933,23 @@ class Database:
                         return True
             return False
 
-        base_closure = TransitiveClosure(lookup, config, False)
-        full_closure = TransitiveClosure(lookup, config, True)
+        # Perform a transitive closure for modules from the configuration.
+        # The result of this transitive closure is a set of main modules.
+        explicit_modules = {lookup(module) for module in config.modules}
+        base_closure = TransitiveClosure(lookup, explicit_modules, mask, gnumake)
+        full_closure = TransitiveClosure(lookup, set(base_closure), mask, gnumake, True)
+
+        # Once the full transitive closure is completed, populate the database.
         main_modules = set(base_closure)
-        explicit_modules = set()
-        for module in full_closure:
-            if module.name in config.modules:
-                explicit_modules.add(module)
         final_modules = set(full_closure) if config.tests else main_modules
-        test_modules = (final_modules - set(filter(_applicability, main_modules)))
+        test_modules = (final_modules - set(filter(_applicability, sorted(main_modules))))
         libtests = _libtests(test_modules)
         if _dummy(main_modules):
             main_modules.add(DummyModule())
         if _dummy(test_modules) and libtests:
             test_modules.add(DummyModule())
         main_files = _files(main_modules)
-        test_files = set()
-        for file in _files(test_modules):
-            if file.startswith("lib/"):
-                file = ("tests=lib/" + file[len("lib/"):])
-            test_files.add(file)
+        test_files = _files(test_modules)
 
         self.__libtests = libtests
         self.__closure = full_closure
@@ -914,6 +959,14 @@ class Database:
         self.__explicit_modules = tuple(sorted(explicit_modules))
         self.__main_files = tuple(sorted(main_files))
         self.__test_files = tuple(sorted(test_files))
+
+
+    def __iter__(self):
+        def _iter():
+            for dependency in self.__closure:
+                for (demander, condition) in self.__closure.demanders(dependency):
+                    yield (dependency, demander, condition)
+        return iter(sorted(_iter()))
 
 
     def conditional(self, module):
@@ -936,12 +989,12 @@ class Database:
 
     def demanders(self, module):
         """For each demander which requires the module yield the demander and the corresponding condition."""
-        return self.__closure.demanders(module)
+        return sorted(self.__closure.demanders(module))
 
 
     def dependencies(self, module):
         """For each dependency of the module yield this dependency and the corresponding condition."""
-        return self.__closure.dependencies(module)
+        return sorted(self.__closure.dependencies(module))
 
 
     @property

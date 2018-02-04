@@ -12,7 +12,6 @@ import tempfile as _tempfile
 import subprocess as _sp
 
 
-from .error import type_assert as _type_assert
 from .error import UnknownModuleError as _UnknownModuleError
 from .module import DummyModule as _DummyModule
 from .module import GnulibModule as _GnulibModule
@@ -21,19 +20,21 @@ from .module import GnulibModule as _GnulibModule
 
 class BaseVFS:
     """gnulib generic virtual file system"""
-    def __init__(self, prefix, **table):
-        _type_assert("prefix", prefix, str)
+    __slots__ = ("__origin", "__root", "__table")
+
+
+    def __init__(self, origin, **table):
         self.__table = {}
         for (key, value) in table.items():
-            _type_assert(key, value, str)
             self.__table[key] = _os.path.normpath(value)
-        self.__prefix = prefix
+        self.__origin = _os.path.normpath(origin)
+        self.__root = _os.path.abspath(origin)
 
 
     def __repr__(self):
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{{{}}}".format(module, name, repr(self.__prefix))
+        return "{}.{}{{{}}}".format(module, name, repr(self.__origin))
 
 
     def __enter__(self):
@@ -45,15 +46,13 @@ class BaseVFS:
 
 
     def __contains__(self, name):
-        path = _os.path.normpath(name)
         if _os.path.isabs(name):
             raise ValueError("name must be a relative path")
-        path = _os.path.join(self.absolute, self[name])
+        path = _os.path.join(self.__root, self[name])
         return _os.path.exists(path)
 
 
     def __getitem__(self, name):
-        _type_assert("name", name, str)
         parts = []
         replaced = False
         name = _os.path.normpath(name)
@@ -67,13 +66,11 @@ class BaseVFS:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        name = _os.path.sep.join(parts)
-        return _os.path.normpath(name)
+        return _os.path.sep.join(parts)
 
 
     def __setitem__(self, src, dst):
         for name in (src, dst):
-            _type_assert("name", name, str)
             if _os.path.isabs(name):
                 raise ValueError("name cannot be an absoule path")
         src = _os.path.normpath(src)
@@ -82,15 +79,15 @@ class BaseVFS:
 
 
     @property
-    def relative(self):
-        """BaseVFS VFS name"""
-        return self.__prefix
+    def origin(self):
+        """origin VFS path"""
+        return self.__origin
 
 
     @property
-    def absolute(self):
+    def root(self):
         """absolute VFS path"""
-        return _os.path.abspath(self.__prefix)
+        return self.__root
 
 
 
@@ -114,8 +111,6 @@ def lookup(name, primary, secondary, patch="patch"):
 
     NOTE: It is up to the caller to unlink files obtained after dynamic patching.
     """
-    _type_assert("primary", primary, BaseVFS)
-    _type_assert("secondary", secondary, BaseVFS)
     if name in secondary:
         return (secondary, name)
     diff = "{}.diff".format(name)
@@ -141,14 +136,14 @@ def lookup(name, primary, secondary, patch="patch"):
 def mkdir(root, name):
     """Create a leaf directory and all intermediate ones recursively."""
     root = BaseVFS(".") if root is None else root
-    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     _os.makedirs(root[name], exist_ok=True)
 
 
 def backup(root, name):
     """Backup the given file."""
     root = BaseVFS(".") if root is None else root
-    original_path = _os.path.join(root.absolute, root[name])
+    original_path = _os.path.join(root.root, root[name])
     backup_path = "{}~".format(original_path)
     try:
         _os.unlink(backup_path)
@@ -163,9 +158,9 @@ def compare(lhs_root, lhs_name, rhs_root, rhs_name):
     rhs_root = BaseVFS(".") if rhs_root is None else rhs_root
     (lhs_path, rhs_path) = (lhs_name, rhs_name)
     if not _os.path.isabs(lhs_name):
-        lhs_path = _os.path.join(lhs_root.absolute, lhs_root[lhs_name])
+        lhs_path = _os.path.join(lhs_root.root, lhs_root[lhs_name])
     if not _os.path.isabs(rhs_name):
-        rhs_path = _os.path.join(rhs_root.absolute, rhs_root[rhs_name])
+        rhs_path = _os.path.join(rhs_root.root, rhs_root[rhs_name])
     return _filecmp.cmp(lhs_path, rhs_path, shallow=False)
 
 
@@ -181,9 +176,9 @@ def copy(src_root, src_name, dst_root, dst_name):
     mkdir(dst_root, _os.path.dirname(dst_name))
     (src_path, dst_path) = (src_name, dst_name)
     if not _os.path.isabs(src_name):
-        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+        src_path = _os.path.join(src_root.root, src_root[src_name])
     if not _os.path.isabs(dst_name):
-        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+        dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     with _codecs.open(src_path, "rb") as istream:
         with _codecs.open(dst_path, "wb") as ostream:
             while 1:
@@ -196,7 +191,7 @@ def copy(src_root, src_name, dst_root, dst_name):
 def exists(root, name):
     """Check whether the given file exists."""
     root = BaseVFS(".") if root is None else root
-    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _os.path.exists(path)
 
 
@@ -212,9 +207,9 @@ def hardlink(src_root, src_name, dst_root, dst_name):
     mkdir(dst_root, _os.path.dirname(dst_name))
     (src_path, dst_path) = (src_name, dst_name)
     if not _os.path.isabs(src_name):
-        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+        src_path = _os.path.join(src_root.root, src_root[src_name])
     if not _os.path.isabs(dst_name):
-        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+        dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     _os.link(src_path, dst_path)
 
 
@@ -229,16 +224,16 @@ def move(src_root, src_name, dst_root, dst_name):
     mkdir(dst_root, _os.path.dirname(dst_name))
     (src_path, dst_path) = (src_name, dst_name)
     if not _os.path.isabs(src_name):
-        src_path = _os.path.join(src_root.absolute, src_root[src_name])
+        src_path = _os.path.join(src_root.root, src_root[src_name])
     if not _os.path.isabs(dst_name):
-        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+        dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     _os.rename(src_path, dst_path)
 
 
 def iostream(root, name, mode="r", encoding=None):
     """Open file and return a stream. Raise IOError upon failure."""
     root = BaseVFS(".") if root is None else root
-    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _codecs.open(path, mode, encoding)
 
 
@@ -246,7 +241,7 @@ def readlink(root, name):
     """Obtain the path to which the symbolic link points."""
     root = BaseVFS(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
-    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _os.readlink(path)
 
 
@@ -262,16 +257,16 @@ def symlink(src_root, src_name, dst_root, dst_name, relative=True):
     if not relative:
         (src_path, dst_path) = (src_name, dst_name)
         if not _os.path.isabs(src_name):
-            src_path = _os.path.join(src_root.absolute, src_root[src_name])
+            src_path = _os.path.join(src_root.root, src_root[src_name])
         if not _os.path.isabs(dst_name):
-            dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+            dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     else:
-        src_path = _os.path.join(src_root.relative, src_root[src_name])
-        dst_path = _os.path.join(dst_root.relative, dst_root[dst_name])
+        src_path = _os.path.join(src_root.origin, src_root[src_name])
+        dst_path = _os.path.join(dst_root.origin, dst_root[dst_name])
         prefix = _os.path.relpath(_os.path.dirname(src_path), _os.path.dirname(dst_path))
         suffix = _os.path.basename(src_root[src_name])
         src_path = _os.path.join(prefix, suffix)
-        dst_path = _os.path.join(dst_root.absolute, dst_root[dst_name])
+        dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     _os.symlink(src_path, dst_path)
 
 
@@ -279,13 +274,16 @@ def unlink(root, name, backup=True):
     """Unlink a file, backing it up if necessary."""
     root = BaseVFS(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
-    path = name if _os.path.isabs(name) else _os.path.join(root.absolute, root[name])
+    path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     _os.unlink(path)
 
 
 
 class GnulibGitVFS(BaseVFS):
     """gnulib git repository"""
+    __slots__ = ("__cache", "__modules")
+
+
     _EXCLUDE = {
         "."                 : str.startswith,
         "~"                 : str.endswith,
@@ -299,23 +297,23 @@ class GnulibGitVFS(BaseVFS):
     }
 
 
-    def __init__(self, prefix, **table):
-        super().__init__(prefix, **table)
+    def __init__(self, origin):
+        super().__init__(origin=origin)
         self.__cache = {"dummy": _DummyModule()}
-        if not _os.path.exists(self.absolute):
-            raise FileNotFoundError(self.absolute)
-        if not _os.path.isdir(self.absolute):
-            raise NotADirectoryError(self.absolute)
-        if not _os.path.isdir(_os.path.join(self.absolute, ".git")):
+        self.__modules = _os.path.join(self.root, "modules")
+        if not _os.path.exists(self.root):
+            raise FileNotFoundError(self.root)
+        if not _os.path.isdir(self.root):
+            raise NotADirectoryError(self.root)
+        if not _os.path.isdir(_os.path.join(self.root, ".git")):
             raise TypeError("{} is not a gnulib repository".format(prefix))
 
 
     def module(self, name):
         """instantiate a module"""
-        _type_assert("name", name, str)
         if name in self.__cache:
             return self.__cache[name]
-        path = _os.path.join(self.absolute, self["modules"], name)
+        path = _os.path.join(self.__modules, name)
         try:
             self.__cache[name] = _GnulibModule(path=path, name=name)
             return self.__cache[name]
@@ -325,8 +323,7 @@ class GnulibGitVFS(BaseVFS):
 
     def modules(self):
         """iterate over all available modules"""
-        prefix = _os.path.join(self.absolute, self["modules"])
-        for root, _, files in _os.walk(prefix):
+        for root, _, files in _os.walk(self.__modules):
             names = []
             for name in files:
                 exclude = False
@@ -338,5 +335,5 @@ class GnulibGitVFS(BaseVFS):
                     names += [name]
             for name in names:
                 path = _os.path.join(root, name)
-                name = path[len(prefix) + 1:]
+                name = path[len(self.__modules) + 1:]
                 yield self.module(name)
