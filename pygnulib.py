@@ -18,6 +18,7 @@ from pygnulib.error import UnknownModuleError
 
 from pygnulib.config import BaseConfig
 from pygnulib.config import CachedConfig
+from pygnulib.config import LGPL_LICENSES
 
 from pygnulib.generator import gnulib_cache
 from pygnulib.generator import gnulib_comp
@@ -30,7 +31,7 @@ from pygnulib.module import Database
 
 from pygnulib.parser import CommandLine as CommandLineParser
 
-from pygnulib.tools import Executable
+from pygnulib.misc import Executable
 
 from pygnulib.vfs import BaseVFS
 from pygnulib.vfs import GnulibGitVFS
@@ -48,29 +49,34 @@ from pygnulib.vfs import unlink as vfs_unlink
 
 
 class GnulibExecutable(Executable):
-    def __init__(self, name, encoding=None, shell_name=None, shell_path=None):
-        path = None
-        if shell_name is None:
-            shell_name = shell_name.upper()
-        if shell_path is None:
-            shell_path = "{}PATH".format(shell_name)
-        environ = dict(ENVIRON)
-        environ.update(os.environ)
-        if shell_name in environ:
-            path = shell_name
-        elif shell_path in environ:
-            path = "{}{}".format(shell_path)
-        super().__init__(name, path)
+    def __init__(self, name, var, prefix, environ=os.environ, encoding=None):
+        if not isinstance(var, str):
+            raise TypeError("var: str expected")
+        if not isinstance(prefix, str):
+            raise TypeError("prefix: str expected")
+        var = environ.get(var, None)
+        prefix = environ.get(prefix, None)
+        path = os.path.normpath(name)
+        if not var and prefix:
+            path = f"{prefix}{path}"
+        elif var and not prefix:
+            path = os.path.normpath(var)
+        super().__init__(path=path, encoding=encoding)
 
 
 
-AC_VERSION_PATTERN = re.compile(r"AC_PREREQ\(\[(.*?)\]\)", re.S | re.M)
-IGNORED_LICENSES = {
-    "GPLed build tool",
-    "public domain",
-    "unlimited",
-    "unmodifiable license text",
-}
+AUTOCONF = GnulibExecutable("autoconf", "AUTOCONF", "AUTOCONFPATH")
+AUTOHEADER = GnulibExecutable("autoheader", "AUTOHEADER", "AUTOCONFPATH")
+ACLOCAL = GnulibExecutable("aclocal", "ACLOCAL", "AUTOMAKEPATH")
+AUTOMAKE = GnulibExecutable("automake", "AUTOMAKE", "AUTOMAKEPATH")
+AUTORECONF = GnulibExecutable("autoreconf", "AUTORECONF", "AUTOCONFPATH")
+LIBTOOLIZE = GnulibExecutable("libtoolize", "LIBTOOLIZE", "LIBTOOLPATH")
+RSYNC = GnulibExecutable("rsync", "RSYNC", "RSYNCPATH")
+WGET = GnulibExecutable("wget", "WGET", "WGETPATH")
+PATCH = GnulibExecutable("patch", "PATCH", "PATCHPATH")
+
+
+
 TRANSFER_MODES = {
     None: vfs_copy,
     "hardlink": vfs_hardlink,
@@ -86,6 +92,18 @@ SUBSTITUTION = {
     "po": "po_base",
     "top": "",
 }
+EXECUTABLES = {
+    "AUTOCONF": "AUTOCONFPATH",
+    "AUTOHEADER": "AUTOCONFPATH",
+    "ACLOCAL": "AUTOMAKEPATH",
+    "AUTOMAKE": "AUTOMAKEPATH",
+    "AUTORECONF": "AUTOCONFPATH",
+    "LIBTOOLIZE": "LIBTOOLPATH",
+}
+for (_var, _prefix) in tuple(EXECUTABLES.items()):
+    _name = _var.lower()
+    del EXECUTABLES[_var]
+    EXECUTABLES[_name] = GnulibExecutable(_name, _var, _prefix)
 TP_URL = "http://translationproject.org/latest/"
 TP_RSYNC_URI = "translationproject.org::tp/latest/"
 
@@ -147,8 +165,14 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Determine license incompatibilities, if any.
     incompatibilities = set()
-    if set(config.licenses) & {"LGPLv2", "LGPLv2+", "LGPLv3", "LGPLv3+"}:
-        acceptable = IGNORED_LICENSES | config.licenses
+    if config.licenses & LGPL_LICENSES:
+        acceptable = {
+            "GPLed build tool",
+            "public domain",
+            "unlimited",
+            "unmodifiable license text",
+        }
+        acceptable |= set(config.licenses)
         for (name, licenses) in ((module.name, module.licenses) for module in main):
             if not (acceptable & licenses):
                 incompatibilities.add((name, licenses))
@@ -259,7 +283,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         for dst in sorted(files):
             match = tuple(override for override in overrides if dst in override)
             override = match[0] if match else gnulib
-            (vfs, src) = vfs_lookup(dst, gnulib, override, patch="patch")
+            (vfs, src) = vfs_lookup(dst, gnulib, override, patch=PATCH)
             action = update_file if vfs_exists(project, dst) else add_file
             action(bool(match), vfs, src, project, dst, present)
 
@@ -301,11 +325,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             "path": path,
             "config": config,
             "explicit": explicit,
-            "modules": database.main_modules,
+            "database": database,
             "mkedits": mkedits,
             "testing": False,
         }
-        for line in lib_makefile(**arguments):
+        for line in lib_makefile(**arguments, autoconf=AUTOCONF):
             print(line, file=tmp)
     (src, dst) = (tmp.name, path)
     present = vfs_exists(project, dst)
@@ -322,7 +346,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             path = os.path.join("build-aux", "po", file)
             match = tuple(override for override in overrides if file in override)
             override = match[0] if match else gnulib
-            (vfs, src) = vfs_lookup(path, gnulib, override, patch="patch")
+            (vfs, src) = vfs_lookup(path, gnulib, override, patch=PATCH)
             dst = os.path.join("po", file)
             present = vfs_exists(project, dst)
             if present:

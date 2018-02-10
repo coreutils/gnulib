@@ -8,6 +8,7 @@ import codecs as _codecs
 import filecmp as _filecmp
 import os as _os
 import shutil as _shutil
+import sys as _sys
 import tempfile as _tempfile
 import subprocess as _sp
 
@@ -15,6 +16,7 @@ import subprocess as _sp
 from .error import UnknownModuleError as _UnknownModuleError
 from .module import DummyModule as _DummyModule
 from .module import GnulibModule as _GnulibModule
+from .misc import Executable as _Executable
 
 
 
@@ -91,7 +93,7 @@ class BaseVFS:
 
 
 
-def lookup(name, primary, secondary, patch="patch"):
+def lookup(name, primary, secondary, patch):
     """
     Try to look up a regular file inside virtual file systems or combine it via patch utility.
     The name argument is a relative file name which is going to be looked up.
@@ -111,9 +113,18 @@ def lookup(name, primary, secondary, patch="patch"):
 
     NOTE: It is up to the caller to unlink files obtained after dynamic patching.
     """
+    if not isinstance(name, str):
+        raise TypeError("name: str expected")
+    if not isinstance(primary, BaseVFS):
+        raise TypeError("primary: VFS expected")
+    if not isinstance(secondary, BaseVFS):
+        raise TypeError("secondary: VFS expected")
+    if not isinstance(patch, _Executable):
+        raise TypeError("patch: executable expected")
+
     if name in secondary:
         return (secondary, name)
-    diff = "{}.diff".format(name)
+    diff = f"{name}.diff"
     if diff not in secondary:
         return (primary, name)
     tmp = _tempfile.NamedTemporaryFile(mode="w+b", delete=False)
@@ -122,6 +133,7 @@ def lookup(name, primary, secondary, patch="patch"):
         tmp.close()
     stdin = _codecs.open(secondary[diff], "rb")
     cmd = (patch, "-s", tmp.name)
+    raise 0
     pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
     (stdout, stderr) = pipes.communicate()
     stdout = stdout.decode("UTF-8")
@@ -281,7 +293,7 @@ def unlink(root, name, backup=True):
 
 class GnulibGitVFS(BaseVFS):
     """gnulib git repository"""
-    __slots__ = ("__cache", "__modules")
+    __slots__ = ("__cache", "__prefix")
 
 
     _EXCLUDE = {
@@ -300,7 +312,7 @@ class GnulibGitVFS(BaseVFS):
     def __init__(self, origin):
         super().__init__(origin=origin)
         self.__cache = {"dummy": _DummyModule()}
-        self.__modules = _os.path.join(self.root, "modules")
+        self.__prefix = _sys.intern(_os.path.join(self.root, "modules"))
         if not _os.path.exists(self.root):
             raise FileNotFoundError(self.root)
         if not _os.path.isdir(self.root):
@@ -310,20 +322,20 @@ class GnulibGitVFS(BaseVFS):
 
 
     def module(self, name):
-        """instantiate a module"""
+        """Try to find the module by name."""
         if name in self.__cache:
             return self.__cache[name]
-        path = _os.path.join(self.__modules, name)
+        path = _os.path.join(self.__prefix, name)
         try:
-            self.__cache[name] = _GnulibModule(path=path, name=name)
-            return self.__cache[name]
-        except FileNotFoundError:
-            raise _UnknownModuleError(name)
+            result = self.__cache[name] = _GnulibModule(path=path, name=name)
+            return result
+        except _UnknownModuleError:
+            return None
 
 
     def modules(self):
-        """iterate over all available modules"""
-        for root, _, files in _os.walk(self.__modules):
+        """Iterate over all available modules."""
+        for root, _, files in _os.walk(self.__prefix):
             names = []
             for name in files:
                 exclude = False
@@ -335,5 +347,5 @@ class GnulibGitVFS(BaseVFS):
                     names += [name]
             for name in names:
                 path = _os.path.join(root, name)
-                name = path[len(self.__modules) + 1:]
+                name = path[len(self.__prefix) + 1:]
                 yield self.module(name)

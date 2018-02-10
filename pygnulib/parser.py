@@ -12,7 +12,7 @@ from .error import CommandLineError as _CommandLineError
 from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE
 from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE
 from .config import GPLv2_LICENSE as _GPLv2_LICENSE
-from .config import LGPL_LICENSE as _LGPL_LICENSE
+from .config import LGPL_LICENSES as _LGPL_LICENSES
 
 
 
@@ -202,7 +202,7 @@ class CommandLine:
             value = {
                 "2": _LGPLv2_LICENSE,
                 "3": _LGPLv3_LICENSE,
-                "yes": _LGPL_LICENSE,
+                "yes": _LGPL_LICENSES,
                 "3orGPLv2": (_GPLv2_LICENSE | _LGPLv3_LICENSE),
             }[value]
             super().__call__(parser, namespace, value, option)

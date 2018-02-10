@@ -28,8 +28,8 @@ LGPLv2_LICENSE = frozenset({"LGPLv2", "LGPLv2+"})
 LGPLv3_LICENSE = frozenset({"LGPLv2+", "LGPLv3", "LGPLv3+", "LGPL"})
 GPLv2_LICENSE = frozenset({"GPLv2", "GPLv2+"})
 GPLv3_LICENSE = frozenset({"GPLv2+", "GPLv3", "GPLv3+", "GPL"})
-LGPL_LICENSE = frozenset(LGPLv3_LICENSE)
-GPL_LICENSE = frozenset(GPLv3_LICENSE)
+LGPL_LICENSES = frozenset(LGPLv3_LICENSE)
+GPL_LICENSES = frozenset(GPLv3_LICENSE)
 OTHER_LICENSES = frozenset({
     "GPLed build tool",
     "public domain",
@@ -315,7 +315,7 @@ class BaseConfig:
     licenses = _StringListProperty(
         sorted=True,
         unique=True,
-        fget=lambda self: self.__get_option("licenses"),
+        fget=lambda self: set(self.__get_option("licenses")),
         fset=lambda self, name: self.__set_option("licenses", name),
         doc="acceptable licenses for modules",
     )
@@ -524,7 +524,7 @@ class CachedConfig(BaseConfig):
                     self[key] = {
                         "2": LGPLv2_LICENSE,
                         "3": LGPLv3_LICENSE,
-                        "yes": LGPL_LICENSE,
+                        "yes": LGPL_LICENSES,
                         "3orGPLv2": (GPLv2_LICENSE | LGPLv3_LICENSE),
                     }[match[-1]]
                 elif typeid is bool:

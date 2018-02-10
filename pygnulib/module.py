@@ -151,7 +151,10 @@ class BaseModule:
                 yield file
             yield "Depends-on:"
             for (module, condition) in self.dependencies:
-                yield "{}    {}".format(module, condition)
+                if condition:
+                    yield f"{module}    {condition}"
+                else:
+                    yield f"{module}"
             yield "configure.ac-early:"
             yield self.early_autoconf_snippet
             yield "configure.ac:"
@@ -318,6 +321,7 @@ class BaseModule:
                 raise TypeError("module: str expected")
             if condition is not None and not isinstance(condition, str):
                 raise TypeError("condition: str or None expected")
+            condition = "" if condition is None else condition
             result.append((module, condition))
         self.__options["dependencies"] = tuple(result)
 
@@ -378,7 +382,7 @@ class BaseModule:
                 result += ("EXTRA_lib_SOURCES += {}".format(" ".join(sorted(extra_files))) + "\n")
 
         # Synthesize an EXTRA_DIST augmentation also for the files in build-aux/.
-        prefix = _os.path.join("$(top_srcdir)", "{auxdir}")
+        prefix = "$(top_srcdir)/{auxdir}"
         buildaux_files = (file for file in all_files if file.startswith("build-aux/"))
         buildaux_files = tuple(_os.path.join(prefix, file[len("build-aux/"):]) for file in buildaux_files)
         if buildaux_files:
@@ -388,29 +392,29 @@ class BaseModule:
 
     def shell_variable(self, macro_prefix="gl"):
         """Get the name of the shell variable set to true once m4 macros have been executed."""
-        module = self.name
-        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), module)):
-            module = (module + "\n").encode("UTF-8")
-            module = _hashlib.md5(module).hexdigest()
-        return "{}_gnulib_enabled_{}".format(macro_prefix, module)
+        name = self.name
+        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), name)):
+            name = (name + "\n").encode("UTF-8")
+            name = _hashlib.md5(name).hexdigest()
+        return f"{macro_prefix}_gnulib_enabled_{name}"
 
 
     def shell_function(self, macro_prefix="gl"):
         """Get the name of the shell function containing the m4 macros."""
-        module = self.name
-        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), module)):
-            module = (module + "\n").encode("UTF-8")
-            module = _hashlib.md5(module).hexdigest()
-        return "func_{}_gnulib_m4code_{}".format(macro_prefix, module)
+        name = self.name
+        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), name)):
+            name = (name + "\n").encode("UTF-8")
+            name = _hashlib.md5(name).hexdigest()
+        return f"func_{macro_prefix}_gnulib_m4code_{name}"
 
 
     def conditional_name(self, macro_prefix="gl"):
         """Get the automake conditional name."""
-        module = self.name
-        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), module)):
-            module = (module + "\n").encode("UTF-8")
-            module = _hashlib.md5(module).hexdigest()
-        return "{}_GNULIB_ENABLED_{}".format(macro_prefix, module)
+        name = self.name
+        if any(filter(lambda rune: not (rune.isalnum() or rune == "_"), name)):
+            name = (name + "\n").encode("UTF-8")
+            name = _hashlib.md5(name).hexdigest()
+        return f"{macro_prefix}_GNULIB_ENABLED_{name}"
 
 
     def items(self):
@@ -466,7 +470,7 @@ class FileModule(BaseModule):
     __slots__ = ("__path")
 
 
-    __DEPENDENCY = _re.compile(r"(\S+)(?:\s+(\[.*?\]))?$", _re.M)
+    __DEPENDENCY = _re.compile(r"(\S+)(?:\s+\[(.*?)\])?$", _re.M)
     __STRING = lambda text: text.strip()
     __MULTILINE = lambda text: tuple(filter(
         lambda line: line.strip() and not line.strip().startswith("#"),
@@ -605,6 +609,10 @@ class DummyModule(BaseModule, metaclass=_DummyModuleMeta):
         super().__init__(name="dummy")
 
 
+    def __repr__(self):
+        return "pygnulib.module.DummyModule"
+
+
 
 class _GnulibModuleMeta(type):
     def __new__(mcs, name, parents, attributes):
@@ -643,6 +651,7 @@ class GnulibModule(FileModule, metaclass=_GnulibModuleMeta):
 
 
     def __repr__(self):
+        return f"{self.name}"
         module = self.__class__.__module__
         name = self.__class__.__name__
         return f"{module}.{name}{{{self.name}}}"
@@ -707,98 +716,128 @@ class GnulibModule(FileModule, metaclass=_GnulibModuleMeta):
 
 class TransitiveClosure:
     """transitive closure table"""
-    def __init__(self, lookup, modules, mask, gnumake, tests=False):
+    __slots__ = ("__lookup", "__dependencies", "__demanders", "__paths", "__conditionals")
+
+
+    __AUTOMAKE_CONDITION = _re.compile("^if\\s+", _re.S | _re.M)
+
+
+    def __init__(self, lookup, modules, mask, gnumake, conditionals, tests=False, error=True):
         if not callable(lookup):
             raise TypeError("lookup: callable expected")
-        demanders = _collections.defaultdict(dict)
-        dependencies = _collections.defaultdict(dict)
 
-        def _exclude(module):
-            return mask != module.mask
-
+        table = {None: None}
         def _lookup(module):
-            if not (module is None or isinstance(module, BaseModule)):
-                if isinstance(module, str):
-                    if lookup is None:
-                        raise TypeError("cannot instantiate {} module".format(module))
-                    module = lookup(module)
-                if not isinstance(module, BaseModule):
-                    raise TypeError("module: pygnulib.module.BaseModule expected")
-            return module
+            return table.setdefault(module, lookup(module))
 
-        def _update(demander, dependency, condition):
-            demanders[demander][dependency] = condition
-            dependencies[dependency][demander] = condition
-            current.add(dependency)
-
-        testdb = {}
-        mapping = {}
         current = set()
         previous = set()
+        demanders = _collections.defaultdict(dict)
+        dependencies = _collections.defaultdict(dict)
+        def _update(demander, dependency, condition):
+            table[dependency.name] = dependency
+            if dependency.mask == mask:
+                # A module whose Makefile.am snippet contains a reference to an
+                # automake conditional. If we were to use it conditionally, we
+                # would get an error
+                #   configure: error: conditional "..." was never defined.
+                # because automake 1.11.1 does not handle nested conditionals
+                # correctly. As a workaround, make the module unconditional.
+                snippet = dependency.automake_snippet
+                pattern = TransitiveClosure.__AUTOMAKE_CONDITION
+                if condition and pattern.findall(snippet):
+                    condition = None
+                    demander = None
+                if not condition:
+                    condition = None
+                if demander is not None:
+                    demander = demander.name
+                dependency = dependency.name
+                demanders[demander][dependency] = condition
+                dependencies[dependency][demander] = condition
+                current.add(dependency)
+
         for module in modules:
             dependency = lookup(module)
             _update(None, dependency, None)
-        while current != previous:
+        while True:
+            modules = current.difference(previous)
+            if not modules:
+                break
             previous.update(current)
-            for demander in previous:
-                if tests and not demander.test and testdb.get(demander.name, None) is None:
-                    try:
-                        name = (demander.name + "-tests")
-                        path = (demander.path + "-tests")
-                        dependency = GnulibModule(name=name, path=path)
-                        if not _exclude(dependency):
-                            _update(demander, dependency, None)
-                            testdb[demander.name] = True
-                        else:
-                            testdb[demander.name] = False
-                    except _UnknownModuleError:
-                        testdb[demander.name] = False
+            for demander in modules:
+                demander = _lookup(demander)
+                if tests and not demander.test:
+                    dependency = _lookup(demander.name + "-tests")
+                    if dependency is not None:
+                        _update(None, dependency, bool(dependencies[demander]))
                 for (dependency, condition) in demander.dependencies:
-                    dependency = lookup(dependency)
-                    if gnumake and condition and condition.startswith("if "):
-                        # A module whose Makefile.am snippet contains a reference to an
-                        # automake conditional. If we were to use it conditionally, we
-                        # would get an error
-                        #   configure: error: conditional "..." was never defined.
-                        # because automake 1.11.1 does not handle nested conditionals
-                        # correctly. As a workaround, make the module unconditional.
-                        _update(None, dependency, None)
-                    elif not _exclude(dependency):
-                        _update(demander, dependency, condition)
+                    dependency = _lookup(dependency)
+                    _update(demander, dependency, condition)
 
         self.__lookup = _lookup
-        self.__demanders = demanders
-        self.__dependencies = dependencies
-
-        conditional = set()
-        unconditional = set()
-        for (dependency, demanders) in self.__dependencies.items():
-            for demander in demanders:
-                if demander is None:
-                    unconditional.add(dependency)
-                    break
-
-        previous = set()
-        current = set(unconditional)
-        while previous != current:
-            previous.update(current)
-            for demander in previous:
-                dependencies = self.__demanders.get(demander, {})
-                for (dependency, condition) in dependencies.items():
-                    if condition is not None:
-                        conditional.add(dependency)
-                    elif demander in conditional:
-                        conditional.add(dependency)
-                    else:
-                        conditional.discard(dependency)
-                        unconditional.add(dependency)
-                current.add(demander)
-        self.__conditional = conditional
+        self.__paths = dict()
+        self.__conditionals = dict()
+        self.__demanders = dict(demanders)
+        self.__dependencies = dict(dependencies)
 
 
     def __iter__(self):
         for dependency in self.__dependencies:
-            yield dependency
+            yield self.__lookup(dependency)
+
+
+    def paths(self, module):
+        graph = self.__dependencies
+        module = self.__lookup(module).name
+        if module in self.__paths:
+            return self.__paths[module]
+        def _paths():
+            path = [module]
+            seen = {module}
+            def search():
+                dead_end = True
+                for neighbour in graph.get(path[-1], []):
+                    if neighbour not in seen:
+                        dead_end = False
+                        seen.add(neighbour)
+                        path.append(neighbour)
+                        yield from search()
+                        path.pop()
+                        seen.remove(neighbour)
+                if dead_end:
+                    yield tuple(path)
+            yield from search()
+        result = self.__paths[module] = tuple(path[:-1] for path in _paths())
+        return result
+
+
+    def conditional(self, module):
+        """
+        Test whether module is a conditional dependency.
+        Note that this check also takes all parent modules into account.
+        """
+        table = self.__dependencies
+        module = self.__lookup(module).name
+        def _conditional():
+            if module in self.__demanders[None]:
+                return False
+            if module in self.__conditionals:
+                return self.__conditionals[module]
+            conditions = set()
+            paths = self.paths(module)
+            for path in paths:
+                conditions.add(any({bool(table[dep][dem]) for (dep, dem) in zip(path, path[1:])}))
+            return all(conditions)
+        return self.__conditionals.setdefault(module, _conditional())
+
+
+    def unconditional(self, module):
+        """
+        Test whether module is an unconditional dependency.
+        Note that this check also takes all parent modules into account.
+        """
+        return not self.conditional(module)
 
 
     def dump(self, indent="  "):
@@ -807,11 +846,10 @@ class TransitiveClosure:
             unconditional = set()
             storage = _collections.defaultdict(dict)
             yield "{{".format()
-            for (key, value) in self.__dependencies.items():
-                for (subkey, subvalue) in value.items():
-                    dependency = key.name
-                    demander = subkey.name if subkey else ""
-                    condition = subvalue if subvalue else ""
+            for (dependency, entries) in self.__dependencies.items():
+                for (demander, condition) in entries.items():
+                    if condition is None:
+                        condition = ""
                     if not demander and not condition:
                         unconditional.add(dependency)
                     condition = condition.replace("\"", "\\\"")
@@ -840,8 +878,6 @@ class TransitiveClosure:
             value = collection[key]
             for (subkey, subvalue) in value.items():
                 (dependency, demander, condition) = (key, subkey, subvalue)
-                dependency = self.__lookup(dependency)
-                demander = self.__lookup(demander)
                 if not condition:
                     condition = None
                 demanders[demander][dependency] = condition
@@ -850,42 +886,20 @@ class TransitiveClosure:
         self.__dependencies = dict(dependencies)
 
 
-    def conditional(self, module):
-        """
-        Test whether module is a conditional dependency.
-        Note that this check also takes all parent modules into account.
-        Any module with an unconditional demander is also unconditional.
-        """
-        module = self.__lookup(module)
-        if module not in self.__dependencies:
-            fmt = "dependency {} not found"
-            raise KeyError(fmt.format(module))
-        return module in self.__conditional
-
-
-    def unconditional(self, module):
-        """
-        Test whether module is an unconditional dependency.
-        Note that this check also takes all parent modules into account.
-        Any module with an unconditional demander is also unconditional.
-        """
-        return not self.conditional(module)
-
-
     def demanders(self, module):
         """For each demander which requires the module yield the demander and the corresponding condition."""
-        module = self.__lookup(module)
+        module = self.__lookup(module).name
         if module in self.__dependencies:
             for (demander, condition) in self.__dependencies.get(module, {}).items():
-                yield (demander, condition)
+                yield (self.__lookup(demander), condition)
 
 
     def dependencies(self, module):
         """For each dependency of the module yield this dependency and the corresponding condition."""
-        module = self.__lookup(module)
+        module = self.__lookup(module).name
         if module in self.__demanders:
             for (dependency, condition) in self.__demanders.get(module, {}).items():
-                yield (dependency, condition)
+                yield (self.__lookup(dependency), condition)
 
 
 
@@ -935,9 +949,12 @@ class Database:
 
         # Perform a transitive closure for modules from the configuration.
         # The result of this transitive closure is a set of main modules.
-        explicit_modules = {lookup(module) for module in config.modules}
-        base_closure = TransitiveClosure(lookup, explicit_modules, mask, gnumake)
-        full_closure = TransitiveClosure(lookup, set(base_closure), mask, gnumake, True)
+        conditionals = config.conditionals
+        modules = explicit_modules = {lookup(module) for module in config.modules}
+        base_closure = TransitiveClosure(lookup, modules, mask, gnumake, conditionals)
+        modules = map(lambda module: lookup(module.name + "-tests"), set(base_closure))
+        modules = set(filter(lambda module: module is not None, modules))
+        full_closure = TransitiveClosure(lookup, (explicit_modules | modules), mask, gnumake, conditionals, True)
 
         # Once the full transitive closure is completed, populate the database.
         main_modules = set(base_closure)
@@ -962,11 +979,11 @@ class Database:
 
 
     def __iter__(self):
-        def _iter():
-            for dependency in self.__closure:
-                for (demander, condition) in self.__closure.demanders(dependency):
-                    yield (dependency, demander, condition)
-        return iter(sorted(_iter()))
+        return iter(self.__closure)
+
+
+    def paths(self, module):
+        return self.__closure.paths(module)
 
 
     def conditional(self, module):

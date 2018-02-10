@@ -5,6 +5,7 @@
 
 
 import os as _os
+import subprocess as _sp
 from collections import OrderedDict as _OrderedDict
 
 
@@ -173,3 +174,65 @@ class PathListProperty(StringListProperty):
             item = _os.path.normpath(item)
             res.append(item)
         return super().__set__(obj, res)
+
+
+
+class _PipeMeta(type):
+    __INSTANCE = None
+    def __call__(cls, *args, **kwargs):
+        if _PipeMeta.__INSTANCE is None:
+            _PipeMeta.__INSTANCE = super(_PipeMeta, cls).__call__(*args, **kwargs)
+        return _PipeMeta.__INSTANCE
+
+
+class Pipe(metaclass=_PipeMeta):
+    """pipe handle singleton"""
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        return f"{module}.{name}"
+
+
+
+class Executable:
+    """command-line program or script"""
+    def __init__(self, path=None, encoding=None):
+        if not isinstance(path, str):
+            raise TypeError("path: str expected")
+        if not path:
+            raise ValueError("path: empty string")
+        if encoding is not None and not isinstance(encoding, str):
+            raise TypeError("encoding: str or None expected")
+        self.__path = path
+        self.__encoding = encoding
+
+
+    path = Property(
+        fget=lambda self: self.__path,
+        doc="executable path",
+    )
+    encoding = Property(
+        fget=lambda self: self.__encoding,
+        doc="stdin/stdout/stderr encoding",
+    )
+
+
+    def __repr__(self):
+        module = self.__class__.__module__
+        name = self.__class__.__name__
+        path = self.__path
+        encoding = self.__encoding
+        return f"{module}.{name}(path={path}, encoding={encoding})"
+
+
+    def __call__(self, *args, **kwargs):
+        """
+        Invoke command-line tool with the given arguments.
+        Upon execution subprocess.Popen instance is returned.
+        """
+        args = ([self.path] + list(args))
+        for key in ("stdin", "stdout", "stderr"):
+            if isinstance(kwargs.get(key, Pipe()), Pipe):
+                kwargs[key] = _sp.PIPE
+        kwargs.setdefault("encoding", self.__encoding)
+        return _sp.Popen(args, **kwargs)

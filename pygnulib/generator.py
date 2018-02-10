@@ -12,20 +12,20 @@ from datetime import datetime as _datetime
 
 
 from .config import BaseConfig as _BaseConfig
-from .module import BaseModule as _BaseModule
-from .module import Database as _Database
 from .config import LGPLv2_LICENSE as _LGPLv2_LICENSE
 from .config import LGPLv3_LICENSE as _LGPLv3_LICENSE
 from .config import GPLv2_LICENSE as _GPLv2_LICENSE
-from .config import LGPL_LICENSE as _LGPL_LICENSE
-
+from .config import LGPL_LICENSES as _LGPL_LICENSES
+from .misc import Executable as _Executable
+from .module import BaseModule as _BaseModule
+from .module import Database as _Database
 
 
 
 _LGPL = {
     _LGPLv2_LICENSE: "2",
     _LGPLv3_LICENSE: "3",
-    _LGPL_LICENSE: "yes",
+    _LGPL_LICENSES: "yes",
     (_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
 }
 __DISCLAIMER = (
@@ -230,7 +230,7 @@ def autoconf_snippets(config, database, modules, toplevel, no_libtool, no_gettex
         for (dependency, condition) in sorted(database.dependencies(demander)):
             if database.conditional(dependency):
                 shellfunc = dependency.shell_function(macro_prefix)
-                if condition is not None:
+                if condition:
                     yield f"      if {condition}; then"
                     yield f"        {shellfunc}"
                     yield f"      fi"
@@ -245,7 +245,7 @@ def autoconf_snippets(config, database, modules, toplevel, no_libtool, no_gettex
             if dependency in modules and database.conditional(dependency):
                 condname = dependency.conditional_name(macro_prefix)
                 shellfunc = dependency.shell_function(macro_prefix)
-                if condition is not None:
+                if condition:
                     yield f"  if {condition}; then"
                     yield f"    {shellfunc}"
                     yield f"  fi"
@@ -466,33 +466,39 @@ __MAKEFILE_PKGDATA = _re.compile(r"^pkgdata_DATA\s+\=")
 __MAKEFILE_SUBDIRS = _re.compile(r"lib/.*/.*\.c", _re.S)
 __MAKEFILE_LDFLAGS = _re.compile(r"^lib_LDFLAGS\s*\+\=.*?$", _re.S)
 __MAKEFILE_LIBNAME = _re.compile(r"lib_([A-Z][A-Z]*)", _re.S)
-__MAKEFILE_GNUMAKE = _re.compile(r"^if (.*?)$", _re.S)
+__MAKEFILE_GNUMAKE = _re.compile(r"^if\s(.*?)$", _re.S | _re.M)
 
 
-def _lib_makefile_callback(conditionals, gnumake):
+def _lib_makefile_callback(database, macro_prefix, conditionals, gnumake):
 
-    def _automake_conditional(module, conditional, unconditional, macro_prefix):
+    def _automake_conditional(module, conditional, unconditional):
         yield ""
-        yield "if {}".format(module.conditional_name(macro_prefix))
-        yield conditional
-        yield "endif"
+        if database.conditional(module):
+            yield "if {}".format(module.conditional_name(macro_prefix))
+            yield conditional
+            yield "endif"
+        else:
+            yield conditional
         yield unconditional
 
-    def _automake_unconditional(module, conditional, unconditional, macro_prefix):
+    def _automake_unconditional(module, conditional, unconditional):
         yield ""
         yield conditional
         yield unconditional
 
-    def _gnumake_conditional(module, conditional, unconditional, macro_prefix):
+    def _gnumake_conditional(module, conditional, unconditional):
         yield "ifeq (,$(OMIT_GNULIB_MODULE_{}))".format(module.name)
         yield ""
-        yield "ifneq (,$({}))".format(module.conditional_name(macro_prefix))
-        yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", conditional)
-        yield "endif"
+        if database.conditional(module):
+            yield "ifneq (,$({}))".format(module.conditional_name(macro_prefix))
+            yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", conditional)
+            yield "endif"
+        else:
+            yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", conditional)
         yield "endif"
         yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", unconditional)
 
-    def _gnumake_unconditional(module, conditional, unconditional, macro_prefix):
+    def _gnumake_unconditional(module, conditional, unconditional):
         yield ""
         yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", conditional)
         yield __MAKEFILE_GNUMAKE.sub("ifneq (,$(\\1))", unconditional)
@@ -504,8 +510,11 @@ def _lib_makefile_callback(conditionals, gnumake):
     return callbacks[conditionals][gnumake]
 
 
-def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
+def lib_makefile(path, config, explicit, database, mkedits, testing, autoconf, **override):
     """Generate library Makefile.am file."""
+    if not isinstance(autoconf, _Executable):
+        raise TypeError("autoconf: executable expected")
+
     date = _datetime.now()
     libname = config.libname
     po_domain = config.po_domain
@@ -537,11 +546,11 @@ def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
         yield f"# Reproduce by: {actioncmd}"
     yield ""
 
-    callback = _lib_makefile_callback(config.conditionals, config.gnumake)
+    callback = _lib_makefile_callback(database, macro_prefix, config.conditionals, config.gnumake)
     def _snippet():
         lines = []
         subdirs = False
-        for module in modules:
+        for module in database.main_modules:
             if module.test:
                 continue
             conditional = module.conditional_automake_snippet
@@ -562,7 +571,7 @@ def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
                 if module.name == "alloca":
                     lines.append(f"{libname}_{libext}_LIBADD += @{perhaps_LT}ALLOCA@")
                     lines.append(f"{libname}_{libext}_DEPENDENCIES += @{perhaps_LT}ALLOCA@")
-                lines += list(callback(module, conditional, unconditional, config.macro_prefix))
+                lines += list(callback(module, conditional, unconditional))
                 lines.append(f"## end   gnulib module {module.name}")
                 lines.append("")
             subdirs |= any(__MAKEFILE_SUBDIRS.match(file) for file in module.files)
@@ -599,14 +608,12 @@ def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
 
     if config.gnumake:
         yield "# Start of GNU Make output."
-        autoconf = "autoconf"
-        cmdargs = (autoconf, "-t", "AC_SUBST:$1 = @$1@", config.ac_file)
-        with _sp.Popen(cmdargs, stdout=_sp.PIPE, stderr=_sp.PIPE) as process:
+        with autoconf("-t", "AC_SUBST:$1 = @$1@", config.ac_file) as process:
             (stdout, stderr) = process.communicate()
             stdout = stdout.decode("UTF-8")
             stderr = stderr.decode("UTF-8")
             if process.returncode == 0:
-                for line in sorted(stdout.splitlines()):
+                for line in sorted(set(stdout.splitlines())):
                     yield line
             else:
                 yield "== gnulib-tool GNU Make output failed as follows =="
@@ -667,7 +674,7 @@ def lib_makefile(path, config, explicit, modules, mkedits, testing, **override):
                     if index != -1:
                         directive = directive[:index].strip(" ")
                     yield directive
-        for directive in sorted(set(_directives(modules))):
+        for directive in sorted(set(_directives(database.main_modules))):
             yield f"{libname}_{libext}_LDFLAGS += {directive}"
     yield ""
 
