@@ -19,6 +19,7 @@
 
 #include <config.h>
 
+#include <fcntl.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -44,11 +45,30 @@
 # define MIN(a, b) ((a) < (b) ? (a) : (b))
 #endif
 
+/* Whether file name components are silently truncated (behavior that
+   POSIX stopped allowing in 2008).  This enables checks whether
+   truncated base names are the same, while checking the directories.  */
+#if !_POSIX_NO_TRUNC && HAVE_FPATHCONF && defined _PC_NAME_MAX
+# define CHECK_TRUNCATION true
+#else
+# define CHECK_TRUNCATION false
+#endif
+
 /* Return nonzero if SOURCE and DEST point to the same name in the same
    directory.  */
 
 bool
 same_name (const char *source, const char *dest)
+{
+  return same_nameat (AT_FDCWD, source, AT_FDCWD, dest);
+}
+
+/* Likewise, but interpret the file names relative to SOURCE_FD and DEST_FD,
+   in the style of openat.  */
+
+bool
+same_nameat (int source_dfd, char const *source,
+             int dest_dfd, char const *dest)
 {
   /* Compare the basenames.  */
   char const *source_basename = last_component (source);
@@ -61,10 +81,7 @@ same_name (const char *source, const char *dest)
   bool compare_dirs = identical_basenames;
   bool same = false;
 
-#if ! _POSIX_NO_TRUNC && HAVE_PATHCONF && defined _PC_NAME_MAX
-  /* This implementation silently truncates components of file names.  If
-     the base names might be truncated, check whether the truncated
-     base names are the same, while checking the directories.  */
+#if CHECK_TRUNCATION
   size_t slen_max = HAVE_LONG_FILE_NAMES ? 255 : _POSIX_NAME_MAX;
   size_t min_baselen = MIN (source_baselen, dest_baselen);
   if (slen_max <= min_baselen
@@ -76,46 +93,55 @@ same_name (const char *source, const char *dest)
     {
       struct stat source_dir_stats;
       struct stat dest_dir_stats;
-      char *source_dirname, *dest_dirname;
 
       /* Compare the parent directories (via the device and inode numbers).  */
-      source_dirname = dir_name (source);
-      dest_dirname = dir_name (dest);
-
-      if (stat (source_dirname, &source_dir_stats))
+      char *source_dirname = dir_name (source);
+      int flags = AT_SYMLINK_NOFOLLOW;
+      if (fstatat (source_dfd, source_dirname, &source_dir_stats, flags) != 0)
         {
           /* Shouldn't happen.  */
           error (1, errno, "%s", source_dirname);
         }
+      free (source_dirname);
 
-      if (stat (dest_dirname, &dest_dir_stats))
+      char *dest_dirname = dir_name (dest);
+      int destdir_errno = 0;
+
+#if CHECK_TRUNCATION
+      int open_flags = O_SEARCH | O_CLOEXEC | O_DIRECTORY;
+      int destdir_fd = openat (dest_dfd, dest_dirname, open_flags);
+      if (destdir_fd < 0 || fstat (destdir_fd, &dest_dir_stats) != 0)
+        destdir_errno = errno;
+      else if (SAME_INODE (source_dir_stats, dest_dir_stats))
+        {
+          same = identical_basenames;
+          if (! same)
+            {
+              errno = 0;
+              long name_max = fpathconf (destdir_fd, _PC_NAME_MAX);
+              if (name_max < 0)
+                destdir_errno = errno;
+              else
+                same = (name_max <= min_baselen
+                        && (memcmp (source_basename, dest_basename, name_max)
+                            == 0));
+            }
+        }
+      close (destdir_fd);
+      if (destdir_errno != 0)
+        {
+          /* Shouldn't happen.  */
+          error (1, destdir_errno, "%s", dest_dirname);
+        }
+#else
+      if (fstatat (dest_dfd, dest_dirname, &dest_dir_stats, flags) != 0)
         {
           /* Shouldn't happen.  */
           error (1, errno, "%s", dest_dirname);
         }
-
       same = SAME_INODE (source_dir_stats, dest_dir_stats);
-
-#if ! _POSIX_NO_TRUNC && HAVE_PATHCONF && defined _PC_NAME_MAX
-      if (same && ! identical_basenames)
-        {
-          long name_max = (errno = 0, pathconf (dest_dirname, _PC_NAME_MAX));
-          if (name_max < 0)
-            {
-              if (errno)
-                {
-                  /* Shouldn't happen.  */
-                  error (1, errno, "%s", dest_dirname);
-                }
-              same = false;
-            }
-          else
-            same = (name_max <= min_baselen
-                    && memcmp (source_basename, dest_basename, name_max) == 0);
-        }
 #endif
 
-      free (source_dirname);
       free (dest_dirname);
     }
 

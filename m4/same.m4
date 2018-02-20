@@ -1,4 +1,4 @@
-#serial 9
+#serial 10
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -9,5 +9,5 @@ dnl Prerequisites of lib/same.c.
 AC_DEFUN([gl_SAME],
 [
   AC_REQUIRE([AC_SYS_LONG_FILE_NAMES])
-  AC_CHECK_FUNCS_ONCE([pathconf])
+  AC_CHECK_FUNCS_ONCE([fpathconf])
 ])

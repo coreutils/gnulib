@@ -21,5 +21,6 @@
 # include <stdbool.h>
 
 bool same_name (const char *source, const char *dest);
+bool same_nameat (int, char const *, int, char const *);
 
 #endif /* SAME_H_ */
