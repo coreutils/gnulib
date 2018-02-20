@@ -7,12 +7,13 @@ lib/utimecmp.c
 m4/utimecmp.m4
 
 Depends-on:
+dirname-lgpl
+fstatat
 hash
 stat-time
 time
-utimens
+utimensat
 intprops
-lstat
 stdbool
 stdint
 verify

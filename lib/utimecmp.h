@@ -33,5 +33,7 @@ enum
 };
 
 int utimecmp (char const *, struct stat const *, struct stat const *, int);
+int utimecmpat (int, char const *, struct stat const *, struct stat const *,
+                int);
 
 #endif
