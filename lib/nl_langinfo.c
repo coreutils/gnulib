@@ -28,6 +28,7 @@
 # include <stdio.h>
 #endif
 
+#if !REPLACE_NL_LANGINFO || GNULIB_defined_CODESET
 /* Return the codeset of the current locale, if this is easily deducible.
    Otherwise, return "".  */
 static char *
@@ -64,7 +65,7 @@ ctype_codeset (void)
         }
     }
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
   /* If setlocale is successful, it returns the number of the
      codepage, as a string.  Otherwise, fall back on Windows API
      GetACP, which returns the locale's codepage as a number (although
@@ -76,9 +77,10 @@ ctype_codeset (void)
   else
     sprintf (buf + 2, "%u", GetACP ());
   codeset = memcpy (buf, "CP", 2);
-#endif
+# endif
   return codeset;
 }
+#endif
 
 
 #if REPLACE_NL_LANGINFO
