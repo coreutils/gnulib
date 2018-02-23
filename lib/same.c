@@ -105,9 +105,9 @@ same_nameat (int source_dfd, char const *source,
       free (source_dirname);
 
       char *dest_dirname = dir_name (dest);
-      int destdir_errno = 0;
 
 #if CHECK_TRUNCATION
+      int destdir_errno = 0;
       int open_flags = O_SEARCH | O_CLOEXEC | O_DIRECTORY;
       int destdir_fd = openat (dest_dfd, dest_dirname, open_flags);
       if (destdir_fd < 0 || fstat (destdir_fd, &dest_dir_stats) != 0)
