@@ -56,10 +56,10 @@ extern "C" {
    the function returns.  Upon failure, it returns NULL.  */
 #if HAVE_ALLOCA
 # define malloca(N) \
-  ((N) < 4032 - (2 * sa_alignment_max - 1)                          \
+  ((N) < 4032 - (2 * sa_alignment_max - 1)                                   \
    ? (void *) (((uintptr_t) (char *) alloca ((N) + 2 * sa_alignment_max - 1) \
-                + (2 * sa_alignment_max - 1))                       \
-               & ~(uintptr_t)(2 * sa_alignment_max - 1))            \
+                + (2 * sa_alignment_max - 1))                                \
+               & ~(uintptr_t)(2 * sa_alignment_max - 1))                     \
    : mmalloca (N))
 #else
 # define malloca(N) \

@@ -32,10 +32,10 @@ extern "C" {
    the function returns.  Upon failure, it exits with an error message.  */
 #if HAVE_ALLOCA
 # define xmalloca(N) \
-  ((N) < 4032 - (2 * sa_alignment_max - 1)                          \
-   ? (void *) (((uintptr_t) alloca ((N) + 2 * sa_alignment_max - 1) \
-                + (2 * sa_alignment_max - 1))                       \
-               & ~(uintptr_t)(2 * sa_alignment_max - 1))            \
+  ((N) < 4032 - (2 * sa_alignment_max - 1)                                   \
+   ? (void *) (((uintptr_t) (char *) alloca ((N) + 2 * sa_alignment_max - 1) \
+                + (2 * sa_alignment_max - 1))                                \
+               & ~(uintptr_t)(2 * sa_alignment_max - 1))                     \
    : xmmalloca (N))
 extern void * xmmalloca (size_t n);
 #else
