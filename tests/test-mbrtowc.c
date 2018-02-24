@@ -103,7 +103,15 @@ main (int argc, char *argv[])
           wc = (wchar_t) 0xBADFACE;
           ret = mbrtowc (&wc, buf, 1, &state);
           ASSERT (ret == 1);
-          ASSERT (wc == c);
+          if (c < 0x80)
+            /* c is an ASCII character.  */
+            ASSERT (wc == c);
+          else
+            /* argv[1] starts with '5', that is, we are testing the C or POSIX
+               locale.
+               On most platforms, the bytes 0x80..0xFF map to U+0080..U+00FF.
+               But on musl libc, the bytes 0x80..0xFF map to U+DF80..U+DFFF.  */
+            ASSERT (wc == btowc (c));
           ASSERT (mbsinit (&state));
           ret = mbrtowc (NULL, buf, 1, &state);
           ASSERT (ret == 1);
