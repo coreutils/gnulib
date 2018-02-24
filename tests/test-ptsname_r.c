@@ -70,7 +70,6 @@ test_errors (int fd, const char *slave)
   for (buflen = 0; buflen <= buflen_max; buflen++)
     {
       memset (buffer, 'X', sizeof buffer);
-      errno = 0;
       result = ptsname_r (fd, buffer, buflen);
       if (buflen > len)
         {
@@ -80,17 +79,14 @@ test_errors (int fd, const char *slave)
       else
         {
           ASSERT (result != 0);
-          ASSERT (result == errno);
-          ASSERT (errno == ERANGE);
+          ASSERT (result == ERANGE);
           ASSERT (buffer[0] == 'X');
         }
     }
 
-  errno = 0;
   result = ptsname_r (fd, null_ptr (), 0);
   ASSERT (result != 0);
-  ASSERT (result == errno);
-  ASSERT (errno == EINVAL);
+  ASSERT (result == EINVAL);
 }
 
 int
@@ -108,11 +104,9 @@ main (void)
     char buffer[256];
     int result;
 
-    errno = 0;
     result = ptsname_r (-1, buffer, sizeof buffer);
     ASSERT (result != 0);
-    ASSERT (result == errno);
-    ASSERT (errno == EBADF || errno == ENOTTY);
+    ASSERT (result == EBADF || result == ENOTTY);
   }
 
   {

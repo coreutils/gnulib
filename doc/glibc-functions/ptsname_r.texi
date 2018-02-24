@@ -22,4 +22,8 @@ OSF/1 5.1.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+When this functions fails, it provides the error code only as the
+return value, without setting @code{errno}, on some platforms:
+musl libc.
 @end itemize
