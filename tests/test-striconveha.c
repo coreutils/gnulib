@@ -29,6 +29,7 @@
 #include <string.h>
 
 #include "macros.h"
+extern int iconv_supports_encoding (const char *encoding);
 
 /* Magic number for detecting bounds violations.  */
 #define MAGIC 0x1983EFF1
@@ -308,95 +309,98 @@ main ()
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
 # if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
-  /* Test conversions from autodetect_jp to UTF-8.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      for (o = 0; o < 2; o++)
+      /* Test conversions from autodetect_jp to UTF-8.  */
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-          char *result = NULL;
-          size_t length = 0;
-          int retval = mem_iconveha (input, strlen (input),
-                                     "autodetect_jp", "UTF-8",
-                                     false, handler,
-                                     offsets,
-                                     &result, &length);
-          ASSERT (retval == 0);
-          ASSERT (length == strlen (expected));
-          ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-          if (o)
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          for (o = 0; o < 2; o++)
             {
-              for (i = 0; i < 10; i++)
-                ASSERT (offsets[i] == ((i % 2) == 0 ? (i / 2) * 3 : (size_t)(-1)));
-              ASSERT (offsets[10] == MAGIC);
-              free (offsets);
+              size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+              char *result = NULL;
+              size_t length = 0;
+              int retval = mem_iconveha (input, strlen (input),
+                                         "autodetect_jp", "UTF-8",
+                                         false, handler,
+                                         offsets,
+                                         &result, &length);
+              ASSERT (retval == 0);
+              ASSERT (length == strlen (expected));
+              ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+              if (o)
+                {
+                  for (i = 0; i < 10; i++)
+                    ASSERT (offsets[i] == ((i % 2) == 0 ? (i / 2) * 3 : (size_t)(-1)));
+                  ASSERT (offsets[10] == MAGIC);
+                  free (offsets);
+                }
+              free (result);
             }
-          free (result);
         }
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      for (o = 0; o < 2; o++)
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-          char *result = NULL;
-          size_t length = 0;
-          int retval = mem_iconveha (input, strlen (input),
-                                     "autodetect_jp", "UTF-8",
-                                     false, handler,
-                                     offsets,
-                                     &result, &length);
-          ASSERT (retval == 0);
-          ASSERT (length == strlen (expected));
-          ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-          if (o)
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          for (o = 0; o < 2; o++)
             {
-              for (i = 0; i < 10; i++)
-                ASSERT (offsets[i] == ((i % 2) == 0 ? (i / 2) * 3 : (size_t)(-1)));
-              ASSERT (offsets[10] == MAGIC);
-              free (offsets);
+              size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+              char *result = NULL;
+              size_t length = 0;
+              int retval = mem_iconveha (input, strlen (input),
+                                         "autodetect_jp", "UTF-8",
+                                         false, handler,
+                                         offsets,
+                                         &result, &length);
+              ASSERT (retval == 0);
+              ASSERT (length == strlen (expected));
+              ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+              if (o)
+                {
+                  for (i = 0; i < 10; i++)
+                    ASSERT (offsets[i] == ((i % 2) == 0 ? (i / 2) * 3 : (size_t)(-1)));
+                  ASSERT (offsets[10] == MAGIC);
+                  free (offsets);
+                }
+              free (result);
             }
-          free (result);
         }
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      for (o = 0; o < 2; o++)
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
-          char *result = NULL;
-          size_t length = 0;
-          int retval = mem_iconveha (input, strlen (input),
-                                     "autodetect_jp", "UTF-8",
-                                     false, handler,
-                                     offsets,
-                                     &result, &length);
-          ASSERT (retval == 0);
-          ASSERT (length == strlen (expected));
-          ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
-          if (o)
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          for (o = 0; o < 2; o++)
             {
-              for (i = 0; i < 16; i++)
-                ASSERT (offsets[i] == (i == 0 ? 0 :
-                                       i == 5 ? 3 :
-                                       i == 7 ? 6 :
-                                       i == 9 ? 9 :
-                                       i == 11 ? 12 :
-                                       i == 13 ? 15 :
-                                       (size_t)(-1)));
-              ASSERT (offsets[16] == MAGIC);
-              free (offsets);
+              size_t *offsets = (o ? new_offsets (strlen (input)) : NULL);
+              char *result = NULL;
+              size_t length = 0;
+              int retval = mem_iconveha (input, strlen (input),
+                                         "autodetect_jp", "UTF-8",
+                                         false, handler,
+                                         offsets,
+                                         &result, &length);
+              ASSERT (retval == 0);
+              ASSERT (length == strlen (expected));
+              ASSERT (result != NULL && memcmp (result, expected, strlen (expected)) == 0);
+              if (o)
+                {
+                  for (i = 0; i < 16; i++)
+                    ASSERT (offsets[i] == (i == 0 ? 0 :
+                                           i == 5 ? 3 :
+                                           i == 7 ? 6 :
+                                           i == 9 ? 9 :
+                                           i == 11 ? 12 :
+                                           i == 13 ? 15 :
+                                           (size_t)(-1)));
+                  ASSERT (offsets[16] == MAGIC);
+                  free (offsets);
+                }
+              free (result);
             }
-          free (result);
         }
     }
 # endif
@@ -544,36 +548,39 @@ main ()
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
 # if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
-  /* Test conversions from autodetect_jp to UTF-8.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, expected) == 0);
-      free (result);
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, expected) == 0);
-      free (result);
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
-      static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
-      char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
-      ASSERT (result != NULL);
-      ASSERT (strcmp (result, expected) == 0);
-      free (result);
+      /* Test conversions from autodetect_jp to UTF-8.  */
+      for (h = 0; h < SIZEOF (handlers); h++)
+        {
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
+          ASSERT (result != NULL);
+          ASSERT (strcmp (result, expected) == 0);
+          free (result);
+        }
+      for (h = 0; h < SIZEOF (handlers); h++)
+        {
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
+          ASSERT (result != NULL);
+          ASSERT (strcmp (result, expected) == 0);
+          free (result);
+        }
+      for (h = 0; h < SIZEOF (handlers); h++)
+        {
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
+          static const char expected[] = "\343\201\223\343\202\223\343\201\253\343\201\241\343\201\257"; /* こんにちは */
+          char *result = str_iconveha (input, "autodetect_jp", "UTF-8", false, handler);
+          ASSERT (result != NULL);
+          ASSERT (strcmp (result, expected) == 0);
+          free (result);
+        }
     }
 # endif
 

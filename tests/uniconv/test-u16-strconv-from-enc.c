@@ -24,6 +24,7 @@
 
 #include "unistr.h"
 #include "macros.h"
+extern int iconv_supports_encoding (const char *encoding);
 
 int
 main ()
@@ -71,45 +72,48 @@ main ()
 
   /* autodetect_jp is only supported when iconv() support ISO-2022-JP-2.  */
 # if defined _LIBICONV_VERSION || !(defined _AIX || defined __sgi || defined __hpux || defined __osf__ || defined __sun)
-  /* Test conversions from autodetect_jp to UTF-16.  */
-  for (h = 0; h < SIZEOF (handlers); h++)
+  if (iconv_supports_encoding ("ISO-2022-JP-2"))
     {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
-      static const uint16_t expected[] = /* こんにちは */
+      /* Test conversions from autodetect_jp to UTF-16.  */
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-        };
-      uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
-      ASSERT (result != NULL);
-      ASSERT (u16_strcmp (result, expected) == 0);
-      free (result);
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
-      static const uint16_t expected[] = /* こんにちは */
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\244\263\244\363\244\313\244\301\244\317"; /* こんにちは in EUC-JP */
+          static const uint16_t expected[] = /* こんにちは */
+            {
+              0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+            };
+          uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
+          ASSERT (result != NULL);
+          ASSERT (u16_strcmp (result, expected) == 0);
+          free (result);
+        }
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-        };
-      uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
-      ASSERT (result != NULL);
-      ASSERT (u16_strcmp (result, expected) == 0);
-      free (result);
-    }
-  for (h = 0; h < SIZEOF (handlers); h++)
-    {
-      enum iconv_ilseq_handler handler = handlers[h];
-      static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
-      static const uint16_t expected[] = /* こんにちは */
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\202\261\202\361\202\311\202\277\202\315"; /* こんにちは in Shift_JIS */
+          static const uint16_t expected[] = /* こんにちは */
+            {
+              0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+            };
+          uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
+          ASSERT (result != NULL);
+          ASSERT (u16_strcmp (result, expected) == 0);
+          free (result);
+        }
+      for (h = 0; h < SIZEOF (handlers); h++)
         {
-          0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
-        };
-      uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
-      ASSERT (result != NULL);
-      ASSERT (u16_strcmp (result, expected) == 0);
-      free (result);
+          enum iconv_ilseq_handler handler = handlers[h];
+          static const char input[] = "\033$B$3$s$K$A$O\033(B"; /* こんにちは in ISO-2022-JP-2 */
+          static const uint16_t expected[] = /* こんにちは */
+            {
+              0x3053, 0x3093, 0x306B, 0x3061, 0x306F, 0
+            };
+          uint16_t *result = u16_strconv_from_encoding (input, "autodetect_jp", handler);
+          ASSERT (result != NULL);
+          ASSERT (u16_strcmp (result, expected) == 0);
+          free (result);
+        }
     }
 # endif
 
