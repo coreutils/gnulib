@@ -40,7 +40,7 @@
 # if defined __APPLE__ && defined __MACH__
 #  include <xlocale.h>
 # endif
-# if (__GLIBC__ >= 2 && !defined __UCLIBC__) || defined __CYGWIN__
+# if (__GLIBC__ >= 2 && !defined __UCLIBC__) || (defined __linux__ && HAVE_LANGINFO_H) || defined __CYGWIN__
 #  include <langinfo.h>
 # endif
 # if !defined IN_LIBINTL
@@ -2703,6 +2703,9 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
              nl_langinfo (_NL_LOCALE_NAME (category)).  */
           name = thread_locale->__names[category];
         return name;
+#  elif defined __linux__ && HAVE_LANGINFO_H && defined NL_LOCALE_NAME
+        /* musl libc */
+        return nl_langinfo_l (NL_LOCALE_NAME (category), thread_locale);
 #  elif (defined __FreeBSD__ || defined __DragonFly__) || (defined __APPLE__ && defined __MACH__)
         /* FreeBSD, Mac OS X */
         int mask;

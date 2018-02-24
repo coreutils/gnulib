@@ -1,4 +1,4 @@
-# localename.m4 serial 2
+# localename.m4 serial 3
 dnl Copyright (C) 2007, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_LOCALENAME],
 [
   AC_REQUIRE([gt_LC_MESSAGES])
   AC_REQUIRE([gt_INTL_MACOSX])
+  AC_CHECK_HEADERS_ONCE([langinfo.h])
   AC_CHECK_FUNCS([setlocale uselocale])
   dnl Solaris 12 provides getlocalename_l, while Illumos doesn't have
   dnl it nor the equivalent.
