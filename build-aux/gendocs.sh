@@ -2,7 +2,7 @@
 # gendocs.sh -- generate a GNU manual in many formats.  This script is
 #   mentioned in maintain.texi.  See the help message below for usage details.
 
-scriptversion=2018-01-01.00
+scriptversion=2018-03-06.19
 
 # Copyright 2003-2018 Free Software Foundation, Inc.
 #
@@ -497,7 +497,7 @@ $GENDOCS_TEMPLATE_DIR/gendocs_template >"$outdir/index.html"
 echo "Done, see $outdir/ subdirectory for new files."
 
 # Local variables:
-# eval: (add-hook 'write-file-hooks 'time-stamp)
+# eval: (add-hook 'before-save-hook 'time-stamp)
 # time-stamp-start: "scriptversion="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
 # time-stamp-end: "$"

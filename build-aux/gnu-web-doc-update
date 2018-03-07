@@ -2,7 +2,7 @@
 # Run this after each non-alpha release, to update the web documentation at
 # https://www.gnu.org/software/$pkg/manual/
 
-VERSION=2017-09-13.06; # UTC
+VERSION=2018-03-07.03; # UTC
 
 # Copyright (C) 2009-2018 Free Software Foundation, Inc.
 
@@ -202,7 +202,7 @@ $RSYNC -avP "$builddir"/doc/manual/ $tmp/$pkg/manual
 )
 
 # Local variables:
-# eval: (add-hook 'write-file-hooks 'time-stamp)
+# eval: (add-hook 'before-save-hook 'time-stamp)
 # time-stamp-start: "VERSION="
 # time-stamp-format: "%:y-%02m-%02d.%02H"
 # time-stamp-time-zone: "UTC0"
