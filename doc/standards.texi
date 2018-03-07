@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate January 15, 2018
+@set lastupdate March 7, 2018
 @c %**end of header
 
 @dircategory GNU organization
@@ -4311,7 +4311,7 @@ or find another place to refer to that information.
 @bye
 
 Local variables:
-eval: (add-hook 'write-file-functions 'time-stamp)
+eval: (add-hook 'before-save-hook 'time-stamp)
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"
