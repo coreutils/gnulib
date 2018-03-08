@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 7, 2017
+@set lastupdate March 7, 2018
 @c %**end of header
 
 @dircategory GNU organization
@@ -2789,7 +2789,7 @@ When you get enough volunteers, send another message to the list saying
 @bye
 
 Local variables:
-eval: (add-hook 'write-file-hooks 'time-stamp)
+eval: (add-hook 'before-save-hook 'time-stamp)
 time-stamp-start: "@set lastupdate "
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
