@@ -33,6 +33,21 @@
 # define __USE_GNU    1
 #endif
 
+/* GCC 2.95 and later have "__restrict"; C99 compilers have
+   "restrict", and "configure" may have defined "restrict".
+   Other compilers use __restrict, __restrict__, and _Restrict, and
+   'configure' might #define 'restrict' to those words, so pick a
+   different name.  */
+#ifndef _Restrict_
+# if 199901L <= __STDC_VERSION__
+#  define _Restrict_ restrict
+# elif 2 < __GNUC__ || (2 == __GNUC__ && 95 <= __GNUC_MINOR__)
+#  define _Restrict_ __restrict
+# else
+#  define _Restrict_
+# endif
+#endif
+
 
 #define glob rpl_glob
 #define globfree rpl_globfree
