@@ -16,31 +16,30 @@ c99
 extensions
 largefile
 snippet/c++defs
-snippet/warn-on-use
-alloca          [test -n "$GLOB_H"]
-builtin-expect  [test -n "$GLOB_H"]
-closedir        [test -n "$GLOB_H"]
-d-type          [test -n "$GLOB_H"]
-flexmember      [test -n "$GLOB_H"]
-fnmatch         [test -n "$GLOB_H"]
-getlogin_r      [test -n "$GLOB_H"]
-libc-config     [test -n "$GLOB_H"]
-lstat           [test -n "$GLOB_H"]
-memchr          [test -n "$GLOB_H"]
-mempcpy         [test -n "$GLOB_H"]
-opendir         [test -n "$GLOB_H"]
-readdir         [test -n "$GLOB_H"]
-scratch_buffer  [test -n "$GLOB_H"]
-stdbool         [test -n "$GLOB_H"]
-stdint          [test -n "$GLOB_H"]
-strdup          [test -n "$GLOB_H"]
-sys_stat        [test -n "$GLOB_H"]
-unistd          [test -n "$GLOB_H"]
-malloc-posix    [test -n "$GLOB_H"]
+alloca          [test $REPLACE_GLOB = 1]
+builtin-expect  [test $REPLACE_GLOB = 1]
+closedir        [test $REPLACE_GLOB = 1]
+d-type          [test $REPLACE_GLOB = 1]
+flexmember      [test $REPLACE_GLOB = 1]
+fnmatch         [test $REPLACE_GLOB = 1]
+getlogin_r      [test $REPLACE_GLOB = 1]
+libc-config     [test $REPLACE_GLOB = 1]
+lstat           [test $REPLACE_GLOB = 1]
+memchr          [test $REPLACE_GLOB = 1]
+mempcpy         [test $REPLACE_GLOB = 1]
+opendir         [test $REPLACE_GLOB = 1]
+readdir         [test $REPLACE_GLOB = 1]
+scratch_buffer  [test $REPLACE_GLOB = 1]
+stdbool         [test $REPLACE_GLOB = 1]
+stdint          [test $REPLACE_GLOB = 1]
+strdup          [test $REPLACE_GLOB = 1]
+sys_stat        [test $REPLACE_GLOB = 1]
+unistd          [test $REPLACE_GLOB = 1]
+malloc-posix    [test $REPLACE_GLOB = 1]
 
 configure.ac:
 gl_GLOB
-if test -n "$GLOB_H"; then
+if test $REPLACE_GLOB = 1; then
   AC_LIBOBJ([glob])
   AC_LIBOBJ([glob_pattern_p])
   AC_LIBOBJ([globfree])
@@ -48,23 +47,22 @@ if test -n "$GLOB_H"; then
 fi
 
 Makefile.am:
-BUILT_SOURCES += $(GLOB_H)
+BUILT_SOURCES += glob.h
 
-# We need the following in order to create <glob.h> when the system
-# doesn't have one that works with the given compiler.
-if GL_GENERATE_GLOB_H
-glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H)
+# We need the following in order to create <glob.h>.
+glob.h: glob.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	$(AM_V_GEN)rm -f $@-t $@ && \
 	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
-	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \
+	  sed -e 's|@''GUARD_PREFIX''@|${gl_include_guard_prefix}|g' \
+	      -e 's|@''REPLACE_GLOB''@|$(REPLACE_GLOB)|g' \
+	      -e 's|@''INCLUDE_NEXT''@|$(INCLUDE_NEXT)|g' \
+	      -e 's|@''PRAGMA_SYSTEM_HEADER''@|@PRAGMA_SYSTEM_HEADER@|g' \
+	      -e 's|@''PRAGMA_COLUMNS''@|@PRAGMA_COLUMNS@|g' \
+	      -e 's|@''NEXT_GLOB_H''@|$(NEXT_GLOB_H)|g' \
+	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      < $(srcdir)/glob.in.h; \
 	} > $@-t && \
 	mv -f $@-t $@
-else
-glob.h: $(top_builddir)/config.status
-	rm -f $@
-endif
 MOSTLYCLEANFILES += glob.h glob.h-t
 
 Include:
