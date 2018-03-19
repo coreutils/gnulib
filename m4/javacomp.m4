@@ -1,4 +1,4 @@
-# javacomp.m4 serial 13
+# javacomp.m4 serial 14
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -18,6 +18,7 @@ dnl with or without modifications, as long as this notice is preserved.
 #           1.6             (not supported)
 #           1.7             switch(string)
 #           1.8             lambdas
+#           1.9             private interface methods
 # Instead of source-version 1.6, use 1.5, since Java 6 did not introduce any
 # language changes. See
 # https://docs.oracle.com/javase/8/docs/technotes/guides/language/enhancements.html
@@ -31,6 +32,7 @@ dnl with or without modifications, as long as this notice is preserved.
 #           1.6                 50.0
 #           1.7                 51.0
 #           1.8                 52.0
+#           1.9                 53.0
 # The classfile version of a .class file can be determined through the "file"
 # command. More portably, the classfile major version can be determined through
 # "od -A n -t d1 -j 7 -N 1 classfile".
@@ -45,6 +47,7 @@ dnl with or without modifications, as long as this notice is preserved.
 #           1.6         JDK/JRE 1.6
 #           1.7         JDK/JRE 1.7
 #           1.8         JDK/JRE 1.8
+#           1.9         JDK/JRE 1.9
 # Note: gij >= 3.3 can in some cases handle classes compiled with -target 1.4,
 # and gij >= 4.1 can in some cases partially handle classes compiled with
 # -target 1.5, but I have no idea how complete this support is.
@@ -108,7 +111,7 @@ changequote([,])dnl
          CLASSPATH=.${CLASSPATH:+$CLASSPATH_SEPARATOR$CLASSPATH} $CONF_JAVA conftestver 2>&AS_MESSAGE_LOG_FD
        }`
        case "$target_version" in
-         1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.8) ;;
+         1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.8 | 1.9) ;;
          null)
            dnl JDK 1.1.X returns null.
            target_version=1.1 ;;
@@ -130,6 +133,8 @@ changequote([,])dnl
     1.7) goodcode='class conftest     { void foo () { switch ("A") {} } }'
          failcode='class conftestfail { void foo () { Runnable r = () -> {}; } }' ;;
     1.8) goodcode='class conftest     { void foo () { Runnable r = () -> {}; } }'
+         failcode='interface conftestfail { private void foo () {} }' ;;
+    1.9) goodcode='interface conftest     { private void foo () {} }'
          failcode='class conftestfail syntax error' ;;
     *) AC_MSG_ERROR([invalid source-version argument to gt_@&t@JAVACOMP: $source_version]) ;;
   esac
@@ -142,6 +147,7 @@ changequote([,])dnl
     1.6) cfversion=50 ;;
     1.7) cfversion=51 ;;
     1.8) cfversion=52 ;;
+    1.9) cfversion=53 ;;
     *) AC_MSG_ERROR([invalid target-version argument to gt_@&t@JAVACOMP: $target_version]) ;;
   esac
   # Function to output the classfile version of a file (8th byte) in decimal.
@@ -204,12 +210,18 @@ changequote([,])dnl
   dnl                -target 1.6 only possible with -source 1.3/1.4/1.5/1.6
   dnl
   dnl   javac 1.8:   -target 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8  default: 1.8
-  dnl                -source [1.3 1.4 1.5] 1.6 1.7 1.8        default: 1.8
+  dnl                -source 1.3 1.4 1.5 1.6 1.7 1.8          default: 1.8
   dnl                -target 1.1/1.2/1.3 only possible with -source 1.3
   dnl                -target 1.4 only possible with -source 1.3/1.4
   dnl                -target 1.5 only possible with -source 1.3/1.4/1.5
   dnl                -target 1.6 only possible with -source 1.3/1.4/1.5/1.6
   dnl                -target 1.7 only possible with -source 1.3/1.4/1.5/1.6/1.7
+  dnl
+  dnl   javac 1.9:   -target 1.6 1.7 1.8 1.9  default: 1.9
+  dnl                -source 1.6 1.7 1.8 1.9  default: 1.9
+  dnl                -target 1.6 only possible with -source 1.6
+  dnl                -target 1.7 only possible with -source 1.6/1.7
+  dnl                -target 1.8 only possible with -source 1.6/1.7/1.8
   dnl
   dnl The support of jikes for target-version and source-version:
   dnl
