@@ -100,7 +100,7 @@ default_target_version (void)
       java_version_cache = javaexec_version ();
       if (java_version_cache == NULL
           || !(java_version_cache[0] == '1' && java_version_cache[1] == '.'
-               && (java_version_cache[2] >= '1' && java_version_cache[2] <= '6')
+               && (java_version_cache[2] >= '1' && java_version_cache[2] <= '9')
                && java_version_cache[3] == '\0'))
         java_version_cache = "1.1";
     }
@@ -110,14 +110,19 @@ default_target_version (void)
 /* ======================= Source version dependent ======================= */
 
 /* Convert a source version to an index.  */
-#define SOURCE_VERSION_BOUND 3 /* exclusive upper bound */
+#define SOURCE_VERSION_BOUND 6 /* exclusive upper bound */
 static unsigned int
 source_version_index (const char *source_version)
 {
-  if (source_version[0] == '1' && source_version[1] == '.'
-      && (source_version[2] >= '3' && source_version[2] <= '5')
-      && source_version[3] == '\0')
-    return source_version[2] - '3';
+  if (source_version[0] == '1' && source_version[1] == '.')
+    {
+      if ((source_version[2] >= '3' && source_version[2] <= '5')
+          && source_version[3] == '\0')
+        return source_version[2] - '3';
+      if ((source_version[2] >= '7' && source_version[2] <= '9')
+          && source_version[3] == '\0')
+        return source_version[2] - '4';
+    }
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return 0;
 }
@@ -132,6 +137,12 @@ get_goodcode_snippet (const char *source_version)
     return "class conftest { static { assert(true); } }\n";
   if (strcmp (source_version, "1.5") == 0)
     return "class conftest<T> { T foo() { return null; } }\n";
+  if (strcmp (source_version, "1.7") == 0)
+    return "class conftest { void foo () { switch (\"A\") {} } }\n";
+  if (strcmp (source_version, "1.8") == 0)
+    return "class conftest { void foo () { Runnable r = () -> {}; } }\n";
+  if (strcmp (source_version, "1.9") == 0)
+    return "interface conftest { private void foo () {} }\n";
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return NULL;
 }
@@ -147,6 +158,12 @@ get_failcode_snippet (const char *source_version)
   if (strcmp (source_version, "1.4") == 0)
     return "class conftestfail<T> { T foo() { return null; } }\n";
   if (strcmp (source_version, "1.5") == 0)
+    return "class conftestfail { void foo () { switch (\"A\") {} } }\n";
+  if (strcmp (source_version, "1.7") == 0)
+    return "class conftestfail { void foo () { Runnable r = () -> {}; } }\n";
+  if (strcmp (source_version, "1.8") == 0)
+    return "interface conftestfail { private void foo () {} }\n";
+  if (strcmp (source_version, "1.9") == 0)
     return NULL;
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return NULL;
@@ -184,6 +201,12 @@ corresponding_classfile_version (const char *target_version)
     return 49;
   if (strcmp (target_version, "1.6") == 0)
     return 50;
+  if (strcmp (target_version, "1.7") == 0)
+    return 51;
+  if (strcmp (target_version, "1.8") == 0)
+    return 52;
+  if (strcmp (target_version, "1.9") == 0)
+    return 53;
   error (EXIT_FAILURE, 0, _("invalid target_version argument to compile_java_class"));
   return 0;
 }
