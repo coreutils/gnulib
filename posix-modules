@@ -227,7 +227,7 @@ exclude_for_mingw=
 # <grp.h> does not exist.
 exclude_for_mingw="$exclude_for_mingw pt_chown grantpt posix_openpt-tests posix_openpt"
 # The functions getuid, getgid, geteuid, getegid don't exist.
-exclude_for_mingw="$exclude_for_mingw euidaccess faccessat"
+exclude_for_mingw="$exclude_for_mingw faccessat"
 exclude_for_mingw="$exclude_for_mingw fchownat-tests fchownat"
 
 # Excludes for MSVC.
