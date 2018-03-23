@@ -99,6 +99,10 @@ static void (* volatile segv_action) (int);
 static char const * volatile program_error_message;
 static char const * volatile stack_overflow_message;
 
+#if ((HAVE_LIBSIGSEGV && ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC) \
+     || (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK            \
+         && HAVE_STACK_OVERFLOW_HANDLING && SIGINFO_WORKS))
+
 /* Output an error message, then exit with status EXIT_FAILURE if it
    appears to have been a stack overflow, or with a core dump
    otherwise.  This function is async-signal-safe.  */
@@ -124,6 +128,7 @@ die (int signo)
   raise (signo);
   abort ();
 }
+#endif
 
 #if (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK \
      && HAVE_STACK_OVERFLOW_HANDLING) || HAVE_LIBSIGSEGV
