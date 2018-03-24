@@ -32,6 +32,7 @@
              1.7             switch(string)
              1.8             lambdas
              9               private interface methods
+            10               type inference for local variables
    target_version can be:  classfile version:
              1.1                 45.3
              1.2                 46.0
@@ -42,6 +43,7 @@
              1.7                 51.0
              1.8                 52.0
              9                   53.0
+            10                   54.0
    target_version can also be given as NULL. In this case, the required
    target_version is determined from the found JVM (see javaversion.h).
    Specifying target_version is useful when building a library (.jar) that is
@@ -53,7 +55,8 @@
      - target_version < 1.6 with source_version >= 1.6, or
      - target_version < 1.7 with source_version >= 1.7, or
      - target_version < 1.8 with source_version >= 1.8, or
-     - target_version < 9 with source_version >= 9,
+     - target_version < 9 with source_version >= 9, or
+     - target_version < 10 with source_version >= 10,
    because even Sun's/Oracle's javac doesn't support these combinations.
    It is redundant to ask for a target_version > source_version, since the
    smaller target_version = source_version will also always work and newer JVMs
