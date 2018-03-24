@@ -1,4 +1,4 @@
-# javacomp.m4 serial 14
+# javacomp.m4 serial 15
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -42,15 +42,17 @@ dnl with or without modifications, as long as this notice is preserved.
 #           1.1         JDK 1.1, jview
 #           1.2         JDK/JRE 1.2
 #           1.3         JDK/JRE 1.3, gij 3.3, 3.4
-#           1.4         JDK/JRE 1.4, gij 4.0, 4.1
-#           1.5         JDK/JRE 5
+#           1.4         JDK/JRE 1.4, gij 4.0 ... 4.2
+#           1.5         JDK/JRE 5, gij 4.3 ... 6
 #           1.6         JDK/JRE 6
 #           1.7         JDK/JRE 7
 #           1.8         JDK/JRE 8
 #           9           JDK/JRE 9
 # Note: gij >= 3.3 can in some cases handle classes compiled with -target 1.4,
 # and gij >= 4.1 can in some cases partially handle classes compiled with
-# -target 1.5, but I have no idea how complete this support is.
+# -target 1.5, but I have no idea how complete this support is. Similarly,
+# gcj >= 4.3 supports -ftarget=1.6, and gij >= 4.3 can in some cases handle
+# classes compiled with -target 1.6.
 #
 # Specifying target-version is useful when building a library (.jar) that is
 # useful outside the given package. Omitting target-version is useful when
@@ -67,9 +69,11 @@ dnl with or without modifications, as long as this notice is preserved.
 #
 # It is redundant to ask for a target-version > source-version, since the
 # smaller target-version = source-version will also always work and newer JVMs
-# support the older target-versions too. Except for the case
-# target-version = 1.4, source-version = 1.3, which allows gcj versions 3.0
-# to 3.2 to be used.
+# support the older target-versions too. Except for the cases
+#   - target-version = 1.4, source-version = 1.3, which allows gcj versions 3.0
+#     to 3.2 to be used,
+#   - target-version = 1.6, source-version = 1.5, which allows gcj versions
+#     >= 4.3 to be used.
 
 AC_DEFUN([gt_JAVACOMP],
 [
@@ -178,7 +182,8 @@ changequote([,])dnl
   dnl   bytecode, which crashes with a VerifyError when executed by Sun Java
   dnl   1.3.1. The bug is registered as java/7066, see
   dnl   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=7066
-  dnl   gcj 4.3 and newer has an option -ftarget=1.X.
+  dnl   gcj 4.3 and newer has an option -ftarget=1.X; the maximum supported
+  dnl   target-version is 1.6.
   dnl
   dnl   For gcj < 3.3, the source-version always is 1.3.
   dnl   For 3.3 <= gcj < 4.3, the source-version defaults to 1.4; option
