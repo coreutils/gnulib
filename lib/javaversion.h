@@ -26,8 +26,8 @@ extern "C" {
 
 /* Return information about the Java version used by execute_java_class().
    This is the value of System.getProperty("java.specification.version").
-   Some possible values are: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6.  Return NULL if
-   the Java version cannot be determined.  */
+   Some possible values are: 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 9.
+   Return NULL if the Java version cannot be determined.  */
 extern char * javaexec_version (void);
 
 
