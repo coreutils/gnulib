@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+. "${srcdir=.}/init.sh"; path_prepend_ .
+
 TMP=ve-expected.tmp
 LC_ALL=C
 export LC_ALL
@@ -31,12 +33,12 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Sergey Poznyakoff and Eric Blake.
 EOT
 
-./test-version-etc${EXEEXT} --version |
+test-version-etc${EXEEXT} --version |
  sed '1s/test-version-etc (.*) .*/test-version-etc (PROJECT) VERSION/
       /^Packaged by/d
       2,3 s/Copyright (C) [0-9]\{4,4\}/COPYRIGHT/' |
  tr -d '\015' |
- diff $TMP - || ERR=1
+ compare $TMP - || ERR=1
 
 rm $TMP
 

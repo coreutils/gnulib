@@ -3,6 +3,7 @@ tests/test-version-etc.c
 tests/test-version-etc.sh
 
 Depends-on:
+test-framework-sh
 version-etc-fsf
 
 Makefile.am:
