@@ -16,6 +16,11 @@ when the environment variable @code{TZ} has been set by Cygwin.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On some platforms, this function loops forever for values
+near extrema (such as the year @math{-2**31}):
+Mac OS X 10.6.
+You can use the @code{time_rz} module to work around the problem.
+@item
 On some platforms, this function returns nonsense values for
 unsupported arguments (like @math{2^56}), rather than failing:
 FreeBSD 10.
