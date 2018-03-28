@@ -101,7 +101,7 @@ static char const * volatile stack_overflow_message;
 
 #if ((HAVE_LIBSIGSEGV && ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC) \
      || (HAVE_SIGALTSTACK && HAVE_DECL_SIGALTSTACK            \
-         && HAVE_STACK_OVERFLOW_HANDLING && SIGINFO_WORKS))
+         && HAVE_STACK_OVERFLOW_HANDLING))
 
 /* Output an error message, then exit with status EXIT_FAILURE if it
    appears to have been a stack overflow, or with a core dump
