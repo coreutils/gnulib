@@ -685,6 +685,7 @@ enum leaf_optimization
 
 /* Linux-specific constants from coreutils' src/fs.h */
 # define S_MAGIC_AFS 0x5346414F
+# define S_MAGIC_CIFS 0xFF534D42
 # define S_MAGIC_NFS 0x6969
 # define S_MAGIC_PROC 0x9FA0
 # define S_MAGIC_REISERFS 0x52654973
@@ -792,8 +793,9 @@ dirent_inode_sort_may_be_useful (FTSENT const *p)
 
   switch (filesystem_type (p))
     {
-    case S_MAGIC_TMPFS:
+    case S_MAGIC_CIFS:
     case S_MAGIC_NFS:
+    case S_MAGIC_TMPFS:
       /* On a file system of any of these types, sorting
          is unnecessary, and hence wasteful.  */
       return false;
@@ -826,6 +828,10 @@ leaf_optimization (FTSENT const *p)
     case S_MAGIC_AFS:
       /* Although AFS mount points are not counted in st_nlink, they
          act like directories.  See <https://bugs.debian.org/143111>.  */
+      FALLTHROUGH;
+    case S_MAGIC_CIFS:
+      /* Leaf optimization causes 'find' to abort.  See
+         <https://lists.gnu.org/r/bug-gnulib/2018-04/msg00015.html>.  */
       FALLTHROUGH;
     case S_MAGIC_NFS:
       /* NFS provides usable dirent.d_type but not necessarily for all entries
