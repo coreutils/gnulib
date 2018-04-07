@@ -33,7 +33,7 @@
    the subprocess (if supported by the platform: not on native Windows
    platforms), otherwise 0.
    It is recommended that no signal is blocked or ignored while execute()
-   is called.  See pipe.h for the reason.  */
+   is called.  See spawn-pipe.h for the reason.  */
 extern int execute (const char *progname,
                     const char *prog_path, char **prog_argv,
                     bool ignore_sigpipe,
