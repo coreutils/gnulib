@@ -1597,7 +1597,11 @@ mem1:                           saved_errno = errno;
                 /* If there are many entries, no sorting function has been
                    specified, and this file system is of a type that may be
                    slow with a large number of entries, arrange to sort the
-                   directory entries on increasing inode numbers.  */
+                   directory entries on increasing inode numbers.
+
+                   The NITEMS comparison uses ==, not >, because the test
+                   needs to be tried at most once once, and NITEMS will exceed
+                   the threshold after it is incremented below.  */
                 if (nitems == _FTS_INODE_SORT_DIR_ENTRIES_THRESHOLD
                     && !sp->fts_compar)
                   sort_by_inode = dirent_inode_sort_may_be_useful (cur, dir_fd);
