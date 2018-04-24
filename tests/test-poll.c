@@ -52,10 +52,6 @@ SIGNATURE_CHECK (poll, int, (struct pollfd[], nfds_t, int));
 #include <sys/wait.h>
 #endif
 
-#ifndef SO_REUSEPORT
-#define SO_REUSEPORT    SO_REUSEADDR
-#endif
-
 #define TEST_PORT       12345
 
 

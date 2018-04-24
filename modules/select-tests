@@ -10,6 +10,7 @@ tests/test-select-stdin.c
 
 Depends-on:
 stdbool
+sys_socket
 netinet_in
 arpa_inet
 unistd

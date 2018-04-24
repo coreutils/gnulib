@@ -32,6 +32,10 @@ AIX 7.1.
 The @code{CMSG_SPACE} and @code{CMSG_LEN} macros are not provided on some
 platforms:
 OpenVMS.
+@item
+This header file does not define the @code{SO_REUSEPORT} macro on some
+platforms:
+Minix 3.1.8, Solaris 10, Cygwin, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
