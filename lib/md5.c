@@ -32,6 +32,10 @@
 #include <string.h>
 #include <sys/types.h>
 
+#ifdef HAVE_LINUX_IF_ALG_H
+# include "af_alg.h"
+#endif
+
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -142,8 +146,20 @@ md5_stream (FILE *stream, void *resblock)
 {
   struct md5_ctx ctx;
   size_t sum;
+  char *buffer;
 
-  char *buffer = malloc (BLOCKSIZE + 72);
+#ifdef HAVE_LINUX_IF_ALG_H
+  int ret;
+
+  ret = afalg_stream(stream, resblock, "md5", MD5_DIGEST_SIZE);
+  if (!ret)
+      return 0;
+
+  if (ret == -EIO)
+      return 1;
+#endif
+
+  buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
     return 1;
 
