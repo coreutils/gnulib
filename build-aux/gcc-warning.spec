@@ -6,7 +6,6 @@
 -Waggregate-return			obsolescent
 -Waliasing				fortran
 -Walign-commons				fortran
--Waligned-new				c++
 -Waligned-new=[none|global|all]		c++
 -Walloca				we like alloca in small doses
 -Walloca-larger-than=<number>		FIXME: choose something sane?
@@ -15,7 +14,7 @@
 -Wampersand				fortran
 -Wargument-mismatch			fortran
 -Warray-bounds				covered by -Warray-bounds=
--Warray-bounds=				handled specially by gl_MANYWARN_ALL_GCC
+-Warray-bounds=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Warray-temporaries			fortran
 -Wassign-intercept			objc/objc++
 -Wc++-compat				FIXME maybe? borderline.  some will want this
@@ -28,7 +27,10 @@
 -Wc90-c99-compat			c compatibility
 -Wc99-c11-compat			c compatibility
 -Wcast-qual				FIXME maybe? too much noise; encourages bad changes
+-Wcatch-value				c++
+-Wcatch-value=<0,3>			c++
 -Wcharacter-truncation			fortran
+-Wclass-memaccess			c++
 -Wcompare-reals				fortran
 -Wconditionally-supported		c++ and objc++
 -Wconversion				FIXME maybe? too much noise; encourages bad changes
@@ -38,20 +40,22 @@
 -Wdeclaration-after-statement		FIXME: do not want.  others may
 -Wdelete-incomplete			c++ and objc++
 -Wdelete-non-virtual-dtor		c++
+-Wdo-subscript				fortran
 -Weffc++				c++
 -Werror-implicit-function-declaration	deprecated
+-Wextra-semi				c++
 -Wfloat-conversion			FIXME maybe? borderline.  some will want this
 -Wfloat-equal				FIXME maybe? borderline.  some will want this
 -Wformat				covered by -Wformat=2
--Wformat=				gcc --help=warnings artifact
--Wformat-overflow			covered by -Wformat-overflow=2
--Wformat-overflow=			handled specially by gl_MANYWARN_ALL_GCC
+-Wformat=<0,2>				gcc --help=warnings artifact
+-Wformat-overflow<0,2>			gcc --help=warnings artifact
+-Wformat-overflow=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Wformat-truncation			covered by -Wformat-truncation=2
--Wformat-truncation=			handled specially by gl_MANYWARN_ALL_GCC
+-Wformat-truncation=<0,2>		handled specially by gl_MANYWARN_ALL_GCC
 -Wframe-larger-than=<number>		FIXME: choose something sane?
 -Wfunction-elimination			fortran
 -Wimplicit-fallthrough			covered by -Wimplicit-fallthrough=2
--Wimplicit-fallthrough=			handled specially by gl_MANYWARN_ALL_GCC
+-Wimplicit-fallthrough=<0,5>		handled specially by gl_MANYWARN_ALL_GCC
 -Wimplicit-interface			fortran
 -Wimplicit-procedure			fortran
 -Winherited-variadic-ctor		c++
@@ -81,7 +85,7 @@
 -Wpadded				FIXME maybe?  warns about "stabil" member in /usr/include/bits/timex.h
 -Wpedantic				FIXME: too strict?
 -Wplacement-new				c++
--Wplacement-new=			c++
+-Wplacement-new=<0,2>			c++
 -Wpmf-conversions			c++ and objc++
 -Wproperty-assign-default		objc++
 -Wprotocol				objc++
@@ -99,18 +103,18 @@
 -Wshadow=local				covered by -Wshadow
 -Wshadow-local				covered by -Wshadow
 -Wshift-overflow			covered by -Wshift-overflow=2
--Wshift-overflow=			gcc --help=warnings artifact
+-Wshift-overflow=<0,2>			gcc --help=warnings artifact
 -Wsign-compare				FIXME maybe? borderline.  some will want this
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wsign-promo				c++ and objc++
 -Wsized-deallocation			c++ and objc++
 -Wstack-usage=<number>			FIXME: choose something sane?
--Wstrict-aliasing=			FIXME: choose something sane?
+-Wstrict-aliasing=<0,3>			FIXME: choose something sane?
 -Wstrict-null-sentinel			c++ and objc++
--Wstrict-overflow=			FIXME: choose something sane?
+-Wstrict-overflow=<0,5>			FIXME: choose something sane?
 -Wstrict-selector-match			objc and objc++
 -Wstringop-overflow			covered by -Wstringop-overflow=
--Wstringop-overflow=			handled specially by gl_MANYWARN_ALL_GCC
+-Wstringop-overflow=<0,4>		handled specially by gl_MANYWARN_ALL_GCC
 -Wsubobject-linkage			c++ and objc++
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
@@ -129,7 +133,7 @@
 -Wunreachable-code			obsolescent no-op
 -Wunsuffixed-float-constants		triggers warning in gnulib's timespec.h
 -Wunused-const-variable			covered by -Wunusec-const-variable=2
--Wunused-const-variable=		gcc --help=warnings artifact
+-Wunused-const-variable=<0,2>		gcc --help=warnings artifact
 -Wunused-dummy-argument			fortran
 -Wuse-without-only			fortran
 -Wuseless-cast				c++ and objc++
