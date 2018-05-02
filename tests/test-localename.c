@@ -155,7 +155,16 @@ test_locale_name (void)
   if (setlocale (LC_ALL, "") != NULL)
     {
       name = gl_locale_name (LC_CTYPE, "LC_CTYPE");
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+      /* On native Windows, here,
+           gl_locale_name_thread (LC_CTYPE, "LC_CTYPE")
+         returns NULL and
+           gl_locale_name_posix (LC_CTYPE, "LC_CTYPE")
+         returns either "de_DE" or "de_DE.UTF-8".  */
+      ASSERT (strcmp (name, "de_DE") == 0 || strcmp (name, "de_DE.UTF-8") == 0);
+#else
       ASSERT (strcmp (name, "de_DE.UTF-8") == 0);
+#endif
       name = gl_locale_name (LC_MESSAGES, "LC_MESSAGES");
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
@@ -575,7 +584,11 @@ test_locale_name_posix (void)
   if (setlocale (LC_ALL, "") != NULL)
     {
       name = gl_locale_name_posix (LC_CTYPE, "LC_CTYPE");
+#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+      ASSERT (strcmp (name, "de_DE") == 0 || strcmp (name, "de_DE.UTF-8") == 0);
+#else
       ASSERT (strcmp (name, "de_DE.UTF-8") == 0);
+#endif
       name = gl_locale_name_posix (LC_MESSAGES, "LC_MESSAGES");
       ASSERT (strcmp (name, "fr_FR.UTF-8") == 0);
     }
