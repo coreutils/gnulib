@@ -33,6 +33,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifdef HAVE_LINUX_IF_ALG_H
+# include "af_alg.h"
+#endif
+
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -130,8 +134,19 @@ sha1_stream (FILE *stream, void *resblock)
 {
   struct sha1_ctx ctx;
   size_t sum;
+  char *buffer;
+#ifdef HAVE_LINUX_IF_ALG_H
+  int ret;
 
-  char *buffer = malloc (BLOCKSIZE + 72);
+  ret = afalg_stream(stream, resblock, "sha1", SHA1_DIGEST_SIZE);
+  if (!ret)
+      return 0;
+
+  if (ret == -EIO)
+      return 1;
+#endif
+
+  buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
     return 1;
 

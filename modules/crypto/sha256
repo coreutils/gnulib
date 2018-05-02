@@ -5,8 +5,11 @@ Files:
 lib/gl_openssl.h
 lib/sha256.h
 lib/sha256.c
+lib/af_alg.h
+lib/af_alg.c
 m4/gl-openssl.m4
 m4/sha256.m4
+m4/linux-if-alg.m4
 
 Depends-on:
 extern-inline
@@ -15,9 +18,10 @@ stdint
 
 configure.ac:
 gl_SHA256
+gl_LINUX_IF_ALG_H
 
 Makefile.am:
-lib_SOURCES += sha256.c
+lib_SOURCES += sha256.c af_alg.c
 
 Include:
 "sha256.h"
