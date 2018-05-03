@@ -64,7 +64,7 @@ nap_get_stat (struct stat *st, int do_write)
   if (do_write)
     {
       ASSERT (write (nap_fd, "\n", 1) == 1);
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
       /* On native Windows, the modification times are not changed until NAP_FD
          is closed. See
          https://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v=vs.85).aspx */

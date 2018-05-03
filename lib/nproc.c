@@ -50,7 +50,7 @@
 # include <sys/sysctl.h>
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -176,7 +176,7 @@ num_processors_via_affinity_mask (void)
   }
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   { /* This works on native Windows platforms.  */
     DWORD_PTR process_mask;
     DWORD_PTR system_mask;
@@ -318,7 +318,7 @@ num_processors_ignoring_omp (enum nproc_query query)
   }
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   { /* This works on native Windows platforms.  */
     SYSTEM_INFO system_info;
     GetSystemInfo (&system_info);

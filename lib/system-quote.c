@@ -27,7 +27,7 @@
 #include "sh-quote.h"
 #include "xalloc.h"
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 /* The native Windows CreateProcess() function interprets characters like
    ' ', '\t', '\\', '"' (but not '<' and '>') in a special way:
@@ -188,13 +188,13 @@ system_quote_length (enum system_command_interpreter interpreter,
 {
   switch (interpreter)
     {
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+#if !(defined _WIN32 && ! defined __CYGWIN__)
     case SCI_SYSTEM:
 #endif
     case SCI_POSIX_SH:
       return shell_quote_length (string);
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
     case SCI_WINDOWS_CREATEPROCESS:
       return windows_createprocess_quote (NULL, string);
 
@@ -216,13 +216,13 @@ system_quote_copy (char *p,
 {
   switch (interpreter)
     {
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+#if !(defined _WIN32 && ! defined __CYGWIN__)
     case SCI_SYSTEM:
 #endif
     case SCI_POSIX_SH:
       return shell_quote_copy (p, string);
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
     case SCI_WINDOWS_CREATEPROCESS:
       p += windows_createprocess_quote (p, string);
       *p = '\0';
@@ -247,13 +247,13 @@ system_quote (enum system_command_interpreter interpreter,
 {
   switch (interpreter)
     {
-#if !((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+#if !(defined _WIN32 && ! defined __CYGWIN__)
     case SCI_SYSTEM:
 #endif
     case SCI_POSIX_SH:
       return shell_quote (string);
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
     case SCI_WINDOWS_CREATEPROCESS:
     case SCI_SYSTEM:
     case SCI_WINDOWS_CMD:

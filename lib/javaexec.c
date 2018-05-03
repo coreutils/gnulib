@@ -357,7 +357,7 @@ execute_java_class (const char *class_name,
       }
   }
 
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if defined _WIN32 || defined __CYGWIN__
   /* Native Windows, Cygwin */
   {
     static bool jview_tested;

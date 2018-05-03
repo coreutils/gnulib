@@ -30,7 +30,7 @@ SIGNATURE_CHECK (pthread_sigmask, int, (int, const sigset_t *, sigset_t *));
 
 #include "macros.h"
 
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#if !(defined _WIN32 && !defined __CYGWIN__)
 
 static volatile int sigint_occurred;
 

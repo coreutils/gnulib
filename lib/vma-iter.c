@@ -86,7 +86,7 @@
 # include <mach/mach.h>
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__ /* Windows */
+#if defined _WIN32 || defined __CYGWIN__ /* Windows */
 # include <windows.h>
 #endif
 
@@ -1397,7 +1397,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
     }
   return 0;
 
-#elif (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__
+#elif defined _WIN32 || defined __CYGWIN__
   /* Windows platform.  Use the native Windows API.  */
 
   MEMORY_BASIC_INFORMATION info;

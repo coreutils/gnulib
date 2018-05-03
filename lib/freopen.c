@@ -47,7 +47,7 @@ FILE *
 rpl_freopen (const char *filename, const char *mode, FILE *stream)
 {
   FILE *result;
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   char const *null_device = "NUL";
   if (filename && strcmp (filename, "/dev/null") == 0)
     filename = null_device;

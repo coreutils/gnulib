@@ -54,7 +54,7 @@ posix_openpt (int flags)
 
   master = open ("/dev/ptc", flags);
 
-#elif (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__ /* mingw */
+#elif defined _WIN32 && !defined __CYGWIN__ /* mingw */
 
   /* Mingw lacks pseudo-terminals altogether.  */
   master = -1;

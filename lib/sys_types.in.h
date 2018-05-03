@@ -86,8 +86,7 @@ typedef unsigned long long int rpl_ino_t;
 
 /* MSVC 9 defines size_t in <stddef.h>, not in <sys/types.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
-#if ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-    && ! defined __GLIBC__
+#if (defined _WIN32 && ! defined __CYGWIN__) && ! defined __GLIBC__
 # include <stddef.h>
 #endif
 

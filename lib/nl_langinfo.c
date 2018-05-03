@@ -22,7 +22,7 @@
 
 #include <locale.h>
 #include <string.h>
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 # include <stdio.h>
@@ -65,7 +65,7 @@ ctype_codeset (void)
         }
     }
 
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if defined _WIN32 && ! defined __CYGWIN__
   /* If setlocale is successful, it returns the number of the
      codepage, as a string.  Otherwise, fall back on Windows API
      GetACP, which returns the locale's codepage as a number (although

@@ -20,7 +20,7 @@
 #include <sys/utsname.h>
 
 /* This file provides an implementation only for the native Windows API.  */
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 #include <stdio.h>
 #include <stdlib.h>

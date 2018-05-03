@@ -30,7 +30,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 #endif
@@ -563,7 +563,7 @@ cleanup_temp_dir (struct temp_dir *dir)
 }
 
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 /* On Windows, opening a file with _O_TEMPORARY has the effect of passing
    the FILE_FLAG_DELETE_ON_CLOSE flag to CreateFile(), which has the effect
@@ -632,7 +632,7 @@ open_temp (const char *file_name, int flags, mode_t mode)
 
   block_fatal_signals ();
   /* Note: 'open' here is actually open() or open_safer().  */
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
      temporary file is removed when the process crashes.  */
   if (supports_delete_on_close ())
@@ -658,7 +658,7 @@ fopen_temp (const char *file_name, const char *mode)
 
   block_fatal_signals ();
   /* Note: 'fopen' here is actually fopen() or fopen_safer().  */
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
      temporary file is removed when the process crashes.  */
   if (supports_delete_on_close ())

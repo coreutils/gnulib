@@ -1,4 +1,4 @@
-# csharpexec.m4 serial 5
+# csharpexec.m4 serial 6
 dnl Copyright (C) 2003-2005, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,7 +15,7 @@ AC_DEFUN([gt_CSHARPEXEC],
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_MSG_CHECKING([for C[#] program execution engine])
   AC_EGREP_CPP([yes], [
-#if defined _WIN32 || defined __WIN32__ || defined __EMX__ || defined __DJGPP__
+#if defined _WIN32 || defined __EMX__ || defined __DJGPP__
   yes
 #endif
 ], MONO_PATH_SEPARATOR=';', MONO_PATH_SEPARATOR=':')

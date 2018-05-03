@@ -1,4 +1,4 @@
-# unistd_h.m4 serial 71
+# unistd_h.m4 serial 72
 dnl Copyright (C) 2006-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,7 +37,7 @@ AC_DEFUN([gl_UNISTD_H],
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if defined _WIN32 && ! defined __CYGWIN__
 #  include <io.h>
 # endif
 #endif

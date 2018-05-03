@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # include <process.h>
 #else
 # include <spawn.h>
@@ -81,7 +81,7 @@ main (int argc, char *argv[])
     child_argv[1] = argv[2];
     child_argv[2] = NULL;
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
     child = spawnvpe (P_NOWAIT, child_path, child_argv,
                       (const char **) environ);
     ASSERT (child >= 0);

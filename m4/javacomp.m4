@@ -1,4 +1,4 @@
-# javacomp.m4 serial 15
+# javacomp.m4 serial 16
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -83,7 +83,7 @@ AC_DEFUN([gt_JAVACOMP],
 [
   ifelse([$2], [], [AC_REQUIRE([gt_JAVAEXEC])], [])
   AC_EGREP_CPP([yes], [
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
+#if defined _WIN32 || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
   yes
 #endif
 ], CLASSPATH_SEPARATOR=';', CLASSPATH_SEPARATOR=':')

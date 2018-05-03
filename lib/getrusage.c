@@ -28,7 +28,7 @@
 /* Get uint64_t.  */
 #include <stdint.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
@@ -47,7 +47,7 @@ getrusage (int who, struct rusage *usage_p)
       /* Clear all unsupported members of 'struct rusage'.  */
       memset (usage_p, '\0', sizeof (struct rusage));
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
       if (who == RUSAGE_SELF)
         {
           /* Fill in the ru_utime and ru_stime members.  */

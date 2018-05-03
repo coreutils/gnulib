@@ -35,7 +35,7 @@
 
 #define _(str) gettext (str)
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
 /* Native Windows API.  */
 # include <process.h>
@@ -49,7 +49,7 @@
 #endif
 
 
-#if defined EINTR && ((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__)
+#if defined EINTR && (defined _WIN32 && ! defined __CYGWIN__)
 
 /* EINTR handling for close(), open().
    These functions can return -1/EINTR even though we don't have any
@@ -99,7 +99,7 @@ execute (const char *progname,
          bool slave_process, bool exit_on_error,
          int *termsigp)
 {
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 
   /* Native Windows API.  */
   int orig_stdin;

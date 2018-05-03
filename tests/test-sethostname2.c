@@ -93,7 +93,7 @@ main (int argc, char *argv[] _GL_UNUSED)
 
       /* On Windows, a hostname change becomes effective only after
          a reboot.  */
-#if !((defined _WIN32 || defined __WIN32__) || defined __CYGWIN__)
+#if !(defined _WIN32 || defined __CYGWIN__)
 
       /* if we don't get back what we put in, there is no need to
          restore the original name as we will assume it was not

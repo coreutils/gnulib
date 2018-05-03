@@ -23,7 +23,7 @@
 
 #undef rename
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 /* The mingw rename has problems with trailing slashes; it also
    requires use of native Windows calls to allow atomic renames over
    existing files.  */

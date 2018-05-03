@@ -35,7 +35,7 @@
 # include <mach-o/dyld.h>
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
 # define WINDOWS_NATIVE
 #endif
 
@@ -78,7 +78,7 @@ extern char * canonicalize_file_name (const char *name);
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
+#if (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
   /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \

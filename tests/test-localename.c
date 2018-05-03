@@ -155,7 +155,7 @@ test_locale_name (void)
   if (setlocale (LC_ALL, "") != NULL)
     {
       name = gl_locale_name (LC_CTYPE, "LC_CTYPE");
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
       /* On native Windows, here,
            gl_locale_name_thread (LC_CTYPE, "LC_CTYPE")
          returns NULL and
@@ -584,7 +584,7 @@ test_locale_name_posix (void)
   if (setlocale (LC_ALL, "") != NULL)
     {
       name = gl_locale_name_posix (LC_CTYPE, "LC_CTYPE");
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
       ASSERT (strcmp (name, "de_DE") == 0 || strcmp (name, "de_DE.UTF-8") == 0);
 #else
       ASSERT (strcmp (name, "de_DE.UTF-8") == 0);
@@ -750,7 +750,7 @@ test_locale_name_default (void)
 
   /* Only Mac OS X and Windows have a facility for the user to set the default
      locale.  */
-#if !((defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__ || defined __CYGWIN__))
+#if !((defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __CYGWIN__))
   ASSERT (strcmp (name, "C") == 0);
 #endif
 

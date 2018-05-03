@@ -52,7 +52,7 @@
 /* Get CHAR_BIT.  */
 #include <limits.h>
 /* On mingw, __USE_MINGW_ANSI_STDIO only works if <stdio.h> is also included */
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # include <stdio.h>
 #endif
 

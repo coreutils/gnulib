@@ -118,7 +118,7 @@
 #  define _flag __flag
 # endif
 
-#elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__  /* newer Windows with MSVC */
+#elif defined _WIN32 && ! defined __CYGWIN__  /* newer Windows with MSVC */
 
 /* <stdio.h> does not define the innards of FILE any more.  */
 # define WINDOWS_OPAQUE_FILE

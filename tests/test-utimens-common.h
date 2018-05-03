@@ -49,7 +49,7 @@ enum {
                           : 0)
 };
 
-# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+# if defined _WIN32 && !defined __CYGWIN__
 /* Skip ctime tests on native Windows, since it is either a copy of
    mtime or birth time (depending on the file system), rather than a
    properly tracked change time.  See

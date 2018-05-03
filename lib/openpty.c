@@ -32,7 +32,7 @@ rpl_openpty (int *amaster, int *aslave, char *name,
                   (struct winsize *) winp);
 }
 
-#elif (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__ /* mingw */
+#elif defined _WIN32 && !defined __CYGWIN__ /* mingw */
 
 # include <errno.h>
 

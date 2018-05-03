@@ -6,7 +6,7 @@
 # with or without modifications, as long as this notice is preserved.
 
 # Written by Paul Eggert.
-# serial 15
+# serial 16
 
 AC_DEFUN([gl_FUNC_GETCWD_NULL],
   [
@@ -25,7 +25,7 @@ AC_DEFUN([gl_FUNC_GETCWD_NULL],
          char *getcwd ();
 #        endif
 ]], [[
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 /* mingw cwd does not start with '/', but getcwd does allocate.
    However, mingw fails to honor non-zero size.  */
 #else

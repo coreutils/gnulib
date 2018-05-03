@@ -47,7 +47,7 @@
    no greater than 1 billion.  */
 #if HAVE_UTIMENSAT
 enum { SYSCALL_RESOLUTION = 1 };
-#elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#elif defined _WIN32 && ! defined __CYGWIN__
 /* On native Windows, file times have 100 ns resolution. See
    <https://msdn.microsoft.com/en-us/library/ms724284.aspx>  */
 enum { SYSCALL_RESOLUTION = 100 };

@@ -42,7 +42,7 @@
 # include "xalloc.h"
 #endif
 
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
 #endif
@@ -77,7 +77,7 @@
    ISSLASH(C)           tests whether C is a directory separator character.
    IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
  */
-#if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
+#if (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
   /* Native Windows, OS/2, DOS */
 # define ISSLASH(C) ((C) == '/' || (C) == '\\')
 # define HAS_DEVICE(P) \
@@ -99,7 +99,7 @@
    platforms, see below.  Therefore we enable it by default only on native
    Windows platforms.  */
 #ifndef ENABLE_COSTLY_RELOCATABLE
-# if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+# if defined _WIN32 && !defined __CYGWIN__
 #  define ENABLE_COSTLY_RELOCATABLE 1
 # else
 #  define ENABLE_COSTLY_RELOCATABLE 0
@@ -256,7 +256,7 @@ compute_curr_prefix (const char *orig_installprefix,
             /* Do case-insensitive comparison if the file system is always or
                often case-insensitive.  It's better to accept the comparison
                if the difference is only in case, rather than to fail.  */
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
+#if defined _WIN32 || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
             /* Native Windows, Cygwin, OS/2, DOS - case insignificant file system */
             if ((*rpi >= 'a' && *rpi <= 'z' ? *rpi - 'a' + 'A' : *rpi)
                 != (*cpi >= 'a' && *cpi <= 'z' ? *cpi - 'a' + 'A' : *cpi))
@@ -310,7 +310,7 @@ compute_curr_prefix (const char *orig_installprefix,
 /* Full pathname of shared library, or NULL.  */
 static char *shared_library_fullname;
 
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
 /* Native Windows only.
    On Cygwin, it is better to use the Cygwin provided /proc interface, than
    to use native Windows API and cygwin_conv_to_posix_path, because it
@@ -445,8 +445,7 @@ find_shared_library_fullname ()
 static char *
 get_shared_library_fullname ()
 {
-#if (!((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) \
-     && !defined __EMX__)
+#if !(defined _WIN32 && !defined __CYGWIN__) && !defined __EMX__
   static bool tried_find_shared_library_fullname;
   if (!tried_find_shared_library_fullname)
     {

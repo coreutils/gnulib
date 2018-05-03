@@ -44,7 +44,7 @@
    sockets have very large buffers in the kernel, so that write() calls
    succeed before the reader has started reading, even if fd is blocking
    and the amount of data is larger than 1 MB.  */
-#if defined __linux__ || (defined __APPLE__ && defined __MACH__) || (defined _WIN32 || defined __WIN32__) || defined __CYGWIN__
+#if defined __linux__ || (defined __APPLE__ && defined __MACH__) || defined _WIN32 || defined __CYGWIN__
 # define SOCKET_HAS_LARGE_BUFFER 1
 #else
 # define SOCKET_HAS_LARGE_BUFFER 0

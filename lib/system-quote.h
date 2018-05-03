@@ -61,7 +61,7 @@ enum system_command_interpreter
   SCI_SYSTEM                    = 0
   /* The POSIX /bin/sh.  */
   , SCI_POSIX_SH                = 1
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   /* The native Windows CreateProcess() function.  */
   , SCI_WINDOWS_CREATEPROCESS   = 2
   /* The native Windows cmd.exe interpreter.  */

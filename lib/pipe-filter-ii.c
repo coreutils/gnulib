@@ -25,7 +25,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 # include <windows.h>
 #elif defined __KLIBC__
 # define INCL_DOS
@@ -162,8 +162,7 @@ WaitForMultipleObjects (DWORD nCount, const HANDLE *pHandles, BOOL bWaitAll,
 
 #include "pipe-filter-aux.h"
 
-#if (((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-     || defined __KLIBC__)
+#if (defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__
 
 struct locals
 {
@@ -265,8 +264,7 @@ pipe_filter_ii_execute (const char *progname,
 {
   pid_t child;
   int fd[2];
-#if !(((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-      || defined __KLIBC__)
+#if !((defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__)
   struct sigaction orig_sigpipe_action;
 #endif
 
@@ -277,8 +275,7 @@ pipe_filter_ii_execute (const char *progname,
   if (child == -1)
     return -1;
 
-#if (((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-     || defined __KLIBC__)
+#if (defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__
   /* Native Windows API.  */
   /* Pipes have a non-blocking mode, see function SetNamedPipeHandleState and
      the article "Named Pipe Type, Read, and Wait Modes", but Microsoft's
@@ -586,8 +583,7 @@ pipe_filter_ii_execute (const char *progname,
   {
     int saved_errno = errno;
     close (fd[1]);
-#if !(((defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__) \
-      || defined __KLIBC__)
+#if !((defined _WIN32 && ! defined __CYGWIN__) || defined __KLIBC__)
     if (sigaction (SIGPIPE, &orig_sigpipe_action, NULL) < 0)
       abort ();
 #endif

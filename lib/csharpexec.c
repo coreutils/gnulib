@@ -43,7 +43,7 @@
 #undef CLASSPATHVAR
 
 /* Handling of clix' PATH variable is just like Java CLASSPATH.  */
-#if defined _WIN32 || defined __WIN32__ || defined __CYGWIN__
+#if defined _WIN32 || defined __CYGWIN__
   /* Native Windows, Cygwin */
   #define CLASSPATHVAR "PATH"
 #elif defined __APPLE__ && defined __MACH__

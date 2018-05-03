@@ -26,7 +26,7 @@
      && (a).st_ino[1] == (b).st_ino[1] \
      && (a).st_ino[2] == (b).st_ino[2] \
      && (a).st_dev == (b).st_dev)
-# elif (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# elif defined _WIN32 && ! defined __CYGWIN__
    /* Native Windows.  */
 #  if _GL_WINDOWS_STAT_INODES
     /* stat() and fstat() set st_dev and st_ino to 0 if information about

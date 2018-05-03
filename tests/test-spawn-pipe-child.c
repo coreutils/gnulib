@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 /* Get declarations of the native Windows API functions.  */
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
@@ -53,7 +53,7 @@ static FILE *myerr;
 static int
 is_open (int fd)
 {
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   /* On native Windows, the initial state of unassigned standard file
      descriptors is that they are open but point to an
      INVALID_HANDLE_VALUE, and there is no fcntl.  */

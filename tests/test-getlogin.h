@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#if !(defined _WIN32 && !defined __CYGWIN__)
 # include <pwd.h>
 #endif
 
@@ -55,7 +55,7 @@ test_getlogin_result (const char *buf, int err)
     }
 
   /* Compare against the value from the environment.  */
-#if !((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__)
+#if !(defined _WIN32 && !defined __CYGWIN__)
   /* Unix platform */
   {
     struct stat stat_buf;
@@ -79,7 +79,7 @@ test_getlogin_result (const char *buf, int err)
     ASSERT (pwd->pw_uid == stat_buf.st_uid);
   }
 #endif
-#if (defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__
+#if defined _WIN32 && !defined __CYGWIN__
   /* Native Windows platform.
      Note: This test would fail on Cygwin in an ssh session, because sshd
      sets USERNAME=SYSTEM.  */

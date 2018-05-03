@@ -70,7 +70,7 @@
 #endif
 
 #ifdef GNULIB_GC_RANDOM
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if defined _WIN32 && ! defined __CYGWIN__
 #  include <windows.h>
 #  include <wincrypt.h>
 HCRYPTPROV g_hProv = 0;
@@ -87,7 +87,7 @@ Gc_rc
 gc_init (void)
 {
 #ifdef GNULIB_GC_RANDOM
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if defined _WIN32 && ! defined __CYGWIN__
   if (g_hProv)
     CryptReleaseContext (g_hProv, 0);
 
@@ -114,7 +114,7 @@ void
 gc_done (void)
 {
 #ifdef GNULIB_GC_RANDOM
-# if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+# if defined _WIN32 && ! defined __CYGWIN__
   if (g_hProv)
     {
       CryptReleaseContext (g_hProv, 0);
@@ -133,7 +133,7 @@ gc_done (void)
 static Gc_rc
 randomize (int level, char *data, size_t datalen)
 {
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
   if (!g_hProv)
     return GC_RANDOM_ERROR;
   CryptGenRandom (g_hProv, (DWORD) datalen, data);

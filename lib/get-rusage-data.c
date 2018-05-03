@@ -353,7 +353,7 @@ vma_iterate_callback (void *data, uintptr_t start, uintptr_t end,
 static uintptr_t
 get_rusage_data_via_iterator (void)
 {
-#  if ((defined _WIN32 || defined __WIN32__) && !defined __CYGWIN__) || defined __BEOS__ || defined __HAIKU__
+#  if (defined _WIN32 && !defined __CYGWIN__) || defined __BEOS__ || defined __HAIKU__
   /* On native Windows, there is no sbrk() function.
      On Haiku, sbrk(0) always returns 0.  */
   static void *brk_value;

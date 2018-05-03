@@ -22,7 +22,7 @@
 #include <alloca.h>
 #include <assert.h>
 
-#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+#if defined _WIN32 && ! defined __CYGWIN__
 /* Native Windows.  */
 
 #include <sys/types.h>
