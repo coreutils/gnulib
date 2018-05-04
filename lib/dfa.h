@@ -22,12 +22,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#if 3 <= __GNUC__
-# define _GL_ATTRIBUTE_MALLOC __attribute__ ((__malloc__))
-#else
-# define _GL_ATTRIBUTE_MALLOC
-#endif
-
 struct localeinfo; /* See localeinfo.h.  */
 
 /* Element of a list of strings, at least one of which is known to

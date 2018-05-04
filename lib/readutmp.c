@@ -38,6 +38,10 @@
 # include "unlocked-io.h"
 #endif
 
+#if 8 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wsizeof-pointer-memaccess"
+#endif
+
 /* Copy UT->ut_name into storage obtained from malloc.  Then remove any
    trailing spaces from the copy, NUL terminate it, and return the copy.  */
 

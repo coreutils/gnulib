@@ -48,7 +48,7 @@ struct exclude;
 
 bool fnmatch_pattern_has_wildcards (const char *, int) _GL_ATTRIBUTE_PURE;
 
-struct exclude *new_exclude (void);
+struct exclude *new_exclude (void) _GL_ATTRIBUTE_MALLOC;
 void free_exclude (struct exclude *);
 void add_exclude (struct exclude *, char const *, int);
 int add_exclude_file (void (*) (struct exclude *, char const *, int),
