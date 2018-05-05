@@ -20,7 +20,12 @@
 #include "sha1.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+
+#define TESTFILE "test-sha1.data"
+#include "test-digest.h"
 
 int
 main (void)
@@ -43,6 +48,12 @@ main (void)
       printf ("\n");
       return 1;
     }
+
+  /* Test sha1_stream.  */
+  test_digest_on_files (sha1_stream, "sha1_stream", 20,
+                        "\xda\x39\xa3\xee\x5e\x6b\x4b\x0d\x32\x55\xbf\xef\x95\x60\x18\x90\xaf\xd8\x07\x09",
+                        "\x9c\x04\xcd\x63\x72\x07\x7e\x9b\x11\xf7\x0c\xa1\x11\xc9\x80\x7d\xc7\x13\x7e\x4b",
+                        "\x91\xab\x6b\x1b\x8d\x29\x25\x3c\xcb\x8d\xce\xb7\x7a\x25\x26\x2c\x92\xc9\x22\x09");
 
   return 0;
 }

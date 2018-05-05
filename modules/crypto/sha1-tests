@@ -1,5 +1,6 @@
 Files:
 tests/test-sha1.c
+tests/test-digest.h
 
 Depends-on:
 
