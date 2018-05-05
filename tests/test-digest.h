@@ -94,7 +94,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
           }
         if (memcmp (digest, expected, digest_size) != 0)
           {
-            int i;
+            size_t i;
             fprintf (stderr, "%s produced wrong result.\n", streamfunc_name);
             fprintf (stderr, "Expected: ");
             for (i = 0; i < digest_size; i++)
