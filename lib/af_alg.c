@@ -35,32 +35,29 @@
 #define BLOCKSIZE 32768
 
 int
-afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
+afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
 {
+  int cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
+  if (cfd < 0)
+    return -EAFNOSUPPORT;
+
   struct sockaddr_alg salg = {
     .salg_family = AF_ALG,
     .salg_type = "hash",
   };
-  int ret, cfd, ofd;
-  struct stat st;
-
-  cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
-  if (cfd < 0)
-    return -EAFNOSUPPORT;
-
-  /* avoid calling both strcpy and strlen.  */
+  /* Avoid calling both strcpy and strlen.  */
   for (int i = 0; (salg.salg_name[i] = alg[i]); i++)
     if (i == sizeof salg.salg_name - 1)
       return -EINVAL;
 
-  ret = bind (cfd, (struct sockaddr *) &salg, sizeof salg);
-  if (ret < 0)
+  int ret = bind (cfd, (struct sockaddr *) &salg, sizeof salg);
+  if (ret != 0)
     {
       ret = -EAFNOSUPPORT;
       goto out_cfd;
     }
 
-  ofd = accept (cfd, NULL, 0);
+  int ofd = accept (cfd, NULL, 0);
   if (ofd < 0)
     {
       ret = -EAFNOSUPPORT;
@@ -68,7 +65,8 @@ afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
     }
 
   /* if file is a regular file, attempt sendfile to pipe the data.  */
-  if (!fstat (fileno (stream), &st)
+  struct stat st;
+  if (fstat (fileno (stream), &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
     {
@@ -77,8 +75,6 @@ afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
           ret = -EIO;
           goto out_ofd;
         }
-      else
-        ret = 0;
     }
   else
     {
