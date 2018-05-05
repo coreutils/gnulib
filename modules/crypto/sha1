@@ -15,6 +15,7 @@ Depends-on:
 extern-inline
 stdalign
 stdint
+sys_socket
 
 configure.ac:
 gl_SHA1
