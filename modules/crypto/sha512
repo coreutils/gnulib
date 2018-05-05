@@ -16,6 +16,7 @@ extern-inline
 stdalign
 stdint
 sys_socket
+sys_stat
 u64
 
 configure.ac:
