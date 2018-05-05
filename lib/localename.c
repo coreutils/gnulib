@@ -1331,7 +1331,7 @@ gl_locale_name_canonicalize (char *name)
   };
 
   /* Convert script names (ISO 15924) to Unix conventions.
-     See http://www.unicode.org/iso15924/iso15924-codes.html  */
+     See https://www.unicode.org/iso15924/iso15924-codes.html  */
   typedef struct { const char script[4+1]; const char unixy[9+1]; }
           script_entry;
   static const script_entry script_table[] = {
@@ -1492,7 +1492,7 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
     sub = SUBLANGID (langid);
 
     /* Dispatch on language.
-       See also http://www.unicode.org/unicode/onlinedat/languages.html .
+       See also https://www.unicode.org/unicode/onlinedat/languages.html .
        For details about languages, see https://www.ethnologue.com/ .  */
     switch (primary)
       {
