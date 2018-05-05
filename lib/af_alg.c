@@ -83,10 +83,12 @@ afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
   else
     {
       /* sendfile not possible, do a classic read-write loop.  */
+      int non_empty = 0;
       ssize_t size;
       char buf[BLOCKSIZE];
       while ((size = fread (buf, 1, sizeof buf, stream)))
         {
+          non_empty = 1;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
               ret = -EIO;
@@ -96,6 +98,13 @@ afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
       if (ferror (stream))
         {
           ret = -EIO;
+          goto out_ofd;
+        }
+      /* On Linux 4.4.0 at least, the value for an empty stream is wrong
+         (all zeroes).  */
+      if (!non_empty)
+        {
+          ret = -EAFNOSUPPORT;
           goto out_ofd;
         }
     }
