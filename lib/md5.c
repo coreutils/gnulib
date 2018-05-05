@@ -151,7 +151,7 @@ md5_stream (FILE *stream, void *resblock)
 #ifdef HAVE_LINUX_IF_ALG_H
   int ret;
 
-  ret = afalg_stream(stream, resblock, "md5", MD5_DIGEST_SIZE);
+  ret = afalg_stream (stream, "md5", resblock, MD5_DIGEST_SIZE);
   if (!ret)
       return 0;
 

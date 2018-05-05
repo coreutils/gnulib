@@ -194,7 +194,7 @@ sha512_stream (FILE *stream, void *resblock)
 #ifdef HAVE_LINUX_IF_ALG_H
   int ret;
 
-  ret = afalg_stream(stream, resblock, "sha512", SHA512_DIGEST_SIZE);
+  ret = afalg_stream (stream, "sha512", resblock, SHA512_DIGEST_SIZE);
   if (!ret)
       return 0;
 
@@ -277,7 +277,7 @@ sha384_stream (FILE *stream, void *resblock)
 #ifdef HAVE_LINUX_IF_ALG_H
   int ret;
 
-  ret = afalg_stream(stream, resblock, "sha384", SHA384_DIGEST_SIZE);
+  ret = afalg_stream (stream, "sha384", resblock, SHA384_DIGEST_SIZE);
   if (!ret)
       return 0;
 

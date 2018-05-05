@@ -58,12 +58,12 @@ extern "C" {
    If successful, this function fills RESBLOCK and returns 0.
    Upon failure, it returns a negated error code.  */
 int
-afalg_stream (FILE *stream, void *resblock, const char *alg, ssize_t hashlen);
+afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen);
 
 # else
 
 static int
-afalg_stream (FILE *stream, void *resblock, const char *alg, ssize_t hashlen)
+afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
 {
   return -EAFNOSUPPORT;
 }

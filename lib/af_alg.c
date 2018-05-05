@@ -35,7 +35,7 @@
 #define BLOCKSIZE 32768
 
 int
-afalg_stream (FILE * stream, void *resblock, const char *alg, ssize_t hashlen)
+afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
 {
   struct sockaddr_alg salg = {
     .salg_family = AF_ALG,

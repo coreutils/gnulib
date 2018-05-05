@@ -138,7 +138,7 @@ sha1_stream (FILE *stream, void *resblock)
 #ifdef HAVE_LINUX_IF_ALG_H
   int ret;
 
-  ret = afalg_stream(stream, resblock, "sha1", SHA1_DIGEST_SIZE);
+  ret = afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE);
   if (!ret)
       return 0;
 
