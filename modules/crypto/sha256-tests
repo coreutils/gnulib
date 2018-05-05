@@ -1,0 +1,12 @@
+Files:
+tests/test-sha256.c
+tests/test-digest.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-sha256
+check_PROGRAMS += test-sha256
+test_sha256_LDADD = $(LDADD) @LIB_CRYPTO@
