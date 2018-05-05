@@ -19,7 +19,9 @@
 
 #include <config.h>
 
-#ifdef HAVE_LINUX_IF_ALG_H
+#if HAVE_LINUX_IF_ALG_H
+
+#include "af_alg.h"
 
 #include <unistd.h>
 #include <string.h>
@@ -27,8 +29,6 @@
 #include <sys/stat.h>
 #include <sys/sendfile.h>
 #include <sys/socket.h>
-
-#include "af_alg.h"
 
 #include "sys-limits.h"
 

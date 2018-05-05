@@ -36,7 +36,7 @@
 extern "C" {
 # endif
 
-# ifdef HAVE_LINUX_IF_ALG_H
+# if HAVE_LINUX_IF_ALG_H
 
 /* Computes a message digest of the contents of a file.
    STREAM is an open file stream.  Regular files are handled more efficiently

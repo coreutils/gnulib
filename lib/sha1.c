@@ -33,9 +33,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef HAVE_LINUX_IF_ALG_H
-# include "af_alg.h"
-#endif
+#include "af_alg.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -127,7 +125,7 @@ sha1_finish_ctx (struct sha1_ctx *ctx, void *resbuf)
 #endif
 
 /* Compute SHA1 message digest for bytes read from STREAM.  The
-   resulting message digest number will be written into the 16 bytes
+   resulting message digest number will be written into the 20 bytes
    beginning at RESBLOCK.  */
 int
 sha1_stream (FILE *stream, void *resblock)
@@ -135,16 +133,15 @@ sha1_stream (FILE *stream, void *resblock)
   struct sha1_ctx ctx;
   size_t sum;
   char *buffer;
-#ifdef HAVE_LINUX_IF_ALG_H
-  int ret;
 
-  ret = afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE);
-  if (!ret)
+  {
+    int ret = afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE);
+    if (!ret)
       return 0;
 
-  if (ret == -EIO)
+    if (ret == -EIO)
       return 1;
-#endif
+  }
 
   buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)

@@ -32,9 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef HAVE_LINUX_IF_ALG_H
-# include "af_alg.h"
-#endif
+#include "af_alg.h"
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -191,16 +189,14 @@ sha512_stream (FILE *stream, void *resblock)
   size_t sum;
   char *buffer;
 
-#ifdef HAVE_LINUX_IF_ALG_H
-  int ret;
-
-  ret = afalg_stream (stream, "sha512", resblock, SHA512_DIGEST_SIZE);
-  if (!ret)
+  {
+    int ret = afalg_stream (stream, "sha512", resblock, SHA512_DIGEST_SIZE);
+    if (!ret)
       return 0;
 
-  if (ret == -EIO)
+    if (ret == -EIO)
       return 1;
-#endif
+  }
 
   buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
@@ -274,16 +270,14 @@ sha384_stream (FILE *stream, void *resblock)
   size_t sum;
   char *buffer;
 
-#ifdef HAVE_LINUX_IF_ALG_H
-  int ret;
-
-  ret = afalg_stream (stream, "sha384", resblock, SHA384_DIGEST_SIZE);
-  if (!ret)
+  {
+    int ret = afalg_stream(stream, "sha384", resblock, SHA384_DIGEST_SIZE);
+    if (!ret)
       return 0;
 
-  if (ret == -EIO)
+    if (ret == -EIO)
       return 1;
-#endif
+  }
 
   buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
