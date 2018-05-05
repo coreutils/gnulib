@@ -4,6 +4,7 @@ An interface to the read() function that retries after interrupts.
 Files:
 lib/safe-read.h
 lib/safe-read.c
+lib/sys-limits.h
 m4/safe-read.m4
 
 Depends-on:

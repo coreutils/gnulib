@@ -5,6 +5,7 @@ Files:
 lib/safe-write.h
 lib/safe-write.c
 lib/safe-read.c
+lib/sys-limits.h
 m4/safe-write.m4
 m4/safe-read.m4
 

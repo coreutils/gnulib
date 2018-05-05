@@ -30,8 +30,8 @@
 
 #include "af_alg.h"
 
-/* from linux/include/linux/fs.h: (INT_MAX & PAGE_MASK).  */
-#define MAX_RW_COUNT 0x7FFFF000
+#include "sys-limits.h"
+
 #define BLOCKSIZE 32768
 
 int
@@ -70,7 +70,7 @@ afalg_stream (FILE * stream, const char *alg, void *resblock, ssize_t hashlen)
   /* if file is a regular file, attempt sendfile to pipe the data.  */
   if (!fstat (fileno (stream), &st)
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
-      && st.st_size && st.st_size <= MAX_RW_COUNT)
+      && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
     {
       if (sendfile (ofd, fileno (stream), NULL, st.st_size) != st.st_size)
         {

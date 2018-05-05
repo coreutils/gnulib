@@ -7,6 +7,7 @@ lib/sha512.h
 lib/sha512.c
 lib/af_alg.h
 lib/af_alg.c
+lib/sys-limits.h
 m4/gl-openssl.m4
 m4/sha512.m4
 m4/linux-if-alg.m4

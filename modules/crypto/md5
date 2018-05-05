@@ -7,6 +7,7 @@ lib/md5.h
 lib/md5.c
 lib/af_alg.h
 lib/af_alg.c
+lib/sys-limits.h
 m4/gl-openssl.m4
 m4/md5.m4
 m4/linux-if-alg.m4
