@@ -130,25 +130,19 @@ sha1_finish_ctx (struct sha1_ctx *ctx, void *resbuf)
 int
 sha1_stream (FILE *stream, void *resblock)
 {
-  struct sha1_ctx ctx;
-  size_t sum;
-  char *buffer;
+  switch (afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE))
+    {
+    case 0: return 0;
+    case -EIO: return 1;
+    }
 
-  {
-    int ret = afalg_stream (stream, "sha1", resblock, SHA1_DIGEST_SIZE);
-    if (!ret)
-      return 0;
-
-    if (ret == -EIO)
-      return 1;
-  }
-
-  buffer = malloc (BLOCKSIZE + 72);
+  char *buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
     return 1;
 
-  /* Initialize the computation context.  */
+  struct sha1_ctx ctx;
   sha1_init_ctx (&ctx);
+  size_t sum;
 
   /* Iterate over full file contents.  */
   while (1)

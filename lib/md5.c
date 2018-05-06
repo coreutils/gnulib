@@ -142,25 +142,19 @@ md5_finish_ctx (struct md5_ctx *ctx, void *resbuf)
 int
 md5_stream (FILE *stream, void *resblock)
 {
-  struct md5_ctx ctx;
-  size_t sum;
-  char *buffer;
+  switch (afalg_stream (stream, "md5", resblock, MD5_DIGEST_SIZE))
+    {
+    case 0: return 0;
+    case -EIO: return 1;
+    }
 
-  {
-    int ret = afalg_stream (stream, "md5", resblock, MD5_DIGEST_SIZE);
-    if (!ret)
-      return 0;
-
-    if (ret == -EIO)
-      return 1;
-  }
-
-  buffer = malloc (BLOCKSIZE + 72);
+  char *buffer = malloc (BLOCKSIZE + 72);
   if (!buffer)
     return 1;
 
-  /* Initialize the computation context.  */
+  struct md5_ctx ctx;
   md5_init_ctx (&ctx);
+  size_t sum;
 
   /* Iterate over full file contents.  */
   while (1)
