@@ -25,7 +25,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
   int pass;
   unlink (TESTFILE);
 
-  for (pass = 0; pass < 3; pass++)
+  for (pass = 0; pass < 4; pass++)
     {
       {
         FILE *fp = fopen (TESTFILE, "wb");
@@ -44,6 +44,10 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
             fputs ("The quick brown fox jumps over the lazy dog.\n", fp);
             break;
           case 2:
+            /* Fill the small file, with some header that will be skipped.  */
+            fputs ("ABCDThe quick brown fox jumps over the lazy dog.\n", fp);
+            break;
+          case 3:
             /* Fill the large file (8 MiB).  */
             {
               unsigned int i;
@@ -74,9 +78,9 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
 
         switch (pass)
           {
-          case 0: expected = expected_for_empty_file; break;
-          case 1: expected = expected_for_small_file; break;
-          case 2: expected = expected_for_large_file; break;
+          case 0:         expected = expected_for_empty_file; break;
+          case 1: case 2: expected = expected_for_small_file; break;
+          case 3:         expected = expected_for_large_file; break;
           default: abort ();
           }
 
@@ -85,6 +89,20 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
           {
             fprintf (stderr, "Could not open file %s.\n", TESTFILE);
             exit (1);
+          }
+        switch (pass)
+          {
+          case 2:
+            {
+              char header[4];
+              if (fread (header, 1, sizeof (header), fp) != sizeof (header))
+                {
+                  fprintf (stderr, "Could not read the header of %s.\n",
+                           TESTFILE);
+                  exit (1);
+                }
+            }
+            break;
           }
         ret = streamfunc (fp, digest);
         if (ret)
