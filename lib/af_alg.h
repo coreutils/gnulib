@@ -38,8 +38,13 @@ extern "C" {
 # if USE_LINUX_CRYPTO_API
 
 /* Compute a message digest of the contents of a file.
+
    STREAM is an open file stream.  Regular files are handled more efficiently.
+   The contents of STREAM from its current position to its end will be read.
+   The case that the last operation on STREAM was an 'ungetc' is not supported.
+
    ALG is the message digest algorithm; see the file /proc/crypto.
+
    RESBLOCK points to a block of HASHLEN bytes, for the result.
    HASHLEN must be the length of the message digest, in bytes, in particular:
 

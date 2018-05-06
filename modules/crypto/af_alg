@@ -8,6 +8,8 @@ lib/sys-limits.h
 m4/af_alg.m4
 
 Depends-on:
+fflush          [test $USE_AF_ALG = 1]
+lseek           [test $USE_AF_ALG = 1]
 sys_socket
 sys_stat
 

@@ -25,6 +25,8 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <errno.h>
 #include <linux/if_alg.h>
 #include <sys/stat.h>
 #include <sys/sendfile.h>
@@ -65,12 +67,35 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
     }
 
   /* if file is a regular file, attempt sendfile to pipe the data.  */
+  int fd = fileno (stream);
   struct stat st;
-  if (fstat (fileno (stream), &st) == 0
+  if (fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
     {
-      if (sendfile (ofd, fileno (stream), NULL, st.st_size) != st.st_size)
+      /* Make sure the offset of fileno (stream) reflects how many bytes
+         have been read from stream before this function got invoked.
+         Note: fflush on an input stream after ungetc does not work as expected
+         on some platforms.  Therefore this situation is not supported here.  */
+      if (fflush (stream))
+        {
+#if defined _WIN32 && ! defined __CYGWIN__
+          ret = -EIO;
+#else
+          ret = -errno;
+#endif
+          goto out_cfd;
+        }
+
+      off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
+      /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
+         See <https://patchwork.kernel.org/patch/9434741/>.  */
+      if (nbytes <= 0)
+        {
+          ret = -EAFNOSUPPORT;
+          goto out_ofd;
+        }
+      if (sendfile (ofd, fd, NULL, nbytes) != nbytes)
         {
           ret = -EIO;
           goto out_ofd;
