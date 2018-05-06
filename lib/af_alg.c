@@ -19,7 +19,7 @@
 
 #include <config.h>
 
-#if HAVE_LINUX_IF_ALG_H
+#if USE_LINUX_CRYPTO_API
 
 #include "af_alg.h"
 

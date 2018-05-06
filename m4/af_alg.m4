@@ -1,6 +1,4 @@
-# af_alg.m4 serial 1
-dnl Check whether linux/if_alg.h has needed features.
-
+# af_alg.m4 serial 2
 dnl Copyright 2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +9,8 @@ dnl From Matteo Croce.
 AC_DEFUN_ONCE([gl_AF_ALG],
 [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+
+  dnl Check whether linux/if_alg.h has needed features.
   AC_CACHE_CHECK([whether linux/if_alg.h has struct sockaddr_alg.],
     [gl_cv_header_linux_if_alg_salg],
     [AC_COMPILE_IFELSE(
@@ -27,4 +27,25 @@ AC_DEFUN_ONCE([gl_AF_ALG],
     AC_DEFINE([HAVE_LINUX_IF_ALG_H], [1],
       [Define to 1 if you have 'struct sockaddr_alg' defined.])
   fi
+
+  dnl The default is to use AF_ALG if available.
+  use_af_alg=yes
+  AC_ARG_WITH([linux-crypto],
+    [AS_HELP_STRING([[--without-linux-crypto]],
+       [Do not use Linux kernel cryptographic API (default is to use it if available)])
+    ],
+    [use_af_alg=$withval],
+    [use_af_alg=yes])
+  dnl We cannot use it if it is not available.
+  if test "$gl_cv_header_linux_if_alg_salg" != yes; then
+    use_af_alg=no
+  fi
+
+  if test "$use_af_alg" != no; then
+    USE_AF_ALG=1
+  else
+    USE_AF_ALG=0
+  fi
+  AC_DEFINE_UNQUOTED([USE_LINUX_CRYPTO_API], [$USE_AF_ALG],
+    [Define to 1 if you want to use the Linux kernel cryptographic API.])
 ])

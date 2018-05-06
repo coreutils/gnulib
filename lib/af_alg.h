@@ -35,7 +35,7 @@
 extern "C" {
 # endif
 
-# if HAVE_LINUX_IF_ALG_H
+# if USE_LINUX_CRYPTO_API
 
 /* Compute a message digest of the contents of a file.
    STREAM is an open file stream.  Regular files are handled more efficiently.
