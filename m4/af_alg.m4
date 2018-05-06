@@ -1,4 +1,4 @@
-# af_alg.m4 serial 2
+# af_alg.m4 serial 3
 dnl Copyright 2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ dnl From Matteo Croce.
 AC_DEFUN_ONCE([gl_AF_ALG],
 [
   AC_REQUIRE([gl_HEADER_SYS_SOCKET])
+  AC_REQUIRE([AC_C_INLINE])
 
   dnl Check whether linux/if_alg.h has needed features.
   AC_CACHE_CHECK([whether linux/if_alg.h has struct sockaddr_alg.],

@@ -64,7 +64,7 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen);
 
 # else
 
-static int
+static inline int
 afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
 {
   return -EAFNOSUPPORT;
