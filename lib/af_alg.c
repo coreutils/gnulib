@@ -96,8 +96,8 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
           ret = -EIO;
           goto out_ofd;
         }
-      /* On Linux 4.4.0 at least, the value for an empty stream is wrong
-         (all zeroes).  */
+      /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
+         See <https://patchwork.kernel.org/patch/9434741/>.  */
       if (!non_empty)
         {
           ret = -EAFNOSUPPORT;
