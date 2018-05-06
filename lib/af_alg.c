@@ -37,7 +37,73 @@
 #define BLOCKSIZE 32768
 
 int
-afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
+afalg_buffer (const char *buffer, size_t len, const char *alg,
+              void *resblock, ssize_t hashlen)
+{
+  /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
+     See <https://patchwork.kernel.org/patch/9434741/>.  */
+  if (len == 0)
+    return -EAFNOSUPPORT;
+
+  int cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
+  if (cfd < 0)
+    return -EAFNOSUPPORT;
+
+  int result;
+  struct sockaddr_alg salg = {
+    .salg_family = AF_ALG,
+    .salg_type = "hash",
+  };
+  /* Avoid calling both strcpy and strlen.  */
+  for (int i = 0; (salg.salg_name[i] = alg[i]); i++)
+    if (i == sizeof salg.salg_name - 1)
+      {
+        result = -EINVAL;
+        goto out_cfd;
+      }
+
+  int ret = bind (cfd, (struct sockaddr *) &salg, sizeof salg);
+  if (ret != 0)
+    {
+      result = -EAFNOSUPPORT;
+      goto out_cfd;
+    }
+
+  int ofd = accept (cfd, NULL, 0);
+  if (ofd < 0)
+    {
+      result = -EAFNOSUPPORT;
+      goto out_cfd;
+    }
+
+  do
+    {
+      ssize_t size = (len > BLOCKSIZE ? BLOCKSIZE : len);
+      if (send (ofd, buffer, size, MSG_MORE) != size)
+        {
+          result = -EIO;
+          goto out_ofd;
+        }
+      buffer += size;
+      len -= size;
+    }
+  while (len > 0);
+
+  if (read (ofd, resblock, hashlen) != hashlen)
+    result = -EIO;
+  else
+    result = 0;
+
+out_ofd:
+  close (ofd);
+out_cfd:
+  close (cfd);
+  return result;
+}
+
+int
+afalg_stream (FILE *stream, const char *alg,
+              void *resblock, ssize_t hashlen)
 {
   int cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
   if (cfd < 0)

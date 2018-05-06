@@ -37,6 +37,30 @@ extern "C" {
 
 # if USE_LINUX_CRYPTO_API
 
+/* Compute a message digest of a memory region.
+
+   The memory region starts at BUFFER and is LEN bytes long.
+
+   ALG is the message digest algorithm; see the file /proc/crypto.
+
+   RESBLOCK points to a block of HASHLEN bytes, for the result.
+   HASHLEN must be the length of the message digest, in bytes, in particular:
+
+      alg    | hashlen
+      -------+--------
+      md5    | 16
+      sha1   | 20
+      sha224 | 28
+      sha256 | 32
+      sha384 | 48
+      sha512 | 64
+
+   If successful, fill RESBLOCK and return 0.
+   Upon failure, return a negated error number.  */
+int
+afalg_buffer (const char *buffer, size_t len, const char *alg,
+              void *resblock, ssize_t hashlen);
+
 /* Compute a message digest of the contents of a file.
 
    STREAM is an open file stream.  Regular files are handled more efficiently.
@@ -60,12 +84,21 @@ extern "C" {
    If successful, fill RESBLOCK and return 0.
    Upon failure, return a negated error number.  */
 int
-afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen);
+afalg_stream (FILE *stream, const char *alg,
+              void *resblock, ssize_t hashlen);
 
 # else
 
 static inline int
-afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
+afalg_buffer (const char *buffer, size_t len, const char *alg,
+              void *resblock, ssize_t hashlen)
+{
+  return -EAFNOSUPPORT;
+}
+
+static inline int
+afalg_stream (FILE *stream, const char *alg,
+              void *resblock, ssize_t hashlen)
 {
   return -EAFNOSUPPORT;
 }
