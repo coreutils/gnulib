@@ -1,5 +1,4 @@
-/* af_alg.h - Declaration of functions to compute message digest from
-   file streams using Linux kernel crypto API.
+/* af_alg.h - Compute message digests from file streams.
    Copyright (C) 2018 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -18,7 +17,7 @@
 /* Written by Matteo Croce <mcroce@redhat.com>, 2018.
    Documentation by Bruno Haible <bruno@clisp.org>, 2018.  */
 
-/* This file declares specific functions for computing message digests
+/* Declare specific functions for computing message digests
    using the Linux kernel crypto API, if available.  This kernel API gives
    access to specialized crypto instructions (that would also be available
    in user space) or to crypto devices (not directly available in user space).
@@ -38,13 +37,11 @@ extern "C" {
 
 # if HAVE_LINUX_IF_ALG_H
 
-/* Computes a message digest of the contents of a file.
-   STREAM is an open file stream.  Regular files are handled more efficiently
-   than other types of files.
-   ALG is the message digest algorithm.  The supported algorithms are listed in
-   the file /proc/crypto.
-   RESBLOCK points to a block of HASHLEN bytes, for the result. HASHLEN must be
-   the length of the message digest, in bytes, in particular:
+/* Compute a message digest of the contents of a file.
+   STREAM is an open file stream.  Regular files are handled more efficiently.
+   ALG is the message digest algorithm; see the file /proc/crypto.
+   RESBLOCK points to a block of HASHLEN bytes, for the result.
+   HASHLEN must be the length of the message digest, in bytes, in particular:
 
       alg    | hashlen
       -------+--------
@@ -55,8 +52,8 @@ extern "C" {
       sha384 | 48
       sha512 | 64
 
-   If successful, this function fills RESBLOCK and returns 0.
-   Upon failure, it returns a negated error code.  */
+   If successful, fill RESBLOCK and return 0.
+   Upon failure, return a negated error number.  */
 int
 afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen);
 
