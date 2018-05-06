@@ -43,6 +43,7 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
   if (cfd < 0)
     return -EAFNOSUPPORT;
 
+  int result;
   struct sockaddr_alg salg = {
     .salg_family = AF_ALG,
     .salg_type = "hash",
@@ -50,19 +51,22 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
   /* Avoid calling both strcpy and strlen.  */
   for (int i = 0; (salg.salg_name[i] = alg[i]); i++)
     if (i == sizeof salg.salg_name - 1)
-      return -EINVAL;
+      {
+        result = -EINVAL;
+        goto out_cfd;
+      }
 
   int ret = bind (cfd, (struct sockaddr *) &salg, sizeof salg);
   if (ret != 0)
     {
-      ret = -EAFNOSUPPORT;
+      result = -EAFNOSUPPORT;
       goto out_cfd;
     }
 
   int ofd = accept (cfd, NULL, 0);
   if (ofd < 0)
     {
-      ret = -EAFNOSUPPORT;
+      result = -EAFNOSUPPORT;
       goto out_cfd;
     }
 
@@ -80,9 +84,9 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
       if (fflush (stream))
         {
 #if defined _WIN32 && ! defined __CYGWIN__
-          ret = -EIO;
+          result = -EIO;
 #else
-          ret = -errno;
+          result = -errno;
 #endif
           goto out_cfd;
         }
@@ -92,12 +96,12 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
          See <https://patchwork.kernel.org/patch/9434741/>.  */
       if (nbytes <= 0)
         {
-          ret = -EAFNOSUPPORT;
+          result = -EAFNOSUPPORT;
           goto out_ofd;
         }
       if (sendfile (ofd, fd, NULL, nbytes) != nbytes)
         {
-          ret = -EIO;
+          result = -EIO;
           goto out_ofd;
         }
     }
@@ -112,34 +116,34 @@ afalg_stream (FILE *stream, const char *alg, void *resblock, ssize_t hashlen)
           non_empty = 1;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
-              ret = -EIO;
+              result = -EIO;
               goto out_ofd;
             }
         }
       if (ferror (stream))
         {
-          ret = -EIO;
+          result = -EIO;
           goto out_ofd;
         }
       /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
          See <https://patchwork.kernel.org/patch/9434741/>.  */
       if (!non_empty)
         {
-          ret = -EAFNOSUPPORT;
+          result = -EAFNOSUPPORT;
           goto out_ofd;
         }
     }
 
   if (read (ofd, resblock, hashlen) != hashlen)
-    ret = -EIO;
+    result = -EIO;
   else
-    ret = 0;
+    result = 0;
 
 out_ofd:
   close (ofd);
 out_cfd:
   close (cfd);
-  return ret;
+  return result;
 }
 
 #endif
