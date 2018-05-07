@@ -183,7 +183,7 @@ sha384_finish_ctx (struct sha512_ctx *ctx, void *resbuf)
    Write the message digest into RESBLOCK, which contains HASHLEN bytes.
    The initial and finishing operations are INIT_CTX and FINISH_CTX.
    Return zero if and only if successful.  */
-int
+static int
 shaxxx_stream (FILE *stream, char const *alg, void *resblock,
                ssize_t hashlen, void (*init_ctx) (struct sha512_ctx *),
                void *(*finish_ctx) (struct sha512_ctx *, void *))

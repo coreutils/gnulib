@@ -41,7 +41,7 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
               void *resblock, ssize_t hashlen)
 {
   /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-     See <https://patchwork.kernel.org/patch/9434741/>.  */
+     See <https://patchwork.kernel.org/patch/9308641/>.  */
   if (len == 0)
     return -EAFNOSUPPORT;
 
@@ -109,6 +109,9 @@ afalg_stream (FILE *stream, const char *alg,
   if (cfd < 0)
     return -EAFNOSUPPORT;
 
+  int fd;
+  struct stat st;
+
   int result;
   struct sockaddr_alg salg = {
     .salg_family = AF_ALG,
@@ -137,8 +140,7 @@ afalg_stream (FILE *stream, const char *alg,
     }
 
   /* if file is a regular file, attempt sendfile to pipe the data.  */
-  int fd = fileno (stream);
-  struct stat st;
+  fd = fileno (stream);
   if (fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
@@ -159,7 +161,7 @@ afalg_stream (FILE *stream, const char *alg,
 
       off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
       /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-         See <https://patchwork.kernel.org/patch/9434741/>.  */
+         See <https://patchwork.kernel.org/patch/9308641/>.  */
       if (nbytes <= 0)
         {
           result = -EAFNOSUPPORT;
@@ -192,7 +194,7 @@ afalg_stream (FILE *stream, const char *alg,
           goto out_ofd;
         }
       /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-         See <https://patchwork.kernel.org/patch/9434741/>.  */
+         See <https://patchwork.kernel.org/patch/9308641/>.  */
       if (!non_empty)
         {
           result = -EAFNOSUPPORT;
