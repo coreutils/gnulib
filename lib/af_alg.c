@@ -35,18 +35,11 @@
 
 #define BLOCKSIZE 32768
 
-int
-afalg_buffer (const char *buffer, size_t len, const char *alg,
-              void *resblock, ssize_t hashlen)
+/* Return a newly created socket for ALG.
+   On error, return a negative error number.  */
+static int
+alg_socket (char const *alg)
 {
-  int ofd;
-
-  /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-     See <https://patchwork.kernel.org/patch/9308641/>.  */
-  if (len == 0)
-    return -EAFNOSUPPORT;
-
-  int result;
   struct sockaddr_alg salg = {
     .salg_family = AF_ALG,
     .salg_type = "hash",
@@ -59,19 +52,27 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
   int cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
   if (cfd < 0)
     return -EAFNOSUPPORT;
+  int ofd = (bind (cfd, (struct sockaddr *) &salg, sizeof salg) == 0
+             ? accept (cfd, NULL, 0)
+             : -1);
+  close (cfd);
+  return ofd < 0 ? -EAFNOSUPPORT : ofd;
+}
 
-  if (bind (cfd, (struct sockaddr *) &salg, sizeof salg) != 0)
-    {
-      result = -EAFNOSUPPORT;
-      goto out_cfd;
-    }
+int
+afalg_buffer (const char *buffer, size_t len, const char *alg,
+              void *resblock, ssize_t hashlen)
+{
+  /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
+     See <https://patchwork.kernel.org/patch/9308641/>.  */
+  if (len == 0)
+    return -EAFNOSUPPORT;
 
-  ofd = accept (cfd, NULL, 0);
+  int ofd = alg_socket (alg);
   if (ofd < 0)
-    {
-      result = -EAFNOSUPPORT;
-      goto out_cfd;
-    }
+    return ofd;
+
+  int result;
 
   do
     {
@@ -93,8 +94,6 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
 
 out_ofd:
   close (ofd);
-out_cfd:
-  close (cfd);
   return result;
 }
 
@@ -102,38 +101,14 @@ int
 afalg_stream (FILE *stream, const char *alg,
               void *resblock, ssize_t hashlen)
 {
-  int fd, ofd;
-  struct stat st;
-
-  int result;
-  struct sockaddr_alg salg = {
-    .salg_family = AF_ALG,
-    .salg_type = "hash",
-  };
-  /* Avoid calling both strcpy and strlen.  */
-  for (int i = 0; (salg.salg_name[i] = alg[i]); i++)
-    if (i == sizeof salg.salg_name - 1)
-      return -EINVAL;
-
-  int cfd = socket (AF_ALG, SOCK_SEQPACKET, 0);
-  if (cfd < 0)
-    return -EAFNOSUPPORT;
-
-  if (bind (cfd, (struct sockaddr *) &salg, sizeof salg) != 0)
-    {
-      result = -EAFNOSUPPORT;
-      goto out_cfd;
-    }
-
-  ofd = accept (cfd, NULL, 0);
+  int ofd = alg_socket (alg);
   if (ofd < 0)
-    {
-      result = -EAFNOSUPPORT;
-      goto out_cfd;
-    }
+    return ofd;
 
   /* if file is a regular file, attempt sendfile to pipe the data.  */
-  fd = fileno (stream);
+  int fd = fileno (stream);
+  int result;
+  struct stat st;
   if (fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
@@ -202,8 +177,6 @@ afalg_stream (FILE *stream, const char *alg,
 
 out_ofd:
   close (ofd);
-out_cfd:
-  close (cfd);
   return result;
 }
 
