@@ -1,5 +1,4 @@
-/* af_alg.c - Functions to compute message digest from file streams using
-   Linux kernel crypto API.
+/* af_alg.c - Compute message digests from file streams and buffers.
    Copyright (C) 2018 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -150,7 +149,7 @@ afalg_stream (FILE *stream, const char *alg,
 #else
           result = -errno;
 #endif
-          goto out_cfd;
+          goto out_ofd;
         }
 
       off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
