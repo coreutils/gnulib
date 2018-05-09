@@ -79,14 +79,14 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
       ssize_t size = (len > BLOCKSIZE ? BLOCKSIZE : len);
       if (send (ofd, buffer, size, MSG_MORE) != size)
         {
-          result = -EIO;
+          result = -EAFNOSUPPORT;
           break;
         }
       buffer += size;
       len -= size;
       if (len == 0)
         {
-          result = read (ofd, resblock, hashlen) == hashlen ? -EIO: 0;
+          result = read (ofd, resblock, hashlen) == hashlen ? -EAFNOSUPPORT: 0;
           break;
         }
     }
@@ -116,22 +116,14 @@ afalg_stream (FILE *stream, const char *alg,
          Note: fflush on an input stream after ungetc does not work as expected
          on some platforms.  Therefore this situation is not supported here.  */
       if (fflush (stream))
-        {
-#if defined _WIN32 && ! defined __CYGWIN__
-          result = -EIO;
-#else
-          result = -errno;
-#endif
-        }
+        result = -EIO;
       else
         {
           off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
           /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
              See <https://patchwork.kernel.org/patch/9308641/>.  */
-          if (nbytes <= 0)
+          if (nbytes <= 0 || sendfile (ofd, fd, NULL, nbytes) != nbytes)
             result = -EAFNOSUPPORT;
-          else if (sendfile (ofd, fd, NULL, nbytes) != nbytes)
-            result = -EIO;
         }
     }
   else
