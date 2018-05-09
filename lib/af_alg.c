@@ -74,25 +74,23 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
 
   int result;
 
-  do
+  for (;;)
     {
       ssize_t size = (len > BLOCKSIZE ? BLOCKSIZE : len);
       if (send (ofd, buffer, size, MSG_MORE) != size)
         {
           result = -EIO;
-          goto out_ofd;
+          break;
         }
       buffer += size;
       len -= size;
+      if (len == 0)
+        {
+          result = read (ofd, resblock, hashlen) == hashlen ? -EIO: 0;
+          break;
+        }
     }
-  while (len > 0);
 
-  if (read (ofd, resblock, hashlen) != hashlen)
-    result = -EIO;
-  else
-    result = 0;
-
-out_ofd:
   close (ofd);
   return result;
 }
@@ -107,7 +105,7 @@ afalg_stream (FILE *stream, const char *alg,
 
   /* if file is a regular file, attempt sendfile to pipe the data.  */
   int fd = fileno (stream);
-  int result;
+  int result = 0;
   struct stat st;
   if (fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
@@ -124,58 +122,48 @@ afalg_stream (FILE *stream, const char *alg,
 #else
           result = -errno;
 #endif
-          goto out_ofd;
         }
-
-      off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
-      /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-         See <https://patchwork.kernel.org/patch/9308641/>.  */
-      if (nbytes <= 0)
+      else
         {
-          result = -EAFNOSUPPORT;
-          goto out_ofd;
-        }
-      if (sendfile (ofd, fd, NULL, nbytes) != nbytes)
-        {
-          result = -EIO;
-          goto out_ofd;
+          off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
+          /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
+             See <https://patchwork.kernel.org/patch/9308641/>.  */
+          if (nbytes <= 0)
+            result = -EAFNOSUPPORT;
+          else if (sendfile (ofd, fd, NULL, nbytes) != nbytes)
+            result = -EIO;
         }
     }
   else
     {
       /* sendfile not possible, do a classic read-write loop.  */
       int non_empty = 0;
-      ssize_t size;
-      char buf[BLOCKSIZE];
-      while ((size = fread (buf, 1, sizeof buf, stream)))
+      for (;;)
         {
+          char buf[BLOCKSIZE];
+          ssize_t size = fread (buf, 1, sizeof buf, stream);
+          if (size == 0)
+            {
+              /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
+                 See <https://patchwork.kernel.org/patch/9308641/>.  */
+              if (!non_empty)
+                result = -EAFNOSUPPORT;
+
+              if (ferror (stream))
+                result = -EIO;
+              break;
+            }
           non_empty = 1;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
               result = -EIO;
-              goto out_ofd;
+              break;
             }
-        }
-      if (ferror (stream))
-        {
-          result = -EIO;
-          goto out_ofd;
-        }
-      /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-         See <https://patchwork.kernel.org/patch/9308641/>.  */
-      if (!non_empty)
-        {
-          result = -EAFNOSUPPORT;
-          goto out_ofd;
         }
     }
 
-  if (read (ofd, resblock, hashlen) != hashlen)
+  if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
     result = -EIO;
-  else
-    result = 0;
-
-out_ofd:
   close (ofd);
   return result;
 }
