@@ -103,33 +103,27 @@ afalg_stream (FILE *stream, const char *alg,
   if (ofd < 0)
     return ofd;
 
-  /* if file is a regular file, attempt sendfile to pipe the data.  */
+  /* If STREAM's size is known and nonzero and not too large, attempt
+     sendfile to pipe the data.  The nonzero restriction avoids issues
+     with /proc files that pretend to be empty, and lets the classic
+     read-write loop work around an empty-input bug noted below.  */
   int fd = fileno (stream);
   int result = 0;
   struct stat st;
-  if (fstat (fd, &st) == 0
+  off_t nseek = 0, off = ftello (stream);
+  if (0 <= off && fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
-      && 0 < st.st_size && st.st_size <= SYS_BUFSIZE_MAX)
+      && off < st.st_size && st.st_size - off < SYS_BUFSIZE_MAX)
     {
-      /* Make sure the offset of fileno (stream) reflects how many bytes
-         have been read from stream before this function got invoked.
-         Note: fflush on an input stream after ungetc does not work as expected
-         on some platforms.  Therefore this situation is not supported here.  */
-      if (fflush (stream))
-        result = -EIO;
-      else
-        {
-          off_t nbytes = st.st_size - lseek (fd, 0, SEEK_CUR);
-          /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
-             See <https://patchwork.kernel.org/patch/9308641/>.  */
-          if (nbytes <= 0 || sendfile (ofd, fd, NULL, nbytes) != nbytes)
-            result = -EAFNOSUPPORT;
-        }
+      off_t nbytes = st.st_size - off;
+      if (sendfile (ofd, fd, &off, nbytes) != nbytes)
+        result = -EAFNOSUPPORT;
     }
   else
     {
-      /* sendfile not possible, do a classic read-write loop.  */
-      int non_empty = 0;
+     /* sendfile not possible, do a classic read-write loop.
+        Defer to glibc as to whether EOF is sticky; see
+        <https://sourceware.org/bugzilla/show_bug.cgi?id=19476>.  */
       for (;;)
         {
           char buf[BLOCKSIZE];
@@ -138,25 +132,28 @@ afalg_stream (FILE *stream, const char *alg,
             {
               /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
                  See <https://patchwork.kernel.org/patch/9308641/>.  */
-              if (!non_empty)
+              if (nseek == 0)
                 result = -EAFNOSUPPORT;
 
               if (ferror (stream))
                 result = -EIO;
               break;
             }
-          non_empty = 1;
+          nseek -= size;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
-              result = -EIO;
+              result = -EAFNOSUPPORT;
               break;
             }
         }
     }
 
   if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
-    result = -EIO;
+    result = -EAFNOSUPPORT;
   close (ofd);
+  if (result == -EAFNOSUPPORT && nseek != 0
+      && fseeko (stream, nseek, SEEK_CUR) != 0)
+    result = -EIO;
   return result;
 }
 

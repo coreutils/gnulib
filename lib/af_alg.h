@@ -1,4 +1,4 @@
-/* af_alg.h - Compute message digests from file streams.
+/* af_alg.h - Compute message digests from file streams and buffers.
    Copyright (C) 2018 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -61,11 +61,12 @@ int
 afalg_buffer (const char *buffer, size_t len, const char *alg,
               void *resblock, ssize_t hashlen);
 
-/* Compute a message digest of the contents of a file.
+/* Compute a message digest of data read from STREAM.
 
-   STREAM is an open file stream.  Regular files are handled more efficiently.
-   The contents of STREAM from its current position to its end will be read.
-   The case that the last operation on STREAM was an 'ungetc' is not supported.
+   STREAM is an open file stream.  The last operation on STREAM should
+   not be 'ungetc', and if STREAM is also open for writing it should
+   have been fflushed since its last write.  Read from the current
+   position to the end of STREAM.  Handle regular files efficently.
 
    ALG is the message digest algorithm; see the file /proc/crypto.
 
@@ -82,7 +83,9 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
       sha512 | 64
 
    If successful, fill RESBLOCK and return 0.
-   Upon failure, return a negated error number.  */
+   Upon failure, return a negated error number.
+   Unless returning 0 or -EIO, restore STREAM's file position so that
+   the caller can fall back on some other method.  */
 int
 afalg_stream (FILE *stream, const char *alg,
               void *resblock, ssize_t hashlen);
