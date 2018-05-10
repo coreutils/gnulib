@@ -86,7 +86,7 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
       len -= size;
       if (len == 0)
         {
-          result = read (ofd, resblock, hashlen) == hashlen ? -EAFNOSUPPORT: 0;
+          result = read (ofd, resblock, hashlen) == hashlen ? 0 : -EAFNOSUPPORT;
           break;
         }
     }
@@ -108,7 +108,7 @@ afalg_stream (FILE *stream, const char *alg,
      with /proc files that pretend to be empty, and lets the classic
      read-write loop work around an empty-input bug noted below.  */
   int fd = fileno (stream);
-  int result = 0;
+  int result;
   struct stat st;
   off_t nseek = 0, off = ftello (stream);
   if (0 <= off && fstat (fd, &st) == 0
@@ -116,8 +116,7 @@ afalg_stream (FILE *stream, const char *alg,
       && off < st.st_size && st.st_size - off < SYS_BUFSIZE_MAX)
     {
       off_t nbytes = st.st_size - off;
-      if (sendfile (ofd, fd, &off, nbytes) != nbytes)
-        result = -EAFNOSUPPORT;
+      result = sendfile (ofd, fd, &off, nbytes) == nbytes ? 0 : -EAFNOSUPPORT;
     }
   else
     {
@@ -132,17 +131,14 @@ afalg_stream (FILE *stream, const char *alg,
             {
               /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
                  See <https://patchwork.kernel.org/patch/9308641/>.  */
-              if (nseek == 0)
-                result = -EAFNOSUPPORT;
-
-              if (ferror (stream))
-                result = -EIO;
+              result = ferror (stream) ? -EIO : nseek == 0 ? -EAFNOSUPPORT : 0;
               break;
             }
           nseek -= size;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
-              result = -EAFNOSUPPORT;
+              result = (fseeko (stream, nseek, SEEK_CUR) == 0
+                        ? -EAFNOSUPPORT : -EIO);
               break;
             }
         }
@@ -151,9 +147,6 @@ afalg_stream (FILE *stream, const char *alg,
   if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
     result = -EAFNOSUPPORT;
   close (ofd);
-  if (result == -EAFNOSUPPORT && nseek != 0
-      && fseeko (stream, nseek, SEEK_CUR) != 0)
-    result = -EIO;
   return result;
 }
 
