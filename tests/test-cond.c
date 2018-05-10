@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <unistd.h>
 
 #include "glthread/cond.h"
 #include "glthread/lock.h"
@@ -58,7 +59,6 @@
 /*
  * Condition check
  */
-#include <unistd.h>
 static int cond_value = 0;
 gl_cond_define_initialized(static, condtest)
 gl_lock_define_initialized(static, lockcond)
