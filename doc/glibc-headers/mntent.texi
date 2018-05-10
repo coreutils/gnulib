@@ -32,7 +32,7 @@ This header file is missing on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 4.3.2, OSF/1 5.1, Solaris 11.3, mingw, MSVC 14, Interix 3.5, BeOS.
 @item
 The function @code{getmntent_r} is missing on all non-glibc platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, Cygwin.
+AIX 5.1, HP-UX 11, IRIX 6.5, Cygwin, Android 9.0.
 @end itemize
 
 Gnulib module @code{mountlist} provides a higher-level abstraction.
