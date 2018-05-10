@@ -17,7 +17,7 @@ glibc 2.11, Mac OS X 10.5.
 
 @item
 The @code{struct lconv} type does not contain any members on some platforms:
-Android.
+Android up to 2014.
 
 @item
 The @code{struct lconv} type does not contain the members

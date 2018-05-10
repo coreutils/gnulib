@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Android LP64, mingw, MSVC 14.
+Android LP64, mingw, MSVC 14, Android 9.0.
 
 @item
 This function is not declared on some platforms:
