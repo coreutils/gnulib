@@ -149,8 +149,8 @@ extern int glthread_in_use (void);
 #  endif
 
 #  if !PTHREAD_IN_USE_DETECTION_HARD
-#   pragma weak pthread_cancel
-#   define pthread_in_use() (pthread_cancel != NULL)
+#   pragma weak pthread_mutexattr_gettype
+#   define pthread_in_use() (pthread_mutexattr_gettype != NULL)
 #  endif
 
 # else
