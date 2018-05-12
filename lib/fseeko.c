@@ -33,9 +33,9 @@ fseeko (FILE *fp, off_t offset, int whence)
 #endif
 #if _GL_WINDOWS_64_BIT_OFF_T
 # undef fseeko
-# if HAVE__FSEEKI64 /* msvc, mingw64 */
+# if HAVE__FSEEKI64 && HAVE_DECL__FSEEKI64 /* msvc, mingw since msvcrt8.0, mingw64 */
 #  define fseeko _fseeki64
-# else /* mingw */
+# else /* mingw before msvcrt8.0 */
 #  define fseeko fseeko64
 # endif
 #endif
