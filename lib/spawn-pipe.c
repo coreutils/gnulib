@@ -71,6 +71,7 @@ nonintr_close (int fd)
 
   return retval;
 }
+#undef close /* avoid warning related to gnulib module unistd */
 #define close nonintr_close
 
 #if defined _WIN32 && ! defined __CYGWIN__

@@ -66,6 +66,7 @@ nonintr_close (int fd)
 
   return retval;
 }
+#undef close /* avoid warning related to gnulib module unistd */
 #define close nonintr_close
 
 static int
