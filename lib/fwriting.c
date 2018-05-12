@@ -21,6 +21,9 @@
 
 #include "stdio-impl.h"
 
+/* This file is not used on systems that have the __fwritable function,
+   namely glibc >= 2.2, Solaris >= 7, Android API >= 29, musl libc.  */
+
 bool
 fwriting (FILE *fp)
 {

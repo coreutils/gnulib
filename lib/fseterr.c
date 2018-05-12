@@ -23,6 +23,9 @@
 
 #include "stdio-impl.h"
 
+/* This file is not used on systems that have the __fseterr function,
+   namely musl libc.  */
+
 void
 fseterr (FILE *fp)
 {

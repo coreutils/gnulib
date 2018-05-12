@@ -25,6 +25,9 @@
 # include <fcntl.h>
 #endif
 
+/* This file is not used on systems that have the __fwritable function,
+   namely glibc >= 2.2, Solaris >= 7, Android API >= 23, musl libc.  */
+
 bool
 fwritable (FILE *fp)
 {

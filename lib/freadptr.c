@@ -23,6 +23,9 @@
 
 #include "stdio-impl.h"
 
+/* This file is not used on systems that have the __freadptr function,
+   namely musl libc.  */
+
 const char *
 freadptr (FILE *fp, size_t *sizep)
 {

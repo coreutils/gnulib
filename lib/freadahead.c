@@ -27,6 +27,9 @@
 extern size_t __sreadahead (FILE *);
 #endif
 
+/* This file is not used on systems that have the __freadahead function,
+   namely musl libc.  */
+
 size_t
 freadahead (FILE *fp)
 {
