@@ -18,6 +18,19 @@
    argument.  Therefore this file produces a non-NULL pointer which cannot
    be dereferenced, if possible.  */
 
+/* On Android, when targeting Android 4.4 or older with a GCC toolchain,
+   prevent a compilation error
+     "error: call to 'mmap' declared with attribute error: mmap is not
+      available with _FILE_OFFSET_BITS=64 when using GCC until android-21.
+      Either raise your minSdkVersion, disable _FILE_OFFSET_BITS=64, or
+      switch to Clang."
+   The files that we access in this compilation unit are less than 2 GB
+   large.  */
+#if defined __ANDROID__
+# undef _FILE_OFFSET_BITS
+# undef __USE_FILE_OFFSET64
+#endif
+
 #include <stdlib.h>
 
 /* Test whether mmap() and mprotect() are available.
