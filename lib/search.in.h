@@ -169,7 +169,7 @@ _GL_FUNCDECL_RPL (twalk, void,
 _GL_CXXALIAS_RPL (twalk, void,
                   (const void *vroot, _gl_search_action_fn action));
 # else
-#  if !@HAVE_TSEARCH@
+#  if !@HAVE_TWALK@
 _GL_FUNCDECL_SYS (twalk, void,
                   (const void *vroot, _gl_search_action_fn action)
                   _GL_ARG_NONNULL ((2)));
@@ -178,6 +178,10 @@ _GL_CXXALIAS_SYS (twalk, void,
                   (const void *vroot, _gl_search_action_fn action));
 # endif
 _GL_CXXALIASWARN (twalk);
+
+/* Flags used by tsearch.c.  */
+# define GNULIB_defined_tsearch  (@REPLACE_TSEARCH@ || !@HAVE_TSEARCH@)
+# define GNULIB_defined_twalk    (@REPLACE_TSEARCH@ || !@HAVE_TWALK@)
 
 #elif defined GNULIB_POSIXCHECK
 # undef tsearch

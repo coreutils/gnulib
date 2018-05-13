@@ -1,4 +1,4 @@
-# search_h.m4 serial 9
+# search_h.m4 serial 10
 dnl Copyright (C) 2007-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,5 +56,6 @@ AC_DEFUN([gl_SEARCH_H_DEFAULTS],
   GNULIB_TSEARCH=0; AC_SUBST([GNULIB_TSEARCH])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_TSEARCH=1;    AC_SUBST([HAVE_TSEARCH])
+  HAVE_TWALK=1;      AC_SUBST([HAVE_TWALK])
   REPLACE_TSEARCH=0; AC_SUBST([REPLACE_TSEARCH])
 ])
