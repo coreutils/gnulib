@@ -79,10 +79,10 @@
 
 
 /* Data structure to contain attributes for thread creation.  */
-#if @REPLACE_POSIX_SPAWN@
+#if @REPLACE_POSIX_SPAWN@ || (@HAVE_POSIX_SPAWNATTR_T@ && !@HAVE_POSIX_SPAWN@)
 # define posix_spawnattr_t rpl_posix_spawnattr_t
 #endif
-#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWNATTR_T@
+#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWNATTR_T@ || !@HAVE_POSIX_SPAWN@
 # if !GNULIB_defined_posix_spawnattr_t
 typedef struct
 {
@@ -101,10 +101,10 @@ typedef struct
 
 /* Data structure to contain information about the actions to be
    performed in the new process with respect to file descriptors.  */
-#if @REPLACE_POSIX_SPAWN@
+#if @REPLACE_POSIX_SPAWN@ || (@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@ && !@HAVE_POSIX_SPAWN@)
 # define posix_spawn_file_actions_t rpl_posix_spawn_file_actions_t
 #endif
-#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@
+#if @REPLACE_POSIX_SPAWN@ || !@HAVE_POSIX_SPAWN_FILE_ACTIONS_T@ || !@HAVE_POSIX_SPAWN@
 # if !GNULIB_defined_posix_spawn_file_actions_t
 typedef struct
 {
