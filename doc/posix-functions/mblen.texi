@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Android 4.3.
+Android 7.1.
 @end itemize
