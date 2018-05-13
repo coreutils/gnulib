@@ -1,4 +1,4 @@
-# serial 6
+# serial 7
 # See if we need to provide mknod replacement.
 
 dnl Copyright (C) 2009-2018 Free Software Foundation, Inc.
@@ -43,10 +43,12 @@ AC_DEFUN([gl_FUNC_MKNOD],
           fi
           gl_cv_func_mknod_works=no],
          [case "$host_os" in
-                           # Guess yes on glibc systems.
-            *-gnu* | gnu*) gl_cv_func_mknod_works="guessing yes" ;;
-                           # If we don't know, assume the worst.
-            *)             gl_cv_func_mknod_works="guessing no" ;;
+                             # Guess yes on Linux systems.
+            linux-* | linux) gl_cv_func_mknod_works="guessing yes" ;;
+                             # Guess yes on glibc systems.
+            *-gnu* | gnu*)   gl_cv_func_mknod_works="guessing yes" ;;
+                             # If we don't know, assume the worst.
+            *)               gl_cv_func_mknod_works="guessing no" ;;
           esac
          ])
        rm -f conftest.fifo])
