@@ -1,4 +1,4 @@
-# getpass.m4 serial 14
+# getpass.m4 serial 15
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -43,7 +43,7 @@ AC_DEFUN([gl_FUNC_GETPASS_GNU],
 # Prerequisites of lib/getpass.c.
 AC_DEFUN([gl_PREREQ_GETPASS], [
   AC_CHECK_HEADERS_ONCE([stdio_ext.h termios.h])
-  AC_CHECK_FUNCS_ONCE([__fsetlocking tcgetattr tcsetattr])
+  AC_CHECK_FUNCS_ONCE([__fsetlocking])
   AC_CHECK_DECLS([__fsetlocking],,,
     [[#include <stdio.h>
       #if HAVE_STDIO_EXT_H
@@ -54,5 +54,46 @@ AC_DEFUN([gl_PREREQ_GETPASS], [
   AC_CHECK_DECLS_ONCE([fputs_unlocked])
   AC_CHECK_DECLS_ONCE([funlockfile])
   AC_CHECK_DECLS_ONCE([putc_unlocked])
-  :
+
+  dnl We can't use AC_CHECK_FUNC here, because tcgetattr() is defined as a
+  dnl static inline function when compiling for Android 4.4 or older.
+  AC_CACHE_CHECK([for tcgetattr], [gl_cv_func_tcgetattr],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <termios.h>
+            struct termios x;
+          ]],
+          [[return tcgetattr(0,&x);]])
+       ],
+       [gl_cv_func_tcgetattr=yes],
+       [gl_cv_func_tcgetattr=no])
+    ])
+  if test $gl_cv_func_tcgetattr = yes; then
+    HAVE_TCGETATTR=1
+  else
+    HAVE_TCGETATTR=0
+  fi
+  AC_DEFINE_UNQUOTED([HAVE_TCGETATTR], [$HAVE_TCGETATTR],
+    [Define to 1 if the system has the 'tcgetattr' function.])
+
+  dnl We can't use AC_CHECK_FUNC here, because tcsetattr() is defined as a
+  dnl static inline function when compiling for Android 4.4 or older.
+  AC_CACHE_CHECK([for tcsetattr], [gl_cv_func_tcsetattr],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <termios.h>
+            struct termios x;
+          ]],
+          [[return tcsetattr(0,0,&x);]])
+       ],
+       [gl_cv_func_tcsetattr=yes],
+       [gl_cv_func_tcsetattr=no])
+    ])
+  if test $gl_cv_func_tcsetattr = yes; then
+    HAVE_TCSETATTR=1
+  else
+    HAVE_TCSETATTR=0
+  fi
+  AC_DEFINE_UNQUOTED([HAVE_TCSETATTR], [$HAVE_TCSETATTR],
+    [Define to 1 if the system has the 'tcsetattr' function.])
 ])
