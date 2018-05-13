@@ -17,16 +17,35 @@
 
 /* Written by Paul Eggert and Glen Lenker.  */
 
-#ifndef _@GUARD_PREFIX@_PTHREAD_H_
-
 #if __GNUC__ >= 3
 @PRAGMA_SYSTEM_HEADER@
 #endif
 @PRAGMA_COLUMNS@
 
-/* The include_next requires a split double-inclusion guard.  */
+#if defined _GL_ALREADY_INCLUDING_PTHREAD_H
+/* Special invocation convention:
+   On Android, we have a sequence of nested includes
+   <pthread.h> -> <time.h> -> <sys/time.h> -> <sys/select.h> ->
+   <signal.h> -> <pthread.h>.
+   In this situation, PTHREAD_COND_INITIALIZER is not yet defined,
+   therefore we should not attempt to define PTHREAD_MUTEX_NORMAL etc.  */
+
+#@INCLUDE_NEXT@ @NEXT_PTHREAD_H@
+
+#else
+/* Normal invocation convention.  */
+
+#ifndef _@GUARD_PREFIX@_PTHREAD_H_
+
 #if @HAVE_PTHREAD_H@
+
+# define _GL_ALREADY_INCLUDING_PTHREAD_H
+
+/* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_PTHREAD_H@
+
+# undef _GL_ALREADY_INCLUDING_PTHREAD_H
+
 #endif
 
 #ifndef _@GUARD_PREFIX@_PTHREAD_H_
@@ -293,3 +312,4 @@ _GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
+#endif
