@@ -20,6 +20,17 @@
 #endif
 @PRAGMA_COLUMNS@
 
+#if defined _WIN32 && !defined __CYGWIN__ \
+    && (defined __need_off_t || defined __need___off64_t \
+        || defined __need_ssize_t || defined __need_time_t)
+
+/* Special invocation convention inside mingw header files.  */
+
+#@INCLUDE_NEXT@ @NEXT_SYS_TYPES_H@
+
+#else
+/* Normal invocation convention.  */
+
 #ifndef _@GUARD_PREFIX@_SYS_TYPES_H
 
 /* The include_next requires a split double-inclusion guard.  */
@@ -92,3 +103,4 @@ typedef unsigned long long int rpl_ino_t;
 
 #endif /* _@GUARD_PREFIX@_SYS_TYPES_H */
 #endif /* _@GUARD_PREFIX@_SYS_TYPES_H */
+#endif /* __need_XXX */
