@@ -1489,7 +1489,7 @@ _GL_FUNCDECL_RPL (truncate, int, (const char *filename, off_t length)
                                  _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (truncate, int, (const char *filename, off_t length));
 # else
-#  if !@HAVE_TRUNCATE@
+#  if !@HAVE_DECL_TRUNCATE@
 _GL_FUNCDECL_SYS (truncate, int, (const char *filename, off_t length)
                                  _GL_ARG_NONNULL ((1)));
 #  endif

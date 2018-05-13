@@ -9,12 +9,12 @@ Depends-on:
 unistd
 sys_types
 largefile
-open            [test $HAVE_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]
-ftruncate       [test $HAVE_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]
+open            [test $HAVE_DECL_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]
+ftruncate       [test $HAVE_DECL_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1]
 
 configure.ac:
 gl_FUNC_TRUNCATE
-if test $HAVE_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1; then
+if test $HAVE_DECL_TRUNCATE = 0 || test $REPLACE_TRUNCATE = 1; then
   AC_LIBOBJ([truncate])
   gl_PREREQ_TRUNCATE
 fi
