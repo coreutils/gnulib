@@ -546,6 +546,7 @@ fts_open (char * const *argv,
                 goto mem3;
         sp->fts_cur->fts_link = root;
         sp->fts_cur->fts_info = FTS_INIT;
+        sp->fts_cur->fts_level = 1;
         if (! setup_dir (sp))
                 goto mem3;
 
