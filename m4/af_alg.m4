@@ -1,4 +1,4 @@
-# af_alg.m4 serial 3
+# af_alg.m4 serial 4
 dnl Copyright 2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,8 +33,8 @@ AC_DEFUN_ONCE([gl_AF_ALG],
   use_af_alg=yes
   AC_ARG_WITH([linux-crypto],
     [AS_HELP_STRING([[--without-linux-crypto]],
-       [Do not use Linux kernel cryptographic API (default is to use it if available)])
-    ],
+       [Do not use Linux kernel cryptographic API
+        (default is to use it if available)])],
     [use_af_alg=$withval],
     [use_af_alg=yes])
   dnl We cannot use it if it is not available.
