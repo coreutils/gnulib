@@ -124,112 +124,11 @@ echo "# It was automatically generated from config.charset."
 # List of references, updated during installation:
 echo "# Packages using this file: "
 case "$os" in
-  linux-gnulibc1*)
-    # Linux libc5 doesn't have nl_langinfo(CODESET); therefore
-    # localcharset.c falls back to using the full locale name
-    # from the environment variables.
-    echo "C ASCII"
-    echo "POSIX ASCII"
-    for l in af af_ZA ca ca_ES da da_DK de de_AT de_BE de_CH de_DE de_LU \
-             en en_AU en_BW en_CA en_DK en_GB en_IE en_NZ en_US en_ZA \
-             en_ZW es es_AR es_BO es_CL es_CO es_DO es_EC es_ES es_GT \
-             es_HN es_MX es_PA es_PE es_PY es_SV es_US es_UY es_VE et \
-             et_EE eu eu_ES fi fi_FI fo fo_FO fr fr_BE fr_CA fr_CH fr_FR \
-             fr_LU ga ga_IE gl gl_ES id id_ID in in_ID is is_IS it it_CH \
-             it_IT kl kl_GL nl nl_BE nl_NL no no_NO pt pt_BR pt_PT sv \
-             sv_FI sv_SE; do
-      echo "$l ISO-8859-1"
-      echo "$l.iso-8859-1 ISO-8859-1"
-      echo "$l.iso-8859-15 ISO-8859-15"
-      echo "$l.iso-8859-15@euro ISO-8859-15"
-      echo "$l@euro ISO-8859-15"
-      echo "$l.cp-437 CP437"
-      echo "$l.cp-850 CP850"
-      echo "$l.cp-1252 CP1252"
-      echo "$l.cp-1252@euro CP1252"
-      #echo "$l.atari-st ATARI-ST" # not a commonly used encoding
-      echo "$l.utf-8 UTF-8"
-      echo "$l.utf-8@euro UTF-8"
-    done
-    for l in cs cs_CZ hr hr_HR hu hu_HU pl pl_PL ro ro_RO sk sk_SK sl \
-             sl_SI sr sr_CS sr_YU; do
-      echo "$l ISO-8859-2"
-      echo "$l.iso-8859-2 ISO-8859-2"
-      echo "$l.cp-852 CP852"
-      echo "$l.cp-1250 CP1250"
-      echo "$l.utf-8 UTF-8"
-    done
-    for l in mk mk_MK ru ru_RU; do
-      echo "$l ISO-8859-5"
-      echo "$l.iso-8859-5 ISO-8859-5"
-      echo "$l.koi8-r KOI8-R"
-      echo "$l.cp-866 CP866"
-      echo "$l.cp-1251 CP1251"
-      echo "$l.utf-8 UTF-8"
-    done
-    for l in ar ar_SA; do
-      echo "$l ISO-8859-6"
-      echo "$l.iso-8859-6 ISO-8859-6"
-      echo "$l.cp-864 CP864"
-      #echo "$l.cp-868 CP868" # not a commonly used encoding
-      echo "$l.cp-1256 CP1256"
-      echo "$l.utf-8 UTF-8"
-    done
-    for l in el el_GR gr gr_GR; do
-      echo "$l ISO-8859-7"
-      echo "$l.iso-8859-7 ISO-8859-7"
-      echo "$l.cp-869 CP869"
-      echo "$l.cp-1253 CP1253"
-      echo "$l.cp-1253@euro CP1253"
-      echo "$l.utf-8 UTF-8"
-      echo "$l.utf-8@euro UTF-8"
-    done
-    for l in he he_IL iw iw_IL; do
-      echo "$l ISO-8859-8"
-      echo "$l.iso-8859-8 ISO-8859-8"
-      echo "$l.cp-862 CP862"
-      echo "$l.cp-1255 CP1255"
-      echo "$l.utf-8 UTF-8"
-    done
-    for l in tr tr_TR; do
-      echo "$l ISO-8859-9"
-      echo "$l.iso-8859-9 ISO-8859-9"
-      echo "$l.cp-857 CP857"
-      echo "$l.cp-1254 CP1254"
-      echo "$l.utf-8 UTF-8"
-    done
-    for l in lt lt_LT lv lv_LV; do
-      #echo "$l BALTIC" # not a commonly used encoding, wrong encoding name
-      echo "$l ISO-8859-13"
-    done
-    for l in ru_UA uk uk_UA; do
-      echo "$l KOI8-U"
-    done
-    for l in zh zh_CN; do
-      #echo "$l GB_2312-80" # not a commonly used encoding, wrong encoding name
-      echo "$l GB2312"
-    done
-    for l in ja ja_JP ja_JP.EUC; do
-      echo "$l EUC-JP"
-    done
-    for l in ko ko_KR; do
-      echo "$l EUC-KR"
-    done
-    for l in th th_TH; do
-      echo "$l TIS-620"
-    done
-    for l in fa fa_IR; do
-      #echo "$l ISIRI-3342" # a broken encoding
-      echo "$l.utf-8 UTF-8"
-    done
-    ;;
   linux* | *-gnu*)
     # With glibc-2.1 or newer, we don't need any canonicalization,
     # because glibc has iconv and both glibc and libiconv support all
     # GNU canonical names directly. Therefore, the Makefile does not
     # need to install the alias file at all.
-    # The following applies only to glibc-2.0.x and older libcs.
-    echo "ISO_646.IRV:1983 ASCII"
     ;;
   aix*)
     echo "ISO8859-1 ISO-8859-1"
@@ -341,7 +240,7 @@ case "$os" in
     echo "GB18030 GB18030"
     echo "cns11643 EUC-TW"
     echo "5601 EUC-KR"
-    echo "ko_KR.johap92 JOHAB"
+    #echo "ko_KR.johap92 JOHAB"
     echo "eucJP EUC-JP"
     echo "PCK SHIFT_JIS"
     echo "TIS620.2533 TIS-620"
@@ -408,47 +307,6 @@ case "$os" in
     echo "ISO8859-7 ISO-8859-7"
     echo "ISO8859-13 ISO-8859-13"
     echo "ISO8859-15 ISO-8859-15"
-    ;;
-  darwin[56]*)
-    # Darwin 6.8 doesn't have nl_langinfo(CODESET); therefore
-    # localcharset.c falls back to using the full locale name
-    # from the environment variables.
-    echo "C ASCII"
-    for l in en_AU en_CA en_GB en_US la_LN; do
-      echo "$l.US-ASCII ASCII"
-    done
-    for l in da_DK de_AT de_CH de_DE en_AU en_CA en_GB en_US es_ES \
-             fi_FI fr_BE fr_CA fr_CH fr_FR is_IS it_CH it_IT nl_BE \
-             nl_NL no_NO pt_PT sv_SE; do
-      echo "$l ISO-8859-1"
-      echo "$l.ISO8859-1 ISO-8859-1"
-      echo "$l.ISO8859-15 ISO-8859-15"
-    done
-    for l in la_LN; do
-      echo "$l.ISO8859-1 ISO-8859-1"
-      echo "$l.ISO8859-15 ISO-8859-15"
-    done
-    for l in cs_CZ hr_HR hu_HU la_LN pl_PL sl_SI; do
-      echo "$l.ISO8859-2 ISO-8859-2"
-    done
-    for l in la_LN lt_LT; do
-      echo "$l.ISO8859-4 ISO-8859-4"
-    done
-    for l in ru_RU; do
-      echo "$l.KOI8-R KOI8-R"
-      echo "$l.ISO8859-5 ISO-8859-5"
-      echo "$l.CP866 CP866"
-    done
-    for l in bg_BG; do
-      echo "$l.CP1251 CP1251"
-    done
-    echo "uk_UA.KOI8-U KOI8-U"
-    echo "zh_TW.BIG5 BIG5"
-    echo "zh_TW.Big5 BIG5"
-    echo "zh_CN.EUC GB2312"
-    echo "ja_JP.EUC EUC-JP"
-    echo "ja_JP.SJIS SHIFT_JIS"
-    echo "ko_KR.EUC EUC-KR"
     ;;
   darwin*)
     # Darwin 7.5 has nl_langinfo(CODESET), but sometimes its value is
