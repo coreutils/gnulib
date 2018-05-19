@@ -1,7 +1,6 @@
 .deps
 Makefile
 alloca.h
-charset.alias
 fnmatch.h
 fts.h
 getdate.c

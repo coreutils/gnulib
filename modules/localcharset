@@ -1,100 +1,23 @@
 Description:
 Return current locale's character encoding.
 
-Notice:
-If your package's tests make use of the locale_charset() function directly or
-indirectly, you may need to define the CHARSETALIASDIR environment variable,
-so that "make check" works before "make install". In Makefile.am syntax:
-TESTS_ENVIRONMENT += @LOCALCHARSET_TESTS_ENVIRONMENT@
-
 Files:
 lib/localcharset.h
 lib/localcharset.c
-lib/config.charset
-lib/ref-add.sin
-lib/ref-del.sin
 m4/codeset.m4
-m4/fcntl-o.m4
-m4/glibc21.m4
 m4/localcharset.m4
 
 Depends-on:
-configmake
 extensions
 
 configure.ac:
 gl_LOCALCHARSET
-LOCALCHARSET_TESTS_ENVIRONMENT="CHARSETALIASDIR=\"\$(abs_top_builddir)/$gl_source_base\""
+dnl For backward compatibility. Some packages still use this.
+LOCALCHARSET_TESTS_ENVIRONMENT=
 AC_SUBST([LOCALCHARSET_TESTS_ENVIRONMENT])
 
 Makefile.am:
-lib_SOURCES += localcharset.h localcharset.c
-
-# We need the following in order to install a simple file in $(libdir)
-# which is shared with other installed packages. We use a list of referencing
-# packages so that "make uninstall" will remove the file if and only if it
-# is not used by another installed package.
-# On systems with glibc-2.1 or newer, the file is redundant, therefore we
-# avoid installing it.
-
-all-local: charset.alias ref-add.sed ref-del.sed
-
-charset_alias = $(DESTDIR)$(libdir)/charset.alias
-charset_tmp = $(DESTDIR)$(libdir)/charset.tmp
-install-exec-local: install-exec-localcharset
-install-exec-localcharset: all-local
-	if test $(GLIBC21) = no; then \
-	  case '$(host_os)' in \
-	    darwin[56]*) \
-	      need_charset_alias=true ;; \
-	    darwin* | cygwin* | mingw* | pw32* | cegcc*) \
-	      need_charset_alias=false ;; \
-	    *) \
-	      need_charset_alias=true ;; \
-	  esac ; \
-	else \
-	  need_charset_alias=false ; \
-	fi ; \
-	if $$need_charset_alias; then \
-	  $(mkinstalldirs) $(DESTDIR)$(libdir) ; \
-	fi ; \
-	if test -f $(charset_alias); then \
-	  sed -f ref-add.sed $(charset_alias) > $(charset_tmp) ; \
-	  $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
-	  rm -f $(charset_tmp) ; \
-	else \
-	  if $$need_charset_alias; then \
-	    sed -f ref-add.sed charset.alias > $(charset_tmp) ; \
-	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias) ; \
-	    rm -f $(charset_tmp) ; \
-	  fi ; \
-	fi
-
-uninstall-local: uninstall-localcharset
-uninstall-localcharset: all-local
-	if test -f $(charset_alias); then \
-	  sed -f ref-del.sed $(charset_alias) > $(charset_tmp); \
-	  if grep '^# Packages using this file: $$' $(charset_tmp) \
-	      > /dev/null; then \
-	    rm -f $(charset_alias); \
-	  else \
-	    $(INSTALL_DATA) $(charset_tmp) $(charset_alias); \
-	  fi; \
-	  rm -f $(charset_tmp); \
-	fi
-
-charset.alias: config.charset
-	$(AM_V_GEN)rm -f t-$@ $@ && \
-	$(SHELL) $(srcdir)/config.charset '$(host)' > t-$@ && \
-	mv t-$@ $@
-
-SUFFIXES += .sed .sin
-.sin.sed:
-	$(AM_V_GEN)rm -f t-$@ $@ && \
-	sed -e '/^#/d' -e 's/@''PACKAGE''@/$(PACKAGE)/g' $< > t-$@ && \
-	mv t-$@ $@
-
-CLEANFILES += charset.alias ref-add.sed ref-del.sed
+lib_SOURCES += localcharset.c
 
 Include:
 "localcharset.h"
