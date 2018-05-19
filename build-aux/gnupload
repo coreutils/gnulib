@@ -24,7 +24,31 @@ scriptversion=2018-03-07.03; # UTC
 
 set -e
 
-GPG='gpg --batch --no-tty'
+GPG=gpg
+# Choose the proper version of gpg, so as to avoid a
+# "gpg-agent is not available in this session" error
+# when gpg-agent is version 2 but gpg is still version 1.
+# This code can go away once all major distributions ship gpg version 2
+# as /usr/bin/gpg.
+gpg_agent_version=`(gpg-agent --version) 2>/dev/null | sed -e '2,$d' -e 's/^[^0-9]*//'`
+case "$gpg_agent_version" in
+  2.*)
+    gpg_version=`(gpg --version) 2>/dev/null | sed -e '2,$d' -e 's/^[^0-9]*//'`
+    case "$gpg_version" in
+      1.*)
+        if (type gpg2) >/dev/null 2>/dev/null; then
+          # gpg2 is present.
+          GPG=gpg2
+        else
+          # gpg2 is missing. Ubuntu users should install the package 'gnupg2'.
+          echo "WARNING: Using 'gpg', which is too old. You should install 'gpg2'." 1>&2
+        fi
+        ;;
+    esac
+    ;;
+esac
+
+GPG="${GPG} --batch --no-tty"
 conffile=.gnuploadrc
 to=
 dry_run=false
