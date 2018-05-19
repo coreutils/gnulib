@@ -90,13 +90,41 @@ struct table_entry
 static const struct table_entry alias_table[] =
   {
 #  if defined __FreeBSD__                                   /* FreeBSD */
-    { "C",        "ASCII" },
-    { "US-ASCII", "ASCII" }
+    { "ARMSCII-8",  "ARMSCII-8" },
+    { "Big5",       "BIG5" },
+    { "C",          "ASCII" },
+    { "CP1131",     "CP1131" },
+    { "CP1251",     "CP1251" },
+    { "CP866",      "CP866" },
+    { "GB18030",    "GB18030" },
+    { "GB2312",     "GB2312" },
+    { "GBK",        "GBK" },
+  /*{ "ISCII-DEV",  "?" },*/
+    { "ISO8859-1",  "ISO-8859-1" },
+    { "ISO8859-13", "ISO-8859-13" },
+    { "ISO8859-15", "ISO-8859-15" },
+    { "ISO8859-2",  "ISO-8859-2" },
+    { "ISO8859-5",  "ISO-8859-5" },
+    { "ISO8859-7",  "ISO-8859-7" },
+    { "ISO8859-9",  "ISO-8859-9" },
+    { "KOI8-R",     "KOI8-R" },
+    { "KOI8-U",     "KOI8-U" },
+    { "SJIS",       "SHIFT_JIS" },
+    { "US-ASCII",   "ASCII" },
+    { "eucCN",      "GB2312" },
+    { "eucJP",      "EUC-JP" },
+    { "eucKR",      "EUC-KR" }
 #   define alias_table_defined
 #  endif
 #  if defined __NetBSD__                                    /* NetBSD */
     { "646",        "ASCII" },
+    { "ARMSCII-8",  "ARMSCII-8" },
     { "BIG5",       "BIG5" },
+    { "Big5-HKSCS", "BIG5-HKSCS" },
+    { "CP1251",     "CP1251" },
+    { "CP866",      "CP866" },
+    { "GB18030",    "GB18030" },
+    { "GB2312",     "GB2312" },
     { "ISO8859-1",  "ISO-8859-1" },
     { "ISO8859-13", "ISO-8859-13" },
     { "ISO8859-15", "ISO-8859-15" },
@@ -104,6 +132,9 @@ static const struct table_entry alias_table[] =
     { "ISO8859-4",  "ISO-8859-4" },
     { "ISO8859-5",  "ISO-8859-5" },
     { "ISO8859-7",  "ISO-8859-7" },
+    { "KOI8-R",     "KOI8-R" },
+    { "KOI8-U",     "KOI8-U" },
+    { "PT154",      "PT154" },
     { "SJIS",       "SHIFT_JIS" },
     { "eucCN",      "GB2312" },
     { "eucJP",      "EUC-JP" },
@@ -217,21 +248,27 @@ static const struct table_entry alias_table[] =
     { "SJIS",      "SHIFT_JIS" },
     { "arabic8",   "HP-ARABIC8" },
     { "big5",      "BIG5" },
+    { "cp1251",    "CP1251" },
     { "eucJP",     "EUC-JP" },
     { "eucKR",     "EUC-KR" },
     { "eucTW",     "EUC-TW" },
+    { "gb18030",   "GB18030" },
     { "greek8",    "HP-GREEK8" },
     { "hebrew8",   "HP-HEBREW8" },
+    { "hkbig5",    "BIG5-HKSCS" },
     { "hp15CN",    "GB2312" },
     { "iso88591",  "ISO-8859-1" },
+    { "iso885913", "ISO-8859-13" },
     { "iso885915", "ISO-8859-15" },
     { "iso88592",  "ISO-8859-2" },
+    { "iso88594",  "ISO-8859-4" },
     { "iso88595",  "ISO-8859-5" },
     { "iso88596",  "ISO-8859-6" },
     { "iso88597",  "ISO-8859-7" },
     { "iso88598",  "ISO-8859-8" },
     { "iso88599",  "ISO-8859-9" },
     { "kana8",     "HP-KANA8" },
+    { "koi8r",     "KOI8-R" },
     { "roman8",    "HP-ROMAN8" },
     { "tis620",    "TIS-620" },
     { "turkish8",  "HP-TURKISH8" },
@@ -239,15 +276,16 @@ static const struct table_entry alias_table[] =
 #   define alias_table_defined
 #  endif
 #  if defined __sgi                                         /* IRIX */
-    { "ISO8859-1", "ISO-8859-1" },
-    { "ISO8859-2", "ISO-8859-2" },
-    { "ISO8859-5", "ISO-8859-5" },
-    { "ISO8859-7", "ISO-8859-7" },
-    { "ISO8859-9", "ISO-8859-9" },
-    { "eucCN",     "GB2312" },
-    { "eucJP",     "EUC-JP" },
-    { "eucKR",     "EUC-KR" },
-    { "eucTW",     "EUC-TW" }
+    { "ISO8859-1",  "ISO-8859-1" },
+    { "ISO8859-15", "ISO-8859-15" },
+    { "ISO8859-2",  "ISO-8859-2" },
+    { "ISO8859-5",  "ISO-8859-5" },
+    { "ISO8859-7",  "ISO-8859-7" },
+    { "ISO8859-9",  "ISO-8859-9" },
+    { "eucCN",      "GB2312" },
+    { "eucJP",      "EUC-JP" },
+    { "eucKR",      "EUC-KR" },
+    { "eucTW",      "EUC-TW" }
 #   define alias_table_defined
 #  endif
 #  if defined __osf__                                       /* OSF/1 */
@@ -284,6 +322,8 @@ static const struct table_entry alias_table[] =
     { "GB18030",     "GB18030" },
     { "GBK",         "GBK" },
     { "ISO8859-1",   "ISO-8859-1" },
+    { "ISO8859-11",  "TIS-620" },
+    { "ISO8859-13",  "ISO-8859-13" },
     { "ISO8859-15",  "ISO-8859-15" },
     { "ISO8859-2",   "ISO-8859-2" },
     { "ISO8859-3",   "ISO-8859-3" },
@@ -301,6 +341,10 @@ static const struct table_entry alias_table[] =
     { "eucJP",       "EUC-JP" },
     { "gb2312",      "GB2312" },
     { "koi8-r",      "KOI8-R" }
+#   define alias_table_defined
+#  endif
+#  if defined __minix                                       /* Minix */
+    { "646", "ASCII" }
 #   define alias_table_defined
 #  endif
 #  if defined WINDOWS_NATIVE || defined __CYGWIN__          /* Windows */
