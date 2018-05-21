@@ -2,20 +2,28 @@ Description:
 Compute SHA1 checksum.
 
 Files:
+lib/gl_openssl.h
+lib/sha1.h
+lib/sha1.c
+m4/gl-openssl.m4
+m4/sha1.m4
 
 Depends-on:
-crypto/af_alg
-crypto/sha1-buffer
+extern-inline
+stdalign
+stdint
 
 configure.ac:
-AC_DEFINE([GL_COMPILE_CRYPTO_STREAM], 1, [Compile Gnulib crypto stream ops.])
+gl_SHA1
 
 Makefile.am:
+lib_SOURCES += sha1.c
 
 Include:
 "sha1.h"
 
 Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+

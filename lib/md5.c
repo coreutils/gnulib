@@ -32,8 +32,6 @@
 #include <string.h>
 #include <sys/types.h>
 
-#include "af_alg.h"
-
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -136,6 +134,10 @@ md5_finish_ctx (struct md5_ctx *ctx, void *resbuf)
 }
 #endif
 
+#if defined _LIBC || defined GL_COMPILE_CRYPTO_STREAM
+
+#include "af_alg.h"
+
 /* Compute MD5 message digest for bytes read from STREAM.  The
    resulting message digest number will be written into the 16 bytes
    beginning at RESBLOCK.  */
@@ -212,6 +214,7 @@ process_partial_block:
   free (buffer);
   return 0;
 }
+#endif
 
 #if ! HAVE_OPENSSL_MD5
 /* Compute MD5 message digest for LEN bytes beginning at BUFFER.  The

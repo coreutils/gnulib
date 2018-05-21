@@ -2,20 +2,28 @@ Description:
 Compute SHA224 and SHA256 checksums.
 
 Files:
+lib/gl_openssl.h
+lib/sha256.h
+lib/sha256.c
+m4/gl-openssl.m4
+m4/sha256.m4
 
 Depends-on:
-crypto/af_alg
-crypto/sha256-buffer
+extern-inline
+stdalign
+stdint
 
 configure.ac:
-AC_DEFINE([GL_COMPILE_CRYPTO_STREAM], 1, [Compile Gnulib crypto stream ops.])
+gl_SHA256
 
 Makefile.am:
+lib_SOURCES += sha256.c
 
 Include:
 "sha256.h"
 
 Link:
+$(LIB_CRYPTO)
 
 License:
 LGPLv2+

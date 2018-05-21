@@ -32,8 +32,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "af_alg.h"
-
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -179,6 +177,10 @@ sha384_finish_ctx (struct sha512_ctx *ctx, void *resbuf)
 }
 #endif
 
+#ifdef GL_COMPILE_CRYPTO_STREAM
+
+#include "af_alg.h"
+
 /* Compute message digest for bytes read from STREAM using algorithm ALG.
    Write the message digest into RESBLOCK, which contains HASHLEN bytes.
    The initial and finishing operations are INIT_CTX and FINISH_CTX.
@@ -272,6 +274,7 @@ sha384_stream (FILE *stream, void *resblock)
   return shaxxx_stream (stream, "sha384", resblock, SHA384_DIGEST_SIZE,
                         sha384_init_ctx, sha384_finish_ctx);
 }
+#endif
 
 #if ! HAVE_OPENSSL_SHA512
 /* Compute SHA512 message digest for LEN bytes beginning at BUFFER.  The

@@ -33,8 +33,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "af_alg.h"
-
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
 #endif
@@ -124,6 +122,10 @@ sha1_finish_ctx (struct sha1_ctx *ctx, void *resbuf)
 }
 #endif
 
+#ifdef GL_COMPILE_CRYPTO_STREAM
+
+#include "af_alg.h"
+
 /* Compute SHA1 message digest for bytes read from STREAM.  The
    resulting message digest number will be written into the 20 bytes
    beginning at RESBLOCK.  */
@@ -200,6 +202,7 @@ sha1_stream (FILE *stream, void *resblock)
   free (buffer);
   return 0;
 }
+#endif
 
 #if ! HAVE_OPENSSL_SHA1
 /* Compute SHA1 message digest for LEN bytes beginning at BUFFER.  The
