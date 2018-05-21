@@ -30,9 +30,20 @@ int
 wcwidth (wchar_t wc)
 #undef wcwidth
 {
+  static int utf8_charset = -1;
+  static const char *encoding;
+
+#if GNULIB_WCHAR_SINGLE
+  if (utf8_charset == -1)
+#endif
+    {
+      encoding = locale_charset ();
+      utf8_charset = STREQ_OPT (encoding,
+                                "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0);
+    }
+
   /* In UTF-8 locales, use a Unicode aware width function.  */
-  const char *encoding = locale_charset ();
-  if (STREQ_OPT (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0))
+  if (utf8_charset)
     {
       /* We assume that in a UTF-8 locale, a wide character is the same as a
          Unicode character.  */

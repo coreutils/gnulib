@@ -1,5 +1,6 @@
 Description:
 A <wchar.h> that works around platform issues.
+Note also the wchar-single module.
 
 Files:
 lib/wchar.in.h

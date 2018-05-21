@@ -138,9 +138,19 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
         goto invalid;
       /* Here MB_CUR_MAX > 1 and 0 < m < 4.  */
       {
-        const char *encoding = locale_charset ();
+        static int utf8_charset = -1;
+        static const char *encoding;
 
-        if (STREQ_OPT (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0, 0))
+# if GNULIB_WCHAR_SINGLE
+        if (utf8_charset == -1)
+# endif
+          {
+            encoding = locale_charset ();
+            utf8_charset = STREQ_OPT (encoding,
+                                      "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0 ,0);
+          }
+
+        if (utf8_charset)
           {
             /* Cf. unistr/u8-mblen.c.  */
             unsigned char c = (unsigned char) p[0];
