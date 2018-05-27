@@ -47,6 +47,8 @@ PERL="${PERL-perl}"
 
 me=$0
 
+default_gnulib_url=git://git.sv.gnu.org/gnulib
+
 usage() {
   cat <<EOF
 Usage: $me [OPTION]...
@@ -75,6 +77,37 @@ contents are read as shell variables to configure the bootstrap.
 
 For build prerequisites, environment variables like \$AUTOCONF and \$AMTAR
 are honored.
+
+Gnulib sources can be fetched in various ways:
+
+ * If this package is in a git repository with a 'gnulib' submodule
+   configured, then that submodule is initialized and updated and sources
+   are fetched from there.  If \$GNULIB_SRCDIR is set (directly or via
+   --gnulib-srcdir) and is a git repository, then it is used as a reference.
+
+ * Otherwise, if \$GNULIB_SRCDIR is set (directly or via --gnulib-srcdir),
+   then sources are fetched from that local directory.  If it is a git
+   repository and \$GNULIB_REVISION is set, then that revision is checked
+   out.
+
+ * Otherwise, if this package is in a git repository with a 'gnulib'
+   submodule configured, then that submodule is initialized and updated and
+   sources are fetched from there.
+
+ * Otherwise, if the 'gnulib' directory does not exist, Gnulib sources are
+   cloned into that directory using git from \$GNULIB_URL, defaulting to
+   $default_gnulib_url.
+   If \$GNULIB_REVISION is set, then that revision is checked out.
+
+ * Otherwise, the existing Gnulib sources in the 'gnulib' directory are
+   used.  If it is a git repository and \$GNULIB_REVISION is set, then that
+   revision is checked out.
+
+If you maintain a package and want to pin a particular revision of the
+Gnulib sources that has been tested with your package, then there are two
+possible approaches: either configure a 'gnulib' submodule with the
+appropriate revision, or set \$GNULIB_REVISION (and if necessary
+\$GNULIB_URL) in $me.conf.
 
 Running without arguments will suffice in most cases.
 EOF
@@ -637,8 +670,8 @@ if $use_gnulib; then
       if test -z "$GNULIB_REVISION"; then
         git clone -h 2>&1 | grep -- --depth > /dev/null && shallow='--depth 2'
       fi
-      git clone $shallow ${GNULIB_URL:-git://git.sv.gnu.org/gnulib} \
-        "$gnulib_path" || cleanup_gnulib
+      git clone $shallow ${GNULIB_URL:-$default_gnulib_url} "$gnulib_path" \
+        || cleanup_gnulib
 
       trap - 1 2 13 15
     fi
