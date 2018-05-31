@@ -34,4 +34,11 @@ Portability problems not fixed by Gnulib:
 @item
 The address of this variable is not a compile-time constant on some platforms:
 mingw.
+@item
+Assigning NULL to @code{environ} to clear all variables is not
+portable; better is to assign @code{environ} to one-element array
+containing a NULL pointer.  That said, an empty environment is not
+portable either, as some systems may require particular environment
+variables (such as @code{PATH}) to be present in order to operate
+consistently.
 @end itemize
