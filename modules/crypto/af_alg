@@ -8,6 +8,7 @@ lib/sys-limits.h
 m4/af_alg.m4
 
 Depends-on:
+c99             [test $USE_AF_ALG = 1]
 fseeko          [test $USE_AF_ALG = 1]
 ftello          [test $USE_AF_ALG = 1]
 sys_socket
