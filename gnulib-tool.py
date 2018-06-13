@@ -31,6 +31,7 @@ import random
 import shutil
 import argparse
 import subprocess as sp
+from tempfile import mktemp
 from pprint import pprint
 from pygnulib import constants
 from pygnulib import classes
@@ -988,7 +989,7 @@ if __name__ == '__main__':
                     incompatibilities += pair[0]
                     incompatibilities += ' %s' % pair[1]
                     incompatibilities += constants.NL
-                tempname = tempfile.mktemp()
+                tempname = mktemp()
                 with codecs.open(tempname, 'wb', 'UTF-8') as file:
                     file.write(incompatibilities)
                 sed_table = 's,^\\([^ ]*\\) ,\\1' + ' ' * 51 + ',\n'
