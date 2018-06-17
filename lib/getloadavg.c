@@ -324,7 +324,9 @@
 #  define LDAV_SYMBOL "avenrun"
 # endif
 
-# include <unistd.h>
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+# endif
 
 /* LOAD_AVE_TYPE should only get defined if we're going to use the
    nlist method.  */
