@@ -58,8 +58,9 @@ $GETTEXT gettext-runtime/m4/lcmessage.m4	m4 release
 $GETTEXT gettext-runtime/m4/nls.m4		m4 release
 $GETTEXT gettext-runtime/m4/po.m4		m4 release
 
-$GETTEXT gettext-runtime/po/Makefile.in.in	build-aux/po release
-$GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
+# Re-enable after the next gettext release.
+#$GETTEXT gettext-runtime/po/Makefile.in.in	build-aux/po release
+#$GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
 
 # 
 # All below here commented out in forlorn hope of future syncs.
