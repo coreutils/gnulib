@@ -36,18 +36,11 @@
 # include "unlocked-io.h"
 #endif
 
+#include <byteswap.h>
 #ifdef WORDS_BIGENDIAN
 # define SWAP(n) (n)
 #else
-# define SWAP(n) \
-    u64or (u64or (u64or (u64shl (n, 56),                                \
-                         u64shl (u64and (n, u64lo (0x0000ff00)), 40)),  \
-                  u64or (u64shl (u64and (n, u64lo (0x00ff0000)), 24),   \
-                         u64shl (u64and (n, u64lo (0xff000000)),  8))), \
-           u64or (u64or (u64and (u64shr (n,  8), u64lo (0xff000000)),   \
-                         u64and (u64shr (n, 24), u64lo (0x00ff0000))),  \
-                  u64or (u64and (u64shr (n, 40), u64lo (0x0000ff00)),   \
-                         u64shr (n, 56))))
+# define SWAP(n) bswap_64 (n)
 #endif
 
 #define BLOCKSIZE 32768

@@ -9,6 +9,7 @@ m4/gl-openssl.m4
 m4/sha512.m4
 
 Depends-on:
+byteswap
 extern-inline
 stdalign
 stdint

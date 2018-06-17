@@ -49,11 +49,11 @@
 # define dbg_printf printf
 #endif
 
+#include <byteswap.h>
 #ifdef WORDS_BIGENDIAN
 # define SWAP(n) (n)
 #else
-# define SWAP(n) \
-    (((n) << 24) | (((n) & 0xff00) << 8) | (((n) >> 8) & 0xff00) | ((n) >> 24))
+# define SWAP(n) bswap_32 (n)
 #endif
 
 #define BLOCKSIZE 32768
