@@ -59,6 +59,7 @@ commonarg= # passed to all makeinfo/texi2html invcations.
 dirargs=   # passed to all tools (-I dir).
 dirs=      # -I directories.
 htmlarg="--css-ref=/software/gnulib/manual.css -c TOP_NODE_UP_URL=/manual"
+default_htmlarg=true
 infoarg=--no-split
 generate_ascii=true
 generate_html=true
@@ -163,7 +164,7 @@ while test $# -gt 0; do
     --common)    shift; commonarg=$1;;
     --docbook)   docbook=yes;;
     --email)     shift; EMAIL=$1;;
-    --html)      shift; htmlarg=$1;;
+    --html)      shift; default_htmlarg=false; htmlarg=$1;;
     --info)      shift; infoarg=$1;;
     --no-ascii)  generate_ascii=false;;
     --no-html)   generate_ascii=false;;
@@ -198,6 +199,11 @@ commonarg=" $dirargs $commonarg"
 
 # For most of the following, the base name is just $PACKAGE
 base=$PACKAGE
+
+if $default_htmlarg && test -n "$use_texi2html"; then
+  # The legacy texi2html doesn't support TOP_NODE_UP_URL
+  htmlarg="--css-ref=/software/gnulib/manual.css"
+fi
 
 if test -n "$srcfile"; then
   # but here, we use the basename of $srcfile
