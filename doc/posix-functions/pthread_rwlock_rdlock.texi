@@ -15,4 +15,13 @@ Portability problems not fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Minix 3.1.8, HP-UX 11, OSF/1 4.0, Solaris 2.6, mingw, MSVC 14, BeOS.
+@item
+This function prefers readers to writers (meaning, when this function is
+called on an rwlock that is already taken by one or more readers, and
+another writer is already waiting to take it, this function may return
+successfully immediately) -- a behaviour that may lead to writer starvation --
+on some platforms:
+glibc 2.28.
+As a workaround, you can use the @code(gl_rwlock_t} type from the Gnulib
+module @samp{lock}.
 @end itemize
