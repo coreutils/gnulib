@@ -22,6 +22,6 @@ another writer is already waiting to take it, this function may return
 successfully immediately) -- a behaviour that may lead to writer starvation --
 on some platforms:
 glibc 2.28.
-As a workaround, you can use the @code(gl_rwlock_t} type from the Gnulib
+As a workaround, you can use the @code{gl_rwlock_t} type from the Gnulib
 module @samp{lock}.
 @end itemize
