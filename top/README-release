@@ -27,9 +27,10 @@ Here are most of the steps we (maintainers) follow when making a release.
 
     ./bootstrap && ./configure
 
-* Pre-release testing: ensure that the following command succeeds:
+* Pre-release testing: ensure that the following commands succeed:
 
-    make check syntax-check distcheck
+    c=check ve=check-very-expensive; git grep -q "^$ve:\$" && c=$ve
+    make $c syntax-check distcheck
 
 * To (i) set the date, version number, and release TYPE on line 3 of
   NEWS, (ii) commit that, and (iii) tag the release, run
