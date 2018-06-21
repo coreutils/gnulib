@@ -29,16 +29,17 @@ SIGNATURE_CHECK (random_r, int, (struct random_data *, int32_t *));
 
 #include "macros.h"
 
-int
-main ()
+static int
+test_failed (int alignment)
 {
   struct random_data rand_state;
-  char buf[128];
+  char buf[128 + sizeof (int32_t)];
   unsigned int i;
   unsigned int n_big = 0;
 
   rand_state.state = NULL;
-  if (initstate_r (time (NULL), buf, sizeof buf, &rand_state))
+  if (initstate_r (time (NULL), buf + alignment, sizeof buf - alignment,
+                   &rand_state))
     return 1;
   for (i = 0; i < 1000; i++)
     {
@@ -51,4 +52,14 @@ main ()
 
   /* Fail if none of the numbers were larger than RAND_MAX / 2.  */
   return !n_big;
+}
+
+int
+main ()
+{
+  int alignment;
+  for (alignment = 0; alignment < sizeof (int32_t); alignment++)
+    if (test_failed (alignment))
+      return 1;
+  return 0;
 }

@@ -69,6 +69,7 @@
 
 #include <errno.h>
 #include <stddef.h>
+#include <string.h>
 
 
 /* An improved random number generation package.  In addition to the standard
@@ -160,7 +161,19 @@ static const struct random_poly_info random_poly_info =
   { DEG_0, DEG_1, DEG_2, DEG_3, DEG_4 }
 };
 
+static int32_t
+get_int32 (void *p)
+{
+  int32_t v;
+  memcpy (&v, p, sizeof v);
+  return v;
+}
 
+static void
+set_int32 (void *p, int32_t v)
+{
+  memcpy (p, &v, sizeof v);
+}
 
 
 /* Initialize the random number generator based on the given seed.  If the
@@ -191,7 +204,7 @@ __srandom_r (unsigned int seed, struct random_data *buf)
   /* We must make sure the seed is not 0.  Take arbitrarily 1 in this case.  */
   if (seed == 0)
     seed = 1;
-  state[0] = seed;
+  set_int32 (&state[0], seed);
   if (type == TYPE_0)
     goto done;
 
@@ -208,7 +221,7 @@ __srandom_r (unsigned int seed, struct random_data *buf)
       word = 16807 * lo - 2836 * hi;
       if (word < 0)
         word += 2147483647;
-      *++dst = word;
+      set_int32 (++dst, word);
     }
 
   buf->fptr = &state[buf->rand_sep];
@@ -251,10 +264,10 @@ __initstate_r (unsigned int seed, char *arg_state, size_t n,
   if (old_state != NULL)
     {
       int old_type = buf->rand_type;
-      if (old_type == TYPE_0)
-        old_state[-1] = TYPE_0;
-      else
-        old_state[-1] = (MAX_TYPES * (buf->rptr - old_state)) + old_type;
+      set_int32 (&old_state[-1],
+                 (old_type == TYPE_0
+                  ? TYPE_0
+                  : (MAX_TYPES * (buf->rptr - old_state)) + old_type));
     }
 
   int type;
@@ -284,9 +297,8 @@ __initstate_r (unsigned int seed, char *arg_state, size_t n,
 
   __srandom_r (seed, buf);
 
-  state[-1] = TYPE_0;
-  if (type != TYPE_0)
-    state[-1] = (buf->rptr - state) * MAX_TYPES + type;
+  set_int32 (&state[-1],
+             type == TYPE_0 ? TYPE_0 : (buf->rptr - state) * MAX_TYPES + type);
 
   return 0;
 
@@ -320,12 +332,12 @@ __setstate_r (char *arg_state, struct random_data *buf)
 
   old_type = buf->rand_type;
   old_state = buf->state;
-  if (old_type == TYPE_0)
-    old_state[-1] = TYPE_0;
-  else
-    old_state[-1] = (MAX_TYPES * (buf->rptr - old_state)) + old_type;
+  set_int32 (&old_state[-1],
+             (old_type == TYPE_0
+              ? TYPE_0
+              : (MAX_TYPES * (buf->rptr - old_state)) + old_type));
 
-  type = new_state[-1] % MAX_TYPES;
+  type = get_int32 (&new_state[-1]) % MAX_TYPES;
   if (type < TYPE_0 || type > TYPE_4)
     goto fail;
 
@@ -335,7 +347,7 @@ __setstate_r (char *arg_state, struct random_data *buf)
 
   if (type != TYPE_0)
     {
-      int rear = new_state[-1] / MAX_TYPES;
+      int rear = get_int32 (&new_state[-1]) / MAX_TYPES;
       buf->rptr = &new_state[rear];
       buf->fptr = &new_state[(rear + separation) % degree];
     }
@@ -375,8 +387,9 @@ __random_r (struct random_data *buf, int32_t *result)
 
   if (buf->rand_type == TYPE_0)
     {
-      int32_t val = ((state[0] * 1103515245U) + 12345U) & 0x7fffffff;
-      state[0] = val;
+      int32_t val = (((get_int32 (&state[0]) * 1103515245U) + 12345U)
+                     & 0x7fffffff);
+      set_int32 (&state[0], val);
       *result = val;
     }
   else
@@ -384,9 +397,12 @@ __random_r (struct random_data *buf, int32_t *result)
       int32_t *fptr = buf->fptr;
       int32_t *rptr = buf->rptr;
       int32_t *end_ptr = buf->end_ptr;
-      uint32_t val;
-
-      val = *fptr += (uint32_t) *rptr;
+      /* F and R are unsigned int, not uint32_t, to avoid undefined
+         overflow behavior on platforms where INT_MAX == UINT32_MAX.  */
+      unsigned int f = get_int32 (fptr);
+      unsigned int r = get_int32 (rptr);
+      uint32_t val = f + r;
+      set_int32 (fptr, val);
       /* Chucking least random bit.  */
       *result = val >> 1;
       ++fptr;
