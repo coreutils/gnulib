@@ -1,18 +1,18 @@
-/* Family of functions for random integers.
-   Copyright (C) 1995-1997, 2000-2002, 2012-2018 Free Software Foundation, Inc.
+/* Copyright (C) 1995-2018 Free Software Foundation, Inc.
 
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 3 of the License, or
-   (at your option) any later version.
+   The GNU C Library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.
 
-   This program is distributed in the hope that it will be useful,
+   The GNU C Library is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+   Lesser General Public License for more details.
 
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   You should have received a copy of the GNU Lesser General Public
+   License along with the GNU C Library; if not, see
+   <http://www.gnu.org/licenses/>.  */
 
 /*
  * This is derived from the Berkeley source:
@@ -38,7 +38,7 @@
       may be used to endorse or promote products derived from this software
       without specific prior written permission.
 
-   THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+   THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS" AND
    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
    ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
@@ -50,16 +50,62 @@
    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
    SUCH DAMAGE.*/
 
-#include <config.h>
+#ifndef _LIBC
+# include <libc-config.h>
+#endif
 
 /* Specification.  */
 #include <stdlib.h>
 
-#include <stdint.h>
-#include <time.h>
+#ifdef _LIBC
+# include <libc-lock.h>
+#else
+/* Allow memory races; that's random enough.  */
+# define __libc_lock_define_initialized(class, name)
+# define __libc_lock_lock(name) ((void) 0)
+# define __libc_lock_unlock(name) ((void) 0)
+#endif
 
-/* This file can assume the 'struct random_data' and associated *_r functions
-   from gnulib.  */
+/* An improved random number generation package.  In addition to the standard
+   rand()/srand() like interface, this package also has a special state info
+   interface.  The initstate() routine is called with a seed, an array of
+   bytes, and a count of how many bytes are being passed in; this array is
+   then initialized to contain information for random number generation with
+   that much state information.  Good sizes for the amount of state
+   information are 32, 64, 128, and 256 bytes.  The state can be switched by
+   calling the setstate() function with the same array as was initialized
+   with initstate().  By default, the package runs with 128 bytes of state
+   information and generates far better random numbers than a linear
+   congruential generator.  If the amount of state information is less than
+   32 bytes, a simple linear congruential R.N.G. is used.  Internally, the
+   state information is treated as an array of longs; the zeroth element of
+   the array is the type of R.N.G. being used (small integer); the remainder
+   of the array is the state information for the R.N.G.  Thus, 32 bytes of
+   state information will give 7 longs worth of state information, which will
+   allow a degree seven polynomial.  (Note: The zeroth word of state
+   information also has some other information stored in it; see setstate
+   for details).  The random number generation technique is a linear feedback
+   shift register approach, employing trinomials (since there are fewer terms
+   to sum up that way).  In this approach, the least significant bit of all
+   the numbers in the state table will act as a linear feedback shift register,
+   and will have period 2^deg - 1 (where deg is the degree of the polynomial
+   being used, assuming that the polynomial is irreducible and primitive).
+   The higher order bits will have longer periods, since their values are
+   also influenced by pseudo-random carries out of the lower bits.  The
+   total period of the generator is approximately deg*(2**deg - 1); thus
+   doubling the amount of state information has a vast influence on the
+   period of the generator.  Note: The deg*(2**deg - 1) is an approximation
+   only good for large deg, when the period of the shift register is the
+   dominant factor.  With deg equal to seven, the period is actually much
+   longer than the 7*(2**7 - 1) predicted by this formula.  */
+
+
+
+/* For each of the currently supported random number generators, we have a
+   break value on the amount of state information (you need at least this many
+   bytes of state info to support this random number generator), a degree for
+   the polynomial (actually a trinomial) that the R.N.G. is based on, and
+   separation between the two lower order coefficients of the trinomial.  */
 
 /* Linear congruential.  */
 #define TYPE_0          0
@@ -91,10 +137,12 @@
 #define DEG_4           63
 #define SEP_4           1
 
+
 /* Array versions of the above information to make code run faster.
    Relies on fact that TYPE_i == i.  */
 
 #define MAX_TYPES       5       /* Max number of types above.  */
+
 
 /* Initially, everything is set up as if from:
         initstate(1, randtbl, 128);
@@ -118,10 +166,11 @@ static int32_t randtbl[DEG_3 + 1] =
     -205601318,
   };
 
-static struct random_data generator =
+
+static struct random_data unsafe_state =
   {
 /* FPTR and RPTR are two pointers into the state info, a front and a rear
-   pointer.  These two pointers are always rand_sep places aparts, as they
+   pointer.  These two pointers are always rand_sep places apart, as they
    cycle through the state information.  (Yes, this does mean we could get
    away with just one pointer, but the code for random is more efficient
    this way).  The pointers are left positioned as they would be from the call:
@@ -130,8 +179,8 @@ static struct random_data generator =
    in the initialization of randtbl) because the state table pointer is set
    to point to randtbl[1] (as explained below).)  */
 
-    /* fptr */ &randtbl[SEP_3 + 1],
-    /* rptr */ &randtbl[1],
+    .fptr = &randtbl[SEP_3 + 1],
+    .rptr = &randtbl[1],
 
 /* The following things are the pointer to the state information table,
    the type of the current generator, the degree of the current polynomial
@@ -143,45 +192,119 @@ static struct random_data generator =
    indexing every time to find the address of the last element to see if
    the front and rear pointers have wrapped.  */
 
-    /* state */ &randtbl[1],
+    .state = &randtbl[1],
 
-    /* rand_type */ TYPE_3,
-    /* rand_deg */ DEG_3,
-    /* rand_sep */ SEP_3,
+    .rand_type = TYPE_3,
+    .rand_deg = DEG_3,
+    .rand_sep = SEP_3,
 
-    /* end_ptr */ &randtbl[sizeof (randtbl) / sizeof (randtbl[0])]
+    .end_ptr = &randtbl[sizeof (randtbl) / sizeof (randtbl[0])]
 };
-
-long
-random (void)
-{
-  int32_t val;
-
-  if (random_r (&generator, &val) < 0)
-    abort (); /* should not happen */
-  return val;
-}
-
+
+/* POSIX.1c requires that there is mutual exclusion for the 'rand' and
+   'srand' functions to prevent concurrent calls from modifying common
+   data.  */
+__libc_lock_define_initialized (static, lock)
+
+/* Initialize the random number generator based on the given seed.  If the
+   type is the trivial no-state-information type, just remember the seed.
+   Otherwise, initializes state[] based on the given "seed" via a linear
+   congruential generator.  Then, the pointers are set to known locations
+   that are exactly rand_sep places apart.  Lastly, it cycles the state
+   information a given number of times to get rid of any initial dependencies
+   introduced by the L.C.R.N.G.  Note that the initialization of randtbl[]
+   for default usage relies on values produced by this routine.  */
 void
-srandom (unsigned int seed)
+__srandom (unsigned int x)
 {
-  (void) srandom_r (seed, &generator); /* may fail! */
+  __libc_lock_lock (lock);
+  (void) __srandom_r (x, &unsafe_state);
+  __libc_lock_unlock (lock);
 }
 
+weak_alias (__srandom, srandom)
+weak_alias (__srandom, srand)
+
+/* Initialize the state information in the given array of N bytes for
+   future random number generation.  Based on the number of bytes we
+   are given, and the break values for the different R.N.G.'s, we choose
+   the best (largest) one we can and set things up for it.  srandom is
+   then called to initialize the state information.  Note that on return
+   from srandom, we set state[-1] to be the type multiplexed with the current
+   value of the rear pointer; this is so successive calls to initstate won't
+   lose this information and will be able to restart with setstate.
+   Note: The first thing we do is save the current state, if any, just like
+   setstate so that it doesn't matter when initstate is called.
+   Returns a pointer to the old state.  */
 char *
-initstate (unsigned int seed, char *buf, size_t buf_size)
+__initstate (unsigned int seed, char *arg_state, size_t n)
 {
-  char *old_state = (char *) ((int32_t *) generator.state - 1);
-  if (initstate_r (seed, buf, buf_size, &generator) < 0)
-    return NULL; /* failed */
-  return old_state;
+  int32_t *ostate;
+  int ret;
+
+  __libc_lock_lock (lock);
+
+  ostate = &unsafe_state.state[-1];
+
+  ret = __initstate_r (seed, arg_state, n, &unsafe_state);
+
+  __libc_lock_unlock (lock);
+
+  return ret == -1 ? NULL : (char *) ostate;
 }
 
+weak_alias (__initstate, initstate)
+
+/* Restore the state from the given state array.
+   Note: It is important that we also remember the locations of the pointers
+   in the current state information, and restore the locations of the pointers
+   from the old state information.  This is done by multiplexing the pointer
+   location into the zeroth word of the state information. Note that due
+   to the order in which things are done, it is OK to call setstate with the
+   same state as the current state
+   Returns a pointer to the old state information.  */
 char *
-setstate (char *arg_state)
+__setstate (char *arg_state)
 {
-  char *old_state = (char *) ((int32_t *) generator.state - 1);
-  if (setstate_r (arg_state, &generator) < 0)
-    return NULL; /* failed */
-  return old_state;
+  int32_t *ostate;
+
+  __libc_lock_lock (lock);
+
+  ostate = &unsafe_state.state[-1];
+
+  if (__setstate_r (arg_state, &unsafe_state) < 0)
+    ostate = NULL;
+
+  __libc_lock_unlock (lock);
+
+  return (char *) ostate;
 }
+
+weak_alias (__setstate, setstate)
+
+/* If we are using the trivial TYPE_0 R.N.G., just do the old linear
+   congruential bit.  Otherwise, we do our fancy trinomial stuff, which is the
+   same in all the other cases due to all the global variables that have been
+   set up.  The basic operation is to add the number at the rear pointer into
+   the one at the front pointer.  Then both pointers are advanced to the next
+   location cyclically in the table.  The value returned is the sum generated,
+   reduced to 31 bits by throwing away the "least random" low bit.
+   Note: The code takes advantage of the fact that both the front and
+   rear pointers can't wrap on the same call by not testing the rear
+   pointer if the front one has wrapped.  Returns a 31-bit random number.  */
+
+long int
+__random (void)
+{
+  int32_t retval;
+
+  __libc_lock_lock (lock);
+
+  (void) __random_r (&unsafe_state, &retval);
+
+  __libc_lock_unlock (lock);
+
+  return retval;
+}
+
+weak_alias (__random, random)

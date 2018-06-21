@@ -6,8 +6,9 @@ lib/random.c
 m4/random.m4
 
 Depends-on:
+libc-config     [test $HAVE_RANDOM = 0]
 stdlib
-stdint
+stdint          [test $HAVE_RANDOM = 0]
 random_r        [test $HAVE_RANDOM = 0]
 
 configure.ac:
