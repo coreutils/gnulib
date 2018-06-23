@@ -282,13 +282,10 @@
 # define __attribute_format_strfmon__(a,b) /* Ignore */
 #endif
 
-/* The nonull function attribute allows to mark pointer parameters which
-   must not be NULL.  */
-#if __GNUC_PREREQ (3,3)
-# define __nonnull(params) __attribute__ ((__nonnull__ params))
-#else
-# define __nonnull(params)
-#endif
+/* The nonnull function attribute allows to mark pointer parameters which
+   must not be NULL.
+   In Gnulib we use the macro _GL_ARG_NONNULL instead of __nonnull, because
+   __nonnull is defined in an incompatible way in FreeBSD's include files.  */
 
 /* If fortification mode, we warn about unused results of certain
    function calls which can lead to problems.  */
