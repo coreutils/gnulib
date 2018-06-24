@@ -19,6 +19,7 @@ configure.ac:
 gl_FUNC_WCWIDTH
 if test $HAVE_WCWIDTH = 0 || test $REPLACE_WCWIDTH = 1; then
   AC_LIBOBJ([wcwidth])
+  gl_PREREQ_WCWIDTH
 fi
 gl_WCHAR_MODULE_INDICATOR([wcwidth])
 
