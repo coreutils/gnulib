@@ -44,9 +44,10 @@ alg_socket (char const *alg)
     .salg_family = AF_ALG,
     .salg_type = "hash",
   };
-  /* Avoid calling both strcpy and strlen.  */
-  for (int i = 0; (salg.salg_name[i] = alg[i]); i++)
+  /* Copy alg into salg.salg_name, without calling strcpy nor strlen.  */
+  for (size_t i = 0; (salg.salg_name[i] = alg[i]) != '\0'; i++)
     if (i == sizeof salg.salg_name - 1)
+      /* alg is too long.  */
       return -EINVAL;
 
   int cfd = socket (AF_ALG, SOCK_SEQPACKET | SOCK_CLOEXEC, 0);
@@ -64,7 +65,9 @@ afalg_buffer (const char *buffer, size_t len, const char *alg,
               void *resblock, ssize_t hashlen)
 {
   /* On Linux < 4.9, the value for an empty stream is wrong (all zeroes).
-     See <https://patchwork.kernel.org/patch/9308641/>.  */
+     See <https://patchwork.kernel.org/patch/9308641/>.
+     This was not fixed properly until November 2016,
+     see <https://patchwork.kernel.org/patch/9434741/>.  */
   if (len == 0)
     return -EAFNOSUPPORT;
 
@@ -110,7 +113,8 @@ afalg_stream (FILE *stream, const char *alg,
   int fd = fileno (stream);
   int result;
   struct stat st;
-  off_t nseek = 0, off = ftello (stream);
+  off_t nseek = 0; /* Number of bytes to seek (backwards) in case of error.  */
+  off_t off = ftello (stream);
   if (0 <= off && fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && off < st.st_size && st.st_size - off < SYS_BUFSIZE_MAX)
@@ -120,7 +124,7 @@ afalg_stream (FILE *stream, const char *alg,
     }
   else
     {
-     /* sendfile not possible, do a classic read-write loop.  */
+      /* sendfile not possible, do a classic read-write loop.  */
       for (;;)
         {
           char buf[BLOCKSIZE];
@@ -128,7 +132,9 @@ afalg_stream (FILE *stream, const char *alg,
           if (size == 0)
             {
               /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
-                 See <https://patchwork.kernel.org/patch/9308641/>.  */
+                 See <https://patchwork.kernel.org/patch/9308641/>.
+                 This was not fixed properly until November 2016,
+                 see <https://patchwork.kernel.org/patch/9434741/>.  */
               result = ferror (stream) ? -EIO : nseek == 0 ? -EAFNOSUPPORT : 0;
               break;
             }
