@@ -17,6 +17,12 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Without this pragma, gcc version 9.0.0 20180616 suggests that
+   the canon_* functions might be candidateifor attribute 'malloc'  */
+#if 9 <= __GNUC__
+# pragma GCC diagnostic ignored "-Wsuggest-attribute=malloc"
+#endif
+
 #include <config.h>
 
 #include "canon-host.h"
