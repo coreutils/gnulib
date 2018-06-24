@@ -29,16 +29,20 @@ AC_DEFUN_ONCE([gl_AF_ALG],
       [Define to 1 if you have 'struct sockaddr_alg' defined.])
   fi
 
-  dnl The default is to use AF_ALG if available.
-  use_af_alg=yes
+  dnl The default is to not use AF_ALG if available,
+  dnl as it's system dependent as to whether the kernel
+  dnl routines are faster than libcrypto for example.
+  use_af_alg=no
   AC_ARG_WITH([linux-crypto],
-    [AS_HELP_STRING([[--without-linux-crypto]],
-       [Do not use Linux kernel cryptographic API
-        (default is to use it if available)])],
+    [AS_HELP_STRING([[--with-linux-crypto]],
+       [use Linux kernel cryptographic API (if available)])],
     [use_af_alg=$withval],
-    [use_af_alg=yes])
+    [use_af_alg=no])
   dnl We cannot use it if it is not available.
   if test "$gl_cv_header_linux_if_alg_salg" != yes; then
+    if test "$use_af_alg" != no; then
+      AC_MSG_WARN([Linux kernel cryptographic API not found])
+    fi
     use_af_alg=no
   fi
 

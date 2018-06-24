@@ -24,7 +24,7 @@ AC_DEFUN([gl_CRYPTO_CHECK],
        'yes', 'no', 'auto' => use if available,
        'optional' => use if available and warn if not available;
        default is ']gl_CRYPTO_CHECK_DEFAULT['.
-       Note also --without-linux-crypto, which will disable
+       Note also --with-linux-crypto, which will enable
        use of kernel crypto routines, which have precedence])],
     [],
     [with_openssl=$with_openssl_default])
