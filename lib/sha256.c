@@ -210,7 +210,9 @@ shaxxx_stream (FILE *stream, char const *alg, void *resblock,
         {
           /* Either process a partial fread() from this loop,
              or the fread() in afalg_stream may have gotten EOF.
-             We need to avoid a subsequent fread() due to glibc BZ 1190.  */
+             We need to avoid a subsequent fread() as EOF may
+             not be sticky.  For details of such systems, see:
+             https://sourceware.org/bugzilla/show_bug.cgi?id=1190  */
           if (feof (stream))
             goto process_partial_block;
 

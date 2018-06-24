@@ -146,7 +146,7 @@ afalg_stream (FILE *stream, const char *alg,
               break;
             }
 
-          /* Assume EOF is not sticky. See:
+          /* Don't assume that EOF is sticky. See:
              <https://sourceware.org/bugzilla/show_bug.cgi?id=19476>.  */
           if (feof (stream))
             {
