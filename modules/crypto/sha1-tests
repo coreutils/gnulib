@@ -3,6 +3,7 @@ tests/test-sha1.c
 tests/test-digest.h
 tests/bench-sha1.c
 tests/bench-digest.h
+tests/macros.h
 
 Depends-on:
 getrusage

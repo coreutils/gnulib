@@ -4,6 +4,7 @@ tests/test-digest.h
 tests/bench-sha384.c
 tests/bench-sha512.c
 tests/bench-digest.h
+tests/macros.h
 
 Depends-on:
 getrusage

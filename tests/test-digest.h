@@ -25,7 +25,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
   int pass;
   unlink (TESTFILE);
 
-  for (pass = 0; pass < 4; pass++)
+  for (pass = 0; pass < 5; pass++)
     {
       {
         FILE *fp = fopen (TESTFILE, "wb");
@@ -39,14 +39,18 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
           case 0:
             /* Nothing to do for the empty file.  */
             break;
+          case 2:
+            /* Fill the small file, with some header that will be skipped.  */
+            fputs ("ABCD", fp);
+            FALLTHROUGH;
           case 1:
             /* Fill the small file.  */
             fputs ("The quick brown fox jumps over the lazy dog.\n", fp);
             break;
-          case 2:
-            /* Fill the small file, with some header that will be skipped.  */
-            fputs ("ABCDThe quick brown fox jumps over the lazy dog.\n", fp);
-            break;
+          case 4:
+            /* Fill the large file, with some header that will be skipped.  */
+            fputs ("ABCD", fp);
+            FALLTHROUGH;
           case 3:
             /* Fill the large file (8 MiB).  */
             {
@@ -80,7 +84,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
           {
           case 0:         expected = expected_for_empty_file; break;
           case 1: case 2: expected = expected_for_small_file; break;
-          case 3:         expected = expected_for_large_file; break;
+	  case 3: case 4: expected = expected_for_large_file; break;
           default: abort ();
           }
 
@@ -93,6 +97,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
         switch (pass)
           {
           case 2:
+          case 4:
             {
               char header[4];
               if (fread (header, 1, sizeof (header), fp) != sizeof (header))

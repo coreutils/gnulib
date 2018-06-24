@@ -24,6 +24,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 #define TESTFILE "test-sha1.data"
 #include "test-digest.h"
 

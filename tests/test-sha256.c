@@ -23,6 +23,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 #define TESTFILE "test-sha256.data"
 #include "test-digest.h"
 

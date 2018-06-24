@@ -3,6 +3,7 @@ tests/test-md5.c
 tests/test-digest.h
 tests/bench-md5.c
 tests/bench-digest.h
+tests/macros.h
 
 Depends-on:
 getrusage

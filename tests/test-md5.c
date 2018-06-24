@@ -26,6 +26,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "macros.h"
+
 #define TESTFILE "test-md5.data"
 #include "test-digest.h"
 
