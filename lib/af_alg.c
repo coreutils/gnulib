@@ -145,7 +145,12 @@ afalg_stream (FILE *stream, const char *alg,
     }
 
   if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
-    result = -EAFNOSUPPORT;
+    {
+      if (nseek == 0 || fseeko (stream, nseek, SEEK_CUR) == 0)
+        result = -EAFNOSUPPORT;
+      else
+        result = -EIO;
+    }
   close (ofd);
   return result;
 }
