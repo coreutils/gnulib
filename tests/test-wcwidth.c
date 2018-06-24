@@ -35,10 +35,12 @@ main ()
 {
   wchar_t wc;
 
-#ifdef C_CTYPE_ASCII
+#if !GNULIB_WCHAR_SINGLE
+# ifdef C_CTYPE_ASCII
   /* Test width of ASCII characters.  */
   for (wc = 0x20; wc < 0x7F; wc++)
     ASSERT (wcwidth (wc) == 1);
+# endif
 #endif
 
   /* Switch to an UTF-8 locale.  */
