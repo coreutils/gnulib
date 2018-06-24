@@ -113,7 +113,6 @@ m4_defun([gl_MANYWARN_ALL_GCC(C)],
   gl_manywarn_set=
   for gl_manywarn_item in -fno-common \
     -W \
-    -Wabi \
     -Waddress \
     -Waggressive-loop-optimizations \
     -Wall \
@@ -128,7 +127,6 @@ m4_defun([gl_MANYWARN_ALL_GCC(C)],
     -Wcast-align=strict \
     -Wcast-function-type \
     -Wchar-subscripts \
-    -Wchkp \
     -Wclobbered \
     -Wcomment \
     -Wcomments \

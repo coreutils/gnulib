@@ -3,6 +3,7 @@
 --extra-warnings			alias for -Wextra
 -Wabi-tag				c++
 -Wabi=					c++
+-Wabi					this is now a no-op
 -Waggregate-return			obsolescent
 -Waliasing				fortran
 -Walign-commons				fortran
@@ -30,6 +31,7 @@
 -Wcatch-value				c++
 -Wcatch-value=<0,3>			c++
 -Wcharacter-truncation			fortran
+-Wchkp					deprecated
 -Wclass-memaccess			c++
 -Wcompare-reals				fortran
 -Wconditionally-supported		c++ and objc++
