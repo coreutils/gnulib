@@ -20,8 +20,8 @@
 #ifndef CANON_HOST_H
 # define CANON_HOST_H 1
 
-char *canon_host (char const *host);
-char *canon_host_r (char const *host, int *cherror);
+char *canon_host (char const *host) _GL_ATTRIBUTE_MALLOC;
+char *canon_host_r (char const *host, int *cherror) _GL_ATTRIBUTE_MALLOC;
 
 const char *ch_strerror (void);
 # define ch_strerror_r(cherror) gai_strerror (cherror);
