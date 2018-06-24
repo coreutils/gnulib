@@ -72,7 +72,12 @@
 
 #else	/* Not GCC.  */
 
-# define __inline		/* No inline functions.  */
+# if (defined __cplusplus						\
+      || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L))
+#  define __inline	inline
+# else
+#  define __inline		/* No inline functions.  */
+# endif
 
 # define __THROW
 # define __THROWNL
@@ -282,10 +287,16 @@
 # define __attribute_format_strfmon__(a,b) /* Ignore */
 #endif
 
-/* The nonnull function attribute allows to mark pointer parameters which
-   must not be NULL.
-   In Gnulib we use the macro _GL_ARG_NONNULL instead of __nonnull, because
-   __nonnull is defined in an incompatible way in FreeBSD's include files.  */
+/* The nonnull function attribute marks pointer parameters that
+   must not be NULL.  Do not define __nonnull if it is already defined,
+   for portability when this file is used in Gnulib.  */
+#ifndef __nonnull
+# if __GNUC_PREREQ (3,3)
+#  define __nonnull(params) __attribute__ ((__nonnull__ params))
+# else
+#  define __nonnull(params)
+# endif
+#endif
 
 /* If fortification mode, we warn about unused results of certain
    function calls which can lead to problems.  */
@@ -365,7 +376,11 @@
 
 /* __restrict is known in EGCS 1.2 and above. */
 #if !__GNUC_PREREQ (2,92)
-# define __restrict	/* Ignore */
+# if defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L
+#  define __restrict	restrict
+# else
+#  define __restrict	/* Ignore */
+# endif
 #endif
 
 /* ISO C99 also allows to declare arrays as non-overlapping.  The syntax is
@@ -402,6 +417,15 @@
 # else
 #  define _Noreturn
 # endif
+#endif
+
+#if __GNUC_PREREQ (8, 0)
+/* Describes a char array whose address can safely be passed as the first
+   argument to strncpy and strncat, as the char array is not necessarily
+   a NUL-terminated string.  */
+# define __attribute_nonstring__ __attribute__ ((__nonstring__))
+#else
+# define __attribute_nonstring__
 #endif
 
 #if (!defined _Static_assert && !defined __cplusplus \
