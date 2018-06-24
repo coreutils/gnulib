@@ -129,6 +129,12 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
             fprintf (stderr, "\n");
             exit (1);
           }
+        /* Verify that fp is now positioned at end of file.  */
+        if (getc (fp) != EOF)
+          {
+            fprintf (stderr, "%s left the stream not at EOF\n", streamfunc_name);
+            exit (1);
+          }
         fclose (fp);
         free (digest - 1);
       }

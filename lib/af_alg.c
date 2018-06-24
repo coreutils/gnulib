@@ -113,18 +113,47 @@ afalg_stream (FILE *stream, const char *alg,
   int fd = fileno (stream);
   int result;
   struct stat st;
-  off_t nseek = 0; /* Number of bytes to seek (backwards) in case of error.  */
   off_t off = ftello (stream);
   if (0 <= off && fstat (fd, &st) == 0
       && (S_ISREG (st.st_mode) || S_TYPEISSHM (&st) || S_TYPEISTMO (&st))
       && off < st.st_size && st.st_size - off < SYS_BUFSIZE_MAX)
     {
-      off_t nbytes = st.st_size - off;
-      result = sendfile (ofd, fd, &off, nbytes) == nbytes ? 0 : -EAFNOSUPPORT;
+      /* Make sure the offset of fileno (stream) reflects how many bytes
+         have been read from stream before this function got invoked.
+         Note: fflush on an input stream after ungetc does not work as expected
+         on some platforms.  Therefore this situation is not supported here.  */
+      if (fflush (stream))
+        result = -EIO;
+      else
+        {
+          off_t nbytes = st.st_size - off;
+          if (sendfile (ofd, fd, &off, nbytes) == nbytes)
+            {
+              if (read (ofd, resblock, hashlen) == hashlen)
+                {
+                  /* The input buffers of stream are no longer valid.  */
+                  if (lseek (fd, off, SEEK_SET) != (off_t)-1)
+                    result = 0;
+                  else
+                    /* The file position of fd has not changed.  */
+                    result = -EAFNOSUPPORT;
+                }
+              else
+                /* The file position of fd has not changed.  */
+                result = -EAFNOSUPPORT;
+            }
+          else
+            /* The file position of fd has not changed.  */
+            result = -EAFNOSUPPORT;
+       }
     }
   else
     {
       /* sendfile not possible, do a classic read-write loop.  */
+
+      /* Number of bytes to seek (backwards) in case of error.  */
+      off_t nseek = 0;
+
       for (;;)
         {
           char buf[BLOCKSIZE];
@@ -154,14 +183,14 @@ afalg_stream (FILE *stream, const char *alg,
               break;
             }
         }
-    }
 
-  if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
-    {
-      if (nseek == 0 || fseeko (stream, nseek, SEEK_CUR) == 0)
-        result = -EAFNOSUPPORT;
-      else
-        result = -EIO;
+      if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
+        {
+          if (nseek == 0 || fseeko (stream, nseek, SEEK_CUR) == 0)
+            result = -EAFNOSUPPORT;
+          else
+            result = -EIO;
+        }
     }
   close (ofd);
   return result;
