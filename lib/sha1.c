@@ -158,6 +158,12 @@ sha1_stream (FILE *stream, void *resblock)
       /* Read block.  Take care for partial reads.  */
       while (1)
         {
+          /* Either process a partial fread() from this loop,
+             or the fread() in afalg_stream may have gotten EOF.
+             We need to avoid a subsequent fread() due to glibc BZ 1190.  */
+          if (feof (stream))
+            goto process_partial_block;
+
           n = fread (buffer + sum, 1, BLOCKSIZE - sum, stream);
 
           sum += n;
@@ -177,12 +183,6 @@ sha1_stream (FILE *stream, void *resblock)
                 }
               goto process_partial_block;
             }
-
-          /* We've read at least one byte, so ignore errors.  But always
-             check for EOF, since feof may be true even though N > 0.
-             Otherwise, we could end up calling fread after EOF.  */
-          if (feof (stream))
-            goto process_partial_block;
         }
 
       /* Process buffer with BLOCKSIZE bytes.  Note that

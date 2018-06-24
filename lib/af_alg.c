@@ -120,9 +120,7 @@ afalg_stream (FILE *stream, const char *alg,
     }
   else
     {
-     /* sendfile not possible, do a classic read-write loop.
-        Defer to glibc as to whether EOF is sticky; see
-        <https://sourceware.org/bugzilla/show_bug.cgi?id=19476>.  */
+     /* sendfile not possible, do a classic read-write loop.  */
       for (;;)
         {
           char buf[BLOCKSIZE];
@@ -139,6 +137,14 @@ afalg_stream (FILE *stream, const char *alg,
             {
               result = (fseeko (stream, nseek, SEEK_CUR) == 0
                         ? -EAFNOSUPPORT : -EIO);
+              break;
+            }
+
+          /* Assume EOF is not sticky. See:
+             <https://sourceware.org/bugzilla/show_bug.cgi?id=19476>.  */
+          if (feof (stream))
+            {
+              result = 0;
               break;
             }
         }
