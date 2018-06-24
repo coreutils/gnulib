@@ -1766,6 +1766,11 @@ parse_datetime2 (struct timespec *result, char const *p,
 
   timezone_t tz = tzdefault;
 
+  /* Store a local copy prior to first "goto".  Without this, a prior use
+     below of RELATIVE_TIME_0 on the RHS might translate to an assignment-
+     to-temporary, which would trigger a -Wjump-misses-init warning.  */
+  static const relative_time rel_time_0 = RELATIVE_TIME_0;
+
   if (strncmp (p, "TZ=\"", 4) == 0)
     {
       char const *tzbase = p + 4;
@@ -1838,7 +1843,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   tm.tm_isdst = tmp.tm_isdst;
 
   pc.meridian = MER24;
-  pc.rel = RELATIVE_TIME_0;
+  pc.rel = rel_time_0;
   pc.timespec_seen = false;
   pc.rels_seen = false;
   pc.dates_seen = 0;
