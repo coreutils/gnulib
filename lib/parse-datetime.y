@@ -1769,7 +1769,7 @@ parse_datetime2 (struct timespec *result, char const *p,
   /* Store a local copy prior to first "goto".  Without this, a prior use
      below of RELATIVE_TIME_0 on the RHS might translate to an assignment-
      to-temporary, which would trigger a -Wjump-misses-init warning.  */
-  static const relative_time rel_time_0 = RELATIVE_TIME_0;
+  const relative_time rel_time_0 = RELATIVE_TIME_0;
 
   if (strncmp (p, "TZ=\"", 4) == 0)
     {
