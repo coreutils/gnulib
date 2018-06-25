@@ -157,7 +157,10 @@ afalg_stream (FILE *stream, const char *alg,
       for (;;)
         {
           char buf[BLOCKSIZE];
-          ssize_t size = fread (buf, 1, sizeof buf, stream);
+          /* When the stream is not seekable, start with a single-byte block,
+             so that we can use ungetc() in the case that send() fails.  */
+          size_t blocksize = (nseek == 0 && off < 0 ? 1 : BLOCKSIZE);
+          ssize_t size = fread (buf, 1, blocksize, stream);
           if (size == 0)
             {
               /* On Linux < 4.9, the value for an empty stream is wrong (all 0).
@@ -170,8 +173,18 @@ afalg_stream (FILE *stream, const char *alg,
           nseek -= size;
           if (send (ofd, buf, size, MSG_MORE) != size)
             {
-              result = (fseeko (stream, nseek, SEEK_CUR) == 0
-                        ? -EAFNOSUPPORT : -EIO);
+              if (nseek == -1)
+                {
+                  /* 1 byte of pushback buffer is guaranteed on stream, even
+                     if stream is not seekable.  */
+                  ungetc ((unsigned char) buf[0], stream);
+                  result = -EAFNOSUPPORT;
+                }
+              else if (fseeko (stream, nseek, SEEK_CUR) == 0)
+                /* The position of stream has been restored.  */
+                result = -EAFNOSUPPORT;
+              else
+                result = -EIO;
               break;
             }
 
@@ -187,6 +200,7 @@ afalg_stream (FILE *stream, const char *alg,
       if (result == 0 && read (ofd, resblock, hashlen) != hashlen)
         {
           if (nseek == 0 || fseeko (stream, nseek, SEEK_CUR) == 0)
+            /* The position of stream has been restored.  */
             result = -EAFNOSUPPORT;
           else
             result = -EIO;
