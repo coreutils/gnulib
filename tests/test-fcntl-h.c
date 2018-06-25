@@ -22,8 +22,8 @@
 
 /* Check that the various O_* macros are defined.  */
 int o = (O_DIRECT | O_DIRECTORY | O_DSYNC | O_IGNORE_CTTY | O_NDELAY | O_NOATIME
-	 | O_NONBLOCK | O_NOCTTY | O_NOFOLLOW | O_NOLINK | O_NOLINKS | O_NOTRANS
-	 | O_RSYNC | O_SYNC | O_TTY_INIT | O_BINARY | O_TEXT);
+         | O_NONBLOCK | O_NOCTTY | O_NOFOLLOW | O_NOLINK | O_NOLINKS | O_NOTRANS
+         | O_RSYNC | O_SYNC | O_TTY_INIT | O_BINARY | O_TEXT);
 
 /* Check that the various SEEK_* macros are defined.  */
 int sk[] = { SEEK_CUR, SEEK_END, SEEK_SET };

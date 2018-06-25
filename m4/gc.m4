@@ -16,7 +16,7 @@ AC_DEFUN([gl_GC],
     gl_good_gcrypt=no
     m4_ifdef([AM_PATH_LIBGCRYPT],
       [AM_PATH_LIBGCRYPT([1.4.4], [gl_good_gcrypt=yes],
-	[AC_MSG_ERROR([libgcrypt is too old])])])
+        [AC_MSG_ERROR([libgcrypt is too old])])])
     if test "x$gl_good_gcrypt" != xno; then
       AC_LIB_HAVE_LINKFLAGS([gcrypt], [gpg-error], [#include <gcrypt.h>])
     else

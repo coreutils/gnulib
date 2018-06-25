@@ -35,8 +35,8 @@ AC_DEFUN([gl_CANONICALIZE_LGPL],
       HAVE_REALPATH=0
     else
       case "$gl_cv_func_realpath_works" in
-	*yes) ;;
-	*)    REPLACE_REALPATH=1 ;;
+        *yes) ;;
+        *)    REPLACE_REALPATH=1 ;;
       esac
     fi
   else

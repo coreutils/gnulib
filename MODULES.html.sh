@@ -3637,8 +3637,8 @@ func_all_modules
 
 gnulib-tool --list > "$tmp/all-modules"
 missed_modules=`for module in $seen_modules; do echo $module; done \
-		  | LC_ALL=C sort -u \
-		  | LC_ALL=C join -v 2 - "$tmp/all-modules"`
+                  | LC_ALL=C sort -u \
+                  | LC_ALL=C join -v 2 - "$tmp/all-modules"`
 
 if test -n "$missed_modules"; then
 
@@ -3657,8 +3657,8 @@ fi
 
 { find lib -type f -print; find m4 -type f -print; } | LC_ALL=C sort | sed -e '/\/\./d' -e /README/d -e /ChangeLog/d -e /Makefile/d -e /TODO/d -e '/tags$/d' -e '/TAGS$/d' -e '/~$/d' > "$tmp/all-files"
 missed_files=`for file in $seen_files; do echo $file; done \
-		| LC_ALL=C sort -u \
-		| LC_ALL=C join -v 2 - "$tmp/all-files"`
+                | LC_ALL=C sort -u \
+                | LC_ALL=C join -v 2 - "$tmp/all-files"`
 
 if test -n "$missed_files"; then
 

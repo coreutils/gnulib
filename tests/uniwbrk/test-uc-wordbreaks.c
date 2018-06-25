@@ -114,12 +114,12 @@ main (int argc, char *argv[])
           p += strspn (p, " \t\r\n");
           if (!strncmp (p, "\303\267" /* ÷ */, 2))
             {
-	      breaks_expected[i] = 1;
+              breaks_expected[i] = 1;
               p += 2;
             }
           else if (!strncmp (p, "\303\227" /* × */, 2))
             {
-	      breaks_expected[i] = 0;
+              breaks_expected[i] = 0;
               p += 2;
             }
           else
@@ -144,11 +144,11 @@ main (int argc, char *argv[])
                 }
               p += n;
 
-	      input[i] = next_int;
-	    }
+              input[i] = next_int;
+            }
 
           p += strspn (p, " \t\r\n");
-	  i++;
+          i++;
         }
       while (*p != '\0');
 
@@ -157,29 +157,29 @@ main (int argc, char *argv[])
       /* u32_wordbreaks always set BREAKS[0] to 0.  */
       breaks[0] = breaks_expected[0] = 1;
       if (memcmp (breaks, breaks_expected, i - 1) != 0)
-	{
-	  int j;
+        {
+          int j;
 
-	  fprintf (stderr, "%s:%d: expected: ", filename, lineno);
-	  for (j = 0; j < i - 1; j++)
-	    {
-	      int input_wbp = uc_wordbreak_property (input[j]);
-	      fprintf (stderr, "%s U+%04X (%s) ",
-		       breaks_expected[j] == 1 ? "\303\267" : "\303\227",
-		       input[j], wordbreakproperty_to_string (input_wbp));
-	    }
-	  fprintf (stderr, "\n");
-	  fprintf (stderr, "%s:%d: actual: ", filename, lineno);
-	  for (j = 0; j < i - 1; j++)
-	    {
-	      int input_wbp = uc_wordbreak_property (input[j]);
-	      fprintf (stderr, "%s U+%04X (%s) ",
-		       breaks[j] == 1 ? "\303\267" : "\303\227",
-		       input[j], wordbreakproperty_to_string (input_wbp));
-	    }
-	  fprintf (stderr, "\n");
-	  exit_code = 1;
-	}
+          fprintf (stderr, "%s:%d: expected: ", filename, lineno);
+          for (j = 0; j < i - 1; j++)
+            {
+              int input_wbp = uc_wordbreak_property (input[j]);
+              fprintf (stderr, "%s U+%04X (%s) ",
+                       breaks_expected[j] == 1 ? "\303\267" : "\303\227",
+                       input[j], wordbreakproperty_to_string (input_wbp));
+            }
+          fprintf (stderr, "\n");
+          fprintf (stderr, "%s:%d: actual: ", filename, lineno);
+          for (j = 0; j < i - 1; j++)
+            {
+              int input_wbp = uc_wordbreak_property (input[j]);
+              fprintf (stderr, "%s U+%04X (%s) ",
+                       breaks[j] == 1 ? "\303\267" : "\303\227",
+                       input[j], wordbreakproperty_to_string (input_wbp));
+            }
+          fprintf (stderr, "\n");
+          exit_code = 1;
+        }
     }
 
   return exit_code;

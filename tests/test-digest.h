@@ -84,7 +84,7 @@ test_digest_on_files (int (*streamfunc) (FILE *, void *),
           {
           case 0:         expected = expected_for_empty_file; break;
           case 1: case 2: expected = expected_for_small_file; break;
-	  case 3: case 4: expected = expected_for_large_file; break;
+          case 3: case 4: expected = expected_for_large_file; break;
           default: abort ();
           }
 

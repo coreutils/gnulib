@@ -84,8 +84,8 @@ static bool
 extremal (struct timespec a)
 {
   return ((a.tv_sec == TYPE_MINIMUM (time_t) && a.tv_nsec == 0)
-	  || (a.tv_sec == TYPE_MAXIMUM (time_t)
-	      && a.tv_nsec == TIMESPEC_RESOLUTION - 1));
+          || (a.tv_sec == TYPE_MAXIMUM (time_t)
+              && a.tv_nsec == TIMESPEC_RESOLUTION - 1));
 }
 
 int
@@ -103,12 +103,12 @@ main (void)
     {
       int s = prototype[i].s;
       if (TYPE_SIGNED (time_t) || 0 <= s)
-	{
-	  time_t t = (s <= INT_MIN + 1 ? s - INT_MIN + TYPE_MINIMUM (time_t)
-		      : INT_MAX - 1 <= s ? s - INT_MAX + TYPE_MAXIMUM (time_t)
-		      : s);
-	  test[ntests++] = make_timespec (t, prototype[i].ns);
-	}
+        {
+          time_t t = (s <= INT_MIN + 1 ? s - INT_MIN + TYPE_MINIMUM (time_t)
+                      : INT_MAX - 1 <= s ? s - INT_MAX + TYPE_MAXIMUM (time_t)
+                      : s);
+          test[ntests++] = make_timespec (t, prototype[i].ns);
+        }
     }
 
   for (i = 0; i < LOG10_TIMESPEC_RESOLUTION; i++)
@@ -127,40 +127,40 @@ main (void)
       ASSERT (sign (timespec_sign (a)) == cmp (a, make_timespec (0, 0)));
 
       if (valid (a))
-	for (j = 0; j < ntests; j++)
-	  {
-	    struct timespec b = test[j];
-	    if (valid (b))
-	      {
-		struct timespec sum = timespec_add (a, b);
-		struct timespec diff = timespec_sub (a, b);
-		struct timespec rdiff = timespec_sub (b, a);
-		ASSERT (cmp (a, b) == sign (i - j));
-		ASSERT (eq (sum, timespec_add (b, a)));
-		if (! extremal (sum))
-		  {
-		    ASSERT (eq (a, timespec_sub (sum, b)));
-		    ASSERT (eq (b, timespec_sub (sum, a)));
+        for (j = 0; j < ntests; j++)
+          {
+            struct timespec b = test[j];
+            if (valid (b))
+              {
+                struct timespec sum = timespec_add (a, b);
+                struct timespec diff = timespec_sub (a, b);
+                struct timespec rdiff = timespec_sub (b, a);
+                ASSERT (cmp (a, b) == sign (i - j));
+                ASSERT (eq (sum, timespec_add (b, a)));
+                if (! extremal (sum))
+                  {
+                    ASSERT (eq (a, timespec_sub (sum, b)));
+                    ASSERT (eq (b, timespec_sub (sum, a)));
 
-		    for (k = 0; k < ntests; k++)
-		      {
-			struct timespec c = test[k];
-			if (valid (c))
-			  {
-			    struct timespec sumbc = timespec_add (b, c);
-			    if (! extremal (sumbc))
-			      ASSERT (eq (timespec_add (a, sumbc),
-					  timespec_add (sum, c)));
-			  }
-		      }
-		  }
-		if (! extremal (diff))
-		  ASSERT (eq (a, timespec_add (diff, b)));
-		if (! extremal (rdiff))
-		  ASSERT (eq (b, timespec_add (rdiff, a)));
+                    for (k = 0; k < ntests; k++)
+                      {
+                        struct timespec c = test[k];
+                        if (valid (c))
+                          {
+                            struct timespec sumbc = timespec_add (b, c);
+                            if (! extremal (sumbc))
+                              ASSERT (eq (timespec_add (a, sumbc),
+                                          timespec_add (sum, c)));
+                          }
+                      }
+                  }
+                if (! extremal (diff))
+                  ASSERT (eq (a, timespec_add (diff, b)));
+                if (! extremal (rdiff))
+                  ASSERT (eq (b, timespec_add (rdiff, a)));
 
-	      }
-	  }
+              }
+          }
     }
 
   return 0;

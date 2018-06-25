@@ -1901,9 +1901,9 @@ The function:
 @example
 void
 re_set_registers (struct re_pattern_buffer *@var{buffer},
-			      struct re_registers *@var{regs},
-			      size_t @var{num_regs},
-			      regoff_t *@var{starts}, regoff_t *@var{ends})
+                  struct re_registers *@var{regs},
+                  size_t @var{num_regs},
+                  regoff_t *@var{starts}, regoff_t *@var{ends})
 @end example
 
 @noindent sets @var{regs} to hold @var{num_regs} registers, storing

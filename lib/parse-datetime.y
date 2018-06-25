@@ -492,7 +492,7 @@ debug_print_current_time (char const *item, parser_control *pc)
   if (pc->local_zones_seen && !pc->debug_local_zones_seen)
     {
       fprintf (stderr, &" isdst=%d%s"[!space],
-	       pc->local_isdst, pc->dsts_seen ? " DST" : "");
+               pc->local_isdst, pc->dsts_seen ? " DST" : "");
       pc->debug_local_zones_seen = true;
       space = true;
     }
@@ -1966,7 +1966,7 @@ parse_datetime2 (struct timespec *result, char const *p,
         fprintf (stderr, ", dst");
 
       if (pc.zones_seen)
-	fprintf (stderr, " (%s)", time_zone_str (pc.time_zone, time_zone_buf));
+        fprintf (stderr, " (%s)", time_zone_str (pc.time_zone, time_zone_buf));
 
       fputc ('\n', stderr);
     }

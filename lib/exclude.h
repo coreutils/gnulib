@@ -54,7 +54,7 @@ void add_exclude (struct exclude *, char const *, int);
 int add_exclude_file (void (*) (struct exclude *, char const *, int),
                       struct exclude *, char const *, int, char);
 int add_exclude_fp (void (*) (struct exclude *, char const *, int, void *),
-		    struct exclude *, FILE *, int, char, void *);
+                    struct exclude *, FILE *, int, char, void *);
 bool excluded_file_name (struct exclude const *, char const *);
 void exclude_add_pattern_buffer (struct exclude *ex, char *buf);
 bool exclude_fnmatch (char const *, char const *, int);
