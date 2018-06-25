@@ -18,7 +18,7 @@
 -Warray-bounds=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Warray-temporaries			fortran
 -Wassign-intercept			objc/objc++
--Wc++-compat				FIXME maybe? borderline.  some will want this
+-Wc++-compat				only useful for code meant to be compiled by a C++ compiler
 -Wc++0x-compat				c++
 -Wc++11-compat				c++
 -Wc++14-compat				c++
@@ -65,6 +65,7 @@
 -Wintrinsic-shadow			fortran
 -Wintrinsics-std			fortran
 -Winvalid-offsetof			c++ and objc++
+-Wjump-misses-init			only useful for code meant to be compiled by a C++ compiler
 -Wlarger-than-				gcc --help=warnings artifact
 -Wlarger-than=<number>			FIXME: choose something sane?
 -Wline-truncation			fortran
