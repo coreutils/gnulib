@@ -716,7 +716,7 @@ class GnulibModule(FileModule, metaclass=_GnulibModuleMeta):
 
 class TransitiveClosure:
     """transitive closure table"""
-    __slots__ = ("__lookup", "__dependencies", "__demanders", "__paths", "__conditionals")
+    __slots__ = ("__lookup", "__dependencies", "__demanders", "__paths", "__conditional")
 
 
     __AUTOMAKE_CONDITION = _re.compile("^if\\s+", _re.S | _re.M)
@@ -734,6 +734,7 @@ class TransitiveClosure:
         previous = set()
         demanders = _collections.defaultdict(dict)
         dependencies = _collections.defaultdict(dict)
+
         def _update(demander, dependency, condition):
             table[dependency.name] = dependency
             if dependency.mask == mask:
@@ -760,6 +761,7 @@ class TransitiveClosure:
         for module in modules:
             dependency = lookup(module)
             _update(None, dependency, None)
+
         while True:
             modules = current.difference(previous)
             if not modules:
@@ -770,14 +772,14 @@ class TransitiveClosure:
                 if tests and not demander.test:
                     dependency = _lookup(demander.name + "-tests")
                     if dependency is not None:
-                        _update(None, dependency, bool(dependencies[demander]))
+                        _update(None, dependency, bool(demanders[demander]))
                 for (dependency, condition) in demander.dependencies:
                     dependency = _lookup(dependency)
                     _update(demander, dependency, condition)
 
         self.__lookup = _lookup
         self.__paths = dict()
-        self.__conditionals = dict()
+        self.__conditional = dict()
         self.__demanders = dict(demanders)
         self.__dependencies = dict(dependencies)
 
@@ -788,10 +790,10 @@ class TransitiveClosure:
 
 
     def paths(self, module):
-        graph = self.__dependencies
-        module = self.__lookup(module).name
         if module in self.__paths:
             return self.__paths[module]
+        graph = self.__dependencies
+        module = self.__lookup(module).name
         def _paths():
             path = [module]
             seen = {module}
@@ -806,10 +808,10 @@ class TransitiveClosure:
                         path.pop()
                         seen.remove(neighbour)
                 if dead_end:
-                    yield tuple(path)
+                    yield path
             yield from search()
-        result = self.__paths[module] = tuple(path[:-1] for path in _paths())
-        return result
+        self.__paths[module] = (tuple(path[:-1]) for path in _paths())
+        return tuple(self.__paths[module])
 
 
     def conditional(self, module):
@@ -817,27 +819,17 @@ class TransitiveClosure:
         Test whether module is a conditional dependency.
         Note that this check also takes all parent modules into account.
         """
-        table = self.__dependencies
-        module = self.__lookup(module).name
-        def _conditional():
-            if module in self.__demanders[None]:
+        if module in self.__conditional:
+            return self.__conditional[module]
+        for path in self.paths(module):
+            unconditional = list()
+            for (dependency, demander) in zip(path, path[1:]):
+                unconditional.append(not self.__dependencies[dependency][demander])
+            if all(unconditional):
+                self.__conditional[module] = False
                 return False
-            if module in self.__conditionals:
-                return self.__conditionals[module]
-            conditions = set()
-            paths = self.paths(module)
-            for path in paths:
-                conditions.add(any({bool(table[dep][dem]) for (dep, dem) in zip(path, path[1:])}))
-            return all(conditions)
-        return self.__conditionals.setdefault(module, _conditional())
-
-
-    def unconditional(self, module):
-        """
-        Test whether module is an unconditional dependency.
-        Note that this check also takes all parent modules into account.
-        """
-        return not self.conditional(module)
+        self.__conditional[module] = True
+        return True
 
 
     def dump(self, indent="  "):
