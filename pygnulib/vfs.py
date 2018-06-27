@@ -133,7 +133,6 @@ def lookup(name, primary, secondary, patch):
         tmp.close()
     stdin = _codecs.open(secondary[diff], "rb")
     cmd = (patch, "-s", tmp.name)
-    raise 0
     pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
     (stdout, stderr) = pipes.communicate()
     stdout = stdout.decode("UTF-8")
