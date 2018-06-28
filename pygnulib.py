@@ -232,7 +232,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         fmt = (action + " file {file} (backup in {file}~)")
         if not dry_run:
             try:
-                vfs_unlink(project, file, backup=True)
+                vfs_backup(project, file)
+                vfs_unlink(project, file)
             except FileNotFoundError:
                 pass
         print(fmt.format(file=file), file=sys.stdout)
@@ -274,7 +275,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # First the files that are in old_files, but not in new_files.
     # Then the files that are in new_files, but not in old_files.
     # Then the files that are in new_files and in old_files.
-    origin = lambda file: ("lib/" + file[len("tests=lib/"):]) if file.startswith("tests=lib/") else file
+    origin = lambda file: project[file]
     removed_files = set(map(origin, old_files)).difference(map(origin, new_files))
     added_files = new_files.difference(old_files)
     kept_files = (old_files & new_files)
