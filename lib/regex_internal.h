@@ -39,7 +39,7 @@
 # include <libc-lock.h>
 # define lock_define(name) __libc_lock_define (, name)
 # define lock_init(lock) (__libc_lock_init (lock), 0)
-# define lock_fini(lock) 0
+# define lock_fini(lock) ((void) 0)
 # define lock_lock(lock) __libc_lock_lock (lock)
 # define lock_unlock(lock) __libc_lock_unlock (lock)
 #elif defined GNULIB_LOCK && !defined USE_UNLOCKED_IO
@@ -441,17 +441,6 @@ typedef struct re_dfa_t re_dfa_t;
 # define IS_IN(libc) false
 #endif
 
-static reg_errcode_t re_string_realloc_buffers (re_string_t *pstr,
-						Idx new_buf_len);
-#ifdef RE_ENABLE_I18N
-static void build_wcs_buffer (re_string_t *pstr);
-static reg_errcode_t build_wcs_upper_buffer (re_string_t *pstr);
-#endif /* RE_ENABLE_I18N */
-static void build_upper_buffer (re_string_t *pstr);
-static void re_string_translate_buffer (re_string_t *pstr);
-static unsigned int re_string_context_at (const re_string_t *input, Idx idx,
-					  int eflags) __attribute__ ((pure));
-
 #define re_string_peek_byte(pstr, offset) \
   ((pstr)->mbs[(pstr)->cur_idx + offset])
 #define re_string_fetch_byte(pstr) \
@@ -757,31 +746,31 @@ typedef struct
 
 /* Functions for bitset_t operation.  */
 
-static void
+static inline void
 bitset_set (bitset_t set, Idx i)
 {
   set[i / BITSET_WORD_BITS] |= (bitset_word_t) 1 << i % BITSET_WORD_BITS;
 }
 
-static void
+static inline void
 bitset_clear (bitset_t set, Idx i)
 {
   set[i / BITSET_WORD_BITS] &= ~ ((bitset_word_t) 1 << i % BITSET_WORD_BITS);
 }
 
-static bool
+static inline bool
 bitset_contain (const bitset_t set, Idx i)
 {
   return (set[i / BITSET_WORD_BITS] >> i % BITSET_WORD_BITS) & 1;
 }
 
-static void
+static inline void
 bitset_empty (bitset_t set)
 {
   memset (set, '\0', sizeof (bitset_t));
 }
 
-static void
+static inline void
 bitset_set_all (bitset_t set)
 {
   memset (set, -1, sizeof (bitset_word_t) * (SBC_MAX / BITSET_WORD_BITS));
@@ -790,13 +779,13 @@ bitset_set_all (bitset_t set)
       ((bitset_word_t) 1 << SBC_MAX % BITSET_WORD_BITS) - 1;
 }
 
-static void
+static inline void
 bitset_copy (bitset_t dest, const bitset_t src)
 {
   memcpy (dest, src, sizeof (bitset_t));
 }
 
-static void __attribute__ ((unused))
+static inline void
 bitset_not (bitset_t set)
 {
   int bitset_i;
@@ -808,7 +797,7 @@ bitset_not (bitset_t set)
        & ~set[BITSET_WORDS - 1]);
 }
 
-static void __attribute__ ((unused))
+static inline void
 bitset_merge (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
@@ -816,7 +805,7 @@ bitset_merge (bitset_t dest, const bitset_t src)
     dest[bitset_i] |= src[bitset_i];
 }
 
-static void __attribute__ ((unused))
+static inline void
 bitset_mask (bitset_t dest, const bitset_t src)
 {
   int bitset_i;
