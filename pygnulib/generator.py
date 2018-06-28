@@ -949,7 +949,7 @@ def gnulib_cache(config, explicit):
     yield f"gl_PO_DOMAIN([{config.po_domain}])"
     yield f"gl_WITNESS_C_MACRO([{config.witness_c_macro}])"
     if config.vc_files:
-        yield "gl_VC_FILES([{}])".format(" ".join(config.vc_files))
+        yield "gl_VC_FILES([{true}])"
 
 
 
