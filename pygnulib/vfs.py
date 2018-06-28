@@ -281,7 +281,7 @@ def symlink(src_root, src_name, dst_root, dst_name, relative=True):
     _os.symlink(src_path, dst_path)
 
 
-def unlink(root, name, backup=True):
+def unlink(root, name):
     """Unlink a file, backing it up if necessary."""
     root = BaseVFS(".") if root is None else root
     mkdir(root, _os.path.dirname(name))
