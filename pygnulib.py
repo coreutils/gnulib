@@ -4,6 +4,7 @@
 
 
 import codecs
+import collections
 import os
 import re
 import stat
@@ -462,6 +463,58 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
 
+    if config.vc_files:
+        anchors = {
+            ".gitignore": "/",
+            ".cvsignore": "",
+        }
+        items = collections.defaultdict(list)
+        for path in added_files:
+            (directory, name) = os.path.split(path)
+            directory = project[directory]
+            items[directory].append(["+", name])
+        for path in removed_files:
+            (directory, name) = os.path.split(path)
+            directory = project[directory]
+            items[directory].append(["-", name])
+        for directory in sorted(items):
+            gitignore = os.path.isdir(os.path.join(config.root, ".git"))
+            gitignore |= os.path.isfile(os.path.join(config.root, directory, ".gitignore"))
+            cvsignore = os.path.isdir(os.path.join(config.root, "CVS"))
+            cvsignore |= os.path.isdir(os.path.join(config.root, directory, "CVS"))
+            cvsignore |= os.path.isfile(os.path.join(config.root, directory, ".cvsignore"))
+            for kind in (([], [".gitignore"])[gitignore] + ([], [".cvsignore"])[cvsignore]):
+                anchor = {
+                    ".gitignore": "/",
+                    ".cvsignore": "",
+                }[kind]
+                path = project[os.path.join(directory, kind)]
+                try:
+                    with vfs_iostream(project, path,  "rb", "UTF-8") as stream:
+                        ignores = [line.strip() for line in stream.readlines()]
+                    vfs_backup(project, path)
+                    present = True
+                except:
+                    present = False
+                    ignores = []
+                include = set()
+                exclude = set()
+                for (action, name) in items[directory]:
+                    name = f"{anchor}{name}"
+                    already = name in ignores
+                    if action == "-" and already:
+                        exclude.add(name)
+                    elif action == "+" and not already:
+                        include.add(name)
+                if include or (set(ignores) & exclude):
+                    print(f"Updating {path} (backup in {path}~)", file=sys.stdout)
+                    with vfs_iostream(project, path,  "wb", "UTF-8") as stream:
+                        for entry in ignores:
+                            if entry not in exclude:
+                                print(entry, file=stream)
+                        for entry in sorted(include):
+                            print(entry, file=stream)
+
     print("Finished.", file=sys.stdout)
     print("", file=sys.stdout)
 
@@ -519,7 +572,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     for (directory, key, value) in mkedits:
         print(f"  - mention \"{value}\" in {key} in {directory}Makefile.am,", file=sys.stdout)
     position_early_after = "AC_PROG_CC"
-    with codecs.open(project[config.ac_file], "rb", "UTF-8") as stream:
+    with vfs_iostream(project, config.ac_file, "rb", "UTF-8") as stream:
         contents = stream.read()
         AC_PROG_CC_STDC = re.compile(r"^\s*AC_PROG_CC_STDC", re.S | re.M)
         AC_PROG_CC_C99 = re.compile(r"^\s*AC_PROG_CC_C99", re.S | re.M)
