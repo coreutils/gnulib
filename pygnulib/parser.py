@@ -947,6 +947,7 @@ class CommandLine:
 
         options = dict(namespace)
         namespace.setdefault("root", ".")
+        namespace.setdefault("vc_files", True)
         options.setdefault("dry_run", False)
         namespace["overrides"] = list(reversed(namespace.get("overrides", [])))
         return (namespace, mode, verbosity, options)
