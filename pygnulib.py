@@ -489,7 +489,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 try:
                     with vfs_iostream(project, path,  "rb", "UTF-8") as stream:
                         ignores = [line.strip() for line in stream.readlines()]
-                    vfs_backup(project, path)
                     present = True
                 except:
                     present = False
@@ -505,6 +504,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                         include.add(name)
                 if include or (set(ignores) & exclude):
                     print(f"Updating {path} (backup in {path}~)", file=sys.stdout)
+                    if present:
+                        vfs_backup(project, path)
                     with vfs_iostream(project, path,  "wb", "UTF-8") as stream:
                         for entry in ignores:
                             if entry not in exclude:
