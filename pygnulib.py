@@ -465,10 +465,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         os.unlink(tmp.name)
 
     if config.vc_files:
-        anchors = {
-            ".gitignore": "/",
-            ".cvsignore": "",
-        }
         items = collections.defaultdict(list)
         for path in added_files:
             (directory, name) = os.path.split(path)
