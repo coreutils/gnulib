@@ -127,21 +127,21 @@ def lookup(name, primary, secondary, patch):
     diff = f"{name}.diff"
     if diff not in secondary:
         return (primary, name)
-    tmp = _tempfile.NamedTemporaryFile(mode="w+b", delete=False)
-    with _codecs.open(primary[name], "rb") as stream:
-        _shutil.copyfileobj(stream, tmp)
-        tmp.close()
+    with _codecs.open(primary[name], "rb") as istream:
+        with _tempfile.NamedTemporaryFile(mode="w+b", delete=False) as ostream:
+            path = ostream.name
+            _shutil.copyfileobj(istream, ostream)
     stdin = _codecs.open(secondary[diff], "rb")
-    cmd = (patch, "-s", tmp.name)
+    cmd = (patch, "-s", path)
     pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
     (stdout, stderr) = pipes.communicate()
     stdout = stdout.decode("UTF-8")
     stderr = stderr.decode("UTF-8")
     returncode = pipes.returncode
     if returncode != 0:
-        cmd = "patch -s {} < {}".format(tmp.name, secondary[diff])
+        cmd = "patch -s {} < {}".format(path, secondary[diff])
         raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
-    return (None, tmp.name)
+    return (None, path)
 
 
 def mkdir(root, name):
@@ -192,10 +192,9 @@ def copy(src_root, src_name, dst_root, dst_name):
         dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     with _codecs.open(src_path, "rb") as istream:
         with _codecs.open(dst_path, "wb") as ostream:
-            while 1:
+            data = True
+            while data:
                 data = istream.read(limit)
-                if not data:
-                    break
                 ostream.write(data)
 
 
