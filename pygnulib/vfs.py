@@ -68,7 +68,7 @@ class BaseVFS:
                 part = self.__table[part]
                 replaced = True
             parts += [part]
-        return _os.path.sep.join(parts)
+        return _os.path.normpath(_os.path.sep.join(parts))
 
 
     def __setitem__(self, src, dst):
