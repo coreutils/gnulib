@@ -197,12 +197,12 @@ class CommandLine:
 
     class _LGPLOption(_Option):
         def __call__(self, parser, namespace, value, option=None):
-            if value not in {"2", "3", "yes", "3orGPLv2"}:
+            if value not in {None, "2", "3", "3orGPLv2"}:
                 parser.error("argument --lgpl: 2, 3, yes or 3orGPLv2")
             value = {
+                None: _LGPL_LICENSES,
                 "2": _LGPLv2_LICENSE,
                 "3": _LGPLv3_LICENSE,
-                "yes": _LGPL_LICENSES,
                 "3orGPLv2": (_GPLv2_LICENSE | _LGPLv3_LICENSE),
             }[value]
             super().__call__(parser, namespace, value, option)
@@ -715,6 +715,7 @@ class CommandLine:
                         "the default is currently LGPLv3.",
                     ),
                     "action": _LGPLOption,
+                    "nargs": "?",
                     "dest": "licenses",
                     "metavar": "[=2|=3orGPLv2|=3]",
                 }),
