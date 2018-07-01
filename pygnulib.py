@@ -655,7 +655,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             position_early_after = "AC_PROG_CC_C99"
     fmt = "  - invoke {macro_prefix}_EARLY in {ac_file}, right after {position_early_after},"
     print(fmt.format(**config, position_early_after=position_early_after), file=sys.stdout)
-    fmt = "  - invoke ${macro_prefix}_INIT in {ac_file}."
+    fmt = "  - invoke {macro_prefix}_INIT in {ac_file}."
     print(fmt.format(**config), file=sys.stdout)
     return os.EX_OK
 
