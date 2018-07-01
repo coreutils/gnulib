@@ -23,10 +23,10 @@ from .module import Database as _Database
 
 
 _LGPL = {
-    _LGPLv2_LICENSE: "2",
-    _LGPLv3_LICENSE: "3",
-    _LGPL_LICENSES: "yes",
-    (_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
+    tuple(_LGPLv2_LICENSE): "2",
+    tuple(_LGPLv3_LICENSE): "3",
+    tuple(_LGPL_LICENSES): "yes",
+    tuple(_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
 }
 __DISCLAIMER = (
     "## DO NOT EDIT! GENERATED AUTOMATICALLY!",
@@ -446,8 +446,8 @@ def command_line(config, explicit, **override):
             yield option
     for module in config.avoids:
         yield "--avoid={module.name}"
-    if frozenset(config.licenses) in _LGPL:
-        lgpl = _LGPL[config.licenses]
+    if tuple(config.licenses) in _LGPL:
+        lgpl = _LGPL[tuple(config.licenses)]
         if lgpl != "yes":
             yield f"--lgpl={lgpl}"
         else:
@@ -937,8 +937,8 @@ def gnulib_cache(config, explicit):
     if config.tests:
         yield "gl_WITH_TESTS"
     yield "gl_LIB([{}])".format(config.libname)
-    if frozenset(config.licenses) in _LGPL:
-        lgpl = _LGPL[config.licenses]
+    if tuple(config.licenses) in _LGPL:
+        lgpl = _LGPL[tuple(config.licenses)]
         yield "gl_LGPL([{}])".format(lgpl) if lgpl != "yes" else "gl_LGPL"
     yield f"gl_MAKEFILE_NAME([{config.makefile_name}])"
     if config.conditionals:
