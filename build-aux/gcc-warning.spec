@@ -121,6 +121,7 @@
 -Wsubobject-linkage			c++ and objc++
 -Wsuggest-override			c++ and objc++
 -Wsurprising				fortran
+-Wswitch-default			https://lists.gnu.org/r/bug-gnulib/2018-05/msg00179.html
 -Wswitch-enum				FIXME maybe? borderline.  some will want this
 -Wsynth					deprecated
 -Wtabs					fortran

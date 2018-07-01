@@ -1,4 +1,4 @@
-# manywarnings-c++.m4 serial 1
+# manywarnings-c++.m4 serial 2
 dnl Copyright (C) 2008-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -180,7 +180,6 @@ AC_DEFUN([gl_MANYWARN_ALL_GCC_CXX_IMPL],
     -Wsuggest-override \
     -Wswitch \
     -Wswitch-bool \
-    -Wswitch-default \
     -Wsync-nand \
     -Wsystem-headers \
     -Wtrampolines \
