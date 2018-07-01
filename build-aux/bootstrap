@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2018-05-27.20; # UTC
+scriptversion=2018-07-01.02; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -942,13 +942,13 @@ fi
 if $use_gnulib; then
   gnulib_tool_options="\
    --no-changelog\
-   --aux-dir $build_aux\
-   --doc-base $doc_base\
-   --lib $gnulib_name\
-   --m4-base $m4_base/\
-   --source-base $source_base/\
-   --tests-base $tests_base\
-   --local-dir $local_gl_dir\
+   --aux-dir=$build_aux\
+   --doc-base=$doc_base\
+   --lib=$gnulib_name\
+   --m4-base=$m4_base/\
+   --source-base=$source_base/\
+   --tests-base=$tests_base\
+   --local-dir=$local_gl_dir\
    $gnulib_tool_option_extras\
   "
   if test $use_libtool = 1; then
