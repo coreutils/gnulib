@@ -5,6 +5,7 @@
 
 import codecs
 import collections
+import functools
 import os
 import re
 import stat
@@ -20,6 +21,9 @@ from pygnulib.error import UnknownModuleError
 from pygnulib.config import BaseConfig
 from pygnulib.config import CachedConfig
 from pygnulib.config import LGPL_LICENSES
+from pygnulib.config import LGPLv3_LICENSE
+from pygnulib.config import LGPLv2_LICENSE
+from pygnulib.config import GPLv2_LICENSE
 
 from pygnulib.generator import gnulib_cache
 from pygnulib.generator import gnulib_comp
@@ -174,8 +178,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             "unmodifiable license text",
         }
         acceptable |= set(config.licenses)
-        for (name, licenses) in ((module.name, module.licenses) for module in main):
-            if not (acceptable & licenses):
+        for (name, licenses) in ((module.name, module.licenses) for module in database.main_modules):
+            if not (acceptable & set(licenses)):
                 incompatibilities.add((name, licenses))
     if incompatibilities:
         print("{0}: *** incompatible license on modules:".format(script), file=sys.stderr)
@@ -228,6 +232,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             raise error
 
     def remove_file(project, file):
+        file = project[file]
         action = ("Removing", "Remove")[dry_run]
         fmt = (action + " file {file} (backup in {file}~)")
         if not dry_run:
@@ -240,6 +245,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     def update_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
         if not vfs_compare(src_vfs, src_name, dst_vfs, dst_name):
+            file = dst_vfs[dst_name]
             action = (("Replacing", "Replace"), ("Updating", "Update"))[present][dry_run]
             message = ("(non-gnulib code backed up in {file}~) !!", "(backup in {file}~)")[present]
             fmt = (action + " file {file} " + message)
@@ -249,6 +255,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             print(fmt.format(file=dst_name), file=sys.stdout)
 
     def add_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
+        file = dst_vfs[dst_name]
         action = ("Copying", "Copy")[dry_run]
         fmt = (action + " file {file}")
         if not dry_run:
@@ -272,11 +279,66 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         old_files |= set(["m4/gnulib-tool.m4"])
     new_files = (files | set(["m4/gnulib-tool.m4"]))
 
+    # Determine required transformations.
+    transformations = []
+    for module in database.main_modules:
+        if module.name == "config-h":
+            # Assume config.h exists, and that -DHAVE_CONFIG_H is omitted.
+            pattern = re.compile(r"^#ifdef\s+HAVE_CONFIG_H\s*$", re.M)
+            transformation = lambda pattern, string: pattern.sub(r"#if 1", string)
+            transformations.append(functools.partial(transformation, pattern))
+            break
+
+    licenses = set(config.licenses)
+    if licenses == (GPLv2_LICENSE | LGPLv3_LICENSE):
+        repl = (
+            "   This program is free software: you can redistribute it and/or",
+            "   modify it under the terms of either:",
+            "",
+            "     * the GNU Lesser General Public License as published by the Free",
+            "       Software Foundation; either version 3 of the License, or (at your",
+            "       option) any later version.",
+            "",
+            "   or",
+            "",
+            "     * the GNU General Public License as published by the Free",
+            "       Software Foundation; either version 2 of the License, or (at your",
+            "       option) any later version.",
+            "",
+            "   or both in parallel, as here.",
+            "",
+            "   This program is distributed in the hope that it will be useful,",
+            "   but WITHOUT ANY WARRANTY; without even the implied warranty of",
+            "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+            "   GNU General Public License for more details.",
+            "",
+            "   You should have received a copy of the GNU General Public License",
+            "   along with this program.  If not, see <https://www.gnu.org/licenses/>.",
+        )
+        pattern = re.compile((r"^\s*(This program is free software.*?)\s*\*/$"), re.S | re.M)
+        transformation = lambda pattern, string: pattern.sub("\n".join(repl), string)
+        transformations.append(functools.partial(transformation, pattern))
+    elif licenses == LGPLv3_LICENSE:
+        print(licenses)
+        transformations += [
+            lambda string: string.replace("GNU General", "GNU Lesser General"),
+            lambda string: string.replace("General Public License", "Lesser General Public License"),
+            lambda string: string.replace("Lesser Lesser General Public License", "Lesser General Public License"),
+        ]
+    elif licenses == LGPLv2_LICENSE:
+        transformations += [
+            lambda string: string.replace("GNU General", "GNU Lesser General"),
+            lambda string: string.replace("General Public License", "Lesser General Public License"),
+            lambda string: string.replace("Lesser Lesser General Public License", "Lesser General Public License"),
+        ]
+        pattern = re.compile(r"version\s+[23]([\s,])")
+        transformation = lambda pattern, string: pattern.sub(r"version 2.1\1", string)
+        transformations.append(functools.partial(transformation, pattern))
+
     # First the files that are in old_files, but not in new_files.
     # Then the files that are in new_files, but not in old_files.
     # Then the files that are in new_files and in old_files.
-    origin = lambda file: project[file]
-    removed_files = set(map(origin, old_files)).difference(map(origin, new_files))
+    removed_files = old_files.difference(new_files)
     added_files = new_files.difference(old_files)
     kept_files = (old_files & new_files)
     for file in sorted(removed_files):
@@ -287,7 +349,20 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             override = match[0] if match else gnulib
             (vfs, src) = vfs_lookup(dst, gnulib, override, patch=PATCH)
             action = update_file if vfs_exists(project, dst) else add_file
+            with vfs_iostream(vfs, src, "rb", "UTF-8") as istream:
+                dst_data = src_data = istream.read()
+            for transformation in transformations:
+                dst_data = transformation(dst_data)
+            temporary = False
+            if src_data != dst_data:
+                with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as ostream:
+                    ostream.write(dst_data)
+                src = ostream.name
+                temporary = True
+                match = False
             action(bool(match), vfs, src, project, dst, present)
+            if temporary:
+                os.unlink(src)
 
     mkedits = []
     if config.makefile_name == "Makefile.am":
