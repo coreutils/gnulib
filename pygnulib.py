@@ -284,56 +284,110 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     for module in database.main_modules:
         if module.name == "config-h":
             # Assume config.h exists, and that -DHAVE_CONFIG_H is omitted.
+            def transformation(pattern, path, string):
+                if path.startswith("lib") or path.startswith("tests=lib"):
+                    return pattern.sub(r"#if 1", string)
+                return string
             pattern = re.compile(r"^#ifdef\s+HAVE_CONFIG_H\s*$", re.M)
-            transformation = lambda pattern, string: pattern.sub(r"#if 1", string)
             transformations.append(functools.partial(transformation, pattern))
             break
 
     licenses = set(config.licenses)
     if licenses == (GPLv2_LICENSE | LGPLv3_LICENSE):
-        repl = (
-            "   This program is free software: you can redistribute it and/or",
-            "   modify it under the terms of either:",
-            "",
-            "     * the GNU Lesser General Public License as published by the Free",
-            "       Software Foundation; either version 3 of the License, or (at your",
-            "       option) any later version.",
-            "",
-            "   or",
-            "",
-            "     * the GNU General Public License as published by the Free",
-            "       Software Foundation; either version 2 of the License, or (at your",
-            "       option) any later version.",
-            "",
-            "   or both in parallel, as here.",
-            "",
-            "   This program is distributed in the hope that it will be useful,",
-            "   but WITHOUT ANY WARRANTY; without even the implied warranty of",
-            "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
-            "   GNU General Public License for more details.",
-            "",
-            "   You should have received a copy of the GNU General Public License",
-            "   along with this program.  If not, see <https://www.gnu.org/licenses/>.",
-        )
+        def transformation(pattern, path, string):
+            repl = (
+                "   This program is free software: you can redistribute it and/or",
+                "   modify it under the terms of either:",
+                "",
+                "     * the GNU Lesser General Public License as published by the Free",
+                "       Software Foundation; either version 3 of the License, or (at your",
+                "       option) any later version.",
+                "",
+                "   or",
+                "",
+                "     * the GNU General Public License as published by the Free",
+                "       Software Foundation; either version 2 of the License, or (at your",
+                "       option) any later version.",
+                "",
+                "   or both in parallel, as here.",
+                "",
+                "   This program is distributed in the hope that it will be useful,",
+                "   but WITHOUT ANY WARRANTY; without even the implied warranty of",
+                "   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the",
+                "   GNU General Public License for more details.",
+                "",
+                "   You should have received a copy of the GNU General Public License",
+                "   along with this program.  If not, see <https://www.gnu.org/licenses/>.",
+            )
+            if path.startswith("lib") or path.startswith("lib=tests"):
+                return pattern.sub("\n".join(repl), string)
+            return string
         pattern = re.compile((r"^\s*(This program is free software.*?)\s*\*/$"), re.S | re.M)
-        transformation = lambda pattern, string: pattern.sub("\n".join(repl), string)
         transformations.append(functools.partial(transformation, pattern))
     elif licenses == LGPLv3_LICENSE:
-        print(licenses)
         transformations += [
-            lambda string: string.replace("GNU General", "GNU Lesser General"),
-            lambda string: string.replace("General Public License", "Lesser General Public License"),
-            lambda string: string.replace("Lesser Lesser General Public License", "Lesser General Public License"),
+            lambda path, string:
+                string.replace("GNU General", "GNU Lesser General")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("General Public License", "Lesser General Public License")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("Lesser Lesser General Public License", "Lesser General Public License")
+                if path.startswith("lib") else string,
         ]
     elif licenses == LGPLv2_LICENSE:
         transformations += [
-            lambda string: string.replace("GNU General", "GNU Lesser General"),
-            lambda string: string.replace("General Public License", "Lesser General Public License"),
-            lambda string: string.replace("Lesser Lesser General Public License", "Lesser General Public License"),
+            lambda path, string:
+                string.replace("GNU General", "GNU Lesser General")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("General Public License", "Lesser General Public License")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("Lesser Lesser General Public License", "Lesser General Public License")
+                if path.startswith("lib") else string,
         ]
+        transformation = lambda pattern, path, string: pattern.sub(r"version 2.1\1", string)
+        def transformation(pattern, path, string):
+            if path.startswith("lib") or path.startswith("lib=tests"):
+                return pattern.sub(r"version 2.1\1", string)
+            return string
         pattern = re.compile(r"version\s+[23]([\s,])")
-        transformation = lambda pattern, string: pattern.sub(r"version 2.1\1", string)
         transformations.append(functools.partial(transformation, pattern))
+    else:
+        transformations += [
+            lambda path, string:
+                string.replace("GNU Lesser General", "GNU General")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("Lesser General Public License", "General Public License")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("GNU Library General", "GNU General")
+                if path.startswith("lib") else string,
+            lambda path, string:
+                string.replace("Library General Public License", "General Public License")
+                if path.startswith("lib") else string,
+        ]
+        def transformation(pattern, path, string):
+            if path.startswith("lib") or path.startswith("lib=tests"):
+                return pattern.sub(r"version 3\1", string)
+            return string
+        pattern = re.compile(r"version\s+2(?:\.1){0,1}([\s,])")
+        transformations.append(functools.partial(transformation, pattern))
+
+    if config.copyrights:
+        for root in {"build-aux", "tests=lib"}:
+            def transformation(root, pattern, path, string):
+                if path.startswith(root):
+                    string = string.replace("GNU Lesser General", "GNU General")
+                    string = string.replace("Lesser General Public License", "General Public License")
+                    string = string.replace("GNU Library General", "GNU General")
+                    string = string.replace("Library General Public License", "General Public License")
+                    string = pattern.sub(r"version 3\1", string)
+                return string
+            transformations.append(functools.partial(transformation, root, pattern))
 
     # First the files that are in old_files, but not in new_files.
     # Then the files that are in new_files, but not in old_files.
@@ -352,7 +406,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             with vfs_iostream(vfs, src, "rb", "UTF-8") as istream:
                 dst_data = src_data = istream.read()
             for transformation in transformations:
-                dst_data = transformation(dst_data)
+                dst_data = transformation(dst, dst_data)
             temporary = False
             if src_data != dst_data:
                 with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as ostream:
@@ -573,9 +627,9 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 for (action, name) in items[directory]:
                     name = f"{anchor}{name}"
                     already = name in ignores
-                    if action == "-" and already:
+                    if action == "-":
                         exclude.add(name)
-                    elif action == "+" and not already:
+                    elif action == "+":
                         include.add(name)
                 if include or (set(ignores) & exclude):
                     print(f"Updating {path} (backup in {path}~)", file=sys.stdout)
@@ -586,7 +640,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                             if entry not in exclude:
                                 print(entry, file=stream)
                         for entry in sorted(include):
-                            print(entry, file=stream)
+                            if entry not in ignores:
+                                print(entry, file=stream)
 
     print("Finished.", file=sys.stdout)
     print("", file=sys.stdout)
