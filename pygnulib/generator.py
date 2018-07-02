@@ -685,6 +685,7 @@ def lib_makefile(path, config, explicit, database, mkedits, testing, autoconf, *
     for line in lines:
         src = "$(top_srcdir)/build-aux/"
         dst = _os.path.join("$(top_srcdir)", config.auxdir)
+        dst += _os.path.sep
         yield line.replace(src, dst)
     yield ""
     yield "mostlyclean-local: mostlyclean-generic"
@@ -874,6 +875,7 @@ def tests_makefile(path, config, explicit, modules, mkedits, testing, libtests):
     for line in lines:
         src = "$(top_srcdir)/build-aux/"
         dst = _os.path.join("$(top_srcdir)", config.auxdir)
+        dst += _os.path.sep
         yield line.replace(src, dst)
     yield ""
     yield "# Clean up after Solaris cc."
