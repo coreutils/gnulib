@@ -144,7 +144,7 @@ def autoconf_snippet(config, module, toplevel, no_libtool, no_gettext, **overrid
     if module.name not in ("gnumakefile", "maintainer-makefile") or toplevel:
         snippet = module.autoconf_snippet
         include_guard_prefix = config.include_guard_prefix
-        snippet.replace(r"${gl_include_guard_prefix}", include_guard_prefix)
+        snippet = snippet.replace(r"${gl_include_guard_prefix}", include_guard_prefix)
         if no_libtool:
             table = (
                 (r"$gl_cond_libtool", "false"),
