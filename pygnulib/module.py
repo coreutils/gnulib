@@ -8,6 +8,7 @@ import ast as _ast
 import codecs as _codecs
 import collections as _collections
 import hashlib as _hashlib
+import itertools as _itertools
 import json as _json
 import os as _os
 import re as _re
@@ -485,6 +486,9 @@ class FileModule(BaseModule):
         lambda line: line.strip() and not line.strip().startswith("#"),
         {line.strip() for line in text.split((",", "\n")["\n" in text.strip()])},
     ))
+    __LICENSES = lambda text: set(_itertools.chain.from_iterable(
+        line.split(" or ") for line in FileModule.__MULTILINE(text)
+    ))
     __TABLE = {
         "Description": (
             "description",
@@ -536,7 +540,7 @@ class FileModule(BaseModule):
         ),
         "License": (
             "licenses",
-            __MULTILINE,
+            __LICENSES,
         ),
         "Maintainer": (
             "maintainers",
