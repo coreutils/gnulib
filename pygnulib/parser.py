@@ -164,10 +164,14 @@ class CommandLine:
 
 
     class _AvoidOption(_Option):
+        def __init__(self, *args, **kwargs):
+            kwargs["dest"] = "avoids"
+            super().__init__(*args, **kwargs)
+
         def __call__(self, parser, namespace, value, option=None):
             if not hasattr(namespace, self.dest):
-                setattr(namespace, self.dest, list())
-            value = set(getattr(namespace, self.dest) | {value})
+                setattr(namespace, self.dest, set())
+            value = (getattr(namespace, self.dest) | set(value))
             super().__call__(parser, namespace, value, option)
 
 
