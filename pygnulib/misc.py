@@ -35,10 +35,6 @@ class Property(property):
         """
         fget = Property.__fget if fget is None else fget
         fset = Property.__fset if fset is None else fset
-        # if not callable(fget):
-        #     raise TypeError("fget: callable expected")
-        # if not callable(fset):
-        #     raise TypeError("fset: callable expected")
         super().__init__(fget=fget, fset=fset, doc=doc)
         self.__check = check
         self.__fget = fget
