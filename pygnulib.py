@@ -689,6 +689,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     # Mention other necessary actions.
     print("", file=sys.stdout)
     print("Don't forget to", file=sys.stdout)
+    if config.makefile_name is None:
+        config.makefile_name = "Makefile.am"
     if config.makefile_name == "Makefile.am":
         fmt = "  - add \"{source_base}/Makefile\" to AC_CONFIG_FILES in {ac_file},"
     else:
