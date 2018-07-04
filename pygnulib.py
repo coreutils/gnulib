@@ -593,28 +593,27 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
 
+    # Generate version control files.
     if config.vc_files:
         items = collections.defaultdict(list)
         for path in added_files:
             (directory, name) = os.path.split(path)
-            directory = project[directory]
             items[directory].append(["+", name])
         for path in removed_files:
             (directory, name) = os.path.split(path)
-            directory = project[directory]
             items[directory].append(["-", name])
         for directory in sorted(items):
-            gitignore = os.path.isdir(os.path.join(config.root, ".git"))
-            gitignore |= os.path.isfile(os.path.join(config.root, directory, ".gitignore"))
-            cvsignore = os.path.isdir(os.path.join(config.root, "CVS"))
-            cvsignore |= os.path.isdir(os.path.join(config.root, directory, "CVS"))
-            cvsignore |= os.path.isfile(os.path.join(config.root, directory, ".cvsignore"))
+            gitignore = os.path.isdir(os.path.join(project.root, ".git"))
+            cvsignore = os.path.isdir(os.path.join(project.root, "CVS"))
+            gitignore |= os.path.isfile(os.path.join(project.root, project[directory], ".gitignore"))
+            cvsignore |= os.path.isdir(os.path.join(project.root, project[directory], "CVS"))
+            cvsignore |= os.path.isfile(os.path.join(project.root, project[directory], ".cvsignore"))
             for kind in (([], [".gitignore"])[gitignore] + ([], [".cvsignore"])[cvsignore]):
                 anchor = {
                     ".gitignore": "/",
                     ".cvsignore": "",
                 }[kind]
-                path = project[os.path.join(directory, kind)]
+                path = os.path.join(directory, kind)
                 try:
                     with vfs_iostream(project, path,  "rb", "UTF-8") as stream:
                         ignores = [line.strip() for line in stream.readlines()]
