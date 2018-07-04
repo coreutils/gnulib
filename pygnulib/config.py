@@ -13,6 +13,7 @@ from .error import AutoconfVersionError as _AutoconfVersionError
 from .error import M4BaseMismatchError as _M4BaseMismatchError
 from .misc import Property as _Property
 from .misc import PathProperty as _PathProperty
+from .misc import OptionalPathProperty as _OptionalPathProperty
 from .misc import BitwiseProperty as _BitwiseProperty
 from .misc import StringListProperty as _StringListProperty
 from .misc import PathListProperty as _PathListProperty
@@ -49,12 +50,12 @@ class BaseConfig:
         "overrides"         : tuple(),
         "source_base"       : "lib",
         "m4_base"           : "m4",
-        "po_base"           : "",
+        "po_base"           : None,
         "doc_base"          : "doc",
         "tests_base"        : "tests",
         "auxdir"            : "build-aux",
         "libname"           : "libgnu",
-        "makefile_name"     : "Makefile.am",
+        "makefile_name"     : None,
         "macro_prefix"      : "gl",
         "po_domain"         : "",
         "witness_c_macro"   : "",
@@ -218,10 +219,9 @@ class BaseConfig:
         fset=lambda self, path: self.__set_option("m4_base", path),
         doc="directory relative to ROOT where *.m4 macros are placed; defaults to 'm4'",
     )
-    po_base = _Property(
+    po_base = _OptionalPathProperty(
         fget=lambda self: self.__get_option("po_base"),
         fset=lambda self, path: self.__set_option("po_base", path),
-        check=lambda value: isinstance(value, str),
         doc="directory relative to ROOT where *.po files are placed; defaults to 'po'",
     )
     doc_base = _PathProperty(
@@ -245,10 +245,9 @@ class BaseConfig:
         check=lambda value: isinstance(value, str) and value,
         doc="library name; defaults to 'libgnu'",
     )
-    makefile_name = _Property(
+    makefile_name = _OptionalPathProperty(
         fget=lambda self: self.__get_option("makefile_name"),
         fset=lambda self, name: self.__set_option("makefile_name", name),
-        check=lambda value: isinstance(value, str) and value,
         doc="name of makefile in automake syntax in the source-base and tests-base directories",
     )
     macro_prefix = _Property(

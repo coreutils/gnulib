@@ -268,9 +268,10 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     overrides = {BaseVFS(override) for override in config.overrides}
     for (alias, key) in SUBSTITUTION.items():
         path = config[key] if key else ""
-        project[alias] = path
-        for override in overrides:
-            override[alias] = path
+        if path is not None:
+            project[alias] = path
+            for override in overrides:
+                override[alias] = path
     gnulib["tests=lib"] = "lib"
 
     # Determine all relevant file lists.
@@ -438,8 +439,10 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
 
     # Find the first parent directory of m4_base that contains or will contain a Makefile.am.
     (dir1, dir2) = (config.m4_base, "")
-    source_base_makefile = os.path.join(config.source_base, config.makefile_name)
-    tests_base_makefile = os.path.join(config.tests_base, config.makefile_name)
+    makefile_name = config.makefile_name
+    makefile_name = "Makefile.am" if makefile_name is None else makefile_name
+    source_base_makefile = os.path.join(config.source_base, makefile_name)
+    tests_base_makefile = os.path.join(config.tests_base, makefile_name)
     while dir1 != ".":
         path = os.path.join(dir1, "Makefile.am")
         if vfs_exists(project, os.path.join(config.root, dir1, "Makefile.am")) \
@@ -450,7 +453,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     mkedits.append((dir1, "EXTRA_DIST", os.path.join(dir2, "gnulib-cache.m4")))
 
     # Generate the contents of library makefile.
-    path = os.path.join(config.source_base, config.makefile_name)
+    path = os.path.join(config.source_base, makefile_name)
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
         arguments = {
             "path": path,
@@ -602,6 +605,10 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         for path in removed_files:
             (directory, name) = os.path.split(path)
             items[directory].append(["-", name])
+
+        # Treat gnulib-comp.m4 like an added file, even if it already existed.
+        items["m4"].append(["+", "gnulib-comp.m4"])
+
         for directory in sorted(items):
             gitignore = os.path.isdir(os.path.join(project.root, ".git"))
             cvsignore = os.path.isdir(os.path.join(project.root, "CVS"))

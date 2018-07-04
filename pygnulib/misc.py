@@ -75,6 +75,29 @@ class PathProperty(Property):
         return super().__set__(obj, val)
 
 
+class OptionalPathProperty(PathProperty):
+    def __init__(self, fget=None, fset=None, doc=None):
+        """
+        doc   : any arbitrary string
+        fget  : function to get the value
+        fset  : function to set the value
+
+        def fget(self):
+            return self.path
+
+        def fset(self, path):
+            self.path = path
+        """
+        super().__init__(fget=fget, fset=fset, doc=doc)
+
+
+    def __set__(self, obj, val):
+        if not (val is None or isinstance(val, str)):
+            raise TypeError("value: str or None expected")
+        val = _os.path.normpath(val) if val else None
+        return super(PathProperty, self).__set__(obj, val)
+
+
 
 class BitwiseProperty(Property):
     """bitwise flag property"""
