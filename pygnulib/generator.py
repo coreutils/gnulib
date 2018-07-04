@@ -942,11 +942,12 @@ def gnulib_cache(config, explicit):
     if config.tests:
         yield "gl_WITH_TESTS"
     yield "gl_LIB([{}])".format(config.libname)
-    lgpl = _LGPL[tuple(sorted(config.licenses))]
-    if lgpl != "yes":
-        yield f"gl_LGPL([{lgpl}])"
-    else:
-        yield "gl_LGPL([])"
+    if tuple(config.licenses) in _LGPL:
+        lgpl = _LGPL[tuple(sorted(config.licenses))]
+        if lgpl != "yes":
+            yield f"gl_LGPL([{lgpl}])"
+        else:
+            yield "gl_LGPL([])"
     if config.makefile_name:
         yield f"gl_MAKEFILE_NAME([{config.makefile_name}])"
     else:
