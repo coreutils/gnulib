@@ -625,8 +625,8 @@ def lib_makefile(path, config, explicit, database, mkedits, testing, autoconf, *
 
     for (directory, key, value) in mkedits:
         if key and _os.path.join(directory, "Makefile.am") == path:
-            del (directory, key, value)
             yield f"{key} += {value}"
+            del (directory, key, value)
 
     cppflags = "".join((
         " -D{}=1".format(config.witness_c_macro) if "witness_c_macro" in explicit else "",
