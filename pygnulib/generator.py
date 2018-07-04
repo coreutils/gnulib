@@ -23,10 +23,10 @@ from .module import Database as _Database
 
 
 _LGPL = {
-    tuple(_LGPLv2_LICENSE): "2",
-    tuple(_LGPLv3_LICENSE): "3",
-    tuple(_LGPL_LICENSES): "yes",
-    tuple(_GPLv2_LICENSE | _LGPLv3_LICENSE): "3orGPLv2",
+    tuple(sorted(_LGPLv2_LICENSE)): "2",
+    tuple(sorted(_LGPLv3_LICENSE)): "3",
+    tuple(sorted(_LGPL_LICENSES)): "yes",
+    tuple(sorted(_GPLv2_LICENSE | _LGPLv3_LICENSE)): "3orGPLv2",
 }
 __DISCLAIMER = (
     "## DO NOT EDIT! GENERATED AUTOMATICALLY!",
@@ -419,7 +419,7 @@ __COMMAND_LINE_TESTS = (
     ("all_tests", lambda v: "--with-all-tests" if v else None),
 )
 __COMMAND_LINE_MISC = (
-    ("makefile_name", lambda k, v, d: f"--makefile-name={v}"),
+    ("makefile_name", lambda k, v, d: "" if v is None else f"--makefile-name={v}"),
     ("conditionals", lambda k, v, d: ("--no-", "--")[v] + "conditional-dependencies"),
     ("libtool", lambda k, v, d: ("--no-", "--")[v] + "libtool"),
     ("macro_prefix", lambda k, v, d: f"--macro-prefix={v}"),
@@ -445,7 +445,7 @@ def command_line(config, explicit, **override):
         if option is not None:
             yield option
     for module in config.avoids:
-        yield "--avoid={module.name}"
+        yield f"--avoid={module}"
     if tuple(config.licenses) in _LGPL:
         lgpl = _LGPL[tuple(config.licenses)]
         if lgpl != "yes":
@@ -933,16 +933,24 @@ def gnulib_cache(config, explicit):
     yield "gl_AVOID([{}])".format(" ".join(sorted(config.avoids)))
     yield f"gl_SOURCE_BASE([{config.source_base}])"
     yield f"gl_M4_BASE([{config.m4_base}])"
-    yield f"gl_PO_BASE([{config.po_base}])"
+    if config.po_base:
+        yield f"gl_PO_BASE([{config.po_base}])"
+    else:
+        yield f"gl_PO_BASE([])"
     yield f"gl_DOC_BASE([{config.doc_base}])"
     yield f"gl_TESTS_BASE([{config.tests_base}])"
     if config.tests:
         yield "gl_WITH_TESTS"
     yield "gl_LIB([{}])".format(config.libname)
-    if tuple(config.licenses) in _LGPL:
-        lgpl = _LGPL[tuple(config.licenses)]
-        yield "gl_LGPL([{}])".format(lgpl) if lgpl != "yes" else "gl_LGPL"
-    yield f"gl_MAKEFILE_NAME([{config.makefile_name}])"
+    lgpl = _LGPL[tuple(sorted(config.licenses))]
+    if lgpl != "yes":
+        yield f"gl_LGPL([{lgpl}])"
+    else:
+        yield "gl_LGPL([])"
+    if config.makefile_name:
+        yield f"gl_MAKEFILE_NAME([{config.makefile_name}])"
+    else:
+        yield f"gl_MAKEFILE_NAME([])"
     if config.conditionals:
         yield "gl_CONDITIONAL_DEPENDENCIES"
     if config.libtool:
