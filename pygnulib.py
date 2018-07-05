@@ -267,7 +267,7 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     project = BaseVFS(config.root)
     overrides = {BaseVFS(override) for override in config.overrides}
     for (alias, key) in SUBSTITUTION.items():
-        path = config[key] if key else ""
+        path = config[key] if key else "."
         if path is not None:
             project[alias] = path
             for override in overrides:
@@ -400,22 +400,21 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         remove_file(project, file)
     for (present, files) in ((False, added_files), (True, kept_files)):
         for dst in sorted(files):
-            match = tuple(override for override in overrides if dst in override)
-            override = match[0] if match else gnulib
-            (vfs, src) = vfs_lookup(dst, gnulib, override, patch=PATCH)
+            (vfs, src) = vfs_lookup(dst, gnulib, overrides, patch=PATCH)
             action = update_file if vfs_exists(project, dst) else add_file
             with vfs_iostream(vfs, src, "rb", "UTF-8") as istream:
                 dst_data = src_data = istream.read()
             for transformation in transformations:
                 dst_data = transformation(dst, dst_data)
             temporary = False
+            local = (vfs and vfs != gnulib)
             if src_data != dst_data:
                 with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as ostream:
                     ostream.write(dst_data)
                 src = ostream.name
                 temporary = True
-                match = False
-            action(bool(match), vfs, src, project, dst, present)
+                local = False
+            action(local, vfs, src, project, dst, present)
             if temporary:
                 os.unlink(src)
 

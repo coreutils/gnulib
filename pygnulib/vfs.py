@@ -34,9 +34,10 @@ class BaseVFS:
 
 
     def __repr__(self):
+        origin = self.__origin
         module = self.__class__.__module__
         name = self.__class__.__name__
-        return "{}.{}{{{}}}".format(module, name, repr(self.__origin))
+        return f"{module}.{name}{{{origin}}}"
 
 
     def __enter__(self):
@@ -93,55 +94,65 @@ class BaseVFS:
 
 
 
-def lookup(name, primary, secondary, patch):
+def lookup(name, origin, overrides, patch):
     """
     Try to look up a regular file inside virtual file systems or combine it via patch utility.
     The name argument is a relative file name which is going to be looked up.
-    The primary argument is the primary virtual file system to search for the file.
-    The secondary argument is the secondary virtual file system to search for the file.
+    The origin argument is the origin virtual file system to search for the file.
+    The overrides argument is the list of override virtual file system to search for the file.
     The patch argument must be a path to the 'patch' utility binary.
 
-    - file is present only inside the primary VFS: open the file inside the primary VFS.
-    - file is present inside the secondary VFS: open the file inside the secondary VFS.
+    - file is present only inside the origin VFS: open the file inside the origin VFS.
+    - file is present inside the override VFS: open the file inside the override VFS.
     - both file and patch are present: combine in memory.
     - file is not present: raise an FileNotFoundError exception.
 
     The function returns a pair of values, representing the file path and state.
     The first element, path, represents a regular file system path.
-    The second element, vfs, is either the primary or the secondary VFS.
+    The second element, vfs, is either the origin or the override VFS.
     If the file was obtained via dynamic patching, the vfs element is None.
 
+    Each of the override VFS is checked for file existence, but only one is used.
     NOTE: It is up to the caller to unlink files obtained after dynamic patching.
     """
-    if not isinstance(name, str):
-        raise TypeError("name: str expected")
-    if not isinstance(primary, BaseVFS):
-        raise TypeError("primary: VFS expected")
-    if not isinstance(secondary, BaseVFS):
-        raise TypeError("secondary: VFS expected")
-    if not isinstance(patch, _Executable):
-        raise TypeError("patch: executable expected")
+    def _lookup(name, override):
+        if not isinstance(name, str):
+            raise TypeError("name: str expected")
+        if not isinstance(origin, BaseVFS):
+            raise TypeError("origin: VFS expected")
+        if not isinstance(override, BaseVFS):
+            raise TypeError("override: VFS expected")
+        if not isinstance(patch, _Executable):
+            raise TypeError("patch: executable expected")
 
-    if name in secondary:
-        return (secondary, name)
-    diff = f"{name}.diff"
-    if diff not in secondary:
-        return (primary, name)
-    with _codecs.open(primary[name], "rb") as istream:
-        with _tempfile.NamedTemporaryFile(mode="w+b", delete=False) as ostream:
-            path = ostream.name
-            _shutil.copyfileobj(istream, ostream)
-    stdin = _codecs.open(secondary[diff], "rb")
-    cmd = (patch, "-s", path)
-    pipes = _sp.Popen(cmd, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE)
-    (stdout, stderr) = pipes.communicate()
-    stdout = stdout.decode("UTF-8")
-    stderr = stderr.decode("UTF-8")
-    returncode = pipes.returncode
-    if returncode != 0:
-        cmd = "patch -s {} < {}".format(path, secondary[diff])
-        raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
-    return (None, path)
+        if name in override:
+            return (override, name)
+
+        diff = f"{name}.diff"
+        if diff not in override:
+            return (origin, name)
+
+        name = _os.path.join(origin.root, origin[name])
+        diff = _os.path.join(override.root, override[diff])
+        with _codecs.open(name, "rb") as istream:
+            with _tempfile.NamedTemporaryFile(mode="w+b", delete=False) as ostream:
+                path = ostream.name
+                _shutil.copyfileobj(istream, ostream)
+        with _codecs.open(diff, "rb") as stdin:
+            with patch("-s", path, stdin=stdin, stdout=_sp.PIPE, stderr=_sp.PIPE) as sp:
+                (stdout, stderr) = sp.communicate()
+                returncode = sp.returncode
+                if returncode != 0:
+                    cmd = f"patch -s {path} < {diff}"
+                    raise _sp.CalledProcessError(returncode, cmd, stdout, stderr)
+                return (None, path)
+
+    for override in overrides:
+        (vfs, path) = _lookup(name, override)
+        if vfs is not origin:
+            return (vfs, path)
+    return (origin, name)
+
 
 
 def mkdir(root, name):
@@ -149,6 +160,7 @@ def mkdir(root, name):
     root = BaseVFS(".") if root is None else root
     path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     _os.makedirs(root[name], exist_ok=True)
+
 
 
 def backup(root, name):
@@ -163,6 +175,7 @@ def backup(root, name):
     _os.rename(original_path, backup_path)
 
 
+
 def compare(lhs_root, lhs_name, rhs_root, rhs_name):
     """Compare the given files; return True if files contain the same data."""
     lhs_root = BaseVFS(".") if lhs_root is None else lhs_root
@@ -173,6 +186,7 @@ def compare(lhs_root, lhs_name, rhs_root, rhs_name):
     if not _os.path.isabs(rhs_name):
         rhs_path = _os.path.join(rhs_root.root, rhs_root[rhs_name])
     return _filecmp.cmp(lhs_path, rhs_path, shallow=False)
+
 
 
 def copy(src_root, src_name, dst_root, dst_name):
@@ -198,11 +212,13 @@ def copy(src_root, src_name, dst_root, dst_name):
                 ostream.write(data)
 
 
+
 def exists(root, name):
     """Check whether the given file exists."""
     root = BaseVFS(".") if root is None else root
     path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _os.path.exists(path)
+
 
 
 def hardlink(src_root, src_name, dst_root, dst_name):
@@ -223,6 +239,7 @@ def hardlink(src_root, src_name, dst_root, dst_name):
     _os.link(src_path, dst_path)
 
 
+
 def move(src_root, src_name, dst_root, dst_name):
     """Move file data."""
     src_abs = _os.path.isabs(src_name)
@@ -240,11 +257,13 @@ def move(src_root, src_name, dst_root, dst_name):
     _os.rename(src_path, dst_path)
 
 
+
 def iostream(root, name, mode="r", encoding=None):
     """Open file and return a stream. Raise IOError upon failure."""
     root = BaseVFS(".") if root is None else root
     path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _codecs.open(path, mode, encoding)
+
 
 
 def readlink(root, name):
@@ -253,6 +272,7 @@ def readlink(root, name):
     mkdir(root, _os.path.dirname(name))
     path = name if _os.path.isabs(name) else _os.path.join(root.root, root[name])
     return _os.readlink(path)
+
 
 
 def symlink(src_root, src_name, dst_root, dst_name, relative=True):
@@ -278,6 +298,7 @@ def symlink(src_root, src_name, dst_root, dst_name, relative=True):
         src_path = _os.path.join(prefix, suffix)
         dst_path = _os.path.join(dst_root.root, dst_root[dst_name])
     _os.symlink(src_path, dst_path)
+
 
 
 def unlink(root, name):
