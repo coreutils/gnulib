@@ -964,7 +964,7 @@ def gnulib_cache(config, explicit):
 
 
 
-def gnulib_comp(config, explicit, database, subdirs, **override):
+def gnulib_comp(config, explicit, database, **override):
     """gnulib-comp.m4 generator"""
     config = _BaseConfig(**config)
     for (key, value) in override.items():
@@ -972,6 +972,10 @@ def gnulib_comp(config, explicit, database, subdirs, **override):
     macro_prefix = config.macro_prefix
     main_modules = database.main_modules
     test_modules = database.test_modules
+
+    subdirs = False
+    for module in database.main_modules:
+        subdirs |= any(__MAKEFILE_SUBDIRS.match(file) for file in module.files)
 
     date = _datetime.now()
     ac_file = config.ac_file

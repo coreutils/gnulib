@@ -560,7 +560,6 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             "config": config,
             "explicit": explicit,
             "database": database,
-            "subdirs": True,
         }
         for line in gnulib_comp(**arguments):
             print(line, file=tmp)
