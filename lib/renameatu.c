@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#include "renameat2.h"
+#include "renameatu.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -68,10 +68,13 @@ rename_noreplace (char const *src, char const *dst)
    the restore_cwd fails, then give a diagnostic and exit nonzero.
 
    Obey FLAGS when doing the renaming.  If FLAGS is zero, this
-   function is equivalent to renameat (FD1, SRC, FD2, DST).  */
+   function is equivalent to renameat (FD1, SRC, FD2, DST).
+   Otherwise, attempt to implement FLAGS even if the implementation is
+   not atomic; this differs from the GNU/Linux native renameat2,
+   which fails if it cannot guarantee atomicity.  */
 
 int
-renameat2 (int fd1, char const *src, int fd2, char const *dst,
+renameatu (int fd1, char const *src, int fd2, char const *dst,
            unsigned int flags)
 {
   int ret_val = -1;

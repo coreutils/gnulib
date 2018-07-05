@@ -1,6 +1,6 @@
 Files:
 tests/test-rename.h
-tests/test-renameat2.c
+tests/test-renameatu.c
 tests/signature.h
 tests/macros.h
 
@@ -15,6 +15,6 @@ closedir
 configure.ac:
 
 Makefile.am:
-TESTS += test-renameat2
-check_PROGRAMS += test-renameat2
-test_renameat2_LDADD = $(LDADD) @LIBINTL@
+TESTS += test-renameatu
+check_PROGRAMS += test-renameatu
+test_renameatu_LDADD = $(LDADD) @LIBINTL@

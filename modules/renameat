@@ -6,7 +6,7 @@ lib/renameat.c
 m4/renameat.m4
 
 Depends-on:
-renameat2        [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
+renameatu        [test $HAVE_RENAMEAT = 0 || test $REPLACE_RENAMEAT = 1]
 
 configure.ac:
 gl_FUNC_RENAMEAT

@@ -1,10 +1,10 @@
 Description:
-renameat2() function: rename a file, relative to two directories
+renameatu() function: rename a file, relative to two dirs, with unsigned flag
 
 Files:
 lib/at-func2.c
-lib/renameat2.c
-lib/renameat2.h
+lib/renameatu.c
+lib/renameatu.h
 m4/renameat.m4
 
 Depends-on:
@@ -30,10 +30,10 @@ if test $HAVE_RENAMEAT = 0; then
 fi
 
 Makefile.am:
-lib_SOURCES += renameat2.c
+lib_SOURCES += renameatu.c
 
 Include:
-"renameat2.h"
+"renameatu.h"
 
 License:
 GPL

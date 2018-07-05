@@ -18,7 +18,7 @@ dirname-lgpl
 fcntl
 memcmp
 opendir
-renameat2
+renameatu
 readdir
 stdbool
 

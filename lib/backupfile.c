@@ -23,7 +23,7 @@
 #include "backup-internal.h"
 
 #include "dirname.h"
-#include "renameat2.h"
+#include "renameatu.h"
 #include "xalloc-oversized.h"
 
 #include <fcntl.h>
@@ -353,7 +353,7 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
           base_offset = 0;
         }
       unsigned flags = backup_type == simple_backups ? 0 : RENAME_NOREPLACE;
-      if (renameat2 (AT_FDCWD, file, sdir, s + base_offset, flags) == 0)
+      if (renameatu (AT_FDCWD, file, sdir, s + base_offset, flags) == 0)
         break;
       int e = errno;
       if (e != EEXIST)

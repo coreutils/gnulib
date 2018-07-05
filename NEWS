@@ -42,6 +42,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2018-07-05  renameat2       This module is renamed to 'renameatu' and all
+                            its include files and functions are renamed
+                            accordingly.
+
 2017-12-30  chdir-safer     This module is removed.  It was deprecated
                             on 2006-07-17.
 

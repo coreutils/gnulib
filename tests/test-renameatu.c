@@ -1,4 +1,4 @@
-/* Test renameat2.
+/* Test renameatu.
    Copyright (C) 2009-2018 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,12 +18,12 @@
 
 #include <config.h>
 
-#include <renameat2.h>
+#include <renameatu.h>
 
 #include <stdio.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (renameat2, int,
+SIGNATURE_CHECK (renameatu, int,
                  (int, char const *, int, char const *, unsigned int));
 
 #include <dirent.h>
@@ -39,18 +39,18 @@ SIGNATURE_CHECK (renameat2, int,
 #include "ignore-value.h"
 #include "macros.h"
 
-#define BASE "test-renameat2.t"
+#define BASE "test-renameatu.t"
 
 #include "test-rename.h"
 
 static int dfd1 = AT_FDCWD;
 static int dfd2 = AT_FDCWD;
 
-/* Wrapper to test renameat2 like rename.  */
+/* Wrapper to test renameatu like rename.  */
 static int
 do_rename (char const *name1, char const *name2)
 {
-  return renameat2 (dfd1, name1, dfd2, name2, 0);
+  return renameatu (dfd1, name1, dfd2, name2, 0);
 }
 
 int
@@ -67,24 +67,24 @@ main (void)
   /* Test behaviour for invalid file descriptors.  */
   {
     errno = 0;
-    ASSERT (renameat2 (-1, "foo", AT_FDCWD, "bar", 0) == -1);
+    ASSERT (renameatu (-1, "foo", AT_FDCWD, "bar", 0) == -1);
     ASSERT (errno == EBADF);
   }
   {
     close (99);
     errno = 0;
-    ASSERT (renameat2 (99, "foo", AT_FDCWD, "bar", 0) == -1);
+    ASSERT (renameatu (99, "foo", AT_FDCWD, "bar", 0) == -1);
     ASSERT (errno == EBADF);
   }
   ASSERT (close (creat (BASE "oo", 0600)) == 0);
   {
     errno = 0;
-    ASSERT (renameat2 (AT_FDCWD, BASE "oo", -1, "bar", 0) == -1);
+    ASSERT (renameatu (AT_FDCWD, BASE "oo", -1, "bar", 0) == -1);
     ASSERT (errno == EBADF);
   }
   {
     errno = 0;
-    ASSERT (renameat2 (AT_FDCWD, BASE "oo", 99, "bar", 0) == -1);
+    ASSERT (renameatu (AT_FDCWD, BASE "oo", 99, "bar", 0) == -1);
     ASSERT (errno == EBADF);
   }
   ASSERT (unlink (BASE "oo") == 0);
@@ -133,13 +133,13 @@ main (void)
 
       ASSERT (sprintf (strchr (file1, '\0') - 2, "%02d", i) == 2);
       ASSERT (sprintf (strchr (file2, '\0') - 2, "%02d", i + 1) == 2);
-      ASSERT (renameat2 (fd1, file1, fd2, file2, 0) == 0);
+      ASSERT (renameatu (fd1, file1, fd2, file2, 0) == 0);
       free (file1);
       free (file2);
     }
   dfd2 = open ("..", O_RDONLY);
   ASSERT (0 <= dfd2);
-  ASSERT (renameat2 (dfd, "../" BASE "16", dfd2, BASE "17", 0) == 0);
+  ASSERT (renameatu (dfd, "../" BASE "16", dfd2, BASE "17", 0) == 0);
   ASSERT (close (dfd2) == 0);
 
   /* Now we change back to the parent directory, and set dfd to ".";
@@ -152,47 +152,47 @@ main (void)
 
   ASSERT (close (creat (BASE "sub2/file", 0600)) == 0);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "sub1", dfd, BASE "sub2", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "sub1", dfd, BASE "sub2", 0) == -1);
   ASSERT (errno == EEXIST || errno == ENOTEMPTY);
   ASSERT (unlink (BASE "sub2/file") == 0);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "sub2", dfd, BASE "sub1/.", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "sub2", dfd, BASE "sub1/.", 0) == -1);
   ASSERT (errno == EINVAL || errno == EISDIR || errno == EBUSY
           || errno == ENOTEMPTY || errno == EEXIST
           || errno == ENOENT /* WSL */);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "sub2/.", dfd, BASE "sub1", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "sub2/.", dfd, BASE "sub1", 0) == -1);
   ASSERT (errno == EINVAL || errno == EBUSY || errno == EEXIST
           || errno == ENOENT /* WSL */);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "17", dfd, BASE "sub1", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "17", dfd, BASE "sub1", 0) == -1);
   ASSERT (errno == EISDIR);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "nosuch", dfd, BASE "18", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "nosuch", dfd, BASE "18", 0) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
-  ASSERT (renameat2 (dfd, "", dfd, BASE "17", 0) == -1);
+  ASSERT (renameatu (dfd, "", dfd, BASE "17", 0) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "17", dfd, "", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "17", dfd, "", 0) == -1);
   ASSERT (errno == ENOENT);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "sub2", dfd, BASE "17", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "sub2", dfd, BASE "17", 0) == -1);
   ASSERT (errno == ENOTDIR);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "17/", dfd, BASE "18", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "17/", dfd, BASE "18", 0) == -1);
   ASSERT (errno == ENOTDIR);
   errno = 0;
-  ASSERT (renameat2 (dfd, BASE "17", dfd, BASE "18/", 0) == -1);
+  ASSERT (renameatu (dfd, BASE "17", dfd, BASE "18/", 0) == -1);
   ASSERT (errno == ENOTDIR || errno == ENOENT);
 
   /* Finally, make sure we cannot overwrite existing files.  */
   ASSERT (close (creat (BASE "sub2/file", 0600)) == 0);
   errno = 0;
-  ASSERT ((renameat2 (dfd, BASE "sub2", dfd, BASE "sub1", RENAME_NOREPLACE)
+  ASSERT ((renameatu (dfd, BASE "sub2", dfd, BASE "sub1", RENAME_NOREPLACE)
            == -1)
           && errno == EEXIST);
-  ASSERT ((renameat2 (dfd, BASE "sub2/file", dfd, BASE "17", RENAME_NOREPLACE)
+  ASSERT ((renameatu (dfd, BASE "sub2/file", dfd, BASE "17", RENAME_NOREPLACE)
            == -1)
           && errno == EEXIST);
 

@@ -16,10 +16,10 @@
 
 #include <config.h>
 #include <stdio.h>
-#include "renameat2.h"
+#include "renameatu.h"
 
 int
 renameat (int fd1, char const *src, int fd2, char const *dst)
 {
-  return renameat2 (fd1, src, fd2, dst, 0);
+  return renameatu (fd1, src, fd2, dst, 0);
 }

@@ -2689,7 +2689,7 @@ func_all_modules ()
   func_module qset-acl
   func_module read-file
   func_module readlinkat
-  func_module renameat2
+  func_module renameatu
   func_module same
   func_module save-cwd
   func_module savedir
