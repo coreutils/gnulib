@@ -932,7 +932,7 @@ class Database:
                 files.update(module.files)
             files.add("m4/00gnulib.m4")
             files.add("m4/gnulib-common.m4")
-            if config.ac_version == 2.59:
+            if config.ac_version == "2.59":
                 files.add("m4/onceonly.m4")
             return files
 
