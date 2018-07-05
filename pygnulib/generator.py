@@ -446,8 +446,9 @@ def command_line(config, explicit, **override):
             yield option
     for module in config.avoids:
         yield f"--avoid={module}"
-    if tuple(config.licenses) in _LGPL:
-        lgpl = _LGPL[tuple(config.licenses)]
+    licenses = tuple(sorted(config.licenses))
+    if licenses in _LGPL:
+        lgpl = _LGPL[licenses]
         if lgpl != "yes":
             yield f"--lgpl={lgpl}"
         else:
@@ -942,8 +943,9 @@ def gnulib_cache(config, explicit):
     if config.tests:
         yield "gl_WITH_TESTS"
     yield "gl_LIB([{}])".format(config.libname)
-    if tuple(config.licenses) in _LGPL:
-        lgpl = _LGPL[tuple(sorted(config.licenses))]
+    licenses = tuple(sorted(config.licenses))
+    if licenses in _LGPL:
+        lgpl = _LGPL[licenses]
         if lgpl != "yes":
             yield f"gl_LGPL([{lgpl}])"
         else:

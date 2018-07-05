@@ -520,7 +520,7 @@ class CachedConfig(BaseConfig):
             match = pattern.findall(data)
             if match and key not in explicit:
                 if key == "licenses":
-                    self[key] = {
+                    self["licenses"] = {
                         "2": LGPLv2_LICENSE,
                         "3": LGPLv3_LICENSE,
                         "yes": LGPL_LICENSES,
