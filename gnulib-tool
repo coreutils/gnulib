@@ -1490,6 +1490,11 @@ func_determine_path_separator
   if test -z "$pobase" && test -n "$po_domain"; then
     func_warning "--po-domain has no effect without a --po-base option"
   fi
+  case $mode,$gnu_make in
+    *test*,true)
+      echo "gnulib-tool: --gnu-make not supported when including tests"
+      func_exit 1;;
+  esac
   # Canonicalize the inctests variable.
   case "$mode" in
     import | add-import | remove-import | update)
@@ -3512,7 +3517,8 @@ func_emit_lib_Makefile_am ()
     sed_transform_check_PROGRAMS="$sed_noop"
   fi
   echo "## DO NOT EDIT! GENERATED AUTOMATICALLY!"
-  echo "## Process this file with automake to produce Makefile.in."
+  $gnu_make ||
+      echo "## Process this file with automake to produce Makefile.in."
   func_emit_copyright_notice
   if test -n "$actioncmd"; then
     # The maximum line length (excluding the terminating newline) of any file
