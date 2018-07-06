@@ -88,86 +88,12 @@ $GETTEXT gettext-runtime/m4/po.m4		m4 release
 #$LIBCSRC libidn/iconvme.h		lib gpl
 #$LIBCSRC libidn/iconvme.c		lib gpl
 
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1057
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1217
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1223
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1224
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1240
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1273
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1280
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
-#$LIBCSRC posix/regcomp.c		lib gpl
-#
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1238
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
-#$LIBCSRC posix/regex.c			lib gpl
-#
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1201
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1207
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1222
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1232
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1236
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1240
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
-#$LIBCSRC posix/regex.h			lib gpl
-#
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1215
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1218
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1226
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1231
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1248
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1284
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1286
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1287
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
-#$LIBCSRC posix/regex_internal.c		lib gpl
-#
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1054
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1221
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1248
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1273
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1291
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
-#$LIBCSRC posix/regex_internal.h		lib gpl
-#
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1216
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1220
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1225
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1227
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1231
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1237
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1241
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1245
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1278
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1279
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1280
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1281
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1282
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1284
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1285
-# https://sourceware.org/bugzilla/show_bug.cgi?id=1302
-#$LIBCSRC posix/regexec.c		lib gpl
+$LIBCSRC posix/regcomp.c		lib
+$LIBCSRC posix/regex.c			lib
+$LIBCSRC posix/regex.h			lib
+$LIBCSRC posix/regex_internal.c		lib
+$LIBCSRC posix/regex_internal.h		lib
+$LIBCSRC posix/regexec.c		lib
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoll.c		lib gpl
