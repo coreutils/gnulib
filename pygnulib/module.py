@@ -913,7 +913,7 @@ class Database:
         lookup = lambda module, lookup=lookup: module if isinstance(module, BaseModule) else lookup(module)
 
         def _applicability(module):
-            return module.applicability in ({"main", "all"}, {"main"})[config.tests]
+            return (module.applicability == "main")
 
         def _dummy(modules):
             if "dummy" in config.avoids:
@@ -947,7 +947,7 @@ class Database:
         # The result of this transitive closure is a set of main modules.
         conditionals = config.conditionals
         modules = explicit_modules = {lookup(module) for module in config.modules}
-        base_closure = TransitiveClosure(lookup, modules, mask, gnumake, conditionals)
+        base_closure = TransitiveClosure(lookup, modules, mask, gnumake, conditionals, False)
         modules = map(lambda module: lookup(module.name + "-tests"), set(base_closure))
         modules = set(filter(lambda module: module is not None, modules))
         full_closure = TransitiveClosure(lookup, (explicit_modules | modules), mask, gnumake, conditionals, True)
@@ -956,6 +956,13 @@ class Database:
         main_modules = set(base_closure)
         final_modules = set(full_closure) if config.tests else main_modules
         test_modules = (final_modules - set(filter(_applicability, sorted(main_modules))))
+        nontrivial_tests = False
+        for module in test_modules:
+            if module.applicability != "all":
+                nontrivial_tests = True
+                break
+        if not nontrivial_tests:
+            test_modules = set()
         libtests = _libtests(test_modules)
         if _dummy(main_modules):
             main_modules.add(DummyModule())
