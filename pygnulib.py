@@ -718,9 +718,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             fmt = "  - \"include {makefile_name}\" from within \"{tests_base}/Makefile.am\","
         print(fmt.format(**config), file=sys.stdout)
     for (directory, key, value) in mkedits:
-        if directory != ".":
-            directory += os.path.sep
-        print(f"  - mention \"{value}\" in {key} in {directory}Makefile.am,", file=sys.stdout)
+        path = os.path.normpath(os.path.join(directory, "Makefile.am"))
+        print(f"  - mention \"{value}\" in {key} in {path},", file=sys.stdout)
     position_early_after = "AC_PROG_CC"
     with vfs_iostream(project, config.ac_file, "rb", "UTF-8") as stream:
         contents = stream.read()
