@@ -82,11 +82,6 @@ PATCH = GnulibExecutable("patch", "PATCH", "PATCHPATH")
 
 
 
-TRANSFER_MODES = {
-    None: vfs_copy,
-    "hardlink": vfs_hardlink,
-    "symlink": vfs_symlink,
-}
 SUBSTITUTION = {
     "build-aux": "auxdir",
     "doc": "doc_base",
@@ -139,7 +134,7 @@ def extract_hook(program, gnulib, mode, namespace, *args, **kwargs):
 def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, **kwargs):
     (_, _) = (args, kwargs)
     config = BaseConfig(**namespace)
-    cache = CachedConfig(root=config.root, gnulib_comp=False, gnulib_cache=False)
+    cache = CachedConfig(root=config.root, m4_base=config.m4_base)
     database = Database(gnulib.module, config)
 
     # Print some information about modules.
@@ -223,7 +218,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
         args = (src_vfs, src_name, dst_vfs, dst_name)
         if src_vfs is None:
             return vfs_copy(*args)
-        action = TRANSFER_MODES[local_copymode if local else gnulib_copymode]
+        action = {
+            None: vfs_copy,
+            "hardlink": vfs_hardlink,
+            "symlink": vfs_symlink,
+        }[local_copymode if local else gnulib_copymode]
         try:
             return action(*args)
         except OSError as error:
@@ -232,35 +231,32 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             raise error
 
     def remove_file(project, file):
-        file = project[file]
         action = ("Removing", "Remove")[dry_run]
-        fmt = (action + " file {file} (backup in {file}~)")
+        fmt = (action + " file {name} (backup in {name}~)")
         if not dry_run:
             try:
                 vfs_backup(project, file)
                 vfs_unlink(project, file)
             except FileNotFoundError:
                 pass
-        print(fmt.format(file=file), file=sys.stdout)
+        print(fmt.format(name=project[file]), file=sys.stdout)
 
     def update_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
         if not vfs_compare(src_vfs, src_name, dst_vfs, dst_name):
-            file = dst_vfs[dst_name]
             action = (("Replacing", "Replace"), ("Updating", "Update"))[present][dry_run]
-            message = ("(non-gnulib code backed up in {file}~) !!", "(backup in {file}~)")[present]
-            fmt = (action + " file {file} " + message)
+            message = ("(non-gnulib code backed up in {name}~) !!", "(backup in {name}~)")[present]
+            fmt = (action + " file {name} " + message)
             if not dry_run:
                 vfs_backup(dst_vfs, dst_name)
                 transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
-            print(fmt.format(file=dst_name), file=sys.stdout)
+            print(fmt.format(name=dst_vfs[dst_name]), file=sys.stdout)
 
     def add_file(local, src_vfs, src_name, dst_vfs, dst_name, present):
-        file = dst_vfs[dst_name]
         action = ("Copying", "Copy")[dry_run]
-        fmt = (action + " file {file}")
+        fmt = (action + " file {name}")
         if not dry_run:
             transfer_file(local, src_vfs, src_name, dst_vfs, dst_name)
-        print(fmt.format(file=dst_name), file=sys.stdout)
+        print(fmt.format(name=dst_vfs[dst_name]), file=sys.stdout)
 
     # Adjust the VFS mappings.
     overrides = []
@@ -419,17 +415,17 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 os.unlink(src)
 
     mkedits = []
-    if config.makefile_name == "Makefile.am":
+    if config.makefile_name in {None, "Makefile.am"}:
         dirname = os.path.dirname(config.source_base)
         basename = os.path.basename(config.source_base)
-        dirname = "" if dirname == "." else (dirname + os.path.sep)
+        dirname += ("", os.path.sep)[bool(dirname)]
         mkedits.append((dirname, "SUBDIRS", basename))
     if "po_base" in explicit:
         dirname = os.path.dirname(config.po_base)
         basename = os.path.basename(config.po_base)
         dirname = "" if dirname == "." else dirname
         mkedits.append((dirname, "SUBDIRS", basename))
-    if config.tests and config.makefile_name == "Makefile.am":
+    if config.tests and config.makefile_name in {None, "Makefile.am"}:
         dirname = os.path.dirname(config.tests_base)
         basename = os.path.basename(config.tests_base)
         dirname = "" if dirname == "." else (dirname + os.path.sep)
@@ -442,20 +438,22 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
     makefile_name = "Makefile.am" if makefile_name is None else makefile_name
     source_base_makefile = os.path.join(config.source_base, makefile_name)
     tests_base_makefile = os.path.join(config.tests_base, makefile_name)
-    while dir1 != ".":
+    while dir1 != "./":
         path = os.path.join(dir1, "Makefile.am")
         if vfs_exists(project, os.path.join(config.root, dir1, "Makefile.am")) \
         or (config.tests and path in (source_base_makefile, tests_base_makefile)):
             break
         dir2 = os.path.join(os.path.basename(dir1), dir2)
         dir1 = os.path.dirname(dir1)
+        if not dir1:
+            dir1 = "."
     mkedits.append((dir1, "EXTRA_DIST", os.path.join(dir2, "gnulib-cache.m4")))
 
     # Generate the contents of library makefile.
-    path = os.path.join(config.source_base, makefile_name)
+    path = os.path.join("lib", makefile_name)
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
         arguments = {
-            "path": path,
+            "path": project[path],
             "config": config,
             "explicit": explicit,
             "database": database,
@@ -466,11 +464,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             print(line, file=tmp)
     (src, dst) = (tmp.name, path)
     present = vfs_exists(project, dst)
-    if present:
-        added_files.add(dst)
     action = update_file if present else add_file
     action(False, None, src, project, dst, present)
     os.unlink(tmp.name)
+    if not present:
+        added_files.add(dst)
 
     # Generate po makefile and directories.
     url = (TP_RSYNC_URI + "gnulib/")
@@ -482,32 +480,34 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             (vfs, src) = vfs_lookup(path, gnulib, override, patch=PATCH)
             dst = os.path.join("po", file)
             present = vfs_exists(project, dst)
-            if present:
-                added_files.add(dst)
             action = update_file if present else add_file
             action(bool(match), vfs, src, project, dst, present)
+            if not present:
+                added_files.add(dst)
+
         # Create po makefile parameterization, part 1.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
             for line in po_make_vars(config):
                 print(line, file=tmp)
         (src, dst) = (tmp.name, "po/Makevars")
         present = vfs_exists(project, dst)
-        if present:
-            added_files.add(dst)
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
+        if not present:
+            added_files.add(dst)
+
         # Create po makefile parameterization, part 2.
         with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
             for line in po_make_vars(config):
                 print(line, file=tmp)
         (src, dst) = (tmp.name, "po/POTFILESGenerator.in")
         present = vfs_exists(project, dst)
-        if present:
-            added_files.add(dst)
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
+        if not present:
+            added_files.add(dst)
 
         po_root = os.path.join(project.absolute, project["po"])
         fmt = ("{} gnulib PO files from " + TP_URL)
@@ -536,11 +536,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 print(line, file=tmp)
         (src, dst) = (tmp.name, "po/LINGUAS")
         present = vfs_exists(project, dst)
-        if present:
-            added_files.add(dst)
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
+        if not present:
+            added_files.add(dst)
 
     # Create m4/gnulib-cache.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
@@ -548,11 +548,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-cache.m4")
     present = vfs_exists(project, dst)
-    if present:
-        added_files.add(dst)
     action = update_file if present else add_file
     action(False, None, src, project, dst, present)
     os.unlink(tmp.name)
+    if not present:
+        added_files.add(dst)
 
     # Create m4/gnulib-comp.m4.
     with tempfile.NamedTemporaryFile("w", encoding="UTF-8", delete=False) as tmp:
@@ -565,11 +565,11 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             print(line, file=tmp)
     (src, dst) = (tmp.name, "m4/gnulib-comp.m4")
     present = vfs_exists(project, dst)
-    if present:
-        added_files.add(dst)
     action = update_file if present else add_file
     action(False, None, src, project, dst, present)
     os.unlink(tmp.name)
+    if not present:
+        added_files.add(dst)
 
     # Generate the contents of tests makefile.
     if config.tests:
@@ -588,32 +588,40 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 print(line, file=tmp)
         (src, dst) = (tmp.name, path)
         present = vfs_exists(project, dst)
-        if present:
-            added_files.add(dst)
         action = update_file if present else add_file
         action(False, None, src, project, dst, present)
         os.unlink(tmp.name)
+        if not present:
+            added_files.add(dst)
 
     # Generate version control files.
     if config.vc_files:
-        items = collections.defaultdict(list)
+        table = collections.defaultdict(list)
         for path in added_files:
             (directory, name) = os.path.split(path)
-            items[directory].append(["+", name])
+            table[directory].append(["+", name])
         for path in removed_files:
             (directory, name) = os.path.split(path)
-            items[directory].append(["-", name])
+            table[directory].append(["-", name])
 
         # Treat gnulib-comp.m4 like an added file, even if it already existed.
-        items["m4"].append(["+", "gnulib-comp.m4"])
+        table["m4"].append(["+", "gnulib-comp.m4"])
 
-        for directory in sorted(items):
-            gitignore = os.path.isdir(os.path.join(project.root, ".git"))
-            cvsignore = os.path.isdir(os.path.join(project.root, "CVS"))
-            gitignore |= os.path.isfile(os.path.join(project.root, project[directory], ".gitignore"))
-            cvsignore |= os.path.isdir(os.path.join(project.root, project[directory], "CVS"))
-            cvsignore |= os.path.isfile(os.path.join(project.root, project[directory], ".cvsignore"))
-            for kind in (([], [".gitignore"])[gitignore] + ([], [".cvsignore"])[cvsignore]):
+        visited = set()
+        tmp_table = dict(table)
+        for directory in tmp_table:
+            if project[directory] in visited:
+                del table[directory]
+            visited.add(project[directory])
+        table = dict(table)
+        for directory in sorted(table):
+            kinds = []
+            kinds += ([], [".gitignore"])[os.path.isdir(os.path.join(project.root, ".git"))]
+            kinds += ([], [".cvsignore"])[os.path.isdir(os.path.join(project.root, "CVS"))]
+            kinds += ([], [".gitignore"])[os.path.isfile(os.path.join(project.root, project[directory], ".gitignore"))]
+            kinds += ([], [".cvsignore"])[os.path.isdir(os.path.join(project.root, project[directory], "CVS"))]
+            kinds += ([], [".cvsignore"])[os.path.isfile(os.path.join(project.root, project[directory], ".cvsignore"))]
+            for kind in set(kinds):
                 anchor = {
                     ".gitignore": "/",
                     ".cvsignore": "",
@@ -621,30 +629,36 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
                 path = os.path.join(directory, kind)
                 try:
                     with vfs_iostream(project, path,  "rb", "UTF-8") as stream:
-                        ignores = [line.strip() for line in stream.readlines()]
+                        origin = [line.strip() for line in stream.readlines()]
                     present = True
-                except:
+                except FileNotFoundError:
+                    origin = []
                     present = False
-                    ignores = []
                 include = set()
                 exclude = set()
-                for (action, name) in items[directory]:
+                for (action, name) in table[directory]:
                     name = f"{anchor}{name}"
-                    already = name in ignores
-                    if action == "-":
+                    already = name in origin
+                    if action == "-" and not already:
                         exclude.add(name)
-                    elif action == "+":
+                    elif action == "+" and not already:
                         include.add(name)
-                if include or (set(ignores) & exclude):
-                    print(f"Updating {path} (backup in {path}~)", file=sys.stdout)
-                    if present:
-                        vfs_backup(project, path)
-                    with vfs_iostream(project, path,  "wb", "UTF-8") as stream:
-                        for entry in ignores:
-                            if entry not in exclude:
-                                print(entry, file=stream)
-                        for entry in sorted(include):
-                            if entry not in ignores:
+                result = []
+                for entry in origin:
+                    if entry not in exclude:
+                        result.append(entry)
+                for entry in sorted(include):
+                    if entry not in origin:
+                        result.append(entry)
+                if (set(origin) != set(result)):
+                    action = (("Creating", "Create"), ("Updating", "Update"))[present][dry_run]
+                    fmt = (action + " {name}" + ("", " (backup in {name}~)")[present])
+                    print(fmt.format(name=project[path]), file=sys.stdout)
+                    if not dry_run:
+                        if present:
+                            vfs_backup(project, path)
+                        with vfs_iostream(project, path,  "wb", "UTF-8") as stream:
+                            for entry in result:
                                 print(entry, file=stream)
 
     print("Finished.", file=sys.stdout)
@@ -704,6 +718,8 @@ def import_hook(script, gnulib, namespace, explicit, verbosity, options, *args, 
             fmt = "  - \"include {makefile_name}\" from within \"{tests_base}/Makefile.am\","
         print(fmt.format(**config), file=sys.stdout)
     for (directory, key, value) in mkedits:
+        if directory != ".":
+            directory += os.path.sep
         print(f"  - mention \"{value}\" in {key} in {directory}Makefile.am,", file=sys.stdout)
     position_early_after = "AC_PROG_CC"
     with vfs_iostream(project, config.ac_file, "rb", "UTF-8") as stream:
