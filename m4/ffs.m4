@@ -1,4 +1,4 @@
-# ffs.m4 serial 3
+# ffs.m4 serial 4
 dnl Copyright (C) 2011-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,13 +10,18 @@ AC_DEFUN([gl_FUNC_FFS],
 
   dnl We can't use AC_CHECK_FUNC here, because ffs() is defined as a
   dnl static inline function when compiling for Android 4.2 or older.
+  dnl But require that ffs() is declared; otherwise we may be using
+  dnl the GCC built-in function, which leads to warnings
+  dnl "warning: implicit declaration of function 'ffs'".
   AC_CACHE_CHECK([for ffs], [gl_cv_func_ffs],
     [AC_LINK_IFELSE(
        [AC_LANG_PROGRAM(
           [[#include <strings.h>
             int x;
           ]],
-          [[return ffs(x);]])
+          [[int (*func) (int) = ffs;
+            return func (x);
+          ]])
        ],
        [gl_cv_func_ffs=yes],
        [gl_cv_func_ffs=no])
