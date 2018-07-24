@@ -56,4 +56,4 @@ effectively change directory modification time:
 Cygwin 1.5.x.
 @end itemize
 
-The gnulib module fdutimensat provides a similar interface.
+The gnulib module @code{fdutimensat} provides a similar interface.

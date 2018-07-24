@@ -42,6 +42,6 @@ no indication if symlink contents were truncated if the return value
 matches the length.  Furthermore, AIX 5.1 and HP-UX 11 set
 @code{errno} to @code{ERANGE} rather than returning truncated
 contents, and Linux sets @code{errno} to @code{EINVAL} if the
-requested length is zero.  Use the gnulib module areadlink for
+requested length is zero.  Use the gnulib module @code{areadlink} for
 improved ability to read symlink contents.
 @end itemize

@@ -9,7 +9,7 @@
 @c Texts.  A copy of the license is included in the ``GNU Free
 @c Documentation License'' file as part of this distribution.
 
-The alloca module provides for a function @code{alloca} which allocates
+The @code{alloca} module provides for a function @code{alloca} which allocates
 memory on the stack, where the system allows it. A memory block allocated with
 @code{alloca} exists only until the function that calls @code{alloca} returns
 or exits abruptly.

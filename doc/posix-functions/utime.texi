@@ -28,6 +28,6 @@ On some platforms, this function mis-handles trailing slash:
 Solaris 9.
 @item
 This function cannot set full timestamp resolution.  Use
-@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module utimens,
+@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
 instead.
 @end itemize

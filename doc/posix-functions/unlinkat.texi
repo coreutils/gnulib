@@ -44,7 +44,7 @@ not always the POSIX value of @code{EPERM}.  Meanwhile, if a process
 has the ability to unlink directories, POSIX requires that
 @code{unlinkat(fd,"symlink-to-dir/",0)} remove @file{dir} and leave
 @file{symlink-to-dir} dangling; this behavior is counter-intuitive.
-The gnulib module unlinkdir can help determine whether code must be
+The gnulib module @code{unlinkdir} can help determine whether code must be
 cautious of unlinking directories.
 @item
 Removing an open file is non-portable: On Unix this allows the programs that

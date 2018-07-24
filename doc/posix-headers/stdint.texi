@@ -66,7 +66,7 @@ To work around these problems, compute the value of expressions like
 @code{#if}-time.
 @end itemize
 
-The stdint.h module uses @code{#include_next}.  If you wish to install
+The @code{stdint} module uses @code{#include_next}.  If you wish to install
 the generated stdint.h file under another name, typically in order to
 be able to use some of the types defined by stdint.h in your public
 header file, you could use the following Makefile.am-snippet:

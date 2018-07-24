@@ -6,7 +6,7 @@ POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/funct
 
 Gnulib module: open, fchdir
 
-Portability problems fixed by the Gnulib module open:
+Portability problems fixed by the Gnulib module @code{open}:
 @itemize
 @item
 Some platforms do not support @code{O_CLOEXEC}:
@@ -28,7 +28,7 @@ On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.
 @end itemize
 
-Portability problems fixed by the Gnulib module fchdir:
+Portability problems fixed by the Gnulib module @code{fchdir}:
 @itemize
 @item
 On Windows platforms (excluding Cygwin), this function fails to open a

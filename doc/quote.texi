@@ -39,6 +39,6 @@ Hence if you need more than one thing quoted at the same time, you
 need to use @code{quote_n}.
 
 @findex quotearg_alloc
-Also, the quote module is not suited for multithreaded applications.
+Also, the @code{quote} module is not suited for multithreaded applications.
 In that case, you have to use @code{quotearg_alloc}, defined in the
 @samp{quotearg} module, which is decidedly less convenient.

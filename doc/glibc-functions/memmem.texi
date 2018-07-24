@@ -5,7 +5,7 @@
 Gnulib module: memmem or memmem-simple
 
 Both modules implement the same replacement for the @code{memmem} function
-with the memmem module providing a replacement on more platforms where
+with the @code{memmem} module providing a replacement on more platforms where
 the existing @code{memmem} function has a quadratic worst-case complexity.
 
 Portability problems fixed by either Gnulib module @code{memmem-simple}

@@ -25,7 +25,7 @@ FreeBSD 7.2, Solaris 9.
 @item
 This function cannot set full timestamp resolution.  In particular,
 some platforms incorrectly round rather than truncate.  Use
-@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module utimens,
+@code{utimensat(AT_FDCWD,file,times,0)}, or the gnulib module @code{utimens},
 instead.
 @item
 On some platforms, @code{utimes (file, NULL)} fails to set the
