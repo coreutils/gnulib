@@ -2,7 +2,8 @@
 @section @code{pthread_attr_setstackaddr}
 @findex pthread_attr_setstackaddr
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/pthread_attr_setstackaddr.html}
+POSIX specification:@inlinefmt{tex,@*}
+@url{http://www.opengroup.org/susv3xsh/pthread_attr_setstackaddr.html}
 
 Gnulib module: ---
 

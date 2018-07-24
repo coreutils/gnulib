@@ -18,6 +18,11 @@ On some platforms, this function mis-handles trailing slash:
 Solaris 9.
 @item
 This function cannot set full timestamp resolution.  Use
-@code{file ? utimensat(fd,file,times,0) : futimens(fd,times)}, or the
-gnulib module fdutimensat, instead.
+
+@example
+file ? utimensat(fd, file, times, 0)
+     : futimens(fd, times)
+@end example
+
+@noindent or the gnulib module fdutimensat, instead.
 @end itemize

@@ -120,7 +120,7 @@ If your package installs shell scripts, also import the
 @code{relocatable-script} module.  Then, near the beginning of each
 shell script that your package installs, add the following:
 
-@example
+@smallexample
 @@relocatable_sh@@
 if test "@@RELOCATABLE@@" = yes; then
   exec_prefix="@@exec_prefix@@"
@@ -142,7 +142,7 @@ fi
 # Get some relocated directory names.
 sysconfdir=`relocate "@@sysconfdir@@"`
 some_datadir=`relocate "@@datadir@@/something"`
-@end example
+@end smallexample
 
 You must adapt the definition of @code{orig_installdir}, depending on
 where the script gets installed.  Also, at the end, instead of
@@ -154,13 +154,16 @@ If your package installs Perl scripts, also import the
 @code{relocatable-perl} module.  Then, near the beginning of each
 Perl script that your package installs, add the following:
 
-@example
+@smallexample
 @@relocatable_pl@@
 if ("@@RELOCATABLE@@" eq "yes") @{
   my $exec_prefix = "@@exec_prefix@@";
   my $orig_installdir = "@@bindir@@"; # see Makefile.am's *_SCRIPTS variables
-  my ($orig_installprefix, $curr_installprefix) = find_prefixes($orig_installdir, find_curr_installdir());
-  sub relocate @{ # the subroutine is defined whether or not the enclosing block is executed
+  my ($orig_installprefix, $curr_installprefix) =
+    find_prefixes($orig_installdir, find_curr_installdir());
+
+  # the subroutine is defined whether or not the enclosing block is executed
+  sub relocate @{
     my ($dir) = @@_;
     if ("@@RELOCATABLE@@" eq "yes") @{
       $dir =~ s%^$orig_installprefix/%$curr_installprefix/%;
@@ -174,7 +177,7 @@ if ("@@RELOCATABLE@@" eq "yes") @{
 # (The gnulib module 'configmake' can help with this.)
 $sysconfdir = relocate("@@sysconfdir@@");
 $some_datadir = relocate(@@datadir@@/something");
-@end example
+@end smallexample
 
 You must adapt the definition of @code{$orig_installdir}, depending on
 where the script gets installed.  Also, at the end, instead of
@@ -211,9 +214,10 @@ endif
 
 @code{SHLIBS_IN_BINDIR} is defined in @file{configure.ac} as follows:
 
-@example
-AM_CONDITIONAL([SHLIBS_IN_BINDIR], [case "$host_os" in mingw* | cygwin*) true;; *) false;; esac])
-@end example
+@smallexample
+AM_CONDITIONAL([SHLIBS_IN_BINDIR],
+               [case "$host_os" in mingw* | cygwin*) true;; *) false;; esac])
+@end smallexample
 
 @item
 You may also need to add a couple of variable assignments to your
