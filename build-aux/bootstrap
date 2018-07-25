@@ -1,6 +1,6 @@
 #! /bin/sh
 # Print a version string.
-scriptversion=2018-07-01.02; # UTC
+scriptversion=2018-07-25.07; # UTC
 
 # Bootstrap this package from checked-out sources.
 
@@ -141,6 +141,9 @@ warn_ ()
 die() { warn_ "$@"; exit 1; }
 
 # Configuration.
+
+# Name of the Makefile.am
+gnulib_mk=gnulib.mk
 
 # List of gnulib modules needed.
 gnulib_modules=
