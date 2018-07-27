@@ -5422,7 +5422,7 @@ s,//*$,/,'
        && { # Prefer rsync over wget if it is available, since it consumes
             # less network bandwidth, due to compression.
             if type rsync 2>/dev/null | grep / > /dev/null; then
-              rsync --delete --exclude "*.s1" -Lrtz "${TP_RSYNC_URI}gnulib/" . && return
+              rsync --delete --include "*.po" --exclude "*" -Lrtz "${TP_RSYNC_URI}gnulib/" . && return
             fi
 
             wget --no-verbose --mirror -nd -np  -A.po -P . "${TP_URL}gnulib/"

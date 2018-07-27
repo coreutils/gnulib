@@ -168,7 +168,7 @@ bootstrap_epilogue() { :; }
 # options because the latest/%s directory and the .po files within are
 # all symlinks.
 po_download_command_format=\
-"rsync --delete --exclude '*.s1' -Lrtvz \
+"rsync --include '*.po' --exclude '*' -Lrtvz \
  'translationproject.org::tp/latest/%s/' '%s'"
 
 # Fallback for downloading .po files (if rsync fails).
