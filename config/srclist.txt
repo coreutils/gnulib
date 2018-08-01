@@ -152,6 +152,7 @@ $LIBCSRC posix/regexec.c		lib
 #$LIBCSRC string/strpbrk.c		lib gpl
 #$LIBCSRC string/strstr.c		lib gpl
 #$LIBCSRC sysdeps/generic/pty-private.h	lib gpl
+#$LIBCSRC sysdeps/ieee754/ieee754.h     lib gpl (ieee754.in.h in gnulib)
 #$LIBCSRC sysdeps/posix/dup2.c		lib gpl
 #$LIBCSRC sysdeps/posix/euidaccess.c	lib gpl
 #$LIBCSRC sysdeps/posix/tempname.c	lib gpl
