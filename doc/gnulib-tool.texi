@@ -44,6 +44,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* Finding POSIX substitutes::   Determining additional suitable Gnulib modules
 * Modified build rules::        Modifying the build rules of a Gnulib import
 * Multiple instances::          Using Gnulib for both a library and a program
 * gettextize and autopoint::    Caveat: @code{gettextize} and @code{autopoint} users!
@@ -58,13 +59,17 @@ a real run without changing anything.
 @section Finding modules
 @cindex Finding modules
 
-There are three ways of finding the names of Gnulib modules that you can use
+There are four ways of finding the names of Gnulib modules that you can use
 in your package:
 
 @itemize
 @item
 You have the complete module list, sorted according to categories, in
 @url{https://www.gnu.org/software/gnulib/MODULES.html}.
+
+@item
+If you are looking for POSIX function replacements that you don't know about
+yet, follow the procedure described in section @ref{Finding POSIX substitutes}.
 
 @item
 If you are looking for a particular POSIX header or function replacement,
@@ -458,6 +463,48 @@ the Gnulib library directory.
 This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
+
+
+@node Finding POSIX substitutes
+@section Finding recommended ISO C and POSIX function substitutes
+
+Gnulib contains a wealth of portability workarounds for ISO C and POSIX
+functions.  They are listed in detail in the chapter @ref{Function Substitutes}.
+If you want to know which function substitutes are recommended for your
+package, you can search your source code for ISO C and POSIX functions
+that it uses and read the corresponding sections of said documentation
+chapter.  But this is a tedious task.  Here is an alternative approach
+that makes this task easier.
+
+@enumerate
+@item
+Add the Gnulib module @samp{posixcheck} to the Gnulib imports of your package,
+as described earlier in this chapter.
+
+@item
+Do a @code{make distclean} if you previously built in the top-level directory.
+Then regenerate the Autotools-generated parts of the package.
+
+@item
+On a glibc system, build your package.  Pay attention to the compiler warnings.
+Warnings are generated for uses of ISO C and POSIX functions that have
+portability problems or other important pitfalls and for which you have not yet
+imported the corresponding Gnulib module.  If you get, say, a warning
+``warning: call to 'close' declared with attribute warning: close does not
+portably work on sockets - use gnulib module close for portability'',
+put @samp{close} on your list of modules to import.
+
+@item
+Add the modules you noted to the Gnulib imports of your package.
+
+@item
+Optionally, you can do the same steps again, and make sure that there are no
+warnings left except those that you want to intentionally ignore.
+
+@item
+Finally, remove the Gnulib module @samp{posixcheck} from the Gnulib imports,
+and run @code{make distclean}.
+@end enumerate
 
 
 @node Modified build rules
