@@ -1,4 +1,4 @@
-# iconv_h.m4 serial 8
+# iconv_h.m4 serial 9
 dnl Copyright (C) 2007-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,6 +11,12 @@ AC_DEFUN([gl_ICONV_H],
   dnl Execute this unconditionally, because ICONV_H may be set by other
   dnl modules, after this code is executed.
   gl_CHECK_NEXT_HEADERS([iconv.h])
+
+  dnl Check for declarations of anything we want to poison if the
+  dnl corresponding gnulib module is not in use, and which is not
+  dnl guaranteed by C89.
+  gl_WARN_ON_USE_PREPARE([[#include <iconv.h>
+    ]], [iconv iconv_open])
 ])
 
 dnl Unconditionally enables the replacement of <iconv.h>.
