@@ -1,4 +1,4 @@
-# monetary_h.m4 serial 1
+# monetary_h.m4 serial 2
 dnl Copyright (C) 2017-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_MONETARY_H_BODY],
   AC_CHECK_HEADERS_ONCE([monetary.h])
   dnl For now, we provide a <monetary.h> wrapper only if the system already
   dnl has a <monetary.h>.
-  if test $ac_cv_header_monetary_h = yes; then
+  if m4_ifdef([gl_POSIXCHECK],[true],[test $ac_cv_header_monetary_h = yes]); then
     MONETARY_H='monetary.h'
 
     gl_CHECK_NEXT_HEADERS([monetary.h])
