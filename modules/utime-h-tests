@@ -2,6 +2,7 @@ Files:
 tests/test-utime-h.c
 
 Depends-on:
+utime-h-c++-tests
 
 configure.ac:
 

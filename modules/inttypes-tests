@@ -2,6 +2,7 @@ Files:
 tests/test-inttypes.c
 
 Depends-on:
+inttypes-c++-tests
 
 configure.ac:
 

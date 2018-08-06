@@ -2,6 +2,7 @@ Files:
 tests/test-strings.c
 
 Depends-on:
+strings-c++-tests
 
 configure.ac:
 

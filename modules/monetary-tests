@@ -2,6 +2,7 @@ Files:
 tests/test-monetary.c
 
 Depends-on:
+monetary-c++-tests
 
 configure.ac:
 
