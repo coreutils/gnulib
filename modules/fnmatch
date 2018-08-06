@@ -2,51 +2,33 @@ Description:
 fnmatch() function: wildcard matching.
 
 Files:
-lib/fnmatch.in.h
 lib/fnmatch.c
 lib/fnmatch_loop.c
 m4/mbstate_t.m4
 m4/fnmatch.m4
 
 Depends-on:
-extensions
-snippet/arg-nonnull
-alloca          [test -n "$FNMATCH_H"]
-builtin-expect  [test -n "$FNMATCH_H"]
-flexmember      [test -n "$FNMATCH_H"]
-stdbool         [test -n "$FNMATCH_H"]
-wchar           [test -n "$FNMATCH_H"]
-wctype-h        [test -n "$FNMATCH_H"]
-memchr          [test -n "$FNMATCH_H"]
-memcmp          [test -n "$FNMATCH_H"]
-mbsrtowcs       [test -n "$FNMATCH_H"]
-mbsinit         [test -n "$FNMATCH_H"]
+fnmatch-h
+alloca          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+builtin-expect  [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+flexmember      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+stdbool         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+wchar           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+wctype-h        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+memchr          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+memcmp          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+mbsrtowcs       [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+mbsinit         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 
 configure.ac:
 gl_FUNC_FNMATCH_POSIX
-if test -n "$FNMATCH_H"; then
+if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
   AC_LIBOBJ([fnmatch])
   gl_PREREQ_FNMATCH
 fi
+gl_FNMATCH_MODULE_INDICATOR([fnmatch])
 
 Makefile.am:
-BUILT_SOURCES += $(FNMATCH_H)
-
-# We need the following in order to create <fnmatch.h> when the system
-# doesn't have one that supports the required API.
-if GL_GENERATE_FNMATCH_H
-fnmatch.h: fnmatch.in.h $(top_builddir)/config.status $(ARG_NONNULL_H)
-	$(AM_V_GEN)rm -f $@-t $@ && \
-	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
-	  sed -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
-	      < $(srcdir)/fnmatch.in.h; \
-	} > $@-t && \
-	mv -f $@-t $@
-else
-fnmatch.h: $(top_builddir)/config.status
-	rm -f $@
-endif
-MOSTLYCLEANFILES += fnmatch.h fnmatch.h-t
 
 Include:
 <fnmatch.h>

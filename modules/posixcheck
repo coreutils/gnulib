@@ -11,6 +11,7 @@ arpa_inet
 ctype
 dirent
 fcntl-h
+fnmatch-h
 iconv-h
 inttypes-incomplete
 langinfo
