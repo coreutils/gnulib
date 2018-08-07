@@ -12,6 +12,7 @@ ctype
 dirent
 fcntl-h
 fnmatch-h
+glob-h
 iconv-h
 inttypes-incomplete
 langinfo

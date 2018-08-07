@@ -3,7 +3,7 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/glob.h.html}
 
-Gnulib module: glob
+Gnulib module: glob-h
 
 Portability problems fixed by Gnulib:
 @itemize
