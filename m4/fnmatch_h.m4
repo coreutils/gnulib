@@ -1,4 +1,4 @@
-# fnmatch_h.m4 serial 1
+# fnmatch_h.m4 serial 2
 dnl Copyright (C) 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,7 @@ dnl From Bruno Haible.
 AC_DEFUN([gl_FNMATCH_H],
 [
   AC_REQUIRE([gl_FNMATCH_H_DEFAULTS])
+  m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
   AC_CHECK_HEADERS_ONCE([fnmatch.h])
   gl_CHECK_NEXT_HEADERS([fnmatch.h])
 
@@ -28,9 +29,14 @@ AC_DEFUN([gl_FNMATCH_H],
   m4_ifdef([gl_POSIXCHECK],
     [FNMATCH_H=fnmatch.h],
     [FNMATCH_H=''
-     if test $ac_cv_header_fnmatch_h != yes; then
-       dnl Provide a substitute <fnmatch.h> file.
+     if m4_ifdef([gl_ANSI_CXX], [test "$CXX" != no], [false]); then
+       dnl Override <fnmatch.h> always, to support the C++ GNULIB_NAMESPACE.
        FNMATCH_H=fnmatch.h
+     else
+       if test $ac_cv_header_fnmatch_h != yes; then
+         dnl Provide a substitute <fnmatch.h> file.
+         FNMATCH_H=fnmatch.h
+       fi
      fi
     ])
   AC_SUBST([FNMATCH_H])

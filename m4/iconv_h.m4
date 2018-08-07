@@ -1,4 +1,4 @@
-# iconv_h.m4 serial 10
+# iconv_h.m4 serial 11
 dnl Copyright (C) 2007-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -36,6 +36,7 @@ AC_DEFUN([gl_ICONV_MODULE_INDICATOR],
 
 AC_DEFUN([gl_ICONV_H_DEFAULTS],
 [
+  m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
   GNULIB_ICONV=0;       AC_SUBST([GNULIB_ICONV])
   dnl Assume proper GNU behavior unless another module says otherwise.
   ICONV_CONST=;         AC_SUBST([ICONV_CONST])
@@ -43,6 +44,12 @@ AC_DEFUN([gl_ICONV_H_DEFAULTS],
   REPLACE_ICONV_OPEN=0; AC_SUBST([REPLACE_ICONV_OPEN])
   REPLACE_ICONV_UTF=0;  AC_SUBST([REPLACE_ICONV_UTF])
   ICONV_H='';           AC_SUBST([ICONV_H])
-  m4_ifdef([gl_POSIXCHECK],[ICONV_H='iconv.h'])
+  m4_ifdef([gl_POSIXCHECK],
+    [ICONV_H='iconv.h'],
+    [if m4_ifdef([gl_ANSI_CXX], [test "$CXX" != no], [false]); then
+       dnl Override <fnmatch.h> always, to support the C++ GNULIB_NAMESPACE.
+       ICONV_H='iconv.h'
+     fi
+    ])
   AM_CONDITIONAL([GL_GENERATE_ICONV_H], [test -n "$ICONV_H"])
 ])

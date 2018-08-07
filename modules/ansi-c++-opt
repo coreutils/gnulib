@@ -7,7 +7,7 @@ m4/ansi-c++.m4
 Depends-on:
 
 configure.ac:
-gl_PROG_ANSI_CXX([CXX], [ANSICXX])
+AC_REQUIRE([gl_ANSI_CXX])
 
 Makefile.am:
 
