@@ -20,15 +20,14 @@
 
 #include <glob.h>
 
-#include <errno.h>
-#include <unistd.h>
-
 #include "signature.h"
 SIGNATURE_CHECK (glob, int, (char const *, int, int (*) (char const *, int),
                              glob_t *));
 SIGNATURE_CHECK (globfree, void, (glob_t *));
 
+#include <errno.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "macros.h"
 
@@ -40,11 +39,6 @@ main ()
 {
   int res;
   glob_t g;
-
-  /* Make sure glob_t struct members exists. */
-  ASSERT (sizeof (g.gl_pathc));
-  ASSERT (sizeof (g.gl_pathv));
-  ASSERT (sizeof (g.gl_offs));
 
   res = glob (".", 0, NULL, &g);
   ASSERT (res == 0 && g.gl_pathc == 1);
