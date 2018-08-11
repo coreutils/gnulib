@@ -93,7 +93,9 @@ _GL_FUNCDECL_SYS (fnmatch, int,
 _GL_CXXALIAS_SYS (fnmatch, int,
                   (const char *pattern, const char *name, int flags));
 # endif
+# if !GNULIB_FNMATCH_GNU
 _GL_CXXALIASWARN (fnmatch);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef fnmatch
 # if HAVE_RAW_DECL_FNMATCH

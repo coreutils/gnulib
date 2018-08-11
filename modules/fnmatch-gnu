@@ -12,6 +12,7 @@ if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
   AC_LIBOBJ([fnmatch])
   gl_PREREQ_FNMATCH
 fi
+gl_MODULE_INDICATOR([fnmatch-gnu])
 
 Makefile.am:
 
