@@ -1,4 +1,4 @@
-# fnmatch_h.m4 serial 2
+# fnmatch_h.m4 serial 3
 dnl Copyright (C) 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,7 +6,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
 
-AC_DEFUN([gl_FNMATCH_H],
+# Request a POSIX compliant <fnmatch.h> include file.
+AC_DEFUN_ONCE([gl_FNMATCH_H],
 [
   AC_REQUIRE([gl_FNMATCH_H_DEFAULTS])
   m4_ifdef([gl_ANSI_CXX], [AC_REQUIRE([gl_ANSI_CXX])])
@@ -47,6 +48,27 @@ AC_DEFUN([gl_FNMATCH_H],
   gl_WARN_ON_USE_PREPARE([[#include <fnmatch.h>
     ]],
     [fnmatch])
+])
+
+# Request a POSIX compliant <fnmatch.h> include file with GNU extensions.
+AC_DEFUN([gl_FNMATCH_H_GNU],
+[
+  AC_REQUIRE([gl_FNMATCH_H])
+  if test -z "$FNMATCH_H"; then
+    AC_CACHE_CHECK([whether <fnmatch.h> has the GNU extensions],
+      [gl_cv_header_fnmatch_h_gnu],
+      [AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[#include <fnmatch.h>]],
+            [[int gnu_flags = FNM_FILE_NAME | FNM_LEADING_DIR | FNM_CASEFOLD | FNM_EXTMATCH;]])],
+         [gl_cv_header_fnmatch_h_gnu=yes],
+         [gl_cv_header_fnmatch_h_gnu=no])
+      ])
+    if test $gl_cv_header_fnmatch_h_gnu != yes; then
+      FNMATCH_H=fnmatch.h
+      AM_CONDITIONAL([GL_GENERATE_FNMATCH_H], [test -n "$FNMATCH_H"])
+    fi
+  fi
 ])
 
 AC_DEFUN([gl_FNMATCH_MODULE_INDICATOR],

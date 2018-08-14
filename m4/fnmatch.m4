@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 10.  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 11.  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2018 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -135,6 +135,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
 [
   m4_divert_text([INIT_PREPARE], [gl_fnmatch_required=GNU])
 
+  AC_REQUIRE([gl_FNMATCH_H_GNU])
   AC_REQUIRE([gl_FUNC_FNMATCH_POSIX])
 ])
 
