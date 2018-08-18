@@ -84,6 +84,10 @@
    of SOCKETs, not bit masks of FDs.  */
 # undef select
 
+/* Avoid warnings from gcc -Wcast-function-type.  */
+# define GetProcAddress \
+   (void *) GetProcAddress
+
 static BOOL IsConsoleHandle (HANDLE h)
 {
   DWORD mode;

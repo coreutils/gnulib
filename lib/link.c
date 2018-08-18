@@ -30,6 +30,10 @@
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
 
+/* Avoid warnings from gcc -Wcast-function-type.  */
+#  define GetProcAddress \
+    (void *) GetProcAddress
+
 /* CreateHardLink was introduced only in Windows 2000.  */
 typedef BOOL (WINAPI * CreateHardLinkFuncType) (LPCTSTR lpFileName,
                                                 LPCTSTR lpExistingFileName,

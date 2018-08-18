@@ -62,6 +62,11 @@
 #include "sockets.h"
 
 #ifdef WINDOWS_NATIVE
+
+/* Avoid warnings from gcc -Wcast-function-type.  */
+# define GetProcAddress \
+   (void *) GetProcAddress
+
 typedef int (WSAAPI *getaddrinfo_func) (const char*, const char*,
                                         const struct addrinfo*,
                                         struct addrinfo**);

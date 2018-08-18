@@ -47,6 +47,10 @@
 
 #undef select
 
+/* Avoid warnings from gcc -Wcast-function-type.  */
+#define GetProcAddress \
+  (void *) GetProcAddress
+
 struct bitset {
   unsigned char in[FD_SETSIZE / CHAR_BIT];
   unsigned char out[FD_SETSIZE / CHAR_BIT];

@@ -59,8 +59,14 @@
 #endif
 
 #ifdef _WIN32
+
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+
+/* Avoid warnings from gcc -Wcast-function-type.  */
+# define GetProcAddress \
+   (void *) GetProcAddress
+
 /*  MEMORYSTATUSEX is missing from older windows headers, so define
     a local replacement.  */
 typedef struct
@@ -76,6 +82,7 @@ typedef struct
   DWORDLONG ullAvailExtendedVirtual;
 } lMEMORYSTATUSEX;
 typedef WINBOOL (WINAPI *PFN_MS_EX) (lMEMORYSTATUSEX*);
+
 #endif
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof ((a)[0]))
