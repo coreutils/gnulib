@@ -1,4 +1,4 @@
-# glob_h.m4 serial 2
+# glob_h.m4 serial 3
 dnl Copyright (C) 2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,22 @@ AC_DEFUN([gl_GLOB_H],
     HAVE_GLOB_H=0
   fi
   AC_SUBST([HAVE_GLOB_H])
+
+  m4_ifdef([gl_POSIXCHECK],
+    [GLOB_H=glob.h],
+    [GLOB_H=''
+     if m4_ifdef([gl_ANSI_CXX], [test "$CXX" != no], [false]); then
+       dnl Override <glob.h> always, to support the C++ GNULIB_NAMESPACE.
+       GLOB_H=glob.h
+     else
+       if test $ac_cv_header_glob_h != yes; then
+         dnl Provide a substitute <glob.h> file.
+         GLOB_H=glob.h
+       fi
+     fi
+    ])
+  AC_SUBST([GLOB_H])
+  AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
