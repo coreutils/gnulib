@@ -110,6 +110,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getlogin_r, int, (char *, size_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getpagesize, int, (void));
 #endif
 
+#if GNULIB_TEST_GETPASS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getpass, char *, (const char *));
+#endif
+
 #if GNULIB_TEST_GETUSERSHELL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getusershell, char *, (void));
 #endif

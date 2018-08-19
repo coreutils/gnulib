@@ -1,4 +1,4 @@
-# getpass.m4 serial 15
+# getpass.m4 serial 16
 dnl Copyright (C) 2002-2003, 2005-2006, 2009-2018 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -6,16 +6,15 @@ dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
 # Provide a getpass() function if the system doesn't have it.
-AC_DEFUN([gl_FUNC_GETPASS],
+AC_DEFUN_ONCE([gl_FUNC_GETPASS],
 [
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+
   dnl Persuade Solaris <unistd.h> and <stdlib.h> to declare getpass().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
 
-  AC_CHECK_FUNCS([getpass])
-  AC_CHECK_DECLS_ONCE([getpass])
-  if test $ac_cv_func_getpass = yes; then
-    HAVE_GETPASS=1
-  else
+  AC_CHECK_FUNCS_ONCE([getpass])
+  if test $ac_cv_func_getpass = no; then
     HAVE_GETPASS=0
   fi
 ])
@@ -24,19 +23,27 @@ AC_DEFUN([gl_FUNC_GETPASS],
 # arbitrary length (not just 8 bytes as on HP-UX).
 AC_DEFUN([gl_FUNC_GETPASS_GNU],
 [
-  dnl Persuade Solaris <unistd.h> and <stdlib.h> to declare getpass().
-  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([gl_FUNC_GETPASS])
 
-  AC_CHECK_DECLS_ONCE([getpass])
-  dnl TODO: Detect when GNU getpass() is already found in glibc.
-  REPLACE_GETPASS=1
-
-  if test $REPLACE_GETPASS = 1; then
-    dnl We must choose a different name for our function, since on ELF systems
-    dnl an unusable getpass() in libc.so would override our getpass() if it is
-    dnl compiled into a shared library.
-    AC_DEFINE([getpass], [gnu_getpass],
-      [Define to a replacement function name for getpass().])
+  if test $ac_cv_func_getpass = yes; then
+    AC_CACHE_CHECK([for getpass without length limitations],
+      [gl_cv_func_getpass_good],
+      [AC_EGREP_CPP([Lucky GNU user],
+         [
+#include <features.h>
+#ifdef __GNU_LIBRARY__
+ #if (__GLIBC__ >= 2) && !defined __UCLIBC__
+  Lucky GNU user
+ #endif
+#endif
+         ],
+         [gl_cv_func_getpass_good=yes],
+         [gl_cv_func_getpass_good=no])
+      ])
+    if test $gl_cv_func_getpass_good != yes; then
+      REPLACE_GETPASS=1
+    fi
   fi
 ])
 

@@ -7,6 +7,7 @@ lib/getpass.c
 m4/getpass.m4
 
 Depends-on:
+unistd
 extensions
 fseeko
 getline
@@ -15,15 +16,16 @@ strdup-posix
 
 configure.ac:
 gl_FUNC_GETPASS
-if test $HAVE_GETPASS = 0; then
+if test $HAVE_GETPASS = 0 || test $REPLACE_GETPASS = 1; then
   AC_LIBOBJ([getpass])
   gl_PREREQ_GETPASS
 fi
+gl_UNISTD_MODULE_INDICATOR([getpass])
 
 Makefile.am:
 
 Include:
-"getpass.h"
+<unistd,h>
 
 License:
 LGPLv2+

@@ -42,6 +42,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2018-08-18  getpass         The include file is changed from "getpass.h" to
+            getpass-gnu     <unistd.h>.
+
 2018-07-17  hard-locale     m4/hard-locale.m4 and gl_HARD_LOCALE are removed.
 
 2018-07-05  renameat2       This module is renamed to 'renameatu' and all
