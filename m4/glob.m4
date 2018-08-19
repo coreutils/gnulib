@@ -1,4 +1,4 @@
-# glob.m4 serial 20
+# glob.m4 serial 21
 dnl Copyright (C) 2005-2007, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,8 +69,7 @@ char a[_GNU_GLOB_INTERFACE_VERSION == 1 || _GNU_GLOB_INTERFACE_VERSION == 2 ? 1 
   fi
 
   if test $HAVE_GLOB = 0 || test $REPLACE_GLOB = 1; then
-    GLOB_H=glob.h
-    AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
+    gl_REPLACE_GLOB_H
   fi
 ])
 

@@ -1,4 +1,4 @@
-# glob_h.m4 serial 4
+# glob_h.m4 serial 5
 dnl Copyright (C) 2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,6 +42,14 @@ AC_DEFUN_ONCE([gl_GLOB_H],
   gl_WARN_ON_USE_PREPARE([[#include <glob.h>
     ]],
     [glob globfree glob_pattern_p])
+])
+
+dnl Unconditionally enables the replacement of <glob.h>.
+AC_DEFUN([gl_REPLACE_GLOB_H],
+[
+  AC_REQUIRE([gl_GLOB_H_DEFAULTS])
+  GLOB_H='glob.h'
+  AM_CONDITIONAL([GL_GENERATE_GLOB_H], [test -n "$GLOB_H"])
 ])
 
 AC_DEFUN([gl_GLOB_MODULE_INDICATOR],
