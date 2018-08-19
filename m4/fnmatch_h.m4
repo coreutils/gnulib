@@ -1,4 +1,4 @@
-# fnmatch_h.m4 serial 3
+# fnmatch_h.m4 serial 4
 dnl Copyright (C) 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,6 +47,14 @@ AC_DEFUN_ONCE([gl_FNMATCH_H],
   gl_WARN_ON_USE_PREPARE([[#include <fnmatch.h>
     ]],
     [fnmatch])
+])
+
+dnl Unconditionally enables the replacement of <fnmatch.h>.
+AC_DEFUN([gl_REPLACE_FNMATCH_H],
+[
+  AC_REQUIRE([gl_FNMATCH_H_DEFAULTS])
+  FNMATCH_H='fnmatch.h'
+  AM_CONDITIONAL([GL_GENERATE_FNMATCH_H], [test -n "$FNMATCH_H"])
 ])
 
 AC_DEFUN([gl_FNMATCH_MODULE_INDICATOR],

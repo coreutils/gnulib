@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 12.  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 13.  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2018 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -125,8 +125,7 @@ AC_DEFUN([gl_FUNC_FNMATCH_POSIX],
     fi
   fi
   if test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1; then
-    FNMATCH_H=fnmatch.h
-    AM_CONDITIONAL([GL_GENERATE_FNMATCH_H], [test -n "$FNMATCH_H"])
+    gl_REPLACE_FNMATCH_H
   fi
 ])
 
