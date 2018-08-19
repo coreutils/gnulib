@@ -1,4 +1,4 @@
-# Check for fnmatch - serial 11.  -*- coding: utf-8 -*-
+# Check for fnmatch - serial 12.  -*- coding: utf-8 -*-
 
 # Copyright (C) 2000-2007, 2009-2018 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -140,11 +140,6 @@ AC_DEFUN([gl_FUNC_FNMATCH_GNU],
 
 AC_DEFUN([gl_PREREQ_FNMATCH],
 [
-  dnl We must choose a different name for our function, since on ELF systems
-  dnl a broken fnmatch() in libc.so would override our fnmatch() if it is
-  dnl compiled into a shared library.
-  AC_DEFINE_UNQUOTED([fnmatch], [${gl_fnmatch_required_lowercase}_fnmatch],
-    [Define to a replacement function name for fnmatch().])
   dnl Prerequisites of lib/fnmatch.c.
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   AC_CHECK_DECLS([isblank], [], [], [[#include <ctype.h>]])
