@@ -77,7 +77,7 @@
 #endif
 
 #ifdef _LIBC
-typedef time_t mktime_offset_t;
+typedef long int mktime_offset_t;
 #else
 # include "mktime-internal.h"
 #endif
