@@ -394,6 +394,7 @@ __mktime_internal (struct tm *tp,
   long_int lmday = mday;
   long_int yday = mon_yday + lmday;
 
+  mktime_offset_t off = *offset;
   int negative_offset_guess;
 
   int sec_requested = sec;
@@ -411,7 +412,7 @@ __mktime_internal (struct tm *tp,
   /* Invert CONVERT by probing.  First assume the same offset as last
      time.  */
 
-  INT_SUBTRACT_WRAPV (0, *offset, &negative_offset_guess);
+  INT_SUBTRACT_WRAPV (0, off, &negative_offset_guess);
   t0 = ydhms_diff (year, yday, hour, min, sec,
 		   EPOCH_YEAR - TM_YEAR_BASE, 0, 0, 0, negative_offset_guess);
 
