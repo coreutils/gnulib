@@ -3484,7 +3484,7 @@ func_update_file ()
 #                   sed expression for resolving ${gl_include_guard_prefix}
 # - destfile        filename relative to destdir of makefile being generated
 # Input/Output:
-# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
+# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val,dotfirst}
 #                   list of edits to be done to Makefile.am variables
 # Output:
 # - uses_subdirs    nonempty if object files in subdirs exist
@@ -3655,8 +3655,14 @@ func_emit_lib_Makefile_am ()
     eval dir=\"\$makefile_am_edit${edit}_dir\"
     eval var=\"\$makefile_am_edit${edit}_var\"
     eval val=\"\$makefile_am_edit${edit}_val\"
+    eval dotfirst=\"\$makefile_am_edit${edit}_dotfirst\"
     if test -n "$var"; then
       if test "${dir}Makefile.am" = "$destfile" || test "./${dir}Makefile.am" = "$destfile"; then
+        if test "${var}" = SUBDIRS && test -n "$dotfirst"; then
+          # The added subdirectory ${val} needs to be mentioned after '.'.
+          # Since we don't have '.' among SUBDIRS so far, add it now.
+          val=". ${val}"
+        fi
         echo "${var} += ${val}"
         eval "makefile_am_edit${edit}_var="
       fi
@@ -3838,7 +3844,7 @@ func_emit_po_POTFILES_in ()
 #                   sed expression for resolving ${gl_include_guard_prefix}
 # - destfile        filename relative to destdir of makefile being generated
 # Input/Output:
-# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val}
+# - makefile_am_edits and makefile_am_edit${edit}_{dir,var,val,dotfirst}
 #                   list of edits to be done to Makefile.am variables
 # Output:
 # - uses_subdirs    nonempty if object files in subdirs exist
@@ -3987,8 +3993,14 @@ func_emit_tests_Makefile_am ()
     eval dir=\"\$makefile_am_edit${edit}_dir\"
     eval var=\"\$makefile_am_edit${edit}_var\"
     eval val=\"\$makefile_am_edit${edit}_val\"
+    eval dotfirst=\"\$makefile_am_edit${edit}_dotfirst\"
     if test -n "$var"; then
       if test "${dir}Makefile.am" = "$destfile" || test "./${dir}Makefile.am" = "$destfile"; then
+        if test "${var}" = SUBDIRS && test -n "$dotfirst"; then
+          # The added subdirectory ${val} needs to be mentioned after '.'.
+          # But we have '.' among SUBDIRS already, so do nothing.
+          :
+        fi
         echo "${var} += ${val}"
         eval "makefile_am_edit${edit}_var="
       fi
@@ -5253,15 +5265,19 @@ s,^\(.................................................[^ ]*\) *,                
   # Some of these edits apply to files that we will generate; others are
   # under the responsibility of the developer.
   makefile_am_edits=0
-  # func_note_Makefile_am_edit dir var value
+  # func_note_Makefile_am_edit dir var value [dotfirst]
   # remembers that ${dir}Makefile.am needs to be edited to that ${var} mentions
   # ${value}.
+  # If ${dotfirst} is non-empty, this mention needs to be present after '.'.
+  # This is a special hack for the SUBDIRS variable, cf.
+  # <https://www.gnu.org/software/automake/manual/html_node/Subdirectories.html>.
   func_note_Makefile_am_edit ()
   {
     makefile_am_edits=`expr $makefile_am_edits + 1`
     eval makefile_am_edit${makefile_am_edits}_dir=\"\$1\"
     eval makefile_am_edit${makefile_am_edits}_var=\"\$2\"
     eval makefile_am_edit${makefile_am_edits}_val=\"\$3\"
+    eval makefile_am_edit${makefile_am_edits}_dotfirst=\"\$4\"
   }
   if test "$makefile_am" = Makefile.am; then
     sourcebase_dir=`echo "$sourcebase" | sed -n -e 's,/[^/]*$,/,p'`
@@ -5277,7 +5293,7 @@ s,^\(.................................................[^ ]*\) *,                
     if test "$makefile_am" = Makefile.am; then
       testsbase_dir=`echo "$testsbase" | sed -n -e 's,/[^/]*$,/,p'`
       testsbase_base=`basename "$testsbase"`
-      func_note_Makefile_am_edit "$testsbase_dir" SUBDIRS "$testsbase_base"
+      func_note_Makefile_am_edit "$testsbase_dir" SUBDIRS "$testsbase_base" true
     fi
   fi
   func_note_Makefile_am_edit "" ACLOCAL_AMFLAGS "-I ${m4base}"
