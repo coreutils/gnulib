@@ -3,6 +3,7 @@ tests/test-count-trailing-zeros.c
 tests/macros.h
 
 Depends-on:
+limits-h
 
 configure.ac:
 

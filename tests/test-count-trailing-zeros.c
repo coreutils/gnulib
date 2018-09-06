@@ -29,11 +29,6 @@
 #define ULONG_BIT (sizeof (unsigned long int) * CHAR_BIT)
 #define ULLONG_BIT (sizeof (unsigned long long int) * CHAR_BIT)
 
-#ifndef ULLONG_MAX
-# define HALF (1ULL << (sizeof (unsigned long long int) * CHAR_BIT - 1))
-# define ULLONG_MAX (HALF - 1 + HALF)
-#endif
-
 int
 main (int argc, char *argv[])
 {
