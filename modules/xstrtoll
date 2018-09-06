@@ -6,6 +6,7 @@ lib/xstrtoll.c
 lib/xstrtoull.c
 
 Depends-on:
+limits-h
 strtoll
 strtoull
 xstrtol

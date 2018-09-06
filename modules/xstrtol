@@ -14,7 +14,6 @@ exitfail
 error
 getopt-gnu
 gettext-h
-intprops
 inttypes-incomplete
 
 configure.ac:
