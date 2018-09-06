@@ -22,13 +22,18 @@ BeOS.
 Note that the gnulib replacement code is functional but not atomic.
 
 @item
+The @code{F_DUPFD_CLOEXEC} action of this function sets the
+@code{FD_CLOEXEC} flag on the wrong file descriptor on some platforms:
+Haiku.
+
+@item
 The @code{F_DUPFD} action of this function does not reject
 out-of-range targets properly on some platforms:
 AIX 7.1, Cygwin 1.5.x, Haiku.
 
 @item
 The @code{F_DUPFD} action of this function mistakenly clears
-FD_CLOEXEC on the source descriptor on some platforms:
+@code{FD_CLOEXEC} on the source descriptor on some platforms:
 Haiku.
 @end itemize
 

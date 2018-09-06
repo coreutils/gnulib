@@ -329,6 +329,12 @@ rpl_fcntl (int fd, int action, /* arg */...)
         result = dupfd (fd, target, O_CLOEXEC);
         break;
 #else /* HAVE_FCNTL */
+# if defined __HAIKU__
+        /* On Haiku, the system fcntl (fd, F_DUPFD_CLOEXEC, target) sets
+           the O_CLOEXEC flag on fd, not on target.  Therefore avoid the
+           system fcntl in this case.  */
+#  define have_dupfd_cloexec -1
+# else
         /* Try the system call first, if the headers claim it exists
            (that is, if GNULIB_defined_F_DUPFD_CLOEXEC is 0), since we
            may be running with a glibc that has the macro but with an
@@ -343,10 +349,10 @@ rpl_fcntl (int fd, int action, /* arg */...)
             if (0 <= result || errno != EINVAL)
               {
                 have_dupfd_cloexec = 1;
-# if REPLACE_FCHDIR
+#  if REPLACE_FCHDIR
                 if (0 <= result)
                   result = _gl_register_dup (fd, result);
-# endif
+#  endif
               }
             else
               {
@@ -357,6 +363,7 @@ rpl_fcntl (int fd, int action, /* arg */...)
               }
           }
         else
+# endif
           result = rpl_fcntl (fd, F_DUPFD, target);
         if (0 <= result && have_dupfd_cloexec == -1)
           {
