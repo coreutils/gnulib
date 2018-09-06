@@ -39,13 +39,17 @@
 
 #include "macros.h"
 
+/* Compile-time verification of expression X.
+   In this file, we need it as a statement, rather than as a declaration.  */
+#define verify_stmt(x) do { verify (x); } while (0)
+
 /* VERIFY (X) uses a static assertion for compilers that are known to work,
    and falls back on a dynamic assertion for other compilers.
    These tests should be checkable via 'verify' rather than 'ASSERT', but
    using 'verify' would run into a bug with HP-UX 11.23 cc; see
    <https://lists.gnu.org/r/bug-gnulib/2011-05/msg00401.html>.  */
 #if __GNUC__ || __SUNPRO_C
-# define VERIFY(x) do { verify (x); } while (0)
+# define VERIFY(x) verify_stmt (x)
 #else
 # define VERIFY(x) ASSERT (x)
 #endif
@@ -114,8 +118,10 @@ main (void)
   VERIFY (TYPE_MINIMUM (unsigned long int) == 0);
   VERIFY (TYPE_MAXIMUM (unsigned long int) == ULONG_MAX);
   #ifdef LLONG_MAX
-   verify (TYPE_MINIMUM (long long int) == LLONG_MIN);
-   verify (TYPE_MAXIMUM (long long int) == LLONG_MAX);
+   verify_stmt (TYPE_MINIMUM (long long int) == LLONG_MIN);
+   verify_stmt (TYPE_MAXIMUM (long long int) == LLONG_MAX);
+   verify_stmt (TYPE_MINIMUM (unsigned long long int) == 0);
+   verify_stmt (TYPE_MAXIMUM (unsigned long long int) == ULLONG_MAX);
   #endif
   VERIFY (TYPE_MINIMUM (intmax_t) == INTMAX_MIN);
   VERIFY (TYPE_MAXIMUM (intmax_t) == INTMAX_MAX);
@@ -124,18 +130,18 @@ main (void)
 
   /* TYPE_WIDTH.  */
   #ifdef CHAR_WIDTH
-   verify (TYPE_WIDTH (char) == CHAR_WIDTH);
-   verify (TYPE_WIDTH (signed char) == SCHAR_WIDTH);
-   verify (TYPE_WIDTH (unsigned char) == UCHAR_WIDTH);
-   verify (TYPE_WIDTH (short int) == SHRT_WIDTH);
-   verify (TYPE_WIDTH (unsigned short int) == USHRT_WIDTH);
-   verify (TYPE_WIDTH (int) == INT_WIDTH);
-   verify (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
-   verify (TYPE_WIDTH (long int) == LONG_WIDTH);
-   verify (TYPE_WIDTH (unsigned long int) == ULONG_WIDTH);
+   verify_stmt (TYPE_WIDTH (char) == CHAR_WIDTH);
+   verify_stmt (TYPE_WIDTH (signed char) == SCHAR_WIDTH);
+   verify_stmt (TYPE_WIDTH (unsigned char) == UCHAR_WIDTH);
+   verify_stmt (TYPE_WIDTH (short int) == SHRT_WIDTH);
+   verify_stmt (TYPE_WIDTH (unsigned short int) == USHRT_WIDTH);
+   verify_stmt (TYPE_WIDTH (int) == INT_WIDTH);
+   verify_stmt (TYPE_WIDTH (unsigned int) == UINT_WIDTH);
+   verify_stmt (TYPE_WIDTH (long int) == LONG_WIDTH);
+   verify_stmt (TYPE_WIDTH (unsigned long int) == ULONG_WIDTH);
    #ifdef LLONG_WIDTH
-    verify (TYPE_WIDTH (long long int) == LLONG_WIDTH);
-    verify (TYPE_WIDTH (unsigned long long int) == ULLONG_WIDTH);
+    verify_stmt (TYPE_WIDTH (long long int) == LLONG_WIDTH);
+    verify_stmt (TYPE_WIDTH (unsigned long long int) == ULLONG_WIDTH);
    #endif
   #endif
 
