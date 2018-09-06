@@ -8,6 +8,7 @@ m4/longlong.m4
 m4/strtoll.m4
 
 Depends-on:
+limits-h
 stdlib
 
 configure.ac:
