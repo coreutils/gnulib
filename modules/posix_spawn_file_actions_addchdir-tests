@@ -1,0 +1,20 @@
+Files:
+tests/test-posix_spawn_file_actions_addchdir.c
+tests/test-posix_spawn4.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+posix_spawn_file_actions_init
+posix_spawnp-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-posix_spawn_file_actions_addchdir
+check_PROGRAMS += test-posix_spawn_file_actions_addchdir
+
+if POSIX_SPAWN_PORTED
+TESTS += test-posix_spawn4
+check_PROGRAMS += test-posix_spawn4
+endif
