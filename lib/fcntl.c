@@ -331,7 +331,7 @@ rpl_fcntl (int fd, int action, /* arg */...)
 #else /* HAVE_FCNTL */
 # if defined __HAIKU__
         /* On Haiku, the system fcntl (fd, F_DUPFD_CLOEXEC, target) sets
-           the O_CLOEXEC flag on fd, not on target.  Therefore avoid the
+           the FD_CLOEXEC flag on fd, not on target.  Therefore avoid the
            system fcntl in this case.  */
 #  define have_dupfd_cloexec -1
 # else
