@@ -284,6 +284,12 @@ __spawni (pid_t *pid, const char *file,
                 /* The 'dup2' call failed.  */
                 _exit (SPAWN_ERROR);
               break;
+
+            case spawn_do_chdir:
+              if (chdir (action->action.chdir_action.path) < 0)
+                /* The 'chdir' call failed.  */
+                _exit (SPAWN_ERROR);
+              break;
             }
         }
     }
