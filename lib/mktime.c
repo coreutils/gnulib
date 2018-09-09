@@ -76,11 +76,7 @@
 # define NEED_MKTIME_WORKING DEBUG_MKTIME
 #endif
 
-#ifdef _LIBC
-typedef long int mktime_offset_t;
-#else
-# include "mktime-internal.h"
-#endif
+#include "mktime-internal.h"
 
 #ifndef _LIBC
 static void

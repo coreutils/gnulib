@@ -23,11 +23,7 @@
 
 #include <time.h>
 
-#ifdef _LIBC
-typedef long int mktime_offset_t;
-#else
-# include "mktime-internal.h"
-#endif
+#include "mktime-internal.h"
 
 time_t
 timegm (struct tm *tmp)
