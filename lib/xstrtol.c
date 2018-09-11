@@ -42,6 +42,8 @@
 
 #include "assure.h"
 
+#define TYPE_SIGNED(t) ((t) -1 < 0)
+
 static strtol_error
 bkm_scale (__strtol_t *x, int scale_factor)
 {
