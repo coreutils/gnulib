@@ -286,6 +286,7 @@ main (int argc, char *argv[])
         ASSERT (p);
         ASSERT (p - haystack == i);
       }
+    free (haystack);
   }
 
   return 0;
