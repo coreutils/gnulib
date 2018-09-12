@@ -212,5 +212,27 @@ main ()
     free (haystack);
   }
 
+  /* Test long needles.  */
+  {
+    size_t m = 1024;
+    char *haystack = (char *) malloc (2 * m + 1);
+    char *needle = (char *) malloc (m + 1);
+    if (haystack != NULL && needle != NULL)
+      {
+        const char *p;
+        haystack[0] = 'x';
+        memset (haystack + 1, ' ', m - 1);
+        memset (haystack + m, 'x', m);
+        haystack[2 * m] = '\0';
+        memset (needle, 'x', m);
+        needle[m] = '\0';
+        p = c_strstr (haystack, needle);
+        ASSERT (p);
+        ASSERT (p - haystack == m);
+      }
+    free (needle);
+    free (haystack);
+  }
+
   return 0;
 }
