@@ -3396,7 +3396,12 @@ problems are not worked around by Gnulib.
 * gethostbyname::
 * getwd::
 * h_errno::
+@ifhtml
+* _index::
+@end ifhtml
+@ifnothtml
 * index::
+@end ifnothtml
 * makecontext::
 * mktemp::
 * pthread_attr_getstackaddr::

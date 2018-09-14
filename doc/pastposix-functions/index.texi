@@ -1,4 +1,9 @@
+@ifhtml
+@node _index
+@end ifhtml
+@ifnothtml
 @node index
+@end ifnothtml
 @section @code{index}
 @findex index
 
