@@ -1,4 +1,4 @@
-# strstr.m4 serial 19
+# strstr.m4 serial 20
 dnl Copyright (C) 2008-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,25 +12,34 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
   if test $HAVE_MEMCHR = 0 || test $REPLACE_MEMCHR = 1; then
     REPLACE_STRSTR=1
   else
-    dnl Detect https://sourceware.org/bugzilla/show_bug.cgi?id=12092.
+    dnl Detect https://sourceware.org/bugzilla/show_bug.cgi?id=12092
+    dnl and https://sourceware.org/bugzilla/show_bug.cgi?id=23637.
     AC_CACHE_CHECK([whether strstr works],
       [gl_cv_func_strstr_works_always],
-      [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
+      [AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM([[
 #include <string.h> /* for strstr */
+#ifdef __GNU_LIBRARY__
+ #include <features.h>
+ #if __GLIBC__ == 2 && __GLIBC_MINOR__ == 28
+  Unlucky user
+ #endif
+#endif
 #define P "_EF_BF_BD"
 #define HAYSTACK "F_BD_CE_BD" P P P P "_C3_88_20" P P P "_C3_A7_20" P
 #define NEEDLE P P P P P
-]], [[return !!strstr (HAYSTACK, NEEDLE);
-    ]])],
-        [gl_cv_func_strstr_works_always=yes],
-        [gl_cv_func_strstr_works_always=no],
-        [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  uClibc is not
-         dnl affected, since it uses different source code for strstr than
-         dnl glibc.
-         dnl Assume that it works on all other platforms, even if it is not
-         dnl linear.
-         AC_EGREP_CPP([Lucky user],
-           [
+]],
+            [[return !!strstr (HAYSTACK, NEEDLE);
+            ]])],
+         [gl_cv_func_strstr_works_always=yes],
+         [gl_cv_func_strstr_works_always=no],
+         [dnl glibc 2.12 and cygwin 1.7.7 have a known bug.  uClibc is not
+          dnl affected, since it uses different source code for strstr than
+          dnl glibc.
+          dnl Assume that it works on all other platforms, even if it is not
+          dnl linear.
+          AC_EGREP_CPP([Lucky user],
+            [
 #ifdef __GNU_LIBRARY__
  #include <features.h>
  #if ((__GLIBC__ == 2 && __GLIBC_MINOR__ > 12) || (__GLIBC__ > 2)) \
@@ -45,10 +54,10 @@ AC_DEFUN([gl_FUNC_STRSTR_SIMPLE],
 #else
   Lucky user
 #endif
-           ],
-           [gl_cv_func_strstr_works_always="guessing yes"],
-           [gl_cv_func_strstr_works_always="guessing no"])
-        ])
+            ],
+            [gl_cv_func_strstr_works_always="guessing yes"],
+            [gl_cv_func_strstr_works_always="guessing no"])
+         ])
       ])
     case "$gl_cv_func_strstr_works_always" in
       *yes) ;;

@@ -16,6 +16,9 @@ glibc 2.10.
 This function can trigger false positives for long periodic needles on
 some platforms:
 glibc 2.12, Cygwin 1.7.7.
+@item
+This function may fail to find matches on some platforms:
+glibc 2.28.
 @end itemize
 
 Portability problems fixed by Gnulib @code{strstr}:
