@@ -35,6 +35,18 @@
 
 #include "localename.h"
 
+#if HAVE_CFLOCALECOPYPREFERREDLANGUAGES || HAVE_CFPREFERENCESCOPYAPPVALUE
+# if HAVE_CFLOCALECOPYPREFERREDLANGUAGES
+#  include <CoreFoundation/CFLocale.h>
+# elif HAVE_CFPREFERENCESCOPYAPPVALUE
+#  include <CoreFoundation/CFPreferences.h>
+# endif
+# include <CoreFoundation/CFPropertyList.h>
+# include <CoreFoundation/CFArray.h>
+# include <CoreFoundation/CFString.h>
+extern void gl_locale_name_canonicalize (char *name);
+#endif
+
 #if 1
 
 # undef setlocale
@@ -892,14 +904,81 @@ rpl_setlocale (int category, const char *locale)
                  )
                 if (setlocale_single (cat, name) == NULL)
 # if defined __APPLE__ && defined __MACH__
-                  /* On Mac OS X 10.13, some locales can be set through
-                     System Preferences > Language & Region, that are not
-                     supported by libc.  The system's setlocale() falls
-                     back to "C" for these locale categories.  Let's do the
-                     same, but print a warning, to limit user expectations.  */
-                  fprintf (stderr,
-                           "Warning: Failed to set locale category %s to %s.\n",
-                           category_to_name (cat), name);
+                  {
+                    /* On Mac OS X 10.13, some locales can be set through
+                       System Preferences > Language & Region, that are not
+                       supported by libc.  The system's setlocale() falls
+                       back to "C" for these locale categories.  We can possibly
+                       do better.  If we can't, print a warning, to limit user
+                       expectations.  */
+                    int warn = 1;
+
+                    if (cat == LC_CTYPE)
+                      warn = (setlocale_single (cat, "UTF-8") == NULL);
+#  if HAVE_CFLOCALECOPYPREFERREDLANGUAGES || HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.4 or newer */
+                    else if (cat == LC_MESSAGES)
+                      {
+                        /* Take the primary language preference.  */
+#   if HAVE_CFLOCALECOPYPREFERREDLANGUAGES /* MacOS X 10.5 or newer */
+                        CFArrayRef prefArray = CFLocaleCopyPreferredLanguages ();
+#   elif HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.4 or newer */
+                        CFTypeRef preferences =
+                          CFPreferencesCopyAppValue (CFSTR ("AppleLanguages"),
+                                                     kCFPreferencesCurrentApplication);
+                        if (preferences != NULL
+                            && CFGetTypeID (preferences) == CFArrayGetTypeID ())
+                          {
+                            CFArrayRef prefArray = (CFArrayRef)preferences;
+#   endif
+                            int n = CFArrayGetCount (prefArray);
+                            if (n > 0)
+                              {
+                                char buf[256];
+                                CFTypeRef element = CFArrayGetValueAtIndex (prefArray, 0);
+                                if (element != NULL
+                                    && CFGetTypeID (element) == CFStringGetTypeID ()
+                                    && CFStringGetCString ((CFStringRef)element,
+                                                           buf, sizeof (buf),
+                                                           kCFStringEncodingASCII))
+                                  {
+                                    /* Remove the country.
+                                       E.g. "zh-Hans-DE" -> "zh-Hans".  */
+                                    char *last_minus = strrchr (buf, '-');
+                                    if (last_minus != NULL)
+                                      *last_minus = '\0';
+
+                                    /* Convert to Unix locale name.
+                                       E.g. "zh-Hans" -> "zh_CN".  */
+                                    gl_locale_name_canonicalize (buf);
+
+                                    /* Try setlocale with this value.  */
+                                    warn = (setlocale_single (cat, buf) == NULL);
+                                  }
+                              }
+#   if HAVE_CFLOCALECOPYPREFERREDLANGUAGES /* MacOS X 10.5 or newer */
+                        CFRelease (prefArray);
+#   elif HAVE_CFPREFERENCESCOPYAPPVALUE /* MacOS X 10.4 or newer */
+                          }
+#   endif
+                      }
+#  endif
+                    /* No fallback possible for LC_NUMERIC.  The application
+                       should use the locale properties
+                       kCFLocaleDecimalSeparator, kCFLocaleGroupingSeparator.
+                       No fallback possible for LC_TIME.  The application should
+                       use the locale property kCFLocaleCalendarIdentifier.
+                       No fallback possible for LC_COLLATE.  The application
+                       should use the locale properties
+                       kCFLocaleCollationIdentifier, kCFLocaleCollatorIdentifier.
+                       No fallback possible for LC_MONETARY.  The application
+                       should use the locale properties
+                       kCFLocaleCurrencySymbol, kCFLocaleCurrencyCode.  */
+
+                    if (warn)
+                      fprintf (stderr,
+                               "Warning: Failed to set locale category %s to %s.\n",
+                               category_to_name (cat), name);
+                  }
 # else
                   goto fail;
 # endif
