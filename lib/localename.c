@@ -1143,7 +1143,7 @@ extern char * getlocalename_l(int, locale_t);
 
 
 #if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-/* Mac OS X 10.2 or newer */
+/* Mac OS X 10.4 or newer */
 
 /* Canonicalize a Mac OS X locale name to a Unix locale name.
    NAME is a sufficiently large buffer.
@@ -2932,7 +2932,7 @@ gl_locale_name_default (void)
      codeset.  */
 
 # if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
-  /* Mac OS X 10.2 or newer */
+  /* Mac OS X 10.4 or newer */
   {
     /* Cache the locale name, since CoreFoundation calls are expensive.  */
     static const char *cached_localename;
@@ -2940,29 +2940,28 @@ gl_locale_name_default (void)
     if (cached_localename == NULL)
       {
         char namebuf[256];
-#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.3 or newer */
+#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.5 or newer */
         CFLocaleRef locale = CFLocaleCopyCurrent ();
         CFStringRef name = CFLocaleGetIdentifier (locale);
-
-        if (CFStringGetCString (name, namebuf, sizeof (namebuf),
-                                kCFStringEncodingASCII))
-          {
-            gl_locale_name_canonicalize (namebuf);
-            cached_localename = strdup (namebuf);
-          }
-        CFRelease (locale);
-#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.2 or newer */
+#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.4 or newer */
         CFTypeRef value =
           CFPreferencesCopyAppValue (CFSTR ("AppleLocale"),
                                      kCFPreferencesCurrentApplication);
-        if (value != NULL
-            && CFGetTypeID (value) == CFStringGetTypeID ()
-            && CFStringGetCString ((CFStringRef)value,
-                                   namebuf, sizeof (namebuf),
-                                   kCFStringEncodingASCII))
+        if (value != NULL && CFGetTypeID (value) == CFStringGetTypeID ())
           {
-            gl_locale_name_canonicalize (namebuf);
-            cached_localename = strdup (namebuf);
+            CFStringRef name = (CFStringRef)value;
+#  endif
+
+            if (CFStringGetCString (name, namebuf, sizeof (namebuf),
+                                    kCFStringEncodingASCII))
+              {
+                gl_locale_name_canonicalize (namebuf);
+                cached_localename = strdup (namebuf);
+              }
+
+#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.5 or newer */
+        CFRelease (locale);
+#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.4 or newer */
           }
 #  endif
         if (cached_localename == NULL)
