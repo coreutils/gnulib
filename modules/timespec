@@ -8,6 +8,7 @@ m4/timespec.m4
 
 Depends-on:
 extern-inline
+snippet/arg-nonnull
 time
 verify
 
