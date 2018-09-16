@@ -58,12 +58,14 @@ AC_DEFUN([gt_INTL_MACOSX],
        [gt_cv_func_CFLocaleCopyPreferredLanguages=yes],
        [gt_cv_func_CFLocaleCopyPreferredLanguages=no])
      LIBS="$gt_save_LIBS"])
-  if test $gt_cv_func_CFLocaleCopyCurrent = yes; then
+  if test $gt_cv_func_CFLocaleCopyPreferredLanguages = yes; then
     AC_DEFINE([HAVE_CFLOCALECOPYPREFERREDLANGUAGES], [1],
       [Define to 1 if you have the Mac OS X function CFLocaleCopyPreferredLanguages in the CoreFoundation framework.])
   fi
   INTL_MACOSX_LIBS=
-  if test $gt_cv_func_CFPreferencesCopyAppValue = yes || test $gt_cv_func_CFLocaleCopyCurrent = yes || test $gt_cv_func_CFLocaleCopyPreferredLanguages = yes; then
+  if test $gt_cv_func_CFPreferencesCopyAppValue = yes \
+     || test $gt_cv_func_CFLocaleCopyCurrent = yes \
+     || test $gt_cv_func_CFLocaleCopyPreferredLanguages = yes; then
     INTL_MACOSX_LIBS="-Wl,-framework -Wl,CoreFoundation"
   fi
   AC_SUBST([INTL_MACOSX_LIBS])
