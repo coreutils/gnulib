@@ -29,6 +29,7 @@
 /* Specification.  */
 #include <locale.h>
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -822,6 +823,7 @@ rpl_setlocale (int category, const char *locale)
           /* Set LC_CTYPE first.  Then the other categories.  */
           static int const categories[] =
             {
+              LC_CTYPE,
               LC_NUMERIC,
               LC_TIME,
               LC_COLLATE,
@@ -848,8 +850,21 @@ rpl_setlocale (int category, const char *locale)
           if (base_name == NULL)
             base_name = gl_locale_name_default ();
 
-          if (setlocale_unixlike (LC_ALL, base_name) == NULL)
-            goto fail;
+          if (setlocale_unixlike (LC_ALL, base_name) != NULL)
+            {
+              /* LC_CTYPE category already set.  */
+              i = 1;
+            }
+          else
+            {
+              /* On Mac OS X, "UTF-8" is a valid locale name for LC_CTYPE but
+                 not for LC_ALL.  Therefore this call may fail.  So, try
+                 another base_name.  */
+              base_name = "C";
+              if (setlocale_unixlike (LC_ALL, base_name) == NULL)
+                goto fail;
+              i = 0;
+            }
 # if defined _WIN32 && ! defined __CYGWIN__
           /* On native Windows, setlocale(LC_ALL,...) may succeed but set the
              LC_CTYPE category to an invalid value ("C") when it does not
@@ -859,7 +874,7 @@ rpl_setlocale (int category, const char *locale)
             goto fail;
 # endif
 
-          for (i = 0; i < sizeof (categories) / sizeof (categories[0]); i++)
+          for (; i < sizeof (categories) / sizeof (categories[0]); i++)
             {
               int cat = categories[i];
               const char *name;
@@ -876,7 +891,18 @@ rpl_setlocale (int category, const char *locale)
 # endif
                  )
                 if (setlocale_single (cat, name) == NULL)
+# if defined __APPLE__ && defined __MACH__
+                  /* On Mac OS X 10.13, some locales can be set through
+                     System Preferences > Language & Region, that are not
+                     supported by libc.  The system's setlocale() falls
+                     back to "C" for these locale categories.  Let's do the
+                     same, but print a warning, to limit user expectations.  */
+                  fprintf (stderr,
+                           "Warning: Failed to set locale category %s to %s.\n",
+                           category_to_name (cat), name);
+# else
                   goto fail;
+# endif
             }
 
           /* All steps were successful.  */
