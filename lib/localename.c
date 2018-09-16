@@ -1308,22 +1308,44 @@ gl_locale_name_canonicalize (char *name)
     /* Mac OS X has "az-Arab", "az-Cyrl", "az-Latn".
        The default script for az on Unix is Latin.  */
     { "az-Latn", "az" },
+    /* Mac OS X has "bs-Cyrl", "bs-Latn".
+       The default script for bs on Unix is Latin.  */
+    { "bs-Latn", "bs" },
     /* Mac OS X has "ga-dots".  Does not yet exist on Unix.  */
     { "ga-dots", "ga" },
-    /* Mac OS X has "kk-Cyrl".  Does not yet exist on Unix.  */
+    /* Mac OS X has "kk-Cyrl".
+       The default script for kk on Unix is Cyrillic.  */
+    { "kk-Cyrl", "kk" },
     /* Mac OS X has "mn-Cyrl", "mn-Mong".
        The default script for mn on Unix is Cyrillic.  */
     { "mn-Cyrl", "mn" },
     /* Mac OS X has "ms-Arab", "ms-Latn".
        The default script for ms on Unix is Latin.  */
     { "ms-Latn", "ms" },
+    /* Mac OS X has "pa-Arab", "pa-Guru".
+       Country codes are used to distinguish these on Unix.  */
+    { "pa-Arab", "pa_PK" },
+    { "pa-Guru", "pa_IN" },
+    /* Mac OS X has "shi-Latn", "shi-Tfng".  Does not yet exist on Unix.  */
+    /* Mac OS X has "sr-Cyrl", "sr-Latn".
+       The default script for sr on Unix is Cyrillic.  */
+    { "sr-Cyrl", "sr" },
     /* Mac OS X has "tg-Cyrl".
        The default script for tg on Unix is Cyrillic.  */
     { "tg-Cyrl", "tg" },
-    /* Mac OS X has "tk-Cyrl".  Does not yet exist on Unix.  */
+    /* Mac OS X has "tk-Cyrl".
+       The default script for tk on Unix is Cyrillic.  */
+    { "tk-Cyrl", "tk" },
     /* Mac OS X has "tt-Cyrl".
        The default script for tt on Unix is Cyrillic.  */
     { "tt-Cyrl", "tt" },
+    /* Mac OS X has "uz-Arab", "uz-Cyrl", "uz-Latn".
+       The default script for uz on Unix is Latin.  */
+    { "uz-Latn", "uz" },
+    /* Mac OS X has "vai-Latn", "vai-Vaii".  Does not yet exist on Unix.  */
+    /* Mac OS X has "yue-Hans", "yue-Hant".
+       The default script for yue on Unix is Simplified Han.  */
+    { "yue-Hans", "yue" },
     /* Mac OS X has "zh-Hans", "zh-Hant".
        Country codes are used to distinguish these on Unix.  */
     { "zh-Hans", "zh_CN" },
@@ -1337,6 +1359,7 @@ gl_locale_name_canonicalize (char *name)
   static const script_entry script_table[] = {
     { "Arab", "arabic" },
     { "Cyrl", "cyrillic" },
+    { "Latn", "latin" },
     { "Mong", "mongolian" }
   };
 
