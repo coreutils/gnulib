@@ -2121,6 +2121,22 @@ delete (size_t del, position_set *s)
   return 0;
 }
 
+static void
+prune (position_set *s)
+{
+  size_t d = 0;
+
+  for (size_t i = 0; i < s->nelem; i++)
+    {
+      if (s->elems[i].constraint == 0)
+        continue;
+
+      s->elems[d++] = s->elems[i];
+    }
+
+  s->nelem = d;
+}
+
 /* Replace a position with the followed set.  */
 static void
 replace (position_set *dst, size_t del, position_set *add,
@@ -2314,6 +2330,130 @@ state_separate_contexts (position_set const *s)
   return separate_contexts;
 }
 
+enum
+{
+  /* Single token is repeated.  It is distinguished from non-repeated.  */
+  OPT_REPEAT = (1 << 0),
+
+  /* Multiple tokens are repeated.  This flag is on at head of tokens.  The
+     node is not merged.  */
+  OPT_LPAREN = (1 << 1),
+
+  /* Multiple branches are joined.  The node is not merged.  */
+  OPT_RPAREN = (1 << 2),
+
+  /* The node is walked.  If the node is found in walking again, OPT_RPAREN
+     flag is turned on. */
+  OPT_WALKED = (1 << 3),
+
+  /* The node is queued.  The node is not queued again.  */
+  OPT_QUEUED = (1 << 4)
+};
+
+static size_t
+merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
+                 int *flags, position_set *merged)
+{
+  size_t sindex;
+  size_t dindex;
+
+  for (size_t i = 0; i < d->follows[tindex].nelem; i++)
+    {
+      dindex = d->follows[tindex].elems[i].index;
+
+      /* Skip the node as pruned in future.  */
+      if (d->follows[tindex].elems[i].constraint == 0)
+        continue;
+
+      if (tindex < dindex && !(flags[dindex] & OPT_QUEUED))
+        {
+          queue[nqueue++] = dindex;
+          flags[dindex] |= OPT_QUEUED;
+        }
+
+      if (flags[dindex] & (OPT_LPAREN | OPT_RPAREN))
+        continue;
+
+      for (size_t j = i + 1; j < d->follows[tindex].nelem; j++)
+        {
+          sindex = d->follows[tindex].elems[j].index;
+
+          if (d->follows[tindex].elems[j].constraint == 0)
+            continue;
+
+          if (flags[sindex] & (OPT_LPAREN | OPT_RPAREN))
+            continue;
+
+          if (d->tokens[sindex] != d->tokens[dindex])
+            continue;
+
+          if (d->follows[tindex].elems[i].constraint !=
+              d->follows[tindex].elems[j].constraint)
+            continue;
+
+          if ((flags[sindex] ^ flags[dindex]) & OPT_REPEAT)
+            continue;
+
+          if (flags[sindex] & OPT_REPEAT)
+            delete (sindex, &d->follows[sindex]);
+
+          merge (&d->follows[dindex], &d->follows[sindex], merged);
+          copy (merged, &d->follows[dindex]);
+
+          /* Mark it as pruned in future.  */
+          d->follows[tindex].elems[j].constraint = 0;
+        }
+    }
+
+  prune (&d->follows[tindex]);
+
+  return nqueue;
+}
+
+static void
+dfaoptimize (struct dfa *d)
+{
+  int *flags;
+  size_t *queue;
+  size_t nqueue;
+  position_set merged0;
+  position_set *merged;
+
+  flags = xnmalloc (d->tindex, sizeof *flags);
+  queue = xnmalloc (d->nleaves, sizeof *queue);
+
+  for (size_t i = 0; i < d->tindex; ++i)
+    flags[i] = 0;
+
+  for (size_t i = 0; i < d->tindex; ++i)
+    {
+      for (size_t j = 0; j < d->follows[i].nelem; j++)
+        {
+          if (d->follows[i].elems[j].index == i)
+            flags[d->follows[i].elems[j].index] |= OPT_REPEAT;
+          else if (d->follows[i].elems[j].index < i)
+            flags[d->follows[i].elems[j].index] |= OPT_LPAREN;
+          else if (flags[d->follows[i].elems[j].index] &=
+                   OPT_WALKED)
+            flags[d->follows[i].elems[j].index] |= OPT_RPAREN;
+          else
+            flags[d->follows[i].elems[j].index] |= OPT_WALKED;
+        }
+    }
+
+  merged = &merged0;
+  alloc_position_set (merged, d->nleaves);
+
+  nqueue = 0;
+  queue[nqueue++] = 0;
+
+  for (size_t i = 0; i < nqueue; i++)
+    nqueue = merge_nfa_state (d, queue, nqueue, queue[i], flags, merged);
+
+  free (merged->elems);
+  free (queue);
+  free (flags);
+}
 
 /* Perform bottom-up analysis on the parse tree, computing various functions.
    Note that at this point, we're pretending constructs like \< are real
@@ -2532,6 +2672,8 @@ dfaanalyze (struct dfa *d, bool searchflag)
       putc ('\n', stderr);
 #endif
     }
+
+  dfaoptimize (d);
 
 #ifdef DEBUG
   for (size_t i = 0; i < d->tindex; ++i)
@@ -3353,7 +3495,7 @@ dfa_supported (struct dfa const *d)
 }
 
 static void
-dfaoptimize (struct dfa *d)
+dfautf8noss (struct dfa *d)
 {
   if (!d->localeinfo.using_utf8)
     return;
@@ -3481,7 +3623,7 @@ dfacomp (char const *s, size_t len, struct dfa *d, bool searchflag)
 
   if (dfa_supported (d))
     {
-      dfaoptimize (d);
+      dfautf8noss (d);
       dfaanalyze (d, searchflag);
     }
   else
