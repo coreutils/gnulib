@@ -31,8 +31,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-extern char **environ;
-
 #define CHILD_PROGRAM_FILENAME "test-posix_spawn2.sh"
 
 static int

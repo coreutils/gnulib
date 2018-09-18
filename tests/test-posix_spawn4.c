@@ -31,8 +31,6 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-extern char **environ;
-
 static int
 fd_safer (int fd)
 {

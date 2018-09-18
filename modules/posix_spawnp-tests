@@ -15,11 +15,12 @@ posix_spawnattr_init
 posix_spawnattr_setsigmask
 posix_spawnattr_setflags
 posix_spawnattr_destroy
-sigprocmask
 stdbool
 unistd
 sys_wait
 dup
+environ
+sigprocmask
 
 configure.ac:
 AC_EGREP_CPP([notposix], [[
