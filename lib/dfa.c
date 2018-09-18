@@ -223,11 +223,14 @@ typedef ptrdiff_t state_num;
 /* Predefined token values.  */
 enum
 {
-  END = -1,                     /* END is a terminal symbol that matches the
+  END = -2,                     /* END is a terminal symbol that matches the
                                    end of input; any value of END or less in
                                    the parse tree is such a symbol.  Accepting
                                    states of the DFA are those that would have
                                    a transition on END.  */
+
+  BEG = -1,                     /* BEG is a beginning symbol that matches the
+                                   biginning of input.  */
 
   /* Ordinary character values are terminal symbols that match themselves.  */
 
@@ -630,9 +633,9 @@ mbs_to_wchar (wint_t *pwc, char const *s, size_t n, struct dfa *d)
 static void
 prtok (token t)
 {
-  if (t < 0)
+  if (t <= END)
     fprintf (stderr, "END");
-  else if (t < NOTCHAR)
+  else if (0 <= t && t < NOTCHAR)
     {
       unsigned int ch = t;
       fprintf (stderr, "0x%02x", ch);
@@ -642,6 +645,9 @@ prtok (token t)
       char const *s;
       switch (t)
         {
+        case BEG:
+          s = "BEG";
+          break;
         case EMPTY:
           s = "EMPTY";
           break;
@@ -1967,6 +1973,9 @@ dfaparse (char const *s, size_t len, struct dfa *d)
   if (!d->syntax.syntax_bits_set)
     dfaerror (_("no syntax specified"));
 
+  if (!d->nregexps)
+    addtok (d, BEG);
+
   d->parse.tok = lex (d);
   d->parse.depth = d->depth;
 
@@ -2180,7 +2189,7 @@ state_index (struct dfa *d, position_set const *s, int context)
   for (state_num j = 0; j < s->nelem; j++)
     {
       int c = s->elems[j].constraint;
-      if (d->tokens[s->elems[j].index] < 0)
+      if (d->tokens[s->elems[j].index] <= END)
         {
           if (succeeds_in_context (c, context, CTX_ANY))
             constraint |= c;
@@ -2380,6 +2389,8 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
   position_set merged;          /* Result of merging sets.  */
 
+  addtok (d, CAT);
+
 #ifdef DEBUG
   fprintf (stderr, "dfaanalyze:\n");
   for (size_t i = 0; i < d->tindex; ++i)
@@ -2540,26 +2551,20 @@ dfaanalyze (struct dfa *d, bool searchflag)
       }
 #endif
 
-  /* Get the epsilon closure of the firstpos of the regexp.  The result will
-     be the set of positions of state 0.  */
-  merged.nelem = 0;
-  for (size_t i = 0; i < stk[-1].nfirstpos; ++i)
-    insert (firstpos[i], &merged);
-
   /* For each follow set that is the follow set of a real position, replace
      it with its epsilon closure.  */
-  epsclosure (&merged, d);
+  epsclosure (&d->follows[0], d);
 
   /* Context wanted by some position.  */
-  int separate_contexts = state_separate_contexts (&merged);
+  int separate_contexts = state_separate_contexts (&d->follows[0]);
 
   /* Build the initial state.  */
   if (separate_contexts & CTX_NEWLINE)
-    state_index (d, &merged, CTX_NEWLINE);
+    state_index (d, &d->follows[0], CTX_NEWLINE);
   d->initstate_notbol = d->min_trcount
-    = state_index (d, &merged, separate_contexts ^ CTX_ANY);
+    = state_index (d, &d->follows[0], separate_contexts ^ CTX_ANY);
   if (separate_contexts & CTX_LETTER)
-    d->min_trcount = state_index (d, &merged, CTX_LETTER);
+    d->min_trcount = state_index (d, &d->follows[0], CTX_LETTER);
   d->min_trcount++;
   d->trcount = 0;
 
@@ -3783,7 +3788,7 @@ dfamust (struct dfa const *d)
   bool need_endline = false;
   bool case_fold_unibyte = d->syntax.case_fold && MB_CUR_MAX == 1;
 
-  for (size_t ri = 0; ri < d->tindex; ++ri)
+  for (size_t ri = 1; ri < d->tindex - 1; ++ri)
     {
       token t = d->tokens[ri];
       switch (t)
