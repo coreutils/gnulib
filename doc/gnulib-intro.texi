@@ -104,11 +104,11 @@ we fix bugs when they are reported.  Except that some rarely tested
 platforms are also low priority; bug fixes for these platforms can
 take longer.
 
-As of 2016, the list of supported platforms is the following:
+As of 2018, the list of supported platforms is the following:
 
 @itemize
 @item
-glibc systems.  With glibc 2.15 or newer, they are frequently tested.
+glibc systems.  With glibc 2.19 or newer, they are frequently tested.
 @c [Not very relevant in the long term.]
 @c The distributions Ubuntu, Fedora, RHEL, Arch Linux are frequently tested.
 @c CentOS is occasionally tested.
@@ -121,19 +121,21 @@ glibc on Linux is frequently tested.
 glibc on kFreeBSD is rarely tested.
 @end itemize
 @item
-Mac OS X.  In versions 10.11, it's occasionally tested.  In version
+Mac OS X.  In versions 10.13, it's occasionally tested.  In version
 10.5, it's rarely tested.
 @item
-FreeBSD 9.1 or newer is occasionally tested.
+FreeBSD 11.0 or newer is occasionally tested.
 @item
-OpenBSD 5.8 or newer is occasionally tested.
+OpenBSD 6.1 or newer is occasionally tested.
+@item
+NetBSD 7.0 or newer is occasionally tested.
 @item
 AIX 7.1 is occasionally tested.
 @item
 Solaris 10 and 11 are occasionally tested.  Solaris 9 and older are rarely
 tested and low priority.
 @item
-Cygwin 2.6 is occasionally tested.  Cygwin 1.7.x is rarely tested.
+Cygwin 2.9 is occasionally tested.  Cygwin 1.7.x is rarely tested.
 @item
 mingw is occasionally tested.  But note that some modules are currently
 unsupported on mingw: @code{mgetgroups}, @code{getugroups}, @code{idcache},
@@ -145,9 +147,9 @@ Only the latest version of mingw is tested; older versions are not supported.
 @item
 GNU Hurd 0.7 is rarely tested.
 @item
-NetBSD 7.0 or newer is rarely tested.
-@item
 Native Windows, with MSVC as compiler, is rarely tested and low priority.
+The versions of MSVC that are supported are MSVC 14 (Visual Studio 2015) or
+newer.
 @item
 @c There is musl-gcc on Ubuntu, and Alpine Linux 3.3.3.
 musl libc is rarely tested.
@@ -157,7 +159,7 @@ Minix 3.3.0 is rarely tested.
 HP-UX 11.31 is very rarely tested.
 @item
 @c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
-IRIX 6.5 is no longer tested.
+IRIX 6.5 is no very rarely tested.
 @item
 OSF/1 5.1 is no longer tested.
 @item
