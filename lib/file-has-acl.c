@@ -74,7 +74,7 @@ file_has_acl (char const *name, struct stat const *sb)
 # elif HAVE_ACL_GET_FILE
 
       /* POSIX 1003.1e (draft 17 -- abandoned) specific version.  */
-      /* Linux, FreeBSD, Mac OS X, IRIX, Tru64 */
+      /* Linux, FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
       int ret;
 
       if (HAVE_ACL_EXTENDED_FILE) /* Linux */
@@ -84,7 +84,7 @@ file_has_acl (char const *name, struct stat const *sb)
              ACL_TYPE_DEFAULT.  */
           ret = acl_extended_file (name);
         }
-      else /* FreeBSD, Mac OS X, IRIX, Tru64 */
+      else /* FreeBSD, Mac OS X, IRIX, Tru64, Cygwin >= 2.5 */
         {
 #  if HAVE_ACL_TYPE_EXTENDED /* Mac OS X */
           /* On Mac OS X, acl_get_file (name, ACL_TYPE_ACCESS)
@@ -100,7 +100,7 @@ file_has_acl (char const *name, struct stat const *sb)
             }
           else
             ret = -1;
-#  else /* FreeBSD, IRIX, Tru64 */
+#  else /* FreeBSD, IRIX, Tru64, Cygwin >= 2.5 */
           acl_t acl = acl_get_file (name, ACL_TYPE_ACCESS);
           if (acl)
             {
@@ -114,7 +114,7 @@ file_has_acl (char const *name, struct stat const *sb)
               /* On OSF/1, acl_get_file (name, ACL_TYPE_DEFAULT) always
                  returns NULL with errno not set.  There is no point in
                  making this call.  */
-#   else /* FreeBSD, IRIX */
+#   else /* FreeBSD, IRIX, Cygwin >= 2.5 */
               /* On Linux, FreeBSD, IRIX, acl_get_file (name, ACL_TYPE_ACCESS)
                  and acl_get_file (name, ACL_TYPE_DEFAULT) on a directory
                  either both succeed or both fail; it depends on the
@@ -125,8 +125,15 @@ file_has_acl (char const *name, struct stat const *sb)
                   acl = acl_get_file (name, ACL_TYPE_DEFAULT);
                   if (acl)
                     {
+#    ifdef __CYGWIN__ /* Cygwin >= 2.5 */
+                      ret = acl_access_nontrivial (acl);
+                      saved_errno = errno;
+                      acl_free (acl);
+                      errno = saved_errno;
+#    else
                       ret = (0 < acl_entries (acl));
                       acl_free (acl);
+#    endif
                     }
                   else
                     ret = -1;
@@ -141,7 +148,7 @@ file_has_acl (char const *name, struct stat const *sb)
         return - acl_errno_valid (errno);
       return ret;
 
-# elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
+# elif HAVE_FACL && defined GETACL /* Solaris, Cygwin < 2.5, not HP-UX */
 
 #  if defined ACL_NO_TRIVIAL
 
