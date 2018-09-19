@@ -3483,7 +3483,7 @@ dfa_supported (struct dfa const *d)
   return true;
 }
 
-/* Disable use of the superset DFA is it is not likely to help
+/* Disable use of the superset DFA if it is not likely to help
    performance.  */
 static void
 maybe_disable_superset_dfa (struct dfa *d)
