@@ -2342,9 +2342,9 @@ enum
   OPT_QUEUED = (1 << 4)
 };
 
-static size_t
-merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
-                 int *flags, position_set *merged)
+static ptrdiff_t
+merge_nfa_state (struct dfa *d, size_t *queue, ptrdiff_t nqueue, size_t tindex,
+                 char *flags, position_set *merged)
 {
   position_set *follows = d->follows;
   ptrdiff_t nelem = 0;
@@ -2369,7 +2369,7 @@ merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
       if (flags[dindex] & (OPT_LPAREN | OPT_RPAREN))
         continue;
 
-      for (size_t j = i + 1; j < follows[tindex].nelem; j++)
+      for (ptrdiff_t j = i + 1; j < follows[tindex].nelem; j++)
         {
           size_t sindex = follows[tindex].elems[j].index;
 
@@ -2404,28 +2404,27 @@ merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
 static void
 dfaoptimize (struct dfa *d)
 {
-  int *flags;
+  char *flags;
   size_t *queue;
-  size_t nqueue;
+  ptrdiff_t nqueue;
   position_set merged0;
   position_set *merged;
+  ptrdiff_t extra_space = d->tindex + sizeof *queue - 1;
+  extra_space -= extra_space % sizeof *queue;
 
-  flags = xnmalloc (d->tindex, sizeof *flags);
-  queue = xnmalloc (d->nleaves, sizeof *queue);
+  queue = xmalloc (d->nleaves * sizeof *queue + extra_space);
+  flags = (char *) (queue + d->nleaves);
+  memset (flags, 0, d->tindex * sizeof *flags);
 
-  for (size_t i = 0; i < d->tindex; ++i)
-    flags[i] = 0;
-
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (size_t i = 0; i < d->tindex; i++)
     {
-      for (size_t j = 0; j < d->follows[i].nelem; j++)
+      for (ptrdiff_t j = 0; j < d->follows[i].nelem; j++)
         {
           if (d->follows[i].elems[j].index == i)
             flags[d->follows[i].elems[j].index] |= OPT_REPEAT;
           else if (d->follows[i].elems[j].index < i)
             flags[d->follows[i].elems[j].index] |= OPT_LPAREN;
-          else if (flags[d->follows[i].elems[j].index] &=
-                   OPT_WALKED)
+          else if (flags[d->follows[i].elems[j].index] &= OPT_WALKED)
             flags[d->follows[i].elems[j].index] |= OPT_RPAREN;
           else
             flags[d->follows[i].elems[j].index] |= OPT_WALKED;
@@ -2438,12 +2437,11 @@ dfaoptimize (struct dfa *d)
   nqueue = 0;
   queue[nqueue++] = 0;
 
-  for (size_t i = 0; i < nqueue; i++)
+  for (ptrdiff_t i = 0; i < nqueue; i++)
     nqueue = merge_nfa_state (d, queue, nqueue, queue[i], flags, merged);
 
   free (merged->elems);
   free (queue);
-  free (flags);
 }
 
 /* Perform bottom-up analysis on the parse tree, computing various functions.
@@ -3921,7 +3919,7 @@ dfamust (struct dfa const *d)
   bool need_endline = false;
   bool case_fold_unibyte = d->syntax.case_fold && MB_CUR_MAX == 1;
 
-  for (size_t ri = 1; ri < d->tindex - 1; ++ri)
+  for (size_t ri = 1; ri + 1 < d->tindex; ri++)
     {
       token t = d->tokens[ri];
       switch (t)
