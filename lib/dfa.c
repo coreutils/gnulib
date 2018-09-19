@@ -2129,22 +2129,6 @@ delete (size_t del, position_set *s)
   return 0;
 }
 
-static void
-prune (position_set *s)
-{
-  size_t d = 0;
-
-  for (size_t i = 0; i < s->nelem; i++)
-    {
-      if (s->elems[i].constraint == 0)
-        continue;
-
-      s->elems[d++] = s->elems[i];
-    }
-
-  s->nelem = d;
-}
-
 /* Replace a position with the followed set.  */
 static void
 replace (position_set *dst, size_t del, position_set *add,
@@ -2362,16 +2346,19 @@ static size_t
 merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
                  int *flags, position_set *merged)
 {
-  size_t sindex;
-  size_t dindex;
+  position_set *follows = d->follows;
+  ptrdiff_t nelem = 0;
 
-  for (size_t i = 0; i < d->follows[tindex].nelem; i++)
+  for (ptrdiff_t i = 0; i < follows[tindex].nelem; i++)
     {
-      dindex = d->follows[tindex].elems[i].index;
+      size_t dindex = follows[tindex].elems[i].index;
 
       /* Skip the node as pruned in future.  */
-      if (d->follows[tindex].elems[i].constraint == 0)
+      unsigned int iconstraint = follows[tindex].elems[i].constraint;
+      if (iconstraint == 0)
         continue;
+
+      follows[tindex].elems[nelem++] = follows[tindex].elems[i];
 
       if (tindex < dindex && !(flags[dindex] & OPT_QUEUED))
         {
@@ -2382,11 +2369,11 @@ merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
       if (flags[dindex] & (OPT_LPAREN | OPT_RPAREN))
         continue;
 
-      for (size_t j = i + 1; j < d->follows[tindex].nelem; j++)
+      for (size_t j = i + 1; j < follows[tindex].nelem; j++)
         {
-          sindex = d->follows[tindex].elems[j].index;
+          size_t sindex = follows[tindex].elems[j].index;
 
-          if (d->follows[tindex].elems[j].constraint == 0)
+          if (follows[tindex].elems[j].constraint != iconstraint)
             continue;
 
           if (flags[sindex] & (OPT_LPAREN | OPT_RPAREN))
@@ -2395,25 +2382,21 @@ merge_nfa_state (struct dfa *d, size_t *queue, size_t nqueue, size_t tindex,
           if (d->tokens[sindex] != d->tokens[dindex])
             continue;
 
-          if (d->follows[tindex].elems[i].constraint !=
-              d->follows[tindex].elems[j].constraint)
-            continue;
-
           if ((flags[sindex] ^ flags[dindex]) & OPT_REPEAT)
             continue;
 
           if (flags[sindex] & OPT_REPEAT)
-            delete (sindex, &d->follows[sindex]);
+            delete (sindex, &follows[sindex]);
 
-          merge (&d->follows[dindex], &d->follows[sindex], merged);
-          copy (merged, &d->follows[dindex]);
+          merge (&follows[dindex], &follows[sindex], merged);
+          copy (merged, &follows[dindex]);
 
           /* Mark it as pruned in future.  */
-          d->follows[tindex].elems[j].constraint = 0;
+          follows[tindex].elems[j].constraint = 0;
         }
     }
 
-  prune (&d->follows[tindex]);
+  follows[tindex].nelem = nelem;
 
   return nqueue;
 }
