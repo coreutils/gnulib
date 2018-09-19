@@ -3483,8 +3483,10 @@ dfa_supported (struct dfa const *d)
   return true;
 }
 
+/* Disable use of the superset DFA is it is not likely to help
+   performance.  */
 static void
-dfautf8noss (struct dfa *d)
+maybe_disable_superset_dfa (struct dfa *d)
 {
   if (!d->localeinfo.using_utf8)
     return;
@@ -3612,7 +3614,7 @@ dfacomp (char const *s, size_t len, struct dfa *d, bool searchflag)
 
   if (dfa_supported (d))
     {
-      dfautf8noss (d);
+      maybe_disable_superset_dfa (d);
       dfaanalyze (d, searchflag);
     }
   else
