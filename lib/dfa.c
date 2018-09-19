@@ -2102,6 +2102,21 @@ merge (position_set const *s1, position_set const *s2, position_set *m)
   merge_constrained (s1, s2, -1, m);
 }
 
+static void
+merge2 (position_set *dst, position_set const *src, position_set *m)
+{
+  if (src->nelem < 4)
+    {
+      for (ptrdiff_t i = 0; i < src->nelem; ++i)
+        insert (src->elems[i], dst);
+    }
+   else
+    {
+      merge (src, dst, m);
+      copy (m, dst);
+    }
+}
+
 /* Delete a position from a set.  Return the nonzero constraint of the
    deleted position, or zero if there was no such position.  */
 static unsigned int
@@ -2388,8 +2403,7 @@ merge_nfa_state (struct dfa *d, size_t *queue, ptrdiff_t nqueue, size_t tindex,
           if (flags[sindex] & OPT_REPEAT)
             delete (sindex, &follows[sindex]);
 
-          merge (&follows[dindex], &follows[sindex], merged);
-          copy (merged, &follows[dindex]);
+          merge2 (&follows[dindex], &follows[sindex], merged);
 
           /* Mark it as pruned in future.  */
           follows[tindex].elems[j].constraint = 0;
