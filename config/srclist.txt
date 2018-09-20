@@ -88,21 +88,21 @@ $GETTEXT gettext-runtime/m4/po.m4		m4 release
 #$LIBCSRC libidn/iconvme.h		lib gpl
 #$LIBCSRC libidn/iconvme.c		lib gpl
 
+$LIBCSRC include/intprops.h             lib
 $LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
 $LIBCSRC posix/regex.h			lib
 $LIBCSRC posix/regex_internal.c		lib
 $LIBCSRC posix/regex_internal.h		lib
 $LIBCSRC posix/regexec.c		lib
+$LIBCSRC time/timegm.c			lib
+$LIBCSRC time/mktime.c			lib
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoll.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoul.c		lib gpl
 # (no more strtok_r.h) $LIBCSRC/string/strtok_r.c		lib gpl
 # (gnulib needs config.h?) $LIBCSRC/string/memmem.c		lib gpl
-# still sync-able, but it's the only one left in libc. not worth it.
-# paul e will do by hand.
-#$LIBCSRC time/mktime.c			lib gpl
 
 #
 # https://sourceware.org/bugzilla/show_bug.cgi?id=1439
