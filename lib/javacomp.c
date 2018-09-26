@@ -106,7 +106,8 @@ default_target_version (void)
                || (java_version_cache[0] == '9'
                    && java_version_cache[1] == '\0')
                || (java_version_cache[0] == '1'
-                   && java_version_cache[1] == '0'
+                   && (java_version_cache[1] >= '0'
+                       && java_version_cache[1] <= '1')
                    && java_version_cache[2] == '\0')))
         java_version_cache = "1.1";
     }
@@ -116,7 +117,7 @@ default_target_version (void)
 /* ======================= Source version dependent ======================= */
 
 /* Convert a source version to an index.  */
-#define SOURCE_VERSION_BOUND 7 /* exclusive upper bound */
+#define SOURCE_VERSION_BOUND 8 /* exclusive upper bound */
 static unsigned int
 source_version_index (const char *source_version)
 {
@@ -131,9 +132,10 @@ source_version_index (const char *source_version)
     }
   else if (source_version[0] == '9' && source_version[1] == '\0')
     return 5;
-  else if (source_version[0] == '1' && source_version[1] == '0'
+  else if (source_version[0] == '1'
+           && (source_version[1] >= '0' && source_version[1] <= '1')
            && source_version[2] == '\0')
-    return 6;
+    return source_version[1] - '0' + 6;
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return 0;
 }
@@ -156,6 +158,8 @@ get_goodcode_snippet (const char *source_version)
     return "interface conftest { private void foo () {} }\n";
   if (strcmp (source_version, "10") == 0)
     return "class conftest { public void m() { var i = new Integer(0); } }\n";
+  if (strcmp (source_version, "11") == 0)
+    return "class conftest { Readable r = (var b) -> 0; }\n";
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return NULL;
 }
@@ -179,6 +183,8 @@ get_failcode_snippet (const char *source_version)
   if (strcmp (source_version, "9") == 0)
     return "class conftestfail { public void m() { var i = new Integer(0); } }\n";
   if (strcmp (source_version, "10") == 0)
+    return "class conftestfail { Readable r = (var b) -> 0; }\n";
+  if (strcmp (source_version, "11") == 0)
     return NULL;
   error (EXIT_FAILURE, 0, _("invalid source_version argument to compile_java_class"));
   return NULL;
@@ -187,7 +193,7 @@ get_failcode_snippet (const char *source_version)
 /* ======================= Target version dependent ======================= */
 
 /* Convert a target version to an index.  */
-#define TARGET_VERSION_BOUND 10 /* exclusive upper bound */
+#define TARGET_VERSION_BOUND 11 /* exclusive upper bound */
 static unsigned int
 target_version_index (const char *target_version)
 {
@@ -197,9 +203,10 @@ target_version_index (const char *target_version)
     return target_version[2] - '1';
   else if (target_version[0] == '9' && target_version[1] == '\0')
     return 8;
-  else if (target_version[0] == '1' && target_version[1] == '0'
+  else if (target_version[0] == '1'
+           && (target_version[1] >= '0' && target_version[1] <= '1')
            && target_version[2] == '\0')
-    return 9;
+    return target_version[1] - '0' + 9;
   error (EXIT_FAILURE, 0, _("invalid target_version argument to compile_java_class"));
   return 0;
 }
@@ -229,6 +236,8 @@ corresponding_classfile_version (const char *target_version)
     return 53;
   if (strcmp (target_version, "10") == 0)
     return 54;
+  if (strcmp (target_version, "11") == 0)
+    return 55;
   error (EXIT_FAILURE, 0, _("invalid target_version argument to compile_java_class"));
   return 0;
 }
