@@ -49,7 +49,7 @@ hmac_sha512 (const void *key, size_t keylen,
       sha512_finish_ctx (&keyhash, optkeybuf);
 
       key = optkeybuf;
-      keylen = 128;
+      keylen = 64;
     }
 
   /* Compute INNERHASH from KEY and IN.  */
