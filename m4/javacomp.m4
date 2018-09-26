@@ -127,6 +127,10 @@ changequote([,])dnl
        }`
        case "$target_version" in
          1.1 | 1.2 | 1.3 | 1.4 | 1.5 | 1.6 | 1.7 | 1.8 | 9 | 10 | 11) ;;
+         12 | 13 | 14 | 15 | 16 | 17)
+           dnl Assume that these (not yet released) Java versions will behave
+           dnl like the preceding ones.
+           target_version=11 ;;
          null)
            dnl JDK 1.1.X returns null.
            target_version=1.1 ;;

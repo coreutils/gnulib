@@ -98,8 +98,9 @@ default_target_version (void)
     {
       /* Determine the version from the found JVM.  */
       java_version_cache = javaexec_version ();
-      if (java_version_cache == NULL
-          || !((java_version_cache[0] == '1'
+      if (java_version_cache == NULL)
+        java_version_cache = "1.1";
+      else if ((java_version_cache[0] == '1'
                 && java_version_cache[1] == '.'
                 && java_version_cache[2] >= '1' && java_version_cache[2] <= '8'
                 && java_version_cache[3] == '\0')
@@ -108,7 +109,17 @@ default_target_version (void)
                || (java_version_cache[0] == '1'
                    && (java_version_cache[1] >= '0'
                        && java_version_cache[1] <= '1')
-                   && java_version_cache[2] == '\0')))
+                   && java_version_cache[2] == '\0'))
+        /* It's one of the valid target version values.  */
+        ;
+      else if (java_version_cache[0] == '1'
+               && (java_version_cache[1] >= '2'
+                   && java_version_cache[1] <= '7')
+               && java_version_cache[2] == '\0')
+        /* Assume that these (not yet released) Java versions will behave
+           like the preceding ones.  */
+        java_version_cache = "11";
+      else
         java_version_cache = "1.1";
     }
   return java_version_cache;
