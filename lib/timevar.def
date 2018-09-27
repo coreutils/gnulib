@@ -1,0 +1,52 @@
+/* This file contains the definitions for timing variables used to -*- C -*-
+   measure run-time performance of the compiler.
+
+   Copyright (C) 2002, 2007, 2009-2015, 2018 Free Software Foundation,
+   Inc.
+
+   Contributed by Akim Demaille <akim@freefriends.org>.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+
+/* This file contains the list of timing variable definitions, used by
+   timevar.h and timevar.c.
+
+   Syntax:
+
+     DEFTIMEVAR (Id, Name);
+
+   where:
+
+   - Id is the value used to identify the timing variable.
+     It's an enum value, i.e., behaves like a positive integer.
+     It is used only the manipulate the timer: the user of the
+     program will never see this identifier.
+
+   - Name is a character string describing its purpose.  This string
+     will be presented to the user in the timing tables.  It does not
+     need to be a literal, you may for instance use gettext.
+
+   The order of this list matters: that is the order in which the
+   timing table is printed.
+  */
+
+/* The total execution time.  Mandatory.  */
+DEFTIMEVAR (tv_total,      "total time")
+
+/* Examples.  */
+DEFTIMEVAR (tv_read,       "read")
+DEFTIMEVAR (tv_work,       "work")
+DEFTIMEVAR (tv_work_1,     "work: phase 1")
+DEFTIMEVAR (tv_work_2,     "work: phase 2")
+DEFTIMEVAR (tv_output,     "output")
