@@ -20,6 +20,9 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include "timevar.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -100,8 +103,6 @@ static float ticks_to_msec;
 static float clocks_to_msec;
 # define CLOCKS_TO_MSEC (1.0 / CLOCKS_PER_SEC)
 #endif
-
-#include "timevar.h"
 
 /* See timevar.h for an explanation of timing variables.  */
 

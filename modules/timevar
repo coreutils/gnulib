@@ -2,8 +2,8 @@ Description:
 A simple self-profiling module based on timers.
 
 Files:
-lib/timevar.c
 lib/timevar.h
+lib/timevar.c
 m4/timevar.m4
 
 Depends-on:
@@ -21,4 +21,4 @@ License:
 GPLv3+
 
 Maintainer:
-all
+Akim Demaille <akim.demaille@gmail.com>

@@ -24,21 +24,21 @@
 
    Syntax:
 
-     DEFTIMEVAR (Id, Name);
+     DEFTIMEVAR (Id, Name)
 
    where:
 
    - Id is the value used to identify the timing variable.
-     It's an enum value, i.e., behaves like a positive integer.
+     It's an enum value, i.e., behaves like a nonnegative integer.
      It is used only the manipulate the timer: the user of the
      program will never see this identifier.
 
-   - Name is a character string describing its purpose.  This string
+   - Name is a string describing its purpose.  This string
      will be presented to the user in the timing tables.  It does not
      need to be a literal, you may for instance use gettext.
 
    The order of this list matters: that is the order in which the
-   timing table is printed.
+   timing table is printed, except that 'tv_total' is printed last.
   */
 
 /* The total execution time.  Mandatory.  */
