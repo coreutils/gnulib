@@ -2696,7 +2696,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                               errno = EILSEQ;
                               return NULL;
                             }
-                          if (precision < count)
+                          if (precision < (unsigned int) count)
                             break;
                           arg_end++;
                           characters += count;
@@ -5127,7 +5127,7 @@ VASNPRINTF (DCHAR_T *resultbuf, size_t *lengthp,
                       {
                         /* Verify that snprintf() has NUL-terminated its
                            result.  */
-                        if (count < maxlen
+                        if ((unsigned int) count < maxlen
                             && ((TCHAR_T *) (result + length)) [count] != '\0')
                           abort ();
                         /* Portability hack.  */
