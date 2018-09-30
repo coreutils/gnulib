@@ -1,7 +1,8 @@
-@node timevar
-@section timevar
+@node Profiling of program phases
+@section Profiling of program phases
 
-A simple self-profiling module based on timers.
+The module @samp{timevar} provides a simple self-profiling facility,
+based on timers.
 
 @smallexample
 Execution times (seconds)
@@ -44,11 +45,13 @@ the following example.
 #include <config.h>
 #include "timevar.h"
 
+#include <stdio.h>
 #include "read.h"
 #include "work.h"
 #include "output.h"
 
-int main (void)
+int
+main (void)
 @{
   timevar_enabled = true;
   timevar_init ();
@@ -76,9 +79,10 @@ with, for instance, in @file{work.c}
 
 @smallexample
 #include <config.h>
-#include <work.h>
+#include "work.h"
 
-void work (void)
+void
+work (void)
 @{
   timevar_push (tv_work_phase1);
   work1 ();
