@@ -118,5 +118,35 @@ main (int argc, char *argv[])
       }
   }
 
+  {
+    char key[129];
+    size_t key_len = sizeof key;
+    memset (key, '\x0b', sizeof key);
+    char *data = "Hi There";
+    size_t data_len = 8;
+    char *digest =
+      "\xaa\x1c\x23\xfe\x04\x0c\x4f\x3e\x65\x45\xa9\x15\x4e\x33\x9d\x17\xff\xb5\x27\x2e\x0a\x54\x5b\x84\xd3\x8b\x9b\xf8\xe2\xc7\x46\x4d\xf2\xd6\x2b\xb5\x00\x05\x57\x68\x6f\x85\x10\xeb\x43\x02\xa0\xca\xe6\xb5\xdd\x1f\x37\x00\xbe\xae\xde\x75\x5f\x86\xfd\xbe\xb4\x8f";
+    char out[64];
+
+    if (hmac_sha512 (key, key_len, data, data_len, out) != 0)
+      {
+        printf ("call failure\n");
+        return 1;
+      }
+
+    if (memcmp (digest, out, 64) != 0)
+      {
+        size_t i;
+        printf ("hash 1 mismatch. expected:\n");
+        for (i = 0; i < 64; i++)
+          printf ("%02x ", digest[i] & 0xFF);
+        printf ("\ncomputed:\n");
+        for (i = 0; i < 64; i++)
+          printf ("%02x ", out[i] & 0xFF);
+        printf ("\n");
+        return 1;
+      }
+  }
+
   return 0;
 }
