@@ -21,127 +21,82 @@
 #include "hmac.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* Test vectors from RFC 2104. */
+
+static void
+hmac_check (const void *key, size_t key_len,
+            const void *data, size_t data_len, const char *digest)
+{
+  char out[16];
+
+  if (hmac_md5 (key, key_len, data, data_len, out) != 0)
+    {
+      printf ("call failure\n");
+      exit (1);
+    }
+
+  if (memcmp (digest, out, 16) != 0)
+    {
+      size_t i;
+      printf ("hash 1 mismatch. expected:\n");
+      for (i = 0; i < 16; i++)
+        printf ("%02x ", digest[i] & 0xFF);
+      printf ("\ncomputed:\n");
+      for (i = 0; i < 16; i++)
+        printf ("%02x ", out[i] & 0xFF);
+      printf ("\n");
+      exit (1);
+    }
+}
 
 int
 main (int argc, char *argv[])
 {
   {
-    /*
-       key =         0x0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b0b
-       key_len =     16 bytes
-       data =        "Hi There"
-       data_len =    8  bytes
-       digest =      0x9294727a3638bb1c13f48ef8158bfc9d
-     */
-    char *key =
-      "\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b\x0b";
-    size_t key_len = 16;
+    char key[16];
+    size_t key_len = sizeof key;
+    memset (key, '\x0b', sizeof key);
     char *data = "Hi There";
     size_t data_len = 8;
     char *digest =
       "\x92\x94\x72\x7a\x36\x38\xbb\x1c\x13\xf4\x8e\xf8\x15\x8b\xfc\x9d";
-    char out[16];
-
-    if (hmac_md5 (key, key_len, data, data_len, out) != 0)
-      {
-        printf ("call failure\n");
-        return 1;
-      }
-
-    if (memcmp (digest, out, 16) != 0)
-      {
-        size_t i;
-        printf ("hash 1 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", digest[i] & 0xFF);
-        printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", out[i] & 0xFF);
-        printf ("\n");
-        return 1;
-      }
+    hmac_check (key, key_len, data, data_len, digest);
   }
 
   {
-    /*
-       key =         "Jefe"
-       data =        "what do ya want for nothing?"
-       data_len =    28 bytes
-       digest =      0x750c783e6ab0b503eaa86e310a5db738
-     */
     char *key = "Jefe";
     size_t key_len = 4;
     char *data = "what do ya want for nothing?";
     size_t data_len = 28;
     char *digest =
       "\x75\x0c\x78\x3e\x6a\xb0\xb5\x03\xea\xa8\x6e\x31\x0a\x5d\xb7\x38";
-    char out[16];
-
-    if (hmac_md5 (key, key_len, data, data_len, out) != 0)
-      {
-        printf ("call failure\n");
-        return 1;
-      }
-
-    if (memcmp (digest, out, 16) != 0)
-      {
-        size_t i;
-        printf ("hash 2 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", digest[i] & 0xFF);
-        printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", out[i] & 0xFF);
-        printf ("\n");
-        return 1;
-      }
+    hmac_check (key, key_len, data, data_len, digest);
   }
 
   {
-    /*
-       key =         0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-       key_len       16 bytes
-       data =        0xDDDDDDDDDDDDDDDDDDDD...
-       ..DDDDDDDDDDDDDDDDDDDD...
-       ..DDDDDDDDDDDDDDDDDDDD...
-       ..DDDDDDDDDDDDDDDDDDDD...
-       ..DDDDDDDDDDDDDDDDDDDD
-       data_len =    50 bytes
-       digest =      0x56be34521d144c88dbb8c733f0e8b3f6
-     */
-    char *key =
-      "\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA\xAA";
-    size_t key_len = 16;
-    char *data = "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-      "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-      "\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD\xDD"
-      "\xDD\xDD";
-    size_t data_len = 50;
+    char key[16];
+    size_t key_len = sizeof key;
+    memset (key, '\xAA', sizeof key);
+    char data[50];
+    size_t data_len = sizeof data;
+    memset (data, '\xDD', sizeof data);
     char *digest =
       "\x56\xbe\x34\x52\x1d\x14\x4c\x88\xdb\xb8\xc7\x33\xf0\xe8\xb3\xf6";
-    char out[16];
+    hmac_check (key, key_len, data, data_len, digest);
+  }
 
-    if (hmac_md5 (key, key_len, data, data_len, out) != 0)
-      {
-        printf ("call failure\n");
-        return 1;
-      }
-
-    if (memcmp (digest, out, 16) != 0)
-      {
-        size_t i;
-        printf ("hash 3 mismatch. expected:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", digest[i] & 0xFF);
-        printf ("\ncomputed:\n");
-        for (i = 0; i < 16; i++)
-          printf ("%02x ", out[i] & 0xFF);
-        printf ("\n");
-        return 1;
-      }
+  {
+    char key[65];
+    size_t key_len = sizeof key;
+    memset (key, '\x0b', sizeof key);
+    char *data = "Hi There";
+    size_t data_len = 8;
+    char *digest =
+      "\xd6\x07\x5b\xee\x4d\x91\x80\xd8\xd1\xa2\x99\x29\x5e\x7c\xc9\xcb";
+    hmac_check (key, key_len, data, data_len, digest);
   }
 
   return 0;

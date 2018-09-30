@@ -3,6 +3,7 @@ Compute hashed message authentication codes with SHA1.
 
 Files:
 lib/hmac.h
+lib/hmac.c
 lib/hmac-sha1.c
 
 Depends-on:

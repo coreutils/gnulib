@@ -3,6 +3,7 @@ Compute hashed message authentication codes with MD5.
 
 Files:
 lib/hmac.h
+lib/hmac.c
 lib/hmac-md5.c
 
 Depends-on:
