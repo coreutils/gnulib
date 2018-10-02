@@ -19,7 +19,13 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 #ifndef _TIMEVAR_H
-#define _TIMEVAR_H
+# define _TIMEVAR_H 1
+
+# include <stdio.h>
+
+# ifdef  __cplusplus
+extern "C" {
+# endif
 
 /* Timing variables are used to measure elapsed time in various
    portions of the application.  Each measures elapsed user, system, and
@@ -120,5 +126,9 @@ void timevar_print (FILE *fp);
 
 /* Set to to nonzero to enable timing variables.  */
 extern int timevar_enabled;
+
+# ifdef  __cplusplus
+}
+# endif
 
 #endif /* ! _TIMEVAR_H */

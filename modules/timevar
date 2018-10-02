@@ -8,8 +8,11 @@ m4/timevar.m4
 
 Depends-on:
 gettext-h
-xalloc
 stdlib
+sys_time
+sys_times
+times
+xalloc
 
 configure.ac:
 gl_TIMEVAR

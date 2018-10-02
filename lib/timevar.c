@@ -24,36 +24,17 @@
 #include "timevar.h"
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include <sys/time.h>
+#include <sys/times.h>
 
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 #include "xalloc.h"
 
-#if HAVE_SYS_TIME_H
-# include <sys/time.h>
-#endif
-
-#ifdef HAVE_SYS_TIMES_H
-# include <sys/times.h>
-#endif
 #ifdef HAVE_SYS_RESOURCE_H
 # include <sys/resource.h>
-#endif
-
-#ifndef HAVE_CLOCK_T
-typedef int clock_t;
-#endif
-
-#ifndef HAVE_STRUCT_TMS
-struct tms
-{
-  clock_t tms_utime;
-  clock_t tms_stime;
-  clock_t tms_cutime;
-  clock_t tms_cstime;
-};
 #endif
 
 /* Calculation of scale factor to convert ticks to microseconds.
@@ -79,17 +60,12 @@ struct tms
 # define USE_GETRUSAGE
 # define HAVE_USER_TIME
 # define HAVE_SYS_TIME
-#elif defined HAVE_CLOCK
-# define USE_CLOCK
-# define HAVE_USER_TIME
 #endif
 
 #if defined USE_TIMES && !defined HAVE_DECL_TIMES
 clock_t times (struct tms *);
 #elif defined USE_GETRUSAGE && !defined HAVE_DECL_GETRUSAGE
 int getrusage (int, struct rusage *);
-#elif defined USE_CLOCK && !defined HAVE_DECL_CLOCK
-clock_t clock (void);
 #endif
 
 /* libc is very likely to have snuck a call to sysconf() into one of
@@ -99,9 +75,6 @@ clock_t clock (void);
 #ifdef USE_TIMES
 static float ticks_to_msec;
 # define TICKS_TO_MSEC (1.0 / TICKS_PER_SECOND)
-#elif defined USE_CLOCK
-static float clocks_to_msec;
-# define CLOCKS_TO_MSEC (1.0 / CLOCKS_PER_SEC)
 #endif
 
 /* See timevar.h for an explanation of timing variables.  */
@@ -184,8 +157,6 @@ set_to_current_time (struct timevar_time_def *now)
     getrusage (RUSAGE_CHILDREN, &rusage);
     now->user = rusage.ru_utime.tv_sec + rusage.ru_utime.tv_usec * 1e-6;
     now->sys  = rusage.ru_stime.tv_sec + rusage.ru_stime.tv_usec * 1e-6;
-#elif defined USE_CLOCK
-    now->user = clock () * clocks_to_msec;
 #endif
   }
 }
@@ -229,8 +200,6 @@ timevar_init ()
 
 #if defined USE_TIMES
   ticks_to_msec = TICKS_TO_MSEC;
-#elif defined USE_CLOCK
-  clocks_to_msec = CLOCKS_TO_MSEC;
 #endif
 }
 
