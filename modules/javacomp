@@ -28,6 +28,7 @@ xvasprintf
 c-strstr
 gettext-h
 javacomp-script
+sh-filename
 
 configure.ac:
 

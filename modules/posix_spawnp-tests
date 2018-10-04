@@ -20,6 +20,7 @@ unistd
 sys_wait
 dup
 environ
+sh-filename
 sigprocmask
 
 configure.ac:

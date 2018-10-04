@@ -12,6 +12,7 @@ alloca-opt
 dup2
 errno
 open
+sh-filename
 strchrnul
 
 configure.ac:

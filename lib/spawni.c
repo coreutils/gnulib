@@ -32,7 +32,7 @@
 #if _LIBC || HAVE_PATHS_H
 # include <paths.h>
 #else
-# define _PATH_BSHELL "/bin/sh"
+# define _PATH_BSHELL BOURNE_SHELL
 #endif
 
 #include <signal.h>

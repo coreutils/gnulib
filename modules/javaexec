@@ -17,6 +17,7 @@ xmalloca
 error
 gettext-h
 javaexec-script
+sh-filename
 
 configure.ac:
 

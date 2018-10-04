@@ -73,7 +73,7 @@ fd_safer (int fd)
 int
 main ()
 {
-  char *argv[3] = { (char *) "/bin/sh", (char *) CHILD_PROGRAM_FILENAME, NULL };
+  char *argv[3] = { (char *) BOURNE_SHELL, (char *) CHILD_PROGRAM_FILENAME, NULL };
   int ifd[2];
   sigset_t blocked_signals;
   sigset_t fatal_signal_set;
@@ -113,7 +113,7 @@ main ()
           || (attrs_allocated = true,
               (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
               || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0)
-          || (err = posix_spawnp (&child, "/bin/sh", &actions, &attrs, argv, environ)) != 0))
+          || (err = posix_spawnp (&child, BOURNE_SHELL, &actions, &attrs, argv, environ)) != 0))
     {
       if (actions_allocated)
         posix_spawn_file_actions_destroy (&actions);

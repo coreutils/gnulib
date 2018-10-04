@@ -172,11 +172,11 @@ execute_java_class (const char *class_name,
         if (verbose)
           printf ("%s\n", command);
 
-        argv[0] = "/bin/sh";
+        argv[0] = BOURNE_SHELL;
         argv[1] = "-c";
         argv[2] = command;
         argv[3] = NULL;
-        err = executer (java, "/bin/sh", argv, private_data);
+        err = executer (java, BOURNE_SHELL, argv, private_data);
 
         freea (command);
 
