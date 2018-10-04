@@ -460,22 +460,22 @@ rpl_fcntl_DUPFD (int fd, int target)
       /* Haiku alpha 2 loses fd flags on original.  */
       int flags = fcntl (fd, F_GETFD);
       if (flags < 0)
+        result = -1;
+      else
         {
-          result = -1;
-          break;
-        }
-      result = fcntl (fd, action, target);
-      if (0 <= result && fcntl (fd, F_SETFD, flags) == -1)
-        {
-          int saved_errno = errno;
-          close (result);
-          result = -1;
-          errno = saved_errno;
-        }
+          result = fcntl (fd, F_DUPFD, target);
+          if (0 <= result && fcntl (fd, F_SETFD, flags) == -1)
+            {
+              int saved_errno = errno;
+              close (result);
+              result = -1;
+              errno = saved_errno;
+            }
 # if REPLACE_FCHDIR
-      if (0 <= result)
-        result = _gl_register_dup (fd, result);
+          if (0 <= result)
+            result = _gl_register_dup (fd, result);
 # endif
+        }
     }
 #else
   result = fcntl (fd, F_DUPFD, target);
@@ -506,7 +506,7 @@ rpl_fcntl_DUPFD_CLOEXEC (int fd, int target)
   static int have_dupfd_cloexec = GNULIB_defined_F_DUPFD_CLOEXEC ? -1 : 0;
   if (0 <= have_dupfd_cloexec)
     {
-      result = fcntl (fd, action, target);
+      result = fcntl (fd, F_DUPFD_CLOEXEC, target);
       if (0 <= result || errno != EINVAL)
         {
           have_dupfd_cloexec = 1;
@@ -518,9 +518,8 @@ rpl_fcntl_DUPFD_CLOEXEC (int fd, int target)
       else
         {
           result = rpl_fcntl_DUPFD (fd, target);
-          if (result < 0)
-            break;
-          have_dupfd_cloexec = -1;
+          if (result >= 0)
+            have_dupfd_cloexec = -1;
         }
     }
   else
