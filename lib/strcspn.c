@@ -22,7 +22,9 @@
 #include <stddef.h>
 #include <string.h>
 
-#undef strcspn
+#if _LIBC
+# undef strcspn
+#endif
 
 /* Return the length of the maximum initial segment of S
    which contains no characters from REJECT.  */
