@@ -27,9 +27,9 @@
 
 #include <stdint.h>
 
-#undef memcmp
-
 #ifdef _LIBC
+
+# undef memcmp
 
 # include <memcopy.h>
 # include <endian.h>
