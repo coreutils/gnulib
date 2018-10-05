@@ -12,6 +12,7 @@ extensions
 fcntl-h
 gettimeofday
 lstat
+mkdir
 stdint
 sys_stat
 sys_time
