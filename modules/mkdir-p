@@ -16,6 +16,7 @@ gettext-h
 lchmod
 lchown
 mkancesdirs
+mkdir
 quote
 savewd
 stat
