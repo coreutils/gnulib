@@ -17,6 +17,9 @@ xalloc
 configure.ac:
 gl_TIMEVAR
 
+Makefile.am:
+lib_SOURCES += timevar.c timevar.def
+
 Include:
 "timevar.h"
 
