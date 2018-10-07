@@ -15,7 +15,7 @@ AC_DEFUN([gl_FUNC_RENAMEAT],
   AC_REQUIRE([gl_STDIO_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_HEADERS([linux/fs.h])
-  AC_CHECK_FUNCS_ONCE([renameat])
+  AC_CHECK_FUNCS_ONCE([renameat renameat2])
   if test $ac_cv_func_renameat = no; then
     HAVE_RENAMEAT=0
   elif test $REPLACE_RENAME = 1; then
