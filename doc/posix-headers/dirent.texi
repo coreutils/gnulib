@@ -8,6 +8,10 @@ Gnulib module: dirent
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This header file is missing on some platforms:
+MSVC 14.
+
+@item
 The type @code{ino_t} is missing on some platforms:
 glibc 2.23 and others.
 
@@ -15,10 +19,6 @@ glibc 2.23 and others.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file is missing on some platforms:
-MSVC 14.
-
 @item
 Although many systems define a @code{struct dirent} member named
 @code{d_type} and directory entry type macros like @code{DT_DIR} and
