@@ -1200,19 +1200,12 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
 
             # Fetch PO files.
             TP_URL = 'https://translationproject.org/latest/'
-            TP_RSYNC_URI = 'translationproject.org::tp/latest/'
             if not self.config['dryrun']:
                 print('Fetching gnulib PO files from %s' % TP_URL)
                 os.chdir(joinpath(destdir, pobase))
-                cmd = 'type rsync 2>/dev/null | grep / > /dev/null'
-                result = sp.call(cmd, shell=True)
-                if result == 0:  # use rsync
-                    args = ['rsync', '--include', '*.po', '--exclude', '*', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
-                    result = sp.call(args, shell=True)
-                if result != 0:  # use wget
-                    args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
-                            '%sgnulib/' % TP_URL]
-                    sp.call(args, shell=True)
+                args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
+                        '%sgnulib/' % TP_URL]
+                sp.call(args, shell=True)
             else:  # if self.config['dryrun']
                 print('Fetch gnulib PO files from %s' % TP_URL)
 

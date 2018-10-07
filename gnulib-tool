@@ -5431,18 +5431,10 @@ s,//*$,/,'
     fi
     # Fetch PO files.
     TP_URL="https://translationproject.org/latest/"
-    TP_RSYNC_URI="translationproject.org::tp/latest/"
     if $doit; then
       echo "Fetching gnulib PO files from $TP_URL"
       (cd "$destdir"/$pobase \
-       && { # Prefer rsync over wget if it is available, since it consumes
-            # less network bandwidth, due to compression.
-            if type rsync 2>/dev/null | grep / > /dev/null; then
-              rsync --delete --include "*.po" --exclude "*" -Lrtz "${TP_RSYNC_URI}gnulib/" . && return
-            fi
-
-            wget --no-verbose --mirror --level=1 -nd -A.po -P . "${TP_URL}gnulib/"
-          }
+       && wget --no-verbose --mirror --level=1 -nd -A.po -P . "${TP_URL}gnulib/"
       )
     else
       echo "Fetch gnulib PO files from $TP_URL"
