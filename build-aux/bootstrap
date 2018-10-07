@@ -173,7 +173,7 @@ po_download_command_format=\
 
 # Fallback for downloading .po files (if rsync fails).
 po_download_command_format2=\
-"wget --mirror -nd -q -np -A.po -P '%s' \
+"wget --mirror --level=1 -nd -q -A.po -P '%s' \
  https://translationproject.org/latest/%s/"
 
 # Prefer a non-empty tarname (4th argument of AC_INIT if given), else

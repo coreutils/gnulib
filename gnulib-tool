@@ -5441,7 +5441,7 @@ s,//*$,/,'
               rsync --delete --include "*.po" --exclude "*" -Lrtz "${TP_RSYNC_URI}gnulib/" . && return
             fi
 
-            wget --no-verbose --mirror -nd -np  -A.po -P . "${TP_URL}gnulib/"
+            wget --no-verbose --mirror --level=1 -nd -A.po -P . "${TP_URL}gnulib/"
           }
       )
     else

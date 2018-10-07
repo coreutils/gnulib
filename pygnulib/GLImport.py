@@ -1210,7 +1210,7 @@ AC_DEFUN([%s_FILE_LIST], [\n''' % macro_prefix
                     args = ['rsync', '--include', '*.po', '--exclude', '*', '-Lrtz', '%sgnulib/' % TP_RSYNC_URI, '.']
                     result = sp.call(args, shell=True)
                 if result != 0:  # use wget
-                    args = ['wget', '--no-verbose', '--mirror', '-nd', '-np', '-A.po', '-P', '.',
+                    args = ['wget', '--no-verbose', '--mirror', '--level=1', '-nd', '-A.po', '-P', '.',
                             '%sgnulib/' % TP_URL]
                     sp.call(args, shell=True)
             else:  # if self.config['dryrun']
