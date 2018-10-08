@@ -370,8 +370,7 @@ internal_function
 diropen (FTS const *sp, char const *dir)
 {
   int open_flags = (O_SEARCH | O_CLOEXEC | O_DIRECTORY | O_NOCTTY | O_NONBLOCK
-                    | (ISSET (FTS_PHYSICAL) ? O_NOFOLLOW : 0)
-                    | (ISSET (FTS_NOATIME) ? O_NOATIME : 0));
+                    | (ISSET (FTS_PHYSICAL) ? O_NOFOLLOW : 0));
 
   int fd = (ISSET (FTS_CWDFD)
             ? openat (sp->fts_cwd_fd, dir, open_flags)
@@ -426,8 +425,7 @@ fts_open (char * const *argv,
                early, doing it here saves us the trouble of ensuring
                later (where it'd be messier) that "." can in fact
                be opened.  If not, revert to FTS_NOCHDIR mode.  */
-            int fd = open (".",
-                           O_SEARCH | (ISSET (FTS_NOATIME) ? O_NOATIME : 0));
+            int fd = open (".", O_SEARCH);
             if (fd < 0)
               {
                 /* Even if "." is unreadable, don't revert to FTS_NOCHDIR mode
@@ -1304,8 +1302,7 @@ set_stat_type (struct stat *st, unsigned int dtype)
                   (((ISSET(FTS_PHYSICAL)                        \
                      && ! (ISSET(FTS_COMFOLLOW)                 \
                            && cur->fts_level == FTS_ROOTLEVEL)) \
-                    ? O_NOFOLLOW : 0)                           \
-                   | (ISSET (FTS_NOATIME) ? O_NOATIME : 0)),    \
+                    ? O_NOFOLLOW : 0)),                         \
                   Pdir_fd)
 
 /*
@@ -1796,7 +1793,7 @@ fd_ring_check (FTS const *sp)
       int fd = i_ring_pop (&fd_w);
       if (0 <= fd)
         {
-          int open_flags = O_SEARCH | O_CLOEXEC | O_NOATIME;
+          int open_flags = O_SEARCH | O_CLOEXEC;
           int parent_fd = openat (cwd_fd, "..", open_flags);
           if (parent_fd < 0)
             {

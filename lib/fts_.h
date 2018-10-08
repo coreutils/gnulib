@@ -149,7 +149,7 @@ typedef struct {
      dirent.d_type data.  */
 # define FTS_DEFER_STAT         0x0400
 
-# define FTS_NOATIME    0x0800          /* use O_NOATIME during traversal */
+/* 0x0800 unused, was non-working FTS_NOATIME */
 
   /* Use this flag to disable stripping of trailing slashes
      from input path names during fts_open initialization.  */
