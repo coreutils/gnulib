@@ -149,16 +149,14 @@ typedef struct {
      dirent.d_type data.  */
 # define FTS_DEFER_STAT         0x0400
 
-/* 0x0800 unused, was non-working FTS_NOATIME */
-
   /* Use this flag to disable stripping of trailing slashes
      from input path names during fts_open initialization.  */
-# define FTS_VERBATIM   0x1000
+# define FTS_VERBATIM   0x0800
 
-# define FTS_OPTIONMASK 0x1fff          /* valid user option mask */
+# define FTS_OPTIONMASK 0x0fff          /* valid user option mask */
 
-# define FTS_NAMEONLY   0x2000          /* (private) child names only */
-# define FTS_STOP       0x4000          /* (private) unrecoverable error */
+# define FTS_NAMEONLY   0x1000          /* (private) child names only */
+# define FTS_STOP       0x2000          /* (private) unrecoverable error */
         int fts_options;                /* fts_open options, global flags */
 
         /* Map a directory's device number to a boolean.  The boolean is
