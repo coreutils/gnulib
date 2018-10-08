@@ -29,13 +29,11 @@
 #   -L DIRECTORY      search for C# libraries also in DIRECTORY
 
 sed_quote_subst='s/\([|&;<>()$`"'"'"'*?[#~=% 	\\]\)/\\\1/g'
-options_ilrun=
 libdirs_mono=
 prog=
 while test $# != 0; do
   case "$1" in
     -L)
-      options_ilrun="$options_ilrun -L "`echo "$2" | sed -e "$sed_quote_subst"`
       libdirs_mono="${libdirs_mono:+$libdirs_mono@MONO_PATH_SEPARATOR@}$2"
       shift
       ;;
@@ -62,34 +60,29 @@ case "$prog" in
     ;;
 esac
 
-if test -n "@HAVE_ILRUN@"; then
-  test -z "$CSHARP_VERBOSE" || echo ilrun $options_ilrun "$@"
-  exec ilrun $options_ilrun "$@"
-else
-  if test -n "@HAVE_MONO@"; then
-    CONF_MONO_PATH='@MONO_PATH@'
-    if test -n "$libdirs_mono"; then
-      MONO_PATH="$libdirs_mono${CONF_MONO_PATH:+@MONO_PATH_SEPARATOR@$CONF_MONO_PATH}"
-    else
-      MONO_PATH="$CONF_MONO_PATH"
-    fi
-    export MONO_PATH
-    test -z "$CSHARP_VERBOSE" || echo mono "$@"
-    exec mono "$@"
+if test -n "@HAVE_MONO@"; then
+  CONF_MONO_PATH='@MONO_PATH@'
+  if test -n "$libdirs_mono"; then
+    MONO_PATH="$libdirs_mono${CONF_MONO_PATH:+@MONO_PATH_SEPARATOR@$CONF_MONO_PATH}"
   else
-    if test -n "@HAVE_CLIX@"; then
-      CONF_CLIX_PATH='@CLIX_PATH@'
-      if test -n "$libdirs_mono"; then
-        @CLIX_PATH_VAR@="$libdirs_mono${CONF_CLIX_PATH:+@MONO_PATH_SEPARATOR@$CONF_CLIX_PATH}"
-      else
-        @CLIX_PATH_VAR@="$CONF_CLIX_PATH"
-      fi
-      export @CLIX_PATH_VAR@
-      test -z "$CSHARP_VERBOSE" || echo clix "$@"
-      exec clix "$@"
+    MONO_PATH="$CONF_MONO_PATH"
+  fi
+  export MONO_PATH
+  test -z "$CSHARP_VERBOSE" || echo mono "$@"
+  exec mono "$@"
+else
+  if test -n "@HAVE_CLIX@"; then
+    CONF_CLIX_PATH='@CLIX_PATH@'
+    if test -n "$libdirs_mono"; then
+      @CLIX_PATH_VAR@="$libdirs_mono${CONF_CLIX_PATH:+@MONO_PATH_SEPARATOR@$CONF_CLIX_PATH}"
     else
-      echo 'C# virtual machine not found, try installing pnet, then reconfigure' 1>&2
-      exit 1
+      @CLIX_PATH_VAR@="$CONF_CLIX_PATH"
     fi
+    export @CLIX_PATH_VAR@
+    test -z "$CSHARP_VERBOSE" || echo clix "$@"
+    exec clix "$@"
+  else
+    echo 'C# virtual machine not found, try installing mono, then reconfigure' 1>&2
+    exit 1
   fi
 fi

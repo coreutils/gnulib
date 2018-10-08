@@ -65,7 +65,6 @@ func_tmpdir ()
 }
 
 sed_quote_subst='s/\([|&;<>()$`"'"'"'*?[#~=% 	\\]\)/\\\1/g'
-options_cscc=
 options_mcs=
 options_csc="-nologo"
 sources=
@@ -74,7 +73,6 @@ while test $# != 0; do
     -o)
       case "$2" in
         *.dll)
-          options_cscc="$options_cscc -shared"
           options_mcs="$options_mcs -target:library"
           options_csc="$options_csc -target:library"
           ;;
@@ -82,29 +80,24 @@ while test $# != 0; do
           options_csc="$options_csc -target:exe"
           ;;
       esac
-      options_cscc="$options_cscc -o "`echo "$2" | sed -e "$sed_quote_subst"`
       options_mcs="$options_mcs -out:"`echo "$2" | sed -e "$sed_quote_subst"`
       options_csc="$options_csc -out:"`echo "$2" | sed -e "$sed_quote_subst"`
       shift
       ;;
     -L)
-      options_cscc="$options_cscc -L "`echo "$2" | sed -e "$sed_quote_subst"`
       options_mcs="$options_mcs -lib:"`echo "$2" | sed -e "$sed_quote_subst"`
       options_csc="$options_csc -lib:"`echo "$2" | sed -e "$sed_quote_subst"`
       shift
       ;;
     -l)
-      options_cscc="$options_cscc -l "`echo "$2" | sed -e "$sed_quote_subst"`
       options_mcs="$options_mcs -reference:"`echo "$2" | sed -e "$sed_quote_subst"`
       options_csc="$options_csc -reference:"`echo "$2" | sed -e "$sed_quote_subst"`".dll"
       shift
       ;;
     -O)
-      options_cscc="$options_cscc -O"
       options_csc="$options_csc -optimize+"
       ;;
     -g)
-      options_cscc="$options_cscc -g"
       options_mcs="$options_mcs -debug"
       options_csc="$options_csc -debug+"
       ;;
@@ -113,7 +106,6 @@ while test $# != 0; do
       exit 1
       ;;
     *.resources)
-      options_cscc="$options_cscc -fresources="`echo "$1" | sed -e "$sed_quote_subst"`
       options_mcs="$options_mcs -resource:"`echo "$1" | sed -e "$sed_quote_subst"`
       options_csc="$options_csc -resource:"`echo "$1" | sed -e "$sed_quote_subst"`
       ;;
@@ -128,31 +120,26 @@ while test $# != 0; do
   shift
 done
 
-if test -n "@HAVE_CSCC@"; then
-  test -z "$CSHARP_VERBOSE" || echo cscc $options_cscc $sources
-  exec cscc $options_cscc $sources
-else
-  if test -n "@HAVE_MCS@"; then
-    # mcs prints it errors and warnings to stdout, not stderr. Furthermore it
-    # adds a useless line "Compilation succeeded..." at the end. Correct both.
-    sed_drop_success_line='${
+if test -n "@HAVE_MCS@"; then
+  # mcs prints it errors and warnings to stdout, not stderr. Furthermore it
+  # adds a useless line "Compilation succeeded..." at the end. Correct both.
+  sed_drop_success_line='${
 /^Compilation succeeded/d
 }'
-    func_tmpdir
-    trap 'rm -rf "$tmp"' 1 2 3 15
-    test -z "$CSHARP_VERBOSE" || echo mcs $options_mcs $sources
-    mcs $options_mcs $sources > "$tmp"/mcs.err
-    result=$?
-    sed -e "$sed_drop_success_line" < "$tmp"/mcs.err >&2
-    rm -rf "$tmp"
-    exit $result
+  func_tmpdir
+  trap 'rm -rf "$tmp"' 1 2 3 15
+  test -z "$CSHARP_VERBOSE" || echo mcs $options_mcs $sources
+  mcs $options_mcs $sources > "$tmp"/mcs.err
+  result=$?
+  sed -e "$sed_drop_success_line" < "$tmp"/mcs.err >&2
+  rm -rf "$tmp"
+  exit $result
+else
+  if test -n "@HAVE_CSC@"; then
+    test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources
+    exec csc $options_csc $sources
   else
-    if test -n "@HAVE_CSC@"; then
-      test -z "$CSHARP_VERBOSE" || echo csc $options_csc $sources
-      exec csc $options_csc $sources
-    else
-      echo 'C# compiler not found, try installing pnet, then reconfigure' 1>&2
-      exit 1
-    fi
+    echo 'C# compiler not found, try installing mono, then reconfigure' 1>&2
+    exit 1
   fi
 fi

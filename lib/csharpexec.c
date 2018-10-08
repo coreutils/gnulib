@@ -70,7 +70,6 @@
 
    Program    from
 
-   ilrun      pnet
    mono       mono
    clix       sscli
 
@@ -78,84 +77,13 @@
    Windows: semicolon separated list of pathnames.)
 
    We try the CIL interpreters in the following order:
-     1. "ilrun", because it is a completely free system.
-     2. "mono", because it is a partially free system but doesn't integrate
+     1. "mono", because it is a partially free system but doesn't integrate
         well with Unix.
-     3. "clix", although it is not free, because it is a kind of "reference
+     2. "clix", although it is not free, because it is a kind of "reference
         implementation" of C#.
    But the order can be changed through the --enable-csharp configuration
    option.
  */
-
-static int
-execute_csharp_using_pnet (const char *assembly_path,
-                           const char * const *libdirs,
-                           unsigned int libdirs_count,
-                           const char * const *args, unsigned int nargs,
-                           bool verbose, bool quiet,
-                           execute_fn *executer, void *private_data)
-{
-  static bool ilrun_tested;
-  static bool ilrun_present;
-
-  if (!ilrun_tested)
-    {
-      /* Test for presence of ilrun:
-         "ilrun --version >/dev/null 2>/dev/null"  */
-      char *argv[3];
-      int exitstatus;
-
-      argv[0] = "ilrun";
-      argv[1] = "--version";
-      argv[2] = NULL;
-      exitstatus = execute ("ilrun", "ilrun", argv, false, false, true, true,
-                            true, false, NULL);
-      ilrun_present = (exitstatus == 0);
-      ilrun_tested = true;
-    }
-
-  if (ilrun_present)
-    {
-      unsigned int argc;
-      char **argv;
-      char **argp;
-      unsigned int i;
-      bool err;
-
-      argc = 1 + 2 * libdirs_count + 1 + nargs;
-      argv = (char **) xmalloca ((argc + 1) * sizeof (char *));
-
-      argp = argv;
-      *argp++ = "ilrun";
-      for (i = 0; i < libdirs_count; i++)
-        {
-          *argp++ = "-L";
-          *argp++ = (char *) libdirs[i];
-        }
-      *argp++ = (char *) assembly_path;
-      for (i = 0; i < nargs; i++)
-        *argp++ = (char *) args[i];
-      *argp = NULL;
-      /* Ensure argv length was correctly calculated.  */
-      if (argp - argv != argc)
-        abort ();
-
-      if (verbose)
-        {
-          char *command = shell_quote_argv (argv);
-          printf ("%s\n", command);
-          free (command);
-        }
-
-      err = executer ("ilrun", "ilrun", argv, private_data);
-
-      freea (argv);
-
-      return err;
-    }
-  else
-    return -1;
-}
 
 static int
 execute_csharp_using_mono (const char *assembly_path,
@@ -300,14 +228,6 @@ execute_csharp_program (const char *assembly_path,
   }
 
   /* First try the C# implementation specified through --enable-csharp.  */
-#if CSHARP_CHOICE_PNET
-  result = execute_csharp_using_pnet (assembly_path, libdirs, libdirs_count,
-                                      args, nargs, verbose, quiet,
-                                      executer, private_data);
-  if (result >= 0)
-    return (bool) result;
-#endif
-
 #if CSHARP_CHOICE_MONO
   result = execute_csharp_using_mono (assembly_path, libdirs, libdirs_count,
                                       args, nargs, verbose, quiet,
@@ -317,14 +237,6 @@ execute_csharp_program (const char *assembly_path,
 #endif
 
   /* Then try the remaining C# implementations in our standard order.  */
-#if !CSHARP_CHOICE_PNET
-  result = execute_csharp_using_pnet (assembly_path, libdirs, libdirs_count,
-                                      args, nargs, verbose, quiet,
-                                      executer, private_data);
-  if (result >= 0)
-    return (bool) result;
-#endif
-
 #if !CSHARP_CHOICE_MONO
   result = execute_csharp_using_mono (assembly_path, libdirs, libdirs_count,
                                       args, nargs, verbose, quiet,
@@ -340,6 +252,6 @@ execute_csharp_program (const char *assembly_path,
     return (bool) result;
 
   if (!quiet)
-    error (0, 0, _("C# virtual machine not found, try installing pnet"));
+    error (0, 0, _("C# virtual machine not found, try installing mono"));
   return true;
 }

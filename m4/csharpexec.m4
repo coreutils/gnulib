@@ -1,4 +1,4 @@
-# csharpexec.m4 serial 6
+# csharpexec.m4 serial 7
 dnl Copyright (C) 2003-2005, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 # Prerequisites of csharpexec.sh.
 # Checks for a C# execution engine.
 # gt_CSHARPEXEC or gt_CSHARPEXEC(testexecutable, its-directory)
-# Sets at most one of HAVE_ILRUN, HAVE_MONO, HAVE_CLIX.
+# Sets at most one of HAVE_MONO, HAVE_CLIX.
 # Sets HAVE_CSHARPEXEC to nonempty if csharpexec.sh will work.
 AC_DEFUN([gt_CSHARPEXEC],
 [
@@ -23,23 +23,13 @@ AC_DEFUN([gt_CSHARPEXEC],
   pushdef([AC_MSG_CHECKING],[:])dnl
   pushdef([AC_CHECKING],[:])dnl
   pushdef([AC_MSG_RESULT],[:])dnl
-  AC_CHECK_PROG([HAVE_ILRUN_IN_PATH], [ilrun], [yes])
   AC_CHECK_PROG([HAVE_MONO_IN_PATH], [mono], [yes])
   AC_CHECK_PROG([HAVE_CLIX_IN_PATH], [clix], [yes])
   popdef([AC_MSG_RESULT])dnl
   popdef([AC_CHECKING])dnl
   popdef([AC_MSG_CHECKING])dnl
-  for impl in "$CSHARP_CHOICE" pnet mono no; do
+  for impl in "$CSHARP_CHOICE" mono no; do
     case "$impl" in
-      pnet)
-        if test -n "$HAVE_ILRUN_IN_PATH" \
-           && ilrun --version >/dev/null 2>/dev/null \
-           ifelse([$1], , , [&& ilrun $2/$1 >/dev/null 2>/dev/null]); then
-          HAVE_ILRUN=1
-          ac_result="ilrun"
-          break
-        fi
-        ;;
       mono)
         if test -n "$HAVE_MONO_IN_PATH" \
            && mono --version >/dev/null 2>/dev/null \
@@ -81,7 +71,6 @@ AC_DEFUN([gt_CSHARPEXEC],
   AC_SUBST([MONO_PATH_SEPARATOR])
   AC_SUBST([CLIX_PATH_VAR])
   AC_SUBST([CLIX_PATH])
-  AC_SUBST([HAVE_ILRUN])
   AC_SUBST([HAVE_MONO])
   AC_SUBST([HAVE_CLIX])
 ])

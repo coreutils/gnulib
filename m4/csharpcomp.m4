@@ -1,4 +1,4 @@
-# csharpcomp.m4 serial 8
+# csharpcomp.m4 serial 9
 dnl Copyright (C) 2003-2005, 2007, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,7 +6,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 # Prerequisites of csharpcomp.sh.
 # Checks for a C# compiler.
-# Sets at most one of HAVE_CSCC, HAVE_MCS, HAVE_CSC.
+# Sets at most one of HAVE_MCS, HAVE_CSC.
 # Sets HAVE_CSHARPCOMP to nonempty if csharpcomp.sh will work.
 # Also sets CSHARPCOMPFLAGS.
 AC_DEFUN([gt_CSHARPCOMP],
@@ -17,30 +17,13 @@ AC_DEFUN([gt_CSHARPCOMP],
   pushdef([AC_MSG_CHECKING],[:])dnl
   pushdef([AC_CHECKING],[:])dnl
   pushdef([AC_MSG_RESULT],[:])dnl
-  AC_CHECK_PROG([HAVE_CSCC_IN_PATH], [cscc], [yes])
   AC_CHECK_PROG([HAVE_MCS_IN_PATH], [mcs], [yes])
   AC_CHECK_PROG([HAVE_CSC_IN_PATH], [csc], [yes])
   popdef([AC_MSG_RESULT])dnl
   popdef([AC_CHECKING])dnl
   popdef([AC_MSG_CHECKING])dnl
-  for impl in "$CSHARP_CHOICE" pnet mono sscli no; do
+  for impl in "$CSHARP_CHOICE" mono sscli no; do
     case "$impl" in
-      pnet)
-        if test -n "$HAVE_CSCC_IN_PATH" \
-           && cscc --version >/dev/null 2>/dev/null \
-           && (
-             # See if pnetlib is well installed.
-             echo 'class ConfTest { static void Main() { } }' > conftest.cs
-             cscc -o conftest.exe conftest.cs 2>/dev/null
-             error=$?
-             rm -f conftest.cs conftest.exe
-             exit $error
-            ); then
-          HAVE_CSCC=1
-          ac_result="cscc"
-          break
-        fi
-        ;;
       mono)
         if test -n "$HAVE_MCS_IN_PATH" \
            && mcs --version >/dev/null 2>/dev/null \
@@ -67,7 +50,6 @@ AC_DEFUN([gt_CSHARPCOMP],
     esac
   done
   AC_MSG_RESULT([$ac_result])
-  AC_SUBST([HAVE_CSCC])
   AC_SUBST([HAVE_MCS])
   AC_SUBST([HAVE_CSC])
   dnl Provide a default for CSHARPCOMPFLAGS.
