@@ -110,9 +110,33 @@ getprogname (void)
       first = 0;
       pid_t pid = getpid ();
       struct pst_status status;
-      p = (0 < pstat_getproc (&status, sizeof status, 0, pid)
-           ? strdup (status.pst_ucomm)
-           : NULL);
+      if (pstat_getproc (&status, sizeof status, 0, pid) > 0)
+        {
+          if (strlen (status.pst_ucomm) < PST_UCOMMLEN - 1)
+            p = status.pst_ucomm;
+          else
+            {
+              /* status.pst_ucomm is truncated to length PST_UCOMMLEN - 1.
+                 Look at status.pst_cmd instead.  */
+              char *space = strchr (status.pst_cmd, ' ');
+              if (space != NULL)
+                *space = '\0';
+              p = strrchr (status.pst_cmd, '/');
+              if (p != NULL)
+                p++;
+              else
+                p = status.pst_cmd;
+              if (strlen (p) > PST_UCOMMLEN - 1
+                  && memcmp (p, status.pst_ucomm, PST_UCOMMLEN - 1) == 0)
+                /* p is less truncated than status.pst_ucomm.  */
+                ;
+              else
+                p = status.pst_ucomm;
+            }
+          p = strdup (p);
+        }
+      else
+        p = NULL;
       if (!p)
         p = "?";
     }
