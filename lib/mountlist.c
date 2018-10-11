@@ -43,7 +43,7 @@
 # include <sys/sysmacros.h>
 #endif
 
-#if defined MOUNTED_GETFSSTAT   /* OSF_1 and Darwin1.3.x */
+#if defined MOUNTED_GETFSSTAT   /* OSF/1, also (obsolete) Apple Darwin 1.3 */
 # if HAVE_SYS_UCRED_H
 #  include <grp.h> /* needed on OSF V4.0 for definition of NGROUPS,
                       NGROUPS is used as an array dimension in ucred.h */
@@ -62,7 +62,8 @@
 # endif
 #endif /* MOUNTED_GETFSSTAT */
 
-#ifdef MOUNTED_GETMNTENT1       /* 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
+#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
+                                   also (obsolete) 4.3BSD, SunOS, Dynix */
 # include <mntent.h>
 # include <sys/types.h>
 # if !defined MOUNTED
@@ -78,48 +79,48 @@
 # endif
 #endif
 
-#ifdef MOUNTED_GETMNTINFO       /* 4.4BSD.  */
+#ifdef MOUNTED_GETMNTINFO       /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
 # include <sys/mount.h>
 #endif
 
-#ifdef MOUNTED_GETMNTINFO2      /* NetBSD 3.0.  */
+#ifdef MOUNTED_GETMNTINFO2      /* NetBSD */
 # include <sys/statvfs.h>
 #endif
 
-#ifdef MOUNTED_GETMNT           /* Ultrix.  */
+#ifdef MOUNTED_GETMNT           /* (obsolete) Ultrix */
 # include <sys/mount.h>
 # include <sys/fs_types.h>
 #endif
 
-#ifdef MOUNTED_FS_STAT_DEV      /* BeOS.  */
+#ifdef MOUNTED_FS_STAT_DEV      /* Haiku, also (obsolete) BeOS */
 # include <fs_info.h>
 # include <dirent.h>
 #endif
 
-#ifdef MOUNTED_FREAD            /* SVR2.  */
+#ifdef MOUNTED_FREAD            /* (obsolete) SVR2 */
 # include <mnttab.h>
 #endif
 
-#ifdef MOUNTED_FREAD_FSTYP      /* SVR3.  */
+#ifdef MOUNTED_FREAD_FSTYP      /* (obsolete) SVR3 */
 # include <mnttab.h>
 # include <sys/fstyp.h>
 # include <sys/statfs.h>
 #endif
 
-#ifdef MOUNTED_LISTMNTENT
+#ifdef MOUNTED_LISTMNTENT       /* (obsolete) Cray UNICOS 9 */
 # include <mntent.h>
 #endif
 
-#ifdef MOUNTED_GETMNTENT2       /* SVR4.  */
+#ifdef MOUNTED_GETMNTENT2       /* Solaris, also (obsolete) SVR4 */
 # include <sys/mnttab.h>
 #endif
 
-#ifdef MOUNTED_VMOUNT           /* AIX.  */
+#ifdef MOUNTED_VMOUNT           /* AIX */
 # include <fshelp.h>
 # include <sys/vfs.h>
 #endif
 
-#ifdef MOUNTED_INTERIX_STATVFS  /* Interix. */
+#ifdef MOUNTED_INTERIX_STATVFS  /* Interix */
 # include <sys/statvfs.h>
 # include <dirent.h>
 #endif
@@ -234,7 +235,7 @@ me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
      || (strcmp("-hosts", Fs_name) == 0))
 #endif
 
-#if MOUNTED_GETMNTINFO
+#if MOUNTED_GETMNTINFO          /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
 
 # if ! HAVE_STRUCT_STATFS_F_FSTYPENAME
 static char *
@@ -344,7 +345,7 @@ fsp_to_string (const struct statfs *fsp)
 
 #endif /* MOUNTED_GETMNTINFO */
 
-#ifdef MOUNTED_VMOUNT           /* AIX.  */
+#ifdef MOUNTED_VMOUNT           /* AIX */
 static char *
 fstype_to_string (int t)
 {
@@ -395,7 +396,7 @@ dev_from_mount_options (char const *mount_options)
 
 #endif
 
-#if defined MOUNTED_GETMNTENT1 && defined __linux__
+#if defined MOUNTED_GETMNTENT1 && defined __linux__ /* GNU/Linux, Android */
 
 /* Unescape the paths in mount tables.
    STR is updated in place.  */
@@ -436,7 +437,7 @@ read_file_system_list (bool need_fs_type)
   struct mount_entry **mtail = &mount_list;
   (void) need_fs_type;
 
-#ifdef MOUNTED_LISTMNTENT
+#ifdef MOUNTED_LISTMNTENT       /* (obsolete) Cray UNICOS 9 */
   {
     struct tabmntent *mntlist, *p;
     struct mntent *mnt;
@@ -467,11 +468,12 @@ read_file_system_list (bool need_fs_type)
   }
 #endif
 
-#ifdef MOUNTED_GETMNTENT1 /* GNU/Linux, 4.3BSD, SunOS, HP-UX, Dynix, Irix.  */
+#ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
+                                   also (obsolete) 4.3BSD, SunOS, Dynix */
   {
     FILE *fp;
 
-#ifdef __linux__
+# ifdef __linux__
     /* Try parsing mountinfo first, as that make device IDs available.
        Note we could use libmount routines to simplify this parsing a little
        (and that code is in previous versions of this function), however
@@ -564,7 +566,7 @@ read_file_system_list (bool need_fs_type)
           goto free_then_fail;
       }
     else /* fallback to /proc/self/mounts (/etc/mtab).  */
-#endif /* __linux __ */
+# endif /* __linux __ */
       {
         struct mntent *mnt;
         char const *table = MOUNTED;
@@ -598,7 +600,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTENT1. */
 
-#ifdef MOUNTED_GETMNTINFO       /* 4.4BSD.  */
+#ifdef MOUNTED_GETMNTINFO       /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
   {
     struct statfs *fsp;
     int entries;
@@ -627,7 +629,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTINFO */
 
-#ifdef MOUNTED_GETMNTINFO2      /* NetBSD 3.0.  */
+#ifdef MOUNTED_GETMNTINFO2      /* NetBSD */
   {
     struct statvfs *fsp;
     int entries;
@@ -654,7 +656,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTINFO2 */
 
-#ifdef MOUNTED_GETMNT           /* Ultrix.  */
+#ifdef MOUNTED_GETMNT           /* (obsolete) Ultrix */
   {
     int offset = 0;
     int val;
@@ -683,7 +685,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNT. */
 
-#if defined MOUNTED_FS_STAT_DEV /* BeOS */
+#if defined MOUNTED_FS_STAT_DEV /* Haiku, also (obsolete) BeOS */
   {
     /* The next_dev() and fs_stat_dev() system calls give the list of
        all file systems, including the information returned by statvfs()
@@ -789,7 +791,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_FS_STAT_DEV */
 
-#if defined MOUNTED_GETFSSTAT   /* __alpha running OSF_1 */
+#if defined MOUNTED_GETFSSTAT   /* OSF/1, also (obsolete) Apple Darwin 1.3 */
   {
     int numsys, counter;
     size_t bufsize;
@@ -832,7 +834,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETFSSTAT */
 
-#if defined MOUNTED_FREAD || defined MOUNTED_FREAD_FSTYP /* SVR[23].  */
+#if defined MOUNTED_FREAD || defined MOUNTED_FREAD_FSTYP /* (obsolete) SVR3, SVR2 */
   {
     struct mnttab mnt;
     char *table = "/etc/mnttab";
@@ -893,7 +895,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_FREAD || MOUNTED_FREAD_FSTYP.  */
 
-#ifdef MOUNTED_GETMNTTBL        /* DolphinOS goes its own way.  */
+#ifdef MOUNTED_GETMNTTBL        /* (obsolete) DolphinOS */
   {
     struct mntent **mnttbl = getmnttbl (), **ent;
     for (ent = mnttbl; *ent; ent++)
@@ -914,9 +916,9 @@ read_file_system_list (bool need_fs_type)
       }
     endmnttbl ();
   }
-#endif
+#endif /* MOUNTED_GETMNTTBL */
 
-#ifdef MOUNTED_GETMNTENT2       /* SVR4.  */
+#ifdef MOUNTED_GETMNTENT2       /* Solaris, also (obsolete) SVR4 */
   {
     struct mnttab mnt;
     char *table = MNTTAB;
@@ -990,7 +992,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTENT2.  */
 
-#ifdef MOUNTED_VMOUNT           /* AIX.  */
+#ifdef MOUNTED_VMOUNT           /* AIX */
   {
     int bufsize;
     void *entries;
@@ -1062,7 +1064,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_VMOUNT. */
 
-#ifdef MOUNTED_INTERIX_STATVFS
+#ifdef MOUNTED_INTERIX_STATVFS  /* Interix */
   {
     DIR *dirp = opendir ("/dev/fs");
     char node[9 + NAME_MAX];
