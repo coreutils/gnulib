@@ -124,7 +124,9 @@ void timevar_get (timevar_id_t timevar, struct timevar_time_def *elapsed);
 
 void timevar_print (FILE *fp);
 
-/* Set to to nonzero to enable timing variables.  */
+/* Set to to nonzero to enable timing variables.  All the timevar
+   functions make an early exit if timevar is disabled.  */
+
 extern int timevar_enabled;
 
 # ifdef  __cplusplus

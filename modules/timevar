@@ -4,18 +4,15 @@ A simple self-profiling module based on timers.
 Files:
 lib/timevar.h
 lib/timevar.c
-m4/timevar.m4
 
 Depends-on:
+getrusage
 gettext-h
 stdlib
 sys_time
 sys_times
 times
 xalloc
-
-configure.ac:
-gl_TIMEVAR
 
 Makefile.am:
 lib_SOURCES += timevar.c timevar.def
