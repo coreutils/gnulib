@@ -304,7 +304,10 @@ timevar_print (FILE *fp)
 
   struct timevar_time_def const* total = &timevars[tv_total].elapsed;
 
-  fputs (_("\nExecution times (seconds)\n"), fp);
+  fprintf (fp, "%-22s\n",
+           _("Execution times (seconds)"));
+  fprintf (fp, " %-22s   %-13s %-13s %-16s\n",
+           "", _("CPU user"), _("CPU system"), _("wall clock"));
   for (unsigned /* timevar_id_t */ id = 0; id < (unsigned) TIMEVAR_LAST; ++id)
     {
       struct timevar_def *tv = &timevars[(timevar_id_t) id];
@@ -327,20 +330,20 @@ timevar_print (FILE *fp)
         continue;
 
       /* The timing variable name.  */
-      fprintf (fp, " %-22s:", tv->name);
+      fprintf (fp, " %-22s", tv->name);
 
       /* Print user-mode time for this process.  */
-      fprintf (fp, "%7.2f (%2.0f%%) usr",
+      fprintf (fp, "%8.3f (%2.0f%%)",
                tv->elapsed.user,
                (total->user == 0 ? 0 : tv->elapsed.user / total->user) * 100);
 
       /* Print system-mode time for this process.  */
-      fprintf (fp, "%7.2f (%2.0f%%) sys",
+      fprintf (fp, "%8.3f (%2.0f%%)",
                tv->elapsed.sys,
                (total->sys == 0 ? 0 : tv->elapsed.sys / total->sys) * 100);
 
       /* Print wall clock time elapsed.  */
-      fprintf (fp, "%7.2f (%2.0f%%) wall",
+      fprintf (fp, "%11.6f (%2.0f%%)",
                tv->elapsed.wall,
                (total->wall == 0 ? 0 : tv->elapsed.wall / total->wall) * 100);
 
@@ -348,8 +351,8 @@ timevar_print (FILE *fp)
     }
 
   /* Print total time.  */
-  fprintf (fp, " %-22s:", timevars[tv_total].name);
-  fprintf (fp, "%7.2f          ", total->user);
-  fprintf (fp, "%7.2f          ", total->sys);
-  fprintf (fp, "%7.2f\n", total->wall);
+  fprintf (fp, " %-22s", timevars[tv_total].name);
+  fprintf (fp, "%8.3f      ", total->user);
+  fprintf (fp, "%8.3f      ", total->sys);
+  fprintf (fp, "%11.6f\n", total->wall);
 }
