@@ -83,7 +83,7 @@
 # include <sys/mount.h>
 #endif
 
-#ifdef MOUNTED_GETMNTINFO2      /* NetBSD */
+#ifdef MOUNTED_GETMNTINFO2      /* NetBSD, Minix */
 # include <sys/statvfs.h>
 #endif
 
@@ -629,7 +629,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTINFO */
 
-#ifdef MOUNTED_GETMNTINFO2      /* NetBSD */
+#ifdef MOUNTED_GETMNTINFO2      /* NetBSD, Minix */
   {
     struct statvfs *fsp;
     int entries;
