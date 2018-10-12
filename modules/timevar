@@ -6,12 +6,12 @@ lib/timevar.h
 lib/timevar.c
 
 Depends-on:
+gethrxtime
 getrusage
 gettext-h
 stdlib
 sys_time
 sys_times
-times
 xalloc
 
 Makefile.am:
@@ -19,6 +19,10 @@ lib_SOURCES += timevar.c timevar.def
 
 Include:
 "timevar.h"
+
+Link:
+$(LIB_GETHRXTIME)
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPLv3+

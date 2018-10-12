@@ -23,6 +23,8 @@
 
 # include <stdio.h>
 
+# include "xtime.h"
+
 # ifdef  __cplusplus
 extern "C" {
 # endif
@@ -58,14 +60,14 @@ extern "C" {
 struct timevar_time_def
 {
   /* User time in this process.  */
-  float user;
+  xtime_t user;
 
   /* System time (if applicable for this host platform) in this
      process.  */
-  float sys;
+  xtime_t sys;
 
   /* Wall clock time.  */
-  float wall;
+  xtime_t wall;
 };
 
 /* An enumeration of timing variable identifiers.  Constructed from

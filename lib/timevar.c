@@ -30,6 +30,7 @@
 #include <sys/time.h>
 #include <sys/times.h>
 
+#include "gethrxtime.h"
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 #include "xalloc.h"
@@ -101,13 +102,20 @@ set_to_current_time (struct timevar_time_def *now)
   if (!timevar_enabled)
     return;
 
-  struct rusage rusage;
-  getrusage (RUSAGE_SELF, &rusage);
-  now->user = rusage.ru_utime.tv_sec + rusage.ru_utime.tv_usec * 1e-6;
-  now->sys  = rusage.ru_stime.tv_sec + rusage.ru_stime.tv_usec * 1e-6;
-  getrusage (RUSAGE_CHILDREN, &rusage);
-  now->user += rusage.ru_utime.tv_sec + rusage.ru_utime.tv_usec * 1e-6;
-  now->sys  += rusage.ru_stime.tv_sec + rusage.ru_stime.tv_usec * 1e-6;
+  struct rusage self;
+  getrusage (RUSAGE_SELF, &self);
+  struct rusage chld;
+  getrusage (RUSAGE_CHILDREN, &chld);
+
+  now->user =
+    xtime_make (self.ru_utime.tv_sec + chld.ru_utime.tv_sec,
+                (self.ru_utime.tv_usec + chld.ru_utime.tv_usec) * 1000);
+
+  now->sys =
+    xtime_make (self.ru_stime.tv_sec + chld.ru_stime.tv_sec,
+                (self.ru_stime.tv_usec + chld.ru_stime.tv_usec) * 1000);
+
+  now->wall = gethrxtime();
 }
 
 /* Return the current time.  */
@@ -310,49 +318,34 @@ timevar_print (FILE *fp)
            "", _("CPU user"), _("CPU system"), _("wall clock"));
   for (unsigned /* timevar_id_t */ id = 0; id < (unsigned) TIMEVAR_LAST; ++id)
     {
-      struct timevar_def *tv = &timevars[(timevar_id_t) id];
-      const float tiny = 5e-3;
-
       /* Don't print the total execution time here; that goes at the
          end.  */
       if ((timevar_id_t) id == tv_total)
         continue;
 
       /* Don't print timing variables that were never used.  */
+      struct timevar_def *tv = &timevars[(timevar_id_t) id];
       if (!tv->used)
         continue;
 
-      /* Don't print timing variables if we're going to get a row of
-         zeroes.  */
-      if (tv->elapsed.user < tiny
-          && tv->elapsed.sys < tiny
-          && tv->elapsed.wall < tiny)
+      /* Percentages.  */
+      const int usr = total->user ? tv->elapsed.user * 100 / total->user : 0;
+      const int sys = total->sys ? tv->elapsed.sys * 100 / total->sys : 0;
+      const int wall = total->wall ? tv->elapsed.wall * 100 / total->wall : 0;
+
+      /* Ignore insignificant lines.  */
+      if (!usr && !sys && !wall)
         continue;
 
-      /* The timing variable name.  */
       fprintf (fp, " %-22s", tv->name);
-
-      /* Print user-mode time for this process.  */
-      fprintf (fp, "%8.3f (%2.0f%%)",
-               tv->elapsed.user,
-               (total->user == 0 ? 0 : tv->elapsed.user / total->user) * 100);
-
-      /* Print system-mode time for this process.  */
-      fprintf (fp, "%8.3f (%2.0f%%)",
-               tv->elapsed.sys,
-               (total->sys == 0 ? 0 : tv->elapsed.sys / total->sys) * 100);
-
-      /* Print wall clock time elapsed.  */
-      fprintf (fp, "%11.6f (%2.0f%%)",
-               tv->elapsed.wall,
-               (total->wall == 0 ? 0 : tv->elapsed.wall / total->wall) * 100);
-
-      putc ('\n', fp);
+      fprintf (fp, "%8.3f (%2d%%)", tv->elapsed.user * 1e-9, usr);
+      fprintf (fp, "%8.3f (%2d%%)", tv->elapsed.sys * 1e-9, sys);
+      fprintf (fp, "%11.6f (%2d%%)\n", tv->elapsed.wall * 1e-9, wall);
     }
 
   /* Print total time.  */
   fprintf (fp, " %-22s", timevars[tv_total].name);
-  fprintf (fp, "%8.3f      ", total->user);
-  fprintf (fp, "%8.3f      ", total->sys);
-  fprintf (fp, "%11.6f\n", total->wall);
+  fprintf (fp, "%8.3f      ", total->user * 1e-9);
+  fprintf (fp, "%8.3f      ", total->sys * 1e-9);
+  fprintf (fp, "%11.6f\n", total->wall * 1e-9);
 }

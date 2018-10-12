@@ -50,10 +50,13 @@ extern "C" {
 #endif
 
 /* Return an extended time value that contains S seconds and NS
-   nanoseconds, without any overflow checking.  */
+   nanoseconds.  */
 XTIME_INLINE xtime_t
 xtime_make (xtime_t s, long int ns)
 {
+  const long int giga = 1000 * 1000 * 1000;
+  s += ns / giga;
+  ns %= giga;
   if (XTIME_PRECISION == 1)
     return s;
   else
