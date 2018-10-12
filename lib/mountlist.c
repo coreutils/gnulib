@@ -111,7 +111,11 @@
 # include <mntent.h>
 #endif
 
-#ifdef MOUNTED_GETMNTENT2       /* Solaris, also (obsolete) SVR4 */
+#ifdef MOUNTED_GETEXTMNTENT     /* Solaris >= 8 */
+# include <sys/mnttab.h>
+#endif
+
+#ifdef MOUNTED_GETMNTENT2       /* Solaris < 8, also (obsolete) SVR4 */
 # include <sys/mnttab.h>
 #endif
 
@@ -918,10 +922,55 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETMNTTBL */
 
-#ifdef MOUNTED_GETMNTENT2       /* Solaris, also (obsolete) SVR4 */
+#ifdef MOUNTED_GETEXTMNTENT     /* Solaris >= 8 */
+  {
+    struct extmnttab mnt;
+    const char *table = MNTTAB;
+    FILE *fp;
+    int ret;
+
+    /* No locking is needed, because the contents of /etc/mnttab is generated
+       by the kernel.  */
+
+    errno = 0;
+    fp = fopen (table, "r");
+    if (fp == NULL)
+      ret = errno;
+    else
+      {
+        while ((ret = getextmntent (fp, &mnt, 1)) == 0)
+          {
+            me = xmalloc (sizeof *me);
+            me->me_devname = xstrdup (mnt.mnt_special);
+            me->me_mountdir = xstrdup (mnt.mnt_mountp);
+            me->me_mntroot = NULL;
+            me->me_type = xstrdup (mnt.mnt_fstype);
+            me->me_type_malloced = 1;
+            me->me_dummy = MNT_IGNORE (&mnt) != 0;
+            me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
+            me->me_dev = makedev (mnt.mnt_major, mnt.mnt_minor);
+
+            /* Add to the linked list. */
+            *mtail = me;
+            mtail = &me->me_next;
+          }
+
+        ret = fclose (fp) == EOF ? errno : 0 < ret ? 0 : -1;
+        /* Here ret = -1 means success, ret >= 0 means failure.  */
+      }
+
+    if (0 <= ret)
+      {
+        errno = ret;
+        goto free_then_fail;
+      }
+  }
+#endif /* MOUNTED_GETMNTTBL */
+
+#ifdef MOUNTED_GETMNTENT2       /* Solaris < 8, also (obsolete) SVR4 */
   {
     struct mnttab mnt;
-    char *table = MNTTAB;
+    const char *table = MNTTAB;
     FILE *fp;
     int ret;
     int lockfd = -1;
@@ -979,6 +1028,7 @@ read_file_system_list (bool need_fs_type)
           }
 
         ret = fclose (fp) == EOF ? errno : 0 < ret ? 0 : -1;
+        /* Here ret = -1 means success, ret >= 0 means failure.  */
       }
 
     if (0 <= lockfd && close (lockfd) != 0)
