@@ -6,10 +6,12 @@ lib/localename.h
 lib/localename.c
 m4/localename.m4
 m4/intlmacosx.m4
+m4/intlsolaris.m4
 m4/lcmessage.m4
 
 Depends-on:
 extensions
+locale
 flexmember
 strdup
 lock
@@ -17,6 +19,7 @@ langinfo
 
 configure.ac:
 gl_LOCALENAME
+gl_LOCALE_MODULE_INDICATOR([localename])
 
 Makefile.am:
 lib_SOURCES += localename.c

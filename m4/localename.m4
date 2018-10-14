@@ -1,4 +1,4 @@
-# localename.m4 serial 3
+# localename.m4 serial 4
 dnl Copyright (C) 2007, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,13 +6,25 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_LOCALENAME],
 [
+  AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
   AC_REQUIRE([gt_LC_MESSAGES])
   AC_REQUIRE([gt_INTL_MACOSX])
   AC_CHECK_HEADERS_ONCE([langinfo.h])
-  AC_CHECK_FUNCS([setlocale uselocale])
-  dnl Solaris 12 provides getlocalename_l, while Illumos doesn't have
-  dnl it nor the equivalent.
-  if test $ac_cv_func_uselocale = yes; then
-    AC_CHECK_FUNCS([getlocalename_l])
+  AC_CHECK_FUNCS([setlocale])
+  AC_CHECK_FUNCS_ONCE([uselocale newlocale duplocale freelocale])
+  if test $ac_cv_func_newlocale != yes; then
+    HAVE_NEWLOCALE=0
+  fi
+  if test $ac_cv_func_duplocale != yes; then
+    HAVE_DUPLOCALE=0
+  fi
+  if test $ac_cv_func_freelocale != yes; then
+    HAVE_FREELOCALE=0
+  fi
+  gt_INTL_SOLARIS
+  if test $gt_nameless_locales = yes; then
+    REPLACE_NEWLOCALE=1
+    REPLACE_DUPLOCALE=1
+    REPLACE_FREELOCALE=1
   fi
 ])
