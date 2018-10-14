@@ -1,4 +1,4 @@
-# logbf.m4 serial 2
+# logbf.m4 serial 3
 dnl Copyright (C) 2012-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -47,7 +47,8 @@ AC_DEFUN([gl_FUNC_LOGBF],
 
 dnl Test whether logbf() works.
 dnl On glibc 2.11/ppc, glibc 2.7/sparc, glibc 2.7/hppa, Solaris 10/SPARC,
-dnl the return value for subnormal (denormalized) arguments is too large.
+dnl Solaris 11.4/x86_64, the return value for subnormal (denormalized) arguments
+dnl is too large.
 AC_DEFUN([gl_FUNC_LOGBF_WORKS],
 [
   AC_REQUIRE([AC_PROG_CC])

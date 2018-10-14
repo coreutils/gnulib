@@ -16,9 +16,17 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX
 Portability problems fixed by Gnulib module @code{dprintf-posix}:
 @itemize
 @item
+printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
+incorrect result on some platforms:
+Solaris 11.4.
+@item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6.
+@item
+printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
+with zeroes, or wrong capitalization) on some platforms:
+Solaris 11.4.
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:

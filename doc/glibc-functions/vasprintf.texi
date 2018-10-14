@@ -27,7 +27,7 @@ Solaris 11.0.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, Solaris 11.3, Cygwin 1.5.x, BeOS.
+glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, Solaris 11.4, Cygwin 1.5.x, BeOS.
 @item
 This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, Cygwin 1.5.x, BeOS.
@@ -37,7 +37,7 @@ OpenBSD 4.0, Cygwin 1.5.x, Haiku.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:
-Solaris 11.3.
+Solaris 11.4.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:

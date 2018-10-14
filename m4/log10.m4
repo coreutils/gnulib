@@ -1,4 +1,4 @@
-# log10.m4 serial 7
+# log10.m4 serial 8
 dnl Copyright (C) 2011-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,7 +48,7 @@ int main (int argc, char *argv[])
 {
   double (*my_log10) (double) = argc ? log10 : dummy;
   /* Test log10(negative).
-     This test fails on NetBSD 5.1, Solaris 11.0.  */
+     This test fails on NetBSD 5.1, Solaris 11.4.  */
   double y = my_log10 (-1.0);
   if (numeric_equal (y, y))
     return 1;

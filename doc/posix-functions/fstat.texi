@@ -16,7 +16,7 @@ On platforms where @code{off_t} is a 32-bit type, @code{fstat} may not correctly
 report the size of files or block devices larger than 2 GB.
 (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
-On Solaris 11.3, when this function yields a timestamp with a
+On Solaris 11.4, when this function yields a timestamp with a
 nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
 @minus{}1000000000..@minus{}1, representing a negative nanoseconds
 offset from @code{tv_sec}.

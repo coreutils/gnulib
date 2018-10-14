@@ -30,7 +30,7 @@ On some platforms, @code{stat(".",buf)} and @code{stat("./",buf)} give
 different results:
 mingw, MSVC 14.
 @item
-On Solaris 11.3, when this function yields a timestamp with a
+On Solaris 11.4, when this function yields a timestamp with a
 nonpositive @code{tv_sec} value, @code{tv_nsec} might be in the range
 @minus{}1000000000..@minus{}1, representing a negative nanoseconds
 offset from @code{tv_sec}.

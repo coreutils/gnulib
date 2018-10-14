@@ -13,7 +13,7 @@ This function is planned to be removed from POSIX and to be deprecated
 in glibc.  Portable applications should use @code{readdir}.
 @item
 This function has an incompatible declaration on some platforms:
-Solaris 11.3 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @end itemize
 
 Portability problems not fixed by Gnulib:
