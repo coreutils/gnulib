@@ -1,4 +1,4 @@
-# trunc.m4 serial 11
+# trunc.m4 serial 12
 dnl Copyright (C) 2007, 2010-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,8 +21,9 @@ AC_DEFUN([gl_FUNC_TRUNC],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
+           double (*funcptr) (double) = trunc;
            double x;]],
-         [[x = trunc(x);]])],
+         [[x = funcptr(x) + trunc(x);]])],
       [TRUNC_LIBM=])
     if test "$TRUNC_LIBM" = "?"; then
       save_LIBS="$LIBS"
@@ -33,8 +34,9 @@ AC_DEFUN([gl_FUNC_TRUNC],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             double (*funcptr) (double) = trunc;
              double x;]],
-           [[x = trunc(x);]])],
+           [[x = funcptr(x) + trunc(x);]])],
         [TRUNC_LIBM="-lm"])
       LIBS="$save_LIBS"
     fi

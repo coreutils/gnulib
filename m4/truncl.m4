@@ -1,4 +1,4 @@
-# truncl.m4 serial 13
+# truncl.m4 serial 14
 dnl Copyright (C) 2007-2008, 2010-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,8 +25,9 @@ AC_DEFUN([gl_FUNC_TRUNCL],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
+           long double (*funcptr) (long double) = truncl;
            long double x;]],
-         [[x = truncl(x);]])],
+         [[x = funcptr(x) + truncl(x);]])],
       [TRUNCL_LIBM=])
     if test "$TRUNCL_LIBM" = "?"; then
       save_LIBS="$LIBS"
@@ -37,8 +38,9 @@ AC_DEFUN([gl_FUNC_TRUNCL],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             long double (*funcptr) (long double) = truncl;
              long double x;]],
-           [[x = truncl(x);]])],
+           [[x = funcptr(x) + truncl(x);]])],
         [TRUNCL_LIBM="-lm"])
       LIBS="$save_LIBS"
     fi

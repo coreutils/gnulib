@@ -1,4 +1,4 @@
-# floor.m4 serial 10
+# floor.m4 serial 11
 dnl Copyright (C) 2007, 2009-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -77,8 +77,9 @@ AC_DEFUN([gl_FUNC_FLOOR_LIBS],
            # define __NO_MATH_INLINES 1 /* for glibc */
            #endif
            #include <math.h>
+           double (*funcptr) (double) = floor;
            double x;]],
-         [[x = floor(x);]])],
+         [[x = funcptr(x) + floor(x);]])],
       [gl_cv_func_floor_libm=])
     if test "$gl_cv_func_floor_libm" = "?"; then
       save_LIBS="$LIBS"
@@ -89,8 +90,9 @@ AC_DEFUN([gl_FUNC_FLOOR_LIBS],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
+             double (*funcptr) (double) = floor;
              double x;]],
-           [[x = floor(x);]])],
+           [[x = funcptr(x) + floor(x);]])],
         [gl_cv_func_floor_libm="-lm"])
       LIBS="$save_LIBS"
     fi
