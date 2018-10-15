@@ -23,7 +23,7 @@
 #include <assert.h>
 
 /* Check E's value at runtime, and report an error and abort if not.
-   However, do nothng if NDEBUG is defined.
+   However, do nothing if NDEBUG is defined.
 
    Unlike standard 'assert', this macro always compiles E even when NDEBUG
    is defined, so as to catch typos and avoid some GCC warnings.  */
