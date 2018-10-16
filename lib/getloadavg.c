@@ -62,7 +62,6 @@
    __MSDOS__                    No-op for MSDOS.
    NeXT
    sgi
-   sony_news                    NEWS-OS (works at least for 4.1C)
    UMAX
    UMAX4_3
    VMS
@@ -191,10 +190,6 @@
 #  endif
 
 #  ifdef SVR4
-#   define LOAD_AVE_TYPE long
-#  endif
-
-#  ifdef sony_news
 #   define LOAD_AVE_TYPE long
 #  endif
 
