@@ -216,9 +216,9 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 
   fsp->fsu_blocksize = PROPAGATE_ALL_ONES (fsd.f_fsize);
 
-#elif defined STAT_STATFS4              /* SVR3, Dynix, old Irix, old AIX */
+#elif defined STAT_STATFS4              /* SVR3, Dynix, old Irix */
 
-# if !_AIX && !defined _SEQUENT_
+# if !defined _SEQUENT_
 #  define f_bavail f_bfree
 # endif
 
@@ -230,7 +230,7 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
   /* Empirically, the block counts on most SVR3 and SVR3-derived
      systems seem to always be in terms of 512-byte blocks,
      no matter what value f_bsize has.  */
-# if _AIX || defined _CRAY
+# if defined _CRAY
    fsp->fsu_blocksize = PROPAGATE_ALL_ONES (fsd.f_bsize);
 # else
    fsp->fsu_blocksize = 512;
