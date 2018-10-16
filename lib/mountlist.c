@@ -125,12 +125,6 @@
 # include <dirent.h>
 #endif
 
-#ifdef DOLPHIN
-/* So special that it's not worth putting this in autoconf.  */
-# undef MOUNTED_FREAD_FSTYP
-# define MOUNTED_GETMNTTBL
-#endif
-
 #if HAVE_SYS_MNTENT_H
 /* This is to get MNTOPT_IGNORE on e.g. SVR4.  */
 # include <sys/mntent.h>
@@ -887,29 +881,6 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_FREAD_FSTYP.  */
 
-#ifdef MOUNTED_GETMNTTBL        /* (obsolete) DolphinOS */
-  {
-    struct mntent **mnttbl = getmnttbl (), **ent;
-    for (ent = mnttbl; *ent; ent++)
-      {
-        me = xmalloc (sizeof *me);
-        me->me_devname = xstrdup ((*ent)->mt_resource);
-        me->me_mountdir = xstrdup ((*ent)->mt_directory);
-        me->me_mntroot = NULL;
-        me->me_type = xstrdup ((*ent)->mt_fstype);
-        me->me_type_malloced = 1;
-        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
-        me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
-        me->me_dev = (dev_t) -1;        /* Magic; means not known yet. */
-
-        /* Add to the linked list. */
-        *mtail = me;
-        mtail = &me->me_next;
-      }
-    endmnttbl ();
-  }
-#endif /* MOUNTED_GETMNTTBL */
-
 #ifdef MOUNTED_GETEXTMNTENT     /* Solaris >= 8 */
   {
     struct extmnttab mnt;
@@ -953,7 +924,7 @@ read_file_system_list (bool need_fs_type)
         goto free_then_fail;
       }
   }
-#endif /* MOUNTED_GETMNTTBL */
+#endif /* MOUNTED_GETEXTMNTENT */
 
 #ifdef MOUNTED_GETMNTENT2       /* Solaris < 8, also (obsolete) SVR4 */
   {
