@@ -216,11 +216,7 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
 
   fsp->fsu_blocksize = PROPAGATE_ALL_ONES (fsd.f_fsize);
 
-#elif defined STAT_STATFS4              /* SVR3, Dynix, old Irix */
-
-# if !defined _SEQUENT_
-#  define f_bavail f_bfree
-# endif
+#elif defined STAT_STATFS4              /* SVR3, old Irix */
 
   struct statfs fsd;
 

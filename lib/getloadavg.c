@@ -62,8 +62,6 @@
    __MSDOS__                    No-op for MSDOS.
    NeXT
    sgi
-   sequent                      Sequent Dynix 3.x.x (BSD)
-   _SEQUENT_                    Sequent DYNIX/ptx 1.x.x (SYSV)
    sony_news                    NEWS-OS (works at least for 4.1C)
    UMAX
    UMAX4_3
@@ -188,10 +186,6 @@
 #   define LOAD_AVE_TYPE long
 #  endif
 
-#  ifdef _SEQUENT_
-#   define LOAD_AVE_TYPE long
-#  endif
-
 #  ifdef sgi
 #   define LOAD_AVE_TYPE long
 #  endif
@@ -201,10 +195,6 @@
 #  endif
 
 #  ifdef sony_news
-#   define LOAD_AVE_TYPE long
-#  endif
-
-#  ifdef sequent
 #   define LOAD_AVE_TYPE long
 #  endif
 
@@ -245,7 +235,7 @@
 #   define FSCALE 256
 #  endif
 
-#  if defined (sgi) || defined (sequent)
+#  if defined (sgi)
 /* Sometimes both MIPS and sgi are defined, so FSCALE was just defined
    above under #ifdef MIPS.  But we want the sgi value.  */
 #   undef FSCALE
@@ -273,20 +263,16 @@
 # endif
 
 
-# if !defined (KERNEL_FILE) && defined (sequent)
-#  define KERNEL_FILE "/dynix"
-# endif
-
 # if !defined (KERNEL_FILE) && defined (hpux)
 #  define KERNEL_FILE "/hp-ux"
 # endif
 
-# if !defined (KERNEL_FILE) && (defined (_SEQUENT_) || defined (MIPS) || defined (SVR4) || defined (ISC) || defined (sgi))
+# if !defined (KERNEL_FILE) && (defined (MIPS) || defined (SVR4) || defined (ISC) || defined (sgi))
 #  define KERNEL_FILE "/unix"
 # endif
 
 
-# if !defined (LDAV_SYMBOL) && (defined (hpux) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
+# if !defined (LDAV_SYMBOL) && (defined (hpux) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
 #  define LDAV_SYMBOL "avenrun"
 # endif
 

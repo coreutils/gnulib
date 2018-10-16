@@ -63,7 +63,7 @@
 #endif /* MOUNTED_GETFSSTAT */
 
 #ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
-                                   also (obsolete) 4.3BSD, SunOS, Dynix */
+                                   also (obsolete) 4.3BSD, SunOS */
 # include <mntent.h>
 # include <sys/types.h>
 # if !defined MOUNTED
@@ -72,9 +72,6 @@
 #  endif
 #  if defined MNT_MNTTAB        /* HP-UX.  */
 #   define MOUNTED MNT_MNTTAB
-#  endif
-#  if defined MNTTABNAME        /* Dynix.  */
-#   define MOUNTED MNTTABNAME
 #  endif
 # endif
 #endif
@@ -463,7 +460,7 @@ read_file_system_list (bool need_fs_type)
 #endif
 
 #ifdef MOUNTED_GETMNTENT1       /* glibc, HP-UX, IRIX, Cygwin, Android,
-                                   also (obsolete) 4.3BSD, SunOS, Dynix */
+                                   also (obsolete) 4.3BSD, SunOS */
   {
     FILE *fp;
 

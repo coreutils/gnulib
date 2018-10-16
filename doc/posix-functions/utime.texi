@@ -21,9 +21,6 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On some old platforms (Sequent), @code{utime (file, NULL)} fails to set the
-file's timestamp to the current time.
-@item
 On some platforms, this function mis-handles trailing slash:
 Solaris 9.
 @item
