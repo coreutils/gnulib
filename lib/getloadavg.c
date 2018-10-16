@@ -172,13 +172,6 @@
 #  include <sys/table.h>
 # endif
 
-/* UTek's /bin/cc on the 4300 has no architecture specific cpp define by
-   default, but _MACH_IND_SYS_TYPES is defined in <sys/types.h>.  Combine
-   that with a couple of other things and we'll have a unique match.  */
-# if !defined (tek4300) && defined (unix) && defined (m68k) && defined (mc68000) && defined (mc68020) && defined (_MACH_IND_SYS_TYPES)
-#  define tek4300                       /* Define by emacs, but not by other users.  */
-# endif
-
 
 /* VAX C can't handle multi-line #ifs, or lines longer than 256 chars.  */
 # ifndef LOAD_AVE_TYPE
@@ -216,10 +209,6 @@
 #  endif
 
 #  ifdef OSF_ALPHA
-#   define LOAD_AVE_TYPE long
-#  endif
-
-#  ifdef tek4300
 #   define LOAD_AVE_TYPE long
 #  endif
 
@@ -272,10 +261,6 @@
    above under #ifdef MIPS.  But we want the sgi value.  */
 #   undef FSCALE
 #   define FSCALE 1000.0
-#  endif
-
-#  ifdef tek4300
-#   define FSCALE 100.0
 #  endif
 
 #  if defined _AIX && !defined HAVE_LIBPERFSTAT
