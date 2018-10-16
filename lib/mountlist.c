@@ -97,10 +97,6 @@
 # include <dirent.h>
 #endif
 
-#ifdef MOUNTED_FREAD            /* (obsolete) SVR2 */
-# include <mnttab.h>
-#endif
-
 #ifdef MOUNTED_FREAD_FSTYP      /* (obsolete) SVR3 */
 # include <mnttab.h>
 # include <sys/fstyp.h>
@@ -838,7 +834,7 @@ read_file_system_list (bool need_fs_type)
   }
 #endif /* MOUNTED_GETFSSTAT */
 
-#if defined MOUNTED_FREAD || defined MOUNTED_FREAD_FSTYP /* (obsolete) SVR3, SVR2 */
+#if defined MOUNTED_FREAD_FSTYP /* (obsolete) SVR3 */
   {
     struct mnttab mnt;
     char *table = "/etc/mnttab";
@@ -851,19 +847,12 @@ read_file_system_list (bool need_fs_type)
     while (fread (&mnt, sizeof mnt, 1, fp) > 0)
       {
         me = xmalloc (sizeof *me);
-# ifdef GETFSTYP                        /* SVR3.  */
         me->me_devname = xstrdup (mnt.mt_dev);
-# else
-        me->me_devname = xmalloc (strlen (mnt.mt_dev) + 6);
-        strcpy (me->me_devname, "/dev/");
-        strcpy (me->me_devname + 5, mnt.mt_dev);
-# endif
         me->me_mountdir = xstrdup (mnt.mt_filsys);
         me->me_mntroot = NULL;
         me->me_dev = (dev_t) -1;        /* Magic; means not known yet. */
         me->me_type = "";
         me->me_type_malloced = 0;
-# ifdef GETFSTYP                        /* SVR3.  */
         if (need_fs_type)
           {
             struct statfs fsd;
@@ -876,7 +865,6 @@ read_file_system_list (bool need_fs_type)
                 me->me_type_malloced = 1;
               }
           }
-# endif
         me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
         me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
 
@@ -897,7 +885,7 @@ read_file_system_list (bool need_fs_type)
     if (fclose (fp) == EOF)
       goto free_then_fail;
   }
-#endif /* MOUNTED_FREAD || MOUNTED_FREAD_FSTYP.  */
+#endif /* MOUNTED_FREAD_FSTYP.  */
 
 #ifdef MOUNTED_GETMNTTBL        /* (obsolete) DolphinOS */
   {
