@@ -219,10 +219,6 @@
 #   define LOAD_AVE_TYPE long
 #  endif
 
-#  if defined (ardent) && defined (titan)
-#   define LOAD_AVE_TYPE long
-#  endif
-
 #  ifdef tek4300
 #   define LOAD_AVE_TYPE long
 #  endif
@@ -278,10 +274,6 @@
 #   define FSCALE 1000.0
 #  endif
 
-#  if defined (ardent) && defined (titan)
-#   define FSCALE 65536.0
-#  endif
-
 #  ifdef tek4300
 #   define FSCALE 100.0
 #  endif
@@ -315,7 +307,7 @@
 #  define KERNEL_FILE "/hp-ux"
 # endif
 
-# if !defined (KERNEL_FILE) && (defined (_SEQUENT_) || defined (MIPS) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (ardent) && defined (titan)))
+# if !defined (KERNEL_FILE) && (defined (_SEQUENT_) || defined (MIPS) || defined (SVR4) || defined (ISC) || defined (sgi))
 #  define KERNEL_FILE "/unix"
 # endif
 
@@ -324,7 +316,7 @@
 #  define LDAV_SYMBOL "_Loadavg"
 # endif
 
-# if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (ardent) && defined (titan)) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
+# if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
 #  define LDAV_SYMBOL "avenrun"
 # endif
 
