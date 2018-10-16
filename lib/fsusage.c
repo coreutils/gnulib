@@ -46,9 +46,6 @@
 # if HAVE_SYS_STATFS_H
 #  include <sys/statfs.h>
 # endif
-# if HAVE_DUSTAT_H              /* AIX PS/2 */
-#  include <sys/dustat.h>
-# endif
 #endif
 
 /* Many space usage primitives use all 1 bits to denote a value that is
@@ -257,30 +254,3 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
   (void) disk;  /* avoid argument-unused warning */
   return 0;
 }
-
-#if defined _AIX && defined _I386
-/* AIX PS/2 does not supply statfs.  */
-
-int
-statfs (char *file, struct statfs *fsb)
-{
-  struct stat stats;
-  struct dustat fsd;
-
-  if (stat (file, &stats) != 0)
-    return -1;
-  if (dustat (stats.st_dev, 0, &fsd, sizeof (fsd)))
-    return -1;
-  fsb->f_type   = 0;
-  fsb->f_bsize  = fsd.du_bsize;
-  fsb->f_blocks = fsd.du_fsize - fsd.du_isize;
-  fsb->f_bfree  = fsd.du_tfree;
-  fsb->f_bavail = fsd.du_tfree;
-  fsb->f_files  = (fsd.du_isize - 2) * fsd.du_inopb;
-  fsb->f_ffree  = fsd.du_tinode;
-  fsb->f_fsid.val[0] = fsd.du_site;
-  fsb->f_fsid.val[1] = fsd.du_pckno;
-  return 0;
-}
-
-#endif /* _AIX && _I386 */
