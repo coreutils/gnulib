@@ -84,11 +84,6 @@
 # include <sys/statvfs.h>
 #endif
 
-#ifdef MOUNTED_GETMNT           /* (obsolete) Ultrix */
-# include <sys/mount.h>
-# include <sys/fs_types.h>
-#endif
-
 #ifdef MOUNTED_FS_STAT_DEV      /* Haiku, also (obsolete) BeOS */
 # include <fs_info.h>
 # include <dirent.h>
@@ -646,35 +641,6 @@ read_file_system_list (bool need_fs_type)
       }
   }
 #endif /* MOUNTED_GETMNTINFO2 */
-
-#ifdef MOUNTED_GETMNT           /* (obsolete) Ultrix */
-  {
-    int offset = 0;
-    int val;
-    struct fs_data fsd;
-
-    while (errno = 0,
-           0 < (val = getmnt (&offset, &fsd, sizeof (fsd), NOSTAT_MANY,
-                              (char *) 0)))
-      {
-        me = xmalloc (sizeof *me);
-        me->me_devname = xstrdup (fsd.fd_req.devname);
-        me->me_mountdir = xstrdup (fsd.fd_req.path);
-        me->me_mntroot = NULL;
-        me->me_type = gt_names[fsd.fd_req.fstype];
-        me->me_type_malloced = 0;
-        me->me_dummy = ME_DUMMY (me->me_devname, me->me_type);
-        me->me_remote = ME_REMOTE (me->me_devname, me->me_type);
-        me->me_dev = fsd.fd_req.dev;
-
-        /* Add to the linked list. */
-        *mtail = me;
-        mtail = &me->me_next;
-      }
-    if (val < 0)
-      goto free_then_fail;
-  }
-#endif /* MOUNTED_GETMNT. */
 
 #if defined MOUNTED_FS_STAT_DEV /* Haiku, also (obsolete) BeOS */
   {

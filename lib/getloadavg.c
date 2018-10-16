@@ -97,11 +97,6 @@
 #  define WINDOWS32
 # endif
 
-# if !defined (BSD) && defined (ultrix)
-/* Ultrix behaves like BSD on Vaxen.  */
-#  define BSD
-# endif
-
 # ifdef NeXT
 /* NeXT in the 2.{0,1,2} releases defines BSD in <sys/param.h>, which
    conflicts with the definition understood in this file, that this
@@ -141,10 +136,6 @@
 #  define MORE_BSD
 # endif
 
-# if defined (ultrix) && defined (mips)
-#  define decstation
-# endif
-
 # if defined (__SVR4) && !defined (SVR4)
 #  define SVR4
 # endif
@@ -177,10 +168,6 @@
 #  endif
 
 #  ifdef sun
-#   define LOAD_AVE_TYPE long
-#  endif
-
-#  ifdef decstation
 #   define LOAD_AVE_TYPE long
 #  endif
 
@@ -218,7 +205,7 @@
 #   define FSCALE 2048.0
 #  endif
 
-#  if defined (MIPS) || defined (SVR4) || defined (decstation)
+#  if defined (MIPS) || defined (SVR4)
 #   define FSCALE 256
 #  endif
 

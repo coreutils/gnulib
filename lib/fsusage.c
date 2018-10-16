@@ -148,21 +148,6 @@ get_fs_usage (char const *file, char const *disk, struct fs_usage *fsp)
                         ? PROPAGATE_ALL_ONES (fsd.f_frsize)
                         : PROPAGATE_ALL_ONES (fsd.f_bsize));
 
-#elif defined STAT_STATFS2_FS_DATA      /* Ultrix */
-
-  struct fs_data fsd;
-
-  if (statfs (file, &fsd) != 1)
-    return -1;
-
-  fsp->fsu_blocksize = 1024;
-  fsp->fsu_blocks = PROPAGATE_ALL_ONES (fsd.fd_req.btot);
-  fsp->fsu_bfree = PROPAGATE_ALL_ONES (fsd.fd_req.bfree);
-  fsp->fsu_bavail = PROPAGATE_TOP_BIT (fsd.fd_req.bfreen);
-  fsp->fsu_bavail_top_bit_set = EXTRACT_TOP_BIT (fsd.fd_req.bfreen) != 0;
-  fsp->fsu_files = PROPAGATE_ALL_ONES (fsd.fd_req.gtot);
-  fsp->fsu_ffree = PROPAGATE_ALL_ONES (fsd.fd_req.gfree);
-
 #elif defined STAT_STATFS3_OSF1         /* OSF/1 */
 
   struct statfs fsd;
