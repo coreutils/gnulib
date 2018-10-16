@@ -212,10 +212,6 @@
 #   define LOAD_AVE_TYPE long
 #  endif
 
-#  if defined (alliant) && defined (i860) /* Alliant FX/2800 */
-#   define LOAD_AVE_TYPE long
-#  endif
-
 #  if defined _AIX && ! defined HAVE_LIBPERFSTAT
 #   define LOAD_AVE_TYPE long
 #  endif
@@ -234,13 +230,6 @@
    according to ghazi@noc.rutgers.edu.  */
 #  undef FSCALE
 #  define FSCALE 1024.0
-# endif
-
-# if defined (alliant) && defined (i860) /* Alliant FX/2800 */
-/* <sys/param.h> defines an incorrect value for FSCALE on an
-   Alliant FX/2800 Concentrix 2.2, according to ghazi@noc.rutgers.edu.  */
-#  undef FSCALE
-#  define FSCALE 100.0
 # endif
 
 
@@ -296,10 +285,6 @@
 #  define KERNEL_FILE "/unix"
 # endif
 
-
-# if !defined (LDAV_SYMBOL) && defined (alliant)
-#  define LDAV_SYMBOL "_Loadavg"
-# endif
 
 # if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
 #  define LDAV_SYMBOL "avenrun"
