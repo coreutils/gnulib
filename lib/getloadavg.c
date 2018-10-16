@@ -55,7 +55,6 @@
 
    apollo
    BSD                          Real BSD, not just BSD-like.
-   convex
    DGUX
    eunice                       UNIX emulator under VMS.
    hpux
@@ -199,13 +198,6 @@
 
 #  if defined _AIX && ! defined HAVE_LIBPERFSTAT
 #   define LOAD_AVE_TYPE long
-#  endif
-
-#  ifdef convex
-#   define LOAD_AVE_TYPE double
-#   ifndef LDAV_CVT
-#    define LDAV_CVT(n) (n)
-#   endif
 #  endif
 
 # endif /* No LOAD_AVE_TYPE.  */
