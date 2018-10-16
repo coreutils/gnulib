@@ -286,7 +286,7 @@
 # endif
 
 
-# if !defined (LDAV_SYMBOL) && ((defined (hpux) && !defined (hp9000s300)) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
+# if !defined (LDAV_SYMBOL) && (defined (hpux) || defined (_SEQUENT_) || defined (SVR4) || defined (ISC) || defined (sgi) || (defined (_AIX) && !defined(HAVE_LIBPERFSTAT)))
 #  define LDAV_SYMBOL "avenrun"
 # endif
 
