@@ -545,8 +545,6 @@ Include:|Link:|License:|Maintainer:)'
                 result = [part.strip() for part in parts if part.strip()]
             result += [joinpath('m4', '00gnulib.m4')]
             result += [joinpath('m4', 'gnulib-common.m4')]
-            if ac_version == 2.59:
-                result += [joinpath('m4', 'onceonly.m4')]
             self.cache['files'] = list(result)
         return(list(self.cache['files']))
 

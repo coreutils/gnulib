@@ -2,7 +2,6 @@ Description:
 Detection of OpenMP support.
 
 Files:
-m4/openmp.m4
 
 Depends-on:
 

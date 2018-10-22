@@ -1,4 +1,4 @@
-# serial 35
+# serial 36
 # How to list mounted file systems.
 
 # Copyright (C) 1998-2004, 2006, 2009-2018 Free Software Foundation, Inc.
@@ -8,14 +8,14 @@
 # with or without modifications, as long as this notice is preserved.
 
 dnl From Jim Meyering.
-dnl
+
+AC_PREREQ([2.60])
+
 dnl This is not pretty.  I've just taken the autoconf code and wrapped
 dnl it in an AC_DEFUN and made some other fixes.
-dnl
 
-# Replace Autoconf's AC_FUNC_GETMNTENT to work around a bug in Autoconf
-# through Autoconf 2.59.  We can remove this once we assume Autoconf 2.60
-# or later.
+# Replace Autoconf's AC_FUNC_GETMNTENT to omit checks that are unnecessary
+# nowadays.
 AC_DEFUN([AC_FUNC_GETMNTENT],
 [
   # getmntent is in the standard C library on UNICOS, in -lsun on Irix 4,
