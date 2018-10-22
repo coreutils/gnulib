@@ -52,7 +52,7 @@ extern char * getlocalename_l(int, locale_t);
 # endif
 # if HAVE_NAMELESS_LOCALES
 #  include <errno.h>
-#  include <stdint.h>
+#  include "localename-table.h"
 # endif
 #endif
 
@@ -2707,43 +2707,8 @@ struniq (const char *string)
 #if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES /* Solaris >= 11.4 */
 
 /* The 'locale_t' object does not contain the names of the locale categories.
-   We have to associate them with the object through a hash table.  */
-
-struct locale_categories_names
-  {
-    /* Locale category -> name (allocated with indefinite extent).  */
-    const char *category_name[6];
-  };
-
-/* A hash function for pointers.  */
-static size_t _GL_ATTRIBUTE_CONST
-pointer_hash (const void *x)
-{
-  uintptr_t p = (uintptr_t) x;
-  size_t h = ((p % 4177) << 12) + ((p % 79) << 6) + (p % 61);
-  return h;
-}
-
-/* A hash table of fixed size.  Multiple threads can access it read-only
-   simultaneously, but only one thread can insert into it or remove from it
-   at the same time.  */
-
-/* A node in a hash bucket collision list.  */
-struct locale_hash_node
-  {
-    struct locale_hash_node *next;
-    locale_t locale;
-    struct locale_categories_names names;
-  };
-
-# define LOCALE_HASH_TABLE_SIZE 101
-static struct locale_hash_node * locale_hash_table[LOCALE_HASH_TABLE_SIZE]
-  /* = { NULL, ..., NULL } */;
-
-/* This lock protects the locale_hash_table against multiple simultaneous
-   accesses (except that multiple simultaneous read accesses are allowed).  */
-
-gl_rwlock_define_initialized(static, locale_lock)
+   We have to associate them with the object through a hash table.
+   The hash table is defined in localename-table.[hc].  */
 
 /* Returns the name of a given locale category in a given locale_t object,
    allocated as a string with indefinite extent.  */
@@ -2763,7 +2728,7 @@ get_locale_t_name (int category, locale_t locale)
   else
     {
       /* Look up the names in the hash table.  */
-      size_t hashcode = pointer_hash (locale);
+      size_t hashcode = locale_hash_function (locale);
       size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
       /* If the locale was not found in the table, return "".  This can
          happen if the application uses the original newlocale()/duplocale()
@@ -2898,7 +2863,7 @@ newlocale (int category_mask, const char *name, locale_t base)
 
           /* Lock while looking up the hash node.  */
           gl_rwlock_rdlock (locale_lock);
-          for (p = locale_hash_table[pointer_hash (base) % LOCALE_HASH_TABLE_SIZE];
+          for (p = locale_hash_table[locale_hash_function (base) % LOCALE_HASH_TABLE_SIZE];
                p != NULL;
                p = p->next)
             if (p->locale == base)
@@ -2961,7 +2926,7 @@ newlocale (int category_mask, const char *name, locale_t base)
 
   /* Insert it in the hash table.  */
   {
-    size_t hashcode = pointer_hash (result);
+    size_t hashcode = locale_hash_function (result);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
     struct locale_hash_node *p;
 
@@ -3036,7 +3001,7 @@ duplocale (locale_t locale)
       /* Lock once, for the lookup and the insertion.  */
       gl_rwlock_wrlock (locale_lock);
 
-      for (p = locale_hash_table[pointer_hash (locale) % LOCALE_HASH_TABLE_SIZE];
+      for (p = locale_hash_table[locale_hash_function (locale) % LOCALE_HASH_TABLE_SIZE];
            p != NULL;
            p = p->next)
         if (p->locale == locale)
@@ -3057,7 +3022,7 @@ duplocale (locale_t locale)
 
   /* Insert it in the hash table.  */
   {
-    size_t hashcode = pointer_hash (result);
+    size_t hashcode = locale_hash_function (result);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
     struct locale_hash_node *p;
 
@@ -3094,7 +3059,7 @@ freelocale (locale_t locale)
     abort ();
 
   {
-    size_t hashcode = pointer_hash (locale);
+    size_t hashcode = locale_hash_function (locale);
     size_t slot = hashcode % LOCALE_HASH_TABLE_SIZE;
     struct locale_hash_node *found;
     struct locale_hash_node **p;

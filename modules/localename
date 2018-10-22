@@ -4,6 +4,8 @@ Return current locale's name, according to glibc naming conventions.
 Files:
 lib/localename.h
 lib/localename.c
+lib/localename-table.h
+lib/localename-table.c
 m4/localename.m4
 m4/intlmacosx.m4
 m4/intlsolaris.m4
@@ -22,7 +24,7 @@ gl_LOCALENAME
 gl_LOCALE_MODULE_INDICATOR([localename])
 
 Makefile.am:
-lib_SOURCES += localename.c
+lib_SOURCES += localename.c localename-table.c
 
 Include:
 "localename.h"
