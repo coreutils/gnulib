@@ -3,6 +3,8 @@ Important general notes
 
 Date        Modules         Changes
 
+2018-10-22  (all)           Automake >= 1.11 and Autoconf >= 2.63 are required.
+
 2016-09-05  progname        There is now an alternate module 'getprogname'. It
                             defines a getprogname() function; use it to obtain
                             the name of the current program.
