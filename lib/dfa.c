@@ -2038,7 +2038,7 @@ insert (position p, position_set *s)
   while (lo < hi)
     {
       ptrdiff_t mid = (lo + hi) >> 1;
-      if (s->elems[mid].index > p.index)
+      if (s->elems[mid].index < p.index)
         lo = mid + 1;
       else if (s->elems[mid].index == p.index)
         {
@@ -2074,7 +2074,7 @@ merge_constrained (position_set const *s1, position_set const *s2,
   m->nelem = 0;
   while (i < s1->nelem || j < s2->nelem)
     if (! (j < s2->nelem)
-        || (i < s1->nelem && s1->elems[i].index >= s2->elems[j].index))
+        || (i < s1->nelem && s1->elems[i].index <= s2->elems[j].index))
       {
         unsigned int c = ((i < s1->nelem && j < s2->nelem
                            && s1->elems[i].index == s2->elems[j].index)
@@ -2127,7 +2127,7 @@ delete (size_t del, position_set *s)
   while (lo < hi)
     {
       size_t mid = (lo + hi) >> 1;
-      if (s->elems[mid].index > del)
+      if (s->elems[mid].index < del)
         lo = mid + 1;
       else if (s->elems[mid].index == del)
         {
@@ -2514,7 +2514,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
   /* Array allocated to hold position sets.  */
   position *posalloc = xnmalloc (d->nleaves, 2 * sizeof *posalloc);
   /* Firstpos and lastpos elements.  */
-  position *firstpos = posalloc + d->nleaves;
+  position *firstpos = posalloc;
   position *lastpos = firstpos + d->nleaves;
 
   /* Stack for element counts and nullable flags.  */
@@ -2565,9 +2565,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
              of every element in the lastpos.  */
           {
             position_set tmp;
+            tmp.elems = firstpos - stk[-1].nfirstpos;
             tmp.nelem = stk[-1].nfirstpos;
-            tmp.elems = firstpos;
-            position *pos = lastpos;
+            position *pos = lastpos - stk[-1].nlastpos;
             for (size_t j = 0; j < stk[-1].nlastpos; j++)
               {
                 merge (&tmp, &d->follows[pos[j].index], &merged);
@@ -2587,8 +2587,8 @@ dfaanalyze (struct dfa *d, bool searchflag)
           {
             position_set tmp;
             tmp.nelem = stk[-1].nfirstpos;
-            tmp.elems = firstpos;
-            position *pos = lastpos + stk[-1].nlastpos;
+            tmp.elems = firstpos - stk[-1].nfirstpos;
+            position *pos = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
             for (size_t j = 0; j < stk[-2].nlastpos; j++)
               {
                 merge (&tmp, &d->follows[pos[j].index], &merged);
@@ -2601,7 +2601,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
           if (stk[-2].nullable)
             stk[-2].nfirstpos += stk[-1].nfirstpos;
           else
-            firstpos += stk[-1].nfirstpos;
+            firstpos -= stk[-1].nfirstpos;
 
           /* The lastpos of a CAT node is the lastpos of the second argument,
              union that of the first argument if the second is nullable.  */
@@ -2609,10 +2609,10 @@ dfaanalyze (struct dfa *d, bool searchflag)
             stk[-2].nlastpos += stk[-1].nlastpos;
           else
             {
-              position *pos = lastpos + stk[-2].nlastpos;
-              for (size_t j = stk[-1].nlastpos; j-- > 0;)
-                pos[j] = lastpos[j];
-              lastpos += stk[-2].nlastpos;
+              position *pos = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
+              for (size_t j = 0; j < stk[-1].nlastpos; j++)
+                pos[j] = pos[j + stk[-2].nlastpos];
+              lastpos -= stk[-2].nlastpos;
               stk[-2].nlastpos = stk[-1].nlastpos;
             }
 
@@ -2645,9 +2645,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
           stk->nfirstpos = stk->nlastpos = 1;
           stk++;
 
-          --firstpos, --lastpos;
           firstpos->index = lastpos->index = i;
           firstpos->constraint = lastpos->constraint = NO_CONSTRAINT;
+          firstpos++, lastpos++;
 
           break;
         }
@@ -2659,16 +2659,16 @@ dfaanalyze (struct dfa *d, bool searchflag)
       fprintf (stderr,
                stk[-1].nullable ? " nullable: yes\n" : " nullable: no\n");
       fprintf (stderr, " firstpos:");
-      for (size_t j = stk[-1].nfirstpos; j-- > 0;)
+      for (size_t j = 0; j < stk[-1].nfirstpos; j++)
         {
-          fprintf (stderr, " %zu:", firstpos[j].index);
-          prtok (d->tokens[firstpos[j].index]);
+          fprintf (stderr, " %zu:", firstpos[j - stk[-1].nfirstpos].index);
+          prtok (d->tokens[firstpos[j - stk[-1].nfirstpos].index]);
         }
       fprintf (stderr, "\n lastpos:");
-      for (size_t j = stk[-1].nlastpos; j-- > 0;)
+      for (size_t j = 0; j < stk[-1].nlastpos; j++)
         {
-          fprintf (stderr, " %zu:", lastpos[j].index);
-          prtok (d->tokens[lastpos[j].index]);
+          fprintf (stderr, " %zu:", lastpos[j - stk[-1].nlastpos].index);
+          prtok (d->tokens[lastpos[j - stk[-1].nlastpos].index]);
         }
       putc ('\n', stderr);
 #endif
@@ -2685,7 +2685,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
         fprintf (stderr, "follows(%zu:", i);
         prtok (d->tokens[i]);
         fprintf (stderr, "):");
-        for (size_t j = d->follows[i].nelem; j-- > 0;)
+        for (size_t j = 0; j < d->follows[i].nelem; j++)
           {
             fprintf (stderr, " %zu:", d->follows[i].elems[j].index);
             prtok (d->tokens[d->follows[i].elems[j].index]);
