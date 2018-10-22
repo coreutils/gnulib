@@ -2248,7 +2248,7 @@ state_index (struct dfa *d, position_set const *s, int context)
    constraint.  Repeat exhaustively until no funny positions are left.
    S->elems must be large enough to hold the result.  */
 static void
-epsclosure (position_set *initial, struct dfa const *d)
+epsclosure (struct dfa const *d)
 {
   position_set tmp;
   alloc_position_set (&tmp, d->nleaves);
@@ -2288,8 +2288,6 @@ epsclosure (position_set *initial, struct dfa const *d)
         for (size_t j = 0; j < d->tindex; j++)
           if (i != j && d->follows[j].nelem > 0)
             replace (&d->follows[j], i, &d->follows[i], constraint, &tmp);
-
-        replace (initial, i, &d->follows[i], constraint, &tmp);
       }
   free (tmp.elems);
 }
@@ -2680,9 +2678,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
 #ifdef DEBUG
   for (size_t i = 0; i < d->tindex; ++i)
-    if (d->tokens[i] < NOTCHAR || d->tokens[i] == BACKREF
-        || d->tokens[i] == ANYCHAR || d->tokens[i] == MBCSET
-        || d->tokens[i] >= CSET)
+    if (d->tokens[i] == BEG || d->tokens[i] < NOTCHAR
+        || d->tokens[i] == BACKREF || d->tokens[i] == ANYCHAR
+        || d->tokens[i] == MBCSET || d->tokens[i] >= CSET)
       {
         fprintf (stderr, "follows(%zu:", i);
         prtok (d->tokens[i]);
@@ -2698,7 +2696,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
   /* For each follow set that is the follow set of a real position, replace
      it with its epsilon closure.  */
-  epsclosure (&d->follows[0], d);
+  epsclosure (d);
 
   /* Context wanted by some position.  */
   int separate_contexts = state_separate_contexts (&d->follows[0]);
