@@ -33,7 +33,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::setlocale, char *, (int, const char *));
 #endif
 
 #if 0
-SIGNATURE_CHECK (GNULIB_NAMESPACE::newlocale, locale_t, (int const char *, locale_t));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::newlocale, locale_t, (int, const char *, locale_t));
 #endif
 
 #if GNULIB_TEST_DUPLOCALE && HAVE_DUPLOCALE
