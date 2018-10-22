@@ -2355,77 +2355,69 @@ enum
   OPT_QUEUED = (1 << 4)
 };
 
-static ptrdiff_t
-merge_nfa_state (struct dfa *d, size_t *queue, ptrdiff_t nqueue, size_t tindex,
-                 char *flags, position_set *merged)
+static void
+merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
+                 position_set *merged)
 {
   position_set *follows = d->follows;
   ptrdiff_t nelem = 0;
 
   for (ptrdiff_t i = 0; i < follows[tindex].nelem; i++)
     {
-      size_t dindex = follows[tindex].elems[i].index;
+      size_t sindex = follows[tindex].elems[i].index;
 
       /* Skip the node as pruned in future.  */
       unsigned int iconstraint = follows[tindex].elems[i].constraint;
       if (iconstraint == 0)
         continue;
 
+      if (!(flags[sindex] & (OPT_LPAREN | OPT_RPAREN)))
+        {
+          ptrdiff_t j;
+
+          for (j = 0; j < nelem; j++)
+            {
+              size_t dindex = follows[tindex].elems[j].index;
+
+              if (follows[tindex].elems[j].constraint != iconstraint)
+                continue;
+
+              if (flags[dindex] & (OPT_LPAREN | OPT_RPAREN))
+                continue;
+
+              if (d->tokens[sindex] != d->tokens[dindex])
+                continue;
+
+              if ((flags[sindex] ^ flags[dindex]) & OPT_REPEAT)
+                continue;
+
+              if (flags[sindex] & OPT_REPEAT)
+                delete (sindex, &follows[sindex]);
+
+              merge2 (&follows[dindex], &follows[sindex], merged);
+
+              break;
+            }
+
+          if (j < nelem)
+            continue;
+        }
+
       follows[tindex].elems[nelem++] = follows[tindex].elems[i];
-
-      if (tindex < dindex && !(flags[dindex] & OPT_QUEUED))
-        {
-          queue[nqueue++] = dindex;
-          flags[dindex] |= OPT_QUEUED;
-        }
-
-      if (flags[dindex] & (OPT_LPAREN | OPT_RPAREN))
-        continue;
-
-      for (ptrdiff_t j = i + 1; j < follows[tindex].nelem; j++)
-        {
-          size_t sindex = follows[tindex].elems[j].index;
-
-          if (follows[tindex].elems[j].constraint != iconstraint)
-            continue;
-
-          if (flags[sindex] & (OPT_LPAREN | OPT_RPAREN))
-            continue;
-
-          if (d->tokens[sindex] != d->tokens[dindex])
-            continue;
-
-          if ((flags[sindex] ^ flags[dindex]) & OPT_REPEAT)
-            continue;
-
-          if (flags[sindex] & OPT_REPEAT)
-            delete (sindex, &follows[sindex]);
-
-          merge2 (&follows[dindex], &follows[sindex], merged);
-
-          /* Mark it as pruned in future.  */
-          follows[tindex].elems[j].constraint = 0;
-        }
+      flags[sindex] |= OPT_QUEUED;
     }
 
   follows[tindex].nelem = nelem;
-
-  return nqueue;
 }
 
 static void
 dfaoptimize (struct dfa *d)
 {
   char *flags;
-  size_t *queue;
-  ptrdiff_t nqueue;
   position_set merged0;
   position_set *merged;
-  ptrdiff_t extra_space = d->tindex + sizeof *queue - 1;
-  extra_space -= extra_space % sizeof *queue;
 
-  queue = xmalloc (d->nleaves * sizeof *queue + extra_space);
-  flags = (char *) (queue + d->nleaves);
+  flags = xmalloc (d->tindex * sizeof *flags);
   memset (flags, 0, d->tindex * sizeof *flags);
 
   for (size_t i = 0; i < d->tindex; i++)
@@ -2443,17 +2435,17 @@ dfaoptimize (struct dfa *d)
         }
     }
 
+  flags[0] |= OPT_QUEUED;
+
   merged = &merged0;
   alloc_position_set (merged, d->nleaves);
 
-  nqueue = 0;
-  queue[nqueue++] = 0;
-
-  for (ptrdiff_t i = 0; i < nqueue; i++)
-    nqueue = merge_nfa_state (d, queue, nqueue, queue[i], flags, merged);
+  for (ptrdiff_t i = 0; i < d->tindex; i++)
+    if (flags[i] & OPT_QUEUED)
+      merge_nfa_state (d, i, flags, merged);
 
   free (merged->elems);
-  free (queue);
+  free (flags);
 }
 
 /* Perform bottom-up analysis on the parse tree, computing various functions.
