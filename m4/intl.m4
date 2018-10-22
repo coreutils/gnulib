@@ -1,4 +1,4 @@
-# intl.m4 serial 32 (gettext-0.19.9)
+# intl.m4 serial 33 (gettext-0.19.9)
 dnl Copyright (C) 1995-2014, 2016-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -232,14 +232,17 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
 
   AC_CHECK_HEADERS([argz.h inttypes.h limits.h unistd.h sys/param.h])
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
-    stpcpy strcasecmp strdup strtoul tsearch uselocale argz_count \
-    argz_stringify argz_next __fsetlocking])
+    stpcpy strcasecmp strdup strtoul tsearch argz_count argz_stringify \
+    argz_next __fsetlocking])
 
-  dnl Solaris 12 provides getlocalename_l, while Illumos doesn't have
-  dnl it nor the equivalent.
-  if test $ac_cv_func_uselocale = yes; then
-    AC_CHECK_FUNCS([getlocalename_l])
+  dnl For Solaris 11.4 and 12.
+  gt_INTL_SOLARIS
+  if test $gt_nameless_locales = yes; then
+    HAVE_NAMELESS_LOCALES=1
+  else
+    HAVE_NAMELESS_LOCALES=0
   fi
+  AC_SUBST([HAVE_NAMELESS_LOCALES])
 
   dnl Use the *_unlocked functions only if they are declared.
   dnl (because some of them were defined without being declared in Solaris
