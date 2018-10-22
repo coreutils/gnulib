@@ -3112,22 +3112,18 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
       /* Find out if the new state will want any context information,
          by calculating possible contexts that the group can match,
          and separate contexts that the new state wants to know.  */
-      int possible_contexts = charclass_context (d, &label);
       int separate_contexts = state_separate_contexts (d, &group);
 
       /* Find the state(s) corresponding to the union of the follows.  */
-      if (possible_contexts & ~separate_contexts)
+      if (d->syntax.sbit[uc] & separate_contexts & CTX_NEWLINE)
+        state = state_index (d, &group, CTX_NEWLINE);
+      else if (d->syntax.sbit[uc] & separate_contexts & CTX_LETTER)
+        state = state_index (d, &group, CTX_LETTER);
+      else
         state = state_index (d, &group, separate_contexts ^ CTX_ANY);
-      else
-        state = -1;
-      if (separate_contexts & possible_contexts & CTX_NEWLINE)
-        state_newline = state_index (d, &group, CTX_NEWLINE);
-      else
-        state_newline = state;
-      if (separate_contexts & possible_contexts & CTX_LETTER)
-        state_letter = state_index (d, &group, CTX_LETTER);
-      else
-        state_letter = state;
+
+      state_newline = state;
+      state_letter = state;
 
       /* Reallocate now, to reallocate any newline transition properly.  */
       realloc_trans_if_necessary (d);
