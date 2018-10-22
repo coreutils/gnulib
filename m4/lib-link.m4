@@ -1,4 +1,4 @@
-# lib-link.m4 serial 26 (gettext-0.18.2)
+# lib-link.m4 serial 27
 dnl Copyright (C) 2001-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -124,8 +124,8 @@ dnl   acl_hardcode_direct,
 dnl   acl_hardcode_minus_L.
 AC_DEFUN([AC_LIB_RPATH],
 [
-  dnl Tell automake >= 1.10 to complain if config.rpath is missing.
-  m4_ifdef([AC_REQUIRE_AUX_FILE], [AC_REQUIRE_AUX_FILE([config.rpath])])
+  dnl Complain if config.rpath is missing.
+  AC_REQUIRE_AUX_FILE([config.rpath])
   AC_REQUIRE([AC_PROG_CC])                dnl we use $CC, $GCC, $LDFLAGS
   AC_REQUIRE([AC_LIB_PROG_LD])            dnl we use $LD, $with_gnu_ld
   AC_REQUIRE([AC_CANONICAL_HOST])         dnl we use $host
