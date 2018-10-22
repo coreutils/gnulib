@@ -2421,6 +2421,94 @@ merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
   follows[tindex].nelem = nelem;
 }
 
+static int
+compare (const void *a, const void *b)
+{
+  int aindex;
+  int bindex;
+
+  aindex = (int) ((position *) a)->index;
+  bindex = (int) ((position *) b)->index;
+
+  return aindex - bindex;
+}
+
+static void
+reorder_tokens (struct dfa *d)
+{
+  ptrdiff_t nleaves;
+  ptrdiff_t *map;
+  token *tokens;
+  position_set *follows;
+  int *constraints;
+  char *multibyte_prop;
+
+  nleaves = 0;
+
+  map = xnmalloc (d->tindex, sizeof *map);
+
+  map[0] = nleaves++;
+
+  for (ptrdiff_t i = 1; i < d->tindex; i++)
+    map[i] = -1;
+
+  tokens = xnmalloc (d->nleaves, sizeof *tokens);
+  follows = xnmalloc (d->nleaves, sizeof *follows);
+  constraints = xnmalloc (d->nleaves, sizeof *constraints);
+
+  if (d->localeinfo.multibyte)
+    multibyte_prop = xnmalloc (d->nleaves, sizeof *multibyte_prop);
+  else
+    multibyte_prop = NULL;
+
+  for (ptrdiff_t i = 0; i < d->tindex; i++)
+    {
+      if (map[i] == -1)
+        {
+          free (d->follows[i].elems);
+          d->follows[i].elems = NULL;
+          d->follows[i].nelem = 0;
+          continue;
+        }
+
+      tokens[map[i]] = d->tokens[i];
+      follows[map[i]] = d->follows[i];
+      constraints[map[i]] = d->constraints[i];
+
+      if (multibyte_prop != NULL)
+        multibyte_prop[map[i]] = d->multibyte_prop[i];
+
+      for (ptrdiff_t j = 0; j < d->follows[i].nelem; j++)
+        {
+          if (map[d->follows[i].elems[j].index] == -1)
+            map[d->follows[i].elems[j].index] = nleaves++;
+
+          d->follows[i].elems[j].index = map[d->follows[i].elems[j].index];
+        }
+
+      qsort (d->follows[i].elems, d->follows[i].nelem,
+             sizeof *d->follows[i].elems, compare);
+    }
+
+  for (ptrdiff_t i = 0; i < nleaves; i++)
+    {
+      d->tokens[i] = tokens[i];
+      d->follows[i] = follows[i];
+      d->constraints[i] = constraints[i];
+
+      if (multibyte_prop != NULL)
+        d->multibyte_prop[i] = multibyte_prop[i];
+    }
+
+  d->tindex = d->nleaves = nleaves;
+
+  free (tokens);
+  free (follows);
+  free (constraints);
+  free (multibyte_prop);
+  free (map);
+}
+
 static void
 dfaoptimize (struct dfa *d)
 {
@@ -2456,6 +2544,8 @@ dfaoptimize (struct dfa *d)
   for (ptrdiff_t i = 0; i < d->tindex; i++)
     if (flags[i] & OPT_QUEUED)
       merge_nfa_state (d, i, flags, merged);
+
+  reorder_tokens (d);
 
   free (merged->elems);
   free (flags);
