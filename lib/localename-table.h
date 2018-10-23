@@ -16,7 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2018.  */
 
-#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES /* Solaris >= 11.4 */
+#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES
 
 # include <stddef.h>
 # include <locale.h>

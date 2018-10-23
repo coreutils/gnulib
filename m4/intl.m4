@@ -1,4 +1,4 @@
-# intl.m4 serial 33 (gettext-0.19.9)
+# intl.m4 serial 34 (gettext-0.19.9)
 dnl Copyright (C) 1995-2014, 2016-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,6 +40,7 @@ AC_DEFUN([AM_INTL_SUBDIR],
   AC_REQUIRE([gl_GLIBC21])dnl
   AC_REQUIRE([gl_XSIZE])dnl
   AC_REQUIRE([gl_FCNTL_O_FLAGS])dnl
+  AC_REQUIRE([gt_INTL_THREAD_LOCALE_NAME])
   AC_REQUIRE([gt_INTL_MACOSX])dnl
   AC_REQUIRE([gl_EXTERN_INLINE])dnl
   AC_REQUIRE([gt_GL_ATTRIBUTE])dnl
@@ -74,7 +75,7 @@ AC_DEFUN([AM_INTL_SUBDIR],
     ])
   AC_CHECK_HEADERS([features.h stddef.h stdlib.h string.h])
   AC_CHECK_FUNCS([asprintf fwprintf newlocale putenv setenv setlocale \
-    snprintf strnlen wcslen wcsnlen mbrtowc wcrtomb])
+    snprintf strnlen uselocale wcslen wcsnlen mbrtowc wcrtomb])
 
   dnl Use the _snprintf function only if it is declared (because on NetBSD it
   dnl is defined as a weak alias of snprintf; we prefer to use the latter).
@@ -118,6 +119,13 @@ AC_DEFUN([AM_INTL_SUBDIR],
 
   AM_LANGINFO_CODESET
   gt_LC_MESSAGES
+
+  if test $gt_nameless_locales = yes; then
+    HAVE_NAMELESS_LOCALES=1
+  else
+    HAVE_NAMELESS_LOCALES=0
+  fi
+  AC_SUBST([HAVE_NAMELESS_LOCALES])
 
   dnl Compilation on mingw and Cygwin needs special Makefile rules, because
   dnl 1. when we install a shared library, we must arrange to export
@@ -234,15 +242,6 @@ AC_DEFUN([gt_INTL_SUBDIR_CORE],
   AC_CHECK_FUNCS([getcwd getegid geteuid getgid getuid mempcpy munmap \
     stpcpy strcasecmp strdup strtoul tsearch argz_count argz_stringify \
     argz_next __fsetlocking])
-
-  dnl For Solaris 11.4 and 12.
-  gt_INTL_SOLARIS
-  if test $gt_nameless_locales = yes; then
-    HAVE_NAMELESS_LOCALES=1
-  else
-    HAVE_NAMELESS_LOCALES=0
-  fi
-  AC_SUBST([HAVE_NAMELESS_LOCALES])
 
   dnl Use the *_unlocked functions only if they are declared.
   dnl (because some of them were defined without being declared in Solaris

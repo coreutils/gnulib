@@ -46,9 +46,13 @@
 # if !defined IN_LIBINTL
 #  include "glthread/lock.h"
 # endif
-# if defined __sun && HAVE_GETLOCALENAME_L
+# if defined __sun
+#  if HAVE_GETLOCALENAME_L
 /* Solaris >= 12.  */
 extern char * getlocalename_l(int, locale_t);
+#  elif HAVE_SOLARIS114_LOCALES
+#   include <sys/localedef.h>
+#  endif
 # endif
 # if HAVE_NAMELESS_LOCALES
 #  include <errno.h>
@@ -2704,7 +2708,7 @@ struniq (const char *string)
 #endif
 
 
-#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES /* Solaris >= 11.4 */
+#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES
 
 /* The 'locale_t' object does not contain the names of the locale categories.
    We have to associate them with the object through a hash table.
@@ -3145,6 +3149,22 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
 #   if HAVE_GETLOCALENAME_L
         /* Solaris >= 12.  */
         return getlocalename_l (category, thread_locale);
+#   elif HAVE_SOLARIS114_LOCALES
+        /* Solaris >= 11.4.  */
+        void *lcp = (*thread_locale)->core.data->lcp;
+        if (lcp != NULL)
+          switch (category)
+            {
+            case LC_CTYPE:
+            case LC_NUMERIC:
+            case LC_TIME:
+            case LC_COLLATE:
+            case LC_MONETARY:
+            case LC_MESSAGES:
+              return ((const char * const *) lcp)[category];
+            default: /* We shouldn't get here.  */
+              return "";
+            }
 #   elif HAVE_NAMELESS_LOCALES
         return get_locale_t_name (category, thread_locale);
 #   else

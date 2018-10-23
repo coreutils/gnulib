@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES /* Solaris >= 11.4 */
+#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES
 
 /* Specification.  */
 #include "localename-table.h"

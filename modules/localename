@@ -7,8 +7,8 @@ lib/localename.c
 lib/localename-table.h
 lib/localename-table.c
 m4/localename.m4
+m4/intl-thread-locale.m4
 m4/intlmacosx.m4
-m4/intlsolaris.m4
 m4/lcmessage.m4
 
 Depends-on:
