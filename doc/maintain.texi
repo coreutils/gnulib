@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 21, 2018
+@set lastupdate October 24, 2018
 @c %**end of header
 
 @dircategory GNU organization
@@ -67,6 +67,8 @@ Texts.  A copy of the license is included in the section entitled
 * Distributions::
 * Web Pages::
 * Ethical and Philosophical Consideration::
+* Humor::
+* Other Politics::
 * Terminology::
 * Interviews and Speeches::
 * Hosting::
@@ -2437,6 +2439,54 @@ frequently.  We ask that GNU maintainers, at least on matters that
 pertain specifically to their package, stand with the rest of the GNU
 project when such issues come up.
 
+@node Humor
+@chapter Humor and GNU
+
+In GNU, we appreciate humor in our work.
+
+GNU is a project of hackers, and
+@uref{https://stallman.org/articles/on-hacking.html,,hacking means
+playful cleverness}.  Even the name ``GNU'' is an example of playful
+cleverness---it is a
+@uref{https://gnu.org/gnu/the-gnu-project.html,,recursive acronym for
+``GNU's Not Unix.''}
+
+In that spirit, we prize occasional doses of humor in GNU packages.
+Humor is not mandatory in a GNU package; we do not tell maintainers,
+``Make users smile, or else!''  But when maintainers do that, we too
+smile.
+
+Nowadays, our humor-positive approach occasionally encounters direct,
+blanket opposition.  Some people advocate, and even demand, removal of
+jokes from software packages simply because they are jokes.  We shrug
+off that point of view.
+
+Jokes are subject to the same sorts of issues and criticism as other
+writing.  Sometimes there is a valid objection to text which is
+humorous, so we do not defend every joke obtusely to the bitter end.
+But @emph{the fact that it is a joke} is not a valid objection.
+
+There are people who frown on anything that is slightly risqué or
+controversial, including jokes.  It would be a terrible shame for that
+attitude to prevail, so our policy is that the occasional risqué joke
+is ok.  GNU is a 21st century project, not a 19th.
+
+@node Other Politics
+@chapter Other Politics
+
+The GNU Project supports the cause of software freedom, that the users
+of computing should have control of their computing activities.  This
+requires that they have control of their software that does those
+activities, which in turn requires that they do these activities
+with free software and have the possibility of replacing any shared
+copies with their own copies.
+
+It also supports basic human rights in computing including use of the
+internet; opposing censorship, for instance.
+
+A GNU package should not seriously advocate any other political
+causes.  Not that the GNU Project opposes those other causes.  Rather,
+it is neutral on them, and GNU packages should be neutral too.
 
 @node Terminology
 @chapter Terminology Issues

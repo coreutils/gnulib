@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate March 7, 2018
+@set lastupdate August 3, 2018
 @c %**end of header
 
 @dircategory GNU organization
@@ -3584,12 +3584,16 @@ The best place to explain how parts of the new code work with other code
 is in comments in the code, not in the change log.
 
 If you think that a change calls for explanation of @emph{why} the
-change was needed (what problem the old code had), you're probably
-right.  Please put the explanation in comments in the code, where
-people will see it whenever they see the code.  An example of such an
-explanation is, ``This function used to be iterative, but that failed
-when MUMBLE was a tree.''  (Though such a simple reason would not need
-this kind of explanation.)
+change was needed---that is, what problem the old code had such that
+it required this change---you're probably right.  Please put the
+explanation in comments in the code, where people will see it whenever
+they see the code.  An example of such an explanation is, ``This
+function used to be iterative, but that failed when MUMBLE was a
+tree.''  (Though such a simple reason would not need this kind of
+explanation.)
+
+The best place for other kinds of explanation of the change is in the
+change log entry.
 
 The easiest way to add an entry to @file{ChangeLog} is with the Emacs
 command @kbd{M-x add-change-log-entry}.  An individual change should
