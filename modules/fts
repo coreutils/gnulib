@@ -15,7 +15,6 @@ d-type
 fchdir
 fcntl
 fcntl-h
-fdopendir
 flexmember
 fstat
 hash
@@ -23,8 +22,8 @@ i-ring
 lstat
 memmove
 openat-h
-openat-safer
 opendir
+opendirat
 readdir
 stdalign
 stdbool

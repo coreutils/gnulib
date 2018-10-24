@@ -13,14 +13,14 @@ argmatch
 closedir
 d-ino
 dirent-safer
-dirfd
 dirname-lgpl
 fcntl
 memcmp
-opendir
+opendirat
 renameatu
 readdir
 stdbool
+stdint
 
 configure.ac:
 gl_BACKUPFILE

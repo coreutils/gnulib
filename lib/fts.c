@@ -73,6 +73,7 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 # include "fcntl--.h"
 # include "flexmember.h"
 # include "openat.h"
+# include "opendirat.h"
 # include "same-inode.h"
 #endif
 
@@ -292,31 +293,6 @@ fts_set_stat_required (FTSENT *p, bool required)
   p->fts_statp->st_size = (required
                            ? FTS_STAT_REQUIRED
                            : FTS_NO_STAT_REQUIRED);
-}
-
-/* file-descriptor-relative opendir.  */
-/* FIXME: if others need this function, move it into lib/openat.c */
-static DIR *
-internal_function
-opendirat (int fd, char const *dir, int extra_flags, int *pdir_fd)
-{
-  int open_flags = (O_RDONLY | O_CLOEXEC | O_DIRECTORY | O_NOCTTY
-                    | O_NONBLOCK | extra_flags);
-  int new_fd = openat (fd, dir, open_flags);
-  DIR *dirp;
-
-  if (new_fd < 0)
-    return NULL;
-  dirp = fdopendir (new_fd);
-  if (dirp)
-    *pdir_fd = new_fd;
-  else
-    {
-      int saved_errno = errno;
-      close (new_fd);
-      errno = saved_errno;
-    }
-  return dirp;
 }
 
 /* Virtual fchdir.  Advance SP's working directory file descriptor,

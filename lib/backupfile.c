@@ -29,6 +29,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -36,7 +37,7 @@
 
 #include <unistd.h>
 
-#include "dirent--.h"
+#include "opendirat.h"
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp) strlen ((dp)->d_name)
 #endif
@@ -47,9 +48,6 @@
 
 #ifndef _POSIX_NAME_MAX
 # define _POSIX_NAME_MAX 14
-#endif
-#ifndef SIZE_MAX
-# define SIZE_MAX ((size_t) -1)
 #endif
 
 #if defined _XOPEN_NAME_MAX
@@ -92,10 +90,15 @@ set_simple_backup_suffix (char const *s)
 /* If FILE (which was of length FILELEN before an extension was
    appended to it) is too long, replace the extension with the single
    char E.  If the result is still too long, remove the char just
-   before E.  */
+   before E.
+
+   If DIR_FD is nonnegative, it is a file descriptor for FILE's parent.
+   *NAME_MAX is either 0, or the cached result of a previous call for
+   FILE's parent's _PC_NAME_MAX.  */
 
 static void
-check_extension (char *file, size_t filelen, char e)
+check_extension (char *file, size_t filelen, char e,
+                 int dir_fd, size_t *base_max)
 {
   char *base = last_component (file);
   size_t baselen = base_len (base);
@@ -104,22 +107,34 @@ check_extension (char *file, size_t filelen, char e)
   if (HAVE_DOS_FILE_NAMES || NAME_MAX_MINIMUM < baselen)
     {
       /* The new base name is long enough to require a pathconf check.  */
-      long name_max;
-
-      /* Temporarily modify the buffer into its parent directory name,
-         invoke pathconf on the directory, and then restore the buffer.  */
-      char tmp[sizeof "."];
-      memcpy (tmp, base, sizeof ".");
-      strcpy (base, ".");
-      errno = 0;
-      name_max = pathconf (file, _PC_NAME_MAX);
-      if (0 <= name_max || errno == 0)
+      if (*base_max == 0)
         {
-          long size = baselen_max = name_max;
-          if (name_max != size)
-            baselen_max = SIZE_MAX;
+          long name_max;
+          if (dir_fd < 0)
+            {
+              /* Temporarily modify the buffer into its parent
+                 directory name, invoke pathconf on the directory, and
+                 then restore the buffer.  */
+              char tmp[sizeof "."];
+              memcpy (tmp, base, sizeof ".");
+              strcpy (base, ".");
+              errno = 0;
+              name_max = pathconf (file, _PC_NAME_MAX);
+              name_max -= !errno;
+              memcpy (base, tmp, sizeof ".");
+            }
+          else
+            {
+              errno = 0;
+              name_max = fpathconf (dir_fd, _PC_NAME_MAX);
+              name_max -= !errno;
+            }
+
+          *base_max = (0 <= name_max && name_max <= SIZE_MAX ? name_max
+                       : name_max < -1 ? NAME_MAX_MINIMUM : SIZE_MAX);
         }
-      memcpy (base, tmp, sizeof ".");
+
+      baselen_max = *base_max;
     }
 
   if (HAVE_DOS_FILE_NAMES && baselen_max <= 12)
@@ -167,8 +182,9 @@ enum numbered_backup_result
     BACKUP_NOMEM
   };
 
-/* *BUFFER contains a file name.  Store into *BUFFER the next backup
-   name for the named file, with a version number greater than all the
+/* Relative to DIR_FD, *BUFFER contains a file name.
+   Store into *BUFFER the next backup name for the named file,
+   with a version number greater than all the
    existing numbered backups.  Reallocate *BUFFER as necessary; its
    initial allocated size is BUFFER_SIZE, which must be at least 4
    bytes longer than the file name to make room for the initially
@@ -180,11 +196,11 @@ enum numbered_backup_result
 
    *DIRPP is the destination directory.  If *DIRPP is null, open the
    destination directory and store the resulting stream into *DIRPP
-   without closing the stream.  */
+   and its file descriptor into *PNEW_FD without closing the stream.  */
 
 static enum numbered_backup_result
-numbered_backup (char **buffer, size_t buffer_size, size_t filelen,
-                 ptrdiff_t base_offset, DIR **dirpp)
+numbered_backup (int dir_fd, char **buffer, size_t buffer_size, size_t filelen,
+                 ptrdiff_t base_offset, DIR **dirpp, int *pnew_fd)
 {
   enum numbered_backup_result result = BACKUP_IS_NEW;
   DIR *dirp = *dirpp;
@@ -203,7 +219,7 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen,
       char tmp[sizeof "."];
       memcpy (tmp, base, sizeof ".");
       strcpy (base, ".");
-      dirp = opendir (buf);
+      dirp = opendirat (dir_fd, buf, 0, pnew_fd);
       if (!dirp && errno == ENOMEM)
         result = BACKUP_NOMEM;
       memcpy (base, tmp, sizeof ".");
@@ -283,13 +299,15 @@ numbered_backup (char **buffer, size_t buffer_size, size_t filelen,
   return result;
 }
 
-/* Return the name of the new backup file for the existing file FILE,
-   allocated with malloc.  If RENAME, also rename FILE to the new name.
+/* Relative to DIR_FD, return the name of the new backup file for the
+   existing file FILE, allocated with malloc.
+   If RENAME, also rename FILE to the new name.
    On failure, return NULL and set errno.
    Do not call this function if backup_type == no_backups.  */
 
 char *
-backupfile_internal (char const *file, enum backup_type backup_type, bool rename)
+backupfile_internal (int dir_fd, char const *file,
+                     enum backup_type backup_type, bool rename)
 {
   ptrdiff_t base_offset = last_component (file) - file;
   size_t filelen = base_offset + strlen (file + base_offset);
@@ -311,6 +329,8 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
     return s;
 
   DIR *dirp = NULL;
+  int sdir = -1;
+  size_t base_max = 0;
   while (true)
     {
       memcpy (s, file, filelen + 1);
@@ -318,7 +338,8 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
       if (backup_type == simple_backups)
         memcpy (s + filelen, simple_backup_suffix, simple_backup_suffix_size);
       else
-        switch (numbered_backup (&s, ssize, filelen, base_offset, &dirp))
+        switch (numbered_backup (dir_fd, &s, ssize, filelen, base_offset,
+                                 &dirp, &sdir))
           {
           case BACKUP_IS_SAME_LENGTH:
             break;
@@ -330,11 +351,11 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
                 memcpy (s + filelen, simple_backup_suffix,
                         simple_backup_suffix_size);
               }
-            check_extension (s, filelen, '~');
+            check_extension (s, filelen, '~', sdir, &base_max);
             break;
 
           case BACKUP_IS_LONGER:
-            check_extension (s, filelen, '~');
+            check_extension (s, filelen, '~', sdir, &base_max);
             break;
 
           case BACKUP_NOMEM:
@@ -346,7 +367,6 @@ backupfile_internal (char const *file, enum backup_type backup_type, bool rename
       if (! rename)
         break;
 
-      int sdir = dirp ? dirfd (dirp) : -1;
       if (sdir < 0)
         {
           sdir = AT_FDCWD;

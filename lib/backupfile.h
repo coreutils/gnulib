@@ -17,11 +17,13 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #ifndef BACKUPFILE_H_
-# define BACKUPFILE_H_
+#define BACKUPFILE_H_
 
-# ifdef __cplusplus
+#include <fcntl.h>
+
+#ifdef __cplusplus
 extern "C" {
-# endif
+#endif
 
 
 /* When to make backup files. */
@@ -41,21 +43,20 @@ enum backup_type
   numbered_backups
 };
 
-# define VALID_BACKUP_TYPE(Type)        \
+#define VALID_BACKUP_TYPE(Type) \
   ((unsigned int) (Type) <= numbered_backups)
 
 extern char const *simple_backup_suffix;
 
 void set_simple_backup_suffix (char const *);
-char *backup_file_rename (char const *, enum backup_type);
-char *find_backup_file_name (char const *, enum backup_type);
+char *backup_file_rename (int, char const *, enum backup_type);
+char *find_backup_file_name (int, char const *, enum backup_type);
 enum backup_type get_version (char const *context, char const *arg);
 enum backup_type xget_version (char const *context, char const *arg);
-void addext (char *, char const *, int);
 
 
-# ifdef __cplusplus
+#ifdef __cplusplus
 }
-# endif
+#endif
 
 #endif /* ! BACKUPFILE_H_ */
