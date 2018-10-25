@@ -1,4 +1,4 @@
-# lib-prefix.m4 serial 12
+# lib-prefix.m4 serial 13
 dnl Copyright (C) 2001-2005, 2008-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -168,6 +168,23 @@ AC_DEFUN([AC_LIB_PREPARE_MULTILIB],
   dnl $prefix/lib/amd64) and 32-bit libraries go under $prefix/lib.
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_HOST_CPU_C_ABI])
+
+  case "$host_os" in
+    solaris*)
+      AC_CACHE_CHECK([for 64-bit host], [gl_cv_solaris_64bit],
+        [AC_COMPILE_IFELSE(
+           [AC_LANG_SOURCE(
+              [[#ifdef _LP64
+                 int ok;
+                #else
+                 error fail
+                #endif
+              ]])],
+           [gl_cv_solaris_64bit=yes],
+           [gl_cv_solaris_64bit=no])
+        ]);;
+  esac
+
   dnl Allow the user to override the result by setting acl_cv_libdirstems.
   AC_CACHE_CHECK([for the common suffixes of directories in the library search path],
     [acl_cv_libdirstems],
@@ -180,18 +197,6 @@ AC_DEFUN([AC_LIB_PREPARE_MULTILIB],
          dnl "Portable Makefiles should refer to any library directories using the 64 symbolic link."
          dnl But we want to recognize the sparcv9 or amd64 subdirectory also if the
          dnl symlink is missing, so we set acl_libdirstem2 too.
-         AC_CACHE_CHECK([for 64-bit host], [gl_cv_solaris_64bit],
-           [AC_COMPILE_IFELSE(
-              [AC_LANG_SOURCE(
-                 [[#ifdef _LP64
-                    int ok;
-                   #else
-                    error fail
-                   #endif
-                 ]])],
-              [gl_cv_solaris_64bit=yes],
-              [gl_cv_solaris_64bit=no])
-           ])
          if test $gl_cv_solaris_64bit = yes; then
            acl_libdirstem=lib/64
            case "$host_cpu" in
