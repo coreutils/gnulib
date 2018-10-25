@@ -23,21 +23,26 @@
 #include "backup-internal.h"
 
 #include "dirname.h"
+#include "opendirat.h"
 #include "renameatu.h"
 #include "xalloc-oversized.h"
 
-#include <fcntl.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <limits.h>
-
 #include <unistd.h>
 
-#include "opendirat.h"
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 #ifndef _D_EXACT_NAMLEN
 # define _D_EXACT_NAMLEN(dp) strlen ((dp)->d_name)
 #endif
@@ -351,9 +356,7 @@ backupfile_internal (int dir_fd, char const *file,
                 memcpy (s + filelen, simple_backup_suffix,
                         simple_backup_suffix_size);
               }
-            check_extension (s, filelen, '~', sdir, &base_max);
-            break;
-
+            FALLTHROUGH;
           case BACKUP_IS_LONGER:
             check_extension (s, filelen, '~', sdir, &base_max);
             break;
