@@ -572,7 +572,7 @@ sc_prohibit_posixver_without_use:
 	@h='posixver.h' re='\<posix2_version *\(' $(_sc_header_without_use)
 
 sc_prohibit_same_without_use:
-	@h='same.h' re='\<same_name *\(' $(_sc_header_without_use)
+	@h='same.h' re='\<same_name(at)? *\(' $(_sc_header_without_use)
 
 sc_prohibit_hash_pjw_without_use:
 	@h='hash-pjw.h' \
