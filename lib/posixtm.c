@@ -176,7 +176,6 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
 {
   struct tm tm0;
   struct tm tm1;
-  struct tm const *tm;
   time_t t;
 
   if (! posix_time_parse (&tm0, s, syntax_bits))
@@ -188,30 +187,23 @@ posixtime (time_t *p, const char *s, unsigned int syntax_bits)
   tm1.tm_mday = tm0.tm_mday;
   tm1.tm_mon = tm0.tm_mon;
   tm1.tm_year = tm0.tm_year;
+  tm1.tm_wday = -1;
   tm1.tm_isdst = -1;
   t = mktime (&tm1);
 
-  if (t != (time_t) -1)
-    tm = &tm1;
-  else
-    {
-      /* mktime returns -1 for errors, but -1 is also a valid time_t
-         value.  Check whether an error really occurred.  */
-      tm = localtime (&t);
-      if (! tm)
-        return false;
-    }
+  if (tm1.tm_wday < 0)
+    return false;
 
   /* Reject dates like "September 31" and times like "25:61".
      However, allow a seconds count of 60 even in time zones that do
      not support leap seconds, treating it as the following second;
      POSIX requires this.  */
-  if ((tm0.tm_year ^ tm->tm_year)
-      | (tm0.tm_mon ^ tm->tm_mon)
-      | (tm0.tm_mday ^ tm->tm_mday)
-      | (tm0.tm_hour ^ tm->tm_hour)
-      | (tm0.tm_min ^ tm->tm_min)
-      | (tm0.tm_sec ^ tm->tm_sec))
+  if ((tm0.tm_year ^ tm1.tm_year)
+      | (tm0.tm_mon ^ tm1.tm_mon)
+      | (tm0.tm_mday ^ tm1.tm_mday)
+      | (tm0.tm_hour ^ tm1.tm_hour)
+      | (tm0.tm_min ^ tm1.tm_min)
+      | (tm0.tm_sec ^ tm1.tm_sec))
     {
       /* Any mismatch without 60 in the tm_sec field is invalid.  */
       if (tm0.tm_sec != 60)
