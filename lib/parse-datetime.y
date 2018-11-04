@@ -1554,24 +1554,17 @@ yyerror (parser_control const *pc _GL_UNUSED,
   return 0;
 }
 
-/* In timezone TZ, if *TM0 is the old and *TM1 is the new value of a
-   struct tm after passing it to mktime_z, return true if it's OK that
-   mktime_z returned T.  It's not OK if *TM0 has out-of-range
-   members.  */
+/* If *TM0 is the old and *TM1 is the new value of a struct tm after
+   passing it to mktime_z, return true if it's OK.  It's not OK if
+   mktime failed or if *TM0 has out-of-range mainline members.
+   The caller should set TM1->tm_wday to -1 before calling mktime,
+   as a negative tm_wday is how mktime failure is inferred.  */
 
 static bool
-mktime_ok (timezone_t tz, struct tm const *tm0, struct tm const *tm1, time_t t)
+mktime_ok (struct tm const *tm0, struct tm const *tm1)
 {
-  struct tm ltm;
-  if (t == (time_t) -1)
-    {
-      /* Guard against falsely reporting an error when parsing a
-         timestamp that happens to equal (time_t) -1, on a host that
-         supports such a timestamp.  */
-      tm1 = localtime_rz (tz, &t, &ltm);
-      if (!tm1)
-        return false;
-    }
+  if (tm1->tm_wday < 0)
+    return false;
 
   return ! ((tm0->tm_sec ^ tm1->tm_sec)
             | (tm0->tm_min ^ tm1->tm_min)
@@ -2046,10 +2039,11 @@ parse_datetime2 (struct timespec *result, char const *p,
       tm0.tm_mon = tm.tm_mon;
       tm0.tm_year = tm.tm_year;
       tm0.tm_isdst = tm.tm_isdst;
+      tm.tm_wday = -1;
 
       Start = mktime_z (tz, &tm);
 
-      if (! mktime_ok (tz, &tm0, &tm, Start))
+      if (! mktime_ok (&tm0, &tm))
         {
           bool repaired = false;
           bool time_zone_seen = pc.zones_seen != 0;
@@ -2082,8 +2076,9 @@ parse_datetime2 (struct timespec *result, char const *p,
               tm.tm_mon = tm0.tm_mon;
               tm.tm_year = tm0.tm_year;
               tm.tm_isdst = tm0.tm_isdst;
+              tm.tm_wday = -1;
               Start = mktime_z (tz2, &tm);
-              repaired = mktime_ok (tz2, &tm0, &tm, Start);
+              repaired = mktime_ok (&tm0, &tm);
               tzfree (tz2);
             }
 
