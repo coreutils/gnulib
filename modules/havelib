@@ -5,10 +5,10 @@ Files:
 m4/lib-ld.m4
 m4/lib-link.m4
 m4/lib-prefix.m4
+m4/host-cpu-c-abi.m4
 build-aux/config.rpath
 
 Depends-on:
-host-cpu-c-abi
 
 configure.ac:
 
