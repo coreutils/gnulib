@@ -45,23 +45,6 @@ $GNUORG Copyright/request-assign.future		doc/Copyright
 $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
-# Although gettext-runtime/m4 has other .m4 files, they are maintained
-# in gnulib.
-$GETTEXT gettext-runtime/m4/codeset.m4		m4 release
-$GETTEXT gettext-runtime/m4/gettext.m4		m4 release
-#broke sync ca.20may2017, hopefully restore in next gettext release.
-#$GETTEXT gettext-runtime/m4/iconv.m4		m4 release
-$GETTEXT gettext-runtime/m4/intl.m4		m4 release
-$GETTEXT gettext-runtime/m4/intldir.m4		m4 release
-$GETTEXT gettext-runtime/m4/intlmacosx.m4	m4 release
-$GETTEXT gettext-runtime/m4/lcmessage.m4	m4 release
-$GETTEXT gettext-runtime/m4/nls.m4		m4 release
-$GETTEXT gettext-runtime/m4/po.m4		m4 release
-
-# Re-enable after the next gettext release.
-#$GETTEXT gettext-runtime/po/Makefile.in.in	build-aux/po release
-#$GETTEXT gettext-runtime/po/remove-potcdate.sin	build-aux/po release
-
 # 
 # All below here commented out in forlorn hope of future syncs.
 
