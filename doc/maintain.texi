@@ -5,8 +5,9 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate October 24, 2018
+@set lastupdate November 21, 2018
 @c %**end of header
+@documentencoding UTF-8
 
 @dircategory GNU organization
 @direntry
@@ -2845,4 +2846,5 @@ time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"
 compile-command: "make -C work.m"
+coding: utf-8
 End:
