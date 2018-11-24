@@ -3238,8 +3238,8 @@ gl_locale_name_posix (int category, const char *categoryname)
 #if defined WINDOWS_NATIVE
   if (LC_MIN <= category && category <= LC_MAX)
     {
-      char *locname = setlocale (category, NULL);
-      LCID lcid = 0;
+      const char *locname = setlocale (category, NULL);
+      LCID lcid;
 
       /* If CATEGORY is LC_ALL, the result might be a semi-colon
         separated list of locales.  We need only one, so we take the
@@ -3257,30 +3257,48 @@ gl_locale_name_posix (int category, const char *categoryname)
         return gl_locale_name_from_win32_LCID (lcid);
     }
 #endif
-  /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
-     On some systems this can be done by the 'setlocale' function itself.  */
+  {
+    const char *locname;
+
+    /* Use the POSIX methods of looking to 'LC_ALL', 'LC_xxx', and 'LANG'.
+       On some systems this can be done by the 'setlocale' function itself.  */
 #if defined HAVE_SETLOCALE && defined HAVE_LC_MESSAGES && defined HAVE_LOCALE_NULL
-  return setlocale (category, NULL);
+    locname = setlocale (category, NULL);
 #else
-  /* On other systems we ignore what setlocale reports and instead look at the
-     environment variables directly.  This is necessary
-       1. on systems which have a facility for customizing the default locale
-          (Mac OS X, native Windows, Cygwin) and where the system's setlocale()
-          function ignores this default locale (Mac OS X, Cygwin), in two cases:
-          a. when the user missed to use the setlocale() override from libintl
-             (for example by not including <libintl.h>),
-          b. when setlocale supports only the "C" locale, such as on Cygwin
-             1.5.x.  In this case even the override from libintl cannot help.
-       2. on all systems where setlocale supports only the "C" locale.  */
-  /* Strictly speaking, it is a POSIX violation to look at the environment
-     variables regardless whether setlocale has been called or not.  POSIX
-     says:
-         "For C-language programs, the POSIX locale shall be the
-          default locale when the setlocale() function is not called."
-     But we assume that all programs that use internationalized APIs call
-     setlocale (LC_ALL, "").  */
-  return gl_locale_name_environ (category, categoryname);
+    /* On other systems we ignore what setlocale reports and instead look at the
+       environment variables directly.  This is necessary
+         1. on systems which have a facility for customizing the default locale
+            (Mac OS X, native Windows, Cygwin) and where the system's setlocale()
+            function ignores this default locale (Mac OS X, Cygwin), in two cases:
+            a. when the user missed to use the setlocale() override from libintl
+               (for example by not including <libintl.h>),
+            b. when setlocale supports only the "C" locale, such as on Cygwin
+               1.5.x.  In this case even the override from libintl cannot help.
+         2. on all systems where setlocale supports only the "C" locale.  */
+    /* Strictly speaking, it is a POSIX violation to look at the environment
+       variables regardless whether setlocale has been called or not.  POSIX
+       says:
+           "For C-language programs, the POSIX locale shall be the
+            default locale when the setlocale() function is not called."
+       But we assume that all programs that use internationalized APIs call
+       setlocale (LC_ALL, "").  */
+    locname = gl_locale_name_environ (category, categoryname);
 #endif
+    /* Convert the locale name from the format returned by setlocale() or found
+       in the environment variables to the XPG syntax.  */
+#if defined WINDOWS_NATIVE
+    {
+      /* Convert locale name to LCID.  We don't want to use
+         LocaleNameToLCID because (a) it is only available since Vista,
+         and (b) it doesn't accept locale names returned by 'setlocale'.  */
+      LCID lcid = get_lcid (locname);
+
+      if (lcid > 0)
+        return gl_locale_name_from_win32_LCID (lcid);
+    }
+#endif
+    return locname;
+  }
 }
 
 const char *
