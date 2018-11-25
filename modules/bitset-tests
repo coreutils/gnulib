@@ -1,0 +1,11 @@
+Files:
+tests/test-bitset.c
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-bitset
+check_PROGRAMS += test-bitset
