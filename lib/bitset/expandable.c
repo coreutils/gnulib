@@ -844,7 +844,7 @@ ebitset_not (bitset dst, bitset src)
       /* Create new elements for dst if they cannot be found
          or substitute zero elements if src elements not found.  */
       ebitset_elt *selt =
-        ebitset_elt_find (dst, j * EBITSET_ELT_BITS, EBITSET_SUBST);
+        ebitset_elt_find (src, j * EBITSET_ELT_BITS, EBITSET_SUBST);
       ebitset_elt *delt =
         ebitset_elt_find (dst, j * EBITSET_ELT_BITS, EBITSET_CREATE);
 
