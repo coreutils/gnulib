@@ -419,14 +419,12 @@ vbitset_subset_p (bitset dst, bitset src)
   unsigned i;
   for (i = 0; i < min (ssize, dsize); i++, dstp++, srcp++)
     if (*dstp != (*srcp | *dstp))
-      return 0;
+      return false;
 
   if (ssize > dsize)
-    {
-      for (; i < ssize; i++)
-        if (*srcp++)
-          return false;
-    }
+    for (; i < ssize; i++)
+      if (*srcp++)
+        return false;
 
   return true;
 }

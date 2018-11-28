@@ -811,7 +811,7 @@ static bool
 ebitset_empty_p (bitset dst)
 {
   if (EBITSET_ZERO_P (dst))
-    return 1;
+    return true;
 
   ebitset_elts *elts = EBITSET_ELTS (dst);
   for (bitset_windex j = 0; j < EBITSET_SIZE (dst); j++)
@@ -821,7 +821,7 @@ ebitset_empty_p (bitset dst)
       if (elt)
         {
           if (!ebitset_elt_zero_p (elt))
-            return 0;
+            return false;
           /* Do some weeding as we go.  */
           ebitset_elt_remove (dst, j);
         }
@@ -830,7 +830,7 @@ ebitset_empty_p (bitset dst)
   /* All the bits are zero.  We could shrink the elts.
      For now just mark DST as known to be zero.  */
   EBITSET_ZERO_SET (dst);
-  return 1;
+  return true;
 }
 
 
