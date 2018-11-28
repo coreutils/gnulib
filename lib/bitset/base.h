@@ -44,12 +44,12 @@
    BITSET_TABLE:  Expandable table of pointers to arrays of bits
                   (variable size, less storage for large sparse sets).
                   Faster than BITSET_LIST for random access.
-   BITSET_VARRAY: Variable array of bits (variable size, fast for
+   BITSET_VECTOR: Variable array of bits (variable size, fast for
                   dense bitsets).
    BITSET_STATS:  Wrapper bitset for internal use only.  Used for gathering
                   statistics and/or better run-time checking.
 */
-enum bitset_type {BITSET_ARRAY, BITSET_LIST, BITSET_TABLE, BITSET_VARRAY,
+enum bitset_type {BITSET_ARRAY, BITSET_LIST, BITSET_TABLE, BITSET_VECTOR,
                   BITSET_TYPE_NUM, BITSET_STATS};
 #define BITSET_TYPE_NAMES {"abitset", "lbitset", "ebitset", "vbitset"}
 

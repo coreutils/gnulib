@@ -18,7 +18,7 @@ very sparse sets).
 Expandable table of pointers to arrays of bits (variable size, less
 storage for large sparse sets).  Faster than @code{BITSET_LIST} for
 random access.
-@item BITSET_VARRAY
+@item BITSET_VECTOR
 Variable array of bits (variable size, fast for dense bitsets).
 @item BITSET_STATS
 Wrapper bitset for internal use only.  Used for gathering statistics

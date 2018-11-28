@@ -58,7 +58,7 @@ bitset_bytes (enum bitset_type type, bitset_bindex n_bits)
     case BITSET_TABLE:
       return ebitset_bytes (n_bits);
 
-    case BITSET_VARRAY:
+    case BITSET_VECTOR:
       return vbitset_bytes (n_bits);
     }
 }
@@ -85,7 +85,7 @@ bitset_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
     case BITSET_TABLE:
       return ebitset_init (bset, n_bits);
 
-    case BITSET_VARRAY:
+    case BITSET_VECTOR:
       return vbitset_init (bset, n_bits);
     }
 }
@@ -109,7 +109,7 @@ bitset_type_choose (bitset_bindex n_bits ATTRIBUTE_UNUSED, unsigned attr)
 
   /* If no attributes selected, choose a good compromise.  */
   if (!attr)
-    return BITSET_VARRAY;
+    return BITSET_VECTOR;
 
   if (attr & BITSET_SPARSE)
     return BITSET_LIST;
@@ -120,7 +120,7 @@ bitset_type_choose (bitset_bindex n_bits ATTRIBUTE_UNUSED, unsigned attr)
   if (attr & BITSET_GREEDY)
     return BITSET_TABLE;
 
-  return BITSET_VARRAY;
+  return BITSET_VECTOR;
 }
 
 

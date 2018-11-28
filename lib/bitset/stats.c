@@ -716,7 +716,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
       }
       break;
 
-    case BITSET_VARRAY:
+    case BITSET_VECTOR:
       {
         size_t bytes = vbitset_bytes (n_bits);
         bset->s.bset = xcalloc (1, bytes);

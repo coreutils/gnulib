@@ -966,7 +966,7 @@ struct bitset_vtable vbitset_vtable = {
   vbitset_list,
   vbitset_list_reverse,
   NULL,
-  BITSET_VARRAY
+  BITSET_VECTOR
 };
 
 
