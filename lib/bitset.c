@@ -28,9 +28,9 @@
 #include "obstack.h"
 
 #include "bitset/array.h"
-#include "bitset/expandable.h"
 #include "bitset/list.h"
 #include "bitset/stats.h"
+#include "bitset/table.h"
 #include "bitset/vector.h"
 
 const char * const bitset_type_names[] = BITSET_TYPE_NAMES;
@@ -56,7 +56,7 @@ bitset_bytes (enum bitset_type type, bitset_bindex n_bits)
       return lbitset_bytes (n_bits);
 
     case BITSET_TABLE:
-      return ebitset_bytes (n_bits);
+      return tbitset_bytes (n_bits);
 
     case BITSET_VECTOR:
       return vbitset_bytes (n_bits);
@@ -83,7 +83,7 @@ bitset_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
       return lbitset_init (bset, n_bits);
 
     case BITSET_TABLE:
-      return ebitset_init (bset, n_bits);
+      return tbitset_init (bset, n_bits);
 
     case BITSET_VECTOR:
       return vbitset_init (bset, n_bits);
@@ -308,7 +308,7 @@ void
 bitset_release_memory (void)
 {
   lbitset_release_memory ();
-  ebitset_release_memory ();
+  tbitset_release_memory ();
 }
 
 

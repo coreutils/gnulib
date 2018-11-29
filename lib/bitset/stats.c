@@ -38,8 +38,8 @@
 
 #include "bitset/array.h"
 #include "bitset/base.h"
-#include "bitset/expandable.h"
 #include "bitset/list.h"
+#include "bitset/table.h"
 #include "bitset/vector.h"
 
 /* Configuration macros.  */
@@ -710,9 +710,9 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
 
     case BITSET_TABLE:
       {
-        size_t bytes = ebitset_bytes (n_bits);
+        size_t bytes = tbitset_bytes (n_bits);
         bset->s.bset = xcalloc (1, bytes);
-        ebitset_init (bset->s.bset, n_bits);
+        tbitset_init (bset->s.bset, n_bits);
       }
       break;
 

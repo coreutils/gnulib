@@ -58,11 +58,11 @@ union bitset_union
     bitset_word words[1];               /* The array of bits.  */
   } a;
 
-  struct ebitset_struct
+  struct tbitset_struct
   {
     struct bbitset_struct b;
     bitset_windex size;                 /* Number of elements.  */
-    struct ebitset_elt_struct **elts;   /* Expanding array of ptrs to elts.  */
+    struct tbitset_elt_struct **elts;   /* Expanding array of ptrs to elts.  */
   } e;
 
   struct lbitset_struct

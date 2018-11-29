@@ -51,7 +51,7 @@
 */
 enum bitset_type {BITSET_ARRAY, BITSET_LIST, BITSET_TABLE, BITSET_VECTOR,
                   BITSET_TYPE_NUM, BITSET_STATS};
-#define BITSET_TYPE_NAMES {"abitset", "lbitset", "ebitset", "vbitset"}
+#define BITSET_TYPE_NAMES {"abitset", "lbitset", "tbitset", "vbitset"}
 
 extern const char * const bitset_type_names[];
 

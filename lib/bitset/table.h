@@ -1,4 +1,4 @@
-/* Functions to support ebitsets.
+/* Functions to support tbitsets.
 
    Copyright (C) 2002, 2004, 2009-2015, 2018 Free Software Foundation,
    Inc.
@@ -18,15 +18,15 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _BITSET_EXPANDABLE_H
-#define _BITSET_EXPANDABLE_H
+#ifndef _BITSET_TABLE_H
+#define _BITSET_TABLE_H
 
 #include "bitset.h"
 
-size_t ebitset_bytes (bitset_bindex);
+size_t tbitset_bytes (bitset_bindex);
 
-bitset ebitset_init (bitset, bitset_bindex);
+bitset tbitset_init (bitset, bitset_bindex);
 
-void ebitset_release_memory (void);
+void tbitset_release_memory (void);
 
 #endif
