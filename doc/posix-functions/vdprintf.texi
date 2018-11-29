@@ -50,6 +50,10 @@ AIX 7.1, BeOS.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+The @code{%m} directive is not portable, use @code{%s} mapped to an
+argument of @code{strerror(errno)} (or a version of @code{strerror_r})
+instead.
+@item
 Formatting noncanonical @samp{long double} numbers produces
 nonmeaningful results on some platforms:
 glibc and others, on x86, x86_64, IA-64 CPUs.
