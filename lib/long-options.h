@@ -17,6 +17,11 @@
 
 /* Written by Jim Meyering.  */
 
+#ifndef LONG_OPTIONS_H_
+# define LONG_OPTIONS_H_ 1
+
+# include <stdbool.h>
+
 void parse_long_options (int _argc,
                          char **_argv,
                          const char *_command_name,
@@ -24,3 +29,14 @@ void parse_long_options (int _argc,
                          const char *_version,
                          void (*_usage) (int),
                          /* const char *author1, ...*/ ...);
+
+void parse_gnu_standard_options_only (int argc,
+                                      char **argv,
+                                      const char *command_name,
+                                      const char *package,
+                                      const char *version,
+                                      bool scan_all,
+                                      void (*usage_func) (int),
+                                      /* const char *author1, ...*/ ...);
+
+#endif /* LONG_OPTIONS_H_ */

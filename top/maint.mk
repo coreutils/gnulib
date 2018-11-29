@@ -537,7 +537,7 @@ sc_prohibit_quote_without_use:
 
 # Don't include this header unless you use one of its functions.
 sc_prohibit_long_options_without_use:
-	@h='long-options.h' re='\<parse_long_options *\(' \
+	@h='long-options.h' re='\<parse_(long_options|gnu_standard_options_only) *\(' \
 	  $(_sc_header_without_use)
 
 # Don't include this header unless you use one of its functions.

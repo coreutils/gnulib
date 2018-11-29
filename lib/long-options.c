@@ -29,6 +29,7 @@
 #include <getopt.h>
 
 #include "version-etc.h"
+#include "exitfail.h"
 
 static struct option const long_options[] =
 {
@@ -71,7 +72,7 @@ parse_long_options (int argc,
             va_list authors;
             va_start (authors, usage_func);
             version_etc_va (stdout, command_name, package, version, authors);
-            exit (0);
+            exit (EXIT_SUCCESS);
           }
 
         default:
@@ -86,4 +87,53 @@ parse_long_options (int argc,
   /* Reset this to zero so that getopt internals get initialized from
      the probably-new parameters when/if getopt is called later.  */
   optind = 0;
+}
+
+/* Process the GNU default long options --help and --version (see also
+   https://gnu.org/prep/standards/html_node/Command_002dLine-Interfaces.html),
+   and fail for any other unknown long or short option.
+   Use with SCAN_ALL=true to scan until "--", or with SCAN_ALL=false to stop
+   at the first non-option argument (or "--", whichever comes first).  */
+void
+parse_gnu_standard_options_only (int argc,
+                                 char **argv,
+                                 const char *command_name,
+                                 const char *package,
+                                 const char *version,
+                                 bool scan_all,
+                                 void (*usage_func) (int),
+                                 /* const char *author1, ...*/ ...)
+{
+  int c;
+  int saved_opterr = opterr;
+
+  /* Print an error message for unrecognized options.  */
+  opterr = 1;
+
+  const char *optstring = scan_all ? "" : "+";
+
+  if ((c = getopt_long (argc, argv, optstring, long_options, NULL)) != -1)
+    {
+      switch (c)
+        {
+        case 'h':
+          (*usage_func) (EXIT_SUCCESS);
+          break;
+
+        case 'v':
+          {
+            va_list authors;
+            va_start (authors, usage_func);
+            version_etc_va (stdout, command_name, package, version, authors);
+            exit (EXIT_SUCCESS);
+          }
+
+        default:
+          (*usage_func) (exit_failure);
+          break;
+        }
+    }
+
+  /* Restore previous value.  */
+  opterr = saved_opterr;
 }
