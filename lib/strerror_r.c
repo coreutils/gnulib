@@ -129,22 +129,13 @@ static int
 safe_copy (char *buf, size_t buflen, const char *msg)
 {
   size_t len = strlen (msg);
-  int ret;
+  size_t moved = len < buflen ? len : buflen - 1;
 
-  if (len < buflen)
-    {
-      /* Although POSIX allows memcpy() to corrupt errno, we don't
-         know of any implementation where this is a real problem.  */
-      memcpy (buf, msg, len + 1);
-      ret = 0;
-    }
-  else
-    {
-      memcpy (buf, msg, buflen - 1);
-      buf[buflen - 1] = '\0';
-      ret = ERANGE;
-    }
-  return ret;
+  /* Although POSIX lets memmove corrupt errno, we don't
+     know of any implementation where this is a real problem.  */
+  memmove (buf, msg, moved);
+  buf[moved] = '\0';
+  return len < buflen ? 0 : ERANGE;
 }
 
 
