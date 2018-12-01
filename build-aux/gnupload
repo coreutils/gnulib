@@ -77,10 +77,10 @@ Options:
   --user NAME              sign with key NAME
   --replace                allow replacements of existing files
   --symlink-regex[=EXPR]   use sed script EXPR to compute symbolic link names
-  --dry-run                do nothing, show what would have been done
+  -n, --dry-run            do nothing, show what would have been done
                            (including the constructed directive file)
   --version                output version information and exit
-  --help                   print this help text and exit
+  -h, --help               print this help text and exit
 
 If --symlink-regex is given without EXPR, then the link target name
 is created by replacing the version information with '-latest', e.g.:
@@ -194,7 +194,7 @@ while test -n "$1"; do
     --symlink)
       collect_var=symlink_files
       ;;
-    --dry-run|-n)
+    -n | --dry-run)
       dry_run=:
       ;;
     --version)
