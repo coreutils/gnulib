@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 21, 2018
+@set lastupdate December 3, 2018
 @c %**end of header
 @documentencoding UTF-8
 
@@ -117,13 +117,15 @@ instance via the web interface at
 Archives are also available there.
 
 @cindex Piercy, Marge
-This document uses the gender-neutral third-person pronouns ``person'',
-``per'', ``pers'' and ``perself'' which were promoted, and perhaps
-invented, by Marge Piercy in @cite{Woman on the Edge of Time}.  They are
-used just like ``she'', ``her'', ``hers'' and ``herself'', except that
-they apply equally to males and females.  For example, ``Person placed
-per new program under the GNU GPL, to let the public benefit from per
-work, and to enable per to feel person has done the right thing.''
+This document uses the gender-neutral third-person pronouns ``person''
+(which can be shortened to ``perse''), ``per'', ``pers'' and
+``perself.''  These pronouns (aside from ``perse'') were promoted, and
+perhaps invented, by Marge Piercy in @cite{Woman on the Edge of Time}.
+They are used just like ``she'', ``her'', ``hers'' and ``herself'',
+except that they apply regardless of gender.  For example, ``Person
+placed per new program under the GNU GPL, to maintain freedom for all
+users of per work, and this way perse knows perse has done the right
+thing.''
 
 This release of the GNU Maintainer Information was last updated
 @value{lastupdate}.
