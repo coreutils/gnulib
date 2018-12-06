@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 3, 2018
+@set lastupdate December 5, 2018
 @c %**end of header
 @documentencoding UTF-8
 
@@ -2414,8 +2414,7 @@ software, including JavaScript, for the coordination of its
 development.  For example, please don't use Transifex for translation
 of your software because it requires your translators to use non-free,
 JavaScript-based editing tools.  Instead, a service without any
-ethical concerns should be used, such as GNU's Pootle instance
-(@url{https://chapters.gnu.org/pootle}) or The Translation Project
+ethical concerns should be used, such as The Translation Project
 (@url{https://translationproject.org}).
 
 A GNU package should not refer the user to any non-free documentation
