@@ -333,7 +333,9 @@ extern bool gl_list_remove_at (gl_list_t list, size_t position);
 extern bool gl_list_remove (gl_list_t list, const void *elt);
 
 /* Free an entire list.
-   (But this call does not free the elements of the list.)  */
+   (But this call does not free the elements of the list.  It only invokes
+   the DISPOSE_FN on each of the elements of the list, and only if the list
+   is not a sublist.)  */
 extern void gl_list_free (gl_list_t list);
 
 #endif /* End of inline and gl_xlist.h-defined functions.  */

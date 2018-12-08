@@ -62,9 +62,9 @@ struct gl_list_impl
   struct gl_list_node_impl *root;   /* root node or NULL */
 };
 
-/* An AVL tree of height h has at least F_(h+2) [Fibonacci number] and at most
-   2^h - 1 elements.  So, h <= 84 (because a tree of height h >= 85 would have
-   at least F_87 elements, and because even on 64-bit machines,
-     sizeof (gl_list_node_impl) * F_87 > 2^64
+/* An AVL tree of height h has at least F_(h+2) - 1 [Fibonacci number] and at
+   most 2^h - 1 elements.  So, h <= 84 (because a tree of height h >= 85 would
+   have at least F_87 - 1 elements, and because even on 64-bit machines,
+     sizeof (gl_list_node_impl) * (F_87 - 1) > 2^64
    this would exceed the address space of the machine.  */
 #define MAXHEIGHT 83

@@ -144,7 +144,8 @@ extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
 extern bool gl_oset_remove (gl_oset_t set, const void *elt);
 
 /* Free an entire ordered set.
-   (But this call does not free the elements of the set.)  */
+   (But this call does not free the elements of the set.  It only invokes
+   the DISPOSE_FN on each of the elements of the set.)  */
 extern void gl_oset_free (gl_oset_t set);
 
 #endif /* End of inline and gl_xoset.h-defined functions.  */

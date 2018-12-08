@@ -136,7 +136,8 @@ extern int gl_set_nx_add (gl_set_t set, const void *elt)
 extern bool gl_set_remove (gl_set_t set, const void *elt);
 
 /* Free an entire set.
-   (But this call does not free the elements of the set.)  */
+   (But this call does not free the elements of the set.  It only invokes
+   the DISPOSE_FN on each of the elements of the set.)  */
 extern void gl_set_free (gl_set_t set);
 
 #endif /* End of inline and gl_xset.h-defined functions.  */

@@ -91,7 +91,7 @@ gl_tree_search_atleast (gl_oset_t set,
         node = node->right;
       else
         {
-          /* We have an element >= VALUE.  But we need the leftmost such
+          /* We have an element >= THRESHOLD.  But we need the leftmost such
              element.  */
           gl_oset_node_t found = node;
           node = node->left;

@@ -136,7 +136,7 @@ gl_array_search_atleast (gl_oset_t set,
                  minimal such index.  */
               high = mid;
               /* At each loop iteration, low <= high and
-                   compar (list->elements[high], value) >= 0,
+                   compar (set->elements[high], threshold) >= 0,
                  and we know that the first occurrence of the element is at
                  low <= position <= high.  */
               while (low < high)
