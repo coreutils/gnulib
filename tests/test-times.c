@@ -35,7 +35,7 @@ doublecmp (const void *p, const void *q)
   double a = *(double *) p;
   double b = *(double *) q;
 
-  return a < b;
+  return a < b ? -1 : a > b ? 1 : 0;
 }
 
 int
