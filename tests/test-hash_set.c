@@ -35,6 +35,14 @@ static const char *objects[30] =
 #define RANDOM(n) (rand () % (n))
 #define RANDOM_OBJECT() objects[RANDOM (SIZEOF (objects))]
 
+static int
+cmp_objects_in_array (const void *objptr1, const void *objptr2)
+{
+  const void *obj1 = *(const void * const *)objptr1;
+  const void *obj2 = *(const void * const *)objptr2;
+  return strcmp ((const char *) obj1, (const char *) obj2);
+}
+
 static void
 check_equals (gl_set_t set1, gl_set_t set2)
 {
@@ -64,10 +72,8 @@ check_equals (gl_set_t set1, gl_set_t set2)
 
   if (n > 0)
     {
-      qsort (elements_of_set1, n, sizeof (const void *),
-             (int (*) (const void *, const void *)) strcmp);
-      qsort (elements_of_set2, n, sizeof (const void *),
-             (int (*) (const void *, const void *)) strcmp);
+      qsort (elements_of_set1, n, sizeof (const void *), cmp_objects_in_array);
+      qsort (elements_of_set2, n, sizeof (const void *), cmp_objects_in_array);
     }
   for (i = 0; i < n; i++)
     ASSERT (elements_of_set1[i] == elements_of_set2[i]);
