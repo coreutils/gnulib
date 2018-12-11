@@ -38,13 +38,16 @@
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
 /* Generic hash-table code: Type definitions.  */
-#include "gl_anyhash_list1.h"
+#include "gl_anyhash1.h"
 
 /* Generic AVL tree code: Type definitions.  */
 #include "gl_anyavltree_list1.h"
 
 /* Generic hash-table code: Low-level code.  */
-#include "gl_anyhash_list2.h"
+#define CONTAINER_T gl_list_t
+#define CONTAINER_COUNT(list) \
+  ((list)->root != NULL ? (list)->root->branch_size : 0)
+#include "gl_anyhash2.h"
 
 /* Generic binary tree code: Type definitions.  */
 #include "gl_anytree_list1.h"

@@ -31,7 +31,7 @@
 
 /* --------------------------- gl_set_t Data Type --------------------------- */
 
-#include "gl_anyhash_set1.h"
+#include "gl_anyhash1.h"
 
 /* Concrete list node implementation, valid for this file only.  */
 struct gl_list_node_impl
@@ -59,7 +59,9 @@ struct gl_set_impl
   size_t count;
 };
 
-#include "gl_anyhash_set2.h"
+#define CONTAINER_T gl_set_t
+#define CONTAINER_COUNT(set) (set)->count
+#include "gl_anyhash2.h"
 
 /* If the symbol SIGNAL_SAFE_SET is defined, the code is compiled in such
    a way that a gl_set_t data structure may be used from within a signal

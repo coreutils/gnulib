@@ -1,6 +1,6 @@
-/* Set data type implemented by a hash table with another list.
-   Copyright (C) 2006-2018 Free Software Foundation, Inc.
-   Written by Bruno Haible <bruno@clisp.org>, 2018.
+/* Hash table for sequential list, set, and map data type.
+   Copyright (C) 2006, 2009-2018 Free Software Foundation, Inc.
+   Written by Bruno Haible <bruno@clisp.org>, 2006.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -16,19 +16,20 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* Common code of
+   gl_linkedhash_list.c, gl_avltreehash_list.c, gl_rbtreehash_list.c,
    gl_linkedhash_set.c, gl_hash_set.c.  */
 
 #include "gl_anyhash_primes.h"
 
 /* Resize the hash table with a new estimated size.  */
 static void
-hash_resize (gl_set_t set, size_t estimate)
+hash_resize (CONTAINER_T container, size_t estimate)
 {
   size_t new_size = next_prime (estimate);
 
-  if (new_size > set->table_size)
+  if (new_size > container->table_size)
     {
-      gl_hash_entry_t *old_table = set->table;
+      gl_hash_entry_t *old_table = container->table;
       /* Allocate the new table.  */
       gl_hash_entry_t *new_table;
       size_t i;
@@ -41,7 +42,7 @@ hash_resize (gl_set_t set, size_t estimate)
         goto fail;
 
       /* Iterate through the entries of the old table.  */
-      for (i = set->table_size; i > 0; )
+      for (i = container->table_size; i > 0; )
         {
           gl_hash_entry_t node = old_table[--i];
 
@@ -57,8 +58,8 @@ hash_resize (gl_set_t set, size_t estimate)
             }
         }
 
-      set->table = new_table;
-      set->table_size = new_size;
+      container->table = new_table;
+      container->table_size = new_size;
       free (old_table);
     }
   return;
@@ -68,12 +69,13 @@ hash_resize (gl_set_t set, size_t estimate)
   return;
 }
 
-/* Resize the hash table if needed, after set->count was incremented.  */
+/* Resize the hash table if needed, after CONTAINER_COUNT (container) was
+   incremented.  */
 static void
-hash_resize_after_add (gl_set_t set)
+hash_resize_after_add (CONTAINER_T container)
 {
-  size_t count = set->count;
+  size_t count = CONTAINER_COUNT (container);
   size_t estimate = xsum (count, count / 2); /* 1.5 * count */
-  if (estimate > set->table_size)
-    hash_resize (set, estimate);
+  if (estimate > container->table_size)
+    hash_resize (container, estimate);
 }

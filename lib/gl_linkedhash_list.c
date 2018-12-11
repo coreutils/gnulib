@@ -34,23 +34,15 @@
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
 /* Generic hash-table code.  */
-#include "gl_anyhash_list1.h"
+#include "gl_anyhash1.h"
 
 /* Generic linked list code.  */
 #include "gl_anylinked_list1.h"
 
 /* Generic hash-table code.  */
-#include "gl_anyhash_list2.h"
-
-/* Resize the hash table if needed, after list->count was incremented.  */
-static void
-hash_resize_after_add (gl_list_t list)
-{
-  size_t count = list->count;
-  size_t estimate = xsum (count, count / 2); /* 1.5 * count */
-  if (estimate > list->table_size)
-    hash_resize (list, estimate);
-}
+#define CONTAINER_T gl_list_t
+#define CONTAINER_COUNT(list) (list)->count
+#include "gl_anyhash2.h"
 
 /* Add a node to the hash table structure.  */
 static void

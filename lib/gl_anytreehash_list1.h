@@ -28,16 +28,6 @@ struct gl_multiple_nodes
    gl_list_node_impl.  */
 #define MULTIPLE_NODES_MAGIC  (void *) -1
 
-/* Resize the hash table if needed, after list->count was incremented.  */
-static void
-hash_resize_after_add (gl_list_t list)
-{
-  size_t count = (list->root != 0 ? list->root->branch_size : 0);
-  size_t estimate = xsum (count, count / 2); /* 1.5 * count */
-  if (estimate > list->table_size)
-    hash_resize (list, estimate);
-}
-
 /* Return the position of the given node in the tree.  */
 static size_t
 node_position (gl_list_node_t node)
