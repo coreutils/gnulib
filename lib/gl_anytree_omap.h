@@ -129,7 +129,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
     {
       if (gl_tree_nx_add_first (map, key, value) == NULL)
         return -1;
-      return true;
+      return 1;
     }
 
   compar = map->base.compar_fn;
@@ -147,7 +147,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
             {
               if (gl_tree_nx_add_after (map, node, key, value) == NULL)
                 return -1;
-              return true;
+              return 1;
             }
           node = node->right;
         }
@@ -157,7 +157,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
             {
               if (gl_tree_nx_add_before (map, node, key, value) == NULL)
                 return -1;
-              return true;
+              return 1;
             }
           node = node->left;
         }
@@ -165,7 +165,7 @@ gl_tree_nx_getput (gl_omap_t map, const void *key, const void *value,
         {
           *oldvaluep = node->value;
           node->value = value;
-          return false;
+          return 0;
         }
     }
 }

@@ -271,7 +271,7 @@ gl_array_nx_getput (gl_omap_t map, const void *key, const void *value,
             {
               *oldvaluep = map->pairs[mid].value;
               map->pairs[mid].value = value;
-              return false;
+              return 0;
             }
         }
       while (low < high);
