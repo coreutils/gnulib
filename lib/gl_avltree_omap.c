@@ -39,8 +39,6 @@
   node->key = key; \
   node->value = value;
 #define NODE_PAYLOAD_DISPOSE \
-  if (container->base.vdispose_fn != NULL) \
-    container->base.vdispose_fn (node->value); \
   if (container->base.kdispose_fn != NULL) \
     container->base.kdispose_fn (node->key);
 

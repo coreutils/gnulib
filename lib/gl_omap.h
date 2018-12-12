@@ -360,14 +360,30 @@ GL_OMAP_INLINE int
 gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
 {
   const void *oldvalue;
-  return gl_omap_nx_getput (map, key, value, &oldvalue);
+  int result = gl_omap_nx_getput (map, key, value, &oldvalue);
+  if (result == 0)
+    {
+      gl_mapvalue_dispose_fn vdispose_fn =
+        ((const struct gl_omap_impl_base *) map)->vdispose_fn;
+      if (vdispose_fn != NULL)
+        vdispose_fn (oldvalue);
+    }
+  return result;
 }
 
 GL_OMAP_INLINE bool
 gl_omap_remove (gl_omap_t map, const void *key)
 {
   const void *oldvalue;
-  return gl_omap_getremove (map, key, &oldvalue);
+  bool result = gl_omap_getremove (map, key, &oldvalue);
+  if (result)
+    {
+      gl_mapvalue_dispose_fn vdispose_fn =
+        ((const struct gl_omap_impl_base *) map)->vdispose_fn;
+      if (vdispose_fn != NULL)
+        vdispose_fn (oldvalue);
+    }
+  return result;
 }
 
 #ifdef __cplusplus

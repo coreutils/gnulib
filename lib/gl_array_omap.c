@@ -220,25 +220,6 @@ gl_array_nx_add_at (gl_omap_t map, size_t position,
   return 1;
 }
 
-/* Remove the pair at the given position,
-   0 <= position < gl_omap_size (map).  */
-static void
-gl_array_remove_at (gl_omap_t map, size_t position)
-{
-  size_t count = map->count;
-  struct pair *pairs;
-  size_t i;
-
-  pairs = map->pairs;
-  if (map->base.vdispose_fn != NULL)
-    map->base.vdispose_fn (pairs[position].value);
-  if (map->base.kdispose_fn != NULL)
-    map->base.kdispose_fn (pairs[position].key);
-  for (i = position + 1; i < count; i++)
-    pairs[i - 1] = pairs[i];
-  map->count = count - 1;
-}
-
 static int
 gl_array_nx_getput (gl_omap_t map, const void *key, const void *value,
                     const void **oldvaluep)
@@ -277,6 +258,23 @@ gl_array_nx_getput (gl_omap_t map, const void *key, const void *value,
       while (low < high);
     }
   return gl_array_nx_add_at (map, low, key, value);
+}
+
+/* Remove the pair at the given position,
+   0 <= position < gl_omap_size (map).  */
+static void
+gl_array_remove_at (gl_omap_t map, size_t position)
+{
+  size_t count = map->count;
+  struct pair *pairs;
+  size_t i;
+
+  pairs = map->pairs;
+  if (map->base.kdispose_fn != NULL)
+    map->base.kdispose_fn (pairs[position].key);
+  for (i = position + 1; i < count; i++)
+    pairs[i - 1] = pairs[i];
+  map->count = count - 1;
 }
 
 static bool
