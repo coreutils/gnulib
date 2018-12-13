@@ -242,9 +242,11 @@ test_bad_nfd (select_fn my_select)
   /* Can't test FD_SETSIZE + 1 for EINVAL, since some systems allow
      dynamically larger set size by redefining FD_SETSIZE anywhere up
      to the actual maximum fd.  */
-  /* if (do_select_bad_nfd_nowait (FD_SETSIZE + 1, my_select) != -1 */
-  /*     || errno != EINVAL) */
-  /*   failed ("invalid errno after bogus nfds"); */
+#if 0
+  if (do_select_bad_nfd_nowait (FD_SETSIZE + 1, my_select) != -1
+      || errno != EINVAL)
+    failed ("invalid errno after bogus nfds");
+#endif
 }
 
 /* Test select(2) on invalid file descriptors.  */
@@ -294,6 +296,11 @@ test_bad_fd (select_fn my_select)
 # else
   fd = 99;
 # endif
+  /* Even on the best POSIX compliant platforms, values of fd >= FD_SETSIZE
+     require an nfds argument that is > FD_SETSIZE and thus may lead to EINVAL,
+     not EBADF.  */
+  if (fd >= FD_SETSIZE)
+    fd = FD_SETSIZE - 1;
   close (fd);
 
   if (do_select_bad_fd_nowait (fd, SEL_IN, my_select) == 0 || errno != EBADF)
