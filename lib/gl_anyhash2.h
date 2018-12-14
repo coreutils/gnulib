@@ -17,7 +17,8 @@
 
 /* Common code of
    gl_linkedhash_list.c, gl_avltreehash_list.c, gl_rbtreehash_list.c,
-   gl_linkedhash_set.c, gl_hash_set.c.  */
+   gl_linkedhash_set.c, gl_hash_set.c,
+   gl_linkedhash_map.c, gl_hash_map.c.  */
 
 #include "gl_anyhash_primes.h"
 
