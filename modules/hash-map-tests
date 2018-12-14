@@ -1,0 +1,13 @@
+Files:
+tests/test-hash_map.c
+tests/macros.h
+
+Depends-on:
+array-map
+xalloc
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-hash_map
+check_PROGRAMS += test-hash_map
