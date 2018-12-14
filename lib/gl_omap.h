@@ -81,6 +81,8 @@ extern "C" {
    NULL denotes pointer comparison.  */
 typedef int (*gl_mapkey_compar_fn) (const void *key1, const void *key2);
 
+#ifndef _GL_MAP_DISPOSE_FNS_DEFINED
+
 /* Type of function used to dispose a key once a (key, value) pair is removed
    from a map.  NULL denotes a no-op.  */
 typedef void (*gl_mapkey_dispose_fn) (const void *key);
@@ -88,6 +90,9 @@ typedef void (*gl_mapkey_dispose_fn) (const void *key);
 /* Type of function used to dispose a value once a (key, value) pair is removed
    from a map.  NULL denotes a no-op.  */
 typedef void (*gl_mapvalue_dispose_fn) (const void *value);
+
+# define _GL_MAP_DISPOSE_FNS_DEFINED 1
+#endif
 
 /* Type of function used to compare a key with a threshold.
    Return true if the key is greater or equal than the threshold.  */
