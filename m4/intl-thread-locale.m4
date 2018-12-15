@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 1
+# intl-thread-locale.m4 serial 2
 dnl Copyright (C) 2015-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -48,9 +48,10 @@ AC_DEFUN([gt_INTL_THREAD_LOCALE_NAME],
          *) gt_cv_locale_solaris114=no ;;
        esac
       ])
+  else
+    gt_cv_locale_solaris114=no
   fi
   if test $gt_cv_locale_solaris114 = yes; then
-    gt_nameless_locales=yes
     AC_DEFINE([HAVE_SOLARIS114_LOCALES], [1],
       [Define if the locale_t type is as on Solaris 11.4.])
   fi
