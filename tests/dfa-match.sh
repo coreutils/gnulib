@@ -22,7 +22,11 @@
 path_prepend_ .
 
 if (type timeout) >/dev/null 2>&1; then
-  timeout_10='timeout 10'
+  if timeout --help 2>&1 | grep BusyBox; then
+    timeout_10='timeout -t 10'
+  else
+    timeout_10='timeout 10'
+  fi
 else
   timeout_10=
 fi
