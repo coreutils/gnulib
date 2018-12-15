@@ -96,9 +96,11 @@ main (void)
           errno = 0;
           ASSERT (openat (dfd, witness "/", O_RDONLY) == -1);
           ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+#ifdef __linux__
           /* Using a bad directory is okay for absolute paths.  */
           fd = openat (-1, "/dev/null", O_WRONLY);
           ASSERT (STDERR_FILENO < fd);
+#endif
           /* Using a non-directory is wrong for relative paths.  */
           errno = 0;
           ASSERT (openat (fd, ".", O_RDONLY) == -1);
