@@ -2300,27 +2300,6 @@ epsclosure (struct dfa const *d)
   free (tmp.elems);
 }
 
-/* Returns the set of contexts for which there is at least one
-   character included in C.  */
-
-static int
-charclass_context (struct dfa const *dfa, charclass const *c)
-{
-  int context = 0;
-
-  for (unsigned int j = 0; j < CHARCLASS_WORDS; ++j)
-    {
-      if (c->w[j] & dfa->syntax.newline.w[j])
-        context |= CTX_NEWLINE;
-      if (c->w[j] & dfa->syntax.letters.w[j])
-        context |= CTX_LETTER;
-      if (c->w[j] & ~(dfa->syntax.letters.w[j] | dfa->syntax.newline.w[j]))
-        context |= CTX_NONE;
-    }
-
-  return context;
-}
-
 /* Returns the contexts on which the position set S depends.  Each context
    in the set of returned contexts (let's call it SC) may have a different
    follow set than other contexts in SC, and also different from the
@@ -2663,11 +2642,11 @@ dfaanalyze (struct dfa *d, bool searchflag)
           {
             tmp.elems = firstpos - stk[-1].nfirstpos;
             tmp.nelem = stk[-1].nfirstpos;
-            position *pos = lastpos - stk[-1].nlastpos;
+            position *p = lastpos - stk[-1].nlastpos;
             for (size_t j = 0; j < stk[-1].nlastpos; j++)
               {
-                merge (&tmp, &d->follows[pos[j].index], &merged);
-                copy (&merged, &d->follows[pos[j].index]);
+                merge (&tmp, &d->follows[p[j].index], &merged);
+                copy (&merged, &d->follows[p[j].index]);
               }
           }
           FALLTHROUGH;
@@ -2683,11 +2662,11 @@ dfaanalyze (struct dfa *d, bool searchflag)
           {
             tmp.nelem = stk[-1].nfirstpos;
             tmp.elems = firstpos - stk[-1].nfirstpos;
-            position *pos = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
+            position *p = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
             for (size_t j = 0; j < stk[-2].nlastpos; j++)
               {
-                merge (&tmp, &d->follows[pos[j].index], &merged);
-                copy (&merged, &d->follows[pos[j].index]);
+                merge (&tmp, &d->follows[p[j].index], &merged);
+                copy (&merged, &d->follows[p[j].index]);
               }
           }
 
@@ -2704,9 +2683,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
             stk[-2].nlastpos += stk[-1].nlastpos;
           else
             {
-              position *pos = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
+              position *p = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
               for (size_t j = 0; j < stk[-1].nlastpos; j++)
-                pos[j] = pos[j + stk[-2].nlastpos];
+                p[j] = p[j + stk[-2].nlastpos];
               lastpos -= stk[-2].nlastpos;
               stk[-2].nlastpos = stk[-1].nlastpos;
             }
