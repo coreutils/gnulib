@@ -103,6 +103,8 @@ main (void)
 #endif
           /* Using a non-directory is wrong for relative paths.  */
           errno = 0;
+          fd = open ("/dev/null", O_RDONLY);
+          ASSERT (STDERR_FILENO < fd);
           ASSERT (openat (fd, ".", O_RDONLY) == -1);
           ASSERT (errno == EBADF || errno == ENOTDIR);
           ASSERT (close (fd) == 0);
