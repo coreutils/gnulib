@@ -111,7 +111,7 @@
 #include <stddef.h>             /* For size_t and ptrdiff_t.  */
 #include <string.h>             /* For __GNU_LIBRARY__, and memcpy.  */
 
-#if __STDC_VERSION__ < 199901L
+#if __STDC_VERSION__ < 199901L || defined __HP_cc
 # define __FLEXIBLE_ARRAY_MEMBER 1
 #else
 # define __FLEXIBLE_ARRAY_MEMBER
