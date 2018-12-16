@@ -7,7 +7,7 @@
 
 # Written by Paul Eggert.
 
-# serial 16
+# serial 17
 
 AC_DEFUN([AC_SYS_XSI_STACK_OVERFLOW_HEURISTIC],
   [
@@ -201,127 +201,140 @@ int main ()
 
    AC_CACHE_CHECK([for precise C stack overflow detection],
      [ac_cv_sys_xsi_stack_overflow_heuristic],
-     [AC_RUN_IFELSE([AC_LANG_SOURCE(
-           [[
-            #include <unistd.h>
-            #include <signal.h>
-            #if HAVE_UCONTEXT_H
-            # include <ucontext.h>
-            #endif
-            #if HAVE_SETRLIMIT
-            # include <sys/types.h>
-            # include <sys/time.h>
-            # include <sys/resource.h>
-            #endif
-            #ifndef SIGSTKSZ
-            # define SIGSTKSZ 16384
-            #endif
+     [dnl On Linux/sparc64 (both in 32-bit and 64-bit mode), it would be wrong
+      dnl to set HAVE_XSI_STACK_OVERFLOW_HEURISTIC to 1, because the third
+      dnl argument passed to the segv_handler is a 'struct sigcontext *', not
+      dnl an 'ucontext_t *'.  It would lead to a failure of test-c-stack2.sh.
+      case "${host_os}--${host_cpu}" in
+        linux*--sparc*)
+          ac_cv_sys_xsi_stack_overflow_heuristic=no
+          ;;
+        *)
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE(
+               [[
+                #include <unistd.h>
+                #include <signal.h>
+                #if HAVE_UCONTEXT_H
+                # include <ucontext.h>
+                #endif
+                #if HAVE_SETRLIMIT
+                # include <sys/types.h>
+                # include <sys/time.h>
+                # include <sys/resource.h>
+                #endif
+                #ifndef SIGSTKSZ
+                # define SIGSTKSZ 16384
+                #endif
 
-            static union
-            {
-              char buffer[2 * SIGSTKSZ];
-              long double ld;
-              long u;
-              void *p;
-            } alternate_signal_stack;
-
-            #if STACK_DIRECTION
-            # define find_stack_direction(ptr) STACK_DIRECTION
-            #else
-            static int
-            find_stack_direction (char const *addr)
-            {
-              char dummy;
-              return (! addr ? find_stack_direction (&dummy)
-                      : addr < &dummy ? 1 : -1);
-            }
-            #endif
-
-            static void
-            segv_handler (int signo, siginfo_t *info, void *context)
-            {
-              if (0 < info->si_code)
+                static union
                 {
-                  /* For XSI heuristics to work, we need uc_stack to describe
-                     the interrupted stack (as on Solaris), and not the
-                     currently executing stack (as on Linux).  */
-                  ucontext_t const *user_context = context;
-                  char const *stack_min = user_context->uc_stack.ss_sp;
-                  size_t stack_size = user_context->uc_stack.ss_size;
-                  char const *faulting_address = info->si_addr;
-                  size_t s = faulting_address - stack_min;
-                  size_t page_size = sysconf (_SC_PAGESIZE);
-                  if (find_stack_direction (0) < 0)
-                    s += page_size;
-                  if (s < stack_size + page_size)
-                    _exit (0);
-                  _exit (4);
+                  char buffer[2 * SIGSTKSZ];
+                  long double ld;
+                  long u;
+                  void *p;
+                } alternate_signal_stack;
+
+                #if STACK_DIRECTION
+                # define find_stack_direction(ptr) STACK_DIRECTION
+                #else
+                static int
+                find_stack_direction (char const *addr)
+                {
+                  char dummy;
+                  return (! addr ? find_stack_direction (&dummy)
+                          : addr < &dummy ? 1 : -1);
                 }
-              _exit (5);
-            }
+                #endif
 
-            static int
-            c_stack_action ()
-            {
-              stack_t st;
-              struct sigaction act;
-              int r;
+                static void
+                segv_handler (int signo, siginfo_t *info, void *context)
+                {
+                  if (0 < info->si_code)
+                    {
+                      /* For XSI heuristics to work, we need uc_stack to
+                         describe the interrupted stack (as on Solaris), and
+                         not the currently executing stack (as on Linux).  */
+                      ucontext_t const *user_context = context;
+                      char const *stack_min = user_context->uc_stack.ss_sp;
+                      size_t stack_size = user_context->uc_stack.ss_size;
+                      char const *faulting_address = info->si_addr;
+                      size_t s = faulting_address - stack_min;
+                      size_t page_size = sysconf (_SC_PAGESIZE);
+                      if (find_stack_direction (0) < 0)
+                        s += page_size;
+                      if (s < stack_size + page_size)
+                        _exit (0);
+                      _exit (4);
+                    }
+                  _exit (5);
+                }
 
-              st.ss_flags = 0;
-              /* Use the midpoint to avoid Irix sigaltstack bug.  */
-              st.ss_sp = alternate_signal_stack.buffer + SIGSTKSZ;
-              st.ss_size = SIGSTKSZ;
-              r = sigaltstack (&st, 0);
-              if (r != 0)
-                return 1;
+                static int
+                c_stack_action ()
+                {
+                  stack_t st;
+                  struct sigaction act;
+                  int r;
 
-              sigemptyset (&act.sa_mask);
-              act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
-              act.sa_sigaction = segv_handler;
-              #if FAULT_YIELDS_SIGBUS
-              if (sigaction (SIGBUS, &act, 0) < 0)
-                return 2;
-              #endif
-              if (sigaction (SIGSEGV, &act, 0) < 0)
-                return 3;
-              return 0;
-            }
-            static volatile int *
-            recurse_1 (volatile int n, volatile int *p)
-            {
-              if (n >= 0)
-                *recurse_1 (n + 1, p) += n;
-              return p;
-            }
-            static int
-            recurse (volatile int n)
-            {
-              int sum = 0;
-              return *recurse_1 (n, &sum);
-            }
-            int
-            main ()
-            {
-              int result;
-              #if HAVE_SETRLIMIT && defined RLIMIT_STACK
-              /* Before starting the endless recursion, try to be friendly
-                 to the user's machine.  On some Linux 2.2.x systems, there
-                 is no stack limit for user processes at all.  We don't want
-                 to kill such systems.  */
-              struct rlimit rl;
-              rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
-              setrlimit (RLIMIT_STACK, &rl);
-              #endif
+                  st.ss_flags = 0;
+                  /* Use the midpoint to avoid Irix sigaltstack bug.  */
+                  st.ss_sp = alternate_signal_stack.buffer + SIGSTKSZ;
+                  st.ss_size = SIGSTKSZ;
+                  r = sigaltstack (&st, 0);
+                  if (r != 0)
+                    return 1;
 
-              result = c_stack_action ();
-              if (result != 0)
-                return result;
-              return recurse (0);
-            }
-           ]])],
-        [ac_cv_sys_xsi_stack_overflow_heuristic=yes],
-        [ac_cv_sys_xsi_stack_overflow_heuristic=no],
-        [ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])])
+                  sigemptyset (&act.sa_mask);
+                  act.sa_flags = SA_NODEFER | SA_ONSTACK | SA_RESETHAND | SA_SIGINFO;
+                  act.sa_sigaction = segv_handler;
+                  #if FAULT_YIELDS_SIGBUS
+                  if (sigaction (SIGBUS, &act, 0) < 0)
+                    return 2;
+                  #endif
+                  if (sigaction (SIGSEGV, &act, 0) < 0)
+                    return 3;
+                  return 0;
+                }
+                static volatile int *
+                recurse_1 (volatile int n, volatile int *p)
+                {
+                  if (n >= 0)
+                    *recurse_1 (n + 1, p) += n;
+                  return p;
+                }
+                static int
+                recurse (volatile int n)
+                {
+                  int sum = 0;
+                  return *recurse_1 (n, &sum);
+                }
+                int
+                main ()
+                {
+                  int result;
+                  #if HAVE_SETRLIMIT && defined RLIMIT_STACK
+                  /* Before starting the endless recursion, try to be friendly
+                     to the user's machine.  On some Linux 2.2.x systems, there
+                     is no stack limit for user processes at all.  We don't want
+                     to kill such systems.  */
+                  struct rlimit rl;
+                  rl.rlim_cur = rl.rlim_max = 0x100000; /* 1 MB */
+                  setrlimit (RLIMIT_STACK, &rl);
+                  #endif
+
+                  result = c_stack_action ();
+                  if (result != 0)
+                    return result;
+                  return recurse (0);
+                }
+               ]])],
+            [ac_cv_sys_xsi_stack_overflow_heuristic=yes],
+            [ac_cv_sys_xsi_stack_overflow_heuristic=no],
+            [ac_cv_sys_xsi_stack_overflow_heuristic=cross-compiling])
+          ;;
+      esac
+     ])
 
    if test $ac_cv_sys_xsi_stack_overflow_heuristic = yes; then
      AC_DEFINE([HAVE_XSI_STACK_OVERFLOW_HEURISTIC], [1],
