@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 2
+# intl-thread-locale.m4 serial 3
 dnl Copyright (C) 2015-2018 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,6 +23,57 @@ AC_DEFUN([gt_INTL_THREAD_LOCALE_NAME],
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([uselocale])
+
+  dnl On OpenBSD >= 6.2, the locale_t type and the uselocale(), newlocale(),
+  dnl duplocale(), freelocale() functions exist but are effectively useless,
+  dnl because the locale_t value depends only on the LC_CTYPE category of the
+  dnl locale and furthermore contains only one bit of information (it
+  dnl distinguishes the "C" locale from the *.UTF-8 locales). See
+  dnl <https://cvsweb.openbsd.org/src/lib/libc/locale/newlocale.c?rev=1.1&content-type=text/x-cvsweb-markup>.
+  dnl In the setlocale() implementation they have thought about the programs
+  dnl that use the API ("Even though only LC_CTYPE has any effect in the
+  dnl OpenBSD base system, store complete information about the global locale,
+  dnl such that third-party software can access it"), but for uselocale()
+  dnl they did not think about the programs.
+  dnl In this situation, even the HAVE_NAMELESS_LOCALES support does not work.
+  dnl So, define HAVE_FAKE_LOCALES and disable all locale_t support.
+  if test $ac_cv_func_uselocale = yes; then
+    AC_CHECK_HEADERS_ONCE([xlocale.h])
+    AC_CACHE_CHECK([for fake locale system (OpenBSD)],
+      [gt_cv_locale_fake],
+      [AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+#include <locale.h>
+#if HAVE_XLOCALE_H
+# include <xlocale.h>
+#endif
+int main ()
+{
+  locale_t loc1, loc2;
+  if (setlocale (LC_ALL, "de_DE.UTF-8") == NULL) return 1;
+  if (setlocale (LC_ALL, "fr_FR.UTF-8") == NULL) return 1;
+  loc1 = newlocale (LC_ALL_MASK, "de_DE.UTF-8", (locale_t)0);
+  loc2 = newlocale (LC_ALL_MASK, "fr_FR.UTF-8", (locale_t)0);
+  return !(loc1 == loc2);
+}]])],
+         [gt_cv_locale_fake=yes],
+         [gt_cv_locale_fake=no],
+         [dnl Guess the locale system is fake only on OpenBSD.
+          case "$host_os" in
+            openbsd*) gt_cv_locale_fake="guessing yes" ;;
+            *)        gt_cv_locale_fake="guessing no" ;;
+          esac
+         ])
+      ])
+  else
+    gt_cv_locale_fake=no
+  fi
+  case "$gt_cv_locale_fake" in
+    *yes)
+      AC_DEFINE([HAVE_FAKE_LOCALES], [1],
+        [Define if the locale_t type contains insufficient information, as on OpenBSD.])
+      ;;
+  esac
 
   if test $ac_cv_func_uselocale = yes; then
     AC_CACHE_CHECK([for Solaris 11.4 locale system],
