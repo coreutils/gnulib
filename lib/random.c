@@ -52,6 +52,14 @@
 
 #ifndef _LIBC
 # include <libc-config.h>
+# define __srandom srandom
+# define __initstate initstate
+# define __setstate setstate
+# define __random random
+# define __srandom_r srandom_r
+# define __initstate_r initstate_r
+# define __setstate_r setstate_r
+# define __random_r random_r
 #endif
 
 /* Specification.  */
