@@ -67,6 +67,7 @@ static struct { int cat; int mask; const char *string; } const categories[] =
 static void
 test_locale_name (void)
 {
+  const char *ret;
   const char *name;
 
   /* Check that gl_locale_name returns non-NULL.  */
@@ -85,7 +86,21 @@ test_locale_name (void)
   unsetenv ("LC_MESSAGES");
   unsetenv ("LC_NUMERIC");
   unsetenv ("LANG");
-  setlocale (LC_ALL, "");
+  /* Need also to unset all environment variables that specify standard or
+     non-standard locale categories.  Otherwise, on glibc systems, when some
+     of these variables are set and reference a nonexistent locale, the
+     setlocale (LC_ALL, "") call below would fail.  */
+  unsetenv ("LC_COLLATE");
+  unsetenv ("LC_MONETARY");
+  unsetenv ("LC_TIME");
+  unsetenv ("LC_ADDRESS");
+  unsetenv ("LC_IDENTIFICATION");
+  unsetenv ("LC_MEASUREMENT");
+  unsetenv ("LC_NAME");
+  unsetenv ("LC_PAPER");
+  unsetenv ("LC_TELEPHONE");
+  ret = setlocale (LC_ALL, "");
+  ASSERT (ret != NULL);
   ASSERT (strcmp (gl_locale_name (LC_MESSAGES, "LC_MESSAGES"),
                   gl_locale_name_default ()) == 0);
   ASSERT (strcmp (gl_locale_name (LC_NUMERIC, "LC_NUMERIC"),
@@ -496,6 +511,7 @@ test_locale_name_thread (void)
 static void
 test_locale_name_posix (void)
 {
+  const char *ret;
   const char *name;
 
   /* Get into a defined state,  */
@@ -511,7 +527,21 @@ test_locale_name_posix (void)
   unsetenv ("LC_MESSAGES");
   unsetenv ("LC_NUMERIC");
   unsetenv ("LANG");
-  setlocale (LC_ALL, "");
+  /* Need also to unset all environment variables that specify standard or
+     non-standard locale categories.  Otherwise, on glibc systems, when some
+     of these variables are set and reference a nonexistent locale, the
+     setlocale (LC_ALL, "") call below would fail.  */
+  unsetenv ("LC_COLLATE");
+  unsetenv ("LC_MONETARY");
+  unsetenv ("LC_TIME");
+  unsetenv ("LC_ADDRESS");
+  unsetenv ("LC_IDENTIFICATION");
+  unsetenv ("LC_MEASUREMENT");
+  unsetenv ("LC_NAME");
+  unsetenv ("LC_PAPER");
+  unsetenv ("LC_TELEPHONE");
+  ret = setlocale (LC_ALL, "");
+  ASSERT (ret != NULL);
   name = gl_locale_name_posix (LC_MESSAGES, "LC_MESSAGES");
   ASSERT (name == NULL || strcmp (name, gl_locale_name_default ()) == 0);
   name = gl_locale_name_posix (LC_NUMERIC, "LC_NUMERIC");
