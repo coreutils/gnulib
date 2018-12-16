@@ -20,13 +20,15 @@
 
 #include <locale.h>
 
-#if HAVE_DUPLOCALE && HAVE_MONETARY_H
+#if HAVE_DUPLOCALE
 
 #include "signature.h"
 SIGNATURE_CHECK (duplocale, locale_t, (locale_t));
 
 #include <langinfo.h>
-#include <monetary.h>
+#if HAVE_MONETARY_H
+# include <monetary.h>
+#endif
 #include <stdio.h>
 #include <string.h>
 
@@ -34,7 +36,9 @@ SIGNATURE_CHECK (duplocale, locale_t, (locale_t));
 
 struct locale_dependent_values
 {
+#if HAVE_MONETARY_H
   char monetary[100];
+#endif
   char numeric[100];
   char time[100];
 };
@@ -42,9 +46,11 @@ struct locale_dependent_values
 static void
 get_locale_dependent_values (struct locale_dependent_values *result)
 {
+#if HAVE_MONETARY_H
   strfmon (result->monetary, sizeof (result->monetary),
            "%n", 123.75);
   /* result->monetary is usually "$123.75" */
+#endif
   snprintf (result->numeric, sizeof (result->numeric),
             "%g", 3.5);
   /* result->numeric is usually "3,5" */
@@ -98,7 +104,9 @@ test_with_uselocale (void)
   {
     struct locale_dependent_values results;
     get_locale_dependent_values (&results);
+# if HAVE_MONETARY_H
     ASSERT (strcmp (results.monetary, expected_results.monetary) == 0);
+# endif
     ASSERT (strcmp (results.numeric, expected_results.numeric) == 0);
     ASSERT (strcmp (results.time, expected_results.time) == 0);
   }
@@ -110,7 +118,9 @@ test_with_uselocale (void)
   {
     struct locale_dependent_values results;
     get_locale_dependent_values (&results);
+# if HAVE_MONETARY_H
     ASSERT (strcmp (results.monetary, expected_results.monetary) == 0);
+# endif
     ASSERT (strcmp (results.numeric, expected_results.numeric) == 0);
     ASSERT (strcmp (results.time, expected_results.time) == 0);
   }
