@@ -214,10 +214,10 @@ AC_DEFUN([gl_REGEX],
               result |= 64;
 
             /* Matching with the compiled form of this regexp would provoke
-	       an assertion failure prior to glibc-2.28:
-		 regexec.c:1375: pop_fail_stack: Assertion 'num >= 0' failed
-	       With glibc-2.28, compilation fails and reports the invalid
-	       back reference.  */
+               an assertion failure prior to glibc-2.28:
+                 regexec.c:1375: pop_fail_stack: Assertion 'num >= 0' failed
+               With glibc-2.28, compilation fails and reports the invalid
+               back reference.  */
             re_set_syntax (RE_SYNTAX_POSIX_EGREP);
             memset (&regex, 0, sizeof regex);
             s = re_compile_pattern ("0|()0|\\1|0", 10, &regex);
