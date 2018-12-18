@@ -59,7 +59,7 @@ get_locale_dependent_values (struct locale_dependent_values *result)
   /* result->time is usually "janvier" */
 }
 
-#if HAVE_USELOCALE
+#if HAVE_WORKING_USELOCALE
 
 static int
 test_with_uselocale (void)
@@ -135,7 +135,7 @@ test_with_uselocale (void)
 
 #endif
 
-#if HAVE_STRFMON_L || HAVE_SNPRINTF_L || HAVE_NL_LANGINFO_L
+#if HAVE_STRFMON_L || HAVE_SNPRINTF_L || (HAVE_NL_LANGINFO_L && HAVE_WORKING_USELOCALE)
 
 static void
 get_locale_dependent_values_from (struct locale_dependent_values *result, locale_t locale)
@@ -150,7 +150,7 @@ get_locale_dependent_values_from (struct locale_dependent_values *result, locale
               "%g", 3.5);
   /* result->numeric is usually "3,5" */
 #endif
-#if HAVE_NL_LANGINFO_L
+#if HAVE_NL_LANGINFO_L && HAVE_WORKING_USELOCALE
   strcpy (result->time, nl_langinfo_l (MON_1, locale));
   /* result->time is usually "janvier" */
 #endif
@@ -201,7 +201,7 @@ test_with_locale_parameter (void)
 #if HAVE_SNPRINTF_L
     ASSERT (strcmp (results.numeric, expected_results.numeric) == 0);
 #endif
-#if HAVE_NL_LANGINFO_L
+#if HAVE_NL_LANGINFO_L && HAVE_WORKING_USELOCALE
     ASSERT (strcmp (results.time, expected_results.time) == 0);
 #endif
   }
@@ -217,10 +217,10 @@ int
 main ()
 {
   int skipped = 0;
-#if HAVE_USELOCALE
+#if HAVE_WORKING_USELOCALE
   skipped |= test_with_uselocale ();
 #endif
-#if HAVE_STRFMON_L || HAVE_SNPRINTF_L || HAVE_NL_LANGINFO_L
+#if HAVE_STRFMON_L || HAVE_SNPRINTF_L || (HAVE_NL_LANGINFO_L && HAVE_WORKING_USELOCALE)
   skipped |= test_with_locale_parameter ();
 #endif
 
