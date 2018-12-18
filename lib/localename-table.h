@@ -16,7 +16,7 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2018.  */
 
-#if HAVE_USELOCALE && HAVE_NAMELESS_LOCALES
+#if HAVE_WORKING_USELOCALE && HAVE_NAMELESS_LOCALES
 
 # include <stddef.h>
 # include <locale.h>

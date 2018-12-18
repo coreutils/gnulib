@@ -37,7 +37,7 @@
 
 /* We cannot support uselocale() on platforms where the locale_t type is fake.
    See intl-thread-locale.m4 for details.  */
-#if HAVE_USELOCALE && !HAVE_FAKE_LOCALES
+#if HAVE_WORKING_USELOCALE && !HAVE_FAKE_LOCALES
 # define HAVE_GOOD_USELOCALE 1
 #endif
 
@@ -2629,7 +2629,7 @@ get_lcid (const char *locale_name)
 #endif
 
 
-#if HAVE_GOOD_USELOCALE /* glibc, Mac OS X, FreeBSD >= 9.1, AIX >= 7, Cygwin >= 2.6,
+#if HAVE_GOOD_USELOCALE /* glibc, Mac OS X, FreeBSD >= 9.1, Cygwin >= 2.6,
                            Solaris 11 OpenIndiana, or Solaris >= 11.4  */
 
 /* Simple hash set of strings.  We don't want to drag in lots of hash table
