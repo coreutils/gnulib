@@ -124,7 +124,7 @@ test_lchown (int (*func) (char const *, uid_t, gid_t), bool print)
       return 77;
     }
   result = func (BASE "dir/link2", -1, -1);
-  if (result == -1 && errno == ENOSYS)
+  if (result == -1 && (errno == ENOSYS || errno == EOPNOTSUPP))
     {
       ASSERT (unlink (BASE "dir/file") == 0);
       ASSERT (unlink (BASE "dir/link2") == 0);
