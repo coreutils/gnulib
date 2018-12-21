@@ -23,7 +23,6 @@
 
 #include <stdarg.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 #if USE_UNLOCKED_IO
 # include "unlocked-io.h"
@@ -95,8 +94,9 @@ There is NO WARRANTY, to the extent permitted by law.\n\
   switch (n_authors)
     {
     case 0:
-      /* The caller must provide at least one author name.  */
-      abort ();
+      /* No authors are given.  The caller should output authorship
+         info after calling this function.  */
+      break;
     case 1:
       /* TRANSLATORS: %s denotes an author name.  */
       fprintf (stream, _("Written by %s.\n"), authors[0]);
