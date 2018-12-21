@@ -21,4 +21,7 @@ NeXTstep/x86.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function produces wrong results when the arguments are constant strings
+and the compiler is clang 6.0.1.
 @end itemize
