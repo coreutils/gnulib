@@ -2300,6 +2300,27 @@ epsclosure (struct dfa const *d)
   free (tmp.elems);
 }
 
+/* Returns the set of contexts for which there is at least one
+   character included in C.  */
+
+static int
+charclass_context (struct dfa const *dfa, charclass const *c)
+{
+  int context = 0;
+
+  for (unsigned int j = 0; j < CHARCLASS_WORDS; ++j)
+    {
+      if (c->w[j] & dfa->syntax.newline.w[j])
+        context |= CTX_NEWLINE;
+      if (c->w[j] & dfa->syntax.letters.w[j])
+        context |= CTX_LETTER;
+      if (c->w[j] & ~(dfa->syntax.letters.w[j] | dfa->syntax.newline.w[j]))
+        context |= CTX_NONE;
+    }
+
+  return context;
+}
+
 /* Returns the contexts on which the position set S depends.  Each context
    in the set of returned contexts (let's call it SC) may have a different
    follow set than other contexts in SC, and also different from the
@@ -3091,18 +3112,22 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
       /* Find out if the new state will want any context information,
          by calculating possible contexts that the group can match,
          and separate contexts that the new state wants to know.  */
+      int possible_contexts = charclass_context (d, &label);
       int separate_contexts = state_separate_contexts (d, &group);
 
       /* Find the state(s) corresponding to the union of the follows.  */
-      if (d->syntax.sbit[uc] & separate_contexts & CTX_NEWLINE)
-        state = state_index (d, &group, CTX_NEWLINE);
-      else if (d->syntax.sbit[uc] & separate_contexts & CTX_LETTER)
-        state = state_index (d, &group, CTX_LETTER);
-      else
+      if (possible_contexts & ~separate_contexts)
         state = state_index (d, &group, separate_contexts ^ CTX_ANY);
-
-      state_newline = state;
-      state_letter = state;
+      else
+        state = -1;
+      if (separate_contexts & possible_contexts & CTX_NEWLINE)
+        state_newline = state_index (d, &group, CTX_NEWLINE);
+      else
+        state_newline = state;
+      if (separate_contexts & possible_contexts & CTX_LETTER)
+        state_letter = state_index (d, &group, CTX_LETTER);
+      else
+        state_letter = state;
 
       /* Reallocate now, to reallocate any newline transition properly.  */
       realloc_trans_if_necessary (d);
