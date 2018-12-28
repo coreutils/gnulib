@@ -34,7 +34,7 @@ mknodat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
   return -1;
 }
 
-#else /* HAVE_MKFIFO */
+#else
 
 /* Create a file system node FILE relative to directory FD, with
    access permissions and file type in MODE, and device type in DEV.
@@ -54,4 +54,4 @@ mknodat (int fd _GL_UNUSED, char const *path _GL_UNUSED,
 # undef AT_FUNC_POST_FILE_PARAM_DECLS
 # undef AT_FUNC_POST_FILE_ARGS
 
-#endif /* HAVE_MKFIFO */
+#endif
