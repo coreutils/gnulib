@@ -1,6 +1,6 @@
 /* xgetcwd.c -- return current directory with unlimited length
 
-   Copyright (C) 2001, 2003-2004, 2006-2007, 2009-2018 Free Software
+   Copyright (C) 2001, 2003-2004, 2006-2007, 2009-2019 Free Software
    Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
