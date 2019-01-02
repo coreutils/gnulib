@@ -14,6 +14,7 @@ configure.ac:
 AC_CONFIG_COMMANDS_PRE([m4_ifdef([AH_HEADER],
   [AC_SUBST([CONFIG_INCLUDE], m4_defn([AH_HEADER]))])])
 AC_REQUIRE([AC_PROG_SED])
+AC_REQUIRE([AC_PROG_GREP])
 
 Makefile.am:
 EXTRA_DIST += $(top_srcdir)/maint.mk
