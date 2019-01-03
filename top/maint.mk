@@ -314,7 +314,7 @@ define _sc_search_regexp
    : Check for the construct;						\
    if test -n "$$files"; then						\
      if test -n "$$prohibit"; then					\
-       echo "$$files"
+       echo "$$files"							\
          | xargs $(GREP) $$with_grep_options $(_ignore_case) -nE	\
 		"$$prohibit" /dev/null					\
          | $(GREP) -vE "$${exclude:-^$$}"				\
