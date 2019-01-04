@@ -20,9 +20,6 @@ lib_SOURCES += canon-host.c
 Include:
 "canon-host.h"
 
-Link:
-$(GETADDRINFO_LIB)
-
 License:
 LGPL
 
