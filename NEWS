@@ -3,6 +3,10 @@ Important general notes
 
 Date        Modules         Changes
 
+2019-01-04  (all)           The meaning of the 'Link' section in the module
+                            descriptions has been clarified: It overrides the
+                            combined 'Link' sections from the dependencies.
+
 2018-10-22  (all)           Automake >= 1.11 and Autoconf >= 2.63 are required.
 
 2016-09-05  progname        There is now an alternate module 'getprogname'. It

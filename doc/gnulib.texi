@@ -476,6 +476,8 @@ Example:
 $(POW_LIBM)
 $(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
 @end smallexample
+When this field is omitted, it defaults to the union of the @code{Link}
+field of the dependencies.
 
 @item License
 This field specifies the license that governs the source code parts of
