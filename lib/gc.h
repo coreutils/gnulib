@@ -16,8 +16,8 @@
  *
  */
 
-#ifndef GC_H
-# define GC_H
+#ifndef _GL_GC_H
+# define _GL_GC_H
 
 /* Get size_t. */
 # include <stddef.h>
@@ -321,4 +321,4 @@ gc_pbkdf2_sha1 (const char *P, size_t Plen,
   Simon
  */
 
-#endif /* GC_H */
+#endif /* _GL_GC_H */

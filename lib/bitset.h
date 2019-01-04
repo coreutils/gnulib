@@ -17,8 +17,8 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
-#ifndef _BITSET_H
-#define _BITSET_H
+#ifndef _GL_BITSET_H
+#define _GL_BITSET_H
 
 /* This file is the public interface to the bitset abstract data type.
    Only use the functions and macros defined in this file.  */
@@ -385,4 +385,4 @@ void debug_bitset (bitset);
 /* Function to debug bitset stats from debugger.  */
 void debug_bitset_stats (void);
 
-#endif /* _BITSET_H  */
+#endif /* _GL_BITSET_H  */
