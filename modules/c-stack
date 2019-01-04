@@ -28,6 +28,7 @@ Include:
 
 Link:
 $(LTLIBCSTACK) when linking with libtool, $(LIBCSTACK) otherwise
+$(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
 GPL
