@@ -1,5 +1,5 @@
 Description:
-c_asprintf and c_vasprintf with out-of-memory checking.  Also see xalloc-die.
+c_asprintf and c_vasprintf with out-of-memory checking.
 
 Files:
 lib/c-xvasprintf.h
@@ -8,6 +8,7 @@ lib/c-xvasprintf.c
 
 Depends-on:
 c-vasprintf
+xalloc-die
 
 configure.ac:
 
