@@ -18,9 +18,6 @@ lib_SOURCES += xstriconveh.c
 Include:
 "xstriconveh.h"
 
-Link:
-$(LTLIBICONV) when linking with libtool, $(LIBICONV) otherwise
-
 License:
 GPL
 

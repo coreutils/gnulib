@@ -15,8 +15,6 @@ Makefile.am:
 Include:
 "sha1.h"
 
-Link:
-
 License:
 LGPLv2+
 

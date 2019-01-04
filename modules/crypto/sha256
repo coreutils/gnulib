@@ -15,8 +15,6 @@ Makefile.am:
 Include:
 "sha256.h"
 
-Link:
-
 License:
 LGPLv2+
 

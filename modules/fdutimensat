@@ -19,9 +19,6 @@ Include:
 <fcntl.h>
 "utimens.h"
 
-Link:
-$(LIB_CLOCK_GETTIME)
-
 License:
 GPL
 

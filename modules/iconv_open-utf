@@ -14,8 +14,6 @@ Makefile.am:
 
 Include:
 
-Link:
-
 License:
 LGPL
 

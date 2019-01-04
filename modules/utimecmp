@@ -27,9 +27,6 @@ lib_SOURCES += utimecmp.c
 Include:
 "utimecmp.h"
 
-Link:
-$(LIB_CLOCK_GETTIME)
-
 License:
 GPL
 

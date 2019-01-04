@@ -21,9 +21,6 @@ lib_SOURCES += copy-acl.c set-acl.c
 Include:
 "acl.h"
 
-Link:
-$(LIB_ACL)
-
 License:
 GPL
 

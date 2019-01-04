@@ -15,8 +15,6 @@ Makefile.am:
 Include:
 "md5.h"
 
-Link:
-
 License:
 LGPLv2+
 
