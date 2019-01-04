@@ -48,6 +48,7 @@ Include:
 <regex.h>
 
 Link:
+$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:
