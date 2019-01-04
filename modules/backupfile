@@ -21,6 +21,7 @@ renameatu
 readdir
 stdbool
 stdint
+xalloc
 
 configure.ac:
 gl_BACKUPFILE
