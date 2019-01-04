@@ -34,7 +34,7 @@ Include:
 <math.h>
 
 Link:
-$(ACOSL_LIBM)
+$(COSL_LIBM)
 
 License:
 LGPL
