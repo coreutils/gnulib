@@ -22,6 +22,8 @@
 
 #include <stdlib.h>
 
+#include "xalloc.h"
+
 
 /* Create a vector of N_VECS bitsets, each of N_BITS, and of
    type TYPE.  */
