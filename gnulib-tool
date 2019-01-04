@@ -141,10 +141,12 @@ Usage: gnulib-tool --list
        gnulib-tool --extract-applicability module
        gnulib-tool --extract-filelist module
        gnulib-tool --extract-dependencies module
+       gnulib-tool --extract-recursive-dependencies module
        gnulib-tool --extract-autoconf-snippet module
        gnulib-tool --extract-automake-snippet module
        gnulib-tool --extract-include-directive module
        gnulib-tool --extract-link-directive module
+       gnulib-tool --extract-recursive-link-directive module
        gnulib-tool --extract-license module
        gnulib-tool --extract-maintainer module
        gnulib-tool --extract-tests-module module
@@ -177,10 +179,16 @@ Operation modes:
       --extract-applicability      extract the applicability
       --extract-filelist           extract the list of files
       --extract-dependencies       extract the dependencies
+      --extract-recursive-dependencies  extract the dependencies of the module
+                                        and its dependencies, recursively, all
+                                        together, but without the conditions
       --extract-autoconf-snippet   extract the snippet for configure.ac
       --extract-automake-snippet   extract the snippet for library makefile
       --extract-include-directive  extract the #include directive
       --extract-link-directive     extract the linker directive
+      --extract-recursive-link-directive  extract the linker directive of the
+                                          module and its dependencies,
+                                          recursively, all together
       --extract-license            report the license terms of the source files
                                    under lib/
       --extract-maintainer         report the maintainer(s) inside gnulib
@@ -1748,6 +1756,10 @@ func_exists_module ()
 # Input:
 # - local_gnulib_path  from --local-dir
 # - module          module name argument
+# Output:
+# - module          unchanged if OK, empty if not OK
+# - lookedup_file   if OK: name of the merged (combined) module description file
+# - lookedup_tmp    if OK: true if it is located in the tmp directory, blank otherwise
 func_verify_module ()
 {
   if func_exists_module "$module"; then
@@ -2328,6 +2340,8 @@ func_get_dependencies ()
   | sed -e '/^#/d'
 }
 
+sed_dependencies_without_conditions='s/ *\[.*//'
+
 # func_get_autoconf_early_snippet module
 # Input:
 # - local_gnulib_path  from --local-dir
@@ -2669,6 +2683,83 @@ func_get_tests_module ()
   fi
 }
 
+# func_get_dependencies_recursively module
+# Input:
+# - local_gnulib_path  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_dependencies_recursively ()
+{
+  # In order to process every module only once (for speed), process an "input
+  # list" of modules, producing an "output list" of modules. During each round,
+  # more modules can be queued in the input list. Once a module on the input
+  # list has been processed, it is added to the "handled list", so we can avoid
+  # to process it again.
+  handledmodules=
+  inmodules="$1"
+  outmodules=
+  while test -n "$inmodules"; do
+    inmodules_this_round="$inmodules"
+    inmodules=                    # Accumulator, queue for next round
+    for module in $inmodules_this_round; do
+      func_verify_module
+      if test -n "$module"; then
+        func_append outmodules " $module"
+        deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+        for dep in $deps; do
+          func_append inmodules " $dep"
+        done
+      fi
+    done
+    handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
+    # Remove $handledmodules from $inmodules.
+    for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
+    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+  done
+  rm -f "$tmp"/queued-modules
+  for m in $outmodules; do echo $m; done | LC_ALL=C sort -u
+}
+
+# func_get_link_directive_recursively module
+# Input:
+# - local_gnulib_path  from --local-dir
+# - modcache          true or false, from --cache-modules/--no-cache-modules
+func_get_link_directive_recursively ()
+{
+  # In order to process every module only once (for speed), process an "input
+  # list" of modules, producing an "output list" of modules. During each round,
+  # more modules can be queued in the input list. Once a module on the input
+  # list has been processed, it is added to the "handled list", so we can avoid
+  # to process it again.
+  handledmodules=
+  inmodules="$1"
+  outmodules=
+  while test -n "$inmodules"; do
+    inmodules_this_round="$inmodules"
+    inmodules=                    # Accumulator, queue for next round
+    for module in $inmodules_this_round; do
+      func_verify_module
+      if test -n "$module"; then
+        if grep '^Link:[ 	]*$' "$lookedup_file" >/dev/null; then
+          # The module description has a 'Link:' field. Ignore the dependencies.
+          func_append outmodules " $module"
+        else
+          # The module description has no 'Link:' field. Recurse through the dependencies.
+          deps=`func_get_dependencies $module | sed -e "$sed_dependencies_without_conditions"`
+          for dep in $deps; do
+            func_append inmodules " $dep"
+          done
+        fi
+      fi
+    done
+    handledmodules=`for m in $handledmodules $inmodules_this_round; do echo $m; done | LC_ALL=C sort -u`
+    # Remove $handledmodules from $inmodules.
+    for m in $inmodules; do echo $m; done | LC_ALL=C sort -u > "$tmp"/queued-modules
+    inmodules=`echo "$handledmodules" | LC_ALL=C join -v 2 - "$tmp"/queued-modules`
+  done
+  rm -f "$tmp"/queued-modules
+  for m in $outmodules; do func_get_link_directive "$m"; done | LC_ALL=C sort -u | sed -e '/^$/d'
+}
+
 # func_acceptable module
 # tests whether a module is acceptable.
 # Input:
@@ -2817,8 +2908,6 @@ else
     eval 'condition="${conddep_condition_'"$suffix"'}"'
   }
 fi
-
-sed_dependencies_without_conditions='s/ *\[.*//'
 
 # func_modules_transitive_closure
 # Input:
@@ -7018,6 +7107,19 @@ s/\([.*$]\)/[\1]/g'
     done
     ;;
 
+  extract-recursive-dependencies )
+    if test -n "$avoidlist"; then
+      func_fatal_error "cannot combine --avoid and --extract-recursive-dependencies"
+    fi
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_dependencies_recursively "$module"
+      fi
+    done
+    ;;
+
   extract-autoconf-snippet )
     for module
     do
@@ -7054,6 +7156,19 @@ s/\([.*$]\)/[\1]/g'
       func_verify_module
       if test -n "$module"; then
         func_get_link_directive "$module"
+      fi
+    done
+    ;;
+
+  extract-recursive-link-directive )
+    if test -n "$avoidlist"; then
+      func_fatal_error "cannot combine --avoid and --extract-recursive-link-directive"
+    fi
+    for module
+    do
+      func_verify_module
+      if test -n "$module"; then
+        func_get_link_directive_recursively "$module"
       fi
     done
     ;;

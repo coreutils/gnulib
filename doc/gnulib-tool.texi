@@ -44,6 +44,7 @@ a real run without changing anything.
 * Modified imports::            Changing the import specification.
 * Simple update::               Tracking Gnulib development.
 * Source changes::              Impact of Gnulib on your source files.
+* Link-time requirements::      Which libraries to link against
 * Finding POSIX substitutes::   Determining additional suitable Gnulib modules
 * Modified build rules::        Modifying the build rules of a Gnulib import
 * Multiple instances::          Using Gnulib for both a library and a program
@@ -463,6 +464,43 @@ the Gnulib library directory.
 This is annoying, but inevitable: On many systems, @file{<config.h>} is
 used to set system dependent flags (such as @code{_GNU_SOURCE} on GNU systems),
 and these flags have no effect after any system header file has been included.
+
+
+@node Link-time requirements
+@section Changing your link commands for use with Gnulib
+
+When you use Gnulib, you need to augment the set of libraries against which
+your programs and libraries are linked.  This is done by augmenting the
+Automake variable @code{LDADD} (for all programs) or
+@code{@var{prog}_LDADD} (for a single program @code{@var{prog}}) or
+@code{@var{library}_la_LIBADD} (for a single library @code{@var{library}.la}).
+
+What do you need to add to this Automake variable?
+@enumerate
+@item
+The reference to the Gnulib library.  In the example of section
+@ref{Initial import}, this would be @code{lib/libgnu.a} for source in the
+top-level directory, or @code{../lib/libgnu.a} for source in a sibling
+directory of @code{lib/}.
+
+@item
+References to additional libraries, brought in by some of the Gnulib
+modules that you use (directly or indirectly).  The complete list of such
+libraries is printed when you invoke @code{gnulib-tool}.  Alternatively,
+you can retrieve the set of additional libraries required by a specific
+Gnulib module by running
+@smallexample
+./gnulib-tool --extract-recursive-link-directive @var{module}
+@end smallexample
+@noindent
+Beware: By looking into the module description file @code{modules/@var{module}}
+or by running
+@smallexample
+./gnulib-tool --extract-link-directive @var{module}
+@end smallexample
+@noindent
+you would miss the link dependencies of indirectly used modules.
+@end enumerate
 
 
 @node Finding POSIX substitutes
