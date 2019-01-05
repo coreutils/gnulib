@@ -69,6 +69,9 @@ typedef int error_t;
 extern "C" {
 #endif
 
+/* Glibc documentation:
+   https://www.gnu.org/software/libc/manual/html_node/Argp.html */
+
 /* A description of a particular option.  A pointer to an array of
    these is passed in the OPTIONS field of an argp structure.  Each option
    entry can correspond to one long option and/or one short option; more
@@ -236,9 +239,9 @@ struct argp
      ARGP_KEY_ definitions below.  */
   argp_parser_t parser;
 
-  /* A string describing what other arguments are wanted by this program.  It
-     is only used by argp_usage to print the "Usage:" message.  If it
-     contains newlines, the strings separated by them are considered
+  /* If non-NULL, a string describing what other arguments are wanted by this
+     program.  It is only used by argp_usage to print the "Usage:" message.
+     If it contains newlines, the strings separated by them are considered
      alternative usage patterns, and printed on separate lines (lines after
      the first are prefix by "  or: " instead of "Usage:").  */
   const char *args_doc;

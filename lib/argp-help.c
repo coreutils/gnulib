@@ -1412,8 +1412,10 @@ argp_args_usage (const struct argp *argp, const struct argp_state *state,
   char *our_level = *levels;
   int multiple = 0;
   const struct argp_child *child = argp->children;
-  const char *tdoc = dgettext (argp->argp_domain, argp->args_doc), *nl = 0;
+  const char *tdoc =
+    argp->args_doc ? dgettext (argp->argp_domain, argp->args_doc) : NULL;
   const char *fdoc = filter_doc (tdoc, ARGP_KEY_HELP_ARGS_DOC, argp, state);
+  const char *nl = NULL;
 
   if (fdoc)
     {
