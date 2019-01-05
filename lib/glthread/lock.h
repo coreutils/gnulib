@@ -416,6 +416,9 @@ extern "C" {
 #  pragma weak pth_rwlock_acquire
 #  pragma weak pth_rwlock_release
 #  pragma weak pth_once
+#  pragma weak pth_cond_init
+#  pragma weak pth_cond_await
+#  pragma weak pth_cond_notify
 
 #  pragma weak pth_cancel
 #  define pth_in_use() (pth_cancel != NULL)
