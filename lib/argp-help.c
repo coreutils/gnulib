@@ -1021,7 +1021,7 @@ static void
 print_header (const char *str, const struct argp *argp,
               struct pentry_state *pest)
 {
-  const char *tstr = dgettext (argp->argp_domain, str);
+  const char *tstr = str ? dgettext (argp->argp_domain, str) : NULL;
   const char *fstr = filter_doc (tstr, ARGP_KEY_HELP_HEADER, argp, pest->state);
 
   if (fstr)
@@ -1479,7 +1479,7 @@ argp_doc (const struct argp *argp, const struct argp_state *state,
   void *input = 0;
   int anything = 0;
   size_t inp_text_limit = 0;
-  const char *doc = dgettext (argp->argp_domain, argp->doc);
+  const char *doc = argp->doc ? dgettext (argp->argp_domain, argp->doc) : NULL;
   const struct argp_child *child = argp->children;
 
   if (doc)
