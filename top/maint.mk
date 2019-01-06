@@ -21,6 +21,12 @@
 # ME := $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
 ME := maint.mk
 
+# These variables ought to be defined through the configure.ac section
+# of the module description. But some packages import this file directly,
+# ignoring the module description.
+GREP ?= grep
+SED ?= sed
+
 # Helper variables.
 _empty =
 _sp = $(_empty) $(_empty)
