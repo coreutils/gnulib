@@ -1,4 +1,4 @@
-# localename.m4 serial 5
+# localename.m4 serial 6
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,7 +11,6 @@ AC_DEFUN([gl_LOCALENAME],
   AC_REQUIRE([gt_INTL_THREAD_LOCALE_NAME])
   AC_REQUIRE([gt_INTL_MACOSX])
   AC_CHECK_HEADERS_ONCE([langinfo.h])
-  AC_CHECK_FUNCS([setlocale])
   AC_CHECK_FUNCS_ONCE([newlocale duplocale freelocale])
   if test $ac_cv_func_newlocale != yes; then
     HAVE_NEWLOCALE=0
