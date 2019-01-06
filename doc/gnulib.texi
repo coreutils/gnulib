@@ -6368,7 +6368,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Closed standard fds::
 * String Functions in C Locale::
 * Quoting::
-* error and progname::
+* progname and getprogname::
 * gcd::
 * Profiling of program phases::
 * Library version handling::
@@ -6401,7 +6401,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 
 @include quote.texi
 
-@include error.texi
+@include progname.texi
 
 @include gcd.texi
 
