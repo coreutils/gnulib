@@ -6365,6 +6365,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Compile-time Assertions::
 * Integer Properties::
 * extern inline::
+* Closed standard fds::
 * String Functions in C Locale::
 * Quoting::
 * error and progname::
@@ -6393,6 +6394,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include intprops.texi
 
 @include extern-inline.texi
+
+@include xstdopen.texi
 
 @include c-locale.texi
 
