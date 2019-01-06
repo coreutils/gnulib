@@ -6366,6 +6366,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Integer Properties::
 * extern inline::
 * Closed standard fds::
+* Container data types::
 * String Functions in C Locale::
 * Quoting::
 * progname and getprogname::
@@ -6396,6 +6397,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include extern-inline.texi
 
 @include xstdopen.texi
+
+@include containers.texi
 
 @include c-locale.texi
 
