@@ -25,7 +25,7 @@ gl_UNISTD_MODULE_INDICATOR([getpass])
 Makefile.am:
 
 Include:
-<unistd,h>
+<unistd.h>
 
 License:
 LGPLv2+
