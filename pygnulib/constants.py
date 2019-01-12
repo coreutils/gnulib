@@ -54,7 +54,7 @@ if not PYTHON3:
 #===============================================================================
 # Define global constants
 #===============================================================================
-# Declare neccessary variables
+# Declare necessary variables
 APP = dict()  # Application
 DIRS = dict()  # Directories
 UTILS = dict()  # Utilities

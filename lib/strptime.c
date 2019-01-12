@@ -277,7 +277,7 @@ __strptime_internal (rp, fmt, tm, decided, era_cnt LOCALE_PARAM)
         }
 
       /* Any character but '%' must be matched by the same character
-         in the iput string.  */
+         in the input string.  */
       if (*fmt != '%')
         {
           match_char (*fmt++, *rp++);

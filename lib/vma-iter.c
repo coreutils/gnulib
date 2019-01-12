@@ -125,7 +125,7 @@
      - On all platforms, if some other thread is doing memory allocations or
        deallocations between two read() calls, there is a high risk that the
        result of these two read() calls don't fit together, and as a
-       consequence we will parse gargage and either omit some VMAs or return
+       consequence we will parse garbage and either omit some VMAs or return
        VMAs with nonsensical addresses.
    So use mmap(), and ignore the resulting VMA.  */
 

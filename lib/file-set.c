@@ -48,7 +48,7 @@ record_file (Hash_table *ht, char const *file, struct stat const *stats)
 
     if (ent_from_table != ent)
       {
-        /* There was alread a matching entry in the table, so ENT was
+        /* There was already a matching entry in the table, so ENT was
            not inserted.  Free it.  */
         triple_free (ent);
       }

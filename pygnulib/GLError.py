@@ -62,7 +62,7 @@ class GLError(Exception):
           9: missing libname argument
          10: conddeps are not supported with inctests
          11: incompatible licenses on modules: <modules>
-         12: cannot process empy filelist
+         12: cannot process empty filelist
          13: cannot create the given directory: <directory>
          14: cannot delete the given file: <file>
          15: cannot create the given file: <file>
@@ -71,7 +71,7 @@ class GLError(Exception):
          18: module lacks a license: <module>
          19: could not create destination directory: <directory>
         errinfo: additional information;
-        style: 0 or 1, wheter old-style'''
+        style: 0 or 1, whether old-style'''
         self.errno = errno
         self.errinfo = errinfo
         self.args = (self.errno, self.errinfo)
@@ -97,7 +97,7 @@ class GLError(Exception):
                 + " so you might have to set this argument",
                 "conddeps are not supported with inctests",
                 "incompatible licenses on modules: %s" % repr(errinfo),
-                "cannot process empy filelist",
+                "cannot process empty filelist",
                 "cannot create the given directory: %s" % repr(errinfo),
                 "cannot remove the given file: %s" % repr(errinfo),
                 "cannot create the given file: %s" % repr(errinfo),

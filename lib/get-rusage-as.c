@@ -91,7 +91,7 @@
      b) pstat_getprocvm() can be used to find out about the virtual memory
         areas.
      Both methods agree, except that the value of get_rusage_as_via_iterator()
-     is slighly larger higher than get_rusage_as_via_setrlimit(), by 4 KB in
+     is slightly larger higher than get_rusage_as_via_setrlimit(), by 4 KB in
      32-bit mode and by 40 KB in 64-bit mode.
 
    IRIX:
