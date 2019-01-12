@@ -94,7 +94,7 @@ The implementation of each container instance is specified in a single place
 only: in the invocation of the function @code{gl_*_create_empty} that creates
 the instance.
 
-The implementations and the guaranteed average performace for the operations
+The implementations and the guaranteed average performance for the operations
 for the ``sequential list'' data type are:
 
 @multitable @columnfractions 0.2 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1
@@ -379,7 +379,7 @@ for the ``sequential list'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
-The implementations and the guaranteed average performace for the operations
+The implementations and the guaranteed average performance for the operations
 for the ``set'' data type are:
 
 @multitable @columnfractions 0.4 0.2 0.4
@@ -406,7 +406,7 @@ for the ``set'' data type are:
 @tab @math{O(1)}
 @end multitable
 
-The implementations and the guaranteed average performace for the operations
+The implementations and the guaranteed average performance for the operations
 for the ``ordered set'' data type are:
 
 @multitable @columnfractions 0.5 0.25 0.25
@@ -436,7 +436,7 @@ for the ``ordered set'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
-The implementations and the guaranteed average performace for the operations
+The implementations and the guaranteed average performance for the operations
 for the ``map'' data type are:
 
 @multitable @columnfractions 0.4 0.2 0.4
@@ -466,7 +466,7 @@ for the ``map'' data type are:
 @tab @math{O(1)}
 @end multitable
 
-The implementations and the guaranteed average performace for the operations
+The implementations and the guaranteed average performance for the operations
 for the ``ordered map'' data type are:
 
 @multitable @columnfractions 0.5 0.25 0.25
