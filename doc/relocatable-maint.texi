@@ -122,8 +122,12 @@ shell script that your package installs, add the following:
 
 @smallexample
 @@relocatable_sh@@
+
+prefix="@@prefix@@"
+exec_prefix="@@exec_prefix@@"   # usually needs $prefix.
+datarootdir="@@datarootdir@@"   # usually needs $prefix.
+
 if test "@@RELOCATABLE@@" = yes; then
-  exec_prefix="@@exec_prefix@@"
   bindir="@@bindir@@"
   orig_installdir="$bindir" # see Makefile.am's *_SCRIPTS variables
   func_find_curr_installdir # determine curr_installdir
@@ -140,8 +144,9 @@ else
 fi
 
 # Get some relocated directory names.
-sysconfdir=`relocate "@@sysconfdir@@"`
-some_datadir=`relocate "@@datadir@@/something"`
+sysconfdir=`relocate "@@sysconfdir@@"`          # usually needs $prefix.
+some_datadir=`relocate "@@datadir@@/something"` # usually needs $datarootdir.
+bindir=`relocate "@@bindir@@"`       # usually needs $exec_prefix, hence $prefix.
 @end smallexample
 
 You must adapt the definition of @code{orig_installdir}, depending on
