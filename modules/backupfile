@@ -17,11 +17,12 @@ dirname-lgpl
 fcntl
 memcmp
 opendirat
-renameatu
 readdir
+renameatu
 stdbool
 stdint
 xalloc
+xalloc-oversized
 
 configure.ac:
 gl_BACKUPFILE
