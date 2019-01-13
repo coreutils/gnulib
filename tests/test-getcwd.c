@@ -166,12 +166,20 @@ test_long_name (void)
       /* If mkdir or chdir fails, it could be that this system cannot create
          any file with an absolute name longer than PATH_MAX, such as cygwin.
          If so, leave fail as 0, because the current working directory can't
-         be too long for getcwd if it can't even be created.  For other
-         errors, be pessimistic and consider that as a failure, too.  */
+         be too long for getcwd if it can't even be created.  On Linux with
+         the 9p file system, mkdir fails with error EINVAL when cwd_len gets
+         too long; ignore this failure because the getcwd() system call
+         produces good results whereas the gnulib substitute calls getdents64
+         which fails with error EPROTO.
+         For other errors, be pessimistic and consider that as a failure,
+         too.  */
       if (mkdir (DIR_NAME, S_IRWXU) < 0 || chdir (DIR_NAME) < 0)
         {
           if (! (errno == ERANGE || errno == ENAMETOOLONG || errno == ENOENT))
-            fail = 2;
+            #ifdef __linux__
+            if (! (errno == EINVAL))
+            #endif
+              fail = 2;
           break;
         }
 
