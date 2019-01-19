@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 3, 2018
+@set lastupdate January 14, 2019
 @c %**end of header
 
 @dircategory GNU organization
@@ -3312,6 +3312,27 @@ Make sure your manual is clear to a reader who knows nothing about the
 topic and reads it straight through.  This means covering basic topics
 at the beginning, and advanced topics only later.  This also means
 defining every specialized term when it is first used.
+
+Remember that the audience for a GNU manual (and other GNU
+documentation) is global, and that it will be used for years, maybe
+decades.  This means that the reader could have very different cultural
+reference points.  Decades from now, all but old folks will have very
+different cultural reference points; many things that "everyone knows
+about" today may be mostly forgotten.
+
+For this reason, try to avoid writing in a way that crucially depends on
+cultural reference points for understanding, or that refers to them in
+ways that would impede reading for someone that doesn't recognize them.
+
+Likewise, be conservative in your choice of words (aside from technical
+terms), linguistic constructs, and spelling: aim to make them
+intelligeble to readers from ten years ago.  In any contest for
+trendiness, GNU writing should not even qualify to enter.
+
+It is ok to refer once in a rare while to spacially or temporally
+localized reference points or facts, if it is directly pertinent or as
+an aside.  Changing these few things (which in any case stand out) when
+they no longer make sense will not be a lot of work.
 
 Programmers tend to carry over the structure of the program as the
 structure for its documentation.  But this structure is not
