@@ -1,4 +1,4 @@
-# expm1l.m4 serial 2
+# expm1l.m4 serial 3
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -69,9 +69,101 @@ AC_DEFUN([gl_FUNC_EXPM1L],
     dnl Also check whether it's declared.
     dnl IRIX 6.5 has expm1l() in libm but doesn't declare it in <math.h>.
     AC_CHECK_DECL([expm1l], , [HAVE_DECL_EXPM1L=0], [[#include <math.h>]])
+    if test $REPLACE_EXPM1L = 0; then
+      AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+      AC_CACHE_CHECK([whether expm1l works],
+        [gl_cv_func_expm1l_works],
+        [
+          save_LIBS="$LIBS"
+          LIBS="$LIBS $EXPM1L_LIBM"
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#ifndef __NO_MATH_INLINES
+# define __NO_MATH_INLINES 1 /* for glibc */
+#endif
+#include <float.h>
+#include <math.h>
+/* Override the values of <float.h>, like done in float.in.h.  */
+#if defined __i386__ && (defined __BEOS__ || defined __OpenBSD__)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG   64
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP    (-16381)
+# undef LDBL_MAX_EXP
+# define LDBL_MAX_EXP    16384
+#endif
+#if defined __i386__ && (defined __FreeBSD__ || defined __DragonFly__)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG   64
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP    (-16381)
+# undef LDBL_MAX_EXP
+# define LDBL_MAX_EXP    16384
+#endif
+#if (defined _ARCH_PPC || defined _POWER) && defined _AIX && (LDBL_MANT_DIG == 106) && defined __GNUC__
+# undef LDBL_MIN_EXP
+# define LDBL_MIN_EXP DBL_MIN_EXP
+#endif
+#if defined __sgi && (LDBL_MANT_DIG >= 106)
+# undef LDBL_MANT_DIG
+# define LDBL_MANT_DIG 106
+# if defined __GNUC__
+#  undef LDBL_MIN_EXP
+#  define LDBL_MIN_EXP DBL_MIN_EXP
+# endif
+#endif
+#undef expm1l
+extern
+#ifdef __cplusplus
+"C"
+#endif
+long double expm1l (long double);
+static long double dummy (long double x) { return 0; }
+int main (int argc, char *argv[])
+{
+  long double (* volatile my_expm1l) (long double) = argc ? expm1l : dummy;
+  int result = 0;
+  /* This test fails on NetBSD 8.0.  */
+  {
+    const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
+      (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 1) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 2) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 3) / 5))
+      * (long double) (1U << ((LDBL_MANT_DIG - 1 + 4) / 5));
+    long double x = 11.358L;
+    long double y = my_expm1l (x);
+    long double z = my_expm1l (- x);
+    long double err = (y + (1.0L + y) * z) * TWO_LDBL_MANT_DIG;
+    if (!(err >= -100.0L && err <= 100.0L))
+      result |= 1;
+  }
+  return result;
+}
+            ]])],
+            [gl_cv_func_expm1l_works=yes],
+            [gl_cv_func_expm1l_works=no],
+            [case "$host_os" in
+                              # Guess yes on glibc systems.
+               *-gnu* | gnu*) gl_cv_func_expm1l_works="guessing yes" ;;
+                              # Guess yes on native Windows.
+               mingw*)        gl_cv_func_expm1l_works="guessing yes" ;;
+                              # If we don't know, assume the worst.
+               *)             gl_cv_func_expm1l_works="guessing no" ;;
+             esac
+            ])
+          LIBS="$save_LIBS"
+        ])
+      case "$gl_cv_func_expm1l_works" in
+        *yes) ;;
+        *) REPLACE_EXPM1L=1 ;;
+      esac
+    fi
   else
     HAVE_EXPM1L=0
     HAVE_DECL_EXPM1L=0
+  fi
+  if test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; then
     dnl Find libraries needed to link lib/expm1l.c.
     if test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1; then
       AC_REQUIRE([gl_FUNC_EXPM1])

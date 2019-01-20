@@ -14,6 +14,10 @@ FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, older IRIX
 @item
 This function is not declared on some platforms:
 IRIX 6.5.
+@item
+This function produces results which are accurate to only 16 digits on some
+platforms:
+NetBSD 8.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -8,16 +8,16 @@ m4/expm1l.m4
 Depends-on:
 math
 extensions
-expm1           [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
-float           [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-isnanl          [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-expl            [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-roundl          [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
-ldexpl          [test $HAVE_EXPM1L = 0 && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+expm1           [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 1]
+float           [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+isnanl          [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+expl            [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+roundl          [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
+ldexpl          [{ test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; } && test $HAVE_SAME_LONG_DOUBLE_AS_DOUBLE = 0]
 
 configure.ac:
 gl_FUNC_EXPM1L
-if test $HAVE_EXPM1L = 0; then
+if test $HAVE_EXPM1L = 0 || test $REPLACE_EXPM1L = 1; then
   AC_LIBOBJ([expm1l])
 fi
 gl_MATH_MODULE_INDICATOR([expm1l])
