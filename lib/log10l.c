@@ -27,7 +27,7 @@ log10l (long double x)
   return log10 (x);
 }
 
-#elif HAVE_LOG10L
+#elif 0 /* was: HAVE_LOG10L */
 
 # include <float.h>
 

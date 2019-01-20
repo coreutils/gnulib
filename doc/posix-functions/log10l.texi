@@ -26,6 +26,10 @@ IRIX 6.5.
 @item
 This function returns an unnormalized positive infinity for a positive infinite argument on some platforms:
 IRIX 6.5.
+@item
+This function produces results which are accurate to only 16 digits on some
+platforms:
+NetBSD 8.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
