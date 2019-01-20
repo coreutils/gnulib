@@ -627,11 +627,20 @@ _GL_WARN_ON_USE (expf, "expf is unportable - "
 #endif
 
 #if @GNULIB_EXPL@
-# if !@HAVE_EXPL@ || !@HAVE_DECL_EXPL@
-#  undef expl
+# if @REPLACE_EXPL@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef expl
+#   define expl rpl_expl
+#  endif
+_GL_FUNCDECL_RPL (expl, long double, (long double x));
+_GL_CXXALIAS_RPL (expl, long double, (long double x));
+# else
+#  if !@HAVE_EXPL@ || !@HAVE_DECL_EXPL@
+#   undef expl
 _GL_FUNCDECL_SYS (expl, long double, (long double x));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (expl, long double, (long double x));
+# endif
 _GL_CXXALIASWARN (expl);
 #elif defined GNULIB_POSIXCHECK
 # undef expl

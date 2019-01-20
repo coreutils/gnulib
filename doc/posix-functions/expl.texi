@@ -23,6 +23,10 @@ MSVC 14.
 @item
 This function is not declared on some platforms:
 Mac OS X 10.3.
+@item
+This function produces results which are accurate to only 16 digits on some
+platforms:
+NetBSD 8.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
