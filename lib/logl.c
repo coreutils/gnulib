@@ -26,7 +26,7 @@ logl (long double x)
   return log (x);
 }
 
-#elif HAVE_LOGL
+#elif 0 /* was: HAVE_LOGL */
 
 long double
 logl (long double x)
