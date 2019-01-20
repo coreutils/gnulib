@@ -10,7 +10,7 @@ math
 float           [test $REPLACE_FLOOR = 1]
 
 configure.ac:
-gl_FUNC_FLOOR
+AC_REQUIRE([gl_FUNC_FLOOR])
 if test $REPLACE_FLOOR = 1; then
   AC_LIBOBJ([floor])
 fi
