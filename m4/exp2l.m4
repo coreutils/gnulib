@@ -1,4 +1,4 @@
-# exp2l.m4 serial 5
+# exp2l.m4 serial 6
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,7 +50,7 @@ static long double dummy (long double x) { return 0; }
 static long double zero;
 int main (int argc, char *argv[])
 {
-  long double (*my_exp2l) (long double) = argc ? exp2l : dummy;
+  long double (* volatile my_exp2l) (long double) = argc ? exp2l : dummy;
   int result = 0;
   /* This test fails on OpenBSD 4.9, where exp2l(NaN) = 0.0.  */
   if (exp2l (zero / zero) == 0.0L)

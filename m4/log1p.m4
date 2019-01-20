@@ -1,4 +1,4 @@
-# log1p.m4 serial 5
+# log1p.m4 serial 6
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_LOG1P],
 static double dummy (double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_log1p) (double) = argc ? log1p : dummy;
+  double (* volatile my_log1p) (double) = argc ? log1p : dummy;
   /* This test fails on AIX, HP-UX 11.  */
   double y = my_log1p (minus_zerod);
   if (!(y == 0.0) || (signbitd (minus_zerod) && !signbitd (y)))

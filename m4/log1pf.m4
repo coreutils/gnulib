@@ -1,4 +1,4 @@
-# log1pf.m4 serial 5
+# log1pf.m4 serial 6
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,7 +50,7 @@ AC_DEFUN([gl_FUNC_LOG1PF],
 static float dummy (float x) { return 0; }
 int main (int argc, char *argv[])
 {
-  float (*my_log1pf) (float) = argc ? log1pf : dummy;
+  float (* volatile my_log1pf) (float) = argc ? log1pf : dummy;
   /* This test fails on OpenBSD 4.9, AIX 7.1.  */
   float y = my_log1pf (minus_zerof);
   if (!(y == 0.0f) || (signbitf (minus_zerof) && !signbitf (y)))

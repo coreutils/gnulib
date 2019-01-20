@@ -1,4 +1,4 @@
-# round.m4 serial 19
+# round.m4 serial 20
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -103,7 +103,7 @@ double round (double);
 static double dummy (double f) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_round) (double) = argc ? round : dummy;
+  double (* volatile my_round) (double) = argc ? round : dummy;
   /* Test whether round (-0.0) is -0.0.  */
   if (signbitd (minus_zerod) && !signbitd (my_round (minus_zerod)))
     return 1;

@@ -1,4 +1,4 @@
-# modff.m4 serial 7
+# modff.m4 serial 8
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -49,7 +49,7 @@ float zero;
 float minus_one = - 1.0f;
 int main (int argc, char *argv[])
 {
-  float (*my_modff) (float, float *) = argc ? modff : dummy;
+  float (* volatile my_modff) (float, float *) = argc ? modff : dummy;
   int result = 0;
   float i;
   float f;

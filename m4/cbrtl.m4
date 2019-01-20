@@ -1,4 +1,4 @@
-# cbrtl.m4 serial 7
+# cbrtl.m4 serial 8
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
   "C"
   #endif
   long double cbrtl (long double);
-  long double (*my_cbrtl) (long double) = argc ? cbrtl : dummy;
+  long double (* volatile my_cbrtl) (long double) = argc ? cbrtl : dummy;
   long double f;
   /* Test cbrtl(-0.0).
      This test fails on IRIX 6.5.  */

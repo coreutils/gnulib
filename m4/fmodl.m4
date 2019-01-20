@@ -1,4 +1,4 @@
-# fmodl.m4 serial 8
+# fmodl.m4 serial 9
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -57,7 +57,7 @@ numeric_equal (long double x, long double y)
 static long double dummy (long double x, long double y) { return 0; }
 int main (int argc, char *argv[])
 {
-  long double (*my_fmodl) (long double, long double) = argc ? fmodl : dummy;
+  long double (* volatile my_fmodl) (long double, long double) = argc ? fmodl : dummy;
   long double f;
   /* Test fmodl(...,0.0L).
      This test fails on OSF/1 5.1.  */

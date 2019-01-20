@@ -1,4 +1,4 @@
-# log2.m4 serial 7
+# log2.m4 serial 8
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -67,7 +67,7 @@ numeric_equal (double x, double y)
 static double dummy (double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_log2) (double) = argc ? log2 : dummy;
+  double (* volatile my_log2) (double) = argc ? log2 : dummy;
   /* Test log2(negative).
      This test fails on NetBSD 5.1 and Solaris 10/x86_64.  */
   double y = my_log2 (-1.0);

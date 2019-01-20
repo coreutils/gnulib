@@ -1,4 +1,4 @@
-# fmodf.m4 serial 8
+# fmodf.m4 serial 9
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -46,7 +46,7 @@ numeric_equal (float x, float y)
 static float dummy (float x, float y) { return 0; }
 int main (int argc, char *argv[])
 {
-  float (*my_fmodf) (float, float) = argc ? fmodf : dummy;
+  float (* volatile my_fmodf) (float, float) = argc ? fmodf : dummy;
   float f;
   /* Test fmodf(...,0.0f).
      This test fails on OSF/1 5.1.  */

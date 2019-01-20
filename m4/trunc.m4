@@ -1,4 +1,4 @@
-# trunc.m4 serial 12
+# trunc.m4 serial 13
 dnl Copyright (C) 2007, 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_FUNC_TRUNC],
 static double dummy (double f) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_trunc) (double) = argc ? trunc : dummy;
+  double (* volatile my_trunc) (double) = argc ? trunc : dummy;
   /* Test whether trunc (-0.0) is -0.0.  */
   if (signbitd (minus_zerod) && !signbitd (my_trunc (minus_zerod)))
     return 1;

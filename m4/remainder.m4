@@ -1,4 +1,4 @@
-# remainder.m4 serial 6
+# remainder.m4 serial 7
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -79,7 +79,7 @@ numeric_equal (double x, double y)
 static double dummy (double x, double y) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_remainder) (double, double) = argc ? remainder : dummy;
+  double (* volatile my_remainder) (double, double) = argc ? remainder : dummy;
   double f;
   /* Test remainder(...,0.0).
      This test fails on OSF/1 5.1.  */

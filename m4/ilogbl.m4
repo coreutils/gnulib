@@ -1,4 +1,4 @@
-# ilogbl.m4 serial 2
+# ilogbl.m4 serial 3
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -106,7 +106,7 @@ volatile long double x;
 static int dummy (long double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  int (*my_ilogbl) (long double) = argc ? ilogbl : dummy;
+  int (* volatile my_ilogbl) (long double) = argc ? ilogbl : dummy;
   int result = 0;
   /* This test fails on Haiku 2017.  */
   {

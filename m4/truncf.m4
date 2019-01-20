@@ -1,4 +1,4 @@
-# truncf.m4 serial 12
+# truncf.m4 serial 13
 dnl Copyright (C) 2007, 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ AC_DEFUN([gl_FUNC_TRUNCF],
 static float dummy (float f) { return 0; }
 int main (int argc, char *argv[])
 {
-  float (*my_truncf) (float) = argc ? truncf : dummy;
+  float (* volatile my_truncf) (float) = argc ? truncf : dummy;
   /* Test whether truncf (-0.0f) is -0.0f.  */
   if (signbitf (minus_zerof) && !signbitf (my_truncf (minus_zerof)))
     return 1;

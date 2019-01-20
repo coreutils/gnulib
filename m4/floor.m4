@@ -1,4 +1,4 @@
-# floor.m4 serial 11
+# floor.m4 serial 12
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_FLOOR],
 static double dummy (double f) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_floor) (double) = argc ? floor : dummy;
+  double (* volatile my_floor) (double) = argc ? floor : dummy;
   /* Test whether floor (-0.0) is -0.0.  */
   if (signbitd (minus_zerod) && !signbitd (my_floor (minus_zerod)))
     return 1;

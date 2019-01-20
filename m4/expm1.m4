@@ -1,4 +1,4 @@
-# expm1.m4 serial 5
+# expm1.m4 serial 6
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -75,7 +75,7 @@ AC_DEFUN([gl_FUNC_EXPM1],
 static double dummy (double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_expm1) (double) = argc ? expm1 : dummy;
+  double (* volatile my_expm1) (double) = argc ? expm1 : dummy;
   double y = my_expm1 (minus_zerod);
   if (!(y == 0.0) || (signbitd (minus_zerod) && !signbitd (y)))
     return 1;

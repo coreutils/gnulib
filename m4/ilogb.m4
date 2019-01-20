@@ -1,4 +1,4 @@
-# ilogb.m4 serial 3
+# ilogb.m4 serial 4
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -85,7 +85,7 @@ static double zero;
 static int dummy (double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  int (*my_ilogb) (double) = argc ? ilogb : dummy;
+  int (* volatile my_ilogb) (double) = argc ? ilogb : dummy;
   int result = 0;
   /* This test fails on OpenBSD 4.9, AIX 5.1.  */
   {

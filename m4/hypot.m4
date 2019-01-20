@@ -1,4 +1,4 @@
-# hypot.m4 serial 6
+# hypot.m4 serial 7
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -42,7 +42,7 @@ double zero;
 double one = 1.0;
 int main (int argc, char *argv[])
 {
-  double (*my_hypot) (double, double) = argc ? hypot : dummy;
+  double (* volatile my_hypot) (double, double) = argc ? hypot : dummy;
   double f;
   /* Test hypot(NaN,Infinity).
      This test fails on OSF/1 5.1 and native Windows.  */

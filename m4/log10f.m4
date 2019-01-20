@@ -1,4 +1,4 @@
-# log10f.m4 serial 9
+# log10f.m4 serial 10
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,7 @@ numeric_equal (float x, float y)
 static float dummy (float x) { return 0; }
 int main (int argc, char *argv[])
 {
-  float (*my_log10f) (float) = argc ? log10f : dummy;
+  float (* volatile my_log10f) (float) = argc ? log10f : dummy;
   /* Test log10f(negative).
      This test fails on NetBSD 5.1.  */
   float y = my_log10f (-1.0f);

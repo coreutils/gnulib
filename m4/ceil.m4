@@ -1,4 +1,4 @@
-# ceil.m4 serial 12
+# ceil.m4 serial 13
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,7 +32,7 @@ AC_DEFUN([gl_FUNC_CEIL],
 static double dummy (double f) { return 0; }
 int main (int argc, char *argv[])
 {
-  double (*my_ceil) (double) = argc ? ceil : dummy;
+  double (* volatile my_ceil) (double) = argc ? ceil : dummy;
   int result = 0;
   /* Test whether ceil (-0.0) is -0.0.  */
   if (signbitd (minus_zerod) && !signbitd (my_ceil (minus_zerod)))

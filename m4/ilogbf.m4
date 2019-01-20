@@ -1,4 +1,4 @@
-# ilogbf.m4 serial 3
+# ilogbf.m4 serial 4
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -87,7 +87,7 @@ static float zero;
 static int dummy (float x) { return 0; }
 int main (int argc, char *argv[])
 {
-  int (*my_ilogbf) (float) = argc ? ilogbf : dummy;
+  int (* volatile my_ilogbf) (float) = argc ? ilogbf : dummy;
   int result = 0;
   /* This test fails on OpenBSD 4.9.  */
   {

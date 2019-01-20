@@ -1,4 +1,4 @@
-# log1pl.m4 serial 5
+# log1pl.m4 serial 6
 dnl Copyright (C) 2012-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_LOG1PL],
 static long double dummy (long double x) { return 0; }
 int main (int argc, char *argv[])
 {
-  long double (*my_log1pl) (long double) = argc ? log1pl : dummy;
+  long double (* volatile my_log1pl) (long double) = argc ? log1pl : dummy;
   /* This test fails on AIX 7.1, IRIX 6.5.  */
   long double y = my_log1pl (minus_zerol);
   if (!(y == 0.0L) || (signbitl (minus_zerol) && !signbitl (y)))

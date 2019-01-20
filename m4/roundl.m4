@@ -1,4 +1,4 @@
-# roundl.m4 serial 17
+# roundl.m4 serial 18
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,7 +50,7 @@ long double roundl (long double);
 static long double dummy (long double f) { return 0; }
 int main (int argc, char *argv[])
 {
-  long double (*my_roundl) (long double) = argc ? roundl : dummy;
+  long double (* volatile my_roundl) (long double) = argc ? roundl : dummy;
   int result = 0;
   /* Test whether roundl (-0.0L) is -0.0L.  */
   if (signbitl (minus_zerol) && !signbitl (my_roundl (minus_zerol)))
