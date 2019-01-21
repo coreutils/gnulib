@@ -234,12 +234,12 @@ Information for GNU Maintainers}.
 @section Trademarks
 @cindex trademarks
 
-Please do not include any trademark acknowledgements in GNU software
+Please do not include any trademark acknowledgments in GNU software
 packages or documentation.
 
-Trademark acknowledgements are the statements that such-and-such is a
+Trademark acknowledgments are the statements that such-and-such is a
 trademark of so-and-so.  The GNU Project has no objection to the basic
-idea of trademarks, but these acknowledgements feel like kowtowing,
+idea of trademarks, but these acknowledgments feel like kowtowing,
 and there is no legal requirement for them, so we don't use them.
 
 What is legally required, as regards other people's trademarks, is to
@@ -3326,10 +3326,10 @@ ways that would impede reading for someone that doesn't recognize them.
 
 Likewise, be conservative in your choice of words (aside from technical
 terms), linguistic constructs, and spelling: aim to make them
-intelligeble to readers from ten years ago.  In any contest for
+intelligible to readers from ten years ago.  In any contest for
 trendiness, GNU writing should not even qualify to enter.
 
-It is ok to refer once in a rare while to spacially or temporally
+It is ok to refer once in a rare while to spatially or temporally
 localized reference points or facts, if it is directly pertinent or as
 an aside.  Changing these few things (which in any case stand out) when
 they no longer make sense will not be a lot of work.
