@@ -48,6 +48,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-01-21  diacrit         This module is deprecated. Please use the module
+                            uninorm/canonical-decomposition instead.
+
 2018-10-23  backupfile      backup_file_rename and find_backup_file_name
                             now take an additional directory file descriptor
                             argument.  Pass AT_FDCWD to get the old behavior.

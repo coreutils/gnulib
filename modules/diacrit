@@ -1,6 +1,12 @@
 Description:
 Decomposition of composed ISO-8859-1 characters.
 
+Status:
+deprecated
+
+Notice:
+This module is deprecated. Use the module 'uninorm/canonical-decomposition' instead.
+
 Files:
 lib/diacrit.h
 lib/diacrit.c
