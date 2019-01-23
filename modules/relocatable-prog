@@ -45,8 +45,8 @@ uninstall-relocwrapper:
 		       uninstall ;; \
 	  esac; \
 	fi
-.PHONY: uninstall-relocwrapper
 endif
+.PHONY: uninstall-relocwrapper
 
 Include:
 "relocatable.h"
