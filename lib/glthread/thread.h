@@ -133,8 +133,6 @@ extern int glthread_in_use (void);
    call to foo(...) in the same function.  To avoid this, we test the
    address of a function in libpthread that we don't use.  */
 
-#  pragma weak pthread_create
-
 #  ifndef pthread_sigmask /* Do not declare rpl_pthread_sigmask weak.  */
 #   pragma weak pthread_sigmask
 #  endif
