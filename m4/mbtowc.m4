@@ -1,4 +1,4 @@
-# mbtowc.m4 serial 2
+# mbtowc.m4 serial 3
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,8 +8,13 @@ AC_DEFUN([gl_FUNC_MBTOWC],
 [
   AC_REQUIRE([gl_STDLIB_H_DEFAULTS])
 
-  if false; then
-    REPLACE_MBTOWC=1
+  AC_CHECK_FUNCS([mbtowc])
+  if test $ac_cv_func_mbtowc = no; then
+    HAVE_MBTOWC=0
+  else
+    if false; then
+      REPLACE_MBTOWC=1
+    fi
   fi
 ])
 

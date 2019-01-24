@@ -1,4 +1,4 @@
-# stdlib_h.m4 serial 45
+# stdlib_h.m4 serial 46
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_STDLIB_H],
 # include <random.h>
 #endif
     ]], [_Exit atoll canonicalize_file_name getloadavg getsubopt grantpt
-    initstate initstate_r mkdtemp mkostemp mkostemps mkstemp mkstemps
+    initstate initstate_r mbtowc mkdtemp mkostemp mkostemps mkstemp mkstemps
     posix_openpt ptsname ptsname_r qsort_r random random_r reallocarray
     realpath rpmatch secure_getenv setenv setstate setstate_r srandom
     srandom_r strtod strtoll strtoull unlockpt unsetenv])
@@ -82,6 +82,7 @@ AC_DEFUN([gl_STDLIB_H_DEFAULTS],
   HAVE_GETSUBOPT=1;          AC_SUBST([HAVE_GETSUBOPT])
   HAVE_GRANTPT=1;            AC_SUBST([HAVE_GRANTPT])
   HAVE_DECL_INITSTATE=1;     AC_SUBST([HAVE_DECL_INITSTATE])
+  HAVE_MBTOWC=1;             AC_SUBST([HAVE_MBTOWC])
   HAVE_MKDTEMP=1;            AC_SUBST([HAVE_MKDTEMP])
   HAVE_MKOSTEMP=1;           AC_SUBST([HAVE_MKOSTEMP])
   HAVE_MKOSTEMPS=1;          AC_SUBST([HAVE_MKOSTEMPS])

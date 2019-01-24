@@ -306,9 +306,18 @@ _GL_WARN_ON_USE (malloc, "malloc is not POSIX compliant everywhere - "
 _GL_FUNCDECL_RPL (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
 _GL_CXXALIAS_RPL (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
 # else
+#  if !@HAVE_MBTOWC@
+_GL_FUNCDECL_SYS (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
+#  endif
 _GL_CXXALIAS_SYS (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
 # endif
 _GL_CXXALIASWARN (mbtowc);
+#elif defined GNULIB_POSIXCHECK
+# undef mbtowc
+# if HAVE_RAW_DECL_MBTOWC
+_GL_WARN_ON_USE (mbtowc, "mbtowc is not portable - "
+                 "use gnulib module mbtowc for portability");
+# endif
 #endif
 
 #if @GNULIB_MKDTEMP@
