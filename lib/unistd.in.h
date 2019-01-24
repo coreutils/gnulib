@@ -68,9 +68,11 @@
 # include <stdio.h>
 #endif
 
-/* Cygwin 1.7.1 declares unlinkat in <fcntl.h>, not in <unistd.h>.  */
+/* Cygwin 1.7.1 and Android 4.3 declare unlinkat in <fcntl.h>, not in
+   <unistd.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
-#if (@GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK) && defined __CYGWIN__ \
+#if (@GNULIB_UNLINKAT@ || defined GNULIB_POSIXCHECK) \
+    && (defined __CYGWIN__ || defined __ANDROID__) \
     && ! defined __GLIBC__
 # include <fcntl.h>
 #endif
