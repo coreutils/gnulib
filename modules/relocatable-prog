@@ -46,6 +46,7 @@ uninstall-relocwrapper:
 	  esac; \
 	fi
 endif
+## Automake warns about conditionally added dependencies to unconditionally defined targets.
 .PHONY: uninstall-relocwrapper
 
 Include:
