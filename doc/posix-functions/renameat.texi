@@ -9,6 +9,21 @@ Gnulib module: renameat
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is missing on some platforms:
+glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
+AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, MSVC 14,
+Interix 3.5, BeOS.
+But the replacement function is not safe to be used in libraries and is not
+multithread-safe.
+@item
+This function is declared in @code{<unistd.h>}, not in @code{<stdio.h>},
+on some platforms:
+NetBSD 7.0, Solaris 11.4.
+@item
+This function is declared in @code{<sys/stat.h>}, not in @code{<stdio.h>},
+on some platforms:
+Android 4.3.
+@item
 This function does not reject trailing slashes on non-directories on
 some platforms, as in @code{renameat(fd,"file",fd,"new/")}:
 Solaris 11.4.
@@ -16,16 +31,6 @@ Solaris 11.4.
 This function ignores trailing slashes on symlinks on some platforms,
 such that @code{renameat(fd,"link/",fd,"new")} corrupts @file{link}:
 Solaris 9.
-@item
-This function is declared in @code{<unistd.h>} instead of @code{<stdio.h>}
-on some platforms:
-NetBSD 7.0, Solaris 11.4.
-@item
-This function is missing on some platforms:
-glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 8, Cygwin 1.5.x, mingw, MSVC 14,
-Interix 3.5, BeOS.
-But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @end itemize
 
 Portability problems not fixed by Gnulib:
