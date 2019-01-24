@@ -1,4 +1,4 @@
-# fdatasync.m4 serial 4
+# fdatasync.m4 serial 5
 dnl Copyright (C) 2008-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_FDATASYNC],
 [
   AC_REQUIRE([gl_UNISTD_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl Using AC_CHECK_FUNCS_ONCE would break our subsequent AC_SEARCH_LIBS
   AC_CHECK_DECLS_ONCE([fdatasync])
@@ -21,12 +22,23 @@ AC_DEFUN([gl_FUNC_FDATASYNC],
       HAVE_FDATASYNC=0
     fi
   else
-    dnl Solaris <= 2.6 has fdatasync() in libposix4.
-    dnl Solaris 7..10 has it in librt.
-    gl_saved_libs=$LIBS
-    AC_SEARCH_LIBS([fdatasync], [rt posix4],
-                   [test "$ac_cv_search_fdatasync" = "none required" ||
-                    LIB_FDATASYNC=$ac_cv_search_fdatasync])
-    LIBS=$gl_saved_libs
+    case "$host_os" in
+      solaris*)
+        dnl Solaris <= 2.6 has fdatasync() in libposix4.
+        dnl Solaris 7..10 has it in librt.
+        gl_saved_libs=$LIBS
+        AC_SEARCH_LIBS([fdatasync], [rt posix4],
+          [test "$ac_cv_search_fdatasync" = "none required" ||
+           LIB_FDATASYNC=$ac_cv_search_fdatasync])
+        LIBS=$gl_saved_libs
+        ;;
+      *)
+        dnl Android 4.3 does not have fdatasync but declares it.
+        AC_CHECK_FUNCS([fdatasync])
+        if test $ac_cv_func_fdatasync = no; then
+          HAVE_FDATASYNC=0
+        fi
+        ;;
+    esac
   fi
 ])
