@@ -113,6 +113,13 @@
 # include <netdb.h>
 #endif
 
+/* Android 4.3 declares fchownat in <sys/stat.h>, not in <unistd.h>.  */
+/* But avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_FCHOWNAT@ || defined GNULIB_POSIXCHECK) && defined __ANDROID__ \
+    && !defined __GLIBC__
+# include <sys/stat.h>
+#endif
+
 /* MSVC defines off_t in <sys/types.h>.
    May also define off_t to a 64-bit type on native Windows.  */
 #if !@HAVE_UNISTD_H@ || @WINDOWS_64_BIT_OFF_T@

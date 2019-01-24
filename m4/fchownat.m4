@@ -1,4 +1,4 @@
-# fchownat.m4 serial 2
+# fchownat.m4 serial 3
 dnl Copyright (C) 2004-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,6 +56,8 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
           [[
 #include <fcntl.h>
 #include <unistd.h>
+/* Android 4.3 declares fchownat() in <sys/stat.h> instead.  */
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -86,6 +88,8 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG],
        [AC_LANG_PROGRAM(
           [[#include <unistd.h>
             #include <fcntl.h>
+            /* Android 4.3 declares fchownat() in <sys/stat.h> instead.  */
+            #include <sys/stat.h>
           ]],
           [[int fd;
             int ret;
