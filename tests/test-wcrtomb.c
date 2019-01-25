@@ -156,6 +156,10 @@ main (int argc, char *argv[])
           check_character (input + 3, 4);
         }
         return 0;
+
+      case '5':
+        /* C locale; tested above.  */
+        return 0;
       }
 
   return 1;

@@ -32,4 +32,8 @@ if test $LOCALE_ZH_CN != none; then
   || exit 1
 fi
 
+# Test in the POSIX locale.
+LC_ALL=C     ./test-wcrtomb${EXEEXT} 5 || exit 1
+LC_ALL=POSIX ./test-wcrtomb${EXEEXT} 5 || exit 1
+
 exit 0
