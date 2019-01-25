@@ -10,7 +10,10 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Solaris 2.4, mingw, MSVC 14, Android 4.4.
+Solaris 2.4, mingw, MSVC 14.
+@item
+This function is only defined as an inline function on some platforms:
+Android 4.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:
