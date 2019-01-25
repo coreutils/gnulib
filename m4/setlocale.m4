@@ -1,4 +1,4 @@
-# setlocale.m4 serial 5
+# setlocale.m4 serial 6
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,32 @@ AC_DEFUN([gl_FUNC_SETLOCALE],
     cygwin*)
       case `uname -r` in
         1.5.*) REPLACE_SETLOCALE=1 ;;
+      esac
+      ;;
+    dnl On Android 4.3, setlocale(category,"C") always fails.
+    *)
+      AC_CACHE_CHECK([whether setlocale supports the C locale],
+        [gl_cv_func_setlocale_works],
+        [AC_RUN_IFELSE(
+           [AC_LANG_SOURCE([[
+#include <locale.h>
+int main ()
+{
+  return setlocale (LC_ALL, "C") == NULL;
+}]])],
+           [gl_cv_func_setlocale_works=yes],
+           [gl_cv_func_setlocale_works=no],
+           [case "$host_os" in
+                               # Guess no on Android.
+              linux*-android*) gl_cv_func_setlocale_works="guessing no";;
+                               # Guess yes otherwise.
+              *)               gl_cv_func_setlocale_works="guessing yes";;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_setlocale_works" in
+        *yes) ;;
+        *) REPLACE_SETLOCALE=1 ;;
       esac
       ;;
   esac

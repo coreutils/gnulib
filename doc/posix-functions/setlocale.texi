@@ -20,6 +20,10 @@ On Windows platforms (excluding Cygwin) and Cygwin 1.5.x,
 On Windows platforms (excluding Cygwin), @code{setlocale} understands different
 locale names, that are not based on ISO 639 language names and ISO 3166 country
 names.
+@item
+On Android 4.3, which which doesn't have locales, the @code{setlocale} function
+always fails.  The replacement, however, supports only the locale names
+@code{"C"} and @code{"POSIX"}.
 @end itemize
 
 Portability problems not fixed by Gnulib:
