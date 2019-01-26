@@ -6,6 +6,7 @@ Depends-on:
 locale
 setenv
 unsetenv
+setlocale
 strdup
 
 configure.ac:
