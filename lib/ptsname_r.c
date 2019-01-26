@@ -76,7 +76,15 @@
    Return 0 on success, otherwise an error number.  */
 int
 __ptsname_r (int fd, char *buf, size_t buflen)
+#undef ptsname_r
 {
+#if HAVE_ESSENTIALLY_WORKING_PTSNAME_R
+  int ret = ptsname_r (fd, buf, buflen);
+  if (ret == 0)
+    return 0;
+  else
+    return errno;
+#else
   int save_errno = errno;
   int err;
   struct stat st;
@@ -87,7 +95,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       return EINVAL;
     }
 
-#if defined __sun /* Solaris */
+# if defined __sun /* Solaris */
   if (fstat (fd, &st) < 0)
     return errno;
   if (!(S_ISCHR (st.st_mode) && major (st.st_rdev) == 0))
@@ -124,7 +132,7 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       }
     memcpy (buf, tmpbuf, n + 1);
   }
-#elif defined _AIX || defined __osf__ /* AIX, OSF/1 */
+# elif defined _AIX || defined __osf__ /* AIX, OSF/1 */
   /* This implementation returns /dev/pts/N, like ptsname() does.
      Whereas the generic implementation below returns /dev/ttypN.
      Both are correct, but let's be consistent with ptsname().  */
@@ -140,13 +148,13 @@ __ptsname_r (int fd, char *buf, size_t buflen)
     int dev;
     char tmpbuf[9 + 10 + 1];
     int n;
-# ifdef _AIX
+#  ifdef _AIX
     ret = ioctl (fd, ISPTM, &dev);
-# endif
-# ifdef __osf__
+#  endif
+#  ifdef __osf__
     ret = ioctl (fd, ISPTM, NULL);
     dev = ret;
-# endif
+#  endif
     if (ret < 0)
       {
         errno = ENOTTY;
@@ -160,16 +168,16 @@ __ptsname_r (int fd, char *buf, size_t buflen)
       }
     memcpy (buf, tmpbuf, n + 1);
   }
-#else
+# else
   if (!__isatty (fd))
     {
-#if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
+#  if ISATTY_FAILS_WITHOUT_SETTING_ERRNO && defined F_GETFL /* IRIX, Solaris */
       /* Set errno.  */
       if (fcntl (fd, F_GETFL) != -1)
         errno = ENOTTY;
-#else
+#  else
       /* We rely on isatty to set errno properly (i.e. EBADF or ENOTTY).  */
-#endif
+#  endif
       return errno;
     }
 
@@ -188,11 +196,12 @@ __ptsname_r (int fd, char *buf, size_t buflen)
 
   if (strncmp(buf, "/dev/pts/", strlen("/dev/pts/")) != 0)
     buf[sizeof (_PATH_DEV) - 1] = 't';
-#endif
+# endif
 
   if (__stat (buf, &st) < 0)
     return errno;
 
   __set_errno (save_errno);
   return 0;
+#endif
 }

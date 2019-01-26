@@ -1,4 +1,4 @@
-# ptsname_r.m4 serial 5
+# ptsname_r.m4 serial 6
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,6 +40,37 @@ AC_DEFUN([gl_FUNC_PTSNAME_R],
       ])
     if test $gl_cv_func_ptsname_r_signature_ok = no; then
       REPLACE_PTSNAME_R=1
+    else
+      AC_DEFINE([HAVE_ESSENTIALLY_WORKING_PTSNAME_R], [1],
+        [Define to 1 if ptsname_r() is essentially working.])
+      dnl On Android 4.3, when ptsname_r fails, it returns -1 instead of the
+      dnl error code.
+      AC_REQUIRE([AC_CANONICAL_HOST])
+      AC_CACHE_CHECK([whether ptsname_r returns an error code],
+        [gl_cv_func_ptsname_r_retval_ok],
+        [AC_RUN_IFELSE(
+           [AC_LANG_SOURCE([[
+#include <stdlib.h>
+int
+main (void)
+{
+  char buf[80];
+  return ptsname_r (-1, buf, sizeof buf) == -1;
+}]])],
+           [gl_cv_func_ptsname_r_retval_ok=yes],
+           [gl_cv_func_ptsname_r_retval_ok=no],
+           [case "$host_os" in
+                               dnl Guess no on Android.
+              linux*-android*) gl_cv_func_ptsname_r_retval_ok="guessing no" ;;
+                               dnl Guess yes otherwise.
+              *)               gl_cv_func_ptsname_r_retval_ok="guessing yes" ;;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_ptsname_r_retval_ok" in
+        *yes) ;;
+        *) REPLACE_PTSNAME_R=1 ;;
+      esac
     fi
   fi
 
