@@ -73,7 +73,7 @@ iconveh_open (const char *to_codeset, const char *from_codeset, iconveh_t *cdp)
         {
           int saved_errno = errno;
           if (cd != (iconv_t)(-1))
-            iconv_close (cdp->cd);
+            iconv_close (cd);
           errno = saved_errno;
           return -1;
         }
