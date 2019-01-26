@@ -24,13 +24,41 @@
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
+#if defined __ANDROID__
+# include <stdio.h>
+#endif
 
 int
 ttyname_r (int fd, char *buf, size_t buflen)
 #undef ttyname_r
 {
+#if defined __ANDROID__
+  /* On Android, read the result from the /proc file system.  */
+  if (!isatty (fd))
+    /* We rely on isatty to set errno properly (i.e. EBADF or ENOTTY).  */
+    return errno;
+  else if (buflen == 0)
+    return ERANGE;
+  else
+    {
+      char procfile[14+11+1];
+      char largerbuf[512];
+      ssize_t ret;
+      sprintf (procfile, "/proc/self/fd/%d", fd);
+      ret = (buflen < sizeof (largerbuf)
+             ? readlink (procfile, largerbuf, sizeof (largerbuf))
+             : readlink (procfile, buf, buflen <= INT_MAX ? buflen : INT_MAX));
+      if (ret < 0)
+        return errno;
+      if ((size_t) ret >= buflen)
+        return ERANGE;
+      if (buflen < sizeof (largerbuf))
+        memcpy (buf, largerbuf, (size_t) ret);
+      buf[(size_t) ret] = '\0';
+      return 0;
+    }
+#elif HAVE_TTYNAME_R
   /* When ttyname_r exists, use it.  */
-#if HAVE_TTYNAME_R
   /* This code is multithread-safe.  */
   /* On Solaris, ttyname_r always fails if buflen < 128.  On OSF/1 5.1,
      ttyname_r ignores the buffer size and assumes the buffer is large enough.

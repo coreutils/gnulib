@@ -1,4 +1,4 @@
-# ttyname_r.m4 serial 9
+# ttyname_r.m4 serial 10
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -45,24 +45,55 @@ AC_DEFUN([gl_FUNC_TTYNAME_R],
       dnl anything when the output buffer is less than 128 bytes large.
       dnl On OSF/1 5.1, ttyname_r ignores the buffer size and assumes the
       dnl buffer is large enough.
+      dnl On Android 4.3, ttyname_r is a stub that prints
+      dnl "int ttyname_r(int, char*, size_t)(3) is not implemented on Android"
+      dnl on stderr and returns -ERANGE.
       AC_REQUIRE([AC_CANONICAL_HOST])
-      AC_CACHE_CHECK([whether ttyname_r works with small buffers],
-        [gl_cv_func_ttyname_r_works],
-        [
-          dnl Initial guess, used when cross-compiling or when /dev/tty cannot
-          dnl be opened.
-changequote(,)dnl
-          case "$host_os" in
-                      # Guess no on Solaris.
-            solaris*) gl_cv_func_ttyname_r_works="guessing no" ;;
-                      # Guess no on OSF/1.
-            osf*)     gl_cv_func_ttyname_r_works="guessing no" ;;
-                      # Guess yes otherwise.
-            *)        gl_cv_func_ttyname_r_works="guessing yes" ;;
+      case "$host_os" in
+        linux*-android*)
+          AC_CACHE_CHECK([whether ttyname_r works at least minimally],
+            [gl_cv_func_ttyname_r_not_stub],
+            [AC_RUN_IFELSE(
+               [AC_LANG_SOURCE([[
+#include <errno.h>
+#include <unistd.h>
+int
+main (void)
+{
+  char buf[80];
+  close(2);
+  return ttyname_r (-1, buf, sizeof (buf)) == -ERANGE;
+}]])],
+               [gl_cv_func_ttyname_r_not_stub=yes],
+               [gl_cv_func_ttyname_r_not_stub=no],
+               [# Guess no on Android.
+                gl_cv_func_ttyname_r_not_stub="guessing no"
+               ])
+            ])
+          case "$gl_cv_func_ttyname_r_not_stub" in
+            *yes) ;;
+            *) REPLACE_TTYNAME_R=1 ;;
           esac
+          ;;
+      esac
+      if test $REPLACE_TTYNAME_R = 0; then
+        AC_CACHE_CHECK([whether ttyname_r works with small buffers],
+          [gl_cv_func_ttyname_r_works],
+          [
+            dnl Initial guess, used when cross-compiling or when /dev/tty cannot
+            dnl be opened.
+changequote(,)dnl
+            case "$host_os" in
+                        # Guess no on Solaris.
+              solaris*) gl_cv_func_ttyname_r_works="guessing no" ;;
+                        # Guess no on OSF/1.
+              osf*)     gl_cv_func_ttyname_r_works="guessing no" ;;
+                        # Guess yes otherwise.
+              *)        gl_cv_func_ttyname_r_works="guessing yes" ;;
+            esac
 changequote([,])dnl
-          AC_RUN_IFELSE(
-            [AC_LANG_SOURCE([[
+            AC_RUN_IFELSE(
+              [AC_LANG_SOURCE([[
 #include <fcntl.h>
 #include <unistd.h>
 int
@@ -81,16 +112,17 @@ main (void)
     result |= 18;
   return result;
 }]])],
-            [gl_cv_func_ttyname_r_works=yes],
-            [case $? in
-               17 | 18) gl_cv_func_ttyname_r_works=no ;;
-             esac],
-            [:])
-        ])
-      case "$gl_cv_func_ttyname_r_works" in
-        *yes) ;;
-        *) REPLACE_TTYNAME_R=1 ;;
-      esac
+              [gl_cv_func_ttyname_r_works=yes],
+              [case $? in
+                 17 | 18) gl_cv_func_ttyname_r_works=no ;;
+               esac],
+              [:])
+          ])
+        case "$gl_cv_func_ttyname_r_works" in
+          *yes) ;;
+          *) REPLACE_TTYNAME_R=1 ;;
+        esac
+      fi
     fi
   fi
 ])
