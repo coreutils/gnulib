@@ -123,6 +123,15 @@
 # include <sys/mntent.h>
 #endif
 
+#ifdef MOUNTED_GETMNTENT1
+# if !HAVE_SETMNTENT            /* Android <= 4.4 */
+#  define setmntent(fp,mode) fopen (fp, mode)
+# endif
+# if !HAVE_ENDMNTENT            /* Android <= 4.4 */
+#  define endmntent(fp) fclose (fp)
+# endif
+#endif
+
 #ifndef HAVE_HASMNTOPT
 # define hasmntopt(mnt, opt) ((char *) 0)
 #endif
@@ -383,7 +392,7 @@ dev_from_mount_options (char const *mount_options)
 
 #endif
 
-#if defined MOUNTED_GETMNTENT1 && defined __linux__ /* GNU/Linux, Android */
+#if defined MOUNTED_GETMNTENT1 && (defined __linux__ || defined __ANDROID__) /* GNU/Linux, Android */
 
 /* Unescape the paths in mount tables.
    STR is updated in place.  */
@@ -429,7 +438,7 @@ read_file_system_list (bool need_fs_type)
   {
     FILE *fp;
 
-# ifdef __linux__
+# if defined __linux__ || defined __ANDROID__
     /* Try parsing mountinfo first, as that make device IDs available.
        Note we could use libmount routines to simplify this parsing a little
        (and that code is in previous versions of this function), however
@@ -522,7 +531,7 @@ read_file_system_list (bool need_fs_type)
           goto free_then_fail;
       }
     else /* fallback to /proc/self/mounts (/etc/mtab).  */
-# endif /* __linux __ */
+# endif /* __linux __ || __ANDROID__ */
       {
         struct mntent *mnt;
         char const *table = MOUNTED;
