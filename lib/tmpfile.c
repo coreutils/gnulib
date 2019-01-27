@@ -21,12 +21,12 @@
 /* Specification.  */
 #include <stdio.h>
 
+#include <errno.h>
 #include <stdbool.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
 /* A native Windows platforms.  */
 
-# include <errno.h>
 # include <fcntl.h>
 # include <string.h>
 # include <sys/stat.h>
