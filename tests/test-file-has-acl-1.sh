@@ -3,6 +3,8 @@
 # Test file-has-acl on the file system of /var/tmp, which usually is a local
 # file system.
 
+. "${srcdir=.}/init.sh"; path_prepend_ .
+
 if test -d /var/tmp; then
   TMPDIR=/var/tmp
 else
@@ -10,4 +12,6 @@ else
 fi
 export TMPDIR
 
-exec "${srcdir}/test-file-has-acl.sh"
+$BOURNE_SHELL "${srcdir}/test-file-has-acl.sh"
+
+Exit $?

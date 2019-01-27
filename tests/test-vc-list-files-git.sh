@@ -17,7 +17,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 : ${srcdir=.}
-. "$srcdir/init.sh"; path_prepend_ "$abs_aux_dir" .
+. "$srcdir/init.sh"; path_prepend_ .
 
 tmpdir=vc-git-$$
 GIT_DIR= GIT_WORK_TREE=; unset GIT_DIR GIT_WORK_TREE
@@ -35,7 +35,7 @@ mkdir $tmpdir && cd $tmpdir &&
   git add . > /dev/null &&
   git commit -q -a -m log &&
   printf '%s\n' b c d/a > expected &&
-  vc-list-files > actual &&
+  $BOURNE_SHELL "$abs_aux_dir/vc-list-files" > actual &&
   compare expected actual &&
   fail=0
 

@@ -10,6 +10,7 @@ acl
 acl-tests
 read-file
 xalloc
+test-framework-sh
 
 configure.ac:
 

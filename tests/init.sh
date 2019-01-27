@@ -475,10 +475,18 @@ setup_ ()
 
   initial_cwd_=$PWD
 
+  # Create and enter the temporary directory.
   pfx_=`testdir_prefix_`
   test_dir_=`mktempd_ "$initial_cwd_" "$pfx_-$ME_.XXXX"` \
     || fail_ "failed to create temporary directory in $initial_cwd_"
   cd "$test_dir_" || fail_ "failed to cd to temporary directory"
+  # Set variables srcdir, builddir, for the convenience of the test.
+  case $srcdir in
+    /* | ?:*) ;;
+    *) srcdir="../$srcdir" ;;
+  esac
+  builddir=".."
+  export srcdir builddir
 
   # As autoconf-generated configure scripts do, ensure that IFS
   # is defined initially, so that saving and restoring $IFS works.
@@ -606,6 +614,15 @@ mktempd_ ()
   done
   fail_ "$err_"
 }
+
+# The interpreter for Bourne-shell scripts.
+# No special standards compatibility requirements.
+# Some environments, such as Android, don't have /bin/sh.
+if test -f /bin/sh$EXEEXT; then
+  BOURNE_SHELL=/bin/sh
+else
+  BOURNE_SHELL=sh
+fi
 
 # If you want to override the testdir_prefix_ function,
 # or to add more utility functions, use this file.

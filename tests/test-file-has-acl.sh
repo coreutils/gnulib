@@ -41,7 +41,12 @@ func_tmpdir ()
 }
 
 func_tmpdir
-builddir=`pwd`
+# builddir may already be set by the script that invokes this one.
+case "$builddir" in
+  '') builddir=`pwd` ;;
+  /* | ?:*) ;;
+  *) builddir=`pwd`/$builddir ;;
+esac
 cd "$builddir" ||
   {
     echo "$0: cannot determine build directory (unreadable parent dir?)" >&2

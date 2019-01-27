@@ -7,6 +7,7 @@ tests/macros.h
 
 Depends-on:
 unistd
+test-framework-sh
 
 configure.ac:
 AC_CHECK_DECLS_ONCE([alarm])

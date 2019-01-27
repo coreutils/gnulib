@@ -15,6 +15,7 @@ file-has-acl-tests
 read-file
 unistd
 xalloc
+test-framework-sh
 
 configure.ac:
 
