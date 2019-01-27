@@ -102,7 +102,7 @@ extern char * canonicalize_file_name (const char *name);
 
 #if ENABLE_RELOCATABLE
 
-#if defined __linux__ || defined __CYGWIN__
+#if defined __linux__ || defined __ANDROID__ || defined __CYGWIN__
 /* File descriptor of the executable.
    (Only used to verify that we find the correct executable.)  */
 static int executable_fd = -1;
@@ -118,7 +118,7 @@ maybe_executable (const char *filename)
     return false;
 #endif
 
-#if defined __linux__ || defined __CYGWIN__
+#if defined __linux__ || defined __ANDROID__ || defined __CYGWIN__
   if (executable_fd >= 0)
     {
       /* If we already have an executable_fd, check that filename points to
@@ -180,7 +180,7 @@ find_executable (const char *argv0)
 
   return xstrdup (location);
 #else /* Unix */
-# ifdef __linux__
+# if defined __linux__ || defined __ANDROID__
   /* The executable is accessible as /proc/<pid>/exe.  In newer Linux
      versions, also as /proc/self/exe.  Linux >= 2.1 provides a symlink
      to the true pathname; older Linux versions give only device and ino,
