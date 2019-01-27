@@ -98,7 +98,7 @@ main (int argc, char *argv[])
   ASSERT (fd >= 0);
   ASSERT (write (fd, "hello", 5) == 5);
 
-#if defined __linux__
+#if defined __linux__ || defined __ANDROID__
   /* Invalid operation codes are rejected by the Linux implementation and by
      the gnulib replacement,  but not by the Mac OS X implementation.  */
   ASSERT (flock (fd, LOCK_SH | LOCK_EX) == -1);
