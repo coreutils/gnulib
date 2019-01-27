@@ -9,6 +9,9 @@ Gnulib module: tmpfile
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function always fails on some platforms:
+Android 4.3.
+@item
 This function often fails for trivial reasons on some platforms:
 mingw, MSVC 14.
 @item

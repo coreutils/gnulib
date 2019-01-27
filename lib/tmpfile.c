@@ -21,24 +21,36 @@
 /* Specification.  */
 #include <stdio.h>
 
-/* This replacement is used only on native Windows platforms.  */
+#include <stdbool.h>
 
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/stat.h>
+#if defined _WIN32 && ! defined __CYGWIN__
+/* A native Windows platforms.  */
 
-#include <io.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <string.h>
+# include <sys/stat.h>
 
-#define WIN32_LEAN_AND_MEAN  /* avoid including junk */
-#include <windows.h>
+# include <io.h>
+
+# define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+# include <windows.h>
+
+#else
+
+# include <unistd.h>
+
+#endif
 
 #include "pathmax.h"
 #include "tempname.h"
 #include "tmpdir.h"
 
 /* PATH_MAX is guaranteed to be defined, because this replacement is only
-   used on native Windows.  */
+   used on native Windows and Android.  */
+
+#if defined _WIN32 && ! defined __CYGWIN__
+/* A native Windows platforms.  */
 
 /* On Windows, opening a file with _O_TEMPORARY has the effect of passing
    the FILE_FLAG_DELETE_ON_CLOSE flag to CreateFile(), which has the effect
@@ -130,3 +142,38 @@ tmpfile (void)
 
   return NULL;
 }
+
+#else
+
+FILE *
+tmpfile (void)
+{
+  char buf[PATH_MAX];
+  int fd;
+  FILE *fp;
+
+  /* Try $TMPDIR first, not /tmp nor P_tmpdir, because we need this replacement
+     on Android, and /tmp does not exist on Android.  */
+
+  if (path_search (buf, sizeof buf, NULL, "tmpf", true))
+    return NULL;
+
+  fd = gen_tempname (buf, 0, 0, GT_FILE);
+  if (fd < 0)
+    return NULL;
+
+  /* Note that this relies on the Unix semantics that
+     a file is not really removed until it is closed.  */
+  (void) unlink (buf);
+
+  if ((fp = fdopen (fd, "w+b")) == NULL)
+    {
+      int saved_errno = errno;
+      close (fd);
+      errno = saved_errno;
+    }
+
+  return fp;
+}
+
+#endif

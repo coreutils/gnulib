@@ -3,6 +3,7 @@ tests/test-argv-iter.c
 tests/macros.h
 
 Depends-on:
+tmpfile
 
 configure.ac:
 
