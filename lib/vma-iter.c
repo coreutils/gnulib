@@ -40,11 +40,11 @@
 #include <fcntl.h> /* open, O_RDONLY */
 #include <unistd.h> /* getpagesize, lseek, read, close, getpid */
 
-#if defined __linux__
+#if defined __linux__ || defined __ANDROID__
 # include <limits.h> /* PATH_MAX */
 #endif
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 # include <sys/types.h>
 # include <sys/mman.h> /* mmap, munmap */
 #endif
@@ -112,7 +112,7 @@
 
 /* Support for reading text files in the /proc file system.  */
 
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 
 /* Buffered read-only streams.
    We cannot use <stdio.h> here, because fopen() calls malloc(), and a malloc()
@@ -129,7 +129,7 @@
        VMAs with nonsensical addresses.
    So use mmap(), and ignore the resulting VMA.  */
 
-# ifdef __linux__
+# if defined __linux__ || defined __ANDROID__
   /* On Linux, if the file does not entirely fit into the buffer, the read()
      function stops before the line that would come out truncated.  The
      maximum size of such a line is 73 + PATH_MAX bytes.  To be sure that we
@@ -205,7 +205,7 @@ rof_open (struct rofile *rof, const char *filename)
                 {
                   /* The buffer was sufficiently large.  */
                   rof->filled = n;
-# ifdef __linux__
+# if defined __linux__ || defined __ANDROID__
                   /* On Linux, the read() call may stop even if the buffer was
                      large enough.  We need the equivalent of full_read().  */
                   for (;;)
@@ -342,7 +342,7 @@ rof_close (struct rofile *rof)
 
 /* Support for reading the info from a text file in the /proc file system.  */
 
-#if defined __linux__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || (defined __FreeBSD_kernel__ && !defined __FreeBSD__) /* || defined __CYGWIN__ */
 /* GNU/kFreeBSD mounts /proc as linprocfs, which looks like a Linux /proc
    file system.  */
 
@@ -866,7 +866,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 int
 vma_iterate (vma_iterate_callback_fn callback, void *data)
 {
-#if defined __linux__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
+#if defined __linux__ || defined __ANDROID__ || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __DragonFly__ || defined __NetBSD__ || defined __minix /* || defined __CYGWIN__ */
 
 # if defined __FreeBSD__
   /* On FreeBSD with procfs (but not GNU/kFreeBSD, which uses linprocfs), the
