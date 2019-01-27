@@ -22,8 +22,6 @@
 
 #include <string.h>
 
-#include "unistr.h"
-
 /* This is similar to u32_mbtouc_unsafe(), but doesn't check invalid
    characters.  */
 static int
