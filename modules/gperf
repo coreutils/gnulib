@@ -1,6 +1,9 @@
 Description:
 Provides the GNU gperf build tool.
 
+Applicability:
+all
+
 Files:
 
 Depends-on:
