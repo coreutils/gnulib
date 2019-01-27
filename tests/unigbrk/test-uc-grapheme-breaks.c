@@ -139,8 +139,6 @@ main (int argc, char *argv[])
       p = line;
       do
         {
-          ucs4_t next;
-
           p += strspn (p, " \t\r\n");
           if (!strncmp (p, "\303\267" /* ÷ */, 2))
             {

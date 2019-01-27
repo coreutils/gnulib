@@ -44,7 +44,6 @@ fts_dealloc (void)
 {
   static char dir[] = "./";
   static char *const curr_dir[2] = { dir, 0 };
-  FTSENT *e;
   FTS *ftsp = fts_open (curr_dir, FTS_NOSTAT | FTS_PHYSICAL | FTS_CWDFD, 0);
   if (ftsp)
     {
