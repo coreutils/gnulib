@@ -1,4 +1,4 @@
-#serial 21
+#serial 22
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,5 +27,23 @@ AC_DEFUN([gl_FUNC_FTS_CORE],
           #include <sys/vfs.h>
         ]])
     fi
+  fi
+
+  AC_CHECK_FUNC([fts_open])
+  if test $ac_cv_func_fts_open = yes; then
+    dnl The system already has the symbols fts_open, etc.
+    dnl Avoid conflicts between these symbols and ours at the linker level.
+    AC_DEFINE([fts_open], [rpl_fts_open],
+      [Define to the overridden function name])
+    AC_DEFINE([fts_close], [rpl_fts_close],
+      [Define to the overridden function name])
+    AC_DEFINE([fts_read], [rpl_fts_read],
+      [Define to the overridden function name])
+    AC_DEFINE([fts_set], [rpl_fts_set],
+      [Define to the overridden function name])
+    AC_DEFINE([fts_children], [rpl_fts_children],
+      [Define to the overridden function name])
+    AC_DEFINE([fts_cross_check], [rpl_fts_cross_check],
+      [Define to the overridden function name])
   fi
 ])
