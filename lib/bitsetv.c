@@ -71,9 +71,12 @@ bitsetv_create (bitset_bindex n_vecs, bitset_bindex n_bits, unsigned attr)
 void
 bitsetv_free (bitsetv bsetv)
 {
-  for (bitset_bindex i = 0; bsetv[i]; i++)
-    BITSET_FREE_ (bsetv[i]);
-  free (bsetv);
+  if (bsetv)
+    {
+      for (bitset_bindex i = 0; bsetv[i]; i++)
+        BITSET_FREE_ (bsetv[i]);
+      free (bsetv);
+    }
 }
 
 

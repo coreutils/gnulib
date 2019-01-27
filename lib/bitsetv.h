@@ -33,7 +33,7 @@ bitsetv bitsetv_alloc (bitset_bindex, bitset_bindex, enum bitset_type);
    attribute hints specified by ATTR.  */
 bitsetv bitsetv_create (bitset_bindex, bitset_bindex, unsigned);
 
-/* Free vector of bitsets.  */
+/* Free vector of bitsets.  Do nothing if NULL.  */
 void bitsetv_free (bitsetv);
 
 /* Zero vector of bitsets.  */
