@@ -653,7 +653,7 @@ enum leaf_optimization
     NOSTAT_LEAF_OPTIMIZATION
   };
 
-#if defined __linux__ \
+#if (defined __linux__ || defined __ANDROID__) \
   && HAVE_SYS_VFS_H && HAVE_FSTATFS && HAVE_STRUCT_STATFS_F_TYPE
 
 # include <sys/vfs.h>
