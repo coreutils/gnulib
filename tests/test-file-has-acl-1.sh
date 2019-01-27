@@ -10,6 +10,7 @@ if test -d /var/tmp; then
 else
   TMPDIR=/tmp
 fi
+test -d $TMPDIR || Exit 77
 export TMPDIR
 
 $BOURNE_SHELL "${srcdir}/test-file-has-acl.sh"
