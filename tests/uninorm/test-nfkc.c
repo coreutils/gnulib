@@ -20,7 +20,7 @@
 
 #include "uninorm.h"
 
-#if !WOE32DLL
+#if !(WOE32DLL || defined __ANDROID__)
 /* Check that UNINORM_NFKC is defined and links.  */
 uninorm_t n = UNINORM_NFKC;
 #endif
@@ -33,7 +33,7 @@ int
 main ()
 {
   /* Check that UNINORM_NFKC is defined and links.  */
-  uninorm_t nf = UNINORM_NFKC;
+  volatile uninorm_t nf = UNINORM_NFKC;
   (void) nf;
 
   test_u32_nfkc ();
