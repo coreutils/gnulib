@@ -28,7 +28,7 @@
 #include "unistr.h"
 #include "unictype.h"
 #include "normalize-internal.h"
-#include "decompose-internal.h"
+#include "uninorm/decompose-internal.h"
 
 #define FUNC u16_normalize
 #define UNIT uint16_t

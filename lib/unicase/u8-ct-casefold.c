@@ -24,9 +24,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include "unicasemap.h"
+#include "unicase/unicasemap.h"
 #include "unicase/special-casing.h"
-#include "casefold.h"
+#include "unicase/casefold.h"
 
 #define FUNC u8_ct_casefold
 #define UNIT uint8_t

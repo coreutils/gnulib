@@ -21,7 +21,7 @@
 #include "uninorm.h"
 
 #include "normalize-internal.h"
-#include "decompose-internal.h"
+#include "uninorm/decompose-internal.h"
 
 const struct unicode_normalization_form uninorm_nfkd =
   {

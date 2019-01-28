@@ -29,7 +29,7 @@
 #include "unictype.h"
 #include "uniwbrk.h"
 #include "uninorm.h"
-#include "caseprop.h"
+#include "unicase/caseprop.h"
 #include "context.h"
 #include "unicase/special-casing.h"
 

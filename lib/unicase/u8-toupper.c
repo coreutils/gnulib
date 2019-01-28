@@ -22,7 +22,7 @@
 
 #include <stddef.h>
 
-#include "unicasemap.h"
+#include "unicase/unicasemap.h"
 #include "unicase/special-casing.h"
 
 uint8_t *

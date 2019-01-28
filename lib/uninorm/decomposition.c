@@ -20,7 +20,7 @@
 /* Specification.  */
 #include "uninorm.h"
 
-#include "decomposition-table.h"
+#include "uninorm/decomposition-table.h"
 
 int
 uc_decomposition (ucs4_t uc, int *decomp_tag, ucs4_t *decomposition)

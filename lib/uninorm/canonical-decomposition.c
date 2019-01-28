@@ -22,7 +22,7 @@
 
 #include <stdlib.h>
 
-#include "decomposition-table.h"
+#include "uninorm/decomposition-table.h"
 
 int
 uc_canonical_decomposition (ucs4_t uc, ucs4_t *decomposition)

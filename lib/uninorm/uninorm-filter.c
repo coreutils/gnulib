@@ -27,7 +27,7 @@
 
 #include "unictype.h"
 #include "normalize-internal.h"
-#include "decompose-internal.h"
+#include "uninorm/decompose-internal.h"
 
 
 struct uninorm_filter

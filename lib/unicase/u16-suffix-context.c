@@ -22,7 +22,7 @@
 
 #include "unictype.h"
 #include "unistr.h"
-#include "caseprop.h"
+#include "unicase/caseprop.h"
 #include "context.h"
 
 #define FUNC1 u16_casing_suffix_context
