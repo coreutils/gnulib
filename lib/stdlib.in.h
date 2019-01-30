@@ -948,6 +948,31 @@ _GL_WARN_ON_USE (strtod, "strtod is unportable - "
 # endif
 #endif
 
+#if @GNULIB_STRTOLD@
+ /* Parse a 'long double' from STRING, updating ENDP if appropriate.  */
+# if @REPLACE_STRTOLD@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define strtold rpl_strtold
+#  endif
+_GL_FUNCDECL_RPL (strtold, long double, (const char *str, char **endp)
+                                        _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (strtold, long double, (const char *str, char **endp));
+# else
+#  if !@HAVE_STRTOLD@
+_GL_FUNCDECL_SYS (strtold, long double, (const char *str, char **endp)
+                                        _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (strtold, long double, (const char *str, char **endp));
+# endif
+_GL_CXXALIASWARN (strtold);
+#elif defined GNULIB_POSIXCHECK
+# undef strtold
+# if HAVE_RAW_DECL_STRTOLD
+_GL_WARN_ON_USE (strtold, "strtold is unportable - "
+                 "use gnulib module strtold for portability");
+# endif
+#endif
+
 #if @GNULIB_STRTOLL@
 /* Parse a signed integer whose textual representation starts at STRING.
    The integer is expected to be in base BASE (2 <= BASE <= 36); if BASE == 0,
