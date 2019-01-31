@@ -297,7 +297,25 @@ STRTOD (const char *nptr, char **endptr)
               while (p < end && c_tolower (*p) != 'p')
                 p++;
               if (p < end && ! c_isdigit (p[1 + (p[1] == '-' || p[1] == '+')]))
-                end = p;
+                {
+                  char *dup = strdup (s);
+                  errno = saved_errno;
+                  if (!dup)
+                    {
+                      /* Not really our day, is it.  Rounding errors are
+                         better than outright failure.  */
+                      num = parse_number (s + 2, 16, 2, 4, 'p', &endbuf);
+                    }
+                  else
+                    {
+                      dup[p - s] = '\0';
+                      num = STRTOD (dup, &endbuf);
+                      saved_errno = errno;
+                      free (dup);
+                      errno = saved_errno;
+                    }
+                  end = p;
+                }
             }
         }
       else

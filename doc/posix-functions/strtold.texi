@@ -57,6 +57,11 @@ glibc-2.3.2, mingw, Haiku.
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
 IRIX 6.5, mingw.
+
+@item
+In hexadecimal floats, this function allows whitespace between @samp{p}
+and the exponent on some platforms:
+HP-UX 11.31/ia64.
 @end itemize
 
 Portability problems not fixed by Gnulib:

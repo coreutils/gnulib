@@ -59,6 +59,11 @@ NetBSD 5.0, OpenBSD 4.0, AIX 5.1, HP-UX 11.11, IRIX 6.5, OSF/1 5.1,
 Solaris 11.4, mingw, MSVC 14.
 
 @item
+In hexadecimal floats, this function allows whitespace between @samp{p}
+and the exponent on some platforms:
+HP-UX 11.31/ia64.
+
+@item
 This function returns the wrong end pointer for @samp{0x1p} on some
 platforms:
 AIX 7.1.
