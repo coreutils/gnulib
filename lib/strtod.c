@@ -143,63 +143,108 @@ scale_radix_exp (DOUBLE x, int radix, long int exponent)
    except there are no leading spaces or signs or "0x", and ENDPTR is
    nonnull.  The number uses a base BASE (either 10 or 16) fraction, a
    radix RADIX (either 10 or 2) exponent, and exponent character
-   EXPCHAR.  To convert from a number of digits to a radix exponent,
-   multiply by RADIX_MULTIPLIER (either 1 or 4).  */
+   EXPCHAR.  BASE is RADIX**RADIX_MULTIPLIER.  */
 static DOUBLE
 parse_number (const char *nptr,
               int base, int radix, int radix_multiplier, char expchar,
               char **endptr)
 {
   const char *s = nptr;
-  bool got_dot = false;
-  long int exponent = 0;
-  DOUBLE num = 0;
+  const char *digits_start;
+  const char *digits_end;
+  const char *radixchar_ptr;
+  long int exponent;
+  DOUBLE num;
 
+  /* First, determine the start and end of the digit sequence.  */
+  digits_start = s;
+  radixchar_ptr = NULL;
   for (;; ++s)
     {
-      int digit;
-      if (c_isdigit (*s))
-        digit = *s - '0';
-      else if (base == 16 && c_isxdigit (*s))
-        digit = c_tolower (*s) - ('a' - 10);
-      else if (! got_dot && *s == '.')
+      if (base == 16 ? c_isxdigit (*s) : c_isdigit (*s))
+        ;
+      else if (radixchar_ptr == NULL && *s == '.')
         {
           /* Record that we have found the decimal point.  */
-          got_dot = true;
-          continue;
+          radixchar_ptr = s;
         }
       else
-        /* Any other character terminates the number.  */
+        /* Any other character terminates the digit sequence.  */
         break;
+    }
+  digits_end = s;
+  /* Now radixchar_ptr == NULL or
+     digits_start <= radixchar_ptr < digits_end.  */
 
-      /* Make sure that multiplication by base will not overflow.  */
-      if (num <= MAX / base)
-        num = num * base + digit;
-      else
+  if (false)
+    { /* Unoptimized.  */
+      exponent =
+        (radixchar_ptr != NULL
+         ? - (long int) (digits_end - radixchar_ptr - 1)
+         : 0);
+    }
+  else
+    { /* Remove trailing zero digits.  This reduces rounding errors for
+         inputs such as 1.0000000000 or 10000000000e-10.  */
+      while (digits_end > digits_start)
         {
-          /* The value of the digit doesn't matter, since we have already
-             gotten as many digits as can be represented in a 'DOUBLE'.
-             This doesn't necessarily mean the result will overflow.
-             The exponent may reduce it to within range.
-
-             We just need to record that there was another
-             digit so that we can multiply by 10 later.  */
-          exponent += radix_multiplier;
+          if (digits_end - 1 == radixchar_ptr || *(digits_end - 1) == '0')
+            digits_end--;
+          else
+            break;
         }
-
-      /* Keep track of the number of digits after the decimal point.
-         If we just divided by base here, we might lose precision.  */
-      if (got_dot)
-        exponent -= radix_multiplier;
+      exponent =
+        (radixchar_ptr != NULL
+         ? (digits_end > radixchar_ptr
+            ? - (long int) (digits_end - radixchar_ptr - 1)
+            : (long int) (radixchar_ptr - digits_end))
+         : (long int) (s - digits_end));
     }
 
+  /* Then, convert the digit sequence to a number.  */
+  {
+    const char *dp;
+    num = 0;
+    for (dp = digits_start; dp < digits_end; dp++)
+      if (dp != radixchar_ptr)
+        {
+          int digit;
+
+          /* Make sure that multiplication by BASE will not overflow.  */
+          if (!(num <= MAX / base))
+            {
+              /* The value of the digit and all subsequent digits don't matter,
+                 since we have already gotten as many digits as can be
+                 represented in a 'DOUBLE'.  This doesn't necessarily mean that
+                 the result will overflow: The exponent may reduce it to within
+                 range.  */
+              exponent +=
+                (digits_end - dp)
+                - (radixchar_ptr >= dp && radixchar_ptr < digits_end ? 1 : 0);
+              break;
+            }
+
+          /* Eat the next digit.  */
+          if (c_isdigit (*dp))
+            digit = *dp - '0';
+          else if (base == 16 && c_isxdigit (*dp))
+            digit = c_tolower (*dp) - ('a' - 10);
+          else
+            abort ();
+          num = num * base + digit;
+        }
+  }
+
+  exponent = exponent * radix_multiplier;
+
+  /* Finally, parse the exponent.  */
   if (c_tolower (*s) == expchar && ! locale_isspace (s[1]))
     {
       /* Add any given exponent to the implicit one.  */
-      int save = errno;
+      int saved_errno = errno;
       char *end;
       long int value = strtol (s + 1, &end, 10);
-      errno = save;
+      errno = saved_errno;
 
       if (s + 1 != end)
         {
