@@ -929,6 +929,7 @@ _GL_WARN_ON_USE (setenv, "setenv is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strtod rpl_strtod
 #  endif
+#  define GNULIB_defined_strtod_function 1
 _GL_FUNCDECL_RPL (strtod, double, (const char *str, char **endp)
                                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strtod, double, (const char *str, char **endp));
@@ -954,6 +955,7 @@ _GL_WARN_ON_USE (strtod, "strtod is unportable - "
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strtold rpl_strtold
 #  endif
+#  define GNULIB_defined_strtold_function 1
 _GL_FUNCDECL_RPL (strtold, long double, (const char *str, char **endp)
                                         _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (strtold, long double, (const char *str, char **endp));

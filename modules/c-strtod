@@ -5,11 +5,13 @@ Files:
 lib/c-strtod.c
 lib/c-strtod.h
 m4/c-strtod.m4
+m4/intl-thread-locale.m4
 
 Depends-on:
 extensions
 locale
 strdup-posix
+strtod
 
 configure.ac:
 gl_C_STRTOD

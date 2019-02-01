@@ -1,4 +1,4 @@
-# c-strtod.m4 serial 16
+# c-strtod.m4 serial 17
 
 # Copyright (C) 2004-2006, 2009-2019 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -7,36 +7,11 @@
 
 # Written by Paul Eggert.
 
-AC_DEFUN([gl_C99_STRTOLD],
-[
-  AC_CACHE_CHECK([whether strtold conforms to C99],
-    [gl_cv_func_c99_strtold],
-    [AC_LINK_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[/* On HP-UX before 11.23, strtold returns a struct instead of
-                long double.  Reject implementations like that, by requiring
-                compatibility with the C99 prototype.  */
-             #include <stdlib.h>
-             static long double (*p) (char const *, char **) = strtold;
-             static long double
-             test (char const *nptr, char **endptr)
-             {
-               long double r;
-               r = strtold (nptr, endptr);
-               return r;
-             }]],
-           [[return test ("1.0", NULL) != 1 || p ("1.0", NULL) != 1;]])],
-       [gl_cv_func_c99_strtold=yes],
-       [gl_cv_func_c99_strtold=no])])
-  if test $gl_cv_func_c99_strtold = yes; then
-    AC_DEFINE([HAVE_C99_STRTOLD], [1], [Define to 1 if strtold conforms to C99.])
-  fi
-])
-
 dnl Prerequisites of lib/c-strtod.c.
 AC_DEFUN([gl_C_STRTOD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([gt_FUNC_USELOCALE])
 
   AC_CHECK_HEADERS_ONCE([xlocale.h])
   dnl We can't use AC_CHECK_FUNC here, because strtod_l() is defined as a
@@ -71,6 +46,8 @@ dnl Prerequisites of lib/c-strtold.c.
 AC_DEFUN([gl_C_STRTOLD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
-  AC_REQUIRE([gl_C99_STRTOLD])
+  AC_REQUIRE([gt_FUNC_USELOCALE])
+  AC_DEFINE([HAVE_C99_STRTOLD], [1],
+    [Define to 1 because the gnulib 'strtold' module provides a C99-conforming strtold function.])
   AC_CHECK_FUNCS([strtold_l])
 ])

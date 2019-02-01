@@ -30,20 +30,19 @@
 # define C_STRTOD c_strtold
 # define DOUBLE long double
 # define STRTOD_L strtold_l
+# define HAVE_GOOD_STRTOD_L (HAVE_STRTOLD_L && !GNULIB_defined_strtold_function)
+# define STRTOD strtold
 #else
 # define C_STRTOD c_strtod
 # define DOUBLE double
 # define STRTOD_L strtod_l
-#endif
-
-/* c_strtold falls back on strtod if strtold doesn't conform to C99.  */
-#if LONG && HAVE_C99_STRTOLD
-# define STRTOD strtold
-#else
+# define HAVE_GOOD_STRTOD_L (HAVE_STRTOD_L && !GNULIB_defined_strtod_function)
 # define STRTOD strtod
 #endif
 
-#if defined LC_ALL_MASK && (LONG ? HAVE_STRTOLD_L : HAVE_STRTOD_L)
+#if defined LC_ALL_MASK \
+    && ((LONG ? HAVE_GOOD_STRTOLD_L : HAVE_GOOD_STRTOD_L) \
+        || HAVE_WORKING_USELOCALE)
 
 /* Cache for the C locale object.
    Marked volatile so that different threads see the same value
@@ -67,7 +66,9 @@ C_STRTOD (char const *nptr, char **endptr)
 {
   DOUBLE r;
 
-#if defined LC_ALL_MASK && (LONG ? HAVE_STRTOLD_L : HAVE_STRTOD_L)
+#if defined LC_ALL_MASK \
+    && ((LONG ? HAVE_GOOD_STRTOLD_L : HAVE_GOOD_STRTOD_L) \
+        || HAVE_WORKING_USELOCALE)
 
   locale_t locale = c_locale ();
   if (!locale)
@@ -77,7 +78,29 @@ C_STRTOD (char const *nptr, char **endptr)
       return 0; /* errno is set here */
     }
 
+# if (LONG ? HAVE_GOOD_STRTOLD_L : HAVE_GOOD_STRTOD_L)
+
   r = STRTOD_L (nptr, endptr, locale);
+
+# else /* HAVE_WORKING_USELOCALE */
+
+  locale_t old_locale = uselocale (locale);
+  if (old_locale == (locale_t)0)
+    {
+      if (endptr)
+        *endptr = (char *) nptr;
+      return 0; /* errno is set here */
+    }
+
+  r = STRTOD (nptr, endptr);
+
+  int saved_errno = errno;
+  if (uselocale (old_locale) == (locale_t)0)
+    /* We can't switch back to the old locale.  The thread is hosed.  */
+    abort ();
+  errno = saved_errno;
+
+# endif
 
 #else
 
