@@ -155,10 +155,7 @@ main (void)
     long double result;
     errno = 0;
     result = strtold (input, &ptr);
-    /* FIXME - gnulib's version is rather inaccurate.  It would be
-       nice to guarantee an exact result, but for now, we settle for a
-       1-ulp error.  */
-    ASSERT (FABSL (result - 0.5L) < LDBL_EPSILON);
+    ASSERT (result == 0.5L);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -238,10 +235,7 @@ main (void)
     long double result;
     errno = 0;
     result = strtold (input, &ptr);
-    /* FIXME - gnulib's version is rather inaccurate.  It would be
-       nice to guarantee an exact result, but for now, we settle for a
-       1-ulp error.  */
-    ASSERT (FABSL (result - 0.5L) < LDBL_EPSILON);
+    ASSERT (result == 0.5L);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }

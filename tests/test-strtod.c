@@ -155,10 +155,7 @@ main (void)
     double result;
     errno = 0;
     result = strtod (input, &ptr);
-    /* FIXME - gnulib's version is rather inaccurate.  It would be
-       nice to guarantee an exact result, but for now, we settle for a
-       1-ulp error.  */
-    ASSERT (FABS (result - 0.5) < DBL_EPSILON);
+    ASSERT (result == 0.5);
     ASSERT (ptr == input + 2);
     ASSERT (errno == 0);
   }
@@ -238,10 +235,7 @@ main (void)
     double result;
     errno = 0;
     result = strtod (input, &ptr);
-    /* FIXME - gnulib's version is rather inaccurate.  It would be
-       nice to guarantee an exact result, but for now, we settle for a
-       1-ulp error.  */
-    ASSERT (FABS (result - 0.5) < DBL_EPSILON);
+    ASSERT (result == 0.5);
     ASSERT (ptr == input + 4);
     ASSERT (errno == 0);
   }
