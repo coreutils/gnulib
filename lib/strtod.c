@@ -21,13 +21,18 @@
 /* Specification.  */
 #include <stdlib.h>
 
-#include <ctype.h>
+#include <ctype.h>      /* isspace() */
 #include <errno.h>
-#include <float.h>
-#include <limits.h>
-#include <math.h>
+#include <float.h>      /* {DBL,LDBL}_{MIN,MAX} */
+#include <limits.h>     /* LONG_{MIN,MAX} */
+#include <locale.h>     /* localeconv() */
+#include <math.h>       /* NAN */
 #include <stdbool.h>
-#include <string.h>
+#include <stdio.h>      /* sprintf() */
+#include <string.h>     /* strdup() */
+#if HAVE_NL_LANGINFO
+# include <langinfo.h>
+#endif
 
 #include "c-ctype.h"
 
@@ -70,6 +75,28 @@ locale_isspace (char c)
 {
   unsigned char uc = c;
   return isspace (uc) != 0;
+}
+
+/* Determine the decimal-point character according to the current locale.  */
+static char
+decimal_point_char (void)
+{
+  const char *point;
+  /* Determine it in a multithread-safe way.  We know nl_langinfo is
+     multithread-safe on glibc systems and Mac OS X systems, but is not required
+     to be multithread-safe by POSIX.  sprintf(), however, is multithread-safe.
+     localeconv() is rarely multithread-safe.  */
+#if HAVE_NL_LANGINFO && (__GLIBC__ || defined __UCLIBC__ || (defined __APPLE__ && defined __MACH__))
+  point = nl_langinfo (RADIXCHAR);
+#elif 1
+  char pointbuf[5];
+  sprintf (pointbuf, "%#.0f", 1.0);
+  point = &pointbuf[1];
+#else
+  point = localeconv () -> decimal_point;
+#endif
+  /* The decimal point is always a single byte: either '.' or ','.  */
+  return (point[0] != '\0' ? point[0] : '.');
 }
 
 #if !USE_LDEXP
@@ -146,7 +173,8 @@ scale_radix_exp (DOUBLE x, int radix, long int exponent)
    EXPCHAR.  BASE is RADIX**RADIX_MULTIPLIER.  */
 static DOUBLE
 parse_number (const char *nptr,
-              int base, int radix, int radix_multiplier, char expchar,
+              int base, int radix, int radix_multiplier, char radixchar,
+              char expchar,
               char **endptr)
 {
   const char *s = nptr;
@@ -163,7 +191,7 @@ parse_number (const char *nptr,
     {
       if (base == 16 ? c_isxdigit (*s) : c_isdigit (*s))
         ;
-      else if (radixchar_ptr == NULL && *s == '.')
+      else if (radixchar_ptr == NULL && *s == radixchar)
         {
           /* Record that we have found the decimal point.  */
           radixchar_ptr = s;
@@ -289,11 +317,13 @@ STRTOD (const char *nptr, char **endptr)
 # endif
 #else
 # undef STRTOD
-# define STRTOD(NPTR,ENDPTR) parse_number (NPTR, 10, 10, 1, 'e', ENDPTR)
+# define STRTOD(NPTR,ENDPTR) \
+   parse_number (NPTR, 10, 10, 1, radixchar, 'e', ENDPTR)
 #endif
 /* From here on, STRTOD refers to the underlying implementation.  It needs
    to handle only finite unsigned decimal numbers with non-null ENDPTR.  */
 {
+  char radixchar;
   bool negative = false;
 
   /* The number so far.  */
@@ -303,6 +333,8 @@ STRTOD (const char *nptr, char **endptr)
   const char *end;
   char *endbuf;
   int saved_errno = errno;
+
+  radixchar = decimal_point_char ();
 
   /* Eat whitespace.  */
   while (locale_isspace (*s))
@@ -316,7 +348,7 @@ STRTOD (const char *nptr, char **endptr)
   num = STRTOD (s, &endbuf);
   end = endbuf;
 
-  if (c_isdigit (s[*s == '.']))
+  if (c_isdigit (s[*s == radixchar]))
     {
       /* If a hex float was converted incorrectly, do it ourselves.
          If the string starts with "0x" but does not contain digits,
@@ -324,7 +356,7 @@ STRTOD (const char *nptr, char **endptr)
          'p' but no exponent, then adjust the end pointer.  */
       if (*s == '0' && c_tolower (s[1]) == 'x')
         {
-          if (! c_isxdigit (s[2 + (s[2] == '.')]))
+          if (! c_isxdigit (s[2 + (s[2] == radixchar)]))
             {
               end = s + 1;
 
@@ -333,7 +365,7 @@ STRTOD (const char *nptr, char **endptr)
             }
           else if (end <= s + 2)
             {
-              num = parse_number (s + 2, 16, 2, 4, 'p', &endbuf);
+              num = parse_number (s + 2, 16, 2, 4, radixchar, 'p', &endbuf);
               end = endbuf;
             }
           else
@@ -349,7 +381,8 @@ STRTOD (const char *nptr, char **endptr)
                     {
                       /* Not really our day, is it.  Rounding errors are
                          better than outright failure.  */
-                      num = parse_number (s + 2, 16, 2, 4, 'p', &endbuf);
+                      num =
+                        parse_number (s + 2, 16, 2, 4, radixchar, 'p', &endbuf);
                     }
                   else
                     {
@@ -379,7 +412,7 @@ STRTOD (const char *nptr, char **endptr)
                 {
                   /* Not really our day, is it.  Rounding errors are
                      better than outright failure.  */
-                  num = parse_number (s, 10, 10, 1, 'e', &endbuf);
+                  num = parse_number (s, 10, 10, 1, radixchar, 'e', &endbuf);
                 }
               else
                 {
