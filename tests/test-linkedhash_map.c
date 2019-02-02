@@ -19,6 +19,7 @@
 
 #include "gl_linkedhash_map.h"
 
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 
