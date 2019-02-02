@@ -1,4 +1,4 @@
-# c-strtod.m4 serial 17
+# c-strtod.m4 serial 18
 
 # Copyright (C) 2004-2006, 2009-2019 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -47,7 +47,5 @@ AC_DEFUN([gl_C_STRTOLD],
 [
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_REQUIRE([gt_FUNC_USELOCALE])
-  AC_DEFINE([HAVE_C99_STRTOLD], [1],
-    [Define to 1 because the gnulib 'strtold' module provides a C99-conforming strtold function.])
   AC_CHECK_FUNCS([strtold_l])
 ])

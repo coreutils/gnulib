@@ -48,6 +48,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-02-02  c-strtod        This and related modules no longer define
+                            the HAVE_C99_STRTOLD macro.  Programs requiring
+                            standard strtold should use the strtold module.
+
 2019-01-21  diacrit         This module is deprecated. Please use the module
                             uninorm/canonical-decomposition instead.
 
