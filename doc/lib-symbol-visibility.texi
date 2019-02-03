@@ -85,6 +85,8 @@ for library-internal API.  And it keeps the annotations in the source code.
 @end itemize
 
 GNU libtool's @option{-export-symbols} option implements the first approach.
+The script @code{declared.sh} from Gnulib can help to produce the list of
+symbols.
 
 This gnulib module implements the third approach.  For this it relies on
 GNU GCC 4.0 or newer, namely on its @samp{-fvisibility=hidden} command-line
