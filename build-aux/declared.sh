@@ -46,8 +46,8 @@ Report bugs to <bruno@clisp.org>."
 # outputs to stdout the --version message.
 func_version ()
 {
-  echo "declared.sh (GNU libunistring)"
-  echo "Copyright (C) 2006-2018 Free Software Foundation, Inc.
+  echo "declared.sh (GNU gnulib)"
+  echo "Copyright (C) 2006-2019 Free Software Foundation, Inc.
 License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
 This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law."
