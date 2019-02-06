@@ -130,7 +130,7 @@ sed_join_multiline_externs='
 }'
 
 # A sed expression that extracts the identifier of each 'extern' declaration.
-sed_extract_extern_declared='s/^extern [^()]* \([A-Za-z_][A-Za-z0-9_]*\) *[;(].*$/\1/p'
+sed_extract_extern_declared='s/^extern [^()]*[ *]\([A-Za-z_][A-Za-z0-9_]*\) *[;(].*$/\1/p'
 
 sed -e "$sed_remove_comments" \
   | sed -e "$sed_join_multiline_externs" \
