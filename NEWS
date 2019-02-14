@@ -3,6 +3,10 @@ Important general notes
 
 Date        Modules         Changes
 
+2019-02-14  gnulib-tool     If you use multiple --local-dir options at once:
+                            The first one now has the highest priority, not the
+                            last one.
+
 2019-01-04  (all)           The meaning of the 'Link' section in the module
                             descriptions has been clarified: It overrides the
                             combined 'Link' sections from the dependencies.

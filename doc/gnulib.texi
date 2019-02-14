@@ -714,6 +714,15 @@ using the @command{patch} program.
 Otherwise, @command{gnulib-tool} uses the file included in Gnulib.
 @end itemize
 
+You can specify the @option{--local-dir} multiple times.  In this case,
+the first specified directory has the highest precedence.  That is, a
+@file{@var{file}} found in one directory will shadow any @file{@var{file}}
+and @file{@var{file}.diff} in the later directories and in the Gnulib
+directory.  And a file @file{@var{file}.diff} found in one directory will
+be applied on top of the combination of @file{@var{file}} and
+@file{@var{file}.diff} files found in the later directories and in the
+Gnulib directory.
+
 Please make wise use of this option.  It also allows you to easily
 hold back modifications you make to Gnulib macros in cases it may be
 better to share them.
