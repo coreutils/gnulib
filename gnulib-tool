@@ -5107,6 +5107,14 @@ s,^\(.................................................[^ ]*\) *,                
     s,^top/,$rewritten,
     s,^$rewritten,,"
 
+  # Determine whether to put anything into $testsbase.
+  testsfiles=`echo "$files" | sed -n -e 's,^tests/,,p' -e 's,^tests=lib/,,p'`
+  if test -n "$testsfiles"; then
+    gentests=true
+  else
+    gentests=false
+  fi
+
   # Create directories.
   { echo "$sourcebase"
     echo "$m4base"
@@ -5117,7 +5125,7 @@ s,^\(.................................................[^ ]*\) *,                
     if test -n "$docfiles"; then
       echo "$docbase"
     fi
-    if $inctests; then
+    if $gentests; then
       echo "$testsbase"
     fi
     echo "$auxdir"
@@ -5412,7 +5420,7 @@ s,//*$,/,'
           && ! { test -f "${destdir}/${dir1}Makefile.am" \
                  || test "${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
                  || test "./${dir1}Makefile.am" = "$sourcebase/$makefile_am" \
-                 || { $inctests \
+                 || { $gentests \
                       && { test "${dir1}Makefile.am" = "$testsbase/$makefile_am" \
                            || test "./${dir1}Makefile.am" = "$testsbase/$makefile_am"; }; }; }; do
       dir2=`echo "$dir1" | sed -e "$sed_last"`"$dir2"
@@ -5833,7 +5841,7 @@ s,//*$,/,'
     fi
   fi
 
-  if $inctests; then
+  if $gentests; then
     # Create tests makefile.
     func_dest_tmpfilename $testsbase/$makefile_am
     destfile="$testsbase/$makefile_am"
@@ -6021,7 +6029,7 @@ s,//*$,/,'
   if test -n "$pobase"; then
     echo "  - add \"$pobase/Makefile.in\" to AC_CONFIG_FILES in $configure_ac,"
   fi
-  if $inctests; then
+  if $gentests; then
     if test "$makefile_am" = Makefile.am; then
       echo "  - add \"$testsbase/Makefile\" to AC_CONFIG_FILES in $configure_ac,"
     else
