@@ -1,4 +1,4 @@
-# relocatable.m4 serial 19
+# relocatable.m4 serial 20
 dnl Copyright (C) 2003, 2005-2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,10 +40,34 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
     enable_rpath=no
     AC_CHECK_HEADERS([mach-o/dyld.h])
     AC_CHECK_FUNCS([_NSGetExecutablePath])
+changequote(,)dnl
     case "$host_os" in
       mingw*) is_noop=yes ;;
+      # For the platforms that support $ORIGIN, see
+      # <https://lekensteyn.nl/rpath.html>.
+      # glibc systems, Linux with musl libc: yes. Android: no.
+      # Hurd: no <http://lists.gnu.org/archive/html/bug-hurd/2019-02/msg00049.html>.
+      linux*-android*) ;;
+      gnu*) ;;
       linux* | kfreebsd*) use_elf_origin_trick=yes ;;
+      # FreeBSD >= 7.3, DragonFly >= 3.0: yes.
+      freebsd | freebsd[1-7] | freebsd[1-6].* | freebsd7.[0-2]) ;;
+      dragonfly | dragonfly[1-2] | dragonfly[1-2].*) ;;
+      freebsd* | dragonfly*) use_elf_origin_trick=yes ;;
+      # NetBSD >= 8.0: yes.
+      netbsd | netbsd[1-7] | netbsd[1-7].*) ;;
+      netbsdelf | netbsdelf[1-7] | netbsdelf[1-7].*) ;;
+      netbsd*) use_elf_origin_trick=yes ;;
+      # OpenBSD >= 5.4: yes.
+      openbsd | openbsd[1-5] | openbsd[1-4].* | openbsd5.[0-3]) ;;
+      openbsd*) use_elf_origin_trick=yes ;;
+      # Solaris >= 10: yes.
+      solaris | solaris2.[1-9] | solaris2.[1-9].*) ;;
+      solaris*) use_elf_origin_trick=yes ;;
+      # Haiku: yes.
+      haiku*) use_elf_origin_trick=yes ;;
     esac
+changequote([,])dnl
     if test $is_noop = yes; then
       RELOCATABLE_LDFLAGS=:
       AC_SUBST([RELOCATABLE_LDFLAGS])

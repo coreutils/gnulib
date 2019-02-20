@@ -54,7 +54,12 @@ case "$installdir" in
 esac
 
 case "$host_os" in
-  linux* | kfreebsd*)
+  linux* | gnu* | kfreebsd* | \
+  freebsd* | dragonfly* | \
+  netbsd* | \
+  openbsd* | \
+  solaris* | \
+  haiku*)
     rpath=
     save_IFS="$IFS"; IFS=":"
     for dir in $library_path_value; do
@@ -89,7 +94,14 @@ case "$host_os" in
     IFS="$save_IFS"
     # Output it.
     if test -n "$rpath"; then
-      echo "-Wl,-rpath,$rpath"
+      case "$host_os" in
+        # At least some versions of FreeBSD, DragonFly, and OpenBSD need the
+        # linker option "-z origin". See <https://lekensteyn.nl/rpath.html>.
+        freebsd* | dragonfly* | openbsd*)
+          echo "-Wl,-z,origin -Wl,-rpath,$rpath" ;;
+        *)
+          echo "-Wl,-rpath,$rpath" ;;
+      esac
     fi
     ;;
   *)
