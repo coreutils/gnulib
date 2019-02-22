@@ -418,7 +418,7 @@ iso_week_days (int yday, int wday)
 
 static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
                                    const CHAR_T *, const struct tm *,
-                                   bool, bool *
+                                   int, bool, bool *
                                    extra_args_spec LOCALE_PARAM);
 
 /* Write information from TP into S according to the format
@@ -433,7 +433,7 @@ my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
              const struct tm *tp extra_args_spec LOCALE_PARAM)
 {
   bool tzset_called = false;
-  return __strftime_internal (s, STRFTIME_ARG (maxsize) format, tp,
+  return __strftime_internal (s, STRFTIME_ARG (maxsize) format, tp, 0,
                               false, &tzset_called extra_args LOCALE_ARG);
 }
 #if defined _LIBC && ! FPRINTFTIME
@@ -446,7 +446,8 @@ libc_hidden_def (my_strftime)
 static size_t
 __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                      const CHAR_T *format,
-                     const struct tm *tp, bool upcase, bool *tzset_called
+                     const struct tm *tp, int yr_spec,
+                     bool upcase, bool *tzset_called
                      extra_args_spec LOCALE_PARAM)
 {
 #if defined _LIBC && defined USE_IN_EXTENDED_LOCALE_MODEL
@@ -850,7 +851,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           if (modifier == L_('O'))
             goto bad_format;
 #ifdef _NL_CURRENT
-          if (! (modifier == 'E'
+          if (! (modifier == L_('E')
                  && (*(subfmt =
                        (const CHAR_T *) _NL_CURRENT (LC_TIME,
                                                      NLW(ERA_D_T_FMT)))
@@ -863,13 +864,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
         subformat:
           {
             size_t len = __strftime_internal (NULL, STRFTIME_ARG ((size_t) -1)
-                                              subfmt,
-                                              tp, to_uppcase, tzset_called
+                                              subfmt, tp, yr_spec,
+                                              to_uppcase, tzset_called
                                               extra_args LOCALE_ARG);
             add (len, __strftime_internal (p,
                                            STRFTIME_ARG (maxsize - i)
-                                           subfmt,
-                                           tp, to_uppcase, tzset_called
+                                           subfmt, tp, yr_spec,
+                                           to_uppcase, tzset_called
                                            extra_args LOCALE_ARG));
           }
           break;
@@ -939,7 +940,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 #ifdef _NL_CURRENT
           if (! (modifier == L_('E')
                  && (*(subfmt =
-                       (const CHAR_T *)_NL_CURRENT (LC_TIME, NLW(ERA_D_FMT)))
+                       (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(ERA_D_FMT)))
                      != L_('\0'))))
             subfmt = (const CHAR_T *) _NL_CURRENT (LC_TIME, NLW(D_FMT));
           goto subformat;
@@ -1327,7 +1328,7 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
           DO_NUMBER (1, tp->tm_wday);
 
         case L_('Y'):
-          if (modifier == 'E')
+          if (modifier == L_('E'))
             {
 #if HAVE_STRUCT_ERA_ENTRY
               struct era_entry *era = _nl_get_era_entry (tp HELPER_LOCALE_ARG);
@@ -1338,6 +1339,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
 # else
                   subfmt = era->era_format;
 # endif
+                  if (pad != 0)
+                    yr_spec = pad;
                   goto subformat;
                 }
 #else
@@ -1358,7 +1361,9 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
               if (era)
                 {
                   int delta = tp->tm_year - era->start_date[0];
-                  DO_NUMBER (1, (era->offset
+                  if (yr_spec != 0)
+                    pad = yr_spec;
+                  DO_NUMBER (2, (era->offset
                                  + delta * era->absolute_direction));
                 }
 #else
