@@ -77,7 +77,7 @@ changequote(,)dnl
       haiku*) use_elf_origin_trick=yes ;;
       # On Mac OS X 10.4 or newer, use Mac OS X tools. See
       # <https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath>.
-      darwin | darwin[1-8].*) ;;
+      darwin | darwin[1-7].*) ;;
       darwin*) use_macos_tools=yes ;;
 changequote([,])dnl
     esac
