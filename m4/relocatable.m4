@@ -1,4 +1,4 @@
-# relocatable.m4 serial 20
+# relocatable.m4 serial 21
 dnl Copyright (C) 2003, 2005-2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,16 +40,24 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
     enable_rpath=no
     AC_CHECK_HEADERS([mach-o/dyld.h])
     AC_CHECK_FUNCS([_NSGetExecutablePath])
-changequote(,)dnl
     case "$host_os" in
       mingw*) is_noop=yes ;;
       # For the platforms that support $ORIGIN, see
       # <https://lekensteyn.nl/rpath.html>.
       # glibc systems, Linux with musl libc: yes. Android: no.
-      # Hurd: no <http://lists.gnu.org/archive/html/bug-hurd/2019-02/msg00049.html>.
       linux*-android*) ;;
-      gnu*) ;;
       linux* | kfreebsd*) use_elf_origin_trick=yes ;;
+      # Hurd: <http://lists.gnu.org/archive/html/bug-hurd/2019-02/msg00049.html>
+      # only after the glibc commit from 2018-01-08
+      # <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=311ba8dc4416467947eff2ab327854f124226309>
+      gnu*)
+        # Test for a glibc version >= 2.27.
+        AC_CHECK_FUNCS([copy_file_range])
+        if test $ac_cv_func_copy_file_range = yes; then
+          use_elf_origin_trick=yes
+        fi
+        ;;
+changequote(,)dnl
       # FreeBSD >= 7.3, DragonFly >= 3.0: yes.
       freebsd | freebsd[1-7] | freebsd[1-6].* | freebsd7.[0-2]) ;;
       dragonfly | dragonfly[1-2] | dragonfly[1-2].*) ;;
@@ -66,8 +74,8 @@ changequote(,)dnl
       solaris*) use_elf_origin_trick=yes ;;
       # Haiku: yes.
       haiku*) use_elf_origin_trick=yes ;;
-    esac
 changequote([,])dnl
+    esac
     if test $is_noop = yes; then
       RELOCATABLE_LDFLAGS=:
       AC_SUBST([RELOCATABLE_LDFLAGS])
