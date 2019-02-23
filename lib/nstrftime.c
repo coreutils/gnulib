@@ -418,7 +418,7 @@ iso_week_days (int yday, int wday)
 
 static size_t __strftime_internal (STREAM_OR_CHAR_T *, STRFTIME_ARG (size_t)
                                    const CHAR_T *, const struct tm *,
-                                   int, bool, bool *
+                                   bool, int, bool *
                                    extra_args_spec LOCALE_PARAM);
 
 /* Write information from TP into S according to the format
@@ -433,8 +433,8 @@ my_strftime (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
              const struct tm *tp extra_args_spec LOCALE_PARAM)
 {
   bool tzset_called = false;
-  return __strftime_internal (s, STRFTIME_ARG (maxsize) format, tp, 0,
-                              false, &tzset_called extra_args LOCALE_ARG);
+  return __strftime_internal (s, STRFTIME_ARG (maxsize) format, tp, false,
+                              0, &tzset_called extra_args LOCALE_ARG);
 }
 #if defined _LIBC && ! FPRINTFTIME
 libc_hidden_def (my_strftime)
@@ -446,8 +446,8 @@ libc_hidden_def (my_strftime)
 static size_t
 __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
                      const CHAR_T *format,
-                     const struct tm *tp, int yr_spec,
-                     bool upcase, bool *tzset_called
+                     const struct tm *tp, bool upcase,
+                     int yr_spec, bool *tzset_called
                      extra_args_spec LOCALE_PARAM)
 {
 #if defined _LIBC && defined USE_IN_EXTENDED_LOCALE_MODEL
@@ -864,13 +864,13 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
         subformat:
           {
             size_t len = __strftime_internal (NULL, STRFTIME_ARG ((size_t) -1)
-                                              subfmt, tp, yr_spec,
-                                              to_uppcase, tzset_called
+                                              subfmt, tp, to_uppcase,
+                                              yr_spec, tzset_called
                                               extra_args LOCALE_ARG);
             add (len, __strftime_internal (p,
                                            STRFTIME_ARG (maxsize - i)
-                                           subfmt, tp, yr_spec,
-                                           to_uppcase, tzset_called
+                                           subfmt, tp, to_uppcase,
+                                           yr_spec, tzset_called
                                            extra_args LOCALE_ARG));
           }
           break;
