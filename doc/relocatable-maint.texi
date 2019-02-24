@@ -38,7 +38,8 @@ here in a platform-specific way:
 On most operating systems, it adds a linker option (@option{-rpath}) that
 causes the dynamic linker to search for libraries in a directory relative
 to the location of the invoked executable.  This works on GNU/Linux and
-modern versions of FreeBSD, NetBSD, OpenBSD, Solaris, Haiku.
+modern versions of GNU/Hurd, GNU/kFreeBSD, FreeBSD, NetBSD, OpenBSD, Solaris,
+Haiku.
 
 @item
 On macOS, it modifies the installed executables after installation in a way
