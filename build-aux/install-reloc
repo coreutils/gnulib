@@ -208,7 +208,9 @@ fi
 # Outputs a command and runs it.
 func_verbose ()
 {
-  echo "$@"
+  # Make it easy to copy&paste the printed command into a shell in most cases,
+  # by escaping '\\', '"', and '$'. This is not perfect, just good enough.
+  echo "$@" | sed -e 's/\([\\"$]\)/\\\1/g'
   "$@"
 }
 
