@@ -223,7 +223,7 @@ mangle_tree (enum order how, enum action what, void **root, int lag)
                   error = 1;
                 }
               elem = tsearch (x + j, root, cmp_fn);
-              if (elem == 0
+              if (elem == NULL
                   || tfind (x + j, (void *const *) root, cmp_fn) == NULL)
                 {
                   fputs ("Couldn't find element after it was added.\n",
