@@ -1,4 +1,4 @@
-# relocatable.m4 serial 22
+# relocatable.m4 serial 21
 dnl Copyright (C) 2003, 2005-2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,7 +34,6 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
   AC_REQUIRE([AC_CANONICAL_HOST])
   is_noop=no
   use_elf_origin_trick=no
-  use_macos_tools=no
   use_wrapper=no
   if test $RELOCATABLE = yes; then
     # --enable-relocatable implies --disable-rpath
@@ -75,10 +74,6 @@ changequote(,)dnl
       solaris*) use_elf_origin_trick=yes ;;
       # Haiku: yes.
       haiku*) use_elf_origin_trick=yes ;;
-      # On Mac OS X 10.4 or newer, use Mac OS X tools. See
-      # <https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath>.
-      darwin | darwin[1-7].*) ;;
-      darwin*) use_macos_tools=yes ;;
 changequote([,])dnl
     esac
     if test $is_noop = yes; then
@@ -94,16 +89,12 @@ changequote([,])dnl
         RELOCATABLE_LDFLAGS="\"$reloc_ldflags\" \"\$(host)\" \"\$(RELOCATABLE_LIBRARY_PATH)\""
         AC_SUBST([RELOCATABLE_LDFLAGS])
       else
+        use_wrapper=yes
         dnl Unfortunately we cannot define INSTALL_PROGRAM to a command
         dnl consisting of more than one word - libtool doesn't support this.
         dnl So we abuse the INSTALL_PROGRAM_ENV hook, originally meant for the
         dnl 'install-strip' target.
-        if test $use_macos_tools = yes; then
-          INSTALL_PROGRAM_ENV="RELOC_MODE=macosx RELOC_PREFIX=\"\$(prefix)\" RELOC_DESTDIR=\"\$(DESTDIR)\" RELOC_STRIP_PROG=\"\$(RELOCATABLE_STRIP)\" RELOC_INSTALL_PROG=\"$INSTALL_PROGRAM\""
-        else
-          use_wrapper=yes
-          INSTALL_PROGRAM_ENV="RELOC_MODE=wrapper RELOC_LIBRARY_PATH_VAR=\"$shlibpath_var\" RELOC_LIBRARY_PATH_VALUE=\"\$(RELOCATABLE_LIBRARY_PATH)\" RELOC_PREFIX=\"\$(prefix)\" RELOC_DESTDIR=\"\$(DESTDIR)\" RELOC_COMPILE_COMMAND=\"\$(CC) \$(CPPFLAGS) \$(CFLAGS) \$(LDFLAGS)\" RELOC_SRCDIR=\"\$(RELOCATABLE_SRC_DIR)\" RELOC_BUILDDIR=\"\$(RELOCATABLE_BUILD_DIR)\" RELOC_CONFIG_H_DIR=\"\$(RELOCATABLE_CONFIG_H_DIR)\" RELOC_EXEEXT=\"\$(EXEEXT)\" RELOC_STRIP_PROG=\"\$(RELOCATABLE_STRIP)\" RELOC_INSTALL_PROG=\"$INSTALL_PROGRAM\""
-        fi
+        INSTALL_PROGRAM_ENV="RELOC_LIBRARY_PATH_VAR=\"$shlibpath_var\" RELOC_LIBRARY_PATH_VALUE=\"\$(RELOCATABLE_LIBRARY_PATH)\" RELOC_PREFIX=\"\$(prefix)\" RELOC_DESTDIR=\"\$(DESTDIR)\" RELOC_COMPILE_COMMAND=\"\$(CC) \$(CPPFLAGS) \$(CFLAGS) \$(LDFLAGS)\" RELOC_SRCDIR=\"\$(RELOCATABLE_SRC_DIR)\" RELOC_BUILDDIR=\"\$(RELOCATABLE_BUILD_DIR)\" RELOC_CONFIG_H_DIR=\"\$(RELOCATABLE_CONFIG_H_DIR)\" RELOC_EXEEXT=\"\$(EXEEXT)\" RELOC_STRIP_PROG=\"\$(RELOCATABLE_STRIP)\" RELOC_INSTALL_PROG=\"$INSTALL_PROGRAM\""
         AC_SUBST([INSTALL_PROGRAM_ENV])
         case "$ac_aux_dir" in
           /*) INSTALL_PROGRAM="$ac_aux_dir/install-reloc" ;;
