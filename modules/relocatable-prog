@@ -5,6 +5,7 @@ properly when copied to an arbitrary directory.
 Files:
 build-aux/config.libpath
 build-aux/reloc-ldflags
+build-aux/libtool-reloc
 doc/relocatable.texi
 lib/relocatable.h
 lib/relocatable.c

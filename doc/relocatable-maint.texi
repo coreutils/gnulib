@@ -38,13 +38,8 @@ here in a platform-specific way:
 On most operating systems, it adds a linker option (@option{-rpath}) that
 causes the dynamic linker to search for libraries in a directory relative
 to the location of the invoked executable.  This works on GNU/Linux and
-modern versions of GNU/Hurd, GNU/kFreeBSD, FreeBSD, NetBSD, OpenBSD, Solaris,
-Haiku.
-
-@item
-On macOS, it modifies the installed executables after installation in a way
-that causes the dynamic linker to search for libraries in a directory relative
-to the location of the invoked executable.
+modern versions of GNU/Hurd, GNU/kFreeBSD, macOS, FreeBSD, NetBSD, OpenBSD,
+Solaris, Haiku.
 
 @item
 On other Unix systems, it installs a trampoline executable.  The trampoline
@@ -63,7 +58,10 @@ You can make your program relocatable by following these steps:
 @enumerate
 @item
 Import the @code{relocatable-prog} module.  For libraries, use the
-@code{relocatable-lib} or @code{relocatable-lib-lgpl} module.
+@code{relocatable-lib} or @code{relocatable-lib-lgpl} module, if
+the libraries are independent.  For installing multiple libraries,
+at least one of which depends on another one, use the @code{relocatable-prog}
+module.
 If you need more than one module, or you need to use them with different
 settings, you will need multiple copies of gnulib (@pxref{Multiple instances}).
 
@@ -233,20 +231,29 @@ AM_CONDITIONAL([SHLIBS_IN_BINDIR],
 @end smallexample
 
 @item
-You may also need to add a couple of variable assignments to your
-@file{configure.ac}.
+In your @file{Makefile.am}, for every library @command{libfoo} that gets
+installed in, say, @file{$(libdir)}, you add:
+
+@example
+if RELOCATABLE_VIA_LD
+libfoo_la_LDFLAGS = `$(RELOCATABLE_LDFLAGS) $(libdir)`
+endif
+@end example
+
+@item
+Add a couple of variable assignments to your @file{Makefile.am}.
 
 If your package (or any package you rely on, e.g.@: gettext-runtime)
 will be relocated together with a set of installed shared libraries,
-then set @var{RELOCATABLE_LIBRARY_PATH} to a colon-separated list
+then set @code{RELOCATABLE_LIBRARY_PATH} to a colon-separated list
 of those libraries' directories, e.g.
 @example
-RELOCATABLE_LIBRARY_PATH='$(libdir)'
+RELOCATABLE_LIBRARY_PATH = $(libdir)
 @end example
 
 If your @file{config.h} is not in @file{$(top_builddir)}, then set
-@var{RELOCATABLE_CONFIG_H_DIR} to its directory, e.g.
+@code{RELOCATABLE_CONFIG_H_DIR} to its directory, e.g.
 @example
-RELOCATABLE_CONFIG_H_DIR='$(top_builddir)/src'
+RELOCATABLE_CONFIG_H_DIR = $(top_builddir)/src
 @end example
 @end enumerate

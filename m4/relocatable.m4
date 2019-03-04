@@ -1,4 +1,4 @@
-# relocatable.m4 serial 21
+# relocatable.m4 serial 23
 dnl Copyright (C) 2003, 2005-2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,18 +22,28 @@ dnl The guts of gl_RELOCATABLE. Needs to be expanded only once.
 AC_DEFUN([gl_RELOCATABLE_BODY],
 [
   AC_REQUIRE([AC_PROG_INSTALL])
+
   dnl This AC_BEFORE invocation leads to unjustified autoconf warnings
   dnl when gl_RELOCATABLE_BODY is invoked more than once.
+  dnl
   dnl We need this AC_BEFORE because AC_PROG_INSTALL is documented to
   dnl overwrite earlier settings of INSTALL and INSTALL_PROGRAM (even
   dnl though in autoconf-2.52..2.60 it doesn't do so), but we want this
   dnl macro's setting of INSTALL_PROGRAM to persist.
-  AC_BEFORE([AC_PROG_INSTALL],[gl_RELOCATABLE_BODY])
+  dnl Arghh: AC_BEFORE does not work in this setting :-(
+  dnl AC_BEFORE([AC_PROG_INSTALL],[gl_RELOCATABLE_BODY])
+  dnl
+  dnl LT_INIT sets LIBTOOL, but we want this macro's setting of LIBTOOL to
+  dnl persist.
+  dnl Arghh: AC_BEFORE does not work in this setting :-(
+  dnl AC_BEFORE([LT_INIT],[gl_RELOCATABLE_BODY])
+
   AC_REQUIRE([AC_LIB_LIBPATH])
   AC_REQUIRE([gl_RELOCATABLE_LIBRARY_BODY])
   AC_REQUIRE([AC_CANONICAL_HOST])
   is_noop=no
   use_elf_origin_trick=no
+  use_macos_tools=no
   use_wrapper=no
   if test $RELOCATABLE = yes; then
     # --enable-relocatable implies --disable-rpath
@@ -74,13 +84,17 @@ changequote(,)dnl
       solaris*) use_elf_origin_trick=yes ;;
       # Haiku: yes.
       haiku*) use_elf_origin_trick=yes ;;
+      # On Mac OS X 10.4 or newer, use Mac OS X tools. See
+      # <https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath>.
+      darwin | darwin[1-7].*) ;;
+      darwin*) use_macos_tools=yes ;;
 changequote([,])dnl
     esac
     if test $is_noop = yes; then
       RELOCATABLE_LDFLAGS=:
       AC_SUBST([RELOCATABLE_LDFLAGS])
     else
-      if test $use_elf_origin_trick = yes; then
+      if test $use_elf_origin_trick = yes || test $use_macos_tools = yes; then
         dnl Use the dynamic linker's support for relocatable programs.
         case "$ac_aux_dir" in
           /*) reloc_ldflags="$ac_aux_dir/reloc-ldflags" ;;
@@ -88,6 +102,13 @@ changequote([,])dnl
         esac
         RELOCATABLE_LDFLAGS="\"$reloc_ldflags\" \"\$(host)\" \"\$(RELOCATABLE_LIBRARY_PATH)\""
         AC_SUBST([RELOCATABLE_LDFLAGS])
+        if test $use_macos_tools = yes; then
+          dnl Use a libtool wrapper that uses Mac OS X tools.
+          case "$ac_aux_dir" in
+            /*) LIBTOOL="${CONFIG_SHELL-$SHELL} $ac_aux_dir/libtool-reloc $LIBTOOL" ;;
+            *) LIBTOOL="${CONFIG_SHELL-$SHELL} \$(top_builddir)/$ac_aux_dir/libtool-reloc $LIBTOOL" ;;
+          esac
+        fi
       else
         use_wrapper=yes
         dnl Unfortunately we cannot define INSTALL_PROGRAM to a command
@@ -104,7 +125,7 @@ changequote([,])dnl
     fi
   fi
   AM_CONDITIONAL([RELOCATABLE_VIA_LD],
-    [test $is_noop = yes || test $use_elf_origin_trick = yes])
+    [test $is_noop = yes || test $use_elf_origin_trick = yes || test $use_macos_tools = yes])
   AM_CONDITIONAL([RELOCATABLE_VIA_WRAPPER], [test $use_wrapper = yes])
 
   dnl RELOCATABLE_LIBRARY_PATH can be set in configure.ac. Default is empty.
