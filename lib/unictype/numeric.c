@@ -39,8 +39,8 @@ uc_numeric_value (ucs4_t uc)
               unsigned int index3 = ((uc & numeric_header_4) + lookup2) * 8;
               /* level3 contains 8-bit values, packed into 16-bit words.  */
               unsigned int lookup3 =
-                ((u_numeric.level3[index3>>4]
-                  | (u_numeric.level3[(index3>>4)+1] << 16))
+                (((unsigned int) u_numeric.level3[index3>>4]
+                  | ((unsigned int) u_numeric.level3[(index3>>4)+1] << 16))
                  >> (index3 % 16))
                 & 0xff;
 

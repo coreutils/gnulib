@@ -39,7 +39,7 @@ uc_joining_group (ucs4_t uc)
               unsigned int index3 = ((uc & joining_group_header_4) + lookup2) * 7;
               /* level3 contains 7-bit values, packed into 16-bit words.  */
               unsigned int lookup3 =
-                ((u_joining_group.level3[index3>>4]
+                (((unsigned int) u_joining_group.level3[index3>>4]
                   | ((unsigned int) u_joining_group.level3[(index3>>4)+1] << 16))
                  >> (index3 % 16))
                 & 0x7f;
