@@ -60,7 +60,8 @@ u8_conv_to_encoding (const char *tocode,
             }
         }
 
-      memcpy (result, (const char *) src, srclen);
+      if (srclen > 0)
+        memcpy (result, (const char *) src, srclen);
       *lengthp = srclen;
       return result;
     }

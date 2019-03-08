@@ -77,7 +77,8 @@ u8_conv_from_encoding (const char *fromcode,
             }
         }
 
-      memcpy ((char *) result, src, srclen);
+      if (srclen > 0)
+        memcpy ((char *) result, src, srclen);
       *lengthp = srclen;
       return result;
     }

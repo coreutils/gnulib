@@ -26,7 +26,8 @@ FUNC (UNIT *dest, const UNIT *src, size_t n)
   for (; n > 0; n--)
     *destptr++ = *src++;
 #else
-  memcpy ((char *) dest, (const char *) src, n * sizeof (UNIT));
+  if (n > 0)
+    memcpy ((char *) dest, (const char *) src, n * sizeof (UNIT));
 #endif
   return dest;
 }
