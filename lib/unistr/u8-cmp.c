@@ -26,5 +26,5 @@ int
 u8_cmp (const uint8_t *s1, const uint8_t *s2, size_t n)
 {
   /* Use the fact that the UTF-8 encoding preserves lexicographic order.  */
-  return memcmp ((const char *) s1, (const char *) s2, n);
+  return n == 0 ? 0 : memcmp ((const char *) s1, (const char *) s2, n);
 }
