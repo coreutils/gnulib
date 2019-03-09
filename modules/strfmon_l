@@ -8,6 +8,7 @@ m4/strfmon_l.m4
 Depends-on:
 monetary
 extensions
+stdbool         [test $REPLACE_STRFMON_L = 1]
 
 configure.ac:
 gl_FUNC_STRFMON_L
