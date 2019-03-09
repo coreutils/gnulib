@@ -407,11 +407,17 @@ gl_des_is_weak_key (const char * key)
  * Macros to convert 8 bytes from/to 32bit words.
  */
 #define READ_64BIT_DATA(data, left, right)                                 \
-    left  = (data[0] << 24) | (data[1] << 16) | (data[2] << 8) | data[3];  \
-    right = (data[4] << 24) | (data[5] << 16) | (data[6] << 8) | data[7];
+    left  = ((uint32_t) data[0] << 24)                                     \
+            | ((uint32_t) data[1] << 16)                                   \
+            | ((uint32_t) data[2] << 8)                                    \
+            | (uint32_t) data[3];                                          \
+    right = ((uint32_t) data[4] << 24)                                     \
+            | ((uint32_t) data[5] << 16)                                   \
+            | ((uint32_t) data[6] << 8)                                    \
+            | (uint32_t) data[7];
 
 #define WRITE_64BIT_DATA(data, left, right)                                \
-    data[0] = (left >> 24) &0xff; data[1] = (left >> 16) &0xff;    \
+    data[0] = (left >> 24) &0xff; data[1] = (left >> 16) &0xff;            \
     data[2] = (left >> 8) &0xff; data[3] = left &0xff;                     \
     data[4] = (right >> 24) &0xff; data[5] = (right >> 16) &0xff;          \
     data[6] = (right >> 8) &0xff; data[7] = right &0xff;
