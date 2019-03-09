@@ -34,23 +34,34 @@ main (int argc, char *argv[])
 {
   int i, j;
 
-#define TEST_COUNT_TRAILING_ZEROS(FUNC, TYPE, BITS, MAX, ONE)   \
-  ASSERT (FUNC (0) == BITS);                                    \
-  for (i = 0; i < BITS; i++)                                    \
-    {                                                           \
-      ASSERT (FUNC (ONE << i) == i);                            \
-      for (j = 0; j < i; j++)                                   \
-        ASSERT (FUNC ((ONE << i) | (ONE << j)) == j);           \
-    }                                                           \
-  for (i = 0; i < 1000; i++)                                    \
-    {                                                           \
-      TYPE value = rand () ^ (rand () << 31 << 1);              \
-      int count = 0;                                            \
-      for (j = BITS - 1; 0 <= j; j--)                           \
-        if (value & (ONE << j))                                 \
-          count = j;                                            \
-      ASSERT (count == FUNC (value));                           \
-    }                                                           \
+#define TEST_COUNT_TRAILING_ZEROS(FUNC, TYPE, BITS, MAX, ONE) \
+  ASSERT (FUNC (0) == BITS);                                  \
+  for (i = 0; i < BITS; i++)                                  \
+    {                                                         \
+      ASSERT (FUNC (ONE << i) == i);                          \
+      for (j = 0; j < i; j++)                                 \
+        ASSERT (FUNC ((ONE << i) | (ONE << j)) == j);         \
+    }                                                         \
+  for (i = 0; i < 1000; i++)                                  \
+    {                                                         \
+      /* RAND_MAX is most often 0x7fff or 0x7fffffff.  */     \
+      TYPE value =                                            \
+        (RAND_MAX <= 0xffff                                   \
+         ? ((TYPE) rand () >> 3)                              \
+           ^ (((TYPE) rand () >> 3) << 12)                    \
+           ^ (((TYPE) rand () >> 3) << 24)                    \
+           ^ (((TYPE) rand () >> 3) << 30 << 6)               \
+           ^ (((TYPE) rand () >> 3) << 30 << 18)              \
+           ^ (((TYPE) rand () >> 3) << 30 << 30)              \
+         : ((TYPE) rand () >> 3)                              \
+           ^ (((TYPE) rand () >> 3) << 22)                    \
+           ^ (((TYPE) rand () >> 3) << 22 << 22));            \
+      int count = 0;                                          \
+      for (j = BITS - 1; 0 <= j; j--)                         \
+        if (value & (ONE << j))                               \
+          count = j;                                          \
+      ASSERT (count == FUNC (value));                         \
+    }                                                         \
   ASSERT (FUNC (MAX) == 0);
 
   TEST_COUNT_TRAILING_ZEROS (count_trailing_zeros, unsigned int,

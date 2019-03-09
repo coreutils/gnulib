@@ -34,22 +34,33 @@ main (int argc, char *argv[])
 {
   int i, j;
 
-#define TEST_COUNT_ONE_BITS(FUNC, TYPE, BITS, MAX, ONE) \
-  ASSERT (FUNC (0) == 0);                               \
-  for (i = 0; i < BITS; i++)                            \
-    {                                                   \
-      ASSERT (FUNC (ONE << i) == 1);                    \
-      for (j = i + 1; j < BITS; j++)                    \
-        ASSERT (FUNC ((ONE << i) | (ONE << j)) == 2);   \
-    }                                                   \
-  for (i = 0; i < 1000; i++)                            \
-    {                                                   \
-      TYPE value = rand () ^ (rand () << 31 << 1);      \
-      int count = 0;                                    \
-      for (j = 0; j < BITS; j++)                        \
-        count += (value & (ONE << j)) != 0;             \
-      ASSERT (count == FUNC (value));                   \
-    }                                                   \
+#define TEST_COUNT_ONE_BITS(FUNC, TYPE, BITS, MAX, ONE)   \
+  ASSERT (FUNC (0) == 0);                                 \
+  for (i = 0; i < BITS; i++)                              \
+    {                                                     \
+      ASSERT (FUNC (ONE << i) == 1);                      \
+      for (j = i + 1; j < BITS; j++)                      \
+        ASSERT (FUNC ((ONE << i) | (ONE << j)) == 2);     \
+    }                                                     \
+  for (i = 0; i < 1000; i++)                              \
+    {                                                     \
+      /* RAND_MAX is most often 0x7fff or 0x7fffffff.  */ \
+      TYPE value =                                        \
+        (RAND_MAX <= 0xffff                               \
+         ? ((TYPE) rand () >> 3)                          \
+           ^ (((TYPE) rand () >> 3) << 12)                \
+           ^ (((TYPE) rand () >> 3) << 24)                \
+           ^ (((TYPE) rand () >> 3) << 30 << 6)           \
+           ^ (((TYPE) rand () >> 3) << 30 << 18)          \
+           ^ (((TYPE) rand () >> 3) << 30 << 30)          \
+         : ((TYPE) rand () >> 3)                          \
+           ^ (((TYPE) rand () >> 3) << 22)                \
+           ^ (((TYPE) rand () >> 3) << 22 << 22));        \
+      int count = 0;                                      \
+      for (j = 0; j < BITS; j++)                          \
+        count += (value & (ONE << j)) != 0;               \
+      ASSERT (count == FUNC (value));                     \
+    }                                                     \
   ASSERT (FUNC (MAX) == BITS);
 
   TEST_COUNT_ONE_BITS (count_one_bits, unsigned int, UINT_BIT, UINT_MAX, 1U);

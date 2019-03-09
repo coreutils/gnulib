@@ -26,7 +26,6 @@ SIGNATURE_CHECK (memmem, void *, (void const *, size_t, void const *, size_t));
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "null-ptr.h"
 #include "zerosize-ptr.h"
 #include "macros.h"
 
@@ -81,7 +80,7 @@ main (int argc, char *argv[])
 
   {
     const char input[] = "foo";
-    const char *result = memmem (input, strlen (input), null_ptr (), 0);
+    const char *result = memmem (input, strlen (input), zerosize_ptr (), 0);
     ASSERT (result == input);
   }
 

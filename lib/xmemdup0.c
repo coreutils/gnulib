@@ -38,7 +38,8 @@ char *
 xmemdup0 (void const *p, size_t s)
 {
   char *result = xcharalloc (s + 1);
-  memcpy (result, p, s);
+  if (s > 0)
+    memcpy (result, p, s);
   result[s] = 0;
   return result;
 }
