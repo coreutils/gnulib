@@ -84,6 +84,10 @@ main (int argc, char *argv[])
         before the call to pthread_sigmask() returns."  */
   ASSERT (sigint_occurred == 1);
 
+  /* Clean up the thread.  This avoid a "ThreadSanitizer: thread leak" warning
+     from "gcc -fsanitize=thread".  */
+  gl_thread_join (killer_thread, NULL);
+
   return 0;
 }
 
