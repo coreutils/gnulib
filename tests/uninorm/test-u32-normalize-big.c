@@ -297,8 +297,34 @@ test_other (const struct normalization_test_file *file, uninorm_t nf)
           input[0] = uc;
           result = u32_normalize (nf, input, 1, NULL, &length);
           ASSERT (result != NULL && length == 1 && result[0] == uc);
+
+          free (result);
         }
     }
+}
+
+void
+free_normalization_test_file (struct normalization_test_file *file)
+{
+  size_t part_index;
+
+  for (part_index = 0; part_index < 4; part_index++)
+    {
+      const struct normalization_test_part *p = &file->parts[part_index];
+      size_t line_index;
+
+      for (line_index = 0; line_index < p->lines_length; line_index++)
+        {
+          const struct normalization_test_line *l = &p->lines[line_index];
+          size_t sequence_index;
+
+          for (sequence_index = 0; sequence_index < 5; sequence_index++)
+            free (l->sequences[sequence_index]);
+        }
+      free (p->lines);
+    }
+  free (file->part1_c1_sorted);
+  free (file->filename);
 }
 
 #endif

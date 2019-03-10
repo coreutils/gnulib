@@ -103,6 +103,8 @@ main (int argc, char *argv[])
   test_specific (&file, check);
   test_other (&file, UNINORM_NFKC);
 
+  free_normalization_test_file (&file);
+
   return 0;
 }
 
