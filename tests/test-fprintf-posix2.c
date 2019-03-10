@@ -20,7 +20,10 @@
 
 #include <stdio.h>
 
-#if HAVE_GETRLIMIT && HAVE_SETRLIMIT
+/* This test assumes getrlimit() and setrlimit().
+   With "gcc -fcheck-pointer-bounds -mmpx -static", it produces an
+   endless loop of "Saw a #BR!" messages.  */
+#if HAVE_GETRLIMIT && HAVE_SETRLIMIT && !defined __CHKP__
 
 #include <stdlib.h>
 #include <sys/types.h>
