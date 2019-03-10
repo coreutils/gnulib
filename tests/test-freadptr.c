@@ -44,7 +44,7 @@ main (int argc, char **argv)
     {
       /* Normal buffered stdio.  */
       const char stdin_contents[] =
-        "#!/bin/sh\n\n./test-freadptr${EXEEXT} 5 < \"$srcdir/test-freadptr.sh\" || exit 1\ncat \"$srcdir/test-freadptr.sh\" | ./test-freadptr${EXEEXT} 5 || exit 1\nexit 0\n";
+        "#!/bin/sh\n\n${CHECKER} ./test-freadptr${EXEEXT} 5 < \"$srcdir/test-freadptr.sh\" || exit 1\ncat \"$srcdir/test-freadptr.sh\" | ${CHECKER} ./test-freadptr${EXEEXT} 5 || exit 1\nexit 0\n";
       const char *expected = stdin_contents + nbytes;
       size_t available1;
       size_t available2;
