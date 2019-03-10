@@ -84,6 +84,9 @@ main (int argc, char *argv[])
         fflush (stderr);
         abort ();
       }
+
+    free (contents2);
+    free (contents1);
   }
 
   /* Compare the access permissions of the two files, including ACLs.  */
@@ -218,6 +221,12 @@ main (int argc, char *argv[])
                 return 1;
               }
           }
+        acl_free (text2);
+        if (acl2 != (acl_t)NULL)
+          acl_free (acl2);
+        acl_free (text1);
+        if (acl1 != (acl_t)NULL)
+          acl_free (acl1);
       }
 #elif HAVE_FACL && defined GETACL /* Solaris, Cygwin, not HP-UX */
   int count1;
@@ -287,6 +296,8 @@ main (int argc, char *argv[])
               return 1;
             }
         }
+      free (entries2);
+      free (entries1);
     }
 # ifdef ACE_GETACL
   count1 = acl (file1, ACE_GETACLCNT, 0, NULL);
@@ -366,6 +377,8 @@ main (int argc, char *argv[])
             return 1;
           }
       }
+    free (entries2);
+    free (entries1);
   }
 # endif
 #elif HAVE_GETACL /* HP-UX */
@@ -438,6 +451,8 @@ main (int argc, char *argv[])
               return 1;
             }
         }
+      free (entries2);
+      free (entries1);
     }
 
 # if HAVE_ACLV_H /* HP-UX >= 11.11 */
@@ -511,6 +526,8 @@ main (int argc, char *argv[])
               return 1;
             }
         }
+      free (entries2);
+      free (entries1);
     }
 # endif
 #elif HAVE_ACLX_GET /* AIX */
@@ -687,6 +704,8 @@ main (int argc, char *argv[])
               return 1;
             }
         }
+      free (entries2);
+      free (entries1);
     }
 #endif
   }

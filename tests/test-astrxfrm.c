@@ -49,6 +49,7 @@ main ()
     ASSERT (transform != NULL);
     ASSERT (strcmp (transform, expected_transform) == 0);
     ASSERT (length == strlen (transform) + 1);
+    free (transform);
   }
 
   /* Test resultbuf != NULL with an initial length = 0.  */
@@ -63,6 +64,7 @@ main ()
     ASSERT (strcmp (transform, expected_transform) == 0);
     ASSERT (length == strlen (transform) + 1);
     ASSERT (buf[0] == '@');
+    free (transform);
   }
 
   /* Test resultbuf != NULL with an initial length that is too small.  */
@@ -77,6 +79,7 @@ main ()
     ASSERT (strcmp (transform, expected_transform) == 0);
     ASSERT (length == strlen (transform) + 1);
     ASSERT (buf[sizeof (buf) - 1] == '@');
+    free (transform);
   }
 
   /* Test resultbuf != NULL with an initial length that is large enough.  */
@@ -92,6 +95,8 @@ main ()
     ASSERT (length == strlen (transform) + 1);
     ASSERT (buf[sizeof (buf) - 1] == '@');
   }
+
+  free (expected_transform);
 
   return 0;
 }

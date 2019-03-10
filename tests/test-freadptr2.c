@@ -43,6 +43,7 @@ main (int argc, char **argv)
     {
       void *buf = malloc (nbytes);
       ASSERT (fread (buf, 1, nbytes, stdin) == nbytes);
+      free (buf);
     }
 
   if (nbytes == 0)

@@ -89,6 +89,8 @@ main (int argc, char *argv[])
       return 1;
     }
 
+  gc_cipher_close (ctx);
+
   gc_done ();
 
   return 0;

@@ -132,6 +132,8 @@ main (void)
   }
 
   free (input);
+  if (sizeof (UNIT) != sizeof (uint32_t))
+    free (input32);
 
   return 0;
 }

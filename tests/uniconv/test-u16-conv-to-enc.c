@@ -106,6 +106,8 @@ main ()
               ASSERT (result == NULL);
               ASSERT (errno == EILSEQ);
               ASSERT (length == 0xdead);
+              if (o)
+                free (offsets);
               break;
             case iconveh_question_mark:
               {

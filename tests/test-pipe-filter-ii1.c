@@ -130,5 +130,7 @@ main (int argc, char *argv[])
     ASSERT (l.nread == input_size);
   }
 
+  free (input);
+
   return 0;
 }

@@ -79,6 +79,7 @@ main (int argc _GL_UNUSED, char *argv[])
                    i, t[0], res);
           fail = true;
         }
+      free (res);
     }
   exit (fail ? EXIT_FAILURE : EXIT_SUCCESS);
 }

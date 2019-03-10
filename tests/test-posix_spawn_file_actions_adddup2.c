@@ -68,5 +68,7 @@ main (void)
     ASSERT (posix_spawn_file_actions_adddup2 (&actions, 2, bad_fd) == EBADF);
   }
 
+  posix_spawn_file_actions_destroy (&actions);
+
   return 0;
 }

@@ -38,5 +38,7 @@ main (void)
 
   ASSERT (posix_spawn_file_actions_addchdir (&actions, "/") == 0);
 
+  posix_spawn_file_actions_destroy (&actions);
+
   return 0;
 }

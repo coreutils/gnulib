@@ -89,5 +89,10 @@ main (int argc, char **argv)
   ASSERT (!ferror (stdin));
 #endif
 
+  free (buf7);
+  free (buf5);
+  free (buf3);
+  free (buf1);
+
   return 0;
 }

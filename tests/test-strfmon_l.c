@@ -74,6 +74,7 @@ main (void)
     loc = newlocale (LC_ALL_MASK, "en_US.UTF-8", NULL);
     ASSERT (strfmon_l (buf, sizeof (buf), loc, "%.2n", 123.5) >= 0);
     ASSERT (strcmp (buf, expected_buf) == 0);
+    freelocale (loc);
   }
   {
     char expected_buf[80];
@@ -86,6 +87,7 @@ main (void)
     loc = newlocale (LC_ALL_MASK, "de_DE.UTF-8", NULL);
     ASSERT (strfmon_l (buf, sizeof (buf), loc, "%.2n", 123.5) >= 0);
     ASSERT (strcmp (buf, expected_buf) == 0);
+    freelocale (loc);
   }
 #endif
 

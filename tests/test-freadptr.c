@@ -30,8 +30,11 @@ int
 main (int argc, char **argv)
 {
   int nbytes = atoi (argv[1]);
-  void *buf = malloc (nbytes);
-  ASSERT (fread (buf, 1, nbytes, stdin) == nbytes);
+  {
+    void *buf = malloc (nbytes);
+    ASSERT (fread (buf, 1, nbytes, stdin) == nbytes);
+    free (buf);
+  }
 
   if (lseek (0, 0, SEEK_CUR) == nbytes)
     {
@@ -89,6 +92,9 @@ main (int argc, char **argv)
           }
       }
     }
+
+  /* Free memory allocated during ungetc().  */
+  fclose (stdin);
 
   return 0;
 }

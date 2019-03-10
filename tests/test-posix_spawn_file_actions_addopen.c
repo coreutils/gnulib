@@ -66,5 +66,7 @@ main (void)
             == EBADF);
   }
 
+  posix_spawn_file_actions_destroy (&actions);
+
   return 0;
 }

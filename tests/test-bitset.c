@@ -114,6 +114,17 @@ void compare (enum bitset_attr a, enum bitset_attr b)
   ASSERT (bitset_or_and_cmp (adst, asrc0, asrc1, asrc2)
           == bitset_or_and_cmp (bdst, bsrc0, bsrc1, bsrc2));
   assert_bitset_equal (adst, bdst);
+
+  bitset_free (bdst);
+  bitset_free (bsrc3);
+  bitset_free (bsrc2);
+  bitset_free (bsrc1);
+  bitset_free (bsrc0);
+  bitset_free (adst);
+  bitset_free (asrc3);
+  bitset_free (asrc2);
+  bitset_free (asrc1);
+  bitset_free (asrc0);
 }
 
 void check_attributes (enum bitset_attr attr)
@@ -148,6 +159,11 @@ void check_attributes (enum bitset_attr attr)
   /* or */
   bitset_or (bs, bs1, bs2);
   ASSERT (bitset_count (bs) == 6);
+
+  bitset_free (bs);
+  bitset_free (bs2);
+  bitset_free (bs1);
+  bitset_free (bs0);
 }
 
 int main (void)

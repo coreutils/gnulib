@@ -158,4 +158,6 @@ test_strchr (void)
 #endif
 
   free (input);
+  if (sizeof (UNIT) != sizeof (uint32_t))
+    free (input32);
 }
