@@ -160,14 +160,14 @@ cd "$builddir" ||
       chmod 600 tmpfile1
 
       # Try to set the ACL to only the given mode.
-      "$builddir"/test-set-mode-acl${EXEEXT} tmpfile1 $mode
+      ${CHECKER} "$builddir"/test-set-mode-acl${EXEEXT} tmpfile1 $mode
       # Verify that tmpfile1 has no ACL and has the desired mode.
       modestring=`ls -l tmpfile1 | dd ibs=1 count=10 2>/dev/null`
       if test "x$modestring" != "x$modestring0"; then
         echo "mode = $mode: tmpfile1 has wrong mode: $modestring" 1>&2
         exit 1
       fi
-      if test `"$builddir"/test-file-has-acl${EXEEXT} tmpfile1` != no; then
+      if test `${CHECKER} "$builddir"/test-file-has-acl${EXEEXT} tmpfile1` != no; then
         echo "mode = $mode: tmpfile1 got an ACL" 1>&2
         exit 1
       fi
@@ -212,14 +212,14 @@ cd "$builddir" ||
         esac
 
         # Try to set the ACL to only the given mode.
-        "$builddir"/test-set-mode-acl${EXEEXT} tmpfile2 $mode
+        ${CHECKER} "$builddir"/test-set-mode-acl${EXEEXT} tmpfile2 $mode
         # Verify that tmpfile2 has no ACL and has the desired mode.
         modestring=`ls -l tmpfile2 | dd ibs=1 count=10 2>/dev/null`
         if test "x$modestring" != "x$modestring0"; then
           echo "mode = $mode: tmpfile2 has wrong mode: $modestring" 1>&2
           exit 1
         fi
-        if test `"$builddir"/test-file-has-acl${EXEEXT} tmpfile2` != no; then
+        if test `${CHECKER} "$builddir"/test-file-has-acl${EXEEXT} tmpfile2` != no; then
           echo "mode = $mode: tmpfile2 still has an ACL" 1>&2
           exit 1
         fi

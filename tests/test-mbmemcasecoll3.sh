@@ -12,4 +12,4 @@ if test $LOCALE_TR_UTF8 = none; then
 fi
 
 LC_ALL=$LOCALE_TR_UTF8 \
-./test-mbmemcasecoll${EXEEXT} 3
+${CHECKER} ./test-mbmemcasecoll${EXEEXT} 3

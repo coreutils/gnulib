@@ -12,4 +12,4 @@ if test $LOCALE_JA = none; then
 fi
 
 LC_ALL=$LOCALE_JA \
-./test-mbsnrtowcs${EXEEXT} 3
+${CHECKER} ./test-mbsnrtowcs${EXEEXT} 3

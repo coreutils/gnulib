@@ -23,4 +23,4 @@ if test $locale = French_France.1252; then
 fi
 
 LOCALE=$locale LOCALEDIR="$srcdir/locale" \
-./test-quotearg${EXEEXT}
+${CHECKER} ./test-quotearg${EXEEXT}

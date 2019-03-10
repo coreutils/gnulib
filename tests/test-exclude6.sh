@@ -32,7 +32,7 @@ bar: 1
 foo/bar: 0
 EOT
 
-test-exclude -anchored in -- bar foo/bar > out || exit $?
+${CHECKER} test-exclude -anchored in -- bar foo/bar > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

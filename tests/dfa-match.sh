@@ -33,11 +33,11 @@ fi
 
 fail=0
 
-dfa-match-aux a ba 0 > out || fail=1
+${CHECKER} dfa-match-aux a ba 0 > out || fail=1
 compare /dev/null out || fail=1
 
 in=$(printf "bb\nbb")
-$timeout_10 dfa-match-aux a "$in" 1 > out || fail=1
+$timeout_10 ${CHECKER} dfa-match-aux a "$in" 1 > out || fail=1
 compare /dev/null out || fail=1
 
 Exit $fail

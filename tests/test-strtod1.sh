@@ -13,11 +13,11 @@ if test $LOCALE_FR = none && test $LOCALE_FR_UTF8 = none; then
 fi
 
 if test $LOCALE_FR != none; then
-  LC_ALL=$LOCALE_FR      ./test-strtod1${EXEEXT} || exit 1
+  LC_ALL=$LOCALE_FR      ${CHECKER} ./test-strtod1${EXEEXT} || exit 1
 fi
 
 if test $LOCALE_FR_UTF8 != none; then
-  LC_ALL=$LOCALE_FR_UTF8 ./test-strtod1${EXEEXT} || exit 1
+  LC_ALL=$LOCALE_FR_UTF8 ${CHECKER} ./test-strtod1${EXEEXT} || exit 1
 fi
 
 exit 0

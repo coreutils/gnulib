@@ -19,4 +19,4 @@ else
 fi
 
 LC_ALL=$testlocale \
-./test-vasnprintf-posix2${EXEEXT}
+${CHECKER} ./test-vasnprintf-posix2${EXEEXT}

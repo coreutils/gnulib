@@ -32,11 +32,11 @@ n
 EOF
 
 fail=0
-(test-yesno; test-yesno 3; cat) < in.tmp > out1.tmp || fail=1
+(${CHECKER} test-yesno; ${CHECKER} test-yesno 3; cat) < in.tmp > out1.tmp || fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 
-(test-yesno 3; test-yesno; cat) < in.tmp > out1.tmp || fail=1
+(${CHECKER} test-yesno 3; ${CHECKER} test-yesno; cat) < in.tmp > out1.tmp || fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 
@@ -45,7 +45,7 @@ cat <<EOF > xout.tmp
 Y
 N
 EOF
-echo yes | test-yesno 2 > out1.tmp || fail=1
+echo yes | ${CHECKER} test-yesno 2 > out1.tmp || fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 
@@ -53,7 +53,7 @@ cmp xout.tmp out.tmp || fail=1
 cat <<EOF > xout.tmp
 Y
 EOF
-printf y | test-yesno 1 > out1.tmp || fail=1
+printf y | ${CHECKER} test-yesno 1 > out1.tmp || fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 
@@ -61,12 +61,12 @@ cmp xout.tmp out.tmp || fail=1
 cat <<EOF > xout.tmp
 N
 EOF
-test-yesno </dev/null > out1.tmp || fail=1
+${CHECKER} test-yesno </dev/null > out1.tmp || fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 
 # Test for behavior when stdin is closed
-test-yesno 0 <&- > out1.tmp 2> err.tmp && fail=1
+${CHECKER} test-yesno 0 <&- > out1.tmp 2> err.tmp && fail=1
 LC_ALL=C tr -d "$cr" < out1.tmp > out.tmp || fail=1
 cmp xout.tmp out.tmp || fail=1
 test -s err.tmp || fail=1

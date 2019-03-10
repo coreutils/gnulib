@@ -12,4 +12,4 @@ if test $LOCALE_FR_UTF8 = none; then
 fi
 
 LC_ALL=$LOCALE_FR_UTF8 \
-./test-ulc-casecmp${EXEEXT} 2
+${CHECKER} ./test-ulc-casecmp${EXEEXT} 2

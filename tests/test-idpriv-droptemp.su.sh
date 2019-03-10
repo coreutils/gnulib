@@ -16,7 +16,7 @@ if test `$ID -u` != 0; then
   exit 77
 fi
 
-./test-idpriv-droptemp${EXEEXT} || exit 13      # normal
+${CHECKER} ./test-idpriv-droptemp${EXEEXT} || exit 13      # normal
 
 chown root:root test-idpriv-droptemp${EXEEXT} 2>/dev/null || \
 chown root:wheel test-idpriv-droptemp${EXEEXT} 2>/dev/null || \

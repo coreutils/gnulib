@@ -31,7 +31,7 @@ cat > expected <<EOT
 foobar: 1
 EOT
 
-test-exclude -wildcards in -- foobar > out || exit $?
+${CHECKER} test-exclude -wildcards in -- foobar > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

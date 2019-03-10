@@ -12,4 +12,4 @@ if test $LOCALE_FR = none; then
 fi
 
 LC_ALL=$LOCALE_FR \
-./test-mbrtowc${EXEEXT} 1
+${CHECKER} ./test-mbrtowc${EXEEXT} 1

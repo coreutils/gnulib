@@ -2,7 +2,7 @@
 
 # Test out-of-memory handling.
 
-(./test-fprintf-posix2${EXEEXT} 0
+(${CHECKER} ./test-fprintf-posix2${EXEEXT} 0
  result=$?
  if test $result != 77 && test $result != 78; then result=1; fi
  exit $result
@@ -15,7 +15,7 @@ fi
 
 for arg in 1 2 3 4 5 6
 do
-  ./test-fprintf-posix2${EXEEXT} $arg > /dev/null
+  ${CHECKER} ./test-fprintf-posix2${EXEEXT} $arg > /dev/null
   result=$?
   if test $result = 77; then
     echo "Skipping test: getrlimit and setrlimit don't work"

@@ -36,7 +36,7 @@ baz: 1
 bar/qux: 0
 EOT
 
-test-exclude -casefold in -- foo 'foo*' bar foobar baz bar/qux > out || exit $?
+${CHECKER} test-exclude -casefold in -- foo 'foo*' bar foobar baz bar/qux > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

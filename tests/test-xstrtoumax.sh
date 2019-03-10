@@ -6,15 +6,15 @@ too_big=99999999999999999999999999999999999999999999999999999999999999999999
 result=0
 
 # test xstrtoumax
-test-xstrtoumax 1 >> out 2>&1 || result=1
-test-xstrtoumax -1 >> out 2>&1 && result=1
-test-xstrtoumax 1k >> out 2>&1 || result=1
-test-xstrtoumax ${too_big}h >> out 2>&1 && result=1
-test-xstrtoumax $too_big >> out 2>&1 && result=1
-test-xstrtoumax x >> out 2>&1 && result=1
-test-xstrtoumax 9x >> out 2>&1 && result=1
-test-xstrtoumax 010 >> out 2>&1 || result=1
-test-xstrtoumax MiB >> out 2>&1 || result=1
+${CHECKER} test-xstrtoumax 1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoumax -1 >> out 2>&1 && result=1
+${CHECKER} test-xstrtoumax 1k >> out 2>&1 || result=1
+${CHECKER} test-xstrtoumax ${too_big}h >> out 2>&1 && result=1
+${CHECKER} test-xstrtoumax $too_big >> out 2>&1 && result=1
+${CHECKER} test-xstrtoumax x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoumax 9x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoumax 010 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoumax MiB >> out 2>&1 || result=1
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

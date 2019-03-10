@@ -2,6 +2,6 @@
 
 . "${srcdir=.}/init.sh"; path_prepend_ .
 
-test-getcwd
+${CHECKER} test-getcwd
 
 Exit $?

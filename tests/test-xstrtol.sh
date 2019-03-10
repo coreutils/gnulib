@@ -6,29 +6,29 @@ too_big=99999999999999999999999999999999999999999999999999999999999999999999
 result=0
 
 # test xstrtol
-test-xstrtol 1 >> out 2>&1 || result=1
-test-xstrtol -1 >> out 2>&1 || result=1
-test-xstrtol 1k >> out 2>&1 || result=1
-test-xstrtol ${too_big}h >> out 2>&1 && result=1
-test-xstrtol $too_big >> out 2>&1 && result=1
-test-xstrtol x >> out 2>&1 && result=1
-test-xstrtol 9x >> out 2>&1 && result=1
-test-xstrtol 010 >> out 2>&1 || result=1
+${CHECKER} test-xstrtol 1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtol -1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtol 1k >> out 2>&1 || result=1
+${CHECKER} test-xstrtol ${too_big}h >> out 2>&1 && result=1
+${CHECKER} test-xstrtol $too_big >> out 2>&1 && result=1
+${CHECKER} test-xstrtol x >> out 2>&1 && result=1
+${CHECKER} test-xstrtol 9x >> out 2>&1 && result=1
+${CHECKER} test-xstrtol 010 >> out 2>&1 || result=1
 # suffix without integer is valid
-test-xstrtol MiB >> out 2>&1 || result=1
-test-xstrtol 1bB >> out 2>&1 && result=1
+${CHECKER} test-xstrtol MiB >> out 2>&1 || result=1
+${CHECKER} test-xstrtol 1bB >> out 2>&1 && result=1
 
 # test xstrtoul
-test-xstrtoul 1 >> out 2>&1 || result=1
-test-xstrtoul -1 >> out 2>&1 && result=1
-test-xstrtoul 1k >> out 2>&1 || result=1
-test-xstrtoul ${too_big}h >> out 2>&1 && result=1
-test-xstrtoul $too_big >> out 2>&1 && result=1
-test-xstrtoul x >> out 2>&1 && result=1
-test-xstrtoul 9x >> out 2>&1 && result=1
-test-xstrtoul 010 >> out 2>&1 || result=1
-test-xstrtoul MiB >> out 2>&1 || result=1
-test-xstrtoul 1bB >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul 1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoul -1 >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul 1k >> out 2>&1 || result=1
+${CHECKER} test-xstrtoul ${too_big}h >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul $too_big >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul 9x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoul 010 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoul MiB >> out 2>&1 || result=1
+${CHECKER} test-xstrtoul 1bB >> out 2>&1 && result=1
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

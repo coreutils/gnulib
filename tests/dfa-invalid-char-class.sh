@@ -24,7 +24,7 @@ path_prepend_ .
 fail=0
 
 echo 'dfaerror: invalid character class' > exp
-LC_ALL=C dfa-match-aux '[[:foo:]]' a > out 2>&1
+LC_ALL=C ${CHECKER} dfa-match-aux '[[:foo:]]' a > out 2>&1
 compare exp out || fail=1
 
 Exit $fail

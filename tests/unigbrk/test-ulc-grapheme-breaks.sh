@@ -12,4 +12,4 @@ if test $LOCALE_AR = none; then
 fi
 
 LC_ALL=$LOCALE_AR \
-./test-ulc-grapheme-breaks${EXEEXT}
+${CHECKER} ./test-ulc-grapheme-breaks${EXEEXT}

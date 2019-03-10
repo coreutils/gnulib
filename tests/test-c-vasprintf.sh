@@ -12,4 +12,4 @@ if test $LOCALE_FR = none; then
 fi
 
 LC_ALL=$LOCALE_FR \
-./test-c-vasprintf${EXEEXT} 1
+${CHECKER} ./test-c-vasprintf${EXEEXT} 1

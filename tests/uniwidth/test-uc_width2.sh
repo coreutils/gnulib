@@ -4,7 +4,7 @@ tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
 tmpfiles="$tmpfiles uc_width.out"
-./test-uc_width2${EXEEXT} | LC_ALL=C tr -d '\r' > uc_width.out
+${CHECKER} ./test-uc_width2${EXEEXT} | LC_ALL=C tr -d '\r' > uc_width.out
 
 tmpfiles="$tmpfiles uc_width.ok"
 cat > uc_width.ok <<\EOF

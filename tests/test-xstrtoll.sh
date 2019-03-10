@@ -6,27 +6,27 @@ too_big=99999999999999999999999999999999999999999999999999999999999999999999
 result=0
 
 # test xstrtoll
-test-xstrtoll 1 >> out 2>&1 || result=1
-test-xstrtoll -1 >> out 2>&1 || result=1
-test-xstrtoll 1k >> out 2>&1 || result=1
-test-xstrtoll ${too_big}h >> out 2>&1 && result=1
-test-xstrtoll $too_big >> out 2>&1 && result=1
-test-xstrtoll x >> out 2>&1 && result=1
-test-xstrtoll 9x >> out 2>&1 && result=1
-test-xstrtoll 010 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoll 1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoll -1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoll 1k >> out 2>&1 || result=1
+${CHECKER} test-xstrtoll ${too_big}h >> out 2>&1 && result=1
+${CHECKER} test-xstrtoll $too_big >> out 2>&1 && result=1
+${CHECKER} test-xstrtoll x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoll 9x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoll 010 >> out 2>&1 || result=1
 # suffix without integer is valid
-test-xstrtoll MiB >> out 2>&1 || result=1
+${CHECKER} test-xstrtoll MiB >> out 2>&1 || result=1
 
 # test xstrtoull
-test-xstrtoull 1 >> out 2>&1 || result=1
-test-xstrtoull -1 >> out 2>&1 && result=1
-test-xstrtoull 1k >> out 2>&1 || result=1
-test-xstrtoull ${too_big}h >> out 2>&1 && result=1
-test-xstrtoull $too_big >> out 2>&1 && result=1
-test-xstrtoull x >> out 2>&1 && result=1
-test-xstrtoull 9x >> out 2>&1 && result=1
-test-xstrtoull 010 >> out 2>&1 || result=1
-test-xstrtoull MiB >> out 2>&1 || result=1
+${CHECKER} test-xstrtoull 1 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoull -1 >> out 2>&1 && result=1
+${CHECKER} test-xstrtoull 1k >> out 2>&1 || result=1
+${CHECKER} test-xstrtoull ${too_big}h >> out 2>&1 && result=1
+${CHECKER} test-xstrtoull $too_big >> out 2>&1 && result=1
+${CHECKER} test-xstrtoull x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoull 9x >> out 2>&1 && result=1
+${CHECKER} test-xstrtoull 010 >> out 2>&1 || result=1
+${CHECKER} test-xstrtoull MiB >> out 2>&1 || result=1
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

@@ -32,7 +32,7 @@ file: 0
 bar: 1
 EOT
 
-test-exclude -wildcards in -- 'f*e' 'file' 'bar' > out || exit $?
+${CHECKER} test-exclude -wildcards in -- 'f*e' 'file' 'bar' > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

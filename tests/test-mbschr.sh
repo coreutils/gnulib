@@ -12,4 +12,4 @@ if test $LOCALE_ZH_CN = none; then
 fi
 
 LC_ALL=$LOCALE_ZH_CN \
-./test-mbschr${EXEEXT}
+${CHECKER} ./test-mbschr${EXEEXT}

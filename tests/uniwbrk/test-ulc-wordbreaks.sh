@@ -12,4 +12,4 @@ if test $LOCALE_FR = none; then
 fi
 
 LC_ALL=$LOCALE_FR \
-./test-ulc-wordbreaks${EXEEXT}
+${CHECKER} ./test-ulc-wordbreaks${EXEEXT}

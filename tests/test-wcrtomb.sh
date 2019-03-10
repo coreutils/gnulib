@@ -4,7 +4,7 @@
 : ${LOCALE_FR=fr_FR}
 if test $LOCALE_FR != none; then
   LC_ALL=$LOCALE_FR \
-  ./test-wcrtomb${EXEEXT} 1 \
+  ${CHECKER} ./test-wcrtomb${EXEEXT} 1 \
   || exit 1
 fi
 
@@ -12,7 +12,7 @@ fi
 : ${LOCALE_FR_UTF8=fr_FR.UTF-8}
 if test $LOCALE_FR_UTF8 != none; then
   LC_ALL=$LOCALE_FR_UTF8 \
-  ./test-wcrtomb${EXEEXT} 2 \
+  ${CHECKER} ./test-wcrtomb${EXEEXT} 2 \
   || exit 1
 fi
 
@@ -20,7 +20,7 @@ fi
 : ${LOCALE_JA=ja_JP}
 if test $LOCALE_JA != none; then
   LC_ALL=$LOCALE_JA \
-  ./test-wcrtomb${EXEEXT} 3 \
+  ${CHECKER} ./test-wcrtomb${EXEEXT} 3 \
   || exit 1
 fi
 
@@ -28,12 +28,12 @@ fi
 : ${LOCALE_ZH_CN=zh_CN.GB18030}
 if test $LOCALE_ZH_CN != none; then
   LC_ALL=$LOCALE_ZH_CN \
-  ./test-wcrtomb${EXEEXT} 4 \
+  ${CHECKER} ./test-wcrtomb${EXEEXT} 4 \
   || exit 1
 fi
 
 # Test in the POSIX locale.
-LC_ALL=C     ./test-wcrtomb${EXEEXT} 5 || exit 1
-LC_ALL=POSIX ./test-wcrtomb${EXEEXT} 5 || exit 1
+LC_ALL=C     ${CHECKER} ./test-wcrtomb${EXEEXT} 5 || exit 1
+LC_ALL=POSIX ${CHECKER} ./test-wcrtomb${EXEEXT} 5 || exit 1
 
 exit 0

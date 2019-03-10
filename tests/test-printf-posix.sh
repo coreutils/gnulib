@@ -4,7 +4,7 @@ tmpfiles=""
 trap 'rm -fr $tmpfiles' 1 2 3 15
 
 tmpfiles="$tmpfiles t-printf-posix.tmp t-printf-posix.out"
-./test-printf-posix${EXEEXT} > t-printf-posix.tmp || exit 1
+${CHECKER} ./test-printf-posix${EXEEXT} > t-printf-posix.tmp || exit 1
 LC_ALL=C tr -d '\r' < t-printf-posix.tmp > t-printf-posix.out || exit 1
 
 : ${DIFF=diff}

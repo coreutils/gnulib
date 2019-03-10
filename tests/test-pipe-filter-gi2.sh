@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-./test-pipe-filter-gi2-main${EXEEXT} ./test-pipe-filter-gi2-child${EXEEXT} | {
+${CHECKER} ./test-pipe-filter-gi2-main${EXEEXT} ./test-pipe-filter-gi2-child${EXEEXT} | {
   set -e
   read a && test "$a" = "Test 1 passed."
   read a && test "$a" = "Test 2 passed."

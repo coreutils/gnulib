@@ -14,8 +14,8 @@ else
 fi
 
 LC_ALL=$testlocale \
-./test-u32-vasnprintf1${EXEEXT} \
+${CHECKER} ./test-u32-vasnprintf1${EXEEXT} \
   || exit 1
 
 LC_ALL=$testlocale \
-./test-u32-vasnprintf2${EXEEXT}
+${CHECKER} ./test-u32-vasnprintf2${EXEEXT}

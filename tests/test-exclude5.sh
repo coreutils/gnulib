@@ -34,7 +34,7 @@ barz: 0
 foo/bar: 1
 EOT
 
-test-exclude -leading_dir in -- bar bar/qux barz foo/bar > out || exit $?
+${CHECKER} test-exclude -leading_dir in -- bar bar/qux barz foo/bar > out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

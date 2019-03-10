@@ -31,7 +31,7 @@ There is NO WARRANTY, to the extent permitted by law.
 Written by Sergey Poznyakoff.
 EOT
 
-./test-argp-version-etc${EXEEXT} --version |
+${CHECKER} ./test-argp-version-etc${EXEEXT} --version |
  sed '1s/test-argp-version-etc (.*) .*/test-argp-version-etc (PROJECT) VERSION/
       /^Packaged by/d
       2,3 s/Copyright (C) [0-9]\{4,4\}/COPYRIGHT/' |

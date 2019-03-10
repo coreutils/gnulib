@@ -32,8 +32,8 @@ bar: 0
 bar: 1
 EOT
 
-test-exclude in -include in -- bar > out || exit $?
-test-exclude -include in -no-include in -- bar >> out || exit $?
+${CHECKER} test-exclude in -include in -- bar > out || exit $?
+${CHECKER} test-exclude -include in -no-include in -- bar >> out || exit $?
 
 # Find out how to remove carriage returns from output. Solaris /usr/ucb/tr
 # does not understand '\r'.

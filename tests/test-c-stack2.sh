@@ -7,7 +7,7 @@ tmpfiles="t-c-stack2.tmp"
 
 # Sanitize exit status within a subshell, since some shells fail to
 # redirect stderr on their message about death due to signal.
-(./test-c-stack${EXEEXT} 1; exit $?) 2> t-c-stack2.tmp
+(${CHECKER} ./test-c-stack${EXEEXT} 1; exit $?) 2> t-c-stack2.tmp
 
 case $? in
   77) if grep 'stack overflow' t-c-stack2.tmp >/dev/null ; then

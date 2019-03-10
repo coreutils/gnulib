@@ -2,7 +2,7 @@
 
 # Test against a memory leak.
 
-(./test-fprintf-posix3${EXEEXT} 0
+(${CHECKER} ./test-fprintf-posix3${EXEEXT} 0
  result=$?
  if test $result != 77 && test $result != 78; then result=1; fi
  exit $result
@@ -13,7 +13,7 @@ if test $malloc_result = 77; then
   exit 77
 fi
 
-./test-fprintf-posix3${EXEEXT} 1 > /dev/null
+${CHECKER} ./test-fprintf-posix3${EXEEXT} 1 > /dev/null
 result=$?
 if test $result = 77; then
   echo "Skipping test: no way to determine address space size"
