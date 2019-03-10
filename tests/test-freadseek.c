@@ -31,7 +31,7 @@ int
 main (int argc, char **argv)
 {
   static const char stdin_contents[] =
-    "#!/bin/sh\n\n./test-freadseek${EXEEXT} 5 19 6 7 18 9 19 < \"$srcdir/test-freadseek.sh\" || exit 1\ncat \"$srcdir/test-freadseek.sh\" | ./test-freadseek${EXEEXT} 5 19 6 7 18 9 19 || exit 1\nexit 0\n";
+    "#!/bin/sh\n\n${CHECKER} ./test-freadseek${EXEEXT} 5 19 6 7 18 9 19 < \"$srcdir/test-freadseek.sh\" || exit 1\ncat \"$srcdir/test-freadseek.sh\" | ${CHECKER} ./test-freadseek${EXEEXT} 5 19 6 7 18 9 19 || exit 1\nexit 0\n";
   int nbytes1 = atoi (argv[1]);
   int nbytes2 = atoi (argv[2]);
   int nbytes3 = atoi (argv[3]);
