@@ -294,16 +294,15 @@ parse_number (const char *nptr,
    ICC 10.0 has a bug when optimizing the expression -zero.
    The expression -MIN * MIN does not work when cross-compiling
    to PowerPC on Mac OS X 10.5.  */
-#if defined __hpux || defined __sgi || defined __ICC
 static DOUBLE
-compute_minus_zero (void)
+minus_zero (void)
 {
+#if defined __hpux || defined __sgi || defined __ICC
   return -MIN * MIN;
-}
-# define minus_zero compute_minus_zero ()
 #else
-DOUBLE minus_zero = -0.0;
+  return -0.0;
 #endif
+}
 
 /* Convert NPTR to a DOUBLE.  If ENDPTR is not NULL, a pointer to the
    character after the last one used in the number is put in *ENDPTR.  */
@@ -479,6 +478,6 @@ STRTOD (const char *nptr, char **endptr)
   /* Special case -0.0, since at least ICC miscompiles negation.  We
      can't use copysign(), as that drags in -lm on some platforms.  */
   if (!num && negative)
-    return minus_zero;
+    return minus_zero ();
   return negative ? -num : num;
 }
