@@ -19,6 +19,29 @@
 # This program is meant for authors or maintainers which want to import
 # modules from gnulib into their packages.
 
+# CODING STYLE for this file:
+# * Indentation: Indent by 2 spaces. Indent case clauses by 2 spaces as well.
+# * Shell variable references: Use double-quote around shell variable
+#   references always (except when word splitting is explicitly desired),
+#   even when you know the double-quote are not needed.  This style tends to
+#   avoid undesired word splitting caused by omitted double-quotes (the
+#   number one mistake in shell scripts).
+#   When the referenced variable can only have a finite number of possible
+#   values and these values are all simple words (e.g. true and false), it's
+#   OK to omit the double-quotes.
+# * Backquotes:
+#   - Use backquotes like in `command`, not $(command).
+#   - Don't use `command` inside double-quotes. Instead assign the result of
+#     `command` to a variable, and use the value of the variable afterwards.
+# * Functions:
+#   - All functions that don't emulate a program or shell built-in have a name
+#     that starts with 'func_'.
+#   - Document the implicit and explicit arguments of all functions, as well
+#     as their output variables and side effects.
+# * Use  test condition  instead of  [ condition ].
+# * Minimize the use of eval; when you need it, make sure the string to be
+#   evaluated has a very simple syntactic structure.
+
 progname=$0
 package=gnulib
 nl='
