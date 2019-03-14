@@ -44,7 +44,7 @@ tzset (void)
   /* Rectify the value of the environment variable TZ.
      There are four possible kinds of such values:
        - Traditional US time zone names, e.g. "PST8PDT".  Syntax: see
-         <https://msdn.microsoft.com/en-us/library/90s5c885.aspx>
+         <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tzset>
        - Time zone names based on geography, that contain one or more
          slashes, e.g. "Europe/Moscow".
        - Time zone names based on geography, without slashes, e.g.
@@ -68,8 +68,8 @@ tzset (void)
     _putenv ("TZ=");
 
   /* On native Windows, tzset() is deprecated.  Use _tzset() instead.  See
-     https://msdn.microsoft.com/en-us/library/ms235451.aspx
-     https://msdn.microsoft.com/en-us/library/90s5c885.aspx  */
+     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/posix-tzset>
+     <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/tzset>  */
   _tzset ();
 #elif HAVE_TZSET
   tzset ();

@@ -580,7 +580,7 @@ supports_delete_on_close ()
       OSVERSIONINFO v;
 
       /* According to
-         <https://msdn.microsoft.com/en-us/library/ms724451.aspx>
+         <https://docs.microsoft.com/en-us/windows/desktop/api/sysinfoapi/nf-sysinfoapi-getversionexa>
          this structure must be initialized as follows:  */
       v.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
 

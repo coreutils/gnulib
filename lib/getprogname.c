@@ -70,7 +70,7 @@ getprogname (void)
     p = "?";
   return last_component (p);
 # elif HAVE_DECL___ARGV                                     /* mingw, MSVC */
-  /* https://msdn.microsoft.com/en-us/library/dn727674.aspx */
+  /* https://docs.microsoft.com/en-us/cpp/c-runtime-library/argc-argv-wargv */
   const char *p = __argv && __argv[0] ? __argv[0] : "?";
   return last_component (p);
 # elif HAVE_VAR___PROGNAME                                  /* OpenBSD, Android, QNX */

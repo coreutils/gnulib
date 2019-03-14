@@ -2296,8 +2296,8 @@ gl_locale_name_from_win32_LANGID (LANGID langid)
           }
         return "wen";
       case LANG_SOTHO:
-        /* <https://msdn.microsoft.com/en-us/library/dd318693.aspx> calls
-           it "Sesotho sa Leboa"; according to
+        /* <https://docs.microsoft.com/en-us/windows/desktop/Intl/language-identifier-constants-and-strings>
+           calls it "Sesotho sa Leboa"; according to
            <https://www.ethnologue.com/show_language.asp?code=nso>
            <https://www.ethnologue.com/show_language.asp?code=sot>
            it's the same as Northern Sotho.  */

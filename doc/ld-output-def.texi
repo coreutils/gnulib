@@ -15,7 +15,8 @@ The variants we have considered include:
 
 @itemize @bullet
 @item Use DUMPBIN /EXPORTS.
-This is explained in @url{https://support.microsoft.com/kb/131313/en-us}.
+This is explained in
+@url{https://docs.microsoft.com/en-us/cpp/build/reference/dash-exports}.
 The tool does not generate DEF files directly, so its output needs to
 be post processed manually:
 @smallexample

@@ -49,7 +49,7 @@
 enum { SYSCALL_RESOLUTION = 1 };
 #elif defined _WIN32 && ! defined __CYGWIN__
 /* On native Windows, file times have 100 ns resolution. See
-   <https://msdn.microsoft.com/en-us/library/ms724284.aspx>  */
+   <https://docs.microsoft.com/en-us/windows/desktop/api/minwinbase/ns-minwinbase-filetime>  */
 enum { SYSCALL_RESOLUTION = 100 };
 #elif ((HAVE_FUTIMESAT || HAVE_WORKING_UTIMES)                  \
        && (defined HAVE_STRUCT_STAT_ST_ATIM_TV_NSEC             \

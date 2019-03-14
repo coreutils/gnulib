@@ -67,7 +67,7 @@ nap_get_stat (struct stat *st, int do_write)
 #if defined _WIN32 || defined __CYGWIN__
       /* On Windows, the modification times are not changed until NAP_FD
          is closed. See
-         https://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v=vs.85).aspx */
+         <https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-writefile> */
       close (nap_fd);
       nap_fd = open (TEMPFILE, O_RDWR, 0600);
       ASSERT (nap_fd != -1);

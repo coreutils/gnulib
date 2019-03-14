@@ -511,9 +511,9 @@ Native Windows ACLs
 Introduction:
   https://helgeklein.com/blog/2009/03/permissions-a-primer-or-dacl-sacl-owner-sid-and-ace-explained/
 Manual pages:
-  https://msdn.microsoft.com/en-us/library/aa374872.aspx
-  https://msdn.microsoft.com/en-us/library/aa446659.aspx
-  https://msdn.microsoft.com/en-us/library/aa374931.aspx
+  https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/access-control-lists
+  https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/getting-information-from-an-acl
+  https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_acl
   https://en.wikipedia.org/wiki/Cacls
 Library:
   ?
