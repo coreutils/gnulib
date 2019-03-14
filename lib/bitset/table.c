@@ -300,7 +300,7 @@ tbitset_elt_find (bitset bset, bitset_bindex bindex,
       abort ();
 
     case EBITSET_FIND:
-      return 0;
+      return NULL;
 
     case EBITSET_CREATE:
       if (eindex >= size)
@@ -588,8 +588,8 @@ tbitset_list_reverse (bitset bset, bitset_bindex *list,
 
 
 /* Find list of up to NUM bits set in BSET starting from and including
- *NEXT and store in array LIST.  Return with actual number of bits
- found and with *NEXT indicating where search stopped.  */
+   *NEXT and store in array LIST.  Return with actual number of bits
+   found and with *NEXT indicating where search stopped.  */
 static bitset_bindex
 tbitset_list (bitset bset, bitset_bindex *list,
               bitset_bindex num, bitset_bindex *next)
@@ -607,17 +607,14 @@ tbitset_list (bitset bset, bitset_bindex *list,
   if (bitno % EBITSET_ELT_BITS)
     {
       /* We need to start within an element.  This is not very common.  */
-
       tbitset_elt *elt = elts[eindex];
       if (elt)
         {
-          bitset_windex woffset;
           bitset_word *srcp = EBITSET_WORDS (elt);
+          bitset_windex woffset = eindex * EBITSET_ELT_WORDS;
 
-          bitset_windex windex = bitno / BITSET_WORD_BITS;
-          woffset = eindex * EBITSET_ELT_WORDS;
-
-          for (; (windex - woffset) < EBITSET_ELT_WORDS; windex++)
+          for (bitset_windex windex = bitno / BITSET_WORD_BITS;
+               (windex - woffset) < EBITSET_ELT_WORDS; windex++)
             {
               bitset_word word = srcp[windex - woffset] >> (bitno % BITSET_WORD_BITS);
 
