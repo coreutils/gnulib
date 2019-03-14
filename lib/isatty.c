@@ -22,6 +22,7 @@
 /* This replacement is enabled on native Windows.  */
 
 #include <errno.h>
+#include <string.h>
 
 /* Get declarations of the Win32 API functions.  */
 #define WIN32_LEAN_AND_MEAN
@@ -38,10 +39,88 @@
 # include <io.h>
 #endif
 
+/* Avoid warnings from gcc -Wcast-function-type.  */
+#define GetProcAddress \
+  (void *) GetProcAddress
+
+/* GetNamedPipeClientProcessId was introduced only in Windows Vista.  */
+typedef BOOL (WINAPI * GetNamedPipeClientProcessIdFuncType) (HANDLE hPipe,
+                                                             PULONG pClientProcessId);
+static GetNamedPipeClientProcessIdFuncType GetNamedPipeClientProcessIdFunc = NULL;
+/* QueryFullProcessImageName was introduced only in Windows Vista.  */
+typedef BOOL (WINAPI * QueryFullProcessImageNameFuncType) (HANDLE hProcess,
+                                                           DWORD dwFlags,
+                                                           LPSTR lpExeName,
+                                                           PDWORD pdwSize);
+static QueryFullProcessImageNameFuncType QueryFullProcessImageNameFunc = NULL;
+static BOOL initialized = FALSE;
+
+static void
+initialize (void)
+{
+  HMODULE kernel32 = LoadLibrary ("kernel32.dll");
+  if (kernel32 != NULL)
+    {
+      GetNamedPipeClientProcessIdFunc =
+        (GetNamedPipeClientProcessIdFuncType) GetProcAddress (kernel32, "GetNamedPipeClientProcessId");
+      QueryFullProcessImageNameFunc =
+        (QueryFullProcessImageNameFuncType) GetProcAddress (kernel32, "QueryFullProcessImageNameA");
+    }
+  initialized = TRUE;
+}
+
 static BOOL IsConsoleHandle (HANDLE h)
 {
   DWORD mode;
+  /* GetConsoleMode
+     <https://docs.microsoft.com/en-us/windows/console/getconsolemode> */
   return GetConsoleMode (h, &mode) != 0;
+}
+
+static BOOL IsCygwinConsoleHandle (HANDLE h)
+{
+  /* A handle to a Cygwin console is in fact a named pipe whose client process
+     and server process is <CYGWIN_INSTALL_DIR>\bin\mintty.exe.  */
+  BOOL result = FALSE;
+  ULONG processId;
+
+  if (!initialized)
+    initialize ();
+
+  /* GetNamedPipeClientProcessId
+     <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-getnamedpipeclientprocessid>
+     It requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA or higher.  */
+  if (GetNamedPipeClientProcessIdFunc && QueryFullProcessImageNameFunc
+      && GetNamedPipeClientProcessIdFunc (h, &processId))
+    {
+      /* OpenProcess
+         <https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/nf-processthreadsapi-openprocess> */
+      HANDLE processHandle =
+        OpenProcess (PROCESS_QUERY_LIMITED_INFORMATION, FALSE, processId);
+      if (processHandle != NULL)
+        {
+          char buf[1024];
+          DWORD bufsize = sizeof (buf);
+          /* The file name can be determined through
+             GetProcessImageFileName
+             <https://docs.microsoft.com/en-us/windows/desktop/api/psapi/nf-psapi-getprocessimagefilenamea>
+             or
+             QueryFullProcessImageName
+             <https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-queryfullprocessimagenamea>
+             The former returns a file name in non-standard notation (it starts
+             with '\Device\') and may require linking with psapi.dll.
+             The latter is better, but requires -D_WIN32_WINNT=_WIN32_WINNT_VISTA
+             or higher.  */
+          if (QueryFullProcessImageNameFunc (processHandle, 0, buf, &bufsize))
+            {
+              if (strlen (buf) >= 11
+                  && strcmp (buf + strlen (buf) - 11, "\\mintty.exe") == 0)
+                result = TRUE;
+            }
+          CloseHandle (processHandle);
+        }
+    }
+  return result;
 }
 
 #if HAVE_MSVC_INVALID_PARAMETER_HANDLER
@@ -84,6 +163,8 @@ isatty (int fd)
       if (IsConsoleHandle (h))
         return 1;
     }
+  if (IsCygwinConsoleHandle (h))
+    return 1;
   errno = ENOTTY;
   return 0;
 }

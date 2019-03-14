@@ -12,6 +12,8 @@ Portability problems fixed by Gnulib:
 On native Windows, this function also returns true for character devices such
 as @file{NUL}.
 @item
+On native Windows, this function returns false for Cygwin consoles.
+@item
 This function crashes when invoked with invalid arguments on some platforms:
 MSVC 14.
 @end itemize
