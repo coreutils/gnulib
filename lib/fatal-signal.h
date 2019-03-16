@@ -71,6 +71,12 @@ extern void block_fatal_signals (void);
 extern void unblock_fatal_signals (void);
 
 
+/* Return the list of signals that block_fatal_signals/unblock_fatal_signals
+   would block or unblock.
+   Fills signals[0..count-1] and returns count.  */
+extern unsigned int get_fatal_signals (int signals[64]);
+
+
 #ifdef __cplusplus
 }
 #endif

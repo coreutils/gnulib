@@ -284,3 +284,20 @@ unblock_fatal_signals (void)
   init_fatal_signal_set ();
   sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
 }
+
+
+unsigned int
+get_fatal_signals (int signals[64])
+{
+  init_fatal_signal_set ();
+
+  {
+    int *p = signals;
+    size_t i;
+
+    for (i = 0; i < num_fatal_signals; i++)
+      if (fatal_signals[i] >= 0)
+        *p++ = fatal_signals[i];
+    return p - signals;
+  }
+}
