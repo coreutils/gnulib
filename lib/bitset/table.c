@@ -778,7 +778,8 @@ tbitset_unused_clear (bitset dst)
           bitset_windex windex = n_bits / BITSET_WORD_BITS;
           bitset_windex woffset = eindex * EBITSET_ELT_WORDS;
 
-          srcp[windex - woffset] &= ((bitset_word) 1 << last_bit) - 1;
+          srcp[windex - woffset]
+            &= ((bitset_word) 1 << (last_bit % BITSET_WORD_BITS)) - 1;
           windex++;
           for (; (windex - woffset) < EBITSET_ELT_WORDS; windex++)
             srcp[windex - woffset] = 0;
