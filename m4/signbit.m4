@@ -30,7 +30,9 @@ AC_DEFUN([gl_SIGNBIT],
         [gl_cv_func_signbit=no],
         [case "$host_os" in
                           # Guess yes on glibc systems.
-           *-gnu* | gnu*) gl_cv_func_signbit="guessing yes" ;;
+           *-gnu* | gnu*\
+	   | *musl* |\
+	   musl* | *musl) gl_cv_func_signbit="guessing yes" ;;
                           # Guess yes on native Windows.
            mingw*)        gl_cv_func_signbit="guessing yes" ;;
                           # If we don't know, assume the worst.
@@ -61,7 +63,9 @@ AC_DEFUN([gl_SIGNBIT],
         [gl_cv_func_signbit_gcc=no],
         [case "$host_os" in
                           # Guess yes on glibc systems.
-           *-gnu* | gnu*) gl_cv_func_signbit_gcc="guessing yes" ;;
+           *-gnu* | gnu*\
+	   | *musl* |\
+	   *musl | musl*) gl_cv_func_signbit_gcc="guessing yes" ;;
                           # Guess yes on mingw, no on MSVC.
            mingw*)        if test -n "$GCC"; then
                             gl_cv_func_signbit_gcc="guessing yes"
