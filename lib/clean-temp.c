@@ -181,7 +181,7 @@ string_hash (const void *x)
 
 /* The signal handler.  It gets called asynchronously.  */
 static void
-cleanup ()
+cleanup_action (int sig _GL_UNUSED)
 {
   size_t i;
 
@@ -279,7 +279,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
 
           if (old_allocated == 0)
             /* First use of this facility.  Register the cleanup handler.  */
-            at_fatal_signal (&cleanup);
+            at_fatal_signal (&cleanup_action);
           else
             {
               /* Don't use memcpy() here, because memcpy takes non-volatile

@@ -107,7 +107,7 @@ init_fatal_signals (void)
 /* ========================================================================= */
 
 
-typedef void (*action_t) (void);
+typedef void (*action_t) (int sig);
 
 /* Type of an entry in the actions array.
    The 'action' field is accessed from within the fatal_signal_handler(),
@@ -162,7 +162,7 @@ fatal_signal_handler (int sig)
       actions_count = n;
       action = actions[n].action;
       /* Execute the action.  */
-      action ();
+      action (sig);
     }
 
   /* Now execute the signal's default action.

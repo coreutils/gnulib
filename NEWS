@@ -3,6 +3,9 @@ Important general notes
 
 Date        Modules         Changes
 
+2019-03-16  fatal-signal    The function that you pass to at_fatal_signal now
+                            takes the signal as argument.
+
 2019-02-14  gnulib-tool     If you use multiple --local-dir options at once:
                             The first one now has the highest priority, not the
                             last one.

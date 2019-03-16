@@ -51,7 +51,7 @@ extern "C" {
    The cleanup function is executed asynchronously.  It is unspecified
    whether during its execution the catchable fatal signals are blocked
    or not.  */
-extern void at_fatal_signal (void (*function) (void));
+extern void at_fatal_signal (void (*function) (int sig));
 
 
 /* Sometimes it is necessary to block the usually fatal signals while the
