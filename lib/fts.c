@@ -2069,7 +2069,6 @@ fts_safe_changedir (FTS *sp, FTSENT *p, int fd, char const *dir)
                 int parent_fd;
                 fd_ring_print (sp, stderr, "pre-pop");
                 parent_fd = i_ring_pop (&sp->fts_fd_ring);
-                is_dotdot = true;
                 if (0 <= parent_fd)
                   {
                     fd = parent_fd;
