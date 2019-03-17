@@ -17,6 +17,7 @@ lib/bitset/vector.c
 lib/bitset/vector.h
 
 Depends-on:
+c99
 gettext-h
 obstack
 xalloc

@@ -6,6 +6,7 @@ lib/timevar.h
 lib/timevar.c
 
 Depends-on:
+c99
 gethrxtime
 getrusage
 gettext-h
