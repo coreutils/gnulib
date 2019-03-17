@@ -1,5 +1,6 @@
 #ifndef _Noreturn
-# if 201103 <= (defined __cplusplus ? __cplusplus : 0)
+# if (201103 <= (defined __cplusplus ? __cplusplus : 0) \
+      && (!defined __GNUC__ || 4 < __GNUC__ + (8 <= __GNUC_MINOR__)))
 #  define _Noreturn [[noreturn]]
 # elif (201112 <= (defined __STDC_VERSION__ ? __STDC_VERSION__ : 0) \
         || 4 < __GNUC__ + (7 <= __GNUC_MINOR__))
