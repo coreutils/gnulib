@@ -139,6 +139,19 @@ void compare (enum bitset_attr a, enum bitset_attr b)
   bitset_zero (bdst);
   assert_bitset_equal (adst, bdst);
 
+  /* resize.
+
+     ARRAY bitsets cannot be resized.  */
+  if (bitset_type_get (bsrc0) != BITSET_ARRAY)
+    {
+      const int nbits_new = RANDOM (256);
+      bitset_copy (adst, asrc0);
+      bitset_copy (bdst, bsrc0);
+      ASSERT (nbits_new == bitset_resize (adst, nbits_new));
+      ASSERT (nbits_new == bitset_resize (bdst, nbits_new));
+      assert_bitset_equal (adst, bdst);
+    }
+
   bitset_free (bdst);
   bitset_free (bsrc3);
   bitset_free (bsrc2);
@@ -204,11 +217,11 @@ int main (void)
   check_attributes (BITSET_FRUGAL);
   check_attributes (BITSET_GREEDY);
 
-  compare (BITSET_FIXED, BITSET_FIXED);
-  compare (BITSET_FIXED, BITSET_VARIABLE);
-  compare (BITSET_FIXED, BITSET_DENSE);
-  compare (BITSET_FIXED, BITSET_SPARSE);
-  compare (BITSET_FIXED, BITSET_FRUGAL);
-  compare (BITSET_FIXED, BITSET_GREEDY);
+  compare (BITSET_VARIABLE, BITSET_FIXED);
+  compare (BITSET_VARIABLE, BITSET_VARIABLE);
+  compare (BITSET_VARIABLE, BITSET_DENSE);
+  compare (BITSET_VARIABLE, BITSET_SPARSE);
+  compare (BITSET_VARIABLE, BITSET_FRUGAL);
+  compare (BITSET_VARIABLE, BITSET_GREEDY);
   return 0;
 }

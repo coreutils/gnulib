@@ -178,8 +178,9 @@ bitset_test (bitset bset, bitset_bindex bitno)
 /* Return size in bits of bitset SRC.  */
 #define bitset_size(SRC) BITSET_SIZE_ (SRC)
 
-/* Change size of bitset.  */
-void bitset_resize (bitset, bitset_bindex);
+/* Change size in bits of bitset.  New bits are zeroed.  Return
+   SIZE.  */
+#define bitset_resize(DST, SIZE) BITSET_RESIZE_ (DST, SIZE)
 
 /* Return number of bits set in bitset SRC.  */
 #define bitset_count(SRC) BITSET_COUNT_ (SRC)
