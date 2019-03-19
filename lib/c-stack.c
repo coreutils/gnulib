@@ -107,6 +107,8 @@ static char const * volatile stack_overflow_message;
    appears to have been a stack overflow, or with a core dump
    otherwise.  This function is async-signal-safe.  */
 
+static char const * volatile progname;
+
 static _GL_ASYNC_SAFE _Noreturn void
 die (int signo)
 {
@@ -119,7 +121,7 @@ die (int signo)
 #endif /* !SIGINFO_WORKS && !HAVE_LIBSIGSEGV */
   segv_action (signo);
   message = signo ? program_error_message : stack_overflow_message;
-  ignore_value (write (STDERR_FILENO, getprogname (), strlen (getprogname ())));
+  ignore_value (write (STDERR_FILENO, progname, strlen (progname)));
   ignore_value (write (STDERR_FILENO, ": ", 2));
   ignore_value (write (STDERR_FILENO, message, strlen (message)));
   ignore_value (write (STDERR_FILENO, "\n", 1));
@@ -170,8 +172,10 @@ segv_handler (void *address _GL_UNUSED, int serious)
 # if DEBUG
   {
     char buf[1024];
+    int saved_errno = errno;
     sprintf (buf, "segv_handler serious=%d\n", serious);
     write (STDERR_FILENO, buf, strlen (buf));
+    errno = saved_errno;
   }
 # endif
 
@@ -206,6 +210,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
   segv_action = action ? action : null_action;
   program_error_message = _("program error");
   stack_overflow_message = _("stack overflow");
+  progname = getprogname ();
 
   /* Always install the overflow handler.  */
   if (stackoverflow_install_handler (overflow_handler,
@@ -298,6 +303,7 @@ c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
   segv_action = action ? action : null_action;
   program_error_message = _("program error");
   stack_overflow_message = _("stack overflow");
+  progname = getprogname ();
 
   sigemptyset (&act.sa_mask);
 
