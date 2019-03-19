@@ -188,21 +188,21 @@ tbitset_elt_alloc (void)
           /* Let particular systems override the size of a chunk.  */
 
 #ifndef OBSTACK_CHUNK_SIZE
-#define OBSTACK_CHUNK_SIZE 0
+# define OBSTACK_CHUNK_SIZE 0
 #endif
 
           /* Let them override the alloc and free routines too.  */
 
 #ifndef OBSTACK_CHUNK_ALLOC
-#define OBSTACK_CHUNK_ALLOC xmalloc
+# define OBSTACK_CHUNK_ALLOC xmalloc
 #endif
 
 #ifndef OBSTACK_CHUNK_FREE
-#define OBSTACK_CHUNK_FREE free
+# define OBSTACK_CHUNK_FREE free
 #endif
 
 #if ! defined __GNUC__ || __GNUC__ < 2
-#define __alignof__(type) 0
+# define __alignof__(type) 0
 #endif
 
           obstack_specify_allocation (&tbitset_obstack, OBSTACK_CHUNK_SIZE,
@@ -1018,13 +1018,9 @@ tbitset_op3_cmp (bitset dst, bitset src1, bitset src2, enum bitset_ops op)
         }
 
       if (!tbitset_elt_zero_p (delt))
-        {
-          tbitset_elt_add (dst, delt, j);
-        }
+        tbitset_elt_add (dst, delt, j);
       else
-        {
-          tbitset_elt_free (delt);
-        }
+        tbitset_elt_free (delt);
     }
 
   /* If we have elements of DST left over, free them all.  */
@@ -1059,7 +1055,8 @@ tbitset_and_cmp (bitset dst, bitset src1, bitset src2)
       tbitset_zero (dst);
       return changed;
     }
-  return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_AND);
+  else
+    return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_AND);
 }
 
 
@@ -1074,9 +1071,7 @@ static bool
 tbitset_andn_cmp (bitset dst, bitset src1, bitset src2)
 {
   if (EBITSET_ZERO_P (src2))
-    {
-      return tbitset_copy_cmp (dst, src1);
-    }
+    return tbitset_copy_cmp (dst, src1);
   else if (EBITSET_ZERO_P (src1))
     {
       tbitset_weed (dst);
@@ -1084,7 +1079,8 @@ tbitset_andn_cmp (bitset dst, bitset src1, bitset src2)
       tbitset_zero (dst);
       return changed;
     }
-  return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_ANDN);
+  else
+    return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_ANDN);
 }
 
 
@@ -1099,14 +1095,11 @@ static bool
 tbitset_or_cmp (bitset dst, bitset src1, bitset src2)
 {
   if (EBITSET_ZERO_P (src2))
-    {
-      return tbitset_copy_cmp (dst, src1);
-    }
+    return tbitset_copy_cmp (dst, src1);
   else if (EBITSET_ZERO_P (src1))
-    {
-      return tbitset_copy_cmp (dst, src2);
-    }
-  return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_OR);
+    return tbitset_copy_cmp (dst, src2);
+  else
+    return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_OR);
 }
 
 
@@ -1121,14 +1114,11 @@ static bool
 tbitset_xor_cmp (bitset dst, bitset src1, bitset src2)
 {
   if (EBITSET_ZERO_P (src2))
-    {
-      return tbitset_copy_cmp (dst, src1);
-    }
+    return tbitset_copy_cmp (dst, src1);
   else if (EBITSET_ZERO_P (src1))
-    {
-      return tbitset_copy_cmp (dst, src2);
-    }
-  return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_XOR);
+    return tbitset_copy_cmp (dst, src2);
+  else
+    return tbitset_op3_cmp (dst, src1, src2, BITSET_OP_XOR);
 }
 
 
