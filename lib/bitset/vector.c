@@ -928,6 +928,13 @@ vbitset_copy (bitset dst, bitset src)
 }
 
 
+static void
+vbitset_free (bitset bset)
+{
+  free (VBITSET_WORDS (bset));
+}
+
+
 /* Vector of operations for multiple word bitsets.  */
 struct bitset_vtable vbitset_vtable = {
   vbitset_set,
@@ -961,7 +968,7 @@ struct bitset_vtable vbitset_vtable = {
   vbitset_or_and_cmp,
   vbitset_list,
   vbitset_list_reverse,
-  NULL,
+  vbitset_free,
   BITSET_VECTOR
 };
 
