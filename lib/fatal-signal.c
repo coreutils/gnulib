@@ -107,7 +107,7 @@ init_fatal_signals (void)
 /* ========================================================================= */
 
 
-typedef void (*action_t) (int sig);
+typedef _GL_ASYNC_SAFE void (*action_t) (int sig);
 
 /* Type of an entry in the actions array.
    The 'action' field is accessed from within the fatal_signal_handler(),
@@ -131,7 +131,7 @@ static struct sigaction saved_sigactions[64];
 
 
 /* Uninstall the handlers.  */
-static void
+static _GL_ASYNC_SAFE void
 uninstall_handlers (void)
 {
   size_t i;
@@ -148,7 +148,7 @@ uninstall_handlers (void)
 
 
 /* The signal handler.  It gets called asynchronously.  */
-static void
+static _GL_ASYNC_SAFE void
 fatal_signal_handler (int sig)
 {
   for (;;)

@@ -91,7 +91,7 @@ typedef struct sigaltstack stack_t;
 
 /* The user-specified action to take when a SEGV-related program error
    or stack overflow occurs.  */
-static void (* volatile segv_action) (int);
+static _GL_ASYNC_SAFE void (* volatile segv_action) (int);
 
 /* Translated messages for program errors and stack overflow.  Do not
    translate them in the signal handler, since gettext is not
@@ -107,7 +107,7 @@ static char const * volatile stack_overflow_message;
    appears to have been a stack overflow, or with a core dump
    otherwise.  This function is async-signal-safe.  */
 
-static _Noreturn void
+static _GL_ASYNC_SAFE _Noreturn void
 die (int signo)
 {
   char const *message;
@@ -146,8 +146,8 @@ static union
   void *p;
 } alternate_signal_stack;
 
-static void
-null_action (int signo __attribute__ ((unused)))
+static _GL_ASYNC_SAFE void
+null_action (int signo _GL_UNUSED)
 {
 }
 
@@ -164,8 +164,8 @@ static volatile int segv_handler_missing;
 /* Handle a segmentation violation and exit if it cannot be stack
    overflow.  This function is async-signal-safe.  */
 
-static int segv_handler (void *address __attribute__ ((unused)),
-                         int serious)
+static _GL_ASYNC_SAFE int
+segv_handler (void *address _GL_UNUSED, int serious)
 {
 # if DEBUG
   {
@@ -185,9 +185,8 @@ static int segv_handler (void *address __attribute__ ((unused)),
 /* Handle a segmentation violation that is likely to be a stack
    overflow and exit.  This function is async-signal-safe.  */
 
-static _Noreturn void
-overflow_handler (int emergency,
-                  stackoverflow_context_t context __attribute__ ((unused)))
+static _GL_ASYNC_SAFE _Noreturn void
+overflow_handler (int emergency, stackoverflow_context_t context _GL_UNUSED)
 {
 # if DEBUG
   {
@@ -202,7 +201,7 @@ overflow_handler (int emergency,
 }
 
 int
-c_stack_action (void (*action) (int))
+c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
 {
   segv_action = action ? action : null_action;
   program_error_message = _("program error");
@@ -229,9 +228,8 @@ c_stack_action (void (*action) (int))
 /* Handle a segmentation violation and exit.  This function is
    async-signal-safe.  */
 
-static _Noreturn void
-segv_handler (int signo, siginfo_t *info,
-              void *context __attribute__ ((unused)))
+static _GL_ASYNC_SAFE _Noreturn void
+segv_handler (int signo, siginfo_t *info, void *context _GL_UNUSED)
 {
   /* Clear SIGNO if it seems to have been a stack overflow.  */
 #  if ! HAVE_XSI_STACK_OVERFLOW_HEURISTIC
@@ -278,7 +276,7 @@ segv_handler (int signo, siginfo_t *info,
 # endif
 
 int
-c_stack_action (void (*action) (int))
+c_stack_action (_GL_ASYNC_SAFE void (*action) (int))
 {
   int r;
   stack_t st;
@@ -325,7 +323,7 @@ c_stack_action (void (*action) (int))
              && HAVE_STACK_OVERFLOW_HANDLING) || HAVE_LIBSIGSEGV) */
 
 int
-c_stack_action (void (*action) (int)  __attribute__ ((unused)))
+c_stack_action (_GL_ASYNC_SAFE void (*action) (int)  _GL_UNUSED)
 {
   errno = ENOTSUP;
   return -1;

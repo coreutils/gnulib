@@ -80,7 +80,7 @@ static size_t slaves_allocated = SIZEOF (static_slaves);
 #endif
 
 /* The cleanup action.  It gets called asynchronously.  */
-static void
+static _GL_ASYNC_SAFE void
 cleanup_slaves (void)
 {
   for (;;)
@@ -104,7 +104,7 @@ cleanup_slaves (void)
 
 /* The cleanup action, taking a signal argument.
    It gets called asynchronously.  */
-static void
+static _GL_ASYNC_SAFE void
 cleanup_slaves_action (int sig _GL_UNUSED)
 {
   cleanup_slaves ();

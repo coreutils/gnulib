@@ -180,7 +180,7 @@ string_hash (const void *x)
 
 
 /* The signal handler.  It gets called asynchronously.  */
-static void
+static _GL_ASYNC_SAFE void
 cleanup_action (int sig _GL_UNUSED)
 {
   size_t i;

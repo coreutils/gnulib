@@ -194,7 +194,7 @@ static sig_atomic_t volatile suspended;
 
 /* Handle SIGCONT. */
 
-static void
+static _GL_ASYNC_SAFE void
 sighandler (int sig)
 {
   suspended = 1;

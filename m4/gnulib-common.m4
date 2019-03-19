@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 43
+# gnulib-common.m4 serial 44
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -86,6 +86,33 @@ AC_DEFUN([gl_COMMON_BODY], [
 #else
 # define _GL_ATTRIBUTE_MALLOC /* empty */
 #endif
+])
+  AH_VERBATIM([async_safe],
+[/* The _GL_ASYNC_SAFE marker should be attached to functions that are
+   signal handlers (for signals other than SIGABRT, SIGPIPE) or can be
+   invoked from such signal handlers.  Such functions have some restrictions:
+     * All functions that it calls should be marked _GL_ASYNC_SAFE as well,
+       or should be listed as async-signal-safe in POSIX
+       <http://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04>
+       section 2.4.3.  Note that malloc(), sprintf(), and fwrite(), in
+       particular, are NOT async-signal-safe.
+     * All memory locations (variables and struct fields) that these functions
+       access must be marked 'volatile'.  This holds for both read and write
+       accesses.  Otherwise the compiler might optimize away stores to and
+       reads from such locations that occur in the program, depending on its
+       data flow analysis.  For example, when the program contains a loop
+       that is intended to inspect a variable set from within a signal handler
+           while (!signal_occurred)
+             ;
+       the compiler is allowed to transform this into an endless loop if the
+       variable 'signal_occurred' is not declared 'volatile'.
+   Additionally, recall that:
+     * A signal handler should not modify errno (except if it is a handler
+       for a fatal signal and ends by raising the same signal again, thus
+       provoking the termination of the process).  If it invokes a function
+       that may clobber errno, it needs to save and restore the value of
+       errno.  */
+#define _GL_ASYNC_SAFE
 ])
   dnl Preparation for running test programs:
   dnl Tell glibc to write diagnostics from -D_FORTIFY_SOURCE=2 to stderr, not

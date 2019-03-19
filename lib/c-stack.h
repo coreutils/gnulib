@@ -41,4 +41,4 @@
    This function may install a handler for the SIGSEGV signal or for the SIGBUS
    signal or exercise other system dependent exception handling APIs.  */
 
-extern int c_stack_action (void (* /*action*/) (int));
+extern int c_stack_action (_GL_ASYNC_SAFE void (* /*action*/) (int));

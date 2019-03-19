@@ -36,7 +36,8 @@ extern "C" {
    occurs.
 
    Restrictions for the cleanup function:
-     - The cleanup function can do all kinds of system calls.
+     - The cleanup function can do all kinds of system calls.  It may also
+       modify (clobber) errno.
      - It can also access application dependent memory locations and data
        structures provided they are in a consistent state. One way to ensure
        this is through block_fatal_signals()/unblock_fatal_signals(), see
@@ -51,7 +52,7 @@ extern "C" {
    The cleanup function is executed asynchronously.  It is unspecified
    whether during its execution the catchable fatal signals are blocked
    or not.  */
-extern void at_fatal_signal (void (*function) (int sig));
+extern void at_fatal_signal (_GL_ASYNC_SAFE void (*function) (int sig));
 
 
 /* Sometimes it is necessary to block the usually fatal signals while the
