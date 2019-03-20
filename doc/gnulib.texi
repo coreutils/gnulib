@@ -6373,6 +6373,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Safe Allocation Macros::
 * Compile-time Assertions::
 * Integer Properties::
+* static inline::
 * extern inline::
 * Closed standard fds::
 * Container data types::
@@ -6402,6 +6403,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include verify.texi
 
 @include intprops.texi
+
+@include static-inline.texi
 
 @include extern-inline.texi
 
