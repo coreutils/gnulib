@@ -6372,6 +6372,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * alloca-opt::
 * Safe Allocation Macros::
 * Compile-time Assertions::
+* Non-returning Functions::
 * Integer Properties::
 * static inline::
 * extern inline::
@@ -6401,6 +6402,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include safe-alloc.texi
 
 @include verify.texi
+
+@include noreturn.texi
 
 @include intprops.texi
 

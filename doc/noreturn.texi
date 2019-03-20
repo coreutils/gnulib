@@ -1,0 +1,60 @@
+@c GNU noreturn, stdnoreturn modules documentation
+
+@c Copyright (C) 2019 Free Software Foundation, Inc.
+
+@c Permission is granted to copy, distribute and/or modify this document
+@c under the terms of the GNU Free Documentation License, Version 1.3
+@c or any later version published by the Free Software Foundation;
+@c with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+@c Texts.  A copy of the license is included in the ``GNU Free
+@c Documentation License'' file as part of this distribution.
+
+@node Non-returning Functions
+@section Non-returning Functions
+
+@cindex @code{_Noreturn}
+@cindex @code{noreturn}
+@cindex @code{stdnoreturn}
+A "non-returning" function is a function which cannot return normally.
+It can transfer control only through @code{longjmp()}, @code{throw}
+(in C++), or similar mechanisms.  The most prominent function of this
+class is the @code{abort} function.  Non-returning functions are
+declared with a @code{void} return type.
+
+It helps the compiler's ability to emit sensible warnings, following
+data-flow analysis, to declare which functions are non-returning.
+
+Gnulib has two modules that support such a declaration:
+
+@itemize @bullet
+@item
+The @samp{stdnoreturn} module.  It provides a way to put this
+declaration at function declarations and function definitions, but not
+in function pointer types.  The identifier to use is @code{_Noreturn}
+or @code{noreturn}; @code{_Noreturn} is to be preferred because
+@code{noreturn} is a no-op on some platforms.  The include file is
+@code{<stdnoreturn.h>}.
+
+@item
+The @samp{noreturn} module.  It provides a way to put this declaration
+at function declarations, at function definitions, and in function
+pointer types.  The identifiers to use are:
+@itemize -
+@item
+@code{_GL_NORETURN_FUNC} for use in function declarations and function
+definitions.
+@item
+@code{_GL_NORETURN_FUNCPTR} for use on function pointers.
+@end itemize
+@noindent
+The include file is @code{<noreturn.h>}.
+@end itemize
+
+Which of the two modules to use?  If the non-returning functions you
+have to declare are unlikely to be accessed through function pointers,
+you should use module @code{stdnoreturn}; otherwise the module
+@code{noreturn} provides for better data-flow analysis and thus for
+better warnings.
+
+For a detailed description of the @code{stdnoreturn} module, see
+@ref{stdnoreturn.h}.
