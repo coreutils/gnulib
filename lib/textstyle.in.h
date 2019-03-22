@@ -319,7 +319,8 @@ term_styled_ostream_create (int fd, const char *filename,
 typedef styled_ostream_t html_styled_ostream_t;
 
 static inline html_styled_ostream_t
-html_styled_ostream_create (ostream_t destination, const char *css_filename)
+html_styled_ostream_create (ostream_t destination _GL_UNUSED,
+                            const char *css_filename _GL_UNUSED)
 {
   abort ();
   return NULL;
