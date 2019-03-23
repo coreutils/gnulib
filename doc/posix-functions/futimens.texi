@@ -29,7 +29,7 @@ Linux kernel 2.6.32, Solaris 11.1.
 @item
 Passing @code{AT_FDCWD} as the fd argument does not properly fail with
 @code{EBADF} on some systems:
-glibc 2.11, Solaris 11.
+glibc 2.11, musl libc, Solaris 11.
 @end itemize
 
 Portability problems not fixed by Gnulib:
