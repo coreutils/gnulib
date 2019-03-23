@@ -74,6 +74,9 @@
 # if (__cplusplus >= 201103 && !(__GNUC__ == 4 && __GNUC_MINOR__ == 7)) \
      || (_MSC_VER >= 1900)
 #  define _GL_NORETURN_FUNC [[noreturn]]
+  /* clang++ supports the _Noreturn keyword, but g++ doesn't.  */
+# elif defined __clang__
+#  define _GL_NORETURN_FUNC _Noreturn
 # else
 #  define _GL_NORETURN_FUNC /* empty */
 # endif
