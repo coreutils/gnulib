@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -139,8 +139,16 @@ main ()
           gl_cv_func_getcwd_abort_bug=yes
         else
           gl_cv_func_getcwd_abort_bug=no
-        fi],
-       [gl_cv_func_getcwd_abort_bug=yes])
+        fi
+       ],
+       [gl_cv_func_getcwd_abort_bug="guessing yes"])
     ])
-  AS_IF([test $gl_cv_func_getcwd_abort_bug = yes], [$1], [$2])
+  case "$gl_cv_func_getcwd_abort_bug" in
+    *yes)
+      $1
+      ;;
+    *)
+      $2
+      ;;
+  esac
 ])

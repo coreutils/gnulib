@@ -1,4 +1,4 @@
-# poll.m4 serial 18
+# poll.m4 serial 19
 dnl Copyright (c) 2003, 2005-2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -54,16 +54,19 @@ AC_DEFUN([gl_FUNC_POLL],
 #if (defined(__APPLE__) && defined(__MACH__)) || defined(_AIX)
 This is MacOSX or AIX
 #endif
-], [gl_cv_func_poll=no], [gl_cv_func_poll=yes])])])
+], [gl_cv_func_poll="guessing no"], [gl_cv_func_poll="guessing yes"])])])
   fi
-  if test $gl_cv_func_poll != yes; then
-    AC_CHECK_FUNC([poll], [ac_cv_func_poll=yes], [ac_cv_func_poll=no])
-    if test $ac_cv_func_poll = no; then
-      HAVE_POLL=0
-    else
-      REPLACE_POLL=1
-    fi
-  fi
+  case "$gl_cv_func_poll" in
+    *yes) ;;
+    *)
+      AC_CHECK_FUNC([poll], [ac_cv_func_poll=yes], [ac_cv_func_poll=no])
+      if test $ac_cv_func_poll = no; then
+        HAVE_POLL=0
+      else
+        REPLACE_POLL=1
+      fi
+      ;;
+  esac
   if test $HAVE_POLL = 0 || test $REPLACE_POLL = 1; then
     :
   else

@@ -1,4 +1,4 @@
-# malloc.m4 serial 17
+# malloc.m4 serial 18
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -34,13 +34,20 @@ AC_DEFUN([_AC_FUNC_MALLOC_IF],
           # Guess yes on platforms where we know the result.
           *-gnu* | gnu* | freebsd* | netbsd* | openbsd* \
           | hpux* | solaris* | cygwin* | mingw*)
-            ac_cv_func_malloc_0_nonnull=yes ;;
+            ac_cv_func_malloc_0_nonnull="guessing yes" ;;
           # If we don't know, assume the worst.
-          *) ac_cv_func_malloc_0_nonnull=no ;;
+          *) ac_cv_func_malloc_0_nonnull="guessing no" ;;
         esac
        ])
     ])
-  AS_IF([test $ac_cv_func_malloc_0_nonnull = yes], [$1], [$2])
+  case "$ac_cv_func_malloc_0_nonnull" in
+    *yes)
+      $1
+      ;;
+    *)
+      $2
+      ;;
+  esac
 ])# _AC_FUNC_MALLOC_IF
 
 ])

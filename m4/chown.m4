@@ -1,4 +1,4 @@
-# serial 30
+# serial 31
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2019 Free Software
@@ -196,13 +196,16 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN_FOLLOWS_SYMLINK],
         ]])],
         [gl_cv_func_chown_follows_symlink=yes],
         [gl_cv_func_chown_follows_symlink=no],
-        [gl_cv_func_chown_follows_symlink=yes]
+        [gl_cv_func_chown_follows_symlink="guessing yes"]
       )
     ]
   )
 
-  if test $gl_cv_func_chown_follows_symlink = no; then
-    AC_DEFINE([CHOWN_MODIFIES_SYMLINK], [1],
-      [Define if chown modifies symlinks.])
-  fi
+  case "$gl_cv_func_chown_follows_symlink" in
+    *yes) ;;
+    *)
+      AC_DEFINE([CHOWN_MODIFIES_SYMLINK], [1],
+        [Define if chown modifies symlinks.])
+      ;;
+  esac
 ])
