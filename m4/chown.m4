@@ -1,4 +1,4 @@
-# serial 31
+# serial 32
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2019 Free Software
@@ -109,10 +109,12 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
         [gl_cv_func_chown_slash_works=yes],
         [gl_cv_func_chown_slash_works=no],
         [case "$host_os" in
-                   # Guess yes on glibc systems.
-           *-gnu*) gl_cv_func_chown_slash_works="guessing yes" ;;
-                   # If we don't know, assume the worst.
-           *)      gl_cv_func_chown_slash_works="guessing no" ;;
+                    # Guess yes on glibc systems.
+           *-gnu*)  gl_cv_func_chown_slash_works="guessing yes" ;;
+                    # Guess yes on musl systems.
+           *-musl*) gl_cv_func_chown_slash_works="guessing yes" ;;
+                    # If we don't know, assume the worst.
+           *)       gl_cv_func_chown_slash_works="guessing no" ;;
          esac
         ])
       rm -f conftest.link conftest.file])
@@ -145,10 +147,12 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
         [gl_cv_func_chown_ctime_works=yes],
         [gl_cv_func_chown_ctime_works=no],
         [case "$host_os" in
-                   # Guess yes on glibc systems.
-           *-gnu*) gl_cv_func_chown_ctime_works="guessing yes" ;;
-                   # If we don't know, assume the worst.
-           *)      gl_cv_func_chown_ctime_works="guessing no" ;;
+                    # Guess yes on glibc systems.
+           *-gnu*)  gl_cv_func_chown_ctime_works="guessing yes" ;;
+                    # Guess yes on musl systems.
+           *-musl*) gl_cv_func_chown_ctime_works="guessing yes" ;;
+                    # If we don't know, assume the worst.
+           *)       gl_cv_func_chown_ctime_works="guessing no" ;;
          esac
         ])
       rm -f conftest.file])

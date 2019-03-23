@@ -1,4 +1,4 @@
-# serial 14
+# serial 15
 
 # Copyright (C) 2001, 2003-2004, 2006, 2008-2019 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -62,6 +62,8 @@ AC_DEFUN([gl_FUNC_MKDIR],
       [case "$host_os" in
                         # Guess yes on glibc systems.
          *-gnu* | gnu*) gl_cv_func_mkdir_trailing_dot_works="guessing yes" ;;
+                        # Guess yes on musl systems.
+         *-musl*)       gl_cv_func_mkdir_trailing_dot_works="guessing yes" ;;
                         # Guess no on native Windows.
          mingw*)        gl_cv_func_mkdir_trailing_dot_works="guessing no" ;;
                         # If we don't know, assume the worst.

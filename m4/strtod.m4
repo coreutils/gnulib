@@ -1,4 +1,4 @@
-# strtod.m4 serial 24
+# strtod.m4 serial 25
 dnl Copyright (C) 2002-2003, 2006-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -115,9 +115,11 @@ numeric_equal (double x, double y)
            ],
            [gl_cv_func_strtod_works="guessing yes"],
            [case "$host_os" in
-                      # Guess yes on native Windows.
-              mingw*) gl_cv_func_strtod_works="guessing yes" ;;
-              *)      gl_cv_func_strtod_works="guessing no" ;;
+                       # Guess yes on musl systems.
+              *-musl*) gl_cv_func_strtod_works="guessing yes" ;;
+                       # Guess yes on native Windows.
+              mingw*)  gl_cv_func_strtod_works="guessing yes" ;;
+              *)       gl_cv_func_strtod_works="guessing no" ;;
             esac
            ])
         ])

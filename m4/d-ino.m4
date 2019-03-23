@@ -1,4 +1,4 @@
-# serial 18
+# serial 19
 
 dnl From Jim Meyering.
 dnl
@@ -40,12 +40,14 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
            [gl_cv_struct_dirent_d_ino=yes],
            [gl_cv_struct_dirent_d_ino=no],
            [case "$host_os" in
-                           # Guess yes on glibc systems with Linux kernel.
-              linux*-gnu*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
-                           # Guess no on native Windows.
-              mingw*)      gl_cv_struct_dirent_d_ino="guessing no" ;;
-                           # If we don't know, assume the worst.
-              *)           gl_cv_struct_dirent_d_ino="guessing no" ;;
+                            # Guess yes on glibc systems with Linux kernel.
+              linux*-gnu*)  gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                            # Guess yes on musl systems with Linux kernel.
+              linux*-musl*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
+                            # Guess no on native Windows.
+              mingw*)       gl_cv_struct_dirent_d_ino="guessing no" ;;
+                            # If we don't know, assume the worst.
+              *)            gl_cv_struct_dirent_d_ino="guessing no" ;;
             esac
            ])])
    case "$gl_cv_struct_dirent_d_ino" in

@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 16
+# stpncpy.m4 serial 17
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2019 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -7,6 +7,8 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gl_FUNC_STPNCPY],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+
   dnl Persuade glibc <string.h> to declare stpncpy().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
@@ -69,12 +71,18 @@ int main ()
 ]])],
         [gl_cv_func_stpncpy=yes],
         [gl_cv_func_stpncpy=no],
-        [AC_EGREP_CPP([Thanks for using GNU], [
+        [dnl Guess yes on glibc systems and musl systems.
+         AC_EGREP_CPP([Thanks for using GNU], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
   Thanks for using GNU
 #endif
-], [gl_cv_func_stpncpy="guessing yes"], [gl_cv_func_stpncpy="guessing no"])
+],         [gl_cv_func_stpncpy="guessing yes"],
+           [case "$host_os" in
+              *-musl*) gl_cv_func_stpncpy="guessing yes" ;;
+              *)       gl_cv_func_stpncpy="guessing no" ;;
+            esac
+           ])
         ])
     ])
     case "$gl_cv_func_stpncpy" in

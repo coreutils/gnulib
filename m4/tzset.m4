@@ -1,4 +1,4 @@
-# serial 11
+# serial 12
 
 # Copyright (C) 2003, 2007, 2009-2019 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -70,6 +70,8 @@ main ()
        [case "$host_os" in
                          # Guess all is fine on glibc systems.
           *-gnu* | gnu*) gl_cv_func_tzset_clobber="guessing no" ;;
+                         # Guess all is fine on musl systems.
+          *-musl*)       gl_cv_func_tzset_clobber="guessing no" ;;
                          # Guess no on native Windows.
           mingw*)        gl_cv_func_tzset_clobber="guessing no" ;;
                          # If we don't know, assume the worst.

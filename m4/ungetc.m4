@@ -1,4 +1,4 @@
-# ungetc.m4 serial 6
+# ungetc.m4 serial 7
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,12 +41,16 @@ AC_DEFUN_ONCE([gl_FUNC_UNGETC_WORKS],
            remove ("conftest.tmp");])],
         [gl_cv_func_ungetc_works=yes], [gl_cv_func_ungetc_works=no],
         [case "$host_os" in
-                                       # Guess yes on glibc and bionic systems.
-           *-gnu* | gnu* | *-android*) gl_cv_func_ungetc_works="guessing yes" ;;
-                                       # Guess yes on native Windows.
-           mingw*)                     gl_cv_func_ungetc_works="guessing yes" ;;
-                                       # If we don't know, assume the worst.
-           *)                          gl_cv_func_ungetc_works="guessing no" ;;
+                          # Guess yes on glibc systems.
+           *-gnu* | gnu*) gl_cv_func_ungetc_works="guessing yes" ;;
+                          # Guess yes on musl systems.
+           *-musl*)       gl_cv_func_ungetc_works="guessing yes" ;;
+                          # Guess yes on bionic systems.
+           *-android*)    gl_cv_func_ungetc_works="guessing yes" ;;
+                          # Guess yes on native Windows.
+           mingw*)        gl_cv_func_ungetc_works="guessing yes" ;;
+                          # If we don't know, assume the worst.
+           *)             gl_cv_func_ungetc_works="guessing no" ;;
          esac
         ])
     ])

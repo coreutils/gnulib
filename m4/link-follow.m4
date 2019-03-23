@@ -1,4 +1,4 @@
-# serial 20
+# serial 21
 dnl Run a program to determine whether link(2) follows symlinks.
 dnl Set LINK_FOLLOWS_SYMLINKS accordingly.
 
@@ -88,6 +88,8 @@ AC_DEFUN([gl_FUNC_LINK_FOLLOWS_SYMLINK],
             case "$host_os" in
                                   # On glibc/Linux we know the result.
               linux*-gnu* | gnu*) gl_cv_func_link_follows_symlink="guessing no" ;;
+                                  # On musl/Linux we know the result.
+              linux*-musl*)       gl_cv_func_link_follows_symlink="guessing no" ;;
                                   # Otherwise, we don't know.
               *)                  gl_cv_func_link_follows_symlink=unknown ;;
             esac

@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 # Determine whether getcwd aborts when the length of the working directory
 # name is unusually large.  Any length between 4k and 16k trigger the bug
 # when using glibc-2.4.90-9 or older.
@@ -13,6 +13,7 @@
 # gl_FUNC_GETCWD_ABORT_BUG([ACTION-IF-FOUND[, ACTION-IF-NOT-FOUND]])
 AC_DEFUN([gl_FUNC_GETCWD_ABORT_BUG],
 [
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_DECLS_ONCE([getcwd])
   AC_CHECK_HEADERS_ONCE([unistd.h])
   AC_REQUIRE([gl_PATHMAX_SNIPPET_PREREQ])
@@ -141,7 +142,13 @@ main ()
           gl_cv_func_getcwd_abort_bug=no
         fi
        ],
-       [gl_cv_func_getcwd_abort_bug="guessing yes"])
+       [case "$host_os" in
+                   # Guess no on musl systems.
+          *-musl*) gl_cv_func_getcwd_abort_bug="guessing no" ;;
+                   # Guess yes otherwise, even on glibc systems.
+          *)       gl_cv_func_getcwd_abort_bug="guessing yes"
+        esac
+       ])
     ])
   case "$gl_cv_func_getcwd_abort_bug" in
     *yes)
