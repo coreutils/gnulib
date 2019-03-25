@@ -123,11 +123,11 @@ extern "C" {
       amounts of output of unstyled text.  However, this is not a requirement:
       You may leave the non-default mode turned on all the time until the
       the program exits.
-   3. Once the non-default mode is activated, you may change the attributes
+   4. Once the non-default mode is activated, you may change the attributes
       (foreground color, background color, font weight, font posture, underline
       decoration, etc.) of the terminal.  On Unix, this is typically done by
       outputting appropriate escape sequences.
-   4. Once attributes are set, text output to the terminal will be rendered
+   5. Once attributes are set, text output to the terminal will be rendered
       with these attributes.
       Note: You MUST return the terminal to the default state before outputting
       a newline.
