@@ -294,7 +294,7 @@ num_processors_ignoring_omp (enum nproc_query query)
        MP_NAPROCS yields the number of processors available to unprivileged
        processes.  */
     int nprocs =
-      sysmp (query == NPROC_CURRENT && getpid () != 0
+      sysmp (query == NPROC_CURRENT && getuid () != 0
              ? MP_NAPROCS
              : MP_NPROCS);
     if (nprocs > 0)
