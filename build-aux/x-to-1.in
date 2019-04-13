@@ -41,7 +41,20 @@ aux="$4"
 output="$5"
 
 progname=`basename $aux .x`
-case "$PERL" in *"/missing perl") perlok=no;; *) perlok=yes;; esac
+# configure determined whether perl exists.
+case "$PERL" in
+  *"/missing perl")
+    perlok=no
+    ;;
+  *)
+    # Determine whether all the perl modules that help2man needs are installed.
+    if $PERL $HELP2MAN --help >/dev/null 2>/dev/null; then
+      perlok=yes
+    else
+      perlok=no
+    fi
+    ;;
+esac
 if test @CROSS_COMPILING@ = no && test -f $executable && test $perlok = yes; then
   echo "Updating man page $output"
   echo "$PERL $HELP2MAN --include=$aux $executable > $output"
