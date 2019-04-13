@@ -1,4 +1,4 @@
-# intl.m4 serial 34 (gettext-0.19.9)
+# intl.m4 serial 34 (gettext-0.20)
 dnl Copyright (C) 1995-2014, 2016-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,

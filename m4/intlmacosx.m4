@@ -1,4 +1,4 @@
-# intlmacosx.m4 serial 6 (gettext-0.19.9)
+# intlmacosx.m4 serial 6 (gettext-0.20)
 dnl Copyright (C) 2004-2014, 2016, 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
