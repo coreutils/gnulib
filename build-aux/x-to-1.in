@@ -18,9 +18,24 @@
 
 # This program creates a program's manual from the .x skeleton and its --help
 # output.
-# The .x skeleton is a file containing manual page text that is not part of the
-# --help output. It is passed to help2man via its --include option. Its format
-# is described in the help2man documentation.
+#
+# Usage: x-to-1 [OPTIONS] PERL HELP2MAN EXECUTABLE PROGRAM.x PROGRAM.1
+# where
+#
+#   PERL        The file name of the perl program.
+#   HELP2MAN    Either the file name of the help2man perl script, or a complete
+#               command such as "$PERL -w -- help2man".
+#   EXECUTABLE  The file name of the program to invoke with --help.
+#   PROGRAM     The name of the program.
+#   PROGRAM.x   The .x skeleton is a file containing manual page text that is
+#               not part of the --help output. It is passed to help2man via
+#               its --include option. Its format is described in the help2man
+#               documentation.
+#   PROGRAM.1   The output file, a manual page in mandoc format.
+#
+# Options:
+#   --update    Don't overwrite the output if nothing would change.
+
 
 update=
 while true; do
@@ -40,6 +55,12 @@ executable="$3"
 aux="$4"
 output="$5"
 
+# Accommodate both possible forms of the HELP2MAN argument.
+case "$HELP2MAN" in
+  "$PERL "*) ;;
+  *) HELP2MAN="$PERL $HELP2MAN" ;;
+esac
+
 progname=`basename $aux .x`
 # configure determined whether perl exists.
 case "$PERL" in
@@ -48,7 +69,7 @@ case "$PERL" in
     ;;
   *)
     # Determine whether all the perl modules that help2man needs are installed.
-    if $PERL $HELP2MAN --help >/dev/null 2>/dev/null; then
+    if $HELP2MAN --help >/dev/null 2>/dev/null; then
       perlok=yes
     else
       perlok=no
@@ -57,9 +78,9 @@ case "$PERL" in
 esac
 if test @CROSS_COMPILING@ = no && test -f $executable && test $perlok = yes; then
   echo "Updating man page $output"
-  echo "$PERL $HELP2MAN --include=$aux $executable > $output"
+  echo "$HELP2MAN --include=$aux $executable > $output"
   rm -f t-$progname.1
-  $PERL $HELP2MAN --include=$aux $executable > t-$progname.1 || exit 1
+  $HELP2MAN --include=$aux $executable > t-$progname.1 || exit 1
   if test -n "$update"; then
     # In --update mode, don't overwrite the output if nothing would change.
     if cmp t-$progname.1 $output >/dev/null 2>&1; then
