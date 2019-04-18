@@ -136,7 +136,8 @@ void
 di_set_free (struct di_set *dis)
 {
   hash_free (dis->dev_map);
-  ino_map_free (dis->ino_map);
+  if (dis->ino_map)
+    ino_map_free (dis->ino_map);
   free (dis->probe);
   free (dis);
 }

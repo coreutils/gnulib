@@ -27,6 +27,9 @@ main (void)
 {
   struct di_set *dis = di_set_alloc ();
   ASSERT (dis);
+  di_set_free (dis); /* free with dis->ino_map still being NULL */
+  dis = di_set_alloc ();
+  ASSERT (dis);
 
   ASSERT (di_set_lookup (dis, 2, 5) == 0); /* initial lookup fails */
   ASSERT (di_set_insert (dis, 2, 5) == 1); /* first insertion succeeds */
