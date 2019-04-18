@@ -44,10 +44,10 @@ extern "C" {
    to the same values in VALLIST).  */
 
 ptrdiff_t argmatch (char const *arg, char const *const *arglist,
-                    char const *vallist, size_t valsize) _GL_ATTRIBUTE_PURE;
+                    void const *vallist, size_t valsize) _GL_ATTRIBUTE_PURE;
 
 # define ARGMATCH(Arg, Arglist, Vallist) \
-  argmatch (Arg, Arglist, (char const *) (Vallist), sizeof *(Vallist))
+  argmatch (Arg, Arglist, (void const *) (Vallist), sizeof *(Vallist))
 
 /* xargmatch calls this function when it fails.  This function should not
    return.  By default, this is a function that calls ARGMATCH_DIE which
@@ -70,10 +70,10 @@ void argmatch_invalid (char const *context, char const *value,
 /* Report on stderr the list of possible arguments.  */
 
 void argmatch_valid (char const *const *arglist,
-                     char const *vallist, size_t valsize);
+                     void const *vallist, size_t valsize);
 
 # define ARGMATCH_VALID(Arglist, Vallist) \
-  argmatch_valid (Arglist, (char const *) (Vallist), sizeof *(Vallist))
+  argmatch_valid (Arglist, (void const *) (Vallist), sizeof *(Vallist))
 
 
 
@@ -82,27 +82,27 @@ void argmatch_valid (char const *const *arglist,
 
 ptrdiff_t __xargmatch_internal (char const *context,
                                 char const *arg, char const *const *arglist,
-                                char const *vallist, size_t valsize,
+                                void const *vallist, size_t valsize,
                                 argmatch_exit_fn exit_fn);
 
 /* Programmer friendly interface to __xargmatch_internal. */
 
 # define XARGMATCH(Context, Arg, Arglist, Vallist)              \
   ((Vallist) [__xargmatch_internal (Context, Arg, Arglist,      \
-                                    (char const *) (Vallist),   \
+                                    (void const *) (Vallist),   \
                                     sizeof *(Vallist),          \
                                     argmatch_die)])
 
 /* Convert a value into a corresponding argument. */
 
-char const *argmatch_to_argument (char const *value,
+char const *argmatch_to_argument (void const *value,
                                   char const *const *arglist,
-                                  char const *vallist, size_t valsize)
+                                  void const *vallist, size_t valsize)
   _GL_ATTRIBUTE_PURE;
 
 # define ARGMATCH_TO_ARGUMENT(Value, Arglist, Vallist)                  \
   argmatch_to_argument (Value, Arglist,                                 \
-                        (char const *) (Vallist), sizeof *(Vallist))
+                        (void const *) (Vallist), sizeof *(Vallist))
 
 #ifdef  __cplusplus
 }
