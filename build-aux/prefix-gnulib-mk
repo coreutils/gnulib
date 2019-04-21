@@ -87,7 +87,6 @@ sub prefix_words ($)
 sub prefix_assignment ($$)
 {
   my ($lhs_and_assign_op, $rhs) = @_;
-  my $res;
 
   # Some variables are initialized by gnulib.mk, and we don't want
   # that.  Change '=' to '+='.
@@ -95,21 +94,35 @@ sub prefix_assignment ($$)
     {
       # Do not change the RHS, which specifies the GPERF program.
     }
+  # Don't change variables such as HAVE_INCLUDE_NEXT.
+  elsif ($lhs_and_assign_op =~ /^HAVE_/)
+    {
+    }
   elsif ($lhs_and_assign_op =~
       /^(SUBDIRS|EXTRA_DIST|BUILT_SOURCES|SUFFIXES|MOSTLYCLEANFILES
-         |CLEANFILES|DISTCLEANFILES|MAINTAINERCLEANFILES|AM_CFLAGS
-         |AM_CPPFLAGS|AM_GNU_GETTEXT)\ =/x)
+         |CLEANFILES|DISTCLEANFILES|MAINTAINERCLEANFILES
+         |AM_GNU_GETTEXT)\ =/x)
     {
       $lhs_and_assign_op =~ s/=/+=/;
+    }
+  # We don't want things such as AM_CPPFLAGS +=
+  # -DDEFAULT_TEXT_DOMAIN=\"bison-gnulib\" to apply to the whole
+  # Makefile.in: scope it to the library: libbison_a_CPPFLAGS =
+  # $(AM_CPPFLAGS) -DDEFAULT_TEXT_DOMAIN=\"bison-gnulib\".
+  elsif ($lhs_and_assign_op =~
+      /^(AM_CFLAGS|AM_CPPFLAGS)\ \+?=/x)
+    {
+      $lhs_and_assign_op =~ s/^AM_(\w+)\ \+?=/${lib_name}_$1 =/;
+      $rhs = " \$(AM_$1)$rhs";
     }
   # We don't want to inherit gnulib's AUTOMAKE_OPTIONS, comment them.
   elsif ($lhs_and_assign_op =~ /^AUTOMAKE_OPTIONS =/)
     {
       $lhs_and_assign_op =~ s/^/# /;
     }
+  # Elide any SUFFIXES assignment or concatenation.
   elsif ($lhs_and_assign_op =~ /^SUFFIXES /)
     {
-      # Elide any SUFFIXES assignment or concatenation.
       $lhs_and_assign_op =~ s/^/# /;
     }
   # The words are (probably) paths to files in lib/: prefix them.
@@ -118,11 +131,11 @@ sub prefix_assignment ($$)
       $rhs = prefix_words($rhs)
     }
 
-  # Variables which name depend on the location: libbison_a_SOURCES =>
+  # Variables whose name depend on the location: libbison_a_SOURCES =>
   # lib_libbison_a_SOURCES.
   $lhs_and_assign_op =~ s/($lib_name)/lib_$1/g;
 
-  return $lhs_and_assign_op . $rhs;
+  $lhs_and_assign_op . $rhs;
 }
 
 # prefix $CONTENTS
