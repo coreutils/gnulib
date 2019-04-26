@@ -151,17 +151,20 @@ full_read (int fd, void *buf, size_t count)
 static int executable_fd = -1;
 #endif
 
+/* Define this function only when it's needed.  */
+#if !(defined WINDOWS_NATIVE || defined __EMX__)
+
 /* Tests whether a given pathname may belong to the executable.  */
 static bool
 maybe_executable (const char *filename)
 {
   /* The native Windows API lacks the access() function.  */
-#if !defined WINDOWS_NATIVE
+# if !defined WINDOWS_NATIVE
   if (access (filename, X_OK) < 0)
     return false;
-#endif
+# endif
 
-#if defined __linux__ || defined __CYGWIN__
+# if defined __linux__ || defined __CYGWIN__
   if (executable_fd >= 0)
     {
       /* If we already have an executable_fd, check that filename points to
@@ -179,10 +182,12 @@ maybe_executable (const char *filename)
             return false;
         }
     }
-#endif
+# endif
 
   return true;
 }
+
+#endif
 
 /* Determine the full pathname of the current executable, freshly allocated.
    Return NULL if unknown.
