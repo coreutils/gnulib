@@ -72,6 +72,7 @@ nonintr_read (int fd, void *buf, size_t count)
 
   return retval;
 }
+#undef read /* avoid warning related to gnulib module unistd */
 #define read nonintr_read
 
 PIPE_FILTER_AUX_INLINE ssize_t
