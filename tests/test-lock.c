@@ -120,6 +120,11 @@
 # include <unistd.h>
 #endif
 
+#if HAVE_DECL_ALARM
+# include <signal.h>
+# include <unistd.h>
+#endif
+
 #if ENABLE_DEBUGGING
 # define dbgprintf printf
 #else
@@ -715,6 +720,14 @@ test_once (void)
 int
 main ()
 {
+#if HAVE_DECL_ALARM
+  /* Declare failure if test takes too long, by using default abort
+     caused by SIGALRM.  */
+  int alarm_value = 600;
+  signal (SIGALRM, SIG_DFL);
+  alarm (alarm_value);
+#endif
+
 #if TEST_PTH_THREADS
   if (!pth_init ())
     abort ();

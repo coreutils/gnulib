@@ -11,6 +11,7 @@ yield
 
 configure.ac:
 AC_CHECK_HEADERS_ONCE([semaphore.h])
+AC_CHECK_DECLS_ONCE([alarm])
 
 Makefile.am:
 TESTS += test-rwlock1 test-lock test-once1 test-once2
