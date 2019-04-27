@@ -20,14 +20,11 @@
 /* Specification.  */
 #include "gl_array_map.h"
 
+#include <stdint.h>
 #include <stdlib.h>
 
 /* Checked size_t computations.  */
 #include "xsize.h"
-
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
 
 /* --------------------------- gl_map_t Data Type --------------------------- */
 

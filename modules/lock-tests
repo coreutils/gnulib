@@ -5,6 +5,7 @@ tests/test-once.c
 
 Depends-on:
 thread
+stdint
 usleep
 yield
 

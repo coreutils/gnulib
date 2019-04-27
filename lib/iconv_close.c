@@ -20,9 +20,6 @@
 #include <iconv.h>
 
 #include <stdint.h>
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
 
 int
 rpl_iconv_close (iconv_t cd)

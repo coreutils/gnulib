@@ -83,6 +83,7 @@
    an "OK" result even without ENABLE_LOCKING (on Linux/x86).  */
 #define REPEAT_COUNT 50000
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -587,7 +588,7 @@ once_execute (void)
 static void *
 once_contender_thread (void *arg)
 {
-  int id = (int) (long) arg;
+  int id = (int) (intptr_t) arg;
   int repeat;
 
   for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
@@ -647,7 +648,8 @@ test_once (void)
 
   /* Spawn the threads.  */
   for (i = 0; i < THREAD_COUNT; i++)
-    threads[i] = gl_thread_create (once_contender_thread, (void *) (long) i);
+    threads[i] =
+      gl_thread_create (once_contender_thread, (void *) (intptr_t) i);
 
   for (repeat = 0; repeat <= REPEAT_COUNT; repeat++)
     {

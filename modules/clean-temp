@@ -7,6 +7,7 @@ lib/clean-temp.c
 
 Depends-on:
 stdbool
+stdint
 unistd
 error
 fatal-signal

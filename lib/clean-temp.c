@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <limits.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -63,10 +64,6 @@
    Temporary directory names are usually not that long.  */
 #ifndef PATH_MAX
 # define PATH_MAX 1024
-#endif
-
-#ifndef uintptr_t
-# define uintptr_t unsigned long
 #endif
 
 

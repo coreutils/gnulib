@@ -26,9 +26,6 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include "unistr.h"
-# ifndef uintptr_t
-#  define uintptr_t unsigned long
-# endif
 #endif
 
 #if REPLACE_ICONV_UTF

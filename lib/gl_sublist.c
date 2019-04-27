@@ -20,11 +20,8 @@
 /* Specification.  */
 #include "gl_sublist.h"
 
+#include <stdint.h>
 #include <stdlib.h>
-
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
 
 /* -------------------------- gl_list_t Data Type -------------------------- */
 

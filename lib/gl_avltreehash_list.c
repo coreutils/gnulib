@@ -20,15 +20,11 @@
 /* Specification.  */
 #include "gl_avltreehash_list.h"
 
-#include <stdint.h> /* for SIZE_MAX */
+#include <stdint.h> /* for uintptr_t, SIZE_MAX */
 #include <stdlib.h>
 
 #include "gl_avltree_oset.h"
 #include "xsize.h"
-
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
 
 #define WITH_HASHTABLE 1
 

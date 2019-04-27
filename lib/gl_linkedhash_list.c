@@ -20,14 +20,10 @@
 /* Specification.  */
 #include "gl_linkedhash_list.h"
 
-#include <stdint.h> /* for SIZE_MAX */
+#include <stdint.h> /* for uintptr_t, SIZE_MAX */
 #include <stdlib.h>
 
 #include "xsize.h"
-
-#ifndef uintptr_t
-# define uintptr_t unsigned long
-#endif
 
 #define WITH_HASHTABLE 1
 
