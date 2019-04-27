@@ -3294,15 +3294,16 @@ gl_locale_name_posix (int category, const char *categoryname)
     /* Convert the locale name from the format returned by setlocale() or found
        in the environment variables to the XPG syntax.  */
 #if defined WINDOWS_NATIVE
-    {
-      /* Convert locale name to LCID.  We don't want to use
-         LocaleNameToLCID because (a) it is only available since Vista,
-         and (b) it doesn't accept locale names returned by 'setlocale'.  */
-      LCID lcid = get_lcid (locname);
+    if (locname != NULL)
+      {
+        /* Convert locale name to LCID.  We don't want to use
+           LocaleNameToLCID because (a) it is only available since Vista,
+           and (b) it doesn't accept locale names returned by 'setlocale'.  */
+        LCID lcid = get_lcid (locname);
 
-      if (lcid > 0)
-        return gl_locale_name_from_win32_LCID (lcid);
-    }
+        if (lcid > 0)
+          return gl_locale_name_from_win32_LCID (lcid);
+      }
 #endif
     return locname;
   }
