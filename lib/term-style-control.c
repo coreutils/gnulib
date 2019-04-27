@@ -812,41 +812,43 @@ ensure_other_signal_handlers (void)
 
   if (!signal_handlers_installed)
     {
-      unsigned int i;
-
       /* Install the handlers for the fatal signals.  */
       at_fatal_signal (fatal_signal_handler);
 
       #if defined SIGCONT
 
       /* Install the handlers for the stopping and continuing signals.  */
-      for (i = 0; i < num_job_control_signals; i++)
-        {
-          int sig = job_control_signals[i];
+      {
+        unsigned int i;
 
-          if (sig == SIGCONT)
-            /* Already handled in ensure_continuing_signal_handler.  */
-            ;
-          else if (!is_ignored (sig))
-            {
-              struct sigaction action;
-              action.sa_handler = &stopping_signal_handler;
-              /* If we get a stopping or continuing signal while executing
-                 stopping_signal_handler, enter it recursively, since it is
-                 reentrant.  Hence no SA_RESETHAND.  */
-              action.sa_flags = SA_NODEFER;
-              sigemptyset (&action.sa_mask);
-              sigaction (sig, &action, NULL);
-            }
-          #if DEBUG_SIGNALS
-          else
-            {
-              fprintf (stderr, "Signal %d is ignored. Not installing a handler!\n",
-                       sig);
-              fflush (stderr);
-            }
-          #endif
-        }
+        for (i = 0; i < num_job_control_signals; i++)
+          {
+            int sig = job_control_signals[i];
+
+            if (sig == SIGCONT)
+              /* Already handled in ensure_continuing_signal_handler.  */
+              ;
+            else if (!is_ignored (sig))
+              {
+                struct sigaction action;
+                action.sa_handler = &stopping_signal_handler;
+                /* If we get a stopping or continuing signal while executing
+                   stopping_signal_handler, enter it recursively, since it is
+                   reentrant.  Hence no SA_RESETHAND.  */
+                action.sa_flags = SA_NODEFER;
+                sigemptyset (&action.sa_mask);
+                sigaction (sig, &action, NULL);
+              }
+            #if DEBUG_SIGNALS
+            else
+              {
+                fprintf (stderr, "Signal %d is ignored. Not installing a handler!\n",
+                         sig);
+                fflush (stderr);
+              }
+            #endif
+          }
+      }
 
       #endif
 
