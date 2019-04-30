@@ -29,12 +29,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gettext.h"
-#define _(msgid) gettext (msgid)
-
 #include "error.h"
 #include "quotearg.h"
-#include "quote.h"
 #include "getprogname.h"
 
 #if USE_UNLOCKED_IO

@@ -59,40 +59,96 @@ static const enum backup_type backup_vals[] =
   numbered_backups, numbered_backups, numbered_backups
 };
 
+ARGMATCH_DEFINE_GROUP(backup, enum backup_type);
+
+static const argmatch_backup_doc argmatch_backup_docs[] =
+{
+  { "no",       N_("never make backups (even if --backup is given)") },
+  { "numbered", N_("make numbered backups") },
+  { "existing", N_("numbered if numbered backups exist, simple otherwise") },
+  { "simple",   N_("always make simple backups") },
+  { NULL, NULL }
+};
+
+static const argmatch_backup_arg argmatch_backup_args[] =
+{
+  { "no",                no_backups },
+  { "none",              no_backups },
+  { "off",               no_backups },
+  { "simple",            simple_backups },
+  { "never",             simple_backups },
+  { "single",            simple_backups },
+  { "existing",          numbered_existing_backups },
+  { "nil",               numbered_existing_backups },
+  { "numbered-existing", numbered_existing_backups },
+  { "numbered",          numbered_backups },
+  { "t",                 numbered_backups },
+  { "newstyle",          numbered_backups },
+  { NULL, no_backups }
+};
+
+const argmatch_backup_group_type argmatch_backup_group =
+{
+  argmatch_backup_docs,
+  argmatch_backup_args,
+  N_("\
+The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n\
+The version control method may be selected via the --backup option or through\n\
+the VERSION_CONTROL environment variable.  Here are the values:\n"),
+  NULL
+};
+
 int
 main (int argc, char *argv[])
 {
+#define CHECK(Input, Output)                                            \
+  do {                                                                  \
+    ASSERT (ARGMATCH (Input, backup_args, backup_vals) == Output);      \
+    ASSERT (argmatch_backup_value (Input) == Output);                   \
+    if (0 <= Output)                                                    \
+      {                                                                 \
+        enum backup_type val = argmatch_backup_args[Output].val;        \
+        ASSERT (*argmatch_backup_xvalue ("test", Input) == val);        \
+        ASSERT (*argmatch_backup_xvalue ("test",                        \
+                                         argmatch_backup_argument (&val)) \
+                == val);                                                \
+      }                                                                 \
+  } while (0)
+
   /* Not found.  */
-  ASSERT (ARGMATCH ("klingon", backup_args, backup_vals) == -1);
+  CHECK ("klingon", -1);
 
   /* Exact match.  */
-  ASSERT (ARGMATCH ("none", backup_args, backup_vals) == 1);
-  ASSERT (ARGMATCH ("nil", backup_args, backup_vals) == 7);
+  CHECK ("none", 1);
+  CHECK ("nil", 7);
 
   /* Too long.  */
-  ASSERT (ARGMATCH ("nilpotent", backup_args, backup_vals) == -1);
+  CHECK ("nilpotent", -1);
 
   /* Abbreviated.  */
-  ASSERT (ARGMATCH ("simpl", backup_args, backup_vals) == 3);
-  ASSERT (ARGMATCH ("simp", backup_args, backup_vals) == 3);
-  ASSERT (ARGMATCH ("sim", backup_args, backup_vals) == 3);
+  CHECK ("simpl", 3);
+  CHECK ("simp", 3);
+  CHECK ("sim", 3);
 
   /* Exact match and abbreviated.  */
-  ASSERT (ARGMATCH ("numbered", backup_args, backup_vals) == 9);
-  ASSERT (ARGMATCH ("numbere", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("number", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("numbe", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("numb", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("num", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("nu", backup_args, backup_vals) == -2);
-  ASSERT (ARGMATCH ("n", backup_args, backup_vals) == -2);
+  CHECK ("numbered", 9);
+  CHECK ("numbere", -2);
+  CHECK ("number", -2);
+  CHECK ("numbe", -2);
+  CHECK ("numb", -2);
+  CHECK ("num", -2);
+  CHECK ("nu", -2);
+  CHECK ("n", -2);
 
   /* Ambiguous abbreviated.  */
-  ASSERT (ARGMATCH ("ne", backup_args, backup_vals) == -2);
+  CHECK ("ne", -2);
 
-  /* Ambiguous abbreviated, but same value.  */
-  ASSERT (ARGMATCH ("si", backup_args, backup_vals) == 3);
-  ASSERT (ARGMATCH ("s", backup_args, backup_vals) == 3);
+  /* Ambiguous abbreviated, but same value ("single" and "simple").  */
+  CHECK ("si", 3);
+  CHECK ("s", 3);
+#undef CHECK
+
+  argmatch_backup_usage (stdout);
 
   return 0;
 }

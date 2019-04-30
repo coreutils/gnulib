@@ -6,16 +6,17 @@ lib/argmatch.h
 lib/argmatch.c
 
 Depends-on:
-gettext-h
+c99
 error
-quotearg
-quote
 exitfail
-verify
+getprogname
+gettext-h
+memcmp
+quote
+quotearg
 stdbool
 stdlib
-memcmp
-getprogname
+verify
 
 configure.ac:
 

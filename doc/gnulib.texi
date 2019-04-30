@@ -6636,6 +6636,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Closed standard fds::
 * Container data types::
 * String Functions in C Locale::
+* Recognizing Option Arguments::
 * Quoting::
 * progname and getprogname::
 * gcd::
@@ -6673,6 +6674,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include containers.texi
 
 @include c-locale.texi
+
+@include argmatch.texi
 
 @include quote.texi
 
