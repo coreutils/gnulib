@@ -80,6 +80,7 @@ $LIBCSRC posix/regex_internal.h		lib
 $LIBCSRC posix/regexec.c		lib
 $LIBCSRC time/timegm.c			lib
 $LIBCSRC time/mktime.c			lib
+$LIBCSRC time/mktime-internal.h		lib
 #
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoll.c		lib gpl
