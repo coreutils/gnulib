@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate December 5, 2018
+@set lastupdate April 28, 2019
 @c %**end of header
 @documentencoding UTF-8
 
@@ -1603,7 +1603,7 @@ information about GPG, see @url{https://www.gnu.org/software/gpg}.
 @item
 Compose a message with the following items in some @var{msgfile}.
 Then GPG-sign it by running @code{gpg --clearsign @var{msgfile}}, and
-finally email the resulting @file{@var{msgfile}.asc} to
+finally email the resulting @file{@var{msgfile}.asc} as an attachment to
 @email{ftp-upload@@gnu.org}.
 
 @enumerate
@@ -2842,7 +2842,6 @@ When you get enough volunteers, send another message to the list saying
 
 Local variables:
 eval: (add-hook 'before-save-hook 'time-stamp)
-time-stamp-start: "@set lastupdate "
 time-stamp-start: "@set lastupdate "
 time-stamp-end: "$"
 time-stamp-format: "%:b %:d, %:y"
