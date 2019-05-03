@@ -1,23 +1,25 @@
 # options to filter out, and why
 --all-warnings				alias for -Wall
 --extra-warnings			alias for -Wextra
+-Wabi					this is now a no-op
 -Wabi-tag				c++
 -Wabi=					c++
--Wabi					this is now a no-op
 -Waggregate-return			obsolescent
 -Waliasing				fortran
 -Walign-commons				fortran
 -Waligned-new=[none|global|all]		c++
--Walloca				we like alloca in small doses
--Walloca-larger-than=<number>		FIXME: choose something sane?
 -Walloc-size-larger-than=		handled specially by gl_MANYWARN_ALL_GCC
 -Walloc-zero				Gnulib fixes this problem
+-Walloca				we like alloca in small doses
+-Walloca-larger-than=<number>		FIXME: choose something sane?
 -Wampersand				fortran
 -Wargument-mismatch			fortran
 -Warray-bounds				covered by -Warray-bounds=
 -Warray-bounds=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Warray-temporaries			fortran
 -Wassign-intercept			objc/objc++
+-Wattribute-alias			covered by -Wattribute-alias=2
+-Wattribute-alias=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Wc++-compat				only useful for code meant to be compiled by a C++ compiler
 -Wc++0x-compat				c++
 -Wc++11-compat				c++
@@ -25,13 +27,16 @@
 -Wc++17-compat				c++
 -Wc++1z-compat				c++
 -Wc-binding-type			fortran
+-Wc11-c2x-compat			c compatibility
 -Wc90-c99-compat			c compatibility
 -Wc99-c11-compat			c compatibility
 -Wcast-qual				FIXME maybe? too much noise; encourages bad changes
+-Wcast-result				D
 -Wcatch-value				c++
 -Wcatch-value=<0,3>			c++
 -Wcharacter-truncation			fortran
 -Wchkp					deprecated
+-Wclass-conversion			c++ and objc++
 -Wclass-memaccess			c++
 -Wcompare-reals				fortran
 -Wconditionally-supported		c++ and objc++
@@ -42,6 +47,8 @@
 -Wdeclaration-after-statement		FIXME: do not want.  others may
 -Wdelete-incomplete			c++ and objc++
 -Wdelete-non-virtual-dtor		c++
+-Wdeprecated-copy			c++ and objc++
+-Wdeprecated-copy-dtor			c++ and objc++
 -Wdo-subscript				fortran
 -Weffc++				c++
 -Werror-implicit-function-declaration	deprecated
@@ -49,25 +56,26 @@
 -Wfloat-conversion			FIXME maybe? borderline.  some will want this
 -Wfloat-equal				FIXME maybe? borderline.  some will want this
 -Wformat				covered by -Wformat=2
--Wformat=<0,2>				gcc --help=warnings artifact
 -Wformat-overflow<0,2>			gcc --help=warnings artifact
 -Wformat-overflow=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Wformat-truncation			covered by -Wformat-truncation=2
 -Wformat-truncation=<0,2>		handled specially by gl_MANYWARN_ALL_GCC
--Wframe-larger-than=<number>		FIXME: choose something sane?
+-Wformat=<0,2>				gcc --help=warnings artifact
+-Wframe-larger-than=<byte-size>		FIXME: choose something sane?
 -Wfunction-elimination			fortran
 -Wimplicit-fallthrough			covered by -Wimplicit-fallthrough=2
 -Wimplicit-fallthrough=<0,5>		handled specially by gl_MANYWARN_ALL_GCC
 -Wimplicit-interface			fortran
 -Wimplicit-procedure			fortran
 -Winherited-variadic-ctor		c++
+-Winit-list-lifetime			c++ and objc++
 -Winteger-division			fortran
 -Wintrinsic-shadow			fortran
 -Wintrinsics-std			fortran
 -Winvalid-offsetof			c++ and objc++
 -Wjump-misses-init			only useful for code meant to be compiled by a C++ compiler
 -Wlarger-than-				gcc --help=warnings artifact
--Wlarger-than=<number>			FIXME: choose something sane?
+-Wlarger-than=<byte-size>		FIXME: choose something sane?
 -Wline-truncation			fortran
 -Wliteral-suffix			c++ and objc++
 -Wlong-long				obsolescent
@@ -76,6 +84,9 @@
 -Wmissing-noreturn			obsolescent
 -Wmultiple-inheritance			c++ and objc++
 -Wnamespaces				c++
+-Wno-alloc-size-larger-than		see -Walloc-size-larger-than
+-Wno-alloca-larger-than			see -Walloca-larger-than
+-Wno-vla-larger-than			see -Wvla-larger-than
 -Wnoexcept				c++
 -Wnoexcept-type				c++
 -Wnon-template-friend			c++
@@ -87,31 +98,34 @@
 -Woverride-init-side-effects		c++ and objc++
 -Wpadded				FIXME maybe?  warns about "stabil" member in /usr/include/bits/timex.h
 -Wpedantic				FIXME: too strict?
+-Wpessimizing-move			c++ and objc++
 -Wplacement-new				c++
 -Wplacement-new=<0,2>			c++
 -Wpmf-conversions			c++ and objc++
+-Wprio-ctor-dtor			c++
 -Wproperty-assign-default		objc++
 -Wprotocol				objc++
 -Wreal-q-constant			fortran
 -Wrealloc-lhs				fortran
 -Wrealloc-lhs-all			fortran
 -Wredundant-decls			FIXME maybe? many _gl_cxxalias_dummy FPs
+-Wredundant-move			c++ and objc++
 -Wregister				c++ and objc++
 -Wreorder				c++ and objc++
 -Wselector				objc and objc++
--Wshadow-ivar				objc
--Wshadow=compatible-local		covered by -Wshadow
 -Wshadow-compatible-local		covered by -Wshadow
+-Wshadow-ivar				objc
+-Wshadow-local				covered by -Wshadow
+-Wshadow=compatible-local		covered by -Wshadow
 -Wshadow=global				covered by -Wshadow
 -Wshadow=local				covered by -Wshadow
--Wshadow-local				covered by -Wshadow
 -Wshift-overflow			covered by -Wshift-overflow=2
 -Wshift-overflow=<0,2>			gcc --help=warnings artifact
 -Wsign-compare				FIXME maybe? borderline.  some will want this
 -Wsign-conversion			FIXME maybe? borderline.  some will want this
 -Wsign-promo				c++ and objc++
 -Wsized-deallocation			c++ and objc++
--Wstack-usage=<number>			FIXME: choose something sane?
+-Wstack-usage=<byte-size>		FIXME: choose something sane?
 -Wstrict-aliasing=<0,3>			FIXME: choose something sane?
 -Wstrict-null-sentinel			c++ and objc++
 -Wstrict-overflow=<0,5>			FIXME: choose something sane?
