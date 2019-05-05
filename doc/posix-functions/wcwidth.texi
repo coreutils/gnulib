@@ -18,6 +18,10 @@ glibc 2.8.
 This function handles combining characters in UTF-8 locales incorrectly on some
 platforms:
 Mac OS X 10.3, OpenBSD 5.8.
+@item
+This function returns 2 for characters with ambiguous east asian width, even in
+Western locales, on some platforms:
+Solaris 11.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:
