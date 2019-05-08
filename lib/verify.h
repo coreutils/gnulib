@@ -32,18 +32,18 @@
    down we could also use it with other compilers, but since this
    affects only the quality of diagnostics, why bother?  */
 #if (4 < __GNUC__ + (6 <= __GNUC_MINOR__) \
-     && (201112L <= __STDC_VERSION__  || !defined __STRICT_ANSI__) \
+     && (201112L <= __STDC_VERSION__ || !defined __STRICT_ANSI__) \
      && !defined __cplusplus)
 # define _GL_HAVE__STATIC_ASSERT 1
 #endif
-#if (6 <= __GNUC__) && defined __cplusplus
+#if 6 <= __GNUC__ && defined __cplusplus
 # define _GL_HAVE_STATIC_ASSERT 1
 #endif
 
 /* FreeBSD 9.1 <sys/cdefs.h>, included by <stddef.h> and lots of other
    system headers, defines a conflicting _Static_assert that is no
    better than ours; override it.  */
-#ifndef _GL_HAVE_STATIC_ASSERT
+#ifndef _GL_HAVE__STATIC_ASSERT
 # include <stddef.h>
 # undef _Static_assert
 #endif
