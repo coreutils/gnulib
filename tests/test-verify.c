@@ -39,7 +39,7 @@ verify (1 == 1); verify (1 == 1); /* should be ok */
 
 enum
 {
-  item = verify_true (1 == 1) * 0 + 17 /* should be ok */
+  item = verify_expr (1 == 1, 10) * 0 + 17 /* should be ok */
 };
 
 static int

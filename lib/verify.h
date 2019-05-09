@@ -149,9 +149,9 @@
      which do not support _Static_assert, also do not warn about the
      last declaration mentioned above.
 
-   * GCC warns if -Wnested-externs is enabled and verify() is used
+   * GCC warns if -Wnested-externs is enabled and 'verify' is used
      within a function body; but inside a function, you can always
-     arrange to use verify_expr() instead.
+     arrange to use verify_expr instead.
 
    * In C++, any struct definition inside sizeof is invalid.
      Use a template type to work around the problem.  */
@@ -235,16 +235,9 @@ template <int w>
    assert (R), there is no run-time overhead.
 
    There are two macros, since no single macro can be used in all
-   contexts in C.  verify_true (R) is for scalar contexts, including
+   contexts in C.  verify_expr (R, E) is for scalar contexts, including
    integer constant expression contexts.  verify (R) is for declaration
    contexts, e.g., the top level.  */
-
-/* Verify requirement R at compile-time, as an integer constant expression.
-   Return 1.  This is equivalent to verify_expr (R, 1).
-
-   verify_true is obsolescent; please use verify_expr instead.  */
-
-#define verify_true(R) _GL_VERIFY_TRUE (R)
 
 /* Verify requirement R at compile-time.  Return the value of the
    expression E.  */

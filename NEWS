@@ -55,6 +55,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-05-90  verify          verify_true (deprecated 2011-06-15) is removed.
+
 2019-02-02  c-strtod        This and related modules no longer define
                             the HAVE_C99_STRTOLD macro.  Programs requiring
                             standard strtold should use the strtold module.
