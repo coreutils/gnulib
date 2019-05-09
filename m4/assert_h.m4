@@ -14,9 +14,11 @@ AC_DEFUN([gl_ASSERT_H],
        [AC_LANG_PROGRAM(
           [[#include <assert.h>
             static_assert (2 + 2 == 4, "arithmetic doesn't work");
+            static_assert (2 + 2 == 4);
           ]],
           [[
             static_assert (sizeof (char) == 1, "sizeof doesn't work");
+            static_assert (sizeof (char) == 1);
           ]])],
        [gl_cv_static_assert=yes],
        [gl_cv_static_assert=no])])
