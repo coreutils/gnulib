@@ -70,7 +70,7 @@ base64_encode_fast (const char *restrict in, size_t inlen, char *restrict out)
 {
   while (inlen)
     {
-      *out++ = b64c[to_uchar (in[0]) >> 2];
+      *out++ = b64c[(to_uchar (in[0]) >> 2) & 0x3f];
       *out++ = b64c[((to_uchar (in[0]) << 4) + (to_uchar (in[1]) >> 4)) & 0x3f];
       *out++ = b64c[((to_uchar (in[1]) << 2) + (to_uchar (in[2]) >> 6)) & 0x3f];
       *out++ = b64c[to_uchar (in[2]) & 0x3f];
@@ -103,7 +103,7 @@ base64_encode (const char *restrict in, size_t inlen,
 
   while (inlen && outlen)
     {
-      *out++ = b64c[to_uchar (in[0]) >> 2];
+      *out++ = b64c[(to_uchar (in[0]) >> 2) & 0x3f];
       if (!--outlen)
         break;
       *out++ = b64c[((to_uchar (in[0]) << 4)
