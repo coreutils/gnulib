@@ -18,9 +18,9 @@
 
 #include <config.h>
 
-#if USE_LINUX_CRYPTO_API
-
 #include "af_alg.h"
+
+#if USE_LINUX_CRYPTO_API
 
 #include <unistd.h>
 #include <string.h>
