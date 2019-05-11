@@ -116,12 +116,22 @@ Examples:
            --symlink-regex \\
            foobar-1.0.tar.gz foobar-1.0.tar.xz
 
-4. Upload foobar-0.9.90.tar.gz to two sites:
+4. Create a symbolic link foobar-latest.tar.gz -> foobar-1.0.tar.gz
+   and likewise for the corresponding .sig file:
+  gnupload --to ftp.gnu.org:foobar \\
+           --symlink foobar-1.0.tar.gz     foobar-latest.tar.gz \\
+                     foobar-1.0.tar.gz.sig foobar-latest.tar.gz.sig
+  or (equivalent):
+  gnupload --to ftp.gnu.org:foobar \\
+           --symlink foobar-1.0.tar.gz     foobar-latest.tar.gz \\
+           --symlink foobar-1.0.tar.gz.sig foobar-latest.tar.gz.sig
+
+5. Upload foobar-0.9.90.tar.gz to two sites:
   gnupload --to alpha.gnu.org:foobar \\
            --to sources.redhat.com:~ftp/pub/foobar \\
            foobar-0.9.90.tar.gz
 
-5. Delete oopsbar-0.9.91.tar.gz and upload foobar-0.9.91.tar.gz
+6. Delete oopsbar-0.9.91.tar.gz and upload foobar-0.9.91.tar.gz
    (the -- terminates the list of files to delete):
   gnupload --to alpha.gnu.org:foobar \\
            --to sources.redhat.com:~ftp/pub/foobar \\
