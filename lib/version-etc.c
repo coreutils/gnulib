@@ -82,14 +82,17 @@ version_etc_arn (FILE *stream,
      locale.  Otherwise, do not translate "(C)"; leave it as-is.  */
   fprintf (stream, version_etc_copyright, _("(C)"), COPYRIGHT_YEAR);
 
-  fputs (_("\
-\n\
-License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\n\
+  fputs ("\n", stream);
+
+  /* TRANSLATORS: The %s placeholder is the web address of the GPL license.  */
+  fprintf (stream, _("\
+License GPLv3+: GNU GPL version 3 or later <%s>.\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
-\n\
 "),
-         stream);
+           "https://gnu.org/licenses/gpl.html");
+
+  fputs ("\n", stream);
 
   switch (n_authors)
     {
@@ -238,11 +241,12 @@ version_etc (FILE *stream,
 void
 emit_bug_reporting_address (void)
 {
+  fputs ("\n", stdout);
   /* TRANSLATORS: The placeholder indicates the bug-reporting address
      for this package.  Please add _another line_ saying
      "Report translation bugs to <...>\n" with the address for translation
      bugs (typically your translation team's web or email address).  */
-  printf (_("\nReport bugs to: %s\n"), PACKAGE_BUGREPORT);
+  printf (_("Report bugs to: %s\n"), PACKAGE_BUGREPORT);
 #ifdef PACKAGE_PACKAGER_BUG_REPORTS
   printf (_("Report %s bugs to: %s\n"), PACKAGE_PACKAGER,
           PACKAGE_PACKAGER_BUG_REPORTS);
@@ -250,9 +254,9 @@ emit_bug_reporting_address (void)
 #ifdef PACKAGE_URL
   printf (_("%s home page: <%s>\n"), PACKAGE_NAME, PACKAGE_URL);
 #else
-  printf (_("%s home page: <https://www.gnu.org/software/%s/>\n"),
-          PACKAGE_NAME, PACKAGE);
+  printf (_("%s home page: <%s>\n"),
+          PACKAGE_NAME, "https://www.gnu.org/software/" PACKAGE "/");
 #endif
-  fputs (_("General help using GNU software: <https://www.gnu.org/gethelp/>\n"),
-         stdout);
+  printf (_("General help using GNU software: <%s>\n"),
+          "https://www.gnu.org/gethelp/");
 }
