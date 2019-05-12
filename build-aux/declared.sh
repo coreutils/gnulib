@@ -72,7 +72,7 @@ while test $# -gt 0; do
    --version | --versio | --versi | --vers | --ver | --ve | --v )
       func_version
       exit 0 ;;
-    -- )      # Stop option prcessing
+    -- )      # Stop option processing
       shift; break ;;
     -* )
       func_fatal_error "unrecognized option: $option"
