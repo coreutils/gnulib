@@ -1,0 +1,291 @@
+#! /bin/sh
+#
+# Copyright (C) 2019 Free Software Foundation, Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+# This program is a wizard that helps a maintainer update the libtool
+# version of a shared library, according to the documentation section
+# 'Updating version info'
+# <https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html>.
+#
+# Let's call the three parts of the version
+#   LTV_CURRENT
+#   LTV_REVISION
+#   LTV_AGE
+#
+# The list of steps given in this documentation section
+#   - If the library source code has changed at all since the last update,
+#     then increment LTV_REVISION.
+#   - If any interfaces have been added, removed, or changed since the last
+#     update, increment LTV_CURRENT and set LTV_REVISION to 0.
+#   - If any interfaces have been added since the last public release, then
+#     increment LTV_AGE.
+#   - If any interfaces have been removed or changed since the last public
+#     release, then set LTV_AGE to 0.
+# leads to mistakes, because
+#   - It does not say what "interfaces" are.
+#   - It does not enforce that applying the second, third, or fourth rule
+#     is only possible after applying the first rule.
+#   - It does not enforce that applying the third or fourth rule is only
+#     possible after applying the second rule.
+
+# func_usage
+# outputs to stdout the --help usage message.
+func_usage ()
+{
+  echo "\
+Usage: libtool-next-version [OPTION]... PREVIOUS-LIBRARY CURRENT-LIBRARY
+
+Determines the next version to use for a libtool library.
+
+PREVIOUS-LIBRARY is the installed library (in .a or .so format) of the
+previous release.
+
+CURRENT-LIBRARY is the installed library (in .a or .so format) of the current
+release candidate.
+
+Options:
+      --help           print this help and exit
+      --version        print version information and exit
+
+Report bugs to <bruno@clisp.org>."
+}
+
+# func_version
+# outputs to stdout the --version message.
+func_version ()
+{
+  echo "libtool-next-version (GNU gnulib)"
+  echo "Copyright (C) 2019 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law."
+  echo "Written by" "Bruno Haible"
+}
+
+# func_fatal_error message
+# outputs to stderr a fatal error message, and terminates the program.
+func_fatal_error ()
+{
+  echo "declared.sh: *** $1" 1>&2
+  echo "declared.sh: *** Stop." 1>&2
+  exit 1
+}
+
+# func_tmpdir
+# creates a temporary directory.
+# Sets variable
+# - tmp             pathname of freshly created temporary directory
+func_tmpdir ()
+{
+  # Use the environment variable TMPDIR, falling back to /tmp. This allows
+  # users to specify a different temporary directory, for example, if their
+  # /tmp is filled up or too small.
+  : ${TMPDIR=/tmp}
+  {
+    # Use the mktemp program if available. If not available, hide the error
+    # message.
+    tmp=`(umask 077 && mktemp -d -q "$TMPDIR/gtXXXXXX") 2>/dev/null` &&
+    test -n "$tmp" && test -d "$tmp"
+  } ||
+  {
+    # Use a simple mkdir command. It is guaranteed to fail if the directory
+    # already exists.  $RANDOM is bash specific and expands to empty in shells
+    # other than bash, ksh and zsh.  Its use does not increase security;
+    # rather, it minimizes the probability of failure in a very cluttered /tmp
+    # directory.
+    tmp=$TMPDIR/gt$$-$RANDOM
+    (umask 077 && mkdir "$tmp")
+  } ||
+  {
+    echo "$0: cannot create a temporary directory in $TMPDIR" >&2
+    { (exit 1); exit 1; }
+  }
+}
+
+# func_read_yesno
+# reads an answer (yes or no).
+# Sets variable
+# - ans             yes or no
+func_read_yesno ()
+{
+  while true; do
+    read ans
+    if test yes = "$ans" || test no = "$ans"; then
+      break
+    fi
+    echo "Invalid answer. Please answer yes or no."
+  done
+}
+
+# Command-line option processing.
+while test $# -gt 0; do
+  case "$1" in
+    --help | --hel | --he | --h )
+      func_usage
+      exit 0 ;;
+   --version | --versio | --versi | --vers | --ver | --ve | --v )
+      func_version
+      exit 0 ;;
+    -- )      # Stop option processing
+      shift; break ;;
+    -* )
+      func_fatal_error "unrecognized option: $option"
+      ;;
+    * )
+      break ;;
+  esac
+done
+
+test $# = 2 || {
+  if test $# -gt 2; then
+    func_fatal_error "too many arguments"
+  else
+    func_fatal_error "Usage: libtool-next-version [OPTION]... PREVIOUS-LIBRARY CURRENT-LIBRARY"
+  fi
+}
+
+test -f "$1" || func_fatal_error "file $1 not found"
+test -f "$2" || func_fatal_error "file $2 not found"
+
+(type nm) >/dev/null || func_fatal_error "program 'nm' not found"
+# Determine how to extract a symbol list from the 'nm' output.
+case `uname -s` in
+  Linux | FreeBSD | NetBSD | OpenBSD) nm_filter="sed -n -e 's/^.* [TWDRB] //p'" ;;
+  Darwin) nm_filter="sed -n -e 's/^.* [TWDRB] _//p'" ;;
+  Minix) nm_filter="sed -n -e 's/^.* [TDC] _//p'" ;;
+  AIX) nm_filter="sed -n -e 's/  *[UD] .*//p' | sed -e 's/^\\.//'" ;;
+  HP-UX) nm_filter="grep '|extern|\\(code\\|data\\)   |' | sed -e 's/|.*//' | sed -e 's/ *$//'" ;;
+  IRIX) nm_filter="grep '|\\(GLOB\\|WEAK\\)' | sed -e 's/^.*|//'" ;;
+  SunOS)
+    case `uname -r` in
+      5.10) nm_filter="sed -n -e 's/^.* [ATWDRBV] //p'" ;;
+      *) nm_filter="grep '|\\(GLOB\\|WEAK\\)' | grep -v '|UNDEF' | grep -v '|SUNW' | sed -e 's/^.*|//'" ;;
+    esac
+    ;;
+  CYGWIN*) nm_filter="sed -n -e 's/^.* T _//p'" ;;
+  *) func_fatal_error "unknown OS - don't know how to interpret the 'nm' output" ;;
+esac
+nm_filter="$nm_filter | LC_ALL=C sort -u"
+
+func_tmpdir
+eval "nm '$1' | $nm_filter > '$tmp/symlist1'"
+eval "nm '$2' | $nm_filter > '$tmp/symlist2'"
+
+echo "Please enter the libtool version of the library in the previous release."
+
+printf "LTV_CURRENT="; read current
+nondigits=`echo "$current" | tr -d '0123456789'`
+{ test -n "$current" && test -z "$nondigits"; } \
+  || func_fatal_error "LTV_CURRENT is invalid. It should be a nonnegative integer."
+
+printf "LTV_REVISION="; read revision
+nondigits=`echo "$revision" | tr -d '0123456789'`
+{ test -n "$revision" && test -z "$nondigits"; } \
+  || func_fatal_error "LTV_REVISION is invalid. It should be a nonnegative integer."
+
+printf "LTV_AGE="; read age
+nondigits=`echo "$age" | tr -d '0123456789'`
+{ test -n "$age" && test -z "$nondigits"; } \
+  || func_fatal_error "LTV_AGE is invalid. It should be a nonnegative integer."
+
+echo
+echo "-------------------------------------------------------------------------------"
+echo "Did the library's code change at all since the previous version?"
+echo "You can usually detect this by looking at the source code changes in git;"
+echo "don't forget source code that is imported from other projects."
+if cmp "$tmp/symlist1" "$tmp/symlist2" >/dev/null; then
+  echo "Please answer yes or no."
+else
+  echo "The symbol list changed. Here are the differences:"
+  (cd "$tmp" && diff symlist1 symlist2 | grep '^[<>]' | sed -e 's/^/  /')
+  echo "Please answer yes or no (probably yes)."
+fi
+func_read_yesno
+if test "$ans" = yes; then
+
+  revision=`expr $revision + 1`
+
+  echo
+  echo "-------------------------------------------------------------------------------"
+  echo "Have any interfaces (functions, variables, classes) been removed since the"
+  echo "previous release? What matters here are interfaces at the linker level;"
+  echo "whether macros have been removed from the include files does not matter."
+  if diff "$tmp/symlist1" "$tmp/symlist2" | grep '^< ' >/dev/null; then
+    echo "Some symbols have been removed:"
+    diff "$tmp/symlist1" "$tmp/symlist2" | grep '^< ' | sed -e 's/^< /  /'
+    echo "Please answer yes or no (probably yes)."
+  else
+    echo "Please answer yes or no."
+  fi
+  func_read_yesno
+
+  if test "$ans" = yes; then
+
+    current=`expr $current + 1`
+    revision=0
+    age=0
+
+  else
+
+    echo
+    echo "-------------------------------------------------------------------------------"
+    echo "Have any interfaces (functions, variables, classes) been changed since the"
+    echo "previous release? This includes signature changes. It includes also details of"
+    echo "how functions produce their results and the values of variables, IF AND ONLY IF"
+    echo "users of the library are likely use these details in their test suite."
+    echo "Please answer yes or no."
+    func_read_yesno
+
+    if test "$ans" = yes; then
+
+      current=`expr $current + 1`
+      revision=0
+      age=0
+
+    else
+
+      echo
+      echo "-------------------------------------------------------------------------------"
+      echo "Have any interfaces (functions, variables, classes) been added since the"
+      echo "previous release? What matters here are interfaces at the linker level;"
+      echo "whether macros have been added to the include files does not matter."
+      if diff "$tmp/symlist1" "$tmp/symlist2" | grep '^> ' >/dev/null; then
+        echo "Some symbols have been added:"
+        diff "$tmp/symlist1" "$tmp/symlist2" | grep '^> ' | sed -e 's/^> /  /'
+        echo "Please answer yes or no (probably yes)."
+      else
+        echo "Please answer yes or no."
+      fi
+      func_read_yesno
+
+      if test "$ans" = yes; then
+
+        current=`expr $current + 1`
+        revision=0
+        age=`expr $age + 1`
+
+      fi
+    fi
+  fi
+fi
+
+echo
+echo "-------------------------------------------------------------------------------"
+echo "This is the libtool version of the library for the new release:"
+echo "LTV_CURRENT=$current"
+echo "LTV_REVISION=$revision"
+echo "LTV_AGE=$age"
