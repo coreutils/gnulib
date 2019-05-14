@@ -4,7 +4,6 @@ Close standard output and standard error, exiting with a diagnostic on error.
 Files:
 lib/closeout.h
 lib/closeout.c
-m4/closeout.m4
 
 Depends-on:
 close-stream
@@ -15,7 +14,6 @@ exitfail
 stdbool
 
 configure.ac:
-gl_CLOSEOUT
 
 Makefile.am:
 lib_SOURCES += closeout.c
