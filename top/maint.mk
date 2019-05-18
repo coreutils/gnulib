@@ -408,6 +408,41 @@ sc_prohibit_magic_number_exit:
 	halt='use EXIT_* values rather than magic number'		\
 	  $(_sc_search_regexp)
 
+# Check that we don't use $< in non-implicit Makefile rules.
+#
+# To find the Makefiles, trace AC_CONFIG_FILES.  Using VC_LIST would
+# miss the Makefiles that are not under VC control (e.g., symlinks
+# installed for gettext).  "Parsing" (recursive) uses of SUBDIRS seems
+# too delicate.
+#
+# Use GNU Make's --print-data-base to normalize the rules into some
+# easy to parse format: they are separated by two \n.  Look for the
+# "section" about non-pattern rules (marked with "# Files") inside
+# which there are still the POSIX Make like implicit rules (".c.o").
+sc_prohibit_gnu_make_extensions_awk_ =					\
+  BEGIN {								\
+      RS = "\n\n";							\
+      in_rules = 0;							\
+  }									\
+  /^\# Files/ {								\
+      in_rules = 1;							\
+  }									\
+  /\$$</ && in_rules && $$0 !~ /^(.*\n)*\.\w+(\.\w+)?:/ {		\
+      print "Error: " file ": $$< in a non implicit rule\n" $$0;	\
+      status = 1;							\
+  }									\
+  END {									\
+     exit status;							\
+  }
+sc_prohibit_gnu_make_extensions:
+	(cd $(srcdir) && autoconf --trace AC_CONFIG_FILES:'$$1') |	\
+	  tr ' ' '\n' |							\
+	  $(SED) -ne '/Makefile/{s/\.in$$//;p;}' |			\
+	  while read m; do						\
+	    $(MAKE) -qp -f $$m .DUMMY-TARGET 2>/dev/null |		\
+	      awk -v file=$$m -e '$($@_awk_)' || exit 1;		\
+	  done
+
 # Using EXIT_SUCCESS as the first argument to error is misleading,
 # since when that parameter is 0, error does not exit.  Use '0' instead.
 sc_error_exit_success:
