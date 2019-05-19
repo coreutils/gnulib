@@ -1,3 +1,4 @@
+# Public domain.
 # Files for which we are not the source.  See ./srclistvars.sh for the
 # variable definitions.
 
@@ -11,7 +12,7 @@ $AUTOMAKE lib/install-sh	build-aux
 $AUTOMAKE lib/mdate-sh		build-aux
 $AUTOMAKE lib/mkinstalldirs	build-aux
 
-$TEXINFOSRC doc/texinfo.tex		build-aux
+$TEXINFOTEX texinfo.tex		build-aux
 
 # we generate INSTALL from this via a rule in doc/Makefile.
 $AUTOCONF doc/install.texi	doc
@@ -45,6 +46,17 @@ $GNUORG Copyright/request-assign.future		doc/Copyright
 $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
+$LIBCSRC include/intprops.h             lib
+$LIBCSRC posix/regcomp.c		lib
+$LIBCSRC posix/regex.c			lib
+$LIBCSRC posix/regex.h			lib
+$LIBCSRC posix/regex_internal.c		lib
+$LIBCSRC posix/regex_internal.h		lib
+$LIBCSRC posix/regexec.c		lib
+$LIBCSRC time/timegm.c			lib
+$LIBCSRC time/mktime.c			lib
+$LIBCSRC time/mktime-internal.h		lib
+
 # 
 # All below here commented out in forlorn hope of future syncs.
 
@@ -71,17 +83,6 @@ $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 #$LIBCSRC libidn/iconvme.h		lib gpl
 #$LIBCSRC libidn/iconvme.c		lib gpl
 
-$LIBCSRC include/intprops.h             lib
-$LIBCSRC posix/regcomp.c		lib
-$LIBCSRC posix/regex.c			lib
-$LIBCSRC posix/regex.h			lib
-$LIBCSRC posix/regex_internal.c		lib
-$LIBCSRC posix/regex_internal.h		lib
-$LIBCSRC posix/regexec.c		lib
-$LIBCSRC time/timegm.c			lib
-$LIBCSRC time/mktime.c			lib
-$LIBCSRC time/mktime-internal.h		lib
-#
 # c89 changes $LIBCSRC/string/strdup.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoll.c		lib gpl
 #tab changes $LIBCSRC/stdlib/strtoul.c		lib gpl

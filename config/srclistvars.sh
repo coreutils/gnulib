@@ -19,11 +19,8 @@
 # per-user overrides.
 case $LOGNAME in
 karl)
-  : ${ACLOCAL=/usr/local/gnu/share/aclocal}
-  : ${GNUBIN=/usr/local/gnu/bin}
   : ${GNUORG=$HOME/gnu/gnuorg}
   : ${GNUWWWLICENSES=$HOME/gnu/www/www/licenses}
-  : ${TEXMFROOT=/usr/local/texmf/texmf-dist}
   ;;
 esac
 
@@ -37,4 +34,4 @@ esac
 : ${GNUWWWLICENSES=../www/www/licenses}
 : ${LIBCSRC=../libc}
 : ${LIBTOOL=../libtool}
-: ${TEXINFOSRC=../texinfo}
+: ${TEXINFOTEX=../../ftp.gnu.org/gnu/texinfo}
