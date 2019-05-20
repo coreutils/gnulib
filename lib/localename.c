@@ -66,13 +66,9 @@ extern char * getlocalename_l(int, locale_t);
 # endif
 #endif
 
-#if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+#if HAVE_CFPREFERENCESCOPYAPPVALUE
 # include <CoreFoundation/CFString.h>
-# if HAVE_CFLOCALECOPYCURRENT
-#  include <CoreFoundation/CFLocale.h>
-# elif HAVE_CFPREFERENCESCOPYAPPVALUE
-#  include <CoreFoundation/CFPreferences.h>
-# endif
+# include <CoreFoundation/CFPreferences.h>
 #endif
 
 #if defined _WIN32 && !defined __CYGWIN__
@@ -1156,7 +1152,7 @@ extern char * getlocalename_l(int, locale_t);
 #endif
 
 
-#if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+#if HAVE_CFPREFERENCESCOPYAPPVALUE
 /* Mac OS X 10.4 or newer */
 
 /* Canonicalize a Mac OS X locale name to a Unix locale name.
@@ -3326,7 +3322,7 @@ gl_locale_name_environ (int category, const char *categoryname)
   retval = getenv ("LANG");
   if (retval != NULL && retval[0] != '\0')
     {
-#if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+#if HAVE_CFPREFERENCESCOPYAPPVALUE
       /* Mac OS X 10.2 or newer.
          Ignore invalid LANG value set by the Terminal application.  */
       if (strcmp (retval, "UTF-8") != 0)
@@ -3373,7 +3369,7 @@ gl_locale_name_default (void)
          "C.UTF-8" locale, which operates in the same way as the "C" locale.
   */
 
-#if !(HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE || defined WINDOWS_NATIVE || defined __CYGWIN__)
+#if !(HAVE_CFPREFERENCESCOPYAPPVALUE || defined WINDOWS_NATIVE || defined __CYGWIN__)
 
   /* The system does not have a way of setting the locale, other than the
      POSIX specified environment variables.  We use C as default locale.  */
@@ -3386,8 +3382,17 @@ gl_locale_name_default (void)
      context, because message catalogs are not specific to a single
      codeset.  */
 
-# if HAVE_CFLOCALECOPYCURRENT || HAVE_CFPREFERENCESCOPYAPPVALUE
+# if HAVE_CFPREFERENCESCOPYAPPVALUE
   /* Mac OS X 10.4 or newer */
+  /* Don't use the API introduced in Mac OS X 10.5, CFLocaleCopyCurrent,
+     because in macOS 10.13.4 it has the following behaviour:
+     When two or more languages are specified in the
+     "System Preferences > Language & Region > Preferred Languages" panel,
+     it returns en_CC where CC is the territory (even when English is not among
+     the preferred languages!).  What we want instead is what
+     CFLocaleCopyCurrent returned in earlier macOS releases and what
+     CFPreferencesCopyAppValue still returns, namely ll_CC where ll is the
+     first among the preferred languages and CC is the territory.  */
   {
     /* Cache the locale name, since CoreFoundation calls are expensive.  */
     static const char *cached_localename;
@@ -3395,17 +3400,12 @@ gl_locale_name_default (void)
     if (cached_localename == NULL)
       {
         char namebuf[256];
-#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.5 or newer */
-        CFLocaleRef locale = CFLocaleCopyCurrent ();
-        CFStringRef name = CFLocaleGetIdentifier (locale);
-#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.4 or newer */
         CFTypeRef value =
           CFPreferencesCopyAppValue (CFSTR ("AppleLocale"),
                                      kCFPreferencesCurrentApplication);
         if (value != NULL && CFGetTypeID (value) == CFStringGetTypeID ())
           {
             CFStringRef name = (CFStringRef)value;
-#  endif
 
             if (CFStringGetCString (name, namebuf, sizeof (namebuf),
                                     kCFStringEncodingASCII))
@@ -3413,12 +3413,7 @@ gl_locale_name_default (void)
                 gl_locale_name_canonicalize (namebuf);
                 cached_localename = strdup (namebuf);
               }
-
-#  if HAVE_CFLOCALECOPYCURRENT /* Mac OS X 10.5 or newer */
-        CFRelease (locale);
-#  elif HAVE_CFPREFERENCESCOPYAPPVALUE /* Mac OS X 10.4 or newer */
           }
-#  endif
         if (cached_localename == NULL)
           cached_localename = "C";
       }
