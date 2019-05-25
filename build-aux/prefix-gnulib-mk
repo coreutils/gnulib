@@ -112,7 +112,7 @@ sub prefix_assignment ($$)
   elsif ($lhs_and_assign_op =~
       /^(AM_CFLAGS|AM_CPPFLAGS)\ \+?=/x)
     {
-      $lhs_and_assign_op =~ s/^AM_(\w+)\ \+?=/${lib_name}_$1 =/;
+      $lhs_and_assign_op =~ s/^AM_(\w+)\ \+?=/${lib_name}_a_$1 =/;
       $rhs = " \$(AM_$1)$rhs";
     }
   # We don't want to inherit gnulib's AUTOMAKE_OPTIONS, comment them.
