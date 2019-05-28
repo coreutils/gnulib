@@ -19,4 +19,12 @@
 
 #include <dirent.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 DIR *opendir_safer (const char *name);
+
+#ifdef __cplusplus
+}
+#endif
