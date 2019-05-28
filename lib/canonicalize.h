@@ -21,6 +21,10 @@
 
 #define CAN_MODE_MASK (CAN_EXISTING | CAN_ALL_BUT_LAST | CAN_MISSING)
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum canonicalize_mode_t
   {
     /* All components must exist.  */
@@ -44,5 +48,9 @@ typedef enum canonicalize_mode_t canonicalize_mode_t;
    Whether components must exist or not depends on canonicalize mode.
    The result is malloc'd.  */
 char *canonicalize_filename_mode (const char *, canonicalize_mode_t);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* !CANONICALIZE_H_ */
