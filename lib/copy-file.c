@@ -38,7 +38,6 @@
 #include "binary-io.h"
 #include "quote.h"
 #include "gettext.h"
-#include "xalloc.h"
 
 #define _(str) gettext (str)
 
@@ -52,14 +51,10 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   struct stat statbuf;
   int mode;
   int dest_fd;
-  char *buf = xmalloc (IO_SIZE);
 
   src_fd = open (src_filename, O_RDONLY | O_BINARY);
   if (src_fd < 0)
-    {
-      err = GL_COPY_ERR_OPEN_READ;
-      goto error;
-    }
+    return GL_COPY_ERR_OPEN_READ;
   if (fstat (src_fd, &statbuf) < 0)
     {
       err = GL_COPY_ERR_OPEN_READ;
@@ -67,6 +62,8 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
     }
 
   mode = statbuf.st_mode & 07777;
+  off_t inbytes = S_ISREG (statbuf.st_mode) ? statbuf.st_size : -1;
+  bool empty_regular_file = inbytes == 0;
 
   dest_fd = open (dest_filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
   if (dest_fd < 0)
@@ -75,27 +72,53 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
       goto error_src;
     }
 
-  /* Copy the file contents.  */
-  for (;;)
+  /* Copy the file contents.  FIXME: Do not copy holes.  */
+  while (0 < inbytes)
     {
-      size_t n_read = safe_read (src_fd, buf, IO_SIZE);
-      if (n_read == SAFE_READ_ERROR)
-        {
-          err = GL_COPY_ERR_READ;
-          goto error_src_dest;
-        }
-      if (n_read == 0)
+      size_t copy_max = -1;
+      copy_max -= copy_max % IO_SIZE;
+      size_t len = inbytes < copy_max ? inbytes : copy_max;
+      ssize_t copied = copy_file_range (src_fd, NULL, dest_fd, NULL, len, 0);
+      if (copied <= 0)
         break;
-
-      if (full_write (dest_fd, buf, n_read) < n_read)
-        {
-          err = GL_COPY_ERR_WRITE;
-          goto error_src_dest;
-        }
+      inbytes -= copied;
     }
 
-  free (buf);
-  buf = NULL; /* To avoid double free in error case.  */
+  /* Finish up with read/write, in case the file was not a regular
+     file, or the file shrank or had I/O errors (in which case find
+     whether it was a read or write error).  Read empty regular files
+     since they might be in /proc with their true sizes unknown until
+     they are read.  */
+  if (inbytes != 0 || empty_regular_file)
+    {
+      char smallbuf[1024];
+      int bufsize = IO_SIZE;
+      char *buf = malloc (bufsize);
+      if (!buf)
+        buf = smallbuf, bufsize = sizeof smallbuf;
+
+      while (true)
+        {
+          size_t n_read = safe_read (src_fd, buf, bufsize);
+          if (n_read == 0)
+            break;
+          if (n_read == SAFE_READ_ERROR)
+            {
+              err = GL_COPY_ERR_READ;
+              break;
+            }
+          if (full_write (dest_fd, buf, n_read) < n_read)
+            {
+              err = GL_COPY_ERR_WRITE;
+              break;
+            }
+        }
+
+      if (buf != smallbuf)
+        free (buf);
+      if (err)
+        goto error_src_dest;
+    }
 
 #if !USE_ACL
   if (close (dest_fd) < 0)
@@ -104,10 +127,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
       goto error_src;
     }
   if (close (src_fd) < 0)
-    {
-      err = GL_COPY_ERR_AFTER_READ;
-      goto error;
-    }
+    return GL_COPY_ERR_AFTER_READ;
 #endif
 
   /* Preserve the access and modification times.  */
@@ -146,10 +166,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
       goto error_src;
     }
   if (close (src_fd) < 0)
-    {
-      err = GL_COPY_ERR_AFTER_READ;
-      goto error;
-    }
+    return GL_COPY_ERR_AFTER_READ;
 #endif
 
   return 0;
@@ -159,7 +176,6 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
  error_src:
   close (src_fd);
  error:
-  free (buf);
   return err;
 }
 

@@ -10,6 +10,7 @@ Depends-on:
 acl
 binary-io
 close
+copy-file-range
 error
 fstat
 full-write
@@ -22,7 +23,6 @@ stat-time
 stdlib
 unistd
 utimens
-xalloc
 
 configure.ac:
 gl_COPY_FILE
