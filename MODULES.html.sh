@@ -2735,6 +2735,7 @@ func_all_modules ()
 
   func_begin_table
   func_module binary-io
+  func_module copy-file-range
   func_module dup3
   func_module fcntl-safer
   func_module fd-safer-flag
