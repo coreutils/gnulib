@@ -175,7 +175,6 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   close (dest_fd);
  error_src:
   close (src_fd);
- error:
   return err;
 }
 
