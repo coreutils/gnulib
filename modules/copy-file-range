@@ -6,12 +6,7 @@ lib/copy-file-range.c
 m4/copy-file-range.m4
 
 Depends-on:
-c99
-inttypes-incomplete [test $HAVE_COPY_FILE_RANGE = 0]
 largefile
-libc-config         [test $HAVE_COPY_FILE_RANGE = 0]
-pread               [test $HAVE_COPY_FILE_RANGE = 0]
-pwrite              [test $HAVE_COPY_FILE_RANGE = 0]
 unistd
 
 configure.ac:
