@@ -6129,15 +6129,19 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * preadv::
+* preadv2::
 * process_vm_readv::
 * process_vm_writev::
 * pwritev::
+* pwritev2::
 @end menu
 
 @include glibc-functions/preadv.texi
+@include glibc-functions/preadv2.texi
 @include glibc-functions/process_vm_readv.texi
 @include glibc-functions/process_vm_writev.texi
 @include glibc-functions/pwritev.texi
+@include glibc-functions/pwritev2.texi
 
 @c @node Glibc sys/un.h
 @c @section Glibc Extensions to @code{<sys/un.h>}
