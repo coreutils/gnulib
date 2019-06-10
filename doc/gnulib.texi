@@ -3645,6 +3645,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/syslog.h::
 * Glibc sys/sysmacros.h::
 * Glibc sys/time.h::
+* Glibc sys/timerfd.h::
 * Glibc sys/timex.h::
 * Glibc sys/uio.h::
 * Glibc sys/ustat.h::
@@ -5950,6 +5951,19 @@ This list of functions is sorted according to the header that declares them.
 
 @c @node Glibc sys/timeb.h
 @c @section Glibc Extensions to @code{<sys/timeb.h>}
+
+@node Glibc sys/timerfd.h
+@section Glibc @code{<sys/timerfd.h>}
+
+@menu
+* timerfd_create::
+* timerfd_gettime::
+* timerfd_settime::
+@end menu
+
+@include glibc-functions/timerfd_create.texi
+@include glibc-functions/timerfd_gettime.texi
+@include glibc-functions/timerfd_settime.texi
 
 @c @node Glibc sys/times.h
 @c @section Glibc Extensions to @code{<sys/times.h>}
