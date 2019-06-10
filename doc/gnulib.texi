@@ -5593,11 +5593,13 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * epoll_create::
 * epoll_ctl::
+* epoll_pwait::
 * epoll_wait::
 @end menu
 
 @include glibc-functions/epoll_create.texi
 @include glibc-functions/epoll_ctl.texi
+@include glibc-functions/epoll_pwait.texi
 @include glibc-functions/epoll_wait.texi
 
 @node Glibc sys/fanotify.h
