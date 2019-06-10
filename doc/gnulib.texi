@@ -3736,6 +3736,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/profil.h::
 * Glibc sys/ptrace.h::
 * Glibc sys/quota.h::
+* Glibc sys/random.h::
 * Glibc sys/reboot.h::
 * Glibc sys/resource.h::
 * Glibc sys/sem.h::
@@ -5903,6 +5904,17 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/quotactl.texi
+
+@node Glibc sys/random.h
+@section Glibc @code{<sys/random.h>}
+
+@menu
+* getentropy::
+* getrandom::
+@end menu
+
+@include glibc-functions/getentropy.texi
+@include glibc-functions/getrandom.texi
 
 @node Glibc sys/reboot.h
 @section Glibc @code{<sys/reboot.h>}
