@@ -2,7 +2,18 @@
 @subsection @code{fcloseall}
 @findex fcloseall
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fcloseall.3.html,,man fcloseall}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Closing Streams,,Closing Streams,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Closing-Streams.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fcloseall.3.html,,man fcloseall}.
+@end itemize
 
 Gnulib module: ---
 

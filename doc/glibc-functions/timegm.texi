@@ -2,7 +2,18 @@
 @subsection @code{timegm}
 @findex timegm
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/timegm.3.html,,man timegm}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Broken-down Time,,Broken-down Time,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Broken_002ddown-Time.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/timegm.3.html,,man timegm}.
+@end itemize
 
 Gnulib module: timegm
 

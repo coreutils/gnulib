@@ -2,7 +2,18 @@
 @subsection @code{fgets_unlocked}
 @findex fgets_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgets_unlocked.3.html,,man fgets_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Line Input,,Line-Oriented Input,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Line-Input.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgets_unlocked.3.html,,man fgets_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

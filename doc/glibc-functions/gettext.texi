@@ -2,7 +2,18 @@
 @subsection @code{gettext}
 @findex gettext
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gettext.3.html,,man gettext}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Translation with gettext,,What has to be done to translate a message?,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Translation-with-gettext.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gettext.3.html,,man gettext}.
+@end itemize
 
 Gnulib module: ---
 

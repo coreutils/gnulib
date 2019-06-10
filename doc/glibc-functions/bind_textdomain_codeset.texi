@@ -2,7 +2,18 @@
 @subsection @code{bind_textdomain_codeset}
 @findex bind_textdomain_codeset
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bind_textdomain_codeset.3.html,,man bind_textdomain_codeset}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Charset conversion in gettext,,How to specify the output character set gettext uses,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Charset-conversion-in-gettext.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bind_textdomain_codeset.3.html,,man bind_textdomain_codeset}.
+@end itemize
 
 Gnulib module: ---
 

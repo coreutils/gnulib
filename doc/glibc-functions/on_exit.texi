@@ -2,7 +2,18 @@
 @subsection @code{on_exit}
 @findex on_exit
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/on_exit.3.html,,man on_exit}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Cleanups on Exit,,Cleanups on Exit,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Cleanups-on-Exit.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/on_exit.3.html,,man on_exit}.
+@end itemize
 
 Gnulib module: ---
 

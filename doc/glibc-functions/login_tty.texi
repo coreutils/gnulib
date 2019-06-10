@@ -2,7 +2,18 @@
 @subsection @code{login_tty}
 @findex login_tty
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/login_tty.3.html,,man login_tty}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Logging In and Out,,Logging In and Out,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Logging-In-and-Out.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/login_tty.3.html,,man login_tty}.
+@end itemize
 
 Gnulib module: login_tty
 

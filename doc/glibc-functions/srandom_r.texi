@@ -2,7 +2,18 @@
 @subsection @code{srandom_r}
 @findex srandom_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/srandom_r.3.html,,man srandom_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{BSD Random,,BSD Random Number Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/BSD-Random.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/srandom_r.3.html,,man srandom_r}.
+@end itemize
 
 Gnulib module: random_r
 

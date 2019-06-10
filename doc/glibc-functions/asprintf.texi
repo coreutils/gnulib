@@ -2,7 +2,18 @@
 @subsection @code{asprintf}
 @findex asprintf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/asprintf.3.html,,man asprintf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Dynamic Output,,Dynamically Allocating Formatted Output,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Dynamic-Output.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/asprintf.3.html,,man asprintf}.
+@end itemize
 
 Gnulib module: vasprintf or vasprintf-posix
 

@@ -2,7 +2,18 @@
 @subsection @code{addseverity}
 @findex addseverity
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/addseverity.3.html,,man addseverity}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Adding Severity Classes,,Adding Severity Classes,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Adding-Severity-Classes.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/addseverity.3.html,,man addseverity}.
+@end itemize
 
 Gnulib module: ---
 

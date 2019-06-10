@@ -2,7 +2,18 @@
 @subsection @code{getwchar_unlocked}
 @findex getwchar_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getwchar_unlocked.3.html,,man getwchar_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Character Input,,Character Input,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Character-Input.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getwchar_unlocked.3.html,,man getwchar_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

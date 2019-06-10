@@ -2,7 +2,18 @@
 @subsection @code{qgcvt}
 @findex qgcvt
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qgcvt.3.html,,man qgcvt}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{System V Number Conversion,,Old-fashioned System V number-to-string functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/System-V-Number-Conversion.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qgcvt.3.html,,man qgcvt}.
+@end itemize
 
 Gnulib module: ---
 

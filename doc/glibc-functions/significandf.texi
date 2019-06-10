@@ -2,7 +2,18 @@
 @subsection @code{significandf}
 @findex significandf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/significandf.3.html,,man significandf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Normalization Functions,,Normalization Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Normalization-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/significandf.3.html,,man significandf}.
+@end itemize
 
 Gnulib module: ---
 

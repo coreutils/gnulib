@@ -2,6 +2,14 @@
 @subsection @code{in6addr_loopback}
 @findex in6addr_loopback
 
+Documentation:@*
+@ifinfo
+@ref{Host Address Data Type,,Host Address Data Type,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Host-Address-Data-Type.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

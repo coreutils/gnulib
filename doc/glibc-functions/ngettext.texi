@@ -2,7 +2,18 @@
 @subsection @code{ngettext}
 @findex ngettext
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ngettext.3.html,,man ngettext}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Advanced gettext functions,,Additional functions for more complicated situations,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Advanced-gettext-functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ngettext.3.html,,man ngettext}.
+@end itemize
 
 Gnulib module: ---
 

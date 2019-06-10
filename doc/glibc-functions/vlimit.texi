@@ -2,7 +2,18 @@
 @subsection @code{vlimit}
 @findex vlimit
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vlimit.3.html,,man vlimit}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Limits on Resources,,Limiting Resource Usage,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Limits-on-Resources.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vlimit.3.html,,man vlimit}.
+@end itemize
 
 Gnulib module: ---
 

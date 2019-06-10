@@ -2,7 +2,18 @@
 @subsection @code{sincosl}
 @findex sincosl
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sincosl.3.html,,man sincosl}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Trig Functions,,Trigonometric Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Trig-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sincosl.3.html,,man sincosl}.
+@end itemize
 
 Gnulib module: ---
 

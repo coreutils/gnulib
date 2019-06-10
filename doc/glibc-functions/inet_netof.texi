@@ -2,7 +2,18 @@
 @subsection @code{inet_netof}
 @findex inet_netof
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_netof.3.html,,man inet_netof}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Host Address Functions,,Host Address Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Host-Address-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_netof.3.html,,man inet_netof}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,7 +2,18 @@
 @subsection @code{memmem}
 @findex memmem
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memmem.3.html,,man memmem}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Search Functions,,Search Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Search-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memmem.3.html,,man memmem}.
+@end itemize
 
 Gnulib module: memmem or memmem-simple
 

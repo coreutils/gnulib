@@ -2,7 +2,18 @@
 @subsection @code{scalbl}
 @findex scalbl
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scalbl.3.html,,man scalbl}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Normalization Functions,,Normalization Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Normalization-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scalbl.3.html,,man scalbl}.
+@end itemize
 
 Gnulib module: ---
 

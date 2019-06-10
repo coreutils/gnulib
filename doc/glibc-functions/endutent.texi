@@ -2,7 +2,18 @@
 @subsection @code{endutent}
 @findex endutent
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endutent.3.html,,man endutent}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Manipulating the Database,,Manipulating the User Accounting Database,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Manipulating-the-Database.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endutent.3.html,,man endutent}.
+@end itemize
 
 Gnulib module: ---
 

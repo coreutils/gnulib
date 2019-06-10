@@ -2,7 +2,18 @@
 @subsection @code{envz_merge}
 @findex envz_merge
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/envz_merge.3.html,,man envz_merge}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Envz Functions,,Envz Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Envz-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/envz_merge.3.html,,man envz_merge}.
+@end itemize
 
 Gnulib module: ---
 

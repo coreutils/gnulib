@@ -2,7 +2,18 @@
 @subsection @code{error}
 @findex error
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error.3.html,,man error}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Error Messages,,Error Messages,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Error-Messages.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error.3.html,,man error}.
+@end itemize
 
 Gnulib module: error
 

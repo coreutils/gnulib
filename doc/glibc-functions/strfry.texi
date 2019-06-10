@@ -2,7 +2,18 @@
 @subsection @code{strfry}
 @findex strfry
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strfry.3.html,,man strfry}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Shuffling Bytes,,Shuffling Bytes,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Shuffling-Bytes.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strfry.3.html,,man strfry}.
+@end itemize
 
 Gnulib module: ---
 

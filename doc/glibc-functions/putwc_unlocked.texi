@@ -2,7 +2,18 @@
 @subsection @code{putwc_unlocked}
 @findex putwc_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putwc_unlocked.3.html,,man putwc_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Simple Output,,Simple Output by Characters or Lines,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Simple-Output.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putwc_unlocked.3.html,,man putwc_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,7 +2,18 @@
 @subsection @code{gethostbyaddr_r}
 @findex gethostbyaddr_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gethostbyaddr_r.3.html,,man gethostbyaddr_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Host Names,,Host Names,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Host-Names.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gethostbyaddr_r.3.html,,man gethostbyaddr_r}.
+@end itemize
 
 Gnulib module: ---
 

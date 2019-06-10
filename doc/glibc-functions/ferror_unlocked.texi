@@ -2,7 +2,18 @@
 @subsection @code{ferror_unlocked}
 @findex ferror_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ferror_unlocked.3.html,,man ferror_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{EOF and Errors,,End-Of-File and Errors,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/EOF-and-Errors.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ferror_unlocked.3.html,,man ferror_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

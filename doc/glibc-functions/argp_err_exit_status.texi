@@ -2,6 +2,14 @@
 @subsection @code{argp_err_exit_status}
 @findex argp_err_exit_status
 
+Documentation:@*
+@ifinfo
+@ref{Argp Global Variables,,Argp Global Variables,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Argp-Global-Variables.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

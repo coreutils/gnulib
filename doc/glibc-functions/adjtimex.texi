@@ -2,7 +2,18 @@
 @subsection @code{adjtimex}
 @findex adjtimex
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/adjtimex.2.html,,man adjtimex}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{High-Resolution Calendar,,High-Resolution Calendar,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/High_002dResolution-Calendar.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/adjtimex.2.html,,man adjtimex}.
+@end itemize
 
 Gnulib module: ---
 

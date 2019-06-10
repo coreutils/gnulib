@@ -2,7 +2,18 @@
 @subsection @code{isnanl}
 @findex isnanl
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/isnanl.3.html,,man isnanl}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Floating Point Classes,,Floating-Point Number Classification Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Floating-Point-Classes.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/isnanl.3.html,,man isnanl}.
+@end itemize
 
 Gnulib module: isnanl
 

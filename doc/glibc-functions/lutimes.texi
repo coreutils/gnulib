@@ -2,7 +2,18 @@
 @subsection @code{lutimes}
 @findex lutimes
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lutimes.3.html,,man lutimes}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{File Times,,File Times,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/File-Times.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lutimes.3.html,,man lutimes}.
+@end itemize
 
 Gnulib module: ---
 

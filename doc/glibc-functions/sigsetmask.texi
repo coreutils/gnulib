@@ -2,7 +2,18 @@
 @subsection @code{sigsetmask}
 @findex sigsetmask
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sigsetmask.3.html,,man sigsetmask}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{BSD Signal Handling,,BSD Signal Handling,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/BSD-Signal-Handling.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sigsetmask.3.html,,man sigsetmask}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,7 +2,18 @@
 @subsection @code{get_nprocs_conf}
 @findex get_nprocs_conf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_nprocs_conf.3.html,,man get_nprocs_conf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Processor Resources,,Learn about the processors available,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Processor-Resources.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_nprocs_conf.3.html,,man get_nprocs_conf}.
+@end itemize
 
 Gnulib module: ---
 

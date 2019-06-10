@@ -2,7 +2,18 @@
 @subsection @code{clog10f}
 @findex clog10f
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clog10f.3.html,,man clog10f}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Exponents and Logarithms,,Exponentiation and Logarithms,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Exponents-and-Logarithms.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clog10f.3.html,,man clog10f}.
+@end itemize
 
 Gnulib module: ---
 

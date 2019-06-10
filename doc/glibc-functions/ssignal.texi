@@ -2,7 +2,18 @@
 @subsection @code{ssignal}
 @findex ssignal
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ssignal.3.html,,man ssignal}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Basic Signal Handling,,Basic Signal Handling,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Basic-Signal-Handling.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ssignal.3.html,,man ssignal}.
+@end itemize
 
 Gnulib module: ---
 

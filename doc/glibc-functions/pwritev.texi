@@ -2,7 +2,18 @@
 @subsection @code{pwritev}
 @findex pwritev
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pwritev.2.html,,man pwritev}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Scatter-Gather,,Fast Scatter-Gather I/O,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Scatter_002dGather.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pwritev.2.html,,man pwritev}.
+@end itemize
 
 Gnulib module: ---
 

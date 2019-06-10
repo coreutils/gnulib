@@ -2,7 +2,18 @@
 @subsection @code{ntp_adjtime}
 @findex ntp_adjtime
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ntp_adjtime.3.html,,man ntp_adjtime}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{High Accuracy Clock,,High Accuracy Clock,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/High-Accuracy-Clock.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ntp_adjtime.3.html,,man ntp_adjtime}.
+@end itemize
 
 Gnulib module: ---
 

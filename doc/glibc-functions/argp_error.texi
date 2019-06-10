@@ -2,6 +2,14 @@
 @subsection @code{argp_error}
 @findex argp_error
 
+Documentation:@*
+@ifinfo
+@ref{Argp Helper Functions,,Functions For Use in Argp Parsers,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Argp-Helper-Functions.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

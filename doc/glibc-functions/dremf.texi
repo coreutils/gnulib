@@ -2,7 +2,18 @@
 @subsection @code{dremf}
 @findex dremf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dremf.3.html,,man dremf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Remainder Functions,,Remainder Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Remainder-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dremf.3.html,,man dremf}.
+@end itemize
 
 Gnulib module: ---
 

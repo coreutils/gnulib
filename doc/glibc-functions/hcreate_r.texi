@@ -2,7 +2,18 @@
 @subsection @code{hcreate_r}
 @findex hcreate_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/hcreate_r.3.html,,man hcreate_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Hash Search Function,,The hsearch function.,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Hash-Search-Function.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/hcreate_r.3.html,,man hcreate_r}.
+@end itemize
 
 Gnulib module: ---
 

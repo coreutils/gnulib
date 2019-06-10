@@ -2,7 +2,18 @@
 @subsection @code{srand48_r}
 @findex srand48_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/srand48_r.3.html,,man srand48_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{SVID Random,,SVID Random Number Function,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/SVID-Random.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/srand48_r.3.html,,man srand48_r}.
+@end itemize
 
 Gnulib module: ---
 

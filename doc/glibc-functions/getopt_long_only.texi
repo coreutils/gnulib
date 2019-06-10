@@ -2,7 +2,18 @@
 @subsection @code{getopt_long_only}
 @findex getopt_long_only
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getopt_long_only.3.html,,man getopt_long_only}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Getopt Long Options,,Parsing Long Options with getopt_long,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Getopt-Long-Options.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getopt_long_only.3.html,,man getopt_long_only}.
+@end itemize
 
 Gnulib module: getopt-gnu
 

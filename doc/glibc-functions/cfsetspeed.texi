@@ -2,7 +2,18 @@
 @subsection @code{cfsetspeed}
 @findex cfsetspeed
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cfsetspeed.3.html,,man cfsetspeed}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Line Speed,,Line Speed,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Line-Speed.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cfsetspeed.3.html,,man cfsetspeed}.
+@end itemize
 
 Gnulib module: ---
 

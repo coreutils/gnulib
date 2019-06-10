@@ -2,7 +2,18 @@
 @subsection @code{getgrent_r}
 @findex getgrent_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getgrent_r.3.html,,man getgrent_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Scanning All Groups,,Scanning the List of All Groups,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Scanning-All-Groups.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getgrent_r.3.html,,man getgrent_r}.
+@end itemize
 
 Gnulib module: ---
 

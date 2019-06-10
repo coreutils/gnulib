@@ -2,7 +2,18 @@
 @subsection @code{stime}
 @findex stime
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/stime.2.html,,man stime}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Simple Calendar Time,,Simple Calendar Time,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Simple-Calendar-Time.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/stime.2.html,,man stime}.
+@end itemize
 
 Gnulib module: ---
 

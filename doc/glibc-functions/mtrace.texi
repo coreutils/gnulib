@@ -2,7 +2,18 @@
 @subsection @code{mtrace}
 @findex mtrace
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mtrace.3.html,,man mtrace}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Tracing malloc,,How to install the tracing functionality,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Tracing-malloc.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mtrace.3.html,,man mtrace}.
+@end itemize
 
 Gnulib module: ---
 

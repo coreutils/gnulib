@@ -2,7 +2,18 @@
 @subsection @code{wmempcpy}
 @findex wmempcpy
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/wmempcpy.3.html,,man wmempcpy}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Copying Strings and Arrays,,Copying Strings and Arrays,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Copying-Strings-and-Arrays.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/wmempcpy.3.html,,man wmempcpy}.
+@end itemize
 
 Gnulib module: ---
 

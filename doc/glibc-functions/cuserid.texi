@@ -2,7 +2,18 @@
 @subsection @code{cuserid}
 @findex cuserid
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cuserid.3.html,,man cuserid}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Who Logged In,,Identifying Who Logged In,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Who-Logged-In.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cuserid.3.html,,man cuserid}.
+@end itemize
 
 Gnulib module: ---
 

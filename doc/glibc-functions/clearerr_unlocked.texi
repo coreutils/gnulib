@@ -2,7 +2,18 @@
 @subsection @code{clearerr_unlocked}
 @findex clearerr_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clearerr_unlocked.3.html,,man clearerr_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Error Recovery,,Recovering from errors,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Error-Recovery.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clearerr_unlocked.3.html,,man clearerr_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

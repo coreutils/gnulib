@@ -2,7 +2,18 @@
 @subsection @code{mprobe}
 @findex mprobe
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mprobe.3.html,,man mprobe}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Heap Consistency Checking,,Heap Consistency Checking,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Heap-Consistency-Checking.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mprobe.3.html,,man mprobe}.
+@end itemize
 
 Gnulib module: ---
 

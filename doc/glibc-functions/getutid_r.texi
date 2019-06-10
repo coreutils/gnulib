@@ -2,7 +2,18 @@
 @subsection @code{getutid_r}
 @findex getutid_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutid_r.3.html,,man getutid_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Manipulating the Database,,Manipulating the User Accounting Database,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Manipulating-the-Database.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutid_r.3.html,,man getutid_r}.
+@end itemize
 
 Gnulib module: ---
 

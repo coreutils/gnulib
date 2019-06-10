@@ -2,7 +2,18 @@
 @subsection @code{ecvt_r}
 @findex ecvt_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ecvt_r.3.html,,man ecvt_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{System V Number Conversion,,Old-fashioned System V number-to-string functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/System-V-Number-Conversion.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ecvt_r.3.html,,man ecvt_r}.
+@end itemize
 
 Gnulib module: ---
 

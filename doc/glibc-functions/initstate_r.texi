@@ -2,7 +2,18 @@
 @subsection @code{initstate_r}
 @findex initstate_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/initstate_r.3.html,,man initstate_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{BSD Random,,BSD Random Number Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/BSD-Random.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/initstate_r.3.html,,man initstate_r}.
+@end itemize
 
 Gnulib module: random_r
 

@@ -2,7 +2,18 @@
 @subsection @code{mallopt}
 @findex mallopt
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallopt.3.html,,man mallopt}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Malloc Tunable Parameters,,Malloc Tunable Parameters,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Malloc-Tunable-Parameters.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallopt.3.html,,man mallopt}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,6 +2,14 @@
 @subsection @code{printf_size_info}
 @findex printf_size_info
 
+Documentation:@*
+@ifinfo
+@ref{Predefined Printf Handlers,,Predefined printf Handlers,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Predefined-Printf-Handlers.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

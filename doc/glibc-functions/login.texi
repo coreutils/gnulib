@@ -2,7 +2,18 @@
 @subsection @code{login}
 @findex login
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/login.3.html,,man login}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Logging In and Out,,Logging In and Out,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Logging-In-and-Out.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/login.3.html,,man login}.
+@end itemize
 
 Gnulib module: ---
 

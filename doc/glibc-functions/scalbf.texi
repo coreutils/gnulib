@@ -2,7 +2,18 @@
 @subsection @code{scalbf}
 @findex scalbf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scalbf.3.html,,man scalbf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Normalization Functions,,Normalization Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Normalization-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scalbf.3.html,,man scalbf}.
+@end itemize
 
 Gnulib module: ---
 

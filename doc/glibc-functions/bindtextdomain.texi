@@ -2,7 +2,18 @@
 @subsection @code{bindtextdomain}
 @findex bindtextdomain
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bindtextdomain.3.html,,man bindtextdomain}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Locating gettext catalog,,How to determine which catalog to be used,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Locating-gettext-catalog.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bindtextdomain.3.html,,man bindtextdomain}.
+@end itemize
 
 Gnulib module: ---
 

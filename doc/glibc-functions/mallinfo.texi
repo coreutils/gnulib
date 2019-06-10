@@ -2,7 +2,18 @@
 @subsection @code{mallinfo}
 @findex mallinfo
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallinfo.3.html,,man mallinfo}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Statistics of Malloc,,Statistics for Memory Allocation with malloc,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Statistics-of-Malloc.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallinfo.3.html,,man mallinfo}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,7 +2,18 @@
 @subsection @code{vtimes}
 @findex vtimes
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vtimes.3.html,,man vtimes}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Resource Usage,,Resource Usage,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Resource-Usage.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vtimes.3.html,,man vtimes}.
+@end itemize
 
 Gnulib module: ---
 

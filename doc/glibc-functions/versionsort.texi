@@ -2,7 +2,18 @@
 @subsection @code{versionsort}
 @findex versionsort
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/versionsort.3.html,,man versionsort}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Scanning Directory Content,,Scanning the Content of a Directory,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Scanning-Directory-Content.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/versionsort.3.html,,man versionsort}.
+@end itemize
 
 Gnulib module: ---
 

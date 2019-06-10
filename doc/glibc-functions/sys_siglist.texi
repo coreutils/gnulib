@@ -2,6 +2,14 @@
 @subsection @code{sys_siglist}
 @findex sys_siglist
 
+Documentation:@*
+@ifinfo
+@ref{Signal Messages,,Signal Messages,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Signal-Messages.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

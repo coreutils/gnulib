@@ -2,7 +2,18 @@
 @subsection @code{wait3}
 @findex wait3
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/wait3.2.html,,man wait3}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{BSD Wait Functions,,BSD Process Wait Function,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/BSD-Wait-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/wait3.2.html,,man wait3}.
+@end itemize
 
 Gnulib module: ---
 

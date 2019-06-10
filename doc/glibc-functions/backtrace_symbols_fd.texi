@@ -2,7 +2,18 @@
 @subsection @code{backtrace_symbols_fd}
 @findex backtrace_symbols_fd
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace_symbols_fd.3.html,,man backtrace_symbols_fd}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Backtraces,,Backtraces,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Backtraces.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace_symbols_fd.3.html,,man backtrace_symbols_fd}.
+@end itemize
 
 Gnulib module: ---
 

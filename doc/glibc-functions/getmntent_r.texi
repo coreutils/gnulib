@@ -2,7 +2,18 @@
 @subsection @code{getmntent_r}
 @findex getmntent_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getmntent_r.3.html,,man getmntent_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{mtab,,The mtab file,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/mtab.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getmntent_r.3.html,,man getmntent_r}.
+@end itemize
 
 Gnulib module: ---
 

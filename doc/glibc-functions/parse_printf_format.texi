@@ -2,6 +2,14 @@
 @subsection @code{parse_printf_format}
 @findex parse_printf_format
 
+Documentation:@*
+@ifinfo
+@ref{Parsing a Template String,,Parsing a Template String,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Parsing-a-Template-String.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

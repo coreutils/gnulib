@@ -2,7 +2,18 @@
 @subsection @code{getpass}
 @findex getpass
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getpass.3.html,,man getpass}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{getpass,,Reading Passphrases,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/getpass.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getpass.3.html,,man getpass}.
+@end itemize
 
 Gnulib module: getpass or getpass-gnu
 

@@ -2,6 +2,14 @@
 @subsection @code{obstack_alloc_failed_handler}
 @findex obstack_alloc_failed_handler
 
+Documentation:@*
+@ifinfo
+@ref{Preparing for Obstacks,,Preparing for Using Obstacks,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Preparing-for-Obstacks.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

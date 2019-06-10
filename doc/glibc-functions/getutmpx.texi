@@ -2,7 +2,18 @@
 @subsection @code{getutmpx}
 @findex getutmpx
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutmpx.3.html,,man getutmpx}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{XPG Functions,,XPG User Accounting Database Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/XPG-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutmpx.3.html,,man getutmpx}.
+@end itemize
 
 Gnulib module: ---
 

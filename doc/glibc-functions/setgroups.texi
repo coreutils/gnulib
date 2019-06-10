@@ -2,7 +2,18 @@
 @subsection @code{setgroups}
 @findex setgroups
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setgroups.2.html,,man setgroups}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Setting Groups,,Setting the Group IDs,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Setting-Groups.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setgroups.2.html,,man setgroups}.
+@end itemize
 
 Gnulib module: ---
 

@@ -2,7 +2,18 @@
 @subsection @code{argz_insert}
 @findex argz_insert
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_insert.3.html,,man argz_insert}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Argz Functions,,Argz Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Argz-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_insert.3.html,,man argz_insert}.
+@end itemize
 
 Gnulib module: argz
 

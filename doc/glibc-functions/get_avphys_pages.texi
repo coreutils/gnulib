@@ -2,7 +2,18 @@
 @subsection @code{get_avphys_pages}
 @findex get_avphys_pages
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_avphys_pages.3.html,,man get_avphys_pages}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Query Memory Parameters,,How to get information about the memory subsystem?,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Query-Memory-Parameters.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_avphys_pages.3.html,,man get_avphys_pages}.
+@end itemize
 
 Gnulib module: ---
 

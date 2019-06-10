@@ -2,7 +2,18 @@
 @subsection @code{canonicalize_file_name}
 @findex canonicalize_file_name
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/canonicalize_file_name.3.html,,man canonicalize_file_name}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Symbolic Links,,Symbolic Links,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Symbolic-Links.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/canonicalize_file_name.3.html,,man canonicalize_file_name}.
+@end itemize
 
 Gnulib module: canonicalize-lgpl
 

@@ -2,6 +2,14 @@
 @subsection @code{obstack_free}
 @findex obstack_free
 
+Documentation:@*
+@ifinfo
+@ref{Freeing Obstack Objects,,Freeing Objects in an Obstack,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Freeing-Obstack-Objects.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,7 +2,18 @@
 @subsection @code{forkpty}
 @findex forkpty
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/forkpty.3.html,,man forkpty}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Pseudo-Terminal Pairs,,Opening a Pseudo-Terminal Pair,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Pseudo_002dTerminal-Pairs.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/forkpty.3.html,,man forkpty}.
+@end itemize
 
 Gnulib module: forkpty
 

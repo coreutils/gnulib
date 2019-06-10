@@ -2,7 +2,18 @@
 @subsection @code{getfsent}
 @findex getfsent
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getfsent.3.html,,man getfsent}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{fstab,,The fstab file,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/fstab.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getfsent.3.html,,man getfsent}.
+@end itemize
 
 Gnulib module: ---
 

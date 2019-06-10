@@ -2,7 +2,18 @@
 @subsection @code{fedisableexcept}
 @findex fedisableexcept
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fedisableexcept.3.html,,man fedisableexcept}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Control Functions,,Floating-Point Control Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Control-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fedisableexcept.3.html,,man fedisableexcept}.
+@end itemize
 
 Gnulib module: ---
 

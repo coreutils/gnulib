@@ -2,7 +2,18 @@
 @subsection @code{fegetexcept}
 @findex fegetexcept
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fegetexcept.3.html,,man fegetexcept}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Control Functions,,Floating-Point Control Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Control-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fegetexcept.3.html,,man fegetexcept}.
+@end itemize
 
 Gnulib module: ---
 

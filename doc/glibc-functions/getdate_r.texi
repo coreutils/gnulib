@@ -2,7 +2,18 @@
 @subsection @code{getdate_r}
 @findex getdate_r
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdate_r.3.html,,man getdate_r}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{General Time String Parsing,,A More User-friendly Way to Parse Times and Dates,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/General-Time-String-Parsing.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdate_r.3.html,,man getdate_r}.
+@end itemize
 
 Gnulib module: ---
 

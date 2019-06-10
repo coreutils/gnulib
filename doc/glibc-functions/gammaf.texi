@@ -2,7 +2,18 @@
 @subsection @code{gammaf}
 @findex gammaf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gammaf.3.html,,man gammaf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Special Functions,,Special Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Special-Functions.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gammaf.3.html,,man gammaf}.
+@end itemize
 
 Gnulib module: ---
 

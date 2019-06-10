@@ -2,7 +2,18 @@
 @subsection @code{vsyslog}
 @findex vsyslog
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vsyslog.3.html,,man vsyslog}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{syslog; vsyslog,,syslog, vsyslog,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/syslog_003b-vsyslog.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vsyslog.3.html,,man vsyslog}.
+@end itemize
 
 Gnulib module: ---
 

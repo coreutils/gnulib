@@ -2,6 +2,14 @@
 @subsection @code{register_printf_function}
 @findex register_printf_function
 
+Documentation:@*
+@ifinfo
+@ref{Registering New Conversions,,Registering New Conversions,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Registering-New-Conversions.html}.
+@end ifnotinfo
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

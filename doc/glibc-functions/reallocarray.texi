@@ -2,7 +2,18 @@
 @subsection @code{reallocarray}
 @findex reallocarray
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/reallocarray.3.html,,man reallocarray}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Changing Block Size,,Changing the Size of a Block,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Changing-Block-Size.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/reallocarray.3.html,,man reallocarray}.
+@end itemize
 
 Gnulib module: reallocarray
 

@@ -2,7 +2,18 @@
 @subsection @code{putpwent}
 @findex putpwent
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putpwent.3.html,,man putpwent}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Writing a User Entry,,Writing a User Entry,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Writing-a-User-Entry.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putpwent.3.html,,man putpwent}.
+@end itemize
 
 Gnulib module: ---
 

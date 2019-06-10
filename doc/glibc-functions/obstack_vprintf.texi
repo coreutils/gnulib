@@ -2,6 +2,14 @@
 @subsection @code{obstack_vprintf}
 @findex obstack_vprintf
 
+Documentation:@*
+@ifinfo
+@ref{Variable Arguments Output,,Variable Arguments Output Functions,libc}.
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Variable-Arguments-Output.html}.
+@end ifnotinfo
+
 Gnulib module: obstack-printf or obstack-printf-posix
 
 Portability problems fixed by either Gnulib module

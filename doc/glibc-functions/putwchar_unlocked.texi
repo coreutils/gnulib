@@ -2,7 +2,18 @@
 @subsection @code{putwchar_unlocked}
 @findex putwchar_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putwchar_unlocked.3.html,,man putwchar_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Simple Output,,Simple Output by Characters or Lines,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Simple-Output.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putwchar_unlocked.3.html,,man putwchar_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

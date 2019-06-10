@@ -2,7 +2,18 @@
 @subsection @code{fileno_unlocked}
 @findex fileno_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fileno_unlocked.3.html,,man fileno_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Descriptors and Streams,,Descriptors and Streams,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Descriptors-and-Streams.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fileno_unlocked.3.html,,man fileno_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

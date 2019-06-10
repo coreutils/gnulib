@@ -2,7 +2,18 @@
 @subsection @code{tdestroy}
 @findex tdestroy
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/tdestroy.3.html,,man tdestroy}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Tree Search Function,,The tsearch function.,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Tree-Search-Function.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/tdestroy.3.html,,man tdestroy}.
+@end itemize
 
 Gnulib module: ---
 

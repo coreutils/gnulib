@@ -2,7 +2,18 @@
 @subsection @code{fread_unlocked}
 @findex fread_unlocked
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fread_unlocked.3.html,,man fread_unlocked}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Block Input/Output,,Block Input/Output,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Block-Input_002fOutput.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fread_unlocked.3.html,,man fread_unlocked}.
+@end itemize
 
 Gnulib module: ---
 

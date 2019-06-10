@@ -2,7 +2,18 @@
 @subsection @code{vasprintf}
 @findex vasprintf
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vasprintf.3.html,,man vasprintf}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Variable Arguments Output,,Variable Arguments Output Functions,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Variable-Arguments-Output.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vasprintf.3.html,,man vasprintf}.
+@end itemize
 
 Gnulib module: vasprintf or vasprintf-posix
 

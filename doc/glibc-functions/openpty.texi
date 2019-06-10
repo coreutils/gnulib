@@ -2,7 +2,18 @@
 @subsection @code{openpty}
 @findex openpty
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/openpty.3.html,,man openpty}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{Pseudo-Terminal Pairs,,Opening a Pseudo-Terminal Pair,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/Pseudo_002dTerminal-Pairs.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/openpty.3.html,,man openpty}.
+@end itemize
 
 Gnulib module: openpty
 

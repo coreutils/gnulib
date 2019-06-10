@@ -2,7 +2,18 @@
 @subsection @code{strverscmp}
 @findex strverscmp
 
-Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strverscmp.3.html,,man strverscmp}
+Documentation:
+@itemize
+@item
+@ifinfo
+@ref{String/Array Comparison,,String/Array Comparison,libc},
+@end ifinfo
+@ifnotinfo
+@url{https://www.gnu.org/software/libc/manual/html_node/String_002fArray-Comparison.html},
+@end ifnotinfo
+@item
+@uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strverscmp.3.html,,man strverscmp}.
+@end itemize
 
 Gnulib module: strverscmp
 
