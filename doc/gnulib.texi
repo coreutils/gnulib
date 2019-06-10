@@ -3615,6 +3615,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc string.h::
 * Glibc sys/capability.h::
 * Glibc sys/epoll.h::
+* Glibc sys/eventfd.h::
 * Glibc sys/fanotify.h::
 * Glibc sys/file.h::
 * Glibc sys/fsuid.h::
@@ -5601,6 +5602,19 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/epoll_ctl.texi
 @include glibc-functions/epoll_pwait.texi
 @include glibc-functions/epoll_wait.texi
+
+@node Glibc sys/eventfd.h
+@section Glibc @code{<sys/eventfd.h>}
+
+@menu
+* eventfd::
+* eventfd_read::
+* eventfd_write::
+@end menu
+
+@include glibc-functions/eventfd.texi
+@include glibc-functions/eventfd_read.texi
+@include glibc-functions/eventfd_write.texi
 
 @node Glibc sys/fanotify.h
 @section Glibc @code{<sys/fanotify.h>}
