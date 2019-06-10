@@ -6094,6 +6094,7 @@ This list of functions is sorted according to the header that declares them.
 * chroot::
 * daemon::
 * dup3::
+* eaccess::
 * endusershell::
 * euidaccess::
 * execvpe::
@@ -6128,6 +6129,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/chroot.texi
 @include glibc-functions/daemon.texi
 @include glibc-functions/dup3.texi
+@include glibc-functions/eaccess.texi
 @include glibc-functions/endusershell.texi
 @include glibc-functions/euidaccess.texi
 @include glibc-functions/execvpe.texi

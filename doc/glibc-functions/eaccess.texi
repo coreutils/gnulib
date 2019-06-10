@@ -1,0 +1,5 @@
+@node eaccess
+@subsection @code{eaccess}
+@findex eaccess
+
+This function is an alias of @code{euidaccess}. See @ref{euidaccess}.
