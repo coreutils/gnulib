@@ -3618,6 +3618,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/file.h::
 * Glibc sys/fsuid.h::
 * Glibc sys/gmon.h::
+* Glibc sys/inotify.h::
 * Glibc sys/io.h and sys/perm.h::
 * Glibc sys/kdaemon.h::
 * Glibc sys/klog.h::
@@ -5627,6 +5628,21 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/monstartup.texi
+
+@node Glibc sys/inotify.h
+@section Glibc @code{<sys/inotify.h>}
+
+@menu
+* inotify_add_watch::
+* inotify_init::
+* inotify_init1::
+* inotify_rm_watch::
+@end menu
+
+@include glibc-functions/inotify_add_watch.texi
+@include glibc-functions/inotify_init.texi
+@include glibc-functions/inotify_init1.texi
+@include glibc-functions/inotify_rm_watch.texi
 
 @node Glibc sys/io.h and sys/perm.h
 @section Glibc @code{<sys/io.h>}, @code{<sys/perm.h>}
