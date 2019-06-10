@@ -3949,12 +3949,14 @@ This list of functions is sorted according to the header that declares them.
 * name_to_handle_at::
 * readahead::
 * open_by_handle_at::
+* sync_file_range::
 @end menu
 
 @include glibc-functions/fallocate.texi
 @include glibc-functions/name_to_handle_at.texi
 @include glibc-functions/readahead.texi
 @include glibc-functions/open_by_handle_at.texi
+@include glibc-functions/sync_file_range.texi
 
 @node Glibc fenv.h
 @section Glibc Extensions to @code{<fenv.h>}
