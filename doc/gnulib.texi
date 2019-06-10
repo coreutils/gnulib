@@ -3796,6 +3796,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc selinux/selinux.h::
 * Glibc shadow.h::
 * Glibc signal.h::
+* Glibc spawn.h::
 * Glibc stdio.h::
 * Glibc stdlib.h::
 * Glibc string.h::
@@ -5573,8 +5574,16 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/sys_siglist.texi
 @include glibc-functions/sysv_signal.texi
 
-@c @node Glibc spawn.h
-@c @section Glibc Extensions to @code{<spawn.h>}
+@node Glibc spawn.h
+@section Glibc Extensions to @code{<spawn.h>}
+
+@menu
+* posix_spawn_file_actions_addchdir_np::
+* posix_spawn_file_actions_addfchdir_np::
+@end menu
+
+@include glibc-functions/posix_spawn_file_actions_addchdir_np.texi
+@include glibc-functions/posix_spawn_file_actions_addfchdir_np.texi
 
 @c @node Glibc stdarg.h
 @c @section Glibc Extensions to @code{<stdarg.h>}
