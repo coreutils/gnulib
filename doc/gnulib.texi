@@ -979,9 +979,9 @@ which (known) portability problems are not worked around by Gnulib.
 @chapter ISO C and POSIX Function Substitutes
 
 This chapter describes which functions and function-like macros specified by
-ISO C or POSIX are substituted by Gnulib, which portability pitfalls are
-fixed by Gnulib, and which (known) portability problems are not worked around
-by Gnulib.
+ISO C (including ISO TS 18661-1) or POSIX are substituted by Gnulib, which
+portability pitfalls are fixed by Gnulib, and which (known) portability
+problems are not worked around by Gnulib.
 
 @nosuchmodulenote function
 
@@ -1591,9 +1591,15 @@ by Gnulib.
 * nextafter::
 * nextafterf::
 * nextafterl::
+* nextdown::
+* nextdownf::
+* nextdownl::
 * nexttoward::
 * nexttowardf::
 * nexttowardl::
+* nextup::
+* nextupf::
+* nextupl::
 * nftw::
 * nice::
 * nl_langinfo::
@@ -2790,9 +2796,15 @@ by Gnulib.
 @include posix-functions/nextafter.texi
 @include posix-functions/nextafterf.texi
 @include posix-functions/nextafterl.texi
+@include posix-functions/nextdown.texi
+@include posix-functions/nextdownf.texi
+@include posix-functions/nextdownl.texi
 @include posix-functions/nexttoward.texi
 @include posix-functions/nexttowardf.texi
 @include posix-functions/nexttowardl.texi
+@include posix-functions/nextup.texi
+@include posix-functions/nextupf.texi
+@include posix-functions/nextupl.texi
 @include posix-functions/nftw.texi
 @include posix-functions/nice.texi
 @include posix-functions/nl_langinfo.texi
