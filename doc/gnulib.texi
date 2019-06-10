@@ -1158,6 +1158,7 @@ problems are not worked around by Gnulib.
 * ctermid::
 * ctime::
 * ctime_r::
+* daddl::
 * daylight::
 * dbm_clearerr::
 * dbm_close::
@@ -1168,6 +1169,7 @@ problems are not worked around by Gnulib.
 * dbm_nextkey::
 * dbm_open::
 * dbm_store::
+* ddivl::
 * difftime::
 * dirfd::
 * dirname::
@@ -1176,8 +1178,10 @@ problems are not worked around by Gnulib.
 * dlerror::
 * dlopen::
 * dlsym::
+* dmull::
 * dprintf::
 * drand48::
+* dsubl::
 * dup::
 * dup2::
 * duplocale::
@@ -1218,6 +1222,8 @@ problems are not worked around by Gnulib.
 * fabsf::
 * fabsl::
 * faccessat::
+* fadd::
+* faddl::
 * fattach::
 * fchdir::
 * fchmod::
@@ -1231,6 +1237,8 @@ problems are not worked around by Gnulib.
 * fdim::
 * fdimf::
 * fdiml::
+* fdiv::
+* fdivl::
 * fdopen::
 * fdopendir::
 * feclearexcept::
@@ -1283,6 +1291,8 @@ problems are not worked around by Gnulib.
 * fmodf::
 * fmodl::
 * fmtmsg::
+* fmul::
+* fmull::
 * fnmatch::
 * fopen::
 * fork::
@@ -1314,6 +1324,8 @@ problems are not worked around by Gnulib.
 * fstat::
 * fstatat::
 * fstatvfs::
+* fsub::
+* fsubl::
 * fsync::
 * ftell::
 * ftello::
@@ -2412,6 +2424,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/ctermid.texi
 @include posix-functions/ctime.texi
 @include posix-functions/ctime_r.texi
+@include posix-functions/daddl.texi
 @include posix-functions/daylight.texi
 @include posix-functions/dbm_clearerr.texi
 @include posix-functions/dbm_close.texi
@@ -2422,6 +2435,7 @@ problems are not worked around by Gnulib.
 @include posix-functions/dbm_nextkey.texi
 @include posix-functions/dbm_open.texi
 @include posix-functions/dbm_store.texi
+@include posix-functions/ddivl.texi
 @include posix-functions/difftime.texi
 @include posix-functions/dirfd.texi
 @include posix-functions/dirname.texi
@@ -2430,8 +2444,10 @@ problems are not worked around by Gnulib.
 @include posix-functions/dlerror.texi
 @include posix-functions/dlopen.texi
 @include posix-functions/dlsym.texi
+@include posix-functions/dmull.texi
 @include posix-functions/dprintf.texi
 @include posix-functions/drand48.texi
+@include posix-functions/dsubl.texi
 @include posix-functions/dup.texi
 @include posix-functions/dup2.texi
 @include posix-functions/duplocale.texi
@@ -2472,6 +2488,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/fabsf.texi
 @include posix-functions/fabsl.texi
 @include posix-functions/faccessat.texi
+@include posix-functions/fadd.texi
+@include posix-functions/faddl.texi
 @include posix-functions/fattach.texi
 @include posix-functions/fchdir.texi
 @include posix-functions/fchmod.texi
@@ -2485,6 +2503,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/fdim.texi
 @include posix-functions/fdimf.texi
 @include posix-functions/fdiml.texi
+@include posix-functions/fdiv.texi
+@include posix-functions/fdivl.texi
 @include posix-functions/fdopen.texi
 @include posix-functions/fdopendir.texi
 @include posix-functions/feclearexcept.texi
@@ -2537,6 +2557,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/fmodf.texi
 @include posix-functions/fmodl.texi
 @include posix-functions/fmtmsg.texi
+@include posix-functions/fmul.texi
+@include posix-functions/fmull.texi
 @include posix-functions/fnmatch.texi
 @include posix-functions/fopen.texi
 @include posix-functions/fork.texi
@@ -2568,6 +2590,8 @@ problems are not worked around by Gnulib.
 @include posix-functions/fstat.texi
 @include posix-functions/fstatat.texi
 @include posix-functions/fstatvfs.texi
+@include posix-functions/fsub.texi
+@include posix-functions/fsubl.texi
 @include posix-functions/fsync.texi
 @include posix-functions/ftell.texi
 @include posix-functions/ftello.texi
