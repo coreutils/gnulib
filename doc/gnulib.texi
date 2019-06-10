@@ -3603,9 +3603,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc rpcsvc/nislib.h::
 * Glibc rpcsvc/nis_callback.h::
 * Glibc rpcsvc/yp.h::
-* Glibc rpcsvc/yp_prot.h::
 * Glibc rpcsvc/ypclnt.h::
-* Glibc rpcsvc/ypupd.h::
 * Glibc sched.h::
 * Glibc search.h::
 * Glibc selinux/selinux.h::
@@ -5174,16 +5172,10 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * xdr_domainname::
 * xdr_keydat::
-* xdr_mapname::
-* xdr_peername::
 * xdr_valdat::
-* xdr_ypbind_binding::
-* xdr_ypbind_resp::
 * xdr_ypbind_resptype::
-* xdr_ypbind_setdom::
 * xdr_ypmap_parms::
 * xdr_ypmaplist::
-* xdr_yppush_status::
 * xdr_yppushresp_xfr::
 * xdr_ypreq_key::
 * xdr_ypreq_nokey::
@@ -5201,16 +5193,10 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/xdr_domainname.texi
 @include glibc-functions/xdr_keydat.texi
-@include glibc-functions/xdr_mapname.texi
-@include glibc-functions/xdr_peername.texi
 @include glibc-functions/xdr_valdat.texi
-@include glibc-functions/xdr_ypbind_binding.texi
-@include glibc-functions/xdr_ypbind_resp.texi
 @include glibc-functions/xdr_ypbind_resptype.texi
-@include glibc-functions/xdr_ypbind_setdom.texi
 @include glibc-functions/xdr_ypmap_parms.texi
 @include glibc-functions/xdr_ypmaplist.texi
-@include glibc-functions/xdr_yppush_status.texi
 @include glibc-functions/xdr_yppushresp_xfr.texi
 @include glibc-functions/xdr_ypreq_key.texi
 @include glibc-functions/xdr_ypreq_nokey.texi
@@ -5225,14 +5211,8 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/xdr_ypstat.texi
 @include glibc-functions/xdr_ypxfrstat.texi
 
-@node Glibc rpcsvc/yp_prot.h
-@section Glibc @code{<rpcsvc/yp_prot.h>}
-
-@menu
-* xdr_ypall::
-@end menu
-
-@include glibc-functions/xdr_ypall.texi
+@c @node Glibc rpcsvc/yp_prot.h
+@c @section Glibc @code{<rpcsvc/yp_prot.h>}
 
 @node Glibc rpcsvc/ypclnt.h
 @section Glibc @code{<rpcsvc/ypclnt.h>}
@@ -5247,7 +5227,6 @@ This list of functions is sorted according to the header that declares them.
 * yp_next::
 * yp_order::
 * yp_unbind::
-* yp_update::
 * ypbinderr_string::
 * yperr_string::
 * ypprot_err::
@@ -5262,23 +5241,12 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/yp_next.texi
 @include glibc-functions/yp_order.texi
 @include glibc-functions/yp_unbind.texi
-@include glibc-functions/yp_update.texi
 @include glibc-functions/ypbinderr_string.texi
 @include glibc-functions/yperr_string.texi
 @include glibc-functions/ypprot_err.texi
 
-@node Glibc rpcsvc/ypupd.h
-@section Glibc @code{<rpcsvc/ypupd.h>}
-
-@menu
-* xdr_yp_buf::
-* xdr_ypdelete_args::
-* xdr_ypupdate_args::
-@end menu
-
-@include glibc-functions/xdr_yp_buf.texi
-@include glibc-functions/xdr_ypdelete_args.texi
-@include glibc-functions/xdr_ypupdate_args.texi
+@c @node Glibc rpcsvc/ypupd.h
+@c @section Glibc @code{<rpcsvc/ypupd.h>}
 
 @node Glibc sched.h
 @section Glibc Extensions to @code{<sched.h>}
