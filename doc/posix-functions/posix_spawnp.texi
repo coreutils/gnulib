@@ -24,6 +24,7 @@ This function does not work on some platforms:
 AIX 6.1 (under particular circumstances), mingw.
 @end itemize
 
-The Gnulib module @code{posix_spawn_file_actions_addchdir} provides an
-additional action, that consists in changing the current directory of
-the child process before starting the specified program.
+The Gnulib modules @code{posix_spawn_file_actions_addchdir} and
+@code{posix_spawn_file_actions_addfchdir} provide additional actions,
+that consist in changing the current directory of the child process
+before starting the specified program.

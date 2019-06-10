@@ -137,6 +137,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_addchdir, int,
                  (posix_spawn_file_actions_t *, const char *));
 #endif
 
+#if GNULIB_TEST_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR
+SIGNATURE_CHECK (GNULIB_NAMESPACE::posix_spawn_file_actions_addfchdir, int,
+                 (posix_spawn_file_actions_t *, int));
+#endif
+
 
 int
 main ()

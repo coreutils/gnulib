@@ -290,6 +290,12 @@ __spawni (pid_t *pid, const char *file,
                 /* The 'chdir' call failed.  */
                 _exit (SPAWN_ERROR);
               break;
+
+            case spawn_do_fchdir:
+              if (fchdir (action->action.fchdir_action.fd) < 0)
+                /* The 'fchdir' call failed.  */
+                _exit (SPAWN_ERROR);
+              break;
             }
         }
     }

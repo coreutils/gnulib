@@ -913,6 +913,41 @@ _GL_WARN_ON_USE (posix_spawn_file_actions_addchdir,
 # endif
 #endif
 
+#if @GNULIB_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR@
+/* Add an action to FILE-ACTIONS which tells the implementation to call
+   'fchdir' to the given directory during the 'spawn' call.  */
+# if @REPLACE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   define posix_spawn_file_actions_addfchdir rpl_posix_spawn_file_actions_addfchdir
+#  endif
+_GL_FUNCDECL_RPL (posix_spawn_file_actions_addfchdir, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (posix_spawn_file_actions_addfchdir, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd));
+# else
+#  if !@HAVE_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR@
+_GL_FUNCDECL_SYS (posix_spawn_file_actions_addfchdir, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd)
+                  __THROW _GL_ARG_NONNULL ((1)));
+#  endif
+_GL_CXXALIAS_SYS (posix_spawn_file_actions_addfchdir, int,
+                  (posix_spawn_file_actions_t *_Restrict_ __file_actions,
+                   int __fd));
+# endif
+_GL_CXXALIASWARN (posix_spawn_file_actions_addfchdir);
+#elif defined GNULIB_POSIXCHECK
+# undef posix_spawn_file_actions_addfchdir
+# if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDFCHDIR
+_GL_WARN_ON_USE (posix_spawn_file_actions_addfchdir,
+                 "posix_spawn_file_actions_addfchdir is unportable - "
+                 "use gnulib module posix_spawn_file_actions_addfchdir for portability");
+# endif
+#endif
+
 
 #endif /* _@GUARD_PREFIX@_SPAWN_H */
 #endif /* _@GUARD_PREFIX@_SPAWN_H */
