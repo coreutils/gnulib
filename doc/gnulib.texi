@@ -3635,6 +3635,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/resource.h::
 * Glibc sys/sem.h::
 * Glibc sys/sendfile.h::
+* Glibc sys/signalfd.h::
 * Glibc sys/socket.h::
 * Glibc sys/stat.h::
 * Glibc sys/statfs.h::
@@ -5823,6 +5824,15 @@ This list of functions is sorted according to the header that declares them.
 
 @c @node Glibc sys/shm.h
 @c @section Glibc Extensions to @code{<sys/shm.h>}
+
+@node Glibc sys/signalfd.h
+@section Glibc @code{<sys/signalfd.h>}
+
+@menu
+* signalfd::
+@end menu
+
+@include glibc-functions/signalfd.texi
 
 @node Glibc sys/socket.h
 @section Glibc Extensions to @code{<sys/socket.h>}
