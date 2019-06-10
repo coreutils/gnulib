@@ -6033,9 +6033,11 @@ This list of functions is sorted according to the header that declares them.
 
 @menu
 * lchmod::
+* statx::
 @end menu
 
 @include glibc-functions/lchmod.texi
+@include glibc-functions/statx.texi
 
 @node Glibc sys/statfs.h
 @section Glibc @code{<sys/statfs.h>}
