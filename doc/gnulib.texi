@@ -3581,6 +3581,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc netinet/ether.h::
 * Glibc netinet/in.h::
 * Glibc obstack.h::
+* Glibc poll.h::
 * Glibc printf.h::
 * Glibc pthread.h::
 * Glibc pty.h::
@@ -4508,8 +4509,14 @@ This list of functions is sorted according to the header that declares them.
 @c @node Glibc paths.h
 @c @section Glibc @code{<paths.h>}
 
-@c @node Glibc poll.h
-@c @section Glibc Extensions to @code{<poll.h>}
+@node Glibc poll.h
+@section Glibc Extensions to @code{<poll.h>}
+
+@menu
+* ppoll::
+@end menu
+
+@include glibc-functions/ppoll.texi
 
 @node Glibc printf.h
 @section Glibc @code{<printf.h>}
