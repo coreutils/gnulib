@@ -5844,6 +5844,11 @@ This list of functions is sorted according to the header that declares them.
 * mincore::
 * mlock2::
 * mremap::
+* pkey_alloc::
+* pkey_free::
+* pkey_get::
+* pkey_mprotect::
+* pkey_set::
 * remap_file_pages::
 @end menu
 
@@ -5852,6 +5857,11 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/mincore.texi
 @include glibc-functions/mlock2.texi
 @include glibc-functions/mremap.texi
+@include glibc-functions/pkey_alloc.texi
+@include glibc-functions/pkey_free.texi
+@include glibc-functions/pkey_get.texi
+@include glibc-functions/pkey_mprotect.texi
+@include glibc-functions/pkey_set.texi
 @include glibc-functions/remap_file_pages.texi
 
 @node Glibc sys/mount.h
