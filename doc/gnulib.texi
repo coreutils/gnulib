@@ -5555,6 +5555,7 @@ This list of functions is sorted according to the header that declares them.
 * fwrite_unlocked::
 * getw::
 * putw::
+* renameat2::
 * setbuffer::
 * setlinebuf::
 * sys_errlist::
@@ -5580,6 +5581,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/fwrite_unlocked.texi
 @include glibc-functions/getw.texi
 @include glibc-functions/putw.texi
+@include glibc-functions/renameat2.texi
 @include glibc-functions/setbuffer.texi
 @include glibc-functions/setlinebuf.texi
 @include glibc-functions/sys_errlist.texi
