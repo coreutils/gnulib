@@ -3613,6 +3613,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc stdio.h::
 * Glibc stdlib.h::
 * Glibc string.h::
+* Glibc sys/auxv.h::
 * Glibc sys/capability.h::
 * Glibc sys/epoll.h::
 * Glibc sys/eventfd.h::
@@ -5578,6 +5579,15 @@ This list of functions is sorted according to the header that declares them.
 
 @c @node Glibc stropts.h
 @c @section Glibc Extensions to @code{<stropts.h>}
+
+@node Glibc sys/auxv.h
+@section Glibc @code{<sys/auxv.h>}
+
+@menu
+* getauxval::
+@end menu
+
+@include glibc-functions/getauxval.texi
 
 @node Glibc sys/capability.h
 @section Glibc @code{<sys/capability.h>}
