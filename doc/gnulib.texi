@@ -3552,7 +3552,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc arpa/inet.h::
 * Glibc byteswap.h::
 * Glibc complex.h::
-* Glibc crypt.h::
 * Glibc ctype.h::
 * Glibc dirent.h::
 * Glibc dlfcn.h::
@@ -3593,7 +3592,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc rpc/auth_des.h::
 * Glibc rpc/auth_unix.h::
 * Glibc rpc/clnt.h::
-* Glibc rpc/des_crypt.h::
 * Glibc rpc/key_prot.h::
 * Glibc rpc/netdb.h::
 * Glibc rpc/pmap_clnt.h::
@@ -3816,18 +3814,8 @@ This list of functions is sorted according to the header that declares them.
 @c @node Glibc cpio.h
 @c @section Glibc Extensions to @code{<cpio.h>}
 
-@node Glibc crypt.h
-@section Glibc @code{<crypt.h>}
-
-@menu
-* crypt_r::
-* encrypt_r::
-* setkey_r::
-@end menu
-
-@include glibc-functions/crypt_r.texi
-@include glibc-functions/encrypt_r.texi
-@include glibc-functions/setkey_r.texi
+@c @node Glibc crypt.h
+@c @section Glibc @code{<crypt.h>}
 
 @node Glibc ctype.h
 @section Glibc Extensions to @code{<ctype.h>}
@@ -4790,18 +4778,8 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getrpcport.texi
 @include glibc-functions/rpc_createerr.texi
 
-@node Glibc rpc/des_crypt.h
-@section Glibc @code{<rpc/des_crypt.h>}
-
-@menu
-* cbc_crypt::
-* des_setparity::
-* ecb_crypt::
-@end menu
-
-@include glibc-functions/cbc_crypt.texi
-@include glibc-functions/des_setparity.texi
-@include glibc-functions/ecb_crypt.texi
+@c @node Glibc rpc/des_crypt.h
+@c @section Glibc @code{<rpc/des_crypt.h>}
 
 @node Glibc rpc/key_prot.h
 @section Glibc @code{<rpc/key_prot.h>}
