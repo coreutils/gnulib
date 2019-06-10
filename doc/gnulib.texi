@@ -2036,6 +2036,9 @@ problems are not worked around by Gnulib.
 * strerror_r::
 * strfmon::
 * strfmon_l::
+* strfromd::
+* strfromf::
+* strfroml::
 * strftime::
 * strftime_l::
 * strlen::
@@ -3287,6 +3290,9 @@ problems are not worked around by Gnulib.
 @include posix-functions/strerror_r.texi
 @include posix-functions/strfmon.texi
 @include posix-functions/strfmon_l.texi
+@include posix-functions/strfromd.texi
+@include posix-functions/strfromf.texi
+@include posix-functions/strfroml.texi
 @include posix-functions/strftime.texi
 @include posix-functions/strftime_l.texi
 @include posix-functions/strlen.texi
