@@ -3647,7 +3647,6 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/uio.h::
 * Glibc sys/ustat.h::
 * Glibc sys/vlimit.h::
-* Glibc sys/vm86.h::
 * Glibc sys/vtimes.h::
 * Glibc sys/wait.h::
 * Glibc sys/xattr.h::
@@ -5991,14 +5990,8 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/vlimit.texi
 
-@node Glibc sys/vm86.h
-@section Glibc @code{<sys/vm86.h>}
-
-@menu
-* vm86::
-@end menu
-
-@include glibc-functions/vm86.texi
+@c @node Glibc sys/vm86.h
+@c @section Glibc @code{<sys/vm86.h>}
 
 @node Glibc sys/vtimes.h
 @section Glibc @code{<sys/vtimes.h>}
