@@ -216,8 +216,9 @@ num_processors_ignoring_omp (enum nproc_query query)
      Note! On Linux systems with glibc, the first and second number come from
      the /sys and /proc file systems (see
      glibc/sysdeps/unix/sysv/linux/getsysstats.c).
-     In some situations these file systems are not mounted, and the sysconf
-     call returns 1, which does not reflect the reality.  */
+     In some situations these file systems are not mounted, and the sysconf call
+     returns 1 or 2 (<https://sourceware.org/bugzilla/show_bug.cgi?id=21542>),
+     which does not reflect the reality.  */
 
   if (query == NPROC_CURRENT)
     {
@@ -249,13 +250,13 @@ num_processors_ignoring_omp (enum nproc_query query)
         /* On Linux systems with glibc, this information comes from the /sys and
            /proc file systems (see glibc/sysdeps/unix/sysv/linux/getsysstats.c).
            In some situations these file systems are not mounted, and the
-           sysconf call returns 1.  But we wish to guarantee that
+           sysconf call returns 1 or 2.  But we wish to guarantee that
            num_processors (NPROC_ALL) >= num_processors (NPROC_CURRENT).  */
-        if (nprocs == 1)
+        if (nprocs == 1 || nprocs == 2)
           {
             unsigned long nprocs_current = num_processors_via_affinity_mask ();
 
-            if (nprocs_current > 0)
+            if (/* nprocs_current > 0 && */ nprocs_current > nprocs)
               nprocs = nprocs_current;
           }
 # endif
