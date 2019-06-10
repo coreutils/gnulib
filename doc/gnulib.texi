@@ -6301,6 +6301,7 @@ This list of functions is sorted according to the header that declares them.
 * acct::
 * brk::
 * chroot::
+* copy_file_range::
 * daemon::
 * dup3::
 * eaccess::
@@ -6336,6 +6337,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/acct.texi
 @include glibc-functions/brk.texi
 @include glibc-functions/chroot.texi
+@include glibc-functions/copy_file_range.texi
 @include glibc-functions/daemon.texi
 @include glibc-functions/dup3.texi
 @include glibc-functions/eaccess.texi
