@@ -4552,6 +4552,7 @@ This list of functions is sorted according to the header that declares them.
 * pthread_attr_getaffinity_np::
 * pthread_attr_setaffinity_np::
 * pthread_getaffinity_np::
+* pthread_getattr_default_np::
 * pthread_getattr_np::
 * pthread_getname_np::
 * pthread_kill_other_threads_np::
@@ -4561,6 +4562,7 @@ This list of functions is sorted according to the header that declares them.
 * pthread_rwlockattr_getkind_np::
 * pthread_rwlockattr_setkind_np::
 * pthread_setaffinity_np::
+* pthread_setattr_default_np::
 * pthread_setname_np::
 * pthread_sigqueue::
 * pthread_timedjoin_np::
@@ -4571,6 +4573,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_attr_getaffinity_np.texi
 @include glibc-functions/pthread_attr_setaffinity_np.texi
 @include glibc-functions/pthread_getaffinity_np.texi
+@include glibc-functions/pthread_getattr_default_np.texi
 @include glibc-functions/pthread_getattr_np.texi
 @include glibc-functions/pthread_getname_np.texi
 @include glibc-functions/pthread_kill_other_threads_np.texi
@@ -4580,6 +4583,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/pthread_rwlockattr_getkind_np.texi
 @include glibc-functions/pthread_rwlockattr_setkind_np.texi
 @include glibc-functions/pthread_setaffinity_np.texi
+@include glibc-functions/pthread_setattr_default_np.texi
 @include glibc-functions/pthread_setname_np.texi
 @include glibc-functions/pthread_sigqueue.texi
 @include glibc-functions/pthread_timedjoin_np.texi
