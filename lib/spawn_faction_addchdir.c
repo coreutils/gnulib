@@ -19,6 +19,8 @@
 #include <spawn.h>
 
 #include <errno.h>
+#include <stdlib.h>
+#include <string.h>
 
 #if REPLACE_POSIX_SPAWN
 # include "spawn_int.h"
@@ -34,24 +36,35 @@ posix_spawn_file_actions_addchdir (posix_spawn_file_actions_t *file_actions,
 #if !REPLACE_POSIX_SPAWN
   return posix_spawn_file_actions_addchdir_np (file_actions, path);
 #else
-  /* Allocate more memory if needed.  */
-  if (file_actions->_used == file_actions->_allocated
-      && __posix_spawn_file_actions_realloc (file_actions) != 0)
-    /* This can only mean we ran out of memory.  */
-    return ENOMEM;
-
   {
-    struct __spawn_action *rec;
+    /* Copy PATH, because the caller may free it before calling posix_spawn()
+       or posix_spawnp().  */
+    char *path_copy = strdup (path);
+    if (path_copy == NULL)
+      return ENOMEM;
 
-    /* Add the new value.  */
-    rec = &file_actions->_actions[file_actions->_used];
-    rec->tag = spawn_do_chdir;
-    rec->action.chdir_action.path = path;
+    /* Allocate more memory if needed.  */
+    if (file_actions->_used == file_actions->_allocated
+        && __posix_spawn_file_actions_realloc (file_actions) != 0)
+      {
+        /* This can only mean we ran out of memory.  */
+        free (path_copy);
+        return ENOMEM;
+      }
 
-    /* Account for the new entry.  */
-    ++file_actions->_used;
+    {
+      struct __spawn_action *rec;
 
-    return 0;
+      /* Add the new value.  */
+      rec = &file_actions->_actions[file_actions->_used];
+      rec->tag = spawn_do_chdir;
+      rec->action.chdir_action.path = path_copy;
+
+      /* Account for the new entry.  */
+      ++file_actions->_used;
+
+      return 0;
+    }
   }
 #endif
 }

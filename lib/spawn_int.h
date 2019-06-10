@@ -48,7 +48,7 @@ struct __spawn_action
     } open_action;
     struct
     {
-      const char *path;
+      char *path;
     } chdir_action;
     struct
     {

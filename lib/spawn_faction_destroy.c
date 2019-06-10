@@ -42,6 +42,7 @@ posix_spawn_file_actions_destroy (posix_spawn_file_actions_t *file_actions)
       switch (sa->tag)
         {
         case spawn_do_open:
+        case spawn_do_chdir:
           free (sa->action.open_action.path);
           break;
         default:
