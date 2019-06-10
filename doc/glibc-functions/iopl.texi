@@ -2,6 +2,8 @@
 @subsection @code{iopl}
 @findex iopl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/iopl.2.html,,man iopl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

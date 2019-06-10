@@ -2,6 +2,8 @@
 @subsection @code{getnetgrent}
 @findex getnetgrent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getnetgrent.3.html,,man getnetgrent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

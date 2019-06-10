@@ -2,6 +2,8 @@
 @subsection @code{err}
 @findex err
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/err.3.html,,man err}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{getw}
 @findex getw
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getw.3.html,,man getw}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

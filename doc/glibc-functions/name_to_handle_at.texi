@@ -2,6 +2,8 @@
 @subsection @code{name_to_handle_at}
 @findex name_to_handle_at
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/name_to_handle_at.2.html,,man name_to_handle_at}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

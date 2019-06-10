@@ -2,6 +2,8 @@
 @subsection @code{matherr}
 @findex matherr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/matherr.3.html,,man matherr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

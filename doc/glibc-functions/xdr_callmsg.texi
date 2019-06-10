@@ -2,6 +2,8 @@
 @subsection @code{xdr_callmsg}
 @findex xdr_callmsg
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_callmsg.3.html,,man xdr_callmsg}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{backtrace_symbols}
 @findex backtrace_symbols
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/backtrace_symbols.3.html,,man backtrace_symbols}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

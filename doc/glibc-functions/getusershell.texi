@@ -2,6 +2,8 @@
 @subsection @code{getusershell}
 @findex getusershell
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getusershell.3.html,,man getusershell}
+
 Gnulib module: getusershell
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{initstate_r}
 @findex initstate_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/initstate_r.3.html,,man initstate_r}
+
 Gnulib module: random_r
 
 Portability problems fixed by Gnulib:

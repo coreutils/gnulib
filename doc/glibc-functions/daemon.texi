@@ -2,6 +2,8 @@
 @subsection @code{daemon}
 @findex daemon
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/daemon.3.html,,man daemon}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

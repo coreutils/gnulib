@@ -2,6 +2,8 @@
 @subsection @code{xdrstdio_create}
 @findex xdrstdio_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdrstdio_create.3.html,,man xdrstdio_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

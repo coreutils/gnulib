@@ -2,6 +2,8 @@
 @subsection @code{dn_expand}
 @findex dn_expand
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dn_expand.3.html,,man dn_expand}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{bindresvport}
 @findex bindresvport
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bindresvport.3.html,,man bindresvport}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

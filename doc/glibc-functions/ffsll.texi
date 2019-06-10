@@ -2,6 +2,8 @@
 @subsection @code{ffsll}
 @findex ffsll
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ffsll.3.html,,man ffsll}
+
 Gnulib module: ffsll
 
 Portability problems fixed by Gnulib:

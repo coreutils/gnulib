@@ -2,6 +2,8 @@
 @subsection @code{pthread_rwlockattr_getkind_np}
 @findex pthread_rwlockattr_getkind_np
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_rwlockattr_getkind_np.3.html,,man pthread_rwlockattr_getkind_np}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

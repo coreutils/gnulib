@@ -2,6 +2,8 @@
 @subsection @code{setfsgid}
 @findex setfsgid
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setfsgid.2.html,,man setfsgid}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

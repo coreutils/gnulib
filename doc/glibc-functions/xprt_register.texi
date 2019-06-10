@@ -2,6 +2,8 @@
 @subsection @code{xprt_register}
 @findex xprt_register
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xprt_register.3.html,,man xprt_register}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

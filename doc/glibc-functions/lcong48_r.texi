@@ -2,6 +2,8 @@
 @subsection @code{lcong48_r}
 @findex lcong48_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lcong48_r.3.html,,man lcong48_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

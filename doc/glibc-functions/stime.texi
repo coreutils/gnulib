@@ -2,6 +2,8 @@
 @subsection @code{stime}
 @findex stime
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/stime.2.html,,man stime}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

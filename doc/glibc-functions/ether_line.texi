@@ -2,6 +2,8 @@
 @subsection @code{ether_line}
 @findex ether_line
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ether_line.3.html,,man ether_line}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

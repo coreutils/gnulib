@@ -2,6 +2,8 @@
 @subsection @code{svcerr_noprog}
 @findex svcerr_noprog
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_noprog.3.html,,man svcerr_noprog}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

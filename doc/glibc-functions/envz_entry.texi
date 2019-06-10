@@ -2,6 +2,8 @@
 @subsection @code{envz_entry}
 @findex envz_entry
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/envz_entry.3.html,,man envz_entry}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

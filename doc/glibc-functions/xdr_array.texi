@@ -2,6 +2,8 @@
 @subsection @code{xdr_array}
 @findex xdr_array
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_array.3.html,,man xdr_array}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

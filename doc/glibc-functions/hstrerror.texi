@@ -2,6 +2,8 @@
 @subsection @code{hstrerror}
 @findex hstrerror
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/hstrerror.3.html,,man hstrerror}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

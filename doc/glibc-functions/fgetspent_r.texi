@@ -2,6 +2,8 @@
 @subsection @code{fgetspent_r}
 @findex fgetspent_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgetspent_r.3.html,,man fgetspent_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

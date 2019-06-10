@@ -2,6 +2,8 @@
 @subsection @code{svc_register}
 @findex svc_register
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_register.3.html,,man svc_register}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{utmpname}
 @findex utmpname
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/utmpname.3.html,,man utmpname}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

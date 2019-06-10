@@ -2,6 +2,8 @@
 @subsection @code{strtouq}
 @findex strtouq
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strtouq.3.html,,man strtouq}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

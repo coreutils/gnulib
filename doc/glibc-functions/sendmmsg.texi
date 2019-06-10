@@ -2,6 +2,8 @@
 @subsection @code{sendmmsg}
 @findex sendmmsg
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sendmmsg.2.html,,man sendmmsg}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

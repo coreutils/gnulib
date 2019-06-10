@@ -2,6 +2,8 @@
 @subsection @code{error_one_per_line}
 @findex error_one_per_line
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error_one_per_line.3.html,,man error_one_per_line}
+
 Gnulib module: error
 
 Portability problems fixed by Gnulib:

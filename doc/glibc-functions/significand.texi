@@ -2,6 +2,8 @@
 @subsection @code{significand}
 @findex significand
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/significand.3.html,,man significand}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

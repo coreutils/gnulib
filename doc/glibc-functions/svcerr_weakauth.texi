@@ -2,6 +2,8 @@
 @subsection @code{svcerr_weakauth}
 @findex svcerr_weakauth
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_weakauth.3.html,,man svcerr_weakauth}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

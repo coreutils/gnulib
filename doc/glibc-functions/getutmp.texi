@@ -2,6 +2,8 @@
 @subsection @code{getutmp}
 @findex getutmp
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutmp.3.html,,man getutmp}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

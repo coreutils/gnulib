@@ -2,6 +2,8 @@
 @subsection @code{clog10l}
 @findex clog10l
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clog10l.3.html,,man clog10l}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

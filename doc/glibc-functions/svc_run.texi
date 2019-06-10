@@ -2,6 +2,8 @@
 @subsection @code{svc_run}
 @findex svc_run
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_run.3.html,,man svc_run}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

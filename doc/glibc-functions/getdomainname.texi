@@ -2,6 +2,8 @@
 @subsection @code{getdomainname}
 @findex getdomainname
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getdomainname.2.html,,man getdomainname}
+
 Gnulib module: getdomainname
 
 Portability problems fixed by Gnulib:

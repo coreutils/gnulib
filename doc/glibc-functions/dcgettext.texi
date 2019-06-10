@@ -2,6 +2,8 @@
 @subsection @code{dcgettext}
 @findex dcgettext
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dcgettext.3.html,,man dcgettext}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

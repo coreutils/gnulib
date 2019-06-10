@@ -2,6 +2,8 @@
 @subsection @code{strsep}
 @findex strsep
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strsep.3.html,,man strsep}
+
 Gnulib module: strsep
 
 Portability problems fixed by Gnulib:

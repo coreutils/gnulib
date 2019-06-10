@@ -2,6 +2,8 @@
 @subsection @code{get_avphys_pages}
 @findex get_avphys_pages
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_avphys_pages.3.html,,man get_avphys_pages}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

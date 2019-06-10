@@ -2,6 +2,8 @@
 @subsection @code{isinff}
 @findex isinff
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/isinff.3.html,,man isinff}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

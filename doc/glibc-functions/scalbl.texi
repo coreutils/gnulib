@@ -2,6 +2,8 @@
 @subsection @code{scalbl}
 @findex scalbl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scalbl.3.html,,man scalbl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

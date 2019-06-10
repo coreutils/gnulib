@@ -2,6 +2,8 @@
 @subsection @code{reallocarray}
 @findex reallocarray
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/reallocarray.3.html,,man reallocarray}
+
 Gnulib module: reallocarray
 
 Allocate multiple memory locations of a fixed size with integer overflow

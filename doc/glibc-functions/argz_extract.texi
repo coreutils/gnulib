@@ -2,6 +2,8 @@
 @subsection @code{argz_extract}
 @findex argz_extract
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_extract.3.html,,man argz_extract}
+
 Gnulib module: argz
 
 Portability problems fixed by Gnulib:

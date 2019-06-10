@@ -2,6 +2,8 @@
 @subsection @code{wait3}
 @findex wait3
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/wait3.2.html,,man wait3}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

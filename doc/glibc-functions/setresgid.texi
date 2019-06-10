@@ -2,6 +2,8 @@
 @subsection @code{setresgid}
 @findex setresgid
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setresgid.2.html,,man setresgid}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{malloc_info}
 @findex malloc_info
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/malloc_info.3.html,,man malloc_info}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

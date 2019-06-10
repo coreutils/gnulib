@@ -2,6 +2,8 @@
 @subsection @code{adjtimex}
 @findex adjtimex
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/adjtimex.2.html,,man adjtimex}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{getprotobynumber_r}
 @findex getprotobynumber_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getprotobynumber_r.3.html,,man getprotobynumber_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

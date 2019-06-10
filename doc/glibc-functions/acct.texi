@@ -2,6 +2,8 @@
 @subsection @code{acct}
 @findex acct
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/acct.2.html,,man acct}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

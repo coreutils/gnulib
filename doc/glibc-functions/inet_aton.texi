@@ -2,6 +2,8 @@
 @subsection @code{inet_aton}
 @findex inet_aton
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_aton.3.html,,man inet_aton}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

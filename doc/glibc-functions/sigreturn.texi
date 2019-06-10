@@ -2,6 +2,8 @@
 @subsection @code{sigreturn}
 @findex sigreturn
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sigreturn.2.html,,man sigreturn}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

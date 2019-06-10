@@ -2,6 +2,8 @@
 @subsection @code{jnl}
 @findex jnl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/jnl.3.html,,man jnl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

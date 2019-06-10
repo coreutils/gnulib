@@ -2,6 +2,8 @@
 @subsection @code{endspent}
 @findex endspent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endspent.3.html,,man endspent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

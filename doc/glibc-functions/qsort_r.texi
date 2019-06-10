@@ -2,6 +2,8 @@
 @subsection @code{qsort_r}
 @findex qsort_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qsort_r.3.html,,man qsort_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{euidaccess}
 @findex euidaccess
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/euidaccess.3.html,,man euidaccess}
+
 Gnulib module: euidaccess
 
 Portability problems fixed by Gnulib:

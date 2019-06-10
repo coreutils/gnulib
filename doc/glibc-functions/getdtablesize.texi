@@ -4,6 +4,8 @@
 
 SUSv2 specification: @url{http://pubs.opengroup.org/onlinepubs/7908799/xsh/getdtablesize.html}
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdtablesize.3.html,,man getdtablesize}
+
 Gnulib module: getdtablesize
 
 Portability problems fixed by Gnulib:

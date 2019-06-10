@@ -2,6 +2,8 @@
 @subsection @code{listxattr}
 @findex listxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/listxattr.2.html,,man listxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

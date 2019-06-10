@@ -2,6 +2,8 @@
 @subsection @code{futimesat}
 @findex futimesat
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/futimesat.2.html,,man futimesat}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{errx}
 @findex errx
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/errx.3.html,,man errx}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

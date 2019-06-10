@@ -2,6 +2,8 @@
 @subsection @code{vsyslog}
 @findex vsyslog
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vsyslog.3.html,,man vsyslog}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

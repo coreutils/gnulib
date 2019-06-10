@@ -2,6 +2,8 @@
 @subsection @code{mkostemp}
 @findex mkostemp
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mkostemp.3.html,,man mkostemp}
+
 Gnulib module: mkostemp
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{strcasestr}
 @findex strcasestr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strcasestr.3.html,,man strcasestr}
+
 Gnulib module: strcasestr or strcasestr-simple
 
 Portability problems fixed by either Gnulib module @code{strcasestr-simple}

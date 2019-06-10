@@ -2,6 +2,8 @@
 @subsection @code{mallinfo}
 @findex mallinfo
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallinfo.3.html,,man mallinfo}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

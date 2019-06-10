@@ -2,6 +2,8 @@
 @subsection @code{svcerr_decode}
 @findex svcerr_decode
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_decode.3.html,,man svcerr_decode}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

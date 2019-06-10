@@ -2,6 +2,8 @@
 @subsection @code{setaliasent}
 @findex setaliasent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setaliasent.3.html,,man setaliasent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

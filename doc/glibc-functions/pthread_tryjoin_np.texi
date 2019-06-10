@@ -2,6 +2,8 @@
 @subsection @code{pthread_tryjoin_np}
 @findex pthread_tryjoin_np
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_tryjoin_np.3.html,,man pthread_tryjoin_np}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

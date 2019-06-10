@@ -2,6 +2,8 @@
 @subsection @code{random_r}
 @findex random_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/random_r.3.html,,man random_r}
+
 Gnulib module: random_r
 
 Portability problems fixed by Gnulib:

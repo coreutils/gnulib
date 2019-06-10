@@ -2,6 +2,8 @@
 @subsection @code{sysv_signal}
 @findex sysv_signal
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sysv_signal.3.html,,man sysv_signal}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

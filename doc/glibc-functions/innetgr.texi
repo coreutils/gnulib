@@ -2,6 +2,8 @@
 @subsection @code{innetgr}
 @findex innetgr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/innetgr.3.html,,man innetgr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{ether_hostton}
 @findex ether_hostton
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ether_hostton.3.html,,man ether_hostton}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

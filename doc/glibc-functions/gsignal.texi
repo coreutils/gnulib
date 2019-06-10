@@ -2,6 +2,8 @@
 @subsection @code{gsignal}
 @findex gsignal
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gsignal.3.html,,man gsignal}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

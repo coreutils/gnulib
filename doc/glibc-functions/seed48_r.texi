@@ -2,6 +2,8 @@
 @subsection @code{seed48_r}
 @findex seed48_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/seed48_r.3.html,,man seed48_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

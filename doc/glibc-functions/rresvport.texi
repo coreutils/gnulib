@@ -2,6 +2,8 @@
 @subsection @code{rresvport}
 @findex rresvport
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/rresvport.3.html,,man rresvport}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

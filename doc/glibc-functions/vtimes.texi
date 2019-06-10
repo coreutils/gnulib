@@ -2,6 +2,8 @@
 @subsection @code{vtimes}
 @findex vtimes
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vtimes.3.html,,man vtimes}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

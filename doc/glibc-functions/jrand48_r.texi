@@ -2,6 +2,8 @@
 @subsection @code{jrand48_r}
 @findex jrand48_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/jrand48_r.3.html,,man jrand48_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

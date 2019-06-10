@@ -2,6 +2,8 @@
 @subsection @code{wmempcpy}
 @findex wmempcpy
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/wmempcpy.3.html,,man wmempcpy}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

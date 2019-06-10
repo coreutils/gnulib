@@ -2,6 +2,8 @@
 @subsection @code{sched_setaffinity}
 @findex sched_setaffinity
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sched_setaffinity.2.html,,man sched_setaffinity}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

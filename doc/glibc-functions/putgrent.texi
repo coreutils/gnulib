@@ -2,6 +2,8 @@
 @subsection @code{putgrent}
 @findex putgrent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putgrent.3.html,,man putgrent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

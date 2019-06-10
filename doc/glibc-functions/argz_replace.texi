@@ -2,6 +2,8 @@
 @subsection @code{argz_replace}
 @findex argz_replace
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_replace.3.html,,man argz_replace}
+
 Gnulib module: argz
 
 Portability problems fixed by Gnulib:

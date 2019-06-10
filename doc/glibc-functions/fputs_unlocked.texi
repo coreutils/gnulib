@@ -2,6 +2,8 @@
 @subsection @code{fputs_unlocked}
 @findex fputs_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fputs_unlocked.3.html,,man fputs_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

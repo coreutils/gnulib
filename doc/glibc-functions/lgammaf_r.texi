@@ -2,6 +2,8 @@
 @subsection @code{lgammaf_r}
 @findex lgammaf_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lgammaf_r.3.html,,man lgammaf_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

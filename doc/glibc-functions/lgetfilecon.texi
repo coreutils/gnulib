@@ -2,4 +2,6 @@
 @subsection @code{lgetfilecon}
 @findex lgetfilecon
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lgetfilecon.3.html,,man lgetfilecon}
+
 @getfileconDesc{lgetfilecon}

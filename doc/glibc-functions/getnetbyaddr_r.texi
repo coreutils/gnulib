@@ -2,6 +2,8 @@
 @subsection @code{getnetbyaddr_r}
 @findex getnetbyaddr_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getnetbyaddr_r.3.html,,man getnetbyaddr_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

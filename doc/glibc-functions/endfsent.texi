@@ -2,6 +2,8 @@
 @subsection @code{endfsent}
 @findex endfsent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endfsent.3.html,,man endfsent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

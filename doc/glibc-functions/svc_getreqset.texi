@@ -2,6 +2,8 @@
 @subsection @code{svc_getreqset}
 @findex svc_getreqset
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_getreqset.3.html,,man svc_getreqset}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

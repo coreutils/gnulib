@@ -2,6 +2,8 @@
 @subsection @code{fedisableexcept}
 @findex fedisableexcept
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fedisableexcept.3.html,,man fedisableexcept}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

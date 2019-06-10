@@ -2,6 +2,8 @@
 @subsection @code{ether_aton_r}
 @findex ether_aton_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ether_aton_r.3.html,,man ether_aton_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

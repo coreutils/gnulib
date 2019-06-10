@@ -2,6 +2,8 @@
 @subsection @code{rtime}
 @findex rtime
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/rtime.3.html,,man rtime}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

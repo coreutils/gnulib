@@ -2,6 +2,8 @@
 @subsection @code{svcerr_progvers}
 @findex svcerr_progvers
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_progvers.3.html,,man svcerr_progvers}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

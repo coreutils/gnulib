@@ -2,6 +2,8 @@
 @subsection @code{setxattr}
 @findex setxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setxattr.2.html,,man setxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{getspnam}
 @findex getspnam
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getspnam.3.html,,man getspnam}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

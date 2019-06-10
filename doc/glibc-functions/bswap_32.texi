@@ -2,6 +2,8 @@
 @subsection @code{bswap_32}
 @findex bswap_32
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bswap_32.3.html,,man bswap_32}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

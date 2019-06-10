@@ -2,6 +2,8 @@
 @subsection @code{finitel}
 @findex finitel
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/finitel.3.html,,man finitel}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

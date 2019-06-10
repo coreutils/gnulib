@@ -2,6 +2,8 @@
 @subsection @code{gammaf}
 @findex gammaf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gammaf.3.html,,man gammaf}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

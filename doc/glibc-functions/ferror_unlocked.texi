@@ -2,6 +2,8 @@
 @subsection @code{ferror_unlocked}
 @findex ferror_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ferror_unlocked.3.html,,man ferror_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

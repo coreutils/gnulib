@@ -2,6 +2,8 @@
 @subsection @code{cfmakeraw}
 @findex cfmakeraw
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cfmakeraw.3.html,,man cfmakeraw}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

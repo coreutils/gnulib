@@ -2,6 +2,8 @@
 @subsection @code{feof_unlocked}
 @findex feof_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/feof_unlocked.3.html,,man feof_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

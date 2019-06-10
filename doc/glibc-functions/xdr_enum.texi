@@ -2,6 +2,8 @@
 @subsection @code{xdr_enum}
 @findex xdr_enum
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_enum.3.html,,man xdr_enum}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

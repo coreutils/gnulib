@@ -2,6 +2,8 @@
 @subsection @code{putspent}
 @findex putspent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putspent.3.html,,man putspent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

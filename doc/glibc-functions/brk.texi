@@ -2,6 +2,8 @@
 @subsection @code{brk}
 @findex brk
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/brk.2.html,,man brk}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

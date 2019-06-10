@@ -2,6 +2,8 @@
 @subsection @code{vhangup}
 @findex vhangup
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/vhangup.2.html,,man vhangup}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

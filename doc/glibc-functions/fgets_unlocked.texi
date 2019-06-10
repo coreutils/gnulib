@@ -2,6 +2,8 @@
 @subsection @code{fgets_unlocked}
 @findex fgets_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgets_unlocked.3.html,,man fgets_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

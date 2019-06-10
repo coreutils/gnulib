@@ -2,6 +2,8 @@
 @subsection @code{setrpcent}
 @findex setrpcent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setrpcent.3.html,,man setrpcent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

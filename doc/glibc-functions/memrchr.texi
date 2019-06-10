@@ -2,6 +2,8 @@
 @subsection @code{memrchr}
 @findex memrchr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memrchr.3.html,,man memrchr}
+
 Gnulib module: memrchr
 
 Portability problems fixed by Gnulib:

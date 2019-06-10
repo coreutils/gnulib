@@ -2,6 +2,8 @@
 @subsection @code{fgetwc_unlocked}
 @findex fgetwc_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgetwc_unlocked.3.html,,man fgetwc_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

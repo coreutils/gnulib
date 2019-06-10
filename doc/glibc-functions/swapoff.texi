@@ -2,6 +2,8 @@
 @subsection @code{swapoff}
 @findex swapoff
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/swapoff.2.html,,man swapoff}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

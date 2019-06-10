@@ -2,6 +2,8 @@
 @subsection @code{fgetpwent_r}
 @findex fgetpwent_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgetpwent_r.3.html,,man fgetpwent_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

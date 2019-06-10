@@ -2,6 +2,8 @@
 @subsection @code{clntudp_create}
 @findex clntudp_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clntudp_create.3.html,,man clntudp_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

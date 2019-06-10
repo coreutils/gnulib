@@ -2,6 +2,8 @@
 @subsection @code{futimes}
 @findex futimes
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/futimes.3.html,,man futimes}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

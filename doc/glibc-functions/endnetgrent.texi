@@ -2,6 +2,8 @@
 @subsection @code{endnetgrent}
 @findex endnetgrent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/endnetgrent.3.html,,man endnetgrent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

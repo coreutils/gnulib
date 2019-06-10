@@ -2,6 +2,8 @@
 @subsection @code{clnt_perror}
 @findex clnt_perror
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clnt_perror.3.html,,man clnt_perror}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

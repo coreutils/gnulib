@@ -2,6 +2,8 @@
 @subsection @code{getgrouplist}
 @findex getgrouplist
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getgrouplist.3.html,,man getgrouplist}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

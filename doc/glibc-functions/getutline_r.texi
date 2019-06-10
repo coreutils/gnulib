@@ -2,6 +2,8 @@
 @subsection @code{getutline_r}
 @findex getutline_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutline_r.3.html,,man getutline_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

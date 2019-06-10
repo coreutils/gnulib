@@ -2,6 +2,8 @@
 @subsection @code{isnanf}
 @findex isnanf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/isnanf.3.html,,man isnanf}
+
 Gnulib module: isnanf
 
 Portability problems fixed by Gnulib:

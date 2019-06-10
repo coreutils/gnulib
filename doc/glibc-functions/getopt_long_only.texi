@@ -2,6 +2,8 @@
 @subsection @code{getopt_long_only}
 @findex getopt_long_only
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getopt_long_only.3.html,,man getopt_long_only}
+
 Gnulib module: getopt-gnu
 
 Portability problems fixed by Gnulib:

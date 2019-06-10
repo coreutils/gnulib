@@ -2,6 +2,8 @@
 @subsection @code{svc_unregister}
 @findex svc_unregister
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_unregister.3.html,,man svc_unregister}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

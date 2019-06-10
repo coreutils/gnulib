@@ -2,6 +2,8 @@
 @subsection @code{xdr_wrapstring}
 @findex xdr_wrapstring
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_wrapstring.3.html,,man xdr_wrapstring}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

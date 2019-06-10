@@ -2,6 +2,8 @@
 @subsection @code{getpt}
 @findex getpt
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getpt.3.html,,man getpt}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

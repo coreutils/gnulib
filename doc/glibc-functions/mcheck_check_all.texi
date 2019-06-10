@@ -2,6 +2,8 @@
 @subsection @code{mcheck_check_all}
 @findex mcheck_check_all
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mcheck_check_all.3.html,,man mcheck_check_all}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

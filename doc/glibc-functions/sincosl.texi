@@ -2,6 +2,8 @@
 @subsection @code{sincosl}
 @findex sincosl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sincosl.3.html,,man sincosl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

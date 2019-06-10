@@ -2,6 +2,8 @@
 @subsection @code{mempcpy}
 @findex mempcpy
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mempcpy.3.html,,man mempcpy}
+
 Gnulib module: mempcpy
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{readahead}
 @findex readahead
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/readahead.2.html,,man readahead}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

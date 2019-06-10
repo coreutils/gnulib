@@ -2,6 +2,8 @@
 @subsection @code{significandf}
 @findex significandf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/significandf.3.html,,man significandf}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

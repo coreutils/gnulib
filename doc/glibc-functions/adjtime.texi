@@ -2,6 +2,8 @@
 @subsection @code{adjtime}
 @findex adjtime
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/adjtime.3.html,,man adjtime}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

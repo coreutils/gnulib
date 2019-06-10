@@ -2,6 +2,8 @@
 @subsection @code{syncfs}
 @findex syncfs
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/syncfs.2.html,,man syncfs}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{clnt_spcreateerror}
 @findex clnt_spcreateerror
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clnt_spcreateerror.3.html,,man clnt_spcreateerror}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

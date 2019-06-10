@@ -2,6 +2,8 @@
 @subsection @code{argz_append}
 @findex argz_append
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_append.3.html,,man argz_append}
+
 Gnulib module: argz
 
 Portability problems fixed by Gnulib:

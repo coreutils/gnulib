@@ -2,6 +2,8 @@
 @subsection @code{fgetc_unlocked}
 @findex fgetc_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgetc_unlocked.3.html,,man fgetc_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

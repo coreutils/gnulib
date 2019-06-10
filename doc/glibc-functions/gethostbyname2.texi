@@ -2,6 +2,8 @@
 @subsection @code{gethostbyname2}
 @findex gethostbyname2
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gethostbyname2.3.html,,man gethostbyname2}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

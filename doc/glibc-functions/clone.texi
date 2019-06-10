@@ -2,6 +2,8 @@
 @subsection @code{clone}
 @findex clone
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/clone.2.html,,man clone}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

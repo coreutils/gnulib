@@ -2,6 +2,8 @@
 @subsection @code{mkstemps}
 @findex mkstemps
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mkstemps.3.html,,man mkstemps}
+
 Gnulib module: mkstemps
 
 Portability problems fixed by Gnulib:

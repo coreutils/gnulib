@@ -2,6 +2,8 @@
 @subsection @code{fputc_unlocked}
 @findex fputc_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fputc_unlocked.3.html,,man fputc_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

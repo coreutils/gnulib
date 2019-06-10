@@ -2,6 +2,8 @@
 @subsection @code{on_exit}
 @findex on_exit
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/on_exit.3.html,,man on_exit}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

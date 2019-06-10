@@ -2,6 +2,8 @@
 @subsection @code{sigorset}
 @findex sigorset
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sigorset.3.html,,man sigorset}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

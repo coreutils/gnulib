@@ -2,6 +2,8 @@
 @subsection @code{aio_init}
 @findex aio_init
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/aio_init.3.html,,man aio_init}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{putwc_unlocked}
 @findex putwc_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putwc_unlocked.3.html,,man putwc_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

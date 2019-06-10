@@ -2,6 +2,8 @@
 @subsection @code{login_tty}
 @findex login_tty
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/login_tty.3.html,,man login_tty}
+
 Gnulib module: login_tty
 
 Portability problems fixed by Gnulib:

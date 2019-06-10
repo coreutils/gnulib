@@ -2,6 +2,8 @@
 @subsection @code{pwritev}
 @findex pwritev
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pwritev.2.html,,man pwritev}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

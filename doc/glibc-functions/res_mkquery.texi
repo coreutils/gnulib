@@ -2,6 +2,8 @@
 @subsection @code{res_mkquery}
 @findex res_mkquery
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/res_mkquery.3.html,,man res_mkquery}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

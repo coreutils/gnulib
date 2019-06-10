@@ -2,6 +2,8 @@
 @subsection @code{re_comp}
 @findex re_comp
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/re_comp.3.html,,man re_comp}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

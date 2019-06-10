@@ -2,6 +2,8 @@
 @subsection @code{personality}
 @findex personality
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/personality.2.html,,man personality}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

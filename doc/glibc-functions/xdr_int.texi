@@ -2,6 +2,8 @@
 @subsection @code{xdr_int}
 @findex xdr_int
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_int.3.html,,man xdr_int}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

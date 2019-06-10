@@ -2,6 +2,8 @@
 @subsection @code{fflush_unlocked}
 @findex fflush_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fflush_unlocked.3.html,,man fflush_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

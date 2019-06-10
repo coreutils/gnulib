@@ -2,6 +2,8 @@
 @subsection @code{getpass}
 @findex getpass
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getpass.3.html,,man getpass}
+
 Gnulib module: getpass or getpass-gnu
 
 Portability problems fixed by either Gnulib module @code{getpass} or @code{getpass-gnu}:

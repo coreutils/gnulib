@@ -2,6 +2,8 @@
 @subsection @code{bswap_64}
 @findex bswap_64
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bswap_64.3.html,,man bswap_64}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

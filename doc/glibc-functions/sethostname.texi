@@ -2,6 +2,8 @@
 @subsection @code{sethostname}
 @findex sethostname
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sethostname.2.html,,man sethostname}
+
 Gnulib module: sethostname
 
 Portability problems fixed by Gnulib:

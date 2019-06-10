@@ -2,6 +2,8 @@
 @subsection @code{gethostent_r}
 @findex gethostent_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gethostent_r.3.html,,man gethostent_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

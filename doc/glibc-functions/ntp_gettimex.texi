@@ -2,6 +2,8 @@
 @subsection @code{ntp_gettimex}
 @findex ntp_gettimex
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ntp_gettimex.3.html,,man ntp_gettimex}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

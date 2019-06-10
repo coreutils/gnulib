@@ -2,6 +2,8 @@
 @subsection @code{get_nprocs}
 @findex get_nprocs
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_nprocs.3.html,,man get_nprocs}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

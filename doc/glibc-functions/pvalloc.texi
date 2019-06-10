@@ -2,6 +2,8 @@
 @subsection @code{pvalloc}
 @findex pvalloc
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pvalloc.3.html,,man pvalloc}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

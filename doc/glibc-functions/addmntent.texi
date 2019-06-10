@@ -2,6 +2,8 @@
 @subsection @code{addmntent}
 @findex addmntent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/addmntent.3.html,,man addmntent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

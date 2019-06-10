@@ -2,6 +2,8 @@
 @subsection @code{xdr_long}
 @findex xdr_long
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_long.3.html,,man xdr_long}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

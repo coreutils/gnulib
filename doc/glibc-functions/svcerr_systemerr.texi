@@ -2,6 +2,8 @@
 @subsection @code{svcerr_systemerr}
 @findex svcerr_systemerr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_systemerr.3.html,,man svcerr_systemerr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

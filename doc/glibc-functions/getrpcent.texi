@@ -2,6 +2,8 @@
 @subsection @code{getrpcent}
 @findex getrpcent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getrpcent.3.html,,man getrpcent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

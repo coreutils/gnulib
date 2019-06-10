@@ -2,6 +2,8 @@
 @subsection @code{ecvt_r}
 @findex ecvt_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ecvt_r.3.html,,man ecvt_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

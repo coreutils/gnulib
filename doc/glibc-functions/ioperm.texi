@@ -2,6 +2,8 @@
 @subsection @code{ioperm}
 @findex ioperm
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/ioperm.2.html,,man ioperm}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

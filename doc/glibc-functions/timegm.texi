@@ -2,6 +2,8 @@
 @subsection @code{timegm}
 @findex timegm
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/timegm.3.html,,man timegm}
+
 Gnulib module: timegm
 
 Portability problems fixed by Gnulib:

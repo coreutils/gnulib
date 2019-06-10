@@ -2,6 +2,8 @@
 @subsection @code{cfsetspeed}
 @findex cfsetspeed
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cfsetspeed.3.html,,man cfsetspeed}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

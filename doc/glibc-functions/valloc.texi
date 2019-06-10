@@ -2,6 +2,8 @@
 @subsection @code{valloc}
 @findex valloc
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/valloc.3.html,,man valloc}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

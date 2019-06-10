@@ -2,6 +2,8 @@
 @subsection @code{get_current_dir_name}
 @findex get_current_dir_name
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/get_current_dir_name.3.html,,man get_current_dir_name}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

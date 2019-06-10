@@ -2,6 +2,8 @@
 @subsection @code{rexec}
 @findex rexec
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/rexec.3.html,,man rexec}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

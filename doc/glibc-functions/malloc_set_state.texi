@@ -2,6 +2,8 @@
 @subsection @code{malloc_set_state}
 @findex malloc_set_state
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/malloc_set_state.3.html,,man malloc_set_state}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

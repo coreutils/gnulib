@@ -2,6 +2,8 @@
 @subsection @code{argz_delete}
 @findex argz_delete
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/argz_delete.3.html,,man argz_delete}
+
 Gnulib module: argz
 
 Portability problems fixed by Gnulib:

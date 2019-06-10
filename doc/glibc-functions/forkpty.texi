@@ -2,6 +2,8 @@
 @subsection @code{forkpty}
 @findex forkpty
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/forkpty.3.html,,man forkpty}
+
 Gnulib module: forkpty
 
 Portability problems fixed by Gnulib:

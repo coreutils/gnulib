@@ -2,6 +2,8 @@
 @subsection @code{canonicalize_file_name}
 @findex canonicalize_file_name
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/canonicalize_file_name.3.html,,man canonicalize_file_name}
+
 Gnulib module: canonicalize-lgpl
 
 Portability problems fixed by Gnulib:

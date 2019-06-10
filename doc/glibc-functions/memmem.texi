@@ -2,6 +2,8 @@
 @subsection @code{memmem}
 @findex memmem
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/memmem.3.html,,man memmem}
+
 Gnulib module: memmem or memmem-simple
 
 Both modules implement the same replacement for the @code{memmem} function

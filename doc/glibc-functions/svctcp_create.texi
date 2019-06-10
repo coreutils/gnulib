@@ -2,6 +2,8 @@
 @subsection @code{svctcp_create}
 @findex svctcp_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svctcp_create.3.html,,man svctcp_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

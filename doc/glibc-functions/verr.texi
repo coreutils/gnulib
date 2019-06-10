@@ -2,6 +2,8 @@
 @subsection @code{verr}
 @findex verr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/verr.3.html,,man verr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

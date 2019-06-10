@@ -2,6 +2,8 @@
 @subsection @code{res_querydomain}
 @findex res_querydomain
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/res_querydomain.3.html,,man res_querydomain}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

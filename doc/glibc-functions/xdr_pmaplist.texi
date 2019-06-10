@@ -2,6 +2,8 @@
 @subsection @code{xdr_pmaplist}
 @findex xdr_pmaplist
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_pmaplist.3.html,,man xdr_pmaplist}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

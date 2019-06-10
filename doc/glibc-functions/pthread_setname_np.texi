@@ -2,6 +2,8 @@
 @subsection @code{pthread_setname_np}
 @findex pthread_setname_np
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_setname_np.3.html,,man pthread_setname_np}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

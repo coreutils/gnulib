@@ -2,6 +2,8 @@
 @subsection @code{getprotobyname_r}
 @findex getprotobyname_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getprotobyname_r.3.html,,man getprotobyname_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

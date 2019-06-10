@@ -2,6 +2,8 @@
 @subsection @code{madvise}
 @findex madvise
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/madvise.2.html,,man madvise}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

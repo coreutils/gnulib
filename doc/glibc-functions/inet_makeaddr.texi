@@ -2,6 +2,8 @@
 @subsection @code{inet_makeaddr}
 @findex inet_makeaddr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_makeaddr.3.html,,man inet_makeaddr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

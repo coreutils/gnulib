@@ -2,6 +2,8 @@
 @subsection @code{fremovexattr}
 @findex fremovexattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/fremovexattr.2.html,,man fremovexattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

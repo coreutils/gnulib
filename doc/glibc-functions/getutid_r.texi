@@ -2,6 +2,8 @@
 @subsection @code{getutid_r}
 @findex getutid_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getutid_r.3.html,,man getutid_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

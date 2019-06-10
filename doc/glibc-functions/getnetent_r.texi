@@ -2,6 +2,8 @@
 @subsection @code{getnetent_r}
 @findex getnetent_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getnetent_r.3.html,,man getnetent_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

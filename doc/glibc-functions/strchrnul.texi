@@ -2,6 +2,8 @@
 @subsection @code{strchrnul}
 @findex strchrnul
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/strchrnul.3.html,,man strchrnul}
+
 Gnulib module: strchrnul
 
 Portability problems fixed by Gnulib:

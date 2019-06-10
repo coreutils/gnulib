@@ -2,6 +2,8 @@
 @subsection @code{recvmmsg}
 @findex recvmmsg
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/recvmmsg.2.html,,man recvmmsg}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

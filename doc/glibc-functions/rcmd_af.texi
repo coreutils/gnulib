@@ -2,6 +2,8 @@
 @subsection @code{rcmd_af}
 @findex rcmd_af
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/rcmd_af.3.html,,man rcmd_af}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

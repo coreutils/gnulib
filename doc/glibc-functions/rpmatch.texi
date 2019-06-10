@@ -2,6 +2,8 @@
 @subsection @code{rpmatch}
 @findex rpmatch
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/rpmatch.3.html,,man rpmatch}
+
 Gnulib module: rpmatch
 
 Portability problems fixed by Gnulib:

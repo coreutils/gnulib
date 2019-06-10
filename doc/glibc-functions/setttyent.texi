@@ -2,6 +2,8 @@
 @subsection @code{setttyent}
 @findex setttyent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setttyent.3.html,,man setttyent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

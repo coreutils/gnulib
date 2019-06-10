@@ -2,6 +2,8 @@
 @subsection @code{pthread_getname_np}
 @findex pthread_getname_np
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_getname_np.3.html,,man pthread_getname_np}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

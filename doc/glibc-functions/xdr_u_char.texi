@@ -2,6 +2,8 @@
 @subsection @code{xdr_u_char}
 @findex xdr_u_char
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_u_char.3.html,,man xdr_u_char}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

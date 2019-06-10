@@ -2,6 +2,8 @@
 @subsection @code{envz_remove}
 @findex envz_remove
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/envz_remove.3.html,,man envz_remove}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

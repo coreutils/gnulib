@@ -2,6 +2,8 @@
 @subsection @code{preadv}
 @findex preadv
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/preadv.2.html,,man preadv}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

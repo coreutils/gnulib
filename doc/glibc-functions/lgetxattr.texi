@@ -2,6 +2,8 @@
 @subsection @code{lgetxattr}
 @findex lgetxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/lgetxattr.2.html,,man lgetxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

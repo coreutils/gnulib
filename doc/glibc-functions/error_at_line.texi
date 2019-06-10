@@ -2,6 +2,8 @@
 @subsection @code{error_at_line}
 @findex error_at_line
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error_at_line.3.html,,man error_at_line}
+
 Gnulib module: error
 
 Portability problems fixed by Gnulib:

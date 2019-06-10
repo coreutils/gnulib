@@ -2,6 +2,8 @@
 @subsection @code{dl_iterate_phdr}
 @findex dl_iterate_phdr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dl_iterate_phdr.3.html,,man dl_iterate_phdr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{dup3}
 @findex dup3
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/dup3.2.html,,man dup3}
+
 Gnulib module: dup3
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{xdrrec_skiprecord}
 @findex xdrrec_skiprecord
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdrrec_skiprecord.3.html,,man xdrrec_skiprecord}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

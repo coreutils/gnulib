@@ -2,6 +2,8 @@
 @subsection @code{fgetgrent}
 @findex fgetgrent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fgetgrent.3.html,,man fgetgrent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

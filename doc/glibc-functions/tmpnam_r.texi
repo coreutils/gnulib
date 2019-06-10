@@ -2,6 +2,8 @@
 @subsection @code{tmpnam_r}
 @findex tmpnam_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/tmpnam_r.3.html,,man tmpnam_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

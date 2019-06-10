@@ -2,6 +2,8 @@
 @subsection @code{svcerr_auth}
 @findex svcerr_auth
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcerr_auth.3.html,,man svcerr_auth}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

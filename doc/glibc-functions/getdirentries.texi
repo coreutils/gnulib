@@ -2,6 +2,8 @@
 @subsection @code{getdirentries}
 @findex getdirentries
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdirentries.3.html,,man getdirentries}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

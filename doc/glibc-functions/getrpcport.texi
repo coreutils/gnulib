@@ -2,6 +2,8 @@
 @subsection @code{getrpcport}
 @findex getrpcport
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getrpcport.3.html,,man getrpcport}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

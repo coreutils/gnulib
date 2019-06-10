@@ -2,6 +2,8 @@
 @subsection @code{lutimes}
 @findex lutimes
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/lutimes.3.html,,man lutimes}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

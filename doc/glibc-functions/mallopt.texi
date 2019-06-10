@@ -2,6 +2,8 @@
 @subsection @code{mallopt}
 @findex mallopt
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mallopt.3.html,,man mallopt}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

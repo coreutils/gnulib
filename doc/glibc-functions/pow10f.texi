@@ -2,6 +2,8 @@
 @subsection @code{pow10f}
 @findex pow10f
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pow10f.3.html,,man pow10f}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

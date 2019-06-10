@@ -2,6 +2,8 @@
 @subsection @code{svcraw_create}
 @findex svcraw_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcraw_create.3.html,,man svcraw_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

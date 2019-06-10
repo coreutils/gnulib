@@ -2,6 +2,8 @@
 @subsection @code{pututline}
 @findex pututline
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pututline.3.html,,man pututline}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

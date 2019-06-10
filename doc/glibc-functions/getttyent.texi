@@ -2,6 +2,8 @@
 @subsection @code{getttyent}
 @findex getttyent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getttyent.3.html,,man getttyent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

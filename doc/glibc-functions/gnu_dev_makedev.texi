@@ -2,6 +2,8 @@
 @subsection @code{gnu_dev_makedev}
 @findex gnu_dev_makedev
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gnu_dev_makedev.3.html,,man gnu_dev_makedev}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

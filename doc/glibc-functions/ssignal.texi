@@ -2,6 +2,8 @@
 @subsection @code{ssignal}
 @findex ssignal
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ssignal.3.html,,man ssignal}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

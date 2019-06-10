@@ -2,6 +2,8 @@
 @subsection @code{fcloseall}
 @findex fcloseall
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fcloseall.3.html,,man fcloseall}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

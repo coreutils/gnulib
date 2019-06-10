@@ -2,6 +2,8 @@
 @subsection @code{error_message_count}
 @findex error_message_count
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/error_message_count.3.html,,man error_message_count}
+
 Gnulib module: error
 
 Portability problems fixed by Gnulib:

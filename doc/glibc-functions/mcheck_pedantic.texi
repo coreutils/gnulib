@@ -2,6 +2,8 @@
 @subsection @code{mcheck_pedantic}
 @findex mcheck_pedantic
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mcheck_pedantic.3.html,,man mcheck_pedantic}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

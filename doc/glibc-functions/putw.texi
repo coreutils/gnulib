@@ -2,6 +2,8 @@
 @subsection @code{putw}
 @findex putw
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/putw.3.html,,man putw}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

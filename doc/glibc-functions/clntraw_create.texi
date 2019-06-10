@@ -2,6 +2,8 @@
 @subsection @code{clntraw_create}
 @findex clntraw_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clntraw_create.3.html,,man clntraw_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

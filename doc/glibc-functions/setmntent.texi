@@ -2,6 +2,8 @@
 @subsection @code{setmntent}
 @findex setmntent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setmntent.3.html,,man setmntent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

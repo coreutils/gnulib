@@ -2,6 +2,8 @@
 @subsection @code{ptrace}
 @findex ptrace
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/ptrace.2.html,,man ptrace}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

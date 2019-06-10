@@ -2,6 +2,8 @@
 @subsection @code{svc_getreq}
 @findex svc_getreq
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svc_getreq.3.html,,man svc_getreq}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

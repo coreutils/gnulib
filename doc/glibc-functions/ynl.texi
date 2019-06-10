@@ -2,6 +2,8 @@
 @subsection @code{ynl}
 @findex ynl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ynl.3.html,,man ynl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

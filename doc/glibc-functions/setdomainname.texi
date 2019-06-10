@@ -2,6 +2,8 @@
 @subsection @code{setdomainname}
 @findex setdomainname
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/setdomainname.2.html,,man setdomainname}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

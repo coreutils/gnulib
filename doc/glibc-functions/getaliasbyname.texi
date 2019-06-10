@@ -2,6 +2,8 @@
 @subsection @code{getaliasbyname}
 @findex getaliasbyname
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getaliasbyname.3.html,,man getaliasbyname}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

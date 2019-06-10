@@ -2,6 +2,8 @@
 @subsection @code{flistxattr}
 @findex flistxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/flistxattr.2.html,,man flistxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

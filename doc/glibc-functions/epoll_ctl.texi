@@ -2,6 +2,8 @@
 @subsection @code{epoll_ctl}
 @findex epoll_ctl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/epoll_ctl.2.html,,man epoll_ctl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

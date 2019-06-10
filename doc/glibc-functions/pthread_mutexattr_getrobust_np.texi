@@ -2,6 +2,8 @@
 @subsection @code{pthread_mutexattr_getrobust_np}
 @findex pthread_mutexattr_getrobust_np
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_mutexattr_getrobust_np.3.html,,man pthread_mutexattr_getrobust_np}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

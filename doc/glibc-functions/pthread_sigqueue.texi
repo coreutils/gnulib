@@ -2,6 +2,8 @@
 @subsection @code{pthread_sigqueue}
 @findex pthread_sigqueue
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pthread_sigqueue.3.html,,man pthread_sigqueue}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

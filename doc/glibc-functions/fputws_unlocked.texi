@@ -2,6 +2,8 @@
 @subsection @code{fputws_unlocked}
 @findex fputws_unlocked
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/fputws_unlocked.3.html,,man fputws_unlocked}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

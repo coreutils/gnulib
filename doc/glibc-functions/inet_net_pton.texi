@@ -2,6 +2,8 @@
 @subsection @code{inet_net_pton}
 @findex inet_net_pton
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_net_pton.3.html,,man inet_net_pton}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

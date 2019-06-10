@@ -2,6 +2,8 @@
 @subsection @code{xdr_void}
 @findex xdr_void
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_void.3.html,,man xdr_void}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

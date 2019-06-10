@@ -2,6 +2,8 @@
 @subsection @code{updwtmp}
 @findex updwtmp
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/updwtmp.3.html,,man updwtmp}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

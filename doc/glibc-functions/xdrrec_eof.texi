@@ -2,6 +2,8 @@
 @subsection @code{xdrrec_eof}
 @findex xdrrec_eof
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdrrec_eof.3.html,,man xdrrec_eof}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

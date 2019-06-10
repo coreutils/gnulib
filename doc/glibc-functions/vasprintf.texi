@@ -2,6 +2,8 @@
 @subsection @code{vasprintf}
 @findex vasprintf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vasprintf.3.html,,man vasprintf}
+
 Gnulib module: vasprintf or vasprintf-posix
 
 Portability problems fixed by either Gnulib module @code{vasprintf} or @code{vasprintf-posix}:

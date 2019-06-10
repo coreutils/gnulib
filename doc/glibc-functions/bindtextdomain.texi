@@ -2,6 +2,8 @@
 @subsection @code{bindtextdomain}
 @findex bindtextdomain
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bindtextdomain.3.html,,man bindtextdomain}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

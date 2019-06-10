@@ -2,6 +2,8 @@
 @subsection @code{authunix_create_default}
 @findex authunix_create_default
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/authunix_create_default.3.html,,man authunix_create_default}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

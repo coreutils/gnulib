@@ -2,6 +2,8 @@
 @subsection @code{lremovexattr}
 @findex lremovexattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/lremovexattr.2.html,,man lremovexattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

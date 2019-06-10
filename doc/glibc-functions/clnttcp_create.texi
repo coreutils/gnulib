@@ -2,6 +2,8 @@
 @subsection @code{clnttcp_create}
 @findex clnttcp_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clnttcp_create.3.html,,man clnttcp_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

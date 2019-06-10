@@ -2,6 +2,8 @@
 @subsection @code{xdr_pointer}
 @findex xdr_pointer
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_pointer.3.html,,man xdr_pointer}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

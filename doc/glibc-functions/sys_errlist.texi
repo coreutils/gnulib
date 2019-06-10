@@ -2,6 +2,8 @@
 @subsection @code{sys_errlist}
 @findex sys_errlist
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/sys_errlist.3.html,,man sys_errlist}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

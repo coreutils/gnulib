@@ -2,6 +2,8 @@
 @subsection @code{getpw}
 @findex getpw
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getpw.3.html,,man getpw}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{capget}
 @findex capget
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/capget.2.html,,man capget}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

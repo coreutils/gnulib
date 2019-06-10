@@ -2,6 +2,8 @@
 @subsection @code{ynf}
 @findex ynf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ynf.3.html,,man ynf}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

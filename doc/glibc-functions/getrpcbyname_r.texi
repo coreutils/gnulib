@@ -2,6 +2,8 @@
 @subsection @code{getrpcbyname_r}
 @findex getrpcbyname_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getrpcbyname_r.3.html,,man getrpcbyname_r}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

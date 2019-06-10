@@ -2,6 +2,8 @@
 @subsection @code{getspent}
 @findex getspent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getspent.3.html,,man getspent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

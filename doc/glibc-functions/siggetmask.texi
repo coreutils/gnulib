@@ -2,6 +2,8 @@
 @subsection @code{siggetmask}
 @findex siggetmask
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/siggetmask.3.html,,man siggetmask}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{program_invocation_short_name}
 @findex program_invocation_short_name
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/program_invocation_short_name.3.html,,man program_invocation_short_name}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

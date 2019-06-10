@@ -2,6 +2,8 @@
 @subsection @code{ether_ntohost}
 @findex ether_ntohost
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ether_ntohost.3.html,,man ether_ntohost}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{xdr_union}
 @findex xdr_union
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_union.3.html,,man xdr_union}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

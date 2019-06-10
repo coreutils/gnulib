@@ -2,6 +2,8 @@
 @subsection @code{key_decryptsession}
 @findex key_decryptsession
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/key_decryptsession.3.html,,man key_decryptsession}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

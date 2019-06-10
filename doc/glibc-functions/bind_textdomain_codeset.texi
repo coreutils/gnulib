@@ -2,6 +2,8 @@
 @subsection @code{bind_textdomain_codeset}
 @findex bind_textdomain_codeset
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/bind_textdomain_codeset.3.html,,man bind_textdomain_codeset}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

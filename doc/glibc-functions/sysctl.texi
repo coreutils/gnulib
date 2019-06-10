@@ -2,6 +2,8 @@
 @subsection @code{sysctl}
 @findex sysctl
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sysctl.2.html,,man sysctl}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

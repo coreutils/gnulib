@@ -2,6 +2,8 @@
 @subsection @code{ulckpwdf}
 @findex ulckpwdf
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ulckpwdf.3.html,,man ulckpwdf}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{xdr_bool}
 @findex xdr_bool
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_bool.3.html,,man xdr_bool}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

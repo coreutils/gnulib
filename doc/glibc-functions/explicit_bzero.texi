@@ -2,6 +2,8 @@
 @subsection @code{explicit_bzero}
 @findex explicit_bzero
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/explicit_bzero.3.html,,man explicit_bzero}
+
 Gnulib module: explicit_bzero
 
 The @code{explicit_bzero} function is an approximation to what is

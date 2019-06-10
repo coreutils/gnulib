@@ -2,6 +2,8 @@
 @subsection @code{svcudp_bufcreate}
 @findex svcudp_bufcreate
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcudp_bufcreate.3.html,,man svcudp_bufcreate}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

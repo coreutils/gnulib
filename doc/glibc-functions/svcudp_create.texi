@@ -2,6 +2,8 @@
 @subsection @code{svcudp_create}
 @findex svcudp_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/svcudp_create.3.html,,man svcudp_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

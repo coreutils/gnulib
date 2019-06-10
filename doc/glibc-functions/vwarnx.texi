@@ -2,6 +2,8 @@
 @subsection @code{vwarnx}
 @findex vwarnx
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/vwarnx.3.html,,man vwarnx}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{gnu_get_libc_version}
 @findex gnu_get_libc_version
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gnu_get_libc_version.3.html,,man gnu_get_libc_version}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

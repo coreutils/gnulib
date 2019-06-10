@@ -2,6 +2,8 @@
 @subsection @code{xprt_unregister}
 @findex xprt_unregister
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xprt_unregister.3.html,,man xprt_unregister}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

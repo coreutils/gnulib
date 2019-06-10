@@ -2,6 +2,8 @@
 @subsection @code{inet_network}
 @findex inet_network
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_network.3.html,,man inet_network}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

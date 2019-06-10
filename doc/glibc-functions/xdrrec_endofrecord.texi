@@ -2,6 +2,8 @@
 @subsection @code{xdrrec_endofrecord}
 @findex xdrrec_endofrecord
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdrrec_endofrecord.3.html,,man xdrrec_endofrecord}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

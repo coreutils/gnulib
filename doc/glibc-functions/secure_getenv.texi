@@ -2,6 +2,8 @@
 @subsection @code{secure_getenv}
 @findex secure_getenv
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/secure_getenv.3.html,,man secure_getenv}
+
 Gnulib module: secure_getenv
 
 Portability problems fixed by Gnulib:

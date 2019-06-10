@@ -2,6 +2,8 @@
 @subsection @code{prlimit}
 @findex prlimit
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/prlimit.2.html,,man prlimit}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

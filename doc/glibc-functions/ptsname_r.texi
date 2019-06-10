@@ -2,6 +2,8 @@
 @subsection @code{ptsname_r}
 @findex ptsname_r
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ptsname_r.3.html,,man ptsname_r}
+
 Gnulib module: ptsname_r
 
 Portability problems fixed by Gnulib:

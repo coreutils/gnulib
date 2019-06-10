@@ -2,6 +2,8 @@
 @subsection @code{scandirat}
 @findex scandirat
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/scandirat.3.html,,man scandirat}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{finite}
 @findex finite
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/finite.3.html,,man finite}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

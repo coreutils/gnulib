@@ -2,6 +2,8 @@
 @subsection @code{xdr_replymsg}
 @findex xdr_replymsg
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdr_replymsg.3.html,,man xdr_replymsg}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

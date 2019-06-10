@@ -2,6 +2,8 @@
 @subsection @code{clntudp_bufcreate}
 @findex clntudp_bufcreate
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clntudp_bufcreate.3.html,,man clntudp_bufcreate}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

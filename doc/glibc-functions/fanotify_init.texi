@@ -2,6 +2,8 @@
 @subsection @code{fanotify_init}
 @findex fanotify_init
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/fanotify_init.2.html,,man fanotify_init}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

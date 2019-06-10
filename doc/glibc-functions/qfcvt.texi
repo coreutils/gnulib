@@ -2,6 +2,8 @@
 @subsection @code{qfcvt}
 @findex qfcvt
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/qfcvt.3.html,,man qfcvt}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

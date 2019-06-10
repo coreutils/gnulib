@@ -2,6 +2,8 @@
 @subsection @code{getrpcbynumber}
 @findex getrpcbynumber
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getrpcbynumber.3.html,,man getrpcbynumber}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

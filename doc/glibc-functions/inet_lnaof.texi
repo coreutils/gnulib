@@ -2,6 +2,8 @@
 @subsection @code{inet_lnaof}
 @findex inet_lnaof
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_lnaof.3.html,,man inet_lnaof}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

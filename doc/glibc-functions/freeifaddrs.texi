@@ -2,6 +2,8 @@
 @subsection @code{freeifaddrs}
 @findex freeifaddrs
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/freeifaddrs.3.html,,man freeifaddrs}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

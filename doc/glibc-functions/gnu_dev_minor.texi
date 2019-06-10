@@ -2,6 +2,8 @@
 @subsection @code{gnu_dev_minor}
 @findex gnu_dev_minor
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/gnu_dev_minor.3.html,,man gnu_dev_minor}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

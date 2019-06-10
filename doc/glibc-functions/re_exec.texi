@@ -2,6 +2,8 @@
 @subsection @code{re_exec}
 @findex re_exec
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/re_exec.3.html,,man re_exec}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

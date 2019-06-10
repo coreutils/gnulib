@@ -2,6 +2,8 @@
 @subsection @code{getxattr}
 @findex getxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getxattr.2.html,,man getxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

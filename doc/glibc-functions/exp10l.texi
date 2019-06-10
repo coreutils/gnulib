@@ -2,6 +2,8 @@
 @subsection @code{exp10l}
 @findex exp10l
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/exp10l.3.html,,man exp10l}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

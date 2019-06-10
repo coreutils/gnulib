@@ -2,6 +2,8 @@
 @subsection @code{getmntent}
 @findex getmntent
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getmntent.3.html,,man getmntent}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

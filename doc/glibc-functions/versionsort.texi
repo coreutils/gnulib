@@ -2,6 +2,8 @@
 @subsection @code{versionsort}
 @findex versionsort
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/versionsort.3.html,,man versionsort}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

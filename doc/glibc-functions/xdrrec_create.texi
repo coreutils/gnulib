@@ -2,6 +2,8 @@
 @subsection @code{xdrrec_create}
 @findex xdrrec_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/xdrrec_create.3.html,,man xdrrec_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

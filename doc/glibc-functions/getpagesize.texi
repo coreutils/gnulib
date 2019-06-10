@@ -2,6 +2,8 @@
 @subsection @code{getpagesize}
 @findex getpagesize
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getpagesize.2.html,,man getpagesize}
+
 Gnulib module: getpagesize
 
 Portability problems fixed by Gnulib:

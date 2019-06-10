@@ -2,6 +2,8 @@
 @subsection @code{inet_netof}
 @findex inet_netof
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/inet_netof.3.html,,man inet_netof}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

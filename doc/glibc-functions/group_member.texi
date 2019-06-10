@@ -2,6 +2,8 @@
 @subsection @code{group_member}
 @findex group_member
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/group_member.3.html,,man group_member}
+
 Gnulib module: group-member
 
 Portability problems fixed by Gnulib:

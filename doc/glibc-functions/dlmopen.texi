@@ -2,6 +2,8 @@
 @subsection @code{dlmopen}
 @findex dlmopen
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dlmopen.3.html,,man dlmopen}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

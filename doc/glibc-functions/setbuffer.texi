@@ -2,6 +2,8 @@
 @subsection @code{setbuffer}
 @findex setbuffer
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/setbuffer.3.html,,man setbuffer}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

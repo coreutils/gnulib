@@ -2,6 +2,8 @@
 @subsection @code{ntp_gettime}
 @findex ntp_gettime
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ntp_gettime.3.html,,man ntp_gettime}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{statfs}
 @findex statfs
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/statfs.2.html,,man statfs}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{epoll_wait}
 @findex epoll_wait
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/epoll_wait.2.html,,man epoll_wait}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{dladdr}
 @findex dladdr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/dladdr.3.html,,man dladdr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

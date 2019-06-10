@@ -2,6 +2,8 @@
 @subsection @code{accept4}
 @findex accept4
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/accept4.2.html,,man accept4}
+
 Gnulib module: accept4
 
 Portability problems fixed by Gnulib:

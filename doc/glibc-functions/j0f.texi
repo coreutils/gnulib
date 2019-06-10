@@ -2,6 +2,8 @@
 @subsection @code{j0f}
 @findex j0f
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/j0f.3.html,,man j0f}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

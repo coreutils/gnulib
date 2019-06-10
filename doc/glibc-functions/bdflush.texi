@@ -2,6 +2,8 @@
 @subsection @code{bdflush}
 @findex bdflush
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/bdflush.2.html,,man bdflush}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

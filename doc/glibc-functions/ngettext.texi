@@ -2,6 +2,8 @@
 @subsection @code{ngettext}
 @findex ngettext
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/ngettext.3.html,,man ngettext}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

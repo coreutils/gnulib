@@ -2,6 +2,8 @@
 @subsection @code{clearenv}
 @findex clearenv
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/clearenv.3.html,,man clearenv}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

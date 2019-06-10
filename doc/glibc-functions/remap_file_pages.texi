@@ -2,6 +2,8 @@
 @subsection @code{remap_file_pages}
 @findex remap_file_pages
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/remap_file_pages.2.html,,man remap_file_pages}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{getloadavg}
 @findex getloadavg
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getloadavg.3.html,,man getloadavg}
+
 Gnulib module: getloadavg
 
 Portability problems fixed by Gnulib:

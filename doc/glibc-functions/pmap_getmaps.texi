@@ -2,6 +2,8 @@
 @subsection @code{pmap_getmaps}
 @findex pmap_getmaps
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/pmap_getmaps.3.html,,man pmap_getmaps}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

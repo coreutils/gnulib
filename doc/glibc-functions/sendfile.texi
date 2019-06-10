@@ -2,6 +2,8 @@
 @subsection @code{sendfile}
 @findex sendfile
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/sendfile.2.html,,man sendfile}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{drem}
 @findex drem
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/drem.3.html,,man drem}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

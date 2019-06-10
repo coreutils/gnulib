@@ -2,6 +2,8 @@
 @subsection @code{textdomain}
 @findex textdomain
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/textdomain.3.html,,man textdomain}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{mprobe}
 @findex mprobe
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/mprobe.3.html,,man mprobe}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

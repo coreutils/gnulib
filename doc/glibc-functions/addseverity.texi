@@ -2,6 +2,8 @@
 @subsection @code{addseverity}
 @findex addseverity
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/addseverity.3.html,,man addseverity}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

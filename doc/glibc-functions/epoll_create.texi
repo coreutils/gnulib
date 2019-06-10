@@ -2,6 +2,8 @@
 @subsection @code{epoll_create}
 @findex epoll_create
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/epoll_create.2.html,,man epoll_create}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

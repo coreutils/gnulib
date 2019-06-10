@@ -2,6 +2,8 @@
 @subsection @code{pipe2}
 @findex pipe2
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/pipe2.2.html,,man pipe2}
+
 Gnulib module: pipe2
 
 Portability problems fixed by Gnulib:

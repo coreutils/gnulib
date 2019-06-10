@@ -2,6 +2,8 @@
 @subsection @code{fsetxattr}
 @findex fsetxattr
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/fsetxattr.2.html,,man fsetxattr}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

@@ -2,6 +2,8 @@
 @subsection @code{malloc_trim}
 @findex malloc_trim
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/malloc_trim.3.html,,man malloc_trim}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:

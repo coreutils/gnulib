@@ -2,6 +2,8 @@
 @subsection @code{cfree}
 @findex cfree
 
+Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/cfree.3.html,,man cfree}
+
 Gnulib module: ---
 
 Portability problems fixed by Gnulib:
