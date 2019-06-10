@@ -5842,6 +5842,7 @@ This list of functions is sorted according to the header that declares them.
 * madvise::
 * memfd_create::
 * mincore::
+* mlock2::
 * mremap::
 * remap_file_pages::
 @end menu
@@ -5849,6 +5850,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/madvise.texi
 @include glibc-functions/memfd_create.texi
 @include glibc-functions/mincore.texi
+@include glibc-functions/mlock2.texi
 @include glibc-functions/mremap.texi
 @include glibc-functions/remap_file_pages.texi
 
