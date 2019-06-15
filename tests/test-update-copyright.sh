@@ -45,12 +45,12 @@ cat <<\EOF > $s
 # or execvp() fails with ENOEXEC if it is a script that does not start
 # with a #! line.  The script interpreter mentioned in the #! line has
 # to be /bin/sh, because on GuixSD systems that is the only program that
-# has a fixed file name.  The second line is for editing this file in
-# Emacs.  The next two lines below are valid code in both sh and perl.
-# When executed by sh, they re-execute the script through the perl
-# program found in $PATH.  The '-x' option is essential; without it,
-# perl would re-execute the script through /bin/sh.  When executed by
-# perl, the next two lines are a no-op.
+# has a fixed file name.  The second line is essential for perl and is
+# also useful for editing this file in Emacs.  The next two lines below
+# are valid code in both sh and perl.  When executed by sh, they re-execute
+# the script through the perl program found in $PATH.  The '-x' option
+# is essential as well; without it, perl would re-execute the script
+# through /bin/sh.  When executed by  perl, the next two lines are a no-op.
 eval 'exec perl -wSx "$0" "$@"'
      if 0;
 
