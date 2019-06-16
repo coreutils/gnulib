@@ -564,6 +564,7 @@ EOF
 ## perl-extra-newline-before-brace: t
 ## perl-merge-trailing-else: nil
 ## eval: (add-hook 'before-save-hook 'time-stamp)
+## time-stamp-line-limit: 50
 ## time-stamp-start: "my $VERSION = '"
 ## time-stamp-format: "%:y-%02m-%02d %02H:%02M"
 ## time-stamp-time-zone: "UTC0"
