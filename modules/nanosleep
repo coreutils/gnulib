@@ -34,7 +34,7 @@ Link:
 $(LIB_NANOSLEEP)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 Jim Meyering
