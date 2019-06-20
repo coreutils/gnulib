@@ -252,6 +252,14 @@ pthread_mutex_trylock (pthread_mutex_t *mutex)
 }
 
 _GL_PTHREAD_INLINE int
+pthread_mutex_timedlock (pthread_mutex_t *mutex, const struct timespec *abstime)
+{
+  /* There is only one thread, so it always gets the lock.  This
+     implementation does not support PTHREAD_MUTEX_ERRORCHECK.  */
+  return 0;
+}
+
+_GL_PTHREAD_INLINE int
 pthread_mutex_unlock (pthread_mutex_t *mutex)
 {
   /* There is only one thread, so it always unlocks successfully.
@@ -261,6 +269,24 @@ pthread_mutex_unlock (pthread_mutex_t *mutex)
 }
 
 #  define GNULIB_defined_pthread_functions 1
+# endif
+
+#else
+
+# if @GNULIB_PTHREAD_MUTEX_TIMEDLOCK@
+#  if !@HAVE_PTHREAD_MUTEX_TIMEDLOCK@
+_GL_FUNCDECL_SYS (pthread_mutex_timedlock, int,
+                  (pthread_mutex_t *, const struct timespec *));
+#  endif
+_GL_CXXALIAS_SYS (pthread_mutex_timedlock, int,
+                  (pthread_mutex_t *, const struct timespec *));
+_GL_CXXALIASWARN (pthread_mutex_timedlock);
+# elif defined GNULIB_POSIXCHECK
+#  undef pthread_mutex_timedlock
+#  if HAVE_RAW_DECL_PTHREAD_MUTEX_TIMEDLOCK
+_GL_WARN_ON_USE (pthread_mutex_timedlock, "pthread_mutex_timedlock is unportable - "
+                 "use gnulib module pthread_mutex_timedlock for portability");
+#  endif
 # endif
 
 #endif

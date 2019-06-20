@@ -1,4 +1,4 @@
-# pthread.m4 serial 10
+# pthread.m4 serial 11
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,18 +39,21 @@ AC_DEFUN([gl_PTHREAD_CHECK],
      HAVE_PTHREAD_SPINLOCK_T=0
    fi
 
-   if test $ac_cv_header_pthread_h != yes ||
-      test $ac_cv_type_pthread_t != yes ||
-      test $ac_cv_type_pthread_spinlock_t != yes; then
+   if test $HAVE_PTHREAD_H = 0 || test $HAVE_PTHREAD_T = 0 || test $HAVE_PTHREAD_SPINLOCK_T = 0; then
      PTHREAD_H='pthread.h'
-     AC_LIBOBJ([pthread])
    elif test $gl_cv_header_pthread_h_pollution = yes; then
-     PTHREAD_H=pthread.h
+     PTHREAD_H='pthread.h'
    else
      PTHREAD_H=
    fi
    AC_SUBST([PTHREAD_H])
    AM_CONDITIONAL([GL_GENERATE_PTHREAD_H], [test -n "$PTHREAD_H"])
+
+   dnl Check for declarations of anything we want to poison if the
+   dnl corresponding gnulib module is not in use, if it is not common
+   dnl enough to be declared everywhere.
+   gl_WARN_ON_USE_PREPARE([[#include <pthread.h>
+     ]], [pthread_mutex_timedlock])
 
    LIB_PTHREAD=
    if test $ac_cv_header_pthread_h = yes; then
@@ -91,10 +94,21 @@ AC_DEFUN([gl_PTHREAD_CHECK],
    AC_REQUIRE([AC_C_RESTRICT])
 ])
 
+AC_DEFUN([gl_PTHREAD_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_PTHREAD_DEFAULTS])
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
+])
+
 AC_DEFUN([gl_PTHREAD_DEFAULTS],
 [
+  GNULIB_PTHREAD_MUTEX_TIMEDLOCK=0; AC_SUBST([GNULIB_PTHREAD_MUTEX_TIMEDLOCK])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_PTHREAD_H=1;              AC_SUBST([HAVE_PTHREAD_H])
-  HAVE_PTHREAD_T=1;              AC_SUBST([HAVE_PTHREAD_T])
-  HAVE_PTHREAD_SPINLOCK_T=1;     AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])
+  HAVE_PTHREAD_H=1;                 AC_SUBST([HAVE_PTHREAD_H])
+  HAVE_PTHREAD_T=1;                 AC_SUBST([HAVE_PTHREAD_T])
+  HAVE_PTHREAD_SPINLOCK_T=1;        AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])
+  HAVE_PTHREAD_MUTEX_TIMEDLOCK=1;   AC_SUBST([HAVE_PTHREAD_MUTEX_TIMEDLOCK])
 ])
