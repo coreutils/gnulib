@@ -3,6 +3,7 @@ tests/test-tls.c
 
 Depends-on:
 thread
+stdint
 yield
 
 configure.ac:

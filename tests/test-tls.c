@@ -46,6 +46,7 @@
 /* Number of operations performed in each thread.  */
 #define REPEAT_COUNT 50000
 
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -90,7 +91,7 @@ static gl_tls_key_t mykeys[KEYS_COUNT];
 static void *
 worker_thread (void *arg)
 {
-  unsigned int id = (unsigned int) (unsigned long) arg;
+  unsigned int id = (unsigned int) (uintptr_t) arg;
   int i, j, repeat;
   unsigned int values[KEYS_COUNT];
 
@@ -172,7 +173,7 @@ test_tls (void)
 
       /* Spawn the threads.  */
       for (i = 0; i < THREAD_COUNT; i++)
-        threads[i] = gl_thread_create (worker_thread, NULL);
+        threads[i] = gl_thread_create (worker_thread, (void *) (uintptr_t) i);
 
       /* Wait for the threads to terminate.  */
       for (i = 0; i < THREAD_COUNT; i++)
