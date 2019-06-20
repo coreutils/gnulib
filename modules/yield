@@ -9,7 +9,7 @@ Depends-on:
 threadlib
 
 configure.ac:
-gl_YIELD
+AC_REQUIRE([gl_YIELD])
 
 Makefile.am:
 lib_SOURCES += glthread/yield.h
