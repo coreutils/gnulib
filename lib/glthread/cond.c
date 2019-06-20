@@ -285,14 +285,6 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
 int
 glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime)
 {
-  struct timeval currtime;
-
-  gettimeofday (&currtime, NULL);
-  if (currtime.tv_sec > abstime->tv_sec
-      || (currtime.tv_sec == abstime->tv_sec
-          && currtime.tv_usec * 1000 >= abstime->tv_nsec))
-    return ETIMEDOUT;
-
   if (!cond->guard.done)
     {
       if (InterlockedIncrement (&cond->guard.started) == 0)
@@ -306,110 +298,120 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
           Sleep (0);
     }
 
-  EnterCriticalSection (&cond->lock);
   {
-    struct gl_waitqueue_element *elt = gl_waitqueue_add (&cond->waiters);
-    LeaveCriticalSection (&cond->lock);
-    if (elt == NULL)
-      {
-        /* Allocation failure.  Weird.  */
-        return EAGAIN;
-      }
-    else
-      {
-        HANDLE event = elt->event;
-        int err;
-        DWORD timeout;
-        DWORD result;
+    struct timeval currtime;
 
-        /* Now release the lock and let any other thread take it.  */
-        err = glthread_lock_unlock (lock);
-        if (err != 0)
-          {
-            EnterCriticalSection (&cond->lock);
-            gl_waitqueue_remove (&cond->waiters, elt);
-            LeaveCriticalSection (&cond->lock);
-            CloseHandle (event);
-            free (elt);
-            return err;
-          }
-        /* POSIX says:
-            "If another thread is able to acquire the mutex after the
-             about-to-block thread has released it, then a subsequent call to
-             pthread_cond_broadcast() or pthread_cond_signal() in that thread
-             shall behave as if it were issued after the about-to-block thread
-             has blocked."
-           This is fulfilled here, because the thread signalling is done
-           through SetEvent, not PulseEvent.  */
-        /* Wait until another thread signals this event or until the abstime
-           passes.  */
-        gettimeofday (&currtime, NULL);
-        if (currtime.tv_sec > abstime->tv_sec)
-          timeout = 0;
-        else
-          {
-            unsigned long seconds = abstime->tv_sec - currtime.tv_sec;
-            timeout = seconds * 1000;
-            if (timeout / 1000 != seconds) /* overflow? */
-              timeout = INFINITE;
-            else
-              {
-                long milliseconds =
-                  abstime->tv_nsec / 1000000 - currtime.tv_usec / 1000;
-                if (milliseconds >= 0)
-                  {
-                    timeout += milliseconds;
-                    if (timeout < milliseconds) /* overflow? */
-                      timeout = INFINITE;
-                  }
-                else
-                  {
-                    if (timeout >= - milliseconds)
-                      timeout -= (- milliseconds);
-                    else
-                      timeout = 0;
-                  }
-              }
-          }
-        result = WaitForSingleObject (event, timeout);
-        if (result == WAIT_FAILED)
-          abort ();
-        if (result == WAIT_TIMEOUT)
-          {
-            EnterCriticalSection (&cond->lock);
-            if (gl_waitqueue_remove (&cond->waiters, elt))
-              {
-                /* The event was not signaled between the WaitForSingleObject
-                   call and the EnterCriticalSection call.  */
-                if (!(WaitForSingleObject (event, 0) == WAIT_TIMEOUT))
-                  abort ();
-              }
-            else
-              {
-                /* The event was signaled between the WaitForSingleObject
-                   call and the EnterCriticalSection call.  */
-                if (!(WaitForSingleObject (event, 0) == WAIT_OBJECT_0))
-                  abort ();
-                /* Produce the right return value.  */
-                result = WAIT_OBJECT_0;
-              }
-            LeaveCriticalSection (&cond->lock);
-          }
-        else
-          {
-            /* The thread which signalled the event already did the
-               bookkeeping: removed us from the waiters.  */
-          }
-        CloseHandle (event);
-        free (elt);
-        /* Take the lock again.  It does not matter whether this is done
-           before or after the bookkeeping for WAIT_TIMEOUT.  */
-        err = glthread_lock_lock (lock);
-        return (err ? err :
-                result == WAIT_OBJECT_0 ? 0 :
-                result == WAIT_TIMEOUT ? ETIMEDOUT :
-                /* WAIT_FAILED shouldn't happen */ EAGAIN);
-      }
+    gettimeofday (&currtime, NULL);
+    if (currtime.tv_sec > abstime->tv_sec
+        || (currtime.tv_sec == abstime->tv_sec
+            && currtime.tv_usec * 1000 >= abstime->tv_nsec))
+      return ETIMEDOUT;
+
+    EnterCriticalSection (&cond->lock);
+    {
+      struct gl_waitqueue_element *elt = gl_waitqueue_add (&cond->waiters);
+      LeaveCriticalSection (&cond->lock);
+      if (elt == NULL)
+        {
+          /* Allocation failure.  Weird.  */
+          return EAGAIN;
+        }
+      else
+        {
+          HANDLE event = elt->event;
+          int err;
+          DWORD timeout;
+          DWORD result;
+
+          /* Now release the lock and let any other thread take it.  */
+          err = glthread_lock_unlock (lock);
+          if (err != 0)
+            {
+              EnterCriticalSection (&cond->lock);
+              gl_waitqueue_remove (&cond->waiters, elt);
+              LeaveCriticalSection (&cond->lock);
+              CloseHandle (event);
+              free (elt);
+              return err;
+            }
+          /* POSIX says:
+              "If another thread is able to acquire the mutex after the
+               about-to-block thread has released it, then a subsequent call to
+               pthread_cond_broadcast() or pthread_cond_signal() in that thread
+               shall behave as if it were issued after the about-to-block thread
+               has blocked."
+             This is fulfilled here, because the thread signalling is done
+             through SetEvent, not PulseEvent.  */
+          /* Wait until another thread signals this event or until the abstime
+             passes.  */
+          gettimeofday (&currtime, NULL);
+          if (currtime.tv_sec > abstime->tv_sec)
+            timeout = 0;
+          else
+            {
+              unsigned long seconds = abstime->tv_sec - currtime.tv_sec;
+              timeout = seconds * 1000;
+              if (timeout / 1000 != seconds) /* overflow? */
+                timeout = INFINITE;
+              else
+                {
+                  long milliseconds =
+                    abstime->tv_nsec / 1000000 - currtime.tv_usec / 1000;
+                  if (milliseconds >= 0)
+                    {
+                      timeout += milliseconds;
+                      if (timeout < milliseconds) /* overflow? */
+                        timeout = INFINITE;
+                    }
+                  else
+                    {
+                      if (timeout >= - milliseconds)
+                        timeout -= (- milliseconds);
+                      else
+                        timeout = 0;
+                    }
+                }
+            }
+          result = WaitForSingleObject (event, timeout);
+          if (result == WAIT_FAILED)
+            abort ();
+          if (result == WAIT_TIMEOUT)
+            {
+              EnterCriticalSection (&cond->lock);
+              if (gl_waitqueue_remove (&cond->waiters, elt))
+                {
+                  /* The event was not signaled between the WaitForSingleObject
+                     call and the EnterCriticalSection call.  */
+                  if (!(WaitForSingleObject (event, 0) == WAIT_TIMEOUT))
+                    abort ();
+                }
+              else
+                {
+                  /* The event was signaled between the WaitForSingleObject
+                     call and the EnterCriticalSection call.  */
+                  if (!(WaitForSingleObject (event, 0) == WAIT_OBJECT_0))
+                    abort ();
+                  /* Produce the right return value.  */
+                  result = WAIT_OBJECT_0;
+                }
+              LeaveCriticalSection (&cond->lock);
+            }
+          else
+            {
+              /* The thread which signalled the event already did the
+                 bookkeeping: removed us from the waiters.  */
+            }
+          CloseHandle (event);
+          free (elt);
+          /* Take the lock again.  It does not matter whether this is done
+             before or after the bookkeeping for WAIT_TIMEOUT.  */
+          err = glthread_lock_lock (lock);
+          return (err ? err :
+                  result == WAIT_OBJECT_0 ? 0 :
+                  result == WAIT_TIMEOUT ? ETIMEDOUT :
+                  /* WAIT_FAILED shouldn't happen */ EAGAIN);
+        }
+    }
   }
 }
 
