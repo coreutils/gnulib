@@ -46,6 +46,16 @@
 #include <errno.h>
 #include <stdlib.h>
 
+#if !defined c11_threads_in_use
+# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK || USE_SOLARIS_THREADS_WEAK)
+#  include <threads.h>
+#  pragma weak thrd_exit
+#  define c11_threads_in_use() (thrd_exit != NULL)
+# else
+#  define c11_threads_in_use() 0
+# endif
+#endif
+
 /* ========================================================================= */
 
 #if USE_POSIX_THREADS
@@ -77,7 +87,8 @@ extern int glthread_in_use (void);
 
 #  if !PTHREAD_IN_USE_DETECTION_HARD
 #   pragma weak pthread_mutexattr_gettype
-#   define pthread_in_use() (pthread_mutexattr_gettype != NULL)
+#   define pthread_in_use() \
+      (pthread_mutexattr_gettype != NULL || c11_threads_in_use ())
 #  endif
 
 # else
@@ -131,7 +142,7 @@ typedef union
 #  pragma weak pth_key_delete
 
 #  pragma weak pth_cancel
-#  define pth_in_use() (pth_cancel != NULL)
+#  define pth_in_use() (pth_cancel != NULL || c11_threads_in_use ())
 
 # else
 
@@ -183,7 +194,7 @@ typedef union
 #  pragma weak thr_setspecific
 
 #  pragma weak thr_suspend
-#  define thread_in_use() (thr_suspend != NULL)
+#  define thread_in_use() (thr_suspend != NULL || c11_threads_in_use ())
 
 # else
 

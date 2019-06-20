@@ -1,4 +1,4 @@
-# threadlib.m4 serial 17
+# threadlib.m4 serial 18
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -160,6 +160,13 @@ int main ()
          *" -static "*) gl_cv_have_weak=no ;;
        esac
       ])
+    if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
+      dnl If we use weak symbols to implement pthread_in_use / pth_in_use /
+      gnl thread_in_use, we also need to test whether the ISO C 11 thrd_create
+      dnl facility is in use.
+      AC_CHECK_HEADERS_ONCE([threads.h])
+      :
+    fi
     if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
       # On OSF/1, the compiler needs the flag -pthread or -D_REENTRANT so that
       # it groks <pthread.h>. It's added above, in gl_THREADLIB_EARLY_BODY.
