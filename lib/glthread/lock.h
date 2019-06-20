@@ -692,6 +692,7 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 
 # include "windows-spinlock.h"
 # include "windows-mutex.h"
+# include "windows-recmutex.h"
 # include "windows-once.h"
 
 # ifdef __cplusplus
@@ -774,36 +775,21 @@ extern int glthread_rwlock_destroy_func (gl_rwlock_t *lock);
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
 
-/* The native Windows documentation says that CRITICAL_SECTION already
-   implements a recursive lock.  But we need not rely on it: It's easy to
-   implement a recursive lock without this assumption.  */
-
-typedef struct
-        {
-          glwthread_spinlock_t guard; /* protects the initialization */
-          DWORD owner;
-          unsigned long depth;
-          CRITICAL_SECTION lock;
-        }
-        gl_recursive_lock_t;
+typedef glwthread_recmutex_t gl_recursive_lock_t;
 # define gl_recursive_lock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_recursive_lock_t NAME;
 # define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
     STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
 # define gl_recursive_lock_initializer \
-    { GLWTHREAD_SPINLOCK_INIT, 0, 0 }
+    GLWTHREAD_RECMUTEX_INIT
 # define glthread_recursive_lock_init(LOCK) \
-    (glthread_recursive_lock_init_func (LOCK), 0)
+    (glwthread_recmutex_init (LOCK), 0)
 # define glthread_recursive_lock_lock(LOCK) \
-    glthread_recursive_lock_lock_func (LOCK)
+    glwthread_recmutex_lock (LOCK)
 # define glthread_recursive_lock_unlock(LOCK) \
-    glthread_recursive_lock_unlock_func (LOCK)
+    glwthread_recmutex_unlock (LOCK)
 # define glthread_recursive_lock_destroy(LOCK) \
-    glthread_recursive_lock_destroy_func (LOCK)
-extern void glthread_recursive_lock_init_func (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_lock_func (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_unlock_func (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_destroy_func (gl_recursive_lock_t *lock);
+    glwthread_recmutex_destroy (LOCK)
 
 /* -------------------------- gl_once_t datatype -------------------------- */
 
