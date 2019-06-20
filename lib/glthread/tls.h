@@ -236,9 +236,11 @@ extern void *glthread_tls_get_multithreaded (thread_key_t key);
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
+# include "windows-tls.h"
+
 /* ------------------------- gl_tls_key_t datatype ------------------------- */
 
-typedef DWORD gl_tls_key_t;
+typedef glwthread_tls_key_t gl_tls_key_t;
 # define glthread_tls_key_init(KEY, DESTRUCTOR) \
     /* The destructor is unsupported.  */    \
     ((*(KEY) = TlsAlloc ()) == (DWORD)-1 ? EAGAIN : ((void) (DESTRUCTOR), 0))

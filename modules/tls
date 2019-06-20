@@ -8,6 +8,7 @@ m4/tls.m4
 
 Depends-on:
 threadlib
+windows-tls     [test $gl_threads_api = windows]
 
 configure.ac:
 gl_TLS
