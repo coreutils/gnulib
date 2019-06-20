@@ -311,7 +311,7 @@ typedef struct
         gl_linked_waitqueue_t;
 typedef struct
         {
-          gl_spinlock_t guard; /* protects the initialization */
+          glwthread_spinlock_t guard; /* protects the initialization */
           CRITICAL_SECTION lock; /* protects the remaining fields */
           gl_linked_waitqueue_t waiters; /* waiting threads */
         }
