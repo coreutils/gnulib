@@ -690,6 +690,8 @@ extern int glthread_once_singlethreaded (gl_once_t *once_control);
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
+# include "windows-once.h"
+
 # ifdef __cplusplus
 extern "C" {
 # endif
@@ -814,18 +816,11 @@ extern int glthread_recursive_lock_destroy_func (gl_recursive_lock_t *lock);
 
 /* -------------------------- gl_once_t datatype -------------------------- */
 
-typedef struct
-        {
-          volatile int inited;
-          volatile long started;
-          CRITICAL_SECTION lock;
-        }
-        gl_once_t;
+typedef glwthread_once_t gl_once_t;
 # define gl_once_define(STORAGECLASS, NAME) \
-    STORAGECLASS gl_once_t NAME = { -1, -1 };
+    STORAGECLASS gl_once_t NAME = GLWTHREAD_ONCE_INIT;
 # define glthread_once(ONCE_CONTROL, INITFUNCTION) \
-    (glthread_once_func (ONCE_CONTROL, INITFUNCTION), 0)
-extern void glthread_once_func (gl_once_t *once_control, void (*initfunction) (void));
+    (glwthread_once (ONCE_CONTROL, INITFUNCTION), 0)
 
 # ifdef __cplusplus
 }

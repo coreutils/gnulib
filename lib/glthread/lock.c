@@ -1193,45 +1193,6 @@ glthread_recursive_lock_destroy_func (gl_recursive_lock_t *lock)
   return 0;
 }
 
-/* -------------------------- gl_once_t datatype -------------------------- */
-
-void
-glthread_once_func (gl_once_t *once_control, void (*initfunction) (void))
-{
-  if (once_control->inited <= 0)
-    {
-      if (InterlockedIncrement (&once_control->started) == 0)
-        {
-          /* This thread is the first one to come to this once_control.  */
-          InitializeCriticalSection (&once_control->lock);
-          EnterCriticalSection (&once_control->lock);
-          once_control->inited = 0;
-          initfunction ();
-          once_control->inited = 1;
-          LeaveCriticalSection (&once_control->lock);
-        }
-      else
-        {
-          /* Don't let once_control->started grow and wrap around.  */
-          InterlockedDecrement (&once_control->started);
-          /* Some other thread has already started the initialization.
-             Yield the CPU while waiting for the other thread to finish
-             initializing and taking the lock.  */
-          while (once_control->inited < 0)
-            Sleep (0);
-          if (once_control->inited <= 0)
-            {
-              /* Take the lock.  This blocks until the other thread has
-                 finished calling the initfunction.  */
-              EnterCriticalSection (&once_control->lock);
-              LeaveCriticalSection (&once_control->lock);
-              if (!(once_control->inited > 0))
-                abort ();
-            }
-        }
-    }
-}
-
 #endif
 
 /* ========================================================================= */
