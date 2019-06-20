@@ -170,7 +170,8 @@ test_tss (void)
 
       /* Spawn the threads.  */
       for (i = 0; i < THREAD_COUNT; i++)
-        ASSERT (thrd_create (&threads[i], worker_thread, NULL) == thrd_success);
+        ASSERT (thrd_create (&threads[i], worker_thread, (void *) (uintptr_t) i)
+                == thrd_success);
 
       /* Wait for the threads to terminate.  */
       for (i = 0; i < THREAD_COUNT; i++)
