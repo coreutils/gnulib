@@ -151,8 +151,6 @@ test_timedcond (void)
   cond_value = cond_timeout = 0;
 
   thread = gl_thread_create (timedcond_routine, NULL);
-
-  remain = 2;
   do
     {
       yield ();
