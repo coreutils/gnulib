@@ -647,9 +647,11 @@ test_once (void)
   fire_signal_state = 0;
 #endif
 
+#if ENABLE_LOCKING
   /* Block all fire_signals.  */
   for (i = REPEAT_COUNT-1; i >= 0; i--)
     gl_rwlock_wrlock (fire_signal[i]);
+#endif
 
   /* Spawn the threads.  */
   for (i = 0; i < THREAD_COUNT; i++)
