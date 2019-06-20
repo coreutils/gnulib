@@ -1,0 +1,12 @@
+Files:
+tests/test-threads.c
+
+Depends-on:
+threads-h-c++-tests
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-threads
+check_PROGRAMS += test-threads
+test_threads_LDADD = $(LDADD) @LIBSTDTHREAD@
