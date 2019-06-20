@@ -811,10 +811,14 @@ glthread_lock_lock_func (gl_lock_t *lock)
         /* This thread is the first one to need this lock.  Initialize it.  */
         glthread_lock_init (lock);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this lock.  */
-        while (!lock->guard.done)
-          Sleep (0);
+        {
+          /* Don't let lock->guard.started grow and wrap around.  */
+          InterlockedDecrement (&lock->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this lock.  */
+          while (!lock->guard.done)
+            Sleep (0);
+        }
     }
   EnterCriticalSection (&lock->lock);
   return 0;
@@ -951,10 +955,14 @@ glthread_rwlock_rdlock_func (gl_rwlock_t *lock)
         /* This thread is the first one to need this lock.  Initialize it.  */
         glthread_rwlock_init (lock);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this lock.  */
-        while (!lock->guard.done)
-          Sleep (0);
+        {
+          /* Don't let lock->guard.started grow and wrap around.  */
+          InterlockedDecrement (&lock->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this lock.  */
+          while (!lock->guard.done)
+            Sleep (0);
+        }
     }
   EnterCriticalSection (&lock->lock);
   /* Test whether only readers are currently running, and whether the runcount
@@ -1007,10 +1015,14 @@ glthread_rwlock_wrlock_func (gl_rwlock_t *lock)
         /* This thread is the first one to need this lock.  Initialize it.  */
         glthread_rwlock_init (lock);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this lock.  */
-        while (!lock->guard.done)
-          Sleep (0);
+        {
+          /* Don't let lock->guard.started grow and wrap around.  */
+          InterlockedDecrement (&lock->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this lock.  */
+          while (!lock->guard.done)
+            Sleep (0);
+        }
     }
   EnterCriticalSection (&lock->lock);
   /* Test whether no readers or writers are currently running.  */
@@ -1131,10 +1143,14 @@ glthread_recursive_lock_lock_func (gl_recursive_lock_t *lock)
         /* This thread is the first one to need this lock.  Initialize it.  */
         glthread_recursive_lock_init (lock);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this lock.  */
-        while (!lock->guard.done)
-          Sleep (0);
+        {
+          /* Don't let lock->guard.started grow and wrap around.  */
+          InterlockedDecrement (&lock->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this lock.  */
+          while (!lock->guard.done)
+            Sleep (0);
+        }
     }
   {
     DWORD self = GetCurrentThreadId ();
@@ -1196,7 +1212,7 @@ glthread_once_func (gl_once_t *once_control, void (*initfunction) (void))
         }
       else
         {
-          /* Undo last operation.  */
+          /* Don't let once_control->started grow and wrap around.  */
           InterlockedDecrement (&once_control->started);
           /* Some other thread has already started the initialization.
              Yield the CPU while waiting for the other thread to finish

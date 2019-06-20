@@ -229,10 +229,14 @@ glthread_cond_wait_func (gl_cond_t *cond, gl_lock_t *lock)
            Initialize it.  */
         glthread_cond_init (cond);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this condition variable.  */
-        while (!cond->guard.done)
-          Sleep (0);
+        {
+          /* Don't let cond->guard.started grow and wrap around.  */
+          InterlockedDecrement (&cond->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this condition variable.  */
+          while (!cond->guard.done)
+            Sleep (0);
+        }
     }
 
   EnterCriticalSection (&cond->lock);
@@ -292,10 +296,14 @@ glthread_cond_timedwait_func (gl_cond_t *cond, gl_lock_t *lock, struct timespec 
            Initialize it.  */
         glthread_cond_init (cond);
       else
-        /* Yield the CPU while waiting for another thread to finish
-           initializing this condition variable.  */
-        while (!cond->guard.done)
-          Sleep (0);
+        {
+          /* Don't let cond->guard.started grow and wrap around.  */
+          InterlockedDecrement (&cond->guard.started);
+          /* Yield the CPU while waiting for another thread to finish
+             initializing this condition variable.  */
+          while (!cond->guard.done)
+            Sleep (0);
+        }
     }
 
   {
