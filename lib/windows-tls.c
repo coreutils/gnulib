@@ -21,6 +21,8 @@
 /* Specification.  */
 #include "windows-tls.h"
 
+#include <errno.h>
+
 int
 glwthread_tls_key_create (glwthread_tls_key_t *keyp, void (*destructor) (void *))
 {

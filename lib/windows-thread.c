@@ -22,6 +22,7 @@
 /* Specification.  */
 #include "windows-thread.h"
 
+#include <errno.h>
 #include <process.h>
 #include <stdlib.h>
 
