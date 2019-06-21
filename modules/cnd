@@ -22,7 +22,7 @@ Include:
 <threads.h>
 
 Link:
-$(LTLIBSTDTHREAD) when linking with libtool, $(LIBSTDTHREAD) otherwise
+$(LIBSTDTHREAD)
 
 License:
 LGPLv2+

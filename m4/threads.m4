@@ -1,4 +1,4 @@
-# threads.m4 serial 2
+# threads.m4 serial 3
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,12 @@ AC_DEFUN([gl_THREADS_H],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_THREADLIB_BODY])
   AC_REQUIRE([gl_YIELD])
+
+  if test "$gl_use_threads" = pth; then
+    AC_MSG_ERROR([You cannot use --enable-threads=pth with the gnulib module 'threads-h'.])
+  fi
+  dnl Now, since $gl_use_threads is not 'pth', $LTLIBMULTITHREAD and
+  dnl $LIBMULTITHREAD have the same value. Only system libraries are needed.
 
   gl_CHECK_NEXT_HEADERS([threads.h])
   if test $ac_cv_header_threads_h = yes; then
@@ -47,7 +53,6 @@ AC_DEFUN([gl_THREADS_H],
   case "$host_os" in
     mingw*)
       LIBSTDTHREAD=
-      LTLIBSTDTHREAD=
       ;;
     *)
       if test $ac_cv_header_threads_h = yes; then
@@ -58,26 +63,21 @@ AC_DEFUN([gl_THREADS_H],
         AC_CHECK_FUNCS([thrd_create])
         if test $ac_cv_func_thrd_create = yes; then
           LIBSTDTHREAD=
-          LTLIBSTDTHREAD=
         else
           AC_CHECK_LIB([stdthreads], [thrd_create], [
             LIBSTDTHREAD='-lstdthreads -lpthread'
-            LTLIBSTDTHREAD='-lstdthreads -lpthread'
           ], [
             dnl Guess that thrd_create is in libpthread.
             LIBSTDTHREAD="$LIBMULTITHREAD"
-            LTLIBSTDTHREAD="$LTLIBMULTITHREAD"
           ])
         fi
       else
         dnl Libraries needed by thrd.c, mtx.c, cnd.c, tss.c.
         LIBSTDTHREAD="$LIBMULTITHREAD $YIELD_LIB"
-        LTLIBSTDTHREAD="$LTLIBMULTITHREAD $YIELD_LIB"
       fi
       ;;
   esac
   AC_SUBST([LIBSTDTHREAD])
-  AC_SUBST([LTLIBSTDTHREAD])
 
   AH_VERBATIM([thread_local],
 [/* The _Thread_local keyword of C11.  */
