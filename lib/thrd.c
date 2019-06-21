@@ -263,6 +263,10 @@ pthread_main_func (void *pmarg)
   /* Execute mainfunc, with arg as argument.  */
   {
     int exitcode = mainfunc (arg);
+    /* Note: When using Windows threads, this exit code is different from the
+       argument passed to ExitThread(), because the latter should never be 259,
+       see <https://docs.microsoft.com/de-de/windows/desktop/api/processthreadsapi/nf-processthreadsapi-getexitcodethread>,
+       whereas the exit code passed to thrd_exit() is not constrained.  */
     return (void *) (intptr_t) exitcode;
   }
 }
