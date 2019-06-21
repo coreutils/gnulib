@@ -1,9 +1,14 @@
-# threads.m4 serial 3
+# threads.m4 serial 4
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
 
+dnl Tests whether the <threads.h> facility is available.
+dnl Sets the variable LIBSTDTHREAD to the linker options for use in a Makefile
+dnl for a program that uses the <threads.h> functions.
+dnl Sets the variable LIBTHREADLOCAL to the linker options for use in a Makefile
+dnl for a program that uses the 'thread_local' macro.
 AC_DEFUN([gl_THREADS_H],
 [
   AC_REQUIRE([gl_THREADS_H_DEFAULTS])
@@ -79,16 +84,54 @@ AC_DEFUN([gl_THREADS_H],
   esac
   AC_SUBST([LIBSTDTHREAD])
 
-  AH_VERBATIM([thread_local],
-[/* The _Thread_local keyword of C11.  */
-#ifndef _Thread_local
-# if defined __GNUC__
-#  define _Thread_local __thread
-# elif defined _MSC_VER
-#  define _Thread_local __declspec (thread)
-# endif
-#endif
-])
+  dnl Define _Thread_local.
+  dnl GCC, for example, supports '__thread' since version 3.3, but it supports
+  dnl '_Thread_local' only starting with version 4.9.
+  AH_VERBATIM([thread_local], gl_THREAD_LOCAL_DEFINITION)
+
+  dnl Test whether _Thread_local is supported in the compiler and linker.
+  AC_CACHE_CHECK([whether _Thread_local works],
+    [gl_cv_thread_local_works],
+    [dnl On AIX 7.1 with GCC 4.8.1, this test program compiles fine, but the
+     dnl 'test-thread-local' test misbehaves.
+     dnl On Android 4.3, this test program compiles fine, but the
+     dnl 'test-thread-local' test crashes.
+     if case "$host_os" in
+          aix*) test -n "$GCC" ;;
+          linux*-android*) true ;;
+          *) false ;;
+        esac
+     then
+       gl_cv_thread_local_works="guessing no"
+     else
+       AC_COMPILE_IFELSE(
+         [AC_LANG_PROGRAM([gl_THREAD_LOCAL_DEFINITION[
+            int _Thread_local x;
+          ]], [[
+            x = 42;
+          ]])],
+         [gl_cv_thread_local_works=yes],
+         [gl_cv_thread_local_works=no])
+     fi
+    ])
+  case "$gl_cv_thread_local_works" in
+    *yes) ;;
+    *) HAVE_THREAD_LOCAL=0 ;;
+  esac
+
+  dnl Determine the link dependencies of '_Thread_local'.
+  LIBTHREADLOCAL=
+  dnl On AIX 7.2 with "xlc -qthreaded -qtls", programs that use _Thread_local
+  dnl as defined above produce link errors regarding the symbols
+  dnl '.__tls_get_mod' and '__tls_get_addr'. Similarly, on AIX 7.2 with gcc,
+  dnl 32-bit programs that use _Thread_local produce link errors regarding the
+  dnl symbol '__get_tpointer'. The fix is to link with -lpthread.
+  case "$host_os" in
+    aix*)
+      LIBTHREADLOCAL=-lpthread
+      ;;
+  esac
+  AC_SUBST([LIBTHREADLOCAL])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
@@ -101,6 +144,24 @@ AC_DEFUN([gl_THREADS_H],
     thrd_sleep thrd_yield
     tss_create tss_delete tss_get tss_set])
 ])
+
+dnl Expands to C preprocessor statements that define _Thread_local.
+AC_DEFUN([gl_THREAD_LOCAL_DEFINITION],
+[[/* The _Thread_local keyword of C11.  */
+/* GNU C: <https://gcc.gnu.org/onlinedocs/gcc-3.3.1/gcc/Thread-Local.html> */
+/* ARM C: <https://developer.arm.com/docs/dui0472/latest/compiler-specific-features/__declspecthread> */
+/* IBM C: supported only with compiler option -qtls, see
+   <https://www.ibm.com/support/knowledgecenter/SSGH2K_12.1.0/com.ibm.xlc121.aix.doc/compiler_ref/opt_tls.html> */
+/* Oracle Solaris Studio C: <https://docs.oracle.com/cd/E18659_01/html/821-1384/bjabr.html> */
+/* MSVC: <https://docs.microsoft.com/en-us/cpp/parallel/thread-local-storage-tls> */
+#ifndef _Thread_local
+# if defined __GNUC__ || defined __CC_ARM || defined __xlC__ || defined __SUNPRO_C
+#  define _Thread_local __thread
+# elif defined _MSC_VER
+#  define _Thread_local __declspec (thread)
+# endif
+#endif
+]])
 
 AC_DEFUN([gl_THREADS_MODULE_INDICATOR],
 [
@@ -118,6 +179,7 @@ AC_DEFUN([gl_THREADS_H_DEFAULTS],
   GNULIB_THRD=0;          AC_SUBST([GNULIB_THRD])
   GNULIB_TSS=0;           AC_SUBST([GNULIB_TSS])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_THREAD_LOCAL=1;    AC_SUBST([HAVE_THREAD_LOCAL])
   BROKEN_THRD_START_T=0;  AC_SUBST([BROKEN_THRD_START_T])
   REPLACE_THRD_CREATE=0;  AC_SUBST([REPLACE_THRD_CREATE])
   REPLACE_THRD_CURRENT=0; AC_SUBST([REPLACE_THRD_CURRENT])

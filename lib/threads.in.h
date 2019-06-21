@@ -67,6 +67,10 @@
 #if !@HAVE_THREADS_H@ || !defined thread_local
 # define thread_local _Thread_local
 #endif
+/* Define the macro thread_local if and only if it actually works.  */
+#if !@HAVE_THREAD_LOCAL@
+# undef thread_local
+#endif
 
 
 /* =========== ISO C 11 7.26.5 Thread functions =========== */

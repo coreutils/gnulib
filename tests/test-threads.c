@@ -20,10 +20,8 @@
 
 #include <threads.h>
 
-/* Check that thread_local is defined.  */
-#ifndef thread_local
-"oops"
-#endif
+/* Don't check that thread_local is defined.
+   We cannot define it properly on some platforms.  */
 
 /* Check that ONCE_FLAG_INIT is defined.  */
 #ifndef ONCE_FLAG_INIT

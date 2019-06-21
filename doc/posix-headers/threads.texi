@@ -20,4 +20,18 @@ AIX 7.2.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+There is no way to define a working @code{thread_local} macro on some platforms:
+@itemize
+@item
+Mac OS X 10.5,
+@item
+OpenBSD 6.5,
+@item
+AIX 7.1 with gcc (but it works with @samp{xlc -qthreaded -qtls}),
+@item
+HP-UX 11.31 with cc (but it works with gcc),
+@item
+IRIX 6.5.
+@end itemize
 @end itemize
