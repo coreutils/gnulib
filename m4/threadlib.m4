@@ -162,7 +162,7 @@ int main ()
       ])
     if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
       dnl If we use weak symbols to implement pthread_in_use / pth_in_use /
-      gnl thread_in_use, we also need to test whether the ISO C 11 thrd_create
+      dnl thread_in_use, we also need to test whether the ISO C 11 thrd_create
       dnl facility is in use.
       AC_CHECK_HEADERS_ONCE([threads.h])
       :
