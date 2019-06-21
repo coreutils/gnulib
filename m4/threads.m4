@@ -1,4 +1,4 @@
-# threads.m4 serial 1
+# threads.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,7 +52,8 @@ AC_DEFUN([gl_THREADS_H],
     *)
       if test $ac_cv_header_threads_h = yes; then
         dnl glibc >= 2.29 has thrd_create in libpthread.
-        dnl FreeBSD >= 10 has thrd_create in libstdthreads.
+        dnl FreeBSD >= 10 has thrd_create in libstdthreads; this library depends
+        dnl on libpthread (for the symbol 'pthread_mutexattr_gettype').
         dnl AIX >= 7.1 and Solaris >= 11.4 have thrd_create in libc.
         AC_CHECK_FUNCS([thrd_create])
         if test $ac_cv_func_thrd_create = yes; then
@@ -60,8 +61,8 @@ AC_DEFUN([gl_THREADS_H],
           LTLIBSTDTHREAD=
         else
           AC_CHECK_LIB([stdthreads], [thrd_create], [
-            LIBSTDTHREAD='-lstdthreads'
-            LTLIBSTDTHREAD='-lstdthreads'
+            LIBSTDTHREAD='-lstdthreads -lpthread'
+            LTLIBSTDTHREAD='-lstdthreads -lpthread'
           ], [
             dnl Guess that thrd_create is in libpthread.
             LIBSTDTHREAD="$LIBMULTITHREAD"
