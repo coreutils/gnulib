@@ -24,6 +24,7 @@ ME := maint.mk
 # These variables ought to be defined through the configure.ac section
 # of the module description. But some packages import this file directly,
 # ignoring the module description.
+AWK ?= awk
 GREP ?= grep
 SED ?= sed
 
@@ -190,7 +191,7 @@ $(sc_z_rules_): %.z: %
 	@end=$$(date +%s.%N);						\
 	start=$$(cat .sc-start-$*);					\
 	rm -f .sc-start-$*;						\
-	awk -v s=$$start -v e=$$end					\
+	$(AWK) -v s=$$start -v e=$$end					\
 	  'END {printf "%.2f $(patsubst sc_%,%,$*)\n", e - s}' < /dev/null
 
 # The patsubst here is to replace each sc_% rule with its sc_%.z wrapper
@@ -435,13 +436,15 @@ sc_prohibit_gnu_make_extensions_awk_ =					\
      exit status;							\
   }
 sc_prohibit_gnu_make_extensions:
-	(cd $(srcdir) && autoconf --trace AC_CONFIG_FILES:'$$1') |	\
-	  tr ' ' '\n' |							\
-	  $(SED) -ne '/Makefile/{s/\.in$$//;p;}' |			\
-	  while read m; do						\
-	    $(MAKE) -qp -f $$m .DUMMY-TARGET 2>/dev/null |		\
-	      awk -v file=$$m -e '$($@_awk_)' || exit 1;		\
-	  done
+	@if $(AWK) --version | grep GNU >/dev/null 2>&1; then		\
+	  (cd $(srcdir) && autoconf --trace AC_CONFIG_FILES:'$$1') |	\
+	    tr ' ' '\n' |						\
+	    $(SED) -ne '/Makefile/{s/\.in$$//;p;}' |			\
+	    while read m; do						\
+	      $(MAKE) -qp -f $$m .DUMMY-TARGET 2>/dev/null |		\
+	        $(AWK) -v file=$$m -e '$($@_awk_)' || exit 1;		\
+	    done;							\
+	fi
 
 # Using EXIT_SUCCESS as the first argument to error is misleading,
 # since when that parameter is 0, error does not exit.  Use '0' instead.
@@ -1383,7 +1386,7 @@ gpg_key_ID ?=								\
   $$(cd $(srcdir)							\
      && git cat-file tag v$(VERSION)					\
         | $(gpgv) --status-fd 1 --keyring /dev/null - - 2>/dev/null	\
-        | awk '/^\[GNUPG:\] ERRSIG / {print $$3; exit}')
+        | $(AWK) '/^\[GNUPG:\] ERRSIG / {print $$3; exit}')
 
 translation_project_ ?= coordinator@translationproject.org
 
