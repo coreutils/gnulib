@@ -122,15 +122,6 @@ char const *argmatch_to_argument (void const *value,
     argmatch_##Name##_size = sizeof (argmatch_##Name##_type)            \
   };                                                                    \
                                                                         \
-  /* Documentation of this group.  */                                   \
-  typedef struct                                                        \
-  {                                                                     \
-    /* Argument (e.g., "simple").  */                                   \
-    const char const *arg;                                              \
-    /* Documentation (e.g., N_("always make simple backups")).  */      \
-    const char const *doc;                                              \
-  } argmatch_##Name##_doc;                                              \
-                                                                        \
   /* Argument mapping of this group.  */                                \
   typedef struct                                                        \
   {                                                                     \
@@ -140,11 +131,20 @@ char const *argmatch_to_argument (void const *value,
     const argmatch_##Name##_type val;                                   \
   } argmatch_##Name##_arg;                                              \
                                                                         \
+  /* Documentation of this group.  */                                   \
+  typedef struct                                                        \
+  {                                                                     \
+    /* Argument (e.g., "simple").  */                                   \
+    const char const *arg;                                              \
+    /* Documentation (e.g., N_("always make simple backups")).  */      \
+    const char const *doc;                                              \
+  } argmatch_##Name##_doc;                                              \
+                                                                        \
   /* All the features of an argmatch group.  */                         \
   typedef struct                                                        \
   {                                                                     \
-    const argmatch_##Name##_doc* docs;                                  \
     const argmatch_##Name##_arg* args;                                  \
+    const argmatch_##Name##_doc* docs;                                  \
                                                                         \
     /* Printed before the usage message.  */                            \
     const char *doc_pre;                                                \

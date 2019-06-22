@@ -89,8 +89,8 @@ static const argmatch_backup_arg argmatch_backup_args[] =
 
 const argmatch_backup_group_type argmatch_backup_group =
 {
-  argmatch_backup_docs,
   argmatch_backup_args,
+  argmatch_backup_docs,
   N_("\
 The backup suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.\n\
 The version control method may be selected via the --backup option or through\n\
