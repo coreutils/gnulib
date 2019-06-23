@@ -31,4 +31,7 @@ When the @code{lseek} function fails, POSIX says that the file offset remains
 unchanged.  But on some platforms, attempting to set a negative file offset
 fails and sets the file offset to 0:
 BeOS.
+@item
+Some systems do not support @code{SEEK_DATA} and @code{SEEK_HOLE}:
+AIX, HP-UX, Microsoft Windows, NetBSD, OpenBSD.
 @end itemize
