@@ -126,7 +126,7 @@ char const *argmatch_to_argument (void const *value,
   typedef struct                                                        \
   {                                                                     \
     /* Argument (e.g., "simple").  */                                   \
-    const char const *arg;                                              \
+    const char *arg;                                                    \
     /* Value (e.g., simple_backups).  */                                \
     const argmatch_##Name##_type val;                                   \
   } argmatch_##Name##_arg;                                              \
@@ -135,9 +135,9 @@ char const *argmatch_to_argument (void const *value,
   typedef struct                                                        \
   {                                                                     \
     /* Argument (e.g., "simple").  */                                   \
-    const char const *arg;                                              \
+    const char *arg;                                                    \
     /* Documentation (e.g., N_("always make simple backups")).  */      \
-    const char const *doc;                                              \
+    const char *doc;                                                    \
   } argmatch_##Name##_doc;                                              \
                                                                         \
   /* All the features of an argmatch group.  */                         \
