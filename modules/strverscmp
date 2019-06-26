@@ -7,6 +7,8 @@ m4/strverscmp.m4
 
 Depends-on:
 extensions
+libc-config  [test $HAVE_STRVERSCMP = 0]
+stdint       [test $HAVE_STRVERSCMP = 0]
 string
 
 configure.ac:
