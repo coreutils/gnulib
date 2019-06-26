@@ -13,7 +13,7 @@ configure.ac-early:
 gl_THREADLIB_EARLY
 
 configure.ac:
-gl_THREADLIB
+AC_REQUIRE([gl_THREADLIB])
 
 Makefile.am:
 lib_SOURCES += glthread/threadlib.c
