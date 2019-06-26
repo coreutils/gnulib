@@ -242,14 +242,13 @@ extern void *glthread_tls_get_multithreaded (thread_key_t key);
 
 typedef glwthread_tls_key_t gl_tls_key_t;
 # define glthread_tls_key_init(KEY, DESTRUCTOR) \
-    /* The destructor is unsupported.  */    \
-    ((*(KEY) = TlsAlloc ()) == (DWORD)-1 ? EAGAIN : ((void) (DESTRUCTOR), 0))
+    glwthread_tls_key_create (KEY, DESTRUCTOR)
 # define gl_tls_get(NAME) \
     TlsGetValue (NAME)
 # define glthread_tls_set(KEY, POINTER) \
     (!TlsSetValue (*(KEY), POINTER) ? EINVAL : 0)
 # define glthread_tls_key_destroy(KEY) \
-    (!TlsFree (*(KEY)) ? EINVAL : 0)
+    glwthread_tls_key_delete (*(KEY))
 
 #endif
 

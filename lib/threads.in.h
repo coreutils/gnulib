@@ -565,7 +565,7 @@ _GL_WARN_ON_USE (cnd_destroy, "cnd_destroy is unportable - "
 #  include "windows-tls.h"
 
 typedef glwthread_tls_key_t tss_t;
-#  define TSS_DTOR_ITERATIONS 0    /* Destructors are currently unsupported.  */
+#  define TSS_DTOR_ITERATIONS GLWTHREAD_DESTRUCTOR_ITERATIONS
 
 # else
 /* Use POSIX threads.  */

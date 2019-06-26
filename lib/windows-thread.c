@@ -27,6 +27,7 @@
 #include <stdlib.h>
 
 #include "windows-once.h"
+#include "windows-tls.h"
 
 /* The Thread-Local Storage (TLS) key that allows to access each thread's
    'struct glwthread_thread_struct *' pointer.  */
@@ -136,6 +137,9 @@ wrapper_func (void *varg)
      otherwise.  */
   thread->result = thread->func (thread->arg);
 
+  /* Process the TLS destructors.  */
+  glwthread_tls_process_destructors ();
+
   if (thread->detached)
     {
       /* Clean up the thread, like thrd_join would do.  */
@@ -233,6 +237,7 @@ glwthread_thread_exit (void *retval)
 {
   glwthread_thread_t thread = glwthread_thread_self ();
   thread->result = retval;
+  glwthread_tls_process_destructors ();
   _endthreadex (0); /* calls ExitThread (0) */
   abort ();
 }
