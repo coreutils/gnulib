@@ -4,6 +4,7 @@ tests/macros.h
 
 Depends-on:
 thrd
+mtx
 stdint
 
 configure.ac:

@@ -25,12 +25,6 @@
 /* Whether to print debugging messages.  */
 #define ENABLE_DEBUGGING 0
 
-/* Number of simultaneous threads.  */
-#define THREAD_COUNT 16
-
-/* Number of operations performed in each thread.  */
-#define REPEAT_COUNT 50000
-
 #include <threads.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -81,6 +75,12 @@ perhaps_yield (void)
 
 /* ----------------------- Test thread-local storage ----------------------- */
 
+/* Number of simultaneous threads.  */
+#define THREAD_COUNT 16
+
+/* Number of operations performed in each thread.  */
+#define REPEAT_COUNT 50000
+
 #define KEYS_COUNT 4
 
 static tss_t mykeys[KEYS_COUNT];
@@ -113,14 +113,14 @@ worker_thread (void *arg)
   perhaps_yield ();
 
   /* Initialize the per-thread storage.  */
-  dbgprintf ("Worker %p before first tls_set\n", thrd_current_pointer ());
+  dbgprintf ("Worker %p before first tss_set\n", thrd_current_pointer ());
   for (i = 0; i < KEYS_COUNT; i++)
     {
       unsigned int *ptr = (unsigned int *) malloc (sizeof (unsigned int));
       *ptr = values[i];
       ASSERT (tss_set (mykeys[i], ptr) == thrd_success);
     }
-  dbgprintf ("Worker %p after  first tls_set\n", thrd_current_pointer ());
+  dbgprintf ("Worker %p after  first tss_set\n", thrd_current_pointer ());
   perhaps_yield ();
 
   /* Shuffle around the pointers.  */
@@ -182,6 +182,314 @@ test_tss (void)
     }
 }
 
+#undef KEYS_COUNT
+#undef REPEAT_COUNT
+#undef THREAD_COUNT
+
+
+/* --------------- Test thread-local storage with destructors --------------- */
+
+/* Number of simultaneous threads.  */
+#define THREAD_COUNT 10
+
+/* Number of keys to allocate in each thread.  */
+#define KEYS_COUNT 10
+
+static mtx_t sumlock;
+static uintptr_t sum;
+
+static void
+inc_sum (uintptr_t value)
+{
+  ASSERT (mtx_lock (&sumlock) == thrd_success);
+  sum += value;
+  ASSERT (mtx_unlock (&sumlock) == thrd_success);
+}
+
+static void
+destructor0 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 0)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor1 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 1)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor2 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 2)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor3 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 3)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor4 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 4)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor5 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 5)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor6 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 6)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor7 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 7)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor8 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 8)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void
+destructor9 (void *value)
+{
+  if ((((uintptr_t) value - 1) % 10) != 9)
+    abort ();
+  inc_sum ((uintptr_t) value);
+}
+
+static void (*destructor_table[10]) (void *) =
+  {
+    destructor0,
+    destructor1,
+    destructor2,
+    destructor3,
+    destructor4,
+    destructor5,
+    destructor6,
+    destructor7,
+    destructor8,
+    destructor9
+  };
+
+static tss_t dtorcheck_keys[THREAD_COUNT][KEYS_COUNT];
+
+/* Worker thread that uses destructors that verify that the destructor belongs
+   to the right thread.  */
+static int
+dtorcheck1_thread (void *arg)
+{
+  unsigned int id = (unsigned int) (uintptr_t) arg;
+  tss_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
+  int i;
+
+  for (i = 0; i < KEYS_COUNT; i++)
+    ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
+
+  for (i = 0; i < KEYS_COUNT; i++)
+    ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1))
+            == thrd_success);
+
+  return 0;
+}
+
+static void
+test_tss_dtorcheck1 (void)
+{
+  thrd_t threads[THREAD_COUNT];
+  unsigned int id;
+  int i;
+  uintptr_t expected_sum;
+
+  sum = 0;
+
+  /* Spawn the threads.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_create (&threads[id], dtorcheck1_thread, (void *) (uintptr_t) id)
+            == thrd_success);
+
+  /* Wait for the threads to terminate.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_join (threads[id], NULL) == thrd_success);
+
+  /* Clean up the keys.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    for (i = 0; i < KEYS_COUNT; i++)
+      tss_delete (dtorcheck_keys[id][i]);
+
+  /* Check that the destructor was invoked for each key.  */
+  expected_sum = 10 * KEYS_COUNT * (THREAD_COUNT * (THREAD_COUNT - 1) / 2)
+                 + THREAD_COUNT * (KEYS_COUNT * (KEYS_COUNT - 1) / 2)
+                 + THREAD_COUNT * KEYS_COUNT;
+  if (sum != expected_sum)
+    abort ();
+}
+
+/* Worker thread that uses destructors that verify that the destructor belongs
+   to the right key allocated within the thread.  */
+static int
+dtorcheck2_thread (void *arg)
+{
+  unsigned int id = (unsigned int) (uintptr_t) arg;
+  tss_t *keys = dtorcheck_keys[id]; /* an array of KEYS_COUNT keys */
+  int i;
+
+  for (i = 0; i < KEYS_COUNT; i++)
+    ASSERT (tss_create (&keys[i], destructor_table[id]) == thrd_success);
+
+  for (i = 0; i < KEYS_COUNT; i++)
+    ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * i + id + 1))
+            == thrd_success);
+
+  return 0;
+}
+
+static void
+test_tss_dtorcheck2 (void)
+{
+  thrd_t threads[THREAD_COUNT];
+  unsigned int id;
+  int i;
+  uintptr_t expected_sum;
+
+  sum = 0;
+
+  /* Spawn the threads.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_create (&threads[id], dtorcheck2_thread, (void *) (uintptr_t) id)
+            == thrd_success);
+
+  /* Wait for the threads to terminate.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_join (threads[id], NULL) == thrd_success);
+
+  /* Clean up the keys.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    for (i = 0; i < KEYS_COUNT; i++)
+      tss_delete (dtorcheck_keys[id][i]);
+
+  /* Check that the destructor was invoked for each key.  */
+  expected_sum = 10 * THREAD_COUNT * (KEYS_COUNT * (KEYS_COUNT - 1) / 2)
+                 + KEYS_COUNT * (THREAD_COUNT * (THREAD_COUNT - 1) / 2)
+                 + THREAD_COUNT * KEYS_COUNT;
+  if (sum != expected_sum)
+    abort ();
+}
+
+#undef KEYS_COUNT
+#undef THREAD_COUNT
+
+
+/* --- Test thread-local storage with with races between init and destroy --- */
+
+/* Number of simultaneous threads.  */
+#define THREAD_COUNT 10
+
+/* Number of keys to allocate in each thread.  */
+#define KEYS_COUNT 10
+
+/* Number of times to destroy and reallocate a key in each thread.  */
+#define REPEAT_COUNT 100000
+
+static tss_t racecheck_keys[THREAD_COUNT][KEYS_COUNT];
+
+/* Worker thread that does many destructions and reallocations of keys, and also
+   uses destructors that verify that the destructor belongs to the right key.  */
+static int
+racecheck_thread (void *arg)
+{
+  unsigned int id = (unsigned int) (uintptr_t) arg;
+  tss_t *keys = racecheck_keys[id]; /* an array of KEYS_COUNT keys */
+  int repeat;
+  int i;
+
+  dbgprintf ("Worker %p started\n", thrd_current_pointer ());
+
+  for (i = 0; i < KEYS_COUNT; i++)
+    {
+      ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
+      ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1))
+              == thrd_success);
+    }
+
+  for (repeat = REPEAT_COUNT; repeat > 0; repeat--)
+    {
+      i = ((unsigned int) rand () >> 3) % KEYS_COUNT;
+      dbgprintf ("Worker %p reallocating key %d\n", thrd_current_pointer (), i);
+      tss_delete (keys[i]);
+      ASSERT (tss_create (&keys[i], destructor_table[i]) == thrd_success);
+      ASSERT (tss_set (keys[i], (void *) (uintptr_t) (10 * id + i + 1))
+              == thrd_success);
+    }
+
+  dbgprintf ("Worker %p dying.\n", thrd_current_pointer ());
+  return 0;
+}
+
+static void
+test_tss_racecheck (void)
+{
+  thrd_t threads[THREAD_COUNT];
+  unsigned int id;
+  int i;
+  uintptr_t expected_sum;
+
+  sum = 0;
+
+  /* Spawn the threads.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_create (&threads[id], racecheck_thread, (void *) (uintptr_t) id)
+            == thrd_success);
+
+  /* Wait for the threads to terminate.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    ASSERT (thrd_join (threads[id], NULL) == thrd_success);
+
+  /* Clean up the keys.  */
+  for (id = 0; id < THREAD_COUNT; id++)
+    for (i = 0; i < KEYS_COUNT; i++)
+      tss_delete (racecheck_keys[id][i]);
+
+  /* Check that the destructor was invoked for each key.  */
+  expected_sum = 10 * KEYS_COUNT * (THREAD_COUNT * (THREAD_COUNT - 1) / 2)
+                 + THREAD_COUNT * (KEYS_COUNT * (KEYS_COUNT - 1) / 2)
+                 + THREAD_COUNT * KEYS_COUNT;
+  if (sum != expected_sum)
+    abort ();
+}
+
+#undef REPEAT_COUNT
+#undef KEYS_COUNT
+#undef THREAD_COUNT
+
 
 /* -------------------------------------------------------------------------- */
 
@@ -196,8 +504,22 @@ main ()
   alarm (alarm_value);
 #endif
 
+  ASSERT (mtx_init (&sumlock, mtx_plain) == thrd_success);
+
   printf ("Starting test_tss ..."); fflush (stdout);
   test_tss ();
+  printf (" OK\n"); fflush (stdout);
+
+  printf ("Starting test_tss_dtorcheck1 ..."); fflush (stdout);
+  test_tss_dtorcheck1 ();
+  printf (" OK\n"); fflush (stdout);
+
+  printf ("Starting test_tss_dtorcheck2 ..."); fflush (stdout);
+  test_tss_dtorcheck2 ();
+  printf (" OK\n"); fflush (stdout);
+
+  printf ("Starting test_tss_racecheck ..."); fflush (stdout);
+  test_tss_racecheck ();
   printf (" OK\n"); fflush (stdout);
 
   return 0;
