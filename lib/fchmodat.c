@@ -18,9 +18,11 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <sys/stat.h>
 
 #include <errno.h>
+#include <stdlib.h>
 
 #ifndef HAVE_LCHMOD
 /* Use a different name, to avoid conflicting with any

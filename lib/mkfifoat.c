@@ -18,7 +18,10 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <sys/stat.h>
+
+#include <stdlib.h>
 
 #if !HAVE_MKFIFO
 

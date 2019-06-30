@@ -25,6 +25,8 @@
 /* Specification.  */
 #include "areadlink.h"
 
+#include <stdlib.h>
+
 #include "careadlinkat.h"
 
 #if HAVE_READLINKAT

@@ -18,8 +18,11 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <unistd.h>
+
 #include <errno.h>
+#include <stdlib.h>
 
 #if HAVE_SYMLINKAT
 # undef symlinkat

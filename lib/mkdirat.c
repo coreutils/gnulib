@@ -18,6 +18,10 @@
 
 #include <config.h>
 
+/* Specification.  */
+#include <sys/stat.h>
+
+#include <stdlib.h>
 #include <unistd.h>
 
 /* Solaris 10 has no function like this.
