@@ -76,6 +76,13 @@
 
 #ifdef WINDOWS_NATIVE
 
+/* Do *not* use the function WSAPoll
+   <https://docs.microsoft.com/en-us/windows/desktop/api/winsock2/nf-winsock2-wsapoll>
+   because there is a bug named “Windows 8 Bugs 309411 - WSAPoll does not
+   report failed connections” that Microsoft won't fix.
+   See Daniel Stenberg: "WASPoll is broken"
+   <https://daniel.haxx.se/blog/2012/10/10/wsapoll-is-broken/>.  */
+
 /* Here we need the recv() function from Windows, that takes a SOCKET as
    first argument, not any possible gnulib override.  */
 # undef recv
