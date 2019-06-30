@@ -49,6 +49,12 @@
 #ifndef _@GUARD_PREFIX@_ARPA_INET_H
 #define _@GUARD_PREFIX@_ARPA_INET_H
 
+/* Get all possible declarations of inet_ntop() and inet_pton().  */
+#if (@GNULIB_INET_NTOP@ || @GNULIB_INET_PTON@ || defined GNULIB_POSIXCHECK) \
+    && @HAVE_WS2TCPIP_H@
+# include <ws2tcpip.h>
+#endif
+
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
 /* The definition of _GL_ARG_NONNULL is copied here.  */

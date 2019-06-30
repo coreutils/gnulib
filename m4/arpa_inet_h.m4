@@ -1,4 +1,4 @@
-# arpa_inet_h.m4 serial 13
+# arpa_inet_h.m4 serial 14
 dnl Copyright (C) 2006, 2008-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,6 +23,8 @@ AC_DEFUN([gl_HEADER_ARPA_INET],
   gl_CHECK_NEXT_HEADERS([arpa/inet.h])
 
   AC_REQUIRE([gl_FEATURES_H])
+
+  gl_PREREQ_SYS_H_WS2TCPIP
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.
