@@ -33,6 +33,13 @@
 #ifndef _@GUARD_PREFIX@_POLL_H
 #define _@GUARD_PREFIX@_POLL_H
 
+/* On native Windows, get the 'struct pollfd' type and the POLL* macro
+   definitions before we override them.  mingw defines them in <winsock2.h>
+   if _WIN32_WINNT >= 0x0600.  */
+#if @HAVE_WINSOCK2_H@
+# include <winsock2.h>
+#endif
+
 
 /* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
 
@@ -40,6 +47,21 @@
 
 
 #if !@HAVE_POLL_H@
+
+# if @HAVE_WINSOCK2_H@
+/* Override the definitions from <winsock2.h>.  */
+#  undef POLLIN
+#  undef POLLPRI
+#  undef POLLOUT
+#  undef POLLERR
+#  undef POLLHUP
+#  undef POLLNVAL
+#  undef POLLRDNORM
+#  undef POLLRDBAND
+#  undef POLLWRNORM
+#  undef POLLWRBAND
+#  define pollfd rpl_pollfd
+# endif
 
 /* fake a poll(2) environment */
 # define POLLIN      0x0001      /* any readable data available   */
