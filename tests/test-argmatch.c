@@ -104,13 +104,13 @@ main (int argc, char *argv[])
 #define CHECK(Input, Output)                                            \
   do {                                                                  \
     ASSERT (ARGMATCH (Input, backup_args, backup_vals) == Output);      \
-    ASSERT (argmatch_backup_value (Input) == Output);                   \
+    ASSERT (argmatch_backup_choice (Input) == Output);                  \
     if (0 <= Output)                                                    \
       {                                                                 \
         enum backup_type val = argmatch_backup_args[Output].val;        \
-        ASSERT (*argmatch_backup_xvalue ("test", Input) == val);        \
-        ASSERT (*argmatch_backup_xvalue ("test",                        \
-                                         argmatch_backup_argument (&val)) \
+        ASSERT (*argmatch_backup_value ("test", Input) == val);         \
+        ASSERT (*argmatch_backup_value ("test",                         \
+                                        argmatch_backup_argument (&val)) \
                 == val);                                                \
       }                                                                 \
   } while (0)
