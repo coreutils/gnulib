@@ -20,6 +20,8 @@
 /* Specification.  */
 #include <string.h>
 
+#include <stdlib.h>
+
 #include "mbuiter.h"
 
 char *

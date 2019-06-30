@@ -22,6 +22,7 @@
 #include <threads.h>
 
 #include <errno.h>
+#include <stdlib.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
 /* Use Windows threads.  */
