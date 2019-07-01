@@ -91,6 +91,10 @@
    of SOCKETs, not bit masks of FDs.  */
 # undef select
 
+/* Here we need timeval from Windows since this is what the select() function
+   from Windows requires.  */
+# undef timeval
+
 /* Avoid warnings from gcc -Wcast-function-type.  */
 # define GetProcAddress \
    (void *) GetProcAddress
