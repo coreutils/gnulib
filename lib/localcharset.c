@@ -787,7 +787,12 @@ locale_charset (void)
         encoding is the best bet.  */
       sprintf (buf, "CP%u", GetACP ());
     }
-  codeset = buf;
+  /* For a locale name such as "French_France.65001", in Windows 10,
+     setlocale now returns "French_France.utf8" instead.  */
+  if (strcmp (buf + 2, "65001") == 0 || strcmp (buf + 2, "utf8") == 0)
+    codeset = "UTF-8";
+  else
+    codeset = buf;
 
 # elif defined OS2
 
