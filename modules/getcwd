@@ -13,6 +13,7 @@ Depends-on:
 unistd
 extensions
 pathmax         [test $REPLACE_GETCWD = 1]
+msvc-inval      [test $REPLACE_GETCWD = 1]
 mempcpy         [test $REPLACE_GETCWD = 1]
 d-ino           [test $REPLACE_GETCWD = 1]
 memmove         [test $REPLACE_GETCWD = 1]

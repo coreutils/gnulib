@@ -23,9 +23,12 @@ instead of @code{size_t} for the size argument when using non-standard
 headers, and the declaration is missing from @code{<unistd.h>}:
 mingw, MSVC 14.
 @item
+On some platforms, @code{getcwd (buf, 0)} crashes:
+MSVC 14.
+@item
 On some platforms, @code{getcwd (buf, 0)} fails with @code{ERANGE}
 instead of the required @code{EINVAL}:
-mingw, MSVC 14.
+mingw.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{getcwd}:
