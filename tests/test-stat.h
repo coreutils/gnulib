@@ -32,12 +32,18 @@ test_stat_func (int (*func) (char const *, struct stat *), bool print)
   ASSERT (cwd);
   ASSERT (func (".", &st1) == 0);
   ASSERT (func ("./", &st2) == 0);
+#if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
   ASSERT (SAME_INODE (st1, st2));
+#endif
   ASSERT (func (cwd, &st2) == 0);
+#if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
   ASSERT (SAME_INODE (st1, st2));
+#endif
   ASSERT (func ("/", &st1) == 0);
   ASSERT (func ("///", &st2) == 0);
+#if !(defined _WIN32 && !defined __CYGWIN__ && !_GL_WINDOWS_STAT_INODES)
   ASSERT (SAME_INODE (st1, st2));
+#endif
 
   errno = 0;
   ASSERT (func ("", &st1) == -1);
