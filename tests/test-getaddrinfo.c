@@ -39,6 +39,8 @@ SIGNATURE_CHECK (getaddrinfo, int, (char const *, char const *,
 #include <stdio.h>
 #include <string.h>
 
+#include "sockets.h"
+
 /* Whether to print debugging messages.  */
 #define ENABLE_DEBUGGING 0
 
@@ -167,6 +169,8 @@ simple (char const *host, char const *service)
 
 int main (void)
 {
+  (void) gl_sockets_startup (SOCKETS_1_1);
+
   return simple (HOST1, SERV1)
     + simple (HOST2, SERV2)
     + simple (HOST3, SERV3)

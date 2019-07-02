@@ -3,6 +3,7 @@ tests/signature.h
 tests/test-getaddrinfo.c
 
 Depends-on:
+sockets
 inet_ntop
 strerror
 
