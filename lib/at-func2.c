@@ -176,6 +176,13 @@ at_func2 (int fd1, char const *file1,
         return func (file1, file2); /* Reduced to case 5.  */
     }
 
+  /* Catch invalid arguments before changing directories.  */
+  if (file1[0] == '\0' || file2[0] == '\0')
+    {
+      errno = ENOENT;
+      return -1;
+    }
+
   /* Cases 3, 7, 12, 13, 15a, 15b remain.  With all reductions in
      place, it is time to start changing directories.  */
 
