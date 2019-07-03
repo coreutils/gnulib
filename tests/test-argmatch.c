@@ -25,6 +25,8 @@
 
 #include "macros.h"
 
+# define N_(Msgid) (Msgid)
+
 /* Some packages define ARGMATCH_DIE and ARGMATCH_DIE_DECL in <config.h>, and
    thus must link with a definition of that function.  Provide it here.  */
 #ifdef ARGMATCH_DIE_DECL

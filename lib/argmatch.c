@@ -29,6 +29,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define _(msgid) gettext (msgid)
+
 #include "error.h"
 #include "quotearg.h"
 #include "getprogname.h"

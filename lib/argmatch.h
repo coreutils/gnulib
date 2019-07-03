@@ -32,9 +32,6 @@
 # include "quote.h"
 # include "verify.h"
 
-# define _(Msgid)  gettext (Msgid)
-# define N_(Msgid) (Msgid)
-
 # ifdef  __cplusplus
 extern "C" {
 # endif
@@ -223,7 +220,7 @@ char const *argmatch_to_argument (void const *value,
                                                                         \
     /* Try to put synonyms on the same line.  Synonyms are expected     \
        to follow each other. */                                         \
-    fputs (_("Valid arguments are:"), out);                             \
+    fputs (gettext ("Valid arguments are:"), out);                      \
     for (int i = 0; g->args[i].arg; i++)                                \
       if (i == 0                                                        \
           || memcmp (&g->args[i-1].val, &g->args[i].val, size))         \
@@ -284,7 +281,7 @@ char const *argmatch_to_argument (void const *value,
        large width. */                                                  \
     const int screen_width = getenv ("HELP2MAN") ? INT_MAX : 80;        \
     if (g->doc_pre)                                                     \
-      fprintf (out, "%s\n", _(g->doc_pre));                             \
+      fprintf (out, "%s\n", gettext (g->doc_pre));                      \
     int doc_col = argmatch_##Name##_doc_col ();                         \
     for (int i = 0; g->docs[i].arg; ++i)                                \
       {                                                                 \
@@ -321,10 +318,11 @@ char const *argmatch_to_argument (void const *value,
             fprintf (out, "\n");                                        \
             col = 0;                                                    \
           }                                                             \
-        fprintf (out, "%*s%s\n", doc_col - col, "", _(g->docs[i].doc)); \
+        fprintf (out, "%*s%s\n",                                        \
+                 doc_col - col, "", gettext (g->docs[i].doc));          \
       }                                                                 \
     if (g->doc_post)                                                    \
-      fprintf (out, "%s\n", _(g->doc_post));                            \
+      fprintf (out, "%s\n", gettext (g->doc_post));                     \
   }
 
 # ifdef  __cplusplus
