@@ -87,6 +87,13 @@ areadlink_with_size (char const *file, size_t size)
       if (link_length < buf_size)
         {
           buffer[link_length] = 0;
+          /* Shrink BUFFER before returning it.  */
+          if (link_length + 1 < buf_size)
+            {
+              char *shrinked_buffer = realloc (buffer, link_length + 1);
+              if (shrinked_buffer != NULL)
+                buffer = shrinked_buffer;
+            }
           return buffer;
         }
 
