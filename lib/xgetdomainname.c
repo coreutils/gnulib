@@ -73,5 +73,16 @@ xgetdomainname (void)
       domainname = xrealloc (domainname, size);
     }
 
+  /* Shrink DOMAINNAME before returning it.  */
+  {
+    size_t actual_size = strlen (domainname) + 1;
+    if (actual_size < size)
+      {
+        char *shrinked_domainname = realloc (domainname, actual_size);
+        if (shrinked_domainname != NULL)
+          domainname = shrinked_domainname;
+      }
+  }
+
   return domainname;
 }
