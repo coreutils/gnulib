@@ -443,7 +443,7 @@ __getcwd (char *buf, size_t size)
 
   if (size == 0)
     /* Ensure that the buffer is only as large as necessary.  */
-    buf = realloc (dir, used);
+    buf = (used < allocated ? realloc (dir, used) : dir);
 
   if (buf == NULL)
     /* Either buf was NULL all along, or 'realloc' failed but
