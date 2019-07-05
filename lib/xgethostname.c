@@ -70,5 +70,16 @@ xgethostname (void)
         }
     }
 
+  /* Shrink HOSTNAME before returning it.  */
+  {
+    size_t actual_size = strlen (hostname) + 1;
+    if (actual_size < size)
+      {
+        char *shrinked_hostname = realloc (hostname, actual_size);
+        if (shrinked_hostname != NULL)
+          hostname = shrinked_hostname;
+      }
+  }
+
   return hostname;
 }
