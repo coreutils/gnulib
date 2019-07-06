@@ -16,9 +16,6 @@ Mac OS X 10.3, OpenBSD 3.8, Minix 3.1.8, mingw, MSVC 14, Android 4.4.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is not declared on some platforms:
-IRIX 5.3.
-@item
 This function reports success for invalid file descriptors on some platforms:
 OpenBSD, Cygwin 1.7.9, musl libc.
 @end itemize

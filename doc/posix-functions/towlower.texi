@@ -9,9 +9,6 @@ Gnulib module: wctype-h
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-IRIX 5.3.
-@item
 This function returns values of which the upper 16 bits are incorrect
 on some platforms:
 mingw.

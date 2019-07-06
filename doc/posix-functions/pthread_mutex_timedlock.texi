@@ -12,7 +12,7 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Mac OS X 10.5, FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 9, Cygwin, mingw, MSVC 14, Android 4.4.
 But the provided replacement is just a dummy on some of these platforms:
-Minix 3.1.8, HP-UX 11, IRIX 5.3, mingw, MSVC 14.
+Minix 3.1.8, HP-UX 11, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

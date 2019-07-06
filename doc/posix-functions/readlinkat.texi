@@ -34,7 +34,7 @@ directories, Cygwin sets @code{errno} to @code{ENOENT} or @code{EIO} instead of
 @code{readlink}.
 @item
 When @code{readlink} is called on a file that is not a symbolic link:
-Irix may set @code{errno} to @code{ENXIO} instead of @code{EINVAL}.  Cygwin
+IRIX may set @code{errno} to @code{ENXIO} instead of @code{EINVAL}.  Cygwin
 may set errno to @code{EACCES} instead of @code{EINVAL}.
 @item
 Symlink contents do not always have a trailing null byte, and there is

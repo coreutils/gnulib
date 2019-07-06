@@ -22,5 +22,5 @@ Minix 3.1.8, Cygwin, mingw, MSVC 14.
 This function interprets the @code{ss_sp} member of @code{stack_t} as
 the upper bound instead of the lower bound of the alternate stack on
 some platforms:
-Irix 6.5
+IRIX 6.5
 @end itemize

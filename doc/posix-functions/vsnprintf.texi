@@ -9,9 +9,6 @@ Gnulib module: vsnprintf or vsnprintf-posix
 Portability problems fixed by either Gnulib module @code{vsnprintf} or @code{vsnprintf-posix}:
 @itemize
 @item
-This function is missing on some platforms:
-IRIX 5.3.
-@item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, MSVC 14.

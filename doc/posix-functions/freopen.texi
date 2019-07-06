@@ -33,7 +33,7 @@ OpenBSD 4.9, AIX 7.1, HP-UX 11.23, IRIX 6.5, Solaris 10, mingw, MSVC 14.
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a
 directory, on some platforms:
-HP-UX 11.00, Solaris 9, Irix 5.3.
+HP-UX 11.00, Solaris 9.
 @item
 Applications should not assume that @code{fileno(f)} will be the same
 before and after a call to @code{freopen(name,mode,f)}.  However, the

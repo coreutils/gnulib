@@ -14,7 +14,4 @@ mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-This header file does not defined @code{nfds_t} on some platforms:
-IRIX 5.3.
 @end itemize

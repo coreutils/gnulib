@@ -11,9 +11,6 @@ Portability problems fixed by Gnulib:
 This header file cannot be included on some platforms:
 Linux uClibc built without wide character support.
 @item
-The type @code{wint_t} and macro @code{WEOF} are missing on some platforms:
-IRIX 5.3.
-@item
 The type @code{wint_t} is incorrect on some platforms:
 MSVC 14.
 

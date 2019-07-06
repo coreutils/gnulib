@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{snprintf} or @code{snpr
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, MSVC 14.
+MSVC 14.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:

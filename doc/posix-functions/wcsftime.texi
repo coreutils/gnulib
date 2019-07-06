@@ -17,7 +17,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OpenBSD 3.8, Minix 3.1.8, IRIX 5.3, Cygwin 1.5.x.
+OpenBSD 3.8, Minix 3.1.8, Cygwin 1.5.x.
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.

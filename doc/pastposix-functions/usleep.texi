@@ -12,11 +12,6 @@ Portability problems fixed by Gnulib:
 On some systems, @code{usleep} rejects attempts to sleep longer than 1
 second, as allowed by POSIX:
 mingw.
-@item
-This function is missing on some platforms.  However, the replacement
-is designed to be lightweight, and may round to the nearest second;
-use @code{select} or @code{nanosleep} if better resolution is needed:
-IRIX 5.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

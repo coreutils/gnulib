@@ -175,6 +175,8 @@ The following platforms were supported in the past, but are no longer
 supported:
 @itemize
 @item
+IRIX 6.4 and older.
+@item
 OSF/1 5.1.
 @item
 Solaris 8 and older.
