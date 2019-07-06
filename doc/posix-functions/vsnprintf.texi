@@ -13,10 +13,6 @@ This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
 NetBSD 3.0, mingw, MSVC 14.
 @item
-This function overwrites memory even when a size argument of 1 is passed on some
-platforms:
-Linux libc5.
-@item
 This function does not return a byte count as specified in C99 on some
 platforms:
 HP-UX 11, IRIX 6.5, Solaris 9, mingw, MSVC 14.

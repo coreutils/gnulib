@@ -19,10 +19,6 @@ NetBSD 3.0, mingw.
 This function does not return a byte count as specified in C99 on some
 platforms:
 HP-UX 11, IRIX 6.5, Solaris 9, mingw.
-@item
-This function overwrites memory even when a size argument of 1 is passed on some
-platforms:
-Linux libc5.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{snprintf-posix}:

@@ -12,9 +12,6 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 Minix 3.1.8.
 @item
-This function returns 0 for all possible arguments on some platforms:
-Linux libc5.
-@item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
 OS X 10.8.

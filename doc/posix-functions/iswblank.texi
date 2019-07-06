@@ -17,9 +17,6 @@ IRIX 6.5.30.
 @item
 This function is not declared (without @code{-D_GNU_SOURCE}) on some platforms:
 glibc 2.8.
-@item
-This function returns 0 for all possible arguments on some platforms:
-Linux libc5.
 @end itemize
 
 Portability problems not fixed by Gnulib:
