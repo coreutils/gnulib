@@ -12,10 +12,6 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
-This function reports failure when called with small arguments such as 1 ns
-on some platforms:
-AIX 4.3.2.
-@item
 This function mishandles large arguments when interrupted by a signal on some
 platforms:
 Linux 64-bit, Solaris 64-bit.

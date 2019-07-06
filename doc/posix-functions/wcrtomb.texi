@@ -16,7 +16,7 @@ This function produces wrong characters in the C locale on some platforms:
 Android 4.3.
 @item
 This function returns 0 when the first argument is NULL in some locales on some platforms:
-AIX 4.3, Solaris 11.3.
+Solaris 11.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:
