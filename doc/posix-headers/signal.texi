@@ -28,9 +28,6 @@ MSVC 14.
 The signal @code{SIGPIPE} is not defined on some platforms:
 mingw, MSVC 14.
 @item
-The macro @code{SA_NODEFER} is not defined on some platforms:
-Interix 3.5.
-@item
 The macros @code{SA_RESETHAND} and @code{SA_RESTART} are not defined
 on some platforms:
 NonStop.
