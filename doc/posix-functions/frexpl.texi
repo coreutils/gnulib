@@ -19,7 +19,7 @@ This function is not declared on some platforms:
 Mac OS X 10.3.
 @item
 This function does not work on finite numbers on some platforms:
-Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 14, BeOS.
+Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 14.
 @item
 This function does not work on denormalized numbers on some platforms:
 Mac OS X 10.5/i386.

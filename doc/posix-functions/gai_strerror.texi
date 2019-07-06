@@ -11,7 +11,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 HP-UX 11.11, IRIX 6.5, OSF/1 4.0, Solaris 7, Cygwin 1.5.x, Interix
-3.5, BeOS.
+3.5.
 @item
 This function is only available in @code{<ws2tcpip.h>} on some
 platforms:

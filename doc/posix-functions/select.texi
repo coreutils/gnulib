@@ -33,9 +33,6 @@ timeout parameter so that upon return from the function, it contains the
 amount of time not slept.  Other implementations leave the timeout parameter
 unmodified.
 @item
-On BeOS, @code{select} can only be called on descriptors created by the
-@code{socket} function, not on regular file descriptors.
-@item
 Under Windows, when passing a pipe, Gnulib's @code{select} replacement might
 return 0 even before the timeout has passed.  Programs using it with pipes can
 thus busy wait.

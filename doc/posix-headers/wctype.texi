@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This header file is missing on some platforms:
-HP-UX 11.00, BeOS.
+HP-UX 11.00.
 @item
 This header file is not self-contained on some platforms:
 Solaris 2.5, OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.

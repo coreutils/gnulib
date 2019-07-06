@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OS X 10.11, FreeBSD 6.4, Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 14, Interix 3.5, BeOS, Tandem/NSK.
+OS X 10.11, FreeBSD 6.4, Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 14, Interix 3.5, Tandem/NSK.
 @item
 This function fails with @code{ENOSYS} on some platforms:
 OpenBSD 4.9.

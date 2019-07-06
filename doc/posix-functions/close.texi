@@ -19,8 +19,4 @@ Instead, @code{closesocket} must be used.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On BeOS, @code{socket} and @code{accept} do not return file descriptors
-that can be closed by @code{close}.  Instead, @code{closesocket} must be
-used.
 @end itemize

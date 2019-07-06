@@ -17,8 +17,7 @@ This function does not support @code{F_DUPFD_CLOEXEC} on some
 platforms:
 glibc with Linux kernels before 2.6.24,
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 7.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, Interix 3.5,
-BeOS.
+IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11, Cygwin 1.7.1, Interix 3.5.
 Note that the gnulib replacement code is functional but not atomic.
 
 @item

@@ -14,7 +14,7 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 14, BeOS.
+Minix 3.1.8, IRIX 5.3, Solaris 2.4, mingw, MSVC 14.
 @item
 This function is not implemented on some platforms:
 Mac OS X 10.11.

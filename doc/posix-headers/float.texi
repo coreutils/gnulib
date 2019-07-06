@@ -13,7 +13,7 @@ platforms:
 glibc 2.7 on Linux/SPARC64.
 @item
 The values of @code{LDBL_*} macros are incorrect on some platforms:
-On OpenBSD 4.0, MirBSD 10, and BeOS, they are the same as the values of the
+On OpenBSD 4.0 and MirBSD 10, they are the same as the values of the
 @code{DBL_*} macros, although @samp{long double} is a larger type than
 @samp{double}.
 On FreeBSD/x86 6.4, they represent the incorrect 53-bit precision assumptions

@@ -19,7 +19,7 @@ instead.
 @item
 This function is missing on some platforms:
 NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, Interix
-3.5, BeOS.
+3.5.
 @item
 This function exists, but does not support wide arguments on some
 platforms: Cygwin 1.5.x.

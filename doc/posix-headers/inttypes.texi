@@ -17,7 +17,7 @@ The PRI* macros are defined to non-string values on AIX 4.3.3.
 @item
 The declarations of @code{imaxabs} and @code{imaxdiv} are missing on some
 platforms:
-NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, BeOS.
+NetBSD 3.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
 @item
 The declarations of @code{strtoimax} and @code{strtoumax} are missing on some
 platforms:

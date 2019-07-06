@@ -21,8 +21,4 @@ instead.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On BeOS, the descriptors returned by the @code{socket} function cannot be used
-in calls to @code{read}, @code{write}, and @code{close}; you have to use
-@code{recv}, @code{send}, @code{closesocket} in these cases instead.
 @end itemize

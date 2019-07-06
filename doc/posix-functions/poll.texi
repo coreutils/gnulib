@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-mingw, MSVC 14, BeOS, HP NonStop.
+mingw, MSVC 14, HP NonStop.
 @item
 This function doesn't work on special files like @file{/dev/null} and ttys like
 @file{/dev/tty} on some platforms:
@@ -19,10 +19,6 @@ Mac OS X 10.4.0, AIX 5.3.
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-Under BeOS, Gnulib's @code{poll} replacement can only be called on descriptors
-created by the @code{socket} function, not on regular file descriptors.
-
 @item
 Under Windows, when passing a pipe, Gnulib's @code{poll} replacement might
 return 0 even before the timeout has passed.  Programs using it with pipes can

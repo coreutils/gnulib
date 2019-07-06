@@ -14,11 +14,11 @@ IRIX 5.3, OSF/1 4.0, Solaris 2.5.1.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
-NetBSD 3.0, mingw, MSVC 14, BeOS.
+NetBSD 3.0, mingw, MSVC 14.
 @item
 This function overwrites memory even when a size argument of 1 is passed on some
 platforms:
-Linux libc5, BeOS.
+Linux libc5.
 @item
 This function does not return a byte count as specified in C99 on some
 platforms:
@@ -30,10 +30,10 @@ Portability problems fixed by Gnulib module @code{vsnprintf-posix}:
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
-AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, MSVC 14, BeOS.
+AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, MSVC 14.
 @item
 printf of @samp{long double} numbers is unsupported on some platforms:
-mingw, MSVC 14, BeOS.
+mingw, MSVC 14.
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
@@ -42,11 +42,11 @@ AIX 5.2, OSF/1 5.1, Solaris 11.4, mingw, MSVC 14.
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14, BeOS.
+IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
-Cygwin 1.5.x, mingw, MSVC 14, BeOS.
+Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{ls} directive on some platforms:
 OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Haiku.
@@ -72,7 +72,7 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-AIX 7.1, Solaris 10/x86, mingw, MSVC 14, BeOS.
+AIX 7.1, Solaris 10/x86, mingw, MSVC 14.
 @item
 This function mishandles large floating point precisions
 (for example, formatting 1.0 with @samp{"%.511f"})

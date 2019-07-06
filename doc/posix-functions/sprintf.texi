@@ -11,10 +11,10 @@ Portability problems fixed by Gnulib:
 @item
 This function does not support size specifiers as in C99 (@code{hh}, @code{ll},
 @code{j}, @code{t}, @code{z}) on some platforms:
-AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, MSVC 14, BeOS.
+AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9, Cygwin 1.5.24, mingw, MSVC 14.
 @item
 printf of @samp{long double} numbers is unsupported on some platforms:
-mingw, MSVC 14, BeOS.
+mingw, MSVC 14.
 @item
 printf @code{"%f"}, @code{"%e"}, @code{"%g"} of Infinity and NaN yields an
 incorrect result on some platforms:
@@ -23,11 +23,11 @@ AIX 5.2, OSF/1 5.1, Solaris 11.4, mingw, MSVC 14.
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
 glibc-2.3.6, Mac OS X 10.5, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14, BeOS.
+IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{F} directive on some platforms:
 NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, OSF/1 5.1, Solaris 9,
-Cygwin 1.5.x, mingw, MSVC 14, BeOS.
+Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{n} directive on some platforms:
 MSVC 14.
@@ -41,7 +41,7 @@ Solaris 11.4.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
-NetBSD 3.0, mingw, MSVC 14, BeOS.
+NetBSD 3.0, mingw, MSVC 14.
 @item
 This function doesn't support the @code{'} flag on some platforms:
 NetBSD 3.0, Cygwin 1.5.24, mingw, MSVC 14.
@@ -60,7 +60,7 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, OSF/1 5.1, Solaris 11
 @item
 This function does not support precisions larger than 512 or 1024 in integer,
 floating-point and pointer output on some platforms:
-AIX 7.1, Solaris 10/x86, mingw, MSVC 14, BeOS.
+AIX 7.1, Solaris 10/x86, mingw, MSVC 14.
 @item
 This function mishandles large floating point precisions
 (for example, formatting 1.0 with @samp{"%.511f"})

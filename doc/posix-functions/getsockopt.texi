@@ -22,14 +22,8 @@ considers it as a pointer to a 32-bit wide @code{unsigned int} entity.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on some platforms:
-BeOS.
-@item
 Some platforms don't have a @code{socklen_t} type; in this case this function's
 fifth argument type is @samp{int *}.
 @item
 Many socket options are not available on all platforms.
-@item
-BeOS has the @code{setsockopt} function, but not the @code{getsockopt}
-function.
 @end itemize
