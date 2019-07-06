@@ -61,7 +61,8 @@ areadlink_with_size (char const *file, size_t size)
                           : INITIAL_LIMIT_BOUND);
 
   /* The initial buffer size for the link value.  */
-  size_t buf_size = size < initial_limit ? size + 1 : initial_limit;
+  size_t buf_size = (size == 0 ? 128
+                     : size < initial_limit ? size + 1 : initial_limit);
 
   while (1)
     {
