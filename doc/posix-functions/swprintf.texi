@@ -18,7 +18,7 @@ argument of @code{strerror(errno)} (or a version of @code{strerror_r})
 instead.
 @item
 This function is missing on some platforms:
-NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Interix 3.5.
+NetBSD 3.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x.
 @item
 This function has a different signature on some platforms:
 MSVC 9.
