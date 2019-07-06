@@ -12,7 +12,7 @@ This header file is missing on some platforms:
 Minix 3.1.8, mingw, MSVC 14.
 @item
 The constant @code{CODESET} is not defined on some platforms:
-glibc 2.0.6, OpenBSD 3.8.
+OpenBSD 3.8.
 @item
 The constants @code{ALTMON_1} to @code{ALTMON_12} are not defined on some
 platforms:
