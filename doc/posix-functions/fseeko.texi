@@ -24,8 +24,4 @@ correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
 
 Portability problems not fixed by Gnulib:
 @itemize
-@item
-On platforms where @code{off_t} is a 64-bit type, but @code{fseeko} is
-not present, stream operations on files larger than 2 GB silently do
-the wrong thing.  This affects BSD/OS, which is mostly obsolete.
 @end itemize

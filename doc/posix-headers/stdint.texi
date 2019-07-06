@@ -31,7 +31,7 @@ Solaris 9 with GCC 4.5 or newer.
 @item
 The macros @code{WCHAR_MIN} and @code{WCHAR_MAX} are not defined in
 @code{<stdint.h>} (only in @code{<wchar.h>}) on some platforms:
-Dragonfly, BSDI.
+Dragonfly.
 @item
 On some hosts that predate C++11, when using C++ one must define
 @code{__STDC_CONSTANT_MACROS} to make visible the definitions of

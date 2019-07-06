@@ -12,7 +12,7 @@ This header file is missing on some platforms:
 HP-UX 11.00.
 @item
 This header file is not self-contained on some platforms:
-OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
+OSF/1 with Desktop Toolkit C.
 @item
 The type @code{wint_t} and macro @code{WEOF} are missing on some platforms:
 IRIX 5.3.
