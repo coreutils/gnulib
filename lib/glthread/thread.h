@@ -15,8 +15,7 @@
    along with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
-   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
-   gthr-win32.h.  */
+   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-win32.h.  */
 
 /* This file contains primitives for creating and controlling threads.
 
@@ -75,7 +74,7 @@
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK || USE_SOLARIS_THREADS_WEAK)
+# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -277,60 +276,6 @@ typedef pth_t gl_thread_t;
 
 /* ========================================================================= */
 
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-# include <thread.h>
-# include <synch.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_SOLARIS_THREADS_WEAK
-
-/* Use weak references to the old Solaris threads library.  */
-
-#  pragma weak thr_create
-#  pragma weak thr_join
-#  pragma weak thr_self
-#  pragma weak thr_exit
-
-#  pragma weak thr_suspend
-#  define thread_in_use() (thr_suspend != NULL || c11_threads_in_use ())
-
-# else
-
-#  define thread_in_use() 1
-
-# endif
-
-/* -------------------------- gl_thread_t datatype -------------------------- */
-
-typedef thread_t gl_thread_t;
-# define glthread_create(THREADP, FUNC, ARG) \
-    (thread_in_use () ? thr_create (NULL, 0, FUNC, ARG, 0, THREADP) : 0)
-# define glthread_sigmask(HOW, SET, OSET) \
-    (thread_in_use () ? sigprocmask (HOW, SET, OSET) : 0)
-# define glthread_join(THREAD, RETVALP) \
-    (thread_in_use () ? thr_join (THREAD, NULL, RETVALP) : 0)
-# define gl_thread_self() \
-    (thread_in_use () ? (void *) thr_self () : NULL)
-# define gl_thread_self_pointer() \
-    gl_thread_self ()
-# define gl_thread_exit(RETVAL) \
-    (thread_in_use () ? thr_exit (RETVAL) : 0)
-# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -367,7 +312,7 @@ typedef glwthread_thread_t gl_thread_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

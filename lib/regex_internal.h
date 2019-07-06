@@ -53,8 +53,6 @@
 #  define lock_define(name) pthread_mutex_t name;
 # elif USE_PTH_THREADS
 #  define lock_define(name) pth_mutex_t name;
-# elif USE_SOLARIS_THREADS
-#  define lock_define(name) mutex_t name;
 # elif USE_WINDOWS_THREADS
 #  define lock_define(name) gl_lock_t name;
 # else

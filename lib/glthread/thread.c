@@ -15,8 +15,7 @@
    along with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
-   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
-   gthr-win32.h.  */
+   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-win32.h.  */
 
 #include <config.h>
 

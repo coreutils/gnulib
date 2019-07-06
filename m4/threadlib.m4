@@ -1,4 +1,4 @@
-# threadlib.m4 serial 18
+# threadlib.m4 serial 19
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,8 +16,8 @@ dnl (it must be placed before the invocation of gl_THREADLIB_EARLY!), then the
 dnl default is 'no', otherwise it is system dependent. In both cases, the user
 dnl can change the choice through the options --enable-threads=choice or
 dnl --disable-threads.
-dnl Defines at most one of the macros USE_POSIX_THREADS, USE_SOLARIS_THREADS,
-dnl USE_PTH_THREADS, USE_WINDOWS_THREADS
+dnl Defines at most one of the macros USE_POSIX_THREADS, USE_PTH_THREADS,
+dnl USE_WINDOWS_THREADS.
 dnl Sets the variables LIBTHREAD and LTLIBTHREAD to the linker options for use
 dnl in a Makefile (LIBTHREAD for use without libtool, LTLIBTHREAD for use with
 dnl libtool).
@@ -52,7 +52,7 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
   m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=])
   AC_ARG_ENABLE([threads],
-AC_HELP_STRING([--enable-threads={posix|solaris|pth|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AC_HELP_STRING([--enable-threads={posix|pth|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
 AC_HELP_STRING([--disable-threads], [build without multithread safety])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
@@ -250,37 +250,6 @@ int main ()
         fi
       fi
     fi
-    if test -z "$gl_have_pthread"; then
-      if test "$gl_use_threads" = yes || test "$gl_use_threads" = solaris; then
-        gl_have_solaristhread=
-        gl_save_LIBS="$LIBS"
-        LIBS="$LIBS -lthread"
-        AC_LINK_IFELSE(
-          [AC_LANG_PROGRAM(
-             [[
-#include <thread.h>
-#include <synch.h>
-             ]],
-             [[thr_self();]])],
-          [gl_have_solaristhread=yes])
-        LIBS="$gl_save_LIBS"
-        if test -n "$gl_have_solaristhread"; then
-          gl_threads_api=solaris
-          LIBTHREAD=-lthread
-          LTLIBTHREAD=-lthread
-          LIBMULTITHREAD="$LIBTHREAD"
-          LTLIBMULTITHREAD="$LTLIBTHREAD"
-          AC_DEFINE([USE_SOLARIS_THREADS], [1],
-            [Define if the old Solaris multithreading library can be used.])
-          if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
-            AC_DEFINE([USE_SOLARIS_THREADS_WEAK], [1],
-              [Define if references to the old Solaris multithreading library should be made weak.])
-            LIBTHREAD=
-            LTLIBTHREAD=
-          fi
-        fi
-      fi
-    fi
     if test "$gl_use_threads" = pth; then
       gl_save_CPPFLAGS="$CPPFLAGS"
       AC_LIB_LINKFLAGS([pth])
@@ -394,7 +363,6 @@ dnl
 dnl Mac OS X 10.[123]  posix      -lpthread       Y      OK
 dnl
 dnl Solaris 7,8,9      posix      -lpthread       Y      Sol 7,8: 0.0; Sol 9: OK
-dnl                    solaris    -lthread        Y      Sol 7,8: 0.0; Sol 9: OK
 dnl
 dnl HP-UX 11           posix      -lpthread       N (cc) OK
 dnl                                               Y (gcc)

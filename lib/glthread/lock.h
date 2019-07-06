@@ -15,8 +15,7 @@
    along with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
-   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
-   gthr-win32.h.  */
+   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-win32.h.  */
 
 /* This file contains locking primitives for use with a given thread library.
    It does not contain primitives for creating threads or for other
@@ -82,7 +81,7 @@
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK || USE_SOLARIS_THREADS_WEAK)
+# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -556,135 +555,6 @@ extern int glthread_once_singlethreaded (pth_once_t *once_control);
 
 /* ========================================================================= */
 
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-# include <thread.h>
-# include <synch.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_SOLARIS_THREADS_WEAK
-
-/* Use weak references to the old Solaris threads library.  */
-
-#  pragma weak mutex_init
-#  pragma weak mutex_lock
-#  pragma weak mutex_unlock
-#  pragma weak mutex_destroy
-#  pragma weak rwlock_init
-#  pragma weak rw_rdlock
-#  pragma weak rw_wrlock
-#  pragma weak rw_unlock
-#  pragma weak rwlock_destroy
-#  pragma weak thr_self
-
-#  pragma weak thr_suspend
-#  define thread_in_use() (thr_suspend != NULL || c11_threads_in_use ())
-
-# else
-
-#  define thread_in_use() 1
-
-# endif
-
-/* -------------------------- gl_lock_t datatype -------------------------- */
-
-typedef mutex_t gl_lock_t;
-# define gl_lock_define(STORAGECLASS, NAME) \
-    STORAGECLASS mutex_t NAME;
-# define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS mutex_t NAME = gl_lock_initializer;
-# define gl_lock_initializer \
-    DEFAULTMUTEX
-# define glthread_lock_init(LOCK) \
-    (thread_in_use () ? mutex_init (LOCK, USYNC_THREAD, NULL) : 0)
-# define glthread_lock_lock(LOCK) \
-    (thread_in_use () ? mutex_lock (LOCK) : 0)
-# define glthread_lock_unlock(LOCK) \
-    (thread_in_use () ? mutex_unlock (LOCK) : 0)
-# define glthread_lock_destroy(LOCK) \
-    (thread_in_use () ? mutex_destroy (LOCK) : 0)
-
-/* ------------------------- gl_rwlock_t datatype ------------------------- */
-
-typedef rwlock_t gl_rwlock_t;
-# define gl_rwlock_define(STORAGECLASS, NAME) \
-    STORAGECLASS rwlock_t NAME;
-# define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS rwlock_t NAME = gl_rwlock_initializer;
-# define gl_rwlock_initializer \
-    DEFAULTRWLOCK
-# define glthread_rwlock_init(LOCK) \
-    (thread_in_use () ? rwlock_init (LOCK, USYNC_THREAD, NULL) : 0)
-# define glthread_rwlock_rdlock(LOCK) \
-    (thread_in_use () ? rw_rdlock (LOCK) : 0)
-# define glthread_rwlock_wrlock(LOCK) \
-    (thread_in_use () ? rw_wrlock (LOCK) : 0)
-# define glthread_rwlock_unlock(LOCK) \
-    (thread_in_use () ? rw_unlock (LOCK) : 0)
-# define glthread_rwlock_destroy(LOCK) \
-    (thread_in_use () ? rwlock_destroy (LOCK) : 0)
-
-/* --------------------- gl_recursive_lock_t datatype --------------------- */
-
-/* Old Solaris threads did not have recursive locks.
-   We have to implement them ourselves.  */
-
-typedef struct
-        {
-          mutex_t mutex;
-          thread_t owner;
-          unsigned long depth;
-        }
-        gl_recursive_lock_t;
-# define gl_recursive_lock_define(STORAGECLASS, NAME) \
-    STORAGECLASS gl_recursive_lock_t NAME;
-# define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_recursive_lock_t NAME = gl_recursive_lock_initializer;
-# define gl_recursive_lock_initializer \
-    { DEFAULTMUTEX, (thread_t) 0, 0 }
-# define glthread_recursive_lock_init(LOCK) \
-    (thread_in_use () ? glthread_recursive_lock_init_multithreaded (LOCK) : 0)
-# define glthread_recursive_lock_lock(LOCK) \
-    (thread_in_use () ? glthread_recursive_lock_lock_multithreaded (LOCK) : 0)
-# define glthread_recursive_lock_unlock(LOCK) \
-    (thread_in_use () ? glthread_recursive_lock_unlock_multithreaded (LOCK) : 0)
-# define glthread_recursive_lock_destroy(LOCK) \
-    (thread_in_use () ? glthread_recursive_lock_destroy_multithreaded (LOCK) : 0)
-extern int glthread_recursive_lock_init_multithreaded (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_unlock_multithreaded (gl_recursive_lock_t *lock);
-extern int glthread_recursive_lock_destroy_multithreaded (gl_recursive_lock_t *lock);
-
-/* -------------------------- gl_once_t datatype -------------------------- */
-
-typedef struct
-        {
-          volatile int inited;
-          mutex_t mutex;
-        }
-        gl_once_t;
-# define gl_once_define(STORAGECLASS, NAME) \
-    STORAGECLASS gl_once_t NAME = { 0, DEFAULTMUTEX };
-# define glthread_once(ONCE_CONTROL, INITFUNCTION) \
-    (thread_in_use ()                                                          \
-     ? glthread_once_multithreaded (ONCE_CONTROL, INITFUNCTION)                \
-     : (glthread_once_singlethreaded (ONCE_CONTROL) ? (INITFUNCTION (), 0) : 0))
-extern int glthread_once_multithreaded (gl_once_t *once_control, void (*initfunction) (void));
-extern int glthread_once_singlethreaded (gl_once_t *once_control);
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -807,7 +677,7 @@ typedef glwthread_once_t gl_once_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

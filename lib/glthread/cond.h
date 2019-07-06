@@ -56,7 +56,7 @@
 #include "glthread/lock.h"
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK || USE_SOLARIS_THREADS_WEAK)
+# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -227,67 +227,6 @@ extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lo
 
 /* ========================================================================= */
 
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-# include <thread.h>
-# include <synch.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_SOLARIS_THREADS_WEAK
-
-/* Use weak references to the old Solaris threads library.  */
-
-#  pragma weak cond_init
-#  pragma weak cond_wait
-#  pragma weak cond_timedwait
-#  pragma weak cond_signal
-#  pragma weak cond_broadcast
-#  pragma weak cond_destroy
-#  pragma weak thr_suspend
-#  define thread_in_use() (thr_suspend != NULL || c11_threads_in_use ())
-
-# else
-
-#  define thread_in_use() 1
-
-# endif
-
-/* -------------------------- gl_cond_t datatype -------------------------- */
-
-typedef cond_t gl_cond_t;
-# define gl_cond_define(STORAGECLASS, NAME) \
-    STORAGECLASS gl_cond_t NAME;
-# define gl_cond_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_cond_t NAME = gl_cond_initializer;
-# define gl_cond_initializer \
-    DEFAULTCV
-# define glthread_cond_init(COND) \
-    (pthread_in_use () ? cond_init (COND, USYNC_THREAD, NULL) : 0)
-# define glthread_cond_wait(COND, LOCK) \
-    (pthread_in_use () ? cond_wait (COND, LOCK) : 0)
-# define glthread_cond_timedwait(COND, LOCK, ABSTIME) \
-    (pthread_in_use () ? glthread_cond_timedwait_multithreaded (COND, LOCK, ABSTIME) : 0)
-# define glthread_cond_signal(COND) \
-    (pthread_in_use () ? cond_signal (COND) : 0)
-# define glthread_cond_broadcast(COND) \
-    (pthread_in_use () ? cond_broadcast (COND) : 0)
-# define glthread_cond_destroy(COND) \
-    (pthread_in_use () ? cond_destroy (COND) : 0)
-extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime);
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -334,7 +273,7 @@ typedef glwthread_cond_t gl_cond_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_SOLARIS_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
+#if USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
 
 /* Which tests to perform.
    Uncomment some of these, to verify that all tests crash if no locking

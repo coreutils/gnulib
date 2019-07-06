@@ -34,26 +34,6 @@
 
 /* ========================================================================= */
 
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-/* ------------------------- gl_tls_key_t datatype ------------------------- */
-
-void *
-glthread_tls_get_multithreaded (thread_key_t key)
-{
-  void *value;
-
-  if (thr_getspecific (key, &value) != 0)
-    abort ();
-  return value;
-}
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 #endif

@@ -15,8 +15,7 @@
    along with this program; if not, see <https://www.gnu.org/licenses/>.  */
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
-   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-solaris.h,
-   gthr-win32.h.  */
+   Based on GCC's gthr-posix.h, gthr-posix95.h, gthr-win32.h.  */
 
 #include <config.h>
 
@@ -670,117 +669,6 @@ glthread_once_singlethreaded (pth_once_t *once_control)
     {
       /* First time use of once_control.  Invert the marker.  */
       *once_control = ~ PTH_ONCE_INIT;
-      return 1;
-    }
-  else
-    return 0;
-}
-
-#endif
-
-/* ========================================================================= */
-
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-/* -------------------------- gl_lock_t datatype -------------------------- */
-
-/* ------------------------- gl_rwlock_t datatype ------------------------- */
-
-/* --------------------- gl_recursive_lock_t datatype --------------------- */
-
-int
-glthread_recursive_lock_init_multithreaded (gl_recursive_lock_t *lock)
-{
-  int err;
-
-  err = mutex_init (&lock->mutex, USYNC_THREAD, NULL);
-  if (err != 0)
-    return err;
-  lock->owner = (thread_t) 0;
-  lock->depth = 0;
-  return 0;
-}
-
-int
-glthread_recursive_lock_lock_multithreaded (gl_recursive_lock_t *lock)
-{
-  thread_t self = thr_self ();
-  if (lock->owner != self)
-    {
-      int err;
-
-      err = mutex_lock (&lock->mutex);
-      if (err != 0)
-        return err;
-      lock->owner = self;
-    }
-  if (++(lock->depth) == 0) /* wraparound? */
-    {
-      lock->depth--;
-      return EAGAIN;
-    }
-  return 0;
-}
-
-int
-glthread_recursive_lock_unlock_multithreaded (gl_recursive_lock_t *lock)
-{
-  if (lock->owner != thr_self ())
-    return EPERM;
-  if (lock->depth == 0)
-    return EINVAL;
-  if (--(lock->depth) == 0)
-    {
-      lock->owner = (thread_t) 0;
-      return mutex_unlock (&lock->mutex);
-    }
-  else
-    return 0;
-}
-
-int
-glthread_recursive_lock_destroy_multithreaded (gl_recursive_lock_t *lock)
-{
-  if (lock->owner != (thread_t) 0)
-    return EBUSY;
-  return mutex_destroy (&lock->mutex);
-}
-
-/* -------------------------- gl_once_t datatype -------------------------- */
-
-int
-glthread_once_multithreaded (gl_once_t *once_control, void (*initfunction) (void))
-{
-  if (!once_control->inited)
-    {
-      int err;
-
-      /* Use the mutex to guarantee that if another thread is already calling
-         the initfunction, this thread waits until it's finished.  */
-      err = mutex_lock (&once_control->mutex);
-      if (err != 0)
-        return err;
-      if (!once_control->inited)
-        {
-          once_control->inited = 1;
-          initfunction ();
-        }
-      return mutex_unlock (&once_control->mutex);
-    }
-  else
-    return 0;
-}
-
-int
-glthread_once_singlethreaded (gl_once_t *once_control)
-{
-  /* We know that gl_once_t contains an integer type.  */
-  if (!once_control->inited)
-    {
-      /* First time use of once_control.  Invert the marker.  */
-      once_control->inited = ~ 0;
       return 1;
     }
   else

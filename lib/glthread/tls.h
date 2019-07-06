@@ -47,7 +47,7 @@
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK || USE_SOLARIS_THREADS_WEAK)
+# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -179,58 +179,6 @@ typedef union
 
 /* ========================================================================= */
 
-#if USE_SOLARIS_THREADS
-
-/* Use the old Solaris threads library.  */
-
-# include <thread.h>
-
-# if USE_SOLARIS_THREADS_WEAK
-
-/* Use weak references to the old Solaris threads library.  */
-
-#  pragma weak thr_keycreate
-#  pragma weak thr_getspecific
-#  pragma weak thr_setspecific
-
-#  pragma weak thr_suspend
-#  define thread_in_use() (thr_suspend != NULL || c11_threads_in_use ())
-
-# else
-
-#  define thread_in_use() 1
-
-# endif
-
-/* ------------------------- gl_tls_key_t datatype ------------------------- */
-
-typedef union
-        {
-          void *singlethread_value;
-          thread_key_t key;
-        }
-        gl_tls_key_t;
-# define glthread_tls_key_init(KEY, DESTRUCTOR) \
-    (thread_in_use ()                          \
-     ? thr_keycreate (&(KEY)->key, DESTRUCTOR) \
-     : ((KEY)->singlethread_value = NULL, 0))
-# define gl_tls_get(NAME) \
-    (thread_in_use ()                \
-     ? glthread_tls_get_multithreaded ((NAME).key) \
-     : (NAME).singlethread_value)
-extern void *glthread_tls_get_multithreaded (thread_key_t key);
-# define glthread_tls_set(KEY, POINTER) \
-    (thread_in_use ()                              \
-     ? thr_setspecific ((KEY)->key, (POINTER))     \
-     : ((KEY)->singlethread_value = (POINTER), 0))
-# define glthread_tls_key_destroy(KEY) \
-    /* Unsupported.  */ \
-    0
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -254,7 +202,7 @@ typedef glwthread_tls_key_t gl_tls_key_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_SOLARIS_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 
