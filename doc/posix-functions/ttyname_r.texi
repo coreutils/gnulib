@@ -17,7 +17,7 @@ on some platforms:
 HP-UX 11.
 @item
 This function has an incompatible declaration on some platforms:
-Mac OS X 10.4, Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
+Solaris 11.4 (when @code{_POSIX_PTHREAD_SEMANTICS} is not defined).
 @item
 This function refuses to do anything when the output buffer is less than 128
 bytes large, on some platforms:

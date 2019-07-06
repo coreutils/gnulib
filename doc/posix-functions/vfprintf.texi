@@ -64,7 +64,7 @@ on some platforms:
 Solaris 10.
 @item
 This function can crash in out-of-memory conditions on some platforms:
-Mac OS X 10.3, FreeBSD 6.0, NetBSD 5.0.
+FreeBSD 6.0, NetBSD 5.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{stdio} or @code{vfprintf-posix}, together with module @code{nonblocking}:

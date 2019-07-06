@@ -14,7 +14,7 @@ mingw, MSVC 14, HP NonStop.
 @item
 This function doesn't work on special files like @file{/dev/null} and ttys like
 @file{/dev/tty} on some platforms:
-Mac OS X 10.4.0, AIX 5.3.
+AIX 5.3.
 @end itemize
 
 Portability problems not fixed by Gnulib:

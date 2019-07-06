@@ -172,6 +172,8 @@ The following platforms were supported in the past, but are no longer
 supported:
 @itemize
 @item
+Mac OS X 10.4 and older.
+@item
 AIX 4 and older.
 @item
 HP-UX 10.

@@ -15,11 +15,8 @@ FreeBSD 5.2.1, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, HP-UX 11, IRIX 6.5, Solaris
 This function is only defined as a macro with arguments on some platforms:
 MSVC 14.
 @item
-This function is not declared on some platforms:
-Mac OS X 10.3.
-@item
 This function does not work on finite numbers on some platforms:
-Mac OS X 10.4/PowerPC, AIX 5.1, MSVC 14.
+AIX 5.1, MSVC 14.
 @item
 This function does not work on denormalized numbers on some platforms:
 Mac OS X 10.5/i386.
