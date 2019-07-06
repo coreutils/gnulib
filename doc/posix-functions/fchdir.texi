@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Tandem/NSK, mingw, MSVC 14.
+mingw, MSVC 14.
 But the replacement function is not safe to be used in libraries and is not multithread-safe.
 @end itemize
 

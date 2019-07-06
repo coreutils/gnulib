@@ -11,9 +11,6 @@ Portability problems fixed by the Gnulib module @code{stdlib}:
 The macros @code{EXIT_SUCCESS} and @code{EXIT_FAILURE} are not defined on
 some platforms.
 @item
-The macro @code{EXIT_FAILURE} is incorrectly defined on Tandem/NSK.
-
-@item
 Some platforms provide a @code{NULL} macro that cannot be used in arbitrary
 expressions:
 NetBSD 5.0
