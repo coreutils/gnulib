@@ -74,7 +74,7 @@
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
+# if HAVE_THREADS_H && USE_POSIX_THREADS_WEAK
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -222,60 +222,6 @@ extern const gl_thread_t gl_null_thread;
 
 /* ========================================================================= */
 
-#if USE_PTH_THREADS
-
-/* Use the GNU Pth threads library.  */
-
-# include <pth.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_PTH_THREADS_WEAK
-
-/* Use weak references to the GNU Pth threads library.  */
-
-#  pragma weak pth_init
-#  pragma weak pth_spawn
-#  pragma weak pth_sigmask
-#  pragma weak pth_join
-#  pragma weak pth_self
-#  pragma weak pth_exit
-
-#  pragma weak pth_cancel
-#  define pth_in_use() (pth_cancel != NULL || c11_threads_in_use ())
-
-# else
-
-#  define pth_in_use() 1
-
-# endif
-/* -------------------------- gl_thread_t datatype -------------------------- */
-
-typedef pth_t gl_thread_t;
-# define glthread_create(THREADP, FUNC, ARG) \
-    (pth_in_use () ? (pth_init (), ((*(THREADP) = pth_spawn (NULL, FUNC, ARG)) ? 0 : errno)) : 0)
-# define glthread_sigmask(HOW, SET, OSET) \
-    (pth_in_use () ? (pth_init (), (pth_sigmask (HOW, SET, OSET) ? 0 : errno)) : 0)
-# define glthread_join(THREAD, RETVALP) \
-    (pth_in_use () ? (pth_init (), (pth_join (THREAD, RETVALP) ? 0 : errno)) : 0)
-# define gl_thread_self() \
-    (pth_in_use () ? (pth_init (), (void *) pth_self ()) : NULL)
-# define gl_thread_self_pointer() \
-    gl_thread_self ()
-# define gl_thread_exit(RETVAL) \
-    (pth_in_use () ? (pth_init (), pth_exit (RETVAL)) : 0)
-# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -312,7 +258,7 @@ typedef glwthread_thread_t gl_thread_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

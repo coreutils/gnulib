@@ -56,7 +56,7 @@
 #include "glthread/lock.h"
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
+# if HAVE_THREADS_H && USE_POSIX_THREADS_WEAK
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -168,65 +168,6 @@ typedef pthread_cond_t gl_cond_t;
 
 /* ========================================================================= */
 
-#if USE_PTH_THREADS
-
-/* Use the GNU Pth threads library.  */
-
-# include <pth.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_PTH_THREADS_WEAK
-
-/* Use weak references to the GNU Pth threads library.  */
-
-#  pragma weak pth_cond_init
-#  pragma weak pth_cond_await
-#  pragma weak pth_cond_notify
-#  pragma weak pth_event
-#  pragma weak pth_timeout
-
-#  pragma weak pth_cancel
-#  define pth_in_use() (pth_cancel != NULL || c11_threads_in_use ())
-
-# else
-
-#  define pth_in_use() 1
-
-# endif
-
-/* -------------------------- gl_cond_t datatype -------------------------- */
-
-typedef pth_cond_t gl_cond_t;
-# define gl_cond_define(STORAGECLASS, NAME) \
-    STORAGECLASS gl_cond_t NAME;
-# define gl_cond_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS gl_cond_t NAME = gl_cond_initializer;
-# define gl_cond_initializer \
-    PTH_COND_INIT
-# define glthread_cond_init(COND) \
-    (pth_in_use () && !pth_cond_init (COND) ? errno : 0)
-# define glthread_cond_wait(COND, LOCK) \
-    (pth_in_use () && !pth_cond_await (COND, LOCK, NULL) ? errno : 0)
-# define glthread_cond_timedwait(COND, LOCK, ABSTIME) \
-    (pth_in_use () ? glthread_cond_timedwait_multithreaded (COND, LOCK, ABSTIME) : 0)
-# define glthread_cond_signal(COND) \
-    (pth_in_use () && !pth_cond_notify (COND, FALSE) ? errno : 0)
-# define glthread_cond_broadcast(COND) \
-    (pth_in_use () && !pth_cond_notify (COND, TRUE) ? errno : 0)
-# define glthread_cond_destroy(COND) 0
-extern int glthread_cond_timedwait_multithreaded (gl_cond_t *cond, gl_lock_t *lock, struct timespec *abstime);
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -273,7 +214,7 @@ typedef glwthread_cond_t gl_cond_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

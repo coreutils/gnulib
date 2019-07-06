@@ -16,7 +16,7 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
+#if USE_POSIX_THREADS || USE_WINDOWS_THREADS
 
 /* Which tests to perform.
    Uncomment some of these, to verify that all tests crash if no locking
@@ -173,11 +173,6 @@ test_timedcond (void)
 int
 main ()
 {
-#if TEST_PTH_THREADS
-  if (!pth_init ())
-    abort ();
-#endif
-
 #if DO_TEST_COND
   printf ("Starting test_cond ..."); fflush (stdout);
   test_cond ();

@@ -1,4 +1,4 @@
-# threadlib.m4 serial 19
+# threadlib.m4 serial 20
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,8 +16,7 @@ dnl (it must be placed before the invocation of gl_THREADLIB_EARLY!), then the
 dnl default is 'no', otherwise it is system dependent. In both cases, the user
 dnl can change the choice through the options --enable-threads=choice or
 dnl --disable-threads.
-dnl Defines at most one of the macros USE_POSIX_THREADS, USE_PTH_THREADS,
-dnl USE_WINDOWS_THREADS.
+dnl Defines at most one of the macros USE_POSIX_THREADS, USE_WINDOWS_THREADS.
 dnl Sets the variables LIBTHREAD and LTLIBTHREAD to the linker options for use
 dnl in a Makefile (LIBTHREAD for use without libtool, LTLIBTHREAD for use with
 dnl libtool).
@@ -27,6 +26,9 @@ dnl between LIBTHREAD and LIBMULTITHREAD is that on platforms supporting weak
 dnl symbols, typically LIBTHREAD is empty whereas LIBMULTITHREAD is not.
 dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
 dnl multithread-safe programs.
+dnl Since support for GNU pth was removed, $LTLIBTHREAD and $LIBTHREAD have the
+dnl same value, and similarly $LTLIBMULTITHREAD and $LIBMULTITHREAD have the
+dnl same value. Only system libraries are needed.
 
 AC_DEFUN([gl_THREADLIB_EARLY],
 [
@@ -52,7 +54,7 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
   m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=])
   AC_ARG_ENABLE([threads],
-AC_HELP_STRING([--enable-threads={posix|pth|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AC_HELP_STRING([--enable-threads={posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
 AC_HELP_STRING([--disable-threads], [build without multithread safety])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
@@ -250,36 +252,6 @@ int main ()
         fi
       fi
     fi
-    if test "$gl_use_threads" = pth; then
-      gl_save_CPPFLAGS="$CPPFLAGS"
-      AC_LIB_LINKFLAGS([pth])
-      gl_have_pth=
-      gl_save_LIBS="$LIBS"
-      LIBS="$LIBS $LIBPTH"
-      AC_LINK_IFELSE(
-        [AC_LANG_PROGRAM([[#include <pth.h>]], [[pth_self();]])],
-        [gl_have_pth=yes])
-      LIBS="$gl_save_LIBS"
-      if test -n "$gl_have_pth"; then
-        gl_threads_api=pth
-        LIBTHREAD="$LIBPTH"
-        LTLIBTHREAD="$LTLIBPTH"
-        LIBMULTITHREAD="$LIBTHREAD"
-        LTLIBMULTITHREAD="$LTLIBTHREAD"
-        AC_DEFINE([USE_PTH_THREADS], [1],
-          [Define if the GNU Pth multithreading library can be used.])
-        if test -n "$LIBMULTITHREAD" || test -n "$LTLIBMULTITHREAD"; then
-          if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
-            AC_DEFINE([USE_PTH_THREADS_WEAK], [1],
-              [Define if references to the GNU Pth multithreading library should be made weak.])
-            LIBTHREAD=
-            LTLIBTHREAD=
-          fi
-        fi
-      else
-        CPPFLAGS="$gl_save_CPPFLAGS"
-      fi
-    fi
     if test -z "$gl_have_pthread"; then
       case "$gl_use_threads" in
         yes | windows | win32) # The 'win32' is for backward compatibility.
@@ -375,8 +347,6 @@ dnl OSF/1 4.0,5.1      posix      -pthread (cc)   N      OK
 dnl                               -lpthread (gcc) Y
 dnl
 dnl Cygwin             posix      -lpthread       Y      OK
-dnl
-dnl Any of the above   pth        -lpth                  0.0
 dnl
 dnl Mingw              windows                    N      OK
 dnl

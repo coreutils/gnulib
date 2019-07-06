@@ -1,4 +1,4 @@
-# threads.m4 serial 4
+# threads.m4 serial 5
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,12 +15,6 @@ AC_DEFUN([gl_THREADS_H],
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_THREADLIB_BODY])
   AC_REQUIRE([gl_YIELD])
-
-  if test "$gl_use_threads" = pth; then
-    AC_MSG_ERROR([You cannot use --enable-threads=pth with the gnulib module 'threads-h'.])
-  fi
-  dnl Now, since $gl_use_threads is not 'pth', $LTLIBMULTITHREAD and
-  dnl $LIBMULTITHREAD have the same value. Only system libraries are needed.
 
   gl_CHECK_NEXT_HEADERS([threads.h])
   if test $ac_cv_header_threads_h = yes; then

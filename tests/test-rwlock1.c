@@ -29,7 +29,6 @@
 #include <unistd.h>
 
 #include "glthread/thread.h"
-#include "glthread/yield.h"
 
 /* Verify that in a situation where
      - an rwlock is taken by a reader and has a writer waiting,
@@ -149,9 +148,6 @@ main ()
   /* Job done.  Go to sleep.  */
   for (;;)
     {
-      /* In cooperative threads implementations (Pth), give other threads
-         a chance to run.  */
-      gl_thread_yield ();
       sleep (1);
     }
 }

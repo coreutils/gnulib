@@ -24,34 +24,6 @@
 
 /* ========================================================================= */
 
-#if USE_PTH_THREADS
-
-/* -------------------------- gl_cond_t datatype -------------------------- */
-
-int
-glthread_cond_timedwait_multithreaded (gl_cond_t *cond,
-                                       gl_lock_t *lock,
-                                       struct timespec *abstime)
-{
-  int ret, status;
-  pth_event_t ev;
-
-  ev = pth_event (PTH_EVENT_TIME, pth_time (abstime->tv_sec, abstime->tv_nsec / 1000));
-  ret = pth_cond_await (cond, lock, ev);
-
-  status = pth_event_status (ev);
-  pth_event_free (ev, PTH_FREE_THIS);
-
-  if (status == PTH_STATUS_OCCURRED)
-    return ETIMEDOUT;
-
-  return ret;
-}
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 #endif

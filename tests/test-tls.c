@@ -18,13 +18,10 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS
+#if USE_POSIX_THREADS || USE_WINDOWS_THREADS
 
 #if USE_POSIX_THREADS
 # define TEST_POSIX_THREADS 1
-#endif
-#if USE_PTH_THREADS
-# define TEST_PTH_THREADS 1
 #endif
 #if USE_WINDOWS_THREADS
 # define TEST_WINDOWS_THREADS 1
@@ -67,8 +64,7 @@
 static void
 perhaps_yield (void)
 {
-  /* Call yield () only with a certain probability, otherwise with GNU Pth
-     the sequence of thread activations is too predictable.  */
+  /* This helps making the sequence of thread activations less predictable.  */
   if ((((unsigned int) rand () >> 3) % 4) == 0)
     yield ();
 }
@@ -495,11 +491,6 @@ main ()
   int alarm_value = 600;
   signal (SIGALRM, SIG_DFL);
   alarm (alarm_value);
-#endif
-
-#if TEST_PTH_THREADS
-  if (!pth_init ())
-    abort ();
 #endif
 
   printf ("Starting test_tls ..."); fflush (stdout);

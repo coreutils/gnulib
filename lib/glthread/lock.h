@@ -81,7 +81,7 @@
 #include <stdlib.h>
 
 #if !defined c11_threads_in_use
-# if HAVE_THREADS_H && (USE_POSIX_THREADS_WEAK || USE_PTH_THREADS_WEAK)
+# if HAVE_THREADS_H && USE_POSIX_THREADS_WEAK
 #  include <threads.h>
 #  pragma weak thrd_exit
 #  define c11_threads_in_use() (thrd_exit != NULL)
@@ -405,156 +405,6 @@ extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 
 /* ========================================================================= */
 
-#if USE_PTH_THREADS
-
-/* Use the GNU Pth threads library.  */
-
-# include <pth.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# if USE_PTH_THREADS_WEAK
-
-/* Use weak references to the GNU Pth threads library.  */
-
-#  pragma weak pth_mutex_init
-#  pragma weak pth_mutex_acquire
-#  pragma weak pth_mutex_release
-#  pragma weak pth_rwlock_init
-#  pragma weak pth_rwlock_acquire
-#  pragma weak pth_rwlock_release
-#  pragma weak pth_once
-#  pragma weak pth_cond_init
-#  pragma weak pth_cond_await
-#  pragma weak pth_cond_notify
-
-#  pragma weak pth_cancel
-#  define pth_in_use() (pth_cancel != NULL || c11_threads_in_use ())
-
-# else
-
-#  define pth_in_use() 1
-
-# endif
-
-/* -------------------------- gl_lock_t datatype -------------------------- */
-
-typedef pth_mutex_t gl_lock_t;
-# define gl_lock_define(STORAGECLASS, NAME) \
-    STORAGECLASS pth_mutex_t NAME;
-# define gl_lock_define_initialized(STORAGECLASS, NAME) \
-    STORAGECLASS pth_mutex_t NAME = gl_lock_initializer;
-# define gl_lock_initializer \
-    PTH_MUTEX_INIT
-# define glthread_lock_init(LOCK) \
-    (pth_in_use () && !pth_mutex_init (LOCK) ? errno : 0)
-# define glthread_lock_lock(LOCK) \
-    (pth_in_use () && !pth_mutex_acquire (LOCK, 0, NULL) ? errno : 0)
-# define glthread_lock_unlock(LOCK) \
-    (pth_in_use () && !pth_mutex_release (LOCK) ? errno : 0)
-# define glthread_lock_destroy(LOCK) \
-    ((void)(LOCK), 0)
-
-/* ------------------------- gl_rwlock_t datatype ------------------------- */
-
-/* Pth pth_rwlock_acquire always prefers readers.  No autoconf test so far.  */
-# if HAVE_PTH_RWLOCK_ACQUIRE_PREFER_WRITER
-
-typedef pth_rwlock_t gl_rwlock_t;
-#  define gl_rwlock_define(STORAGECLASS, NAME) \
-     STORAGECLASS pth_rwlock_t NAME;
-#  define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS pth_rwlock_t NAME = gl_rwlock_initializer;
-#  define gl_rwlock_initializer \
-     PTH_RWLOCK_INIT
-#  define glthread_rwlock_init(LOCK) \
-     (pth_in_use () && !pth_rwlock_init (LOCK) ? errno : 0)
-#  define glthread_rwlock_rdlock(LOCK) \
-     (pth_in_use () && !pth_rwlock_acquire (LOCK, PTH_RWLOCK_RD, 0, NULL) ? errno : 0)
-#  define glthread_rwlock_wrlock(LOCK) \
-     (pth_in_use () && !pth_rwlock_acquire (LOCK, PTH_RWLOCK_RW, 0, NULL) ? errno : 0)
-#  define glthread_rwlock_unlock(LOCK) \
-     (pth_in_use () && !pth_rwlock_release (LOCK) ? errno : 0)
-#  define glthread_rwlock_destroy(LOCK) \
-     ((void)(LOCK), 0)
-
-# else
-
-typedef struct
-        {
-          int initialized;
-          pth_mutex_t lock; /* protects the remaining fields */
-          pth_cond_t waiting_readers; /* waiting readers */
-          pth_cond_t waiting_writers; /* waiting writers */
-          unsigned int waiting_writers_count; /* number of waiting writers */
-          int runcount; /* number of readers running, or -1 when a writer runs */
-        }
-        gl_rwlock_t;
-#  define gl_rwlock_define(STORAGECLASS, NAME) \
-     STORAGECLASS gl_rwlock_t NAME;
-#  define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
-#  define gl_rwlock_initializer \
-     { 0 }
-#  define glthread_rwlock_init(LOCK) \
-     (pth_in_use () ? glthread_rwlock_init_multithreaded (LOCK) : 0)
-#  define glthread_rwlock_rdlock(LOCK) \
-     (pth_in_use () ? glthread_rwlock_rdlock_multithreaded (LOCK) : 0)
-#  define glthread_rwlock_wrlock(LOCK) \
-     (pth_in_use () ? glthread_rwlock_wrlock_multithreaded (LOCK) : 0)
-#  define glthread_rwlock_unlock(LOCK) \
-     (pth_in_use () ? glthread_rwlock_unlock_multithreaded (LOCK) : 0)
-#  define glthread_rwlock_destroy(LOCK) \
-     (pth_in_use () ? glthread_rwlock_destroy_multithreaded (LOCK) : 0)
-extern int glthread_rwlock_init_multithreaded (gl_rwlock_t *lock);
-extern int glthread_rwlock_rdlock_multithreaded (gl_rwlock_t *lock);
-extern int glthread_rwlock_wrlock_multithreaded (gl_rwlock_t *lock);
-extern int glthread_rwlock_unlock_multithreaded (gl_rwlock_t *lock);
-extern int glthread_rwlock_destroy_multithreaded (gl_rwlock_t *lock);
-
-# endif
-
-/* --------------------- gl_recursive_lock_t datatype --------------------- */
-
-/* In Pth, mutexes are recursive by default.  */
-typedef pth_mutex_t gl_recursive_lock_t;
-#  define gl_recursive_lock_define(STORAGECLASS, NAME) \
-     STORAGECLASS pth_mutex_t NAME;
-#  define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
-     STORAGECLASS pth_mutex_t NAME = gl_recursive_lock_initializer;
-#  define gl_recursive_lock_initializer \
-     PTH_MUTEX_INIT
-#  define glthread_recursive_lock_init(LOCK) \
-     (pth_in_use () && !pth_mutex_init (LOCK) ? errno : 0)
-#  define glthread_recursive_lock_lock(LOCK) \
-     (pth_in_use () && !pth_mutex_acquire (LOCK, 0, NULL) ? errno : 0)
-#  define glthread_recursive_lock_unlock(LOCK) \
-     (pth_in_use () && !pth_mutex_release (LOCK) ? errno : 0)
-#  define glthread_recursive_lock_destroy(LOCK) \
-     ((void)(LOCK), 0)
-
-/* -------------------------- gl_once_t datatype -------------------------- */
-
-typedef pth_once_t gl_once_t;
-# define gl_once_define(STORAGECLASS, NAME) \
-    STORAGECLASS pth_once_t NAME = PTH_ONCE_INIT;
-# define glthread_once(ONCE_CONTROL, INITFUNCTION) \
-    (pth_in_use ()                                                             \
-     ? glthread_once_multithreaded (ONCE_CONTROL, INITFUNCTION)                \
-     : (glthread_once_singlethreaded (ONCE_CONTROL) ? (INITFUNCTION (), 0) : 0))
-extern int glthread_once_multithreaded (pth_once_t *once_control, void (*initfunction) (void));
-extern int glthread_once_singlethreaded (pth_once_t *once_control);
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -677,7 +527,7 @@ typedef glwthread_once_t gl_once_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

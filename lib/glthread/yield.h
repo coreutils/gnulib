@@ -46,27 +46,6 @@ extern "C" {
 
 /* ========================================================================= */
 
-#if USE_PTH_THREADS
-
-/* Use the GNU Pth threads library.  */
-
-# include <pth.h>
-
-# ifdef __cplusplus
-extern "C" {
-# endif
-
-# define gl_thread_yield() \
-    pth_yield (NULL)
-
-# ifdef __cplusplus
-}
-# endif
-
-#endif
-
-/* ========================================================================= */
-
 #if USE_WINDOWS_THREADS
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -87,7 +66,7 @@ extern "C" {
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_PTH_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 
