@@ -37,10 +37,6 @@ Under Windows, when passing a pipe, Gnulib's @code{select} replacement might
 return 0 even before the timeout has passed.  Programs using it with pipes can
 thus busy wait.
 @item
-On Solaris 2.6 and older, @code{select} applied to a file descriptor opened
-for reading and associated with @code{/dev/null} hangs, waiting for input,
-when instead it should return immediately.
-@item
 On Linux, when some file descriptor refers to a regular file, @code{select}
 may fail, setting @code{errno} to @code{EBADF}.
 @item

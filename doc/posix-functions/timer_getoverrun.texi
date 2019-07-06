@@ -14,5 +14,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-OS X 10.11, FreeBSD 6.0, Minix 3.1.8, IRIX 5.3, Solaris 2.4, Cygwin, mingw, MSVC 14.
+OS X 10.11, FreeBSD 6.0, Minix 3.1.8, IRIX 5.3, Cygwin, mingw, MSVC 14.
 @end itemize

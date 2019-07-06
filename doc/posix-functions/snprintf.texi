@@ -10,7 +10,7 @@ Portability problems fixed by either Gnulib module @code{snprintf} or @code{snpr
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, OSF/1 4.0, Solaris 2.5.1, MSVC 14.
+IRIX 5.3, OSF/1 4.0, MSVC 14.
 @item
 This function does not support format directives that access arguments in an
 arbitrary order, such as @code{"%2$s"}, on some platforms:
@@ -52,7 +52,7 @@ This function does not support the @samp{n} directive on some platforms:
 MSVC 14.
 @item
 This function does not support the @samp{ls} directive on some platforms:
-OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Haiku.
+OpenBSD 4.0, IRIX 6.5, Cygwin 1.5.x, Haiku.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:

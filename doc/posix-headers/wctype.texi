@@ -12,7 +12,7 @@ This header file is missing on some platforms:
 HP-UX 11.00.
 @item
 This header file is not self-contained on some platforms:
-Solaris 2.5, OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
+OSF/1 with Desktop Toolkit C, BSD/OS 4.0.1.
 @item
 The type @code{wint_t} and macro @code{WEOF} are missing on some platforms:
 IRIX 5.3.
@@ -28,10 +28,6 @@ IRIX 6.5.30.
 @item
 The functions @code{isw*} are actually defined as macros that don't work,
 on IRIX 5.3.
-@item
-This header file defines some identifiers, such as @code{multibyte}, as macros
-on some platforms:
-Solaris 2.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:

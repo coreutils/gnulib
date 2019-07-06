@@ -33,7 +33,7 @@ This function does not support the @samp{n} directive on some platforms:
 MSVC 14.
 @item
 This function does not support the @samp{ls} directive on some platforms:
-OpenBSD 4.0, IRIX 6.5, Solaris 2.6, Cygwin 1.5.x, Haiku.
+OpenBSD 4.0, IRIX 6.5, Cygwin 1.5.x, Haiku.
 @item
 This function does not support precisions in the @samp{ls} directive correctly
 on some platforms:

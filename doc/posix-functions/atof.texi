@@ -32,20 +32,20 @@ glibc 2.4, Cygwin < 1.5.25-11.
 
 @item
 This function fails to parse Infinities and plain NaNs on some platforms:
-Solaris 8, Mingw, OpenBSD 4.0.
+Mingw, OpenBSD 4.0.
 
 @item
 This function fails to parse NaN() on some platforms:
-Solaris 8, Mingw, OpenBSD 4.0, Cygwin < 1.5.25-11.
+Mingw, OpenBSD 4.0, Cygwin < 1.5.25-11.
 
 @item
 This function fails to parse NaN(n-char-sequence) on some platforms:
-Solaris 8, Mingw, OpenBSD 4.0.
+Mingw, OpenBSD 4.0.
 
 @item
 This function fails to parse C99 hexadecimal floating point on some
 platforms:
-Solaris 8, Mingw, OpenBSD 4.0.
+Mingw, OpenBSD 4.0.
 
 @item
 This function fails to correctly parse very long strings on some

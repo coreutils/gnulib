@@ -43,10 +43,6 @@ Cygwin 1.5.x, mingw, MSVC 14.
 This function does not reject attempts to rename existing directories
 and non-directories onto one another on some platforms:
 Cygwin 1.5.x, mingw, MSVC 14.
-@item
-This function does not allow trailing slashes on source directories on
-older platforms, as in @samp{rename("dir/","new")}:
-SunOS 4.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

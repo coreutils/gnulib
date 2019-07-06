@@ -11,10 +11,6 @@ Portability problems fixed by Gnulib:
 @item
 On native Windows platforms (mingw, MSVC), this function works incorrectly
 when the environment variable @code{TZ} has been set by Cygwin.
-@item
-This function clobbers the buffer used by the localtime function on some
-platforms:
-Solaris 2.6.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -132,7 +132,7 @@ NetBSD 7.0 or newer is occasionally tested.
 @item
 AIX 7.1 is occasionally tested.
 @item
-Solaris 10 and 11 are occasionally tested.  Solaris 9 and older are rarely
+Solaris 10 and 11 are occasionally tested.  Solaris 9 is rarely
 tested and low priority.
 @item
 Cygwin 2.9 is occasionally tested.  Cygwin 1.7.x is rarely tested.
@@ -176,6 +176,8 @@ QNX is no longer tested.
 The following platforms were supported in the past, but are no longer
 supported:
 @itemize
+@item
+Solaris 8 and older.
 @item
 BeOS.
 @end itemize
