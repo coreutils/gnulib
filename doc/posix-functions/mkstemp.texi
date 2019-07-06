@@ -16,9 +16,6 @@ This function is declared in @code{<unistd.h>} instead of @code{<stdlib.h>}
 on some platforms:
 Mac OS X 10.3.
 @item
-On some platforms (HP-UX 10.20), mkstemp has a silly
-limit that it can create no more than 26 files from a given template.
-@item
 On platforms where @code{off_t} is a 32-bit type, @code{mkstemp} may not work
 correctly to create files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item

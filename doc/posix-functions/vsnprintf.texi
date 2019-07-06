@@ -59,10 +59,6 @@ This function does not round the argument of the @samp{a} directive correctly
 on some platforms:
 Mac OS X 10.12, FreeBSD 6.1.
 @item
-This function behaves incorrectly when a @samp{-} flag and a negative width
-are specified together, on some platforms:
-HP-UX 10.20.
-@item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, AIX 5.2, IRIX 6.5, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.

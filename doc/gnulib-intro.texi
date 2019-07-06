@@ -172,6 +172,8 @@ The following platforms were supported in the past, but are no longer
 supported:
 @itemize
 @item
+HP-UX 10.
+@item
 IRIX 6.4 and older.
 @item
 OSF/1 5.1.
