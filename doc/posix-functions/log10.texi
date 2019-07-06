@@ -8,9 +8,6 @@ Gnulib module: log10 or log10-ieee
 
 Portability problems fixed by either Gnulib module @code{log10} or @code{log10-ieee}:
 @itemize
-@item
-This function returns a wrong value for a minus zero argument on some platforms:
-OSF/1 5.1.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{log10-ieee}:

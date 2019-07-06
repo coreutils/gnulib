@@ -17,7 +17,7 @@ mingw, MSVC 14.
 Portability problems not fixed by Gnulib:
 @itemize
 @item @code{malloc (0)} always returns a NULL pointer on some platforms:
-AIX 5.1, OSF/1 5.1.
+AIX 5.1.
 @end itemize
 
 Extension: Gnulib provides a module @samp{malloc-gnu} that substitutes a

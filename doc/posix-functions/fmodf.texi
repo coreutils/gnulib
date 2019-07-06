@@ -19,9 +19,6 @@ MSVC 14.
 Portability problems fixed by Gnulib module @code{fmodf-ieee}:
 @itemize
 @item
-This function has problems when the second argument is zero on some platforms:
-OSF/1 5.1.
-@item
 This function has problems when the first argument is minus zero on some
 platforms:
 MSVC 14.

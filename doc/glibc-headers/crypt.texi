@@ -36,7 +36,7 @@ Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, mingw, MSVC 14
 @item
 The functions @code{crypt}, @code{setkey}, @code{encrypt} are missing on some
 platforms:
-HP-UX 11, OSF/1 5.1.
+HP-UX 11.
 @item
 The type @code{struct crypt_data} and the functions @code{crypt_r},
 @code{setkey_r}, @code{encrypt_r} are missing on some platforms:

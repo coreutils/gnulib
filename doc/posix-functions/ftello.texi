@@ -10,11 +10,11 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-IRIX 5.3, OSF/1 4.0, mingw, MSVC 14.
+IRIX 5.3, mingw, MSVC 14.
 @item
 The declaration of @code{ftello} in @code{<stdio.h>} is not enabled by default
 on some platforms:
-glibc 2.3.6, OSF/1 5.1.
+glibc 2.3.6.
 @item
 This function produces incorrect results after @code{putc} that followed a
 @code{getc} call that reached EOF on some platforms:

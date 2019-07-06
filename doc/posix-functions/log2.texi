@@ -19,9 +19,6 @@ IRIX 6.5.
 This function is only provided as a macro on some platforms:
 Cygwin 1.5.x.
 @item
-This function returns a wrong value for a minus zero argument on some platforms:
-OSF/1 5.1.
-@item
 This function returns slightly wrong values for exact powers of 2 on some platforms:
 Cygwin 1.7.9.
 @end itemize

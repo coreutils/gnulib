@@ -161,8 +161,6 @@ HP-UX 11.31 is very rarely tested.
 @c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
 IRIX 6.5 is very rarely tested.
 @item
-OSF/1 5.1 is no longer tested.
-@item
 Interix 6.1 is no longer tested, and requires the @code{suacomp} library
 (@url{https://sourceforge.net/projects/suacomp/}) in version 0.6.8 or newer.
 @item
@@ -176,6 +174,8 @@ QNX is no longer tested.
 The following platforms were supported in the past, but are no longer
 supported:
 @itemize
+@item
+OSF/1 5.1.
 @item
 Solaris 8 and older.
 @item

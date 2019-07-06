@@ -26,15 +26,15 @@ This function clobbers the @code{strerror} buffer on some platforms:
 Cygwin 1.7.9.
 @item
 This function is sometimes not declared in @code{<string.h>} on some platforms:
-glibc 2.8, OSF/1 5.1.
+glibc 2.8.
 @item
 The third argument is of type @code{int} instead of @code{size_t} on some
 platforms:
-AIX 5.1, OSF/1 5.1.
+AIX 5.1.
 @item
 When this function fails, it returns @minus{}1 and sets @code{errno}, instead of
 returning the error number, on some platforms:
-glibc 2.12 with @code{-D_POSIX_C_SOURCE=200112L}, AIX 6.1, OSF/1 5.1.
+glibc 2.12 with @code{-D_POSIX_C_SOURCE=200112L}, AIX 6.1.
 @item
 When this function fails, it corrupts @code{errno}, on some platforms:
 Solaris 10.
@@ -45,7 +45,7 @@ MSVC 14.
 @item
 This function does not support the error values that are specified by POSIX
 but not defined by the system, on some platforms:
-OpenBSD 4.0, OSF/1 5.1, NonStop Kernel, Cygwin 1.5.x.
+OpenBSD 4.0, NonStop Kernel, Cygwin 1.5.x.
 @item
 This function reports failure for @code{strerror_r(0, buf, len)},
 although POSIX requires this to succeed, on some platforms:
@@ -62,7 +62,7 @@ HP-UX 11.31.
 When the buffer is too small and the value is in range, this function
 does not fail, but instead truncates the result and returns 0 on some
 platforms:
-AIX 6.1, OSF/1 5.1, Haiku 2017.
+AIX 6.1, Haiku 2017.
 @item
 When the value is not in range or the buffer is too small, this
 function fails to leave a NUL-terminated string in the buffer on some

@@ -21,7 +21,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, MSVC 14.
+AIX 5.1, HP-UX 11, IRIX 6.5, MSVC 14.
 @item
 The function @code{getopt_long} does not obey the combination of
 @samp{+} and @samp{:} flags in the options string on some platforms:
@@ -33,7 +33,7 @@ glibc 2.11.
 @item
 The function @code{getopt_long} does not support the @samp{+} flag in
 the options string on some platforms:
-Mac OS X 10.5, AIX 5.2, OSF/1 5.1, Solaris 10.
+Mac OS X 10.5, AIX 5.2, Solaris 10.
 @item
 The value of @code{optind} after a missing required argument is wrong
 on some platforms:

@@ -18,10 +18,6 @@ MSVC 14.
 
 Portability problems fixed by Gnulib module @code{floorf-ieee}:
 @itemize
-@item
-This function returns a positive zero for a minus zero argument
-on some platforms:
-OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{iconv_open}:
 @item
 This function recognizes only non-standard aliases for many encodings (not
 the IANA registered encoding names) on many platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1, Solaris 11 2010-11.
+AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11 2010-11.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{iconv_open-utf}:
@@ -28,7 +28,7 @@ Portability problems fixed by Gnulib module @code{iconv_open-utf}:
 @item
 This function does not support the encodings UTF-16BE, UTF-16LE, UTF-32BE,
 UTF-32LE on many platforms:
-AIX 5.1, HP-UX 11, IRIX 6.5, OSF/1 5.1.
+AIX 5.1, HP-UX 11, IRIX 6.5.
 @end itemize
 
 Portability problems not fixed by Gnulib:

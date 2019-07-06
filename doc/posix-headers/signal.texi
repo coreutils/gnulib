@@ -42,7 +42,7 @@ NonStop.
 The type @code{sighandler_t} (a GNU extension) is not defined on most non-glibc
 platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin, mingw, MSVC 14.
+IRIX 6.5, Solaris 11.4, Cygwin, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
@@ -50,10 +50,6 @@ Portability problems not fixed by Gnulib:
 @item
 Many signals are not defined on some platforms:
 mingw, MSVC 14.
-@item
-The macros @code{SIGRTMIN} and @code{SIGRTMAX} expand to an expression of type
-@code{long} instead of @code{int} on some platforms:
-OSF/1 5.1.
 @item
 The macro @code{SIGBUS} is set to the same value as @code{SIGSEGV},
 rather than being a distinct signal, on some platforms:

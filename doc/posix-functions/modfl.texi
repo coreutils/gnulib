@@ -20,7 +20,7 @@ Portability problems fixed by Gnulib module @code{modfl-ieee}:
 @itemize
 @item
 This function has problems with infinite arguments on some platforms:
-IRIX 6.5, OSF/1 5.1, mingw.
+IRIX 6.5, mingw.
 @end itemize
 
 Portability problems not fixed by Gnulib:

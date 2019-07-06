@@ -18,9 +18,6 @@ IRIX 5.3.
 
 Portability problems fixed by Gnulib module @code{remainder-ieee}:
 @itemize
-@item
-This function has problems when the second argument is zero on some platforms:
-OSF/1 5.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

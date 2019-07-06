@@ -18,9 +18,6 @@ MSVC 14.
 This function is not declared and does not work on some platforms:
 AIX 5.1.
 @item
-This function returns a wrong value for a minus zero argument on some platforms:
-OSF/1 5.1.
-@item
 This function returns an unnormalized negative infinity for a minus zero argument on some platforms:
 IRIX 6.5.
 @item

@@ -25,7 +25,7 @@ Minix 3.1.8, Cygwin, mingw, MSVC 14, Android 5.1.
 Note that the Gnulib replacement may fail with ENOSYS on some platforms.
 @item
 This function is not declared on some platforms:
-AIX 7.1, OSF/1 5.1, Solaris 10.
+AIX 7.1, Solaris 10.
 @end itemize
 
 Portability problems not fixed by Gnulib:

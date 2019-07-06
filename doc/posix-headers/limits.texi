@@ -10,7 +10,7 @@ Portability problems fixed by Gnulib module @code{limits-h}:
 @item
 The macros @code{LLONG_MIN}, @code{LLONG_MAX}, @code{ULLONG_MAX} are not
 defined on some platforms:
-older glibc systems (e.g. Fedora 1), AIX 5.1, HP-UX 11, IRIX 6.5, OpenVMS, OSF/1 5.1 with gcc.
+older glibc systems (e.g. Fedora 1), AIX 5.1, HP-UX 11, IRIX 6.5, OpenVMS.
 @item
 The macros @code{WORD_BIT}, @code{LONG_BIT} are not defined on some platforms:
 glibc 2.11 without @code{-D_GNU_SOURCE}, Cygwin, mingw, MSVC 14.
@@ -24,7 +24,7 @@ Portability problems fixed by Gnulib module @code{gethostname}:
 @item
 The @code{HOST_NAME_MAX} macro is not defined on some platforms:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11,
-IRIX 6.5, OSF/1 5.1, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
+IRIX 6.5, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
