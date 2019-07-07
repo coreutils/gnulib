@@ -60,19 +60,28 @@ areadlink_with_size (char const *file, size_t size)
                           ? symlink_max + 1
                           : INITIAL_LIMIT_BOUND);
 
+  enum { stackbuf_size = 128 };
+
   /* The initial buffer size for the link value.  */
-  size_t buf_size = (size == 0 ? 128
+  size_t buf_size = (size == 0 ? stackbuf_size
                      : size < initial_limit ? size + 1 : initial_limit);
 
   while (1)
     {
       ssize_t r;
       size_t link_length;
-      char *buffer = malloc (buf_size);
+      char stackbuf[stackbuf_size];
+      char *buf = stackbuf;
+      char *buffer = NULL;
 
-      if (buffer == NULL)
-        return NULL;
-      r = readlink (file, buffer, buf_size);
+      if (! (size == 0 && buf_size == stackbuf_size))
+        {
+          buf = buffer = malloc (buf_size);
+          if (!buffer)
+            return NULL;
+        }
+
+      r = readlink (file, buf, buf_size);
       link_length = r;
 
       /* On AIX 5L v5.3 and HP-UX 11i v2 04/09, readlink returns -1
@@ -87,10 +96,16 @@ areadlink_with_size (char const *file, size_t size)
 
       if (link_length < buf_size)
         {
-          buffer[link_length] = 0;
-          /* Shrink BUFFER before returning it.  */
-          if (link_length + 1 < buf_size)
+          buf[link_length] = 0;
+          if (!buffer)
             {
+              buffer = malloc (link_length + 1);
+              if (buffer)
+                return memcpy (buffer, buf, link_length + 1);
+            }
+          else if (link_length + 1 < buf_size)
+            {
+              /* Shrink BUFFER before returning it.  */
               char *shrinked_buffer = realloc (buffer, link_length + 1);
               if (shrinked_buffer != NULL)
                 buffer = shrinked_buffer;
