@@ -264,9 +264,8 @@ char const *argmatch_to_argument (void const *value,
           for (int j = 0; g->args[j].arg; ++j)                          \
             if (! memcmp (&g->args[ival].val, &g->args[j].val, size))   \
               col += (col == 4 ? 0 : 2) + strlen (g->args[j].arg);      \
-        /* Ignore series that are too wide. */                          \
-        if (col <= 20 && res <= col)                                    \
-          res = col;                                                    \
+        if (res <= col)                                                 \
+          res = col <= 20 ? col : 20;                                   \
       }                                                                 \
     return res ? res : 20;                                              \
   }                                                                     \
