@@ -1106,8 +1106,6 @@ main ()
       free (result);
     }
 
-#endif
-
   /* -------------------------------- Done. -------------------------------- */
 
   if (cd_ascii_to_88591 != (iconv_t)(-1))
@@ -1115,6 +1113,8 @@ main ()
   iconv_close (cd_ascii_to_utf8);
   if (cd_utf7_to_utf8 != (iconv_t)(-1))
     iconv_close (cd_utf7_to_utf8);
+
+#endif
 
   return 0;
 }
