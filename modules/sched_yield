@@ -1,0 +1,32 @@
+Description:
+Schedule other threads to run.
+
+Files:
+lib/sched_yield.c
+m4/sched_yield.m4
+m4/yield.m4
+
+Depends-on:
+sched
+threadlib
+
+configure.ac:
+gl_FUNC_SCHED_YIELD
+if test $HAVE_SCHED_YIELD = 0 || test $REPLACE_SCHED_YIELD = 1; then
+  AC_LIBOBJ([sched_yield])
+fi
+gl_SCHED_MODULE_INDICATOR([sched_yield])
+
+Makefile.am:
+
+Include:
+<sched.h>
+
+Link:
+$(YIELD_LIB)
+
+License:
+LGPLv2+
+
+Maintainer:
+all
