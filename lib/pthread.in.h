@@ -85,63 +85,281 @@ _GL_INLINE_HEADER_BEGIN
 # define _GL_PTHREAD_INLINE _GL_INLINE
 #endif
 
-#if ! @HAVE_PTHREAD_T@
-# if !GNULIB_defined_pthread_types
- typedef int pthread_t;
- typedef int pthread_attr_t;
- typedef int pthread_barrier_t;
- typedef int pthread_barrierattr_t;
- typedef int pthread_cond_t;
- typedef int pthread_condattr_t;
- typedef int pthread_key_t;
- typedef int pthread_mutex_t;
- typedef int pthread_mutexattr_t;
- typedef int pthread_once_t;
- typedef int pthread_rwlock_t;
- typedef int pthread_rwlockattr_t;
-#  define GNULIB_defined_pthread_types 1
+/* =========== Thread types and macros =========== */
+
+#if @GNULIB_PTHREAD_THREAD@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-thread.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_t rpl_pthread_t
+#  define pthread_attr_t rpl_pthread_attr_t
+# endif
+# if !GNULIB_defined_pthread_thread_types
+typedef glwthread_thread_t pthread_t;
+typedef unsigned int pthread_attr_t;
+#  define GNULIB_defined_pthread_thread_types 1
+# endif
+# undef PTHREAD_CREATE_JOINABLE
+# undef PTHREAD_CREATE_DETACHED
+# define PTHREAD_CREATE_JOINABLE 0
+# define PTHREAD_CREATE_DETACHED 1
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_thread_types
+typedef int pthread_t;
+typedef unsigned int pthread_attr_t;
+#   define GNULIB_defined_pthread_thread_types 1
+#  endif
+# endif
+# if !@HAVE_PTHREAD_CREATE_DETACHED@
+#  define PTHREAD_CREATE_JOINABLE 0
+#  define PTHREAD_CREATE_DETACHED 1
 # endif
 #endif
 
-#ifndef PTHREAD_COND_INITIALIZER
-#define PTHREAD_COND_INITIALIZER { 0 }
-#define PTHREAD_MUTEX_INITIALIZER { 0 }
-#define PTHREAD_ONCE_INIT { 0 }
-#define PTHREAD_RWLOCK_INITIALIZER { 0 }
+/* =========== Once-only control (initialization) types and macros ========== */
 
-#define PTHREAD_BARRIER_SERIAL_THREAD (-1)
+#if @GNULIB_PTHREAD_ONCE@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-once.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_once_t rpl_pthread_once_t
+# endif
+# if !GNULIB_defined_pthread_once_types
+typedef glwthread_once_t pthread_once_t;
+#  define GNULIB_defined_pthread_once_types 1
+# endif
+# undef PTHREAD_ONCE_INIT
+# define PTHREAD_ONCE_INIT GLWTHREAD_ONCE_INIT
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_once_types
+typedef int pthread_once_t;
+#   define GNULIB_defined_pthread_once_types 1
+#  endif
+#  undef PTHREAD_ONCE_INIT
+#  define PTHREAD_ONCE_INIT { 0 }
+# endif
+#endif
 
-#define PTHREAD_CANCEL_DEFERRED 0
-#define PTHREAD_CANCEL_ASYNCHRONOUS 1
+/* =========== Mutex types and macros =========== */
 
-#define PTHREAD_CANCEL_ENABLE 0
-#define PTHREAD_CANCEL_DISABLE 1
+#if @GNULIB_PTHREAD_MUTEX@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-timedmutex.h"
+# include "windows-timedrecmutex.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_mutex_t rpl_pthread_mutex_t
+#  define pthread_mutexattr_t rpl_pthread_mutexattr_t
+# endif
+# if !GNULIB_defined_pthread_mutex_types
+typedef struct
+        {
+          int type;
+          union
+            {
+              glwthread_timedmutex_t    u_timedmutex;
+              glwthread_timedrecmutex_t u_timedrecmutex;
+            }
+          u;
+        }
+        pthread_mutex_t;
+typedef unsigned int pthread_mutexattr_t;
+#  define GNULIB_defined_pthread_mutex_types 1
+# endif
+# undef PTHREAD_MUTEX_INITIALIZER
+# define PTHREAD_MUTEX_INITIALIZER { 1, { GLWTHREAD_TIMEDMUTEX_INIT } }
+# undef PTHREAD_MUTEX_DEFAULT
+# undef PTHREAD_MUTEX_NORMAL
+# undef PTHREAD_MUTEX_ERRORCHECK
+# undef PTHREAD_MUTEX_RECURSIVE
+# define PTHREAD_MUTEX_DEFAULT PTHREAD_MUTEX_NORMAL
+# define PTHREAD_MUTEX_NORMAL 0
+# define PTHREAD_MUTEX_ERRORCHECK 1
+# define PTHREAD_MUTEX_RECURSIVE 2
+# undef PTHREAD_MUTEX_STALLED
+# undef PTHREAD_MUTEX_ROBUST
+# define PTHREAD_MUTEX_STALLED 0
+# define PTHREAD_MUTEX_ROBUST 1
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_mutex_types
+typedef int pthread_mutex_t;
+typedef unsigned int pthread_mutexattr_t;
+#   define GNULIB_defined_pthread_mutex_types 1
+#  endif
+#  undef PTHREAD_MUTEX_INITIALIZER
+#  define PTHREAD_MUTEX_INITIALIZER { 0 }
+# endif
+# if !@HAVE_PTHREAD_MUTEX_RECURSIVE@
+#  define PTHREAD_MUTEX_DEFAULT PTHREAD_MUTEX_NORMAL
+#  define PTHREAD_MUTEX_NORMAL 0
+#  define PTHREAD_MUTEX_ERRORCHECK 1
+#  define PTHREAD_MUTEX_RECURSIVE 2
+# endif
+# if !@HAVE_PTHREAD_MUTEX_ROBUST@
+#  define PTHREAD_MUTEX_STALLED 0
+#  define PTHREAD_MUTEX_ROBUST 1
+# endif
+#endif
 
-#define PTHREAD_CANCELED ((void *) -1)
+/* =========== Read-write lock types and macros =========== */
 
-#define PTHREAD_CREATE_JOINABLE 0
-#define PTHREAD_CREATE_DETACHED 1
+#if @GNULIB_PTHREAD_RWLOCK@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-timedrwlock.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_rwlock_t rpl_pthread_rwlock_t
+#  define pthread_rwlockattr_t rpl_pthread_rwlockattr_t
+# endif
+# if !GNULIB_defined_pthread_rwlock_types
+typedef glwthread_timedrwlock_t pthread_rwlock_t;
+typedef unsigned int pthread_rwlockattr_t;
+#  define GNULIB_defined_pthread_rwlock_types 1
+# endif
+# undef PTHREAD_RWLOCK_INITIALIZER
+# define PTHREAD_RWLOCK_INITIALIZER GLWTHREAD_TIMEDRWLOCK_INIT
+#elif @GNULIB_PTHREAD_RWLOCK@ && @REPLACE_PTHREAD_RWLOCK_INIT@ /* i.e. PTHREAD_RWLOCK_UNIMPLEMENTED */
+# if @HAVE_PTHREAD_T@
+#  define pthread_rwlock_t rpl_pthread_rwlock_t
+#  define pthread_rwlockattr_t rpl_pthread_rwlockattr_t
+# endif
+# if !GNULIB_defined_pthread_rwlock_types
+typedef struct
+        {
+          pthread_mutex_t lock; /* protects the remaining fields */
+          pthread_cond_t waiting_readers; /* waiting readers */
+          pthread_cond_t waiting_writers; /* waiting writers */
+          unsigned int waiting_writers_count; /* number of waiting writers */
+          int runcount; /* number of readers running, or -1 when a writer runs */
+        }
+        pthread_rwlock_t;
+typedef unsigned int pthread_rwlockattr_t;
+#  define GNULIB_defined_pthread_rwlock_types 1
+# endif
+# undef PTHREAD_RWLOCK_INITIALIZER
+# define PTHREAD_RWLOCK_INITIALIZER \
+   { PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER, 0, 0 }
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_rwlock_types
+typedef int pthread_rwlock_t;
+typedef unsigned int pthread_rwlockattr_t;
+#   define GNULIB_defined_pthread_rwlock_types 1
+#  endif
+#  undef PTHREAD_RWLOCK_INITIALIZER
+#  define PTHREAD_RWLOCK_INITIALIZER { 0 }
+# endif
+#endif
 
-#define PTHREAD_INHERIT_SCHED 0
-#define PTHREAD_EXPLICIT_SCHED 1
+/* =========== Condition variable types and macros =========== */
 
-#define PTHREAD_MUTEX_DEFAULT PTHREAD_MUTEX_NORMAL
-#define PTHREAD_MUTEX_NORMAL 0
-#define PTHREAD_MUTEX_ERRORCHECK 1
-#define PTHREAD_MUTEX_RECURSIVE 2
+#if @GNULIB_PTHREAD_COND@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-cond.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_cond_t rpl_pthread_cond_t
+#  define pthread_condattr_t rpl_pthread_condattr_t
+# endif
+# if !GNULIB_defined_pthread_cond_types
+typedef glwthread_cond_t pthread_cond_t;
+typedef unsigned int pthread_condattr_t;
+#  define GNULIB_defined_pthread_cond_types 1
+# endif
+# undef PTHREAD_COND_INITIALIZER
+# define PTHREAD_COND_INITIALIZER GLWTHREAD_COND_INIT
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_cond_types
+typedef int pthread_cond_t;
+typedef unsigned int pthread_condattr_t;
+#   define GNULIB_defined_pthread_cond_types 1
+#  endif
+#  undef PTHREAD_COND_INITIALIZER
+#  define PTHREAD_COND_INITIALIZER { 0 }
+# endif
+#endif
 
-#define PTHREAD_MUTEX_STALLED 0
-#define PTHREAD_MUTEX_ROBUST 1
+/* =========== Thread-specific storage types and macros =========== */
 
-#define PTHREAD_PRIO_NONE 0
-#define PTHREAD_PRIO_INHERIT 1
-#define PTHREAD_PRIO_PROTECT 2
+#if @GNULIB_PTHREAD_TSS@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-tls.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_key_t rpl_pthread_key_t
+# endif
+# if !GNULIB_defined_pthread_tss_types
+typedef glwthread_tls_key_t pthread_key_t;
+#  define GNULIB_defined_pthread_tss_types 1
+# endif
+# undef PTHREAD_DESTRUCTOR_ITERATIONS
+# define PTHREAD_DESTRUCTOR_ITERATIONS GLWTHREAD_DESTRUCTOR_ITERATIONS
+#else
+# if !@HAVE_PTHREAD_T@
+#  if !GNULIB_defined_pthread_tss_types
+typedef void ** pthread_key_t;
+#   define GNULIB_defined_pthread_tss_types 1
+#  endif
+#  undef PTHREAD_DESTRUCTOR_ITERATIONS
+#  define PTHREAD_DESTRUCTOR_ITERATIONS 0
+# endif
+#endif
 
-#define PTHREAD_PROCESS_PRIVATE 0
-#define PTHREAD_PROCESS_SHARED 1
+/* =========== Spinlock types and macros =========== */
 
-#define PTHREAD_SCOPE_SYSTEM 0
-#define PTHREAD_SCOPE_PROCESS 1
+#if @GNULIB_PTHREAD_SPIN@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
+# include "windows-spin.h"
+# if @HAVE_PTHREAD_T@
+#  define pthread_spinlock_t rpl_pthread_spinlock_t
+# endif
+# if !GNULIB_defined_pthread_spin_types
+typedef glwthread_spinlock_t pthread_spinlock_t;
+#  define GNULIB_defined_pthread_spin_types 1
+# endif
+# undef PTHREAD_PROCESS_PRIVATE
+# undef PTHREAD_PROCESS_SHARED
+# define PTHREAD_PROCESS_PRIVATE 0
+# define PTHREAD_PROCESS_SHARED 1
+#else
+# if !@HAVE_PTHREAD_SPINLOCK_T@
+/* Approximate spinlocks with mutexes.  */
+#  if !GNULIB_defined_pthread_spin_types
+typedef pthread_mutex_t pthread_spinlock_t;
+#   define GNULIB_defined_pthread_spin_types 1
+#  endif
+# endif
+# if !@HAVE_PTHREAD_PROCESS_SHARED@
+#  define PTHREAD_PROCESS_PRIVATE 0
+#  define PTHREAD_PROCESS_SHARED 1
+# endif
+#endif
+
+/* =========== Other types and macros =========== */
+
+#if !@HAVE_PTHREAD_T@
+# if !GNULIB_defined_other_pthread_types
+typedef int pthread_barrier_t;
+typedef unsigned int pthread_barrierattr_t;
+#  define GNULIB_defined_other_pthread_types 1
+# endif
+#endif
+
+#if !defined PTHREAD_CANCELED
+
+# define PTHREAD_BARRIER_SERIAL_THREAD (-1)
+
+# define PTHREAD_CANCEL_DEFERRED 0
+# define PTHREAD_CANCEL_ASYNCHRONOUS 1
+
+# define PTHREAD_CANCEL_ENABLE 0
+# define PTHREAD_CANCEL_DISABLE 1
+
+# define PTHREAD_CANCELED ((void *) -1)
+
+# define PTHREAD_INHERIT_SCHED 0
+# define PTHREAD_EXPLICIT_SCHED 1
+
+# define PTHREAD_PRIO_NONE 0
+# define PTHREAD_PRIO_INHERIT 1
+# define PTHREAD_PRIO_PROTECT 2
+
+# define PTHREAD_SCOPE_SYSTEM 0
+# define PTHREAD_SCOPE_PROCESS 1
+
 #endif
 
 #if ! @HAVE_PTHREAD_T@
@@ -289,11 +507,7 @@ pthread_mutex_unlock (pthread_mutex_t *mutex)
 
 # if @GNULIB_PTHREAD@
 
-#  if !GNULIB_defined_pthread_spinlock_t
-
-/* Approximate spinlocks with mutexes.  */
-
-typedef pthread_mutex_t pthread_spinlock_t;
+#  if !GNULIB_defined_pthread_spinlock_functions
 
 _GL_PTHREAD_INLINE int
 pthread_spin_init (pthread_spinlock_t *lock, int pshared)
@@ -325,7 +539,7 @@ pthread_spin_unlock (pthread_spinlock_t *lock)
   return pthread_mutex_unlock (lock);
 }
 
-#   define GNULIB_defined_pthread_spinlock_t 1
+#   define GNULIB_defined_pthread_spinlock_functions 1
 #  endif
 
 # endif

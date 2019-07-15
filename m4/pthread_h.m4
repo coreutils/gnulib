@@ -1,4 +1,4 @@
-# pthread_h.m4 serial 3
+# pthread_h.m4 serial 4
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -32,6 +32,68 @@ AC_DEFUN([gl_PTHREAD_H],
   fi
   if test $ac_cv_type_pthread_spinlock_t != yes; then
     HAVE_PTHREAD_SPINLOCK_T=0
+  fi
+
+  dnl Constants may be defined as C preprocessor macros or as enum items.
+
+  AC_CACHE_CHECK([for PTHREAD_CREATE_DETACHED],
+    [gl_cv_const_PTHREAD_CREATE_DETACHED],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <pthread.h>
+            int x = PTHREAD_CREATE_DETACHED;
+          ]],
+          [[]])],
+       [gl_cv_const_PTHREAD_CREATE_DETACHED=yes],
+       [gl_cv_const_PTHREAD_CREATE_DETACHED=no])
+    ])
+  if test $gl_cv_const_PTHREAD_CREATE_DETACHED != yes; then
+    HAVE_PTHREAD_CREATE_DETACHED=0
+  fi
+
+  AC_CACHE_CHECK([for PTHREAD_MUTEX_RECURSIVE],
+    [gl_cv_const_PTHREAD_MUTEX_RECURSIVE],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <pthread.h>
+            int x = PTHREAD_MUTEX_RECURSIVE;
+          ]],
+          [[]])],
+       [gl_cv_const_PTHREAD_MUTEX_RECURSIVE=yes],
+       [gl_cv_const_PTHREAD_MUTEX_RECURSIVE=no])
+    ])
+  if test $gl_cv_const_PTHREAD_MUTEX_RECURSIVE != yes; then
+    HAVE_PTHREAD_MUTEX_RECURSIVE=0
+  fi
+
+  AC_CACHE_CHECK([for PTHREAD_MUTEX_ROBUST],
+    [gl_cv_const_PTHREAD_MUTEX_ROBUST],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <pthread.h>
+            int x = PTHREAD_MUTEX_ROBUST;
+          ]],
+          [[]])],
+       [gl_cv_const_PTHREAD_MUTEX_ROBUST=yes],
+       [gl_cv_const_PTHREAD_MUTEX_ROBUST=no])
+    ])
+  if test $gl_cv_const_PTHREAD_MUTEX_ROBUST != yes; then
+    HAVE_PTHREAD_MUTEX_ROBUST=0
+  fi
+
+  AC_CACHE_CHECK([for PTHREAD_PROCESS_SHARED],
+    [gl_cv_const_PTHREAD_PROCESS_SHARED],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <pthread.h>
+            int x = PTHREAD_PROCESS_SHARED;
+          ]],
+          [[]])],
+       [gl_cv_const_PTHREAD_PROCESS_SHARED=yes],
+       [gl_cv_const_PTHREAD_PROCESS_SHARED=no])
+    ])
+  if test $gl_cv_const_PTHREAD_PROCESS_SHARED != yes; then
+    HAVE_PTHREAD_PROCESS_SHARED=0
   fi
 
   dnl Check for declarations of anything we want to poison if the
@@ -88,8 +150,12 @@ AC_DEFUN([gl_PTHREAD_H_DEFAULTS],
   GNULIB_PTHREAD_SPIN=0;                 AC_SUBST([GNULIB_PTHREAD_SPIN])
   GNULIB_PTHREAD_MUTEX_TIMEDLOCK=0;      AC_SUBST([GNULIB_PTHREAD_MUTEX_TIMEDLOCK])
   dnl Assume proper GNU behavior unless another module says otherwise.
-  HAVE_PTHREAD_SPINLOCK_T=1;             AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])
   HAVE_PTHREAD_T=1;                      AC_SUBST([HAVE_PTHREAD_T])
+  HAVE_PTHREAD_SPINLOCK_T=1;             AC_SUBST([HAVE_PTHREAD_SPINLOCK_T])
+  HAVE_PTHREAD_CREATE_DETACHED=1;        AC_SUBST([HAVE_PTHREAD_CREATE_DETACHED])
+  HAVE_PTHREAD_MUTEX_RECURSIVE=1;        AC_SUBST([HAVE_PTHREAD_MUTEX_RECURSIVE])
+  HAVE_PTHREAD_MUTEX_ROBUST=1;           AC_SUBST([HAVE_PTHREAD_MUTEX_ROBUST])
+  HAVE_PTHREAD_PROCESS_SHARED=1;         AC_SUBST([HAVE_PTHREAD_PROCESS_SHARED])
   HAVE_PTHREAD_CREATE=1;                 AC_SUBST([HAVE_PTHREAD_CREATE])
   HAVE_PTHREAD_ATTR_INIT=1;              AC_SUBST([HAVE_PTHREAD_ATTR_INIT])
   HAVE_PTHREAD_ATTR_GETDETACHSTATE=1;    AC_SUBST([HAVE_PTHREAD_ATTR_GETDETACHSTATE])
