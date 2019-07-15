@@ -21,17 +21,16 @@
 #include <signal.h>
 
 #include <errno.h>
+#include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-
-#include "glthread/thread.h"
 
 #include "macros.h"
 
 #if USE_POSIX_THREADS
 
-static gl_thread_t main_thread;
-static gl_thread_t killer_thread;
+static pthread_t main_thread;
+static pthread_t killer_thread;
 
 static void *
 killer_thread_func (void *arg)
@@ -66,8 +65,8 @@ main (int argc, char *argv[])
   ASSERT (pthread_sigmask (SIG_BLOCK, &set, NULL) == 0);
 
   /* Request a SIGINT signal from another thread.  */
-  main_thread = gl_thread_self ();
-  ASSERT (glthread_create (&killer_thread, killer_thread_func, NULL) == 0);
+  main_thread = pthread_self ();
+  ASSERT (pthread_create (&killer_thread, NULL, killer_thread_func, NULL) == 0);
 
   /* Wait.  */
   sleep (2);
@@ -86,7 +85,7 @@ main (int argc, char *argv[])
 
   /* Clean up the thread.  This avoid a "ThreadSanitizer: thread leak" warning
      from "gcc -fsanitize=thread".  */
-  gl_thread_join (killer_thread, NULL);
+  ASSERT (pthread_join (killer_thread, NULL) == 0);
 
   return 0;
 }

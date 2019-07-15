@@ -6,7 +6,7 @@ tests/macros.h
 
 Depends-on:
 sleep
-thread
+pthread-thread
 
 configure.ac:
 
