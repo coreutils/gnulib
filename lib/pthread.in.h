@@ -362,59 +362,6 @@ typedef unsigned int pthread_barrierattr_t;
 
 #endif
 
-#if ! @HAVE_PTHREAD_T@
-
-# if @GNULIB_PTHREAD@
-
-#  if !GNULIB_defined_pthread_functions
-
-/* Provide substitutes for the thread functions that should work
-   adequately on a single-threaded implementation, where
-   pthread_create always fails.  The goal is to let programs compile
-   on non-pthread hosts with minimal runtime overhead.
-
-   Omit interfaces that have not been analyzed and for which we do not
-   know what to do, so that they elicit a compile-time error for
-   now.  */
-
-_GL_PTHREAD_INLINE int
-pthread_cond_destroy (pthread_cond_t *cond)
-{
-  /* COND is never seriously used.  */
-  return 0;
-}
-
-_GL_PTHREAD_INLINE int
-pthread_cond_init (pthread_cond_t *restrict cond,
-                   pthread_condattr_t const *restrict attr)
-{
-  /* COND is never seriously used.  */
-  return 0;
-}
-
-_GL_PTHREAD_INLINE int
-pthread_cond_signal (pthread_cond_t *cond)
-{
-  /* No threads can currently be blocked on COND.  */
-  return 0;
-}
-
-_GL_PTHREAD_INLINE int
-pthread_cond_wait (pthread_cond_t *restrict cond,
-                   pthread_mutex_t *restrict mutex)
-{
-  /* Properly-written applications never come here.  */
-  abort ();
-  return 0;
-}
-
-#   define GNULIB_defined_pthread_functions 1
-#  endif
-
-# endif
-
-#endif
-
 #if ! @HAVE_PTHREAD_SPINLOCK_T@
 
 # if @GNULIB_PTHREAD@
