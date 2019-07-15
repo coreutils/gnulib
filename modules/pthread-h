@@ -10,6 +10,7 @@ extensions
 extern-inline
 sched
 time
+threadlib
 
 configure.ac-early:
 AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
@@ -46,7 +47,7 @@ Include:
 <pthread.h>
 
 Link:
-$(LIB_PTHREAD)
+$(LIBTHREAD)
 
 License:
 LGPLv2+
