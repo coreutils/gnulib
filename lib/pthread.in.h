@@ -362,49 +362,6 @@ typedef unsigned int pthread_barrierattr_t;
 
 #endif
 
-#if ! @HAVE_PTHREAD_SPINLOCK_T@
-
-# if @GNULIB_PTHREAD@
-
-#  if !GNULIB_defined_pthread_spinlock_functions
-
-_GL_PTHREAD_INLINE int
-pthread_spin_init (pthread_spinlock_t *lock, int pshared)
-{
-  return pthread_mutex_init (lock, NULL);
-}
-
-_GL_PTHREAD_INLINE int
-pthread_spin_destroy (pthread_spinlock_t *lock)
-{
-  return pthread_mutex_destroy (lock);
-}
-
-_GL_PTHREAD_INLINE int
-pthread_spin_lock (pthread_spinlock_t *lock)
-{
-  return pthread_mutex_lock (lock);
-}
-
-_GL_PTHREAD_INLINE int
-pthread_spin_trylock (pthread_spinlock_t *lock)
-{
-  return pthread_mutex_trylock (lock);
-}
-
-_GL_PTHREAD_INLINE int
-pthread_spin_unlock (pthread_spinlock_t *lock)
-{
-  return pthread_mutex_unlock (lock);
-}
-
-#   define GNULIB_defined_pthread_spinlock_functions 1
-#  endif
-
-# endif
-
-#endif
-
 /* =========== Thread functions =========== */
 
 #if @GNULIB_PTHREAD_THREAD@
