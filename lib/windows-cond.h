@@ -27,16 +27,21 @@
 
 #include "windows-initguard.h"
 
+#ifndef _glwthread_linked_waitqueue_link_defined
+#define _glwthread_linked_waitqueue_link_defined
 struct glwthread_waitqueue_link
 {
   struct glwthread_waitqueue_link *wql_next;
   struct glwthread_waitqueue_link *wql_prev;
 };
+#endif /* _glwthread_linked_waitqueue_link_defined */
+
 typedef struct
         {
           struct glwthread_waitqueue_link wq_list; /* circular list of waiting threads */
         }
         glwthread_linked_waitqueue_t;
+
 typedef struct
         {
           glwthread_initguard_t guard; /* protects the initialization */
