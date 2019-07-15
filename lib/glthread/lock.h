@@ -410,8 +410,8 @@ extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
-# include "windows-initguard.h"
 # include "windows-mutex.h"
+# include "windows-rwlock.h"
 # include "windows-recmutex.h"
 # include "windows-once.h"
 
@@ -450,48 +450,23 @@ typedef glwthread_mutex_t gl_lock_t;
 
 /* ------------------------- gl_rwlock_t datatype ------------------------- */
 
-/* It is impossible to implement read-write locks using plain locks, without
-   introducing an extra thread dedicated to managing read-write locks.
-   Therefore here we need to use the low-level Event type.  */
-
-typedef struct
-        {
-          HANDLE *array; /* array of waiting threads, each represented by an event */
-          unsigned int count; /* number of waiting threads */
-          unsigned int alloc; /* length of allocated array */
-          unsigned int offset; /* index of first waiting thread in array */
-        }
-        gl_carray_waitqueue_t;
-typedef struct
-        {
-          glwthread_initguard_t guard; /* protects the initialization */
-          CRITICAL_SECTION lock; /* protects the remaining fields */
-          gl_carray_waitqueue_t waiting_readers; /* waiting readers */
-          gl_carray_waitqueue_t waiting_writers; /* waiting writers */
-          int runcount; /* number of readers running, or -1 when a writer runs */
-        }
-        gl_rwlock_t;
+typedef glwthread_rwlock_t gl_rwlock_t;
 # define gl_rwlock_define(STORAGECLASS, NAME) \
     STORAGECLASS gl_rwlock_t NAME;
 # define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
     STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
 # define gl_rwlock_initializer \
-    { GLWTHREAD_INITGUARD_INIT }
+    GLWTHREAD_RWLOCK_INIT
 # define glthread_rwlock_init(LOCK) \
-    (glthread_rwlock_init_func (LOCK), 0)
+    (glwthread_rwlock_init (LOCK), 0)
 # define glthread_rwlock_rdlock(LOCK) \
-    glthread_rwlock_rdlock_func (LOCK)
+    glwthread_rwlock_rdlock (LOCK)
 # define glthread_rwlock_wrlock(LOCK) \
-    glthread_rwlock_wrlock_func (LOCK)
+    glwthread_rwlock_wrlock (LOCK)
 # define glthread_rwlock_unlock(LOCK) \
-    glthread_rwlock_unlock_func (LOCK)
+    glwthread_rwlock_unlock (LOCK)
 # define glthread_rwlock_destroy(LOCK) \
-    glthread_rwlock_destroy_func (LOCK)
-extern void glthread_rwlock_init_func (gl_rwlock_t *lock);
-extern int glthread_rwlock_rdlock_func (gl_rwlock_t *lock);
-extern int glthread_rwlock_wrlock_func (gl_rwlock_t *lock);
-extern int glthread_rwlock_unlock_func (gl_rwlock_t *lock);
-extern int glthread_rwlock_destroy_func (gl_rwlock_t *lock);
+    glwthread_rwlock_destroy (LOCK)
 
 /* --------------------- gl_recursive_lock_t datatype --------------------- */
 

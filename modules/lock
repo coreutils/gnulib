@@ -11,6 +11,7 @@ Depends-on:
 extensions
 threadlib
 windows-mutex    [test $gl_threads_api = windows]
+windows-rwlock   [test $gl_threads_api = windows]
 windows-recmutex [test $gl_threads_api = windows]
 windows-once     [test $gl_threads_api = windows]
 
