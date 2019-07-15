@@ -1,0 +1,14 @@
+Files:
+tests/test-pthread-mutex.c
+tests/macros.h
+
+Depends-on:
+pthread-thread
+sched_yield
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-pthread-mutex
+check_PROGRAMS += test-pthread-mutex
+test_pthread_mutex_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
