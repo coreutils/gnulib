@@ -25,7 +25,7 @@
 
 #include <time.h>
 
-#include "windows-spinlock.h"
+#include "windows-initguard.h"
 
 struct glwthread_waitqueue_link
 {
@@ -39,13 +39,13 @@ typedef struct
         glwthread_linked_waitqueue_t;
 typedef struct
         {
-          glwthread_spinlock_t guard; /* protects the initialization */
+          glwthread_initguard_t guard; /* protects the initialization */
           CRITICAL_SECTION lock; /* protects the remaining fields */
           glwthread_linked_waitqueue_t waiters; /* waiting threads */
         }
         glwthread_cond_t;
 
-#define GLWTHREAD_COND_INIT { GLWTHREAD_SPINLOCK_INIT }
+#define GLWTHREAD_COND_INIT { GLWTHREAD_INITGUARD_INIT }
 
 #ifdef __cplusplus
 extern "C" {

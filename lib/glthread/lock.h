@@ -410,7 +410,7 @@ extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 # include <windows.h>
 
-# include "windows-spinlock.h"
+# include "windows-initguard.h"
 # include "windows-mutex.h"
 # include "windows-recmutex.h"
 # include "windows-once.h"
@@ -464,7 +464,7 @@ typedef struct
         gl_carray_waitqueue_t;
 typedef struct
         {
-          glwthread_spinlock_t guard; /* protects the initialization */
+          glwthread_initguard_t guard; /* protects the initialization */
           CRITICAL_SECTION lock; /* protects the remaining fields */
           gl_carray_waitqueue_t waiting_readers; /* waiting readers */
           gl_carray_waitqueue_t waiting_writers; /* waiting writers */
@@ -476,7 +476,7 @@ typedef struct
 # define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
     STORAGECLASS gl_rwlock_t NAME = gl_rwlock_initializer;
 # define gl_rwlock_initializer \
-    { GLWTHREAD_SPINLOCK_INIT }
+    { GLWTHREAD_INITGUARD_INIT }
 # define glthread_rwlock_init(LOCK) \
     (glthread_rwlock_init_func (LOCK), 0)
 # define glthread_rwlock_rdlock(LOCK) \

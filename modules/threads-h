@@ -11,7 +11,7 @@ lib/windows-timedrecmutex.h
 lib/windows-once.h
 lib/windows-cond.h
 lib/windows-tls.h
-lib/windows-spinlock.h
+lib/windows-initguard.h
 m4/threads.m4
 m4/threadlib.m4
 m4/yield.m4

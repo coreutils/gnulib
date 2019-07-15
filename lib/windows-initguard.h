@@ -1,4 +1,4 @@
-/* Spinlocks (native Windows implementation).
+/* Init guards, somewhat like spinlocks (native Windows implementation).
    Copyright (C) 2005-2019 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify
@@ -17,8 +17,8 @@
 /* Written by Bruno Haible <bruno@clisp.org>, 2005.
    Based on GCC's gthr-win32.h.  */
 
-#ifndef _WINDOWS_SPINLOCK_H
-#define _WINDOWS_SPINLOCK_H
+#ifndef _WINDOWS_INITGUARD_H
+#define _WINDOWS_INITGUARD_H
 
 #define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #include <windows.h>
@@ -28,8 +28,8 @@ typedef struct
           volatile int done;
           volatile LONG started;
         }
-        glwthread_spinlock_t;
+        glwthread_initguard_t;
 
-#define GLWTHREAD_SPINLOCK_INIT { 0, -1 }
+#define GLWTHREAD_INITGUARD_INIT { 0, -1 }
 
-#endif /* _WINDOWS_SPINLOCK_H */
+#endif /* _WINDOWS_INITGUARD_H */

@@ -4,7 +4,7 @@ Plain mutexes (native Windows implementation).
 Files:
 lib/windows-mutex.h
 lib/windows-mutex.c
-lib/windows-spinlock.h
+lib/windows-initguard.h
 
 Depends-on:
 

@@ -4,7 +4,7 @@ Condition variables (native Windows implementation).
 Files:
 lib/windows-cond.h
 lib/windows-cond.c
-lib/windows-spinlock.h
+lib/windows-initguard.h
 
 Depends-on:
 stdbool

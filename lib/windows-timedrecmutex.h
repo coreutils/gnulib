@@ -25,7 +25,7 @@
 
 #include <time.h>
 
-#include "windows-spinlock.h"
+#include "windows-initguard.h"
 
 /* The native Windows documentation says that CRITICAL_SECTION already
    implements a recursive lock.  But we need not rely on it: It's easy to
@@ -33,7 +33,7 @@
 
 typedef struct
         {
-          glwthread_spinlock_t guard; /* protects the initialization */
+          glwthread_initguard_t guard; /* protects the initialization */
           DWORD owner;
           unsigned long depth;
           HANDLE event;
@@ -41,7 +41,7 @@ typedef struct
         }
         glwthread_timedrecmutex_t;
 
-#define GLWTHREAD_TIMEDRECMUTEX_INIT { GLWTHREAD_SPINLOCK_INIT, 0, 0 }
+#define GLWTHREAD_TIMEDRECMUTEX_INIT { GLWTHREAD_INITGUARD_INIT, 0, 0 }
 
 #ifdef __cplusplus
 extern "C" {

@@ -23,16 +23,16 @@
 #define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #include <windows.h>
 
-#include "windows-spinlock.h"
+#include "windows-initguard.h"
 
 typedef struct
         {
-          glwthread_spinlock_t guard; /* protects the initialization */
+          glwthread_initguard_t guard; /* protects the initialization */
           CRITICAL_SECTION lock;
         }
         glwthread_mutex_t;
 
-#define GLWTHREAD_MUTEX_INIT { GLWTHREAD_SPINLOCK_INIT }
+#define GLWTHREAD_MUTEX_INIT { GLWTHREAD_INITGUARD_INIT }
 
 #ifdef __cplusplus
 extern "C" {

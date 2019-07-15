@@ -23,7 +23,7 @@
 #define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #include <windows.h>
 
-#include "windows-spinlock.h"
+#include "windows-initguard.h"
 
 /* The native Windows documentation says that CRITICAL_SECTION already
    implements a recursive lock.  But we need not rely on it: It's easy to
@@ -31,14 +31,14 @@
 
 typedef struct
         {
-          glwthread_spinlock_t guard; /* protects the initialization */
+          glwthread_initguard_t guard; /* protects the initialization */
           DWORD owner;
           unsigned long depth;
           CRITICAL_SECTION lock;
         }
         glwthread_recmutex_t;
 
-#define GLWTHREAD_RECMUTEX_INIT { GLWTHREAD_SPINLOCK_INIT, 0, 0 }
+#define GLWTHREAD_RECMUTEX_INIT { GLWTHREAD_INITGUARD_INIT, 0, 0 }
 
 #ifdef __cplusplus
 extern "C" {

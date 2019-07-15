@@ -4,7 +4,7 @@ Plain recursive mutexes (native Windows implementation).
 Files:
 lib/windows-recmutex.h
 lib/windows-recmutex.c
-lib/windows-spinlock.h
+lib/windows-initguard.h
 
 Depends-on:
 

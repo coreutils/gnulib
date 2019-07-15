@@ -4,7 +4,7 @@ Timed recursive mutexes (native Windows implementation).
 Files:
 lib/windows-timedrecmutex.h
 lib/windows-timedrecmutex.c
-lib/windows-spinlock.h
+lib/windows-initguard.h
 
 Depends-on:
 errno

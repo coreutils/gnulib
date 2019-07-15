@@ -4,7 +4,7 @@ Timed mutexes (native Windows implementation).
 Files:
 lib/windows-timedmutex.h
 lib/windows-timedmutex.c
-lib/windows-spinlock.h
+lib/windows-initguard.h
 
 Depends-on:
 errno
