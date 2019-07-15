@@ -2,16 +2,18 @@ Description:
 Implement the most essential subset of the pthreads library.
 
 Files:
-lib/pthread.c
 
 Depends-on:
 pthread-h
+pthread-thread
+pthread-once
+pthread-mutex
+pthread-rwlock
+pthread-cond
+pthread-tss
+pthread-spin
 
 configure.ac:
-if test $HAVE_PTHREAD_H = 0 || test $HAVE_PTHREAD_T = 0 || test $HAVE_PTHREAD_SPINLOCK_T = 0; then
-  AC_LIBOBJ([pthread])
-fi
-gl_MODULE_INDICATOR([pthread])
 
 Makefile.am:
 

@@ -77,14 +77,6 @@
 
 /* The definition of _GL_WARN_ON_USE is copied here.  */
 
-#ifndef _GL_INLINE_HEADER_BEGIN
- #error "Please include config.h first."
-#endif
-_GL_INLINE_HEADER_BEGIN
-#ifndef _GL_PTHREAD_INLINE
-# define _GL_PTHREAD_INLINE _GL_INLINE
-#endif
-
 /* =========== Thread types and macros =========== */
 
 #if @GNULIB_PTHREAD_THREAD@ && (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
@@ -1719,8 +1711,6 @@ _GL_WARN_ON_USE (pthread_spin_destroy, "pthread_spin_destroy is not portable - "
 # endif
 #endif
 
-
-_GL_INLINE_HEADER_END
 
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
 #endif /* _@GUARD_PREFIX@_PTHREAD_H_ */
