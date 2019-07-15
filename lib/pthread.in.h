@@ -409,30 +409,6 @@ pthread_cond_wait (pthread_cond_t *restrict cond,
 }
 
 _GL_PTHREAD_INLINE int
-pthread_create (pthread_t *restrict thread,
-                pthread_attr_t const *restrict attr,
-                void * (*start_routine) (void*), void *restrict arg)
-{
-  /* Do not create a thread.  */
-  return EAGAIN;
-}
-
-_GL_PTHREAD_INLINE void
-pthread_exit (void *value)
-{
-  /* There is just one thread, so the process exits.  */
-  exit (0);
-}
-
-_GL_PTHREAD_INLINE int
-pthread_join (pthread_t thread, void **pvalue)
-{
-  /* Properly-written applications never come here.  */
-  abort ();
-  return 0;
-}
-
-_GL_PTHREAD_INLINE int
 pthread_mutexattr_destroy (pthread_mutexattr_t *attr)
 {
   return 0;
