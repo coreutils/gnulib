@@ -23,7 +23,7 @@
 #define DO_TEST_TIMEDCOND 1
 
 
-/* Whether to help the scheduler through explicit yield().
+/* Whether to help the scheduler through explicit thrd_yield().
    Uncomment this to see if the operating system has a fair scheduler.  */
 #define EXPLICIT_YIELD 1
 
