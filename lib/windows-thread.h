@@ -38,7 +38,10 @@ typedef struct glwthread_thread_struct *glwthread_thread_t;
 extern "C" {
 #endif
 
+/* attr is a bit mask, consisting of the following bits: */
+#define GLWTHREAD_ATTR_DETACHED 1
 extern int glwthread_thread_create (glwthread_thread_t *threadp,
+                                    unsigned int attr,
                                     void * (*func) (void *), void *arg);
 extern int glwthread_thread_join (glwthread_thread_t thread, void **retvalp);
 extern int glwthread_thread_detach (glwthread_thread_t thread);

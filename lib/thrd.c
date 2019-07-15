@@ -289,7 +289,7 @@ thrd_create (thrd_t *threadp, thrd_start_t mainfunc, void *arg)
   pthread_main_arg->arg = arg;
 
   {
-    int err = glwthread_thread_create (threadp,
+    int err = glwthread_thread_create (threadp, 0,
                                        pthread_main_func, pthread_main_arg);
     if (err != 0)
       free (pthread_main_arg);

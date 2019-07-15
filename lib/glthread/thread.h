@@ -237,7 +237,7 @@ extern "C" {
 
 typedef glwthread_thread_t gl_thread_t;
 # define glthread_create(THREADP, FUNC, ARG) \
-    glwthread_thread_create (THREADP, FUNC, ARG)
+    glwthread_thread_create (THREADP, 0, FUNC, ARG)
 # define glthread_sigmask(HOW, SET, OSET) \
     /* unsupported */ 0
 # define glthread_join(THREAD, RETVALP) \

@@ -152,7 +152,7 @@ wrapper_func (void *varg)
 }
 
 int
-glwthread_thread_create (glwthread_thread_t *threadp,
+glwthread_thread_create (glwthread_thread_t *threadp, unsigned int attr,
                          void * (*func) (void *), void *arg)
 {
   struct glwthread_thread_struct *thread =
@@ -162,7 +162,7 @@ glwthread_thread_create (glwthread_thread_t *threadp,
     return ENOMEM;
   thread->handle = NULL;
   InitializeCriticalSection (&thread->handle_lock);
-  thread->detached = FALSE;
+  thread->detached = (attr & GLWTHREAD_ATTR_DETACHED ? TRUE : FALSE);
   thread->result = NULL; /* just to be deterministic */
   thread->func = func;
   thread->arg = arg;
