@@ -138,7 +138,9 @@ _GL_INLINE_HEADER_BEGIN
 
 #if ! @HAVE_PTHREAD_T@
 
-# if !GNULIB_defined_pthread_functions
+# if @GNULIB_PTHREAD@
+
+#  if !GNULIB_defined_pthread_functions
 
 /* Provide substitutes for the thread functions that should work
    adequately on a single-threaded implementation, where
@@ -268,7 +270,9 @@ pthread_mutex_unlock (pthread_mutex_t *mutex)
   return 0;
 }
 
-#  define GNULIB_defined_pthread_functions 1
+#   define GNULIB_defined_pthread_functions 1
+#  endif
+
 # endif
 
 #else
@@ -293,7 +297,9 @@ _GL_WARN_ON_USE (pthread_mutex_timedlock, "pthread_mutex_timedlock is unportable
 
 #if ! @HAVE_PTHREAD_SPINLOCK_T@
 
-# if !GNULIB_defined_pthread_spinlock_t
+# if @GNULIB_PTHREAD@
+
+#  if !GNULIB_defined_pthread_spinlock_t
 
 /* Approximate spinlocks with mutexes.  */
 
@@ -329,7 +335,9 @@ pthread_spin_unlock (pthread_spinlock_t *lock)
   return pthread_mutex_unlock (lock);
 }
 
-#  define GNULIB_defined_pthread_spinlock_t 1
+#   define GNULIB_defined_pthread_spinlock_t 1
+#  endif
+
 # endif
 
 #endif

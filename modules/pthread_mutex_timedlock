@@ -6,7 +6,7 @@ lib/pthread_mutex_timedlock.c
 m4/pthread_mutex_timedlock.m4
 
 Depends-on:
-pthread
+pthread-h
 nanosleep       [test $HAVE_PTHREAD_T = 1 && test $HAVE_PTHREAD_MUTEX_TIMEDLOCK = 0]
 
 configure.ac:
