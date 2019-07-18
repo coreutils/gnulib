@@ -565,7 +565,7 @@ debug_print_relative_time (char const *item, parser_control const *pc)
 
 /* We want a reentrant parser, even if the TZ manipulation and the calls to
    localtime and gmtime are not reentrant.  */
-%pure-parser
+%define api.pure
 %parse-param { parser_control *pc }
 %lex-param { parser_control *pc }
 
