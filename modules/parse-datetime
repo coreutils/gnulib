@@ -38,7 +38,7 @@ parse-datetime.c: parse-datetime.y
 	                              y.tab.c parse-datetime.c \
 	                              y.tab.h parse-datetime.h \
 	                              y.output parse-datetime.output \
-	                              -- $(YACC) $(YFLAGS) $(AM_YFLAGS) && \
+	                              -- $(PARSE_DATETIME_BISON) -y -d $(YFLAGS) $(AM_YFLAGS) && \
 	sed -e 's|".*/parse-datetime.y"|"parse-datetime.y"|' \
 	 < parse-datetime.c > parse-datetime.c-t && \
 	rm -f parse-datetime.c && \
