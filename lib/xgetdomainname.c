@@ -28,6 +28,9 @@
 /* Get errno.  */
 #include <errno.h>
 
+/* Get strlen.  */
+#include <string.h>
+
 /* Get free.  */
 #include <stdlib.h>
 
