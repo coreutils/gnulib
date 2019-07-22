@@ -78,7 +78,7 @@ cond_routine (void *arg)
   return NULL;
 }
 
-void
+static void
 test_cond ()
 {
   int remain = 2;

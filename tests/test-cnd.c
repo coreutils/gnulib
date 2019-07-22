@@ -78,7 +78,7 @@ cnd_wait_routine (void *arg)
   return 0;
 }
 
-void
+static void
 test_cnd_wait ()
 {
   struct timespec remain;

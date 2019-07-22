@@ -279,14 +279,14 @@ struct argp test_argp = {
 int test_number;
 unsigned failure_count = 0;
 
-void
+static void
 fail (const char *msg)
 {
   fprintf (stderr, "Test %d: %s\n", test_number, msg);
   failure_count++;
 }
 
-void
+static void
 test1 (struct argp *argp)
 {
   INIT_TEST1 (1, "--test");
@@ -296,7 +296,7 @@ test1 (struct argp *argp)
     fail ("option not processed");
 }
 
-void
+static void
 test2 (struct argp *argp)
 {
   INIT_TEST1 (2, "-t");
@@ -306,7 +306,7 @@ test2 (struct argp *argp)
     fail ("option not processed");
 }
 
-void
+static void
 test_file (struct argp *argp, int argc, char **argv, struct test_args *args)
 {
   if (argp_parse (argp, argc, argv, 0, NULL, args))
@@ -317,35 +317,35 @@ test_file (struct argp *argp, int argc, char **argv, struct test_args *args)
     fail ("option processed incorrectly");
 }
 
-void
+static void
 test3 (struct argp *argp)
 {
   INIT_TEST1 (3, "--file=FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
-void
+static void
 test4 (struct argp *argp)
 {
   INIT_TEST2 (4, "--file", "FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
-void
+static void
 test5 (struct argp *argp)
 {
   INIT_TEST1 (5, "--input=FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
-void
+static void
 test6 (struct argp *argp)
 {
   INIT_TEST2 (6, "--input", "FILE");
   test_file (argp, argc, argv, &test_args);
 }
 
-void
+static void
 test_optional (struct argp *argp, int argc, char **argv,
                struct test_args *args, const char *val, const char *a)
 {
@@ -372,49 +372,49 @@ test_optional (struct argp *argp, int argc, char **argv,
     }
 }
 
-void
+static void
 test7 (struct argp *argp)
 {
   INIT_TEST1 (7, "-oARG");
   test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
-void
+static void
 test8 (struct argp *argp)
 {
   INIT_TEST2 (8, "-o", "ARG");
   test_optional (argp, argc, argv, &test_args, NULL, "ARG");
 }
 
-void
+static void
 test9 (struct argp *argp)
 {
   INIT_TEST1 (9, "--optional=ARG");
   test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
-void
+static void
 test10 (struct argp *argp)
 {
   INIT_TEST2 (10, "--optional", "ARG");
   test_optional (argp, argc, argv, &test_args, NULL, "ARG");
 }
 
-void
+static void
 test11 (struct argp *argp)
 {
   INIT_TEST1 (11, "--optiona=ARG");
   test_optional (argp, argc, argv, &test_args, "ARG", NULL);
 }
 
-void
+static void
 test12 (struct argp *argp)
 {
   INIT_TEST3 (12, "--option", "--optional=OPT", "FILE");
   test_optional (argp, argc, argv, &test_args, "OPT", "FILE");
 }
 
-void
+static void
 test13 (struct argp *argp)
 {
   INIT_TEST1 (1, "--cantiga");
@@ -424,7 +424,7 @@ test13 (struct argp *argp)
     fail ("option not processed");
 }
 
-void
+static void
 test14 (struct argp *argp)
 {
   INIT_TEST1 (1, "--limerick");
@@ -434,7 +434,7 @@ test14 (struct argp *argp)
     fail ("option not processed");
 }
 
-void
+static void
 test15 (struct argp *argp)
 {
   INIT_TEST2 (1, "-r", "FILE");
@@ -446,7 +446,7 @@ test15 (struct argp *argp)
 
 typedef void (*test_fp) (struct argp *argp);
 
-test_fp test_fun[] = {
+static test_fp test_fun[] = {
   test1,  test2,  test3,  test4,
   test5,  test6,  test7,  test8,
   test9,  test10, test11, test12,
