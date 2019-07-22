@@ -83,7 +83,7 @@ pthread_cond_wait_routine (void *arg)
   return NULL;
 }
 
-void
+static void
 test_pthread_cond_wait ()
 {
   struct timespec remain;
