@@ -362,6 +362,8 @@ backupfile_internal (int dir_fd, char const *file,
             break;
 
           case BACKUP_NOMEM:
+            if (dirp)
+              closedir (dirp);
             free (s);
             errno = ENOMEM;
             return NULL;
