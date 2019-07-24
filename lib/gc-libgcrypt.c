@@ -304,9 +304,11 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
       gcryalg = GCRY_MD_RMD160;
       break;
 
+#ifdef GNULIB_GC_SM3
     case GC_SM3:
       gcryalg = GCRY_MD_SM3;
       break;
+#endif
 
     default:
       rc = GC_INVALID_HASH;
