@@ -1160,34 +1160,37 @@ static table const time_zone_table[] =
 
 /* Military time zone table.
 
+   RFC 822 got these backwards, but RFC 5322 makes the incorrect
+   treatment optional, so do them the right way here.
+
    Note 'T' is a special case, as it is used as the separator in ISO
    8601 date and time of day representation.  */
 static table const military_table[] =
 {
-  { "A", tZONE, -HOUR ( 1) },
-  { "B", tZONE, -HOUR ( 2) },
-  { "C", tZONE, -HOUR ( 3) },
-  { "D", tZONE, -HOUR ( 4) },
-  { "E", tZONE, -HOUR ( 5) },
-  { "F", tZONE, -HOUR ( 6) },
-  { "G", tZONE, -HOUR ( 7) },
-  { "H", tZONE, -HOUR ( 8) },
-  { "I", tZONE, -HOUR ( 9) },
-  { "K", tZONE, -HOUR (10) },
-  { "L", tZONE, -HOUR (11) },
-  { "M", tZONE, -HOUR (12) },
-  { "N", tZONE,  HOUR ( 1) },
-  { "O", tZONE,  HOUR ( 2) },
-  { "P", tZONE,  HOUR ( 3) },
-  { "Q", tZONE,  HOUR ( 4) },
-  { "R", tZONE,  HOUR ( 5) },
-  { "S", tZONE,  HOUR ( 6) },
+  { "A", tZONE,  HOUR ( 1) },
+  { "B", tZONE,  HOUR ( 2) },
+  { "C", tZONE,  HOUR ( 3) },
+  { "D", tZONE,  HOUR ( 4) },
+  { "E", tZONE,  HOUR ( 5) },
+  { "F", tZONE,  HOUR ( 6) },
+  { "G", tZONE,  HOUR ( 7) },
+  { "H", tZONE,  HOUR ( 8) },
+  { "I", tZONE,  HOUR ( 9) },
+  { "K", tZONE,  HOUR (10) },
+  { "L", tZONE,  HOUR (11) },
+  { "M", tZONE,  HOUR (12) },
+  { "N", tZONE, -HOUR ( 1) },
+  { "O", tZONE, -HOUR ( 2) },
+  { "P", tZONE, -HOUR ( 3) },
+  { "Q", tZONE, -HOUR ( 4) },
+  { "R", tZONE, -HOUR ( 5) },
+  { "S", tZONE, -HOUR ( 6) },
   { "T", 'T',    0 },
-  { "U", tZONE,  HOUR ( 8) },
-  { "V", tZONE,  HOUR ( 9) },
-  { "W", tZONE,  HOUR (10) },
-  { "X", tZONE,  HOUR (11) },
-  { "Y", tZONE,  HOUR (12) },
+  { "U", tZONE, -HOUR ( 8) },
+  { "V", tZONE, -HOUR ( 9) },
+  { "W", tZONE, -HOUR (10) },
+  { "X", tZONE, -HOUR (11) },
+  { "Y", tZONE, -HOUR (12) },
   { "Z", tZONE,  HOUR ( 0) },
   { NULL, 0, 0 }
 };
