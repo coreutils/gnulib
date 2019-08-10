@@ -55,7 +55,6 @@ BUILT_SOURCES += configmake.h
 CLEANFILES += configmake.h configmake.h-t
 
 Include:
-/* Include only after all system include files.  */
 "configmake.h"
 
 License:
