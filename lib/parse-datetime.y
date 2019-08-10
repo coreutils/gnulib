@@ -754,14 +754,14 @@ zone:
     tZONE
       { pc->time_zone = $1; }
   | 'T'
-      { pc->time_zone = HOUR (7); }
+      { pc->time_zone = -HOUR (7); }
   | tZONE relunit_snumber
       { pc->time_zone = $1;
         if (! apply_relative_time (pc, $2, 1)) YYABORT;
         debug_print_relative_time (_("relative"), pc);
       }
   | 'T' relunit_snumber
-      { pc->time_zone = HOUR (7);
+      { pc->time_zone = -HOUR (7);
         if (! apply_relative_time (pc, $2, 1)) YYABORT;
         debug_print_relative_time (_("relative"), pc);
       }
