@@ -769,7 +769,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 static int
 vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 {
-  /* Documentation: https://man.openbsd.org/sysctl.3  */
+  /* Documentation: https://man.openbsd.org/sysctl.2  */
   int info_path[] = { CTL_KERN, KERN_PROC_VMMAP, getpid () };
   size_t len;
   size_t pagesize;

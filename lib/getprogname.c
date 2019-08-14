@@ -233,12 +233,13 @@ getprogname (void)
         {
           char *name = buf.pr_fname;
           size_t namesize = sizeof buf.pr_fname;
+          /* It may not be NUL-terminated.  */
           char *namenul = memchr (name, '\0', namesize);
           size_t namelen = namenul ? namenul - name : namesize;
           char *namecopy = malloc (namelen + 1);
           if (namecopy)
             {
-              namecopy[namelen] = 0;
+              namecopy[namelen] = '\0';
               return memcpy (namecopy, name, namelen);
             }
         }
