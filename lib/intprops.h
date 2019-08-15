@@ -366,7 +366,7 @@
 #define _GL_BUILTIN_MUL_OVERFLOW(a, b, r) \
   ((!_GL_SIGNED_TYPE_OR_EXPR (*(r)) && EXPR_SIGNED (a) && EXPR_SIGNED (b) \
     && _GL_INT_MULTIPLY_RANGE_OVERFLOW (a, b, 0, (__typeof__ (*(r))) -1)) \
-   ? (__builtin_mul_overflow (a, b, r), 1) \
+   ? ((void) __builtin_mul_overflow (a, b, r), 1) \
    : __builtin_mul_overflow (a, b, r))
 
 /* Nonzero if this compiler has GCC bug 68193 or Clang bug 25390.  See:
@@ -540,7 +540,9 @@
              : (tmax) / -(b)) \
             <= -1 - (a))) \
       : INT_NEGATE_OVERFLOW (_GL_INT_CONVERT (b, tmin)) && (b) == -1 \
-      ? (EXPR_SIGNED (a) ? 0 < (a) + (tmin) : (a) && -1 - (tmin) < (a) - 1) \
+      ? (EXPR_SIGNED (a) \
+	 ? 0 < (a) + (tmin) \
+	 : 0 < (a) && -1 - (tmin) < (a) - 1) \
       : (tmin) / (b) < (a)) \
    : (b) == 0 \
    ? 0 \
