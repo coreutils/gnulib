@@ -46,7 +46,8 @@ $GNUORG Copyright/request-assign.future		doc/Copyright
 $GNUORG Copyright/request-assign.program	doc/Copyright
 $GNUORG Copyright/request-disclaim.changes	doc/Copyright
 
-$LIBCSRC include/intprops.h             lib
+# Temporarily newer in Gnulib than in glibc.
+#$LIBCSRC include/intprops.h             lib
 $LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
 $LIBCSRC posix/regex.h			lib
