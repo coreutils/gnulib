@@ -41,7 +41,7 @@ glwthread_spin_lock (glwthread_spinlock_t *lock)
 }
 
 int
-glwthread_spinlock_trylock (glwthread_spinlock_t *lock)
+glwthread_spin_trylock (glwthread_spinlock_t *lock)
 {
   /* If lock->word is 0, then replace it with 1.  */
   /* InterlockedCompareExchange
