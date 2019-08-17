@@ -416,10 +416,10 @@
                         unsigned long int, 0, ULONG_MAX), \
      long long int: \
        _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned long long int, \
-                        long long int, LLONG_MIN, LLONG_MAX),
+                        long long int, LLONG_MIN, LLONG_MAX), \
      unsigned long long int: \
        _GL_INT_OP_CALC (a, b, r, op, overflow, unsigned long long int, \
-                        unsigned long long int, ULLONG_MIN, ULLONG_MAX)))
+                        unsigned long long int, 0, ULLONG_MAX)))
 #else
 /* Store the low-order bits of A <op> B into *R, where OP specifies
    the operation and OVERFLOW the overflow predicate.  If *R is
