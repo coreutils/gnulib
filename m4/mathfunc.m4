@@ -1,4 +1,4 @@
-# mathfunc.m4 serial 11
+# mathfunc.m4 serial 12
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,7 +60,7 @@ AC_DEFUN([gl_MATHFUNC],
              #endif
              #include <math.h>
              $4
-             $2 (*funcptr) $3 = ]func[;
+             $2 (* volatile funcptr) $3 = ]func[;
              int i_ret;
              float f_ret;
              double d_ret;
@@ -85,7 +85,7 @@ AC_DEFUN([gl_MATHFUNC],
                #endif
                #include <math.h>
                $4
-               $2 (*funcptr) $3 = ]func[;
+               $2 (* volatile funcptr) $3 = ]func[;
                int i_ret;
                float f_ret;
                double d_ret;

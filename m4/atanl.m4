@@ -1,4 +1,4 @@
-# atanl.m4 serial 8
+# atanl.m4 serial 9
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_ATANL],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
-             long double (*funcptr) (long double) = atanl;
+             long double (* volatile funcptr) (long double) = atanl;
              long double x;]],
            [[return funcptr (x) > 1
                     || atanl (x) > 1;]])],
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_ATANL],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
-               long double (*funcptr) (long double) = atanl;
+               long double (* volatile funcptr) (long double) = atanl;
                long double x;]],
              [[return funcptr (x) > 1
                       || atanl (x) > 1;]])],

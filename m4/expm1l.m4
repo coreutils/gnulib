@@ -1,4 +1,4 @@
-# expm1l.m4 serial 4
+# expm1l.m4 serial 5
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([gl_FUNC_EXPM1L],
              "C"
              #endif
              long double expm1l (long double);
-             long double (*funcptr) (long double) = expm1l;
+             long double (* volatile funcptr) (long double) = expm1l;
              long double x;]],
            [[return funcptr (x) > 0.5
                     || expm1l (x) > 0.5;]])],
@@ -51,7 +51,7 @@ AC_DEFUN([gl_FUNC_EXPM1L],
                "C"
                #endif
                long double expm1l (long double);
-               long double (*funcptr) (long double) = expm1l;
+               long double (* volatile funcptr) (long double) = expm1l;
                long double x;]],
              [[return funcptr (x) > 0.5
                       || expm1l (x) > 0.5;]])],

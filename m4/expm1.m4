@@ -1,4 +1,4 @@
-# expm1.m4 serial 7
+# expm1.m4 serial 8
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,7 +22,7 @@ AC_DEFUN([gl_FUNC_EXPM1],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
-             double (*funcptr) (double) = expm1;
+             double (* volatile funcptr) (double) = expm1;
              double x;]],
            [[return funcptr (x) > 0.5
                     || expm1 (x) > 0.5;]])],
@@ -41,7 +41,7 @@ AC_DEFUN([gl_FUNC_EXPM1],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
-               double (*funcptr) (double) = expm1;
+               double (* volatile funcptr) (double) = expm1;
                double x;]],
              [[return funcptr (x) > 0.5
                       || expm1 (x) > 0.5;]])],

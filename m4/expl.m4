@@ -1,4 +1,4 @@
-# expl.m4 serial 13
+# expl.m4 serial 14
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,7 +23,7 @@ AC_DEFUN([gl_FUNC_EXPL],
              # define __NO_MATH_INLINES 1 /* for glibc */
              #endif
              #include <math.h>
-             long double (*funcptr) (long double) = expl;
+             long double (* volatile funcptr) (long double) = expl;
              long double x;]],
            [[return funcptr (x) > 1.5
                     || expl (x) > 1.5;]])],
@@ -42,7 +42,7 @@ AC_DEFUN([gl_FUNC_EXPL],
                # define __NO_MATH_INLINES 1 /* for glibc */
                #endif
                #include <math.h>
-               long double (*funcptr) (long double) = expl;
+               long double (* volatile funcptr) (long double) = expl;
                long double x;]],
              [[return funcptr (x) > 1.5
                       || expl (x) > 1.5;]])],
