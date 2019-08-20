@@ -31,6 +31,9 @@
 #ifndef SOCK_CLOEXEC
 # define SOCK_CLOEXEC 0
 #endif
+#ifndef SOCK_NONBLOCK
+# define SOCK_NONBLOCK 0
+#endif
 
 int
 accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
@@ -58,7 +61,7 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 #endif
 
   /* Check the supported flags.  */
-  if ((flags & ~(SOCK_CLOEXEC | O_TEXT | O_BINARY)) != 0)
+  if ((flags & ~(SOCK_CLOEXEC | SOCK_NONBLOCK | O_TEXT | O_BINARY)) != 0)
     {
       errno = EINVAL;
       return -1;
@@ -119,6 +122,22 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
         }
     }
 # endif
+#endif
+
+#if SOCK_CLOEXEC
+  if (flags & SOCK_NONBLOCK)
+    {
+      int fcntl_flags;
+
+      if ((fcntl_flags = fcntl (fd, F_GETFL, 0)) < 0
+          || fcntl (fd, F_SETFL, fcntl_flags | O_NONBLOCK) == -1)
+        {
+          int saved_errno = errno;
+          close (fd);
+          errno = saved_errno;
+          return -1;
+        }
+    }
 #endif
 
 #if O_BINARY
