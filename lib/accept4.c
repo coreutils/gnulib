@@ -37,7 +37,7 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 {
   int fd;
 
-#if HAVE_ACCEPT4
+#if HAVE_DECL_ACCEPT4
 # undef accept4
   /* Try the system call first, if it exists.  (We may be running with a glibc
      that has the function but with an older kernel that lacks it.)  */
