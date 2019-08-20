@@ -124,7 +124,7 @@ accept4 (int sockfd, struct sockaddr *addr, socklen_t *addrlen, int flags)
 # endif
 #endif
 
-#if SOCK_CLOEXEC
+#if SOCK_NONBLOCK
   if (flags & SOCK_NONBLOCK)
     {
       int fcntl_flags;
