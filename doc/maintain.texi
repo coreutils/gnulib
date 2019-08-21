@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate April 28, 2019
+@set lastupdate August 14, 2019
 @c %**end of header
 @documentencoding UTF-8
 
@@ -130,7 +130,6 @@ thing.''
 This release of the GNU Maintainer Information was last updated
 @value{lastupdate}.
 
-
 @node Getting Help
 @chapter Getting Help
 @cindex help, getting
@@ -182,10 +181,13 @@ The directory @file{/gd/gnuorg} mentioned throughout this document is
 available on the general GNU server, currently
 @code{fencepost.gnu.org}.  If you are the maintainer of a GNU package,
 you should have an account there.  If you don't have one already, see
-@url{https://www.gnu.org/software/README.accounts.html}.  You can also
-ask for accounts for people who significantly help you in working on
-the package.  Such GNU login accounts include email
-(see @url{https://www.fsf.org/about/systems/sending-mail-via-fencepost}).
+@url{https://www.gnu.org/software/README.accounts.html}.  Such GNU
+login accounts include email (see
+@url{https://www.fsf.org/about/systems/sending-mail-via-fencepost}).
+
+You can request for accounts for people who significantly help you in
+working on the package; we will do this in special cases when there is
+a good reason.
 @end macro
 
 @gdgnuorgtext{}
@@ -457,6 +459,18 @@ the collection.  Then you can use the files
 an assignment for a new separate program or manual, unless it is quite
 small, but a disclaimer is acceptable if the contributor insists on
 handling the matter that way.
+
+When a copyright holder has signed an assignment for all future
+changes to the package, and contributes a change made up of new files
+which require no change to any of the old files, we want to avoid any
+uncertainty about whether these files are intended as a change to the
+package and thus covered by that assignment.  The way to do this is to
+ask the contributor to say so in a message to you --- for instance,
+``My modules `frog' and `kangaroo' are intended as changes to the
+program Hoppers.''  Forward the message to @email{assign@@gnu.org},
+who will save it permanently.  A variation on this procedure: the
+contributor who wrote the new files can send copies of the new files
+which contain such a message.
 
 If a contributor wants the FSF to publish only a pseudonym, that is
 ok.  The contributor should say this, and state the desired pseudonym,
@@ -786,6 +800,7 @@ please write @email{licensing@@gnu.org}.
 * Canonical:     Canonical License Sources.
 * Code:          License Notices for Code.
 * Documentation: License Notices for Documentation.
+* Examples:      License Notices for Code Examples.
 * Other:         License Notices for Other Files.
 @end menu
 
@@ -972,6 +987,19 @@ section@tie{}6).  However, the printed (@samp{.dvi}, @samp{.pdf},
 set up to be printed and published only together.  Therefore, it is
 usually simplest to include the GFDL in each manual.
 
+@node License Notices for Code Examples
+@subsection License Notices for Code Examples
+
+When a code example in documentation is more than two or three lines,
+and specific enough that people might want to copy and adapt it, we
+suggest putting a copy of the example in a file of code and releasing
+that under some free software license.  That means it will be
+released under two different licenses: in the manual under the GFDL,
+and in the code example file under a software license.
+
+If the example is important and nontrivial, and 40 lines or more, we
+suggest releasing the code copy under the same license as the program
+it pertains to.  Otherwise, we recommend releasing it under the X11 license.
 
 @node License Notices for Other Files
 @subsection License Notices for Other Files

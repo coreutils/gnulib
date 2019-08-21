@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 28, 2019
+@set lastupdate August 9, 2019
 @c %**end of header
 
 @dircategory GNU organization
@@ -531,6 +531,8 @@ command line interface, and how libraries should behave.
 * Libraries::                   Library behavior.
 * Errors::                      Formatting error messages.
 * User Interfaces::             Standards about interfaces generally.
+* Finding Program Files::       How to find the program's executable
+                                  and other files that go with it.
 * Graphical Interfaces::        Standards for graphical interfaces.
 * Command-Line Interfaces::     Standards for command line interfaces.
 * Dynamic Plug-In Interfaces::  Standards for dynamic plug-in interfaces.
@@ -815,13 +817,16 @@ end with a period.
 
 @cindex program name and its behavior
 @cindex behavior, dependent on program's name
-Please don't make the behavior of a utility depend on the name used
-to invoke it.  It is useful sometimes to make a link to a utility
-with a different name, and that should not change what it does.
+Please don't make the behavior of a utility depend on the name used to
+invoke it.  It is useful sometimes to make a link to a utility with a
+different name, and that should not change what it does.  Thus, if you
+make @file{foo} a link to @file{ls}, the program should behave the
+same regardless of which of those names is used to invoke it.
 
 Instead, use a run time option or a compilation switch or both to
 select among the alternate behaviors.  You can also build two versions
-of the program, with different names and different default behaviors.
+of the program, with different default behaviors, and install them
+under two different names.
 
 @cindex output device and program's behavior
 Likewise, please don't make the behavior of a command-line program
@@ -853,6 +858,72 @@ program with a preferred alternate version that does not depend on the
 output device type.  For example, we provide a @code{dir} program much
 like @code{ls} except that its default output format is always
 multi-column format.
+
+@node Finding Program Files
+@section Finding the Program's Executable and Associated Files
+
+A program may need to find the executable file it was started with, so
+as to relaunch the same program.  It may need to find associated
+files, either source files or files constructed by building, that
+it uses at run time.
+
+The way to find them starts with looking at @code{argv[0]}.
+
+If that string contains a slash, it is by convention the file name of
+the executable and its directory part is the directory that contained
+the executable.  This is the case when the program was not found
+through @env{PATH}, which normally means it was built but not
+installed, and run from the build directory.  The program can use the
+@code{argv[0]} file name to relaunch itself, and can look in its
+directory part for associated files.  If that file name is not
+absolute, then it is relative to the working directory in which the
+program started.
+
+If @code{argv[0]} does not contain a slash, it is a command name whose
+executable was found via @env{PATH}.  The program should search for
+that name in the directories in @env{PATH}, interpreting @file{.} as
+the working directory that was current when the program started.
+
+If this procedure finds the executable, we call the directory it was
+found in the @dfn{iinvocation directory}.  The program should check
+for the presence in that directory of the associated files it needs.
+
+If the program's executable is normally built in a subdirectory of the
+main build directory, and the main build directory contains associated
+files (perhaps including subdirectories), the program should look at
+the parent of the invocation directory, checking for the associated
+files and subdirectories the main build directory should contain.
+
+If the invocation directory doesn't contain what's needed, but the
+executable file name is a symbolic link, the program should try using
+the link target's containing directory as the invocation directory.
+
+If this procedure doesn't come up with an invocation directory that is
+valid---normally the case for an installed program that was found via
+@env{PATH}---the program should look for the associated files in the
+directories where the program's makefile installs them.
+@xref{Directory Variables}.
+
+Providing valid information in @code{argv[0]} is a convention, not
+guaranteed.  Well-behaved programs that launch other programs, such as
+shells, follow the convention; your code should follow it too, when
+launching other programs.  But it is always possible to launch the
+program and give a nonsensical value in @code{argv[0]}.
+
+Therefore, any program that needs to know the location of its
+executable, or that of of other associated files, should offer the
+user environment variables to specify those locations explicitly.
+
+@strong{Don't give special privilege, such as with the @code{setuid}
+bit, to programs that will search heuristically for associated files
+or for their own executables when invoked that way.}  Limit that
+privilege to programs that find associated files in hard-coded
+installed locations such as under @file{/usr} and @file{/etc}.
+
+@c ??? Is even that safe, in a setuid program?
+
+@xref{Bourne Shell Variables,,, Bash, Bash Reference Manual},
+for more information about @env{PATH}.
 
 @node Graphical Interfaces
 @section Standards for Graphical Interfaces
@@ -3320,8 +3391,8 @@ reference points.  Decades from now, all but old folks will have very
 different cultural reference points; many things that "everyone knows
 about" today may be mostly forgotten.
 
-For this reason, try to avoid writing in a way that crucially depends on
-cultural reference points for understanding, or that refers to them in
+For this reason, try to avoid writing in a way that depends on
+cultural reference points for proper understanding, or that refers to them in
 ways that would impede reading for someone that doesn't recognize them.
 
 Likewise, be conservative in your choice of words (aside from technical
@@ -3333,6 +3404,12 @@ It is ok to refer once in a rare while to spatially or temporally
 localized reference points or facts, if it is directly pertinent or as
 an aside.  Changing these few things (which in any case stand out) when
 they no longer make sense will not be a lot of work.
+
+By contrast, it is always proper to refer to concepts of GNU and the
+free software movement, when they are pertinent.  These are a central
+part of our message, so we should take advantage of opportunities to
+mention them.  They are fundamental moral positions, so they will
+rarely if ever change.
 
 Programmers tend to carry over the structure of the program as the
 structure for its documentation.  But this structure is not
@@ -4201,7 +4278,7 @@ ethical problem, and our aim is to put an end to that problem.  We
 can't stop some people from writing proprietary programs, or stop
 other people from using them, but we can and should refuse to
 advertise them to new potential customers, or to give the public the
-idea that their existence is ethical.
+impression that their existence is legitimate.
 
 The GNU definition of free software is found on the GNU web site at
 @url{https://www.gnu.org/@/philosophy/@/free-sw.html}, and the definition
@@ -4220,7 +4297,8 @@ passing---that is harmless, since users who might want to use it
 probably already know about it.  For instance, it is fine to explain
 how to build your package on top of some widely used non-free
 operating system, or how to use it together with some widely used
-non-free program.
+non-free program, after first explaining how to use it on the GNU
+system.
 
 However, you should give only the necessary information to help those
 who already use the non-free program to use your program with
@@ -4233,6 +4311,11 @@ program with it, while people who don't already use the proprietary
 program will not see anything likely to lead them to take an interest
 in it.
 
+You shouldn't recommend any non-free add-ons for the non-free program,
+but it is ok to mention free add-ons that help it to work with your
+program, and how to install the free add-ons even if that requires
+running some non-free program.
+
 If a non-free program or system is obscure in your program's domain,
 your program should not mention or support it at all, since doing so
 would tend to popularize the non-free program more than it popularizes
@@ -4241,17 +4324,18 @@ program among the users of Foobar, if the existence of Foobar is not
 generally known among people who might want to use your program.)
 
 Sometimes a program is free software in itself but depends on a
-non-free platform in order to run.  For instance, many Java programs
-depend on some non-free Java libraries.  To recommend or promote such
-a program is to promote the other programs it needs.  This is why we
-are careful about listing Java programs in the Free Software
-Directory: we don't want to promote the non-free Java libraries.
+non-free platform in order to run.  For instance, it used to be the
+case that many Java programs depended on some non-free Java libraries.
+(See @uref{https://www.gnu.org/philosophy/java-trap.html}.)
+To recommend or promote such a program is to promote the other
+programs it needs; therefore, judge mentions of the former as if they
+were mentions of the latter.  For this reason, we were careful about
+listing Java programs in the Free Software Directory: we wanted to
+avoid promoting the non-free Java libraries.
 
-We hope this particular problem with Java will be gone by and by, as
-we replace the remaining non-free standard Java libraries with free
-software, but the general principle will remain the same: don't
-recommend, promote or legitimize programs that depend on non-free
-software to run.
+Java no longer has this problem, but the general principle will remain
+the same: don't recommend, promote or legitimize programs that depend
+on non-free software to run.
 
 Some free programs strongly encourage the use of non-free software.  A
 typical example is @command{mplayer}.  It is free software in itself,
@@ -4285,25 +4369,25 @@ program is promoting that program, so please do not make links to (or
 mention by name) web sites that contain such material.  This policy is
 relevant particularly for the web pages for a GNU package.
 
-Following links from nearly any web site can lead eventually to
-non-free software; this is inherent in the nature of the web.  So it
-makes no sense to criticize a site for having such links.  As long as
-the site does not itself recommend a non-free program, there is no
-need to consider the question of the sites that it links to for other
-reasons.
+What about chains of links?  Following links from nearly any web site
+can lead eventually to promotion of non-free software; this is
+inherent in the nature of the web.  Here's how we treat that.
 
-Thus, for example, you should not refer to AT&T's web site if that
-recommends AT&T's non-free software packages; you should not refer to
-a page @var{p} that links to AT&T's site presenting it as a place to get
-some non-free program, because that part of the page @var{p} itself
-recommends and legitimizes the non-free program.  However, that @var{p}
-contains a link to AT&T's web site for some other purpose (such as
-long-distance telephone service) is not an objection against it.
+You should not refer to AT&T's web site if that recommends AT&T's
+non-free software packages; you should not refer to a page @var{p}
+that links to AT&T's site presenting it as a place to get some
+non-free program, because that part of the page @var{p} itself
+recommends and legitimizes the non-free program.
 
-A web page recommends a program in a particularly strong way if it
-requires users to run that program in order to use the page.  Many
-pages contain Javascript code which they recommend in this way.  This
-Javascript code may be free or nonfree, but nonfree is the usual case.
+However, if @var{p} contains a link to AT&T's web site for some other
+purpose (such as long-distance telephone service), that is no reason
+you should not link to @var{p}.
+
+A web page recommends a program in an implicit but particularly strong
+way if it requires users to run that program in order to use the page.
+Many pages contain Javascript code which they recommend in this way.
+This Javascript code may be free or nonfree, but nonfree is the usual
+case.
 
 If the purpose for which you would refer to the page cannot be carried
 out without running nonfree Javascript code, then you should not refer
