@@ -14,6 +14,7 @@
 #   options.
 # The possible options are "gpl" (to replace the license with the GPL)
 #   and "doclicense" (to replace @include doclicense.texi with fdl.texi)
+#   and "strip-trailing-space" (to strip trailing white space from lines)
 #   and "release" (to use the release version instead of the
 #   development version).
 #   Unrecognized options are ignored.
@@ -91,14 +92,19 @@ fixlicense='
 # Quote the $ so that CVS does not expand it in this script.
 remove_id_lines='/[$]Id:.*[$]/d'
 
-# $1 is the root directory of input file, $2 is input file, $3 is
-# output.  Remove $Id lines, since they'll differ between source
+# $1 is input file, $2 is output.
+# Remove $Id lines, since they'll differ between source
 # locations.  If $options contains "gpl", change the license to be the
 # standard GPL.  We use this for libc files, et al.
 #
 fixfile() \
 {
   sed_command="$remove_id_lines"
+
+  case " $options " in
+  *' strip-trailing-space '*)
+    sed_command="$sed_command; s/[[:space:]]*\$//";;
+  esac
 
   case " $options " in
   *' gpl '*)
