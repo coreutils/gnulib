@@ -6,6 +6,7 @@ lib/gc.h
 lib/gc-libgcrypt.c
 lib/gc-gnulib.c
 m4/gc.m4
+m4/libgcrypt.m4
 
 Depends-on:
 havelib
