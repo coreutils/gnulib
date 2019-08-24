@@ -646,7 +646,8 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
     {
 #if GNULIB_GC_MD2
     case GC_MD2:
-      md2_init_ctx (&ctx->md2Context);
+      /* Not needed, because ctx is already zero-initialized.  */
+      /*md2_init_ctx (&ctx->md2Context);*/
       break;
 #endif
 
