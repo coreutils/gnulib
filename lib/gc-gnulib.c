@@ -48,6 +48,12 @@
 #if GNULIB_GC_SHA1
 # include "sha1.h"
 #endif
+#if GNULIB_GC_SHA256
+# include "sha256.h"
+#endif
+#if GNULIB_GC_SHA512
+# include "sha512.h"
+#endif
 #if GNULIB_GC_SM3
 # include "sm3.h"
 #endif
@@ -602,7 +608,7 @@ gc_cipher_close (gc_cipher_handle handle)
 
 /* Hashes. */
 
-#define MAX_DIGEST_SIZE 32
+#define MAX_DIGEST_SIZE 64
 
 typedef struct _gc_hash_ctx
 {
@@ -620,6 +626,12 @@ typedef struct _gc_hash_ctx
 #endif
 #if GNULIB_GC_SHA1
   struct sha1_ctx sha1Context;
+#endif
+#if GNULIB_GC_SHA256
+  struct sha256_ctx sha256Context;
+#endif
+#if GNULIB_GC_SHA512
+  struct sha512_ctx sha512Context;
 #endif
 #if GNULIB_GC_SM3
   struct sm3_ctx sm3Context;
@@ -666,6 +678,18 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 #if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_init_ctx (&ctx->sha1Context);
+      break;
+#endif
+
+#if GNULIB_GC_SHA256
+    case GC_SHA256:
+      sha256_init_ctx (&ctx->sha256Context);
+      break;
+#endif
+
+#if GNULIB_GC_SHA512
+    case GC_SHA512:
+      sha512_init_ctx (&ctx->sha512Context);
       break;
 #endif
 
@@ -730,6 +754,14 @@ gc_hash_digest_length (Gc_hash hash)
       len = GC_SHA1_DIGEST_SIZE;
       break;
 
+    case GC_SHA256:
+      len = GC_SHA256_DIGEST_SIZE;
+      break;
+
+    case GC_SHA512:
+      len = GC_SHA512_DIGEST_SIZE;
+      break;
+
     case GC_SM3:
       len = GC_SM3_DIGEST_SIZE;
       break;
@@ -769,6 +801,18 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 #if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_process_bytes (data, len, &ctx->sha1Context);
+      break;
+#endif
+
+#if GNULIB_GC_SHA256
+    case GC_SHA256:
+      sha256_process_bytes (data, len, &ctx->sha256Context);
+      break;
+#endif
+
+#if GNULIB_GC_SHA512
+    case GC_SHA512:
+      sha512_process_bytes (data, len, &ctx->sha512Context);
       break;
 #endif
 
@@ -815,6 +859,20 @@ gc_hash_read (gc_hash_handle handle)
 #if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_finish_ctx (&ctx->sha1Context, ctx->hash);
+      ret = ctx->hash;
+      break;
+#endif
+
+#if GNULIB_GC_SHA256
+    case GC_SHA256:
+      sha256_finish_ctx (&ctx->sha256Context, ctx->hash);
+      ret = ctx->hash;
+      break;
+#endif
+
+#if GNULIB_GC_SHA512
+    case GC_SHA512:
+      sha512_finish_ctx (&ctx->sha512Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
@@ -870,6 +928,18 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
       break;
 #endif
 
+#if GNULIB_GC_SHA256
+    case GC_SHA256:
+      sha256_buffer (in, inlen, resbuf);
+      break;
+#endif
+
+#if GNULIB_GC_SHA512
+    case GC_SHA512:
+      sha512_buffer (in, inlen, resbuf);
+      break;
+#endif
+
 #if GNULIB_GC_SM3
     case GC_SM3:
       sm3_buffer (in, inlen, resbuf);
@@ -915,6 +985,24 @@ Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
   sha1_buffer (in, inlen, resbuf);
+  return GC_OK;
+}
+#endif
+
+#if GNULIB_GC_SHA256
+Gc_rc
+gc_sha256 (const void *in, size_t inlen, void *resbuf)
+{
+  sha256_buffer (in, inlen, resbuf);
+  return GC_OK;
+}
+#endif
+
+#if GNULIB_GC_SHA512
+Gc_rc
+gc_sha512 (const void *in, size_t inlen, void *resbuf)
+{
+  sha512_buffer (in, inlen, resbuf);
   return GC_OK;
 }
 #endif

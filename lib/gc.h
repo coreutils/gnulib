@@ -159,6 +159,8 @@ extern Gc_rc gc_md2 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md4 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_md5 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_sha1 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_sha256 (const void *in, size_t inlen, void *resbuf);
+extern Gc_rc gc_sha512 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_sm3 (const void *in, size_t inlen, void *resbuf);
 extern Gc_rc gc_hmac_md5 (const void *key, size_t keylen,
                           const void *in, size_t inlen, char *resbuf);

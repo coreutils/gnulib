@@ -707,6 +707,70 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
+#if GNULIB_GC_SHA256
+Gc_rc
+gc_sha256 (const void *in, size_t inlen, void *resbuf)
+{
+  size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA256);
+  gcry_md_hd_t hd;
+  gpg_error_t err;
+  unsigned char *p;
+
+  assert (outlen == GC_SHA256_DIGEST_SIZE);
+
+  err = gcry_md_open (&hd, GCRY_MD_SHA256, 0);
+  if (err != GPG_ERR_NO_ERROR)
+    return GC_INVALID_HASH;
+
+  gcry_md_write (hd, in, inlen);
+
+  p = gcry_md_read (hd, GCRY_MD_SHA256);
+  if (p == NULL)
+    {
+      gcry_md_close (hd);
+      return GC_INVALID_HASH;
+    }
+
+  memcpy (resbuf, p, outlen);
+
+  gcry_md_close (hd);
+
+  return GC_OK;
+}
+#endif
+
+#if GNULIB_GC_SHA512
+Gc_rc
+gc_sha512 (const void *in, size_t inlen, void *resbuf)
+{
+  size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
+  gcry_md_hd_t hd;
+  gpg_error_t err;
+  unsigned char *p;
+
+  assert (outlen == GC_SHA512_DIGEST_SIZE);
+
+  err = gcry_md_open (&hd, GCRY_MD_SHA512, 0);
+  if (err != GPG_ERR_NO_ERROR)
+    return GC_INVALID_HASH;
+
+  gcry_md_write (hd, in, inlen);
+
+  p = gcry_md_read (hd, GCRY_MD_SHA512);
+  if (p == NULL)
+    {
+      gcry_md_close (hd);
+      return GC_INVALID_HASH;
+    }
+
+  memcpy (resbuf, p, outlen);
+
+  gcry_md_close (hd);
+
+  return GC_OK;
+}
+#endif
+
 #if GNULIB_GC_SM3
 Gc_rc
 gc_sm3  (const void *in, size_t inlen, void *resbuf)
