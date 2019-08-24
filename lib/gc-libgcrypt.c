@@ -29,6 +29,8 @@
 /* Get libgcrypt API. */
 #include <gcrypt.h>
 #if GNULIB_GC_MD2
+/* libgcrypt declares GCRY_MD_MD2 but does not actually implement the
+   MD2 algorithm.  Therefore take the implementation from gnulib.  */
 # include "md2.h"
 #endif
 
