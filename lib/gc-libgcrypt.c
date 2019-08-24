@@ -33,6 +33,9 @@
    MD2 algorithm.  Therefore take the implementation from gnulib.  */
 # include "md2.h"
 #endif
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+# include "sm3.h"
+#endif
 
 #include <assert.h>
 
@@ -243,13 +246,21 @@ gc_cipher_close (gc_cipher_handle handle)
 
 /* Hashes. */
 
+/* Maximum of GC_MD2_DIGEST_SIZE and GC_SM3_DIGEST_SIZE.  */
+#define MAX_DIGEST_SIZE 32
+
 typedef struct _gc_hash_ctx {
   Gc_hash alg;
   Gc_hash_mode mode;
   gcry_md_hd_t gch;
+#if GNULIB_GC_MD2 || (GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3)
+  char hash[MAX_DIGEST_SIZE];
+#endif
 #if GNULIB_GC_MD2
-  char hash[GC_MD2_DIGEST_SIZE];
   struct md2_ctx md2Context;
+#endif
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+  struct sm3_ctx sm3Context;
 #endif
 } _gc_hash_ctx;
 
@@ -312,7 +323,12 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 
 #if GNULIB_GC_SM3
     case GC_SM3:
+# if LIBGCRYPT_HAS_MD_SM3
       gcryalg = GCRY_MD_SM3;
+# else
+      sm3_init_ctx (&ctx->sm3Context);
+      gcryalg = GCRY_MD_NONE;
+# endif
       break;
 #endif
 
@@ -433,7 +449,10 @@ gc_hash_hmac_setkey (gc_hash_handle handle, size_t len, const char *key)
 #if GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
-    gcry_md_setkey (ctx->gch, key, len);
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+    if (ctx->alg != GC_SM3)
+#endif
+      gcry_md_setkey (ctx->gch, key, len);
 }
 
 void
@@ -444,6 +463,11 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 #if GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     md2_process_bytes (data, len, &ctx->md2Context);
+  else
+#endif
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+  if (ctx->alg == GC_SM3)
+    sm3_process_bytes (data, len, &ctx->sm3Context);
   else
 #endif
     gcry_md_write (ctx->gch, data, len);
@@ -459,6 +483,14 @@ gc_hash_read (gc_hash_handle handle)
   if (ctx->alg == GC_MD2)
     {
       md2_finish_ctx (&ctx->md2Context, ctx->hash);
+      digest = ctx->hash;
+    }
+  else
+#endif
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+  if (ctx->alg == GC_SM3)
+    {
+      sm3_finish_ctx (&ctx->sm3Context, ctx->hash);
       digest = ctx->hash;
     }
   else
@@ -479,7 +511,10 @@ gc_hash_close (gc_hash_handle handle)
 #if GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
-    gcry_md_close (ctx->gch);
+#if GNULIB_GC_SM3 && !LIBGCRYPT_HAS_MD_SM3
+    if (ctx->alg != GC_SM3)
+#endif
+      gcry_md_close (ctx->gch);
 
   free (ctx);
 }
@@ -495,7 +530,6 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
     case GC_MD2:
       md2_buffer (in, inlen, resbuf);
       return GC_OK;
-      break;
 #endif
 
 #if GNULIB_GC_MD4
@@ -548,8 +582,13 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
 #if GNULIB_GC_SM3
     case GC_SM3:
+# if !LIBGCRYPT_HAS_MD_SM3
+      sm3_buffer (in, inlen, resbuf);
+      return GC_OK;
+# else
       gcryalg = GCRY_MD_SM3;
       break;
+# endif
 #endif
 
     default:
@@ -672,6 +711,10 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 Gc_rc
 gc_sm3  (const void *in, size_t inlen, void *resbuf)
 {
+# if !LIBGCRYPT_HAS_MD_SM3
+  sm3_buffer (in, inlen, resbuf);
+  return GC_OK;
+# else
   size_t outlen = gcry_md_get_algo_dlen (GCRY_MD_SM3);
   gcry_md_hd_t hd;
   gpg_error_t err;
@@ -697,6 +740,7 @@ gc_sm3  (const void *in, size_t inlen, void *resbuf)
   gcry_md_close (hd);
 
   return GC_OK;
+# endif
 }
 #endif
 
