@@ -27,7 +27,7 @@
 #include <string.h>
 
 /* For randomize. */
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -36,40 +36,40 @@
 #endif
 
 /* Hashes. */
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
 # include "md2.h"
 #endif
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
 # include "md4.h"
 #endif
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
 # include "md5.h"
 #endif
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
 # include "sha1.h"
 #endif
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
 # include "sm3.h"
 #endif
-#if defined(GNULIB_GC_HMAC_MD5) || defined(GNULIB_GC_HMAC_SHA1) || defined(GNULIB_GC_HMAC_SHA256) || defined(GNULIB_GC_HMAC_SHA512)
+#if GNULIB_GC_HMAC_MD5 || GNULIB_GC_HMAC_SHA1 || GNULIB_GC_HMAC_SHA256 || GNULIB_GC_HMAC_SHA512
 # include "hmac.h"
 #endif
 
 /* Ciphers. */
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
 # include "arcfour.h"
 #endif
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
 # include "arctwo.h"
 #endif
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
 # include "des.h"
 #endif
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
 # include "rijndael-api-fst.h"
 #endif
 
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 # if defined _WIN32 && ! defined __CYGWIN__
 #  include <windows.h>
 #  include <wincrypt.h>
@@ -86,7 +86,7 @@ HCRYPTPROV g_hProv = 0;
 Gc_rc
 gc_init (void)
 {
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 # if defined _WIN32 && ! defined __CYGWIN__
   if (g_hProv)
     CryptReleaseContext (g_hProv, 0);
@@ -113,7 +113,7 @@ gc_init (void)
 void
 gc_done (void)
 {
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 # if defined _WIN32 && ! defined __CYGWIN__
   if (g_hProv)
     {
@@ -126,7 +126,7 @@ gc_done (void)
   return;
 }
 
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 
 /* Randomness. */
 
@@ -228,17 +228,17 @@ typedef struct _gc_cipher_ctx
 {
   Gc_cipher alg;
   Gc_cipher_mode mode;
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
   arctwo_context arctwoContext;
   char arctwoIV[ARCTWO_BLOCK_SIZE];
 #endif
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
   arcfour_context arcfourContext;
 #endif
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
   gl_des_ctx desContext;
 #endif
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
   rijndaelKeyInstance aesEncKey;
   rijndaelKeyInstance aesDecKey;
   rijndaelCipherInstance aesContext;
@@ -261,7 +261,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
 
   switch (alg)
     {
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (mode)
         {
@@ -275,7 +275,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       break;
 #endif
 
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       switch (mode)
@@ -289,7 +289,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       break;
 #endif
 
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
     case GC_DES:
       switch (mode)
         {
@@ -302,7 +302,7 @@ gc_cipher_open (Gc_cipher alg, Gc_cipher_mode mode,
       break;
 #endif
 
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
     case GC_AES256:
@@ -337,20 +337,20 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       arctwo_setkey (&ctx->arctwoContext, keylen, key);
       break;
 #endif
 
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       arcfour_setkey (&ctx->arcfourContext, key, keylen);
       break;
 #endif
 
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
     case GC_DES:
       if (keylen != 8)
         return GC_INVALID_CIPHER;
@@ -358,7 +358,7 @@ gc_cipher_setkey (gc_cipher_handle handle, size_t keylen, const char *key)
       break;
 #endif
 
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
     case GC_AES256:
@@ -401,7 +401,7 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       if (ivlen != ARCTWO_BLOCK_SIZE)
         return GC_INVALID_CIPHER;
@@ -409,7 +409,7 @@ gc_cipher_setiv (gc_cipher_handle handle, size_t ivlen, const char *iv)
       break;
 #endif
 
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
     case GC_AES256:
@@ -455,7 +455,7 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (ctx->mode)
         {
@@ -482,21 +482,21 @@ gc_cipher_encrypt_inline (gc_cipher_handle handle, size_t len, char *data)
       break;
 #endif
 
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       arcfour_stream (&ctx->arcfourContext, data, data, len);
       break;
 #endif
 
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
         gl_des_ecb_encrypt (&ctx->desContext, data, data);
       break;
 #endif
 
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
     case GC_AES256:
@@ -525,7 +525,7 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_ARCTWO
+#if GNULIB_GC_ARCTWO
     case GC_ARCTWO40:
       switch (ctx->mode)
         {
@@ -554,21 +554,21 @@ gc_cipher_decrypt_inline (gc_cipher_handle handle, size_t len, char *data)
       break;
 #endif
 
-#ifdef GNULIB_GC_ARCFOUR
+#if GNULIB_GC_ARCFOUR
     case GC_ARCFOUR128:
     case GC_ARCFOUR40:
       arcfour_stream (&ctx->arcfourContext, data, data, len);
       break;
 #endif
 
-#ifdef GNULIB_GC_DES
+#if GNULIB_GC_DES
     case GC_DES:
       for (; len >= 8; len -= 8, data += 8)
         gl_des_ecb_decrypt (&ctx->desContext, data, data);
       break;
 #endif
 
-#ifdef GNULIB_GC_RIJNDAEL
+#if GNULIB_GC_RIJNDAEL
     case GC_AES128:
     case GC_AES192:
     case GC_AES256:
@@ -609,19 +609,19 @@ typedef struct _gc_hash_ctx
   Gc_hash alg;
   Gc_hash_mode mode;
   char hash[MAX_DIGEST_SIZE];
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   struct md2_ctx md2Context;
 #endif
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
   struct md4_ctx md4Context;
 #endif
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
   struct md5_ctx md5Context;
 #endif
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
   struct sha1_ctx sha1Context;
 #endif
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
   struct sm3_ctx sm3Context;
 #endif
 } _gc_hash_ctx;
@@ -644,31 +644,31 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
 
   switch (hash)
     {
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
     case GC_MD2:
       md2_init_ctx (&ctx->md2Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
     case GC_MD4:
       md4_init_ctx (&ctx->md4Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
     case GC_MD5:
       md5_init_ctx (&ctx->md5Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_init_ctx (&ctx->sha1Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       sm3_init_ctx (&ctx->sm3Context);
       break;
@@ -747,31 +747,31 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
     case GC_MD2:
       md2_process_bytes (data, len, &ctx->md2Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
     case GC_MD4:
       md4_process_bytes (data, len, &ctx->md4Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
     case GC_MD5:
       md5_process_bytes (data, len, &ctx->md5Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_process_bytes (data, len, &ctx->sha1Context);
       break;
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       sm3_process_bytes (data, len, &ctx->sm3Context);
       break;
@@ -790,35 +790,35 @@ gc_hash_read (gc_hash_handle handle)
 
   switch (ctx->alg)
     {
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
     case GC_MD2:
       md2_finish_ctx (&ctx->md2Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
     case GC_MD4:
       md4_finish_ctx (&ctx->md4Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
     case GC_MD5:
       md5_finish_ctx (&ctx->md5Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_finish_ctx (&ctx->sha1Context, ctx->hash);
       ret = ctx->hash;
       break;
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       sm3_finish_ctx (&ctx->sm3Context, ctx->hash);
       ret = ctx->hash;
@@ -845,31 +845,31 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 {
   switch (hash)
     {
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
     case GC_MD2:
       md2_buffer (in, inlen, resbuf);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
     case GC_MD4:
       md4_buffer (in, inlen, resbuf);
       break;
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
     case GC_MD5:
       md5_buffer (in, inlen, resbuf);
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
     case GC_SHA1:
       sha1_buffer (in, inlen, resbuf);
       break;
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       sm3_buffer (in, inlen, resbuf);
       break;
@@ -882,7 +882,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
   return GC_OK;
 }
 
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
 Gc_rc
 gc_md2 (const void *in, size_t inlen, void *resbuf)
 {
@@ -891,7 +891,7 @@ gc_md2 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
 Gc_rc
 gc_md4 (const void *in, size_t inlen, void *resbuf)
 {
@@ -900,7 +900,7 @@ gc_md4 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
 Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
@@ -909,7 +909,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
 Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
@@ -918,7 +918,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
 Gc_rc
 gc_sm3 (const void *in, size_t inlen, void *resbuf)
 {
@@ -927,7 +927,7 @@ gc_sm3 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_MD5
+#if GNULIB_GC_HMAC_MD5
 Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
              const void *in, size_t inlen, char *resbuf)
@@ -937,7 +937,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA1
+#if GNULIB_GC_HMAC_SHA1
 Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
               const void *in, size_t inlen, char *resbuf)
@@ -947,7 +947,7 @@ gc_hmac_sha1 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA256
+#if GNULIB_GC_HMAC_SHA256
 Gc_rc
 gc_hmac_sha256 (const void *key, size_t keylen,
                 const void *in, size_t inlen, char *resbuf)
@@ -957,7 +957,7 @@ gc_hmac_sha256 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA512
+#if GNULIB_GC_HMAC_SHA512
 Gc_rc
 gc_hmac_sha512 (const void *key, size_t keylen,
                 const void *in, size_t inlen, char *resbuf)

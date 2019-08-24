@@ -28,7 +28,7 @@
 
 /* Get libgcrypt API. */
 #include <gcrypt.h>
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
 # include "md2.h"
 #endif
 
@@ -68,7 +68,7 @@ gc_done (void)
   return;
 }
 
-#ifdef GNULIB_GC_RANDOM
+#if GNULIB_GC_RANDOM
 
 /* Randomness. */
 
@@ -245,7 +245,7 @@ typedef struct _gc_hash_ctx {
   Gc_hash alg;
   Gc_hash_mode mode;
   gcry_md_hd_t gch;
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   char hash[GC_MD2_DIGEST_SIZE];
   struct md2_ctx md2Context;
 #endif
@@ -304,7 +304,7 @@ gc_hash_open (Gc_hash hash, Gc_hash_mode mode, gc_hash_handle * outhandle)
       gcryalg = GCRY_MD_RMD160;
       break;
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       gcryalg = GCRY_MD_SM3;
       break;
@@ -424,7 +424,7 @@ void
 gc_hash_hmac_setkey (gc_hash_handle handle, size_t len, const char *key)
 {
   _gc_hash_ctx *ctx = handle;
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
     gcry_md_setkey (ctx->gch, key, len);
@@ -435,7 +435,7 @@ gc_hash_write (gc_hash_handle handle, size_t len, const char *data)
 {
   _gc_hash_ctx *ctx = handle;
 
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     md2_process_bytes (data, len, &ctx->md2Context);
   else
@@ -449,7 +449,7 @@ gc_hash_read (gc_hash_handle handle)
   _gc_hash_ctx *ctx = handle;
   const char *digest;
 
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   if (ctx->alg == GC_MD2)
     {
       md2_finish_ctx (&ctx->md2Context, ctx->hash);
@@ -470,7 +470,7 @@ gc_hash_close (gc_hash_handle handle)
 {
   _gc_hash_ctx *ctx = handle;
 
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
   if (ctx->alg != GC_MD2)
 #endif
     gcry_md_close (ctx->gch);
@@ -485,62 +485,62 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
   switch (hash)
     {
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
     case GC_MD2:
       md2_buffer (in, inlen, resbuf);
       return GC_OK;
       break;
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
     case GC_MD4:
       gcryalg = GCRY_MD_MD4;
       break;
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
     case GC_MD5:
       gcryalg = GCRY_MD_MD5;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
     case GC_SHA1:
       gcryalg = GCRY_MD_SHA1;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA256
+#if GNULIB_GC_SHA256
     case GC_SHA256:
       gcryalg = GCRY_MD_SHA256;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA384
+#if GNULIB_GC_SHA384
     case GC_SHA384:
       gcryalg = GCRY_MD_SHA384;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA512
+#if GNULIB_GC_SHA512
     case GC_SHA512:
       gcryalg = GCRY_MD_SHA512;
       break;
 #endif
 
-#ifdef GNULIB_GC_SHA224
+#if GNULIB_GC_SHA224
     case GC_SHA224:
       gcryalg = GCRY_MD_SHA224;
       break;
 #endif
 
-#ifdef GNULIB_GC_RMD160
+#if GNULIB_GC_RMD160
     case GC_RMD160:
       gcryalg = GCRY_MD_RMD160;
       break;
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
     case GC_SM3:
       gcryalg = GCRY_MD_SM3;
       break;
@@ -557,7 +557,7 @@ gc_hash_buffer (Gc_hash hash, const void *in, size_t inlen, char *resbuf)
 
 /* One-call interface. */
 
-#ifdef GNULIB_GC_MD2
+#if GNULIB_GC_MD2
 Gc_rc
 gc_md2 (const void *in, size_t inlen, void *resbuf)
 {
@@ -566,7 +566,7 @@ gc_md2 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_MD4
+#if GNULIB_GC_MD4
 Gc_rc
 gc_md4 (const void *in, size_t inlen, void *resbuf)
 {
@@ -598,7 +598,7 @@ gc_md4 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_MD5
+#if GNULIB_GC_MD5
 Gc_rc
 gc_md5 (const void *in, size_t inlen, void *resbuf)
 {
@@ -630,7 +630,7 @@ gc_md5 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_SHA1
+#if GNULIB_GC_SHA1
 Gc_rc
 gc_sha1 (const void *in, size_t inlen, void *resbuf)
 {
@@ -662,7 +662,7 @@ gc_sha1 (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_SM3
+#if GNULIB_GC_SM3
 Gc_rc
 gc_sm3  (const void *in, size_t inlen, void *resbuf)
 {
@@ -694,7 +694,7 @@ gc_sm3  (const void *in, size_t inlen, void *resbuf)
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_MD5
+#if GNULIB_GC_HMAC_MD5
 Gc_rc
 gc_hmac_md5 (const void *key, size_t keylen,
              const void *in, size_t inlen, char *resbuf)
@@ -734,7 +734,7 @@ gc_hmac_md5 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA1
+#if GNULIB_GC_HMAC_SHA1
 Gc_rc
 gc_hmac_sha1 (const void *key, size_t keylen,
               const void *in, size_t inlen, char *resbuf)
@@ -774,7 +774,7 @@ gc_hmac_sha1 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA256
+#if GNULIB_GC_HMAC_SHA256
 Gc_rc
 gc_hmac_sha256 (const void *key, size_t keylen,
              const void *in, size_t inlen, char *resbuf)
@@ -814,7 +814,7 @@ gc_hmac_sha256 (const void *key, size_t keylen,
 }
 #endif
 
-#ifdef GNULIB_GC_HMAC_SHA512
+#if GNULIB_GC_HMAC_SHA512
 Gc_rc
 gc_hmac_sha512 (const void *key, size_t keylen,
               const void *in, size_t inlen, char *resbuf)
