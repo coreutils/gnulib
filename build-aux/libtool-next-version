@@ -80,8 +80,8 @@ There is NO WARRANTY, to the extent permitted by law."
 # outputs to stderr a fatal error message, and terminates the program.
 func_fatal_error ()
 {
-  echo "declared.sh: *** $1" 1>&2
-  echo "declared.sh: *** Stop." 1>&2
+  echo "libtool-next-version: *** $1" 1>&2
+  echo "libtool-next-version: *** Stop." 1>&2
   exit 1
 }
 
