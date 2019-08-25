@@ -220,7 +220,9 @@
    ? (a) < (min) >> (b)                                 \
    : (max) >> (b) < (a))
 
-/* True if __builtin_add_overflow (A, B, P) works when P is non-null.  */
+/* True if __builtin_add_overflow (A, B, P) works when P is non-null.
+   See <https://bugs.llvm.org/show_bug.cgi?id=16404> for why this is
+   false for Clang.  */
 #if 5 <= __GNUC__ && !defined __ICC
 # define _GL_HAS_BUILTIN_OVERFLOW 1
 #else
