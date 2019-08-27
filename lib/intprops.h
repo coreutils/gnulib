@@ -31,6 +31,7 @@
 # else
 #  define _GL_HAS___builtin_add_overflow 0
 # endif
+# define _GL_HAS___builtin_mul_overflow _GL_HAS___builtin_add_overflow
 # define _GL_TEMPDEF___has_builtin
 #endif
 
@@ -240,12 +241,13 @@
 # define _GL_HAS_BUILTIN_ADD_OVERFLOW 0
 #endif
 
-/* True if __builtin_mul_overflow (A, B, P) works when P is non-null.  */
-#ifdef __clang__
-/* Work around Clang bug <https://bugs.llvm.org/show_bug.cgi?id=16404>.  */
-# define _GL_HAS_BUILTIN_MUL_OVERFLOW 0
+/* True if __builtin_mul_overflow (A, B, P) works when P is non-null.
+   Work around Clang bug <https://bugs.llvm.org/show_bug.cgi?id=16404>.  */
+#if (__has_builtin (__builtin_mul_overflow) \
+     && (!defined __clang__ || (defined __APPLE__ && defined __MACH__)))
+# define _GL_HAS_BUILTIN_MUL_OVERFLOW 1
 #else
-# define _GL_HAS_BUILTIN_MUL_OVERFLOW _GL_HAS_BUILTIN_ADD_OVERFLOW
+# define _GL_HAS_BUILTIN_MUL_OVERFLOW 0
 #endif
 
 /* True if __builtin_add_overflow_p (A, B, C) works, and similarly for
@@ -589,6 +591,7 @@
 #ifdef _GL_TEMPDEF___has_builtin
 # undef __has_builtin
 # undef _GL_HAS___builtin_add_overflow
+# undef _GL_HAS___builtin_mul_overflow
 # undef _GL_TEMPDEF___has_builtin
 #endif
 
