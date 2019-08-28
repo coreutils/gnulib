@@ -2207,8 +2207,8 @@ _GL_EXTERN_C int gl_isfinitel (long double x);
 #  if defined isfinite || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
 #   undef isfinite
-#   if defined __MINGW32__
-  /* This platform's <cmath> defines isfinite through a set of inline
+#   if __GNUC__ >= 6 || defined __clang__
+  /* This platform's <cmath> possibly defines isfinite through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite, rpl_isfinite, bool)
 #    define isfinite rpl_isfinite
@@ -2241,8 +2241,8 @@ _GL_EXTERN_C int gl_isinfl (long double x);
 #  if defined isinf || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isinf)
 #   undef isinf
-#   if defined __MINGW32__
-  /* This platform's <cmath> defines isinf through a set of inline
+#   if __GNUC__ >= 6 || defined __clang__
+  /* This platform's <cmath> possibly defines isinf through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isinf, rpl_isinf, bool)
 #    define isinf rpl_isinf
@@ -2366,8 +2366,8 @@ _GL_EXTERN_C int rpl_isnanl (long double x) _GL_ATTRIBUTE_CONST;
 #  if defined isnan || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isnan)
 #   undef isnan
-#   if defined __MINGW32__
-  /* This platform's <cmath> defines isnan through a set of inline
+#   if __GNUC__ >= 6 || defined __clang__
+  /* This platform's <cmath> possibly defines isnan through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isnan, rpl_isnan, bool)
 #    define isnan rpl_isnan
@@ -2449,8 +2449,8 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #  if defined signbit || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
 #   undef signbit
-#   if defined __MINGW32__
-  /* This platform's <cmath> defines signbit through a set of inline
+#   if __GNUC__ >= 6 || defined __clang__
+  /* This platform's <cmath> possibly defines signbit through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, rpl_signbit, bool)
 #    define signbit rpl_signbit
