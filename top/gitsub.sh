@@ -95,13 +95,17 @@ Usage: gitsub.sh pull [SUBDIR]
 
 Operations:
 
-gitsub.sh pull [SUBDIR]
+gitsub.sh pull [GIT_OPTIONS] [SUBDIR]
         You should perform this operation after 'git clone ...' and after
         every 'git pull'.
         It brings your checkout in sync with what the other developers of
         your package have committed and pushed.
         If an environment variable <SUBDIR>_SRCDIR is set, with a non-empty
         value, nothing is done for this SUBDIR.
+        Supported GIT_OPTIONS (for expert git users) are:
+          --reference <repository>
+          --depth <depth>
+          --recursive
         If no SUBDIR is specified, the operation applies to all dependencies.
 
 gitsub.sh upgrade [SUBDIR]
@@ -201,7 +205,8 @@ case "$1" in
     echo "Try 'gitsub.sh --help' for more information." 1>&2
     exit 1 ;;
 esac
-if test $# = 2 && test $mode != checkout || test $# -gt 2; then
+if { test $mode = upgrade && test $# -gt 1; } \
+   || { test $mode = checkout && test $# -gt 2; }; then
   echo "gitsub.sh: too many arguments in '$mode' mode" 1>&2
   echo "Try 'gitsub.sh --help' for more information." 1>&2
   exit 1
@@ -335,7 +340,7 @@ func_cleanup_current_git_clone ()
   func_fatal_error "git clone failed"
 }
 
-# func_pull SUBDIR
+# func_pull SUBDIR GIT_OPTIONS
 # Implements the 'pull' operation.
 func_pull ()
 {
@@ -350,7 +355,7 @@ func_pull ()
       else
         # The subdir does not yet exist. Create a plain checkout.
         trap func_cleanup_current_git_clone 1 2 13 15
-        git clone "$url" "$path" || func_cleanup_current_git_clone
+        git clone $2 "$url" "$path" || func_cleanup_current_git_clone
         trap - 1 2 13 15
       fi
       ;;
@@ -359,7 +364,7 @@ func_pull ()
       # It's a submodule.
       if test -n "$needs_init"; then
         # Create a submodule checkout.
-        git submodule init -- "$path" && git submodule update -- "$path" || func_fatal_error "git operation failed"
+        git submodule init -- "$path" && git submodule update $2 -- "$path" || func_fatal_error "git operation failed"
       else
         # See https://stackoverflow.com/questions/1030169/easy-way-to-pull-latest-of-all-git-submodules
         # https://stackoverflow.com/questions/4611512/is-there-a-way-to-make-git-pull-automatically-update-submodules
@@ -428,9 +433,30 @@ func_checkout ()
 
 case "$mode" in
   pull )
+    git_options=""
+    while test $# -gt 0; do
+      case "$1" in
+        --reference=* | --depth=* | --recursive)
+          git_options="$git_options $1"
+          shift
+          ;;
+        --reference | --depth)
+          git_options="$git_options $1 $2"
+          shift; shift
+          ;;
+        *)
+          break
+          ;;
+      esac
+    done
+    if test $# -gt 1; then
+      echo "gitsub.sh: too many arguments in '$mode' mode" 1>&2
+      echo "Try 'gitsub.sh --help' for more information." 1>&2
+      exit 1
+    fi
     if test $# = 0; then
       for sub in $subcheckout_names $submodule_names; do
-        func_pull "$sub"
+        func_pull "$sub" "$git_options"
       done
     else
       valid=false
@@ -440,7 +466,7 @@ case "$mode" in
         fi
       done
       if $valid; then
-        func_pull "$1"
+        func_pull "$1" "$git_options"
       else
         func_fatal_error "Subdir '$1' is not configured as a subcheckout or a submodule in .gitmodules"
       fi
