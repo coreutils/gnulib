@@ -24,6 +24,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "xalloc.h"
+
 /* This file implements variable size bitsets stored as a variable
    length array of words.  Any unused bits in the last word must be
    zero.
@@ -74,7 +76,7 @@ vbitset_resize (bitset src, bitset_bindex n_bits)
 
           bitset_windex size = oldsize == 0 ? newsize : newsize + newsize / 4;
           VBITSET_WORDS (src)
-            = realloc (VBITSET_WORDS (src), size * sizeof (bitset_word));
+            = xrealloc (VBITSET_WORDS (src), size * sizeof (bitset_word));
           VBITSET_ASIZE (src) = size;
         }
 
@@ -88,9 +90,13 @@ vbitset_resize (bitset src, bitset_bindex n_bits)
          the memory unless it is shrinking by a reasonable amount.  */
       if ((oldsize - newsize) >= oldsize / 2)
         {
-          VBITSET_WORDS (src)
+          void *p
             = realloc (VBITSET_WORDS (src), newsize * sizeof (bitset_word));
-          VBITSET_ASIZE (src) = newsize;
+          if (p)
+            {
+              VBITSET_WORDS (src) = p;
+              VBITSET_ASIZE (src) = newsize;
+            }
         }
 
       /* Need to prune any excess bits.  FIXME.  */

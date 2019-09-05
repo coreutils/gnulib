@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include "obstack.h"
+#include "xalloc.h"
 
 /* This file implements expandable bitsets.  These bitsets can be of
    arbitrary length and are more efficient than arrays of bits for
@@ -142,7 +143,7 @@ tbitset_resize (bitset src, bitset_bindex n_bits)
 
           bitset_windex size = oldsize == 0 ? newsize : newsize + newsize / 4;
           EBITSET_ELTS (src)
-            = realloc (EBITSET_ELTS (src), size * sizeof (tbitset_elt *));
+            = xrealloc (EBITSET_ELTS (src), size * sizeof (tbitset_elt *));
           EBITSET_ASIZE (src) = size;
         }
 
@@ -155,9 +156,13 @@ tbitset_resize (bitset src, bitset_bindex n_bits)
          the memory unless it is shrinking by a reasonable amount.  */
       if ((oldsize - newsize) >= oldsize / 2)
         {
-          EBITSET_ELTS (src)
+          void *p
             = realloc (EBITSET_ELTS (src), newsize * sizeof (tbitset_elt *));
-          EBITSET_ASIZE (src) = newsize;
+          if (p)
+            {
+              EBITSET_ELTS (src) = p;
+              EBITSET_ASIZE (src) = newsize;
+            }
         }
 
       /* Need to prune any excess bits.  FIXME.  */
