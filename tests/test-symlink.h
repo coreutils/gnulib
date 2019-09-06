@@ -67,7 +67,8 @@ test_symlink (int (*func) (char const *, char const *), bool print)
   ASSERT (errno == EEXIST);
   errno = 0;
   ASSERT (func ("nowhere", BASE "dir/") == -1);
-  ASSERT (errno == EEXIST || errno == EINVAL);
+  ASSERT (errno == EEXIST || errno == EINVAL
+          || errno == ENOENT /* Lustre FS on Linux */);
   ASSERT (close (creat (BASE "file", 0600)) == 0);
   errno = 0;
   ASSERT (func ("nowhere", BASE "file") == -1);
