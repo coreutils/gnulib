@@ -41,7 +41,7 @@ bitsetv_alloc (bitset_bindex n_vecs, bitset_bindex n_bits,
   /* Allocate vector table at head of bitset array.  */
   size_t vector_bytes = (n_vecs + 1) * sizeof (bitset) + bytes - 1;
   vector_bytes -= vector_bytes % bytes;
-  bitset *bsetv = xcalloc (1, vector_bytes + bytes * n_vecs);
+  bitset *bsetv = xzalloc (vector_bytes + bytes * n_vecs);
 
   bitset_bindex i = 0;
   for (i = 0; i < n_vecs; i++)

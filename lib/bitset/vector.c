@@ -82,7 +82,6 @@ vbitset_resize (bitset src, bitset_bindex n_bits)
 
       memset (VBITSET_WORDS (src) + oldsize, 0,
               (newsize - oldsize) * sizeof (bitset_word));
-      VBITSET_SIZE (src) = newsize;
     }
   else
     {
@@ -100,10 +99,9 @@ vbitset_resize (bitset src, bitset_bindex n_bits)
         }
 
       /* Need to prune any excess bits.  FIXME.  */
-
-      VBITSET_SIZE (src) = newsize;
     }
 
+  VBITSET_SIZE (src) = newsize;
   BITSET_NBITS_ (src) = n_bits;
   return n_bits;
 }

@@ -694,7 +694,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
     case BITSET_ARRAY:
       {
         size_t bytes = abitset_bytes (n_bits);
-        bset->s.bset = xcalloc (1, bytes);
+        bset->s.bset = xzalloc (bytes);
         abitset_init (bset->s.bset, n_bits);
       }
       break;
@@ -702,7 +702,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
     case BITSET_LIST:
       {
         size_t bytes = lbitset_bytes (n_bits);
-        bset->s.bset = xcalloc (1, bytes);
+        bset->s.bset = xzalloc (bytes);
         lbitset_init (bset->s.bset, n_bits);
       }
       break;
@@ -710,7 +710,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
     case BITSET_TABLE:
       {
         size_t bytes = tbitset_bytes (n_bits);
-        bset->s.bset = xcalloc (1, bytes);
+        bset->s.bset = xzalloc (bytes);
         tbitset_init (bset->s.bset, n_bits);
       }
       break;
@@ -718,7 +718,7 @@ bitset_stats_init (bitset bset, bitset_bindex n_bits, enum bitset_type type)
     case BITSET_VECTOR:
       {
         size_t bytes = vbitset_bytes (n_bits);
-        bset->s.bset = xcalloc (1, bytes);
+        bset->s.bset = xzalloc (bytes);
         vbitset_init (bset->s.bset, n_bits);
       }
       break;
