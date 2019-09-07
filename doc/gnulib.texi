@@ -3796,6 +3796,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sched.h::
 * Glibc search.h::
 * Glibc selinux/selinux.h::
+* Glibc semaphore.h::
 * Glibc shadow.h::
 * Glibc signal.h::
 * Glibc spawn.h::
@@ -4741,14 +4742,18 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * pthread_attr_getaffinity_np::
 * pthread_attr_setaffinity_np::
+* pthread_cond_clockwait::
 * pthread_getaffinity_np::
 * pthread_getattr_default_np::
 * pthread_getattr_np::
 * pthread_getname_np::
 * pthread_kill_other_threads_np::
+* pthread_mutex_clocklock::
 * pthread_mutex_consistent_np::
 * pthread_mutexattr_getrobust_np::
 * pthread_mutexattr_setrobust_np::
+* pthread_rwlock_clockrdlock::
+* pthread_rwlock_clockwrlock::
 * pthread_rwlockattr_getkind_np::
 * pthread_rwlockattr_setkind_np::
 * pthread_setaffinity_np::
@@ -4762,14 +4767,18 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/pthread_attr_getaffinity_np.texi
 @include glibc-functions/pthread_attr_setaffinity_np.texi
+@include glibc-functions/pthread_cond_clockwait.texi
 @include glibc-functions/pthread_getaffinity_np.texi
 @include glibc-functions/pthread_getattr_default_np.texi
 @include glibc-functions/pthread_getattr_np.texi
 @include glibc-functions/pthread_getname_np.texi
 @include glibc-functions/pthread_kill_other_threads_np.texi
+@include glibc-functions/pthread_mutex_clocklock.texi
 @include glibc-functions/pthread_mutex_consistent_np.texi
 @include glibc-functions/pthread_mutexattr_getrobust_np.texi
 @include glibc-functions/pthread_mutexattr_setrobust_np.texi
+@include glibc-functions/pthread_rwlock_clockrdlock.texi
+@include glibc-functions/pthread_rwlock_clockwrlock.texi
 @include glibc-functions/pthread_rwlockattr_getkind_np.texi
 @include glibc-functions/pthread_rwlockattr_setkind_np.texi
 @include glibc-functions/pthread_setaffinity_np.texi
@@ -5483,12 +5492,14 @@ This list of functions is sorted according to the header that declares them.
 * hdestroy_r::
 * hsearch_r::
 * tdestroy::
+* twalk_r::
 @end menu
 
 @include glibc-functions/hcreate_r.texi
 @include glibc-functions/hdestroy_r.texi
 @include glibc-functions/hsearch_r.texi
 @include glibc-functions/tdestroy.texi
+@include glibc-functions/twalk_r.texi
 
 @node Glibc selinux/selinux.h
 @section Glibc Extensions to @code{<selinux/selinux.h>}
@@ -5504,8 +5515,14 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getfilecon.texi
 @include glibc-functions/lgetfilecon.texi
 
-@c @node Glibc semaphore.h
-@c @section Glibc Extensions to @code{<semaphore.h>}
+@node Glibc semaphore.h
+@section Glibc Extensions to @code{<semaphore.h>}
+
+@menu
+* sem_clockwait::
+@end menu
+
+@include glibc-functions/sem_clockwait.texi
 
 @c @node Glibc setjmp.h
 @c @section Glibc Extensions to @code{<setjmp.h>}
@@ -5560,6 +5577,7 @@ This list of functions is sorted according to the header that declares them.
 * ssignal::
 * sys_siglist::
 * sysv_signal::
+* tgkill::
 @end menu
 
 @include glibc-functions/gsignal.texi
@@ -5575,6 +5593,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/ssignal.texi
 @include glibc-functions/sys_siglist.texi
 @include glibc-functions/sysv_signal.texi
+@include glibc-functions/tgkill.texi
 
 @node Glibc spawn.h
 @section Glibc Extensions to @code{<spawn.h>}
@@ -6422,6 +6441,7 @@ This list of functions is sorted according to the header that declares them.
 * getpass::
 * getresgid::
 * getresuid::
+* gettid::
 * getusershell::
 * group_member::
 * pipe2::
@@ -6458,6 +6478,7 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/getpass.texi
 @include glibc-functions/getresgid.texi
 @include glibc-functions/getresuid.texi
+@include glibc-functions/gettid.texi
 @include glibc-functions/getusershell.texi
 @include glibc-functions/group_member.texi
 @include glibc-functions/pipe2.texi
