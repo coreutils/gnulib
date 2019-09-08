@@ -21,15 +21,28 @@ extern "C" {
 #endif
 
 
-/* Look up a program in the PATH.
-   Attempt to determine the pathname that would be called by execlp/execvp
-   of PROGNAME.  If successful, return a pathname containing a slash
-   (either absolute or relative to the current directory).  Otherwise,
-   return PROGNAME unmodified.
+/* Looks up a program in the PATH.
+   Attempts to determine the pathname that would be called by execlp/execvp
+   of PROGNAME.  If successful, it returns a pathname containing a slash
+   (either absolute or relative to the current directory).  Otherwise, it
+   returns PROGNAME unmodified.
    Because of the latter case, callers should use execlp/execvp, not
    execl/execv on the returned pathname.
    The returned string is freshly malloc()ed if it is != PROGNAME.  */
 extern const char *find_in_path (const char *progname);
+
+/* Looks up a program in the given PATH-like string.
+   The PATH argument consists of a list of directories, separated by ':' or
+   (on native Windows) by ';'.  An empty PATH element designates the current
+   directory.  A null PATH is equivalent to an empty PATH, that is, to the
+   singleton list that contains only the current directory.
+   Determines the pathname that would be called by execlp/execvp of PROGNAME.
+   - If successful, it returns a pathname containing a slash (either absolute
+     or relative to the current directory).  The returned string can be used
+     with either execl/execv or execlp/execvp.  It is freshly malloc()ed if it
+     is != PROGNAME.
+   - Otherwise, it returns NULL.  */
+extern const char *find_in_given_path (const char *progname, const char *path);
 
 
 #ifdef __cplusplus
