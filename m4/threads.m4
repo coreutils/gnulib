@@ -1,4 +1,4 @@
-# threads.m4 serial 5
+# threads.m4 serial 6
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -104,8 +104,18 @@ AC_DEFUN([gl_THREADS_H],
           ]], [[
             x = 42;
           ]])],
-         [gl_cv_thread_local_works=yes],
-         [gl_cv_thread_local_works=no])
+         [if test "$cross_compiling" != yes; then
+            gl_cv_thread_local_works=yes
+          else
+            gl_cv_thread_local_works="guessing yes"
+          fi
+         ],
+         [if test "$cross_compiling" != yes; then
+            gl_cv_thread_local_works=no
+          else
+            gl_cv_thread_local_works="guessing no"
+          fi
+         ])
      fi
     ])
   case "$gl_cv_thread_local_works" in
