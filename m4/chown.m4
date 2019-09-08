@@ -1,4 +1,4 @@
-# serial 32
+# serial 33
 # Determine whether we need the chown wrapper.
 
 dnl Copyright (C) 1997-2001, 2003-2005, 2007, 2009-2019 Free Software
@@ -80,9 +80,10 @@ AC_DEFUN_ONCE([gl_FUNC_CHOWN],
     HAVE_CHOWN=0
   else
     dnl Some old systems treated chown like lchown.
-    if test $gl_cv_func_chown_follows_symlink = no; then
-      REPLACE_CHOWN=1
-    fi
+    case "$gl_cv_func_chown_follows_symlink" in
+      *yes) ;;
+      *) REPLACE_CHOWN=1 ;;
+    esac
 
     dnl Some old systems tried to use uid/gid -1 literally.
     case "$ac_cv_func_chown_works" in
