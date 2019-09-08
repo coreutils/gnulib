@@ -12,7 +12,6 @@ stdbool
 xalloc
 xconcat-filename
 unistd
-strdup
 
 configure.ac:
 gl_FINDPROG
