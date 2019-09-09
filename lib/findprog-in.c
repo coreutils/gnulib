@@ -71,26 +71,84 @@ static const char * const suffixes[] =
   };
 
 const char *
-find_in_given_path (const char *progname, const char *path)
+find_in_given_path (const char *progname, const char *path,
+                    bool optimize_for_exec)
 {
   {
     bool has_slash = false;
-    const char *p;
+    {
+      const char *p;
 
-    for (p = progname; *p != '\0'; p++)
-      if (ISSLASH (*p))
-        {
-          has_slash = true;
-          break;
-        }
+      for (p = progname; *p != '\0'; p++)
+        if (ISSLASH (*p))
+          {
+            has_slash = true;
+            break;
+          }
+    }
     if (has_slash)
-      /* If progname contains a slash, it is either absolute or relative to
-         the current directory.  PATH is not used.
-         We could try the various suffixes and see whether one of the files
-         with such a suffix is actually executable.  But this is not needed,
-         since the execl/execv/execlp/execvp functions will do these tests
-         anyway.  */
-      return progname;
+      {
+        /* If progname contains a slash, it is either absolute or relative to
+           the current directory.  PATH is not used.  */
+        if (optimize_for_exec)
+          /* The execl/execv/execlp/execvp functions will try the various
+             suffixes anyway and fail if no executable is found.  */
+          return progname;
+        else
+          {
+            /* Try the various suffixes and see whether one of the files
+               with such a suffix is actually executable.  */
+            size_t i;
+            #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
+            const char *progbasename;
+
+            {
+              const char *p;
+
+              progbasename = progname;
+              for (p = progname; *p != '\0'; p++)
+                if (ISSLASH (*p))
+                  progbasename = p + 1;
+            }
+            #endif
+
+            /* Try all platform-dependent suffixes.  */
+            for (i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
+              {
+                const char *suffix = suffixes[i];
+
+                #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
+                /* File names without a '.' are not considered executable.  */
+                if (*suffix != '\0' || strchr (progbasename, '.') != NULL)
+                #endif
+                  {
+                    /* Concatenate progname and suffix.  */
+                    char *progpathname =
+                      xconcatenated_filename ("", progname, suffix);
+
+                    /* On systems which have the eaccess() system call, let's
+                       use it.  On other systems, let's hope that this program
+                       is not installed setuid or setgid, so that it is ok to
+                       call access() despite its design flaw.  */
+                    if (eaccess (progpathname, X_OK) == 0)
+                      {
+                        /* Found!  */
+                        if (strcmp (progpathname, progname) == 0)
+                          {
+                            free (progpathname);
+                            return progname;
+                          }
+                        else
+                          return progpathname;
+                      }
+
+                    free (progpathname);
+                  }
+              }
+
+            return NULL;
+          }
+      }
   }
 
   if (path == NULL)
@@ -131,14 +189,14 @@ find_in_given_path (const char *progname, const char *path)
             if (*suffix != '\0' || strchr (progname, '.') != NULL)
             #endif
               {
-                /* Concatenate dir and progname.  */
+                /* Concatenate dir, progname, and suffix.  */
                 char *progpathname =
                   xconcatenated_filename (dir, progname, suffix);
 
-                /* On systems which have the eaccess() system call, let's use
-                   it.  On other systems, let's hope that this program is not
-                   installed setuid or setgid, so that it is ok to call
-                   access() despite its design flaw.  */
+                /* On systems which have the eaccess() system call, let's
+                   use it.  On other systems, let's hope that this program
+                   is not installed setuid or setgid, so that it is ok to
+                   call access() despite its design flaw.  */
                 if (eaccess (progpathname, X_OK) == 0)
                   {
                     /* Found!  */

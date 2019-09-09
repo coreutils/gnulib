@@ -15,6 +15,10 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+#ifndef _FINDPROG_H
+#define _FINDPROG_H
+
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -41,10 +45,16 @@ extern const char *find_in_path (const char *progname);
      or relative to the current directory).  The returned string can be used
      with either execl/execv or execlp/execvp.  It is freshly malloc()ed if it
      is != PROGNAME.
-   - Otherwise, it returns NULL.  */
-extern const char *find_in_given_path (const char *progname, const char *path);
+   - Otherwise, it returns NULL.
+   If OPTIMIZE_FOR_EXEC is true, the function saves some work, under the
+   assumption that the resulting pathname will not be accessed directly,
+   only through execl/execv or execlp/execvp.  */
+extern const char *find_in_given_path (const char *progname, const char *path,
+                                       bool optimize_for_exec);
 
 
 #ifdef __cplusplus
 }
 #endif
+
+#endif /* _FINDPROG_H */
