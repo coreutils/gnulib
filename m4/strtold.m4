@@ -1,4 +1,4 @@
-# strtold.m4 serial 4
+# strtold.m4 serial 5
 dnl Copyright (C) 2002-2003, 2006-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -101,7 +101,7 @@ numeric_equal (long double x, long double y)
            [case "$host_os" in
                        # Guess yes on musl systems.
               *-musl*) gl_cv_func_strtold_works="guessing yes" ;;
-              *)       gl_cv_func_strtold_works="guessing no" ;;
+              *)       gl_cv_func_strtold_works="$gl_cross_guess_normal" ;;
             esac
            ])
         ])

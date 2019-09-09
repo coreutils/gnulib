@@ -1,4 +1,4 @@
-# pthread_rwlock_rdlock.m4 serial 3
+# pthread_rwlock_rdlock.m4 serial 4
 dnl Copyright (C) 2017-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -170,8 +170,8 @@ main ()
                            gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no"
                          fi
                          ;;
-                         # If we don't know, assume the worst.
-          *)             gl_cv_pthread_rwlock_rdlock_prefer_writer="guessing no" ;;
+                         # If we don't know, obey --enable-cross-guesses.
+          *)             gl_cv_pthread_rwlock_rdlock_prefer_writer="$gl_cross_guess_normal" ;;
          esac
        ])
      LIBS="$save_LIBS"

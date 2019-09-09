@@ -1,4 +1,4 @@
-# modfl.m4 serial 7
+# modfl.m4 serial 8
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -76,8 +76,8 @@ int main (int argc, char *argv[])
                                   [gl_cv_func_modfl_ieee="guessing yes"],
                                   [gl_cv_func_modfl_ieee="guessing no"])
                                 ;;
-                                # If we don't know, assume the worst.
-                 *)             gl_cv_func_modfl_ieee="guessing no" ;;
+                                # If we don't know, obey --enable-cross-guesses.
+                 *)             gl_cv_func_modfl_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
             LIBS="$save_LIBS"

@@ -1,4 +1,4 @@
-# serial 19
+# serial 20
 
 dnl From Jim Meyering.
 dnl
@@ -46,8 +46,8 @@ AC_DEFUN([gl_CHECK_TYPE_STRUCT_DIRENT_D_INO],
               linux*-musl*) gl_cv_struct_dirent_d_ino="guessing yes" ;;
                             # Guess no on native Windows.
               mingw*)       gl_cv_struct_dirent_d_ino="guessing no" ;;
-                            # If we don't know, assume the worst.
-              *)            gl_cv_struct_dirent_d_ino="guessing no" ;;
+                            # If we don't know, obey --enable-cross-guesses.
+              *)            gl_cv_struct_dirent_d_ino="$gl_cross_guess_normal" ;;
             esac
            ])])
    case "$gl_cv_struct_dirent_d_ino" in

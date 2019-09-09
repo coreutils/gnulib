@@ -1,4 +1,4 @@
-# usleep.m4 serial 6
+# usleep.m4 serial 7
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,8 +35,8 @@ AC_DEFUN([gl_FUNC_USLEEP],
            *-musl*)       gl_cv_func_usleep_works="guessing yes" ;;
                           # Guess no on native Windows.
            mingw*)        gl_cv_func_usleep_works="guessing no" ;;
-                          # If we don't know, assume the worst.
-           *)             gl_cv_func_usleep_works="guessing no" ;;
+                          # If we don't know, obey --enable-cross-guesses.
+           *)             gl_cv_func_usleep_works="$gl_cross_guess_normal" ;;
          esac
         ])])
     case "$gl_cv_func_usleep_works" in

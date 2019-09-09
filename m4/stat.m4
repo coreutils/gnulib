@@ -1,4 +1,4 @@
-# serial 15
+# serial 16
 
 # Copyright (C) 2009-2019 Free Software Foundation, Inc.
 #
@@ -47,8 +47,8 @@ AC_DEFUN([gl_FUNC_STAT],
               linux-* | linux) gl_cv_func_stat_file_slash="guessing yes" ;;
                                # Guess yes on glibc systems.
               *-gnu* | gnu*)   gl_cv_func_stat_file_slash="guessing yes" ;;
-                               # If we don't know, assume the worst.
-              *)               gl_cv_func_stat_file_slash="guessing no" ;;
+                               # If we don't know, obey --enable-cross-guesses.
+              *)               gl_cv_func_stat_file_slash="$gl_cross_guess_normal" ;;
             esac
            ])
          rm -f conftest.tmp conftest.lnk])

@@ -1,4 +1,4 @@
-# select.m4 serial 10
+# select.m4 serial 11
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -78,8 +78,8 @@ changequote([,])dnl
             linux-* | linux) gl_cv_func_select_detects_ebadf="guessing yes" ;;
                              # Guess yes on glibc systems.
             *-gnu* | gnu*)   gl_cv_func_select_detects_ebadf="guessing yes" ;;
-                             # If we don't know, assume the worst.
-            *)               gl_cv_func_select_detects_ebadf="guessing no" ;;
+                             # If we don't know, obey --enable-cross-guesses.
+            *)               gl_cv_func_select_detects_ebadf="$gl_cross_guess_normal" ;;
            esac
           ])
       ])

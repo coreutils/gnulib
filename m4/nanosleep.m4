@@ -1,4 +1,4 @@
-# serial 38
+# serial 39
 
 dnl From Jim Meyering.
 dnl Check for the nanosleep function.
@@ -119,8 +119,8 @@ AC_DEFUN([gl_FUNC_NANOSLEEP],
             gl_cv_func_nanosleep='guessing no (mishandles large arguments)' ;;
           mingw*) # Guess no on native Windows.
             gl_cv_func_nanosleep='guessing no' ;;
-          *)      # If we don't know, assume the worst.
-            gl_cv_func_nanosleep='guessing no' ;;
+          *)      # If we don't know, obey --enable-cross-guesses.
+            gl_cv_func_nanosleep="$gl_cross_guess_normal" ;;
         esac
        ])
     ])

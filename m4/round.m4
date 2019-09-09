@@ -1,4 +1,4 @@
-# round.m4 serial 21
+# round.m4 serial 22
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -126,8 +126,8 @@ int main (int argc, char *argv[])
                                   [gl_cv_func_round_ieee="guessing yes"],
                                   [gl_cv_func_round_ieee="guessing no"])
                                 ;;
-                                # If we don't know, assume the worst.
-                 *)             gl_cv_func_round_ieee="guessing no" ;;
+                                # If we don't know, obey --enable-cross-guesses.
+                 *)             gl_cv_func_round_ieee="$gl_cross_guess_normal" ;;
                esac
               ])
             LIBS="$save_LIBS"

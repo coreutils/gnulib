@@ -1,4 +1,4 @@
-# rmdir.m4 serial 16
+# rmdir.m4 serial 17
 dnl Copyright (C) 2002, 2005, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,8 +39,8 @@ AC_DEFUN([gl_FUNC_RMDIR],
           *-gnu* | gnu*)   gl_cv_func_rmdir_works="guessing yes" ;;
                            # Guess no on native Windows.
           mingw*)          gl_cv_func_rmdir_works="guessing no" ;;
-                           # If we don't know, assume the worst.
-          *)               gl_cv_func_rmdir_works="guessing no" ;;
+                           # If we don't know, obey --enable-cross-guesses.
+          *)               gl_cv_func_rmdir_works="$gl_cross_guess_normal" ;;
         esac
        ])
      rm -rf conftest.dir conftest.file])

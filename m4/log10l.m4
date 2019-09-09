@@ -1,4 +1,4 @@
-# log10l.m4 serial 7
+# log10l.m4 serial 8
 dnl Copyright (C) 2011-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -151,8 +151,8 @@ int main (int argc, char *argv[])
            *-musl*)       gl_cv_func_log10l_works="guessing yes" ;;
                           # Guess yes on native Windows.
            mingw*)        gl_cv_func_log10l_works="guessing yes" ;;
-                          # If we don't know, assume the worst.
-           *)             gl_cv_func_log10l_works="guessing no" ;;
+                          # If we don't know, obey --enable-cross-guesses.
+           *)             gl_cv_func_log10l_works="$gl_cross_guess_normal" ;;
          esac
         ])
     ])

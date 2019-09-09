@@ -1,4 +1,4 @@
-# stpncpy.m4 serial 17
+# stpncpy.m4 serial 18
 dnl Copyright (C) 2002-2003, 2005-2007, 2009-2019 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -80,7 +80,7 @@ int main ()
 ],         [gl_cv_func_stpncpy="guessing yes"],
            [case "$host_os" in
               *-musl*) gl_cv_func_stpncpy="guessing yes" ;;
-              *)       gl_cv_func_stpncpy="guessing no" ;;
+              *)       gl_cv_func_stpncpy="$gl_cross_guess_normal" ;;
             esac
            ])
         ])

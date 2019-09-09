@@ -1,4 +1,4 @@
-# signbit.m4 serial 17
+# signbit.m4 serial 18
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,8 +35,8 @@ AC_DEFUN([gl_SIGNBIT],
            *-musl*)       gl_cv_func_signbit="guessing yes" ;;
                           # Guess yes on native Windows.
            mingw*)        gl_cv_func_signbit="guessing yes" ;;
-                          # If we don't know, assume the worst.
-           *)             gl_cv_func_signbit="guessing no" ;;
+                          # If we don't know, obey --enable-cross-guesses.
+           *)             gl_cv_func_signbit="$gl_cross_guess_normal" ;;
          esac
         ])
     ])
@@ -73,8 +73,8 @@ AC_DEFUN([gl_SIGNBIT],
                             gl_cv_func_signbit_gcc="guessing no"
                           fi
                           ;;
-                          # If we don't know, assume the worst.
-           *)             gl_cv_func_signbit_gcc="guessing no" ;;
+                          # If we don't know, obey --enable-cross-guesses.
+           *)             gl_cv_func_signbit_gcc="$gl_cross_guess_normal" ;;
          esac
         ])
     ])

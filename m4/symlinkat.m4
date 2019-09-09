@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 # See if we need to provide symlinkat replacement.
 
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
@@ -41,8 +41,8 @@ AC_DEFUN([gl_FUNC_SYMLINKAT],
             linux-* | linux) gl_cv_func_symlinkat_works="guessing yes" ;;
                              # Guess yes on glibc systems.
             *-gnu* | gnu*)   gl_cv_func_symlinkat_works="guessing yes" ;;
-                             # If we don't know, assume the worst.
-            *)               gl_cv_func_symlinkat_works="guessing no" ;;
+                             # If we don't know, obey --enable-cross-guesses.
+            *)               gl_cv_func_symlinkat_works="$gl_cross_guess_normal" ;;
           esac
          ])
       rm -f conftest.f conftest.link conftest.lnk2])

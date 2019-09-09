@@ -1,4 +1,4 @@
-# ceil.m4 serial 14
+# ceil.m4 serial 15
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -52,8 +52,8 @@ int main (int argc, char *argv[])
                *-musl*)       gl_cv_func_ceil_ieee="guessing yes" ;;
                               # Guess yes on native Windows.
                mingw*)        gl_cv_func_ceil_ieee="guessing yes" ;;
-                              # If we don't know, assume the worst.
-               *)             gl_cv_func_ceil_ieee="guessing no" ;;
+                              # If we don't know, obey --enable-cross-guesses.
+               *)             gl_cv_func_ceil_ieee="$gl_cross_guess_normal" ;;
              esac
             ])
           LIBS="$save_LIBS"

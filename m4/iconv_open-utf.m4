@@ -1,4 +1,4 @@
-# iconv_open-utf.m4 serial 3
+# iconv_open-utf.m4 serial 4
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -214,7 +214,7 @@ int main ()
            dnl We know that GNU libiconv, GNU libc, musl libc, and Solaris >= 9 do.
            dnl OSF/1 5.1 has these encodings, but inserts a BOM in the "to"
            dnl direction.
-           gl_cv_func_iconv_supports_utf="guessing no"
+           gl_cv_func_iconv_supports_utf="$gl_cross_guess_normal"
            if test $gl_func_iconv_gnu = yes; then
              gl_cv_func_iconv_supports_utf="guessing yes"
            else

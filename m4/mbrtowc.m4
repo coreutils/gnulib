@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 31  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 32  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2019 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -599,7 +599,7 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
     [
      dnl Initial guess, used when cross-compiling or when no suitable locale
      dnl is present.
-     gl_cv_C_locale_sans_EILSEQ="guessing no"
+     gl_cv_C_locale_sans_EILSEQ="$gl_cross_guess_normal"
 
      AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(

@@ -1,4 +1,4 @@
-# fchownat.m4 serial 4
+# fchownat.m4 serial 5
 dnl Copyright (C) 2004-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,7 +71,7 @@ main ()
           ]])],
        [gl_cv_func_fchownat_nofollow_works=yes],
        [gl_cv_func_fchownat_nofollow_works=no],
-       [gl_cv_func_fchownat_nofollow_works="guessing no"])
+       [gl_cv_func_fchownat_nofollow_works="$gl_cross_guess_normal"])
   ])
   AS_IF([test "$gl_cv_func_fchownat_nofollow_works" != yes], [$1], [$2])
 ])
@@ -105,7 +105,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG],
           ]])],
        [gl_cv_func_fchownat_empty_filename_works=yes],
        [gl_cv_func_fchownat_empty_filename_works=no],
-       [gl_cv_func_fchownat_empty_filename_works="guessing no"])
+       [gl_cv_func_fchownat_empty_filename_works="$gl_cross_guess_normal"])
     ])
   AS_IF([test "$gl_cv_func_fchownat_empty_filename_works" != yes], [$1], [$2])
 ])
