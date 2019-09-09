@@ -89,6 +89,9 @@ void hash_reset_tuning (Hash_tuning *);
 Hash_table *hash_initialize (size_t, const Hash_tuning *,
                              Hash_hasher, Hash_comparator,
                              Hash_data_freer) _GL_ATTRIBUTE_WUR;
+Hash_table *hash_xinitialize (size_t, const Hash_tuning *,
+                              Hash_hasher, Hash_comparator,
+                              Hash_data_freer) _GL_ATTRIBUTE_WUR;
 void hash_clear (Hash_table *);
 void hash_free (Hash_table *);
 
