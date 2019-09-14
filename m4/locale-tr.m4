@@ -1,4 +1,4 @@
-# locale-tr.m4 serial 11
+# locale-tr.m4 serial 12
 dnl Copyright (C) 2003, 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,6 +21,7 @@ changequote(,)dnl
 #endif
 #include <stdlib.h>
 #include <string.h>
+#include <wctype.h>
 struct tm t;
 char buf[16];
 int main () {

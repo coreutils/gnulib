@@ -1,4 +1,4 @@
-# ptsname.m4 serial 7
+# ptsname.m4 serial 8
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,10 +19,12 @@ AC_DEFUN([gl_FUNC_PTSNAME],
     AC_CACHE_CHECK([whether ptsname sets errno on failure],
       [gl_cv_func_ptsname_sets_errno],
       [AC_RUN_IFELSE(
-         [AC_LANG_PROGRAM([[#include <errno.h>
-      ]], [[
-      return ptsname (-1) || !errno;
-           ]])],
+         [AC_LANG_PROGRAM([[
+              #include <stdlib.h>
+              #include <errno.h>
+            ]], [[
+              return ptsname (-1) || !errno;
+            ]])],
          [gl_cv_func_ptsname_sets_errno=yes],
          [gl_cv_func_ptsname_sets_errno=no],
          [case "$host_os" in
