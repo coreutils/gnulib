@@ -118,8 +118,9 @@ find_in_given_path (const char *progname, const char *path,
                 const char *suffix = suffixes[i];
 
                 #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
-                /* File names without a '.' are not considered executable.  */
-                if (*suffix != '\0' || strchr (progbasename, '.') != NULL)
+                /* File names without a '.' are not considered executable, and
+                   for file names with a '.' no additional suffix is tried.  */
+                if ((*suffix != '\0') != (strchr (progbasename, '.') != NULL))
                 #endif
                   {
                     /* Concatenate progname and suffix.  */
@@ -185,8 +186,9 @@ find_in_given_path (const char *progname, const char *path,
             const char *suffix = suffixes[i];
 
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
-            /* File names without a '.' are not considered executable.  */
-            if (*suffix != '\0' || strchr (progname, '.') != NULL)
+            /* File names without a '.' are not considered executable, and
+               for file names with a '.' no additional suffix is tried.  */
+            if ((*suffix != '\0') != (strchr (progname, '.') != NULL))
             #endif
               {
                 /* Concatenate dir, progname, and suffix.  */
