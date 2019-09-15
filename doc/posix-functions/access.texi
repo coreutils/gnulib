@@ -4,10 +4,13 @@
 
 POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/functions/access.html}
 
-Gnulib module: ---
+Gnulib module: access
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function does not support the @code{X_OK} mode on some platforms:
+MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

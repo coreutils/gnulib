@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_ACCESS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::access, int, (const char *, int));
+#endif
+
 #if GNULIB_TEST_CHDIR
 SIGNATURE_CHECK (GNULIB_NAMESPACE::chdir, int, (const char *));
 #endif

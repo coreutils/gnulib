@@ -253,10 +253,28 @@ _GL_INLINE_HEADER_BEGIN
 /* Declare overridden functions.  */
 
 
-#if defined GNULIB_POSIXCHECK
+#if @GNULIB_ACCESS@
+# if @REPLACE_ACCESS@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef access
+#   define access rpl_access
+#  endif
+_GL_FUNCDECL_RPL (access, int, (const char *file, int mode)
+                               _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (access, int, (const char *file, int mode));
+# else
+_GL_CXXALIAS_SYS (access, int, (const char *file, int mode));
+# endif
+_GL_CXXALIASWARN (access);
+#elif defined GNULIB_POSIXCHECK
+# undef access
+# if HAVE_RAW_DECL_ACCESS
 /* The access() function is a security risk.  */
-_GL_WARN_ON_USE (access, "the access function is a security risk - "
+_GL_WARN_ON_USE (access, "access does not always support X_OK - "
+                 "use gnulib module access for portability; "
+                 "also, this function is a security risk - "
                  "use the gnulib module faccessat instead");
+# endif
 #endif
 
 
