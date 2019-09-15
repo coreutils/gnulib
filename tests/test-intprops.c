@@ -368,7 +368,9 @@ main (void)
   CHECK_PRODUCT (INT_MAX, UINT_MAX, unsigned int, true, INT_MAX * UINT_MAX);
   CHECK_PRODUCT (INT_MAX, ULONG_MAX, unsigned long int, true,
                  INT_MAX * ULONG_MAX);
+#if !defined __HP_cc
   CHECK_SPRODUCT (INT_MIN, LONG_MAX / INT_MIN - 1, long int, true, LONG_MIN);
+#endif
   CHECK_SPRODUCT (INT_MIN, LONG_MAX / INT_MIN, long int, false, DONTCARE);
   CHECK_PRODUCT (INT_MIN, UINT_MAX, unsigned int, true, INT_MIN * UINT_MAX);
   CHECK_PRODUCT (INT_MIN, ULONG_MAX, unsigned long int, true,
