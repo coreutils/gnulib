@@ -12,6 +12,7 @@ stdbool
 filename
 xalloc
 xconcat-filename
+access
 unistd
 
 configure.ac:

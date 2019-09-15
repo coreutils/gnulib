@@ -12,6 +12,7 @@ Depends-on:
 stdbool
 strdup
 concat-filename
+access
 unistd
 
 configure.ac:
