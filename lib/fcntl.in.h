@@ -39,6 +39,12 @@
 #endif
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
+/* Native Windows platforms declare open(), creat() in <io.h>.  */
+#if (@GNULIB_CREAT@ || @GNULIB_OPEN@ || defined GNULIB_POSIXCHECK) \
+    && (defined _WIN32 && ! defined __CYGWIN__)
+# include <io.h>
+#endif
+
 #else
 /* Normal invocation convention.  */
 
@@ -59,17 +65,17 @@
 /* The include_next requires a split double-inclusion guard.  */
 #@INCLUDE_NEXT@ @NEXT_FCNTL_H@
 
+/* Native Windows platforms declare open(), creat() in <io.h>.  */
+#if (@GNULIB_CREAT@ || @GNULIB_OPEN@ || defined GNULIB_POSIXCHECK) \
+    && (defined _WIN32 && ! defined __CYGWIN__)
+# include <io.h>
+#endif
+
 #ifndef _@GUARD_PREFIX@_FCNTL_H
 #define _@GUARD_PREFIX@_FCNTL_H
 
 #ifndef __GLIBC__ /* Avoid namespace pollution on glibc systems.  */
 # include <unistd.h>
-#endif
-
-/* Native Windows platforms declare open(), creat() in <io.h>.  */
-#if (@GNULIB_CREAT@ || @GNULIB_OPEN@ || defined GNULIB_POSIXCHECK) \
-    && (defined _WIN32 && ! defined __CYGWIN__)
-# include <io.h>
 #endif
 
 
