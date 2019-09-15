@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_CREAT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::creat, int, (const char *, mode_t));
+#endif
+
 #if GNULIB_TEST_FCNTL
 SIGNATURE_CHECK (GNULIB_NAMESPACE::fcntl, int, (int, int, ...));
 #endif

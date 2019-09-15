@@ -5,6 +5,7 @@ Files:
 lib/open.c
 m4/open.m4
 m4/open-cloexec.m4
+m4/open-slash.m4
 m4/mode_t.m4
 
 Depends-on:
