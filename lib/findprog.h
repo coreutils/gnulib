@@ -36,19 +36,29 @@ extern "C" {
 extern const char *find_in_path (const char *progname);
 
 /* Looks up a program in the given PATH-like string.
+
    The PATH argument consists of a list of directories, separated by ':' or
    (on native Windows) by ';'.  An empty PATH element designates the current
    directory.  A null PATH is equivalent to an empty PATH, that is, to the
    singleton list that contains only the current directory.
+
    Determines the pathname that would be called by execlp/execvp of PROGNAME.
    - If successful, it returns a pathname containing a slash (either absolute
      or relative to the current directory).  The returned string can be used
      with either execl/execv or execlp/execvp.  It is freshly malloc()ed if it
      is != PROGNAME.
-   - Otherwise, it returns NULL.
+   - Otherwise, it sets errno and returns NULL.
+     Specific errno values include:
+       - ENOENT: means that the program's file was not found.
+       - EACCESS: means that the program's file was found but lacks the
+         execute permissions.
    If OPTIMIZE_FOR_EXEC is true, the function saves some work, under the
    assumption that the resulting pathname will not be accessed directly,
-   only through execl/execv or execlp/execvp.  */
+   only through execl/execv or execlp/execvp.
+
+   Here, a "slash" means:
+     - On POSIX systems excluding Cygwin: a '/',
+     - On Windows, OS/2, DOS platforms: a '/' or '\'. */
 extern const char *find_in_given_path (const char *progname, const char *path,
                                        bool optimize_for_exec);
 

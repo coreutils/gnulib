@@ -21,6 +21,7 @@
 /* Specification.  */
 #include "findprog.h"
 
+#include <errno.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -98,6 +99,7 @@ find_in_given_path (const char *progname, const char *path,
           {
             /* Try the various suffixes and see whether one of the files
                with such a suffix is actually executable.  */
+            int failure_errno;
             size_t i;
             #if defined _WIN32 && !defined __CYGWIN__ /* Native Windows */
             const char *progbasename;
@@ -113,6 +115,7 @@ find_in_given_path (const char *progname, const char *path,
             #endif
 
             /* Try all platform-dependent suffixes.  */
+            failure_errno = ENOENT;
             for (i = 0; i < sizeof (suffixes) / sizeof (suffixes[0]); i++)
               {
                 const char *suffix = suffixes[i];
@@ -143,10 +146,14 @@ find_in_given_path (const char *progname, const char *path,
                           return progpathname;
                       }
 
+                    if (errno != ENOENT)
+                      failure_errno = errno;
+
                     free (progpathname);
                   }
               }
 
+            errno = failure_errno;
             return NULL;
           }
       }
@@ -158,11 +165,13 @@ find_in_given_path (const char *progname, const char *path,
     path = "";
 
   {
+    int failure_errno;
     /* Make a copy, to prepare for destructive modifications.  */
     char *path_copy = xstrdup (path);
     char *path_rest;
     char *cp;
 
+    failure_errno = ENOENT;
     for (path_rest = path_copy; ; path_rest = cp + 1)
       {
         const char *dir;
@@ -222,6 +231,9 @@ find_in_given_path (const char *progname, const char *path,
                     return progpathname;
                   }
 
+                if (errno != ENOENT)
+                  failure_errno = errno;
+
                 free (progpathname);
               }
           }
@@ -232,7 +244,8 @@ find_in_given_path (const char *progname, const char *path,
 
     /* Not found in PATH.  */
     free (path_copy);
-  }
 
-  return NULL;
+    errno = failure_errno;
+    return NULL;
+  }
 }
