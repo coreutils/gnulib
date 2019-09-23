@@ -43,7 +43,7 @@
 
    See Vincent Lefèvre's page https://www.vinc17.net/research/extended.en.html
    for a good explanation.
-   See http://www.uwsg.iu.edu/hypermail/linux/kernel/0103.0/0453.html for
+   See https://web.archive.org/web/20060905133417/http://www.uwsg.iu.edu/hypermail/linux/kernel/0103.0/0453.html
    some argumentation which setting should be the default.  */
 
 /* This header file provides the following facilities:

@@ -2,7 +2,7 @@
 @section @code{vfork}
 @findex vfork
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/vfork.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/vfork.html}
 
 Gnulib module: ---
 

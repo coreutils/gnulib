@@ -57,7 +57,7 @@ AC_DEFUN([gl_FUNC_FFLUSH_STDIN],
          if (lseek (fd, 0, SEEK_CUR) != 5)
            { fclose (f); return 5; }
          /* Verify behaviour of fflush after ungetc. See
-            <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
+            <https://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>  */
          /* Verify behaviour of fflush after a backup ungetc.  This fails on
             mingw.  */
          c = fgetc (f);

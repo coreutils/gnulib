@@ -60,7 +60,7 @@ main (int argc, char *argv[])
        read access for strstr().
        See <https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=521737>.
        This is a bug in memchr(), see the Austin Group's clarification
-       <http://www.opengroup.org/austin/docs/austin_454.txt>.  */
+       <https://www.opengroup.org/austin/docs/austin_454.txt>.  */
     const char *fix = "aBaaaaaaaaaaax";
     char *page_boundary = (char *) zerosize_ptr ();
     size_t len = strlen (fix) + 1;

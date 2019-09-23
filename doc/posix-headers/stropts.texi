@@ -1,7 +1,7 @@
 @node stropts.h
 @section @file{stropts.h}
 
-POSIX specification:@* @url{http://www.opengroup.org/onlinepubs/9699919799/basedefs/stropts.h.html}
+POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/stropts.h.html}
 
 Gnulib module: ---
 

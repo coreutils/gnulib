@@ -113,7 +113,7 @@ rpl_stat (char const *name, struct stat *buf)
      around length limitations
      <https://docs.microsoft.com/en-us/windows/desktop/FileIO/naming-a-file> ?  */
 
-  /* POSIX <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>
+  /* POSIX <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>
      specifies: "More than two leading <slash> characters shall be treated as
      a single <slash> character."  */
   if (ISSLASH (name[0]) && ISSLASH (name[1]) && ISSLASH (name[2]))

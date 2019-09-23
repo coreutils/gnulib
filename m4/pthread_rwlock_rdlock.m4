@@ -26,7 +26,7 @@ dnl
 dnl POSIX:2017 makes this requirement only for implementations that support TPS
 dnl (Thread Priority Scheduling) and only for the scheduling policies SCHED_FIFO
 dnl and SCHED_RR, see
-dnl http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html
+dnl https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html
 dnl but this test verifies the guarantee regardless of TPS and regardless of
 dnl scheduling policy.
 dnl Glibc does not provide this guarantee (and never will on Linux), see

@@ -2,7 +2,7 @@
 @section @code{bcopy}
 @findex bcopy
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/bcopy.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/bcopy.html}
 
 Gnulib module: bcopy
 

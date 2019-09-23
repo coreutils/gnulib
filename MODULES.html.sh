@@ -21,8 +21,8 @@
 # Extend the PATH so that gnulib-tool is found.
 PATH=`dirname "$0"`:$PATH; export PATH
 
-POSIX2001_URL='http://www.opengroup.org/susv3'
-POSIX2008_URL='http://www.opengroup.org/onlinepubs/9699919799'
+POSIX2001_URL='https://pubs.opengroup.org/onlinepubs/009695399'
+POSIX2008_URL='https://pubs.opengroup.org/onlinepubs/9699919799'
 
 repo_url_prefix=
 repo_url_suffix=
@@ -1521,9 +1521,9 @@ func_module ()
       s,\([^a-zA-Z_]\)'$posix_functions'() \(function\|macro\),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> \3,g
       s,\([^a-zA-Z_]\)'$posix_functions' \(function\|macro\),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> \3,g
       s,\([^a-zA-Z_]\)'$posix_functions'(),\1<A HREF="'$POSIX2008_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions'() \(function\|macro\),\1<A HREF="'$POSIX2001_URL'xsh/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions' \(function\|macro\),\1<A HREF="'$POSIX2001_URL'xsh/\2.html">\2</A> \3,g
-      s,\([^a-zA-Z_]\)'$posix2001_functions'(),\1<A HREF="'$POSIX2001_URL'xsh/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
+      s,\([^a-zA-Z_]\)'$posix2001_functions'() \(function\|macro\),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix2001_functions' \(function\|macro\),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> \3,g
+      s,\([^a-zA-Z_]\)'$posix2001_functions'(),\1<A HREF="'$POSIX2001_URL'/functions/\2.html">\2</A> <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
       s,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)() \(function\|macro\),\1\2 \3,g
       s,\([^a-zA-Z_]\)\([a-zA-Z_][a-zA-Z0-9_]*\)(),\1\2 <SPAN STYLE="color:#FF0000;">what?? If you mean a function\, please say so.</SPAN>,g
       s, '"'"'\([a-zA-Z0-9_ -]*\)'"'"'\([^a-zA-Z0-9_]\), <CODE>\1</CODE>\2,g
@@ -1553,7 +1553,7 @@ func_module ()
       s,^#include "\(.*\)"$,#include "<A HREF="'$repo_url_prefix'lib/\1'$repo_url_suffix_repl'">\1</A>",
       s,^#include &lt;'$posix_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2008_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
       s,<A HREF="'$POSIX2008_URL'/basedefs/\([a-zA-Z0-9_]*\)/\([a-zA-Z0-9_]*\)\.h\.html">,<A HREF="'$POSIX2008_URL'/basedefs/\1_\2.h.html">,
-      s,^#include &lt;'$posix2001_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2001_URL'xbd/\1.h.html">\1.h</A>\&gt;,
+      s,^#include &lt;'$posix2001_headers'\.h&gt;$,#include \&lt;<A HREF="'$POSIX2001_URL'/basedefs/\1.h.html">\1.h</A>\&gt;,
       s/$/<BR>/
     '
     element=`echo "$includes" \

@@ -7,7 +7,7 @@
 @section @code{index}
 @findex index
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/index.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/index.html}
 
 Gnulib module: ---
 

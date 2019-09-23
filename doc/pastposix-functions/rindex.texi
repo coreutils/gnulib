@@ -2,7 +2,7 @@
 @section @code{rindex}
 @findex rindex
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/rindex.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/rindex.html}
 
 Gnulib module: ---
 

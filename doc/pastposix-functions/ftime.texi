@@ -2,7 +2,7 @@
 @section @code{ftime}
 @findex ftime
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ftime.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ftime.html}
 
 Gnulib module: ---
 

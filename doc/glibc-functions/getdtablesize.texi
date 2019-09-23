@@ -2,7 +2,7 @@
 @subsection @code{getdtablesize}
 @findex getdtablesize
 
-SUSv2 specification: @url{http://pubs.opengroup.org/onlinepubs/7908799/xsh/getdtablesize.html}
+SUSv2 specification: @url{https://pubs.opengroup.org/onlinepubs/7908799/xsh/getdtablesize.html}
 
 Documentation:@* @uref{https://www.kernel.org/doc/man-pages/online/pages/man3/getdtablesize.3.html,,man getdtablesize}
 

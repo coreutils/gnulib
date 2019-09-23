@@ -721,7 +721,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                   roundoff_bits = sum_bits - keep_bits; /* > 0, <= sum_bits */
                   {
 #if HAVE_FEGETROUND && defined FE_TOWARDZERO
-                    /* Cf. <http://pubs.opengroup.org/onlinepubs/9699919799/functions/fegetround.html> */
+                    /* Cf. <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fegetround.html> */
                     int rounding_mode = fegetround ();
                     if (rounding_mode == FE_TOWARDZERO)
                       round_up = 0;
@@ -730,7 +730,7 @@ FUNC (DOUBLE x, DOUBLE y, DOUBLE z)
                     else if (rounding_mode == FE_UPWARD)
                       round_up = !sign;
 #else
-                    /* Cf. <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html> */
+                    /* Cf. <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html> */
                     int rounding_mode = FLT_ROUNDS;
                     if (rounding_mode == 0) /* toward zero */
                       round_up = 0;

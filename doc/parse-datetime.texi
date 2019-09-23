@@ -545,9 +545,9 @@ New York in 2004, but this example refers to a brief Halloween period
 when the gap was five hours.)
 
 A @env{TZ} value is a rule that typically names a location in the
-@uref{http://www.twinsun.com/tz/tz-link.htm, @samp{tz} database}.
+@uref{https://www.iana.org/time-zones, @samp{tz} database}.
 A recent catalog of location names appears in the
-@uref{http://twiki.org/cgi-bin/xtra/tzdate, TWiki Date and Time
+@uref{https://twiki.org/cgi-bin/xtra/tzdatepick.html, TWiki Date and Time
 Gateway}.  A few non-GNU hosts require a colon before a
 location name in a @env{TZ} setting, e.g.,
 @samp{TZ=":America/New_York"}.

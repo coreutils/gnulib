@@ -35,7 +35,7 @@ main (int argc, char *argv[])
 
   /* Verify the property in the "C" locale.
      POSIX specifies in
-       <http://www.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html>
+       <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html>
      that
        - in all locales, the blank characters include the <space> and <tab>
          characters,

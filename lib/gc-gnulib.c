@@ -99,7 +99,7 @@ gc_init (void)
 
   /* There is no need to create a container for just random data, so
      we can use CRYPT_VERIFY_CONTEXT (one call) see:
-     http://blogs.msdn.com/dangriff/archive/2003/11/19/51709.aspx */
+     https://web.archive.org/web/20070314163712/http://blogs.msdn.com/dangriff/archive/2003/11/19/51709.aspx */
 
   /* We first try to use the Intel PIII RNG if drivers are present */
   if (!CryptAcquireContext (&g_hProv, NULL, NULL,

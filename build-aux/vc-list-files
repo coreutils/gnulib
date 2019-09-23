@@ -25,7 +25,7 @@ scriptversion=2018-03-07.03; # UTC
 # list the version-controlled files in that directory.
 
 # If there's an argument, it must be a single, "."-relative directory name.
-# cvsu is part of the cvsutils package: http://www.red-bean.com/cvsutils/
+# cvsu is part of the cvsutils package: https://www.red-bean.com/cvsutils/
 
 postprocess=
 case $1 in

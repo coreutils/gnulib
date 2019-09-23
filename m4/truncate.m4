@@ -21,7 +21,7 @@ AC_DEFUN([gl_FUNC_TRUNCATE],
           dnl Native Windows, and Large File Support is requested.
           dnl The mingw64 truncate64() function is based on ftruncate64(),
           dnl which is unreliable (it may delete the file, see
-          dnl <http://mingw-w64.sourcearchive.com/documentation/2.0-1/ftruncate64_8c_source.html>).
+          dnl <https://web.archive.org/web/20160425005423/http://mingw-w64.sourcearchive.com/documentation/2.0-1/ftruncate64_8c_source.html>).
           dnl Use gnulib's ftruncate() and truncate() implementation instead.
           REPLACE_TRUNCATE=1
           ;;

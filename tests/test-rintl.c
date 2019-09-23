@@ -53,7 +53,7 @@ main ()
   BEGIN_LONG_DOUBLE_ROUNDING ();
 
   /* Consider the current rounding mode, cf.
-     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html>  */
+     <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html>  */
   if (FLT_ROUNDS == 1)
     {
       /* The current rounding mode is round-to-nearest

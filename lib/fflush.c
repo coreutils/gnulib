@@ -162,22 +162,19 @@ rpl_fflush (FILE *stream)
     /* Notes about the file-position indicator:
        1) The file position indicator is incremented by fgetc() and decremented
           by ungetc():
-          <http://www.opengroup.org/susv3/functions/fgetc.html>
+          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fgetc.html>
             "... the fgetc() function shall ... advance the associated file
              position indicator for the stream ..."
-          <http://www.opengroup.org/susv3/functions/ungetc.html>
+          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html>
             "The file-position indicator is decremented by each successful
              call to ungetc()..."
-       2) <http://www.opengroup.org/susv3/functions/ungetc.html> says:
-            "The value of the file-position indicator for the stream after
-             reading or discarding all pushed-back bytes shall be the same
-             as it was before the bytes were pushed back."
-          Here we are discarding all pushed-back bytes.  But more specifically,
-       3) <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt> says:
-            "[After fflush(),] the file offset of the underlying open file
-             description shall be set to the file position of the stream, and
-             any characters pushed back onto the stream by ungetc() ... shall
-             be discarded."  */
+       2) <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html> says:
+            "The value of the file-position indicator for the stream
+             after all pushed-back bytes have been read, or discarded
+             by calling fseek(), fseeko(), fsetpos(), or rewind() (but
+             not fflush()), shall be the same as it was before the
+             bytes were pushed back."
+          Here we are discarding all pushed-back bytes.  */
 
     /* POSIX does not specify fflush behavior for non-seekable input
        streams.  Some implementations purge unread data, some return

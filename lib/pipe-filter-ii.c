@@ -478,7 +478,7 @@ pipe_filter_ii_execute (const char *progname,
                 /* Writing to a pipe in non-blocking mode is tricky: The
                    write() call may fail with EAGAIN, simply because sufficient
                    space is not available in the pipe. See POSIX:2008
-                   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
+                   <https://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html>.
                    This happens actually on AIX and IRIX, when bufsize >= 8192
                    (even though PIPE_BUF and pathconf ("/", _PC_PIPE_BUF) are
                    both 32768).  */

@@ -2,7 +2,7 @@
 @section @code{h_errno}
 @findex h_errno
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/h_errno.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/h_errno.html}
 
 Gnulib module: ---
 

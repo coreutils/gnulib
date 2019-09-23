@@ -57,7 +57,7 @@ AC_DEFUN([gl_RELOCATABLE_BODY],
       # glibc systems, Linux with musl libc: yes. Android: no.
       linux*-android*) ;;
       linux* | kfreebsd*) use_elf_origin_trick=yes ;;
-      # Hurd: <http://lists.gnu.org/archive/html/bug-hurd/2019-02/msg00049.html>
+      # Hurd: <https://lists.gnu.org/r/bug-hurd/2019-02/msg00049.html>
       # only after the glibc commit from 2018-01-08
       # <https://sourceware.org/git/?p=glibc.git;a=commitdiff;h=311ba8dc4416467947eff2ab327854f124226309>
       gnu*)

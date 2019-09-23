@@ -19,7 +19,7 @@
 
 /*
  * ISO C 99 <wchar.h> for platforms that have issues.
- * <http://www.opengroup.org/susv3xbd/wchar.h.html>
+ * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wchar.h.html>
  *
  * For now, this just ensures proper prerequisite inclusion order and
  * the declaration of wcwidth().
@@ -1036,7 +1036,7 @@ _GL_WARN_ON_USE (wcswidth, "wcswidth is unportable - "
 
 
 /* Convert *TP to a date and time wide string.  See
-   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsftime.html>.  */
+   <https://pubs.opengroup.org/onlinepubs/9699919799/functions/wcsftime.html>.  */
 #if @GNULIB_WCSFTIME@
 # if @REPLACE_WCSFTIME@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

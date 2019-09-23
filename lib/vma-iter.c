@@ -677,7 +677,7 @@ vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 static int
 vma_iterate_bsd (vma_iterate_callback_fn callback, void *data)
 {
-  /* Documentation: http://man.netbsd.org/man/sysctl+7  */
+  /* Documentation: https://man.netbsd.org/man/sysctl+7  */
   unsigned int entry_size =
     /* If we wanted to have the path of each entry, we would need
        sizeof (struct kinfo_vmentry).  But we need only the non-string

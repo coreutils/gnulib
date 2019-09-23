@@ -76,8 +76,8 @@
    the return value is NULL and errno is set to ENOSPC.  A good value
    for CNT is 46.
 
-   For more details, see the POSIX:2001 specification
-   <http://www.opengroup.org/susv3xsh/inet_ntop.html>.  */
+   For more details, see the POSIX:2008 specification
+   <https://pubs.opengroup.org/onlinepubs/9699919799/functions/inet_ntop.html>.  */
 # if @REPLACE_INET_NTOP@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef inet_ntop

@@ -42,9 +42,9 @@ struct regex_quote_spec
    a pattern that can be compiled with regcomp().
    CFLAGS can be 0 or REG_EXTENDED.
    If it is 0, the result is a Basic Regular Expression (BRE)
-   <http://www.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03>.
+   <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_03>.
    If it is REG_EXTENDED, the result is an Extended Regular Expression (ERE)
-   <http://www.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_04>.
+   <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html#tag_09_04>.
    If ANCHORED is false, the regular expression will match substrings of lines.
    If ANCHORED is true, it will match only complete lines,  */
 extern struct regex_quote_spec

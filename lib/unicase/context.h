@@ -18,7 +18,7 @@
 
 /* The context of a prefix string combines the information of the "Before C"
    conditions of the Unicode Standard,
-   <http://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
+   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
    table 3-14 "Context Specification for Casing".
 
    casing_prefix_context_t contains the following fields:
@@ -38,7 +38,7 @@
 
 /* The context of a suffix string combines the information of the "After C"
    conditions of the Unicode Standard,
-   <http://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
+   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
    table 3-14 "Context Specification for Casing".
 
    casing_suffix_context_t contains the following fields:

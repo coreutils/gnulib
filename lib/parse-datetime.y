@@ -1200,7 +1200,7 @@ static table const military_table[] =
 /* Convert a time zone expressed as HH:MM into an integer count of
    seconds.  If MM is negative, then S is of the form HHMM and needs
    to be picked apart; otherwise, S is of the form HH.  As specified in
-   http://www.opengroup.org/susv3xbd/xbd_chap08.html#tag_08_03, allow
+   https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap08.html#tag_08_03, allow
    only valid TZ range, and consider first two digits as hours, if no
    minutes specified.  Return true if successful.  */
 

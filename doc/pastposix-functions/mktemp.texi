@@ -2,7 +2,7 @@
 @section @code{mktemp}
 @findex mktemp
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/mktemp.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/mktemp.html}
 
 Gnulib module: ---
 

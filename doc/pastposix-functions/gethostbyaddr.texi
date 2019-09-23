@@ -2,7 +2,7 @@
 @section @code{gethostbyaddr}
 @findex gethostbyaddr
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/gethostbyaddr.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/gethostbyaddr.html}
 
 Gnulib module: ---
 

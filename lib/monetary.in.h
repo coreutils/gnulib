@@ -74,7 +74,7 @@ extern "C" {
 #if @GNULIB_STRFMON_L@
 /* Converts a monetary value to a string.
    See the POSIX:2008 specification
-   <http://pubs.opengroup.org/onlinepubs/9699919799/functions/strfmon_l.html.  */
+   <https://pubs.opengroup.org/onlinepubs/9699919799/functions/strfmon_l.html.  */
 # if @REPLACE_STRFMON_L@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strfmon_l rpl_strfmon_l

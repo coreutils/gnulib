@@ -19,7 +19,7 @@
 
 /*
  * ISO C 99 <ctype.h> for platforms on which it is incomplete.
- * <http://www.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html>
+ * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/ctype.h.html>
  */
 
 #ifndef _@GUARD_PREFIX@_CTYPE_H

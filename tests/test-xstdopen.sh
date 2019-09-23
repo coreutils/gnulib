@@ -5,7 +5,7 @@ ${CHECKER} ./test-xstdopen${EXEEXT} || exit 1
 
 # The syntax for closed file descriptors in sh scripts is specified by POSIX in
 # section 2.7.5 of
-# http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html
 
 # Test with stdin closed.
 ${CHECKER} ./test-xstdopen${EXEEXT} <&- || exit 1

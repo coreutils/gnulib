@@ -45,14 +45,7 @@ creat (const char *filename, mode_t mode)
 {
 #if OPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash, then fail.
-     Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
-     says that
-       "A pathname that contains at least one non-slash character and that
-        ends with one or more trailing slashes shall be resolved as if a
-        single dot character ( '.' ) were appended to the pathname."
-     and
-       "The special filename dot shall refer to the directory specified by
-        its predecessor."
+     Rationale: POSIX <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html>
      creat() is defined as being equivalent to open() with flags
      O_CREAT | O_TRUNC | O_WRONLY.  Therefore:
      If the named file already exists as a directory, then creat() must fail

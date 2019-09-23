@@ -57,7 +57,7 @@ idpriv_drop (void)
        Hao Chen, David Wagner, Drew Dean: Setuid Demystified
        <https://www.usenix.org/legacy/publications/library/proceedings/sec02/full_papers/chen/chen.pdf>
      says about setreuid(): "The rule by which the saved uid id is modified
-     is complicated." Similarly, <http://unixpapa.com/incnote/setuid.html>
+     is complicated." Similarly, <https://unixpapa.com/incnote/setuid.html>
      says about setreuid(): "What exactly happens to the saved UID when this
      is used seems to vary a lot."  */
   if (setresuid (uid, uid, uid) < 0)

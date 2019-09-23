@@ -2,7 +2,7 @@
 @section @code{getwd}
 @findex getwd
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/getwd.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/getwd.html}
 
 Gnulib module: ---
 

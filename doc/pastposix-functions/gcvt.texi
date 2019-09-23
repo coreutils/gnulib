@@ -2,7 +2,7 @@
 @section @code{gcvt}
 @findex gcvt
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/gcvt.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/gcvt.html}
 
 Gnulib module: ---
 

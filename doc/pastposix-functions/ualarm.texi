@@ -2,7 +2,7 @@
 @section @code{ualarm}
 @findex ualarm
 
-POSIX specification: @url{http://www.opengroup.org/susv3xsh/ualarm.html}
+POSIX specification: @url{https://pubs.opengroup.org/onlinepubs/009695399/functions/ualarm.html}
 
 Gnulib module: ---
 

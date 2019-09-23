@@ -16,7 +16,7 @@ AC_DEFUN([gl_FUNC_GETDOMAINNAME],
   dnl Where is getdomainname() defined?
   dnl - On Solaris, it is in libnsl. But this function is not declared and
   dnl   is discouraged, see
-  dnl   <http://www.sun.com/software/solaris/programs/abi/appcert_faq.xml#q18>.
+  dnl   <https://web.archive.org/web/20100121182558/http://www.sun.com/software/solaris/programs/abi/appcert_faq.xml#q18>.
   dnl   We need to avoid a collision with this function.
   dnl - Otherwise it is in libc.
   AC_CHECK_FUNCS([getdomainname], , [

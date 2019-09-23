@@ -69,16 +69,7 @@ main (int argc, char **argv)
            according to the Austin Group's resolution on 2009-01-08.  */
         /* Check that fflush after a non-backup ungetc() call discards the
            ungetc buffer.  This is mandated by POSIX
-           <http://www.opengroup.org/susv3/functions/ungetc.html>:
-             "The value of the file-position indicator for the stream after
-              reading or discarding all pushed-back bytes shall be the same
-              as it was before the bytes were pushed back."
-           <http://www.opengroup.org/austin/aardvark/latest/xshbug3.txt>
-             "[After fflush(),] the file offset of the underlying open file
-              description shall be set to the file position of the stream, and
-              any characters pushed back onto the stream by ungetc() or
-              ungetwc() that have not subsequently been read from the stream
-              shall be discarded."  */
+           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html>  */
 
         c = fgetc (stdin);
         ASSERT (c == '#');

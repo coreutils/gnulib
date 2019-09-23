@@ -88,7 +88,7 @@ main (void)
 
   /* Check that memchr() does not read past the first occurrence of the
      byte being searched.  See the Austin Group's clarification
-     <http://www.opengroup.org/austin/docs/austin_454.txt>.
+     <https://www.opengroup.org/austin/docs/austin_454.txt>.
      Test both '\0' and something else, since some implementations
      special-case searching for NUL.
   */

@@ -16,7 +16,7 @@
 
 /*
  * POSIX <langinfo.h> for platforms that lack it or have an incomplete one.
- * <http://www.opengroup.org/onlinepubs/9699919799/basedefs/langinfo.h.html>
+ * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/langinfo.h.html>
  */
 
 #ifndef _@GUARD_PREFIX@_LANGINFO_H

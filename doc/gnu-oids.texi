@@ -7,8 +7,8 @@
 @c notice and this notice are preserved.
 @c
 @c When adding new OIDs, please add them also to
-@c   http://www.alvestrand.no/objectid/
-@c (Our page is http://www.alvestrand.no/objectid/1.3.6.1.4.1.11591.html.)
+@c   https://www.alvestrand.no/objectid/
+@c (Our page is https://www.alvestrand.no/objectid/1.3.6.1.4.1.11591.html.)
 
 1.3.6.1.4.1.11591 GNU
 

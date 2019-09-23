@@ -48,8 +48,8 @@
 #  endif
 # endif
 
-/* See <http://www.opengroup.org/susv3xbd/search.h.html>,
-       <http://www.opengroup.org/susv3xsh/tsearch.html>
+/* See <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/search.h.html>
+       <https://pubs.opengroup.org/onlinepubs/9699919799/functions/tsearch.html>
    for details.  */
 
 # if !@HAVE_TYPE_VISIT@

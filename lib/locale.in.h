@@ -72,7 +72,7 @@ struct lconv
   /* All 'char *' are actually 'const char *'.  */
 
   /* Members that depend on the LC_NUMERIC category of the locale.  See
-     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_04> */
+     <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_04> */
 
   /* Symbol used as decimal point.  */
   char *decimal_point;
@@ -84,7 +84,7 @@ struct lconv
   char *grouping;
 
   /* Members that depend on the LC_MONETARY category of the locale.  See
-     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_03> */
+     <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap07.html#tag_07_03_03> */
 
   /* Symbol used as decimal point.  */
   char *mon_decimal_point;

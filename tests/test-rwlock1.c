@@ -47,7 +47,7 @@
    POSIX:2008 makes this requirement only for implementations that support TPS
    (Thread Priority Scheduling) and only for the scheduling policies SCHED_FIFO
    and SCHED_RR, see
-   http://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html
+   https://pubs.opengroup.org/onlinepubs/9699919799/functions/pthread_rwlock_rdlock.html
    but test verifies the guarantee regardless of TPS and regardless of
    scheduling policy.  */
 

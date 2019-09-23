@@ -82,7 +82,7 @@ RINT (DOUBLE x)
   volatile DOUBLE z = x;
 
   /* Consider the current rounding mode, cf.
-     <http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html>.
+     <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/float.h.html>.
      This implementation supports only rounds-to-nearest.  */
   if (FLT_ROUNDS != 1)
     abort ();

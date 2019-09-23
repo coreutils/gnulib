@@ -94,7 +94,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    invoked from such signal handlers.  Such functions have some restrictions:
      * All functions that it calls should be marked _GL_ASYNC_SAFE as well,
        or should be listed as async-signal-safe in POSIX
-       <http://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04>
+       <https://pubs.opengroup.org/onlinepubs/9699919799/functions/V2_chap02.html#tag_15_04>
        section 2.4.3.  Note that malloc(), sprintf(), and fwrite(), in
        particular, are NOT async-signal-safe.
      * All memory locations (variables and struct fields) that these functions

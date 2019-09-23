@@ -34,7 +34,7 @@ extern "C" {
 
 /* Property defined in Unicode Standard Annex #29, section "Grapheme Cluster
    Boundaries"
-   <http://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries> */
+   <https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries> */
 
 /* Possible values of the Grapheme_Cluster_Break property.
    This enumeration may be extended in the future.  */

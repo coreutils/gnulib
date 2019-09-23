@@ -378,8 +378,6 @@ static const struct table_entry alias_table[] =
        by Alex Taylor:
        <http://altsan.org/os2/toolkits/uls/index.html#codepages>.
        See also "__convcp() of kLIBC":
-       <http://trac.netlabs.org/libc/browser/branches/libc-0.6/src/emx/src/lib/locale/__convcp.c>,
-       or:
        <https://github.com/bitwiseworks/libc/blob/master/src/emx/src/lib/locale/__convcp.c>.  */
     { "CP1004",        "CP1252" },
   /*{ "CP1041",        "CP943" },*/

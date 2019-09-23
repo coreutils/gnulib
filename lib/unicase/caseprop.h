@@ -19,7 +19,7 @@
 #include "unitypes.h"
 
 /* Determine whether a character is "cased" according to the Unicode Standard,
-   <http://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
+   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
    definition D120.  */
 extern bool
        uc_is_cased (ucs4_t uc)
@@ -27,7 +27,7 @@ extern bool
 
 /* Determine whether a character is "case-ignorable"
    according to the Unicode Standard,
-   <http://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
+   <https://www.unicode.org/versions/Unicode5.0.0/ch03.pdf>, section 3.13,
    definition D121.  */
 extern bool
        uc_is_case_ignorable (ucs4_t uc)

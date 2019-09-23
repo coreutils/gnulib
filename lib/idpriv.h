@@ -78,7 +78,7 @@ extern "C" {
    * Dan Tsafrir, Dilma da Silva, David Wagner: The Murky Issue of Changing
      Process Identity: Revising "Setuid Demystified"
      <https://people.eecs.berkeley.edu/~daw/papers/setuid-login08b.pdf>
-     <http://code.google.com/p/change-process-identity/>
+     <https://code.google.com/archive/p/change-process-identity/>
    * Dhruv Mohindra: Observe correct revocation order while relinquishing
      privileges
      <https://www.securecoding.cert.org/confluence/display/seccode/POS36-C.+Observe+correct+revocation+order+while+relinquishing+privileges>

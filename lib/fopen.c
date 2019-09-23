@@ -55,18 +55,11 @@ rpl_fopen (const char *filename, const char *mode)
 #if FOPEN_TRAILING_SLASH_BUG
   /* If the filename ends in a slash and a mode that requires write access is
      specified, then fail.
-     Rationale: POSIX <http://www.opengroup.org/susv3/basedefs/xbd_chap04.html>
-     says that
-       "A pathname that contains at least one non-slash character and that
-        ends with one or more trailing slashes shall be resolved as if a
-        single dot character ( '.' ) were appended to the pathname."
-     and
-       "The special filename dot shall refer to the directory specified by
-        its predecessor."
+     Rationale: POSIX <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html>
      If the named file already exists as a directory, then if a mode that
      requires write access is specified, fopen() must fail because POSIX
-     <http://www.opengroup.org/susv3/functions/fopen.html> says that it
-     fails with errno = EISDIR in this case.
+     <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fopen.html>
+     says that it fails with errno = EISDIR in this case.
      If the named file does not exist or does not name a directory, then
      fopen() must fail since the file does not contain a '.' directory.  */
   {

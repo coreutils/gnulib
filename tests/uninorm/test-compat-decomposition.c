@@ -161,7 +161,7 @@ main ()
 
   /* HANGUL SYLLABLE GEUL */
   ret = uc_compat_decomposition (0xAE00, decomposed);
-  /* See the clarification at <http://www.unicode.org/versions/Unicode5.1.0/>,
+  /* See the clarification at <https://www.unicode.org/versions/Unicode5.1.0/>,
      section "Clarification of Hangul Jamo Handling".  */
 #if 1
   ASSERT (ret == 2);

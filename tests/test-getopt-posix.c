@@ -23,7 +23,7 @@
 #define _GL_NO_LARGE_FILES
 
 /* POSIX and glibc provide the getopt() function in <unistd.h>, see
-   http://pubs.opengroup.org/onlinepubs/9699919799/functions/getopt.html
+   https://pubs.opengroup.org/onlinepubs/9699919799/functions/getopt.html
    https://www.gnu.org/software/libc/manual/html_node/Using-Getopt.html
    But gnulib provides the getopt() function in <getopt.h>, not in <unistd.h>.
    Nevertheless the getopt() function should also be found in <unistd.h>.  */

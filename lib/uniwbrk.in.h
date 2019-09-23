@@ -31,7 +31,7 @@ extern "C" {
 /* ========================================================================= */
 
 /* Property defined in Unicode Standard Annex #29, section "Word Boundaries"
-   <http://www.unicode.org/reports/tr29/#Word_Boundaries>  */
+   <https://www.unicode.org/reports/tr29/#Word_Boundaries>  */
 
 /* Possible values of the Word_Break property.
    This enumeration may be extended in the future.  */

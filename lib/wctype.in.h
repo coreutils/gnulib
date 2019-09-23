@@ -19,7 +19,7 @@
 
 /*
  * ISO C 99 <wctype.h> for platforms that lack it.
- * <http://www.opengroup.org/susv3xbd/wctype.h.html>
+ * <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/wctype.h.html>
  *
  * iswctype, towctrans, towlower, towupper, wctrans, wctype,
  * wctrans_t, and wctype_t are not yet implemented.
