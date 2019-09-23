@@ -53,9 +53,9 @@ rpl_fopen (const char *filename, const char *mode)
 #endif
 
 #if FOPEN_TRAILING_SLASH_BUG
-  /* If the filename ends in a slash and a mode that requires write access is
-     specified, then fail.
-     Rationale: POSIX <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html>
+  /* Fail if the mode requires write access and the filename ends in a slash,
+     as POSIX says such a filename must name a directory
+     <https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_13>.
      If the named file already exists as a directory, then if a mode that
      requires write access is specified, fopen() must fail because POSIX
      <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fopen.html>

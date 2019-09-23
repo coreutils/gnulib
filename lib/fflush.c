@@ -168,13 +168,12 @@ rpl_fflush (FILE *stream)
           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html>
             "The file-position indicator is decremented by each successful
              call to ungetc()..."
-       2) <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html> says:
-            "The value of the file-position indicator for the stream
-             after all pushed-back bytes have been read, or discarded
-             by calling fseek(), fseeko(), fsetpos(), or rewind() (but
-             not fflush()), shall be the same as it was before the
-             bytes were pushed back."
-          Here we are discarding all pushed-back bytes.  */
+       2) fflush discards bytes pushed back by ungetc:
+          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html>
+            "...any characters pushed back onto the stream by ungetc()
+             or ungetwc() that have not subsequently been read from the
+             stream shall be discarded (without further changing the
+             file offset)."  */
 
     /* POSIX does not specify fflush behavior for non-seekable input
        streams.  Some implementations purge unread data, some return

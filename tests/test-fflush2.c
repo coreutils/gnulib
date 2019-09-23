@@ -69,7 +69,7 @@ main (int argc, char **argv)
            according to the Austin Group's resolution on 2009-01-08.  */
         /* Check that fflush after a non-backup ungetc() call discards the
            ungetc buffer.  This is mandated by POSIX
-           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/ungetc.html>  */
+           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html>  */
 
         c = fgetc (stdin);
         ASSERT (c == '#');
