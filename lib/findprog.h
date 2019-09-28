@@ -50,8 +50,9 @@ extern const char *find_in_path (const char *progname);
    - Otherwise, it sets errno and returns NULL.
      Specific errno values include:
        - ENOENT: means that the program's file was not found.
-       - EACCESS: means that the program's file was found but lacks the
-         execute permissions.
+       - EACCES: means that the program's file cannot be accessed (due to some
+         issue with one of the ancestor directories) or lacks the execute
+         permissions.
    If OPTIMIZE_FOR_EXEC is true, the function saves some work, under the
    assumption that the resulting pathname will not be accessed directly,
    only through execl/execv or execlp/execvp.

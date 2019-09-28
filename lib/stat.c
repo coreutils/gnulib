@@ -375,7 +375,7 @@ rpl_stat (char const *name, struct stat *buf)
 
       case ERROR_ACCESS_DENIED:  /* rname is such as 'C:\System Volume Information\foo'.  */
       case ERROR_SHARING_VIOLATION: /* rname is such as 'C:\pagefile.sys' (second approach only).  */
-                                    /* XXX map to EACCESS or EPERM? */
+                                    /* XXX map to EACCES or EPERM? */
         errno = EACCES;
         break;
 
@@ -398,7 +398,7 @@ rpl_stat (char const *name, struct stat *buf)
         errno = ENAMETOOLONG;
         break;
 
-      case ERROR_DELETE_PENDING: /* XXX map to EACCESS or EPERM? */
+      case ERROR_DELETE_PENDING: /* XXX map to EACCES or EPERM? */
         errno = EPERM;
         break;
 

@@ -224,7 +224,7 @@ _gl_utimens_windows (const char *name, struct timespec ts[2])
         errno = ENAMETOOLONG;
         break;
 
-      case ERROR_DELETE_PENDING: /* XXX map to EACCESS or EPERM? */
+      case ERROR_DELETE_PENDING: /* XXX map to EACCES or EPERM? */
         errno = EPERM;
         break;
 
