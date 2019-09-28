@@ -159,8 +159,9 @@ rpl_fflush (FILE *stream)
 
 #else
   {
-    /* Notes about the file-position indicator:
-       1) The file position indicator is incremented by fgetc() and decremented
+    /* What POSIX says:
+       1) About the file-position indicator (-> fseeko, ftello):
+          The file position indicator is incremented by fgetc() and decremented
           by ungetc():
           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fgetc.html>
             "... the fgetc() function shall ... advance the associated file
@@ -172,8 +173,14 @@ rpl_fflush (FILE *stream)
           <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html>
             "...any characters pushed back onto the stream by ungetc()
              or ungetwc() that have not subsequently been read from the
-             stream shall be discarded (without further changing the
-             file offset)."  */
+             stream shall be discarded..."
+          This implies implicitly: fflush does not change the file position
+          indicator.
+       3) Effects on the file descriptor, if the file descriptor is capable of
+          seeking:
+          <https://pubs.opengroup.org/onlinepubs/9699919799/functions/fflush.html>
+            "...the file offset of the underlying open file description shall
+             be set to the file position of the stream..."  */
 
     /* POSIX does not specify fflush behavior for non-seekable input
        streams.  Some implementations purge unread data, some return
