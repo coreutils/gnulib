@@ -50,7 +50,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   libguestfs      https://github.com/libguestfs/libguestfs
   libiconv        https://git.sv.gnu.org/gitweb/?p=libiconv.git
   libidn          https://git.sv.gnu.org/gitweb/?p=libidn.git
-  libidn2         https://josefsson.org/libidn2/
+  libidn2         https://gitlab.com/libidn/libidn2
   libksba         https://www.gnupg.org/related_software/libksba/index.html
   libntlm         https://git.savannah.nongnu.org/gitweb/?p=libntlm.git;a=tree
   libprelude      https://trac.prelude-ids.org/browser/trunk/libprelude/
