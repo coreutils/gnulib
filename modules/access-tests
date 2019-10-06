@@ -5,8 +5,10 @@ tests/macros.h
 
 Depends-on:
 creat
+root-uid
 
 configure.ac:
+AC_CHECK_FUNCS_ONCE([geteuid])
 
 Makefile.am:
 TESTS += test-access

@@ -24,7 +24,13 @@ SIGNATURE_CHECK (access, int, (const char *, int));
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include "root-uid.h"
 #include "macros.h"
+
+/* mingw and MSVC 9 lack geteuid, so setup a dummy value.  */
+#if !HAVE_GETEUID
+# define geteuid() ROOT_UID
+#endif
 
 #define BASE "test-access.t"
 
@@ -62,9 +68,12 @@ main ()
 
     ASSERT (access (BASE "f2", R_OK) == 0);
 
-    errno = 0;
-    ASSERT (access (BASE "f2", W_OK) == -1);
-    ASSERT (errno == EACCES);
+    if (geteuid () != ROOT_UID)
+      {
+        errno = 0;
+        ASSERT (access (BASE "f2", W_OK) == -1);
+        ASSERT (errno == EACCES);
+      }
 
 #if defined _WIN32 && !defined __CYGWIN__
     /* X_OK works like R_OK.  */
@@ -75,6 +84,10 @@ main ()
     ASSERT (errno == EACCES);
 #endif
   }
+
+  /* Cleanup.  */
+  unlink (BASE "f1");
+  unlink (BASE "f2");
 
   return 0;
 }
