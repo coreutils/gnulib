@@ -69,6 +69,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   msmtp           https://sourceforge.net/p/msmtp/code/ci/master/tree/
   myserver        https://git.sv.gnu.org/gitweb/?p=myserver.git;a=summary
   nagios-plugins  https://github.com/nagios-plugins/nagios-plugins
+  nano            https://git.savannah.gnu.org/cgit/nano.git
   Net::CDP        http://cpansearch.perl.org/src/MCHAPMAN/Net-CDP-0.09/libcdp/
   netcf           https://fedorahosted.org/netcf/
   OATH Toolkit    https://gitlab.com/oath-toolkit/oath-toolkit/
