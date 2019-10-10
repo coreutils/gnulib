@@ -597,20 +597,11 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
   Idx extra_nmatch;
   bool sb;
   int ch;
-#if defined _LIBC || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L)
   re_match_context_t mctx = { .dfa = dfa };
-#else
-  re_match_context_t mctx;
-#endif
   char *fastmap = ((preg->fastmap != NULL && preg->fastmap_accurate
 		    && start != last_start && !preg->can_be_null)
 		   ? preg->fastmap : NULL);
   RE_TRANSLATE_TYPE t = preg->translate;
-
-#if !(defined _LIBC || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L))
-  memset (&mctx, '\0', sizeof (re_match_context_t));
-  mctx.dfa = dfa;
-#endif
 
   extra_nmatch = (nmatch > preg->re_nsub) ? nmatch - (preg->re_nsub + 1) : 0;
   nmatch -= extra_nmatch;
@@ -677,8 +668,6 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 	  goto free_return;
 	}
     }
-  else
-    mctx.state_log = NULL;
 
   match_first = start;
   mctx.input.tip_context = (eflags & REG_NOTBOL) ? CONTEXT_BEGBUF
