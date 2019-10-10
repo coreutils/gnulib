@@ -34,6 +34,7 @@
 #include <stdint.h>
 
 #include <intprops.h>
+#include <verify.h>
 
 #ifdef _LIBC
 # include <libc-lock.h>
