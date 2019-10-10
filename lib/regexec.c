@@ -817,7 +817,9 @@ re_search_internal (const regex_t *preg, const char *string, Idx length,
 		    break;
 		  if (__glibc_unlikely (err != REG_NOMATCH))
 		    goto free_return;
+#ifdef DEBUG
 		  match_last = -1;
+#endif
 		}
 	      else
 		break; /* We found a match.  */
