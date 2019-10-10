@@ -3662,7 +3662,6 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
   Idx alloc = 0;
 #endif /* not RE_ENABLE_I18N */
   reg_errcode_t ret;
-  re_token_t br_token;
   bin_tree_t *tree;
 
   sbcset = (re_bitset_ptr_t) calloc (sizeof (bitset_t), 1);
@@ -3713,11 +3712,7 @@ build_charclass_op (re_dfa_t *dfa, RE_TRANSLATE_TYPE trans,
 #endif
 
   /* Build a tree for simple bracket.  */
-#if defined GCC_LINT || defined lint
-  memset (&br_token, 0, sizeof br_token);
-#endif
-  br_token.type = SIMPLE_BRACKET;
-  br_token.opr.sbcset = sbcset;
+  re_token_t br_token = { .type = SIMPLE_BRACKET, .opr.sbcset = sbcset };
   tree = create_token_tree (dfa, NULL, NULL, &br_token);
   if (__glibc_unlikely (tree == NULL))
     goto build_word_op_espace;
@@ -3808,11 +3803,7 @@ static bin_tree_t *
 create_tree (re_dfa_t *dfa, bin_tree_t *left, bin_tree_t *right,
 	     re_token_type_t type)
 {
-  re_token_t t;
-#if defined GCC_LINT || defined lint
-  memset (&t, 0, sizeof t);
-#endif
-  t.type = type;
+  re_token_t t = { .type = type };
   return create_token_tree (dfa, left, right, &t);
 }
 
