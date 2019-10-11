@@ -20,7 +20,6 @@
 #ifndef _REGEX_INTERNAL_H
 #define _REGEX_INTERNAL_H 1
 
-#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,6 +34,13 @@
 
 #include <intprops.h>
 #include <verify.h>
+
+#if defined DEBUG && DEBUG != 0
+# include <assert.h>
+# define DEBUG_ASSERT(x) assert (x)
+#else
+# define DEBUG_ASSERT(x) assume (x)
+#endif
 
 #ifdef _LIBC
 # include <libc-lock.h>

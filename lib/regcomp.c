@@ -1436,7 +1436,7 @@ link_nfa_nodes (void *extra, bin_tree_t *node)
       break;
 
     case END_OF_RE:
-      assert (node->next == NULL);
+      DEBUG_ASSERT (node->next == NULL);
       break;
 
     case OP_DUP_ASTERISK:
@@ -1452,8 +1452,8 @@ link_nfa_nodes (void *extra, bin_tree_t *node)
 	  right = node->right->first->node_idx;
 	else
 	  right = node->next->node_idx;
-	assert (left > -1);
-	assert (right > -1);
+	DEBUG_ASSERT (left > -1);
+	DEBUG_ASSERT (right > -1);
 	err = re_node_set_init_2 (dfa->edests + idx, left, right);
       }
       break;
@@ -1471,7 +1471,7 @@ link_nfa_nodes (void *extra, bin_tree_t *node)
       break;
 
     default:
-      assert (!IS_EPSILON_NODE (node->token.type));
+      DEBUG_ASSERT (!IS_EPSILON_NODE (node->token.type));
       dfa->nexts[idx] = node->next->node_idx;
       break;
     }
@@ -1653,9 +1653,7 @@ calc_eclosure (re_dfa_t *dfa)
 {
   Idx node_idx;
   bool incomplete;
-#ifdef DEBUG
-  assert (dfa->nodes_len > 0);
-#endif
+  DEBUG_ASSERT (dfa->nodes_len > 0);
   incomplete = false;
   /* For each nodes, calculate epsilon closure.  */
   for (node_idx = 0; ; ++node_idx)
@@ -1670,9 +1668,7 @@ calc_eclosure (re_dfa_t *dfa)
 	  node_idx = 0;
 	}
 
-#ifdef DEBUG
-      assert (dfa->eclosures[node_idx].nelem != -1);
-#endif
+      DEBUG_ASSERT (dfa->eclosures[node_idx].nelem != -1);
 
       /* If we have already calculated, skip it.  */
       if (dfa->eclosures[node_idx].nelem != 0)
@@ -2442,9 +2438,7 @@ parse_expression (re_string_t *regexp, regex_t *preg, re_token_t *token,
 
     default:
       /* Must not happen?  */
-#ifdef DEBUG
-      assert (0);
-#endif
+      DEBUG_ASSERT (false);
       return NULL;
     }
   fetch_token (token, regexp, syntax);
@@ -3306,7 +3300,7 @@ parse_bracket_exp (re_string_t *regexp, re_dfa_t *dfa, re_token_t *token,
 	       goto parse_bracket_exp_free_return;
 	      break;
 	    default:
-	      assert (0);
+	      DEBUG_ASSERT (false);
 	      break;
 	    }
 	}
