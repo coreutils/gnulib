@@ -218,8 +218,10 @@ main (void)
   CHECK_SBINOP (*, MULTIPLY, INT_MIN, INT_MIN, int, true, 0);
   CHECK_SBINOP (*, MULTIPLY, -1, INT_MIN, int,
                 INT_NEGATE_OVERFLOW (INT_MIN), INT_MIN);
+#if !defined __HP_cc
   CHECK_SBINOP (*, MULTIPLY, LONG_MIN / INT_MAX, (long int) INT_MAX,
                 long int, false, LONG_MIN - LONG_MIN % INT_MAX);
+#endif
 
   CHECK_BINOP (/, DIVIDE, INT_MIN, -1, int,
                INT_NEGATE_OVERFLOW (INT_MIN), INT_MIN);
@@ -370,8 +372,8 @@ main (void)
                  INT_MAX * ULONG_MAX);
 #if !defined __HP_cc
   CHECK_SPRODUCT (INT_MIN, LONG_MAX / INT_MIN - 1, long int, true, LONG_MIN);
-#endif
   CHECK_SPRODUCT (INT_MIN, LONG_MAX / INT_MIN, long int, false, DONTCARE);
+#endif
   CHECK_PRODUCT (INT_MIN, UINT_MAX, unsigned int, true, INT_MIN * UINT_MAX);
   CHECK_PRODUCT (INT_MIN, ULONG_MAX, unsigned long int, true,
                  INT_MIN * ULONG_MAX);
