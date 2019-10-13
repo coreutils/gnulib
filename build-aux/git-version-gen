@@ -142,11 +142,9 @@ then
     v=`cat $tarball_version_file` || v=
     case $v in
         *$nl*) v= ;; # reject multi-line output
-        [0-9]*) ;;
-        *) v= ;;
     esac
     test "x$v" = x \
-        && echo "$0: WARNING: $tarball_version_file is missing or damaged" 1>&2
+        && echo "$0: WARNING: $tarball_version_file is damaged" 1>&2
 fi
 
 if test "x$v" != x
