@@ -192,7 +192,7 @@ while (/(^|\n)(.{0,$prefix_max})$copyright_re/g)
     $holder_re =~ s/\s/$ws_re/g;
     my $stmt_remainder_re =
       "(?:$ws_re$circle_c_re)?"
-      . "$ws_re(?:(?:\\d\\d)?\\d\\d(?:,$ws_re?|-))*"
+      . "$ws_re(?:(?:\\d\\d)?\\d\\d(?:,$ws_re?|--?))*"
       . "((?:\\d\\d)?\\d\\d)$ws_re$holder_re";
     if (/\G$stmt_remainder_re/)
       {
