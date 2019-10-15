@@ -132,6 +132,25 @@ styled_ostream_end_use_class (styled_ostream_t stream _GL_UNUSED,
 {
 }
 
+static inline const char *
+styled_ostream_get_hyperlink_ref (styled_ostream_t stream _GL_UNUSED)
+{
+  return NULL;
+}
+
+static inline const char *
+styled_ostream_get_hyperlink_id (styled_ostream_t stream _GL_UNUSED)
+{
+  return NULL;
+}
+
+static inline void
+styled_ostream_set_hyperlink (styled_ostream_t stream _GL_UNUSED,
+                              const char *ref _GL_UNUSED,
+                              const char *id _GL_UNUSED)
+{
+}
+
 static inline void
 styled_ostream_flush_to_current_style (styled_ostream_t stream _GL_UNUSED)
 {
@@ -266,6 +285,25 @@ term_ostream_set_underline (term_ostream_t stream _GL_UNUSED,
 {
 }
 
+static inline const char *
+term_ostream_get_hyperlink_ref (term_ostream_t stream _GL_UNUSED)
+{
+  return NULL;
+}
+
+static inline const char *
+term_ostream_get_hyperlink_id (term_ostream_t stream _GL_UNUSED)
+{
+  return NULL;
+}
+
+static inline void
+term_ostream_set_hyperlink (term_ostream_t stream _GL_UNUSED,
+                            const char *ref _GL_UNUSED,
+                            const char *id _GL_UNUSED)
+{
+}
+
 static inline void
 term_ostream_flush_to_current_style (term_ostream_t stream)
 {
@@ -304,6 +342,9 @@ typedef styled_ostream_t term_styled_ostream_t;
 #define term_styled_ostream_free ostream_free
 #define term_styled_ostream_begin_use_class styled_ostream_begin_use_class
 #define term_styled_ostream_end_use_class styled_ostream_end_use_class
+#define term_styled_ostream_get_hyperlink_ref styled_ostream_get_hyperlink_ref
+#define term_styled_ostream_get_hyperlink_id styled_ostream_get_hyperlink_id
+#define term_styled_ostream_set_hyperlink styled_ostream_set_hyperlink
 #define term_styled_ostream_flush_to_current_style styled_ostream_flush_to_current_style
 
 static inline term_styled_ostream_t
