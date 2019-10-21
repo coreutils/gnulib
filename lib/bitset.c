@@ -168,8 +168,11 @@ bitset_create (bitset_bindex n_bits, unsigned attr)
 void
 bitset_free (bitset bset)
 {
-  BITSET_FREE_ (bset);
-  free (bset);
+  if (bset)
+    {
+      BITSET_FREE_ (bset);
+      free (bset);
+    }
 }
 
 
@@ -177,7 +180,8 @@ bitset_free (bitset bset)
 void
 bitset_obstack_free (bitset bset)
 {
-  BITSET_FREE_ (bset);
+  if (bset)
+    BITSET_FREE_ (bset);
 }
 
 

@@ -109,7 +109,7 @@ enum bitset_type bitset_type_choose (bitset_bindex, bitset_attrs);
 /* Create a bitset of desired type and size.  The bitset is zeroed.  */
 bitset bitset_alloc (bitset_bindex, enum bitset_type);
 
-/* Free bitset.  */
+/* Free bitset.  Do nothing if NULL.  */
 void bitset_free (bitset);
 
 /* Create a bitset of desired type and size using an obstack.  The
@@ -117,7 +117,7 @@ void bitset_free (bitset);
 bitset bitset_obstack_alloc (struct obstack *bobstack,
                              bitset_bindex, enum bitset_type);
 
-/* Free bitset allocated on obstack.  */
+/* Free bitset allocated on obstack.  Do nothing if NULL.  */
 void bitset_obstack_free (bitset);
 
 /* Create a bitset of desired size and attributes.  The bitset is zeroed.  */

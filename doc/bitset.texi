@@ -48,9 +48,9 @@ Prefer fastest at memory expense.
 enum { nbits = 32 };
 
 bitset bs0 = bitset_create (nbits, BITSET_FIXED);
-bitset_set (bs1, 1);
-bitset_set (bs1, 3);
-bitset_set (bs1, 5);
+bitset_set (bs0, 1);
+bitset_set (bs0, 3);
+bitset_set (bs0, 5);
 
 bitset bs1 = bitset_create (nbits, BITSET_FIXED);
 bitset_set (bs1, 0);
@@ -58,6 +58,10 @@ bitset_set (bs1, 2);
 bitset_set (bs1, 4);
 
 bitset bs = bitset_create (nbits, BITSET_FIXED);
-bitset_or (bs, b1, b2);
+bitset_or (bs, bs0, bs1);
 ASSERT (bitset_count (bs) == 6);
+
+bitset_free (bs);
+bitset_free (bs1);
+bitset_free (bs0);
 @end smallexample
