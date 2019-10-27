@@ -1,4 +1,4 @@
-# host-cpu-c-abi.m4 serial 11
+# host-cpu-c-abi.m4 serial 12
 dnl Copyright (C) 2002-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -55,7 +55,7 @@ AC_DEFUN([gl_HOST_CPU_C_ABI],
     [case "$host_cpu" in
 
 changequote(,)dnl
-       i[4567]86 )
+       i[34567]86 )
 changequote([,])dnl
          gl_cv_host_cpu_c_abi=i386
          ;;
@@ -473,8 +473,28 @@ AC_DEFUN([gl_HOST_CPU_C_ABI_32BIT],
      else
        case "$host_cpu" in
 
+         # CPUs that only support a 32-bit ABI.
+         arc \
+         | bfin \
+         | cris* \
+         | csky \
+         | epiphany \
+         | ft32 \
+         | h8300 \
+         | m68k \
+         | microblaze | microblazeel \
+         | nds32 | nds32le | nds32be \
+         | nios2 | nios2eb | nios2el \
+         | or1k* \
+         | or32 \
+         | sh | sh[1234] | sh[1234]e[lb] \
+         | tic6x \
+         | xtensa* )
+           gl_cv_host_cpu_c_abi_32bit=yes
+           ;;
+
 changequote(,)dnl
-         i[4567]86 )
+         i[34567]86 )
 changequote([,])dnl
            gl_cv_host_cpu_c_abi_32bit=yes
            ;;
