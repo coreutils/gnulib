@@ -10,6 +10,7 @@ libtextstyle
 stdbool
 unistd
 fsync
+vasprintf-posix
 
 configure.ac:
 gl_LIBTEXTSTYLE_OPTIONAL

@@ -31,6 +31,7 @@
 #define _TEXTSTYLE_H
 
 #include <errno.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -110,6 +111,51 @@ static inline void
 ostream_write_str (ostream_t stream, const char *string)
 {
   ostream_write_mem (stream, string, strlen (string));
+}
+
+static inline ptrdiff_t ostream_printf (ostream_t stream,
+                                        const char *format, ...)
+#if (__GNUC__ == 3 && __GNUC_MINOR__ >= 1) || __GNUC__ > 3
+  __attribute__ ((__format__ (__printf__, 2, 3)))
+#endif
+  ;
+static inline ptrdiff_t
+ostream_printf (ostream_t stream, const char *format, ...)
+{
+  va_list args;
+  char *temp_string;
+  ptrdiff_t ret;
+
+  va_start (args, format);
+  ret = vasprintf (&temp_string, format, args);
+  va_end (args);
+  if (ret >= 0)
+    {
+      if (ret > 0)
+        ostream_write_str (stream, temp_string);
+      free (temp_string);
+    }
+  return ret;
+}
+
+static inline ptrdiff_t ostream_vprintf (ostream_t stream,
+                                         const char *format, va_list args)
+#if (__GNUC__ == 3 && __GNUC_MINOR__ >= 1) || __GNUC__ > 3
+  __attribute__ ((__format__ (__printf__, 2, 0)))
+#endif
+  ;
+static inline ptrdiff_t
+ostream_vprintf (ostream_t stream, const char *format, va_list args)
+{
+  char *temp_string;
+  ptrdiff_t ret = vasprintf (&temp_string, format, args);
+  if (ret >= 0)
+    {
+      if (ret > 0)
+        ostream_write_str (stream, temp_string);
+      free (temp_string);
+    }
+  return ret;
 }
 
 /* ------------------------- From styled-ostream.h ------------------------- */
