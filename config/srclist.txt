@@ -52,12 +52,12 @@ $LIBCSRC malloc/scratch_buffer_grow_preserve.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc
 # Temporarily newer in Gnulib than in glibc.
 #$LIBCSRC include/intprops.h             lib
-#$LIBCSRC posix/regcomp.c		lib
+$LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
 $LIBCSRC posix/regex.h			lib
-#$LIBCSRC posix/regex_internal.c	lib
-#$LIBCSRC posix/regex_internal.h	lib
-#$LIBCSRC posix/regexec.c		lib
+$LIBCSRC posix/regex_internal.c		lib
+$LIBCSRC posix/regex_internal.h		lib
+$LIBCSRC posix/regexec.c		lib
 $LIBCSRC time/timegm.c			lib
 $LIBCSRC time/mktime.c			lib
 $LIBCSRC time/mktime-internal.h		lib
