@@ -17,19 +17,54 @@ AC_DEFUN([gl_TIME_R],
 
   dnl Some systems don't declare localtime_r() and gmtime_r() if _REENTRANT is
   dnl not defined.
-  AC_CHECK_DECLS([localtime_r], [], [], [[#include <time.h>]])
+  AC_CHECK_DECLS([localtime_r], [], [],
+    [[/* mingw's <time.h> provides the functions asctime_r, ctime_r,
+         gmtime_r, localtime_r only if <unistd.h> or <pthread.h> has
+         been included before.  */
+      #if defined __MINGW32__
+      # include <unistd.h>
+      #endif
+      #include <time.h>
+    ]])
   if test $ac_cv_have_decl_localtime_r = no; then
     HAVE_DECL_LOCALTIME_R=0
   fi
 
-  AC_CHECK_FUNCS_ONCE([localtime_r])
-  if test $ac_cv_func_localtime_r = yes; then
+  dnl We can't use AC_CHECK_FUNC here, because localtime_r() is defined as an
+  dnl inline function on mingw.
+  AC_CACHE_CHECK([for localtime_r], [gl_cv_func_localtime_r],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[/* mingw's <time.h> provides the functions asctime_r, ctime_r,
+               gmtime_r, localtime_r only if <unistd.h> or <pthread.h> has
+               been included before.  */
+            #if defined __MINGW32__
+            # include <unistd.h>
+            #endif
+            #include <time.h>
+          ]],
+          [[time_t a;
+            struct tm r;
+            localtime_r (&a, &r);
+          ]])
+       ],
+       [gl_cv_func_localtime_r=yes],
+       [gl_cv_func_localtime_r=no])
+    ])
+  if test $gl_cv_func_localtime_r = yes; then
     HAVE_LOCALTIME_R=1
     AC_CACHE_CHECK([whether localtime_r is compatible with its POSIX signature],
       [gl_cv_time_r_posix],
       [AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
-            [[#include <time.h>]],
+            [[/* mingw's <time.h> provides the functions asctime_r, ctime_r,
+                 gmtime_r, localtime_r only if <unistd.h> or <pthread.h> has
+                 been included before.  */
+              #if defined __MINGW32__
+              # include <unistd.h>
+              #endif
+              #include <time.h>
+            ]],
             [[/* We don't need to append 'restrict's to the argument types,
                  even though the POSIX signature has the 'restrict's,
                  since C99 says they can't affect type compatibility.  */
