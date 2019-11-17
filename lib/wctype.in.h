@@ -133,33 +133,113 @@ typedef unsigned int rpl_wint_t;
 
 /* FreeBSD 4.4 to 4.11 has <wctype.h> but lacks the functions.
    Linux libc5 has <wctype.h> and the functions but they are broken.
+   mingw and MSVC have <wctype.h> and the functions but they take a wchar_t
+   as argument, not an rpl_wint_t.
    Assume all 11 functions (all isw* except iswblank) are implemented the
    same way, or not at all.  */
 # if ! @HAVE_ISWCNTRL@ || @REPLACE_ISWCNTRL@
 
-/* IRIX 5.3 has macros but no functions, its isw* macros refer to an
-   undefined variable _ctmp_ and to <ctype.h> macros like _P, and they
-   refer to system functions like _iswctype that are not in the
-   standard C library.  Rather than try to get ancient buggy
-   implementations like this to work, just disable them.  */
-#  undef iswalnum
-#  undef iswalpha
-#  undef iswblank
-#  undef iswcntrl
-#  undef iswdigit
-#  undef iswgraph
-#  undef iswlower
-#  undef iswprint
-#  undef iswpunct
-#  undef iswspace
-#  undef iswupper
-#  undef iswxdigit
-#  undef towlower
-#  undef towupper
+#  if @GNULIB_OVERRIDES_WINT_T@ /* implies @REPLACE_ISWCNTRL@ */
 
-/* Linux libc5 has <wctype.h> and the functions but they are broken.  */
-#  if @REPLACE_ISWCNTRL@
+_GL_WCTYPE_INLINE int
+rpl_iswalnum (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswalnum ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswalpha (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswalpha ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswblank (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswblank ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswcntrl (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswcntrl ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswdigit (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswdigit ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswgraph (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswgraph ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswlower (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswlower ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswprint (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswprint ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswpunct (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswpunct ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswspace (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswspace ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswupper (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswupper ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE int
+rpl_iswxdigit (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? iswxdigit ((wchar_t) wc) : 0);
+}
+
+_GL_WCTYPE_INLINE wint_t
+rpl_towlower (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? (wchar_t) towlower ((wchar_t) wc) : wc);
+}
+
+_GL_WCTYPE_INLINE wint_t
+rpl_towupper (wint_t wc)
+{
+  return ((wchar_t) wc == wc ? (wchar_t) towupper ((wchar_t) wc) : wc);
+}
+
 #   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#    undef iswalnum
+#    undef iswalpha
+#    undef iswblank
+#    undef iswcntrl
+#    undef iswdigit
+#    undef iswgraph
+#    undef iswlower
+#    undef iswprint
+#    undef iswpunct
+#    undef iswspace
+#    undef iswupper
+#    undef iswxdigit
+#    undef towlower
+#    undef towupper
 #    define iswalnum rpl_iswalnum
 #    define iswalpha rpl_iswalpha
 #    define iswblank rpl_iswblank
@@ -172,21 +252,62 @@ typedef unsigned int rpl_wint_t;
 #    define iswspace rpl_iswspace
 #    define iswupper rpl_iswupper
 #    define iswxdigit rpl_iswxdigit
-#   endif
-#  endif
-#  if @REPLACE_TOWLOWER@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #    define towlower rpl_towlower
 #    define towupper rpl_towupper
 #   endif
-#  endif
+
+#  else
+
+/* IRIX 5.3 has macros but no functions, its isw* macros refer to an
+   undefined variable _ctmp_ and to <ctype.h> macros like _P, and they
+   refer to system functions like _iswctype that are not in the
+   standard C library.  Rather than try to get ancient buggy
+   implementations like this to work, just disable them.  */
+#   undef iswalnum
+#   undef iswalpha
+#   undef iswblank
+#   undef iswcntrl
+#   undef iswdigit
+#   undef iswgraph
+#   undef iswlower
+#   undef iswprint
+#   undef iswpunct
+#   undef iswspace
+#   undef iswupper
+#   undef iswxdigit
+#   undef towlower
+#   undef towupper
+
+/* Linux libc5 has <wctype.h> and the functions but they are broken.  */
+#   if @REPLACE_ISWCNTRL@
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     define iswalnum rpl_iswalnum
+#     define iswalpha rpl_iswalpha
+#     define iswblank rpl_iswblank
+#     define iswcntrl rpl_iswcntrl
+#     define iswdigit rpl_iswdigit
+#     define iswgraph rpl_iswgraph
+#     define iswlower rpl_iswlower
+#     define iswprint rpl_iswprint
+#     define iswpunct rpl_iswpunct
+#     define iswspace rpl_iswspace
+#     define iswupper rpl_iswupper
+#     define iswxdigit rpl_iswxdigit
+#    endif
+#   endif
+#   if @REPLACE_TOWLOWER@
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     define towlower rpl_towlower
+#     define towupper rpl_towupper
+#    endif
+#   endif
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswalnum
-#  else
+#   else
 iswalnum
-#  endif
+#   endif
          (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
@@ -194,88 +315,88 @@ iswalnum
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswalpha
-#  else
+#   else
 iswalpha
-#  endif
+#   endif
          (wint_t wc)
 {
   return (wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'Z';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswblank
-#  else
+#   else
 iswblank
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc == ' ' || wc == '\t';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswcntrl
-#  else
+#   else
 iswcntrl
-#  endif
+#   endif
         (wint_t wc)
 {
   return (wc & ~0x1f) == 0 || wc == 0x7f;
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswdigit
-#  else
+#   else
 iswdigit
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc >= '0' && wc <= '9';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswgraph
-#  else
+#   else
 iswgraph
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc >= '!' && wc <= '~';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswlower
-#  else
+#   else
 iswlower
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc >= 'a' && wc <= 'z';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswprint
-#  else
+#   else
 iswprint
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc >= ' ' && wc <= '~';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswpunct
-#  else
+#   else
 iswpunct
-#  endif
+#   endif
          (wint_t wc)
 {
   return (wc >= '!' && wc <= '~'
@@ -284,11 +405,11 @@ iswpunct
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswspace
-#  else
+#   else
 iswspace
-#  endif
+#   endif
          (wint_t wc)
 {
   return (wc == ' ' || wc == '\t'
@@ -296,22 +417,22 @@ iswspace
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswupper
-#  else
+#   else
 iswupper
-#  endif
+#   endif
          (wint_t wc)
 {
   return wc >= 'A' && wc <= 'Z';
 }
 
 _GL_WCTYPE_INLINE int
-#  if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWCNTRL@
 rpl_iswxdigit
-#  else
+#   else
 iswxdigit
-#  endif
+#   endif
           (wint_t wc)
 {
   return ((wc >= '0' && wc <= '9')
@@ -319,26 +440,28 @@ iswxdigit
 }
 
 _GL_WCTYPE_INLINE wint_t
-#  if @REPLACE_TOWLOWER@
+#   if @REPLACE_TOWLOWER@
 rpl_towlower
-#  else
+#   else
 towlower
-#  endif
+#   endif
          (wint_t wc)
 {
   return (wc >= 'A' && wc <= 'Z' ? wc - 'A' + 'a' : wc);
 }
 
 _GL_WCTYPE_INLINE wint_t
-#  if @REPLACE_TOWLOWER@
+#   if @REPLACE_TOWLOWER@
 rpl_towupper
-#  else
+#   else
 towupper
-#  endif
+#   endif
          (wint_t wc)
 {
   return (wc >= 'a' && wc <= 'z' ? wc - 'a' + 'A' : wc);
 }
+
+#  endif
 
 # elif @GNULIB_ISWBLANK@ && (! @HAVE_ISWBLANK@ || @REPLACE_ISWBLANK@)
 /* Only the iswblank function is missing.  */
@@ -354,7 +477,7 @@ _GL_FUNCDECL_SYS (iswblank, int, (wint_t wc));
 
 # endif
 
-# if defined __MINGW32__
+# if defined __MINGW32__ && !@GNULIB_OVERRIDES_WINT_T@
 
 /* On native Windows, wchar_t is uint16_t, and wint_t is uint32_t.
    The functions towlower and towupper are implemented in the MSVCRT library
@@ -387,7 +510,7 @@ rpl_towupper (wint_t wc)
 #   define towupper rpl_towupper
 #  endif
 
-# endif /* __MINGW32__ */
+# endif /* __MINGW32__ && !@GNULIB_OVERRIDES_WINT_T@ */
 
 # define GNULIB_defined_wctype_functions 1
 #endif

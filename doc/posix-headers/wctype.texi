@@ -12,7 +12,7 @@ This header file is missing on some platforms:
 HP-UX 11.00.
 @item
 The type @code{wint_t} is incorrect on some platforms:
-MSVC 14.
+mingw, MSVC 14.
 @item
 The functions @code{isw*} are missing on some platforms:
 FreeBSD 4.11.
