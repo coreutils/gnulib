@@ -1,4 +1,4 @@
-# lib-link.m4 serial 29
+# lib-link.m4 serial 30
 dnl Copyright (C) 2001-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -274,7 +274,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
             dnl The same code as in the loop below:
             dnl First look for a shared library.
             if test -n "$acl_shlibext"; then
-              if test -f "$dir/$libname$shrext"; then
+              if test -f "$dir/$libname$shrext" && acl_is_expected_elfclass < "$dir/$libname$shrext"; then
                 found_dir="$dir"
                 found_so="$dir/$libname$shrext"
               else
@@ -284,14 +284,14 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                         | sed -e "s,^$libname$shrext\\\\.,," \
                         | sort -t '.' -n -r -k1,1 -k2,2 -k3,3 -k4,4 -k5,5 \
                         | sed 1q ) 2>/dev/null`
-                  if test -n "$ver" && test -f "$dir/$libname$shrext.$ver"; then
+                  if test -n "$ver" && test -f "$dir/$libname$shrext.$ver" && acl_is_expected_elfclass < "$dir/$libname$shrext.$ver"; then
                     found_dir="$dir"
                     found_so="$dir/$libname$shrext.$ver"
                   fi
                 else
                   eval library_names=\"$acl_library_names_spec\"
                   for f in $library_names; do
-                    if test -f "$dir/$f"; then
+                    if test -f "$dir/$f" && acl_is_expected_elfclass < "$dir/$f"; then
                       found_dir="$dir"
                       found_so="$dir/$f"
                       break
@@ -302,7 +302,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
             fi
             dnl Then look for a static library.
             if test "X$found_dir" = "X"; then
-              if test -f "$dir/$libname.$acl_libext"; then
+              if test -f "$dir/$libname.$acl_libext" && ${AR-ar} -p "$dir/$libname.$acl_libext" | acl_is_expected_elfclass; then
                 found_dir="$dir"
                 found_a="$dir/$libname.$acl_libext"
               fi
@@ -321,7 +321,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                   dir=`echo "X$x" | sed -e 's/^X-L//'`
                   dnl First look for a shared library.
                   if test -n "$acl_shlibext"; then
-                    if test -f "$dir/$libname$shrext"; then
+                    if test -f "$dir/$libname$shrext" && acl_is_expected_elfclass < "$dir/$libname$shrext"; then
                       found_dir="$dir"
                       found_so="$dir/$libname$shrext"
                     else
@@ -331,14 +331,14 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                               | sed -e "s,^$libname$shrext\\\\.,," \
                               | sort -t '.' -n -r -k1,1 -k2,2 -k3,3 -k4,4 -k5,5 \
                               | sed 1q ) 2>/dev/null`
-                        if test -n "$ver" && test -f "$dir/$libname$shrext.$ver"; then
+                        if test -n "$ver" && test -f "$dir/$libname$shrext.$ver" && acl_is_expected_elfclass < "$dir/$libname$shrext.$ver"; then
                           found_dir="$dir"
                           found_so="$dir/$libname$shrext.$ver"
                         fi
                       else
                         eval library_names=\"$acl_library_names_spec\"
                         for f in $library_names; do
-                          if test -f "$dir/$f"; then
+                          if test -f "$dir/$f" && acl_is_expected_elfclass < "$dir/$f"; then
                             found_dir="$dir"
                             found_so="$dir/$f"
                             break
@@ -349,7 +349,7 @@ AC_DEFUN([AC_LIB_LINKFLAGS_BODY],
                   fi
                   dnl Then look for a static library.
                   if test "X$found_dir" = "X"; then
-                    if test -f "$dir/$libname.$acl_libext"; then
+                    if test -f "$dir/$libname.$acl_libext" && ${AR-ar} -p "$dir/$libname.$acl_libext" | acl_is_expected_elfclass; then
                       found_dir="$dir"
                       found_a="$dir/$libname.$acl_libext"
                     fi
