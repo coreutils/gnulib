@@ -1,4 +1,4 @@
-# locale_h.m4 serial 21
+# locale_h.m4 serial 22
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,8 @@ AC_DEFUN([gl_LOCALE_H],
 
   dnl If <stddef.h> is replaced, then <locale.h> must also be replaced.
   AC_REQUIRE([gl_STDDEF_H])
+
+  AC_REQUIRE([gl_LOCALE_T])
 
   dnl Solaris 11.0 defines the int_p_*, int_n_* members of 'struct lconv'
   dnl only if _LCONV_C99 is defined.
@@ -36,34 +38,6 @@ AC_DEFUN([gl_LOCALE_H],
           [[]])],
        [gl_cv_header_locale_h_posix2001=yes],
        [gl_cv_header_locale_h_posix2001=no])])
-
-  dnl Check for <xlocale.h>.
-  AC_CHECK_HEADERS_ONCE([xlocale.h])
-  if test $ac_cv_header_xlocale_h = yes; then
-    HAVE_XLOCALE_H=1
-    dnl Check whether use of locale_t requires inclusion of <xlocale.h>,
-    dnl e.g. on Mac OS X 10.5. If <locale.h> does not define locale_t by
-    dnl itself, we assume that <xlocale.h> will do so.
-    AC_CACHE_CHECK([whether locale.h defines locale_t],
-      [gl_cv_header_locale_has_locale_t],
-      [AC_COMPILE_IFELSE(
-         [AC_LANG_PROGRAM(
-            [[#include <locale.h>
-              locale_t x;]],
-            [[]])],
-         [gl_cv_header_locale_has_locale_t=yes],
-         [gl_cv_header_locale_has_locale_t=no])
-      ])
-    if test $gl_cv_header_locale_has_locale_t = yes; then
-      gl_cv_header_locale_h_needs_xlocale_h=no
-    else
-      gl_cv_header_locale_h_needs_xlocale_h=yes
-    fi
-  else
-    HAVE_XLOCALE_H=0
-    gl_cv_header_locale_h_needs_xlocale_h=no
-  fi
-  AC_SUBST([HAVE_XLOCALE_H])
 
   dnl Check whether 'struct lconv' is complete.
   dnl Bionic libc's 'struct lconv' is just a dummy.
@@ -97,6 +71,49 @@ AC_DEFUN([gl_LOCALE_H],
 #endif
     ]],
     [setlocale newlocale duplocale freelocale])
+])
+
+dnl Checks to determine whether the system has the locale_t type,
+dnl and how to obtain it.
+AC_DEFUN([gl_LOCALE_T],
+[
+  dnl Persuade glibc and Solaris <locale.h> to define locale_t.
+  AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+
+  dnl Check whether use of locale_t requires inclusion of <xlocale.h>,
+  dnl e.g. on Mac OS X 10.5. If <locale.h> does not define locale_t by
+  dnl itself, we assume that <xlocale.h> will do so.
+  AC_CACHE_CHECK([whether locale.h defines locale_t],
+    [gl_cv_header_locale_has_locale_t],
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <locale.h>
+            locale_t x;]],
+          [[]])],
+       [gl_cv_header_locale_has_locale_t=yes],
+       [gl_cv_header_locale_has_locale_t=no])
+    ])
+
+  dnl Check for <xlocale.h>.
+  AC_CHECK_HEADERS_ONCE([xlocale.h])
+  if test $ac_cv_header_xlocale_h = yes; then
+    HAVE_XLOCALE_H=1
+    if test $gl_cv_header_locale_has_locale_t = yes; then
+      gl_cv_header_locale_h_needs_xlocale_h=no
+    else
+      gl_cv_header_locale_h_needs_xlocale_h=yes
+    fi
+    HAVE_LOCALE_T=1
+  else
+    HAVE_XLOCALE_H=0
+    gl_cv_header_locale_h_needs_xlocale_h=no
+    if test $gl_cv_header_locale_has_locale_t = yes; then
+      HAVE_LOCALE_T=1
+    else
+      HAVE_LOCALE_T=0
+    fi
+  fi
+  AC_SUBST([HAVE_XLOCALE_H])
 ])
 
 AC_DEFUN([gl_LOCALE_MODULE_INDICATOR],

@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 4
+# intl-thread-locale.m4 serial 5
 dnl Copyright (C) 2015-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -139,13 +139,15 @@ AC_DEFUN([gt_FUNC_USELOCALE],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
-  dnl Persuade Solaris <locale.h> to define 'locale_t'.
+  dnl Persuade glibc and Solaris <locale.h> to define 'locale_t'.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
 
   AC_CHECK_FUNCS_ONCE([uselocale])
 
   dnl On AIX 7.2, the uselocale() function is not documented and leads to
   dnl crashes in subsequent setlocale() invocations.
+  dnl In 2019, some versions of z/OS lack the locale_t type and have a broken
+  dnl uselocale function.
   if test $ac_cv_func_uselocale = yes; then
     AC_CHECK_HEADERS_ONCE([xlocale.h])
     AC_CACHE_CHECK([whether uselocale works],
@@ -156,6 +158,7 @@ AC_DEFUN([gt_FUNC_USELOCALE],
 #if HAVE_XLOCALE_H
 # include <xlocale.h>
 #endif
+locale_t loc1;
 int main ()
 {
   uselocale (NULL);
@@ -164,10 +167,10 @@ int main ()
 }]])],
          [gt_cv_func_uselocale_works=yes],
          [gt_cv_func_uselocale_works=no],
-         [# Guess no on AIX, yes otherwise.
+         [# Guess no on AIX and z/OS, yes otherwise.
           case "$host_os" in
-            aix*) gt_cv_func_uselocale_works="guessing no" ;;
-            *)    gt_cv_func_uselocale_works="guessing yes" ;;
+            aix* | mvs*) gt_cv_func_uselocale_works="guessing no" ;;
+            *)           gt_cv_func_uselocale_works="guessing yes" ;;
           esac
          ])
       ])
