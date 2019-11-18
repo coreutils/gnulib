@@ -33,5 +33,6 @@ esac
 : ${GNUSTANDARDS=../gnustandards}
 : ${GNUWWWLICENSES=../www/www/licenses}
 : ${LIBCSRC=../libc}
+: ${LIBGCRYPT=../libgcrypt}
 : ${LIBTOOL=../libtool}
 : ${TEXINFOTEX=../../ftp.gnu.org/gnu/texinfo}

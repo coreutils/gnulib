@@ -185,6 +185,8 @@ $LIBCSRC time/mktime-internal.h		lib
 #$LIBCSRC sysdeps/unix/sysv/gethostname.c	lib gpl
 #$LIBCSRC sysdeps/unix/utime.c			lib gpl
 
+$LIBGCRYPT src/libgcrypt.m4			m4
+
 # Now derived from concatenation of separate .c files in glibc.
 # See argz.mk for details.
 #$LIBTOOL libltdl/argz.c			lib gpl
