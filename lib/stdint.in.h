@@ -591,17 +591,21 @@ typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
    _STDINT_MAX (@HAVE_SIGNED_WCHAR_T@, @BITSIZEOF_WCHAR_T@, 0@WCHAR_T_SUFFIX@)
 
 /* wint_t limits */
-# undef WINT_MIN
-# undef WINT_MAX
-# if @HAVE_SIGNED_WINT_T@
-#  define WINT_MIN  \
-    _STDINT_SIGNED_MIN (@BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
-# else
-#  define WINT_MIN  \
-    _STDINT_UNSIGNED_MIN (@BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
+/* If gnulib's <wchar.h> or <wctype.h> overrides wint_t, @WINT_T_SUFFIX@ is not
+   accurate, therefore use the definitions from above.  */
+# if !@GNULIB_OVERRIDES_WINT_T@
+#  undef WINT_MIN
+#  undef WINT_MAX
+#  if @HAVE_SIGNED_WINT_T@
+#   define WINT_MIN  \
+     _STDINT_SIGNED_MIN (@BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
+#  else
+#   define WINT_MIN  \
+     _STDINT_UNSIGNED_MIN (@BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
+#  endif
+#  define WINT_MAX  \
+    _STDINT_MAX (@HAVE_SIGNED_WINT_T@, @BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
 # endif
-# define WINT_MAX  \
-   _STDINT_MAX (@HAVE_SIGNED_WINT_T@, @BITSIZEOF_WINT_T@, 0@WINT_T_SUFFIX@)
 
 /* 7.18.4. Macros for integer constants */
 
