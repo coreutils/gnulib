@@ -14,20 +14,23 @@ AC_DEFUN([gl_LOCALENAME],
   AC_CHECK_HEADERS_ONCE([langinfo.h])
   if test $HAVE_LOCALE_T = 1; then
     AC_CHECK_FUNCS_ONCE([newlocale duplocale freelocale])
+    gl_func_newlocale="$ac_cv_func_newlocale"
+    gl_func_duplocale="$ac_cv_func_duplocale"
+    gl_func_freelocale="$ac_cv_func_freelocale"
   else
     dnl In 2019, some versions of z/OS lack the locale_t type and have broken
     dnl newlocale, duplocale, freelocale functions.
-    ac_cv_func_newlocale=no
-    ac_cv_func_duplocale=no
-    ac_cv_func_freelocale=no
+    gl_func_newlocale=no
+    gl_func_duplocale=no
+    gl_func_freelocale=no
   fi
-  if test $ac_cv_func_newlocale != yes; then
+  if test $gl_func_newlocale != yes; then
     HAVE_NEWLOCALE=0
   fi
-  if test $ac_cv_func_duplocale != yes; then
+  if test $gl_func_duplocale != yes; then
     HAVE_DUPLOCALE=0
   fi
-  if test $ac_cv_func_freelocale != yes; then
+  if test $gl_func_freelocale != yes; then
     HAVE_FREELOCALE=0
   fi
   if test $gt_nameless_locales = yes; then
