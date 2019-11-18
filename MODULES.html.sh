@@ -3577,6 +3577,7 @@ func_all_modules ()
   func_module update-copyright
   func_module useless-if-before-free
   func_module vc-list-files
+  func_module vcs-to-changelog
   func_end_table
 
   element="Misc"
