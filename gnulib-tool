@@ -3283,18 +3283,24 @@ func_modules_add_dummy ()
   for module in $modules; do
     func_verify_nontests_module
     if test -n "$module"; then
-      # Extract the value of "lib_SOURCES += ...".
-      for file in `func_get_automake_snippet "$module" | combine_lines |
-                   sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
-        # Ignore .h files since they are not compiled.
-        case "$file" in
-          *.h) ;;
-          *)
-            have_lib_SOURCES=yes
-            break 2
-            ;;
-        esac
-      done
+      if test "$cond_dependencies" = true && func_cond_module_p $module; then
+        # Ignore conditional modules, since they are not guaranteed to
+        # contribute to lib_SOURCES.
+        :
+      else
+        # Extract the value of "lib_SOURCES += ...".
+        for file in `func_get_automake_snippet "$module" | combine_lines |
+                     sed -n -e 's,^lib_SOURCES[	 ]*+=\([^#]*\).*$,\1,p'`; do
+          # Ignore .h files since they are not compiled.
+          case "$file" in
+            *.h) ;;
+            *)
+              have_lib_SOURCES=yes
+              break 2
+              ;;
+          esac
+        done
+      fi
     fi
   done
   # Add the dummy module, to make sure the library will be non-empty.
