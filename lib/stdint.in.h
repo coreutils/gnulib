@@ -308,12 +308,17 @@ typedef gl_uint_fast32_t gl_uint_fast16_t;
    _findclose in <io.h>.  */
 # if !((defined __KLIBC__ && defined _INTPTR_T_DECLARED) \
        || (defined __MINGW32__ && defined _INTPTR_T_DEFINED && defined _UINTPTR_T_DEFINED))
-# undef intptr_t
-# undef uintptr_t
+#  undef intptr_t
+#  undef uintptr_t
+#  ifdef _WIN64
+typedef long long int gl_intptr_t;
+typedef unsigned long long int gl_uintptr_t;
+#  else
 typedef long int gl_intptr_t;
 typedef unsigned long int gl_uintptr_t;
-# define intptr_t gl_intptr_t
-# define uintptr_t gl_uintptr_t
+#  endif
+#  define intptr_t gl_intptr_t
+#  define uintptr_t gl_uintptr_t
 # endif
 
 /* 7.18.1.5. Greatest-width integer types */
@@ -490,9 +495,15 @@ typedef int _verify_intmax_size[sizeof (intmax_t) == sizeof (uintmax_t)
 # undef INTPTR_MIN
 # undef INTPTR_MAX
 # undef UINTPTR_MAX
-# define INTPTR_MIN  LONG_MIN
-# define INTPTR_MAX  LONG_MAX
-# define UINTPTR_MAX  ULONG_MAX
+# ifdef _WIN64
+#  define INTPTR_MIN  LLONG_MIN
+#  define INTPTR_MAX  LLONG_MAX
+#  define UINTPTR_MAX  ULLONG_MAX
+# else
+#  define INTPTR_MIN  LONG_MIN
+#  define INTPTR_MAX  LONG_MAX
+#  define UINTPTR_MAX  ULONG_MAX
+# endif
 
 /* 7.18.2.5. Limits of greatest-width integer types */
 
