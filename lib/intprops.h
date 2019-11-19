@@ -373,9 +373,10 @@
    _GL_INT_OP_WRAPV (a, b, r, -, _GL_INT_SUBTRACT_RANGE_OVERFLOW)
 #endif
 #if _GL_HAS_BUILTIN_MUL_OVERFLOW
-/* Work around GCC bug 91450.  */
+/* Work around GCC bug 91450 (fixed in GCC 9.3).  */
 # define INT_MULTIPLY_WRAPV(a, b, r) \
-   ((!_GL_SIGNED_TYPE_OR_EXPR (*(r)) && EXPR_SIGNED (a) && EXPR_SIGNED (b) \
+   ((! (9 < __GNUC__ + (3 <= __GNUC_MINOR__)) \
+     && !_GL_SIGNED_TYPE_OR_EXPR (*(r)) && EXPR_SIGNED (a) && EXPR_SIGNED (b) \
      && _GL_INT_MULTIPLY_RANGE_OVERFLOW (a, b, 0, (__typeof__ (*(r))) -1)) \
     ? ((void) __builtin_mul_overflow (a, b, r), 1) \
     : __builtin_mul_overflow (a, b, r))
