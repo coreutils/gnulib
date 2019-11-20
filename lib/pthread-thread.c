@@ -39,7 +39,7 @@ pthread_attr_init (pthread_attr_t *attr)
 }
 
 int
-pthread_attr_getdetachstate (pthread_attr_t *attr, int *detachstatep)
+pthread_attr_getdetachstate (const pthread_attr_t *attr, int *detachstatep)
 {
   *detachstatep = *attr & (PTHREAD_CREATE_JOINABLE | PTHREAD_CREATE_DETACHED);
   return 0;

@@ -38,7 +38,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_attr_init, int, (pthread_attr_t *));
 
 #if GNULIB_TEST_PTHREAD_THREAD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_attr_getdetachstate, int,
-                 (pthread_attr_t *, int *));
+                 (const pthread_attr_t *, int *));
 #endif
 
 #if GNULIB_TEST_PTHREAD_THREAD

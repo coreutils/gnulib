@@ -509,18 +509,18 @@ _GL_WARN_ON_USE (pthread_attr_init, "pthread_attr_init is not portable - "
 #   define pthread_attr_getdetachstate rpl_pthread_attr_getdetachstate
 #  endif
 _GL_FUNCDECL_RPL (pthread_attr_getdetachstate, int,
-                  (pthread_attr_t *attr, int *detachstatep)
+                  (const pthread_attr_t *attr, int *detachstatep)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_attr_getdetachstate, int,
-                  (pthread_attr_t *attr, int *detachstatep));
+                  (const pthread_attr_t *attr, int *detachstatep));
 # else
 #  if !@HAVE_PTHREAD_ATTR_GETDETACHSTATE@
 _GL_FUNCDECL_SYS (pthread_attr_getdetachstate, int,
-                  (pthread_attr_t *attr, int *detachstatep)
+                  (const pthread_attr_t *attr, int *detachstatep)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_attr_getdetachstate, int,
-                  (pthread_attr_t *attr, int *detachstatep));
+                  (const pthread_attr_t *attr, int *detachstatep));
 # endif
 _GL_CXXALIASWARN (pthread_attr_getdetachstate);
 #elif defined GNULIB_POSIXCHECK
