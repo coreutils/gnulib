@@ -38,13 +38,13 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_exit, _Noreturn void, (int));
 #endif
 
 #if GNULIB_TEST_MTX
-SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_init, int, (mtx *, int));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_lock, int, (mtx *));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_trylock, int, (mtx *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_init, int, (mtx_t *, int));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_lock, int, (mtx_t *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_trylock, int, (mtx_t *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_timedlock, int,
-                 (mtx *, const struct timespec *));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_unlock, int, (mtx *));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_destroy, void, (mtx *));
+                 (mtx_t *, const struct timespec *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_unlock, int, (mtx_t *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mtx_destroy, void, (mtx_t *));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::call_once, void,
                  (once_flag *, void (*) (void)));
 #endif
