@@ -254,7 +254,9 @@ _GL_FUNCDECL_RPL (freelocale, void, (locale_t locale) _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (freelocale, void, (locale_t locale));
 # else
 #  if @HAVE_FREELOCALE@
-_GL_CXXALIAS_SYS (freelocale, void, (locale_t locale));
+/* Need to cast, because on FreeBSD and Mac OS X 10.13, the return type is
+                                   int.  */
+_GL_CXXALIAS_SYS_CAST (freelocale, void, (locale_t locale));
 #  endif
 # endif
 # if @HAVE_FREELOCALE@

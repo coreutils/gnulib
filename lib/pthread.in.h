@@ -804,8 +804,10 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_gettype, int,
                   (const pthread_mutexattr_t *attr, int *typep)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (pthread_mutexattr_gettype, int,
-                  (const pthread_mutexattr_t *attr, int *typep));
+/* Need to cast, because on FreeBSD the first parameter is
+                        pthread_mutexattr_t *attr.  */
+_GL_CXXALIAS_SYS_CAST (pthread_mutexattr_gettype, int,
+                       (const pthread_mutexattr_t *attr, int *typep));
 # endif
 _GL_CXXALIASWARN (pthread_mutexattr_gettype);
 #elif defined GNULIB_POSIXCHECK
@@ -860,8 +862,10 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_getrobust, int,
                   (const pthread_mutexattr_t *attr, int *robustp)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (pthread_mutexattr_getrobust, int,
-                  (const pthread_mutexattr_t *attr, int *robustp));
+/* Need to cast, because on FreeBSD the first parameter is
+                        pthread_mutexattr_t *attr.  */
+_GL_CXXALIAS_SYS_CAST (pthread_mutexattr_getrobust, int,
+                       (const pthread_mutexattr_t *attr, int *robustp));
 # endif
 _GL_CXXALIASWARN (pthread_mutexattr_getrobust);
 #elif defined GNULIB_POSIXCHECK

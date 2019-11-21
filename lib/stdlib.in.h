@@ -616,7 +616,9 @@ _GL_CXXALIAS_RPL (srandom, void, (unsigned int seed));
 #  if !@HAVE_RANDOM@
 _GL_FUNCDECL_SYS (srandom, void, (unsigned int seed));
 #  endif
-_GL_CXXALIAS_SYS (srandom, void, (unsigned int seed));
+/* Need to cast, because on FreeBSD, the first parameter is
+                                       unsigned long seed.  */
+_GL_CXXALIAS_SYS_CAST (srandom, void, (unsigned int seed));
 # endif
 _GL_CXXALIASWARN (srandom);
 #elif defined GNULIB_POSIXCHECK
@@ -644,8 +646,10 @@ _GL_FUNCDECL_SYS (initstate, char *,
                   (unsigned int seed, char *buf, size_t buf_size)
                   _GL_ARG_NONNULL ((2)));
 #  endif
-_GL_CXXALIAS_SYS (initstate, char *,
-                  (unsigned int seed, char *buf, size_t buf_size));
+/* Need to cast, because on FreeBSD, the first parameter is
+                        unsigned long seed.  */
+_GL_CXXALIAS_SYS_CAST (initstate, char *,
+                       (unsigned int seed, char *buf, size_t buf_size));
 # endif
 _GL_CXXALIASWARN (initstate);
 #elif defined GNULIB_POSIXCHECK
@@ -668,7 +672,9 @@ _GL_CXXALIAS_RPL (setstate, char *, (char *arg_state));
 #  if !@HAVE_SETSTATE@ || !@HAVE_DECL_SETSTATE@
 _GL_FUNCDECL_SYS (setstate, char *, (char *arg_state) _GL_ARG_NONNULL ((1)));
 #  endif
-_GL_CXXALIAS_SYS (setstate, char *, (char *arg_state));
+/* Need to cast, because on Mac OS X 10.13, HP-UX, Solaris the first parameter
+   is                                     const char *arg_state.  */
+_GL_CXXALIAS_SYS_CAST (setstate, char *, (char *arg_state));
 # endif
 _GL_CXXALIASWARN (setstate);
 #elif defined GNULIB_POSIXCHECK
