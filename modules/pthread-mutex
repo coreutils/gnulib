@@ -13,7 +13,8 @@ windows-timedrecmutex   [test $gl_threads_api = windows]
 
 configure.ac:
 gl_PTHREAD_MUTEX
-if test $HAVE_PTHREAD_MUTEX_INIT = 0 || test $REPLACE_PTHREAD_MUTEX_INIT = 1; then
+if test $HAVE_PTHREAD_MUTEX_INIT = 0 || test $REPLACE_PTHREAD_MUTEX_INIT = 1 \
+   || test $HAVE_PTHREAD_MUTEXATTR_GETROBUST = 0 || test $REPLACE_PTHREAD_MUTEXATTR_GETROBUST = 1; then
   AC_LIBOBJ([pthread-mutex])
 fi
 gl_PTHREAD_MODULE_INDICATOR([pthread-mutex])

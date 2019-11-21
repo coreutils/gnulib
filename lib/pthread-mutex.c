@@ -82,6 +82,25 @@ pthread_mutexattr_destroy (pthread_mutexattr_t *attr _GL_UNUSED)
   return 0;
 }
 
+#elif PTHREAD_MUTEXATTR_ROBUST_UNIMPLEMENTED
+
+int
+pthread_mutexattr_getrobust (const pthread_mutexattr_t *attr, int *robustp)
+{
+  *robustp = PTHREAD_MUTEX_STALLED;
+  return 0;
+}
+
+int
+pthread_mutexattr_setrobust (pthread_mutexattr_t *attr, int robust)
+{
+  if (!(robust == PTHREAD_MUTEX_STALLED || robust == PTHREAD_MUTEX_ROBUST))
+    return EINVAL;
+  if (!(robust == PTHREAD_MUTEX_STALLED))
+    return ENOTSUP;
+  return 0;
+}
+
 #endif
 
 #if (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS

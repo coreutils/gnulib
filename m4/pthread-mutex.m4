@@ -1,4 +1,4 @@
-# pthread-mutex.m4 serial 1
+# pthread-mutex.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,33 @@ AC_DEFUN([gl_PTHREAD_MUTEX],
       dnl HAVE_PTHREAD_MUTEX_TIMEDLOCK is set in pthread_mutex_timedlock.m4.
       HAVE_PTHREAD_MUTEX_UNLOCK=0
       HAVE_PTHREAD_MUTEX_DESTROY=0
+    else
+      AC_CACHE_CHECK([for pthread_mutexattr_getrobust],
+        [gl_cv_func_pthread_mutexattr_getrobust],
+        [saved_LIBS="$LIBS"
+         LIBS="$LIBS $LIBMULTITHREAD"
+         AC_LINK_IFELSE(
+           [AC_LANG_SOURCE(
+              [[extern
+                #ifdef __cplusplus
+                "C"
+                #endif
+                int pthread_mutexattr_getrobust (void);
+                int main ()
+                {
+                  return pthread_mutexattr_getrobust ();
+                }
+              ]])],
+           [gl_cv_func_pthread_mutexattr_getrobust=yes],
+           [gl_cv_func_pthread_mutexattr_getrobust=no])
+         LIBS="$saved_LIBS"
+        ])
+      if test $gl_cv_func_pthread_mutexattr_getrobust = no; then
+        HAVE_PTHREAD_MUTEXATTR_GETROBUST=0
+        HAVE_PTHREAD_MUTEXATTR_SETROBUST=0
+        AC_DEFINE([PTHREAD_MUTEXATTR_ROBUST_UNIMPLEMENTED], [1],
+          [Define if the 'robust' attribute of pthread_mutex* doesn't exist.])
+      fi
     fi
   fi
 ])
