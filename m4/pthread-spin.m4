@@ -1,4 +1,4 @@
-# pthread-spin.m4 serial 1
+# pthread-spin.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -19,7 +19,7 @@ AC_DEFUN([gl_PTHREAD_SPIN],
     REPLACE_PTHREAD_SPIN_UNLOCK=1
     REPLACE_PTHREAD_SPIN_DESTROY=1
   else
-    if test $HAVE_PTHREAD_H = 0; then
+    if test $HAVE_PTHREAD_H = 0 || test $HAVE_PTHREAD_SPINLOCK_T = 0; then
       HAVE_PTHREAD_SPIN_INIT=0
       HAVE_PTHREAD_SPIN_LOCK=0
       HAVE_PTHREAD_SPIN_TRYLOCK=0
