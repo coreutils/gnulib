@@ -168,7 +168,9 @@ _GL_FUNCDECL_SYS (raise, int, (int sig));
 #  endif
 _GL_CXXALIAS_SYS (raise, int, (int sig));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (raise);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef raise
 /* Assume raise is always declared.  */
@@ -321,7 +323,9 @@ _GL_CXXALIAS_RPL (signal, _gl_function_taking_int_returning_void_t,
 _GL_CXXALIAS_SYS (signal, _gl_function_taking_int_returning_void_t,
                   (int sig, _gl_function_taking_int_returning_void_t func));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (signal);
+# endif
 
 # if !@HAVE_POSIX_SIGNALBLOCKING@ && GNULIB_defined_SIGPIPE
 /* Raise signal SIGPIPE.  */

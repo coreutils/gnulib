@@ -558,7 +558,9 @@ _GL_CXXALIAS_RPL (iswblank, int, (wint_t wc));
 # else
 _GL_CXXALIAS_SYS (iswblank, int, (wint_t wc));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (iswblank);
+# endif
 #endif
 
 #if !@HAVE_WCTYPE_T@
@@ -623,7 +625,9 @@ typedef void * wctrans_t;
 _GL_FUNCDECL_SYS (wctrans, wctrans_t, (const char *name));
 # endif
 _GL_CXXALIAS_SYS (wctrans, wctrans_t, (const char *name));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wctrans);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wctrans
 # if HAVE_RAW_DECL_WCTRANS
@@ -640,7 +644,9 @@ _GL_WARN_ON_USE (wctrans, "wctrans is unportable - "
 _GL_FUNCDECL_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
 # endif
 _GL_CXXALIAS_SYS (towctrans, wint_t, (wint_t wc, wctrans_t desc));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (towctrans);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef towctrans
 # if HAVE_RAW_DECL_TOWCTRANS

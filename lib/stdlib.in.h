@@ -176,7 +176,9 @@ _GL_CXXALIAS_RPL (calloc, void *, (size_t nmemb, size_t size));
 # else
 _GL_CXXALIAS_SYS (calloc, void *, (size_t nmemb, size_t size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (calloc);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef calloc
 /* Assume calloc is always declared.  */
@@ -288,7 +290,9 @@ _GL_CXXALIAS_RPL (malloc, void *, (size_t size));
 # else
 _GL_CXXALIAS_SYS (malloc, void *, (size_t size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (malloc);
+# endif
 #elif defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
 # undef malloc
 /* Assume malloc is always declared.  */
@@ -311,7 +315,9 @@ _GL_FUNCDECL_SYS (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
 #  endif
 _GL_CXXALIAS_SYS (mbtowc, int, (wchar_t *pwc, const char *s, size_t n));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (mbtowc);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef mbtowc
 # if HAVE_RAW_DECL_MBTOWC
@@ -815,7 +821,9 @@ _GL_CXXALIAS_RPL (realloc, void *, (void *ptr, size_t size));
 # else
 _GL_CXXALIAS_SYS (realloc, void *, (void *ptr, size_t size));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (realloc);
+# endif
 #elif defined GNULIB_POSIXCHECK && !_GL_USE_STDLIB_ALLOC
 # undef realloc
 /* Assume realloc is always declared.  */
@@ -946,7 +954,9 @@ _GL_FUNCDECL_SYS (strtod, double, (const char *str, char **endp)
 #  endif
 _GL_CXXALIAS_SYS (strtod, double, (const char *str, char **endp));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strtod);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strtod
 # if HAVE_RAW_DECL_STRTOD
@@ -1085,7 +1095,9 @@ _GL_CXXALIAS_RPL (wctomb, int, (char *s, wchar_t wc));
 # else
 _GL_CXXALIAS_SYS (wctomb, int, (char *s, wchar_t wc));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wctomb);
+# endif
 #endif
 
 

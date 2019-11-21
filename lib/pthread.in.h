@@ -867,7 +867,9 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_getrobust, int,
 _GL_CXXALIAS_SYS_CAST (pthread_mutexattr_getrobust, int,
                        (const pthread_mutexattr_t *attr, int *robustp));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_getrobust);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_getrobust
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_GETROBUST
@@ -896,7 +898,9 @@ _GL_FUNCDECL_SYS (pthread_mutexattr_setrobust, int,
 _GL_CXXALIAS_SYS (pthread_mutexattr_setrobust, int,
                   (pthread_mutexattr_t *attr, int robust));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_setrobust);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutexattr_setrobust
 # if HAVE_RAW_DECL_PTHREAD_MUTEXATTR_SETROBUST
@@ -946,7 +950,9 @@ _GL_FUNCDECL_SYS (pthread_mutex_lock, int, (pthread_mutex_t *mutex)
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_lock, int, (pthread_mutex_t *mutex));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutex_lock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_mutex_lock
 # if HAVE_RAW_DECL_PTHREAD_MUTEX_LOCK
@@ -1694,7 +1700,9 @@ _GL_FUNCDECL_SYS (pthread_spin_init, int,
 _GL_CXXALIAS_SYS (pthread_spin_init, int,
                   (pthread_spinlock_t *lock, int shared_across_processes));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_spin_init);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_spin_init
 # if HAVE_RAW_DECL_PTHREAD_SPIN_INIT
@@ -1719,7 +1727,9 @@ _GL_FUNCDECL_SYS (pthread_spin_lock, int, (pthread_spinlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_spin_lock, int, (pthread_spinlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_spin_lock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_spin_lock
 # if HAVE_RAW_DECL_PTHREAD_SPIN_LOCK
@@ -1744,7 +1754,9 @@ _GL_FUNCDECL_SYS (pthread_spin_trylock, int, (pthread_spinlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_spin_trylock, int, (pthread_spinlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_spin_trylock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_spin_trylock
 # if HAVE_RAW_DECL_PTHREAD_SPIN_TRYLOCK
@@ -1769,7 +1781,9 @@ _GL_FUNCDECL_SYS (pthread_spin_unlock, int, (pthread_spinlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_spin_unlock, int, (pthread_spinlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_spin_unlock);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_spin_unlock
 # if HAVE_RAW_DECL_PTHREAD_SPIN_UNLOCK
@@ -1794,7 +1808,9 @@ _GL_FUNCDECL_SYS (pthread_spin_destroy, int, (pthread_spinlock_t *lock)
 #  endif
 _GL_CXXALIAS_SYS (pthread_spin_destroy, int, (pthread_spinlock_t *lock));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_spin_destroy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_spin_destroy
 # if HAVE_RAW_DECL_PTHREAD_SPIN_DESTROY

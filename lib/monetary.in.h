@@ -91,7 +91,9 @@ _GL_CXXALIAS_SYS (strfmon_l, ssize_t, (char *s, size_t maxsize, locale_t locale,
                                        const char *format, ...));
 #  endif
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (strfmon_l);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef strfmon_l
 # if HAVE_RAW_DECL_STRFMON_L

@@ -156,7 +156,9 @@ _GL_CXXALIAS_RPL (localeconv, struct lconv *, (void));
 # else
 _GL_CXXALIAS_SYS (localeconv, struct lconv *, (void));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (localeconv);
+# endif
 #elif @REPLACE_STRUCT_LCONV@
 # undef localeconv
 # define localeconv localeconv_used_without_requesting_gnulib_module_localeconv
@@ -181,7 +183,9 @@ _GL_CXXALIAS_RPL (setlocale, char *, (int category, const char *locale));
 # else
 _GL_CXXALIAS_SYS (setlocale, char *, (int category, const char *locale));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (setlocale);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef setlocale
 # if HAVE_RAW_DECL_SETLOCALE
