@@ -373,7 +373,8 @@
    _GL_INT_OP_WRAPV (a, b, r, -, _GL_INT_SUBTRACT_RANGE_OVERFLOW)
 #endif
 #if _GL_HAS_BUILTIN_MUL_OVERFLOW
-# if 9 < __GNUC__ + (3 <= __GNUC_MINOR__)
+# if (9 < __GNUC__ + (3 <= __GNUC_MINOR__) \
+      || (__GNUC__ == 8 && 4 <= __GNUC_MINOR__))
 #  define INT_MULTIPLY_WRAPV(a, b, r) __builtin_mul_overflow (a, b, r)
 # else
    /* Work around GCC bug 91450.  */
