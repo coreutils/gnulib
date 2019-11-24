@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 Cygwin 1.5.x.
+@item
+This function takes only two arguments on some platforms:
+mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:

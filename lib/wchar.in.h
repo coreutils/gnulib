@@ -1037,12 +1037,23 @@ _GL_WARN_ON_USE (wcsstr, "wcsstr is unportable - "
 
 /* Divide WCS into tokens separated by characters in DELIM.  */
 #if @GNULIB_WCSTOK@
-# if !@HAVE_WCSTOK@
+# if @REPLACE_WCSTOK@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef wcstok
+#   define wcstok rpl_wcstok
+#  endif
+_GL_FUNCDECL_RPL (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+_GL_CXXALIAS_RPL (wcstok, wchar_t *,
+                  (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+# else
+#  if !@HAVE_WCSTOK@
 _GL_FUNCDECL_SYS (wcstok, wchar_t *,
                   (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (wcstok, wchar_t *,
                   (wchar_t *wcs, const wchar_t *delim, wchar_t **ptr));
+# endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcstok);
 # endif

@@ -7,7 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl Written by Eric Blake.
 
-# wchar_h.m4 serial 43
+# wchar_h.m4 serial 44
 
 AC_DEFUN([gl_WCHAR_H],
 [
@@ -237,4 +237,5 @@ AC_DEFUN([gl_WCHAR_H_DEFAULTS],
   REPLACE_WCWIDTH=0;    AC_SUBST([REPLACE_WCWIDTH])
   REPLACE_WCSWIDTH=0;   AC_SUBST([REPLACE_WCSWIDTH])
   REPLACE_WCSFTIME=0;   AC_SUBST([REPLACE_WCSFTIME])
+  REPLACE_WCSTOK=0;     AC_SUBST([REPLACE_WCSTOK])
 ])

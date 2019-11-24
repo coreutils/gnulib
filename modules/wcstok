@@ -8,12 +8,12 @@ m4/wcstok.m4
 
 Depends-on:
 wchar
-wcsspn          [test $HAVE_WCSTOK = 0]
-wcspbrk         [test $HAVE_WCSTOK = 0]
+wcsspn          [test $HAVE_WCSTOK = 0 || test $REPLACE_WCSTOK = 1]
+wcspbrk         [test $HAVE_WCSTOK = 0 || test $REPLACE_WCSTOK = 1]
 
 configure.ac:
 gl_FUNC_WCSTOK
-if test $HAVE_WCSTOK = 0; then
+if test $HAVE_WCSTOK = 0 || test $REPLACE_WCSTOK = 1; then
   AC_LIBOBJ([wcstok])
 fi
 gl_WCHAR_MODULE_INDICATOR([wcstok])
