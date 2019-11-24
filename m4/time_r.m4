@@ -30,28 +30,8 @@ AC_DEFUN([gl_TIME_R],
     HAVE_DECL_LOCALTIME_R=0
   fi
 
-  dnl We can't use AC_CHECK_FUNC here, because localtime_r() is defined as an
-  dnl inline function on mingw.
-  AC_CACHE_CHECK([for localtime_r], [gl_cv_func_localtime_r],
-    [AC_LINK_IFELSE(
-       [AC_LANG_PROGRAM(
-          [[/* mingw's <time.h> provides the functions asctime_r, ctime_r,
-               gmtime_r, localtime_r only if <unistd.h> or <pthread.h> has
-               been included before.  */
-            #if defined __MINGW32__
-            # include <unistd.h>
-            #endif
-            #include <time.h>
-          ]],
-          [[time_t a;
-            struct tm r;
-            localtime_r (&a, &r);
-          ]])
-       ],
-       [gl_cv_func_localtime_r=yes],
-       [gl_cv_func_localtime_r=no])
-    ])
-  if test $gl_cv_func_localtime_r = yes; then
+  AC_CHECK_FUNCS_ONCE([localtime_r])
+  if test $ac_cv_func_localtime_r = yes; then
     HAVE_LOCALTIME_R=1
     AC_CACHE_CHECK([whether localtime_r is compatible with its POSIX signature],
       [gl_cv_time_r_posix],
@@ -84,6 +64,32 @@ AC_DEFUN([gl_TIME_R],
     fi
   else
     HAVE_LOCALTIME_R=0
+    dnl On mingw, localtime_r() is defined as an inline function; use through a
+    dnl direct function call works but the use as a function pointer leads to a
+    dnl link error.
+    AC_CACHE_CHECK([whether localtime_r exists as an inline function],
+      [gl_cv_func_localtime_r_inline],
+      [AC_LINK_IFELSE(
+         [AC_LANG_PROGRAM(
+            [[/* mingw's <time.h> provides the functions asctime_r, ctime_r,
+                 gmtime_r, localtime_r only if <unistd.h> or <pthread.h> has
+                 been included before.  */
+              #if defined __MINGW32__
+              # include <unistd.h>
+              #endif
+              #include <time.h>
+            ]],
+            [[time_t a;
+              struct tm r;
+              localtime_r (&a, &r);
+            ]])
+         ],
+         [gl_cv_func_localtime_r_inline=yes],
+         [gl_cv_func_localtime_r_inline=no])
+      ])
+    if test $gl_cv_func_localtime_r_inline = yes; then
+      REPLACE_LOCALTIME_R=1
+    fi
   fi
 ])
 
