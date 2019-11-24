@@ -49,4 +49,8 @@ extern int glwthread_timedmutex_timedlock (glwthread_timedmutex_t *mutex,
 extern int glwthread_timedmutex_unlock (glwthread_timedmutex_t *mutex);
 extern int glwthread_timedmutex_destroy (glwthread_timedmutex_t *mutex);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* _WINDOWS_TIMEDMUTEX_H */
