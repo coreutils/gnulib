@@ -589,10 +589,19 @@ _GL_WARN_ON_USE (wctype, "wctype is unportable - "
    The argument WC must be either a wchar_t value or WEOF.
    The argument DESC must have been returned by the wctype() function.  */
 #if @GNULIB_ISWCTYPE@
-# if !@HAVE_WCTYPE_T@
+# if @GNULIB_OVERRIDES_WINT_T@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef iswctype
+#   define iswctype rpl_iswctype
+#  endif
+_GL_FUNCDECL_RPL (iswctype, int, (wint_t wc, wctype_t desc));
+_GL_CXXALIAS_RPL (iswctype, int, (wint_t wc, wctype_t desc));
+# else
+#  if !@HAVE_WCTYPE_T@
 _GL_FUNCDECL_SYS (iswctype, int, (wint_t wc, wctype_t desc));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (iswctype, int, (wint_t wc, wctype_t desc));
+# endif
 _GL_CXXALIASWARN (iswctype);
 #elif defined GNULIB_POSIXCHECK
 # undef iswctype
