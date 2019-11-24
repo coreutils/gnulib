@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 32  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 33  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2019 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -126,6 +126,7 @@ AC_DEFUN([gl_MBRTOWC_INCOMPLETE_STATE],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gt_LOCALE_JA])
+  AC_REQUIRE([gt_LOCALE_FR_UTF8])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether mbrtowc handles incomplete characters],
     [gl_cv_func_mbrtowc_incomplete_state],
@@ -171,6 +172,39 @@ int main ()
           [gl_cv_func_mbrtowc_incomplete_state=yes],
           [gl_cv_func_mbrtowc_incomplete_state=no],
           [:])
+      else
+        if test $LOCALE_FR_UTF8 != none; then
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#include <locale.h>
+#include <string.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
+int main ()
+{
+  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+    {
+      const char input[] = "B\303\274\303\237er"; /* "Büßer" */
+      mbstate_t state;
+      wchar_t wc;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, input + 1, 1, &state) == (size_t)(-2))
+        if (mbsinit (&state))
+          return 2;
+    }
+  return 0;
+}]])],
+          [gl_cv_func_mbrtowc_incomplete_state=yes],
+          [gl_cv_func_mbrtowc_incomplete_state=no],
+          [:])
+        fi
       fi
     ])
 ])

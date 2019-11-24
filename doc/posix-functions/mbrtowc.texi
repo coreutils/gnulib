@@ -22,11 +22,11 @@ glibc 2.19.
 @item
 This function returns @code{(size_t) -1} instead of @code{(size_t) -2}
 when the input is empty:
-AIX 5.1.
+AIX 7.2.
 @item
 This function does not put the state into non-initial state when parsing an
 incomplete multibyte character on some platforms:
-AIX 5.1.
+AIX 7.2.
 @item
 This function returns the total number of bytes that make up the multibyte
 character, not the number of bytes that were needed to complete the multibyte
