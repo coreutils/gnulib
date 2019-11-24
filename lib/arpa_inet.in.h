@@ -103,7 +103,9 @@ _GL_CXXALIAS_SYS_CAST (inet_ntop, const char *,
                        (int af, const void *restrict src,
                         char *restrict dst, socklen_t cnt));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (inet_ntop);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_ntop
 # if HAVE_RAW_DECL_INET_NTOP
@@ -132,7 +134,9 @@ _GL_FUNCDECL_SYS (inet_pton, int,
 _GL_CXXALIAS_SYS (inet_pton, int,
                   (int af, const char *restrict src, void *restrict dst));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (inet_pton);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef inet_pton
 # if HAVE_RAW_DECL_INET_PTON

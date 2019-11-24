@@ -161,7 +161,8 @@ _GL_CXXALIAS_RPL (btowc, wint_t, (int c));
 #  if !@HAVE_BTOWC@
 _GL_FUNCDECL_SYS (btowc, wint_t, (int c) _GL_ATTRIBUTE_PURE);
 #  endif
-_GL_CXXALIAS_SYS (btowc, wint_t, (int c));
+/* Need to cast, because on mingw, the return type is 'unsigned short'.  */
+_GL_CXXALIAS_SYS_CAST (btowc, wint_t, (int c));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (btowc);

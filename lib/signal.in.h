@@ -144,7 +144,9 @@ _GL_FUNCDECL_SYS (pthread_sigmask, int,
 _GL_CXXALIAS_SYS (pthread_sigmask, int,
                   (int how, const sigset_t *new_mask, sigset_t *old_mask));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_sigmask);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef pthread_sigmask
 # if HAVE_RAW_DECL_PTHREAD_SIGMASK

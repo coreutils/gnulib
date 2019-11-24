@@ -802,7 +802,9 @@ _GL_CXXALIAS_SYS (posix_spawn_file_actions_addopen, int,
                    int __fd,
                    const char *_Restrict_ __path, int __oflag, mode_t __mode));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawn_file_actions_addopen);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addopen
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDOPEN
@@ -833,7 +835,9 @@ _GL_FUNCDECL_SYS (posix_spawn_file_actions_addclose, int,
 _GL_CXXALIAS_SYS (posix_spawn_file_actions_addclose, int,
                   (posix_spawn_file_actions_t *__file_actions, int __fd));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawn_file_actions_addclose);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_addclose
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDCLOSE
@@ -868,7 +872,9 @@ _GL_CXXALIAS_SYS (posix_spawn_file_actions_adddup2, int,
                   (posix_spawn_file_actions_t *__file_actions,
                    int __fd, int __newfd));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawn_file_actions_adddup2);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawn_file_actions_adddup2
 # if HAVE_RAW_DECL_POSIX_SPAWN_FILE_ACTIONS_ADDDUP2
