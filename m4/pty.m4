@@ -1,4 +1,4 @@
-# pty.m4 serial 13
+# pty.m4 serial 14
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,6 +39,9 @@ AC_DEFUN([gl_FUNC_FORKPTY],
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
 #endif
+#if HAVE_TERMIOS_H
+# include <termios.h>
+#endif
 ]])
   if test $ac_cv_have_decl_forkpty = yes; then
     dnl The system has forkpty.
@@ -57,6 +60,9 @@ AC_DEFUN([gl_FUNC_FORKPTY],
 #endif
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
+#endif
+#if HAVE_TERMIOS_H
+# include <termios.h>
 #endif
           ]], [[
             int forkpty (int *, char *, struct termios const *,
@@ -98,6 +104,9 @@ AC_DEFUN([gl_FUNC_OPENPTY],
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
 #endif
+#if HAVE_TERMIOS_H
+# include <termios.h>
+#endif
 ]])
   if test $ac_cv_have_decl_openpty = yes; then
     AC_DEFINE([HAVE_OPENPTY], [1],
@@ -118,6 +127,9 @@ AC_DEFUN([gl_FUNC_OPENPTY],
 #endif
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
+#endif
+#if HAVE_TERMIOS_H
+# include <termios.h>
 #endif
           ]], [[
             int openpty (int *, int *, char *, struct termios const *,

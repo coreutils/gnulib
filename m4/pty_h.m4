@@ -1,4 +1,4 @@
-# pty_h.m4 serial 10
+# pty_h.m4 serial 11
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -22,6 +22,7 @@ AC_DEFUN_ONCE([gl_PTY_H],
     if test $ac_cv_header_libutil_h = yes; then
       HAVE_LIBUTIL_H=1
     fi
+    AC_CHECK_HEADERS_ONCE([termios.h])
   else # Have <pty.h>, assume forkpty is declared there.
     HAVE_PTY_H=1
   fi
@@ -42,6 +43,9 @@ AC_DEFUN_ONCE([gl_PTY_H],
 #endif
 #if HAVE_LIBUTIL_H
 # include <libutil.h>
+#endif
+#if HAVE_TERMIOS_H
+# include <termios.h>
 #endif
     ]], [forkpty openpty])
 ])

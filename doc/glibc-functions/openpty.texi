@@ -29,13 +29,14 @@ and Mac OS X) linking with @code{-lutil} is not required.
 On glibc, OpenBSD, NetBSD and FreeBSD linking with @code{-lutil} is
 required.
 @item
-The function is declared in pty.h on Cygwin
-and glibc.  It is declared in util.h on Mac OS X, OpenBSD and NetBSD.
+The function is declared in pty.h on glibc and Cygwin.
+It is declared in util.h on Mac OS X, OpenBSD, and NetBSD.
 It is declared in libutil.h on FreeBSD.
+It is declared in termios.h on Solaris.
 @item
 Some platforms declare the function without marking the last two
 parameters @code{const}.
-FreeBSD, Cygwin 1.7.1.
+FreeBSD, Solaris 11.4, Cygwin 1.7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
