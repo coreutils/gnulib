@@ -25,6 +25,27 @@
 
 /* ========================================================================= */
 
+#if USE_ISOC_THREADS || USE_ISOC_AND_POSIX_THREADS
+
+/* Use the ISO C threads library.  */
+
+# include <threads.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+# define gl_thread_yield() \
+    thrd_yield ()
+
+# ifdef __cplusplus
+}
+# endif
+
+#endif
+
+/* ========================================================================= */
+
 #if USE_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
@@ -66,7 +87,7 @@ extern "C" {
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

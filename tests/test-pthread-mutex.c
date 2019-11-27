@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_WINDOWS_THREADS
+#if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
 
 /* Whether to enable locking.
    Uncomment this to get a test program without locking, to verify that

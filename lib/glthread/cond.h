@@ -76,6 +76,53 @@ _GL_INLINE_HEADER_BEGIN
 
 /* ========================================================================= */
 
+#if USE_ISOC_THREADS || USE_ISOC_AND_POSIX_THREADS
+
+/* Use the ISO C threads library.  */
+
+# include <threads.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+/* -------------------------- gl_cond_t datatype -------------------------- */
+
+typedef struct
+        {
+          int volatile init_needed;
+          once_flag init_once;
+          void (*init_func) (void);
+          cnd_t condition;
+        }
+        gl_cond_t;
+# define gl_cond_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_cond_t NAME;
+# define gl_cond_define_initialized(STORAGECLASS, NAME) \
+    static void _atomic_init_##NAME (void);       \
+    STORAGECLASS gl_cond_t NAME =                 \
+      { 1, ONCE_FLAG_INIT, _atomic_init_##NAME }; \
+    static void _atomic_init_##NAME (void)        \
+    {                                             \
+      if (glthread_cond_init (&(NAME)))           \
+        abort ();                                 \
+    }
+extern int glthread_cond_init (gl_cond_t *condition);
+extern int glthread_cond_wait (gl_cond_t *condition, gl_lock_t *lock);
+extern int glthread_cond_timedwait (gl_cond_t *condition, gl_lock_t *lock,
+                                    const struct timespec *abstime);
+extern int glthread_cond_signal (gl_cond_t *condition);
+extern int glthread_cond_broadcast (gl_cond_t *condition);
+extern int glthread_cond_destroy (gl_cond_t *condition);
+
+# ifdef __cplusplus
+}
+# endif
+
+#endif
+
+/* ========================================================================= */
+
 #if USE_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
@@ -214,7 +261,7 @@ typedef glwthread_cond_t gl_cond_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

@@ -67,7 +67,7 @@ main ()
     }
   else
     {
-#if USE_POSIX_THREADS || USE_WINDOWS_THREADS
+#if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
       fputs ("glthread_create failed\n", stderr);
       return 1;
 #else

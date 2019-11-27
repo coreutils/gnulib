@@ -27,7 +27,7 @@
 
 #include "macros.h"
 
-#if USE_POSIX_THREADS
+#if USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS
 
 static pthread_t main_thread;
 static pthread_t killer_thread;

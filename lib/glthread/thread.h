@@ -93,7 +93,39 @@ _GL_INLINE_HEADER_BEGIN
 
 /* ========================================================================= */
 
-#if USE_POSIX_THREADS
+#if USE_ISOC_THREADS
+
+/* Use the ISO C threads library.  */
+
+# include <threads.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+/* -------------------------- gl_thread_t datatype -------------------------- */
+
+typedef struct thrd_with_exitvalue *gl_thread_t;
+extern int glthread_create (gl_thread_t *threadp,
+                            void *(*func) (void *), void *arg);
+# define glthread_sigmask(HOW, SET, OSET) \
+    pthread_sigmask (HOW, SET, OSET)
+extern int glthread_join (gl_thread_t thread, void **return_value_ptr);
+extern gl_thread_t gl_thread_self (void);
+# define gl_thread_self_pointer() \
+    (void *) gl_thread_self ()
+extern _Noreturn void gl_thread_exit (void *return_value);
+# define glthread_atfork(PREPARE_FUNC, PARENT_FUNC, CHILD_FUNC) 0
+
+# ifdef __cplusplus
+}
+# endif
+
+#endif
+
+/* ========================================================================= */
+
+#if USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
 
@@ -258,7 +290,7 @@ typedef glwthread_thread_t gl_thread_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

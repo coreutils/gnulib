@@ -58,6 +58,28 @@
 
 /* ========================================================================= */
 
+#if USE_ISOC_THREADS || USE_ISOC_AND_POSIX_THREADS
+
+/* Use the ISO C threads library.  */
+
+# include <threads.h>
+
+/* ------------------------- gl_tls_key_t datatype ------------------------- */
+
+typedef tss_t gl_tls_key_t;
+# define glthread_tls_key_init(KEY, DESTRUCTOR) \
+    (tss_create (KEY, DESTRUCTOR) != thrd_success ? EAGAIN : 0)
+# define gl_tls_get(NAME) \
+    tss_get (NAME)
+# define glthread_tls_set(KEY, POINTER) \
+    (tss_set (*(KEY), (POINTER)) != thrd_success ? ENOMEM : 0)
+# define glthread_tls_key_destroy(KEY) \
+    (tss_delete (*(KEY)), 0)
+
+#endif
+
+/* ========================================================================= */
+
 #if USE_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
@@ -149,7 +171,7 @@ typedef glwthread_tls_key_t gl_tls_key_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

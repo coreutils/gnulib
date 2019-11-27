@@ -1,4 +1,4 @@
-# threadlib.m4 serial 20
+# threadlib.m4 serial 21
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,7 +16,13 @@ dnl (it must be placed before the invocation of gl_THREADLIB_EARLY!), then the
 dnl default is 'no', otherwise it is system dependent. In both cases, the user
 dnl can change the choice through the options --enable-threads=choice or
 dnl --disable-threads.
-dnl Defines at most one of the macros USE_POSIX_THREADS, USE_WINDOWS_THREADS.
+dnl Defines at most one of the macros USE_ISOC_THREADS, USE_POSIX_THREADS,
+dnl USE_ISOC_AND_POSIX_THREADS, USE_WINDOWS_THREADS.
+dnl The choice --enable-threads=isoc+posix is available only on platforms that
+dnl have both the ISO C and the POSIX threads APIs. It has the effect of using
+dnl the ISO C API for most things and the POSIX API only for creating and
+dnl controlling threads (because there is no equivalent to pthread_atfork in
+dnl the ISO C API).
 dnl Sets the variables LIBTHREAD and LTLIBTHREAD to the linker options for use
 dnl in a Makefile (LIBTHREAD for use without libtool, LTLIBTHREAD for use with
 dnl libtool).
@@ -54,7 +60,7 @@ AC_DEFUN([gl_THREADLIB_EARLY_BODY],
     [m4_divert_text([DEFAULTS], [gl_use_threads_default=])])
   m4_divert_text([DEFAULTS], [gl_use_winpthreads_default=])
   AC_ARG_ENABLE([threads],
-AC_HELP_STRING([--enable-threads={posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
+AC_HELP_STRING([--enable-threads={isoc|posix|isoc+posix|windows}], [specify multithreading API])m4_ifdef([gl_THREADLIB_DEFAULT_NO], [], [
 AC_HELP_STRING([--disable-threads], [build without multithread safety])]),
     [gl_use_threads=$enableval],
     [if test -n "$gl_use_threads_default"; then
@@ -88,8 +94,11 @@ changequote(,)dnl
 changequote([,])dnl
      fi
     ])
-  if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
-    # For using <pthread.h>:
+  if test "$gl_use_threads" = yes \
+     || test "$gl_use_threads" = isoc \
+     || test "$gl_use_threads" = posix \
+     || test "$gl_use_threads" = isoc+posix; then
+    # For using <threads.h> or <pthread.h>:
     case "$host_os" in
       osf*)
         # On OSF/1, the compiler needs the flag -D_REENTRANT so that it
@@ -169,7 +178,26 @@ int main ()
       AC_CHECK_HEADERS_ONCE([threads.h])
       :
     fi
-    if test "$gl_use_threads" = yes || test "$gl_use_threads" = posix; then
+    if test "$gl_use_threads" = isoc || test "$gl_use_threads" = isoc+posix; then
+      AC_CHECK_HEADERS_ONCE([threads.h])
+      if test $ac_cv_header_threads_h = yes; then
+        gl_have_isoc_threads=
+        # Test whether both mtx_lock and cnd_timedwait exist in libc.
+        AC_LINK_IFELSE(
+          [AC_LANG_PROGRAM(
+             [[#include <threads.h>
+               #include <stddef.h>
+               mtx_t m;
+               cnd_t c;
+             ]],
+             [[mtx_lock (&m);
+               cnd_timedwait (&c, &m, NULL);]])],
+          [gl_have_isoc_threads=yes])
+      fi
+    fi
+    if test "$gl_use_threads" = yes \
+       || test "$gl_use_threads" = posix \
+       || test "$gl_use_threads" = isoc+posix; then
       # On OSF/1, the compiler needs the flag -pthread or -D_REENTRANT so that
       # it groks <pthread.h>. It's added above, in gl_THREADLIB_EARLY_BODY.
       AC_CHECK_HEADER([pthread.h],
@@ -238,21 +266,34 @@ int main ()
           fi
         fi
         if test -n "$gl_have_pthread"; then
-          gl_threads_api=posix
-          AC_DEFINE([USE_POSIX_THREADS], [1],
-            [Define if the POSIX multithreading library can be used.])
-          if test -n "$LIBMULTITHREAD" || test -n "$LTLIBMULTITHREAD"; then
-            if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
-              AC_DEFINE([USE_POSIX_THREADS_WEAK], [1],
-                [Define if references to the POSIX multithreading library should be made weak.])
-              LIBTHREAD=
-              LTLIBTHREAD=
+          if test "$gl_use_threads" = isoc+posix && test "$gl_have_isoc_threads" = yes; then
+            gl_threads_api='isoc+posix'
+            AC_DEFINE([USE_ISOC_AND_POSIX_THREADS], [1],
+              [Define if the combination of the ISO C and POSIX multithreading APIs can be used.])
+            LIBTHREAD= LTLIBTHREAD=
+          else
+            gl_threads_api=posix
+            AC_DEFINE([USE_POSIX_THREADS], [1],
+              [Define if the POSIX multithreading library can be used.])
+            if test -n "$LIBMULTITHREAD" || test -n "$LTLIBMULTITHREAD"; then
+              if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
+                AC_DEFINE([USE_POSIX_THREADS_WEAK], [1],
+                  [Define if references to the POSIX multithreading library should be made weak.])
+                LIBTHREAD= LTLIBTHREAD=
+              fi
             fi
           fi
         fi
       fi
     fi
-    if test -z "$gl_have_pthread"; then
+    if test $gl_threads_api = none; then
+      if test "$gl_use_threads" = isoc && test "$gl_have_isoc_threads" = yes; then
+        gl_threads_api=isoc
+        AC_DEFINE([USE_ISOC_THREADS], [1],
+          [Define if the ISO C multithreading library can be used.])
+      fi
+    fi
+    if test $gl_threads_api = none; then
       case "$gl_use_threads" in
         yes | windows | win32) # The 'win32' is for backward compatibility.
           if { case "$host_os" in

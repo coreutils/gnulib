@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-#if USE_POSIX_THREADS || USE_WINDOWS_THREADS
+#if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
 
 /* Whether to help the scheduler through explicit sched_yield().
    Uncomment this to see if the operating system has a fair scheduler.  */

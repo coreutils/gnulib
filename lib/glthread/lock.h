@@ -92,6 +92,115 @@
 
 /* ========================================================================= */
 
+#if USE_ISOC_THREADS || USE_ISOC_AND_POSIX_THREADS
+
+/* Use the ISO C threads library.  */
+
+# include <threads.h>
+
+# ifdef __cplusplus
+extern "C" {
+# endif
+
+/* -------------------------- gl_lock_t datatype -------------------------- */
+
+typedef struct
+        {
+          int volatile init_needed;
+          once_flag init_once;
+          void (*init_func) (void);
+          mtx_t mutex;
+        }
+        gl_lock_t;
+# define gl_lock_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_lock_t NAME;
+# define gl_lock_define_initialized(STORAGECLASS, NAME) \
+    static void _atomic_init_##NAME (void);       \
+    STORAGECLASS gl_lock_t NAME =                 \
+      { 1, ONCE_FLAG_INIT, _atomic_init_##NAME }; \
+    static void _atomic_init_##NAME (void)        \
+    {                                             \
+      if (glthread_lock_init (&(NAME)))           \
+        abort ();                                 \
+    }
+extern int glthread_lock_init (gl_lock_t *lock);
+extern int glthread_lock_lock (gl_lock_t *lock);
+extern int glthread_lock_unlock (gl_lock_t *lock);
+extern int glthread_lock_destroy (gl_lock_t *lock);
+
+/* ------------------------- gl_rwlock_t datatype ------------------------- */
+
+typedef struct
+        {
+          int volatile init_needed;
+          once_flag init_once;
+          void (*init_func) (void);
+          mtx_t lock; /* protects the remaining fields */
+          cnd_t waiting_readers; /* waiting readers */
+          cnd_t waiting_writers; /* waiting writers */
+          unsigned int waiting_writers_count; /* number of waiting writers */
+          int runcount; /* number of readers running, or -1 when a writer runs */
+        }
+        gl_rwlock_t;
+# define gl_rwlock_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_rwlock_t NAME;
+# define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
+    static void _atomic_init_##NAME (void);       \
+    STORAGECLASS gl_rwlock_t NAME =               \
+      { 1, ONCE_FLAG_INIT, _atomic_init_##NAME }; \
+    static void _atomic_init_##NAME (void)        \
+    {                                             \
+      if (glthread_rwlock_init (&(NAME)))         \
+        abort ();                                 \
+    }
+extern int glthread_rwlock_init (gl_rwlock_t *lock);
+extern int glthread_rwlock_rdlock (gl_rwlock_t *lock);
+extern int glthread_rwlock_wrlock (gl_rwlock_t *lock);
+extern int glthread_rwlock_unlock (gl_rwlock_t *lock);
+extern int glthread_rwlock_destroy (gl_rwlock_t *lock);
+
+/* --------------------- gl_recursive_lock_t datatype --------------------- */
+
+typedef struct
+        {
+          int volatile init_needed;
+          once_flag init_once;
+          void (*init_func) (void);
+          mtx_t mutex;
+        }
+        gl_recursive_lock_t;
+# define gl_recursive_lock_define(STORAGECLASS, NAME) \
+    STORAGECLASS gl_recursive_lock_t NAME;
+# define gl_recursive_lock_define_initialized(STORAGECLASS, NAME) \
+    static void _atomic_init_##NAME (void);       \
+    STORAGECLASS gl_recursive_lock_t NAME =       \
+      { 1, ONCE_FLAG_INIT, _atomic_init_##NAME }; \
+    static void _atomic_init_##NAME (void)        \
+    {                                             \
+      if (glthread_recursive_lock_init (&(NAME))) \
+        abort ();                                 \
+    }
+extern int glthread_recursive_lock_init (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_lock (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_unlock (gl_recursive_lock_t *lock);
+extern int glthread_recursive_lock_destroy (gl_recursive_lock_t *lock);
+
+/* -------------------------- gl_once_t datatype -------------------------- */
+
+typedef once_flag gl_once_t;
+# define gl_once_define(STORAGECLASS, NAME) \
+    STORAGECLASS once_flag NAME = ONCE_FLAG_INIT;
+# define glthread_once(ONCE_CONTROL, INITFUNCTION) \
+    (call_once (ONCE_CONTROL, INITFUNCTION), 0)
+
+# ifdef __cplusplus
+}
+# endif
+
+#endif
+
+/* ========================================================================= */
+
 #if USE_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
@@ -502,7 +611,7 @@ typedef glwthread_once_t gl_once_t;
 
 /* ========================================================================= */
 
-#if !(USE_POSIX_THREADS || USE_WINDOWS_THREADS)
+#if !(USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS)
 
 /* Provide dummy implementation if threads are not supported.  */
 

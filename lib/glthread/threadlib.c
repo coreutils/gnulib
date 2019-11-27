@@ -20,7 +20,7 @@
 
 /* ========================================================================= */
 
-#if USE_POSIX_THREADS
+#if USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS
 
 /* Use the POSIX threads library.  */
 
