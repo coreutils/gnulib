@@ -1374,13 +1374,17 @@ for the following .h files.')
 
         # Get link directives.
         links = [module.getLink() for module in self.moduletable['main']]
-        links = sorted(set([link for link in links if link.strip()]))
-        if links:
+        ulinks = list()
+        for link in links:
+            for lib in link:
+                ulinks += [lib]
+        ulinks = sorted(set(ulinks))
+        if ulinks:
             print('''
 You may need to use the following Makefile variables when linking.
 Use them in <program>_LDADD when linking a program, or
 in <library>_a_LDFLAGS or <library>_la_LDFLAGS when linking a library.''')
-            for link in links:
+            for link in ulinks:
                 print('  %s' % link)
 
         # Print reminders.

@@ -853,17 +853,18 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             emit += '%s_%s_LDFLAGS += -no-undefined\n' % (libname, libext)
             # Synthesize an ${libname}_${libext}_LDFLAGS augmentation by combining
             # the link dependencies of all modules.
-            listing = list()
             links = [module.getLink()
                      for module in modules if not module.isTests()]
+            ulinks = list()
             for link in links:
-                link = constants.nlremove(link)
-                position = link.find(' when linking with libtool')
-                if position != -1:
-                    link = link[:position]
-                listing += [link]
-            listing = sorted(set([link for link in listing if link != '']))
-            for link in listing:
+                for lib in link:
+                    lib = constants.nlremove(lib)
+                    position = lib.find(' when linking with libtool')
+                    if position != -1:
+                        lib = lib[:position]
+                    ulinks += [lib]
+            ulinks = sorted(set(ulinks))
+            for link in ulinks:
                 emit += '%s_%s_LDFLAGS += %s\n' % (libname, libext, link)
         emit += '\n'
         if pobase:

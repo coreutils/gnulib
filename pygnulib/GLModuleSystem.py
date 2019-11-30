@@ -791,13 +791,11 @@ Include:|Link:|License:|Maintainer:)'
         Return link directive.'''
         section = 'Link:'
         if 'link' not in self.cache:
-            if section not in self.content:
-                result = string()
-            else:  # if section in self.content
+            parts = list()
+            if section in self.content:
                 snippet = self.content.split(section)[-1]
                 snippet = snippet.replace('\r\n', '\n')
                 lines = ['%s\n' % line for line in snippet.split('\n')]
-                parts = list()
                 for line in lines:
                     regex = '^(Description|Comment|Status|Notice|Applicability|'
                     regex += 'Files|Depends-on|configure\\.ac-early|configure\\.ac|'
@@ -808,8 +806,8 @@ Include:|Link:|License:|Maintainer:)'
                         break
                     parts += [line]
                 parts = [part.strip() for part in parts if part.strip()]
-                result = ''.join(parts)
-            self.cache['link'] = result
+                # result = ' '.join(parts)
+            self.cache['link'] = parts
         return(self.cache['link'])
 
     def getLicense(self):
