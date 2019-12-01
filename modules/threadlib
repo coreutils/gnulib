@@ -4,7 +4,6 @@ Access to multithreading primitives.
 Files:
 lib/glthread/threadlib.c
 m4/threadlib.m4
-build-aux/config.rpath
 
 Depends-on:
 havelib
