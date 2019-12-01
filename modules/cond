@@ -24,6 +24,9 @@ lib_SOURCES += glthread/cond.h glthread/cond.c
 Include:
 "glthread/cond.h"
 
+Link:
+$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
+
 License:
 LGPLv2+
 
