@@ -20,6 +20,9 @@ lib_SOURCES += mbstok_r.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

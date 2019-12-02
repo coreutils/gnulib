@@ -31,4 +31,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbsnrtowcs
-
+test_mbsnrtowcs_LDADD = $(LDADD) $(LIBTHREAD)

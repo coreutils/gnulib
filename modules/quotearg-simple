@@ -12,6 +12,9 @@ Makefile.am:
 
 Include:
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

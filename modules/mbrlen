@@ -24,6 +24,9 @@ Makefile.am:
 Include:
 <wchar.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

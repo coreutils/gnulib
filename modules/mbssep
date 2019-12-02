@@ -19,6 +19,9 @@ lib_SOURCES += mbssep.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

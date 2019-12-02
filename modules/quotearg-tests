@@ -27,4 +27,4 @@ Makefile.am:
 TESTS += test-quotearg.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-quotearg
-test_quotearg_LDADD = $(LDADD) @LIBINTL@
+test_quotearg_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)

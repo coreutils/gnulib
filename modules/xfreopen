@@ -19,6 +19,9 @@ lib_SOURCES += xfreopen.c xfreopen.h
 Include:
 "xfreopen.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

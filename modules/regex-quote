@@ -18,6 +18,9 @@ lib_SOURCES += regex-quote.c
 Include:
 "regex-quote.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

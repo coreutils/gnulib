@@ -36,6 +36,9 @@ Include:
 "dfa.h"
 "localeinfo.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

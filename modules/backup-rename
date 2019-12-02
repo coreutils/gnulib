@@ -32,6 +32,9 @@ lib_SOURCES += backupfile.c backup-rename.c
 Include:
 "backupfile.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

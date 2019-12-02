@@ -19,6 +19,9 @@ lib_SOURCES += closein.c
 Include:
 "closein.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

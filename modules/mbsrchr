@@ -17,6 +17,9 @@ lib_SOURCES += mbsrchr.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

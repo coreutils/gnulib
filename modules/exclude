@@ -24,6 +24,9 @@ lib_SOURCES += exclude.c
 Include:
 "exclude.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

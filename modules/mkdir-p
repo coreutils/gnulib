@@ -33,6 +33,9 @@ lib_SOURCES += dirchownmod.c mkdir-p.c
 Include:
 "mkdir-p.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

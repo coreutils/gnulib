@@ -20,6 +20,9 @@ lib_SOURCES += trim.c
 Include:
 "trim.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

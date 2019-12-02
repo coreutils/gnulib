@@ -16,6 +16,9 @@ Makefile.am:
 Include:
 "quote.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

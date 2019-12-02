@@ -25,6 +25,9 @@ lib_SOURCES += mbuiter.h mbuiter.c
 Include:
 "mbuiter.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

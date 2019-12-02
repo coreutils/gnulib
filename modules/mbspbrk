@@ -19,6 +19,9 @@ lib_SOURCES += mbspbrk.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

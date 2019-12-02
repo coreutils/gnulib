@@ -17,6 +17,9 @@ lib_SOURCES += system-quote.h system-quote.c
 Include:
 "system-quote.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

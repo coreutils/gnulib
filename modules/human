@@ -26,6 +26,9 @@ lib_SOURCES += human.c
 Include:
 "human.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

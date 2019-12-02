@@ -17,6 +17,9 @@ lib_SOURCES += sh-quote.h sh-quote.c
 Include:
 "sh-quote.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

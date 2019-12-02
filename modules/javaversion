@@ -25,6 +25,9 @@ pkgdata_DATA += javaversion.class
 Include:
 "javaversion.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

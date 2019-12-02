@@ -17,6 +17,9 @@ lib_SOURCES += mbscasecmp.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

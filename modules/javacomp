@@ -38,6 +38,9 @@ lib_SOURCES += javacomp.h javacomp.c
 Include:
 "javacomp.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

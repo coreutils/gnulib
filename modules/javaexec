@@ -28,6 +28,9 @@ lib_SOURCES += javaexec.h javaexec.c
 Include:
 "javaexec.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

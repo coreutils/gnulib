@@ -22,6 +22,9 @@ endif
 Include:
 "unistdio.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPLv3+ or GPLv2
 

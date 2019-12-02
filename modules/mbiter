@@ -24,6 +24,9 @@ lib_SOURCES += mbiter.h mbiter.c
 Include:
 "mbiter.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPLv2+
 

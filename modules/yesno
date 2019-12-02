@@ -21,6 +21,9 @@ lib_SOURCES += yesno.c
 Include:
 "yesno.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

@@ -17,6 +17,9 @@ lib_SOURCES += mbsnlen.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPLv2+
 

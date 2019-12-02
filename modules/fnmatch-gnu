@@ -19,6 +19,9 @@ Makefile.am:
 Include:
 <fnmatch.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPLv2+
 

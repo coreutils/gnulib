@@ -23,6 +23,9 @@ lib_SOURCES += mbmemcasecoll.c
 Include:
 "mbmemcasecoll.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

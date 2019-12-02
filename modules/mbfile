@@ -24,6 +24,9 @@ lib_SOURCES += mbfile.h mbfile.c
 Include:
 "mbfile.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

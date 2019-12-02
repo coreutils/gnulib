@@ -25,6 +25,9 @@ lib_SOURCES += mbswidth.h mbswidth.c
 Include:
 "mbswidth.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 

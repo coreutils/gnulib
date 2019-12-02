@@ -16,6 +16,9 @@ lib_SOURCES += mbmemcasecmp.c
 Include:
 "mbmemcasecmp.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

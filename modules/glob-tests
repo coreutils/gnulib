@@ -11,3 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-glob
 check_PROGRAMS += test-glob
+test_glob_LDADD = $(LDADD) $(LIBTHREAD)

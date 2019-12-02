@@ -19,6 +19,9 @@ lib_SOURCES += mbscspn.c
 Include:
 <string.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPL
 

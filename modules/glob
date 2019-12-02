@@ -49,6 +49,9 @@ Makefile.am:
 Include:
 <glob.h>
 
+Link:
+$(LIBTHREAD)
+
 License:
 LGPLv2+
 

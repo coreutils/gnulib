@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-closein.sh
 check_PROGRAMS += test-closein
-test_closein_LDADD = $(LDADD) @LIBINTL@
+test_closein_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)

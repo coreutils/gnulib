@@ -21,6 +21,9 @@ lib_SOURCES += closeout.c
 Include:
 "closeout.h"
 
+Link:
+$(LIBTHREAD)
+
 License:
 GPL
 
