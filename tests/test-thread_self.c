@@ -28,7 +28,12 @@ main ()
   /* Check that gl_thread_self () can be used with just $(LIBTHREAD), not
      $(LIBMULTITHREAD), i.e. in libraries that are multithread-safe but don't
      create threads themselves.  */
+  /* This is not the case on AIX with --enable-threads=isoc+posix, because in
+     this case, $(LIBTHREAD) is empty whereas $(LIBMULTITHREAD) is '-lpthread'.
+   */
+#if !defined _AIX
   main_thread = gl_thread_self ();
+#endif
 
   return 0;
 }
