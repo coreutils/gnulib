@@ -23,7 +23,7 @@ Include:
 "glthread/thread.h"
 
 Link:
-$(LTLIBMULTITHREAD) when linking with libtool, $(LIBMULTITHREAD) otherwise
+$(LIBMULTITHREAD)
 
 License:
 LGPLv2+

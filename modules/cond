@@ -25,7 +25,7 @@ Include:
 "glthread/cond.h"
 
 Link:
-$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
+$(LIBTHREAD)
 
 License:
 LGPLv2+

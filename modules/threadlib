@@ -20,7 +20,7 @@ lib_SOURCES += glthread/threadlib.c
 Include:
 
 Link:
-$(LTLIBTHREAD) when linking with libtool, $(LIBTHREAD) otherwise
+$(LIBTHREAD)
 
 License:
 LGPLv2+
