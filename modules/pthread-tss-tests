@@ -12,4 +12,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-pthread-tss
 check_PROGRAMS += test-pthread-tss
-test_pthread_tss_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
+test_pthread_tss_LDADD = $(LDADD) @LIBPMULTITHREAD@ @YIELD_LIB@

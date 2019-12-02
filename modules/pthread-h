@@ -4,21 +4,20 @@ A POSIX-like <pthread.h>.
 Files:
 lib/pthread.in.h
 m4/pthread_h.m4
+m4/threadlib.m4
 
 Depends-on:
 extensions
 extern-inline
 sched
 time
-threadlib
 snippet/c++defs
 snippet/_Noreturn
 snippet/arg-nonnull
 snippet/warn-on-use
 
 configure.ac-early:
-AC_DEFINE([_REENTRANT], 1, [For thread-safety on OSF/1, Solaris.])
-AC_DEFINE([_THREAD_SAFE], 1, [For thread-safety on AIX, FreeBSD.])
+gl_ANYTHREADLIB_EARLY
 
 configure.ac:
 gl_PTHREAD_H
@@ -166,7 +165,7 @@ Include:
 <pthread.h>
 
 Link:
-$(LIBTHREAD)
+$(LIBPTHREAD)
 
 License:
 LGPLv2+

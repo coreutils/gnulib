@@ -15,5 +15,5 @@ if ANSICXX
 TESTS += test-pthread-c++
 check_PROGRAMS += test-pthread-c++
 test_pthread_c___SOURCES = test-pthread-c++.cc
-test_pthread_c___LDADD = $(LDADD) $(LIBMULTITHREAD)
+test_pthread_c___LDADD = $(LDADD) $(LIBPMULTITHREAD)
 endif

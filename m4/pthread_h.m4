@@ -1,4 +1,4 @@
-# pthread_h.m4 serial 4
+# pthread_h.m4 serial 5
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,13 +10,21 @@ AC_DEFUN([gl_PTHREAD_H],
   dnl once only, before all statements that occur in other macros.
   AC_REQUIRE([gl_PTHREAD_H_DEFAULTS])
 
-  AC_REQUIRE([gl_THREADLIB])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_REQUIRE([gl_PTHREADLIB])
 
   gl_CHECK_NEXT_HEADERS([pthread.h])
-  dnl On mingw, if --enable-threads=windows or gl_AVOID_WINPTHREAD is used,
-  dnl ignore the <pthread.h> from the mingw-w64 winpthreads library.
-  if test $ac_cv_header_pthread_h = yes && test $gl_threads_api != windows; then
+  if test $ac_cv_header_pthread_h = yes; then
     HAVE_PTHREAD_H=1
+    dnl On mingw, if --enable-threads=windows or gl_AVOID_WINPTHREAD is used,
+    dnl ignore the <pthread.h> from the mingw-w64 winpthreads library.
+    m4_ifdef([gl_][THREADLIB], [
+      AC_REQUIRE([gl_][THREADLIB])
+      if { case "$host_os" in mingw*) true;; *) false;; esac; } \
+         && test $gl_threads_api = windows; then
+        HAVE_PTHREAD_H=0
+      fi
+    ])
   else
     HAVE_PTHREAD_H=0
   fi
@@ -125,7 +133,7 @@ AC_DEFUN([gl_PTHREAD_H],
   AC_REQUIRE([AC_C_RESTRICT])
 
   dnl For backward compatibility with gnulib versions <= 2019-07.
-  LIB_PTHREAD="$LIBMULTITHREAD"
+  LIB_PTHREAD="$LIBPMULTITHREAD"
   AC_SUBST([LIB_PTHREAD])
 ])
 

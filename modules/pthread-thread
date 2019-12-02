@@ -22,7 +22,7 @@ Include:
 <pthread.h>
 
 Link:
-$(LIBMULTITHREAD)
+$(LIBPMULTITHREAD)
 
 License:
 LGPLv2+

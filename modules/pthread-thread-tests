@@ -9,4 +9,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-pthread-thread
 check_PROGRAMS += test-pthread-thread
-test_pthread_thread_LDADD = $(LDADD) @LIBMULTITHREAD@
+test_pthread_thread_LDADD = $(LDADD) @LIBPMULTITHREAD@

@@ -11,4 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-pthread-mutex
 check_PROGRAMS += test-pthread-mutex
-test_pthread_mutex_LDADD = $(LDADD) @LIBMULTITHREAD@ @YIELD_LIB@
+test_pthread_mutex_LDADD = $(LDADD) @LIBPMULTITHREAD@ @YIELD_LIB@
