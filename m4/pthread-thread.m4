@@ -1,4 +1,4 @@
-# pthread-thread.m4 serial 1
+# pthread-thread.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -41,7 +41,7 @@ AC_DEFUN([gl_PTHREAD_THREAD],
       AC_CACHE_CHECK([whether pthread_create exists as a global function],
         [gl_cv_func_pthread_create],
         [saved_LIBS="$LIBS"
-         LIBS="$LIBS $LIBMULTITHREAD"
+         LIBS="$LIBS $LIBPMULTITHREAD"
          AC_LINK_IFELSE(
            [AC_LANG_SOURCE(
               [[extern

@@ -1,4 +1,4 @@
-# pthread-rwlock.m4 serial 1
+# pthread-rwlock.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_PTHREAD_RWLOCK],
       AC_CACHE_CHECK([for pthread_rwlock_init],
         [gl_cv_func_pthread_rwlock_init],
         [saved_LIBS="$LIBS"
-         LIBS="$LIBS $LIBMULTITHREAD"
+         LIBS="$LIBS $LIBPMULTITHREAD"
          AC_LINK_IFELSE(
            [AC_LANG_SOURCE(
               [[extern

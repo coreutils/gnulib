@@ -1,4 +1,4 @@
-# pthread-mutex.m4 serial 2
+# pthread-mutex.m4 serial 3
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -43,7 +43,7 @@ AC_DEFUN([gl_PTHREAD_MUTEX],
       AC_CACHE_CHECK([for pthread_mutexattr_getrobust],
         [gl_cv_func_pthread_mutexattr_getrobust],
         [saved_LIBS="$LIBS"
-         LIBS="$LIBS $LIBMULTITHREAD"
+         LIBS="$LIBS $LIBPMULTITHREAD"
          AC_LINK_IFELSE(
            [AC_LANG_SOURCE(
               [[extern
