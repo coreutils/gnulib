@@ -7,8 +7,8 @@ m4/pthread-rwlock.m4
 
 Depends-on:
 pthread-h
-pthread-cond        [test $gl_threads_api = posix && test $REPLACE_PTHREAD_RWLOCK_INIT = 1]
-nanosleep           [test $gl_threads_api = posix && test $HAVE_PTHREAD_RWLOCK_INIT = 1 && test $HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK = 0]
+pthread-cond        [test $gl_threads_api != windows && test $REPLACE_PTHREAD_RWLOCK_INIT = 1]
+nanosleep           [test $gl_threads_api != windows && test $HAVE_PTHREAD_RWLOCK_INIT = 1 && test $HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK = 0]
 windows-timedrwlock [test $gl_threads_api = windows]
 
 configure.ac:

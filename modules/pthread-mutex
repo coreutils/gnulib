@@ -7,7 +7,7 @@ m4/pthread-mutex.m4
 
 Depends-on:
 pthread-h
-pthread_mutex_timedlock [test $gl_threads_api = posix]
+pthread_mutex_timedlock [test $gl_threads_api != windows]
 windows-timedmutex      [test $gl_threads_api = windows]
 windows-timedrecmutex   [test $gl_threads_api = windows]
 
