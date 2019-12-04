@@ -436,7 +436,7 @@ _GL_CXXALIAS_RPL (wcsnrtombs, size_t,
                   (char *dest, const wchar_t **srcp, size_t srclen, size_t len,
                    mbstate_t *ps));
 # else
-#  if !@HAVE_WCSNRTOMBS@
+#  if !@HAVE_WCSNRTOMBS@ || (defined __cplusplus && defined __sun)
 _GL_FUNCDECL_SYS (wcsnrtombs, size_t,
                   (char *dest, const wchar_t **srcp, size_t srclen, size_t len,
                    mbstate_t *ps)
