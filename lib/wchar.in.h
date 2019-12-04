@@ -446,7 +446,9 @@ _GL_CXXALIAS_SYS (wcsnrtombs, size_t,
                   (char *dest, const wchar_t **srcp, size_t srclen, size_t len,
                    mbstate_t *ps));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcsnrtombs);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcsnrtombs
 # if HAVE_RAW_DECL_WCSNRTOMBS
@@ -472,7 +474,9 @@ _GL_FUNCDECL_SYS (wcwidth, int, (wchar_t) _GL_ATTRIBUTE_PURE);
 #  endif
 _GL_CXXALIAS_SYS (wcwidth, int, (wchar_t));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcwidth);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcwidth
 # if HAVE_RAW_DECL_WCWIDTH
@@ -1085,7 +1089,9 @@ _GL_FUNCDECL_SYS (wcswidth, int, (const wchar_t *s, size_t n)
 #  endif
 _GL_CXXALIAS_SYS (wcswidth, int, (const wchar_t *s, size_t n));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wcswidth);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wcswidth
 # if HAVE_RAW_DECL_WCSWIDTH

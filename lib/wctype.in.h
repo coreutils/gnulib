@@ -540,6 +540,7 @@ _GL_CXXALIAS_SYS (iswspace, int, (wint_t wc));
 _GL_CXXALIAS_SYS (iswupper, int, (wint_t wc));
 _GL_CXXALIAS_SYS (iswxdigit, int, (wint_t wc));
 #endif
+#if __GLIBC__ >= 2
 _GL_CXXALIASWARN (iswalnum);
 _GL_CXXALIASWARN (iswalpha);
 _GL_CXXALIASWARN (iswcntrl);
@@ -551,6 +552,7 @@ _GL_CXXALIASWARN (iswpunct);
 _GL_CXXALIASWARN (iswspace);
 _GL_CXXALIASWARN (iswupper);
 _GL_CXXALIASWARN (iswxdigit);
+#endif
 
 #if @GNULIB_ISWBLANK@
 # if @REPLACE_ISWCNTRL@ || @REPLACE_ISWBLANK@
@@ -576,7 +578,9 @@ typedef void * wctype_t;
 _GL_FUNCDECL_SYS (wctype, wctype_t, (const char *name));
 # endif
 _GL_CXXALIAS_SYS (wctype, wctype_t, (const char *name));
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (wctype);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef wctype
 # if HAVE_RAW_DECL_WCTYPE
@@ -602,7 +606,9 @@ _GL_FUNCDECL_SYS (iswctype, int, (wint_t wc, wctype_t desc));
 #  endif
 _GL_CXXALIAS_SYS (iswctype, int, (wint_t wc, wctype_t desc));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (iswctype);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef iswctype
 # if HAVE_RAW_DECL_ISWCTYPE
@@ -618,8 +624,10 @@ _GL_CXXALIAS_RPL (towupper, wint_t, (wint_t wc));
 _GL_CXXALIAS_SYS (towlower, wint_t, (wint_t wc));
 _GL_CXXALIAS_SYS (towupper, wint_t, (wint_t wc));
 #endif
+#if __GLIBC__ >= 2
 _GL_CXXALIASWARN (towlower);
 _GL_CXXALIASWARN (towupper);
+#endif
 
 #if !@HAVE_WCTRANS_T@
 # if !GNULIB_defined_wctrans_t
