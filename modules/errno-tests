@@ -2,6 +2,7 @@ Files:
 tests/test-errno.c
 
 Depends-on:
+errno-c++-tests
 
 configure.ac:
 

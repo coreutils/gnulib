@@ -5,6 +5,7 @@ tests/macros.h
 Depends-on:
 fpieee
 fpucw
+float-c++-tests
 
 configure.ac:
 

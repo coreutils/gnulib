@@ -4,6 +4,7 @@ tests/test-limits-h.c
 Depends-on:
 extensions
 verify
+limits-h-c++-tests
 
 configure.ac:
 

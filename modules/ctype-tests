@@ -2,6 +2,7 @@ Files:
 tests/test-ctype.c
 
 Depends-on:
+ctype-c++-tests
 
 configure.ac:
 

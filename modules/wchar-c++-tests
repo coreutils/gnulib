@@ -1,5 +1,6 @@
 Files:
 tests/test-wchar-c++.cc
+tests/test-wchar-c++2.cc
 tests/signature.h
 
 Status:
@@ -14,6 +15,6 @@ Makefile.am:
 if ANSICXX
 TESTS += test-wchar-c++
 check_PROGRAMS += test-wchar-c++
-test_wchar_c___SOURCES = test-wchar-c++.cc
+test_wchar_c___SOURCES = test-wchar-c++.cc test-wchar-c++2.cc
 test_wchar_c___LDADD = $(LDADD) $(LIBINTL) $(LIB_NANOSLEEP) $(LIB_EACCESS) $(LIBTHREAD)
 endif

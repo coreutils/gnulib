@@ -4,6 +4,7 @@ tests/test-stddef.c
 Depends-on:
 stdalign
 verify
+stddef-c++-tests
 
 configure.ac:
 

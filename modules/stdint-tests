@@ -8,6 +8,7 @@ extensions
 verify
 intprops
 wchar
+stdint-c++-tests
 
 configure.ac:
 AC_REQUIRE([gt_TYPE_WCHAR_T])
