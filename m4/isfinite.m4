@@ -1,4 +1,4 @@
-# isfinite.m4 serial 16
+# isfinite.m4 serial 17
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_ISFINITE],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   dnl Persuade glibc <math.h> to declare isfinite.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_DECLS([isfinite], , , [[#include <math.h>]])
@@ -25,8 +26,13 @@ AC_DEFUN([gl_ISFINITE],
       dnl isfinite(long double) also does not work in this situation.
     fi
   fi
-  if test "$ac_cv_have_decl_isfinite" != yes ||
-     test "$ISFINITE_LIBM" = missing; then
+  dnl On Solaris 10, with CC in C++ mode, isfinite is not available although
+  dnl is with cc in C mode. This cannot be worked around by defining
+  dnl _XOPEN_SOURCE=600, because the latter does not work in C++ mode on
+  dnl Solaris 11.0. Therefore use the replacement functions on Solaris.
+  if test "$ac_cv_have_decl_isfinite" != yes \
+     || test "$ISFINITE_LIBM" = missing \
+     || { case "$host_os" in solaris*) true;; *) false;; esac; }; then
     REPLACE_ISFINITE=1
     dnl No libraries are needed to link lib/isfinite.c.
     ISFINITE_LIBM=

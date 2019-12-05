@@ -464,9 +464,9 @@ _GL_FUNCDECL_SYS (pthread_create, int,
                    void * (*mainfunc) (void *), void *arg)
                   _GL_ARG_NONNULL ((1, 3)));
 #  endif
-_GL_CXXALIAS_SYS (pthread_create, int,
-                  (pthread_t *threadp, const pthread_attr_t *attr,
-                   void * (*mainfunc) (void *), void *arg));
+_GL_CXXALIAS_SYS_CAST (pthread_create, int,
+                       (pthread_t *threadp, const pthread_attr_t *attr,
+                        void * (*mainfunc) (void *), void *arg));
 # endif
 _GL_CXXALIASWARN (pthread_create);
 #elif defined GNULIB_POSIXCHECK
@@ -721,8 +721,9 @@ _GL_FUNCDECL_SYS (pthread_once, int,
                   (pthread_once_t *once_control, void (*initfunction) (void))
                    _GL_ARG_NONNULL ((1, 2)));
 #  endif
-_GL_CXXALIAS_SYS (pthread_once, int,
-                  (pthread_once_t *once_control, void (*initfunction) (void)));
+_GL_CXXALIAS_SYS_CAST (pthread_once, int,
+                       (pthread_once_t *once_control,
+                        void (*initfunction) (void)));
 # endif
 _GL_CXXALIASWARN (pthread_once);
 #elif defined GNULIB_POSIXCHECK
@@ -1595,8 +1596,8 @@ _GL_FUNCDECL_SYS (pthread_key_create, int,
                   (pthread_key_t *keyp, void (*destructor) (void *))
                   _GL_ARG_NONNULL ((1)));
 #  endif
-_GL_CXXALIAS_SYS (pthread_key_create, int,
-                  (pthread_key_t *keyp, void (*destructor) (void *)));
+_GL_CXXALIAS_SYS_CAST (pthread_key_create, int,
+                       (pthread_key_t *keyp, void (*destructor) (void *)));
 # endif
 _GL_CXXALIASWARN (pthread_key_create);
 #elif defined GNULIB_POSIXCHECK

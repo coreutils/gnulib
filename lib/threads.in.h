@@ -438,7 +438,7 @@ typedef pthread_once_t once_flag;
 _GL_FUNCDECL_SYS (call_once, void, (once_flag *, void (*) (void))
                                    _GL_ARG_NONNULL ((1, 2)));
 # endif
-_GL_CXXALIAS_SYS (call_once, void, (once_flag *, void (*) (void)));
+_GL_CXXALIAS_SYS_CAST (call_once, void, (once_flag *, void (*) (void)));
 _GL_CXXALIASWARN (call_once);
 #elif defined GNULIB_POSIXCHECK
 # undef call_once

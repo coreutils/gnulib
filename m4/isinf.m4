@@ -1,4 +1,4 @@
-# isinf.m4 serial 12
+# isinf.m4 serial 13
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_ISINF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
   dnl Persuade glibc <math.h> to declare isinf.
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
   AC_CHECK_DECLS([isinf], , ,
@@ -26,8 +27,13 @@ AC_DEFUN([gl_ISINF],
       esac
     fi
   fi
-  if test "$ac_cv_have_decl_isinf" != yes ||
-     test "$ISINF_LIBM" = missing; then
+  dnl On Solaris 10, with CC in C++ mode, isinf is not available although
+  dnl is with cc in C mode. This cannot be worked around by defining
+  dnl _XOPEN_SOURCE=600, because the latter does not work in C++ mode on
+  dnl Solaris 11.0. Therefore use the replacement functions on Solaris.
+  if test "$ac_cv_have_decl_isinf" != yes \
+     || test "$ISINF_LIBM" = missing \
+     || { case "$host_os" in solaris*) true;; *) false;; esac; }; then
     REPLACE_ISINF=1
     dnl No libraries are needed to link lib/isinf.c.
     ISINF_LIBM=

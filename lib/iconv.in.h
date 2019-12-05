@@ -87,10 +87,12 @@ _GL_CXXALIAS_RPL (iconv, size_t,
                    @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
                    char **outbuf, size_t *outbytesleft));
 # else
-_GL_CXXALIAS_SYS (iconv, size_t,
-                  (iconv_t cd,
-                   @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
-                   char **outbuf, size_t *outbytesleft));
+/* Need to cast, because on some versions of Solaris, ICONV_CONST does
+   not have the right value for C++.  */
+_GL_CXXALIAS_SYS_CAST (iconv, size_t,
+                       (iconv_t cd,
+                        @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
+                        char **outbuf, size_t *outbytesleft));
 # endif
 _GL_CXXALIASWARN (iconv);
 # ifndef ICONV_CONST
