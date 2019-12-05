@@ -689,7 +689,7 @@ _GL_CXXALIAS_RPL (pthread_exit, _Noreturn void, (void *value));
 #  if !@HAVE_PTHREAD_EXIT@
 _GL_FUNCDECL_SYS (pthread_exit, _Noreturn void, (void *value));
 #  endif
-_GL_CXXALIAS_SYS (pthread_exit, _Noreturn void, (void *value));
+_GL_CXXALIAS_SYS_CAST (pthread_exit, _Noreturn void, (void *value));
 # endif
 _GL_CXXALIASWARN (pthread_exit);
 #elif defined GNULIB_POSIXCHECK

@@ -780,7 +780,9 @@ _GL_CXXALIAS_RPL (expm1l, long double, (long double x));
 # else
 #  if !@HAVE_DECL_EXPM1L@
 #   undef expm1l
+#   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (expm1l, long double, (long double x));
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (expm1l, long double, (long double x));
 # endif
@@ -960,8 +962,10 @@ _GL_CXXALIAS_RPL (fmal, long double,
 # else
 #  if !@HAVE_FMAL@
 #   undef fmal
+#   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (fmal, long double,
                   (long double x, long double y, long double z));
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (fmal, long double,
                   (long double x, long double y, long double z));
@@ -1838,7 +1842,9 @@ _GL_CXXALIAS_RPL (remainderl, long double, (long double x, long double y));
 # else
 #  if !@HAVE_DECL_REMAINDERL@
 #   undef remainderl
+#   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (remainderl, long double, (long double x, long double y));
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (remainderl, long double, (long double x, long double y));
 # endif
@@ -1965,7 +1971,9 @@ _GL_CXXALIAS_RPL (roundl, long double, (long double x));
 # else
 #  if !@HAVE_DECL_ROUNDL@
 #   undef roundl
+#   if !(defined __cplusplus && defined _AIX)
 _GL_FUNCDECL_SYS (roundl, long double, (long double x));
+#   endif
 #  endif
 _GL_CXXALIAS_SYS (roundl, long double, (long double x));
 # endif
@@ -2249,7 +2257,7 @@ _GL_EXTERN_C int gl_isfinitel (long double x);
 #  if defined isfinite || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (isfinite)
 #   undef isfinite
-#   if __GNUC__ >= 6 || defined __clang__
+#   if __GNUC__ >= 6 || (defined __clang__ && !defined _AIX)
   /* This platform's <cmath> possibly defines isfinite through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (isfinite, rpl_isfinite, bool)
@@ -2491,7 +2499,7 @@ _GL_EXTERN_C int gl_signbitl (long double arg);
 #  if defined signbit || defined GNULIB_NAMESPACE
 _GL_MATH_CXX_REAL_FLOATING_DECL_1 (signbit)
 #   undef signbit
-#   if __GNUC__ >= 6 || defined __clang__
+#   if __GNUC__ >= 6 || (defined __clang__ && !defined _AIX)
   /* This platform's <cmath> possibly defines signbit through a set of inline
      functions.  */
 _GL_MATH_CXX_REAL_FLOATING_DECL_2 (signbit, rpl_signbit, bool)

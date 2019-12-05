@@ -268,7 +268,7 @@ _GL_WARN_ON_USE (thrd_join, "thrd_join is unportable - "
 # if !@HAVE_THREADS_H@
 _GL_FUNCDECL_SYS (thrd_exit, _Noreturn void, (int));
 # endif
-_GL_CXXALIAS_SYS (thrd_exit, _Noreturn void, (int));
+_GL_CXXALIAS_SYS_CAST (thrd_exit, _Noreturn void, (int));
 _GL_CXXALIASWARN (thrd_exit);
 #elif defined GNULIB_POSIXCHECK
 # undef thrd_exit
