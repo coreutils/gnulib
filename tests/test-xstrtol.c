@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "xstrtol.h"
+#include "xstrtol-error.h"
 #include "error.h"
 
 #ifndef __xstrtol

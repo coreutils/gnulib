@@ -5,22 +5,17 @@ Files:
 lib/xstrtol.h
 lib/xstrtol.c
 lib/xstrtoul.c
-lib/xstrtol-error.c
 m4/xstrtol.m4
 
 Depends-on:
 assure
-exitfail
-error
-getopt-gnu
-gettext-h
 inttypes-incomplete
 
 configure.ac:
 gl_XSTRTOL
 
 Makefile.am:
-lib_SOURCES += xstrtol.c xstrtoul.c xstrtol-error.c
+lib_SOURCES += xstrtol.c xstrtoul.c
 
 Include:
 "xstrtol.h"

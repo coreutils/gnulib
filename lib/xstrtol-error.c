@@ -17,7 +17,7 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 #include <config.h>
-#include "xstrtol.h"
+#include "xstrtol-error.h"
 
 #include <stdlib.h>
 

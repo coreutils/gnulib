@@ -19,7 +19,6 @@
 #ifndef XSTRTOL_H_
 # define XSTRTOL_H_ 1
 
-# include <getopt.h>
 # include <inttypes.h>
 
 # ifndef _STRTOL_ERROR
@@ -50,24 +49,5 @@ _DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 _DECLARE_XSTRTOL (xstrtoll, long long int)
 _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
 #endif
-
-/* Report an error for an invalid integer in an option argument.
-
-   ERR is the error code returned by one of the xstrto* functions.
-
-   Use OPT_IDX to decide whether to print the short option string "C"
-   or "-C" or a long option string derived from LONG_OPTION.  OPT_IDX
-   is -2 if the short option "C" was used, without any leading "-"; it
-   is -1 if the short option "-C" was used; otherwise it is an index
-   into LONG_OPTIONS, which should have a name preceded by two '-'
-   characters.
-
-   ARG is the option-argument containing the integer.
-
-   After reporting an error, exit with a failure status.  */
-
-_Noreturn void xstrtol_fatal (enum strtol_error,
-                              int, char, struct option const *,
-                              char const *);
 
 #endif /* not XSTRTOL_H_ */

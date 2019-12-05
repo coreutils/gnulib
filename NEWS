@@ -3,6 +3,12 @@ Important general notes
 
 Date        Modules         Changes
 
+2019-12-07  userspec        The xstrtol_fatal is moved away from the xstrtol
+            xstrtoimax      module to a new xstrtol-error module. Because of
+            xstrtol         this, using xstrtol or any of the modules using it
+            xstrtoll        does not pull automatically the exitfail, error,
+            xstrtoumax      getopt-gnu, and gettext-h modules.
+
 2019-03-16  fatal-signal    The function that you pass to at_fatal_signal now
                             takes the signal as argument.
 
