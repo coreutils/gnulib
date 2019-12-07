@@ -3,15 +3,6 @@ Important general notes
 
 Date        Modules         Changes
 
-2019-12-07  userspec        The xstrtol_fatal is moved away from the xstrtol
-            xstrtoimax      module to a new xstrtol-error module. Because of
-            xstrtol         this, using xstrtol or any of the modules using it
-            xstrtoll        does not pull automatically the exitfail, error,
-            xstrtoumax      getopt-gnu, and gettext-h modules.
-
-2019-03-16  fatal-signal    The function that you pass to at_fatal_signal now
-                            takes the signal as argument.
-
 2019-02-14  gnulib-tool     If you use multiple --local-dir options at once:
                             The first one now has the highest priority, not the
                             last one.
@@ -61,7 +52,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-12-07  xstrtol         This module no longer defines the function
+            xstrtoll        'xstrtol_fatal'.  Program that need this function
+            xstrtoimax      should add the module 'xstrtol-error' to the list
+            xstrtoumax      of imported modules.
+
 2019-05-90  verify          verify_true (deprecated 2011-06-15) is removed.
+
+2019-03-16  fatal-signal    The function that you pass to at_fatal_signal now
+                            takes the signal as argument.
 
 2019-02-02  c-strtod        This and related modules no longer define
                             the HAVE_C99_STRTOLD macro.  Programs requiring
