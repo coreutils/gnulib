@@ -11,6 +11,9 @@ Portability problems fixed by Gnulib:
 This header file is missing on some platforms:
 AIX 5.1, HP-UX 11, IRIX 6.5.
 @item
+This header file is not usable in C++ mode with the vendor compiler
+on Solaris 10.
+@item
 Some compilers have bugs relating to @samp{bool}.
 @item
 This header file defines @code{true} incorrectly on some platforms:
