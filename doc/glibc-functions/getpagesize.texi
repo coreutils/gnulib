@@ -23,6 +23,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 MSVC 14, Android 4.4.
 @item
+This function is not declared on some platforms:
+HP-UX 11 with compiler option @code{-D_XOPEN_SOURCE=600}.
+@item
 This function is broken on some platforms:
 mingw.
 @end itemize

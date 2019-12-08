@@ -905,6 +905,11 @@ _GL_WARN_ON_USE (getlogin_r, "getlogin_r is unportable - "
 _GL_FUNCDECL_RPL (getpagesize, int, (void));
 _GL_CXXALIAS_RPL (getpagesize, int, (void));
 # else
+/* On HP-UX, getpagesize exists, but it is not declared in <unistd.h> even if
+   the compiler options -D_HPUX_SOURCE -D_XOPEN_SOURCE=600 are used.  */
+#  if defined __hpux
+_GL_FUNCDECL_SYS (getpagesize, int, (void));
+#  endif
 #  if !@HAVE_GETPAGESIZE@
 #   if !defined getpagesize
 /* This is for POSIX systems.  */
