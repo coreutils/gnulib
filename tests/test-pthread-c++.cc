@@ -68,7 +68,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_join, int, (pthread_t, void **));
 #endif
 
 #if GNULIB_TEST_PTHREAD_THREAD
-SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_exit, _Noreturn void, (void *));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::pthread_exit, void, (void *));
 #endif
 
 /* =========== Once-only control (initialization) functions =========== */

@@ -34,7 +34,7 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_sleep, int,
 SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_yield, void, (void));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_detach, int, (thrd_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_join, int, (thrd_t, int *));
-SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_exit, _Noreturn void, (int));
+SIGNATURE_CHECK (GNULIB_NAMESPACE::thrd_exit, void, (int));
 #endif
 
 #if GNULIB_TEST_MTX

@@ -689,9 +689,8 @@ _GL_CXXALIAS_RPL (pthread_exit, _Noreturn void, (void *value));
 #  if !@HAVE_PTHREAD_EXIT@
 _GL_FUNCDECL_SYS (pthread_exit, _Noreturn void, (void *value));
 #  endif
-/* Need to cast, because on AIX with xlclang++, the return type is
-                                     void.  */
-_GL_CXXALIAS_SYS_CAST (pthread_exit, _Noreturn void, (void *value));
+/* Need to cast because of AIX with xlclang++.  */
+_GL_CXXALIAS_SYS_CAST (pthread_exit, void, (void *value));
 # endif
 _GL_CXXALIASWARN (pthread_exit);
 #elif defined GNULIB_POSIXCHECK
