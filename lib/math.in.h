@@ -500,6 +500,7 @@ _GL_WARN_ON_USE (ceill, "ceill is unportable - "
 
 #if @GNULIB_COPYSIGNF@
 # if !@HAVE_DECL_COPYSIGNF@
+#  undef copysignf
 _GL_FUNCDECL_SYS (copysignf, float, (float x, float y));
 # endif
 _GL_CXXALIAS_SYS (copysignf, float, (float x, float y));
@@ -911,6 +912,7 @@ _GL_FUNCDECL_RPL (fmaf, float, (float x, float y, float z));
 _GL_CXXALIAS_RPL (fmaf, float, (float x, float y, float z));
 # else
 #  if !@HAVE_FMAF@
+#   undef fmaf
 _GL_FUNCDECL_SYS (fmaf, float, (float x, float y, float z));
 #  endif
 _GL_CXXALIAS_SYS (fmaf, float, (float x, float y, float z));
@@ -934,6 +936,7 @@ _GL_FUNCDECL_RPL (fma, double, (double x, double y, double z));
 _GL_CXXALIAS_RPL (fma, double, (double x, double y, double z));
 # else
 #  if !@HAVE_FMA@
+#   undef fma
 _GL_FUNCDECL_SYS (fma, double, (double x, double y, double z));
 #  endif
 _GL_CXXALIAS_SYS (fma, double, (double x, double y, double z));
