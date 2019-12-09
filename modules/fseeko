@@ -16,7 +16,7 @@ sys_types
 fseek
 
 configure.ac-early:
-AC_REQUIRE([AC_FUNC_FSEEKO])
+AC_REQUIRE([gl_SET_LARGEFILE_SOURCE])
 
 configure.ac:
 gl_FUNC_FSEEKO
