@@ -604,7 +604,9 @@ _GL_CXXALIAS_SYS (posix_spawnattr_getschedpolicy, int,
                   (const posix_spawnattr_t *_Restrict_ __attr,
                    int *_Restrict_ __schedpolicy));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawnattr_getschedpolicy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPOLICY
@@ -634,7 +636,9 @@ _GL_FUNCDECL_SYS (posix_spawnattr_setschedpolicy, int,
 _GL_CXXALIAS_SYS (posix_spawnattr_setschedpolicy, int,
                   (posix_spawnattr_t *__attr, int __schedpolicy));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawnattr_setschedpolicy);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedpolicy
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPOLICY
@@ -668,7 +672,9 @@ _GL_CXXALIAS_SYS (posix_spawnattr_getschedparam, int,
                   (const posix_spawnattr_t *_Restrict_ __attr,
                    struct sched_param *_Restrict_ __schedparam));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawnattr_getschedparam);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_getschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_GETSCHEDPARAM
@@ -702,7 +708,9 @@ _GL_CXXALIAS_SYS (posix_spawnattr_setschedparam, int,
                   (posix_spawnattr_t *_Restrict_ __attr,
                    const struct sched_param *_Restrict_ __schedparam));
 # endif
+# if __GLIBC__ >= 2
 _GL_CXXALIASWARN (posix_spawnattr_setschedparam);
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef posix_spawnattr_setschedparam
 # if HAVE_RAW_DECL_POSIX_SPAWNATTR_SETSCHEDPARAM

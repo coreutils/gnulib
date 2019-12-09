@@ -1677,7 +1677,9 @@ _GL_CXXALIAS_RPL (usleep, int, (useconds_t n));
 #  if !@HAVE_USLEEP@
 _GL_FUNCDECL_SYS (usleep, int, (useconds_t n));
 #  endif
-_GL_CXXALIAS_SYS (usleep, int, (useconds_t n));
+/* Need to cast, because on Haiku, the first parameter is
+                                     unsigned int n.  */
+_GL_CXXALIAS_SYS_CAST (usleep, int, (useconds_t n));
 # endif
 _GL_CXXALIASWARN (usleep);
 #elif defined GNULIB_POSIXCHECK
