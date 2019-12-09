@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate August 14, 2019
+@set lastupdate November 12, 2019
 @c %**end of header
 @documentencoding UTF-8
 
@@ -25,7 +25,7 @@ Information for maintainers of GNU software, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 Free Software Foundation,
+2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2019 Free Software Foundation,
 Inc.
 
 Permission is granted to copy, distribute and/or modify this document
@@ -153,11 +153,11 @@ committee members.  Additional information is in
 
 @cindex down, when GNU machines are
 @cindex outage, of GNU machines
-@cindex @url{https://quitter.im/fsfstatus}
+@cindex @url{https://hostux.social/@@fsfstatus}
 If you find that any GNU computer systems (@code{fencepost.gnu.org},
 @code{ftp.gnu.org}, @code{www.gnu.org}, @code{savannah.gnu.org},
 @dots{}) seem to be down, you can check the current status at
-@url{https://quitter.im/fsfstatus}.  Most likely the problem, if
+@url{https://hostux.social/@@fsfstatus}.  Most likely the problem, if
 it can be alleviated at the FSF end, is already being worked on.
 
 @cindex sysadmin, FSF
