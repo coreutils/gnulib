@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate August 9, 2019
+@set lastupdate November 17, 2019
 @c %**end of header
 
 @dircategory GNU organization
@@ -28,7 +28,8 @@ The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
-2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018 Free Software Foundation, Inc.
+2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software
+Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -922,7 +923,7 @@ installed locations such as under @file{/usr} and @file{/etc}.
 
 @c ??? Is even that safe, in a setuid program?
 
-@xref{Bourne Shell Variables,,, Bash, Bash Reference Manual},
+@xref{Bourne Shell Variables,,, bash, Bash Reference Manual},
 for more information about @env{PATH}.
 
 @node Graphical Interfaces
@@ -1133,42 +1134,43 @@ GNU GPL with the exception for Ada.
 
 @item Apache
 The Apache Software Foundation license,
-@url{https://www.apache.org/@/licenses}.
+@url{https://directory.fsf.org/@/wiki/@/License:Apache2.0}.
 
 @item Artistic
-The Artistic license used for Perl, @url{https://dev.perl.org/licenses/artistic.html}.
+The Artistic license used for Perl,
+@url{https://directory.fsf.org/@/wiki/@/License:ArtisticLicense2.0}.
 
 @item Expat
-The Expat license, @url{http://www.jclark.com/@/xml/@/copying.txt}.
+The Expat license, @url{https://directory.fsf.org/@/wiki/@/License:Expat}.
 
 @item MPL
-The Mozilla Public License, @url{https://www.mozilla.org/@/MPL/}.
+The Mozilla Public License, @url{https://directory.fsf.org/@/wiki/@/License:MPLv2.0}.
 
 @item OBSD
-The original (4-clause) BSD license, incompatible with the GNU GPL
-@url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#6}.
+The original (4-clause) BSD license, incompatible with the GNU GPL,@*
+@url{https://directory.fsf.org/@/wiki/@/License:BSD_4Clause}.
 
 @item PHP
-The license used for PHP, @url{http://www.php.net/@/license/}.
+The license used for PHP, @url{https://directory.fsf.org/@/wiki/@/License:PHPv3.01}.
 
 @item public domain
-The non-license that is being in the public domain,
+The non-license that is being in the public domain,@*
 @url{https://www.gnu.org/@/licenses/@/license-list.html#PublicDomain}.
 
 @item Python
 The license for Python,
-@url{https://directory.fsf.org/wiki?title=License:Python2.0.1}.
+@url{https://directory.fsf.org/@/wiki/@/License:Python2.0.1}.
 
 @item RBSD
 The revised (3-clause) BSD, compatible with the GNU GPL,@*
-@url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#5}.
+@url{https://directory.fsf.org/@/wiki/@/License:BSD_3Clause}.
 
 @item X11
 The simple non-copyleft license used for most versions of the X Window
-System, @url{https://www.xfree86.org/@/3.3.6/@/COPYRIGHT2.html#3}.
+System, @url{https://directory.fsf.org/@/wiki/@/License:X11}.
 
 @item Zlib
-The license for Zlib, @url{http://www.zlib.net/zlib_license.html}.
+The license for Zlib, @url{https://directory.fsf.org/@/wiki/@/License:Zlib}.
 
 @end table
 
