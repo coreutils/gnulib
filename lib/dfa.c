@@ -2423,13 +2423,8 @@ merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
 static int
 compare (const void *a, const void *b)
 {
-  int aindex;
-  int bindex;
-
-  aindex = (int) ((position *) a)->index;
-  bindex = (int) ((position *) b)->index;
-
-  return aindex - bindex;
+  position const *p = a, *q = b;
+  return p->index < q->index ? -1 : p->index > q->index;
 }
 
 static void
