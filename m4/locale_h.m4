@@ -1,4 +1,4 @@
-# locale_h.m4 serial 22
+# locale_h.m4 serial 23
 dnl Copyright (C) 2007, 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -56,7 +56,20 @@ AC_DEFUN([gl_LOCALE_H],
        [gl_cv_sys_struct_lconv_ok=no])
     ])
   if test $gl_cv_sys_struct_lconv_ok = no; then
-    REPLACE_STRUCT_LCONV=1
+    dnl On native Windows with MSVC, merely define these member names as macros.
+    dnl This avoids trouble in C++ mode.
+    case "$host_os" in
+      mingw*)
+        AC_EGREP_CPP([Special], [
+#ifdef _MSC_VER
+ Special
+#endif
+          ],
+          [],
+          [REPLACE_STRUCT_LCONV=1])
+        ;;
+      *) REPLACE_STRUCT_LCONV=1 ;;
+    esac
   fi
 
   dnl <locale.h> is always overridden, because of GNULIB_POSIXCHECK.

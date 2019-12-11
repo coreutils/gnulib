@@ -64,6 +64,18 @@
 # define LC_MESSAGES 1729
 #endif
 
+/* On native Windows with MSVC, 'struct lconv' lacks the members int_p_* and
+   int_n_*.  Instead of overriding 'struct lconv', merely define these member
+   names as macros.  This avoids trouble in C++ mode.  */
+#if defined _MSC_VER
+# define int_p_cs_precedes   p_cs_precedes
+# define int_p_sign_posn     p_sign_posn
+# define int_p_sep_by_space  p_sep_by_space
+# define int_n_cs_precedes   n_cs_precedes
+# define int_n_sign_posn     n_sign_posn
+# define int_n_sep_by_space  n_sep_by_space
+#endif
+
 /* Bionic libc's 'struct lconv' is just a dummy.  */
 #if @REPLACE_STRUCT_LCONV@
 # define lconv rpl_lconv
