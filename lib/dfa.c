@@ -1966,9 +1966,8 @@ regexp (struct dfa *dfa)
     }
 }
 
-/* Main entry point for the parser.  S is a string to be parsed, len is the
-   length of the string, so s can include NUL characters.  D is a pointer to
-   the struct dfa to parse into.  */
+/* Parse a string S of length LEN into D.  S can include NUL characters.
+   This is the main entry point for the parser.  */
 void
 dfaparse (char const *s, size_t len, struct dfa *d)
 {
@@ -3741,7 +3740,9 @@ dfassbuild (struct dfa *d)
     }
 }
 
-/* Parse and analyze a single string of the given length.  */
+/* Parse a string S of length LEN into D (but skip this step if S is null).
+   Then analyze D and build a matcher for it.
+   SEARCHFLAG says whether to build a searching or an exact matcher.  */
 void
 dfacomp (char const *s, size_t len, struct dfa *d, bool searchflag)
 {

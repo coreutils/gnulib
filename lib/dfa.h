@@ -65,18 +65,20 @@ enum
 extern void dfasyntax (struct dfa *, struct localeinfo const *,
                        reg_syntax_t, int);
 
-/* Build and return the struct dfamust from the given struct dfa. */
+/* Parse the given string of given length into the given struct dfa.  */
+extern void dfaparse (char const *, size_t, struct dfa *);
+
+/* Allocate and return a struct dfamust from a struct dfa that was
+   initialized by dfaparse and not yet given to dfacomp.  */
 extern struct dfamust *dfamust (struct dfa const *);
 
 /* Free the storage held by the components of a struct dfamust. */
 extern void dfamustfree (struct dfamust *);
 
-/* Parse the given string of given length into the given struct dfa.  */
-extern void dfaparse (char const *, size_t, struct dfa *);
-
 /* Compile the given string of the given length into the given struct dfa.
-   Final argument is a flag specifying whether to build a searching or an
-   exact matcher. */
+   The last argument says whether to build a searching or an exact matcher.
+   A null first argument means the struct dfa has already been
+   initialized by dfaparse; the second argument is ignored.  */
 extern void dfacomp (char const *, size_t, struct dfa *, bool);
 
 /* Search through a buffer looking for a match to the given struct dfa.

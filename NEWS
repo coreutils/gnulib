@@ -58,6 +58,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-12-11  dfa             To call dfamust, one must now call dfaparse
+                            without yet calling dfacomp.  This fixes a bug
+                            introduced on 2018-10-22 that broke dfamust.
+
 2019-12-07  xstrtol         This module no longer defines the function
             xstrtoll        'xstrtol_fatal'.  Program that need this function
             xstrtoimax      should add the module 'xstrtol-error' to the list
