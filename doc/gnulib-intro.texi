@@ -323,6 +323,11 @@ with @samp{.in} inserted before the @samp{.h} extension, so that on
 systems which do provide a correct
 header file the system's one is used.
 
+The modules in this category are supported in C++ mode as well.  This
+means, while the autoconfiguration uses the C compiler, the resulting
+header files and function substitutes can be used with a matching C++
+compiler as well.
+
 @subsection Enhancements of ISO C or POSIX functions
 
 These are sometimes POSIX functions with GNU extensions also found in

@@ -3,6 +3,12 @@ Important general notes
 
 Date        Modules         Changes
 
+2019-12-11  Support for     These modules are now supported in C++ mode as well.
+            ISO C or POSIX  This means, while the autoconfiguration uses the C
+            functions       compiler, the resulting header files and function
+                            substitutes can be used with a matching C++ compiler
+                            as well.
+
 2019-02-14  gnulib-tool     If you use multiple --local-dir options at once:
                             The first one now has the highest priority, not the
                             last one.
