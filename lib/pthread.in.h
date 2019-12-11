@@ -684,7 +684,7 @@ _GL_WARN_ON_USE (pthread_join, "pthread_join is not portable - "
 #   define pthread_exit rpl_pthread_exit
 #  endif
 _GL_FUNCDECL_RPL (pthread_exit, _Noreturn void, (void *value));
-_GL_CXXALIAS_RPL (pthread_exit, _Noreturn void, (void *value));
+_GL_CXXALIAS_RPL (pthread_exit, void, (void *value));
 # else
 #  if !@HAVE_PTHREAD_EXIT@
 _GL_FUNCDECL_SYS (pthread_exit, _Noreturn void, (void *value));
