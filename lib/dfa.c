@@ -1969,7 +1969,7 @@ regexp (struct dfa *dfa)
 /* Main entry point for the parser.  S is a string to be parsed, len is the
    length of the string, so s can include NUL characters.  D is a pointer to
    the struct dfa to parse into.  */
-static void
+void
 dfaparse (char const *s, size_t len, struct dfa *d)
 {
   d->lex.ptr = s;
@@ -3745,7 +3745,9 @@ dfassbuild (struct dfa *d)
 void
 dfacomp (char const *s, size_t len, struct dfa *d, bool searchflag)
 {
-  dfaparse (s, len, d);
+  if (s != NULL)
+    dfaparse (s, len, d);
+
   dfassbuild (d);
 
   if (dfa_supported (d))

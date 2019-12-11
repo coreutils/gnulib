@@ -71,6 +71,9 @@ extern struct dfamust *dfamust (struct dfa const *);
 /* Free the storage held by the components of a struct dfamust. */
 extern void dfamustfree (struct dfamust *);
 
+/* Parse the given string of given length into the given struct dfa.  */
+extern void dfaparse (char const *, size_t, struct dfa *);
+
 /* Compile the given string of the given length into the given struct dfa.
    Final argument is a flag specifying whether to build a searching or an
    exact matcher. */
