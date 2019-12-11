@@ -325,7 +325,7 @@ enum
    a constraint.  */
 typedef struct
 {
-  size_t index;                 /* Index into the parse array.  */
+  ptrdiff_t index;              /* Index into the parse array.  */
   unsigned int constraint;      /* Constraint for matching this position.  */
 } position;
 
@@ -407,9 +407,9 @@ struct regex_syntax
 struct lexer_state
 {
   char const *ptr;	/* Pointer to next input character.  */
-  size_t left;		/* Number of characters remaining.  */
+  ptrdiff_t left;	/* Number of characters remaining.  */
   token lasttok;	/* Previous token returned; initially END.  */
-  size_t parens;	/* Count of outstanding left parens.  */
+  ptrdiff_t parens;	/* Count of outstanding left parens.  */
   int minrep, maxrep;	/* Repeat counts for {m,n}.  */
 
   /* Wide character representation of the current multibyte character,
@@ -432,7 +432,7 @@ struct lexer_state
 struct parser_state
 {
   token tok;               /* Lookahead token.  */
-  size_t depth;            /* Current depth of a hypothetical stack
+  ptrdiff_t depth;         /* Current depth of a hypothetical stack
                               holding deferred productions.  This is
                               used to determine the depth that will be
                               required of the real stack later on in
@@ -449,7 +449,7 @@ struct dfa
   charclass *charclasses;       /* Array of character sets for CSET tokens.  */
   ptrdiff_t cindex;             /* Index for adding new charclasses.  */
   ptrdiff_t calloc;             /* Number of charclasses allocated.  */
-  size_t canychar;              /* Index of anychar class, or (size_t) -1.  */
+  ptrdiff_t canychar;           /* Index of anychar class, or -1.  */
 
   /* Scanner state */
   struct lexer_state lex;
@@ -459,13 +459,13 @@ struct dfa
 
   /* Fields filled by the parser.  */
   token *tokens;                /* Postfix parse array.  */
-  size_t tindex;                /* Index for adding new tokens.  */
-  size_t talloc;                /* Number of tokens currently allocated.  */
-  size_t depth;                 /* Depth required of an evaluation stack
+  ptrdiff_t tindex;             /* Index for adding new tokens.  */
+  ptrdiff_t talloc;             /* Number of tokens currently allocated.  */
+  ptrdiff_t depth;              /* Depth required of an evaluation stack
                                    used for depth-first traversal of the
                                    parse tree.  */
-  size_t nleaves;               /* Number of leaves on the parse tree.  */
-  size_t nregexps;              /* Count of parallel regexps being built
+  ptrdiff_t nleaves;            /* Number of leaves on the parse tree.  */
+  ptrdiff_t nregexps;           /* Count of parallel regexps being built
                                    with dfaparse.  */
   bool fast;			/* The DFA is fast.  */
   token utf8_anychar_classes[5]; /* To lower ANYCHAR in UTF-8 locales.  */
@@ -612,7 +612,7 @@ static void regexp (struct dfa *dfa);
    * The return value is always in the range 1..N.
    * D->mbs is always valid afterwards.
    * *PWC is always set to something.  */
-static size_t
+static int
 mbs_to_wchar (wint_t *pwc, char const *s, size_t n, struct dfa *d)
 {
   unsigned char uc = s[0];
@@ -952,8 +952,8 @@ using_simple_locale (bool multibyte)
 static int
 fetch_wc (struct dfa *dfa)
 {
-  size_t nbytes = mbs_to_wchar (&dfa->lex.wctok, dfa->lex.ptr, dfa->lex.left,
-                                dfa);
+  int nbytes = mbs_to_wchar (&dfa->lex.wctok, dfa->lex.ptr, dfa->lex.left,
+                             dfa);
   dfa->lex.cur_mb_len = nbytes;
   int c = nbytes == 1 ? to_uchar (dfa->lex.ptr[0]) : EOF;
   dfa->lex.ptr += nbytes;
@@ -1003,7 +1003,7 @@ static const struct dfa_ctype prednames[] = {
 static const struct dfa_ctype *_GL_ATTRIBUTE_PURE
 find_pred (const char *str)
 {
-  for (unsigned int i = 0; prednames[i].name; ++i)
+  for (int i = 0; prednames[i].name; i++)
     if (streq (str, prednames[i].name))
       return &prednames[i];
   return NULL;
@@ -1058,7 +1058,7 @@ parse_bracket_exp (struct dfa *dfa)
             {
               enum { MAX_BRACKET_STRING_LEN = 32 };
               char str[MAX_BRACKET_STRING_LEN + 1];
-              size_t len = 0;
+              int len = 0;
               for (;;)
                 {
                   c = bracket_fetch_wc (dfa);
@@ -1196,11 +1196,11 @@ parse_bracket_exp (struct dfa *dfa)
       else
         {
           wchar_t folded[CASE_FOLDED_BUFSIZE + 1];
-          unsigned int n = (dfa->syntax.case_fold
-                            ? case_folded_counterparts (wc, folded + 1) + 1
-                            : 1);
+          int n = (dfa->syntax.case_fold
+                   ? case_folded_counterparts (wc, folded + 1) + 1
+                   : 1);
           folded[0] = wc;
-          for (unsigned int i = 0; i < n; i++)
+          for (int i = 0; i < n; i++)
             if (!setbit_wc (folded[i], &ccl))
               {
                 dfa->lex.brack.chars
@@ -1239,7 +1239,7 @@ parse_bracket_exp (struct dfa *dfa)
 struct lexptr
 {
   char const *ptr;
-  size_t left;
+  ptrdiff_t left;
 };
 
 static void
@@ -1487,7 +1487,7 @@ lex (struct dfa *dfa)
         case '.':
           if (backslash)
             goto normal_char;
-          if (dfa->canychar == (size_t) -1)
+          if (dfa->canychar < 0)
             {
               charclass ccl;
               fillset (&ccl);
@@ -1610,8 +1610,8 @@ addtok_mb (struct dfa *dfa, token t, char mbprop)
 {
   if (dfa->talloc == dfa->tindex)
     {
-      dfa->tokens = x2nrealloc (dfa->tokens, &dfa->talloc,
-                                sizeof *dfa->tokens);
+      dfa->tokens = xpalloc (dfa->tokens, &dfa->talloc, 1, -1,
+                             sizeof *dfa->tokens);
       if (dfa->localeinfo.multibyte)
         dfa->multibyte_prop = xnrealloc (dfa->multibyte_prop, dfa->talloc,
                                          sizeof *dfa->multibyte_prop);
@@ -1733,11 +1733,11 @@ add_utf8_anychar (struct dfa *dfa)
     /* f0-f7: 4-byte sequence.  */
     CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0, 0xff0000)
   };
-  const unsigned int n = sizeof (utf8_classes) / sizeof (utf8_classes[0]);
+  int n = sizeof utf8_classes / sizeof *utf8_classes;
 
   /* Define the five character classes that are needed below.  */
   if (dfa->utf8_anychar_classes[0] == 0)
-    for (unsigned int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
       {
         charclass c = utf8_classes[i];
         if (i == 1)
@@ -1760,7 +1760,7 @@ add_utf8_anychar (struct dfa *dfa)
      which I'll write more concisely "B|CA|DAA|EAAA".  Factor the [0x00-0x7f]
      and you get "B|(C|(D|EA)A)A".  And since the token buffer is in reverse
      Polish notation, you get "B C D E A CAT OR A CAT OR A CAT OR".  */
-  unsigned int i;
+  int i;
   for (i = 1; i < n; i++)
     addtok (dfa, dfa->utf8_anychar_classes[i]);
   while (--i > 1)
@@ -1843,9 +1843,8 @@ atom (struct dfa *dfa)
           if (dfa->syntax.case_fold)
             {
               wchar_t folded[CASE_FOLDED_BUFSIZE];
-              unsigned int n = case_folded_counterparts (dfa->lex.wctok,
-                                                         folded);
-              for (unsigned int i = 0; i < n; i++)
+              int n = case_folded_counterparts (dfa->lex.wctok, folded);
+              for (int i = 0; i < n; i++)
                 {
                   addtok_wc (dfa, folded[i]);
                   addtok (dfa, OR);
@@ -1868,8 +1867,8 @@ atom (struct dfa *dfa)
 }
 
 /* Return the number of tokens in the given subexpression.  */
-static size_t _GL_ATTRIBUTE_PURE
-nsubtoks (struct dfa const *dfa, size_t tindex)
+static ptrdiff_t _GL_ATTRIBUTE_PURE
+nsubtoks (struct dfa const *dfa, ptrdiff_t tindex)
 {
   switch (dfa->tokens[tindex - 1])
     {
@@ -1882,7 +1881,7 @@ nsubtoks (struct dfa const *dfa, size_t tindex)
     case CAT:
     case OR:
       {
-        size_t ntoks1 = nsubtoks (dfa, tindex - 1);
+        ptrdiff_t ntoks1 = nsubtoks (dfa, tindex - 1);
         return 1 + ntoks1 + nsubtoks (dfa, tindex - 1 - ntoks1);
       }
     }
@@ -1890,14 +1889,14 @@ nsubtoks (struct dfa const *dfa, size_t tindex)
 
 /* Copy the given subexpression to the top of the tree.  */
 static void
-copytoks (struct dfa *dfa, size_t tindex, size_t ntokens)
+copytoks (struct dfa *dfa, ptrdiff_t tindex, ptrdiff_t ntokens)
 {
   if (dfa->localeinfo.multibyte)
-    for (size_t i = 0; i < ntokens; ++i)
+    for (ptrdiff_t i = 0; i < ntokens; ++i)
       addtok_mb (dfa, dfa->tokens[tindex + i],
                  dfa->multibyte_prop[tindex + i]);
   else
-    for (size_t i = 0; i < ntokens; ++i)
+    for (ptrdiff_t i = 0; i < ntokens; ++i)
       addtok_mb (dfa, dfa->tokens[tindex + i], 3);
 }
 
@@ -1909,8 +1908,8 @@ closure (struct dfa *dfa)
          || dfa->parse.tok == PLUS || dfa->parse.tok == REPMN)
     if (dfa->parse.tok == REPMN && (dfa->lex.minrep || dfa->lex.maxrep))
       {
-        size_t ntokens = nsubtoks (dfa, dfa->tindex);
-        size_t tindex = dfa->tindex - ntokens;
+        ptrdiff_t ntokens = nsubtoks (dfa, dfa->tindex);
+        ptrdiff_t tindex = dfa->tindex - ntokens;
         if (dfa->lex.maxrep < 0)
           addtok (dfa, PLUS);
         if (dfa->lex.minrep == 0)
@@ -2017,7 +2016,7 @@ copy (position_set const *src, position_set *dst)
 }
 
 static void
-alloc_position_set (position_set *s, size_t size)
+alloc_position_set (position_set *s, ptrdiff_t size)
 {
   s->elems = xnmalloc (size, sizeof *s->elems);
   s->alloc = size;
@@ -2126,19 +2125,19 @@ merge2 (position_set *dst, position_set const *src, position_set *m)
 /* Delete a position from a set.  Return the nonzero constraint of the
    deleted position, or zero if there was no such position.  */
 static unsigned int
-delete (size_t del, position_set *s)
+delete (ptrdiff_t del, position_set *s)
 {
-  size_t count = s->nelem;
-  size_t lo = 0, hi = count;
+  ptrdiff_t count = s->nelem;
+  ptrdiff_t lo = 0, hi = count;
   while (lo < hi)
     {
-      size_t mid = (lo + hi) >> 1;
+      ptrdiff_t mid = (lo + hi) >> 1;
       if (s->elems[mid].index < del)
         lo = mid + 1;
       else if (s->elems[mid].index == del)
         {
           unsigned int c = s->elems[mid].constraint;
-          size_t i;
+          ptrdiff_t i;
           for (i = mid; i + 1 < count; i++)
             s->elems[i] = s->elems[i + 1];
           s->nelem = i;
@@ -2152,7 +2151,7 @@ delete (size_t del, position_set *s)
 
 /* Replace a position with the followed set.  */
 static void
-replace (position_set *dst, size_t del, position_set *add,
+replace (position_set *dst, ptrdiff_t del, position_set *add,
          unsigned int constraint, position_set *tmp)
 {
   unsigned int c = delete (del, dst) & constraint;
@@ -2176,7 +2175,10 @@ state_index (struct dfa *d, position_set const *s, int context)
   token first_end = 0;
 
   for (i = 0; i < s->nelem; ++i)
-    hash ^= s->elems[i].index + s->elems[i].constraint;
+    {
+      size_t ind = s->elems[i].index;
+      hash ^= ind + s->elems[i].constraint;
+    }
 
   /* Try to find a state that exactly matches the proposed one.  */
   for (i = 0; i < d->sindex; ++i)
@@ -2194,10 +2196,10 @@ state_index (struct dfa *d, position_set const *s, int context)
     }
 
 #ifdef DEBUG
-  fprintf (stderr, "new state %zd\n nextpos:", i);
+  fprintf (stderr, "new state %td\n nextpos:", i);
   for (state_num j = 0; j < s->nelem; j++)
     {
-      fprintf (stderr, " %zu:", s->elems[j].index);
+      fprintf (stderr, " %td:", s->elems[j].index);
       prtok (d->tokens[s->elems[j].index]);
     }
   fprintf (stderr, "\n context:");
@@ -2259,7 +2261,7 @@ epsclosure (struct dfa const *d)
 {
   position_set tmp;
   alloc_position_set (&tmp, d->nleaves);
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (ptrdiff_t i = 0; i < d->tindex; ++i)
     if (d->follows[i].nelem > 0 && d->tokens[i] >= NOTCHAR
         && d->tokens[i] != BACKREF && d->tokens[i] != ANYCHAR
         && d->tokens[i] != MBCSET && d->tokens[i] < CSET)
@@ -2292,7 +2294,7 @@ epsclosure (struct dfa const *d)
 
         delete (i, &d->follows[i]);
 
-        for (size_t j = 0; j < d->tindex; j++)
+        for (ptrdiff_t j = 0; j < d->tindex; j++)
           if (i != j && d->follows[j].nelem > 0)
             replace (&d->follows[j], i, &d->follows[i], constraint, &tmp);
       }
@@ -2307,7 +2309,7 @@ charclass_context (struct dfa const *dfa, charclass const *c)
 {
   int context = 0;
 
-  for (unsigned int j = 0; j < CHARCLASS_WORDS; ++j)
+  for (int j = 0; j < CHARCLASS_WORDS; j++)
     {
       if (c->w[j] & dfa->syntax.newline.w[j])
         context |= CTX_NEWLINE;
@@ -2331,7 +2333,7 @@ state_separate_contexts (struct dfa *d, position_set const *s)
 {
   int separate_contexts = 0;
 
-  for (size_t j = 0; j < s->nelem; j++)
+  for (ptrdiff_t j = 0; j < s->nelem; j++)
     separate_contexts |= d->separates[s->elems[j].index];
 
   return separate_contexts;
@@ -2358,7 +2360,7 @@ enum
 };
 
 static void
-merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
+merge_nfa_state (struct dfa *d, ptrdiff_t tindex, char *flags,
                  position_set *merged)
 {
   position_set *follows = d->follows;
@@ -2368,7 +2370,7 @@ merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
 
   for (ptrdiff_t i = 0; i < follows[tindex].nelem; i++)
     {
-      size_t sindex = follows[tindex].elems[i].index;
+      ptrdiff_t sindex = follows[tindex].elems[i].index;
 
       /* Skip the node as pruned in future.  */
       unsigned int iconstraint = follows[tindex].elems[i].constraint;
@@ -2387,7 +2389,7 @@ merge_nfa_state (struct dfa *d, size_t tindex, char *flags,
 
           for (j = 0; j < nelem; j++)
             {
-              size_t dindex = follows[tindex].elems[j].index;
+              ptrdiff_t dindex = follows[tindex].elems[j].index;
 
               if (follows[tindex].elems[j].constraint != iconstraint)
                 continue;
@@ -2513,7 +2515,7 @@ dfaoptimize (struct dfa *d)
   flags = xmalloc (d->tindex * sizeof *flags);
   memset (flags, 0, d->tindex * sizeof *flags);
 
-  for (size_t i = 0; i < d->tindex; i++)
+  for (ptrdiff_t i = 0; i < d->tindex; i++)
     {
       for (ptrdiff_t j = 0; j < d->follows[i].nelem; j++)
         {
@@ -2615,8 +2617,8 @@ dfaanalyze (struct dfa *d, bool searchflag)
     bool nullable;
 
     /* Counts of firstpos and lastpos sets.  */
-    size_t nfirstpos;
-    size_t nlastpos;
+    ptrdiff_t nfirstpos;
+    ptrdiff_t nlastpos;
   } *stkalloc = xnmalloc (d->depth, sizeof *stkalloc), *stk = stkalloc;
 
   position_set merged;          /* Result of merging sets.  */
@@ -2625,9 +2627,9 @@ dfaanalyze (struct dfa *d, bool searchflag)
 
 #ifdef DEBUG
   fprintf (stderr, "dfaanalyze:\n");
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (ptrdiff_t i = 0; i < d->tindex; ++i)
     {
-      fprintf (stderr, " %zu:", i);
+      fprintf (stderr, " %td:", i);
       prtok (d->tokens[i]);
     }
   putc ('\n', stderr);
@@ -2637,7 +2639,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
   alloc_position_set (&merged, d->nleaves);
   d->follows = xcalloc (d->tindex, sizeof *d->follows);
 
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (ptrdiff_t i = 0; i < d->tindex; ++i)
     {
       switch (d->tokens[i])
         {
@@ -2658,7 +2660,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
             tmp.elems = firstpos - stk[-1].nfirstpos;
             tmp.nelem = stk[-1].nfirstpos;
             position *p = lastpos - stk[-1].nlastpos;
-            for (size_t j = 0; j < stk[-1].nlastpos; j++)
+            for (ptrdiff_t j = 0; j < stk[-1].nlastpos; j++)
               {
                 merge (&tmp, &d->follows[p[j].index], &merged);
                 copy (&merged, &d->follows[p[j].index]);
@@ -2678,7 +2680,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
             tmp.nelem = stk[-1].nfirstpos;
             tmp.elems = firstpos - stk[-1].nfirstpos;
             position *p = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
-            for (size_t j = 0; j < stk[-2].nlastpos; j++)
+            for (ptrdiff_t j = 0; j < stk[-2].nlastpos; j++)
               {
                 merge (&tmp, &d->follows[p[j].index], &merged);
                 copy (&merged, &d->follows[p[j].index]);
@@ -2699,7 +2701,7 @@ dfaanalyze (struct dfa *d, bool searchflag)
           else
             {
               position *p = lastpos - stk[-1].nlastpos - stk[-2].nlastpos;
-              for (size_t j = 0; j < stk[-1].nlastpos; j++)
+              for (ptrdiff_t j = 0; j < stk[-1].nlastpos; j++)
                 p[j] = p[j + stk[-2].nlastpos];
               lastpos -= stk[-2].nlastpos;
               stk[-2].nlastpos = stk[-1].nlastpos;
@@ -2742,21 +2744,21 @@ dfaanalyze (struct dfa *d, bool searchflag)
         }
 #ifdef DEBUG
       /* ... balance the above nonsyntactic #ifdef goo...  */
-      fprintf (stderr, "node %zu:", i);
+      fprintf (stderr, "node %td:", i);
       prtok (d->tokens[i]);
       putc ('\n', stderr);
       fprintf (stderr,
                stk[-1].nullable ? " nullable: yes\n" : " nullable: no\n");
       fprintf (stderr, " firstpos:");
-      for (size_t j = 0; j < stk[-1].nfirstpos; j++)
+      for (ptrdiff_t j = 0; j < stk[-1].nfirstpos; j++)
         {
-          fprintf (stderr, " %zu:", firstpos[j - stk[-1].nfirstpos].index);
+          fprintf (stderr, " %td:", firstpos[j - stk[-1].nfirstpos].index);
           prtok (d->tokens[firstpos[j - stk[-1].nfirstpos].index]);
         }
       fprintf (stderr, "\n lastpos:");
-      for (size_t j = 0; j < stk[-1].nlastpos; j++)
+      for (ptrdiff_t j = 0; j < stk[-1].nlastpos; j++)
         {
-          fprintf (stderr, " %zu:", lastpos[j - stk[-1].nlastpos].index);
+          fprintf (stderr, " %td:", lastpos[j - stk[-1].nlastpos].index);
           prtok (d->tokens[lastpos[j - stk[-1].nlastpos].index]);
         }
       putc ('\n', stderr);
@@ -2770,17 +2772,17 @@ dfaanalyze (struct dfa *d, bool searchflag)
   dfaoptimize (d);
 
 #ifdef DEBUG
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (ptrdiff_t i = 0; i < d->tindex; ++i)
     if (d->tokens[i] == BEG || d->tokens[i] < NOTCHAR
         || d->tokens[i] == BACKREF || d->tokens[i] == ANYCHAR
         || d->tokens[i] == MBCSET || d->tokens[i] >= CSET)
       {
-        fprintf (stderr, "follows(%zu:", i);
+        fprintf (stderr, "follows(%td:", i);
         prtok (d->tokens[i]);
         fprintf (stderr, "):");
-        for (size_t j = 0; j < d->follows[i].nelem; j++)
+        for (ptrdiff_t j = 0; j < d->follows[i].nelem; j++)
           {
-            fprintf (stderr, " %zu:", d->follows[i].elems[j].index);
+            fprintf (stderr, " %td:", d->follows[i].elems[j].index);
             prtok (d->tokens[d->follows[i].elems[j].index]);
           }
         putc ('\n', stderr);
@@ -2959,8 +2961,8 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
 
   /* Find the union of the follows of the positions of the group.
      This is a hideously inefficient loop.  Fix it someday.  */
-  for (size_t j = 0; j < d->states[s].elems.nelem; ++j)
-    for (size_t k = 0;
+  for (ptrdiff_t j = 0; j < d->states[s].elems.nelem; j++)
+    for (ptrdiff_t k = 0;
          k < d->follows[d->states[s].elems.elems[j].index].nelem; ++k)
       insert (d->follows[d->states[s].elems.elems[j].index].elems[k],
               &follows);
@@ -2972,7 +2974,7 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
   charclass label;
   fillset (&label);
 
-  for (size_t i = 0; i < follows.nelem; ++i)
+  for (ptrdiff_t i = 0; i < follows.nelem; ++i)
     {
       charclass matches;            /* Set of matching characters.  */
       position pos = follows.elems[i];
@@ -3019,15 +3021,15 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
         {
           if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_NEWLINE))
-            for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
+            for (int j = 0; j < CHARCLASS_WORDS; j++)
               matches.w[j] &= ~d->syntax.newline.w[j];
           if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_LETTER))
-            for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
+            for (int j = 0; j < CHARCLASS_WORDS; ++j)
               matches.w[j] &= ~d->syntax.letters.w[j];
           if (!succeeds_in_context (pos.constraint,
                                     d->states[s].context, CTX_NONE))
-            for (size_t j = 0; j < CHARCLASS_WORDS; ++j)
+            for (int j = 0; j < CHARCLASS_WORDS; ++j)
               matches.w[j] &= d->syntax.letters.w[j] | d->syntax.newline.w[j];
 
           /* If there are no characters left, there's no point in going on.  */
@@ -3042,24 +3044,24 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
         }
 
 #ifdef DEBUG
-      fprintf (stderr, " nextpos %zu:", pos.index);
+      fprintf (stderr, " nextpos %td:", pos.index);
       prtok (d->tokens[pos.index]);
       fprintf (stderr, " of");
-      for (size_t j = 0; j < NOTCHAR; j++)
+      for (unsigned j = 0; j < NOTCHAR; j++)
         if (tstbit (j, &matches))
-          fprintf (stderr, " 0x%02zx", j);
+          fprintf (stderr, " 0x%02x", j);
       fprintf (stderr, "\n");
 #endif
 
       if (matched)
         {
-          for (size_t k = 0; k < CHARCLASS_WORDS; ++k)
+          for (int k = 0; k < CHARCLASS_WORDS; ++k)
             label.w[k] &= matches.w[k];
           append (pos, &group);
         }
       else
         {
-          for (size_t k = 0; k < CHARCLASS_WORDS; ++k)
+          for (int k = 0; k < CHARCLASS_WORDS; ++k)
             label.w[k] &= ~matches.w[k];
         }
     }
@@ -3093,7 +3095,7 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
           if (!mergeit)
             {
               mergeit = true;
-              for (size_t j = 0; mergeit && j < group.nelem; j++)
+              for (ptrdiff_t j = 0; mergeit && j < group.nelem; j++)
                 mergeit &= d->multibyte_prop[group.elems[j].index];
             }
           if (mergeit)
@@ -3144,7 +3146,7 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
     }
 
   /* Set the transitions for each character in the label.  */
-  for (size_t i = 0; i < NOTCHAR; i++)
+  for (int i = 0; i < NOTCHAR; i++)
     if (tstbit (i, &label))
       switch (d->syntax.sbit[i])
         {
@@ -3161,7 +3163,7 @@ build_state (state_num s, struct dfa *d, unsigned char uc)
 
 #ifdef DEBUG
   fprintf (stderr, "trans table %td", s);
-  for (size_t i = 0; i < NOTCHAR; ++i)
+  for (int i = 0; i < NOTCHAR; ++i)
     {
       if (!(i & 0xf))
         fprintf (stderr, "\n");
@@ -3402,7 +3404,7 @@ dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
         alloc_position_set (&d->mb_follows, d->nleaves);
     }
 
-  size_t nlcount = 0;
+  ptrdiff_t nlcount = 0;
   for (;;)
     {
       state_num *t;
@@ -3592,7 +3594,7 @@ free_mbdata (struct dfa *d)
 static bool _GL_ATTRIBUTE_PURE
 dfa_supported (struct dfa const *d)
 {
-  for (size_t i = 0; i < d->tindex; i++)
+  for (ptrdiff_t i = 0; i < d->tindex; i++)
     {
       switch (d->tokens[i])
         {
@@ -3620,7 +3622,7 @@ maybe_disable_superset_dfa (struct dfa *d)
     return;
 
   bool have_backref = false;
-  for (size_t i = 0; i < d->tindex; ++i)
+  for (ptrdiff_t i = 0; i < d->tindex; ++i)
     {
       switch (d->tokens[i])
         {
@@ -3685,8 +3687,8 @@ dfassbuild (struct dfa *d)
 
   bool have_achar = false;
   bool have_nchar = false;
-  size_t j;
-  for (size_t i = j = 0; i < d->tindex; i++)
+  ptrdiff_t j;
+  for (ptrdiff_t i = j = 0; i < d->tindex; i++)
     {
       switch (d->tokens[i])
         {
@@ -3776,7 +3778,7 @@ dfafree (struct dfa *d)
   free (d->constraints);
   free (d->separates);
 
-  for (size_t i = 0; i < d->sindex; ++i)
+  for (ptrdiff_t i = 0; i < d->sindex; ++i)
     {
       free (d->states[i].elems.elems);
       free (d->states[i].mbps.elems);
@@ -3785,14 +3787,14 @@ dfafree (struct dfa *d)
 
   if (d->follows)
     {
-      for (size_t i = 0; i < d->tindex; ++i)
+      for (ptrdiff_t i = 0; i < d->tindex; ++i)
         free (d->follows[i].elems);
       free (d->follows);
     }
 
   if (d->trans)
     {
-      for (size_t i = 0; i < d->tralloc; ++i)
+      for (ptrdiff_t i = 0; i < d->tralloc; ++i)
         {
           free (d->trans[i]);
           free (d->fails[i]);
@@ -3896,10 +3898,10 @@ dfafree (struct dfa *d)
 static char *
 icatalloc (char *old, char const *new)
 {
-  size_t newsize = strlen (new);
+  ptrdiff_t newsize = strlen (new);
   if (newsize == 0)
     return old;
-  size_t oldsize = strlen (old);
+  ptrdiff_t oldsize = strlen (old);
   char *result = xrealloc (old, oldsize + newsize + 1);
   memcpy (result + oldsize, new, newsize + 1);
   return result;
@@ -3913,20 +3915,20 @@ freelist (char **cpp)
 }
 
 static char **
-enlist (char **cpp, char *new, size_t len)
+enlist (char **cpp, char *new, ptrdiff_t len)
 {
   new = memcpy (xmalloc (len + 1), new, len);
   new[len] = '\0';
   /* Is there already something in the list that's new (or longer)?  */
-  size_t i;
-  for (i = 0; cpp[i] != NULL; ++i)
+  ptrdiff_t i;
+  for (i = 0; cpp[i] != NULL; i++)
     if (strstr (cpp[i], new) != NULL)
       {
         free (new);
         return cpp;
       }
   /* Eliminate any obsoleted strings.  */
-  for (size_t j = 0; cpp[j] != NULL; )
+  for (ptrdiff_t j = 0; cpp[j] != NULL; )
     if (strstr (new, cpp[j]) == NULL)
       ++j;
     else
@@ -3953,11 +3955,11 @@ comsubs (char *left, char const *right)
 
   for (char *lcp = left; *lcp != '\0'; lcp++)
     {
-      size_t len = 0;
+      ptrdiff_t len = 0;
       char *rcp = strchr (right, *lcp);
       while (rcp != NULL)
         {
-          size_t i;
+          ptrdiff_t i;
           for (i = 1; lcp[i] != '\0' && lcp[i] == rcp[i]; ++i)
             continue;
           if (i > len)
@@ -3985,9 +3987,9 @@ inboth (char **left, char **right)
 {
   char **both = xzalloc (sizeof *both);
 
-  for (size_t lnum = 0; left[lnum] != NULL; ++lnum)
+  for (ptrdiff_t lnum = 0; left[lnum] != NULL; lnum++)
     {
-      for (size_t rnum = 0; right[rnum] != NULL; ++rnum)
+      for (ptrdiff_t rnum = 0; right[rnum] != NULL; rnum++)
         {
           char **temp = comsubs (left[lnum], right[rnum]);
           both = addlists (both, temp);
@@ -4012,7 +4014,7 @@ struct must
 };
 
 static must *
-allocmust (must *mp, size_t size)
+allocmust (must *mp, ptrdiff_t size)
 {
   must *new_mp = xmalloc (sizeof *new_mp);
   new_mp->in = xzalloc (sizeof *new_mp->in);
@@ -4058,7 +4060,7 @@ dfamust (struct dfa const *d)
   bool need_endline = false;
   bool case_fold_unibyte = d->syntax.case_fold && MB_CUR_MAX == 1;
 
-  for (size_t ri = 1; ri + 1 < d->tindex; ri++)
+  for (ptrdiff_t ri = 1; ri + 1 < d->tindex; ri++)
     {
       token t = d->tokens[ri];
       switch (t)
@@ -4098,7 +4100,7 @@ dfamust (struct dfa const *d)
             char **new;
             must *rmp = mp;
             must *lmp = mp = mp->prev;
-            size_t j, ln, rn, n;
+            ptrdiff_t j, ln, rn, n;
 
             /* Guaranteed to be.  Unlikely, but ...  */
             if (streq (lmp->is, rmp->is))
@@ -4113,7 +4115,7 @@ dfamust (struct dfa const *d)
                 lmp->endline = false;
               }
             /* Left side--easy */
-            size_t i = 0;
+            ptrdiff_t i = 0;
             while (lmp->left[i] != '\0' && lmp->left[i] == rmp->left[i])
               ++i;
             lmp->left[i] = '\0';
@@ -4143,7 +4145,7 @@ dfamust (struct dfa const *d)
 
         case END:
           assert (!mp->prev);
-          for (size_t i = 0; mp->in[i] != NULL; ++i)
+          for (ptrdiff_t i = 0; mp->in[i] != NULL; i++)
             if (strlen (mp->in[i]) > strlen (result))
               result = mp->in[i];
           if (streq (result, mp->is))
@@ -4167,8 +4169,8 @@ dfamust (struct dfa const *d)
             lmp->in = addlists (lmp->in, rmp->in);
             if (lmp->right[0] != '\0' && rmp->left[0] != '\0')
               {
-                size_t lrlen = strlen (lmp->right);
-                size_t rllen = strlen (rmp->left);
+                ptrdiff_t lrlen = strlen (lmp->right);
+                ptrdiff_t rllen = strlen (rmp->left);
                 char *tp = xmalloc (lrlen + rllen);
                 memcpy (tp, lmp->right, lrlen);
                 memcpy (tp + lrlen, rmp->left, rllen);
@@ -4233,7 +4235,7 @@ dfamust (struct dfa const *d)
                 }
             }
 
-          size_t rj = ri + 2;
+          ptrdiff_t rj = ri + 2;
           if (d->tokens[ri + 1] == CAT)
             {
               for (; rj < d->tindex - 1; rj += 2)
@@ -4248,7 +4250,7 @@ dfamust (struct dfa const *d)
           mp->is[0] = mp->left[0] = mp->right[0]
             = case_fold_unibyte ? toupper (t) : t;
 
-          size_t i;
+          ptrdiff_t i;
           for (i = 1; ri + 2 < rj; i++)
             {
               ri += 2;
