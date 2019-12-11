@@ -21,7 +21,7 @@
 #endif
 @PRAGMA_COLUMNS@
 
-#ifdef _GL_INCLUDING_UNISTD_H
+#if @HAVE_UNISTD_H@ && defined _GL_INCLUDING_UNISTD_H
 /* Special invocation convention:
    - On Mac OS X 10.3.9 we have a sequence of nested includes
      <unistd.h> -> <signal.h> -> <pthread.h> -> <unistd.h>
