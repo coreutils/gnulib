@@ -69,7 +69,11 @@ main ()
 #endif
 
       /* Test width of some zero width characters.  */
-      ASSERT (wcwidth (0x200B) == 0);
+      /* While it is desirable that U+200B, U+200C, U+200D have width 0,
+         because this makes wcswidth work better on strings that contain these
+         characters, it is acceptable if an implementation treats these
+         characters like control characters.  */
+      ASSERT (wcwidth (0x200B) <= 0);
       ASSERT (wcwidth (0xFEFF) <= 0);
 
       /* Test width of some math symbols.

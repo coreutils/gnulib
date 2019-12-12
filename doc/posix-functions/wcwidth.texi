@@ -29,4 +29,8 @@ Portability problems not fixed by Gnulib:
 @item
 On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
+@item
+This function treats zero-width spaces like control characters on some
+platforms:
+AIX 7.2.
 @end itemize
