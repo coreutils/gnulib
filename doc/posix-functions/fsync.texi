@@ -18,5 +18,5 @@ Portability problems not fixed by Gnulib:
 @item
 If the argument is a read-only file descriptor, this function fails
 with @code{EBADF} on some platforms:
-AIX 7.1.
+AIX 7.2, Cygwin 2.9.
 @end itemize
