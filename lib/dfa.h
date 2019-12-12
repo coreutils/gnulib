@@ -66,7 +66,7 @@ extern void dfasyntax (struct dfa *, struct localeinfo const *,
                        reg_syntax_t, int);
 
 /* Parse the given string of given length into the given struct dfa.  */
-extern void dfaparse (char const *, size_t, struct dfa *);
+extern void dfaparse (char const *, ptrdiff_t, struct dfa *);
 
 /* Allocate and return a struct dfamust from a struct dfa that was
    initialized by dfaparse and not yet given to dfacomp.  */
@@ -79,7 +79,7 @@ extern void dfamustfree (struct dfamust *);
    The last argument says whether to build a searching or an exact matcher.
    A null first argument means the struct dfa has already been
    initialized by dfaparse; the second argument is ignored.  */
-extern void dfacomp (char const *, size_t, struct dfa *, bool);
+extern void dfacomp (char const *, ptrdiff_t, struct dfa *, bool);
 
 /* Search through a buffer looking for a match to the given struct dfa.
    Find the first occurrence of a string matching the regexp in the
@@ -94,7 +94,7 @@ extern void dfacomp (char const *, size_t, struct dfa *, bool);
    encountered a back-reference.  The caller can use this to decide
    whether to fall back on a backtracking matcher.  */
 extern char *dfaexec (struct dfa *d, char const *begin, char *end,
-                      bool allow_nl, size_t *count, bool *backref);
+                      bool allow_nl, ptrdiff_t *count, bool *backref);
 
 /* Return a superset for D.  The superset matches everything that D
    matches, along with some other strings (though the latter should be

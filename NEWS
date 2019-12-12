@@ -58,6 +58,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2019-12-12  dfa             Its API now uses ptrdiff_t instead of size_t.
+
 2019-12-11  dfa             To call dfamust, one must now call dfaparse
                             without yet calling dfacomp.  This fixes a bug
                             introduced on 2018-10-22 that broke dfamust.
