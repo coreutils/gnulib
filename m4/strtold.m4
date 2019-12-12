@@ -1,4 +1,4 @@
-# strtold.m4 serial 5
+# strtold.m4 serial 6
 dnl Copyright (C) 2002-2003, 2006-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ numeric_equal (long double x, long double y)
        terminating character under some conditions.  */
     const char *string = "NaN";
     char *term;
-    strtod (string, &term);
+    strtold (string, &term);
     if (term != string && *(term - 1) == 0)
       result |= 2;
   }
@@ -61,7 +61,7 @@ numeric_equal (long double x, long double y)
     char *term;
     long double value;
     errno = 0;
-    value = strtod (string, &term);
+    value = strtold (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
       result |= 16;
   }
