@@ -62,6 +62,11 @@ IRIX 6.5, mingw.
 In hexadecimal floats, this function allows whitespace between @samp{p}
 and the exponent on some platforms:
 HP-UX 11.31/ia64.
+
+@item
+This function fails to set @code{errno} upon underflow on some platforms:
+@c https://cygwin.com/ml/cygwin/2019-12/msg00072.html
+Cygwin 2.9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -45,6 +45,9 @@
    /* We cannot call strtold on HP-UX/hppa, because its return type is a struct,
       not a 'long double'.  */
 #  define HAVE_UNDERLYING_STRTOD 0
+# elif STRTOLD_HAS_UNDERFLOW_BUG
+   /* strtold would not set errno=ERANGE upon underflow.  */
+#  define HAVE_UNDERLYING_STRTOD 0
 # else
 #  define HAVE_UNDERLYING_STRTOD HAVE_STRTOLD
 # endif

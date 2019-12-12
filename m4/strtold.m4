@@ -1,4 +1,4 @@
-# strtold.m4 serial 6
+# strtold.m4 serial 7
 dnl Copyright (C) 2002-2003, 2006-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,7 +13,7 @@ AC_DEFUN([gl_FUNC_STRTOLD],
   if test $ac_cv_func_strtold != yes; then
     HAVE_STRTOLD=0
   else
-    AC_CACHE_CHECK([whether strtold obeys C99], [gl_cv_func_strtold_works],
+    AC_CACHE_CHECK([whether strtold obeys POSIX], [gl_cv_func_strtold_works],
       [AC_RUN_IFELSE([AC_LANG_PROGRAM([[
 #include <stdlib.h>
 #include <math.h>
@@ -35,7 +35,7 @@ numeric_equal (long double x, long double y)
     char *term;
     strtold (string, &term);
     if (term != string && *(term - 1) == 0)
-      result |= 2;
+      result |= 1;
   }
   {
     /* Older glibc and Cygwin mis-parse "-0x".  */
@@ -44,7 +44,7 @@ numeric_equal (long double x, long double y)
     long double value = strtold (string, &term);
     long double zero = 0.0L;
     if (1.0L / value != -1.0L / zero || term != (string + 2))
-      result |= 4;
+      result |= 2;
   }
   {
     /* IRIX 6.5, mingw do not parse hex floats.  */
@@ -52,7 +52,7 @@ numeric_equal (long double x, long double y)
     char *term;
     long double value = strtold (string, &term);
     if (value != 20.0L || term != (string + 6))
-      result |= 8;
+      result |= 4;
   }
   {
     /* IRIX 6.5 does not parse infinities.  HP-UX 11.31/ia64 parses inf,
@@ -63,7 +63,7 @@ numeric_equal (long double x, long double y)
     errno = 0;
     value = strtold (string, &term);
     if (value != HUGE_VAL || term != (string + 3) || errno)
-      result |= 16;
+      result |= 8;
   }
   {
     /* glibc-2.3.2, IRIX 6.5, mingw, Haiku misparse "nan()".  */
@@ -71,7 +71,7 @@ numeric_equal (long double x, long double y)
     char *term;
     long double value = strtold (string, &term);
     if (numeric_equal (value, value) || term != (string + 5))
-      result |= 32;
+      result |= 16;
   }
   {
     /* Mac OS X 10.5, IRIX 6.5 misparse "nan(".  */
@@ -79,12 +79,27 @@ numeric_equal (long double x, long double y)
     char *term;
     long double value = strtold (string, &term);
     if (numeric_equal (value, value) || term != (string + 3))
+      result |= 32;
+  }
+  {
+    /* In Cygwin 2.9, strtold does not set errno upon underflow.  */
+    const char *string = "1E-100000";
+    char *term;
+    long double value;
+    errno = 0;
+    value = strtold (string, &term);
+    if (term != (string + 9) || (value == 0.0L && errno != ERANGE))
       result |= 64;
   }
   return result;
 ]])],
         [gl_cv_func_strtold_works=yes],
-        [gl_cv_func_strtold_works=no],
+        [if expr $? '>=' 64 >/dev/null; then
+           gl_cv_func_strtold_works="no (underflow problem)"
+         else
+           gl_cv_func_strtold_works=no
+         fi
+        ],
         [dnl The last known bugs in glibc strtold(), as of this writing,
          dnl were fixed in version 2.8
          AC_EGREP_CPP([Lucky user],
@@ -101,6 +116,8 @@ numeric_equal (long double x, long double y)
            [case "$host_os" in
                        # Guess yes on musl systems.
               *-musl*) gl_cv_func_strtold_works="guessing yes" ;;
+                       # Guess 'no (underflow problem)' on Cygwin.
+              cygwin*) gl_cv_func_strtold_works="guessing no (underflow problem)" ;;
               *)       gl_cv_func_strtold_works="$gl_cross_guess_normal" ;;
             esac
            ])
@@ -110,6 +127,12 @@ numeric_equal (long double x, long double y)
       *yes) ;;
       *)
         REPLACE_STRTOLD=1
+        case "$gl_cv_func_strtold_works" in
+          *"no (underflow problem)")
+            AC_DEFINE([STRTOLD_HAS_UNDERFLOW_BUG], [1],
+              [Define to 1 if strtold does not set errno upon underflow.])
+            ;;
+        esac
         ;;
     esac
   fi
