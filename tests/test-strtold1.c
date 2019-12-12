@@ -68,8 +68,10 @@ main (int argc, char *argv[])
     long double result;
     errno = 0;
     result = strtold (input, &ptr);
-    ASSERT (result == 1.0L);
-    ASSERT (ptr == input + 1);
+    /* On AIX 7.2, in the French locale, '.' is recognized as an alternate
+       radix character.  */
+    ASSERT ((ptr == input + 1 && result == 1.0L)
+            || (ptr == input + 3 && result == 1.5L));
     ASSERT (errno == 0);
   }
   {
@@ -78,8 +80,10 @@ main (int argc, char *argv[])
     long double result;
     errno = 0;
     result = strtold (input, &ptr);
-    ASSERT (result == 123.0L);
-    ASSERT (ptr == input + 3);
+    /* On AIX 7.2, in the French locale, '.' is recognized as an alternate
+       radix character.  */
+    ASSERT ((ptr == input + 3 && result == 123.0L)
+            || (ptr == input + 7 && result > 123.45L && result < 123.46L));
     ASSERT (errno == 0);
   }
   {
