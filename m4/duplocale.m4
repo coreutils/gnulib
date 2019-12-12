@@ -1,4 +1,4 @@
-# duplocale.m4 serial 10
+# duplocale.m4 serial 11
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,11 +17,12 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
     dnl Also, on NetBSD 7.0, duplocale(LC_GLOBAL_LOCALE) returns a locale that
     dnl corresponds to the C locale.
     AC_REQUIRE([gl_LOCALE_H])
-    AC_CHECK_FUNCS_ONCE([snprintf_l nl_langinfo_l])
-    AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
-      [gl_cv_func_duplocale_works],
-      [AC_RUN_IFELSE(
-         [AC_LANG_SOURCE([[
+    if test $HAVE_LOCALE_T = 1; then
+      AC_CHECK_FUNCS_ONCE([snprintf_l nl_langinfo_l])
+      AC_CACHE_CHECK([whether duplocale(LC_GLOBAL_LOCALE) works],
+        [gl_cv_func_duplocale_works],
+        [AC_RUN_IFELSE(
+           [AC_LANG_SOURCE([[
 #include <locale.h>
 #if HAVE_XLOCALE_H
 # include <xlocale.h>
@@ -72,13 +73,13 @@ int main ()
   freelocale (loc);
   return 0;
 }]])],
-         [gl_cv_func_duplocale_works=yes],
-         [gl_cv_func_duplocale_works=no],
-         [dnl Guess it works except on glibc < 2.12, uClibc, AIX, and NetBSD.
-          case "$host_os" in
-            aix* | netbsd*) gl_cv_func_duplocale_works="guessing no";;
-            *-gnu* | gnu*)
-              AC_EGREP_CPP([Unlucky], [
+           [gl_cv_func_duplocale_works=yes],
+           [gl_cv_func_duplocale_works=no],
+           [dnl Guess it works except on glibc < 2.12, uClibc, AIX, and NetBSD.
+            case "$host_os" in
+              aix* | netbsd*) gl_cv_func_duplocale_works="guessing no";;
+              *-gnu* | gnu*)
+                AC_EGREP_CPP([Unlucky], [
 #include <features.h>
 #ifdef __GNU_LIBRARY__
  #if (__GLIBC__ == 2 && __GLIBC_MINOR__ < 12)
@@ -88,17 +89,23 @@ int main ()
 #ifdef __UCLIBC__
  Unlucky user
 #endif
-                ],
-                [gl_cv_func_duplocale_works="guessing no"],
-                [gl_cv_func_duplocale_works="guessing yes"])
-              ;;
-            *) gl_cv_func_duplocale_works="guessing yes";;
-          esac
-         ])
-      ])
-    case "$gl_cv_func_duplocale_works" in
-      *no) REPLACE_DUPLOCALE=1 ;;
-    esac
+                  ],
+                  [gl_cv_func_duplocale_works="guessing no"],
+                  [gl_cv_func_duplocale_works="guessing yes"])
+                ;;
+              *) gl_cv_func_duplocale_works="guessing yes";;
+            esac
+           ])
+        ])
+      case "$gl_cv_func_duplocale_works" in
+        *no) REPLACE_DUPLOCALE=1 ;;
+      esac
+    else
+      dnl In 2019, some versions of z/OS lack the locale_t type and have broken
+      dnl newlocale, duplocale, freelocale functions. In this situation, we
+      dnl cannot use nor override duplocale.
+      HAVE_DUPLOCALE=0
+    fi
   else
     HAVE_DUPLOCALE=0
   fi
