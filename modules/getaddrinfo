@@ -10,18 +10,18 @@ Depends-on:
 netdb
 sys_socket
 extensions
-gettext-h       [test $HAVE_GETADDRINFO = 0 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
-inet_ntop       [test $HAVE_GETADDRINFO = 0]
-snprintf        [test $HAVE_GETADDRINFO = 0]
-stdbool         [test $HAVE_GETADDRINFO = 0]
-strdup          [test $HAVE_GETADDRINFO = 0]
-servent         [test $HAVE_GETADDRINFO = 0]
-hostent         [test $HAVE_GETADDRINFO = 0]
-sockets         [test $HAVE_GETADDRINFO = 0]
+gettext-h       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1 || test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1]
+inet_ntop       [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+snprintf        [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+stdbool         [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+strdup          [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+servent         [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+hostent         [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
+sockets         [test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1]
 
 configure.ac:
 gl_GETADDRINFO
-if test $HAVE_GETADDRINFO = 0; then
+if test $HAVE_GETADDRINFO = 0 || test $REPLACE_GETADDRINFO = 1; then
   AC_LIBOBJ([getaddrinfo])
 fi
 if test $HAVE_DECL_GAI_STRERROR = 0 || test $REPLACE_GAI_STRERROR = 1; then

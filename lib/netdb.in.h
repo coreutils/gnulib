@@ -158,33 +158,61 @@ struct addrinfo
 #  endif
 # endif
 
-# if !@HAVE_DECL_GETADDRINFO@
 /* Translate name of a service location and/or a service name to set of
    socket addresses.
    For more details, see the POSIX:2008 specification
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/getaddrinfo.html>.  */
+# if @REPLACE_GETADDRINFO@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getaddrinfo
+#   define getaddrinfo rpl_getaddrinfo
+#  endif
+_GL_FUNCDECL_RPL (getaddrinfo, int,
+                  (const char *restrict nodename,
+                   const char *restrict servname,
+                   const struct addrinfo *restrict hints,
+                   struct addrinfo **restrict res)
+                  _GL_ARG_NONNULL ((4)));
+_GL_CXXALIAS_RPL (getaddrinfo, int,
+                  (const char *restrict nodename,
+                   const char *restrict servname,
+                   const struct addrinfo *restrict hints,
+                   struct addrinfo **restrict res));
+# else
+#  if !@HAVE_DECL_GETADDRINFO@
 _GL_FUNCDECL_SYS (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
                    struct addrinfo **restrict res)
                   _GL_ARG_NONNULL ((4)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (getaddrinfo, int,
                   (const char *restrict nodename,
                    const char *restrict servname,
                    const struct addrinfo *restrict hints,
                    struct addrinfo **restrict res));
+# endif
 _GL_CXXALIASWARN (getaddrinfo);
 
-# if !@HAVE_DECL_FREEADDRINFO@
 /* Free 'addrinfo' structure AI including associated storage.
    For more details, see the POSIX:2008 specification
    <https://pubs.opengroup.org/onlinepubs/9699919799/functions/getaddrinfo.html>.  */
+# if @REPLACE_GETADDRINFO@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef freeaddrinfo
+#   define freeaddrinfo rpl_freeaddrinfo
+#  endif
+_GL_FUNCDECL_RPL (freeaddrinfo, void, (struct addrinfo *ai)
+                                      _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (freeaddrinfo, void, (struct addrinfo *ai));
+# else
+#  if !@HAVE_DECL_FREEADDRINFO@
 _GL_FUNCDECL_SYS (freeaddrinfo, void, (struct addrinfo *ai)
                                       _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (freeaddrinfo, void, (struct addrinfo *ai));
+# endif
 _GL_CXXALIASWARN (freeaddrinfo);
 
 # if @REPLACE_GAI_STRERROR@
