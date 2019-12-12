@@ -1,4 +1,4 @@
-# ilogbl.m4 serial 3
+# ilogbl.m4 serial 4
 dnl Copyright (C) 2010-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -71,6 +71,7 @@ AC_DEFUN([gl_FUNC_ILOGBL],
 ])
 
 dnl Test whether ilogbl() works.
+dnl On Cygwin 2.9, ilogb(0.0L) is wrong.
 dnl On Haiku 2017, it returns i-2 instead of i-1 for values between
 dnl ca. 2^-16444 and ca. 2^-16382.
 AC_DEFUN([gl_FUNC_ILOGBL_WORKS],
@@ -108,13 +109,19 @@ int main (int argc, char *argv[])
 {
   int (* volatile my_ilogbl) (long double) = argc ? ilogbl : dummy;
   int result = 0;
+  /* This test fails on Cygwin 2.9.  */
+  {
+    x = 0.0L;
+    if (my_ilogbl (x) != FP_ILOGB0)
+      result |= 1;
+  }
   /* This test fails on Haiku 2017.  */
   {
     int i;
     for (i = 1, x = (long double)1.0; i >= LDBL_MIN_EXP-100 && x > (long double)0.0; i--, x *= (long double)0.5)
       if (my_ilogbl (x) != i - 1)
         {
-          result |= 1;
+          result |= 2;
           break;
         }
   }
