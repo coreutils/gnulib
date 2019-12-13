@@ -14,6 +14,11 @@ Cygwin 1.5.x.
 @item
 This function takes only two arguments on some platforms:
 mingw, older MSVC.
+@item
+This function may use hidden state, ignoring the third argument, and thus
+exhibit a bug when two or more @code{wcstok} iteration loops are being performed
+in the same thread, on some platforms:
+HP-UX 11.31.
 @end itemize
 
 Portability problems not fixed by Gnulib:
