@@ -227,6 +227,9 @@ _GL_CXXALIAS_SYS (newlocale, locale_t,
 # if @HAVE_NEWLOCALE@
 _GL_CXXALIASWARN (newlocale);
 # endif
+# ifndef HAVE_WORKING_NEWLOCALE
+#  define HAVE_WORKING_NEWLOCALE 1
+# endif
 #elif defined GNULIB_POSIXCHECK
 # undef newlocale
 # if HAVE_RAW_DECL_NEWLOCALE
@@ -250,6 +253,9 @@ _GL_CXXALIAS_SYS (duplocale, locale_t, (locale_t locale));
 # endif
 # if @HAVE_DUPLOCALE@
 _GL_CXXALIASWARN (duplocale);
+# endif
+# ifndef HAVE_WORKING_DUPLOCALE
+#  define HAVE_WORKING_DUPLOCALE 1
 # endif
 #elif defined GNULIB_POSIXCHECK
 # undef duplocale

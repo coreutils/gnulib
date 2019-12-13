@@ -44,7 +44,7 @@ verify (sizeof NULL == sizeof (void *));
 int
 main ()
 {
-#if HAVE_NEWLOCALE
+#if HAVE_WORKING_NEWLOCALE
   /* Check that the locale_t type and the LC_GLOBAL_LOCALE macro are defined.  */
   locale_t b = LC_GLOBAL_LOCALE;
   (void) b;
