@@ -206,6 +206,45 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
 # endif
 #endif
 
+#if @GNULIB_SETLOCALE_NULL@
+/* Recommended size of a buffer for a locale name for a single category.
+   On glibc systems, you can have locale names that are relative file names;
+   assume a maximum length 256.
+   In native Windows, in 2018 the longest locale name was of length 58
+   ("FYRO Macedonian_Former Yugoslav Republic of Macedonia.1251").  */
+# define SETLOCALE_NULL_MAX (256+1)
+/* Recommended size of a buffer for a locale name with all categories.
+   On glibc systems, you can have locale names that are relative file names;
+   assume maximum length 256 for each.  There are 12 categories; so, the
+   maximum total length is 148+12*256.
+   In native Windows, there are 5 categories, and the maximum total length is
+   55+5*58.  */
+# define SETLOCALE_NULL_ALL_MAX (148+12*256+1)
+/* setlocale_null (CATEGORY, BUF, BUFSIZE) is like setlocale (CATEGORY, NULL),
+   except that
+     - it is guaranteed to be multithread-safe,
+     - it returns the resulting locale category name or locale name in the
+       user-supplied buffer BUF, which must be BUFSIZE bytes long.
+   The recommended minimum buffer size is
+     - SETLOCALE_NULL_MAX for CATEGORY != LC_ALL, and
+     - SETLOCALE_NULL_ALL_MAX for CATEGORY == LC_ALL.
+   The return value is an error code: 0 if the call is successful, ERANGE if
+   BUFSIZE is smaller than the length needed size (including the trailing NUL
+   byte).  In the latter case, a truncated result is returned in BUF, but
+   still NUL-terminated if BUFSIZE > 0.
+   For this call to be multithread-safe, *all* calls to
+   setlocale (CATEGORY, NULL) in all other threads must have been converted
+   to use setlocale_null as well, and the other threads must not make other
+   setlocale invocations (since changing the global locale has side effects
+   on all threads).  */
+_GL_FUNCDECL_SYS (setlocale_null, int,
+                  (int category, char *buf, size_t bufsize)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (setlocale_null, int,
+                  (int category, char *buf, size_t bufsize));
+_GL_CXXALIASWARN (setlocale_null);
+#endif
+
 #if /*@GNULIB_NEWLOCALE@ ||*/ (@GNULIB_LOCALENAME@ && @HAVE_NEWLOCALE@)
 # if @REPLACE_NEWLOCALE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)

@@ -1,4 +1,4 @@
-# threadlib.m4 serial 22
+# threadlib.m4 serial 23
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,8 @@ dnl LIBPMULTITHREAD is that on platforms supporting weak symbols, typically
 dnl LIBPTHREAD is empty whereas LIBPMULTITHREAD is not.
 dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
 dnl multithread-safe programs.
+dnl Defines the C macro HAVE_PTHREAD_API if (at least parts of) the POSIX
+dnl threads API is available.
 
 dnl gl_THREADLIB
 dnl ------------
@@ -220,6 +222,10 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
     AC_MSG_RESULT([$gl_pthread_api])
     AC_SUBST([LIBPTHREAD])
     AC_SUBST([LIBPMULTITHREAD])
+    if test $gl_pthread_api = yes; then
+      AC_DEFINE([HAVE_PTHREAD_API], [1],
+        [Define if you have the <pthread.h> header and the POSIX threads API.])
+    fi
     gl_threadlib_body_done=done
   fi
 ])
