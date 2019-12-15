@@ -22,7 +22,6 @@
 #include <locale.h>
 
 #include <errno.h>
-#include <stdlib.h>
 #include <string.h>
 
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
@@ -68,27 +67,33 @@ rpl_duplocale (locale_t locale)
           , { LC_IDENTIFICATION, LC_IDENTIFICATION_MASK }
 #endif
         };
-      char *base_name;
+      char base_name[SETLOCALE_NULL_MAX];
+      int err;
       locale_t base_copy;
       unsigned int i;
 
-      base_name = strdup (setlocale (LC_CTYPE, NULL));
-      if (base_name == NULL)
-        return NULL;
-      base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
-      if (base_copy == NULL)
+      err = setlocale_null (LC_CTYPE, base_name, sizeof (base_name));
+      if (err)
         {
-          int saved_errno = errno;
-          free (base_name);
-          errno = saved_errno;
+          errno = err;
           return NULL;
         }
+      base_copy = newlocale (LC_ALL_MASK, base_name, NULL);
+      if (base_copy == NULL)
+        return NULL;
 
       for (i = 0; i < SIZEOF (categories); i++)
         {
           int category = categories[i].cat;
           int category_mask = categories[i].mask;
-          const char *name = setlocale (category, NULL);
+          char name[SETLOCALE_NULL_MAX];
+
+          err = setlocale_null (category, name, sizeof (name));
+          if (err)
+            {
+              errno = err;
+              return NULL;
+            }
           if (strcmp (name, base_name) != 0)
             {
               locale_t copy = newlocale (category_mask, name, base_copy);
@@ -96,7 +101,6 @@ rpl_duplocale (locale_t locale)
                 {
                   int saved_errno = errno;
                   freelocale (base_copy);
-                  free (base_name);
                   errno = saved_errno;
                   return NULL;
                 }
@@ -106,7 +110,6 @@ rpl_duplocale (locale_t locale)
             }
         }
 
-      free (base_name);
       return base_copy;
     }
 

@@ -1,4 +1,4 @@
-# duplocale.m4 serial 11
+# duplocale.m4 serial 12
 dnl Copyright (C) 2009-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ AC_DEFUN([gl_FUNC_DUPLOCALE],
 [
   AC_REQUIRE([gl_LOCALE_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
+  AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
   AC_CHECK_FUNCS_ONCE([duplocale])
   if test $ac_cv_func_duplocale = yes; then
     dnl Check against glibc bug where duplocale crashes.
@@ -109,6 +110,12 @@ int main ()
   else
     HAVE_DUPLOCALE=0
   fi
+  if test $REPLACE_DUPLOCALE = 1; then
+    LIB_DUPLOCALE="$LIB_SETLOCALE_NULL"
+  else
+    LIB_DUPLOCALE=
+  fi
+  AC_SUBST([LIB_DUPLOCALE])
 ])
 
 # Prerequisites of lib/duplocale.c.
