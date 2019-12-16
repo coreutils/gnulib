@@ -44,17 +44,55 @@ is_using_utf8 (void)
   return mbrtowc (&wc, "\xc4\x80", 2, &mbs) == 2 && wc == 0x100;
 }
 
+/* Return true if the locale is compatible enough with the C locale so
+   that the locale is single-byte, bytes are in collating-sequence
+   order, and there are no multi-character collating elements.  */
+
+static bool
+using_simple_locale (bool multibyte)
+{
+  /* The native character set is known to be compatible with
+     the C locale.  The following test isn't perfect, but it's good
+     enough in practice, as only ASCII and EBCDIC are in common use
+     and this test correctly accepts ASCII and rejects EBCDIC.  */
+  enum { native_c_charset =
+    ('\b' == 8 && '\t' == 9 && '\n' == 10 && '\v' == 11 && '\f' == 12
+     && '\r' == 13 && ' ' == 32 && '!' == 33 && '"' == 34 && '#' == 35
+     && '%' == 37 && '&' == 38 && '\'' == 39 && '(' == 40 && ')' == 41
+     && '*' == 42 && '+' == 43 && ',' == 44 && '-' == 45 && '.' == 46
+     && '/' == 47 && '0' == 48 && '9' == 57 && ':' == 58 && ';' == 59
+     && '<' == 60 && '=' == 61 && '>' == 62 && '?' == 63 && 'A' == 65
+     && 'Z' == 90 && '[' == 91 && '\\' == 92 && ']' == 93 && '^' == 94
+     && '_' == 95 && 'a' == 97 && 'z' == 122 && '{' == 123 && '|' == 124
+     && '}' == 125 && '~' == 126)
+  };
+
+  if (!native_c_charset || multibyte)
+    return false;
+
+  /* As a heuristic, use strcoll to compare native character order.
+     If this agrees with byte order the locale should be simple.
+     This heuristic should work for all known practical locales,
+     although it would be invalid for artificially-constructed locales
+     where the native order is the collating-sequence order but there
+     are multi-character collating elements.  */
+  for (int i = 0; i < UCHAR_MAX; i++)
+    if (strcoll (((char []) {i, 0}), ((char []) {i + 1, 0})) <= 0)
+      return false;
+
+  return true;
+}
+
 /* Initialize *LOCALEINFO from the current locale.  */
 
 void
 init_localeinfo (struct localeinfo *localeinfo)
 {
-  int i;
-
   localeinfo->multibyte = MB_CUR_MAX > 1;
+  localeinfo->simple = using_simple_locale (localeinfo->multibyte);
   localeinfo->using_utf8 = is_using_utf8 ();
 
-  for (i = CHAR_MIN; i <= CHAR_MAX; i++)
+  for (int i = CHAR_MIN; i <= CHAR_MAX; i++)
     {
       char c = i;
       unsigned char uc = i;
