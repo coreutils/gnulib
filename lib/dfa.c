@@ -31,7 +31,6 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <string.h>
-#include <locale.h>
 
 /* Another name for ptrdiff_t, for sizes of objects and nonnegative
    indexes into objects.  It is signed to help catch integer overflow.
@@ -573,12 +572,6 @@ struct dfa
   char *(*dfaexec) (struct dfa *, char const *, char *,
                     bool, ptrdiff_t *, bool *);
 
-  /* The locale is simple, like the C locale.  These locales can be
-     processed more efficiently, as they are single-byte, their native
-     character set is in collating-sequence order, and they do not
-     have multi-character collating elements.  */
-  bool simple_locale;
-
   /* Other cached information derived from the locale.  */
   struct localeinfo localeinfo;
 };
@@ -917,38 +910,6 @@ setbit_case_fold_c (int b, charclass *c)
       setbit (i, c);
 }
 
-/* Return true if the locale compatible with the C locale.  */
-
-static bool
-using_simple_locale (bool multibyte)
-{
-  /* The native character set is known to be compatible with
-     the C locale.  The following test isn't perfect, but it's good
-     enough in practice, as only ASCII and EBCDIC are in common use
-     and this test correctly accepts ASCII and rejects EBCDIC.  */
-  enum { native_c_charset =
-    ('\b' == 8 && '\t' == 9 && '\n' == 10 && '\v' == 11 && '\f' == 12
-     && '\r' == 13 && ' ' == 32 && '!' == 33 && '"' == 34 && '#' == 35
-     && '%' == 37 && '&' == 38 && '\'' == 39 && '(' == 40 && ')' == 41
-     && '*' == 42 && '+' == 43 && ',' == 44 && '-' == 45 && '.' == 46
-     && '/' == 47 && '0' == 48 && '9' == 57 && ':' == 58 && ';' == 59
-     && '<' == 60 && '=' == 61 && '>' == 62 && '?' == 63 && 'A' == 65
-     && 'Z' == 90 && '[' == 91 && '\\' == 92 && ']' == 93 && '^' == 94
-     && '_' == 95 && 'a' == 97 && 'z' == 122 && '{' == 123 && '|' == 124
-     && '}' == 125 && '~' == 126)
-  };
-
-  if (!native_c_charset || multibyte)
-    return false;
-  else
-    {
-      /* Treat C and POSIX locales as being compatible.  Also, treat
-         errors as compatible, as these are invariably from stubs.  */
-      char const *loc = setlocale (LC_ALL, NULL);
-      return !loc || streq (loc, "C") || streq (loc, "POSIX");
-    }
-}
-
 /* Fetch the next lexical input character from the pattern.  There
    must at least one byte of pattern input.  Set DFA->lex.wctok to the
    value of the character or to WEOF depending on whether the input is
@@ -1039,7 +1000,7 @@ parse_bracket_exp (struct dfa *dfa)
   if (invert)
     {
       c = bracket_fetch_wc (dfa);
-      known_bracket_exp = dfa->simple_locale;
+      known_bracket_exp = dfa->localeinfo.simple;
     }
   wint_t wc = dfa->lex.wctok;
   int c1;
@@ -1169,7 +1130,7 @@ parse_bracket_exp (struct dfa *dfa)
               /* Treat [x-y] as a range if x != y.  */
               if (wc != wc2 || wc == WEOF)
                 {
-                  if (dfa->simple_locale
+                  if (dfa->localeinfo.simple
                       || (isasciidigit (c) & isasciidigit (c2)))
                     {
                       for (int ci = c; ci <= c2; ci++)
@@ -3348,7 +3309,7 @@ skip_remains_mb (struct dfa *d, unsigned char const *p,
     - [[:alpha:]] etc. in multibyte locale (except [[:digit:]] works OK)
     - back-reference: (.)\1
     - word-delimiter in multibyte locale: \<, \>, \b, \B
-   See using_simple_locale for the definition of "simple locale".  */
+   See struct localeinfo.simple for the definition of "simple locale".  */
 
 static inline char *
 dfaexec_main (struct dfa *d, char const *begin, char *end, bool allow_nl,
@@ -4311,7 +4272,6 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
 {
   memset (dfa, 0, offsetof (struct dfa, dfaexec));
   dfa->dfaexec = linfo->multibyte ? dfaexec_mb : dfaexec_sb;
-  dfa->simple_locale = using_simple_locale (linfo->multibyte);
   dfa->localeinfo = *linfo;
 
   dfa->fast = !dfa->localeinfo.multibyte;
