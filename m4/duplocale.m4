@@ -115,6 +115,8 @@ int main ()
   else
     LIB_DUPLOCALE=
   fi
+  dnl LIB_DUPLOCALE is expected to be '-pthread' or '-lpthread' on AIX
+  dnl with gcc or xlc, and empty otherwise.
   AC_SUBST([LIB_DUPLOCALE])
 ])
 

@@ -1,4 +1,4 @@
-# setlocale_null.m4 serial 1
+# setlocale_null.m4 serial 2
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -75,10 +75,18 @@ AC_DEFUN([gl_FUNC_SETLOCALE_NULL],
   if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
     case "$host_os" in
       mingw*) LIB_SETLOCALE_NULL= ;;
-      *)      LIB_SETLOCALE_NULL="$LIBPTHREAD" ;;
+      *)
+        gl_WEAK_SYMBOLS
+        case "$gl_cv_have_weak" in
+          *yes) LIB_SETLOCALE_NULL= ;;
+          *)    LIB_SETLOCALE_NULL="$LIBPTHREAD" ;;
+        esac
+        ;;
     esac
   else
     LIB_SETLOCALE_NULL=
   fi
+  dnl LIB_SETLOCALE_NULL is expected to be '-pthread' or '-lpthread' on AIX
+  dnl with gcc or xlc, and empty otherwise.
   AC_SUBST([LIB_SETLOCALE_NULL])
 ])

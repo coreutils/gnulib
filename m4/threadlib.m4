@@ -1,4 +1,4 @@
-# threadlib.m4 serial 23
+# threadlib.m4 serial 24
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -142,6 +142,57 @@ changequote([,])dnl
   fi
 ])
 
+dnl Checks whether the compiler and linker support weak declarations of symbols.
+
+AC_DEFUN([gl_WEAK_SYMBOLS],
+[
+  AC_CACHE_CHECK([whether imported symbols can be declared weak],
+    [gl_cv_have_weak],
+    [gl_cv_have_weak=no
+     dnl First, test whether the compiler accepts it syntactically.
+     AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[extern void xyzzy ();
+#pragma weak xyzzy]],
+          [[xyzzy();]])],
+       [gl_cv_have_weak=maybe])
+     if test $gl_cv_have_weak = maybe; then
+       dnl Second, test whether it actually works. On Cygwin 1.7.2, with
+       dnl gcc 4.3, symbols declared weak always evaluate to the address 0.
+       AC_RUN_IFELSE(
+         [AC_LANG_SOURCE([[
+#include <stdio.h>
+#pragma weak fputs
+int main ()
+{
+  return (fputs == NULL);
+}]])],
+         [gl_cv_have_weak=yes],
+         [gl_cv_have_weak=no],
+         [dnl When cross-compiling, assume that only ELF platforms support
+          dnl weak symbols.
+          AC_EGREP_CPP([Extensible Linking Format],
+            [#ifdef __ELF__
+             Extensible Linking Format
+             #endif
+            ],
+            [gl_cv_have_weak="guessing yes"],
+            [gl_cv_have_weak="guessing no"])
+         ])
+     fi
+     dnl But when linking statically, weak symbols don't work.
+     case " $LDFLAGS " in
+       *" -static "*) gl_cv_have_weak=no ;;
+     esac
+    ])
+  case "$gl_cv_have_weak" in
+    *yes)
+      AC_DEFINE([HAVE_WEAK_SYMBOLS], [1],
+        [Define to 1 if the compiler and linker support weak declarations of symbols.])
+      ;;
+  esac
+])
+
 dnl The guts of gl_PTHREADLIB. Needs to be expanded only once.
 
 AC_DEFUN([gl_PTHREADLIB_BODY],
@@ -242,45 +293,7 @@ AC_DEFUN([gl_THREADLIB_BODY],
   LTLIBMULTITHREAD=
   if test "$gl_use_threads" != no; then
     dnl Check whether the compiler and linker support weak declarations.
-    AC_CACHE_CHECK([whether imported symbols can be declared weak],
-      [gl_cv_have_weak],
-      [gl_cv_have_weak=no
-       dnl First, test whether the compiler accepts it syntactically.
-       AC_LINK_IFELSE(
-         [AC_LANG_PROGRAM(
-            [[extern void xyzzy ();
-#pragma weak xyzzy]],
-            [[xyzzy();]])],
-         [gl_cv_have_weak=maybe])
-       if test $gl_cv_have_weak = maybe; then
-         dnl Second, test whether it actually works. On Cygwin 1.7.2, with
-         dnl gcc 4.3, symbols declared weak always evaluate to the address 0.
-         AC_RUN_IFELSE(
-           [AC_LANG_SOURCE([[
-#include <stdio.h>
-#pragma weak fputs
-int main ()
-{
-  return (fputs == NULL);
-}]])],
-           [gl_cv_have_weak=yes],
-           [gl_cv_have_weak=no],
-           [dnl When cross-compiling, assume that only ELF platforms support
-            dnl weak symbols.
-            AC_EGREP_CPP([Extensible Linking Format],
-              [#ifdef __ELF__
-               Extensible Linking Format
-               #endif
-              ],
-              [gl_cv_have_weak="guessing yes"],
-              [gl_cv_have_weak="guessing no"])
-           ])
-       fi
-       dnl But when linking statically, weak symbols don't work.
-       case " $LDFLAGS " in
-         *" -static "*) gl_cv_have_weak=no ;;
-       esac
-      ])
+    gl_WEAK_SYMBOLS
     if case "$gl_cv_have_weak" in *yes) true;; *) false;; esac; then
       dnl If we use weak symbols to implement pthread_in_use / pth_in_use /
       dnl thread_in_use, we also need to test whether the ISO C 11 thrd_create

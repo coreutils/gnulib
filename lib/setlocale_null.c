@@ -30,12 +30,25 @@
 
 #if !(SETLOCALE_NULL_ALL_MTSAFE && SETLOCALE_NULL_ONE_MTSAFE)
 # if defined _WIN32 && !defined __CYGWIN__
+
 #  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
 #  include <windows.h>
+
 # elif HAVE_PTHREAD_API
+
 #  include <pthread.h>
+#  if HAVE_THREADS_H && HAVE_WEAK_SYMBOLS
+#   include <threads.h>
+#   pragma weak thrd_exit
+#   define c11_threads_in_use() (thrd_exit != NULL)
+#  else
+#   define c11_threads_in_use() 0
+#  endif
+
 # elif HAVE_THREADS_H
+
 #  include <threads.h>
+
 # endif
 #endif
 
@@ -100,7 +113,7 @@ setlocale_null_unlocked (int category, char *buf, size_t bufsize)
 #endif
 }
 
-#if !(SETLOCALE_NULL_ALL_MTSAFE && SETLOCALE_NULL_ONE_MTSAFE)
+#if !(SETLOCALE_NULL_ALL_MTSAFE && SETLOCALE_NULL_ONE_MTSAFE) /* musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Haiku, Cygwin */
 
 /* Use a lock, so that no two threads can invoke setlocale_null_unlocked
    at the same time.  */
@@ -125,7 +138,7 @@ setlocale_null_with_lock (int category, char *buf, size_t bufsize)
   return ret;
 }
 
-# elif HAVE_PTHREAD_API
+# elif HAVE_PTHREAD_API /* musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Haiku, Cygwin */
 
 extern
 #  if defined _WIN32 || defined __CYGWIN__
@@ -133,19 +146,40 @@ extern
 #  endif
   pthread_mutex_t *gl_get_setlocale_null_lock (void);
 
+#  if HAVE_WEAK_SYMBOLS /* musl libc, FreeBSD, NetBSD, OpenBSD, Haiku */
+
+    /* Avoid the need to link with '-lpthread'.  */
+#   pragma weak pthread_mutex_lock
+#   pragma weak pthread_mutex_unlock
+
+    /* Determine whether libpthread is in use.  */
+#   pragma weak pthread_mutexattr_gettype
+    /* See the comments in lock.h.  */
+#   define pthread_in_use() \
+      (pthread_mutexattr_gettype != NULL || c11_threads_in_use ())
+
+#  else
+#   define pthread_in_use() 1
+#  endif
+
 static int
 setlocale_null_with_lock (int category, char *buf, size_t bufsize)
 {
-  pthread_mutex_t *lock = gl_get_setlocale_null_lock ();
-  int ret;
+  if (pthread_in_use())
+    {
+      pthread_mutex_t *lock = gl_get_setlocale_null_lock ();
+      int ret;
 
-  if (pthread_mutex_lock (lock))
-    abort ();
-  ret = setlocale_null_unlocked (category, buf, bufsize);
-  if (pthread_mutex_unlock (lock))
-    abort ();
+      if (pthread_mutex_lock (lock))
+        abort ();
+      ret = setlocale_null_unlocked (category, buf, bufsize);
+      if (pthread_mutex_unlock (lock))
+        abort ();
 
-  return ret;
+      return ret;
+    }
+  else
+    return setlocale_null_unlocked (category, buf, bufsize);
 }
 
 # elif HAVE_THREADS_H
