@@ -422,9 +422,6 @@ struct lexer_state
      MB_CUR_MAX > 1.  */
   wint_t wctok;
 
-  /* Length of the multibyte representation of wctok.  */
-  int cur_mb_len;
-
   /* The most recently analyzed multibyte bracket expression.  */
   struct mb_char_classes brack;
 
@@ -921,7 +918,6 @@ fetch_wc (struct dfa *dfa)
 {
   int nbytes = mbs_to_wchar (&dfa->lex.wctok, dfa->lex.ptr, dfa->lex.left,
                              dfa);
-  dfa->lex.cur_mb_len = nbytes;
   int c = nbytes == 1 ? to_uchar (dfa->lex.ptr[0]) : EOF;
   dfa->lex.ptr += nbytes;
   dfa->lex.left -= nbytes;
@@ -1111,8 +1107,8 @@ parse_bracket_exp (struct dfa *dfa)
             {
               /* In the case [x-], the - is an ordinary hyphen,
                  which is left in c1, the lookahead character.  */
-              dfa->lex.ptr -= dfa->lex.cur_mb_len;
-              dfa->lex.left += dfa->lex.cur_mb_len;
+              dfa->lex.ptr--;
+              dfa->lex.left++;
             }
           else
             {
@@ -1662,21 +1658,22 @@ addtok_wc (struct dfa *dfa, wint_t wc)
   unsigned char buf[MB_LEN_MAX];
   mbstate_t s = { 0 };
   size_t stored_bytes = wcrtomb ((char *) buf, wc, &s);
+  int buflen;
 
   if (stored_bytes != (size_t) -1)
-    dfa->lex.cur_mb_len = stored_bytes;
+    buflen = stored_bytes;
   else
     {
       /* This is merely stop-gap.  buf[0] is undefined, yet skipping
          the addtok_mb call altogether can corrupt the heap.  */
-      dfa->lex.cur_mb_len = 1;
+      buflen = 1;
       buf[0] = 0;
     }
 
-  addtok_mb (dfa, buf[0], dfa->lex.cur_mb_len == 1 ? 3 : 1);
-  for (int i = 1; i < dfa->lex.cur_mb_len; i++)
+  addtok_mb (dfa, buf[0], buflen == 1 ? 3 : 1);
+  for (int i = 1; i < buflen; i++)
     {
-      addtok_mb (dfa, buf[i], i == dfa->lex.cur_mb_len - 1 ? 2 : 0);
+      addtok_mb (dfa, buf[i], i == buflen - 1 ? 2 : 0);
       addtok (dfa, CAT);
     }
 }
@@ -4277,7 +4274,6 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
   dfa->fast = !dfa->localeinfo.multibyte;
 
   dfa->canychar = -1;
-  dfa->lex.cur_mb_len = 1;
   dfa->syntax.syntax_bits_set = true;
   dfa->syntax.case_fold = (bits & RE_ICASE) != 0;
   dfa->syntax.anchor = (dfaopts & DFA_ANCHOR) != 0;
