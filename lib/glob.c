@@ -72,6 +72,10 @@
 # define __glob                 glob
 # define __getlogin_r(buf, len) getlogin_r (buf, len)
 # define __lstat64(fname, buf)  lstat (fname, buf)
+# ifdef __MINGW32__
+   /* Avoid GCC warning.  mingw has an unused __stat64 macro.  */
+#  undef __stat64
+# endif
 # define __stat64(fname, buf)   stat (fname, buf)
 # define __fxstatat64(_, d, f, st, flag) fstatat (d, f, st, flag)
 # define struct_stat64          struct stat
