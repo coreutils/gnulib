@@ -82,28 +82,15 @@ isasciidigit (char c)
 /* First integer value that is greater than any character code.  */
 enum { NOTCHAR = 1 << CHAR_BIT };
 
+/* Number of bits used in a charclass word.  */
+enum { CHARCLASS_WORD_BITS = 64 };
+
 /* This represents part of a character class.  It must be unsigned and
    at least CHARCLASS_WORD_BITS wide.  Any excess bits are zero.  */
-typedef unsigned long int charclass_word;
+typedef uint_fast64_t charclass_word;
 
-/* CHARCLASS_WORD_BITS is the number of bits used in a charclass word.
-   CHARCLASS_PAIR (LO, HI) is part of a charclass initializer, and
-   represents 64 bits' worth of a charclass, where LO and HI are the
-   low and high-order 32 bits of the 64-bit quantity.  */
-#if ULONG_MAX >> 31 >> 31 < 3
-enum { CHARCLASS_WORD_BITS = 32 };
-# define CHARCLASS_PAIR(lo, hi) lo, hi
-#else
-enum { CHARCLASS_WORD_BITS = 64 };
-# define CHARCLASS_PAIR(lo, hi) (((charclass_word) (hi) << 32) + (lo))
-#endif
-
-/* An initializer for a charclass whose 32-bit words are A through H.  */
-#define CHARCLASS_INIT(a, b, c, d, e, f, g, h)		\
-   {{							\
-      CHARCLASS_PAIR (a, b), CHARCLASS_PAIR (c, d),	\
-      CHARCLASS_PAIR (e, f), CHARCLASS_PAIR (g, h)	\
-   }}
+/* An initializer for a charclass whose 64-bit words are A through D.  */
+#define CHARCLASS_INIT(a, b, c, d) {{a, b, c, d}}
 
 /* The maximum useful value of a charclass_word; all used bits are 1.  */
 static charclass_word const CHARCLASS_WORD_MASK
@@ -1684,19 +1671,19 @@ add_utf8_anychar (struct dfa *dfa)
 {
   static charclass const utf8_classes[5] = {
     /* 80-bf: non-leading bytes.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0xffffffff, 0xffffffff, 0, 0),
+    CHARCLASS_INIT (0, 0, 0xffffffffffffffff, 0),
 
     /* 00-7f: 1-byte sequence.  */
-    CHARCLASS_INIT (0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0, 0, 0, 0),
+    CHARCLASS_INIT (0xffffffffffffffff, 0xffffffffffffffff, 0, 0),
 
     /* c2-df: 2-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0xfffffffc, 0),
+    CHARCLASS_INIT (0, 0, 0, 0x00000000fffffffc),
 
     /* e0-ef: 3-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0, 0xffff),
+    CHARCLASS_INIT (0, 0, 0, 0x0000ffff00000000),
 
     /* f0-f7: 4-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0, 0xff0000)
+    CHARCLASS_INIT (0, 0, 0, 0x00ff000000000000)
   };
   int n = sizeof utf8_classes / sizeof *utf8_classes;
 
