@@ -444,9 +444,6 @@ struct parser_state
 /* A compiled regular expression.  */
 struct dfa
 {
-  /* Syntax configuration */
-  struct regex_syntax syntax;
-
   /* Fields filled by the scanner.  */
   charclass *charclasses;       /* Array of character sets for CSET tokens.  */
   idx_t cindex;			/* Index for adding new charclasses.  */
@@ -561,6 +558,10 @@ struct dfa
                                    ANYCHAR.  */
   state_num mb_trcount;         /* Number of transition tables for states with
                                    ANYCHAR that have actually been built.  */
+
+  /* Syntax configuration.  This is near the end so that dfacopysyntax
+     can memset up to here.  */
+  struct regex_syntax syntax;
 
   /* Information derived from the locale.  This is at the end so that
      a quick memset need not clear it specially.  */
@@ -4301,6 +4302,18 @@ dfasyntax (struct dfa *dfa, struct localeinfo const *linfo,
                                      ? (uc & 0xc0) != 0x80
                                      : strchr ("\n\r./", uc) != NULL);
     }
+}
+
+/* Initialize TO by copying FROM's syntax settings.  */
+void
+dfacopysyntax (struct dfa *to, struct dfa const *from)
+{
+  memset (to, 0, offsetof (struct dfa, syntax));
+  to->canychar = -1;
+  to->fast = from->fast;
+  to->syntax = from->syntax;
+  to->dfaexec = from->dfaexec;
+  to->localeinfo = from->localeinfo;
 }
 
 /* vim:set shiftwidth=2: */

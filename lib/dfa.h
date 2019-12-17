@@ -45,6 +45,7 @@ struct dfa;
 /* Entry points. */
 
 /* Allocate a struct dfa.  The struct dfa is completely opaque.
+   It should be initialized via dfasyntax or dfacopysyntax before other use.
    The returned pointer should be passed directly to free() after
    calling dfafree() on it. */
 extern struct dfa *dfaalloc (void) _GL_ATTRIBUTE_MALLOC;
@@ -61,14 +62,16 @@ enum
     DFA_EOL_NUL = 1 << 1
   };
 
-/* Initialize or reinitialize a DFA.  This must be called before
-   any of the routines below.  The arguments are:
+/* Initialize or reinitialize a DFA.  The arguments are:
    1. The DFA to operate on.
    2. Information about the current locale.
    3. Syntax bits described in regex.h.
    4. Additional DFA options described above.  */
 extern void dfasyntax (struct dfa *, struct localeinfo const *,
                        reg_syntax_t, int);
+
+/* Initialize or reinitialize a DFA from an already-initialized DFA.  */
+extern void dfacopysyntax (struct dfa *, struct dfa const *);
 
 /* Parse the given string of given length into the given struct dfa.  */
 extern void dfaparse (char const *, ptrdiff_t, struct dfa *);
