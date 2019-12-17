@@ -2473,12 +2473,7 @@ reorder_tokens (struct dfa *d)
 static void
 dfaoptimize (struct dfa *d)
 {
-  char *flags;
-  position_set merged0;
-  position_set *merged;
-
-  flags = xmalloc (d->tindex * sizeof *flags);
-  memset (flags, 0, d->tindex * sizeof *flags);
+  char *flags = xzalloc (d->tindex);
 
   for (idx_t i = 0; i < d->tindex; i++)
     {
@@ -2497,7 +2492,8 @@ dfaoptimize (struct dfa *d)
 
   flags[0] |= OPT_QUEUED;
 
-  merged = &merged0;
+  position_set merged0;
+  position_set *merged = &merged0;
   alloc_position_set (merged, d->nleaves);
 
   d->constraints = xnmalloc (d->tindex, sizeof *d->constraints);
