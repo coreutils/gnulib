@@ -47,9 +47,14 @@ ctype_codeset (void)
 {
   static char result[2 + 10 + 1];
   char buf[2 + 10 + 1];
-  char const *locale = setlocale (LC_CTYPE, NULL);
-  char *codeset = buf;
+  char locale[SETLOCALE_NULL_MAX];
+  char *codeset;
   size_t codesetlen;
+
+  if (setlocale_null (LC_CTYPE, locale, sizeof (locale)))
+    locale[0] = '\0';
+
+  codeset = buf;
   codeset[0] = '\0';
 
   if (locale && locale[0])
