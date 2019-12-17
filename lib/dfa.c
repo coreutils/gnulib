@@ -4022,7 +4022,7 @@ dfamust (struct dfa const *d)
   bool endline = false;
   bool need_begline = false;
   bool need_endline = false;
-  bool case_fold_unibyte = d->syntax.case_fold && MB_CUR_MAX == 1;
+  bool case_fold_unibyte = d->syntax.case_fold & !d->localeinfo.multibyte;
 
   for (idx_t ri = 1; ri + 1 < d->tindex; ri++)
     {
