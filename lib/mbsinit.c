@@ -56,13 +56,10 @@ mbsinit (const mbstate_t *ps)
 {
 # if defined _WIN32 && !defined __CYGWIN__
   /* Native Windows.  */
-#  ifdef __MINGW32__
-  /* On mingw, 'mbstate_t' is defined as 'int'.  */
-  return ps == NULL || *ps == 0;
-#  else
-  /* MSVC defines 'mbstate_t' as an 8-byte struct; the first 4-bytes matter.  */
+  /* MSVC defines 'mbstate_t' as an 8-byte struct; the first 4 bytes matter.
+     On mingw, 'mbstate_t' is sometimes defined as 'int', sometimes defined as
+     an 8-byte struct, of which the first 4 bytes matter.  */
   return ps == NULL || *(const unsigned int *)ps == 0;
-#  endif
 # else
   /* Minix, HP-UX 11.00, Solaris 2.6, Interix, ...  */
   /* Maybe this definition works, maybe not...  */
