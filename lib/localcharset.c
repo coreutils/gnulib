@@ -812,8 +812,11 @@ static const struct table_entry locale_table[] =
 
 
 /* Determine the current locale's character encoding, and canonicalize it
-   into one of the canonical names listed in localcharset.h.
-   The result must not be freed; it is statically allocated.
+   into one of the canonical names listed below.
+   The result must not be freed; it is statically allocated.  The result
+   becomes invalid when setlocale() is used to change the global locale, or
+   when the value of one of the environment variables LC_ALL, LC_CTYPE, LANG
+   is changed; threads in multithreaded programs should not do this.
    If the canonical name cannot be determined, the result is a non-canonical
    name.  */
 
@@ -824,6 +827,13 @@ const char *
 locale_charset (void)
 {
   const char *codeset;
+
+  /* This function must be multithread-safe.  To achieve this without using
+     thread-local storage, we use a simple strcpy or memcpy to fill this static
+     buffer.  Filling it through, for example, strcpy + strcat would not be
+     guaranteed to leave the buffer's contents intact if another thread is
+     currently accessing it.  If necessary, the contents is first assembled in
+     a stack-allocated buffer.  */
 
 #if HAVE_LANGINFO_CODESET || defined WINDOWS_NATIVE || defined OS2
 
@@ -839,7 +849,7 @@ locale_charset (void)
   if (codeset != NULL && strcmp (codeset, "US-ASCII") == 0)
     {
       const char *locale;
-      static char buf[2 + 10 + 1];
+      static char resultbuf[2 + 10 + 1];
 
       locale = getenv ("LC_ALL");
       if (locale == NULL || locale[0] == '\0')
@@ -863,11 +873,12 @@ locale_charset (void)
               modifier = strchr (dot, '@');
               if (modifier == NULL)
                 return dot;
-              if (modifier - dot < sizeof (buf))
+              if (modifier - dot < sizeof (resultbuf))
                 {
-                  memcpy (buf, dot, modifier - dot);
-                  buf [modifier - dot] = '\0';
-                  return buf;
+                  /* This way of filling resultbuf is multithread-safe.  */
+                  memcpy (resultbuf, dot, modifier - dot);
+                  resultbuf [modifier - dot] = '\0';
+                  return resultbuf;
                 }
             }
         }
@@ -883,8 +894,13 @@ locale_charset (void)
          converting to GetConsoleOutputCP().  This leads to correct results,
          except when SetConsoleOutputCP has been called and a raster font is
          in use.  */
-      sprintf (buf, "CP%u", GetACP ());
-      codeset = buf;
+      {
+        char buf[2 + 10 + 1];
+
+        sprintf (buf, "CP%u", GetACP ());
+        strcpy (resultbuf, buf);
+        codeset = resultbuf;
+      }
     }
 #  endif
 
@@ -894,7 +910,8 @@ locale_charset (void)
 
 # elif defined WINDOWS_NATIVE
 
-  static char buf[2 + 10 + 1];
+  char buf[2 + 10 + 1];
+  static char resultbuf[2 + 10 + 1];
 
   /* The Windows API has a function returning the locale's codepage as
      a number, but the value doesn't change according to what the
@@ -922,12 +939,15 @@ locale_charset (void)
   if (strcmp (buf + 2, "65001") == 0 || strcmp (buf + 2, "utf8") == 0)
     codeset = "UTF-8";
   else
-    codeset = buf;
+    {
+      strcpy (resultbuf, buf);
+      codeset = resultbuf;
+    }
 
 # elif defined OS2
 
   const char *locale;
-  static char buf[2 + 10 + 1];
+  static char resultbuf[2 + 10 + 1];
   ULONG cp[3];
   ULONG cplen;
 
@@ -956,11 +976,12 @@ locale_charset (void)
           modifier = strchr (dot, '@');
           if (modifier == NULL)
             return dot;
-          if (modifier - dot < sizeof (buf))
+          if (modifier - dot < sizeof (resultbuf))
             {
-              memcpy (buf, dot, modifier - dot);
-              buf [modifier - dot] = '\0';
-              return buf;
+              /* This way of filling resultbuf is multithread-safe.  */
+              memcpy (resultbuf, dot, modifier - dot);
+              resultbuf [modifier - dot] = '\0';
+              return resultbuf;
             }
         }
 
@@ -976,8 +997,11 @@ locale_charset (void)
         codeset = "";
       else
         {
+          char buf[2 + 10 + 1];
+
           sprintf (buf, "CP%u", cp[0]);
-          codeset = buf;
+          strcpy (resultbuf, buf);
+          codeset = resultbuf;
         }
     }
 
