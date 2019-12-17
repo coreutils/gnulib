@@ -901,27 +901,20 @@ locale_charset (void)
      'setlocale' call specified.  So we use it as a last resort, in
      case the string returned by 'setlocale' doesn't specify the
      codepage.  */
-  char *current_locale = setlocale (LC_ALL, NULL);
-  char *pdot;
+  char *current_locale = setlocale (LC_CTYPE, NULL);
+  char *pdot = strrchr (current_locale, '.');
 
-  /* If they set different locales for different categories,
-     'setlocale' will return a semi-colon separated list of locale
-     values.  To make sure we use the correct one, we choose LC_CTYPE.  */
-  if (strchr (current_locale, ';'))
-    current_locale = setlocale (LC_CTYPE, NULL);
-
-  pdot = strrchr (current_locale, '.');
   if (pdot && 2 + strlen (pdot + 1) + 1 <= sizeof (buf))
     sprintf (buf, "CP%s", pdot + 1);
   else
     {
       /* The Windows API has a function returning the locale's codepage as a
-        number: GetACP().
-        When the output goes to a console window, it needs to be provided in
-        GetOEMCP() encoding if the console is using a raster font, or in
-        GetConsoleOutputCP() encoding if it is using a TrueType font.
-        But in GUI programs and for output sent to files and pipes, GetACP()
-        encoding is the best bet.  */
+         number: GetACP().
+         When the output goes to a console window, it needs to be provided in
+         GetOEMCP() encoding if the console is using a raster font, or in
+         GetConsoleOutputCP() encoding if it is using a TrueType font.
+         But in GUI programs and for output sent to files and pipes, GetACP()
+         encoding is the best bet.  */
       sprintf (buf, "CP%u", GetACP ());
     }
   /* For a locale name such as "French_France.65001", in Windows 10,
