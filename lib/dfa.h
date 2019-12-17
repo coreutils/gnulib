@@ -37,6 +37,11 @@ struct dfamust
 /* The dfa structure. It is completely opaque. */
 struct dfa;
 
+/* Needed when Gnulib is not used.  */
+#ifndef _GL_ATTRIBUTE_MALLOC
+# define  _GL_ATTRIBUTE_MALLOC
+#endif
+
 /* Entry points. */
 
 /* Allocate a struct dfa.  The struct dfa is completely opaque.
