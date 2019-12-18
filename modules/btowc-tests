@@ -18,4 +18,4 @@ Makefile.am:
 TESTS += test-btowc1.sh test-btowc2.sh
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@' LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-btowc
-
+test_btowc_LDADD = $(LDADD) $(LIB_SETLOCALE)

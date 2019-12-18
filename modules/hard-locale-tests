@@ -16,4 +16,4 @@ Makefile.am:
 TESTS += test-hard-locale
 check_PROGRAMS += test-hard-locale
 noinst_PROGRAMS += locale
-test_hard_locale_LDADD = $(LDADD) @LIB_HARD_LOCALE@
+test_hard_locale_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIB_HARD_LOCALE@

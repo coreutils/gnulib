@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-mbspcasecmp.sh
 TESTS_ENVIRONMENT += LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
 check_PROGRAMS += test-mbspcasecmp
-test_mbspcasecmp_LDADD = $(LDADD) $(LIBTHREAD)
+test_mbspcasecmp_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)

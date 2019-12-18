@@ -22,6 +22,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* We want to use the system's setlocale() function here, not the gnulib
+   override.  */
+#undef setlocale
+
 /* Specification:
    <https://pubs.opengroup.org/onlinepubs/9699919799/utilities/locale.html>
    Here we implement only the invocation without any command-line options.  */

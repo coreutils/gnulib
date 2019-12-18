@@ -13,5 +13,6 @@ gt_LOCALE_FR
 
 Makefile.am:
 TESTS += test-c-vasprintf.sh
-check_PROGRAMS += test-c-vasprintf
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
+check_PROGRAMS += test-c-vasprintf
+test_c_vasprintf_LDADD = $(LDADD) $(LIB_SETLOCALE)

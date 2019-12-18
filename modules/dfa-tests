@@ -18,4 +18,4 @@ TESTS +=			\
   dfa-match.sh
 
 check_PROGRAMS += dfa-match-aux
-dfa_match_aux_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+dfa_match_aux_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(LIBTHREAD)

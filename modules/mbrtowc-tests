@@ -41,4 +41,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_JA='@LOCALE_JA@' \
   LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbrtowc test-mbrtowc-w32
-test_mbrtowc_LDADD = $(LDADD) $(LIBTHREAD)
+test_mbrtowc_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)

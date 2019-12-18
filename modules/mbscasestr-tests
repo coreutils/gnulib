@@ -25,6 +25,6 @@ TESTS += test-mbscasestr1 test-mbscasestr2.sh test-mbscasestr3.sh test-mbscasest
 TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' LOCALE_TR_UTF8='@LOCALE_TR_UTF8@' LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbscasestr1 test-mbscasestr2 test-mbscasestr3 test-mbscasestr4
 test_mbscasestr1_LDADD = $(LDADD) $(LIBTHREAD)
-test_mbscasestr2_LDADD = $(LDADD) $(LIBTHREAD)
-test_mbscasestr3_LDADD = $(LDADD) $(LIBTHREAD)
-test_mbscasestr4_LDADD = $(LDADD) $(LIBTHREAD)
+test_mbscasestr2_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
+test_mbscasestr3_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
+test_mbscasestr4_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)

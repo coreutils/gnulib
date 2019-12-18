@@ -13,5 +13,6 @@ gt_LOCALE_FR
 
 Makefile.am:
 TESTS += test-c-snprintf.sh
-check_PROGRAMS += test-c-snprintf
 TESTS_ENVIRONMENT += LOCALE_FR='@LOCALE_FR@'
+check_PROGRAMS += test-c-snprintf
+test_c_snprintf_LDADD = $(LDADD) $(LIB_SETLOCALE)

@@ -28,6 +28,10 @@
 
 #include "glthread/thread.h"
 
+/* We want to use the system's setlocale() function here, not the gnulib
+   override.  */
+#undef setlocale
+
 
 /* Some common locale names.  */
 

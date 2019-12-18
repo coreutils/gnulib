@@ -26,14 +26,15 @@ always fails.  The replacement, however, supports only the locale names
 @code{"C"} and @code{"POSIX"}.
 @end itemize
 
-Portability problems fixed by Gnulib module @code{setlocale-null}:
+Portability problems fixed by Gnulib module @code{setlocale} or @code{setlocale-null}:
 @itemize
 @item
 Invocations of @code{setlocale (..., NULL)} are not multithread-safe on some
 platforms:
 musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Haiku, Cygwin.
-To make these invocations multithread-safe, you need to change the code to
-invoke @code{setlocale_null} instead.
+To make these invocations multithread-safe, you need the Gnulib module
+@code{setlocale}, or you need to change the code to invoke @code{setlocale_null}
+instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

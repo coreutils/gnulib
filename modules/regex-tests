@@ -11,4 +11,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-regex
 check_PROGRAMS += test-regex
-test_regex_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+test_regex_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(LIBTHREAD)
