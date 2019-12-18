@@ -18,6 +18,7 @@ flexmember
 strdup
 lock
 langinfo
+setlocale-null
 
 configure.ac:
 gl_LOCALENAME
