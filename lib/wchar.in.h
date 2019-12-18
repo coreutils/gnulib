@@ -140,12 +140,13 @@ typedef unsigned int rpl_wint_t;
    implementing mbrtowc for encodings like UTF-8.
    On AIX and MSVC, mbrtowc needs to be overridden, but mbstate_t exists and is
    large enough and overriding it would cause problems in C++ mode.  */
-#if (!(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@) \
-    && !(defined _AIX || defined _MSC_VER)
+#if !(@HAVE_MBSINIT@ && @HAVE_MBRTOWC@) || @REPLACE_MBSTATE_T@
 # if !GNULIB_defined_mbstate_t
+#  if !(defined _AIX || defined _MSC_VER)
 typedef int rpl_mbstate_t;
-#  undef mbstate_t
-#  define mbstate_t rpl_mbstate_t
+#   undef mbstate_t
+#   define mbstate_t rpl_mbstate_t
+#  endif
 #  define GNULIB_defined_mbstate_t 1
 # endif
 #endif
