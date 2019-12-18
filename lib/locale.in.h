@@ -228,10 +228,10 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
    The recommended minimum buffer size is
      - SETLOCALE_NULL_MAX for CATEGORY != LC_ALL, and
      - SETLOCALE_NULL_ALL_MAX for CATEGORY == LC_ALL.
-   The return value is an error code: 0 if the call is successful, ERANGE if
-   BUFSIZE is smaller than the length needed size (including the trailing NUL
-   byte).  In the latter case, a truncated result is returned in BUF, but
-   still NUL-terminated if BUFSIZE > 0.
+   The return value is an error code: 0 if the call is successful, EINVAL if
+   CATEGORY is invalid, or ERANGE if BUFSIZE is smaller than the length needed
+   size (including the trailing NUL byte).  In the latter case, a truncated
+   result is returned in BUF, but still NUL-terminated if BUFSIZE > 0.
    For this call to be multithread-safe, *all* calls to
    setlocale (CATEGORY, NULL) in all other threads must have been converted
    to use setlocale_null as well, and the other threads must not make other

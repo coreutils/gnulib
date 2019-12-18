@@ -63,52 +63,103 @@ setlocale_null_unlocked (int category, char *buf, size_t bufsize)
      on _wsetlocale() and uses malloc() for the result.  We are better off
      using _wsetlocale() directly.  */
   const wchar_t *result = _wsetlocale (category, NULL);
-  size_t length = wcslen (result);
-  if (length < bufsize)
+
+  if (result == NULL)
     {
-      size_t i;
-
-      /* Convert wchar_t[] -> char[], assuming plain ASCII.  */
-      for (i = 0; i <= length; i++)
-        buf[i] = result[i];
-
-      return 0;
+      /* CATEGORY is invalid.  */
+      if (bufsize > 0)
+        /* Return an empty string in BUF.
+           This is a convenience for callers that don't want to write explicit
+           code for handling EINVAL.  */
+        buf[0] = '\0';
+      return EINVAL;
     }
   else
     {
-      if (bufsize > 0)
+      size_t length = wcslen (result);
+      if (length < bufsize)
         {
-          /* Return a truncated result in BUF.
-             This is a convenience for callers that don't want to write
-             explicit code for handling ERANGE.  */
           size_t i;
 
           /* Convert wchar_t[] -> char[], assuming plain ASCII.  */
-          for (i = 0; i < bufsize; i++)
+          for (i = 0; i <= length; i++)
             buf[i] = result[i];
-          buf[bufsize - 1] = '\0';
+
+          return 0;
         }
-      return ERANGE;
+      else
+        {
+          if (bufsize > 0)
+            {
+              /* Return a truncated result in BUF.
+                 This is a convenience for callers that don't want to write
+                 explicit code for handling ERANGE.  */
+              size_t i;
+
+              /* Convert wchar_t[] -> char[], assuming plain ASCII.  */
+              for (i = 0; i < bufsize; i++)
+                buf[i] = result[i];
+              buf[bufsize - 1] = '\0';
+            }
+          return ERANGE;
+        }
     }
 #else
   const char *result = setlocale (category, NULL);
-  size_t length = strlen (result);
-  if (length < bufsize)
+
+# ifdef __ANDROID__
+  if (result == NULL)
+    switch (category)
+      {
+      case LC_CTYPE:
+      case LC_NUMERIC:
+      case LC_TIME:
+      case LC_COLLATE:
+      case LC_MONETARY:
+      case LC_MESSAGES:
+      case LC_ALL:
+      case LC_PAPER:
+      case LC_NAME:
+      case LC_ADDRESS:
+      case LC_TELEPHONE:
+      case LC_MEASUREMENT:
+        result = "C";
+        break;
+      default:
+        break;
+      }
+# endif
+
+  if (result == NULL)
     {
-      memcpy (buf, result, length + 1);
-      return 0;
+      /* CATEGORY is invalid.  */
+      if (bufsize > 0)
+        /* Return an empty string in BUF.
+           This is a convenience for callers that don't want to write explicit
+           code for handling EINVAL.  */
+        buf[0] = '\0';
+      return EINVAL;
     }
   else
     {
-      if (bufsize > 0)
+      size_t length = strlen (result);
+      if (length < bufsize)
         {
-          /* Return a truncated result in BUF.
-             This is a convenience for callers that don't want to write
-             explicit code for handling ERANGE.  */
-          memcpy (buf, result, bufsize - 1);
-          buf[bufsize - 1] = '\0';
+          memcpy (buf, result, length + 1);
+          return 0;
         }
-      return ERANGE;
+      else
+        {
+          if (bufsize > 0)
+            {
+              /* Return a truncated result in BUF.
+                 This is a convenience for callers that don't want to write
+                 explicit code for handling ERANGE.  */
+              memcpy (buf, result, bufsize - 1);
+              buf[bufsize - 1] = '\0';
+            }
+          return ERANGE;
+        }
     }
 #endif
 }
