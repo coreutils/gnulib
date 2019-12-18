@@ -454,7 +454,7 @@ struct dfa
   idx_t nregexps;		/* Count of parallel regexps being built
                                    with dfaparse.  */
   bool fast;			/* The DFA is fast.  */
-  token utf8_anychar_classes[5]; /* To lower ANYCHAR in UTF-8 locales.  */
+  token utf8_anychar_classes[9]; /* To lower ANYCHAR in UTF-8 locales.  */
   mbstate_t mbs;		/* Multibyte conversion state.  */
 
   /* The following are valid only if MB_CUR_MAX > 1.  */
@@ -838,7 +838,7 @@ maybe_realloc (void *pa, idx_t i, idx_t *nitems,
 
 /* In DFA D, find the index of charclass S, or allocate a new one.  */
 static idx_t
-charclass_index (struct dfa *d, charclass *s)
+charclass_index (struct dfa *d, charclass const *s)
 {
   idx_t i;
 
@@ -1669,55 +1669,111 @@ addtok_wc (struct dfa *dfa, wint_t wc)
 static void
 add_utf8_anychar (struct dfa *dfa)
 {
-  static charclass const utf8_classes[5] = {
-    /* 80-bf: non-leading bytes.  */
-    CHARCLASS_INIT (0, 0, 0xffffffffffffffff, 0),
+  /* Since the Unicode Standard Version 4.0.0 (2003), a well-formed
+     UTF-8 byte sequence has been defined as follows:
 
-    /* 00-7f: 1-byte sequence.  */
+     ([\x00-\x7f]
+     |[\xc2-\xdf][\x80-\xbf]
+     |[\xe0][\xa0-\xbf][\x80-\xbf]
+     |[\xe1-\xec\xee-\xef][\x80-\xbf][\x80-\xbf]
+     |[\xed][\x80-\x9f][\x80-\xbf]
+     |[\xf0][\x90-\xbf][\x80-\xbf][\x80-\xbf])
+     |[\xf1-\xf3][\x80-\xbf][\x80-\xbf][\x80-\xbf]
+     |[\xf4][\x80-\x8f][\x80-\xbf][\x80-\xbf])
+
+     which I'll write more concisely "A|BC|DEC|FCC|GHC|IJCC|KCCC|LMCC",
+     where A = [\x00-\x7f], B = [\xc2-\xdf], C = [\x80-\xbf],
+     D = [\xe0], E = [\xa0-\xbf], F = [\xe1-\xec\xee-\xef], G = [\xed],
+     H = [\x80-\x9f], I = [\xf0],
+     J = [\x90-\xbf], K = [\xf1-\xf3], L = [\xf4], M = [\x80-\x8f].
+
+     This can be refactored to "A|(B|DE|GH|(F|IJ|LM|KC)C)C".  */
+
+  /* Mnemonics for classes containing two or more bytes.  */
+  enum { A, B, C, E, F, H, J, K, M };
+
+  /* Mnemonics for single-byte tokens.  */
+  enum { D_token = 0xe0, G_token = 0xed, I_token = 0xf0, L_token = 0xf4 };
+
+  static charclass const utf8_classes[] = {
+    /* A. 00-7f: 1-byte sequence.  */
     CHARCLASS_INIT (0xffffffffffffffff, 0xffffffffffffffff, 0, 0),
 
-    /* c2-df: 2-byte sequence.  */
+    /* B. c2-df: 1st byte of a 2-byte sequence.  */
     CHARCLASS_INIT (0, 0, 0, 0x00000000fffffffc),
 
-    /* e0-ef: 3-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0x0000ffff00000000),
+    /* C. 80-bf: non-leading bytes.  */
+    CHARCLASS_INIT (0, 0, 0xffffffffffffffff, 0),
 
-    /* f0-f7: 4-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0x00ff000000000000)
+    /* D. e0 (just a token).  */
+
+    /* E. a0-bf: 2nd byte of a "DEC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0xffffffff00000000, 0),
+
+    /* F. e1-ec + ee-ef: 1st byte of an "FCC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0, 0x0000dffe00000000),
+
+    /* G. ed (just a token).  */
+
+    /* H. 80-9f: 2nd byte of a "GHC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0x000000000000ffff, 0),
+
+    /* I. f0 (just a token).  */
+
+    /* J. 90-bf: 2nd byte of an "IJCC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0xffffffffffff0000, 0),
+
+    /* K. f1-f3: 1st byte of a "KCCC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0, 0x000e000000000000),
+
+    /* L. f4 (just a token).  */
+
+    /* M. 80-8f: 2nd byte of a "LMCC" sequence.  */
+    CHARCLASS_INIT (0, 0, 0x00000000000000ff, 0),
   };
-  int n = sizeof utf8_classes / sizeof *utf8_classes;
 
-  /* Define the five character classes that are needed below.  */
+  /* Define the character classes that are needed below.  */
   if (dfa->utf8_anychar_classes[0] == 0)
-    for (int i = 0; i < n; i++)
-      {
-        charclass c = utf8_classes[i];
-        if (i == 1)
-          {
-            if (!(dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
-              clrbit ('\n', &c);
-            if (dfa->syntax.syntax_bits & RE_DOT_NOT_NULL)
-              clrbit ('\0', &c);
-          }
-        dfa->utf8_anychar_classes[i] = CSET + charclass_index (dfa, &c);
-      }
-
-  /* A valid UTF-8 character is
-
-     ([0x00-0x7f]
-     |[0xc2-0xdf][0x80-0xbf]
-     |[0xe0-0xef[0x80-0xbf][0x80-0xbf]
-     |[0xf0-f7][0x80-0xbf][0x80-0xbf][0x80-0xbf])
-
-     which I'll write more concisely "B|CA|DAA|EAAA".  Factor the [0x00-0x7f]
-     and you get "B|(C|(D|EA)A)A".  And since the token buffer is in reverse
-     Polish notation, you get "B C D E A CAT OR A CAT OR A CAT OR".  */
-  int i;
-  for (i = 1; i < n; i++)
-    addtok (dfa, dfa->utf8_anychar_classes[i]);
-  while (--i > 1)
     {
-      addtok (dfa, dfa->utf8_anychar_classes[0]);
+      charclass c = utf8_classes[0];
+      if (! (dfa->syntax.syntax_bits & RE_DOT_NEWLINE))
+        clrbit ('\n', &c);
+      if (dfa->syntax.syntax_bits & RE_DOT_NOT_NULL)
+        clrbit ('\0', &c);
+      dfa->utf8_anychar_classes[0] = CSET + charclass_index (dfa, &c);
+
+      for (int i = 1; i < sizeof utf8_classes / sizeof *utf8_classes; i++)
+        dfa->utf8_anychar_classes[i]
+          = CSET + charclass_index (dfa, &utf8_classes[i]);
+    }
+
+  /* Implement the "A|(B|DE|GH|(F|IJ|LM|KC)C)C" pattern mentioned above.
+     The token buffer is in reverse Polish order, so we get
+     "A B D E CAT OR G H CAT OR F I J CAT OR L M CAT OR K
+      C CAT OR C CAT OR C CAT OR".  */
+  addtok (dfa, dfa->utf8_anychar_classes[A]);
+  addtok (dfa, dfa->utf8_anychar_classes[B]);
+  addtok (dfa, D_token);
+  addtok (dfa, dfa->utf8_anychar_classes[E]);
+  addtok (dfa, CAT);
+  addtok (dfa, OR);
+  addtok (dfa, G_token);
+  addtok (dfa, dfa->utf8_anychar_classes[H]);
+  addtok (dfa, CAT);
+  addtok (dfa, OR);
+  addtok (dfa, dfa->utf8_anychar_classes[F]);
+  addtok (dfa, I_token);
+  addtok (dfa, dfa->utf8_anychar_classes[J]);
+  addtok (dfa, CAT);
+  addtok (dfa, OR);
+  addtok (dfa, L_token);
+  addtok (dfa, dfa->utf8_anychar_classes[M]);
+  addtok (dfa, CAT);
+  addtok (dfa, OR);
+  addtok (dfa, dfa->utf8_anychar_classes[K]);
+  for (int i = 0; i < 3; i++)
+    {
+      addtok (dfa, dfa->utf8_anychar_classes[C]);
       addtok (dfa, CAT);
       addtok (dfa, OR);
     }
