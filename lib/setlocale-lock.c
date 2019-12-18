@@ -1,4 +1,4 @@
-/* Return the internal lock used by setlocale_null.
+/* Return the internal lock used by setlocale_null_r.
    Copyright (C) 2019 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 
 #include <config.h>
 
-/* This file defines the internal lock used by setlocale_null.
+/* This file defines the internal lock used by setlocale_null_r.
    It is a separate compilation unit, so that only one copy of it is
    present when linking statically.  */
 
@@ -41,7 +41,7 @@ __declspec(dllexport) CRITICAL_SECTION *gl_get_setlocale_null_lock (void);
 static glwthread_initguard_t guard = GLWTHREAD_INITGUARD_INIT;
 static CRITICAL_SECTION lock;
 
-/* Returns the internal lock used by setlocale_null.  */
+/* Returns the internal lock used by setlocale_null_r.  */
 CRITICAL_SECTION *
 gl_get_setlocale_null_lock (void)
 {
@@ -77,7 +77,7 @@ static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 __declspec(dllexport) pthread_mutex_t *gl_get_setlocale_null_lock (void);
 # endif
 
-/* Returns the internal lock used by setlocale_null.  */
+/* Returns the internal lock used by setlocale_null_r.  */
 pthread_mutex_t *
 gl_get_setlocale_null_lock (void)
 {
@@ -101,7 +101,7 @@ atomic_init (void)
   init_needed = 0;
 }
 
-/* Returns the internal lock used by setlocale_null.  */
+/* Returns the internal lock used by setlocale_null_r.  */
 mtx_t *
 gl_get_setlocale_null_lock (void)
 {

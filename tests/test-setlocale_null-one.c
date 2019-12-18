@@ -1,4 +1,4 @@
-/* Multithread-safety test for setlocale_null (LC_xxx, ...).
+/* Multithread-safety test for setlocale_null_r (LC_xxx, ...).
    Copyright (C) 2019 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ thread1_func (void *arg)
     {
       char buf[SETLOCALE_NULL_MAX];
 
-      if (setlocale_null (LC_NUMERIC, buf, sizeof (buf)))
+      if (setlocale_null_r (LC_NUMERIC, buf, sizeof (buf)))
         abort ();
       if (strcmp (expected, buf) != 0)
         {
@@ -86,8 +86,8 @@ thread2_func (void *arg)
     {
       char buf[SETLOCALE_NULL_MAX];
 
-      setlocale_null (LC_NUMERIC, buf, sizeof (buf));
-      setlocale_null (LC_TIME, buf, sizeof (buf));
+      setlocale_null_r (LC_NUMERIC, buf, sizeof (buf));
+      setlocale_null_r (LC_TIME, buf, sizeof (buf));
     }
 
   /*NOTREACHED*/

@@ -220,7 +220,7 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
    In native Windows, there are 5 categories, and the maximum total length is
    55+5*58.  */
 # define SETLOCALE_NULL_ALL_MAX (148+12*256+1)
-/* setlocale_null (CATEGORY, BUF, BUFSIZE) is like setlocale (CATEGORY, NULL),
+/* setlocale_null_r (CATEGORY, BUF, BUFSIZE) is like setlocale (CATEGORY, NULL),
    except that
      - it is guaranteed to be multithread-safe,
      - it returns the resulting locale category name or locale name in the
@@ -234,14 +234,25 @@ _GL_WARN_ON_USE (setlocale, "setlocale works differently on native Windows - "
    result is returned in BUF, but still NUL-terminated if BUFSIZE > 0.
    For this call to be multithread-safe, *all* calls to
    setlocale (CATEGORY, NULL) in all other threads must have been converted
-   to use setlocale_null as well, and the other threads must not make other
-   setlocale invocations (since changing the global locale has side effects
-   on all threads).  */
-_GL_FUNCDECL_SYS (setlocale_null, int,
+   to use setlocale_null_r or setlocale_null as well, and the other threads
+   must not make other setlocale invocations (since changing the global locale
+   has side effects on all threads).  */
+_GL_FUNCDECL_SYS (setlocale_null_r, int,
                   (int category, char *buf, size_t bufsize)
                   _GL_ARG_NONNULL ((2)));
-_GL_CXXALIAS_SYS (setlocale_null, int,
+_GL_CXXALIAS_SYS (setlocale_null_r, int,
                   (int category, char *buf, size_t bufsize));
+_GL_CXXALIASWARN (setlocale_null_r);
+/* setlocale_null (CATEGORY) is like setlocale (CATEGORY, NULL), except that
+   it is guaranteed to be multithread-safe.
+   The return value is NULL if CATEGORY is invalid.
+   For this call to be multithread-safe, *all* calls to
+   setlocale (CATEGORY, NULL) in all other threads must have been converted
+   to use setlocale_null_r or setlocale_null as well, and the other threads
+   must not make other setlocale invocations (since changing the global locale
+   has side effects on all threads).  */
+_GL_FUNCDECL_SYS (setlocale_null, const char *, (int category));
+_GL_CXXALIAS_SYS (setlocale_null, const char *, (int category));
 _GL_CXXALIASWARN (setlocale_null);
 #endif
 

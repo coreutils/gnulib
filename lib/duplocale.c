@@ -72,7 +72,7 @@ rpl_duplocale (locale_t locale)
       locale_t base_copy;
       unsigned int i;
 
-      err = setlocale_null (LC_CTYPE, base_name, sizeof (base_name));
+      err = setlocale_null_r (LC_CTYPE, base_name, sizeof (base_name));
       if (err)
         {
           errno = err;
@@ -88,7 +88,7 @@ rpl_duplocale (locale_t locale)
           int category_mask = categories[i].mask;
           char name[SETLOCALE_NULL_MAX];
 
-          err = setlocale_null (category, name, sizeof (name));
+          err = setlocale_null_r (category, name, sizeof (name));
           if (err)
             {
               errno = err;

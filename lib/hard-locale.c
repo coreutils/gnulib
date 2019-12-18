@@ -28,7 +28,7 @@ hard_locale (int category)
 {
   char locale[SETLOCALE_NULL_MAX];
 
-  if (setlocale_null (category, locale, sizeof (locale)))
+  if (setlocale_null_r (category, locale, sizeof (locale)))
     return false;
 
   return !(strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0);

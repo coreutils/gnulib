@@ -29,7 +29,6 @@
 /* Specification.  */
 #include <locale.h>
 
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,111 +70,7 @@ char *
 setlocale_mtsafe (int category, const char *locale)
 {
   if (locale == NULL)
-    {
-      /* This call must be multithread-safe.  To achieve this without using
-         thread-local storage:
-           1. We use a specific static buffer for each possible CATEGORY
-              argument.  So that different threads can call setlocale_mtsafe
-              with different CATEGORY arguments, without interfering.
-           2. We use a simple strcpy or memcpy to fill this static buffer.
-              Filling it through, for example, strcpy + strcat would not be
-              guaranteed to leave the buffer's contents intact if another thread
-              is currently accessing it.  If necessary, the contents is first
-              assembled in a stack-allocated buffer.  */
-      if (category == LC_ALL)
-        {
-#  if SETLOCALE_NULL_ALL_MTSAFE
-          return setlocale (LC_ALL, NULL);
-#  else
-          char buf[SETLOCALE_NULL_ALL_MAX];
-          static char resultbuf[SETLOCALE_NULL_ALL_MAX];
-
-          if (setlocale_null (LC_ALL, buf, sizeof (buf)))
-            return (char *) "C";
-          strcpy (resultbuf, buf);
-          return resultbuf;
-#  endif
-        }
-      else
-        {
-#  if SETLOCALE_NULL_ONE_MTSAFE
-          return setlocale (category, NULL);
-#  else
-          enum
-            {
-              LC_CTYPE_INDEX,
-              LC_NUMERIC_INDEX,
-              LC_TIME_INDEX,
-              LC_COLLATE_INDEX,
-              LC_MONETARY_INDEX,
-              LC_MESSAGES_INDEX,
-#   ifdef LC_PAPER
-              LC_PAPER_INDEX,
-#   endif
-#   ifdef LC_NAME
-              LC_NAME_INDEX,
-#   endif
-#   ifdef LC_ADDRESS
-              LC_ADDRESS_INDEX,
-#   endif
-#   ifdef LC_TELEPHONE
-              LC_TELEPHONE_INDEX,
-#   endif
-#   ifdef LC_MEASUREMENT
-              LC_MEASUREMENT_INDEX,
-#   endif
-#   ifdef LC_IDENTIFICATION
-              LC_IDENTIFICATION_INDEX,
-#   endif
-              LC_INDICES_COUNT
-            }
-            i;
-          char buf[SETLOCALE_NULL_MAX];
-          static char resultbuf[LC_INDICES_COUNT][SETLOCALE_NULL_MAX];
-          int err;
-
-          err = setlocale_null (category, buf, sizeof (buf));
-          if (err == EINVAL)
-            return NULL;
-          if (err)
-            return (char *) "C";
-
-          switch (category)
-            {
-            case LC_CTYPE:          i = LC_CTYPE_INDEX;          break;
-            case LC_NUMERIC:        i = LC_NUMERIC_INDEX;        break;
-            case LC_TIME:           i = LC_TIME_INDEX;           break;
-            case LC_COLLATE:        i = LC_COLLATE_INDEX;        break;
-            case LC_MONETARY:       i = LC_MONETARY_INDEX;       break;
-            case LC_MESSAGES:       i = LC_MESSAGES_INDEX;       break;
-#   ifdef LC_PAPER
-            case LC_PAPER:          i = LC_PAPER_INDEX;          break;
-#   endif
-#   ifdef LC_NAME
-            case LC_NAME:           i = LC_NAME_INDEX;           break;
-#   endif
-#   ifdef LC_ADDRESS
-            case LC_ADDRESS:        i = LC_ADDRESS_INDEX;        break;
-#   endif
-#   ifdef LC_TELEPHONE
-            case LC_TELEPHONE:      i = LC_TELEPHONE_INDEX;      break;
-#   endif
-#   ifdef LC_MEASUREMENT
-            case LC_MEASUREMENT:    i = LC_MEASUREMENT_INDEX;    break;
-#   endif
-#   ifdef LC_IDENTIFICATION
-            case LC_IDENTIFICATION: i = LC_IDENTIFICATION_INDEX; break;
-#   endif
-            default:
-              /* If you get here, a #ifdef LC_xxx is missing.  */
-              abort ();
-            }
-
-          strcpy (resultbuf[i], buf);
-          return resultbuf[i];
-#  endif
-        }
-    }
+    return (char *) setlocale_null (category);
   else
     return setlocale (category, locale);
 }

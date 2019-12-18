@@ -51,7 +51,7 @@ ctype_codeset (void)
   char *codeset;
   size_t codesetlen;
 
-  if (setlocale_null (LC_CTYPE, locale, sizeof (locale)))
+  if (setlocale_null_r (LC_CTYPE, locale, sizeof (locale)))
     locale[0] = '\0';
 
   codeset = buf;

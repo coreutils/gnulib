@@ -34,7 +34,7 @@ platforms:
 musl libc, macOS, FreeBSD, NetBSD, OpenBSD, AIX, Haiku, Cygwin.
 To make these invocations multithread-safe, you need the Gnulib module
 @code{setlocale}, or you need to change the code to invoke @code{setlocale_null}
-instead.
+or @code{setlocale_null_r} instead.
 @end itemize
 
 Portability problems not fixed by Gnulib:

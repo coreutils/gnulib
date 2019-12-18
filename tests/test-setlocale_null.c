@@ -1,4 +1,4 @@
-/* Test of setlocale_null function.
+/* Test of setlocale_null_r function.
    Copyright (C) 2019 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -27,6 +27,6 @@ static char buf[SETLOCALE_NULL_ALL_MAX];
 int
 main ()
 {
-  /* Check that setlocale_null () can be used with $(LIB_SETLOCALE_NULL).  */
-  return setlocale_null (LC_ALL, buf, sizeof (buf)) != 0;
+  /* Check that setlocale_null_r() can be used with $(LIB_SETLOCALE_NULL).  */
+  return setlocale_null_r (LC_ALL, buf, sizeof (buf)) != 0;
 }
