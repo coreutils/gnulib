@@ -21,52 +21,15 @@
 #include "hard-locale.h"
 
 #include <locale.h>
-#include <stdlib.h>
 #include <string.h>
 
-#ifdef __GLIBC__
-# define GLIBC_VERSION __GLIBC__
-#elif defined __UCLIBC__
-# define GLIBC_VERSION 2
-#else
-# define GLIBC_VERSION 0
-#endif
-
-/* Return true if the current CATEGORY locale is hard, i.e. if you
-   can't get away with assuming traditional C or POSIX behavior.  */
 bool
 hard_locale (int category)
 {
-  bool hard = true;
-  char const *p = setlocale (category, NULL);
+  char locale[SETLOCALE_NULL_MAX];
 
-  if (p)
-    {
-      if (2 <= GLIBC_VERSION)
-        {
-          if (strcmp (p, "C") == 0 || strcmp (p, "POSIX") == 0)
-            hard = false;
-        }
-      else
-        {
-          char *locale = strdup (p);
-          if (locale)
-            {
-              /* Temporarily set the locale to the "C" and "POSIX" locales
-                 to find their names, so that we can determine whether one
-                 or the other is the caller's locale.  */
-              if (((p = setlocale (category, "C"))
-                   && strcmp (p, locale) == 0)
-                  || ((p = setlocale (category, "POSIX"))
-                      && strcmp (p, locale) == 0))
-                hard = false;
+  if (setlocale_null (category, locale, sizeof (locale)))
+    return false;
 
-              /* Restore the caller's locale.  */
-              setlocale (category, locale);
-              free (locale);
-            }
-        }
-    }
-
-  return hard;
+  return !(strcmp (locale, "C") == 0 || strcmp (locale, "POSIX") == 0);
 }

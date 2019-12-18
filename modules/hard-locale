@@ -7,15 +7,21 @@ lib/hard-locale.c
 
 Depends-on:
 stdbool
-strdup
+setlocale-null
 
 configure.ac:
+AC_REQUIRE([gl_FUNC_SETLOCALE_NULL])
+LIB_HARD_LOCALE="$LIB_SETLOCALE_NULL"
+AC_SUBST([LIB_HARD_LOCALE])
 
 Makefile.am:
 lib_SOURCES += hard-locale.c
 
 Include:
 "hard-locale.h"
+
+Link:
+$(LIB_HARD_LOCALE)
 
 License:
 LGPLv2+

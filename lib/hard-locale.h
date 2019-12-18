@@ -20,6 +20,9 @@
 
 # include <stdbool.h>
 
-bool hard_locale (int);
+/* Return true if the specified CATEGORY of the current locale is hard, i.e.
+   different from the C or POSIX locale that has a fixed behavior.
+   CATEGORY must be one of the LC_* values, but not LC_ALL.  */
+extern bool hard_locale (int category);
 
 #endif /* HARD_LOCALE_H_ */
