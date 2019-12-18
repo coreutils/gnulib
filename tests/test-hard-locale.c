@@ -39,8 +39,8 @@ test_one (const char *name, int failure_bitmask)
       /* musl libc has special code for the C.UTF-8 locale; other than that,
          all locale names are accepted and all locales are trivial.
          OpenBSD returns the locale name that was set, but we don't know how it
-         behaves under the hood.  */
-#if defined MUSL_LIBC || defined __OpenBSD__
+         behaves under the hood.  Likewise for Haiku.  */
+#if defined MUSL_LIBC || defined __OpenBSD__ || defined __HAIKU__
       expected = true;
 #else
       expected = !all_trivial;
@@ -63,7 +63,7 @@ test_one (const char *name, int failure_bitmask)
       expected = false;
 #elif defined MUSL_LIBC
       expected = strcmp (name, "C.UTF-8") != 0;
-#elif defined __OpenBSD__ && HAVE_DUPLOCALE /* OpenBSD >= 6.2 */
+#elif (defined __OpenBSD__ && HAVE_DUPLOCALE) || defined __HAIKU__ /* OpenBSD >= 6.2, Haiku */
       expected = true;
 #else
       expected = !all_trivial;
