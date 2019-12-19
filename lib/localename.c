@@ -3191,6 +3191,8 @@ gl_locale_name_thread_unsafe (int category, const char *categoryname)
             return "";
           }
 #   endif
+#  elif defined _AIX && HAVE_NAMELESS_LOCALES
+        return get_locale_t_name (category, thread_locale);
 #  elif defined __CYGWIN__
         /* Cygwin < 2.6 lacks uselocale and thread-local locales altogether.
            Cygwin <= 2.6.1 lacks NL_LOCALE_NAME, requiring peeking inside

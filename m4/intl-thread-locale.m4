@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 5
+# intl-thread-locale.m4 serial 6
 dnl Copyright (C) 2015-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,7 +17,7 @@ dnl Check how to retrieve the name of a per-thread locale (POSIX locale_t).
 dnl Sets gt_nameless_locales.
 AC_DEFUN([gt_INTL_THREAD_LOCALE_NAME],
 [
-  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl Persuade Solaris <locale.h> to define 'locale_t'.
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
@@ -119,18 +119,20 @@ int main ()
       ;;
   esac
 
-  dnl This code is for future use, in case we some day have to port to a
-  dnl platform where the locale_t type does not provide access to the name of
-  dnl each locale category.  This code has the drawback that it requires the
-  dnl gnulib overrides of 'newlocale', 'duplocale', 'freelocale', which is a
-  dnl problem for GNU libunistring.  Therefore try hard to avoid enabling this
-  dnl code!
+  dnl This code is for platforms where the locale_t type does not provide access
+  dnl to the name of each locale category.  This code has the drawback that it
+  dnl requires the gnulib overrides of 'newlocale', 'duplocale', 'freelocale',
+  dnl which is a problem for GNU libunistring.  Therefore try hard to avoid
+  dnl enabling this code!
   gt_nameless_locales=no
-  if false; then
-    gt_nameless_locales=yes
-    AC_DEFINE([HAVE_NAMELESS_LOCALES], [1],
-      [Define if the locale_t type does not contain the name of each locale category.])
-  fi
+  case "$host_os" in
+    dnl It's needed on AIX 7.2.
+    aix*)
+      gt_nameless_locales=yes
+      AC_DEFINE([HAVE_NAMELESS_LOCALES], [1],
+        [Define if the locale_t type does not contain the name of each locale category.])
+      ;;
+  esac
 ])
 
 dnl Tests whether uselocale() exists and is usable.
