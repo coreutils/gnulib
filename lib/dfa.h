@@ -31,7 +31,7 @@ struct dfamust
   bool exact;
   bool begline;
   bool endline;
-  char *must;
+  char must[FLEXIBLE_ARRAY_MEMBER];
 };
 
 /* The dfa structure. It is completely opaque. */

@@ -11,6 +11,7 @@ Depends-on:
 assert
 c99
 ctype
+flexmember
 intprops
 isblank
 locale

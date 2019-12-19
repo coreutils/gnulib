@@ -24,6 +24,8 @@
 
 #include "dfa.h"
 
+#include "flexmember.h"
+
 #include <assert.h>
 #include <ctype.h>
 #include <stdint.h>
@@ -4272,11 +4274,11 @@ dfamust (struct dfa const *d)
   struct dfamust *dm = NULL;
   if (*result)
     {
-      dm = xmalloc (sizeof *dm);
+      dm = xmalloc (FLEXSIZEOF (struct dfamust, must, strlen (result) + 1));
       dm->exact = exact;
       dm->begline = begline;
       dm->endline = endline;
-      dm->must = xstrdup (result);
+      strcpy (dm->must, result);
     }
 
   while (mp)
@@ -4292,7 +4294,6 @@ dfamust (struct dfa const *d)
 void
 dfamustfree (struct dfamust *dm)
 {
-  free (dm->must);
   free (dm);
 }
 
