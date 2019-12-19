@@ -87,7 +87,7 @@ enum { CHARCLASS_WORD_BITS = 64 };
 
 /* This represents part of a character class.  It must be unsigned and
    at least CHARCLASS_WORD_BITS wide.  Any excess bits are zero.  */
-typedef uint_fast64_t charclass_word;
+typedef uint_least64_t charclass_word;
 
 /* An initializer for a charclass whose 64-bit words are A through D.  */
 #define CHARCLASS_INIT(a, b, c, d) {{a, b, c, d}}
