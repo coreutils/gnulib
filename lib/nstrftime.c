@@ -1138,8 +1138,8 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             int ndigs = ns_digits;
             while (width < ndigs || (1 < ndigs && n % 10 == 0))
               ndigs--, n /= 10;
-            for (int i = ndigs; 0 < i; i--)
-              buf[i - 1] = n % 10 + L_('0'), n /= 10;
+            for (int j = ndigs; 0 < j; j--)
+              buf[j - 1] = n % 10 + L_('0'), n /= 10;
             if (!pad)
               pad = L_('0');
             width_cpy (0, ndigs, buf);
