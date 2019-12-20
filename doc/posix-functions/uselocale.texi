@@ -20,6 +20,10 @@ This function is not documented and leads to crashes in subsequent
 @code{setlocale} invocations on some platforms:
 AIX 7.2.
 @item
+This function is useless because the @code{locale_t} type is not defined
+on some platforms:
+z/OS.
+@item
 This function is useless because the @code{locale_t} type contains basically
 no information on some platforms:
 OpenBSD 6.3.
