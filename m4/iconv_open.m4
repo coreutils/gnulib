@@ -1,4 +1,4 @@
-# iconv_open.m4 serial 15
+# iconv_open.m4 serial 16
 dnl Copyright (C) 2007-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -23,11 +23,12 @@ AC_DEFUN([gl_FUNC_ICONV_OPEN],
     if test $gl_func_iconv_gnu = no; then
       iconv_flavor=
       case "$host_os" in
-        aix*)     iconv_flavor=ICONV_FLAVOR_AIX ;;
-        irix*)    iconv_flavor=ICONV_FLAVOR_IRIX ;;
-        hpux*)    iconv_flavor=ICONV_FLAVOR_HPUX ;;
-        osf*)     iconv_flavor=ICONV_FLAVOR_OSF ;;
-        solaris*) iconv_flavor=ICONV_FLAVOR_SOLARIS ;;
+        aix*)         iconv_flavor=ICONV_FLAVOR_AIX ;;
+        irix*)        iconv_flavor=ICONV_FLAVOR_IRIX ;;
+        hpux*)        iconv_flavor=ICONV_FLAVOR_HPUX ;;
+        osf*)         iconv_flavor=ICONV_FLAVOR_OSF ;;
+        solaris*)     iconv_flavor=ICONV_FLAVOR_SOLARIS ;;
+        openedition*) iconv_flavor=ICONV_FLAVOR_ZOS ;;
       esac
       if test -n "$iconv_flavor"; then
         AC_DEFINE_UNQUOTED([ICONV_FLAVOR], [$iconv_flavor],

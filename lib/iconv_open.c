@@ -36,6 +36,7 @@
 #define ICONV_FLAVOR_IRIX "iconv_open-irix.h"
 #define ICONV_FLAVOR_OSF "iconv_open-osf.h"
 #define ICONV_FLAVOR_SOLARIS "iconv_open-solaris.h"
+#define ICONV_FLAVOR_ZOS "iconv_open-zos.h"
 
 #ifdef ICONV_FLAVOR
 # include ICONV_FLAVOR
