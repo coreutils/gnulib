@@ -1,4 +1,4 @@
-# intl-thread-locale.m4 serial 6
+# intl-thread-locale.m4 serial 7
 dnl Copyright (C) 2015-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -171,8 +171,8 @@ int main ()
          [gt_cv_func_uselocale_works=no],
          [# Guess no on AIX and z/OS, yes otherwise.
           case "$host_os" in
-            aix* | mvs*) gt_cv_func_uselocale_works="guessing no" ;;
-            *)           gt_cv_func_uselocale_works="guessing yes" ;;
+            aix* | openedition*) gt_cv_func_uselocale_works="guessing no" ;;
+            *)                   gt_cv_func_uselocale_works="guessing yes" ;;
           esac
          ])
       ])
