@@ -27,7 +27,7 @@ time
 havelib
 
 configure.ac-early:
-gl_THREADLIB_EARLY
+gl_ANYTHREADLIB_EARLY
 
 configure.ac:
 AC_REQUIRE([gl_THREADS_H])
