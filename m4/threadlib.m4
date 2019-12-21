@@ -1,4 +1,4 @@
-# threadlib.m4 serial 24
+# threadlib.m4 serial 25
 dnl Copyright (C) 2005-2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -16,6 +16,8 @@ dnl Sets the variable LIBPMULTITHREAD, for programs that really need
 dnl multithread functionality. The difference between LIBPTHREAD and
 dnl LIBPMULTITHREAD is that on platforms supporting weak symbols, typically
 dnl LIBPTHREAD is empty whereas LIBPMULTITHREAD is not.
+dnl Sets the variable LIB_SCHED_YIELD to the linker options needed to use the
+dnl sched_yield() function.
 dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
 dnl multithread-safe programs.
 dnl Defines the C macro HAVE_PTHREAD_API if (at least parts of) the POSIX
@@ -277,6 +279,21 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
       AC_DEFINE([HAVE_PTHREAD_API], [1],
         [Define if you have the <pthread.h> header and the POSIX threads API.])
     fi
+
+    dnl On some systems, sched_yield is in librt, rather than in libpthread.
+    AC_LINK_IFELSE(
+      [AC_LANG_PROGRAM(
+         [[#include <sched.h>]],
+         [[sched_yield ();]])],
+      [LIB_SCHED_YIELD=
+      ],
+      [dnl Solaris 7...10 has sched_yield in librt, not in libpthread or libc.
+       AC_CHECK_LIB([rt], [sched_yield], [LIB_SCHED_YIELD=-lrt],
+         [dnl Solaris 2.5.1, 2.6 has sched_yield in libposix4, not librt.
+          AC_CHECK_LIB([posix4], [sched_yield], [LIB_SCHED_YIELD=-lposix4])])
+      ])
+    AC_SUBST([LIB_SCHED_YIELD])
+
     gl_threadlib_body_done=done
   fi
 ])

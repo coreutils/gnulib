@@ -14,7 +14,6 @@ lib/windows-tls.h
 lib/windows-initguard.h
 m4/threads.m4
 m4/threadlib.m4
-m4/yield.m4
 build-aux/config.rpath
 
 Depends-on:

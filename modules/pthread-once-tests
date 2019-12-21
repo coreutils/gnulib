@@ -14,4 +14,4 @@ Makefile.am:
 TESTS += test-pthread-once1 test-pthread-once2
 check_PROGRAMS += test-pthread-once1 test-pthread-once2
 test_pthread_once1_LDADD = $(LDADD) @LIBPMULTITHREAD@
-test_pthread_once2_LDADD = $(LDADD) @LIBPMULTITHREAD@ @YIELD_LIB@
+test_pthread_once2_LDADD = $(LDADD) @LIBPMULTITHREAD@ @LIB_SCHED_YIELD@

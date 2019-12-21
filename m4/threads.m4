@@ -1,4 +1,4 @@
-# threads.m4 serial 6
+# threads.m4 serial 7
 dnl Copyright (C) 2019 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -14,7 +14,6 @@ AC_DEFUN([gl_THREADS_H],
   AC_REQUIRE([gl_THREADS_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
   AC_REQUIRE([gl_THREADLIB_BODY])
-  AC_REQUIRE([gl_YIELD])
 
   gl_CHECK_NEXT_HEADERS([threads.h])
   if test $ac_cv_header_threads_h = yes; then
@@ -72,7 +71,7 @@ AC_DEFUN([gl_THREADS_H],
         fi
       else
         dnl Libraries needed by thrd.c, mtx.c, cnd.c, tss.c.
-        LIBSTDTHREAD="$LIBMULTITHREAD $YIELD_LIB"
+        LIBSTDTHREAD="$LIBMULTITHREAD $LIB_SCHED_YIELD"
       fi
       ;;
   esac

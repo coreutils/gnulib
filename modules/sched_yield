@@ -4,11 +4,10 @@ Schedule other threads to run.
 Files:
 lib/sched_yield.c
 m4/sched_yield.m4
-m4/yield.m4
+m4/threadlib.m4
 
 Depends-on:
 sched
-threadlib
 
 configure.ac:
 gl_FUNC_SCHED_YIELD
@@ -23,7 +22,7 @@ Include:
 <sched.h>
 
 Link:
-$(YIELD_LIB)
+$(LIB_SCHED_YIELD)
 
 License:
 LGPLv2+
