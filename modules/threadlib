@@ -6,7 +6,6 @@ lib/glthread/threadlib.c
 m4/threadlib.m4
 
 Depends-on:
-havelib
 
 configure.ac-early:
 gl_THREADLIB_EARLY
