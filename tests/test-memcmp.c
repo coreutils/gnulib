@@ -25,12 +25,11 @@ SIGNATURE_CHECK (memcmp, int, (void const *, void const *, size_t));
 #include "zerosize-ptr.h"
 #include "macros.h"
 
-/* Note: This test sometimes fails when compiled by 'clang'.
-   See <https://bugs.llvm.org/show_bug.cgi?id=40063>.  */
-
 int
 main (void)
 {
+  int (* volatile memcmp_ptr) (const void *, const void *, size_t) = memcmp;
+
   /* Test equal / not equal distinction.  */
   ASSERT (memcmp (zerosize_ptr (), zerosize_ptr (), 0) == 0);
   ASSERT (memcmp ("foo", "foobar", 2) == 0);
@@ -48,10 +47,13 @@ main (void)
   ASSERT (memcmp ("foobar", "foo", 4) > 0);
 
   /* Some old versions of memcmp were not 8-bit clean.  */
-  ASSERT (memcmp ("\100", "\201", 1) < 0);
-  ASSERT (memcmp ("\201", "\100", 1) > 0);
-  ASSERT (memcmp ("\200", "\201", 1) < 0);
-  ASSERT (memcmp ("\201", "\200", 1) > 0);
+  /* Use the function pointer here, because otherwise this test is sometimes
+     miscompiled by 'clang'.
+     See <https://bugs.llvm.org/show_bug.cgi?id=40063>.  */
+  ASSERT (memcmp_ptr ("\100", "\201", 1) < 0);
+  ASSERT (memcmp_ptr ("\201", "\100", 1) > 0);
+  ASSERT (memcmp_ptr ("\200", "\201", 1) < 0);
+  ASSERT (memcmp_ptr ("\201", "\200", 1) > 0);
 
   /* The Next x86 OpenStep bug shows up only when comparing 16 bytes
      or more and with at least one buffer not starting on a 4-byte boundary.
