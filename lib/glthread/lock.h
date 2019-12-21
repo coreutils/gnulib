@@ -308,7 +308,7 @@ typedef pthread_mutex_t gl_lock_t;
 
 # if HAVE_PTHREAD_RWLOCK && (HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER || (defined PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP && (__GNU_LIBRARY__ > 1)))
 
-#  ifdef PTHREAD_RWLOCK_INITIALIZER
+#  if defined PTHREAD_RWLOCK_INITIALIZER || defined PTHREAD_RWLOCK_INITIALIZER_NP
 
 typedef pthread_rwlock_t gl_rwlock_t;
 #   define gl_rwlock_define(STORAGECLASS, NAME) \
@@ -316,8 +316,13 @@ typedef pthread_rwlock_t gl_rwlock_t;
 #   define gl_rwlock_define_initialized(STORAGECLASS, NAME) \
       STORAGECLASS pthread_rwlock_t NAME = gl_rwlock_initializer;
 #   if HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER
-#    define gl_rwlock_initializer \
-       PTHREAD_RWLOCK_INITIALIZER
+#    if defined PTHREAD_RWLOCK_INITIALIZER
+#     define gl_rwlock_initializer \
+        PTHREAD_RWLOCK_INITIALIZER
+#    else
+#     define gl_rwlock_initializer \
+        PTHREAD_RWLOCK_INITIALIZER_NP
+#    endif
 #    define glthread_rwlock_init(LOCK) \
        (pthread_in_use () ? pthread_rwlock_init (LOCK, NULL) : 0)
 #   else /* glibc with bug https://sourceware.org/bugzilla/show_bug.cgi?id=13701 */

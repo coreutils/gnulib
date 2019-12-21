@@ -281,7 +281,11 @@ typedef unsigned int pthread_rwlockattr_t;
 # define PTHREAD_RWLOCK_INITIALIZER \
    { PTHREAD_MUTEX_INITIALIZER, PTHREAD_COND_INITIALIZER, PTHREAD_COND_INITIALIZER, 0, 0 }
 #else
-# if !@HAVE_PTHREAD_T@
+# if @HAVE_PTHREAD_T@
+#  if !defined PTHREAD_RWLOCK_INITIALIZER && defined PTHREAD_RWLOCK_INITIALIZER_NP /* z/OS */
+#   define PTHREAD_RWLOCK_INITIALIZER PTHREAD_RWLOCK_INITIALIZER_NP
+#  endif
+# else
 #  if !GNULIB_defined_pthread_rwlock_types
 typedef int pthread_rwlock_t;
 typedef unsigned int pthread_rwlockattr_t;

@@ -254,7 +254,7 @@ glthread_recursive_lock_destroy (gl_recursive_lock_t *lock)
 
 # if HAVE_PTHREAD_RWLOCK && (HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER || (defined PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP && (__GNU_LIBRARY__ > 1)))
 
-#  ifdef PTHREAD_RWLOCK_INITIALIZER
+#  if defined PTHREAD_RWLOCK_INITIALIZER || defined PTHREAD_RWLOCK_INITIALIZER_NP
 
 #   if !HAVE_PTHREAD_RWLOCK_RDLOCK_PREFER_WRITER
      /* glibc with bug https://sourceware.org/bugzilla/show_bug.cgi?id=13701 */
