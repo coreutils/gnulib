@@ -13,7 +13,7 @@ AC_DEFUN([gl_THREADS_H],
 [
   AC_REQUIRE([gl_THREADS_H_DEFAULTS])
   AC_REQUIRE([AC_CANONICAL_HOST])
-  AC_REQUIRE([gl_THREADLIB_BODY])
+  AC_REQUIRE([gl_STDTHREADLIB])
 
   gl_CHECK_NEXT_HEADERS([threads.h])
   if test $ac_cv_header_threads_h = yes; then
@@ -47,35 +47,6 @@ AC_DEFUN([gl_THREADS_H],
       BROKEN_THRD_START_T=1
     fi
   fi
-
-  case "$host_os" in
-    mingw*)
-      LIBSTDTHREAD=
-      ;;
-    *)
-      if test $ac_cv_header_threads_h = yes; then
-        dnl glibc >= 2.29 has thrd_create in libpthread.
-        dnl FreeBSD >= 10 has thrd_create in libstdthreads; this library depends
-        dnl on libpthread (for the symbol 'pthread_mutexattr_gettype').
-        dnl AIX >= 7.1 and Solaris >= 11.4 have thrd_create in libc.
-        AC_CHECK_FUNCS([thrd_create])
-        if test $ac_cv_func_thrd_create = yes; then
-          LIBSTDTHREAD=
-        else
-          AC_CHECK_LIB([stdthreads], [thrd_create], [
-            LIBSTDTHREAD='-lstdthreads -lpthread'
-          ], [
-            dnl Guess that thrd_create is in libpthread.
-            LIBSTDTHREAD="$LIBMULTITHREAD"
-          ])
-        fi
-      else
-        dnl Libraries needed by thrd.c, mtx.c, cnd.c, tss.c.
-        LIBSTDTHREAD="$LIBMULTITHREAD $LIB_SCHED_YIELD"
-      fi
-      ;;
-  esac
-  AC_SUBST([LIBSTDTHREAD])
 
   dnl Define _Thread_local.
   dnl GCC, for example, supports '__thread' since version 3.3, but it supports

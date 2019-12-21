@@ -23,6 +23,15 @@ dnl multithread-safe programs.
 dnl Defines the C macro HAVE_PTHREAD_API if (at least parts of) the POSIX
 dnl threads API is available.
 
+dnl gl_STDTHREADLIB
+dnl ---------------
+dnl Tests for the libraries needs for using the ISO C threads API.
+dnl Sets the variable LIBSTDTHREAD to the linker options for use in a Makefile.
+dnl Adds to CPPFLAGS the flag -D_REENTRANT or -D_THREAD_SAFE if needed for
+dnl multithread-safe programs.
+dnl Defines the C macro HAVE_THREADS_H if (at least parts of) the ISO C threads
+dnl API is available.
+
 dnl gl_THREADLIB
 dnl ------------
 dnl Tests for a multithreading library to be used.
@@ -200,7 +209,7 @@ dnl The guts of gl_PTHREADLIB. Needs to be expanded only once.
 AC_DEFUN([gl_PTHREADLIB_BODY],
 [
   AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
-  if test -z "$gl_threadlib_body_done"; then
+  if test -z "$gl_pthreadlib_body_done"; then
     gl_pthread_api=no
     LIBPTHREAD=
     LIBPMULTITHREAD=
@@ -294,7 +303,52 @@ AC_DEFUN([gl_PTHREADLIB_BODY],
       ])
     AC_SUBST([LIB_SCHED_YIELD])
 
-    gl_threadlib_body_done=done
+    gl_pthreadlib_body_done=done
+  fi
+])
+
+dnl The guts of gl_STDTHREADLIB. Needs to be expanded only once.
+
+AC_DEFUN([gl_STDTHREADLIB_BODY],
+[
+  AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
+  AC_REQUIRE([AC_CANONICAL_HOST])
+  if test -z "$gl_stdthreadlib_body_done"; then
+    AC_CHECK_HEADERS_ONCE([threads.h])
+
+    case "$host_os" in
+      mingw*)
+        LIBSTDTHREAD=
+        ;;
+      *)
+        gl_PTHREADLIB_BODY
+        if test $ac_cv_header_threads_h = yes; then
+          dnl glibc >= 2.29 has thrd_create in libpthread.
+          dnl FreeBSD >= 10 has thrd_create in libstdthreads; this library depends
+          dnl on libpthread (for the symbol 'pthread_mutexattr_gettype').
+          dnl AIX >= 7.1 and Solaris >= 11.4 have thrd_create in libc.
+          AC_CHECK_FUNCS([thrd_create])
+          if test $ac_cv_func_thrd_create = yes; then
+            LIBSTDTHREAD=
+          else
+            AC_CHECK_LIB([stdthreads], [thrd_create], [
+              LIBSTDTHREAD='-lstdthreads -lpthread'
+            ], [
+              dnl Guess that thrd_create is in libpthread.
+              LIBSTDTHREAD="$LIBPMULTITHREAD"
+            ])
+          fi
+        else
+          dnl Libraries needed by thrd.c, mtx.c, cnd.c, tss.c.
+          LIBSTDTHREAD="$LIBPMULTITHREAD $LIB_SCHED_YIELD"
+        fi
+        ;;
+    esac
+    AC_SUBST([LIBSTDTHREAD])
+
+    AC_MSG_CHECKING([whether ISO C threads API is available])
+    AC_MSG_RESULT([$ac_cv_header_threads_h])
+    gl_stdthreadlib_body_done=done
   fi
 ])
 
@@ -320,20 +374,7 @@ AC_DEFUN([gl_THREADLIB_BODY],
     fi
     if test "$gl_use_threads" = isoc || test "$gl_use_threads" = isoc+posix; then
       AC_CHECK_HEADERS_ONCE([threads.h])
-      if test $ac_cv_header_threads_h = yes; then
-        gl_have_isoc_threads=
-        # Test whether both mtx_lock and cnd_timedwait exist in libc.
-        AC_LINK_IFELSE(
-          [AC_LANG_PROGRAM(
-             [[#include <threads.h>
-               #include <stddef.h>
-               mtx_t m;
-               cnd_t c;
-             ]],
-             [[mtx_lock (&m);
-               cnd_timedwait (&c, &m, NULL);]])],
-          [gl_have_isoc_threads=yes])
-      fi
+      gl_have_isoc_threads="$ac_cv_header_threads_h"
     fi
     if test "$gl_use_threads" = yes \
        || test "$gl_use_threads" = posix \
@@ -363,6 +404,9 @@ AC_DEFUN([gl_THREADLIB_BODY],
     fi
     if test $gl_threads_api = none; then
       if test "$gl_use_threads" = isoc && test "$gl_have_isoc_threads" = yes; then
+        gl_STDTHREADLIB_BODY
+        LIBTHREAD=$LIBSTDTHREAD LTLIBTHREAD=$LIBSTDTHREAD
+        LIBMULTITHREAD=$LIBSTDTHREAD LTLIBMULTITHREAD=$LIBSTDTHREAD
         gl_threads_api=isoc
         AC_DEFINE([USE_ISOC_THREADS], [1],
           [Define if the ISO C multithreading library can be used.])
@@ -396,6 +440,12 @@ AC_DEFUN([gl_PTHREADLIB],
 [
   AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
   gl_PTHREADLIB_BODY
+])
+
+AC_DEFUN([gl_STDTHREADLIB],
+[
+  AC_REQUIRE([gl_ANYTHREADLIB_EARLY])
+  gl_STDTHREADLIB_BODY
 ])
 
 AC_DEFUN([gl_THREADLIB],
