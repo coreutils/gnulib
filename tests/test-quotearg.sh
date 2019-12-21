@@ -22,5 +22,5 @@ if test $locale = French_France.1252; then
   locale=fr_FR.CP1252
 fi
 
-LOCALE=$locale LOCALEDIR="$srcdir/locale" \
+LOCALE=$locale LOCALEDIR="$srcdir/testlocale" \
 ${CHECKER} ./test-quotearg${EXEEXT}
