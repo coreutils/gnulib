@@ -59,7 +59,10 @@ main (int argc, char *argv[])
   sigaddset (&set, SIGINT);
 
   /* Check error handling.  */
+  /* This call returns 0 on NetBSD 8.0.  */
+#if !defined __NetBSD__
   ASSERT (pthread_sigmask (1729, &set, NULL) == EINVAL);
+#endif
 
   /* Block SIGINT.  */
   ASSERT (pthread_sigmask (SIG_BLOCK, &set, NULL) == 0);

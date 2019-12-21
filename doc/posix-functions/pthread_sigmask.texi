@@ -34,4 +34,7 @@ Portability problems not fixed by Gnulib:
 @item
 On platforms that do not natively support this function,
 it has unspecified behavior in a multi-threaded process.
+@item
+This function may not fail when the first argument is invalid on some platforms:
+NetBSD 8.0.
 @end itemize
