@@ -4,7 +4,6 @@ strtoimax() function: convert string to 'intmax_t'.
 Files:
 lib/strtoimax.c
 m4/strtoimax.m4
-m4/longlong.m4
 
 Depends-on:
 inttypes-incomplete
