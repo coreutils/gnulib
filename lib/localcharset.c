@@ -150,7 +150,8 @@ static const struct table_entry alias_table[] =
     { "ISO8859-2",  "ISO-8859-2" },
     { "ISO8859-4",  "ISO-8859-4" },
     { "ISO8859-5",  "ISO-8859-5" },
-    { "ISO8859-7",  "ISO-8859-7" }
+    { "ISO8859-7",  "ISO-8859-7" },
+    { "US-ASCII",   "ASCII" }
 #   define alias_table_defined
 #  endif
 #  if defined __APPLE__ && defined __MACH__                 /* Mac OS X */
