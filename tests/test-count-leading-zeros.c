@@ -68,10 +68,8 @@ main (int argc, char *argv[])
                             UINT_BIT, UINT_MAX, 1U);
   TEST_COUNT_LEADING_ZEROS (count_leading_zeros_l, unsigned long int,
                             ULONG_BIT, ULONG_MAX, 1UL);
-#ifdef HAVE_UNSIGNED_LONG_LONG_INT
   TEST_COUNT_LEADING_ZEROS (count_leading_zeros_ll, unsigned long long int,
                             ULLONG_BIT, ULLONG_MAX, 1ULL);
-#endif
 
   return 0;
 }

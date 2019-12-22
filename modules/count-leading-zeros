@@ -4,14 +4,12 @@ Counts the number of leading 0-bits in a word.
 Files:
 lib/count-leading-zeros.c
 lib/count-leading-zeros.h
-m4/count-leading-zeros.m4
 
 Depends-on:
 extern-inline
 verify
 
 configure.ac:
-gl_COUNT_LEADING_ZEROS
 
 Makefile.am:
 lib_SOURCES += count-leading-zeros.c
