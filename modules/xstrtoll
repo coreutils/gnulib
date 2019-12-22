@@ -12,10 +12,9 @@ strtoull
 xstrtol
 
 configure.ac:
-AC_LIBOBJ([xstrtoll])
-AC_LIBOBJ([xstrtoull])
 
 Makefile.am:
+lib_SOURCES += xstrtoll.c xstrtoull.c
 
 Include:
 "xstrtol.h"

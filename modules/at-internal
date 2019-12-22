@@ -14,9 +14,9 @@ sys_stat
 unistd
 
 configure.ac:
-AC_LIBOBJ([openat-proc])
 
 Makefile.am:
+lib_SOURCES += openat-priv.h openat-proc.c
 
 Include:
 "openat-priv.h"

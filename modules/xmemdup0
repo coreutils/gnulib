@@ -9,9 +9,9 @@ Depends-on:
 xalloc
 
 configure.ac:
-AC_LIBOBJ([xmemdup0])
 
 Makefile.am:
+lib_SOURCES += xmemdup0.h xmemdup0.c
 
 Include:
 "xmemdup0.h"

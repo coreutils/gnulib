@@ -21,9 +21,9 @@ unistd
 
 configure.ac:
 AC_CHECK_HEADERS([selinux/flask.h])
-AC_LIBOBJ([selinux-at])
 
 Makefile.am:
+lib_SOURCES += selinux-at.h selinux-at.c
 
 Include:
 "selinux-at.h"
