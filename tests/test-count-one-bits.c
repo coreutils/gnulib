@@ -66,10 +66,8 @@ main (int argc, char *argv[])
   TEST_COUNT_ONE_BITS (count_one_bits, unsigned int, UINT_BIT, UINT_MAX, 1U);
   TEST_COUNT_ONE_BITS (count_one_bits_l, unsigned long int,
                        ULONG_BIT, ULONG_MAX, 1UL);
-#ifdef HAVE_UNSIGNED_LONG_LONG_INT
-  TEST_COUNT_ONE_BITS (count_one_bits_ll,
-                       unsigned long long int, ULLONG_BIT, ULLONG_MAX, 1ULL);
-#endif
+  TEST_COUNT_ONE_BITS (count_one_bits_ll, unsigned long long int,
+                       ULLONG_BIT, ULLONG_MAX, 1ULL);
 
   return 0;
 }
