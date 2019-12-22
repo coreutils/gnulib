@@ -29,21 +29,9 @@ _GL_INLINE_HEADER_BEGIN
 #endif
 
 /* xtime_t is a signed type used for timestamps.  It is an integer
-   type that is a count of nanoseconds -- except for obsolescent hosts
-   without sufficiently-wide integers, where it is a count of
-   seconds.  */
-#if HAVE_LONG_LONG_INT
+   type that is a count of nanoseconds.  */
 typedef long long int xtime_t;
-# define XTIME_PRECISION 1000000000
-#else
-# include <limits.h>
-typedef long int xtime_t;
-# if LONG_MAX >> 31 >> 31 == 0
-#  define XTIME_PRECISION 1
-# else
-#  define XTIME_PRECISION 1000000000
-# endif
-#endif
+#define XTIME_PRECISION 1000000000
 
 #ifdef  __cplusplus
 extern "C" {
@@ -57,10 +45,7 @@ xtime_make (xtime_t s, long int ns)
   const long int giga = 1000 * 1000 * 1000;
   s += ns / giga;
   ns %= giga;
-  if (XTIME_PRECISION == 1)
-    return s;
-  else
-    return XTIME_PRECISION * s + ns;
+  return XTIME_PRECISION * s + ns;
 }
 
 /* Return the number of seconds in T, which must be nonnegative.  */
@@ -74,9 +59,7 @@ xtime_nonnegative_sec (xtime_t t)
 XTIME_INLINE xtime_t
 xtime_sec (xtime_t t)
 {
-  return (XTIME_PRECISION == 1
-          ? t
-          : t < 0
+  return (t < 0
           ? (t + XTIME_PRECISION - 1) / XTIME_PRECISION - 1
           : xtime_nonnegative_sec (t));
 }
