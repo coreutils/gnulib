@@ -1,6 +1,12 @@
 Description:
 Define HAVE_LONG_LONG_INT if 'long long int' works.
 
+Status:
+obsolete
+
+Notice:
+This module is obsolete.
+
 Files:
 m4/longlong.m4
 
