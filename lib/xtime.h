@@ -38,15 +38,17 @@ extern "C" {
 #endif
 
 /* Return an extended time value that contains S seconds and NS
-   nanoseconds.  */
+   nanoseconds.  S and NS should be nonnegative; otherwise, integer
+   overflow can occur even if the result is in range.  */
 XTIME_INLINE xtime_t
 xtime_make (xtime_t s, long int ns)
 {
-  const long int giga = 1000 * 1000 * 1000;
-  s += ns / giga;
-  ns %= giga;
   return XTIME_PRECISION * s + ns;
 }
+
+/* The following functions split an extended time value:
+   T = XTIME_PRECISION * xtime_sec (T) + xtime_nsec (T)
+   with  0 <= xtime_nsec (T) < XTIME_PRECISION.  */
 
 /* Return the number of seconds in T, which must be nonnegative.  */
 XTIME_INLINE xtime_t
