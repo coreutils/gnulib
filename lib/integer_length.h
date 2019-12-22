@@ -36,11 +36,9 @@ extern int integer_length (unsigned int x);
    The result is >= 0, <= sizeof (unsigned long) * CHAR_BIT.  */
 extern int integer_length_l (unsigned long x);
 
-#if HAVE_UNSIGNED_LONG_LONG_INT
 /* Returns the integer length of x.
    The result is >= 0, <= sizeof (unsigned long long) * CHAR_BIT.  */
 extern int integer_length_ll (unsigned long long x);
-#endif
 
 #ifdef __cplusplus
 }

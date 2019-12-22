@@ -5,14 +5,12 @@ Files:
 lib/integer_length.h
 lib/integer_length.c
 lib/float+.h
-m4/longlong.m4
 m4/exponentd.m4
 
 Depends-on:
 float
 
 configure.ac:
-AC_REQUIRE([AC_TYPE_UNSIGNED_LONG_LONG_INT])
 AC_REQUIRE([gl_DOUBLE_EXPONENT_LOCATION])
 
 Makefile.am:
