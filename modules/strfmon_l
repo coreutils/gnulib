@@ -4,6 +4,8 @@ strfmon_l() function: formatted conversion of monetary value to string.
 Files:
 lib/strfmon_l.c
 m4/strfmon_l.m4
+m4/locale-fr.m4
+m4/codeset.m4
 
 Depends-on:
 monetary
