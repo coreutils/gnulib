@@ -31,8 +31,6 @@ inttypes.h: inttypes.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_U
 	      -e 's|@''NEXT_INTTYPES_H''@|$(NEXT_INTTYPES_H)|g' \
 	      -e 's/@''PRI_MACROS_BROKEN''@/$(PRI_MACROS_BROKEN)/g' \
 	      -e 's/@''APPLE_UNIVERSAL_BUILD''@/$(APPLE_UNIVERSAL_BUILD)/g' \
-	      -e 's/@''HAVE_LONG_LONG_INT''@/$(HAVE_LONG_LONG_INT)/g' \
-	      -e 's/@''HAVE_UNSIGNED_LONG_LONG_INT''@/$(HAVE_UNSIGNED_LONG_LONG_INT)/g' \
 	      -e 's/@''PRIPTR_PREFIX''@/$(PRIPTR_PREFIX)/g' \
 	      -e 's/@''GNULIB_IMAXABS''@/$(GNULIB_IMAXABS)/g' \
 	      -e 's/@''GNULIB_IMAXDIV''@/$(GNULIB_IMAXDIV)/g' \
