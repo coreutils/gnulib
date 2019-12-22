@@ -34,6 +34,7 @@
 #include <string.h>
 
 #include "flexmember.h"
+#include "setlocale_null.h"
 
 /* We cannot support uselocale() on platforms where the locale_t type is fake.
    See intl-thread-locale.m4 for details.  */

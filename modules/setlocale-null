@@ -2,6 +2,7 @@ Description:
 setlocale_null() function: query the name of the current global locale.
 
 Files:
+lib/setlocale_null.h
 lib/setlocale_null.c
 lib/setlocale-lock.c
 lib/windows-initguard.h
@@ -10,6 +11,7 @@ m4/threadlib.m4
 
 Depends-on:
 locale
+snippet/arg-nonnull
 
 configure.ac:
 gl_FUNC_SETLOCALE_NULL
@@ -22,7 +24,7 @@ Makefile.am:
 lib_SOURCES += setlocale_null.c
 
 Include:
-<locale.h>
+#include "setlocale_null.h" or #include <locale.h>
 
 Link:
 $(LIB_SETLOCALE_NULL)

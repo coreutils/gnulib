@@ -19,9 +19,10 @@
 #include <config.h>
 
 /* Specification.  */
-#include <locale.h>
+#include "setlocale_null.h"
 
 #include <errno.h>
+#include <locale.h>
 #include <stdlib.h>
 #include <string.h>
 #if defined _WIN32 && !defined __CYGWIN__
