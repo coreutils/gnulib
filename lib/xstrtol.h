@@ -42,12 +42,9 @@ typedef enum strtol_error strtol_error;
   strtol_error name (const char *, char **, int, type *, const char *);
 _DECLARE_XSTRTOL (xstrtol, long int)
 _DECLARE_XSTRTOL (xstrtoul, unsigned long int)
-_DECLARE_XSTRTOL (xstrtoimax, intmax_t)
-_DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
-
-#if HAVE_LONG_LONG_INT
 _DECLARE_XSTRTOL (xstrtoll, long long int)
 _DECLARE_XSTRTOL (xstrtoull, unsigned long long int)
-#endif
+_DECLARE_XSTRTOL (xstrtoimax, intmax_t)
+_DECLARE_XSTRTOL (xstrtoumax, uintmax_t)
 
 #endif /* not XSTRTOL_H_ */
