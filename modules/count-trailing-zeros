@@ -4,13 +4,11 @@ Counts the number of trailing 0-bits in a word.
 Files:
 lib/count-trailing-zeros.c
 lib/count-trailing-zeros.h
-m4/count-trailing-zeros.m4
 
 Depends-on:
 extern-inline
 
 configure.ac:
-gl_COUNT_TRAILING_ZEROS
 
 Makefile.am:
 lib_SOURCES += count-trailing-zeros.c
