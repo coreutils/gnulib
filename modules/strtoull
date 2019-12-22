@@ -5,7 +5,6 @@ Files:
 lib/strtol.c
 lib/strtoul.c
 lib/strtoull.c
-m4/longlong.m4
 m4/strtoull.m4
 
 Depends-on:
