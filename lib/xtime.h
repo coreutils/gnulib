@@ -61,9 +61,7 @@ xtime_nonnegative_sec (xtime_t t)
 XTIME_INLINE xtime_t
 xtime_sec (xtime_t t)
 {
-  return (t < 0
-          ? (t + XTIME_PRECISION - 1) / XTIME_PRECISION - 1
-          : xtime_nonnegative_sec (t));
+  return t / XTIME_PRECISION - (t % XTIME_PRECISION < 0);
 }
 
 /* Return the number of nanoseconds in T, which must be nonnegative.  */
