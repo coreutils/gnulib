@@ -90,3 +90,9 @@ AC_DEFUN([gl_FUNC_SETLOCALE_NULL],
   dnl with gcc or xlc, and empty otherwise.
   AC_SUBST([LIB_SETLOCALE_NULL])
 ])
+
+# Prerequisites of lib/setlocale-lock.c.
+AC_DEFUN([gl_PREREQ_SETLOCALE_LOCK],
+[
+  gl_VISIBILITY
+])

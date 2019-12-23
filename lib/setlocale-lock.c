@@ -25,6 +25,19 @@
 /* Prohibit renaming this symbol.  */
 #undef gl_get_setlocale_null_lock
 
+/* Macro for exporting a symbol (function, not variable) defined in this file,
+   when compiled into a shared library.  */
+#ifndef DLL_EXPORTED
+# if HAVE_VISIBILITY
+  /* Override the effect of the compiler option '-fvisibility=hidden'.  */
+#  define DLL_EXPORTED __attribute__((__visibility__("default")))
+# elif defined _WIN32 || defined __CYGWIN__
+#  define DLL_EXPORTED __declspec(dllexport)
+# else
+#  define DLL_EXPORTED
+# endif
+#endif
+
 #if defined _WIN32 && !defined __CYGWIN__
 
 # define WIN32_LEAN_AND_MEAN  /* avoid including junk */
@@ -36,7 +49,7 @@
    because the latter is not guaranteed to be a stable ABI in the future.  */
 
 /* Make sure the function gets exported from DLLs.  */
-__declspec(dllexport) CRITICAL_SECTION *gl_get_setlocale_null_lock (void);
+DLL_EXPORTED CRITICAL_SECTION *gl_get_setlocale_null_lock (void);
 
 static glwthread_initguard_t guard = GLWTHREAD_INITGUARD_INIT;
 static CRITICAL_SECTION lock;
@@ -72,10 +85,8 @@ gl_get_setlocale_null_lock (void)
 
 static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
-# if defined _WIN32 || defined __CYGWIN__
-/* Make sure the function gets exported from DLLs.  */
-__declspec(dllexport) pthread_mutex_t *gl_get_setlocale_null_lock (void);
-# endif
+/* Make sure the function gets exported from shared libraries.  */
+DLL_EXPORTED pthread_mutex_t *gl_get_setlocale_null_lock (void);
 
 /* Returns the internal lock used by setlocale_null_r.  */
 pthread_mutex_t *
@@ -100,6 +111,9 @@ atomic_init (void)
     abort ();
   init_needed = 0;
 }
+
+/* Make sure the function gets exported from shared libraries.  */
+DLL_EXPORTED mtx_t *gl_get_setlocale_null_lock (void);
 
 /* Returns the internal lock used by setlocale_null_r.  */
 mtx_t *

@@ -8,6 +8,7 @@ lib/setlocale-lock.c
 lib/windows-initguard.h
 m4/setlocale_null.m4
 m4/threadlib.m4
+m4/visibility.m4
 
 Depends-on:
 locale
@@ -17,6 +18,7 @@ configure.ac:
 gl_FUNC_SETLOCALE_NULL
 if test $SETLOCALE_NULL_ALL_MTSAFE = 0 || test $SETLOCALE_NULL_ONE_MTSAFE = 0; then
   AC_LIBOBJ([setlocale-lock])
+  gl_PREREQ_SETLOCALE_LOCK
 fi
 gl_LOCALE_MODULE_INDICATOR([setlocale_null])
 
