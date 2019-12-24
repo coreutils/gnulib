@@ -58,6 +58,9 @@
 #elif defined WINDOWS_NATIVE
 # define WIN32_LEAN_AND_MEAN
 # include <windows.h>
+  /* For the use of setlocale() below, the Gnulib override in setlocale.c is
+     not needed; see the platform lists in setlocale_null.m4.  */
+# undef setlocale
 #endif
 #if defined OS2
 # define INCL_DOS
