@@ -206,7 +206,7 @@ day_of_the_week (struct tm *tm)
   int wday = (-473
               + (365 * (tm->tm_year - 70))
               + corr_quad
-              - (corr_quad + (corr_quad < 0)) / 25 - (corr_quad < 0)
+              - ((corr_quad + (corr_quad < 0)) / 25 - (corr_quad < 0))
               + ((corr_quad / 25) / 4)
               + __mon_yday[0][tm->tm_mon]
               + tm->tm_mday - 1);
