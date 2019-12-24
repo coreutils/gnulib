@@ -113,7 +113,7 @@ extern char *tzname[];
 #define SHR(a, b)       \
   (-1 >> 1 == -1        \
    ? (a) >> (b)         \
-   : (a) / (1 << (b)) - ((a) % (1 << (b)) < 0))
+   : ((a) + ((a) < 0)) / (1 << (b)) - ((a) < 0))
 
 #define TM_YEAR_BASE 1900
 
@@ -348,8 +348,8 @@ tm_diff (const struct tm *a, const struct tm *b)
      but it's OK to assume that A and B are close to each other.  */
   int a4 = SHR (a->tm_year, 2) + SHR (TM_YEAR_BASE, 2) - ! (a->tm_year & 3);
   int b4 = SHR (b->tm_year, 2) + SHR (TM_YEAR_BASE, 2) - ! (b->tm_year & 3);
-  int a100 = a4 / 25 - (a4 % 25 < 0);
-  int b100 = b4 / 25 - (b4 % 25 < 0);
+  int a100 = (a4 + (a4 < 0)) / 25 - (a4 < 0);
+  int b100 = (b4 + (b4 < 0)) / 25 - (b4 < 0);
   int a400 = SHR (a100, 2);
   int b400 = SHR (b100, 2);
   int intervening_leap_days = (a4 - b4) - (a100 - b100) + (a400 - b400);
@@ -927,9 +927,11 @@ __strftime_internal (STREAM_OR_CHAR_T *s, STRFTIME_ARG (size_t maxsize)
             }
 
           {
-            int century = tp->tm_year / 100 + TM_YEAR_BASE / 100;
-            century -= tp->tm_year % 100 < 0 && 0 < century;
-            DO_YEARISH (2, tp->tm_year < - TM_YEAR_BASE, century);
+            bool negative_year = tp->tm_year < - TM_YEAR_BASE;
+            bool zero_thru_1899 = !negative_year & (tp->tm_year < 0);
+            int century = ((tp->tm_year - 99 * zero_thru_1899) / 100
+                           + TM_YEAR_BASE / 100);
+            DO_YEARISH (2, negative_year, century);
           }
 
         case L_('x'):
