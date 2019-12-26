@@ -214,12 +214,17 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
                             if ((c3 ^ 0x80) < 0x40)
                               {
-                                if (pwc != NULL)
-                                  *pwc = ((unsigned int) (c & 0x0f) << 12)
-                                         | ((unsigned int) (c2 ^ 0x80) << 6)
-                                         | (unsigned int) (c3 ^ 0x80);
-                                res = 3;
-                                goto success;
+                                unsigned int wc
+                                  = (((unsigned int) (c & 0x0f) << 12)
+                                     | ((unsigned int) (c2 ^ 0x80) << 6)
+                                     | (unsigned int) (c3 ^ 0x80));
+                                if (wc <= WCHAR_MAX)
+                                  {
+                                    if (pwc != NULL)
+                                      *pwc = wc;
+                                    res = 3;
+                                    goto success;
+                                  }
                               }
                           }
                       }
@@ -253,13 +258,19 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
                                     if ((c4 ^ 0x80) < 0x40)
                                       {
-                                        if (pwc != NULL)
-                                          *pwc = ((unsigned int) (c & 0x07) << 18)
-                                                 | ((unsigned int) (c2 ^ 0x80) << 12)
-                                                 | ((unsigned int) (c3 ^ 0x80) << 6)
-                                                 | (unsigned int) (c4 ^ 0x80);
-                                        res = 4;
-                                        goto success;
+                                        unsigned int wc
+                                          = (((unsigned int) (c & 0x07) << 18)
+                                             | ((unsigned int) (c2 ^ 0x80)
+                                                << 12)
+                                             | ((unsigned int) (c3 ^ 0x80) << 6)
+                                             | (unsigned int) (c4 ^ 0x80));
+                                        if (wc <= WCHAR_MAX)
+                                          {
+                                            if (pwc != NULL)
+                                              *pwc = wc;
+                                            res = 4;
+                                            goto success;
+                                          }
                                       }
                                   }
                               }
