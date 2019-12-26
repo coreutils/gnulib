@@ -161,10 +161,10 @@ fi
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
 LC_ALL=en_US.UTF-8 printf "\\351" 2>/dev/null \
-  | LC_ALL=C tr "\\351" x | LC_ALL=C grep x > /dev/null \
+  | LC_ALL=C tr "\\351" x | LC_ALL=C grep "^x$" > /dev/null \
   || exit 1
 printf "\\351" 2>/dev/null \
-  | LC_ALL=C tr "\\351" x | LC_ALL=C grep x > /dev/null \
+  | LC_ALL=C tr "\\351" x | LC_ALL=C grep "^x$" > /dev/null \
   || exit 1
 f_local_() { local v=1; }; f_local_ || exit 1
 f_dash_local_fail_() { local t=$(printf " 1"); }; f_dash_local_fail_
