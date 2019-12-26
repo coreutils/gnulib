@@ -129,6 +129,8 @@ else
 fi
 
 # We require $(...) support unconditionally.
+# We require that the printf built-in work correctly regarding octal escapes;
+# this eliminates /bin/sh on AIX 7.2.
 # We require non-surprising "local" semantics (this eliminates dash).
 # This takes the admittedly draconian step of eliminating dash, because the
 # assignment tab=$(printf '\t') works fine, yet preceding it with "local "
@@ -158,6 +160,12 @@ fi
 #  ? - not ok
 gl_shell_test_script_='
 test $(echo y) = y || exit 1
+LC_ALL=en_US.UTF-8 printf "\\351" 2>/dev/null \
+  | LC_ALL=C tr "\\351" x | LC_ALL=C grep x > /dev/null \
+  || exit 1
+printf "\\351" 2>/dev/null \
+  | LC_ALL=C tr "\\351" x | LC_ALL=C grep x > /dev/null \
+  || exit 1
 f_local_() { local v=1; }; f_local_ || exit 1
 f_dash_local_fail_() { local t=$(printf " 1"); }; f_dash_local_fail_
 score_=10
