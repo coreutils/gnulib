@@ -1152,7 +1152,7 @@ expression implementations have back-reference bugs that can cause
 programs to return incorrect answers or even crash, and fixing these
 bugs has often been low-priority---for example, as of 2019 the GNU C
 library bug database contained back-reference bugs 52, 10844, 11053,
-and 23522, with little sign of forthcoming fixes.  Luckily,
+and 25322, with little sign of forthcoming fixes.  Luckily,
 back-references are rarely useful and it should be little trouble to
 avoid them in practical applications.
 
