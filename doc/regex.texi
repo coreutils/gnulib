@@ -253,7 +253,7 @@ the close-group operator.
 @cnindex RE_NO_BK_REFS
 @item RE_NO_BK_REFS
 If this bit is set, then Regex doesn't recognize @samp{\}@var{digit} as
-the back reference operator; if this bit isn't set, then it does.
+the back-reference operator; if this bit isn't set, then it does.
 
 @cnindex RE_NO_BK_VBAR
 @item RE_NO_BK_VBAR
@@ -1084,11 +1084,11 @@ considers it to match @samp{)}.
 @node Back-reference Operator
 @section The Back-reference Operator (@dfn{\}@var{digit})
 
-@cindex back references
+@cindex back-references
 
 If the syntax bit @code{RE_NO_BK_REF} isn't set, then Regex recognizes
-back references.  A back reference matches a specified preceding group.
-The back reference operator is represented by @samp{\@var{digit}}
+back-references.  A back-reference matches a specified preceding group.
+The back-reference operator is represented by @samp{\@var{digit}}
 anywhere after the end of a regular expression's @w{@var{digit}-th}
 group (@pxref{Grouping Operators}).
 
@@ -1098,13 +1098,13 @@ one of @samp{\1} through @samp{\9} after the corresponding group's
 close-group operator, you can match a substring identical to the
 one that the group does.
 
-Back references match according to the following (in all examples below,
+Back-references match according to the following (in all examples below,
 @samp{(} represents the open-group, @samp{)} the close-group, @samp{@{}
 the open-interval and @samp{@}} the close-interval operator):
 
 @itemize @bullet
 @item
-If the group matches a substring, the back reference matches an
+If the group matches a substring, the back-reference matches an
 identical substring.  For example, @samp{(a)\1} matches @samp{aa} and
 @samp{(bana)na\1bo\1} matches @samp{bananabanabobana}.  Likewise,
 @samp{(.*)\1} matches any (newline-free if the syntax bit
@@ -1114,7 +1114,7 @@ identical halves; the @samp{(.*)} matches the first half and the
 
 @item
 If the group matches more than once (as it might if followed
-by, e.g., a repetition operator), then the back reference matches the
+by, e.g., a repetition operator), then the back-reference matches the
 substring the group @emph{last} matched.  For example,
 @samp{((a*)b)*\1\2} matches @samp{aabababa}; first @w{group 1} (the
 outer one) matches @samp{aab} and @w{group 2} (the inner one) matches
@@ -1125,19 +1125,19 @@ outer one) matches @samp{aab} and @w{group 2} (the inner one) matches
 @item
 If the group doesn't participate in a match, i.e., it is part of an
 alternative not taken or a repetition operator allows zero repetitions
-of it, then the back reference makes the whole match fail.  For example,
+of it, then the back-reference makes the whole match fail.  For example,
 @samp{(one()|two())-and-(three\2|four\3)} matches @samp{one-and-three}
 and @samp{two-and-four}, but not @samp{one-and-four} or
 @samp{two-and-three}.  For example, if the pattern matches
 @samp{one-and-}, then its @w{group 2} matches the empty string and its
 @w{group 3} doesn't participate in the match.  So, if it then matches
-@samp{four}, then when it tries to back reference @w{group 3}---which it
+@samp{four}, then when it tries to back-reference @w{group 3}---which it
 will attempt to do because @samp{\3} follows the @samp{four}---the match
 will fail because @w{group 3} didn't participate in the match.
 
 @end itemize
 
-You can use a back reference as an argument to a repetition operator.  For
+You can use a back-reference as an argument to a repetition operator.  For
 example, @samp{(a(b))\2*} matches @samp{a} followed by two or more
 @samp{b}s.  Similarly, @samp{(a(b))\2@{3@}} matches @samp{abbbb}.
 
