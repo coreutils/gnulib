@@ -1,0 +1,18 @@
+Files:
+tests/test-uchar-c++.cc
+tests/test-uchar-c++2.cc
+
+Status:
+c++-test
+
+Depends-on:
+ansi-c++-opt
+
+configure.ac:
+
+Makefile.am:
+if ANSICXX
+TESTS += test-uchar-c++
+check_PROGRAMS += test-uchar-c++
+test_uchar_c___SOURCES = test-uchar-c++.cc test-uchar-c++2.cc
+endif
