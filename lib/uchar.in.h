@@ -37,6 +37,9 @@
 /* Get mbstate_t, size_t.  */
 #include <wchar.h>
 
+/* The definitions of _GL_FUNCDECL_RPL etc. are copied here.  */
+
+
 #if !@HAVE_UCHAR_H@
 
 /* A 16-bit variant of wchar_t.
@@ -50,5 +53,21 @@ typedef uint_least16_t char16_t;
 typedef uint_least32_t char32_t;
 
 #endif
+
+/* Define if a 'char32_t' can hold more characters than a 'wchar_t'.  */
+#if (defined _AIX && !defined __64BIT__) || defined _WIN32 || defined __CYGWIN__
+# define _GL_LARGE_CHAR32_T 1
+#endif
+
+
+/* Converts a 32-bit wide character to unibyte character.
+   Returns the single-byte representation of WC if it exists,
+   or EOF otherwise.  */
+#if @GNULIB_C32TOB@
+_GL_FUNCDECL_SYS (c32tob, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32tob, int, (wint_t wc));
+_GL_CXXALIASWARN (c32tob);
+#endif
+
 
 #endif /* _@GUARD_PREFIX@_UCHAR_H */

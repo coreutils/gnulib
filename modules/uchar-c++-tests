@@ -1,6 +1,7 @@
 Files:
 tests/test-uchar-c++.cc
 tests/test-uchar-c++2.cc
+tests/signature.h
 
 Status:
 c++-test

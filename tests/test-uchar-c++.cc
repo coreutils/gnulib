@@ -21,6 +21,13 @@
 
 #include <uchar.h>
 
+#include "signature.h"
+
+
+#if GNULIB_TEST_C32TOB
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32tob, int, (wint_t));
+#endif
+
 
 int
 main ()

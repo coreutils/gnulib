@@ -1,4 +1,4 @@
-# uchar.m4 serial 1
+# uchar.m4 serial 2
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,6 +9,8 @@ dnl Prepare the overridden <uchar.h>.
 
 AC_DEFUN_ONCE([gl_UCHAR_H],
 [
+  AC_REQUIRE([gl_UCHAR_H_DEFAULTS])
+
   gl_CHECK_NEXT_HEADERS([uchar.h])
   if test $ac_cv_header_uchar_h = yes; then
     HAVE_UCHAR_H=1
@@ -16,4 +18,18 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
     HAVE_UCHAR_H=0
   fi
   AC_SUBST([HAVE_UCHAR_H])
+])
+
+AC_DEFUN([gl_UCHAR_MODULE_INDICATOR],
+[
+  dnl Use AC_REQUIRE here, so that the default settings are expanded once only.
+  AC_REQUIRE([gl_UCHAR_H_DEFAULTS])
+  gl_MODULE_INDICATOR_SET_VARIABLE([$1])
+  dnl Define it also as a C macro, for the benefit of the unit tests.
+  gl_MODULE_INDICATOR_FOR_TESTS([$1])
+])
+
+AC_DEFUN([gl_UCHAR_H_DEFAULTS],
+[
+  GNULIB_C32TOB=0;           AC_SUBST([GNULIB_C32TOB])
 ])

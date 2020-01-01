@@ -35,6 +35,13 @@ verify ((char32_t)(-1) >= 0);
 /* Check that char32_t is at least 31 bits wide.  */
 verify ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);
 
+/* Check that _GL_LARGE_CHAR32_T is correctly defined.  */
+#if _GL_LARGE_CHAR32_T
+verify (sizeof (char32_t) > sizeof (wchar_t));
+#else
+verify (sizeof (char32_t) == sizeof (wchar_t));
+#endif
+
 int
 main (void)
 {
