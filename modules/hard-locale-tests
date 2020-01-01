@@ -15,5 +15,8 @@ AC_CHECK_FUNCS_ONCE([duplocale])
 Makefile.am:
 TESTS += test-hard-locale
 check_PROGRAMS += test-hard-locale
-noinst_PROGRAMS += locale
 test_hard_locale_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIB_HARD_LOCALE@
+# We cannot call this program 'locale', because the C++ compiler on Mac OS X
+# would then barf upon '#include <locale>'. So, call it 'current-locale'.
+noinst_PROGRAMS += current-locale
+current_locale_SOURCES = locale.c
