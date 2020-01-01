@@ -338,7 +338,7 @@ main (int argc, char *argv[])
           ASSERT (ret == 1);
           ASSERT (wc == 'e');
           ASSERT (mbsinit (&state));
-          input[5] = '\0';
+          input[7] = '\0';
 
           wc = (wchar_t) 0xBADFACE;
           ret = mbrtowc (&wc, input + 8, 1, &state);
