@@ -27,7 +27,7 @@ Solaris 11.4.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-On AIX and Windows platforms, @code{wchar_t} is a 16-bit type and therefore cannot
+On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
 This function treats zero-width spaces like control characters on some
