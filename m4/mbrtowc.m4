@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 33  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 34  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -77,10 +77,10 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
            REPLACE_MBRTOWC=1
            ;;
       esac
-      case $gl_cv_C_locale_sans_EILSEQ in
+      case "$gl_cv_func_mbrtowc_C_locale_sans_EILSEQ" in
         *yes) ;;
-        *) AC_DEFINE([C_LOCALE_MAYBE_EILSEQ], [1],
-             [Define to 1 if the C locale may have encoding errors.])
+        *) AC_DEFINE([MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ], [1],
+             [Define if the mbrtowc function may signal encoding errors in the C locale.])
            REPLACE_MBRTOWC=1
            ;;
       esac
@@ -629,11 +629,11 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
 [
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CACHE_CHECK([whether the C locale is free of encoding errors],
-    [gl_cv_C_locale_sans_EILSEQ],
+    [gl_cv_func_mbrtowc_C_locale_sans_EILSEQ],
     [
      dnl Initial guess, used when cross-compiling or when no suitable locale
      dnl is present.
-     gl_cv_C_locale_sans_EILSEQ="$gl_cross_guess_normal"
+     gl_cv_func_mbrtowc_C_locale_sans_EILSEQ="$gl_cross_guess_normal"
 
      AC_RUN_IFELSE(
        [AC_LANG_PROGRAM(
@@ -656,11 +656,11 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
               }
             return 0;
           ]])],
-      [gl_cv_C_locale_sans_EILSEQ=yes],
-      [gl_cv_C_locale_sans_EILSEQ=no],
+      [gl_cv_func_mbrtowc_C_locale_sans_EILSEQ=yes],
+      [gl_cv_func_mbrtowc_C_locale_sans_EILSEQ=no],
       [case "$host_os" in
                  # Guess yes on native Windows.
-         mingw*) gl_cv_C_locale_sans_EILSEQ="guessing yes" ;;
+         mingw*) gl_cv_func_mbrtowc_C_locale_sans_EILSEQ="guessing yes" ;;
        esac
       ])
     ])

@@ -20,7 +20,7 @@
 /* Specification.  */
 #include <wchar.h>
 
-#if C_LOCALE_MAYBE_EILSEQ
+#if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ
 # include "hard-locale.h"
 # include <locale.h>
 #endif
@@ -530,7 +530,7 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
     return 0;
 # endif
 
-# if C_LOCALE_MAYBE_EILSEQ
+# if MBRTOWC_IN_C_LOCALE_MAYBE_EILSEQ
   if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
     {
       unsigned char uc = *s;
