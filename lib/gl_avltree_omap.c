@@ -1,5 +1,5 @@
 /* Ordered map data type implemented by a binary tree.
-   Copyright (C) 2006-2007, 2009-2019 Free Software Foundation, Inc.
+   Copyright (C) 2006-2007, 2009-2020 Free Software Foundation, Inc.
    Written by Bruno Haible <bruno@clisp.org>, 2018.
 
    This program is free software: you can redistribute it and/or modify
