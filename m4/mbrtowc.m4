@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 35  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 36  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -39,6 +39,7 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
       gl_MBRTOWC_NULL_ARG2
       gl_MBRTOWC_RETVAL
       gl_MBRTOWC_NUL_RETVAL
+      gl_MBRTOWC_STORES_INCOMPLETE
       gl_MBRTOWC_EMPTY_INPUT
       gl_MBRTOWC_C_LOCALE
       case "$gl_cv_func_mbrtowc_null_arg1" in
@@ -66,6 +67,13 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
         *yes) ;;
         *) AC_DEFINE([MBRTOWC_NUL_RETVAL_BUG], [1],
              [Define if the mbrtowc function does not return 0 for a NUL character.])
+           REPLACE_MBRTOWC=1
+           ;;
+      esac
+      case "$gl_cv_func_mbrtowc_stores_incomplete" in
+        *no) ;;
+        *) AC_DEFINE([MBRTOWC_STORES_INCOMPLETE_BUG], [1],
+             [Define if the mbrtowc function stores a wide character when reporting incomplete input.])
            REPLACE_MBRTOWC=1
            ;;
       esac
@@ -589,6 +597,126 @@ int main ()
           [gl_cv_func_mbrtowc_nul_retval=no],
           [:])
       fi
+    ])
+])
+
+dnl Test whether mbrtowc stores a wide character when reporting incomplete
+dnl input.
+
+AC_DEFUN([gl_MBRTOWC_STORES_INCOMPLETE],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  AC_CACHE_CHECK([whether mbrtowc stores incomplete characters],
+    [gl_cv_func_mbrtowc_stores_incomplete],
+    [
+     dnl Initial guess, used when cross-compiling or when no suitable locale
+     dnl is present.
+changequote(,)dnl
+     case "$host_os" in
+               # Guess yes on native Windows.
+       mingw*) gl_cv_func_mbrtowc_stores_incomplete="guessing yes" ;;
+       *)      gl_cv_func_mbrtowc_stores_incomplete="guessing no" ;;
+     esac
+changequote([,])dnl
+     case "$host_os" in
+       mingw*)
+         AC_RUN_IFELSE(
+           [AC_LANG_SOURCE([[
+#include <locale.h>
+#include <string.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
+int main ()
+{
+  int result = 0;
+  if (setlocale (LC_ALL, "French_France.65001") != NULL)
+    {
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      mbstate_t state;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\303", 1, &state) == (size_t)(-2)
+          && wc != (wchar_t) 0xBADFACE)
+        result |= 1;
+    }
+  if (setlocale (LC_ALL, "Japanese_Japan.932") != NULL)
+    {
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      mbstate_t state;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\226", 1, &state) == (size_t)(-2)
+          && wc != (wchar_t) 0xBADFACE)
+        result |= 2;
+    }
+  if (setlocale (LC_ALL, "Chinese_Taiwan.950") != NULL)
+    {
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      mbstate_t state;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\245", 1, &state) == (size_t)(-2)
+          && wc != (wchar_t) 0xBADFACE)
+        result |= 4;
+    }
+  if (setlocale (LC_ALL, "Chinese_China.936") != NULL)
+    {
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      mbstate_t state;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\261", 1, &state) == (size_t)(-2)
+          && wc != (wchar_t) 0xBADFACE)
+        result |= 8;
+    }
+  return result;
+}]])],
+           [gl_cv_func_mbrtowc_stores_incomplete=no],
+           [gl_cv_func_mbrtowc_stores_incomplete=yes],
+           [:])
+         ;;
+       *)
+         AC_REQUIRE([gt_LOCALE_FR_UTF8])
+         if test $LOCALE_FR_UTF8 != none; then
+           AC_RUN_IFELSE(
+             [AC_LANG_SOURCE([[
+#include <locale.h>
+#include <string.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
+int main ()
+{
+  if (setlocale (LC_ALL, "$LOCALE_FR_UTF8") != NULL)
+    {
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      mbstate_t state;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\303", 1, &state) == (size_t)(-2)
+          && wc != (wchar_t) 0xBADFACE)
+        return 1;
+    }
+  return 0;
+}]])],
+             [gl_cv_func_mbrtowc_stores_incomplete=no],
+             [gl_cv_func_mbrtowc_stores_incomplete=yes],
+             [:])
+         fi
+         ;;
+     esac
     ])
 ])
 

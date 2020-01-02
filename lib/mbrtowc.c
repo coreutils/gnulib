@@ -524,7 +524,13 @@ rpl_mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
   }
 # endif
 
+# if MBRTOWC_STORES_INCOMPLETE_BUG
+  ret = mbrtowc (&wc, s, n, ps);
+  if (ret < (size_t) -2 && pwc != NULL)
+    *pwc = wc;
+# else
   ret = mbrtowc (pwc, s, n, ps);
+# endif
 
 # if MBRTOWC_NUL_RETVAL_BUG
   if (ret < (size_t) -2 && !*pwc)
