@@ -33,7 +33,8 @@
 #if (((defined __need_mbstate_t || defined __need_wint_t)               \
       && !defined __MINGW32__)                                          \
      || (defined __hpux                                                 \
-         && ((defined _INTTYPES_INCLUDED && !defined strtoimax)         \
+         && ((defined _INTTYPES_INCLUDED                                \
+              && !defined _GL_FINISHED_INCLUDING_SYSTEM_INTTYPES_H)     \
              || defined _GL_JUST_INCLUDE_SYSTEM_WCHAR_H))               \
      || (defined __MINGW32__ && defined __STRING_H_SOURCED__)           \
      || defined _GL_ALREADY_INCLUDING_WCHAR_H)
