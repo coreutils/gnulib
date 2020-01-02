@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 14
+# wcrtomb.m4 serial 15
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -90,12 +90,10 @@ int main ()
           dnl is present.
 changequote(,)dnl
           case "$host_os" in
-                                     # Guess no on AIX 4, OSF/1 and Solaris.
-            aix4* | osf* | solaris*) gl_cv_func_wcrtomb_retval="guessing no" ;;
-                                     # Guess yes on native Windows.
-            mingw*)                  gl_cv_func_wcrtomb_retval="guessing yes" ;;
-                                     # Guess yes otherwise.
-            *)                       gl_cv_func_wcrtomb_retval="guessing yes" ;;
+            # Guess no on AIX 4, OSF/1, Solaris, native Windows.
+            aix4* | osf* | solaris* | mingw*) gl_cv_func_wcrtomb_retval="guessing no" ;;
+            # Guess yes otherwise.
+            *)                                gl_cv_func_wcrtomb_retval="guessing yes" ;;
           esac
 changequote([,])dnl
           if test $LOCALE_FR != none || test $LOCALE_FR_UTF8 != none || test $LOCALE_JA != none || test $LOCALE_ZH_CN != none; then
@@ -111,6 +109,7 @@ changequote([,])dnl
 #include <stdio.h>
 #include <time.h>
 #include <wchar.h>
+#include <stdlib.h>
 int main ()
 {
   int result = 0;
@@ -123,6 +122,12 @@ int main ()
     {
       if (wcrtomb (NULL, 0, NULL) != 1)
         result |= 2;
+      {
+        wchar_t wc = (wchar_t) 0xBADFACE;
+        if (mbtowc (&wc, "\303\274", 2) == 2)
+          if (wcrtomb (NULL, wc, NULL) != 1)
+            result |= 2;
+      }
     }
   if (setlocale (LC_ALL, "$LOCALE_JA") != NULL)
     {

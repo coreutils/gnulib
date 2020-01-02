@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 34  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 35  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -97,11 +97,19 @@ dnl avoid inconsistencies.
 AC_DEFUN([gl_MBSTATE_T_BROKEN],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   AC_CHECK_FUNCS_ONCE([mbsinit])
   AC_CHECK_FUNCS_ONCE([mbrtowc])
-  if test $ac_cv_func_mbsinit = yes && test $ac_cv_func_mbrtowc = yes; then
+  dnl On native Windows, we know exactly how mbsinit() behaves and don't need
+  dnl to override it, even if - like on MSVC - mbsinit() is only defined as
+  dnl an inline function, not as a global function.
+  if case "$host_os" in
+       mingw*) true ;;
+       *) test $ac_cv_func_mbsinit = yes ;;
+     esac \
+    && test $ac_cv_func_mbrtowc = yes; then
     gl_MBRTOWC_INCOMPLETE_STATE
     gl_MBRTOWC_SANITYCHECK
     REPLACE_MBSTATE_T=0
