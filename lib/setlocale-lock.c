@@ -136,7 +136,7 @@ gl_get_setlocale_null_lock (void)
 
 # endif
 
-# if defined _WIN32 || defined __CYGWIN__
+# if (defined _WIN32 || defined __CYGWIN__) && !defined _MSC_VER
 /* Make sure the '__declspec(dllimport)' in setlocale_null.c does not cause
    a link failure when no DLLs are involved.  */
 #  if defined _WIN64 || defined _LP64
