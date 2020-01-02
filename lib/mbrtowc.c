@@ -29,6 +29,7 @@
 /* Implement mbrtowc() on top of mbtowc().  */
 
 # include <errno.h>
+# include <stdint.h>
 # include <stdlib.h>
 
 # include "localcharset.h"
