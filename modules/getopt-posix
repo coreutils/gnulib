@@ -29,6 +29,7 @@ if test $REPLACE_GETOPT = 1; then
   GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT=1
 fi
 AC_SUBST([GNULIB_${gl_include_guard_prefix}_UNISTD_H_GETOPT])
+gl_UNISTD_MODULE_INDICATOR([getopt-posix])
 
 Makefile.am:
 BUILT_SOURCES += $(GETOPT_H) $(GETOPT_CDEFS_H)
