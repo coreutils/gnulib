@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "localcharset.h"
 #include "macros.h"
 
 #if defined _WIN32 && !defined __CYGWIN__
@@ -257,6 +258,8 @@ test_one_locale (const char *name, int codepage)
 
     case 54936:
       /* Locale encoding is CP54936 = GB18030.  */
+      if (strcmp (locale_charset (), "GB18030") != 0)
+        return 77;
       {
         /* Convert "B\250\271\201\060\211\070er": "Büßer" */
         memset (buf, 'x', 8);
@@ -275,6 +278,8 @@ test_one_locale (const char *name, int codepage)
 
     case 65001:
       /* Locale encoding is CP65001 = UTF-8.  */
+      if (strcmp (locale_charset (), "UTF-8") != 0)
+        return 77;
       {
         /* Convert "B\303\274\303\237er": "Büßer" */
         memset (buf, 'x', 8);
