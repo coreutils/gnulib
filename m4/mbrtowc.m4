@@ -821,7 +821,7 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
     ])
 ])
 
-# Prerequisites of lib/mbrtowc.c.
+# Prerequisites of lib/mbrtowc.c and lib/lc-charset-dispatch.c.
 AC_DEFUN([gl_PREREQ_MBRTOWC], [
   AC_REQUIRE([AC_C_INLINE])
   :
