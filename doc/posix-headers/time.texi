@@ -19,8 +19,15 @@ NetBSD 5.0
 Portability problems not fixed by Gnulib:
 @itemize
 @item
+On platforms with 32-bit @code{time_t}, functions like @code{stat} can
+fail with @code{errno == EOVERFLOW} when a timestamp is out of range,
+such as with a file timestamp in the far future or past; on others,
+the functions silently return the low-order 32 bits of the correct
+timestamp.  These platforms will be obsolete when 32-bit @code{time_t}
+rolls around, which will occur the year 2038 for the typical case when
+@code{time_t} is signed.
+@item
 On some platforms the @code{tv_nsec} member of @code{struct timespec}
 is not of type @code{long}, but is of type @code{long long} instead:
 glibc x32
-
 @end itemize
