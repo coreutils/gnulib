@@ -15,4 +15,4 @@ Makefile.am:
 TESTS += test-mbspbrk.sh
 TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@'
 check_PROGRAMS += test-mbspbrk
-test_mbspbrk_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
+test_mbspbrk_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIB_MBRTOWC)

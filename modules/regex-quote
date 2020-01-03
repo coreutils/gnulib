@@ -19,7 +19,7 @@ Include:
 "regex-quote.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

@@ -26,7 +26,7 @@ Include:
 "javaversion.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

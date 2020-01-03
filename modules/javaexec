@@ -29,7 +29,7 @@ Include:
 "javaexec.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

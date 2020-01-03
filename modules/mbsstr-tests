@@ -20,6 +20,6 @@ Makefile.am:
 TESTS += test-mbsstr1 test-mbsstr2.sh test-mbsstr3.sh
 TESTS_ENVIRONMENT += LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' LOCALE_ZH_CN='@LOCALE_ZH_CN@'
 check_PROGRAMS += test-mbsstr1 test-mbsstr2 test-mbsstr3
-test_mbsstr1_LDADD = $(LDADD) $(LIBTHREAD)
-test_mbsstr2_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
-test_mbsstr3_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
+test_mbsstr1_LDADD = $(LDADD) $(LIB_MBRTOWC)
+test_mbsstr2_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIB_MBRTOWC)
+test_mbsstr3_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIB_MBRTOWC)

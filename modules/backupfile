@@ -34,7 +34,7 @@ Include:
 "backupfile.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

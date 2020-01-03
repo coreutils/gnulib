@@ -25,7 +25,7 @@ Include:
 "mbfile.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 LGPL

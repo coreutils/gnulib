@@ -1,4 +1,4 @@
-# mbrtowc.m4 serial 36  -*- coding: utf-8 -*-
+# mbrtowc.m4 serial 37  -*- coding: utf-8 -*-
 dnl Copyright (C) 2001-2002, 2004-2005, 2008-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -8,6 +8,8 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_MBRTOWC],
 [
   AC_REQUIRE([gl_WCHAR_H_DEFAULTS])
+  AC_REQUIRE([gl_PTHREADLIB])
+  AC_CHECK_HEADERS_ONCE([threads.h])
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   gl_MBSTATE_T_BROKEN
@@ -94,6 +96,23 @@ AC_DEFUN([gl_FUNC_MBRTOWC],
       esac
     fi
   fi
+  if test $REPLACE_MBSTATE_T = 1; then
+    case "$host_os" in
+      mingw*) LIB_MBRTOWC= ;;
+      *)
+        gl_WEAK_SYMBOLS
+        case "$gl_cv_have_weak" in
+          *yes) LIB_MBRTOWC= ;;
+          *)    LIB_MBRTOWC="$LIBPTHREAD" ;;
+        esac
+        ;;
+    esac
+  else
+    LIB_MBRTOWC=
+  fi
+  dnl LIB_MBRTOWC is expected to be '-pthread' or '-lpthread' on AIX
+  dnl with gcc or xlc, and empty otherwise.
+  AC_SUBST([LIB_MBRTOWC])
 ])
 
 dnl Test whether mbsinit() and mbrtowc() need to be overridden in a way that
@@ -806,6 +825,12 @@ AC_DEFUN([gl_MBRTOWC_C_LOCALE],
 AC_DEFUN([gl_PREREQ_MBRTOWC], [
   AC_REQUIRE([AC_C_INLINE])
   :
+])
+
+# Prerequisites of lib/mbtowc-lock.c.
+AC_DEFUN([gl_PREREQ_MBTOWC_LOCK],
+[
+  gl_VISIBILITY
 ])
 
 

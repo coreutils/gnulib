@@ -25,4 +25,4 @@ TESTS_ENVIRONMENT += \
   LOCALE_FR_UTF8='@LOCALE_FR_UTF8@' \
   LOCALE_TR_UTF8='@LOCALE_TR_UTF8@'
 check_PROGRAMS += test-mbmemcasecoll
-test_mbmemcasecoll_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIBTHREAD)
+test_mbmemcasecoll_LDADD = $(LDADD) $(LIB_SETLOCALE) $(LIB_MBRTOWC)

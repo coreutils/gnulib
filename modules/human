@@ -27,7 +27,7 @@ Include:
 "human.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

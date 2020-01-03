@@ -32,10 +32,32 @@
 # include <stdint.h>
 # include <stdlib.h>
 
+# if defined _WIN32 && !defined __CYGWIN__
+
+#  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+#  include <windows.h>
+
+# elif HAVE_PTHREAD_API
+
+#  include <pthread.h>
+#  if HAVE_THREADS_H && HAVE_WEAK_SYMBOLS
+#   include <threads.h>
+#   pragma weak thrd_exit
+#   define c11_threads_in_use() (thrd_exit != NULL)
+#  else
+#   define c11_threads_in_use() 0
+#  endif
+
+# elif HAVE_THREADS_H
+
+#  include <threads.h>
+
+# endif
+
 # include "localcharset.h"
 # include "streq.h"
 # include "verify.h"
-# include "glthread/lock.h"
+# include "mbtowc-lock.h"
 
 # ifndef FALLTHROUGH
 #  if __GNUC__ < 7
@@ -93,12 +115,7 @@ locale_enc_cached (void)
 #  define locale_enc_cached locale_enc
 # endif
 
-/* This lock protects the internal state of mbtowc against multiple simultaneous
-   calls of mbrtowc.  */
-gl_lock_define_initialized(static, mbtowc_lock)
-
 verify (sizeof (mbstate_t) >= 4);
-
 static char internal_state[4];
 
 size_t
@@ -286,16 +303,7 @@ mbrtowc (wchar_t *pwc, const char *s, size_t n, mbstate_t *ps)
       {
         /* The hidden internal state of mbtowc would make this function not
            multi-thread safe.  Achieve multi-thread safety through a lock.  */
-        gl_lock_lock (mbtowc_lock);
-
-        /* Put the hidden internal state of mbtowc into its initial state.
-           This is needed at least with glibc, uClibc, and MSVC CRT.
-           See <https://sourceware.org/bugzilla/show_bug.cgi?id=9674>.  */
-        mbtowc (NULL, NULL, 0);
-
-        res = mbtowc (pwc, p, m);
-
-        gl_lock_unlock (mbtowc_lock);
+        res = mbtowc_with_lock (pwc, p, m);
 
         if (res >= 0)
           {

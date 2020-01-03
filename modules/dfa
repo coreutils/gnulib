@@ -38,7 +38,7 @@ Include:
 "localeinfo.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

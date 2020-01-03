@@ -50,7 +50,7 @@ Include:
 <glob.h>
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 LGPLv2+

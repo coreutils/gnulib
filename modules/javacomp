@@ -39,7 +39,7 @@ Include:
 "javacomp.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

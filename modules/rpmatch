@@ -27,7 +27,7 @@ Include:
 <stdlib.h>
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 $(LTLIBINTL) when linking with libtool, $(LIBINTL) otherwise
 
 License:

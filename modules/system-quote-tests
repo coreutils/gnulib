@@ -18,7 +18,7 @@ configure.ac:
 Makefile.am:
 TESTS += test-system-quote.sh
 check_PROGRAMS += test-system-quote-main test-system-quote-child
-test_system_quote_main_LDADD = $(LDADD) @LIBINTL@ $(LIBTHREAD)
+test_system_quote_main_LDADD = $(LDADD) @LIBINTL@ $(LIB_MBRTOWC)
 # The test-system-quote-child program must be a real executable, not a libtool
 # wrapper script, and should link against as few libraries as possible.
 # Therefore don't link it against any libraries other than -lc.

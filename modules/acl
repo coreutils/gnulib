@@ -22,7 +22,7 @@ Include:
 "acl.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL

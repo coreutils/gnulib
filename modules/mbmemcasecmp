@@ -17,7 +17,7 @@ Include:
 "mbmemcasecmp.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 LGPL

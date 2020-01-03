@@ -23,7 +23,7 @@ Include:
 "unistdio.h"
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 LGPLv3+ or GPLv2

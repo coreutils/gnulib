@@ -30,7 +30,7 @@ Include:
 <wchar.h>
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 LGPL

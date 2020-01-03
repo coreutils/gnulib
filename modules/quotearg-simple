@@ -13,7 +13,7 @@ Makefile.am:
 Include:
 
 Link:
-$(LIBTHREAD)
+$(LIB_MBRTOWC)
 
 License:
 GPL
