@@ -3,6 +3,8 @@ mbrtowc() function: convert multibyte character to wide character.
 
 Files:
 lib/mbrtowc.c
+lib/mbrtowc-impl.h
+lib/mbrtowc-impl-utf8.h
 lib/lc-charset-dispatch.h
 lib/lc-charset-dispatch.c
 lib/mbtowc-lock.h
