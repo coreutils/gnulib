@@ -15,6 +15,7 @@ strnlen1        [test $SMALL_WCHAR_T = 1]
 mbsrtowcs       [test $SMALL_WCHAR_T = 0]
 
 configure.ac:
+AC_REQUIRE([gl_UCHAR_H])
 if test $SMALL_WCHAR_T = 1; then
   AC_LIBOBJ([mbsrtoc32s-state])
 fi
