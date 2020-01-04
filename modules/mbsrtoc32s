@@ -1,0 +1,36 @@
+Description:
+mbsrtoc32s() function: convert string to 32-bit wide string.
+
+Files:
+lib/mbsrtoc32s.c
+lib/mbsrtowcs-impl.h
+lib/mbsrtoc32s-state.c
+
+Depends-on:
+uchar
+wchar
+verify
+mbrtoc32        [test $SMALL_WCHAR_T = 1]
+strnlen1        [test $SMALL_WCHAR_T = 1]
+mbsrtowcs       [test $SMALL_WCHAR_T = 0]
+
+configure.ac:
+if test $SMALL_WCHAR_T = 1; then
+  AC_LIBOBJ([mbsrtoc32s-state])
+fi
+gl_UCHAR_MODULE_INDICATOR([mbsrtoc32s])
+
+Makefile.am:
+lib_SOURCES += mbsrtoc32s.c
+
+Include:
+<uchar.h>
+
+Link:
+$(LIB_MBRTOWC)
+
+License:
+LGPLv2+
+
+Maintainer:
+Bruno Haible

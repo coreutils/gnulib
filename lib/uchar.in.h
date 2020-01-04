@@ -107,4 +107,16 @@ _GL_WARN_ON_USE (mbrtoc32, "mbrtoc32 is not portable - "
 #endif
 
 
+/* Convert a string to a 32-bit wide string.  */
+#if @GNULIB_MBSRTOC32S@
+_GL_FUNCDECL_SYS (mbsrtoc32s, size_t,
+                  (char32_t *dest, const char **srcp, size_t len, mbstate_t *ps)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (mbsrtoc32s, size_t,
+                  (char32_t *dest, const char **srcp, size_t len,
+                   mbstate_t *ps));
+_GL_CXXALIASWARN (mbsrtoc32s);
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_UCHAR_H */

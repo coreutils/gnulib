@@ -1,4 +1,4 @@
-# uchar.m4 serial 5
+# uchar.m4 serial 6
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -50,6 +50,7 @@ AC_DEFUN([gl_UCHAR_H_DEFAULTS],
   GNULIB_BTOC32=0;           AC_SUBST([GNULIB_BTOC32])
   GNULIB_C32TOB=0;           AC_SUBST([GNULIB_C32TOB])
   GNULIB_MBRTOC32=0;         AC_SUBST([GNULIB_MBRTOC32])
+  GNULIB_MBSRTOC32S=0;       AC_SUBST([GNULIB_MBSRTOC32S])
   dnl Assume proper GNU behavior unless another module says otherwise.
   HAVE_MBRTOC32=1;           AC_SUBST([HAVE_MBRTOC32])
   REPLACE_MBRTOC32=0;        AC_SUBST([REPLACE_MBRTOC32])
