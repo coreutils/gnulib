@@ -24,6 +24,10 @@
 #include "signature.h"
 
 
+#if GNULIB_TEST_BTOC32
+SIGNATURE_CHECK (GNULIB_NAMESPACE::btoc32, wint_t, (int));
+#endif
+
 #if GNULIB_TEST_C32TOB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::c32tob, int, (wint_t));
 #endif

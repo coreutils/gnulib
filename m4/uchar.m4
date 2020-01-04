@@ -1,4 +1,4 @@
-# uchar.m4 serial 3
+# uchar.m4 serial 4
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,6 +37,7 @@ AC_DEFUN([gl_UCHAR_MODULE_INDICATOR],
 
 AC_DEFUN([gl_UCHAR_H_DEFAULTS],
 [
+  GNULIB_BTOC32=0;           AC_SUBST([GNULIB_BTOC32])
   GNULIB_C32TOB=0;           AC_SUBST([GNULIB_C32TOB])
   GNULIB_MBRTOC32=0;         AC_SUBST([GNULIB_MBRTOC32])
   dnl Assume proper GNU behavior unless another module says otherwise.

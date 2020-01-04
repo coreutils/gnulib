@@ -60,6 +60,14 @@ typedef uint_least32_t char32_t;
 #endif
 
 
+/* Convert a single-byte character to a 32-bit wide character.  */
+#if @GNULIB_BTOC32@
+_GL_FUNCDECL_SYS (btoc32, wint_t, (int c) _GL_ATTRIBUTE_PURE);
+_GL_CXXALIAS_SYS (btoc32, wint_t, (int c));
+_GL_CXXALIASWARN (btoc32);
+#endif
+
+
 /* Converts a 32-bit wide character to unibyte character.
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */
