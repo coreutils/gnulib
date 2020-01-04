@@ -16,4 +16,5 @@ if ANSICXX
 TESTS += test-uchar-c++
 check_PROGRAMS += test-uchar-c++
 test_uchar_c___SOURCES = test-uchar-c++.cc test-uchar-c++2.cc
+test_uchar_c___LDADD = $(LDADD) $(LIB_MBRTOWC)
 endif

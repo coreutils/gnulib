@@ -1,0 +1,227 @@
+/* Convert multibyte character to 32-bit wide character.
+   Copyright (C) 2020 Free Software Foundation, Inc.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+
+/* Written by Bruno Haible <bruno@clisp.org>, 2020.  */
+
+#include <config.h>
+
+/* Specification.  */
+#include <uchar.h>
+
+#include <errno.h>
+#include <stdlib.h>
+
+# ifndef FALLTHROUGH
+#  if __GNUC__ < 7
+#   define FALLTHROUGH ((void) 0)
+#  else
+#   define FALLTHROUGH __attribute__ ((__fallthrough__))
+#  endif
+# endif
+
+#if GNULIB_defined_mbstate_t /* AIX, IRIX */
+/* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales
+   and directly for the UTF-8 locales.  */
+
+# if defined _WIN32 && !defined __CYGWIN__
+
+#  define WIN32_LEAN_AND_MEAN  /* avoid including junk */
+#  include <windows.h>
+
+# elif HAVE_PTHREAD_API
+
+#  include <pthread.h>
+#  if HAVE_THREADS_H && HAVE_WEAK_SYMBOLS
+#   include <threads.h>
+#   pragma weak thrd_exit
+#   define c11_threads_in_use() (thrd_exit != NULL)
+#  else
+#   define c11_threads_in_use() 0
+#  endif
+
+# elif HAVE_THREADS_H
+
+#  include <threads.h>
+
+# endif
+
+# include "verify.h"
+# include "lc-charset-dispatch.h"
+# include "mbtowc-lock.h"
+
+verify (sizeof (mbstate_t) >= 4);
+static char internal_state[4];
+
+size_t
+mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+{
+# define FITS_IN_CHAR_TYPE(wc)  1
+# include "mbrtowc-impl.h"
+}
+
+#else /* glibc, macOS, FreeBSD, NetBSD, OpenBSD, HP-UX, Solaris, Cygwin, mingw, MSVC, Minix, Android */
+
+/* Implement mbrtoc32() based on mbrtowc().  */
+
+# include <wchar.h>
+
+# include "localcharset.h"
+# include "streq.h"
+
+static mbstate_t internal_state;
+
+size_t
+mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+{
+  /* It's simpler to handle the case s == NULL upfront, than to worry about
+     this case later, before every test of pwc and n.  */
+  if (s == NULL)
+    {
+      pwc = NULL;
+      s = "";
+      n = 1;
+    }
+
+# if MBRTOC32_EMPTY_INPUT_BUG || _GL_LARGE_CHAR32_T
+  if (n == 0)
+    return (size_t) -2;
+# endif
+
+  if (ps == NULL)
+    ps = &internal_state;
+
+# if _GL_LARGE_CHAR32_T
+
+  /* Special-case all encodings that may produce wide character values
+     > WCHAR_MAX.  */
+  const char *encoding = locale_charset ();
+  if (STREQ_OPT (encoding, "UTF-8", 'U', 'T', 'F', '-', '8', 0, 0, 0, 0))
+    {
+      /* Special-case the UTF-8 encoding.  Assume that the wide-character
+         encoding in a UTF-8 locale is UCS-2 or, equivalently, UTF-16.  */
+      /* Here n > 0.  */
+      char *pstate = (char *)ps;
+      size_t nstate = pstate[0];
+      char buf[4];
+      const char *p;
+      size_t m;
+      int res;
+
+      switch (nstate)
+        {
+        case 0:
+          p = s;
+          m = n;
+          break;
+        case 3:
+          buf[2] = pstate[3];
+          FALLTHROUGH;
+        case 2:
+          buf[1] = pstate[2];
+          FALLTHROUGH;
+        case 1:
+          buf[0] = pstate[1];
+          p = buf;
+          m = nstate;
+          buf[m++] = s[0];
+          if (n >= 2 && m < 4)
+            {
+              buf[m++] = s[1];
+              if (n >= 3 && m < 4)
+                buf[m++] = s[2];
+            }
+          break;
+        default:
+          errno = EINVAL;
+          return (size_t)(-1);
+        }
+
+      /* Here m > 0.  */
+
+      {
+#  define FITS_IN_CHAR_TYPE(wc)  1
+#  include "mbrtowc-impl-utf8.h"
+      }
+
+     success:
+      if (nstate >= (res > 0 ? res : 1))
+        abort ();
+      res -= nstate;
+      /* Set *ps to the initial state.  */
+#  if defined _WIN32 && !defined __CYGWIN__
+      /* Native Windows.  */
+      /* MSVC defines 'mbstate_t' as an 8-byte struct; the first 4 bytes matter.
+         On mingw, 'mbstate_t' is sometimes defined as 'int', sometimes defined
+         as an 8-byte struct, of which the first 4 bytes matter.  */
+      *(unsigned int *)pstate = 0;
+#  elif defined __CYGWIN__
+      /* Cygwin defines 'mbstate_t' as an 8-byte struct; the first 4 bytes
+         matter.  */
+      ps->__count = 0;
+#  else
+      pstate[0] = 0;
+#  endif
+      return res;
+
+     incomplete:
+      {
+        size_t k = nstate;
+        /* Here 0 <= k < m < 4.  */
+        pstate[++k] = s[0];
+        if (k < m)
+          {
+            pstate[++k] = s[1];
+            if (k < m)
+              pstate[++k] = s[2];
+          }
+        if (k != m)
+          abort ();
+      }
+      pstate[0] = m;
+      return (size_t)(-2);
+
+     invalid:
+      errno = EILSEQ;
+      /* The conversion state is undefined, says POSIX.  */
+      return (size_t)(-1);
+    }
+  else
+    {
+      wchar_t wc;
+      size_t ret = mbrtowc (&wc, s, n, ps);
+      if (ret < (size_t) -2 && pwc != NULL)
+        *pwc = wc;
+      return ret;
+    }
+
+# else
+
+  /* char32_t and wchar_t are equivalent.
+     Two implementations are possible:
+       - We can call the original mbrtoc32 (if it exists) and handle
+         MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ.
+       - We can call mbrtowc.
+     The latter is simpler.   */
+  wchar_t wc;
+  size_t ret = mbrtowc (&wc, s, n, ps);
+  if (ret < (size_t) -2 && pwc != NULL)
+    *pwc = wc;
+  return ret;
+
+# endif
+}
+
+#endif

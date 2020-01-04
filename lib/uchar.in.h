@@ -70,4 +70,33 @@ _GL_CXXALIASWARN (c32tob);
 #endif
 
 
+/* Converts a multibyte character to a 32-bit wide character.  */
+#if @GNULIB_MBRTOC32@
+# if @REPLACE_MBRTOC32@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef mbrtoc32
+#   define mbrtoc32 rpl_mbrtoc32
+#  endif
+_GL_FUNCDECL_RPL (mbrtoc32, size_t,
+                  (char32_t *pc, const char *s, size_t n, mbstate_t *ps));
+_GL_CXXALIAS_RPL (mbrtoc32, size_t,
+                  (char32_t *pc, const char *s, size_t n, mbstate_t *ps));
+# else
+#  if !@HAVE_MBRTOC32@
+_GL_FUNCDECL_SYS (mbrtoc32, size_t,
+                  (char32_t *pc, const char *s, size_t n, mbstate_t *ps));
+#  endif
+_GL_CXXALIAS_SYS (mbrtoc32, size_t,
+                  (char32_t *pc, const char *s, size_t n, mbstate_t *ps));
+# endif
+_GL_CXXALIASWARN (mbrtoc32);
+#elif defined GNULIB_POSIXCHECK
+# undef mbrtoc32
+# if HAVE_RAW_DECL_MBRTOC32
+_GL_WARN_ON_USE (mbrtoc32, "mbrtoc32 is not portable - "
+                 "use gnulib module mbrtoc32 for portability");
+# endif
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_UCHAR_H */
