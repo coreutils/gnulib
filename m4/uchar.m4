@@ -1,4 +1,4 @@
-# uchar.m4 serial 4
+# uchar.m4 serial 5
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,6 +18,16 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
     HAVE_UCHAR_H=0
   fi
   AC_SUBST([HAVE_UCHAR_H])
+
+  dnl Test whether a 'char32_t' can hold more characters than a 'wchar_t'.
+  gl_STDINT_BITSIZEOF([wchar_t], [gl_STDINT_INCLUDES])
+  if test $BITSIZEOF_WCHAR_T -lt 32; then
+    SMALL_WCHAR_T=1
+  else
+    SMALL_WCHAR_T=0
+  fi
+  dnl SMALL_WCHAR_T is expected to be 1 on 32-bit AIX, Cygwin, native Windows.
+  AC_SUBST([SMALL_WCHAR_T])
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use, and which is not
