@@ -23,8 +23,8 @@ Depends-on:
 wchar
 extensions
 stdint          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
-hard-locale     [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
-mbsinit         [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
+hard-locale     [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && test $REPLACE_MBSTATE_T = 0]
+mbsinit         [{ test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; } && test $REPLACE_MBSTATE_T = 0]
 localcharset    [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 streq           [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
 verify          [test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1]
@@ -33,10 +33,12 @@ configure.ac:
 gl_FUNC_MBRTOWC
 if test $HAVE_MBRTOWC = 0 || test $REPLACE_MBRTOWC = 1; then
   AC_LIBOBJ([mbrtowc])
-  AC_LIBOBJ([lc-charset-dispatch])
-  AC_LIBOBJ([mbtowc-lock])
+  if test $REPLACE_MBSTATE_T = 1; then
+    AC_LIBOBJ([lc-charset-dispatch])
+    AC_LIBOBJ([mbtowc-lock])
+    gl_PREREQ_MBTOWC_LOCK
+  fi
   gl_PREREQ_MBRTOWC
-  gl_PREREQ_MBTOWC_LOCK
 fi
 gl_WCHAR_MODULE_INDICATOR([mbrtowc])
 

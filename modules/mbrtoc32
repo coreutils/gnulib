@@ -18,9 +18,7 @@ m4/visibility.m4
 
 Depends-on:
 uchar
-hard-locale     [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
-mbrtowc         [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
-mbsinit         [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
+mbrtowc         [{ test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; } && test $REPLACE_MBSTATE_T = 0]
 localcharset    [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 streq           [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
 verify          [test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1]
@@ -29,10 +27,12 @@ configure.ac:
 gl_FUNC_MBRTOC32
 if test $HAVE_MBRTOC32 = 0 || test $REPLACE_MBRTOC32 = 1; then
   AC_LIBOBJ([mbrtoc32])
-  AC_LIBOBJ([lc-charset-dispatch])
-  AC_LIBOBJ([mbtowc-lock])
+  if test $REPLACE_MBSTATE_T = 1; then
+    AC_LIBOBJ([lc-charset-dispatch])
+    AC_LIBOBJ([mbtowc-lock])
+    gl_PREREQ_MBTOWC_LOCK
+  fi
   gl_PREREQ_MBRTOC32
-  gl_PREREQ_MBTOWC_LOCK
 fi
 gl_UCHAR_MODULE_INDICATOR([mbrtoc32])
 
