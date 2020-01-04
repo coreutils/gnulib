@@ -30,7 +30,9 @@ char32_t d = 'y';
 
 /* Check that char16_t and char32_t are unsigned types.  */
 verify ((char16_t)(-1) >= 0);
+#if !defined __HP_cc
 verify ((char32_t)(-1) >= 0);
+#endif
 
 /* Check that char32_t is at least 31 bits wide.  */
 verify ((char32_t)0x7FFFFFFF != (char32_t)0x3FFFFFFF);
