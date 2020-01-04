@@ -139,13 +139,13 @@ main (int argc, char *argv[])
             case '2':
               /* Locale encoding is UTF-8.  */
               {
-                char input[] = "B\303\274\303\237er"; /* "Büßer" */
+                char input[] = "s\303\274\303\237\360\237\230\213!"; /* "süß😋!" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
                 wc = (char32_t) 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
-                ASSERT (wc == 'B');
+                ASSERT (wc == 's');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
@@ -171,8 +171,8 @@ main (int argc, char *argv[])
                 ASSERT (c32tob (buf[1]) == EOF);
                 if (unlimited)
                   {
-                    ASSERT (buf[2] == 'e');
-                    ASSERT (buf[3] == 'r');
+                    ASSERT (buf[2] == 0x1F60B); /* expect Unicode encoding */
+                    ASSERT (buf[3] == '!');
                     ASSERT (buf[4] == 0);
                     ASSERT (buf[5] == (char32_t) 0xBADFACE);
                   }
@@ -238,13 +238,13 @@ main (int argc, char *argv[])
             case '4':
               /* Locale encoding is GB18030.  */
               {
-                char input[] = "B\250\271\201\060\211\070er"; /* "Büßer" */
+                char input[] = "s\250\271\201\060\211\070\224\071\375\067!"; /* "süß😋!" */
                 memset (&state, '\0', sizeof (mbstate_t));
 
                 wc = (char32_t) 0xBADFACE;
                 ret = mbrtoc32 (&wc, input, 1, &state);
                 ASSERT (ret == 1);
-                ASSERT (wc == 'B');
+                ASSERT (wc == 's');
                 ASSERT (mbsinit (&state));
                 input[0] = '\0';
 
@@ -270,8 +270,8 @@ main (int argc, char *argv[])
                 ASSERT (c32tob (buf[1]) == EOF);
                 if (unlimited)
                   {
-                    ASSERT (buf[2] == 'e');
-                    ASSERT (buf[3] == 'r');
+                    ASSERT (c32tob (buf[2]) == EOF);
+                    ASSERT (buf[3] == '!');
                     ASSERT (buf[4] == 0);
                     ASSERT (buf[5] == (char32_t) 0xBADFACE);
                   }
