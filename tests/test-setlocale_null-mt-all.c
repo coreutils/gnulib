@@ -18,6 +18,8 @@
 
 #include <config.h>
 
+#if USE_ISOC_THREADS || USE_POSIX_THREADS || USE_ISOC_AND_POSIX_THREADS || USE_WINDOWS_THREADS
+
 /* Specification.  */
 #include <locale.h>
 
@@ -130,6 +132,21 @@ main (int argc, char *argv[])
 
   return 0;
 }
+
+#else
+
+/* No multithreading available.  */
+
+#include <stdio.h>
+
+int
+main ()
+{
+  fputs ("Skipping test: multithreading not enabled\n", stderr);
+  return 77;
+}
+
+#endif
 
 /* Without locking, the results of this test would be:
 glibc                OK
