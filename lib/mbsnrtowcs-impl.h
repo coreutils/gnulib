@@ -16,16 +16,16 @@
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 size_t
-mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps)
+FUNC (DCHAR_T *dest, const char **srcp, size_t srclen, size_t len, mbstate_t *ps)
 {
   if (ps == NULL)
-    ps = &_gl_mbsrtowcs_state;
+    ps = &INTERNAL_STATE;
   {
     const char *src = *srcp;
 
     if (dest != NULL)
       {
-        wchar_t *destptr = dest;
+        DCHAR_T *destptr = dest;
 
         for (; srclen > 0 && len > 0; destptr++, len--)
           {
@@ -46,7 +46,7 @@ mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate
               src_avail = 4 + strnlen1 (src + 4, MIN (srclen, MB_LEN_MAX) - 4);
 
             /* Parse the next multibyte character.  */
-            ret = mbrtowc (destptr, src, src_avail, ps);
+            ret = MBRTOWC (destptr, src, src_avail, ps);
 
             if (ret == (size_t)(-2))
               /* Encountered a multibyte character that extends past a '\0' byte
@@ -94,7 +94,7 @@ mbsnrtowcs (wchar_t *dest, const char **srcp, size_t srclen, size_t len, mbstate
               src_avail = 4 + strnlen1 (src + 4, MIN (srclen, MB_LEN_MAX) - 4);
 
             /* Parse the next multibyte character.  */
-            ret = mbrtowc (NULL, src, src_avail, &state);
+            ret = MBRTOWC (NULL, src, src_avail, &state);
 
             if (ret == (size_t)(-2))
               /* Encountered a multibyte character that extends past a '\0' byte

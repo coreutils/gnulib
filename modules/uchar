@@ -31,6 +31,7 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	      -e 's/@''GNULIB_BTOC32''@/$(GNULIB_BTOC32)/g' \
 	      -e 's/@''GNULIB_C32TOB''@/$(GNULIB_C32TOB)/g' \
 	      -e 's/@''GNULIB_MBRTOC32''@/$(GNULIB_MBRTOC32)/g' \
+	      -e 's/@''GNULIB_MBSNRTOC32S''@/$(GNULIB_MBSNRTOC32S)/g' \
 	      -e 's/@''GNULIB_MBSRTOC32S''@/$(GNULIB_MBSRTOC32S)/g' \
 	      -e 's|@''HAVE_MBRTOC32''@|$(HAVE_MBRTOC32)|g' \
 	      -e 's|@''REPLACE_MBRTOC32''@|$(REPLACE_MBRTOC32)|g' \
