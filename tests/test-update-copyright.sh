@@ -51,7 +51,7 @@ cat <<\EOF > $s
 # the script through the perl program found in $PATH.  The '-x' option
 # is essential as well; without it, perl would re-execute the script
 # through /bin/sh.  When executed by  perl, the next two lines are a no-op.
-eval 'exec perl -wSx "$0" "$@"'
+eval 'exec perl -wSx -pi "$0" "$@"'
      if 0;
 
 s/a/b/
