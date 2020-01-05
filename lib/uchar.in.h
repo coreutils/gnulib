@@ -132,4 +132,15 @@ _GL_CXXALIASWARN (mbsrtoc32s);
 #endif
 
 
+/* Convert a string to a 32-bit wide string.  */
+#if @GNULIB_MBSTOC32S@
+_GL_FUNCDECL_SYS (mbstoc32s, size_t,
+                  (char32_t *dest, const char *src, size_t len)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (mbstoc32s, size_t,
+                  (char32_t *dest, const char *src, size_t len));
+_GL_CXXALIASWARN (mbstoc32s);
+#endif
+
+
 #endif /* _@GUARD_PREFIX@_UCHAR_H */

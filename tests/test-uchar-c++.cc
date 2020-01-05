@@ -48,6 +48,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::mbsrtoc32s, size_t,
                  (char32_t *, const char **, size_t, mbstate_t *));
 #endif
 
+#if GNULIB_TEST_MBSTOC32S
+SIGNATURE_CHECK (GNULIB_NAMESPACE::mbstoc32s, size_t,
+                 (char32_t *, const char *, size_t));
+#endif
+
 
 int
 main ()
