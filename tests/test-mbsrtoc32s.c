@@ -21,8 +21,8 @@
 #include <uchar.h>
 
 #include "signature.h"
-SIGNATURE_CHECK (mbsrtoc32s, size_t, (char32_t *, char const **, size_t,
-                                      mbstate_t *));
+SIGNATURE_CHECK (mbsrtoc32s, size_t,
+                 (char32_t *, const char **, size_t, mbstate_t *));
 
 #include <locale.h>
 #include <stdio.h>

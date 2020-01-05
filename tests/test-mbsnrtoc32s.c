@@ -22,7 +22,7 @@
 
 #include "signature.h"
 SIGNATURE_CHECK (mbsnrtoc32s, size_t,
-                 (char32_t *, char const **, size_t, size_t, mbstate_t *));
+                 (char32_t *, const char **, size_t, size_t, mbstate_t *));
 
 #include <locale.h>
 #include <stdio.h>
