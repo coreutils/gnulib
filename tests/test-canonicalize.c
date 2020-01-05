@@ -16,6 +16,11 @@
 
 /* Written by Bruno Haible <bruno@clisp.org>, 2007.  */
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   may "optimize" the null_ptr function, when its result gets passed to a
+   function that has an argument declared as _GL_ARG_NONNULL.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <config.h>
 
 #include "canonicalize.h"
@@ -62,22 +67,34 @@ main (void)
             == result1 + strlen (result1) - strlen ("/" BASE "/tra"));
     free (result1);
     free (result2);
+
     errno = 0;
     result1 = canonicalize_file_name ("");
     ASSERT (result1 == NULL);
     ASSERT (errno == ENOENT);
+
     errno = 0;
     result2 = canonicalize_filename_mode ("", CAN_EXISTING);
     ASSERT (result2 == NULL);
     ASSERT (errno == ENOENT);
+
+    /* This test works only if the canonicalize_file_name implementation
+       comes from gnulib.  If it comes from libc, we have no way to prevent
+       gcc from "optimizing" the null_ptr function in invalid ways.  See
+       <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93156>.  */
+#if GNULIB_defined_canonicalize_file_name
     errno = 0;
     result1 = canonicalize_file_name (null_ptr ());
     ASSERT (result1 == NULL);
     ASSERT (errno == EINVAL);
+#endif
+
     errno = 0;
     result2 = canonicalize_filename_mode (NULL, CAN_EXISTING);
     ASSERT (result2 == NULL);
     ASSERT (errno == EINVAL);
+
+    errno = 0;
     result2 = canonicalize_filename_mode (".", CAN_MISSING | CAN_ALL_BUT_LAST);
     ASSERT (result2 == NULL);
     ASSERT (errno == EINVAL);

@@ -14,6 +14,11 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
+/* Don't use __attribute__ __nonnull__ in this compilation unit.  Otherwise gcc
+   may "optimize" the null_ptr function, when its result gets passed to a
+   function that has an argument declared as _GL_ARG_NONNULL.  */
+#define _GL_ARG_NONNULL(params)
+
 #include <config.h>
 
 #include <stdlib.h>
@@ -84,9 +89,15 @@ test_errors (int fd, const char *slave)
         }
     }
 
+  /* This test works only if the ptsname_r implementation comes from gnulib.
+     If it comes from libc, we have no way to prevent gcc from "optimizing"
+     the null_ptr function in invalid ways.  See
+     <https://gcc.gnu.org/bugzilla/show_bug.cgi?id=93156>.  */
+#if GNULIB_defined_ptsname_r
   result = ptsname_r (fd, null_ptr (), 0);
   ASSERT (result != 0);
   ASSERT (result == EINVAL);
+#endif
 }
 
 int
