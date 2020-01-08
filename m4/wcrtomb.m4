@@ -1,4 +1,4 @@
-# wcrtomb.m4 serial 15
+# wcrtomb.m4 serial 16
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -31,9 +31,11 @@ AC_DEFUN([gl_FUNC_WCRTOMB],
       REPLACE_WCRTOMB=1
     fi
   else
-    if test $REPLACE_MBSTATE_T = 1; then
-      REPLACE_WCRTOMB=1
-    fi
+    dnl We don't actually need to override wcrtomb when redefining the semantics
+    dnl of the mbstate_t type. Tested on 32-bit AIX.
+    dnl if test $REPLACE_MBSTATE_T = 1; then
+    dnl   REPLACE_WCRTOMB=1
+    dnl fi
     if test $REPLACE_WCRTOMB = 0; then
       dnl On Android 4.3, wcrtomb produces wrong characters in the C locale.
       dnl On AIX 4.3, OSF/1 5.1 and Solaris <= 11.3, wcrtomb (NULL, 0, NULL)
@@ -79,7 +81,9 @@ int main ()
         ])
       case "$gl_cv_func_wcrtomb_works" in
         *yes) ;;
-        *) REPLACE_WCRTOMB=1 ;;
+        *) AC_DEFINE([WCRTOMB_C_LOCALE_BUG], [1],
+             [Define if the wcrtomb function does not work in the C locale.])
+           REPLACE_WCRTOMB=1 ;;
       esac
     fi
     if test $REPLACE_WCRTOMB = 0; then
@@ -148,7 +152,9 @@ int main ()
         ])
       case "$gl_cv_func_wcrtomb_retval" in
         *yes) ;;
-        *) REPLACE_WCRTOMB=1 ;;
+        *) AC_DEFINE([WCRTOMB_RETVAL_BUG], [1],
+             [Define if the wcrtomb function has an incorrect return value.])
+           REPLACE_WCRTOMB=1 ;;
       esac
     fi
   fi
