@@ -6,6 +6,7 @@ lib/btoc32.c
 
 Depends-on:
 uchar
+mbrtoc32
 btowc
 
 configure.ac:

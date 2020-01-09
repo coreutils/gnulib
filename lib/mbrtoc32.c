@@ -24,13 +24,13 @@
 #include <errno.h>
 #include <stdlib.h>
 
-# ifndef FALLTHROUGH
-#  if __GNUC__ < 7
-#   define FALLTHROUGH ((void) 0)
-#  else
-#   define FALLTHROUGH __attribute__ ((__fallthrough__))
-#  endif
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
 # endif
+#endif
 
 #if GNULIB_defined_mbstate_t /* AIX, IRIX */
 /* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales
@@ -74,17 +74,23 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
 #else /* glibc, macOS, FreeBSD, NetBSD, OpenBSD, HP-UX, Solaris, Cygwin, mingw, MSVC, Minix, Android */
 
-/* Implement mbrtoc32() based on mbrtowc().  */
+/* Implement mbrtoc32() based on the original mbrtoc32() or on mbrtowc().  */
 
 # include <wchar.h>
 
 # include "localcharset.h"
 # include "streq.h"
 
+# if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
+#  include "hard-locale.h"
+#  include <locale.h>
+# endif
+
 static mbstate_t internal_state;
 
 size_t
 mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
+# undef mbrtoc32
 {
   /* It's simpler to handle the case s == NULL upfront, than to worry about
      this case later, before every test of pwc and n.  */
@@ -103,7 +109,31 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
   if (ps == NULL)
     ps = &internal_state;
 
-# if _GL_LARGE_CHAR32_T
+# if HAVE_WORKING_MBRTOC32
+  /* mbrtoc32() may produce different values for wc than mbrtowc().  Therefore
+     use mbrtoc32().  */
+
+#  if defined _WIN32 && !defined __CYGWIN__
+  char32_t wc;
+  size_t ret = mbrtoc32 (&wc, s, n, ps);
+  if (ret < (size_t) -2 && pwc != NULL)
+    *pwc = wc;
+#  else
+  size_t ret = mbrtoc32 (pwc, s, n, ps);
+#  endif
+
+#  if MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ
+  if ((size_t) -2 <= ret && n != 0 && ! hard_locale (LC_CTYPE))
+    {
+      if (pwc != NULL)
+        *pwc = (unsigned char) *s;
+      return 1;
+    }
+#  endif
+
+  return ret;
+
+# elif _GL_LARGE_CHAR32_T
 
   /* Special-case all encodings that may produce wide character values
      > WCHAR_MAX.  */
@@ -209,12 +239,7 @@ mbrtoc32 (char32_t *pwc, const char *s, size_t n, mbstate_t *ps)
 
 # else
 
-  /* char32_t and wchar_t are equivalent.
-     Two implementations are possible:
-       - We can call the original mbrtoc32 (if it exists) and handle
-         MBRTOC32_IN_C_LOCALE_MAYBE_EILSEQ.
-       - We can call mbrtowc.
-     The latter is simpler.   */
+  /* char32_t and wchar_t are equivalent.  Use mbrtowc().  */
   wchar_t wc;
   size_t ret = mbrtowc (&wc, s, n, ps);
   if (ret < (size_t) -2 && pwc != NULL)

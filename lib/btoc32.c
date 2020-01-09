@@ -21,10 +21,30 @@
 /* Specification.  */
 #include <uchar.h>
 
+#include <stdio.h>
+#include <string.h>
+
 wint_t
 btoc32 (int c)
 {
+#if HAVE_WORKING_MBRTOC32 && !defined __GLIBC__
+  /* The char32_t encoding of a multibyte character may be different than its
+     wchar_t encoding.  */
+  if (c != EOF)
+    {
+      mbstate_t state;
+      char s[1];
+      char32_t wc;
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      s[0] = (unsigned char) c;
+      if (mbrtoc32 (&wc, s, 1, &state) <= 1)
+        return wc;
+    }
+  return WEOF;
+#else
   /* In all known locale encodings, unibyte characters correspond only to
      characters in the BMP.  */
   return btowc (c);
+#endif
 }

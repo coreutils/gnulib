@@ -22,7 +22,9 @@
 
 #include <wchar.h>
 
-#if _GL_LARGE_CHAR32_T
+#if (HAVE_WORKING_MBRTOC32 && !defined __GLIBC__) || _GL_LARGE_CHAR32_T
+/* The char32_t encoding of a multibyte character may be different than its
+   wchar_t encoding, or char32_t is wider than wchar_t.  */
 
 /* For Cygwin >= 1.7 it would be possible to speed this up a bit by cutting
    the source into chunks, calling mbsnrtowcs on a chunk, then u16_to_u32 on

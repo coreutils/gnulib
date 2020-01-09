@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 1
+# mbrtoc32.m4 serial 2
 dnl Copyright (C) 2014-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,8 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
 
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   gl_MBSTATE_T_BROKEN
+
+  AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
 
   AC_CHECK_FUNCS_ONCE([mbrtoc32])
   if test $ac_cv_func_mbrtoc32 = no; then
@@ -34,6 +36,9 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
            REPLACE_MBRTOC32=1
            ;;
       esac
+    fi
+    if test $HAVE_WORKING_MBRTOC32 = 0; then
+      REPLACE_MBRTOC32=1
     fi
   fi
 ])
@@ -109,6 +114,101 @@ AC_DEFUN([gl_MBRTOC32_C_LOCALE],
        esac
       ])
     ])
+])
+
+dnl Test whether mbrtoc32 works not worse than mbrtowc.
+dnl Result is HAVE_WORKING_MBRTOC32.
+
+AC_DEFUN([gl_MBRTOC32_SANITYCHECK],
+[
+  AC_REQUIRE([AC_PROG_CC])
+  AC_CHECK_FUNCS_ONCE([mbrtoc32])
+  AC_REQUIRE([gt_LOCALE_FR])
+  AC_REQUIRE([gt_LOCALE_ZH_CN])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
+  if test $ac_cv_func_mbrtoc32 = no; then
+    HAVE_WORKING_MBRTOC32=0
+  else
+    AC_CACHE_CHECK([whether mbrtoc32 works as well as mbrtowc],
+      [gl_cv_func_mbrtoc32_sanitycheck],
+      [
+        dnl Initial guess, used when cross-compiling or when no suitable locale
+        dnl is present.
+changequote(,)dnl
+        case "$host_os" in
+                             # Guess no on Solaris, native Windows.
+          solaris* | mingw*) gl_cv_func_mbrtoc32_sanitycheck="guessing no" ;;
+                             # Guess yes otherwise.
+          *)                 gl_cv_func_mbrtoc32_sanitycheck="guessing yes" ;;
+        esac
+changequote([,])dnl
+        if test $LOCALE_FR != none || test $LOCALE_ZH_CN != none; then
+          AC_RUN_IFELSE(
+            [AC_LANG_SOURCE([[
+#include <locale.h>
+#include <stdlib.h>
+#include <string.h>
+/* Tru64 with Desktop Toolkit C has a bug: <stdio.h> must be included before
+   <wchar.h>.
+   BSD/OS 4.0.1 has a bug: <stddef.h>, <stdio.h> and <time.h> must be
+   included before <wchar.h>.  */
+#include <stddef.h>
+#include <stdio.h>
+#include <time.h>
+#include <wchar.h>
+#include <uchar.h>
+int main ()
+{
+  int result = 0;
+  /* This fails on native Windows:
+     mbrtoc32 returns (size_t)-1.
+     mbrtowc returns 1 (correct).  */
+  if (setlocale (LC_ALL, "$LOCALE_FR") != NULL)
+    {
+      mbstate_t state;
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\374", 1, &state) == 1)
+        {
+          char32_t c32 = (wchar_t) 0xBADFACE;
+          memset (&state, '\0', sizeof (mbstate_t));
+          if (mbrtoc32 (&c32, "\374", 1, &state) != 1)
+            result |= 1;
+        }
+    }
+  /* This fails on Solaris 11.4:
+     mbrtoc32 returns (size_t)-1.
+     mbrtowc returns 4 (correct).  */
+  if (setlocale (LC_ALL, "$LOCALE_ZH_CN") != NULL)
+    {
+      mbstate_t state;
+      wchar_t wc = (wchar_t) 0xBADFACE;
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (mbrtowc (&wc, "\224\071\375\067", 4, &state) == 4)
+        {
+          char32_t c32 = (wchar_t) 0xBADFACE;
+          memset (&state, '\0', sizeof (mbstate_t));
+          if (mbrtoc32 (&c32, "\224\071\375\067", 4, &state) != 4)
+            result |= 2;
+        }
+    }
+  return result;
+}]])],
+            [gl_cv_func_mbrtoc32_sanitycheck=yes],
+            [gl_cv_func_mbrtoc32_sanitycheck=no],
+            [:])
+        fi
+      ])
+    case "$gl_cv_func_mbrtoc32_sanitycheck" in
+      *yes)
+        HAVE_WORKING_MBRTOC32=1
+        AC_DEFINE([HAVE_WORKING_MBRTOC32], [1],
+          [Define if the mbrtoc32 function basically works.])
+        ;;
+      *) HAVE_WORKING_MBRTOC32=0 ;;
+    esac
+  fi
+  AC_SUBST([HAVE_WORKING_MBRTOC32])
 ])
 
 # Prerequisites of lib/mbrtoc32.c and lib/lc-charset-dispatch.c.
