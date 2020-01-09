@@ -93,6 +93,18 @@ _GL_WARN_ON_USE (mbrtoc32, "c32rtomb is not portable - "
 #endif
 
 
+/* Convert a 32-bit wide string to a string.  */
+#if @GNULIB_C32SRTOMBS@
+_GL_FUNCDECL_SYS (c32srtombs, size_t,
+                  (char *dest, const char32_t **srcp, size_t len, mbstate_t *ps)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (c32srtombs, size_t,
+                  (char *dest, const char32_t **srcp, size_t len,
+                   mbstate_t *ps));
+_GL_CXXALIASWARN (c32srtombs);
+#endif
+
+
 /* Converts a 32-bit wide character to unibyte character.
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */

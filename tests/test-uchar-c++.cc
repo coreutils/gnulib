@@ -33,6 +33,11 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::c32rtomb, size_t,
                  (char *, char32_t , mbstate_t *));
 #endif
 
+#if GNULIB_TEST_C32SRTOMBS
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32srtombs, size_t,
+                 (char *, const char32_t **, size_t, mbstate_t *));
+#endif
+
 #if GNULIB_TEST_C32TOB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::c32tob, int, (wint_t));
 #endif

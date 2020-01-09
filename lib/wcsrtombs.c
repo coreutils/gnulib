@@ -51,6 +51,10 @@ rpl_wcsrtombs (char *dest, const wchar_t **srcp, size_t len, mbstate_t *ps)
 # include <stdlib.h>
 # include <string.h>
 
+# define FUNC wcsrtombs
+# define SCHAR_T wchar_t
+# define INTERNAL_STATE _gl_wcsrtombs_state
+# define WCRTOMB wcrtomb
 # include "wcsrtombs-impl.h"
 
 #endif
