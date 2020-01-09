@@ -21,10 +21,27 @@
 /* Specification.  */
 #include <uchar.h>
 
+#include <stdio.h>
+#include <string.h>
+#include <wchar.h>
+
 int
 c32tob (wint_t wc)
 {
-#if _GL_LARGE_CHAR32_T
+#if HAVE_WORKING_MBRTOC32 && !defined __GLIBC__
+  /* The char32_t encoding of a multibyte character may be different than its
+     wchar_t encoding.  */
+  if (wc != WEOF)
+    {
+      mbstate_t state;
+      char buf[8];
+
+      memset (&state, '\0', sizeof (mbstate_t));
+      if (c32rtomb (buf, wc, &state) == 1)
+        return (unsigned char) buf[0];
+    }
+  return EOF;
+#elif _GL_LARGE_CHAR32_T
   /* In all known encodings, unibyte characters correspond only to
      characters in the BMP.  */
   if (wc != WEOF && (wchar_t) wc == wc)
