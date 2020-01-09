@@ -1,4 +1,4 @@
-# uchar.m4 serial 8
+# uchar.m4 serial 9
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN_ONCE([gl_UCHAR_H],
   dnl corresponding gnulib module is not in use, and which is not
   dnl guaranteed by C11.
   gl_WARN_ON_USE_PREPARE([[#include <uchar.h>
-    ]], [mbrtoc32])
+    ]], [c32rtomb mbrtoc32])
 ])
 
 AC_DEFUN([gl_UCHAR_MODULE_INDICATOR],
@@ -48,12 +48,15 @@ AC_DEFUN([gl_UCHAR_MODULE_INDICATOR],
 AC_DEFUN([gl_UCHAR_H_DEFAULTS],
 [
   GNULIB_BTOC32=0;           AC_SUBST([GNULIB_BTOC32])
+  GNULIB_C32RTOMB=0;         AC_SUBST([GNULIB_C32RTOMB])
   GNULIB_C32TOB=0;           AC_SUBST([GNULIB_C32TOB])
   GNULIB_MBRTOC32=0;         AC_SUBST([GNULIB_MBRTOC32])
   GNULIB_MBSNRTOC32S=0;      AC_SUBST([GNULIB_MBSNRTOC32S])
   GNULIB_MBSRTOC32S=0;       AC_SUBST([GNULIB_MBSRTOC32S])
   GNULIB_MBSTOC32S=0;        AC_SUBST([GNULIB_MBSTOC32S])
   dnl Assume proper GNU behavior unless another module says otherwise.
+  HAVE_C32RTOMB=1;           AC_SUBST([HAVE_C32RTOMB])
   HAVE_MBRTOC32=1;           AC_SUBST([HAVE_MBRTOC32])
+  REPLACE_C32RTOMB=0;        AC_SUBST([REPLACE_C32RTOMB])
   REPLACE_MBRTOC32=0;        AC_SUBST([REPLACE_MBRTOC32])
 ])

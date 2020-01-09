@@ -68,6 +68,31 @@ _GL_CXXALIASWARN (btoc32);
 #endif
 
 
+/* Converts a 32-bit wide character to a multibyte character.  */
+#if @GNULIB_C32RTOMB@
+# if @REPLACE_C32RTOMB@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef c32rtomb
+#   define c32rtomb rpl_c32rtomb
+#  endif
+_GL_FUNCDECL_RPL (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
+_GL_CXXALIAS_RPL (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
+# else
+#  if !@HAVE_C32RTOMB@
+_GL_FUNCDECL_SYS (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
+#  endif
+_GL_CXXALIAS_SYS (c32rtomb, size_t, (char *s, char32_t wc, mbstate_t *ps));
+# endif
+_GL_CXXALIASWARN (c32rtomb);
+#elif defined GNULIB_POSIXCHECK
+# undef c32rtomb
+# if HAVE_RAW_DECL_C32RTOMB
+_GL_WARN_ON_USE (mbrtoc32, "c32rtomb is not portable - "
+                 "use gnulib module c32rtomb for portability");
+# endif
+#endif
+
+
 /* Converts a 32-bit wide character to unibyte character.
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */
