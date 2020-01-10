@@ -94,6 +94,19 @@ _GL_WARN_ON_USE (mbrtoc32, "c32rtomb is not portable - "
 
 
 /* Convert a 32-bit wide string to a string.  */
+#if @GNULIB_C32SNRTOMBS@
+_GL_FUNCDECL_SYS (c32snrtombs, size_t,
+                  (char *dest, const char32_t **srcp, size_t srclen, size_t len,
+                   mbstate_t *ps)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (c32snrtombs, size_t,
+                  (char *dest, const char32_t **srcp, size_t srclen, size_t len,
+                   mbstate_t *ps));
+_GL_CXXALIASWARN (c32snrtombs);
+#endif
+
+
+/* Convert a 32-bit wide string to a string.  */
 #if @GNULIB_C32SRTOMBS@
 _GL_FUNCDECL_SYS (c32srtombs, size_t,
                   (char *dest, const char32_t **srcp, size_t len, mbstate_t *ps)

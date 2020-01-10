@@ -30,6 +30,7 @@ uchar.h: uchar.in.h $(top_builddir)/config.status $(CXXDEFS_H)
 	      -e 's|@''SMALL_WCHAR_T''@|$(SMALL_WCHAR_T)|g' \
 	      -e 's/@''GNULIB_BTOC32''@/$(GNULIB_BTOC32)/g' \
 	      -e 's/@''GNULIB_C32RTOMB''@/$(GNULIB_C32RTOMB)/g' \
+	      -e 's/@''GNULIB_C32SNRTOMBS''@/$(GNULIB_C32SNRTOMBS)/g' \
 	      -e 's/@''GNULIB_C32SRTOMBS''@/$(GNULIB_C32SRTOMBS)/g' \
 	      -e 's/@''GNULIB_C32TOB''@/$(GNULIB_C32TOB)/g' \
 	      -e 's/@''GNULIB_MBRTOC32''@/$(GNULIB_MBRTOC32)/g' \

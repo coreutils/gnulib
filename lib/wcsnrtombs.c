@@ -27,4 +27,8 @@
 
 extern mbstate_t _gl_wcsrtombs_state;
 
+#define FUNC wcsnrtombs
+#define SCHAR_T wchar_t
+#define INTERNAL_STATE _gl_wcsrtombs_state
+#define WCRTOMB wcrtomb
 #include "wcsnrtombs-impl.h"
