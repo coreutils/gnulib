@@ -1,4 +1,4 @@
-# 00gnulib.m4 serial 4
+# 00gnulib.m4 serial 5
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ barfbarf
        [gl_cv_compiler_clang=no])
     ])
 ])
-AC_DEFUN([gl_COMPILER_PREPARE_CHECK_DECL],
+AC_DEFUN_ONCE([gl_COMPILER_PREPARE_CHECK_DECL],
 [
   AC_REQUIRE([AC_PROG_CC])
   AC_REQUIRE([gl_COMPILER_CLANG])
@@ -95,10 +95,11 @@ m4_define([_AC_CHECK_DECL_BODY],
 m4_defn([_AC_CHECK_DECL_BODY])[  ac_compile="$ac_save_ac_compile"
 ])
   ])
-dnl Redefine AC_CHECK_DECL so that it starts with
-dnl AC_REQUIRE([gl_COMPILER_PREPARE_CHECK_DECL]).
+dnl Redefine AC_CHECK_DECL so that it starts with an invocation of
+dnl gl_COMPILER_PREPARE_CHECK_DECL.
 m4_define([AC_CHECK_DECL],
-  [AC_REQUIRE([gl_COMPILER_PREPARE_CHECK_DECL])]m4_defn([AC_CHECK_DECL]))
+  [gl_COMPILER_PREPARE_CHECK_DECL dnl
+]m4_defn([AC_CHECK_DECL]))
 
 # gl_00GNULIB
 # -----------
