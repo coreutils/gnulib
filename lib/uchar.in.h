@@ -118,6 +118,17 @@ _GL_CXXALIASWARN (c32srtombs);
 #endif
 
 
+/* Convert a 32-bit wide string to a string.  */
+#if @GNULIB_C32STOMBS@
+_GL_FUNCDECL_SYS (c32stombs, size_t,
+                  (char *dest, const char32_t *src, size_t len)
+                  _GL_ARG_NONNULL ((2)));
+_GL_CXXALIAS_SYS (c32stombs, size_t,
+                  (char *dest, const char32_t *src, size_t len));
+_GL_CXXALIASWARN (c32stombs);
+#endif
+
+
 /* Converts a 32-bit wide character to unibyte character.
    Returns the single-byte representation of WC if it exists,
    or EOF otherwise.  */
