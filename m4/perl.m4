@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 
 dnl From Jim Meyering.
 dnl Find a new-enough version of Perl.
@@ -29,7 +29,7 @@ AC_DEFUN([gl_PERL],
   for perl in $candidate_perl_names; do
     # Run test in a subshell; some versions of sh will print an error if
     # an executable is not found, even if stderr is redirected.
-    if ( $perl -e 'require 5.005; use File::Compare' ) > /dev/null 2>&1; then
+    if ( $perl -e 'require 5.005; use File::Compare; use warnings;' ) > /dev/null 2>&1; then
       PERL=$perl
       found=yes
       break
