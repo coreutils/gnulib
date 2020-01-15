@@ -1985,6 +1985,7 @@ func_all_modules ()
   func_module crypto/gc-md2
   func_module crypto/gc-md4
   func_module crypto/gc-md5
+  func_module crypto/gc-pbkdf2
   func_module crypto/gc-pbkdf2-sha1
   func_module crypto/gc-random
   func_module crypto/gc-rijndael

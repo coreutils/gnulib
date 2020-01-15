@@ -58,6 +58,8 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-01-15  gc-pbkdf2-sha1  This module is deprecated.  Use gc-pbkdf2 instead.
+
 2019-12-12  dfa             Its API now uses ptrdiff_t instead of size_t.
 
 2019-12-11  dfa             To call dfamust, one must now call dfaparse

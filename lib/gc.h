@@ -72,6 +72,8 @@ typedef void *gc_hash_handle;
 #define GC_SHA224_DIGEST_SIZE 24
 #define GC_SM3_DIGEST_SIZE 32
 
+#define GC_MAX_DIGEST_SIZE 64
+
 /* Cipher types. */
 enum Gc_cipher
 {
@@ -171,13 +173,20 @@ extern Gc_rc gc_hmac_sha256 (const void *key, size_t keylen,
 extern Gc_rc gc_hmac_sha512 (const void *key, size_t keylen,
                              const void *in, size_t inlen, char *resbuf);
 
-/* Derive cryptographic keys from a password P of length PLEN, with
-   salt S of length SLEN, placing the result in pre-allocated buffer
-   DK of length DKLEN.  An iteration count is specified in C, where a
-   larger value means this function take more time (typical iteration
-   counts are 1000-20000).  This function "stretches" the key to be
-   exactly dkLen bytes long.  GC_OK is returned on success, otherwise
-   a Gc_rc error code is returned.  */
+/* Derive cryptographic keys using PKCS#5 PBKDF2 (RFC 2898) from a
+   password P of length PLEN, with salt S of length SLEN, placing the
+   result in pre-allocated buffer DK of length DKLEN.  The PRF is hard
+   coded to be HMAC with HASH.  An iteration count is specified in C
+   (> 0), where a larger value means this function take more time
+   (typical iteration counts are 1000-20000).  This function
+   "stretches" the key to be exactly dkLen bytes long.  GC_OK is
+   returned on success, otherwise a Gc_rc error code is returned.  */
+extern Gc_rc
+gc_pbkdf2_hmac (Gc_hash hash,
+                const char *P, size_t Plen,
+                const char *S, size_t Slen,
+                unsigned int c, char *DK, size_t dkLen);
+
 extern Gc_rc
 gc_pbkdf2_sha1 (const char *P, size_t Plen,
                 const char *S, size_t Slen,
