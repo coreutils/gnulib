@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 # The C Parser.
 # Copyright (C) 2019-2020 Free Software Foundation, Inc.
 #
