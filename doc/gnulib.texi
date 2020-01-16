@@ -6761,6 +6761,7 @@ for use with GNU Automake (in particular).
 * configmake::
 * warnings::
 * manywarnings::
+* VCS To ChangeLog::
 @end menu
 
 @include havelib.texi
@@ -6776,6 +6777,8 @@ for use with GNU Automake (in particular).
 @include warnings.texi
 
 @include manywarnings.texi
+
+@include vcs-to-changelog.texi
 
 
 @node Build Infrastructure Files
