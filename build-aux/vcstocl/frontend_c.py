@@ -266,7 +266,7 @@ class DeclParser(ExprParser):
                            ExprParser.ATTRIBUTE + ';')
 
     # Function Declarations.
-    FNDECL_RE = re.compile(r'\s*(\w+)\s*\([^\(][^;]*\)\s*' +
+    FNDECL_RE = re.compile(r'\s*(\w+)\s*\(([^\(][^;]*)?\)\s*' +
                            ExprParser.ATTRIBUTE + ';')
 
     def __init__(self, regex, blocktype, project_quirks, debug):
