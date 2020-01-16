@@ -78,17 +78,8 @@ class ProjectQuirks:
     # header file that is only assembly code, which breaks the C parser.
     IGNORE_LIST = ['ChangeLog']
 
-
-# Load quirks file.  We assume that the script is run from the top level source
-# directory.
 sys.path.append('/'.join([os.path.dirname(os.path.realpath(__file__)),
                 'vcstocl']))
-try:
-    from vcstocl_quirks import *
-    project_quirks = get_project_quirks(debug)
-except:
-    project_quirks = ProjectQuirks()
-
 
 def main(repo, frontends, refs):
     ''' ChangeLog Generator Entry Point.
@@ -107,6 +98,9 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--debug', required=False, action='store_true',
                      help='Run the file parser debugger.')
 
+    parser.add_argument('-q', '--quirks', required=False, type=str,
+                     help='Load a quirks file.')
+
     args = parser.parse_args()
 
     debug.debug = args.debug
@@ -114,6 +108,21 @@ if __name__ == '__main__':
     if len(args.refs) < 2:
         debug.eprint('Two refs needed to get a ChangeLog.')
         sys.exit(os.EX_USAGE)
+
+    # Load quirks file.  We assume that the script is run from the top level source
+    # directory.
+    if args.quirks:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("vcstocl_quirks", args.quirks)
+        vcstocl_quirks = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(vcstocl_quirks)
+        project_quirks = vcstocl_quirks.get_project_quirks(debug)
+    else:
+        try:
+            from vcstocl_quirks import *
+            project_quirks = get_project_quirks(debug)
+        except:
+            project_quirks = ProjectQuirks()
 
     REPO = {'git': GitRepo(project_quirks.IGNORE_LIST, debug)}
 
