@@ -843,10 +843,11 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
               {
                 size_t home_len = strlen (p->pw_dir);
                 size_t rest_len = end_name == NULL ? 0 : strlen (end_name);
+                /* dirname contains end_name; we can't free it now.  */
+                char *prev_dirname =
+                  (__glibc_unlikely (malloc_dirname) ? dirname : NULL);
                 char *d;
 
-                if (__glibc_unlikely (malloc_dirname))
-                  free (dirname);
                 malloc_dirname = 0;
 
                 if (glob_use_alloca (alloca_used, home_len + rest_len + 1))
@@ -857,6 +858,7 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                     dirname = malloc (home_len + rest_len + 1);
                     if (dirname == NULL)
                       {
+                        free (prev_dirname);
                         scratch_buffer_free (&pwtmpbuf);
                         retval = GLOB_NOSPACE;
                         goto out;
@@ -867,6 +869,8 @@ __glob (const char *pattern, int flags, int (*errfunc) (const char *, int),
                 if (end_name != NULL)
                   d = mempcpy (d, end_name, rest_len);
                 *d = '\0';
+
+                free (prev_dirname);
 
                 dirlen = home_len + rest_len;
                 dirname_modified = 1;
