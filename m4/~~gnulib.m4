@@ -15,3 +15,9 @@ m4_define([AC_PROG_CC],
 gl_COMPILER_CLANG
 gl_COMPILER_PREPARE_CHECK_DECL
 ])
+
+# gl_ZZGNULIB
+# -----------
+# Witness macro that this file has been included.  Needed to force
+# Automake to include this file after all other gnulib .m4 files.
+AC_DEFUN([gl_ZZGNULIB])
