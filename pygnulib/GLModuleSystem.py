@@ -544,7 +544,7 @@ Include:|Link:|License:|Maintainer:)'
                     parts += [line]
                 result = [part.strip() for part in parts if part.strip()]
             result += [joinpath('m4', '00gnulib.m4')]
-            result += [joinpath('m4', '~~gnulib.m4')]
+            result += [joinpath('m4', 'zzgnulib.m4')]
             result += [joinpath('m4', 'gnulib-common.m4')]
             self.cache['files'] = list(result)
         return(list(self.cache['files']))

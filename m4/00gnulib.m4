@@ -101,7 +101,7 @@ dnl AC_REQUIRE([gl_COMPILER_CLANG])
 ])
 dnl Redefine _AC_CHECK_DECL_BODY so that it references ac_compile_for_check_decl
 dnl instead of ac_compile.  If, for whatever reason, the override of AC_PROG_CC
-dnl in ~~gnulib.m4 is inactive, use the original ac_compile.
+dnl in zzgnulib.m4 is inactive, use the original ac_compile.
 m4_define([_AC_CHECK_DECL_BODY],
 [  ac_save_ac_compile="$ac_compile"
   if test -n "$ac_compile_for_check_decl"; then
