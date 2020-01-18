@@ -1,4 +1,4 @@
-# 00gnulib.m4 serial 6
+# 00gnulib.m4 serial 7
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -58,13 +58,18 @@ AC_DEFUN([gl_COMPILER_CLANG],
 dnl AC_REQUIRE([AC_PROG_CC])
   AC_CACHE_CHECK([whether the compiler is clang],
     [gl_cv_compiler_clang],
-    [AC_EGREP_CPP([barfbarf],[
-#ifdef __clang__
-barfbarf
-#endif
-       ],
-       [gl_cv_compiler_clang=yes],
-       [gl_cv_compiler_clang=no])
+    [dnl Use _AC_COMPILE_IFELSE instead of AC_EGREP_CPP, to avoid error
+     dnl "circular dependency of AC_LANG_COMPILER(C)" if AC_PROG_CC has
+     dnl not yet been invoked.
+     _AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM([[
+           #ifdef __clang__
+           barfbarf
+           #endif
+           ]],[[]])
+        ],
+        [gl_cv_compiler_clang=no],
+        [gl_cv_compiler_clang=yes])
     ])
 ])
 AC_DEFUN([gl_COMPILER_PREPARE_CHECK_DECL],
