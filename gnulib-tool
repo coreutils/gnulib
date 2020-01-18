@@ -2294,6 +2294,7 @@ func_get_filelist ()
     fi
   fi
   echo m4/00gnulib.m4
+  echo 'm4/~~gnulib.m4'
   echo m4/gnulib-common.m4
 }
 
