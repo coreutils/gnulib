@@ -25,6 +25,14 @@
 /* Specification.  */
 #include "unistr.h"
 
+#ifndef FALLTHROUGH
+# if __GNUC__ < 7
+#  define FALLTHROUGH ((void) 0)
+# else
+#  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# endif
+#endif
+
 #if !HAVE_INLINE
 
 int
@@ -62,7 +70,9 @@ u8_uctomb (uint8_t *s, ucs4_t uc, int n)
           switch (count) /* note: code falls through cases! */
             {
             case 4: s[3] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x10000;
+              FALLTHROUGH;
             case 3: s[2] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0x800;
+              FALLTHROUGH;
             case 2: s[1] = 0x80 | (uc & 0x3f); uc = uc >> 6; uc |= 0xc0;
           /*case 1:*/ s[0] = uc;
             }
