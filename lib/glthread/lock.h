@@ -505,10 +505,19 @@ extern int glthread_recursive_lock_destroy_multithreaded (gl_recursive_lock_t *l
 typedef pthread_once_t gl_once_t;
 # define gl_once_define(STORAGECLASS, NAME) \
     STORAGECLASS pthread_once_t NAME = PTHREAD_ONCE_INIT;
-# define glthread_once(ONCE_CONTROL, INITFUNCTION) \
-    (pthread_in_use ()                                                         \
-     ? pthread_once (ONCE_CONTROL, INITFUNCTION)                               \
-     : (glthread_once_singlethreaded (ONCE_CONTROL) ? (INITFUNCTION (), 0) : 0))
+# if PTHREAD_IN_USE_DETECTION_HARD || USE_POSIX_THREADS_WEAK
+#  define glthread_once(ONCE_CONTROL, INITFUNCTION) \
+     (pthread_in_use ()                                                        \
+      ? pthread_once (ONCE_CONTROL, INITFUNCTION)                              \
+      : (glthread_once_singlethreaded (ONCE_CONTROL) ? (INITFUNCTION (), 0) : 0))
+# else
+#  define glthread_once(ONCE_CONTROL, INITFUNCTION) \
+     (pthread_in_use ()                                                        \
+      ? glthread_once_multithreaded (ONCE_CONTROL, INITFUNCTION)               \
+      : (glthread_once_singlethreaded (ONCE_CONTROL) ? (INITFUNCTION (), 0) : 0))
+extern int glthread_once_multithreaded (pthread_once_t *once_control,
+                                        void (*init_function) (void));
+# endif
 extern int glthread_once_singlethreaded (pthread_once_t *once_control);
 
 # ifdef __cplusplus

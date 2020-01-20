@@ -718,6 +718,26 @@ glthread_once_singlethreaded (pthread_once_t *once_control)
     return 0;
 }
 
+# if !(PTHREAD_IN_USE_DETECTION_HARD || USE_POSIX_THREADS_WEAK)
+
+int
+glthread_once_multithreaded (pthread_once_t *once_control,
+                             void (*init_function) (void))
+{
+  int err = pthread_once (once_control, init_function);
+  if (err == ENOSYS)
+    {
+      /* This happens on FreeBSD 11: The pthread_once function in libc returns
+         ENOSYS.  */
+      if (glthread_once_singlethreaded (once_control))
+        init_function ();
+      return 0;
+    }
+  return err;
+}
+
+# endif
+
 #endif
 
 /* ========================================================================= */
