@@ -20,7 +20,7 @@ glibc 2.19.
 @item
 This function does not recognize multibyte sequences that @code{mbrtowc}
 recognizes on some platforms:
-Solaris 11.4, mingw, MSVC 14.
+FreeBSD 12, Solaris 11.4, mingw, MSVC 14.
 @end itemize
 
 Portability problems not fixed by Gnulib:
