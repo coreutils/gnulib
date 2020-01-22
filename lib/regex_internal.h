@@ -164,36 +164,8 @@ typedef __re_size_t re_hashval_t;
 typedef unsigned long int bitset_word_t;
 /* All bits set in a bitset_word_t.  */
 #define BITSET_WORD_MAX ULONG_MAX
-
-/* Number of bits in a bitset_word_t.  For portability to hosts with
-   padding bits, do not use '(sizeof (bitset_word_t) * CHAR_BIT)';
-   instead, deduce it directly from BITSET_WORD_MAX.  Avoid
-   greater-than-32-bit integers and unconditional shifts by more than
-   31 bits, as they're not portable.  */
-#if BITSET_WORD_MAX == 0xffffffffUL
-# define BITSET_WORD_BITS 32
-#elif BITSET_WORD_MAX >> 31 >> 4 == 1
-# define BITSET_WORD_BITS 36
-#elif BITSET_WORD_MAX >> 31 >> 16 == 1
-# define BITSET_WORD_BITS 48
-#elif BITSET_WORD_MAX >> 31 >> 28 == 1
-# define BITSET_WORD_BITS 60
-#elif BITSET_WORD_MAX >> 31 >> 31 >> 1 == 1
-# define BITSET_WORD_BITS 64
-#elif BITSET_WORD_MAX >> 31 >> 31 >> 9 == 1
-# define BITSET_WORD_BITS 72
-#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 3 == 1
-# define BITSET_WORD_BITS 128
-#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 7 == 1
-# define BITSET_WORD_BITS 256
-#elif BITSET_WORD_MAX >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 31 >> 7 > 1
-# define BITSET_WORD_BITS 257 /* any value > SBC_MAX will do here */
-# if BITSET_WORD_BITS <= SBC_MAX
-#  error "Invalid SBC_MAX"
-# endif
-#else
-# error "Add case for new bitset_word_t size"
-#endif
+/* Number of bits in a bitset_word_t.  */
+#define BITSET_WORD_BITS ULONG_WIDTH
 
 /* Number of bitset_word_t values in a bitset_t.  */
 #define BITSET_WORDS ((SBC_MAX + BITSET_WORD_BITS - 1) / BITSET_WORD_BITS)
