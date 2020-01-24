@@ -141,6 +141,9 @@
 #ifndef SSIZE_MAX
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
+#ifndef ULONG_WIDTH
+# define ULONG_WIDTH (CHAR_BIT * sizeof (unsigned long int))
+#endif
 
 /* The type of indexes into strings.  This is signed, not size_t,
    since the API requires indexes to fit in regoff_t anyway, and using
