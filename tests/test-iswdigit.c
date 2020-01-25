@@ -39,9 +39,10 @@ for_character (const char *s, size_t n)
   memset (&state, '\0', sizeof (mbstate_t));
   wc = (wchar_t) 0xBADFACE;
   ret = mbrtowc (&wc, s, n, &state);
-  ASSERT (ret == n);
-
-  return iswdigit (wc);
+  if (ret == n)
+    return iswdigit (wc);
+  else
+    return 0;
 }
 
 int
