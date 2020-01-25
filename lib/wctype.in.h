@@ -348,7 +348,7 @@ iswcntrl
 }
 
 _GL_WCTYPE_INLINE int
-#   if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWDIGIT@
 rpl_iswdigit
 #   else
 iswdigit
@@ -463,16 +463,29 @@ towupper
 
 #  endif
 
-# elif @GNULIB_ISWBLANK@ && (! @HAVE_ISWBLANK@ || @REPLACE_ISWBLANK@)
-/* Only the iswblank function is missing.  */
+# else
+/* Only some of the functions are missing or broken.  */
 
-#  if @REPLACE_ISWBLANK@
-#   if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#    define iswblank rpl_iswblank
-#   endif
+#  if @GNULIB_ISWBLANK@ && (! @HAVE_ISWBLANK@ || @REPLACE_ISWBLANK@)
+/* Only the iswblank function is missing.  */
+#   if @REPLACE_ISWBLANK@
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     define iswblank rpl_iswblank
+#    endif
 _GL_FUNCDECL_RPL (iswblank, int, (wint_t wc));
-#  else
+#   else
 _GL_FUNCDECL_SYS (iswblank, int, (wint_t wc));
+#   endif
+#  endif
+
+#  if @GNULIB_ISWDIGIT@
+#   if @REPLACE_ISWDIGIT@
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     undef iswdigit
+#     define iswdigit rpl_iswdigit
+#    endif
+_GL_FUNCDECL_RPL (iswdigit, int, (wint_t wc));
+#   endif
 #  endif
 
 # endif
@@ -517,27 +530,57 @@ rpl_towupper (wint_t wc)
 
 #if @REPLACE_ISWCNTRL@
 _GL_CXXALIAS_RPL (iswalnum, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswalpha, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswcntrl, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswdigit, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswgraph, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswlower, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswprint, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswpunct, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswspace, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswupper, int, (wint_t wc));
-_GL_CXXALIAS_RPL (iswxdigit, int, (wint_t wc));
 #else
 _GL_CXXALIAS_SYS (iswalnum, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswalpha, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswalpha, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswcntrl, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswcntrl, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWDIGIT@
+_GL_CXXALIAS_RPL (iswdigit, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswdigit, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswgraph, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswgraph, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswlower, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswlower, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswprint, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswprint, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswpunct, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswpunct, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswspace, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswspace, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswupper, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswupper, int, (wint_t wc));
+#endif
+#if @REPLACE_ISWCNTRL@
+_GL_CXXALIAS_RPL (iswxdigit, int, (wint_t wc));
+#else
 _GL_CXXALIAS_SYS (iswxdigit, int, (wint_t wc));
 #endif
 #if __GLIBC__ >= 2
