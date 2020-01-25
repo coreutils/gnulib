@@ -210,7 +210,10 @@ rpl_iswupper (wint_t wc)
 _GL_WCTYPE_INLINE int
 rpl_iswxdigit (wint_t wc)
 {
-  return ((wchar_t) wc == wc ? iswxdigit ((wchar_t) wc) : 0);
+  return ((wchar_t) wc == wc
+          ? (wc >= '0' && wc <= '9')
+            || ((wc & ~0x20) >= 'A' && (wc & ~0x20) <= 'F')
+          : 0);
 }
 
 _GL_WCTYPE_INLINE wint_t
@@ -428,7 +431,7 @@ iswupper
 }
 
 _GL_WCTYPE_INLINE int
-#   if @REPLACE_ISWCNTRL@
+#   if @REPLACE_ISWXDIGIT@
 rpl_iswxdigit
 #   else
 iswxdigit
@@ -485,6 +488,16 @@ _GL_FUNCDECL_SYS (iswblank, int, (wint_t wc));
 #     define iswdigit rpl_iswdigit
 #    endif
 _GL_FUNCDECL_RPL (iswdigit, int, (wint_t wc));
+#   endif
+#  endif
+
+#  if @GNULIB_ISWXDIGIT@
+#   if @REPLACE_ISWXDIGIT@
+#    if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#     undef iswxdigit
+#     define iswxdigit rpl_iswxdigit
+#    endif
+_GL_FUNCDECL_RPL (iswxdigit, int, (wint_t wc));
 #   endif
 #  endif
 
@@ -578,7 +591,7 @@ _GL_CXXALIAS_RPL (iswupper, int, (wint_t wc));
 #else
 _GL_CXXALIAS_SYS (iswupper, int, (wint_t wc));
 #endif
-#if @REPLACE_ISWCNTRL@
+#if @REPLACE_ISWXDIGIT@
 _GL_CXXALIAS_RPL (iswxdigit, int, (wint_t wc));
 #else
 _GL_CXXALIAS_SYS (iswxdigit, int, (wint_t wc));
