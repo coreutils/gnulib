@@ -1,14 +1,12 @@
 Files:
 tests/test-hard-locale.c
 tests/locale.c
+m4/musl.m4
 
 Depends-on:
 
 configure.ac:
-AC_REQUIRE([AC_CANONICAL_HOST])
-case "$host_os" in
-  *-musl*) AC_DEFINE([MUSL_LIBC], [1], [Define to 1 on musl libc.]) ;;
-esac
+gl_MUSL_LIBC
 dnl Distinguish OpenBSD >= 6.2 from OpenBSD < 6.2.
 AC_CHECK_FUNCS_ONCE([duplocale])
 
