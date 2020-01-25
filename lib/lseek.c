@@ -63,7 +63,7 @@ rpl_lseek (int fd, off_t offset, int whence)
       return -1;
     }
 #endif
-#if _GL_WINDOWS_64_BIT_OFF_T
+#if _GL_WINDOWS_64_BIT_OFF_T || (defined __MINGW32__ && defined _FILE_OFFSET_BITS && (_FILE_OFFSET_BITS == 64))
   return _lseeki64 (fd, offset, whence);
 #else
   return lseek (fd, offset, whence);
