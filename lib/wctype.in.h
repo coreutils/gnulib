@@ -168,7 +168,7 @@ rpl_iswcntrl (wint_t wc)
 _GL_WCTYPE_INLINE int
 rpl_iswdigit (wint_t wc)
 {
-  return ((wchar_t) wc == wc ? iswdigit ((wchar_t) wc) : 0);
+  return ((wchar_t) wc == wc ? wc >= '0' && wc <= '9' : 0);
 }
 
 _GL_WCTYPE_INLINE int
