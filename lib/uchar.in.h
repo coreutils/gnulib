@@ -68,6 +68,69 @@ _GL_CXXALIASWARN (btoc32);
 #endif
 
 
+/* Test a specific property of a 32-bit wide character.  */
+#if @GNULIB_C32ISALNUM@
+_GL_FUNCDECL_SYS (c32isalnum, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isalnum, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isalnum);
+#endif
+#if @GNULIB_C32ISALPHA@
+_GL_FUNCDECL_SYS (c32isalpha, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isalpha, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isalpha);
+#endif
+#if @GNULIB_C32ISBLANK@
+_GL_FUNCDECL_SYS (c32isblank, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isblank, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isblank);
+#endif
+#if @GNULIB_C32ISCNTRL@
+_GL_FUNCDECL_SYS (c32iscntrl, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32iscntrl, int, (wint_t wc));
+_GL_CXXALIASWARN (c32iscntrl);
+#endif
+#if @GNULIB_C32ISDIGIT@
+_GL_FUNCDECL_SYS (c32isdigit, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isdigit, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isdigit);
+#endif
+#if @GNULIB_C32ISGRAPH@
+_GL_FUNCDECL_SYS (c32isgraph, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isgraph, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isgraph);
+#endif
+#if @GNULIB_C32ISLOWER@
+_GL_FUNCDECL_SYS (c32islower, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32islower, int, (wint_t wc));
+_GL_CXXALIASWARN (c32islower);
+#endif
+#if @GNULIB_C32ISPRINT@
+_GL_FUNCDECL_SYS (c32isprint, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isprint, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isprint);
+#endif
+#if @GNULIB_C32ISPUNCT@
+_GL_FUNCDECL_SYS (c32ispunct, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32ispunct, int, (wint_t wc));
+_GL_CXXALIASWARN (c32ispunct);
+#endif
+#if @GNULIB_C32ISSPACE@
+_GL_FUNCDECL_SYS (c32isspace, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isspace, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isspace);
+#endif
+#if @GNULIB_C32ISUPPER@
+_GL_FUNCDECL_SYS (c32isupper, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isupper, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isupper);
+#endif
+#if @GNULIB_C32ISXDIGIT@
+_GL_FUNCDECL_SYS (c32isxdigit, int, (wint_t wc));
+_GL_CXXALIAS_SYS (c32isxdigit, int, (wint_t wc));
+_GL_CXXALIASWARN (c32isxdigit);
+#endif
+
+
 /* Converts a 32-bit wide character to a multibyte character.  */
 #if @GNULIB_C32RTOMB@
 # if @REPLACE_C32RTOMB@

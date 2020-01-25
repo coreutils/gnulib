@@ -28,6 +28,54 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::btoc32, wint_t, (int));
 #endif
 
+#if GNULIB_TEST_C32ISALNUM
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isalnum, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISALPHA
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isalpha, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISBLANK
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isblank, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISCNTRL
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32iscntrl, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISDIGIT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isdigit, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISGRAPH
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isgraph, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISLOWER
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32islower, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISPRINT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isprint, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISPUNCT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32ispunct, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISSPACE
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isspace, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISUPPER
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isupper, int, (wint_t));
+#endif
+
+#if GNULIB_TEST_C32ISXDIGIT
+SIGNATURE_CHECK (GNULIB_NAMESPACE::c32isxdigit, int, (wint_t));
+#endif
+
 #if GNULIB_TEST_C32RTOMB
 SIGNATURE_CHECK (GNULIB_NAMESPACE::c32rtomb, size_t,
                  (char *, char32_t , mbstate_t *));
