@@ -142,7 +142,22 @@
 # define SSIZE_MAX ((ssize_t) (SIZE_MAX / 2))
 #endif
 #ifndef ULONG_WIDTH
-# define ULONG_WIDTH (CHAR_BIT * sizeof (unsigned long int))
+# define ULONG_WIDTH REGEX_UINTEGER_WIDTH (ULONG_MAX)
+/* The number of usable bits in an unsigned integer type with maximum
+   value MAX, as an int expression suitable in #if.  Cover all known
+   practical hosts.  This implementation exploits the fact that MAX is
+   1 less than a power of 2, and merely counts the number of 1 bits in
+   MAX; "COBn" means "count the number of 1 bits in the low-order n bits".  */
+# define REGEX_UINTEGER_WIDTH(max) REGEX_COB128 (max)
+# define REGEX_COB128(n) (REGEX_COB64 ((n) >> 31 >> 31 >> 2) + REGEX_COB64 (n))
+# define REGEX_COB64(n) (REGEX_COB32 ((n) >> 31 >> 1) + REGEX_COB32 (n))
+# define REGEX_COB32(n) (REGEX_COB16 ((n) >> 16) + REGEX_COB16 (n))
+# define REGEX_COB16(n) (REGEX_COB8 ((n) >> 8) + REGEX_COB8 (n))
+# define REGEX_COB8(n) (REGEX_COB4 ((n) >> 4) + REGEX_COB4 (n))
+# define REGEX_COB4(n) (!!((n) & 8) + !!((n) & 4) + !!((n) & 2) + ((n) & 1))
+# if ULONG_MAX / 2 + 1 != 1ul << (ULONG_WIDTH - 1)
+#  error "ULONG_MAX out of range"
+# endif
 #endif
 
 /* The type of indexes into strings.  This is signed, not size_t,
