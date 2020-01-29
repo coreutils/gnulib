@@ -84,6 +84,8 @@ isasciidigit (char c)
 /* First integer value that is greater than any character code.  */
 enum { NOTCHAR = 1 << CHAR_BIT };
 
+#ifdef UINT_LEAST64_MAX
+
 /* Number of bits used in a charclass word.  */
 enum { CHARCLASS_WORD_BITS = 64 };
 
@@ -91,8 +93,24 @@ enum { CHARCLASS_WORD_BITS = 64 };
    at least CHARCLASS_WORD_BITS wide.  Any excess bits are zero.  */
 typedef uint_least64_t charclass_word;
 
-/* An initializer for a charclass whose 64-bit words are A through D.  */
-#define CHARCLASS_INIT(a, b, c, d) {{a, b, c, d}}
+/* Part of a charclass initializer that represents 64 bits' worth of a
+   charclass, where LO and HI are the low and high-order 32 bits of
+   the 64-bit quantity.  */
+# define CHARCLASS_PAIR(lo, hi) (((charclass_word) (hi) << 32) + (lo))
+
+#else
+/* Fallbacks for pre-C99 hosts that lack 64-bit integers.  */
+enum { CHARCLASS_WORD_BITS = 32 };
+typedef unsigned long charclass_word;
+# define CHARCLASS_PAIR(lo, hi) lo, hi
+#endif
+
+/* An initializer for a charclass whose 32-bit words are A through H.  */
+#define CHARCLASS_INIT(a, b, c, d, e, f, g, h)		\
+   {{							\
+      CHARCLASS_PAIR (a, b), CHARCLASS_PAIR (c, d),	\
+      CHARCLASS_PAIR (e, f), CHARCLASS_PAIR (g, h)	\
+   }}
 
 /* The maximum useful value of a charclass_word; all used bits are 1.  */
 static charclass_word const CHARCLASS_WORD_MASK
@@ -1699,39 +1717,39 @@ add_utf8_anychar (struct dfa *dfa)
 
   static charclass const utf8_classes[] = {
     /* A. 00-7f: 1-byte sequence.  */
-    CHARCLASS_INIT (0xffffffffffffffff, 0xffffffffffffffff, 0, 0),
+    CHARCLASS_INIT (0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff, 0, 0, 0, 0),
 
     /* B. c2-df: 1st byte of a 2-byte sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0x00000000fffffffc),
+    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0xfffffffc, 0),
 
     /* C. 80-bf: non-leading bytes.  */
-    CHARCLASS_INIT (0, 0, 0xffffffffffffffff, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xffffffff, 0xffffffff, 0, 0),
 
     /* D. e0 (just a token).  */
 
     /* E. a0-bf: 2nd byte of a "DEC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0xffffffff00000000, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0, 0xffffffff, 0, 0),
 
     /* F. e1-ec + ee-ef: 1st byte of an "FCC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0x0000dffe00000000),
+    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0, 0xdffe),
 
     /* G. ed (just a token).  */
 
     /* H. 80-9f: 2nd byte of a "GHC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0x000000000000ffff, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xffff, 0, 0, 0),
 
     /* I. f0 (just a token).  */
 
     /* J. 90-bf: 2nd byte of an "IJCC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0xffffffffffff0000, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xffff0000, 0xffffffff, 0, 0),
 
     /* K. f1-f3: 1st byte of a "KCCC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0, 0x000e000000000000),
+    CHARCLASS_INIT (0, 0, 0, 0, 0, 0, 0, 0xe0000),
 
     /* L. f4 (just a token).  */
 
     /* M. 80-8f: 2nd byte of a "LMCC" sequence.  */
-    CHARCLASS_INIT (0, 0, 0x00000000000000ff, 0),
+    CHARCLASS_INIT (0, 0, 0, 0, 0xff, 0, 0, 0),
   };
 
   /* Define the character classes that are needed below.  */
