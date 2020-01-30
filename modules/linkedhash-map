@@ -1,5 +1,5 @@
 Description:
-Set data type implemented by a hash table with a linked list.
+Map data type implemented by a hash table with a linked list.
 
 Files:
 lib/gl_linkedhash_map.h

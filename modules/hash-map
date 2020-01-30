@@ -1,5 +1,5 @@
 Description:
-Set data type implemented by a hash table.
+Map data type implemented by a hash table.
 
 Files:
 lib/gl_hash_map.h

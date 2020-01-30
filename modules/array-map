@@ -1,5 +1,5 @@
 Description:
-Set data type implemented by an array.
+Map data type implemented by an array.
 
 Files:
 lib/gl_array_map.h
