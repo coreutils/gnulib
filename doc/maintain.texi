@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate November 12, 2019
+@set lastupdate January 29, 2020
 @c %**end of header
 @documentencoding UTF-8
 
@@ -406,14 +406,12 @@ additional week, please write to @email{maintainers@@gnu.org} about it.
 
 After receiving the necessary form, the contributor needs to sign
 it. Contributors residing in the USA or Italy may use GPG in order to
-sign their assignment.  Contributors located in the USA, Germany, or
-India can print, sign, and then email (or fax) a scanned copy back to
-the FSF. (Specific instructions for both cases are sent with the
-assignment form.)  They may use postal mail, if they
-prefer. Contributors residing outside the USA, Germany or India must
-mail the signed form to the FSF via postal mail.  To emphasize, the
-necessary distinction is between residents and non-residents of these
-countries; citizenship does not matter.
+sign their assignment. Contributors located anywhere else can print,
+sign, and then email (or fax) a scanned copy back to the
+FSF. (Specific instructions for both cases are sent with the
+assignment form.) They may use postal mail, if they prefer. To
+emphasize, the necessary distinction is between residents and
+non-residents of these countries; citizenship does not matter.
 
 For less common cases, we have template files you should send to the
 contributor.  Be sure to fill in the name of the person and the name
