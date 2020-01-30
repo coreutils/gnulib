@@ -81,6 +81,16 @@ isasciidigit (char c)
 # undef clrbit
 #endif
 
+/* For code that does not use Gnulib’s isblank module.  */
+#if !defined isblank && !defined HAVE_ISBLANK && !defined GNULIB_ISBLANK
+# define isblank dfa_isblank
+static int
+isblank (int c)
+{
+  return c == ' ' || c == '\t';
+}
+#endif
+
 /* First integer value that is greater than any character code.  */
 enum { NOTCHAR = 1 << CHAR_BIT };
 

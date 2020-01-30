@@ -13,7 +13,6 @@ c99
 ctype
 flexmember
 intprops
-isblank
 locale
 regex
 stdbool
