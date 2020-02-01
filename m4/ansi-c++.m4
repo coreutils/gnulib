@@ -1,4 +1,4 @@
-# ansi-c++.m4 serial 10
+# ansi-c++.m4 serial 11
 dnl Copyright (C) 2002-2003, 2005, 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -122,6 +122,16 @@ EOF
     dnl /usr/local/share/automake-1.11/am/depend2.am:   The usual way to define 'am__fastdepCXX' is to add 'AC_PROG_CXX'
     dnl /usr/local/share/automake-1.11/am/depend2.am:   to 'configure.ac' and run 'aclocal' and 'autoconf' again.
     _AM_DEPENDENCIES([CXX])
+    dnl Determine a good default for the CXXFLAGS variable.
+    AC_LANG_PUSH([C++])
+    _AC_LANG_COMPILER_GNU
+    if test $ac_compiler_gnu = yes; then
+      GXX=yes
+    else
+      GXX=
+    fi
+    _AC_PROG_CXX_G
+    AC_LANG_POP([C++])
   else
     AM_CONDITIONAL([am__fastdepCXX], [false])
   fi
