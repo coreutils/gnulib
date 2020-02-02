@@ -498,6 +498,35 @@ for the ``ordered map'' data type are:
 @tab @math{O(@log n)}
 @end multitable
 
+For C++, Gnulib provides a C++ template class for each of these container data types.
+
+@multitable @columnfractions .30 .20 .25 .25
+@headitem Data type
+@tab C++ class
+@tab Module
+@tab Include file
+@item Sequential list
+@tab @code{gl_List}
+@tab @code{list-c++}
+@tab @code{"gl_list.hh"}
+@item Set
+@tab @code{gl_Set}
+@tab @code{set-c++}
+@tab @code{"gl_set.hh"}
+@item Ordered set
+@tab @code{gl_OSet}
+@tab @code{oset-c++}
+@tab @code{"gl_oset.hh"}
+@item Map
+@tab @code{gl_Map}
+@tab @code{map-c++}
+@tab @code{"gl_map.hh"}
+@item Ordered map
+@tab @code{gl_OMap}
+@tab @code{omap-c++}
+@tab @code{"gl_omap.hh"}
+@end multitable
+
 @ifnottex
 @unmacro log
 @end ifnottex
