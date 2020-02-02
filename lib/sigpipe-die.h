@@ -48,7 +48,7 @@ extern "C" {
 
 /* Emit an error message indicating a SIGPIPE signal, and terminate the
    process with an error code.  */
-extern _Noreturn void sigpipe_die (void);
+/*extern*/ _Noreturn void sigpipe_die (void);
 
 /* Install a SIGPIPE handler that invokes PREPARE_DIE and then emits an
    error message and exits.  PREPARE_DIE may be NULL, meaning a no-op.  */

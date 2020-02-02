@@ -48,7 +48,7 @@ extern "C" {
    or by using gnulib's xalloc-die module.  This is the
    function to call when one wants the program to die because of a
    memory allocation failure.  */
-extern _Noreturn void xalloc_die (void);
+/*extern*/ _Noreturn void xalloc_die (void);
 
 void *xmalloc (size_t s)
       _GL_ATTRIBUTE_MALLOC _GL_ATTRIBUTE_ALLOC_SIZE ((1));
