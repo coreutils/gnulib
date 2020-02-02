@@ -161,7 +161,7 @@ extern int gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
 #endif
   ;
 
-/* Adds a pair to an ordered map and retrieve the previous value.
+/* Adds a pair to an ordered map and retrieves the previous value.
    Returns true if a pair with the given key was not already in the map and so
    this pair was added.
    Returns false and sets *OLDVALUEP to the previous value, if a pair with the
@@ -182,7 +182,7 @@ extern int gl_omap_nx_getput (gl_omap_t map, const void *key, const void *value,
    Returns false otherwise.  */
 extern bool gl_omap_remove (gl_omap_t map, const void *key);
 
-/* Removes a pair from an ordered map and retrieve the previous value.
+/* Removes a pair from an ordered map and retrieves the previous value.
    Returns true and sets *OLDVALUEP to the previous value, if the key was found
    and its pair removed.
    Returns false otherwise.  */

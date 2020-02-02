@@ -172,7 +172,7 @@ extern int gl_map_nx_getput (gl_map_t map, const void *key, const void *value,
    Returns false otherwise.  */
 extern bool gl_map_remove (gl_map_t map, const void *key);
 
-/* Removes a pair from a map and retrieve the previous value.
+/* Removes a pair from a map and retrieves the previous value.
    Returns true and sets *OLDVALUEP to the previous value, if the key was found
    and its pair removed.
    Returns false otherwise.  */
