@@ -46,7 +46,7 @@
 # include <sys/param.h>
 #endif
 
-#if HAVE_SYS_SYSCTL_H
+#if HAVE_SYS_SYSCTL_H && ! defined __GLIBC__
 # include <sys/sysctl.h>
 #endif
 
@@ -306,7 +306,7 @@ num_processors_ignoring_omp (enum nproc_query query)
   /* Finally, as fallback, use the APIs that don't distinguish between
      NPROC_CURRENT and NPROC_ALL.  */
 
-#if HAVE_SYSCTL && defined HW_NCPU
+#if HAVE_SYSCTL && ! defined __GLIBC__ && defined HW_NCPU
   { /* This works on Mac OS X, FreeBSD, NetBSD, OpenBSD.  */
     int nprocs;
     size_t len = sizeof (nprocs);

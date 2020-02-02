@@ -50,7 +50,7 @@
 # include <sys/param.h>
 #endif
 
-#if HAVE_SYS_SYSCTL_H
+#if HAVE_SYS_SYSCTL_H && ! defined __GLIBC__
 # include <sys/sysctl.h>
 #endif
 
@@ -149,7 +149,7 @@ physmem_total (void)
   }
 #endif
 
-#if HAVE_SYSCTL && defined HW_PHYSMEM
+#if HAVE_SYSCTL && ! defined __GLIBC__ && defined HW_PHYSMEM
   { /* This works on *bsd and darwin.  */
     unsigned int physmem;
     size_t len = sizeof physmem;
@@ -263,7 +263,7 @@ physmem_available (void)
   }
 #endif
 
-#if HAVE_SYSCTL && defined HW_USERMEM
+#if HAVE_SYSCTL && ! defined __GLIBC__ && defined HW_USERMEM
   { /* This works on *bsd and darwin.  */
     unsigned int usermem;
     size_t len = sizeof usermem;
