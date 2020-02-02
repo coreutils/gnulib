@@ -74,7 +74,7 @@ static const size_t primes[] =
     SIZE_MAX /* sentinel, to ensure the search terminates */
   };
 
-/* Return a suitable prime >= ESTIMATE.  */
+/* Returns a suitable prime >= ESTIMATE.  */
 static size_t
 next_prime (size_t estimate)
 {

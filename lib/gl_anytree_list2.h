@@ -136,7 +136,7 @@ gl_tree_previous_node (gl_list_t list, gl_list_node_t node)
   return node;
 }
 
-/* Return the node at the given position < gl_tree_size (list).  */
+/* Returns the node at the given position < gl_tree_size (list).  */
 static gl_list_node_t _GL_ATTRIBUTE_PURE
 node_at (gl_list_node_t root, size_t position)
 {

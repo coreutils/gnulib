@@ -19,9 +19,9 @@
 
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
-/* Create a subtree for count >= 1 elements.
+/* Creates a subtree for count >= 1 elements.
    Its height is h where 2^(h-1) <= count <= 2^h - 1.
-   Return NULL upon out-of-memory.  */
+   Returns NULL upon out-of-memory.  */
 static gl_list_node_t
 create_subtree_with_contents (size_t count, const void **contents)
 {
@@ -138,7 +138,7 @@ gl_tree_nx_create (gl_list_implementation_t implementation,
   return NULL;
 }
 
-/* Ensure the tree is balanced, after an insertion or deletion operation.
+/* Ensures the tree is balanced, after an insertion or deletion operation.
    The height of NODE is incremented by HEIGHT_DIFF (1 or -1).
    PARENT = NODE->parent.  (NODE can also be NULL.  But PARENT is non-NULL.)
    Rotation operations are performed starting at PARENT (not NODE itself!).  */

@@ -97,7 +97,7 @@ typedef const struct gl_set_implementation * gl_set_implementation_t;
 
 #if 0 /* Unless otherwise specified, these are defined inline below.  */
 
-/* Create an empty set.
+/* Creates an empty set.
    IMPLEMENTATION is one of GL_ARRAY_SET, GL_LINKEDHASH_SET, GL_HASH_SET.
    EQUALS_FN is an element comparison function or NULL.
    HASHCODE_FN is an element hash code function or NULL.
@@ -107,35 +107,35 @@ extern gl_set_t gl_set_create_empty (gl_set_implementation_t implementation,
                                      gl_setelement_equals_fn equals_fn,
                                      gl_setelement_hashcode_fn hashcode_fn,
                                      gl_setelement_dispose_fn dispose_fn);
-/* Likewise.  Return NULL upon out-of-memory.  */
+/* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_set_t gl_set_nx_create_empty (gl_set_implementation_t implementation,
                                         gl_setelement_equals_fn equals_fn,
                                         gl_setelement_hashcode_fn hashcode_fn,
                                         gl_setelement_dispose_fn dispose_fn);
 
-/* Return the current number of elements in a set.  */
+/* Returns the current number of elements in a set.  */
 extern size_t gl_set_size (gl_set_t set);
 
-/* Search whether an element is already in the set.
-   Return true if found, or false if not present in the set.  */
+/* Searches whether an element is already in the set.
+   Returns true if found, or false if not present in the set.  */
 extern bool gl_set_search (gl_set_t set, const void *elt);
 
-/* Add an element to a set.
-   Return true if it was not already in the set and added, false otherwise.  */
+/* Adds an element to a set.
+   Returns true if it was not already in the set and added, false otherwise.  */
 /* declared in gl_xset.h */
 extern bool gl_set_add (gl_set_t set, const void *elt);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_set_nx_add (gl_set_t set, const void *elt)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
 #endif
   ;
 
-/* Remove an element from a set.
-   Return true if it was found and removed.  */
+/* Removes an element from a set.
+   Returns true if it was found and removed.  */
 extern bool gl_set_remove (gl_set_t set, const void *elt);
 
-/* Free an entire set.
+/* Frees an entire set.
    (But this call does not free the elements of the set.  It only invokes
    the DISPOSE_FN on each of the elements of the set.)  */
 extern void gl_set_free (gl_set_t set);
@@ -166,17 +166,17 @@ typedef struct
 
 #if 0 /* These are defined inline below.  */
 
-/* Create an iterator traversing a set.
+/* Creates an iterator traversing a set.
    The set's contents must not be modified while the iterator is in use,
    except for removing the last returned element.  */
 extern gl_set_iterator_t gl_set_iterator (gl_set_t set);
 
-/* If there is a next element, store the next element in *ELTP, advance the
-   iterator and return true.  Otherwise, return false.  */
+/* If there is a next element, stores the next element in *ELTP, advances the
+   iterator and returns true.  Otherwise, returns false.  */
 extern bool gl_set_iterator_next (gl_set_iterator_t *iterator,
                                   const void **eltp);
 
-/* Free an iterator.  */
+/* Frees an iterator.  */
 extern void gl_set_iterator_free (gl_set_iterator_t *iterator);
 
 #endif /* End of inline functions.  */

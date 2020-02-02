@@ -28,7 +28,7 @@ struct gl_multiple_nodes
    gl_list_node_impl.  */
 #define MULTIPLE_NODES_MAGIC  (void *) -1
 
-/* Return the position of the given node in the tree.  */
+/* Returns the position of the given node in the tree.  */
 static size_t
 node_position (gl_list_node_t node)
 {
@@ -76,7 +76,7 @@ compare_position_threshold (const void *x, const void *threshold)
   return (position >= (uintptr_t)threshold);
 }
 
-/* Return the first element of a non-empty ordered set of nodes.  */
+/* Returns the first element of a non-empty ordered set of nodes.  */
 static gl_list_node_t
 gl_oset_first (gl_oset_t set)
 {
@@ -89,7 +89,7 @@ gl_oset_first (gl_oset_t set)
   return (gl_list_node_t) first;
 }
 
-/* Add a node to the hash table structure.
+/* Adds a node to the hash table structure.
    If duplicates are allowed, this function performs in average time
    O((log n)^2): gl_oset_nx_add may need to add an element to an ordered set
    of size O(n), needing O(log n) comparison function calls.  The comparison
@@ -178,7 +178,7 @@ add_to_bucket (gl_list_t list, gl_list_node_t new_node)
 #define add_to_bucket(list,node) \
     __builtin_expect ((add_to_bucket) (list, node), 0)
 
-/* Remove a node from the hash table structure.
+/* Removes a node from the hash table structure.
    If duplicates are allowed, this function performs in average time
    O((log n)^2): gl_oset_remove may need to remove an element from an ordered
    set of size O(n), needing O(log n) comparison function calls.  The
@@ -257,9 +257,9 @@ remove_from_bucket (gl_list_t list, gl_list_node_t old_node)
     }
 }
 
-/* Build up the hash table during initialization: Store all the nodes of
+/* Builds up the hash table during initialization: Stores all the nodes of
    list->root in the hash table.
-   Return 0 upon success, -1 upon out-of-memory.  */
+   Returns 0 upon success, -1 upon out-of-memory.  */
 static int
 add_nodes_to_buckets (gl_list_t list)
 {

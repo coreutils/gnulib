@@ -28,7 +28,7 @@ typedef struct
 /* A stack used for iterating across the elements.  */
 typedef iterstack_item_t iterstack_t[MAXHEIGHT];
 
-/* Free a non-empty subtree recursively.
+/* Frees a non-empty subtree recursively.
    This function is recursive and therefore not very fast.  */
 static void
 free_subtree (gl_list_node_t node)

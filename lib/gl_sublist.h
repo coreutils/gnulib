@@ -25,7 +25,7 @@ extern "C" {
 #endif
 
 
-/* Create a sublist of a given list.
+/* Creates a sublist of a given list.
    This is the list of elements with indices i, start_index <= i < end_index.
    The sublist is backed by the given list, which means:
      - Modifications to the sublist affect the whole list.
@@ -37,7 +37,7 @@ extern "C" {
 extern gl_list_t gl_sublist_create (gl_list_t whole_list,
                                     size_t start_index, size_t end_index);
 #endif
-/* Likewise.  Return NULL upon out-of-memory.  */
+/* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_list_t gl_sublist_nx_create (gl_list_t whole_list,
                                        size_t start_index, size_t end_index);
 

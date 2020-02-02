@@ -95,7 +95,7 @@ typedef void (*gl_mapvalue_dispose_fn) (const void *value);
 #endif
 
 /* Type of function used to compare a key with a threshold.
-   Return true if the key is greater or equal than the threshold.  */
+   Returns true if the key is greater or equal than the threshold.  */
 typedef bool (*gl_mapkey_threshold_fn) (const void *key, const void *threshold);
 
 struct gl_omap_impl;
@@ -108,7 +108,7 @@ typedef const struct gl_omap_implementation * gl_omap_implementation_t;
 
 #if 0 /* Unless otherwise specified, these are defined inline below.  */
 
-/* Create an empty map.
+/* Creates an empty map.
    IMPLEMENTATION is one of GL_ARRAY_OMAP, GL_AVLTREE_OMAP, GL_RBTREE_OMAP.
    COMPAR_FN is a key comparison function or NULL.
    KDISPOSE_FN is a key disposal function or NULL.
@@ -118,58 +118,58 @@ extern gl_omap_t gl_omap_create_empty (gl_omap_implementation_t implementation,
                                        gl_mapkey_compar_fn compar_fn,
                                        gl_mapkey_dispose_fn kdispose_fn,
                                        gl_mapvalue_dispose_fn vdispose_fn);
-/* Likewise.  Return NULL upon out-of-memory.  */
+/* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_omap_t gl_omap_nx_create_empty (gl_omap_implementation_t implementation,
                                           gl_mapkey_compar_fn compar_fn,
                                           gl_mapkey_dispose_fn kdispose_fn,
                                           gl_mapvalue_dispose_fn vdispose_fn);
 
-/* Return the current number of pairs in an ordered map.  */
+/* Returns the current number of pairs in an ordered map.  */
 extern size_t gl_omap_size (gl_omap_t map);
 
-/* Search whether a pair with the given key is already in the ordered map.
-   Return the value if found, or NULL if not present in the map.  */
+/* Searches whether a pair with the given key is already in the ordered map.
+   Returns the value if found, or NULL if not present in the map.  */
 extern const void * gl_omap_get (gl_omap_t map, const void *key);
 
-/* Search whether a pair with the given key is already in the ordered map.
-   Return true and set *VALUEP to the value if found.
-   Return false if not present in the map.  */
+/* Searches whether a pair with the given key is already in the ordered map.
+   Returns true and sets *VALUEP to the value if found.
+   Returns false if not present in the map.  */
 extern bool gl_omap_search (gl_omap_t map, const void *key,
                             const void **valuep);
 
-/* Search the pair with the least key in the ordered map that compares
+/* Searches the pair with the least key in the ordered map that compares
    greater or equal to the given THRESHOLD.  The representation of the
    THRESHOLD is defined by the THRESHOLD_FN.
-   Return true and store the found pair in *KEYP and *VALUEP if found.
-   Otherwise return false.  */
+   Returns true and stores the found pair in *KEYP and *VALUEP if found.
+   Otherwise returns false.  */
 extern bool gl_omap_search_atleast (gl_omap_t map,
                                     gl_mapkey_threshold_fn threshold_fn,
                                     const void *threshold,
                                     const void **keyp, const void **valuep);
 
-/* Add a pair to an ordered map.
-   Return true if a pair with the given key was not already in the map and so
+/* Adds a pair to an ordered map.
+   Returns true if a pair with the given key was not already in the map and so
    this pair was added.
-   Return false if a pair with the given key was already in the map and only
+   Returns false if a pair with the given key was already in the map and only
    its value was replaced.  */
 /* declared in gl_xomap.h */
 extern bool gl_omap_put (gl_omap_t map, const void *key, const void *value);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_omap_nx_put (gl_omap_t map, const void *key, const void *value)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
 #endif
   ;
 
-/* Add a pair to an ordered map and retrieve the previous value.
-   Return true if a pair with the given key was not already in the map and so
+/* Adds a pair to an ordered map and retrieve the previous value.
+   Returns true if a pair with the given key was not already in the map and so
    this pair was added.
-   Return false and set *OLDVALUEP to the previous value, if a pair with the
+   Returns false and sets *OLDVALUEP to the previous value, if a pair with the
    given key was already in the map and only its value was replaced.  */
 /* declared in gl_xomap.h */
 extern bool gl_omap_getput (gl_omap_t map, const void *key, const void *value,
                             const void **oldvaluep);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_omap_nx_getput (gl_omap_t map, const void *key, const void *value,
                               const void **oldvaluep)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
@@ -177,19 +177,19 @@ extern int gl_omap_nx_getput (gl_omap_t map, const void *key, const void *value,
 #endif
   ;
 
-/* Remove a pair from an ordered map.
-   Return true if the key was found and its pair removed.
-   Return false otherwise.  */
+/* Removes a pair from an ordered map.
+   Returns true if the key was found and its pair removed.
+   Returns false otherwise.  */
 extern bool gl_omap_remove (gl_omap_t map, const void *key);
 
-/* Remove a pair from an ordered map and retrieve the previous value.
-   Return true and set *OLDVALUEP to the previous value, if the key was found
+/* Removes a pair from an ordered map and retrieve the previous value.
+   Returns true and sets *OLDVALUEP to the previous value, if the key was found
    and its pair removed.
-   Return false otherwise.  */
+   Returns false otherwise.  */
 extern bool gl_omap_getremove (gl_omap_t map, const void *key,
                                const void **oldvaluep);
 
-/* Free an entire ordered map.
+/* Frees an entire ordered map.
    (But this call does not free the keys and values of the pairs in the map.
    It only invokes the KDISPOSE_FN on each key and the VDISPOSE_FN on each value
    of the pairs in the map.)  */
@@ -218,18 +218,18 @@ typedef struct
 
 #if 0 /* These are defined inline below.  */
 
-/* Create an iterator traversing an ordered map.
+/* Creates an iterator traversing an ordered map.
    The map's contents must not be modified while the iterator is in use,
    except for modifying the value of the last returned key or removing the
    last returned pair.  */
 extern gl_omap_iterator_t gl_omap_iterator (gl_omap_t map);
 
-/* If there is a next pair, store the next pair in *KEYP and *VALUEP, advance
-   the iterator, and return true.  Otherwise, return false.  */
+/* If there is a next pair, stores the next pair in *KEYP and *VALUEP, advances
+   the iterator, and returns true.  Otherwise, returns false.  */
 extern bool gl_omap_iterator_next (gl_omap_iterator_t *iterator,
                                    const void **keyp, const void **valuep);
 
-/* Free an iterator.  */
+/* Frees an iterator.  */
 extern void gl_omap_iterator_free (gl_omap_iterator_t *iterator);
 
 #endif /* End of inline functions.  */

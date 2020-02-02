@@ -63,7 +63,7 @@ struct CONTAINER_IMPL
    this would exceed the address space of the machine.  */
 #define MAXHEIGHT 116
 
-/* Rotate left a subtree.
+/* Rotates left a subtree.
 
                          B                         D
                        /   \                     /   \
@@ -71,7 +71,7 @@ struct CONTAINER_IMPL
                             / \               / \
                            C   E             A   C
 
-   Change the tree structure, update the branch sizes.
+   Changes the tree structure, updates the branch sizes.
    The caller must update the colors and register D as child of its parent.  */
 static NODE_T
 rotate_left (NODE_T b_node, NODE_T d_node)
@@ -89,7 +89,7 @@ rotate_left (NODE_T b_node, NODE_T d_node)
   return d_node;
 }
 
-/* Rotate right a subtree.
+/* Rotates right a subtree.
 
                            D                     B
                          /   \                 /   \
@@ -97,7 +97,7 @@ rotate_left (NODE_T b_node, NODE_T d_node)
                       / \                           / \
                      A   C                         C   E
 
-   Change the tree structure, update the branch sizes.
+   Changes the tree structure, updates the branch sizes.
    The caller must update the colors and register B as child of its parent.  */
 static NODE_T
 rotate_right (NODE_T b_node, NODE_T d_node)
@@ -115,7 +115,7 @@ rotate_right (NODE_T b_node, NODE_T d_node)
   return b_node;
 }
 
-/* Ensure the tree is balanced, after an insertion operation.
+/* Ensures the tree is balanced, after an insertion operation.
    Also assigns node->color.
    parent is the given node's parent, known to be non-NULL.  */
 static void
@@ -239,7 +239,7 @@ rebalance_after_add (CONTAINER_T container, NODE_T node, NODE_T parent)
     }
 }
 
-/* Ensure the tree is balanced, after a deletion operation.
+/* Ensures the tree is balanced, after a deletion operation.
    CHILD was a grandchild of PARENT and is now its child.  Between them,
    a black node was removed.  CHILD is also black, or NULL.
    (CHILD can also be NULL.  But PARENT is non-NULL.)  */

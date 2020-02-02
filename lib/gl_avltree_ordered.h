@@ -57,7 +57,7 @@ struct CONTAINER_IMPL
    this would exceed the address space of the machine.  */
 #define MAXHEIGHT 83
 
-/* Ensure the tree is balanced, after an insertion or deletion operation.
+/* Ensures the tree is balanced, after an insertion or deletion operation.
    The height of NODE is incremented by HEIGHT_DIFF (1 or -1).
    PARENT = NODE->parent.  (NODE can also be NULL.  But PARENT is non-NULL.)
    Rotation operations are performed starting at PARENT (not NODE itself!).  */

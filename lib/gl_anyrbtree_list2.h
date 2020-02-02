@@ -19,7 +19,7 @@
 
 /* -------------------------- gl_list_t Data Type -------------------------- */
 
-/* Create a subtree for count >= 1 elements.
+/* Creates a subtree for count >= 1 elements.
    Its black-height bh is passed as argument, with
    2^bh - 1 <= count <= 2^(bh+1) - 1.  bh == 0 implies count == 1.
    Its height is h where 2^(h-1) <= count <= 2^h - 1.
@@ -153,7 +153,7 @@ gl_tree_nx_create (gl_list_implementation_t implementation,
   return NULL;
 }
 
-/* Rotate left a subtree.
+/* Rotates left a subtree.
 
                          B                         D
                        /   \                     /   \
@@ -161,7 +161,7 @@ gl_tree_nx_create (gl_list_implementation_t implementation,
                             / \               / \
                            C   E             A   C
 
-   Change the tree structure, update the branch sizes.
+   Changes the tree structure, updates the branch sizes.
    The caller must update the colors and register D as child of its parent.  */
 static gl_list_node_t
 rotate_left (gl_list_node_t b_node, gl_list_node_t d_node)
@@ -187,7 +187,7 @@ rotate_left (gl_list_node_t b_node, gl_list_node_t d_node)
   return d_node;
 }
 
-/* Rotate right a subtree.
+/* Rotates right a subtree.
 
                            D                     B
                          /   \                 /   \
@@ -195,7 +195,7 @@ rotate_left (gl_list_node_t b_node, gl_list_node_t d_node)
                       / \                           / \
                      A   C                         C   E
 
-   Change the tree structure, update the branch sizes.
+   Changes the tree structure, updates the branch sizes.
    The caller must update the colors and register B as child of its parent.  */
 static gl_list_node_t
 rotate_right (gl_list_node_t b_node, gl_list_node_t d_node)
@@ -221,7 +221,7 @@ rotate_right (gl_list_node_t b_node, gl_list_node_t d_node)
   return b_node;
 }
 
-/* Ensure the tree is balanced, after an insertion operation.
+/* Ensures the tree is balanced, after an insertion operation.
    Also assigns node->color.
    parent is the given node's parent, known to be non-NULL.  */
 static void
@@ -345,7 +345,7 @@ rebalance_after_add (gl_list_t list, gl_list_node_t node, gl_list_node_t parent)
     }
 }
 
-/* Ensure the tree is balanced, after a deletion operation.
+/* Ensures the tree is balanced, after a deletion operation.
    CHILD was a grandchild of PARENT and is now its child.  Between them,
    a black node was removed.  CHILD is also black, or NULL.
    (CHILD can also be NULL.  But PARENT is non-NULL.)  */

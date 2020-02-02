@@ -85,7 +85,7 @@ typedef void (*gl_setelement_dispose_fn) (const void *elt);
 #endif
 
 /* Type of function used to compare an element with a threshold.
-   Return true if the element is greater or equal than the threshold.  */
+   Returns true if the element is greater or equal than the threshold.  */
 typedef bool (*gl_setelement_threshold_fn) (const void *elt, const void *threshold);
 
 struct gl_oset_impl;
@@ -98,7 +98,7 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
 
 #if 0 /* Unless otherwise specified, these are defined inline below.  */
 
-/* Create an empty set.
+/* Creates an empty set.
    IMPLEMENTATION is one of GL_ARRAY_OSET, GL_AVLTREE_OSET, GL_RBTREE_OSET.
    COMPAR_FN is an element comparison function or NULL.
    DISPOSE_FN is an element disposal function or NULL.  */
@@ -106,44 +106,44 @@ typedef const struct gl_oset_implementation * gl_oset_implementation_t;
 extern gl_oset_t gl_oset_create_empty (gl_oset_implementation_t implementation,
                                        gl_setelement_compar_fn compar_fn,
                                        gl_setelement_dispose_fn dispose_fn);
-/* Likewise.  Return NULL upon out-of-memory.  */
+/* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_oset_t gl_oset_nx_create_empty (gl_oset_implementation_t implementation,
                                           gl_setelement_compar_fn compar_fn,
                                           gl_setelement_dispose_fn dispose_fn);
 
-/* Return the current number of elements in an ordered set.  */
+/* Returns the current number of elements in an ordered set.  */
 extern size_t gl_oset_size (gl_oset_t set);
 
-/* Search whether an element is already in the ordered set.
-   Return true if found, or false if not present in the set.  */
+/* Searches whether an element is already in the ordered set.
+   Returns true if found, or false if not present in the set.  */
 extern bool gl_oset_search (gl_oset_t set, const void *elt);
 
-/* Search the least element in the ordered set that compares greater or equal
+/* Searches the least element in the ordered set that compares greater or equal
    to the given THRESHOLD.  The representation of the THRESHOLD is defined
    by the THRESHOLD_FN.
-   Return true and store the found element in *ELTP if found, otherwise return
+   Returns true and stores the found element in *ELTP if found, otherwise returns
    false.  */
 extern bool gl_oset_search_atleast (gl_oset_t set,
                                     gl_setelement_threshold_fn threshold_fn,
                                     const void *threshold,
                                     const void **eltp);
 
-/* Add an element to an ordered set.
-   Return true if it was not already in the set and added, false otherwise.  */
+/* Adds an element to an ordered set.
+   Returns true if it was not already in the set and added, false otherwise.  */
 /* declared in gl_xoset.h */
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
 #endif
   ;
 
-/* Remove an element from an ordered set.
-   Return true if it was found and removed.  */
+/* Removes an element from an ordered set.
+   Returns true if it was found and removed.  */
 extern bool gl_oset_remove (gl_oset_t set, const void *elt);
 
-/* Free an entire ordered set.
+/* Frees an entire ordered set.
    (But this call does not free the elements of the set.  It only invokes
    the DISPOSE_FN on each of the elements of the set.)  */
 extern void gl_oset_free (gl_oset_t set);
@@ -171,17 +171,17 @@ typedef struct
 
 #if 0 /* These are defined inline below.  */
 
-/* Create an iterator traversing an ordered set.
+/* Creates an iterator traversing an ordered set.
    The set's contents must not be modified while the iterator is in use,
    except for removing the last returned element.  */
 extern gl_oset_iterator_t gl_oset_iterator (gl_oset_t set);
 
-/* If there is a next element, store the next element in *ELTP, advance the
-   iterator and return true.  Otherwise, return false.  */
+/* If there is a next element, stores the next element in *ELTP, advances the
+   iterator and returns true.  Otherwise, returns false.  */
 extern bool gl_oset_iterator_next (gl_oset_iterator_t *iterator,
                                    const void **eltp);
 
-/* Free an iterator.  */
+/* Frees an iterator.  */
 extern void gl_oset_iterator_free (gl_oset_iterator_t *iterator);
 
 #endif /* End of inline functions.  */

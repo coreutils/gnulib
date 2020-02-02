@@ -106,7 +106,7 @@ typedef const struct gl_map_implementation * gl_map_implementation_t;
 
 #if 0 /* Unless otherwise specified, these are defined inline below.  */
 
-/* Create an empty map.
+/* Creates an empty map.
    IMPLEMENTATION is one of GL_ARRAY_MAP, GL_LINKEDHASH_MAP, GL_HASH_MAP.
    EQUALS_FN is a key comparison function or NULL.
    HASHCODE_FN is a key hash code function or NULL.
@@ -118,48 +118,48 @@ extern gl_map_t gl_map_create_empty (gl_map_implementation_t implementation,
                                      gl_mapkey_hashcode_fn hashcode_fn,
                                      gl_mapkey_dispose_fn kdispose_fn,
                                      gl_mapvalue_dispose_fn vdispose_fn);
-/* Likewise.  Return NULL upon out-of-memory.  */
+/* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_map_t gl_map_nx_create_empty (gl_map_implementation_t implementation,
                                         gl_mapkey_equals_fn equals_fn,
                                         gl_mapkey_hashcode_fn hashcode_fn,
                                         gl_mapkey_dispose_fn kdispose_fn,
                                         gl_mapvalue_dispose_fn vdispose_fn);
 
-/* Return the current number of pairs in a map.  */
+/* Returns the current number of pairs in a map.  */
 extern size_t gl_map_size (gl_map_t map);
 
-/* Search whether a pair with the given key is already in the map.
-   Return the value if found, or NULL if not present in the map.  */
+/* Searches whether a pair with the given key is already in the map.
+   Returns the value if found, or NULL if not present in the map.  */
 extern const void * gl_map_get (gl_map_t map, const void *key);
 
-/* Search whether a pair with the given key is already in the map.
-   Return true and set *VALUEP to the value if found.
-   Return false if not present in the map.  */
+/* Searches whether a pair with the given key is already in the map.
+   Returns true and sets *VALUEP to the value if found.
+   Returns false if not present in the map.  */
 extern bool gl_map_search (gl_map_t map, const void *key, const void **valuep);
 
-/* Add a pair to a map.
-   Return true if a pair with the given key was not already in the map and so
+/* Adds a pair to a map.
+   Returns true if a pair with the given key was not already in the map and so
    this pair was added.
-   Return false if a pair with the given key was already in the map and only
+   Returns false if a pair with the given key was already in the map and only
    its value was replaced.  */
 /* declared in gl_xmap.h */
 extern bool gl_map_put (gl_map_t map, const void *key, const void *value);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_map_nx_put (gl_map_t map, const void *key, const void *value)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
 #endif
   ;
 
-/* Add a pair to a map and retrieve the previous value.
-   Return true if a pair with the given key was not already in the map and so
+/* Adds a pair to a map and retrieves the previous value.
+   Returns true if a pair with the given key was not already in the map and so
    this pair was added.
-   Return false and set *OLDVALUEP to the previous value, if a pair with the
+   Returns false and sets *OLDVALUEP to the previous value, if a pair with the
    given key was already in the map and only its value was replaced.  */
 /* declared in gl_xmap.h */
 extern bool gl_map_getput (gl_map_t map, const void *key, const void *value,
                            const void **oldvaluep);
-/* Likewise.  Return -1 upon out-of-memory.  */
+/* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_map_nx_getput (gl_map_t map, const void *key, const void *value,
                              const void **oldvaluep)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
@@ -167,19 +167,19 @@ extern int gl_map_nx_getput (gl_map_t map, const void *key, const void *value,
 #endif
   ;
 
-/* Remove a pair from a map.
-   Return true if the key was found and its pair removed.
-   Return false otherwise.  */
+/* Removes a pair from a map.
+   Returns true if the key was found and its pair removed.
+   Returns false otherwise.  */
 extern bool gl_map_remove (gl_map_t map, const void *key);
 
-/* Remove a pair from a map and retrieve the previous value.
-   Return true and set *OLDVALUEP to the previous value, if the key was found
+/* Removes a pair from a map and retrieve the previous value.
+   Returns true and sets *OLDVALUEP to the previous value, if the key was found
    and its pair removed.
-   Return false otherwise.  */
+   Returns false otherwise.  */
 extern bool gl_map_getremove (gl_map_t map, const void *key,
                               const void **oldvaluep);
 
-/* Free an entire map.
+/* Frees an entire map.
    (But this call does not free the keys and values of the pairs in the map.
    It only invokes the KDISPOSE_FN on each key and the VDISPOSE_FN on each value
    of the pairs in the map.)  */
@@ -211,18 +211,18 @@ typedef struct
 
 #if 0 /* These are defined inline below.  */
 
-/* Create an iterator traversing a map.
+/* Creates an iterator traversing a map.
    The map's contents must not be modified while the iterator is in use,
    except for modifying the value of the last returned key or removing the
    last returned pair.  */
 extern gl_map_iterator_t gl_map_iterator (gl_map_t map);
 
-/* If there is a next pair, store the next pair in *KEYP and *VALUEP, advance
-   the iterator, and return true.  Otherwise, return false.  */
+/* If there is a next pair, stores the next pair in *KEYP and *VALUEP, advances
+   the iterator, and returns true.  Otherwise, returns false.  */
 extern bool gl_map_iterator_next (gl_map_iterator_t *iterator,
                                   const void **keyp, const void **valuep);
 
-/* Free an iterator.  */
+/* Frees an iterator.  */
 extern void gl_map_iterator_free (gl_map_iterator_t *iterator);
 
 #endif /* End of inline functions.  */
