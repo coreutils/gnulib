@@ -36,7 +36,10 @@
 #include "same-inode.h"
 #include "ignore-value.h"
 
-#include "null-ptr.h"
+#if GNULIB_defined_canonicalize_file_name
+# include "null-ptr.h"
+#endif
+
 #include "macros.h"
 
 #define BASE "t-can.tmp"
