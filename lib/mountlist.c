@@ -231,7 +231,7 @@ me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
              || strcmp (Fs_type, "cifs") == 0)) \
      || strcmp (Fs_type, "afs") == 0            \
      || strcmp (Fs_type, "auristorfs") == 0     \
-     || (strcmp("-hosts", Fs_name) == 0))
+     || strcmp ("-hosts", Fs_name) == 0)
 #endif
 
 #if MOUNTED_GETMNTINFO          /* Mac OS X, FreeBSD, OpenBSD, also (obsolete) 4.4BSD */
