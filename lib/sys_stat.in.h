@@ -525,7 +525,7 @@ _GL_FUNCDECL_RPL (lchmod, int,
 _GL_CXXALIAS_RPL (lchmod, int,
                   (char const *filename, mode_t mode));
 # else
-#  if !@HAVE_LCHMOD@
+#  if !@HAVE_LCHMOD@ || defined __hpux
 _GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode)
                                _GL_ARG_NONNULL ((1)));
 #  endif
