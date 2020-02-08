@@ -28,6 +28,8 @@ SIGNATURE_CHECK (fchmodat, int, (int, const char *, mode_t, int));
 
 #include "macros.h"
 
+#define BASE "test-fchmodat."
+
 int
 main (void)
 {
@@ -47,9 +49,15 @@ main (void)
   /* Test that fchmodat works on non-symlinks, when given
      the AT_SYMLINK_NOFOLLOW flag.  */
   {
-    ASSERT (close (creat ("file", 0600)) == 0);
-    ASSERT (fchmodat (AT_FDCWD, "file", 0700, AT_SYMLINK_NOFOLLOW) == 0);
-    ASSERT (unlink ("file") == 0);
+    struct stat statbuf;
+    unlink (BASE "file");
+    ASSERT (close (creat (BASE "file", 0600)) == 0);
+    ASSERT (fchmodat (AT_FDCWD, BASE "file", 0400, AT_SYMLINK_NOFOLLOW) == 0);
+    ASSERT (stat (BASE "file", &statbuf) >= 0);
+    ASSERT ((statbuf.st_mode & 0700) == 0400);
+    /* Clean up.  */
+    ASSERT (chmod (BASE "file", 0600) == 0);
+    ASSERT (unlink (BASE "file") == 0);
   }
 
   return 0;
