@@ -4743,6 +4743,7 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * pthread_attr_getaffinity_np::
 * pthread_attr_setaffinity_np::
+* pthread_clockjoin_np::
 * pthread_cond_clockwait::
 * pthread_getaffinity_np::
 * pthread_getattr_default_np::
@@ -4768,6 +4769,7 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/pthread_attr_getaffinity_np.texi
 @include glibc-functions/pthread_attr_setaffinity_np.texi
+@include glibc-functions/pthread_clockjoin_np.texi
 @include glibc-functions/pthread_cond_clockwait.texi
 @include glibc-functions/pthread_getaffinity_np.texi
 @include glibc-functions/pthread_getattr_default_np.texi
