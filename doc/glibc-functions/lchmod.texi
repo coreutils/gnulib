@@ -9,6 +9,10 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 OpenBSD 3.8, Minix 3.1.8, AIX 5.1, IRIX 6.5, Solaris 11.4, Cygwin, mingw, MSVC 14, Android 9.0.
+@item
+This function always fails with @code{errno} set to @code{ENOSYS},
+even when the file is not a symbolic link:
+GNU/Linux with glibc 2.31.
 @end itemize
 
 Portability problems not fixed by Gnulib:

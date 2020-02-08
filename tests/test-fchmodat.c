@@ -22,6 +22,8 @@
 SIGNATURE_CHECK (fchmodat, int, (int, const char *, mode_t, int));
 
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 #include "macros.h"
@@ -40,6 +42,14 @@ main (void)
     errno = 0;
     ASSERT (fchmodat (99, "foo", 0600, 0) == -1);
     ASSERT (errno == EBADF);
+  }
+
+  /* Test that fchmodat works on non-symlinks, when given
+     the AT_SYMLINK_NOFOLLOW flag.  */
+  {
+    ASSERT (close (creat ("file", 0600)) == 0);
+    ASSERT (fchmodat (AT_FDCWD, "file", 0700, AT_SYMLINK_NOFOLLOW) == 0);
+    ASSERT (unlink ("file") == 0);
   }
 
   return 0;

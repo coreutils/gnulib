@@ -58,6 +58,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-02-07  fchmodat        When applied to non-symlinks, these now act like
+            lchmod          chmod (the BSD behavior, which POSIX requires for
+                            fchmodat + AT_SYMLINK_NOFOLLOW), instead of failing
+                            (the GNU/Linux behavior through glibc 2.31).
+                            Future versions of GNU/Linux are planned to act as
+                            per POSIX and BSD.
+
 2020-01-15  gc-pbkdf2-sha1  This module is deprecated.  Use gc-pbkdf2 instead.
 
 2019-12-12  dfa             Its API now uses ptrdiff_t instead of size_t.

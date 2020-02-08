@@ -9,6 +9,11 @@ Gnulib module: fchmodat
 Portability problems fixed by Gnulib:
 @itemize
 @item
+When given the @code{AT_SYMLINK_NOFOLLOW} flag,
+this function fails with @code{errno} set to @code{ENOTSUP},
+even when the file is not a symbolic link:
+GNU/Linux and Cygwin with glibc 2.31.
+@item
 This function is missing on some platforms:
 glibc 2.3.6, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8,
 AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, Cygwin 1.5.x, mingw, MSVC 14.
@@ -19,9 +24,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 Some platforms do not allow changing the access bits on symbolic
-links.  POSIX states that @code{fchmodat(@dots{},AT_SYMLINK_NOFOLLOW)}
-may fail with @code{EOPNOTSUPP} when called on a symlink, but some
-platforms, as well as the gnulib replacement, fail for any use of
-AT_SYMLINK_NOFOLLOW even if the target was not a symlink:
-glibc, Cygwin.
+links.
 @end itemize

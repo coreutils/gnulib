@@ -1,4 +1,4 @@
-# fchmodat.m4 serial 1
+# fchmodat.m4 serial 2
 dnl Copyright (C) 2004-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,5 +13,51 @@ AC_DEFUN([gl_FUNC_FCHMODAT],
   AC_CHECK_FUNCS_ONCE([fchmodat lchmod])
   if test $ac_cv_func_fchmodat != yes; then
     HAVE_FCHMODAT=0
+  else
+    AC_CACHE_CHECK(
+      [whether fchmodat+AT_SYMLINK_NOFOLLOW works on non-symlinks],
+      [gl_cv_func_fchmodat_works],
+      [AC_RUN_IFELSE(
+         [AC_LANG_PROGRAM(
+            [
+              AC_INCLUDES_DEFAULT[
+              #include <fcntl.h>
+              #ifndef S_IRUSR
+               #define S_IRUSR 0400
+              #endif
+              #ifndef S_IWUSR
+               #define S_IWUSR 0200
+              #endif
+              #ifndef S_IRWXU
+               #define S_IRWXU 0700
+              #endif
+              #ifndef S_IRWXG
+               #define S_IRWXG 0070
+              #endif
+              #ifndef S_IRWXO
+               #define S_IRWXO 0007
+              #endif
+            ]],
+            [[
+              int permissive = S_IRWXU | S_IRWXG | S_IRWXO;
+              int desired = S_IRUSR | S_IWUSR;
+              static char const f[] = "conftest.fchmodat";
+              struct stat st;
+              if (creat (f, permissive) < 0)
+                return 1;
+              if (fchmodat (AT_FDCWD, f, desired, AT_SYMLINK_NOFOLLOW) != 0)
+                return 1;
+              if (stat (f, &st) != 0)
+                return 1;
+              return ! ((st.st_mode & permissive) == desired);
+            ]])],
+         [gl_cv_func_fchmodat_works=yes],
+         [gl_cv_func_fchmodat_works=no],
+         [gl_cv_func_fchmodat_works=$gl_cross_guess_normal])
+       rm -f conftest.fchmodat])
+    case $gl_cv_func_fchmodat_works in
+      *yes) ;;
+      *) REPLACE_FCHMODAT=1;;
+    esac
   fi
 ])
