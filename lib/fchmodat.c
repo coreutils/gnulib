@@ -26,12 +26,6 @@
 #include <sys/stat.h>
 #undef __need_system_sys_stat_h
 
-#include <errno.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
 #if HAVE_FCHMODAT
 static int
 orig_fchmodat (int dir, char const *file, mode_t mode, int flags)
@@ -39,6 +33,12 @@ orig_fchmodat (int dir, char const *file, mode_t mode, int flags)
   return fchmodat (dir, file, mode, flags);
 }
 #endif
+
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #ifdef __osf__
 /* Write "sys/stat.h" here, not <sys/stat.h>, otherwise OSF/1 5.1 DTK cc
