@@ -1,4 +1,4 @@
-# fchmodat.m4 serial 2
+# fchmodat.m4 serial 3
 dnl Copyright (C) 2004-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,6 +10,7 @@ AC_DEFUN([gl_FUNC_FCHMODAT],
 [
   AC_REQUIRE([gl_SYS_STAT_H_DEFAULTS])
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
   AC_CHECK_FUNCS_ONCE([fchmodat lchmod])
   if test $ac_cv_func_fchmodat != yes; then
     HAVE_FCHMODAT=0
@@ -17,7 +18,9 @@ AC_DEFUN([gl_FUNC_FCHMODAT],
     AC_CACHE_CHECK(
       [whether fchmodat+AT_SYMLINK_NOFOLLOW works on non-symlinks],
       [gl_cv_func_fchmodat_works],
-      [AC_RUN_IFELSE(
+      [dnl This test fails on GNU/Linux with glibc 2.31 (but not on
+       dnl GNU/kFreeBSD nor GNU/Hurd) and Cygwin 2.9.
+       AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [
               AC_INCLUDES_DEFAULT[
@@ -53,7 +56,12 @@ AC_DEFUN([gl_FUNC_FCHMODAT],
             ]])],
          [gl_cv_func_fchmodat_works=yes],
          [gl_cv_func_fchmodat_works=no],
-         [gl_cv_func_fchmodat_works=$gl_cross_guess_normal])
+         [case "$host_os" in
+            dnl Guess no on Linux with glibc and Cygwin, yes otherwise.
+            linux-gnu* | cygwin*) gl_cv_func_fchmodat_works="guessing no" ;;
+            *)                    gl_cv_func_fchmodat_works="$gl_cross_guess_normal" ;;
+          esac
+         ])
        rm -f conftest.fchmodat])
     case $gl_cv_func_fchmodat_works in
       *yes) ;;
