@@ -228,6 +228,7 @@ me_remote (char const *fs_name, char const *fs_type _GL_UNUSED)
      || ((Fs_name)[0] == '/'                    \
          && (Fs_name)[1] == '/'                 \
          && (strcmp (Fs_type, "smbfs") == 0     \
+             || strcmp (Fs_type, "smb3") == 0   \
              || strcmp (Fs_type, "cifs") == 0)) \
      || strcmp (Fs_type, "afs") == 0            \
      || strcmp (Fs_type, "auristorfs") == 0     \
