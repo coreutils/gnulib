@@ -1,4 +1,4 @@
-# copysignf.m4 serial 3
+# copysignf.m4 serial 4
 dnl Copyright (C) 2011-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -7,6 +7,7 @@ dnl with or without modifications, as long as this notice is preserved.
 AC_DEFUN([gl_FUNC_COPYSIGNF],
 [
   AC_REQUIRE([gl_MATH_H_DEFAULTS])
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   dnl Persuade glibc <math.h> to declare copysignf().
   AC_REQUIRE([gl_USE_SYSTEM_EXTENSIONS])
@@ -28,7 +29,12 @@ AC_DEFUN([gl_FUNC_COPYSIGNF],
   else
     HAVE_COPYSIGNF=0
     HAVE_DECL_COPYSIGNF=0
-    COPYSIGNF_LIBM=
+    dnl On HP-UX 11.31/ia64, cc has a built-in for copysignf that redirects
+    dnl to the symbol '_copysignf', defined in libm, not libc.
+    case "$host_os" in
+      hpux*) COPYSIGNF_LIBM='-lm' ;;
+      *)     COPYSIGNF_LIBM= ;;
+    esac
   fi
   AC_SUBST([COPYSIGNF_LIBM])
 ])
