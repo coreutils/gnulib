@@ -36,7 +36,10 @@ SIGNATURE_CHECK (ptsname_r, int, (int, char *, size_t));
 
 #include "same-inode.h"
 
-#include "null-ptr.h"
+#if GNULIB_defined_ptsname_r
+# include "null-ptr.h"
+#endif
+
 #include "macros.h"
 
 /* Compare two slave names.
