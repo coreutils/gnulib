@@ -36,7 +36,8 @@ lchmod (char const *file, mode_t mode)
 {
 #if HAVE_FCHMODAT
   return fchmodat (AT_FDCWD, file, mode, AT_SYMLINK_NOFOLLOW);
-#elif defined O_PATH && defined AT_FDCWD
+#else
+# if defined O_PATH && defined AT_FDCWD
   int fd = openat (AT_FDCWD, file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
   if (fd < 0)
     return fd;
@@ -54,9 +55,9 @@ lchmod (char const *file, mode_t mode)
       return chmod_result;
     }
   /* /proc is not mounted; fall back on racy implementation.  */
-#endif
+# endif
 
-#if HAVE_LSTAT
+# if HAVE_LSTAT
   struct stat st;
   int lstat_result = lstat (file, &st);
   if (lstat_result != 0)
@@ -66,7 +67,8 @@ lchmod (char const *file, mode_t mode)
       errno = EOPNOTSUPP;
       return -1;
     }
-#endif
+# endif
 
   return chmod (file, mode);
+#endif
 }
