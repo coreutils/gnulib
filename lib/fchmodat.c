@@ -63,12 +63,31 @@ orig_fchmodat (int dir, char const *file, mode_t mode, int flags)
 int
 fchmodat (int dir, char const *file, mode_t mode, int flags)
 {
-  if (flags & AT_SYMLINK_NOFOLLOW)
+  if (flags == AT_SYMLINK_NOFOLLOW)
     {
-# ifdef O_PATH
+      struct stat st;
+
+# if defined O_PATH && defined AT_EMPTY_PATH
       int fd = openat (dir, file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
       if (fd < 0)
         return fd;
+
+      /* Use fstatat because fstat does not work on O_PATH descriptors
+         before Linux 3.6.  */
+      if (fstatat (fd, "", &st, AT_EMPTY_PATH) != 0)
+        {
+          int stat_errno = errno;
+          close (fd);
+          errno = stat_errno;
+          return -1;
+        }
+      if (S_ISLNK (st.st_mode))
+        {
+          close (fd);
+          errno = EOPNOTSUPP;
+          return -1;
+        }
+
       static char const fmt[] = "/proc/self/fd/%d";
       char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
       sprintf (buf, fmt, fd);
@@ -82,10 +101,8 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           errno = chmod_errno;
           return chmod_result;
         }
-      /* /proc is not mounted; fall back on racy implementation.  */
-# endif
-
-      struct stat st;
+      /* /proc is not mounted.  */
+# else
       int fstatat_result = fstatat (dir, file, &st, AT_SYMLINK_NOFOLLOW);
       if (fstatat_result != 0)
         return fstatat_result;
@@ -94,7 +111,9 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           errno = EOPNOTSUPP;
           return -1;
         }
-      flags &= ~AT_SYMLINK_NOFOLLOW;
+# endif
+      /* Fall back on chmod, despite the race.  */
+      flags = 0;
     }
 
   return orig_fchmodat (dir, file, mode, flags);
