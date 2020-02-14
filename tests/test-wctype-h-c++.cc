@@ -27,14 +27,18 @@
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswalnum, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswalpha, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswcntrl, int, (wint_t));
+#if GNULIB_TEST_ISWDIGIT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswdigit, int, (wint_t));
+#endif
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswgraph, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswlower, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswprint, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswpunct, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswspace, int, (wint_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswupper, int, (wint_t));
+#if GNULIB_TEST_ISWXDIGIT
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswxdigit, int, (wint_t));
+#endif
 #if GNULIB_TEST_ISWBLANK
 SIGNATURE_CHECK (GNULIB_NAMESPACE::iswblank, int, (wint_t));
 #endif
