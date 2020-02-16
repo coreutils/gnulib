@@ -1,4 +1,4 @@
-#serial 4
+#serial 5
 
 dnl Copyright (C) 2005-2006, 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -14,6 +14,8 @@ AC_DEFUN([gl_FUNC_LCHMOD],
 
   dnl Persuade glibc <sys/stat.h> to declare lchmod().
   AC_REQUIRE([AC_USE_SYSTEM_EXTENSIONS])
+
+  AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
 
   AC_CHECK_FUNCS_ONCE([fchmodat lchmod lstat])
   if test "$ac_cv_func_lchmod" = no; then
@@ -56,7 +58,12 @@ AC_DEFUN([gl_FUNC_LCHMOD],
             ]])],
          [gl_cv_func_lchmod_works=yes],
          [gl_cv_func_lchmod_works=no],
-         [gl_cv_func_lchmod_works=$gl_cross_guess_normal])
+         [case "$host_os" in
+            dnl Guess no on Linux with glibc, yes otherwise.
+            linux-gnu*) gl_cv_func_lchmod_works="guessing no" ;;
+            *)          gl_cv_func_lchmod_works="$gl_cross_guess_normal" ;;
+          esac
+         ])
        rm -f conftest.lchmod])
     case $gl_cv_func_lchmod_works in
       *yes) ;;
