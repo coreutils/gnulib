@@ -8,8 +8,10 @@ m4/xnanosleep.m4
 
 Depends-on:
 dtotimespec
+intprops
 nanosleep
 time
+unistd
 
 configure.ac:
 gl_XNANOSLEEP
