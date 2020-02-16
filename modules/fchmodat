@@ -28,6 +28,7 @@ configure.ac:
 gl_FUNC_FCHMODAT
 if test $HAVE_FCHMODAT = 0 || test $REPLACE_FCHMODAT = 1; then
   AC_LIBOBJ([fchmodat])
+  gl_PREREQ_FCHMODAT
 fi
 gl_MODULE_INDICATOR([fchmodat]) dnl for lib/openat.h
 gl_SYS_STAT_MODULE_INDICATOR([fchmodat])

@@ -14,7 +14,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-/* written by Jim Meyering */
+/* written by Jim Meyering and Paul Eggert */
 
 /* If the user's config.h happens to include <sys/stat.h>, let it include only
    the system's <sys/stat.h> here, so that orig_fchmodat doesn't recurse to
@@ -63,16 +63,27 @@ orig_fchmodat (int dir, char const *file, mode_t mode, int flags)
 int
 fchmodat (int dir, char const *file, mode_t mode, int flags)
 {
+# if NEED_FCHMODAT_NONSYMLINK_FIX
   if (flags == AT_SYMLINK_NOFOLLOW)
     {
       struct stat st;
 
-# if defined O_PATH && defined AT_EMPTY_PATH
+#  if defined O_PATH && defined AT_EMPTY_PATH \
+      && (defined __linux__ || defined __ANDROID__)
+      /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
+         follow symbolic links, if /proc is mounted.  O_PATH is used to
+         avoid a failure if the file is not readable.
+         Cf. <https://sourceware.org/bugzilla/show_bug.cgi?id=14578>  */
       int fd = openat (dir, file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
       if (fd < 0)
         return fd;
 
-      /* Use fstatat because fstat does not work on O_PATH descriptors
+      /* Up to Linux 5.3 at least, when FILE refers to a symbolic link, the
+         chmod call below will change the permissions of the symbolic link
+         - which is undersired - and on many file systems (ext4, btrfs, jfs,
+         xfs, ..., but not reiserfs) fail with error EOPNOTSUPP - which is
+         misleading.  Therefore test for a symbolic link explicitly.
+         Use fstatat because fstat does not work on O_PATH descriptors
          before Linux 3.6.  */
       if (fstatat (fd, "", &st, AT_EMPTY_PATH) != 0)
         {
@@ -102,7 +113,9 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           return chmod_result;
         }
       /* /proc is not mounted.  */
-# else
+      /* Fall back on orig_fchmodat, despite the race.  */
+      return orig_fchmodat (dir, file, mode, 0);
+#  elif (defined __linux__ || defined __ANDROID__) || !HAVE_LCHMOD
       int fstatat_result = fstatat (dir, file, &st, AT_SYMLINK_NOFOLLOW);
       if (fstatat_result != 0)
         return fstatat_result;
@@ -111,10 +124,13 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           errno = EOPNOTSUPP;
           return -1;
         }
-# endif
-      /* Fall back on chmod, despite the race.  */
-      flags = 0;
+      /* Fall back on orig_fchmodat, despite the race.  */
+      return orig_fchmodat (dir, file, mode, 0);
+#  else
+      return orig_fchmodat (dir, file, mode, 0);
+#  endif
     }
+# endif
 
   return orig_fchmodat (dir, file, mode, flags);
 }

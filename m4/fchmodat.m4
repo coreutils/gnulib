@@ -1,4 +1,4 @@
-# fchmodat.m4 serial 3
+# fchmodat.m4 serial 4
 dnl Copyright (C) 2004-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -65,7 +65,18 @@ AC_DEFUN([gl_FUNC_FCHMODAT],
        rm -f conftest.fchmodat])
     case $gl_cv_func_fchmodat_works in
       *yes) ;;
-      *) REPLACE_FCHMODAT=1;;
+      *)
+        AC_DEFINE([NEED_FCHMODAT_NONSYMLINK_FIX], [1],
+          [Define to 1 if fchmodat+AT_SYMLINK_NOFOLLOW does not work right on non-symlinks.])
+        REPLACE_FCHMODAT=1
+        ;;
     esac
   fi
+])
+
+# Prerequisites of lib/fchmodat.c.
+AC_DEFUN([gl_PREREQ_FCHMODAT],
+[
+  AC_CHECK_FUNCS_ONCE([lchmod])
+  :
 ])
