@@ -73,6 +73,21 @@ keys_init (void)
 /* Ensure that keys_init is called once only.  */
 gl_once_define(static, keys_init_once)
 
+void
+fstrcmp_free_resources (void)
+{
+  ptrdiff_t *buffer;
+
+  gl_once (keys_init_once, keys_init);
+  buffer = gl_tls_get (buffer_key);
+  if (buffer != NULL)
+    {
+      gl_tls_set (buffer_key, NULL);
+      gl_tls_set (bufmax_key, (void *) (uintptr_t) 0);
+      free (buffer);
+    }
+}
+
 
 /* In the code below, branch probabilities were measured by Ralf Wildenhues,
    by running "msgmerge LL.po coreutils.pot" with msgmerge 0.18 for many
