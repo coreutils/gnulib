@@ -23,7 +23,6 @@ fi
 gl_SYS_STAT_MODULE_INDICATOR([lchmod])
 
 Makefile.am:
-lib_SOURCES += lchmod.c
 
 Include:
 <sys/stat.h>
