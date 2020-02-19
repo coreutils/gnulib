@@ -23,6 +23,7 @@
 #define ELEMENT struct ucs4_with_ccc
 #define COMPARE(a,b) ((a)->ccc - (b)->ccc)
 #define STATIC
+#define STATIC_FROMTO static
 #define merge_sort_fromto gl_uninorm_decompose_merge_sort_fromto
 #define merge_sort_inplace gl_uninorm_decompose_merge_sort_inplace
 #include "array-mergesort.h"
