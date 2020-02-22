@@ -794,6 +794,13 @@ func_relconcat ()
   done
 }
 
+# func_ensure_writable DEST
+# Ensures the file DEST is writable.
+func_ensure_writable ()
+{
+  test -w "$1" || chmod u+w "$1"
+}
+
 # func_ln_s SRC DEST
 # Like ln -s, except use cp -p if ln -s fails.
 func_ln_s ()
@@ -813,6 +820,7 @@ func_ln_s ()
     esac
 
     cp -p "$cp_src" "$2"
+    func_ensure_writable "$2"
   }
 }
 
@@ -876,6 +884,7 @@ func_hardlink ()
   ln "$1" "$2" || {
     echo "$progname: ln failed; falling back on cp -p" >&2
     cp -p "$1" "$2"
+    func_ensure_writable "$2"
   }
 }
 
@@ -1717,6 +1726,7 @@ func_lookup_file ()
     lkbase=`echo "$lkfile" | sed -e 's,^.*/,,'`
     rm -f "$tmp/$lkbase"
     cp "$lookedup_file" "$tmp/$lkbase"
+    func_ensure_writable "$tmp/$lkbase"
     save_IFS="$IFS"
     IFS="$PATH_SEPARATOR"
     for patchfile in $lkpatches; do
@@ -5225,6 +5235,7 @@ s,^\(.................................................[^ ]*\) *,                
     func_dest_tmpfilename "$g"
     func_lookup_file "$f"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
+    func_ensure_writable "$tmpfile"
     case "$f" in
       *.class | *.mo )
         # Don't process binary files with sed.
@@ -6313,6 +6324,7 @@ func_create_testdir ()
       func_lookup_file "$f"
       if test -n "$lookedup_tmp"; then
         cp -p "$lookedup_file" "$testdir/$g"
+        func_ensure_writable "$testdir/$g"
       else
         func_should_link
         if test "$copyaction" = symlink; then
@@ -6322,6 +6334,7 @@ func_create_testdir ()
             func_hardlink "$lookedup_file" "$testdir/$g"
           else
             cp -p "$lookedup_file" "$testdir/$g"
+            func_ensure_writable "$testdir/$g"
           fi
         fi
       fi
@@ -7317,6 +7330,7 @@ s/\([.*$]\)/[\1]/g'
     # Copy the file.
     func_dest_tmpfilename "$g"
     cp "$lookedup_file" "$tmpfile" || func_fatal_error "failed"
+    func_ensure_writable "$tmpfile"
     already_present=true
     if test -f "$destdir/$g"; then
       # The file already exists.
