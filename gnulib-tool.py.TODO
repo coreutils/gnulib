@@ -15,6 +15,21 @@ The following commits to gnulib-tool have not yet been reflected in
 
 --------------------------------------------------------------------------------
 
+commit baec1bac1602ba8534320c295e120f7b658400f4
+Author: Bruno Haible <bruno@clisp.org>
+Date:   Sat Feb 22 15:15:01 2020 +0100
+
+    gnulib-tool: Ensure copied files are writable.
+
+    Reported by Benno Fünfstück <benno.fuenfstueck@gmail.com> in
+    <https://lists.gnu.org/archive/html/bug-gnulib/2020-02/msg00101.html>.
+
+    * gnulib-tool (func_ensure_writable): New function.
+    (func_ln_s, func_hardlink, func_lookup_file, func_import,
+    func_create_testdir, copy-file): Invoke it after copying a file.
+
+--------------------------------------------------------------------------------
+
 commit 0d41dbc7c88b10d16751466ec91efa75951426bb
 Author: Bruno Haible <bruno@clisp.org>
 Date:   Mon Nov 18 13:32:46 2019 +0100
