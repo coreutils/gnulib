@@ -29,6 +29,7 @@ The following packages appear to be using gnulib and gnulib-tool:
                   https://gitlab.com/gnutls/gnutls.git
   gpg             https://gnupg.org/
                   https://git.gnupg.org/
+  groff           https://git.savannah.gnu.org/gitweb/?p=groff.git;a=tree
   grub            https://git.savannah.gnu.org/gitweb/?p=grub.git;a=tree
   gsasl           https://git.savannah.gnu.org/gitweb/?p=gsasl.git;a=tree
   gss             https://git.savannah.gnu.org/gitweb/?p=gss.git;a=tree
