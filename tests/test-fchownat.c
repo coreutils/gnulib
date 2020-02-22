@@ -36,7 +36,9 @@ SIGNATURE_CHECK (fchownat, int, (int, char const *, uid_t, gid_t, int));
 #include "ignore-value.h"
 #include "macros.h"
 
-#define BASE "test-fchownat.t"
+#ifndef BASE
+# define BASE "test-fchownat.t"
+#endif
 
 #include "test-chown.h"
 #include "test-lchown.h"
@@ -47,14 +49,22 @@ static int dfd = AT_FDCWD;
 static int
 do_chown (char const *name, uid_t user, gid_t group)
 {
+#ifdef TEST_CHOWNAT
   return chownat (dfd, name, user, group);
+#else
+  return fchownat (dfd, name, user, group, 0);
+#endif
 }
 
 /* Wrapper around fchownat to test lchown behavior.  */
 static int
 do_lchown (char const *name, uid_t user, gid_t group)
 {
+#ifdef TEST_CHOWNAT
   return lchownat (dfd, name, user, group);
+#else
+  return fchownat (dfd, name, user, group, AT_SYMLINK_NOFOLLOW);
+#endif
 }
 
 int
