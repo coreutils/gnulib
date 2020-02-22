@@ -79,16 +79,19 @@ extern "C" {
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   define strfmon_l rpl_strfmon_l
 #  endif
-_GL_FUNCDECL_RPL (strfmon_l, ssize_t, (char *s, size_t maxsize, locale_t locale,
-                                       const char *format, ...)
-                                      _GL_ATTRIBUTE_FORMAT_STRFMON (4, 5)
-                                      _GL_ARG_NONNULL ((4)));
-_GL_CXXALIAS_RPL (strfmon_l, ssize_t, (char *s, size_t maxsize, locale_t locale,
-                                       const char *format, ...));
+_GL_FUNCDECL_RPL (strfmon_l, ssize_t,
+                  (char *restrict s, size_t maxsize, locale_t locale,
+                   const char *restrict format, ...)
+                  _GL_ATTRIBUTE_FORMAT_STRFMON (4, 5)
+                  _GL_ARG_NONNULL ((4)));
+_GL_CXXALIAS_RPL (strfmon_l, ssize_t,
+                  (char *restrict s, size_t maxsize, locale_t locale,
+                   const char *restrict format, ...));
 # else
 #  if @HAVE_STRFMON_L@
-_GL_CXXALIAS_SYS (strfmon_l, ssize_t, (char *s, size_t maxsize, locale_t locale,
-                                       const char *format, ...));
+_GL_CXXALIAS_SYS (strfmon_l, ssize_t,
+                  (char *restrict s, size_t maxsize, locale_t locale,
+                   const char *restrict format, ...));
 #  endif
 # endif
 # if __GLIBC__ >= 2

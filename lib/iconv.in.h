@@ -80,19 +80,22 @@ _GL_WARN_ON_USE (iconv_open, "iconv_open is not working correctly everywhere - "
 #  endif
 _GL_FUNCDECL_RPL (iconv, size_t,
                   (iconv_t cd,
-                   @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
-                   char **outbuf, size_t *outbytesleft));
+                   @ICONV_CONST@ char **restrict inbuf,
+                   size_t *restrict inbytesleft,
+                   char **restrict outbuf, size_t *restrict outbytesleft));
 _GL_CXXALIAS_RPL (iconv, size_t,
                   (iconv_t cd,
-                   @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
-                   char **outbuf, size_t *outbytesleft));
+                   @ICONV_CONST@ char **restrict inbuf,
+                   size_t *restrict inbytesleft,
+                   char **restrict outbuf, size_t *restrict outbytesleft));
 # else
 /* Need to cast, because on some versions of Solaris, ICONV_CONST does
    not have the right value for C++.  */
 _GL_CXXALIAS_SYS_CAST (iconv, size_t,
                        (iconv_t cd,
-                        @ICONV_CONST@ char **inbuf, size_t *inbytesleft,
-                        char **outbuf, size_t *outbytesleft));
+                        @ICONV_CONST@ char **restrict inbuf,
+                        size_t *restrict inbytesleft,
+                        char **restrict outbuf, size_t *restrict outbytesleft));
 # endif
 _GL_CXXALIASWARN (iconv);
 # ifndef ICONV_CONST

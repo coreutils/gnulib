@@ -1,4 +1,4 @@
-# search_h.m4 serial 10
+# search_h.m4 serial 11
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -40,6 +40,8 @@ AC_DEFUN([gl_SEARCH_H],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[#include <search.h>
     ]], [tdelete tfind tsearch twalk])
+
+  AC_REQUIRE([AC_C_RESTRICT])
 ])
 
 AC_DEFUN([gl_SEARCH_MODULE_INDICATOR],

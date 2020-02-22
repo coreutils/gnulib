@@ -449,28 +449,34 @@ typedef unsigned int pthread_barrierattr_t;
 /* =========== Thread functions =========== */
 
 #if @GNULIB_PTHREAD_THREAD@
+/* The 'restrict' qualifier on ARG is nonsense, but POSIX specifies it this way.
+   Sigh.  */
 # if @REPLACE_PTHREAD_CREATE@
 #  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
 #   undef pthread_create
 #   define pthread_create rpl_pthread_create
 #  endif
 _GL_FUNCDECL_RPL (pthread_create, int,
-                  (pthread_t *threadp, const pthread_attr_t *attr,
-                   void * (*mainfunc) (void *), void *arg)
+                  (pthread_t *restrict threadp,
+                   const pthread_attr_t *restrict attr,
+                   void * (*mainfunc) (void *), void *restrict arg)
                   _GL_ARG_NONNULL ((1, 3)));
 _GL_CXXALIAS_RPL (pthread_create, int,
-                  (pthread_t *threadp, const pthread_attr_t *attr,
-                   void * (*mainfunc) (void *), void *arg));
+                  (pthread_t *restrict threadp,
+                   const pthread_attr_t *restrict attr,
+                   void * (*mainfunc) (void *), void *restrict arg));
 # else
 #  if !@HAVE_PTHREAD_CREATE@
 _GL_FUNCDECL_SYS (pthread_create, int,
-                  (pthread_t *threadp, const pthread_attr_t *attr,
-                   void * (*mainfunc) (void *), void *arg)
+                  (pthread_t *restrict threadp,
+                   const pthread_attr_t *restrict attr,
+                   void * (*mainfunc) (void *), void *restrict arg)
                   _GL_ARG_NONNULL ((1, 3)));
 #  endif
 _GL_CXXALIAS_SYS_CAST (pthread_create, int,
-                       (pthread_t *threadp, const pthread_attr_t *attr,
-                        void * (*mainfunc) (void *), void *arg));
+                       (pthread_t *restrict threadp,
+                        const pthread_attr_t *restrict attr,
+                        void * (*mainfunc) (void *), void *restrict arg));
 # endif
 _GL_CXXALIASWARN (pthread_create);
 #elif defined GNULIB_POSIXCHECK
@@ -746,18 +752,22 @@ _GL_WARN_ON_USE (pthread_once, "pthread_once is not portable - "
 #   define pthread_mutex_init rpl_pthread_mutex_init
 #  endif
 _GL_FUNCDECL_RPL (pthread_mutex_init, int,
-                  (pthread_mutex_t *mutex, const pthread_mutexattr_t *attr)
+                  (pthread_mutex_t *restrict mutex,
+                   const pthread_mutexattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (pthread_mutex_init, int,
-                  (pthread_mutex_t *mutex, const pthread_mutexattr_t *attr));
+                  (pthread_mutex_t *restrict mutex,
+                   const pthread_mutexattr_t *restrict attr));
 # else
 #  if !@HAVE_PTHREAD_MUTEX_INIT@
 _GL_FUNCDECL_SYS (pthread_mutex_init, int,
-                  (pthread_mutex_t *mutex, const pthread_mutexattr_t *attr)
+                  (pthread_mutex_t *restrict mutex,
+                   const pthread_mutexattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_init, int,
-                  (pthread_mutex_t *mutex, const pthread_mutexattr_t *attr));
+                  (pthread_mutex_t *restrict mutex,
+                   const pthread_mutexattr_t *restrict attr));
 # endif
 _GL_CXXALIASWARN (pthread_mutex_init);
 #elif defined GNULIB_POSIXCHECK
@@ -800,20 +810,24 @@ _GL_WARN_ON_USE (pthread_mutexattr_init, "pthread_mutexattr_init is not portable
 #   define pthread_mutexattr_gettype rpl_pthread_mutexattr_gettype
 #  endif
 _GL_FUNCDECL_RPL (pthread_mutexattr_gettype, int,
-                  (const pthread_mutexattr_t *attr, int *typep)
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict typep)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_mutexattr_gettype, int,
-                  (const pthread_mutexattr_t *attr, int *typep));
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict typep));
 # else
 #  if !@HAVE_PTHREAD_MUTEXATTR_GETTYPE@
 _GL_FUNCDECL_SYS (pthread_mutexattr_gettype, int,
-                  (const pthread_mutexattr_t *attr, int *typep)
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict typep)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 /* Need to cast, because on FreeBSD the first parameter is
                         pthread_mutexattr_t *attr.  */
 _GL_CXXALIAS_SYS_CAST (pthread_mutexattr_gettype, int,
-                       (const pthread_mutexattr_t *attr, int *typep));
+                       (const pthread_mutexattr_t *restrict attr,
+                        int *restrict typep));
 # endif
 _GL_CXXALIASWARN (pthread_mutexattr_gettype);
 #elif defined GNULIB_POSIXCHECK
@@ -858,20 +872,24 @@ _GL_WARN_ON_USE (pthread_mutexattr_settype, "pthread_mutexattr_settype is not po
 #   define pthread_mutexattr_getrobust rpl_pthread_mutexattr_getrobust
 #  endif
 _GL_FUNCDECL_RPL (pthread_mutexattr_getrobust, int,
-                  (const pthread_mutexattr_t *attr, int *robustp)
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict robustp)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_mutexattr_getrobust, int,
-                  (const pthread_mutexattr_t *attr, int *robustp));
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict robustp));
 # else
 #  if !@HAVE_PTHREAD_MUTEXATTR_GETROBUST@
 _GL_FUNCDECL_SYS (pthread_mutexattr_getrobust, int,
-                  (const pthread_mutexattr_t *attr, int *robustp)
+                  (const pthread_mutexattr_t *restrict attr,
+                   int *restrict robustp)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 /* Need to cast, because on FreeBSD the first parameter is
                         pthread_mutexattr_t *attr.  */
 _GL_CXXALIAS_SYS_CAST (pthread_mutexattr_getrobust, int,
-                       (const pthread_mutexattr_t *attr, int *robustp));
+                       (const pthread_mutexattr_t *restrict attr,
+                        int *restrict robustp));
 # endif
 # if __GLIBC__ >= 2
 _GL_CXXALIASWARN (pthread_mutexattr_getrobust);
@@ -999,18 +1017,22 @@ _GL_WARN_ON_USE (pthread_mutex_trylock, "pthread_mutex_trylock is not portable -
 #   define pthread_mutex_timedlock rpl_pthread_mutex_timedlock
 #  endif
 _GL_FUNCDECL_RPL (pthread_mutex_timedlock, int,
-                  (pthread_mutex_t *mutex, const struct timespec *abstime)
+                  (pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_mutex_timedlock, int,
-                  (pthread_mutex_t *mutex, const struct timespec *abstime));
+                  (pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime));
 # else
 #  if !@HAVE_PTHREAD_MUTEX_TIMEDLOCK@
 _GL_FUNCDECL_SYS (pthread_mutex_timedlock, int,
-                  (pthread_mutex_t *mutex, const struct timespec *abstime)
+                  (pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_mutex_timedlock, int,
-                  (pthread_mutex_t *mutex, const struct timespec *abstime));
+                  (pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime));
 # endif
 _GL_CXXALIASWARN (pthread_mutex_timedlock);
 #elif defined GNULIB_POSIXCHECK
@@ -1080,18 +1102,22 @@ _GL_WARN_ON_USE (pthread_mutex_destroy, "pthread_mutex_destroy is not portable -
 #   define pthread_rwlock_init rpl_pthread_rwlock_init
 #  endif
 _GL_FUNCDECL_RPL (pthread_rwlock_init, int,
-                  (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr)
+                  (pthread_rwlock_t *restrict lock,
+                   const pthread_rwlockattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (pthread_rwlock_init, int,
-                  (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr));
+                  (pthread_rwlock_t *restrict lock,
+                   const pthread_rwlockattr_t *restrict attr));
 # else
 #  if !@HAVE_PTHREAD_RWLOCK_INIT@
 _GL_FUNCDECL_SYS (pthread_rwlock_init, int,
-                  (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr)
+                  (pthread_rwlock_t *restrict lock,
+                   const pthread_rwlockattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_init, int,
-                  (pthread_rwlock_t *lock, const pthread_rwlockattr_t *attr));
+                  (pthread_rwlock_t *restrict lock,
+                   const pthread_rwlockattr_t *restrict attr));
 # endif
 _GL_CXXALIASWARN (pthread_rwlock_init);
 #elif defined GNULIB_POSIXCHECK
@@ -1261,18 +1287,22 @@ _GL_WARN_ON_USE (pthread_rwlock_trywrlock, "pthread_rwlock_trywrlock is not port
 #   define pthread_rwlock_timedrdlock rpl_pthread_rwlock_timedrdlock
 #  endif
 _GL_FUNCDECL_RPL (pthread_rwlock_timedrdlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime)
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_rwlock_timedrdlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime));
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime));
 # else
 #  if !@HAVE_PTHREAD_RWLOCK_TIMEDRDLOCK@
 _GL_FUNCDECL_SYS (pthread_rwlock_timedrdlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime)
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_timedrdlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime));
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime));
 # endif
 _GL_CXXALIASWARN (pthread_rwlock_timedrdlock);
 #elif defined GNULIB_POSIXCHECK
@@ -1290,18 +1320,22 @@ _GL_WARN_ON_USE (pthread_rwlock_timedrdlock, "pthread_rwlock_timedrdlock is not 
 #   define pthread_rwlock_timedwrlock rpl_pthread_rwlock_timedwrlock
 #  endif
 _GL_FUNCDECL_RPL (pthread_rwlock_timedwrlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime)
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_rwlock_timedwrlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime));
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime));
 # else
 #  if !@HAVE_PTHREAD_RWLOCK_TIMEDWRLOCK@
 _GL_FUNCDECL_SYS (pthread_rwlock_timedwrlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime)
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_rwlock_timedwrlock, int,
-                  (pthread_rwlock_t *lock, const struct timespec *abstime));
+                  (pthread_rwlock_t *restrict lock,
+                   const struct timespec *restrict abstime));
 # endif
 _GL_CXXALIASWARN (pthread_rwlock_timedwrlock);
 #elif defined GNULIB_POSIXCHECK
@@ -1371,18 +1405,22 @@ _GL_WARN_ON_USE (pthread_rwlock_destroy, "pthread_rwlock_destroy is not portable
 #   define pthread_cond_init rpl_pthread_cond_init
 #  endif
 _GL_FUNCDECL_RPL (pthread_cond_init, int,
-                  (pthread_cond_t *cond, const pthread_condattr_t *attr)
+                  (pthread_cond_t *restrict cond,
+                   const pthread_condattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 _GL_CXXALIAS_RPL (pthread_cond_init, int,
-                  (pthread_cond_t *cond, const pthread_condattr_t *attr));
+                  (pthread_cond_t *restrict cond,
+                   const pthread_condattr_t *restrict attr));
 # else
 #  if !@HAVE_PTHREAD_COND_INIT@
 _GL_FUNCDECL_SYS (pthread_cond_init, int,
-                  (pthread_cond_t *cond, const pthread_condattr_t *attr)
+                  (pthread_cond_t *restrict cond,
+                   const pthread_condattr_t *restrict attr)
                   _GL_ARG_NONNULL ((1)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_init, int,
-                  (pthread_cond_t *cond, const pthread_condattr_t *attr));
+                  (pthread_cond_t *restrict cond,
+                   const pthread_condattr_t *restrict attr));
 # endif
 _GL_CXXALIASWARN (pthread_cond_init);
 #elif defined GNULIB_POSIXCHECK
@@ -1450,18 +1488,22 @@ _GL_WARN_ON_USE (pthread_condattr_destroy, "pthread_condattr_destroy is not port
 #   define pthread_cond_wait rpl_pthread_cond_wait
 #  endif
 _GL_FUNCDECL_RPL (pthread_cond_wait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex)
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex)
                   _GL_ARG_NONNULL ((1, 2)));
 _GL_CXXALIAS_RPL (pthread_cond_wait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex));
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex));
 # else
 #  if !@HAVE_PTHREAD_COND_WAIT@
 _GL_FUNCDECL_SYS (pthread_cond_wait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex)
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex)
                   _GL_ARG_NONNULL ((1, 2)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_wait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex));
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex));
 # endif
 _GL_CXXALIASWARN (pthread_cond_wait);
 #elif defined GNULIB_POSIXCHECK
@@ -1479,22 +1521,26 @@ _GL_WARN_ON_USE (pthread_cond_wait, "pthread_cond_wait is not portable - "
 #   define pthread_cond_timedwait rpl_pthread_cond_timedwait
 #  endif
 _GL_FUNCDECL_RPL (pthread_cond_timedwait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex,
-                   const struct timespec *abstime)
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (pthread_cond_timedwait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex,
-                   const struct timespec *abstime));
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime));
 # else
 #  if !@HAVE_PTHREAD_COND_TIMEDWAIT@
 _GL_FUNCDECL_SYS (pthread_cond_timedwait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex,
-                   const struct timespec *abstime)
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime)
                   _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (pthread_cond_timedwait, int,
-                  (pthread_cond_t *cond, pthread_mutex_t *mutex,
-                   const struct timespec *abstime));
+                  (pthread_cond_t *restrict cond,
+                   pthread_mutex_t *restrict mutex,
+                   const struct timespec *restrict abstime));
 # endif
 _GL_CXXALIASWARN (pthread_cond_timedwait);
 #elif defined GNULIB_POSIXCHECK

@@ -1,4 +1,4 @@
-# iconv_h.m4 serial 11
+# iconv_h.m4 serial 12
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -17,6 +17,8 @@ AC_DEFUN([gl_ICONV_H],
   dnl guaranteed by C89.
   gl_WARN_ON_USE_PREPARE([[#include <iconv.h>
     ]], [iconv iconv_open])
+
+  AC_REQUIRE([AC_C_RESTRICT])
 ])
 
 dnl Unconditionally enables the replacement of <iconv.h>.

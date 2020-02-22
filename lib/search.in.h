@@ -132,21 +132,21 @@ _GL_CXXALIASWARN (tfind);
    returned.  Otherwise, NULL is returned.  */
 # if @REPLACE_TSEARCH@
 _GL_FUNCDECL_RPL (tdelete, void *,
-                  (const void *key, void **vrootp,
+                  (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar)
                   _GL_ARG_NONNULL ((1, 2, 3)));
 _GL_CXXALIAS_RPL (tdelete, void *,
-                  (const void *key, void **vrootp,
+                  (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar));
 # else
 #  if !@HAVE_TSEARCH@
 _GL_FUNCDECL_SYS (tdelete, void *,
-                  (const void *key, void **vrootp,
+                  (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar)
                   _GL_ARG_NONNULL ((1, 2, 3)));
 #  endif
 _GL_CXXALIAS_SYS (tdelete, void *,
-                  (const void *key, void **vrootp,
+                  (const void *restrict key, void **restrict vrootp,
                    _gl_search_compar_fn compar));
 # endif
 _GL_CXXALIASWARN (tdelete);
