@@ -64,9 +64,9 @@ lchmod (char const *file, mode_t mode)
   /* Gnulib's fchmodat contains the workaround.  No need to duplicate it
      here.  */
   return fchmodat (AT_FDCWD, file, mode, AT_SYMLINK_NOFOLLOW);
-#elif NEED_LCHMOD_NONSYMLINK_FIX
-# if defined AT_FDCWD && defined O_PATH && defined AT_EMPTY_PATH \
-     && (defined __linux__ || defined __ANDROID__)
+#elif NEED_LCHMOD_NONSYMLINK_FIX \
+      && defined AT_FDCWD && defined O_PATH && defined AT_EMPTY_PATH \
+      && (defined __linux__ || defined __ANDROID__)            /* newer Linux */
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
      avoid a failure if the file is not readable.
@@ -113,8 +113,9 @@ lchmod (char const *file, mode_t mode)
   /* /proc is not mounted.  */
   /* Fall back on chmod, despite the race.  */
   return chmod (file, mode);
-# elif HAVE_LSTAT
-#  if (defined __linux__ || defined __ANDROID__) || !HAVE_LCHMOD
+#elif HAVE_LSTAT
+# if (NEED_LCHMOD_NONSYMLINK_FIX && (defined __linux__ || defined __ANDROID__)) \
+     || !HAVE_LCHMOD                               /* older Linux, Solaris 10 */
   struct stat st;
   int lstat_result = lstat (file, &st);
   if (lstat_result != 0)
@@ -126,13 +127,10 @@ lchmod (char const *file, mode_t mode)
     }
   /* Fall back on chmod, despite the race.  */
   return chmod (file, mode);
-#  else              /* GNU/kFreeBSD, GNU/Hurd, macOS, FreeBSD, NetBSD, HP-UX */
+# else               /* GNU/kFreeBSD, GNU/Hurd, macOS, FreeBSD, NetBSD, HP-UX */
   return orig_lchmod (file, mode);
-#  endif
-# else                                                      /* native Windows */
-  return chmod (file, mode);
 # endif
-#else
-  return orig_lchmod (file, mode);
+#else                                                       /* native Windows */
+  return chmod (file, mode);
 #endif
 }
