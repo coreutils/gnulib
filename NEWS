@@ -58,6 +58,16 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-02-22  fchownat        This module no longer defines the functions
+                            'chownat' and 'lchownat'.  Program that need these
+                            functions should add the module 'chownat' to the
+                            list of imported modules.
+
+2020-02-22  fchmodat        This module no longer defines the functions
+                            'chmodat' and 'lchmodat'.  Program that need these
+                            functions should add the module 'chmodat' to the
+                            list of imported modules.
+
 2020-02-07  fchmodat        When applied to non-symlinks, these now act like
             lchmod          chmod (the BSD behavior, which POSIX requires for
                             fchmodat + AT_SYMLINK_NOFOLLOW), instead of failing
