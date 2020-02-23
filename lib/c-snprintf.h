@@ -36,7 +36,8 @@
 extern "C" {
 #endif
 
-int c_snprintf (char *str, size_t size, const char *format, ...)
+extern int c_snprintf (char *restrict str, size_t size,
+                       const char *format, ...)
        _GL_ATTRIBUTE_FORMAT ((__printf__, 3, 4));
 
 #ifdef __cplusplus

@@ -9,6 +9,7 @@ Depends-on:
 c-vasnprintf
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += c-snprintf.c
