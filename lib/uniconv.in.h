@@ -98,19 +98,19 @@ extern char *
                             enum iconv_ilseq_handler handler,
                             const uint8_t *src, size_t srclen,
                             size_t *offsets,
-                            char *resultbuf, size_t *lengthp);
+                            char *_UC_RESTRICT resultbuf, size_t *lengthp);
 extern char *
        u16_conv_to_encoding (const char *tocode,
                              enum iconv_ilseq_handler handler,
                              const uint16_t *src, size_t srclen,
                              size_t *offsets,
-                             char *resultbuf, size_t *lengthp);
+                             char *_UC_RESTRICT resultbuf, size_t *lengthp);
 extern char *
        u32_conv_to_encoding (const char *tocode,
                              enum iconv_ilseq_handler handler,
                              const uint32_t *src, size_t srclen,
                              size_t *offsets,
-                             char *resultbuf, size_t *lengthp);
+                             char *_UC_RESTRICT resultbuf, size_t *lengthp);
 
 /* Converts a NUL terminated string from a given encoding.
    The result is malloc allocated, or NULL (with errno set) in case of error.

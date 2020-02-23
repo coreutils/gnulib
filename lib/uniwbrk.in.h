@@ -81,7 +81,7 @@ extern void
 extern void
        u32_wordbreaks (const uint32_t *s, size_t n, char *p);
 extern void
-       ulc_wordbreaks (const char *s, size_t n, char *p);
+       ulc_wordbreaks (const char *s, size_t n, char *_UC_RESTRICT p);
 
 /* ========================================================================= */
 
