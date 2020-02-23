@@ -75,18 +75,19 @@ extern void sm3_process_bytes (const void *buffer, size_t len,
    in first 32 bytes following RESBUF.  The result is always in little
    endian byte order, so that a byte-wise output yields to the wanted
    ASCII representation of the message digest.  */
-extern void *sm3_finish_ctx (struct sm3_ctx *ctx, void *resbuf);
+extern void *sm3_finish_ctx (struct sm3_ctx *ctx, void *restrict resbuf);
 
 /* Put result from CTX in first 32 bytes following RESBUF.  The result is
    always in little endian byte order, so that a byte-wise output yields
    to the wanted ASCII representation of the message digest.  */
-extern void *sm3_read_ctx (const struct sm3_ctx *ctx, void *resbuf);
+extern void *sm3_read_ctx (const struct sm3_ctx *ctx, void *restrict resbuf);
 
 /* Compute SM3 message digest for LEN bytes beginning at BUFFER.  The
    result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
    digest.  */
-extern void *sm3_buffer (const char *buffer, size_t len, void *resblock);
+extern void *sm3_buffer (const char *buffer, size_t len,
+                         void *restrict resblock);
 
 # endif
 /* Compute SM3 message digest for bytes read from STREAM.  The
