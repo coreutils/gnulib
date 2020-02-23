@@ -49,6 +49,7 @@ verify
 xalloc-oversized
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 gl_FUNC_READLINK_SEPARATE
 gl_CANONICALIZE_LGPL_SEPARATE
 gl_MALLOCA
