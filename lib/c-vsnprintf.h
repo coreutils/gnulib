@@ -39,7 +39,8 @@
 extern "C" {
 #endif
 
-int c_vsnprintf (char *str, size_t size, const char *format, va_list args)
+extern int c_vsnprintf (char *restrict str, size_t size,
+                        const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((__printf__, 3, 0));
 
 #ifdef __cplusplus
