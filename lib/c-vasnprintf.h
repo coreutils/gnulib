@@ -66,7 +66,8 @@ extern "C" {
    Formatting takes place in the C locale, that is, the decimal point used in
    floating-point formatting directives is always '.'.
   */
-extern char *c_vasnprintf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
+extern char *c_vasnprintf (char *restrict resultbuf, size_t *lengthp,
+                           const char *format, va_list args)
        _GL_ATTRIBUTE_FORMAT ((__printf__, 3, 0));
 
 #ifdef __cplusplus
