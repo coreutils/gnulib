@@ -16,6 +16,7 @@ stdint
 u64
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 gl_SHA512
 
 Makefile.am:
