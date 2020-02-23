@@ -12,6 +12,7 @@ stdalign
 stdint
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 gl_MD4
 
 Makefile.am:
