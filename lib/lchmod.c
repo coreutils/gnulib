@@ -19,23 +19,8 @@
 
 #include <config.h>
 
-/* If the user's config.h happens to include <sys/stat.h>, let it include only
-   the system's <sys/stat.h> here, so that orig_fchmodat doesn't recurse to
-   rpl_fchmodat.  */
-#define __need_system_sys_stat_h
-#include <config.h>
-
 /* Specification.  */
 #include <sys/stat.h>
-#undef __need_system_sys_stat_h
-
-#if HAVE_LCHMOD
-static inline int
-orig_lchmod (char const *file, mode_t mode)
-{
-  return lchmod (file, mode);
-}
-#endif
 
 #include <errno.h>
 #include <fcntl.h>
@@ -60,24 +45,18 @@ orig_lchmod (char const *file, mode_t mode)
 int
 lchmod (char const *file, mode_t mode)
 {
-#if HAVE_FCHMODAT
-  /* Gnulib's fchmodat contains the workaround.  No need to duplicate it
-     here.  */
-  return fchmodat (AT_FDCWD, file, mode, AT_SYMLINK_NOFOLLOW);
-#elif NEED_LCHMOD_NONSYMLINK_FIX \
-      && defined AT_FDCWD && defined O_PATH && defined AT_EMPTY_PATH \
-      && (defined __linux__ || defined __ANDROID__)            /* newer Linux */
+#if defined O_PATH && defined AT_EMPTY_PATH
   /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
      follow symbolic links, if /proc is mounted.  O_PATH is used to
      avoid a failure if the file is not readable.
      Cf. <https://sourceware.org/bugzilla/show_bug.cgi?id=14578>  */
-  int fd = openat (AT_FDCWD, file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
+  int fd = open (file, O_PATH | O_NOFOLLOW | O_CLOEXEC);
   if (fd < 0)
     return fd;
 
   /* Up to Linux 5.3 at least, when FILE refers to a symbolic link, the
      chmod call below will change the permissions of the symbolic link
-     - which is undersired - and on many file systems (ext4, btrfs, jfs,
+     - which is undesired - and on many file systems (ext4, btrfs, jfs,
      xfs, ..., but not reiserfs) fail with error EOPNOTSUPP - which is
      misleading.  Therefore test for a symbolic link explicitly.
      Use fstatat because fstat does not work on O_PATH descriptors
@@ -97,6 +76,7 @@ lchmod (char const *file, mode_t mode)
       return -1;
     }
 
+# if defined __linux__ || defined __ANDROID__
   static char const fmt[] = "/proc/self/fd/%d";
   char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
   sprintf (buf, fmt, fd);
@@ -110,12 +90,10 @@ lchmod (char const *file, mode_t mode)
       errno = chmod_errno;
       return chmod_result;
     }
-  /* /proc is not mounted.  */
-  /* Fall back on chmod, despite the race.  */
-  return chmod (file, mode);
+# endif
+  /* /proc is not mounted or would not work as in GNU/Linux.  */
+
 #elif HAVE_LSTAT
-# if (NEED_LCHMOD_NONSYMLINK_FIX && (defined __linux__ || defined __ANDROID__)) \
-     || !HAVE_LCHMOD                               /* older Linux, Solaris 10 */
   struct stat st;
   int lstat_result = lstat (file, &st);
   if (lstat_result != 0)
@@ -125,12 +103,8 @@ lchmod (char const *file, mode_t mode)
       errno = EOPNOTSUPP;
       return -1;
     }
-  /* Fall back on chmod, despite the race.  */
-  return chmod (file, mode);
-# else               /* GNU/kFreeBSD, GNU/Hurd, macOS, FreeBSD, NetBSD, HP-UX */
-  return orig_lchmod (file, mode);
-# endif
-#else                                                       /* native Windows */
-  return chmod (file, mode);
 #endif
+
+  /* Fall back on chmod, despite a possible race.  */
+  return chmod (file, mode);
 }

@@ -6,18 +6,17 @@ lib/lchmod.c
 m4/lchmod.m4
 
 Depends-on:
-errno         [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
+errno         [test $HAVE_LCHMOD = 0]
 extensions
-fcntl-h       [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
-fchmodat      [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
-intprops      [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
-lstat         [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
+fcntl-h       [test $HAVE_LCHMOD = 0]
+intprops      [test $HAVE_LCHMOD = 0]
+lstat         [test $HAVE_LCHMOD = 0]
 sys_stat
-unistd        [test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1]
+unistd        [test $HAVE_LCHMOD = 0]
 
 configure.ac:
 gl_FUNC_LCHMOD
-if test $HAVE_LCHMOD = 0 || test $REPLACE_LCHMOD = 1; then
+if test $HAVE_LCHMOD = 0; then
   AC_LIBOBJ([lchmod])
   gl_PREREQ_LCHMOD
 fi

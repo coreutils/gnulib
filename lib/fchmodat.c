@@ -68,8 +68,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
     {
       struct stat st;
 
-#  if defined O_PATH && defined AT_EMPTY_PATH \
-      && (defined __linux__ || defined __ANDROID__)
+#  if defined O_PATH && defined AT_EMPTY_PATH
       /* Open a file descriptor with O_NOFOLLOW, to make sure we don't
          follow symbolic links, if /proc is mounted.  O_PATH is used to
          avoid a failure if the file is not readable.
@@ -80,7 +79,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
 
       /* Up to Linux 5.3 at least, when FILE refers to a symbolic link, the
          chmod call below will change the permissions of the symbolic link
-         - which is undersired - and on many file systems (ext4, btrfs, jfs,
+         - which is undesired - and on many file systems (ext4, btrfs, jfs,
          xfs, ..., but not reiserfs) fail with error EOPNOTSUPP - which is
          misleading.  Therefore test for a symbolic link explicitly.
          Use fstatat because fstat does not work on O_PATH descriptors
@@ -99,6 +98,7 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           return -1;
         }
 
+#   if defined __linux__ || defined __ANDROID__
       static char const fmt[] = "/proc/self/fd/%d";
       char buf[sizeof fmt - sizeof "%d" + INT_BUFSIZE_BOUND (int)];
       sprintf (buf, fmt, fd);
@@ -112,10 +112,10 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           errno = chmod_errno;
           return chmod_result;
         }
-      /* /proc is not mounted.  */
-      /* Fall back on orig_fchmodat, despite the race.  */
-      return orig_fchmodat (dir, file, mode, 0);
-#  elif (defined __linux__ || defined __ANDROID__) || !HAVE_LCHMOD
+#   endif
+      /* /proc is not mounted or would not work as in GNU/Linux.  */
+
+#  else
       int fstatat_result = fstatat (dir, file, &st, AT_SYMLINK_NOFOLLOW);
       if (fstatat_result != 0)
         return fstatat_result;
@@ -124,11 +124,10 @@ fchmodat (int dir, char const *file, mode_t mode, int flags)
           errno = EOPNOTSUPP;
           return -1;
         }
-      /* Fall back on orig_fchmodat, despite the race.  */
-      return orig_fchmodat (dir, file, mode, 0);
-#  else
-      return orig_fchmodat (dir, file, mode, 0);
 #  endif
+
+      /* Fall back on orig_fchmodat with no flags, despite a possible race.  */
+      flags = 0;
     }
 # endif
 

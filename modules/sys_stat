@@ -63,7 +63,6 @@ sys/stat.h: sys_stat.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_NONNU
 	      -e 's|@''REPLACE_FSTAT''@|$(REPLACE_FSTAT)|g' \
 	      -e 's|@''REPLACE_FSTATAT''@|$(REPLACE_FSTATAT)|g' \
 	      -e 's|@''REPLACE_FUTIMENS''@|$(REPLACE_FUTIMENS)|g' \
-	      -e 's|@''REPLACE_LCHMOD''@|$(REPLACE_LCHMOD)|g' \
 	      -e 's|@''REPLACE_LSTAT''@|$(REPLACE_LSTAT)|g' \
 	      -e 's|@''REPLACE_MKDIR''@|$(REPLACE_MKDIR)|g' \
 	      -e 's|@''REPLACE_MKFIFO''@|$(REPLACE_MKFIFO)|g' \

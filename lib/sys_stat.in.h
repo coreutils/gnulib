@@ -518,23 +518,11 @@ _GL_WARN_ON_USE (futimens, "futimens is not portable - "
 #if @GNULIB_LCHMOD@
 /* Change the mode of FILENAME to MODE, without dereferencing it if FILENAME
    denotes a symbolic link.  */
-# if @REPLACE_LCHMOD@
-#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
-#   undef lchmod
-#   define lchmod rpl_lchmod
-#  endif
-_GL_FUNCDECL_RPL (lchmod, int,
-                  (char const *filename, mode_t mode)
-                  _GL_ARG_NONNULL ((1)));
-_GL_CXXALIAS_RPL (lchmod, int,
-                  (char const *filename, mode_t mode));
-# else
-#  if !@HAVE_LCHMOD@ || defined __hpux
+# if !@HAVE_LCHMOD@ || defined __hpux
 _GL_FUNCDECL_SYS (lchmod, int, (const char *filename, mode_t mode)
                                _GL_ARG_NONNULL ((1)));
-#  endif
-_GL_CXXALIAS_SYS (lchmod, int, (const char *filename, mode_t mode));
 # endif
+_GL_CXXALIAS_SYS (lchmod, int, (const char *filename, mode_t mode));
 _GL_CXXALIASWARN (lchmod);
 #elif defined GNULIB_POSIXCHECK
 # undef lchmod
