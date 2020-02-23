@@ -1,4 +1,4 @@
-# gc.m4 serial 12
+# gc.m4 serial 13
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -25,4 +25,6 @@ AC_DEFUN([gl_GC],
     fi
   fi
   AC_SUBST([LIB_CRYPTO])
+
+  AC_REQUIRE([AC_C_RESTRICT])
 ])

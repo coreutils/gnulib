@@ -185,12 +185,12 @@ extern Gc_rc
 gc_pbkdf2_hmac (Gc_hash hash,
                 const char *P, size_t Plen,
                 const char *S, size_t Slen,
-                unsigned int c, char *DK, size_t dkLen);
+                unsigned int c, char *restrict DK, size_t dkLen);
 
 extern Gc_rc
 gc_pbkdf2_sha1 (const char *P, size_t Plen,
                 const char *S, size_t Slen,
-                unsigned int c, char *DK, size_t dkLen);
+                unsigned int c, char *restrict DK, size_t dkLen);
 
 /*
   TODO:
