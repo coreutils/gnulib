@@ -1,4 +1,4 @@
-# parse-datetime.m4 serial 23
+# parse-datetime.m4 serial 24
 dnl Copyright (C) 2002-2006, 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -60,6 +60,7 @@ changequote([,])dnl
   dnl Prerequisites of lib/parse-datetime.h.
   AC_REQUIRE([AM_STDBOOL_H])
   AC_REQUIRE([gl_TIMESPEC])
+  AC_REQUIRE([AC_C_RESTRICT])
 
   dnl Prerequisites of lib/parse-datetime.y.
   AC_REQUIRE([gl_BISON])
