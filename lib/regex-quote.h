@@ -77,7 +77,7 @@ extern size_t
 /* Copies the quoted string to p and returns the incremented p.
    There must be room for regex_quote_length (string, spec) + 1 bytes at p.  */
 extern char *
-       regex_quote_copy (char *p,
+       regex_quote_copy (char *restrict p,
                          const char *string, const struct regex_quote_spec *spec);
 
 /* Returns the freshly allocated quoted string.  */
