@@ -15,6 +15,7 @@ stdalign
 stdint
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 gl_SHA1
 
 Makefile.am:
