@@ -57,13 +57,13 @@ extern void md2_process_bytes (const void *buffer, size_t len,
    in first 16 bytes following RESBUF.  The result is always in little
    endian byte order, so that a byte-wise output yields to the wanted
    ASCII representation of the message digest.  */
-extern void *md2_finish_ctx (struct md2_ctx *ctx, void *resbuf);
+extern void *md2_finish_ctx (struct md2_ctx *ctx, void *restrict resbuf);
 
 
 /* Put result from CTX in first 16 bytes following RESBUF.  The result is
    always in little endian byte order, so that a byte-wise output yields
    to the wanted ASCII representation of the message digest.  */
-extern void *md2_read_ctx (const struct md2_ctx *ctx, void *resbuf);
+extern void *md2_read_ctx (const struct md2_ctx *ctx, void *restrict resbuf);
 
 
 /* Compute MD2 message digest for bytes read from STREAM.  The
@@ -75,7 +75,8 @@ extern int md2_stream (FILE *stream, void *resblock);
    result is always in little endian byte order, so that a byte-wise
    output yields to the wanted ASCII representation of the message
    digest.  */
-extern void *md2_buffer (const char *buffer, size_t len, void *resblock);
+extern void *md2_buffer (const char *buffer, size_t len,
+                         void *restrict resblock);
 
 # ifdef __cplusplus
 }

@@ -9,6 +9,7 @@ Depends-on:
 minmax
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += md2.c
