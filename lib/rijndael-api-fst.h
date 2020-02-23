@@ -157,7 +157,7 @@ extern int
 rijndaelBlockEncrypt (rijndaelCipherInstance *cipher,
                       const rijndaelKeyInstance *key,
                       const char *input, size_t inputLen,
-                      char *outBuffer);
+                      char *restrict outBuffer);
 
 /* Encrypt data in INPUT, of INPUTOCTETS bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -172,7 +172,7 @@ extern int
 rijndaelPadEncrypt (rijndaelCipherInstance *cipher,
                     const rijndaelKeyInstance *key,
                     const char *input, size_t inputOctets,
-                    char *outBuffer);
+                    char *restrict outBuffer);
 
 /* Decrypt data in INPUT, of INPUTLEN/8 bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -185,7 +185,7 @@ extern int
 rijndaelBlockDecrypt (rijndaelCipherInstance *cipher,
                       const rijndaelKeyInstance *key,
                       const char *input, size_t inputLen,
-                      char *outBuffer);
+                      char *restrict outBuffer);
 
 /* Decrypt data in INPUT, of INPUTOCTETS bytes length, placing the
    output in the pre-allocated OUTBUFFER which must hold at least
@@ -200,6 +200,6 @@ extern int
 rijndaelPadDecrypt (rijndaelCipherInstance *cipher,
                     const rijndaelKeyInstance *key,
                     const char *input, size_t inputOctets,
-                    char *outBuffer);
+                    char *restrict outBuffer);
 
 #endif /* __RIJNDAEL_API_FST_H */

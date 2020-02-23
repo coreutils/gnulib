@@ -11,6 +11,7 @@ Depends-on:
 stdint
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += rijndael-alg-fst.c rijndael-api-fst.c
