@@ -10,6 +10,7 @@ sh-quote
 xalloc
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += system-quote.h system-quote.c

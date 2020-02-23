@@ -77,7 +77,7 @@ extern size_t
 /* Copies the quoted string to p and returns the incremented p.
    There must be room for system_quote_length (string) + 1 bytes at p.  */
 extern char *
-       system_quote_copy (char *p,
+       system_quote_copy (char *restrict p,
                           enum system_command_interpreter interpreter,
                           const char *string);
 
