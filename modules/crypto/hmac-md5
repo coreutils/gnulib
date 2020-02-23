@@ -11,6 +11,7 @@ memxor
 crypto/md5
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += hmac-md5.c

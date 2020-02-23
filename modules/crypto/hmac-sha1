@@ -11,6 +11,7 @@ memxor
 crypto/sha1
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += hmac-sha1.c

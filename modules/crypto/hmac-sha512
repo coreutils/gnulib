@@ -11,6 +11,7 @@ memxor
 crypto/sha512
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += hmac-sha512.c
