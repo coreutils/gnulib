@@ -37,7 +37,8 @@ extern "C" {
    freshly allocated string is returned.  In both cases, *lengthp is set to the
    length of the returned string.
    Upon failure, return NULL, with errno set.  */
-extern char * astrxfrm (const char *s, char *resultbuf, size_t *lengthp);
+extern char * astrxfrm (const char *s,
+                        char *restrict resultbuf, size_t *lengthp);
 
 
 #ifdef __cplusplus
