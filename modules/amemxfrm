@@ -8,6 +8,7 @@ lib/amemxfrm.c
 Depends-on:
 
 configure.ac:
+AC_REQUIRE([AC_C_RESTRICT])
 
 Makefile.am:
 lib_SOURCES += amemxfrm.c

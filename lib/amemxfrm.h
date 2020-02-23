@@ -38,7 +38,8 @@ extern "C" {
    freshly allocated string is returned.  In both cases, *lengthp is set to the
    length of the returned string.
    Upon failure, return NULL, with errno set.  */
-extern char * amemxfrm (char *s, size_t n, char *resultbuf, size_t *lengthp);
+extern char * amemxfrm (char *restrict s, size_t n,
+                        char *restrict resultbuf, size_t *lengthp);
 
 
 #ifdef __cplusplus
