@@ -13,6 +13,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   CSSC            https://git.savannah.gnu.org/gitweb/?p=cssc.git;a=tree
   cvs             https://cvs.savannah.gnu.org/viewcvs/cvs/ccvs/
   cvsps           https://sourceforge.net/projects/cvsps/
+  datamash        https://git.savannah.gnu.org/gitweb/?p=datamash.git;a=tree
   diffutils       https://git.savannah.gnu.org/gitweb/?p=diffutils.git;a=tree
   emacs           https://git.savannah.gnu.org/gitweb/?p=emacs.git;a=tree
   febootstrap     https://fedorapeople.org/cgit/rjones/public_git/febootstrap.git/
@@ -90,6 +91,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   shishi          https://git.savannah.gnu.org/gitweb/?p=shishi.git;a=tree
   tar             https://git.savannah.gnu.org/gitweb/?p=tar.git;a=tree
   texinfo         https://git.savannah.gnu.org/gitweb/?p=texinfo.git;a=tree
+  time            https://git.savannah.gnu.org/gitweb/?p=time.git;a=tree
   tmpwatch        https://pagure.io/tmpwatch/tree/master
   vc-dwim         https://git.savannah.gnu.org/gitweb/?p=vc-dwim.git;a=tree
   wdiff           https://bzr.savannah.gnu.org/lh/wdiff/trunk/files
