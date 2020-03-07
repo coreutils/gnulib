@@ -154,7 +154,7 @@ static int executable_fd = -1;
 /* Define this function only when it's needed.  */
 #if !(defined WINDOWS_NATIVE || defined __EMX__)
 
-/* Tests whether a given pathname may belong to the executable.  */
+/* Tests whether a given filename may belong to the executable.  */
 static bool
 maybe_executable (const char *filename)
 {
@@ -173,18 +173,20 @@ maybe_executable (const char *filename)
       struct stat statfile;
 
       if (fstat (executable_fd, &statexe) >= 0)
-        {
-          if (stat (filename, &statfile) < 0)
-            return false;
-          if (!(statfile.st_dev
+        return (stat (filename, &statfile) >= 0
+                && statfile.st_dev
                 && statfile.st_dev == statexe.st_dev
-                && statfile.st_ino == statexe.st_ino))
-            return false;
-        }
+                && statfile.st_ino == statexe.st_ino);
     }
 # endif
 
-  return true;
+  /* Check that the filename does not point to a directory.  */
+  {
+    struct stat statfile;
+
+    return (stat (filename, &statfile) >= 0
+            && ! S_ISDIR (statfile.st_mode));
+  }
 }
 
 #endif
