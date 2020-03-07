@@ -105,29 +105,22 @@ find_in_path (const char *progname)
          design flaw.  */
       if (eaccess (progpathname, X_OK) == 0)
         {
-          /* Check that the progpathname does not point to a directory.  */
-          struct stat statbuf;
-
-          if (stat (progpathname, &statbuf) >= 0
-              && ! S_ISDIR (statbuf.st_mode))
+          /* Found!  */
+          if (strcmp (progpathname, progname) == 0)
             {
-              /* Found!  */
-              if (strcmp (progpathname, progname) == 0)
-                {
-                  free (progpathname);
+              free (progpathname);
 
-                  /* Add the "./" prefix for real, that xconcatenated_filename()
-                     optimized away.  This avoids a second PATH search when the
-                     caller uses execlp/execvp.  */
-                  progpathname = XNMALLOC (2 + strlen (progname) + 1, char);
-                  progpathname[0] = '.';
-                  progpathname[1] = '/';
-                  memcpy (progpathname + 2, progname, strlen (progname) + 1);
-                }
-
-              free (path);
-              return progpathname;
+              /* Add the "./" prefix for real, that xconcatenated_filename()
+                 optimized away.  This avoids a second PATH search when the
+                 caller uses execlp/execvp.  */
+              progpathname = XNMALLOC (2 + strlen (progname) + 1, char);
+              progpathname[0] = '.';
+              progpathname[1] = '/';
+              memcpy (progpathname + 2, progname, strlen (progname) + 1);
             }
+
+          free (path);
+          return progpathname;
         }
 
       free (progpathname);
