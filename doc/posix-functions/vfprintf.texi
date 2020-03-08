@@ -30,6 +30,7 @@ NetBSD 3.0, AIX 5.1, HP-UX 11.23, IRIX 6.5, Solaris 9,
 Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
 MSVC 14.
 @item
 This function does not support the @samp{ls} directive on some platforms:

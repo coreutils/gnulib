@@ -1,4 +1,4 @@
-# printf.m4 serial 62
+# printf.m4 serial 63
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -711,6 +711,16 @@ int main ()
         [gl_cv_func_printf_directive_n=yes],
         [gl_cv_func_printf_directive_n=no],
         [case "$host_os" in
+                            # Guess no on glibc when _FORTIFY_SOURCE >= 2.
+           *-gnu* | gnu*)   AC_COMPILE_IFELSE(
+                              [AC_LANG_SOURCE(
+                                 [[#if _FORTIFY_SOURCE >= 2
+                                    error fail
+                                   #endif
+                                 ]])],
+                              [gl_cv_func_printf_directive_n="guessing yes"],
+                              [gl_cv_func_printf_directive_n="guessing no"])
+                            ;;
                             # Guess no on Android.
            linux*-android*) gl_cv_func_printf_directive_n="guessing no";;
                             # Guess no on native Windows.
@@ -1414,8 +1424,16 @@ int main ()
         [
 changequote(,)dnl
          case "$host_os" in
-                                 # Guess yes on glibc systems.
-           *-gnu* | gnu*)        gl_cv_func_snprintf_directive_n="guessing yes";;
+                                 # Guess no on glibc when _FORTIFY_SOURCE >= 2.
+           *-gnu* | gnu*)        AC_COMPILE_IFELSE(
+                                   [AC_LANG_SOURCE(
+                                      [[#if _FORTIFY_SOURCE >= 2
+                                         error fail
+                                        #endif
+                                      ]])],
+                                   [gl_cv_func_snprintf_directive_n="guessing yes"],
+                                   [gl_cv_func_snprintf_directive_n="guessing no"])
+                                 ;;
                                  # Guess yes on musl systems.
            *-musl*)              gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on FreeBSD >= 5.

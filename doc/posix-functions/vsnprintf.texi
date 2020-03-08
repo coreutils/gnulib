@@ -75,6 +75,7 @@ This function does not truncate the result as specified in C99 on some platforms
 mingw, MSVC 14.
 @item
 This function does not fully support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
 HP-UX 11, mingw, MSVC 14.
 @item
 This function overwrites memory even when a zero size argument is passed on some
