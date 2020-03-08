@@ -11,6 +11,7 @@ fatal-signal
 sigaction
 sigprocmask
 full-write
+fstat
 same-inode
 
 configure.ac:

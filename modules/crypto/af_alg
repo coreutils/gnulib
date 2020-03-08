@@ -12,6 +12,7 @@ c99             [test $USE_AF_ALG = 1]
 fflush          [test $USE_AF_ALG = 1]
 fseeko          [test $USE_AF_ALG = 1]
 ftello          [test $USE_AF_ALG = 1]
+fstat           [test $USE_AF_ALG = 1]
 sys_socket
 sys_stat
 

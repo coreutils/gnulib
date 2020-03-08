@@ -10,6 +10,7 @@ m4/same.m4
 Depends-on:
 error
 dirname
+fstat
 fstatat
 openat
 same-inode
