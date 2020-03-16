@@ -1,4 +1,4 @@
-# printf.m4 serial 63
+# printf.m4 serial 64
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1422,7 +1422,6 @@ int main ()
         [gl_cv_func_snprintf_directive_n=yes],
         [gl_cv_func_snprintf_directive_n=no],
         [
-changequote(,)dnl
          case "$host_os" in
                                  # Guess no on glibc when _FORTIFY_SOURCE >= 2.
            *-gnu* | gnu*)        AC_COMPILE_IFELSE(
@@ -1434,6 +1433,7 @@ changequote(,)dnl
                                    [gl_cv_func_snprintf_directive_n="guessing yes"],
                                    [gl_cv_func_snprintf_directive_n="guessing no"])
                                  ;;
+changequote(,)dnl
                                  # Guess yes on musl systems.
            *-musl*)              gl_cv_func_snprintf_directive_n="guessing yes";;
                                  # Guess yes on FreeBSD >= 5.
@@ -1466,8 +1466,8 @@ changequote(,)dnl
            mingw*)               gl_cv_func_snprintf_directive_n="guessing no";;
                                  # If we don't know, obey --enable-cross-guesses.
            *)                    gl_cv_func_snprintf_directive_n="$gl_cross_guess_normal";;
-         esac
 changequote([,])dnl
+         esac
         ])
     ])
 ])
