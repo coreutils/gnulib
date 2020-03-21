@@ -65,10 +65,7 @@ rpl_unlink (char const *name)
           /* Trailing NUL will overwrite the trailing slash.  */
           char *short_name = malloc (len);
           if (!short_name)
-            {
-              errno = EPERM;
-              return -1;
-            }
+            return -1;
           memcpy (short_name, name, len);
           while (len && ISSLASH (short_name[len - 1]))
             short_name[--len] = '\0';
