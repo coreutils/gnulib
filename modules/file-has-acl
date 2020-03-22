@@ -2,10 +2,12 @@ Description:
 Whether a file has an ACL.
 
 Files:
+lib/acl-internal.h
 lib/file-has-acl.c
+m4/acl.m4
 
 Depends-on:
-acl-permissions  [test $gl_need_lib_has_acl]
+acl-permissions
 
 configure.ac:
 gl_FILE_HAS_ACL
