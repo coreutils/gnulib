@@ -20,6 +20,7 @@ lstat           [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 openat-die      [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 openat-h        [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 save-cwd        [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
+stat            [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 stat-time       [test $HAVE_FSTATAT = 0 || test $REPLACE_FSTATAT = 1]
 
 configure.ac:

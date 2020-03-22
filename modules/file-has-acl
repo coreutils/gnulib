@@ -8,6 +8,7 @@ m4/acl.m4
 
 Depends-on:
 acl-permissions
+stat
 
 configure.ac:
 gl_FILE_HAS_ACL

@@ -17,6 +17,7 @@ fcntl-h         [test $HAVE_READLINKAT = 0]
 openat-die      [test $HAVE_READLINKAT = 0]
 openat-h        [test $HAVE_READLINKAT = 0]
 save-cwd        [test $HAVE_READLINKAT = 0]
+stat            [test $HAVE_READLINKAT = 0]
 readlink        [test $HAVE_READLINKAT = 0]
 
 configure.ac:

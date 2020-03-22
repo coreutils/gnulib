@@ -15,6 +15,7 @@ fstat
 lstat
 gettime
 msvc-nothrow
+stat
 stat-time
 stdbool
 sys_stat

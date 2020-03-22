@@ -10,6 +10,7 @@ ptsname
 root-uid
 stdlib
 configmake
+stat
 
 configure.ac:
 

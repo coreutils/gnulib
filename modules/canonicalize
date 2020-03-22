@@ -17,6 +17,7 @@ lstat
 memmove
 nocrash
 pathmax
+stat
 sys_stat
 xalloc
 xgetcwd

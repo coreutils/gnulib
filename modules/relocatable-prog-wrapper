@@ -37,6 +37,7 @@ Depends-on:
 alloca-opt
 double-slash-root
 errno
+largefile
 pathmax
 ssize_t
 stdbool

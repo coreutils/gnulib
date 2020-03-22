@@ -23,6 +23,7 @@ getline
 xconcat-filename
 fwriteerror
 clean-temp
+stat
 error
 xvasprintf
 c-strstr

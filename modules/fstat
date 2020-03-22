@@ -11,6 +11,7 @@ Depends-on:
 sys_stat
 largefile
 pathmax         [test $REPLACE_FSTAT = 1]
+stat            [test $REPLACE_FSTAT = 1]
 stat-time       [test $REPLACE_FSTAT = 1]
 unistd          [test $REPLACE_FSTAT = 1]
 verify          [test $REPLACE_FSTAT = 1]

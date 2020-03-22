@@ -23,6 +23,7 @@ openat-die       [test $HAVE_RENAMEAT = 0]
 rename           [test $HAVE_RENAMEAT = 0]
 same-inode       [test $HAVE_RENAMEAT = 0]
 save-cwd         [test $HAVE_RENAMEAT = 0]
+stat             [test $HAVE_RENAMEAT = 0]
 
 configure.ac:
 gl_FUNC_RENAMEAT
