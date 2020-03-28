@@ -47,6 +47,7 @@
 #  define IS_ABSOLUTE_FILE_NAME(F)                              \
      (ISSLASH ((F)[0]) || FILE_SYSTEM_PREFIX_LEN (F) != 0)
 #endif
-#define IS_RELATIVE_FILE_NAME(F) (! IS_ABSOLUTE_FILE_NAME (F))
+#define IS_RELATIVE_FILE_NAME(F) \
+  (! (ISSLASH ((F)[0]) || FILE_SYSTEM_PREFIX_LEN (F) != 0))
 
 #endif /* DOSNAME_H_ */

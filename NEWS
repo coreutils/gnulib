@@ -58,6 +58,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-03-28  dosname         On native Windows, OS/2, DOS,
+                            IS_RELATIVE_FILE_NAME("c:") now returns false.
+
 2020-03-28  filename        The macro IS_ABSOLUTE_PATH is deprecated. Use
                             IS_ABSOLUTE_FILE_NAME instead.
                             The macro IS_PATH_WITH_DIR is deprecated. Use
