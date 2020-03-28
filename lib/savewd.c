@@ -33,8 +33,8 @@
 #include <unistd.h>
 
 #include "assure.h"
-#include "dosname.h"
 #include "fcntl-safer.h"
+#include "filename.h"
 
 #ifndef FALLTHROUGH
 # if __GNUC__ < 7

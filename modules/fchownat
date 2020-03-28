@@ -10,11 +10,11 @@ Depends-on:
 unistd
 extensions
 at-internal     [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
-dosname         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 errno           [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 extern-inline   [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fchdir          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 fcntl-h         [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
+filename        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 lchown          [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-die      [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]
 openat-h        [test $HAVE_FCHOWNAT = 0 || test $REPLACE_FCHOWNAT = 1]

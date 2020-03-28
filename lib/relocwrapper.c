@@ -24,10 +24,11 @@
              -> allocator
           -> readlink
              -> stat
-                -> dosname
+                -> filename
                 -> pathmax
                 -> verify
        -> canonicalize-lgpl
+          -> filename
           -> malloca
           -> lstat
           -> readlink

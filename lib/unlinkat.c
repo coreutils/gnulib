@@ -28,7 +28,7 @@
 
 #include <stdlib.h>
 
-#include "dosname.h"
+#include "filename.h"
 #include "openat.h"
 
 #if HAVE_UNLINKAT

@@ -167,7 +167,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
 
 #else /* !HAVE_OPENAT */
 
-# include "dosname.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
+# include "filename.h" /* solely for definition of IS_ABSOLUTE_FILE_NAME */
 # include "openat-priv.h"
 # include "save-cwd.h"
 

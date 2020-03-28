@@ -7,7 +7,7 @@ m4/unlink.m4
 
 Depends-on:
 unistd
-dosname         [test $REPLACE_UNLINK = 1]
+filename        [test $REPLACE_UNLINK = 1]
 lstat           [test $REPLACE_UNLINK = 1]
 malloc-posix    [test $REPLACE_UNLINK = 1]
 

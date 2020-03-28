@@ -24,7 +24,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#include "dosname.h"
+#include "filename.h"
 
 #undef unlink
 

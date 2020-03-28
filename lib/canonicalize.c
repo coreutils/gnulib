@@ -30,7 +30,7 @@
 #include "pathmax.h"
 #include "xalloc.h"
 #include "xgetcwd.h"
-#include "dosname.h"
+#include "filename.h"
 
 #define MULTIPLE_BITS_SET(i) (((i) & ((i) - 1)) != 0)
 

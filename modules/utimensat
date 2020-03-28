@@ -10,10 +10,10 @@ Depends-on:
 sys_stat
 extensions
 at-internal     [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
-dosname         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 errno           [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 fchdir          [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 fcntl-h         [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
+filename        [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 openat-die      [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 openat-h        [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]
 save-cwd        [test $HAVE_UTIMENSAT = 0 || test $REPLACE_UTIMENSAT = 1]

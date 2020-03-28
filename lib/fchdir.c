@@ -29,7 +29,7 @@
 #include <sys/stat.h>
 
 #include "assure.h"
-#include "dosname.h"
+#include "filename.h"
 #include "filenamecat.h"
 
 #ifndef REPLACE_OPEN_DIRECTORY

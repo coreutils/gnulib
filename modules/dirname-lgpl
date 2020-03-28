@@ -9,8 +9,8 @@ lib/stripslash.c
 m4/dirname.m4
 
 Depends-on:
-dosname
 double-slash-root
+filename
 malloc-posix
 stdbool
 

@@ -11,11 +11,11 @@ areadlink-with-size
 stdint
 readlinkat
 at-internal
-dosname
 errno
 extensions
 fchdir
 fcntl-h
+filename
 openat-die
 openat-h
 save-cwd

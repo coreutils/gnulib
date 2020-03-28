@@ -9,11 +9,11 @@ lib/at-func.c
 Depends-on:
 selinux-h
 at-internal
-dosname
 errno
 extensions
 fchdir
 fcntl-h
+filename
 openat-die
 openat-h
 save-cwd

@@ -7,7 +7,7 @@ m4/rmdir.m4
 
 Depends-on:
 unistd
-dosname         [test $REPLACE_RMDIR = 1]
+filename        [test $REPLACE_RMDIR = 1]
 sys_stat        [test $REPLACE_RMDIR = 1]
 
 configure.ac:

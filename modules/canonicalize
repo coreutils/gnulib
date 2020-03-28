@@ -12,6 +12,7 @@ areadlink-with-size
 errno
 extensions
 file-set
+filename
 hash-triple
 lstat
 memmove
