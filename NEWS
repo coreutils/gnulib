@@ -58,6 +58,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-03-28  filename        The macro IS_ABSOLUTE_PATH is deprecated. Use
+                            IS_ABSOLUTE_FILE_NAME instead.
+                            The macro IS_PATH_WITH_DIR is deprecated. Use
+                            IS_FILE_NAME_WITH_DIR instead.
+
 2020-02-22  fchownat        This module no longer defines the functions
                             'chownat' and 'lchownat'.  Program that need these
                             functions should add the module 'chownat' to the

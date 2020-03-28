@@ -76,8 +76,8 @@
 extern char * canonicalize_file_name (const char *name);
 
 /* Pathname support.
-   ISSLASH(C)           tests whether C is a directory separator character.
-   IS_PATH_WITH_DIR(P)  tests whether P contains a directory specification.
+   ISSLASH(C)                tests whether C is a directory separator character.
+   IS_FILE_NAME_WITH_DIR(P)  tests whether P contains a directory specification.
  */
 #if (defined _WIN32 && !defined __CYGWIN__) || defined __EMX__ || defined __DJGPP__
   /* Native Windows, OS/2, DOS */
@@ -85,13 +85,13 @@ extern char * canonicalize_file_name (const char *name);
 # define HAS_DEVICE(P) \
     ((((P)[0] >= 'A' && (P)[0] <= 'Z') || ((P)[0] >= 'a' && (P)[0] <= 'z')) \
      && (P)[1] == ':')
-# define IS_PATH_WITH_DIR(P) \
+# define IS_FILE_NAME_WITH_DIR(P) \
     (strchr (P, '/') != NULL || strchr (P, '\\') != NULL || HAS_DEVICE (P))
 # define FILE_SYSTEM_PREFIX_LEN(P) (HAS_DEVICE (P) ? 2 : 0)
 #else
   /* Unix */
 # define ISSLASH(C) ((C) == '/')
-# define IS_PATH_WITH_DIR(P) (strchr (P, '/') != NULL)
+# define IS_FILE_NAME_WITH_DIR(P) (strchr (P, '/') != NULL)
 # define FILE_SYSTEM_PREFIX_LEN(P) 0
 #endif
 
@@ -206,7 +206,7 @@ find_executable (const char *argv0)
   int length = GetModuleFileName (NULL, location, sizeof (location));
   if (length < 0)
     return NULL;
-  if (!IS_PATH_WITH_DIR (location))
+  if (!IS_FILE_NAME_WITH_DIR (location))
     /* Shouldn't happen.  */
     return NULL;
   return xstrdup (location);
