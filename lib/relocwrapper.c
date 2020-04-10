@@ -19,14 +19,15 @@
    relocwrapper
     -> progname
     -> progreloc
+       -> stat
+          -> filename
+          -> pathmax
+          -> verify
        -> areadlink
           -> careadlinkat
              -> allocator
           -> readlink
              -> stat
-                -> filename
-                -> pathmax
-                -> verify
        -> canonicalize-lgpl
           -> filename
           -> malloca

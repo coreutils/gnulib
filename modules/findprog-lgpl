@@ -10,9 +10,11 @@ m4/eaccess.m4
 
 Depends-on:
 stdbool
+sys_stat
 strdup
 concat-filename
 access
+stat
 unistd
 
 configure.ac:

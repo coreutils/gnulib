@@ -25,6 +25,7 @@ lib/relocatable.c
 lib/setenv.c
 lib/c-ctype.h
 lib/c-ctype.c
+m4/largefile.m4
 m4/malloca.m4
 m4/canonicalize.m4
 m4/eealloc.m4
@@ -49,6 +50,9 @@ environ
 string
 verify
 xalloc-oversized
+
+configure.ac-early:
+AC_REQUIRE([AC_SYS_LARGEFILE])
 
 configure.ac:
 AC_REQUIRE([AC_C_RESTRICT])
