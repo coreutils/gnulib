@@ -25,6 +25,11 @@
 # include <config.h>
 #endif
 
+/* memset_s need this define */
+#if HAVE_MEMSET_S
+# define __STDC_WANT_LIB_EXT1__ 1
+#endif
+
 #include <string.h>
 
 #if _LIBC
@@ -40,6 +45,8 @@ explicit_bzero (void *s, size_t len)
 {
 #ifdef HAVE_EXPLICIT_MEMSET
   explicit_memset (s, 0, len);
+#elif HAVE_MEMSET_S
+  (void) memset_s (s, len, '\0', len);
 #else
   memset (s, '\0', len);
 # if defined __GNUC__ && !defined __clang__
