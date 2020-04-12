@@ -112,7 +112,9 @@ test_heap (void)
   free (heapbuf);
   if (is_range_mapped (addr, addr + SECRET_SIZE))
     {
-      ASSERT (memcmp (zero, heapbuf, SECRET_SIZE) == 0);
+      /* some implementation could override freed memory by canaries so
+         compare against secret */
+      ASSERT (memcmp (heapbuf, SECRET, SECRET_SIZE) != 0);
       printf ("test_heap: address range is still mapped after free().\n");
     }
   else
