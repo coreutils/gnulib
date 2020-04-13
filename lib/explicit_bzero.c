@@ -51,7 +51,7 @@ explicit_bzero (void *s, size_t len)
 #if defined _WIN32 && !defined __CYGWIN__
   (void) SecureZeroMemory (s, len);
 #elif HAVE_EXPLICIT_MEMSET
-  explicit_memset (s, 0, len);
+  explicit_memset (s, '\0', len);
 #elif HAVE_MEMSET_S
   (void) memset_s (s, len, '\0', len);
 #else
