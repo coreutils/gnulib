@@ -1511,10 +1511,11 @@ mem1:                           saved_errno = errno;
                            inode numbers.  Some day we might optimize that
                            away, too, for directories where d_ino is known to
                            be valid.  */
-                        bool skip_stat = (ISSET(FTS_PHYSICAL)
-                                          && ISSET(FTS_NOSTAT)
+                        bool skip_stat = (ISSET(FTS_NOSTAT)
                                           && DT_IS_KNOWN(dp)
-                                          && ! DT_MUST_BE(dp, DT_DIR));
+                                          && ! DT_MUST_BE(dp, DT_DIR)
+                                          && (ISSET(FTS_PHYSICAL)
+                                              || ! DT_MUST_BE(dp, DT_LNK)));
                         p->fts_info = FTS_NSOK;
                         /* Propagate dirent.d_type information back
                            to caller, when possible.  */
