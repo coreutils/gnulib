@@ -5,7 +5,7 @@
 @c For double-sided printing, uncomment:
 @c @setchapternewpage odd
 @c This date is automagically updated when you save this file:
-@set lastupdate January 29, 2020
+@set lastupdate April 24, 2020
 @c %**end of header
 @documentencoding UTF-8
 
@@ -2417,7 +2417,7 @@ making Ogg Vorbis the preferred format for audio distribution
 in GNU packages and their web sites.
 
 We will consider using Ogg Opus at some point in the future.
-It is fine to distribute Ogg Opus files <em>also</em>, but please
+It is fine to distribute Ogg Opus files @emph{also}, but please
 continue distributing Ogg Vorbis, so as not to hurry users to change
 the software with which they listen to audio.
 
