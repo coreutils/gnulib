@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate November 17, 2019
+@set lastupdate April 24, 2020
 @c %**end of header
 
 @dircategory GNU organization
@@ -886,7 +886,7 @@ that name in the directories in @env{PATH}, interpreting @file{.} as
 the working directory that was current when the program started.
 
 If this procedure finds the executable, we call the directory it was
-found in the @dfn{iinvocation directory}.  The program should check
+found in the @dfn{invocation directory}.  The program should check
 for the presence in that directory of the associated files it needs.
 
 If the program's executable is normally built in a subdirectory of the
