@@ -3138,11 +3138,12 @@ func_all_modules ()
   func_module uniname/base
   func_module uniname/uniname
   func_module unictype/base
-  func_module unictype/bidicategory-byname
-  func_module unictype/bidicategory-name
-  func_module unictype/bidicategory-of
-  func_module unictype/bidicategory-test
-  func_module unictype/bidicategory-all
+  func_module unictype/bidiclass-byname
+  func_module unictype/bidiclass-name
+  func_module unictype/bidiclass-longname
+  func_module unictype/bidiclass-of
+  func_module unictype/bidiclass-test
+  func_module unictype/bidiclass-all
   func_module unictype/block-list
   func_module unictype/block-of
   func_module unictype/block-test

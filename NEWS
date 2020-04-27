@@ -58,6 +58,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  unictype/bidicategory-*  These deprecated modules are removed. Use
+                                     the modules unictype/bidiclass-* instead.
+
 2020-03-28  dosname         On native Windows, OS/2, DOS,
                             IS_RELATIVE_FILE_NAME("c:") now returns false.
 
