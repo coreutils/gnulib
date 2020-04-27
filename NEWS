@@ -58,6 +58,12 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  pipe            This deprecated module is removed. Use the module
+                            'spawn-pipe' instead. Instead of
+                              #include "pipe.h"
+                            write
+                              #include "spawn-pipe.h"
+
 2020-04-27  getopt          This deprecated module is removed. Please choose
                             among getopt-posix and getopt-gnu. getopt-gnu
                             provides "long options" and "options with optional
