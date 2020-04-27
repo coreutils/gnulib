@@ -58,6 +58,13 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  getdate         This deprecated module is removed. Use the module
+                            'parse-datetime' instead. Instead of
+                              #include "getdate.h"
+                            write
+                              #include "parse-datetime.h"
+                            The function get_date is renamed to parse_datetime.
+
 2020-04-27  realloc         This deprecated module is removed. Use the module
                             'realloc-gnu' instead.
 
