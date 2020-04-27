@@ -58,6 +58,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  fnmatch-posix   This deprecated module is removed. Use the module
+                            'fnmatch' instead.
+
 2020-04-27  pipe            This deprecated module is removed. Use the module
                             'spawn-pipe' instead. Instead of
                               #include "pipe.h"
