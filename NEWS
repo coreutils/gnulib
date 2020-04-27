@@ -58,6 +58,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  getopt          This deprecated module is removed. Please choose
+                            among getopt-posix and getopt-gnu. getopt-gnu
+                            provides "long options" and "options with optional
+                            arguments", getopt-posix doesn't.
+
 2020-04-27  rename-dest-slash  This deprecated module is removed. Use the
                                module 'rename' instead.
 
