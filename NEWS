@@ -58,6 +58,9 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-04-27  calloc          This deprecated module is removed. Use the module
+                            'calloc-gnu' instead.
+
 2020-04-27  malloc          This deprecated module is removed. Use the module
                             'malloc-gnu' instead.
 
