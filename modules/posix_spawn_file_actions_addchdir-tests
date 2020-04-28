@@ -7,6 +7,7 @@ tests/macros.h
 Depends-on:
 posix_spawn_file_actions_init
 posix_spawnp-tests
+findprog
 
 configure.ac:
 
