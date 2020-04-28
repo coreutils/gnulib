@@ -31,6 +31,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+#include "findprog.h"
+
 static int
 fd_safer (int fd)
 {
@@ -46,8 +48,8 @@ fd_safer (int fd)
   return fd;
 }
 
-int
-main ()
+static void
+test (const char *pwd_prog)
 {
   char *argv[2] = { (char *) "pwd", NULL };
   int rootfd;
@@ -97,7 +99,7 @@ main ()
           || (attrs_allocated = true,
               (err = posix_spawnattr_setsigmask (&attrs, &blocked_signals)) != 0
               || (err = posix_spawnattr_setflags (&attrs, POSIX_SPAWN_SETSIGMASK)) != 0)
-          || (err = posix_spawnp (&child, "pwd", &actions, &attrs, argv, environ)) != 0))
+          || (err = posix_spawnp (&child, pwd_prog, &actions, &attrs, argv, environ)) != 0))
     {
       if (actions_allocated)
         posix_spawn_file_actions_destroy (&actions);
@@ -144,5 +146,24 @@ main ()
       fprintf (stderr, "subprocess terminated with unexpected exit status %d\n", exitstatus);
       exit (1);
     }
+}
+
+int
+main ()
+{
+  test ("pwd");
+
+  /* Verify that if a program is given as a relative file name with at least one
+     slash, it is interpreted w.r.t. the current directory after fchdir has been
+     executed.  */
+  {
+    const char *abs_pwd_prog = find_in_path ("pwd");
+
+    if (abs_pwd_prog != NULL
+        && abs_pwd_prog[0] == '/'
+        && abs_pwd_prog[1] != '0' && abs_pwd_prog[1] != '/')
+      test (&abs_pwd_prog[1]);
+  }
+
   return 0;
 }
