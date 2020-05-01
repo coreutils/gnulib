@@ -79,6 +79,7 @@ The following packages appear to be using gnulib and gnulib-tool:
   OPeNDAP         https://scm.opendap.org/svn/trunk/
   parted          https://git.savannah.gnu.org/gitweb/?p=parted.git;a=tree
   patch           https://git.savannah.gnu.org/gitweb/?p=patch.git;a=tree
+  poke            https://git.savannah.gnu.org/gitweb/?p=poke.git;a=tree
   prelude-lml     https://www.prelude-siem.org/projects/prelude-lml/repository
   prelude-manager https://www.prelude-siem.org/projects/prelude-manager/repository
   pspp            https://git.savannah.gnu.org/gitweb/?p=pspp.git;a=tree
