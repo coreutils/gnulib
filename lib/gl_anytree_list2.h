@@ -486,6 +486,34 @@ gl_tree_remove_at (gl_list_t list, size_t position)
 }
 
 static bool
+gl_tree_remove_first (gl_list_t list)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      node = node_at (node, 0);
+      return gl_tree_remove_node (list, node);
+    }
+  else
+    return false;
+}
+
+static bool
+gl_tree_remove_last (gl_list_t list)
+{
+  gl_list_node_t node = list->root;
+
+  if (node != NULL)
+    {
+      node = node_at (node, node->branch_size - 1);
+      return gl_tree_remove_node (list, node);
+    }
+  else
+    return false;
+}
+
+static bool
 gl_tree_remove (gl_list_t list, const void *elt)
 {
   if (list->root != NULL)

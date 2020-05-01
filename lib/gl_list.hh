@@ -219,6 +219,18 @@ public:
   bool remove_at (size_t position)
     { return gl_list_remove_at (_ptr, position); }
 
+  /* Removes the element at the first position from the list.
+     Returns true if it was found and removed,
+     or false if the list was empty.  */
+  bool remove_first ()
+    { return gl_list_remove_first (_ptr); }
+
+  /* Removes the element at the last position from the list.
+     Returns true if it was found and removed,
+     or false if the list was empty.  */
+  bool remove_last ()
+    { return gl_list_remove_last (_ptr); }
+
   /* Searches and removes an element from the list.
      Returns true if it was found and removed.  */
   bool remove (ELTYPE * elt)

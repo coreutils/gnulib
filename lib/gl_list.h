@@ -88,6 +88,8 @@ extern "C" {
    gl_list_add_at              O(n)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
    gl_list_remove_node         O(n)     O(1)   O(log n)  O(n)/O(1) O((log n)²)/O(log n)
    gl_list_remove_at           O(n)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
+   gl_list_remove_first      O(n)/O(1)  O(1)   O(log n)  O(n)/O(1) O((log n)²)/O(log n)
+   gl_list_remove_last         O(1)     O(1)   O(log n)  O(n)/O(1) O((log n)²)/O(log n)
    gl_list_remove              O(n)     O(n)     O(n)    O(n)/O(1) O((log n)²)/O(log n)
    gl_list_iterator            O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_iterator_from_to    O(1)     O(n)   O(log n)    O(n)       O(log n)
@@ -328,6 +330,14 @@ extern bool gl_list_remove_node (gl_list_t list, gl_list_node_t node);
    Returns true.  */
 extern bool gl_list_remove_at (gl_list_t list, size_t position);
 
+/* Removes the element at the first position from the list.
+   Returns true if it was found and removed, or false if the list was empty.  */
+extern bool gl_list_remove_first (gl_list_t list);
+
+/* Removes the element at the last position from the list.
+   Returns true if it was found and removed, or false if the list was empty.  */
+extern bool gl_list_remove_last (gl_list_t list);
+
 /* Searches and removes an element from the list.
    Returns true if it was found and removed.  */
 extern bool gl_list_remove (gl_list_t list, const void *elt);
@@ -508,6 +518,8 @@ struct gl_list_implementation
                                const void *elt);
   bool (*remove_node) (gl_list_t list, gl_list_node_t node);
   bool (*remove_at) (gl_list_t list, size_t position);
+  bool (*remove_first) (gl_list_t list);
+  bool (*remove_last) (gl_list_t list);
   bool (*remove_elt) (gl_list_t list, const void *elt);
   void (*list_free) (gl_list_t list);
   /* gl_list_iterator_t functions.  */
@@ -745,6 +757,20 @@ gl_list_remove_at (gl_list_t list, size_t position)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
          ->remove_at (list, position);
+}
+
+GL_LIST_INLINE bool
+gl_list_remove_first (gl_list_t list)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+         ->remove_first (list);
+}
+
+GL_LIST_INLINE bool
+gl_list_remove_last (gl_list_t list)
+{
+  return ((const struct gl_list_impl_base *) list)->vtable
+         ->remove_last (list);
 }
 
 GL_LIST_INLINE bool

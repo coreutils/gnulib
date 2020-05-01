@@ -882,6 +882,68 @@ gl_linked_remove_at (gl_list_t list, size_t position)
 }
 
 static bool
+gl_linked_remove_first (gl_list_t list)
+{
+  size_t count = list->count;
+  gl_list_node_t removed_node;
+
+  if (count == 0)
+    return false;
+  /* Here we know count > 0.  */
+  /* Like gl_linked_remove_at (list, 0).  */
+  {
+    gl_list_node_t node;
+    gl_list_node_t after_removed;
+
+    node = &list->root;
+    removed_node = node->next;
+    after_removed = node->next->next;
+    ASYNCSAFE(gl_list_node_t) node->next = after_removed;
+    after_removed->prev = node;
+  }
+#if WITH_HASHTABLE
+  remove_from_bucket (list, removed_node);
+#endif
+  list->count--;
+
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (removed_node->value);
+  free (removed_node);
+  return true;
+}
+
+static bool
+gl_linked_remove_last (gl_list_t list)
+{
+  size_t count = list->count;
+  gl_list_node_t removed_node;
+
+  if (count == 0)
+    return false;
+  /* Here we know count > 0.  */
+  /* Like gl_linked_remove_at (list, count - 1).  */
+  {
+    gl_list_node_t node;
+    gl_list_node_t before_removed;
+
+    node = &list->root;
+    removed_node = node->prev;
+    before_removed = node->prev->prev;
+    node->prev = before_removed;
+    ASYNCSAFE(gl_list_node_t) before_removed->next = node;
+  }
+#if WITH_HASHTABLE
+  remove_from_bucket (list, removed_node);
+#endif
+  list->count--;
+
+  if (list->base.dispose_fn != NULL)
+    list->base.dispose_fn (removed_node->value);
+  free (removed_node);
+  return true;
+}
+
+static bool
 gl_linked_remove (gl_list_t list, const void *elt)
 {
   gl_list_node_t node = gl_linked_search_from_to (list, 0, list->count, elt);
