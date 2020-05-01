@@ -44,9 +44,11 @@ Makefile.am:
 # Therefore we override this rule.
 parse-datetime.c: parse-datetime.y
 	$(AM_V_YACC)$(PARSE_DATETIME_BISON) -d $(YFLAGS) $(AM_YFLAGS) $(srcdir)/parse-datetime.y \
-	&& sed -e 's|".*/parse-datetime.y"|"parse-datetime.y"|' < parse-datetime.tab.c > parse-datetime.c-t \
-	&& rm -f parse-datetime.tab.c parse-datetime.tab.h \
-	&& mv parse-datetime.c-t $(srcdir)/parse-datetime.c
+	&& test ':' = '$(PARSE_DATETIME_BISON)' || { \
+	  sed -e 's|".*/parse-datetime.y"|"parse-datetime.y"|' < parse-datetime.tab.c > parse-datetime.c-t \
+	  && rm -f parse-datetime.tab.c parse-datetime.tab.h \
+	  && mv parse-datetime.c-t $(srcdir)/parse-datetime.c; \
+	}
 lib_SOURCES += parse-datetime.y
 BUILT_SOURCES += parse-datetime.c
 MOSTLYCLEANFILES += parse-datetime.tab.c parse-datetime.tab.h parse-datetime.c-t
