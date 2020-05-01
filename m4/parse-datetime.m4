@@ -1,4 +1,4 @@
-# parse-datetime.m4 serial 24
+# parse-datetime.m4 serial 25
 dnl Copyright (C) 2002-2006, 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,27 +35,7 @@ AC_DEFUN([gl_PARSE_DATETIME],
   dnl the files or have a broken "make" program, hence the parse-datetime.c
   dnl rule will sometimes fire. To avoid an error, defines PARSE_DATETIME_BISON
   dnl to ":" if it is not present or too old.
-  AC_CHECK_PROGS([PARSE_DATETIME_BISON], [bison])
-  if test -z "$PARSE_DATETIME_BISON"; then
-    ac_verc_fail=yes
-  else
-    dnl Found it, now check the version.
-    AC_MSG_CHECKING([version of bison])
-changequote(<<,>>)dnl
-    ac_prog_version=`$PARSE_DATETIME_BISON --version 2>&1 | sed -n 's/^.*GNU Bison.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
-    case $ac_prog_version in
-      '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
-      1.* | 2.[0-3] | 2.[0-3].*)
-changequote([,])dnl
-         ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
-      *) ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
-    esac
-    AC_MSG_RESULT([$ac_prog_version])
-  fi
-  if test $ac_verc_fail = yes; then
-    PARSE_DATETIME_BISON=:
-  fi
-  AC_SUBST([PARSE_DATETIME_BISON])
+  gl_PROG_BISON([PARSE_DATETIME_BISON], [2.4], [1.* | 2.[0-3] | 2.[0-3].*])
 
   dnl Prerequisites of lib/parse-datetime.h.
   AC_REQUIRE([AM_STDBOOL_H])
