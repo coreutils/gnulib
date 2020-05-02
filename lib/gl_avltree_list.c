@@ -89,8 +89,6 @@ const struct gl_list_implementation gl_avltree_list_implementation =
     gl_tree_nx_add_at,
     gl_tree_remove_node,
     gl_tree_remove_at,
-    gl_tree_remove_first,
-    gl_tree_remove_last,
     gl_tree_remove,
     gl_tree_list_free,
     gl_tree_iterator,

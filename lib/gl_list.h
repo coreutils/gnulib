@@ -518,8 +518,6 @@ struct gl_list_implementation
                                const void *elt);
   bool (*remove_node) (gl_list_t list, gl_list_node_t node);
   bool (*remove_at) (gl_list_t list, size_t position);
-  bool (*remove_first) (gl_list_t list);
-  bool (*remove_last) (gl_list_t list);
   bool (*remove_elt) (gl_list_t list, const void *elt);
   void (*list_free) (gl_list_t list);
   /* gl_list_iterator_t functions.  */
@@ -762,15 +760,21 @@ gl_list_remove_at (gl_list_t list, size_t position)
 GL_LIST_INLINE bool
 gl_list_remove_first (gl_list_t list)
 {
-  return ((const struct gl_list_impl_base *) list)->vtable
-         ->remove_first (list);
+  size_t size = gl_list_size (list);
+  if (size > 0)
+    return gl_list_remove_at (list, 0);
+  else
+    return false;
 }
 
 GL_LIST_INLINE bool
 gl_list_remove_last (gl_list_t list)
 {
-  return ((const struct gl_list_impl_base *) list)->vtable
-         ->remove_last (list);
+  size_t size = gl_list_size (list);
+  if (size > 0)
+    return gl_list_remove_at (list, size - 1);
+  else
+    return false;
 }
 
 GL_LIST_INLINE bool

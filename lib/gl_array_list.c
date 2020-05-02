@@ -406,41 +406,6 @@ gl_array_remove_at (gl_list_t list, size_t position)
 }
 
 static bool
-gl_array_remove_first (gl_list_t list)
-{
-  size_t count = list->count;
-  const void **elements;
-  size_t i;
-
-  if (count == 0)
-    return false;
-  /* Like gl_array_remove_at (list, 0).  */
-  elements = list->elements;
-  if (list->base.dispose_fn != NULL)
-    list->base.dispose_fn (elements[0]);
-  for (i = 1; i < count; i++)
-    elements[i - 1] = elements[i];
-  list->count = count - 1;
-  return true;
-}
-
-static bool
-gl_array_remove_last (gl_list_t list)
-{
-  size_t count = list->count;
-  const void **elements;
-
-  if (count == 0)
-    return false;
-  /* Like gl_array_remove_at (list, count - 1).  */
-  elements = list->elements;
-  if (list->base.dispose_fn != NULL)
-    list->base.dispose_fn (elements[count - 1]);
-  list->count = count - 1;
-  return true;
-}
-
-static bool
 gl_array_remove (gl_list_t list, const void *elt)
 {
   size_t position = gl_array_indexof_from_to (list, 0, list->count, elt);
@@ -697,8 +662,6 @@ const struct gl_list_implementation gl_array_list_implementation =
     gl_array_nx_add_at,
     gl_array_remove_node,
     gl_array_remove_at,
-    gl_array_remove_first,
-    gl_array_remove_last,
     gl_array_remove,
     gl_array_list_free,
     gl_array_iterator,

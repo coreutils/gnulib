@@ -259,22 +259,6 @@ gl_sublist_remove_at (gl_list_t list, size_t position)
 }
 
 static bool
-gl_sublist_remove_first (gl_list_t list)
-{
-  if (list->end == list->start)
-    return false;
-  return gl_list_remove_at (list->whole, list->start);
-}
-
-static bool
-gl_sublist_remove_last (gl_list_t list)
-{
-  if (list->end == list->start)
-    return false;
-  return gl_list_remove_at (list->whole, list->end - 1);
-}
-
-static bool
 gl_sublist_remove (gl_list_t list, const void *elt)
 {
   size_t position =
@@ -440,8 +424,6 @@ static const struct gl_list_implementation gl_sublist_list_implementation =
     gl_sublist_nx_add_at,
     gl_sublist_remove_node,
     gl_sublist_remove_at,
-    gl_sublist_remove_first,
-    gl_sublist_remove_last,
     gl_sublist_remove,
     gl_sublist_list_free,
     gl_sublist_iterator,

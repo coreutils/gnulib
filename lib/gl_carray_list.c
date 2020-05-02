@@ -545,44 +545,6 @@ gl_carray_remove_at (gl_list_t list, size_t position)
 }
 
 static bool
-gl_carray_remove_first (gl_list_t list)
-{
-  size_t count = list->count;
-  size_t i0;
-
-  if (count == 0)
-    return false;
-  /* Here we know count > 0.  */
-  /* Like gl_carray_remove_at (list, 0).  */
-  i0 = list->offset;
-  if (list->base.dispose_fn != NULL)
-    list->base.dispose_fn (list->elements[i0]);
-  i0++;
-  list->offset = (i0 == list->allocated ? 0 : i0);
-  list->count = count - 1;
-  return true;
-}
-
-static bool
-gl_carray_remove_last (gl_list_t list)
-{
-  size_t count = list->count;
-  size_t i1;
-
-  if (count == 0)
-    return false;
-  /* Here we know count > 0.  */
-  /* Like gl_carray_remove_at (list, count - 1).  */
-  i1 = list->offset + count - 1;
-  if (i1 >= list->allocated)
-    i1 -= list->allocated;
-  if (list->base.dispose_fn != NULL)
-    list->base.dispose_fn (list->elements[i1]);
-  list->count = count - 1;
-  return true;
-}
-
-static bool
 gl_carray_remove_node (gl_list_t list, gl_list_node_t node)
 {
   size_t count = list->count;
@@ -893,8 +855,6 @@ const struct gl_list_implementation gl_carray_list_implementation =
     gl_carray_nx_add_at,
     gl_carray_remove_node,
     gl_carray_remove_at,
-    gl_carray_remove_first,
-    gl_carray_remove_last,
     gl_carray_remove,
     gl_carray_list_free,
     gl_carray_iterator,

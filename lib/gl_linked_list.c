@@ -49,8 +49,6 @@ const struct gl_list_implementation gl_linked_list_implementation =
     gl_linked_nx_add_at,
     gl_linked_remove_node,
     gl_linked_remove_at,
-    gl_linked_remove_first,
-    gl_linked_remove_last,
     gl_linked_remove,
     gl_linked_list_free,
     gl_linked_iterator,
