@@ -74,7 +74,11 @@ extern "C" {
    gl_list_next_node           O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_previous_node       O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_get_at              O(1)     O(n)   O(log n)    O(n)       O(log n)
+   gl_list_get_first           O(1)     O(1)   O(log n)    O(1)       O(log n)
+   gl_list_get_last            O(1)     O(1)   O(log n)    O(1)       O(log n)
    gl_list_set_at              O(1)     O(n)   O(log n)    O(n)    O((log n)²)/O(log n)
+   gl_list_set_first           O(1)     O(1)   O(log n)  O(n)/O(1) O((log n)²)/O(log n)
+   gl_list_set_last            O(1)     O(1)   O(log n)  O(n)/O(1) O((log n)²)/O(log n)
    gl_list_search              O(n)     O(n)     O(n)    O(n)/O(1)    O(log n)/O(1)
    gl_list_search_from         O(n)     O(n)     O(n)    O(n)/O(1) O((log n)²)/O(log n)
    gl_list_search_from_to      O(n)     O(n)     O(n)    O(n)/O(1) O((log n)²)/O(log n)
@@ -210,6 +214,14 @@ extern gl_list_node_t gl_list_previous_node (gl_list_t list, gl_list_node_t node
    POSITION must be >= 0 and < gl_list_size (list).  */
 extern const void * gl_list_get_at (gl_list_t list, size_t position);
 
+/* Returns the element at the first position in the list.
+   LIST must be non-empty.  */
+extern const void * gl_list_get_first (gl_list_t list);
+
+/* Returns the element at the last position in the list.
+   LIST must be non-empty.  */
+extern const void * gl_list_get_last (gl_list_t list);
+
 /* Replaces the element at a given position in the list.
    POSITION must be >= 0 and < gl_list_size (list).
    Returns its node.  */
@@ -219,6 +231,30 @@ extern gl_list_node_t gl_list_set_at (gl_list_t list, size_t position,
 /* Likewise.  Returns NULL upon out-of-memory.  */
 extern gl_list_node_t gl_list_nx_set_at (gl_list_t list, size_t position,
                                          const void *elt)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
+  ;
+
+/* Replaces the element at the first position in the list.
+   LIST must be non-empty.
+   Returns its node.  */
+/* declared in gl_xlist.h */
+extern gl_list_node_t gl_list_set_first (gl_list_t list, const void *elt);
+/* Likewise.  Returns NULL upon out-of-memory.  */
+extern gl_list_node_t gl_list_nx_set_first (gl_list_t list, const void *elt)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
+  ;
+
+/* Replaces the element at the last position in the list.
+   LIST must be non-empty.
+   Returns its node.  */
+/* declared in gl_xlist.h */
+extern gl_list_node_t gl_list_set_last (gl_list_t list, const void *elt);
+/* Likewise.  Returns NULL upon out-of-memory.  */
+extern gl_list_node_t gl_list_nx_set_last (gl_list_t list, const void *elt)
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
 #endif
@@ -635,6 +671,18 @@ gl_list_get_at (gl_list_t list, size_t position)
          ->get_at (list, position);
 }
 
+GL_LIST_INLINE const void *
+gl_list_get_first (gl_list_t list)
+{
+  return gl_list_get_at (list, 0);
+}
+
+GL_LIST_INLINE const void *
+gl_list_get_last (gl_list_t list)
+{
+  return gl_list_get_at (list, gl_list_size (list) - 1);
+}
+
 GL_LIST_INLINE gl_list_node_t
 #if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
   __attribute__ ((__warn_unused_result__))
@@ -643,6 +691,24 @@ gl_list_nx_set_at (gl_list_t list, size_t position, const void *elt)
 {
   return ((const struct gl_list_impl_base *) list)->vtable
          ->nx_set_at (list, position, elt);
+}
+
+GL_LIST_INLINE gl_list_node_t
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
+gl_list_nx_set_first (gl_list_t list, const void *elt)
+{
+  return gl_list_nx_set_at (list, 0, elt);
+}
+
+GL_LIST_INLINE gl_list_node_t
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+  __attribute__ ((__warn_unused_result__))
+#endif
+gl_list_nx_set_last (gl_list_t list, const void *elt)
+{
+  return gl_list_nx_set_at (list, gl_list_size (list) - 1, elt);
 }
 
 GL_LIST_INLINE gl_list_node_t
