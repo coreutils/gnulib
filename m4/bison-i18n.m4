@@ -30,7 +30,7 @@ AC_DEFUN([BISON_I18N],
     dnl options --datarootdir and --localedir.
     BISON_LOCALEDIR="${localedir}"
     AC_ARG_WITH([bison-prefix],
-      [[  with-bison-prefix=DIR  search for bison's runtime data in DIR/share]],
+      [[  --with-bison-prefix=DIR  search for bison's runtime data in DIR/share]],
       [if test "X$withval" != "X" && test "X$withval" != "Xno"; then
          BISON_LOCALEDIR="$withval/share/locale"
        fi
