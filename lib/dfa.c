@@ -62,7 +62,9 @@ isasciidigit (char c)
 #include "localeinfo.h"
 
 #ifndef FALLTHROUGH
-# if __GNUC__ < 7
+# if 201710L < __STDC_VERSION__
+#  define FALLTHROUGH [[__fallthrough__]]
+# elif __GNUC__ < 7
 #  define FALLTHROUGH ((void) 0)
 # else
 #  define FALLTHROUGH __attribute__ ((__fallthrough__))

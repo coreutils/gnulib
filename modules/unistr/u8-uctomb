@@ -7,6 +7,7 @@ lib/unistr/u8-uctomb-aux.c
 
 Depends-on:
 unistr/base
+attribute
 
 configure.ac:
 gl_MODULE_INDICATOR([unistr/u8-uctomb])

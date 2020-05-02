@@ -10,6 +10,7 @@ m4/backupfile.m4
 
 Depends-on:
 argmatch
+attribute
 closedir
 d-ino
 dirent-safer

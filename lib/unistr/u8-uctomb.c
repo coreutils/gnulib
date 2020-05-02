@@ -25,13 +25,7 @@
 /* Specification.  */
 #include "unistr.h"
 
-#ifndef FALLTHROUGH
-# if __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# endif
-#endif
+#include "attribute.h"
 
 #if !HAVE_INLINE
 

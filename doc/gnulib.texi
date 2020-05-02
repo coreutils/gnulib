@@ -6654,6 +6654,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * alloca::
 * alloca-opt::
 * Safe Allocation Macros::
+* Attributes::
 * Compile-time Assertions::
 * Non-returning Functions::
 * Integer Properties::
@@ -6684,6 +6685,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include alloca-opt.texi
 
 @include safe-alloc.texi
+
+@include attribute.texi
 
 @include verify.texi
 

@@ -27,6 +27,7 @@ unistr/u16-strlen
 unistr/u16-strmblen
 unistr/u32-strlen
 unistr/u32-strmblen
+attribute
 mbsnlen
 isnand-nolibm
 isnanl-nolibm

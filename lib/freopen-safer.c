@@ -21,18 +21,12 @@
 
 #include "stdio-safer.h"
 
+#include "attribute.h"
+
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
 #include <unistd.h>
-
-#ifndef FALLTHROUGH
-# if __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# endif
-#endif
 
 /* Guarantee that FD is open; all smaller FDs must already be open.
    Return true if successful.  */

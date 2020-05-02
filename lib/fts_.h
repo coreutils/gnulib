@@ -249,30 +249,13 @@ typedef struct _ftsent {
         char fts_name[__FLEXIBLE_ARRAY_MEMBER]; /* file name */
 } FTSENT;
 
-#ifndef __GNUC_PREREQ
-# if defined __GNUC__ && defined __GNUC_MINOR__
-#  define __GNUC_PREREQ(maj, min) \
-         ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
-# else
-#  define __GNUC_PREREQ(maj, min) 0
-# endif
-#endif
-
-#if __GNUC_PREREQ (3,4)
-# undef __attribute_warn_unused_result__
-# define __attribute_warn_unused_result__ \
-   __attribute__ ((__warn_unused_result__))
-#else
-# define __attribute_warn_unused_result__ /* empty */
-#endif
-
 __BEGIN_DECLS
-FTSENT  *fts_children (FTS *, int) __THROW __attribute_warn_unused_result__;
-int      fts_close (FTS *) __THROW __attribute_warn_unused_result__;
+FTSENT  *fts_children (FTS *, int) __THROW _GL_ATTRIBUTE_NODISCARD;
+int      fts_close (FTS *) __THROW _GL_ATTRIBUTE_NODISCARD;
 FTS     *fts_open (char * const *, int,
                    int (*)(const FTSENT **, const FTSENT **))
-  __THROW __attribute_warn_unused_result__;
-FTSENT  *fts_read (FTS *) __THROW __attribute_warn_unused_result__;
+  __THROW _GL_ATTRIBUTE_NODISCARD;
+FTSENT  *fts_read (FTS *) __THROW _GL_ATTRIBUTE_NODISCARD;
 int      fts_set (FTS *, FTSENT *, int) __THROW;
 __END_DECLS
 

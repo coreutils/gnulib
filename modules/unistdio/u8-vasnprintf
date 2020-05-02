@@ -30,6 +30,7 @@ unistr/u16-strlen
 unistr/u16-strmblen
 unistr/u32-strlen
 unistr/u32-strmblen
+attribute
 isnand-nolibm
 isnanl-nolibm
 frexpl-nolibm

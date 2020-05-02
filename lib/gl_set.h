@@ -126,10 +126,7 @@ extern bool gl_set_search (gl_set_t set, const void *elt);
 extern bool gl_set_add (gl_set_t set, const void *elt);
 /* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_set_nx_add (gl_set_t set, const void *elt)
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-  __attribute__ ((__warn_unused_result__))
-#endif
-  ;
+  _GL_ATTRIBUTE_NODISCARD;
 
 /* Removes an element from a set.
    Returns true if it was found and removed.  */
@@ -233,10 +230,7 @@ gl_set_search (gl_set_t set, const void *elt)
   return ((const struct gl_set_impl_base *) set)->vtable->search (set, elt);
 }
 
-GL_SET_INLINE int
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-  __attribute__ ((__warn_unused_result__))
-#endif
+GL_SET_INLINE _GL_ATTRIBUTE_NODISCARD int
 gl_set_nx_add (gl_set_t set, const void *elt)
 {
   return ((const struct gl_set_impl_base *) set)->vtable->nx_add (set, elt);

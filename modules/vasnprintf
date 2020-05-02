@@ -22,6 +22,7 @@ m4/exponentd.m4
 
 Depends-on:
 alloca-opt
+attribute
 float
 stdint
 xsize

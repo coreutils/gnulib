@@ -22,6 +22,7 @@ m4/math_h.m4
 m4/exponentd.m4
 
 Depends-on:
+attribute
 isnand-nolibm
 isnanl-nolibm
 frexpl-nolibm

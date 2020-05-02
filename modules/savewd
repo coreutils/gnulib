@@ -8,6 +8,7 @@ m4/savewd.m4
 
 Depends-on:
 assure
+attribute
 chdir
 errno
 extern-inline

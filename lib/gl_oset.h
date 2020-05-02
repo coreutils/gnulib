@@ -134,10 +134,7 @@ extern bool gl_oset_search_atleast (gl_oset_t set,
 extern bool gl_oset_add (gl_oset_t set, const void *elt);
 /* Likewise.  Returns -1 upon out-of-memory.  */
 extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-  __attribute__ ((__warn_unused_result__))
-#endif
-  ;
+  _GL_ATTRIBUTE_NODISCARD;
 
 /* Removes an element from an ordered set.
    Returns true if it was found and removed.  */
@@ -248,10 +245,7 @@ gl_oset_search_atleast (gl_oset_t set,
          ->search_atleast (set, threshold_fn, threshold, eltp);
 }
 
-GL_OSET_INLINE int
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
-  __attribute__ ((__warn_unused_result__))
-#endif
+GL_OSET_INLINE _GL_ATTRIBUTE_NODISCARD int
 gl_oset_nx_add (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable->nx_add (set, elt);

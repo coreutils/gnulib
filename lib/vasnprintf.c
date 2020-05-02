@@ -94,6 +94,7 @@
 /* Checked size_t computations.  */
 #include "xsize.h"
 
+#include "attribute.h"
 #include "verify.h"
 
 #if (NEED_PRINTF_DOUBLE || NEED_PRINTF_LONG_DOUBLE) && !defined IN_LIBINTL
@@ -123,14 +124,6 @@
 # include "isnanl-nolibm.h"
 # include "printf-frexpl.h"
 # include "fpucw.h"
-#endif
-
-#ifndef FALLTHROUGH
-# if __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# endif
 #endif
 
 /* Default parameters.  */

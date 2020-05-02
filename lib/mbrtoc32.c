@@ -21,16 +21,10 @@
 /* Specification.  */
 #include <uchar.h>
 
+#include <attribute.h>
+
 #include <errno.h>
 #include <stdlib.h>
-
-#ifndef FALLTHROUGH
-# if __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# endif
-#endif
 
 #if GNULIB_defined_mbstate_t /* AIX, IRIX */
 /* Implement mbrtoc32() on top of mbtowc() for the non-UTF-8 locales

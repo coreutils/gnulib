@@ -2364,6 +2364,7 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module attribute
   func_module builtin-expect
   func_module ieee754-h
   func_module limits-h

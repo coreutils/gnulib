@@ -35,12 +35,6 @@
 
 #include <config.h>
 
-#ifndef __attribute__
-# if __GNUC__ < 3
-#  define __attribute__(x)
-# endif
-#endif
-
 #include "gettext.h"
 #define _(msgid) gettext (msgid)
 

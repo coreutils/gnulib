@@ -70,6 +70,7 @@ static char sccsid[] = "@(#)fts.c       8.6 (Berkeley) 8/14/94";
 #include <unistd.h>
 
 #if ! _LIBC
+# include "attribute.h"
 # include "fcntl--.h"
 # include "flexmember.h"
 # include "openat.h"

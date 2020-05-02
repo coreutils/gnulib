@@ -28,9 +28,5 @@
        _GL_UNUSED_PARAMETER int *(*param)(void)
  */
 #ifndef _GL_UNUSED_PARAMETER
-# if __GNUC__ >= 3 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
-#  define _GL_UNUSED_PARAMETER __attribute__ ((__unused__))
-# else
-#  define _GL_UNUSED_PARAMETER
-# endif
+# define _GL_UNUSED_PARAMETER _GL_ATTRIBUTE_MAYBE_UNUSED
 #endif

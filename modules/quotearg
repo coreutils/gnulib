@@ -10,6 +10,7 @@ m4/mbrtowc.m4
 m4/quotearg.m4
 
 Depends-on:
+attribute
 c-strcaseeq
 extensions
 gettext-h
