@@ -1,4 +1,4 @@
-# serial 8
+# serial 9
 
 # Copyright (C) 2002-2006, 2008-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -25,9 +25,9 @@
 #     - %define api.pure   requires bison 2.7 or newer,
 #     - %precedence        requires bison 3.0 or newer.
 #   For these, in the configure.ac you will need an invocation of
-#     gl_PROG_BISON([VARIABLE], [MIN_BISON_VERSION], [BISON_VERSIONS_TO_EXCLUDE])
+#     gl_PROG_BISON([VARIABLE], [MIN_BISON_VERSION])
 #   Example:
-#     gl_PROG_BISON([PARSE_DATETIME_BISON], [2.4], [1.* | 2.[0-3] | 2.[0-3].*])
+#     gl_PROG_BISON([PARSE_DATETIME_BISON], [2.4])
 #   With this preparation, in the Makefile.am there are two ways to formulate
 #   the invocation. Both are direct, without use of 'ylwrap'.
 #   (a) You can invoke
@@ -47,18 +47,23 @@ AC_DEFUN([gl_PROG_BISON],
   if test -z "$[$1]"; then
     ac_verc_fail=yes
   else
-    dnl Found it, now check the version.
-    AC_MSG_CHECKING([version of bison])
-changequote(<<,>>)dnl
-    ac_prog_version=`$<<$1>> --version 2>&1 | sed -n 's/^.*GNU Bison.* \([0-9]*\.[0-9.]*\).*$/\1/p'`
-    case $ac_prog_version in
-      '') ac_prog_version="v. ?.??, bad"; ac_verc_fail=yes;;
-      <<$3>>)
-         ac_prog_version="$ac_prog_version, bad"; ac_verc_fail=yes;;
-      *) ac_prog_version="$ac_prog_version, ok"; ac_verc_fail=no;;
-    esac
-changequote([,])dnl
+    cat >conftest.y <<_ACEOF
+%require "$2"
+%%
+exp:
+_ACEOF
+    AC_MSG_CHECKING([for bison $2 or newer])
+    ac_prog_version=`$$1 --version 2>&1 | sed -n 's/^.*GNU Bison.* \([[0-9]]*\.[[0-9.]]*\).*$/\1/p'`
+    : ${ac_prog_version:='v. ?.??'}
+    if $$1 conftest.y -o conftest.c 2>/dev/null; then
+      ac_prog_version="$ac_prog_version, ok"
+      ac_verc_fail=false
+    else
+      ac_prog_version="$ac_prog_version, bad"
+      ac_verc_fail=true
+    fi
     AC_MSG_RESULT([$ac_prog_version])
+    rm -f conftest.y conftest.c
   fi
   if test $ac_verc_fail = yes; then
     [$1]=:

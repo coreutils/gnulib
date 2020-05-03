@@ -35,7 +35,7 @@ AC_DEFUN([gl_PARSE_DATETIME],
   dnl the files or have a broken "make" program, hence the parse-datetime.c
   dnl rule will sometimes fire. To avoid an error, defines PARSE_DATETIME_BISON
   dnl to ":" if it is not present or too old.
-  gl_PROG_BISON([PARSE_DATETIME_BISON], [2.4], [1.* | 2.[0-3] | 2.[0-3].*])
+  gl_PROG_BISON([PARSE_DATETIME_BISON], [2.4])
 
   dnl Prerequisites of lib/parse-datetime.h.
   AC_REQUIRE([AM_STDBOOL_H])
