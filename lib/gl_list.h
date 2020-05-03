@@ -215,11 +215,11 @@ extern gl_list_node_t gl_list_previous_node (gl_list_t list, gl_list_node_t node
 extern const void * gl_list_get_at (gl_list_t list, size_t position);
 
 /* Returns the element at the first position in the list.
-   LIST must be non-empty.  */
+   The list must be non-empty.  */
 extern const void * gl_list_get_first (gl_list_t list);
 
 /* Returns the element at the last position in the list.
-   LIST must be non-empty.  */
+   The list must be non-empty.  */
 extern const void * gl_list_get_last (gl_list_t list);
 
 /* Replaces the element at a given position in the list.
@@ -237,8 +237,8 @@ extern gl_list_node_t gl_list_nx_set_at (gl_list_t list, size_t position,
   ;
 
 /* Replaces the element at the first position in the list.
-   LIST must be non-empty.
-   Returns its node.  */
+   Returns its node.
+   The list must be non-empty.  */
 /* declared in gl_xlist.h */
 extern gl_list_node_t gl_list_set_first (gl_list_t list, const void *elt);
 /* Likewise.  Returns NULL upon out-of-memory.  */
@@ -249,8 +249,8 @@ extern gl_list_node_t gl_list_nx_set_first (gl_list_t list, const void *elt)
   ;
 
 /* Replaces the element at the last position in the list.
-   LIST must be non-empty.
-   Returns its node.  */
+   Returns its node.
+   The list must be non-empty.  */
 /* declared in gl_xlist.h */
 extern gl_list_node_t gl_list_set_last (gl_list_t list, const void *elt);
 /* Likewise.  Returns NULL upon out-of-memory.  */

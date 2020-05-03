@@ -137,6 +137,16 @@ public:
   ELTYPE * get_at (size_t position) const
     { return static_cast<ELTYPE *>(gl_list_get_at (_ptr, position)); }
 
+  /* Returns the element at the first position in the list.
+     The list must be non-empty.  */
+  ELTYPE * get_first () const
+    { return static_cast<ELTYPE *>(gl_list_get_first (_ptr)); }
+
+  /* Returns the element at the last position in the list.
+     The list must be non-empty.  */
+  ELTYPE * get_last () const
+    { return static_cast<ELTYPE *>(gl_list_get_last (_ptr)); }
+
   /* Searches whether an element is already in the list.
      Returns its node if found, or NULL if not present in the list.  */
   gl_list_node_t search (ELTYPE * elt) const
@@ -182,6 +192,18 @@ public:
      Returns its node.  */
   gl_list_node_t set_at (size_t position, ELTYPE * elt)
     { return gl_list_set_at (_ptr, position, elt); }
+
+  /* Replaces the element at the first position in the list.
+     Returns its node.
+     The list must be non-empty.  */
+  gl_list_node_t set_first (ELTYPE * elt)
+    { return gl_list_set_first (_ptr, elt); }
+
+  /* Replaces the element at the last position in the list.
+     Returns its node.
+     The list must be non-empty.  */
+  gl_list_node_t set_last (ELTYPE * elt)
+    { return gl_list_set_last (_ptr, elt); }
 
   /* Adds an element as the first element of the list.
      Returns its node.  */
