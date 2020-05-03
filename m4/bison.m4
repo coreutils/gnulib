@@ -1,4 +1,4 @@
-# serial 9
+# serial 10
 
 # Copyright (C) 2002-2006, 2008-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -57,13 +57,13 @@ _ACEOF
     : ${ac_prog_version:='v. ?.??'}
     if $$1 conftest.y -o conftest.c 2>/dev/null; then
       ac_prog_version="$ac_prog_version, ok"
-      ac_verc_fail=false
+      ac_verc_fail=no
     else
       ac_prog_version="$ac_prog_version, bad"
-      ac_verc_fail=true
+      ac_verc_fail=yes
     fi
-    AC_MSG_RESULT([$ac_prog_version])
     rm -f conftest.y conftest.c
+    AC_MSG_RESULT([$ac_prog_version])
   fi
   if test $ac_verc_fail = yes; then
     [$1]=:
