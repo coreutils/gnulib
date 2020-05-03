@@ -245,6 +245,12 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_PURE
 #endif
 
+#if _GL_HAS_ATTRIBUTE (returns_nonnull)
+# define _GL_ATTRIBUTE_RETURNS_NONNULL __attribute__ ((__returns_nonnull__))
+#else
+# define _GL_ATTRIBUTE_RETURNS_NONNULL
+#endif
+
 #if _GL_HAS_ATTRIBUTE (sentinel)
 # define _GL_ATTRIBUTE_SENTINEL(pos) __attribute__ ((__sentinel__ pos))
 #else
