@@ -21,7 +21,7 @@
 /* Specification.  */
 #include <uchar.h>
 
-#include <attribute.h>
+#include "attribute.h"
 
 #include <errno.h>
 #include <stdlib.h>

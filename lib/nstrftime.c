@@ -68,7 +68,7 @@ extern char *tzname[];
 #include <string.h>
 #include <stdbool.h>
 
-#include <attribute.h>
+#include "attribute.h"
 #include <intprops.h>
 
 #ifdef COMPILE_WIDE

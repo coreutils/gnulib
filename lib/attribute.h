@@ -30,8 +30,9 @@
 #define MAYBE_UNUSED _GL_ATTRIBUTE_MAYBE_UNUSED
 #define NODISCARD _GL_ATTRIBUTE_NODISCARD
 
-/* Attributes from GCC have macro names beginning with 'ATTRIBUTE_' to
-   avoid name clashes.  */
+/* Selected GCC attributes; see:
+   https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html
+   These names begin with 'ATTRIBUTE_' to avoid name clashes.  */
 #define ATTRIBUTE_ALLOC_SIZE(args) _GL_ATTRIBUTE_ALLOC_SIZE(args)
 #define ATTRIBUTE_ALWAYS_INLINE _GL_ATTRIBUTE_ALWAYS_INLINE
 #define ATTRIBUTE_ARTIFICIAL _GL_ATTRIBUTE_ARTIFICIAL
