@@ -122,7 +122,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 /* Avoid __attribute__ ((cold)) on MinGW; see thread starting at
    <https://lists.gnu.org/r/emacs-devel/2019-04/msg01152.html>. */
 #if _GL_HAS_ATTRIBUTE (cold) && !defined __MINGW32__
-# define _GL_ATTRIBUTE_COLD __attribute__ ((cold))
+# define _GL_ATTRIBUTE_COLD __attribute__ ((__cold__))
 #else
 # define _GL_ATTRIBUTE_COLD
 #endif
@@ -142,8 +142,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 #endif
 
 #if _GL_HAS_ATTRIBUTE (error)
-# define _GL_ATTRIBUTE_ERROR(msg) __attribute__((__error__ (msg)))
-# define _GL_ATTRIBUTE_WARNING(msg) __attribute__((__warning__ (msg)))
+# define _GL_ATTRIBUTE_ERROR(msg) __attribute__ ((__error__ (msg)))
+# define _GL_ATTRIBUTE_WARNING(msg) __attribute__ ((__warning__ (msg)))
 #else
 # define _GL_ATTRIBUTE_ERROR(msg)
 # define _GL_ATTRIBUTE_WARNING(msg)
