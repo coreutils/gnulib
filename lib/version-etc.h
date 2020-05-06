@@ -22,15 +22,6 @@
 # include <stdarg.h>
 # include <stdio.h>
 
-/* The 'sentinel' attribute was added in gcc 4.0.  */
-#ifndef _GL_ATTRIBUTE_SENTINEL
-# if 4 <= __GNUC__
-#  define _GL_ATTRIBUTE_SENTINEL __attribute__ ((__sentinel__))
-# else
-#  define _GL_ATTRIBUTE_SENTINEL /* empty */
-# endif
-#endif
-
 extern const char version_etc_copyright[];
 
 /* The three functions below display the --version information in the
@@ -70,7 +61,7 @@ extern void version_etc (FILE *stream,
                          const char *command_name, const char *package,
                          const char *version,
                          /* const char *author1, ..., NULL */ ...)
-  _GL_ATTRIBUTE_SENTINEL;
+  _GL_ATTRIBUTE_SENTINEL ();
 
 /* Display the usual "Report bugs to" stanza.  */
 extern void emit_bug_reporting_address (void);
