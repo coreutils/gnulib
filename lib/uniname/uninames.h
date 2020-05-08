@@ -41108,11 +41108,7 @@ static const uint16_t unicode_names[115981] = {
   23557, 15672,
   23563, 15672,
 };
-static const struct { uint16_t index; uint32_t name:24; }
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
-__attribute__((__packed__))
-#endif
-unicode_name_to_index[29282] = {
+static const struct { uint16_t index; uint32_t name:24; } ATTRIBUTE_PACKED unicode_name_to_index[29282] = {
   { 0x1CA1, 0 },
   { 0x2526, 4 },
   { 0x1EB0, 7 },
@@ -70396,11 +70392,7 @@ unicode_name_to_index[29282] = {
   { 0x1F1B, 115977 },
   { 0x1F1A, 115979 },
 };
-static const struct { uint16_t index; uint32_t name:24; }
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)
-__attribute__((__packed__))
-#endif
-unicode_index_to_name[29234] = {
+static const struct { uint16_t index; uint32_t name:24; } ATTRIBUTE_PACKED unicode_index_to_name[29234] = {
   { 0x0000, 34710 },
   { 0x0001, 105577 },
   { 0x0002, 101766 },

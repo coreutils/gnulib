@@ -25,6 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "attribute.h"
+
 #define SIZEOF(a) (sizeof(a) / sizeof(a[0]))
 
 

@@ -294,9 +294,7 @@
             (incf i (length (unicode-char-word-indices uc)))
         ) )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t index; uint32_t name:24; }~%")
-        (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
-        (format ostream "unicode_name_to_index[~D] = {~%"
+        (format ostream "static const struct { uint16_t index; uint32_t name:24; } ATTRIBUTE_PACKED unicode_name_to_index[~D] = {~%"
                         (length all-chars-and-aliases)
         )
         (dolist (uc all-chars-and-aliases)
@@ -310,9 +308,7 @@
           (format ostream "~%")
         )
         (format ostream "};~%")
-        (format ostream "static const struct { uint16_t index; uint32_t name:24; }~%")
-        (format ostream "#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)~%__attribute__((__packed__))~%#endif~%")
-        (format ostream "unicode_index_to_name[~D] = {~%"
+        (format ostream "static const struct { uint16_t index; uint32_t name:24; } ATTRIBUTE_PACKED unicode_index_to_name[~D] = {~%"
                         (length all-chars)
         )
         (dolist (uc (sort (copy-list all-chars) #'< :key #'unicode-char-index))
