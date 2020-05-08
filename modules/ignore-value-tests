@@ -2,6 +2,7 @@ Files:
 tests/test-ignore-value.c
 
 Depends-on:
+attribute
 stdio
 
 configure.ac:

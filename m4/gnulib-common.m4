@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 49
+# gnulib-common.m4 serial 50
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -96,7 +96,7 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTR_returns_nonnull _GL_GNUC_PREREQ (4, 9)
 # define _GL_ATTR_sentinel _GL_GNUC_PREREQ (4, 0)
 # define _GL_ATTR_unused _GL_GNUC_PREREQ (2, 7)
-# define _GL_ATTR_warn_unused_result_GL_GNUC_PREREQ (3, 4)
+# define _GL_ATTR_warn_unused_result _GL_GNUC_PREREQ (3, 4)
 #endif
 
 ]dnl There is no _GL_ATTRIBUTE_ALIGNED; use stdalign's _Alignas instead.
