@@ -24,16 +24,9 @@
 #include <errno.h>
 #include <wchar.h>
 
+#include "attribute.h" /* FALLTHROUGH */
 #include "localcharset.h"
 #include "streq.h"
-
-#ifndef FALLTHROUGH
-# if __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
-#  define FALLTHROUGH __attribute__ ((__fallthrough__))
-# endif
-#endif
 
 size_t
 c32rtomb (char *s, char32_t wc, mbstate_t *ps)

@@ -8,6 +8,7 @@ m4/mbrtoc32.m4
 
 Depends-on:
 uchar
+attribute       [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 wchar           [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 wcrtomb         [test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1]
 localcharset    [{ test $HAVE_C32RTOMB = 0 || test $REPLACE_C32RTOMB = 1; } && test $SMALL_WCHAR_T = 1]
