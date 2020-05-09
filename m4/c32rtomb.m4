@@ -1,4 +1,4 @@
-# c32rtomb.m4 serial 2
+# c32rtomb.m4 serial 3
 dnl Copyright (C) 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -62,7 +62,7 @@ int main ()
     case "$gl_cv_func_c32rtomb_retval" in
       *yes) ;;
       *) AC_DEFINE([C32RTOMB_RETVAL_BUG], [1],
-           [Define if the wcrtomb function has an incorrect return value.])
+           [Define if the c32rtomb function has an incorrect return value.])
          REPLACE_C32RTOMB=1 ;;
     esac
   fi
