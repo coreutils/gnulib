@@ -20,13 +20,6 @@
 
 # include <stddef.h>
 
-#if ! defined __clang__ && \
-    (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
-# define _GL_ATTRIBUTE_ALLOC_SIZE(args) __attribute__ ((__alloc_size__ args))
-#else
-# define _GL_ATTRIBUTE_ALLOC_SIZE(args)
-#endif
-
 /* Allocate a block of memory of SIZE bytes, aligned on a system page
    boundary.
    If SIZE is not a multiple of the system page size, it will be rounded up
