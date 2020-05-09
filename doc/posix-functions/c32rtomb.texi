@@ -16,4 +16,7 @@ AIX 7.2.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is only defined as an inline function on some platforms:
+Haiku 2020.
 @end itemize

@@ -1,4 +1,4 @@
-# c32rtomb.m4 serial 1
+# c32rtomb.m4 serial 2
 dnl Copyright (C) 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -10,8 +10,22 @@ AC_DEFUN([gl_FUNC_C32RTOMB],
 
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
 
-  AC_CHECK_FUNCS_ONCE([c32rtomb])
-  if test $ac_cv_func_c32rtomb = no; then
+  dnl We can't use AC_CHECK_FUNC here, because c32rtomb() is defined as a
+  dnl static inline function on Haiku 2020.
+  AC_CACHE_CHECK([for c32rtomb], [gl_cv_func_c32rtomb],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <stdlib.h>
+            #include <uchar.h>
+          ]],
+          [[char buf[8];
+            return c32rtomb (buf, 0, NULL) == 0;
+          ]])
+       ],
+       [gl_cv_func_c32rtomb=yes],
+       [gl_cv_func_c32rtomb=no])
+    ])
+  if test $gl_cv_func_c32rtomb = no; then
     HAVE_C32RTOMB=0
   else
     dnl When we override mbrtoc32, redefining the meaning of the char32_t
