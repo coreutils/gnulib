@@ -65,6 +65,10 @@ typedef struct sigaltstack stack_t;
 
 #include <unistd.h>
 
+#if DEBUG
+# include <stdio.h>
+#endif
+
 #if HAVE_LIBSIGSEGV
 # include <sigsegv.h>
 #endif
