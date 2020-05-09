@@ -47,10 +47,24 @@
    on which __STDC_UTF_16__ is defined.)  */
 typedef uint_least16_t char16_t;
 
+#elif @GNULIB_OVERRIDES_CHAR16_T@
+
+typedef uint_least16_t gl_char16_t;
+# define char16_t gl_char16_t
+
+#endif
+
+#if !@HAVE_UCHAR_H@
+
 /* A 32-bit variant of wchar_t.
    Note: This type does *NOT* denote UTF-32 code points.  (Only on platforms
    on which __STDC_UTF_32__ is defined.)  */
 typedef uint_least32_t char32_t;
+
+#elif @GNULIB_OVERRIDES_CHAR32_T@
+
+typedef uint_least32_t gl_char32_t;
+# define char32_t gl_char32_t
 
 #endif
 

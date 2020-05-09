@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 4
+# mbrtoc32.m4 serial 5
 dnl Copyright (C) 2014-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -11,13 +11,14 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
   AC_REQUIRE([AC_TYPE_MBSTATE_T])
   gl_MBSTATE_T_BROKEN
 
+  AC_REQUIRE([gl_TYPE_CHAR32_T])
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
 
   AC_REQUIRE([gl_CHECK_FUNC_MBRTOC32])
   if test $gl_cv_func_mbrtoc32 = no; then
     HAVE_MBRTOC32=0
   else
-    if test $REPLACE_MBSTATE_T = 1; then
+    if test $GNULIB_OVERRIDES_CHAR32_T = 1 || test $REPLACE_MBSTATE_T = 1; then
       REPLACE_MBRTOC32=1
     else
       gl_MBRTOC32_EMPTY_INPUT
@@ -141,11 +142,12 @@ dnl Result is HAVE_WORKING_MBRTOC32.
 AC_DEFUN([gl_MBRTOC32_SANITYCHECK],
 [
   AC_REQUIRE([AC_PROG_CC])
+  AC_REQUIRE([gl_TYPE_CHAR32_T])
   AC_REQUIRE([gl_CHECK_FUNC_MBRTOC32])
   AC_REQUIRE([gt_LOCALE_FR])
   AC_REQUIRE([gt_LOCALE_ZH_CN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  if test $gl_cv_func_mbrtoc32 = no; then
+  if test $GNULIB_OVERRIDES_CHAR32_T = 1 || test $gl_cv_func_mbrtoc32 = no; then
     HAVE_WORKING_MBRTOC32=0
   else
     AC_CACHE_CHECK([whether mbrtoc32 works as well as mbrtowc],
