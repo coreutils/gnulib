@@ -25,4 +25,7 @@ FreeBSD 12, Solaris 11.4, mingw, MSVC 14.
 
 Portability problems not fixed by Gnulib:
 @itemize
+@item
+This function is only defined as an inline function on some platforms:
+Haiku 2020.
 @end itemize

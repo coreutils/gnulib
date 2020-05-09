@@ -1,4 +1,4 @@
-# mbrtoc32.m4 serial 3
+# mbrtoc32.m4 serial 4
 dnl Copyright (C) 2014-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,8 +13,8 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
 
   AC_REQUIRE([gl_MBRTOC32_SANITYCHECK])
 
-  AC_CHECK_FUNCS_ONCE([mbrtoc32])
-  if test $ac_cv_func_mbrtoc32 = no; then
+  AC_REQUIRE([gl_CHECK_FUNC_MBRTOC32])
+  if test $gl_cv_func_mbrtoc32 = no; then
     HAVE_MBRTOC32=0
   else
     if test $REPLACE_MBSTATE_T = 1; then
@@ -41,6 +41,25 @@ AC_DEFUN([gl_FUNC_MBRTOC32],
       REPLACE_MBRTOC32=1
     fi
   fi
+])
+
+dnl We can't use AC_CHECK_FUNC here, because mbrtoc32() is defined as a
+dnl static inline function on Haiku 2020.
+AC_DEFUN([gl_CHECK_FUNC_MBRTOC32],
+[
+  AC_CACHE_CHECK([for mbrtoc32], [gl_cv_func_mbrtoc32],
+    [AC_LINK_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[#include <stdlib.h>
+            #include <uchar.h>
+          ]],
+          [[char32_t c;
+            return mbrtoc32 (&c, "", 1, NULL) == 0;
+          ]])
+       ],
+       [gl_cv_func_mbrtoc32=yes],
+       [gl_cv_func_mbrtoc32=no])
+    ])
 ])
 
 AC_DEFUN([gl_MBRTOC32_EMPTY_INPUT],
@@ -122,11 +141,11 @@ dnl Result is HAVE_WORKING_MBRTOC32.
 AC_DEFUN([gl_MBRTOC32_SANITYCHECK],
 [
   AC_REQUIRE([AC_PROG_CC])
-  AC_CHECK_FUNCS_ONCE([mbrtoc32])
+  AC_REQUIRE([gl_CHECK_FUNC_MBRTOC32])
   AC_REQUIRE([gt_LOCALE_FR])
   AC_REQUIRE([gt_LOCALE_ZH_CN])
   AC_REQUIRE([AC_CANONICAL_HOST]) dnl for cross-compiles
-  if test $ac_cv_func_mbrtoc32 = no; then
+  if test $gl_cv_func_mbrtoc32 = no; then
     HAVE_WORKING_MBRTOC32=0
   else
     AC_CACHE_CHECK([whether mbrtoc32 works as well as mbrtowc],
