@@ -25,9 +25,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "attribute.h"
 #include "xalloc.h"
-
-#define ATTRIBUTE_UNUSED _GL_ATTRIBUTE_MAYBE_UNUSED
 
 /* Currently we support five flavours of bitsets:
    BITSET_ARRAY:  Array of bits (fixed size, fast for dense bitsets).
