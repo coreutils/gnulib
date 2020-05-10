@@ -70,19 +70,28 @@ careadlinkat (int fd, char const *filename,
   size_t buf_size;
   size_t buf_size_max =
     SSIZE_MAX < SIZE_MAX ? (size_t) SSIZE_MAX + 1 : SIZE_MAX;
-  char stack_buf[1024];
+
+#if defined GCC_LINT || defined lint
+  /* Pacify preadlinkat without creating a pointer to the stack
+     that gcc -Wreturn-local-addr would cry wolf about.  */
+  static char initial_buf[1];
+  enum { initial_buf_size = 0 }; /* 0 so that initial_buf never changes.  */
+#else
+  char initial_buf[1024];
+  enum { initial_buf_size = sizeof initial_buf };
+#endif
 
   if (! alloc)
     alloc = &stdlib_allocator;
 
   if (! buffer_size)
     {
-      /* Allocate the initial buffer on the stack.  This way, in the
-         common case of a symlink of small size, we get away with a
+      /* Allocate the initial buffer.  This way, in the common case of
+         a symlink of small size without GCC_LINT, we get away with a
          single small malloc() instead of a big malloc() followed by a
          shrinking realloc().  */
-      buffer = stack_buf;
-      buffer_size = sizeof stack_buf;
+      buffer = initial_buf;
+      buffer_size = initial_buf_size;
     }
 
   buf = buffer;
@@ -115,21 +124,21 @@ careadlinkat (int fd, char const *filename,
         {
           buf[link_size++] = '\0';
 
-          if (buf == stack_buf)
+          if (buf == initial_buf)
             {
               char *b = (char *) alloc->allocate (link_size);
               buf_size = link_size;
               if (! b)
                 break;
-              memcpy (b, buf, link_size);
-              buf = b;
+              return memcpy (b, buf, link_size);
             }
-          else if (link_size < buf_size && buf != buffer && alloc->reallocate)
+
+          if (link_size < buf_size && buf != buffer && alloc->reallocate)
             {
               /* Shrink BUF before returning it.  */
               char *b = (char *) alloc->reallocate (buf, link_size);
               if (b)
-                buf = b;
+                return b;
             }
 
           return buf;
