@@ -79,6 +79,17 @@ when linking with libtool.  Both @code{LTLIB<@var{NAME}>} and
 @samp{-Wl,-rpath}, @code{LTLIB<@var{NAME}>} contains platform independent
 flags like @samp{-R}.
 
+If you, by mistake, use @code{LIB<@var{NAME}>} instead of
+@code{LTLIB<@var{NAME}>} when linking with libtool, you will observe that the
+binaries created in the build dir will prefer the shared libraries in the
+installation directories over the shared libraries in the build dir; this can
+lead to all sorts of build failures, test failures, or crashes!
+
+If you, on the other hand, by mistake, use @code{LTLIB<@var{NAME}>} instead of
+@code{LIB<@var{NAME}>} when linking @emph{without} libtool, you will observe
+build failures, because the @samp{-R} options contained @code{LTLIB<@var{NAME}>}
+are not valid options to compilers such as GCC.
+
 @unnumberedsubsubsec Example of using @code{AC_LIB_LINKFLAGS}
 
 Suppose you want to use @code{libz}, the compression library.
