@@ -88,7 +88,8 @@
 
 /* ================== Attributes for compiler diagnostics ================== */
 
-/* Attributes that help the compiler diagnose programmer mistakes.  */
+/* Attributes that help the compiler diagnose programmer mistakes.
+   Some of them may also help for some compiler optimizations.  */
 
 /* ATTRIBUTE_FORMAT ((ARCHETYPE, STRING-INDEX, FIRST-TO-CHECK)) -
    The STRING-INDEXth function argument is a format string of style
