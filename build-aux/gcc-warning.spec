@@ -8,12 +8,11 @@
 -Waliasing				fortran
 -Walign-commons				fortran
 -Waligned-new=[none|global|all]		c++
--Walloc-size-larger-than=		handled specially by gl_MANYWARN_ALL_GCC
+-Walloc-size-larger-than=<bytes>	handled specially by gl_MANYWARN_ALL_GCC
 -Walloc-zero				Gnulib fixes this problem
 -Walloca				we like alloca in small doses
 -Walloca-larger-than=<number>		FIXME: choose something sane?
 -Wampersand				fortran
--Wargument-mismatch			fortran
 -Warray-bounds				covered by -Warray-bounds=
 -Warray-bounds=<0,2>			handled specially by gl_MANYWARN_ALL_GCC
 -Warray-temporaries			fortran
@@ -26,6 +25,8 @@
 -Wc++14-compat				c++
 -Wc++17-compat				c++
 -Wc++1z-compat				c++
+-Wc++20-compat				c++
+-Wc++2a-compat				c++
 -Wc-binding-type			fortran
 -Wc11-c2x-compat			c compatibility
 -Wc90-c99-compat			c compatibility
@@ -38,6 +39,7 @@
 -Wchkp					deprecated
 -Wclass-conversion			c++ and objc++
 -Wclass-memaccess			c++
+-Wcomma-subscript			c++ and objc++
 -Wcompare-reals				fortran
 -Wconditionally-supported		c++ and objc++
 -Wconversion				FIXME maybe? too much noise; encourages bad changes
@@ -67,6 +69,7 @@
 -Wimplicit-fallthrough=<0,5>		handled specially by gl_MANYWARN_ALL_GCC
 -Wimplicit-interface			fortran
 -Wimplicit-procedure			fortran
+-Winaccessible-base			c++ and objc++
 -Winherited-variadic-ctor		c++
 -Winit-list-lifetime			c++ and objc++
 -Winteger-division			fortran
@@ -80,12 +83,16 @@
 -Wliteral-suffix			c++ and objc++
 -Wlong-long				obsolescent
 -Wlto-type-mismatch			c++ and objc++
+-Wmismatched-tags			c++ and objc++
 -Wmissing-format-attribute		obsolescent
 -Wmissing-noreturn			obsolescent
 -Wmultiple-inheritance			c++ and objc++
 -Wnamespaces				c++
 -Wno-alloc-size-larger-than		see -Walloc-size-larger-than
 -Wno-alloca-larger-than			see -Walloca-larger-than
+-Wno-frame-larger-than			see -Wframe-larger-than
+-Wno-larger-than			see -Wlarger-than
+-Wno-stack-usage			see -Wstack-usage
 -Wno-vla-larger-than			see -Wvla-larger-than
 -Wnoexcept				c++
 -Wnoexcept-type				c++
@@ -96,6 +103,7 @@
 -Wold-style-cast			c++ and objc++
 -Woverloaded-virtual			c++
 -Woverride-init-side-effects		c++ and objc++
+-Woverwrite-recursive			fortran
 -Wpadded				FIXME maybe?  warns about "stabil" member in /usr/include/bits/timex.h
 -Wpedantic				FIXME: too strict?
 -Wpessimizing-move			c++ and objc++
@@ -110,6 +118,7 @@
 -Wrealloc-lhs-all			fortran
 -Wredundant-decls			FIXME maybe? many _gl_cxxalias_dummy FPs
 -Wredundant-move			c++ and objc++
+-Wredundant-tags			c++ and objc++
 -Wregister				c++ and objc++
 -Wreorder				c++ and objc++
 -Wselector				objc and objc++
@@ -158,6 +167,7 @@
 -Wvirtual-inheritance			c++
 -Wvirtual-move-assign			c++
 -Wvla-larger-than=<number>		handled specially by gl_MANYWARN_ALL_GCC
+-Wvolatile				c++ and objc++
 -Wzero-as-null-pointer-constant		c++ and objc++
 -Wzerotrip				fortran
 -frequire-return-statement		go
