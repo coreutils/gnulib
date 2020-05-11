@@ -70,39 +70,40 @@ careadlinkat (int fd, char const *filename,
   size_t buf_size;
   size_t buf_size_max =
     SSIZE_MAX < SIZE_MAX ? (size_t) SSIZE_MAX + 1 : SIZE_MAX;
+  char stack_buf[1024];
 
 #if (defined GCC_LINT || defined lint) && _GL_GNUC_PREREQ (10, 1)
   /* Pacify preadlinkat without creating a pointer to the stack
      that a broken gcc -Wreturn-local-addr would cry wolf about.  See:
      https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95044
-     This workaround differs substantially from the mainline code, but
+     This workaround differs from the mainline code, but
      no other way to pacify GCC 10.1.0 is known; even an explicit
      #pragma does not pacify GCC.  When the GCC bug is fixed this
      workaround should be limited to the broken GCC versions.  */
-  static char initial_buf[1];
-  enum { initial_buf_size = 0 }; /* 0 so that initial_buf never changes.  */
-#else
-  char initial_buf[1024];
-  enum { initial_buf_size = sizeof initial_buf };
+# define WORK_AROUND_GCC_BUG_95044
 #endif
 
   if (! alloc)
     alloc = &stdlib_allocator;
 
-  if (! buffer_size)
+  if (!buffer)
     {
-      /* Allocate the initial buffer.  This way, in the common case of
-         a symlink of small size without GCC_LINT, we get away with a
+#ifdef WORK_AROUND_GCC_BUG_95044
+      buffer = alloc->allocate (sizeof stack_buf);
+#else
+      /* Allocate the initial buffer on the stack.  This way, in the
+         common case of a symlink of small size, we get away with a
          single small malloc() instead of a big malloc() followed by a
          shrinking realloc().  */
-      buffer = initial_buf;
-      buffer_size = initial_buf_size;
+      buffer = stack_buf;
+#endif
+      buffer_size = sizeof stack_buf;
     }
 
   buf = buffer;
   buf_size = buffer_size;
 
-  do
+  while (buf)
     {
       /* Attempt to read the link into the current buffer.  */
       ssize_t link_length = preadlinkat (fd, filename, buf, buf_size);
@@ -129,9 +130,9 @@ careadlinkat (int fd, char const *filename,
         {
           buf[link_size++] = '\0';
 
-          if (buf == initial_buf)
+          if (buf == stack_buf)
             {
-              char *b = (char *) alloc->allocate (link_size);
+              char *b = alloc->allocate (link_size);
               buf_size = link_size;
               if (! b)
                 break;
@@ -141,7 +142,7 @@ careadlinkat (int fd, char const *filename,
           if (link_size < buf_size && buf != buffer && alloc->reallocate)
             {
               /* Shrink BUF before returning it.  */
-              char *b = (char *) alloc->reallocate (buf, link_size);
+              char *b = alloc->reallocate (buf, link_size);
               if (b)
                 return b;
             }
@@ -152,8 +153,8 @@ careadlinkat (int fd, char const *filename,
       if (buf != buffer)
         alloc->free (buf);
 
-      if (buf_size <= buf_size_max / 2)
-        buf_size *= 2;
+      if (buf_size < buf_size_max / 2)
+        buf_size = 2 * buf_size + 1;
       else if (buf_size < buf_size_max)
         buf_size = buf_size_max;
       else if (buf_size_max < SIZE_MAX)
@@ -163,9 +164,8 @@ careadlinkat (int fd, char const *filename,
         }
       else
         break;
-      buf = (char *) alloc->allocate (buf_size);
+      buf = alloc->allocate (buf_size);
     }
-  while (buf);
 
   if (alloc->die)
     alloc->die (buf_size);
