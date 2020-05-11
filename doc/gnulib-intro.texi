@@ -156,8 +156,6 @@ musl libc is rarely tested.
 @item
 Minix 3.3.0 is rarely tested.
 @item
-HP-UX 11.31 is very rarely tested.
-@item
 @c IRIX 6.5 cc has no option for C99 support. You would need to use gcc instead.
 IRIX 6.5 is very rarely tested.
 @item
@@ -178,7 +176,7 @@ Mac OS X 10.4 and older.
 @item
 AIX 4 and older.
 @item
-HP-UX 10.
+HP-UX 11.31.
 @item
 IRIX 6.4 and older.
 @item
