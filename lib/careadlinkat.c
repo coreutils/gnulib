@@ -71,9 +71,14 @@ careadlinkat (int fd, char const *filename,
   size_t buf_size_max =
     SSIZE_MAX < SIZE_MAX ? (size_t) SSIZE_MAX + 1 : SIZE_MAX;
 
-#if defined GCC_LINT || defined lint
+#if (defined GCC_LINT || defined lint) && _GL_GNUC_PREREQ (10, 1)
   /* Pacify preadlinkat without creating a pointer to the stack
-     that gcc -Wreturn-local-addr would cry wolf about.  */
+     that a broken gcc -Wreturn-local-addr would cry wolf about.  See:
+     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95044
+     This workaround differs substantially from the mainline code, but
+     no other way to pacify GCC 10.1.0 is known; even an explicit
+     #pragma does not pacify GCC.  When the GCC bug is fixed this
+     workaround should be limited to the broken GCC versions.  */
   static char initial_buf[1];
   enum { initial_buf_size = 0 }; /* 0 so that initial_buf never changes.  */
 #else
