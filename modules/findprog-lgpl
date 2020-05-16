@@ -22,7 +22,7 @@ gl_FINDPROG
 gl_MODULE_INDICATOR([findprog-lgpl])
 
 Makefile.am:
-lib_SOURCES += findprog.h findprog.c
+lib_SOURCES += findprog.h findprog-lgpl.c
 
 Include:
 "findprog.h"
