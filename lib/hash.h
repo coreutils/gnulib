@@ -80,6 +80,7 @@ void hash_free (Hash_table *);
 /* Insertion and deletion.  */
 bool hash_rehash (Hash_table *, size_t) _GL_ATTRIBUTE_NODISCARD;
 void *hash_insert (Hash_table *, const void *) _GL_ATTRIBUTE_NODISCARD;
+void *hash_xinsert (Hash_table *, const void *);
 
 int hash_insert_if_absent (Hash_table *table, const void *entry,
                            const void **matched_ent);
