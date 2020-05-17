@@ -23,5 +23,5 @@ On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefo
 accommodate all Unicode characters.
 @item
 Native Windows platforms (mingw, MSVC) support only a subset of time
-zones specified by POSIX.  @xref{tzset}.
+zones specified by POSIX@.  @xref{tzset}.
 @end itemize

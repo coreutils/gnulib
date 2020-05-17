@@ -916,7 +916,7 @@ into the VCS, but instead added to @file{.gitignore} or equivalent.
 @item
 In projects which customarily omit from their VCS all files that are
 generated from other source files, none of these files and directories
-are added into the VCS.  As described in @ref{Modified imports}, there
+are added into the VCS@.  As described in @ref{Modified imports}, there
 are two ways to keep track of options and module names that are passed
 to @code{gnulib-tool}.  The command for restoring the omitted files
 depends on it:

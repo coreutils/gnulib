@@ -16,6 +16,6 @@ mingw, MSVC 14, Android 9.0.
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is marked as ``legacy'' in POSIX.  Better use @code{memcpy}
+This function is marked as ``legacy'' in POSIX@.  Better use @code{memcpy}
 or @code{memmove} instead.
 @end itemize

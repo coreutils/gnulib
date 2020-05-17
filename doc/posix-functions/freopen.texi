@@ -14,7 +14,7 @@ file descriptor, @code{freopen} returns the stream without opening
 the file: glibc 2.24.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{freopen} may not work
-correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly with files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.

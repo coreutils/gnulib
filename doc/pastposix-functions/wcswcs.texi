@@ -19,6 +19,6 @@ Mac OS X 10.5, FreeBSD 6.0, Cygwin, mingw, MSVC 14, Android 9.0.
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.
 @item
-This function is marked as ``legacy'' in POSIX.  Better use @code{wcsstr}
+This function is marked as ``legacy'' in POSIX@.  Better use @code{wcsstr}
 instead.
 @end itemize

@@ -18,6 +18,6 @@ on input streams that are opened in @code{O_TEXT} mode and whose contents
 contains Unix line terminators (LF), on some platforms: mingw, MSVC 14.
 @item
 On platforms where @code{off_t} is a 32-bit type, this function may not
-work correctly on files larger than 2 GB.  The fix is to use the
+work correctly on files larger than 2 GB@.  The fix is to use the
 @code{AC_SYS_LARGEFILE} macro.
 @end itemize

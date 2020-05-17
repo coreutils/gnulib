@@ -15,7 +15,7 @@ directory, on some platforms:
 HP-UX 11.00, AIX 7.1, Solaris 9.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{fopen} may not work
-correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly with files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
 On Windows platforms (excluding Cygwin), this function does usually not
 recognize the @file{/dev/null} filename.

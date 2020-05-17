@@ -17,7 +17,7 @@ on some platforms:
 Mac OS X 10.13.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{mkostemps} may not work
-correctly to create files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly to create files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @end itemize
 
 Portability problems not fixed by Gnulib:

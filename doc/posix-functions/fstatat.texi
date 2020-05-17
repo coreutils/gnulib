@@ -16,7 +16,7 @@ But the replacement function is not safe to be used in libraries and is not mult
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{fstatat} may
 not correctly report the size of files or block devices larger than 2
-GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
 On some platforms, @code{fstatat(fd,"file/",buf,flag)} succeeds instead of
 failing with @code{ENOTDIR}.

@@ -26,5 +26,5 @@ unsupported arguments (like @math{2^56}), rather than failing:
 FreeBSD 10.
 @item
 Native Windows platforms (mingw, MSVC) support only a subset of time
-zones supported by GNU or specified by POSIX.  @xref{tzset}.
+zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize

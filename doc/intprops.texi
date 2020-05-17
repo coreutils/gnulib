@@ -368,9 +368,9 @@ Although the implementation of these macros is similar to that
 suggested in Seacord R, The CERT C Secure Coding Standard (2009,
 revised 2011), in its two sections
 ``@url{https://www.securecoding.cert.org/confluence/display/c/INT30-C.+Ensure+that+unsigned+integer+operations+do+not+wrap,
-INT30-C. Ensure that unsigned integer operations do not wrap}'' and
+INT30-C@. Ensure that unsigned integer operations do not wrap}'' and
 ``@url{https://www.securecoding.cert.org/confluence/display/c/INT32-C.+Ensure+that+operations+on+signed+integers+do+not+result+in+overflow,
-INT32-C. Ensure that operations on signed integers do not result in
+INT32-C@. Ensure that operations on signed integers do not result in
 overflow}'', Gnulib's implementation was derived independently of
 CERT's suggestions.
 

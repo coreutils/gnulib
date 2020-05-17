@@ -80,7 +80,7 @@ the shared library, and an ``exported'' attribute for those symbols in these
 files that shall be exported.
 
 This is perfect: It burdens the maintainer only for exported API, not
-for library-internal API.  And it keeps the annotations in the source code.
+for library-internal API@.  And it keeps the annotations in the source code.
 @end itemize
 
 GNU libtool's @option{-export-symbols} option implements the first approach.

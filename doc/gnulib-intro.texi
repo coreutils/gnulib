@@ -121,7 +121,7 @@ glibc on Linux is frequently tested.
 glibc on kFreeBSD is rarely tested.
 @end itemize
 @item
-Mac OS X.  In versions 10.13, it's occasionally tested.  In version
+Mac OS X@.  In versions 10.13, it's occasionally tested.  In version
 10.5, it's rarely tested.
 @item
 FreeBSD 11.0 or newer is occasionally tested.
@@ -392,8 +392,8 @@ proofreading the patch.
 @node Copyright
 @section Copyright
 
-Most modules are under the GPL.  Some, mostly modules which can
-reasonably be used in libraries, are under LGPL.  The source files
+Most modules are under the GPL@.  Some, mostly modules which can
+reasonably be used in libraries, are under LGPL@.  The source files
 always say "GPL", but the real license specification is in the module
 description file.  If the module description file says "GPL", it means
 "GPLv3+" (GPLv3 or newer, at the licensee's choice); if it says "LGPL",
@@ -426,7 +426,7 @@ with or without modifications, as long as this notice is preserved.
 
 @item tests/
 If a license statement is not present in a test module, the test files are
-under GPL.  Even if the corresponding source module is under LGPL, this is
+under GPL@.  Even if the corresponding source module is under LGPL, this is
 not a problem, since compiled tests are not installed by ``make install''.
 
 @item doc/
@@ -452,7 +452,7 @@ passing the option @samp{--lgpl=2} to @code{gnulib-tool}.
 Keep in mind that when you submit patches to files in Gnulib, you should
 license them under a compatible license.  This means that sometimes the
 contribution will have to be LGPL, if the original file is available
-under LGPL.  You can find out about it by looking for a "License: LGPL"
+under LGPL@.  You can find out about it by looking for a "License: LGPL"
 information in the corresponding module description.
 
 @node Steady Development

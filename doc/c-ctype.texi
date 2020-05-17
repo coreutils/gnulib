@@ -10,7 +10,7 @@
 
 The @code{c-ctype} module contains functions operating on single-byte
 characters, like the functions in @code{<ctype.h>}, that operate as if the
-locale encoding was ASCII.  (The "C" locale on many systems has the locale
+locale encoding was ASCII@.  (The "C" locale on many systems has the locale
 encoding "ASCII".)
 
 The functions are:

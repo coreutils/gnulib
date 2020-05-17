@@ -16,6 +16,6 @@ Portability problems not fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14, Android 9.0.
 @item
-This function is marked as ``legacy'' in POSIX.  Better use @code{strrchr}
+This function is marked as ``legacy'' in POSIX@.  Better use @code{strrchr}
 instead.
 @end itemize

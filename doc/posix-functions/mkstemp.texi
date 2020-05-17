@@ -13,7 +13,7 @@ This function is missing on some platforms:
 mingw, MSVC 14.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{mkstemp} may not work
-correctly to create files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly to create files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
 On some older platforms, @code{mkstemp} can create a world or group
 writable or readable file, if you haven't set the process umask to

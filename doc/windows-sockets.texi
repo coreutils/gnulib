@@ -10,7 +10,7 @@ This was written for the @code{getaddrinfo} module, but may be applicable to
 other functions too.
 
 The @code{getaddrinfo} function exists in @code{ws2tcpip.h} and @code{-lws2_32}
-on Windows XP.  The function declaration is present if @code{WINVER >= 0x0501}.
+on Windows XP@.  The function declaration is present if @code{WINVER >= 0x0501}.
 Windows 2000 does not have @code{getaddrinfo} in its @file{WS2_32.DLL}.
 
 Thus, if you want to assume Windows XP or later, you can add

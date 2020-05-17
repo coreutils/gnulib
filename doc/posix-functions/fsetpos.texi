@@ -14,6 +14,6 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 On platforms where @code{off_t} is a 32-bit type, this function may not
-work correctly on files larger than 2 GB.  The fix is to use the
+work correctly on files larger than 2 GB@.  The fix is to use the
 @code{AC_SYS_LARGEFILE} macro.
 @end itemize

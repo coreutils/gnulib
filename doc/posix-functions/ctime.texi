@@ -26,7 +26,7 @@ wrong date in one of the threads, or some undefined string.  There is
 a re-entrant interface @code{ctime_r}.
 @item
 Native Windows platforms (mingw, MSVC) support only a subset of time
-zones supported by GNU or specified by POSIX.  @xref{tzset}.
+zones supported by GNU or specified by POSIX@.  @xref{tzset}.
 @end itemize
 
 A more flexible function is @code{strftime}.  However, note that it is

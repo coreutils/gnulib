@@ -13,7 +13,7 @@ Some platforms do not support @code{O_CLOEXEC}:
 Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 10, Cygwin, mingw, MSVC 14.
 @item
 On platforms where @code{off_t} is a 32-bit type, @code{open} may not work
-correctly with files larger than 2 GB.  (Cf. @code{AC_SYS_LARGEFILE}.)
+correctly with files larger than 2 GB@.  (Cf. @code{AC_SYS_LARGEFILE}.)
 @item
 This function does not fail when the file name argument ends in a slash
 and (without the slash) names a nonexistent file or a file that is not a

@@ -21,7 +21,7 @@ The code license (GNU GPL, GNU LGPL, or GNU Affero GPL) is usually
 present as a file in the top-level directory.  This is true not only for
 the release tarballs, but also in the VCS repository.  The file is
 typically named @samp{COPYING} for the GNU GPL, or @samp{COPYING.LIB} or
-@samp{COPYING.LESSER} for the GNU LGPL.  The presence of this file
+@samp{COPYING.LESSER} for the GNU LGPL@.  The presence of this file
 fulfills a legal obligation; see
 @url{https://www.gnu.org/licenses/gpl-faq.html#WhyMustIInclude}.
 
