@@ -2,7 +2,7 @@ Description:
 Convert git log to ChangeLog
 
 Files:
-build-aux/vcs_to_changelog.py
+build-aux/vcs-to-changelog.py
 build-aux/vcstocl/frontend_c.py
 build-aux/vcstocl/misc_util.py
 build-aux/vcstocl/vcs_git.py

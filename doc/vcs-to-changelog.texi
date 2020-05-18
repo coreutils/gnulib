@@ -17,7 +17,7 @@ similar to the GNU ChangeLog format from metadata of source control software
 such as git.  Here's an example of using @samp{vcs-to-changelog}:
 
 @example
-build-aux/vcs_to_changelog.py <from_ref> <to_ref>
+build-aux/vcs-to-changelog.py <from_ref> <to_ref>
 @end example
 
 where @code{<from_ref>} and @code{<to_ref>} refer to the range of commits to
