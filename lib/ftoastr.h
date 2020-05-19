@@ -18,6 +18,7 @@
 /* Written by Paul Eggert.  */
 
 #ifndef _GL_FTOASTR_H
+#define _GL_FTOASTR_H
 
 #include "intprops.h"
 #include <float.h>
