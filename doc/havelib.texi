@@ -87,8 +87,8 @@ lead to all sorts of build failures, test failures, or crashes!
 
 If you, on the other hand, by mistake, use @code{LTLIB<@var{NAME}>} instead of
 @code{LIB<@var{NAME}>} when linking @emph{without} libtool, you will observe
-build failures, because the @samp{-R} options contained @code{LTLIB<@var{NAME}>}
-are not valid options to compilers such as GCC.
+build failures, because the @samp{-R} options contained in
+@code{LTLIB<@var{NAME}>} are not valid options to compilers such as GCC.
 
 @unnumberedsubsubsec Example of using @code{AC_LIB_LINKFLAGS}
 
