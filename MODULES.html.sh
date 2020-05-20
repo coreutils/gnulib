@@ -2319,6 +2319,8 @@ func_all_modules ()
   func_echo "$element"
 
   func_begin_table
+  func_module c-dtoastr
+  func_module c-ldtoast
   func_module dtoastr
   func_module ftoastr
   func_module intprops

@@ -49,6 +49,12 @@ int  ftoastr (char *buf, size_t bufsize, int flags, int width,       float x);
 int  dtoastr (char *buf, size_t bufsize, int flags, int width,      double x);
 int ldtoastr (char *buf, size_t bufsize, int flags, int width, long double x);
 
+/* The last two functions except that the formatting takes place in
+   the C locale.  */
+int  c_dtoastr (char *buf, size_t bufsize, int flags, int width,      double x);
+int c_ldtoastr (char *buf, size_t bufsize, int flags, int width, long double x);
+
+
 /* Flag values for ftoastr etc.  These can be ORed together.  */
 enum
   {
