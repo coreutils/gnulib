@@ -1,4 +1,4 @@
-# fchownat.m4 serial 5
+# fchownat.m4 serial 6
 dnl Copyright (C) 2004-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -64,7 +64,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_DEREF_BUG],
 int
 main ()
 {
-  return (fchownat (AT_FDCWD, "$gl_dangle", -1, getgid (),
+  return (fchownat (AT_FDCWD, "$gl_dangle", (uid_t)(-1), getgid (),
                     AT_SYMLINK_NOFOLLOW) != 0
           && errno == ENOENT);
 }
@@ -98,7 +98,7 @@ AC_DEFUN([gl_FUNC_FCHOWNAT_EMPTY_FILENAME_BUG],
             fd = open ("conftestdir", O_RDONLY);
             if (fd < 0)
               return 3;
-            ret = fchownat (fd, "", -1, -1, 0);
+            ret = fchownat (fd, "", (uid_t)(-1), (gid_t)(-1), 0);
             close (fd);
             rmdir ("conftestdir");
             return ret == 0;
