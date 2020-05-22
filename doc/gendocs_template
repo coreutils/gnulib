@@ -1,5 +1,15 @@
 <!--#include virtual="/server/header.html" -->
-<!-- Parent-Version: 1.77 -->
+<!-- Parent-Version: 1.78 -->
+
+<!--
+Copyright (C) 2006-2020 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.  This file is offered as-is,
+without any warranty.
+-->
+
 <title>%%TITLE%% - GNU Project - Free Software Foundation</title>
 <!--#include virtual="/server/banner.html" -->
 <h2>%%TITLE%%</h2>
