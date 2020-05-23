@@ -1,4 +1,4 @@
-# calloc.m4 serial 22
+# calloc.m4 serial 23
 
 # Copyright (C) 2004-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -38,16 +38,27 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
        AC_RUN_IFELSE(
          [AC_LANG_PROGRAM(
             [AC_INCLUDES_DEFAULT],
-            [[int result = 0;
-              char * volatile p = calloc ((size_t) -1 / 8 + 1, 8);
-              if (!p)
-                result |= 2;
-              free (p);
+            [[int result;
+              typedef struct { char c[8]; } S8;
+              size_t n = (size_t) -1 / sizeof (S8) + 2;
+              S8 * volatile s = calloc (n, sizeof (S8));
+              if (s)
+                {
+                  s[0].c[0] = 1;
+                  if (s[n - 1].c[0])
+                    result = 0;
+                  else
+                    result = 2;
+                }
+              else
+                result = 3;
+              free (s);
               return result;
             ]])],
-         dnl The exit code of this program is 0 if calloc() succeeded (which
-         dnl it shouldn't), 2 if calloc() failed, or 1 if some leak sanitizer
-         dnl terminated the program as a result of the calloc() call.
+         dnl The exit code of this program is 0 if calloc() succeeded with a
+         dnl wrap-around bug (which it shouldn't), 2 if calloc() succeeded in
+         dnl a non-flat address space, 3 if calloc() failed, or 1 if some leak
+         dnl sanitizer terminated the program as a result of the calloc() call.
          [ac_cv_func_calloc_0_nonnull=no],
          [])
      else
