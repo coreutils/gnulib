@@ -1,4 +1,4 @@
-# calloc.m4 serial 20
+# calloc.m4 serial 21
 
 # Copyright (C) 2004-2020 Free Software Foundation, Inc.
 # This file is free software; the Free Software Foundation
@@ -25,7 +25,7 @@ AC_DEFUN([_AC_FUNC_CALLOC_IF],
        [AC_LANG_PROGRAM(
           [AC_INCLUDES_DEFAULT],
           [[int result = 0;
-            char *p = calloc (0, 0);
+            char * volatile p = calloc (0, 0);
             if (!p)
               result |= 1;
             free (p);
