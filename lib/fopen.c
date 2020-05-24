@@ -47,10 +47,46 @@ orig_fopen (const char *filename, const char *mode)
 FILE *
 rpl_fopen (const char *filename, const char *mode)
 {
+  int open_direction;
+  int open_flags_standard;
+
 #if defined _WIN32 && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
     filename = "NUL";
 #endif
+
+  /* Parse the mode.  */
+  open_direction = 0;
+  open_flags_standard = 0;
+  {
+    const char *m;
+
+    for (m = mode; *m != '\0'; m++)
+      {
+        switch (*m)
+          {
+          case 'r':
+            open_direction = O_RDONLY;
+            continue;
+          case 'w':
+            open_direction = O_WRONLY;
+            open_flags_standard |= O_CREAT | O_TRUNC;
+            continue;
+          case 'a':
+            open_direction = O_WRONLY;
+            open_flags_standard |= O_CREAT | O_APPEND;
+            continue;
+          case 'b':
+            continue;
+          case '+':
+            open_direction = O_RDWR;
+            continue;
+          default:
+            break;
+          }
+        break;
+      }
+  }
 
 #if FOPEN_TRAILING_SLASH_BUG
   /* Fail if the mode requires write access and the filename ends in a slash,
@@ -74,13 +110,13 @@ rpl_fopen (const char *filename, const char *mode)
         struct stat statbuf;
         FILE *fp;
 
-        if (mode[0] == 'w' || mode[0] == 'a')
+        if (open_direction != O_RDONLY)
           {
             errno = EISDIR;
             return NULL;
           }
 
-        fd = open (filename, O_RDONLY);
+        fd = open (filename, open_direction | open_flags_standard);
         if (fd < 0)
           return NULL;
 
@@ -101,7 +137,7 @@ rpl_fopen (const char *filename, const char *mode)
         return fp;
       }
   }
-# endif
+#endif
 
   return orig_fopen (filename, mode);
 }

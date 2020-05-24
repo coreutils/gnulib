@@ -47,6 +47,10 @@ test_fopen (void)
   ASSERT (fopen (BASE "file/", "r") == NULL);
   ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
 
+  errno = 0;
+  ASSERT (fopen (BASE "file/", "r+") == NULL);
+  ASSERT (errno == ENOTDIR || errno == EISDIR || errno == EINVAL);
+
   /* Cannot create a directory.  */
   errno = 0;
   ASSERT (fopen ("nonexist.ent/", "w") == NULL);
@@ -56,6 +60,18 @@ test_fopen (void)
   /* Directories cannot be opened for writing.  */
   errno = 0;
   ASSERT (fopen (".", "w") == NULL);
+  ASSERT (errno == EISDIR || errno == EINVAL || errno == EACCES);
+
+  errno = 0;
+  ASSERT (fopen ("./", "w") == NULL);
+  ASSERT (errno == EISDIR || errno == EINVAL || errno == EACCES);
+
+  errno = 0;
+  ASSERT (fopen (".", "r+") == NULL);
+  ASSERT (errno == EISDIR || errno == EINVAL || errno == EACCES);
+
+  errno = 0;
+  ASSERT (fopen ("./", "r+") == NULL);
   ASSERT (errno == EISDIR || errno == EINVAL || errno == EACCES);
 
   /* /dev/null must exist, and be writable.  */
