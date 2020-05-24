@@ -128,7 +128,7 @@ test_heap (void)
      2. Verify that the memory has been erased.
    Implement them in the same function, so that they access the same memory
    range on the stack.  */
-int
+static int
 do_secret_stuff (volatile int pass)
 {
   char stackbuf[SECRET_SIZE];
@@ -144,7 +144,7 @@ do_secret_stuff (volatile int pass)
     }
 }
 
-void
+static void
 test_stack (void)
 {
   int count = 0;
