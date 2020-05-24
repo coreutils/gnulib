@@ -5,6 +5,7 @@ Files:
 lib/assure.h
 
 Depends-on:
+verify
 
 configure.ac:
 
