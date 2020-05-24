@@ -88,6 +88,26 @@ test_open (int (*func) (char const *, int, ...), bool print)
   ASSERT (0 <= fd);
   ASSERT (close (fd) == 0);
 
+  /* O_CLOEXEC must be honoured.  */
+  if (O_CLOEXEC)
+    {
+      /* Since the O_CLOEXEC handling goes through a special code path at its
+         first invocation, test it twice.  */
+      int i;
+
+      for (i = 0; i < 2; i++)
+        {
+          int flags;
+
+          fd = func (BASE "file", O_CLOEXEC | O_RDONLY);
+          ASSERT (0 <= fd);
+          flags = fcntl (fd, F_GETFD);
+          ASSERT (flags >= 0);
+          ASSERT ((flags & FD_CLOEXEC) != 0);
+          ASSERT (close (fd) == 0);
+        }
+    }
+
   /* Symlink handling, where supported.  */
   if (symlink (BASE "file", BASE "link") != 0)
     {

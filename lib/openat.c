@@ -114,7 +114,7 @@ rpl_openat (int dfd, char const *filename, int flags, ...)
 # endif
 
   fd = orig_openat (dfd, filename,
-                    flags & ~(have_cloexec <= 0 ? O_CLOEXEC : 0), mode);
+                    flags & ~(have_cloexec < 0 ? O_CLOEXEC : 0), mode);
 
   if (flags & O_CLOEXEC)
     {
