@@ -5,6 +5,7 @@ Files:
 lib/verify.h
 
 Depends-on:
+c99
 
 configure.ac:
 

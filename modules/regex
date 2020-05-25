@@ -14,6 +14,7 @@ m4/regex.m4
 m4/mbstate_t.m4
 
 Depends-on:
+c99
 extensions
 ssize_t
 alloca-opt      [test $ac_use_included_regex = yes]

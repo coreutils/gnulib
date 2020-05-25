@@ -5,6 +5,7 @@ Files:
 lib/timespec-add.c
 
 Depends-on:
+c99
 intprops
 timespec
 

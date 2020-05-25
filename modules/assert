@@ -5,6 +5,7 @@ Files:
 m4/assert.m4
 
 Depends-on:
+c99
 
 configure.ac:
 gl_ASSERT

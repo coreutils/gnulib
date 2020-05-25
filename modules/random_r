@@ -6,6 +6,7 @@ lib/random_r.c
 m4/random_r.m4
 
 Depends-on:
+c99
 libc-config     [test $HAVE_RANDOM_R = 0 || test $REPLACE_RANDOM_R = 1]
 stdlib
 stdint          [test $HAVE_RANDOM_R = 0 || test $REPLACE_RANDOM_R = 1]

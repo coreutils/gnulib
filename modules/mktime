@@ -8,6 +8,7 @@ m4/mktime.m4
 
 Depends-on:
 time
+c99
 multiarch
 intprops        [test $REPLACE_MKTIME = 1]
 libc-config     [test $REPLACE_MKTIME = 1]

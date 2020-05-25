@@ -9,6 +9,7 @@ lib/malloc/scratch_buffer_grow_preserve.c
 lib/malloc/scratch_buffer_set_array_size.c
 
 Depends-on:
+c99
 libc-config
 stdbool
 stddef
