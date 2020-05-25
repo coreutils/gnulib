@@ -1,0 +1,44 @@
+Description:
+Fill buffer with random bytes.
+
+Files:
+lib/getrandom.c
+lib/sys_random.in.h
+m4/getrandom.m4
+
+Depends-on:
+crypto/gc-random    [test $HAVE_GETRANDOM = 0]
+fcntl-h             [test $HAVE_GETRANDOM = 0]
+minmax              [test $HAVE_GETRANDOM = 0]
+open                [test $HAVE_GETRANDOM = 0]
+
+configure.ac:
+gl_FUNC_GETRANDOM
+if test $HAVE_GETRANDOM = 0; then
+  AC_LIBOBJ([getrandom])
+fi
+gl_UNISTD_MODULE_INDICATOR([getrandom])
+
+Makefile.am:
+BUILT_SOURCES += sys/random.h
+
+# We need the following in order to create <sys/random.h> when the system
+# doesn't have one that works with the given compiler.
+sys/random.h: sys_random.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(WARN_ON_USE_H) $(ARG_NONNULL_H)
+	$(AM_V_at)$(MKDIR_P) sys
+	$(AM_V_GEN)rm -f $@-t $@ && \
+	{ echo '/* DO NOT EDIT! GENERATED AUTOMATICALLY! */'; \
+	  cat $(srcdir)/sys_random.in.h; \
+	} > $@-t && \
+	mv -f $@-t $@
+MOSTLYCLEANFILES += sys/random.h sys/random.h-t
+MOSTLYCLEANDIRS += sys
+
+Include:
+<sys/random.h>
+
+License:
+LGPL
+
+Maintainer:
+all

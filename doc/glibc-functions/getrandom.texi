@@ -19,11 +19,15 @@ Gnulib module: ---
 
 Portability problems fixed by Gnulib:
 @itemize
+@item
+This function is missing on some platforms:
+glibc 2.24, Mac OS X 10.5, FreeBSD 11.0, NetBSD 5.0, OpenBSD 3.8,
+Solaris 11.0, Android 9.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
 @itemize
 @item
-This function is missing on many non-glibc platforms:
-glibc 2.24, Mac OS X 10.5, FreeBSD 11.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 11.0, Cygwin, mingw, MSVC 14, Android 9.0.
+This function is missing on some platforms:
+Minix 3.1.8, IRIX 6.5, mingw, MSVC 14.
 @end itemize

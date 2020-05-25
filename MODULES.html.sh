@@ -3484,9 +3484,11 @@ func_all_modules ()
   func_module forkpty
   func_module getdomainname
   func_module xgetdomainname
+  func_module getentropy
   func_module getloadavg
   func_module getpagesize
   func_module getprogname
+  func_module getrandom
   func_module getusershell
   func_module lib-symbol-visibility
   func_module login_tty

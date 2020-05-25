@@ -1,0 +1,12 @@
+Files:
+tests/test-getentropy.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getentropy
+check_PROGRAMS += test-getentropy
