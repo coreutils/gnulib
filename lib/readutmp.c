@@ -132,7 +132,7 @@ read_utmp (char const *file, size_t *n_entries, STRUCT_UTMP **utmp_buf,
   size_t n_alloc = 0;
   STRUCT_UTMP *utmp = NULL;
   int saved_errno;
-  FILE *f = fopen (file, "r");
+  FILE *f = fopen (file, "re");
 
   if (! f)
     return -1;

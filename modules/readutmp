@@ -11,6 +11,7 @@ extensions
 xalloc
 stdbool
 stdint
+fopen-gnu
 
 configure.ac:
 gl_READUTMP
