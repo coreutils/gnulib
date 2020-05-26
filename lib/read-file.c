@@ -171,7 +171,7 @@ internal_read_file (const char *filename, size_t *length, const char *mode)
 char *
 read_file (const char *filename, size_t *length)
 {
-  return internal_read_file (filename, length, "r");
+  return internal_read_file (filename, length, "re");
 }
 
 /* Open (on non-POSIX systems, in binary mode) and read the contents
@@ -184,5 +184,5 @@ read_file (const char *filename, size_t *length)
 char *
 read_binary_file (const char *filename, size_t *length)
 {
-  return internal_read_file (filename, length, "rb");
+  return internal_read_file (filename, length, "rbe");
 }

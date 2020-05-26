@@ -7,6 +7,7 @@ lib/read-file.c
 m4/read-file.m4
 
 Depends-on:
+fopen-gnu
 fstat
 ftello
 malloc-posix
