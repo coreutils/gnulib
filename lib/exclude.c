@@ -683,7 +683,7 @@ add_exclude_file (void (*add_func) (struct exclude *, char const *, int),
 
   if (use_stdin)
     in = stdin;
-  else if (! (in = fopen (file_name, "r")))
+  else if (! (in = fopen (file_name, "re")))
     return -1;
 
   rc = add_exclude_fp (call_addfn, ex, in, options, line_end, &add_func);

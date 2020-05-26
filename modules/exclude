@@ -8,6 +8,7 @@ lib/exclude.c
 Depends-on:
 filename
 fnmatch
+fopen-gnu
 hash
 mbscasecmp
 mbuiter
