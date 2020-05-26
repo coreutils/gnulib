@@ -378,7 +378,7 @@ Every module has one or more maintainers.  While issues are discussed
 collaboratively on the list, the maintainer of a module nevertheless has
 a veto right regarding changes in his module.
 
-All patches should be posted the list, regardless whether they are
+All patches should be posted to the list, regardless whether they are
 proposed patches or whether they are committed immediately by the
 maintainer of the particular module.  The purpose is not only to inform
 the other users of the module, but mainly to allow peer review.  It is not
