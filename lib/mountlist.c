@@ -125,7 +125,7 @@
 
 #ifdef MOUNTED_GETMNTENT1
 # if !HAVE_SETMNTENT            /* Android <= 4.4 */
-#  define setmntent(fp,mode) fopen (fp, mode)
+#  define setmntent(fp,mode) fopen (fp, mode "e")
 # endif
 # if !HAVE_ENDMNTENT            /* Android <= 4.4 */
 #  define endmntent(fp) fclose (fp)
@@ -460,7 +460,7 @@ read_file_system_list (bool need_fs_type)
        (and that code is in previous versions of this function), however
        libmount depends on libselinux which pulls in many dependencies.  */
     char const *mountinfo = "/proc/self/mountinfo";
-    fp = fopen (mountinfo, "r");
+    fp = fopen (mountinfo, "re");
     if (fp != NULL)
       {
         char *line = NULL;
@@ -794,7 +794,7 @@ read_file_system_list (bool need_fs_type)
     char *table = "/etc/mnttab";
     FILE *fp;
 
-    fp = fopen (table, "r");
+    fp = fopen (table, "re");
     if (fp == NULL)
       return NULL;
 
@@ -852,7 +852,7 @@ read_file_system_list (bool need_fs_type)
        by the kernel.  */
 
     errno = 0;
-    fp = fopen (table, "r");
+    fp = fopen (table, "re");
     if (fp == NULL)
       ret = errno;
     else
@@ -924,7 +924,7 @@ read_file_system_list (bool need_fs_type)
 # endif
 
     errno = 0;
-    fp = fopen (table, "r");
+    fp = fopen (table, "re");
     if (fp == NULL)
       ret = errno;
     else
