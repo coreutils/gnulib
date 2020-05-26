@@ -52,7 +52,7 @@ sethostname (const char *name, size_t len)
        these are appropriate for us to set, even if they may match the
        situation, during failed open/write/close operations, so we
        leave errno alone and rely on what the system sets up. */
-    hostf = fopen ("/etc/hostname.file", "w");
+    hostf = fopen ("/etc/hostname.file", "we");
     if (hostf == NULL)
       r = -1;
     else
