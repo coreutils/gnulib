@@ -117,6 +117,8 @@ main (void)
 {
   ASSERT (!test_read_file (0));
   ASSERT (!test_read_file (RF_BINARY));
+  ASSERT (!test_read_file (RF_SENSITIVE));
+  ASSERT (!test_read_file (RF_BINARY | RF_SENSITIVE));
 
   return 0;
 }

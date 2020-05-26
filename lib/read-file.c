@@ -31,6 +31,9 @@
 /* Get malloc, realloc, free. */
 #include <stdlib.h>
 
+/* Get explicit_bzero, memcpy. */
+#include <string.h>
+
 /* Get errno. */
 #include <errno.h>
 
@@ -38,9 +41,12 @@
    and set *LENGTH to the length of the string.  The string is
    zero-terminated, but the terminating zero byte is not counted in
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
-   values set by system functions (if any), and NULL is returned.  */
+   values set by system functions (if any), and NULL is returned.
+
+   If the RF_SENSITIVE flag is set in FLAGS, the memory buffer
+   internally allocated will be cleared upon failure.  */
 char *
-fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
+fread_file (FILE *stream, int flags, size_t *length)
 {
   char *buf = NULL;
   size_t alloc = BUFSIZ;
@@ -94,9 +100,25 @@ fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
             /* Shrink the allocated memory if possible.  */
             if (size < alloc - 1)
               {
-                char *smaller_buf = realloc (buf, size + 1);
-                if (smaller_buf != NULL)
-                  buf = smaller_buf;
+                if (flags & RF_SENSITIVE)
+                  {
+                    char *smaller_buf = malloc (size + 1);
+                    if (smaller_buf == NULL)
+                      explicit_bzero (buf + size, alloc - size);
+                    else
+                      {
+                        memcpy (smaller_buf, buf, size);
+                        explicit_bzero (buf, alloc);
+                        free (buf);
+                        buf = smaller_buf;
+                      }
+                  }
+                else
+                  {
+                    char *smaller_buf = realloc (buf, size + 1);
+                    if (smaller_buf != NULL)
+                      buf = smaller_buf;
+                  }
               }
 
             buf[size] = '\0';
@@ -106,6 +128,7 @@ fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
 
         {
           char *new_buf;
+          size_t save_alloc = alloc;
 
           if (alloc == PTRDIFF_MAX)
             {
@@ -118,7 +141,21 @@ fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
           else
             alloc = PTRDIFF_MAX;
 
-          if (!(new_buf = realloc (buf, alloc)))
+          if (flags & RF_SENSITIVE)
+            {
+              new_buf = malloc (alloc);
+              if (!new_buf)
+                {
+                  /* BUF should be cleared below after the loop.  */
+                  save_errno = errno;
+                  break;
+                }
+              memcpy (new_buf, buf, save_alloc);
+              explicit_bzero (buf, save_alloc);
+              free (buf);
+              buf = new_buf;
+            }
+          else if (!(new_buf = realloc (buf, alloc)))
             {
               save_errno = errno;
               break;
@@ -127,6 +164,9 @@ fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
           buf = new_buf;
         }
       }
+
+    if (flags & RF_SENSITIVE)
+      explicit_bzero (buf, alloc);
 
     free (buf);
     errno = save_errno;
@@ -142,7 +182,8 @@ fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
    any), and NULL is returned.
 
    If the RF_BINARY flag is set in FLAGS, the file is opened in binary
-   mode.  */
+   mode.  If the RF_SENSITIVE flag is set in FLAGS, the memory buffer
+   internally allocated will be cleared upon failure.  */
 char *
 read_file (const char *filename, int flags, size_t *length)
 {
@@ -163,6 +204,8 @@ read_file (const char *filename, int flags, size_t *length)
       if (out)
         {
           save_errno = errno;
+          if (flags & RF_SENSITIVE)
+            explicit_bzero (out, *length);
           free (out);
         }
       errno = save_errno;

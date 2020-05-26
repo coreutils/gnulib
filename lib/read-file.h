@@ -27,6 +27,9 @@
 /* Indicate that the file is treated as binary.  */
 #define RF_BINARY 0x1
 
+/* Indicate that the file content contains sensitive information.  */
+#define RF_SENSITIVE 0x2
+
 extern char *fread_file (FILE * stream, int flags, size_t * length);
 
 extern char *read_file (const char *filename, int flags, size_t * length);
