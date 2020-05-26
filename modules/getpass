@@ -9,6 +9,7 @@ m4/getpass.m4
 Depends-on:
 unistd
 extensions
+fopen-gnu
 fseeko
 getline
 stdbool
