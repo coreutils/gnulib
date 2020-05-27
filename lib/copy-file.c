@@ -52,7 +52,7 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   int mode;
   int dest_fd;
 
-  src_fd = open (src_filename, O_RDONLY | O_BINARY);
+  src_fd = open (src_filename, O_RDONLY | O_BINARY | O_CLOEXEC);
   if (src_fd < 0)
     return GL_COPY_ERR_OPEN_READ;
   if (fstat (src_fd, &statbuf) < 0)
@@ -65,7 +65,9 @@ qcopy_file_preserving (const char *src_filename, const char *dest_filename)
   off_t inbytes = S_ISREG (statbuf.st_mode) ? statbuf.st_size : -1;
   bool empty_regular_file = inbytes == 0;
 
-  dest_fd = open (dest_filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0600);
+  dest_fd = open (dest_filename,
+                  O_WRONLY | O_CREAT | O_TRUNC | O_BINARY | O_CLOEXEC,
+                  0600);
   if (dest_fd < 0)
     {
       err = GL_COPY_ERR_OPEN_BACKUP_WRITE;
