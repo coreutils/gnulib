@@ -174,7 +174,7 @@ rof_open (struct rofile *rof, const char *filename)
   unsigned long pagesize;
   size_t size;
 
-  fd = open (filename, O_RDONLY);
+  fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
   rof->position = 0;
@@ -267,7 +267,7 @@ rof_open (struct rofile *rof, const char *filename)
       if (lseek (fd, 0, SEEK_SET) < 0)
         {
           close (fd);
-          fd = open (filename, O_RDONLY);
+          fd = open (filename, O_RDONLY | O_CLOEXEC);
           if (fd < 0)
             goto fail2;
         }
@@ -924,7 +924,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  fd = open (fname, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
 
@@ -939,7 +939,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
 # if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
   if (zero_fd < 0)
     goto fail2;
 # endif
@@ -1049,7 +1049,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  fd = open (fname, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
 
@@ -1064,7 +1064,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
 #  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
   if (zero_fd < 0)
     goto fail2;
 #  endif
@@ -1168,7 +1168,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
   fname -= 6;
   memcpy (fname, "/proc/", 6);
 
-  fd = open (fname, O_RDONLY);
+  fd = open (fname, O_RDONLY | O_CLOEXEC);
   if (fd < 0)
     return -1;
 
@@ -1187,7 +1187,7 @@ vma_iterate (vma_iterate_callback_fn callback, void *data)
      So use mmap(), and ignore the resulting VMA.  */
   memneed = ((memneed - 1) / pagesize + 1) * pagesize;
 #  if !HAVE_MAP_ANONYMOUS
-  zero_fd = open ("/dev/zero", O_RDONLY, 0644);
+  zero_fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0644);
   if (zero_fd < 0)
     goto fail2;
 #  endif
