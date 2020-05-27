@@ -16,7 +16,11 @@ The type @code{mode_t} is not defined on some platforms:
 MSVC 14.
 
 @item
-@samp{O_CLOEXEC}, @samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
+@samp{O_CLOEXEC} is not defined on some platforms:
+Mac OS X 10.6, FreeBSD 8.4, NetBSD 5.1, OpenBSD 4.9, Minix 3.1.8, AIX 7.1, HP-UX 11.31, IRIX 6.5, Solaris 10, Cygwin 1.7.1, mingw, MSVC 14.
+
+@item
+@samp{O_DIRECTORY}, @samp{O_DSYNC}, @samp{O_NOCTTY},
 @samp{O_NOFOLLOW}, @samp{O_RSYNC}, @samp{O_SYNC},
 and @samp{O_TTY_INIT} are not defined on some platforms.  Gnulib defines
 these macros to 0, which is generally safe.
