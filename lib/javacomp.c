@@ -597,7 +597,7 @@ get_classfile_version (const char *compiled_file_name)
   int fd;
 
   /* Open the class file.  */
-  fd = open (compiled_file_name, O_RDONLY | O_BINARY, 0);
+  fd = open (compiled_file_name, O_RDONLY | O_BINARY | O_CLOEXEC, 0);
   if (fd >= 0)
     {
       /* Read its first 8 bytes.  */

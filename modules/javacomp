@@ -16,6 +16,7 @@ classpath
 xsetenv
 sh-quote
 binary-io
+open
 safe-read
 xalloc
 xmalloca
