@@ -902,7 +902,7 @@ read_file_system_list (bool need_fs_type)
 #  ifndef MNTTAB_LOCK
 #   define MNTTAB_LOCK "/etc/.mnttab.lock"
 #  endif
-    lockfd = open (MNTTAB_LOCK, O_RDONLY);
+    lockfd = open (MNTTAB_LOCK, O_RDONLY | O_CLOEXEC);
     if (0 <= lockfd)
       {
         struct flock flock;
