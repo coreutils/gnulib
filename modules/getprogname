@@ -9,6 +9,7 @@ m4/getprogname.m4
 Depends-on:
 dirname-lgpl
 extensions
+open
 
 configure.ac:
 gl_FUNC_GETPROGNAME
