@@ -9,6 +9,7 @@ m4/pty.m4
 Depends-on:
 pty
 sys_ioctl
+open            [test $ac_cv_func_login_tty = no]
 
 configure.ac:
 gl_FUNC_LOGIN_TTY

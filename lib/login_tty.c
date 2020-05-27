@@ -55,7 +55,7 @@ login_tty (int slave_fd)
     slave_name = ttyname (slave_fd);
     if (slave_name == NULL)
       return -1;
-    dummy_fd = open (slave_name, O_RDWR);
+    dummy_fd = open (slave_name, O_RDWR | O_CLOEXEC);
     if (dummy_fd < 0)
       return -1;
     close (dummy_fd);
