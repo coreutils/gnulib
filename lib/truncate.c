@@ -29,13 +29,13 @@ truncate (const char *filename, off_t length)
 
   if (length == 0)
     {
-      fd = open (filename, O_WRONLY | O_TRUNC);
+      fd = open (filename, O_WRONLY | O_TRUNC | O_CLOEXEC);
       if (fd < 0)
         return -1;
     }
   else
     {
-      fd = open (filename, O_WRONLY);
+      fd = open (filename, O_WRONLY | O_CLOEXEC);
       if (fd < 0)
         return -1;
       if (ftruncate (fd, length) < 0)
