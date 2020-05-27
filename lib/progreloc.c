@@ -70,6 +70,11 @@
 # define O_EXEC O_RDONLY /* This is often close enough in older systems.  */
 #endif
 
+#if defined IN_RELOCWRAPPER && (!defined O_CLOEXEC || GNULIB_defined_O_CLOEXEC)
+# undef O_CLOEXEC
+# define O_CLOEXEC 0
+#endif
+
 /* Declare canonicalize_file_name.
    The <stdlib.h> included above may be the system's one, not the gnulib
    one.  */
@@ -242,7 +247,7 @@ find_executable (const char *argv0)
     if (link != NULL && link[0] != '[')
       return link;
     if (executable_fd < 0)
-      executable_fd = open ("/proc/self/exe", O_EXEC, 0);
+      executable_fd = open ("/proc/self/exe", O_EXEC | O_CLOEXEC, 0);
 
     {
       char buf[6+10+5];
@@ -251,7 +256,7 @@ find_executable (const char *argv0)
       if (link != NULL && link[0] != '[')
         return link;
       if (executable_fd < 0)
-        executable_fd = open (buf, O_EXEC, 0);
+        executable_fd = open (buf, O_EXEC | O_CLOEXEC, 0);
     }
   }
 # endif
@@ -298,7 +303,7 @@ find_executable (const char *argv0)
      the current directory.  */
   {
     char namebuf[4096];
-    int fd = open ("/proc/self/execname", O_RDONLY, 0);
+    int fd = open ("/proc/self/execname", O_RDONLY | O_CLOEXEC, 0);
     if (fd >= 0)
       {
         size_t len = full_read (fd, namebuf, sizeof (namebuf));
@@ -321,7 +326,7 @@ find_executable (const char *argv0)
     if (link != NULL)
       return link;
     if (executable_fd < 0)
-      executable_fd = open ("/proc/self/exe", O_EXEC, 0);
+      executable_fd = open ("/proc/self/exe", O_EXEC | O_CLOEXEC, 0);
   }
 # endif
 # if HAVE_MACH_O_DYLD_H && HAVE__NSGETEXECUTABLEPATH
