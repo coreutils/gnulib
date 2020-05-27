@@ -9,6 +9,7 @@ Depends-on:
 extensions
 sys_types
 unistd
+open
 
 configure.ac:
 
