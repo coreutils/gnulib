@@ -9,6 +9,7 @@ Depends-on:
 extensions
 fopen-gnu
 intprops
+open
 stdbool
 stdlib
 
