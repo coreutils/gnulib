@@ -176,7 +176,7 @@ get_rusage_as_via_setrlimit (void)
   const int fd = -1;
 # else /* !HAVE_MAP_ANONYMOUS */
   const int flags = MAP_FILE | MAP_PRIVATE;
-  int fd = open ("/dev/zero", O_RDONLY, 0666);
+  int fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
   if (fd < 0)
     return 0;
 # endif
