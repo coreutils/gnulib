@@ -10,6 +10,7 @@ m4/libgcrypt.m4
 
 Depends-on:
 havelib
+open
 
 configure.ac:
 gl_GC
