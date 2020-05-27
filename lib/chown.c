@@ -87,7 +87,7 @@ rpl_chown (const char *file, uid_t uid, gid_t gid)
        on the symlink itself.  To work around that, we open the
        file (but this can fail due to lack of read or write permission) and
        use fchown on the resulting descriptor.  */
-    int open_flags = O_NONBLOCK | O_NOCTTY;
+    int open_flags = O_NONBLOCK | O_NOCTTY | O_CLOEXEC;
     int fd = open (file, O_RDONLY | open_flags);
     if (0 <= fd
         || (errno == EACCES
