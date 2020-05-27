@@ -12,6 +12,7 @@ error
 extensions
 getpagesize
 gettext-h
+open
 stdlib
 xalloc
 unistd

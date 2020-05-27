@@ -132,7 +132,7 @@ pagealign_alloc (size_t size)
   const int flags = MAP_FILE | MAP_PRIVATE;
   if (fd == -1)
     {
-      fd = open ("/dev/zero", O_RDONLY, 0666);
+      fd = open ("/dev/zero", O_RDONLY | O_CLOEXEC, 0666);
       if (fd < 0)
         error (EXIT_FAILURE, errno, _("Failed to open /dev/zero for read"));
     }
