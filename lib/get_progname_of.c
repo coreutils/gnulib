@@ -105,7 +105,7 @@ get_progname_of (pid_t pid)
     int fd;
 
     sprintf (filename, "/proc/%u/cmdline", (unsigned int) pid);
-    fd = open (filename, O_RDONLY);
+    fd = open (filename, O_RDONLY | O_CLOEXEC);
     if (fd >= 0)
       {
         char buf[4096 + 1];
@@ -158,7 +158,7 @@ get_progname_of (pid_t pid)
   int fd;
 
   sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-  fd = open (filename, O_RDONLY);
+  fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (fd >= 0)
     {
       char buf[4096 + 1];
@@ -223,7 +223,7 @@ get_progname_of (pid_t pid)
     int fd;
 
     sprintf (filename, "/proc/%u/psinfo", (unsigned int) pid);
-    fd = open (filename, O_RDONLY);
+    fd = open (filename, O_RDONLY | O_CLOEXEC);
     if (fd >= 0)
       {
         /* The contents is a 'struct psinfo'.  But since 'struct psinfo'
@@ -378,7 +378,7 @@ get_progname_of (pid_t pid)
   int fd;
 
   sprintf (filename, "/proc/pinfo/%u", pid);
-  fd = open (filename, O_RDONLY);
+  fd = open (filename, O_RDONLY | O_CLOEXEC);
   if (0 <= fd)
     {
       prpsinfo_t buf;

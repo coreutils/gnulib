@@ -8,6 +8,7 @@ lib/get_progname_of.c
 Depends-on:
 extensions
 unistd
+open
 
 configure.ac:
 
