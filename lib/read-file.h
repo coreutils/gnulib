@@ -24,10 +24,11 @@
 /* Get FILE.  */
 #include <stdio.h>
 
-extern char *fread_file (FILE * stream, size_t * length);
+/* Indicate that the file is treated as binary.  */
+#define RF_BINARY 0x1
 
-extern char *read_file (const char *filename, size_t * length);
+extern char *fread_file (FILE * stream, int flags, size_t * length);
 
-extern char *read_binary_file (const char *filename, size_t * length);
+extern char *read_file (const char *filename, int flags, size_t * length);
 
 #endif /* READ_FILE_H */

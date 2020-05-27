@@ -1,5 +1,6 @@
 Files:
 tests/test-read-file.c
+tests/macros.h
 
 Depends-on:
 

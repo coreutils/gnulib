@@ -40,7 +40,7 @@
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
    values set by system functions (if any), and NULL is returned.  */
 char *
-fread_file (FILE *stream, size_t *length)
+fread_file (FILE *stream, int flags _GL_UNUSED, size_t *length)
 {
   char *buf = NULL;
   size_t alloc = BUFSIZ;
@@ -134,9 +134,19 @@ fread_file (FILE *stream, size_t *length)
   }
 }
 
-static char *
-internal_read_file (const char *filename, size_t *length, const char *mode)
+/* Open and read the contents of FILENAME, and return a newly
+   allocated string with the content, and set *LENGTH to the length of
+   the string.  The string is zero-terminated, but the terminating
+   zero byte is not counted in *LENGTH.  On errors, *LENGTH is
+   undefined, errno preserves the values set by system functions (if
+   any), and NULL is returned.
+
+   If the RF_BINARY flag is set in FLAGS, the file is opened in binary
+   mode.  */
+char *
+read_file (const char *filename, int flags, size_t *length)
 {
+  const char *mode = (flags & RF_BINARY) ? "rbe" : "re";
   FILE *stream = fopen (filename, mode);
   char *out;
   int save_errno;
@@ -144,7 +154,7 @@ internal_read_file (const char *filename, size_t *length, const char *mode)
   if (!stream)
     return NULL;
 
-  out = fread_file (stream, length);
+  out = fread_file (stream, flags, length);
 
   save_errno = errno;
 
@@ -160,29 +170,4 @@ internal_read_file (const char *filename, size_t *length, const char *mode)
     }
 
   return out;
-}
-
-/* Open and read the contents of FILENAME, and return a newly
-   allocated string with the content, and set *LENGTH to the length of
-   the string.  The string is zero-terminated, but the terminating
-   zero byte is not counted in *LENGTH.  On errors, *LENGTH is
-   undefined, errno preserves the values set by system functions (if
-   any), and NULL is returned.  */
-char *
-read_file (const char *filename, size_t *length)
-{
-  return internal_read_file (filename, length, "re");
-}
-
-/* Open (on non-POSIX systems, in binary mode) and read the contents
-   of FILENAME, and return a newly allocated string with the content,
-   and set LENGTH to the length of the string.  The string is
-   zero-terminated, but the terminating zero byte is not counted in
-   the LENGTH variable.  On errors, *LENGTH is undefined, errno
-   preserves the values set by system functions (if any), and NULL is
-   returned.  */
-char *
-read_binary_file (const char *filename, size_t *length)
-{
-  return internal_read_file (filename, length, "rbe");
 }

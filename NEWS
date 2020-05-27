@@ -58,6 +58,11 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-05-27  read-file       The functions provided by this module now take an
+                            'int flags' argument to modify the file reading
+                            behavior.  The read_binary_file function has been
+                            removed as it is no longer necessary.
+
 2020-04-27  getdate         This deprecated module is removed. Use the module
                             'parse-datetime' instead. Instead of
                               #include "getdate.h"
