@@ -291,7 +291,7 @@ bool
 openat_needs_fchdir (void)
 {
   bool needs_fchdir = true;
-  int fd = open ("/", O_SEARCH);
+  int fd = open ("/", O_SEARCH | O_CLOEXEC);
 
   if (0 <= fd)
     {
