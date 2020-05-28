@@ -22,6 +22,7 @@ hash
 i-ring
 lstat
 memmove
+open
 openat-h
 opendir
 opendirat

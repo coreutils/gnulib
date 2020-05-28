@@ -402,7 +402,7 @@ fts_open (char * const *argv,
                early, doing it here saves us the trouble of ensuring
                later (where it'd be messier) that "." can in fact
                be opened.  If not, revert to FTS_NOCHDIR mode.  */
-            int fd = open (".", O_SEARCH);
+            int fd = open (".", O_SEARCH | O_CLOEXEC);
             if (fd < 0)
               {
                 /* Even if "." is unreadable, don't revert to FTS_NOCHDIR mode
