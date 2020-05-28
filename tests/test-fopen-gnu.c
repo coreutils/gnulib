@@ -29,15 +29,20 @@
 
 #define BASE "test-fopen-gnu.t"
 
+/* 0x1a is an EOF on Windows.  */
+#define DATA "abc\x1adef"
+
 int
 main (void)
 {
   FILE *f;
   int fd;
   int flags;
+  char buf[16];
 
   /* Remove anything from prior partial run.  */
   unlink (BASE "file");
+  unlink (BASE "binary");
 
   /* Create the file.  */
   f = fopen (BASE "file", "w");
@@ -64,8 +69,20 @@ main (void)
   ASSERT (f == NULL);
   ASSERT (errno == EEXIST);
 
+  /* Open a binary file and check that the 'e' mode doesn't interfere.  */
+  f = fopen (BASE "binary", "wbe");
+  ASSERT (f);
+  ASSERT (fwrite (DATA, 1, sizeof (DATA)-1, f) == sizeof (DATA)-1);
+  ASSERT (fclose (f) == 0);
+
+  f = fopen (BASE "binary", "rbe");
+  ASSERT (f);
+  ASSERT (fread (buf, 1, sizeof (buf), f) == sizeof (DATA)-1);
+  ASSERT (fclose (f) == 0);
+
   /* Cleanup.  */
   ASSERT (unlink (BASE "file") == 0);
+  ASSERT (unlink (BASE "binary") == 0);
 
   return 0;
 }

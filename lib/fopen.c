@@ -101,6 +101,10 @@ rpl_fopen (const char *filename, const char *mode)
 #endif
             continue;
           case 'b':
+            /* While it is non-standard, O_BINARY is guaranteed by
+               gnulib <fcntl.h>.  We can also assume that orig_fopen
+               supports the 'b' flag.  */
+            open_flags_standard |= O_BINARY;
 #if GNULIB_FOPEN_GNU
             if (q < fdopen_mode_buf + BUF_SIZE)
               *q++ = *p;
