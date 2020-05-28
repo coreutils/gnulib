@@ -1,5 +1,5 @@
 /* git-merge-changelog - git "merge" driver for GNU style ChangeLog files.
-   Copyright (C) 2008-2010 Bruno Haible <bruno@clisp.org>
+   Copyright (C) 2008-2020 Bruno Haible <bruno@clisp.org>
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -300,7 +300,7 @@ read_changelog_file (const char *filename, struct changelog_file *result)
   /* Read the file in text mode, otherwise it's hard to recognize empty
      lines.  */
   size_t length;
-  char *contents = read_file (filename, &length);
+  char *contents = read_file (filename, 0, &length);
   if (contents == NULL)
     {
       fprintf (stderr, "could not read file '%s'\n", filename);

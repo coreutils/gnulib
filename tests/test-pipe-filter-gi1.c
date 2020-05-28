@@ -80,7 +80,7 @@ main (int argc, char *argv[])
 
   /* Read some text from a file.  */
   input_filename = argv[2];
-  input = read_binary_file (input_filename, &input_size);
+  input = read_file (input_filename, RF_BINARY, &input_size);
   ASSERT (input != NULL);
 
   /* Convert it to uppercase, line by line.  */

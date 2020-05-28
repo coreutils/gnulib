@@ -55,14 +55,14 @@ main (int argc, char *argv[])
     size_t size2;
     char *contents2;
 
-    contents1 = read_file (file1, &size1);
+    contents1 = read_file (file1, 0, &size1);
     if (contents1 == NULL)
       {
         fprintf (stderr, "error reading file %s: errno = %d\n", file1, errno);
         fflush (stderr);
         abort ();
       }
-    contents2 = read_file (file2, &size2);
+    contents2 = read_file (file2, 0, &size2);
     if (contents2 == NULL)
       {
         fprintf (stderr, "error reading file %s: errno = %d\n", file2, errno);
