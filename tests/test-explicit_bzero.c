@@ -128,7 +128,7 @@ test_heap (void)
      2. Verify that the memory has been erased.
    Implement them in the same function, so that they access the same memory
    range on the stack.  */
-static int
+static int _GL_ATTRIBUTE_NOINLINE
 do_secret_stuff (volatile int pass)
 {
   char stackbuf[SECRET_SIZE];
