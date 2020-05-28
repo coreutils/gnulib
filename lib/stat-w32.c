@@ -21,8 +21,10 @@
 #if defined _WIN32 && ! defined __CYGWIN__
 
 /* Ensure that <windows.h> defines FILE_ID_INFO.  */
-#undef _WIN32_WINNT
-#define _WIN32_WINNT _WIN32_WINNT_WIN8
+#if !defined _WIN32_WINNT || (_WIN32_WINNT < _WIN32_WINNT_WIN8)
+# undef _WIN32_WINNT
+# define _WIN32_WINNT _WIN32_WINNT_WIN8
+#endif
 
 #include <sys/types.h>
 #include <sys/stat.h>

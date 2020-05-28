@@ -23,11 +23,11 @@
 /* Unix API.  */
 
 /* Specification.  */
-#include <unistd.h>
+# include <unistd.h>
 
-#include <errno.h>
-#include <stdio.h>
-#include <limits.h>
+# include <errno.h>
+# include <stdio.h>
+# include <limits.h>
 
 /* Set up to LEN chars of NAME as system hostname.
    Return 0 if ok, set errno and return -1 on error. */
@@ -43,7 +43,7 @@ sethostname (const char *name, size_t len)
       return -1;
     }
 
-#ifdef __minix /* Minix */
+# ifdef __minix /* Minix */
   {
     FILE *hostf;
     int r = 0;
@@ -76,38 +76,40 @@ sethostname (const char *name, size_t len)
 
     return r;
   }
-#else
+# else
   /* For platforms that we don't have a better option for, simply bail
      out.  */
   errno = ENOSYS;
   return -1;
-#endif
+# endif
 }
 
 #else
 /* Native Windows API.  Also used on Cygwin.  */
 
 /* Ensure that <windows.h> declares SetComputerNameEx.  */
-#undef _WIN32_WINNT
-#define _WIN32_WINNT _WIN32_WINNT_WIN2K
+# if !defined _WIN32_WINNT || (_WIN32_WINNT < _WIN32_WINNT_WIN2K)
+#  undef _WIN32_WINNT
+#  define _WIN32_WINNT _WIN32_WINNT_WIN2K
+# endif
 
-#define WIN32_LEAN_AND_MEAN
+# define WIN32_LEAN_AND_MEAN
 
 /* Specification.  */
-#include <unistd.h>
+# include <unistd.h>
 
-#include <errno.h>
-#include <limits.h>
-#include <string.h>
+# include <errno.h>
+# include <limits.h>
+# include <string.h>
 
-#include <windows.h>
+# include <windows.h>
 /* The mingw header files don't define GetComputerNameEx, SetComputerNameEx.  */
-#ifndef GetComputerNameEx
-# define GetComputerNameEx GetComputerNameExA
-#endif
-#ifndef SetComputerNameEx
-# define SetComputerNameEx SetComputerNameExA
-#endif
+# ifndef GetComputerNameEx
+#  define GetComputerNameEx GetComputerNameExA
+# endif
+# ifndef SetComputerNameEx
+#  define SetComputerNameEx SetComputerNameExA
+# endif
 
 /* Set up to LEN chars of NAME as system hostname.
    Return 0 if ok, set errno and return -1 on error. */
