@@ -54,7 +54,7 @@ static GetFileInformationByHandleExFuncType GetFileInformationByHandleExFunc = N
 #endif
 /* GetFinalPathNameByHandle was introduced only in Windows Vista.  */
 typedef DWORD (WINAPI * GetFinalPathNameByHandleFuncType) (HANDLE hFile,
-                                                           LPTSTR lpFilePath,
+                                                           LPSTR lpFilePath,
                                                            DWORD lenFilePath,
                                                            DWORD dwFlags);
 static GetFinalPathNameByHandleFuncType GetFinalPathNameByHandleFunc = NULL;

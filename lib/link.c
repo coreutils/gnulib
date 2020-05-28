@@ -35,8 +35,8 @@
     (void *) GetProcAddress
 
 /* CreateHardLink was introduced only in Windows 2000.  */
-typedef BOOL (WINAPI * CreateHardLinkFuncType) (LPCTSTR lpFileName,
-                                                LPCTSTR lpExistingFileName,
+typedef BOOL (WINAPI * CreateHardLinkFuncType) (LPCSTR lpFileName,
+                                                LPCSTR lpExistingFileName,
                                                 LPSECURITY_ATTRIBUTES lpSecurityAttributes);
 static CreateHardLinkFuncType CreateHardLinkFunc = NULL;
 static BOOL initialized = FALSE;
