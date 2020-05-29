@@ -32,17 +32,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define WIDE_CHAR_SUPPORT \
-  (HAVE_WCTYPE_H && HAVE_BTOWC && HAVE_ISWCTYPE \
-   && HAVE_WMEMCHR && (HAVE_WMEMCPY || HAVE_WMEMPCPY))
-
-/* For platform which support the ISO C amendment 1 functionality we
-   support user defined character classes.  */
-#if defined _LIBC || WIDE_CHAR_SUPPORT
-# include <wctype.h>
-# include <wchar.h>
-#endif
+#include <wchar.h>
+#include <wctype.h>
 
 /* We need some of the locale data (the collation sequence information)
    but there is no interface to get this information in general.  Therefore
@@ -82,50 +73,33 @@ extern int fnmatch (const char *pattern, const char *string, int flags);
 #if defined _LIBC || !defined __GNU_LIBRARY__ || !HAVE_FNMATCH_GNU
 
 
-# if ! (defined isblank || (HAVE_ISBLANK && HAVE_DECL_ISBLANK))
-#  define isblank(c) ((c) == ' ' || (c) == '\t')
-# endif
-
 # define STREQ(s1, s2) (strcmp (s1, s2) == 0)
 
-# if defined _LIBC || WIDE_CHAR_SUPPORT
-/* The GNU C library provides support for user-defined character classes
-   and the functions from ISO C amendment 1.  */
-#  ifdef CHARCLASS_NAME_MAX
-#   define CHAR_CLASS_MAX_LENGTH CHARCLASS_NAME_MAX
-#  else
+/* Provide support for user-defined character classes, based on the functions
+   from ISO C 90 amendment 1.  */
+# ifdef CHARCLASS_NAME_MAX
+#  define CHAR_CLASS_MAX_LENGTH CHARCLASS_NAME_MAX
+# else
 /* This shouldn't happen but some implementation might still have this
    problem.  Use a reasonable default value.  */
-#   define CHAR_CLASS_MAX_LENGTH 256
-#  endif
+#  define CHAR_CLASS_MAX_LENGTH 256
+# endif
 
-#  ifdef _LIBC
-#   define IS_CHAR_CLASS(string) __wctype (string)
-#  else
-#   define IS_CHAR_CLASS(string) wctype (string)
-#  endif
-
-#  ifdef _LIBC
-#   define ISWCTYPE(WC, WT)     __iswctype (WC, WT)
-#  else
-#   define ISWCTYPE(WC, WT)     iswctype (WC, WT)
-#  endif
-
-#  if (HAVE_MBSTATE_T && HAVE_MBSRTOWCS) || _LIBC
-/* In this case we are implementing the multibyte character handling.  */
-#   define HANDLE_MULTIBYTE     1
-#  endif
-
+# ifdef _LIBC
+#  define IS_CHAR_CLASS(string) __wctype (string)
 # else
-#  define CHAR_CLASS_MAX_LENGTH  6 /* Namely, 'xdigit'.  */
+#  define IS_CHAR_CLASS(string) wctype (string)
+# endif
 
-#  define IS_CHAR_CLASS(string)                                               \
-   (STREQ (string, "alpha") || STREQ (string, "upper")                        \
-    || STREQ (string, "lower") || STREQ (string, "digit")                     \
-    || STREQ (string, "alnum") || STREQ (string, "xdigit")                    \
-    || STREQ (string, "space") || STREQ (string, "print")                     \
-    || STREQ (string, "punct") || STREQ (string, "graph")                     \
-    || STREQ (string, "cntrl") || STREQ (string, "blank"))
+# ifdef _LIBC
+#  define ISWCTYPE(WC, WT)     __iswctype (WC, WT)
+# else
+#  define ISWCTYPE(WC, WT)     iswctype (WC, WT)
+# endif
+
+# if (HAVE_MBSTATE_T && HAVE_MBSRTOWCS) || _LIBC
+/* In this case we are implementing the multibyte character handling.  */
+#  define HANDLE_MULTIBYTE     1
 # endif
 
 /* Avoid depending on library functions or files
@@ -159,11 +133,7 @@ static int posixly_correct;
 # ifdef _LIBC
 #  define MEMPCPY(D, S, N) __mempcpy (D, S, N)
 # else
-#  if HAVE_MEMPCPY
-#   define MEMPCPY(D, S, N) mempcpy (D, S, N)
-#  else
-#   define MEMPCPY(D, S, N) ((void *) ((char *) memcpy (D, S, N) + (N)))
-#  endif
+#  define MEMPCPY(D, S, N) mempcpy (D, S, N)
 # endif
 # define MEMCHR(S, C, N) memchr (S, C, N)
 # include "fnmatch_loop.c"
@@ -186,11 +156,7 @@ static int posixly_correct;
 #  else
 #   define STRLEN(S) wcslen (S)
 #   define STRCAT(D, S) wcscat (D, S)
-#   if HAVE_WMEMPCPY
-#    define MEMPCPY(D, S, N) wmempcpy (D, S, N)
-#   else
-#    define MEMPCPY(D, S, N) (wmemcpy (D, S, N) + (N))
-#   endif
+#   define MEMPCPY(D, S, N) wmempcpy (D, S, N)
 #  endif
 #  define MEMCHR(S, C, N) wmemchr (S, C, N)
 #  define WIDE_CHAR_VERSION 1
