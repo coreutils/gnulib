@@ -56,6 +56,10 @@ initialize (void)
   initialized = TRUE;
 }
 
+# else
+
+#  define GetSystemTimePreciseAsFileTimeFunc GetSystemTimePreciseAsFileTime
+
 # endif
 
 #endif

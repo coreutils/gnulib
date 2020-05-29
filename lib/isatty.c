@@ -71,6 +71,11 @@ initialize (void)
   initialized = TRUE;
 }
 
+#else
+
+# define GetNamedPipeClientProcessIdFunc GetNamedPipeClientProcessId
+# define QueryFullProcessImageNameFunc QueryFullProcessImageName
+
 #endif
 
 static BOOL IsConsoleHandle (HANDLE h)
