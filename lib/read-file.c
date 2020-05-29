@@ -43,8 +43,11 @@
    *LENGTH.  On errors, *LENGTH is undefined, errno preserves the
    values set by system functions (if any), and NULL is returned.
 
-   If the RF_SENSITIVE flag is set in FLAGS, the memory buffer
-   internally allocated will be cleared upon failure.  */
+   If the RF_SENSITIVE flag is set in FLAGS:
+     - You should control the buffering of STREAM using 'setvbuf'.  Either
+       clear the buffer of STREAM after closing it, or disable buffering of
+       STREAM before calling this function.
+     - The memory buffer internally allocated will be cleared upon failure.  */
 char *
 fread_file (FILE *stream, int flags, size_t *length)
 {
@@ -194,6 +197,9 @@ read_file (const char *filename, int flags, size_t *length)
 
   if (!stream)
     return NULL;
+
+  if (flags & RF_SENSITIVE)
+    setvbuf (stream, NULL, _IONBF, 0);
 
   out = fread_file (stream, flags, length);
 
