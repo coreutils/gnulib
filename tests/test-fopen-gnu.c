@@ -30,7 +30,7 @@
 #define BASE "test-fopen-gnu.t"
 
 /* 0x1a is an EOF on Windows.  */
-#define DATA "abc\x1adef"
+#define DATA "abc\x1axyz"
 
 int
 main (void)
