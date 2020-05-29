@@ -33,9 +33,11 @@
 
 #ifdef WINDOWS_NATIVE
 
+# if !(_WIN32_WINNT >= _WIN32_WINNT_WIN8)
+
 /* Avoid warnings from gcc -Wcast-function-type.  */
-# define GetProcAddress \
-   (void *) GetProcAddress
+#  define GetProcAddress \
+    (void *) GetProcAddress
 
 /* GetSystemTimePreciseAsFileTime was introduced only in Windows 8.  */
 typedef void (WINAPI * GetSystemTimePreciseAsFileTimeFuncType) (FILETIME *lpTime);
@@ -53,6 +55,8 @@ initialize (void)
     }
   initialized = TRUE;
 }
+
+# endif
 
 #endif
 
@@ -84,8 +88,10 @@ gettimeofday (struct timeval *restrict tv, void *restrict tz)
      <http://www.windowstimestamp.com/description>.  */
   FILETIME current_time;
 
+# if !(_WIN32_WINNT >= _WIN32_WINNT_WIN8)
   if (!initialized)
     initialize ();
+# endif
   if (GetSystemTimePreciseAsFileTimeFunc != NULL)
     GetSystemTimePreciseAsFileTimeFunc (&current_time);
   else
