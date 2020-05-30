@@ -4165,8 +4165,6 @@ func_emit_tests_Makefile_am ()
   echo "  -I${testsbase_inverse} -I\$(srcdir)/${testsbase_inverse} \\"
   echo "  -I${testsbase_inverse}/${sourcebase-lib} -I\$(srcdir)/${testsbase_inverse}/${sourcebase-lib}"
   echo
-  local_ldadd_before=''
-  local_ldadd_after=''
   if $use_libtests; then
     # All test programs need to be linked with libtests.a.
     # It needs to be passed to the linker before ${libname}.${libext}, since
@@ -4176,10 +4174,10 @@ func_emit_tests_Makefile_am ()
     # module whose dependency to 'progname' is voluntarily omitted).
     # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it does
     # not matter.
-    local_ldadd_before=' libtests.a'
-    local_ldadd_after=' libtests.a $(LIBTESTS_LIBDEPS)'
+    echo "LDADD = libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} libtests.a ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext} \$(LIBTESTS_LIBDEPS)"
+  else
+    echo "LDADD = ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}"
   fi
-  echo "LDADD =${local_ldadd_before} ${testsbase_inverse}/${sourcebase-lib}/${libname}.${libext}${local_ldadd_after}"
   echo
   if $use_libtests; then
     echo "libtests_a_SOURCES ="

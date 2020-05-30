@@ -1123,8 +1123,6 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             (testsbase_inverse, sourcebase, testsbase_inverse, sourcebase)
         emit += '\n'
 
-        local_ldadd_before = string()
-        local_ldadd_after = string()
         if libtests:
             # All test programs need to be linked with libtests.a.
             # It needs to be passed to the linker before ${libname}.${libext}, since
@@ -1134,11 +1132,12 @@ AC_DEFUN([%V1%_LIBSOURCES], [
             # 'error' module whose dependency to 'progname' is voluntarily omitted).
             # The LIBTESTS_LIBDEPS can be passed to the linker once or twice, it does
             # not matter.
-            local_ldadd_before = ' libtests.a'
-            local_ldadd_after = ' libtests.a $(LIBTESTS_LIBDEPS)'
-        emit += 'LDADD =%s %s/%s/%s.%s%s\n\n' % \
-            (local_ldadd_before, testsbase_inverse, sourcebase, libname, libext,
-             local_ldadd_after)
+            emit += 'LDADD = libtests.a %s/%s/%s.%s libtests.a %s/%s/%s.%s $(LIBTESTS_LIBDEPS)\n\n' % \
+                (testsbase_inverse, sourcebase, libname, libext,
+                 testsbase_inverse, sourcebase, libname, libext)
+        else:
+            emit += 'LDADD = %s/%s/%s.%s\n\n' % \
+                (testsbase_inverse, sourcebase, libname, libext)
         if libtests:
             emit += 'libtests_a_SOURCES =\n'
             # Here we use $(LIBOBJS), not @LIBOBJS@. The value is the same. However,
