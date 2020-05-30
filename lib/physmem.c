@@ -81,7 +81,7 @@ typedef struct
   DWORDLONG ullAvailVirtual;
   DWORDLONG ullAvailExtendedVirtual;
 } lMEMORYSTATUSEX;
-typedef WINBOOL (WINAPI *PFN_MS_EX) (lMEMORYSTATUSEX*);
+typedef BOOL (WINAPI *PFN_MS_EX) (lMEMORYSTATUSEX*);
 
 #endif
 
