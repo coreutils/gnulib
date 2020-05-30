@@ -1,4 +1,4 @@
-# gc-random.m4 serial 7
+# gc-random.m4 serial 8
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -12,15 +12,9 @@ AC_DEFUN([gl_GC_RANDOM],
   AC_REQUIRE([AC_CANONICAL_HOST])
 
   case "$host_os" in
-    *openbsd* | *mirbsd*)
+    *mirbsd*)
       NAME_OF_RANDOM_DEVICE="/dev/srandom"
       NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/prandom"
-      NAME_OF_NONCE_DEVICE="/dev/urandom"
-      ;;
-
-    *netbsd*)
-      NAME_OF_RANDOM_DEVICE="/dev/srandom"
-      NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/urandom"
       NAME_OF_NONCE_DEVICE="/dev/urandom"
       ;;
 
