@@ -1,4 +1,4 @@
-# sys_random_h.m4 serial 2
+# sys_random_h.m4 serial 3
 dnl Copyright (C) 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -20,6 +20,9 @@ AC_DEFUN([gl_HEADER_SYS_RANDOM],
   dnl corresponding gnulib module is not in use.
   gl_WARN_ON_USE_PREPARE([[
 #if HAVE_SYS_RANDOM_H
+/* Additional includes are needed before <sys/random.h> on Mac OS X.  */
+# include <sys/types.h>
+# include <stdlib.h>
 # include <sys/random.h>
 #endif
     ]],

@@ -1,4 +1,4 @@
-# getrandom.m4 serial 3
+# getrandom.m4 serial 4
 dnl Copyright 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,8 +18,10 @@ AC_DEFUN([gl_FUNC_GETRANDOM],
       [gl_cv_func_getrandom_ok],
       [AC_COMPILE_IFELSE(
          [AC_LANG_PROGRAM(
-            [[#include <sys/random.h>
+            [[/* Additional includes are needed before <sys/random.h> on Mac OS X.  */
               #include <sys/types.h>
+              #include <stdlib.h>
+              #include <sys/random.h>
               ssize_t getrandom (void *, size_t, unsigned int);
             ]],
             [[]])

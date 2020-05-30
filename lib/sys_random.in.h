@@ -23,6 +23,14 @@
 
 #if @HAVE_SYS_RANDOM_H@
 
+/* On Mac OS X 10.5, <sys/random.h> assumes prior inclusion of <sys/types.h>.
+   On Max OS X 10.13, <sys/random.h> assumes prior inclusion of a file that
+   includes <Availability.h>, such as <stdlib.h> or <unistd.h>.  */
+# if defined __APPLE__ && defined __MACH__                  /* Mac OS X */
+#  include <sys/types.h>
+#  include <stdlib.h>
+# endif
+
 /* The include_next requires a split double-inclusion guard.  */
 # @INCLUDE_NEXT@ @NEXT_SYS_RANDOM_H@
 
