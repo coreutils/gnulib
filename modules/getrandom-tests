@@ -1,0 +1,12 @@
+Files:
+tests/test-getrandom.c
+tests/signature.h
+tests/macros.h
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-getrandom
+check_PROGRAMS += test-getrandom
