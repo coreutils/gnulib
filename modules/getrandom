@@ -8,13 +8,13 @@ m4/getrandom.m4
 Depends-on:
 sys_random
 crypto/gc-random    [test $HAVE_GETRANDOM = 0]
-fcntl-h             [test $HAVE_GETRANDOM = 0]
-minmax              [test $HAVE_GETRANDOM = 0]
-open                [test $HAVE_GETRANDOM = 0]
+fcntl-h             [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
+minmax              [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
+open                [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
 
 configure.ac:
 gl_FUNC_GETRANDOM
-if test $HAVE_GETRANDOM = 0; then
+if test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1; then
   AC_LIBOBJ([getrandom])
 fi
 gl_SYS_RANDOM_MODULE_INDICATOR([getrandom])

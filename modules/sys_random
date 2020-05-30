@@ -32,6 +32,7 @@ sys/random.h: sys_random.in.h $(top_builddir)/config.status $(CXXDEFS_H) $(ARG_N
 	      -e 's|@''HAVE_SYS_RANDOM_H''@|$(HAVE_SYS_RANDOM_H)|g' \
 	      -e 's/@''GNULIB_GETRANDOM''@/$(GNULIB_GETRANDOM)/g' \
 	      -e 's/@''HAVE_GETRANDOM''@/$(HAVE_GETRANDOM)/g' \
+	      -e 's/@''REPLACE_GETRANDOM''@/$(REPLACE_GETRANDOM)/g' \
 	      -e '/definitions of _GL_FUNCDECL_RPL/r $(CXXDEFS_H)' \
 	      -e '/definition of _GL_ARG_NONNULL/r $(ARG_NONNULL_H)' \
 	      -e '/definition of _GL_WARN_ON_USE/r $(WARN_ON_USE_H)' \

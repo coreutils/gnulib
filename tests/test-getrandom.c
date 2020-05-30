@@ -75,7 +75,8 @@ main (void)
   ret = getrandom (large_buf, sizeof (large_buf), GRND_RANDOM | GRND_NONBLOCK);
   /* It is very unlikely that so many truly random bytes were ready.  */
   if (ret < 0)
-    ASSERT (errno == ENOSYS || errno == EAGAIN);
+    ASSERT (errno == ENOSYS || errno == EAGAIN
+            || errno == EINVAL /* Solaris */);
   else
     ASSERT (ret > 0 && ret < sizeof (large_buf));
 

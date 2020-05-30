@@ -51,13 +51,25 @@
 
 #if @GNULIB_GETRANDOM@
 /* Fill a buffer with random bytes.  */
-# if !@HAVE_GETRANDOM@
+# if @REPLACE_GETRANDOM@
+#  if !(defined __cplusplus && defined GNULIB_NAMESPACE)
+#   undef getrandom
+#   define getrandom rpl_getrandom
+#  endif
+_GL_FUNCDECL_RPL (getrandom, ssize_t,
+                  (void *buffer, size_t length, unsigned int flags)
+                  _GL_ARG_NONNULL ((1)));
+_GL_CXXALIAS_RPL (getrandom, ssize_t,
+                  (void *buffer, size_t length, unsigned int flags));
+# else
+#  if !@HAVE_GETRANDOM@
 _GL_FUNCDECL_SYS (getrandom, ssize_t,
                   (void *buffer, size_t length, unsigned int flags)
                   _GL_ARG_NONNULL ((1)));
-# endif
+#  endif
 _GL_CXXALIAS_SYS (getrandom, ssize_t,
                   (void *buffer, size_t length, unsigned int flags));
+# endif
 _GL_CXXALIASWARN (getrandom);
 #elif defined GNULIB_POSIXCHECK
 # undef getrandom

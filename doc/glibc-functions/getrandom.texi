@@ -15,7 +15,7 @@ Documentation:
 @uref{https://www.kernel.org/doc/man-pages/online/pages/man2/getrandom.2.html,,man getrandom}.
 @end itemize
 
-Gnulib module: ---
+Gnulib module: getrandom
 
 Portability problems fixed by Gnulib:
 @itemize
@@ -23,6 +23,9 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 glibc 2.24, Mac OS X 10.5, FreeBSD 11.0, NetBSD 5.0, OpenBSD 3.8,
 Solaris 11.0, Android 9.0.
+@item
+This function has a different return type on some platforms:
+Solaris 11.4.
 @end itemize
 
 Portability problems not fixed by Gnulib:

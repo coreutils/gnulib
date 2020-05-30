@@ -21,16 +21,21 @@
 
 #include <sys/random.h>
 
-#include "minmax.h"
 #include <fcntl.h>
 #include <stdbool.h>
 #include <unistd.h>
+
+#include "minmax.h"
 
 /* Set BUFFER (of size LENGTH) to random bytes under the control of FLAGS.
    Return the number of bytes written, or -1 on error.  */
 ssize_t
 getrandom (void *buffer, size_t length, unsigned int flags)
+#undef getrandom
 {
+#if HAVE_GETRANDOM
+  return getrandom (buffer, length, flags);
+#else
   static int randfd[2] = { -1, -1 };
   bool devrandom = (flags & GRND_RANDOM) != 0;
   int fd = randfd[devrandom];
@@ -49,4 +54,5 @@ getrandom (void *buffer, size_t length, unsigned int flags)
     }
 
   return read (fd, buffer, length);
+#endif
 }
