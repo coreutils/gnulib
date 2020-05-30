@@ -17,7 +17,7 @@ Include:
 "gc.h"
 
 Link:
-$(LIB_GC_RAMDOM)
+$(LIB_GC_RANDOM)
 
 License:
 LGPLv2+

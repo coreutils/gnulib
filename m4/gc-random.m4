@@ -87,9 +87,9 @@ AC_DEFUN([gl_GC_RANDOM],
 
   case $host_os in
     mingw*)
-      LIB_GC_RAMDOM='-ladvapi32' ;;
+      LIB_GC_RANDOM='-ladvapi32' ;;
     *)
-      LIB_GC_RAMDOM= ;;
+      LIB_GC_RANDOM= ;;
   esac
-  AC_SUBST([LIB_GC_RAMDOM])
+  AC_SUBST([LIB_GC_RANDOM])
 ])
