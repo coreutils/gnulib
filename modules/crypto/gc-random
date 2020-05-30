@@ -16,6 +16,9 @@ Makefile.am:
 Include:
 "gc.h"
 
+Link:
+$(LIB_GC_RAMDOM)
+
 License:
 LGPLv2+
 

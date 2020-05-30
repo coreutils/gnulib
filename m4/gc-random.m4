@@ -1,4 +1,4 @@
-# gc-random.m4 serial 6
+# gc-random.m4 serial 7
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -9,7 +9,7 @@ AC_DEFUN([gl_GC_RANDOM],
   # Devices with randomness.
   # FIXME: Are these the best defaults?
 
-  AC_REQUIRE([AC_CANONICAL_HOST])dnl
+  AC_REQUIRE([AC_CANONICAL_HOST])
 
   case "$host_os" in
     *openbsd* | *mirbsd*)
@@ -84,4 +84,12 @@ AC_DEFUN([gl_GC_RANDOM],
                    [defined to the name of the pseudo random device])
   AC_DEFINE_UNQUOTED([NAME_OF_NONCE_DEVICE], ["$NAME_OF_NONCE_DEVICE"],
                    [defined to the name of the unpredictable nonce device])
+
+  case $host_os in
+    mingw*)
+      LIB_GC_RAMDOM='-ladvapi32' ;;
+    *)
+      LIB_GC_RAMDOM= ;;
+  esac
+  AC_SUBST([LIB_GC_RAMDOM])
 ])

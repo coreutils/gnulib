@@ -8,4 +8,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-gc
 check_PROGRAMS += test-gc
-test_gc_LDADD = $(LDADD) @LIB_CRYPTO@
+test_gc_LDADD = $(LDADD) @LIB_CRYPTO@ $(LIB_GC_RAMDOM)
