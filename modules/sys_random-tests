@@ -2,6 +2,7 @@ Files:
 tests/test-sys_random.c
 
 Depends-on:
+sys_random-c++-tests
 
 configure.ac:
 
