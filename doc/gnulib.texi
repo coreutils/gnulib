@@ -3684,6 +3684,7 @@ not worked around by Gnulib.
 * resolv.h::
 * shadow.h::
 * sys/ioctl.h::
+* sys/random.h::
 * sysexits.h::
 * ttyent.h::
 @end menu
@@ -3718,6 +3719,7 @@ not worked around by Gnulib.
 @include glibc-headers/resolv.texi
 @include glibc-headers/shadow.texi
 @include glibc-headers/sys_ioctl.texi
+@include glibc-headers/sys_random.texi
 @include glibc-headers/sysexits.texi
 @include glibc-headers/ttyent.texi
 

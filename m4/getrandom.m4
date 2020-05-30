@@ -1,4 +1,4 @@
-# getrandom.m4
+# getrandom.m4 serial 2
 dnl Copyright 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -8,6 +8,7 @@ dnl Written by Paul Eggert.
 
 AC_DEFUN([gl_FUNC_GETRANDOM],
 [
+  AC_REQUIRE([gl_SYS_RANDOM_H_DEFAULTS])
   AC_CHECK_FUNCS_ONCE([getrandom])
   if test "$ac_cv_func_getrandom" != yes; then
     HAVE_GETRANDOM=0
