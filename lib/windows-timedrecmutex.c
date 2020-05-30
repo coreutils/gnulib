@@ -26,6 +26,10 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
+/* Don't assume that UNICODE is not defined.  */
+#undef CreateEvent
+#define CreateEvent CreateEventA
+
 int
 glwthread_timedrecmutex_init (glwthread_timedrecmutex_t *mutex)
 {

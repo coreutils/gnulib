@@ -45,6 +45,10 @@
 #   include <io.h>
 #  endif
 
+/* Don't assume that UNICODE is not defined.  */
+#  undef GetNamedPipeHandleState
+#  define GetNamedPipeHandleState GetNamedPipeHandleStateA
+
 #  if GNULIB_NONBLOCKING
 #   define CLEAR_ERRNO \
       errno = 0;

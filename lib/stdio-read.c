@@ -43,6 +43,10 @@
 #   include <io.h>
 #  endif
 
+/* Don't assume that UNICODE is not defined.  */
+#  undef GetNamedPipeHandleState
+#  define GetNamedPipeHandleState GetNamedPipeHandleStateA
+
 #  define CALL_WITH_ERRNO_FIX(RETTYPE, EXPRESSION, FAILED) \
   if (ferror (stream))                                                        \
     return (EXPRESSION);                                                      \

@@ -22,29 +22,35 @@
 /* This file provides an implementation only for the native Windows API.  */
 #if defined _WIN32 && ! defined __CYGWIN__
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <windows.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <windows.h>
 
 /* Mingw headers don't have all the platform codes.  */
-#ifndef VER_PLATFORM_WIN32_CE
-# define VER_PLATFORM_WIN32_CE 3
-#endif
+# ifndef VER_PLATFORM_WIN32_CE
+#  define VER_PLATFORM_WIN32_CE 3
+# endif
 
 /* Some headers don't have all the processor architecture codes.  */
-#ifndef PROCESSOR_ARCHITECTURE_AMD64
-# define PROCESSOR_ARCHITECTURE_AMD64 9
-#endif
-#ifndef PROCESSOR_ARCHITECTURE_IA32_ON_WIN64
-# define PROCESSOR_ARCHITECTURE_IA32_ON_WIN64 10
-#endif
+# ifndef PROCESSOR_ARCHITECTURE_AMD64
+#  define PROCESSOR_ARCHITECTURE_AMD64 9
+# endif
+# ifndef PROCESSOR_ARCHITECTURE_IA32_ON_WIN64
+#  define PROCESSOR_ARCHITECTURE_IA32_ON_WIN64 10
+# endif
 
 /* Mingw headers don't have the latest processor codes.  */
-#ifndef PROCESSOR_AMD_X8664
-# define PROCESSOR_AMD_X8664 8664
-#endif
+# ifndef PROCESSOR_AMD_X8664
+#  define PROCESSOR_AMD_X8664 8664
+# endif
+
+/* Don't assume that UNICODE is not defined.  */
+# undef OSVERSIONINFO
+# define OSVERSIONINFO OSVERSIONINFOA
+# undef GetVersionEx
+# define GetVersionEx GetVersionExA
 
 int
 uname (struct utsname *buf)
@@ -108,7 +114,7 @@ uname (struct utsname *buf)
     super_version = "";
 
   /* Fill in sysname.  */
-#ifdef __MINGW32__
+# ifdef __MINGW32__
   /* Returns a string compatible with the MSYS uname.exe program,
      so that no further changes are needed to GNU config.guess.
      For example,
@@ -117,9 +123,9 @@ uname (struct utsname *buf)
   sprintf (buf->sysname, "MINGW32_%s-%u.%u", super_version,
            (unsigned int) version.dwMajorVersion,
            (unsigned int) version.dwMinorVersion);
-#else
+# else
   sprintf (buf->sysname, "Windows%s", super_version);
-#endif
+# endif
 
   /* Fill in release, version.  */
   /* The MSYS uname.exe programs uses strings from a modified Cygwin runtime:

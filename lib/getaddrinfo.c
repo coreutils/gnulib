@@ -86,6 +86,10 @@ freeaddrinfo (struct addrinfo *ai)
 
 # ifdef WINDOWS_NATIVE
 
+/* Don't assume that UNICODE is not defined.  */
+#  undef GetModuleHandle
+#  define GetModuleHandle GetModuleHandleA
+
 #  if !(_WIN32_WINNT >= _WIN32_WINNT_WINXP)
 
 /* Avoid warnings from gcc -Wcast-function-type.  */

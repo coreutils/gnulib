@@ -33,6 +33,10 @@
 
 #ifdef WINDOWS_NATIVE
 
+/* Don't assume that UNICODE is not defined.  */
+# undef LoadLibrary
+# define LoadLibrary LoadLibraryA
+
 # if !(_WIN32_WINNT >= _WIN32_WINNT_WIN8)
 
 /* Avoid warnings from gcc -Wcast-function-type.  */

@@ -76,6 +76,18 @@
 
 #ifdef WINDOWS_NATIVE
 
+/* Don't assume that UNICODE is not defined.  */
+# undef GetModuleHandle
+# define GetModuleHandle GetModuleHandleA
+# undef PeekConsoleInput
+# define PeekConsoleInput PeekConsoleInputA
+# undef CreateEvent
+# define CreateEvent CreateEventA
+# undef PeekMessage
+# define PeekMessage PeekMessageA
+# undef DispatchMessage
+# define DispatchMessage DispatchMessageA
+
 /* Do *not* use the function WSAPoll
    <https://docs.microsoft.com/en-us/windows/desktop/api/winsock2/nf-winsock2-wsapoll>
    because there is a bug named “Windows 8 Bugs 309411 - WSAPoll does not

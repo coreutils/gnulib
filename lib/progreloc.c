@@ -80,6 +80,12 @@
    one.  */
 extern char * canonicalize_file_name (const char *name);
 
+#if defined WINDOWS_NATIVE
+/* Don't assume that UNICODE is not defined.  */
+# undef GetModuleFileName
+# define GetModuleFileName GetModuleFileNameA
+#endif
+
 /* Pathname support.
    ISSLASH(C)                tests whether C is a directory separator character.
    IS_FILE_NAME_WITH_DIR(P)  tests whether P contains a directory specification.

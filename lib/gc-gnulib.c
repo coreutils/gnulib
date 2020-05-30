@@ -89,6 +89,12 @@ HCRYPTPROV g_hProv = 0;
 # endif
 #endif
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef CryptAcquireContext
+# define CryptAcquireContext CryptAcquireContextA
+#endif
+
 Gc_rc
 gc_init (void)
 {

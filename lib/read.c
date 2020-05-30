@@ -37,6 +37,10 @@
 #  include <io.h>
 # endif
 
+/* Don't assume that UNICODE is not defined.  */
+# undef GetNamedPipeHandleState
+# define GetNamedPipeHandleState GetNamedPipeHandleStateA
+
 # undef read
 
 # if HAVE_MSVC_INVALID_PARAMETER_HANDLER

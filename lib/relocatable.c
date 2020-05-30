@@ -65,6 +65,12 @@
 # include <libintl.h>
 #endif
 
+#if defined _WIN32 && !defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef GetModuleFileName
+# define GetModuleFileName GetModuleFileNameA
+#endif
+
 /* Faked cheap 'bool'.  */
 #undef bool
 #undef false

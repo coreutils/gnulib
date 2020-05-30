@@ -66,6 +66,14 @@
 # define PATH_MAX 1024
 #endif
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef OSVERSIONINFO
+# define OSVERSIONINFO OSVERSIONINFOA
+# undef GetVersionEx
+# define GetVersionEx GetVersionExA
+#endif
+
 
 /* The use of 'volatile' in the types below (and ISO C 99 section 5.1.2.3.(5))
    ensure that while constructing or modifying the data structures, the field

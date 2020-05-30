@@ -28,6 +28,10 @@
 
 #include "sockets.h"
 
+/* Don't assume that UNICODE is not defined.  */
+#undef WSASocket
+#define WSASocket WSASocketA
+
 int
 rpl_socket (int domain, int type, int protocol)
 {

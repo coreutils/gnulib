@@ -49,6 +49,12 @@
 
 #include "pathmax.h"
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef GetTempPath
+# define GetTempPath GetTempPathA
+#endif
+
 #if _LIBC
 # define struct_stat64 struct stat64
 #else

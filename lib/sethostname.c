@@ -103,13 +103,12 @@ sethostname (const char *name, size_t len)
 # include <string.h>
 
 # include <windows.h>
-/* The mingw header files don't define GetComputerNameEx, SetComputerNameEx.  */
-# ifndef GetComputerNameEx
-#  define GetComputerNameEx GetComputerNameExA
-# endif
-# ifndef SetComputerNameEx
-#  define SetComputerNameEx SetComputerNameExA
-# endif
+
+/* Don't assume that UNICODE is not defined.  */
+# undef GetComputerNameEx
+# define GetComputerNameEx GetComputerNameExA
+# undef SetComputerNameEx
+# define SetComputerNameEx SetComputerNameExA
 
 /* Set up to LEN chars of NAME as system hostname.
    Return 0 if ok, set errno and return -1 on error. */

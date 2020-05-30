@@ -195,6 +195,9 @@
 
 #ifdef __CYGWIN__
 # include <windows.h>
+/* Don't assume that UNICODE is not defined.  */
+# undef GetDriveType
+# define GetDriveType GetDriveTypeA
 # define ME_REMOTE me_remote
 /* All cygwin mount points include ':' or start with '//'; so it
    requires a native Windows call to determine remote disks.  */

@@ -27,6 +27,10 @@
 #include <stdlib.h>
 #include <sys/time.h>
 
+/* Don't assume that UNICODE is not defined.  */
+#undef CreateEvent
+#define CreateEvent CreateEventA
+
 /* In this file, the waitqueues are implemented as linked lists.  */
 #define glwthread_waitqueue_t glwthread_linked_waitqueue_t
 

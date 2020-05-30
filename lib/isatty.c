@@ -39,6 +39,12 @@
 # include <io.h>
 #endif
 
+/* Don't assume that UNICODE is not defined.  */
+#undef LoadLibrary
+#define LoadLibrary LoadLibraryA
+#undef QueryFullProcessImageName
+#define QueryFullProcessImageName QueryFullProcessImageNameA
+
 #if !(_WIN32_WINNT >= _WIN32_WINNT_VISTA)
 
 /* Avoid warnings from gcc -Wcast-function-type.  */

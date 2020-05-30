@@ -38,6 +38,10 @@
 #  include <io.h>
 # endif
 
+/* Don't assume that UNICODE is not defined.  */
+# undef GetNamedPipeHandleState
+# define GetNamedPipeHandleState GetNamedPipeHandleStateA
+
 int
 get_nonblocking_flag (int desc)
 {

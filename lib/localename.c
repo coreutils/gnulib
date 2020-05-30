@@ -1150,6 +1150,11 @@ extern char * getlocalename_l(int, locale_t);
 # ifndef LOCALE_NAME_MAX_LENGTH
 # define LOCALE_NAME_MAX_LENGTH 85
 # endif
+/* Don't assume that UNICODE is not defined.  */
+# undef GetLocaleInfo
+# define GetLocaleInfo GetLocaleInfoA
+# undef EnumSystemLocales
+# define EnumSystemLocales EnumSystemLocalesA
 #endif
 
 /* We want to use the system's setlocale() function here, not the gnulib

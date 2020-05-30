@@ -58,6 +58,12 @@ __libc_lock_define_initialized (static, envlock)
 # define UNLOCK
 #endif
 
+#if defined _WIN32 && ! defined __CYGWIN__
+/* Don't assume that UNICODE is not defined.  */
+# undef SetEnvironmentVariable
+# define SetEnvironmentVariable SetEnvironmentVariableA
+#endif
+
 static int
 _unsetenv (const char *name)
 {
