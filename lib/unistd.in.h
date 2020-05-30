@@ -1030,24 +1030,6 @@ _GL_WARN_ON_USE (getpass, "getpass is unportable - "
 #endif
 
 
-#if @GNULIB_GETRANDOM@
-/* Fill a buffer with random bytes.  */
-# if !@HAVE_GETRANDOM@
-_GL_FUNCDECL_SYS (getrandom, int, (void *buffer, size_t length,
-                                   unsigned int flags));
-# endif
-_GL_CXXALIAS_SYS (getrandom, int, (void *buffer, size_t length,
-                                   unsigned int flags));
-_GL_CXXALIASWARN (getrandom);
-#elif defined GNULIB_POSIXCHECK
-# undef getrandom
-# if HAVE_RAW_DECL_GETRANDOM
-_GL_WARN_ON_USE (getrandom, "getrandom is unportable - "
-                 "use gnulib module getrandom for portability");
-# endif
-#endif
-
-
 #if @GNULIB_GETUSERSHELL@
 /* Return the next valid login shell on the system, or NULL when the end of
    the list has been reached.  */
