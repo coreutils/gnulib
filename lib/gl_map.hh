@@ -143,7 +143,17 @@ public:
     /* If there is a next pair, stores the next pair in KEY and VALUE, advance
        the iterator, and returns true.  Otherwise, returns false.  */
     bool next (KEYTYPE *& key, VALUETYPE *& value)
-      { return gl_map_iterator_next (&_state, reinterpret_cast<const void **>(&key), reinterpret_cast<const void **>(&value)); }
+      {
+        const void *next_key;
+        const void *next_value;
+        bool has_next = gl_map_iterator_next (&_state, &next_key, &next_value);
+        if (has_next)
+          {
+            key = static_cast<KEYTYPE *>(next_key);
+            value = static_cast<VALUETYPE *>(next_value);
+          }
+        return has_next;
+      }
 
     ~iterator ()
       { gl_map_iterator_free (&_state); }

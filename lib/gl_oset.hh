@@ -121,7 +121,13 @@ public:
     /* If there is a next element, stores the next element in ELT, advances the
        iterator and returns true.  Otherwise, returns false.  */
     bool next (ELTYPE *& elt)
-      { return gl_oset_iterator_next (&_state, reinterpret_cast<const void **>(&elt)); }
+      {
+        const void *next_elt;
+        bool has_next = gl_oset_iterator_next (&_state, &next_elt);
+        if (has_next)
+          elt = static_cast<ELTYPE *>(next_elt);
+        return has_next;
+      }
 
     ~iterator ()
       { gl_oset_iterator_free (&_state); }

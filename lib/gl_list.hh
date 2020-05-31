@@ -351,13 +351,25 @@ public:
        the iterator and returns true.
        Otherwise, returns false.  */
     bool next (ELTYPE *& elt)
-      { return gl_list_iterator_next (&_state, reinterpret_cast<const void **>(&elt), NULL); }
+      {
+        const void *next_elt;
+        bool has_next = gl_list_iterator_next (&_state, &next_elt, NULL);
+        if (has_next)
+          elt = static_cast<ELTYPE *>(next_elt);
+        return has_next;
+      }
 
     /* If there is a next element, stores the next element in ELT, stores its
        node in *NODEP if NODEP is non-NULL, advances the iterator and returns true.
        Otherwise, returns false.  */
     bool next (ELTYPE *& elt, gl_list_node_t *nodep)
-      { return gl_list_iterator_next (&_state, reinterpret_cast<const void **>(&elt), nodep); }
+      {
+        const void *next_elt;
+        bool has_next = gl_list_iterator_next (&_state, &next_elt, nodep);
+        if (has_next)
+          elt = static_cast<ELTYPE *>(next_elt);
+        return has_next;
+      }
 
     ~iterator ()
       { gl_list_iterator_free (&_state); }

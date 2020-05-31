@@ -150,7 +150,17 @@ public:
     /* If there is a next pair, stores the next pair in KEY and VALUE, advances
        the iterator, and returns true.  Otherwise, returns false.  */
     bool next (KEYTYPE *& key, VALUETYPE *& value)
-      { return gl_omap_iterator_next (&_state, reinterpret_cast<const void **>(&key), reinterpret_cast<const void **>(&value)); }
+      {
+        const void *next_key;
+        const void *next_value;
+        bool has_next = gl_omap_iterator_next (&_state, &next_key, &next_value);
+        if (has_next)
+          {
+            key = static_cast<KEYTYPE *>(next_key);
+            value = static_cast<VALUETYPE *>(next_value);
+          }
+        return has_next;
+      }
 
     ~iterator ()
       { gl_omap_iterator_free (&_state); }
