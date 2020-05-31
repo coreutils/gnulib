@@ -73,12 +73,37 @@ main (void)
 
   /* Check that GRND_NONBLOCK works.  */
   ret = getrandom (large_buf, sizeof (large_buf), GRND_RANDOM | GRND_NONBLOCK);
+  ASSERT (ret <= (ssize_t) sizeof (large_buf));
   /* It is very unlikely that so many truly random bytes were ready.  */
   if (ret < 0)
     ASSERT (errno == ENOSYS || errno == EAGAIN
             || errno == EINVAL /* Solaris */);
   else
-    ASSERT (ret > 0 && ret < sizeof (large_buf));
+    {
+      ASSERT (ret > 0);
+      /* This assertion fails on
+           - GNU/Hurd,
+           - Mac OS X,
+           - GNU/kFreeBSD, FreeBSD 12.0,
+           - OpenBSD 6.5,
+           - Minix 3.3,
+           - AIX 7.1,
+           - Haiku,
+           - native Windows.
+         This indicates that the function, when called with GRND_RANDOM flag,
+         probably does not return truly random numbers, but instead uses a
+         pseudo-random number generator.  */
+#if !(defined __GNU__ || (defined __APPLE__ && defined __MACH__) || defined __FreeBSD_kernel__ || defined __FreeBSD__ || defined __OpenBSD__ || defined __minix || defined _AIX || defined __HAIKU__ || (defined _WIN32 && ! defined __CYGWIN__))
+      ASSERT (ret < (ssize_t) sizeof (large_buf));
+#endif
+    }
+
+  if (getrandom (buf1, 1, 0) < 1)
+    if (getrandom (buf1, 1, GRND_RANDOM) < 1)
+      {
+        fputs ("Skipping test: getrandom is ineffective\n", stderr);
+        return 77;
+      }
 
   return 0;
 }

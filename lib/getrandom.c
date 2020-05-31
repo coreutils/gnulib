@@ -98,7 +98,8 @@ initialize (void)
 #endif
 
 /* Set BUFFER (of size LENGTH) to random bytes under the control of FLAGS.
-   Return the number of bytes written, or -1 on error.  */
+   Return the number of bytes written (> 0).
+   Upon error, return -1 and set errno.  */
 ssize_t
 getrandom (void *buffer, size_t length, unsigned int flags)
 #undef getrandom

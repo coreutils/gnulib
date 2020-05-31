@@ -26,9 +26,6 @@ glibc 2.24, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 7.1, HP-UX 11.11, IRIX 6.5
 @item
 This header file is not self-contained on some platforms:
 Mac OS X 10.13.
-@item
-This header file does not declare the @code{getrandom} function on some platforms:
-Mac OS X 10.5, FreeBSD 11.0, HP-UX 11.31, Solaris 11.0.
 @end itemize
 
 Portability problems not fixed by Gnulib:
