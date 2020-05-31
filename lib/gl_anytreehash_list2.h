@@ -61,13 +61,13 @@ gl_tree_search_from_to (gl_list_t list, size_t start_index, size_t end_index,
                         {
                           /* We have to return only the one at the minimal
                              position >= start_index.  */
-                          const void *elt;
+                          const void *nodes_elt;
                           if (gl_oset_search_atleast (nodes,
                                                       compare_position_threshold,
                                                       (void *)(uintptr_t)start_index,
-                                                      &elt))
+                                                      &nodes_elt))
                             {
-                              node = (gl_list_node_t) elt;
+                              node = (gl_list_node_t) nodes_elt;
                               if (end_index == list->root->branch_size
                                   || node_position (node) < end_index)
                                 return node;
