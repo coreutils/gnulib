@@ -9,14 +9,17 @@ m4/fnmatch.m4
 
 Depends-on:
 fnmatch-h
-alloca          [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+alloca-opt      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 attribute       [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 btowc           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 builtin-expect  [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 flexmember      [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+intprops        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 isblank         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 iswctype        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+libc-config     [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 stdbool         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
+strnlen         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 wchar           [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 wctype-h        [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
 wmemchr         [test $HAVE_FNMATCH = 0 || test $REPLACE_FNMATCH = 1]
