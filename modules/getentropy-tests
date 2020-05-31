@@ -10,3 +10,4 @@ configure.ac:
 Makefile.am:
 TESTS += test-getentropy
 check_PROGRAMS += test-getentropy
+test_getentropy_LDADD = $(LDADD) $(LIB_GETRANDOM)

@@ -23,6 +23,9 @@ Makefile.am:
 Include:
 <sys/random.h>
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 LGPL
 

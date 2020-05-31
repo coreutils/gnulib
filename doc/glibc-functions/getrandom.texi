@@ -22,7 +22,7 @@ Portability problems fixed by Gnulib:
 @item
 This function is missing on some platforms:
 glibc 2.24, Mac OS X 10.5, FreeBSD 11.0, NetBSD 5.0, OpenBSD 3.8,
-Solaris 11.0, Android 9.0.
+Solaris 11.0, mingw, MSVC 14, Android 9.0.
 @item
 This function has a different return type on some platforms:
 Solaris 11.4.
@@ -32,5 +32,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This function is missing on some platforms:
-Minix 3.1.8, IRIX 6.5, mingw, MSVC 14.
+Minix 3.1.8, IRIX 6.5.
 @end itemize
