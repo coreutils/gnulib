@@ -31,3 +31,9 @@ Mac OS X 10.13, Solaris 11.4, Android 9.0.
 Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
+
+Note: This function does not provides high-quality random numbers, as needed
+by some crypto applications.  If you want such high-quality random numbers,
+use the function @code{getrandom} with the @code{GRND_RANDOM} flag or (better)
+use the @samp{crypto/gc-random} module and configure with
+@samp{--with-libgcrypt}.

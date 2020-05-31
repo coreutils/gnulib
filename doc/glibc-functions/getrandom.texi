@@ -29,6 +29,12 @@ Solaris 11.4.
 
 Portability problems not fixed by Gnulib:
 @itemize
-This function cannot produce truly random numbers on some platforms:
+This function cannot produce truly random numbers, even when the
+@code{GRND_RANDOM} flag is given, on some platforms:
 GNU/Hurd, Mac OS X, GNU/kFreeBSD, FreeBSD 12.0, OpenBSD 6.5, Minix 3.3, AIX 7.1, Haiku, mingw, MSVC 14.
 @end itemize
+
+Note: This function does not provides high-quality random numbers, as needed
+by some crypto applications, even when the @code{GRND_RANDOM} flag is given.
+If you want such high-quality random numbers, use the @samp{crypto/gc-random}
+module and configure with @samp{--with-libgcrypt}.
