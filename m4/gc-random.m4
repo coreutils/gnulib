@@ -1,4 +1,4 @@
-# gc-random.m4 serial 8
+# gc-random.m4 serial 9
 dnl Copyright (C) 2005-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -18,7 +18,7 @@ AC_DEFUN([gl_GC_RANDOM],
       NAME_OF_NONCE_DEVICE="/dev/urandom"
       ;;
 
-    *solaris* | *irix* | *dec-osf* )
+    *irix* | *dec-osf* )
       NAME_OF_RANDOM_DEVICE="/dev/random"
       NAME_OF_PSEUDO_RANDOM_DEVICE="/dev/random"
       NAME_OF_NONCE_DEVICE="/dev/random"
