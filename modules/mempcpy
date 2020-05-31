@@ -1,5 +1,5 @@
 Description:
-mempcpy() function: copy memory area, return point after last written byte.
+mempcpy() function: copy memory area, return pointer after last written byte.
 
 Files:
 lib/mempcpy.c

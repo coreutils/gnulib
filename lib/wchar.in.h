@@ -624,6 +624,29 @@ _GL_WARN_ON_USE (wmemmove, "wmemmove is unportable - "
 #endif
 
 
+/* Copy N wide characters of SRC to DEST.
+   Return pointer to wide characters after the last written wide character.  */
+#if @GNULIB_WMEMPCPY@
+# if !@HAVE_WMEMPCPY@
+_GL_FUNCDECL_SYS (wmempcpy, wchar_t *,
+                  (wchar_t *restrict dest,
+                   const wchar_t *restrict src, size_t n));
+# endif
+_GL_CXXALIAS_SYS (wmempcpy, wchar_t *,
+                  (wchar_t *restrict dest,
+                   const wchar_t *restrict src, size_t n));
+# if __GLIBC__ >= 2
+_GL_CXXALIASWARN (wmempcpy);
+# endif
+#elif defined GNULIB_POSIXCHECK
+# undef wmempcpy
+# if HAVE_RAW_DECL_WMEMPCPY
+_GL_WARN_ON_USE (wmempcpy, "wmempcpy is unportable - "
+                 "use gnulib module wmempcpy for portability");
+# endif
+#endif
+
+
 /* Set N wide characters of S to C.  */
 #if @GNULIB_WMEMSET@
 # if !@HAVE_WMEMSET@
