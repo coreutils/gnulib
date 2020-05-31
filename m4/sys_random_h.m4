@@ -1,4 +1,4 @@
-# sys_random_h.m4 serial 3
+# sys_random_h.m4 serial 4
 dnl Copyright (C) 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -15,6 +15,11 @@ AC_DEFUN([gl_HEADER_SYS_RANDOM],
     HAVE_SYS_RANDOM_H=0
   fi
   AC_SUBST([HAVE_SYS_RANDOM_H])
+
+  m4_ifdef([gl_UNISTD_H_DEFAULTS], [AC_REQUIRE([gl_UNISTD_H_DEFAULTS])])
+  if test $ac_cv_header_sys_random_h = yes; then
+    UNISTD_H_HAVE_SYS_RANDOM_H=1
+  fi
 
   dnl Check for declarations of anything we want to poison if the
   dnl corresponding gnulib module is not in use.

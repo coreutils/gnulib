@@ -118,6 +118,17 @@
 # include <netdb.h>
 #endif
 
+/* Mac OS X 10.13, Solaris 11.4, and Android 9.0 declare getentropy in
+   <sys/random.h>, not in <unistd.h>.  */
+/* But avoid namespace pollution on glibc systems.  */
+#if (@GNULIB_GETENTROPY@ || defined GNULIB_POSIXCHECK) \
+    && ((defined __APPLE__ && defined __MACH__) || defined __sun \
+        || defined __ANDROID__) \
+    && @UNISTD_H_HAVE_SYS_RANDOM_H@ \
+    && !defined __GLIBC__
+# include <sys/random.h>
+#endif
+
 /* Android 4.3 declares fchownat in <sys/stat.h>, not in <unistd.h>.  */
 /* But avoid namespace pollution on glibc systems.  */
 #if (@GNULIB_FCHOWNAT@ || defined GNULIB_POSIXCHECK) && defined __ANDROID__ \
