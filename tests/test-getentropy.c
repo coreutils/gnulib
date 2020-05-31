@@ -39,5 +39,16 @@ main (int argc, char *argv[])
   /* This test fails with probability 2**-2048.  (Run it again if so. :-) */
   ASSERT (memcmp (buf, empty_buf, sizeof buf) != 0);
 
+  /* It is very unlikely that two calls to getentropy produce the same
+     results.  */
+  {
+    char buf1[8];
+    char buf2[8];
+
+    ASSERT (getentropy (buf1, sizeof (buf1)) == 0);
+    ASSERT (getentropy (buf2, sizeof (buf2)) == 0);
+    ASSERT (memcmp (buf1, buf2, sizeof (buf1)) != 0);
+  }
+
   return 0;
 }

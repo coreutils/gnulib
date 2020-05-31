@@ -94,6 +94,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::getdomainname, int, (char *, size_t));
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getdtablesize, int, (void));
 #endif
 
+#if GNULIB_TEST_GETENTROPY
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getentropy, int, (void *, size_t));
+#endif
+
 #if GNULIB_TEST_GETGROUPS
 SIGNATURE_CHECK (GNULIB_NAMESPACE::getgroups, int, (int, gid_t *));
 #endif
