@@ -6632,6 +6632,7 @@ to POSIX that it can be treated like any other Unix-like platform.
 * Avoiding the year 2038 problem::
 * Windows sockets::
 * Native Windows Support without MSVC Support::
+* Visual Studio Compatibility::
 @end menu
 
 @include windows-libtool.texi
@@ -6647,6 +6648,8 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include windows-sockets.texi
 
 @include windows-without-msvc.texi
+
+@include ld-output-def.texi
 
 
 @node Particular Modules
@@ -6765,7 +6768,6 @@ for use with GNU Automake (in particular).
 * Searching for Libraries::
 * Exported Symbols of Shared Libraries::
 * LD Version Scripts::
-* Visual Studio Compatibility::
 * configmake::
 * warnings::
 * manywarnings::
@@ -6777,8 +6779,6 @@ for use with GNU Automake (in particular).
 @include lib-symbol-visibility.texi
 
 @include ld-version-script.texi
-
-@include ld-output-def.texi
 
 @include configmake.texi
 
