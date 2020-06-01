@@ -740,7 +740,6 @@ better to share them.
 * Extra tests modules::
 * Modules that modify the way other modules work::
 * A C++ namespace for gnulib::      A different way of using Gnulib in C++
-* Running self-tests under valgrind::
 * License Texinfo sources::
 * Building gnulib::
 @end menu
@@ -754,8 +753,6 @@ better to share them.
 @include transversal.texi
 
 @include namespace.texi
-
-@include valgrind-tests.texi
 
 @include licenses-texi.texi
 
@@ -6771,6 +6768,7 @@ for use with GNU Automake (in particular).
 * configmake::
 * warnings::
 * manywarnings::
+* Running self-tests under valgrind::
 * VCS To ChangeLog::
 @end menu
 
@@ -6785,6 +6783,8 @@ for use with GNU Automake (in particular).
 @include warnings.texi
 
 @include manywarnings.texi
+
+@include valgrind-tests.texi
 
 @include vcs-to-changelog.texi
 
