@@ -48,8 +48,7 @@
 
 #include <fcntl.h>
 #include <stdint.h>
-#include <unistd.h>
-
+#include <sys/random.h>
 #include <sys/stat.h>
 
 #if _LIBC
@@ -71,11 +70,11 @@ typedef uint32_t random_value;
 # define BASE_62_DIGITS 5 /* 62**5 < UINT32_MAX */
 # define BASE_62_POWER (62 * 62 * 62 * 62 * 62) /* 2**BASE_62_DIGITS */
 #else
-/* Use getentropy if it works, falling back on a 64-bit linear
+/* Use getrandom if it works, falling back on a 64-bit linear
    congruential generator that starts with whatever Var's value
    happens to be.  */
 # define RANDOM_BITS(Var) \
-    ((void) (getentropy (&(Var), sizeof (Var)) == 0 \
+    ((void) (getrandom (&(Var), sizeof (Var), 0) == sizeof (Var) \
              || ((Var) = 2862933555777941757 * (Var) + 3037000493)))
 typedef uint_fast64_t random_value;
 # define RANDOM_VALUE_MAX UINT_FAST64_MAX
