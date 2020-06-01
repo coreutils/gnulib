@@ -71,6 +71,7 @@ Documentation License''.
 * Glibc Header File Substitutes::   Overriding system headers.
 * Glibc Function Substitutes::      Replacing system functions.
 * Native Windows Support::          Support for the native Windows platforms.
+* Multithreading::                  Multiple threads of execution.
 * Particular Modules::              Documentation of individual modules.
 * Regular expressions::             The regex module.
 * Build Infrastructure Modules::    Modules that extend the GNU Build System.
@@ -6647,6 +6648,9 @@ to POSIX that it can be treated like any other Unix-like platform.
 @include windows-without-msvc.texi
 
 @include ld-output-def.texi
+
+
+@include multithread.texi
 
 
 @node Particular Modules
