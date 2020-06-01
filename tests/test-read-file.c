@@ -28,7 +28,7 @@
 #define FILE1 "/etc/resolv.conf"
 #define FILE2 "/dev/null"
 
-int
+static int
 test_read_file (int flags)
 {
   struct stat statbuf;
