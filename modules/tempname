@@ -10,12 +10,12 @@ m4/tempname.m4
 Depends-on:
 extensions
 fcntl-h
-gettimeofday
+getentropy
+libc-config
 lstat
 mkdir
 stdint
 sys_stat
-sys_time
 
 configure.ac:
 gl_FUNC_GEN_TEMPNAME
