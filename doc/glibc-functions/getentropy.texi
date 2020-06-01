@@ -32,8 +32,12 @@ Portability problems not fixed by Gnulib:
 @itemize
 @end itemize
 
-Note: This function does not provides high-quality random numbers, as needed
-by some crypto applications.  If you want such high-quality random numbers,
-use the function @code{getrandom} with the @code{GRND_RANDOM} flag or (better)
-use the @samp{crypto/gc-random} module and configure with
-@samp{--with-libgcrypt}.
+@noindent
+Although this function is intended to produce random data, the data's
+security properties may not be appropriate for your application.
+For example, identical ``random'' data streams might be produced by
+rebooted virtual machines.  If this is of concern you may need to use
+additional techniques such as hedging.@footnote{Ristenpart T, Yilek
+S@. @url{http://pages.cs.wisc.edu/~rist/papers/sslhedge.pdf, When good
+randomness goes bad: virtual machine vulnerabilities and hedging
+deployed cryptography}. NDSS 2010.}
