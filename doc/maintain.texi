@@ -309,7 +309,7 @@ distribute the package, and the standing to defend its GPL-covered
 status in court if necessary.
 
 GNU packages need not be FSF-copyrighted; this is up to the author(s),
-generally at the time the package is dubbed GNU.  When copyright is
+generally at the time the package is dubbed GNU@.  When copyright is
 assigned to the FSF, the FSF can act to stop GPL violations about the
 package.  Otherwise, legal actions are up to the author(s).  The rest
 of this section is about the case when a package is FSF-copyrighted.
@@ -408,7 +408,7 @@ After receiving the necessary form, the contributor needs to sign
 it. Contributors residing in the USA or Italy may use GPG in order to
 sign their assignment. Contributors located anywhere else can print,
 sign, and then email (or fax) a scanned copy back to the
-FSF. (Specific instructions for both cases are sent with the
+FSF@. (Specific instructions for both cases are sent with the
 assignment form.) They may use postal mail, if they prefer. To
 emphasize, the necessary distinction is between residents and
 non-residents of these countries; citizenship does not matter.
@@ -846,7 +846,7 @@ or both in parallel, as here.
 
 GNU @var{package} is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE@.  See the GNU
 General Public License for more details.
 
 You should have received copies of the GNU General Public License and
@@ -870,7 +870,7 @@ You can use whichever is the most convenient for you.
 
 @item
 The @code{gnulib} project on @code{savannah.gnu.org}, which you
-can access via anonymous Git or CVS.  See
+can access via anonymous Git or CVS@.  See
 @uref{https://savannah.gnu.org/projects/gnulib}.
 
 @end itemize
@@ -898,7 +898,7 @@ License, or (at your option) any later version.
 
 GNU @var{package} is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE@.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -916,7 +916,7 @@ the Free Software Foundation; either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE@.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -1036,7 +1036,7 @@ separately-published general-purpose free modules?  (We also call them
 matter whether they are packaged as libraries or not.)
 
 It would be unreasonable to ask their authors to assign copyright to
-the FSF.  They didn't write those modules as contributions to GNU.  We
+the FSF@.  They didn't write those modules as contributions to GNU@.  We
 just happen to want to use them, as any developer might.  It would be
 rude to ask developers, out of the blue, to give the FSF their
 copyright.  Please don't ask for that in cases like these.
@@ -1487,7 +1487,7 @@ version, and checking that the result exactly matches the new version.
 @section Binary Distribution for Nonfree Platforms
 
 Some package maintainers release pre-compiled binaries for proprietary
-systems such as Microsoft Windows or MacOS.  It's entirely up to you
+systems such as Microsoft Windows or MacOS@.  It's entirely up to you
 whether to do that; we don't ask you to do it, but we don't object.
 Please do not let anyone make you feel you have an obligation to do
 this.
@@ -2567,7 +2567,7 @@ well.
 @cindex GNU/Linux
 
 The GNU Project was formed to develop a free Unix-like operating system,
-GNU.  The existence of this system is our major accomplishment.
+GNU@.  The existence of this system is our major accomplishment.
 However, the widely used version of the GNU system, in which Linux is
 used as the kernel, is often called simply ``Linux''.  As a result, most
 users don't know about the GNU Project's major accomplishment---or more
@@ -2623,7 +2623,7 @@ itself (@pxref{Terminology}).  Likewise, avoid promoting nonfree
 programs (@pxref{References,,, standards, GNU Coding
 Standards}) as you would in the package itself.
 
-Many GNU users have erroneous ideas about GNU.  Outside of our
+Many GNU users have erroneous ideas about GNU@.  Outside of our
 community, most people think it is Linux.  Please use your opportunity
 to set them straight.  Start the presentation with the answers to
 these basic questions:

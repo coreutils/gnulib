@@ -549,15 +549,15 @@ should normally be @file{/usr/local/include}, but write it as
 
 Most compilers other than GCC do not look for header files in directory
 @file{/usr/local/include}.  So installing the header files this way is
-only useful with GCC.  Sometimes this is not a problem because some
-libraries are only really intended to work with GCC.  But some libraries
+only useful with GCC@.  Sometimes this is not a problem because some
+libraries are only really intended to work with GCC@.  But some libraries
 are intended to work with other compilers.  They should install their
 header files in two places, one specified by @code{includedir} and one
 specified by @code{oldincludedir}.
 
 @item oldincludedir
 The directory for installing @samp{#include} header files for use with
-compilers other than GCC.  This should normally be @file{/usr/include}.
+compilers other than GCC@.  This should normally be @file{/usr/include}.
 (If you are using Autoconf, you can write it as @samp{@@oldincludedir@@}.)
 
 The Makefile commands should check whether the value of

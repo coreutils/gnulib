@@ -290,7 +290,7 @@ account when designing your program.
 @cindex programming languages
 
 When you want to use a language that gets compiled and runs at high
-speed, the best language to use is C.  C++ is ok too, but please don't
+speed, the best language to use is C@.  C++ is ok too, but please don't
 make heavy use of templates.  So is Java, if you compile it.
 
 When highest efficiency is not required, other languages commonly used
@@ -303,7 +303,7 @@ the more users are able to extend and combine them (@pxref{The Emacs
 Thesis,,, guile, GNU Guile Reference Manual}).
 
 Many programs are designed to be extensible: they include an interpreter
-for a language that is higher level than C.  Often much of the program
+for a language that is higher level than C@.  Often much of the program
 is written in that language, too.  The Emacs editor pioneered this
 technique.
 
@@ -951,7 +951,7 @@ so that the same jobs can be done from scripts.
 @cindex keyboard interface
 @cindex library interface
 Please also consider providing a D-bus interface for use from other
-running programs, such as within GNOME.  (GNOME used to use CORBA
+running programs, such as within GNOME@.  (GNOME used to use CORBA
 for this, but that is being phased out.)  In addition, consider
 providing a library interface (for use from C), and perhaps a
 keyboard-driven console interface (for use by users from console
@@ -2936,7 +2936,7 @@ versions.  For a GNU program, this kind of portability is desirable, but
 not paramount.
 
 The primary purpose of GNU software is to run on top of the GNU kernel,
-compiled with the GNU C compiler, on various types of CPU.  So the
+compiled with the GNU C compiler, on various types of CPU@.  So the
 kinds of portability that are absolutely necessary are quite limited.
 But it is important to support Linux-based GNU systems, since they
 are the form of GNU that is popular.
@@ -3583,7 +3583,7 @@ See @uref{https://www.gnu.org/copyleft/fdl-howto.html} for more explanation
 of how to employ the GFDL.
 
 Note that it is not obligatory to include a copy of the GNU GPL or GNU
-LGPL in a manual whose license is neither the GPL nor the LGPL.  It can
+LGPL in a manual whose license is neither the GPL nor the LGPL@.  It can
 be a good idea to include the program's license in a large manual; in a
 short manual, whose size would be increased considerably by including
 the program's license, it is probably better not to include it.
@@ -3676,7 +3676,7 @@ you.
 
 Instead of using a file named @file{ChangeLog}, you can record the
 change log information as log entries in a version control system such
-as RCS or CVS.  This can be converted automatically to a
+as RCS or CVS@.  This can be converted automatically to a
 @file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
 @kbd{C-x v a} (@code{vc-update-change-log}) does the job.
 
@@ -3949,7 +3949,7 @@ with the FSF about the individual case.
 @cindex releasing
 
 Making a release is more than just bundling up your source files in a
-tar file and putting it up for FTP.  You should set up your software so
+tar file and putting it up for FTP@.  You should set up your software so
 that it can be configured to run on a variety of systems.  Your Makefile
 should conform to the GNU standards described below, and your directory
 layout should also conform to the standards discussed below.  Doing so
@@ -4252,7 +4252,7 @@ names for one file in different directories, because certain file
 systems cannot handle this and that prevents unpacking the
 distribution.
 
-Try to make sure that all the file names will be unique on MS-DOS.  A
+Try to make sure that all the file names will be unique on MS-DOS@.  A
 name on MS-DOS consists of up to 8 characters, optionally followed by a
 period and up to three characters.  MS-DOS will truncate extra
 characters both before and after the period.  Thus,
