@@ -550,7 +550,7 @@ getloadavg (double loadavg[], int nelem)
         for (ptr++; '0' <= *ptr && *ptr <= '9'; ptr++)
           numerator = 10 * numerator + (*ptr - '0'), denominator *= 10;
 
-      loadavg[elem++] = numerator / denominator;
+      loadavg[elem] = numerator / denominator;
     }
 
   return elem;
