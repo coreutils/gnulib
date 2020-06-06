@@ -36,20 +36,26 @@ int
 main ()
 {
   /* Check that calloc (0, 0) is not a NULL pointer.  */
-  void *p = calloc (0, 0);
-  if (p == NULL)
-    return 1;
-  free (p);
+  {
+    void * volatile p = calloc (0, 0);
+    if (p == NULL)
+      return 1;
+    free (p);
+  }
 
   /* Check that calloc fails when requested to allocate a block of memory
      larger than SIZE_MAX bytes.
-     We use eight (), not 8, to avoid a compiler warning from GCC 7.  */
-  p = calloc ((size_t) -1 / 8 + 1, eight ());
-  if (p != NULL)
-    {
-      free (p);
-      return 1;
-    }
+     We use eight (), not 8, to avoid a compiler warning from GCC 7.
+     'volatile' is needed to defeat an incorrect optimization by clang 10,
+     see <https://bugs.llvm.org/show_bug.cgi?id=46055>.  */
+  {
+    void * volatile p = calloc ((size_t) -1 / 8 + 1, eight ());
+    if (p != NULL)
+      {
+        free (p);
+        return 2;
+      }
+  }
 
   return 0;
 }
