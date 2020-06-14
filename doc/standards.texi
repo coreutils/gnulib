@@ -3,7 +3,7 @@
 @setfilename standards.info
 @settitle GNU Coding Standards
 @c This date is automagically updated when you save this file:
-@set lastupdate April 24, 2020
+@set lastupdate June 12, 2020
 @c %**end of header
 
 @dircategory GNU organization
@@ -28,8 +28,8 @@ The GNU coding standards, last updated @value{lastupdate}.
 
 Copyright @copyright{} 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010,
-2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019 Free Software
-Foundation, Inc.
+2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free
+Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -2959,7 +2959,7 @@ Avoid using the format of semi-internal data bases (e.g., directories)
 when there is a higher-level alternative (@code{readdir}).
 
 @cindex non-POSIX systems, and portability
-As for systems that are not like Unix, such as MSDOS, Windows, VMS, MVS,
+As for systems that are not like Unix, such as MS-DOS, Windows, VMS, MVS,
 and older Macintosh systems, supporting them is often a lot of work.
 When that is the case, it is better to spend your time adding features
 that will be useful on GNU and GNU/Linux, rather than on supporting
@@ -3635,7 +3635,76 @@ future will know about the changes that might have introduced the bug.
 Often a new bug can be found by looking at what was recently changed.
 More importantly, change logs can help you eliminate conceptual
 inconsistencies between different parts of a program, by giving you a
-history of how the conflicting concepts arose and who they came from.
+history of how the conflicting concepts arose, who they came from, and
+why the conflicting changes were made.
+
+@cindex software forensics, and change logs
+Therefore, change logs should be detailed enough and accurate enough
+to provide the information commonly required for such @dfn{software
+forensics}.  Specifically, change logs should make finding answers to
+the following questions easy:
+
+@itemize @bullet
+@item
+What changes affected a particular source file?
+
+@item
+Was a particular source file renamed or moved, and if so, as part of
+what change?
+
+@item
+What changes affected a given function or macro or definition of a
+data structure?
+
+@item
+Was a function (or a macro or the definition of a data structure)
+renamed or moved from another file, and if so, as part of which
+change?
+
+@item
+What changes deleted a function (or macro or data structure)?
+
+@item
+What was the rationale for a given change, and what were its main
+ideas?
+
+@item
+Is there any additional information regarding the change, and if so,
+where can it be found?
+@end itemize
+
+@cindex VCS
+@cindex version control system, for keeping change logs
+Historically, change logs were maintained on specially formatted
+files.  Nowadays, projects commonly keep their source files under a
+@dfn{version control system} (@acronym{VCS}), such as Git,
+Subversion, or Mercurial.  If the @acronym{VCS} repository is publicly
+accessible, and changes are committed to it separately (one commit for
+each logical changeset) and record the authors of each change, then
+the information recorded by the @acronym{VCS} can be used to produce
+the change logs out of @acronym{VCS} logs, and to answer the above
+questions by using the suitable @acronym{VCS} commands.  (However, the
+@acronym{VCS} log messages still need to provide some supporting
+information, as described below.)  Projects that maintain such
+@acronym{VCS} repositories can decide not to maintain separate change
+log files, and instead rely on the @acronym{VCS} to keep the change
+logs.
+
+If you decide not to maintain separate change log files, you should
+still consider providing them in the release tarballs, for the benefit
+of users who'd like to review the change logs without accessing the
+project's @acronym{VCS} repository.  Scripts exist that can produce
+@file{ChangeLog} files from the @acronym{VCS} logs; for example, the
+@file{gitlog-to-changelog} script, which is part of Gnulib, can do
+that for Git repositories.  In Emacs, the command @kbd{C-x v a}
+(@code{vc-update-change-log}) does the job of incrementally updating a
+@file{ChangeLog} file from the @acronym{VCS} logs.
+
+If separate change log files @emph{are} maintained, they are normally
+called @file{ChangeLog}, and each such file covers an entire
+directory.  Each directory can have its own change log file, or a
+directory can use the change log of its parent directory---it's up to
+you.
 
 @menu
 * Change Log Concepts::
@@ -3646,39 +3715,41 @@ history of how the conflicting concepts arose and who they came from.
 @end menu
 
 @node Change Log Concepts
-@subsection Change Log Concepts
+@subsection Change Log Concepts and Conventions
 
-@cindex change set
-@cindex batch of changes
+@cindex changeset, in a change log
+@cindex batch of changes, in a change log
 You can think of the change log as a conceptual ``undo list'' which
 states how earlier versions were different from the current version.
 People can see the current version; they don't need the change log to
 tell them what is in it.  What they want from a change log is a clear
 explanation of how the earlier version differed.  Each @dfn{entry} in
 a change log describes either an individual change or the smallest
-batch of changes that belong together, also known as a @dfn{change
-set}.
+batch of changes that belong together, also known as a @dfn{changeset}.
 
 @cindex title, change log entry
+@cindex header line, change log entry
+It is a good idea to start the change log entry with a @dfn{header
+line}: a single line that is a complete sentence which summarizes the
+changeset.  If you keep the change log in a @acronym{VCS}, this
+should be a requirement, as @acronym{VCS} commands that show the
+change log in abbreviated form, such as @kbd{git log --oneline}, treat
+the header line specially.  (In a @file{ChangeLog} file, the header
+line follows a line that says who was the author of the change and
+when it was installed.)
+
 @cindex description, change log entry
-It is a good idea to start the change log entry with a description
-of the overall change.  This should be as long as needed to give
-a clear description.
-
-Then give a list of names of the entities or definitions that you
-changed, according to the files they are in, and what was changed
-in each one.  @xref{Style of Change Logs}.
-
-The change log file is normally called @file{ChangeLog} and covers an
-entire directory.  Each directory can have its own change log, or a
-directory can use the change log of its parent directory---it's up to
-you.
-
-Instead of using a file named @file{ChangeLog}, you can record the
-change log information as log entries in a version control system such
-as RCS or CVS@.  This can be converted automatically to a
-@file{ChangeLog} file using @code{rcs2log}; in Emacs, the command
-@kbd{C-x v a} (@code{vc-update-change-log}) does the job.
+Follow the change log entry's header line with a description of the
+overall change.  This should be as long as needed to give a clear
+description.  Pay special attention to aspects of the changeset not
+easily gleaned from the diffs or from the names of modified files and
+functions: the overall idea of the change and the need for it, and the
+relations, if any, between changes made to different files/functions.
+If the change or its reasons were discussed on some public forum, such
+as the project's issue tracker or mailing list, it is a good idea to
+summarize the main points of that discussion in the change's
+description, and include a pointer to that discussion or the issue ID
+for those who'd like to read it in full.
 
 The best place to explain how parts of the new code work with other code
 is in comments in the code, not in the change log.
@@ -3693,14 +3764,78 @@ tree.''  (Though such a simple reason would not need this kind of
 explanation.)
 
 The best place for other kinds of explanation of the change is in the
-change log entry.
+change log entry.  In particular, comments usually will not say why
+some code was deleted or moved to another place---that belongs to the
+description of the change which did that.
 
-The easiest way to add an entry to @file{ChangeLog} is with the Emacs
-command @kbd{M-x add-change-log-entry}.  An individual change should
-have an asterisk, the name of the changed file, and then in
-parentheses the name of the changed functions, variables or whatever,
-followed by a colon.  Then describe the changes you made to that
-function or variable.
+Following the free-text description of the change, it is a good idea
+to give a list of names of the entities or definitions that you
+changed, according to the files they are in, and what was changed in
+each one.  @xref{Style of Change Logs}.  If a project uses a modern
+@acronym{VCS} to keep the change log information, as described in
+@ref{Change Logs}, explicitly listing the files and functions that
+were changed is not strictly necessary, and in some cases (like
+identical mechanical changes in many places) even tedious.  It is up
+to you to decide whether to allow your project's developers to omit
+the list of changed files and functions from the log entries, and
+whether to allow such omissions under some specific conditions.
+However, while making this decision, please consider the following
+benefits of providing the list of changed entities with each change:
+
+@itemize @bullet
+@item
+Generation of useful @file{ChangeLog} files from @acronym{VCS} logs
+becomes more difficult if the change log entries don't list the
+modified functions/macros, because @acronym{VCS} commands cannot
+reliably reproduce their names from the commit information alone.  For
+example, when there is a change in the header part of a function
+definition, the heading of the diff hunk as shown in the VCS log
+commands will name the wrong function as being modified (usually, the
+function defined before the one being modified), so using those diffs
+to glean the names of the modified functions will produce inaccurate
+results.  You will need to use specialized scripts, such as gnulib's
+@file{vcs-to-changelog.py}, mentioned below, to solve these
+difficulties, and make sure it supports the source languages used by
+your project.
+
+@item
+While modern @acronym{VCS} commands, such as Git's @kbd{git log -L}
+and @kbd{git log -G}, provide powerful means for finding changes that
+affected a certain function or macro or data structure (and thus might
+make @file{ChangeLog} files unnecessary if you have the repository
+available), they can sometimes fail.  For example, @kbd{git log -L}
+doesn't support syntax of some programming languages out of the box.
+Mentioning the modified functions/macros explicitly allows finding the
+related changes simply and reliably.
+
+@item
+Some @acronym{VCS} commands have difficulties or limitations when
+tracking changes across file moves or renames.  Again, if the entities
+are mentioned explicitly, those difficulties can be overcome.
+
+@item
+Users that review changes using the generated @file{ChangeLog} files
+may not have the repository and the @acronym{VCS} commands available
+to them.  Naming the modified entities alleviates that problem.
+@end itemize
+
+@noindent
+For these reasons, providing lists of modified files and functions
+with each change makes the change logs more useful, and we therefore
+recommend to include them whenever possible and practical.
+
+It is also possible to generate the lists naming the modified entities
+by running a script.  One such script is @file{mklog.py} (written in
+Python 3); it is used by the @code{GCC} project.  Gnulib provides
+another variant of such a script, called @file{vcs-to-changelog.py},
+part of the @code{vcs-to-changelog} module.  Note that these scripts
+currently support fewer programming languages than the manual commands
+provided by Emacs (@pxref{Style of Change Logs}).  Therefore, the
+above mentioned method of generating the @code{ChangeLog} file from
+the @acronym{VCS} commit history, for instance via the
+@code{gitlog-to-changelog} script, usually gives better
+results---provided that the contributors stick to providing good
+commit messages.
 
 @node Style of Change Logs
 @subsection Style of Change Logs
@@ -3709,30 +3844,47 @@ function or variable.
 Here are some simple examples of change log entries, starting with the
 header line that says who made the change and when it was installed,
 followed by descriptions of specific changes.  (These examples are
-drawn from Emacs and GCC.)
+drawn from Emacs.)  Keep in mind that the line which shows the date of
+the change and the author's name and email address is needed only in a
+separate @file{ChangeLog} file, not when the change logs are kept in a
+@acronym{VCS}.
 
 @example
-1998-08-17  Richard Stallman  <rms@@gnu.org>
+2019-08-29  Noam Postavsky  <npostavs@@gmail.com>
 
-* register.el (insert-register): Return nil.
-(jump-to-register): Likewise.
+	Handle completely undecoded input in term (Bug#29918)
 
-* sort.el (sort-subr): Return nil.
+	* lisp/term.el (term-emulate-terminal): Avoid errors if the whole
+	decoded string is eight-bit characters.  Don't attempt to save the
+	string for next iteration in that case.
+	* test/lisp/term-tests.el (term-decode-partial)
+	(term-undecodable-input): New tests.
 
-* tex-mode.el (tex-bibtex-file, tex-file, tex-region):
-Restart the tex shell if process is gone or stopped.
-(tex-shell-running): New function.
+2019-06-15  Paul Eggert  <eggert@@cs.ucla.edu>
 
-* expr.c (store_one_arg): Round size up for move_block_to_reg.
-(expand_call): Round up when emitting USE insns.
-* stmt.c (assign_parms): Round size up for move_block_from_reg.
+	Port to platforms where tputs is in libtinfow
+
+	* configure.ac (tputs_library): Also try tinfow, ncursesw (Bug#33977).
+
+2019-02-08  Eli Zaretskii  <eliz@@gnu.org>
+
+	Improve documentation of 'date-to-time' and 'parse-time-string'
+
+	* doc/lispref/os.texi (Time Parsing): Document
+	'parse-time-string', and refer to it for the description of
+	the argument of 'date-to-time'.
+
+	* lisp/calendar/time-date.el (date-to-time): Refer in the doc
+	string to 'parse-time-string' for more information about the
+	format of the DATE argument.  (Bug#34303)
 @end example
 
-It's important to name the changed function or variable in full.  Don't
-abbreviate function or variable names, and don't combine them.
-Subsequent maintainers will often search for a function name to find all
-the change log entries that pertain to it; if you abbreviate the name,
-they won't find it when they search.
+If you mention the names of the modified functions or variables, it's
+important to name them in full.  Don't abbreviate function or variable
+names, and don't combine them.  Subsequent maintainers will often
+search for a function name to find all the change log entries that
+pertain to it; if you abbreviate the name, they won't find it when
+they search.
 
 For example, some people are tempted to abbreviate groups of function
 names by writing @samp{* register.el (@{insert,jump-to@}-register)};
@@ -3746,12 +3898,21 @@ the same file.
 
 Break long lists of function names by closing continued lines with
 @samp{)}, rather than @samp{,}, and opening the continuation with
-@samp{(} as in this example:
+@samp{(}.  This makes highlighting in Emacs work better.
+Here is an example:
 
 @example
-* keyboard.c (menu_bar_items, tool_bar_items)
+* src/keyboard.c (menu_bar_items, tool_bar_items)
 (Fexecute_extended_command): Deal with 'keymap' property.
 @end example
+
+The easiest way to add an entry to @file{ChangeLog} is with the Emacs
+command @kbd{M-x add-change-log-entry}, or its variant @kbd{C-x 4 a}
+(@code{add-change-log-entry-other-window}).  This automatically
+collects the name of the changed file and the changed function or
+variable, and formats a change log entry according to the conventions
+described above, leaving it up to you to describe the changes you made
+to that function or variable.
 
 When you install someone else's changes, put the contributor's name in
 the change log entry rather than in the text of the entry.  In other
@@ -3772,13 +3933,39 @@ rather than this:
         * sewing.c: Make it sew.  Patch by jdoe@@gnu.org.
 @end example
 
+When committing someone else's changes into a @acronym{VCS}, use the
+@acronym{VCS} features to specify the author.  For example, with Git,
+use @kbd{git commit --author=@var{author}}.
+
 As for the date, that should be the date you applied the change.
+(With a @acronym{VCS}, use the appropriate command-line switches,
+e.g., @kbd{git commit --date=@var{date}}.)
+
+Modern @acronym{VCS} have commands to apply changes sent via email
+(e.g., Git has @kbd{git am}); in that case the author of the changeset
+and the date it was made will be automatically gleaned from the email
+message and recorded in the repository.  If the patches are prepared
+with suitable @acronym{VCS} commands, such as @kbd{git format-patch},
+the email message body will also have the original author of the
+changeset, so resending or forwarding the message will not interfere
+with attributing the changes to their author.  Thus, we recommend that
+you request your contributors to use commands such as @kbd{git
+format-patch} to prepare the patches.
 
 @node Simple Changes
 @subsection Simple Changes
 
 Certain simple kinds of changes don't need much detail in the change
 log.
+
+If the description of the change is short enough, it can serve as its
+own header line:
+
+@example
+2019-08-29  Eli Zaretskii  <eliz@@gnu.org>
+
+	* lisp/simple.el (kill-do-not-save-duplicates): Doc fix.  (Bug#36827)
+@end example
 
 When you change the calling sequence of a function in a simple fashion,
 and you change all the callers of the function to use the new calling
@@ -3795,6 +3982,22 @@ When you change just comments or doc strings, it is enough to write an
 entry for the file, without mentioning the functions.  Just ``Doc
 fixes'' is enough for the change log.
 
+When you make changes in many files that follow mechanically from one
+underlying change, it is enough to describe the underlying change.
+Here's an example of a change that affects all of the files in the
+repository:
+
+@example
+2019-01-07  Paul Eggert  <eggert@@cs.ucla.edu>
+
+	Update copyright year to 2019
+
+	Run 'TZ=UTC0 admin/update-copyright $(git ls-files)'.
+@end example
+
+Test suite files are part of the software, so we recommend treating
+them as code for change-log purposes.
+
 There's no technical need to make change log entries for non-software
 files (manuals, help files, media files, etc.).  This is because they
 are not susceptible to bugs that are hard to understand.  To correct
@@ -3803,7 +4006,9 @@ is enough to compare what the file says with the actual facts.
 
 However, you should keep change logs for non-software files when the
 project gets copyright assignments from its contributors, so as to
-make the records of authorship more accurate.
+make the records of authorship more accurate.  For that reason, we
+recommend to keep change logs for Texinfo sources of your project's
+manuals.
 
 @node Conditional Changes
 @subsection Conditional Changes
