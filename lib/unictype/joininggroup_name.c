@@ -40,7 +40,7 @@ static const struct joining_group_stringpool_t joining_group_stringpool_contents
 
 static const int joining_group_index[] =
   {
-#define ELEM(tag,string) (int)(long)&((struct joining_group_stringpool_t *)0)->tag,
+#define ELEM(tag,string) (int)(size_t)&((struct joining_group_stringpool_t *)0)->tag,
 #include "unictype/joininggroup_name.h"
 #undef ELEM
   };
