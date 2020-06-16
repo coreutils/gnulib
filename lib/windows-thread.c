@@ -232,7 +232,7 @@ glwthread_thread_detach (glwthread_thread_t thread)
   return 0;
 }
 
-int
+void
 glwthread_thread_exit (void *retval)
 {
   glwthread_thread_t thread = glwthread_thread_self ();

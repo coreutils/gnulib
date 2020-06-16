@@ -46,7 +46,7 @@ extern int glwthread_thread_create (glwthread_thread_t *threadp,
 extern int glwthread_thread_join (glwthread_thread_t thread, void **retvalp);
 extern int glwthread_thread_detach (glwthread_thread_t thread);
 extern glwthread_thread_t glwthread_thread_self (void);
-extern int glwthread_thread_exit (void *retval);
+extern void glwthread_thread_exit (void *retval);
 
 #ifdef __cplusplus
 }
