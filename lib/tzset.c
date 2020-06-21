@@ -22,6 +22,9 @@
 /* Specification.  */
 #include <time.h>
 
+#include <stdlib.h>
+#include <string.h>
+
 #include "localtime-buffer.h"
 
 /* This is a wrapper for tzset, for systems on which tzset may clobber
