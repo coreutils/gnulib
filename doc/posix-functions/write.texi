@@ -6,11 +6,19 @@ POSIX specification:@* @url{https://pubs.opengroup.org/onlinepubs/9699919799/fun
 
 Gnulib module: write, nonblocking, sigpipe
 
-Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+Portability problems fixed by Gnulib module @code{write}:
 @itemize
+@item
+This function is declared in a different header file (namely, @code{<io.h>})
+on some platforms:
+mingw, MSVC 14.
 @item
 This function crashes when invoked with invalid arguments on some platforms:
 MSVC 14.
+@end itemize
+
+Portability problems fixed by Gnulib module @code{stdio}, together with module @code{nonblocking}:
+@itemize
 @item
 When writing to a non-blocking pipe whose buffer is full, this function fails
 with @code{errno} being set to @code{ENOSPC} instead of @code{EAGAIN} on some

@@ -9,6 +9,10 @@ Gnulib module: isatty
 Portability problems fixed by Gnulib:
 @itemize
 @item
+This function is declared in a different header file (namely, @code{<io.h>})
+on some platforms:
+MSVC 14.
+@item
 On native Windows, this function also returns true for character devices such
 as @file{NUL}.
 @item

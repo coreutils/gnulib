@@ -9,6 +9,11 @@ Gnulib module: dup2 or dup2-obsolete
 Portability problems fixed by either Gnulib module @code{dup2} or @code{dup2-obsolete}:
 @itemize
 @item
+This function is declared in a different header file (namely, @code{<io.h>})
+on some platforms:
+MSVC 14.
+
+@item
 This function always returns 0 for success on some platforms:
 mingw, MSVC 14.
 
