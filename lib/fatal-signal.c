@@ -26,6 +26,7 @@
 #include <signal.h>
 #include <unistd.h>
 
+#include "glthread/lock.h"
 #include "sig-handler.h"
 #include "xalloc.h"
 
@@ -200,11 +201,16 @@ install_handlers (void)
 }
 
 
+/* Lock that makes at_fatal_signal multi-thread safe.  */
+gl_lock_define_initialized (static, at_fatal_signal_lock)
+
 /* Register a cleanup function to be executed when a catchable fatal signal
    occurs.  */
 void
 at_fatal_signal (action_t action)
 {
+  gl_lock_lock (at_fatal_signal_lock);
+
   static bool cleanup_initialized = false;
   if (!cleanup_initialized)
     {
@@ -242,6 +248,8 @@ at_fatal_signal (action_t action)
      actions[actions_count].  */
   actions[actions_count].action = action;
   actions_count++;
+
+  gl_lock_unlock (at_fatal_signal_lock);
 }
 
 
@@ -269,20 +277,43 @@ init_fatal_signal_set (void)
     }
 }
 
+/* Lock and counter that allow block_fatal_signals/unblock_fatal_signals pairs
+   to occur in different threads and even overlap in time.  */
+gl_lock_define_initialized (static, fatal_signals_block_lock)
+static unsigned int fatal_signals_block_counter = 0;
+
 /* Temporarily delay the catchable fatal signals.  */
 void
 block_fatal_signals (void)
 {
-  init_fatal_signal_set ();
-  sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
+  gl_lock_lock (fatal_signals_block_lock);
+
+  if (fatal_signals_block_counter++ == 0)
+    {
+      init_fatal_signal_set ();
+      sigprocmask (SIG_BLOCK, &fatal_signal_set, NULL);
+    }
+
+  gl_lock_unlock (fatal_signals_block_lock);
 }
 
 /* Stop delaying the catchable fatal signals.  */
 void
 unblock_fatal_signals (void)
 {
-  init_fatal_signal_set ();
-  sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+  gl_lock_lock (fatal_signals_block_lock);
+
+  if (fatal_signals_block_counter == 0)
+    /* There are more calls to unblock_fatal_signals() than to
+       block_fatal_signals().  */
+    abort ();
+  if (--fatal_signals_block_counter == 0)
+    {
+      init_fatal_signal_set ();
+      sigprocmask (SIG_UNBLOCK, &fatal_signal_set, NULL);
+    }
+
+  gl_lock_unlock (fatal_signals_block_lock);
 }
 
 

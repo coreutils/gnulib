@@ -12,6 +12,7 @@ xalloc
 stdbool
 unistd
 sigaction
+lock
 sigprocmask
 raise
 
