@@ -9,6 +9,7 @@ m4/filenamecat.m4
 Depends-on:
 c99
 dirname-lgpl
+malloc-posix
 
 configure.ac:
 gl_FILE_NAME_CONCAT_LGPL
