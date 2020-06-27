@@ -7,7 +7,6 @@ m4/getloadavg.m4
 
 Depends-on:
 extensions
-fopen-gnu
 intprops
 open
 stdbool
