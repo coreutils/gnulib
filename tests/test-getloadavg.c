@@ -70,7 +70,7 @@ main (int argc, char **argv)
       if (loads > 1)
         check_avg (5, avg[1], argc > 1);
       if (loads > 2)
-        check_avg (15, avg[1], argc > 1);
+        check_avg (15, avg[2], argc > 1);
       if (loads > 0 && argc > 1)
         putchar ('\n');
 
