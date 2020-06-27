@@ -26,6 +26,9 @@ lib_SOURCES += tempname.c
 Include:
 "tempname.h"
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 LGPLv2+
 

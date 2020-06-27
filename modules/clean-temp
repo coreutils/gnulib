@@ -31,6 +31,9 @@ lib_SOURCES += clean-temp.h clean-temp.c
 Include:
 "clean-temp.h"
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 GPL
 

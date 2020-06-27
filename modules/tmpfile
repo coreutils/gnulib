@@ -26,6 +26,9 @@ Makefile.am:
 Include:
 <stdio.h>
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 LGPL
 

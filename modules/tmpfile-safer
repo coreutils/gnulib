@@ -20,6 +20,9 @@ lib_SOURCES += tmpfile-safer.c
 Include:
 "stdio-safer.h"
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 GPL
 

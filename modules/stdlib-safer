@@ -20,6 +20,9 @@ lib_SOURCES += mkstemp-safer.c
 Include:
 "stdlib-safer.h"
 
+Link:
+$(LIB_GETRANDOM)
+
 License:
 GPL
 
