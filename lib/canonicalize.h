@@ -46,7 +46,8 @@ typedef enum canonicalize_mode_t canonicalize_mode_t;
    does not contain any `.', `..' components nor any repeated file name
    separators ('/') or, depending on other CAN_MODE flags, symlinks.
    Whether components must exist or not depends on canonicalize mode.
-   The result is malloc'd.  */
+   The result is malloc'd.
+   Upon failure, return NULL with errno set.  */
 char *canonicalize_filename_mode (const char *, canonicalize_mode_t);
 
 #ifdef __cplusplus
