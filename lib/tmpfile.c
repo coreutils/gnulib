@@ -25,7 +25,7 @@
 #include <stdbool.h>
 
 #if defined _WIN32 && ! defined __CYGWIN__
-/* A native Windows platforms.  */
+/* A native Windows platform.  */
 
 # include <fcntl.h>
 # include <string.h>
@@ -50,7 +50,7 @@
    used on native Windows and Android.  */
 
 #if defined _WIN32 && ! defined __CYGWIN__
-/* A native Windows platforms.  */
+/* A native Windows platform.  */
 
 /* Don't assume that UNICODE is not defined.  */
 # undef OSVERSIONINFO
