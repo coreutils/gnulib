@@ -29,7 +29,7 @@
 
 /* Return the current directory, newly allocated.
    Upon an out-of-memory error, call xalloc_die.
-   Upon any other type of error, return NULL.  */
+   Upon any other type of error, return NULL with errno set.  */
 
 char *
 xgetcwd (void)
