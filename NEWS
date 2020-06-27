@@ -58,6 +58,10 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-06-27  clean-temp      The functions open_temp, fopen_temp now take a
+                            'bool delete_on_close' argument. If in doubt, pass
+                            false.
+
 2020-06-27  tempname        The link requirements of these modules are changed
             mkdtemp         from empty to $(LIB_GETRANDOM).
             mkstemp

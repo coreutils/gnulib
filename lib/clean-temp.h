@@ -117,9 +117,13 @@ extern int cleanup_temp_dir_contents (struct temp_dir *dir);
 extern int cleanup_temp_dir (struct temp_dir *dir);
 
 /* Open a temporary file in a temporary directory.
-   Registers the resulting file descriptor to be closed.  */
-extern int open_temp (const char *file_name, int flags, mode_t mode);
-extern FILE * fopen_temp (const char *file_name, const char *mode);
+   Registers the resulting file descriptor to be closed.
+   DELETE_ON_CLOSE indicates whether the file can be deleted when the resulting
+   file descriptor or stream is closed.  */
+extern int open_temp (const char *file_name, int flags, mode_t mode,
+                      bool delete_on_close);
+extern FILE * fopen_temp (const char *file_name, const char *mode,
+                          bool delete_on_close);
 
 /* Close a temporary file in a temporary directory.
    Unregisters the previously registered file descriptor.  */

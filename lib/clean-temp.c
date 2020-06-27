@@ -630,7 +630,7 @@ unregister_fd (int fd)
 /* Open a temporary file in a temporary directory.
    Registers the resulting file descriptor to be closed.  */
 int
-open_temp (const char *file_name, int flags, mode_t mode)
+open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
 {
   int fd;
   int saved_errno;
@@ -640,7 +640,7 @@ open_temp (const char *file_name, int flags, mode_t mode)
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
      temporary file is removed when the process crashes.  */
-  if (supports_delete_on_close ())
+  if (delete_on_close && supports_delete_on_close ())
     fd = open (file_name, flags | _O_TEMPORARY, mode);
   else
 #endif
@@ -656,7 +656,7 @@ open_temp (const char *file_name, int flags, mode_t mode)
 /* Open a temporary file in a temporary directory.
    Registers the resulting file descriptor to be closed.  */
 FILE *
-fopen_temp (const char *file_name, const char *mode)
+fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 {
   FILE *fp;
   int saved_errno;
@@ -666,7 +666,7 @@ fopen_temp (const char *file_name, const char *mode)
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Use _O_TEMPORARY when possible, to increase the chances that the
      temporary file is removed when the process crashes.  */
-  if (supports_delete_on_close ())
+  if (delete_on_close && supports_delete_on_close ())
     {
       size_t mode_len = strlen (mode);
       char *augmented_mode = (char *) xmalloca (mode_len + 2);
