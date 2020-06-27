@@ -39,6 +39,7 @@ orig_fopen (const char *filename, const char *mode)
 
 #include <errno.h>
 #include <fcntl.h>
+#include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -48,13 +49,12 @@ FILE *
 rpl_fopen (const char *filename, const char *mode)
 {
   int open_direction;
-  int open_flags_standard;
+  int open_flags;
 #if GNULIB_FOPEN_GNU
-  int open_flags_gnu;
+  bool open_flags_gnu;
 # define BUF_SIZE 80
   char fdopen_mode_buf[BUF_SIZE + 1];
 #endif
-  int open_flags;
 
 #if defined _WIN32 && ! defined __CYGWIN__
   if (strcmp (filename, "/dev/null") == 0)
@@ -63,9 +63,9 @@ rpl_fopen (const char *filename, const char *mode)
 
   /* Parse the mode.  */
   open_direction = 0;
-  open_flags_standard = 0;
+  open_flags = 0;
 #if GNULIB_FOPEN_GNU
-  open_flags_gnu = 0;
+  open_flags_gnu = false;
 #endif
   {
     const char *p = mode;
@@ -86,7 +86,7 @@ rpl_fopen (const char *filename, const char *mode)
             continue;
           case 'w':
             open_direction = O_WRONLY;
-            open_flags_standard |= O_CREAT | O_TRUNC;
+            open_flags |= O_CREAT | O_TRUNC;
 #if GNULIB_FOPEN_GNU
             if (q < fdopen_mode_buf + BUF_SIZE)
               *q++ = *p;
@@ -94,7 +94,7 @@ rpl_fopen (const char *filename, const char *mode)
             continue;
           case 'a':
             open_direction = O_WRONLY;
-            open_flags_standard |= O_CREAT | O_APPEND;
+            open_flags |= O_CREAT | O_APPEND;
 #if GNULIB_FOPEN_GNU
             if (q < fdopen_mode_buf + BUF_SIZE)
               *q++ = *p;
@@ -104,7 +104,7 @@ rpl_fopen (const char *filename, const char *mode)
             /* While it is non-standard, O_BINARY is guaranteed by
                gnulib <fcntl.h>.  We can also assume that orig_fopen
                supports the 'b' flag.  */
-            open_flags_standard |= O_BINARY;
+            open_flags |= O_BINARY;
 #if GNULIB_FOPEN_GNU
             if (q < fdopen_mode_buf + BUF_SIZE)
               *q++ = *p;
@@ -119,10 +119,12 @@ rpl_fopen (const char *filename, const char *mode)
             continue;
 #if GNULIB_FOPEN_GNU
           case 'x':
-            open_flags_gnu |= O_EXCL;
+            open_flags |= O_EXCL;
+            open_flags_gnu = true;
             continue;
           case 'e':
-            open_flags_gnu |= O_CLOEXEC;
+            open_flags |= O_CLOEXEC;
+            open_flags_gnu = true;
             continue;
 #endif
           default:
@@ -145,11 +147,6 @@ rpl_fopen (const char *filename, const char *mode)
     *q = '\0';
 #endif
   }
-#if GNULIB_FOPEN_GNU
-  open_flags = open_flags_standard | open_flags_gnu;
-#else
-  open_flags = open_flags_standard;
-#endif
 
 #if FOPEN_TRAILING_SLASH_BUG
   /* Fail if the mode requires write access and the filename ends in a slash,
@@ -207,7 +204,7 @@ rpl_fopen (const char *filename, const char *mode)
 #endif
 
 #if GNULIB_FOPEN_GNU
-  if (open_flags_gnu != 0)
+  if (open_flags_gnu)
     {
       int fd;
       FILE *fp;

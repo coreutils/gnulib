@@ -8,6 +8,7 @@ m4/fopen.m4
 Depends-on:
 stdio
 largefile
+stdbool         [test $REPLACE_FOPEN = 1]
 unistd          [test $REPLACE_FOPEN = 1]
 fstat           [test $REPLACE_FOPEN = 1]
 
