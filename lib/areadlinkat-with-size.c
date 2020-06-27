@@ -84,6 +84,8 @@ areadlinkat_with_size (int fd, char const *file, size_t size)
         {
           buf = buffer = malloc (buf_size);
           if (!buffer)
+            /* We can assume errno == ENOMEM here, since all platforms that have
+               readlinkat() have a POSIX compliant malloc().  */
             return NULL;
         }
 

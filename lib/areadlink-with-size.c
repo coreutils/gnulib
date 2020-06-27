@@ -79,7 +79,10 @@ areadlink_with_size (char const *file, size_t size)
         {
           buf = buffer = malloc (buf_size);
           if (!buffer)
-            return NULL;
+            {
+              errno = ENOMEM;
+              return NULL;
+            }
         }
 
       r = readlink (file, buf, buf_size);
