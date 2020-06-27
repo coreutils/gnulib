@@ -239,8 +239,15 @@ at_fatal_signal (action_t action)
       actions = new_actions;
       actions_allocated = new_actions_allocated;
       /* Now we can free the old actions array.  */
+      /* No, we can't do that.  If fatal_signal_handler is running in a
+         different thread and has already fetched the actions pointer (getting
+         old_actions) but not yet accessed its n-th element, that thread may
+         crash when accessing an element of the already freed old_actions
+         array.  */
+      #if 0
       if (old_actions != static_actions)
         free (old_actions);
+      #endif
     }
   /* The two uses of 'volatile' in the types above (and ISO C 99 section
      5.1.2.3.(5)) ensure that we increment the actions_count only after
