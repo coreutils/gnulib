@@ -9,9 +9,10 @@ Depends-on:
 sys_random
 fcntl-h             [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
 minmax              [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
-open                [test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1]
+open                [case $host_os in mingw*) false;; *) test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1;; esac]
 
 configure.ac:
+AC_REQUIRE([AC_CANONICAL_HOST])
 gl_FUNC_GETRANDOM
 if test $HAVE_GETRANDOM = 0 || test $REPLACE_GETRANDOM = 1; then
   AC_LIBOBJ([getrandom])
