@@ -332,6 +332,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
     }
   block_fatal_signals ();
   tmpdirname = mkdtemp (xtemplate);
+  int saved_errno = errno;
   if (tmpdirname != NULL)
     {
       tmpdir->dirname = tmpdirname;
@@ -340,7 +341,7 @@ create_temp_dir (const char *prefix, const char *parentdir,
   unblock_fatal_signals ();
   if (tmpdirname == NULL)
     {
-      error (0, errno,
+      error (0, saved_errno,
              _("cannot create a temporary directory using template \"%s\""),
              xtemplate);
       goto quit;
