@@ -442,7 +442,7 @@ sc_prohibit_gnu_make_extensions:
 	    $(SED) -ne '/Makefile/{s/\.in$$//;p;}' |			\
 	    while read m; do						\
 	      $(MAKE) -qp -f $$m .DUMMY-TARGET 2>/dev/null |		\
-	        $(AWK) -v file=$$m -e '$($@_awk_)' || exit 1;		\
+		$(AWK) -v file=$$m -e '$($@_awk_)' || exit 1;		\
 	    done;							\
 	fi
 
@@ -915,7 +915,7 @@ sc_prohibit_always-defined_macros:
 		dummy /dev/null						\
 	    && { printf '$(ME): define the above'			\
 			' via some gnulib .h file\n' 1>&2;		\
-	         exit 1; }						\
+		 exit 1; }						\
 	    || :;							\
 	fi
 # ==================================================================
