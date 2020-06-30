@@ -195,12 +195,7 @@ struct sockaddr_storage
 /* Include headers needed by the emulation code.  */
 #  include <sys/types.h>
 #  include <io.h>
-
-#  if !GNULIB_defined_socklen_t
-typedef int socklen_t;
-#   define GNULIB_defined_socklen_t 1
-#  endif
-
+/* If these headers don't define socklen_t, <config.h> does.  */
 # endif
 
 /* Rudimentary 'struct msghdr'; this works as long as you don't try to
