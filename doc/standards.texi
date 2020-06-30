@@ -3677,28 +3677,28 @@ where can it be found?
 @cindex version control system, for keeping change logs
 Historically, change logs were maintained on specially formatted
 files.  Nowadays, projects commonly keep their source files under a
-@dfn{version control system} (@acronym{VCS}), such as Git,
-Subversion, or Mercurial.  If the @acronym{VCS} repository is publicly
+@dfn{version control system} (VCS), such as Git,
+Subversion, or Mercurial.  If the VCS repository is publicly
 accessible, and changes are committed to it separately (one commit for
 each logical changeset) and record the authors of each change, then
-the information recorded by the @acronym{VCS} can be used to produce
-the change logs out of @acronym{VCS} logs, and to answer the above
-questions by using the suitable @acronym{VCS} commands.  (However, the
-@acronym{VCS} log messages still need to provide some supporting
+the information recorded by the VCS can be used to produce
+the change logs out of VCS logs, and to answer the above
+questions by using the suitable VCS commands.  (However, the
+VCS log messages still need to provide some supporting
 information, as described below.)  Projects that maintain such
-@acronym{VCS} repositories can decide not to maintain separate change
-log files, and instead rely on the @acronym{VCS} to keep the change
+VCS repositories can decide not to maintain separate change
+log files, and instead rely on the VCS to keep the change
 logs.
 
 If you decide not to maintain separate change log files, you should
 still consider providing them in the release tarballs, for the benefit
 of users who'd like to review the change logs without accessing the
-project's @acronym{VCS} repository.  Scripts exist that can produce
-@file{ChangeLog} files from the @acronym{VCS} logs; for example, the
+project's VCS repository.  Scripts exist that can produce
+@file{ChangeLog} files from the VCS logs; for example, the
 @file{gitlog-to-changelog} script, which is part of Gnulib, can do
 that for Git repositories.  In Emacs, the command @kbd{C-x v a}
 (@code{vc-update-change-log}) does the job of incrementally updating a
-@file{ChangeLog} file from the @acronym{VCS} logs.
+@file{ChangeLog} file from the VCS logs.
 
 If separate change log files @emph{are} maintained, they are normally
 called @file{ChangeLog}, and each such file covers an entire
@@ -3731,8 +3731,8 @@ batch of changes that belong together, also known as a @dfn{changeset}.
 @cindex header line, change log entry
 It is a good idea to start the change log entry with a @dfn{header
 line}: a single line that is a complete sentence which summarizes the
-changeset.  If you keep the change log in a @acronym{VCS}, this
-should be a requirement, as @acronym{VCS} commands that show the
+changeset.  If you keep the change log in a VCS, this
+should be a requirement, as VCS commands that show the
 change log in abbreviated form, such as @kbd{git log --oneline}, treat
 the header line specially.  (In a @file{ChangeLog} file, the header
 line follows a line that says who was the author of the change and
@@ -3772,7 +3772,7 @@ Following the free-text description of the change, it is a good idea
 to give a list of names of the entities or definitions that you
 changed, according to the files they are in, and what was changed in
 each one.  @xref{Style of Change Logs}.  If a project uses a modern
-@acronym{VCS} to keep the change log information, as described in
+VCS to keep the change log information, as described in
 @ref{Change Logs}, explicitly listing the files and functions that
 were changed is not strictly necessary, and in some cases (like
 identical mechanical changes in many places) even tedious.  It is up
@@ -3784,9 +3784,9 @@ benefits of providing the list of changed entities with each change:
 
 @itemize @bullet
 @item
-Generation of useful @file{ChangeLog} files from @acronym{VCS} logs
+Generation of useful @file{ChangeLog} files from VCS logs
 becomes more difficult if the change log entries don't list the
-modified functions/macros, because @acronym{VCS} commands cannot
+modified functions/macros, because VCS commands cannot
 reliably reproduce their names from the commit information alone.  For
 example, when there is a change in the header part of a function
 definition, the heading of the diff hunk as shown in the VCS log
@@ -3799,7 +3799,7 @@ difficulties, and make sure it supports the source languages used by
 your project.
 
 @item
-While modern @acronym{VCS} commands, such as Git's @kbd{git log -L}
+While modern VCS commands, such as Git's @kbd{git log -L}
 and @kbd{git log -G}, provide powerful means for finding changes that
 affected a certain function or macro or data structure (and thus might
 make @file{ChangeLog} files unnecessary if you have the repository
@@ -3809,13 +3809,13 @@ Mentioning the modified functions/macros explicitly allows finding the
 related changes simply and reliably.
 
 @item
-Some @acronym{VCS} commands have difficulties or limitations when
+Some VCS commands have difficulties or limitations when
 tracking changes across file moves or renames.  Again, if the entities
 are mentioned explicitly, those difficulties can be overcome.
 
 @item
 Users that review changes using the generated @file{ChangeLog} files
-may not have the repository and the @acronym{VCS} commands available
+may not have the repository and the VCS commands available
 to them.  Naming the modified entities alleviates that problem.
 @end itemize
 
@@ -3832,7 +3832,7 @@ part of the @code{vcs-to-changelog} module.  Note that these scripts
 currently support fewer programming languages than the manual commands
 provided by Emacs (@pxref{Style of Change Logs}).  Therefore, the
 above mentioned method of generating the @code{ChangeLog} file from
-the @acronym{VCS} commit history, for instance via the
+the VCS commit history, for instance via the
 @code{gitlog-to-changelog} script, usually gives better
 results---provided that the contributors stick to providing good
 commit messages.
@@ -3847,7 +3847,7 @@ followed by descriptions of specific changes.  (These examples are
 drawn from Emacs.)  Keep in mind that the line which shows the date of
 the change and the author's name and email address is needed only in a
 separate @file{ChangeLog} file, not when the change logs are kept in a
-@acronym{VCS}.
+VCS.
 
 @example
 2019-08-29  Noam Postavsky  <npostavs@@gmail.com>
@@ -3933,19 +3933,19 @@ rather than this:
         * sewing.c: Make it sew.  Patch by jdoe@@gnu.org.
 @end example
 
-When committing someone else's changes into a @acronym{VCS}, use the
-@acronym{VCS} features to specify the author.  For example, with Git,
+When committing someone else's changes into a VCS, use the
+VCS features to specify the author.  For example, with Git,
 use @kbd{git commit --author=@var{author}}.
 
 As for the date, that should be the date you applied the change.
-(With a @acronym{VCS}, use the appropriate command-line switches,
+(With a VCS, use the appropriate command-line switches,
 e.g., @kbd{git commit --date=@var{date}}.)
 
-Modern @acronym{VCS} have commands to apply changes sent via email
+Modern VCS have commands to apply changes sent via email
 (e.g., Git has @kbd{git am}); in that case the author of the changeset
 and the date it was made will be automatically gleaned from the email
 message and recorded in the repository.  If the patches are prepared
-with suitable @acronym{VCS} commands, such as @kbd{git format-patch},
+with suitable VCS commands, such as @kbd{git format-patch},
 the email message body will also have the original author of the
 changeset, so resending or forwarding the message will not interfere
 with attributing the changes to their author.  Thus, we recommend that
