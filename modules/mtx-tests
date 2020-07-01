@@ -1,6 +1,7 @@
 Files:
 tests/test-mtx.c
 tests/test-call_once.c
+tests/atomic-int-isoc.h
 tests/macros.h
 
 Depends-on:
