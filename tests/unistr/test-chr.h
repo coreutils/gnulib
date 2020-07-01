@@ -48,7 +48,9 @@ main (void)
   ASSERT (U_CHR (input, length, 'a') == input);
 
   ASSERT (U_CHR (input, 0, 'a') == NULL);
-  ASSERT (U_CHR (zerosize_ptr (), 0, 'a') == NULL);
+  void *page_boundary = zerosize_ptr ();
+  if (page_boundary)
+    ASSERT (U_CHR (page_boundary, 0, 'a') == NULL);
 
   ASSERT (U_CHR (input, length, 'b') == input + 1);
   ASSERT (U_CHR (input, length, 'c') == input + 2);

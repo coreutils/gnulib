@@ -49,7 +49,9 @@ main (void)
   ASSERT (MEMRCHR (input, 'a', n) == input + n - 1);
 
   ASSERT (MEMRCHR (input, 'a', 0) == NULL);
-  ASSERT (MEMRCHR (zerosize_ptr (), 'a', 0) == NULL);
+  void *page_boundary = zerosize_ptr ();
+  if (page_boundary)
+    ASSERT (MEMRCHR (page_boundary, 'a', 0) == NULL);
 
   ASSERT (MEMRCHR (input, 'b', n) == input + n - 2);
   ASSERT (MEMRCHR (input, 'c', n) == input + n - 3);

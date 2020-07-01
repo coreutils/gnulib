@@ -20,7 +20,10 @@ static void
 test_cmp (void)
 {
   /* Test equal / not equal distinction.  */
-  ASSERT (U_CMP (zerosize_ptr (), zerosize_ptr (), 0) == 0);
+  void *page_boundary1 = zerosize_ptr ();
+  void *page_boundary2 = zerosize_ptr ();
+  if (page_boundary1 && page_boundary2)
+    ASSERT (U_CMP (page_boundary1, page_boundary2, 0) == 0);
   {
     static const UNIT input1[] = { 'f', 'o', 'o', 0 };
     static const UNIT input2[] = { 'f', 'o', 'o', 'b', 'a', 'r', 0 };

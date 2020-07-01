@@ -31,7 +31,10 @@ main (void)
   int (* volatile memcmp_ptr) (const void *, const void *, size_t) = memcmp;
 
   /* Test equal / not equal distinction.  */
-  ASSERT (memcmp (zerosize_ptr (), zerosize_ptr (), 0) == 0);
+  void *page_boundary1 = zerosize_ptr ();
+  void *page_boundary2 = zerosize_ptr ();
+  if (page_boundary1 && page_boundary2)
+    ASSERT (memcmp (page_boundary1, page_boundary2, 0) == 0);
   ASSERT (memcmp ("foo", "foobar", 2) == 0);
   ASSERT (memcmp ("foo", "foobar", 3) == 0);
   ASSERT (memcmp ("foo", "foobar", 4) != 0);

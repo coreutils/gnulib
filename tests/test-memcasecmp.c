@@ -28,7 +28,10 @@ int
 main (void)
 {
   /* Test equal / not equal distinction.  */
-  ASSERT (memcasecmp (zerosize_ptr (), zerosize_ptr (), 0) == 0);
+  void *page_boundary1 = zerosize_ptr ();
+  void *page_boundary2 = zerosize_ptr ();
+  if (page_boundary1 && page_boundary2)
+    ASSERT (memcasecmp (page_boundary1, page_boundary2, 0) == 0);
   ASSERT (memcasecmp ("foo", "foobar", 2) == 0);
   ASSERT (memcasecmp ("foo", "foobar", 3) == 0);
   ASSERT (memcasecmp ("foo", "foobar", 4) != 0);
