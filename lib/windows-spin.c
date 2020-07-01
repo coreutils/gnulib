@@ -27,6 +27,7 @@ void
 glwthread_spin_init (glwthread_spinlock_t *lock)
 {
   lock->word = 0;
+  MemoryBarrier ();
 }
 
 int
