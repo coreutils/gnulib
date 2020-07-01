@@ -1,5 +1,6 @@
 Files:
 tests/test-pthread-rwlock.c
+tests/atomic-int-posix.h
 tests/macros.h
 
 Depends-on:
