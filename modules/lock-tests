@@ -2,6 +2,7 @@ Files:
 tests/test-rwlock1.c
 tests/test-lock.c
 tests/test-once.c
+tests/atomic-int-gnulib.h
 m4/semaphore.m4
 
 Depends-on:
