@@ -21,6 +21,8 @@
 /* Specification.  */
 #include <pthread.h>
 
+#include <stdbool.h>
+
 #if (defined _WIN32 && ! defined __CYGWIN__) && USE_WINDOWS_THREADS
 # include "windows-spin.h"
 #endif
@@ -72,6 +74,55 @@ pthread_spin_destroy (pthread_spinlock_t *lock)
    Documentation:
    <https://gcc.gnu.org/onlinedocs/gcc-4.7.0/gcc/_005f_005fatomic-Builtins.html>  */
 
+#  if 1
+/* An implementation that verifies the unlocks.  */
+
+int
+pthread_spin_init (pthread_spinlock_t *lock,
+                   int shared_across_processes _GL_UNUSED)
+{
+  __atomic_store_n ((char *) lock, 0, __ATOMIC_SEQ_CST);
+  return 0;
+}
+
+int
+pthread_spin_lock (pthread_spinlock_t *lock)
+{
+  /* Wait until *lock becomes 0, then replace it with 1.  */
+  asyncsafe_spinlock_t zero;
+  while (!(zero = 0,
+           __atomic_compare_exchange_n ((char *) lock, &zero, 1, false,
+                                        __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)))
+    ;
+  return 0;
+}
+
+int
+pthread_spin_trylock (pthread_spinlock_t *lock)
+{
+  asyncsafe_spinlock_t zero;
+  if (!(zero = 0,
+        __atomic_compare_exchange_n ((char *) lock, &zero, 1, false,
+                                     __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST)))
+    return EBUSY;
+  return 0;
+}
+
+int
+pthread_spin_unlock (pthread_spinlock_t *lock)
+{
+  /* If *lock is 1, then replace it with 0.  */
+  asyncsafe_spinlock_t one = 1;
+  if (!__atomic_compare_exchange_n ((char *) lock, &one, 0, false,
+                                    __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST))
+    abort ();
+  return 0;
+}
+
+#  else
+/* An implementation that is a little bit more optimized, but does not verify
+   the unlocks.  */
+
 int
 pthread_spin_init (pthread_spinlock_t *lock,
                    int shared_across_processes _GL_UNUSED)
@@ -102,6 +153,8 @@ pthread_spin_unlock (pthread_spinlock_t *lock)
   __atomic_clear (lock, __ATOMIC_SEQ_CST);
   return 0;
 }
+
+#  endif
 
 int
 pthread_spin_destroy (pthread_spinlock_t *lock)

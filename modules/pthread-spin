@@ -7,6 +7,7 @@ m4/pthread-spin.m4
 
 Depends-on:
 pthread-h
+stdbool         [test $HAVE_PTHREAD_SPIN_INIT = 0 || test $REPLACE_PTHREAD_SPIN_INIT = 1]
 windows-spin    [test $gl_threads_api = windows]
 
 configure.ac:
