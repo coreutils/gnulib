@@ -12,6 +12,7 @@ sigprocmask
 windows-spin
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 AC_CHECK_HEADERS_ONCE([pthread.h])
 
 Makefile.am:
