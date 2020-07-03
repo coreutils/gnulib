@@ -28,6 +28,7 @@ xalloc
 xalloc-die
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += dfa.c localeinfo.c
