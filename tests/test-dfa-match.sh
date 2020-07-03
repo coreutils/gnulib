@@ -18,7 +18,7 @@
 
 . "${srcdir=.}/init.sh"; path_prepend_ ../src
 
-# Add "." to PATH for the use of dfa-match-aux.
+# Add "." to PATH for the use of test-dfa-match-aux.
 path_prepend_ .
 
 if (type timeout) >/dev/null 2>&1; then
@@ -33,11 +33,11 @@ fi
 
 fail=0
 
-${CHECKER} dfa-match-aux a ba 0 > out || fail=1
+${CHECKER} test-dfa-match-aux a ba 0 > out || fail=1
 compare /dev/null out || fail=1
 
 in=$(printf "bb\nbb")
-$timeout_10 ${CHECKER} dfa-match-aux a "$in" 1 > out || fail=1
+$timeout_10 ${CHECKER} test-dfa-match-aux a "$in" 1 > out || fail=1
 compare /dev/null out || fail=1
 
 Exit $fail

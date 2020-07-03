@@ -1,7 +1,7 @@
 Files:
-tests/dfa-match.sh
-tests/dfa-match-aux.c
-tests/dfa-invalid-char-class.sh
+tests/test-dfa-match.sh
+tests/test-dfa-match-aux.c
+tests/test-dfa-invalid-char-class.sh
 
 Depends-on:
 getprogname
@@ -13,9 +13,9 @@ regex
 configure.ac:
 
 Makefile.am:
-TESTS +=			\
-  dfa-invalid-char-class.sh	\
-  dfa-match.sh
+TESTS += \
+  test-dfa-invalid-char-class.sh \
+  test-dfa-match.sh
 
-check_PROGRAMS += dfa-match-aux
-dfa_match_aux_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(LIB_MBRTOWC)
+check_PROGRAMS += test-dfa-match-aux
+test_dfa_match_aux_LDADD = $(LDADD) $(LIB_SETLOCALE) @LIBINTL@ $(LIB_MBRTOWC)
