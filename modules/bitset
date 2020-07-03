@@ -24,6 +24,9 @@ gettext-h
 obstack
 xalloc
 
+configure.ac:
+AC_REQUIRE([AC_C_INLINE])
+
 Makefile.am:
 lib_SOURCES += bitset.c bitset/array.c bitset/stats.c \
   bitset/table.c bitset/list.c bitset/vector.c
