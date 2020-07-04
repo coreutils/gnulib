@@ -43,6 +43,10 @@ SIGNATURE_CHECK (GNULIB_NAMESPACE::futimens, int,
                  (int, struct timespec const[2]));
 #endif
 
+#if GNULIB_TEST_GETUMASK
+SIGNATURE_CHECK (GNULIB_NAMESPACE::getumask, mode_t, (void));
+#endif
+
 #if GNULIB_TEST_LCHMOD
 SIGNATURE_CHECK (GNULIB_NAMESPACE::lchmod, int, (const char *, mode_t));
 #endif

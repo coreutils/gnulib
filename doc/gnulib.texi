@@ -6119,10 +6119,12 @@ This list of functions is sorted according to the header that declares them.
 @section Glibc Extensions to @code{<sys/stat.h>}
 
 @menu
+* getumask::
 * lchmod::
 * statx::
 @end menu
 
+@include glibc-functions/getumask.texi
 @include glibc-functions/lchmod.texi
 @include glibc-functions/statx.texi
 
