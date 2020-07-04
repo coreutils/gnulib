@@ -868,6 +868,7 @@ close_temp (int fd)
            handler.  */
         if (element->fd == fd)
           {
+            found = true;
             result = asyncsafe_close (element);
             saved_errno = errno;
           }
@@ -929,6 +930,7 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
            signal handler.  */
         if (element->fd == fd)
           {
+            found = true;
             result = asyncsafe_fclose_variant (element, fp, fclose_variant);
             saved_errno = errno;
           }
