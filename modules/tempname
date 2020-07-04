@@ -19,6 +19,7 @@ sys_stat
 
 configure.ac:
 gl_FUNC_GEN_TEMPNAME
+gl_MODULE_INDICATOR([tempname])
 
 Makefile.am:
 lib_SOURCES += tempname.c

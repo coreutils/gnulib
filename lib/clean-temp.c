@@ -48,6 +48,9 @@
 #include "gl_linkedhash_list.h"
 #include "gl_linked_list.h"
 #include "gettext.h"
+#if GNULIB_TEMPNAME
+# include "tempname.h"
+#endif
 #if GNULIB_FWRITEERROR
 # include "fwriteerror.h"
 #endif
@@ -958,8 +961,34 @@ fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
   return fp;
 }
 
+#if GNULIB_TEMPNAME
+/* Open a temporary file, generating its name based on FILE_NAME_TMPL.
+   FILE_NAME_TMPL must match the rules for mk[s]temp (i.e. end in "XXXXXX",
+   possibly with a suffix).  The name constructed does not exist at the time
+   of the call.  FILE_NAME_TMPL is overwritten with the result.
+   Registers the file for deletion.
+   Opens the file, with the given FLAGS and mode 0600.
+   Registers the resulting file descriptor to be closed.  */
+int
+gen_register_open_temp (char *file_name_tmpl, int suffixlen, int flags)
+{
+  block_fatal_signals ();
+  int fd = gen_tempname (file_name_tmpl, suffixlen, flags, GT_FILE);
+  int saved_errno = errno;
+  if (fd >= 0)
+    {
+      init_clean_temp ();
+      register_fd (fd);
+      register_temporary_file (file_name_tmpl);
+    }
+  unblock_fatal_signals ();
+  errno = saved_errno;
+  return fd;
+}
+#endif
+
 /* Close a temporary file.
-   FD must have been returned by open_temp.
+   FD must have been returned by open_temp or gen_register_open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 close_temp (int fd)
@@ -1088,7 +1117,7 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
 
 /* Close a temporary file.
    FP must have been returned by fopen_temp, or by fdopen on a file descriptor
-   returned by open_temp.
+   returned by open_temp or gen_register_open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 fclose_temp (FILE *fp)
@@ -1099,7 +1128,7 @@ fclose_temp (FILE *fp)
 #if GNULIB_FWRITEERROR
 /* Like fwriteerror.
    FP must have been returned by fopen_temp, or by fdopen on a file descriptor
-   returned by open_temp.
+   returned by open_temp or gen_register_open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 fwriteerror_temp (FILE *fp)
@@ -1111,7 +1140,7 @@ fwriteerror_temp (FILE *fp)
 #if GNULIB_CLOSE_STREAM
 /* Like close_stream.
    FP must have been returned by fopen_temp, or by fdopen on a file descriptor
-   returned by open_temp.
+   returned by open_temp or gen_register_open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 close_stream_temp (FILE *fp)
