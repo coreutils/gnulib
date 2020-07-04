@@ -86,6 +86,10 @@ static int fatal_signals[] =
 static void
 init_fatal_signals (void)
 {
+  /* This function is multithread-safe even without synchronization, because
+     if two threads execute it simultaneously, the fatal_signals[] array will
+     not change any more after the first of the threads has completed this
+     function.  */
   static bool fatal_signals_initialized = false;
   if (!fatal_signals_initialized)
     {
@@ -266,22 +270,25 @@ at_fatal_signal (action_t action)
 static sigset_t fatal_signal_set;
 
 static void
+do_init_fatal_signal_set (void)
+{
+  size_t i;
+
+  init_fatal_signals ();
+
+  sigemptyset (&fatal_signal_set);
+  for (i = 0; i < num_fatal_signals; i++)
+    if (fatal_signals[i] >= 0)
+      sigaddset (&fatal_signal_set, fatal_signals[i]);
+}
+
+/* Ensure that do_init_fatal_signal_set is called once only.  */
+gl_once_define(static, fatal_signal_set_once)
+
+static void
 init_fatal_signal_set (void)
 {
-  static bool fatal_signal_set_initialized = false;
-  if (!fatal_signal_set_initialized)
-    {
-      size_t i;
-
-      init_fatal_signals ();
-
-      sigemptyset (&fatal_signal_set);
-      for (i = 0; i < num_fatal_signals; i++)
-        if (fatal_signals[i] >= 0)
-          sigaddset (&fatal_signal_set, fatal_signals[i]);
-
-      fatal_signal_set_initialized = true;
-    }
+  gl_once (fatal_signal_set_once, do_init_fatal_signal_set);
 }
 
 /* Lock and counter that allow block_fatal_signals/unblock_fatal_signals pairs
