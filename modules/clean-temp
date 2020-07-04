@@ -9,6 +9,7 @@ Depends-on:
 stdbool
 stdint
 unistd
+lock
 error
 fatal-signal
 open

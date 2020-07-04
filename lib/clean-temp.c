@@ -42,6 +42,7 @@
 #include "tmpdir.h"
 #include "xalloc.h"
 #include "xmalloca.h"
+#include "glthread/lock.h"
 #include "gl_xlist.h"
 #include "gl_linkedhash_list.h"
 #include "gettext.h"
@@ -95,6 +96,10 @@ struct tempdir
   gl_list_t /* <char *> */ volatile files;
 };
 
+/* Lock that protects the cleanup_list from concurrent modification in
+   different threads.  */
+gl_lock_define_initialized (static, cleanup_list_lock)
+
 /* List of all temporary directories.  */
 static struct
 {
@@ -102,6 +107,10 @@ static struct
   size_t volatile tempdir_count;
   size_t tempdir_allocated;
 } cleanup_list /* = { NULL, 0, 0 } */;
+
+/* Lock that protects the descriptors list from concurrent modification in
+   different threads.  */
+gl_lock_define_initialized (static, descriptors_lock)
 
 /* List of all open file descriptors to temporary files.  */
 static gl_list_t /* <int> */ volatile descriptors;
@@ -255,6 +264,8 @@ struct temp_dir *
 create_temp_dir (const char *prefix, const char *parentdir,
                  bool cleanup_verbose)
 {
+  gl_lock_lock (cleanup_list_lock);
+
   struct tempdir * volatile *tmpdirp = NULL;
   struct tempdir *tmpdir;
   size_t i;
@@ -300,8 +311,15 @@ create_temp_dir (const char *prefix, const char *parentdir,
           cleanup_list.tempdir_allocated = new_allocated;
 
           /* Now we can free the old array.  */
+          /* No, we can't do that.  If cleanup_action is running in a different
+             thread and has already fetched the tempdir_list pointer (getting
+             old_array) but not yet accessed its i-th element, that thread may
+             crash when accessing an element of the already freed old_array
+             array.  */
+          #if 0
           if (old_array != NULL)
             free ((struct tempdir **) old_array);
+          #endif
         }
 
       tmpdirp = &cleanup_list.tempdir_list[cleanup_list.tempdir_count];
@@ -351,10 +369,12 @@ create_temp_dir (const char *prefix, const char *parentdir,
      block because then the cleanup handler would not remove the directory
      if xstrdup fails.  */
   tmpdir->dirname = xstrdup (tmpdirname);
+  gl_lock_unlock (cleanup_list_lock);
   freea (xtemplate);
   return (struct temp_dir *) tmpdir;
 
  quit:
+  gl_lock_unlock (cleanup_list_lock);
   freea (xtemplate);
   return NULL;
 }
@@ -368,9 +388,13 @@ register_temp_file (struct temp_dir *dir,
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
 
+  gl_lock_lock (cleanup_list_lock);
+
   /* Add absolute_file_name to tmpdir->files, without duplicates.  */
   if (gl_list_search (tmpdir->files, absolute_file_name) == NULL)
     gl_list_add_first (tmpdir->files, xstrdup (absolute_file_name));
+
+  gl_lock_unlock (cleanup_list_lock);
 }
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file inside DIR, that
@@ -381,6 +405,9 @@ unregister_temp_file (struct temp_dir *dir,
                       const char *absolute_file_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+
+  gl_lock_lock (cleanup_list_lock);
+
   gl_list_t list = tmpdir->files;
   gl_list_node_t node;
 
@@ -392,6 +419,8 @@ unregister_temp_file (struct temp_dir *dir,
       gl_list_remove_node (list, node);
       free (old_string);
     }
+
+  gl_lock_unlock (cleanup_list_lock);
 }
 
 /* Register the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
@@ -403,9 +432,13 @@ register_temp_subdir (struct temp_dir *dir,
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
 
+  gl_lock_lock (cleanup_list_lock);
+
   /* Add absolute_dir_name to tmpdir->subdirs, without duplicates.  */
   if (gl_list_search (tmpdir->subdirs, absolute_dir_name) == NULL)
     gl_list_add_first (tmpdir->subdirs, xstrdup (absolute_dir_name));
+
+  gl_lock_unlock (cleanup_list_lock);
 }
 
 /* Unregister the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
@@ -417,6 +450,9 @@ unregister_temp_subdir (struct temp_dir *dir,
                         const char *absolute_dir_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+
+  gl_lock_lock (cleanup_list_lock);
+
   gl_list_t list = tmpdir->subdirs;
   gl_list_node_t node;
 
@@ -428,6 +464,8 @@ unregister_temp_subdir (struct temp_dir *dir,
       gl_list_remove_node (list, node);
       free (old_string);
     }
+
+  gl_lock_unlock (cleanup_list_lock);
 }
 
 /* Remove a file, with optional error message.
@@ -488,6 +526,7 @@ cleanup_temp_subdir (struct temp_dir *dir,
 }
 
 /* Remove all registered files and subdirectories inside DIR.
+   Only to be called with cleanup_list_lock locked.
    Return 0 upon success, or -1 if there was some problem.  */
 int
 cleanup_temp_dir_contents (struct temp_dir *dir)
@@ -536,6 +575,8 @@ cleanup_temp_dir_contents (struct temp_dir *dir)
 int
 cleanup_temp_dir (struct temp_dir *dir)
 {
+  gl_lock_lock (cleanup_list_lock);
+
   struct tempdir *tmpdir = (struct tempdir *)dir;
   int err = 0;
   size_t i;
@@ -561,6 +602,7 @@ cleanup_temp_dir (struct temp_dir *dir)
         gl_list_free (tmpdir->subdirs);
         free (tmpdir->dirname);
         free (tmpdir);
+        gl_lock_unlock (cleanup_list_lock);
         return err;
       }
 
@@ -605,16 +647,22 @@ supports_delete_on_close ()
 static void
 register_fd (int fd)
 {
+  gl_lock_lock (descriptors_lock);
+
   if (descriptors == NULL)
     descriptors = gl_list_create_empty (GL_LINKEDHASH_LIST, NULL, NULL, NULL,
                                         false);
   gl_list_add_first (descriptors, (void *) (uintptr_t) fd);
+
+  gl_lock_unlock (descriptors_lock);
 }
 
 /* Unregister a file descriptor to be closed.  */
 static void
 unregister_fd (int fd)
 {
+  gl_lock_lock (descriptors_lock);
+
   gl_list_t fds = descriptors;
   gl_list_node_t node;
 
@@ -626,6 +674,8 @@ unregister_fd (int fd)
     /* descriptors should already contain fd.  */
     abort ();
   gl_list_remove_node (fds, node);
+
+  gl_lock_unlock (descriptors_lock);
 }
 
 /* Open a temporary file in a temporary directory.
