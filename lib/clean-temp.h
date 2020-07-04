@@ -37,18 +37,40 @@ extern "C" {
    and the temporary directories can be removed, because only on Unix
    (excluding Cygwin) can one remove directories containing open files.
 
-   This module provides support for temporary directories and temporary files
-   inside these temporary directories.  Temporary files without temporary
-   directories are not supported here.  The temporary directories and files
-   are automatically cleaned up (at the latest) when the program exits or
-   dies from a fatal signal such as SIGINT, SIGTERM, SIGHUP, but not if it
-   dies from a fatal signal such as SIGQUIT, SIGKILL, or SIGABRT, SIGSEGV,
-   SIGBUS, SIGILL, SIGFPE.
+   This module provides support for
+     - temporary directories and temporary files inside these temporary
+       directories,
+     - temporary files without temporary directories.
+   The temporary directories and files are automatically cleaned up (at the
+   latest) when the program exits or dies from a fatal signal such as SIGINT,
+   SIGTERM, SIGHUP, but not if it dies from a fatal signal such as SIGQUIT,
+   SIGKILL, or SIGABRT, SIGSEGV, SIGBUS, SIGILL, SIGFPE.
 
    For the cleanup in the normal case, programs that use this module need to
    call 'cleanup_temp_dir' for each successful return of 'create_temp_dir'.
    The cleanup in the case of a fatal signal such as SIGINT, SIGTERM, SIGHUP,
    is done entirely automatically by the functions of this module.  */
+
+
+/* ============= Temporary files without temporary directories ============= */
+
+/* Register the given ABSOLUTE_FILE_NAME as being a file that needs to be
+   removed.
+   Should be called before the file ABSOLUTE_FILE_NAME is created.  */
+extern void register_temporary_file (const char *absolute_file_name);
+
+/* Unregister the given ABSOLUTE_FILE_NAME as being a file that needs to be
+   removed.
+   Should be called when the file ABSOLUTE_FILE_NAME could not be created.  */
+extern void unregister_temporary_file (const char *absolute_file_name);
+
+/* Remove the given ABSOLUTE_FILE_NAME and unregister it.
+   CLEANUP_VERBOSE determines whether errors are reported to standard error.
+   Return 0 upon success, or -1 if there was some problem.  */
+extern int cleanup_temporary_file (const char *absolute_file_name,
+                                   bool cleanup_verbose);
+
+/* ========= Temporary directories and temporary files inside them ========= */
 
 struct temp_dir
 {
@@ -116,6 +138,8 @@ extern int cleanup_temp_dir_contents (struct temp_dir *dir);
    Return 0 upon success, or -1 if there was some problem.  */
 extern int cleanup_temp_dir (struct temp_dir *dir);
 
+/* ================== Opening and closing temporary files ================== */
+
 /* Open a temporary file in a temporary directory.
    FILE_NAME must already have been passed to register_temp_file.
    Registers the resulting file descriptor to be closed.
@@ -126,12 +150,12 @@ extern int open_temp (const char *file_name, int flags, mode_t mode,
 extern FILE * fopen_temp (const char *file_name, const char *mode,
                           bool delete_on_close);
 
-/* Close a temporary file in a temporary directory.
+/* Close a temporary file.
    FD must have been returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 extern int close_temp (int fd);
 
-/* Close a temporary file in a temporary directory.
+/* Close a temporary file.
    FP must have been returned by fopen_temp, or by fdopen on a file descriptor
    returned by open_temp.
    Unregisters the previously registered file descriptor.  */
