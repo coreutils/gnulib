@@ -28,7 +28,7 @@ Link:
 $(LIB_GETRANDOM)
 
 License:
-LGPL
+LGPLv2+
 
 Maintainer:
 all
