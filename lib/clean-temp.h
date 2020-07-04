@@ -164,10 +164,12 @@ extern FILE * fopen_temp (const char *file_name, const char *mode,
    FILE_NAME_TMPL must match the rules for mk[s]temp (i.e. end in "XXXXXX",
    possibly with a suffix).  The name constructed does not exist at the time
    of the call.  FILE_NAME_TMPL is overwritten with the result.
+   A safe choice for MODE is S_IRUSR | S_IWUSR, a.k.a. 0600.
    Registers the file for deletion.
-   Opens the file, with the given FLAGS and mode 0600.
+   Opens the file, with the given FLAGS and mode MODE.
    Registers the resulting file descriptor to be closed.  */
-extern int gen_register_open_temp (char *file_name_tmpl, int suffixlen, int flags);
+extern int gen_register_open_temp (char *file_name_tmpl, int suffixlen,
+                                   int flags, mode_t mode);
 
 /* Close a temporary file.
    FD must have been returned by open_temp or gen_register_open_temp.

@@ -962,18 +962,42 @@ fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 }
 
 #if GNULIB_TEMPNAME
+
+struct try_create_file_params
+{
+  int flags;
+  mode_t mode;
+};
+
+static int
+try_create_file (char *file_name_tmpl, void *params_)
+{
+  struct try_create_file_params *params = params_;
+  return open (file_name_tmpl,
+               (params->flags & ~O_ACCMODE) | O_RDWR | O_CREAT | O_EXCL,
+               params->mode);
+}
+
 /* Open a temporary file, generating its name based on FILE_NAME_TMPL.
    FILE_NAME_TMPL must match the rules for mk[s]temp (i.e. end in "XXXXXX",
    possibly with a suffix).  The name constructed does not exist at the time
    of the call.  FILE_NAME_TMPL is overwritten with the result.
+   A safe choice for MODE is S_IRUSR | S_IWUSR, a.k.a. 0600.
    Registers the file for deletion.
-   Opens the file, with the given FLAGS and mode 0600.
+   Opens the file, with the given FLAGS and mode MODE.
    Registers the resulting file descriptor to be closed.  */
 int
-gen_register_open_temp (char *file_name_tmpl, int suffixlen, int flags)
+gen_register_open_temp (char *file_name_tmpl, int suffixlen,
+                        int flags, mode_t mode)
 {
   block_fatal_signals ();
-  int fd = gen_tempname (file_name_tmpl, suffixlen, flags, GT_FILE);
+
+  struct try_create_file_params params;
+  params.flags = flags;
+  params.mode = mode;
+
+  int fd = try_tempname (file_name_tmpl, suffixlen, &params, try_create_file);
+
   int saved_errno = errno;
   if (fd >= 0)
     {
@@ -985,6 +1009,7 @@ gen_register_open_temp (char *file_name_tmpl, int suffixlen, int flags)
   errno = saved_errno;
   return fd;
 }
+
 #endif
 
 /* Close a temporary file.
