@@ -346,3 +346,10 @@ get_fatal_signals (int signals[64])
     return p - signals;
   }
 }
+
+const sigset_t *
+get_fatal_signal_set (void)
+{
+  init_fatal_signal_set ();
+  return &fatal_signal_set;
+}

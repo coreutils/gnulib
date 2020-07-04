@@ -12,6 +12,7 @@ unistd
 lock
 error
 fatal-signal
+asyncsafe-spin
 open
 pathmax
 tmpdir
@@ -20,6 +21,7 @@ rmdir
 xalloc
 xmalloca
 linkedhash-list
+linked-list
 xlist
 gettext-h
 

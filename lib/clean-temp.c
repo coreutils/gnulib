@@ -38,6 +38,7 @@
 
 #include "error.h"
 #include "fatal-signal.h"
+#include "asyncsafe-spin.h"
 #include "pathmax.h"
 #include "tmpdir.h"
 #include "xalloc.h"
@@ -45,6 +46,7 @@
 #include "glthread/lock.h"
 #include "gl_xlist.h"
 #include "gl_linkedhash_list.h"
+#include "gl_linked_list.h"
 #include "gettext.h"
 #if GNULIB_FWRITEERROR
 # include "fwriteerror.h"
@@ -108,12 +110,28 @@ static struct
   size_t tempdir_allocated;
 } cleanup_list /* = { NULL, 0, 0 } */;
 
+/* A file descriptor to be closed.
+   In multithreaded programs, it is forbidden to close the same fd twice,
+   because you never know what unrelated open() calls are being executed in
+   other threads. So, the 'close (fd)' must be guarded by a once-only guard.  */
+struct closeable_fd
+{
+  /* The file descriptor to close.  */
+  int volatile fd;
+  /* Set to true when it has been closed.  */
+  bool volatile closed;
+  /* Lock that protects the fd from being closed twice.  */
+  asyncsafe_spinlock_t lock;
+  /* Tells whether this list element has been done and can be freed.  */
+  bool volatile done;
+};
+
 /* Lock that protects the descriptors list from concurrent modification in
    different threads.  */
 gl_lock_define_initialized (static, descriptors_lock)
 
 /* List of all open file descriptors to temporary files.  */
-static gl_list_t /* <int> */ volatile descriptors;
+static gl_list_t /* <closeable_fd *> */ volatile descriptors;
 
 
 /* For the subdirs and for the files, we use a gl_list_t of type LINKEDHASH.
@@ -193,6 +211,84 @@ string_hash (const void *x)
 }
 
 
+/* The set of fatal signal handlers.
+   Cached here because we are not allowed to call get_fatal_signal_set ()
+   from a signal handler.  */
+static const sigset_t *fatal_signal_set /* = NULL */;
+
+static void
+init_fatal_signal_set (void)
+{
+  if (fatal_signal_set == NULL)
+    fatal_signal_set = get_fatal_signal_set ();
+}
+
+
+/* Close a file descriptor.
+   Avoids race conditions with normal thread code or signal-handler code that
+   might want to close the same file descriptor.  */
+static _GL_ASYNC_SAFE int
+asyncsafe_close (struct closeable_fd *element)
+{
+  sigset_t saved_mask;
+  int ret;
+  int saved_errno;
+
+  asyncsafe_spin_lock (&element->lock, fatal_signal_set, &saved_mask);
+  if (!element->closed)
+    {
+      ret = close (element->fd);
+      saved_errno = errno;
+      element->closed = true;
+    }
+  else
+    {
+      ret = 0;
+      saved_errno = 0;
+    }
+  asyncsafe_spin_unlock (&element->lock, &saved_mask);
+  element->done = true;
+
+  errno = saved_errno;
+  return ret;
+}
+
+/* Close a file descriptor and the stream that contains it.
+   Avoids race conditions with signal-handler code that might want to close the
+   same file descriptor.  */
+static int
+asyncsafe_fclose_variant (struct closeable_fd *element, FILE *fp,
+                          int (*fclose_variant) (FILE *))
+{
+  if (fileno (fp) != element->fd)
+    abort ();
+
+  /* Flush buffered data first, to minimize the duration of the spin lock.  */
+  fflush (fp);
+
+  sigset_t saved_mask;
+  int ret;
+  int saved_errno;
+
+  asyncsafe_spin_lock (&element->lock, fatal_signal_set, &saved_mask);
+  if (!element->closed)
+    {
+      ret = fclose_variant (fp); /* invokes close (element->fd) */
+      saved_errno = errno;
+      element->closed = true;
+    }
+  else
+    {
+      ret = 0;
+      saved_errno = 0;
+    }
+  asyncsafe_spin_unlock (&element->lock, &saved_mask);
+  element->done = true;
+
+  errno = saved_errno;
+  return ret;
+}
+
 /* The signal handler.  It gets called asynchronously.  */
 static _GL_ASYNC_SAFE void
 cleanup_action (int sig _GL_UNUSED)
@@ -211,8 +307,7 @@ cleanup_action (int sig _GL_UNUSED)
         iter = gl_list_iterator (fds);
         while (gl_list_iterator_next (&iter, &element, NULL))
           {
-            int fd = (int) (uintptr_t) element;
-            close (fd);
+            asyncsafe_close ((struct closeable_fd *) element);
           }
         gl_list_iterator_free (&iter);
       }
@@ -294,8 +389,11 @@ create_temp_dir (const char *prefix, const char *parentdir,
             XNMALLOC (new_allocated, struct tempdir * volatile);
 
           if (old_allocated == 0)
-            /* First use of this facility.  Register the cleanup handler.  */
-            at_fatal_signal (&cleanup_action);
+            {
+              /* First use of this facility.  Register the cleanup handler.  */
+              init_fatal_signal_set ();
+              at_fatal_signal (&cleanup_action);
+            }
           else
             {
               /* Don't use memcpy() here, because memcpy takes non-volatile
@@ -650,30 +748,16 @@ register_fd (int fd)
   gl_lock_lock (descriptors_lock);
 
   if (descriptors == NULL)
-    descriptors = gl_list_create_empty (GL_LINKEDHASH_LIST, NULL, NULL, NULL,
+    descriptors = gl_list_create_empty (GL_LINKED_LIST, NULL, NULL, NULL,
                                         false);
-  gl_list_add_first (descriptors, (void *) (uintptr_t) fd);
 
-  gl_lock_unlock (descriptors_lock);
-}
+  struct closeable_fd *element = XMALLOC (struct closeable_fd);
+  element->fd = fd;
+  element->closed = false;
+  asyncsafe_spin_init (&element->lock);
+  element->done = false;
 
-/* Unregister a file descriptor to be closed.  */
-static void
-unregister_fd (int fd)
-{
-  gl_lock_lock (descriptors_lock);
-
-  gl_list_t fds = descriptors;
-  gl_list_node_t node;
-
-  if (fds == NULL)
-    /* descriptors should already contain fd.  */
-    abort ();
-  node = gl_list_search (fds, (void *) (uintptr_t) fd);
-  if (node == NULL)
-    /* descriptors should already contain fd.  */
-    abort ();
-  gl_list_remove_node (fds, node);
+  gl_list_add_first (descriptors, element);
 
   gl_lock_unlock (descriptors_lock);
 }
@@ -755,23 +839,124 @@ fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 int
 close_temp (int fd)
 {
-  if (fd >= 0)
-    {
-      /* No blocking of signals is needed here, since a double close of a
-         file descriptor is harmless.  */
-      int result = close (fd);
-      int saved_errno = errno;
-
-      /* No race condition here: we assume a single-threaded program, hence
-         fd cannot be re-opened here.  */
-
-      unregister_fd (fd);
-
-      errno = saved_errno;
-      return result;
-    }
-  else
+  if (fd < 0)
     return close (fd);
+
+  init_fatal_signal_set ();
+
+  int result = 0;
+  int saved_errno = 0;
+
+  gl_lock_lock (descriptors_lock);
+
+  gl_list_t list = descriptors;
+  if (list == NULL)
+    /* descriptors should already contain fd.  */
+    abort ();
+
+  /* Search through the list, and clean it up on the fly.  */
+  bool found = false;
+  gl_list_iterator_t iter = gl_list_iterator (list);
+  const void *elt;
+  gl_list_node_t node;
+  if (gl_list_iterator_next (&iter, &elt, &node))
+    for (;;)
+      {
+        struct closeable_fd *element = (struct closeable_fd *) elt;
+
+        /* Close the file descriptor, avoiding races with the signal
+           handler.  */
+        if (element->fd == fd)
+          {
+            result = asyncsafe_close (element);
+            saved_errno = errno;
+          }
+
+        bool free_this_node = element->done;
+        struct closeable_fd *element_to_free = element;
+        gl_list_node_t node_to_free = node;
+
+        bool have_next = gl_list_iterator_next (&iter, &elt, &node);
+
+        if (free_this_node)
+          {
+            free (element_to_free);
+            gl_list_remove_node (list, node_to_free);
+          }
+
+        if (!have_next)
+          break;
+      }
+  gl_list_iterator_free (&iter);
+  if (!found)
+    /* descriptors should already contain fd.  */
+    abort ();
+
+  gl_lock_unlock (descriptors_lock);
+
+  errno = saved_errno;
+  return result;
+}
+
+static int
+fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
+{
+  int fd = fileno (fp);
+
+  init_fatal_signal_set ();
+
+  int result = 0;
+  int saved_errno = 0;
+
+  gl_lock_lock (descriptors_lock);
+
+  gl_list_t list = descriptors;
+  if (list == NULL)
+    /* descriptors should already contain fd.  */
+    abort ();
+
+  /* Search through the list, and clean it up on the fly.  */
+  bool found = false;
+  gl_list_iterator_t iter = gl_list_iterator (list);
+  const void *elt;
+  gl_list_node_t node;
+  if (gl_list_iterator_next (&iter, &elt, &node))
+    for (;;)
+      {
+        struct closeable_fd *element = (struct closeable_fd *) elt;
+
+        /* Close the file descriptor and the stream, avoiding races with the
+           signal handler.  */
+        if (element->fd == fd)
+          {
+            result = asyncsafe_fclose_variant (element, fp, fclose_variant);
+            saved_errno = errno;
+          }
+
+        bool free_this_node = element->done;
+        struct closeable_fd *element_to_free = element;
+        gl_list_node_t node_to_free = node;
+
+        bool have_next = gl_list_iterator_next (&iter, &elt, &node);
+
+        if (free_this_node)
+          {
+            free (element_to_free);
+            gl_list_remove_node (list, node_to_free);
+          }
+
+        if (!have_next)
+          break;
+      }
+  gl_list_iterator_free (&iter);
+  if (!found)
+    /* descriptors should have contained fd.  */
+    abort ();
+
+  gl_lock_unlock (descriptors_lock);
+
+  errno = saved_errno;
+  return result;
 }
 
 /* Close a temporary file in a temporary directory.
@@ -779,19 +964,7 @@ close_temp (int fd)
 int
 fclose_temp (FILE *fp)
 {
-  int fd = fileno (fp);
-  /* No blocking of signals is needed here, since a double close of a
-     file descriptor is harmless.  */
-  int result = fclose (fp);
-  int saved_errno = errno;
-
-  /* No race condition here: we assume a single-threaded program, hence
-     fd cannot be re-opened here.  */
-
-  unregister_fd (fd);
-
-  errno = saved_errno;
-  return result;
+  return fclose_variant_temp (fp, fclose);
 }
 
 #if GNULIB_FWRITEERROR
@@ -800,19 +973,7 @@ fclose_temp (FILE *fp)
 int
 fwriteerror_temp (FILE *fp)
 {
-  int fd = fileno (fp);
-  /* No blocking of signals is needed here, since a double close of a
-     file descriptor is harmless.  */
-  int result = fwriteerror (fp);
-  int saved_errno = errno;
-
-  /* No race condition here: we assume a single-threaded program, hence
-     fd cannot be re-opened here.  */
-
-  unregister_fd (fd);
-
-  errno = saved_errno;
-  return result;
+  return fclose_variant_temp (fp, fwriteerror);
 }
 #endif
 
@@ -822,18 +983,6 @@ fwriteerror_temp (FILE *fp)
 int
 close_stream_temp (FILE *fp)
 {
-  int fd = fileno (fp);
-  /* No blocking of signals is needed here, since a double close of a
-     file descriptor is harmless.  */
-  int result = close_stream (fp);
-  int saved_errno = errno;
-
-  /* No race condition here: we assume a single-threaded program, hence
-     fd cannot be re-opened here.  */
-
-  unregister_fd (fd);
-
-  errno = saved_errno;
-  return result;
+  return fclose_variant_temp (fp, close_stream);
 }
 #endif
