@@ -49,7 +49,17 @@ extern "C" {
    For the cleanup in the normal case, programs that use this module need to
    call 'cleanup_temp_dir' for each successful return of 'create_temp_dir'.
    The cleanup in the case of a fatal signal such as SIGINT, SIGTERM, SIGHUP,
-   is done entirely automatically by the functions of this module.  */
+   is done entirely automatically by the functions of this module.
+
+   Limitations: Files or directories can still be left over if
+     - the program is dies from a fatal signal such as SIGQUIT, SIGKILL, or
+       SIGABRT, SIGSEGV, SIGBUS, SIGILL, SIGFPE, or
+     - in a multithreaded program, the fatal signal handler is already running
+       while another thread of the program creates a new temporary directory
+       or temporary file, or
+     - on native Windows, some temporary files are used by a subprocess while
+       the fatal signal interrupts the program.
+ */
 
 
 /* ============= Temporary files without temporary directories ============= */
