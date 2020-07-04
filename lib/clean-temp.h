@@ -117,6 +117,7 @@ extern int cleanup_temp_dir_contents (struct temp_dir *dir);
 extern int cleanup_temp_dir (struct temp_dir *dir);
 
 /* Open a temporary file in a temporary directory.
+   FILE_NAME must already have been passed to register_temp_file.
    Registers the resulting file descriptor to be closed.
    DELETE_ON_CLOSE indicates whether the file can be deleted when the resulting
    file descriptor or stream is closed.  */
@@ -126,15 +127,25 @@ extern FILE * fopen_temp (const char *file_name, const char *mode,
                           bool delete_on_close);
 
 /* Close a temporary file in a temporary directory.
+   FD must have been returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 extern int close_temp (int fd);
+
+/* Close a temporary file in a temporary directory.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
+   Unregisters the previously registered file descriptor.  */
 extern int fclose_temp (FILE *fp);
 
 /* Like fwriteerror.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 extern int fwriteerror_temp (FILE *fp);
 
 /* Like close_stream.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 extern int close_stream_temp (FILE *fp);
 

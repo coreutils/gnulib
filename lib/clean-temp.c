@@ -763,7 +763,10 @@ register_fd (int fd)
 }
 
 /* Open a temporary file in a temporary directory.
-   Registers the resulting file descriptor to be closed.  */
+   FILE_NAME must already have been passed to register_temp_file.
+   Registers the resulting file descriptor to be closed.
+   DELETE_ON_CLOSE indicates whether the file can be deleted when the resulting
+   file descriptor or stream is closed.  */
 int
 open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
 {
@@ -789,7 +792,10 @@ open_temp (const char *file_name, int flags, mode_t mode, bool delete_on_close)
 }
 
 /* Open a temporary file in a temporary directory.
-   Registers the resulting file descriptor to be closed.  */
+   FILE_NAME must already have been passed to register_temp_file.
+   Registers the resulting file descriptor to be closed.
+   DELETE_ON_CLOSE indicates whether the file can be deleted when the resulting
+   file descriptor or stream is closed.  */
 FILE *
 fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 {
@@ -835,6 +841,7 @@ fopen_temp (const char *file_name, const char *mode, bool delete_on_close)
 }
 
 /* Close a temporary file in a temporary directory.
+   FD must have been returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 close_temp (int fd)
@@ -962,6 +969,8 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
 }
 
 /* Close a temporary file in a temporary directory.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 fclose_temp (FILE *fp)
@@ -971,6 +980,8 @@ fclose_temp (FILE *fp)
 
 #if GNULIB_FWRITEERROR
 /* Like fwriteerror.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 fwriteerror_temp (FILE *fp)
@@ -981,6 +992,8 @@ fwriteerror_temp (FILE *fp)
 
 #if GNULIB_CLOSE_STREAM
 /* Like close_stream.
+   FP must have been returned by fopen_temp, or by fdopen on a file descriptor
+   returned by open_temp.
    Unregisters the previously registered file descriptor.  */
 int
 close_stream_temp (FILE *fp)
