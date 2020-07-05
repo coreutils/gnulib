@@ -4,11 +4,10 @@ Extract specific portions of filenames.
 Files:
 lib/dirname.h
 lib/dirname-lgpl.c
-lib/basename-lgpl.c
 lib/stripslash.c
 
 Depends-on:
-double-slash-root
+basename-lgpl
 filename
 malloc-posix
 stdbool
@@ -16,7 +15,7 @@ stdbool
 configure.ac:
 
 Makefile.am:
-lib_SOURCES += dirname-lgpl.c basename-lgpl.c stripslash.c
+lib_SOURCES += dirname-lgpl.c stripslash.c
 
 Include:
 "dirname.h"
