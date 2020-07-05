@@ -6,7 +6,6 @@ lib/dirname.h
 lib/dirname-lgpl.c
 lib/basename-lgpl.c
 lib/stripslash.c
-m4/dirname.m4
 
 Depends-on:
 double-slash-root
@@ -15,7 +14,6 @@ malloc-posix
 stdbool
 
 configure.ac:
-gl_DIRNAME_LGPL
 
 Makefile.am:
 lib_SOURCES += dirname-lgpl.c basename-lgpl.c stripslash.c

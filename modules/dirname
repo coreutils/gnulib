@@ -12,7 +12,6 @@ xalloc
 xstrndup
 
 configure.ac:
-gl_DIRNAME
 gl_MODULE_INDICATOR([dirname])
 
 Makefile.am:
