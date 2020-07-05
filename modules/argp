@@ -24,7 +24,7 @@ m4/argp.m4
 
 Depends-on:
 alloca
-dirname-lgpl
+basename-lgpl
 extern-inline
 getopt-gnu
 strchrnul

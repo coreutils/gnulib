@@ -146,7 +146,7 @@
 #elif defined GNULIB_ARGP_EXTERN_BASENAME
 extern char *__argp_base_name (const char *arg);
 #else
-# include "dirname.h"
+# include "basename-lgpl.h"
 # define __argp_base_name last_component
 #endif
 
