@@ -25,7 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dirname.h"
+#include "basename-lgpl.h"
+#include "filename.h"
 
 #if ! HAVE_MEMPCPY && ! defined mempcpy
 # define mempcpy(D, S, N) ((void *) ((char *) memcpy (D, S, N) + (N)))

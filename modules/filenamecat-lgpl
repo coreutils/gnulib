@@ -8,7 +8,8 @@ m4/filenamecat.m4
 
 Depends-on:
 c99
-dirname-lgpl
+basename-lgpl
+filename
 malloc-posix
 
 configure.ac:
