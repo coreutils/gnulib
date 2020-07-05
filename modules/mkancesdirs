@@ -7,8 +7,8 @@ lib/mkancesdirs.h
 m4/mkancesdirs.m4
 
 Depends-on:
-dirname-lgpl
 fcntl-h
+filename
 savewd
 stat-macros
 sys_stat

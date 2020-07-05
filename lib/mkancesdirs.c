@@ -28,7 +28,7 @@
 #include <errno.h>
 #include <unistd.h>
 
-#include "dirname.h"
+#include "filename.h"
 #include "savewd.h"
 
 /* Ensure that the ancestor directories of FILE exist, using an
