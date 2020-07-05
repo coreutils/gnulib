@@ -23,7 +23,7 @@
 #include "backup-internal.h"
 
 #include "attribute.h"
-#include "dirname.h"
+#include "basename-lgpl.h"
 #include "opendirat.h"
 #include "renameatu.h"
 #include "xalloc-oversized.h"
