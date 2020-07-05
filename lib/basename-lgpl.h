@@ -44,7 +44,7 @@ extern "C" {
               "foo/bar//"   "bar//"
               "/"           ""
               "//"          ""
-	      ""            ""
+              ""            ""
    The return value is a tail of the given FILENAME; do NOT free() it!  */
 
 /* This function was traditionally called 'basename', but we avoid this
