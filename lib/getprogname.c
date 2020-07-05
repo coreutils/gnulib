@@ -51,7 +51,7 @@
 # include <sys/procfs.h>
 #endif
 
-#include "dirname.h"
+#include "basename-lgpl.h"
 
 #ifndef HAVE_GETPROGNAME             /* not Mac OS X, FreeBSD, NetBSD, OpenBSD >= 5.4, Cygwin */
 char const *
