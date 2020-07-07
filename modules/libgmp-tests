@@ -1,0 +1,12 @@
+Files:
+tests/macros.h
+tests/test-libgmp.c
+
+Depends-on:
+
+configure.ac:
+
+Makefile.am:
+TESTS += test-libgmp
+check_PROGRAMS += test-libgmp
+test_libgmp_LDADD = $(LDADD) @LIB_GMP@

@@ -2372,6 +2372,15 @@ func_all_modules ()
   func_module limits-h
   func_end_table
 
+  element="Support for GNU multiple precision arithmetic"
+  func_section_wrap gmp
+  func_wrap H2
+  func_echo "$element"
+
+  func_begin_table
+  func_module libgmp
+  func_end_table
+
   element="Support for sharing code with the GNU C Library"
   func_section_wrap glibc
   func_wrap H2

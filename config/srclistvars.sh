@@ -27,6 +27,7 @@ esac
 # Default to sibling (of parent) directories.
 : ${AUTOCONF=../autoconf}
 : ${AUTOMAKE=../automake}
+: ${GMP=../gmp}
 : ${GNUCONFIG=../config}
 : ${GNULIBSRC=../gnulib}
 : ${GNUORG=../gnuorg}

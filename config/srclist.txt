@@ -17,6 +17,9 @@ $TEXINFOTEX texinfo.tex		build-aux strip-trailing-space
 # we generate INSTALL from this via a rule in doc/Makefile.
 $AUTOCONF doc/install.texi	doc
 
+$GMP mini-gmp/mini-gmp.c	lib
+$GMP mini-gmp/mini-gmp.h	lib
+
 $GNUSTANDARDS maintain.texi	doc strip-trailing-space
 $GNUSTANDARDS standards.texi	doc strip-trailing-space
 $GNUSTANDARDS make-stds.texi	doc
