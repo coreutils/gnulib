@@ -8,6 +8,7 @@ lib/stripslash.c
 
 Depends-on:
 basename-lgpl
+double-slash-root
 filename
 malloc-posix
 stdbool
