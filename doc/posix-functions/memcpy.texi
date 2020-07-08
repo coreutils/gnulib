@@ -9,8 +9,6 @@ Gnulib module: memcpy
 Portability problems fixed by Gnulib:
 @itemize
 @item
-This function is missing on some older platforms.
-@item
 This function cannot be called from plain inline or extern inline functions
 on some platforms:
 OS X 10.8.
