@@ -3,10 +3,9 @@ Hash functions for file-related triples: name, device, inode.
 
 Files:
 lib/hash-triple.c
-lib/hash-triple.h
 
 Depends-on:
-hash-pjw
+hash-triple-simple
 same
 same-inode
 

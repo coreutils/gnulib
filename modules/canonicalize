@@ -13,7 +13,7 @@ errno
 extensions
 file-set
 filename
-hash-triple
+hash-triple-simple
 lstat
 memmove
 nocrash

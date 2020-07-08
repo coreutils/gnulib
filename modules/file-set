@@ -7,7 +7,7 @@ lib/file-set.h
 
 Depends-on:
 hash
-hash-triple
+hash-triple-simple
 stdbool
 xalloc
 xalloc-die
