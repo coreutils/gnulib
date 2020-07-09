@@ -62,6 +62,7 @@ main (int argc, char *argv[])
       if (argc > 1)
         switch (argv[1][0])
           {
+          case '1': /* On some platforms, the "C" locale has UTF-8 encoding.  */
           case '2':
             ASSERT (strcmp (result, TEST_CODE_AS_UTF8) == 0);
             break;
