@@ -134,9 +134,10 @@ unicode_to_mb (unsigned int code,
 # if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
           || (res > 0 && code != 0 && outptr - outbuf == 1 && *outbuf == '\0')
 # endif
-          /* Solaris 11 iconv() inserts a '?' if it cannot convert. */
-# if !defined _LIBICONV_VERSION && defined __sun
-          || (res > 0 && code != 0 && outptr - outbuf == 1 && *outbuf == '?')
+          /* NetBSD iconv() and Solaris 11 iconv() insert a '?' if they cannot
+             convert.  */
+# if !defined _LIBICONV_VERSION && (defined __NetBSD__ || defined __sun)
+          || (res > 0 && outptr - outbuf == 1 && *outbuf == '?')
 # endif
          )
         return failure (code, NULL, callback_arg);
