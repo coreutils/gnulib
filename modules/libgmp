@@ -8,6 +8,7 @@ lib/mini-gmp.h
 m4/libgmp.m4
 
 Depends-on:
+havelib
 
 configure.ac:
 gl_LIBGMP
@@ -33,7 +34,7 @@ Include:
 <gmp.h>
 
 Link:
-$(LIB_GMP)
+$(LTLIBGMP) when linking with libtool, $(LIBGMP) otherwise
 
 License:
 LGPLv3+ or GPLv2+

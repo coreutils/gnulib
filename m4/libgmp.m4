@@ -1,9 +1,17 @@
+# libgmp.m4 serial 2
 # Configure the GMP library or a replacement.
-
 dnl Copyright 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
+
+dnl gl_LIBGMP
+dnl Searches for an installed libgmp.
+dnl If found, it sets and AC_SUBSTs HAVE_LIBGMP=yes and the LIBGMP and LTLIBGMP
+dnl variables, and augments the CPPFLAGS variable, and #defines HAVE_LIBGMP
+dnl and HAVE_GMP to 1.
+dnl Otherwise, it sets and AC_SUBSTs HAVE_LIBGMP=no and LIBGMP and LTLIBGMP to
+dnl empty.
 
 AC_DEFUN([gl_LIBGMP],
 [
@@ -11,34 +19,42 @@ AC_DEFUN([gl_LIBGMP],
     [AS_HELP_STRING([--without-libgmp],
        [do not use the GNU Multiple Precision (GMP) library;
         this is the default on systems lacking libgmp.])])
-
-  AC_CHECK_HEADERS_ONCE([gmp.h])
-  GMP_H=gmp.h
-  LIB_GMP=
-
-  case $with_libgmp in
-    no) ;;
-    yes) GMP_H= LIB_GMP=-lgmp;;
-    *) if test "$ac_cv_header_gmp_h" = yes; then
-         gl_saved_LIBS=$LIBS
-         AC_SEARCH_LIBS([__gmpz_roinit_n], [gmp])
-         LIBS=$gl_saved_LIBS
-         case $ac_cv_search___gmpz_roinit_n in
-           'none needed')
-             GMP_H=;;
-           -*)
-             GMP_H= LIB_GMP=$ac_cv_search___gmpz_roinit_n;;
-         esac
-       fi;;
+  case "$with_libgmp" in
+    no)
+      HAVE_LIBGMP=no
+      LIBGMP=
+      LTLIBGMP=
+      ;;
+    *)
+      AC_LIB_HAVE_LINKFLAGS([gmp], [],
+        [#include <gmp.h>],
+        [static const mp_limb_t x[2] = { 0x73, 0x55 };
+         mpz_t tmp;
+         mpz_roinit_n (tmp, x, 2);
+        ],
+        [no])
+      if test $HAVE_LIBGMP = no; then
+        case "$with_libgmp" in
+          yes)
+            AC_MSG_ERROR([GMP not found, although --with-libgmp was specified. Try specifying --with-libgmp-prefix=DIR.])
+            ;;
+        esac
+      fi
+      ;;
   esac
-
-  if test -z "$GMP_H"; then
-    AC_DEFINE([HAVE_GMP], 1,
+  if test $HAVE_LIBGMP = yes; then
+    GMP_H=
+    dnl This is redundant, as HAVE_LIBGMP is also defined to 1.
+    AC_DEFINE([HAVE_GMP], [1],
       [Define to 1 if you have the GMP library instead of just the
        mini-gmp replacement.])
+  else
+    GMP_H=gmp.h
   fi
-
-  AC_SUBST([LIB_GMP])
   AC_SUBST([GMP_H])
   AM_CONDITIONAL([GL_GENERATE_GMP_H], [test -n "$GMP_H"])
+
+  dnl For backward compatibility.
+  LIB_GMP="$LIBGMP"
+  AC_SUBST([LIB_GMP])
 ])
