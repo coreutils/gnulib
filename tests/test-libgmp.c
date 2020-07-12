@@ -16,13 +16,49 @@
 
 #include <config.h>
 
+/* Specification.  */
 #include <gmp.h>
 
+#include <limits.h>
+#include <string.h>
+
+#include "verify.h"
+
 #include "macros.h"
+
+#ifndef MINI_GMP_LIMB_TYPE
+/* Verify that the gmp.h header file was generated for the same
+   machine word size as we are using.  */
+verify (GMP_NUMB_BITS == sizeof (mp_limb_t) * CHAR_BIT);
+#endif
 
 int
 main ()
 {
+#ifndef MINI_GMP_LIMB_TYPE
+  /* Verify that the gmp.h header file and the libgmp library come from
+     the same GMP version.  */
+  {
+    char gmp_header_version[32];
+    sprintf (gmp_header_version, "%d.%d.%d", __GNU_MP_VERSION,
+             __GNU_MP_VERSION_MINOR, __GNU_MP_VERSION_PATCHLEVEL);
+    if (strcmp (gmp_version, gmp_header_version) != 0)
+      {
+        char gmp_header_version2[32];
+        if (__GNU_MP_VERSION_PATCHLEVEL > 0
+            || (sprintf (gmp_header_version2, "%d.%d", __GNU_MP_VERSION,
+                         __GNU_MP_VERSION_MINOR),
+                strcmp (gmp_version, gmp_header_version2) != 0))
+          {
+            fprintf (stderr,
+                     "gmp header version (%s) does not match gmp library version (%s).\n",
+                     gmp_header_version, gmp_version);
+            exit (1);
+          }
+      }
+  }
+#endif
+
   /* A simple sanity check that 2 + 2 = 4.  */
   static mp_limb_t const twobody[] = { 2 };
   static mpz_t const two = MPZ_ROINIT_N ((mp_limb_t *) twobody, 1);
