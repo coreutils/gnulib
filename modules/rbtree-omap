@@ -19,7 +19,7 @@ Include:
 "gl_rbtree_omap.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all

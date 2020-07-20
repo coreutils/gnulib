@@ -20,7 +20,7 @@ Include:
 "gl_rbtree_oset.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all

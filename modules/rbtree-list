@@ -21,7 +21,7 @@ Include:
 "gl_rbtree_list.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all

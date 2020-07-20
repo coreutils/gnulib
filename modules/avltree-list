@@ -21,7 +21,7 @@ Include:
 "gl_avltree_list.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all

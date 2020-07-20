@@ -19,7 +19,7 @@ Include:
 "gl_linked_list.h"
 
 License:
-GPL
+LGPLv2+
 
 Maintainer:
 all
