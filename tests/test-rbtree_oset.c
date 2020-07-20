@@ -25,6 +25,8 @@
 #include "gl_array_oset.h"
 #include "macros.h"
 
+#include "test-oset-update.h"
+
 extern void gl_rbtree_oset_check_invariants (gl_oset_t set);
 
 static const char *objects[30] =
@@ -128,6 +130,8 @@ main (int argc, char *argv[])
     gl_oset_free (set1);
     gl_oset_free (set2);
   }
+
+  test_update (GL_RBTREE_OSET);
 
   return 0;
 }

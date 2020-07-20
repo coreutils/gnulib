@@ -38,7 +38,7 @@
 #define NODE_PAYLOAD_ASSIGN(node) \
   node->key = key; \
   node->value = value;
-#define NODE_PAYLOAD_DISPOSE \
+#define NODE_PAYLOAD_DISPOSE(container, node) \
   if (container->base.kdispose_fn != NULL) \
     container->base.kdispose_fn (node->key);
 

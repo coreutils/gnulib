@@ -565,19 +565,12 @@ gl_tree_nx_add_first (CONTAINER_T container, NODE_PAYLOAD_PARAMS)
   return new_node;
 }
 
-static NODE_T
-gl_tree_nx_add_before (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
+/* Adds the already allocated NEW_NODE to the tree, right before NODE.  */
+static void
+gl_tree_add_node_before (CONTAINER_T container, NODE_T node, NODE_T new_node)
 {
-  /* Create new node.  */
-  NODE_T new_node =
-    (struct NODE_IMPL *) malloc (sizeof (struct NODE_IMPL));
-
-  if (new_node == NULL)
-    return NULL;
-
   new_node->left = NULL;
   new_node->right = NULL;
-  NODE_PAYLOAD_ASSIGN(new_node)
 
   /* Add it to the tree.  */
   if (node->left == NULL)
@@ -594,11 +587,10 @@ gl_tree_nx_add_before (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
   rebalance_after_add (container, new_node, node);
 
   container->count++;
-  return new_node;
 }
 
 static NODE_T
-gl_tree_nx_add_after (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
+gl_tree_nx_add_before (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
 {
   /* Create new node.  */
   NODE_T new_node =
@@ -607,9 +599,18 @@ gl_tree_nx_add_after (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
   if (new_node == NULL)
     return NULL;
 
+  NODE_PAYLOAD_ASSIGN(new_node)
+
+  gl_tree_add_node_before (container, node, new_node);
+  return new_node;
+}
+
+/* Adds the already allocated NEW_NODE to the tree, right after NODE.  */
+static void
+gl_tree_add_node_after (CONTAINER_T container, NODE_T node, NODE_T new_node)
+{
   new_node->left = NULL;
   new_node->right = NULL;
-  NODE_PAYLOAD_ASSIGN(new_node)
 
   /* Add it to the tree.  */
   if (node->right == NULL)
@@ -626,11 +627,26 @@ gl_tree_nx_add_after (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
   rebalance_after_add (container, new_node, node);
 
   container->count++;
+}
+
+static NODE_T
+gl_tree_nx_add_after (CONTAINER_T container, NODE_T node, NODE_PAYLOAD_PARAMS)
+{
+  /* Create new node.  */
+  NODE_T new_node =
+    (struct NODE_IMPL *) malloc (sizeof (struct NODE_IMPL));
+
+  if (new_node == NULL)
+    return NULL;
+
+  NODE_PAYLOAD_ASSIGN(new_node)
+
+  gl_tree_add_node_after (container, node, new_node);
   return new_node;
 }
 
-static bool
-gl_tree_remove_node (CONTAINER_T container, NODE_T node)
+static void
+gl_tree_remove_node_no_free (CONTAINER_T container, NODE_T node)
 {
   NODE_T parent = node->parent;
 
@@ -749,7 +765,13 @@ gl_tree_remove_node (CONTAINER_T container, NODE_T node)
     }
 
   container->count--;
-  NODE_PAYLOAD_DISPOSE
+}
+
+static bool
+gl_tree_remove_node (CONTAINER_T container, NODE_T node)
+{
+  gl_tree_remove_node_no_free (container, node);
+  NODE_PAYLOAD_DISPOSE (container, node)
   free (node);
   return true;
 }

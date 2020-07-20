@@ -11,6 +11,7 @@ Depends-on:
 oset
 
 configure.ac:
+AC_REQUIRE([AC_C_INLINE])
 
 Makefile.am:
 lib_SOURCES += gl_rbtree_oset.h gl_rbtree_oset.c gl_rbtree_ordered.h gl_anytree_oset.h

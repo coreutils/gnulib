@@ -65,6 +65,7 @@ extern "C" {
    gl_oset_size                O(1)     O(1)
    gl_oset_add                 O(n)   O(log n)
    gl_oset_remove              O(n)   O(log n)
+   gl_oset_update              O(n)   O(log n)
    gl_oset_search            O(log n) O(log n)
    gl_oset_search_atleast    O(log n) O(log n)
    gl_oset_iterator            O(1)   O(log n)
@@ -140,6 +141,18 @@ extern int gl_oset_nx_add (gl_oset_t set, const void *elt)
    Returns true if it was found and removed.  */
 extern bool gl_oset_remove (gl_oset_t set, const void *elt);
 
+/* Invokes ACTION (ELT, ACTION_DATA) and updates the given ordered set if,
+   during this invocation, the attributes/properties of the element ELT change
+   in a way that influences the comparison function.
+   Warning: During the invocation of ACTION, the ordered set is inconsistent
+   and must not be accessed!
+   Returns 1 if the position of the element in the ordered set has changed as
+   a consequence, 0 if the element stayed at the same position, or -1 if it
+   collided with another element and was therefore removed.  */
+extern int gl_oset_update (gl_oset_t set, const void *elt,
+                           void (*action) (const void *elt, void *action_data),
+                           void *action_data);
+
 /* Frees an entire ordered set.
    (But this call does not free the elements of the set.  It only invokes
    the DISPOSE_FN on each of the elements of the set.)  */
@@ -198,6 +211,9 @@ struct gl_oset_implementation
                           const void *threshold, const void **eltp);
   int (*nx_add) (gl_oset_t set, const void *elt);
   bool (*remove_elt) (gl_oset_t set, const void *elt);
+  int (*update) (gl_oset_t set, const void *elt,
+                 void (*action) (const void * /*elt*/, void * /*action_data*/),
+                 void *action_data);
   void (*oset_free) (gl_oset_t set);
   /* gl_oset_iterator_t functions.  */
   gl_oset_iterator_t (*iterator) (gl_oset_t set);
@@ -256,6 +272,15 @@ gl_oset_remove (gl_oset_t set, const void *elt)
 {
   return ((const struct gl_oset_impl_base *) set)->vtable
          ->remove_elt (set, elt);
+}
+
+GL_OSET_INLINE int
+gl_oset_update (gl_oset_t set, const void *elt,
+                void (*action) (const void * /*elt*/, void * /*action_data*/),
+                void *action_data)
+{
+  return ((const struct gl_oset_impl_base *) set)->vtable
+         ->update (set, elt, action, action_data);
 }
 
 GL_OSET_INLINE void

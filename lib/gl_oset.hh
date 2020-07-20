@@ -97,6 +97,24 @@ public:
   bool remove (ELTYPE * elt)
     { return gl_oset_remove (_ptr, elt); }
 
+  /* Invokes ACTION (ELT, ACTION_DATA) and updates the ordered set if,
+     during this invocation, the attributes/properties of the element ELT change
+     in a way that influences the comparison function.
+     Warning: During the invocation of ACTION, the ordered set is inconsistent
+     and must not be accessed!
+     Returns 1 if the position of the element in the ordered set has changed as
+     a consequence, 0 if the element stayed at the same position, or -1 if it
+     collided with another element and was therefore removed.  */
+  template <typename DT>
+  int update (ELTYPE * elt,
+              void (*action) (ELTYPE * /*elt*/, DT * /*action_data*/),
+              DT *action_data)
+    {
+      return gl_oset_update (_ptr, elt,
+                             reinterpret_cast<void (*) (const void *, void *)> (action),
+                             action_data);
+    }
+
   /* Frees the entire ordered set.
      (But this call does not free the elements of the set.  It only invokes
      the DISPOSE_FN on each of the elements of the set.)  */

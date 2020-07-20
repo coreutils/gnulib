@@ -31,27 +31,51 @@ reverse_strcmp (const char *str1, const char *str2)
   return (cmp > 0 ? -1 : cmp < 0 ? 1 : 0);
 }
 
+static void
+action (const char *str, int *data)
+{
+  const_cast<char *> (str) [0] += *data;
+}
+
 int
 main (int argc, char *argv[])
 {
+  char A[2] = "A";
   gl_OSet<const char *> set1;
 
   set1 = gl_OSet<const char *> (GL_ARRAY_OSET, reverse_strcmp, NULL);
-  set1.add ("A");
+  set1.add (A);
   set1.add ("C");
   set1.add ("D");
   set1.add ("C");
   ASSERT (set1.size () == 3);
 
-  gl_OSet<const char *>::iterator iter1 = set1.begin ();
-  const char *elt;
-  ASSERT (iter1.next (elt));
-  ASSERT (strcmp (elt, "D") == 0);
-  ASSERT (iter1.next (elt));
-  ASSERT (strcmp (elt, "C") == 0);
-  ASSERT (iter1.next (elt));
-  ASSERT (strcmp (elt, "A") == 0);
-  ASSERT (!iter1.next (elt));
+  {
+    gl_OSet<const char *>::iterator iter1 = set1.begin ();
+    const char *elt;
+    ASSERT (iter1.next (elt));
+    ASSERT (strcmp (elt, "D") == 0);
+    ASSERT (iter1.next (elt));
+    ASSERT (strcmp (elt, "C") == 0);
+    ASSERT (iter1.next (elt));
+    ASSERT (strcmp (elt, "A") == 0);
+    ASSERT (!iter1.next (elt));
+  }
+
+  int data = 'Z' - 'A';
+  ASSERT (set1.update (A, action, &data) == 1);
+
+  {
+    gl_OSet<const char *>::iterator iter2 = set1.begin ();
+    const char *elt;
+    ASSERT (iter2.next (elt));
+    ASSERT (strcmp (elt, "Z") == 0);
+    ASSERT (iter2.next (elt));
+    ASSERT (strcmp (elt, "D") == 0);
+    ASSERT (iter2.next (elt));
+    ASSERT (strcmp (elt, "C") == 0);
+    ASSERT (!iter2.next (elt));
+  }
 
   set1.free ();
 

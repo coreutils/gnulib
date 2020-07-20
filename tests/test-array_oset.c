@@ -26,6 +26,8 @@
 #include "gl_array_list.h"
 #include "macros.h"
 
+#include "test-oset-update.h"
+
 static const char *objects[30] =
   {
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
@@ -136,6 +138,8 @@ main (int argc, char *argv[])
     gl_oset_free (set1);
     gl_list_free (set2);
   }
+
+  test_update (GL_ARRAY_OSET);
 
   return 0;
 }
