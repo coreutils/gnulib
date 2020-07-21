@@ -1,4 +1,4 @@
-# printf.m4 serial 64
+# printf.m4 serial 65
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -680,7 +680,10 @@ AC_DEFUN([gl_PRINTF_DIRECTIVE_N],
 #include <stdlib.h>
 #include <string.h>
 #ifdef _MSC_VER
-/* See page about "Parameter Validation" on msdn.microsoft.com.  */
+#include <inttypes.h>
+/* See page about "Parameter Validation" on msdn.microsoft.com.
+   <https://docs.microsoft.com/en-us/cpp/c-runtime-library/parameter-validation>
+   <https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/set-invalid-parameter-handler-set-thread-local-invalid-parameter-handler>  */
 static void cdecl
 invalid_parameter_handler (const wchar_t *expression,
                            const wchar_t *function,
