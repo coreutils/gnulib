@@ -1,4 +1,4 @@
-# inttypes.m4 serial 29
+# inttypes.m4 serial 30
 dnl Copyright (C) 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,8 +39,17 @@ AC_DEFUN([gl_INTTYPES_PRI_SCN],
 
   PRIPTR_PREFIX=
   if test -n "$STDINT_H"; then
-    dnl Using the gnulib <stdint.h>. It always defines intptr_t to 'long'.
-    PRIPTR_PREFIX='"l"'
+    dnl Using the gnulib <stdint.h>. It defines intptr_t to 'long' or
+    dnl 'long long', depending on _WIN64.
+    AC_COMPILE_IFELSE(
+      [AC_LANG_PROGRAM([[
+         #ifdef _WIN64
+         LLP64
+         #endif
+         ]]),
+      ],
+      [PRIPTR_PREFIX='"l"'],
+      [PRIPTR_PREFIX='"ll"'])
   else
     dnl Using the system's <stdint.h>.
     for glpfx in '' l ll I64; do
