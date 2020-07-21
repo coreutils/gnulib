@@ -29,17 +29,29 @@
    The block can be freed through aligned_free(), NOT through free().
    Upon failure, it returns NULL.  */
 
-/* This module exists instead of a posix_memalign() or memalign() emulation,
-   because we can't reasonably emulate posix_memalign() or memalign():
+/* This module exists instead of a posix_memalign(), aligned_alloc(), or
+   memalign() emulation, because we can't reasonably emulate posix_memalign(),
+   aligned_alloc(), or memalign():
    If malloc() returned p, only free (p) is allowed, not free (p + 1),
    free (p + 2), free (p + 4), free (p + 8), or similar.
 
-   We can use posix_memalign().  On older systems, we can alternatively use
-   memalign() instead.  In the Solaris documentation of memalign() it is not
-   specified how a memory block returned by memalign() can be freed, but
-   it actually can be freed with free().  */
+   We can use posix_memalign(), a POSIX function.
 
-#if ((ALIGNMENT) <= MALLOC_ALIGNMENT) || HAVE_POSIX_MEMALIGN || HAVE_MEMALIGN
+   We can also use aligned_alloc(), an ISO C11 and POSIX function.  But it's
+   a bit more awkward to use.
+
+   On older systems, we can alternatively use memalign() instead.  In the
+   Solaris documentation of memalign() it is not specified how a memory block
+   returned by memalign() can be freed, but it actually can be freed with
+   free().  */
+
+#if !defined ALIGNMENT
+# error "ALIGNMENT is not defined"
+#endif
+#if !((ALIGNMENT) > 0 && ((ALIGNMENT) & ((ALIGNMENT) - 1)) == 0)
+# error "ALIGNMENT is not a power of 2"
+#endif
+#if ((ALIGNMENT) <= MALLOC_ALIGNMENT) || HAVE_POSIX_MEMALIGN || HAVE_ALIGNED_ALLOC || HAVE_MEMALIGN
 
 # if (ALIGNMENT) <= MALLOC_ALIGNMENT
 /* Simply use malloc.  */
@@ -68,6 +80,23 @@ aligned_malloc (size_t size)
     return p;
   else
     return NULL;
+}
+
+# elif HAVE_ALIGNED_ALLOC
+/* Use aligned_alloc.  */
+
+static inline void *
+aligned_malloc (size_t size)
+{
+  /* Round up SIZE to the next multiple of ALIGNMENT,
+     namely (SIZE + ALIGNMENT - 1) & ~(ALIGNMENT - 1).  */
+  size += (ALIGNMENT) - 1;
+  if (size >= (ALIGNMENT) - 1) /* no overflow? */
+    {
+      size &= ~(size_t)((ALIGNMENT) - 1);
+      return aligned_alloc ((ALIGNMENT), size);
+    }
+  return NULL;
 }
 
 # elif HAVE_MEMALIGN                    /* HP-UX, IRIX, Solaris <= 10 */
