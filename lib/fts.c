@@ -1190,8 +1190,7 @@ fts_children (register FTS *sp, int instr)
 static int
 fts_compare_ino (struct _ftsent const **a, struct _ftsent const **b)
 {
-  return (a[0]->fts_statp->st_ino < b[0]->fts_statp->st_ino ? -1
-          : b[0]->fts_statp->st_ino < a[0]->fts_statp->st_ino ? 1 : 0);
+  return _GL_CMP (a[0]->fts_statp->st_ino, b[0]->fts_statp->st_ino);
 }
 
 /* Map the dirent.d_type value, DTYPE, to the corresponding stat.st_mode

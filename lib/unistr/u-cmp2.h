@@ -21,12 +21,7 @@ FUNC (const UNIT *s1, size_t n1, const UNIT *s2, size_t n2)
   int cmp = U_CMP (s1, s2, MIN (n1, n2));
 
   if (cmp == 0)
-    {
-      if (n1 < n2)
-        cmp = -1;
-      else if (n1 > n2)
-        cmp = 1;
-    }
+    cmp = _GL_CMP (n1, n2);
 
   return cmp;
 }

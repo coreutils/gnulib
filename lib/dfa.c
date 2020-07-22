@@ -2466,7 +2466,7 @@ static int
 compare (const void *a, const void *b)
 {
   position const *p = a, *q = b;
-  return p->index < q->index ? -1 : p->index > q->index;
+  return _GL_CMP (p->index, q->index);
 }
 
 static void

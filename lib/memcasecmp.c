@@ -40,8 +40,7 @@ memcasecmp (const void *vs1, const void *vs2, size_t n)
       unsigned char u2 = s2[i];
       int U1 = toupper (u1);
       int U2 = toupper (u2);
-      int diff = (UCHAR_MAX <= INT_MAX ? U1 - U2
-                  : U1 < U2 ? -1 : U2 < U1);
+      int diff = (UCHAR_MAX <= INT_MAX ? U1 - U2 : _GL_CMP (U1, U2));
       if (diff)
         return diff;
     }

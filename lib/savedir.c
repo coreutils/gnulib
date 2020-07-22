@@ -65,7 +65,7 @@ direntry_cmp_inode (void const *a, void const *b)
   direntry_t const *dea = a;
   direntry_t const *deb = b;
 
-  return dea->ino < deb->ino ? -1 : dea->ino > deb->ino;
+  return _GL_CMP (dea->ino, deb->ino);
 }
 #endif
 
