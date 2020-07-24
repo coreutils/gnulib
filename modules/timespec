@@ -10,7 +10,6 @@ Depends-on:
 extern-inline
 snippet/arg-nonnull
 time
-verify
 
 configure.ac:
 gl_TIMESPEC

@@ -34,7 +34,6 @@ extern "C" {
 #endif
 
 #include "arg-nonnull.h"
-#include "verify.h"
 
 /* Inverse resolution of timespec timestamps (in units per second),
    and log base 10 of the inverse resolution.  */
