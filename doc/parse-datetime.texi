@@ -46,17 +46,17 @@ arguments to the various programs.  The C interface (via the
 @code{parse_datetime} function) is not described here.
 
 @menu
-* General date syntax::            Common rules.
-* Calendar date items::            19 Dec 1994.
-* Time of day items::              9:20pm.
-* Time zone items::                EST, PDT, UTC, @dots{}
-* Combined date and time of day items:: 1972-09-24T20:02:00,000000-0500.
-* Day of week items::              Monday and others.
-* Relative items in date strings:: next tuesday, 2 years ago.
-* Pure numbers in date strings::   19931219, 1440.
-* Seconds since the Epoch::        @@1078100502.
-* Specifying time zone rules::     TZ="America/New_York", TZ="UTC0".
-* Authors of parse_datetime::      Bellovin, Eggert, Salz, Berets, et al.
+* General date syntax::          Common rules
+* Calendar date items::          21 Jul 2020
+* Time of day items::            9:20pm
+* Time zone items::              UTC, -0700, +0900, @dots{}
+* Combined date and time of day items:: 2020-07-21T20:02:00,000000-0400
+* Day of week items::            Monday and others
+* Relative items in date strings:: next tuesday, 2 years ago
+* Pure numbers in date strings:: 20200721, 1440
+* Seconds since the Epoch::      @@1595289600
+* Specifying time zone rules::   TZ="America/New_York", TZ="UTC0"
+* Authors of parse_datetime::    Bellovin, Eggert, Salz, Berets, et al.
 @end menu
 
 
@@ -124,17 +124,17 @@ ways to do this:
 
 @example
 $ LC_ALL=C TZ=UTC0 date
-Mon Mar  1 00:21:42 UTC 2004
+Tue Jul 21 23:00:37 UTC 2020
 $ TZ=UTC0 date +'%Y-%m-%d %H:%M:%SZ'
-2004-03-01 00:21:42Z
+2020-07-21 23:00:37Z
 $ date --rfc-3339=ns  # --rfc-3339 is a GNU extension.
-2004-02-29 16:21:42.692722128-08:00
+2020-07-21 19:00:37.692722128-04:00
 $ date --rfc-2822  # a GNU extension
-Sun, 29 Feb 2004 16:21:42 -0800
+Tue, 21 Jul 2020 19:00:37 -0400
 $ date +'%Y-%m-%d %H:%M:%S %z'  # %z is a GNU extension.
-2004-02-29 16:21:42 -0800
+2020-07-21 19:00:37 -0400
 $ date +'@@%s.%N'  # %s and %N are GNU extensions.
-@@1078100502.692722128
+@@1595372437.692722128
 @end example
 
 @cindex case, ignored in dates
@@ -145,7 +145,7 @@ nested.  Hyphens not followed by a digit are currently ignored.  Leading
 zeros on numbers are ignored.
 
 @cindex leap seconds
-Invalid dates like @samp{2005-02-29} or times like @samp{24:00} are
+Invalid dates like @samp{2019-02-29} or times like @samp{24:00} are
 rejected.  In the typical case of a host that does not support leap
 seconds, a time like @samp{23:59:60} is rejected even if it
 corresponds to a valid leap second.
@@ -161,25 +161,23 @@ specified differently, depending on whether the month is specified
 numerically or literally.  All these strings specify the same calendar date:
 
 @example
-1972-09-24     # ISO 8601.
-72-9-24        # Assume 19xx for 69 through 99,
-               # 20xx for 00 through 68.
-72-09-24       # Leading zeros are ignored.
-9/24/72        # Common U.S. writing.
-24 September 1972
-24 Sept 72     # September has a special abbreviation.
-24 Sep 72      # Three-letter abbreviations always allowed.
-Sep 24, 1972
-24-sep-72
-24sep72
+2020-07-20     # ISO 8601.
+20-7-20        # Assume 19xx for 69 through 99,
+               # 20xx for 00 through 68 (not recommended).
+7/20/2020      # Common U.S. writing.
+20 July 2020
+20 Jul 2020    # Three-letter abbreviations always allowed.
+Jul 20, 2020
+20-jul-2020
+20jul2020
 @end example
 
 The year can also be omitted.  In this case, the last specified year is
 used, or the current year if none.  For example:
 
 @example
-9/24
-sep 24
+7/20
+jul 20
 @end example
 
 Here are the rules.
@@ -432,14 +430,14 @@ where the clocks were adjusted, typically for daylight saving time,
 the resulting date and time are adjusted accordingly.
 
 The fuzz in units can cause problems with relative items.  For
-example, @samp{2003-07-31 -1 month} might evaluate to 2003-07-01,
-because 2003-06-31 is an invalid date.  To determine the previous
+example, @samp{2020-07-31 -1 month} might evaluate to 2020-07-01,
+because 2020-06-31 is an invalid date.  To determine the previous
 month more reliably, you can ask for the month before the 15th of the
 current month.  For example:
 
 @example
 $ date -R
-Thu, 31 Jul 2003 13:02:39 -0700
+Thu, 31 Jul 2020 13:02:39 -0400
 $ date --date='-1 month' +'Last month was %B?'
 Last month was July?
 $ date --date="$(date +%Y-%m-15) -1 month" +'Last month was %B!'
@@ -487,28 +485,29 @@ infinity.  Such a number cannot be combined with any other date
 item, as it specifies a complete timestamp.
 
 @cindex beginning of time, for POSIX
-@cindex epoch, for POSIX
+@cindex Epoch, for POSIX
 Internally, computer times are represented as a count of seconds since
-an epoch---a well-defined point of time.  On GNU and
-POSIX systems, the epoch is 1970-01-01 00:00:00 UTC, so
+an Epoch---a well-defined point of time.  On GNU and
+POSIX systems, the Epoch is 1970-01-01 00:00:00 UTC, so
 @samp{@@0} represents this time, @samp{@@1} represents 1970-01-01
 00:00:01 UTC, and so forth.  GNU and most other
 POSIX-compliant systems support such times as an extension
 to POSIX, using negative counts, so that @samp{@@-1}
 represents 1969-12-31 23:59:59 UTC.
 
-Traditional Unix systems count seconds with 32-bit two's-complement
+Most modern systems count seconds with 64-bit two's-complement integers
+of seconds with nanosecond subcounts, which is a range that includes
+the known lifetime of the universe with nanosecond resolution.
+Some obsolescent systems count seconds with 32-bit two's-complement
 integers and can represent times from 1901-12-13 20:45:52 through
-2038-01-19 03:14:07 UTC@.  More modern systems use 64-bit counts
-of seconds with nanosecond subcounts, and can represent all the times
-in the known lifetime of the universe to a resolution of 1 nanosecond.
+2038-01-19 03:14:07 UTC@.  A few systems sport other time ranges.
 
 @cindex leap seconds
 On most hosts, these counts ignore the presence of leap seconds.
-For example, on most hosts @samp{@@915148799} represents 1998-12-31
-23:59:59 UTC, @samp{@@915148800} represents 1999-01-01 00:00:00
+For example, on most hosts @samp{@@1483228799} represents 2016-12-31
+23:59:59 UTC, @samp{@@1483228800} represents 2017-01-01 00:00:00
 UTC, and there is no way to represent the intervening leap second
-1998-12-31 23:59:60 UTC.
+2016-12-31 23:59:60 UTC.
 
 @node Specifying time zone rules
 @section Specifying time zone rules
@@ -525,22 +524,22 @@ backslash.
 
 For example, with the GNU @command{date} command you can
 answer the question ``What time is it in New York when a Paris clock
-shows 6:30am on October 31, 2004?'' by using a date beginning with
+shows 6:30am on October 31, 2019?'' by using a date beginning with
 @samp{TZ="Europe/Paris"} as shown in the following shell transcript:
 
 @example
 $ export TZ="America/New_York"
-$ date --date='TZ="Europe/Paris" 2004-10-31 06:30'
-Sun Oct 31 01:30:00 EDT 2004
+$ date --date='TZ="Europe/Paris" 2019-10-31 06:30'
+Sun Oct 31 01:30:00 EDT 2019
 @end example
 
 In this example, the @option{--date} operand begins with its own
 @env{TZ} setting, so the rest of that operand is processed according
-to @samp{Europe/Paris} rules, treating the string @samp{2004-10-31
+to @samp{Europe/Paris} rules, treating the string @samp{2019-10-31
 06:30} as if it were in Paris.  However, since the output of the
 @command{date} command is processed according to the overall time zone
 rules, it uses New York time.  (Paris was normally six hours ahead of
-New York in 2004, but this example refers to a brief Halloween period
+New York in 2019, but this example refers to a brief Halloween period
 when the gap was five hours.)
 
 A @env{TZ} value is a rule that typically names a location in the
