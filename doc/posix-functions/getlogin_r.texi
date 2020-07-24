@@ -18,7 +18,7 @@ HP-UX 11.
 @item
 This function returns a truncated result, instead of failing with error code
 @code{ERANGE}, when the buffer is not large enough, on some platforms:
-Mac OS X 10.12.
+Mac OS X 10.13.
 @end itemize
 
 Portability problems not fixed by Gnulib:

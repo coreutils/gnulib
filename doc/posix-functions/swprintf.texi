@@ -28,7 +28,7 @@ MSVC 14.
 @item
 This function does not support the @samp{n} directive on some platforms:
 glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
-MSVC 14.
+Mac OS X 10.13, MSVC 14.
 @item
 On Windows and 32-bit AIX platforms, @code{wchar_t} is a 16-bit type and therefore cannot
 accommodate all Unicode characters.

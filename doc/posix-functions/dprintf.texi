@@ -22,7 +22,15 @@ Solaris 11.4.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6.
+glibc-2.3.6, Solaris 11.4.
+@item
+This function does not support the @samp{n} directive on some platforms:
+glibc when used with @code{_FORTIFY_SOURCE >= 2} (set by default on Ubuntu),
+Mac OS X 10.13.
+@item
+This function does not support precisions in the @samp{ls} directive correctly
+on some platforms:
+Solaris 11.4.
 @item
 printf @code{"%010f"} of NaN and Infinity yields an incorrect result (padded
 with zeroes, or wrong capitalization) on some platforms:

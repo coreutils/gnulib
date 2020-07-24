@@ -14,7 +14,7 @@ mingw, MSVC 14.
 @item
 On some platforms, this function fails to reject a negative count,
 even though that is less than the size that would be returned:
-FreeBSD 7.2.
+Mac OS X 10.13, FreeBSD 7.2.
 @item
 On NeXTstep 3.2, @code{getgroups (0, NULL)} always fails.  See macro
 @samp{AC_FUNC_GETGROUPS}.

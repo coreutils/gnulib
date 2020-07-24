@@ -21,7 +21,7 @@ Portability problems fixed by Gnulib module @code{ceilf-ieee}:
 @item
 This function returns a positive zero for an argument between @minus{}1 and 0
 on some platforms:
-Mac OS X 10.5, AIX 7.1.
+Mac OS X 10.13, AIX 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:

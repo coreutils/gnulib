@@ -53,7 +53,7 @@ FreeBSD 8.2.
 @item
 This function produces a different string for @code{0} than
 @code{strerror} on some platforms:
-Mac OS X 10.5.
+Mac OS X 10.13.
 @item
 This function always fails when the third argument is less than 80 on some
 platforms:

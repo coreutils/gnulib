@@ -89,7 +89,7 @@ glibc 2.7, IRIX 6.5, mingw, MSVC 14.
 @item
 This function fails to correctly parse very long strings on some
 platforms:
-Mac OS X 10.5, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, IRIX 6.5, Cygwin, mingw, MSVC 14.
+Mac OS X 10.13, FreeBSD 6.2, NetBSD 5.0, OpenBSD 4.0, IRIX 6.5, Cygwin, mingw, MSVC 14.
 
 @item
 The replacement function does not always return correctly rounded results.

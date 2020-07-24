@@ -20,5 +20,5 @@ Portability problems not fixed by Gnulib:
 @itemize
 @item
 This constant is missing on some platforms:
-Mac OS X 10.5, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Cygwin 1.5.x, mingw, MSVC 14, Android 6.0.
+Mac OS X 10.13, Minix 3.1.8, HP-UX 11.00, IRIX 6.5, Cygwin 1.5.x, mingw, MSVC 14, Android 6.0.
 @end itemize

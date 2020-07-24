@@ -13,7 +13,7 @@ mingw, MSVC 14.
 
 @item
 The @code{locale_t} type is not defined on some platforms:
-glibc 2.11, Mac OS X 10.5.
+glibc 2.11, Mac OS X 10.13.
 
 @item
 The @code{struct lconv} type does not contain any members on some platforms:

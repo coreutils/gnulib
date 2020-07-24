@@ -40,7 +40,7 @@ that has a different semantics.
 Some systems define a @code{struct dirent} member named @code{d_off}
 containing a magic cookie suitable as an argument to @code{seekdir},
 but others do not:
-glibc 2.23 on Hurd, Mac OS X 10.5, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, Cygwin, mingw.
+glibc 2.23 on Hurd, Mac OS X 10.13, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, AIX 5.1, HP-UX 11, Cygwin, mingw.
 
 @item
 Some systems define a @code{struct dirent} member named

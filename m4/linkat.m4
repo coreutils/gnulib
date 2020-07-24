@@ -1,4 +1,4 @@
-# serial 10
+# serial 11
 # See if we need to provide linkat replacement.
 
 dnl Copyright (C) 2009-2020 Free Software Foundation, Inc.
@@ -83,7 +83,7 @@ AC_DEFUN([gl_FUNC_LINKAT],
                           AT_SYMLINK_FOLLOW) == 0)
                 result |= 8;
 
-              /* On OS X 10.10 a trailing "/" will cause the second path to be
+              /* On Mac OS X 10.13 a trailing "/" will cause the second path to be
                  dereferenced, and thus will succeed on a dangling symlink.  */
               if (symlink ("conftest.e", "conftest.s") == 0)
                 {
