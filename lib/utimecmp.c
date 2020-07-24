@@ -396,8 +396,6 @@ utimecmpat (int dfd, char const *dst_name,
     }
 
   /* Compare the timestamps and return -1, 0, 1 accordingly.  */
-  return (dst_s < src_s ? -1
-          : dst_s > src_s ? 1
-          : dst_ns < src_ns ? -1
-          : dst_ns > src_ns);
+  return (_GL_CMP (dst_s, src_s)
+          + ((dst_s == src_s ? ~0 : 0) & _GL_CMP (dst_ns, src_ns)));
 }
