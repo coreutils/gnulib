@@ -305,7 +305,7 @@ AC_DEFUN([gl_COMMON_BODY], [
    GCC versions up to GCC 9.
    The better code  (n1 > n2) - (n1 < n2)  from Hacker's Delight § 2-9
    avoids conditional jumps in all GCC versions >= 3.4.  */
-#define _GL_CMP(n1, n2) ((n1) > (n2)) - ((n1) < (n2))
+#define _GL_CMP(n1, n2) (((n1) > (n2)) - ((n1) < (n2)))
 ])
   dnl Hint which direction to take regarding cross-compilation guesses:
   dnl When a user installs a program on a platform they are not intimately
