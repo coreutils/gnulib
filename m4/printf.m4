@@ -1,4 +1,4 @@
-# printf.m4 serial 66
+# printf.m4 serial 67
 dnl Copyright (C) 2003, 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -1702,6 +1702,7 @@ dnl   HP-UX 10.20                    #  .  #  .  #  #  .  ?  .  .  #  #  .  .  .
 dnl   IRIX 6.5                       #  .  #  #  #  #  .  #  .  .  .  #  .  .  .  .  #  .  .  .
 dnl   OSF/1 5.1                      #  .  #  #  #  #  .  .  .  .  .  #  .  .  .  .  #  .  .  #
 dnl   OSF/1 4.0d                     #  .  #  #  #  #  .  .  .  .  .  #  .  .  #  #  #  #  #  #
+dnl   NetBSD 9.0                     .  .  .  .  #  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 dnl   NetBSD 5.0                     .  .  .  #  #  .  .  .  .  .  .  #  .  #  .  .  .  .  .  .
 dnl   NetBSD 4.0                     .  ?  ?  ?  ?  ?  .  ?  .  ?  ?  ?  ?  ?  .  .  .  ?  ?  ?
 dnl   NetBSD 3.0                     .  .  .  .  #  #  .  ?  #  #  ?  #  .  #  .  .  .  .  .  .

@@ -20,8 +20,12 @@ This header file does not define the type @code{socklen_t} on some platforms:
 IRIX 6.5.
 
 @item
-This header file does not define @code{AI_ALL}, @code{AI_V4MAPPED},
-@code{AI_ADDRCONFIG} on some platforms:
+This header file does not define @code{AI_ALL}, @code{AI_V4MAPPED}
+on some platforms:
+NetBSD 9.0.
+
+@item
+This header file does not define @code{AI_ADDRCONFIG} on some platforms:
 NetBSD 5.0.
 @end itemize
 

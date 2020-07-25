@@ -9,7 +9,7 @@ Portability problems fixed by Gnulib:
 @itemize
 @item
 Some platforms fail to provide @code{max_align_t}, which was added in C11:
-Solaris 11.0 and others.
+NetBSD 8.0, Solaris 11.0, and others.
 
 @item
 @code{max_align_t} does not have the expected alignment on some platforms:

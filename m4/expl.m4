@@ -1,4 +1,4 @@
-# expl.m4 serial 15
+# expl.m4 serial 16
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -150,7 +150,7 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_expl) (long double) = argc ? expl : dummy;
   int result = 0;
-  /* This test fails on NetBSD 8.0.  */
+  /* This test fails on NetBSD 9.0.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
       (long double) (1U << ((LDBL_MANT_DIG - 1) / 5))

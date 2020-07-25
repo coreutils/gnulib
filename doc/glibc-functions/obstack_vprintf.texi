@@ -17,7 +17,7 @@ Portability problems fixed by either Gnulib module
 @itemize
 @item
 This function is missing on all non-glibc platforms:
-Mac OS X 10.13, FreeBSD 6.0, NetBSD 5.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
+Mac OS X 10.13, FreeBSD 6.0, NetBSD 9.0, OpenBSD 3.8, Minix 3.1.8, AIX 5.1, HP-UX 11, IRIX 6.5, Solaris 11.4, Cygwin 2.9, mingw, MSVC 14, Android 9.0.
 @end itemize
 
 Portability problems fixed by Gnulib module @code{obstack-printf-posix}:
@@ -36,7 +36,7 @@ AIX 5.2, Solaris 11.0, mingw, MSVC 14.
 @item
 This function does not support the @samp{a} and @samp{A} directives on some
 platforms:
-glibc-2.3.6, Mac OS X 10.13, NetBSD 5.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
+glibc-2.3.6, Mac OS X 10.13, NetBSD 9.0, OpenBSD 4.0, AIX 5.2, HP-UX 11,
 IRIX 6.5, Solaris 11.4, Cygwin 1.5.x, mingw, MSVC 14.
 @item
 This function does not support the @samp{F} directive on some platforms:

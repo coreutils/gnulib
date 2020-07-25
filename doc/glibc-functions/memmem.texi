@@ -46,7 +46,7 @@ Performance problems fixed by Gnulib module @code{memmem}:
 @item
 This function has quadratic instead of linear worst-case complexity on some
 platforms:
-glibc 2.8, FreeBSD 6.2, NetBSD 5.0, AIX 5.1, Solaris 11.4, Cygwin 1.5.x.
+glibc 2.8, FreeBSD 6.2, NetBSD 9.0, AIX 5.1, Solaris 11.4, Cygwin 1.5.x.
 Note for small needles the replacement may be slower.
 @end itemize
 

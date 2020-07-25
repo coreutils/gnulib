@@ -12,7 +12,8 @@ Portability problems fixed by Gnulib:
 This function is missing on some platforms:
 mingw, MSVC 14.
 @item
-This function is broken in some versions of Solaris and glibc.
+This function is broken on some platforms:
+some versions of glibc, NetBSD 7.1, some versions of Solaris.
 @end itemize
 
 Portability problems not fixed by Gnulib:

@@ -14,7 +14,7 @@ glibc 2.11, AIX 7.1.
 @item
 With the argument @code{LC_GLOBAL_LOCALE}, this function returns a wrong result
 on some platforms:
-NetBSD 7.0.
+NetBSD 7.1.
 @end itemize
 
 Portability problems not fixed by Gnulib:
