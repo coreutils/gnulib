@@ -1,4 +1,4 @@
-# parse-datetime.m4 serial 25
+# parse-datetime.m4 serial 26
 dnl Copyright (C) 2002-2006, 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -13,11 +13,15 @@ dnl static variables (even though gcc supports this in pre-C99 mode).
 AC_DEFUN([gl_C_COMPOUND_LITERALS],
 [
   AC_CACHE_CHECK([for compound literals], [gl_cv_compound_literals],
-  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[struct s { int i, j; };]],
-      [[struct s t = (struct s) { 3, 4 };
-        if (t.i != 0) return 0;]])],
-    gl_cv_compound_literals=yes,
-    gl_cv_compound_literals=no)])
+    [AC_COMPILE_IFELSE(
+       [AC_LANG_PROGRAM(
+          [[struct s { int i, j; };]],
+          [[struct s t = (struct s) { 3, 4 };
+            if (t.i != 0) return 0;]])
+       ],
+       [gl_cv_compound_literals=yes],
+       [gl_cv_compound_literals=no])
+    ])
   if test $gl_cv_compound_literals = yes; then
     AC_DEFINE([HAVE_COMPOUND_LITERALS], [1],
       [Define if you have compound literals.])
