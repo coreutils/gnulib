@@ -1,4 +1,4 @@
-# gnulib-common.m4 serial 51
+# gnulib-common.m4 serial 52
 dnl Copyright (C) 2007-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -624,6 +624,15 @@ AC_DEFUN([AC_C_RESTRICT],
 AC_DEFUN([gl_BIGENDIAN],
 [
   AC_C_BIGENDIAN
+])
+
+# gl_SILENT(command)
+# executes command, but without the normal configure output.
+AC_DEFUN([gl_SILENT],
+[
+  {
+    $1
+  } AS_MESSAGE_FD>/dev/null
 ])
 
 # gl_CACHE_VAL_SILENT(cache-id, command-to-set-it)
