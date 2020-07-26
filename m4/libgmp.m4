@@ -1,4 +1,4 @@
-# libgmp.m4 serial 2
+# libgmp.m4 serial 3
 # Configure the GMP library or a replacement.
 dnl Copyright 2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
@@ -8,8 +8,7 @@ dnl with or without modifications, as long as this notice is preserved.
 dnl gl_LIBGMP
 dnl Searches for an installed libgmp.
 dnl If found, it sets and AC_SUBSTs HAVE_LIBGMP=yes and the LIBGMP and LTLIBGMP
-dnl variables, and augments the CPPFLAGS variable, and #defines HAVE_LIBGMP
-dnl and HAVE_GMP to 1.
+dnl variables, and augments the CPPFLAGS variable, and #defines HAVE_LIBGMP.
 dnl Otherwise, it sets and AC_SUBSTs HAVE_LIBGMP=no and LIBGMP and LTLIBGMP to
 dnl empty.
 
@@ -44,17 +43,9 @@ AC_DEFUN([gl_LIBGMP],
   esac
   if test $HAVE_LIBGMP = yes; then
     GMP_H=
-    dnl This is redundant, as HAVE_LIBGMP is also defined to 1.
-    AC_DEFINE([HAVE_GMP], [1],
-      [Define to 1 if you have the GMP library instead of just the
-       mini-gmp replacement.])
   else
     GMP_H=gmp.h
   fi
   AC_SUBST([GMP_H])
   AM_CONDITIONAL([GL_GENERATE_GMP_H], [test -n "$GMP_H"])
-
-  dnl For backward compatibility.
-  LIB_GMP="$LIBGMP"
-  AC_SUBST([LIB_GMP])
 ])
