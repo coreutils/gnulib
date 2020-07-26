@@ -1,4 +1,4 @@
-# multiarch.m4 serial 8
+# multiarch.m4 serial 9
 dnl Copyright (C) 2008-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -39,7 +39,7 @@ AC_DEFUN_ONCE([gl_MULTIARCH],
         for word in ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS}; do
           if test -n "$prev"; then
             case $word in
-              i?86 | x86_64 | ppc | ppc64)
+              i?86 | x86_64 | ppc | ppc64 | arm | arm64)
                 if test -z "$arch" || test "$arch" = "$word"; then
                   arch="$word"
                 else
