@@ -1727,7 +1727,6 @@ func_all_modules ()
 
   func_begin_table
   func_module fprintftime
-  func_module localtime-buffer
   func_module nstrftime
   func_module strftime-fixes
   func_module time_rz

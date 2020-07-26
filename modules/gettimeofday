@@ -7,7 +7,6 @@ m4/gettimeofday.m4
 
 Depends-on:
 sys_time
-localtime-buffer [test $NEED_LOCALTIME_BUFFER = 1]
 
 configure.ac:
 gl_FUNC_GETTIMEOFDAY
