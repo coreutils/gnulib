@@ -8,7 +8,6 @@ lib/mini-gmp.h
 m4/libgmp.m4
 
 Depends-on:
-havelib
 
 configure.ac:
 gl_LIBGMP
