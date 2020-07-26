@@ -48,7 +48,7 @@ extern error_t argz_create_sep (const char *restrict /*string*/,
 
 /* Returns the number of strings in ARGZ.  */
 
-extern size_t argz_count (const char */*argz*/, size_t /*len*/);
+extern size_t argz_count (const char * /*argz*/, size_t /*len*/);
 
 /* Puts pointers to each string in ARGZ into ARGV, which must be large enough
    to hold them all.  */
@@ -59,7 +59,7 @@ extern void argz_extract (const char *restrict /*argz*/, size_t /*len*/,
 /* Make '\0' separated arg vector ARGZ printable by converting all the '\0's
    except the last into the character SEP.  */
 
-extern void argz_stringify (char */*argz*/, size_t /*len*/, int /*sep*/);
+extern void argz_stringify (char * /*argz*/, size_t /*len*/, int /*sep*/);
 
 /* Append BUF, of length BUF_LEN to the argz vector in ARGZ & ARGZ_LEN.  */
 
