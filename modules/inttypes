@@ -2,7 +2,6 @@ Description:
 An <inttypes.h> that nearly conforms to C99.
 
 Files:
-m4/inttypes-pri.m4
 
 Depends-on:
 inttypes-incomplete

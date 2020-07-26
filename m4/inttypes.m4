@@ -1,4 +1,4 @@
-# inttypes.m4 serial 30
+# inttypes.m4 serial 31
 dnl Copyright (C) 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -35,8 +35,6 @@ AC_DEFUN_ONCE([gl_INTTYPES_INCOMPLETE],
 # Ensure that the PRI* and SCN* macros are defined appropriately.
 AC_DEFUN([gl_INTTYPES_PRI_SCN],
 [
-  AC_REQUIRE([gt_INTTYPES_PRI])
-
   PRIPTR_PREFIX=
   if test -n "$STDINT_H"; then
     dnl Using the gnulib <stdint.h>. It defines intptr_t to 'long' or
@@ -161,7 +159,6 @@ AC_DEFUN([gl_INTTYPES_H_DEFAULTS],
   REPLACE_STRTOUMAX=0;   AC_SUBST([REPLACE_STRTOUMAX])
   INT32_MAX_LT_INTMAX_MAX=1;  AC_SUBST([INT32_MAX_LT_INTMAX_MAX])
   INT64_MAX_EQ_LONG_MAX='defined _LP64';  AC_SUBST([INT64_MAX_EQ_LONG_MAX])
-  PRI_MACROS_BROKEN=0;   AC_SUBST([PRI_MACROS_BROKEN])
   PRIPTR_PREFIX=__PRIPTR_PREFIX;  AC_SUBST([PRIPTR_PREFIX])
   UINT32_MAX_LT_UINTMAX_MAX=1;  AC_SUBST([UINT32_MAX_LT_UINTMAX_MAX])
   UINT64_MAX_EQ_ULONG_MAX='defined _LP64';  AC_SUBST([UINT64_MAX_EQ_ULONG_MAX])
