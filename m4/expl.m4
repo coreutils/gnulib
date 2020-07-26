@@ -1,4 +1,4 @@
-# expl.m4 serial 16
+# expl.m4 serial 17
 dnl Copyright (C) 2010-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -53,43 +53,6 @@ AC_DEFUN([gl_FUNC_EXPL],
     if test $gl_cv_func_expl_in_libm = yes; then
       EXPL_LIBM=-lm
     fi
-  fi
-  dnl On Haiku 2017 the system's native expl() is just a stub: it returns 0.0
-  dnl and prints "__expl not implemented" for all arguments.
-  dnl On OpenBSD 5.4 the system's native expl() is buggy:
-  dnl it returns 'nan' for small values. Test for this anomaly.
-  if test $gl_cv_func_expl_no_libm = yes \
-     || test $gl_cv_func_expl_in_libm = yes; then
-    AC_CACHE_CHECK([whether expl() breaks with small values],
-      [gl_cv_func_expl_buggy],
-      [save_LIBS="$LIBS"
-       LIBS="$EXPL_LIBM"
-       AC_RUN_IFELSE(
-         [AC_LANG_PROGRAM(
-            [[#include <math.h>]],
-            [[volatile long double x1 = -1.0;
-              volatile long double x2 = -0.8;
-              volatile long double x3 = -0.4;
-              return expl(x1) == 0.0 || isnan(expl(x1))
-                     || isnan(expl(x2)) || isnan(expl(x3));
-            ]])
-         ],
-         [gl_cv_func_expl_buggy=no], [gl_cv_func_expl_buggy=yes],
-         [case $host_os in
-            haiku* | openbsd*)
-                      gl_cv_func_expl_buggy="guessing yes" ;;
-                      # Guess no on native Windows.
-            mingw*)   gl_cv_func_expl_buggy="guessing no" ;;
-            *)        gl_cv_func_expl_buggy="guessing no" ;;
-          esac
-         ])
-       LIBS="$save_LIBS"
-      ])
-    case "$gl_cv_func_expl_buggy" in
-      *yes)
-        gl_cv_func_expl_in_libm=no
-        gl_cv_func_expl_no_libm=no ;;
-    esac
   fi
   if test $gl_cv_func_expl_no_libm = yes \
      || test $gl_cv_func_expl_in_libm = yes; then
@@ -150,6 +113,22 @@ int main (int argc, char *argv[])
 {
   long double (* volatile my_expl) (long double) = argc ? expl : dummy;
   int result = 0;
+  /* On Haiku 2017 the system's native expl() is just a stub: it returns 0.0
+     and prints "__expl not implemented" for all arguments.  */
+  {
+    volatile long double x1 = -1.0;
+    if (expl (x1) == 0.0)
+      result |= 1;
+  }
+  /* On OpenBSD 5.4 the system's native expl() is buggy:
+     it returns 'nan' for small values.  */
+  {
+    volatile long double x1 = -1.0;
+    volatile long double x2 = -0.8;
+    volatile long double x3 = -0.4;
+    if (isnan (expl (x1)) || isnan (expl (x2)) || isnan (expl (x3)))
+      result |= 2;
+  }
   /* This test fails on NetBSD 9.0.  */
   {
     const long double TWO_LDBL_MANT_DIG = /* 2^LDBL_MANT_DIG */
@@ -161,7 +140,7 @@ int main (int argc, char *argv[])
     long double x = 11.358L;
     long double err = (my_expl (x) * my_expl (- x) - 1.0L) * TWO_LDBL_MANT_DIG;
     if (!(err >= -100.0L && err <= 100.0L))
-      result |= 1;
+      result |= 4;
   }
   return result;
 }
