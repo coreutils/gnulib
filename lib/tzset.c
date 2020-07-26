@@ -25,8 +25,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "localtime-buffer.h"
-
 /* This is a wrapper for tzset, for systems on which tzset may clobber
    the static buffer used for localtime's result.
    Work around the bug in some systems whereby tzset clobbers the
@@ -37,12 +35,6 @@ void
 tzset (void)
 #undef tzset
 {
-#if TZSET_CLOBBERS_LOCALTIME
-  /* Save and restore the contents of the buffer used for localtime's
-     result around the call to tzset.  */
-  struct tm save = *localtime_buffer_addr;
-#endif
-
 #if defined _WIN32 && ! defined __CYGWIN__
   /* Rectify the value of the environment variable TZ.
      There are four possible kinds of such values:
@@ -78,9 +70,5 @@ tzset (void)
   tzset ();
 #else
   /* Do nothing.  Avoid infinite recursion.  */
-#endif
-
-#if TZSET_CLOBBERS_LOCALTIME
-  *localtime_buffer_addr = save;
 #endif
 }

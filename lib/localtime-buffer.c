@@ -22,7 +22,7 @@
 /* Specification.  */
 #include "localtime-buffer.h"
 
-#if GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME
+#if GETTIMEOFDAY_CLOBBERS_LOCALTIME
 
 static struct tm tm_zero_buffer;
 struct tm *localtime_buffer_addr = &tm_zero_buffer;

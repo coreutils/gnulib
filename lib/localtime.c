@@ -20,7 +20,7 @@
 #include <time.h>
 
 /* Keep consistent with localtime-buffer.c!  */
-#if !(GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME)
+#if !GETTIMEOFDAY_CLOBBERS_LOCALTIME
 
 # include <stdlib.h>
 # include <string.h>

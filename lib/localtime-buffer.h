@@ -19,7 +19,7 @@
 
 #include <time.h>
 
-#if GETTIMEOFDAY_CLOBBERS_LOCALTIME || TZSET_CLOBBERS_LOCALTIME
+#if GETTIMEOFDAY_CLOBBERS_LOCALTIME
 
 /* The address of the last buffer returned by localtime() or gmtime().  */
 extern struct tm *localtime_buffer_addr;
