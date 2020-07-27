@@ -26,8 +26,6 @@
 #include <dfa.h>
 #include <localeinfo.h>
 
-#include "getprogname.h"
-
 _Noreturn void
 dfaerror (char const *mesg)
 {
@@ -35,11 +33,13 @@ dfaerror (char const *mesg)
   exit (EXIT_FAILURE);
 }
 
-_Noreturn void
+static int exit_status = EXIT_SUCCESS;
+
+void
 dfawarn (char const *mesg)
 {
   printf ("dfawarn: %s\n", mesg);
-  exit (EXIT_FAILURE);
+  exit_status = EXIT_FAILURE;
 }
 
 int
@@ -69,5 +69,5 @@ main (int argc, char **argv)
   if (p != NULL)
     printf ("%zd\n", p - beg);
 
-  exit (EXIT_SUCCESS);
+  exit (exit_status);
 }

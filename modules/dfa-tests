@@ -4,7 +4,6 @@ tests/test-dfa-match-aux.c
 tests/test-dfa-invalid-char-class.sh
 
 Depends-on:
-getprogname
 stdio
 stdlib
 string
