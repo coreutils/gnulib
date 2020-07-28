@@ -176,7 +176,8 @@ rpl_fopen (const char *filename, const char *mode)
             return NULL;
           }
 
-        fd = open (filename, open_direction | open_flags);
+        fd = open (filename, open_direction | open_flags,
+                   S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
         if (fd < 0)
           return NULL;
 
@@ -209,7 +210,8 @@ rpl_fopen (const char *filename, const char *mode)
       int fd;
       FILE *fp;
 
-      fd = open (filename, open_direction | open_flags);
+      fd = open (filename, open_direction | open_flags,
+                 S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH | S_IWOTH);
       if (fd < 0)
         return NULL;
 
