@@ -129,6 +129,14 @@ unicode_to_mb (unsigned int code,
       res = iconv (utf8_to_local,
                    (ICONV_CONST char **)&inptr, &inbytesleft,
                    &outptr, &outbytesleft);
+      /* Analyze what iconv() actually did and distinguish replacements
+         that are OK (no need to invoke the FAILURE callback), such as
+           - replacing GREEK SMALL LETTER MU with MICRO SIGN, or
+           - replacing FULLWIDTH COLON with ':', or
+           - replacing a Unicode TAG character (U+E00xx) with an empty string,
+         from replacements that are worse than the FAILURE callback, such as
+           - replacing 'ç' with '?' (NetBSD, Solaris 11) or '*' (musl) or
+             NUL (IRIX).  */
       if (inbytesleft > 0 || res == (size_t)(-1)
           /* Irix iconv() inserts a NUL byte if it cannot convert.  */
 # if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
