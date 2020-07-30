@@ -120,9 +120,14 @@ AC_DEFUN([gl_COMMON_BODY], [
 #endif
 
 /* Avoid __attribute__ ((cold)) on MinGW; see thread starting at
-   <https://lists.gnu.org/r/emacs-devel/2019-04/msg01152.html>. */
+   <https://lists.gnu.org/r/emacs-devel/2019-04/msg01152.html>.
+   Also, Oracle Studio 12.6 requires 'cold' not '__cold__'.  */
 #if _GL_HAS_ATTRIBUTE (cold) && !defined __MINGW32__
-# define _GL_ATTRIBUTE_COLD __attribute__ ((__cold__))
+# ifndef __SUNPRO_C
+#  define _GL_ATTRIBUTE_COLD __attribute__ ((__cold__))
+# else
+#  define _GL_ATTRIBUTE_COLD __attribute__ ((cold))
+# endif
 #else
 # define _GL_ATTRIBUTE_COLD
 #endif
@@ -176,7 +181,8 @@ AC_DEFUN([gl_COMMON_BODY], [
 # define _GL_ATTRIBUTE_LEAF
 #endif
 
-#if _GL_HAS_ATTRIBUTE (may_alias)
+/* Oracle Studio 12.6 mishandles may_alias despite __has_attribute OK.  */
+#if _GL_HAS_ATTRIBUTE (may_alias) && !defined __SUNPRO_C
 # define _GL_ATTRIBUTE_MAY_ALIAS __attribute__ ((__may_alias__))
 #else
 # define _GL_ATTRIBUTE_MAY_ALIAS
