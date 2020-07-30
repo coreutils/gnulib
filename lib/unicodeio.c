@@ -130,7 +130,7 @@ unicode_to_mb (unsigned int code,
                    (ICONV_CONST char **)&inptr, &inbytesleft,
                    &outptr, &outbytesleft);
       if (inbytesleft > 0 || res == (size_t)(-1)
-          /* Irix iconv() inserts a NUL byte if it cannot convert. */
+          /* Irix iconv() inserts a NUL byte if it cannot convert.  */
 # if !defined _LIBICONV_VERSION && (defined sgi || defined __sgi)
           || (res > 0 && code != 0 && outptr - outbuf == 1 && *outbuf == '\0')
 # endif
@@ -138,6 +138,10 @@ unicode_to_mb (unsigned int code,
              convert.  */
 # if !defined _LIBICONV_VERSION && (defined __NetBSD__ || defined __sun)
           || (res > 0 && outptr - outbuf == 1 && *outbuf == '?')
+# endif
+          /* musl libc iconv() inserts a '*' if it cannot convert.  */
+# if !defined _LIBICONV_VERSION && MUSL_LIBC
+          || (res > 0 && outptr - outbuf == 1 && *outbuf == '*')
 # endif
          )
         return failure (code, NULL, callback_arg);

@@ -5,6 +5,7 @@ Files:
 lib/unicodeio.h
 lib/unicodeio.c
 m4/unicodeio.m4
+m4/musl.m4
 
 Depends-on:
 unistr/u8-uctomb
