@@ -6,6 +6,7 @@ Depends-on:
 isatty
 
 configure.ac:
+gl_LIBTEXTSTYLE_OPTIONAL
 
 Makefile.am:
 TESTS += test-libtextstyle
