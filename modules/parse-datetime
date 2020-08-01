@@ -49,7 +49,8 @@ parse-datetime.c: parse-datetime.y
 	      -e 's|"parse-datetime\.tab\.c"|"parse-datetime.c"|' \
 	      -e 's|"parse-datetime\.tab\.h"|"parse-datetime-gen.h"|' \
 	      < parse-datetime.tab.c > parse-datetime.c-tmp \
-	  && sed -e 's|"parse-datetime\.tab\.h"|"parse-datetime-gen.h"|' \
+	  && sed -e 's|".*/parse-datetime\.y"|"parse-datetime.y"|' \
+	         -e 's|"parse-datetime\.tab\.h"|"parse-datetime-gen.h"|' \
 	         < parse-datetime.tab.h > parse-datetime-gen.h-tmp \
 	  && rm -f parse-datetime.tab.c parse-datetime.tab.h \
 	  && mv parse-datetime.c-tmp $(srcdir)/parse-datetime.c \
