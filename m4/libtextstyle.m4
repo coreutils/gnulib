@@ -1,4 +1,4 @@
-# libtextstyle.m4 serial 2
+# libtextstyle.m4 serial 3
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -21,12 +21,12 @@ AC_DEFUN([gl_LIBTEXTSTYLE],
 [
   AC_REQUIRE([gl_LIBTEXTSTYLE_INITIALIZE])
   AC_REQUIRE([gl_LIBTEXTSTYLE_SEARCH])
-  pushdef([MINVERSION], ifelse([$1], [], [gl_LIBTEXTSTYLE_NEWEST_VERSION], [$1]))
+  pushdef([MINVERSION], m4_if([$1], [], [gl_LIBTEXTSTYLE_NEWEST_VERSION], [$1]))
   dnl Signal a fatal error if MINVERSION is not among the allowed values.
-  ifelse(ifelse(MINVERSION, [0.20], [x], [])ifelse(MINVERSION, [0.20.5], [x], []), [],
+  m4_if(m4_if(MINVERSION, [0.20], [x], [])m4_if(MINVERSION, [0.20.5], [x], []), [],
     [m4_fatal([The argument to gl_LIBTEXTSTYLE or gl_LIBTEXTSTYLE_OPTIONAL is not one of the expected values.])])
   dnl Store the specified minimum version in gl_libtextstyle_minversion.
-  dnl (This needs to be outside the ifelse. m4_divert_text inside ifelse does
+  dnl (This needs to be outside the m4_if. m4_divert_text inside m4_if does
   dnl not work reliably in Autoconf 2.69.)
   m4_divert_text([INIT_PREPARE],
     [gl_libtextstyle_minversion="$gl_libtextstyle_minversion MINVERSION "])

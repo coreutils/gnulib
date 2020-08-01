@@ -1,4 +1,4 @@
-# csharpexec.m4 serial 7
+# csharpexec.m4 serial 8
 dnl Copyright (C) 2003-2005, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -33,7 +33,7 @@ AC_DEFUN([gt_CSHARPEXEC],
       mono)
         if test -n "$HAVE_MONO_IN_PATH" \
            && mono --version >/dev/null 2>/dev/null \
-           ifelse([$1], , , [&& mono $2/$1 >/dev/null 2>/dev/null]); then
+           m4_if([$1], , , [&& mono $2/$1 >/dev/null 2>/dev/null]); then
           HAVE_MONO=1
           ac_result="mono"
           break
@@ -41,7 +41,7 @@ AC_DEFUN([gt_CSHARPEXEC],
         ;;
       sscli)
         if test -n "$HAVE_CLIX_IN_PATH" \
-           ifelse([$1], , , [&& clix $2/$1 >/dev/null 2>/dev/null]); then
+           m4_if([$1], , , [&& clix $2/$1 >/dev/null 2>/dev/null]); then
           HAVE_CLIX=1
           case $host_os in
             cygwin* | mingw* | pw32*)

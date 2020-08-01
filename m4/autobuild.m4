@@ -1,4 +1,4 @@
-# autobuild.m4 serial 7
+# autobuild.m4 serial 8
 dnl Copyright (C) 2004, 2006-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -27,7 +27,7 @@ AC_DEFUN([AB_INIT],
     AC_MSG_NOTICE([autobuild hostname... $hostname])
   fi
 
-  ifelse([$1],[],,[AC_MSG_NOTICE([autobuild mode... $1])])
+  m4_if([$1],[],,[AC_MSG_NOTICE([autobuild mode... $1])])
 
   date=`TZ=UTC0 date +%Y%m%dT%H%M%SZ`
   if test "$?" != 0; then

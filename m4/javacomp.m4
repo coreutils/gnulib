@@ -1,4 +1,4 @@
-# javacomp.m4 serial 17
+# javacomp.m4 serial 18
 dnl Copyright (C) 2001-2003, 2006-2007, 2009-2020 Free Software Foundation,
 dnl Inc.
 dnl This file is free software; the Free Software Foundation
@@ -85,7 +85,7 @@ dnl with or without modifications, as long as this notice is preserved.
 
 AC_DEFUN([gt_JAVACOMP],
 [
-  ifelse([$2], [], [AC_REQUIRE([gt_JAVAEXEC])], [])
+  m4_if([$2], [], [AC_REQUIRE([gt_JAVAEXEC])], [])
   AC_EGREP_CPP([yes], [
 #if defined _WIN32 || defined __CYGWIN__ || defined __EMX__ || defined __DJGPP__
   yes
@@ -95,7 +95,7 @@ AC_DEFUN([gt_JAVACOMP],
   test -n "$source_version" || {
     AC_MSG_ERROR([missing source-version argument to gt_@&t@JAVACOMP])
   }
-  ifelse([$2], [],
+  m4_if([$2], [],
     [if test -n "$HAVE_JAVAEXEC"; then
        dnl Use $CONF_JAVA to determine the JVM's version.
 changequote(,)dnl

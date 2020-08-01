@@ -1,4 +1,4 @@
-# javaexec.m4 serial 6
+# javaexec.m4 serial 7
 dnl Copyright (C) 2001-2003, 2006, 2009-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -37,14 +37,14 @@ AC_DEFUN([gt_JAVAEXEC],
     popdef([AC_MSG_RESULT])dnl
     popdef([AC_CHECKING])dnl
     popdef([AC_MSG_CHECKING])dnl
-    ifelse([$1], , , [
+    m4_if([$1], , , [
       save_CLASSPATH="$CLASSPATH"
       CLASSPATH="$2"${CLASSPATH+"$CLASSPATH_SEPARATOR$CLASSPATH"}
       ])
     export CLASSPATH
     if test -n "$HAVE_GIJ_IN_PATH" \
        && gij --version >/dev/null 2>/dev/null \
-       ifelse([$1], , , [&& {
+       m4_if([$1], , , [&& {
          echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
          gij $1 >&AS_MESSAGE_LOG_FD 2>&1
        }]); then
@@ -53,7 +53,7 @@ AC_DEFUN([gt_JAVAEXEC],
     else
       if test -n "$HAVE_JAVA_IN_PATH" \
          && java -version >/dev/null 2>/dev/null \
-         ifelse([$1], , , [&& {
+         m4_if([$1], , , [&& {
            echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
            java $1 >&AS_MESSAGE_LOG_FD 2>&1
          }]); then
@@ -62,7 +62,7 @@ AC_DEFUN([gt_JAVAEXEC],
       else
         if test -n "$HAVE_JRE_IN_PATH" \
            && (jre >/dev/null 2>/dev/null || test $? = 1) \
-           ifelse([$1], , , [&& {
+           m4_if([$1], , , [&& {
              echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
              jre $1 >&AS_MESSAGE_LOG_FD 2>&1
            }]); then
@@ -71,7 +71,7 @@ AC_DEFUN([gt_JAVAEXEC],
         else
           if test -n "$HAVE_JVIEW_IN_PATH" \
              && (jview -? >/dev/null 2>/dev/null || test $? = 1) \
-             ifelse([$1], , , [&& {
+             m4_if([$1], , , [&& {
                echo "$as_me:__oline__: gij $1" >&AS_MESSAGE_LOG_FD
                jview $1 >&AS_MESSAGE_LOG_FD 2>&1
              }]); then
@@ -83,7 +83,7 @@ AC_DEFUN([gt_JAVAEXEC],
         fi
       fi
     fi
-    ifelse([$1], , , [
+    m4_if([$1], , , [
       CLASSPATH="$save_CLASSPATH"
     ])
   fi
