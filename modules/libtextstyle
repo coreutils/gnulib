@@ -8,7 +8,7 @@ Depends-on:
 havelib
 
 configure.ac:
-gl_LIBTEXTSTYLE
+# You need to invoke gl_LIBTEXTSTYLE yourself, possibly with arguments.
 
 Makefile.am:
 

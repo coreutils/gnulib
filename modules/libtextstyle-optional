@@ -13,7 +13,7 @@ fsync
 vasprintf-posix
 
 configure.ac:
-gl_LIBTEXTSTYLE_OPTIONAL
+# You need to invoke gl_LIBTEXTSTYLE_OPTIONAL yourself, possibly with arguments.
 
 Makefile.am:
 BUILT_SOURCES += $(TEXTSTYLE_H)

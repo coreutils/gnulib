@@ -58,6 +58,15 @@ User visible incompatible changes
 
 Date        Modules         Changes
 
+2020-08-01  libtextstyle-optional  You now need to invoke
+                                   gl_LIBTEXTSTYLE_OPTIONAL explicitly, because
+                                   this macro now takes an optional
+                                   MINIMUM-VERSION argument.
+
+2020-08-01  libtextstyle    You now need to invoke gl_LIBTEXTSTYLE explicitly,
+                            because this macro now takes an optional
+                            MINIMUM-VERSION argument.
+
 2020-06-27  clean-temp      The functions open_temp, fopen_temp now take a
                             'bool delete_on_close' argument. If in doubt, pass
                             false.

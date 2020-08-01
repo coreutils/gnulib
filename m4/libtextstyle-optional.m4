@@ -1,4 +1,4 @@
-# libtextstyle-optional.m4 serial 1
+# libtextstyle-optional.m4 serial 2
 dnl Copyright (C) 2019-2020 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
@@ -6,9 +6,13 @@ dnl with or without modifications, as long as this notice is preserved.
 
 dnl From Bruno Haible.
 
-dnl gl_LIBTEXTSTYLE_OPTIONAL
-dnl Searches for an installed libtextstyle or uses the included source code
-dnl parts that define only part of the API and does not do any styling.
+dnl gl_LIBTEXTSTYLE_OPTIONAL([MINIMUM-VERSION])
+dnl Searches for an installed libtextstyle with version >= MINIMUM-VERSION
+dnl   MINIMUM-VERSION = 0.20      - the first release in 2019
+dnl   MINIMUM-VERSION = 0.20.5    - adds hyperlink support and ostream_printf
+dnl   MINIMUM-VERSION unspecified - the newest release
+dnl or uses the included source code parts that define only part of the API
+dnl and do not do any styling.
 dnl If found, it sets and AC_SUBSTs HAVE_LIBTEXTSTYLE=yes and the LIBTEXTSTYLE
 dnl and LTLIBTEXTSTYLE variables, and augments the CPPFLAGS variable, and
 dnl #defines HAVE_LIBTEXTSTYLE to 1.
@@ -17,7 +21,7 @@ dnl LTLIBTEXTSTYLE to empty.
 
 AC_DEFUN([gl_LIBTEXTSTYLE_OPTIONAL],
 [
-  AC_REQUIRE([gl_LIBTEXTSTYLE])
+  gl_LIBTEXTSTYLE([$1])
   if test $HAVE_LIBTEXTSTYLE = yes; then
     TEXTSTYLE_H=
   else
