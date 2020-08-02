@@ -43,4 +43,12 @@ The replacement function does not support @code{F_SETFD},
 @code{F_GETFL}, @code{F_SETFL}, @code{F_GETOWN}, @code{F_SETOWN},
 @code{F_GETLK}, @code{F_SETLK}, and @code{F_SETLKW} on some platforms:
 mingw, MSVC 14.
+
+@item
+When a file does not support locking (such as on an NFS file system
+that does not support file locking), calls with @code{F_SETLK} and
+@code{F_SETLKW} fail with @code{errno} set to different values on
+different systems: @code{EINVAL} on OpenIndiana (as suggested by the
+POSIX 1003.1-2017 @code{fcntl} specification), @code{ENOLCK} on
+GNU/Linux, and @code{EOPNOTSUPP} on FreeBSD.
 @end itemize
