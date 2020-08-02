@@ -67,6 +67,7 @@ const struct gl_oset_implementation gl_avltree_oset_implementation =
     gl_tree_update,
     gl_tree_oset_free,
     gl_tree_iterator,
+    gl_tree_iterator_atleast,
     gl_tree_iterator_next,
     gl_tree_iterator_free
   };

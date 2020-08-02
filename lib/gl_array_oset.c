@@ -107,11 +107,15 @@ gl_array_search (gl_oset_t set, const void *elt)
   return gl_array_indexof (set, elt) != (size_t)(-1);
 }
 
-static bool
-gl_array_search_atleast (gl_oset_t set,
-                         gl_setelement_threshold_fn threshold_fn,
-                         const void *threshold,
-                         const void **eltp)
+/* Searches the least element in the ordered set that compares greater or equal
+   to the given THRESHOLD.  The representation of the THRESHOLD is defined
+   by the THRESHOLD_FN.
+   Returns the position at which it was found, or gl_list_size (SET) if not
+   found.  */
+static size_t
+gl_array_indexof_atleast (gl_oset_t set,
+                          gl_setelement_threshold_fn threshold_fn,
+                          const void *threshold)
 {
   size_t count = set->count;
 
@@ -148,13 +152,29 @@ gl_array_search_atleast (gl_oset_t set,
                   else
                     high = mid2;
                 }
-              *eltp = set->elements[low];
-              return true;
+              return low;
             }
         }
       while (low < high);
     }
-  return false;
+  return count;
+}
+
+static bool
+gl_array_search_atleast (gl_oset_t set,
+                         gl_setelement_threshold_fn threshold_fn,
+                         const void *threshold,
+                         const void **eltp)
+{
+  size_t index = gl_array_indexof_atleast (set, threshold_fn, threshold);
+
+  if (index == set->count)
+    return false;
+  else
+    {
+      *eltp = set->elements[index];
+      return true;
+    }
 }
 
 /* Ensure that set->allocated > set->count.
@@ -421,6 +441,27 @@ gl_array_iterator (gl_oset_t set)
   return result;
 }
 
+static gl_oset_iterator_t
+gl_array_iterator_atleast (gl_oset_t set,
+                           gl_setelement_threshold_fn threshold_fn,
+                           const void *threshold)
+{
+  size_t index = gl_array_indexof_atleast (set, threshold_fn, threshold);
+  gl_oset_iterator_t result;
+
+  result.vtable = set->base.vtable;
+  result.set = set;
+  result.count = set->count;
+  result.p = set->elements + index;
+  result.q = set->elements + set->count;
+#if defined GCC_LINT || defined lint
+  result.i = 0;
+  result.j = 0;
+#endif
+
+  return result;
+}
+
 static bool
 gl_array_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
 {
@@ -463,6 +504,7 @@ const struct gl_oset_implementation gl_array_oset_implementation =
     gl_array_update,
     gl_array_free,
     gl_array_iterator,
+    gl_array_iterator_atleast,
     gl_array_iterator_next,
     gl_array_iterator_free
   };

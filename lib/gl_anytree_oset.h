@@ -375,6 +375,52 @@ gl_tree_iterator (gl_oset_t set)
   return result;
 }
 
+static gl_oset_iterator_t
+gl_tree_iterator_atleast (gl_oset_t set,
+                          gl_setelement_threshold_fn threshold_fn,
+                          const void *threshold)
+{
+  gl_oset_iterator_t result;
+  gl_oset_node_t node;
+
+  result.vtable = set->base.vtable;
+  result.set = set;
+  /* End point is past the rightmost node.  */
+  result.q = NULL;
+#if defined GCC_LINT || defined lint
+  result.i = 0;
+  result.j = 0;
+  result.count = 0;
+#endif
+
+  for (node = set->root; node != NULL; )
+    {
+      if (! threshold_fn (node->value, threshold))
+        node = node->right;
+      else
+        {
+          /* We have an element >= THRESHOLD.  But we need the leftmost such
+             element.  */
+          gl_oset_node_t found = node;
+          node = node->left;
+          for (; node != NULL; )
+            {
+              if (! threshold_fn (node->value, threshold))
+                node = node->right;
+              else
+                {
+                  found = node;
+                  node = node->left;
+                }
+            }
+          result.p = found;
+          return result;
+        }
+    }
+  result.p = NULL;
+  return result;
+}
+
 static bool
 gl_tree_iterator_next (gl_oset_iterator_t *iterator, const void **eltp)
 {

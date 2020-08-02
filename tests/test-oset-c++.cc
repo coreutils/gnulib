@@ -37,6 +37,12 @@ action (const char *str, int *data)
   const_cast<char *> (str) [0] += *data;
 }
 
+static bool
+is_at_most (const char *str, const char *threshold)
+{
+  return strcmp (str, threshold) <= 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -75,6 +81,16 @@ main (int argc, char *argv[])
     ASSERT (iter2.next (elt));
     ASSERT (strcmp (elt, "C") == 0);
     ASSERT (!iter2.next (elt));
+  }
+
+  {
+    gl_OSet<const char *>::iterator iter3 = set1.begin_atleast (is_at_most, "R");
+    const char *elt;
+    ASSERT (iter3.next (elt));
+    ASSERT (strcmp (elt, "D") == 0);
+    ASSERT (iter3.next (elt));
+    ASSERT (strcmp (elt, "C") == 0);
+    ASSERT (!iter3.next (elt));
   }
 
   set1.free ();

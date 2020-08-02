@@ -156,10 +156,19 @@ public:
   #else
   private:
     friend iterator gl_OSet::begin ();
+    template <typename THT>
+    friend iterator gl_OSet::begin_atleast (bool (*) (ELTYPE *, THT *), THT *);
   #endif
 
     iterator (gl_oset_t ptr)
       : _state (gl_oset_iterator (ptr))
+      {}
+
+    template <typename THT>
+    iterator (gl_oset_t ptr,
+              bool (*threshold_fn) (ELTYPE * /*elt*/, THT * /*threshold*/),
+              THT * threshold)
+      : _state (gl_oset_iterator_atleast (ptr, reinterpret_cast<gl_setelement_threshold_fn>(threshold_fn), threshold))
       {}
 
   private:
@@ -172,6 +181,16 @@ public:
      except for removing the last returned element.  */
   iterator begin ()
     { return iterator (_ptr); }
+
+  /* Creates an iterator traversing the tail of an ordered set, that comprises
+     the elements that compare greater or equal to the given THRESHOLD.  The
+     representation of the THRESHOLD is defined by the THRESHOLD_FN.
+     The set's contents must not be modified while the iterator is in use,
+     except for removing the last returned element.  */
+  template <typename THT>
+  iterator begin_atleast (bool (*threshold_fn) (ELTYPE * /*elt*/, THT * /*threshold*/),
+                          THT * threshold)
+    { return iterator (_ptr, threshold_fn, threshold); }
 };
 
 #endif /* _GL_OSET_HH */

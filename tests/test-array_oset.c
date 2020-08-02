@@ -68,6 +68,27 @@ check_all (gl_oset_t set1, gl_list_t set2)
   check_equals (set1, set2);
 }
 
+static bool
+is_at_least (const void *elt, const void *threshold)
+{
+  return strcmp ((const char *) elt, (const char *) threshold) >= 0;
+}
+
+static size_t
+gl_sortedlist_indexof_atleast (gl_list_t set,
+                               gl_setelement_threshold_fn threshold_fn,
+                               const void *threshold)
+{
+  /* This implementation is slow, but easy to verify.  */
+  size_t count = gl_list_size (set);
+  size_t index;
+
+  for (index = 0; index < count; index++)
+    if (threshold_fn (gl_list_get_at (set, index), threshold))
+      return index;
+  return (size_t)(-1);
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -105,7 +126,7 @@ main (int argc, char *argv[])
 
     for (repeat = 0; repeat < 100000; repeat++)
       {
-        unsigned int operation = RANDOM (3);
+        unsigned int operation = RANDOM (4);
         switch (operation)
           {
           case 0:
@@ -129,6 +150,32 @@ main (int argc, char *argv[])
               const char *obj = RANDOM_OBJECT ();
               ASSERT (gl_oset_remove (set1, obj)
                       == gl_sortedlist_remove (set2, (gl_listelement_compar_fn)strcmp, obj));
+            }
+            break;
+          case 3:
+            {
+              const char *obj = RANDOM_OBJECT ();
+              gl_oset_iterator_t iter = gl_oset_iterator_atleast (set1, is_at_least, obj);
+              size_t index = gl_sortedlist_indexof_atleast (set2, is_at_least, obj);
+              const void *elt;
+              /* Check the first two values that the iterator produces.
+                 Checking them all would make this part of the test dominate the
+                 run time of the test.  */
+              if (index == (size_t)(-1))
+                ASSERT (!gl_oset_iterator_next (&iter, &elt));
+              else
+                {
+                  ASSERT (gl_oset_iterator_next (&iter, &elt));
+                  ASSERT (elt == gl_list_get_at (set2, index));
+                  if (index + 1 == gl_list_size (set2))
+                    ASSERT (!gl_oset_iterator_next (&iter, &elt));
+                  else
+                    {
+                      ASSERT (gl_oset_iterator_next (&iter, &elt));
+                      ASSERT (elt == gl_list_get_at (set2, index + 1));
+                    }
+                }
+              gl_oset_iterator_free (&iter);
             }
             break;
           }

@@ -68,6 +68,12 @@ check_all (gl_oset_t set1, gl_oset_t set2)
   check_equals (set1, set2);
 }
 
+static bool
+is_at_least (const void *elt, const void *threshold)
+{
+  return strcmp ((const char *) elt, (const char *) threshold) >= 0;
+}
+
 int
 main (int argc, char *argv[])
 {
@@ -102,7 +108,7 @@ main (int argc, char *argv[])
 
     for (repeat = 0; repeat < 100000; repeat++)
       {
-        unsigned int operation = RANDOM (3);
+        unsigned int operation = RANDOM (4);
         switch (operation)
           {
           case 0:
@@ -121,6 +127,32 @@ main (int argc, char *argv[])
             {
               const char *obj = RANDOM_OBJECT ();
               ASSERT (gl_oset_remove (set1, obj) == gl_oset_remove (set2, obj));
+            }
+            break;
+          case 3:
+            {
+              const char *obj = RANDOM_OBJECT ();
+              gl_oset_iterator_t iter1 = gl_oset_iterator_atleast (set1, is_at_least, obj);
+              gl_oset_iterator_t iter2 = gl_oset_iterator_atleast (set2, is_at_least, obj);
+              const void *elt1;
+              const void *elt2;
+              /* Check the first two values that the iterator produces.
+                 Checking them all would make this part of the test dominate the
+                 run time of the test.  */
+              bool havenext1 = gl_oset_iterator_next (&iter1, &elt1);
+              bool havenext2 = gl_oset_iterator_next (&iter2, &elt2);
+              ASSERT (havenext1 == havenext2);
+              if (havenext1)
+                {
+                  ASSERT (elt1 == elt2);
+                  havenext1 = gl_oset_iterator_next (&iter1, &elt1);
+                  havenext2 = gl_oset_iterator_next (&iter2, &elt2);
+                  ASSERT (havenext1 == havenext2);
+                  if (havenext1)
+                    ASSERT (elt1 == elt2);
+                }
+              gl_oset_iterator_free (&iter1);
+              gl_oset_iterator_free (&iter2);
             }
             break;
           }
