@@ -80,8 +80,9 @@ public:
      by the THRESHOLD_FN.
      Returns true and store the found element in ELT if found, otherwise returns
      false.  */
-  bool search_atleast (bool (*threshold_fn) (ELTYPE * /*elt*/, ELTYPE * /*threshold*/),
-                       ELTYPE * threshold,
+  template <typename THT>
+  bool search_atleast (bool (*threshold_fn) (ELTYPE * /*elt*/, THT * /*threshold*/),
+                       THT * threshold,
                        ELTYPE *& elt) const
   { return gl_oset_search_atleast (_ptr, reinterpret_cast<gl_setelement_threshold_fn>(threshold_fn), threshold, &elt); }
 
