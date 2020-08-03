@@ -25,10 +25,8 @@
 
 #include "float+.h"
 
-/* MSVC with option -fp:strict refuses to compile constant initializers that
-   contain floating-point operations.  Pacify this compiler.  */
-#ifdef _MSC_VER
-# pragma fenv_access (off)
+#if defined _MSC_VER
+# include <intrin.h>
 #endif
 
 #define NBITS (sizeof (unsigned int) * CHAR_BIT)
@@ -41,6 +39,14 @@ integer_length (unsigned int x)
     return 0;
   else
     return NBITS - __builtin_clz (x);
+#elif defined _MSC_VER
+  /* _BitScanReverse
+     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+  unsigned long bit;
+  if (_BitScanReverse (&bit, x))
+    return bit + 1;
+  else
+    return 0;
 #else
 # if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT
   if (NBITS <= DBL_MANT_BIT)
