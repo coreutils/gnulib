@@ -27,6 +27,22 @@
 #include <limits.h>
 #include <strings.h>
 
+#if defined _MSC_VER
+# include <intrin.h>
+/* Copied from ffs.c.  */
+static inline int
+ffs (int i)
+{
+  /* _BitScanForward
+     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanforward-bitscanforward64> */
+  unsigned long bit;
+  if (_BitScanForward (&bit, i))
+    return bit + 1;
+  else
+    return 0;
+}
+#endif
+
 #if !defined FUNC || !defined TYPE
 # error
 #endif
