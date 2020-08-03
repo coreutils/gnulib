@@ -37,6 +37,22 @@
 # define GCC_BUILTIN __builtin_clzl
 #endif
 
+#if defined _MSC_VER
+# include <intrin.h>
+/* Copied from integer_length.c.  */
+static inline int
+integer_length (unsigned int x)
+{
+  /* _BitScanReverse
+     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+  unsigned long bit;
+  if (_BitScanReverse (&bit, x))
+    return bit + 1;
+  else
+    return 0;
+}
+#endif
+
 #define NBITS (sizeof (TYPE) * CHAR_BIT)
 
 /* Modify shift count to be in bounds, even in dead code, otherwise GCC
