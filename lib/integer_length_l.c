@@ -31,10 +31,14 @@
 # define FUNC integer_length_ll
 # define TYPE unsigned long long
 # define GCC_BUILTIN __builtin_clzll
+# ifdef _WIN64
+#  define MSVC_BUILTIN _BitScanReverse64
+# endif
 #else
 # define FUNC integer_length_l
 # define TYPE unsigned long
 # define GCC_BUILTIN __builtin_clzl
+# define MSVC_BUILTIN _BitScanReverse
 #endif
 
 #if defined _MSC_VER
@@ -67,6 +71,14 @@ FUNC (TYPE x)
     return 0;
   else
     return NBITS - GCC_BUILTIN (x);
+#elif defined _MSC_VER && defined MSVC_BUILTIN
+  /* _BitScanReverse, _BitScanReverse64
+     <https://docs.microsoft.com/en-us/cpp/intrinsics/bitscanreverse-bitscanreverse64> */
+  unsigned long bit;
+  if (MSVC_BUILTIN (&bit, x))
+    return bit + 1;
+  else
+    return 0;
 #else
   /* Split x into chunks, and look at one chunk after the other.  */
   if (sizeof (TYPE) > 2 * sizeof (unsigned int))
