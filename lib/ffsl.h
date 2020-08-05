@@ -27,7 +27,7 @@
 #include <limits.h>
 #include <strings.h>
 
-#if defined _MSC_VER
+#if defined _MSC_VER && !(__clang_major__ >= 4)
 # include <intrin.h>
 /* Copied from ffs.c.  */
 static inline int
@@ -50,7 +50,8 @@ ffs (int i)
 int
 FUNC (TYPE i)
 {
-#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)) && defined GCC_BUILTIN
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) \
+    || (__clang_major__ >= 4)
   return GCC_BUILTIN (i);
 #elif defined _MSC_VER && defined MSVC_BUILTIN
   /* _BitScanForward, _BitScanForward64

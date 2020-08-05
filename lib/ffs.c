@@ -23,14 +23,14 @@
 
 #include <limits.h>
 
-#if defined _MSC_VER
+#if defined _MSC_VER && !(__clang_major__ >= 4)
 # include <intrin.h>
 #endif
 
 int
 ffs (int i)
 {
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) || (__clang_major__ >= 4)
   return __builtin_ffs (i);
 #elif defined _MSC_VER
   /* _BitScanForward
