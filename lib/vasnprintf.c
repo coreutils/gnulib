@@ -633,7 +633,8 @@ divide (mpn_t a, mpn_t b, mpn_t *q)
         mp_limb_t msd = b_ptr[b_len - 1]; /* = b[n-1], > 0 */
         /* Determine s = GMP_LIMB_BITS - integer_length (msd).
            Code copied from gnulib's integer_length.c.  */
-# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) \
+     || (__clang_major__ >= 4)
         s = __builtin_clz (msd);
 # else
 #  if defined DBL_EXPBIT0_WORD && defined DBL_EXPBIT0_BIT

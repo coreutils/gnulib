@@ -41,7 +41,7 @@
 # define MSVC_BUILTIN _BitScanReverse
 #endif
 
-#if defined _MSC_VER
+#if defined _MSC_VER && !(__clang_major__ >= 4)
 # include <intrin.h>
 /* Copied from integer_length.c.  */
 static inline int
@@ -66,7 +66,7 @@ integer_length (unsigned int x)
 int
 FUNC (TYPE x)
 {
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) || (__clang_major__ >= 4)
   if (x == 0)
     return 0;
   else

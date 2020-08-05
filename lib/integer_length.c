@@ -25,7 +25,7 @@
 
 #include "float+.h"
 
-#if defined _MSC_VER
+#if defined _MSC_VER && !(__clang_major__ >= 4)
 # include <intrin.h>
 #endif
 
@@ -34,7 +34,7 @@
 int
 integer_length (unsigned int x)
 {
-#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4) || (__clang_major__ >= 4)
   if (x == 0)
     return 0;
   else
