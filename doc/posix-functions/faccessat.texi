@@ -28,6 +28,12 @@ The replacement is not multithread-safe.
 @item
 The replacement does not support the @code{AT_SYMLINK_NOFOLLOW} flag,
 which is supported by GNU @code{faccessat}.
+@item
+On some platforms, @code{faccessat} can mishandle @code{AT_EACCESS}
+after a process starts as root and then becomes non-root:
+GNU/Linux with glibc 2.32.
+@c This bug should be fixed in glibc 2.33.  See:
+@c https://sourceware.org/bugzilla/show_bug.cgi?id=18683
 @end itemize
 
 Other problems of this function:
