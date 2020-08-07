@@ -39,8 +39,8 @@
 # define memory_full() abort ()
 #endif
 
-/* If compiling with GCC 2, this file's not needed.  */
-#if !defined (__GNUC__) || __GNUC__ < 2
+/* If compiling with GCC or clang, this file is not needed.  */
+#if !(defined __GNUC__ || defined __clang__)
 
 /* If someone has defined alloca as a macro,
    there must be some other way alloca is supposed to work.  */
@@ -197,4 +197,4 @@ alloca (size_t size)
 }
 
 # endif /* no alloca */
-#endif /* not GCC 2 */
+#endif /* not GCC || clang */
