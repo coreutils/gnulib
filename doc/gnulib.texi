@@ -3829,6 +3829,7 @@ This list of functions is sorted according to the header that declares them.
 * Glibc sys/sem.h::
 * Glibc sys/sendfile.h::
 * Glibc sys/signalfd.h::
+* Glibc sys/single_threaded.h::
 * Glibc sys/socket.h::
 * Glibc sys/stat.h::
 * Glibc sys/statfs.h::
@@ -4743,6 +4744,8 @@ This list of functions is sorted according to the header that declares them.
 @menu
 * pthread_attr_getaffinity_np::
 * pthread_attr_setaffinity_np::
+* pthread_attr_getsigmask_np::
+* pthread_attr_setsigmask_np::
 * pthread_clockjoin_np::
 * pthread_cond_clockwait::
 * pthread_getaffinity_np::
@@ -4769,6 +4772,8 @@ This list of functions is sorted according to the header that declares them.
 
 @include glibc-functions/pthread_attr_getaffinity_np.texi
 @include glibc-functions/pthread_attr_setaffinity_np.texi
+@include glibc-functions/pthread_attr_getsigmask_np.texi
+@include glibc-functions/pthread_attr_setsigmask_np.texi
 @include glibc-functions/pthread_clockjoin_np.texi
 @include glibc-functions/pthread_cond_clockwait.texi
 @include glibc-functions/pthread_getaffinity_np.texi
@@ -5781,8 +5786,12 @@ This list of functions is sorted according to the header that declares them.
 * mempcpy::
 * memrchr::
 * rawmemchr::
+* sigabbrev_np::
+* sigdescr_np::
 * strcasestr::
 * strchrnul::
+* strerrordesc_np::
+* strerrorname_np::
 * strfry::
 * strsep::
 * strverscmp::
@@ -5796,8 +5805,12 @@ This list of functions is sorted according to the header that declares them.
 @include glibc-functions/mempcpy.texi
 @include glibc-functions/memrchr.texi
 @include glibc-functions/rawmemchr.texi
+@include glibc-functions/sigabbrev_np.texi
+@include glibc-functions/sigdescr_np.texi
 @include glibc-functions/strcasestr.texi
 @include glibc-functions/strchrnul.texi
+@include glibc-functions/strerrordesc_np.texi
+@include glibc-functions/strerrorname_np.texi
 @include glibc-functions/strfry.texi
 @include glibc-functions/strsep.texi
 @include glibc-functions/strverscmp.texi
@@ -6099,6 +6112,15 @@ This list of functions is sorted according to the header that declares them.
 @end menu
 
 @include glibc-functions/signalfd.texi
+
+@node Glibc sys/single_threaded.h
+@section Glibc @code{<sys/single_threaded.h>}
+
+@menu
+* __libc_single_threaded::
+@end menu
+
+@include glibc-functions/__libc_single_threaded.texi
 
 @node Glibc sys/socket.h
 @section Glibc Extensions to @code{<sys/socket.h>}

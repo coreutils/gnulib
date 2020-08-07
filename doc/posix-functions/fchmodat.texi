@@ -17,7 +17,7 @@ But the replacement function is not safe to be used in libraries and is not mult
 When given the @code{AT_SYMLINK_NOFOLLOW} flag,
 this function fails with @code{errno} set to @code{ENOTSUP},
 even when the file is not a symbolic link:
-GNU/Linux with glibc 2.31, Cygwin 2.9.
+GNU/Linux with glibc 2.31 (or newer?), Cygwin 2.9.
 @end itemize
 
 Portability problems not fixed by Gnulib:

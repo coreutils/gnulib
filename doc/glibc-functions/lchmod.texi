@@ -15,7 +15,7 @@ HP-UX 11.31.
 @item
 This function always fails with @code{errno} set to @code{ENOSYS},
 even when the file is not a symbolic link:
-GNU/Linux with glibc 2.31.
+GNU/Linux with glibc 2.31 (or newer?).
 @end itemize
 
 Portability problems not fixed by Gnulib:
