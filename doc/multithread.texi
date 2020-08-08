@@ -60,6 +60,7 @@ Nevertheless, they need to use mutexes/locks in many cases.
 * POSIX multithreading::
 * ISO C multithreading::
 * Gnulib multithreading::
+* Multithreading Optimizations::
 @end menu
 
 @node Multithreading APIs
@@ -215,4 +216,50 @@ native Windows platforms (mingw and MSVC).
 @code{--enable-threads=isoc} is supported on all platforms that have the
 ISO C multithreading API.  However, @code{--enable-threads=posix} is always
 a better choice.
+@end itemize
+
+@node Multithreading Optimizations
+@section Optimizations of multithreaded code
+
+Despite all the optimizations of multithreading primitives that have been
+implemented over the years --- from
+@url{https://en.wikipedia.org/wiki/Compare-and-swap,
+atomic operations in hardware},
+over @url{https://en.wikipedia.org/wiki/Futex, futexes} and
+@url{https://www.efficios.com/blog/2019/02/08/linux-restartable-sequences/,
+restartable sequences}
+in the Linux kernel, to lock elision
+@url{https://lwn.net/Articles/534758/, [1]}
+@url{https://www.gnu.org/software/libc/manual/html_node/Elision-Tunables.html,
+[2]})
+--- single-threaded programs can still profit performance-wise from the
+assertion that they are single-threaded.
+
+Gnulib defines four facilities that help optimizing for the single-threaded
+case.
+
+@itemize @bullet
+@item
+The Gnulib multithreading API, when used on glibc @leq{} 2.32 and *BSD systems,
+uses weak symbols to detect whether the program is linked with
+@code{libpthread}.  If not, the program has no way to create additional
+threads and must therefore be single-threaded.  This optimization applies
+to all the Gnulib multithreading API (locks, thread-local storage, and more).
+@item
+The @code{thread-optim} module, on glibc @geq{} 2.32 systems, allows your code
+to skip locking between threads (regardless which of the three multithreading
+APIs you use).  You need extra code for this: include the
+@code{"thread-optim.h"} header file, and use the macros @code{IF_MT_DECL}
+and @code{IF_MT}.
+@item
+The @code{unlocked-io} module is applicable only if all the programs in your
+package are single-threaded.  It optimizes the operations on @code{FILE}
+streams.  You need extra code for this: include the @code{"unlocked-io.h"}
+header file.  Some Gnulib modules that do operations on @code{FILE} streams
+have these preparations already included.
+@item
+You may define the C macro @code{GNULIB_WCHAR_SINGLE}, if all the programs in
+your package are single-threaded and won't change the locale after it has
+been initialized.  This macro optimizes the functions @code{mbrtowc} and
+@code{wcwidth}.
 @end itemize
