@@ -10,6 +10,7 @@ stdbool
 stdint
 unistd
 lock
+thread-optim
 error
 fatal-signal
 asyncsafe-spin

@@ -44,6 +44,7 @@
 #include "xalloc.h"
 #include "xmalloca.h"
 #include "glthread/lock.h"
+#include "thread-optim.h"
 #include "gl_xlist.h"
 #include "gl_linkedhash_list.h"
 #include "gl_linked_list.h"
@@ -406,7 +407,9 @@ init_clean_temp (void)
 void
 register_temporary_file (const char *absolute_file_name)
 {
-  gl_lock_lock (file_cleanup_list_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (file_cleanup_list_lock);
 
   /* Make sure that this facility and the file_cleanup_list are initialized.  */
   if (file_cleanup_list == NULL)
@@ -421,7 +424,7 @@ register_temporary_file (const char *absolute_file_name)
   if (gl_list_search (file_cleanup_list, absolute_file_name) == NULL)
     gl_list_add_first (file_cleanup_list, xstrdup (absolute_file_name));
 
-  gl_lock_unlock (file_cleanup_list_lock);
+  IF_MT gl_lock_unlock (file_cleanup_list_lock);
 }
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file that needs to be
@@ -430,7 +433,9 @@ register_temporary_file (const char *absolute_file_name)
 void
 unregister_temporary_file (const char *absolute_file_name)
 {
-  gl_lock_lock (file_cleanup_list_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (file_cleanup_list_lock);
 
   gl_list_t list = file_cleanup_list;
   if (list != NULL)
@@ -445,7 +450,7 @@ unregister_temporary_file (const char *absolute_file_name)
         }
     }
 
-  gl_lock_unlock (file_cleanup_list_lock);
+  IF_MT gl_lock_unlock (file_cleanup_list_lock);
 }
 
 /* Remove a file, with optional error message.
@@ -493,7 +498,9 @@ struct temp_dir *
 create_temp_dir (const char *prefix, const char *parentdir,
                  bool cleanup_verbose)
 {
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   struct tempdir * volatile *tmpdirp = NULL;
   struct tempdir *tmpdir;
@@ -600,12 +607,12 @@ create_temp_dir (const char *prefix, const char *parentdir,
      block because then the cleanup handler would not remove the directory
      if xstrdup fails.  */
   tmpdir->dirname = xstrdup (tmpdirname);
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
   freea (xtemplate);
   return (struct temp_dir *) tmpdir;
 
  quit:
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
   freea (xtemplate);
   return NULL;
 }
@@ -618,14 +625,15 @@ register_temp_file (struct temp_dir *dir,
                     const char *absolute_file_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  IF_MT_DECL;
 
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   /* Add absolute_file_name to tmpdir->files, without duplicates.  */
   if (gl_list_search (tmpdir->files, absolute_file_name) == NULL)
     gl_list_add_first (tmpdir->files, xstrdup (absolute_file_name));
 
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
 }
 
 /* Unregister the given ABSOLUTE_FILE_NAME as being a file inside DIR, that
@@ -636,8 +644,9 @@ unregister_temp_file (struct temp_dir *dir,
                       const char *absolute_file_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  IF_MT_DECL;
 
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   gl_list_t list = tmpdir->files;
   gl_list_node_t node;
@@ -651,7 +660,7 @@ unregister_temp_file (struct temp_dir *dir,
       free (old_string);
     }
 
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
 }
 
 /* Register the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
@@ -662,14 +671,15 @@ register_temp_subdir (struct temp_dir *dir,
                       const char *absolute_dir_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  IF_MT_DECL;
 
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   /* Add absolute_dir_name to tmpdir->subdirs, without duplicates.  */
   if (gl_list_search (tmpdir->subdirs, absolute_dir_name) == NULL)
     gl_list_add_first (tmpdir->subdirs, xstrdup (absolute_dir_name));
 
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
 }
 
 /* Unregister the given ABSOLUTE_DIR_NAME as being a subdirectory inside DIR,
@@ -681,8 +691,9 @@ unregister_temp_subdir (struct temp_dir *dir,
                         const char *absolute_dir_name)
 {
   struct tempdir *tmpdir = (struct tempdir *)dir;
+  IF_MT_DECL;
 
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   gl_list_t list = tmpdir->subdirs;
   gl_list_node_t node;
@@ -696,7 +707,7 @@ unregister_temp_subdir (struct temp_dir *dir,
       free (old_string);
     }
 
-  gl_lock_unlock (dir_cleanup_list_lock);
+  IF_MT gl_lock_unlock (dir_cleanup_list_lock);
 }
 
 /* Remove a directory, with optional error message.
@@ -792,7 +803,9 @@ cleanup_temp_dir_contents (struct temp_dir *dir)
 int
 cleanup_temp_dir (struct temp_dir *dir)
 {
-  gl_lock_lock (dir_cleanup_list_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (dir_cleanup_list_lock);
 
   struct tempdir *tmpdir = (struct tempdir *)dir;
   int err = 0;
@@ -819,7 +832,7 @@ cleanup_temp_dir (struct temp_dir *dir)
         gl_list_free (tmpdir->subdirs);
         free (tmpdir->dirname);
         free (tmpdir);
-        gl_lock_unlock (dir_cleanup_list_lock);
+        IF_MT gl_lock_unlock (dir_cleanup_list_lock);
         return err;
       }
 
@@ -866,7 +879,9 @@ supports_delete_on_close ()
 static void
 register_fd (int fd)
 {
-  gl_lock_lock (descriptors_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (descriptors_lock);
 
   if (descriptors == NULL)
     descriptors = gl_list_create_empty (GL_LINKED_LIST, NULL, NULL, NULL,
@@ -880,7 +895,7 @@ register_fd (int fd)
 
   gl_list_add_first (descriptors, element);
 
-  gl_lock_unlock (descriptors_lock);
+  IF_MT gl_lock_unlock (descriptors_lock);
 }
 
 /* Open a temporary file in a temporary directory.
@@ -1026,7 +1041,9 @@ close_temp (int fd)
   int result = 0;
   int saved_errno = 0;
 
-  gl_lock_lock (descriptors_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (descriptors_lock);
 
   gl_list_t list = descriptors;
   if (list == NULL)
@@ -1072,7 +1089,7 @@ close_temp (int fd)
     /* descriptors should already contain fd.  */
     abort ();
 
-  gl_lock_unlock (descriptors_lock);
+  IF_MT gl_lock_unlock (descriptors_lock);
 
   errno = saved_errno;
   return result;
@@ -1088,7 +1105,9 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
   int result = 0;
   int saved_errno = 0;
 
-  gl_lock_lock (descriptors_lock);
+  IF_MT_DECL;
+
+  IF_MT gl_lock_lock (descriptors_lock);
 
   gl_list_t list = descriptors;
   if (list == NULL)
@@ -1134,7 +1153,7 @@ fclose_variant_temp (FILE *fp, int (*fclose_variant) (FILE *))
     /* descriptors should have contained fd.  */
     abort ();
 
-  gl_lock_unlock (descriptors_lock);
+  IF_MT gl_lock_unlock (descriptors_lock);
 
   errno = saved_errno;
   return result;
