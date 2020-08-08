@@ -19,6 +19,7 @@ strdup
 lock
 langinfo
 setlocale-null
+thread-optim
 
 configure.ac:
 gl_LOCALENAME
