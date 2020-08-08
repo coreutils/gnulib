@@ -13,6 +13,7 @@ stdbool
 unistd
 sigaction
 lock
+thread-optim
 sigprocmask
 raise
 
