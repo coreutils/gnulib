@@ -64,10 +64,10 @@ isasciidigit (char c)
 #ifndef FALLTHROUGH
 # if 201710L < __STDC_VERSION__
 #  define FALLTHROUGH [[__fallthrough__]]
-# elif __GNUC__ < 7
-#  define FALLTHROUGH ((void) 0)
-# else
+# elif (__GNUC__ >= 7) || (__clang_major__ >= 10)
 #  define FALLTHROUGH __attribute__ ((__fallthrough__))
+# else
+#  define FALLTHROUGH ((void) 0)
 # endif
 #endif
 
