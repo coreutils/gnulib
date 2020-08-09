@@ -19,14 +19,14 @@
 /* Specification.  */
 #include <unistd.h>
 
-#if HAVE_CHSIZE
+#if HAVE__CHSIZE
 /* A native Windows platform.  */
 
 # include <errno.h>
 
 # if _GL_WINDOWS_64_BIT_OFF_T
 
-/* Large File Support: off_t is 64-bit, but chsize() takes only a 32-bit
+/* Large File Support: off_t is 64-bit, but _chsize() takes only a 32-bit
    argument.  So, define a 64-bit safe SetFileSize function ourselves.  */
 
 /* Ensure that <windows.h> declares GetFileSizeEx.  */
@@ -170,7 +170,7 @@ chsize_nothrow (int fd, long length)
 
   TRY_MSVC_INVAL
     {
-      result = chsize (fd, length);
+      result = _chsize (fd, length);
     }
   CATCH_MSVC_INVAL
     {
@@ -182,7 +182,7 @@ chsize_nothrow (int fd, long length)
   return result;
 }
 #  else
-#   define chsize_nothrow chsize
+#   define chsize_nothrow _chsize
 #  endif
 
 int
