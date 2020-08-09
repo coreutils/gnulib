@@ -129,6 +129,12 @@
 # define __warnattr(msg) __attribute__((__warning__ (msg)))
 # define __errordecl(name, msg) \
   extern void name (void) __attribute__((__error__ (msg)))
+#elif __clang_major__ >= 4
+# define __warndecl(name, msg) \
+  extern void name (void) __attribute__((__diagnose_if__ (1, msg, "warning")))
+# define __warnattr(msg) __attribute__((__diagnose_if__ (1, msg, "warning")))
+# define __errordecl(name, msg) \
+  extern void name (void) __attribute__((__diagnose_if__ (1, msg, "error")))
 #else
 # define __warndecl(name, msg) extern void name (void)
 # define __warnattr(msg)
