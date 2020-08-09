@@ -59,7 +59,7 @@ verify (alignof (ptrdiff_t) <= alignof (max_align_t));
 verify (alignof (size_t) <= alignof (max_align_t));
 verify (alignof (wchar_t) <= alignof (max_align_t));
 verify (alignof (struct d) <= alignof (max_align_t));
-#if defined __GNUC__ || defined __IBM__ALIGNOF__
+#if defined __GNUC__ || defined __clang__ || defined __IBM__ALIGNOF__
 verify (__alignof__ (double) <= __alignof__ (max_align_t));
 verify (__alignof__ (int) <= __alignof__ (max_align_t));
 verify (__alignof__ (long double) <= __alignof__ (max_align_t));

@@ -36,12 +36,14 @@
 /* alignof_type (TYPE)
    Determine the good alignment of an object of the given type at compile time.
    Note that this is not necessarily the same as alignof_slot(type).
-   For example, with GNU C on x86 platforms: alignof_type(double) = 8, but
+   For example, with GNU C on x86 platforms and with clang on Linux/x86:
+   alignof_type(long long) = 8, but alignof_slot(long long) = 4.
+   And alignof_type(double) = 8, but
    - when -malign-double is not specified:  alignof_slot(double) = 4,
    - when -malign-double is specified:      alignof_slot(double) = 8.
    Note: The result cannot be used as a value for an 'enum' constant,
    due to bugs in HP-UX 10.20 cc and AIX 3.2.5 xlc.  */
-#if defined __GNUC__ || defined __IBM__ALIGNOF__
+#if defined __GNUC__ || defined __clang__ || defined __IBM__ALIGNOF__
 # define alignof_type __alignof__
 #else
 # define alignof_type alignof_slot
