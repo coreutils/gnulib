@@ -17,13 +17,11 @@
 #if HAVE_ISNANF_IN_LIBC
 /* Get declaration of isnan macro or (older) isnanf function.  */
 # include <math.h>
-# ifndef __has_builtin
-#  define __has_builtin(name) 0
-# endif
-# if __GNUC__ >= 4 && (!defined __clang__ || __has_builtin (__builtin_isnanf))
-   /* GCC 4.0 and newer provides three built-ins for isnan.  */
+# if (__GNUC__ >= 4) || (__clang_major__ >= 4)
+   /* GCC >= 4.0 and clang provide a type-generic built-in for isnan.
+      GCC >= 4.0 also provides __builtin_isnanf, but clang doesn't.  */
 #  undef isnanf
-#  define isnanf(x) __builtin_isnanf ((float)(x))
+#  define isnanf(x) __builtin_isnan ((float)(x))
 # elif defined isnan
 #  undef isnanf
 #  define isnanf(x) isnan ((float)(x))
