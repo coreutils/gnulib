@@ -26,7 +26,7 @@
 #include "verify.h"
 #include "intprops.h"
 
-#if __GNUC__ >= 2 && DO_PEDANTIC
+#if ((__GNUC__ >= 2) || (__clang_major__ >= 4)) && DO_PEDANTIC
 # define verify_same_types(expr1,expr2)  \
     extern void _verify_func(__LINE__) (__typeof__ (expr1) *); \
     extern void _verify_func(__LINE__) (__typeof__ (expr2) *);
