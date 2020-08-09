@@ -239,7 +239,7 @@
 #endif
 
 /* True if __builtin_add_overflow_p (A, B, C) works, and similarly for
-   __builtin_mul_overflow_p and __builtin_mul_overflow_p.  */
+   __builtin_sub_overflow_p and __builtin_mul_overflow_p.  */
 #define _GL_HAS_BUILTIN_OVERFLOW_P (7 <= __GNUC__)
 
 /* The _GL*_OVERFLOW macros have the same restrictions as the
