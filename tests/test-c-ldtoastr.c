@@ -50,7 +50,7 @@ main (int argc, char *argv[])
   {
     char buf[DBL_BUFSIZE_BOUND];
 
-    c_ldtoastr (buf, sizeof buf, 0, 0, 0.1);
+    c_ldtoastr (buf, sizeof buf, 0, 0, 0.1L);
     ASSERT (!strcmp (buf, "0.1"));
   }
 
