@@ -53,7 +53,7 @@ $LIBCSRC include/scratch_buffer.h	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_grow_preserve.c	lib/malloc
 $LIBCSRC malloc/scratch_buffer_set_array_size.c	lib/malloc
-$LIBCSRC include/intprops.h             lib
+#$LIBCSRC include/intprops.h             lib
 $LIBCSRC posix/regcomp.c		lib
 $LIBCSRC posix/regex.c			lib
 $LIBCSRC posix/regex.h			lib
