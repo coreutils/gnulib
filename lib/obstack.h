@@ -153,7 +153,7 @@
 
 /* Not the same as _Noreturn, since it also works with function pointers.  */
 #ifndef __attribute_noreturn__
-# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__) || 0x5110 <= __SUNPRO_C
+# if 2 < __GNUC__ + (8 <= __GNUC_MINOR__) || defined __clang__ || 0x5110 <= __SUNPRO_C
 #  define __attribute_noreturn__ __attribute__ ((__noreturn__))
 # else
 #  define __attribute_noreturn__

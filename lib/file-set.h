@@ -24,8 +24,8 @@
 
 extern void record_file (Hash_table *ht, char const *file,
                          struct stat const *stats)
-#if defined __GNUC__ && ((__GNUC__ == 3 && __GNUC_MINOR__ >= 3) || __GNUC__ > 3)
-  __attribute__ ((nonnull (2, 3)))
+#if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3) || defined __clang__
+  __attribute__ ((__nonnull__ (2, 3)))
 #endif
 ;
 

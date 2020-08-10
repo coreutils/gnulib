@@ -570,7 +570,7 @@ hol_entry_short_iterate (const struct hol_entry *entry,
 }
 
 static inline int
-#if __GNUC__ >= 3
+#if (__GNUC__ >= 3) || (__clang_major__ >= 4)
 __attribute__ ((always_inline))
 #endif
 hol_entry_long_iterate (const struct hol_entry *entry,

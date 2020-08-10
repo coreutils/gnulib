@@ -26,7 +26,7 @@ typedef uint32_t ucs4_t;
 /* Attribute of a function whose result depends only on the arguments
    (not pointers!) and which has no side effects.  */
 #ifndef _UC_ATTRIBUTE_CONST
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95) || defined __clang__
 #  define _UC_ATTRIBUTE_CONST __attribute__ ((__const__))
 # else
 #  define _UC_ATTRIBUTE_CONST
@@ -36,7 +36,7 @@ typedef uint32_t ucs4_t;
 /* Attribute of a function whose result depends only on the arguments
    (possibly pointers) and global memory, and which has no side effects.  */
 #ifndef _UC_ATTRIBUTE_PURE
-# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+# if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96) || defined __clang__
 #  define _UC_ATTRIBUTE_PURE __attribute__ ((__pure__))
 # else
 #  define _UC_ATTRIBUTE_PURE

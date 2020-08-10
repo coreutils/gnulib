@@ -62,6 +62,7 @@
      _GL_NORETURN_FUNC extern void func (void);
  */
 #if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__)) \
+    || defined __clang__ \
     || (0x5110 <= __SUNPRO_C)
   /* For compatibility with _GL_NORETURN_FUNCPTR on clang, use
      __attribute__((__noreturn__)), not _Noreturn.  */
@@ -94,6 +95,7 @@
      _GL_NORETURN_FUNCPTR void (*funcptr) (void);
  */
 #if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__)) \
+    || defined __clang__ \
     || (0x5110 <= __SUNPRO_C)
 # define _GL_NORETURN_FUNCPTR __attribute__ ((__noreturn__))
 #else
