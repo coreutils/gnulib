@@ -23,5 +23,5 @@ call.  @code{vfork} is a variant of @code{fork} that has been introduced to
 optimize the @code{fork}/@code{exec} pattern.
 @item
 On Windows platforms (excluding Cygwin), this function is not implemented; use
-@code{spawnvp} instead.
+@code{_spawnvp} instead.
 @end itemize
